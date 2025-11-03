@@ -24,8 +24,7 @@ describe('GroupMemberItem.vue', () => {
       },
     }
   })
-
-  it('should render GroupMemberItem component', () => {
+  ;(it('should render GroupMemberItem component', () => {
     wrapper = lpiMount(GroupMemberItem, defaultParams)
     expect(wrapper.exists()).toBe(true)
   }),
@@ -38,5 +37,5 @@ describe('GroupMemberItem.vue', () => {
       closeButton.trigger('click')
       await wrapper.vm.$nextTick()
       expect(wrapper.emitted('user-click')).toBeTruthy()
-    })
+    }))
 })

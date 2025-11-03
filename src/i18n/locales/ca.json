@@ -113,7 +113,7 @@
         "text": "Visualitza les posicions obertes"
       },
       "button_contact": {
-        "text": "Contacte amb nosaltres"
+        "text": "Contacta amb nosaltres"
       }
     }
   },
@@ -279,7 +279,10 @@
       "events": "Esdeveniments",
       "instructions": "Instruccions",
       "news": "Notícies",
-      "featured-projects": "Projectes de característiques"
+      "featured-projects": "Projectes de característiques",
+      "templates": {
+        "add": "Afegeix una plantilla"
+      }
     },
     "form": {
       "admin-info": {
@@ -559,11 +562,12 @@
     "year": "any",
     "link-to": "enllaç a",
     "other": "altra",
-    "and": "i"
+    "and": "i",
+    "create": "Crea"
   },
   "complete-profile": {
     "bio": {
-      "title": "Biotec",
+      "title": "Perfil",
       "notice": "Bio Bioto permet a la gent entendre qui ets, què fas i defensar-te.",
       "notice-exemples": "Necessites inspiració? Aquí teniu exemples de {0}, {1} o {2}.",
       "exemples": {
@@ -614,7 +618,7 @@
     }
   },
   "description": {
-    "default-placeholder": "Ara, descriu el teu projecte.",
+    "default-project": "Ara, descriu el teu projecte.",
     "placeholder": "Encara no teniu cap descripció, penseu en afegir-ne un!",
     "delete": "Esteu segur que voleu tancar l' editor?",
     "edit-saved": "Qualsevol canvi que (i cap co- authors) hagi fet no serà desat.",
@@ -794,7 +798,8 @@
   },
   "feed": {
     "see-all": "Veure- ho tot",
-    "title": "Reducció de notícies"
+    "title": "Fil de notícies",
+    "empty": "No hi ha notícies... encara!"
   },
   "file": {
     "add-image": "afegeix una imatge",
@@ -814,7 +819,7 @@
     "title": "Títol",
     "url": "URL",
     "contact": {
-      "subtitle": "Ompliu aquesta forma ràpida i us hi tornarem aviat",
+      "subtitle": "Ompliu aquest formulari i us respondrem aviat",
       "subject": "Assumpte",
       "subject-placeholder": "Què t'agradaria compartir amb nosaltres?",
       "email": "Correu electrònic",
@@ -867,10 +872,11 @@
         "format": "Si us plau, introduïu una adreça de correu electrònic vàlida"
       },
       "description": "Cal el camp de descripció"
-    }
+    },
+    "templates": "Plantilles"
   },
   "footer": {
-    "contact": "Contacte amb nosaltres",
+    "contact": "Contacta amb nosaltres",
     "legal-notices": "Avisos legals",
     "terms-of-service": "Termes de servei",
     "cookies": "Galetes",
@@ -899,7 +905,7 @@
     "contact": "Contacte",
     "edit-group": "Edita grup",
     "see-more-people-button": "Vegeu {users} més",
-    "see-subgroups": "Mireu el subagrupador {count} mireu {count} subagrupacions",
+    "see-subgroups": "Veure el subgrup | Veure {count} subgrups",
     "share": "Comparteix",
     "the-team": "L' equip ({users})",
     "news": "Anuncis",
@@ -908,7 +914,7 @@
     "see-more": "Veure més",
     "see-less": "Veure menys",
     "subgroups": "SUBGROUPSConstellation name (optional)",
-    "snapshot": "instantània",
+    "snapshot": "Visió general",
     "members": "Membres",
     "projects": "Projectes",
     "visibility-private": "Visibilitat: privat",
@@ -1033,7 +1039,9 @@
     "label-ca": "Català",
     "label-nl": "Neerlandès",
     "label-es": "Espanyol",
-    "label-et": "Estonià"
+    "label-et": "Estonià",
+    "auto-translate-on": "Traducció automàtica activada",
+    "auto-translate-off": "Traducció automàtica desactivada"
   },
   "location": {
     "loading": "S' estan carregant les localitzacions"
@@ -1052,7 +1060,7 @@
     "no-bio": "Encara no has escrit la teva biografia",
     "no-skill": "Encara no heu afegit habilitat",
     "page-title": "El meu perfil",
-    "projects-participate": "Projectes sóc membre de",
+    "projects-participate": "Projectes dels quals sóc membre",
     "no-project-participate": "Encara no sou membre d' un projecte",
     "projects-reviewing": "Estic revisant projectes",
     "no-project-reviewing": "Encara no esteu revisant un projecte",
@@ -1253,6 +1261,7 @@
         "tab": "Informació general",
         "form-has-error": "Falta o no hi ha un camp incorrecte en el formulari.",
         "save-error": "Error en desar el perfil.",
+        "save-image-error": "Error en desar la imatge de perfil.",
         "save-success": "El perfil s' ha desat.",
         "pronouns": {
           "label": "Pronomsfrance. kgm",
@@ -1323,7 +1332,7 @@
         }
       },
       "bio": {
-        "tab": "Biotec",
+        "tab": "Perfil",
         "save-error": "Error en desar el perfil.",
         "save-success": "El perfil s' ha desat.",
         "short-bio": {
@@ -1342,7 +1351,7 @@
       "projects": {
         "tab": "Projectes",
         "member": {
-          "label": "Projectes sóc membre de",
+          "label": "Projectes dels quals sóc membre",
           "notice": "Si voleu ser membre d' un projecte existent, hauríeu de demanar-li a l'equip del projecte que us afegeixi. O pots crear el teu projecte."
         },
         "followed": {
@@ -1521,10 +1530,10 @@
     "projects": "Projectes",
     "skills": "Habilitats",
     "groups": "Grups",
-    "snapshot": "instantània",
-    "bio": "Biotec",
-    "bio_pro": "Biotec professional",
-    "bio_personal": "Biotec personal",
+    "snapshot": "Visió general",
+    "bio": "Perfil",
+    "bio_pro": "Perfil professional",
+    "bio_personal": "Perfil personal",
     "cancel-title": "Cancel· la l' edició del perfil",
     "cancel-content": "Esteu segur que voleu cancel· lar la vostra edició de perfils? Qualsevol canvi fet es perdrà.",
     "can-mentor": "Pot ser mentor",
@@ -1546,6 +1555,7 @@
     "take-tour": "Fes la volta ara."
   },
   "project": {
+    "infos": "Infos",
     "add-location": "Afegeix una localització",
     "add-linked-project": "Afegeix un projecte enllaçat",
     "add-location-point": "Afegeix un punt d' emplaçament",
@@ -1592,7 +1602,7 @@
       "project-category": "Categoria del projecte",
       "select-category": "Escull una categoria",
       "purpose-label": "objectiu del projecte",
-      "purpose-placeholder": "Quin és l'objectiu del teu projecte?",
+      "project-purpose": "Quin és l'objectiu del teu projecte?",
       "resize-image": "Rel· la",
       "title-label": "Afegeix un títol",
       "title-placeholder": "Com es diu aquest projecte?",
@@ -1606,6 +1616,7 @@
         "max": "El camp de propòsit no pot ser més gran que 180 caràcters",
         "min": "El camp de propòsit ha de ser almenys 3 caràcters"
       },
+      "project-templates": "Nom de la plantilla",
       "completed-info-to-access-presentation": "S' ha de completar tota la informació de la pàgina per accedir a la presentació."
     },
     "image-header": "Imatge",
@@ -1771,7 +1782,7 @@
     "have-account": "Ja ets un compte?",
     "login": "Entrada",
     "need-help": "Necessites ajuda?",
-    "contact-us": "Contacte amb nosaltres"
+    "contact-us": "Contacta amb nosaltres"
   },
   "request-access": {
     "title": "Petició d' accés",
@@ -1806,7 +1817,7 @@
     "have-account": "Ja ets un compte?",
     "login": "Entrada",
     "need-help": "Necessites ajuda?",
-    "contact-us": "Contacte amb nosaltres"
+    "contact-us": "Contacta amb nosaltres"
   },
   "role": {
     "role-editor": "Té tots els drets d' edició per aquest grup.",
@@ -2013,15 +2024,31 @@
     "advancement-goal-title": "plantilla per al títol de l' objectiu",
     "advancement-goal-content": "plantilla per al contingut de l' objectiu",
     "category": "Categoria de plantilla",
-    "description": "Plantilla per a la descripció",
     "language": "Plantilla d' idioma",
     "info": "Si voleu suggerir als usuaris com organitzar el seu projecte en una categoria específica, podeu crear una plantilla per aquesta categoria. Llavors, quan un usuari crearà un projecte en aquesta categoria, el projecte serà inicials amb el text que heu definit a la plantilla. Aquest text està dissenyat com a guia per als usuaris.",
     "no-tag-set": "No s' ha establert cap etiqueta per ara.",
-    "placeholder-purpose": "objectiu del projecte",
-    "placeholder-title": "Lloc de substitució del títol",
+    "project-purpose": "objectiu del projecte",
+    "project-title": "Lloc de substitució del títol",
     "tags": "Etiquetes de plantilla",
     "title": "Plantilles",
-    "tips-category": "Seleccioneu una categoria a la que s' aplicarà la vostra plantilla."
+    "tips-category": "Seleccioneu una categoria a la que s' aplicarà la vostra plantilla.",
+    "comment": "Plantilla per al comentari",
+    "tips-template": "",
+    "template": "Plantilla",
+    "no-category-set": "Sense conjunt de categoria",
+    "create": "Creació de plantilla",
+    "edit": "Edició de la plantilla",
+    "list": "Llista de plantilles",
+    "add-template": "Afegeix plantilla",
+    "description": "Descripció de la plantilla",
+    "project-description": "Plantilla per a la descripció del projecte",
+    "title-project": "Projecte",
+    "title-blog": "Bloc",
+    "title-goal": "Objectiu",
+    "title-comment": "Comentari",
+    "no-templates-set": "No s' ha establert cap plantilla.",
+    "placeholder-purpose": "propòsit del projecte",
+    "placeholder-title": "Títol en ordre"
   },
   "tips": {
     "background-color": "Aquest color es mostrarà darrera del text.",
@@ -2205,6 +2232,10 @@
       "success": "El projecte s' ha creat correctament",
       "error": "Error durant la creació del projecte"
     },
+    "project-header-create": {
+      "success": "La imatge del projecte s' ha creat correctament",
+      "error": "Error durant la creació de la imatge del projecte"
+    },
     "project-destroy": {
       "success": "El projecte s' ha esborrat correctament",
       "error": "Error durant l' esborrat del projecte"
@@ -2212,6 +2243,10 @@
     "project-edit": {
       "success": "El projecte s' ha actualitzat amb èxitName",
       "error": "Error durant l' actualització del projecte"
+    },
+    "project-header-edit": {
+      "success": "La imatge del projecte s' ha actualitzat correctament",
+      "error": "Error durant l' actualització de la imatge del projecte"
     },
     "project-duplication": {
       "success": "El projecte s' ha duplicat correctament",
@@ -2375,7 +2410,7 @@
   "recommendations": {
     "empty": "No tens recomanacions",
     "connect-to": "Potser voldreu connectar amb",
-    "title": "Recomanat per a vós",
+    "title": "Recomanat per a tu",
     "is-featured": "(Fatuta)",
     "more-projects": "Descobreix més projectes",
     "more-profiles": "Descobriu més perfils",
@@ -2634,7 +2669,8 @@
       "unauthorized": "Sense autoritzar: S' ha denegat l' accés degut a les credencials no vàlides.",
       "unprocessable-entity": "Entitat no es pot processar: no es pot processar les instruccions contingudes.",
       "bad-gateway": "Portal incorrecte: El servidor ha trobat un error temporal i no ha pogut completar la vostra petició."
-    }
+    },
+    "error-default": "S' ha produït un error. Torneu a provar o contacteu amb l' administrador."
   },
   "people-groups": {
     "browse-tree": "Navega per l' arbre de grups"
@@ -2675,5 +2711,10 @@
   "documents-page": {
     "title": "Documents de la plataforma {platformName}",
     "description": "Troba aquí tots els documents relacionats amb la plataforma {platformName}, inclosos els termes del servei, la política de privacitat i altres documents legals."
+  },
+  "chatbot": {
+    "title": "Xateja amb IA",
+    "input-placeholder": "Escriu el teu missatge aquí...",
+    "intro-message": "Hola, com et puc ajudar avui?"
   }
 }

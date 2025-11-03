@@ -54,7 +54,6 @@
   </BaseDrawer>
   <ConfirmModal
     v-if="showConfirmModal"
-    confirm-button-label="common.continue"
     :title="$t('description.quit-without-saving-title')"
     :content="$t('common.confirm-close')"
     @cancel="showConfirmModal = false"
@@ -214,8 +213,8 @@ export default {
 
     resetForm() {
       this.form = {
-        title: this.project?.template?.goal_title || '',
-        description: this.project?.template?.goal_description || '<p></p>',
+        title: this.project.template?.$t?.goal_title || '',
+        description: this.project.template?.$t?.goal_description || '<p></p>',
         deadline_at: new Date(),
         status: 'na',
       }

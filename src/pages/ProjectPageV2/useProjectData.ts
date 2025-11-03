@@ -25,6 +25,22 @@ export default function useProjectData() {
   const usersStore = useUsersStore()
   // const runtimeConfig = useRuntimeConfig()
 
+  const {
+    translateProject,
+    translateProjects,
+    translateComments,
+    translateProjectMessages,
+    translateLocations,
+    translateAnnouncements,
+    translateGoals,
+    translateBlogEntries,
+    translateReviews,
+    translateFiles,
+    translateLinks,
+    translateUser,
+    translateTeam,
+  } = useAutoTranslate()
+
   const projectCategoriesStore = useProjectCategories()
 
   const route = useRoute()
@@ -38,22 +54,38 @@ export default function useProjectData() {
     return isAdmin.value || members.find((user) => usersStore.id === user.id)
   })
 
-  const project = computed(() => projectsStore.project)
+  // const project = computed(() => projectsStore.project)
+  const _project: ComputedRef<any> = computed(() => projectsStore.project)
+  const project: ComputedRef<any> = translateProject(_project)
 
-  const similarProjects = ref([])
-  const comments = ref([])
-  const projectMessages = ref([])
-  const locations = ref([])
-  const announcements = ref([])
-  const fileResources = ref([])
-  const linkResources = ref([])
-  const blogEntries = ref([])
+  const _similarProjects: Ref<any> = ref([])
+  const _comments: Ref<any> = ref([])
+  const _projectMessages: Ref<any> = ref([])
+  const _locations: Ref<any> = ref([])
+  const _announcements: Ref<any> = ref([])
+  const _fileResources: Ref<any> = ref([])
+  const _linkResources: ComputedRef<any> | Ref<any> = ref([])
+  const _blogEntries: Ref<any> = ref([])
+  const _goals: Ref<any> = ref([])
+  const _team: Ref<any> = ref({ owners: [], members: [], reviewers: [] })
+  const _reviews: Ref<any> = ref([])
+  const _linkedProjects: Ref<any> = ref([])
+
+  const similarProjects: ComputedRef<any> = translateProjects(_similarProjects)
+  const comments: ComputedRef<any> = translateComments(_comments)
+  const projectMessages: ComputedRef<any> = translateProjectMessages(_projectMessages)
+  const locations: ComputedRef<any> = translateLocations(_locations)
+  const announcements: ComputedRef<any> = translateAnnouncements(_announcements)
+  const fileResources: ComputedRef<any> = translateFiles(_fileResources)
+  const linkResources: ComputedRef<any> = translateLinks(_linkResources)
+  const blogEntries: ComputedRef<any> = translateBlogEntries(_blogEntries)
+  const goals: ComputedRef<any> = translateGoals(_goals)
+  const team: ComputedRef<any> = translateTeam(_team)
+  const reviews: ComputedRef<any> = translateReviews(_reviews)
+  const linkedProjects: ComputedRef<any> = translateProjects(_linkedProjects)
+
   const follow = ref({ is_followed: false })
-  const goals = ref([])
   const sdgs = ref([])
-  const team = ref({ owners: [], members: [], reviewers: [] })
-  const reviews = ref([])
-  const linkedProjects = ref([])
   const commentLoop = ref(null)
   const linkedProjectsLoading = ref(false)
 
@@ -66,14 +98,14 @@ export default function useProjectData() {
       ...(team.value.members || []),
       ...((team.value as any).people_groups || []),
     ].map((user) => ({
-      user,
+      user: unref(translateUser(user)),
     }))
   })
 
   const getReviews = async () => {
     try {
       const response = await getReviewsApi(project.value.id)
-      reviews.value = response.results
+      _reviews.value = response.results
     } catch (err) {
       console.error(err)
     }
@@ -82,20 +114,21 @@ export default function useProjectData() {
   const getGoals = async () => {
     try {
       const response = await getAllGoals(project.value.id)
-      goals.value = response.results
+      _goals.value = response.results
     } catch (err) {
       console.error(err)
     }
   }
-  const getLinkedProjects = async (_linkedProjects = null) => {
-    if (_linkedProjects) {
-      linkedProjects.value = _linkedProjects
+  const getLinkedProjects = async (forcedLinkedProjects = null) => {
+    if (forcedLinkedProjects) {
+      // refreshing from a drawer edit update
+      _linkedProjects.value = forcedLinkedProjects
     } else {
       try {
         linkedProjectsLoading.value = true
         // TODO beg for a dedicated endpoint
         const response = await getProject(project.value.id)
-        linkedProjects.value = response.linked_projects
+        _linkedProjects.value = response.linked_projects
       } catch (err) {
         console.error(err)
       } finally {
@@ -116,7 +149,7 @@ export default function useProjectData() {
     try {
       // TODO beg for a dedicated endpoint
       const response = await getProject(project.value.id)
-      team.value = response.team
+      _team.value = response.team
     } catch (err) {
       console.error(err)
     }
@@ -131,9 +164,10 @@ export default function useProjectData() {
   const getBlogEntries = async () => {
     try {
       const response = await getBlogEntriesApi(project.value.id)
-      blogEntries.value = (response.results || []).sort((a, b) => {
+      const sortedEntries = (response.results || []).sort((a, b) => {
         return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
       })
+      _blogEntries.value = sortedEntries
     } catch (err) {
       console.error(err)
     }
@@ -142,7 +176,7 @@ export default function useProjectData() {
   const getFileResources = async () => {
     try {
       const response = await getAttachmentFiles(project.value.id)
-      fileResources.value = response.results
+      _fileResources.value = response.results
     } catch (err) {
       console.error(err)
     }
@@ -151,7 +185,7 @@ export default function useProjectData() {
   const getLinkResources = async () => {
     try {
       const response = await getAttachmentLinks(project.value.id)
-      linkResources.value = response.results
+      _linkResources.value = response.results
     } catch (err) {
       console.error(err)
     }
@@ -160,7 +194,7 @@ export default function useProjectData() {
   const getComments = async (project_id) => {
     try {
       const response = await getCommentApi(project_id)
-      comments.value = response.results
+      _comments.value = response.results
     } catch (err) {
       console.error(err)
     }
@@ -169,7 +203,7 @@ export default function useProjectData() {
   const getProjectMessages = async (project_id) => {
     try {
       const response = await getProjectMessagesApi(project_id)
-      projectMessages.value = response.results
+      _projectMessages.value = response.results
     } catch (err) {
       console.error(err)
     }
@@ -178,7 +212,7 @@ export default function useProjectData() {
   const getAnnouncements = async () => {
     try {
       const response = await getProjectAnnouncements(project.value.id, {})
-      announcements.value = response.results
+      _announcements.value = response.results
     } catch (err) {
       console.error(err)
     }
@@ -192,11 +226,11 @@ export default function useProjectData() {
     const project = await projectsStore.getProject(projectSlugOrId)
     // TODO watch here it was the computed project value instead
     follow.value = project.is_followed
-    goals.value = project.goals
+    _goals.value = project.goals
     sdgs.value = project.sdgs
-    team.value = project.team
-    reviews.value = project.reviews
-    linkedProjects.value = project.linked_projects
+    _team.value = project.team
+    _reviews.value = project.reviews
+    _linkedProjects.value = project.linked_projects
 
     const extraData = [
       getComments(project.id), // TODO remove param and use this.proejct.id in method, also chnage handler
@@ -232,7 +266,8 @@ export default function useProjectData() {
 
   const getProjectLocations = async () => {
     try {
-      locations.value = await getProjectLocationsApi(project.value.id)
+      const res = await getProjectLocationsApi(project.value.id)
+      _locations.value = res
     } catch (err) {
       console.error(err)
     }
@@ -240,10 +275,8 @@ export default function useProjectData() {
 
   const getSimilarProjects = async () => {
     try {
-      similarProjects.value = await getSuggestedProjects(
-        project.value.id,
-        organizationsStore.current?.code
-      )
+      const res = await getSuggestedProjects(project.value.id, organizationsStore.current?.code)
+      _similarProjects.value = res
     } catch (err) {
       console.error(err)
     }
@@ -427,8 +460,9 @@ export default function useProjectData() {
           onReloadLinkResources: () => getLinkResources(),
         },
         condition:
-          project.value &&
-          (project.value.files.length || project.value.links.length || isRoute('projectResources')), // prevent error when emptying the current tab
+          project?.value?.files?.length ||
+          project?.value?.links?.length ||
+          isRoute('projectResources'), // prevent error when emptying the current tab
         dataTest: 'project-resources',
         icon: 'Globe',
       },

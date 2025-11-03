@@ -203,7 +203,9 @@ export default {
       this.form.team.reviewer_groups = []
 
       this.selectedUsers.forEach((user) => {
-        this.form.team[user.role].push(user.id)
+        if (!this.form.team[user.role].includes(user.id)) {
+          this.form.team[user.role].push(user.id)
+        }
       })
     },
   },

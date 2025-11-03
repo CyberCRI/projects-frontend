@@ -32,7 +32,7 @@ const buildParams = (user) => ({
 describe('ProfileGroupsTab', () => {
   beforeEach(() => {
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.current = { id: 'TEST' } as unknown as OrganizationOutput
+    organizationsStore._current = { id: 'TEST' } as unknown as OrganizationOutput
   })
 
   it('should render ProfileGroupsTab component', () => {

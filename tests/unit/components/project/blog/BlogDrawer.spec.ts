@@ -6,7 +6,6 @@ import { OrganizationOutputFactory } from '@/../tests/factories/organization.fac
 import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
-import useProjectsStore from '@/stores/useProjects'
 import useUsersStore from '@/stores/useUsers'
 
 const i18n = {
@@ -28,10 +27,9 @@ describe('BlogDrawer.vue', () => {
       getUser: vi.fn(),
     } as any)
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.current = OrganizationOutputFactory.generate()
-    const projectsStore = useProjectsStore(pinia)
+    organizationsStore._current = OrganizationOutputFactory.generate()
 
-    projectsStore.project = {
+    const project = {
       ...ProjectOutputFactory.generate(),
       files: [],
       links: [],
@@ -40,6 +38,7 @@ describe('BlogDrawer.vue', () => {
       props: {
         isOpened: true,
         initialStep: 2,
+        project: project,
       },
       i18n,
       provide: {
@@ -47,8 +46,7 @@ describe('BlogDrawer.vue', () => {
       },
     }
   })
-
-  it('should render component', () => {
+  ;(it('should render component', () => {
     const wrapper = lpiMount(BlogDrawer, defaultParams)
     expect(wrapper.exists()).toBe(true)
   }),
@@ -58,5 +56,5 @@ describe('BlogDrawer.vue', () => {
 
       vm.closeDrawer()
       expect(wrapper.emitted('close')).toBeTruthy()
-    })
+    }))
 })

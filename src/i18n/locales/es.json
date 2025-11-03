@@ -279,7 +279,10 @@
       "events": "Eventos",
       "instructions": "Instrucciones",
       "news": "Noticias",
-      "featured-projects": "Proyectos destacados"
+      "featured-projects": "Proyectos destacados",
+      "templates": {
+        "add": "Añadir una plantilla"
+      }
     },
     "form": {
       "admin-info": {
@@ -559,7 +562,8 @@
     "year": "año",
     "link-to": "enlace",
     "other": "otros",
-    "and": "y"
+    "and": "y",
+    "create": "Crear"
   },
   "complete-profile": {
     "bio": {
@@ -614,7 +618,7 @@
     }
   },
   "description": {
-    "default-placeholder": "Ahora, describir su proyecto.",
+    "default-project": "Ahora, describir su proyecto.",
     "placeholder": "Aún no tienes una descripción, piensa en añadir una!",
     "delete": "¿Seguro que quieres cerrar el editor?",
     "edit-saved": "Cualquier cambio que usted (y cualquier co-autor) haga no será salvado.",
@@ -794,7 +798,8 @@
   },
   "feed": {
     "see-all": "Ver todos",
-    "title": "Newsfeed"
+    "title": "Newsfeed",
+    "empty": "No hay noticias... ¡todavía!"
   },
   "file": {
     "add-image": "añadir una imagen",
@@ -867,7 +872,8 @@
         "format": "Por favor, introduzca una dirección de correo electrónico válida"
       },
       "description": "El campo de descripción es necesario"
-    }
+    },
+    "templates": "Plantillas"
   },
   "footer": {
     "contact": "Contacta con nosotros",
@@ -1033,7 +1039,9 @@
     "label-ca": "Catalan",
     "label-nl": "Dutch",
     "label-es": "Español",
-    "label-et": "Estonia"
+    "label-et": "Estonia",
+    "auto-translate-on": "Traducción automática activada",
+    "auto-translate-off": "Traducción automática desactivada"
   },
   "location": {
     "loading": "Lugares de carga"
@@ -1067,9 +1075,9 @@
     "no-bio": "No biografía todavía",
     "no-skill": "No se han indicado todavía",
     "no-project-participate": "Aún no es miembro de un proyecto",
-    "no-project-reviewing": "Aún no es un revisor de un proyecto",
     "publications": "Sus publicaciones",
-    "no-publications": "No hay publicaciones todavía"
+    "no-publications": "No hay publicaciones todavía",
+    "no-project-reviewing": "Aún no es un revisor de un proyecto"
   },
   "multieditor": {
     "blockquote": "Bloqueo",
@@ -1253,6 +1261,7 @@
         "tab": "Información general",
         "form-has-error": "Hay campo perdido o inválido en la forma.",
         "save-error": "Error al guardar el perfil.",
+        "save-image-error": "Error al guardar la imagen de perfil.",
         "save-success": "Perfil guardado.",
         "pronouns": {
           "label": "Pronombres",
@@ -1546,6 +1555,7 @@
     "take-tour": "Tome el tour ahora"
   },
   "project": {
+    "infos": "Infos",
     "add-location": "Agregar un lugar",
     "add-linked-project": "Agregar un proyecto vinculado",
     "add-location-point": "Agregar un punto de ubicación",
@@ -1593,6 +1603,7 @@
       "select-category": "Elija una categoría",
       "purpose-label": "Objetivo del proyecto",
       "purpose-placeholder": "¿Cuál es el objetivo de su proyecto?",
+      "project-purpose": "¿Cuál es el objetivo de su proyecto?",
       "resize-image": "Reframe",
       "title-label": "Añadir un título",
       "title-placeholder": "¿Cuál es el nombre de este proyecto?",
@@ -1606,6 +1617,7 @@
         "max": "El campo de propósito puede no ser mayor que 180 caracteres",
         "min": "El campo de propósito debe ser por lo menos 3 caracteres"
       },
+      "project-templates": "Nombre de plantilla",
       "completed-info-to-access-presentation": "Toda la información de la página debe completarse para acceder a la presentación."
     },
     "image-header": "Imagen",
@@ -2014,14 +2026,30 @@
     "advancement-goal-content": "plantilla para el contenido de metas de avance",
     "category": "Plantilla Categoría",
     "description": "Plantilla para Descripción",
-    "language": "Plantilla de idiomas",
     "info": "Si desea sugerir a los usuarios cómo organizar su proyecto en una categoría específica, puede crear una plantilla para esa categoría. Luego, cuando un usuario creará un proyecto en esa categoría, el proyecto será inicializado con el texto que usted definió en la plantilla. Este texto se entiende como guía para los usuarios.",
+    "language": "Plantilla de idiomas",
     "no-tag-set": "No se ha fijado ninguna etiqueta por ahora.",
-    "placeholder-purpose": "Objetivo del proyecto",
-    "placeholder-title": "Título Titular",
+    "project-purpose": "Objetivo del proyecto",
+    "project-title": "Título Titular",
     "tags": "Etiquetas de plantilla",
     "title": "Plantillas",
-    "tips-category": "Seleccione una categoría a la que se aplicará su plantilla."
+    "tips-category": "Seleccione una categoría a la que se aplicará su plantilla.",
+    "comment": "Plantilla para el comentario",
+    "tips-template": "",
+    "template": "Plantilla",
+    "no-category-set": "No Categoría set",
+    "create": "Creación de plantillas",
+    "edit": "Edición de plantilla",
+    "list": "Lista de plantillas",
+    "add-template": "Agregar plantilla",
+    "project-description": "Plantilla para descripción del proyecto",
+    "title-project": "Proyecto",
+    "title-blog": "Blog",
+    "title-goal": "Objetivo",
+    "title-comment": "Comentario",
+    "no-templates-set": "Sin plantilla.",
+    "placeholder-purpose": "Finalidad del proyecto",
+    "placeholder-title": "Título In situ"
   },
   "tips": {
     "background-color": "Este color se mostrará detrás del texto.",
@@ -2205,6 +2233,10 @@
       "success": "El proyecto ha sido creado con éxito",
       "error": "Error durante la creación del proyecto"
     },
+    "project-header-create": {
+      "success": "La imagen del proyecto se ha creado con éxito",
+      "error": "Error durante la creación de la imagen del proyecto"
+    },
     "project-destroy": {
       "success": "El proyecto se ha eliminado con éxito",
       "error": "Error durante la eliminación del proyecto"
@@ -2212,6 +2244,10 @@
     "project-edit": {
       "success": "El proyecto ha sido actualizado con éxito",
       "error": "Error durante la actualización del proyecto"
+    },
+    "project-header-edit": {
+      "success": "La imagen del proyecto se ha actualizado con éxito",
+      "error": "Error durante la actualización de la imagen del proyecto"
     },
     "project-duplication": {
       "success": "El proyecto se ha duplicado con éxito",
@@ -2634,7 +2670,8 @@
       "unauthorized": "No autorizado: Se niega el acceso debido a credenciales inválidas.",
       "unprocessable-entity": "Entidad no procesable: Incapaz de procesar las instrucciones contenidas.",
       "bad-gateway": "Mala puerta de entrada: El servidor encontró un error temporal y no pudo completar su solicitud."
-    }
+    },
+    "error-default": "Se produjo un error. Por favor intente de nuevo o administrador de contacto."
   },
   "people-groups": {
     "browse-tree": "Examine el árbol de grupo"
@@ -2675,5 +2712,10 @@
   "documents-page": {
     "title": "Documentos de la plataforma {platformName}",
     "description": "Encuentra aquí todos los documentos relacionados con la plataforma {platformName}, incluidos los términos de servicio, la política de privacidad y otros documentos legales."
+  },
+  "chatbot": {
+    "title": "Chatear con IA",
+    "input-placeholder": "Escribe tu mensaje aquí...",
+    "intro-message": "Hola, ¿cómo puedo ayudarte hoy?"
   }
 }

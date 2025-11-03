@@ -125,7 +125,7 @@ export default {
       return this.blogEntries.map((blogEntry) => {
         return {
           id: blogEntry.id,
-          label: blogEntry.title,
+          label: blogEntry.$t?.title,
           date: blogEntry.created_at,
         }
       })
@@ -137,7 +137,7 @@ export default {
       handler: function () {
         if (!this.project) return
         // Router needs to be tested, if it's not set right away it might create an error
-        if (this.$router && this.blogEntriesLength === 0)
+        if (this.$router && this.blogEntriesLength === 0 && !this.isEditionEnabled)
           this.$router.push({
             name: 'projectSummary',
             params: { slugOrId: this.project.slug },

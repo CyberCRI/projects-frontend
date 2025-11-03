@@ -1,0 +1,34 @@
+.navpanel-menu-entry {
+  cursor: pointer;
+  border-radius: $border-radius-s;
+
+  &:hover,
+  &.active {
+    background-color: $primary-light;
+  }
+
+  .navpanel-menu-link {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.4rem;
+    color: $primary-dark;
+    cursor: pointer;
+
+    .icon {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      fill: $primary-dark;
+    }
+
+    .action-icon {
+      margin-left: auto;
+      opacity: 0;
+    }
+
+    &:hover .action-icon {
+      opacity: 1;
+    }
+  }
+}

@@ -6,10 +6,10 @@ import BaseFactory from './base.factory'
 
 export const TemplateFactory = createFactory<TemplateModel>((faker) => ({
   ...BaseFactory.generate(),
-  title_placeholder: faker.datatype.string(),
-  goal_placeholder: faker.datatype.string(),
-  description_placeholder: faker.datatype.string(),
-  blogentry_placeholder: faker.datatype.string(),
+  project_title: faker.datatype.string(),
+  goal_title: faker.datatype.string(),
+  project_description: faker.datatype.string(),
+  blogentry_title: faker.datatype.string(),
   images: ImageFactory.generateMany(2),
 }))
 

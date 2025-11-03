@@ -64,8 +64,19 @@
             'ProfileGroups',
             'ProfileSkills',
             'ProfileEdit',
+            'ProfileEditOther',
             'ProfileOtherUser',
             'ProfileEditOtherUser',
+            'ProfileSummaryOther',
+            'ProfileBioOther',
+            'ProfileProjectsOther',
+            'ProfileGroupsOther',
+            'ProfileSkillsOther',
+            'ProfileEditGeneralOther',
+            'ProfileEditBioOther',
+            'ProfileEditProjectsOther',
+            'ProfileEditGroupsOther',
+            'ProfileEditSkillsOther',
           ]"
           :to="{ name: 'People' }"
         />
@@ -209,6 +220,7 @@ export default {
     const usersStore = useUsersStore()
     const { isAdmin, isFacilitator, isSuperAdmin, isOrgAdmin } = usePermissions()
     const { locale, setLocale } = useI18n()
+    const { isAutoTranslateActivated } = useAutoTranslate()
     return {
       projectCategoriesStore,
       organizationsStore,
@@ -218,6 +230,7 @@ export default {
       isSuperAdmin,
       isOrgAdmin,
       locale,
+      isAutoTranslateActivated,
       setLocale,
     }
   },
@@ -241,16 +254,37 @@ export default {
     },
 
     langMenu() {
-      return this.organizationsStore.languages
+      const menu = this.organizationsStore.languages
         .map((lang) => ({
-          label: lang.toUpperCase(),
+          label: `${lang.toUpperCase()} - ${this.$t('language.label-' + lang)}`,
           action: () => this.updateLanguage(lang),
         }))
         .filter((lang) => lang.label !== this.locale.toUpperCase())
+      if (this.showAutoTranslateOption)
+        menu.push({
+          label: this.isAutoTranslateActivated
+            ? this.$t('language.auto-translate-on')
+            : this.$t('language.auto-translate-on'),
+          action: () => {
+            this.isAutoTranslateActivated = !this.isAutoTranslateActivated
+          },
+          leftIcon: this.isAutoTranslateActivated ? 'CheckBoxChecked' : 'SquareRoundedOutline',
+        })
+
+      return menu
+    },
+
+    showAutoTranslateOption() {
+      return !!this.organisation?.auto_translate_content
     },
 
     organization() {
       return this.organizationsStore.current
+    },
+
+    showDocumentsLink() {
+      // admin should always access to documents, so they can add the first one...
+      return this.isAdmin || (this.isConnected && this.organization?.attachment_files_count > 0)
     },
 
     userMenu() {
@@ -308,7 +342,7 @@ export default {
           label: this.$t('home.documents').toUpperCase(),
           to: { name: 'DocumentsPage' },
           leftIcon: 'File',
-          condition: this.isConnected, // TODO: check also if there's any document or if we are admin
+          condition: this.showDocumentsLink, // TODO: check also if there's any document or if we are admin
           dataTest: 'more-documents',
         },
         {
@@ -540,11 +574,12 @@ export default {
           organizations: [this.organization.code],
           ordering: '-updated_at',
         })
-        this.announcements = announcements.results.filter(
-          (announcement) =>
-            (announcement.project.publication_status !== 'private' && !announcement.deadline) ||
-            new Date(announcement.deadline) >= new Date().setHours(0, 0, 0, 0)
-        )
+        this.announcements =
+          announcements.results?.filter(
+            (announcement) =>
+              (announcement.project.publication_status !== 'private' && !announcement.deadline) ||
+              new Date(announcement.deadline) >= new Date().setHours(0, 0, 0, 0)
+          ) || []
       } catch (err) {
         console.error(err)
       }

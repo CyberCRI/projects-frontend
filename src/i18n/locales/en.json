@@ -275,6 +275,9 @@
         "upload-picture": "Upload a picture",
         "tips-background-image": "It is not required if you would rather simply display a color.  Minimum width: 1024px, Minimum height: 400px."
       },
+      "templates": {
+        "add": "Add a template"
+      },
       "chat": "Chat platform (Connected view)",
       "events": "Events",
       "instructions": "Instructions",
@@ -502,6 +505,7 @@
     "link-to": "link to",
     "other": "other",
     "and": "and",
+    "create": "Create",
     "activate": "Activate",
     "activated": "Activated",
     "add": "Add",
@@ -614,7 +618,7 @@
     }
   },
   "description": {
-    "default-placeholder": "Now, describe your project.",
+    "default-project": "Now, describe your project.",
     "placeholder": "You do not have a description yet, think about adding one!",
     "delete": "Are you sure you want to close the editor ?",
     "edit-saved": "Any changes you (and any co-authors) made will not be saved.",
@@ -794,7 +798,8 @@
   },
   "feed": {
     "see-all": "See all",
-    "title": "Newsfeed"
+    "title": "Newsfeed",
+    "empty": "There's no news... yet!"
   },
   "file": {
     "add-image": "add an image",
@@ -813,6 +818,7 @@
     "language": "Language",
     "title": "Title",
     "url": "url",
+    "templates": "Templates",
     "contact": {
       "subtitle": "Fill in this quick form and we’ll get back to you shortly",
       "subject": "Subject",
@@ -1033,7 +1039,9 @@
     "label-ca": "Catalan",
     "label-nl": "Dutch",
     "label-es": "Spanish",
-    "label-et": "Estonian"
+    "label-et": "Estonian",
+    "auto-translate-on": "Auto translate on",
+    "auto-translate-off": "Auto translate off"
   },
   "location": {
     "loading": "Loading locations"
@@ -1253,6 +1261,7 @@
         "tab": "General info",
         "form-has-error": "There is missing or invalid field in the form.",
         "save-error": "Error while saving profile.",
+        "save-image-error": "Error while saving profile picture.",
         "save-success": "Profile saved.",
         "pronouns": {
           "label": "Pronouns",
@@ -1546,6 +1555,7 @@
     "take-tour": "Take the tour now"
   },
   "project": {
+    "infos": "Infos",
     "add-location": "Add a location",
     "add-linked-project": "Add a linked project",
     "add-location-point": "Add a location point",
@@ -1585,6 +1595,7 @@
     "follow": "Follow",
     "followed": "Followed",
     "form": {
+      "project-templates": "Template name",
       "add-tags": "Add tags",
       "create-project": "Create project",
       "edit-project": "Edit project",
@@ -1592,7 +1603,7 @@
       "project-category": "Project category",
       "select-category": "Pick a category",
       "purpose-label": "Project's goal",
-      "purpose-placeholder": "What is the goal of your project?",
+      "project-purpose": "What is the goal of your project?",
       "resize-image": "Reframe",
       "title-label": "Add a title",
       "title-placeholder": "What is the name of this project?",
@@ -2013,15 +2024,31 @@
     "advancement-goal-title": "template for advancement goal title",
     "advancement-goal-content": "template for advancement goal content",
     "category": "Template Category",
-    "description": "Template for Description",
+    "description": "Template Description",
     "language": "Language Template",
     "info": "If you want to suggest to users how to organise their project in a specific category, you can create a template for that category. Then, when a user will create a project in that category, the project will be initialised with the text that you defined in the template. This text is meant as a guide to users.",
     "no-tag-set": "No tag has been set for now.",
-    "placeholder-purpose": "Project goal",
-    "placeholder-title": "Title Placeholder",
+    "project-purpose": "Template for project goal",
+    "project-title": "Template for project title",
+    "project-description": "Template for project description",
     "tags": "Template tags",
     "title": "Templates",
-    "tips-category": "Select a category to which your template will apply."
+    "tips-category": "Select a category to which your template will apply.",
+    "comment": "Template for comment",
+    "tips-template": "",
+    "template": "Template",
+    "no-category-set": "No Category set",
+    "create": "Template creation",
+    "edit": "Template edition",
+    "list": "Template list",
+    "add-template": "Add template",
+    "no-templates-set": "No Template set.",
+    "title-project": "Project",
+    "title-blog": "Blog",
+    "title-goal": "Goal",
+    "title-comment": "Comment",
+    "placeholder-purpose": "Purpose of the project",
+    "placeholder-title": "Title On-site"
   },
   "tips": {
     "background-color": "This color will be displayed behind the text.",
@@ -2205,6 +2232,10 @@
       "success": "The project has been created successfully",
       "error": "Error during the project creation"
     },
+    "project-header-create": {
+      "success": "The project image has been created successfully",
+      "error": "Error during the project image creation"
+    },
     "project-destroy": {
       "success": "The project has been deleted successfully",
       "error": "Error during the project deletion"
@@ -2212,6 +2243,10 @@
     "project-edit": {
       "success": "The project has been updated successfully",
       "error": "Error during project update"
+    },
+    "project-header-edit": {
+      "success": "The project image has been updated successfully",
+      "error": "Error during project image update"
     },
     "project-duplication": {
       "success": "The project has been duplicated successfully",
@@ -2626,6 +2661,7 @@
   },
   "message": {
     "error-login": "An error occured during login. Please try again.",
+    "error-default": "An error occured. Please try again or contact administrator.",
     "failed": "Error while sending message. Please try again.",
     "leave-confirmation": "You're about to leave the page with unsaved data.",
     "sent": "Message sent",
@@ -2675,5 +2711,10 @@
   "documents-page": {
     "title": "Documents of the {platformName} platform",
     "description": "Find here all the documents related to the {platformName} platform, including the terms of service, privacy policy, and other legal documents."
+  },
+  "chatbot": {
+    "title": "Chat with AI",
+    "input-placeholder": "Type your message here...",
+    "intro-message": "Hello How can I assist you today?"
   }
 }

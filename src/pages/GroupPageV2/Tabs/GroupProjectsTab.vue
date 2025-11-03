@@ -53,34 +53,35 @@ export default {
     },
   },
 
-  data() {
-    return {
-      style: {},
+  setup(props) {
+    const style = ref({})
+    const pagination = ref({
+      currentPage: 1,
+      total: 1,
+      previous: undefined,
+      next: undefined,
+      first: undefined,
+      last: undefined,
+    })
+    const projectsRequest = ref(props.projectsInitialRequest)
+    const isPaginationLoading = ref(false)
+    const { translateProjects } = useAutoTranslate()
+    const rawProjects = computed(() => projectsRequest.value?.results || [])
+    const projects = translateProjects(rawProjects)
+    const projectsCount = computed(() => projectsRequest.value?.count || 0)
+    const isLoading = computed(() => props.isProjectsLoading || isPaginationLoading.value)
 
-      pagination: {
-        currentPage: 1,
-        total: 1,
-        previous: undefined,
-        next: undefined,
-        first: undefined,
-        last: undefined,
-      },
-      projectsRequest: this.projectsInitialRequest,
-      isPaginationLoading: false,
+    return {
+      style,
+      pagination,
+      projectsRequest,
+      isPaginationLoading,
+      projects,
+      projectsCount,
+      isLoading,
     }
   },
 
-  computed: {
-    projects() {
-      return this.projectsRequest.results || []
-    },
-    projectsCount() {
-      return this.projectsRequest.count || 0
-    },
-    isLoading() {
-      return this.isProjectsLoading || this.isPaginationLoading
-    },
-  },
   watch: {
     projectsRequest: {
       handler: function (response) {

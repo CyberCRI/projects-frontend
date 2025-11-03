@@ -279,7 +279,10 @@
       "events": "Gebeurtenissen",
       "instructions": "Instructies",
       "news": "Nieuws",
-      "featured-projects": "Aanbevolen projecten"
+      "featured-projects": "Aanbevolen projecten",
+      "templates": {
+        "add": "Een sjabloon toevoegen"
+      }
     },
     "form": {
       "admin-info": {
@@ -559,7 +562,8 @@
     "year": "jaar",
     "link-to": "verwijzing naar",
     "other": "Andere",
-    "and": "en"
+    "and": "en",
+    "create": "Aanmaken"
   },
   "complete-profile": {
     "bio": {
@@ -614,7 +618,7 @@
     }
   },
   "description": {
-    "default-placeholder": "Beschrijf nu je project.",
+    "default-project": "Beschrijf nu je project.",
     "placeholder": "Je hebt nog geen beschrijving, denk erover om er een toe te voegen!",
     "delete": "Weet u zeker dat u de editor wilt sluiten?",
     "edit-saved": "Wijzigingen die u (en eventuele co-auteurs) heeft aangebracht, worden niet opgeslagen.",
@@ -794,7 +798,8 @@
   },
   "feed": {
     "see-all": "Alles zien",
-    "title": "Nieuwsfeed"
+    "title": "Nieuwsfeed",
+    "empty": "Geen nieuwsfeed... nog niet!"
   },
   "file": {
     "add-image": "een afbeelding toevoegen",
@@ -814,7 +819,7 @@
     "title": "Titel",
     "url": "url",
     "contact": {
-      "subtitle": "Vul dit snelle formulier in en we nemen spoedig contact met u op",
+      "subtitle": "Vul dit korte formulier in en we nemen spoedig contact met u op",
       "subject": "Onderwerp",
       "subject-placeholder": "Wat wil je met ons delen?",
       "email": "E-mail",
@@ -867,7 +872,8 @@
         "format": "Voer een geldig e-mailadres in"
       },
       "description": "Het beschrijvingsveld is vereist"
-    }
+    },
+    "templates": "Sjablonen"
   },
   "footer": {
     "contact": "Contacteer ons",
@@ -899,7 +905,7 @@
     "contact": "Contactpersoon",
     "edit-group": "Groep bewerken",
     "see-more-people-button": "Zie {users} meer",
-    "see-subgroups": "Zie {count} subgroep ",
+    "see-subgroups": "Zie de subgroep | Zie {count} subgroepen",
     "share": "Delen",
     "the-team": "Het team ({users})",
     "news": "Mededelingen",
@@ -1033,7 +1039,9 @@
     "label-ca": "Catalaans",
     "label-nl": "Nederlands",
     "label-es": "Spaans",
-    "label-et": "Ests"
+    "label-et": "Ests",
+    "auto-translate-on": "Automatisch vertalen aan",
+    "auto-translate-off": "Automatisch vertalen uit"
   },
   "location": {
     "loading": "Locatie laden"
@@ -1253,6 +1261,7 @@
         "tab": "Algemene informatie",
         "form-has-error": "Er ontbreekt of is een ongeldig veld in het formulier.",
         "save-error": "Fout bij opslaan van profiel.",
+        "save-image-error": "Fout bij opslaan van profielfoto.",
         "save-success": "Profiel opgeslagen.",
         "pronouns": {
           "label": "Voornaamwoorden",
@@ -1546,6 +1555,7 @@
     "take-tour": "Neem de rondleiding nu."
   },
   "project": {
+    "infos": "Infos",
     "add-location": "Voeg een locatie toe",
     "add-linked-project": "Een gekoppeld project toevoegen",
     "add-location-point": "Plaatspunt toevoegen",
@@ -1592,7 +1602,7 @@
       "project-category": "Projectcategorie",
       "select-category": "Kies een categorie",
       "purpose-label": "Doel van het project",
-      "purpose-placeholder": "Wat is het doel van uw project?",
+      "project-purpose": "Wat is het doel van uw project?",
       "resize-image": "Herframe",
       "title-label": "Titel toevoegen",
       "title-placeholder": "Wat is de naam van dit project?",
@@ -1606,6 +1616,7 @@
         "max": "Het toepassingsgebied mag niet groter zijn dan 180 tekens",
         "min": "Het doelveld moet ten minste 3 karakters tellen"
       },
+      "project-templates": "Sjabloonnaam",
       "completed-info-to-access-presentation": "Alle informatie op de pagina moet worden ingevuld om toegang te krijgen tot de presentatie."
     },
     "image-header": "Afbeelding",
@@ -2013,15 +2024,31 @@
     "advancement-goal-title": "template voor de titel van het doel van de vooruitgang",
     "advancement-goal-content": "sjabloon voor doelinhoud voor vooruitgang",
     "category": "Sjablooncategorie",
-    "description": "Sjabloon voor beschrijving",
     "language": "Taalsjabloon",
     "info": "Als u gebruikers wilt voorstellen hoe hun project te organiseren in een specifieke categorie, kunt u een sjabloon voor die categorie maken. Wanneer een gebruiker een project in die categorie aanmaakt, wordt het project geïnitialiseerd met de tekst die u in het sjabloon hebt gedefinieerd. Deze tekst is bedoeld als gids voor gebruikers.",
     "no-tag-set": "Er is voorlopig geen tag ingesteld.",
-    "placeholder-purpose": "Projectdoelstelling",
-    "placeholder-title": "Titel Plaatshouder",
+    "project-purpose": "Projectdoelstelling",
+    "project-title": "Titel Plaatshouder",
     "tags": "Sjabloontags",
     "title": "Sjablonen",
-    "tips-category": "Selecteer een categorie waarop uw sjabloon van toepassing is."
+    "tips-category": "Selecteer een categorie waarop uw sjabloon van toepassing is.",
+    "comment": "Sjabloon voor commentaar",
+    "tips-template": "",
+    "template": "Sjabloon",
+    "no-category-set": "Geen categorie ingesteld",
+    "create": "Sjabloon aanmaken",
+    "edit": "Sjabloon editie",
+    "list": "Sjabloonlijst",
+    "add-template": "Sjabloon toevoegen",
+    "description": "Sjabloonbeschrijving",
+    "project-description": "Sjabloon voor projectbeschrijving",
+    "title-project": "Project",
+    "title-blog": "Blog",
+    "title-goal": "Doel",
+    "title-comment": "Opmerking",
+    "no-templates-set": "Geen sjabloon ingesteld.",
+    "placeholder-purpose": "Doel van het project",
+    "placeholder-title": "Titel ter plaatse"
   },
   "tips": {
     "background-color": "Deze kleur wordt achter de tekst weergegeven.",
@@ -2205,6 +2232,10 @@
       "success": "Het project is succesvol aangemaakt",
       "error": "Fout tijdens het aanmaken van het project"
     },
+    "project-header-create": {
+      "success": "De projectafbeelding is succesvol aangemaakt",
+      "error": "Fout tijdens het aanmaken van de projectafbeelding"
+    },
     "project-destroy": {
       "success": "Het project is succesvol verwijderd",
       "error": "Fout tijdens het verwijderen van het project"
@@ -2212,6 +2243,10 @@
     "project-edit": {
       "success": "Het project is succesvol bijgewerkt",
       "error": "Fout tijdens projectupdate"
+    },
+    "project-header-edit": {
+      "success": "De projectafbeelding is succesvol bijgewerkt",
+      "error": "Fout tijdens het bijwerken van de projectafbeelding"
     },
     "project-duplication": {
       "success": "Het project is succesvol gedupliceerd",
@@ -2634,7 +2669,8 @@
       "unauthorized": "Ongeautoriseerd: Toegang wordt geweigerd wegens ongeldige referenties.",
       "unprocessable-entity": "Onverwerkbare entiteit: Kan de inhoud niet verwerken.",
       "bad-gateway": "Onjuiste gateway: De server kwam een tijdelijke fout tegen en kon uw verzoek niet voltooien."
-    }
+    },
+    "error-default": "Er is een fout opgetreden. Probeer opnieuw of contacteer beheerder."
   },
   "people-groups": {
     "browse-tree": "Groepsboom doorbladeren"
@@ -2675,5 +2711,10 @@
   "documents-page": {
     "title": "Documenten van het {platformName} platform",
     "description": "Vind hier alle documenten met betrekking tot het {platformName} platform, waaronder de servicevoorwaarden, het privacybeleid en andere juridische documenten."
+  },
+  "chatbot": {
+    "title": "Chat met AI",
+    "input-placeholder": "Typ hier je bericht...",
+    "intro-message": "Hallo, hoe kan ik je vandaag helpen?"
   }
 }

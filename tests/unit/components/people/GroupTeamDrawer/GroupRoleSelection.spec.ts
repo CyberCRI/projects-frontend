@@ -25,8 +25,7 @@ describe('GroupRoleSelection.vue', () => {
       },
     }
   })
-
-  it('should render GroupRoleSelection component', () => {
+  ;(it('should render GroupRoleSelection component', () => {
     wrapper = lpiMount(GroupRoleSelection, defaultParams)
     expect(wrapper.exists()).toBe(true)
   }),
@@ -34,5 +33,5 @@ describe('GroupRoleSelection.vue', () => {
       wrapper = lpiShallowMount(GroupRoleSelection, defaultParams)
       wrapper.vm.selectRole(members[0], 'owner')
       expect(wrapper.emitted('select-role', members)).toBeTruthy()
-    })
+    }))
 })

@@ -7,9 +7,9 @@ const { t } = useI18n()
 
 onMounted(organizationsStore.getAllOrganizations)
 
-const organisations = computed(() => {
-  return organizationsStore.all.filter((org) => org.is_logo_visible_on_parent_dashboard)
-})
+const organisations = computed(() =>
+  organizationsStore.all.filter((org) => org.is_logo_visible_on_parent_dashboard)
+)
 
 try {
   const runtimeConfig = useRuntimeConfig()
@@ -47,7 +47,7 @@ try {
         :style="{
           backgroundColor: organisation.background_color,
         }"
-        :title="organisation.name"
+        :title="organisation?.$t?.name"
       >
         <div
           class="portal-image"

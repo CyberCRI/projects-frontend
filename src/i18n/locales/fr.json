@@ -279,7 +279,10 @@
       "events": "Événements",
       "instructions": "Instructions",
       "news": "Actualités",
-      "featured-projects": "Projets à la une"
+      "featured-projects": "Projets à la une",
+      "templates": {
+        "add": "Ajouter un modèle"
+      }
     },
     "form": {
       "admin-info": {
@@ -559,7 +562,8 @@
     "year": "année",
     "link-to": "lien vers",
     "other": "autres",
-    "and": "et"
+    "and": "et",
+    "create": "Créer"
   },
   "complete-profile": {
     "bio": {
@@ -614,7 +618,7 @@
     }
   },
   "description": {
-    "default-placeholder": "Veuillez décrire votre projet",
+    "default-project": "Veuillez décrire votre projet",
     "delete": "Etes-vous sûr de vouloir fermer l'éditeur ?",
     "edit-saved": "Les modifications que vous (et vos éventuels co-auteurs) avez apportées ne seront pas enregistrées",
     "edit": "modifier la description (brouillon)",
@@ -794,7 +798,8 @@
   },
   "feed": {
     "see-all": "Tout voir",
-    "title": "Fil d'infos"
+    "title": "Fil d'infos",
+    "empty": "Pas de nouvelles... Pour le moment !"
   },
   "file": {
     "add-image": "ajouter une image",
@@ -867,7 +872,8 @@
         "format": "Veuillez entrer une adresse email valide"
       },
       "description": "Le champ description est obligatoire"
-    }
+    },
+    "templates": "Modèles"
   },
   "footer": {
     "contact": "Contactez-nous",
@@ -1033,7 +1039,9 @@
     "label-ca": "Catalan",
     "label-nl": "Néerlandais",
     "label-es": "Espagnol",
-    "label-et": "Estonien"
+    "label-et": "Estonien",
+    "auto-translate-on": "Traduction automatique activée",
+    "auto-translate-off": "Traduction automatique désactivée"
   },
   "location": {
     "loading": "Chargement des lieux en cours"
@@ -1253,6 +1261,7 @@
         "tab": "Infos Générales",
         "form-has-error": "Il y a des champs manquants ou invalides dans le formulaires.",
         "save-error": "Erreur lors de la sauvegarde du profil.",
+        "save-image-error": "Erreur lors de la sauvegarde de l'image de profil.",
         "save-success": "Le profil a été sauvegardé.",
         "pronouns": {
           "label": "Pronoms",
@@ -1546,6 +1555,7 @@
     "take-tour": "Faire le tour maintenant"
   },
   "project": {
+    "infos": "Infos",
     "add-location": "Ajouter une localisation",
     "add-linked-project": "Ajouter un projet lié",
     "add-location-point": "Ajouter un point de localisation",
@@ -1593,7 +1603,7 @@
       "project-category": "Catégorie du projet",
       "select-category": "Choisir une catégorie",
       "purpose-label": "Objectif du projet",
-      "purpose-placeholder": "Quel est l’objectif de votre projet ?",
+      "project-purpose": "Quel est l’objectif de votre projet ?",
       "resize-image": "Recadrer",
       "title-label": "Ajouter un titre",
       "title-placeholder": "Comment s'appelle ce projet ?",
@@ -1606,7 +1616,8 @@
         "required": "Le champ titre est obligatoire",
         "max": "Le champ mission ne peut pas contenir plus de 180 caractères",
         "min": "Le champ mission doit contenir au minimum 3 caractères"
-      }
+      },
+      "project-templates": "Nom du modèle"
     },
     "image-header": "Image",
     "image-alert": {
@@ -2013,15 +2024,31 @@
     "advancement-goal-title": "template de titre d'objectif d'avancement",
     "advancement-goal-content": "template de contenu d'objectif d'avancement",
     "category": "Catégorie du template",
-    "description": "template de description",
     "language": "Langue du template",
     "info": "Si vous voulez suggérer à vos utilisateurs comment organiser leur projet dans une catégorie en particulier, vous pouvez créer un template pour cette catégorie. Ensuite, lorsque l'utilisateur créera un projet dans cette catégorie, le projet sera initialisé avec le texte que vous aurez défini dans le template. Ce texte est un guide pour l'utilisateur.",
     "no-tag-set": "Aucun tag n'a été défini pour le moment.",
-    "placeholder-purpose": "Objectif du projet",
-    "placeholder-title": "Titre",
+    "project-purpose": "Objectif du projet",
+    "project-title": "Titre",
     "tags": "Tags du template",
     "title": "Templates",
-    "tips-category": "Sélectionnez la catégorie à laquelle va correspondre le template."
+    "tips-category": "Sélectionnez la catégorie à laquelle va correspondre le template.",
+    "comment": "Template pour les commentaires",
+    "tips-template": "",
+    "template": "Template",
+    "no-category-set": "Aucun ensemble de catégories",
+    "create": "Création de templates",
+    "edit": "Édition template",
+    "list": "Liste des templates",
+    "add-template": "Ajouter un template",
+    "description": "Description du template",
+    "project-description": "Template de description du projet",
+    "title-project": "Projet",
+    "title-blog": "Blog",
+    "title-goal": "Objectif",
+    "title-comment": "Commentaire",
+    "no-templates-set": "Pas de template.",
+    "placeholder-purpose": "Objet du projet",
+    "placeholder-title": "Titre Sur place"
   },
   "tips": {
     "background-color": "Cette couleur sera affichée derrière le texte.",
@@ -2205,6 +2232,10 @@
       "success": "Le projet a bien été créé",
       "error": "Erreur lors de la création du projet"
     },
+    "project-header-create": {
+      "success": "L'image du projet a bien été créée",
+      "error": "Erreur lors de la création de l'image du projet"
+    },
     "project-destroy": {
       "success": "Le projet a bien été supprimé",
       "error": "Erreur lors de la suppression du projet"
@@ -2212,6 +2243,10 @@
     "project-edit": {
       "success": "Le projet a bien été mis à jour",
       "error": "Erreur lors de la mise à jour du projet"
+    },
+    "project-header-edit": {
+      "success": "L'image du projet a bien été mise à jour",
+      "error": "Erreur lors de la mise à jour de l'image du projet"
     },
     "project-duplication": {
       "success": "Le projet a bien été dupliqué",
@@ -2449,7 +2484,7 @@
     },
     "delete": {
       "title": "Supprimer un événement ? ",
-      "message": "Voulez-vous supprimmer cet événement ?",
+      "message": "Voulez-vous supprimer cet événement ?",
       "success": "Événement supprimé",
       "error": "Erreur lors de la suppression de l'événement"
     },
@@ -2494,7 +2529,7 @@
     },
     "delete": {
       "title": "Supprimer une actualité ? ",
-      "message": "Voulez-vous supprimmer cette actualité ?",
+      "message": "Voulez-vous supprimer cette actualité ?",
       "success": "Actualité supprimée",
       "error": "Erreur lors de la suppression de l'actualité"
     },
@@ -2544,7 +2579,7 @@
     },
     "delete": {
       "title": "Supprimer une instruction ? ",
-      "message": "Voulez-vous supprimmer cette instruction ?",
+      "message": "Voulez-vous supprimer cette instruction ?",
       "success": "Instruction supprimée",
       "error": "Erreur lors de la suppression de l'instruction"
     },
@@ -2634,7 +2669,8 @@
       "unauthorized": "Non autorisé: Accès refusé en raison d'informations d'identification non valides.",
       "unprocessable-entity": "Unprocessable entity: le serveur n'a pas été en mesure de réaliser les instructions demandées",
       "bad-gateway": "Bad gateway: Le serveur a rencontré une erreur temporaire et n'a pas pu répondre à votre demande."
-    }
+    },
+    "error-default": "Une erreur s'est produite. Veuillez réessayer ou contacter l'administrateur."
   },
   "people-groups": {
     "browse-tree": "Parcourir l'arbre des groupes"
@@ -2675,5 +2711,10 @@
   "documents-page": {
     "title": "Documents de la plateforme {platformName}",
     "description": "Retrouvez ici tous les documents relatifs à la plateforme {platformName}, y compris les conditions d'utilisation, la politique de confidentialité et d'autres documents juridiques."
+  },
+  "chatbot": {
+    "title": "Discuter avec l'IA",
+    "input-placeholder": "Tapez votre message ici...",
+    "intro-message": "Bonjour, comment puis-je vous aider aujourd'hui ?"
   }
 }

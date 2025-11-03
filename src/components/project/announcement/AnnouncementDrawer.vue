@@ -60,7 +60,6 @@
       v-if="confirmModalIsOpen"
       :content="$t('common.confirm-close')"
       :title="$t('description.quit-without-saving-title')"
-      confirm-button-label="common.continue"
       @cancel="confirmModalIsOpen = false"
       @confirm="confirmClose"
     />

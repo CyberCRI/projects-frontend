@@ -279,7 +279,10 @@
       "events": "Veranstaltungen",
       "instructions": "Anweisungen",
       "news": "Nachrichten",
-      "featured-projects": "Empfohlene Projekte"
+      "featured-projects": "Empfohlene Projekte",
+      "templates": {
+        "add": "Vorlage hinzufügen"
+      }
     },
     "form": {
       "admin-info": {
@@ -559,7 +562,8 @@
     "year": "Jahr",
     "link-to": "Link zu",
     "other": "andere",
-    "and": "und"
+    "and": "und",
+    "create": "Erstellung"
   },
   "complete-profile": {
     "bio": {
@@ -615,6 +619,7 @@
   },
   "description": {
     "default-placeholder": "Jetzt beschreiben Sie Ihr Projekt.",
+    "default-project": "Jetzt beschreiben Sie Ihr Projekt.",
     "placeholder": "Sie haben noch keine Beschreibung, denken Sie daran, eine hinzuzufügen!",
     "delete": "Sind Sie sicher, dass Sie den Editor schließen wollen?",
     "edit-saved": "Änderungen, die Sie (und alle Co-Autor) vorgenommen haben, werden nicht gespeichert.",
@@ -794,7 +799,8 @@
   },
   "feed": {
     "see-all": "Alle",
-    "title": "Newsfeed"
+    "title": "Newsfeed",
+    "empty": "Keine Nachrichten... noch nicht!"
   },
   "file": {
     "add-image": "ein Bild hinzufügen",
@@ -867,7 +873,8 @@
         "format": "Bitte geben Sie eine gültige E-Mail-Adresse ein"
       },
       "description": "Das Beschreibungsfeld ist erforderlich"
-    }
+    },
+    "templates": "Vorlagen"
   },
   "footer": {
     "contact": "Kontaktieren Sie uns",
@@ -899,7 +906,7 @@
     "contact": "Kontakt",
     "edit-group": "Gruppe bearbeiten",
     "see-more-people-button": "Siehe {users} mehr",
-    "see-subgroups": "Siehe {count} Untergruppe | Siehe {count} Untergruppen",
+    "see-subgroups": "Siehe {count} Untergruppe | {count} Untergruppen ansehen",
     "share": "Teilen",
     "the-team": "Das Team ({users})",
     "news": "Ankündigungen",
@@ -1033,7 +1040,9 @@
     "label-ca": "Katalanisch",
     "label-nl": "Niederländisch",
     "label-es": "Spanisch",
-    "label-et": "Estnisch"
+    "label-et": "Estnisch",
+    "auto-translate-on": "Automatische Übersetzung ein",
+    "auto-translate-off": "Automatische Übersetzung deaktiviert"
   },
   "location": {
     "loading": "Ladestellen"
@@ -1052,7 +1061,7 @@
     "no-bio": "Sie schreiben Ihre Biographie noch nicht",
     "no-skill": "Sie haben noch keine Fähigkeiten hinzugefügt",
     "page-title": "Mein Profil",
-    "projects-participate": "Projekte, die ich bin",
+    "projects-participate": "Projekte, an denen ich beteiligt bin",
     "no-project-participate": "Sie sind noch nicht Mitglied eines Projekts",
     "projects-reviewing": "Projekte, die ich rezensiere",
     "no-project-reviewing": "Sie sind noch kein Reviewer eines Projekts",
@@ -1253,6 +1262,7 @@
         "tab": "Allgemeine Informationen",
         "form-has-error": "Im Formular gibt es ein fehlendes oder ungültiges Feld.",
         "save-error": "Fehler beim Speichern von Profilen.",
+        "save-image-error": "Fehler beim Speichern des Profilbildes.",
         "save-success": "Profil gespeichert.",
         "pronouns": {
           "label": "Aussprache",
@@ -1546,6 +1556,7 @@
     "take-tour": "Machen Sie die Tour jetzt"
   },
   "project": {
+    "infos": "Infos",
     "add-location": "Standort hinzufügen",
     "add-linked-project": "Ein verknüpftes Projekt hinzufügen",
     "add-location-point": "Einen Ortspunkt hinzufügen",
@@ -1592,7 +1603,7 @@
       "project-category": "Projektkategorie",
       "select-category": "Wählen Sie eine Kategorie",
       "purpose-label": "Ziel des Projekts",
-      "purpose-placeholder": "Was ist das Ziel Ihres Projekts?",
+      "project-purpose": "Was ist das Ziel Ihres Projekts?",
       "resize-image": "Reframe",
       "title-label": "Titel hinzufügen",
       "title-placeholder": "Wie heißt dieses Projekt?",
@@ -1606,6 +1617,7 @@
         "max": "Das Zielfeld darf nicht größer als 180 Zeichen sein",
         "min": "Das Zielfeld muss mindestens 3 Zeichen sein"
       },
+      "project-templates": "Vorname",
       "completed-info-to-access-presentation": "Alle Informationen auf der Seite müssen ausgefüllt werden, um auf die Präsentation zuzugreifen."
     },
     "image-header": "Bild",
@@ -2017,11 +2029,27 @@
     "language": "Sprache Vorlage",
     "info": "Wenn Sie den Benutzern vorschlagen möchten, wie sie ihr Projekt in einer bestimmten Kategorie organisieren, können Sie eine Vorlage für diese Kategorie erstellen. Dann, wenn ein Benutzer ein Projekt in dieser Kategorie erstellen wird das Projekt mit dem Text, den Sie in der Vorlage definiert. Dieser Text ist als Leitfaden für Nutzer gedacht.",
     "no-tag-set": "Es wurde jetzt kein Tag gesetzt.",
-    "placeholder-purpose": "Projektziel",
-    "placeholder-title": "Titel Platzhalter",
+    "project-purpose": "Projektziel",
+    "project-title": "Titel Platzhalter",
     "tags": "Vorlage-Tags",
     "title": "Vorlagen",
-    "tips-category": "Wählen Sie eine Kategorie aus, auf die Ihre Vorlage Anwendung findet."
+    "tips-category": "Wählen Sie eine Kategorie aus, auf die Ihre Vorlage Anwendung findet.",
+    "comment": "Vorlage für Kommentare",
+    "tips-template": "",
+    "template": "Vorlage",
+    "no-category-set": "Keine Kategorie Set",
+    "create": "Erstellung von Dokumenten",
+    "edit": "Ausgabe von Dokumenten",
+    "list": "Vorlagenliste",
+    "add-template": "Vorlage hinzufügen",
+    "project-description": "Vorlage für Projektbeschreibung",
+    "title-project": "Projekt",
+    "title-blog": "Blog",
+    "title-goal": "Ziel",
+    "title-comment": "Anmerkung",
+    "no-templates-set": "Kein Template-Set.",
+    "placeholder-purpose": "Ziel des Projekts",
+    "placeholder-title": "Titel Vor Ort"
   },
   "tips": {
     "background-color": "Diese Farbe wird hinter dem Text angezeigt.",
@@ -2205,6 +2233,10 @@
       "success": "Das Projekt wurde erfolgreich erstellt",
       "error": "Fehler bei der Projekterstellung"
     },
+    "project-header-create": {
+      "success": "Das Projektbild wurde erfolgreich erstellt",
+      "error": "Fehler bei der Erstellung des Projektbildes"
+    },
     "project-destroy": {
       "success": "Das Projekt wurde erfolgreich gelöscht",
       "error": "Fehler bei der Projektlöschung"
@@ -2212,6 +2244,10 @@
     "project-edit": {
       "success": "Das Projekt wurde erfolgreich aktualisiert",
       "error": "Fehler beim Projektupdate"
+    },
+    "project-header-edit": {
+      "success": "Das Projektbild wurde erfolgreich aktualisiert",
+      "error": "Fehler bei der Aktualisierung des Projektbildes"
     },
     "project-duplication": {
       "success": "Das Projekt wurde erfolgreich dupliziert",
@@ -2532,7 +2568,7 @@
       "read-more": "Weiterlesen"
     },
     "page": {
-      "others": "Sonstige Nachrichten"
+      "others": "Weitere Nachrichten"
     },
     "drawer": {
       "title": "Nachrichten bearbeiten"
@@ -2634,7 +2670,8 @@
       "unauthorized": "Unbefugt: Der Zugang wird durch ungültige Anmeldeinformationen verweigert.",
       "unprocessable-entity": "Unverarbeitbare Einheit: Nicht verarbeitbar, um die enthaltenen Anweisungen zu bearbeiten.",
       "bad-gateway": "Bad Gateway: Der Server stieß auf einen temporären Fehler und konnte Ihre Anfrage nicht abschließen."
-    }
+    },
+    "error-default": "Ein Fehler trat auf. Bitte versuchen Sie es erneut oder kontaktieren Sie den Administrator."
   },
   "people-groups": {
     "browse-tree": "Durchsuchen Sie den Stammbaum"
@@ -2675,5 +2712,10 @@
   "documents-page": {
     "title": "Dokumente der {platformName} Plattform",
     "description": "Finden Sie hier alle Dokumente zur {platformName} Plattform, einschließlich der Nutzungsbedingungen, der Datenschutzrichtlinie und anderer rechtlicher Dokumente."
+  },
+  "chatbot": {
+    "title": "Chat mit KI",
+    "input-placeholder": "Geben Sie hier Ihre Nachricht ein...",
+    "intro-message": "Hallo, wie kann ich Ihnen heute helfen?"
   }
 }

@@ -4,13 +4,16 @@ import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { getOrganizationByCode } from '@/api/organizations.service'
 
+const { translateInstructions } = useAutoTranslate()
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
 const { canCreateInstruction, canEditInstruction, canDeleteInstruction } = usePermissions()
 const router = useRouter()
 const { t } = useI18n()
 
-const allInstructions = useState(() => [])
+const _allInstructions = useState(() => [])
+const allInstructions = translateInstructions(_allInstructions)
+
 const loading = ref(false)
 const editedInstruction = ref(null)
 const instructionToDelete = ref(null)
@@ -26,7 +29,7 @@ const loadInstructions = async () => {
       ? {}
       : { to_date: new Date().toISOString() }
   loading.value = true
-  allInstructions.value = (
+  _allInstructions.value = (
     await getAllInstructions(organizationsStore.current?.code, {
       ordering: '-publication_date',
       ...dateLimit,
@@ -113,8 +116,6 @@ try {
     v-if="instructionToDelete"
     :content="$t('instructions.delete.message')"
     :title="$t('instructions.delete.title')"
-    cancel-button-label="common.cancel"
-    confirm-button-label="common.delete"
     :asyncing="isDeletingInstruction"
     @cancel="instructionToDelete = null"
     @confirm="doDeleteInstruction"

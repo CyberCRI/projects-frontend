@@ -176,6 +176,11 @@ export default {
   },
 
   computed: {
+    // isSelf() {
+    //   if (!this.user) return true
+    //   const connectedUser = this.usersStore.userFromApi
+    //   return connectedUser && this.user?.id === connectedUser?.id
+    // },
     optionsMap() {
       return {
         hide: {
@@ -224,12 +229,12 @@ export default {
   },
   methods: {
     redirectToProfile() {
-      if (this.isSelf) this.$router.push({ name: 'ProfileBio' })
-      else
-        this.$router.push({
-          name: 'ProfileBioOtherUser',
-          params: { userId: this.user.id },
-        })
+      // if (this.isSelf) this.$router.push({ name: 'ProfileBio' })
+      // else
+      //   this.$router.push({
+      //     name: 'ProfileBioOther',
+      //     params: { userId: this.user.id },
+      //   })
     },
 
     async save() {

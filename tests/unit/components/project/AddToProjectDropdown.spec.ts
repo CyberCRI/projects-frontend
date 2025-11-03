@@ -34,7 +34,7 @@ describe('AddToProjectDropdown', () => {
     } as any)
 
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.current = OrganizationOutputFactory.generate()
+    organizationsStore._current = OrganizationOutputFactory.generate()
     const projectsStore = useProjectsStore(pinia)
     projectsStore.project = {
       ...ProjectOutputFactory.generate(),

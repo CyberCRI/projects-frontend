@@ -63,37 +63,41 @@ export default {
     },
   },
 
-  data() {
+  setup(props) {
+    const style = ref({})
+    const profileDrawer = ref({
+      isOpened: false,
+      user_id: null,
+    })
+    const pagination = ref({
+      currentPage: 1,
+      total: 1,
+      previous: undefined,
+      next: undefined,
+      first: undefined,
+      last: undefined,
+    })
+    const membersRequest = ref(props.membersInitialRequest)
+
+    const isPaginationLoading = ref(false)
+    const rawMembers = computed(() => membersRequest.value?.results || [])
+    const { translateUsers } = useAutoTranslate()
+    const members = translateUsers(rawMembers)
+    const membersCount = computed(() => membersRequest.value?.count || 0)
+
+    const isLoading = computed(() => props.isMembersLoading || isPaginationLoading.value)
     return {
-      style: {},
-      profileDrawer: {
-        isOpened: false,
-        user_id: null,
-      },
-      pagination: {
-        currentPage: 1,
-        total: 1,
-        previous: undefined,
-        next: undefined,
-        first: undefined,
-        last: undefined,
-      },
-      membersRequest: this.membersInitialRequest,
-      isPaginationLoading: false,
+      style,
+      profileDrawer,
+      pagination,
+      membersRequest,
+      isPaginationLoading,
+      members,
+      membersCount,
+      isLoading,
     }
   },
 
-  computed: {
-    members() {
-      return this.membersRequest.results || []
-    },
-    membersCount() {
-      return this.membersRequest.count || 0
-    },
-    isLoading() {
-      return this.isMembersLoading || this.isPaginationLoading
-    },
-  },
   watch: {
     membersRequest: {
       handler: function (response) {

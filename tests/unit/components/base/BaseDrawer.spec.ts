@@ -34,7 +34,7 @@ describe('BaseDrawer', () => {
   })
 
   it('should show BaseDrawer component when it is opened', () => {
-    wrapper = lpiShallowMount(BaseDrawer, defaultParams)
+    wrapper = lpiMount(BaseDrawer, defaultParams)
     const drawerIsShown = wrapper.find('.drawer')
 
     expect(drawerIsShown.exists()).toBeTruthy()
@@ -42,14 +42,14 @@ describe('BaseDrawer', () => {
 
   it('should hide BaseDrawer component when it is closed', () => {
     defaultParams.props.isOpened = false
-    wrapper = lpiShallowMount(BaseDrawer, defaultParams)
+    wrapper = lpiMount(BaseDrawer, defaultParams)
     const drawerIsShown = wrapper.find('.drawer--opened')
 
     expect(drawerIsShown.exists()).toBeFalsy()
   })
 
   it('should emit close event when clicking close', async () => {
-    wrapper = lpiShallowMount(BaseDrawer, defaultParams)
+    wrapper = lpiMount(BaseDrawer, defaultParams)
     const closeButton = wrapper.find('.header__close')
 
     expect(closeButton.exists()).toBeTruthy()
@@ -60,7 +60,7 @@ describe('BaseDrawer', () => {
   })
 
   it('should emit close event when clicking outside', async () => {
-    wrapper = lpiShallowMount(BaseDrawer, defaultParams)
+    wrapper = lpiMount(BaseDrawer, defaultParams)
     const outside = wrapper.find('.background')
 
     expect(outside.exists()).toBeTruthy()

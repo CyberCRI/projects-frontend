@@ -1,28 +1,56 @@
 <template>
   <form>
     <!--  Category -->
-    <div v-if="isAddMode && categories && categories.length" class="category-ctn">
-      <label class="label">{{ $t('project.form.project-category') }} *</label>
-      <ProjectCategoriesDropdown
-        ref="categoryDropdown"
-        class="category-select"
-        data-test="select-project-category"
-        :dropdown-label="selectedCategoryLabel"
-      >
-        <template #default="{ category }">
-          <ProjectCategoriesDropdownElementButton
-            :category="category"
-            @choose-category="setCategory(category.id)"
-          />
-        </template>
-      </ProjectCategoriesDropdown>
-    </div>
+    <template v-if="isAddMode && categories && categories.length">
+      <div class="category-ctn">
+        <label class="label">{{ $t('project.form.project-category') }} *</label>
+        <ProjectCategoriesDropdown
+          ref="categoryDropdown"
+          class="category-select"
+          data-test="select-project-category"
+          :dropdown-label="selectedCategoryLabel"
+        >
+          <template #default="{ category }">
+            <ProjectCategoriesDropdownElementButton
+              :category="category"
+              @choose-category="setCategory(category.id)"
+            />
+          </template>
+        </ProjectCategoriesDropdown>
+      </div>
+      <template v-if="selectedCategory?.templates?.length > 1">
+        <div class="category-ctn">
+          <label class="label">{{ $t('project.form.project-templates') }} *</label>
+          <LpiDropDown
+            v-model="selectedTemplate"
+            :options="selectedCategory.templates"
+            data-test="select-project-template"
+            :default-label="$t('project.form.project-templates')"
+          >
+            <template #default="{ option, selected }">
+              <LpiDropDownElementButton
+                :option="option"
+                :selected="selected"
+                @click="setTemplate(option)"
+              />
+            </template>
+          </LpiDropDown>
+        </div>
+      </template>
+    </template>
 
     <!--  Title -->
-    <FieldDisabler :disabled="otherFieldDisabled">
+    <FieldDisabler
+      :label="
+        !form.category
+          ? $t('project.create.choose-category-first')
+          : $t('project.create.choose-template-first')
+      "
+      :disabled="otherFieldDisabled"
+    >
       <TextInput
         v-model="form.title"
-        :placeholder="titlePlaceholder"
+        :placeholder="$t('project.form.title-placeholder')"
         :unfocusable="otherFieldDisabled"
         space-below-label="large-space"
         data-test="title-input"
@@ -38,10 +66,18 @@
     </FieldDisabler>
 
     <!-- Purpose -->
-    <FieldDisabler :disabled="otherFieldDisabled" class="purpose-input">
+    <FieldDisabler
+      :label="
+        !form.category
+          ? $t('project.create.choose-category-first')
+          : $t('project.create.choose-template-first')
+      "
+      :disabled="otherFieldDisabled"
+      class="purpose-input"
+    >
       <TextInput
         v-model="form.purpose"
-        :placeholder="purposePlaceholder"
+        :placeholder="$t('project.form.project-purpose')"
         :unfocusable="otherFieldDisabled"
         data-test="purpose-input"
         space-below-label="large-space"
@@ -53,7 +89,16 @@
     </FieldDisabler>
 
     <!-- Team -->
-    <FieldDisabler v-if="isAddMode" :disabled="otherFieldDisabled" class="team">
+    <FieldDisabler
+      v-if="isAddMode"
+      :label="
+        !form.category
+          ? $t('project.create.choose-category-first')
+          : $t('project.create.choose-template-first')
+      "
+      :disabled="otherFieldDisabled"
+      class="team"
+    >
       <TeamSection
         :selected-category="selectedCategory"
         :unfocusable="otherFieldDisabled"
@@ -62,7 +107,15 @@
     </FieldDisabler>
 
     <!-- Tag -->
-    <FieldDisabler :disabled="otherFieldDisabled" class="tags">
+    <FieldDisabler
+      :label="
+        !form.category
+          ? $t('project.create.choose-category-first')
+          : $t('project.create.choose-template-first')
+      "
+      :disabled="otherFieldDisabled"
+      class="tags"
+    >
       <label>
         {{ $filters.capitalize($t('tag.title')) }}
         <span
@@ -81,7 +134,15 @@
     <div class="spacer" />
 
     <!-- Picture -->
-    <FieldDisabler :disabled="otherFieldDisabled" class="img-ctn">
+    <FieldDisabler
+      :label="
+        !form.category
+          ? $t('project.create.choose-category-first')
+          : $t('project.create.choose-template-first')
+      "
+      :disabled="otherFieldDisabled"
+      class="img-ctn"
+    >
       <label>{{ $filters.capitalize($t('project.image-header')) }}</label>
       <ImageEditor
         v-model:image-sizes="form.imageSizes"
@@ -94,7 +155,16 @@
     </FieldDisabler>
 
     <!-- Language -->
-    <FieldDisabler :disabled="otherFieldDisabled" class="language">
+    <FieldDisabler
+      v-if="!organizationsStore.isAutoTranslate"
+      :label="
+        !form.category
+          ? $t('project.create.choose-category-first')
+          : $t('project.create.choose-template-first')
+      "
+      :disabled="otherFieldDisabled"
+      class="language"
+    >
       <label>{{ $filters.capitalize($t('project.language')) }}</label>
       <LpiSelect
         v-model="form.language"
@@ -139,11 +209,16 @@ import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { useRuntimeConfig } from '#imports'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import LpiDropDown from '@/components/base/form/LpiDropDown.vue'
+import LpiDropDownElementButton from '@/components/base/form/LpiDropDownElementButton.vue'
+import { getTemplate } from '@/api/templates.service'
 
 export default {
   name: 'ProjectForm',
 
   components: {
+    LpiDropDown,
+    LpiDropDownElementButton,
     TextInput,
     TeamSection,
     LpiSelect,
@@ -181,9 +256,11 @@ export default {
   setup() {
     const organizationsStore = useOrganizationsStore()
     const runtimeConfig = useRuntimeConfig()
+    const { translateTemplate } = useAutoTranslate()
     return {
       organizationsStore,
       runtimeConfig,
+      translateTemplate,
     }
   },
 
@@ -196,8 +273,10 @@ export default {
 
     return {
       loading: false,
+      templates: [],
       displayedImage: '',
       selectedCategory: undefined,
+      selectedTemplate: null,
       form: JSON.parse(JSON.stringify(this.modelValue)),
       tags: [...this.modelValue.tags],
       tagSearchIsOpened: false,
@@ -209,9 +288,7 @@ export default {
 
   computed: {
     selectedCategoryLabel() {
-      return this.selectedCategory
-        ? this.selectedCategory.name
-        : this.$t('project.form.select-category')
+      return this.selectedCategory?.name || this.$t('project.form.select-category')
     },
 
     languageOptions() {
@@ -224,39 +301,34 @@ export default {
       })
     },
 
-    titlePlaceholder() {
-      if (
-        this.selectedCategory &&
-        this.selectedCategory.template &&
-        this.selectedCategory.template.title_placeholder
-      )
-        return this.selectedCategory.template.title_placeholder
-      return this.$t('project.form.title-placeholder')
-    },
-
-    purposePlaceholder() {
-      if (
-        this.selectedCategory &&
-        this.selectedCategory.template &&
-        this.selectedCategory.template.goal_placeholder
-      )
-        return this.selectedCategory.template.goal_placeholder
-      return this.$t('project.form.purpose-placeholder')
-    },
-
     otherFieldDisabled() {
       return (
-        this.isAddMode && !!this.categories && this.categories.length > 0 && !this.form.category
+        this.isAddMode && !!this.categories && this.categories.length > 0 && !this.form.template
       )
     },
   },
 
   watch: {
     'form.category': async function (categoryId, oldVal) {
-      if (categoryId && categoryId !== oldVal)
+      if (categoryId && categoryId !== oldVal) {
         this.selectedCategory = this.categories.find((category) => category.id === categoryId)
-      // set default tags according to selected category
-      this.tags = [...this.selectedCategory.tags]
+        // set default tags according to selected category
+        if (this.selectedCategory) this.tags = [...this.selectedCategory.tags]
+        if (this.selectedCategory.templates.length == 1) {
+          await this.setTemplate(this.selectedCategory.templates[0])
+        } else {
+          await this.setTemplate(null)
+        }
+      }
+    },
+
+    categories: function (neo, old) {
+      const categoryId = this.form.category
+      if (neo && neo !== old && categoryId) {
+        this.selectedCategory = neo.find((category) => category.id === categoryId)
+        // set default tags according to selected category
+        if (this.selectedCategory) this.tags = [...this.selectedCategory.tags]
+      }
     },
 
     form: {
@@ -287,6 +359,20 @@ export default {
       this.form.category = categoryId
       this.$refs.categoryDropdown?.close()
     },
+
+    async setTemplate(template) {
+      if (template === null) {
+        this.selectedTemplate = template
+        this.form.template = null
+        return
+      }
+      const { data } = await getTemplate(this.organizationsStore.current.code, template.id)
+      const trans = this.translateTemplate(data.value)
+      this.form.title = trans.value.$t.project_title
+      this.form.purpose = trans.value.$t.project_purpose
+      this.form.template = template.id
+      this.selectedTemplate = template
+    },
     closeTagSearchTags() {
       this.tagSearchIsOpened = false
     },
@@ -309,7 +395,10 @@ export default {
       this.form.team.member_groups = []
 
       team.forEach((user) => {
-        this.form.team[user.role].push(user.user.id)
+        // check for not duplicates user
+        if (!this.form.team[user.role].includes(user.user.id)) {
+          this.form.team[user.role].push(user.user.id)
+        }
       })
     },
 
@@ -328,6 +417,10 @@ export default {
 
   .category-ctn {
     margin-bottom: $space-xl;
+
+    & > * + * {
+      margin-top: 0.5rem;
+    }
   }
 
   .category-select {

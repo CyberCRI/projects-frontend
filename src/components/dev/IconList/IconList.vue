@@ -108,6 +108,7 @@ export default {
         'Tune',
         'Upload',
         'Users',
+        'CheckBoxChecked',
         'CheckBoxOutline',
         'CheckBoxBlankOutline',
         'CropFree',
@@ -124,6 +125,8 @@ export default {
         'MenuUnfoldLine',
         'Archive',
         'VipCrownLine',
+        'SparklingFill',
+        'InfoCardLine',
       ],
     }
   },

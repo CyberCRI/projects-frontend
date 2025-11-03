@@ -50,7 +50,7 @@ describe('auth.service', () => {
   })
   beforeEach(() => {
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.current = { code: '123' } as unknown as OrganizationOutput
+    organizationsStore._current = { code: '123' } as unknown as OrganizationOutput
   })
   afterAll(() => {
     process.env = OLD_ENV // Restore old environment

@@ -40,7 +40,25 @@ export default function useAdminPagesRoutes() {
         {
           path: 'templates',
           name: 'templates',
-          component: () => import('../pages/AdminPortalPageV2/Tabs/TemplatesTab.vue'),
+          redirect: { name: 'templatesList' },
+          component: () => import('../pages/AdminPortalPageV2/Tabs/EmptyTab.vue'),
+          children: [
+            {
+              path: 'list',
+              name: 'templatesList',
+              component: () => import('../pages/AdminPortalPageV2/Tabs/TemplatesTab.vue'),
+            },
+            {
+              path: 'edit/:id',
+              name: 'templatesEdit',
+              component: () => import('../pages/AdminPortalPageV2/Tabs/TemplatesEditTab.vue'),
+            },
+            {
+              path: 'create',
+              name: 'templatesCreate',
+              component: () => import('../pages/AdminPortalPageV2/Tabs/TemplatesCreateTab.vue'),
+            },
+          ],
         },
         {
           path: 'accounts',
@@ -51,7 +69,7 @@ export default function useAdminPagesRoutes() {
           path: 'links',
           name: 'links',
           redirect: { name: 'linksList' },
-          component: () => import('../pages/AdminPortalPageV2/Tabs/LinksTab.vue'),
+          component: () => import('../pages/AdminPortalPageV2/Tabs/EmptyTab.vue'),
           children: [
             {
               path: 'list',

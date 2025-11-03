@@ -4,15 +4,19 @@ import useAPI from '@/composables/useAPI.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { getOrganizationByCode } from '@/api/organizations.service'
 
+const { translateNewsfeed } = useAutoTranslate()
+
 const organizationsStore = useOrganizationsStore()
 const { t } = useI18n()
 
 const isLoading = useState(() => false)
 const request = useState(() => ({ results: [] }))
 
-const newsfeed = computed(() => {
+const _newsfeed = computed(() => {
   return request.value ? request.value.results : []
 })
+
+const newsfeed = translateNewsfeed(_newsfeed)
 
 const pagination = computed(() => {
   if (!request.value) return { total: 0 }
@@ -71,8 +75,11 @@ try {
       <div v-if="isLoading">
         <NewsListSkeleton :limit="15" />
       </div>
-      <div v-else class="news-container">
+      <div v-else-if="newsfeed.length" class="news-container">
         <NewsFeed :newsfeed="newsfeed" @reload-newsfeed="loadNewsfeed" />
+      </div>
+      <div v-else>
+        <EmptyNewsFeed />
       </div>
     </div>
 

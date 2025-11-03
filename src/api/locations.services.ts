@@ -8,7 +8,7 @@ export async function getProjectLocations(projectId) {
 }
 
 export async function getProjectLocation(body) {
-  return await useAPI(`project/${body.projectId}/location/${body.locationId}`, {}) //.data.value
+  return await useAPI(`project/${body.projectId}/location/${body.locationId}/`, {}) //.data.value
 }
 
 export async function getLocations(params, next) {

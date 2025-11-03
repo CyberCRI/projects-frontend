@@ -21,13 +21,12 @@ describe('ProfileCompletedModal.vue', () => {
 
   beforeEach(() => {
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.current = OrganizationOutputFactory.generate()
+    organizationsStore._current = OrganizationOutputFactory.generate()
     defaultParams = {
       i18n,
     }
   })
-
-  it('should render ProfileCompletedModal component', () => {
+  ;(it('should render ProfileCompletedModal component', () => {
     wrapper = lpiMount(ProfileCompletedModal, defaultParams)
     expect(wrapper.exists()).toBe(true)
   }),
@@ -44,5 +43,5 @@ describe('ProfileCompletedModal.vue', () => {
 
       vm.takeTour()
       expect(wrapper.emitted('take-tour')).toBeTruthy()
-    })
+    }))
 })

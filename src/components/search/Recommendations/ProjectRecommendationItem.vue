@@ -9,7 +9,7 @@
     >
       <CroppedApiImage
         ref="projectImg"
-        :alt="`${recommendation.title} image`"
+        :alt="`${recommendation?.$t?.title} image`"
         class="img-container"
         :picture-data="recommendation?.header_image"
         picture-size="small"
@@ -17,7 +17,7 @@
       />
       <div class="text-container">
         <span class="project-title">
-          {{ recommendation.title }}
+          {{ recommendation?.$t?.title }}
         </span>
         <span v-if="recommendation.isFeatured" class="is-featured">
           {{ $t('recommendations.is-featured') }}

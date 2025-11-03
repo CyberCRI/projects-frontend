@@ -1,7 +1,6 @@
 import { alias } from './alias'
 import fs from 'node:fs'
 import path from 'node:path'
-
 import * as dotenv from 'dotenv'
 
 // Determine the environment file
@@ -41,8 +40,8 @@ try {
 // console.log(ALL_LOCALES)
 
 export default defineNuxtConfig({
-  // ssr: false,
-  compatibilityDate: '2024-11-01',
+  ssr: true,
+  // compatibilityDate: '2024-11-01',
   devtools: {
     enabled: import.meta.dev,
 
@@ -58,6 +57,16 @@ export default defineNuxtConfig({
     '@nuxt/test-utils/module',
     'nuxt-svgo',
   ],
+
+  // disable caching
+  routeRules: {
+    '*': {
+      cache: false,
+      headers: {
+        'Cache-Control': 'no-store',
+      },
+    },
+  },
   plugins: [
     '~/filters/index.ts',
     '~/directives/index.ts',
@@ -76,6 +85,13 @@ export default defineNuxtConfig({
       pathPrefix: false,
     },
   ],
+  vue: {
+    compilerOptions: {
+      // treat all tags with a dash as custom elements
+      // isCustomElement: (tag) => tag.includes('-')
+      isCustomElement: (tag) => ['deep-chat'].includes(tag),
+    },
+  },
   vite: {
     resolve: {
       alias,
@@ -113,6 +129,10 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     appGeocodingApiKey: '',
+    appOpenaiApiKey: '',
+    appOpenaiApiPromptId: '',
+    appOpenaiApiPromptVersion: '',
+    appOpenaiApiVectorStoreId: '',
     public: {
       appVersion: '',
       appApiOrgCode: '',
@@ -141,11 +161,11 @@ export default defineNuxtConfig({
       appDisconnectionGraceDuration: 0,
       allLocales: ALL_LOCALES.map((l) => l.code),
       appGeocodingApiUrl: '',
+      appChatbotEnabled: 0,
     },
   },
   i18n: {
     locales: ALL_LOCALES,
-    lazy: true,
     defaultLocale: 'en',
     restructureDir: './src/i18n',
     // detectBrowserLanguage: {

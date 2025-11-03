@@ -19,7 +19,7 @@ fullName: '{{ join "-" (list .Values.instanceName .Values.resourceName) }}'
 config:
   nonSensitive:
     NUXT_PUBLIC_APP_API_URL: '{{ printf "https://api.projects.%s" .Values.domain }}'
-    NUXT_PUBLIC_APP_DOC: '{{ printf "https://docs.projects.%s" .Values.domain }}'
+    NUXT_PUBLIC_APP_DOC: https://gentle-calculator-517.notion.site/ebd/1de766fb378c80b3aec3feb2d1a59f28
     NUXT_PUBLIC_APP_WSS_HOST: '{{ printf "wss://hocus-pocus.%s" .Values.domain }}'
     NUXT_PUBLIC_APP_META_PORTAL_URL: '{{ printf "https://projects.%s" .Values.domain }}'
     NUXT_PUBLIC_APP_MIXPANEL_API_URL: '{{ printf "https://mixpanel-proxy.%s" .Values.domain }}'
@@ -35,6 +35,10 @@ config:
     NUXT_PUBLIC_APP_I18N_LOCALE: '{{ .Values.defaultLanguage }}'
     NUXT_PUBLIC_APP_API_DEFAULT_VERSION: /v1
     NUXT_PUBLIC_APP_GEOCODING_API_URL: https://maps.googleapis.com/maps/api/geocode/json
+    NUXT_APP_OPENAI_API_PROMPT_ID: ''
+    NUXT_APP_OPENAI_API_PROMPT_VERSION: ''
+    NUXT_APP_OPENAI_API_VECTOR_STORE_ID: ''
+    NUXT_PUBLIC_APP_CHATBOT_ENABLED: ''
 e2eEnv:
   nonSensitive:
     USER_ADMIN_EMAIL: testautomatatiquedministrateur1@outlook.fr

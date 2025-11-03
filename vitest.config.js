@@ -1,7 +1,4 @@
 import { defineVitestConfig } from '@nuxt/test-utils/config'
-
-import vue from '@vitejs/plugin-vue'
-import path from 'path'
 import { alias } from './alias'
 
 // https://vitejs.dev/config/
