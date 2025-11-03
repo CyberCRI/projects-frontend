@@ -28,7 +28,10 @@ export default function useProfilePagesRoutes() {
     {
       path: 'publications',
       name: 'ProfilePublications',
-      component: () => import('../pages/UserProfilePageV2/Tabs/ProfilePublicationsTab.vue'),
+      component: () => import('../pages/UserProfilePageV2/Tabs/ProfileDocumentsTab.vue'),
+      props: {
+        docType: 'publications',
+      },
     },
   ]
 

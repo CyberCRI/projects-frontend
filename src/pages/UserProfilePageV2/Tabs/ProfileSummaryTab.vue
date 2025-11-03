@@ -22,23 +22,28 @@
     <div class="lists">
       <!-- publications -->
       <UserProjectsSearch
-        v-if="user.researcher?.publications_count"
+        v-if="documentsCount.publications"
         :limit="publicationsLimit"
         :user="user"
       >
         <template #default>
           <div class="project-list-header">
             <h4 class="title">
-              {{ $t('me.publications') }}
-              <span>({{ user.researcher.publications_count }})</span>
+              {{ $t('me.publication') }}
+              <span>({{ documentsCount.publications }})</span>
             </h4>
             <SeeMoreArrow
-              v-if="user.researcher.publications_count > publicationsLimit"
+              v-if="documentsCount.publications > publicationsLimit"
               data-test="see-more"
               :to="{ name: 'ProfilePublicationsOther' }"
             />
           </div>
-          <UserPublicationsList preview :limit="publicationsLimit" :user="user" />
+          <ResearcherDocumentsList
+            doc-type="publications"
+            preview
+            :limit="publicationsLimit"
+            :user="user"
+          />
         </template>
       </UserProjectsSearch>
 
@@ -127,6 +132,7 @@ import UserDescriptions from '@/components/people/UserDescriptions.vue'
 import SkillSummary from '@/components/people/skill/SkillSummary.vue'
 import useUsersStore from '@/stores/useUsers.ts'
 import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
+import ResearcherDocumentsList from '@/components/people/UserProfile/ResearcherDocumentsList.vue'
 
 export default {
   name: 'ProfileSummaryTab',
@@ -137,6 +143,7 @@ export default {
     UserDescriptions,
     SkillSummary,
     SeeMoreArrow,
+    ResearcherDocumentsList,
   },
 
   inject: {
@@ -168,6 +175,9 @@ export default {
   },
 
   computed: {
+    documentsCount() {
+      return this.user.researcher?.documents ?? {}
+    },
     isCurrentUser() {
       return this.usersStore.id === this.user.id
     },

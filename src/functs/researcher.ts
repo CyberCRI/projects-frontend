@@ -78,3 +78,23 @@ export const researcherHarvesterToUrl = (author: Researcher): string => {
   // remove undefined/null
   return urls.filter((v) => v)[0]
 }
+
+/**
+ * identifier to docTypeUrl
+ *
+ * @function
+ * @name documentTypeHarverToUrl
+ * @kind variable
+ * @param {String} docType
+ * @param {Identifier} identifier
+ * @returns {string}
+ * @exports
+ */
+export const documentTypeHarverToUrl = (docType: string, identifier: Identifier) => {
+  switch (docType) {
+    case 'publications':
+      return publicationHarvesterToUrl(identifier)
+    default:
+      throw new Error(`docType ${docType} is not already enabled`)
+  }
+}

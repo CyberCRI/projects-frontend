@@ -280,7 +280,7 @@ export default {
             user: this.user,
           },
           // dispay publications only if user have publications
-          condition: this.user?.researcher?.publications_count,
+          condition: this.user?.researcher?.documents?.publications,
           icon: 'Pen',
         },
         {
@@ -411,7 +411,7 @@ export default {
           },
           props,
           // dispay publications only if user have publications
-          condition: this.user?.researcher?.publications_count,
+          condition: this.user?.researcher?.documents?.publications,
           icon: 'Pen',
           actionIcon: 'Pen',
         },

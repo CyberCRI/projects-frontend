@@ -1,59 +1,58 @@
 <template>
-  <div v-if="publications" class="profile-publications-container">
+  <div v-if="documents" class="profile-documents-container">
     <div class="profile-info-container" :class="{ preview: preview }">
-      <div class="public-year-container">
+      <div class="doc-year-container">
         <h5>
           {{ t('profile.research-output-year') }}
-          {{ filters.year ? `${filters.year} (${publications.count})` : '' }}
+          {{ filters.year ? `${filters.year} (${documents.count})` : '' }}
         </h5>
-        <div class="public-year-info">
-          <span class="public-year-info-minyear">{{ yearsInfo.minYear }}</span>
-          <div class="publi-year">
+        <div class="doc-year-info">
+          <span class="doc-year-info-minyear">{{ yearsInfo.minYear }}</span>
+          <div>
             <component
               :is="preview ? 'button' : 'div'"
               v-for="obj in yearsInfo.bar"
               :key="obj.year"
-              class="publi-year-bar"
+              class="doc-year-bar"
               :class="{
                 disabled: filters.year && filters.year !== obj.year,
                 selected: filters.year === obj.year,
                 preview: preview,
               }"
-              :title="`${t('profile.publications')} ${obj.year} (${obj.count})`"
+              :title="`${t('profile.documents')} ${obj.year} (${obj.count})`"
               :style="{ '--bar-count': obj.height }"
               @click="onFilter('year', obj.year)"
             >
               <span>{{ obj.year }}</span>
             </component>
           </div>
-          <span class="public-year-info-maxyear">{{ yearsInfo.maxYear }}</span>
+          <span class="doc-year-info-maxyear">{{ yearsInfo.maxYear }}</span>
         </div>
       </div>
-      <div class="public-numbers-container">
+      <div class="doc-numbers-container">
         <component
           :is="preview ? 'div' : 'button'"
-          v-for="obj in publicationsTypeInfos"
+          v-for="obj in DocumentTypeInfos"
           :key="obj.name"
-          class="publi-numbers"
+          class="doc-numbers"
           :class="{
             disabled:
-              filters.publication_type !== undefined &&
-              filters.publication_type !== (obj.name ?? ''),
-            selected: filters.publication_type === (obj.name ?? ''),
+              filters.document_type !== undefined && filters.document_type !== (obj.name ?? ''),
+            selected: filters.document_type === (obj.name ?? ''),
             preview: preview,
           }"
-          @click="onFilter('publication_type', obj.name ?? '')"
+          @click="onFilter('document_type', obj.name ?? '')"
         >
           <span>{{ obj.count }}</span>
           <span>{{ obj.name ?? t('common.other') }}</span>
         </component>
       </div>
-      <div v-if="!preview" class="public-roles-container">
+      <div v-if="!preview" class="doc-roles-container">
         <component
           :is="preview ? 'div' : 'button'"
-          v-for="[role, count] in publicationsRoleInfos"
+          v-for="[role, count] in documentsRoleInfos"
           :key="role"
-          class="publi-roles"
+          class="doc-roles"
           @click="onFilter('roles', role)"
         >
           <BadgeItem
@@ -67,13 +66,13 @@
         </component>
       </div>
     </div>
-    <article v-for="publi in publications.results" :key="publi.id" class="profile-publications">
+    <article v-for="publi in documents.results" :key="publi.id" class="profile-documents">
       <h2>{{ publi.title }}</h2>
       <div>
         <span v-for="(author, idx) in publi.contributors" :key="author.id">
           <NuxtLink
             v-if="author.user?.slug"
-            class="profile-publication-contributor"
+            class="profile-document-contributor"
             :to="{ name: 'ProfileOtherUser', params: { userId: author.user.slug } }"
           >
             <strong>{{ author.display_name }}</strong>
@@ -83,35 +82,35 @@
             :href="researcherHarvesterToUrl(author)"
             rel="noreferer,noopener"
             target="_blank"
-            class="profile-publication-contributor"
+            class="profile-document-contributor"
           >
             {{ author.display_name }}
           </a>
-          <span v-else class="profile-publication-contributor">
+          <span v-else class="profile-document-contributor">
             {{ author.display_name }}
           </span>
           <!-- add comas if users is upper than 2, and add "and" beetwen last contributors -->
           <span v-if="idx + 2 < publi.contributors.length">,</span>
           <span v-else-if="idx + 2 === publi.contributors.length">
-            {{ ` ${$t('common.and')} ` }}
+            {{ ` ${t('common.and')} ` }}
           </span>
         </span>
       </div>
-      <p class="profile-publication-description" :class="{ preview: preview }">
+      <p class="profile-document-description" :class="{ preview: preview }">
         {{ publi.description }}
       </p>
       <span>
         {{ publi.publication_date?.toLocaleDateString(locale, { year: 'numeric', month: 'long' }) }}
       </span>
-      <div class="public-sources-container">
+      <div class="doc-sources-container">
         <a
           v-for="identifier in publi.identifiers"
           :key="identifier.id"
-          :href="publicationHarvesterToUrl(identifier)"
+          :href="documentTypeHarverToUrl(docType, identifier)"
           :title="`${t('common.link-to')} ${identifier.harvester}`"
           target="_blank"
           rel="referer,noopener"
-          class="public-sources"
+          class="doc-sources"
         >
           <IconHarvester :harvester="identifier.harvester" height="1.3rem" />
         </a>
@@ -123,23 +122,23 @@
       :current="pagination.currentPage"
       :pagination="pagination"
       :total="pagination.total"
-      @update-pagination="getPublications"
+      @update-pagination="getDocuments"
     />
   </div>
-  <div v-else-if="loading" class="publications-loading">{{ t('common.loading') }}...</div>
-  <div v-else class="publications-empty">
-    {{ t('you.no-publications') }}
+  <div v-else-if="loading" class="documents-loading">{{ t('common.loading') }}...</div>
+  <div v-else class="documents-empty">
+    {{ t('you.no-documents') }}
   </div>
 </template>
 
 <script setup>
 import IconHarvester from '@/components/base/media/IconHarvester.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import { sanitizeResearcherPublication } from '@/api/sanitizes/researcher'
-import { publicationHarvesterToUrl, researcherHarvesterToUrl } from '@/functs/researcher.ts'
+import { sanitizeResearcherDocument } from '@/api/sanitizes/researcher'
+import { documentTypeHarverToUrl, researcherHarvesterToUrl } from '@/functs/researcher.ts'
 
 defineOptions({
-  name: 'UserPublicationsList',
+  name: 'ResearcherDocumentsList',
 })
 
 const props = defineProps({
@@ -155,31 +154,35 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  docType: {
+    type: String,
+    required: true,
+  },
 })
 const { t, locale } = useNuxtI18n()
 
-const publications = ref(null)
+const documents = ref(null)
 const pagination = computed(() => {
-  if (publications.value === null) {
+  if (documents.value === null) {
     return { total: 0 }
   }
   return {
-    currentPage: publications.value.current_page,
-    total: publications.value.total_page,
-    previous: publications.value.previous,
-    next: publications.value.next,
-    first: publications.value.first,
-    last: publications.value.last,
+    currentPage: documents.value.current_page,
+    total: documents.value.total_page,
+    previous: documents.value.previous,
+    next: documents.value.next,
+    first: documents.value.first,
+    last: documents.value.last,
   }
 })
 const loading = ref(false)
-const publicationsAnalytics = ref({
-  publication_types: [],
+const documentsAnalytics = ref({
+  document_types: [],
   years: [],
 })
 
 // filter backend query
-// default role "author" to only show author publication
+// default role "author" to only show author form documents
 const filters = reactive({
   roles: 'author',
 })
@@ -194,12 +197,12 @@ const onFilter = (key, value) => {
   }
 }
 
-const getPublications = (url) => {
+const getDocuments = (url) => {
   loading.value = true
   useAPI(url)
-    .then(sanitizeResearcherPublication)
+    .then(sanitizeResearcherDocument)
     .then((data) => {
-      publications.value = data
+      documents.value = data
     })
     .finally(() => {
       loading.value = false
@@ -210,30 +213,30 @@ const sanitizeFilters = () => {
   const publicationDate =
     filters.year !== undefined ? `&publication_date__year=${filters.year}` : ''
   const pubType =
-    filters.publication_type !== undefined ? `&publication_type=${filters.publication_type}` : ''
+    filters.document_type !== undefined ? `&document_type=${filters.document_type}` : ''
   const roles = filters.roles !== undefined ? `&roles=${filters.roles}` : ''
   return `${publicationDate}${pubType}${roles}`
 }
 
-const defaultURL = `crisalid/researcher/${props.user.researcher.id}/publications?offset=0&limit=${props.limit || 10}`
+const defaultURL = `crisalid/researcher/${props.user.researcher.id}/${props.docType}/?offset=0&limit=${props.limit || 10}`
 watch(filters, () => {
-  getPublications(`${defaultURL}${sanitizeFilters()}`)
-  getPublicationsInfo()
+  getDocuments(`${defaultURL}${sanitizeFilters()}`)
+  getDocumentsInfo()
 })
 
-const getPublicationsInfo = () => {
+const getDocumentsInfo = () => {
   const limit = props.preview ? `limit=5` : ''
   useAPI(
-    `crisalid/researcher/${props.user.researcher.id}/publications/analytics?${limit}${sanitizeFilters()}`
+    `crisalid/researcher/${props.user.researcher.id}/${props.docType}/analytics/?${limit}${sanitizeFilters()}`
   ).then((data) => {
-    publicationsAnalytics.value = data
+    documentsAnalytics.value = data
   })
 }
 
 // when components is mounted, getch
 onMounted(() => {
-  getPublications(`${defaultURL}${sanitizeFilters()}`)
-  getPublicationsInfo()
+  getDocuments(`${defaultURL}${sanitizeFilters()}`)
+  getDocumentsInfo()
 })
 
 // this create years graph
@@ -243,7 +246,7 @@ const yearsInfo = computed(() => {
     maxYear: null,
     bar: [],
   }
-  publicationsAnalytics.value.years.forEach((o) => {
+  documentsAnalytics.value.years.forEach((o) => {
     if (info.minYear == null || info.minYear > o.year) {
       info.minYear = o.year
     }
@@ -266,15 +269,15 @@ const yearsInfo = computed(() => {
   return info
 })
 
-const publicationsTypeInfos = computed(() => {
+const DocumentTypeInfos = computed(() => {
   if (props.limit) {
-    return publicationsAnalytics.value.publication_types.slice(0, props.limit)
+    return documentsAnalytics.value.document_types.slice(0, props.limit)
   }
-  return publicationsAnalytics.value.publication_types
+  return documentsAnalytics.value.document_types
 })
 
-const publicationsRoleInfos = computed(() => {
-  const roles = Object.entries(publicationsAnalytics.value.roles)
+const documentsRoleInfos = computed(() => {
+  const roles = Object.entries(documentsAnalytics.value.roles)
     .sort(([, c]) => c)
     .reverse()
   if (props.limit) {
@@ -285,13 +288,13 @@ const publicationsRoleInfos = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-$profile-publications: 1rem;
+$profile-documents: 1rem;
 
-.profile-publications-container {
+.profile-documents-container {
   display: flex;
   flex-direction: column;
   justify-items: start;
-  gap: $profile-publications;
+  gap: $profile-documents;
 
   & > *:not(:last-child)::after {
     content: '';
@@ -300,34 +303,34 @@ $profile-publications: 1rem;
     height: 2px;
     opacity: 0.7;
     background-color: #d4d4d4;
-    transform: translateY(calc($profile-publications / 2));
+    transform: translateY(calc($profile-documents / 2));
   }
 }
 
-.profile-publications {
+.profile-documents {
   border-radius: 5px;
   padding: 0.2rem;
   transition: background-color 0.25s ease;
 }
 
-.profile-publication-contributor {
+.profile-document-contributor {
   font-weight: bold;
   font-size: 0.9rem;
   padding-left: 0.2rem;
 }
 
 // if is a link, add correct color and underline
-a.profile-publication-contributor {
+a.profile-document-contributor {
   color: $primary-dark;
   text-decoration: underline;
 }
 
-span.profile-publication-contributor {
+span.profile-document-contributor {
   font-style: italic;
   font-weight: normal;
 }
 
-.profile-publication-description {
+.profile-document-description {
   font-weight: 400;
   opacity: 0.75;
   display: -webkit-box;
@@ -335,7 +338,7 @@ span.profile-publication-contributor {
   overflow: hidden;
 }
 
-.profile-publication-description.preview {
+.profile-document-description.preview {
   -webkit-line-clamp: 2;
 }
 
@@ -351,7 +354,7 @@ span.profile-publication-contributor {
   align-items: center;
   gap: 1rem;
 
-  .public-year-container > h5 {
+  .doc-year-container > h5 {
     text-align: center;
   }
 }
@@ -363,13 +366,13 @@ span.profile-publication-contributor {
     align-items: center;
     gap: 1rem;
 
-    .public-year-container > h5 {
+    .doc-year-container > h5 {
       text-align: center;
     }
   }
 }
 
-.public-year-container {
+.doc-year-container {
   display: inline-flex;
   justify-content: start;
   align-items: baseline;
@@ -383,21 +386,21 @@ span.profile-publication-contributor {
   }
 }
 
-.public-year {
+.doc-year {
   display: flex;
   justify-content: end;
   gap: 2rem;
 }
 
-.public-year-info-minyear {
+.doc-year-info-minyear {
   align-self: baseline;
 }
 
-.public-year-info-maxyear {
+.doc-year-info-maxyear {
   align-self: flex-end;
 }
 
-.publi-year-bar {
+.doc-year-bar {
   border: none;
   margin: 0 1px;
 
@@ -448,7 +451,7 @@ span.profile-publication-contributor {
   }
 }
 
-.public-year-info {
+.doc-year-info {
   display: flex;
   width: 100%;
   gap: 1rem;
@@ -456,13 +459,13 @@ span.profile-publication-contributor {
   font-weight: bold;
 }
 
-.public-numbers-container {
+.doc-numbers-container {
   display: inline-flex;
   justify-content: end;
   gap: 2rem;
 }
 
-.publi-numbers {
+.doc-numbers {
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -501,14 +504,14 @@ span.profile-publication-contributor {
   }
 }
 
-.public-sources-container {
+.doc-sources-container {
   display: flex;
   flex-wrap: wrap;
   gap: 0.2rem;
   margin-top: 0.5rem;
 }
 
-.public-sources {
+.doc-sources {
   border: 1px gray;
   border-radius: 30px;
   padding: 0.2rem 0.4rem;
@@ -524,8 +527,8 @@ span.profile-publication-contributor {
   margin: auto;
 }
 
-.publications-loading,
-.publications-empty {
+.documents-loading,
+.documents-empty {
   width: 100%;
   text-align: center;
   opacity: 0.5;
@@ -533,7 +536,7 @@ span.profile-publication-contributor {
   font-weight: bold;
 }
 
-.publi-roles {
+.doc-roles {
   margin: 0;
   border: 0;
   background-color: unset;
