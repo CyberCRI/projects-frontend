@@ -26,6 +26,8 @@ const useOrganizationsStore = defineStore('organizations', () => {
   const all = translateOrganizations(_all)
   const current = translateOrganization(_current)
 
+  const isAutoTranslate = computed(() => !!current.value?.auto_translate_content)
+
   const isDefault = computed((): boolean => {
     return current.value?.code === 'DEFAULT'
   })
@@ -98,6 +100,7 @@ const useOrganizationsStore = defineStore('organizations', () => {
     current,
     // getters
     isDefault,
+    isAutoTranslate,
     languages,
     allClassifications,
     // actions

@@ -156,6 +156,7 @@
 
     <!-- Language -->
     <FieldDisabler
+      v-if="!organizationsStore.isAutoTranslate"
       :label="
         !form.category
           ? $t('project.create.choose-category-first')
