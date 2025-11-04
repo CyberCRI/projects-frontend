@@ -47,7 +47,7 @@
           <span>{{ obj.name ?? t('common.other') }}</span>
         </component>
       </div>
-      <div v-if="!preview" class="doc-roles-container">
+      <div v-if="!preview && documentsRoleInfos.length" class="doc-roles-container">
         <component
           :is="preview ? 'div' : 'button'"
           v-for="[role, count] in documentsRoleInfos"
@@ -66,10 +66,11 @@
         </component>
       </div>
     </div>
-    <article v-for="publi in documents.results" :key="publi.id" class="profile-documents">
-      <h2>{{ publi.title }}</h2>
+    <article v-for="doc in documents.results" :key="doc.id" class="profile-documents">
+      <h2>{{ doc.title }}</h2>
       <div>
-        <span v-for="(author, idx) in publi.contributors" :key="author.id">
+        <span v-for="(author, idx) in doc.contributors" :key="author.id">
+          <!-- if author.user isa projectsUser, create a nuxtlink to go to the user -->
           <NuxtLink
             v-if="author.user?.slug"
             class="profile-document-contributor"
@@ -77,6 +78,7 @@
           >
             <strong>{{ author.display_name }}</strong>
           </NuxtLink>
+          <!-- else , ceate a link to the harvester (hal,idref..ect) -->
           <a
             v-else-if="researcherHarvesterToUrl(author)"
             :href="researcherHarvesterToUrl(author)"
@@ -90,21 +92,21 @@
             {{ author.display_name }}
           </span>
           <!-- add comas if users is upper than 2, and add "and" beetwen last contributors -->
-          <span v-if="idx + 2 < publi.contributors.length">,</span>
-          <span v-else-if="idx + 2 === publi.contributors.length">
+          <span v-if="idx + 2 < doc.contributors.length">,</span>
+          <span v-else-if="idx + 2 === doc.contributors.length">
             {{ ` ${t('common.and')} ` }}
           </span>
         </span>
       </div>
       <p class="profile-document-description" :class="{ preview: preview }">
-        {{ publi.description }}
+        {{ doc.description }}
       </p>
       <span>
-        {{ publi.publication_date?.toLocaleDateString(locale, { year: 'numeric', month: 'long' }) }}
+        {{ doc.publication_date?.toLocaleDateString(locale, { year: 'numeric', month: 'long' }) }}
       </span>
       <div class="doc-sources-container">
         <a
-          v-for="identifier in publi.identifiers"
+          v-for="identifier in doc.identifiers"
           :key="identifier.id"
           :href="documentTypeHarverToUrl(docType, identifier)"
           :title="`${t('common.link-to')} ${identifier.harvester}`"
@@ -132,6 +134,7 @@
 </template>
 
 <script setup>
+// TODO(remi): need to use useFetch to optimize request, and create paginated composable
 import IconHarvester from '@/components/base/media/IconHarvester.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { sanitizeResearcherDocument } from '@/api/sanitizes/researcher'
