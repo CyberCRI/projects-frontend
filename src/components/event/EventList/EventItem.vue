@@ -18,7 +18,7 @@
       <div class="event-information">
         <HtmlLimiter
           v-if="isLimitedDescription"
-          :html="event.content"
+          :html="event?.$t?.content"
           :striped-tags="['table']"
           @computed="layoutComputed"
           @computing="computeLayout"
