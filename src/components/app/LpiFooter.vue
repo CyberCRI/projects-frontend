@@ -289,10 +289,12 @@ footer {
     display: flex;
     align-items: center;
     font-size: $font-size-s;
+    overflow-x: hidden; // fix mobile layout break on commit hashes
 
     > div {
       margin-right: $space-m;
       text-align: right;
+      overflow-x: hidden; // fix mobile layout break on commit hashes
     }
 
     .lpi-logo {
