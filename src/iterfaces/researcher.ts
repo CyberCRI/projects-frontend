@@ -23,10 +23,13 @@ export type Document = {
 
 export type ResearcherDocumentAnalytics = {
   document_types: {
-    [key: string]: number
+    [name: string]: number
   }
   years: Array<{
     year: number
     total: number
   }>
+  roles: {
+    [name: string]: number
+  }
 }

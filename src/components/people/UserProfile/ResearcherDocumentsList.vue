@@ -32,19 +32,18 @@
       <div class="doc-numbers-container">
         <component
           :is="preview ? 'div' : 'button'"
-          v-for="obj in DocumentTypeInfos"
-          :key="obj.name"
+          v-for="[name, count] in DocumentTypeInfos"
+          :key="name"
           class="doc-numbers"
           :class="{
-            disabled:
-              filters.document_type !== undefined && filters.document_type !== (obj.name ?? ''),
-            selected: filters.document_type === (obj.name ?? ''),
+            disabled: filters.document_type !== undefined && filters.document_type !== (name ?? ''),
+            selected: filters.document_type === (name ?? ''),
             preview: preview,
           }"
-          @click="onFilter('document_type', obj.name ?? '')"
+          @click="onFilter('document_type', name ?? '')"
         >
-          <span>{{ obj.count }}</span>
-          <span>{{ obj.name ?? t('common.other') }}</span>
+          <span>{{ count }}</span>
+          <span>{{ name ?? t('common.other') }}</span>
         </component>
       </div>
       <div v-if="!preview && documentsRoleInfos.length" class="doc-roles-container">
@@ -183,7 +182,7 @@ const pagination = computed(() => {
 })
 const loading = ref(false)
 const documentsAnalytics = ref({
-  document_types: [],
+  document_types: {},
   years: [],
 })
 
@@ -216,8 +215,7 @@ const getDocuments = (url) => {
 }
 
 const sanitizeFilters = () => {
-  const publicationDate =
-    filters.year !== undefined ? `&publication_date__year=${filters.year}` : ''
+  const publicationDate = filters.year !== undefined ? `&year=${filters.year}` : ''
   const pubType =
     filters.document_type !== undefined ? `&document_type=${filters.document_type}` : ''
   const roles = filters.roles !== undefined ? `&roles=${filters.roles}` : ''
@@ -246,13 +244,18 @@ onMounted(() => {
 })
 
 // this create years graph
-const yearsInfo = computed(() => sanitizeResearcherDocumentAnalyticsYears(documentsAnalytics.value))
+const yearsInfo = computed(() =>
+  sanitizeResearcherDocumentAnalyticsYears(documentsAnalytics.value.years)
+)
 
 const DocumentTypeInfos = computed(() => {
+  const documentTypes = Object.entries(documentsAnalytics.value.document_types)
+    .toSorted((a, b) => a[1] - b[1])
+    .reverse()
   if (props.limit) {
-    return documentsAnalytics.value.document_types.slice(0, props.limit)
+    return documentTypes.slice(0, props.limit)
   }
-  return documentsAnalytics.value.document_types
+  return documentTypes
 })
 
 const documentsRoleInfos = computed(() => {
