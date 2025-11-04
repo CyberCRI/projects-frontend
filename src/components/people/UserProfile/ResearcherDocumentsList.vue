@@ -184,6 +184,7 @@ const loading = ref(false)
 const documentsAnalytics = ref({
   document_types: {},
   years: [],
+  roles: {},
 })
 
 // filter backend query
