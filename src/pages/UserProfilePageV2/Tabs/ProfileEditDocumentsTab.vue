@@ -7,7 +7,7 @@
     </div>
     <div class="publications-warning">
       <SvgWarning class="inline-block" />
-      {{ t('profile.edit.publications.no-editable') }}
+      {{ notEditable }}
     </div>
   </div>
 </template>
@@ -15,14 +15,21 @@
 <script setup>
 /*
     publications editions not form projects
-    need to add iframe to show sovisioplus
+    need to add iframe to show sovisuplus
 */
 import SvgWarning from '@/assets/svg/warning.svg'
 
 defineOptions({
-  name: 'ProfileEditPublicationsTab',
+  name: 'ProfileEditDocumentsTab',
 })
 const { t } = useNuxtI18n()
+
+const props = defineProps({
+  docType: String,
+})
+
+const title = computed(() => t(`me.${props.docType}`))
+const notEditable = computed(() => t(`profile.edit.${props.docType}.no-editable`))
 </script>
 
 <style lang="scss">

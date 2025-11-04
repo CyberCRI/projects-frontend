@@ -33,9 +33,9 @@ const props = defineProps({
   },
 })
 
-const title = t(`me.${props.docType}`)
-const documentEmpty = t(`you.no-${props.docType}`)
-const documentsCount = props.user.researcher?.documents?.[props.docType] ?? 0
+const title = computed(() => t(`me.${props.docType}`))
+const documentEmpty = computed(() => t(`you.no-${props.docType}`))
+const documentsCount = computed(() => props.user.researcher?.documents?.[props.docType] ?? 0)
 </script>
 
 <style lang="scss" scoped>
