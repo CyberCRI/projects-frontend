@@ -137,7 +137,10 @@
 // TODO(remi): need to use useFetch to optimize request, and create paginated composable
 import IconHarvester from '@/components/base/media/IconHarvester.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import { sanitizeResearcherDocument } from '@/api/sanitizes/researcher'
+import {
+  sanitizeResearcherDocument,
+  sanitizeResearcherDocumentAnalyticsYears,
+} from '@/api/sanitizes/researcher'
 import { documentTypeHarverToUrl, researcherHarvesterToUrl } from '@/functs/researcher.ts'
 
 defineOptions({
@@ -243,34 +246,7 @@ onMounted(() => {
 })
 
 // this create years graph
-const yearsInfo = computed(() => {
-  const info = {
-    minYear: null,
-    maxYear: null,
-    bar: [],
-  }
-  documentsAnalytics.value.years.forEach((o) => {
-    if (info.minYear == null || info.minYear > o.year) {
-      info.minYear = o.year
-    }
-    if (info.maxYear == null || info.maxYear < o.year) {
-      info.maxYear = o.year
-    }
-    info.bar.push({
-      count: o.total,
-      year: o.year,
-    })
-  })
-
-  const maxCount = Math.max(...info.bar.map((el) => el.count))
-  info.bar.forEach((obj) => {
-    obj.height = (obj.count / maxCount) * 100
-  })
-
-  info.bar = info.bar.reverse()
-
-  return info
-})
+const yearsInfo = computed(() => sanitizeResearcherDocumentAnalyticsYears(documentsAnalytics.value))
 
 const DocumentTypeInfos = computed(() => {
   if (props.limit) {

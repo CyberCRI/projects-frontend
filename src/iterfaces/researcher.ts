@@ -22,6 +22,11 @@ export type Document = {
 }
 
 export type ResearcherDocumentAnalytics = {
-  year: string | Date | number
-  count: number
+  document_types: {
+    [key: string]: number
+  }
+  years: Array<{
+    year: number
+    total: number
+  }>
 }

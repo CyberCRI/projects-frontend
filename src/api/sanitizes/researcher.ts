@@ -1,4 +1,4 @@
-import type { Document } from '@/iterfaces/researcher.ts'
+import type { Document, ResearcherDocumentAnalytics } from '@/iterfaces/researcher.ts'
 
 /**
  * sanitize results from publication
@@ -19,4 +19,57 @@ export const sanitizeResearcherDocument = (data): Document => {
     }
   })
   return data
+}
+
+type AnalyticsYears = {
+  minYear: number
+  maxYear: number
+  // sorted by year
+  bar: Array<{
+    count: number
+    year: number
+    height: number
+  }>
+}
+
+/**
+ * sanitize document year info for bar/chart
+ *
+ * @function
+ * @name sanitizeResearcherDocumentAnalyticsYears
+ * @kind variable
+ * @param {{ year: number total: number }[]} data
+ * @returns {AnalyticsYears}
+ * @exports
+ */
+export const sanitizeResearcherDocumentAnalyticsYears = (
+  data: ResearcherDocumentAnalytics['years']
+): AnalyticsYears => {
+  const info: AnalyticsYears = {
+    minYear: null,
+    maxYear: null,
+    bar: [],
+  }
+  data.forEach((o) => {
+    if (info.minYear == null || info.minYear > o.year) {
+      info.minYear = o.year
+    }
+    if (info.maxYear == null || info.maxYear < o.year) {
+      info.maxYear = o.year
+    }
+    info.bar.push({
+      count: o.total,
+      year: o.year,
+      height: 0,
+    })
+  })
+
+  const maxCount = Math.max(...info.bar.map((el) => el.count))
+  info.bar.forEach((obj) => {
+    obj.height = (obj.count / maxCount) * 100
+  })
+
+  info.bar = info.bar.reverse()
+
+  return info
 }
