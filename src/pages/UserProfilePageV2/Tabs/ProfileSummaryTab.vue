@@ -29,7 +29,7 @@
         <template #default>
           <div class="project-list-header">
             <h4 class="title">
-              {{ $t('me.publication') }}
+              {{ $t('me.publications') }}
               <span>({{ documentsCount.publications }})</span>
             </h4>
             <SeeMoreArrow
