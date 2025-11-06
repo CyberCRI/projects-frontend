@@ -56,10 +56,11 @@
       </a>
     </div>
     <SeeMoreArrow
+      v-if="similar && document.similars > 0"
       data-test="see-more"
       class="no-padding"
       :label="`${document.similars} ${t(`profile.${docType}-similars`)}`"
-      :to="{ name: 'ResearcherPublicationSimilars', params: { documentId: document.id } }"
+      @click.prevent="emit('similar', document)"
     />
   </article>
 </template>
@@ -71,8 +72,12 @@ import { Document } from '@/iterfaces/researcher'
 defineOptions({ name: 'ResearcherDocument' })
 
 const { t, locale } = useNuxtI18n()
+const emit = defineEmits(['similar'])
 
-defineProps<{ document: Document; docType: string; preview?: boolean }>()
+withDefaults(
+  defineProps<{ document: Document; docType: string; preview?: boolean; similar?: boolean }>(),
+  { similar: true, preview: false }
+)
 </script>
 
 <style lang="scss" scoped>

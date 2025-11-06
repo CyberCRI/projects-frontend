@@ -1545,7 +1545,9 @@
     "mentorship-asking": "Demana a mentor",
     "mentorship-offering": "Estàs oferint mentors",
     "publications": "Publicacions",
-    "research-output-year": "Any de sortida de recerca"
+    "research-output-year": "Any de sortida de recerca",
+    "publications-similars": "similar a Publicacions",
+    "publications-empty": "Sense Publicacions."
   },
   "profile-completed-modal": {
     "notice-congratulation": "Ara estàs preparat per utilitzar la plataforma de projectes.",

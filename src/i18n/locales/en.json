@@ -624,7 +624,8 @@
     "edit-saved": "Any changes you (and any co-authors) made will not be saved.",
     "edit": "edit description (draft)",
     "add": "Add description",
-    "quit-without-saving-title": "Quit without saving?"
+    "quit-without-saving-title": "Quit without saving?",
+    "default-placeholder": "Now describe your project."
   },
   "discover": {
     "page-title": "Discover",
@@ -1546,7 +1547,8 @@
     "mentorship-offering": "You are offering mentorship",
     "publications": "Publications",
     "research-output-year": "Research output year",
-    "publications-similars": "Publications similars"
+    "publications-similars": "Publications similars",
+    "publications-empty": "No Publications."
   },
   "profile-completed-modal": {
     "notice-congratulation": "You are now ready to use the projects platform.",
@@ -1618,7 +1620,8 @@
         "max": "The purpose field may not be greater than 180 characters",
         "min": "The purpose field must be at least 3 characters"
       },
-      "completed-info-to-access-presentation": "All information on the page must be completed to access the presentation."
+      "completed-info-to-access-presentation": "All information on the page must be completed to access the presentation.",
+      "purpose-placeholder": "What is the purpose of your project?"
     },
     "image-header": "Image",
     "image-alert": {

@@ -25,7 +25,10 @@ defineOptions({
 const { t } = useNuxtI18n()
 
 const props = defineProps({
-  docType: String,
+  docType: {
+    type: String,
+    required: true,
+  },
 })
 
 const title = computed(() => t(`me.${props.docType}`))

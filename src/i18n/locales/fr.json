@@ -1545,7 +1545,9 @@
     "mentorship-asking": "Vous demandez un mentorat",
     "mentorship-offering": "Vous proposez un mentorat",
     "publications": "Publications",
-    "research-output-year": "Année de production de la recherche"
+    "research-output-year": "Année de production de la recherche",
+    "publications-similars": "Publications similaires",
+    "publications-empty": "Pas de publications."
   },
   "profile-completed-modal": {
     "notice-congratulation": "Vous êtes maintenant prêt à utiliser la plateforme Projects.",

@@ -1545,7 +1545,9 @@
     "mentorship-asking": "Sa küsid mentorlust",
     "mentorship-offering": "Sa pakud mentorlust",
     "publications": "Trükised",
-    "research-output-year": "Teadustöö väljundaasta"
+    "research-output-year": "Teadustöö väljundaasta",
+    "publications-similars": "Väljaannete sarnased väljaanded",
+    "publications-empty": "Ei mingeid väljaandeid."
   },
   "profile-completed-modal": {
     "notice-congratulation": "Nüüd olete valmis kasutama projekti platvormi.",

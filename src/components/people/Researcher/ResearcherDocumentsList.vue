@@ -1,105 +1,109 @@
 <template>
-  <div v-if="documents" class="profile-documents-container">
-    <div class="profile-info-container" :class="{ preview: preview }">
-      <div class="doc-year-container">
-        <h5>
-          {{ t('profile.research-output-year') }}
-          {{ filters.year ? `${filters.year} (${documents.count})` : '' }}
-        </h5>
-        <div class="doc-year-info">
-          <span class="doc-year-info-minyear">{{ yearsInfo.minYear }}</span>
-          <div>
-            <component
-              :is="preview ? 'button' : 'div'"
-              v-for="obj in yearsInfo.bar"
-              :key="obj.year"
-              class="doc-year-bar"
-              :class="{
-                disabled: filters.year && filters.year !== obj.year,
-                selected: filters.year === obj.year,
-                preview: preview,
-              }"
-              :title="`${t(`profile.${docType}`)} ${obj.year} (${obj.count})`"
-              :style="{ '--bar-count': obj.height }"
-              @click="onFilter('year', obj.year)"
-            >
-              <span>{{ obj.year }}</span>
-            </component>
+  <FetchLoader sttus="status" :with-data="!!documents">
+    <div v-if="documents?.results?.length" class="profile-documents-container">
+      <div class="profile-info-container" :class="{ preview: preview }">
+        <div class="doc-year-container">
+          <h5>
+            {{ t('profile.research-output-year') }}
+            {{ filters.year ? `${filters.year} (${documents.count})` : '' }}
+          </h5>
+          <div class="doc-year-info">
+            <span class="doc-year-info-minyear">{{ yearsInfo.minYear }}</span>
+            <div>
+              <component
+                :is="preview ? 'button' : 'div'"
+                v-for="obj in yearsInfo.bar"
+                :key="obj.year"
+                class="doc-year-bar"
+                :class="{
+                  disabled: filters.year && filters.year !== obj.year,
+                  selected: filters.year === obj.year,
+                  preview: preview,
+                }"
+                :title="`${t(`profile.${docType}`)} ${obj.year} (${obj.count})`"
+                :style="{ '--bar-count': obj.height }"
+                @click="onFilter('year', obj.year)"
+              >
+                <span>{{ obj.year }}</span>
+              </component>
+            </div>
+            <span class="doc-year-info-maxyear">{{ yearsInfo.maxYear }}</span>
           </div>
-          <span class="doc-year-info-maxyear">{{ yearsInfo.maxYear }}</span>
         </div>
-      </div>
-      <div class="doc-numbers-container">
-        <component
-          :is="preview ? 'div' : 'button'"
-          v-for="[name, count] in DocumentTypeInfos"
-          :key="name"
-          class="doc-numbers"
-          :class="{
-            disabled: filters.document_type !== undefined && filters.document_type !== (name ?? ''),
-            selected: filters.document_type === (name ?? ''),
-            preview: preview,
-          }"
-          @click="onFilter('document_type', name ?? '')"
-        >
-          <span>{{ count }}</span>
-          <span>
-            {{
-              (name && localT(`document_types.${sanitizeTranslateKeys(name)}`)) ?? t('common.other')
-            }}
-          </span>
-        </component>
-      </div>
-      <div v-if="!preview && documentsRoleInfos.length" class="doc-roles-container">
-        <component
-          :is="preview ? 'div' : 'button'"
-          v-for="[role, count] in documentsRoleInfos"
-          :key="role"
-          class="doc-roles"
-          @click="onFilter('roles', role)"
-        >
-          <BadgeItem
+        <div class="doc-numbers-container">
+          <component
+            :is="preview ? 'div' : 'button'"
+            v-for="[name, count] in DocumentTypeInfos"
+            :key="name"
+            class="doc-numbers"
             :class="{
-              disabled: filters.roles !== null && filters.roles !== role,
-              selected: filters.roles === role,
+              disabled:
+                filters.document_type !== undefined && filters.document_type !== (name ?? ''),
+              selected: filters.document_type === (name ?? ''),
               preview: preview,
             }"
-            :label="`${localT(`relators.${sanitizeTranslateKeys(role)}`)} ${count}`"
-          />
-        </component>
+            @click="onFilter('document_type', name ?? '')"
+          >
+            <span>{{ count }}</span>
+            <span>
+              {{
+                (name && localT(`document_types.${sanitizeTranslateKeys(name)}`)) ??
+                t('common.other')
+              }}
+            </span>
+          </component>
+        </div>
+        <div v-if="!preview && documentsRoleInfos.length" class="doc-roles-container">
+          <component
+            :is="preview ? 'div' : 'button'"
+            v-for="[role, count] in documentsRoleInfos"
+            :key="role"
+            class="doc-roles"
+            @click="onFilter('roles', role)"
+          >
+            <BadgeItem
+              :class="{
+                disabled: filters.roles !== null && filters.roles !== role,
+                selected: filters.roles === role,
+                preview: preview,
+              }"
+              :label="`${localT(`relators.${sanitizeTranslateKeys(role)}`)} ${count}`"
+            />
+          </component>
+        </div>
       </div>
+      <div class="documents-list">
+        <ResearcherDocument
+          v-for="doc in documents.results"
+          :key="doc.id"
+          :document="doc"
+          :doc-type="docType"
+          :preview="preview"
+          @similar="documentSelected = doc"
+        />
+      </div>
+      <PaginationButtons2 v-if="props.preview === false" class="m-auto" :pagination="pagination" />
     </div>
-    <ResearcherDocument
-      v-for="doc in documents.results"
-      :key="doc.id"
-      :document="doc"
+    <div v-else class="documents-empty">
+      {{ t(`profile.${docType}-empty`) }}
+    </div>
+    <ResearcherDocumentDrawer
+      :document="documentSelected"
       :doc-type="docType"
-      :preview="preview"
+      :user="user"
+      @close="documentSelected = null"
     />
-    <PaginationButtons
-      v-if="props.preview === false"
-      class="m-auto"
-      :current="pagination.currentPage"
-      :pagination="pagination"
-      :total="pagination.total"
-      @update-pagination="getDocuments"
-    />
-  </div>
-  <div v-else-if="loading" class="documents-loading">{{ t('common.loading') }}...</div>
-  <div v-else class="documents-empty">
-    {{ t('you.no-documents') }}
-  </div>
+  </FetchLoader>
 </template>
 
 <script setup>
-// TODO(remi): need to use useFetch to optimize request, and create paginated composable
-import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import {
   sanitizeResearcherDocument,
   sanitizeTranslateKeys,
   sanitizeResearcherDocumentAnalyticsYears,
 } from '@/api/sanitizes/researcher'
 import ResearcherDocument from '@/components/people/Researcher/ResearcherDocument.vue'
+import ResearcherDocumentDrawer from '@/components/people/Researcher/ResearcherDocumentDrawer.vue'
 
 defineOptions({
   name: 'ResearcherDocumentsList',
@@ -123,23 +127,12 @@ const props = defineProps({
     required: true,
   },
 })
-const { t, locale } = useNuxtI18n()
+const { t } = useNuxtI18n()
 const { t: localT } = useI18n({ useScope: 'locale' })
 
+const documentSelected = ref(null)
 const documents = ref(null)
-const pagination = computed(() => {
-  if (documents.value === null) {
-    return { total: 0 }
-  }
-  return {
-    currentPage: documents.value.current_page,
-    total: documents.value.total_page,
-    previous: documents.value.previous,
-    next: documents.value.next,
-    first: documents.value.first,
-    last: documents.value.last,
-  }
-})
+const pagination = usePagination(documents, { limit: props.limit ?? 10 })
 const loading = ref(false)
 const documentsAnalytics = ref({
   document_types: {},
@@ -163,9 +156,13 @@ const onFilter = (key, value) => {
   }
 }
 
-const getDocuments = (url) => {
+const getDocuments = () => {
   loading.value = true
-  useAPI(url)
+  const query = {
+    ...filters,
+    ...pagination.query(),
+  }
+  useAPI(`crisalid/researcher/${props.user.researcher.id}/${props.docType}/`, { query })
     .then(sanitizeResearcherDocument)
     .then((data) => {
       documents.value = data
@@ -175,43 +172,32 @@ const getDocuments = (url) => {
     })
 }
 
-const sanitizeFilters = () => {
-  const urlSearch = new URLSearchParams()
-  if (filters.year !== undefined) {
-    urlSearch.set('year', filters.year)
-  }
-  if (filters.document_type !== undefined) {
-    urlSearch.set('document_type', filters.document_type)
-  }
-  if (filters.roles !== undefined) {
-    urlSearch.set('roles', filters.roles)
-  }
-
-  return urlSearch
-}
-
-const defaultURL = `crisalid/researcher/${props.user.researcher.id}/${props.docType}/?offset=0&limit=${props.limit || 10}`
-watch(filters, () => {
-  const query = sanitizeFilters()
-  getDocuments(`${defaultURL}&${query}`)
-  getDocumentsInfo()
-})
-
 const getDocumentsInfo = () => {
-  const query = sanitizeFilters()
-  if (props.preview) {
-    query.set('limit', '5')
-  }
-  useAPI(
-    `crisalid/researcher/${props.user.researcher.id}/${props.docType}/analytics/?${query}`
-  ).then((data) => {
+  useAPI(`crisalid/researcher/${props.user.researcher.id}/${props.docType}/analytics/`, {
+    query: {
+      ...filters,
+      ...(props.preview ? { limit: 5 } : {}),
+    },
+  }).then((data) => {
     documentsAnalytics.value = data
   })
 }
 
+watch(pagination.query, () => {
+  getDocuments()
+  getDocumentsInfo()
+})
+
+watch(filters, () => {
+  if (!pagination.first()) {
+    getDocuments()
+    getDocumentsInfo()
+  }
+})
+
 // when components is mounted, getch
 onMounted(() => {
-  getDocuments(`${defaultURL}&${sanitizeFilters()}`)
+  getDocuments()
   getDocumentsInfo()
 })
 
@@ -241,6 +227,7 @@ const documentsRoleInfos = computed(() => {
 
 <style lang="scss" scoped>
 $profile-documents: 1rem;
+
 // $purple: #501087;
 $purple: $primary-dark;
 
@@ -249,16 +236,15 @@ $purple: $primary-dark;
   flex-direction: column;
   justify-items: start;
   gap: $profile-documents;
+}
 
-  & > *:not(:last-child)::after {
-    content: '';
-    display: inline-block;
-    width: 100%;
-    height: 1.5px;
-    opacity: 0.7;
-    background-color: #d4d4d4;
-    transform: translateY(calc($profile-documents / 2));
-  }
+.documents-list > *:not(:last-child)::after {
+  content: '';
+  display: inline-block;
+  width: 100%;
+  height: 1.5px;
+  opacity: 0.7;
+  background-color: #d4d4d4;
 }
 
 .profile-info-container {
@@ -287,10 +273,6 @@ $purple: $primary-dark;
 
     .doc-year-container > h5 {
       text-align: center;
-    }
-
-    .doc-numbers {
-      justify-content: unset;
     }
   }
 }
