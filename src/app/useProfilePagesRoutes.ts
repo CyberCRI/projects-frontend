@@ -27,8 +27,8 @@ export default function useProfilePagesRoutes() {
     },
     {
       path: 'publications',
-      name: 'ProfilePublications',
-      component: () => import('../pages/UserProfilePageV2/Tabs/ProfileDocumentsTab.vue'),
+      name: 'ResearcherPublications',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ResearcherDocumentsTab.vue'),
       props: {
         docType: 'publications',
       },
@@ -69,7 +69,7 @@ export default function useProfilePagesRoutes() {
     {
       path: 'publications',
       name: 'ProfileEditPublications',
-      component: () => import('../pages/UserProfilePageV2/Tabs/ProfileEditDocumentsTab.vue'),
+      component: () => import('../pages/UserProfilePageV2/Tabs/ResearcherEditDocumentsTab.vue'),
       props: {
         docType: 'publications',
       },

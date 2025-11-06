@@ -9,6 +9,7 @@ export interface UserModel {
     firstname: string
     lastname: string
   }
+  slug: string
   email: string
   roles: string[]
   orgs: string[]

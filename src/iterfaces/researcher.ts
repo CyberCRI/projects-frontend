@@ -1,3 +1,5 @@
+import { UserModel } from '@/models/user.model'
+
 export type Identifier = {
   id: number
   value: string
@@ -6,7 +8,7 @@ export type Identifier = {
 
 export type Researcher = {
   id: number
-  user: null | object
+  user: null | UserModel
   display_name: string
   identifiers: Identifier[]
 }
@@ -19,6 +21,7 @@ export type Document = {
   contributors: Researcher[]
   identifiers: Identifier[]
   publication_date: string | null | Date
+  similars: number
 }
 
 export type ResearcherDocumentAnalytics = {

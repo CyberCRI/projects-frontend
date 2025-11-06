@@ -69,58 +69,13 @@
         </component>
       </div>
     </div>
-    <article v-for="doc in documents.results" :key="doc.id" class="profile-documents">
-      <h2>{{ doc.title }}</h2>
-      <div>
-        <span v-for="(author, idx) in doc.contributors" :key="author.id">
-          <!-- if author.user isa projectsUser, create a nuxtlink to go to the user -->
-          <NuxtLink
-            v-if="author.user?.slug"
-            class="profile-document-contributor"
-            :to="{ name: 'ProfileOtherUser', params: { userId: author.user.slug } }"
-          >
-            <strong>{{ author.display_name }}</strong>
-          </NuxtLink>
-          <!-- else , ceate a link to the harvester (hal,idref..ect) -->
-          <a
-            v-else-if="researcherHarvesterToUrl(author)"
-            :href="researcherHarvesterToUrl(author)"
-            rel="noreferer,noopener"
-            target="_blank"
-            class="profile-document-contributor"
-          >
-            {{ author.display_name }}
-          </a>
-          <span v-else class="profile-document-contributor">
-            {{ author.display_name }}
-          </span>
-          <!-- add comas if users is upper than 2, and add "and" beetwen last contributors -->
-          <span v-if="idx + 2 < doc.contributors.length">,</span>
-          <span v-else-if="idx + 2 === doc.contributors.length">
-            {{ ` ${t('common.and')} ` }}
-          </span>
-        </span>
-      </div>
-      <p class="profile-document-description" :class="{ preview: preview }">
-        {{ doc.description }}
-      </p>
-      <span>
-        {{ doc.publication_date?.toLocaleDateString(locale, { year: 'numeric', month: 'long' }) }}
-      </span>
-      <div class="doc-sources-container">
-        <a
-          v-for="identifier in doc.identifiers"
-          :key="identifier.id"
-          :href="documentTypeHarverToUrl(docType, identifier)"
-          :title="`${t('common.link-to')} ${identifier.harvester}`"
-          target="_blank"
-          rel="referer,noopener"
-          class="doc-sources"
-        >
-          <IconHarvester :harvester="identifier.harvester" height="1.3rem" />
-        </a>
-      </div>
-    </article>
+    <ResearcherDocument
+      v-for="doc in documents.results"
+      :key="doc.id"
+      :document="doc"
+      :doc-type="docType"
+      :preview="preview"
+    />
     <PaginationButtons
       v-if="props.preview === false"
       class="m-auto"
@@ -138,14 +93,13 @@
 
 <script setup>
 // TODO(remi): need to use useFetch to optimize request, and create paginated composable
-import IconHarvester from '@/components/base/media/IconHarvester.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import {
   sanitizeResearcherDocument,
   sanitizeTranslateKeys,
   sanitizeResearcherDocumentAnalyticsYears,
 } from '@/api/sanitizes/researcher'
-import { documentTypeHarverToUrl, researcherHarvesterToUrl } from '@/functs/researcher.ts'
+import ResearcherDocument from '@/components/people/Researcher/ResearcherDocument.vue'
 
 defineOptions({
   name: 'ResearcherDocumentsList',
@@ -287,6 +241,8 @@ const documentsRoleInfos = computed(() => {
 
 <style lang="scss" scoped>
 $profile-documents: 1rem;
+// $purple: #501087;
+$purple: $primary-dark;
 
 .profile-documents-container {
   display: flex;
@@ -298,46 +254,11 @@ $profile-documents: 1rem;
     content: '';
     display: inline-block;
     width: 100%;
-    height: 2px;
+    height: 1.5px;
     opacity: 0.7;
     background-color: #d4d4d4;
     transform: translateY(calc($profile-documents / 2));
   }
-}
-
-.profile-documents {
-  border-radius: 5px;
-  padding: 0.2rem;
-  transition: background-color 0.25s ease;
-}
-
-.profile-document-contributor {
-  font-weight: bold;
-  font-size: 0.9rem;
-  padding-left: 0.2rem;
-}
-
-// if is a link, add correct color and underline
-a.profile-document-contributor {
-  color: $primary-dark;
-  text-decoration: underline;
-}
-
-span.profile-document-contributor {
-  font-style: italic;
-  font-weight: normal;
-}
-
-.profile-document-description {
-  font-weight: 400;
-  opacity: 0.75;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.profile-document-description.preview {
-  -webkit-line-clamp: 2;
 }
 
 .profile-info-container {
@@ -366,6 +287,10 @@ span.profile-document-contributor {
 
     .doc-year-container > h5 {
       text-align: center;
+    }
+
+    .doc-numbers {
+      justify-content: unset;
     }
   }
 }
@@ -407,7 +332,7 @@ span.profile-document-contributor {
 
   width: 12.5px;
   display: inline-block;
-  background-color: #501087;
+  background-color: $purple;
   height: calc((var(--max-bar-height) * (var(--bar-count) / 100) + var(--min-bar-height)) * 1px);
   transition: all 0.4s;
   transform-origin: bottom;
@@ -478,7 +403,7 @@ span.profile-document-contributor {
 
     &:hover,
     &.selected {
-      background-color: #501087;
+      background-color: $purple;
       color: white;
 
       & :first-child {
@@ -492,32 +417,13 @@ span.profile-document-contributor {
   }
 
   & :first-child {
-    color: #501087;
+    color: $purple;
     font-size: 2rem;
   }
 
   & :last-child {
     opacity: 0.6;
     text-transform: capitalize;
-  }
-}
-
-.doc-sources-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.2rem;
-  margin-top: 0.5rem;
-}
-
-.doc-sources {
-  border: 1px gray;
-  border-radius: 30px;
-  padding: 0.2rem 0.4rem;
-  transition: all 0.2s;
-  background-color: $primary-light;
-
-  &:hover {
-    transform: scale(102%);
   }
 }
 

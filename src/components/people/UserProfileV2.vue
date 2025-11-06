@@ -269,7 +269,7 @@ export default {
           key: 'publications',
           id: 'profile-publications',
           view: {
-            name: 'ProfilePublications' + roadSuffix,
+            name: 'ResearcherPublications' + roadSuffix,
             params,
           },
           altView: {
@@ -406,7 +406,7 @@ export default {
             params,
           },
           altView: {
-            name: 'ProfilePublications' + roadSuffix,
+            name: 'ResearcherPublications' + roadSuffix,
             params,
           },
           props,

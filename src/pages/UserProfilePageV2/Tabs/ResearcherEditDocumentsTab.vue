@@ -20,7 +20,7 @@
 import SvgWarning from '@/assets/svg/warning.svg'
 
 defineOptions({
-  name: 'ProfileEditDocumentsTab',
+  name: 'ResearcherEditDocumentsTab',
 })
 const { t } = useNuxtI18n()
 

@@ -14,10 +14,10 @@
 </template>
 
 <script setup>
-import ResearcherDocumentsList from '@/components/people/UserProfile/ResearcherDocumentsList.vue'
+import ResearcherDocumentsList from '@/components/people/Researcher/ResearcherDocumentsList.vue'
 
 defineOptions({
-  name: 'ProfileDocumentsTab',
+  name: 'ResearcherDocumentsTab',
 })
 
 const { t } = useNuxtI18n()

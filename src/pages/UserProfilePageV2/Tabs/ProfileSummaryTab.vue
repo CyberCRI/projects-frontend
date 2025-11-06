@@ -35,7 +35,7 @@
             <SeeMoreArrow
               v-if="documentsCount.publications > publicationsLimit"
               data-test="see-more"
-              :to="{ name: 'ProfilePublicationsOther' }"
+              :to="{ name: 'ResearcherPublicationsOther' }"
             />
           </div>
           <ResearcherDocumentsList
@@ -132,7 +132,7 @@ import UserDescriptions from '@/components/people/UserDescriptions.vue'
 import SkillSummary from '@/components/people/skill/SkillSummary.vue'
 import useUsersStore from '@/stores/useUsers.ts'
 import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
-import ResearcherDocumentsList from '@/components/people/UserProfile/ResearcherDocumentsList.vue'
+import ResearcherDocumentsList from '@/components/people/Researcher/ResearcherDocumentsList.vue'
 
 export default {
   name: 'ProfileSummaryTab',
