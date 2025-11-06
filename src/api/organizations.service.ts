@@ -1,5 +1,8 @@
 // import type { APIResponseList } from '@/api/types'
-import type { /* OrganizationOutput,*/ OrganizationPatchInput } from '@/models/organization.model'
+import type {
+  /* OrganizationOutput,*/ OrganizationModel,
+  OrganizationPatchInput,
+} from '@/models/organization.model'
 import type { /*ImageOrganizationOutput,*/ ImageOrganizationInput } from '@/models/image.model'
 import type { /*GroupModel,*/ GroupModelInput, RemoveGroupModelInput } from '@/models/group.model'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
@@ -109,4 +112,14 @@ export async function removeFeaturedProject(org_code, body) {
 
 export async function postOrganizationImage({ orgCode, body }) {
   return await useAPI(`organization/${orgCode}/image/`, { body, method: 'POST' }) //.data.value
+}
+
+export async function patchTermsAndConditions(organization: OrganizationModel, content: string) {
+  return await useAPI(
+    `organization/${organization.code}/terms-and-conditions/${organization.terms_and_conditions?.id}/`,
+    {
+      body: { content },
+      method: 'PATCH',
+    }
+  ) //.data.value
 }
