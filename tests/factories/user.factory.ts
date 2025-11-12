@@ -29,6 +29,8 @@ export const UserFactory = createFactory<UserModel>((faker) => ({
     natural_ratio: faker.datatype.number(),
     variations: { medium: 'string.jpeg' },
   },
+  researcher: undefined,
+  slug: '',
 }))
 
 export const UserFromJWTFactory = createFactory<UserFromJWTModel>((faker) => ({

@@ -5,7 +5,7 @@
         <div class="doc-year-container">
           <h5>
             {{ t('profile.research-output-year') }}
-            {{ filters.year ? `${filters.year} (${documents.count})` : '' }}
+            {{ query.year ? `${query.year} (${documents.count})` : '' }}
           </h5>
           <div class="doc-year-info">
             <span class="doc-year-info-minyear">{{ yearsInfo.minYear }}</span>
@@ -16,13 +16,13 @@
                 :key="obj.year"
                 class="doc-year-bar"
                 :class="{
-                  disabled: filters.year && filters.year !== obj.year,
-                  selected: filters.year === obj.year,
+                  disabled: query.year && query.year !== obj.year,
+                  selected: query.year === obj.year,
                   preview: preview,
                 }"
                 :title="`${t(`profile.${docType}`)} ${obj.year} (${obj.count})`"
                 :style="{ '--bar-count': obj.height }"
-                @click="onFilter('year', obj.year)"
+                @click="!preview && toogleQuery('year', obj.year)"
               >
                 <span>{{ obj.year }}</span>
               </component>
@@ -33,16 +33,15 @@
         <div class="doc-numbers-container">
           <component
             :is="preview ? 'div' : 'button'"
-            v-for="[name, count] in DocumentTypeInfos"
+            v-for="[name, count] in documentTypeInfos"
             :key="name"
             class="doc-numbers"
             :class="{
-              disabled:
-                filters.document_type !== undefined && filters.document_type !== (name ?? ''),
-              selected: filters.document_type === (name ?? ''),
+              disabled: query.document_type !== undefined && query.document_type !== (name ?? ''),
+              selected: query.document_type === (name ?? ''),
               preview: preview,
             }"
-            @click="onFilter('document_type', name ?? '')"
+            @click="!preview && toogleQuery('document_type', name ?? '')"
           >
             <span>{{ count }}</span>
             <span>
@@ -54,17 +53,18 @@
           </component>
         </div>
         <div v-if="!preview && documentsRoleInfos.length" class="doc-roles-container">
+          <!-- change button to div only if we are in preview (from summary page) -->
           <component
             :is="preview ? 'div' : 'button'"
             v-for="[role, count] in documentsRoleInfos"
             :key="role"
             class="doc-roles"
-            @click="onFilter('roles', role)"
+            @click="!preview && toogleQuery('roles', role)"
           >
             <BadgeItem
               :class="{
-                disabled: filters.roles !== null && filters.roles !== role,
-                selected: filters.roles === role,
+                disabled: query.roles !== null && query.roles !== role,
+                selected: query.roles === role,
                 preview: preview,
               }"
               :label="`${localT(`relators.${sanitizeTranslateKeys(role)}`)} ${count}`"
@@ -87,7 +87,7 @@
     <div v-else class="documents-empty">
       {{ t(`profile.${docType}-empty`) }}
     </div>
-    <ResearcherDocumentDrawer
+    <ResearcherDocumentSimilars
       :document="documentSelected"
       :doc-type="docType"
       :user="user"
@@ -96,45 +96,35 @@
   </FetchLoader>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {
   sanitizeResearcherDocument,
   sanitizeTranslateKeys,
   sanitizeResearcherDocumentAnalyticsYears,
 } from '@/api/sanitizes/researcher'
 import ResearcherDocument from '@/components/people/Researcher/ResearcherDocument.vue'
-import ResearcherDocumentDrawer from '@/components/people/Researcher/ResearcherDocumentDrawer.vue'
+import ResearcherDocumentSimilars from '@/components/people/Researcher/ResearcherDocumentSimilars.vue'
+import { useQuery } from '@/composables/useQuery'
+import { QueryFilterDocument, ResearcherDocumentAnalytics } from '@/iterfaces/researcher'
+import { UserModel } from '@/models/user.model'
 
-defineOptions({
-  name: 'ResearcherDocumentsList',
-})
+defineOptions({ name: 'ResearcherDocumentsList' })
 
-const props = defineProps({
-  preview: {
-    type: Boolean,
-    default: false,
-  },
-  limit: {
-    type: Number,
-    default: null,
-  },
-  user: {
-    type: Object,
-    required: true,
-  },
-  docType: {
-    type: String,
-    required: true,
-  },
-})
+const props = withDefaults(
+  defineProps<{ preview?: boolean; limit?: number; user: UserModel; docType: string }>(),
+  { preview: false, limit: null }
+)
 const { t } = useNuxtI18n()
-const { t: localT } = useI18n({ useScope: 'locale' })
+const { t: localT } = useI18n({ useScope: 'local' })
 
+// when we click to "show similars documents"
 const documentSelected = ref(null)
+
 const documents = ref(null)
 const pagination = usePagination(documents, { limit: props.limit ?? 10 })
 const loading = ref(false)
-const documentsAnalytics = ref({
+
+const documentsAnalytics = ref<ResearcherDocumentAnalytics>({
   document_types: {},
   years: [],
   roles: {},
@@ -142,27 +132,16 @@ const documentsAnalytics = ref({
 
 // filter backend query
 // default role "author" to only show author form documents
-const filters = reactive({
-  roles: 'author',
-})
-const onFilter = (key, value) => {
-  if (props.preview) {
-    return
-  }
-  if (filters[key] === value) {
-    delete filters[key]
-  } else {
-    filters[key] = value
-  }
-}
+const { query, toogleQuery } = useQuery<QueryFilterDocument>({ roles: 'author' })
 
 const getDocuments = () => {
   loading.value = true
-  const query = {
-    ...filters,
-    ...pagination.query(),
-  }
-  useAPI(`crisalid/researcher/${props.user.researcher.id}/${props.docType}/`, { query })
+  useAPI(`crisalid/researcher/${props.user.researcher.id}/${props.docType}/`, {
+    query: {
+      ...query,
+      ...pagination.query(),
+    },
+  })
     .then(sanitizeResearcherDocument)
     .then((data) => {
       documents.value = data
@@ -175,7 +154,8 @@ const getDocuments = () => {
 const getDocumentsInfo = () => {
   useAPI(`crisalid/researcher/${props.user.researcher.id}/${props.docType}/analytics/`, {
     query: {
-      ...filters,
+      ...query,
+      // add only limit for preview (used to show only X year bar graph)
       ...(props.preview ? { limit: 5 } : {}),
     },
   }).then((data) => {
@@ -188,7 +168,7 @@ watch(pagination.query, () => {
   getDocumentsInfo()
 })
 
-watch(filters, () => {
+watch(query, () => {
   if (!pagination.first()) {
     getDocuments()
     getDocumentsInfo()
@@ -206,23 +186,21 @@ const yearsInfo = computed(() =>
   sanitizeResearcherDocumentAnalyticsYears(documentsAnalytics.value.years)
 )
 
-const DocumentTypeInfos = computed(() => {
-  const documentTypes = Object.entries(documentsAnalytics.value.document_types)
-    .toSorted((a, b) => a[1] - b[1])
+// convert object key/number to array sorted by DESC and sliced from preview limit
+const sortInfos = (
+  data: ResearcherDocumentAnalytics['document_types'] | ResearcherDocumentAnalytics['roles']
+) => {
+  const dataEntries = Object.entries(data)
+    .toSorted(([, lenA], [, lenB]) => lenA - lenB)
     .reverse()
   if (props.limit) {
-    return documentTypes.slice(0, props.limit)
+    return dataEntries.slice(0, props.limit)
   }
-  return documentTypes
-})
+  return dataEntries
+}
 
-const documentsRoleInfos = computed(() => {
-  const roles = Object.entries(documentsAnalytics.value.roles).toSorted(([, c], [, c2]) => c < c2)
-  if (props.limit) {
-    return roles.slice(0, props.limit)
-  }
-  return roles
-})
+const documentTypeInfos = computed(() => sortInfos(documentsAnalytics.value.document_types))
+const documentsRoleInfos = computed(() => sortInfos(documentsAnalytics.value.roles))
 </script>
 
 <style lang="scss" scoped>
@@ -374,7 +352,6 @@ $purple: $primary-dark;
   display: flex;
   flex-direction: column;
   text-align: center;
-  justify-content: end;
   border-radius: 12px;
   border: none;
   padding: 0.2rem 0.5rem;

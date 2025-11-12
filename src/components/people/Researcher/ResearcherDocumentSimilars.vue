@@ -31,6 +31,8 @@ import FetchLoader from '@/components/base/FetchLoader.vue'
 import { Document } from '@/iterfaces/researcher'
 import { UserModel } from '@/models/user.model'
 
+defineOptions({ name: 'ResearcherDocumentSimilars' })
+
 const { t } = useNuxtI18n()
 const emit = defineEmits(['close'])
 const props = defineProps<{
@@ -64,7 +66,8 @@ const getDocuments = (query) => {
 watch(pagination.query, (query) => getDocuments(query))
 watch(
   () => props.document,
-  (doc) => doc && getDocuments(pagination.query())
+  (doc) => doc && getDocuments(pagination.query()),
+  { immediate: true }
 )
 </script>
 

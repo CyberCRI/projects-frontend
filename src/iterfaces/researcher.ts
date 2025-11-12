@@ -1,5 +1,11 @@
 import { UserModel } from '@/models/user.model'
 
+export type QueryFilterDocument = {
+  year?: number
+  document_type?: string
+  roles?: string
+}
+
 export type Identifier = {
   id: number
   value: string

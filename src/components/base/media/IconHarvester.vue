@@ -6,6 +6,7 @@
 
 <script>
 import halIcon from '@/assets/svg/hal.svg'
+import doiIcon from '@/assets/svg/doi.svg'
 import idrefIcon from '@/assets/svg/idref.svg'
 import scopusIcon from '@/assets/svg/scopus.svg'
 import orcidIcon from '@/assets/svg/orcid.svg'
@@ -19,6 +20,7 @@ const icons = {
   orcid: orcidIcon,
   openalex: openalexIcon,
   scanr: scanrIcon,
+  doi: doiIcon,
   local: null,
 }
 </script>
