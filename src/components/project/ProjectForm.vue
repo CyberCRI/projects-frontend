@@ -275,7 +275,6 @@ export default {
       loading: false,
       templates: [],
       displayedImage: '',
-      selectedCategory: undefined,
       selectedTemplate: null,
       form: JSON.parse(JSON.stringify(this.modelValue)),
       tags: [...this.modelValue.tags],
@@ -306,29 +305,25 @@ export default {
         this.isAddMode && !!this.categories && this.categories.length > 0 && !this.form.template
       )
     },
+
+    selectedCategory() {
+      const categoryId = this.form.category
+      if (!categoryId) return
+      if (!this.categories) return
+      return this.categories.find((category) => category.id === categoryId)
+    },
   },
 
   watch: {
-    'form.category': async function (categoryId, oldVal) {
-      if (categoryId && categoryId !== oldVal) {
-        this.selectedCategory = this.categories.find((category) => category.id === categoryId)
-        // set default tags according to selected category
-        if (this.selectedCategory) this.tags = [...this.selectedCategory.tags]
-        if (this.selectedCategory.templates.length == 1) {
-          await this.setTemplate(this.selectedCategory.templates[0])
-        } else {
-          await this.setTemplate(null)
+    selectedCategory: async function (cat) {
+      if (cat) {
+        this.tags = [...cat.tags]
+        if (cat.templates.length == 1) {
+          await this.setTemplate(cat.templates[0])
+          return
         }
       }
-    },
-
-    categories: function (neo, old) {
-      const categoryId = this.form.category
-      if (neo && neo !== old && categoryId) {
-        this.selectedCategory = neo.find((category) => category.id === categoryId)
-        // set default tags according to selected category
-        if (this.selectedCategory) this.tags = [...this.selectedCategory.tags]
-      }
+      await this.setTemplate(null)
     },
 
     form: {
