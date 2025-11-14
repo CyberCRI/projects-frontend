@@ -1,5 +1,5 @@
 <template>
-  <FetchLoader sttus="status" :with-data="!!documents">
+  <FetchLoader :status="status" :with-data="!!documents">
     <div v-if="documents?.results?.length" class="profile-documents-container">
       <div class="profile-info-container" :class="{ preview: preview }">
         <div class="doc-year-container">
@@ -104,8 +104,9 @@ import {
 } from '@/api/sanitizes/researcher'
 import ResearcherDocument from '@/components/people/Researcher/ResearcherDocument.vue'
 import ResearcherDocumentSimilars from '@/components/people/Researcher/ResearcherDocumentSimilars.vue'
+import { PaginationResult, usePagination } from '@/composables/usePagination'
 import { useQuery } from '@/composables/useQuery'
-import { QueryFilterDocument, ResearcherDocumentAnalytics } from '@/iterfaces/researcher'
+import { Document, QueryFilterDocument, ResearcherDocumentAnalytics } from '@/iterfaces/researcher'
 import { UserModel } from '@/models/user.model'
 
 defineOptions({ name: 'ResearcherDocumentsList' })
@@ -118,11 +119,11 @@ const { t } = useNuxtI18n()
 const { t: localT } = useI18n({ useScope: 'local' })
 
 // when we click to "show similars documents"
-const documentSelected = ref(null)
+const documentSelected = ref<Document>(null)
 
-const documents = ref(null)
+const documents = ref<PaginationResult<Document>>(null)
 const pagination = usePagination(documents, { limit: props.limit ?? 10 })
-const loading = ref(false)
+const status = ref('pending')
 
 const documentsAnalytics = ref<ResearcherDocumentAnalytics>({
   document_types: {},
@@ -135,7 +136,7 @@ const documentsAnalytics = ref<ResearcherDocumentAnalytics>({
 const { query, toogleQuery } = useQuery<QueryFilterDocument>({ roles: 'author' })
 
 const getDocuments = () => {
-  loading.value = true
+  status.value = 'pending'
   useAPI(`crisalid/researcher/${props.user.researcher.id}/${props.docType}/`, {
     query: {
       ...query,
@@ -145,9 +146,10 @@ const getDocuments = () => {
     .then(sanitizeResearcherDocument)
     .then((data) => {
       documents.value = data
+      status.value = 'success'
     })
-    .finally(() => {
-      loading.value = false
+    .catch(() => {
+      status.value = 'error'
     })
 }
 

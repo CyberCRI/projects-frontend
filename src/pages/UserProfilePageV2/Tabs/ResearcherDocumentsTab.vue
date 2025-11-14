@@ -13,25 +13,15 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import ResearcherDocumentsList from '@/components/people/Researcher/ResearcherDocumentsList.vue'
+import { UserModel } from '@/models/user.model'
 
-defineOptions({
-  name: 'ResearcherDocumentsTab',
-})
+defineOptions({ name: 'ResearcherDocumentsTab' })
 
 const { t } = useNuxtI18n()
 
-const props = defineProps({
-  user: {
-    type: Object,
-    required: true,
-  },
-  docType: {
-    type: String,
-    required: true,
-  },
-})
+const props = defineProps<{ docType: string; user: UserModel }>()
 
 const title = computed(() => t(`me.${props.docType}`))
 const documentEmpty = computed(() => t(`you.no-${props.docType}`))
