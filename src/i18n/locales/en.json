@@ -275,6 +275,9 @@
         "upload-picture": "Upload a picture",
         "tips-background-image": "It is not required if you would rather simply display a color.  Minimum width: 1024px, Minimum height: 400px."
       },
+      "templates": {
+        "add": "Add a template"
+      },
       "chat": "Chat platform (Connected view)",
       "events": "Events",
       "instructions": "Instructions",
@@ -497,6 +500,7 @@
     "delete-description": "Are you sure you want to permanently delete your comments? This action will be irreversible."
   },
   "common": {
+    "create": "Create",
     "activate": "Activate",
     "activated": "Activated",
     "add": "Add",
@@ -609,7 +613,7 @@
     }
   },
   "description": {
-    "default-placeholder": "Now, describe your project.",
+    "default-project": "Now, describe your project.",
     "placeholder": "You do not have a description yet, think about adding one!",
     "delete": "Are you sure you want to close the editor ?",
     "edit-saved": "Any changes you (and any co-authors) made will not be saved.",
@@ -808,7 +812,8 @@
     "email-contact": "Email",
     "language": "Language",
     "title": "Title",
-    "url": "Url",
+    "url": "url",
+    "templates": "Templates",
     "contact": {
       "subtitle": "Fill in this quick form and we’ll get back to you shortly",
       "subject": "Subject",
@@ -1576,6 +1581,7 @@
     "follow": "Follow",
     "followed": "Followed",
     "form": {
+      "project-templates": "Template name",
       "add-tags": "Add tags",
       "create-project": "Create project",
       "edit-project": "Edit project",
@@ -1583,7 +1589,7 @@
       "project-category": "Project category",
       "select-category": "Pick a category",
       "purpose-label": "Project's goal",
-      "purpose-placeholder": "What is the goal of your project?",
+      "project-purpose": "What is the goal of your project?",
       "resize-image": "Reframe",
       "title-label": "Add a title",
       "title-placeholder": "What is the name of this project?",
@@ -1892,7 +1898,7 @@
     "disambiguate": "(disambiguation)",
     "suggestions": "Suggestions",
     "choose-skill": "Click on the chosen skill:",
-    "main-tags": "Or choose from the main tags"
+    "main-tags": "or choose from the main tags"
   },
   "sdg": {
     "1": {
@@ -2004,16 +2010,31 @@
     "advancement-goal-title": "Template for advancement goal title",
     "advancement-goal-content": "Template for advancement goal content",
     "category": "Template Category",
-    "description": "Template for description",
+    "description": "Template Description",
     "language": "Language Template",
     "info": "If you want to suggest to users how to organise their project in a specific category, you can create a template for that category. Then, when a user will create a project in that category, the project will be initialised with the text that you defined in the template. This text is meant as a guide to users.",
     "no-tag-set": "No tag has been set for now.",
-    "placeholder-purpose": "Project goal",
-    "placeholder-title": "Title Placeholder",
+    "project-purpose": "Template for project goal",
+    "project-title": "Template for project title",
+    "project-description": "Template for project description",
     "tags": "Template tags",
     "title": "Templates",
     "tips-category": "Select a category to which your template will apply.",
-    "comment": "Template for comment"
+    "comment": "Template for comment",
+    "tips-template": "",
+    "template": "Template",
+    "no-category-set": "No Category set",
+    "create": "Template creation",
+    "edit": "Template edition",
+    "list": "Template list",
+    "add-template": "Add template",
+    "no-templates-set": "No Template set.",
+    "title-project": "Project",
+    "title-blog": "Blog",
+    "title-goal": "Goal",
+    "title-comment": "Comment",
+    "placeholder-purpose": "Purpose of the project",
+    "placeholder-title": "Title On-site"
   },
   "tips": {
     "background-color": "This color will be displayed behind the text.",
@@ -2626,6 +2647,7 @@
   },
   "message": {
     "error-login": "An error occured during login. Please try again.",
+    "error-default": "An error occured. Please try again or contact administrator.",
     "failed": "Error while sending message. Please try again.",
     "leave-confirmation": "You're about to leave the page with unsaved data.",
     "sent": "Message sent",

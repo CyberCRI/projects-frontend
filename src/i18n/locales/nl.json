@@ -279,7 +279,10 @@
       "events": "Gebeurtenissen",
       "instructions": "Instructies",
       "news": "Nieuws",
-      "featured-projects": "Aanbevolen projecten"
+      "featured-projects": "Aanbevolen projecten",
+      "templates": {
+        "add": "Een sjabloon toevoegen"
+      }
     },
     "form": {
       "admin-info": {
@@ -331,7 +334,9 @@
         "accept": "Accepteren",
         "accepted": "Goedgekeurd",
         "no-result": "Geen resultaat"
-      }
+      },
+      "accept-success": "Toepassing succesvol aanvaard",
+      "decline-success": "Aanvraag succesvol afgewezen"
     }
   },
   "account": {
@@ -552,7 +557,8 @@
     "disconnect": "Verbinding verbreken",
     "confirm-close": "Weet u zeker dat u de editor wilt sluiten? Wijzigingen die u hebt gemaakt worden niet opgeslagen.",
     "ok": "Ok",
-    "file-too-big": "Bestand is te groot (max: {maxSize}Mb)"
+    "file-too-big": "Bestand is te groot (max: {maxSize}Mb)",
+    "create": "Aanmaken"
   },
   "complete-profile": {
     "bio": {
@@ -607,7 +613,7 @@
     }
   },
   "description": {
-    "default-placeholder": "Beschrijf nu je project.",
+    "default-project": "Beschrijf nu je project.",
     "placeholder": "Je hebt nog geen beschrijving, denk erover om er een toe te voegen!",
     "delete": "Weet u zeker dat u de editor wilt sluiten?",
     "edit-saved": "Wijzigingen die u (en eventuele co-auteurs) heeft aangebracht, worden niet opgeslagen.",
@@ -861,7 +867,8 @@
         "format": "Voer een geldig e-mailadres in"
       },
       "description": "Het beschrijvingsveld is vereist"
-    }
+    },
+    "templates": "Sjablonen"
   },
   "footer": {
     "contact": "Contacteer ons",
@@ -1581,7 +1588,7 @@
       "project-category": "Projectcategorie",
       "select-category": "Kies een categorie",
       "purpose-label": "Doel van het project",
-      "purpose-placeholder": "Wat is het doel van uw project?",
+      "project-purpose": "Wat is het doel van uw project?",
       "resize-image": "Herframe",
       "title-label": "Titel toevoegen",
       "title-placeholder": "Wat is de naam van dit project?",
@@ -1594,7 +1601,9 @@
         "required": "Het doelveld is vereist",
         "max": "Het toepassingsgebied mag niet groter zijn dan 180 tekens",
         "min": "Het doelveld moet ten minste 3 karakters tellen"
-      }
+      },
+      "project-templates": "Sjabloonnaam",
+      "completed-info-to-access-presentation": "Alle informatie op de pagina moet worden ingevuld om toegang te krijgen tot de presentatie."
     },
     "image-header": "Afbeelding",
     "image-alert": {
@@ -1888,7 +1897,8 @@
     "current-skill-description": "Typ vaardigheden label en selecteer de juiste vaardigheden",
     "disambiguate": "(Disambiguatie)",
     "suggestions": "Voorstellen",
-    "choose-skill": "Klik op de gekozen vaardigheid:"
+    "choose-skill": "Klik op de gekozen vaardigheid:",
+    "main-tags": "of kies uit de hoofdtags"
   },
   "sdg": {
     "1": {
@@ -2000,16 +2010,31 @@
     "advancement-goal-title": "Sjabloon voor de titel van het doel van de vooruitgang",
     "advancement-goal-content": "Sjabloon voor doelinhoud voor vooruitgang",
     "category": "Sjablooncategorie",
-    "description": "Beschrijving",
     "language": "Taalsjabloon",
     "info": "Als u gebruikers wilt voorstellen hoe hun project te organiseren in een specifieke categorie, kunt u een sjabloon voor die categorie maken. Wanneer een gebruiker een project in die categorie aanmaakt, wordt het project geïnitialiseerd met de tekst die u in het sjabloon hebt gedefinieerd. Deze tekst is bedoeld als gids voor gebruikers.",
     "no-tag-set": "Er is voorlopig geen tag ingesteld.",
-    "placeholder-purpose": "Projectdoelstelling",
-    "placeholder-title": "Titel Plaatshouder",
+    "project-purpose": "Projectdoelstelling",
+    "project-title": "Titel Plaatshouder",
     "tags": "Sjabloontags",
     "title": "Sjablonen",
     "tips-category": "Selecteer een categorie waarop uw sjabloon van toepassing is.",
-    "comment": "Sjabloon voor commentaar"
+    "comment": "Sjabloon voor commentaar",
+    "tips-template": "",
+    "template": "Sjabloon",
+    "no-category-set": "Geen categorie ingesteld",
+    "create": "Sjabloon aanmaken",
+    "edit": "Sjabloon editie",
+    "list": "Sjabloonlijst",
+    "add-template": "Sjabloon toevoegen",
+    "description": "Sjabloonbeschrijving",
+    "project-description": "Sjabloon voor projectbeschrijving",
+    "title-project": "Project",
+    "title-blog": "Blog",
+    "title-goal": "Doel",
+    "title-comment": "Opmerking",
+    "no-templates-set": "Geen sjabloon ingesteld.",
+    "placeholder-purpose": "Doel van het project",
+    "placeholder-title": "Titel ter plaatse"
   },
   "tips": {
     "background-color": "Deze kleur wordt achter de tekst weergegeven.",
@@ -2572,6 +2597,9 @@
         "label": "Kennisgeving",
         "notice": "Indien geselecteerd wordt iedereen op de hoogte gebracht van de nieuwe instructie",
         "button": "Een melding versturen"
+      },
+      "image": {
+        "label": "Afbeelding"
       }
     },
     "list": {
@@ -2627,7 +2655,8 @@
       "unauthorized": "Ongeautoriseerd: Toegang wordt geweigerd wegens ongeldige referenties.",
       "unprocessable-entity": "Onverwerkbare entiteit: Kan de inhoud niet verwerken.",
       "bad-gateway": "Onjuiste gateway: De server kwam een tijdelijke fout tegen en kon uw verzoek niet voltooien."
-    }
+    },
+    "error-default": "Er is een fout opgetreden. Probeer opnieuw of contacteer beheerder."
   },
   "people-groups": {
     "browse-tree": "Groepsboom doorbladeren"

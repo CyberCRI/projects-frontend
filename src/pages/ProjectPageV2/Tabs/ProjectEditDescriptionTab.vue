@@ -35,6 +35,7 @@
         :save-image-callback="saveDescriptionImage"
         class="no-max-height"
         mode="full"
+        :disable-save="asyncing"
         @unauthorized="$emit('close')"
         @saved="patchProject(false)"
         @socket-ready="socketReady = $event"
@@ -220,10 +221,10 @@ export default {
     getProjectDescription(project) {
       if (this.descriptionIsNotEmpty) {
         return project.description
-      } else if (project.template && project.template.description_placeholder) {
-        return project.template.description_placeholder
       }
-      return this.$t('description.default-placeholder')
+      return (
+        this.project.template?.$t?.project_description || this.$t('description.default-project')
+      )
     },
 
     loadProject(project) {

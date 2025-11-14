@@ -9,7 +9,7 @@ export async function getAttachmentLinks(id: string) {
 }
 
 export async function getAttachmentLink(body: AttachmentLinkInput) {
-  return await useAPI(`project/${body.project_id}/link/${body.link_id}`, {}) //.data.value
+  return await useAPI(`project/${body.project_id}/link/${body.link_id}/`, {}) //.data.value
 }
 
 export async function postAttachmentLinks(body: AttachmentLinkInput) {

@@ -68,6 +68,7 @@
         mode="full"
         save-icon-visible
         :save-image-callback="saveBlogImage"
+        :disable-save="asyncing"
         @unauthorized="closeDrawer"
         @image="handleImage"
         @saved="submitBlogEntry(false)"
@@ -98,7 +99,6 @@ import { postBlogEntry, patchBlogEntry } from '@/api/blogentries.service'
 import analytics from '@/analytics'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import useProjectsStore from '@/stores/useProjects.ts'
 import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
@@ -124,6 +124,10 @@ export default {
   },
 
   props: {
+    project: {
+      type: Object,
+      required: true,
+    },
     isOpened: {
       type: Boolean,
       default: false,
@@ -145,13 +149,11 @@ export default {
   setup() {
     const toaster = useToasterStore()
     const organizationsStore = useOrganizationsStore()
-    const projectsStore = useProjectsStore()
     const usersStore = useUsersStore()
     const v$ = useVuelidate()
     return {
       toaster,
       organizationsStore,
-      projectsStore,
       usersStore,
       v$,
     }
@@ -186,24 +188,14 @@ export default {
   },
 
   computed: {
-    project() {
-      return this.projectsStore.project
-    },
-
     titlePlaceholder() {
-      if (
-        this.project &&
-        this.project.template &&
-        this.project.template.blogentry_title_placeholder
-      )
-        return this.project.template.blogentry_title_placeholder
-      return this.$t('common.title')
+      return this.project.template?.$t?.blogentry_title || this.$t('common.title')
     },
 
     providerParams() {
       return {
         blogId: this.editedBlog ? this.editedBlog.id : null,
-        projectId: this.projectsStore.currentProjectId,
+        projectId: this.project.id,
         organizationId: this.organizationsStore.current.id,
       }
     },
@@ -224,7 +216,7 @@ export default {
 
           this.room = null
           this.selectedDate = new Date()
-          this.title = null
+          this.title = this.getNewBlogIniatialTitle()
           this.addedImages = []
         }
         this.$nextTick(() => {
@@ -237,7 +229,10 @@ export default {
 
   methods: {
     getNewBlogIniatialContent() {
-      return this.project?.template?.blogentry_placeholder || '<p></p>'
+      return this.project?.template?.$t?.blogentry_content || '<p></p>'
+    },
+    getNewBlogIniatialTitle() {
+      return this.project?.template?.$t?.blogentry_title || ''
     },
 
     handleDestroyModalConfirmed() {
@@ -393,7 +388,10 @@ export default {
           this.closeDrawer()
         }
       } else {
-        if (this.editorBlogEntry !== this.getNewBlogIniatialContent || this.title) {
+        if (
+          this.editorBlogEntry !== this.getNewBlogIniatialContent() ||
+          this.title !== this.getNewBlogIniatialTitle()
+        ) {
           this.confirmModalIsOpen = true
         } else {
           this.closeDrawer()

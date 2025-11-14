@@ -40,6 +40,7 @@
               id="add-file-input"
               :label="$t('file.upload' + ' *')"
               class="text-input"
+              file-types="*/*"
               @upload-image="uploadImage"
             />
             <p>{{ $t('resource.max-size') }}</p>

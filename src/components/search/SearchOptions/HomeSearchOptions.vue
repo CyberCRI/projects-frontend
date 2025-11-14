@@ -106,7 +106,7 @@ export default {
   }
 
   &.has-sections {
-    width: pxToRem(350px);
+    max-width: pxToRem(350px);
   }
 }
 </style>

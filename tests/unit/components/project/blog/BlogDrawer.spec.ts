@@ -6,7 +6,6 @@ import { OrganizationOutputFactory } from '@/../tests/factories/organization.fac
 import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
-import useProjectsStore from '@/stores/useProjects'
 import useUsersStore from '@/stores/useUsers'
 
 const i18n = {
@@ -29,9 +28,8 @@ describe('BlogDrawer.vue', () => {
     } as any)
     const organizationsStore = useOrganizationsStore(pinia)
     organizationsStore._current = OrganizationOutputFactory.generate()
-    const projectsStore = useProjectsStore(pinia)
 
-    projectsStore.project = {
+    const project = {
       ...ProjectOutputFactory.generate(),
       files: [],
       links: [],
@@ -40,6 +38,7 @@ describe('BlogDrawer.vue', () => {
       props: {
         isOpened: true,
         initialStep: 2,
+        project: project,
       },
       i18n,
       provide: {

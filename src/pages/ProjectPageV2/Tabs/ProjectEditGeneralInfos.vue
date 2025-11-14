@@ -39,6 +39,7 @@ export default {
     const toaster = useToasterStore()
     const projectsStore = useProjectsStore()
     const orgStore = useOrganizations()
+    const { locale } = useNuxtI18n()
     const form = ref({
       title: '',
       purpose: '',
@@ -49,7 +50,7 @@ export default {
           small: undefined,
         },
       },
-      language: orgStore.current?.language || 'en',
+      language: orgStore.current?.language || locale.value || 'en',
       tags: [],
     })
     const { startEditWatcher, stopEditWatcher } = useEditWatcher(form)

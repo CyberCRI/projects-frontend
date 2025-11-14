@@ -279,7 +279,10 @@
       "events": "Veranstaltungen",
       "instructions": "Anweisungen",
       "news": "Nachrichten",
-      "featured-projects": "Empfohlene Projekte"
+      "featured-projects": "Empfohlene Projekte",
+      "templates": {
+        "add": "Vorlage hinzufügen"
+      }
     },
     "form": {
       "admin-info": {
@@ -331,7 +334,9 @@
         "accept": "Annahme",
         "accepted": "angenommen",
         "no-result": "Kein Ergebnis"
-      }
+      },
+      "accept-success": "Erfolgreiche Anwendung",
+      "decline-success": "Antrag abgelehnt erfolgreich"
     }
   },
   "account": {
@@ -473,8 +478,8 @@
   },
   "comment": {
     "add-comment": "Fügen Sie Ihren Kommentar hinzu!",
-    "comment-verb": "Anmerkung",
-    "comments": "Bemerkungen",
+    "comment-verb": "Kommentare",
+    "comments": "Kommentare",
     "deleted": "Kommentar gelöscht",
     "discard-comment": "Kommentieren?",
     "discard-changes": "Änderungen deaktivieren?",
@@ -498,22 +503,22 @@
     "activate": "Aktivieren",
     "activated": "Aktiviert",
     "add": "Hinzufügen",
-    "added-on-the": "Hinzugefügt am",
+    "added-on-the": "zugefügt",
     "back": "zurück",
     "cancel": "Abbrechen",
     "chose-date": "Chose Datum",
-    "confirm": "bestätigen",
+    "confirm": "Bestätigen",
     "continue": "Weiter",
     "confirm-delete": "Sind Sie sicher, dass Sie das löschen möchten?",
     "deadline": "Frist",
     "delete": "Löschen",
     "delete-selection": "Auswahl löschen",
     "delete-user": "Löschen",
-    "description": "Warenbezeichnung",
+    "description": "Beschreibung",
     "destroy-confirm": "Sind Sie sicher, dass Sie dieses Projekt löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
     "cant-quit-self": "Sie sind der letzte Redakteur des Teams. Jedes Projekt muss mindestens einen Editor haben.\nSie können entweder einen anderen Editor hinzufügen, bevor Sie das Projekt verlassen, oder das Projekt aus der Registerkarte Konfiguration löschen.",
     "cant-quit-other": "Das ist der letzte Redakteur des Teams. Jedes Projekt muss mindestens einen Editor haben.\nSie können entweder einen anderen Editor hinzufügen, der diese verdrängt, oder das Projekt aus der Registerkarte Konfiguration löschen.",
-    "edit": "Bearbeiten",
+    "edit": "Bearbeitung",
     "file-required": "Eine Datei ist erforderlich",
     "for": "für",
     "groups": "Gruppen",
@@ -537,7 +542,7 @@
     "reply": "Antwort",
     "remove-group": "Sind Sie sicher, dass Sie diese Gruppe löschen möchten?",
     "remove-user": "Sind Sie sicher, dass Sie diesen Benutzer löschen möchten?",
-    "save": "Speichern",
+    "save": "speichern",
     "send": "Bitte",
     "see-less": "weniger",
     "see-more": "Mehr erfahren",
@@ -552,7 +557,8 @@
     "disconnect": "Abmelden",
     "confirm-close": "Sind Sie sicher, dass Sie den Editor schließen wollen? Änderungen, die Sie vorgenommen haben, werden nicht gespeichert.",
     "ok": "Ok.",
-    "file-too-big": "Die Datei ist zu groß (max: {maxSize}Mb)"
+    "file-too-big": "Die Datei ist zu groß (max: {maxSize}Mb)",
+    "create": "Erstellung"
   },
   "complete-profile": {
     "bio": {
@@ -607,7 +613,7 @@
     }
   },
   "description": {
-    "default-placeholder": "Jetzt beschreiben Sie Ihr Projekt.",
+    "default-project": "Jetzt beschreiben Sie Ihr Projekt.",
     "placeholder": "Sie haben noch keine Beschreibung, denken Sie daran, eine hinzuzufügen!",
     "delete": "Sind Sie sicher, dass Sie den Editor schließen wollen?",
     "edit-saved": "Änderungen, die Sie (und alle Co-Autor) vorgenommen haben, werden nicht gespeichert.",
@@ -791,10 +797,10 @@
     "empty": "Keine Nachrichten... noch nicht!"
   },
   "file": {
-    "add-image": "Bild hinzufügen",
+    "add-image": "ein Bild hinzufügen",
     "add-video": "Video hinzufügen",
     "add-video-hint": "Fügen Sie ein Video hinzu, indem Sie seine youtube oder vimeo URL eingeben.",
-    "attachment": "Befestigtes Dokument | beigefügte Dokumente",
+    "attachment": "beigefügtes Dokument | beigefügte Dokumente",
     "upload": "Hochladen"
   },
   "form": {
@@ -861,7 +867,8 @@
         "format": "Bitte geben Sie eine gültige E-Mail-Adresse ein"
       },
       "description": "Das Beschreibungsfeld ist erforderlich"
-    }
+    },
+    "templates": "Vorlagen"
   },
   "footer": {
     "contact": "Kontaktieren Sie uns",
@@ -879,13 +886,13 @@
     "pssi": "Sicherheitsplan (PSSI)"
   },
   "goal": {
-    "add": "Ziel hinzufügen",
-    "completed-on-the": "Vollständig auf der",
+    "add": "ein Ziel hinzufügen",
+    "completed-on-the": "abgeschlossen auf",
     "description": "Zielbeschreibung",
     "goals": "Ziele",
-    "planned-for-the": "Für die",
+    "planned-for-the": "geplant für die",
     "status-title": "Status",
-    "title": "Goal's Titel",
+    "title": "Titel des Ziels",
     "delete": "Möchten Sie dieses Ziel löschen?"
   },
   "group": {
@@ -937,7 +944,7 @@
       "short-description-placeholder": "Beschreiben Sie Ihre Gruppe in einem Satz",
       "name-label": "Bezeichnung",
       "name-placeholder": "Ex. Hitbox: interaktive Boxsack",
-      "description-label": "Warenbezeichnung",
+      "description-label": "Beschreibung",
       "add-description": "Beschreibung hinzufügen",
       "add-parent-group": "Stammgruppe hinzufügen",
       "project-label": "Empfohlene Projekte",
@@ -1308,7 +1315,7 @@
           "label": "*"
         },
         "sdgs": {
-          "label": "Sdg",
+          "label": "SDGs",
           "add": "Hinzufügen",
           "notice-start": "Hinzufügen",
           "notice-link": "Nachhaltige Entwicklungsziele (SDG)",
@@ -1468,7 +1475,8 @@
             "title": "Ebene 4: Experten",
             "description": "PhD-Level oder hat ein großes Projekt, oder kann Meister-Level lehren"
           }
-        }
+        },
+        "nothing-yet": "Du hast noch keine Fähigkeiten hinzugefügt."
       },
       "privacy": {
         "tab": "Datenschutz",
@@ -1568,7 +1576,7 @@
     "edit-linked-project": "Verknüpftes Projekt bearbeiten",
     "edit-location-point": "Standortpunkt bearbeiten",
     "edit-map": "Geolokalisierung",
-    "edit-review": "Kommentar bearbeiten",
+    "edit-review": "Zurück zur Übersicht",
     "files": "Projektdatei | Projektdatei | Projektdateien",
     "follow": "Folgen",
     "followed": "Folgen",
@@ -1580,7 +1588,7 @@
       "project-category": "Projektkategorie",
       "select-category": "Wählen Sie eine Kategorie",
       "purpose-label": "Ziel des Projekts",
-      "purpose-placeholder": "Was ist das Ziel Ihres Projekts?",
+      "project-purpose": "Was ist das Ziel Ihres Projekts?",
       "resize-image": "Reframe",
       "title-label": "Titel hinzufügen",
       "title-placeholder": "Wie heißt dieses Projekt?",
@@ -1593,7 +1601,9 @@
         "required": "Das Zielfeld ist erforderlich",
         "max": "Das Zielfeld darf nicht größer als 180 Zeichen sein",
         "min": "Das Zielfeld muss mindestens 3 Zeichen sein"
-      }
+      },
+      "project-templates": "Vorname",
+      "completed-info-to-access-presentation": "Alle Informationen auf der Seite müssen ausgefüllt werden, um auf die Präsentation zuzugreifen."
     },
     "image-header": "Bild",
     "image-alert": {
@@ -1627,7 +1637,7 @@
     "remove-user-title": "Löschen des Benutzers",
     "remove-user": "Löschen",
     "show-n-projects": "{count} Projekte anzeigen",
-    "suggested": "Ähnliche Projekte",
+    "suggested": "ähnliche Projekte",
     "suggested-hint": "Projekte, die Sie interessieren könnten",
     "summary": "Zusammenfassung",
     "settings": "Einstellungen",
@@ -1657,28 +1667,28 @@
   "projects": "Projekte",
   "recruit": {
     "about-you": "Erzählen Sie uns von sich selbst und was motiviert Sie",
-    "add-announcement": "Ankündigung hinzufügen",
+    "add-announcement": "eine Ankündigung hinzufügen",
     "announcement": "Ankündigung",
-    "announcements": "Keine Ankündigung | {count} Ankündigung | {count} Ankündigungen",
-    "apply": "Anwendung",
-    "creation-date": "Erstellt am",
+    "announcements": "keine Ankündigung | {count} Ankündigung | {count} Ankündigungen",
+    "apply": "Anwendungsbereich",
+    "creation-date": "erstellt auf",
     "delete-announcement-message": "Möchten Sie diese Ankündigung löschen?",
-    "edit-announcement": "Ankündigung ändern",
-    "email": "Achtung, wir brauchen eine gültige E-Mail-Adresse, um Sie zu kontaktieren. (wir speichern diese Informationen nicht auf der Plattform).",
+    "edit-announcement": "Pressemitteilung",
+    "email": "Warnung, wir benötigen eine gültige E-Mail-Adresse, um Sie zu kontaktieren. (Wir werden diese Informationen nicht auf der Plattform speichern).",
     "firstname": "Vorname",
-    "is-remunerated": "wird entlohnt",
-    "job": "Stellenangebote",
+    "is-remunerated": "wird vergütet",
+    "job": "Job",
     "lastname": "Vorname",
     "motivation-hint": "Es sollte mindestens 20 Zeichen enthalten",
-    "new-announcement": "Neue Ankündigung",
+    "new-announcement": "neue Ankündigung",
     "participant": "Teilnehmer",
     "remunerated": "Vergütung",
     "send": "Bewerbung senden",
     "title": "Titel",
     "traineeship": "Ausbildung",
-    "type": "Meldetyp",
-    "updated": "Aktualisierung",
-    "valid-until-the": "Gültig bis",
+    "type": "Anzeigeart",
+    "updated": "aktualisiert",
+    "valid-until-the": "gültig bis",
     "view": "Blick"
   },
   "report": {
@@ -1692,12 +1702,12 @@
     "bug-url": "Kopieren Sie die URL der Seite, in der Sie dieses Problem hinzufügen."
   },
   "resource": {
-    "add": "Ressourcen hinzufügen",
-    "add-file": "Datei hinzufügen",
-    "add-link": "Einen Link hinzufügen",
+    "add": "Hinzufügen von Ressourcen",
+    "add-file": "eine Datei hinzufügen",
+    "add-link": "einen Link hinzufügen",
     "add-link-url": "Link hinzufügen",
-    "add-link-url-label": "Url",
-    "add-link-text": "Linktext hinzufügen",
+    "add-link-url-label": "URL",
+    "add-link-text": "Link hinzufügen",
     "add-link-text-label": "Text",
     "edit-link": "Einen Link bearbeiten",
     "edit-file": "Datei bearbeiten",
@@ -1823,21 +1833,21 @@
     "banner-portal": "Sie können auch nach Projekten aller Gemeinschaften auf suchen",
     "browse-map": "Durchsuchen nach Karte",
     "by-language": "nach Sprache",
-    "by-people": "Von Menschen",
-    "by-tag": "Nach oben",
-    "by-sdg": "von sdg",
+    "by-people": "von Menschen",
+    "by-tag": "von tag",
+    "by-sdg": "von SDG",
     "filter-by-language": "Sprache hinzufügen",
     "filter-by-people": "Eine Person hinzufügen",
     "filter-by-tag": "Einen Tag hinzufügen",
-    "filter-by-sdg": "Hinzufügen eines sdd",
+    "filter-by-sdg": "Einen SDD hinzufügen",
     "filter-by-category": "Kategorie hinzufügen",
     "language": "Sprache",
     "people": "Menschen",
     "tag": "Tag",
-    "or": "Oder",
-    "ambiguousTag": "Mehrdeutige Bezeichnung",
-    "subtitle-ambiguous-tag": "Dieses Tag hat verschiedene Bedeutungen. Wählen Sie die, an der Sie interessiert sind:",
-    "sdg": "Sdg",
+    "or": "oder",
+    "ambiguousTag": "Am eindeutigen Tag",
+    "subtitle-ambiguous-tag": "Dieser Tag hat verschiedene Bedeutungen. Wählen Sie die, an der Sie interessiert sind:",
+    "sdg": "SDG",
     "skills": "Fähigkeiten",
     "category": "Kategorie",
     "choose": "Wählen Sie unter den wichtigsten Tags oder suchen nach Tags",
@@ -1869,25 +1879,26 @@
     "search-tag": "Erste Buchstaben des Typ-Tags",
     "search-skill": "Art Skill's Label",
     "search-user": "Name der Person",
-    "search-in": "Suchergebnisse in",
-    "specific-tags": "Wählen Sie aus {organizationname} tags",
+    "search-in": "Suche Projekte in",
+    "specific-tags": "Wählen Sie aus {organizationName} tags",
     "wiki-tags": "Wählen Sie thematische Tags",
-    "term-is-ambigous": "Term ist mehrdeutig.{0}siehe unsere Vorschläge",
-    "info": "Sie können auch Projekte aus allen Gemeinschaften suchen",
+    "term-is-ambigous": "Term ist mehrdeutig.{0} Unsere Vorschläge",
+    "info": "Sie können auch Projekte aus allen Gemeinden suchen",
     "geo-map": "Geografische Karte",
     "tag-map": "Tagkarte",
     "geo-map-description": "Entdecken Sie Projekte auf einer Weltkarte",
-    "tag-map-description": "Entdecken Sie Projetcs auf einer wikipédia-Tagskarte",
+    "tag-map-description": "Entdecken Sie Projetcs auf einer Wikipédia-Tagskarte",
     "open-map": "Karte öffnen",
-    "pick-tag-classification": "Wählen Sie ein Tag Framework",
+    "pick-tag-classification": "Wählen Sie ein Tags-Framework",
     "pick-skill-classification": "Wählen Sie einen Fähigkeitenrahmen",
     "pick-tag-preset": "Oder wählen Sie einen Vorschlag",
     "pick-skill-preset": "Oder wählen Sie eine vorgeschlagene Fähigkeit",
     "current-tag-description": "Geben Sie die ersten Buchstaben des Tags ein und wählen Sie den richtigen Tag",
-    "current-skill-description": "Geben Sie das Label des Könnens ein und wählen Sie die richtige Geschicklichkeit",
-    "disambiguate": "(Disambiguation)",
+    "current-skill-description": "Füge deine Fähigkeit hinzu und wähle die passende Kompetenz aus",
+    "disambiguate": "(DISAMBIGUATION)",
     "suggestions": "Vorschläge",
-    "choose-skill": "Klicken Sie auf das gewählte Können:"
+    "choose-skill": "Klicken Sie auf die gewählte Fähigkeit:",
+    "main-tags": "oder wählen Sie aus den wichtigsten Tags"
   },
   "sdg": {
     "1": {
@@ -1941,7 +1952,7 @@
     "17": {
       "title": "Partnerschaften für die Ziele"
     },
-    "add-short": "Hinzufügen eines sdg",
+    "add-short": "SDG hinzufügen",
     "sdg-fulltext": "Nachhaltigkeitsziele"
   },
   "stats": {
@@ -1961,15 +1972,15 @@
   "status": {
     "complete": "abgeschlossen",
     "completed": "abgeschlossen",
-    "cancel": "Abbrechen",
-    "canceled": "Abgebrochen",
-    "ended": "Endet",
-    "ongoing": "Fortlaufen",
-    "private": "Privatpersonen",
-    "public": "Öffentliche",
+    "cancel": "Zurück zur Übersicht",
+    "canceled": "storniert",
+    "ended": "Ende",
+    "ongoing": "laufenden",
+    "private": "Privatperson",
+    "public": "Öffentlichkeit",
     "running": "Laufen",
     "title": "Was ist der Status des Projekts?",
-    "toreview": "Zur Überprüfung",
+    "toreview": "zu überprüfen",
     "updated": "Status des Projekts aktualisiert",
     "na": "Keine"
   },
@@ -1997,18 +2008,33 @@
     "blog-content": "Vorlage für Blog-Inhalte",
     "blog-title": "Vorlage für Blogtitel",
     "advancement-goal-title": "Vorlage für Weiterentwicklungszieltitel",
-    "advancement-goal-content": "Vorlage für Weiterentwicklungszielinhalte",
+    "advancement-goal-content": "Vorlage für den Fortschrittszielinhalt",
     "category": "Kategorie",
-    "description": "Vorlage für die Beschreibung",
     "language": "Sprache Vorlage",
     "info": "Wenn Sie den Benutzern vorschlagen möchten, wie sie ihr Projekt in einer bestimmten Kategorie organisieren, können Sie eine Vorlage für diese Kategorie erstellen. Dann, wenn ein Benutzer ein Projekt in dieser Kategorie erstellen wird das Projekt mit dem Text, den Sie in der Vorlage definiert. Dieser Text ist als Leitfaden für Nutzer gedacht.",
     "no-tag-set": "Es wurde jetzt kein Tag gesetzt.",
-    "placeholder-purpose": "Projektziel",
-    "placeholder-title": "Titel Platzhalter",
+    "project-purpose": "Projektziel",
+    "project-title": "Titel Platzhalter",
     "tags": "Vorlage-Tags",
     "title": "Vorlagen",
     "tips-category": "Wählen Sie eine Kategorie aus, auf die Ihre Vorlage Anwendung findet.",
-    "comment": "Vorlage für Kommentar"
+    "comment": "Vorlage für Kommentare",
+    "tips-template": "",
+    "template": "Vorlage",
+    "no-category-set": "Keine Kategorie Set",
+    "create": "Erstellung von Dokumenten",
+    "edit": "Ausgabe von Dokumenten",
+    "list": "Vorlagenliste",
+    "add-template": "Vorlage hinzufügen",
+    "description": "Vorlage Beschreibung",
+    "project-description": "Vorlage für Projektbeschreibung",
+    "title-project": "Projekt",
+    "title-blog": "Blog",
+    "title-goal": "Ziel",
+    "title-comment": "Anmerkung",
+    "no-templates-set": "Kein Template-Set.",
+    "placeholder-purpose": "Ziel des Projekts",
+    "placeholder-title": "Titel Vor Ort"
   },
   "tips": {
     "background-color": "Diese Farbe wird hinter dem Text angezeigt.",
@@ -2020,7 +2046,7 @@
     "organization-email": "Kontakt E-Mail Ihres Portals.",
     "organization-language": "Die Sprache standardmäßig Ihres Portals.",
     "organization-visibility": "Möchten Sie einen Link zu Ihrem Portal vom Hauptportal der Projekte?",
-    "organization-logo": "Ihr Logo wird auf dem Elternportal auf einem weißen Hintergrund erscheinen. Wenn das Logo, das Sie zuvor hochgeladen haben, nicht mit einem weißen Hintergrund kompatibel ist, wählen Sie bitte unten eine Hintergrundfarbe."
+    "organization-logo": "Ihr Logo wird auf einem weißen Hintergrund auf dem Elternportal erscheinen. Wenn das zuvor hochgeladene Logo nicht mit einem weißen Hintergrund kompatibel ist, wählen Sie bitte unten eine Hintergrundfarbe."
   },
   "toasts": {
     "abuse-report": {
@@ -2571,6 +2597,9 @@
         "label": "Notifizierung",
         "notice": "Wenn Sie ausgewählt werden, werden alle über die neue Anweisung informiert",
         "button": "Nachricht senden"
+      },
+      "image": {
+        "label": "Bild"
       }
     },
     "list": {
@@ -2626,7 +2655,8 @@
       "unauthorized": "Unbefugt: Der Zugang wird durch ungültige Anmeldeinformationen verweigert.",
       "unprocessable-entity": "Unverarbeitbare Einheit: Nicht verarbeitbar, um die enthaltenen Anweisungen zu bearbeiten.",
       "bad-gateway": "Bad Gateway: Der Server stieß auf einen temporären Fehler und konnte Ihre Anfrage nicht abschließen."
-    }
+    },
+    "error-default": "Ein Fehler trat auf. Bitte versuchen Sie es erneut oder kontaktieren Sie den Administrator."
   },
   "people-groups": {
     "browse-tree": "Durchsuchen Sie den Stammbaum"

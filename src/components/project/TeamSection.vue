@@ -31,7 +31,7 @@
       :is-opened="teamModalVisible"
       :selected-categories="[selectedCategory]"
       @close="teamModalVisible = false"
-      @add-user="addUser"
+      @add-user="addPayloadUsers"
     />
   </div>
 </template>
@@ -41,7 +41,6 @@ import TeamDrawer from '@/components/people/ProjectTeamDrawer/TeamDrawer.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import TeamCardInline from '@/components/people/TeamCard/TeamCardInline.vue'
 import useUsersStore from '@/stores/useUsers'
-import { isGroup } from '@/functs/users'
 
 export default {
   name: 'TeamSection',
@@ -91,16 +90,17 @@ export default {
         job: this.currentUser.job,
         people_id: this.currentUser.people_id,
         profile_picture: this.currentUser.profile_picture,
+        role: 'owners',
       }
     },
   },
 
   watch: {
-    currentUser: {
+    adaptedCurrentUser: {
       handler: function (neo) {
         if (neo) {
-          this.projectUsers.push({ user: this.adaptedCurrentUser, role: 'owners' })
-          this.$emit('update-team', this.projectUsers)
+          // current user is automatically added as owner
+          this.addUser(this.adaptedCurrentUser)
         }
       },
       immediate: true,
@@ -108,19 +108,19 @@ export default {
   },
 
   methods: {
-    addUser(payload) {
-      payload.forEach((user) => {
-        // current user is automatically added as owner
-        // so dont duplicate him
-        if (isGroup(user) || user.id !== this.currentUser.id) {
-          this.projectUsers.push({
-            user: user,
-            role: user.role,
-          })
-        }
+    addUser(newUser) {
+      // don't duplicate users
+      if (this.projectUsers.find(({ user }) => user.id === newUser.id)) {
+        return
+      }
+      this.projectUsers.push({
+        user: newUser,
+        role: newUser.role,
       })
-
       this.$emit('update-team', this.projectUsers)
+    },
+    addPayloadUsers(payload) {
+      payload.forEach((user) => this.addUser(user))
     },
 
     removeUser(user) {

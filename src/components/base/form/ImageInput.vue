@@ -18,7 +18,7 @@
       />
     </label>
 
-    <input :id="uniqueId" :ref="uniqueId" type="file" accept="image/*" @change="uploadImage" />
+    <input :id="uniqueId" :ref="uniqueId" type="file" :accept="fileTypes" @change="uploadImage" />
     <p v-if="fileIsTooLarge" class="error-message">
       {{ $t('common.file-too-big', { maxSize: maxSizeMb }) }}
     </p>
@@ -58,6 +58,10 @@ export default {
     maxSizeMb: {
       type: Number,
       default: 2.25,
+    },
+    fileTypes: {
+      type: String,
+      default: 'image/*',
     },
   },
 

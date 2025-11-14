@@ -52,6 +52,15 @@ export default defineNuxtConfig({
   srcDir: 'src/',
   modules: ['@pinia/nuxt', '@nuxt/test-utils/module', '@nuxtjs/i18n', '@nuxt/test-utils/module'],
 
+  // disable caching
+  routeRules: {
+    '/**': {
+      cache: false,
+      headers: {
+        'Cache-Control': 'no-store',
+      },
+    },
+  },
   plugins: [
     '~/directives/index.ts',
     '~/plugins/appInit.ts',
