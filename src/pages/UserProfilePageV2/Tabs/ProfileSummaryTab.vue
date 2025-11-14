@@ -21,11 +21,7 @@
     </div>
     <div class="lists">
       <!-- publications -->
-      <UserProjectsSearch
-        v-if="documentsCount.publications"
-        :limit="publicationsLimit"
-        :user="user"
-      >
+      <UserProjectsSearch v-if="documentsCount.publications" :limit="documentsLimit" :user="user">
         <template #default>
           <div class="project-list-header">
             <h4 class="title">
@@ -33,7 +29,7 @@
               <span>({{ documentsCount.publications }})</span>
             </h4>
             <SeeMoreArrow
-              v-if="documentsCount.publications > publicationsLimit"
+              v-if="documentsCount.publications > documentsLimit"
               data-test="see-more"
               :to="{ name: 'ResearcherPublicationsOther' }"
             />
@@ -41,7 +37,28 @@
           <ResearcherDocumentsList
             doc-type="publications"
             preview
-            :limit="publicationsLimit"
+            :limit="documentsLimit"
+            :user="user"
+          />
+        </template>
+      </UserProjectsSearch>
+      <UserProjectsSearch v-if="documentsCount.conferences" :limit="documentsLimit" :user="user">
+        <template #default>
+          <div class="project-list-header">
+            <h4 class="title">
+              {{ $t('me.conferences') }}
+              <span>({{ documentsCount.conferences }})</span>
+            </h4>
+            <SeeMoreArrow
+              v-if="documentsCount.conferences > documentsLimit"
+              data-test="see-more"
+              :to="{ name: 'ResearcherConferencesOther' }"
+            />
+          </div>
+          <ResearcherDocumentsList
+            doc-type="conferences"
+            preview
+            :limit="documentsLimit"
             :user="user"
           />
         </template>
@@ -170,7 +187,7 @@ export default {
   data() {
     return {
       listLimit: 6,
-      publicationsLimit: 3,
+      documentsLimit: 3,
     }
   },
 

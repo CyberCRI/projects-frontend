@@ -104,6 +104,7 @@ import {
 } from '@/api/sanitizes/researcher'
 import ResearcherDocument from '@/components/people/Researcher/ResearcherDocument.vue'
 import ResearcherDocumentSimilars from '@/components/people/Researcher/ResearcherDocumentSimilars.vue'
+import { usePagination } from '@/composables/usePagination'
 import { useQuery } from '@/composables/useQuery'
 import { QueryFilterDocument, ResearcherDocumentAnalytics } from '@/iterfaces/researcher'
 import { UserModel } from '@/models/user.model'

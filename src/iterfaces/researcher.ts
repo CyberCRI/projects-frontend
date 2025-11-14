@@ -19,6 +19,14 @@ export type Researcher = {
   identifiers: Identifier[]
 }
 
+export type ResearcherLight = Researcher & {
+  // this is a objects with numbers of each documents
+  documents: {
+    publications: number
+    conferences: number
+  }
+}
+
 export type Document = {
   id: number
   title: string

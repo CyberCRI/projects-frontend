@@ -93,6 +93,7 @@ export const researcherHarvesterToUrl = (author: Researcher): string => {
 export const documentTypeHarverToUrl = (docType: string, identifier: Identifier) => {
   switch (docType) {
     case 'publications':
+    case 'conferences':
       return publicationHarvesterToUrl(identifier)
     default:
       throw new Error(`docType ${docType} is not already enabled`)

@@ -284,6 +284,24 @@ export default {
           icon: 'Pen',
         },
         {
+          label: this.$t('profile.conferences'),
+          key: 'conferences',
+          id: 'profile-conferences',
+          view: {
+            name: 'ResearcherConferences' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileEditConferences' + roadSuffix,
+            params,
+          },
+          props: {
+            user: this.user,
+          },
+          condition: this.user?.researcher?.documents?.conferences,
+          icon: 'Pen',
+        },
+        {
           label: this.$t('profile.groups'),
           key: 'groups',
           id: 'profile-groups',
@@ -410,8 +428,24 @@ export default {
             params,
           },
           props,
-          // dispay publications only if user have publications
           condition: this.user?.researcher?.documents?.publications,
+          icon: 'Pen',
+          actionIcon: 'Pen',
+        },
+        {
+          label: this.$t('profile.edit.conferences.tab'),
+          key: 'conferences',
+          id: 'profile-edit-conferences',
+          view: {
+            name: 'ProfileEditConferences' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ResearcherConferences' + roadSuffix,
+            params,
+          },
+          props,
+          condition: this.user?.researcher?.documents?.conferences,
           icon: 'Pen',
           actionIcon: 'Pen',
         },

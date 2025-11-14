@@ -1,11 +1,11 @@
 <template>
-  <div class="profile-publications">
+  <div class="profile-documents">
     <div>
       <h4 class="title">
         {{ title }}
       </h4>
     </div>
-    <div class="publications-warning">
+    <div class="documents-warning">
       <SvgWarning class="inline-block" />
       {{ notEditable }}
     </div>
@@ -14,7 +14,7 @@
 
 <script setup>
 /*
-    publications editions not form projects
+    documents editions not form projects
     need to add iframe to show sovisuplus
 */
 import SvgWarning from '@/assets/svg/warning.svg'
@@ -36,7 +36,7 @@ const notEditable = computed(() => t(`profile.edit.${props.docType}.no-editable`
 </script>
 
 <style lang="scss">
-.publications-warning {
+.documents-warning {
   border-radius: 20px;
   padding: 1rem;
   background-color: $salmon;

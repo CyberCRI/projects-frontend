@@ -28,6 +28,7 @@
 import { sanitizeResearcherDocument } from '@/api/sanitizes/researcher'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
+import { usePagination } from '@/composables/usePagination'
 import { Document } from '@/iterfaces/researcher'
 import { UserModel } from '@/models/user.model'
 
