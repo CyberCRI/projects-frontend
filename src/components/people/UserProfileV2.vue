@@ -265,6 +265,25 @@ export default {
           icon: 'Archive',
         },
         {
+          label: this.$t('profile.publications'),
+          key: 'publications',
+          id: 'profile-publications',
+          view: {
+            name: 'ResearcherPublications' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileEditPublications' + roadSuffix,
+            params,
+          },
+          props: {
+            user: this.user,
+          },
+          // dispay publications only if user have publications
+          condition: this.user?.researcher?.documents?.publications,
+          icon: 'Pen',
+        },
+        {
           label: this.$t('profile.groups'),
           key: 'groups',
           id: 'profile-groups',
@@ -376,6 +395,24 @@ export default {
           props,
           condition: true,
           icon: 'Archive',
+          actionIcon: 'Pen',
+        },
+        {
+          label: this.$t('profile.edit.publications.tab'),
+          key: 'publications',
+          id: 'profile-edit-publications',
+          view: {
+            name: 'ProfileEditPublications' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ResearcherPublications' + roadSuffix,
+            params,
+          },
+          props,
+          // dispay publications only if user have publications
+          condition: this.user?.researcher?.documents?.publications,
+          icon: 'Pen',
           actionIcon: 'Pen',
         },
         {

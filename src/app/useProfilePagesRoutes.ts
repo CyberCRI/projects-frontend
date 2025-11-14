@@ -25,6 +25,14 @@ export default function useProfilePagesRoutes() {
       name: 'ProfileSkills',
       component: () => import('../pages/UserProfilePageV2/Tabs/ProfileSkillTab.vue'),
     },
+    {
+      path: 'publications',
+      name: 'ResearcherPublications',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ResearcherDocumentsTab.vue'),
+      props: {
+        docType: 'publications',
+      },
+    },
   ]
 
   const profileEditTabs = [
@@ -57,6 +65,14 @@ export default function useProfilePagesRoutes() {
       path: 'privacy',
       name: 'ProfileEditPrivacy',
       component: () => import('../pages/UserProfilePageV2/Tabs/ProfilePrivacyEditTab.vue'),
+    },
+    {
+      path: 'publications',
+      name: 'ProfileEditPublications',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ResearcherEditDocumentsTab.vue'),
+      props: {
+        docType: 'publications',
+      },
     },
   ]
   return [

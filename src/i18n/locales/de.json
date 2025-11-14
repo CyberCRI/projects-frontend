@@ -554,10 +554,15 @@
     "the-project": "Das Projekt",
     "title": "Titel",
     "yes": "Ja.",
-    "disconnect": "Abmelden",
+    "disconnect": "Trennen",
     "confirm-close": "Sind Sie sicher, dass Sie den Editor schließen wollen? Änderungen, die Sie vorgenommen haben, werden nicht gespeichert.",
     "ok": "Ok.",
     "file-too-big": "Die Datei ist zu groß (max: {maxSize}Mb)",
+    "select": "Wählen",
+    "year": "Jahr",
+    "link-to": "Link zu",
+    "other": "andere",
+    "and": "und",
     "create": "Erstellung"
   },
   "complete-profile": {
@@ -613,6 +618,7 @@
     }
   },
   "description": {
+    "default-placeholder": "Jetzt beschreiben Sie Ihr Projekt.",
     "default-project": "Jetzt beschreiben Sie Ihr Projekt.",
     "placeholder": "Sie haben noch keine Beschreibung, denken Sie daran, eine hinzuzufügen!",
     "delete": "Sind Sie sicher, dass Sie den Editor schließen wollen?",
@@ -1061,7 +1067,8 @@
     "no-project-reviewing": "Sie sind noch kein Reviewer eines Projekts",
     "skills": "Fähigkeiten",
     "hobbies": "Hobbys",
-    "levels-help-link": "Qualifikationsniveau"
+    "levels-help-link": "Qualifikationsniveau",
+    "publications": "Meine Veröffentlichungen"
   },
   "you": {
     "no-follow": "Noch keine Projekte",
@@ -1069,7 +1076,9 @@
     "no-bio": "Noch keine Biographie",
     "no-skill": "Noch keine Fähigkeiten angegeben",
     "no-project-participate": "Noch kein Projektmitglied",
-    "no-project-reviewing": "Noch kein Reviewer eines Projekts"
+    "no-project-reviewing": "Noch kein Reviewer eines Projekts",
+    "publications": "Seine Veröffentlichungen",
+    "no-publications": "Noch keine Veröffentlichungen"
   },
   "multieditor": {
     "blockquote": "Das ist nicht möglich.",
@@ -1511,6 +1520,10 @@
           "org": "Mein Portal",
           "pub": "Öffentliche"
         }
+      },
+      "publications": {
+        "no-editable": "Die Veröffentlichungen sind noch nicht verfügbar.",
+        "tab": "Veröffentlichungen"
       }
     },
     "go-to-page": "Profilseite anzeigen",
@@ -1531,7 +1544,11 @@
     "mentorship-asked": "Sie haben nach Mentorship gefragt",
     "mentorship-offered": "Sie haben Mentorschaft angeboten",
     "mentorship-asking": "Sie fragen nach Mentorship",
-    "mentorship-offering": "Sie bieten Mentorship an"
+    "mentorship-offering": "Sie bieten Mentorship an",
+    "publications": "Veröffentlichungen",
+    "research-output-year": "Forschungsausgabe Jahr",
+    "publications-similars": "Veröffentlichungen ähnlich",
+    "publications-empty": "Keine Veröffentlichungen."
   },
   "profile-completed-modal": {
     "notice-congratulation": "Sie sind jetzt bereit, die Projektplattform zu nutzen.",
@@ -2010,6 +2027,7 @@
     "advancement-goal-title": "Vorlage für Weiterentwicklungszieltitel",
     "advancement-goal-content": "Vorlage für den Fortschrittszielinhalt",
     "category": "Kategorie",
+    "description": "Vorlage für Beschreibung",
     "language": "Sprache Vorlage",
     "info": "Wenn Sie den Benutzern vorschlagen möchten, wie sie ihr Projekt in einer bestimmten Kategorie organisieren, können Sie eine Vorlage für diese Kategorie erstellen. Dann, wenn ein Benutzer ein Projekt in dieser Kategorie erstellen wird das Projekt mit dem Text, den Sie in der Vorlage definiert. Dieser Text ist als Leitfaden für Nutzer gedacht.",
     "no-tag-set": "Es wurde jetzt kein Tag gesetzt.",
@@ -2026,7 +2044,6 @@
     "edit": "Ausgabe von Dokumenten",
     "list": "Vorlagenliste",
     "add-template": "Vorlage hinzufügen",
-    "description": "Vorlage Beschreibung",
     "project-description": "Vorlage für Projektbeschreibung",
     "title-project": "Projekt",
     "title-blog": "Blog",

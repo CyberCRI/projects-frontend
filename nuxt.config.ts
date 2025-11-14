@@ -50,7 +50,13 @@ export default defineNuxtConfig({
     },
   },
   srcDir: 'src/',
-  modules: ['@pinia/nuxt', '@nuxt/test-utils/module', '@nuxtjs/i18n', '@nuxt/test-utils/module'],
+  modules: [
+    '@pinia/nuxt',
+    '@nuxt/test-utils/module',
+    '@nuxtjs/i18n',
+    '@nuxt/test-utils/module',
+    'nuxt-svgo',
+  ],
 
   // disable caching
   routeRules: {

@@ -558,6 +558,11 @@
     "confirm-close": "Esteu segur que voleu tancar l' editor? Qualsevol canvi que heu fet no serà desat.",
     "ok": "Bé",
     "file-too-big": "El fitxer és massa gran (màx: {maxSize}Mb)",
+    "select": "Selecciona",
+    "year": "any",
+    "link-to": "enllaç a",
+    "other": "altra",
+    "and": "i",
     "create": "Crea"
   },
   "complete-profile": {
@@ -1061,7 +1066,8 @@
     "no-project-reviewing": "Encara no esteu revisant un projecte",
     "skills": "Habilitats",
     "hobbies": "Hobbiesusa. kgm",
-    "levels-help-link": "Nivells d'kill"
+    "levels-help-link": "Nivells d'kill",
+    "publications": "Les meves publicacions"
   },
   "you": {
     "no-follow": "Encara no hi ha cap projecte seguit",
@@ -1069,7 +1075,9 @@
     "no-bio": "Encara no hi ha biografia",
     "no-skill": "Encara no s' han indicat habilitats",
     "no-project-participate": "Encara no és membre d' un projecte",
-    "no-project-reviewing": "Encara no és un revisador d'un projecte"
+    "no-project-reviewing": "Encara no és un revisador d'un projecte",
+    "publications": "Les seves publicacions",
+    "no-publications": "Encara no hi ha publicacions"
   },
   "multieditor": {
     "blockquote": "Bloqueja la cita",
@@ -1511,6 +1519,10 @@
           "org": "El meu portal",
           "pub": "Públic"
         }
+      },
+      "publications": {
+        "no-editable": "Les publicacions encara no estan disponibles.",
+        "tab": "Publicacions"
       }
     },
     "go-to-page": "Visualitza la pàgina del perfil",
@@ -1531,7 +1543,11 @@
     "mentorship-asked": "Vas demanar un mentor.",
     "mentorship-offered": "Heu ofert un mentor",
     "mentorship-asking": "Demana a mentor",
-    "mentorship-offering": "Estàs oferint mentors"
+    "mentorship-offering": "Estàs oferint mentors",
+    "publications": "Publicacions",
+    "research-output-year": "Any de sortida de recerca",
+    "publications-similars": "similar a Publicacions",
+    "publications-empty": "Sense Publicacions."
   },
   "profile-completed-modal": {
     "notice-congratulation": "Ara estàs preparat per utilitzar la plataforma de projectes.",

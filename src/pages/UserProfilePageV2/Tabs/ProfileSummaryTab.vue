@@ -20,6 +20,33 @@
       <SkillSummary :user="user" class="unboxed" />
     </div>
     <div class="lists">
+      <!-- publications -->
+      <UserProjectsSearch
+        v-if="documentsCount.publications"
+        :limit="publicationsLimit"
+        :user="user"
+      >
+        <template #default>
+          <div class="project-list-header">
+            <h4 class="title">
+              {{ $t('me.publications') }}
+              <span>({{ documentsCount.publications }})</span>
+            </h4>
+            <SeeMoreArrow
+              v-if="documentsCount.publications > publicationsLimit"
+              data-test="see-more"
+              :to="{ name: 'ResearcherPublicationsOther' }"
+            />
+          </div>
+          <ResearcherDocumentsList
+            doc-type="publications"
+            preview
+            :limit="publicationsLimit"
+            :user="user"
+          />
+        </template>
+      </UserProjectsSearch>
+
       <!-- user projects (Owners, Members) -->
       <UserProjectsSearch :limit="listLimit" :member-roles="['owners', 'members']" :user="user">
         <template #default="{ items: projects, isLoading, totalCount }">
@@ -105,6 +132,7 @@ import UserDescriptions from '@/components/people/UserDescriptions.vue'
 import SkillSummary from '@/components/people/skill/SkillSummary.vue'
 import useUsersStore from '@/stores/useUsers.ts'
 import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
+import ResearcherDocumentsList from '@/components/people/Researcher/ResearcherDocumentsList.vue'
 
 export default {
   name: 'ProfileSummaryTab',
@@ -115,6 +143,7 @@ export default {
     UserDescriptions,
     SkillSummary,
     SeeMoreArrow,
+    ResearcherDocumentsList,
   },
 
   inject: {
@@ -141,10 +170,14 @@ export default {
   data() {
     return {
       listLimit: 6,
+      publicationsLimit: 3,
     }
   },
 
   computed: {
+    documentsCount() {
+      return this.user.researcher?.documents ?? {}
+    },
     isCurrentUser() {
       return this.usersStore.id === this.user.id
     },

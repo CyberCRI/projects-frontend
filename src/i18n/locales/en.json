@@ -500,6 +500,11 @@
     "delete-description": "Are you sure you want to permanently delete your comments? This action will be irreversible."
   },
   "common": {
+    "select": "select",
+    "year": "year",
+    "link-to": "link to",
+    "other": "other",
+    "and": "and",
     "create": "Create",
     "activate": "Activate",
     "activated": "Activated",
@@ -619,7 +624,8 @@
     "edit-saved": "Any changes you (and any co-authors) made will not be saved.",
     "edit": "edit description (draft)",
     "add": "Add description",
-    "quit-without-saving-title": "Quit without saving?"
+    "quit-without-saving-title": "Quit without saving?",
+    "default-placeholder": "Now describe your project."
   },
   "discover": {
     "page-title": "Discover",
@@ -1061,7 +1067,8 @@
     "no-project-reviewing": "You are not reviewer of a project yet",
     "skills": "Skills",
     "hobbies": "Hobbies",
-    "levels-help-link": "Skill levels"
+    "levels-help-link": "Skill levels",
+    "publications": "My publications"
   },
   "you": {
     "no-follow": "No projects followed yet",
@@ -1069,7 +1076,9 @@
     "no-bio": "No biography yet",
     "no-skill": "No skills indicated yet",
     "no-project-participate": "Not a member of a project yet",
-    "no-project-reviewing": "Not a reviewer of a project yet"
+    "no-project-reviewing": "Not a reviewer of a project yet",
+    "publications": "His publications",
+    "no-publications": "No publications yet"
   },
   "multieditor": {
     "blockquote": "Blockquote",
@@ -1478,6 +1487,10 @@
         },
         "nothing-yet": "You haven't added skills yet."
       },
+      "publications": {
+        "no-editable": "The publications are not yet available.",
+        "tab": "Publications"
+      },
       "privacy": {
         "tab": "Privacy",
         "save-error": "Error while saving profile.",
@@ -1531,7 +1544,11 @@
     "mentorship-asked": "You asked for mentorship",
     "mentorship-offered": "You offered mentorship",
     "mentorship-asking": "You are asking for mentorship",
-    "mentorship-offering": "You are offering mentorship"
+    "mentorship-offering": "You are offering mentorship",
+    "publications": "Publications",
+    "research-output-year": "Research output year",
+    "publications-similars": "Publications similars",
+    "publications-empty": "No Publications."
   },
   "profile-completed-modal": {
     "notice-congratulation": "You are now ready to use the projects platform.",
@@ -1603,7 +1620,8 @@
         "max": "The purpose field may not be greater than 180 characters",
         "min": "The purpose field must be at least 3 characters"
       },
-      "completed-info-to-access-presentation": "All information on the page must be completed to access the presentation."
+      "completed-info-to-access-presentation": "All information on the page must be completed to access the presentation.",
+      "purpose-placeholder": "What is the purpose of your project?"
     },
     "image-header": "Image",
     "image-alert": {

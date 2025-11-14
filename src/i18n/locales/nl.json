@@ -558,6 +558,11 @@
     "confirm-close": "Weet u zeker dat u de editor wilt sluiten? Wijzigingen die u hebt gemaakt worden niet opgeslagen.",
     "ok": "Ok",
     "file-too-big": "Bestand is te groot (max: {maxSize}Mb)",
+    "select": "selecteren",
+    "year": "jaar",
+    "link-to": "verwijzing naar",
+    "other": "Andere",
+    "and": "en",
     "create": "Aanmaken"
   },
   "complete-profile": {
@@ -1061,7 +1066,8 @@
     "no-project-reviewing": "U bent nog geen beoordelaar van een project",
     "skills": "Vaardigheden",
     "hobbies": "Hobby's",
-    "levels-help-link": "Vaardigheden"
+    "levels-help-link": "Vaardigheden",
+    "publications": "Mijn publicaties"
   },
   "you": {
     "no-follow": "Nog geen projecten gevolgd",
@@ -1069,7 +1075,9 @@
     "no-bio": "Nog geen biografie",
     "no-skill": "Nog geen vaardigheden aangegeven",
     "no-project-participate": "Nog geen lid van een project",
-    "no-project-reviewing": "Nog geen recensent van een project"
+    "no-project-reviewing": "Nog geen recensent van een project",
+    "publications": "Zijn publicaties",
+    "no-publications": "Nog geen publicaties"
   },
   "multieditor": {
     "blockquote": "Blockquote",
@@ -1511,6 +1519,10 @@
           "org": "Mijn portaal",
           "pub": "Openbaar"
         }
+      },
+      "publications": {
+        "no-editable": "De publicaties zijn nog niet beschikbaar.",
+        "tab": "Publicaties"
       }
     },
     "go-to-page": "De pagina van het profiel weergeven",
@@ -1531,7 +1543,11 @@
     "mentorship-asked": "U vroeg om mentorschap.",
     "mentorship-offered": "Je bood mentorschap aan.",
     "mentorship-asking": "U vraagt om mentorschap.",
-    "mentorship-offering": "Je biedt mentorschap aan."
+    "mentorship-offering": "Je biedt mentorschap aan.",
+    "publications": "Publicaties",
+    "research-output-year": "Produktiejaar onderzoek",
+    "publications-similars": "Publicaties",
+    "publications-empty": "Geen publicaties."
   },
   "profile-completed-modal": {
     "notice-congratulation": "U bent nu klaar om het projectplatform te gebruiken.",
