@@ -35,7 +35,7 @@ export default function useProfilePagesRoutes() {
     },
     {
       path: 'conferences',
-      name: 'ResearchecConferences',
+      name: 'ResearcherConferences',
       component: () => import('../pages/UserProfilePageV2/Tabs/ResearcherDocumentsTab.vue'),
       props: {
         docType: 'conferences',

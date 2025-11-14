@@ -624,7 +624,8 @@
     "edit": "modifier la description (brouillon)",
     "placeholder": "Vous n’avez pas encore de description, pensez à en ajouter une !",
     "add": "Ajouter une description",
-    "quit-without-saving-title": "Quitter sans sauvegarder ?"
+    "quit-without-saving-title": "Quitter sans sauvegarder ?",
+    "default-placeholder": "Décrivez votre projet."
   },
   "discover": {
     "page-title": "Découvrir",
@@ -1067,7 +1068,8 @@
     "skills": "Compétences",
     "hobbies": "Hobbies",
     "levels-help-link": "Niveaux de compétence",
-    "publications": "Mes publications"
+    "publications": "Mes publications",
+    "conferences": "Mes conférences"
   },
   "you": {
     "no-follow": "Pas encore de projets suivis",
@@ -1077,7 +1079,9 @@
     "no-project-participate": "N’est pas encore membre d’un projet",
     "no-project-reviewing": "Ne revise pas encore de projets",
     "publications": "Ses publications",
-    "no-publications": "Pas encore de publications"
+    "no-publications": "Pas encore de publications",
+    "conferences": "Ses conférences",
+    "no-conferences": "Pas encore de conférences"
   },
   "multieditor": {
     "blockquote": "Citation",
@@ -1523,6 +1527,10 @@
       "publications": {
         "no-editable": "Les publications ne sont pas encore disponibles.",
         "tab": "Publications"
+      },
+      "conferences": {
+        "no-editable": "Les conférences ne sont pas encore disponibles.",
+        "tab": "Conférences"
       }
     },
     "go-to-page": "Voir la page du profil",
@@ -1547,7 +1555,10 @@
     "publications": "Publications",
     "research-output-year": "Année de production de la recherche",
     "publications-similars": "Publications similaires",
-    "publications-empty": "Pas de publications."
+    "publications-empty": "Pas de publications.",
+    "conferences": "Conférences",
+    "conferences-similars": "Conférences similaires",
+    "conferences-empty": "Pas de conférence."
   },
   "profile-completed-modal": {
     "notice-congratulation": "Vous êtes maintenant prêt à utiliser la plateforme Projects.",
@@ -1619,7 +1630,8 @@
         "max": "Le champ mission ne peut pas contenir plus de 180 caractères",
         "min": "Le champ mission doit contenir au minimum 3 caractères"
       },
-      "project-templates": "Nom du modèle"
+      "project-templates": "Nom du modèle",
+      "purpose-placeholder": "Quel est le but de votre projet?"
     },
     "image-header": "Image",
     "image-alert": {
