@@ -28,7 +28,7 @@
 import { sanitizeResearcherDocument } from '@/api/sanitizes/researcher'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
-import { usePagination } from '@/composables/usePagination'
+import { PaginationResult, usePagination } from '@/composables/usePagination'
 import { Document } from '@/iterfaces/researcher'
 import { UserModel } from '@/models/user.model'
 
@@ -43,7 +43,7 @@ const props = defineProps<{
 }>()
 
 const status = ref('pending')
-const documents = ref()
+const documents = ref<PaginationResult<Document>>()
 const pagination = usePagination(documents, { limit: 10 })
 const { count } = pagination
 

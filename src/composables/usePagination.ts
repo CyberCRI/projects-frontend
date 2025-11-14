@@ -1,4 +1,4 @@
-export type PaginationResult<T = any[]> = {
+export type PaginationResult<T = any> = {
   /** @example 123 */
   count: number
   /** @example 123 */
@@ -27,7 +27,7 @@ export type PaginationResult<T = any[]> = {
   previous?: string | null
   /** @example 123 */
   previous_page?: number
-  results: T
+  results: T[]
   /** @example 123 */
   total_page?: number
 }

@@ -12,30 +12,29 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 /*
     documents editions not form projects
     need to add iframe to show sovisuplus
 */
 import SvgWarning from '@/assets/svg/warning.svg'
 
-defineOptions({
-  name: 'ResearcherEditDocumentsTab',
-})
+defineOptions({ name: 'ResearcherEditDocumentsTab' })
 const { t } = useNuxtI18n()
 
-const props = defineProps({
-  docType: {
-    type: String,
-    required: true,
-  },
-})
+const props = defineProps<{ docType: string }>()
 
 const title = computed(() => t(`me.${props.docType}`))
 const notEditable = computed(() => t(`profile.edit.${props.docType}.no-editable`))
 </script>
 
 <style lang="scss">
+.profile-documents {
+  border-radius: 5px;
+  padding: 0.2rem;
+  transition: background-color 0.25s ease;
+}
+
 .documents-warning {
   border-radius: 20px;
   padding: 1rem;

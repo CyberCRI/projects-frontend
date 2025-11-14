@@ -1,3 +1,4 @@
+import { PaginationResult } from '@/composables/usePagination'
 import type { Document, ResearcherDocumentAnalytics } from '@/iterfaces/researcher.ts'
 
 /**
@@ -11,8 +12,8 @@ import type { Document, ResearcherDocumentAnalytics } from '@/iterfaces/research
  * @returns {any}
  * @exports
  */
-export const sanitizeResearcherDocument = (data): Document => {
-  const result = data.results as Document[]
+export const sanitizeResearcherDocument = (data: PaginationResult<Document>) => {
+  const result = data.results
   result.forEach((el) => {
     if (el.publication_date) {
       el.publication_date = new Date(el.publication_date)
