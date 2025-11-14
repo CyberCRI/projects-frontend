@@ -4,7 +4,7 @@ import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { getOrganizationByCode } from '@/api/organizations.service'
 
 const organizationsStore = useOrganizationsStore()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const announcements = useState(() => [])
 const isLoading = useState(() => false)
@@ -55,7 +55,7 @@ try {
 <template>
   <div class="announcements-page page-section-medium page-top">
     <h1 class="page-title">
-      {{ $filters.capitalize($t('home.announcements')) }}
+      {{ $t('home.announcements') }}
     </h1>
 
     <AnnouncementCardListSkeleton v-if="isLoading" />

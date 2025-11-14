@@ -44,7 +44,7 @@ export default {
   emits: ['close'],
 
   setup() {
-    const { locale } = useI18n()
+    const { locale } = useNuxtI18n()
 
     const { onboardingTrap } = useOnboardingStatus()
     return {

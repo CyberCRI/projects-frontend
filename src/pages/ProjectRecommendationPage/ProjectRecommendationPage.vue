@@ -4,7 +4,7 @@ import { getOrganizationByCode } from '@/api/organizations.service'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 const organizationsStore = useOrganizationsStore()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const projectRecommendationsRequest = useState(() => null)
 const limit = useState(() => 10)

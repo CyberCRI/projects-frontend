@@ -62,7 +62,6 @@ export default defineNuxtConfig({
     },
   },
   plugins: [
-    '~/filters/index.ts',
     '~/directives/index.ts',
     '~/plugins/appInit.ts',
     '~/plugins/errorHandler.ts',
@@ -70,6 +69,7 @@ export default defineNuxtConfig({
     '~/plugins/router-after-each.client.ts',
     '~/plugins/lang-switch.ts',
   ],
+  css: ['@/design/scss/reset.scss', '@/design/scss/main.scss'],
   imports: {
     autoImport: true, //false,
   },

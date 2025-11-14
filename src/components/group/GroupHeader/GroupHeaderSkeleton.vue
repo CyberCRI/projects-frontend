@@ -12,12 +12,9 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
-export default {
-  name: 'GroupHeaderSkeleton',
-  components: { SkeletonComponent },
-}
+defineOptions({ name: 'GroupHeaderSkeleton' })
 </script>
 
 <style lang="scss" scoped>

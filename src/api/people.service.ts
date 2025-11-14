@@ -1,13 +1,18 @@
 // import type { APIResponseList } from '@/api/types'
 // import type { PeopleModel } from '@/models/people.model'
-import type { UserPatchModel, UserPrivacyPatchModel, UserSkillModel } from '@/models/user.model'
+import type {
+  UserPatchModel,
+  UserPrivacyPatchModel,
+  UserSkillModel,
+  UserModel,
+} from '@/models/user.model'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useAPI from '@/composables/useAPI'
 
 // New user service using projects API
 export async function getUser(id: string, noError: boolean = false) {
-  return await useAPI(`user/${id}/`, { noError: noError }) //.data.value
+  return await useAPI<UserModel>(`user/${id}/`, { noError: noError }) //.data.value
 }
 
 export async function postUser(payload: FormData) {

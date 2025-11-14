@@ -2,7 +2,7 @@
   <div class="linked-projects-recap">
     <SectionHeader
       :title="$t('project.linked', linkedProjects.length)"
-      :button-label="$filters.capitalize($t('project.show-n-projects', linkedProjects.length))"
+      :button-label="$t('project.show-n-projects', linkedProjects.length)"
       class="section-header"
       :has-button="linkedProjects.length > 6"
       @redirect-button-clicked="goToLinkedProjectsView"

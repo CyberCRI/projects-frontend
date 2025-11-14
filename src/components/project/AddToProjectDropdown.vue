@@ -8,7 +8,7 @@
       <LpiButton
         v-if="item.condition"
         :data-test="item.dataTest"
-        :label="$filters.capitalize($t(item.label))"
+        :label="item.label"
         :secondary="true"
         class="add-to-project__button borderless squarish unpad no-height not-centered"
         btn-icon="Plus"
@@ -41,7 +41,7 @@ export default {
     menuItems() {
       return [
         {
-          label: 'project.add-to-project.blog-entry',
+          label: this.$t('project.add-to-project.blog-entry'),
           dataTest: 'button-add-blog-to-project',
           onClick: () => {
             this.$emit('close-dropdown')
@@ -51,7 +51,7 @@ export default {
         },
         // TODO merge sdg and goal
         {
-          label: 'project.add-to-project.goal',
+          label: this.$t('project.add-to-project.goal'),
           dataTest: 'button-add-goal-to-project',
           onClick: () => {
             this.$emit('close-dropdown')
@@ -61,7 +61,7 @@ export default {
         },
         // TODO merge sdg and goal
         {
-          label: 'project.add-to-project.sdg',
+          label: this.$t('project.add-to-project.sdg'),
           dataTest: 'button-add-sdg-to-project',
           onClick: () => {
             this.$emit('close-dropdown')
@@ -70,7 +70,7 @@ export default {
           condition: this.canEditProject,
         },
         {
-          label: 'project.add-to-project.link-and-attached-document',
+          label: this.$t('project.add-to-project.link-and-attached-document'),
           dataTest: 'button-add-resource-to-project',
           onClick: () => {
             this.$emit('close-dropdown')
@@ -79,7 +79,7 @@ export default {
           condition: this.canEditProject,
         },
         {
-          label: 'project.linked-project',
+          label: this.$t('project.linked-project'),
           dataTest: 'button-add-linked-project-to-project',
           onClick: () => {
             this.$emit('close-dropdown')
@@ -88,7 +88,7 @@ export default {
           condition: this.canEditProject,
         },
         {
-          label: 'project.add-to-project.team-member',
+          label: this.$t('project.add-to-project.team-member'),
           dataTest: 'button-add-team-to-project',
           onClick: () => {
             this.$emit('close-dropdown')
@@ -97,7 +97,7 @@ export default {
           condition: this.canEditProject,
         },
         {
-          label: 'project.add-to-project.announcement',
+          label: this.$t('project.add-to-project.announcement'),
           dataTest: 'button-add-job-to-project',
           onClick: () => {
             this.$emit('close-dropdown')
@@ -107,7 +107,7 @@ export default {
         },
 
         {
-          label: 'project.add-to-project.location',
+          label: this.$t('project.add-to-project.location'),
           dataTest: 'button-add-location-to-project',
           onClick: () => {
             this.$emit('close-dropdown')

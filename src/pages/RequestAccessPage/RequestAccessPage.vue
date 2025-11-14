@@ -9,7 +9,7 @@ import { getOrganizationByCode } from '@/api/organizations.service'
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
 const router = useRouter()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 const form = ref({
   email: '',
   given_name: '',

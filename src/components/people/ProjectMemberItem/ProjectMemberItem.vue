@@ -1,5 +1,5 @@
 <template>
-  <div class="user" @click="$emit('user-click', user)">
+  <div class="user" @click="emit('user-click', user)">
     <CroppedApiImage
       :alt="user.id ? `${user.given_name} ${user.family_name} image` : `${user.name} image`"
       class="picture"
@@ -8,21 +8,21 @@
       default-picture="/placeholders/user_placeholder.svg"
     />
     <span v-if="roleLabel" class="badge" data-test="leader-badge">
-      {{ $t(roleLabel) }}
+      {{ t(roleLabel) }}
     </span>
 
-    <div v-if="$filters.isNotGroup(user)" class="name-ctn">
+    <div v-if="isNotGroup(user)" class="name-ctn">
       <h4 class="user-name">
         {{ userName }}
       </h4>
     </div>
 
     <!--        TODO: ask Api to send information-->
-    <div v-if="$filters.isNotGroup(user)" class="job">
+    <div v-if="isNotGroup(user)" class="job">
       {{ user?.$t?.job }}
     </div>
 
-    <div v-if="$filters.isGroup(user)" class="name-ctn">
+    <div v-if="isGroup(user)" class="name-ctn">
       <h4 class="user-name">
         {{ user.name }}
       </h4>
@@ -30,42 +30,42 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { isNotGroup, isGroup } from '@/functs/users'
+
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 
-export default {
-  name: 'ProjectMemberItem',
+defineOptions({ name: 'ProjectMemberItem' })
 
-  components: {
-    CroppedApiImage,
+const props = defineProps({
+  user: {
+    type: Object,
+    default: () => {},
   },
+})
+const { t } = useNuxtI18n()
+const emit = defineEmits(['user-click'])
 
-  props: {
-    user: {
-      type: Object,
-      default: () => {},
-    },
-  },
-
-  emits: ['user-click'],
-
-  computed: {
-    userName() {
-      return `${this.user.given_name?.toLowerCase()} ${this.user.family_name?.toLowerCase()}`
-    },
-    roleLabel() {
-      const role = this.user?.role
-      if (role) {
-        if (role === 'owners') return 'role.editor'
-        else if (role === 'members') return 'role.teammate'
-        else if (role === 'reviewers') return 'role.reviewer'
-        else if (role === 'owner_groups') return 'role.editor-group'
-        else if (role === 'reviewer_groups') return 'role.reviewer-group'
-        else if (role === 'member_groups') return 'role.teammate-group'
-      }
+const userName = () => {
+  return `${props.user.given_name?.toLowerCase()} ${props.user.family_name?.toLowerCase()}`
+}
+const roleLabel = () => {
+  switch (props.user?.role) {
+    case 'owners':
+      return 'role.editor'
+    case 'members':
+      return 'role.teammate'
+    case 'reviewers':
+      return 'role.reviewer'
+    case 'owner_groups':
+      return 'role.editor-group'
+    case 'reviewer_groups':
+      return 'role.reviewer-group'
+    case 'member_groups':
+      return 'role.teammate-group'
+    default:
       return null
-    },
-  },
+  }
 }
 </script>
 

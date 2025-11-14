@@ -10,37 +10,32 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import useSkillLevels from '@/composables/useSkillLevels.js'
-export default {
-  name: 'SkillSteps',
 
-  props: {
-    steps: {
-      type: Number,
-      default: 1,
-    },
+defineOptions({ name: 'SkillSteps' })
 
-    activeStep: {
-      type: Number,
-      default: 1,
-    },
-
-    hasBorder: {
-      type: Boolean,
-      default: false,
-    },
-    showLabel: {
-      type: Boolean,
-      default: false,
-    },
+defineProps({
+  steps: {
+    type: Number,
+    default: 1,
   },
 
-  setup() {
-    const { skillLevels } = useSkillLevels()
-    return { skillLevels }
+  activeStep: {
+    type: Number,
+    default: 1,
   },
-}
+
+  hasBorder: {
+    type: Boolean,
+    default: false,
+  },
+  showLabel: {
+    type: Boolean,
+    default: false,
+  },
+})
+const { skillLevels } = useSkillLevels()
 </script>
 
 <style lang="scss" scoped>

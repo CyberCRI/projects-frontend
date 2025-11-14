@@ -49,6 +49,7 @@ export default {
   data() {
     return {
       editChatIsOpen: false,
+      isLoading: false,
     }
   },
 

@@ -2,7 +2,7 @@
 import NotificationsSettingsTab from './Tabs/NotificationsSettingsTab.vue'
 import { getOrganizationByCode } from '@/api/organizations.service'
 
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const tabs = computed(() => [
   {

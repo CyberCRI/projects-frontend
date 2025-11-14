@@ -40,7 +40,7 @@
                 :class="{ unsortable: filter.unsortable }"
                 @click="sortBy(filter)"
               >
-                {{ $filters.capitalize($t(filter.label)) }}
+                {{ $t(filter.label) }}
                 <IconImage
                   v-if="!filter.unsortable"
                   :name="filter.order === '-' ? 'MenuDown' : 'MenuUp'"
@@ -72,11 +72,11 @@
                 </div>
               </td>
               <td>
-                {{ $filters.capitalize(user.family_name) }}
-                {{ $filters.capitalize(user.given_name) }}
+                {{ capitalize(user.family_name) }}
+                {{ capitalize(user.given_name) }}
               </td>
-              <!-- <td>{{ $filters.capitalize(user.given_name) }}</td> -->
-              <!-- <td>{{ $filters.capitalize(user.job) }}</td> -->
+              <!-- <td>{{ capitalize(user.given_name) }}</td> -->
+              <!-- <td>{{ capitalize(user.job) }}</td> -->
               <!-- <td class="has-more">
               {{ user.current_org_role ? $t(`groups.roles.${user.current_org_role}`) : '-' }}
             </td> -->
@@ -166,7 +166,8 @@
 </template>
 
 <script>
-import debounce from 'lodash.debounce'
+import { debounce } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 import { searchPeopleAdmin } from '@/api/people.service'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
@@ -176,6 +177,7 @@ export default {
     const organizationsStore = useOrganizationsStore()
     return {
       organizationsStore,
+      capitalize,
     }
   },
   data() {
@@ -190,56 +192,56 @@ export default {
       request: {},
       filters: [
         {
-          label: 'form.email',
+          label: this.$t('form.email'),
           isActive: false,
           filter: 'email',
           order: '',
           unsortable: false,
         },
         {
-          label: 'admin.accounts.table.last-name',
+          label: this.$t('admin.accounts.table.last-name'),
           isActive: false,
           filter: 'family_name',
           order: '',
           unsortable: false,
         },
         // {
-        //   label: 'admin.accounts.table.first-name',
+        //   label: this.$t('admin.accounts.table.first-name'),
         //   isActive: false,
         //   filter: 'given_name',
         //   order: '',
         //   unsortable: false,
         // },
         // {
-        //   label: 'admin.accounts.table.title',
+        //   label: this.$t('admin.accounts.table.title'),
         //   isActive: false,
         //   filter: 'job',
         //   order: '',
         //   unsortable: false,
         // },
         // {
-        //   label: 'admin.accounts.table.roles',
+        //   label: this.$t('admin.accounts.table.roles'),
         //   isActive: false,
         //   filter: 'current_org_role',
         //   order: '',
         //   unsortable: false,
         // },
         // {
-        //   label: 'admin.accounts.table.groups',
+        //   label: this.$t('admin.accounts.table.groups'),
         //   isActive: false,
         //   filter: 'people_groups',
         //   order: '',
         //   unsortable: true,
         // },
         {
-          label: 'admin.accounts.table.inscription',
+          label: this.$t('admin.accounts.table.inscription'),
           isActive: false,
           filter: 'created_at',
           order: '',
           unsortable: false,
         },
         {
-          label: 'admin.accounts.table.activation',
+          label: this.$t('admin.accounts.table.activation'),
           isActive: false,
           filter: 'email_verified',
           order: '',

@@ -3,20 +3,20 @@
     <div class="project-tooltip__header">
       <div :class="location.type" class="project-tooltip__header--dot" />
       <h2 class="project-tooltip__header--title">
-        {{ $filters.capitalize(typeLabel) }}
+        {{ typeLabel }}
       </h2>
     </div>
 
     <div class="project-tooltip__location">
       <h3 class="project-tooltip__location--title">
-        {{ $filters.capitalize(location.title) }}
+        {{ capitalize(location.title) }}
       </h3>
       <p class="project-tooltip__location--description">
-        {{ $filters.capitalize(location.description) }}
+        {{ capitalize(location.description) }}
       </p>
 
       <LinkButton
-        :label="$filters.capitalize($t('project.view'))"
+        :label="$t('project.view')"
         class="project-tooltip__button"
         btn-icon="ArrowRight"
         :to="{ name: 'pageProject', params: { slugOrId: project.slug || project.id } }"
@@ -42,46 +42,34 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { capitalize } from '@/functs/string'
+
 import LinkButton from '@/components/base/button/LinkButton.vue'
+import { cropIfTooLong } from '@/functs/string'
 
-export default {
-  name: 'ProjectTooltip',
+defineOptions({ name: 'ProjectTooltip' })
 
-  components: {
-    LinkButton,
+const props = defineProps({
+  location: {
+    type: Object,
+    default: () => {},
   },
+})
 
-  props: {
-    location: {
-      type: Object,
-      default: () => {},
-    },
-  },
-
-  computed: {
-    title() {
-      return this.cropIfTooLong(this.project.title, 45)
-    },
-    purpose() {
-      return this.cropIfTooLong(this.project.purpose, 85)
-    },
-
-    project() {
-      return this.location.project
-    },
-    typeLabel() {
-      return this.location.type === 'impact' ? this.$t('project.impact') : this.$t('team.team')
-    },
-  },
-
-  methods: {
-    cropIfTooLong(text, length) {
-      if (text) return text.length > length ? text.substring(0, length) + '...' : text
-      return ''
-    },
-  },
-}
+const { t } = useNuxtI18n()
+const project = computed(() => {
+  return props.location.project
+})
+const typeLabel = computed(() => {
+  return props.location.type === 'impact' ? t('project.impact') : t('team.team')
+})
+const title = computed(() => {
+  return cropIfTooLong(project.value.title, 45)
+})
+const purpose = computed(() => {
+  return cropIfTooLong(project.value.purpose, 85)
+})
 </script>
 
 <style lang="scss" scoped>

@@ -1,7 +1,7 @@
 <template>
   <div class="summary-block list-summary-block" :class="[nbColsText, { inlined }]">
     <h1 class="uppercase-title">
-      {{ $filters.capitalize(title) }}
+      {{ title }}
     </h1>
     <div class="column-wrapper">
       <div class="items-line">
@@ -14,45 +14,38 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'BaseListSummaryBlock',
+<script setup>
+defineOptions({ name: 'BaseListSummaryBlock' })
 
-  props: {
-    title: {
-      type: String,
-      default: '',
-    },
-
-    items: {
-      type: Array,
-      default: () => [],
-    },
-
-    inlined: {
-      type: Boolean,
-      default: false,
-    },
+const props = defineProps({
+  title: {
+    type: String,
+    default: '',
   },
 
-  computed: {
-    nbCols() {
-      return this.items.length
-    },
-
-    nbColsText() {
-      if (this.nbCols > 2) {
-        return 'three-col-wrapper'
-      } else if (this.nbCols === 2) {
-        return 'two-col-wrapper'
-      } else if (this.nbCols === 1) {
-        return ['one-col-wrapper']
-      } else {
-        return 'no-col-wrapper'
-      }
-    },
+  items: {
+    type: Array,
+    default: () => [],
   },
-}
+
+  inlined: {
+    type: Boolean,
+    default: false,
+  },
+})
+
+const nbCols = computed(() => props.items.length)
+const nbColsText = computed(() => {
+  if (nbCols.value > 2) {
+    return 'three-col-wrapper'
+  } else if (nbCols.value === 2) {
+    return 'two-col-wrapper'
+  } else if (nbCols.value === 1) {
+    return ['one-col-wrapper']
+  } else {
+    return 'no-col-wrapper'
+  }
+})
 </script>
 
 <style lang="scss" scoped>

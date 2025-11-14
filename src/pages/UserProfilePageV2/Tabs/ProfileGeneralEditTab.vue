@@ -111,7 +111,7 @@
 
     <!-- Picture -->
     <div class="form-group img-ctn">
-      <label>{{ $filters.capitalize($t('profile.edit.general.picture.label')) }}</label>
+      <label>{{ $t('profile.edit.general.picture.label') }}</label>
       <ImageEditor
         v-model:image-sizes="form.imageSizes"
         v-model:picture="form.picture"
@@ -153,9 +153,7 @@
     <div class="form-group">
       <div class="label-wrapper">
         <label>
-          {{ $filters.capitalize($t('profile.edit.general.sdgs.label')) }} ({{
-            form.sdgs ? form.sdgs.length : '0'
-          }})
+          {{ $t('profile.edit.general.sdgs.label') }} ({{ form.sdgs ? form.sdgs.length : '0' }})
         </label>
 
         <LpiButton
@@ -191,7 +189,7 @@
     <div class="form-actions" data-test="main-form">
       <LpiButton
         :disabled="asyncing"
-        :label="$filters.capitalize($t('common.cancel'))"
+        :label="$t('common.cancel')"
         :secondary="true"
         class="footer__left-button"
         data-test="close-button"
@@ -200,7 +198,7 @@
 
       <LpiButton
         :disabled="v$.$errors.length || asyncing"
-        :label="$filters.capitalize($t('common.confirm'))"
+        :label="$t('common.confirm')"
         :btn-icon="asyncing ? 'LoaderSimple' : null"
         class="footer__right-button"
         data-test="confirm-button"
@@ -235,7 +233,7 @@
 import useVuelidate from '@vuelidate/core'
 import { helpers, required, email, url } from '@vuelidate/validators'
 import { patchUser, patchUserPicture, postUserPicture } from '@/api/people.service.ts'
-import isEqual from 'lodash.isequal'
+import { isEqual } from 'es-toolkit'
 import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils.ts'
 import { VALID_NAME_REGEX } from '@/functs/constants.ts'
 import useToasterStore from '@/stores/useToaster.ts'

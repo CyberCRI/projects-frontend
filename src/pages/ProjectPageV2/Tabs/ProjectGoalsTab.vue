@@ -5,7 +5,7 @@
     <div v-if="isEditionEnabled" class="add-goal">
       <LpiButton
         v-if="isEditionEnabled"
-        :label="$filters.capitalize($t('goal.add'))"
+        :label="$t('goal.add')"
         class="add-goal-btn"
         btn-icon="Plus"
         @click="projectLayoutToggleAddModal('goal')"
