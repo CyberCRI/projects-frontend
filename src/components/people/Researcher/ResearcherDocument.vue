@@ -1,6 +1,6 @@
 <template>
   <article class="profile-documents">
-    <h2>{{ document.title }}</h2>
+    <h2>{{ document.$t.title }}</h2>
     <div>
       <span v-for="(author, idx) in document.contributors" :key="author.id">
         <!-- if author.user isa projectsUser, create a nuxtlink to go to the user -->
@@ -32,7 +32,7 @@
       </span>
     </div>
     <p class="profile-document-description" :class="{ preview: preview }">
-      {{ document.description }}
+      {{ document.$t.description }}
     </p>
     <span>
       {{
@@ -67,7 +67,7 @@
 
 <script setup lang="ts">
 import { documentTypeHarverToUrl, researcherHarvesterToUrl } from '@/functs/researcher'
-import { Document } from '@/iterfaces/researcher'
+import { TranslatedDocument } from '@/iterfaces/researcher'
 
 defineOptions({ name: 'ResearcherDocument' })
 
@@ -75,7 +75,12 @@ const { t, locale } = useNuxtI18n()
 const emit = defineEmits(['similar'])
 
 withDefaults(
-  defineProps<{ document: Document; docType: string; preview?: boolean; similar?: boolean }>(),
+  defineProps<{
+    document: TranslatedDocument
+    docType: string
+    preview?: boolean
+    similar?: boolean
+  }>(),
   { similar: true, preview: false }
 )
 </script>

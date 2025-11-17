@@ -10,7 +10,7 @@
     <FetchLoader :status="status">
       <div class="documents-list">
         <ResearcherDocument
-          v-for="doc in documents.results"
+          v-for="doc in documentsTranslated"
           :key="doc.id"
           :document="doc"
           :doc-type="docType"
@@ -25,11 +25,11 @@
 </template>
 
 <script setup lang="ts">
-import { sanitizeResearcherDocument } from '@/api/sanitizes/researcher'
+import { sanitizeResearcherDocuments } from '@/api/sanitizes/researcher'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { PaginationResult, usePagination } from '@/composables/usePagination'
-import { Document } from '@/iterfaces/researcher'
+import { Document, TranslatedDocument } from '@/iterfaces/researcher'
 import { UserModel } from '@/models/user.model'
 
 defineOptions({ name: 'ResearcherDocumentSimilars' })
@@ -46,6 +46,10 @@ const status = ref('pending')
 const documents = ref<PaginationResult<Document>>()
 const pagination = usePagination(documents, { limit: 10 })
 const { count } = pagination
+const { translateResearcherDocuments } = useAutoTranslate()
+const documentsTranslated = computed<TranslatedDocument[]>(() =>
+  unref(translateResearcherDocuments(documents.value?.results))
+)
 
 const getDocuments = (query) => {
   status.value = 'pending'
@@ -56,7 +60,7 @@ const getDocuments = (query) => {
     }
   )
     .then((data) => {
-      documents.value = sanitizeResearcherDocument(data)
+      documents.value = sanitizeResearcherDocuments(data)
       status.value = 'success'
     })
     .catch(() => {

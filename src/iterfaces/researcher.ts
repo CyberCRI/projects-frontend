@@ -1,3 +1,4 @@
+import { Translated } from '@/iterfaces/translated'
 import { UserModel } from '@/models/user.model'
 
 export type QueryFilterDocument = {
@@ -36,6 +37,8 @@ export type Document = {
   publication_date: string | null | Date
   similars: number
 }
+
+export type TranslatedDocument = Translated<Document, 'title' | 'description'>
 
 export type ResearcherDocumentAnalytics = {
   document_types: {
