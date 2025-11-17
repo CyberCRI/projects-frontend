@@ -3,7 +3,7 @@
     <teleport to="body">
       <transition name="modal-fade">
         <div v-if="open" class="modal-backdrop" data-test="modal-backdrop">
-          <div class="modal-wrapper" :class="{ 'full-screen': fullScreen }">
+          <div :id="modalId" class="modal-wrapper" :class="{ 'full-screen': fullScreen }">
             <div v-if="$slots.topping" class="modal-topping">
               <slot name="topping" />
             </div>
@@ -33,7 +33,11 @@
                   </slot>
                 </div>
               </section>
-              <section id="modalDescription" class="modal-content custom-scrollbar">
+              <section
+                id="modalDescription"
+                class="modal-content custom-scrollbar"
+                @scroll="$emit('content-scroll', $event)"
+              >
                 <slot name="content" />
               </section>
 
@@ -50,7 +54,6 @@
 
 <script>
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
-
 export default {
   name: 'BaseModal',
 
@@ -81,9 +84,13 @@ export default {
       type: Boolean,
       default: false,
     },
+    modalId: {
+      type: [String, undefined],
+      default: undefined,
+    },
   },
 
-  emits: ['close', 'submit'],
+  emits: ['close', 'submit', 'content-scroll'],
 
   data() {
     return {
