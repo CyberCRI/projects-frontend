@@ -12,7 +12,7 @@ import type { Document, ResearcherDocumentAnalytics } from '@/iterfaces/research
  * @returns {any}
  * @exports
  */
-export const sanitizeResearcherDocument = (data: PaginationResult<Document>) => {
+export const sanitizeResearcherDocuments = (data: PaginationResult<Document>) => {
   const result = data.results
   result.forEach((el) => {
     if (el.publication_date) {

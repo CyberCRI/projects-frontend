@@ -74,7 +74,7 @@
       </div>
       <div class="documents-list">
         <ResearcherDocument
-          v-for="doc in documents.results"
+          v-for="doc in documentsTranslated"
           :key="doc.id"
           :document="doc"
           :doc-type="docType"
@@ -98,7 +98,7 @@
 
 <script setup lang="ts">
 import {
-  sanitizeResearcherDocument,
+  sanitizeResearcherDocuments,
   sanitizeTranslateKeys,
   sanitizeResearcherDocumentAnalyticsYears,
 } from '@/api/sanitizes/researcher'
@@ -106,7 +106,12 @@ import ResearcherDocument from '@/components/people/Researcher/ResearcherDocumen
 import ResearcherDocumentSimilars from '@/components/people/Researcher/ResearcherDocumentSimilars.vue'
 import { PaginationResult, usePagination } from '@/composables/usePagination'
 import { useQuery } from '@/composables/useQuery'
-import { Document, QueryFilterDocument, ResearcherDocumentAnalytics } from '@/iterfaces/researcher'
+import {
+  Document,
+  QueryFilterDocument,
+  ResearcherDocumentAnalytics,
+  TranslatedDocument,
+} from '@/iterfaces/researcher'
 import { UserModel } from '@/models/user.model'
 
 defineOptions({ name: 'ResearcherDocumentsList' })
@@ -117,11 +122,16 @@ const props = withDefaults(
 )
 const { t } = useNuxtI18n()
 const { t: localT } = useI18n({ useScope: 'local' })
+const { translateResearcherDocuments } = useAutoTranslate()
 
 // when we click to "show similars documents"
-const documentSelected = ref<Document>(null)
+const documentSelected = ref<Document>()
 
-const documents = ref<PaginationResult<Document>>(null)
+const documents = ref<PaginationResult<Document>>()
+const documentsTranslated = computed<TranslatedDocument[]>(() =>
+  unref(translateResearcherDocuments(documents.value?.results))
+)
+
 const pagination = usePagination(documents, { limit: props.limit ?? 10 })
 const status = ref('pending')
 
@@ -143,9 +153,8 @@ const getDocuments = () => {
       ...pagination.query(),
     },
   })
-    .then(sanitizeResearcherDocument)
     .then((data) => {
-      documents.value = data
+      documents.value = sanitizeResearcherDocuments(data)
       status.value = 'success'
     })
     .catch(() => {
