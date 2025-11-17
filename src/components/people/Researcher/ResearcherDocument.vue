@@ -1,5 +1,9 @@
 <template>
   <article class="profile-documents">
+    <span class="icon-container">
+      <PushPinSvg />
+      {{ t(`researcher.document_types.${sanitizeTranslateKeys(document.document_type)}`) }}
+    </span>
     <h2>{{ document.$t.title }}</h2>
     <div>
       <span v-for="(author, idx) in document.contributors" :key="author.id">
@@ -68,10 +72,12 @@
 <script setup lang="ts">
 import { documentTypeHarverToUrl, researcherHarvesterToUrl } from '@/functs/researcher'
 import { TranslatedDocument } from '@/iterfaces/researcher'
+import PushPinSvg from '@/assets/svg/pushpin.svg'
+import { sanitizeTranslateKeys } from '@/api/sanitizes/researcher'
 
 defineOptions({ name: 'ResearcherDocument' })
 
-const { t, locale } = useNuxtI18n()
+const { t } = useNuxtI18n()
 const emit = defineEmits(['similar'])
 
 withDefaults(
@@ -86,6 +92,17 @@ withDefaults(
 </script>
 
 <style lang="scss" scoped>
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 0.4rem;
+  font-weight: 700;
+  color: $primary;
+  text-transform: capitalize;
+  letter-spacing: -0.1;
+}
+
 .profile-documents {
   border-radius: 5px;
   padding: 0.2rem;
