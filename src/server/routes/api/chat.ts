@@ -69,7 +69,7 @@ export default defineLazyEventHandler(() => {
     if (appMcpServerUrl) {
       requestOptions.tools.push({
         type: 'mcp',
-        server_label: 'pojects-local-mcp',
+        server_label: 'projects-local-mcp',
         server_description:
           'A MCP to fetch information about projects, people and groups on this Projects platform.',
         server_url: appMcpServerUrl,
