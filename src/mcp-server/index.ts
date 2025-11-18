@@ -1,5 +1,6 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { z } from 'zod'
+import { organizations } from '../../tests/playwright/fixtures/data'
 
 // TODO people group member and project
 // TODO org files
@@ -147,7 +148,7 @@ const mapProjectPreview = (p: any) => ({
   title: p.title,
   purpose: p.purpose,
   categories: (p.categories || []).map(categoryMapper),
-  link_url: `/project/${p.slug}/`,
+  link_url: `/projects/${p.slug}/`,
 })
 
 const mapUserPreview = (u: any) => ({
@@ -226,15 +227,20 @@ server.registerTool(
   {
     title: 'Search Tool',
     description: 'Search on the platform for projects, people and groups related to a query.',
-    inputSchema: { query: z.string() },
+    inputSchema: { queryTerms: z.string() },
     outputSchema: { results: z.array(z.any()) },
   },
-  async ({ query }) => {
+  async ({ queryTerms }) => {
     let results = []
     try {
+      const query = {
+        limit: 12,
+        organizations: [orgCode],
+      }
       const queryResult: any = await $fetch(
         // TODO: use org code from config
-        `${API_BASE_URL}search/${encodeURIComponent(query)}/?limit=30&organizations=${orgCode}`
+        `${API_BASE_URL}search/${encodeURIComponent(queryTerms)}/?limit=30&organizations=${orgCode}`,
+        { query }
       )
       results = queryResult.results.map((item) => {
         if (item.type === 'project') {
