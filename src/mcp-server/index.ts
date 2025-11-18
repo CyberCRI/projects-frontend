@@ -1,6 +1,5 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { z } from 'zod'
-import { organizations } from '../../tests/playwright/fixtures/data'
 
 // TODO people group member and project
 // TODO org files

@@ -3,7 +3,7 @@ import 'deep-chat'
 import analytics from '@/analytics'
 
 const { t } = useI18n()
-
+const router = useRouter()
 const props = defineProps({
   isOpened: { type: Boolean, default: false },
 })
@@ -166,6 +166,26 @@ const messageStyles = computed(() => {
       ai: botStyles,
     },
   }
+})
+
+const handleLinkClick = (evt) => {
+  // short-circuit target blank for internal links in chatbot messages
+  if (
+    evt.target.tagName === 'A' &&
+    !!evt.target.closest('.deep-chat-outer-container-role-assistant')
+  ) {
+    const href = evt.target.getAttribute('href')
+    if (!href.startsWith('http')) {
+      evt.preventDefault()
+      router.push({ path: href })
+    }
+  }
+}
+onMounted(() => {
+  document.addEventListener('click', handleLinkClick)
+})
+onUnmounted(() => {
+  document.removeEventListener('click', handleLinkClick)
 })
 
 const remarkableOptions = ref({ linkify: true, linkTarget: '_blank' })
