@@ -10,7 +10,7 @@ export type QueryFilterDocument = {
 export type Identifier = {
   id: number
   value: string
-  harvester: 'hal' | 'scanr' | 'openalex' | 'idref' | 'scopus' | 'orcid' | 'local'
+  harvester: 'hal' | 'scanr' | 'openalex' | 'idref' | 'scopus' | 'orcid' | 'local' | 'doi'
 }
 
 export type Researcher = {

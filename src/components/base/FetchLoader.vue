@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="loading" class="m-auto w-fit">
+    <div v-if="loading" class="m-auto w-fit flex justify-center items-center flex-col">
       <LpiLoader type="simple" />
       <span class="loading">
         {{ props.label ?? t('common.loading') }}
