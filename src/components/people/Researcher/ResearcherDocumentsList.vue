@@ -67,7 +67,7 @@
                 selected: query.roles === role,
                 preview: preview,
               }"
-              :label="`${t(`relators.${sanitizeTranslateKeys(role)}`)} ${count}`"
+              :label="`${t(`researcher.relators.${sanitizeTranslateKeys(role)}`)} ${count}`"
             />
           </component>
         </div>
