@@ -37,6 +37,9 @@ export const publicationHarvesterToUrl = (identifier: Identifier): string => {
       const idref = value.padStart(9, '0')
       return `https://www.idref.fr/${idref}`
     }
+    case 'doi': {
+      return `https://doi.org/${value}`
+    }
     default:
       return value
   }
