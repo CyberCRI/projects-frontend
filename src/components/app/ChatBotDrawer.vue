@@ -226,7 +226,12 @@ const remarkableOptions = ref({ linkify: true, linkTarget: '_blank' })
         }
         a:hover {
           text-decoration: underline !important;
-        }  
+        }
+        .html-wrapper img {
+          max-width: 8rem;
+          max-height: 8rem;
+          border-radius: .5rem;
+        }
       "
     ></deep-chat>
   </BaseDrawer>
