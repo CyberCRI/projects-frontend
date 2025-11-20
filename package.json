@@ -78,7 +78,7 @@
     "chart.js": "^4.5.0",
     "commitlint": "^17.8.0",
     "croppr": "^2.3.1",
-    "deep-chat": "^2.2.2",
+    "deep-chat": "^2.3.0",
     "es-toolkit": "^1.40.0",
     "highlight.js": "^11",
     "leaflet": "^1",

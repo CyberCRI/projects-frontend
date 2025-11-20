@@ -5206,10 +5206,10 @@ decamelize@^5.0.0:
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-5.0.1.tgz#db11a92e58c741ef339fb0a2868d8a06a9a7b1e9"
   integrity sha512-VfxadyCECXgQlkoEAjeghAr5gY3Hf+IKjKb+X8tGVDtveCjN+USwprd2q3QXBR9T1+x2DG0XZF5/w+7HAtSaXA==
 
-deep-chat@^2.2.2:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/deep-chat/-/deep-chat-2.2.2.tgz#645cf78da334e4b0d0d90003292190f5272d6997"
-  integrity sha512-2e/VqEsYsRAPG64SB6ieResgVk3TW/a0qQuNY/gAakCRKXnEXeWoU8RPNQRHTJUp/LXU2Uo7uiqcBvVsVRdtGA==
+deep-chat@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/deep-chat/-/deep-chat-2.3.0.tgz#ec191b441f876abed3a121b1695a690e6a876d20"
+  integrity sha512-3dEBdJd3PZrZ29hggecZB13MzHLGcyuQ9+qRDohcxinTHhCcV6TjfGRkaLvh+9D2akHOXO238usJwFlnzupmUA==
   dependencies:
     "@microsoft/fetch-event-source" "^2.0.1"
     remarkable "^2.0.1"
@@ -5594,17 +5594,17 @@ es-module-lexer@^1.5.4, es-module-lexer@^1.7.0:
   resolved "https://registry.yarnpkg.com/es-module-lexer/-/es-module-lexer-1.7.0.tgz#9159601561880a85f2734560a9099b2c31e5372a"
   integrity sha512-jEQoCwk8hyb2AZziIOLhDqpm5+2ww5uIE6lkO/6jcOCusfk6LhMHpXXfBLXTZ7Ydyt0j4VoUQv6uGNYbdW+kBA==
 
-es-toolkit@^1.40.0:
-  version "1.40.0"
-  resolved "https://registry.yarnpkg.com/es-toolkit/-/es-toolkit-1.40.0.tgz#1132e3d8a990298edd08d7b830a12c4eebbe82bb"
-  integrity sha512-8o6w0KFmU0CiIl0/Q/BCEOabF2IJaELM1T2PWj6e8KqzHv1gdx+7JtFnDwOx1kJH/isJ5NwlDG1nCr1HrRF94Q==
-
 es-object-atoms@^1.0.0, es-object-atoms@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/es-object-atoms/-/es-object-atoms-1.1.1.tgz#1c4f2c4837327597ce69d2ca190a7fdd172338c1"
   integrity sha512-FGgH2h8zKNim9ljj7dankFPcICIK9Cp5bm+c2gQSYePhpaG5+esrLODihIorn+Pe6FGJzWhXQotPv73jTaldXA==
   dependencies:
     es-errors "^1.3.0"
+
+es-toolkit@^1.40.0:
+  version "1.40.0"
+  resolved "https://registry.yarnpkg.com/es-toolkit/-/es-toolkit-1.40.0.tgz#1132e3d8a990298edd08d7b830a12c4eebbe82bb"
+  integrity sha512-8o6w0KFmU0CiIl0/Q/BCEOabF2IJaELM1T2PWj6e8KqzHv1gdx+7JtFnDwOx1kJH/isJ5NwlDG1nCr1HrRF94Q==
 
 esbuild@^0.21.3:
   version "0.21.5"

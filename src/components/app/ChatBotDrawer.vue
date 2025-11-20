@@ -27,7 +27,7 @@ onErrorCaptured((err) => {
   return false
 })
 
-defineEmits(['close'])
+const emit = defineEmits(['close'])
 
 const IS_STREAMED = ref(true)
 
@@ -70,7 +70,6 @@ const requestInterceptor = (requestDetails) => {
 }
 
 const responseInterceptor = (response) => {
-  console.log('response', response)
   if (!IS_STREAMED.value || response.is_done) {
     // only add complete response, not individual chunks
     addToConversation({
@@ -85,12 +84,20 @@ const responseInterceptor = (response) => {
 
 const placeholderText = computed(() => t('chatbot.input-placeholder'))
 
+const htmlWrappers = ref({
+  default: `
+    <div class="my-wrap" onclick="window.handleChatClick(event)">
+      <span class="html-wrapper"></span>
+    </div>`,
+})
+
 watch(
   () => chatBox.value,
   (neo, old) => {
     if (neo && !old) {
       neo.requestInterceptor = requestInterceptor
       neo.responseInterceptor = responseInterceptor
+      neo.htmlWrappers = htmlWrappers.value
     }
     history.value = JSON.parse(JSON.stringify(conversation.value))
   }
@@ -168,25 +175,25 @@ const messageStyles = computed(() => {
   }
 })
 
-const handleLinkClick = (evt) => {
+const handleChatClick = (evt) => {
   // short-circuit target blank for internal links in chatbot messages
   if (
     evt.target.tagName === 'A' &&
     !!evt.target.closest('.deep-chat-outer-container-role-assistant')
   ) {
     const href = evt.target.getAttribute('href')
-    if (!href.startsWith('http')) {
+    const origin = window.location.origin
+    if ((!href.startsWith('http') || href.startsWith(origin)) && !href.startsWith('email:')) {
       evt.preventDefault()
       router.push({ path: href })
+      emit('close')
     }
   }
 }
-onMounted(() => {
-  document.addEventListener('click', handleLinkClick)
-})
-onUnmounted(() => {
-  document.removeEventListener('click', handleLinkClick)
-})
+
+if (window && !window.handleChatClick) {
+  window.handleChatClick = handleChatClick
+}
 
 const remarkableOptions = ref({ linkify: true, linkTarget: '_blank' })
 </script>
@@ -201,7 +208,6 @@ const remarkableOptions = ref({ linkify: true, linkTarget: '_blank' })
   >
     <deep-chat
       ref="deep-chat"
-      :demo="true"
       :textInput="textInputOptions"
       :history="history"
       :style="chatStyle"
@@ -212,6 +218,16 @@ const remarkableOptions = ref({ linkify: true, linkTarget: '_blank' })
       :messageStyles="messageStyles"
       :stream="IS_STREAMED"
       :remarkable="remarkableOptions"
+      auxiliaryStyle="
+        a {
+          color: #1d727c;
+          text-decoration: none;
+          font-weight: bold;
+        }
+        a:hover {
+          text-decoration: underline !important;
+        }  
+      "
     ></deep-chat>
   </BaseDrawer>
 </template>

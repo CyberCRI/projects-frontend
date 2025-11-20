@@ -122,7 +122,10 @@ const ALL_SDGS = [
     description:
       'Strengthen the means of implementation and revitalize the Global Partnership for Sustainable Development.',
   },
-]
+].map((sdg) => ({
+  ...sdg,
+  item_image: `${runtimeConfig.public.appPublicBinariesPrefix}/sdgs/en/${sdg.id}.svg`,
+}))
 
 const mapNewsArticle = (n: any) => ({
   id: n.id,
@@ -163,6 +166,7 @@ const mapProjectPreview = (p: any) => ({
   purpose: p.purpose,
   categories: (p.categories || []).map(categoryMapper),
   link_url: `/projects/${p.slug}/`,
+  item_image: p.header_image?.variations?.small,
 })
 
 const mapUserPreview = (u: any) => ({
@@ -173,6 +177,7 @@ const mapUserPreview = (u: any) => ({
   job: u.job,
   email: u.email,
   link_url: `/profile/${u.slug}/`,
+  item_image: u.profile_picture?.variations?.small,
 })
 
 const mapPeopleGroupPreview = (g: any) => ({
@@ -184,6 +189,7 @@ const mapPeopleGroupPreview = (g: any) => ({
   email: g.email,
   member_count: g.member_count,
   link_url: `/group/${g.slug}/`,
+  item_image: g.header_image?.variations?.small,
 })
 
 const mapBlogEntry = (b: any) => ({
@@ -300,6 +306,7 @@ server.registerTool(
       const p = queryResult
       results = {
         id: p.id,
+        item_image: p.header_image?.variations?.small,
         slug: p.slug,
         title: p.title,
         description: p.description,
@@ -490,6 +497,7 @@ server.registerTool(
       const u = queryResult
       results = {
         id: u.id,
+        item_image: u.profile_picture?.variations?.small,
         slug: u.slug,
         is_superuser: u.is_superuser,
         people_groups: (u.people_groups || []).map(mapPeopleGroupPreview),
@@ -548,6 +556,7 @@ server.registerTool(
       const g = queryResult
       results = {
         id: g.id,
+        item_image: g.header_image?.variations?.small,
         slug: g.slug,
         name: g.name,
         description: g.description,
@@ -836,7 +845,7 @@ if (sorbobotApi) {
   server.registerTool(
     'sorbobot-api',
     {
-      title: 'Research, researchers, science topics and publication finder',
+      title: 'Research, researchers, experts and science topics and publication finder',
       description:
         'Get a list of researchers and their research papers based on a query. Also get a list of research topics.',
       inputSchema: { queryPrompt: z.string() },
