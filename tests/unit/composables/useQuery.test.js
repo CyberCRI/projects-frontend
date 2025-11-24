@@ -3,7 +3,7 @@ import { useQuery } from '@/composables/useQuery'
 
 describe('useQuery', () => {
   it('method', async () => {
-    const { setQuery, toogleQuery, removeQuery, query } = useQuery()
+    const { setQuery, toggleQuery, removeQuery, query } = useQuery()
 
     expect(query).toEqual({})
     setQuery('role', 'author')
@@ -20,11 +20,11 @@ describe('useQuery', () => {
 
     // remove not exists keys
     expect(query).toEqual({})
-    toogleQuery('role', 'author')
+    toggleQuery('role', 'author')
     expect(query).toEqual({ role: 'author' })
-    toogleQuery('role', 'thesis')
+    toggleQuery('role', 'thesis')
     expect(query).toEqual({ role: 'thesis' })
-    toogleQuery('role', 'thesis')
+    toggleQuery('role', 'thesis')
     expect(query).toEqual({})
   })
 })

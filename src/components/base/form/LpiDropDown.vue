@@ -1,6 +1,6 @@
 <template>
   <div v-click-outside="close" class="lpi-dropdown" :class="{ 'is-open': open }">
-    <button type="button" class="dropdown toggle-btn" @click.prevent="toogle">
+    <button type="button" class="dropdown toggle-btn" @click.prevent="toggle">
       <span class="dropdown-btn">{{ showLabel }}</span>
       <IconImage class="caret" :name="open ? 'ChevronUp' : 'ChevronDown'" />
     </button>
@@ -60,7 +60,7 @@ const props = defineProps({
 const open = ref(false)
 
 const close = () => (open.value = false)
-const toogle = () => (open.value = !open.value)
+const toggle = () => (open.value = !open.value)
 
 // when value change, close select
 watch(() => props.modelValue, close)

@@ -22,7 +22,7 @@
                 }"
                 :title="`${t(`profile.${docType}`)} ${obj.year} (${obj.count})`"
                 :style="{ '--bar-count': obj.height }"
-                @click="!preview && toogleQuery('year', obj.year)"
+                @click="!preview && toggleQuery('year', obj.year)"
               >
                 <span>{{ obj.year }}</span>
               </component>
@@ -41,7 +41,7 @@
               selected: query.document_type === (name ?? ''),
               preview: preview,
             }"
-            @click="!preview && toogleQuery('document_type', name ?? '')"
+            @click="!preview && toggleQuery('document_type', name ?? '')"
           >
             <span>{{ count }}</span>
             <span>
@@ -59,7 +59,7 @@
             v-for="[role, count] in documentsRoleInfos"
             :key="role"
             class="doc-roles"
-            @click="!preview && toogleQuery('roles', role)"
+            @click="!preview && toggleQuery('roles', role)"
           >
             <BadgeItem
               :class="{
@@ -142,7 +142,7 @@ const documentsAnalytics = ref<ResearcherDocumentAnalytics>({
 
 // filter backend query
 // default role "author" to only show author form documents
-const { query, toogleQuery } = useQuery<QueryFilterDocument>({ roles: 'author' })
+const { query, toggleQuery } = useQuery<QueryFilterDocument>({ roles: 'author' })
 
 const getDocuments = () => {
   status.value = 'pending'
@@ -249,7 +249,7 @@ $profile-documents: 1rem;
   }
 }
 
-@media screen and (width <= 1000px) {
+@media screen and (width <= pxToRem(1000px)) {
   .profile-info-container {
     display: flex;
     flex-direction: column;
