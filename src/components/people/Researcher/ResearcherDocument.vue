@@ -77,7 +77,7 @@ import { sanitizeTranslateKeys } from '@/api/sanitizes/researcher'
 
 defineOptions({ name: 'ResearcherDocument' })
 
-const { t } = useNuxtI18n()
+const { t, locale } = useNuxtI18n()
 const emit = defineEmits(['similar'])
 
 withDefaults(
