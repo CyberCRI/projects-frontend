@@ -61,7 +61,7 @@
     </div>
     <SeeMoreArrow
       v-if="similar && document.similars > 0"
-      data-test="see-more"
+      :data-test="`see-more-${document.id}`"
       class="no-padding"
       :label="`${document.similars} ${t(`profile.${docType}-similars`)}`"
       @click.prevent="emit('similar', document)"

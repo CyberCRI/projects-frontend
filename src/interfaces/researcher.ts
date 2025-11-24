@@ -7,10 +7,20 @@ export type QueryFilterDocument = {
   roles?: string
 }
 
+export type HarvesterType =
+  | 'hal'
+  | 'scanr'
+  | 'openalex'
+  | 'idref'
+  | 'scopus'
+  | 'orcid'
+  | 'local'
+  | 'doi'
+
 export type Identifier = {
   id: number
   value: string
-  harvester: 'hal' | 'scanr' | 'openalex' | 'idref' | 'scopus' | 'orcid' | 'local' | 'doi'
+  harvester: HarvesterType
 }
 
 export type Researcher = {

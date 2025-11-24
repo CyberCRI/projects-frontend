@@ -29,7 +29,7 @@ export const UserFactory = createFactory<UserModel>((faker) => ({
     natural_ratio: faker.datatype.number(),
     variations: { medium: 'string.jpeg' },
   },
-  researcher: undefined,
+  researcher: null,
   slug: '',
 }))
 

@@ -8,7 +8,7 @@
     @close="emit('close')"
   >
     <FetchLoader :status="status">
-      <div class="documents-list">
+      <div class="documents-list-similars">
         <ResearcherDocument
           v-for="doc in documentsTranslated"
           :key="doc.id"
@@ -37,7 +37,7 @@ defineOptions({ name: 'ResearcherDocumentSimilars' })
 const { t } = useNuxtI18n()
 const emit = defineEmits(['close'])
 const props = defineProps<{
-  document: Document | null
+  document?: Document
   docType: string
   user: UserModel
 }>()
@@ -79,7 +79,7 @@ watch(
 <style lang="scss">
 $profile-documents: 1rem;
 
-.documents-list > *:not(:last-child)::after {
+.documents-list-similars > *:not(:last-child)::after {
   content: '';
   display: inline-block;
   width: 100%;

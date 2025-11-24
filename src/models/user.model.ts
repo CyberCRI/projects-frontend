@@ -19,7 +19,7 @@ export interface UserModel {
   description?: string
   people_groups?: object[] // TODO: define this type
   skills?: UserSkillModel[]
-  researcher: ResearcherLight
+  researcher?: ResearcherLight
 }
 
 export interface UserFromJWTModel {
