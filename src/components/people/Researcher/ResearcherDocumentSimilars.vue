@@ -29,7 +29,7 @@ import { sanitizeResearcherDocuments } from '@/api/sanitizes/researcher'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { PaginationResult, usePagination } from '@/composables/usePagination'
-import { Document, TranslatedDocument } from '@/iterfaces/researcher'
+import { Document, TranslatedDocument } from '@/interfaces/researcher'
 import { UserModel } from '@/models/user.model'
 
 defineOptions({ name: 'ResearcherDocumentSimilars' })

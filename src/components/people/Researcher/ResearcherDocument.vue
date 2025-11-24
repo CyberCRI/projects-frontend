@@ -71,7 +71,7 @@
 
 <script setup lang="ts">
 import { documentTypeHarverToUrl, researcherHarvesterToUrl } from '@/functs/researcher'
-import { TranslatedDocument } from '@/iterfaces/researcher'
+import { TranslatedDocument } from '@/interfaces/researcher'
 import PushPinSvg from '@/assets/svg/pushpin.svg'
 import { sanitizeTranslateKeys } from '@/api/sanitizes/researcher'
 

@@ -2,7 +2,7 @@
  * @name UserModel
  * @description user data set on the project app
  */
-import { ResearcherLight } from '@/iterfaces/researcher'
+import { ResearcherLight } from '@/interfaces/researcher'
 import { TagModel } from './tag.model'
 
 export interface UserModel {

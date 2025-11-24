@@ -1,4 +1,4 @@
-import { Translated } from '@/iterfaces/translated'
+import { Translated } from '@/interfaces/translated'
 import { UserModel } from '@/models/user.model'
 
 export type QueryFilterDocument = {

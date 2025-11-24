@@ -111,7 +111,7 @@ import {
   QueryFilterDocument,
   ResearcherDocumentAnalytics,
   TranslatedDocument,
-} from '@/iterfaces/researcher'
+} from '@/interfaces/researcher'
 import { UserModel } from '@/models/user.model'
 
 defineOptions({ name: 'ResearcherDocumentsList' })

@@ -1,4 +1,4 @@
-import type { Identifier, Researcher } from '@/iterfaces/researcher'
+import type { Identifier, Researcher } from '@/interfaces/researcher'
 
 const cleanHarvesterValue = (identifier: Identifier): Identifier => {
   const newIdentifer = { ...identifier }
