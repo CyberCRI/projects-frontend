@@ -24,3 +24,21 @@ export async function patchAttachmentLink(body: AttachmentLinkInput) {
 export async function deleteAttachmentLink({ id, projectId }) {
   return await useAPI(`project/${projectId}/link/${id}/`, { method: 'DELETE' })
 }
+
+// --- user
+
+export async function getUserAttachmentLink(userId: number) {
+  return await useAPI(`user/${userId}/link/`)
+}
+
+export async function postUserAttachmentLinks(userId: number, body) {
+  return await useAPI(`user/${userId}/link/`, { body, method: 'POST' })
+}
+
+export async function patchUserAttachmentLink(userId: number, linkId: number, body) {
+  return await useAPI(`user/${userId}/link/${linkId}/`, { body, method: 'PATCH' })
+}
+
+export async function deleteUserAttachmentLink(userId: number, linkId: number) {
+  return await useAPI(`user/${userId}/link/${linkId}/`, { method: 'DELETE' })
+}

@@ -42,3 +42,20 @@ export async function patchAttachmentFile(body: AttachmentFileInput) {
 export async function deleteAttachmentFile({ id, projectId }) {
   return await useAPI(`project/${projectId}/file/${id}/`, { method: 'DELETE' })
 }
+
+// -- user
+export async function getUserAttachmentFile(userId: number) {
+  return await useAPI(`user/${userId}/file/`)
+}
+
+export async function postUserAttachmentFile(userId: number, body) {
+  return await useAPI(`user/${userId}/file/`, { body, method: 'POST' })
+}
+
+export async function patchUserAttachmentFile(userId: number, fileId: number, body) {
+  return await useAPI(`user/${userId}/file/${fileId}/`, { body, method: 'PATCH' })
+}
+
+export async function deleteUserAttachmentFile(userId: number, fileId: number) {
+  return await useAPI(`user/${userId}/file/${fileId}/`, { method: 'DELETE' })
+}
