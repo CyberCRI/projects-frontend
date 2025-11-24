@@ -100,9 +100,16 @@ describe('ResearcherDocumentsTab.vue', () => {
       }
     )
 
-    const doc = DocumentFactory.generate({ document_type: 'JournalArticle' })
+    const docWithSimilars = DocumentFactory.generate({
+      document_type: 'JournalArticle',
+      similars: 6,
+    })
+    const docWithoutSimilars = DocumentFactory.generate({
+      document_type: 'JournalArticle',
+      similars: 0,
+    })
     registerEndpoint(
-      `crisalid/researcher/${defaultProps.user.researcher.id}/publications/${doc.id}/similars/`,
+      `crisalid/researcher/${defaultProps.user.researcher.id}/publications/${docWithSimilars.id}/similars/`,
       () => {
         return PaginationsFactory.generate({
           results: [
@@ -115,11 +122,7 @@ describe('ResearcherDocumentsTab.vue', () => {
 
     registerEndpoint(`crisalid/researcher/${defaultProps.user.researcher.id}/publications/`, () => {
       return PaginationsFactory.generate({
-        results: [
-          doc,
-          DocumentFactory.generate({ document_type: 'JournalArticle' }),
-          DocumentFactory.generate({ document_type: 'JournalArticle' }),
-        ],
+        results: [docWithSimilars, docWithoutSimilars],
       })
     })
 
@@ -128,8 +131,13 @@ describe('ResearcherDocumentsTab.vue', () => {
     await delay(100)
     expect(wrapper.find('.loading').exists()).toBeFalsy()
 
-    expect(wrapper.find('.documents-list').element.childElementCount).toEqual(3)
-    wrapper.find(`[data-test="see-more-${doc.id}"]`).element.dispatchEvent(new Event('click'))
+    expect(wrapper.find('.documents-list').element.childElementCount).toEqual(2)
+    // no similars button show
+    expect(wrapper.find(`[data-test="see-more-${docWithoutSimilars.id}"]`).exists()).toBe(false)
+
+    wrapper
+      .find(`[data-test="see-more-${docWithSimilars.id}"]`)
+      .element.dispatchEvent(new Event('click'))
     await delay(100)
     expect(wrapper.find('.documents-list-similars').element.childElementCount).toEqual(2)
   })
