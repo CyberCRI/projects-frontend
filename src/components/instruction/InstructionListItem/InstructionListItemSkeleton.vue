@@ -13,15 +13,10 @@
     </div>
   </div>
 </template>
-<script>
+<script setup>
 import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
-export default {
-  name: 'InstructionListItemSkeleton',
 
-  components: {
-    SkeletonComponent,
-  },
-}
+defineOptions({ name: 'InstructionListItemSkeleton' })
 </script>
 <style scoped lang="scss">
 .instruction-list-item {

@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import debounce from 'lodash.debounce'
+import { debounce } from 'es-toolkit'
 
 import { getOrgClassificationTags } from '@/api/tag-classification.service'
 
@@ -84,7 +84,7 @@ export default {
 
   setup() {
     const organizationsStore = useOrganizationsStore()
-    const { locale } = useI18n()
+    const { locale } = useNuxtI18n()
     return {
       locale,
       organizationsStore,

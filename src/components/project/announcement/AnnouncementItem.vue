@@ -2,13 +2,13 @@
   <div class="announcement">
     <div class="banner">
       <div class="creation-date">
-        {{ $filters.capitalize(createdDateLabel) }}
+        {{ createdDateLabel }}
       </div>
       <div v-if="!!announcement.deadline" class="deadline">
-        {{ $filters.capitalize(deadlineLabel) }}
+        {{ deadlineLabel }}
       </div>
       <div v-if="announcement.type && announcement.type !== 'na'" class="type">
-        {{ $filters.capitalize($t(`recruit.${announcement.type}`)) }}
+        {{ $t(`recruit.${announcement.type}`) }}
       </div>
     </div>
 

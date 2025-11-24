@@ -23,12 +23,12 @@ import {
   useTipTap,
 } from '@/components/base/form/TextEditor/useTipTap.js'
 import { ref, watchEffect, computed, onMounted, onBeforeUnmount, toRaw } from 'vue'
-import { useI18n } from 'vue-i18n'
+
 import { useRuntimeConfig } from '#imports'
 const runtimeConfig = useRuntimeConfig()
 
 import useUsersStore from '@/stores/useUsers.ts'
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 import useToasterStore from '@/stores/useToaster.ts'
 
 // grace period before freezing the editor on socket deconnection (in milliseconds)

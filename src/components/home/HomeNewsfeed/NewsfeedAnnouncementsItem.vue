@@ -19,7 +19,7 @@
       <div :style="announcementStyle" class="announcement-overlay" />
     </div>
     <h3 class="announcement-title">
-      {{ $filters.capitalize(announcement?.$t?.title) }}
+      {{ capitalize(announcement?.$t?.title) }}
     </h3>
     <div class="announcement-infos">
       <span class="date-ctn">
@@ -39,6 +39,8 @@
 </template>
 
 <script>
+import { capitalize } from '@/functs/string'
+
 import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
@@ -59,6 +61,7 @@ export default {
     const runtimeConfig = useRuntimeConfig()
     return {
       runtimeConfig,
+      capitalize,
     }
   },
 

@@ -24,7 +24,7 @@
           </div>
 
           <div class="job">
-            {{ $filters.capitalize(user.job) }}
+            {{ capitalize(user.job) }}
           </div>
 
           <div v-if="displayableGroups.length" class="group-ctn">
@@ -109,47 +109,37 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { capitalize } from '@/functs/string'
+
 import IconImage from '@/components/base/media/IconImage.vue'
 import BadgeItem from '@/components/base/BadgeItem.vue'
 import SocialNetworks from './SocialNetworks.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
-export default {
-  name: 'ProfileHeader',
 
-  components: { IconImage, BadgeItem, SocialNetworks, CroppedApiImage },
-  props: {
-    user: {
-      type: Object,
-      default: () => {},
-    },
-  },
+defineOptions({ name: 'ProfileHeader' })
 
-  emits: ['edit-profile'],
-  setup() {
-    const organizationsStore = useOrganizationsStore()
-    const runtimeConfig = useRuntimeConfig()
-    return {
-      organizationsStore,
-      runtimeConfig,
-    }
+const props = defineProps({
+  user: {
+    type: Object,
+    default: () => {},
   },
+})
 
-  computed: {
-    displayableGroups() {
-      return this.user?.people_groups
-        ? this.user.people_groups.filter(
-            (group) => group.organization === this.organizationsStore.current?.code
-          )
-        : []
-    },
-  },
-  methods: {
-    fixLocation(l) {
-      return l.split('\n').join('<br />')
-    },
-  },
+const organizationsStore = useOrganizationsStore()
+const runtimeConfig = useRuntimeConfig()
+
+const displayableGroups = computed(() => {
+  return props.user?.people_groups
+    ? props.user.people_groups.filter(
+        (group) => group.organization === organizationsStore.current?.code
+      )
+    : []
+})
+
+const fixLocation = (l) => {
+  return l.split('\n').join('<br />')
 }
 </script>
 

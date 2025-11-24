@@ -25,30 +25,21 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
-export default {
-  name: 'NewsListSkeleton',
 
-  components: {
-    SkeletonComponent,
-  },
+defineOptions({ name: 'NewsListSkeleton' })
 
-  props: {
-    // number of skeletons to show
-    limit: {
-      type: Number,
-      default: 15,
-    },
+defineProps({
+  // number of skeletons to show
+  limit: {
+    type: Number,
+    default: 15,
   },
+})
 
-  data() {
-    return {
-      // indices of skeleton that are projects (other are announcements)
-      projectNewsIndex: [1, 2, 5, 6, 8, 9, 10, 13, 14],
-    }
-  },
-}
+// indices of skeleton that are projects (other are announcements)
+const projectNewsIndex = [1, 2, 5, 6, 8, 9, 10, 13, 14]
 </script>
 
 <style lang="scss" scoped>

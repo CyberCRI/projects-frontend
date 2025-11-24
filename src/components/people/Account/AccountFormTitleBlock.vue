@@ -5,29 +5,28 @@
     </h1>
 
     <p v-if="showHelp" class="sub-main-title">
-      {{ $t('account.sub-title') }}
+      {{ t('account.sub-title') }}
       <NuxtLink :to="{ name: 'Help' }" class="link">
-        {{ $t('account.link') }}
+        {{ t('account.link') }}
       </NuxtLink>
     </p>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'AccountFormTitleBlock',
+<script setup>
+defineOptions({ name: 'AccountFormTitleBlock' })
 
-  props: {
-    mainTitleLabel: {
-      type: String,
-      required: true,
-    },
-    showHelp: {
-      type: Boolean,
-      required: true,
-    },
+defineProps({
+  mainTitleLabel: {
+    type: String,
+    required: true,
   },
-}
+  showHelp: {
+    type: Boolean,
+    required: true,
+  },
+})
+const { t } = useNuxtI18n()
 </script>
 
 <style scoped lang="scss">

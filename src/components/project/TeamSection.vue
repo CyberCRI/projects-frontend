@@ -2,7 +2,7 @@
   <div class="team-section">
     <label>
       <span class="section-title">
-        {{ $filters.capitalize($t('team.project-members')) }}
+        {{ $t('team.project-members') }}
         <span v-if="projectUsers.length">({{ projectUsers.length }})</span>
       </span>
       <span
@@ -12,7 +12,7 @@
         @click="teamModalVisible = true"
       >
         <IconImage name="Plus" />
-        <span>{{ $filters.capitalize($t('team.add')) }}</span>
+        <span>{{ $t('team.add') }}</span>
       </span>
     </label>
 

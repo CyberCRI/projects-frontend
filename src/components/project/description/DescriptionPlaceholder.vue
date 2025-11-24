@@ -5,7 +5,7 @@
     </p>
 
     <LpiButton
-      :label="$filters.capitalize($t('description.add'))"
+      :label="$t('description.add')"
       btn-icon="ArrowRight"
       :reversed-order="true"
       data-test="add-description-button"
@@ -21,36 +21,20 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import DescriptionDrawer from '@/components/project/description/DescriptionDrawer.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-export default {
-  name: 'DescriptionPlaceholder',
 
-  components: {
-    DescriptionDrawer,
-    LpiButton,
+defineOptions({ name: 'DescriptionPlaceholder' })
+defineProps({
+  project: {
+    type: Object,
+    required: true,
   },
+})
 
-  props: {
-    project: {
-      type: Object,
-      required: true,
-    },
-  },
-
-  data() {
-    return {
-      editDescriptionModalActive: false,
-    }
-  },
-
-  methods: {
-    close() {
-      this.editDescriptionModalActive = !this.editDescriptionModalActive
-    },
-  },
-}
+const editDescriptionModalActive = ref(false)
+const close = () => (editDescriptionModalActive.value = !editDescriptionModalActive.value)
 </script>
 
 <style lang="scss" scoped>

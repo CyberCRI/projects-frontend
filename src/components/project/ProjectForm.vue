@@ -117,7 +117,7 @@
       class="tags"
     >
       <label>
-        {{ $filters.capitalize($t('tag.title')) }}
+        {{ $t('tag.title') }}
         <span
           v-disable-focus="otherFieldDisabled"
           class="add-tags"
@@ -125,7 +125,7 @@
           @click="tagSearchIsOpened = true"
         >
           <IconImage name="Plus" />
-          <span>{{ $filters.capitalize($t('project.form.add-tags')) }}</span>
+          <span>{{ $t('project.form.add-tags') }}</span>
         </span>
       </label>
       <TagsFilterSummary v-model="tags" />

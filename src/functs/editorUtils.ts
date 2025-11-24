@@ -1,5 +1,5 @@
 import hljs from 'highlight.js'
-import throttle from 'lodash.throttle'
+import { throttle } from 'es-toolkit'
 
 export function fixTables(contentNode) {
   const tables = contentNode?.querySelectorAll('table')
