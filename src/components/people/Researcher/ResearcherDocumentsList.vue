@@ -216,9 +216,6 @@ const documentsRoleInfos = computed(() => sortInfos(documentsAnalytics.value.rol
 <style lang="scss" scoped>
 $profile-documents: 1rem;
 
-// $purple: #501087;
-$purple: $primary-dark;
-
 .profile-documents-container {
   display: flex;
   flex-direction: column;
@@ -302,7 +299,7 @@ $purple: $primary-dark;
 
   width: 12.5px;
   display: inline-block;
-  background-color: $purple;
+  background-color: $primary-dark;
   height: calc((var(--max-bar-height) * (var(--bar-count) / 100) + var(--min-bar-height)) * 1px);
   transition: all 0.4s;
   transform-origin: bottom;
@@ -372,7 +369,7 @@ $purple: $primary-dark;
 
     &:hover,
     &.selected {
-      background-color: $purple;
+      background-color: $primary-dark;
       color: white;
 
       & :first-child {
@@ -386,7 +383,7 @@ $purple: $primary-dark;
   }
 
   & :first-child {
-    color: $purple;
+    color: $primary-dark;
     font-size: 2rem;
   }
 
