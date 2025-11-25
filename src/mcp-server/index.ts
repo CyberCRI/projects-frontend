@@ -27,9 +27,52 @@ const sorbobotApiToken = runtimeConfig.appSorbobotApiToken
 //   'sorbobotApiToken',
 //   !!sorbobotApiToken
 // )
+
+let SORBOBOT_EXTRA = ''
 if (sorbobotApiUrl && sorbobotApiToken) {
   sorbobotApi = new SorbobotAPI(sorbobotApiToken, sorbobotApiUrl)
+  SORBOBOT_EXTRA =
+    "If the query is about researchers, research topics, parpers or publications use the 'sorbobot-api' in priority."
   console.log('Sorbobot API initialized')
+  // console.log('Registering Sorbobot API tool')
+  // Add an search tool
+  server.registerTool(
+    'sorbobot-api',
+    {
+      title: 'Research, researchers, experts and science topics and publication finder',
+      description:
+        'Get a list of researchers and their research papers based on a query. Also get a list of research topics. Use this tool in priority if it is relevant to the user question.',
+      inputSchema: { queryPrompt: z.string().describe('The research query prompt') },
+      outputSchema: {
+        researchers: z.array(z.object({}).describe('A researcher object')),
+        research_topics: z.array(z.string().describe('A research topic')),
+      },
+    },
+    async ({ queryPrompt }) => {
+      let results = { researchers: [], research_topics: [] }
+      if (!sorbobotApi) {
+        console.log('Sorbobot API not initialized')
+        return results
+      }
+      try {
+        await sorbobotApi.init()
+        const sorbobotResults = await sorbobotApi.query(queryPrompt)
+        await sorbobotApi.close()
+        results = {
+          researchers: Object.entries(sorbobotResults.authors).map((entry) => entry[1]),
+          research_topics: sorbobotResults.search_results,
+        }
+      } catch (error) {
+        console.error('Error querying Sorbobot:', error)
+      }
+      const output = results
+      // console.log('MCP TOOL CALLED: sorbobot-api', { output })
+      return {
+        content: [{ type: 'text', text: JSON.stringify(output) }],
+        structuredContent: output,
+      }
+    }
+  )
 }
 
 const FETCH_PROJECT_SLUG_OR_ID =
@@ -365,8 +408,7 @@ server.registerTool(
   'search',
   {
     title: 'Search Tool',
-    description:
-      'Search on the platform for projects, people profile (user) and groups (of users) related to a query.',
+    description: `Search on the platform for projects, people profile (user) and groups (of users) related to a query. ${SORBOBOT_EXTRA}`,
     inputSchema: { queryTerms: z.string().describe('The search query terms') },
     outputSchema: {
       results: z
@@ -1169,44 +1211,5 @@ server.registerTool(
     }
   }
 )
-
-if (sorbobotApi) {
-  // console.log('Registering Sorbobot API tool')
-  // Add an search tool
-  server.registerTool(
-    'sorbobot-api',
-    {
-      title: 'Research, researchers, experts and science topics and publication finder',
-      description:
-        'Get a list of researchers and their research papers based on a query. Also get a list of research topics.',
-      inputSchema: { queryPrompt: z.string() },
-      outputSchema: { researchers: z.array(z.object({})), research_topics: z.array(z.string()) },
-    },
-    async ({ queryPrompt }) => {
-      let results = { researchers: [], research_topics: [] }
-      if (!sorbobotApi) {
-        console.log('Sorbobot API not initialized')
-        return results
-      }
-      try {
-        await sorbobotApi.init()
-        const sorbobotResults = await sorbobotApi.query(queryPrompt)
-        await sorbobotApi.close()
-        results = {
-          researchers: Object.entries(sorbobotResults.authors).map((entry) => entry[1]),
-          research_topics: sorbobotResults.search_results,
-        }
-      } catch (error) {
-        console.error('Error querying Sorbobot:', error)
-      }
-      const output = results
-      // console.log('MCP TOOL CALLED: sorbobot-api', { output })
-      return {
-        content: [{ type: 'text', text: JSON.stringify(output) }],
-        structuredContent: output,
-      }
-    }
-  )
-}
 
 export default server
