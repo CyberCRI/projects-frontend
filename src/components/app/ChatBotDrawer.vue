@@ -289,6 +289,7 @@ const remarkableOptions = ref({ linkify: true, linkTarget: '_blank' })
     line-height: 36px;
     font-size: 0.8rem;
   }
+
   .prompt-suggestion ~ .prompt-suggestion {
     margin-left: 8px;
   }
