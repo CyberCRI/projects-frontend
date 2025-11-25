@@ -91,6 +91,37 @@ const htmlWrappers = ref({
     </div>`,
 })
 
+const suggestButtons = ref([
+  'Tell me about this platform',
+  'Find research projects on renewable energy',
+  'Find researchers and publication on climate change',
+])
+function placeCaretAtEnd(el) {
+  // https://stackoverflow.com/questions/4233265/contenteditable-set-caret-at-the-end-of-the-text-cross-browser
+  el.focus()
+  if (typeof window.getSelection != 'undefined' && typeof document.createRange != 'undefined') {
+    const range = document.createRange()
+    range.selectNodeContents(el)
+    range.collapse(false)
+    const sel = window.getSelection()
+    sel.removeAllRanges()
+    sel.addRange(range)
+  } else if (typeof document.body.createTextRange != 'undefined') {
+    const textRange = document.body.createTextRange()
+    textRange.moveToElementText(el)
+    textRange.collapse(false)
+    textRange.select()
+  }
+}
+const onSuggestButtonClick = (buttonText) => {
+  if (chatBox.value) {
+    console.log(chatBox.value.textInput)
+    const inputBox = chatBox.value.shadowRoot.querySelector('#text-input')
+    inputBox.innerText = buttonText
+    placeCaretAtEnd(inputBox)
+  }
+}
+
 watch(
   () => chatBox.value,
   (neo, old) => {
@@ -218,6 +249,7 @@ const remarkableOptions = ref({ linkify: true, linkTarget: '_blank' })
       :messageStyles="messageStyles"
       :stream="IS_STREAMED"
       :remarkable="remarkableOptions"
+      :customButtons="customButtons"
       auxiliaryStyle="
         a {
           color: #1d727c;
@@ -234,5 +266,31 @@ const remarkableOptions = ref({ linkify: true, linkTarget: '_blank' })
         }
       "
     ></deep-chat>
+    <div class="prompt-suggestions">
+      <a
+        v-for="button in suggestButtons"
+        :key="button"
+        class="prompt-suggestion"
+        href="#"
+        @click.prevent="onSuggestButtonClick(button)"
+      >
+        {{ button }}
+      </a>
+    </div>
   </BaseDrawer>
 </template>
+<style lang="scss" scoped>
+.prompt-suggestions {
+  .prompt-suggestion {
+    background-color: #eee;
+    border-radius: 4px;
+    padding: 4px;
+    color: #666;
+    line-height: 36px;
+    font-size: 0.8rem;
+  }
+  .prompt-suggestion ~ .prompt-suggestion {
+    margin-left: 8px;
+  }
+}
+</style>
