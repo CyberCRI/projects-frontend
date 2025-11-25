@@ -8,7 +8,7 @@
             :name="`option-picker-${option.id}`"
             type="checkbox"
             :checked="selectedId.includes(option.id)"
-            @input="toogle(option)"
+            @input="toggle(option)"
           />
         </div>
         <div class="name black-text">
@@ -35,7 +35,7 @@ const modelValue = defineModel('modelValue', { required: true, type: Array })
 const emit = defineEmits(['update:modelValue'])
 
 const selectedId = computed(() => modelValue.value.map((el) => el.id))
-const toogle = (element) => {
+const toggle = (element) => {
   let value = modelValue.value
   if (selectedId.value.includes(element.id)) {
     value = value.filter((el) => el.id !== element.id)

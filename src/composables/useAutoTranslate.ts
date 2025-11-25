@@ -223,6 +223,14 @@ export default function useAutoTranslate() {
   }
   const translateCategories = (categories) => translateEntities(categories, translateCategory)
 
+  /*
+    researcher document
+  */
+
+  const translateResearcherDocument = (data) => translateEntity(data, ['title', 'description'])
+  const translateResearcherDocuments = (datas) =>
+    translateEntities(datas, translateResearcherDocument)
+
   return {
     isAutoTranslateActivated,
     getTranslatableField,
@@ -288,5 +296,9 @@ export default function useAutoTranslate() {
     // templates
     translateTemplate,
     translateTemplates,
+
+    // researcher document (publications, conferences ...ect)
+    translateResearcherDocument,
+    translateResearcherDocuments,
   }
 }
