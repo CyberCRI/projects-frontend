@@ -81,7 +81,7 @@ export const usePagination = (
   )
 
   const canPrev = computed(() => current.value > 1)
-  const canNext = computed(() => current.value + 1 < total.value)
+  const canNext = computed(() => current.value < total.value)
 
   // you can change page directly
   const setPage = (pageValue: number) => {

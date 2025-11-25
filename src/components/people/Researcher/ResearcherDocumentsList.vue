@@ -1,6 +1,6 @@
 <template>
   <FetchLoader :status="status" :with-data="!!documents">
-    <div v-if="documents?.results?.length" class="profile-documents-container">
+    <div v-if="documentsTranslated?.length" class="profile-documents-container">
       <div class="profile-info-container" :class="{ preview: preview }">
         <div class="doc-year-container">
           <h5>
@@ -22,7 +22,7 @@
                 }"
                 :title="`${t(`profile.${docType}`)} ${obj.year} (${obj.count})`"
                 :style="{ '--bar-count': obj.height }"
-                @click="!preview && toogleQuery('year', obj.year)"
+                @click="!preview && toggleQuery('year', obj.year)"
               >
                 <span>{{ obj.year }}</span>
               </component>
@@ -41,7 +41,7 @@
               selected: query.document_type === (name ?? ''),
               preview: preview,
             }"
-            @click="!preview && toogleQuery('document_type', name ?? '')"
+            @click="!preview && toggleQuery('document_type', name ?? '')"
           >
             <span>{{ count }}</span>
             <span>
@@ -59,7 +59,7 @@
             v-for="[role, count] in documentsRoleInfos"
             :key="role"
             class="doc-roles"
-            @click="!preview && toogleQuery('roles', role)"
+            @click="!preview && toggleQuery('roles', role)"
           >
             <BadgeItem
               :class="{
@@ -111,7 +111,7 @@ import {
   QueryFilterDocument,
   ResearcherDocumentAnalytics,
   TranslatedDocument,
-} from '@/iterfaces/researcher'
+} from '@/interfaces/researcher'
 import { UserModel } from '@/models/user.model'
 
 defineOptions({ name: 'ResearcherDocumentsList' })
@@ -127,9 +127,10 @@ const { translateResearcherDocuments } = useAutoTranslate()
 const documentSelected = ref<Document>()
 
 const documents = ref<PaginationResult<Document>>()
-const documentsTranslated = computed<TranslatedDocument[]>(() =>
-  unref(translateResearcherDocuments(documents.value?.results))
-)
+
+// get results list from paginated response
+const results = computed<Document[] | undefined>(() => documents.value?.results)
+const documentsTranslated: ComputedRef<TranslatedDocument[]> = translateResearcherDocuments(results)
 
 const pagination = usePagination(documents, { limit: props.limit ?? 10 })
 const status = ref('pending')
@@ -142,7 +143,7 @@ const documentsAnalytics = ref<ResearcherDocumentAnalytics>({
 
 // filter backend query
 // default role "author" to only show author form documents
-const { query, toogleQuery } = useQuery<QueryFilterDocument>({ roles: 'author' })
+const { query, toggleQuery } = useQuery<QueryFilterDocument>({ roles: 'author' })
 
 const getDocuments = () => {
   status.value = 'pending'
@@ -216,9 +217,6 @@ const documentsRoleInfos = computed(() => sortInfos(documentsAnalytics.value.rol
 <style lang="scss" scoped>
 $profile-documents: 1rem;
 
-// $purple: #501087;
-$purple: $primary-dark;
-
 .profile-documents-container {
   display: flex;
   flex-direction: column;
@@ -252,7 +250,7 @@ $purple: $primary-dark;
   }
 }
 
-@media screen and (width <= 1000px) {
+@media screen and (width <= pxToRem(1000px)) {
   .profile-info-container {
     display: flex;
     flex-direction: column;
@@ -302,7 +300,7 @@ $purple: $primary-dark;
 
   width: 12.5px;
   display: inline-block;
-  background-color: $purple;
+  background-color: $primary-dark;
   height: calc((var(--max-bar-height) * (var(--bar-count) / 100) + var(--min-bar-height)) * 1px);
   transition: all 0.4s;
   transform-origin: bottom;
@@ -372,7 +370,7 @@ $purple: $primary-dark;
 
     &:hover,
     &.selected {
-      background-color: $purple;
+      background-color: $primary-dark;
       color: white;
 
       & :first-child {
@@ -386,7 +384,7 @@ $purple: $primary-dark;
   }
 
   & :first-child {
-    color: $purple;
+    color: $primary-dark;
     font-size: 2rem;
   }
 

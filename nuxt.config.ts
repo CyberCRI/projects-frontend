@@ -6,7 +6,8 @@ import * as dotenv from 'dotenv'
 // Determine the environment file
 const customEnvFile = process.env.ENV_FILE ? `.env.${process.env.ENV_FILE}` : '.env'
 
-if (fs.existsSync(customEnvFile)) {
+// not load env when we are in tests
+if (fs.existsSync(customEnvFile) && import.meta.env.VITEST !== 'true') {
   console.log(`Overriding environment variables with: ${customEnvFile}`)
   dotenv.config({ path: customEnvFile, override: true })
 }

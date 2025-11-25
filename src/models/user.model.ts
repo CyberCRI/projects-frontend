@@ -2,7 +2,7 @@
  * @name UserModel
  * @description user data set on the project app
  */
-import { ResearcherLight } from '@/iterfaces/researcher'
+import { ResearcherLight } from '@/interfaces/researcher'
 import { TagModel } from './tag.model'
 
 export interface UserModel {
@@ -19,7 +19,7 @@ export interface UserModel {
   description?: string
   people_groups?: object[] // TODO: define this type
   skills?: UserSkillModel[]
-  researcher: ResearcherLight
+  researcher?: ResearcherLight
 }
 
 export interface UserFromJWTModel {

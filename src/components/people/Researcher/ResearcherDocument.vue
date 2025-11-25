@@ -61,7 +61,7 @@
     </div>
     <SeeMoreArrow
       v-if="similar && document.similars > 0"
-      data-test="see-more"
+      :data-test="`see-more-${document.id}`"
       class="no-padding"
       :label="`${document.similars} ${t(`profile.${docType}-similars`)}`"
       @click.prevent="emit('similar', document)"
@@ -71,13 +71,13 @@
 
 <script setup lang="ts">
 import { documentTypeHarverToUrl, researcherHarvesterToUrl } from '@/functs/researcher'
-import { TranslatedDocument } from '@/iterfaces/researcher'
+import { TranslatedDocument } from '@/interfaces/researcher'
 import PushPinSvg from '@/assets/svg/pushpin.svg'
 import { sanitizeTranslateKeys } from '@/api/sanitizes/researcher'
 
 defineOptions({ name: 'ResearcherDocument' })
 
-const { t } = useNuxtI18n()
+const { t, locale } = useNuxtI18n()
 const emit = defineEmits(['similar'])
 
 withDefaults(

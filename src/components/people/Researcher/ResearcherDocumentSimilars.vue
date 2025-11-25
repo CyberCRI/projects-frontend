@@ -8,7 +8,7 @@
     @close="emit('close')"
   >
     <FetchLoader :status="status">
-      <div class="documents-list">
+      <div class="documents-list-similars">
         <ResearcherDocument
           v-for="doc in documentsTranslated"
           :key="doc.id"
@@ -29,7 +29,7 @@ import { sanitizeResearcherDocuments } from '@/api/sanitizes/researcher'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { PaginationResult, usePagination } from '@/composables/usePagination'
-import { Document, TranslatedDocument } from '@/iterfaces/researcher'
+import { Document, TranslatedDocument } from '@/interfaces/researcher'
 import { UserModel } from '@/models/user.model'
 
 defineOptions({ name: 'ResearcherDocumentSimilars' })
@@ -37,7 +37,7 @@ defineOptions({ name: 'ResearcherDocumentSimilars' })
 const { t } = useNuxtI18n()
 const emit = defineEmits(['close'])
 const props = defineProps<{
-  document: Document | null
+  document?: Document
   docType: string
   user: UserModel
 }>()
@@ -47,9 +47,10 @@ const documents = ref<PaginationResult<Document>>()
 const pagination = usePagination(documents, { limit: 10 })
 const { count } = pagination
 const { translateResearcherDocuments } = useAutoTranslate()
-const documentsTranslated = computed<TranslatedDocument[]>(() =>
-  unref(translateResearcherDocuments(documents.value?.results))
-)
+
+// get results list from paginated response
+const results = computed<Document[] | undefined>(() => documents.value?.results)
+const documentsTranslated: ComputedRef<TranslatedDocument[]> = translateResearcherDocuments(results)
 
 const getDocuments = (query) => {
   status.value = 'pending'
@@ -79,7 +80,7 @@ watch(
 <style lang="scss">
 $profile-documents: 1rem;
 
-.documents-list > *:not(:last-child)::after {
+.documents-list-similars > *:not(:last-child)::after {
   content: '';
   display: inline-block;
   width: 100%;

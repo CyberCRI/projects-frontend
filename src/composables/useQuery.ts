@@ -4,7 +4,7 @@
  * @constant
  * @name useQuery
  * @kind variable
- * @type {<DataQuery = { [key: string]: string | number; }>(defaultValue: Partial<DataQuery>) => { query: Reactive<Partial<DataQuery>>; setQuery: <K extends keyof DataQuery>(key: K, value: DataQuery[K]) => void; removeQuery: <K extends keyof DataQuery>(key: K) => void; toogleQuery: <K extends keyof DataQuery>(key: K, value: DataQuery[K]) => void; }}
+ * @type {<DataQuery = { [key: string]: string | number; }>(defaultValue: Partial<DataQuery>) => { query: Reactive<Partial<DataQuery>>; setQuery: <K extends keyof DataQuery>(key: K, value: DataQuery[K]) => void; removeQuery: <K extends keyof DataQuery>(key: K) => void; toggleQuery: <K extends keyof DataQuery>(key: K, value: DataQuery[K]) => void; }}
  * @exports
  */
 export const useQuery = <DataQuery = { [key: string]: string | number }>(
@@ -21,9 +21,9 @@ export const useQuery = <DataQuery = { [key: string]: string | number }>(
   }
 
   /**
-   * toogle value in object ( if exists with the same value, remove it else set it)
+   * toggle value in object ( if exists with the same value, remove it else set it)
    */
-  const toogleQuery = <K extends keyof DataQuery>(key: K, value: DataQuery[K]) => {
+  const toggleQuery = <K extends keyof DataQuery>(key: K, value: DataQuery[K]) => {
     if ((query as Record<K, DataQuery[K]>)[key] === value) {
       removeQuery(key)
     } else {
@@ -35,6 +35,6 @@ export const useQuery = <DataQuery = { [key: string]: string | number }>(
     query,
     setQuery,
     removeQuery,
-    toogleQuery,
+    toggleQuery,
   }
 }
