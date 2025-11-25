@@ -624,7 +624,8 @@
     "edit-saved": "Qualsevol canvi que (i cap co- authors) hagi fet no serà desat.",
     "edit": "Descripció d' edició (projecte)",
     "add": "Afegeix descripció",
-    "quit-without-saving-title": "Surto sense desar?"
+    "quit-without-saving-title": "Surto sense desar?",
+    "default-placeholder": "Ara descriu el teu projecte."
   },
   "discover": {
     "page-title": "Descobri",
@@ -1067,7 +1068,8 @@
     "skills": "Habilitats",
     "hobbies": "Hobbiesusa. kgm",
     "levels-help-link": "Nivells d'kill",
-    "publications": "Les meves publicacions"
+    "publications": "Les meves publicacions",
+    "conferences": "Les meves conferències"
   },
   "you": {
     "no-follow": "Encara no hi ha cap projecte seguit",
@@ -1077,7 +1079,9 @@
     "no-project-participate": "Encara no és membre d' un projecte",
     "no-project-reviewing": "Encara no és un revisador d'un projecte",
     "publications": "Les seves publicacions",
-    "no-publications": "Encara no hi ha publicacions"
+    "no-publications": "Encara no hi ha publicacions",
+    "conferences": "Les seves conferències",
+    "no-conferences": "Encara no hi ha conferències"
   },
   "multieditor": {
     "blockquote": "Bloqueja la cita",
@@ -1523,6 +1527,10 @@
       "publications": {
         "no-editable": "Les publicacions encara no estan disponibles.",
         "tab": "Publicacions"
+      },
+      "conferences": {
+        "no-editable": "Les conferències encara no estan disponibles.",
+        "tab": "Conferèncias"
       }
     },
     "go-to-page": "Visualitza la pàgina del perfil",
@@ -1547,7 +1555,10 @@
     "publications": "Publicacions",
     "research-output-year": "Any de sortida de recerca",
     "publications-similars": "similar a Publicacions",
-    "publications-empty": "Sense Publicacions."
+    "publications-empty": "Sense Publicacions.",
+    "conferences": "Conferèncias",
+    "conferences-similars": "Les conferències similars",
+    "conferences-empty": "No hi ha conferències."
   },
   "profile-completed-modal": {
     "notice-congratulation": "Ara estàs preparat per utilitzar la plataforma de projectes.",
@@ -1619,7 +1630,8 @@
         "min": "El camp de propòsit ha de ser almenys 3 caràcters"
       },
       "project-templates": "Nom de la plantilla",
-      "completed-info-to-access-presentation": "S' ha de completar tota la informació de la pàgina per accedir a la presentació."
+      "completed-info-to-access-presentation": "S' ha de completar tota la informació de la pàgina per accedir a la presentació.",
+      "purpose-placeholder": "Quin és el propòsit del teu projecte?"
     },
     "image-header": "Imatge",
     "image-alert": {

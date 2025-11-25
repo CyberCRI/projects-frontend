@@ -624,7 +624,8 @@
     "edit-saved": "Wijzigingen die u (en eventuele co-auteurs) heeft aangebracht, worden niet opgeslagen.",
     "edit": "bewerk beschrijving (ontwerp)",
     "add": "Beschrijving toevoegen",
-    "quit-without-saving-title": "Stoppen zonder te redden?"
+    "quit-without-saving-title": "Stoppen zonder te redden?",
+    "default-placeholder": "Beschrijf nu je project."
   },
   "discover": {
     "page-title": "Ontdekken",
@@ -1067,7 +1068,8 @@
     "skills": "Vaardigheden",
     "hobbies": "Hobby's",
     "levels-help-link": "Vaardigheden",
-    "publications": "Mijn publicaties"
+    "publications": "Mijn publicaties",
+    "conferences": "Mijn conferenties"
   },
   "you": {
     "no-follow": "Nog geen projecten gevolgd",
@@ -1077,7 +1079,9 @@
     "no-project-participate": "Nog geen lid van een project",
     "no-project-reviewing": "Nog geen recensent van een project",
     "publications": "Zijn publicaties",
-    "no-publications": "Nog geen publicaties"
+    "no-publications": "Nog geen publicaties",
+    "conferences": "Zijn conferenties",
+    "no-conferences": "Nog geen conferenties"
   },
   "multieditor": {
     "blockquote": "Blockquote",
@@ -1523,6 +1527,10 @@
       "publications": {
         "no-editable": "De publicaties zijn nog niet beschikbaar.",
         "tab": "Publicaties"
+      },
+      "conferences": {
+        "no-editable": "De conferenties zijn nog niet beschikbaar.",
+        "tab": "Conferenties"
       }
     },
     "go-to-page": "De pagina van het profiel weergeven",
@@ -1547,7 +1555,10 @@
     "publications": "Publicaties",
     "research-output-year": "Produktiejaar onderzoek",
     "publications-similars": "Publicaties",
-    "publications-empty": "Geen publicaties."
+    "publications-empty": "Geen publicaties.",
+    "conferences": "Conferenties",
+    "conferences-similars": "Vergelijkende conferenties",
+    "conferences-empty": "Geen conferenties."
   },
   "profile-completed-modal": {
     "notice-congratulation": "U bent nu klaar om het projectplatform te gebruiken.",
@@ -1619,7 +1630,8 @@
         "min": "Het doelveld moet ten minste 3 karakters tellen"
       },
       "project-templates": "Sjabloonnaam",
-      "completed-info-to-access-presentation": "Alle informatie op de pagina moet worden ingevuld om toegang te krijgen tot de presentatie."
+      "completed-info-to-access-presentation": "Alle informatie op de pagina moet worden ingevuld om toegang te krijgen tot de presentatie.",
+      "purpose-placeholder": "Wat is het doel van uw project?"
     },
     "image-header": "Afbeelding",
     "image-alert": {

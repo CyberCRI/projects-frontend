@@ -31,6 +31,7 @@ export type Researcher = {
 }
 
 export type ResearcherLight = Researcher & {
+  // this is a objects with numbers of each documents
   documents: {
     publications: number
     conferences: number

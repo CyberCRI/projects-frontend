@@ -1068,7 +1068,8 @@
     "skills": "Skills",
     "hobbies": "Hobbies",
     "levels-help-link": "Skill levels",
-    "publications": "My publications"
+    "publications": "My publications",
+    "conferences": "My conferences"
   },
   "you": {
     "no-follow": "No projects followed yet",
@@ -1078,7 +1079,9 @@
     "no-project-participate": "Not a member of a project yet",
     "no-project-reviewing": "Not a reviewer of a project yet",
     "publications": "His publications",
-    "no-publications": "No publications yet"
+    "no-publications": "No publications yet",
+    "conferences": "His conferences",
+    "no-conferences": "No conferences yet"
   },
   "multieditor": {
     "blockquote": "Blockquote",
@@ -1491,6 +1494,10 @@
         "no-editable": "The publications are not yet available.",
         "tab": "Publications"
       },
+      "conferences": {
+        "no-editable": "The conferences are not yet available.",
+        "tab": "Conferences"
+      },
       "privacy": {
         "tab": "Privacy",
         "save-error": "Error while saving profile.",
@@ -1546,9 +1553,12 @@
     "mentorship-asking": "You are asking for mentorship",
     "mentorship-offering": "You are offering mentorship",
     "publications": "Publications",
+    "conferences": "Conferences",
     "research-output-year": "Research output year",
     "publications-similars": "Publications similars",
-    "publications-empty": "No Publications."
+    "publications-empty": "No Publications.",
+    "conferences-similars": "Conferences similars",
+    "conferences-empty": "No conferences."
   },
   "profile-completed-modal": {
     "notice-congratulation": "You are now ready to use the projects platform.",

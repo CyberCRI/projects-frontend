@@ -624,7 +624,8 @@
     "edit-saved": "Teie (ja kaasautorite) tehtud muudatusi ei salvestata.",
     "edit": "redigeerimise kirjeldus (joonis)",
     "add": "Lisa kirjeldus",
-    "quit-without-saving-title": "Lõpetad säästmata?"
+    "quit-without-saving-title": "Lõpetad säästmata?",
+    "default-placeholder": "Nüüd kirjelda oma projekti."
   },
   "discover": {
     "page-title": "Avasta",
@@ -1067,7 +1068,8 @@
     "skills": "Oskused",
     "hobbies": "Hobid",
     "levels-help-link": "Oskuste tase",
-    "publications": "Minu väljaanded"
+    "publications": "Minu väljaanded",
+    "conferences": "Konverentsid"
   },
   "you": {
     "no-follow": "Projekte ei ole veel rakendatud",
@@ -1077,7 +1079,9 @@
     "no-project-participate": "Ei ole veel projekti liige",
     "no-project-reviewing": "Pole veel projekti ülevaataja",
     "publications": "Tema väljaanded",
-    "no-publications": "Väljaanded veel puuduvad"
+    "no-publications": "Väljaanded veel puuduvad",
+    "conferences": "Tema konverentsid",
+    "no-conferences": "Konverentse veel pole"
   },
   "multieditor": {
     "blockquote": "Blockquote",
@@ -1523,6 +1527,10 @@
       "publications": {
         "no-editable": "Väljaanded ei ole veel kättesaadavad.",
         "tab": "Trükised"
+      },
+      "conferences": {
+        "no-editable": "Konverentsid ei ole veel kättesaadavad.",
+        "tab": "Konverentsid"
       }
     },
     "go-to-page": "Vaata profiili lehekülge",
@@ -1547,7 +1555,10 @@
     "publications": "Trükised",
     "research-output-year": "Teadustöö väljundaasta",
     "publications-similars": "Väljaannete sarnased väljaanded",
-    "publications-empty": "Ei mingeid väljaandeid."
+    "publications-empty": "Ei mingeid väljaandeid.",
+    "conferences": "Konverentsid",
+    "conferences-similars": "Konverentsilaadsed",
+    "conferences-empty": "Ei mingeid konverentse."
   },
   "profile-completed-modal": {
     "notice-congratulation": "Nüüd olete valmis kasutama projekti platvormi.",
@@ -1619,7 +1630,8 @@
         "min": "Eesmärgi väli peab olema vähemalt 3 märki."
       },
       "project-templates": "Malli nimi",
-      "completed-info-to-access-presentation": "Esitlusele pääsemiseks tuleb täita kogu lehel olev teave."
+      "completed-info-to-access-presentation": "Esitlusele pääsemiseks tuleb täita kogu lehel olev teave.",
+      "purpose-placeholder": "Mis on teie projekti eesmärk?"
     },
     "image-header": "Pilt",
     "image-alert": {

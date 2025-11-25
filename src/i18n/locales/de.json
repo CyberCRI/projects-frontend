@@ -1068,7 +1068,8 @@
     "skills": "Fähigkeiten",
     "hobbies": "Hobbys",
     "levels-help-link": "Qualifikationsniveau",
-    "publications": "Meine Veröffentlichungen"
+    "publications": "Meine Veröffentlichungen",
+    "conferences": "Meine Konferenzen"
   },
   "you": {
     "no-follow": "Noch keine Projekte",
@@ -1078,7 +1079,9 @@
     "no-project-participate": "Noch kein Projektmitglied",
     "no-project-reviewing": "Noch kein Reviewer eines Projekts",
     "publications": "Seine Veröffentlichungen",
-    "no-publications": "Noch keine Veröffentlichungen"
+    "no-publications": "Noch keine Veröffentlichungen",
+    "conferences": "Seine Konferenzen",
+    "no-conferences": "Noch keine Konferenzen"
   },
   "multieditor": {
     "blockquote": "Das ist nicht möglich.",
@@ -1524,6 +1527,10 @@
       "publications": {
         "no-editable": "Die Veröffentlichungen sind noch nicht verfügbar.",
         "tab": "Veröffentlichungen"
+      },
+      "conferences": {
+        "no-editable": "Die Konferenzen sind noch nicht verfügbar.",
+        "tab": "Konferenzen"
       }
     },
     "go-to-page": "Profilseite anzeigen",
@@ -1548,7 +1555,10 @@
     "publications": "Veröffentlichungen",
     "research-output-year": "Forschungsausgabe Jahr",
     "publications-similars": "Veröffentlichungen ähnlich",
-    "publications-empty": "Keine Veröffentlichungen."
+    "publications-empty": "Keine Veröffentlichungen.",
+    "conferences": "Konferenzen",
+    "conferences-similars": "Konferenzen ähnlich",
+    "conferences-empty": "Keine Konferenzen."
   },
   "profile-completed-modal": {
     "notice-congratulation": "Sie sind jetzt bereit, die Projektplattform zu nutzen.",
@@ -1620,7 +1630,8 @@
         "min": "Das Zielfeld muss mindestens 3 Zeichen sein"
       },
       "project-templates": "Vorname",
-      "completed-info-to-access-presentation": "Alle Informationen auf der Seite müssen ausgefüllt werden, um auf die Präsentation zuzugreifen."
+      "completed-info-to-access-presentation": "Alle Informationen auf der Seite müssen ausgefüllt werden, um auf die Präsentation zuzugreifen.",
+      "purpose-placeholder": "Was ist der Zweck Ihres Projekts?"
     },
     "image-header": "Bild",
     "image-alert": {

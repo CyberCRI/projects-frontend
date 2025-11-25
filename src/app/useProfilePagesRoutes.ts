@@ -33,6 +33,14 @@ export default function useProfilePagesRoutes() {
         docType: 'publications',
       },
     },
+    {
+      path: 'conferences',
+      name: 'ResearcherConferences',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ResearcherDocumentsTab.vue'),
+      props: {
+        docType: 'conferences',
+      },
+    },
   ]
 
   const profileEditTabs = [
@@ -72,6 +80,14 @@ export default function useProfilePagesRoutes() {
       component: () => import('../pages/UserProfilePageV2/Tabs/ResearcherEditDocumentsTab.vue'),
       props: {
         docType: 'publications',
+      },
+    },
+    {
+      path: 'conferences',
+      name: 'ProfileEditConferences',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ResearcherEditDocumentsTab.vue'),
+      props: {
+        docType: 'conferences',
       },
     },
   ]
