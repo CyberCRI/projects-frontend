@@ -108,6 +108,7 @@ export default {
   margin-top: $space-l;
   border: 1px solid $primary;
   border-radius: $border-radius-s;
+  overflow-x: hidden;
 }
 
 .recommendation-wrapper {

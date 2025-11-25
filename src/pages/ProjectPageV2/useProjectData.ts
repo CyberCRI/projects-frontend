@@ -218,12 +218,23 @@ export default function useProjectData() {
     }
   }
 
+  // used to register a call back (setHeader in ProjectPage)
+  // so we dont rely on a watcher (that occasionaly enter infinite loop)
+  const postFecthProjectHook: Ref<((project: any) => Promise<void>) | null> = ref(null)
+
   const reloadProject = async () => {
-    return await projectsStore.getProject(project.value.id)
+    const res = await projectsStore.getProject(project.value.id)
+    if (postFecthProjectHook.value) {
+      await postFecthProjectHook.value(res)
+    }
+    return res
   }
 
   const setProject = async (projectSlugOrId) => {
     const project = await projectsStore.getProject(projectSlugOrId)
+    if (postFecthProjectHook.value) {
+      await postFecthProjectHook.value(project)
+    }
     // TODO watch here it was the computed project value instead
     follow.value = project.is_followed
     _goals.value = project.goals
@@ -837,6 +848,7 @@ export default function useProjectData() {
     commentLoop,
     linkedProjectsLoading,
     isEditing,
+    postFecthProjectHook,
     //computed
     mergedTeam,
     projectTabs,

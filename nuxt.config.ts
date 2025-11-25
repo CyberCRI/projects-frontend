@@ -61,7 +61,7 @@ export default defineNuxtConfig({
 
   // disable caching
   routeRules: {
-    '*': {
+    '/**': {
       cache: false,
       headers: {
         'Cache-Control': 'no-store',
