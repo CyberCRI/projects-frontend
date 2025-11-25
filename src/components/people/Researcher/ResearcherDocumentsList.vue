@@ -1,6 +1,6 @@
 <template>
   <FetchLoader :status="status" :with-data="!!documents">
-    <div v-if="documents?.results?.length" class="profile-documents-container">
+    <div v-if="documentsTranslated?.length" class="profile-documents-container">
       <div class="profile-info-container" :class="{ preview: preview }">
         <div class="doc-year-container">
           <h5>
@@ -127,9 +127,10 @@ const { translateResearcherDocuments } = useAutoTranslate()
 const documentSelected = ref<Document>()
 
 const documents = ref<PaginationResult<Document>>()
-const documentsTranslated = computed<TranslatedDocument[]>(() =>
-  unref(translateResearcherDocuments(documents.value?.results))
-)
+
+// get results list from paginated response
+const results = computed<Document[] | undefined>(() => documents.value?.results)
+const documentsTranslated: ComputedRef<TranslatedDocument[]> = translateResearcherDocuments(results)
 
 const pagination = usePagination(documents, { limit: props.limit ?? 10 })
 const status = ref('pending')

@@ -47,9 +47,10 @@ const documents = ref<PaginationResult<Document>>()
 const pagination = usePagination(documents, { limit: 10 })
 const { count } = pagination
 const { translateResearcherDocuments } = useAutoTranslate()
-const documentsTranslated = computed<TranslatedDocument[]>(() =>
-  unref(translateResearcherDocuments(documents.value?.results))
-)
+
+// get results list from paginated response
+const results = computed<Document[] | undefined>(() => documents.value?.results)
+const documentsTranslated: ComputedRef<TranslatedDocument[]> = translateResearcherDocuments(results)
 
 const getDocuments = (query) => {
   status.value = 'pending'
