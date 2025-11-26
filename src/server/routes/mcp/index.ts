@@ -16,7 +16,8 @@ export default defineEventHandler(async (event) => {
 
   // const body = await readBody(event)
 
-  // console.log(req.headers, req.method, req.url /*body*/)
+  console.log('MCP connection request:')
+  console.log(req.headers, req.method, req.url /*body*/)
 
   const conversationId = getRequestHeader(event, 'Authorization') || ''
   if (conversationId) {

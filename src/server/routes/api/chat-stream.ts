@@ -63,13 +63,10 @@ export default defineLazyEventHandler(() => {
       `Starting chat stream for conversation ${conversationId} with ${messages.length} messages`
     )
 
-    tokenMap.set(
-      '123456',
-      /*conversationId, */ {
-        date: new Date(),
-        token: 'fobbar', // ('' + tokenHeader).replace('Bearer ', ''),
-      }
-    )
+    tokenMap.set(conversationId, {
+      date: new Date(),
+      token: ('' + tokenHeader).replace('Bearer ', ''),
+    })
 
     const adaptedMessages = messages.map((message) => {
       return {
