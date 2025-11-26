@@ -31,7 +31,7 @@
             <SeeMoreArrow
               v-if="documentsCount.publications > documentsLimit"
               data-test="see-more"
-              :to="{ name: 'ResearcherPublicationsOther' }"
+              :to="{ name: 'ResearcherPublicationsOther', params: { userId: user.id } }"
             />
           </div>
           <ResearcherDocumentsList
@@ -52,7 +52,7 @@
             <SeeMoreArrow
               v-if="documentsCount.conferences > documentsLimit"
               data-test="see-more"
-              :to="{ name: 'ResearcherConferencesOther' }"
+              :to="{ name: 'ResearcherConferencesOther', params: { userId: user.id } }"
             />
           </div>
           <ResearcherDocumentsList
