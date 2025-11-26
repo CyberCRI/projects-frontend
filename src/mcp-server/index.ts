@@ -9,7 +9,7 @@ import { tokenMap } from '@/server/routes/api/chat-stream'
 // TODO output schemas
 
 function getUserToken(extras) {
-  const convesrationId = extras.requestInfo.headers['authorization'] || ''
+  const convesrationId = (extras.requestInfo.headers['authorization'] || '').replace('Bearer ', '')
   console.log('Tool Getting user token for conversationId', convesrationId)
   const tokenEntry = tokenMap.get(convesrationId)
   if (tokenEntry) {
