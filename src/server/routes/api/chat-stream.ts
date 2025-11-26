@@ -36,9 +36,11 @@ export default defineLazyEventHandler(() => {
       }
     }
 
-    const tokenHeader = getResponseHeader(event, 'Authorization ') || ''
+    const tokenHeader = getResponseHeader(event, 'authorization ') || ''
     if (tokenHeader) {
-      console.log('got Authorization header provided')
+      console.log('chat-stream: got Authorization header provided')
+    } else {
+      console.log('chat-stream: no Authorization header provided')
     }
 
     setResponseHeader(event, 'Content-Type', 'text/event-stream')

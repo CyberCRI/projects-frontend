@@ -37,21 +37,13 @@ const connectOptions = {
   stream: IS_STREAMED.value,
 }
 const usersStore = useUsersStore()
-const accessToken = computed(() => usersStore.accessToken)
+const accessToken = usersStore.accessToken
 
-watch(
-  () => accessToken.value,
-  (neo) => {
-    if (neo) {
-      connectOptions.headers = {
-        Authorization: neo ? `Bearer ${neo}` : '',
-      }
-    } else if (connectOptions.headers) {
-      delete connectOptions.headers.Authorization
-    }
-  },
-  { immediate: true }
-)
+if (accessToken) {
+  connectOptions.headers = {
+    authorization: `Bearer ${accessToken}`,
+  }
+}
 
 const chatStyle = ref({
   border: '0 none',
