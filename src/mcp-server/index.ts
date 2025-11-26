@@ -1,16 +1,43 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { z } from 'zod'
 import SorbobotAPI from '@/mcp-server/sorbobot/sorbobot-api.js'
+import { tokenMap } from '@/server/routes/api/chat-stream'
 
 // TODO people group member and project
 // TODO org files
 // TODO pagination of search results
 // TODO output schemas
 
-const API_BASE_URL = 'https://api.projects.k8s.lp-i.dev/v1/'
+function getUserToken(extras) {
+  const convesrationId = extras.requestInfo.headers['authorization'] || ''
+  console.log('Tool Getting user token for conversationId', convesrationId)
+  const tokenEntry = tokenMap.get(convesrationId)
+  if (tokenEntry) {
+    console.log('MCP tool found token for conversationId', tokenEntry.token.substring(0, 6) + '...')
+    return tokenEntry.token
+  } else {
+    console.log('MCP tool no token found for conversationId', convesrationId)
+  }
+  return null
+}
+
+function mcpFetch(url: string, options: any, extras: any = {}) {
+  const _options = options || {}
+  const accessToken = getUserToken(extras)
+  if (accessToken) {
+    if (!_options.headers) {
+      _options.headers = {}
+    }
+    _options.headers['Authorization'] = `Bearer ${accessToken}`
+  }
+  return $fetch(url, _options)
+}
 
 const runtimeConfig = useRuntimeConfig()
 const orgCode = runtimeConfig.public.appApiOrgCode
+
+const API_BASE_URL =
+  runtimeConfig.public.appApiUrl + runtimeConfig.public.appApiDefaultVersion + '/'
 // Create an MCP server
 const server = new McpServer({
   name: 'demo-server',
@@ -365,7 +392,8 @@ server.registerTool(
       results: z.array(SDG_OUTPUT_SCHEMA),
     },
   },
-  async () => {
+  async function () {
+    console.log('foo')
     const output = { results: ALL_SDGS }
     // console.log('MCP TOOL CALLED: search', { query, output })
     return {
@@ -422,17 +450,18 @@ server.registerTool(
         .describe('The list of search results'),
     },
   },
-  async ({ queryTerms }) => {
+  async ({ queryTerms }, extras) => {
     let results = []
     try {
       const query = {
         limit: 12,
         organizations: [orgCode],
       }
-      const queryResult: any = await $fetch(
+      const queryResult: any = await mcpFetch(
         // TODO: use org code from config
         `${API_BASE_URL}search/${encodeURIComponent(queryTerms)}/?limit=30&organizations=${orgCode}`,
-        { query }
+        { query },
+        extras
       )
       results = queryResult.results.map((item) => {
         if (item.type === 'project') {
@@ -576,12 +605,14 @@ server.registerTool(
       }),
     },
   },
-  async ({ idOrSlug }) => {
+  async ({ idOrSlug }, extras) => {
     let results = {}
     try {
-      const queryResult: any = await $fetch(
+      const queryResult: any = await mcpFetch(
         // TODO: use org code from config
-        `${API_BASE_URL}project/${idOrSlug}/`
+        `${API_BASE_URL}project/${idOrSlug}/`,
+        {},
+        extras
       )
       const p = queryResult
       results = {
@@ -674,12 +705,14 @@ server.registerTool(
       results: z.array(PROJECT_PREVIEW_OUTPUT_SCHEMA).describe('The list of similar projects'),
     },
   },
-  async ({ idOrSlug }) => {
+  async ({ idOrSlug }, extras) => {
     let results = {}
     try {
-      const queryResult: any = await $fetch(
+      const queryResult: any = await mcpFetch(
         // TODO: use org code from config
-        `${API_BASE_URL}project/${idOrSlug}/similar/`
+        `${API_BASE_URL}project/${idOrSlug}/similar/`,
+        {},
+        extras
       )
       results = queryResult.results.map((p: any) => mapProjectPreview(p))
     } catch (error) {
@@ -705,12 +738,14 @@ server.registerTool(
       results: z.array(BLOG_ENTRY_OUTPUT_SCHEMA).describe('The list of blog entries'),
     },
   },
-  async ({ idOrSlug }) => {
+  async ({ idOrSlug }, extras) => {
     let results = {}
     try {
-      const queryResult: any = await $fetch(
+      const queryResult: any = await mcpFetch(
         // TODO: use org code from config
-        `${API_BASE_URL}project/${idOrSlug}/blog-entry/`
+        `${API_BASE_URL}project/${idOrSlug}/blog-entry/`,
+        {},
+        extras
       )
       results = queryResult.results.map(mapBlogEntry)
     } catch (error) {
@@ -737,12 +772,14 @@ server.registerTool(
     },
     outputSchema: { blog_entry: BLOG_ENTRY_OUTPUT_SCHEMA },
   },
-  async ({ idOrSlug, blogEntryId }) => {
+  async ({ idOrSlug, blogEntryId }, extras) => {
     let results = {}
     try {
-      const queryResult: any = await $fetch(
+      const queryResult: any = await mcpFetch(
         // TODO: use org code from config
-        `${API_BASE_URL}project/${idOrSlug}/blog-entry/${blogEntryId}/`
+        `${API_BASE_URL}project/${idOrSlug}/blog-entry/${blogEntryId}/`,
+        {},
+        extras
       )
       results = mapBlogEntry(queryResult)
     } catch (error) {
@@ -818,12 +855,14 @@ server.registerTool(
       }),
     },
   },
-  async ({ idOrSlug }) => {
+  async ({ idOrSlug }, extras) => {
     let results = {}
     try {
-      const queryResult: any = await $fetch(
+      const queryResult: any = await mcpFetch(
         // TODO: use org code from config
-        `${API_BASE_URL}user/${idOrSlug}/`
+        `${API_BASE_URL}user/${idOrSlug}/`,
+        {},
+        extras
       )
       const u = queryResult
       results = {
@@ -885,12 +924,14 @@ server.registerTool(
       }),
     },
   },
-  async ({ idOrSlug }) => {
+  async ({ idOrSlug }, extras) => {
     let results = {}
     try {
-      const queryResult: any = await $fetch(
+      const queryResult: any = await mcpFetch(
         // TODO: use org code from config
-        `${API_BASE_URL}organization/${orgCode}/people-group/${idOrSlug}/`
+        `${API_BASE_URL}organization/${orgCode}/people-group/${idOrSlug}/`,
+        {},
+        extras
       )
       const g = queryResult
       results = {
@@ -947,12 +988,14 @@ server.registerTool(
         .describe('The organization general data'),
     },
   },
-  async () => {
+  async (_input, extras) => {
     let results = {}
     try {
-      const queryResult: any = await $fetch(
+      const queryResult: any = await mcpFetch(
         // TODO: use org code from config
-        `${API_BASE_URL}organization/${orgCode}/`
+        `${API_BASE_URL}organization/${orgCode}/`,
+        {},
+        extras
       )
       const org = queryResult
       results = {
@@ -989,12 +1032,14 @@ server.registerTool(
       results: z.array(PROJECT_PREVIEW_OUTPUT_SCHEMA).describe('The list of featured projects'),
     },
   },
-  async () => {
+  async (_input, extras) => {
     let results = {}
     try {
-      const queryResult: any = await $fetch(
+      const queryResult: any = await mcpFetch(
         // TODO: use org code from config
-        `${API_BASE_URL}organization/${orgCode}/featured-projects/`
+        `${API_BASE_URL}organization/${orgCode}/featured-projects/`,
+        {},
+        extras
       )
       results = queryResult.results.map((p: any) => mapProjectPreview(p))
     } catch (error) {
@@ -1020,14 +1065,15 @@ server.registerTool(
       results: z.array(NEWS_ARTICLE_OUTPUT_SCHEMA).describe('The list of recent news articles'),
     },
   },
-  async () => {
+  async (_input, extras) => {
     const params = { ordering: '-publication_date', limit: 30, to_date: new Date().toISOString() }
     let results = {}
     try {
-      const queryResult: any = await $fetch(
+      const queryResult: any = await mcpFetch(
         // TODO: use org code from config
         `${API_BASE_URL}organization/${orgCode}/news/`,
-        { params }
+        { params },
+        extras
       )
       results = queryResult.results.map(mapNewsArticle)
     } catch (error) {
@@ -1053,12 +1099,14 @@ server.registerTool(
       results: z.array(NEWS_ARTICLE_OUTPUT_SCHEMA).describe('The news article data'),
     },
   },
-  async ({ slugOrId }) => {
+  async ({ slugOrId }, extras) => {
     let results = {}
     try {
-      const queryResult: any = await $fetch(
+      const queryResult: any = await mcpFetch(
         // TODO: use org code from config
-        `${API_BASE_URL}organization/${orgCode}/news/${slugOrId}/`
+        `${API_BASE_URL}organization/${orgCode}/news/${slugOrId}/`,
+        {},
+        extras
       )
       results = mapNewsArticle(queryResult.results)
     } catch (error) {
@@ -1086,12 +1134,14 @@ server.registerTool(
         .describe('The list of instruction articles'),
     },
   },
-  async () => {
+  async (_input, extras) => {
     let results = {}
     try {
-      const queryResult: any = await $fetch(
+      const queryResult: any = await mcpFetch(
         // TODO: use org code from config
-        `${API_BASE_URL}organization/${orgCode}/instruction/`
+        `${API_BASE_URL}organization/${orgCode}/instruction/`,
+        {},
+        extras
       )
       results = queryResult.results.map(mapInstructionArticle)
     } catch (error) {
@@ -1118,12 +1168,14 @@ server.registerTool(
       instruction_data: INSTRUCTION_ARTICLE_OUTPUT_SCHEMA.describe('The instruction article data'),
     },
   },
-  async ({ slugOrId }) => {
+  async ({ slugOrId }, extras) => {
     let results = {}
     try {
-      const queryResult: any = await $fetch(
+      const queryResult: any = await mcpFetch(
         // TODO: use org code from config
-        `${API_BASE_URL}organization/${orgCode}/instruction/${slugOrId}/`
+        `${API_BASE_URL}organization/${orgCode}/instruction/${slugOrId}/`,
+        {},
+        extras
       )
       results = mapInstructionArticle(queryResult.results)
     } catch (error) {
@@ -1147,7 +1199,7 @@ server.registerTool(
     inputSchema: {},
     outputSchema: { results: z.array(EVENT_OUTPUT_SCHEMA).describe('The list of future events') },
   },
-  async () => {
+  async (_input, extras) => {
     // today date at midnight
     const todayZeroHour = new Date()
     todayZeroHour.setHours(0, 0, 0, 0)
@@ -1157,10 +1209,11 @@ server.registerTool(
     }
     let results = {}
     try {
-      const queryResult: any = await $fetch(
+      const queryResult: any = await mcpFetch(
         // TODO: use org code from config
         `${API_BASE_URL}organization/${orgCode}/event/`,
-        { params }
+        { params },
+        extras
       )
       results = queryResult.results.map(mapEvent)
     } catch (error) {
@@ -1184,7 +1237,7 @@ server.registerTool(
     inputSchema: {},
     outputSchema: { results: z.array(EVENT_OUTPUT_SCHEMA).describe('The list of past events') },
   },
-  async () => {
+  async (_input, extras) => {
     // today date at midnight
     const todayZeroHour = new Date()
     todayZeroHour.setHours(0, 0, 0, 0)
@@ -1194,10 +1247,11 @@ server.registerTool(
     }
     let results = {}
     try {
-      const queryResult: any = await $fetch(
+      const queryResult: any = await mcpFetch(
         // TODO: use org code from config
         `${API_BASE_URL}organization/${orgCode}/event/`,
-        { params }
+        { params },
+        extras
       )
       results = mapEvent(queryResult.results)
     } catch (error) {

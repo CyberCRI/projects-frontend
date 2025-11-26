@@ -10,6 +10,8 @@ const {
 } = runtimeConfig
 const { appChatbotEnabled } = runtimeConfig.public
 
+export const tokenMap = new Map<string, { date: Date; token: string }>()
+
 export default defineLazyEventHandler(() => {
   const openai = appOpenaiApiKey
     ? new OpenAI({
@@ -24,6 +26,21 @@ export default defineLazyEventHandler(() => {
       setResponseStatus(event, 404)
       return
     }
+
+    // clean up token map as a bonus
+    const now = new Date()
+    for (const [key, value] of tokenMap.entries()) {
+      const diff = now.getTime() - value.date.getTime()
+      if (diff > 60 * 60 * 1000) {
+        tokenMap.delete(key)
+      }
+    }
+
+    const tokenHeader = getResponseHeader(event, 'Authorization ') || ''
+    if (tokenHeader) {
+      console.log('got Authorization header provided')
+    }
+
     setResponseHeader(event, 'Content-Type', 'text/event-stream')
     setResponseHeader(event, 'Cache-Control', 'no-cache')
     setResponseHeader(event, 'Connection', 'keep-alive')
@@ -41,6 +58,18 @@ export default defineLazyEventHandler(() => {
       const conversation = await openai.conversations.create()
       conversationId = conversation.id
     }
+
+    console.log(
+      `Starting chat stream for conversation ${conversationId} with ${messages.length} messages`
+    )
+
+    tokenMap.set(
+      '123456',
+      /*conversationId, */ {
+        date: new Date(),
+        token: 'fobbar', // ('' + tokenHeader).replace('Bearer ', ''),
+      }
+    )
 
     const adaptedMessages = messages.map((message) => {
       return {
@@ -76,6 +105,7 @@ export default defineLazyEventHandler(() => {
           'A MCP to fetch information about projects, people and groups on this Projects platform.',
         server_url: appMcpServerUrl,
         require_approval: 'never',
+        authorization: conversationId,
       })
     }
 

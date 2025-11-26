@@ -1,7 +1,10 @@
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js'
 import mcpServer from '@/mcp-server'
+
+import { tokenMap } from '../api/chat-stream'
 export default defineEventHandler(async (event) => {
   const { req, res } = event.node
+
   //   const eventStream = createEventStream(event)
   // Create a new transport for each request to prevent request ID collisions
   const transport = new StreamableHTTPServerTransport({
@@ -10,6 +13,23 @@ export default defineEventHandler(async (event) => {
     allowedOrigins: ['*'],
   })
   console.log('New MCP connection established')
+
+  // const body = await readBody(event)
+
+  // console.log(req.headers, req.method, req.url /*body*/)
+
+  const conversationId = getRequestHeader(event, 'Authorization') || ''
+  if (conversationId) {
+    console.log('MCP request with conversationId header')
+    const tokenEntry = tokenMap.get(conversationId)
+    if (tokenEntry) {
+      console.log('MCP found token for conversationId', tokenEntry.token.substring(0, 6) + '...')
+      // transport.setAuthorizationToken(tokenEntry.token)
+    } else {
+      console.log('MCP no token found for conversationId')
+    }
+  }
+
   //   res.on('close', () => {
   //     transport.close()
   //   })

@@ -1,6 +1,7 @@
 <script setup>
 import 'deep-chat'
 import analytics from '@/analytics'
+import useUsersStore from '@/stores/useUsers.ts'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -35,6 +36,22 @@ const connectOptions = {
   url: IS_STREAMED.value ? '/api/chat-stream' : '/api/chat',
   stream: IS_STREAMED.value,
 }
+const usersStore = useUsersStore()
+const accessToken = computed(() => usersStore.accessToken)
+
+watch(
+  () => accessToken.value,
+  (neo) => {
+    if (neo) {
+      connectOptions.headers = {
+        Authorization: neo ? `Bearer ${neo}` : '',
+      }
+    } else if (connectOptions.headers) {
+      delete connectOptions.headers.Authorization
+    }
+  },
+  { immediate: true }
+)
 
 const chatStyle = ref({
   border: '0 none',
