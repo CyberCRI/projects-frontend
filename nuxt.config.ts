@@ -129,6 +129,8 @@ export default defineNuxtConfig({
     appOpenaiApiVectorStoreId: '',
     appMcpServerUrl: '',
     appSorbobotApiToken: '',
+    appMcpServerTrace: 0,
+    appSorbobotApiTrace: 0,
     public: {
       appVersion: '',
       appApiOrgCode: '',

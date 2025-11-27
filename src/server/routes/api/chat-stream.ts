@@ -7,10 +7,25 @@ const {
   appOpenaiApiKey,
   appOpenaiApiVectorStoreId,
   appMcpServerUrl,
+  appMcpServerTrace,
+  appSorbobotApiTrace,
 } = runtimeConfig
 const { appChatbotEnabled } = runtimeConfig.public
 
+// Map conversationId to token and date for authed api requests in MCP
 export const tokenMap = new Map<string, { date: Date; token: string }>()
+
+export const traceMcp = (...args) => {
+  if (appMcpServerTrace) {
+    console.log('[MCP TRACE]', ...args)
+  }
+}
+
+export const traceSorbobot = (...args) => {
+  if (appSorbobotApiTrace) {
+    console.log('[Sorbobot TRACE]', ...args)
+  }
+}
 
 export default defineLazyEventHandler(() => {
   const openai = appOpenaiApiKey
@@ -38,9 +53,9 @@ export default defineLazyEventHandler(() => {
 
     const tokenHeader = getRequestHeader(event, 'authorization') || ''
     if (tokenHeader) {
-      console.log('chat-stream: got Authorization header provided')
+      traceMcp('chat-stream: got Authorization header provided')
     } else {
-      console.log('chat-stream: no Authorization header provided')
+      traceMcp('chat-stream: no Authorization header provided')
     }
 
     setResponseHeader(event, 'Content-Type', 'text/event-stream')
@@ -61,7 +76,7 @@ export default defineLazyEventHandler(() => {
       conversationId = conversation.id
     }
 
-    console.log(
+    traceMcp(
       `Starting chat stream for conversation ${conversationId} with ${messages.length} messages`
     )
 
@@ -96,7 +111,7 @@ export default defineLazyEventHandler(() => {
     }
 
     if (appMcpServerUrl) {
-      console.log('Adding MCP tool with server URL:', appMcpServerUrl)
+      traceMcp('Adding MCP tool with server URL:', appMcpServerUrl)
       requestOptions.tools.push({
         type: 'mcp',
         server_label: 'projects-local-mcp',

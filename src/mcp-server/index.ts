@@ -1,7 +1,7 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { z } from 'zod'
 import SorbobotAPI from '@/mcp-server/sorbobot/sorbobot-api.js'
-import { tokenMap } from '@/server/routes/api/chat-stream'
+import { tokenMap, traceMcp, traceSorbobot } from '@/server/routes/api/chat-stream'
 
 // TODO people group member and project
 // TODO org files
@@ -9,23 +9,16 @@ import { tokenMap } from '@/server/routes/api/chat-stream'
 // TODO output schemas
 
 const runtimeConfig = useRuntimeConfig()
-// const doTrace = runtimeConfig.public.appMcpServerTrace || false
-
-// const traceMcp = (...args) => {
-//   if (doTrace) {
-//     console.log('[MCP TRACE]', ...args)
-//   }
-// }
 
 function getUserToken(extras) {
   const convesrationId = (extras.requestInfo.headers['authorization'] || '').replace('Bearer ', '')
-  console.log('Tool Getting user token for conversationId', convesrationId)
+  traceMcp('Tool Getting user token for conversationId', convesrationId)
   const tokenEntry = tokenMap.get(convesrationId)
   if (tokenEntry) {
-    console.log('MCP tool found token for conversationId', tokenEntry.token.substring(0, 6) + '...')
+    traceMcp('MCP tool found token for conversationId', tokenEntry.token.substring(0, 6) + '...')
     return tokenEntry.token
   } else {
-    console.log('MCP tool no token found for conversationId', convesrationId)
+    traceMcp('MCP tool no token found for conversationId', convesrationId)
   }
   return null
 }
@@ -73,8 +66,8 @@ if (sorbobotApiUrl && sorbobotApiToken) {
 
   async function resolveResearcherProfile(sorbobotResults, extras) {
     // map researchers to their profile in Projects
-    console.log('Resolving researcher profiles from Sorbobot results')
-    console.log('SorbobotResults:', sorbobotResults)
+    traceSorbobot('Resolving researcher profiles from Sorbobot results')
+    traceSorbobot('SorbobotResults:', sorbobotResults)
     const researcherEppn = Object.values(sorbobotResults)
       .map((researcher: any) => researcher.id)
       .filter((id) => !!id)
@@ -93,7 +86,7 @@ if (sorbobotApiUrl && sorbobotApiToken) {
         },
         extras
       )
-      console.log('Profile response from sorbobots extender in MCP:', profileResponse)
+      traceSorbobot('Profile response from sorbobots extender in MCP:', profileResponse)
       idMap = profileResponse.results || {}
     } catch (error) {
       console.error('Error fetching projects researcher profiles from MCP:', error)
@@ -111,7 +104,7 @@ if (sorbobotApiUrl && sorbobotApiToken) {
       }
       return res
     })
-    console.log('Sorbobot results with profiles:', sorbobotResultsWithProfiles)
+    traceSorbobot('Sorbobot results with profiles:', sorbobotResultsWithProfiles)
     return sorbobotResultsWithProfiles
   }
   // Add an search tool

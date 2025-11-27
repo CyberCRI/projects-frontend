@@ -1,7 +1,6 @@
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js'
 import mcpServer from '@/mcp-server'
-
-import { tokenMap } from '../api/chat-stream'
+import { tokenMap, traceMcp } from '@/server/routes/api/chat-stream'
 export default defineEventHandler(async (event) => {
   const { req, res } = event.node
 
@@ -12,22 +11,22 @@ export default defineEventHandler(async (event) => {
     enableJsonResponse: false,
     allowedOrigins: ['*'],
   })
-  console.log('New MCP connection established')
+  traceMcp('New MCP connection established')
 
   // const body = await readBody(event)
 
-  console.log('MCP connection request:')
-  console.log(req.headers, req.method, req.url /*body*/)
+  traceMcp('MCP connection request:')
+  traceMcp(req.headers, req.method, req.url /*body*/)
 
   const conversationId = getRequestHeader(event, 'Authorization') || ''
   if (conversationId) {
-    console.log('MCP request with conversationId header')
+    traceMcp('MCP request with conversationId header')
     const tokenEntry = tokenMap.get(conversationId)
     if (tokenEntry) {
-      console.log('MCP found token for conversationId', tokenEntry.token.substring(0, 6) + '...')
+      traceMcp('MCP found token for conversationId', tokenEntry.token.substring(0, 6) + '...')
       // transport.setAuthorizationToken(tokenEntry.token)
     } else {
-      console.log('MCP no token found for conversationId')
+      traceMcp('MCP no token found for conversationId')
     }
   }
 
@@ -39,7 +38,7 @@ export default defineEventHandler(async (event) => {
   //     console.log('MCP connection opened')
   //   })
   res.on('close', () => {
-    console.log('MCP connection closed, closing transport')
+    traceMcp('MCP connection closed, closing transport')
     transport.close()
   })
 
