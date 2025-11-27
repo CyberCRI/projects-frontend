@@ -134,6 +134,10 @@ export default defineNuxtConfig({
     appOpenaiApiPromptId: '',
     appOpenaiApiPromptVersion: '',
     appOpenaiApiVectorStoreId: '',
+    appMcpServerUrl: '',
+    appSorbobotApiToken: '',
+    appMcpServerTrace: 0,
+    appSorbobotApiTrace: 0,
     public: {
       appVersion: '',
       appApiOrgCode: '',
@@ -163,6 +167,7 @@ export default defineNuxtConfig({
       allLocales: ALL_LOCALES.map((l) => l.code),
       appGeocodingApiUrl: '',
       appChatbotEnabled: 0,
+      appSorbobotApiUrl: '',
     },
   },
   i18n: {

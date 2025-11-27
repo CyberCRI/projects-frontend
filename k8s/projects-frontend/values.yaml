@@ -39,6 +39,8 @@ config:
     NUXT_APP_OPENAI_API_PROMPT_VERSION: ''
     NUXT_APP_OPENAI_API_VECTOR_STORE_ID: ''
     NUXT_PUBLIC_APP_CHATBOT_ENABLED: ''
+    NUXT_APP_MCP_SERVER_TRACE: ''
+    NUXT_APP_SORBOBOT_API_TRACE: ''
 e2eEnv:
   nonSensitive:
     USER_ADMIN_EMAIL: testautomatatiquedministrateur1@outlook.fr
