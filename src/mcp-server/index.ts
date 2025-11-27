@@ -71,6 +71,7 @@ if (sorbobotApiUrl && sorbobotApiToken) {
     const researcherEppn = Object.values(sorbobotResults)
       .map((researcher: any) => researcher.id)
       .filter((id) => !!id)
+      .map((id) => ('' + id).split('@')[0]) // get eppn only)
     const idSource = 'eppn'
     const offset = '0'
     let idMap = {}
