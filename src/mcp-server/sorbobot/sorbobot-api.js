@@ -40,7 +40,7 @@ export async function makeQuery(api_url, api_token, sessionId, queryPrompt) {
   const { authors, search_results } = queryJson.data
 
   const authorsArrays = Object.entries(authors)
-  const limitedAuthors = Object.fromEntries(authorsArrays.slice(0, 2))
+  const limitedAuthors = Object.fromEntries(authorsArrays.slice(0, 12))
 
   return {
     authors: limitedAuthors,
