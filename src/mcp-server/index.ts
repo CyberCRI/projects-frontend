@@ -82,7 +82,7 @@ if (sorbobotApiUrl && sorbobotApiToken) {
           query: {
             harvester: idSource,
             offset: offset,
-            values: encodeURIComponent(researcherEppn.join(',')),
+            values: researcherEppn.join(','),
           },
         },
         extras
