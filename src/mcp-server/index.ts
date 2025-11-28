@@ -94,7 +94,9 @@ if (sorbobotApiUrl && sorbobotApiToken) {
     }
     const sorbobotResultsWithProfiles = Object.values(sorbobotResults).map((researcher: any) => {
       const res = researcher
-      const profile = idMap[researcher.id]
+      const resarecherId = researcher.id || ''
+      const localEppn = resarecherId.split('@')[0]
+      const profile = idMap[localEppn]
       const user = profile?.user
       if (user) {
         res['id'] = user.id
