@@ -58,7 +58,6 @@ export default defineNuxtConfig({
     '@nuxt/test-utils/module',
     'nuxt-svgo',
   ],
-
   // disable caching
   routeRules: {
     '/**': {
