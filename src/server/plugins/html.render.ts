@@ -40,13 +40,13 @@ export default defineNitroPlugin((nitroApp) => {
             @keyframes app-loader-pulse {
                 0%,
                 10% {
-                    transform: scale(1);
+                    transform: translateZ(0) scale(1);
                     opacity: 0.5;
                 }
 
                 90%,
                 100% {
-                    transform: scale(1.05);
+                    transform: translateZ(0) scale(1.05);
                     opacity: 1;
                 }
             }

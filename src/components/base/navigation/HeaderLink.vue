@@ -97,7 +97,7 @@ a.header-link:visited {
       height: pxToRem(6px);
       background-color: $primary-dark;
       bottom: pxToRem(-8px);
-      transform: scale(0);
+      transform: translateZ(0) scale(0);
       transition: transform 0.15s ease-in-out;
     }
   }
@@ -120,7 +120,7 @@ a.header-link:visited {
     position: relative;
 
     & .link-label::after {
-      transform: scale(1);
+      transform: translateZ(0) scale(1);
     }
   }
 }

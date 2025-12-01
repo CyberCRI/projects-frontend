@@ -34,13 +34,14 @@ export default {
     transition: transform 200ms ease-in-out;
     font-weight: 400;
     font-size: $font-size-m;
+    transform: translateZ(0);
   }
 
   &:hover {
     background-color: $primary-light;
 
     .label {
-      transform: scaleX(1.1);
+      transform: translateZ(0) scaleX(1.1);
     }
   }
 }

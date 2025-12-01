@@ -253,23 +253,23 @@ export default {
 
 @keyframes arrowbounce {
   0% {
-    transform: scale(1, 1) translate(-50%, -50%);
+    transform: translateZ(0) scale(1, 1) translate(-50%, -50%);
   }
 
   30% {
-    transform: scale(0.7, 1) translate(-70%, -50%);
+    transform: translateZ(0) scale(0.7, 1) translate(-70%, -50%);
   }
 
   50% {
-    transform: scale(1, 1) translate(-50%, -50%);
+    transform: translateZ(0) scale(1, 1) translate(-50%, -50%);
   }
 
   70% {
-    transform: scale(0.7, 1) translate(20%, -50%);
+    transform: translateZ(0) scale(0.7, 1) translate(20%, -50%);
   }
 
   100% {
-    transform: scale(1, 1) translate(-50%, -50%);
+    transform: translateZ(0) scale(1, 1) translate(-50%, -50%);
   }
 }
 

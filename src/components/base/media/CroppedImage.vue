@@ -51,7 +51,7 @@ export default {
           height: this.ratio < this.imageSizes.naturalRatio ? '100%' : 'auto',
           'object-fit': 'unset',
           'object-position': 'unset',
-          transform: `scale(${this.imageSizes.scaleX}, ${this.imageSizes.scaleY}) translate(${this.imageSizes.left}%, ${this.imageSizes.top}%)`,
+          transform: `translateZ(0)  scale(${this.imageSizes.scaleX}, ${this.imageSizes.scaleY}) translate(${this.imageSizes.left}%, ${this.imageSizes.top}%)`,
           position: 'absolute',
           top: 0,
           left: 0,
@@ -59,7 +59,7 @@ export default {
         }
       } else {
         return {
-          transform: `translate(0,0) scale(1,1)`,
+          transform: `translateZ(0) translate(0,0) scale(1,1)`,
         }
       }
     },
