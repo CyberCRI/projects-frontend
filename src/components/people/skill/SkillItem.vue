@@ -134,7 +134,7 @@ export default {
 
 .open-enter-from,
 .open-leave-to {
-  transform: scaleY(0);
+  transform: translateZ(0) scaleY(0);
 
   p {
     opacity: 0;
@@ -143,7 +143,7 @@ export default {
 
 .open-enter-to,
 .open-leave-from {
-  transform: scaleY(1);
+  transform: translateZ(0) scaleY(1);
 
   p {
     opacity: 1;

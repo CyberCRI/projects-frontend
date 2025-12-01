@@ -286,13 +286,13 @@ export default {
 .chevron {
   flex-shrink: 0;
   width: 1rem;
-  transform: scale(1.2) translate(-0.2rem, 0.1rem) rotate(-90deg);
+  transform: translateZ(0) scale(1.2) translate(-0.2rem, 0.1rem) rotate(-90deg);
   transition: transform 400ms ease-in-out;
   transform-origin: center;
 }
 
 .is-open .chevron {
-  transform: scale(1.1) translate(-0.4rem, 0.2rem) rotate(0deg);
+  transform: translateZ(0) scale(1.1) translate(-0.4rem, 0.2rem) rotate(0deg);
 }
 
 .skill-title {
@@ -378,7 +378,7 @@ export default {
 
 .open-enter-from,
 .open-leave-to {
-  transform: scaleY(0);
+  transform: translateZ(0) scaleY(0);
 
   p {
     opacity: 0;
@@ -387,7 +387,7 @@ export default {
 
 .open-enter-to,
 .open-leave-from {
-  transform: scaleY(1);
+  transform: translateZ(0) scaleY(1);
 
   p {
     opacity: 1;

@@ -75,11 +75,12 @@ export default {
 .sdg-enter-active,
 .sdg-leave-active {
   transition: all 0.4s ease;
+  transform: translateZ(0);
 }
 
 .sdg-enter-from,
 .sdg-leave-to {
-  transform: scale(0) translateY(200%);
+  transform: translateZ(0) scale(0) translateY(200%);
 }
 
 .sdg-recap {

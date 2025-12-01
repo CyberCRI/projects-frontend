@@ -998,7 +998,7 @@ export default {
         }
 
         &:hover {
-          transform: scale(1.2);
+          transform: translateZ(0) scale(1.2);
         }
       }
 
@@ -1011,12 +1011,12 @@ export default {
       .sdg-leave-active {
         transition: transform 0.4s ease;
         transform-origin: center center;
-        transform: scale(1) translateY(0);
+        transform: translateZ(0) scale(1);
       }
 
       .sdg-enter-from,
       .sdg-leave-to {
-        transform: scale(0) translateY(200%);
+        transform: translateZ(0) scale(0) translateY(200%);
       }
 
       .tag-list {

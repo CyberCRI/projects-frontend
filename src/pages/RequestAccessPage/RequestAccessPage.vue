@@ -333,13 +333,13 @@ try {
   transition:
     transform 200ms ease-in-out,
     opacity 200ms ease-in-out;
-  transform: scale(1);
+  transform: translateZ(0) scale(1);
   opacity: 1;
 }
 
 .fade-enter-from,
 .fade-leave-to {
-  transform: scale(0);
+  transform: translateZ(0) scale(0);
 
   $opacity: 0;
 }

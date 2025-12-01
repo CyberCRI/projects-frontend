@@ -83,13 +83,13 @@ export default {
     z-index: 0;
     position: absolute;
     transform-origin: center center;
-    transform: translateY(4px) scale(0, 1);
+    transform: translateY(4px) translateZ(0) scale(0, 1);
     transition: 200ms ease-in-out;
     border-bottom: $border-width-m solid $primary-dark;
   }
 
   &:hover::before {
-    transform: translateY(4px) scale(1, 1);
+    transform: translateY(4px) translateZ(0) scale(1, 1);
   }
 }
 

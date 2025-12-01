@@ -503,6 +503,7 @@ export default {
       user-select: none; // avoid text selection while clicking on tab
       transition: transform 0.3s ease-in-out;
       transform-origin: bottom center;
+      transform: translateZ(0);
       line-height: 1;
 
       &--no-border {
@@ -510,7 +511,7 @@ export default {
       }
 
       &:hover {
-        transform: scaleY(1.15);
+        transform: translateZ(0) scaleY(1.15);
       }
 
       &.selected {

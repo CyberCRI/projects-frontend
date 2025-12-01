@@ -586,9 +586,10 @@ textarea {
     appearance: none;
     cursor: pointer;
     transition: transform 200ms ease-in-out;
+    transform: translateZ(0);
 
     &:hover {
-      transform: scale(1.1);
+      transform: translateZ(0) scale(1.1);
     }
   }
 
@@ -614,12 +615,12 @@ textarea {
     position: absolute;
     top: 0;
     right: 0;
-    transform: translate(50%, -50%) scale(0);
+    transform: translateZ(0) translate(50%, -50%) scale(0);
     transition: transform 200ms cubic-bezier(0, -1.59, 0.6, 0.59);
   }
 
   .sdg-checkbox {
-    transform: scale(0);
+    transform: translateZ(0) scale(0);
     opacity: 0;
     position: absolute;
 
@@ -629,7 +630,7 @@ textarea {
     }
 
     &:checked ~ .sdg-checkmark {
-      transform: translate(50%, -50%) scale(1);
+      transform: translateZ(0) translate(50%, -50%) scale(1);
       transition: transform 200ms cubic-bezier(0.65, 1.23, 1, 1.99);
     }
   }

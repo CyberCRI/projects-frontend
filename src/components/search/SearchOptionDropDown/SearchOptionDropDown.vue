@@ -232,17 +232,18 @@ function menuAction(key) {
         .label,
         .menu-icon svg {
           transition: transform 200ms ease-in-out;
+          transform: translateZ(0);
         }
       }
 
       &:hover {
         .drop-down-menu-item-content {
           .label {
-            transform: scaleX(1.1);
+            transform: translateZ(0) scaleX(1.1);
           }
 
           svg {
-            transform: scale(1.35);
+            transform: translateZ(0) scale(1.35);
           }
         }
       }
