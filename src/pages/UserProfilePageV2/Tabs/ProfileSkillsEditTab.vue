@@ -146,11 +146,15 @@ export default {
     },
     skills() {
       return [
-        ...this.allSkills.filter((s) => s.type === 'skill').sort(this.skillTexts.compareTitles),
+        ...(this.allSkills || [])
+          .filter((s) => s.type === 'skill')
+          .sort(this.skillTexts.compareTitles),
       ]
     },
     hobbies() {
-      return this.allSkills.filter((s) => s.type === 'hobby').sort(this.skillTexts.compareTitles)
+      return (this.allSkills || [])
+        .filter((s) => s.type === 'hobby')
+        .sort(this.skillTexts.compareTitles)
     },
 
     // isSelf() {
