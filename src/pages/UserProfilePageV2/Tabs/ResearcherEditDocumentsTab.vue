@@ -38,9 +38,14 @@ const notEditable = computed(() => t(`profile.edit.${props.docType}.no-editable`
 .documents-warning {
   border-radius: 20px;
   padding: 1rem;
+  margin-top: 1rem;
   background-color: $salmon;
   color: rgba(0 0 0 / 80%);
   font-style: italic;
+  svg {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 .inline-block {

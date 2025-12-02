@@ -1525,12 +1525,12 @@
         }
       },
       "publications": {
-        "no-editable": "Die Veröffentlichungen sind noch nicht verfügbar.",
-        "tab": "Veröffentlichungen"
+        "tab": "Veröffentlichungen",
+        "no-editable": "Redaktionen werden Anfang Januar 2026 verfügbar sein."
       },
       "conferences": {
-        "no-editable": "Die Konferenzen sind noch nicht verfügbar.",
-        "tab": "Konferenzen"
+        "tab": "Konferenzen",
+        "no-editable": "Editing Konferenzen werden Anfang Januar 2026 verfügbar sein"
       }
     },
     "go-to-page": "Profilseite anzeigen",
