@@ -42,6 +42,7 @@ const notEditable = computed(() => t(`profile.edit.${props.docType}.no-editable`
   background-color: $salmon;
   color: rgba(0 0 0 / 80%);
   font-style: italic;
+
   svg {
     width: 20px;
     height: 20px;
