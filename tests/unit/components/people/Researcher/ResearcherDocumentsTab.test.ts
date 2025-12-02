@@ -9,7 +9,7 @@ import { PaginationsFactory } from '../../../../factories/paginations.factory'
 
 describe('ResearcherDocumentsTab.vue', () => {
   let defaultProps
-  let orgaCode = 'CRI'
+  const orgaCode = useOrganizationCode()
 
   beforeAll(() => {
     defaultProps = {
@@ -58,7 +58,7 @@ describe('ResearcherDocumentsTab.vue', () => {
     }
 
     registerEndpoint(
-      `organization/${orgaCode}/researcher/${defaultProps.user.researcher.id}/publications/`,
+      `crisalid/organization/${orgaCode}/researcher/${defaultProps.user.researcher.id}/publications/`,
       () => {
         throw createError({ statusCode: 500 })
       }
@@ -80,7 +80,7 @@ describe('ResearcherDocumentsTab.vue', () => {
     }
 
     registerEndpoint(
-      `organization/${orgaCode}/researcher/${defaultProps.user.researcher.id}/publications/analytics/`,
+      `crisalid/organization/${orgaCode}/researcher/${defaultProps.user.researcher.id}/publications/analytics/`,
       () => {
         return {
           document_types: {
