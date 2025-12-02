@@ -47,6 +47,7 @@ const documents = ref<PaginationResult<Document>>()
 const pagination = usePagination(documents, { limit: 10 })
 const { count } = pagination
 const { translateResearcherDocuments } = useAutoTranslate()
+const orgaCode = useOrganizationCode()
 
 // get results list from paginated response
 const results = computed<Document[] | undefined>(() => documents.value?.results)
@@ -55,7 +56,7 @@ const documentsTranslated: ComputedRef<TranslatedDocument[]> = translateResearch
 const getDocuments = (query) => {
   status.value = 'pending'
   useAPI(
-    `crisalid/researcher/${props.user.researcher.id}/${props.docType}/${props.document.id}/similars/`,
+    `crisalid/organization/${orgaCode}/researcher/${props.user.researcher.id}/${props.docType}/${props.document.id}/similars/`,
     {
       query,
     }
