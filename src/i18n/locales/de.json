@@ -2729,7 +2729,8 @@
   "chatbot": {
     "title": "Chat mit KI",
     "input-placeholder": "Geben Sie hier Ihre Nachricht ein...",
-    "intro-message": "Hallo, wie kann ich Ihnen heute helfen?"
+    "intro-message": "Hallo, wie kann ich Ihnen heute helfen?",
+    "drawer-button-label": "KI-Assistent"
   },
   "researcher": {
     "relators": {

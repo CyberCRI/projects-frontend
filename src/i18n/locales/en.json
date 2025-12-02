@@ -2729,7 +2729,8 @@
   "chatbot": {
     "title": "Chat with AI",
     "input-placeholder": "Type your message here...",
-    "intro-message": "Hello How can I assist you today?"
+    "intro-message": "Hello How can I assist you today?",
+    "drawer-button-label": "AI Assistant"
   },
   "researcher": {
     "relators": {

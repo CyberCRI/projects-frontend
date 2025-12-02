@@ -100,11 +100,12 @@ const htmlWrappers = ref({
     </div>`,
 })
 
-const suggestButtons = ref([
-  'Tell me about this platform',
-  'Find research projects on renewable energy',
-  'Find researchers and publication on climate change',
-])
+const runtimeConfig = useRuntimeConfig()
+const chatExemples = (runtimeConfig.public.appChatbotExemples || '')
+  .split('§')
+  .filter((s) => !!s && s.trim().length)
+const suggestButtons = ref(chatExemples)
+
 function placeCaretAtEnd(el) {
   // https://stackoverflow.com/questions/4233265/contenteditable-set-caret-at-the-end-of-the-text-cross-browser
   el.focus()
@@ -275,7 +276,7 @@ const remarkableOptions = ref({ linkify: true, linkTarget: '_blank' })
         }
       "
     ></deep-chat>
-    <div class="prompt-suggestions">
+    <div v-if="suggestButtons?.length" class="prompt-suggestions">
       <a
         v-for="button in suggestButtons"
         :key="button"
