@@ -110,6 +110,18 @@ if (sorbobotApiUrl && sorbobotApiToken) {
     traceSorbobot('Sorbobot results with profiles:', sorbobotResultsWithProfiles)
     return sorbobotResultsWithProfiles
   }
+
+  const sorbobotRewriteTopics = (topics) => {
+    const topicSet = new Set()
+    for (const topic of topics || []) {
+      const t = topic.split('/')
+      if (t.length < 2) continue // skip "root"
+      let topicName = t[t.length - 1].replace(/^-/, ' ').trim()
+      if (t.length > 2) topicName += ` (${t[t.length - 2].replace(/^-/, ' ').trim()})`
+      topicSet.add(topicName)
+    }
+    return Array.from(topicSet)
+  }
   // Add an search tool
   server.registerTool(
     'sorbobot-api',
@@ -136,7 +148,7 @@ if (sorbobotApiUrl && sorbobotApiToken) {
         const researchers = await resolveResearcherProfile(sorbobotResults?.authors || [], extras)
         results = {
           researchers: researchers,
-          research_topics: sorbobotResults.search_results,
+          research_topics: sorbobotRewriteTopics(sorbobotResults.search_results),
         }
       } catch (error) {
         console.error('Error querying Sorbobot:', error)
