@@ -9,6 +9,7 @@ import { PaginationsFactory } from '../../../../factories/paginations.factory'
 
 describe('ResearcherDocumentsTab.vue', () => {
   let defaultProps
+  let orgaCode = 'CRI'
 
   beforeAll(() => {
     defaultProps = {
@@ -56,9 +57,12 @@ describe('ResearcherDocumentsTab.vue', () => {
       },
     }
 
-    registerEndpoint(`crisalid/researcher/${defaultProps.user.researcher.id}/publications/`, () => {
-      throw createError({ statusCode: 500 })
-    })
+    registerEndpoint(
+      `organization/${orgaCode}/researcher/${defaultProps.user.researcher.id}/publications/`,
+      () => {
+        throw createError({ statusCode: 500 })
+      }
+    )
 
     const wrapper = await lpiMount(ResearcherDocumentsTab, { props: defaultProps })
     expect(wrapper.find('.loading').exists()).toBeTruthy()
@@ -76,7 +80,7 @@ describe('ResearcherDocumentsTab.vue', () => {
     }
 
     registerEndpoint(
-      `crisalid/researcher/${defaultProps.user.researcher.id}/publications/analytics/`,
+      `organization/${orgaCode}/researcher/${defaultProps.user.researcher.id}/publications/analytics/`,
       () => {
         return {
           document_types: {
@@ -109,7 +113,7 @@ describe('ResearcherDocumentsTab.vue', () => {
       similars: 0,
     })
     registerEndpoint(
-      `crisalid/researcher/${defaultProps.user.researcher.id}/publications/${docWithSimilars.id}/similars/`,
+      `crisalid/organization/${orgaCode}/researcher/${defaultProps.user.researcher.id}/publications/${docWithSimilars.id}/similars/`,
       () => {
         return PaginationsFactory.generate({
           results: [
@@ -120,11 +124,14 @@ describe('ResearcherDocumentsTab.vue', () => {
       }
     )
 
-    registerEndpoint(`crisalid/researcher/${defaultProps.user.researcher.id}/publications/`, () => {
-      return PaginationsFactory.generate({
-        results: [docWithSimilars, docWithoutSimilars],
-      })
-    })
+    registerEndpoint(
+      `crisalid/organization/${orgaCode}/researcher/${defaultProps.user.researcher.id}/publications/`,
+      () => {
+        return PaginationsFactory.generate({
+          results: [docWithSimilars, docWithoutSimilars],
+        })
+      }
+    )
 
     const wrapper = await lpiMount(ResearcherDocumentsTab, { props: defaultProps })
     expect(wrapper.find('.loading').exists()).toBeTruthy()

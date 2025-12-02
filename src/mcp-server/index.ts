@@ -77,7 +77,7 @@ if (sorbobotApiUrl && sorbobotApiToken) {
     let idMap = {}
     try {
       const profileResponse: any = await mcpFetch(
-        `${API_BASE_URL}crisalid/researcher/search/?`,
+        `${API_BASE_URL}crisalid/organization/${orgCode}/researcher/search/?`,
         {
           query: {
             harvester: idSource,
