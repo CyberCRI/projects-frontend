@@ -2729,7 +2729,8 @@
   "chatbot": {
     "title": "Chat met AI",
     "input-placeholder": "Typ hier je bericht...",
-    "intro-message": "Hallo, hoe kan ik je vandaag helpen?"
+    "intro-message": "Hallo, hoe kan ik je vandaag helpen?",
+    "drawer-button-label": "AI-assistent"
   },
   "researcher": {
     "relators": {

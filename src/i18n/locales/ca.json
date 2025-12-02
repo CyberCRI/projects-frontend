@@ -2729,7 +2729,8 @@
   "chatbot": {
     "title": "Xateja amb IA",
     "input-placeholder": "Escriu el teu missatge aquí...",
-    "intro-message": "Hola, com et puc ajudar avui?"
+    "intro-message": "Hola, com et puc ajudar avui?",
+    "drawer-button-label": "Assistent d'IA"
   },
   "researcher": {
     "relators": {
