@@ -265,6 +265,43 @@ export default {
           icon: 'Archive',
         },
         {
+          label: this.$t('profile.publications'),
+          key: 'publications',
+          id: 'profile-publications',
+          view: {
+            name: 'ResearcherPublications' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileEditPublications' + roadSuffix,
+            params,
+          },
+          props: {
+            user: this.user,
+          },
+          // dispay publications only if user have publications
+          condition: this.user?.researcher?.documents?.publications,
+          icon: 'Pen',
+        },
+        {
+          label: this.$t('profile.conferences'),
+          key: 'conferences',
+          id: 'profile-conferences',
+          view: {
+            name: 'ResearcherConferences' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileEditConferences' + roadSuffix,
+            params,
+          },
+          props: {
+            user: this.user,
+          },
+          condition: this.user?.researcher?.documents?.conferences,
+          icon: 'Pen',
+        },
+        {
           label: this.$t('profile.groups'),
           key: 'groups',
           id: 'profile-groups',
@@ -376,6 +413,40 @@ export default {
           props,
           condition: true,
           icon: 'Archive',
+          actionIcon: 'Pen',
+        },
+        {
+          label: this.$t('profile.edit.publications.tab'),
+          key: 'publications',
+          id: 'profile-edit-publications',
+          view: {
+            name: 'ProfileEditPublications' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ResearcherPublications' + roadSuffix,
+            params,
+          },
+          props,
+          condition: this.user?.researcher?.documents?.publications,
+          icon: 'Pen',
+          actionIcon: 'Pen',
+        },
+        {
+          label: this.$t('profile.edit.conferences.tab'),
+          key: 'conferences',
+          id: 'profile-edit-conferences',
+          view: {
+            name: 'ProfileEditConferences' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ResearcherConferences' + roadSuffix,
+            params,
+          },
+          props,
+          condition: this.user?.researcher?.documents?.conferences,
+          icon: 'Pen',
           actionIcon: 'Pen',
         },
         {

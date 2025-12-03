@@ -6,7 +6,8 @@ import * as dotenv from 'dotenv'
 // Determine the environment file
 const customEnvFile = process.env.ENV_FILE ? `.env.${process.env.ENV_FILE}` : '.env'
 
-if (fs.existsSync(customEnvFile)) {
+// not load env when we are in tests
+if (fs.existsSync(customEnvFile) && import.meta.env.VITEST !== 'true') {
   console.log(`Overriding environment variables with: ${customEnvFile}`)
   dotenv.config({ path: customEnvFile, override: true })
 }
@@ -50,8 +51,13 @@ export default defineNuxtConfig({
     },
   },
   srcDir: 'src/',
-  modules: ['@pinia/nuxt', '@nuxt/test-utils/module', '@nuxtjs/i18n', '@nuxt/test-utils/module'],
-
+  modules: [
+    '@pinia/nuxt',
+    '@nuxt/test-utils/module',
+    '@nuxtjs/i18n',
+    '@nuxt/test-utils/module',
+    'nuxt-svgo',
+  ],
   // disable caching
   routeRules: {
     '/**': {
@@ -127,6 +133,10 @@ export default defineNuxtConfig({
     appOpenaiApiPromptId: '',
     appOpenaiApiPromptVersion: '',
     appOpenaiApiVectorStoreId: '',
+    appMcpServerUrl: '',
+    appSorbobotApiToken: '',
+    appMcpServerTrace: 0,
+    appSorbobotApiTrace: 0,
     public: {
       appVersion: '',
       appApiOrgCode: '',
@@ -156,6 +166,8 @@ export default defineNuxtConfig({
       allLocales: ALL_LOCALES.map((l) => l.code),
       appGeocodingApiUrl: '',
       appChatbotEnabled: 0,
+      appChatbotExemples: '',
+      appSorbobotApiUrl: '',
     },
   },
   i18n: {

@@ -1,13 +1,31 @@
 import OpenAI from 'openai'
 
+const runtimeConfig = useRuntimeConfig()
 const {
   appOpenaiApiPromptId,
   appOpenaiApiPromptVersion,
   appOpenaiApiKey,
   appOpenaiApiVectorStoreId,
-} = useRuntimeConfig()
+  appMcpServerUrl,
+  appMcpServerTrace,
+  appSorbobotApiTrace,
+} = runtimeConfig
+const { appChatbotEnabled } = runtimeConfig.public
 
-const { appChatbotEnabled } = useRuntimeConfig().public
+// Map conversationId to token and date for authed api requests in MCP
+export const tokenMap = new Map<string, { date: Date; token: string }>()
+
+export const traceMcp = (...args) => {
+  if (appMcpServerTrace) {
+    console.log('[MCP TRACE]', ...args)
+  }
+}
+
+export const traceSorbobot = (...args) => {
+  if (appSorbobotApiTrace) {
+    console.log('[Sorbobot TRACE]', ...args)
+  }
+}
 
 export default defineLazyEventHandler(() => {
   const openai = appOpenaiApiKey
@@ -16,12 +34,30 @@ export default defineLazyEventHandler(() => {
       })
     : null
 
+  console.log('appChatbotEnabled:', appChatbotEnabled)
   return defineEventHandler(async (event) => {
     // return 404 if not configured
     if (!openai || !appChatbotEnabled) {
       setResponseStatus(event, 404)
       return
     }
+
+    // clean up token map as a bonus
+    const now = new Date()
+    for (const [key, value] of tokenMap.entries()) {
+      const diff = now.getTime() - value.date.getTime()
+      if (diff > 60 * 60 * 1000) {
+        tokenMap.delete(key)
+      }
+    }
+
+    const tokenHeader = getRequestHeader(event, 'authorization') || ''
+    if (tokenHeader) {
+      traceMcp('chat-stream: got Authorization header provided')
+    } else {
+      traceMcp('chat-stream: no Authorization header provided')
+    }
+
     setResponseHeader(event, 'Content-Type', 'text/event-stream')
     setResponseHeader(event, 'Cache-Control', 'no-cache')
     setResponseHeader(event, 'Connection', 'keep-alive')
@@ -40,6 +76,15 @@ export default defineLazyEventHandler(() => {
       conversationId = conversation.id
     }
 
+    traceMcp(
+      `Starting chat stream for conversation ${conversationId} with ${messages.length} messages`
+    )
+
+    tokenMap.set(conversationId, {
+      date: new Date(),
+      token: ('' + tokenHeader).replace('Bearer ', ''),
+    })
+
     const adaptedMessages = messages.map((message) => {
       return {
         role: message.role,
@@ -54,7 +99,7 @@ export default defineLazyEventHandler(() => {
       prompt['version'] = String(appOpenaiApiPromptVersion)
     }
 
-    const requestOptions = {
+    const requestOptions: any = {
       prompt,
       //store: false, // do not store in OpenAI's servers, we do this on client side
       store: true, // we want to store it to be able to use follow-up questions
@@ -63,6 +108,19 @@ export default defineLazyEventHandler(() => {
       reasoning: {},
       tools: [],
       stream: true,
+    }
+
+    if (appMcpServerUrl) {
+      traceMcp('Adding MCP tool with server URL:', appMcpServerUrl)
+      requestOptions.tools.push({
+        type: 'mcp',
+        server_label: 'projects-local-mcp',
+        server_description:
+          'A MCP to fetch information about projects, people and groups on this Projects platform.',
+        server_url: appMcpServerUrl,
+        require_approval: 'never',
+        authorization: conversationId,
+      })
     }
 
     if (appOpenaiApiVectorStoreId) {

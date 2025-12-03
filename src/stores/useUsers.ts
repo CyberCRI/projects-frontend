@@ -72,6 +72,8 @@ const useUsersStore = defineStore('users', () => {
         roles: userFromToken.value.roles || [],
         orgs: funct.getOrgsFromRoles(userFromToken.value.roles),
         permissions: permissions.value,
+        slug: userFromToken.value.slug,
+        researcher: userFromToken.value.researcher,
       }
     }
 

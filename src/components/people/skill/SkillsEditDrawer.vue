@@ -194,10 +194,10 @@ export default {
       return this.user.skills || []
     },
     skills() {
-      return this.allSkills.filter((s) => s.type === 'skill')
+      return (this.allSkills || []).filter((s) => s.type === 'skill')
     },
     hobbies() {
-      return this.allSkills.filter((s) => s.type === 'hobby')
+      return (this.allSkills || []).filter((s) => s.type === 'hobby')
     },
   },
   watch: {
