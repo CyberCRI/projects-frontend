@@ -88,10 +88,13 @@ const onTermApproved = async () => {
       <p v-else ref="firstnotice" class="notice instructions">
         {{ $t('tos.review-and-sign') }}
       </p>
+      <p v-if="organizationsStore.termsVersion" class="terms-version">
+        {{ $t('admin.terms.version') }} {{ organizationsStore.termsVersion }}
+      </p>
       <div class="tos-content">
         <TipTapOutput
           v-if="organizationsStore?.hasTerms"
-          :content="organizationsStore?.termsContent"
+          :content="organizationsStore?.termsContentTranslated"
         />
         <DefaultTermsOfService v-else />
       </div>
@@ -145,5 +148,13 @@ const onTermApproved = async () => {
     align-items: center;
     gap: 1rem;
   }
+}
+
+.terms-version {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  text-align: right;
+  color: $mid-gray;
 }
 </style>

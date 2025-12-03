@@ -22,7 +22,22 @@ try {
 <template>
   <div class="page-section-narrow legal-page terms-of-service page-top">
     <h1 class="page-title">{{ $t('tos.title') }}</h1>
-    <TipTapOutput v-if="organizationsStore?.hasTerms" :content="organizationsStore?.termsContent" />
+    <TipTapOutput
+      v-if="organizationsStore?.hasTerms"
+      :content="organizationsStore?.termsContentTranslated"
+    />
     <DefaultTermsOfService v-else />
+    <p v-if="organizationsStore.termsVersion" class="terms-version">
+      {{ $t('admin.terms.version') }} {{ organizationsStore.termsVersion }}
+    </p>
   </div>
 </template>
+<style scoped lang="scss">
+.terms-version {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  text-align: right;
+  color: $mid-gray;
+}
+</style>

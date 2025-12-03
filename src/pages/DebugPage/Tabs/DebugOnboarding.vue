@@ -26,6 +26,7 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import { patchUser } from '@/api/people.service.ts'
 import useToasterStore from '@/stores/useToaster.ts'
 import useUsersStore from '@/stores/useUsers.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
   name: 'DebugOnboarding',
@@ -33,9 +34,12 @@ export default {
   setup() {
     const toaster = useToasterStore()
     const usersStore = useUsersStore()
+
+    const organizationsStore = useOrganizationsStore()
     return {
       toaster,
       usersStore,
+      organizationsStore,
     }
   },
 
@@ -44,6 +48,11 @@ export default {
       reseting: false,
       resetingTerms: false,
     }
+  },
+  computed: {
+    orgCode() {
+      return this.organizationsStore.current?.code
+    },
   },
   methods: {
     async resetOnboardingStatus() {
@@ -70,7 +79,7 @@ export default {
         const payload = {
           signed_terms_and_conditions: {
             ...user.signed_terms_and_conditions,
-            [orgCode.value]: undefined,
+            [this.orgCode]: undefined,
           },
         }
         await patchUser(user.id, payload)
