@@ -29,13 +29,12 @@ import ResourceCount from '@/components/project/resource/ResourceCount.vue'
 import { AttachmentFileModel } from '@/models/attachment-file.model'
 import { AttachmentLinkModel } from '@/models/attachment-link.model'
 
-const emit = defineEmits(['redirect'])
 const router = useRouter()
 
 const props = withDefaults(
   defineProps<{
-    files: AttachmentFileModel[]
-    links: AttachmentLinkModel[]
+    files?: AttachmentFileModel[]
+    links?: AttachmentLinkModel[]
     target: any
     redirect: any
   }>(),

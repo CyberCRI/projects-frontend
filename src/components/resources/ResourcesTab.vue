@@ -110,7 +110,7 @@ export default {
     },
   },
 
-  emits: ['reload-file-resources', 'reload-link-resources'],
+  emits: ['reload-file-resources', 'reload-link-resources', 'edit'],
 
   setup() {
     const toaster = useToasterStore()

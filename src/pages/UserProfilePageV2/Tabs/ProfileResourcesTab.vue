@@ -10,21 +10,21 @@
         :permissions="canEditUser"
         @edit="onEdit"
       />
+      <ResourceDrawer
+        :user="user"
+        :is-add-mode="!!!selectedItem"
+        :selected-item="selectedItem"
+        :is-opened="isOpened"
+        :links="resultsLinks"
+        :post-attachment-files="postAttachmentFiles"
+        :patch-attachment-file="patchAttachmentFile"
+        :post-attachment-links="postAttachmentLinks"
+        :patch-attachment-link="patchAttachmentLink"
+        @close="isOpened = false"
+        @reload-link-resources="refreshLinks"
+        @reload-file-resources="refreshFiles"
+      />
     </FetchLoader>
-    <ResourceDrawer
-      :user="user"
-      :is-add-mode="!!!selectedItem"
-      :selected-item="selectedItem"
-      :is-opened="isOpened"
-      :links="resultsLinks"
-      :post-attachment-files="postAttachmentFiles"
-      :patch-attachment-file="patchAttachmentFile"
-      :post-attachment-links="postAttachmentLinks"
-      :patch-attachment-link="patchAttachmentLink"
-      @close="isOpened = false"
-      @reload-link-resources="refreshLinks"
-      @reload-file-resources="refreshFiles"
-    />
   </div>
 </template>
 
@@ -53,7 +53,7 @@ const { translateFiles, translateLinks } = useAutoTranslate()
 const selectedItem = ref(null)
 const isOpened = ref(false)
 
-// bu limits (add paginated query ?)
+// paginated limits (add paginated query ?)
 const query = { query: { limit: 500 } }
 
 const {

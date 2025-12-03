@@ -48,11 +48,21 @@ export async function getUserAttachmentFile(userId: number, options) {
   return await useAPI2(`user/${userId}/file/`, options)
 }
 
-export async function postUserAttachmentFile(userId: number, body) {
+export async function postUserAttachmentFile(userId: number, data) {
+  const body = new FormData()
+  body.set('description', data.description)
+  body.set('title', data.title)
+  body.set('file', data.file, data.file.name)
+  body.set('mime', data.file.type || 'file')
+
   return await useAPI(`user/${userId}/file/`, { body, method: 'POST' })
 }
 
-export async function patchUserAttachmentFile(userId: number, fileId: number, body) {
+export async function patchUserAttachmentFile(userId: number, fileId: number, data) {
+  const body = new FormData()
+  body.set('description', data.description)
+  body.set('title', data.title)
+
   return await useAPI(`user/${userId}/file/${fileId}/`, { body, method: 'PATCH' })
 }
 

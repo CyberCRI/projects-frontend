@@ -3,7 +3,7 @@ import { createFactory } from 'faker-create-factory'
 import { UserModel, UserFromJWTModel } from '@/models/user.model'
 
 export const UserFactory = createFactory<UserModel>((faker) => ({
-  id: faker.datatype.uuid(),
+  id: faker.datatype.number(),
   name: {
     firstname: faker.name.firstName(),
     lastname: faker.name.lastName(),
