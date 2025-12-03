@@ -97,6 +97,14 @@ const tabs = computed(() => {
       icon: 'Users',
       condition: true,
     },
+    {
+      key: 'admin-terms',
+      label: t('admin.tabs.terms'),
+      view: { name: 'termsAdmin' },
+      props: {},
+      icon: 'Scales',
+      condition: true,
+    },
   ].map((entry) => ({ ...entry, dataTest: entry.key }))
 })
 

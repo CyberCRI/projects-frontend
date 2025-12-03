@@ -18,7 +18,7 @@ export interface OrganizationsState {
 }
 
 const useOrganizationsStore = defineStore('organizations', () => {
-  const { translateOrganization, translateOrganizations } = useAutoTranslate()
+  const { translateOrganization, translateOrganizations, getTranslatableField } = useAutoTranslate()
 
   const _all = ref([])
   const _current = ref(null)
@@ -53,6 +53,14 @@ const useOrganizationsStore = defineStore('organizations', () => {
     })
     return Object.values(index)
   })
+
+  // Terms and Conditions might be null initially
+  const tos = computed(() => current.value?.terms_and_conditions || null)
+  const termsId = computed((): number | null => tos?.value?.id || null)
+  const termsVersion = computed((): number | null => tos?.value?.displayed_version || null)
+  const termsContent = computed((): string | null => tos?.value?.displayed_content || null)
+  const termsContentTranslated = getTranslatableField(tos, 'content', termsContent)
+  const hasTerms = computed((): boolean => !!(termsId.value && termsContent.value))
 
   async function getCurrentOrganization(code: string): Promise<OrganizationOutput> {
     try {
@@ -103,6 +111,11 @@ const useOrganizationsStore = defineStore('organizations', () => {
     isAutoTranslate,
     languages,
     allClassifications,
+    hasTerms,
+    termsId,
+    termsVersion,
+    termsContent,
+    termsContentTranslated,
     // actions
     getCurrentOrganization,
     getAllOrganizations,

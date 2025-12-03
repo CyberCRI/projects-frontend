@@ -118,6 +118,13 @@
     }
   },
   "admin": {
+    "terms": {
+      "title": "Conditions Générales d'Utilisation",
+      "using-default": "Vous utilisez actuellement les Conditions Générales d'Utilisation par défaut",
+      "error": "Une erreur s'est produite lors de l'enregistrement des Conditions Générales d'Utilisation.",
+      "saved": "Conditions Générales d'Utilisation enregistrées avec succès.",
+      "version": "Version :"
+    },
     "accounts": {
       "table": {
         "last-name": "Nom",
@@ -219,7 +226,8 @@
       "users": "Utilisateurs",
       "requests": "Demandes",
       "groups": "Groupes",
-      "settings": "Paramètres"
+      "settings": "Paramètres",
+      "terms": "CGU"
     },
     "page-title": "Admin",
     "portal": {
@@ -3085,5 +3093,13 @@
       "Unknown": "inconnu",
       "Working-Paper": "document de travail"
     }
+  },
+  "tos": {
+    "evolved": "Nos conditions générales d'utilisation ont été mises à jour, veuillez prendre un moment pour les examiner et les approuver.",
+    "review-and-sign": "Veuillez lire et approuver les conditions générales d'utilisation mises à jour pour continuer à utiliser la plateforme.",
+    "scroll-notice": "Allez en bas des conditions avant de pouvoir approuver.",
+    "error-approving": "Erreur lors de l'approbation des conditions générales d'utilisation, veuillez réessayer plus tard.",
+    "title": "Conditions générales d’utilisation",
+    "approve-title": "Veuillez approuver les conditions générales d'utilisation"
   }
 }
