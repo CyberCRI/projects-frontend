@@ -135,6 +135,25 @@
           />
         </template>
       </UserProjectsSearch>
+      <!-- user resources -->
+      <UserProjectsSearch v-if="resourcesCount" :user="user">
+        <template #default>
+          <ResourcesRecap
+            class="unboxed"
+            :files="resources.files"
+            :links="resources.links"
+            :target="{
+              name: 'ProfileResourcesOther',
+              params: { userId: user.id },
+            }"
+            :redirect="{
+              name: 'ProfileResourcesOther',
+              params: { userId: user.id },
+              hash: '#tab',
+            }"
+          />
+        </template>
+      </UserProjectsSearch>
     </div>
     <div class="skills-mobile">
       <SkillSummary :user="user" />
@@ -192,6 +211,16 @@ export default {
   },
 
   computed: {
+    resources() {
+      // resources from user is only a numbers, so convert it to array for recapComponents
+      return {
+        files: Array.from(Array(this.user.resources.files)),
+        links: Array.from(Array(this.user.resources.links)),
+      }
+    },
+    resourcesCount() {
+      return this.resources.files.length + this.resources.links.length
+    },
     documentsCount() {
       return this.user.researcher?.documents ?? {}
     },

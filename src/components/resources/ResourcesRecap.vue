@@ -6,58 +6,44 @@
         :quantity="links.length + files.length"
         :title="$t('project.resource', links.length + files.length)"
         class="section-header"
-        @redirect-button-clicked="goToResourcesPage"
+        @redirect-button-clicked="redirect"
       />
 
       <div class="resources-block">
-        <ResourceCount
-          v-if="files.length"
-          :count="files.length"
-          :is-file="true"
-          :target="`/projects/${$route.params.slugOrId}/resources`"
-        />
+        <ResourceCount v-if="files.length" :count="files.length" :is-file="true" :target="target" />
 
         <ResourceCount
           v-if="links.length"
           :count="links.length"
           :is-file="false"
-          :target="`/projects/${$route.params.slugOrId}/resources`"
+          :target="target"
         />
       </div>
     </div>
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import SectionHeader from '@/components/base/SectionHeader.vue'
 import ResourceCount from '@/components/project/resource/ResourceCount.vue'
+import { AttachmentFileModel } from '@/models/attachment-file.model'
+import { AttachmentLinkModel } from '@/models/attachment-link.model'
 
-export default {
-  name: 'ResourcesRecap',
+const emit = defineEmits(['redirect'])
+const router = useRouter()
 
-  components: { SectionHeader, ResourceCount },
+const props = withDefaults(
+  defineProps<{
+    files: AttachmentFileModel[]
+    links: AttachmentLinkModel[]
+    target: any
+    redirect: any
+  }>(),
+  { links: () => [], files: () => [] }
+)
 
-  props: {
-    files: {
-      type: Array,
-      default: () => [],
-    },
-
-    links: {
-      type: Array,
-      default: () => [],
-    },
-  },
-
-  methods: {
-    goToResourcesPage() {
-      this.$router.push({
-        name: 'projectResources',
-        params: { slugOrId: this.$route.params.slugOrId },
-        hash: '#tab',
-      })
-    },
-  },
+const redirect = () => {
+  router.push(props.redirect)
 }
 </script>
 

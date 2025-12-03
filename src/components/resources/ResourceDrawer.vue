@@ -1,5 +1,5 @@
 <template>
-  <div class="project-form">
+  <div class="resource-form">
     <BaseDrawer
       :confirm-action-disabled="v$.$invalid || hasFileError"
       :no-footer="!resourceTypeSelected && isAddMode"
@@ -8,7 +8,7 @@
       :title="$filters.capitalize(label)"
       class="resource-modal small"
       :asyncing="isSaving"
-      @close="close()"
+      @close="close"
       @confirm="addEditResource"
     >
       <div v-if="isAddMode && selectedType === null" class="select-resource">
@@ -100,20 +100,14 @@ import { helpers, required, url } from '@vuelidate/validators'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
 import analytics from '@/analytics'
-import { postAttachmentFiles, patchAttachmentFile } from '@/api/attachment-files.service'
-import { postAttachmentLinks, patchAttachmentLink } from '@/api/attachment-links.service'
 import useToasterStore from '@/stores/useToaster.ts'
-import useProjectsStore from '@/stores/useProjects.ts'
+
 export default {
-  name: 'ProjectResourceDrawer',
+  name: 'ResourceDrawer',
 
   components: { LpiButton, ImageInput, BaseDrawer, TextInput, FieldErrors },
 
   props: {
-    project: {
-      type: Object,
-      default: () => ({}),
-    },
     isAddMode: {
       type: Boolean,
       default: true,
@@ -128,15 +122,39 @@ export default {
       type: Boolean,
       default: false,
     },
+
+    user: {
+      type: Object,
+      required: true,
+    },
+
+    links: {
+      type: Array,
+      default: () => [],
+    },
+    postAttachmentFiles: {
+      type: Function,
+      required: true,
+    },
+    patchAttachmentFile: {
+      type: Function,
+      required: true,
+    },
+    postAttachmentLinks: {
+      type: Function,
+      required: true,
+    },
+    patchAttachmentLink: {
+      type: Function,
+      required: true,
+    },
   },
 
   emits: ['close', 'reload-link-resources', 'reload-file-resources'],
   setup() {
     const toaster = useToasterStore()
-    const projectsStore = useProjectsStore()
     return {
       toaster,
-      projectsStore,
     }
   },
 
@@ -196,14 +214,6 @@ export default {
         return this.isFile ? this.$t('resource.edit-file') : this.$t('resource.edit-link')
       }
     },
-
-    projectSlug() {
-      return this.projectsStore.currentProjectSlug
-    },
-
-    projectId() {
-      return this.project?.id
-    },
   },
 
   watch: {
@@ -238,7 +248,7 @@ export default {
     },
     linkExists() {
       return (
-        this.projectsStore.project.links.filter(
+        this.links.filter(
           (link) => utils.removePrefix(link.site_url) === utils.removePrefix(this.link)
         ).length > 0
       )
@@ -266,7 +276,6 @@ export default {
       if (!this.linkExists()) {
         this.isSaving = true
         const body = {
-          project_id: this.projectId,
           attachment_type: 'link',
           description: this.description,
           site_url: this.link,
@@ -274,11 +283,11 @@ export default {
         }
 
         try {
-          const result = await postAttachmentLinks(body)
+          const result = await this.postAttachmentLinks(body)
 
           analytics.attachmentLink.addAttachment({
-            project: {
-              id: this.projectId,
+            user: {
+              id: this.user.id,
             },
             attachment: result,
           })
@@ -286,13 +295,6 @@ export default {
           this.$emit('reload-link-resources')
 
           this.toaster.pushSuccess(this.$t('toasts.link-create.success'))
-
-          if (this.$route && this.$route.name !== 'projectResources') {
-            this.$router.push({
-              name: 'projectResources',
-              params: { slugOrId: this.projectSlug },
-            })
-          }
         } catch (error) {
           this.toaster.pushError(`${this.$t('toasts.link-create.error')} (${error})`)
           console.error(error)
@@ -312,14 +314,13 @@ export default {
           file: this.file,
           title: this.title,
           description: this.description,
-          project_id: this.projectId,
         }
 
-        const result = await postAttachmentFiles(body)
+        const result = await this.postAttachmentFiles(body)
 
         analytics.attachmentFile.addAttachment({
-          project: {
-            id: this.projectId,
+          user: {
+            id: this.user.id,
           },
           attachment: result,
         })
@@ -327,13 +328,6 @@ export default {
         this.$emit('reload-file-resources')
 
         this.toaster.pushSuccess(this.$t('toasts.file-create.success'))
-
-        if (this.$route.name !== 'projectResources') {
-          this.$router.push({
-            name: 'projectResources',
-            params: { slugOrId: this.projectSlug },
-          })
-        }
       } catch (error) {
         this.toaster.pushError(`${this.$t('toasts.file-create.error')} (${error})`)
         console.error(error)
@@ -347,18 +341,17 @@ export default {
       this.isSaving = true
       const body = {
         ...this.selectedItem,
-        project_id: this.projectId,
         description: this.description,
         title: this.title,
         site_url: this.link,
       }
 
       try {
-        const result = await patchAttachmentLink(body)
+        const result = await this.patchAttachmentLink(body)
 
         analytics.attachmentLink.updateAttachment({
-          project: {
-            id: this.projectId,
+          user: {
+            id: this.user.id,
           },
           attachment: result,
         })
@@ -381,16 +374,15 @@ export default {
         ...this.selectedItem,
         title: this.title,
         description: this.description,
-        project_id: this.projectId,
         id: this.selectedItem.id,
       }
 
       try {
-        const result = await patchAttachmentFile(body)
+        const result = await this.patchAttachmentFile(body)
 
         analytics.attachmentFile.updateAttachment({
-          project: {
-            id: this.projectId,
+          user: {
+            id: this.user.id,
           },
           attachment: result,
         })

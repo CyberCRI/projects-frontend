@@ -6,7 +6,7 @@ import { ResearcherLight } from '@/interfaces/researcher'
 import { TagModel } from './tag.model'
 
 export interface UserModel {
-  id: string
+  id: number
   name: {
     firstname: string
     lastname: string

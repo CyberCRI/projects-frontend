@@ -6,7 +6,7 @@
         {{ props.label ?? t('common.loading') }}
       </span>
     </div>
-    <slot v-else-if="status === 'error'" name="error">
+    <slot v-else-if="acutalStatus === 'error'" name="error">
       <div class="error">
         <IconImage name="AlertOutline" class="icon" />
         <span>
@@ -18,7 +18,9 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { AsyncDataRequestStatus } from 'nuxt/app'
+
 /*
   componets wrappers aroud usefetch status result
   show loader during fetching data
@@ -30,20 +32,31 @@ defineOptions({ name: 'FetchLoader' })
 
 const { t } = useNuxtI18n()
 
-const props = defineProps({
-  // stauts from fetchOptions
-  status: {
-    type: String,
-    required: true,
-  },
-  label: {
-    type: String,
-    default: null,
-  },
-  withData: {
-    type: Boolean,
-    default: null,
-  },
+const props = withDefaults(
+  defineProps<{
+    // stauts from fetchOptions
+    status: AsyncDataRequestStatus | AsyncDataRequestStatus[]
+    label?: string
+    withData?: boolean
+  }>(),
+  { withData: false, label: null }
+)
+
+const acutalStatus = computed(() => {
+  let status = props.status
+  if (!Array.isArray(status)) {
+    status = [status]
+  }
+  if (status.includes('error')) {
+    return 'error'
+  }
+  if (status.includes('pending')) {
+    return 'idle'
+  }
+  if (status.includes('idle')) {
+    return 'idle'
+  }
+  return 'success'
 })
 
 const loading = computed(() => {
@@ -51,7 +64,7 @@ const loading = computed(() => {
   if (props.withData === true) {
     return false
   }
-  return ['pending', 'idle'].includes(props.status)
+  return ['pending', 'idle'].includes(acutalStatus.value)
 })
 </script>
 

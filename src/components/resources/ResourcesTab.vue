@@ -2,11 +2,11 @@
   <div class="project-resources">
     <div v-if="isEditionEnabled" class="add-resource">
       <LpiButton
-        :label="$filters.capitalize($t('resource.add'))"
+        :label="$t('resource.add')"
         class="add-item-btn"
         btn-icon="Plus"
         data-test="in-page-add-resources"
-        @click="projectLayoutToggleAddModal('resource')"
+        @click="$emit('edit')"
       />
     </div>
 
@@ -14,7 +14,7 @@
       v-if="fileResources.length"
       :has-button="false"
       :quantity="fileResources.length"
-      :title="$filters.capitalize($t('project.files', fileResources.length))"
+      :title="$t('files', fileResources.length)"
     />
 
     <div v-if="fileResources.length" class="resource-ctn">
@@ -27,7 +27,7 @@
         :subtitle="file?.$t?.description"
         :title="file?.$t?.title"
         icon="File"
-        @edit-clicked="projectLayoutToggleAddModal('resource', file)"
+        @edit-clicked="$emit('edit', file)"
         @delete-clicked="openModal(file, 'file')"
       />
     </div>
@@ -50,7 +50,7 @@
         :subtitle="link?.$t?.description"
         :title="link?.$t?.title"
         icon="LinkRotated"
-        @edit-clicked="projectLayoutToggleAddModal('resource', link)"
+        @edit-clicked="$emit('edit', link)"
         @delete-clicked="openModal(link, 'link')"
       />
     </div>
@@ -71,12 +71,10 @@ import SectionHeader from '@/components/base/SectionHeader.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import ResourceCard from '@/components/resources/ResourceCard.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import analytics from '@/analytics'
-import { deleteAttachmentFile } from '@/api/attachment-files.service'
-import { deleteAttachmentLink } from '@/api/attachment-links.service'
 import useToasterStore from '@/stores/useToaster.ts'
+
 export default {
-  name: 'ProjectResourcesTab',
+  name: 'ResourcesTab',
 
   components: {
     SectionHeader,
@@ -85,13 +83,7 @@ export default {
     LpiButton,
   },
 
-  inject: ['projectLayoutToggleAddModal'],
-
   props: {
-    project: {
-      type: Object,
-      default: () => ({}),
-    },
     fileResources: {
       type: Array,
       default: () => [],
@@ -100,10 +92,21 @@ export default {
       type: Array,
       default: () => [],
     },
-
+    deleteAttachmentLink: {
+      type: Function,
+      required: true,
+    },
+    deleteAttachmentFile: {
+      type: Function,
+      required: true,
+    },
     isInEditingMode: {
       type: Boolean,
       default: false,
+    },
+    permissions: {
+      type: Boolean,
+      default: true,
     },
   },
 
@@ -112,10 +115,8 @@ export default {
   setup() {
     const toaster = useToasterStore()
     useScrollToTab()
-    const { canEditProject } = usePermissions()
     return {
       toaster,
-      canEditProject,
     }
   },
 
@@ -131,7 +132,7 @@ export default {
 
   computed: {
     isEditionEnabled() {
-      return this.canEditProject && this.isInEditingMode
+      return this.permissions && this.isInEditingMode
     },
   },
 
@@ -143,25 +144,15 @@ export default {
 
       this.confirmModalContent =
         this.currentType === 'link'
-          ? this.$t('project.link-confirm-delete')
-          : this.$t('project.file-confirm-delete')
+          ? this.$t('resources.link-confirm-delete')
+          : this.$t('resources.file-confirm-delete')
     },
 
     async deleteResource(resource, type) {
       this.asyncing = true
       if (type === 'link') {
         try {
-          await deleteAttachmentLink({
-            id: resource.id,
-            projectId: this.project.id,
-          })
-
-          analytics.attachmentLink.removeAttachment({
-            project: {
-              id: this.project.id,
-            },
-            attachment: resource,
-          })
+          await this.deleteAttachmentLink(resource.id)
 
           this.$emit('reload-link-resources')
 
@@ -175,14 +166,7 @@ export default {
         }
       } else if (type === 'file') {
         try {
-          await deleteAttachmentFile({ id: resource.id, projectId: this.project?.id })
-
-          analytics.attachmentFile.removeAttachment({
-            project: {
-              id: this.project.id,
-            },
-            attachment: resource,
-          })
+          await this.deleteAttachmentFile(resource.id)
 
           this.$emit('reload-file-resources')
 

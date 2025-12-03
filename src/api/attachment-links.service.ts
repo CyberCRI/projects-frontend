@@ -27,11 +27,11 @@ export async function deleteAttachmentLink({ id, projectId }) {
 
 // --- user
 
-export async function getUserAttachmentLink(userId: number) {
-  return await useAPI(`user/${userId}/link/`)
+export async function getUserAttachmentLink(userId: number, options) {
+  return await useAPI2(`user/${userId}/link/`, options)
 }
 
-export async function postUserAttachmentLinks(userId: number, body) {
+export async function postUserAttachmentLink(userId: number, body) {
   return await useAPI(`user/${userId}/link/`, { body, method: 'POST' })
 }
 

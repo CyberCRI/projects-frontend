@@ -44,8 +44,8 @@ export async function deleteAttachmentFile({ id, projectId }) {
 }
 
 // -- user
-export async function getUserAttachmentFile(userId: number) {
-  return await useAPI(`user/${userId}/file/`)
+export async function getUserAttachmentFile(userId: number, options) {
+  return await useAPI2(`user/${userId}/file/`, options)
 }
 
 export async function postUserAttachmentFile(userId: number, body) {

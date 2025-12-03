@@ -48,6 +48,12 @@
         class="unboxed"
         :files="fileResources"
         :links="linkResources"
+        :target="`/projects/${$route.params.slugOrId}/resources`"
+        :redirect="{
+          name: 'projectResources',
+          params: { slugOrId: $route.params.slugOrId },
+          hash: '#tab',
+        }"
       />
 
       <!-- linked projects -->
