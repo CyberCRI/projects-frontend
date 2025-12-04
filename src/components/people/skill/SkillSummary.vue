@@ -78,10 +78,6 @@ export default {
       if (!this.allStepsVisible) skills = skills.slice(0, this.maxSkills)
       return skills
     },
-
-    isCurrentUser() {
-      return this.usersStore.id === this.user.id
-    },
   },
 
   methods: {
