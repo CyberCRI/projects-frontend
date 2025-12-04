@@ -563,7 +563,9 @@
     "link-to": "verwijzing naar",
     "other": "Andere",
     "and": "en",
-    "create": "Aanmaken"
+    "create": "Aanmaken",
+    "order-asc": "oudste tot nieuwste",
+    "order-desc": "nieuwste naar oudste"
   },
   "complete-profile": {
     "bio": {

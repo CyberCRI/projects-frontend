@@ -563,7 +563,9 @@
     "link-to": "enlace",
     "other": "otros",
     "and": "y",
-    "create": "Crear"
+    "create": "Crear",
+    "order-asc": "más antiguo a más reciente",
+    "order-desc": "más reciente a la más antigua"
   },
   "complete-profile": {
     "bio": {

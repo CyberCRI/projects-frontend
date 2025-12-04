@@ -563,7 +563,9 @@
     "link-to": "link",
     "other": "teised",
     "and": "ja",
-    "create": "Loo"
+    "create": "Loo",
+    "order-asc": "vanim kuni uusim",
+    "order-desc": "uusim"
   },
   "complete-profile": {
     "bio": {

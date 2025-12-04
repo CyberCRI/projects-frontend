@@ -563,7 +563,9 @@
     "link-to": "enllaç a",
     "other": "altra",
     "and": "i",
-    "create": "Crea"
+    "create": "Crea",
+    "order-asc": "Més antiga al més nou",
+    "order-desc": "nova a la més antiga"
   },
   "complete-profile": {
     "bio": {
