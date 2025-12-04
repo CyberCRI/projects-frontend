@@ -1527,12 +1527,12 @@
         }
       },
       "publications": {
-        "no-editable": "De publicaties zijn nog niet beschikbaar.",
-        "tab": "Publicaties"
+        "tab": "Publicaties",
+        "no-editable": "Publicaties worden begin januari 2026 bewerkt."
       },
       "conferences": {
-        "no-editable": "De conferenties zijn nog niet beschikbaar.",
-        "tab": "Conferenties"
+        "tab": "Conferenties",
+        "no-editable": "Begin januari 2026 zullen er conferenties worden gehouden over de uitvoering van de projecten."
       }
     },
     "go-to-page": "De pagina van het profiel weergeven",
