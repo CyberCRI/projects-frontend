@@ -142,8 +142,7 @@ const documentsAnalytics = ref<ResearcherDocumentAnalytics>({
 })
 
 // filter backend query
-// default role "author" to only show author form documents
-const { query, toggleQuery } = useQuery<QueryFilterDocument>({ roles: 'author' })
+const { query, toggleQuery } = useQuery<QueryFilterDocument>({})
 
 const getDocuments = () => {
   status.value = 'pending'
