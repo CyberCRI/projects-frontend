@@ -1554,11 +1554,11 @@
     "mentorship-offering": "Sa pakud mentorlust",
     "publications": "Trükised",
     "research-output-year": "Teadustöö väljundaasta",
-    "publications-similars": "Väljaannete sarnased väljaanded",
     "publications-empty": "Ei mingeid väljaandeid.",
     "conferences": "Konverentsid",
     "conferences-similars": "Konverentsilaadsed",
-    "conferences-empty": "Ei mingeid konverentse."
+    "conferences-empty": "Ei mingeid konverentse.",
+    "publications-similars": "Sarnased väljaanded"
   },
   "profile-completed-modal": {
     "notice-congratulation": "Nüüd olete valmis kasutama projekti platvormi.",

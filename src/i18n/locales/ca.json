@@ -1554,11 +1554,11 @@
     "mentorship-offering": "Estàs oferint mentors",
     "publications": "Publicacions",
     "research-output-year": "Any de sortida de recerca",
-    "publications-similars": "similar a Publicacions",
     "publications-empty": "Sense Publicacions.",
     "conferences": "Conferèncias",
     "conferences-similars": "Les conferències similars",
-    "conferences-empty": "No hi ha conferències."
+    "conferences-empty": "No hi ha conferències.",
+    "publications-similars": "Publicació similar"
   },
   "profile-completed-modal": {
     "notice-congratulation": "Ara estàs preparat per utilitzar la plataforma de projectes.",

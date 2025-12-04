@@ -1554,11 +1554,11 @@
     "mentorship-offering": "Je biedt mentorschap aan.",
     "publications": "Publicaties",
     "research-output-year": "Produktiejaar onderzoek",
-    "publications-similars": "Publicaties",
     "publications-empty": "Geen publicaties.",
     "conferences": "Conferenties",
     "conferences-similars": "Vergelijkende conferenties",
-    "conferences-empty": "Geen conferenties."
+    "conferences-empty": "Geen conferenties.",
+    "publications-similars": "Soortgelijke publikaties"
   },
   "profile-completed-modal": {
     "notice-congratulation": "U bent nu klaar om het projectplatform te gebruiken.",

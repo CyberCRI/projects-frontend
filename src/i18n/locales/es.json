@@ -1554,11 +1554,11 @@
     "mentorship-offering": "Estás ofreciendo mentoría",
     "publications": "Publicaciones",
     "research-output-year": "Año de producción de investigación",
-    "publications-similars": "Publicaciones similares",
     "publications-empty": "No hay publicaciones.",
     "conferences": "Conferencias",
     "conferences-similars": "Conferencias similares",
-    "conferences-empty": "Sin conferencias."
+    "conferences-empty": "Sin conferencias.",
+    "publications-similars": "Publicaciones similares"
   },
   "profile-completed-modal": {
     "notice-congratulation": "Ahora está listo para usar la plataforma de proyectos.",
