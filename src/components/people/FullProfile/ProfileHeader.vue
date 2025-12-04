@@ -84,7 +84,7 @@
       >
         <div v-if="user && user.email" class="social">
           <IconImage class="icon" name="Email" />
-          <span>{{ user.email }}</span>
+          <a :href="`mailto:${user.email}`">{{ $t('complete-profile.personal.email') }}</a>
         </div>
 
         <!-- TODO: Use privacy settings -->
@@ -374,9 +374,9 @@ export default {
           margin-right: $space-xs;
         }
 
-        span {
+        a {
           text-decoration: underline;
-          font-weight: 700;
+          font-weight: 500;
           font-size: $font-size-s;
           color: $primary-dark;
         }
