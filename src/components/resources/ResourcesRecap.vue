@@ -3,21 +3,16 @@
     <div class="resources-ctn">
       <SectionHeader
         :button-label="$t('common.see-more')"
-        :quantity="links.length + files.length"
-        :title="$t('project.resource', links.length + files.length)"
+        :quantity="links + files"
+        :title="$t('project.resource', links + files)"
         class="section-header"
         @redirect-button-clicked="redirect"
       />
 
       <div class="resources-block">
-        <ResourceCount v-if="files.length" :count="files.length" :is-file="true" :target="target" />
+        <ResourceCount v-if="files" :count="files" :is-file="true" :target="target" />
 
-        <ResourceCount
-          v-if="links.length"
-          :count="links.length"
-          :is-file="false"
-          :target="target"
-        />
+        <ResourceCount v-if="links" :count="links" :is-file="false" :target="target" />
       </div>
     </div>
   </div>
@@ -26,19 +21,17 @@
 <script setup lang="ts">
 import SectionHeader from '@/components/base/SectionHeader.vue'
 import ResourceCount from '@/components/project/resource/ResourceCount.vue'
-import { AttachmentFileModel } from '@/models/attachment-file.model'
-import { AttachmentLinkModel } from '@/models/attachment-link.model'
 
 const router = useRouter()
 
 const props = withDefaults(
   defineProps<{
-    files?: AttachmentFileModel[]
-    links?: AttachmentLinkModel[]
+    files?: number
+    links?: number
     target: any
     redirect: any
   }>(),
-  { links: () => [], files: () => [] }
+  { links: 0, files: 0 }
 )
 
 const redirect = () => {

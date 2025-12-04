@@ -33,16 +33,17 @@ import {
   patchUserAttachmentFile,
   postUserAttachmentFile,
   deleteUserAttachmentFile,
+  getUserAttachmentFile,
 } from '@/api/attachment-files.service'
 import {
   patchUserAttachmentLink,
   postUserAttachmentLink,
   deleteUserAttachmentLink,
+  getUserAttachmentLink,
 } from '@/api/attachment-links.service'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import ResourceDrawer from '@/components/resources/ResourceDrawer.vue'
 import ResourcesTab from '@/components/resources/ResourcesTab.vue'
-import { AttachmentFileModel, TranslatedAttachmentFileModel } from '@/models/attachment-file.model'
 import { UserModel } from '@/models/user.model'
 
 defineOptions({ name: 'ProfileResourcesTab' })
@@ -60,17 +61,17 @@ const {
   status: statusFiles,
   data: dataFiles,
   refresh: refreshFiles,
-} = useAPI2<PaginationResult<AttachmentFileModel>>(`user/${props.user.id}/file`, query)
-const resultsFiles = computed<AttachmentFileModel[] | undefined>(() => dataFiles.value?.results)
-const filesTranslated: ComputedRef<TranslatedAttachmentFileModel[]> = translateFiles(resultsFiles)
+} = getUserAttachmentFile(props.user.id, query)
+const resultsFiles = computed(() => dataFiles.value?.results)
+const filesTranslated = translateFiles(resultsFiles)
 
 const {
   status: statusLinks,
   data: dataLinks,
   refresh: refreshLinks,
-} = useAPI2<PaginationResult<AttachmentFileModel>>(`user/${props.user.id}/link`, query)
-const resultsLinks = computed<AttachmentFileModel[] | undefined>(() => dataLinks.value?.results)
-const LinksTranslated: ComputedRef<TranslatedAttachmentFileModel[]> = translateLinks(resultsLinks)
+} = getUserAttachmentLink(props.user.id, query)
+const resultsLinks = computed(() => dataLinks.value?.results)
+const LinksTranslated = translateLinks(resultsLinks)
 
 const deleteAttachmentLink = (linkId) => deleteUserAttachmentLink(props.user.id, linkId)
 const deleteAttachmentFile = (fileId) => deleteUserAttachmentFile(props.user.id, fileId)

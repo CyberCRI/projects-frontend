@@ -20,6 +20,10 @@ export interface UserModel {
   people_groups?: object[] // TODO: define this type
   skills?: UserSkillModel[]
   researcher?: ResearcherLight
+  resources: {
+    files: number
+    links: number
+  }
 }
 
 export interface UserFromJWTModel {

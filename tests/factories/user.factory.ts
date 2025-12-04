@@ -31,6 +31,10 @@ export const UserFactory = createFactory<UserModel>((faker) => ({
   },
   researcher: null,
   slug: '',
+  resources: {
+    files: faker.datatype.number(),
+    links: faker.datatype.number(),
+  },
 }))
 
 export const UserFromJWTFactory = createFactory<UserFromJWTModel>((faker) => ({

@@ -140,8 +140,8 @@
         <template #default>
           <ResourcesRecap
             class="unboxed"
-            :files="resources.files"
-            :links="resources.links"
+            :files="user.resources.files"
+            :links="user.resources.links"
             :target="{
               name: 'ProfileResourcesOther',
               params: { userId: user.id },
@@ -211,15 +211,8 @@ export default {
   },
 
   computed: {
-    resources() {
-      // resources from user is only a numbers, so convert it to array for recapComponents
-      return {
-        files: Array.from(Array(this.user.resources.files)),
-        links: Array.from(Array(this.user.resources.links)),
-      }
-    },
     resourcesCount() {
-      return this.resources.files.length + this.resources.links.length
+      return this.user.resources.files + this.user.resources.links
     },
     documentsCount() {
       return this.user.researcher?.documents ?? {}

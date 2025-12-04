@@ -14,7 +14,7 @@ export interface AttachmentFileModel extends BaseModel {
   mime: string
 }
 
-export type TranslatedAttachmentFileModel = Translated<AttachmentFileModel, 'title' | 'description'>
+export type TranslatedAttachmentFile = Translated<AttachmentFileModel, 'title' | 'description'>
 
 export type AttachmentFileOutput = Required<AttachmentFileModel>
 

@@ -130,7 +130,7 @@ export default {
         let results = response.results?.map((follow) => follow.project) || []
         this.items.push(...results.slice(0, maxResults))
       } else {
-        this.items.push(...response.results.slice(0, maxResults))
+        this.items.push(...(response.results?.slice(0, maxResults) || []))
       }
       this.isLoading = false
       this.$emit('loading', false)
