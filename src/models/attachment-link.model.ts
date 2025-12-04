@@ -1,3 +1,4 @@
+import { Translated } from '@/interfaces/translated'
 import BaseModel from '@/models/base.model'
 import { AttachmentType } from '@/models/types'
 
@@ -13,6 +14,8 @@ export interface AttachmentLinkModel extends BaseModel {
   site_url: string
   title: string
 }
+
+export type TranslatedAttachmentLink = Translated<AttachmentLinkModel, 'title' | 'description'>
 
 export type AttachmentLinkOutput = Required<AttachmentLinkModel>
 

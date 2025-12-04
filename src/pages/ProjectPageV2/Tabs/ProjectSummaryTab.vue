@@ -46,8 +46,14 @@
       <ResourcesRecap
         v-if="linkResources?.length || fileResources?.length"
         class="unboxed"
-        :files="fileResources"
-        :links="linkResources"
+        :files="fileResources.length"
+        :links="linkResources.length"
+        :target="`/projects/${$route.params.slugOrId}/resources`"
+        :redirect="{
+          name: 'projectResources',
+          params: { slugOrId: $route.params.slugOrId },
+          hash: '#tab',
+        }"
       />
 
       <!-- linked projects -->

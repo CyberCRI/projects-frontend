@@ -74,6 +74,7 @@ const useUsersStore = defineStore('users', () => {
         permissions: permissions.value,
         slug: userFromToken.value.slug,
         researcher: userFromToken.value.researcher,
+        resources: userFromToken.value.resources,
       }
     }
 

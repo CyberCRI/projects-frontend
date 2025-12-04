@@ -31,6 +31,7 @@ import FetchLoader from '@/components/base/FetchLoader.vue'
 import { PaginationResult, usePagination } from '@/composables/usePagination'
 import { Document, TranslatedDocument } from '@/interfaces/researcher'
 import { UserModel } from '@/models/user.model'
+import { AsyncDataRequestStatus } from 'nuxt/app'
 
 defineOptions({ name: 'ResearcherDocumentSimilars' })
 
@@ -42,7 +43,7 @@ const props = defineProps<{
   user: UserModel
 }>()
 
-const status = ref('pending')
+const status = ref<AsyncDataRequestStatus>('pending')
 const documents = ref<PaginationResult<Document>>()
 const pagination = usePagination(documents, { limit: 10 })
 const { count } = pagination

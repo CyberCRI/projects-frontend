@@ -1,3 +1,4 @@
+import { Translated } from '@/interfaces/translated'
 import BaseModel from '@/models/base.model'
 import { AttachmentType } from '@/models/types'
 
@@ -12,6 +13,8 @@ export interface AttachmentFileModel extends BaseModel {
   description: string
   mime: string
 }
+
+export type TranslatedAttachmentFile = Translated<AttachmentFileModel, 'title' | 'description'>
 
 export type AttachmentFileOutput = Required<AttachmentFileModel>
 

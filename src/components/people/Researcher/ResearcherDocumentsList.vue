@@ -113,6 +113,7 @@ import {
   TranslatedDocument,
 } from '@/interfaces/researcher'
 import { UserModel } from '@/models/user.model'
+import { AsyncDataRequestStatus } from 'nuxt/app'
 
 defineOptions({ name: 'ResearcherDocumentsList' })
 
@@ -133,7 +134,7 @@ const results = computed<Document[] | undefined>(() => documents.value?.results)
 const documentsTranslated: ComputedRef<TranslatedDocument[]> = translateResearcherDocuments(results)
 
 const pagination = usePagination(documents, { limit: props.limit ?? 10 })
-const status = ref('pending')
+const status = ref<AsyncDataRequestStatus>('pending')
 
 const documentsAnalytics = ref<ResearcherDocumentAnalytics>({
   document_types: {},

@@ -86,9 +86,9 @@ const defaultOptions = () => {
   }
 }
 
-const useAPI = (url: string, options?: any) => {
+const useAPI = <DataT>(url: string, options?: any) => {
   const _options = merge(defaultOptions(), options || {})
-  return $fetch(url, _options)
+  return $fetch<DataT>(url, _options)
 }
 
 export default useAPI

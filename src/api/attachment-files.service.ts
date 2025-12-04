@@ -1,6 +1,9 @@
 // import type { APIResponseList } from '@/api/types'
 
-import type { AttachmentFileInput /*, AttachmentFileOutput*/ } from '@/models/attachment-file.model'
+import type {
+  AttachmentFileInput /*, AttachmentFileOutput*/,
+  AttachmentFileModel,
+} from '@/models/attachment-file.model'
 
 import useAPI from '@/composables/useAPI'
 
@@ -41,4 +44,38 @@ export async function patchAttachmentFile(body: AttachmentFileInput) {
 
 export async function deleteAttachmentFile({ id, projectId }) {
   return await useAPI(`project/${projectId}/file/${id}/`, { method: 'DELETE' })
+}
+
+// -- user
+export function getUserAttachmentFile(userId: number, options) {
+  return useAPI2<PaginationResult<AttachmentFileModel>>(`user/${userId}/file/`, options)
+}
+
+export async function postUserAttachmentFile(userId: number, data: AttachmentFileModel) {
+  const body = new FormData()
+  body.set('description', data.description)
+  body.set('title', data.title)
+  body.set('file', data.file, data.file.name)
+  body.set('mime', data.file.type || 'file')
+
+  return await useAPI<AttachmentFileModel>(`user/${userId}/file/`, { body, method: 'POST' })
+}
+
+export async function patchUserAttachmentFile(
+  userId: number,
+  fileId: number,
+  data: Partial<AttachmentFileModel>
+) {
+  const body = new FormData()
+  body.set('description', data.description)
+  body.set('title', data.title)
+
+  return await useAPI<AttachmentFileModel>(`user/${userId}/file/${fileId}/`, {
+    body,
+    method: 'PATCH',
+  })
+}
+
+export async function deleteUserAttachmentFile(userId: number, fileId: number) {
+  return await useAPI(`user/${userId}/file/${fileId}/`, { method: 'DELETE' })
 }
