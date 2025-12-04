@@ -1,5 +1,5 @@
 <template>
-  <div class="document-tab">
+  <div>
     <FetchLoader :status="[statusFiles, statusLinks]">
       <ResourcesTab
         :file-resources="filesTranslated"
