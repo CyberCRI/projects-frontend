@@ -9,33 +9,25 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'LocationTooltip',
+<script setup>
+import { cropIfTooLong } from '@/functs/string'
 
-  props: {
-    location: {
-      type: Object,
-      required: true,
-    },
+defineOptions({ name: 'LocationTooltip' })
+
+const props = defineProps({
+  location: {
+    type: Object,
+    required: true,
   },
+})
 
-  computed: {
-    title() {
-      return this.cropIfTooLong(this.location?.$t?.title, 45)
-    },
+const title = computed(() => {
+  return cropIfTooLong(props.location?.$t?.title, 45)
+})
 
-    description() {
-      return this.cropIfTooLong(this.location?.$t?.description, 85)
-    },
-  },
-
-  methods: {
-    cropIfTooLong(text, length) {
-      return text.length > length ? text.substring(0, length) + '...' : text
-    },
-  },
-}
+const description = computed(() => {
+  return cropIfTooLong(props.location?.$t?.description, 85)
+})
 </script>
 
 <style lang="scss" scoped>

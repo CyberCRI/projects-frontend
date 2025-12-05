@@ -40,7 +40,7 @@
 
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
-import debounce from 'lodash.debounce'
+import { debounce } from 'es-toolkit'
 
 export default {
   name: 'GroupButton',
@@ -91,7 +91,7 @@ export default {
 
   emits: ['update:model-value'],
   setup() {
-    const { locale } = useI18n()
+    const { locale } = useNuxtI18n()
     return {
       locale,
     }

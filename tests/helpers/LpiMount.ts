@@ -1,19 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { createI18n } from 'vue-i18n'
-import { config, mount, shallowMount } from '@vue/test-utils'
-import { capitalize, isNotGroup, isGroup } from '@/filters'
+import { mount, shallowMount } from '@vue/test-utils'
 import { clickOutside, disableFocus } from '@/directives'
 import pinia from './test-pinia'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import english from '@/i18n/locales/en.json'
-
-config.global.mocks = {
-  $filters: {
-    capitalize,
-    isNotGroup,
-    isGroup,
-  },
-}
 
 const defaultI18nOptions = () => {
   return {

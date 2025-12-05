@@ -13,7 +13,7 @@ const props = defineProps({
 
 const { translateInstruction } = useAutoTranslate()
 
-const { d, t } = useI18n()
+const { d, t } = useNuxtI18n()
 const { canEditInstruction, canDeleteInstruction } = usePermissions()
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()

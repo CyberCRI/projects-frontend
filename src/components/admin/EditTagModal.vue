@@ -5,14 +5,14 @@ import TextInput from '@/components/base/form/TextInput.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { postClassificationTag, putClassificationTag } from '@/api/tag-classification.service'
-import { useI18n } from 'vue-i18n'
+
 import CharCounter from '@/components/base/form/CharCounter.vue'
 import useValidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import LpiButton from '../base/button/LpiButton.vue'
 
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()

@@ -30,7 +30,7 @@
           @toggle-filter="toggleFilter"
         >
           <template #header>
-            {{ $filters.capitalize($t(`search.${filter.title}`)) }}
+            {{ $t(`search.${filter.title}`) }}
           </template>
           <component :is="filter.componentSummary" v-model="selection[key]" />
         </FilterWrapper>

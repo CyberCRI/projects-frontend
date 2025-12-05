@@ -42,7 +42,7 @@
       />
       <ExternalLabelButton
         class="space-button"
-        :label="$filters.capitalize($t('comment.comment-verb'))"
+        :label="$t('comment.comment-verb')"
         btn-icon="ChatBubble"
         vertical-layout
         label-on-hover

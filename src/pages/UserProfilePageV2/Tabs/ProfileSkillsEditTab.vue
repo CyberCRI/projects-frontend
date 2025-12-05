@@ -15,13 +15,13 @@
       </p>
       <div class="actions">
         <LpiButton
-          :label="$filters.capitalize($t('profile.edit.skills.skills.add-item'))"
+          :label="$t('profile.edit.skills.skills.add-item')"
           btn-icon="Plus"
           data-test="initial-add-skills-button"
           @click="openDrawer('skills', 'add')"
         />
         <LpiButton
-          :label="$filters.capitalize($t('profile.edit.skills.hobbies.add-item'))"
+          :label="$t('profile.edit.skills.hobbies.add-item')"
           btn-icon="Plus"
           data-test="initial-add-hobbies-button"
           @click="openDrawer('hobbies', 'add')"
@@ -75,7 +75,7 @@
           </TransitionGroup>
           <div class="actions">
             <LpiButton
-              :label="$filters.capitalize($t(`profile.edit.skills.${key}.add-item`))"
+              :label="$t(`profile.edit.skills.${key}.add-item`)"
               btn-icon="Plus"
               :data-test="`add-${key}-button`"
               @click="openDrawer(key)"
@@ -85,7 +85,7 @@
         <div v-else class="add-action">
           <p class="intro">{{ $t(`profile.edit.skills.${key}.nothing-yet`) }}</p>
           <LpiButton
-            :label="$filters.capitalize($t(`profile.edit.skills.${key}.add-item`))"
+            :label="$t(`profile.edit.skills.${key}.add-item`)"
             btn-icon="Plus"
             :data-test="`initial-add-${key}-button`"
             @click="openDrawer(key, 'add')"
@@ -103,6 +103,7 @@
     @skill-added="onSkillAdded"
   />
 </template>
+
 <script>
 import { patchUserSkill, deleteUserSkill } from '@/api/people.service.ts'
 import useToasterStore from '@/stores/useToaster.ts'

@@ -8,7 +8,7 @@
       >
         <div class="skill-title">
           <IconImage class="chevron" :name="isOpen ? 'Minus' : 'Plus'" />
-          <span class="skill-title">{{ $filters.capitalize(label) }}</span>
+          <span class="skill-title">{{ capitalize(label) }}</span>
         </div>
         <transition name="open">
           <div v-show="isOpen" class="description mobile">
@@ -20,8 +20,8 @@
         <SkillSteps show-label :active-step="level" :steps="steps" class="steps" />
       </div>
       <div class="mentorship">
-        <span v-if="skill.can_mentor">{{ $t('profile.can-mentor') }}</span>
-        <span v-if="skill.needs_mentor">{{ $t('profile.needs-mentor') }}</span>
+        <span v-if="skill.can_mentor">{{ t('profile.can-mentor') }}</span>
+        <span v-if="skill.needs_mentor">{{ t('profile.needs-mentor') }}</span>
         <ToolTip
           v-if="skill.comment && (skill.can_mentor || skill.needs_mentor)"
           placement="bottom"
@@ -38,10 +38,10 @@
         </template>
         <template v-if="skill.can_mentor && !mentorshipIsLoading">
           <span v-if="isSelf" class="mentorship-offering">
-            {{ $t('profile.mentorship-offering') }}
+            {{ t('profile.mentorship-offering') }}
           </span>
           <span v-else-if="hasAskedMentorship" class="mentorship-asked">
-            {{ $t('profile.mentorship-asked') }}
+            {{ t('profile.mentorship-asked') }}
           </span>
           <NeedLoginToolTip v-else>
             <template #default="{ needLogin }">
@@ -51,7 +51,7 @@
                 :disabled="needLogin"
                 secondary
                 btn-icon="EmailOutline"
-                :label="$t('profile.ask-mentorship')"
+                :label="t('profile.ask-mentorship')"
                 @click="askMentorship(needLogin)"
               />
             </template>
@@ -59,10 +59,10 @@
         </template>
         <template v-if="skill.needs_mentor && !mentorshipIsLoading">
           <span v-if="isSelf" class="mentorship-asking">
-            {{ $t('profile.mentorship-asking') }}
+            {{ t('profile.mentorship-asking') }}
           </span>
           <span v-else-if="hasOfferedMentorship" class="mentorship-offered">
-            {{ $t('profile.mentorship-offered') }}
+            {{ t('profile.mentorship-offered') }}
           </span>
           <NeedLoginToolTip v-else>
             <template #default="{ needLogin }">
@@ -71,7 +71,7 @@
                 :disabled="needLogin"
                 secondary
                 btn-icon="EmailOutline"
-                :label="$t('profile.offer-mentorship')"
+                :label="t('profile.offer-mentorship')"
                 @click="offerMentorship(needLogin)"
               />
             </template>
@@ -90,11 +90,14 @@
       :is-open="mentorshipDrawerIsOpen"
       :is-offer="mentorshipDrawerIsOffer"
       @close="mentorshipDrawerIsOpen = false"
-      @mentorship-send="$emit('mentorship-send')"
+      @mentorship-send="emit('mentorship-send')"
     />
   </div>
 </template>
-<script>
+
+<script setup>
+import { capitalize } from '@/functs/string'
+
 import SkillSteps from '@/components/people/skill/SkillSteps.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import useSkillTexts from '@/composables/useSkillTexts.js'
@@ -103,93 +106,73 @@ import MentorshipContactDrawer from '@/components/people/skill/MentorshipContact
 import ToolTip from '@/components/base/ToolTip.vue'
 import NeedLoginToolTip from '@/components/base/NeedLoginToolTip.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-export default {
-  name: 'SkillItemFull',
 
-  components: {
-    SkillSteps,
-    IconImage,
-    LpiButton,
-    MentorshipContactDrawer,
-    ToolTip,
-    NeedLoginToolTip,
-    LoaderSimple,
-  },
-  props: {
-    skill: {
-      type: Object,
-      required: true,
-    },
-    steps: {
-      type: Number,
-      default: 4,
-    },
-    hasAskedMentorship: {
-      type: Boolean,
-      default: false,
-    },
-    hasOfferedMentorship: {
-      type: Boolean,
-      default: false,
-    },
-    isSelf: {
-      type: Boolean,
-      default: false,
-    },
-    mentorshipIsLoading: {
-      type: Boolean,
-      default: false,
-    },
-  },
+defineOptions({ name: 'SkillItemFull' })
 
-  emits: ['mentorship-send'],
-  setup() {
-    const skillTexts = useSkillTexts()
-    return { skillTexts }
+const props = defineProps({
+  skill: {
+    type: Object,
+    required: true,
   },
-  data() {
-    return {
-      isOpen: false,
-      mentorshipDrawerIsOpen: false,
-      mentorshipDrawerIsOffer: false,
-    }
+  steps: {
+    type: Number,
+    default: 4,
   },
-
-  computed: {
-    label() {
-      return this.skillTexts.title(this.skill)
-    },
-    description() {
-      return this.skillTexts.description(this.skill)
-    },
-    level() {
-      return Number(this.skill.level)
-    },
+  hasAskedMentorship: {
+    type: Boolean,
+    default: false,
   },
-
-  methods: {
-    askMentorship(prevent) {
-      if (!prevent) {
-        this.mentorshipDrawerIsOpen = true
-        this.mentorshipDrawerIsOffer = false
-      }
-    },
-    offerMentorship() {
-      this.mentorshipDrawerIsOpen = true
-      this.mentorshipDrawerIsOffer = true
-    },
-
-    escapeHTML(text) {
-      return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-    },
-    convertNewLineToBr(text) {
-      return text.replace(/\n/g, '<br>')
-    },
-
-    escapeComment(text) {
-      return this.convertNewLineToBr(this.escapeHTML(text))
-    },
+  hasOfferedMentorship: {
+    type: Boolean,
+    default: false,
   },
+  isSelf: {
+    type: Boolean,
+    default: false,
+  },
+  mentorshipIsLoading: {
+    type: Boolean,
+    default: false,
+  },
+})
+
+const { t } = useNuxtI18n()
+const emit = defineEmits(['mentorship-send'])
+const skillTexts = useSkillTexts()
+const isOpen = ref(false)
+const mentorshipDrawerIsOpen = ref(false)
+const mentorshipDrawerIsOffer = ref(false)
+
+const label = computed(() => {
+  return skillTexts.title(props.skill)
+})
+const description = computed(() => {
+  return skillTexts.description(props.skill)
+})
+const level = computed(() => {
+  return Number(props.skill.level)
+})
+
+const askMentorship = (prevent) => {
+  if (!prevent) {
+    mentorshipDrawerIsOpen.value = true
+    mentorshipDrawerIsOffer.value = false
+  }
+}
+const offerMentorship = () => {
+  mentorshipDrawerIsOpen.value = true
+  mentorshipDrawerIsOffer.value = true
+}
+
+const escapeHTML = (text) => {
+  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+}
+const convertNewLineToBr = (text) => {
+  return text.replace(/\n/g, '<br>')
+}
+
+const escapeComment = (text) => {
+  return convertNewLineToBr(escapeHTML(text))
 }
 </script>
 <style lang="scss" scoped>

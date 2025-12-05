@@ -8,9 +8,7 @@
   >
     <template #header>
       {{
-        $filters.capitalize(
-          mode === 'add' ? $t('multieditor.color.set-color') : $t('multieditor.color.change-color')
-        )
+        mode === 'add' ? $t('multieditor.color.set-color') : $t('multieditor.color.change-color')
       }}
     </template>
 

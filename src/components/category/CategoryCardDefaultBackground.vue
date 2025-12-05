@@ -1275,32 +1275,30 @@
     </defs>
   </svg>
 </template>
-<script>
-export default {
-  name: 'CategoryCardDefaultBackground',
+<script setup>
+defineOptions({ name: 'CategoryCardDefaultBackground' })
 
-  props: {
-    backgroundColor: {
-      type: String,
-      required: true,
-    },
-
-    shapesColor: {
-      type: String,
-      default: '#FFF',
-    },
-
-    imageHeight: {
-      type: String,
-      required: true,
-    },
-
-    imageWidth: {
-      type: String,
-      required: true,
-    },
+defineProps({
+  backgroundColor: {
+    type: String,
+    required: true,
   },
-}
+
+  shapesColor: {
+    type: String,
+    default: '#FFF',
+  },
+
+  imageHeight: {
+    type: String,
+    required: true,
+  },
+
+  imageWidth: {
+    type: String,
+    required: true,
+  },
+})
 </script>
 
 <style lang="scss" scoped>

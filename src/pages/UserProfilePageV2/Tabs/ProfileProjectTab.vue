@@ -15,7 +15,7 @@
       <template #default="{ items: projects, isLoading, totalCount, pagination, paginationAction }">
         <div class="project-list-header">
           <h4 class="title">
-            {{ $filters.capitalize($t('me.projects-participate')) }}
+            {{ $t('me.projects-participate') }}
             <span>({{ totalCount }})</span>
           </h4>
         </div>

@@ -8,7 +8,7 @@ import { getOrganizationByCode } from '@/api/organizations.service'
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
 const router = useRouter()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const asyncing = ref(false)
 const form = ref(defaultForm())
@@ -72,7 +72,7 @@ try {
     <div class="form-actions">
       <LpiButton
         :disabled="asyncing"
-        :label="$filters.capitalize($t('common.cancel'))"
+        :label="$t('common.cancel')"
         secondary
         class="footer__left-button"
         data-test="close-button"

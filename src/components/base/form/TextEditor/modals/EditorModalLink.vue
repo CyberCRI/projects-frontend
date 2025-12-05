@@ -7,22 +7,22 @@
     @submit="insertLink"
   >
     <template #header>
-      {{ $filters.capitalize(mode === 'add' ? $t('resource.add-link') : $t('resource.edit-link')) }}
+      {{ mode === 'add' ? $t('resource.add-link') : $t('resource.edit-link') }}
     </template>
 
     <template #body>
       <template v-if="needText">
-        <label>{{ $filters.capitalize($t('resource.add-link-text-label')) }}</label>
+        <label>{{ $t('resource.add-link-text-label') }}</label>
         <TextInput
           v-model="text"
-          :placeholder="$filters.capitalize($t('resource.add-link-text'))"
+          :placeholder="$t('resource.add-link-text')"
           data-test="input-new-link-text"
         />
       </template>
-      <label>{{ $filters.capitalize($t('resource.add-link-url-label')) }}</label>
+      <label>{{ $t('resource.add-link-url-label') }}</label>
       <TextInput
         v-model="link"
-        :placeholder="$filters.capitalize($t('resource.add-link-url'))"
+        :placeholder="$t('resource.add-link-url')"
         data-test="input-new-link"
       />
     </template>
