@@ -76,9 +76,11 @@ export default {
     },
 
     src() {
-      return this.imageError || !this._src
-        ? this.runtimeConfig.public.appPublicBinariesPrefix + this.defaultPicture
-        : this._src
+      return (
+        this.imageError ||
+        this._src ||
+        `${this.runtimeConfig.public.appPublicBinariesPrefix}${this.defaultPicture}`
+      )
     },
 
     imageSizes() {

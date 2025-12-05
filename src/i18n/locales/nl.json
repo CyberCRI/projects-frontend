@@ -563,7 +563,9 @@
     "link-to": "verwijzing naar",
     "other": "Andere",
     "and": "en",
-    "create": "Aanmaken"
+    "create": "Aanmaken",
+    "order-asc": "oudste tot nieuwste",
+    "order-desc": "nieuwste naar oudste"
   },
   "complete-profile": {
     "bio": {
@@ -1525,12 +1527,12 @@
         }
       },
       "publications": {
-        "no-editable": "De publicaties zijn nog niet beschikbaar.",
-        "tab": "Publicaties"
+        "tab": "Publicaties",
+        "no-editable": "Publicaties worden begin januari 2026 bewerkt."
       },
       "conferences": {
-        "no-editable": "De conferenties zijn nog niet beschikbaar.",
-        "tab": "Conferenties"
+        "tab": "Conferenties",
+        "no-editable": "Begin januari 2026 zullen er conferenties worden gehouden over de uitvoering van de projecten."
       }
     },
     "go-to-page": "De pagina van het profiel weergeven",
@@ -1554,11 +1556,11 @@
     "mentorship-offering": "Je biedt mentorschap aan.",
     "publications": "Publicaties",
     "research-output-year": "Produktiejaar onderzoek",
-    "publications-similars": "Publicaties",
     "publications-empty": "Geen publicaties.",
     "conferences": "Conferenties",
     "conferences-similars": "Vergelijkende conferenties",
-    "conferences-empty": "Geen conferenties."
+    "conferences-empty": "Geen conferenties.",
+    "publications-similars": "Soortgelijke publikaties"
   },
   "profile-completed-modal": {
     "notice-congratulation": "U bent nu klaar om het projectplatform te gebruiken.",

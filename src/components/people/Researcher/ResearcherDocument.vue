@@ -38,7 +38,7 @@
     <p class="profile-document-description" :class="{ preview: preview }">
       {{ document.$t.description }}
     </p>
-    <span>
+    <span v-if="document.publication_date">
       {{
         new Date(document.publication_date).toLocaleDateString(locale, {
           year: 'numeric',

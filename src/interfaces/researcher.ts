@@ -5,6 +5,7 @@ export type QueryFilterDocument = {
   year?: number
   document_type?: string
   roles?: string
+  ordering: 'publication_date' | '-publication_date'
 }
 
 export type HarvesterType =

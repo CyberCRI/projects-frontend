@@ -239,7 +239,7 @@ export default {
           props: {
             user: this.user,
           },
-          condition: true,
+          condition: !!this.user.description,
           icon: 'Account',
         },
         {
@@ -318,7 +318,7 @@ export default {
           props: {
             user: this.user,
           },
-          condition: true,
+          condition: this.user?.people_groups?.length,
           icon: 'Users',
         },
         {
@@ -341,7 +341,7 @@ export default {
             user: this.user,
           },
 
-          condition: true,
+          condition: this.user?.skills?.length,
           icon: 'VipCrownLine',
         },
       ]

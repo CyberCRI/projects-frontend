@@ -13,7 +13,7 @@
         class="img-container"
         :picture-data="userImage"
         picture-size="medium"
-        default-picture="/placeholders/user_placeholder.svg"
+        :default-picture="DEFAULT_USER_PATATOID"
       />
       <div class="user-info">
         <div v-if="$filters.isNotGroup(user)" class="name">
@@ -45,6 +45,7 @@
 <script>
 import IconImage from '@/components/base/media/IconImage.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
+import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 
 export default {
   name: 'UserCardInline',
@@ -77,6 +78,10 @@ export default {
   },
 
   emits: ['user-clicked'],
+
+  setup() {
+    return { DEFAULT_USER_PATATOID }
+  },
 
   computed: {
     roleLabel() {

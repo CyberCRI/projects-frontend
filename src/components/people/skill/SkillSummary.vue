@@ -1,5 +1,5 @@
 <template>
-  <div class="skill-summary">
+  <div v-if="allSkills?.length" class="skill-summary">
     <div class="skill-header">
       <h4 class="title">{{ $t('profile.skills') }} ({{ allSkills?.length || '' }})</h4>
       <SeeMoreArrow
@@ -10,18 +10,13 @@
     </div>
 
     <div class="skills">
-      <template v-if="allSkills?.length">
-        <SkillItem
-          v-for="skill in visibleSkills"
-          :key="skill.id"
-          :label="skillTexts.title(skill)"
-          :description="skillTexts.description(skill)"
-          :level="Number(skill.level)"
-        />
-      </template>
-      <p v-else class="empty-field">
-        {{ noSkillLabel }}
-      </p>
+      <SkillItem
+        v-for="skill in visibleSkills"
+        :key="skill.id"
+        :label="skillTexts.title(skill)"
+        :description="skillTexts.description(skill)"
+        :level="Number(skill.level)"
+      />
     </div>
   </div>
 </template>
@@ -82,14 +77,6 @@ export default {
       )
       if (!this.allStepsVisible) skills = skills.slice(0, this.maxSkills)
       return skills
-    },
-
-    isCurrentUser() {
-      return this.usersStore.id === this.user.id
-    },
-
-    noSkillLabel() {
-      return this.isCurrentUser ? this.$t('me.no-skill') : this.$t('you.no-skill')
     },
   },
 

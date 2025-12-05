@@ -7,7 +7,7 @@
           class="image"
           :picture-data="comment.author.profile_picture"
           picture-size="medium"
-          default-picture="/placeholders/user_placeholder.svg"
+          :default-picture="DEFAULT_USER_PATATOID"
         />
       </div>
       <div class="comment-body">
@@ -146,6 +146,7 @@ import analytics from '@/analytics'
 import useToasterStore from '@/stores/useToaster.ts'
 import useUsersStore from '@/stores/useUsers.ts'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
+import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 
 export default {
   name: 'CommentItem',
@@ -201,6 +202,7 @@ export default {
       toaster,
       usersStore,
       isAdmin,
+      DEFAULT_USER_PATATOID,
     }
   },
 

@@ -79,15 +79,8 @@ export default {
   emits: ['update:modelValue'],
   setup() {
     const runtimeConfig = useRuntimeConfig()
-    return { runtimeConfig }
-  },
-  data() {
-    const defaultPictures = [1, 2, 3, 4, 5, 6].map((index) => {
-      return `${
-        this.runtimeConfig.public.appPublicBinariesPrefix
-      }/patatoids-project/Patatoid-${index}.png`
-    })
-    return { defaultPictures }
+    const defaultPictures = usePatatoids()
+    return { runtimeConfig, defaultPictures }
   },
   methods: {
     updateForm(fieldName, fieldValue) {

@@ -15,6 +15,7 @@ export interface UserModel {
   email: string
   roles: string[]
   orgs: string[]
+  profile_picture?: object
   permissions: object
   description?: string
   people_groups?: object[] // TODO: define this type

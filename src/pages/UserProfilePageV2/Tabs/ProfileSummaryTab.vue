@@ -3,17 +3,9 @@
     <!-- Profile Header -->
     <ProfileHeaderV2 v-if="user && !isLoading" class="profile-header" :user="user" />
 
-    <div>
+    <div v-if="user.description">
       <!-- User descriptions -->
-      <UserDescriptions
-        v-if="user.description"
-        :is-limited="true"
-        :user="user"
-        class="user-description unboxed"
-      />
-      <p v-else class="empty-field">
-        {{ noDescription }}
-      </p>
+      <UserDescriptions :is-limited="true" :user="user" class="user-description unboxed" />
     </div>
 
     <div>
@@ -66,7 +58,7 @@
 
       <!-- user projects (Owners, Members) -->
       <UserProjectsSearch :limit="listLimit" :member-roles="['owners', 'members']" :user="user">
-        <template #default="{ items: projects, isLoading, totalCount }">
+        <template v-if="totalCount" #default="{ items: projects, isLoading, totalCount }">
           <div class="project-list-header">
             <h4 class="title">
               {{ $t('me.projects-participate') }}
@@ -89,8 +81,8 @@
         </template>
       </UserProjectsSearch>
       <!-- user projects (Reviewers) -->
-      <UserProjectsSearch :limit="listLimit" :member-roles="['reviewers']" :user="user">
-        <template #default="{ items: projects, isLoading, totalCount }">
+      <UserProjectsSearch member-roles="['reviewers']" :user="user">
+        <template v-if="totalCount" #default="{ items: projects, isLoading, totalCount }">
           <div class="project-list-header">
             <h4 class="title">
               {{ $t('me.projects-reviewing') }}
@@ -114,7 +106,7 @@
       </UserProjectsSearch>
       <!-- user projects (Followed) -->
       <UserProjectsSearch :limit="listLimit" follow :user="user">
-        <template #default="{ items: projects, isLoading, totalCount }">
+        <template v-if="totalCount" #default="{ items: projects, isLoading, totalCount }">
           <div class="project-list-header">
             <h4 class="title">
               {{ $t('me.follow') }}
@@ -213,10 +205,6 @@ export default {
       return this.isCurrentUser
         ? this.$t('me.no-project-participate')
         : this.$t('you.no-project-participate')
-    },
-
-    noDescription() {
-      return this.isCurrentUser ? this.$t('me.no-bio') : this.$t('you.no-bio')
     },
   },
 
