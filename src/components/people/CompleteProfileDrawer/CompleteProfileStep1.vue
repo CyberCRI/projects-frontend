@@ -182,6 +182,7 @@ import { VALID_NAME_REGEX } from '@/functs/constants.ts'
 import useToasterStore from '@/stores/useToaster.ts'
 import useUsersStore from '@/stores/useUsers.ts'
 import { useRuntimeConfig } from '#imports'
+import { usePatatoids } from '@/composables/usePatatoids'
 export default {
   name: 'CompleteProfileStep1',
 
@@ -193,21 +194,18 @@ export default {
     const usersStore = useUsersStore()
     const runtimeConfig = useRuntimeConfig()
     const { onboardingTrap } = useOnboardingStatus()
+    const defaultPictures = usePatatoids()
     return {
       toaster,
       locale,
       usersStore,
       runtimeConfig,
       onboardingTrap,
+      defaultPictures,
     }
   },
 
   data() {
-    const defaultPictures = [1, 2, 3, 4, 5, 6].map((index) => {
-      return `${
-        this.runtimeConfig.public.appPublicBinariesPrefix
-      }/patatoids-project/Patatoid-${index}.png`
-    })
     return {
       v$: useVuelidate(),
       user: null,
@@ -224,7 +222,6 @@ export default {
       bio: '<p></p>',
       exempleToShow: null,
       loading: false,
-      defaultPictures,
     }
   },
 

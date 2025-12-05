@@ -7,7 +7,7 @@
             :alt="`${user.given_name} ${user.family_name} image`"
             :picture-data="user.profile_picture"
             picture-size="medium"
-            default-picture="/placeholders/user_placeholder.svg"
+            :default-picture="DEFAULT_USER_PATATOID"
           />
         </div>
       </div>
@@ -74,6 +74,7 @@
 </template>
 
 <script>
+import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
   name: 'ProfileHeaderV2',
@@ -92,6 +93,7 @@ export default {
     return {
       organizationsStore,
       runtimeConfig,
+      DEFAULT_USER_PATATOID,
     }
   },
 

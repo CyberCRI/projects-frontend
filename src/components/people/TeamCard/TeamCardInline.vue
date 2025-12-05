@@ -13,7 +13,7 @@
         class="img-container"
         :picture-data="user.profile_picture"
         picture-size="medium"
-        default-picture="/placeholders/user_placeholder.svg"
+        :default-picture="DEFAULT_USER_PATATOID"
       />
 
       <div class="user-info">
@@ -44,6 +44,7 @@
 import IconImage from '@/components/base/media/IconImage.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import useUsersStore from '@/stores/useUsers.ts'
+import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 
 export default {
   name: 'TeamCardInline',
@@ -70,8 +71,10 @@ export default {
   emits: ['user-clicked'],
   setup() {
     const usersStore = useUsersStore()
+
     return {
       usersStore,
+      DEFAULT_USER_PATATOID,
     }
   },
 

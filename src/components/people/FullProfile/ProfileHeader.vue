@@ -7,7 +7,7 @@
             :alt="`${user.given_name} ${user.family_name} image`"
             :picture-data="user.profile_picture"
             picture-size="medium"
-            default-picture="/placeholders/user_placeholder.svg"
+            :default-picture="DEFAULT_USER_PATATOID"
           />
         </div>
       </div>
@@ -115,6 +115,7 @@ import BadgeItem from '@/components/base/BadgeItem.vue'
 import SocialNetworks from './SocialNetworks.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 export default {
   name: 'ProfileHeader',
 
@@ -133,6 +134,7 @@ export default {
     return {
       organizationsStore,
       runtimeConfig,
+      DEFAULT_USER_PATATOID,
     }
   },
 

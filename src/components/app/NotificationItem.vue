@@ -19,7 +19,7 @@
         class="img-container"
         :picture-data="notification.sender?.profile_picture"
         picture-size="medium"
-        default-picture="/placeholders/user_placeholder.svg"
+        :default-picture="DEFAULT_USER_PATATOID"
       />
       <div class="container">
         <i18n-t :keypath="`notifications.type.${notification.type}`" tag="p">
@@ -118,6 +118,7 @@ import IconImage from '@/components/base/media/IconImage.vue'
 import utils from '@/functs/functions.ts'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import { NuxtLink } from '#components'
+import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 export default {
   name: 'NotificationItem',
 
@@ -131,6 +132,10 @@ export default {
   },
 
   emits: ['navigated'],
+
+  setup() {
+    return { DEFAULT_USER_PATATOID }
+  },
 
   computed: {
     icon() {
