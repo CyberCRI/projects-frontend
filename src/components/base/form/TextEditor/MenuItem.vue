@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import remixiconUrl from 'remixicon/fonts/remixicon.symbol.svg'
+import remixiconUrl from 'remixicon/fonts/remixicon.symbol.svg?url'
 
 export default {
   name: 'MenuItem',

@@ -74,7 +74,7 @@ export const defaultOptions = () => {
         }
 
         // TODO : is this still used ?
-        if (status === 403 && !originalRequest._retry) {
+        if (status === 403 && typeof originalRequest === 'object' && !originalRequest._retry) {
           originalRequest._retry = true
 
           return Promise.reject(response)

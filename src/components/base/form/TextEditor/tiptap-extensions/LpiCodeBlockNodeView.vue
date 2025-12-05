@@ -39,7 +39,7 @@ import {
   DEFAULT_TAB,
 } from '@/components/base/form/TextEditor/tiptap-extensions/LpiCodeBlock.ts'
 import lowlight from '@/functs/lowlight.ts'
-import remixiconUrl from 'remixicon/fonts/remixicon.symbol.svg'
+import remixiconUrl from 'remixicon/fonts/remixicon.symbol.svg?url'
 
 export default defineComponent({
   name: 'LpiCodeBlockNodeView',

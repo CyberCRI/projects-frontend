@@ -1,16 +1,16 @@
 <template>
   <div class="skill-summary">
     <div class="skill-header">
-      <h4 class="title">{{ $t('profile.skills') }} ({{ allSkills.length }})</h4>
+      <h4 class="title">{{ $t('profile.skills') }} ({{ allSkills?.length || '' }})</h4>
       <SeeMoreArrow
-        v-if="allSkills.length > maxSkills"
+        v-if="allSkills?.length > maxSkills"
         data-test="see-more-skills"
         @click.prevent="goToSkillTab"
       />
     </div>
 
     <div class="skills">
-      <template v-if="allSkills.length">
+      <template v-if="allSkills?.length">
         <SkillItem
           v-for="skill in visibleSkills"
           :key="skill.id"
@@ -69,7 +69,7 @@ export default {
 
   computed: {
     allStepsVisible() {
-      return this.allSkills.length <= this.maxSkills
+      return this.allSkills?.length <= this.maxSkills
     },
 
     allSkills() {
@@ -77,7 +77,7 @@ export default {
     },
 
     visibleSkills() {
-      let skills = [...this.allSkills].sort(
+      let skills = [...(this.allSkills || [])].sort(
         (a, b) => b.level - a.level || this.skillTexts.compareTitles(a, b)
       )
       if (!this.allStepsVisible) skills = skills.slice(0, this.maxSkills)

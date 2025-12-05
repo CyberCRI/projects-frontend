@@ -159,5 +159,5 @@ export async function getNotifications(id) {
 
 export async function patchNotifications({ id, payload }) {
   // TODO: should patchNotificationsSetting
-  return (await useAPI(`notifications-setting/${id}/`, { body: payload, method: 'PATCH' })).data
+  return await useAPI(`notifications-setting/${id}/`, { body: payload, method: 'PATCH' })
 }

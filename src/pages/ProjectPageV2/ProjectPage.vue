@@ -38,6 +38,7 @@ const {
   linkedProjects,
   commentLoop,
   linkedProjectsLoading,
+  postFecthProjectHook,
   //computed
   mergedTeam,
   projectTabs,
@@ -66,6 +67,8 @@ const { connectToSocket, cleanupProvider, projectPatched } = useProjectSocket({
   reloadProject,
   getBlogEntries,
 })
+
+const { translateProject } = useAutoTranslate()
 
 const { goToProjectTab } = useProjectNav(route.params.slugOrId)
 
@@ -101,14 +104,15 @@ provide('projectLayoutProjectPatched', projectPatched)
 //     if (commentLoop.value) clearInterval(commentLoop.value)
 //     cleanupProvider()
 // })
-const setLpiHead = (projectData) => {
-  if (projectData) {
-    const { image, dimensions } = useImageAndDimension(projectData?.header_image, 'medium')
+const setLpiHead = (_projectData) => {
+  if (_projectData) {
+    const projectData = translateProject(_projectData)
+    const { image, dimensions } = useImageAndDimension(projectData.value?.header_image, 'medium')
     try {
       useLpiHead(
         useRequestURL().toString(),
-        projectData.title,
-        projectData.purpose,
+        computed(() => projectData.value?.$t?.title || projectData.value.title),
+        computed(() => projectData.value?.$t?.purpose || projectData.value.purpose),
         image,
         dimensions
       )
@@ -117,7 +121,6 @@ const setLpiHead = (projectData) => {
     }
   }
 }
-
 if (import.meta.server) {
   try {
     // project might need access right
@@ -128,8 +131,8 @@ if (import.meta.server) {
     console.log(err)
   }
 }
-// when project change, update header
-watch(project, setLpiHead)
+
+postFecthProjectHook.value = setLpiHead
 
 onMounted(async () => {
   if (import.meta.client) {

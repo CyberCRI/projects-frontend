@@ -15,7 +15,6 @@ export default defineVitestConfig({
       // './.vitest/register-context.ts',
       './.vitest/mockApiCookie.ts',
       './.vitest/mockOauth.ts',
-      './.vitest/mockUseAPI.ts',
       './.vitest/mockMixpanel.ts',
     ],
     environmentOptions: {

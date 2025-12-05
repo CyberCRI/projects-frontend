@@ -10,7 +10,7 @@
         @click="$router.push(editProfileSkillLink)"
       />
     </div-->
-    <template v-if="allSkills.length">
+    <template v-if="allSkills?.length">
       <section v-if="skills?.length" class="section">
         <UserSkillsFull
           :full-list="true"
@@ -90,11 +90,15 @@ export default {
     },
 
     skills() {
-      return this.allSkills.filter((s) => s.type == 'skill').sort(this.skillTexts.compareTitles)
+      return (this.allSkills || [])
+        .filter((s) => s.type == 'skill')
+        .sort(this.skillTexts.compareTitles)
     },
 
     hobbies() {
-      return this.allSkills.filter((s) => s.type == 'hobby').sort(this.skillTexts.compareTitles)
+      return (this.allSkills || [])
+        .filter((s) => s.type == 'hobby')
+        .sort(this.skillTexts.compareTitles)
     },
 
     isCurrentUser() {

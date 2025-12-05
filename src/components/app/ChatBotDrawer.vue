@@ -1,9 +1,10 @@
 <script setup>
 import 'deep-chat'
 import analytics from '@/analytics'
+import useUsersStore from '@/stores/useUsers.ts'
 
-const { t } = useNuxtI18n()
-
+const { t } = useI18n()
+const router = useRouter()
 const props = defineProps({
   isOpened: { type: Boolean, default: false },
 })
@@ -27,13 +28,21 @@ onErrorCaptured((err) => {
   return false
 })
 
-defineEmits(['close'])
+const emit = defineEmits(['close'])
 
 const IS_STREAMED = ref(true)
 
 const connectOptions = {
   url: IS_STREAMED.value ? '/api/chat-stream' : '/api/chat',
   stream: IS_STREAMED.value,
+}
+const usersStore = useUsersStore()
+const accessToken = usersStore.accessToken
+
+if (accessToken) {
+  connectOptions.headers = {
+    authorization: `Bearer ${accessToken}`,
+  }
 }
 
 const chatStyle = ref({
@@ -70,7 +79,6 @@ const requestInterceptor = (requestDetails) => {
 }
 
 const responseInterceptor = (response) => {
-  console.log('response', response)
   if (!IS_STREAMED.value || response.is_done) {
     // only add complete response, not individual chunks
     addToConversation({
@@ -85,12 +93,52 @@ const responseInterceptor = (response) => {
 
 const placeholderText = computed(() => t('chatbot.input-placeholder'))
 
+const htmlWrappers = ref({
+  default: `
+    <div class="my-wrap" onclick="window.handleChatClick(event)">
+      <span class="html-wrapper"></span>
+    </div>`,
+})
+
+const runtimeConfig = useRuntimeConfig()
+const chatExemples = (runtimeConfig.public.appChatbotExemples || '')
+  .split('§')
+  .filter((s) => !!s && s.trim().length)
+const suggestButtons = ref(chatExemples)
+
+function placeCaretAtEnd(el) {
+  // https://stackoverflow.com/questions/4233265/contenteditable-set-caret-at-the-end-of-the-text-cross-browser
+  el.focus()
+  if (typeof window.getSelection != 'undefined' && typeof document.createRange != 'undefined') {
+    const range = document.createRange()
+    range.selectNodeContents(el)
+    range.collapse(false)
+    const sel = window.getSelection()
+    sel.removeAllRanges()
+    sel.addRange(range)
+  } else if (typeof document.body.createTextRange != 'undefined') {
+    const textRange = document.body.createTextRange()
+    textRange.moveToElementText(el)
+    textRange.collapse(false)
+    textRange.select()
+  }
+}
+const onSuggestButtonClick = (buttonText) => {
+  if (chatBox.value) {
+    console.log(chatBox.value.textInput)
+    const inputBox = chatBox.value.shadowRoot.querySelector('#text-input')
+    inputBox.innerText = buttonText
+    placeCaretAtEnd(inputBox)
+  }
+}
+
 watch(
   () => chatBox.value,
   (neo, old) => {
     if (neo && !old) {
       neo.requestInterceptor = requestInterceptor
       neo.responseInterceptor = responseInterceptor
+      neo.htmlWrappers = htmlWrappers.value
     }
     history.value = JSON.parse(JSON.stringify(conversation.value))
   }
@@ -168,6 +216,26 @@ const messageStyles = computed(() => {
   }
 })
 
+const handleChatClick = (evt) => {
+  // short-circuit target blank for internal links in chatbot messages
+  if (
+    evt.target.tagName === 'A' &&
+    !!evt.target.closest('.deep-chat-outer-container-role-assistant')
+  ) {
+    const href = evt.target.getAttribute('href')
+    const origin = window.location.origin
+    if ((!href.startsWith('http') || href.startsWith(origin)) && !href.startsWith('email:')) {
+      evt.preventDefault()
+      router.push({ path: href })
+      emit('close')
+    }
+  }
+}
+
+if (window && !window.handleChatClick) {
+  window.handleChatClick = handleChatClick
+}
+
 const remarkableOptions = ref({ linkify: true, linkTarget: '_blank' })
 </script>
 
@@ -181,7 +249,6 @@ const remarkableOptions = ref({ linkify: true, linkTarget: '_blank' })
   >
     <deep-chat
       ref="deep-chat"
-      :demo="true"
       :textInput="textInputOptions"
       :history="history"
       :style="chatStyle"
@@ -192,6 +259,49 @@ const remarkableOptions = ref({ linkify: true, linkTarget: '_blank' })
       :messageStyles="messageStyles"
       :stream="IS_STREAMED"
       :remarkable="remarkableOptions"
+      :customButtons="customButtons"
+      auxiliaryStyle="
+        a {
+          color: #1d727c;
+          text-decoration: none;
+          font-weight: bold;
+        }
+        a:hover {
+          text-decoration: underline !important;
+        }
+        .html-wrapper img {
+          max-width: 8rem;
+          max-height: 8rem;
+          border-radius: .5rem;
+        }
+      "
     ></deep-chat>
+    <div v-if="suggestButtons?.length" class="prompt-suggestions">
+      <a
+        v-for="button in suggestButtons"
+        :key="button"
+        class="prompt-suggestion"
+        href="#"
+        @click.prevent="onSuggestButtonClick(button)"
+      >
+        {{ button }}
+      </a>
+    </div>
   </BaseDrawer>
 </template>
+<style lang="scss" scoped>
+.prompt-suggestions {
+  .prompt-suggestion {
+    background-color: #eee;
+    border-radius: 4px;
+    padding: 4px;
+    color: #666;
+    line-height: 36px;
+    font-size: 0.8rem;
+  }
+
+  .prompt-suggestion ~ .prompt-suggestion {
+    margin-left: 8px;
+  }
+}
+</style>
