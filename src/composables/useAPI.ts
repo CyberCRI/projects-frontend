@@ -87,7 +87,7 @@ export const defaultOptions = () => {
 }
 
 const useAPI = <T>(url: string, options?: any) => {
-  const _options = merge(defaultOptions(), options)
+  const _options = merge(defaultOptions(), options || {})
   return $fetch<T>(url, _options)
 }
 
