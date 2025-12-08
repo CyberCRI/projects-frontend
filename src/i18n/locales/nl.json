@@ -1593,6 +1593,7 @@
     "create-project": "Een project aanmaken",
     "create": {
       "choose-category-first": "Kies eerst een categorie",
+      "choose-template-first": "Kies eerst een sjabloon",
       "help-link": "We zijn hier om te helpen.",
       "notice": "Velden gemarkeerd met * zijn verplicht. Je kunt dit altijd later aanpassen. Geen idee wat je moet doen?",
       "title": "Een nieuw project aanmaken"

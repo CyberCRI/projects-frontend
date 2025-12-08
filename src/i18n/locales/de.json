@@ -1593,6 +1593,7 @@
     "create-project": "Projekt erstellen",
     "create": {
       "choose-category-first": "Bitte wählen Sie eine Kategorie zuerst",
+      "choose-template-first": "Bitte wählen Sie zuerst eine Vorlage aus",
       "help-link": "Wir sind hier, um zu helfen.",
       "notice": "Mit * gekennzeichnete Felder sind obligatorisch. Sie können das immer später ändern. Keine Ahnung, was du tun solltest?",
       "title": "Neues Projekt erstellen"
