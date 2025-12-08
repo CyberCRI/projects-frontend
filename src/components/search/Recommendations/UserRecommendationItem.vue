@@ -10,7 +10,7 @@
         class="img-container"
         :picture-data="recommendation?.profile_picture"
         picture-size="small"
-        default-picture="/placeholders/user_placeholder.svg"
+        :default-picture="DEFAULT_USER_PATATOID"
       />
       <div class="text-container">
         <span class="name">
@@ -64,6 +64,7 @@ import { capitalize } from '@/functs/string'
 import BadgeItem from '@/components/base/BadgeItem.vue'
 import ToolTip from '@/components/base/ToolTip.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
+import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 import useSkillTexts from '@/composables/useSkillTexts.js'
 
 export default {
@@ -84,6 +85,7 @@ export default {
     const skillTexts = useSkillTexts()
     return {
       skillTexts,
+      DEFAULT_USER_PATATOID,
       capitalize,
     }
   },

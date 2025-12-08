@@ -31,9 +31,6 @@ const props = defineProps({
     type: String,
     required: true,
   },
-
-  //
-
   alt: {
     type: String,
     required: false,
@@ -62,9 +59,11 @@ const _src = computed(() => {
 })
 
 const src = computed(() => {
-  return imageError.value || !_src.value
-    ? runtimeConfig.public.appPublicBinariesPrefix + props.defaultPicture
-    : _src.value
+  return (
+    imageError.value ||
+    _src.value ||
+    `${runtimeConfig.public.appPublicBinariesPrefix}${props.defaultPicture}`
+  )
 })
 
 const imageSizes = computed(() => {

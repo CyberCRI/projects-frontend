@@ -571,7 +571,9 @@
     "link-to": "lien vers",
     "other": "autres",
     "and": "et",
-    "create": "Créer"
+    "create": "Créer",
+    "order-asc": "plus ancien à plus récent",
+    "order-desc": "Plus récent à plus ancien"
   },
   "complete-profile": {
     "bio": {
@@ -1533,12 +1535,12 @@
         }
       },
       "publications": {
-        "no-editable": "Les publications ne sont pas encore disponibles.",
-        "tab": "Publications"
+        "tab": "Publications",
+        "no-editable": "Les publications d'édition seront disponibles début janvier 2026"
       },
       "conferences": {
-        "no-editable": "Les conférences ne sont pas encore disponibles.",
-        "tab": "Conférences"
+        "tab": "Conférences",
+        "no-editable": "Des conférences d'édition seront disponibles début janvier 2026"
       }
     },
     "go-to-page": "Voir la page du profil",
@@ -1562,11 +1564,11 @@
     "mentorship-offering": "Vous proposez un mentorat",
     "publications": "Publications",
     "research-output-year": "Année de production de la recherche",
-    "publications-similars": "Publications similaires",
     "publications-empty": "Pas de publications.",
     "conferences": "Conférences",
     "conferences-similars": "Conférences similaires",
-    "conferences-empty": "Pas de conférence."
+    "conferences-empty": "Pas de conférence.",
+    "publications-similars": "Publications similaires"
   },
   "profile-completed-modal": {
     "notice-congratulation": "Vous êtes maintenant prêt à utiliser la plateforme Projects.",

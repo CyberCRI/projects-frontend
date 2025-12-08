@@ -563,7 +563,9 @@
     "link-to": "enllaç a",
     "other": "altra",
     "and": "i",
-    "create": "Crea"
+    "create": "Crea",
+    "order-asc": "Més antiga al més nou",
+    "order-desc": "nova a la més antiga"
   },
   "complete-profile": {
     "bio": {
@@ -1525,12 +1527,12 @@
         }
       },
       "publications": {
-        "no-editable": "Les publicacions encara no estan disponibles.",
-        "tab": "Publicacions"
+        "tab": "Publicacions",
+        "no-editable": "Les publicacions d' edició estaran disponibles al principi del 20 de gener del 2026"
       },
       "conferences": {
-        "no-editable": "Les conferències encara no estan disponibles.",
-        "tab": "Conferèncias"
+        "tab": "Conferèncias",
+        "no-editable": "L' edició de conferències estarà disponible al principi del 2026 de gener."
       }
     },
     "go-to-page": "Visualitza la pàgina del perfil",
@@ -1554,11 +1556,11 @@
     "mentorship-offering": "Estàs oferint mentors",
     "publications": "Publicacions",
     "research-output-year": "Any de sortida de recerca",
-    "publications-similars": "similar a Publicacions",
     "publications-empty": "Sense Publicacions.",
     "conferences": "Conferèncias",
     "conferences-similars": "Les conferències similars",
-    "conferences-empty": "No hi ha conferències."
+    "conferences-empty": "No hi ha conferències.",
+    "publications-similars": "Publicació similar"
   },
   "profile-completed-modal": {
     "notice-congratulation": "Ara estàs preparat per utilitzar la plataforma de projectes.",

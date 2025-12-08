@@ -7,7 +7,7 @@
           class="picture"
           :picture-data="user.profile_picture"
           picture-size="medium"
-          default-picture="/placeholders/user_placeholder.svg"
+          :default-picture="DEFAULT_USER_PATATOID"
         />
         <div class="description">
           <div :style="{ borderLeftColor: user.color }" class="name">
@@ -19,33 +19,19 @@
   </div>
 </template>
 
-<script>
+<script lang="ts" setup>
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
+import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 
-export default {
-  name: 'UserPresenceCard',
-
-  components: {
-    CroppedApiImage,
-  },
-
-  props: {
-    user: {
-      type: [Object, String],
-      required: true,
-    },
-
-    size: {
-      type: String,
-      required: true,
-    },
-
-    tint: {
-      type: String,
-      default: '',
-    },
-  },
-}
+defineOptions({ name: 'UserPresenceCard' })
+withDefaults(
+  defineProps<{
+    user: any // TODO(remi): made tiptap user interface
+    size: string
+    tint?: string
+  }>(),
+  { tint: '' }
+)
 </script>
 
 <style lang="scss" scoped>

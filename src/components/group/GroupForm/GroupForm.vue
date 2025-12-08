@@ -169,6 +169,7 @@
 import { deleteGroup, getHierarchyGroups } from '@/api/groups.service.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { useRuntimeConfig } from '#imports'
+import { usePatatoids } from '@/composables/usePatatoids'
 export default {
   name: 'GroupForm',
 
@@ -196,18 +197,15 @@ export default {
   setup() {
     const organizationsStore = useOrganizationsStore()
     const runtimeConfig = useRuntimeConfig()
+    const defaultPictures = usePatatoids()
     return {
       organizationsStore,
       runtimeConfig,
+      defaultPictures,
     }
   },
 
   data() {
-    const defaultPictures = [1, 2, 3, 4, 5, 6].map((index) => {
-      return `${
-        this.runtimeConfig.public.appPublicBinariesPrefix
-      }/patatoids-project/Patatoid-${index}.png`
-    })
     return {
       loading: false,
       currentPatatoidIndex: 1,
@@ -247,7 +245,6 @@ export default {
       descriptionIsOpened: false,
       showRemoveQuit: false,
       groups: [],
-      defaultPictures,
     }
   },
 

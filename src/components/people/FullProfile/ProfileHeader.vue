@@ -7,7 +7,7 @@
             :alt="`${user.given_name} ${user.family_name} image`"
             :picture-data="user.profile_picture"
             picture-size="medium"
-            default-picture="/placeholders/user_placeholder.svg"
+            :default-picture="DEFAULT_USER_PATATOID"
           />
         </div>
       </div>
@@ -84,7 +84,7 @@
       >
         <div v-if="user && user.email" class="social">
           <IconImage class="icon" name="Email" />
-          <span>{{ user.email }}</span>
+          <a :href="`mailto:${user.email}`">{{ $t('complete-profile.personal.email') }}</a>
         </div>
 
         <!-- TODO: Use privacy settings -->
@@ -117,6 +117,7 @@ import BadgeItem from '@/components/base/BadgeItem.vue'
 import SocialNetworks from './SocialNetworks.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 
 defineOptions({ name: 'ProfileHeader' })
 
@@ -364,9 +365,9 @@ const fixLocation = (l) => {
           margin-right: $space-xs;
         }
 
-        span {
+        a {
           text-decoration: underline;
-          font-weight: 700;
+          font-weight: 500;
           font-size: $font-size-s;
           color: $primary-dark;
         }

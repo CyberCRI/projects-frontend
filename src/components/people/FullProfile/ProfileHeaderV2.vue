@@ -7,7 +7,7 @@
             :alt="`${user.given_name} ${user.family_name} image`"
             :picture-data="user.profile_picture"
             picture-size="medium"
-            default-picture="/placeholders/user_placeholder.svg"
+            :default-picture="DEFAULT_USER_PATATOID"
           />
         </div>
       </div>
@@ -74,6 +74,7 @@
 </template>
 
 <script setup>
+import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 import { capitalize } from '@/functs/string'
 
 import useOrganizationsStore from '@/stores/useOrganizations.ts'

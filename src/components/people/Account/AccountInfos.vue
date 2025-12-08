@@ -55,7 +55,7 @@ import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import AccountSection from '@/components/people/Account/AccountSection.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
-import { useRuntimeConfig } from '#imports'
+import { usePatatoids } from '@/composables/usePatatoids'
 defineOptions({ name: 'AccountInfos' })
 
 defineProps({
@@ -70,12 +70,9 @@ defineProps({
 })
 
 const emit = defineEmits(['update:modelValue'])
-const runtimeConfig = useRuntimeConfig()
 const { t } = useNuxtI18n()
 
-const defaultPictures = [1, 2, 3, 4, 5, 6].map((index) => {
-  return `${runtimeConfig.public.appPublicBinariesPrefix}/patatoids-project/Patatoid-${index}.png`
-})
+const defaultPictures = usePatatoids()
 
 const updateForm = (fieldName, fieldValue) => {
   emit('update:modelValue', { ...this.modelValue, [fieldName]: fieldValue })

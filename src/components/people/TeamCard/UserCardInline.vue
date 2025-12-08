@@ -13,7 +13,7 @@
         class="img-container"
         :picture-data="userImage"
         picture-size="medium"
-        default-picture="/placeholders/user_placeholder.svg"
+        :default-picture="DEFAULT_USER_PATATOID"
       />
       <div class="user-info">
         <div v-if="isNotGroup(user)" class="name">
@@ -48,6 +48,7 @@ import { isNotGroup } from '@/functs/users'
 
 import IconImage from '@/components/base/media/IconImage.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
+import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 
 defineOptions({ name: 'UserCardInline' })
 const { t } = useNuxtI18n()

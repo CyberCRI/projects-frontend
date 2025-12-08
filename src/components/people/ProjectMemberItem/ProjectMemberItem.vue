@@ -5,7 +5,7 @@
       class="picture"
       :picture-data="user.profile_picture"
       picture-size="medium"
-      default-picture="/placeholders/user_placeholder.svg"
+      :default-picture="DEFAULT_USER_PATATOID"
     />
     <span v-if="roleLabel" class="badge" data-test="leader-badge">
       {{ t(roleLabel) }}

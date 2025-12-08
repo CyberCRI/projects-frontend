@@ -563,7 +563,9 @@
     "link-to": "Link zu",
     "other": "andere",
     "and": "und",
-    "create": "Erstellung"
+    "create": "Erstellung",
+    "order-asc": "Älter als neuster",
+    "order-desc": "neuste bis älteste"
   },
   "complete-profile": {
     "bio": {
@@ -1525,12 +1527,12 @@
         }
       },
       "publications": {
-        "no-editable": "Die Veröffentlichungen sind noch nicht verfügbar.",
-        "tab": "Veröffentlichungen"
+        "tab": "Veröffentlichungen",
+        "no-editable": "Redaktionen werden Anfang Januar 2026 verfügbar sein."
       },
       "conferences": {
-        "no-editable": "Die Konferenzen sind noch nicht verfügbar.",
-        "tab": "Konferenzen"
+        "tab": "Konferenzen",
+        "no-editable": "Editing Konferenzen werden Anfang Januar 2026 verfügbar sein"
       }
     },
     "go-to-page": "Profilseite anzeigen",
@@ -1554,11 +1556,11 @@
     "mentorship-offering": "Sie bieten Mentorship an",
     "publications": "Veröffentlichungen",
     "research-output-year": "Forschungsausgabe Jahr",
-    "publications-similars": "Veröffentlichungen ähnlich",
     "publications-empty": "Keine Veröffentlichungen.",
     "conferences": "Konferenzen",
     "conferences-similars": "Konferenzen ähnlich",
-    "conferences-empty": "Keine Konferenzen."
+    "conferences-empty": "Keine Konferenzen.",
+    "publications-similars": "Ähnliche Publikationen"
   },
   "profile-completed-modal": {
     "notice-congratulation": "Sie sind jetzt bereit, die Projektplattform zu nutzen.",

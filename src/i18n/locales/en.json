@@ -533,6 +533,8 @@
     "cant-quit-self": "You are the last editor of the team. Every project must have at least one editor.\nYou can either add another editor before leaving the project, or delete the project from the Configuration tab.",
     "cant-quit-other": "This is the last editor of the team. Every project must have at least one editor.\nYou can either add another editor supressing this one, or delete the project from the Configuration tab.",
     "edit": "Edit",
+    "order-asc": "oldest to newest",
+    "order-desc": "newest to oldest",
     "file-required": "A file is required",
     "for": "for",
     "groups": "Groups",
@@ -1499,11 +1501,11 @@
         "nothing-yet": "You haven't added skills yet."
       },
       "publications": {
-        "no-editable": "The publications are not yet available.",
+        "no-editable": "Editing publications will be available in early January 2026",
         "tab": "Publications"
       },
       "conferences": {
-        "no-editable": "The conferences are not yet available.",
+        "no-editable": "Editing conferences will be available in early January 2026",
         "tab": "Conferences"
       },
       "privacy": {
@@ -1563,7 +1565,7 @@
     "publications": "Publications",
     "conferences": "Conferences",
     "research-output-year": "Research output year",
-    "publications-similars": "Publications similars",
+    "publications-similars": "Similar Publications",
     "publications-empty": "No Publications.",
     "conferences-similars": "Conferences similars",
     "conferences-empty": "No conferences."

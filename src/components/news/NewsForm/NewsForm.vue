@@ -93,6 +93,7 @@ import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { postOrganizationImage } from '@/api/organizations.service.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { useRuntimeConfig } from '#imports'
+import { usePatatoids } from '@/composables/usePatatoids'
 
 export function defaultForm() {
   return {
@@ -131,19 +132,15 @@ export default {
   setup() {
     const organizationsStore = useOrganizationsStore()
     const runtimeConfig = useRuntimeConfig()
+    const defaultPictures = usePatatoids()
     return {
       organizationsStore,
       runtimeConfig,
+      defaultPictures,
     }
   },
 
   data() {
-    const defaultPictures = [1, 2, 3, 4, 5, 6].map((index) => {
-      return `${
-        this.runtimeConfig.public.appPublicBinariesPrefix
-      }/patatoids-project/Patatoid-${index}.png`
-    })
-
     const updateForm = throttle((data) => {
       // short throttling is mandatory here
       // because ImageEditor is emitting two event on image change (one for the image and one for the image sizes)
@@ -155,7 +152,6 @@ export default {
 
     return {
       v$: useVuelidate(),
-      defaultPictures,
       showDatePicker: false,
       updateForm,
     }

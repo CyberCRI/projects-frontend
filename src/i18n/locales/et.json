@@ -563,7 +563,9 @@
     "link-to": "link",
     "other": "teised",
     "and": "ja",
-    "create": "Loo"
+    "create": "Loo",
+    "order-asc": "vanim kuni uusim",
+    "order-desc": "uusim"
   },
   "complete-profile": {
     "bio": {
@@ -1525,12 +1527,12 @@
         }
       },
       "publications": {
-        "no-editable": "Väljaanded ei ole veel kättesaadavad.",
-        "tab": "Trükised"
+        "tab": "Trükised",
+        "no-editable": "Väljaannete toimetamine on saadaval 2026. aasta jaanuari alguses"
       },
       "conferences": {
-        "no-editable": "Konverentsid ei ole veel kättesaadavad.",
-        "tab": "Konverentsid"
+        "tab": "Konverentsid",
+        "no-editable": "Toimetuskonverentsid on saadaval 2026. aasta jaanuari alguses"
       }
     },
     "go-to-page": "Vaata profiili lehekülge",
@@ -1554,11 +1556,11 @@
     "mentorship-offering": "Sa pakud mentorlust",
     "publications": "Trükised",
     "research-output-year": "Teadustöö väljundaasta",
-    "publications-similars": "Väljaannete sarnased väljaanded",
     "publications-empty": "Ei mingeid väljaandeid.",
     "conferences": "Konverentsid",
     "conferences-similars": "Konverentsilaadsed",
-    "conferences-empty": "Ei mingeid konverentse."
+    "conferences-empty": "Ei mingeid konverentse.",
+    "publications-similars": "Sarnased väljaanded"
   },
   "profile-completed-modal": {
     "notice-congratulation": "Nüüd olete valmis kasutama projekti platvormi.",

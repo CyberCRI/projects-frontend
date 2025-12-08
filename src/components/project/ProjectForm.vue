@@ -212,6 +212,7 @@ import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import LpiDropDown from '@/components/base/form/LpiDropDown.vue'
 import LpiDropDownElementButton from '@/components/base/form/LpiDropDownElementButton.vue'
 import { getTemplate } from '@/api/templates.service'
+import { usePatatoids } from '@/composables/usePatatoids'
 
 export default {
   name: 'ProjectForm',
@@ -257,20 +258,16 @@ export default {
     const organizationsStore = useOrganizationsStore()
     const runtimeConfig = useRuntimeConfig()
     const { translateTemplate } = useAutoTranslate()
+    const defaultPictures = usePatatoids()
     return {
       organizationsStore,
       runtimeConfig,
       translateTemplate,
+      defaultPictures,
     }
   },
 
   data() {
-    const defaultPictures = [1, 2, 3, 4, 5, 6].map((index) => {
-      return `${
-        this.runtimeConfig.public.appPublicBinariesPrefix
-      }/patatoids-project/Patatoid-${index}.png`
-    })
-
     return {
       loading: false,
       templates: [],
@@ -281,7 +278,6 @@ export default {
       tagSearchIsOpened: false,
       showImageResizer: false,
       tagsInProcess: [],
-      defaultPictures,
     }
   },
 

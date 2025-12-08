@@ -5,7 +5,7 @@
         :alt="`${title} image`"
         :picture-data="image"
         picture-size="medium"
-        default-picture="/placeholders/user_placeholder.svg"
+        :default-picture="DEFAULT_USER_PATATOID"
       />
     </div>
     <div class="header-group-infos">
@@ -28,43 +28,33 @@
   <GroupHeaderSkeleton v-else />
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
+
 defineOptions({ name: 'GroupHeaderV2' })
-const props = defineProps({
-  title: {
-    type: String,
-    required: true,
-  },
-  image: {
-    type: [Object, null],
-    required: true,
-  },
-  visibility: {
-    type: String,
-    required: true,
-  },
-  isLoading: {
-    type: Boolean,
-    default: false,
-    required: false,
-  },
-  shortDescription: {
-    type: String,
-    default: null,
-    required: false,
-  },
-})
+const props = withDefaults(
+  defineProps<{
+    title: string
+    image: object | null
+    visibility: string
+    isLoading?: boolean
+    shortDescription?: string
+  }>(),
+  { isLoading: false, shortDescription: null }
+)
 
 const { t } = useNuxtI18n()
-const groupVisibilityLabel = () => {
-  if (props.visibility === 'public') return t('group.visibility-public')
-  else if (props.visibility === 'private') return t('group.visibility-private')
-  return t('group.visibility-org')
-}
 
-const groupVisibilityIcon = () => {
-  return props.visibility === 'public' ? 'Eye' : 'EyeSlash'
-}
+const groupVisibilityLabel = computed(() => {
+  if (props.visibility === 'public') {
+    return t('group.visibility-public')
+  } else if (props.visibility === 'private') {
+    return t('group.visibility-private')
+  }
+  return t('group.visibility-org')
+})
+
+const groupVisibilityIcon = computed(() => (props.visibility === 'public' ? 'Eye' : 'EyeSlash'))
 </script>
 
 <style lang="scss" scoped>

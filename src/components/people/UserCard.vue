@@ -10,7 +10,7 @@
       class="picture picture-user"
       :picture-data="user.profile_picture"
       picture-size="medium"
-      default-picture="/placeholders/user_placeholder.svg"
+      :default-picture="DEFAULT_USER_PATATOID"
     />
     <div class="text text-limit">
       <div class="card-type">
@@ -28,6 +28,7 @@
 import BasicCard from '@/components/base/BasicCard.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
+import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 
 defineOptions({ name: 'UserCard' })
 
