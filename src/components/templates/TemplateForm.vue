@@ -31,10 +31,7 @@
         <h4 class="title">
           {{ $t('template.category') }}
         </h4>
-        <LpiButton
-          :label="$filters.capitalize($t('category.edit'))"
-          @click="categorySearchIsOpened = true"
-        />
+        <LpiButton :label="$t('category.edit')" @click="categorySearchIsOpened = true" />
       </div>
 
       <div v-if="form.categories.length" class="tag-grid">
@@ -145,7 +142,7 @@
 </template>
 
 <script setup>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 import useNuxtI18n from '@/composables/useNuxtI18n'
 
 import TextInput from '@/components/base/form/TextInput.vue'

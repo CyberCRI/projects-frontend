@@ -1,22 +1,22 @@
 <template>
   <div class="stats-by-tab">
     <StatCard :title="$t('stats.number-projects-total')">
-      <LpiLoader v-if="isLoading" />
+      <LpiLoader v-if="isLoading" type="simple" />
       <TotalChart v-else :stats="stats.total" />
     </StatCard>
 
     <StatCard :title="$t('stats.number-projects-sdg')">
-      <LpiLoader v-if="isLoading" />
+      <LpiLoader v-if="isLoading" type="simple" />
       <SdgChart v-else :stats="stats.by_sdg" />
     </StatCard>
 
     <StatCard :title="$t('stats.time-evolution')">
-      <LpiLoader v-if="isLoading" />
+      <LpiLoader v-if="isLoading" type="simple" />
       <TimeOrgChart v-else :stats="stats.by_month" />
     </StatCard>
 
     <StatCard :title="$t('stats.number-tags')">
-      <LpiLoader v-if="isLoading" />
+      <LpiLoader v-if="isLoading" type="simple" />
       <TagChart v-else :stats="stats.top_tags" />
     </StatCard>
   </div>

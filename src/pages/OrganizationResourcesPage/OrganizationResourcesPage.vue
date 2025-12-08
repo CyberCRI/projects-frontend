@@ -93,14 +93,14 @@ try {
 <template>
   <div class="page-section-narrow organization-resources-page pssi page-top">
     <h1 class="page-title">
-      {{ $t('documents-page.title', { platformName: organization?.name }) }}
+      {{ t('documents-page.title', { platformName: organization?.name }) }}
     </h1>
     <p class="notice">
-      {{ $t('documents-page.description', { platformName: organization?.name }) }}
+      {{ t('documents-page.description', { platformName: organization?.name }) }}
     </p>
     <div v-if="isEditionEnabled" class="add-resource">
       <LpiButton
-        :label="$filters.capitalize($t('resource.add-file'))"
+        :label="t('resource.add-file')"
         class="add-item-btn"
         btn-icon="Plus"
         data-test="in-page-add-resources"
@@ -130,8 +130,8 @@ try {
 
     <ConfirmModal
       v-if="confirmModalVisible"
-      :content="$t('admin.org-file-confirm-delete')"
-      :title="$t('common.delete')"
+      :content="t('admin.org-file-confirm-delete')"
+      :title="t('common.delete')"
       :asyncing="asyncing"
       @cancel="confirmModalVisible = false"
       @confirm="deleteResource(currentResource)"

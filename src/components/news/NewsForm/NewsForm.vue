@@ -1,7 +1,7 @@
 <template>
   <form>
     <div class="form-section img-ctn">
-      <label>{{ $filters.capitalize($t('news.form.image.label')) }}</label>
+      <label>{{ $t('news.form.image.label') }}</label>
       <ImageEditor
         picture-alt="news image"
         :contain="true"
@@ -17,8 +17,8 @@
     <div class="form-section">
       <TextInput
         :model-value="modelValue.title"
-        :label="$filters.capitalize($t('news.form.title.label'))"
-        :placeholder="$filters.capitalize($t('news.form.title.placeholder'))"
+        :label="$t('news.form.title.label')"
+        :placeholder="$t('news.form.title.placeholder')"
         class="input-field"
         @update:model-value="updateForm({ title: $event })"
         @blur="v$.modelValue.title.$validate"
@@ -48,7 +48,7 @@
     </div>
 
     <div class="form-section">
-      <label>{{ $filters.capitalize($t('news.form.content.label')) }}</label>
+      <label>{{ $t('news.form.content.label') }}</label>
       <TipTapEditor
         ref="tiptapEditor"
         :model-value="modelValue.content"
@@ -88,7 +88,7 @@ import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import IconImage from '@/components/base/media/IconImage.vue'
 import MultiGroupPicker from '@/components/group/MultiGroupPicker/MultiGroupPicker.vue'
-import throttle from 'lodash/throttle'
+import { throttle } from 'es-toolkit'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { postOrganizationImage } from '@/api/organizations.service.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
@@ -141,9 +141,19 @@ export default {
   },
 
   data() {
+    const updateForm = throttle((data) => {
+      // short throttling is mandatory here
+      // because ImageEditor is emitting two event on image change (one for the image and one for the image sizes)
+      // and without a delay model dont have time to be updated in the second event
+      // resulting in lost of the first event data (eg the picture)
+      // TODO: find a cleaner way to fix the issue (maybe rewrite ImageEditor to emit only one event with all the data needed)
+      this.$emit('update:modelValue', { ...this.modelValue, ...data })
+    }, 16)
+
     return {
       v$: useVuelidate(),
       showDatePicker: false,
+      updateForm,
     }
   },
 
@@ -193,15 +203,6 @@ export default {
       this.updateForm({ publication_date: modelData })
       this.showDatePicker = false
     },
-
-    updateForm: throttle(function (data) {
-      // short throttling is mandatory here
-      // because ImageEditor is emitting two event on image change (one for the image and one for the image sizes)
-      // and without a delay model dont have time to be updated in the second event
-      // resulting in lost of the first event data (eg the picture)
-      // TODO: find a cleaner way to fix the issue (maybe rewrite ImageEditor to emit only one event with all the data needed)
-      this.$emit('update:modelValue', { ...this.modelValue, ...data })
-    }, 16),
   },
 }
 </script>

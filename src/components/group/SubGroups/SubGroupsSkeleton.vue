@@ -7,12 +7,9 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
-export default {
-  name: 'SubGroupsSkeleton',
-  components: { SkeletonComponent },
-}
+defineOptions({ name: 'SubGroupsSkeleton' })
 </script>
 
 <style lang="scss" scoped>

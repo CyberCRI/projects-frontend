@@ -6,7 +6,7 @@
       @update:model-value="updateForm('given_name', $event)"
       @blur="v$.form.given_name.$touch"
     >
-      <label class="label">{{ $t('account.form.first-name') }}</label>
+      <label class="label">{{ t('account.form.first-name') }}</label>
     </TextInput>
     <FieldErrors :errors="v$.form.given_name.$errors" />
   </AccountSection>
@@ -18,7 +18,7 @@
       @update:model-value="updateForm('family_name', $event)"
       @blur="v$.form.family_name.$touch"
     >
-      <label class="label">{{ $t('account.form.last-name') }}</label>
+      <label class="label">{{ t('account.form.last-name') }}</label>
     </TextInput>
     <FieldErrors :errors="v$.form.family_name.$errors" />
   </AccountSection>
@@ -30,14 +30,14 @@
       @update:model-value="updateForm('job', $event)"
       @blur="v$.form.job.$touch"
     >
-      <label class="label">{{ $t('account.form.title') }}</label>
+      <label class="label">{{ t('account.form.title') }}</label>
     </TextInput>
     <FieldErrors :errors="v$.form.job.$errors" />
   </AccountSection>
 
   <!-- Picture -->
   <AccountSection>
-    <label class="label">{{ $filters.capitalize($t('project.image-header')) }}</label>
+    <label class="label">{{ t('project.image-header') }}</label>
     <ImageEditor
       :picture-alt="`${modelValue.name} image`"
       :contain="true"
@@ -50,43 +50,32 @@
     />
   </AccountSection>
 </template>
-<script>
+<script setup>
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import AccountSection from '@/components/people/Account/AccountSection.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
-import { useRuntimeConfig } from '#imports'
-export default {
-  name: 'AccountInfos',
+import { usePatatoids } from '@/composables/usePatatoids'
+defineOptions({ name: 'AccountInfos' })
 
-  components: {
-    TextInput,
-    ImageEditor,
-    AccountSection,
-    FieldErrors,
+defineProps({
+  modelValue: {
+    type: Object,
+    required: true,
   },
-  props: {
-    modelValue: {
-      type: Object,
-      required: true,
-    },
-    v$: {
-      type: Object,
-      required: true,
-    },
+  v$: {
+    type: Object,
+    required: true,
   },
+})
 
-  emits: ['update:modelValue'],
-  setup() {
-    const runtimeConfig = useRuntimeConfig()
-    const defaultPictures = usePatatoids()
-    return { runtimeConfig, defaultPictures }
-  },
-  methods: {
-    updateForm(fieldName, fieldValue) {
-      this.$emit('update:modelValue', { ...this.modelValue, [fieldName]: fieldValue })
-    },
-  },
+const emit = defineEmits(['update:modelValue'])
+const { t } = useNuxtI18n()
+
+const defaultPictures = usePatatoids()
+
+const updateForm = (fieldName, fieldValue) => {
+  emit('update:modelValue', { ...this.modelValue, [fieldName]: fieldValue })
 }
 </script>
 <style lang="scss" scoped>

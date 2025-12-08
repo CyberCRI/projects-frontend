@@ -97,7 +97,7 @@ export default {
     const usersStore = useUsersStore()
     const { canEditUser } = usePermissions()
 
-    const { t } = useI18n()
+    const { t } = useNuxtI18n()
     const uniqueId = 'project-nav-panel'
     const { isNavCollapsed, toggleNavPanel, collapseIfUnderBreakpoint } =
       useToggleableNavPanel(uniqueId)

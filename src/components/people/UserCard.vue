@@ -23,76 +23,51 @@
     </div>
   </BasicCard>
 </template>
-<script>
+
+<script setup>
 import BasicCard from '@/components/base/BasicCard.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 
-export default {
-  name: 'UserCard',
+defineOptions({ name: 'UserCard' })
 
-  components: {
-    BasicCard,
-    IconImage,
-    CroppedApiImage,
+const props = defineProps({
+  user: {
+    type: Object,
+    required: true,
   },
-
-  props: {
-    user: {
-      type: Object,
-      required: true,
-    },
-    toLink: {
-      type: [String, Object],
-      default: null,
-    },
-    mode: {
-      type: String,
-      default: 'card', // 'card' or 'list'
-    },
+  toLink: {
+    type: [String, Object],
+    default: null,
   },
-
-  emits: ['click'],
-
-  setup(props) {
-    const { getTranslatableField } = useAutoTranslate()
-    const translatedJob = getTranslatableField(props.user, 'job')
-
-    return {
-      translatedJob,
-      DEFAULT_USER_PATATOID,
-    }
+  mode: {
+    type: String,
+    default: 'card', // 'card' or 'list'
   },
+})
 
-  data() {
-    return {
-      isDetailOpen: false,
-    }
-  },
+const emit = defineEmits(['click'])
+const { getTranslatableField } = useAutoTranslate()
+const translatedJob = getTranslatableField(props.user, 'job')
 
-  computed: {
-    isPrivateUser() {
-      // Private users do not return an iD from API call
-      return !this.user.id
-    },
-    userGroups() {
-      // TODO: use first group name plus groups number (ex: "Staff (+4)")
-      // when data will be available in api
-      return ''
-    },
-  },
+const isPrivateUser = computed(() => {
+  // Private users do not return an iD from API call
+  return !props.user.id
+})
+const userGroups = computed(() => {
+  // TODO: use first group name plus groups number (ex: "Staff (+4)")
+  // when data will be available in api
+  return ''
+})
 
-  methods: {
-    mailTo() {
-      document.location.href = 'mailto:' + this.user.email
-    },
-    userAction(event) {
-      if (this.isPrivateUser) return
+const mailTo = () => {
+  document.location.href = 'mailto:' + props.user.email
+}
+const userAction = (event) => {
+  if (isPrivateUser.value) return
 
-      this.$emit('click', event)
-    },
-  },
+  emit('click', event)
 }
 </script>
 

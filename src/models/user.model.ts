@@ -16,11 +16,15 @@ export interface UserModel {
   roles: string[]
   orgs: string[]
   profile_picture?: object
-  permissions: object
+  permissions: string[]
   description?: string
   people_groups?: object[] // TODO: define this type
   skills?: UserSkillModel[]
+  notifications?: number
   researcher?: ResearcherLight
+  signed_terms_and_conditions?: {
+    [key: string]: { version: number | null; date: string | null }
+  } | null
 }
 
 export interface UserFromJWTModel {

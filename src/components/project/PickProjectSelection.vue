@@ -4,7 +4,7 @@
       <SearchInput
         v-model="queryString"
         :full="true"
-        :placeholder="$filters.capitalize($t('search.projects'))"
+        :placeholder="$t('search.projects')"
         class="input"
         @enter="launchSearch"
         @delete-query="deleteQuery"
@@ -13,7 +13,7 @@
         v-if="!isLoading && matchingProjectsFiltered.length"
         class="select-btn"
         :secondary="true"
-        :label="$filters.capitalize($t('drawer.select-all'))"
+        :label="$t('drawer.select-all')"
         @click="selectAll"
       />
     </section>
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import debounce from 'lodash.debounce'
+import { debounce } from 'es-toolkit'
 import { getAllProjects } from '@/api/projects.service'
 import { searchProjects } from '@/api/search.service'
 import LpiButton from '@/components/base/button/LpiButton.vue'

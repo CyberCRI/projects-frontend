@@ -9,95 +9,74 @@
     @load="onImageLoaded"
   />
 </template>
-<script>
+<script setup>
 import CroppedImage from '@/components/base/media/CroppedImage.vue'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
-export default {
-  name: 'CroppedApiImage',
 
-  components: { CroppedImage },
+defineOptions({ name: 'CroppedApiImage' })
 
-  props: {
-    pictureData: {
-      type: [Object, null],
-      required: true,
-    },
-
-    pictureSize: {
-      type: String, // 'small', 'medium', 'large'
-      required: false,
-      default: 'medium',
-    },
-
-    defaultPicture: {
-      type: String,
-      required: true,
-    },
-
-    //
-
-    alt: {
-      type: String,
-      required: false,
-      default: '',
-    },
-    contain: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-
-    ratio: {
-      // crop area aspect ratio
-      type: Number,
-      default: 1,
-    },
+const props = defineProps({
+  pictureData: {
+    type: [Object, null],
+    required: true,
   },
 
-  emits: ['load', 'error'],
-
-  setup() {
-    const runtimeConfig = useRuntimeConfig()
-    return {
-      runtimeConfig,
-    }
+  pictureSize: {
+    type: String, // 'small', 'medium', 'large'
+    required: false,
+    default: 'medium',
   },
 
-  data() {
-    return {
-      imageLoaded: false,
-      imageError: false,
-    }
+  defaultPicture: {
+    type: String,
+    required: true,
+  },
+  alt: {
+    type: String,
+    required: false,
+    default: '',
+  },
+  contain: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
 
-  computed: {
-    _src() {
-      return this.pictureData?.variations[this.pictureSize]
-    },
-
-    src() {
-      return (
-        this.imageError ||
-        this._src ||
-        `${this.runtimeConfig.public.appPublicBinariesPrefix}${this.defaultPicture}`
-      )
-    },
-
-    imageSizes() {
-      return this.imageError ? null : pictureApiToImageSizes(this.pictureData)
-    },
+  ratio: {
+    // crop area aspect ratio
+    type: Number,
+    default: 1,
   },
+})
 
-  methods: {
-    onImageError(event) {
-      this.imageError = true
-      this.imageLoaded = true
-      this.$emit('error', event)
-    },
-    onImageLoaded(event) {
-      this.imageLoaded = true
-      this.$emit('load', event)
-    },
-  },
+const emit = defineEmits(['load', 'error'])
+const runtimeConfig = useRuntimeConfig()
+const imageLoaded = ref(false)
+const imageError = ref(false)
+
+const _src = computed(() => {
+  return props.pictureData?.variations?.[props.pictureSize]
+})
+
+const src = computed(() => {
+  return (
+    imageError.value ||
+    _src.value ||
+    `${runtimeConfig.public.appPublicBinariesPrefix}${props.defaultPicture}`
+  )
+})
+
+const imageSizes = computed(() => {
+  return imageError.value ? null : pictureApiToImageSizes(props.pictureData)
+})
+
+const onImageError = (event) => {
+  imageError.value = true
+  imageLoaded.value = true
+  emit('error', event)
+}
+const onImageLoaded = (event) => {
+  imageLoaded.value = true
+  emit('load', event)
 }
 </script>

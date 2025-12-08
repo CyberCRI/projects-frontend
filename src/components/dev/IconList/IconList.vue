@@ -127,6 +127,7 @@ export default {
         'VipCrownLine',
         'SparklingFill',
         'InfoCardLine',
+        'Scales',
       ],
     }
   },

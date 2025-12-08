@@ -3,7 +3,7 @@
     <div class="goal" :class="{ 'shadow-box': hasDescription }" @click="toggleDescription">
       <div class="content">
         <div class="left" :class="goal.status">
-          {{ $filters.capitalize($t(`status.${goal.status}`)) }}
+          {{ $t(`status.${goal.status}`) }}
         </div>
 
         <div class="right">
@@ -13,7 +13,7 @@
             </p>
 
             <p v-if="deadlineVisible" class="goal-deadline" :class="goal.status">
-              {{ $filters.capitalize(deadlineFormatted) }}
+              {{ deadlineFormatted }}
             </p>
 
             <span v-if="hasDescription" class="chevron-icon">
@@ -72,7 +72,6 @@ export default {
   },
 
   emits: ['edit-goal', 'delete-goal'],
-
   data() {
     return {
       descriptionVisible: false,

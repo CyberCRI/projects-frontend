@@ -117,7 +117,7 @@
       class="tags"
     >
       <label>
-        {{ $filters.capitalize($t('tag.title')) }}
+        {{ $t('tag.title') }}
         <span
           v-disable-focus="otherFieldDisabled"
           class="add-tags"
@@ -125,7 +125,7 @@
           @click="tagSearchIsOpened = true"
         >
           <IconImage name="Plus" />
-          <span>{{ $filters.capitalize($t('project.form.add-tags')) }}</span>
+          <span>{{ $t('project.form.add-tags') }}</span>
         </span>
       </label>
       <TagsFilterSummary v-model="tags" />
@@ -143,7 +143,7 @@
       :disabled="otherFieldDisabled"
       class="img-ctn"
     >
-      <label>{{ $filters.capitalize($t('project.image-header')) }}</label>
+      <label>{{ $t('project.image-header') }}</label>
       <ImageEditor
         v-model:image-sizes="form.imageSizes"
         v-model:picture="form.header_image"
@@ -165,7 +165,7 @@
       :disabled="otherFieldDisabled"
       class="language"
     >
-      <label>{{ $filters.capitalize($t('project.language')) }}</label>
+      <label>{{ $t('project.language') }}</label>
       <LpiSelect
         v-model="form.language"
         :value="form.language"

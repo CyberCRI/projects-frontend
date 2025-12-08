@@ -2,7 +2,7 @@
   <div class="profile-edit-group">
     <div class="form-group">
       <label>
-        {{ $t('profile.edit.groups.groups.label') }} ({{ user?.people_groups?.length || 0 }})
+        {{ t('profile.edit.groups.groups.label') }} ({{ user?.people_groups?.length || 0 }})
       </label>
       <div class="group-list-list">
         <ListPaginator :limit="listLimit" :list="user?.people_groups || []">
@@ -18,13 +18,13 @@
                   v-if="cardListSlotProps.item"
                   :class="{ 'is-other-org': groupIsOtherOrg(cardListSlotProps.item) }"
                   :group="cardListSlotProps.item"
-                  :title="groupIsOtherOrg(cardListSlotProps.item) ? $t('group.is-other-org') : ''"
+                  :title="groupIsOtherOrg(cardListSlotProps.item) ? t('group.is-other-org') : ''"
                   @click.capture="cancelIfOtherOrg($event, cardListSlotProps.item)"
                 />
               </template>
               <template #empty>
                 <div class="empty-ctn" :class="gridLayout">
-                  <EmptyCard class="empty-card" :label="$t('me.no-group')" />
+                  <EmptyCard class="empty-card" :label="t('me.no-group')" />
                 </div>
               </template>
             </CardList>
@@ -45,53 +45,35 @@
     </div>
   </div>
 </template>
-<script>
+<script setup>
 import CardList from '@/components/base/CardList.vue'
 import GroupCard from '@/components/group/GroupCard.vue'
 import EmptyCard from '@/components/people/UserProfile/EmptyCard.vue'
 import ListPaginator from '@/components/base/navigation/ListPaginator.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 
-export default {
-  name: 'ProfileGroupsEditTab',
-  components: {
-    CardList,
-    GroupCard,
-    EmptyCard,
-    ListPaginator,
-    PaginationButtons,
-  },
+defineOptions({ name: 'ProfileGroupsEditTab' })
 
-  props: {
-    user: {
-      type: Object,
-      required: true,
-    },
+defineProps({
+  user: {
+    type: Object,
+    required: true,
   },
+})
 
-  setup() {
-    const orgStore = useOrganizations()
-    return { orgStore }
-  },
+const { t } = useNuxtI18n()
+const orgStore = useOrganizations()
+const listLimit = 12
 
-  data() {
-    return {
-      listLimit: 12,
-    }
-  },
+const groupIsOtherOrg = (group) => {
+  return group.organization != orgStore?.current?.code
+}
 
-  methods: {
-    groupIsOtherOrg(group) {
-      return group.organization != this.orgStore?.current?.code
-    },
-
-    cancelIfOtherOrg(evt, group) {
-      if (this.groupIsOtherOrg(group)) {
-        evt.stopImmediatePropagation()
-        evt.preventDefault()
-      }
-    },
-  },
+const cancelIfOtherOrg = (evt, group) => {
+  if (groupIsOtherOrg(group)) {
+    evt.stopImmediatePropagation()
+    evt.preventDefault()
+  }
 }
 </script>
 <style scoped lang="scss">

@@ -19,14 +19,10 @@
       <IconImage class="close" name="Close" @click="$emit('close')" />
       <p>{{ $t('project.image-alert.notice') }}</p>
       <div class="actions">
-        <LpiButton
-          :label="$filters.capitalize($t('common.cancel'))"
-          :secondary="true"
-          @click="$emit('close')"
-        />
+        <LpiButton :label="$t('common.cancel')" :secondary="true" @click="$emit('close')" />
 
         <LpiButton
-          :label="$filters.capitalize($t('project.image-alert.upload'))"
+          :label="$t('project.image-alert.upload')"
           class="footer__right-button"
           @click="$emit('edit')"
         />
@@ -35,20 +31,15 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 
-export default {
+defineOptions({
   name: 'ImageFormatAlert',
+})
 
-  components: {
-    LpiButton,
-    IconImage,
-  },
-
-  emits: ['close', 'edit'],
-}
+defineEmits(['close', 'edit'])
 </script>
 <style lang="scss" scoped>
 .image-format-alert {

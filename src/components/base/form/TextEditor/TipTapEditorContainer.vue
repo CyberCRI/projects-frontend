@@ -11,7 +11,7 @@ function focusEditor() {
   }
 }
 
-const { locale } = useI18n()
+const { locale } = useNuxtI18n()
 </script>
 <template>
   <div

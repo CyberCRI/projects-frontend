@@ -10,7 +10,7 @@ const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
 const { canEditNews, canDeleteNews, canCreateNews } = usePermissions()
 const router = useRouter()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const loading = ref(false)
 const editedNews = ref(null)
@@ -122,7 +122,7 @@ try {
       <LpiButton
         v-if="canCreateNews"
         primary
-        :label="$filters.capitalize($t('news.list.create'))"
+        :label="$t('news.list.create')"
         data-test="create-news-button"
         btn-icon="Plus"
         class="create-news-button"

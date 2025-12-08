@@ -73,6 +73,7 @@ export default {
       chat_button_text: org.chat_button_text || '',
       chat_url: org.chat_url || '',
       asyncing: false,
+      form: {},
     }
   },
 

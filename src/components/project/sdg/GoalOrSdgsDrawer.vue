@@ -8,14 +8,14 @@
   >
     <div class="select-added-item">
       <LpiButton
-        :label="$filters.capitalize($t('project.add-to-project.sdg'))"
+        :label="$t('project.add-to-project.sdg')"
         btn-icon="Plus"
         data-test="button-add-sdg-to-project"
         class="button-select"
         @click="$emit('choice-made', 'sdg')"
       />
       <LpiButton
-        :label="$filters.capitalize($t('project.add-to-project.goal'))"
+        :label="$t('project.add-to-project.goal')"
         btn-icon="Plus"
         data-test="button-add-goal-to-project"
         class="button-select"
@@ -25,22 +25,16 @@
   </BaseDrawer>
 </template>
 
-<script>
-export default {
-  name: 'GoalOrSdgsDrawer',
+<script setup>
+defineOptions({ name: 'GoalOrSdgsDrawer' })
 
-  props: {
-    isOpened: { type: Boolean, default: false },
-  },
+defineProps({
+  isOpened: { type: Boolean, default: false },
+})
 
-  emits: ['choice-made', 'close'],
+const emit = defineEmits(['choice-made', 'close'])
 
-  methods: {
-    close() {
-      this.$emit('close')
-    },
-  },
-}
+const close = () => emit('close')
 </script>
 <style scoped lang="scss">
 .select-added-item {

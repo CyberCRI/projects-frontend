@@ -14,11 +14,11 @@
       />
       <div class="text-container">
         <span class="name">
-          {{ $filters.capitalize(recommendation.given_name) }}
-          {{ $filters.capitalize(recommendation.family_name) }}
+          {{ capitalize(recommendation.given_name) }}
+          {{ capitalize(recommendation.family_name) }}
         </span>
         <span v-if="recommendation.job" class="job">
-          {{ $filters.capitalize(recommendation?.$t?.job) }}
+          {{ capitalize(recommendation?.$t?.job) }}
         </span>
         <div class="skills">
           <BadgeItem
@@ -59,6 +59,8 @@
 </template>
 
 <script>
+import { capitalize } from '@/functs/string'
+
 import BadgeItem from '@/components/base/BadgeItem.vue'
 import ToolTip from '@/components/base/ToolTip.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
@@ -84,6 +86,7 @@ export default {
     return {
       skillTexts,
       DEFAULT_USER_PATATOID,
+      capitalize,
     }
   },
 
