@@ -9,6 +9,16 @@
       :disabled="!usersStore.userFromApi || reseting"
       @click="resetOnboardingStatus"
     />
+    <hr />
+    <p class="notice">Reset terms approval for the current user.</p>
+    <p v-if="!usersStore.userFromApi">Login first !</p>
+    <LpiButton
+      class="reset-button"
+      :btn-icon="resetingTerms ? 'LoaderSimple' : 'RotateRight'"
+      :label="'Reset terms approval'"
+      :disabled="!usersStore.userFromApi || resetingTerms"
+      @click="resetTermsSigned"
+    />
   </div>
 </template>
 <script>
@@ -16,6 +26,7 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import { patchUser } from '@/api/people.service.ts'
 import useToasterStore from '@/stores/useToaster.ts'
 import useUsersStore from '@/stores/useUsers.ts'
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
   name: 'DebugOnboarding',
@@ -23,16 +34,25 @@ export default {
   setup() {
     const toaster = useToasterStore()
     const usersStore = useUsersStore()
+
+    const organizationsStore = useOrganizationsStore()
     return {
       toaster,
       usersStore,
+      organizationsStore,
     }
   },
 
   data() {
     return {
       reseting: false,
+      resetingTerms: false,
     }
+  },
+  computed: {
+    orgCode() {
+      return this.organizationsStore.current?.code
+    },
   },
   methods: {
     async resetOnboardingStatus() {
@@ -44,10 +64,32 @@ export default {
         await patchUser(keycloak_id, payload)
         await this.usersStore.getUser(keycloak_id)
         this.toaster.pushSuccess(`Onboarding reseted for ${user.email}`)
-      } catch {
+      } catch (err) {
+        console.error(err)
         this.toaster.pushError(`Error while reseting onboarding status`)
       } finally {
         this.reseting = false
+      }
+    },
+    async resetTermsSigned() {
+      this.resetingTerms = true
+      try {
+        if (!this.usersStore.userFromApi) return
+        const user = this.usersStore.userFromApi
+        const payload = {
+          signed_terms_and_conditions: {
+            ...user.signed_terms_and_conditions,
+            [this.orgCode]: undefined,
+          },
+        }
+        await patchUser(user.id, payload)
+        await this.usersStore.getUser(user.id)
+        this.toaster.pushSuccess(`Terms approval reseted for ${user.email}`)
+      } catch (err) {
+        console.error(err)
+        this.toaster.pushError(`Error while reseting terms approval`)
+      } finally {
+        this.resetingTerms = false
       }
     },
   },

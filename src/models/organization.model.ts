@@ -21,6 +21,12 @@ interface LogoImage {
   }
 }
 
+export interface TermsAndConditions {
+  id: number
+  version: number
+  content: string
+}
+
 export interface OrganizationModel extends BaseModel {
   background_color: string
   banner_image: string
@@ -38,6 +44,7 @@ export interface OrganizationModel extends BaseModel {
   children: string[]
   enabled_projects_tag_classifications: object[] // TODO: define this type
   enabled_skills_tag_classifications: object[] // TODO: define this type
+  terms_and_conditions: TermsAndConditions | null
 }
 
 export type OrganizationPatchInput = Partial<OrganizationModel> & {
