@@ -24,7 +24,7 @@
           </div>
 
           <div class="job">
-            {{ $filters.capitalize(user?.$t?.job) }}
+            {{ capitalize(user?.$t?.job) }}
           </div>
 
           <div v-if="displayableGroups.length" class="group-ctn">
@@ -73,38 +73,29 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { capitalize } from '@/functs/string'
+
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
-export default {
-  name: 'ProfileHeaderV2',
+defineOptions({ name: 'ProfileHeaderV2' })
 
-  props: {
-    user: {
-      type: Object,
-      default: () => {},
-    },
+const props = defineProps({
+  user: {
+    type: Object,
+    default: () => {},
   },
+})
 
-  emits: ['edit-profile'],
-  setup() {
-    const organizationsStore = useOrganizationsStore()
-    const runtimeConfig = useRuntimeConfig()
-    return {
-      organizationsStore,
-      runtimeConfig,
-    }
-  },
+const organizationsStore = useOrganizationsStore()
+const runtimeConfig = useRuntimeConfig()
 
-  computed: {
-    displayableGroups() {
-      return this.user?.people_groups
-        ? this.user.people_groups.filter(
-            (group) => group.organization === this.organizationsStore.current?.code
-          )
-        : []
-    },
-  },
-}
+const displayableGroups = computed(() => {
+  return props.user?.people_groups
+    ? props.user.people_groups.filter(
+        (group) => group.organization === organizationsStore.current?.code
+      )
+    : []
+})
 </script>
 
 <style lang="scss" scoped>

@@ -1,8 +1,7 @@
 import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 
 export default function useSkillLevels() {
-  const { t } = useI18n()
+  const { t } = useNuxtI18n()
   const skillLevels = computed(() =>
     // CAUTION : this must be ordered from lowest to highest (see clampLevel())
     [

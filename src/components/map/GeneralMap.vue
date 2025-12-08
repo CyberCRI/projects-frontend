@@ -15,57 +15,49 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import BaseMap from '@/components/map/BaseMap.vue'
 import MapPointer from '@/components/map/MapPointer.vue'
 
-export default {
-  name: 'GeneralMap',
+defineOptions({ name: 'GeneralMap' })
 
-  components: {
-    MapPointer,
-    BaseMap,
+const props = defineProps({
+  locations: {
+    type: Array,
+    required: true,
   },
+  loading: {
+    type: Boolean,
+    default: true,
+  },
+})
 
-  props: {
-    locations: {
-      type: Array,
-      required: true,
-    },
-    loading: {
-      type: Boolean,
-      default: true,
-    },
-  },
-
-  data() {
-    return {
-      config: {
-        mapUrl: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-        zoom: 1,
-        maxZoom: 17,
-        minZoom: 0,
-        maxBounds: [
-          [-90, -175],
-          [84, 195],
-        ],
-        maxBoundsViscosity: 1.0,
-        iconSize: [80, 69],
-        useCluster: true,
-        worldCopyJump: true,
-      },
-    }
-  },
-
-  watch: {
-    loading(neo) {
-      if (!neo && this.$refs && this.$refs.map) {
-        console.log('cenbter')
-        this.$refs.map.centerMap()
-      }
-    },
-  },
+const config = {
+  mapUrl: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+  zoom: 1,
+  maxZoom: 17,
+  minZoom: 0,
+  maxBounds: [
+    [-90, -175],
+    [84, 195],
+  ],
+  maxBoundsViscosity: 1.0,
+  iconSize: [80, 69],
+  useCluster: true,
+  worldCopyJump: true,
 }
+
+const mapRef = useTemplateRef('map')
+
+watch(
+  () => props.loading,
+  (neo) => {
+    if (!neo && mapRef.value) {
+      console.log('center')
+      mapRef.value.centerMap()
+    }
+  }
+)
 </script>
 
 <style lang="scss">

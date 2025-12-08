@@ -3,8 +3,8 @@
     <div class="form-section">
       <TextInput
         :model-value="modelValue.title"
-        :label="$filters.capitalize($t('instructions.form.title.label'))"
-        :placeholder="$filters.capitalize($t('instructions.form.title.placeholder'))"
+        :label="$t('instructions.form.title.label')"
+        :placeholder="$t('instructions.form.title.placeholder')"
         class="input-field"
         @update:model-value="updateForm({ title: $event })"
         @blur="v$.modelValue.title.$validate"
@@ -34,7 +34,7 @@
     </div>
 
     <div class="form-section">
-      <label>{{ $filters.capitalize($t('instructions.form.content.label')) }}</label>
+      <label>{{ $t('instructions.form.content.label') }}</label>
       <TipTapEditor
         ref="tiptapEditor"
         :model-value="modelValue.content"

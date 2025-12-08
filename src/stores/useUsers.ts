@@ -60,26 +60,31 @@ const useUsersStore = defineStore('users', () => {
     return userFromApi.value?.id
   })
 
-  const user = computed((): UserModel | null => {
-    if (userFromToken.value) {
-      return {
-        id: userFromToken.value.pid,
-        name: {
-          firstname: userFromToken.value.given_name,
-          lastname: userFromToken.value.family_name,
-        },
-        email: userFromToken.value.email,
-        roles: userFromToken.value.roles || [],
-        orgs: funct.getOrgsFromRoles(userFromToken.value.roles),
-        permissions: permissions.value,
-        slug: userFromToken.value.slug,
-        researcher: userFromToken.value.researcher,
-        signed_terms_and_conditions: userFromApi.value?.signed_terms_and_conditions || {},
+  const user = computed(
+    ():
+      | (Omit<UserModel, 'permissions'> & {
+          permissions: { [key: string]: boolean }
+        })
+      | null => {
+      if (userFromToken.value) {
+        return {
+          id: userFromToken.value.pid,
+          name: {
+            firstname: userFromToken.value.given_name,
+            lastname: userFromToken.value.family_name,
+          },
+          email: userFromToken.value.email,
+          roles: userFromToken.value.roles || [],
+          orgs: funct.getOrgsFromRoles(userFromToken.value.roles),
+          permissions: permissions.value,
+          slug: userFromToken.value.slug,
+          researcher: userFromToken.value.researcher,
+          signed_terms_and_conditions: userFromApi.value?.signed_terms_and_conditions || {},
+        }
       }
+      return null
     }
-
-    return null
-  })
+  )
 
   function stopUserDataRefreshLoop() {
     if (userDataRefreshLoop.value) {

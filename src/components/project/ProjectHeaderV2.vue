@@ -160,6 +160,7 @@
 </template>
 
 <script>
+import { capitalize } from '@/functs/string'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useUsersStore from '@/stores/useUsers.ts'
 
@@ -231,12 +232,12 @@ export default {
 
     capitalizedTitle() {
       const title = this.project?.$t?.title
-      return this.capitalize(title)
+      return capitalize(title)
     },
 
     capitalizedPurpose() {
       const purpose = this.project?.$t?.purpose
-      return this.capitalize(purpose)
+      return capitalize(purpose)
     },
   },
   watch: {
@@ -308,10 +309,6 @@ export default {
         org: 'PeopleGroup',
       }
       return map[this.project.publication_status] || ''
-    },
-
-    capitalize(s) {
-      return s && s.length > 1 ? s[0].toUpperCase() + s.slice(1) : s
     },
   },
 }

@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 import useNuxtI18n from '@/composables/useNuxtI18n'
 import LayoutTab from '@/components/admin/LayoutTab.vue'
 import { postTemplate, postTemplateImage } from '@/api/templates.service'

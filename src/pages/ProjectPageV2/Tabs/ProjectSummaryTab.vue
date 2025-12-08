@@ -94,6 +94,8 @@
 </template>
 
 <script>
+import { isNotGroup } from '@/functs/users'
+
 export default {
   name: 'ProjectSummaryTab',
 
@@ -209,7 +211,7 @@ export default {
   },
   methods: {
     async openProfileDrawer(user) {
-      if (this.$filters.isNotGroup(user)) {
+      if (isNotGroup(user)) {
         this.profileDrawer.user_id = user.id
         this.profileDrawer.isOpened = true
       } else {

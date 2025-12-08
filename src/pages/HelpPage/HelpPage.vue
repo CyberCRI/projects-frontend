@@ -2,7 +2,7 @@
 import { getOrganizationByCode } from '@/api/organizations.service'
 
 const { onboardingTrap } = useOnboardingStatus()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 provide(
   'helpPageHasFaq',
@@ -86,7 +86,7 @@ try {
   <div :class="{ loading: isLoading }" class="page-section-extra-wide help-layout page-top">
     <div>
       <h1 class="page-title">
-        {{ $filters.capitalize($t('faq.portal')) }}
+        {{ $t('faq.portal') }}
       </h1>
     </div>
 

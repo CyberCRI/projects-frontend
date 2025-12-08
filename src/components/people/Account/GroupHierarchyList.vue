@@ -31,35 +31,26 @@
   </li>
 </template>
 
-<script>
+<script setup>
 import IconImage from '@/components/base/media/IconImage.vue'
 import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
 
-export default {
-  name: 'GroupHierarchyList',
-  components: { IconImage, LpiCheckbox },
-  props: {
-    parent: {
-      type: Object,
-      default: () => {},
-    },
+defineOptions({ name: 'GroupHierarchyList' })
+defineProps({
+  parent: {
+    type: Object,
+    default: () => {},
+  },
 
-    selectedGroups: {
-      type: Object, // map {[groupid]: 'members'|'leaders'|'managers'|false}
-      required: true,
-    },
+  selectedGroups: {
+    type: Object, // map {[groupid]: 'members'|'leaders'|'managers'|false}
+    required: true,
   },
-  emits: ['add-group'],
-  data() {
-    return {
-      show: false,
-    }
-  },
-  methods: {
-    setGroupList(groupId) {
-      this.$emit('add-group', groupId)
-    },
-  },
+})
+const emit = defineEmits(['add-group'])
+const show = ref(false)
+const setGroupList = (groupId) => {
+  emit('add-group', groupId)
 }
 </script>
 

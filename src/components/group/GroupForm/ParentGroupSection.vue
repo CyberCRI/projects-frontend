@@ -2,13 +2,13 @@
   <div class="group-section">
     <label>
       <span class="section-title">
-        {{ $filters.capitalize($t('group.form.parent-group-label')) }}
+        {{ t('group.form.parent-group-label') }}
       </span>
 
       <LpiButton
         class="add-parent-group-card"
         :btn-icon="modelValue ? 'Pen' : 'Plus'"
-        :label="$filters.capitalize($t(modelValue ? 'group.form.edit' : 'group.form.add'))"
+        :label="t(modelValue ? 'group.form.edit' : 'group.form.add')"
         data-test="add-parent-group-card"
         @click="drawerIsOpen = true"
       />
@@ -19,8 +19,8 @@
     </div>
 
     <PickGroupDrawer
-      :drawer-title="$t('group.form.add-parent-group')"
-      :subtitle="$t('admin.groups.subtitle-edit-child')"
+      :drawer-title="t('group.form.add-parent-group')"
+      :subtitle="t('admin.groups.subtitle-edit-child')"
       :is-opened="drawerIsOpen"
       :groups="groups"
       :initial-group="modelValue"
@@ -32,39 +32,31 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'ParentGroupSection',
+<script setup>
+defineOptions({ name: 'ParentGroupSection' })
 
-  props: {
-    modelValue: {
-      type: [Object, null],
-      default: null,
-    },
-    groups: {
-      type: Array,
-      default: () => [],
-    },
+defineProps({
+  modelValue: {
+    type: [Object, null],
+    default: null,
   },
-
-  emits: ['update:modelValue'],
-
-  data() {
-    return {
-      drawerIsOpen: false,
-      forbiddenIds: [],
-    }
+  groups: {
+    type: Array,
+    default: () => [],
   },
+})
 
-  methods: {
-    closeDrawer() {
-      this.drawerIsOpen = false
-    },
-    confirmGroup(group) {
-      this.$emit('update:modelValue', group)
-      this.closeDrawer()
-    },
-  },
+const emit = defineEmits(['update:modelValue'])
+const { t } = useNuxtI18n()
+const drawerIsOpen = ref(false)
+const forbiddenIds = ref([])
+
+const closeDrawer = () => {
+  drawerIsOpen.value = false
+}
+const confirmGroup = (group) => {
+  emit('update:modelValue', group)
+  closeDrawer()
 }
 </script>
 

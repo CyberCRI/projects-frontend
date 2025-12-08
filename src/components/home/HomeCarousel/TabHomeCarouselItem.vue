@@ -11,25 +11,23 @@
       </h3>
 
       <i18n-t :keypath="tab.text" tag="p">
-        <a place="sdg" :href="$t('homeCarousel.tab4.link')">
-          <abbr :title="$t('homeCarousel.tab4.sdgAbbr')">{{ $t('homeCarousel.tab4.sdg') }}</abbr>
+        <a place="sdg" :href="t('homeCarousel.tab4.link')">
+          <abbr :title="t('homeCarousel.tab4.sdgAbbr')">{{ t('homeCarousel.tab4.sdg') }}</abbr>
         </a>
       </i18n-t>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'TabHomeCarouselItem',
-
-  props: {
-    tab: {
-      type: Object,
-      default: () => {},
-    },
+<script setup>
+defineOptions({ name: 'TabHomeCarouselItem' })
+defineProps({
+  tab: {
+    type: Object,
+    default: () => {},
   },
-}
+})
+const { t } = useNuxtI18n()
 </script>
 
 <style lang="scss" scoped>

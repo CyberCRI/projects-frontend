@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div ref="marker" class="map-pointer">
-      <div class="badge" @click="$emit('pick-location', location)">
+      <div class="badge" @click="emit('pick-location', location)">
         <div :class="location.type" class="badge__dot" />
         <div class="badge__label">
           {{ location.label }}
@@ -13,30 +13,29 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'MapSuggestion',
+<script setup>
+defineOptions({ name: 'MapSuggestion' })
 
-  props: {
-    location: {
-      type: Object,
-      default: null,
-    },
+const props = defineProps({
+  location: {
+    type: Object,
+    default: null,
   },
+})
 
-  emits: ['mounted', 'unmounted', 'pick-location'],
+const emit = defineEmits(['mounted', 'unmounted', 'pick-location'])
 
-  mounted() {
-    this.$emit('mounted', {
-      location: this.location,
-      markerContent: this.$refs.marker,
-    })
-  },
+const markerRef = useTemplateRef('marker')
+onMounted(() => {
+  emit('mounted', {
+    location: props.location,
+    markerContent: markerRef.value,
+  })
+})
 
-  unmounted() {
-    this.$emit('unmounted', this.location)
-  },
-}
+onUnmounted(() => {
+  emit('unmounted', props.location)
+})
 </script>
 
 <style lang="scss" scoped>

@@ -9,7 +9,7 @@ import {
 import useValidate from '@vuelidate/core'
 import { required, maxLength, helpers, email } from '@vuelidate/validators'
 import { imageSizesFormData, pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
-import isEqual from 'lodash.isequal'
+import { isEqual } from 'es-toolkit'
 import useToasterStore from '@/stores/useToaster.ts'
 import usePeopleGroupsStore from '@/stores/usePeopleGroups'
 import useUsersStore from '@/stores/useUsers.ts'
@@ -51,7 +51,7 @@ const usersStore = useUsersStore()
 const { canCreateGroup, canEditGroup } = usePermissions()
 const route = useRoute()
 const router = useRouter()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const isFormCorrect = ref(true)
 

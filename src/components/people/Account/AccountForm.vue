@@ -102,7 +102,7 @@
       <div class="confirm-ctn">
         <LpiButton
           :disabled="asyncSave"
-          :label="$filters.capitalize($t('common.cancel'))"
+          :label="$t('common.cancel')"
           :secondary="true"
           class="footer__left-button"
           data-test="close-button"
@@ -111,7 +111,7 @@
 
         <LpiButton
           :disabled="asyncSave || v$.$invalid"
-          :label="$filters.capitalize($t('common.confirm'))"
+          :label="$t('common.confirm')"
           :btn-icon="asyncSave ? 'LoaderSimple' : null"
           :secondary="false"
           class="footer__right-button"

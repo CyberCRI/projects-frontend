@@ -2,13 +2,13 @@
   <div class="team-section">
     <label>
       <span class="section-title">
-        {{ $filters.capitalize($t('group.form.project-label')) }}
+        {{ t('group.form.project-label') }}
         <span v-if="modelValue.length">({{ modelValue.length }})</span>
       </span>
       <LpiButton
         class="add-project-card"
         :btn-icon="modelValue.length ? 'Pen' : 'Plus'"
-        :label="$filters.capitalize($t(modelValue.length ? 'group.form.edit' : 'group.form.add'))"
+        :label="t(modelValue.length ? 'group.form.edit' : 'group.form.add')"
         data-test="add-projects"
         @click="drawerIsOpen = true"
       />
@@ -28,7 +28,7 @@
       <LinkButton
         v-if="shortList?.length < modelValue?.length"
         class="see-more-btn"
-        :label="$filters.capitalize($t(seeMoreLabel))"
+        :label="t(seeMoreLabel)"
         @click="showFullList = !showFullList"
       />
     </div>
@@ -37,53 +37,45 @@
       v-if="drawerIsOpen"
       :is-opened="drawerIsOpen"
       :pre-selected-projects="modelValue"
-      :title="$t('group.form.add-projects')"
+      :title="t('group.form.add-projects')"
       @close="drawerIsOpen = false"
       @picked-projects="onProjectsPicked"
     />
   </div>
 </template>
 
-<script>
-export default {
-  name: 'ProjectSection',
+<script setup>
+defineOptions({ name: 'ProjectSection' })
 
-  props: {
-    modelValue: {
-      type: Array,
-      default: () => [],
-    },
+const props = defineProps({
+  modelValue: {
+    type: Array,
+    default: () => [],
   },
+})
 
-  emits: ['update:model-value'],
+const emit = defineEmits(['update:model-value'])
 
-  data() {
-    return {
-      drawerIsOpen: false,
-      showFullList: false,
-      isSeeMore: true,
-    }
-  },
-  computed: {
-    shortList() {
-      return this.modelValue.slice(0, 8)
-    },
-    seeMoreLabel() {
-      return this.showFullList ? 'common.see-less' : 'common.see-more'
-    },
-  },
+const drawerIsOpen = ref(false)
+const showFullList = ref(false)
 
-  methods: {
-    onProjectsPicked(projects) {
-      this.$emit('update:model-value', [...projects])
-      this.drawerIsOpen = false
-    },
+const { t } = useNuxtI18n()
 
-    onRemoveProject(project) {
-      const projects = this.modelValue.filter((p) => p.id !== project.id)
-      this.$emit('update:model-value', [...projects])
-    },
-  },
+const shortList = computed(() => {
+  return props.modelValue.slice(0, 8)
+})
+const seeMoreLabel = computed(() => {
+  return showFullList.value ? 'common.see-less' : 'common.see-more'
+})
+
+const onProjectsPicked = (projects) => {
+  emit('update:model-value', [...projects])
+  drawerIsOpen.value = false
+}
+
+const onRemoveProject = (project) => {
+  const projects = this.modelValue.filter((p) => p.id !== project.id)
+  emit('update:model-value', [...projects])
 }
 </script>
 

@@ -4,21 +4,17 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import LpiSingleStatChart from './Generic/LpiSingleStatChart.vue'
 
-export default {
-  name: 'TotalChart',
+defineOptions({ name: 'TotalChart' })
 
-  components: { LpiSingleStatChart },
-
-  props: {
-    stats: {
-      type: Array,
-      default: () => [],
-    },
+defineProps({
+  stats: {
+    type: Number,
+    default: null,
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

@@ -20,12 +20,12 @@
         <GroupButton v-model="form.type" :options="locationTypeOptions" />
       </div>
 
-      <TextInput v-model="form.title" :label="$filters.capitalize($t('common.title'))" />
+      <TextInput v-model="form.title" :label="$t('common.title')" />
 
       <TextInput
         v-model="form.description"
         input-type="textarea"
-        :label="$filters.capitalize($t('common.description'))"
+        :label="$t('common.description')"
         class="description-input"
       />
     </template>
@@ -35,7 +35,7 @@
         class="delete-button"
         :disabled="asyncing"
         :btn-icon="asyncing ? 'LoaderSimple' : null"
-        :label="$filters.capitalize($t('common.delete'))"
+        :label="$t('common.delete')"
         @click="deleteLocation"
       />
     </template>
