@@ -298,7 +298,11 @@ export default {
 
     otherFieldDisabled() {
       return (
-        this.isAddMode && !!this.categories && this.categories.length > 0 && !this.form.template
+        this.isAddMode &&
+        !!this.categories &&
+        this.categories.length > 0 &&
+        (!this.selectedCategory ||
+          (this.selectedCategory?.templates?.length && !this.form.template))
       )
     },
 
@@ -355,6 +359,10 @@ export default {
       if (template === null) {
         this.selectedTemplate = template
         this.form.template = null
+        if (this.isAddMode) {
+          this.form.title = ''
+          this.form.purpose = ''
+        }
         return
       }
       const { data } = await getTemplate(this.organizationsStore.current.code, template.id)

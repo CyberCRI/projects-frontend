@@ -1595,6 +1595,7 @@
     "create-project": "Projekti loomine",
     "create": {
       "choose-category-first": "Palun vali esmalt kategooria",
+      "choose-template-first": "Palun vali esmalt mall",
       "help-link": "Me oleme siin, et aidata.",
       "notice": "Tärniga * märgitud väljad on kohustuslikud. Seda saab alati hiljem muuta. Pole aimugi, mida sa tegema peaksid?",
       "title": "Uue projekti loomine"

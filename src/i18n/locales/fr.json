@@ -1603,6 +1603,7 @@
     "create-project": "Créer un projet",
     "create": {
       "choose-category-first": "Choisissez d'abord une catégorie",
+      "choose-template-first": "Veuillez d'abord choisir un modèle",
       "help-link": "On est là pour aider.",
       "notice": "Les champs marqués avec * sont obligatoires. Vous pourrez les modifier par la suite si besoin. Vous avez des questions ?",
       "title": "Créer un nouveau projet"
