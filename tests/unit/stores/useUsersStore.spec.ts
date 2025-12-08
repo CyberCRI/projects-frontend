@@ -309,6 +309,7 @@ describe('Store module | users | getters', () => {
         'organization.member',
         'organization.group',
       ],
+      signed_terms_and_conditions: {},
     })
 
     usersStore.$patch(stateWithoutSessionToken as any)

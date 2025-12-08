@@ -79,6 +79,7 @@ const useUsersStore = defineStore('users', () => {
           permissions: permissions.value,
           slug: userFromToken.value.slug,
           researcher: userFromToken.value.researcher,
+          signed_terms_and_conditions: userFromApi.value?.signed_terms_and_conditions || {},
         }
       }
       return null

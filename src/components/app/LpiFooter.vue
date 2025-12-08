@@ -160,6 +160,8 @@
     <ReportDrawer :is-opened="reportBugOpen" type="bug" @close="reportBugOpen = false" />
 
     <OnboardingScreens v-if="showOnboardingScreen && isConnected" />
+
+    <ApproveTermsModal v-if="isConnected" />
   </footer>
 </template>
 

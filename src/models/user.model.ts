@@ -21,6 +21,9 @@ export interface UserModel {
   skills?: UserSkillModel[]
   notifications?: number
   researcher?: ResearcherLight
+  signed_terms_and_conditions?: {
+    [key: string]: { version: number | null; date: string | null }
+  } | null
 }
 
 export interface UserFromJWTModel {
