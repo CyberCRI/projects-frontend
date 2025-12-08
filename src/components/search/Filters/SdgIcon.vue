@@ -32,7 +32,7 @@ export default {
   emits: ['toggled'],
 
   setup() {
-    const { locale } = useI18n()
+    const { locale } = useNuxtI18n()
     const runtimeConfig = useRuntimeConfig()
     return {
       locale,

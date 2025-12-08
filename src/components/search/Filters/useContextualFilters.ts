@@ -1,5 +1,5 @@
 import { computed, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
+
 import useSectionFilters, {
   PROJECT_SECTION_KEY,
   PEOPLE_SECTION_KEY,
@@ -32,7 +32,7 @@ export default function useContextualFilters({
   clearSelectedFilters,
   showSectionFilter,
 }) {
-  const { t, locale } = useI18n()
+  const { t, locale } = useNuxtI18n()
 
   const projectCategoriesStore = useProjectCategories()
   const { sectionFilters } = useSectionFilters({ selectedSection })

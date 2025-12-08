@@ -13,80 +13,65 @@
       :is-add-mode="isAddMode"
       :is-invite-mode="isInviteMode"
       :selected-user="currentUser"
-      @close="$emit('close')"
+      @close="emit('close')"
     />
   </div>
 </template>
 
-<script>
+<script setup>
 import { getUser } from '@/api/people.service.ts'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import AccountFormTitleBlock from '@/components/people/Account/AccountFormTitleBlock.vue'
 import AccountForm from '@/components/people/Account/AccountForm.vue'
 
-export default {
-  name: 'AccountLayout',
+defineOptions({ name: 'AccountLayout' })
 
-  components: {
-    AccountFormTitleBlock,
-    LpiLoader,
-    AccountForm,
+const props = defineProps({
+  isAddMode: {
+    type: Boolean,
+    default: true,
   },
-
-  props: {
-    isAddMode: {
-      type: Boolean,
-      default: true,
-    },
-    isInviteMode: {
-      type: Boolean,
-      default: false,
-    },
-    selectedUser: {
-      type: Object,
-      default: null,
-    },
+  isInviteMode: {
+    type: Boolean,
+    default: false,
   },
-
-  emits: ['close'],
-
-  data() {
-    return {
-      currentUser: null,
-      isLoading: true,
-    }
+  selectedUser: {
+    type: Object,
+    default: null,
   },
+})
 
-  computed: {
-    mainTitleLabel() {
-      return this.isAddMode
-        ? this.$t('account.title-create')
-        : this.isInviteMode
-          ? this.$t('account.title-invite')
-          : this.$t('account.title-edit')
-    },
-  },
+const emit = defineEmits(['close'])
 
-  async mounted() {
-    if (this.selectedUser?.id) await this.setFormFromSelectedUser()
-    else
-      this.currentUser = {
-        ...this.selectedUser,
-        current_org_role: this.selectedUser?.current_org_role,
-      }
-    this.isLoading = false
-  },
+const currentUser = ref(null)
+const isLoading = ref(true)
+const { t } = useNuxtI18n()
 
-  methods: {
-    async setFormFromSelectedUser() {
-      const user = await getUser(this.selectedUser.id)
-      this.currentUser = {
-        ...user,
-        current_org_role: this.selectedUser.current_org_role,
-      }
-    },
-  },
+const mainTitleLabel = computed(() => {
+  return props.isAddMode
+    ? t('account.title-create')
+    : props.isInviteMode
+      ? t('account.title-invite')
+      : t('account.title-edit')
+})
+
+const setFormFromSelectedUser = async () => {
+  const user = await getUser(props.selectedUser.id)
+  currentUser.value = {
+    ...user,
+    current_org_role: props.selectedUser.current_org_role,
+  }
 }
+
+onMounted(async () => {
+  if (props.selectedUser?.id) await setFormFromSelectedUser()
+  else
+    currentUser.value = {
+      ...props.selectedUser,
+      current_org_role: props.selectedUser?.current_org_role,
+    }
+  isLoading.value = false
+})
 </script>
 
 <style lang="scss" scoped>

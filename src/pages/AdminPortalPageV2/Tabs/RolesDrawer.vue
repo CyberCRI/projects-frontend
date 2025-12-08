@@ -12,7 +12,7 @@
         <div class="checkbox-item">
           <label class="form-control">
             <input v-model="selectedRole" :value="roleOption" type="radio" />
-            {{ $filters.capitalize($t(`groups.roles.${roleOption.name}`)) }}
+            {{ $t(`groups.roles.${roleOption.name}`) }}
           </label>
           <ToolTip :hover="true" :interactive="false" :placement="left">
             <IconImage class="icon" name="HelpCircleOutline" />
@@ -35,8 +35,8 @@ import { getGroups } from '@/api/groups.service'
 import { addOrgMember, removeOrgMember } from '@/api/organizations.service'
 import ToolTip from '@/components/base/ToolTip.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
-/** 
- TODO: remove this dead component 
+/**
+ TODO: remove this dead component
 */
 
 export default {

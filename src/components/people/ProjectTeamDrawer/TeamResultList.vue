@@ -27,6 +27,8 @@ import UserCardInline from '@/components/people/TeamCard/UserCardInline.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import useAPI from '@/composables/useAPI.ts'
+import { isNotGroup, isGroup } from '@/functs/users'
+
 export default {
   name: 'TeamResultList',
 
@@ -76,11 +78,10 @@ export default {
           // watch out for current (logged) user (in create project) : it has no id yet !
           selected:
             this.selectedUsers.some(
-              (selected) => this.$filters.isNotGroup(selected) && selected.id === user.id
+              (selected) => isNotGroup(selected) && selected.id === user.id
             ) ||
             this.currentUsers.some(
-              (currentUser) =>
-                this.$filters.isNotGroup(currentUser.user) && currentUser.user.id === user.id
+              (currentUser) => isNotGroup(currentUser.user) && currentUser.user.id === user.id
             ),
         }))
       } else {
@@ -90,11 +91,10 @@ export default {
           ...people_group,
           selected:
             this.selectedUsers.some(
-              (selected) => this.$filters.isGroup(selected) && selected.id === people_group.id
+              (selected) => isGroup(selected) && selected.id === people_group.id
             ) ||
             this.currentUsers.some(
-              (currentUser) =>
-                this.$filters.isGroup(currentUser.user) && currentUser.user.id === people_group.id
+              (currentUser) => isGroup(currentUser.user) && currentUser.user.id === people_group.id
             ),
         }))
       }

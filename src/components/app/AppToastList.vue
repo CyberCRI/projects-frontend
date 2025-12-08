@@ -2,7 +2,7 @@
 import useToasterStore from '@/stores/useToaster.ts'
 
 const toaster = useToasterStore()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 const snackbars = computed(() => {
   return (toaster.toastList || []).map((toast) => {
     const iconMap = {

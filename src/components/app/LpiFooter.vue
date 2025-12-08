@@ -160,6 +160,8 @@
     <ReportDrawer :is-opened="reportBugOpen" type="bug" @close="reportBugOpen = false" />
 
     <OnboardingScreens v-if="showOnboardingScreen && isConnected" />
+
+    <ApproveTermsModal v-if="isConnected" />
   </footer>
 </template>
 
@@ -188,7 +190,7 @@ export default {
     const organizationsStore = useOrganizationsStore()
     const usersStore = useUsersStore()
     const runtimeConfig = useRuntimeConfig()
-    const { locale } = useI18n()
+    const { locale } = useNuxtI18n()
     return {
       organizationsStore,
       usersStore,

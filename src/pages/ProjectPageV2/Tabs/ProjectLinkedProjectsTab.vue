@@ -2,7 +2,7 @@
   <div class="project-linked-projects">
     <div v-if="canEditProject && isInEditingMode" class="add-linked-project">
       <LpiButton
-        :label="$filters.capitalize($t('project.add-linked-project'))"
+        :label="$t('project.add-linked-project')"
         class="add-linked-project-btn"
         @click="projectLayoutToggleAddModal('linkedProject')"
       />

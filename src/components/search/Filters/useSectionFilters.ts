@@ -1,5 +1,4 @@
 import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 
 export const ALL_SECTION_KEY = 'all'
 export const PROJECT_SECTION_KEY = 'projects'
@@ -7,7 +6,7 @@ export const GROUP_SECTION_KEY = 'groups'
 export const PEOPLE_SECTION_KEY = 'people'
 
 export default function useSectionFilters({ selectedSection }) {
-  const { t } = useI18n()
+  const { t } = useNuxtI18n()
 
   function toggleSectionFilter(key) {
     selectedSection.value = selectedSection.value == key ? ALL_SECTION_KEY : key

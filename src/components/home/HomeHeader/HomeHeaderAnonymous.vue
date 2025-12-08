@@ -11,7 +11,7 @@
           :ratio="1 / 1"
           :picture-data="organization?.banner_image"
           picture-size="medium"
-          default-picture="/placeholders/user_placeholder.svg"
+          :default-picture="DEFAULT_USER_PATATOID"
         />
       </div>
       <div
@@ -72,6 +72,8 @@ import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
+
 export default {
   name: 'HomeHeaderAnonymous',
   components: {
@@ -84,6 +86,7 @@ export default {
     const organizationsStore = useOrganizationsStore()
     return {
       organizationsStore,
+      DEFAULT_USER_PATATOID,
     }
   },
   data() {

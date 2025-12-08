@@ -8,7 +8,7 @@ export default function useAutoTranslate() {
   // TODO: memoize in local storage / user prefs
   const isAutoTranslateActivated = useState('isAutoTranslateActivated', () => true)
 
-  // const { locale } = useI18n()
+  // const { locale } = useNuxtI18n()
   // but we use auto translate in organization pinia store so
   // https://stackoverflow.com/questions/77594888/how-to-use-i18n-messages-in-a-nuxt3-pinia-store
   const locale = (useNuxtApp().$i18n as any).locale

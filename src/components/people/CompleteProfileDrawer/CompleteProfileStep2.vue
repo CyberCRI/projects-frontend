@@ -3,66 +3,56 @@
     <LoaderSimple />
   </div>
   <template v-else>
-    <ProfileEditBlock :block-title="$t('complete-profile.skills.title')">
+    <ProfileEditBlock :block-title="t('complete-profile.skills.title')">
       <ProfileSkillsEditTab v-if="user" :user="user" @edited="loadUser" />
     </ProfileEditBlock>
   </template>
 </template>
-<script>
+
+<script setup>
 import ProfileEditBlock from '@/components/people/CompleteProfileDrawer/ProfileEditBlock.vue'
 import ProfileSkillsEditTab from '@/pages/UserProfilePageV2/Tabs/ProfileSkillsEditTab.vue'
 import { getUser } from '@/api/people.service.ts'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import useUsersStore from '@/stores/useUsers.ts'
 
-export default {
-  name: 'CompleteProfileStep2',
+defineOptions({ name: 'CompleteProfileStep2' })
+const emit = defineEmits(['saving', 'loading'])
 
-  components: { ProfileSkillsEditTab, ProfileEditBlock, LoaderSimple },
+const { t } = useNuxtI18n()
+const usersStore = useUsersStore()
+const { onboardingTrap } = useOnboardingStatus()
 
-  emits: ['saving', 'loading'],
+const user = ref(null)
+const loading = ref(false)
 
-  setup() {
-    const usersStore = useUsersStore()
-    const { onboardingTrap } = useOnboardingStatus()
-    return {
-      usersStore,
-      onboardingTrap,
-    }
-  },
-  data() {
-    return { user: null, loading: false }
-  },
+const loadUser = async () => {
+  try {
+    user.value = await getUser(usersStore.id)
+  } catch (error) {
+    console.error(error)
+  }
+}
 
-  async mounted() {
-    this.loading = true
-    this.$emit('loading', true)
-    try {
-      await this.loadUser()
-    } catch (error) {
-      console.error(error)
-    } finally {
-      this.loading = false
-      this.$emit('loading', false)
-    }
-  },
+onMounted(async () => {
+  loading.value = true
+  emit('loading', true)
 
-  methods: {
-    async loadUser() {
-      try {
-        this.user = await getUser(this.usersStore.id)
-      } catch (error) {
-        console.error(error)
-      }
-    },
-    /* eslint-disable-next-line vue/no-unused-properties */
-    async save() {
-      // this called by CompleteProfileDrawer.vue
-      await this.onboardingTrap('complete_profile', false)
+  try {
+    await loadUser()
+  } catch (error) {
+    console.error(error)
+  } finally {
+    loading.value = false
+    emit('loading', false)
+  }
+})
 
-      return true
-    },
-  },
+/* eslint-disable-next-line */
+const save = async () => {
+  // this called by CompleteProfileDrawer.vue
+  await onboardingTrap('complete_profile', false)
+  return true
 }
 </script>
 <style lang="scss" scoped>

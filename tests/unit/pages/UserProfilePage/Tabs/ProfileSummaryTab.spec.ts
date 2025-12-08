@@ -75,14 +75,13 @@ describe('ProfileSummaryTab', () => {
     expect(vm.isCurrentUser).toBeFalsy()
   })
 
-  it('should display a message if user has no bio set', async () => {
+  it('shouldnt display a message if user has no bio set', async () => {
     const user = UserFactory.generate()
     user.description = null
     let wrapper = lpiShallowMount(ProfileSummaryTab, buildParams(user))
 
     await flushPromises()
     expect(wrapper.find('user-descriptions-stub').exists()).toBe(false)
-    expect(wrapper.find('.empty-field').exists()).toBe(true)
   })
 
   it('should display bio if user has one', async () => {

@@ -533,12 +533,12 @@
     "need-login": "Sie müssen eingeloggt sein",
     "no": "Nein",
     "no-result": "Kein Ergebnis",
-    "none": "keine",
+    "none": "Keine",
     "of": "von",
     "org": "Mitglieder des Portals",
     "quit-project": "Sind Sie sicher, dass Sie dieses Projekt beenden wollen?",
     "people": "Menschen",
-    "read": "lesen",
+    "read": "Weiterlesen",
     "reply": "Antwort",
     "remove-group": "Sind Sie sicher, dass Sie diese Gruppe löschen möchten?",
     "remove-user": "Sind Sie sicher, dass Sie diesen Benutzer löschen möchten?",
@@ -548,7 +548,7 @@
     "see-more": "Mehr erfahren",
     "see": "Siehe",
     "see-all": "Alle",
-    "set-deadline": "Fristsetzung",
+    "set-deadline": "Frist",
     "shrink": "Schrumpfen",
     "submit": "Antrag",
     "the-project": "Das Projekt",
@@ -563,7 +563,9 @@
     "link-to": "Link zu",
     "other": "andere",
     "and": "und",
-    "create": "Erstellung"
+    "create": "Erstellung",
+    "order-asc": "Älter als neuster",
+    "order-desc": "neuste bis älteste"
   },
   "complete-profile": {
     "bio": {
@@ -813,12 +815,12 @@
     "background-color": "Hintergrundfarbe",
     "category-name": "Name der Kategorie",
     "organization-name": "Name Ihrer Gemeinde",
-    "description": "Beschreibung",
+    "description": "Warenbezeichnung",
     "email": "E-Mail senden",
     "email-contact": "E-Mail senden",
     "language": "Sprache",
     "title": "Titel",
-    "url": "URLs",
+    "url": "Url",
     "contact": {
       "subtitle": "Füllen Sie dieses schnelle Formular aus und wir kommen in Kürze zurück zu Ihnen",
       "subject": "Gegenstand",
@@ -989,7 +991,7 @@
         "label": "Leiter und Manager"
       },
       "managers": {
-        "label": "Teammitglieder",
+        "label": "Herausgeber",
         "help": "Teammitglieder"
       }
     }
@@ -1019,7 +1021,7 @@
     "communities": "Portale",
     "home": "Home",
     "categories": {
-      "title": "Projekte Kategorien"
+      "title": "Projektkategorien"
     },
     "login": "Anmelden",
     "account-request": "Ein Konto anfordern",
@@ -1061,7 +1063,7 @@
     "no-bio": "Sie schreiben Ihre Biographie noch nicht",
     "no-skill": "Sie haben noch keine Fähigkeiten hinzugefügt",
     "page-title": "Mein Profil",
-    "projects-participate": "Projekte, an denen ich beteiligt bin",
+    "projects-participate": "Projekte, die ich bin",
     "no-project-participate": "Sie sind noch nicht Mitglied eines Projekts",
     "projects-reviewing": "Projekte, die ich rezensiere",
     "no-project-reviewing": "Sie sind noch kein Reviewer eines Projekts",
@@ -1525,12 +1527,12 @@
         }
       },
       "publications": {
-        "no-editable": "Die Veröffentlichungen sind noch nicht verfügbar.",
-        "tab": "Veröffentlichungen"
+        "tab": "Veröffentlichungen",
+        "no-editable": "Redaktionen werden Anfang Januar 2026 verfügbar sein."
       },
       "conferences": {
-        "no-editable": "Die Konferenzen sind noch nicht verfügbar.",
-        "tab": "Konferenzen"
+        "tab": "Konferenzen",
+        "no-editable": "Editing Konferenzen werden Anfang Januar 2026 verfügbar sein"
       }
     },
     "go-to-page": "Profilseite anzeigen",
@@ -1554,11 +1556,11 @@
     "mentorship-offering": "Sie bieten Mentorship an",
     "publications": "Veröffentlichungen",
     "research-output-year": "Forschungsausgabe Jahr",
-    "publications-similars": "Veröffentlichungen ähnlich",
     "publications-empty": "Keine Veröffentlichungen.",
     "conferences": "Konferenzen",
     "conferences-similars": "Konferenzen ähnlich",
-    "conferences-empty": "Keine Konferenzen."
+    "conferences-empty": "Keine Konferenzen.",
+    "publications-similars": "Ähnliche Publikationen"
   },
   "profile-completed-modal": {
     "notice-congratulation": "Sie sind jetzt bereit, die Projektplattform zu nutzen.",
@@ -1572,12 +1574,12 @@
     "add-location": "Standort hinzufügen",
     "add-linked-project": "Ein verknüpftes Projekt hinzufügen",
     "add-location-point": "Einen Ortspunkt hinzufügen",
-    "add-review": "Zurück zur Übersicht",
+    "add-review": "Bewertung hinzufügen",
     "add-to-project": {
       "title": "Projekt hinzufügen",
       "blog-entry": "Blog-Eintrag",
       "goal": "Ziel",
-      "sdg": "SDG",
+      "sdg": "Sdg",
       "link-and-attached-document": "Ressourcen",
       "team-member": "Teammitglied / Gruppe",
       "announcement": "Ankündigung",
@@ -1649,7 +1651,7 @@
     "file-confirm-delete": "Sind Sie sicher, dass Sie diese Datei aus dem Projekt löschen möchten?",
     "blog-confirm-delete": "Sind Sie sicher, dass Sie diesen Blogeintrag aus dem Projekt löschen möchten?",
     "location-type-label": "Standort",
-    "lock": "Schlossprojekt",
+    "lock": "Projekt schließen",
     "private": "Private Projekte",
     "publish": "Projekt veröffentlichen",
     "public": "Öffentliche Projekte",
@@ -1710,7 +1712,7 @@
     "motivation-hint": "Es sollte mindestens 20 Zeichen enthalten",
     "new-announcement": "neue Ankündigung",
     "participant": "Teilnehmer",
-    "remunerated": "entlohnt",
+    "remunerated": "Vergütung",
     "send": "Bewerbung senden",
     "title": "Titel",
     "traineeship": "Ausbildung",
@@ -1737,7 +1739,7 @@
     "add-link-url-label": "URL",
     "add-link-text": "Link hinzufügen",
     "add-link-text-label": "Text",
-    "edit-link": "einen Link bearbeiten",
+    "edit-link": "Einen Link bearbeiten",
     "edit-file": "Datei bearbeiten",
     "max-size": "Max Größe 10MB",
     "invalid-image": "Ununterstützte Datei ... ist das ein Bild?",
@@ -1745,8 +1747,8 @@
     "cannot-upload-image": "Bild jetzt nicht hochladen",
     "link-address": "Linkadresse",
     "resources": "Ressourcen",
-    "web": "Link zu Web-Ressourcen",
-    "web-link": "web link | web link | web links"
+    "web": "Link zu Webressourcen | Links zu Web-Ressourcen",
+    "web-link": "Weblink | web link | web links"
   },
   "result_box": {
     "people": "Menschen",
@@ -1837,11 +1839,11 @@
     "role-editor": "Hat alle Bearbeitungsrechte für diese Gruppe.",
     "role-reviewer": "Wenn das Projekt als \"ready for review\" markiert wurde, kann der Reviewer Feedback geben und ein Projekt sperren, um weitere Bearbeitungen im Projekt zu verhindern. Ein Reviewer hat auch Bearbeitungsrechte.",
     "role-teammate": "Er hat keine Bearbeitungsrechte, erscheint aber als Teammitglied.",
-    "editor": "Teammitglied",
-    "editors": "Teammitglieder",
+    "editor": "Herausgeber",
+    "editors": "Herausgeber",
     "editor-groups": "Gruppen",
     "editor-group": "Gruppe",
-    "reviewer": "Rezension",
+    "reviewer": "Rückblick",
     "reviewers": "Bewertungen",
     "reviewer-groups": "Rezensionen",
     "reviewer-group": "Rezensionsgruppe",
@@ -1883,7 +1885,7 @@
     "filters": "Filter",
     "add-filter": "Filter hinzufügen",
     "geographic-map": "Geografische Karte",
-    "nothing-found": "nichts gefunden",
+    "nothing-found": "Nichts gefunden",
     "people-directory": "Suche in Personenverzeichnis",
     "projects": "Suche in Projekten",
     "projects-tab": "Projekte ({count})",
@@ -1898,13 +1900,13 @@
     "all-section": "Alle Unternehmen",
     "groups-section": "Gruppen",
     "people-section": "Menschen",
-    "result": "Ergebnisse",
+    "result": "Suchergebnisse",
     "search-title": "Suche",
     "search": "Suchgruppe",
     "search-for-a-tag": "Suche nach einem Tag",
-    "search-all": "Suche in allen Gemeinden",
+    "search-all": "Suche in allen Gemeinschaften",
     "search-group": "Erste Buchstaben der Typengruppe",
-    "search-tag": "Typ tags erste Buchstaben",
+    "search-tag": "Erste Buchstaben des Typ-Tags",
     "search-skill": "Art Skill's Label",
     "search-user": "Name der Person",
     "search-in": "Suche Projekte in",
@@ -2010,7 +2012,7 @@
     "title": "Was ist der Status des Projekts?",
     "toreview": "zu überprüfen",
     "updated": "Status des Projekts aktualisiert",
-    "na": "keine"
+    "na": "Keine"
   },
   "tag": {
     "add-specific": "Tags erstellen, um Projekte zu organisieren",
@@ -2558,7 +2560,7 @@
       "title": {
         "label": "Titel *",
         "required": "Der Titel ist erforderlich",
-        "placeholder": "der Titel der Nachrichten"
+        "placeholder": "Der Titel der Nachrichten"
       },
       "content": {
         "label": "Inhalt *",
@@ -2605,7 +2607,7 @@
       "title": {
         "label": "Titel *",
         "required": "Der Titel ist erforderlich",
-        "placeholder": "den Titel der Anweisung"
+        "placeholder": "Der Titel der Anweisung"
       },
       "content": {
         "label": "Inhalt *",

@@ -22,7 +22,7 @@
       class="picture picture-group"
       :picture-data="group.header_image"
       picture-size="medium"
-      default-picture="/placeholders/user_placeholder.svg"
+      :default-picture="DEFAULT_USER_PATATOID"
     />
 
     <div class="text text-limit">
@@ -49,6 +49,7 @@
 import BasicCard from '@/components/base/BasicCard.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
+import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 
 export default {
   name: 'GroupCard',
@@ -94,6 +95,7 @@ export default {
     return {
       translatedName,
       translatedShortDescription,
+      DEFAULT_USER_PATATOID,
     }
   },
 

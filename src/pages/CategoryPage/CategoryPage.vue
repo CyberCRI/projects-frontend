@@ -9,7 +9,7 @@ const props = defineProps({
   },
 })
 
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 const route = useRoute()
 const { canCreateProject } = usePermissions()
 const projectCategoriesStore = useProjectCategories()

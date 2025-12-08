@@ -7,7 +7,7 @@
             :alt="`${user.given_name} ${user.family_name} image`"
             :picture-data="user.profile_picture"
             picture-size="medium"
-            default-picture="/placeholders/user_placeholder.svg"
+            :default-picture="DEFAULT_USER_PATATOID"
           />
         </div>
       </div>
@@ -24,7 +24,7 @@
           </div>
 
           <div class="job">
-            {{ $filters.capitalize(user.job) }}
+            {{ capitalize(user.job) }}
           </div>
 
           <div v-if="displayableGroups.length" class="group-ctn">
@@ -84,7 +84,7 @@
       >
         <div v-if="user && user.email" class="social">
           <IconImage class="icon" name="Email" />
-          <span>{{ user.email }}</span>
+          <a :href="`mailto:${user.email}`">{{ $t('complete-profile.personal.email') }}</a>
         </div>
 
         <!-- TODO: Use privacy settings -->
@@ -109,47 +109,38 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { capitalize } from '@/functs/string'
+
 import IconImage from '@/components/base/media/IconImage.vue'
 import BadgeItem from '@/components/base/BadgeItem.vue'
 import SocialNetworks from './SocialNetworks.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
-export default {
-  name: 'ProfileHeader',
+import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 
-  components: { IconImage, BadgeItem, SocialNetworks, CroppedApiImage },
-  props: {
-    user: {
-      type: Object,
-      default: () => {},
-    },
-  },
+defineOptions({ name: 'ProfileHeader' })
 
-  emits: ['edit-profile'],
-  setup() {
-    const organizationsStore = useOrganizationsStore()
-    const runtimeConfig = useRuntimeConfig()
-    return {
-      organizationsStore,
-      runtimeConfig,
-    }
+const props = defineProps({
+  user: {
+    type: Object,
+    default: () => {},
   },
+})
 
-  computed: {
-    displayableGroups() {
-      return this.user?.people_groups
-        ? this.user.people_groups.filter(
-            (group) => group.organization === this.organizationsStore.current?.code
-          )
-        : []
-    },
-  },
-  methods: {
-    fixLocation(l) {
-      return l.split('\n').join('<br />')
-    },
-  },
+const organizationsStore = useOrganizationsStore()
+const runtimeConfig = useRuntimeConfig()
+
+const displayableGroups = computed(() => {
+  return props.user?.people_groups
+    ? props.user.people_groups.filter(
+        (group) => group.organization === organizationsStore.current?.code
+      )
+    : []
+})
+
+const fixLocation = (l) => {
+  return l.split('\n').join('<br />')
 }
 </script>
 
@@ -374,9 +365,9 @@ export default {
           margin-right: $space-xs;
         }
 
-        span {
+        a {
           text-decoration: underline;
-          font-weight: 700;
+          font-weight: 500;
           font-size: $font-size-s;
           color: $primary-dark;
         }

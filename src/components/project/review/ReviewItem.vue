@@ -22,7 +22,7 @@
         class="image"
         :picture-data="review?.reviewer?.profile_picture"
         picture-size="medium"
-        default-picture="/placeholders/user_placeholder.svg"
+        :default-picture="DEFAULT_USER_PATATOID"
       />
       <p class="name">{{ review.reviewer.given_name }} {{ review.reviewer.family_name }}</p>
 
@@ -43,6 +43,7 @@
 <script>
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
+import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 
 export default {
   name: 'ReviewItem',
@@ -63,7 +64,7 @@ export default {
 
   setup() {
     const { canDestroyReview, canAddReview } = usePermissions()
-    return { canDestroyReview, canAddReview }
+    return { canDestroyReview, canAddReview, DEFAULT_USER_PATATOID }
   },
 }
 </script>

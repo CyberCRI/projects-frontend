@@ -15,7 +15,7 @@
         <div class="buttons-ctn">
           <LpiButton
             v-if="!isAddMode"
-            :label="$filters.capitalize($t('common.delete'))"
+            :label="$t('common.delete')"
             :btn-icon="deleteLoading ? 'LoaderSimple' : null"
             class="delete-button"
             @click="showDeleteConfirm"
@@ -23,7 +23,7 @@
 
           <LpiButton
             :disabled="!faq.title"
-            :label="$filters.capitalize(isAddMode ? $t('common.add') : $t('common.edit'))"
+            :label="isAddMode ? $t('common.add') : $t('common.edit')"
             :btn-icon="addOrEditLoading ? 'LoaderSimple' : null"
             @click="submitFaq"
           />

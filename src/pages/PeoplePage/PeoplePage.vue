@@ -2,7 +2,7 @@
 import { getOrganizationByCode } from '@/api/organizations.service'
 
 const { searchFromQuery } = useSearch('people')
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const fixedSearch = computed(() => {
   return {
@@ -38,7 +38,7 @@ try {
 <template>
   <div class="page-section-extra-wide page-top">
     <h1 class="page-title">
-      {{ $filters.capitalize($t('common.people')) }}
+      {{ $t('common.people') }}
     </h1>
     <div class="main-ctn">
       <SearchBlock :limit="30" section="people" :freeze-search="isNavigating" />

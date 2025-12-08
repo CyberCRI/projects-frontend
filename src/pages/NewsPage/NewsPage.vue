@@ -11,7 +11,7 @@ const props = defineProps({
 })
 
 const { translateOneNews, translateNews } = useAutoTranslate()
-const { d, t } = useI18n()
+const { d, t } = useNuxtI18n()
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
 const router = useRouter()

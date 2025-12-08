@@ -1,28 +1,28 @@
 <template>
-  <div class="user" @click="$emit('user-click', user)">
+  <div class="user" @click="emit('user-click', user)">
     <CroppedApiImage
       :alt="user.id ? `${user.given_name} ${user.family_name} image` : `${user.name} image`"
       class="picture"
       :picture-data="user.profile_picture"
       picture-size="medium"
-      default-picture="/placeholders/user_placeholder.svg"
+      :default-picture="DEFAULT_USER_PATATOID"
     />
     <span v-if="roleLabel" class="badge" data-test="leader-badge">
       {{ $t(roleLabel) }}
     </span>
 
-    <div v-if="$filters.isNotGroup(user)" class="name-ctn">
+    <div v-if="isNotGroup(user)" class="name-ctn">
       <h4 class="user-name">
         {{ userName }}
       </h4>
     </div>
 
     <!--        TODO: ask Api to send information-->
-    <div v-if="$filters.isNotGroup(user)" class="job">
+    <div v-if="isNotGroup(user)" class="job">
       {{ user?.$t?.job }}
     </div>
 
-    <div v-if="$filters.isGroup(user)" class="name-ctn">
+    <div v-if="isGroup(user)" class="name-ctn">
       <h4 class="user-name">
         {{ user.name }}
       </h4>
@@ -30,40 +30,35 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { isNotGroup, isGroup } from '@/functs/users'
+
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
+import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 
-export default {
-  name: 'GroupMemberItem',
+defineOptions({ name: 'GroupMemberItem' })
 
-  components: {
-    CroppedApiImage,
+const props = defineProps({
+  user: {
+    type: Object,
+    default: () => {},
   },
+})
 
-  props: {
-    user: {
-      type: Object,
-      default: () => {},
-    },
-  },
+const emit = defineEmits(['user-click'])
 
-  emits: ['user-click'],
-
-  computed: {
-    userName() {
-      return `${this.user.given_name?.toLowerCase()} ${this.user.family_name?.toLowerCase()}`
-    },
-    roleLabel() {
-      if (this.user) {
-        if (this.user.is_leader && this.user.is_manager) return 'group.role.leaders-managers.label'
-        else if (this.user.is_manager) return 'group.role.managers.label'
-        else if (this.user.is_leader) return 'group.role.leaders.label'
-        else return 'group.role.members.label'
-      }
-      return null
-    },
-  },
-}
+const userName = computed(() => {
+  return `${props.user.given_name?.toLowerCase()} ${props.user.family_name?.toLowerCase()}`
+})
+const roleLabel = computed(() => {
+  if (props.user) {
+    if (props.user.is_leader && props.user.is_manager) return 'group.role.leaders-managers.label'
+    else if (props.user.is_manager) return 'group.role.managers.label'
+    else if (props.user.is_leader) return 'group.role.leaders.label'
+    else return 'group.role.members.label'
+  }
+  return null
+})
 </script>
 
 <style lang="scss" scoped>

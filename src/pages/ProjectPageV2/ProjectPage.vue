@@ -15,7 +15,7 @@ const globalsStore = useGlobalsStore()
 
 const toaster = useToasterStore()
 
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const { modals, toggleAddModal } = useProjectModals()
 

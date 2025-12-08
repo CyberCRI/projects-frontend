@@ -139,7 +139,7 @@
         <LinkButton
           v-if="!isConnected"
           :class="{ 'header__close-icon': isNavOpen }"
-          :label="$filters.capitalize($t('common.login'))"
+          :label="$t('common.login')"
           class="header__mobile-btn"
           data-test="login-button"
           @click="login"
@@ -199,6 +199,7 @@ import ContactDrawer from '@/components/app/ContactDrawer.vue'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useUsersStore from '@/stores/useUsers.ts'
+
 export default {
   name: 'LpiHeader',
 
@@ -219,7 +220,7 @@ export default {
     const organizationsStore = useOrganizationsStore()
     const usersStore = useUsersStore()
     const { isAdmin, isFacilitator, isSuperAdmin, isOrgAdmin } = usePermissions()
-    const { locale, setLocale } = useI18n()
+    const { locale, setLocale } = useNuxtI18n()
     const { isAutoTranslateActivated } = useAutoTranslate()
     return {
       projectCategoriesStore,

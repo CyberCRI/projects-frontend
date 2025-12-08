@@ -17,23 +17,23 @@
       class="header"
     >
       <div class="container">
-        <h2>{{ $t('discover.HEADER.title') }}&nbsp;{{ $t('discover.HEADER.impact') }}</h2>
+        <h2>{{ t('discover.HEADER.title') }}&nbsp;{{ t('discover.HEADER.impact') }}</h2>
 
         <p>
-          {{ $t('discover.HEADER.des') }}&nbsp;{{ $t('discover.HEADER.facilitate') }}&nbsp;{{
-            $t('discover.HEADER.common')
+          {{ t('discover.HEADER.des') }}&nbsp;{{ t('discover.HEADER.facilitate') }}&nbsp;{{
+            t('discover.HEADER.common')
           }}
         </p>
 
         <div class="header-buttons">
           <LpiButton
-            :label="$t('discover.HEADER.button_discover')"
+            :label="t('discover.HEADER.button_discover')"
             level="primary"
             to="/dashboard"
           />
 
           <LpiButton
-            :label="$t('discover.HEADER.button_access')"
+            :label="t('discover.HEADER.button_access')"
             href="#get-access"
             level="primary"
             @click.prevent="goTo('#get-access')"
@@ -44,7 +44,7 @@
 
     <div class="intro bg-green">
       <div class="container">
-        <h4>{{ $t('discover.INTRO.title') }}</h4>
+        <h4>{{ t('discover.INTRO.title') }}</h4>
 
         <div class="intro-list">
           <div v-for="(introListItem, index) in introList" :key="index" class="intro-item">
@@ -57,7 +57,7 @@
             <div class="item-num" v-text="introListItem.num" />
 
             <div class="item-title">
-              {{ $t(`discover.INTRO.list[${index}].title`) }}
+              {{ t(`discover.INTRO.list[${index}].title`) }}
             </div>
           </div>
         </div>
@@ -74,7 +74,7 @@
               />
             </div>
 
-            <h3>{{ $t(`discover.FEATURES[${featindex}].title`) }}</h3>
+            <h3>{{ t(`discover.FEATURES[${featindex}].title`) }}</h3>
 
             <i18n-t :keypath="`discover.FEATURES[${featindex}].des`" tag="p">
               <br />
@@ -90,14 +90,14 @@
                 >
                   <a v-if="item.href" :href="item.href">
                     <img
-                      :alt="$t(`discover.FEATURES[${featindex}].list[${index}].title`)"
+                      :alt="t(`discover.FEATURES[${featindex}].list[${index}].title`)"
                       :src="`${runtimeConfig.public.appPublicBinariesPrefix}/discover/feat/${item.pic})`"
                     />
                   </a>
 
                   <img
                     v-else
-                    :alt="$t(`discover.FEATURES[${featindex}].list[${index}].title`)"
+                    :alt="t(`discover.FEATURES[${featindex}].list[${index}].title`)"
                     :src="`${runtimeConfig.public.appPublicBinariesPrefix}/discover/feat/${item.pic})`"
                   />
                 </li>
@@ -106,7 +106,7 @@
               <ul class="tabs-title">
                 <li v-for="(item, index) in feature.list" :key="index">
                   <a :class="currentTab == index ? 'selected' : ''" @click="currentTab = index">
-                    {{ $t(`discover.FEATURES[${featindex}].list[${index}].title`) }}
+                    {{ t(`discover.FEATURES[${featindex}].list[${index}].title`) }}
                   </a>
                 </li>
               </ul>
@@ -118,7 +118,7 @@
                   :class="currentTab == index ? 'selected' : ''"
                 >
                   <p>
-                    {{ $t(`discover.FEATURES[${featindex}].list[${index}].des`) }}
+                    {{ t(`discover.FEATURES[${featindex}].list[${index}].des`) }}
                   </p>
                 </li>
               </ul>
@@ -132,7 +132,7 @@
 
               <div class="feature-table-list">
                 <p v-for="(item, index) in feature.list" :key="index" class="feature-table-item">
-                  {{ $t(`discover.FEATURES[${featindex}].list[${index}].des`) }}
+                  {{ t(`discover.FEATURES[${featindex}].list[${index}].des`) }}
                 </p>
               </div>
             </div>
@@ -144,7 +144,7 @@
             >
               <div v-for="(item, index) in feature.list" :key="index" class="feature-list-item">
                 <img
-                  :alt="$t(`discover.FEATURES[${featindex}].list[${index}].title`)"
+                  :alt="t(`discover.FEATURES[${featindex}].list[${index}].title`)"
                   :src="`${runtimeConfig.public.appPublicBinariesPrefix}/discover/feat/${item.pic})`"
                   @click="
                     zoommedImg = `${runtimeConfig.public.appPublicBinariesPrefix}/discover/feat/${item.pic})`
@@ -152,11 +152,11 @@
                 />
 
                 <h6>
-                  {{ $t(`discover.FEATURES[${featindex}].list[${index}].title`) }}
+                  {{ t(`discover.FEATURES[${featindex}].list[${index}].title`) }}
                 </h6>
 
                 <p>
-                  {{ $t(`discover.FEATURES[${featindex}].list[${index}].des`) }}
+                  {{ t(`discover.FEATURES[${featindex}].list[${index}].des`) }}
                 </p>
               </div>
             </div>
@@ -175,20 +175,20 @@
 
     <div class="testimonials-projects bg-dark">
       <div class="container">
-        <h3>{{ $t('discover.PROJECT.title') }}</h3>
+        <h3>{{ t('discover.PROJECT.title') }}</h3>
 
-        <p>{{ $t('discover.PROJECT.des') }}</p>
+        <p>{{ t('discover.PROJECT.des') }}</p>
 
         <a :href="`${getMetaPortalUrl}/projects/PyimxKq5/summary`" class="projects-item">
           <img
-            :alt="$t('discover.PROJECT.project.title')"
+            :alt="t('discover.PROJECT.project.title')"
             :src="`${runtimeConfig.public.appPublicBinariesPrefix}/discover/project-0.jpg`"
           />
 
           <div class="projects-item-title">
-            <h6 v-text="$t('discover.PROJECT.project.title')" />
+            <h6 v-text="t('discover.PROJECT.project.title')" />
 
-            <p v-text="$t('discover.PROJECT.project.des')" />
+            <p v-text="t('discover.PROJECT.project.des')" />
           </div>
         </a>
       </div>
@@ -218,24 +218,24 @@
             target="_blank"
           >
             <img
-              :alt="$t(`discover.TESTIMONIALS.list[${index}].project.title`)"
+              :alt="t(`discover.TESTIMONIALS.list[${index}].project.title`)"
               :src="`${runtimeConfig.public.appPublicBinariesPrefix}/discover/${item.project.pic})`"
             />
 
             <div class="projects-item-title">
-              <h6 v-text="$t(`discover.TESTIMONIALS.list[${index}].project.title`)" />
+              <h6 v-text="t(`discover.TESTIMONIALS.list[${index}].project.title`)" />
 
-              <p v-text="$t(`discover.TESTIMONIALS.list[${index}].project.des`)" />
+              <p v-text="t(`discover.TESTIMONIALS.list[${index}].project.des`)" />
             </div>
           </a>
 
           <div class="quote-container">
             <div class="quote-title">
-              {{ $t(`discover.TESTIMONIALS.list[${index}].title`) }}
+              {{ t(`discover.TESTIMONIALS.list[${index}].title`) }}
             </div>
 
             <p class="quote-des">
-              {{ $t(`discover.TESTIMONIALS.list[${index}].des`) }}
+              {{ t(`discover.TESTIMONIALS.list[${index}].des`) }}
             </p>
 
             <div class="quote-content">
@@ -248,7 +248,7 @@
               </i18n-t>
 
               <p class="quote-author">
-                {{ $t(`discover.TESTIMONIALS.list[${index}].author`) }}
+                {{ t(`discover.TESTIMONIALS.list[${index}].author`) }}
               </p>
             </div>
           </div>
@@ -273,7 +273,7 @@
 
     <div id="get-access" class="get-access bg-light">
       <div class="container">
-        <h3>{{ $t('discover.ACCESS.title') }}</h3>
+        <h3>{{ t('discover.ACCESS.title') }}</h3>
 
         <i18n-t keypath="discover.ACCESS.des" tag="p">
           <br />
@@ -285,7 +285,7 @@
               :src="`${runtimeConfig.public.appPublicBinariesPrefix}/discover/icons/_icon-user-white.svg)`"
             />
 
-            <span class="button-text">{{ $t('discover.ACCESS.button_personal.text') }}</span>
+            <span class="button-text">{{ t('discover.ACCESS.button_personal.text') }}</span>
           </a>
 
           <a class="button button-icon" href="https://forms.gle/hVYD1751YaGh7cmD7" target="_blank">
@@ -293,7 +293,7 @@
               :src="`${runtimeConfig.public.appPublicBinariesPrefix}/discover/icons/_icon-community-white.svg`"
             />
 
-            <span class="button-text">{{ $t('discover.ACCESS.button_community.text') }}</span>
+            <span class="button-text">{{ t('discover.ACCESS.button_community.text') }}</span>
           </a>
         </div>
       </div>
@@ -303,7 +303,7 @@
 
     <div class="contact bg-dark">
       <div class="container">
-        <h3>{{ $t('discover.CONTACT.title') }}</h3>
+        <h3>{{ t('discover.CONTACT.title') }}</h3>
 
         <i18n-t keypath="discover.CONTACT.des" tag="p">
           <a
@@ -323,174 +323,147 @@
   </div>
 </template>
 
-<script>
-import debounce from 'lodash.debounce'
+<script setup>
+import { debounce } from 'es-toolkit'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import CriPartners from '@/components/CriPartners.vue'
 
 import { useRuntimeConfig } from '#imports'
 
-export default {
-  name: 'DiscoverPage',
+defineOptions({ name: 'DiscoverPage' })
+const runtimeConfig = useRuntimeConfig()
 
-  components: { LpiButton, CriPartners },
+const { t } = useNuxtI18n()
 
-  // pageTitle() {
-  //     return this.$t('discover.page-title')
-  // },
+const currentTab = ref(0)
+const currentslide = ref(0)
+const currentOffset = ref(0)
+const scrollAtTop = ref(true)
+const zoommedImg = ref(null)
 
-  setup() {
-    const runtimeConfig = useRuntimeConfig()
-
-    return {
-      runtimeConfig,
-    }
+const introList = [
+  {
+    num: '1280+',
+    icon: 'icon-project-white.svg',
   },
-
-  data() {
-    return {
-      currentTab: 0,
-      currentslide: 0,
-      currentOffset: 0,
-      scrollAtTop: true,
-      zoommedImg: null,
-      introList: [
-        {
-          num: '1280+',
-          icon: 'icon-project-white.svg',
-        },
-        {
-          num: '1850+',
-          icon: 'icon-user-white.svg',
-        },
-        {
-          num: '15+',
-          icon: 'icon-community-white.svg',
-        },
-      ],
-      features: [
-        {
-          type: 'tabs',
-          icon: 'icon-light-green.svg',
-          pic: 'illu1.jpg',
-          list: [
-            {
-              pic: 'feat-linked.jpg',
-            },
-            {
-              pic: 'feat-tag.jpg',
-              href: '/tags-map',
-            },
-            {
-              pic: 'feat-geo.jpg',
-              href: '/map',
-            },
-          ],
-        },
-        {
-          type: 'table',
-          icon: 'icon-share-green.svg',
-          pic: 'illu2.jpg',
-          tablepic: 'feat-share.jpg',
-        },
-        {
-          type: 'list',
-          icon: 'icon-teach-green.svg',
-          pic: 'illu6.jpg',
-          list: [
-            {
-              pic: 'feat-templates.jpg',
-            },
-            {
-              pic: 'feat-review.jpg',
-            },
-          ],
-        },
-        {
-          type: 'list',
-          icon: 'icon-community-green.svg',
-          list: [
-            {
-              pic: 'feat-portal.jpg',
-            },
-            {
-              pic: 'feat-admin.jpg',
-            },
-            {
-              pic: 'feat-external.jpg',
-            },
-          ],
-        },
-      ],
-      testimonials: [
-        {
-          project: {
-            id: 'vVfBTCl4',
-            pic: 'project-1.jpg',
-          },
-        },
-        {
-          project: {
-            id: 'IFJer642',
-            pic: 'project-2.jpg',
-          },
-        },
-        {
-          project: {
-            id: 'z1wzXjYk',
-            pic: 'project-3.jpg',
-          },
-        },
-      ],
-    }
+  {
+    num: '1850+',
+    icon: 'icon-user-white.svg',
   },
-
-  computed: {
-    maxSlide() {
-      return this.testimonials.length
-    },
-    getMetaPortalUrl() {
-      return this.runtimeConfig.public.appMetaPortalUrl
-    },
+  {
+    num: '15+',
+    icon: 'icon-community-white.svg',
   },
-
-  mounted() {
-    this.toggleTopBtn = debounce(
-      () => {
-        this.currentOffset = document.querySelector('#scrollview').scrollTop
-        this.scrollAtTop = this.currentOffset > 500 ? false : true
+]
+const features = [
+  {
+    type: 'tabs',
+    icon: 'icon-light-green.svg',
+    pic: 'illu1.jpg',
+    list: [
+      {
+        pic: 'feat-linked.jpg',
       },
-      150,
-      { leading: false, trailing: true }
-    )
-
-    document.querySelector('#scrollview').addEventListener('scroll', this.toggleTopBtn)
+      {
+        pic: 'feat-tag.jpg',
+        href: '/tags-map',
+      },
+      {
+        pic: 'feat-geo.jpg',
+        href: '/map',
+      },
+    ],
   },
-
-  beforeUnmount() {
-    document.querySelector('#scrollview').removeEventListener('scroll', this.toggleTopBtn)
-    document.title = 'Projects'
+  {
+    type: 'table',
+    icon: 'icon-share-green.svg',
+    pic: 'illu2.jpg',
+    tablepic: 'feat-share.jpg',
   },
-
-  methods: {
-    onSlide(index) {
-      this.currentslide = index
-    },
-
-    goTo(anchor) {
-      document.querySelector(anchor).scrollIntoView({
-        behavior: 'smooth',
-      })
-    },
-
-    slidePrev() {
-      this.currentslide = this.currentslide > 0 ? this.currentslide - 1 : this.maxSlide - 1
-    },
-
-    slideNext() {
-      this.currentslide = this.currentslide < this.maxSlide - 1 ? this.currentslide + 1 : 0
+  {
+    type: 'list',
+    icon: 'icon-teach-green.svg',
+    pic: 'illu6.jpg',
+    list: [
+      {
+        pic: 'feat-templates.jpg',
+      },
+      {
+        pic: 'feat-review.jpg',
+      },
+    ],
+  },
+  {
+    type: 'list',
+    icon: 'icon-community-green.svg',
+    list: [
+      {
+        pic: 'feat-portal.jpg',
+      },
+      {
+        pic: 'feat-admin.jpg',
+      },
+      {
+        pic: 'feat-external.jpg',
+      },
+    ],
+  },
+]
+const testimonials = [
+  {
+    project: {
+      id: 'vVfBTCl4',
+      pic: 'project-1.jpg',
     },
   },
+  {
+    project: {
+      id: 'IFJer642',
+      pic: 'project-2.jpg',
+    },
+  },
+  {
+    project: {
+      id: 'z1wzXjYk',
+      pic: 'project-3.jpg',
+    },
+  },
+]
+
+const getMetaPortalUrl = runtimeConfig.public.appMetaPortalUrl
+
+const toggleTopBtn = debounce(
+  () => {
+    currentOffset.value = document.querySelector('#scrollview').scrollTop
+    scrollAtTop.value = currentOffset.value > 500 ? false : true
+  },
+  150,
+  { leading: false, trailing: true }
+)
+
+onMounted(() => {
+  document.querySelector('#scrollview').addEventListener('scroll', toggleTopBtn)
+})
+
+onBeforeUnmount(() => {
+  document.querySelector('#scrollview').removeEventListener('scroll', toggleTopBtn)
+  document.title = 'Projects'
+})
+
+const goTo = (anchor) => {
+  document.querySelector(anchor).scrollIntoView({ behavior: 'smooth' })
+}
+
+const onSlide = (index) => {
+  currentslide.value = index
+}
+
+const slidePrev = () => {
+  currentslide.value = currentslide.value > 0 ? currentslide.value - 1 : this.maxSlide - 1
+}
+
+const slideNext = () => {
+  currentslide.value = currentslide.value < this.maxSlide - 1 ? currentslide.value + 1 : 0
 }
 </script>
 
