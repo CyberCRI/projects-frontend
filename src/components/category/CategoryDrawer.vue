@@ -29,7 +29,7 @@
             </h4>
             <LpiButton
               :disabled="status !== 'success'"
-              :label="$filters.capitalize($t('category.edit'))"
+              :label="$t('category.edit')"
               @click="templateSearchIsOpened = true"
             />
           </div>

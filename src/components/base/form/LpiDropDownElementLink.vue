@@ -8,6 +8,8 @@
 </template>
 
 <script setup>
+import { capitalize } from '@/functs/string'
+
 defineOptions({
   name: 'LpiDropDownElementLink',
 })
@@ -22,7 +24,7 @@ defineProps({
 
 const label = computed(() => {
   const vl = option.label ?? option.name ?? option.value
-  return $filters.capitalize(vl)
+  return capitalize(vl)
 })
 </script>
 

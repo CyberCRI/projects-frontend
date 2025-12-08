@@ -143,7 +143,7 @@
       :disabled="otherFieldDisabled"
       class="img-ctn"
     >
-      <label>{{ $filters.capitalize($t('project.image-header')) }}</label>
+      <label>{{ $t('project.image-header') }}</label>
       <ImageEditor
         v-model:image-sizes="form.imageSizes"
         v-model:picture="form.header_image"
@@ -165,7 +165,7 @@
       :disabled="otherFieldDisabled"
       class="language"
     >
-      <label>{{ $filters.capitalize($t('project.language')) }}</label>
+      <label>{{ $t('project.language') }}</label>
       <LpiSelect
         v-model="form.language"
         :value="form.language"
