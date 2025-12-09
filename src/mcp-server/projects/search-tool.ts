@@ -117,10 +117,10 @@ export default (server) => {
         const query = {
           limit: 12,
           organizations: [orgCode],
-          tagIds: tagIds || [],
+          tags: tagIds || [],
           sdgs: sdgs || [],
           members: members || [],
-          types: ['projects'],
+          types: ['project'],
           // categorieIds,
         }
         const queryResult: any = await mcpFetch(
@@ -128,6 +128,7 @@ export default (server) => {
           { query },
           extras
         )
+
         // leaving "all cases" mapping for safety, even if this is "projects only" search
         results = queryResult.results.map((item) => {
           if (item.type === 'project') {
@@ -166,7 +167,7 @@ export default (server) => {
         categories: z.array(z.string()).optional().describe('List of categories to filter by'),
       },
       outputSchema: {
-        results: z.array(PROJECT_PREVIEW_OUTPUT_SCHEMA).describe('The list of search results'),
+        results: z.array(USER_PREVIEW_OUTPUT_SCHEMA).describe('The list of search results'),
       },
     },
     async ({ queryTerms, skills, sdgs }, extras) => {
@@ -184,7 +185,7 @@ export default (server) => {
           organizations: [orgCode],
           skills: tagIds || [],
           sdgs: sdgs || [],
-          types: ['people'],
+          types: ['user'],
         }
         const queryResult: any = await mcpFetch(
           `${API_BASE_URL}search/${encodeURIComponent(queryTerms)}/?limit=30&organizations=${orgCode}`,
