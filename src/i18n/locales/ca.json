@@ -2733,7 +2733,10 @@
     "title": "Xateja amb IA",
     "input-placeholder": "Escriu el teu missatge aquí...",
     "intro-message": "Hola, com et puc ajudar avui?",
-    "drawer-button-label": "Assistent d'IA"
+    "drawer-button-label": "Assistent d'IA",
+    "fetching_tools": "Obtenció d'eines...",
+    "fetching_data": "Obtenció de dades...",
+    "reasoning": "Pensant..."
   },
   "researcher": {
     "relators": {

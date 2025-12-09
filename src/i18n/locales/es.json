@@ -2733,7 +2733,10 @@
     "title": "Chatear con IA",
     "input-placeholder": "Escribe tu mensaje aquí...",
     "intro-message": "Hola, ¿cómo puedo ayudarte hoy?",
-    "drawer-button-label": "Asistente de IA"
+    "drawer-button-label": "Asistente de IA",
+    "fetching_tools": "Obteniendo herramientas...",
+    "fetching_data": "Obteniendo datos...",
+    "reasoning": "Pensando..."
   },
   "researcher": {
     "relators": {
