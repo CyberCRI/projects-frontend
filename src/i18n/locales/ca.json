@@ -1595,6 +1595,7 @@
     "create-project": "Crea un projecte",
     "create": {
       "choose-category-first": "Primer seleccioneu una categoria",
+      "choose-template-first": "Primer seleccioneu una plantilla",
       "help-link": "Som aquí per ajudar.",
       "notice": "Els camps marcats amb * són obligatoris. Sempre ho pots modificar més tard. No saps què hauries de fer?",
       "title": "Crea un nou projecte"

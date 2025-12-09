@@ -1603,6 +1603,7 @@
     "create-project": "Create a project",
     "create": {
       "choose-category-first": "Please choose a category first",
+      "choose-template-first": "Please choose a template first",
       "help-link": "We're here to help.",
       "notice": "Fields marked with * are mandatory. You can always modify this later. No idea what you should do?",
       "title": "Create a new project"
