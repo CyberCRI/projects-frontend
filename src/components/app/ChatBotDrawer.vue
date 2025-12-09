@@ -204,11 +204,6 @@ watch(
   }
 )
 
-const introMessage = computed(() => ({
-  text: t('chatbot.intro-message'),
-  html: false,
-}))
-
 watchEffect(() => {
   if (chatBox.value) {
     chatBox.value.setPlaceholderText(placeholderText.value)
@@ -298,6 +293,16 @@ if (window && !window.handleChatClick) {
 }
 
 const remarkableOptions = ref({ linkify: true, linkTarget: '_blank' })
+
+const resetChat = () => {
+  conversation.value = []
+  conversationId.value = null
+  history.value = []
+  if (chatBox.value) {
+    chatBox.value.resetChat()
+  }
+  analytics.chatbot.reset()
+}
 </script>
 
 <template>
@@ -314,7 +319,6 @@ const remarkableOptions = ref({ linkify: true, linkTarget: '_blank' })
       :history="history"
       :style="chatStyle"
       :connect="connectOptions"
-      :introMessage="introMessage"
       :avatars="true"
       :submitButtonStyles="submitButtonStyles"
       :messageStyles="messageStyles"
@@ -336,23 +340,39 @@ const remarkableOptions = ref({ linkify: true, linkTarget: '_blank' })
           border-radius: .5rem;
         }
       "
-    ></deep-chat>
-    <div v-if="suggestButtons?.length" class="prompt-suggestions">
-      <a
-        v-for="button in suggestButtons"
-        :key="button"
-        class="prompt-suggestion"
-        href="#"
-        @click.prevent="onSuggestButtonClick(button)"
+    >
+      <div
+        style="
+          margin: 1rem;
+          background-color: #f3f3f3;
+          border-radius: 10px;
+          padding: 12px;
+          padding-bottom: 15px;
+          display: none;
+        "
       >
-        {{ button }}
-      </a>
+        <p>
+          {{ $t('chatbot.intro-message') }}
+        </p>
+        <ul v-if="suggestButtons?.length" class="prompt-suggestions">
+          <li v-for="button in suggestButtons" :key="button">
+            <a class="prompt-suggestion" href="#" @click.prevent="onSuggestButtonClick(button)">
+              {{ button }}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </deep-chat>
+    <div class="action-bar">
+      <a class="action-button" href="#" @click.prevent="resetChat()">Reset Chat</a>
     </div>
   </BaseDrawer>
 </template>
 <style lang="scss" scoped>
-.prompt-suggestions {
-  .prompt-suggestion {
+.action-bar {
+  text-align: right;
+
+  .action-button {
     background-color: #eee;
     border-radius: 4px;
     padding: 4px;
