@@ -344,6 +344,7 @@ const resetChat = () => {
       <div
         style="
           margin: 1rem;
+          padding: 1rem;
           background-color: #f3f3f3;
           border-radius: 10px;
           padding: 12px;
@@ -371,7 +372,6 @@ const resetChat = () => {
 <style lang="scss" scoped>
 .action-bar {
   text-align: right;
-
   .action-button {
     background-color: #eee;
     border-radius: 4px;
