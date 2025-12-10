@@ -2,6 +2,7 @@
 import 'deep-chat'
 import analytics from '@/analytics'
 import useUsersStore from '@/stores/useUsers.ts'
+import { shuffle } from 'es-toolkit'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -166,7 +167,20 @@ const runtimeConfig = useRuntimeConfig()
 const chatExemples = (runtimeConfig.public.appChatbotExemples || '')
   .split('§')
   .filter((s) => !!s && s.trim().length)
-const suggestButtons = ref(chatExemples)
+
+const setExemples = () => shuffle(chatExemples).slice(0, 3)
+
+const suggestButtons = ref(setExemples())
+
+watch(
+  () => conversationStarted.value,
+  (neo, old) => {
+    if (neo != old) {
+      // conversation was reset
+      suggestButtons.value = setExemples()
+    }
+  }
+)
 
 function placeCaretAtEnd(el) {
   // https://stackoverflow.com/questions/4233265/contenteditable-set-caret-at-the-end-of-the-text-cross-browser
