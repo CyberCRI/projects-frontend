@@ -190,9 +190,10 @@ const displayableGroups = computed(() => {
         transition: transform 0.3s ease-in-out;
         transform-origin: center bottom;
         display: inline-block;
+        transform: translateZ(0);
 
         &:hover {
-          transform: scaleY(1.3);
+          transform: translateZ(0) scaleY(1.3);
         }
       }
 
@@ -210,9 +211,10 @@ const displayableGroups = computed(() => {
           width: pxToRem(40px);
           height: pxToRem(40px);
           transition: all 0.2s ease-in-out;
+          transform: translateZ(0);
 
           &:hover {
-            transform: scale(1.2);
+            transform: translateZ(0) scale(1.2);
           }
         }
       }

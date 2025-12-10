@@ -169,113 +169,113 @@ export default {
 
 @keyframes open-eye {
   0% {
-    transform: scaleY(1);
+    transform: translateZ(0) scaleY(1);
   }
 
   20% {
-    transform: scaleY(0.5);
+    transform: translateZ(0) scaleY(0.5);
   }
 
   65% {
-    transform: scaleY(1.3);
+    transform: translateZ(0) scaleY(1.3);
   }
 
   100% {
-    transform: scaleY(1);
+    transform: translateZ(0) scaleY(1);
   }
 }
 
 @keyframes scale-plus {
   0% {
-    transform: scale(1, 1);
+    transform: translateZ(0) scale(1, 1);
   }
 
   30% {
-    transform: scale(1.3, 1);
+    transform: translateZ(0) scale(1.3, 1);
   }
 
   60% {
-    transform: scale(1, 1.3);
+    transform: translateZ(0) scale(1, 1.3);
   }
 
   90% {
-    transform: scale(1, 1);
+    transform: translateZ(0) scale(1, 1);
   }
 }
 
 @keyframes rotate-pen {
   0% {
-    transform: rotate(0deg);
+    transform: translateZ(0) rotate(0deg);
   }
 
   25% {
-    transform: rotate(10deg);
+    transform: translateZ(0) rotate(10deg);
   }
 
   75% {
-    transform: rotate(-10deg);
+    transform: translateZ(0) rotate(-10deg);
   }
 
   100% {
-    transform: rotate(0deg);
+    transform: translateZ(0) rotate(0deg);
   }
 }
 
 @keyframes rotate-close {
   0% {
-    transform: rotate(0deg);
+    transform: translateZ(0) rotate(0deg);
   }
 
   25% {
-    transform: rotate(90deg);
+    transform: translateZ(0) rotate(90deg);
   }
 
   75% {
-    transform: rotate(-90deg);
+    transform: translateZ(0) rotate(-90deg);
   }
 
   100% {
-    transform: rotate(0deg);
+    transform: translateZ(0) rotate(0deg);
   }
 }
 
 @keyframes horizontal-squeeze {
   0% {
-    transform: scaleX(1);
+    transform: translateZ(0) scaleX(1);
   }
 
   50% {
-    transform: scaleX(1.4);
+    transform: translateZ(0) scaleX(1.4);
   }
 
   100% {
-    transform: scaleX(1);
+    transform: translateZ(0) scaleX(1);
   }
 }
 
 @keyframes trash-anim {
   0% {
-    transform: scaleY(1);
+    transform: translateZ(0) scaleY(1);
   }
 
   20% {
-    transform: scaleY(0.3);
+    transform: translateZ(0) scaleY(0.3);
   }
 
   40% {
-    transform: scaleY(1.3);
+    transform: translateZ(0) scaleY(1.3);
   }
 
   60% {
-    transform: scaleY(0.8);
+    transform: translateZ(0) scaleY(0.8);
   }
 
   80% {
-    transform: scaleY(1.15);
+    transform: translateZ(0) scaleY(1.15);
   }
 
   100% {
-    transform: scaleY(1);
+    transform: translateZ(0) scaleY(1);
   }
 }
 </style>

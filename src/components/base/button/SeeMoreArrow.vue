@@ -68,6 +68,7 @@ $icon-size: pxToRem(18px);
       height: $icon-size;
       width: $icon-size;
       fill: $primary-dark;
+      transform: translateZ(0);
     }
   }
 
@@ -84,15 +85,15 @@ $icon-size: pxToRem(18px);
 
 @keyframes arrowbounce {
   0% {
-    transform: scale(1, 1) translateX(0%);
+    transform: translateZ(0) scale(1, 1) translateX(0%);
   }
 
   80% {
-    transform: scale(0.7, 1) translateX(100%);
+    transform: translateZ(0) scale(0.7, 1) translateX(100%);
   }
 
   100% {
-    transform: scale(1, 1) translateX(0%);
+    transform: translateZ(0) scale(1, 1) translateX(0%);
   }
 }
 </style>

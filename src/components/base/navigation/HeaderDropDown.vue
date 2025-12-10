@@ -297,6 +297,7 @@ export default {
 
         .label,
         .menu-icon svg {
+          transform: translateZ(0);
           transition: transform 200ms ease-in-out;
         }
       }
@@ -305,12 +306,12 @@ export default {
         .drop-down-menu-item-content {
           .label {
             color: $primary-light;
-            transform: scaleX(1.1);
+            transform: translateZ(0) scaleX(1.1);
           }
 
           svg {
             fill: $primary-light;
-            transform: scale(1.35);
+            transform: translateZ(0) scale(1.35);
           }
         }
       }
@@ -384,12 +385,12 @@ export default {
     height: pxToRem(6px);
     background-color: $primary-dark;
     bottom: pxToRem(-6px);
-    transform: scale(0);
+    transform: translateZ(0) scale(0);
     transition: transform 0.15s ease-in-out;
   }
 
   &:hover::after {
-    transform: scale(1);
+    transform: translateZ(0) scale(1);
   }
 }
 </style>
