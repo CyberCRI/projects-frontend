@@ -46,9 +46,10 @@ const props = defineProps({
 const { t } = useNuxtI18n()
 const emit = defineEmits(['user-click'])
 
-const userName = () => {
-  return `${props.user.given_name?.toLowerCase()} ${props.user.family_name?.toLowerCase()}`
-}
+const userName = computed(
+  () => `${props.user.given_name?.toLowerCase()} ${props.user.family_name?.toLowerCase()}`
+)
+
 const roleLabel = computed(() => {
   switch (props.user?.role) {
     case 'owners':
