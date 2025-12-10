@@ -2744,7 +2744,8 @@
     "drawer-button-label": "AI Assistant",
     "fetching_tools": "Fetching tools...",
     "fetching_data": "Fetching data...",
-    "reasoning": "Thinking..."
+    "reasoning": "Thinking...",
+    "restart": "Restart conversation"
   },
   "researcher": {
     "relators": {

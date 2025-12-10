@@ -2736,7 +2736,8 @@
     "drawer-button-label": "Assistent d'IA",
     "fetching_tools": "Obtenció d'eines...",
     "fetching_data": "Obtenció de dades...",
-    "reasoning": "Pensant..."
+    "reasoning": "Pensant...",
+    "restart": "Reinicia la conversa"
   },
   "researcher": {
     "relators": {

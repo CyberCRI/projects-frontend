@@ -2744,7 +2744,8 @@
     "drawer-button-label": "Assistant IA",
     "fetching_tools": "Récupération des outils...",
     "fetching_data": "Récupération des données...",
-    "reasoning": "Réflexion en cours..."
+    "reasoning": "Réflexion en cours...",
+    "restart": "Redémarrer la conversation"
   },
   "researcher": {
     "relators": {

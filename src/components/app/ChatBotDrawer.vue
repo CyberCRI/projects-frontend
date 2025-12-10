@@ -70,7 +70,9 @@ const addToConversation = (...args) => {
   }
 }
 
+const conversationStarted = ref(false)
 const requestInterceptor = (requestDetails) => {
+  conversationStarted.value = true
   addToConversation(...requestDetails.body.messages)
   // requestDetails.body.messages = conversation.value
   requestDetails.body.conversationId = conversationId.value
@@ -295,6 +297,7 @@ if (window && !window.handleChatClick) {
 const remarkableOptions = ref({ linkify: true, linkTarget: '_blank' })
 
 const resetChat = () => {
+  conversationStarted.value = false
   conversation.value = []
   conversationId.value = null
   history.value = []
@@ -353,35 +356,73 @@ const resetChat = () => {
         <p>
           {{ $t('chatbot.intro-message') }}
         </p>
-        <ul v-if="suggestButtons?.length" class="prompt-suggestions">
-          <li v-for="button in suggestButtons" :key="button">
+        <menu v-if="suggestButtons?.length" class="prompt-suggestions" style="padding-left: 0">
+          <li
+            v-for="button in suggestButtons"
+            :key="button"
+            style="list-style-type: none; margin: 0"
+          >
             <a class="prompt-suggestion" href="#" @click.prevent="onSuggestButtonClick(button)">
+              <IconImage
+                class="icon"
+                name="ChatBubble"
+                style="width: 1.6em; height: 1em; vertical-align: middle; fill: #666"
+              />
               {{ button }}
             </a>
           </li>
-        </ul>
+        </menu>
       </div>
     </deep-chat>
     <div class="action-bar">
-      <a class="action-button" href="#" @click.prevent="resetChat()">Reset Chat</a>
+      <a class="action-button" href="#" @click.prevent="resetChat()">
+        <IconImage class="icon" name="RestartLeft" />
+        {{ $t('chatbot.restart') }}
+      </a>
+    </div>
+    <div v-if="suggestButtons?.length && conversationStarted">
+      <a
+        v-for="button in suggestButtons"
+        :key="button"
+        class="prompt-suggestion action-button"
+        href="#"
+        @click.prevent="onSuggestButtonClick(button)"
+      >
+        <IconImage class="icon" name="ChatBubble" />
+        {{ button }}
+      </a>
     </div>
   </BaseDrawer>
 </template>
 <style lang="scss" scoped>
 .action-bar {
   text-align: right;
+  margin-bottom: 1em;
+}
 
-  .action-button {
-    background-color: #eee;
-    border-radius: 4px;
-    padding: 4px;
-    color: #666;
-    line-height: 36px;
-    font-size: 0.8rem;
-  }
+.action-button {
+  background-color: #eee;
+  border-radius: 4px;
+  padding: 4px;
+  color: #666;
+  font-size: 0.8rem;
+}
 
-  .prompt-suggestion ~ .prompt-suggestion {
-    margin-left: 8px;
+.prompt-suggestion ~ .prompt-suggestion {
+  margin-left: 8px;
+}
+
+.action-button,
+.prompt-suggestion {
+  display: inline-flex;
+  align-items: center;
+  gap: 1em;
+
+  .icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    fill: #666;
   }
 }
 </style>

@@ -2736,7 +2736,8 @@
     "drawer-button-label": "Asistente de IA",
     "fetching_tools": "Obteniendo herramientas...",
     "fetching_data": "Obteniendo datos...",
-    "reasoning": "Pensando..."
+    "reasoning": "Pensando...",
+    "restart": "Reiniciar conversación"
   },
   "researcher": {
     "relators": {

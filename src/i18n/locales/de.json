@@ -2736,7 +2736,8 @@
     "drawer-button-label": "KI-Assistent",
     "fetching_tools": "Abrufwerkzeuge...",
     "fetching_data": "Daten werden abgerufen...",
-    "reasoning": "Denken..."
+    "reasoning": "Denken...",
+    "restart": "Konversation neu starten"
   },
   "researcher": {
     "relators": {
