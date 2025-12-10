@@ -59,7 +59,7 @@ const label = computed(() => {
 })
 
 watch(
-  props.isOpened,
+  () => props.isOpened,
   (neo) => {
     if (neo) selectedUsers.value = [...props.currentUsers]
   },

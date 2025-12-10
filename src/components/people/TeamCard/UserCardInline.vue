@@ -79,21 +79,21 @@ const props = defineProps({
 
 const emit = defineEmits(['user-clicked'])
 
-const roleLabel = () => {
+const roleLabel = computed(() => {
   if (props.role) {
     if (props.role === 'owners') return t('role.editor')
     else if (props.role === 'members') return t('role.teammate')
     else if (props.role === 'reviewers') return t('role.reviewer')
   }
   return null
-}
+})
 
-const userImage = () => {
+const userImage = computed(() => {
   if (isNotGroup(props.user)) {
     return props.user.profile_picture
   }
   return props.user.header_image
-}
+})
 </script>
 
 <style lang="scss" scoped>
