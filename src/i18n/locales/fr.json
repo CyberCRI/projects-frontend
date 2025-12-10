@@ -2741,7 +2741,11 @@
     "title": "Discuter avec l'IA",
     "input-placeholder": "Tapez votre message ici...",
     "intro-message": "Bonjour, comment puis-je vous aider aujourd'hui ?",
-    "drawer-button-label": "Assistant IA"
+    "drawer-button-label": "Assistant IA",
+    "fetching_tools": "Récupération des outils...",
+    "fetching_data": "Récupération des données...",
+    "reasoning": "Réflexion en cours...",
+    "restart": "Redémarrer la conversation"
   },
   "researcher": {
     "relators": {

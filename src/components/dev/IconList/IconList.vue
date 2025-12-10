@@ -128,6 +128,9 @@ export default {
         'SparklingFill',
         'InfoCardLine',
         'Scales',
+        'SortAsc',
+        'SortDesc',
+        'RestartLeft',
       ],
     }
   },

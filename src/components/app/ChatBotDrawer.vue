@@ -2,6 +2,7 @@
 import 'deep-chat'
 import analytics from '@/analytics'
 import useUsersStore from '@/stores/useUsers.ts'
+import { shuffle } from 'es-toolkit'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -70,7 +71,9 @@ const addToConversation = (...args) => {
   }
 }
 
+const conversationStarted = ref(false)
 const requestInterceptor = (requestDetails) => {
+  conversationStarted.value = true
   addToConversation(...requestDetails.body.messages)
   // requestDetails.body.messages = conversation.value
   requestDetails.body.conversationId = conversationId.value
@@ -78,7 +81,64 @@ const requestInterceptor = (requestDetails) => {
   return requestDetails
 }
 
+const spinner = `
+<svg
+    class="loader-simple"
+    width="20"
+    height="20"
+    viewBox="0 0 99 99"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+  <defs>
+        <style type="text/css"><![CDATA[
+            @-webkit-keyframes spin {
+              from {
+                -webkit-transform: rotate(0deg)
+              }
+              to {
+                -webkit-transform: rotate(-359deg)
+              }
+            }
+            @keyframes spin {
+              from {
+                transform: rotate(0deg)
+              }
+              to {
+                transform: rotate(-359deg)
+              }
+            }
+            svg {
+                -webkit-transform-origin: 50% 50%;
+                -webkit-animation: spin 1.5s linear infinite;
+                -webkit-backface-visibility: hidden;
+                animation: spin 1.5s linear infinite;
+            }
+        ]]></style>
+    </defs>
+    <path
+      d="M21.2998 81.9326C26.0817 86.0995 31.8631 89.2684 38.4025 91.0206C61.3415 97.1671 84.92 83.554 91.0665 60.615C91.0872 60.5377 91.125 60.4693 91.1746 60.413C91.8385 57.8685 92.2752 55.2322 92.4616 52.5271C92.5756 50.8742 93.9078 49.5266 95.5647 49.5266C97.2215 49.5266 98.5742 50.8732 98.4743 52.5271C96.924 78.1917 75.6191 98.5266 49.5647 98.5266C37.7559 98.5266 26.9228 94.3494 18.4623 87.3919C14.368 84.032 10.8729 80.047 8.08485 75.6235C1.05722 64.4738 -1.47882 50.5382 2.20133 36.8037C8.9447 11.637 34.1008 -3.67888 59.2922 1.46613C60.9155 1.79768 61.8662 3.45281 61.4374 5.05321C61.0085 6.6536 59.3621 7.5917 57.736 7.27394C55.0744 6.75383 52.4145 6.49328 49.7845 6.47604C49.7181 6.50843 49.6434 6.52661 49.5647 6.52661C25.8164 6.52661 6.56469 25.7784 6.56469 49.5266C6.56469 62.4546 12.2699 74.0501 21.2998 81.9326Z"
+      fill="#00DBA7"
+    />
+  </svg>`
+
+const spinnerMD = `![](data:image/svg+xml;base64,${btoa(spinner)}) `
+
+// to handle 'meta' messages get replaced by next message
+let replacedByNext = false
 const responseInterceptor = (response) => {
+  if (response.role === 'meta') {
+    let text = spinnerMD + t(`chatbot.${response.text}`)
+    if (response.is_done) {
+      text = ''
+    }
+    replacedByNext = true
+    return {
+      text: text,
+      role: 'meta',
+      overwrite: true,
+    }
+  }
   if (!IS_STREAMED.value || response.is_done) {
     // only add complete response, not individual chunks
     addToConversation({
@@ -88,7 +148,10 @@ const responseInterceptor = (response) => {
     conversationId.value = response.conversationId
     analytics.chatbot.receive(response)
   }
-  return response
+  const overwrite = replacedByNext
+  // no way to know when a true message begin, so just assume next is not overwrite
+  replacedByNext = false
+  return { ...response, overwrite }
 }
 
 const placeholderText = computed(() => t('chatbot.input-placeholder'))
@@ -104,7 +167,20 @@ const runtimeConfig = useRuntimeConfig()
 const chatExemples = (runtimeConfig.public.appChatbotExemples || '')
   .split('§')
   .filter((s) => !!s && s.trim().length)
-const suggestButtons = ref(chatExemples)
+
+const setExemples = () => shuffle(chatExemples).slice(0, 3)
+
+const suggestButtons = ref(setExemples())
+
+watch(
+  () => conversationStarted.value,
+  (neo, old) => {
+    if (neo != old) {
+      // conversation was reset
+      suggestButtons.value = setExemples()
+    }
+  }
+)
 
 function placeCaretAtEnd(el) {
   // https://stackoverflow.com/questions/4233265/contenteditable-set-caret-at-the-end-of-the-text-cross-browser
@@ -143,11 +219,6 @@ watch(
     history.value = JSON.parse(JSON.stringify(conversation.value))
   }
 )
-
-const introMessage = computed(() => ({
-  text: t('chatbot.intro-message'),
-  html: false,
-}))
 
 watchEffect(() => {
   if (chatBox.value) {
@@ -212,6 +283,7 @@ const messageStyles = computed(() => {
       },
       assistant: botStyles,
       ai: botStyles,
+      meta: botStyles,
     },
   }
 })
@@ -237,6 +309,17 @@ if (window && !window.handleChatClick) {
 }
 
 const remarkableOptions = ref({ linkify: true, linkTarget: '_blank' })
+
+const resetChat = () => {
+  conversationStarted.value = false
+  conversation.value = []
+  conversationId.value = null
+  history.value = []
+  if (chatBox.value) {
+    chatBox.value.resetChat()
+  }
+  analytics.chatbot.reset()
+}
 </script>
 
 <template>
@@ -253,7 +336,6 @@ const remarkableOptions = ref({ linkify: true, linkTarget: '_blank' })
       :history="history"
       :style="chatStyle"
       :connect="connectOptions"
-      :introMessage="introMessage"
       :avatars="true"
       :submitButtonStyles="submitButtonStyles"
       :messageStyles="messageStyles"
@@ -275,33 +357,86 @@ const remarkableOptions = ref({ linkify: true, linkTarget: '_blank' })
           border-radius: .5rem;
         }
       "
-    ></deep-chat>
-    <div v-if="suggestButtons?.length" class="prompt-suggestions">
+    >
+      <div
+        style="
+          margin: 1rem;
+          padding: 1rem;
+          background-color: #f3f3f3;
+          border-radius: 10px;
+          display: none;
+        "
+      >
+        <p>
+          {{ $t('chatbot.intro-message') }}
+        </p>
+        <menu v-if="suggestButtons?.length" class="prompt-suggestions" style="padding-left: 0">
+          <li
+            v-for="button in suggestButtons"
+            :key="button"
+            style="list-style-type: none; margin: 0"
+          >
+            <a class="prompt-suggestion" href="#" @click.prevent="onSuggestButtonClick(button)">
+              <IconImage
+                class="icon"
+                name="ChatBubble"
+                style="width: 1.6em; height: 1em; vertical-align: middle; fill: #666"
+              />
+              {{ button }}
+            </a>
+          </li>
+        </menu>
+      </div>
+    </deep-chat>
+    <div class="action-bar">
+      <a class="action-button" href="#" @click.prevent="resetChat()">
+        <IconImage class="icon" name="RestartLeft" />
+        {{ $t('chatbot.restart') }}
+      </a>
+    </div>
+    <div v-if="suggestButtons?.length && conversationStarted">
       <a
         v-for="button in suggestButtons"
         :key="button"
-        class="prompt-suggestion"
+        class="prompt-suggestion action-button"
         href="#"
         @click.prevent="onSuggestButtonClick(button)"
       >
+        <IconImage class="icon" name="ChatBubble" />
         {{ button }}
       </a>
     </div>
   </BaseDrawer>
 </template>
 <style lang="scss" scoped>
-.prompt-suggestions {
-  .prompt-suggestion {
-    background-color: #eee;
-    border-radius: 4px;
-    padding: 4px;
-    color: #666;
-    line-height: 36px;
-    font-size: 0.8rem;
-  }
+.action-bar {
+  text-align: right;
+  margin-bottom: 1em;
+}
 
-  .prompt-suggestion ~ .prompt-suggestion {
-    margin-left: 8px;
+.action-button {
+  background-color: #eee;
+  border-radius: 4px;
+  padding: 4px;
+  color: #666;
+  font-size: 0.8rem;
+}
+
+.prompt-suggestion ~ .prompt-suggestion {
+  margin-left: 8px;
+}
+
+.action-button,
+.prompt-suggestion {
+  display: inline-flex;
+  align-items: center;
+  gap: 1em;
+
+  .icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    fill: #666;
   }
 }
 </style>

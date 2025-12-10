@@ -133,6 +133,8 @@ export default defineLazyEventHandler(() => {
     const stream: any = await openai.responses.create(requestOptions as any)
 
     for await (const chunk of stream) {
+      // console.log('CHAT STREAM CHUNK:', chunk.type)
+
       // TODO: handle other chunk types (like error)
       if (chunk.type === 'response.output_text.delta') {
         event.node.res.write(
@@ -155,7 +157,96 @@ export default defineLazyEventHandler(() => {
             conversationId: conversationId,
           })}\n\n`
         )
+      } else if (chunk.type === 'response.mcp_list_tools.in_progress') {
+        event.node.res.write(
+          `data: ${JSON.stringify({
+            text: 'fetching_tools',
+            role: 'meta',
+            is_done: false,
+            conversationId: conversationId,
+          })}\n\n`
+        )
+      } else if (chunk.type === 'response.mcp_list_tools.completed') {
+        event.node.res.write(
+          `data: ${JSON.stringify({
+            text: 'fetching_tools',
+            role: 'meta',
+            is_done: true,
+            conversationId: conversationId,
+          })}\n\n`
+        )
+      } else if (chunk.type === 'response.mcp_call.in_progress') {
+        event.node.res.write(
+          `data: ${JSON.stringify({
+            text: 'fetching_data',
+            role: 'meta',
+            is_done: false,
+            conversationId: conversationId,
+          })}\n\n`
+        )
+      } else if (chunk.type === 'response.mcp_call.completed') {
+        event.node.res.write(
+          `data: ${JSON.stringify({
+            text: 'fetching_data',
+            role: 'meta',
+            is_done: true,
+            conversationId: conversationId,
+          })}\n\n`
+        )
+        // Reasoning
+      } else if (chunk.type === 'response.reasoning_summary_part.added') {
+        event.node.res.write(
+          `data: ${JSON.stringify({
+            text: 'reasoning',
+            role: 'meta',
+            is_done: false,
+            conversationId: conversationId,
+          })}\n\n`
+        )
+      } else if (chunk.type === 'response.reasoning_summary_part.done') {
+        // console.log(JSON.stringify(chunk, null, 2))
+        event.node.res.write(
+          `data: ${JSON.stringify({
+            text: 'reasoning',
+            role: 'meta',
+            is_done: true,
+            conversationId: conversationId,
+          })}\n\n`
+        )
       }
+      // MCP tool call
+      // } else if (chunk.type === 'response.mcp_list_tools.in_progress') {
+      //   console.log('MCP LIST TOOLS IN PROGRESS')
+      //   console.log(JSON.stringify(chunk, null, 2))
+      // } else if (chunk.type === 'response.mcp_list_tools.completed') {
+      //   console.log('MCP LIST TOOLS COMPLETE')
+      //   console.log(JSON.stringify(chunk, null, 2))
+      // } else if (chunk.type === 'response.mcp_call.in_progress') {
+      //   console.log('MCP CALL TOOLS IN PROGRESS')
+      //   console.log(JSON.stringify(chunk, null, 2))
+      // } else if (chunk.type === 'response.mcp_call.arguments.delta') {
+      //   console.log('MCP CALL TOOLS ARGUMENTS DELTA')
+      //   console.log(JSON.stringify(chunk, null, 2))
+      // } else if (chunk.type === 'response.mcp_call.arguments.done') {
+      //   console.log('MCP CALL TOOLS ARGUMENTS DONE')
+      //   console.log(JSON.stringify(chunk, null, 2))
+      // } else if (chunk.type === 'response.mcp_call.completed') {
+      //   console.log('MCP CALL TOOLS COMPLETED')
+      //   console.log(JSON.stringify(chunk, null, 2))
+      //   // Reasoning
+      // } else if (chunk.type === 'response.reasoning_summary_part.added') {
+      //   console.log('REASONING SUMMARY PART ADDED')
+      //   console.log(JSON.stringify(chunk, null, 2))
+      // } else if (chunk.type === 'response.reasoning_summary_text.delta') {
+      //   console.log('REASONING SUMMARY COMPLETED')
+      //  // console.log(JSON.stringify(chunk, null, 2))
+      // } else if (chunk.type === 'response.reasoning_summary_text.done') {
+      //   console.log('REASONING SUMMARY TEXT DONE')
+      //   console.log(JSON.stringify(chunk, null, 2))
+      // } else if (chunk.type === 'response.reasoning_summary_part.done') {
+      //   console.log('REASONING SUMMARY PART DONE')
+      //   console.log(JSON.stringify(chunk, null, 2))
+      // }
     }
 
     event.node.res.end()

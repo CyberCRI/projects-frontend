@@ -2733,7 +2733,11 @@
     "title": "Chat met AI",
     "input-placeholder": "Typ hier je bericht...",
     "intro-message": "Hallo, hoe kan ik je vandaag helpen?",
-    "drawer-button-label": "AI-assistent"
+    "drawer-button-label": "AI-assistent",
+    "fetching_tools": "Hulpmiddelen ophalen...",
+    "fetching_data": "Gegevens ophalen...",
+    "reasoning": "Bezig met nadenken...",
+    "restart": "Gesprek opnieuw starten"
   },
   "researcher": {
     "relators": {

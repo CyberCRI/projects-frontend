@@ -2733,7 +2733,11 @@
     "title": "Vestelda AI-ga",
     "input-placeholder": "Sisesta oma sõnum siia...",
     "intro-message": "Tere! Kuidas ma saan teid täna aidata?",
-    "drawer-button-label": "Tehisintellekti assistent"
+    "drawer-button-label": "Tehisintellekti assistent",
+    "fetching_tools": "Tööriistade hankimine...",
+    "fetching_data": "Andmete hankimine...",
+    "reasoning": "Mõtlemine...",
+    "restart": "Vestluse taaskäivitamine"
   },
   "researcher": {
     "relators": {
