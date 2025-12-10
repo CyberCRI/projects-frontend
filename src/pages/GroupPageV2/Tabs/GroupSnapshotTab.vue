@@ -1,17 +1,21 @@
 <template>
   <div class="group-snapshot">
     <GroupHeaderV2
-      :title="groupName"
-      :image="groupImage"
-      :visibility="groupVisibility"
-      :email="groupEmail"
-      :short-description="groupShortDescription"
+      :title="groupData.$t.name"
+      :image="groupData.header_image"
+      :visibility="groupData.publication_status"
+      :email="groupData.email"
+      :short-description="groupData.$t.short_description"
       :is-loading="isLoading"
     />
-    <SubGroups v-if="groupChildren.length > 0" :subgroups="groupChildren" :is-loading="isLoading" />
+    <SubGroups
+      v-if="groupData.children.length > 0"
+      :subgroups="groupData.children"
+      :is-loading="isLoading"
+    />
     <div v-if="!isLoading" class="description">
       <DescriptionExpandable
-        :description="description"
+        :description="groupData.$t.description"
         :height-limit="400"
         class="description-content"
       />
@@ -23,36 +27,6 @@
       <SkeletonComponent width="100%" height="15px" border-radius="10px" />
       <SkeletonComponent width="90%" height="15px" border-radius="10px" />
       <SkeletonComponent width="95%" height="15px" border-radius="10px" />
-    </div>
-
-    <div v-if="membersCount > 0 || isMembersLoading" class="members">
-      <div class="members-header">
-        <h2 class="title">
-          {{ $t('group.members') }}
-          <span v-if="membersCount">( {{ membersCount }} )</span>
-        </h2>
-
-        <SeeMoreArrow
-          v-if="!isMembersLoading"
-          class="see-more-button"
-          :to="{ name: 'groupMembers', params: { groupId: $route.params.groupId } }"
-        />
-      </div>
-
-      <div v-if="isMembersLoading" class="members-container">
-        <MemberListSkeleton :min-gap="90" :desktop-columns-number="6" />
-      </div>
-      <DynamicGrid v-else :min-gap="90" class="members-container">
-        <GroupMemberItem
-          v-for="member in members.slice(0, totalDisplayed)"
-          :key="member.id"
-          :user="member"
-          :is-manager="member.is_manager"
-          class="cursor-pointer shadow-drop"
-          @user-click="openProfileDrawer"
-          @close="closeProfileDrawer"
-        />
-      </DynamicGrid>
     </div>
 
     <div v-if="projectsCount > 0 || isProjectsLoading" class="projects">
@@ -78,126 +52,33 @@
         </CardList>
       </div>
     </div>
-    <BaseDrawer
-      no-footer
-      :is-opened="profileDrawer.isOpened"
-      :title="$t('profile.drawer_title')"
-      @close="closeProfileDrawer"
-      @confirm="closeProfileDrawer"
-    >
-      <UserProfileV2
-        v-if="profileDrawer.isOpened"
-        ref="profile-user"
-        :can-edit="false"
-        :user-id="profileDrawer.user_id"
-        is-preview
-        @close="closeProfileDrawer"
-      />
-    </BaseDrawer>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'GroupSnapshotTab',
+<script setup lang="ts">
+defineOptions({ name: 'GroupSnapshotTab' })
+const props = defineProps<{
+  groupData: any
+  isLoading: boolean
+}>()
+const { translateUsers, translateProjects } = useAutoTranslate()
 
-  props: {
-    description: {
-      type: String,
-      default: '',
-    },
+const style = ref({})
+const totalDisplayed = ref(12)
+const profileDrawer = ref({
+  isOpened: false,
+  user_id: null,
+})
 
-    projectsInitialRequest: {
-      type: Object,
-      default: () => ({}),
-    },
+const openProfileDrawer = async (user) => {
+  this.profileDrawer.user_id = user.id
+  this.profileDrawer.isOpened = true
+}
 
-    isProjectsLoading: {
-      type: Boolean,
-      default: true,
-    },
-
-    membersInitialRequest: {
-      type: Object,
-      default: () => ({}),
-    },
-
-    isMembersLoading: {
-      type: Boolean,
-      default: true,
-    },
-
-    isLoading: {
-      type: Boolean,
-      default: true,
-    },
-    groupName: {
-      type: String,
-      default: '',
-    },
-    groupImage: {
-      type: [Object, null],
-      default: null,
-    },
-    groupEmail: {
-      type: String,
-      default: '',
-    },
-    groupVisibility: {
-      type: String,
-      default: '',
-    },
-    groupShortDescription: {
-      type: String,
-      default: '',
-    },
-    groupChildren: {
-      type: Array,
-      default: () => [],
-    },
-  },
-
-  setup(props) {
-    const { translateUsers, translateProjects } = useAutoTranslate()
-    const rawMembers = computed(() => props.membersInitialRequest.results || [])
-    const members = translateUsers(rawMembers)
-    const membersCount = computed(() => props.membersInitialRequest.count || 0)
-
-    const rawProjects = computed(() => props.projectsInitialRequest.results || [])
-    const projects = translateProjects(rawProjects)
-    const projectsCount = computed(() => props.projectsInitialRequest.count || 0)
-
-    return {
-      members,
-      membersCount,
-      projects,
-      projectsCount,
-    }
-  },
-
-  data() {
-    return {
-      style: {},
-      totalDisplayed: 12,
-      profileDrawer: {
-        isOpened: false,
-        user_id: null,
-      },
-    }
-  },
-
-  methods: {
-    async openProfileDrawer(user) {
-      this.profileDrawer.user_id = user.id
-      this.profileDrawer.isOpened = true
-    },
-
-    closeProfileDrawer() {
-      this.isEditMode = false
-      this.profileDrawer.isOpened = false
-      this.profileDrawer.user_id = null
-    },
-  },
+const closeProfileDrawer = () => {
+  this.isEditMode = false
+  this.profileDrawer.isOpened = false
+  this.profileDrawer.user_id = null
 }
 </script>
 

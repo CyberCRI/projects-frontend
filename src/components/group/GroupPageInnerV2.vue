@@ -38,351 +38,274 @@
     </div>
 
     <NavPanelLoader v-else />
-    <!--div class="page-section-extra-wide tabs-wrapper">
-      <GroupTabs
-        :description="groupDescription"
-        :projects-initial-request="projectsInitialRequest"
-        :is-projects-loading="isProjectsLoading"
-        :members-initial-request="membersInitialRequest"
-        :is-members-loading="isMembersLoading"
-        :is-loading="isLoading"
-        :align-left="true"
-        :border="false"
-      />
-    </div-->
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import { getGroup, getGroupMember, getGroupProject } from '@/api/groups.service'
 import usePeopleGroupsStore from '@/stores/usePeopleGroups'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-export default {
-  name: 'GroupPageInnerV2',
-  props: {
-    groupId: {
-      type: String,
-      required: true,
-    },
-  },
-  setup() {
-    const peopleGroupsStore = usePeopleGroupsStore()
-    const organizationsStore = useOrganizationsStore()
-    const { canEditGroup } = usePermissions()
-    const uniqueId = 'group-nav-panel'
-    const { isNavCollapsed, toggleNavPanel, collapseIfUnderBreakpoint } =
-      useToggleableNavPanel(uniqueId)
+defineOptions({ name: 'GroupPageInnerV2' })
+const props = defineProps<{ groupId: number }>()
+const uniqueId = 'group-nav-panel'
+const peopleGroupsStore = usePeopleGroupsStore()
+const { canEditGroup } = usePermissions()
+const { isNavCollapsed, toggleNavPanel, collapseIfUnderBreakpoint } =
+  useToggleableNavPanel(uniqueId)
+const onNavigated = collapseIfUnderBreakpoint
+const { translateGroup } = useAutoTranslate()
+const rawGroupData = ref({})
+const groupData = translateGroup(rawGroupData)
 
-    const onNavigated = collapseIfUnderBreakpoint
-    const { translateGroup } = useAutoTranslate()
-    const rawGroupData = ref({})
-    const groupData = translateGroup(rawGroupData)
-    return {
-      peopleGroupsStore,
-      organizationsStore,
-      canEditGroup,
-      isNavCollapsed,
-      rawGroupData,
-      groupData,
-      toggleNavPanel,
-      onNavigated,
+const membersInitialRequest = ref({})
+const projectsInitialRequest = ref({})
+const isLoading = ref(true)
+const isProjectsLoading = ref(true)
+const isMembersLoading = ref(true)
+const router = useRouter()
+const route = useRoute()
+const organizationCode = useOrganizationCode()
+const { t } = useNuxtI18n()
+
+const groupEmail = computed(() => {
+  return groupData.value?.email
+})
+const groupVisibility = computed(() => {
+  return groupData.value?.publication_status
+})
+
+const groupDescription = computed(() => {
+  return groupData.value?.$t?.description
+})
+const groupShortDescription = computed(() => {
+  return groupData.value?.$t?.short_description
+})
+
+const groupHierarchy = computed(() => {
+  const root = {
+    name: t('common.groups'),
+    route: { name: 'Groups' },
+  }
+  if (!groupData.value) return [root]
+  return [
+    root,
+    ...(groupData.value?.hierarchy || []).map((group) => ({
+      name: group.name,
+      route: { name: 'Group', params: { groupId: group.slug || group.id } },
+    })),
+  ]
+})
+const groupChildren = computed(() => {
+  return groupData.value?.children
+})
+
+const groupModules = computed(() => groupData.value?.modules || {})
+
+const groupTabsDisplay = computed(() => {
+  return [
+    {
+      isEditing: false,
+      key: 'group-snapshot',
+      dataTest: 'group-snapshot',
+      label: t('group.snapshot'),
+      view: `/group/${route.params.groupId}/snapshot`,
+      altView: `/group/${route.params.groupId}/snapshot/edit`,
+      props: {
+        group: groupData.value,
+        isLoading: isLoading.value,
+      },
+      condition: true,
+      noTitle: true,
+      icon: 'Home',
+    },
+    {
+      isEditing: false,
+      key: 'group-members',
+      dataTest: 'group-members',
+      label: t('group.members'),
+      view: `/group/${route.params.groupId}/members`,
+      altView: `/group/${route.params.groupId}/members/edit`,
+      props: {
+        group: groupData.value,
+      },
+      condition: groupModules.value.members,
+      icon: 'Users',
+    },
+    {
+      isEditing: false,
+      key: 'group-projects',
+      dataTest: 'group-projects',
+      label: t('group.projects'),
+      view: `/group/${route.params.groupId}/projects`,
+      altView: `/group/${route.params.groupId}/projects/edit`,
+      props: {
+        group: groupData.value,
+      },
+      condition: groupModules.value.projects,
+      icon: 'Archive',
+    },
+  ]
+})
+
+const groupTabsDisplayFiltered = computed(() => {
+  return groupTabsDisplay.value.filter((tab) => tab.condition)
+})
+
+const groupTabsEdit = computed(() => {
+  return [
+    {
+      isEditing: true,
+      key: 'group-snapshot-edit',
+      dataTest: 'group-snapshot-edit',
+      label: t('group.snapshot'),
+      view: `/group/${route.params.groupId}/snapshot/edit`,
+      altView: `/group/${route.params.groupId}/snapshot`,
+      props: {
+        isInEditingMode: true,
+        group: groupData.value,
+      },
+      condition: true,
+      noTitle: true,
+      icon: 'Pen',
+    },
+    {
+      isEditing: true,
+      key: 'groups-members-edit',
+      dataTest: 'groups-members-edit',
+      label: t('group.members'),
+      view: `/group/${route.params.groupId}/members/edit`,
+      altView: `/group/${route.params.groupId}/members`,
+      props: {
+        isInEditingMode: true,
+        groupData: groupData.value,
+      },
+      condition: true,
+      icon: 'Pen',
+    },
+    {
+      isEditing: true,
+      key: 'group-projects-edit',
+      dataTest: 'group-projects-edit',
+      label: t('group.projects'),
+      view: `/group/${route.params.groupId}/projects/edit`,
+      altView: `/group/${route.params.groupId}/projects`,
+      props: {
+        isInEditingMode: true,
+        groupData: groupData.value,
+      },
+      condition: true,
+      icon: 'Pen',
+    },
+  ]
+})
+
+const groupTabsEditFiltered = computed(() => {
+  return groupTabsEdit.value.filter((tab) => tab.condition)
+})
+
+const groupTabs = computed(() => {
+  return isEditing.value ? groupTabsEditFiltered.value : groupTabsDisplayFiltered.value
+})
+
+const allGroupsTabs = computed(() => {
+  return [...groupTabsDisplay.value, ...groupTabsEdit.value]
+})
+
+const currentTab = computed(() => {
+  return allGroupsTabs.value.find((tab) => route.fullPath === tab.view)
+})
+
+const isEditing = computed(() => {
+  return currentTab.value?.isEditing || false
+})
+
+watch(
+  () => props.groupId,
+  (neo, old) => {
+    if (neo && neo != old) {
+      load()
     }
   },
+  { immediate: true }
+)
 
-  data() {
-    return {
-      membersInitialRequest: {},
-      projectsInitialRequest: {},
-      isLoading: true,
-      isProjectsLoading: true,
-      isMembersLoading: true,
+watch(
+  canEditGroup,
+  (neo) => {
+    if (!neo && isEditing.value) {
+      if (import.meta.client) router.push(currentTab.value.altView)
     }
   },
+  {
+    immediate: true,
+  }
+)
 
-  computed: {
-    groupName() {
-      return this.groupData?.$t?.name
-    },
-    groupImage() {
-      return this.groupData?.header_image
-    },
-    groupEmail() {
-      return this.groupData?.email
-    },
-    groupVisibility() {
-      return this.groupData?.publication_status
-    },
-    // groupSlug() {
-    //   return this.groupData?.slug
-    // },
-
-    groupDescription() {
-      return this.groupData?.$t?.description
-    },
-    groupShortDescription() {
-      return this.groupData?.$t?.short_description
-    },
-
-    groupHierarchy() {
-      const root = {
-        name: this.$t('common.groups'),
-        route: { name: 'Groups' },
-      }
-      if (!this.groupData) return [root]
-      return [
-        root,
-        ...(this.groupData?.hierarchy || []).map((group) => ({
-          name: group.name,
-          route: { name: 'Group', params: { groupId: group.slug || group.id } },
-        })),
-      ]
-    },
-    groupChildren() {
-      return this.groupData?.children
-    },
-
-    groupTabsDisplay() {
-      return [
-        {
-          key: 'group-snapshot',
-          dataTest: 'group-snapshot',
-          label: this.$t('group.snapshot'),
-          view: `/group/${this.$route.params.groupId}/snapshot`,
-          altView: `/group/${this.$route.params.groupId}/snapshot/edit`,
-          props: {
-            description: this.groupDescription,
-            projectsInitialRequest: this.projectsInitialRequest,
-            isProjectsLoading: this.isProjectsLoading,
-            membersInitialRequest: this.membersInitialRequest,
-            isMembersLoading: this.isMembersLoading,
-            isLoading: this.isLoading,
-            groupName: this.groupName,
-            groupImage: this.groupImage,
-            groupVisibility: this.groupVisibility,
-            groupShortDescription: this.groupShortDescription,
-            groupChildren: this.groupChildren,
-          },
-          condition: true,
-          noTitle: true,
-          icon: 'Home',
-        },
-        {
-          key: 'group-members',
-          dataTest: 'group-members',
-          label: this.$t('group.members'),
-          view: `/group/${this.$route.params.groupId}/members`,
-          altView: `/group/${this.$route.params.groupId}/members/edit`,
-          props: {
-            membersInitialRequest: this.membersInitialRequest,
-            isMembersLoading: this.isMembersLoading,
-          },
-          condition: true,
-          icon: 'Users',
-        },
-        {
-          key: 'group-projects',
-          dataTest: 'group-projects',
-          label: this.$t('group.projects'),
-          view: `/group/${this.$route.params.groupId}/projects`,
-          altView: `/group/${this.$route.params.groupId}/projects/edit`,
-          props: {
-            projectsInitialRequest: this.projectsInitialRequest,
-            isProjectsLoading: this.isProjectsLoading,
-          },
-          condition: true,
-          icon: 'Archive',
-        },
-      ]
-    },
-
-    groupTabsDisplayFiltered() {
-      return this.groupTabsDisplay.filter((tab) => tab.condition)
-    },
-
-    groupTabsEdit() {
-      return [
-        {
-          key: 'group-snapshot-edit',
-          dataTest: 'group-snapshot-edit',
-          label: this.$t('group.snapshot'),
-          view: `/group/${this.$route.params.groupId}/snapshot/edit`,
-          altView: `/group/${this.$route.params.groupId}/snapshot`,
-          props: {
-            isInEditingMode: true,
-            description: this.groupDescription,
-            projectsInitialRequest: this.projectsInitialRequest,
-            isProjectsLoading: this.isProjectsLoading,
-            membersInitialRequest: this.membersInitialRequest,
-            isMembersLoading: this.isMembersLoading,
-            isLoading: this.isLoading,
-            groupName: this.groupName,
-            groupImage: this.groupImage,
-            groupVisibility: this.groupVisibility,
-            groupShortDescription: this.groupShortDescription,
-            groupChildren: this.groupChildren,
-            onReloadGroup: this.loadGroup,
-          },
-          condition: true,
-          noTitle: true,
-          icon: 'Home',
-        },
-        {
-          key: 'groups-members-edit',
-          dataTest: 'groups-members-edit',
-          label: this.$t('group.members'),
-          view: `/group/${this.$route.params.groupId}/members/edit`,
-          altView: `/group/${this.$route.params.groupId}/members`,
-          props: {
-            isInEditingMode: true,
-            groupData: this.groupData,
-            onReloadGroupMembers: this.loadGroupMembers,
-          },
-          condition: this.groupData,
-          icon: 'Users',
-        },
-        {
-          key: 'group-projects-edit',
-          dataTest: 'group-projects-edit',
-          label: this.$t('group.projects'),
-          view: `/group/${this.$route.params.groupId}/projects/edit`,
-          altView: `/group/${this.$route.params.groupId}/projects`,
-          props: {
-            isInEditingMode: true,
-            groupData: this.groupData,
-            onReloadGroupProjects: this.loadGroupProjects,
-          },
-          condition: this.groupData,
-          icon: 'Archive',
-        },
-      ].map((entry) => ({
-        ...entry,
-        isEditing: true,
-        actionIcon: 'Pen',
-      }))
-    },
-
-    groupTabsEditFiltered() {
-      return this.groupTabsEdit.filter((tab) => tab.condition)
-    },
-
-    groupTabs() {
-      return this.isEditing ? this.groupTabsEditFiltered : this.groupTabsDisplayFiltered
-    },
-
-    allGroupsTabs() {
-      return [...this.groupTabsDisplay, ...this.groupTabsEdit]
-    },
-
-    currentTab() {
-      return this.allGroupsTabs.find((tab) => this.$route.fullPath === tab.view)
-    },
-
-    currentOrganizationCode() {
-      return this.organizationsStore.current.code
-    },
-
-    isEditing() {
-      return this.currentTab?.isEditing || false
-    },
+watch(
+  isEditing,
+  (neo) => {
+    if (neo && !canEditGroup.value) {
+      if (import.meta.client) router.push(currentTab.value.altView)
+    }
   },
-  watch: {
-    groupId: {
-      handler: function (neo, old) {
-        if (neo && neo != old) {
-          this.load()
-        }
-      },
-      immediate: true,
-    },
+  { immediate: true }
+)
 
-    canEditGroup: {
-      handler: function (neo /*, old*/) {
-        if (!neo && /*neo !== old && */ this.isEditing) {
-          if (import.meta.client) this.$router.push(this.currentTab.altView)
-        }
-      },
-      immediate: true,
-    },
+const toggleEditing = () => router.push(currentTab.value.altView)
+const load = async () => {
+  if (!import.meta.client) return
+  isLoading.value = true
+  isProjectsLoading.value = true
+  isMembersLoading.value = true
 
-    isEditing: {
-      handler: function (neo /*, old*/) {
-        if (neo && /* neo !== old && */ !this.canEditGroup) {
-          if (import.meta.client) this.$router.push(this.currentTab.altView)
-        }
-      },
-      immediate: true,
-    },
-  },
+  peopleGroupsStore.currentId = props.groupId
+  try {
+    await Promise.all([loadGroup(), loadGroupMembers(), loadGroupProjects()])
+  } catch {
+    console.error("group data couldn't be loaded")
+  }
 
-  methods: {
-    toggleEditing() {
-      this.$router.push(this.currentTab.altView)
-    },
-    async load() {
-      if (!import.meta.client) return
-      this.isLoading = true
-      this.isProjectsLoading = true
-      this.isMembersLoading = true
+  isLoading.value = false
+}
 
-      this.peopleGroupsStore.currentId = this.groupId
-      try {
-        await Promise.all([this.loadGroup(), this.loadGroupMembers(), this.loadGroupProjects()])
-      } catch {
-        console.error("group data couldn't be loaded")
-      }
+const loadGroup = async () => {
+  try {
+    isLoading.value = true
+    rawGroupData.value = await getGroup(organizationCode, props.groupId, /*no error*/ true)
 
-      this.isLoading = false
-    },
+    // we can't use "props.groupId" because it might be a slug and not an id....
+    peopleGroupsStore.currentId = groupData.value.id
+  } catch {
+    router.replace({
+      name: 'page404',
+      params: { pathMatch: route.path.substring(1).split('/') },
+    })
+  } finally {
+    isLoading.value = false
+  }
+}
 
-    async loadGroup() {
-      try {
-        this.isLoading = true
-        this.rawGroupData = await getGroup(
-          this.currentOrganizationCode,
-          this.groupId,
-          /*no error*/ true
-        )
+const loadGroupMembers = async () => {
+  try {
+    const groupMemberData = await getGroupMember(organizationCode, props.groupId, /*no error*/ true)
+    membersInitialRequest.value = groupMemberData
+  } finally {
+    // no catch / log because it might be a permission denied
+    isMembersLoading.value = false
+  }
+}
 
-        // we can't use "this.groupId" because it might be a slug and not an id....
-        this.peopleGroupsStore.currentId = this.groupData.id
-      } catch {
-        this.$router.replace({
-          name: 'page404',
-          params: { pathMatch: this.$route.path.substring(1).split('/') },
-        })
-      } finally {
-        this.isLoading = false
-      }
-    },
-
-    async loadGroupMembers() {
-      try {
-        const groupMemberData = await getGroupMember(
-          this.currentOrganizationCode,
-          this.groupId,
-          /*no error*/ true
-        )
-        this.membersInitialRequest = groupMemberData
-      } finally {
-        // no catch / log because it might be a permission denied
-        this.isMembersLoading = false
-      }
-    },
-
-    async loadGroupProjects() {
-      try {
-        const groupProjectData = await getGroupProject(
-          this.currentOrganizationCode,
-          this.groupId,
-          /*no error*/ true
-        )
-        this.projectsInitialRequest = groupProjectData
-      } finally {
-        // no catch / log because it might be a permission denied
-        this.isProjectsLoading = false
-      }
-    },
-  },
+const loadGroupProjects = async () => {
+  try {
+    const groupProjectData = await getGroupProject(
+      organizationCode,
+      props.groupId,
+      /*no error*/ true
+    )
+    projectsInitialRequest.value = groupProjectData
+  } finally {
+    // no catch / log because it might be a permission denied
+    isProjectsLoading.value = false
+  }
 }
 </script>
 

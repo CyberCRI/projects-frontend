@@ -52,7 +52,7 @@ export async function addParentGroup(
   return await useAPI(`organization/${orgId}/people-group/${groupId}/`, { body, method: 'PATCH' }) //.data.value
 }
 
-export async function getGroup(org: string, groupId: string, noError: boolean = false) {
+export async function getGroup(org: string, groupId: number, noError: boolean = false) {
   return await useAPI(
     `/organization/${org}/people-group/${groupId}/`,
     { noError: noError } // TODO nuxt check error silenced
@@ -72,7 +72,7 @@ export async function deleteGroup(org_code, group_id) {
 
 // GROUP MEMBERS
 
-export async function getGroupMember(org: string, groupId: string, noError: boolean = false) {
+export async function getGroupMember(org: string, groupId: number, noError: boolean = false) {
   return (
     // TODO nuxt check error silenced
     await useAPI(`organization/${org}/people-group/${groupId}/member/`, { noError: noError })
@@ -104,7 +104,7 @@ export async function removeGroupMember(
 
 // GROUP PROJECTS
 
-export async function getGroupProject(org: string, groupId: string, noError: boolean = false) {
+export async function getGroupProject(org: string, groupId: number, noError: boolean = false) {
   return await useAPI(`organization/${org}/people-group/${groupId}/project/`, {
     noError: noError,
   }) //.data.value

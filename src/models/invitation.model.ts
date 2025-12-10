@@ -6,6 +6,10 @@ export interface PeopleGroupModel {
   email: string
   type: string
   header_image: string
+  modules: {
+    members: number
+    projects: number
+  }
 }
 
 export interface ProfilePictureVariationsModel {
