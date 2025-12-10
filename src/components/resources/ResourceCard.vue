@@ -81,7 +81,8 @@ export default {
 
   methods: {
     openResource() {
-      if (this.resource.attachment_type === 'file') {
+      console.log(this.resource)
+      if (['file', 'image'].includes(this.resource.attachment_type)) {
         window.open(this.resource.file, '_blank')
       } else {
         //'link', 'video'...

@@ -344,6 +344,29 @@ export default {
           condition: this.user?.skills?.length,
           icon: 'VipCrownLine',
         },
+        {
+          // watch out for the order of this tab
+          // this tab index (4) is used in SkillSummary.vue
+          label: this.$t('profile.resources'),
+          key: 'resources',
+          id: 'profile-resources',
+          // view: `/profile/${this.pathInfix}skills`,
+          view: {
+            name: 'ProfileResources' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileEditResources' + roadSuffix,
+            params,
+          },
+          // component: ProfileSkillTab,
+          props: {
+            user: this.user,
+          },
+
+          condition: this.user?.resources?.links || this.user?.resources?.files,
+          icon: 'File',
+        },
       ]
     },
 
@@ -483,6 +506,24 @@ export default {
           icon: 'VipCrownLine',
           actionIcon: 'Pen',
         },
+        {
+          label: this.$t('profile.edit.resources.tab'),
+          key: 'resources',
+          id: 'profile-edit-resources',
+          view: {
+            name: 'ProfileEditResources' + roadSuffix,
+            params,
+          },
+          altView: {
+            name: 'ProfileResources' + roadSuffix,
+            params,
+          },
+          props,
+          condition: true,
+          icon: 'File',
+          actionIcon: 'Pen',
+        },
+
         {
           label: this.$t('profile.edit.privacy.tab'),
           key: 'privacy',

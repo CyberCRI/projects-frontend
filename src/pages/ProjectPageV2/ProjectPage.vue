@@ -239,7 +239,7 @@ const chooseGoalOrSdg = (choice) => {
       @close="toggleAddModal('teamMember')"
       @reload-team="reloadTeam"
     />
-    <LazyResourceDrawer
+    <LazyProjectResourceDrawer
       :project="project"
       :is-add-mode="!modals.resource.editedItem"
       :is-opened="modals.resource.visible"

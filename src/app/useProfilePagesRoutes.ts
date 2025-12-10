@@ -41,6 +41,14 @@ export default function useProfilePagesRoutes() {
         docType: 'conferences',
       },
     },
+    {
+      path: 'resources',
+      name: 'ProfileResources',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ProfileResourcesTab.vue'),
+      props: {
+        isInEditingMode: false,
+      },
+    },
   ]
 
   const profileEditTabs = [
@@ -88,6 +96,14 @@ export default function useProfilePagesRoutes() {
       component: () => import('../pages/UserProfilePageV2/Tabs/ResearcherEditDocumentsTab.vue'),
       props: {
         docType: 'conferences',
+      },
+    },
+    {
+      path: 'resources',
+      name: 'ProfileEditResources',
+      component: () => import('../pages/UserProfilePageV2/Tabs/ProfileResourcesTab.vue'),
+      props: {
+        isInEditingMode: true,
       },
     },
   ]
