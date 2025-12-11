@@ -3092,5 +3092,14 @@
       "Unknown": "unbekannt",
       "Working-Paper": "Arbeitspapier"
     }
+  },
+  "tos": {
+    "evolved": "Unsere Nutzungsbedingungen wurden aktualisiert, bitte nehmen Sie sich einen Moment Zeit, um sie zu überprüfen und zu akzeptieren.",
+    "review-and-sign": "Bitte lesen und akzeptieren Sie die aktualisierten Nutzungsbedingungen, um die Plattform weiterhin nutzen zu können.",
+    "scroll-notice": "Bitte scrollen Sie bis zum Ende der Bedingungen, bevor Sie sie akzeptieren.",
+    "error-approving": "Fehler beim Akzeptieren der Nutzungsbedingungen, bitte versuchen Sie es später erneut.",
+    "title": "Nutzungsbedingungen",
+    "approve-title": "Bitte akzeptieren Sie die Nutzungsbedingungen",
+    "approve-button": "Ich akzeptiere"
   }
 }

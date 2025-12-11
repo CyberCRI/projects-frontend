@@ -3092,5 +3092,14 @@
       "Unknown": "tundmatu",
       "Working-Paper": "töödokument"
     }
+  },
+  "tos": {
+    "evolved": "Meie teenusetingimusi on uuendatud, palun vaadake need üle ja kinnitage.",
+    "review-and-sign": "Palun lugege ja kinnitage uuendatud teenusetingimused, et platvormi kasutamist jätkata.",
+    "scroll-notice": "Enne kinnitamist kerige tingimuste lõppu.",
+    "error-approving": "Viga tingimuste kinnitamisel, palun proovige hiljem uuesti.",
+    "title": "Teenuse osutamise tingimused",
+    "approve-title": "Palun kinnitage teenusetingimused",
+    "approve-button": "Nõustun"
   }
 }

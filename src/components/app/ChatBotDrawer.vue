@@ -290,10 +290,7 @@ const messageStyles = computed(() => {
 
 const handleChatClick = (evt) => {
   // short-circuit target blank for internal links in chatbot messages
-  if (
-    evt.target.tagName === 'A' &&
-    !!evt.target.closest('.deep-chat-outer-container-role-assistant')
-  ) {
+  if (evt.target.tagName === 'A') {
     const href = evt.target.getAttribute('href')
     const origin = window.location.origin
     if ((!href.startsWith('http') || href.startsWith(origin)) && !href.startsWith('email:')) {
@@ -315,10 +312,6 @@ const resetChat = () => {
   conversation.value = []
   conversationId.value = null
   history.value = []
-  if (chatBox.value) {
-    chatBox.value.resetChat()
-  }
-  analytics.chatbot.reset()
 }
 </script>
 
@@ -355,6 +348,9 @@ const resetChat = () => {
           max-width: 8rem;
           max-height: 8rem;
           border-radius: .5rem;
+        }
+        h1,h2,h3,h4,h5,h6 {
+          line-height: 1.3;
         }
       "
     >

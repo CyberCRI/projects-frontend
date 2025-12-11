@@ -3104,9 +3104,10 @@
   "tos": {
     "evolved": "Nos conditions générales d'utilisation ont été mises à jour, veuillez prendre un moment pour les examiner et les approuver.",
     "review-and-sign": "Veuillez lire et approuver les conditions générales d'utilisation mises à jour pour continuer à utiliser la plateforme.",
-    "scroll-notice": "Allez en bas des conditions avant de pouvoir approuver.",
+    "scroll-notice": "Veuillez faire défiler jusqu'en bas des conditions avant de les approuver.",
     "error-approving": "Erreur lors de l'approbation des conditions générales d'utilisation, veuillez réessayer plus tard.",
     "title": "Conditions générales d’utilisation",
-    "approve-title": "Veuillez approuver les conditions générales d'utilisation"
+    "approve-title": "Veuillez approuver les conditions générales d'utilisation",
+    "approve-button": "J'accepte"
   }
 }

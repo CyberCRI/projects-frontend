@@ -108,7 +108,7 @@ const onTermApproved = async () => {
         <div class="action-buttons">
           <LpiButton
             :disabled="isAsyncing || !hasReadAll"
-            :label="$t('common.yes')"
+            :label="$t('tos.approve-button')"
             data-test="approve-terms"
             :btn-icon="isAsyncing ? 'LoaderSimple' : null"
             @click="onTermApproved"
