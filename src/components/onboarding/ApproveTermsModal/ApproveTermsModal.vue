@@ -30,7 +30,8 @@ const hasReadAll = ref(false)
 
 const onTosScroll = (e) => {
   const scrollable = e.target
-  if (scrollable.scrollTop === scrollable.scrollTopMax) {
+  const maxScroll = Math.floor(scrollable.scrollHeight - scrollable.offsetHeight) - 8
+  if (Math.ceil(scrollable.scrollTop) >= maxScroll) {
     // reached bottom
     hasReadAll.value = true
   }
