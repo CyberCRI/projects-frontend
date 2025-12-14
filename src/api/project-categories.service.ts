@@ -66,3 +66,15 @@ export async function patchProjectCategoryBackground({ id, imageId, body }) {
 export async function deleteProjectCategoryBackground({ category_id, id }) {
   return await useAPI(`category/${category_id}/background/${id}/`, { method: 'DELETE' })
 }
+
+export async function getProjectCategoriesFollow(userId: number) {
+  return await useAPI(`user/${userId}/category-follow/`) //.data.value
+}
+
+export async function postProjectCategoryFollow(userId: number, category_id: number) {
+  return await useAPI(`user/${userId}/category-follow/`, { body: { category_id }, method: 'POST' }) //.data.value
+}
+
+export async function deleteProjectCategoryFollow(userId: number, category_follow_id: number) {
+  return await useAPI(`user/${userId}/category-follow/${category_follow_id}/`, { method: 'DELETE' })
+}

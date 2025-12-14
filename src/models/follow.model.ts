@@ -18,6 +18,16 @@ export type FollowInput = {
   follower_id: number
 }
 
+export type FollowCategoryInput = {
+  category_id?: number
+  follower_id: number
+}
+
+export type UnfollowCategoryInput = {
+  category_follow_id: number
+  follower_id: number
+}
+
 export type FollowedProjectRef = {
   project_id: string
 }

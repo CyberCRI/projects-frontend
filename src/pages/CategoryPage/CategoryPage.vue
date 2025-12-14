@@ -1,6 +1,10 @@
 <script setup>
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
+import useUsersStore from '@/stores/useUsers.ts'
+import followUtils from '@/functs/followUtils.ts'
+
+const usersStore = useUsersStore()
 
 const props = defineProps({
   slugOrId: {
@@ -102,6 +106,31 @@ useLpiHead(
   image,
   dimensions
 )
+
+// TODO
+const follow = computed(() =>
+  usersStore.followedCategories.find((f) => f.category.id === category.value?.id)
+)
+const followed = computed(() => !!follow.value)
+
+const toggleFollow = async () => {
+  try {
+    if (follow.value) {
+      await followUtils.unfollowCategory({
+        follower_id: usersStore.id,
+        category_follow_id: follow.value.id,
+      })
+    } else {
+      await followUtils.followCategory({
+        follower_id: usersStore.id,
+        category_id: category.value.id,
+      })
+    }
+    await usersStore.fetchFollowedCategories()
+  } catch (error) {
+    console.error('Error updating follow', error)
+  }
+}
 </script>
 <template>
   <div v-if="category" id="type" :key="category.id" class="category-layout">
@@ -122,6 +151,15 @@ useLpiHead(
 
       <div class="banner-title-ctn">
         <div class="banner-title">
+          <ExternalLabelButton
+            v-if="usersStore.isConnected"
+            class="space-button bg-on-hover follow-button"
+            :label="followed ? $t('project.followed') : $t('project.follow')"
+            :btn-icon="followed ? 'Heart' : 'HeartOutline'"
+            vertical-layout
+            @click="toggleFollow"
+          />
+
           <h1 class="category-name">
             {{ category?.$t?.name }}
           </h1>
@@ -324,6 +362,16 @@ useLpiHead(
       font-size: $font-size-l;
       line-height: 1.4;
     }
+  }
+}
+.banner-title {
+  position: relative;
+  .follow-button {
+    position: absolute;
+    bottom: -2.5rem;
+    right: 0;
+    transform: translate(-50%, -100%);
+    width: 3rem; // fix creepy changing size vs positoning issue
   }
 }
 </style>
