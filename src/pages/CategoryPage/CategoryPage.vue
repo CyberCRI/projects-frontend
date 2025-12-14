@@ -364,8 +364,10 @@ const toggleFollow = async () => {
     }
   }
 }
+
 .banner-title {
   position: relative;
+
   .follow-button {
     position: absolute;
     bottom: -2.5rem;

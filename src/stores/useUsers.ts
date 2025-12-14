@@ -261,8 +261,8 @@ const useUsersStore = defineStore('users', () => {
   async function fetchFollowedCategories() {
     if (!id.value) return
     try {
+      // TODO check if paginated result workaround is needed
       const resp = await getProjectCategoriesFollow(id.value)
-      console.log('resp', resp)
       followedCategories.value = resp.results
     } catch (err) {
       console.error('Error fetching followed categories:', err)
