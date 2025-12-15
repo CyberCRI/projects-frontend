@@ -3,6 +3,7 @@ import { patchTermsAndConditions } from '@/api/organizations.service'
 import useOrganizations from '@/stores/useOrganizations'
 import useToasterStore from '@/stores/useToaster.ts'
 
+const NULL_CONTENT = '<p></p>'
 const { t } = useI18n()
 const toaster = useToasterStore()
 const organizationsStore = useOrganizations()
@@ -15,7 +16,7 @@ const termsContent = ref('<p></p>')
 const isLoading = ref(true)
 
 const resetTerms = () => {
-  termsContent.value = organizationsStore?.termsContent || '<p></p>'
+  termsContent.value = organizationsStore?.termsContent || NULL_CONTENT
 }
 
 const isAsyncing = ref(false)
@@ -44,6 +45,10 @@ watch(
   },
   { immediate: true }
 )
+
+const canSave = computed(
+  () => (organizationsStore?.termsContent || NULL_CONTENT) !== termsContent.value
+)
 </script>
 <template>
   <div class="terms-of-service-admin-tab">
@@ -68,7 +73,7 @@ watch(
           @click="resetTerms"
         />
         <LpiButton
-          :disabled="isAsyncing"
+          :disabled="isAsyncing || !canSave"
           :btn-icon="isAsyncing ? 'LoaderSimple' : undefined"
           :label="$t('common.save')"
           @click="saveTerms"
