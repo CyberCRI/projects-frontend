@@ -54,6 +54,8 @@ export default {
         organization_has_new_access_request: false,
         invitation_link_will_expire: false,
         new_instruction: false,
+        category_project_created: false,
+        category_project_updated: false,
       },
       isLoading: true,
     }
@@ -79,6 +81,18 @@ export default {
 
     switches() {
       return [
+        {
+          label: this.$t('notifications.category.project-created'),
+          subLabel: this.$t('notifications.category.project-created-sub'),
+          value: this.form.category_project_created,
+          settingValue: 'category_project_created',
+        },
+        {
+          label: this.$t('notifications.category.project-updated'),
+          subLabel: this.$t('notifications.category.project-updated-sub'),
+          value: this.form.category_project_updated,
+          settingValue: 'category_project_updated',
+        },
         {
           label: this.$t('notifications.projects.follow'),
           subLabel: this.$t('notifications.projects.follow-sub'),

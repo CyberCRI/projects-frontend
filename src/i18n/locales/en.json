@@ -2366,6 +2366,12 @@
       "applications": "Application notifications",
       "blogEntries": "Blog entries notifications"
     },
+    "category": {
+      "project-created": "Category you follow - creation",
+      "project-created-sub": "Be notified when a new project is created in this category",
+      "project-updated": "Category you follow - update",
+      "project-updated-sub": "Be notified when a project is updated in this category"
+    },
     "projects": {
       "title": "Notifications that you receive by email:",
       "follow": "Projects you follow",

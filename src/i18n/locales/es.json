@@ -2350,6 +2350,12 @@
         "no": "No"
       }
     },
+    "category": {
+      "project-created": "Categoría que sigues - creación",
+      "project-created-sub": "Recibe una notificación cuando se crea un nuevo proyecto en esta categoría",
+      "project-updated": "Categoría que sigues - actualización",
+      "project-updated-sub": "Recibe una notificación cuando se actualiza un proyecto en esta categoría"
+    },
     "project": {
       "title": "Notificación del proyecto",
       "changes": "Modificaciones",

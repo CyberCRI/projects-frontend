@@ -2350,6 +2350,12 @@
         "no": "Nee"
       }
     },
+    "category": {
+      "project-created": "Categorie die u volgt - aanmaak",
+      "project-created-sub": "Ontvang een melding wanneer er een nieuw project wordt aangemaakt in deze categorie",
+      "project-updated": "Categorie die u volgt - update",
+      "project-updated-sub": "Ontvang een melding wanneer een project wordt bijgewerkt in deze categorie"
+    },
     "project": {
       "title": "Projectnotificatie",
       "changes": "Meldingen wijzigen",

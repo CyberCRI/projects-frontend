@@ -2358,6 +2358,12 @@
         "no": "Non"
       }
     },
+    "category": {
+      "project-created": "Catégorie que vous suivez - création",
+      "project-created-sub": "Soyez notifié lorsqu'un nouveau projet est créé dans cette catégorie",
+      "project-updated": "Catégorie que vous suivez - mise à jour",
+      "project-updated-sub": "Soyez notifié lorsqu'un projet est mis à jour dans cette catégorie"
+    },
     "project": {
       "title": "Notifications de projet",
       "changes": "Notifications de changement",

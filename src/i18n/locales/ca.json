@@ -2350,6 +2350,12 @@
         "no": "No"
       }
     },
+    "category": {
+      "project-created": "Categoria que seguiu - creació",
+      "project-created-sub": "Rebeu una notificació quan es crea un nou projecte en aquesta categoria",
+      "project-updated": "Categoria que seguiu - actualització",
+      "project-updated-sub": "Rebeu una notificació quan s'actualitza un projecte en aquesta categoria"
+    },
     "project": {
       "title": "Notificació del projecte",
       "changes": "Canvia les notificacions",

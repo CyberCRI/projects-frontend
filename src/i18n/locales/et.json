@@ -2350,6 +2350,12 @@
         "no": "Ei"
       }
     },
+    "category": {
+      "project-created": "Kategooria, mida jälgite - loomine",
+      "project-created-sub": "Saate teate, kui selles kategoorias luuakse uus projekt",
+      "project-updated": "Kategooria, mida jälgite - uuendus",
+      "project-updated-sub": "Saate teate, kui selles kategoorias uuendatakse projekti"
+    },
     "project": {
       "title": "Projektist teatamine",
       "changes": "Teadete muutmine",

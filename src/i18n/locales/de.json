@@ -2350,6 +2350,12 @@
         "no": "Nein"
       }
     },
+    "category": {
+      "project-created": "Kategorie, der Sie folgen - Erstellung",
+      "project-created-sub": "Benachrichtigen, wenn ein neues Projekt in dieser Kategorie erstellt wird",
+      "project-updated": "Kategorie, der Sie folgen - Aktualisierung",
+      "project-updated-sub": "Benachrichtigen, wenn ein Projekt in dieser Kategorie aktualisiert wird"
+    },
     "project": {
       "title": "Projektbenachrichtigung",
       "changes": "Benachrichtigungen ändern",
