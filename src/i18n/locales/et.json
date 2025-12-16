@@ -1056,6 +1056,7 @@
   },
   "me": {
     "follow": "Projektid, mida jälgin",
+    "follow-category": "Kategooriad, mida ma jälgin",
     "no-follow": "Sa ei jälgi veel projekti",
     "groups": "Minu grupid",
     "no-group": "Sa ei ole veel grupi liige",
@@ -1352,6 +1353,13 @@
         "personal-bio": {
           "label": "Isiklik biobioloogia",
           "placeholder": "Esitle ennast isiklikult. Räägi meile endast ja oma kirgedest!"
+        }
+      },
+      "categories": {
+        "followed": {
+          "label": "Kategooriad, mida ma jälgin",
+          "notice": "Jälgides kategooriaid, saate teateid mis tahes uue tegevuse kohta nende kategooriate projektides. Kui soovite kategooriat jälgida, külastage seda ja klõpsake pealkirja kõrval nuppu \"Jälgi\".",
+          "empty": "Te ei järgi veel ühtegi kategooriat."
         }
       },
       "projects": {

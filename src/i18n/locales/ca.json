@@ -1056,6 +1056,7 @@
   },
   "me": {
     "follow": "Projectes que segueixo",
+    "follow-category": "Categories que segueixo",
     "no-follow": "Encara no esteu seguint un projecte",
     "groups": "Grups, sóc membre de",
     "no-group": "Encara no sou membre d' un grup",
@@ -1352,6 +1353,13 @@
         "personal-bio": {
           "label": "bio Personal",
           "placeholder": "Presenta't personalment. Parla'ns de tu i de les teves passions!"
+        }
+      },
+      "categories": {
+        "followed": {
+          "label": "Categories que segueixo",
+          "notice": "Quan seguiu categories, rebreu notificacions sobre qualsevol nova activitat en projectes d'aquestes categories. Si voleu seguir una categoria, visiteu-la i feu clic al botó \"Segueix\" al costat del títol.",
+          "empty": "Encara no seguiu cap categoria."
         }
       },
       "projects": {

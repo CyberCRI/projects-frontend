@@ -1064,6 +1064,7 @@
   },
   "me": {
     "follow": "Projects I follow",
+    "follow-category": "Categories I follow",
     "no-follow": "You are not following a project yet",
     "groups": "Groups I'm a member of",
     "no-group": "Your are not member of a group yet",
@@ -1360,6 +1361,13 @@
         "personal-bio": {
           "label": "Personal bio",
           "placeholder": "Present yourself personally. Tell us about you and your passions!"
+        }
+      },
+      "categories": {
+        "followed": {
+          "label": "Categories I follow",
+          "notice": "Following categories you will receive notifications about any new activity on projects in these categories. If you want to follow a category, visit it and click the \"Follow\" button next to the title.",
+          "empty": "You are not following any category yet."
         }
       },
       "projects": {

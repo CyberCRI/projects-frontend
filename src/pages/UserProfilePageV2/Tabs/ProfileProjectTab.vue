@@ -74,6 +74,23 @@
         />
       </template>
     </UserProjectsSearch>
+
+    <div class="follower-categories" v-if="followedCategories.length">
+      <div class="project-list-header">
+        <h4 class="title">
+          {{ $t('me.follow-category') }}
+          <span>({{ followedCategories.length }})</span>
+        </h4>
+      </div>
+      <div class="category-list-wrapper">
+        <CategoryCard
+          v-for="category in followedCategories"
+          :key="category.id"
+          :category="category"
+          class="category-card"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -82,6 +99,7 @@ import UserProjectsSearch from '@/components/people/UserProfile/UserProjectsSear
 import UserProjectList from '@/components/people/UserProfile/UserProjectList.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import useUsersStore from '@/stores/useUsers.ts'
+import useProjectCategories from '@/stores/useProjectCategories.ts'
 
 export default {
   name: 'ProfileProjectTab',
@@ -98,13 +116,20 @@ export default {
   setup() {
     const usersStore = useUsersStore()
     const { canCreateProject } = usePermissions()
+    const projectCategoriesStore = useProjectCategories()
     return {
       usersStore,
       canCreateProject,
+      projectCategoriesStore,
     }
   },
-
   computed: {
+    followedCategories() {
+      return (this.usersStore.followedCategories || [])
+        .map((f) => this.projectCategoriesStore.allByIds[f.category.id])
+        .filter((c) => !!c)
+    },
+
     isMyProfileAndCanCreateProject() {
       const loggedAsID = this.usersStore.id
       return loggedAsID && this.user.id === loggedAsID && this.canCreateProject
@@ -166,5 +191,11 @@ export default {
   .project-tab {
     padding: 0 $space-s;
   }
+}
+
+.category-list-wrapper {
+  display: flex;
+  gap: 1rem;
+  flex-flow: row wrap;
 }
 </style>

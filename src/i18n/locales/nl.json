@@ -1354,6 +1354,13 @@
           "placeholder": "Presenteer jezelf persoonlijk. Vertel ons over jou en je passies!"
         }
       },
+      "categories": {
+        "followed": {
+          "label": "Categorieën die ik volg",
+          "notice": "Door categorieën te volgen, ontvangt u meldingen over nieuwe activiteiten met betrekking tot projecten in deze categorieën. Als u een categorie wilt volgen, bezoekt u deze en klikt u op de knop \"Volgen\" naast de titel.",
+          "empty": "Je volgt nog geen categorie."
+        }
+      },
       "projects": {
         "tab": "Projecten",
         "member": {
