@@ -7,6 +7,8 @@ import {
 } from '@/composables/usePagination'
 import { omit } from 'es-toolkit'
 
+type RefOrRaw<DataT> = Ref<DataT> | ComputedRef<DataT> | DataT
+
 /**
  * wrapper around useAsyncData (for watch local change TODO !)
  *
@@ -42,7 +44,7 @@ type AsyncPaginationHandler = {
 
 type AsyncDataConfig<ResT, DataT> = Parameters<typeof useAsyncData<ResT, unknown, DataT>>['2']
 
-type AsyncpaginationConfig<DataT> = Omit<
+type AsyncpaginationConfig<DataT, Result> = Omit<
   AsyncDataConfig<PaginationResult<DataT>, DataT[]>,
   'transform'
 > & {
@@ -50,20 +52,23 @@ type AsyncpaginationConfig<DataT> = Omit<
   paginationConfig?: paginationConfig
   // method to transform data
   transform?: (data: DataT[]) => DataT[]
+  translate?: (data: RefOrRaw<DataT[]>) => Result
 }
 
-type AsyncPaginationParameters<DataT> = [
+type AsyncPaginationParameters<DataT, Result> = [
   Parameters<typeof useAsyncData<PaginationResult<DataT>, unknown, DataT[]>>['0'],
   (
     obj: AsyncPaginationHandler
   ) => ReturnType<Parameters<typeof useAsyncData<PaginationResult<DataT>, unknown, DataT[]>>['1']>,
-  AsyncpaginationConfig<DataT>?,
+  AsyncpaginationConfig<DataT, Result>?,
 ]
 
-type asyncPaginationAPI<DataT> = ReturnType<
-  typeof useAsyncAPI<PaginationResult<DataT>, DataT[]>
+type asyncPaginationAPI<DataT, Result> = Omit<
+  ReturnType<typeof useAsyncAPI<PaginationResult<DataT>, DataT[]>>,
+  'data'
 > & {
   pagination: Pagination
+  data: Result | Ref<DataT[]>
 }
 
 /**
@@ -75,15 +80,15 @@ type asyncPaginationAPI<DataT> = ReturnType<
  * @kind variable
  * @exports
  */
-export const useAsyncPaginationAPI = <DataT = unknown>(
-  ...params: AsyncPaginationParameters<DataT>
-): asyncPaginationAPI<DataT> => {
+export const useAsyncPaginationAPI = <DataT, Result = undefined>(
+  ...params: AsyncPaginationParameters<DataT, Result>
+): asyncPaginationAPI<DataT, Result> => {
   const paginationData = useState<PaginationResult>()
   const pagination = usePagination(paginationData, params[2]?.paginationConfig)
   const config = defaultOptions()
 
   // pass all arguements, but override the transform data
-  const results = useAsyncAPI<PaginationResult<DataT>, DataT[]>(
+  const { data, ...rest } = useAsyncAPI<PaginationResult<DataT>, DataT[]>(
     params[0],
     // override handler to add pagination query
     (ctx) => {
@@ -117,8 +122,12 @@ export const useAsyncPaginationAPI = <DataT = unknown>(
     }
   )
 
+  // translate results
+  const dataWrapped = params[2]?.translate?.(data) || data
+
   return {
-    ...results,
+    ...rest,
     pagination,
+    data: dataWrapped,
   }
 }

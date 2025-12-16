@@ -11,10 +11,12 @@ export interface PeopleGroupModel {
   type: string
   header_image: ImageModel
   publication_status: string
+  organization: string
   children: any[]
+  hierarchy: any
   modules: {
     members: number
-    projects: number
+    featured_projects: number
   }
 }
 

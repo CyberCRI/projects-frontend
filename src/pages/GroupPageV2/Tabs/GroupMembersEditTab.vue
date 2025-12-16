@@ -1,15 +1,14 @@
-<script setup>
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+<script setup lang="ts">
+import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 
-const props = defineProps({ groupData: { type: Object, required: true } })
+const props = defineProps<{ group: TranslatedPeopleGroupModel }>()
+const router = useRouter()
 
-const emit = defineEmits('reload-group-members')
-
-const organizationsStore = useOrganizationsStore()
+const organizationCode = useOrganizationCode()
 const orgCode = computed(() => {
   // use group's org code if availabe
   // to allow edition of groups on the meta portal (PROJ-1032)
-  return props.groupData?.organization || organizationsStore.current.code
+  return props.group?.organization || organizationCode
 })
 
 const form = ref({
@@ -18,7 +17,7 @@ const form = ref({
 
 const { setMembersData, updateGroupMembers, isSaving } = useGroupMembersUpdate(
   orgCode,
-  props.groupData?.id,
+  props.group?.id,
   form
 )
 
@@ -28,9 +27,10 @@ const save = async () => {
   try {
     await updateGroupMembers()
     startEditWatcher()
-    emit('reload-group-members')
+    await refreshNuxtData(`people-group::${props.group.id}`)
+    router.push({ name: 'groupMembers', params: { groupId: props.group.id } })
   } catch (e) {
-    console.log(e)
+    console.error(e)
   }
 }
 
@@ -49,7 +49,7 @@ onMounted(async () => {
         @close="
           $router.push({
             name: 'groupMembers',
-            params: { groupId: groupData.slug || groupData.id },
+            params: { groupId: group.id },
           })
         "
         @confirm="save"

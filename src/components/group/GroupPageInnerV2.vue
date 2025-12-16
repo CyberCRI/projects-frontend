@@ -43,8 +43,8 @@
 
 <script setup lang="ts">
 import { getGroup } from '@/api/groups.service'
+import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 defineOptions({ name: 'GroupPageInnerV2' })
-const props = defineProps<{ groupId: string }>()
 const uniqueId = 'group-nav-panel'
 const { canEditGroup } = usePermissions()
 const { isNavCollapsed, toggleNavPanel, collapseIfUnderBreakpoint } =
@@ -81,7 +81,7 @@ const groupHierarchy = computed(() => {
   ]
 })
 
-const groupModules = computed(() => groupData.value?.modules || {})
+const groupModules = computed<TranslatedPeopleGroupModel['modules']>(() => groupData.value?.modules)
 
 const groupTabsDisplay = computed(() => {
   return [
@@ -122,7 +122,7 @@ const groupTabsDisplay = computed(() => {
       props: {
         group: groupData.value,
       },
-      condition: groupModules.value.projects,
+      condition: groupModules.value.featured_projects,
       icon: 'Archive',
     },
   ]
@@ -158,7 +158,7 @@ const groupTabsEdit = computed(() => {
       altView: `/group/${route.params.groupId}/members`,
       props: {
         isInEditingMode: true,
-        groupData: groupData.value,
+        group: groupData.value,
       },
       condition: true,
       icon: 'Pen',
@@ -172,7 +172,7 @@ const groupTabsEdit = computed(() => {
       altView: `/group/${route.params.groupId}/projects`,
       props: {
         isInEditingMode: true,
-        groupData: groupData.value,
+        group: groupData.value,
       },
       condition: true,
       icon: 'Pen',

@@ -51,11 +51,13 @@ const props = defineProps<{
   group: TranslatedPeopleGroupModel
 }>()
 
-const { translateUser } = useAutoTranslate()
+const { translateUsers } = useAutoTranslate()
 const organizationCode = useOrganizationCode()
 const key = computed(() => `group-${props.group.id}-members-tabs`)
-const { data, isLoading, pagination } = useAsyncPaginationAPI<GroupMember>(key, ({ config }) =>
-  getGroupMember(organizationCode, props.group.id, config)
+const { data, isLoading, pagination } = useAsyncPaginationAPI(
+  key,
+  ({ config }) => getGroupMember(organizationCode, props.group.id, config),
+  { translate: translateUsers }
 )
 const { total, count } = pagination
 const userIdDrawer = ref<number | null>()

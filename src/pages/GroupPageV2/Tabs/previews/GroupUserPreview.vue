@@ -44,7 +44,6 @@
 
 <script setup lang="ts">
 import { getGroupMember } from '@/api/groups.service'
-import { GroupMember } from '@/models/group.model'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupPreview from '@/pages/GroupPageV2/Tabs/previews/BaseGroupPreview.vue'
 
@@ -52,12 +51,14 @@ const props = defineProps<{
   group: TranslatedPeopleGroupModel
 }>()
 
+const { translateUsers } = useAutoTranslate()
 const organizationCode = useOrganizationCode()
 const key = computed(() => `group-${props.group.id}-member-preview`)
-const { status, data, isLoading } = useAsyncPaginationAPI<GroupMember>(
+const { status, data, isLoading } = useAsyncPaginationAPI(
   key,
   ({ config }) => getGroupMember(organizationCode, props.group.id, config),
   {
+    translate: translateUsers,
     paginationConfig: {
       limit: 6,
     },

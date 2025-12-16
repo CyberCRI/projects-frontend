@@ -8,13 +8,13 @@ import type {
   RemoveGroupProject,
   AddParentGroupModelInput,
   GroupMember,
-  GroupModel,
 } from '@/models/group.model'
 // import type { HierarchyGroupModel } from '@/models/group.model'
 // import type { APIResponseList } from '@/api/types'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import useAPI from '@/composables/useAPI'
-import { Project } from '@playwright/test'
+import { ProjectModel } from '@/models/project.model'
+import { PeopleGroupModel } from '@/models/invitation.model'
 
 // HIERARCHY
 
@@ -56,7 +56,9 @@ export async function addParentGroup(
 }
 
 export function getGroup(organizationCode: string, groupId: string) {
-  return useAPI2(`organization/${organizationCode}/people-group/${groupId}/`)
+  return useAPI2<PeopleGroupModel>(`organization/${organizationCode}/people-group/${groupId}/`, {
+    key: `people-group::${groupId}`,
+  })
 }
 
 export async function patchGroup(org: string, group_id: string, groupData: Partial<PostGroupData>) {
@@ -73,7 +75,10 @@ export async function deleteGroup(org_code, group_id) {
 // GROUP MEMBERS
 
 export function getGroupMember(org: string, groupId: number, config = {}) {
-  return useAPI(`organization/${org}/people-group/${groupId}/member/`, config)
+  return useAPI<PaginationResult<GroupMember>>(
+    `organization/${org}/people-group/${groupId}/member/`,
+    config
+  )
 }
 
 export async function postGroupMembers(
@@ -101,7 +106,7 @@ export async function removeGroupMember(
 // GROUP PROJECTS
 
 export function getGroupProject(org: string, groupId: number, config = {}) {
-  return useAPI2<PaginationResult<Project>>(
+  return useAPI<PaginationResult<ProjectModel>>(
     `organization/${org}/people-group/${groupId}/project/`,
     config
   )

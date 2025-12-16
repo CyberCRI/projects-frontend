@@ -1,8 +1,8 @@
 <template>
   <BaseGroupPreview
     :title="$t('group.projects')"
-    :total="group.modules.projects"
-    :loading="loading"
+    :total="group.modules.featured_projects"
+    :loading="isLoading"
     :see-more="{
       name: 'groupProjects',
       params: { groupId: $route.params.groupId },
@@ -10,7 +10,7 @@
   >
     <template #content>
       <FetchLoader :status="status">
-        <CardList :items="translatedProjects">
+        <CardList :items="data">
           <template #default="projectListSlotProps">
             <ProjectCard :horizontal-display="true" :project="projectListSlotProps.item" />
           </template>
@@ -22,7 +22,6 @@
 
 <script setup lang="ts">
 import { getGroupProject } from '@/api/groups.service'
-import useLoadingFromStatus from '@/composables/useLoadingFromStatus'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupPreview from '@/pages/GroupPageV2/Tabs/previews/BaseGroupPreview.vue'
 
@@ -30,14 +29,17 @@ const props = defineProps<{
   group: TranslatedPeopleGroupModel
 }>()
 
-const LIMIT_MEMBERS = 12
 const { translateProjects } = useAutoTranslate()
 const organizationCode = useOrganizationCode()
-const { status, data } = getGroupProject(organizationCode, props.group.id, {
-  query: { limit: LIMIT_MEMBERS },
-})
-const results = computed(() => data.value?.results)
-const translatedProjects = translateProjects(results)
-
-const loading = useLoadingFromStatus(status)
+const key = computed(() => `group-${props.group.id}-project-preview`)
+const { status, data, isLoading } = useAsyncPaginationAPI(
+  key,
+  ({ config }) => getGroupProject(organizationCode, props.group.id, config),
+  {
+    translate: translateProjects,
+    paginationConfig: {
+      limit: 6,
+    },
+  }
+)
 </script>

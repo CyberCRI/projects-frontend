@@ -1,15 +1,14 @@
-<script setup>
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+<script setup lang="ts">
+import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 
-const props = defineProps({ groupData: { type: Object, required: true } })
+const organizationCode = useOrganizationCode()
+const props = defineProps<{ group: TranslatedPeopleGroupModel }>()
+const router = useRouter()
 
-const emit = defineEmits('reload-group-projects')
-
-const organizationsStore = useOrganizationsStore()
 const orgCode = computed(() => {
   // use group's org code if availabe
   // to allow edition of groups on the meta portal (PROJ-1032)
-  return props.groupData?.organization || organizationsStore.current.code
+  return props.group?.organization || organizationCode
 })
 
 const form = ref({
@@ -18,7 +17,7 @@ const form = ref({
 
 const { setProjectsData, updateGroupProjects, isSaving } = useGroupProjectsUpdate(
   orgCode,
-  props.groupData?.id,
+  props.group?.id,
   form
 )
 
@@ -28,7 +27,8 @@ const save = async () => {
   try {
     await updateGroupProjects()
     startEditWatcher()
-    emit('reload-group-projects')
+    await refreshNuxtData(`people-group::${props.group.id}`)
+    router.push({ name: 'groupProjects', params: { groupId: props.group.id } })
   } catch (e) {
     console.log(e)
   }
@@ -42,20 +42,18 @@ onMounted(async () => {
 
 <template>
   <div class="group-projects">
-    <ClientOnly>
-      <FormPanel
-        :confirm-action-name="$t('common.save')"
-        :asyncing="isSaving"
-        @close="
-          $router.push({
-            name: 'groupMembers',
-            params: { groupId: groupData.slug || groupData.id },
-          })
-        "
-        @confirm="save"
-      >
-        <ProjectSection v-model="form.featuredProjects" />
-      </FormPanel>
-    </ClientOnly>
+    <FormPanel
+      :confirm-action-name="$t('common.save')"
+      :asyncing="isSaving"
+      @close="
+        $router.push({
+          name: 'groupMembers',
+          params: { groupId: group.id },
+        })
+      "
+      @confirm="save"
+    >
+      <ProjectSection v-model="form.featuredProjects" />
+    </FormPanel>
   </div>
 </template>
