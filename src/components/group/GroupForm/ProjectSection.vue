@@ -74,7 +74,7 @@ const onProjectsPicked = (projects) => {
 }
 
 const onRemoveProject = (project) => {
-  const projects = this.modelValue.filter((p) => p.id !== project.id)
+  const projects = props.modelValue.filter((p) => p.id !== project.id)
   emit('update:model-value', [...projects])
 }
 </script>

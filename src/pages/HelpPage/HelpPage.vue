@@ -4,14 +4,8 @@ import { getOrganizationByCode } from '@/api/organizations.service'
 const { onboardingTrap } = useOnboardingStatus()
 const { t } = useNuxtI18n()
 
-provide(
-  'helpPageHasFaq',
-  computed(() => this.hasFaq)
-)
-provide(
-  'helpPageFaq',
-  computed(() => this.faq)
-)
+provide('helpPageHasFaq', hasFaq)
+provide('helpPageFaq', faq)
 
 const isLoading = ref(true)
 const customTab = ref(null)
