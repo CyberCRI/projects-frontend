@@ -430,6 +430,7 @@ const testimonials = [
   },
 ]
 
+const maxSlide = testimonials.length
 const getMetaPortalUrl = runtimeConfig.public.appMetaPortalUrl
 
 const toggleTopBtn = debounce(
@@ -459,11 +460,11 @@ const onSlide = (index) => {
 }
 
 const slidePrev = () => {
-  currentslide.value = currentslide.value > 0 ? currentslide.value - 1 : this.maxSlide - 1
+  currentslide.value = currentslide.value > 0 ? currentslide.value - 1 : maxSlide - 1
 }
 
 const slideNext = () => {
-  currentslide.value = currentslide.value < this.maxSlide - 1 ? currentslide.value + 1 : 0
+  currentslide.value = currentslide.value < maxSlide - 1 ? currentslide.value + 1 : 0
 }
 </script>
 

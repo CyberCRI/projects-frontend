@@ -75,7 +75,7 @@ const { t } = useNuxtI18n()
 const defaultPictures = usePatatoids()
 
 const updateForm = (fieldName, fieldValue) => {
-  emit('update:modelValue', { ...this.modelValue, [fieldName]: fieldValue })
+  emit('update:modelValue', { ...props.modelValue, [fieldName]: fieldValue })
 }
 </script>
 <style lang="scss" scoped>

@@ -82,7 +82,7 @@ const hasNext = computed(() => {
   return activeStep.value < props.stepNumber
 })
 const hasBothButtons = computed(() => {
-  return this.hasPrevious && hasNext.value
+  return hasPrevious.value && hasNext.value
 })
 
 const previous = () => {
