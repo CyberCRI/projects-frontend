@@ -161,6 +161,7 @@ export default {
     svg {
       transform-origin: center;
       transition: all 200ms ease-in-out;
+      transform: translateZ(0);
     }
 
     &:hover {
@@ -168,7 +169,7 @@ export default {
       background-color: $primary-light !important;
 
       svg {
-        transform: scale(1.1);
+        transform: translateZ(0) scale(1.1);
       }
     }
   }

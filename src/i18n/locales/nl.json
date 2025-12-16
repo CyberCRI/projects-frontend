@@ -2733,7 +2733,11 @@
     "title": "Chat met AI",
     "input-placeholder": "Typ hier je bericht...",
     "intro-message": "Hallo, hoe kan ik je vandaag helpen?",
-    "drawer-button-label": "AI-assistent"
+    "drawer-button-label": "AI-assistent",
+    "fetching_tools": "Hulpmiddelen ophalen...",
+    "fetching_data": "Gegevens ophalen...",
+    "reasoning": "Bezig met nadenken...",
+    "restart": "Gesprek opnieuw starten"
   },
   "researcher": {
     "relators": {
@@ -3088,5 +3092,14 @@
       "Unknown": "onbekend",
       "Working-Paper": "werkdocument"
     }
+  },
+  "tos": {
+    "evolved": "Onze servicevoorwaarden zijn bijgewerkt, neem even de tijd om ze te bekijken en goed te keuren.",
+    "review-and-sign": "Lees en keur de bijgewerkte servicevoorwaarden goed om het platform te blijven gebruiken.",
+    "scroll-notice": "Scroll alstublieft naar beneden tot het einde van de voorwaarden voordat u goedkeurt.",
+    "error-approving": "Fout bij het goedkeuren van de servicevoorwaarden, probeer het later opnieuw.",
+    "title": "Servicevoorwaarden",
+    "approve-title": "Gelieve de servicevoorwaarden goed te keuren",
+    "approve-button": "Ik accepteer"
   }
 }

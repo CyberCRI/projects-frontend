@@ -2733,7 +2733,11 @@
     "title": "Xateja amb IA",
     "input-placeholder": "Escriu el teu missatge aquí...",
     "intro-message": "Hola, com et puc ajudar avui?",
-    "drawer-button-label": "Assistent d'IA"
+    "drawer-button-label": "Assistent d'IA",
+    "fetching_tools": "Obtenció d'eines...",
+    "fetching_data": "Obtenció de dades...",
+    "reasoning": "Pensant...",
+    "restart": "Reinicia la conversa"
   },
   "researcher": {
     "relators": {
@@ -3088,5 +3092,14 @@
       "Unknown": "desconegut",
       "Working-Paper": "Paper en funcionament"
     }
+  },
+  "tos": {
+    "evolved": "Els nostres Termes i Condicions s'han actualitzat, si us plau, reviseu-los i aproveu-los.",
+    "review-and-sign": "Si us plau, llegeix i aprova els Termes i Condicions actualitzats per continuar utilitzant la plataforma.",
+    "scroll-notice": "Si us plau, desplaça't fins al final dels termes abans d'aprovar.",
+    "error-approving": "Error en aprovar els termes i condicions, torna-ho a provar més tard.",
+    "title": "Termes i Condicions",
+    "approve-title": "Si us plau, aprova els Termes i Condicions",
+    "approve-button": "Accepto"
   }
 }

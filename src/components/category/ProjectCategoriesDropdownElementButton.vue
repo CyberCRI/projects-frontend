@@ -37,6 +37,7 @@ const emit = defineEmits(['choose-category'])
   background-color: white;
   transition: transform 200ms ease-in-out;
   width: auto;
+  transform: translateZ(0);
 
   .label {
     transform-origin: left center;
@@ -46,7 +47,7 @@ const emit = defineEmits(['choose-category'])
 
   &:hover {
     background-color: $primary-light;
-    transform: scaleX(1.1);
+    transform: translateZ(0) scaleX(1.1);
   }
 }
 </style>

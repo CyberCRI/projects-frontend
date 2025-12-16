@@ -2741,7 +2741,11 @@
     "title": "Chat with AI",
     "input-placeholder": "Type your message here...",
     "intro-message": "Hello How can I assist you today?",
-    "drawer-button-label": "AI Assistant"
+    "drawer-button-label": "AI Assistant",
+    "fetching_tools": "Fetching tools...",
+    "fetching_data": "Fetching data...",
+    "reasoning": "Thinking...",
+    "restart": "Restart conversation"
   },
   "researcher": {
     "relators": {
@@ -3100,9 +3104,10 @@
   "tos": {
     "evolved": "Our Terms and Conditions have been updated, please take a moment to review and approve them.",
     "review-and-sign": "Please read and approve the updated Terms and Conditions to continue using the platform.",
-    "scroll-notice": " Go to the bottom of the terms before you can approve.",
+    "scroll-notice": "Please scroll to the bottom of the terms before approving.",
     "error-approving": "Error while approving terms and conditions, please try again later.",
     "title": "Terms and Conditions",
-    "approve-title": "Please Approve the Terms and Conditions"
+    "approve-title": "Please Approve the Terms and Conditions",
+    "approve-button": "I accept"
   }
 }

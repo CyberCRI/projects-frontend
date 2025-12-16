@@ -41,13 +41,13 @@ defineProps({
     z-index: 0;
     position: absolute;
     transform-origin: center center;
-    transform: scale(0, 1);
+    transform: translateZ(0) scale(0, 1);
     transition: 200ms ease-in-out;
     border-bottom: $border-width-m solid $primary-dark;
   }
 
   &:hover::before {
-    transform: scale(1, 1);
+    transform: translateZ(0) scale(1, 1);
   }
 
   .icon,

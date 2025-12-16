@@ -735,14 +735,14 @@ export default {
     content: '';
     width: pxToRem(12px);
     height: pxToRem(12px);
-    transform: scale(0);
+    transform: translateZ(0) scale(0);
     transition: 120ms transform ease-in-out;
     box-shadow: inset 1em 1em $primary-dark;
     border-radius: 50%;
   }
 
   input[type='radio']:checked::before {
-    transform: scale(1);
+    transform: translateZ(0) scale(1);
   }
 
   input[type='radio']:disabled {

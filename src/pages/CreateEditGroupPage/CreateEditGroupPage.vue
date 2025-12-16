@@ -217,7 +217,7 @@ const createGroup = async () => {
         : { name: 'Group', params: { groupId: newGroupId } }
     )
   } catch (error) {
-    this.toaster.pushError(`${t('toasts.group-create.error')} (${error})`)
+    toaster.pushError(`${t('toasts.group-create.error')} (${error})`)
     console.error(error)
   } finally {
     isSaving.value = false

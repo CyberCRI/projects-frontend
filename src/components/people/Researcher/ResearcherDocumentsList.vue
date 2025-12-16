@@ -334,13 +334,14 @@ $profile-documents: 1rem;
 
   &:not(.preview) {
     cursor: pointer;
+    transform: translateZ(0);
 
     &:hover:not(.selected) {
-      transform: scale(120%);
+      transform: translateZ(0) scale(120%);
     }
 
     &.selected:hover {
-      transform: scale(105%);
+      transform: translateZ(0) scale(105%);
     }
 
     &:not(:hover).disabled {

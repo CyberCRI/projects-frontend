@@ -441,10 +441,10 @@ table {
   cursor: pointer;
   transition: transform 200ms ease-in-out;
   transform-origin: center bottom;
-  transform: scale(1);
+  transform: translateZ(0) scale(1);
 
   &:hover {
-    transform: scale(1.05);
+    transform: translateZ(0) scale(1.05);
   }
 
   &.decline-action {

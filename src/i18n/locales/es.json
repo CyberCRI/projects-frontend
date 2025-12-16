@@ -2733,7 +2733,11 @@
     "title": "Chatear con IA",
     "input-placeholder": "Escribe tu mensaje aquí...",
     "intro-message": "Hola, ¿cómo puedo ayudarte hoy?",
-    "drawer-button-label": "Asistente de IA"
+    "drawer-button-label": "Asistente de IA",
+    "fetching_tools": "Obteniendo herramientas...",
+    "fetching_data": "Obteniendo datos...",
+    "reasoning": "Pensando...",
+    "restart": "Reiniciar conversación"
   },
   "researcher": {
     "relators": {
@@ -3088,5 +3092,14 @@
       "Unknown": "desconocida",
       "Working-Paper": "Documento de trabajo"
     }
+  },
+  "tos": {
+    "evolved": "Nuestros Términos y Condiciones han sido actualizados, por favor tómese un momento para revisarlos y aprobarlos.",
+    "review-and-sign": "Por favor, lea y apruebe los Términos y Condiciones actualizados para continuar usando la plataforma.",
+    "scroll-notice": "Por favor, desplácese hasta el final de los términos antes de aprobar.",
+    "error-approving": "Error al aprobar los términos y condiciones, por favor intente de nuevo más tarde.",
+    "title": "Términos y Condiciones",
+    "approve-title": "Por favor, apruebe los Términos y Condiciones",
+    "approve-button": "Acepto"
   }
 }
