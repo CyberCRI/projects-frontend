@@ -9,9 +9,12 @@ export const defaultOptions = () => {
   const localStorage = _localStorage
   const runtimeConfig = useRuntimeConfig()
   const usersStore = useUsers()
+  const headers = useRequestHeaders(['cookie'])
+
   return {
     baseURL: runtimeConfig.public.appApiUrl + runtimeConfig.public.appApiDefaultVersion + '/',
     method: 'GET',
+    headers,
     onRequest({ options }) {
       // if (import.meta.client) {
       const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')

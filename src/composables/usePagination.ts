@@ -65,9 +65,9 @@ export const usePagination = (
   results: Ref<PaginationResult>,
   paginationConfig: paginationConfig = {}
 ): Pagination => {
-  const current = ref(1)
-  const total = ref(0)
-  const count = ref(0)
+  const current = useState(() => 1)
+  const total = useState(() => 0)
+  const count = useState(() => 0)
   const limit = paginationConfig.limit ?? DEFAULT_Pagination_LIMIT
 
   watch(

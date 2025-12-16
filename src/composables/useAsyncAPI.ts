@@ -78,7 +78,7 @@ type asyncPaginationAPI<DataT> = ReturnType<
 export const useAsyncPaginationAPI = <DataT = unknown>(
   ...params: AsyncPaginationParameters<DataT>
 ): asyncPaginationAPI<DataT> => {
-  const paginationData = ref()
+  const paginationData = useState<PaginationResult>()
   const pagination = usePagination(paginationData, params[2]?.paginationConfig)
   const config = defaultOptions()
 
@@ -104,10 +104,10 @@ export const useAsyncPaginationAPI = <DataT = unknown>(
       // add page watcher
       watch: [...(params[2]?.watch || []), pagination.current],
 
-      // default() {
-      //   // return by defaults a emptys arrays
-      //   return params[2]?.default?.() || []
-      // },
+      default() {
+        // return by defaults a emptys arrays
+        return params[2]?.default?.() || []
+      },
 
       transform(dataApi) {
         paginationData.value = dataApi
