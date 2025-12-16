@@ -152,6 +152,7 @@ useLpiHead(
           <h3 class="child-title">
             {{ child?.$t?.name }}
           </h3>
+          <CategoryFollowButton :category-id="child.id" @click.stop.prevent="" />
         </NuxtLink>
       </div>
       <div class="category-search-header">
@@ -314,8 +315,10 @@ useLpiHead(
   }
 
   .category-child {
-    display: inline-block;
+    display: inline-flex;
+    gap: $space-m;
     padding: $space-m;
+    align-items: flex-start;
     border: $border-width-s solid $primary;
     border-radius: $border-radius-s;
     background-color: $white;
@@ -325,6 +328,7 @@ useLpiHead(
       color: $almost-black;
       font-size: $font-size-l;
       line-height: 1.4;
+      flex-grow: 1;
     }
   }
 }
