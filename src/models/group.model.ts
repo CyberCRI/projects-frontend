@@ -81,7 +81,3 @@ export interface RemoveGroupMember {
 export interface PostGroupProjects {
   featured_projects: Array<string>
 }
-
-export interface RemoveGroupProject {
-  project: string
-}

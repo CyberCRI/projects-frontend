@@ -1,18 +1,18 @@
 import useValidate from '@vuelidate/core'
 import { debounce } from 'es-toolkit'
 
-type OptionsForm = {
-  default?: object
+type OptionsForm<T, CleanResult> = {
+  default?: T
   rules?: object
   validateTimeout?: number
-  onClean: (data: object) => object
+  onClean: (data: T) => CleanResult
 }
 
-type UseFormResult = {
-  form: Ref<object>
+type UseFormResult<T, CleanResult> = {
+  form: Ref<T>
   isValid: Ref<boolean>
   errors: Ref<object>
-  cleanedData: null | Ref<object>
+  cleanedData: null | Ref<CleanResult>
 }
 
 const onClean = (d) => d
@@ -26,8 +26,10 @@ const onClean = (d) => d
  * @param {OptionsForm} options?
  * @returns {UseFormResult}
  */
-const useForm = (options: OptionsForm = { onClean }): UseFormResult => {
-  const form = ref<object>({ ...(options.default ?? {}) })
+const useForm = <T, CleanResult = T>(
+  options: OptionsForm<T, CleanResult> = { onClean }
+): UseFormResult<T, CleanResult> => {
+  const form = ref<T>({ ...(options.default ?? {}) } as T)
   const _onClean = options.onClean ?? onClean
 
   const isValid = ref<boolean>(false)
@@ -49,7 +51,7 @@ const useForm = (options: OptionsForm = { onClean }): UseFormResult => {
   })
 
   // clean data (before send to backend)
-  const cleanedData = computed(() => {
+  const cleanedData = computed<CleanResult>(() => {
     if (!isValid.value) {
       return null
     }

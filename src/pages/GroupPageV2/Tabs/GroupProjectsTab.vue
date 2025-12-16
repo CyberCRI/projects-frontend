@@ -22,28 +22,20 @@
 </template>
 
 <script setup lang="ts">
+import { getGroupProject } from '@/api/v2/group.service'
 import CardList from '@/components/base/CardList.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
 
-import { getGroupProject } from '@/api/groups.service'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 
-defineOptions({ name: 'GroupMembersTab' })
+defineOptions({ name: 'GroupProjectsTab' })
 
 const props = defineProps<{
   group: TranslatedPeopleGroupModel
 }>()
 
-const { translateProjects } = useAutoTranslate()
-const organizationCode = useOrganizationCode()
-const key = computed(() => `group-${props.group.id}-projects-tabs`)
-const { data, isLoading, pagination } = useAsyncPaginationAPI(
-  key,
-  ({ config }) => getGroupProject(organizationCode, props.group.id, config),
-  {
-    translate: translateProjects,
-  }
-)
+const organizationCode = computed(() => props.group?.organization || useOrganizationCode())
+const { data, isLoading, pagination } = getGroupProject(organizationCode, props.group.id)
 const { total, count } = pagination
 </script>
 

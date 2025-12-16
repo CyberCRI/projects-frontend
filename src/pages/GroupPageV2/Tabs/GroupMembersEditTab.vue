@@ -15,20 +15,44 @@ const form = ref({
   members: [],
 })
 
-const { setMembersData, updateGroupMembers, isSaving } = useGroupMembersUpdate(
+const { setMembersData, updateGroupMembers, isSaving, groupMemberData } = useGroupMembersUpdate(
   orgCode,
   props.group?.id,
   form
 )
 
-const { startEditWatcher } = useEditWatcher(form)
+const { startEditWatcher, stopEditWatcher } = useEditWatcher(form)
+
+const redirectMember = () => {
+  router.push({
+    name: 'groupMembers',
+    params: { groupId: props.group.id },
+  })
+}
+
+const redirectHome = () => {
+  router.push({
+    name: 'groupSnapshot',
+    params: { groupId: props.group.id },
+  })
+}
+
+const redirect = (numberMembers) => {
+  if (numberMembers) {
+    redirectMember()
+  } else {
+    redirectHome()
+  }
+}
 
 const save = async () => {
   try {
-    await updateGroupMembers()
-    startEditWatcher()
+    const { removed, added } = await updateGroupMembers()
+    console.log(removed, added, groupMemberData.value.length)
+    const actualMembersCount = groupMemberData.value.length - removed + added
+    stopEditWatcher()
     await refreshNuxtData(`people-group::${props.group.id}`)
-    router.push({ name: 'groupMembers', params: { groupId: props.group.id } })
+    redirect(actualMembersCount)
   } catch (e) {
     console.error(e)
   }
@@ -46,12 +70,7 @@ onMounted(async () => {
       <FormPanel
         :confirm-action-name="$t('common.save')"
         :asyncing="isSaving"
-        @close="
-          $router.push({
-            name: 'groupMembers',
-            params: { groupId: group.id },
-          })
-        "
+        @close="redirect(groupMemberData)"
         @confirm="save"
       >
         <GroupTeamSection v-model="form.members" />

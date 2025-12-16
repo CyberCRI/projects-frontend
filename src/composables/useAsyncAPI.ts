@@ -5,9 +5,8 @@ import {
   usePagination,
   Pagination,
 } from '@/composables/usePagination'
+import { RefOrRaw } from '@/interfaces/utils'
 import { omit } from 'es-toolkit'
-
-type RefOrRaw<DataT> = Ref<DataT> | ComputedRef<DataT> | DataT
 
 /**
  * wrapper around useAsyncData (for watch local change TODO !)

@@ -5,7 +5,6 @@ import type {
   AddGroupMembers,
   RemoveGroupMember,
   PostGroupProjects,
-  RemoveGroupProject,
   AddParentGroupModelInput,
   GroupMember,
 } from '@/models/group.model'
@@ -126,7 +125,7 @@ export async function postGroupProjects(
 export async function removeGroupProject(
   org: string,
   group_id: number,
-  projectsData: RemoveGroupProject
+  projectsData: PostGroupProjects
 ) {
   return await useAPI(`organization/${org}/people-group/${group_id}/project/remove/`, {
     body: projectsData,

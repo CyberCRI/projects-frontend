@@ -42,7 +42,6 @@
 
 <script setup lang="ts">
 import { getGroupMember } from '@/api/groups.service'
-import { GroupMember } from '@/models/group.model'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 
 defineOptions({ name: 'GroupMembersTab' })

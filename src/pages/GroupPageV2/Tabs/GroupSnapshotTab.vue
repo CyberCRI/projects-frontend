@@ -19,9 +19,13 @@
         :height-limit="400"
         class="description-content"
       />
-      <template v-for="[name, count] in groupModules">
-        <GroupUserPreview v-if="name === 'members'" :group="group" />
-        <GroupProjectsPreview v-else-if="name === 'featured_projects'" :group="group" />
+      <template v-for="[name] in groupModules">
+        <GroupUserPreview v-if="name === 'members'" :key="name" :group="group" />
+        <GroupProjectsPreview
+          v-else-if="name === 'featured_projects'"
+          :key="'featured_projects'"
+          :group="group"
+        />
       </template>
     </div>
     <div v-else class="skeleton">
