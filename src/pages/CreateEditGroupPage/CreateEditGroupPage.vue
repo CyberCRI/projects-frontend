@@ -13,7 +13,6 @@ import { isEqual } from 'es-toolkit'
 import useToasterStore from '@/stores/useToaster.ts'
 import usePeopleGroupsStore from '@/stores/usePeopleGroups'
 import useUsersStore from '@/stores/useUsers.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { getOrganizationByCode } from '@/api/organizations.service'
 
 const props = defineProps({
@@ -46,7 +45,7 @@ const props = defineProps({
 const emit = defineEmits(['close', 'reload-group'])
 const toaster = useToasterStore()
 const peopleGroupsStore = usePeopleGroupsStore()
-const organizationsStore = useOrganizationsStore()
+const organizationCode = useOrganizationCode()
 const usersStore = useUsersStore()
 const { canCreateGroup, canEditGroup } = usePermissions()
 const route = useRoute()
@@ -107,7 +106,7 @@ const isEdit = computed(() => {
 const orgCode = computed(() => {
   // use group's org code if availabe
   // to allow edition of groups on the meta portal (PROJ-1032)
-  return groupData.value ? groupData.value.organization : organizationsStore.current.code
+  return groupData.value ? groupData.value.organization : organizationCode
 })
 
 const redirectTo404 = () => {
@@ -291,7 +290,7 @@ onMounted(async () => {
     // load data
     // general data
     try {
-      const _groupData = await getGroup(orgCode.value, props.groupId)
+      const _groupData = await getGroup(orgCode.value, props.groupId).data.value
 
       // now we can get the real id (not slug)
       peopleGroupsStore.currentId = _groupData.id

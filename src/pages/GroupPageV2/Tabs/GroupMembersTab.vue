@@ -4,146 +4,63 @@
       <div class="members-header">
         <h2 class="title">
           {{ $t('group.group-members') }}
-          <span v-if="!isLoading">( {{ membersCount }} )</span>
+          <span v-if="!isLoading">( {{ count }} )</span>
         </h2>
       </div>
       <MemberListSkeleton v-if="isLoading" :min-gap="90" />
       <DynamicGrid v-else :min-gap="90" class="members-container">
         <GroupMemberItem
-          v-for="member in members"
+          v-for="member in data"
           :key="member.id"
           :user="member"
           class="cursor-pointer shadow-drop"
-          @user-click="openProfileDrawer"
+          @user-click="openProfile"
         />
       </DynamicGrid>
     </div>
-    <div v-if="!isLoading && pagination.total > 1" class="pagination-container">
-      <PaginationButtons
-        :current="pagination.currentPage"
-        :pagination="pagination"
-        :total="pagination.total"
-        @update-pagination="onClickPagination"
-      />
+    <div v-if="!isLoading && total > 1" class="pagination-container">
+      <PaginationButtons2 :pagination="pagination" />
     </div>
   </div>
   <BaseDrawer
-    :v-if="profileDrawer.isOpened"
     no-footer
-    :is-opened="profileDrawer.isOpened"
+    :is-opened="!!userIdDrawer"
     :title="$t('profile.drawer_title')"
-    @close="closeProfileDrawer"
-    @confirm="closeProfileDrawer"
+    @close="closeProfile"
+    @confirm="closeProfile"
   >
     <UserProfileV2
-      v-if="profileDrawer.isOpened"
+      v-if="!!userIdDrawer"
       ref="profile-user"
       :can-edit="false"
-      :user-id="profileDrawer.user_id"
+      :user-id="userIdDrawer"
       is-preview
-      @close="closeProfileDrawer"
+      @close="closeProfile"
     />
   </BaseDrawer>
 </template>
 
-<script>
-import useAPI from '@/composables/useAPI.ts'
+<script setup lang="ts">
+import { getGroupMember } from '@/api/groups.service'
+import { GroupMember } from '@/models/group.model'
+import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 
-export default {
-  name: 'GroupMembersTab',
+defineOptions({ name: 'GroupMembersTab' })
 
-  props: {
-    membersInitialRequest: {
-      type: Object,
-      default: () => {},
-    },
-    isMembersLoading: {
-      type: Boolean,
-      default: true,
-    },
-  },
+const props = defineProps<{
+  group: TranslatedPeopleGroupModel
+}>()
 
-  setup(props) {
-    const style = ref({})
-    const profileDrawer = ref({
-      isOpened: false,
-      user_id: null,
-    })
-    const pagination = ref({
-      currentPage: 1,
-      total: 1,
-      previous: undefined,
-      next: undefined,
-      first: undefined,
-      last: undefined,
-    })
-    const membersRequest = ref(props.membersInitialRequest)
-
-    const isPaginationLoading = ref(false)
-    const rawMembers = computed(() => membersRequest.value?.results || [])
-    const { translateUsers } = useAutoTranslate()
-    const members = translateUsers(rawMembers)
-    const membersCount = computed(() => membersRequest.value?.count || 0)
-
-    const isLoading = computed(() => props.isMembersLoading || isPaginationLoading.value)
-    return {
-      style,
-      profileDrawer,
-      pagination,
-      membersRequest,
-      isPaginationLoading,
-      members,
-      membersCount,
-      isLoading,
-    }
-  },
-
-  watch: {
-    membersRequest: {
-      handler: function (response) {
-        if (response) this.updatePagination(response)
-      },
-      immediate: true,
-    },
-
-    membersInitialRequest: {
-      handler: function (membersInitialRequest) {
-        if (membersInitialRequest) this.membersRequest = membersInitialRequest
-      },
-      immediate: true,
-    },
-  },
-
-  methods: {
-    async openProfileDrawer(user) {
-      this.profileDrawer.user_id = user.id
-      this.profileDrawer.isOpened = true
-    },
-
-    closeProfileDrawer() {
-      this.isEditMode = false
-      this.profileDrawer.isOpened = false
-      this.profileDrawer.user_id = null
-    },
-
-    async onClickPagination(requestedPage) {
-      this.isPaginationLoading = true
-      this.membersRequest = await useAPI(requestedPage, {})
-      this.isPaginationLoading = false
-      const el = document.querySelector('.group-members .members-header')
-      if (el) el.scrollIntoView({ behavior: 'smooth' })
-    },
-
-    updatePagination(response) {
-      this.pagination.currentPage = response.current_page
-      this.pagination.total = response.total_page
-      this.pagination.previous = response.previous
-      this.pagination.next = response.next
-      this.pagination.first = response.first
-      this.pagination.last = response.last
-    },
-  },
-}
+const { translateUser } = useAutoTranslate()
+const organizationCode = useOrganizationCode()
+const key = computed(() => `group-${props.group.id}-members-tabs`)
+const { data, isLoading, pagination } = useAsyncPaginationAPI<GroupMember>(key, ({ config }) =>
+  getGroupMember(organizationCode, props.group.id, config)
+)
+const { total, count } = pagination
+const userIdDrawer = ref<number | null>()
+const openProfile = (user) => (userIdDrawer.value = user.id)
+const closeProfile = () => (userIdDrawer.value = null)
 </script>
 
 <style lang="scss" scoped>

@@ -1,4 +1,4 @@
-import { UserFromJWTModel } from '@/models/user.model'
+import { UserFromJWTModel, UserModel } from '@/models/user.model'
 
 /**
  * @name GroupModel
@@ -10,6 +10,10 @@ export interface GroupModel {
   name: string
   permissions: Array<string>
   users: Array<UserFromJWTModel>
+}
+
+export type GroupMember = UserModel & {
+  is_manager: boolean
 }
 
 export interface HierarchyGroupModel {

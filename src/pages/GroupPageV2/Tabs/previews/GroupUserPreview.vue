@@ -1,59 +1,70 @@
 <template>
   <BaseGroupPreview
     :title="$t('group.members')"
-    :total="groupData.modules.projects"
-    :loading="loading"
+    :total="group.modules.members"
+    :loading="isLoading"
     :see-more="{ name: 'groupMembers', params: { groupId: $route.params.groupId } }"
   >
     <template #skeleton>
       <MemberListSkeleton :min-gap="90" :desktop-columns-number="6" />
     </template>
     <template #content>
-      <DynamicGrid :min-gap="90" class="members-container">
-        <GroupMemberItem
-          v-for="member in members.slice(0, totalDisplayed)"
-          :key="member.id"
-          :user="member"
-          :is-manager="member.is_manager"
-          class="cursor-pointer shadow-drop"
-          @user-click="openProfile"
+      <FetchLoader :status="status">
+        <DynamicGrid :min-gap="90" class="members-container">
+          <GroupMemberItem
+            v-for="member in data"
+            :key="member.id"
+            :user="member"
+            :is-manager="member.is_manager"
+            class="cursor-pointer shadow-drop"
+            @user-click="openProfile"
+            @close="closeProfile"
+          />
+        </DynamicGrid>
+        <BaseDrawer
+          no-footer
+          :is-opened="!!userIdDrawer"
+          :title="$t('profile.drawer_title')"
           @close="closeProfile"
-        />
-      </DynamicGrid>
-      <BaseDrawer
-        no-footer
-        :is-opened="!!userIdDrawer"
-        :title="$t('profile.drawer_title')"
-        @close="closeProfile"
-        @confirm="closeProfile"
-      >
-        <UserProfileV2
-          v-if="!!userIdDrawer"
-          ref="profile-user"
-          :can-edit="false"
-          :user-id="userIdDrawer"
-          is-preview
-          @close="closeProfile"
-        />
-      </BaseDrawer>
+          @confirm="closeProfile"
+        >
+          <UserProfileV2
+            v-if="!!userIdDrawer"
+            ref="profile-user"
+            :can-edit="false"
+            :user-id="userIdDrawer"
+            is-preview
+            @close="closeProfile"
+          />
+        </BaseDrawer>
+      </FetchLoader>
     </template>
   </BaseGroupPreview>
 </template>
 
 <script setup lang="ts">
-import { PeopleGroupModel } from '@/models/invitation.model';
-import BaseGroupPreview from '@/pages/GroupPageV2/Tabs/previews/BaseGroupPreview.vue';
+import { getGroupMember } from '@/api/groups.service'
+import { GroupMember } from '@/models/group.model'
+import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import BaseGroupPreview from '@/pages/GroupPageV2/Tabs/previews/BaseGroupPreview.vue'
 
 const props = defineProps<{
-  groupData: PeopleGroupModel,
+  group: TranslatedPeopleGroupModel
 }>()
 
-const {status, data} =
-const loading = ref(false)
-const totalDisplayed = 6;
-const members = []
+const organizationCode = useOrganizationCode()
+const key = computed(() => `group-${props.group.id}-member-preview`)
+const { status, data, isLoading } = useAsyncPaginationAPI<GroupMember>(
+  key,
+  ({ config }) => getGroupMember(organizationCode, props.group.id, config),
+  {
+    paginationConfig: {
+      limit: 6,
+    },
+  }
+)
 
 const userIdDrawer = ref<number | null>()
-const openProfile = (user) => userIdDrawer.value = user.id
-const closeProfile = () => userIdDrawer.value = null
+const openProfile = (user) => (userIdDrawer.value = user.id)
+const closeProfile = () => (userIdDrawer.value = null)
 </script>

@@ -31,8 +31,8 @@
           />
         </template>
         <template v-if="currentTab" #content>
-          <SubPageTitle :title-prefix="groupName" :current-tab="currentTab" />
-          <NuxtPage v-bind="currentTab.props" />
+          <!-- <SubPageTitle :title-prefix="groupName" :current-tab="currentTab" /> -->
+          <NuxtPage v-if="!isLoading" v-bind="currentTab.props" />
         </template>
       </NavPanelLayout>
     </div>
@@ -42,42 +42,28 @@
 </template>
 
 <script setup lang="ts">
-import { getGroup, getGroupMember, getGroupProject } from '@/api/groups.service'
-import usePeopleGroupsStore from '@/stores/usePeopleGroups'
+import { getGroup } from '@/api/groups.service'
 defineOptions({ name: 'GroupPageInnerV2' })
-const props = defineProps<{ groupId: number }>()
+const props = defineProps<{ groupId: string }>()
 const uniqueId = 'group-nav-panel'
-const peopleGroupsStore = usePeopleGroupsStore()
 const { canEditGroup } = usePermissions()
 const { isNavCollapsed, toggleNavPanel, collapseIfUnderBreakpoint } =
   useToggleableNavPanel(uniqueId)
 const onNavigated = collapseIfUnderBreakpoint
 const { translateGroup } = useAutoTranslate()
-const rawGroupData = ref({})
-const groupData = translateGroup(rawGroupData)
+const organizationCode = useOrganizationCode()
 
-const membersInitialRequest = ref({})
-const projectsInitialRequest = ref({})
-const isLoading = ref(true)
-const isProjectsLoading = ref(true)
-const isMembersLoading = ref(true)
 const router = useRouter()
 const route = useRoute()
-const organizationCode = useOrganizationCode()
 const { t } = useNuxtI18n()
+const groupId = computed(() => route.params.groupId)
+
+const { status, data } = getGroup(organizationCode, groupId.value)
+const groupData = translateGroup(data)
+const isLoading = useLoadingFromStatus(status)
 
 const groupEmail = computed(() => {
   return groupData.value?.email
-})
-const groupVisibility = computed(() => {
-  return groupData.value?.publication_status
-})
-
-const groupDescription = computed(() => {
-  return groupData.value?.$t?.description
-})
-const groupShortDescription = computed(() => {
-  return groupData.value?.$t?.short_description
 })
 
 const groupHierarchy = computed(() => {
@@ -94,9 +80,6 @@ const groupHierarchy = computed(() => {
     })),
   ]
 })
-const groupChildren = computed(() => {
-  return groupData.value?.children
-})
 
 const groupModules = computed(() => groupData.value?.modules || {})
 
@@ -111,7 +94,6 @@ const groupTabsDisplay = computed(() => {
       altView: `/group/${route.params.groupId}/snapshot/edit`,
       props: {
         group: groupData.value,
-        isLoading: isLoading.value,
       },
       condition: true,
       noTitle: true,
@@ -219,16 +201,6 @@ const isEditing = computed(() => {
 })
 
 watch(
-  () => props.groupId,
-  (neo, old) => {
-    if (neo && neo != old) {
-      load()
-    }
-  },
-  { immediate: true }
-)
-
-watch(
   canEditGroup,
   (neo) => {
     if (!neo && isEditing.value) {
@@ -251,62 +223,6 @@ watch(
 )
 
 const toggleEditing = () => router.push(currentTab.value.altView)
-const load = async () => {
-  if (!import.meta.client) return
-  isLoading.value = true
-  isProjectsLoading.value = true
-  isMembersLoading.value = true
-
-  peopleGroupsStore.currentId = props.groupId
-  try {
-    await Promise.all([loadGroup(), loadGroupMembers(), loadGroupProjects()])
-  } catch {
-    console.error("group data couldn't be loaded")
-  }
-
-  isLoading.value = false
-}
-
-const loadGroup = async () => {
-  try {
-    isLoading.value = true
-    rawGroupData.value = await getGroup(organizationCode, props.groupId, /*no error*/ true)
-
-    // we can't use "props.groupId" because it might be a slug and not an id....
-    peopleGroupsStore.currentId = groupData.value.id
-  } catch {
-    router.replace({
-      name: 'page404',
-      params: { pathMatch: route.path.substring(1).split('/') },
-    })
-  } finally {
-    isLoading.value = false
-  }
-}
-
-const loadGroupMembers = async () => {
-  try {
-    const groupMemberData = await getGroupMember(organizationCode, props.groupId, /*no error*/ true)
-    membersInitialRequest.value = groupMemberData
-  } finally {
-    // no catch / log because it might be a permission denied
-    isMembersLoading.value = false
-  }
-}
-
-const loadGroupProjects = async () => {
-  try {
-    const groupProjectData = await getGroupProject(
-      organizationCode,
-      props.groupId,
-      /*no error*/ true
-    )
-    projectsInitialRequest.value = groupProjectData
-  } finally {
-    // no catch / log because it might be a permission denied
-    isProjectsLoading.value = false
-  }
-}
 </script>
 
 <style lang="scss" scoped>

@@ -7,11 +7,14 @@ import type {
   PostGroupProjects,
   RemoveGroupProject,
   AddParentGroupModelInput,
+  GroupMember,
+  GroupModel,
 } from '@/models/group.model'
 // import type { HierarchyGroupModel } from '@/models/group.model'
 // import type { APIResponseList } from '@/api/types'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import useAPI from '@/composables/useAPI'
+import { Project } from '@playwright/test'
 
 // HIERARCHY
 
@@ -52,14 +55,11 @@ export async function addParentGroup(
   return await useAPI(`organization/${orgId}/people-group/${groupId}/`, { body, method: 'PATCH' }) //.data.value
 }
 
-export async function getGroup(org: string, groupId: number, noError: boolean = false) {
-  return await useAPI(
-    `/organization/${org}/people-group/${groupId}/`,
-    { noError: noError } // TODO nuxt check error silenced
-  ) //.data.value
+export function getGroup(organizationCode: string, groupId: string) {
+  return useAPI2(`organization/${organizationCode}/people-group/${groupId}/`)
 }
 
-export async function patchGroup(org: string, group_id: number, groupData: Partial<PostGroupData>) {
+export async function patchGroup(org: string, group_id: string, groupData: Partial<PostGroupData>) {
   return await useAPI(`organization/${org}/people-group/${group_id}/`, {
     body: groupData,
     method: 'PATCH',
@@ -72,12 +72,8 @@ export async function deleteGroup(org_code, group_id) {
 
 // GROUP MEMBERS
 
-export async function getGroupMember(org: string, groupId: number, noError: boolean = false) {
-  return (
-    // TODO nuxt check error silenced
-    await useAPI(`organization/${org}/people-group/${groupId}/member/`, { noError: noError })
-    //.data.value
-  )
+export function getGroupMember(org: string, groupId: number, config = {}) {
+  return useAPI(`organization/${org}/people-group/${groupId}/member/`, config)
 }
 
 export async function postGroupMembers(
@@ -104,10 +100,11 @@ export async function removeGroupMember(
 
 // GROUP PROJECTS
 
-export async function getGroupProject(org: string, groupId: number, noError: boolean = false) {
-  return await useAPI(`organization/${org}/people-group/${groupId}/project/`, {
-    noError: noError,
-  }) //.data.value
+export function getGroupProject(org: string, groupId: number, config = {}) {
+  return useAPI2<PaginationResult<Project>>(
+    `organization/${org}/people-group/${groupId}/project/`,
+    config
+  )
 }
 
 export async function postGroupProjects(

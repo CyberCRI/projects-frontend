@@ -13,10 +13,11 @@ export const defaultOptions = () => {
     baseURL: runtimeConfig.public.appApiUrl + runtimeConfig.public.appApiDefaultVersion + '/',
     method: 'GET',
     onRequest({ options }) {
-      if (import.meta.client) {
-        const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
-        if (accessToken) options.headers.set('Authorization', `Bearer ${accessToken}`)
-      }
+      // if (import.meta.client) {
+      const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
+      console.log(accessToken)
+      if (accessToken) options.headers.set('Authorization', `Bearer ${accessToken}`)
+      // }
     },
     onRequestError() {
       // Handle the request errors

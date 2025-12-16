@@ -1,24 +1,28 @@
 <template>
   <div class="group-snapshot">
     <GroupHeaderV2
-      :title="groupData.$t.name"
-      :image="groupData.header_image"
-      :visibility="groupData.publication_status"
-      :email="groupData.email"
-      :short-description="groupData.$t.short_description"
+      :title="group.$t.name"
+      :image="group.header_image"
+      :visibility="group.publication_status"
+      :email="group.email"
+      :short-description="group.$t.short_description"
       :is-loading="isLoading"
     />
-    <SubGroups
-      v-if="groupData.children.length > 0"
-      :subgroups="groupData.children"
+    <!-- <SubGroups
+      v-if="group.children.length > 0"
+      :subgroups="group.children"
       :is-loading="isLoading"
-    />
+    /> -->
     <div v-if="!isLoading" class="description">
       <DescriptionExpandable
-        :description="groupData.$t.description"
+        :description="group.$t.description"
         :height-limit="400"
         class="description-content"
       />
+      <template v-for="[name, count] in groupModules">
+        <GroupUserPreview v-if="name === 'members'" :group="group" />
+        <GroupProjectsPreview v-else-if="name === 'featured_projects'" :group="group" />
+      </template>
     </div>
     <div v-else class="skeleton">
       <SkeletonComponent width="60%" height="25px" border-radius="10px" />
@@ -28,58 +32,27 @@
       <SkeletonComponent width="90%" height="15px" border-radius="10px" />
       <SkeletonComponent width="95%" height="15px" border-radius="10px" />
     </div>
-
-    <div v-if="projectsCount > 0 || isProjectsLoading" class="projects">
-      <div class="projects-header">
-        <h2 class="title">
-          {{ $t('group.projects') }}
-          <span v-if="projectsCount">( {{ projectsCount }} )</span>
-        </h2>
-        <SeeMoreArrow
-          v-if="!isProjectsLoading"
-          class="see-more-button"
-          :to="{
-            name: 'groupProjects',
-            params: { groupId: $route.params.groupId },
-          }"
-        />
-      </div>
-      <div class="projects-container">
-        <CardList :is-loading="isProjectsLoading" :items="projects.slice(0, totalDisplayed)">
-          <template #default="projectListSlotProps">
-            <ProjectCard :horizontal-display="true" :project="projectListSlotProps.item" />
-          </template>
-        </CardList>
-      </div>
-    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import GroupProjectsPreview from '@/pages/GroupPageV2/Tabs/previews/GroupProjectsPreview.vue'
+import GroupUserPreview from '@/pages/GroupPageV2/Tabs/previews/GroupUserPreview.vue'
+
 defineOptions({ name: 'GroupSnapshotTab' })
 const props = defineProps<{
-  groupData: any
+  group: TranslatedPeopleGroupModel
   isLoading: boolean
 }>()
-const { translateUsers, translateProjects } = useAutoTranslate()
 
-const style = ref({})
-const totalDisplayed = ref(12)
-const profileDrawer = ref({
-  isOpened: false,
-  user_id: null,
+const groupModules = computed(() => {
+  if (!props.group || !props.group.modules) {
+    return []
+  }
+  // we filter only modules upper than 0 elements
+  return Object.entries(props.group.modules).filter(([, count]) => count > 0)
 })
-
-const openProfileDrawer = async (user) => {
-  this.profileDrawer.user_id = user.id
-  this.profileDrawer.isOpened = true
-}
-
-const closeProfileDrawer = () => {
-  this.isEditMode = false
-  this.profileDrawer.isOpened = false
-  this.profileDrawer.user_id = null
-}
 </script>
 
 <style lang="scss" scoped>

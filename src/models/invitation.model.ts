@@ -1,16 +1,27 @@
+import { Translated } from '@/interfaces/translated'
+import { ImageModel } from '@/models/image.model'
+
 // TODO remove once merged with group PR
 export interface PeopleGroupModel {
   id: number
   name: string
   description: string
+  short_description: string
   email: string
   type: string
-  header_image: string
+  header_image: ImageModel
+  publication_status: string
+  children: any[]
   modules: {
     members: number
     projects: number
   }
 }
+
+export type TranslatedPeopleGroupModel = Translated<
+  PeopleGroupModel,
+  'name' | 'description' | 'short_description'
+>
 
 export interface ProfilePictureVariationsModel {
   full: string

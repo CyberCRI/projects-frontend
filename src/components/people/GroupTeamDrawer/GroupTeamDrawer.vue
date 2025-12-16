@@ -80,7 +80,7 @@ const updateUsers = (users) => {
 }
 
 const selectAction = () => {
-  if (this.mode == 'roles') {
+  if (props.mode == 'roles') {
     addTeamMember()
   } else {
     emit('set-mode', 'roles')

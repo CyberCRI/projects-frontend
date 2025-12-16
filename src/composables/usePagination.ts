@@ -115,7 +115,7 @@ export const usePagination = (
 
   const query = (): PaginationQuery => {
     // page - 1 for first page
-    const offset = (current.value - 1) * limit
+    const offset = Math.max((current.value - 1) * limit, 0)
     return {
       offset,
       limit,
