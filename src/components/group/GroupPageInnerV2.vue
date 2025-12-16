@@ -247,6 +247,7 @@ export default {
           view: `/group/${this.$route.params.groupId}/projects/edit`,
           altView: `/group/${this.$route.params.groupId}/projects`,
           props: {
+            groupId: this.groupId,
             isInEditingMode: true,
             groupData: this.groupData,
             onReloadGroupProjects: this.loadGroupProjects,

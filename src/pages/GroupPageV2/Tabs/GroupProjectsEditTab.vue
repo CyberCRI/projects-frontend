@@ -1,7 +1,10 @@
 <script setup>
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
-const props = defineProps({ groupData: { type: Object, required: true } })
+const props = defineProps({
+  groupId: { type: Number, required: true },
+  groupData: { type: Object, required: true },
+})
 
 const emit = defineEmits('reload-group-projects')
 
@@ -18,7 +21,7 @@ const form = ref({
 
 const { setProjectsData, updateGroupProjects, isSaving } = useGroupProjectsUpdate(
   orgCode,
-  props.groupData?.id,
+  props.groupId,
   form
 )
 
