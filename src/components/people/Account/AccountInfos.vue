@@ -58,7 +58,7 @@ import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { usePatatoids } from '@/composables/usePatatoids'
 defineOptions({ name: 'AccountInfos' })
 
-defineProps({
+const props = defineProps({
   modelValue: {
     type: Object,
     required: true,
