@@ -37,7 +37,7 @@ export type PaginationQuery = {
   offset?: number
 }
 
-const DEFAULT_Pagination_LIMIT = 100
+const DEFAULT_PAGINATION_LIMIT = 10
 export type paginationConfig = {
   limit?: number
   offset?: number
@@ -68,7 +68,7 @@ export const usePagination = (
   const current = useState(() => 1)
   const total = useState(() => 0)
   const count = useState(() => 0)
-  const limit = paginationConfig.limit ?? DEFAULT_Pagination_LIMIT
+  const limit = paginationConfig.limit ?? DEFAULT_PAGINATION_LIMIT
 
   watch(
     results,

@@ -1,6 +1,7 @@
 import useNuxtI18n from '@/composables/useNuxtI18n'
+import { ImageModel } from '@/models/image.model'
 
-export default (url, _title, _description, image, dimensions = null) => {
+const useLpiHead = (url, _title, _description, image, dimensions = null) => {
   const runtimeConfig = useRuntimeConfig()
   const { locale } = useNuxtI18n()
 
@@ -114,4 +115,38 @@ export default (url, _title, _description, image, dimensions = null) => {
   setHead()
 
   watch(() => [locale.value], setHead)
+}
+
+export default useLpiHead
+
+type OptionsHead = {
+  url?: string
+  title?: string
+  image?: ImageModel
+  description?: string
+}
+
+/**
+ * default value for useLpiHead
+ *
+ * @function
+ * @name useLpiHead2
+ * @kind variable
+ * @param {OptionsHead} options
+ * @returns {void}
+ * @exports
+ */
+export const useLpiHead2 = (options: OptionsHead) => {
+  const url = options.url ?? useRequestURL().toString()
+  const title = options.title ?? ''
+  const description = options.description ?? ''
+
+  let [image, dimensions] = [null, null]
+  if (typeof options.image === 'object') {
+    const tmp = useImageAndDimension(options.image, 'medium')
+    image = tmp.image
+    dimensions = tmp.dimensions
+  }
+
+  useLpiHead(url, title, description, image, dimensions)
 }

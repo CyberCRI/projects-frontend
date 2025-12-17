@@ -6,7 +6,7 @@
     :see-more="{ name: 'groupMembers', params: { groupId: $route.params.groupId } }"
   >
     <template #skeleton>
-      <MemberListSkeleton :min-gap="90" :desktop-columns-number="6" />
+      <MemberListSkeleton :min-gap="90" :desktop-columns-number="3" :limit="limitSkeletons" />
     </template>
     <template #content>
       <FetchLoader :status="status">
@@ -44,8 +44,10 @@
 
 <script setup lang="ts">
 import { getGroupMember } from '@/api/groups.service'
+import { TranslatedGroupMember } from '@/models/group.model'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupPreview from '@/pages/GroupPageV2/Tabs/previews/BaseGroupPreview.vue'
+const LIMIT = 6
 
 const props = defineProps<{
   group: TranslatedPeopleGroupModel
@@ -54,13 +56,16 @@ const props = defineProps<{
 const { translateUsers } = useAutoTranslate()
 const organizationCode = useOrganizationCode()
 const key = computed(() => `group-${props.group.id}-member-preview`)
+
+const limitSkeletons = computed(() => props.group.modules?.members ?? LIMIT)
+
 const { status, data, isLoading } = useAsyncPaginationAPI(
   key,
   ({ config }) => getGroupMember(organizationCode, props.group.id, config),
   {
-    translate: translateUsers,
+    translate: (data) => translateUsers<TranslatedGroupMember>(data),
     paginationConfig: {
-      limit: 6,
+      limit: LIMIT,
     },
   }
 )

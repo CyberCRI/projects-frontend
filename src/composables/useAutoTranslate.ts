@@ -117,9 +117,10 @@ export default function useAutoTranslate() {
 
   // --------------------
   // People
-  const translateUser = (user) =>
-    translateEntity<TranslatedPeopleModel>(user, ['description', 'short_description', 'job'])
-  const translateUsers = (users) => translateEntities<TranslatedPeopleModel>(users, translateUser)
+  const translateUser = <Model = TranslatedPeopleModel>(user) =>
+    translateEntity<Model>(user, ['description', 'short_description', 'job'])
+  const translateUsers = <Model = TranslatedPeopleModel>(users) =>
+    translateEntities<Model>(users, translateUser)
 
   const translateTeam = (team) =>
     computed(() => {

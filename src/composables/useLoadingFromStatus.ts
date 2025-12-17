@@ -7,8 +7,8 @@
  * @param {any} status
  * @returns {globalThis.ComputedRef<boolean>}
  */
-const useLoadingFromStatus = (status) => {
-  const loading = computed(() => ['idle', 'pending'].includes(status))
+const useLoadingFromStatus = (status: Ref<'pending' | 'error' | 'success' | 'idle'>) => {
+  const loading = computed(() => ['idle', 'pending'].includes(status.value))
 
   return loading
 }

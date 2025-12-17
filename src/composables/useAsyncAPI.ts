@@ -67,7 +67,7 @@ type asyncPaginationAPI<DataT, Result> = Omit<
   'data'
 > & {
   pagination: Pagination
-  data: Result | Ref<DataT[]>
+  data: Result extends undefined ? Ref<DataT[]> : Result
 }
 
 /**
@@ -79,17 +79,15 @@ type asyncPaginationAPI<DataT, Result> = Omit<
  * @kind variable
  * @exports
  */
-export const useAsyncPaginationAPI = <DataT, Result = undefined>(
+export function useAsyncPaginationAPI<DataT, Result = undefined>(
   ...params: AsyncPaginationParameters<DataT, Result>
-): asyncPaginationAPI<DataT, Result> => {
+): asyncPaginationAPI<DataT, Result> {
   const paginationData = useState<PaginationResult>()
   const pagination = usePagination(paginationData, params[2]?.paginationConfig)
   const config = defaultOptions()
 
-  // pass all arguements, but override the transform data
   const { data, ...rest } = useAsyncAPI<PaginationResult<DataT>, DataT[]>(
     params[0],
-    // override handler to add pagination query
     (ctx) => {
       return params[1]({
         ctx,
@@ -100,19 +98,14 @@ export const useAsyncPaginationAPI = <DataT, Result = undefined>(
       })
     },
     {
-      // add all params without transform
       ...((omit(params[2] ?? {}, ['transform']) ?? {}) as AsyncDataConfig<
         PaginationResult<DataT>,
         DataT[]
       >),
-      // add page watcher
       watch: [...(params[2]?.watch || []), pagination.current],
-
       default() {
-        // return by defaults a emptys arrays
         return params[2]?.default?.() || []
       },
-
       transform(dataApi) {
         paginationData.value = dataApi
         const results = dataApi.results
@@ -121,12 +114,12 @@ export const useAsyncPaginationAPI = <DataT, Result = undefined>(
     }
   )
 
-  // translate results
-  const dataWrapped = params[2]?.translate?.(data) || data
+  const dataWrapped = (params[2]?.translate?.(data) as Result) || (data as Ref<DataT[]>)
 
   return {
     ...rest,
     pagination,
+    // @ts-expect-error dynamic type from translate function or raw data
     data: dataWrapped,
   }
 }

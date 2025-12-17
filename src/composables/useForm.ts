@@ -29,13 +29,12 @@ const onClean = (d) => d
 const useForm = <T, CleanResult = T>(
   options: OptionsForm<T, CleanResult> = { onClean }
 ): UseFormResult<T, CleanResult> => {
-  const form = ref<T>({ ...(options.default ?? {}) } as T)
+  const form = ref<T>({ ...(options.default ?? {}) } as T) as Ref<T>
   const _onClean = options.onClean ?? onClean
 
   const isValid = ref<boolean>(false)
   const v$ = useValidate(options.rules ?? {}, form)
 
-  // debounce validate to optimize check
   const validate = () => v$.value.$validate().then((v) => (isValid.value = v))
   const debounceValidate = debounce(validate, options.validateTimeout ?? 200)
   watch(form, () => debounceValidate(), { deep: true, immediate: true })
@@ -50,7 +49,6 @@ const useForm = <T, CleanResult = T>(
     return err
   })
 
-  // clean data (before send to backend)
   const cleanedData = computed<CleanResult>(() => {
     if (!isValid.value) {
       return null

@@ -8,22 +8,18 @@
       :short-description="group.$t.short_description"
       :is-loading="isLoading"
     />
-    <!-- <SubGroups
-      v-if="group.children.length > 0"
-      :subgroups="group.children"
-      :is-loading="isLoading"
-    /> -->
+    <SubGroups v-if="group.children?.length" :subgroups="group.children" :is-loading="isLoading" />
     <div v-if="!isLoading" class="description">
       <DescriptionExpandable
         :description="group.$t.description"
         :height-limit="400"
         class="description-content"
       />
-      <template v-for="[name] in groupModules">
-        <GroupUserPreview v-if="name === 'members'" :key="name" :group="group" />
+      <template v-for="([name], idx) in groupModules">
+        <GroupMembersPreview v-if="name === 'members'" :key="`members-${idx}`" :group="group" />
         <GroupProjectsPreview
           v-else-if="name === 'featured_projects'"
-          :key="'featured_projects'"
+          :key="`featured_projects-${idx}`"
           :group="group"
         />
       </template>
@@ -42,7 +38,7 @@
 <script setup lang="ts">
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import GroupProjectsPreview from '@/pages/GroupPageV2/Tabs/previews/GroupProjectsPreview.vue'
-import GroupUserPreview from '@/pages/GroupPageV2/Tabs/previews/GroupUserPreview.vue'
+import GroupMembersPreview from '@/pages/GroupPageV2/Tabs/previews/GroupMembersPreview.vue'
 
 defineOptions({ name: 'GroupSnapshotTab' })
 const props = defineProps<{
@@ -50,11 +46,11 @@ const props = defineProps<{
   isLoading: boolean
 }>()
 
+// filters only modules with upper than zero elements
 const groupModules = computed(() => {
   if (!props.group || !props.group.modules) {
     return []
   }
-  // we filter only modules upper than 0 elements
   return Object.entries(props.group.modules).filter(([, count]) => count > 0)
 })
 </script>

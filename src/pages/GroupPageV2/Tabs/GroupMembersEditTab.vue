@@ -4,12 +4,9 @@ import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 const props = defineProps<{ group: TranslatedPeopleGroupModel }>()
 const router = useRouter()
 
-const organizationCode = useOrganizationCode()
-const orgCode = computed(() => {
-  // use group's org code if availabe
-  // to allow edition of groups on the meta portal (PROJ-1032)
-  return props.group?.organization || organizationCode
-})
+// use group's org code if availabe
+// to allow edition of groups on the meta portal (PROJ-1032)
+const orgCode = computed(() => props.group.organization || useOrganizationCode())
 
 const form = ref({
   members: [],
@@ -23,36 +20,19 @@ const { setMembersData, updateGroupMembers, isSaving, groupMemberData } = useGro
 
 const { startEditWatcher, stopEditWatcher } = useEditWatcher(form)
 
-const redirectMember = () => {
-  router.push({
-    name: 'groupMembers',
-    params: { groupId: props.group.id },
-  })
-}
-
-const redirectHome = () => {
-  router.push({
-    name: 'groupSnapshot',
-    params: { groupId: props.group.id },
-  })
-}
-
 const redirect = (numberMembers) => {
-  if (numberMembers) {
-    redirectMember()
-  } else {
-    redirectHome()
-  }
+  router.push({
+    name: numberMembers ? 'groupMembers' : 'groupSnapshot',
+    params: { groupId: props.group.id },
+  })
 }
 
 const save = async () => {
   try {
     const { removed, added } = await updateGroupMembers()
-    console.log(removed, added, groupMemberData.value.length)
-    const actualMembersCount = groupMemberData.value.length - removed + added
     stopEditWatcher()
     await refreshNuxtData(`people-group::${props.group.id}`)
-    redirect(actualMembersCount)
+    redirect(groupMemberData.value.length - removed + added)
   } catch (e) {
     console.error(e)
   }

@@ -7,7 +7,7 @@
           <span v-if="!isLoading">( {{ count }} )</span>
         </h2>
       </div>
-      <MemberListSkeleton v-if="isLoading" :min-gap="90" />
+      <MemberListSkeleton v-if="isLoading" :min-gap="90" :limit="limitSkeletons" />
       <DynamicGrid v-else :min-gap="90" class="members-container">
         <GroupMemberItem
           v-for="member in data"
@@ -49,6 +49,8 @@ defineOptions({ name: 'GroupMembersTab' })
 const props = defineProps<{
   group: TranslatedPeopleGroupModel
 }>()
+
+const limitSkeletons = computed(() => Math.min(props.group.modules?.members ?? 10, 10))
 
 const { translateUsers } = useAutoTranslate()
 const organizationCode = useOrganizationCode()

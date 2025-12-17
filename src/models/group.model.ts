@@ -1,3 +1,4 @@
+import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import { UserFromJWTModel, UserModel } from '@/models/user.model'
 
 /**
@@ -15,6 +16,8 @@ export interface GroupModel {
 export type GroupMember = UserModel & {
   is_manager: boolean
 }
+
+export type TranslatedGroupMember = TranslatedPeopleGroupModel & GroupMember
 
 export interface HierarchyGroupModel {
   id: number
