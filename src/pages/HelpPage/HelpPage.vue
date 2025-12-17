@@ -4,9 +4,6 @@ import { getOrganizationByCode } from '@/api/organizations.service'
 const { onboardingTrap } = useOnboardingStatus()
 const { t } = useNuxtI18n()
 
-provide('helpPageHasFaq', hasFaq)
-provide('helpPageFaq', faq)
-
 const isLoading = ref(true)
 const customTab = ref(null)
 const faq = ref(null)
@@ -15,6 +12,10 @@ const hasFaq = computed(() => {
   let _faq = faq.value
   return _faq && _faq.title && _faq.content && _faq.content !== '<p></p>'
 })
+
+provide('helpPageHasFaq', hasFaq)
+provide('helpPageFaq', faq)
+
 const tabs = computed(() => {
   const res = []
 
