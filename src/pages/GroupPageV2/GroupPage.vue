@@ -8,7 +8,7 @@
       'group-display-layout': !isEditing,
     }"
   >
-    <div v-if="groupData" class="page-section-extra-wide">
+    <div class="page-section-extra-wide">
       <NavPanelLayout
         :is-loading="isLoading"
         :is-nav-collapsed="isNavCollapsed"
@@ -26,49 +26,47 @@
             :can-edit-group="canEditGroup"
             :is-editing="isEditing"
             class="slide-panel"
-            @navigated="onNavigated"
+            @navigated="collapseIfUnderBreakpoint"
             @toggle-editing="toggleEditing"
           />
         </template>
         <template v-if="currentTab" #content>
-          <!-- <SubPageTitle :title-prefix="groupName" :current-tab="currentTab" /> -->
+          <SubPageTitle :title-prefix="groupData.$t?.name" :current-tab="currentTab" />
           <NuxtPage v-bind="currentTab.props" />
         </template>
       </NavPanelLayout>
     </div>
-
-    <NavPanelLoader v-else />
   </div>
 </template>
 
 <script setup lang="ts">
-import { getGroup } from '@/api/groups.service'
+import { getGroup } from '@/api/v2/group.service'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 
 const uniqueId = 'group-nav-panel'
 const { canEditGroup } = usePermissions()
 const { isNavCollapsed, toggleNavPanel, collapseIfUnderBreakpoint } =
   useToggleableNavPanel(uniqueId)
-const onNavigated = collapseIfUnderBreakpoint
-const { translateGroup } = useAutoTranslate()
 const organizationCode = useOrganizationCode()
 
 const router = useRouter()
 const route = useRoute()
 const { t } = useNuxtI18n()
-const groupId = computed(() => route.params.groupId.toString())
+const groupId = computed(() => parseInt(route.params.groupId.toString(), 10))
 
-const { status, data } = getGroup(organizationCode, groupId.value)
-const groupData = translateGroup(data)
-const isLoading = useLoadingFromStatus(status)
+const { data: groupData, isLoading } = getGroup(organizationCode, groupId)
 
-watch(groupData, () => {
-  useLpiHead2({
-    title: groupData.value?.name,
-    description: groupData.value?.description,
-    image: groupData.value?.header_image,
-  })
-})
+watch(
+  groupData,
+  () => {
+    useLpiHead2({
+      title: groupData.value?.name,
+      description: groupData.value?.description,
+      image: groupData.value?.header_image,
+    })
+  },
+  { immediate: true }
+)
 
 const groupEmail = computed(() => {
   return groupData.value?.email
@@ -137,6 +135,7 @@ const groupTabsDisplay = computed(() => {
       altView: `/group/${route.params.groupId}/projects/edit`,
       props: {
         group: groupData.value,
+        isLoading: isLoading.value,
       },
       condition: groupModules.value.featured_projects,
       icon: 'Archive',
@@ -207,39 +206,13 @@ const groupTabs = computed(() => {
   return isEditing.value ? groupTabsEditFiltered.value : groupTabsDisplayFiltered.value
 })
 
-const allGroupsTabs = computed(() => {
-  return [...groupTabsDisplay.value, ...groupTabsEdit.value]
-})
+const allGroupsTabs = computed(() => [...groupTabsDisplay.value, ...groupTabsEdit.value])
 
 const currentTab = computed(() => {
   return allGroupsTabs.value.find((tab) => route.fullPath === tab.view)
 })
 
-const isEditing = computed(() => {
-  return currentTab.value?.isEditing || false
-})
-
-watch(
-  canEditGroup,
-  (neo) => {
-    if (!neo && isEditing.value) {
-      if (import.meta.client) router.push(currentTab.value.altView)
-    }
-  },
-  {
-    immediate: true,
-  }
-)
-
-watch(
-  isEditing,
-  (neo) => {
-    if (neo && !canEditGroup.value) {
-      if (import.meta.client) router.push(currentTab.value.altView)
-    }
-  },
-  { immediate: true }
-)
+const isEditing = computed(() => currentTab.value?.isEditing || false)
 
 const toggleEditing = () => {
   const nextTab = allGroupsTabs.value.find((tab) => tab.view === currentTab.value.altView)
@@ -252,6 +225,28 @@ const toggleEditing = () => {
     router.push(tabHome.view)
   }
 }
+
+watch(
+  canEditGroup,
+  (neo) => {
+    if (!neo && isEditing.value) {
+      if (import.meta.client) toggleEditing()
+    }
+  },
+  {
+    immediate: true,
+  }
+)
+
+watch(
+  isEditing,
+  (neo) => {
+    if (neo && !canEditGroup.value) {
+      if (import.meta.client) toggleEditing()
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <style lang="scss" scoped>

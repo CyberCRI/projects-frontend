@@ -36,7 +36,7 @@ export default function useGroupPagesRoutes() {
             isReducedMode: true,
             groupId: route.params.groupId,
           }),
-          component: () => import('../pages/CreateEditGroupPage/CreateEditGroupPage.vue'),
+          component: () => import('../pages/GroupPageV2/Tabs/GroupEditPage.vue'),
         },
         {
           path: 'members/edit',

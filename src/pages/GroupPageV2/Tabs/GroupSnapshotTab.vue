@@ -9,28 +9,26 @@
       :is-loading="isLoading"
     />
     <SubGroups v-if="group.children?.length" :subgroups="group.children" :is-loading="isLoading" />
-    <div v-if="!isLoading" class="description">
+    <div class="description">
       <DescriptionExpandable
         :description="group.$t.description"
         :height-limit="400"
         class="description-content"
       />
       <template v-for="([name], idx) in groupModules">
-        <GroupMembersPreview v-if="name === 'members'" :key="`members-${idx}`" :group="group" />
+        <GroupMembersPreview
+          v-if="name === 'members'"
+          :key="`members-${idx}`"
+          :group="group"
+          :is-loading="isLoading"
+        />
         <GroupProjectsPreview
           v-else-if="name === 'featured_projects'"
           :key="`featured_projects-${idx}`"
           :group="group"
+          :is-loading="isLoading"
         />
       </template>
-    </div>
-    <div v-else class="skeleton">
-      <SkeletonComponent width="60%" height="25px" border-radius="10px" />
-      <SkeletonComponent width="80%" height="20px" border-radius="10px" />
-      <SkeletonComponent width="45%" height="20px" border-radius="10px" />
-      <SkeletonComponent width="100%" height="15px" border-radius="10px" />
-      <SkeletonComponent width="90%" height="15px" border-radius="10px" />
-      <SkeletonComponent width="95%" height="15px" border-radius="10px" />
     </div>
   </div>
 </template>

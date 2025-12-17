@@ -2,7 +2,7 @@
   <BaseGroupPreview
     :title="$t('group.projects')"
     :total="group.modules.featured_projects"
-    :loading="isLoading"
+    :loading="loading"
     :see-more="{
       name: 'groupProjects',
       params: { groupId: $route.params.groupId },
@@ -27,12 +27,17 @@ import BaseGroupPreview from '@/pages/GroupPageV2/Tabs/previews/BaseGroupPreview
 
 const props = defineProps<{
   group: TranslatedPeopleGroupModel
+  isLoading: boolean
 }>()
 
 const { translateProjects } = useAutoTranslate()
 const organizationCode = useOrganizationCode()
 const key = computed(() => `group-${props.group.id}-project-preview`)
-const { status, data, isLoading } = useAsyncPaginationAPI(
+const {
+  status,
+  data,
+  isLoading: isLoadingProject,
+} = useAsyncPaginationAPI(
   key,
   ({ config }) => getGroupProject(organizationCode, props.group.id, config),
   {
@@ -42,4 +47,5 @@ const { status, data, isLoading } = useAsyncPaginationAPI(
     },
   }
 )
+const loading = computed(() => props.isLoading || isLoadingProject.value)
 </script>

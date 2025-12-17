@@ -290,8 +290,7 @@ onMounted(async () => {
     // load data
     // general data
     try {
-      const _groupData = await getGroup(orgCode.value, props.groupId).data.value
-
+      const _groupData = await getGroup(orgCode.value, props.groupId)
       // now we can get the real id (not slug)
       peopleGroupsStore.currentId = _groupData.id
       if (!canEditGroup.value) {

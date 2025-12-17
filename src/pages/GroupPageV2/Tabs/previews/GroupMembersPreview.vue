@@ -2,7 +2,7 @@
   <BaseGroupPreview
     :title="$t('group.members')"
     :total="group.modules.members"
-    :loading="isLoading"
+    :loading="loading"
     :see-more="{ name: 'groupMembers', params: { groupId: $route.params.groupId } }"
   >
     <template #skeleton>
@@ -51,6 +51,7 @@ const LIMIT = 6
 
 const props = defineProps<{
   group: TranslatedPeopleGroupModel
+  isLoading: boolean
 }>()
 
 const { translateUsers } = useAutoTranslate()
@@ -59,7 +60,11 @@ const key = computed(() => `group-${props.group.id}-member-preview`)
 
 const limitSkeletons = computed(() => props.group.modules?.members ?? LIMIT)
 
-const { status, data, isLoading } = useAsyncPaginationAPI(
+const {
+  status,
+  data,
+  isLoading: isLoadingMember,
+} = useAsyncPaginationAPI(
   key,
   ({ config }) => getGroupMember(organizationCode, props.group.id, config),
   {
@@ -69,6 +74,7 @@ const { status, data, isLoading } = useAsyncPaginationAPI(
     },
   }
 )
+const loading = computed(() => props.isLoading || isLoadingMember.value)
 
 const userIdDrawer = ref<number | null>()
 const openProfile = (user) => (userIdDrawer.value = user.id)

@@ -48,19 +48,19 @@ export async function postGroup(org: string, groupData: PostGroupData) {
 
 export async function addParentGroup(
   orgId: string,
-  groupId: string,
+  groupId: number,
   body: AddParentGroupModelInput
 ) {
   return await useAPI(`organization/${orgId}/people-group/${groupId}/`, { body, method: 'PATCH' }) //.data.value
 }
 
-export function getGroup(organizationCode: string, groupId: string) {
-  return useAPI2<PeopleGroupModel>(`organization/${organizationCode}/people-group/${groupId}/`, {
+export function getGroup(organizationCode: string, groupId: number) {
+  return useAPI<PeopleGroupModel>(`organization/${organizationCode}/people-group/${groupId}/`, {
     key: `people-group::${groupId}`,
   })
 }
 
-export async function patchGroup(org: string, group_id: string, groupData: Partial<PostGroupData>) {
+export async function patchGroup(org: string, group_id: number, groupData: Partial<PostGroupData>) {
   return await useAPI(`organization/${org}/people-group/${group_id}/`, {
     body: groupData,
     method: 'PATCH',
@@ -80,12 +80,8 @@ export function getGroupMember(org: string, groupId: number, config = {}) {
   )
 }
 
-export async function postGroupMembers(
-  org: string,
-  group_id: number,
-  membersData: AddGroupMembers
-) {
-  return await useAPI(`organization/${org}/people-group/${group_id}/member/add/`, {
+export async function postGroupMembers(org: string, groupId: number, membersData: AddGroupMembers) {
+  return await useAPI(`organization/${org}/people-group/${groupId}/member/add/`, {
     body: membersData,
     method: 'POST',
   }) //.data.value
@@ -93,10 +89,10 @@ export async function postGroupMembers(
 
 export async function removeGroupMember(
   org: string,
-  group_id: number,
+  groupId: number,
   membersData: RemoveGroupMember
 ) {
-  return await useAPI(`organization/${org}/people-group/${group_id}/member/remove/`, {
+  return await useAPI(`organization/${org}/people-group/${groupId}/member/remove/`, {
     body: membersData,
     method: 'POST',
   }) //.data.value
