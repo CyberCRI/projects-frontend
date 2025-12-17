@@ -473,6 +473,7 @@
     "page-title": "Categoria",
     "title": "Categories",
     "all-categories": "Veure totes les categories",
+    "follow-all-categories": "Segueix totes les categories",
     "all-projects": "Veure tots els projectes",
     "edit": "Edita"
   },
@@ -2415,6 +2416,7 @@
       "reply": "{sender} va respondre al vostre comentari en {project}",
       "review": "{sender} revisat el projecte {project}",
       "ready_for_review": "{sender} va marcar el seu projecte per revisar. Ara podeu revisar el projecte {project}",
+      "project_created": "{sender} va crear el projecte {project}",
       "project_updated": "12154654 actualitzat El projecte {project}",
       "group_member_added": "{sender} va afegir el grup {group} com a membre del projecte 13215446",
       "group_member_added_self": "{sender} va afegir al grup {group} que sou part del projecte {project}",

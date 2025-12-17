@@ -481,6 +481,7 @@
     "page-title": "Category",
     "title": "Categories",
     "all-categories": "See all categories",
+    "follow-all-categories": "Follow all categories",
     "all-projects": "See all projects",
     "edit": "Edit"
   },
@@ -2423,6 +2424,7 @@
       "reply": "{sender} replied to your comment in {project}",
       "review": "{sender} reviewed project {project}",
       "ready_for_review": "{sender} marked his project as ready for review. You can now review project {project}",
+      "project_created": "{sender} created the project {project}",
       "project_updated": "{sender} updated the project {project}",
       "group_member_added": "{sender} added the group {group} as member to the project {project}",
       "group_member_added_self": "{sender} added the group {group} you are part of to project {project}",

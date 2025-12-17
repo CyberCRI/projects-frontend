@@ -473,6 +473,7 @@
     "page-title": "Kategooria",
     "title": "Kategooriad",
     "all-categories": "Vaata kõiki kategooriaid",
+    "follow-all-categories": "Jälgi kõiki kategooriaid",
     "all-projects": "Vaata kõiki projekte",
     "edit": "Edit"
   },
@@ -2415,6 +2416,7 @@
       "reply": "{sender} vastas teie kommentaarile {project}",
       "review": "{sender} läbivaadatud projekt {project}",
       "ready_for_review": "{sender} märkis, et tema projekt on läbivaatamiseks valmis. Nüüd saate vaadata projekti {project}",
+      "project_created": "{sender} lõi projekti {project}",
       "project_updated": "{sender} uuendatud projekt {project}",
       "group_member_added": "{sender} lisas grupi {group} projekti liikmeks {project}",
       "group_member_added_self": "{sender} lisas grupi {group} olete osa projektist {project}",

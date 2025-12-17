@@ -473,6 +473,7 @@
     "page-title": "Categoría",
     "title": "Categorías",
     "all-categories": "Ver todas las categorías",
+    "follow-all-categories": "Seguir todas las categorías",
     "all-projects": "Ver todos los proyectos",
     "edit": "Editar"
   },
@@ -2415,6 +2416,7 @@
       "reply": "{sender} respondió a su comentario en {project}",
       "review": "{sender} proyecto revisado {project}",
       "ready_for_review": "{sender} marcó su proyecto como listo para su revisión. Ahora puede revisar el proyecto {project}",
+      "project_created": "{sender} creó el proyecto {project}",
       "project_updated": "{sender} actualizado el proyecto {project}",
       "group_member_added": "{sender} añadió el grupo {group} como miembro del proyecto {project}",
       "group_member_added_self": "{sender} añadido el grupo {group} que es parte del proyecto {project}",

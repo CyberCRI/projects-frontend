@@ -2,12 +2,18 @@
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import { getOrganizationByCode } from '@/api/organizations.service'
 
+const { isAdmin } = usePermissions()
+
 const { canCreateProject } = usePermissions()
 const projectCategoriesStore = useProjectCategories()
 const { searchFromQuery } = useSearch('projects')
 const { t } = useNuxtI18n()
 
 const forceSearch = ref(false)
+
+if (!projectCategoriesStore._root?.value?.id) {
+  await projectCategoriesStore.getRootProjectCategory()
+}
 
 const categories = computed(() => {
   return projectCategoriesStore.hierarchy
@@ -81,6 +87,10 @@ try {
         @click="$router.push({ name: 'createProject' })"
       />
     </div>
+    <div v-if="projectCategoriesStore._root?.id && isAdmin" class="follow-all">
+      {{ $t('category.follow-all-categories') }}
+      <CategoryFollowButton :category-id="projectCategoriesStore._root?.id" class="follow-button" />
+    </div>
 
     <div v-if="hasSearch || forceSearch" class="page-section-wide">
       <GlobalSearchTab :search="fixedSearch" :freeze-search="isNavigating" />
@@ -147,6 +157,24 @@ try {
     justify-content: center;
     align-items: stretch;
     gap: $space-l;
+  }
+}
+.follow-all {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-m;
+  margin: $space-m auto;
+  font-weight: 700;
+  width: max-content;
+  max-width: 100%;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: $primary-lighter;
+
+  .follow-button {
+    --external-button-outer-size: 2rem;
+    --external-button-inner-size: 2rem;
   }
 }
 </style>

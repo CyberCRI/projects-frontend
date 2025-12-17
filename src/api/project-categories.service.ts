@@ -51,6 +51,10 @@ export async function getAllProjectCategories(organizationCode: string) {
   return await useAPI(`organization/${organizationCode}/category/`)
 }
 
+export async function getRootProjectCategory(organizationCode: string) {
+  return await useAPI(`organization/${organizationCode}/categories-hierarchy/`)
+}
+
 export async function getProjectCategoriesHierarchy(organizationCode: string, rootId: number) {
   return await useAPI(`organization/${organizationCode}/category/${rootId}/hierarchy/`) //.data.value
 }

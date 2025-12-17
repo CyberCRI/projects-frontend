@@ -473,6 +473,7 @@
     "page-title": "Categorie",
     "title": "Categorieën",
     "all-categories": "Zie alle categorieën",
+    "follow-all-categories": "Volg alle categorieën",
     "all-projects": "Alle projecten bekijken",
     "edit": "Bewerken"
   },
@@ -2414,6 +2415,7 @@
       "reply": "{sender} beantwoordde uw opmerking in {project}",
       "review": "{sender} herzien project {project}",
       "ready_for_review": "{sender} markeerde zijn project als klaar voor herziening. U kunt nu project {project} beoordelen",
+      "project_created": "{sender} heeft het project {project} gemaakt",
       "project_updated": "{sender} bijgewerkt het project {project}",
       "group_member_added": "{sender} voegde groep {group} als lid toe aan project {project}",
       "group_member_added_self": "{sender} toegevoegd groep {group} u maakt deel uit van project {project}",
