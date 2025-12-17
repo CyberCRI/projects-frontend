@@ -179,6 +179,10 @@ export default {
     padding-top: 1rem;
     position: relative;
 
+    &.small-top-padding {
+      padding-top: 0.5rem;
+    }
+
     .label {
       opacity: 0;
       transition: opacity 200ms ease-in-out;

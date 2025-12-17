@@ -38,7 +38,7 @@ const toggleFollow = async () => {
 <template>
   <ExternalLabelButton
     v-if="usersStore.isConnected"
-    class="space-button bg-on-hover follow-button"
+    class="space-button bg-on-hover small-top-padding follow-button"
     :label="followed ? $t('project.followed') : $t('project.follow')"
     :btn-icon="followed ? 'BookmarkFill' : 'BookmarkLine'"
     vertical-layout
@@ -46,3 +46,9 @@ const toggleFollow = async () => {
     @click="toggleFollow"
   />
 </template>
+<style lang="css" scoped>
+.follow-button {
+  --external-button-outer-size: 1.2rem;
+  --external-button-inner-size: 1.2rem;
+}
+</style>

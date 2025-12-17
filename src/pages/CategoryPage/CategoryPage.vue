@@ -338,10 +338,9 @@ useLpiHead(
 
   .follow-button {
     position: absolute;
-    bottom: -2.5rem;
+    top: 5.5rem;
     right: 0;
     transform: translate(-50%, -100%);
-    width: 3rem; // fix creepy changing size vs positoning issue
   }
 }
 </style>
