@@ -40,8 +40,9 @@ const toggleFollow = async () => {
     v-if="usersStore.isConnected"
     class="space-button bg-on-hover follow-button"
     :label="followed ? $t('project.followed') : $t('project.follow')"
-    :btn-icon="followed ? 'Heart' : 'HeartOutline'"
+    :btn-icon="followed ? 'BookmarkFill' : 'BookmarkLine'"
     vertical-layout
+    label-on-hover
     @click="toggleFollow"
   />
 </template>

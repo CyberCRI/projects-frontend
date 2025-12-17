@@ -14,14 +14,14 @@
       <IconImage
         v-if="showFollowButton"
         class="icon"
-        name="HeartOutline"
+        name="BookmarkLine"
         tabindex="1"
         @click="updateFollow"
       />
       <IconImage
         v-else-if="showUnfollowButton"
         class="icon"
-        name="Heart"
+        name="BookmarkFill"
         tabindex="1"
         @click="updateFollow"
       />

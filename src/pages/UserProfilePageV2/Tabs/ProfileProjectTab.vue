@@ -75,7 +75,7 @@
       </template>
     </UserProjectsSearch>
 
-    <div class="follower-categories" v-if="followedCategories.length">
+    <div v-if="followedCategories.length" class="follower-categories">
       <div class="project-list-header">
         <h4 class="title">
           {{ $t('me.follow-category') }}
