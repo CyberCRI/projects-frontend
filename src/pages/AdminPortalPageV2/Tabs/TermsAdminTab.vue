@@ -19,6 +19,12 @@ const resetTerms = () => {
   termsContent.value = organizationsStore?.termsContent || NULL_CONTENT
 }
 
+const termsDateStr = computed(() =>
+  organizationsStore.termsUpdatedAt
+    ? new Date(organizationsStore.termsUpdatedAt).toLocaleString()
+    : ''
+)
+
 const isAsyncing = ref(false)
 
 const saveTerms = async () => {
@@ -60,7 +66,7 @@ const canSave = computed(
         {{ $t('admin.terms.using-default') }}
       </p>
       <p v-else class="notice">
-        {{ $t('admin.terms.version') }} {{ organizationsStore.termsVersion }}
+        {{ $t('admin.terms.version') }} {{ termsDateStr }}
         <!-- ,
         {{ $d(new Date(organizationsStore.termsDate)) }}-->
       </p>

@@ -3,7 +3,11 @@ import { getOrganizationByCode } from '@/api/organizations.service'
 import useOrganizations from '@/stores/useOrganizations'
 const { t } = useI18n()
 const organizationsStore = useOrganizations()
-
+const termsDateStr = computed(() =>
+  organizationsStore.termsUpdatedAt
+    ? new Date(organizationsStore.termsUpdatedAt).toLocaleString()
+    : ''
+)
 try {
   const runtimeConfig = useRuntimeConfig()
   const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
@@ -22,13 +26,12 @@ try {
 <template>
   <div class="page-section-narrow legal-page terms-of-service page-top">
     <h1 class="page-title">{{ $t('tos.title') }}</h1>
-    <TipTapOutput
-      v-if="organizationsStore?.hasTerms"
-      :content="organizationsStore?.termsContentTranslated"
-    />
+    <section v-if="organizationsStore?.hasTerms">
+      <TipTapOutput :content="organizationsStore?.termsContentTranslated" />
+    </section>
     <DefaultTermsOfService v-else />
-    <p v-if="organizationsStore.termsVersion" class="terms-version">
-      {{ $t('admin.terms.version') }} {{ organizationsStore.termsVersion }}
+    <p v-if="termsDateStr" class="terms-version">
+      {{ $t('admin.terms.version') }} {{ termsDateStr }}
     </p>
   </div>
 </template>
