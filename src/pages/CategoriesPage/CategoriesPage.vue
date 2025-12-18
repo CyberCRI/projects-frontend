@@ -79,6 +79,14 @@ try {
     </div>
 
     <div v-if="canCreateProject" class="action-ctn page-section-extra-wide">
+      <div v-if="projectCategoriesStore._root?.id && isAdmin" class="follow-all">
+        <CategoryFollowButton
+          :category-id="projectCategoriesStore._root?.id"
+          class="follow-button"
+          message-follow="category.follow-all-categories"
+          message-following="category.following-all-categories"
+        />
+      </div>
       <LpiButton
         :label="$t('project.create-project')"
         btn-icon="Plus"
@@ -86,10 +94,6 @@ try {
         data-test="create-project"
         @click="$router.push({ name: 'createProject' })"
       />
-    </div>
-    <div v-if="projectCategoriesStore._root?.id && isAdmin" class="follow-all">
-      {{ $t('category.follow-all-categories') }}
-      <CategoryFollowButton :category-id="projectCategoriesStore._root?.id" class="follow-button" />
     </div>
 
     <div v-if="hasSearch || forceSearch" class="page-section-wide">
@@ -130,7 +134,8 @@ try {
   }
 
   .action-ctn {
-    text-align: right;
+    display: flex;
+    align-items: center;
 
     button {
       margin-left: auto;
@@ -159,22 +164,12 @@ try {
     gap: $space-l;
   }
 }
+
 .follow-all {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: $space-m;
-  margin: $space-m auto;
-  font-weight: 700;
+  margin-right: auto;
   width: max-content;
-  max-width: 100%;
   padding: 1rem;
   border-radius: 1rem;
   background-color: $primary-lighter;
-
-  .follow-button {
-    --external-button-outer-size: 2rem;
-    --external-button-inner-size: 2rem;
-  }
 }
 </style>

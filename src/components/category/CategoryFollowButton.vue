@@ -1,11 +1,19 @@
 <script setup>
 import useUsersStore from '@/stores/useUsers.ts'
 import followUtils from '@/functs/followUtils.ts'
-
+const { t } = useNuxtI18n()
 const props = defineProps({
   categoryId: {
     type: Number,
     required: true,
+  },
+  messageFollow: {
+    type: String,
+    default: null,
+  },
+  messageFollowing: {
+    type: String,
+    default: null,
   },
 })
 
@@ -15,6 +23,17 @@ const follow = computed(() =>
   usersStore.followedCategories.find((f) => f.category.id === props.categoryId)
 )
 const followed = computed(() => !!follow.value)
+
+const hasCustomMessages = computed(() => {
+  return props.messageFollow && props.messageFollowing
+})
+
+const label = computed(() => {
+  if (hasCustomMessages.value) {
+    return followed.value ? t(props.messageFollowing) : t(props.messageFollow)
+  }
+  return followed.value ? t('project.followed') : t('project.follow')
+})
 
 const toggleFollow = async () => {
   try {
@@ -39,10 +58,10 @@ const toggleFollow = async () => {
   <ExternalLabelButton
     v-if="usersStore.isConnected"
     class="space-button bg-on-hover small-top-padding follow-button"
-    :label="followed ? $t('project.followed') : $t('project.follow')"
+    :label="label"
     :btn-icon="followed ? 'BookmarkFill' : 'BookmarkLine'"
-    vertical-layout
-    label-on-hover
+    :vertical-layout="!hasCustomMessages"
+    :label-on-hover="!hasCustomMessages"
     @click="toggleFollow"
   />
 </template>
