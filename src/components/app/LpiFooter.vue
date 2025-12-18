@@ -63,11 +63,9 @@
             </NuxtLink>
           </li>
           <li v-else>
-            <FooterEnglishTips ref="copy-link-tooltip" item-title="terms of use">
-              <NuxtLink to="/terms-of-service">
-                {{ $t('footer.terms-of-service') }}
-              </NuxtLink>
-            </FooterEnglishTips>
+            <NuxtLink to="/terms-of-service">
+              {{ $t('footer.terms-of-service') }}
+            </NuxtLink>
           </li>
 
           <li v-if="canOpen" class="list-item">
