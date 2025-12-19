@@ -58,9 +58,9 @@ export async function addParentGroup(
   return await useAPI(`organization/${orgId}/people-group/${groupId}/`, { body, method: 'PATCH' }) //.data.value
 }
 
-export function getGroup(organizationCode: string, groupName: string, config = {}) {
+export function getGroup(organizationCode: string, groupId: number, config = {}) {
   return useAPI<PeopleGroupModel>(
-    `organization/${organizationCode}/people-group/${groupName}/`,
+    `organization/${organizationCode}/people-group/${groupId}/`,
     config
   )
 }

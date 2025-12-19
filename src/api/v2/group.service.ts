@@ -4,6 +4,7 @@ import {
   getHierarchyGroups as fetchGetHierarchyGroups,
   getGroupMember as fetchGetGroupMember,
 } from '@/api/groups.service'
+import { onlyRefs } from '@/functs/onlyRefs'
 import { RefOrRaw } from '@/interfaces/utils'
 import { GroupModel, TranslatedGroupMember } from '@/models/group.model'
 import { OrganizationModel } from '@/models/organization.model'
@@ -16,27 +17,33 @@ const DEFAULT_CONFIG = {
 
 export const getGroup = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
-  groupSlug: RefOrRaw<GroupModel['name']>,
+  groupId: RefOrRaw<GroupModel['id']>,
   config = {}
 ) => {
   const { translateGroup } = useAutoTranslate()
-  const key = computed(() => `${organizationCode}::group::${unref(groupSlug)}`)
+  const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}`)
+  watch(key, () => console.log(`key`, key.value), { immediate: true })
 
   return useAsyncAPI(
     key,
-    () => fetchGetGroup(unref(organizationCode), unref(groupSlug), { ...DEFAULT_CONFIG }),
+    () => fetchGetGroup(unref(organizationCode), unref(groupId), { ...DEFAULT_CONFIG }),
     {
       translate: translateGroup,
+      watch: onlyRefs([organizationCode, groupId]),
       ...config,
     }
   )
 }
 
 export const getHierarchyGroups = (organizationCode: RefOrRaw<OrganizationModel['code']>) => {
-  const key = computed(() => `${organizationCode}::group::hierarchy`)
+  const key = computed(() => `${unref(organizationCode)}::group::hierarchy`)
 
-  return useAsyncAPI(key, () =>
-    fetchGetHierarchyGroups(unref(organizationCode), { ...DEFAULT_CONFIG })
+  return useAsyncAPI(
+    key,
+    () => fetchGetHierarchyGroups(unref(organizationCode), { ...DEFAULT_CONFIG }),
+    {
+      watch: onlyRefs([organizationCode]),
+    }
   )
 }
 
@@ -46,7 +53,7 @@ export const getGroupProject = (
   config = {}
 ) => {
   const { translateProjects } = useAutoTranslate()
-  const key = computed(() => `${organizationCode}::group::${unref(groupId)}::projects`)
+  const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::projects`)
 
   return useAsyncPaginationAPI(
     key,
@@ -57,6 +64,7 @@ export const getGroupProject = (
       }),
     {
       translate: translateProjects,
+      watch: onlyRefs([organizationCode, groupId]),
       ...config,
     }
   )
@@ -68,7 +76,7 @@ export const getGroupMember = (
   config = {}
 ) => {
   const { translateUsers } = useAutoTranslate()
-  const key = computed(() => `${organizationCode}::group::${unref(groupId)}::members`)
+  const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::members`)
 
   return useAsyncPaginationAPI(
     key,
@@ -79,6 +87,7 @@ export const getGroupMember = (
       }),
     {
       translate: (data) => translateUsers<TranslatedGroupMember>(data),
+      watch: onlyRefs([organizationCode, groupId]),
       ...config,
     }
   )

@@ -149,12 +149,14 @@ const updateHeader = async (groupId) => {
       payloadHeader.append('file', form.value.header_image, form.value.header_image.name)
 
       await postGroupHeader(orgCode.value, groupId, payloadHeader)
+      await refreshNuxtData(`${organizationCode}::group::${groupData.value.id}`)
 
       // TODO: make this in POST when backend allows it
       payloadHeader.delete('file')
     } else if (form.value.imageSizes) {
       // TODO else ?
       await patchGroupHeader(orgCode.value, groupId, payloadHeader)
+      await refreshNuxtData(`${organizationCode}::group::${groupData.value.id}`)
     }
   }
 }
@@ -200,10 +202,12 @@ const createGroup = async () => {
   try {
     const payload = buildPayload()
 
-    const newGroupId = (await postGroup(orgCode.value, payload)).id
+    const newGroup = await postGroup(orgCode.value, payload)
+    const newGroupId = newGroupId
 
     // save header
     await updateHeader(newGroupId)
+    await refreshNuxtData(`${organizationCode}::group::${newGroup.slug}`)
 
     startEditWatcher()
 
@@ -241,6 +245,8 @@ const updateGroup = async () => {
 
     //save featured projects
     await updateGroupProjects(props.groupId)
+
+    await refreshNuxtData(`${organizationCode}::group::${groupData.value.id}`)
 
     startEditWatcher()
 

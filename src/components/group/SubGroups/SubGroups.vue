@@ -6,7 +6,7 @@
     <NuxtLink
       v-for="(subgroup, index) in subgroups"
       :key="index"
-      :to="{ name: 'Group', params: { groupId: subgroup.slug || subgroup.id } }"
+      :to="{ name: 'Group', params: { groupId: subgroup.id } }"
       class="subgroups-item"
     >
       <div class="vector" />

@@ -6,7 +6,7 @@ const router = useRouter()
 
 // use group's org code if availabe
 // to allow edition of groups on the meta portal (PROJ-1032)
-const organizationCode = computed(() => props.group.organization || useOrganizationCode())
+const organizationCode = computed(() => props.group?.organization.code || useOrganizationCode())
 
 const form = ref({
   members: [],
@@ -32,7 +32,7 @@ const save = async () => {
     const { removed, added } = await updateGroupMembers()
     stopEditWatcher()
     // refresh group parent info
-    await refreshNuxtData(`${organizationCode}::group::${props.group.id}`)
+    await refreshNuxtData(`${organizationCode.value}::group::${props.group.id}`)
     redirect(groupMemberData.value.length - removed + added)
   } catch (e) {
     console.error(e)

@@ -33,7 +33,7 @@ const props = defineProps<{
 }>()
 
 const limitSkeletons = computed(() => Math.min(props.group.modules?.featured_projects ?? 10, 10))
-const organizationCode = computed(() => props.group?.organization || useOrganizationCode())
+const organizationCode = useOrganizationCode()
 const { data, isLoading, pagination } = getGroupProject(organizationCode, props.group.id)
 const { total, count } = pagination
 

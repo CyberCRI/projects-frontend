@@ -1,9 +1,11 @@
 import { Translated } from '@/interfaces/translated'
 import { ImageModel } from '@/models/image.model'
+import { OrganizationModel } from '@/models/organization.model'
 
 // TODO remove once merged with group PR
 export interface PeopleGroupModel {
   id: number
+  slug: string
   name: string
   description: string
   short_description: string
@@ -11,7 +13,7 @@ export interface PeopleGroupModel {
   type: string
   header_image: ImageModel
   publication_status: string
-  organization: string
+  organization: OrganizationModel
   children: any[]
   hierarchy: any
   modules: {

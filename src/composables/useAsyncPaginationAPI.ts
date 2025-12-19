@@ -65,7 +65,7 @@ export default function useAsyncPaginationAPI<DataT, Result = undefined>(
         DataT[],
         Result
       >),
-      watch: [...(params[2]?.watch || []), pagination.current],
+      watch: [...(params[2]?.watch || []), pagination.current, pagination.limit],
       // default() {
       //   return params[2]?.default?.() || []
       // },

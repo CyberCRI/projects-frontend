@@ -1,6 +1,6 @@
 <template>
   <div
-    :key="groupName"
+    :key="groupId"
     class="group-layout"
     :class="{
       'can-edit-group': canEditGroup,
@@ -52,9 +52,9 @@ const organizationCode = useOrganizationCode()
 const router = useRouter()
 const route = useRoute()
 const { t } = useNuxtI18n()
-const groupName = computed(() => route.params.groupId.toString())
+const groupId = computed(() => parseInt(route.params.groupId.toString(), 10))
 
-const { data: group, isLoading } = getGroup(organizationCode, groupName)
+const { data: group, isLoading } = getGroup(organizationCode, groupId)
 
 watch(
   group,
@@ -82,7 +82,7 @@ const groupHierarchy = computed(() => {
     root,
     ...(group.value?.hierarchy || []).map((group) => ({
       name: group.name,
-      route: { name: 'Group', params: { groupId: group.slug || group.id } },
+      route: { name: 'Group', params: { groupId: group.id } },
     })),
   ]
 })
