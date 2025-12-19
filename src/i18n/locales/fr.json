@@ -481,6 +481,8 @@
     "page-title": "Categorie",
     "title": "Catégories",
     "all-categories": "Voir toutes les catégories",
+    "follow-all-categories": "Suivre toutes les catégories",
+    "following-all-categories": "Vous suivez toutes les catégories",
     "all-projects": "Voir tous les projets",
     "edit": "Modifier"
   },
@@ -1064,6 +1066,7 @@
   },
   "me": {
     "follow": "Projets que je suis",
+    "follow-category": "Catégories que je suis",
     "no-follow": "Vous ne suivez pas encore de projet",
     "groups": "Groupes dont je fait partie",
     "no-group": "Vous n'êtes pas encore membre d'un groupe",
@@ -1360,6 +1363,13 @@
         "personal-bio": {
           "label": "Bio personnelle",
           "placeholder": "Présentez-vous personnellement. Parlez-nous de vous et de vos passions !"
+        }
+      },
+      "categories": {
+        "followed": {
+          "label": "Catégories que je suis",
+          "notice": "En suivant des catégories, vous recevrez des notifications sur toute nouvelle activité concernant des projets dans ces catégories. Si vous souhaitez suivre une catégorie, visitez-la et cliquez sur le bouton \"Suivre\" à côté du titre.",
+          "empty": "Vous ne suivez encore aucune catégorie."
         }
       },
       "projects": {
@@ -2358,6 +2368,12 @@
         "no": "Non"
       }
     },
+    "category": {
+      "project-created": "Catégorie que vous suivez - création",
+      "project-created-sub": "Soyez notifié lorsqu'un nouveau projet est créé dans cette catégorie",
+      "project-updated": "Catégorie que vous suivez - mise à jour",
+      "project-updated-sub": "Soyez notifié lorsqu'un projet est mis à jour dans cette catégorie"
+    },
     "project": {
       "title": "Notifications de projet",
       "changes": "Notifications de changement",
@@ -2409,6 +2425,7 @@
       "reply": "{sender} a répondu à votre commentaire sur {project}",
       "review": "{sender} a révisé votre projet {project}",
       "ready_for_review": "{sender} a marqué son projet comme prêt à être revisé. Vous pouvez maintenant réviser le projet {project}",
+      "project_created": "{sender} a créé le projet {project}",
       "project_updated": "{sender} a mis à jour {project}",
       "group_member_added": "{sender} a ajouté le groupe {group} comme membre du projet {project}",
       "group_member_added_self": "{sender} a ajouté le groupe {group} dont vous faites partie au projet {project}",

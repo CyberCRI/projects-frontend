@@ -473,6 +473,8 @@
     "page-title": "Kategooria",
     "title": "Kategooriad",
     "all-categories": "Vaata kõiki kategooriaid",
+    "follow-all-categories": "Jälgi kõiki kategooriaid",
+    "following-all-categories": "Jälgid kõiki kategooriaid",
     "all-projects": "Vaata kõiki projekte",
     "edit": "Edit"
   },
@@ -1056,6 +1058,7 @@
   },
   "me": {
     "follow": "Projektid, mida jälgin",
+    "follow-category": "Kategooriad, mida ma jälgin",
     "no-follow": "Sa ei jälgi veel projekti",
     "groups": "Minu grupid",
     "no-group": "Sa ei ole veel grupi liige",
@@ -1352,6 +1355,13 @@
         "personal-bio": {
           "label": "Isiklik biobioloogia",
           "placeholder": "Esitle ennast isiklikult. Räägi meile endast ja oma kirgedest!"
+        }
+      },
+      "categories": {
+        "followed": {
+          "label": "Kategooriad, mida ma jälgin",
+          "notice": "Jälgides kategooriaid, saate teateid mis tahes uue tegevuse kohta nende kategooriate projektides. Kui soovite kategooriat jälgida, külastage seda ja klõpsake pealkirja kõrval nuppu \"Jälgi\".",
+          "empty": "Te ei järgi veel ühtegi kategooriat."
         }
       },
       "projects": {
@@ -2350,6 +2360,12 @@
         "no": "Ei"
       }
     },
+    "category": {
+      "project-created": "Kategooria, mida jälgite - loomine",
+      "project-created-sub": "Saate teate, kui selles kategoorias luuakse uus projekt",
+      "project-updated": "Kategooria, mida jälgite - uuendus",
+      "project-updated-sub": "Saate teate, kui selles kategoorias uuendatakse projekti"
+    },
     "project": {
       "title": "Projektist teatamine",
       "changes": "Teadete muutmine",
@@ -2401,6 +2417,7 @@
       "reply": "{sender} vastas teie kommentaarile {project}",
       "review": "{sender} läbivaadatud projekt {project}",
       "ready_for_review": "{sender} märkis, et tema projekt on läbivaatamiseks valmis. Nüüd saate vaadata projekti {project}",
+      "project_created": "{sender} lõi projekti {project}",
       "project_updated": "{sender} uuendatud projekt {project}",
       "group_member_added": "{sender} lisas grupi {group} projekti liikmeks {project}",
       "group_member_added_self": "{sender} lisas grupi {group} olete osa projektist {project}",

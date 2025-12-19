@@ -131,6 +131,8 @@ export default {
         'SortAsc',
         'SortDesc',
         'RestartLeft',
+        'BookmarkLine',
+        'BookmarkFill',
       ],
     }
   },

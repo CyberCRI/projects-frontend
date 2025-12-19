@@ -2,12 +2,18 @@
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import { getOrganizationByCode } from '@/api/organizations.service'
 
+const { isAdmin } = usePermissions()
+
 const { canCreateProject } = usePermissions()
 const projectCategoriesStore = useProjectCategories()
 const { searchFromQuery } = useSearch('projects')
 const { t } = useNuxtI18n()
 
 const forceSearch = ref(false)
+
+if (!projectCategoriesStore._root?.value?.id) {
+  await projectCategoriesStore.getRootProjectCategory()
+}
 
 const categories = computed(() => {
   return projectCategoriesStore.hierarchy
@@ -73,6 +79,14 @@ try {
     </div>
 
     <div v-if="canCreateProject" class="action-ctn page-section-extra-wide">
+      <div v-if="projectCategoriesStore._root?.id && isAdmin" class="follow-all">
+        <CategoryFollowButton
+          :category-id="projectCategoriesStore._root?.id"
+          class="follow-button"
+          message-follow="category.follow-all-categories"
+          message-following="category.following-all-categories"
+        />
+      </div>
       <LpiButton
         :label="$t('project.create-project')"
         btn-icon="Plus"
@@ -120,7 +134,8 @@ try {
   }
 
   .action-ctn {
-    text-align: right;
+    display: flex;
+    align-items: center;
 
     button {
       margin-left: auto;
@@ -148,5 +163,13 @@ try {
     align-items: stretch;
     gap: $space-l;
   }
+}
+
+.follow-all {
+  margin-right: auto;
+  width: max-content;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: $primary-lighter;
 }
 </style>

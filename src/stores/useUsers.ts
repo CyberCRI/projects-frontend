@@ -1,4 +1,5 @@
 import type { AuthResult } from '@/api/auth/keycloak'
+import { getProjectCategoriesFollow } from '@/api/project-categories.service'
 
 import {
   logoutFromKeycloak,
@@ -24,7 +25,7 @@ export interface UsersState {
   refreshToken?: string
   refreshTokenExp?: number
   accessToken?: string
-  id?: string
+  id?: number
   keycloak_id?: string
   userFromToken?: any
   userFromApi?: any
@@ -34,6 +35,7 @@ export interface UsersState {
   notificationsCount?: number
   notificationsSettings?: NotificationsSettings
   userDataRefreshLoop?: ReturnType<typeof setInterval> | null
+  followedCategories?: any[]
 }
 
 const useUsersStore = defineStore('users', () => {
@@ -51,12 +53,13 @@ const useUsersStore = defineStore('users', () => {
   const notificationsCount = ref(0)
   const notificationsSettings = ref(null)
   const userDataRefreshLoop = ref(null)
+  const followedCategories = ref<any[]>([])
 
   const isConnected = computed((): boolean => {
     return !!userFromToken.value
   })
 
-  const id = computed((): string | undefined => {
+  const id = computed((): number | undefined => {
     return userFromApi.value?.id
   })
 
@@ -201,6 +204,10 @@ const useUsersStore = defineStore('users', () => {
     }
   }
 
+  watchEffect(async () => {
+    if (id.value) await fetchFollowedCategories()
+  })
+
   async function getUser(id) {
     // id is keycloak_id OR django user id OR slug
     try {
@@ -251,6 +258,17 @@ const useUsersStore = defineStore('users', () => {
     }
   }
 
+  async function fetchFollowedCategories() {
+    if (!id.value) return
+    try {
+      // TODO check if paginated result workaround is needed
+      const resp = await getProjectCategoriesFollow(id.value)
+      followedCategories.value = resp.results
+    } catch (err) {
+      console.error('Error fetching followed categories:', err)
+    }
+  }
+
   return {
     // state
     refreshToken,
@@ -264,6 +282,7 @@ const useUsersStore = defineStore('users', () => {
     notificationsCount,
     notificationsSettings,
     userDataRefreshLoop,
+    followedCategories,
     // getters
     isConnected,
     id,
@@ -279,6 +298,7 @@ const useUsersStore = defineStore('users', () => {
     getUser,
     getNotifications,
     patchNotifications,
+    fetchFollowedCategories,
   }
 })
 
