@@ -13,7 +13,6 @@ import { isEqual } from 'es-toolkit'
 import useToasterStore from '@/stores/useToaster.ts'
 import usePeopleGroupsStore from '@/stores/usePeopleGroups'
 import useUsersStore from '@/stores/useUsers.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { getOrganizationByCode } from '@/api/organizations.service'
 
 const props = defineProps({
@@ -46,7 +45,7 @@ const props = defineProps({
 const emit = defineEmits(['close', 'reload-group'])
 const toaster = useToasterStore()
 const peopleGroupsStore = usePeopleGroupsStore()
-const organizationsStore = useOrganizationsStore()
+const organizationCode = useOrganizationCode()
 const usersStore = useUsersStore()
 const { canCreateGroup, canEditGroup } = usePermissions()
 const route = useRoute()
@@ -107,7 +106,7 @@ const isEdit = computed(() => {
 const orgCode = computed(() => {
   // use group's org code if availabe
   // to allow edition of groups on the meta portal (PROJ-1032)
-  return groupData.value ? groupData.value.organization : organizationsStore.current.code
+  return groupData.value ? groupData.value.organization : organizationCode
 })
 
 const redirectTo404 = () => {
@@ -150,12 +149,14 @@ const updateHeader = async (groupId) => {
       payloadHeader.append('file', form.value.header_image, form.value.header_image.name)
 
       await postGroupHeader(orgCode.value, groupId, payloadHeader)
+      await refreshNuxtData(`${organizationCode}::group::${groupData.value.id}`)
 
       // TODO: make this in POST when backend allows it
       payloadHeader.delete('file')
     } else if (form.value.imageSizes) {
       // TODO else ?
       await patchGroupHeader(orgCode.value, groupId, payloadHeader)
+      await refreshNuxtData(`${organizationCode}::group::${groupData.value.id}`)
     }
   }
 }
@@ -201,10 +202,12 @@ const createGroup = async () => {
   try {
     const payload = buildPayload()
 
-    const newGroupId = (await postGroup(orgCode.value, payload)).id
+    const newGroup = await postGroup(orgCode.value, payload)
+    const newGroupId = newGroupId
 
     // save header
     await updateHeader(newGroupId)
+    await refreshNuxtData(`${organizationCode}::group::${newGroup.slug}`)
 
     startEditWatcher()
 
@@ -242,6 +245,8 @@ const updateGroup = async () => {
 
     //save featured projects
     await updateGroupProjects(props.groupId)
+
+    await refreshNuxtData(`${organizationCode}::group::${groupData.value.id}`)
 
     startEditWatcher()
 
@@ -292,7 +297,6 @@ onMounted(async () => {
     // general data
     try {
       const _groupData = await getGroup(orgCode.value, props.groupId)
-
       // now we can get the real id (not slug)
       peopleGroupsStore.currentId = _groupData.id
       if (!canEditGroup.value) {

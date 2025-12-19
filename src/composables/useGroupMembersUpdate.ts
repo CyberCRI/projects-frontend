@@ -96,8 +96,12 @@ export default function useGroupMembersUpdate(orgCode, groupId, form) {
       }
       await postGroupMembers(orgCode.value, groupId, payloadMembers)
     }
-
     isSaving.value = false
+
+    return {
+      removed: membersToRemove.length + leadersToRemove.length + managersToRemove.length,
+      added: membersToAdd.length + leadersToAdd.length + managersToAdd.length,
+    }
   }
 
   return { groupMemberData, isSaving, setMembersData, updateGroupMembers }

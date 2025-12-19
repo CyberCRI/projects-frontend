@@ -79,6 +79,14 @@ const useOrganizationsStore = defineStore('organizations', () => {
     }
   }
 
+  async function getOrFetchOrganization() {
+    if (!current.value) {
+      const runtimeConfig = useRuntimeConfig()
+      await getCurrentOrganization(runtimeConfig.public.appApiOrgCode)
+    }
+    return current.value
+  }
+
   async function getAllOrganizations(): Promise<APIResponseList<OrganizationOutput>> {
     try {
       const response = await getOrganizations()
@@ -121,6 +129,7 @@ const useOrganizationsStore = defineStore('organizations', () => {
     termsUpdatedAt,
     // actions
     getCurrentOrganization,
+    getOrFetchOrganization,
     getAllOrganizations,
     updateCurrentOrganization,
     // needed in unit test, shouldn't be used anywhere else

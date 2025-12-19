@@ -1,4 +1,4 @@
-import GroupPageInnerV2 from '@/components/group/GroupPageInnerV2.vue'
+import GroupPage from '@/pages/GroupPageV2/GroupPage.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 import { flushPromises } from '@vue/test-utils'
@@ -72,7 +72,7 @@ const buildParams = (groupId) => ({
   },
 })
 
-describe('GroupPageInnerV2', () => {
+describe('GroupPage', () => {
   let usersStore
   beforeEach(() => {
     usePeopleGroupsStore(pinia)
@@ -88,14 +88,14 @@ describe('GroupPageInnerV2', () => {
   afterEach(() => {
     // usersStore.$reset()
   })
-  it('should render GroupPageInnerV2 component', () => {
-    let wrapper = lpiShallowMount(GroupPageInnerV2, buildParams('123'))
+  it('should render GroupPage component', () => {
+    let wrapper = lpiShallowMount(GroupPage, buildParams('123'))
 
     expect(wrapper.exists()).toBeTruthy()
   })
 
   it('should load group data', async () => {
-    let wrapper = lpiShallowMount(GroupPageInnerV2, buildParams('123'))
+    let wrapper = lpiShallowMount(GroupPage, buildParams('123'))
     let vm: any = wrapper.vm
     expect(vm.isLoading).toBe(true)
     await flushPromises()
@@ -107,7 +107,7 @@ describe('GroupPageInnerV2', () => {
   // TODO: Fix this test since migrating people group store to pinia
   // it('should display a 404 if no group found', async () => {
   //     vi.mocked(getGroup).mockRejectedValueOnce({ response: { status: 404 } })
-  //     let wrapper = lpiShallowMount(GroupPageInnerV2, buildParams('123'))
+  //     let wrapper = lpiShallowMount(GroupPage, buildParams('123'))
   //     await (wrapper.vm as any).$nextTick() // Wait for component to be fully mounted
   //     vi.spyOn((wrapper.vm as any).$router, 'replace')
   //     await flushPromises()
@@ -120,7 +120,7 @@ describe('GroupPageInnerV2', () => {
   // })
 
   it('should not display a edit button button if not allowed', async () => {
-    let wrapper = lpiShallowMount(GroupPageInnerV2, buildParams('123'))
+    let wrapper = lpiShallowMount(GroupPage, buildParams('123'))
 
     let vm = wrapper.vm
     await flushPromises()
@@ -131,7 +131,7 @@ describe('GroupPageInnerV2', () => {
     usersStore.permissions = {
       'organizations.change_peoplegroup': true,
     }
-    let wrapper = lpiShallowMount(GroupPageInnerV2, buildParams('123'))
+    let wrapper = lpiShallowMount(GroupPage, buildParams('123'))
     let vm = wrapper.vm
     await flushPromises()
     expect(wrapper.find('.can-edit-group').exists()).toBe(true)
@@ -157,7 +157,7 @@ describe('GroupPageInnerV2', () => {
   //     publication_status: 'public',
   //   })
 
-  //   let wrapper = lpiShallowMount(GroupPageInnerV2, buildParams('123'))
+  //   let wrapper = lpiShallowMount(GroupPage, buildParams('123'))
 
   //   await flushPromises()
   //   expect(wrapper.find('bread-crumbs-stub').exists()).toBe(true)
@@ -183,7 +183,7 @@ describe('GroupPageInnerV2', () => {
   //     logo_image: null,
   //     publication_status: 'public',
   //   })
-  //   let wrapper = lpiShallowMount(GroupPageInnerV2, buildParams('123'))
+  //   let wrapper = lpiShallowMount(GroupPage, buildParams('123'))
 
   //   await flushPromises()
   //   expect(wrapper.find('sub-groups-stub').exists()).toBe(true)

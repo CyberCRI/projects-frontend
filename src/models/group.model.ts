@@ -1,4 +1,5 @@
-import { UserFromJWTModel } from '@/models/user.model'
+import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import { UserFromJWTModel, UserModel } from '@/models/user.model'
 
 /**
  * @name GroupModel
@@ -11,6 +12,12 @@ export interface GroupModel {
   permissions: Array<string>
   users: Array<UserFromJWTModel>
 }
+
+export type GroupMember = UserModel & {
+  is_manager: boolean
+}
+
+export type TranslatedGroupMember = TranslatedPeopleGroupModel & GroupMember
 
 export interface HierarchyGroupModel {
   id: number
@@ -76,8 +83,4 @@ export interface RemoveGroupMember {
 
 export interface PostGroupProjects {
   featured_projects: Array<string>
-}
-
-export interface RemoveGroupProject {
-  project: string
 }

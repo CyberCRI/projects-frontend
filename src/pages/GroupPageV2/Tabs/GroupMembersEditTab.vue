@@ -1,36 +1,41 @@
-<script setup>
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+<script setup lang="ts">
+import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 
-const props = defineProps({ groupData: { type: Object, required: true } })
+const props = defineProps<{ group: TranslatedPeopleGroupModel }>()
+const router = useRouter()
 
-const emit = defineEmits('reload-group-members')
-
-const organizationsStore = useOrganizationsStore()
-const orgCode = computed(() => {
-  // use group's org code if availabe
-  // to allow edition of groups on the meta portal (PROJ-1032)
-  return props.groupData?.organization || organizationsStore.current.code
-})
+// use group's org code if availabe
+// to allow edition of groups on the meta portal (PROJ-1032)
+const organizationCode = computed(() => props.group?.organization.code || useOrganizationCode())
 
 const form = ref({
   members: [],
 })
 
-const { setMembersData, updateGroupMembers, isSaving } = useGroupMembersUpdate(
-  orgCode,
-  props.groupData?.id,
+const { setMembersData, updateGroupMembers, isSaving, groupMemberData } = useGroupMembersUpdate(
+  organizationCode,
+  props.group?.id,
   form
 )
 
-const { startEditWatcher } = useEditWatcher(form)
+const { startEditWatcher, stopEditWatcher } = useEditWatcher(form)
+
+const redirect = (numberMembers) => {
+  router.push({
+    name: numberMembers ? 'groupMembers' : 'groupSnapshot',
+    params: { groupId: props.group.id },
+  })
+}
 
 const save = async () => {
   try {
-    await updateGroupMembers()
-    startEditWatcher()
-    emit('reload-group-members')
+    const { removed, added } = await updateGroupMembers()
+    stopEditWatcher()
+    // refresh group parent info
+    await refreshNuxtData(`${organizationCode.value}::group::${props.group.id}`)
+    redirect(groupMemberData.value.length - removed + added)
   } catch (e) {
-    console.log(e)
+    console.error(e)
   }
 }
 
@@ -46,12 +51,7 @@ onMounted(async () => {
       <FormPanel
         :confirm-action-name="$t('common.save')"
         :asyncing="isSaving"
-        @close="
-          $router.push({
-            name: 'groupMembers',
-            params: { groupId: groupData.slug || groupData.id },
-          })
-        "
+        @close="redirect(groupMemberData)"
         @confirm="save"
       >
         <GroupTeamSection v-model="form.members" />

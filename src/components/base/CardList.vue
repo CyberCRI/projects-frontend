@@ -1,12 +1,12 @@
 <template>
   <div v-if="switchableDisplay" class="diplay-switcher">
-    <GroupButton v-model="mode" :options="displayModes" :has-icon="false" size="s-small" />
+    <GroupButton v-model="mode" :options="displayMode" :has-icon="false" size="s-small" />
   </div>
 
   <ProjectListSkeleton
     v-if="isLoading"
     class="card-list"
-    :min-gap="gridGap"
+    :min-gap="GRID_GAP"
     :limit="limit"
     :mode="mode"
   />
@@ -18,88 +18,67 @@
       </slot>
     </template>
     <div v-else class="card-container">
-      <DynamicGrid :min-gap="gridGap" class="card-list" :mode="mode">
+      <DynamicGrid :min-gap="GRID_GAP" class="card-list" :mode="mode">
         <slot v-for="item in items" :key="item.id" :item="item" :mode="mode" />
       </DynamicGrid>
     </div>
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import ProjectListSkeleton from '@/components/project/ProjectListSkeleton.vue'
 import DynamicGrid from '@/components/base/DynamicGrid.vue'
 
-export default {
-  name: 'CardList',
+const props = withDefaults(
+  defineProps<{
+    items?: any[]
+    isLoading?: boolean
+    limit?: number
+    switchableDisplay?: boolean
+  }>(),
+  {
+    items: () => [],
+    isLoading: false,
+    limit: 12,
+    switchableDisplay: false,
+  }
+)
 
-  components: {
-    ProjectListSkeleton,
-    DynamicGrid,
-  },
+const { t } = useNuxtI18n()
 
-  props: {
-    items: {
-      type: Array,
-      default: () => [],
+const GRID_GAP = 24
+const mode = ref<'card' | 'list'>('card')
+const isEmpty = computed(() => !props.isLoading && !props.items.length)
+
+const displayMode = computed(() => {
+  return [
+    {
+      label: t('card-list.grid'),
+      iconName: 'Card',
+      value: 'card',
     },
-
-    isLoading: {
-      type: Boolean,
-      default: false,
+    {
+      label: t('card-list.list'),
+      iconName: 'List',
+      value: 'list',
     },
+  ]
+})
 
-    limit: {
-      type: Number,
-      default: 12,
-    },
+watch(mode, (newMODE, oldMODE) => {
+  if (props.switchableDisplay && newMODE !== oldMODE) {
+    localStorage?.setItem('card-list-MODE', newMODE)
+  }
+})
 
-    switchableDisplay: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  data() {
-    return {
-      gridGap: 24,
-
-      mode: 'card', // 'list' or 'grid'
+onMounted(() => {
+  if (props.switchableDisplay) {
+    const storageMode = localStorage?.getItem('card-list-MODE')
+    if (['card', 'list'].includes(storageMode)) {
+      mode.value = storageMode as 'card' | 'list'
     }
-  },
-  computed: {
-    isEmpty() {
-      return !this.isLoading && !this.items.length
-    },
-
-    displayModes() {
-      return [
-        {
-          label: this.$t('card-list.grid'),
-          iconName: 'Card',
-          value: 'card',
-        },
-        {
-          label: this.$t('card-list.list'),
-          iconName: 'List',
-          value: 'list',
-        },
-      ]
-    },
-  },
-  watch: {
-    mode(newMode, oldMode) {
-      if (this.switchableDisplay && newMode !== oldMode) {
-        localStorage?.setItem('card-list-mode', newMode)
-      }
-    },
-  },
-
-  mounted() {
-    if (this.switchableDisplay) {
-      this.mode = localStorage?.getItem('card-list-mode') || 'card'
-    }
-  },
-}
+  }
+})
 </script>
 
 <style lang="scss" scoped>
