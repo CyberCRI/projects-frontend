@@ -2,7 +2,6 @@
   <div class="group">
     <div class="group-header">
       <h2 class="title">{{ title }} ( {{ total }} )</h2>
-
       <SeeMoreArrow v-if="!loading" class="see-more-button" :to="seeMore" />
     </div>
 

@@ -1,5 +1,7 @@
 import useNuxtI18n from '@/composables/useNuxtI18n'
+import { RefOrRaw } from '@/interfaces/utils'
 import { ImageModel } from '@/models/image.model'
+import useOrganizationsStore from '@/stores/useOrganizations'
 
 const useLpiHead = (url, _title, _description, image, dimensions = null) => {
   const runtimeConfig = useRuntimeConfig()
@@ -120,10 +122,10 @@ const useLpiHead = (url, _title, _description, image, dimensions = null) => {
 export default useLpiHead
 
 type OptionsHead = {
-  url?: string
-  title?: string
+  url?: RefOrRaw<string>
+  title?: RefOrRaw<string>
   image?: ImageModel
-  description?: string
+  description?: RefOrRaw<string>
 }
 
 /**
@@ -136,17 +138,29 @@ type OptionsHead = {
  * @returns {void}
  * @exports
  */
-export const useLpiHead2 = (options: OptionsHead) => {
-  const url = options.url ?? useRequestURL().toString()
-  const title = options.title ?? ''
-  const description = options.description ?? ''
+export const useLpiHead2 = async (options: OptionsHead) => {
+  // TODO(remi): remove try/catch
 
-  let [image, dimensions] = [null, null]
-  if (typeof options.image === 'object') {
-    const tmp = useImageAndDimension(options.image, 'medium')
-    image = tmp.image
-    dimensions = tmp.dimensions
+  const store = useOrganizationsStore()
+  try {
+    const organization = await store.getOrFetchOrganization()
+    const url = options.url ?? useRequestURL().toString()
+    const title = options.title ?? organization?.$t.name ?? ''
+    const description = options.description ?? organization?.$t.description ?? ''
+
+    let [image, dimensions] = [null, null]
+    if (typeof options.image === 'object') {
+      const tmp = useImageAndDimension(options.image, 'medium')
+      image = tmp.image
+      dimensions = tmp.dimensions
+    } else {
+      const tmp = useImageAndDimension(organization?.banner_image, 'medium')
+      image = tmp.image
+      dimensions = tmp.dimensions
+    }
+
+    useLpiHead(url, title, description, image, dimensions)
+  } catch (e) {
+    console.error(e)
   }
-
-  useLpiHead(url, title, description, image, dimensions)
 }

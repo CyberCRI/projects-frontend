@@ -4,7 +4,7 @@
       <div class="members-header">
         <h2 class="title">
           {{ $t('group.group-members') }}
-          <span v-if="!isLoading">( {{ count }} )</span>
+          <span v-show="countElement">( {{ countElement }} )</span>
         </h2>
       </div>
       <MemberListSkeleton v-if="isLoading" :min-gap="90" :limit="limitSkeletons" />
@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { getGroupMember } from '@/api/groups.service'
+import { getGroupMember } from '@/api/v2/group.service'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 
 defineOptions({ name: 'GroupMembersTab' })
@@ -50,20 +50,19 @@ const props = defineProps<{
   group: TranslatedPeopleGroupModel
 }>()
 
+const organizationCode = useOrganizationCode()
 const limitSkeletons = computed(() => Math.min(props.group.modules?.members ?? 10, 10))
 
-const { translateUsers } = useAutoTranslate()
-const organizationCode = useOrganizationCode()
-const key = computed(() => `group-${props.group.id}-members-tabs`)
-const { data, isLoading, pagination } = useAsyncPaginationAPI(
-  key,
-  ({ config }) => getGroupMember(organizationCode, props.group.id, config),
-  { translate: translateUsers }
-)
+const { data, isLoading, pagination } = getGroupMember(organizationCode, props.group.id)
 const { total, count } = pagination
+
 const userIdDrawer = ref<number | null>()
 const openProfile = (user) => (userIdDrawer.value = user.id)
 const closeProfile = () => (userIdDrawer.value = null)
+
+const countElement = computed<number>(
+  () => (isLoading.value ? props.group.modules?.members : count.value) ?? count.value
+)
 </script>
 
 <style lang="scss" scoped>

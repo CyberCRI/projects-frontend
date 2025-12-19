@@ -14,7 +14,9 @@ type AsyncReturn<ResDataT, DataT, Result> = Omit<
   ReturnType<typeof useAsyncData<ResDataT, unknown, DataT>>,
   'data'
 > & {
-  data: Result extends undefined ? DataT : Result
+  data: Result extends undefined
+    ? ReturnType<typeof useAsyncData<ResDataT, unknown, DataT>>['data']
+    : Result
   isLoading: ComputedRef<boolean>
 }
 
@@ -26,7 +28,7 @@ type AsyncReturn<ResDataT, DataT, Result> = Omit<
  * @kind variable
  * @exports
  */
-export default function useAsyncAPI<ResDataT, DataT, Result = undefined>(
+export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefined>(
   ...params: AsyncParameters<ResDataT, DataT, Result>
 ): AsyncReturn<ResDataT, DataT, Result> {
   /*
@@ -36,17 +38,19 @@ export default function useAsyncAPI<ResDataT, DataT, Result = undefined>(
   params[2] ??= {}
   params[2].watch = [...(params[2].watch || []), locale]
   */
+
   const { status, data, ...res } = useAsyncData<ResDataT, unknown, DataT>(...params)
   const isLoading = useLoadingFromStatus(status)
 
   // @ts-expect-error 2345 todo check why
   const dataWrapped = params[2]?.translate?.(data) || data
 
-  return {
+  const results = {
     ...res,
     status,
     isLoading,
-    // @ts-expect-error 2322 todo check why
     data: dataWrapped,
   }
+  // @ts-expect-error 2322 todo check why
+  return results
 }

@@ -43,8 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import { getGroupMember } from '@/api/groups.service'
-import { TranslatedGroupMember } from '@/models/group.model'
+import { getGroupMember } from '@/api/v2/group.service'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupPreview from '@/pages/GroupPageV2/Tabs/previews/BaseGroupPreview.vue'
 const LIMIT = 6
@@ -54,26 +53,18 @@ const props = defineProps<{
   isLoading: boolean
 }>()
 
-const { translateUsers } = useAutoTranslate()
 const organizationCode = useOrganizationCode()
-const key = computed(() => `group-${props.group.id}-member-preview`)
-
 const limitSkeletons = computed(() => props.group.modules?.members ?? LIMIT)
 
 const {
   status,
   data,
   isLoading: isLoadingMember,
-} = useAsyncPaginationAPI(
-  key,
-  ({ config }) => getGroupMember(organizationCode, props.group.id, config),
-  {
-    translate: (data) => translateUsers<TranslatedGroupMember>(data),
-    paginationConfig: {
-      limit: LIMIT,
-    },
-  }
-)
+} = getGroupMember(organizationCode, props.group.id, {
+  paginationConfig: {
+    limit: LIMIT,
+  },
+})
 const loading = computed(() => props.isLoading || isLoadingMember.value)
 
 const userIdDrawer = ref<number | null>()

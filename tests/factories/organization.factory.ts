@@ -40,6 +40,9 @@ const OrganizationFactory = createFactory<OrganizationModel>((faker) => ({
   enabled_projects_tag_classifications: [], // TODO: define this type
   enabled_skills_tag_classifications: [], // TODO: define this type
   terms_and_conditions: null,
+  auto_translate_content: false,
+  description: '',
+  chat_button_text: '',
 }))
 
 export const OrganizationOutputFactory = createFactory<OrganizationOutput>(() => ({

@@ -4,11 +4,11 @@
       <div class="projects-header">
         <h2 class="title">
           {{ $t('group.group-projects') }}
-          <span v-if="!isLoading">( {{ count }} )</span>
+          <span v-show="count">( {{ countElement }} )</span>
         </h2>
       </div>
       <div class="projects-container">
-        <CardList :is-loading="isLoading" :items="data">
+        <CardList :is-loading="isLoading" :items="data" :limit="limitSkeletons">
           <template #default="projectListSlotProps">
             <ProjectCard :project="projectListSlotProps.item" />
           </template>
@@ -28,15 +28,18 @@ import ProjectCard from '@/components/project/ProjectCard.vue'
 
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 
-defineOptions({ name: 'GroupProjectsTab' })
-
 const props = defineProps<{
   group: TranslatedPeopleGroupModel
 }>()
 
+const limitSkeletons = computed(() => Math.min(props.group.modules?.featured_projects ?? 10, 10))
 const organizationCode = computed(() => props.group?.organization || useOrganizationCode())
 const { data, isLoading, pagination } = getGroupProject(organizationCode, props.group.id)
 const { total, count } = pagination
+
+const countElement = computed(
+  () => (isLoading.value ? props.group.modules?.featured_projects : count) ?? count
+)
 </script>
 
 <style lang="scss" scoped>

@@ -1,6 +1,6 @@
 <template>
   <div
-    :key="groupId"
+    :key="groupName"
     class="group-layout"
     :class="{
       'can-edit-group': canEditGroup,
@@ -31,7 +31,7 @@
           />
         </template>
         <template v-if="currentTab" #content>
-          <SubPageTitle :title-prefix="groupData.$t?.name" :current-tab="currentTab" />
+          <SubPageTitle :title-prefix="group.$t?.name" :current-tab="currentTab" />
           <NuxtPage v-bind="currentTab.props" />
         </template>
       </NavPanelLayout>
@@ -52,24 +52,24 @@ const organizationCode = useOrganizationCode()
 const router = useRouter()
 const route = useRoute()
 const { t } = useNuxtI18n()
-const groupId = computed(() => parseInt(route.params.groupId.toString(), 10))
+const groupName = computed(() => route.params.groupId.toString())
 
-const { data: groupData, isLoading } = getGroup(organizationCode, groupId)
+const { data: group, isLoading } = getGroup(organizationCode, groupName)
 
 watch(
-  groupData,
+  group,
   () => {
     useLpiHead2({
-      title: groupData.value?.name,
-      description: groupData.value?.description,
-      image: groupData.value?.header_image,
+      title: group.value?.name,
+      description: group.value?.description,
+      image: group.value?.header_image,
     })
   },
   { immediate: true }
 )
 
 const groupEmail = computed(() => {
-  return groupData.value?.email
+  return group.value?.email
 })
 
 const groupHierarchy = computed(() => {
@@ -77,10 +77,10 @@ const groupHierarchy = computed(() => {
     name: t('common.groups'),
     route: { name: 'Groups' },
   }
-  if (!groupData.value) return [root]
+  if (!group.value) return [root]
   return [
     root,
-    ...(groupData.value?.hierarchy || []).map((group) => ({
+    ...(group.value?.hierarchy || []).map((group) => ({
       name: group.name,
       route: { name: 'Group', params: { groupId: group.slug || group.id } },
     })),
@@ -89,7 +89,7 @@ const groupHierarchy = computed(() => {
 
 const groupModules = computed<TranslatedPeopleGroupModel['modules']>(
   () =>
-    groupData.value?.modules ?? {
+    group.value?.modules ?? {
       members: 0,
       featured_projects: 0,
     }
@@ -105,7 +105,7 @@ const groupTabsDisplay = computed(() => {
       view: `/group/${route.params.groupId}/snapshot`,
       altView: `/group/${route.params.groupId}/snapshot/edit`,
       props: {
-        group: groupData.value,
+        group: group.value,
         isLoading: isLoading.value,
       },
       condition: true,
@@ -120,7 +120,7 @@ const groupTabsDisplay = computed(() => {
       view: `/group/${route.params.groupId}/members`,
       altView: `/group/${route.params.groupId}/members/edit`,
       props: {
-        group: groupData.value,
+        group: group.value,
         isLoading: isLoading.value,
       },
       condition: groupModules.value.members,
@@ -134,7 +134,7 @@ const groupTabsDisplay = computed(() => {
       view: `/group/${route.params.groupId}/projects`,
       altView: `/group/${route.params.groupId}/projects/edit`,
       props: {
-        group: groupData.value,
+        group: group.value,
         isLoading: isLoading.value,
       },
       condition: groupModules.value.featured_projects,
@@ -158,7 +158,7 @@ const groupTabsEdit = computed(() => {
       altView: `/group/${route.params.groupId}/snapshot`,
       props: {
         isInEditingMode: true,
-        group: groupData.value,
+        group: group.value,
         isLoading: isLoading.value,
       },
       condition: true,
@@ -174,7 +174,7 @@ const groupTabsEdit = computed(() => {
       altView: `/group/${route.params.groupId}/members`,
       props: {
         isInEditingMode: true,
-        group: groupData.value,
+        group: group.value,
         isLoading: isLoading.value,
       },
       condition: true,
@@ -189,7 +189,7 @@ const groupTabsEdit = computed(() => {
       altView: `/group/${route.params.groupId}/projects`,
       props: {
         isInEditingMode: true,
-        group: groupData.value,
+        group: group.value,
         isLoading: isLoading.value,
       },
       condition: true,

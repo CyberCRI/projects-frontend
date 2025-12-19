@@ -35,7 +35,8 @@ const save = async () => {
   try {
     const { removed, added } = await updateGroupProjects()
     stopEditWatcher()
-    await refreshNuxtData(`people-group::${props.group.id}`)
+    // refresh group parent info
+    await refreshNuxtData(`${organizationCode}::group::${props.group.id}`)
     redirect(groupProjectData.value.length - removed + added)
   } catch (e) {
     console.error(e)

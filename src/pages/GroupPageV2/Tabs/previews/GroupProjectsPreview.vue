@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { getGroupProject } from '@/api/groups.service'
+import { getGroupProject } from '@/api/v2/group.service'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupPreview from '@/pages/GroupPageV2/Tabs/previews/BaseGroupPreview.vue'
 
@@ -30,22 +30,12 @@ const props = defineProps<{
   isLoading: boolean
 }>()
 
-const { translateProjects } = useAutoTranslate()
 const organizationCode = useOrganizationCode()
-const key = computed(() => `group-${props.group.id}-project-preview`)
+
 const {
   status,
   data,
   isLoading: isLoadingProject,
-} = useAsyncPaginationAPI(
-  key,
-  ({ config }) => getGroupProject(organizationCode, props.group.id, config),
-  {
-    translate: translateProjects,
-    paginationConfig: {
-      limit: 6,
-    },
-  }
-)
+} = getGroupProject(organizationCode, props.group.id, { paginationConfig: { limit: 6 } })
 const loading = computed(() => props.isLoading || isLoadingProject.value)
 </script>

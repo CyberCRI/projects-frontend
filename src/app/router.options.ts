@@ -223,7 +223,7 @@ const routes = ({
   {
     path: '/create-group',
     name: 'createGroup',
-    component: () => import('../pages/GroupPageV2/Tabs/GroupEditPage.vue'),
+    component: () => import('../pages/GroupPageV2/Tabs/GroupEditTab.vue'),
 
     meta: {
       resetScroll: true,

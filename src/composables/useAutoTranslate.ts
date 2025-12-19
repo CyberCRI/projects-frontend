@@ -1,4 +1,5 @@
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import { TranslatedOrganizationModel } from '@/models/organization.model'
 import { TranslatedPeopleModel } from '@/models/people.model'
 import { TranslatedProjectModel } from '@/models/project.model'
 
@@ -147,14 +148,15 @@ export default function useAutoTranslate() {
 
   // orgs
   const translateOrganization = (org) =>
-    translateEntity(org, [
+    translateEntity<TranslatedOrganizationModel>(org, [
       'name',
       'dashboard_title',
       'dashboard_subtitle',
       'description',
       'chat_button_text',
     ])
-  const translateOrganizations = (orgs) => translateEntities(orgs, translateOrganization)
+  const translateOrganizations = (orgs) =>
+    translateEntities<TranslatedOrganizationModel>(orgs, translateOrganization)
 
   const translateTemplate = (template) => {
     const _template = unref(template)

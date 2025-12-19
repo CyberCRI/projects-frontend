@@ -7,6 +7,7 @@ import type {
   PostGroupProjects,
   AddParentGroupModelInput,
   GroupMember,
+  HierarchyGroupModel,
 } from '@/models/group.model'
 // import type { HierarchyGroupModel } from '@/models/group.model'
 // import type { APIResponseList } from '@/api/types'
@@ -17,8 +18,11 @@ import { PeopleGroupModel } from '@/models/invitation.model'
 
 // HIERARCHY
 
-export async function getHierarchyGroups(org: string) {
-  return await useAPI(`organization/${org}/people-groups-hierarchy/`, {}) //.data.value
+export function getHierarchyGroups(organizationCode: string, config = {}) {
+  return useAPI<HierarchyGroupModel>(
+    `organization/${organizationCode}/people-groups-hierarchy/`,
+    config
+  )
 }
 
 export async function getPeopleGroupsHierarchy(org_code, params) {
@@ -54,45 +58,56 @@ export async function addParentGroup(
   return await useAPI(`organization/${orgId}/people-group/${groupId}/`, { body, method: 'PATCH' }) //.data.value
 }
 
-export function getGroup(organizationCode: string, groupId: number) {
-  return useAPI<PeopleGroupModel>(`organization/${organizationCode}/people-group/${groupId}/`, {
-    key: `people-group::${groupId}`,
-  })
+export function getGroup(organizationCode: string, groupName: string, config = {}) {
+  return useAPI<PeopleGroupModel>(
+    `organization/${organizationCode}/people-group/${groupName}/`,
+    config
+  )
 }
 
-export async function patchGroup(org: string, group_id: number, groupData: Partial<PostGroupData>) {
-  return await useAPI(`organization/${org}/people-group/${group_id}/`, {
+export async function patchGroup(
+  organizationCode: string,
+  groupName: string,
+  groupData: Partial<PostGroupData>
+) {
+  return await useAPI(`organization/${organizationCode}/people-group/${groupName}/`, {
     body: groupData,
     method: 'PATCH',
   }) //.data.value
 }
 
-export async function deleteGroup(org_code, group_id) {
-  return await useAPI(`organization/${org_code}/people-group/${group_id}/`, { method: 'DELETE' }) //.data.value
+export async function deleteGroup(organizationCode: string, groupName: string) {
+  return await useAPI(`organization/${organizationCode}/people-group/${groupName}/`, {
+    method: 'DELETE',
+  }) //.data.value
 }
 
 // GROUP MEMBERS
 
-export function getGroupMember(org: string, groupId: number, config = {}) {
+export function getGroupMember(organizationCode: string, groupId: number, config = {}) {
   return useAPI<PaginationResult<GroupMember>>(
-    `organization/${org}/people-group/${groupId}/member/`,
+    `organization/${organizationCode}/people-group/${groupId}/member/`,
     config
   )
 }
 
-export async function postGroupMembers(org: string, groupId: number, membersData: AddGroupMembers) {
-  return await useAPI(`organization/${org}/people-group/${groupId}/member/add/`, {
+export async function postGroupMembers(
+  organizationCode: string,
+  groupId: number,
+  membersData: AddGroupMembers
+) {
+  return await useAPI(`organization/${organizationCode}/people-group/${groupId}/member/add/`, {
     body: membersData,
     method: 'POST',
   }) //.data.value
 }
 
 export async function removeGroupMember(
-  org: string,
+  organizationCode: string,
   groupId: number,
   membersData: RemoveGroupMember
 ) {
-  return await useAPI(`organization/${org}/people-group/${groupId}/member/remove/`, {
+  return await useAPI(`organization/${organizationCode}/people-group/${groupId}/member/remove/`, {
     body: membersData,
     method: 'POST',
   }) //.data.value
