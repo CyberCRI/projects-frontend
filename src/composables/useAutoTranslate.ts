@@ -225,9 +225,9 @@ export default function useAutoTranslate() {
   // categoris
   const translateCategory = (category) => {
     const rawCategory = unref(category)
-    if (rawCategory.children)
+    if (rawCategory?.children)
       rawCategory.children = unref(translateEntities(rawCategory.children, translateCategory))
-    if (rawCategory.hierarchy)
+    if (rawCategory?.hierarchy)
       rawCategory.hierarchy = unref(translateEntities(rawCategory.hierarchy, translateCategory))
     return translateEntity(rawCategory, ['name', 'description'])
   }

@@ -24,7 +24,7 @@ import ExistingAccountChecker from '@/components/people/Account/ExistingAccountC
 import useToasterStore from '@/stores/useToaster.ts'
 defineOptions({ name: 'AccountDrawer' })
 
-defineProps({
+const props = defineProps({
   isOpened: {
     type: Boolean,
     required: true,

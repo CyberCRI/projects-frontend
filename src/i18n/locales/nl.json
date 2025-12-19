@@ -473,6 +473,8 @@
     "page-title": "Categorie",
     "title": "Categorieën",
     "all-categories": "Zie alle categorieën",
+    "follow-all-categories": "Volg alle categorieën",
+    "following-all-categories": "Je volgt alle categorieën",
     "all-projects": "Alle projecten bekijken",
     "edit": "Bewerken"
   },
@@ -1352,6 +1354,13 @@
         "personal-bio": {
           "label": "Persoonlijke bio",
           "placeholder": "Presenteer jezelf persoonlijk. Vertel ons over jou en je passies!"
+        }
+      },
+      "categories": {
+        "followed": {
+          "label": "Categorieën die ik volg",
+          "notice": "Door categorieën te volgen, ontvangt u meldingen over nieuwe activiteiten met betrekking tot projecten in deze categorieën. Als u een categorie wilt volgen, bezoekt u deze en klikt u op de knop \"Volgen\" naast de titel.",
+          "empty": "Je volgt nog geen categorie."
         }
       },
       "projects": {
@@ -2350,6 +2359,12 @@
         "no": "Nee"
       }
     },
+    "category": {
+      "project-created": "Categorie die u volgt - aanmaak",
+      "project-created-sub": "Ontvang een melding wanneer er een nieuw project wordt aangemaakt in deze categorie",
+      "project-updated": "Categorie die u volgt - update",
+      "project-updated-sub": "Ontvang een melding wanneer een project wordt bijgewerkt in deze categorie"
+    },
     "project": {
       "title": "Projectnotificatie",
       "changes": "Meldingen wijzigen",
@@ -2401,6 +2416,7 @@
       "reply": "{sender} beantwoordde uw opmerking in {project}",
       "review": "{sender} herzien project {project}",
       "ready_for_review": "{sender} markeerde zijn project als klaar voor herziening. U kunt nu project {project} beoordelen",
+      "project_created": "{sender} heeft het project {project} gemaakt",
       "project_updated": "{sender} bijgewerkt het project {project}",
       "group_member_added": "{sender} voegde groep {group} als lid toe aan project {project}",
       "group_member_added_self": "{sender} toegevoegd groep {group} u maakt deel uit van project {project}",

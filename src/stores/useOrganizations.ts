@@ -58,8 +58,9 @@ const useOrganizationsStore = defineStore('organizations', () => {
   const tos = computed(() => current.value?.terms_and_conditions || null)
   const termsId = computed((): number | null => tos?.value?.id || null)
   const termsVersion = computed((): number | null => tos?.value?.displayed_version || null)
+  const termsUpdatedAt = computed((): number | null => tos?.value?.displayed_updated_at || null)
   const termsContent = computed((): string | null => tos?.value?.displayed_content || null)
-  const termsContentTranslated = getTranslatableField(tos, 'content', termsContent)
+  const termsContentTranslated = getTranslatableField(tos, 'displayed_content', termsContent)
   const hasTerms = computed((): boolean => !!(termsId.value && termsContent.value))
 
   async function getCurrentOrganization(code: string): Promise<OrganizationOutput> {
@@ -121,9 +122,11 @@ const useOrganizationsStore = defineStore('organizations', () => {
     allClassifications,
     hasTerms,
     termsId,
+    tos,
     termsVersion,
     termsContent,
     termsContentTranslated,
+    termsUpdatedAt,
     // actions
     getCurrentOrganization,
     getOrFetchOrganization,

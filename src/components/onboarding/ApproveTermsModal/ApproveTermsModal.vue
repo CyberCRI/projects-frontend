@@ -19,11 +19,29 @@ const lastApprovedVersion = computed(() => {
   return signedTerms.value?.[orgCode.value]?.version || null
 })
 
+const lastApprovedDate = computed(() => {
+  if (!usersStore.isConnected) return null
+  return signedTerms.value?.[orgCode.value]?.date || null
+})
+
 const needsAproval = computed(() => {
   if (!usersStore.isConnected) return false
-  if (!lastApprovedVersion.value) return true
-  return organizationsStore.termsVersion > lastApprovedVersion.value
+  // if (!lastApprovedVersion.value) return true
+  if (!lastApprovedDate.value) return true
+  if (organizationsStore.termsUpdatedAt) {
+    const lastApproval = new Date(lastApprovedDate.value).toISOString()
+    const updateDate = new Date(organizationsStore.termsUpdatedAt).toISOString()
+    return updateDate > lastApproval
+    // return organizationsStore.termsVersion > lastApprovedVersion.value
+  }
+  return false
 })
+
+const termsDateStr = computed(() =>
+  organizationsStore.termsUpdatedAt
+    ? new Date(organizationsStore.termsUpdatedAt).toLocaleString()
+    : ''
+)
 
 const firstnotice = useTemplateRef('firstnotice')
 const hasReadAll = ref(false)
@@ -89,8 +107,8 @@ const onTermApproved = async () => {
       <p v-else ref="firstnotice" class="notice instructions">
         {{ $t('tos.review-and-sign') }}
       </p>
-      <p v-if="organizationsStore.termsVersion" class="terms-version">
-        {{ $t('admin.terms.version') }} {{ organizationsStore.termsVersion }}
+      <p v-if="termsDateStr" class="terms-version">
+        {{ $t('admin.terms.version') }} {{ termsDateStr }}
       </p>
       <div class="tos-content">
         <TipTapOutput

@@ -84,6 +84,33 @@
         </template>
       </UserProjectsSearch>
     </div>
+
+    <hr class="separator" />
+    <!-- followed categories -->
+    <div class="form-group follower-categories">
+      <div class="label-wrapper">
+        <label>
+          {{ $t('profile.edit.categories.followed.label') }}
+          ({{ followedCategories.length }})
+        </label>
+      </div>
+      <p class="notice">
+        {{ $t('profile.edit.categories.followed.notice') }}
+      </p>
+      <div class="category-list-wrapper">
+        <CategoryCard
+          v-for="category in followedCategories"
+          :key="category.id"
+          :category="category"
+          class="category-card"
+        />
+        <EmptyCard
+          v-if="!followedCategories.length"
+          class="empty-card"
+          :label="$t('profile.edit.categories.followed.empty')"
+        />
+      </div>
+    </div>
   </div>
   <ChooseFollowedProjectsDrawer
     :is-opened="showFollowProjectDrawer"
@@ -92,6 +119,8 @@
   />
 </template>
 <script>
+import useUsersStore from '@/stores/useUsers.ts'
+import useProjectCategories from '@/stores/useProjectCategories.ts'
 export default {
   name: 'ProfileProjectsEditTab',
   props: {
@@ -101,6 +130,14 @@ export default {
     },
   },
   emits: ['profile-edited'],
+  setup() {
+    const usersStore = useUsersStore()
+    const projectCategoriesStore = useProjectCategories()
+    return {
+      usersStore,
+      projectCategoriesStore,
+    }
+  },
   data() {
     return {
       showFollowProjectDrawer: false,
@@ -108,6 +145,13 @@ export default {
       projectColumns: 4,
       followedProjectsKey: 1,
     }
+  },
+  computed: {
+    followedCategories() {
+      return (this.usersStore.followedCategories || [])
+        .map((f) => this.projectCategoriesStore.allByIds[f.category.id])
+        .filter((c) => !!c)
+    },
   },
   methods: {
     closeFollowProjectDrawer() {
@@ -133,5 +177,12 @@ export default {
     color: $primary-dark;
     margin: 0;
   }
+}
+
+.category-list-wrapper {
+  display: flex;
+  gap: 1rem;
+  flex-flow: row wrap;
+  margin-top: 2rem;
 }
 </style>

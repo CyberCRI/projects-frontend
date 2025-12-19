@@ -1,5 +1,15 @@
-import { FollowInput, FollowOutput } from '@/models/follow.model'
+import {
+  FollowInput,
+  FollowOutput,
+  FollowCategoryInput,
+  UnfollowCategoryInput,
+} from '@/models/follow.model'
 import { deleteFollow, postFollow, postFollowMany } from '@/api/follows.service'
+import {
+  // getProjectCategoriesFollow,
+  postProjectCategoryFollow,
+  deleteProjectCategoryFollow,
+} from '@/api/project-categories.service'
 import analytics from '@/analytics'
 
 async function follow(follow: FollowInput): Promise<FollowOutput> {
@@ -57,8 +67,46 @@ async function unfollow({ follower_id, project_id }: FollowInput): Promise<void>
   return result
 }
 
+async function followCategory({
+  follower_id,
+  category_id,
+}: FollowCategoryInput): Promise<FollowOutput> {
+  const result = await postProjectCategoryFollow(follower_id, category_id)
+
+  analytics.follow.followCategory({
+    category: {
+      id: category_id,
+    },
+    follow: {
+      id: follower_id,
+    },
+  })
+
+  return result
+}
+
+async function unfollowCategory({
+  follower_id,
+  category_follow_id,
+}: UnfollowCategoryInput): Promise<void> {
+  const result = await deleteProjectCategoryFollow(follower_id, category_follow_id)
+
+  analytics.follow.unfollowCategory({
+    category: {
+      id: category_follow_id,
+    },
+    follow: {
+      id: follower_id,
+    },
+  })
+
+  return result
+}
+
 export default {
   follow,
   followMany,
   unfollow,
+  followCategory,
+  unfollowCategory,
 }
