@@ -56,8 +56,27 @@ export function useTipTap({ props, emit, t }) {
   const toaster = useToasterStore()
   const organizationsStore = useOrganizationsStore()
 
+  const filteredTags = computed(() => {
+    const forbiddenTags = [/<script.*?<\/script>/gim]
+    if (props.mode != 'full') {
+      forbiddenTags.push(/<iframe.*?<\/iframe>/gim)
+      forbiddenTags.push(/<video.*?<\/video>/gim)
+      forbiddenTags.push(/<video.*?>/gim)
+      forbiddenTags.push(/<img.*?>/gim)
+    }
+    return forbiddenTags
+  })
+
   const onUpdate = ({ editor }) => {
-    emit('update:modelValue', editor.getHTML())
+    let html = editor.getHTML()
+    let filteredHtml = html
+    filteredTags.value?.forEach((re) => {
+      filteredHtml = filteredHtml.replaceAll(re, '')
+    })
+    if (html != filteredHtml) {
+      editor.commands.setContent(filteredHtml)
+    }
+    emit('update:modelValue', filteredHtml)
   }
 
   const onBlur = (e) => {
