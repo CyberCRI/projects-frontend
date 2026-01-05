@@ -197,6 +197,7 @@ const useUsersStore = defineStore('users', () => {
       stopUserDataRefreshLoop()
       userDataRefreshLoop.value = setInterval(
         () => {
+          console.log('Refreshing user data...')
           getUser(id.value)
         },
         1000 * 60 * 5 // 5 minutes
@@ -210,6 +211,9 @@ const useUsersStore = defineStore('users', () => {
 
   async function getUser(id) {
     // id is keycloak_id OR django user id OR slug
+    if (!id) {
+      debugger
+    }
     try {
       // TODO: except for permissions, useless props that are on userFromApi anyway (to check)
       const user = await _getUser(id)
@@ -231,6 +235,15 @@ const useUsersStore = defineStore('users', () => {
       console.error(err)
     }
   }
+
+  watch(
+    () => keycloak_id.value,
+    (neo, old) => {
+      if (neo && neo !== old) {
+        getUser(keycloak_id.value)
+      }
+    }
+  )
 
   async function getNotifications(id) {
     // TODO: should be getNotificationsSetting

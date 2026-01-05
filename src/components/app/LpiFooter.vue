@@ -159,7 +159,7 @@
 
     <OnboardingScreens v-if="showOnboardingScreen && isConnected" />
 
-    <ApproveTermsModal v-if="isConnected" />
+    <ApproveTermsModal v-if="approveTermIsActive" />
   </footer>
 </template>
 
@@ -222,6 +222,9 @@ export default {
     },
     isConnected() {
       return this.usersStore.isConnected
+    },
+    approveTermIsActive() {
+      return !!this.usersStore.userFromApi
     },
     showOnboardingScreen() {
       return this.organizationsStore.current?.onboarding_enabled

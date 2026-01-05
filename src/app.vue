@@ -44,7 +44,6 @@ import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import useGlobalsStore from '@/stores/useGlobals.ts'
 import { fixTiptapTableHeight } from '@/functs/editorUtils.ts'
-
 useRuntimeHook('app:error', (error) => {
   console.log('app:error', error)
 })
@@ -118,12 +117,30 @@ onMounted(() => {
   setTimeout(() => {
     document.querySelector('.app-loader')?.remove()
   }, 200)
+
+  const sharedWorker = new SharedWorker(new URL('./workers/shared-worker.js', import.meta.url), {
+    type: 'module',
+  })
+  window.lpiSharedWorker = sharedWorker
+  window.lpiSharedWorker.port.onmessage = (e) => {
+    const { type, payload } = e.data
+    switch (type) {
+      case 'TOS_ACCEPTED':
+        const user = usersStore.userFromApi
+        if (user) user.signed_terms_and_conditions = payload
+        break
+    }
+    window.lpiSharedWorker.port.start()
+  }
 })
 
 onBeforeUnmount(() => {
   // this.$refs.scrollview.removeEventListener('scroll', this.setDarkTopbar)
   window.removeEventListener('focus', onFocus)
   window.removeEventListener('resize', fixTiptapTableHeight)
+  if (window?.lpiSharedWorker) {
+    window?.lpiSharedWorker.port.close()
+  }
 })
 </script>
 <style lang="scss">
