@@ -1,7 +1,7 @@
 import AccountDrawer from '@/components/people/Account/AccountDrawer.vue'
 import { lpiMount } from '@/../tests/helpers/LpiMount'
 
-import { beforeAll, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { UserFactory } from '@/../tests/factories/user.factory'
 import ExistingAccountChecker from '@/components/people/Account/ExistingAccountChecker.vue'
 import AccountLayout from '@/components/people/Account/AccountLayout.vue'
@@ -12,7 +12,7 @@ import { flushPromises } from '@vue/test-utils'
 describe('AccountDrawer', () => {
   let defaultProps
 
-  beforeAll(() => {
+  beforeEach(() => {
     defaultProps = {
       isAddMode: true,
       isInviteMode: false,
@@ -44,7 +44,7 @@ describe('AccountDrawer', () => {
     expect(wrapper.findComponent(ExistingAccountChecker).exists()).toBe(false)
     expect(wrapper.findComponent(AccountLayout).exists()).toBe(true)
 
-    // email not exists so il create user
+    // email not exists so create user
     expect(wrapper.findComponent(AccountLayout).text()).contain('Create an account')
   })
 
@@ -59,7 +59,7 @@ describe('AccountDrawer', () => {
     registerEndpoint(`user/get-by-email/${user.email}/`, () => user)
     registerEndpoint(`organization/`, () => ({ results: [organization] }))
 
-    const wrapper = await lpiMount(AccountDrawer, { props: defaultProps })
+    const wrapper = await lpiMount(AccountDrawer, { props })
 
     const input = wrapper.get<HTMLInputElement>('input[type="email"]')
     await input.setValue(user.email)
@@ -73,7 +73,7 @@ describe('AccountDrawer', () => {
     expect(wrapper.findComponent(ExistingAccountChecker).exists()).toBe(false)
     expect(wrapper.findComponent(AccountLayout).exists()).toBe(true)
 
-    // email not exists so il create user
+    // email exists so update/add account
     expect(wrapper.findComponent(AccountLayout).text()).contain('Add an account')
   })
 
