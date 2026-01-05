@@ -6,7 +6,7 @@
         {{ props.label ?? t('common.loading') }}
       </span>
     </div>
-    <slot v-else-if="acutalStatus === 'error'" name="error">
+    <slot v-else-if="actualStatus === 'error'" name="error">
       <div class="error">
         <IconImage name="AlertOutline" class="icon" />
         <span>
@@ -42,7 +42,7 @@ const props = withDefaults(
   { withData: false, label: null }
 )
 
-const acutalStatus = computed(() => {
+const actualStatus = computed(() => {
   let status = props.status
   if (!Array.isArray(status)) {
     status = [status]
@@ -64,7 +64,7 @@ const loading = computed(() => {
   if (props.withData === true) {
     return false
   }
-  return ['pending', 'idle'].includes(acutalStatus.value)
+  return ['pending', 'idle'].includes(actualStatus.value)
 })
 </script>
 
