@@ -16,6 +16,7 @@ export default defineVitestConfig({
       './.vitest/mockApiCookie.ts',
       './.vitest/mockOauth.ts',
       './.vitest/mockMixpanel.ts',
+      './.vitest/mockPatatoids.ts',
     ],
     environmentOptions: {
       nuxt: {

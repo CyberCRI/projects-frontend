@@ -15,26 +15,23 @@
     />
   </BaseDrawer>
 </template>
-<script setup>
+<script setup lang="ts">
 import { nextTick } from 'vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import AccountLayout from '@/components/people/Account/AccountLayout.vue'
 import ExistingAccountChecker from '@/components/people/Account/ExistingAccountChecker.vue'
 
-import useToasterStore from '@/stores/useToaster.ts'
+import useToasterStore from '@/stores/useToaster'
+import { UserModel } from '@/models/user.model'
 defineOptions({ name: 'AccountDrawer' })
 
-const props = defineProps({
-  isOpened: {
-    type: Boolean,
-    required: true,
-  },
-
-  selectedUser: {
-    type: Object,
-    default: null,
-  },
-})
+const props = withDefaults(
+  defineProps<{
+    isOpened?: boolean
+    selectedUser?: UserModel
+  }>(),
+  { isOpened: true, selectedUser: null }
+)
 
 const { t } = useNuxtI18n()
 const emit = defineEmits(['close'])
@@ -50,8 +47,8 @@ const isInviteMode = computed(() => {
   return !isAddMode.value && !user?.current_org_role // null if not in current org
 })
 
-const onCheckDone = (targetUser) => {
-  targetUser.value = targetUser
+const onCheckDone = (user: UserModel | { email: string }) => {
+  targetUser.value = user
   nextTick(() => {
     if (!isAddMode.value) {
       toaster.pushWarning(
