@@ -118,19 +118,21 @@ onMounted(() => {
     document.querySelector('.app-loader')?.remove()
   }, 200)
 
-  const sharedWorker = new SharedWorker(new URL('./workers/shared-worker.js', import.meta.url), {
-    type: 'module',
-  })
-  window.lpiSharedWorker = sharedWorker
-  window.lpiSharedWorker.port.onmessage = (e) => {
-    const { type, payload } = e.data
-    switch (type) {
-      case 'TOS_ACCEPTED':
-        const user = usersStore.userFromApi
-        if (user) user.signed_terms_and_conditions = payload
-        break
+  if (SharedWorker) {
+    const sharedWorker = new SharedWorker(new URL('./workers/shared-worker.js', import.meta.url), {
+      type: 'module',
+    })
+    window.lpiSharedWorker = sharedWorker
+    window.lpiSharedWorker.port.onmessage = (e) => {
+      const { type, payload } = e.data
+      switch (type) {
+        case 'TOS_ACCEPTED':
+          const user = usersStore.userFromApi
+          if (user) user.signed_terms_and_conditions = payload
+          break
+      }
+      window.lpiSharedWorker.port.start()
     }
-    window.lpiSharedWorker.port.start()
   }
 })
 
