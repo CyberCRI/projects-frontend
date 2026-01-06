@@ -7,8 +7,6 @@ import { delay } from 'es-toolkit'
 import { DocumentFactory, ResearcherFactory } from '../../../../factories/researcher.factory'
 import { PaginationsFactory } from '../../../../factories/paginations.factory'
 
-const API_PREFIX = 'http://127.0.0.1/v1/'
-
 describe('ResearcherDocumentsTab.vue', () => {
   let defaultProps
 
@@ -17,22 +15,6 @@ describe('ResearcherDocumentsTab.vue', () => {
       user: UserFactory.generate(),
       docType: 'publications',
     }
-
-    // this doesn't seem to have effect
-    // but is fixed by the API_PREFIX usage in registerEndpoint calls below
-    // keeping for further investigation
-    vi.mock('#imports', () => ({
-      useRuntimeConfig: () => ({
-        public: {
-          appApiUrl: 'http://127.0.0.1',
-          appKeycloakUrl: 'https://keycloak.tech',
-          appKeycloakRealm: 'RealmName',
-          appKeycloakClientId: 'RealmId',
-          appKeycloakClientSecret: 'ClientSecret',
-          appApiDefaultVersion: '/v1',
-        },
-      }),
-    }))
   })
 
   it('undefined researcher', async () => {
@@ -60,12 +42,9 @@ describe('ResearcherDocumentsTab.vue', () => {
       },
     }
 
-    registerEndpoint(
-      `${API_PREFIX}crisalid/researcher/${defaultProps.user.researcher.id}/publications/`,
-      () => {
-        throw createError({ statusCode: 500 })
-      }
-    )
+    registerEndpoint(`crisalid/researcher/${defaultProps.user.researcher.id}/publications/`, () => {
+      throw createError({ statusCode: 500 })
+    })
 
     const wrapper = await lpiMount(ResearcherDocumentsTab, { props: defaultProps })
     expect(wrapper.find('.loading').exists()).toBeTruthy()
@@ -82,7 +61,7 @@ describe('ResearcherDocumentsTab.vue', () => {
       },
     }
     registerEndpoint(
-      `${API_PREFIX}crisalid/researcher/${defaultProps.user.researcher.id}/publications/analytics/`,
+      `crisalid/researcher/${defaultProps.user.researcher.id}/publications/analytics/`,
       () => {
         return {
           document_types: {
@@ -115,7 +94,7 @@ describe('ResearcherDocumentsTab.vue', () => {
       similars: 0,
     })
     registerEndpoint(
-      `${API_PREFIX}crisalid/researcher/${defaultProps.user.researcher.id}/publications/${docWithSimilars.id}/similars/`,
+      `crisalid/researcher/${defaultProps.user.researcher.id}/publications/${docWithSimilars.id}/similars/`,
       () => {
         return PaginationsFactory.generate({
           results: [
@@ -126,14 +105,11 @@ describe('ResearcherDocumentsTab.vue', () => {
       }
     )
 
-    registerEndpoint(
-      `${API_PREFIX}crisalid/researcher/${defaultProps.user.researcher.id}/publications/`,
-      () => {
-        return PaginationsFactory.generate({
-          results: [docWithSimilars, docWithoutSimilars],
-        })
-      }
-    )
+    registerEndpoint(`crisalid/researcher/${defaultProps.user.researcher.id}/publications/`, () => {
+      return PaginationsFactory.generate({
+        results: [docWithSimilars, docWithoutSimilars],
+      })
+    })
 
     const wrapper = await lpiMount(ResearcherDocumentsTab, { props: defaultProps })
     expect(wrapper.find('.loading').exists()).toBeTruthy()
