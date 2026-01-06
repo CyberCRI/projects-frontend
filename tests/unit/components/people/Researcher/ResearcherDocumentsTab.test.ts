@@ -18,6 +18,9 @@ describe('ResearcherDocumentsTab.vue', () => {
       docType: 'publications',
     }
 
+    // this doesn't seem to have effect
+    // but is fixed by the API_PREFIX usage in registerEndpoint calls below
+    // keeping for further investigation
     vi.mock('#imports', () => ({
       useRuntimeConfig: () => ({
         public: {
