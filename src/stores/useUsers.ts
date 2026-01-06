@@ -211,21 +211,18 @@ const useUsersStore = defineStore('users', () => {
 
   async function getUser(id) {
     // id is keycloak_id OR django user id OR slug
-    if (!id) {
-      debugger
-    }
     try {
       // TODO: except for permissions, useless props that are on userFromApi anyway (to check)
       const user = await _getUser(id)
 
       const _permissions = {}
-      for (const key of user.permissions) {
+      for (const key of user?.permissions || []) {
         _permissions[key] = true
       }
       permissions.value = _permissions
 
-      roles.value = user.roles
-      notificationsCount.value = user.notifications
+      roles.value = user?.roles || []
+      notificationsCount.value = user?.notifications || 0
       userFromApi.value = user
 
       startUserDataRefreshLoop()

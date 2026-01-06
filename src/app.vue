@@ -118,7 +118,7 @@ onMounted(() => {
     document.querySelector('.app-loader')?.remove()
   }, 200)
 
-  if (SharedWorker) {
+  if (window?.SharedWorker) {
     const sharedWorker = new SharedWorker(new URL('./workers/shared-worker.js', import.meta.url), {
       type: 'module',
     })
