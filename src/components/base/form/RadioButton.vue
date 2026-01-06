@@ -31,11 +31,11 @@ export default {
 
     radioGroup: {
       type: String,
-      required: true,
+      default: null,
     },
 
     modelValue: {
-      type: [Boolean, Object],
+      type: [Boolean, Object, String, Number],
       default: false,
     },
 
