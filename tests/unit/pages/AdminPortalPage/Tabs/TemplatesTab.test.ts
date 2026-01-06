@@ -3,9 +3,11 @@ import TemplatesTab from '@/pages/AdminPortalPageV2/Tabs/TemplatesTab.vue'
 import { describe, expect, it, vi } from 'vitest'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 
+const API_PREFIX = 'http://127.0.0.1/v1/'
+
 describe('TemplatesTab.vue', () => {
   it('BackendError', async () => {
-    registerEndpoint('organization/CRI/template', () => {
+    registerEndpoint(`${API_PREFIX}organization/CRI/template`, () => {
       throw createError({ statusCode: 500 })
     })
     const wrapper = await lpiMount(TemplatesTab)

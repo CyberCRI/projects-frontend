@@ -7,6 +7,8 @@ import { delay } from 'es-toolkit'
 import { DocumentFactory, ResearcherFactory } from '../../../../factories/researcher.factory'
 import { PaginationsFactory } from '../../../../factories/paginations.factory'
 
+const API_PREFIX = 'http://127.0.0.1/v1/'
+
 describe('ResearcherDocumentsTab.vue', () => {
   let defaultProps
 
@@ -56,9 +58,12 @@ describe('ResearcherDocumentsTab.vue', () => {
       },
     }
 
-    registerEndpoint(`crisalid/researcher/${defaultProps.user.researcher.id}/publications/`, () => {
-      throw createError({ statusCode: 500 })
-    })
+    registerEndpoint(
+      `${API_PREFIX}crisalid/researcher/${defaultProps.user.researcher.id}/publications/`,
+      () => {
+        throw createError({ statusCode: 500 })
+      }
+    )
 
     const wrapper = await lpiMount(ResearcherDocumentsTab, { props: defaultProps })
     expect(wrapper.find('.loading').exists()).toBeTruthy()
@@ -74,9 +79,8 @@ describe('ResearcherDocumentsTab.vue', () => {
         publications: 100,
       },
     }
-
     registerEndpoint(
-      `crisalid/researcher/${defaultProps.user.researcher.id}/publications/analytics/`,
+      `${API_PREFIX}crisalid/researcher/${defaultProps.user.researcher.id}/publications/analytics/`,
       () => {
         return {
           document_types: {
@@ -109,7 +113,7 @@ describe('ResearcherDocumentsTab.vue', () => {
       similars: 0,
     })
     registerEndpoint(
-      `crisalid/researcher/${defaultProps.user.researcher.id}/publications/${docWithSimilars.id}/similars/`,
+      `${API_PREFIX}crisalid/researcher/${defaultProps.user.researcher.id}/publications/${docWithSimilars.id}/similars/`,
       () => {
         return PaginationsFactory.generate({
           results: [
@@ -120,11 +124,14 @@ describe('ResearcherDocumentsTab.vue', () => {
       }
     )
 
-    registerEndpoint(`crisalid/researcher/${defaultProps.user.researcher.id}/publications/`, () => {
-      return PaginationsFactory.generate({
-        results: [docWithSimilars, docWithoutSimilars],
-      })
-    })
+    registerEndpoint(
+      `${API_PREFIX}crisalid/researcher/${defaultProps.user.researcher.id}/publications/`,
+      () => {
+        return PaginationsFactory.generate({
+          results: [docWithSimilars, docWithoutSimilars],
+        })
+      }
+    )
 
     const wrapper = await lpiMount(ResearcherDocumentsTab, { props: defaultProps })
     expect(wrapper.find('.loading').exists()).toBeTruthy()
