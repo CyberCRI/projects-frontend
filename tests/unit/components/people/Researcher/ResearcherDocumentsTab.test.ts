@@ -24,13 +24,12 @@ describe('ResearcherDocumentsTab.vue', () => {
     vi.mock('#imports', () => ({
       useRuntimeConfig: () => ({
         public: {
-          appApiUrl: '',
-          APP_KEYCLOAK_URL: 'https://keycloak.tech',
-          APP_KEYCLOAK_REALM: 'RealmName',
-          APP_KEYCLOAK_CLIENT_ID: 'RealmId',
-          APP_KEYCLOAK_CLIENT_SECRET: 'ClientSecret',
-          APP_API_URL: '',
-          APP_API_DEFAULT_VERSION: '',
+          appApiUrl: 'http://127.0.0.1',
+          appKeycloakUrl: 'https://keycloak.tech',
+          appKeycloakRealm: 'RealmName',
+          appKeycloakClientId: 'RealmId',
+          appKeycloakClientSecret: 'ClientSecret',
+          appApiDefaultVersion: '/v1',
         },
       }),
     }))

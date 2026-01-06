@@ -1,11 +1,29 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
 import TemplatesTab from '@/pages/AdminPortalPageV2/Tabs/TemplatesTab.vue'
-import { describe, expect, it, vi } from 'vitest'
+import { beforeAll, describe, expect, it, vi } from 'vitest'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 
 const API_PREFIX = 'http://127.0.0.1/v1/'
 
 describe('TemplatesTab.vue', () => {
+  beforeAll(() => {
+    // this doesn't seem to have effect
+    // but is fixed by the API_PREFIX usage in registerEndpoint calls below
+    // keeping for further investigation
+    vi.mock('#imports', () => ({
+      useRuntimeConfig: () => ({
+        public: {
+          appApiUrl: 'http://127.0.0.1',
+          appKeycloakUrl: 'https://keycloak.tech',
+          appKeycloakRealm: 'RealmName',
+          appKeycloakClientId: 'RealmId',
+          appKeycloakClientSecret: 'ClientSecret',
+          appApiDefaultVersion: '/v1',
+        },
+      }),
+    }))
+  })
+
   it('BackendError', async () => {
     registerEndpoint(`${API_PREFIX}organization/CRI/template`, () => {
       throw createError({ statusCode: 500 })
