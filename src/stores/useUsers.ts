@@ -197,6 +197,7 @@ const useUsersStore = defineStore('users', () => {
       stopUserDataRefreshLoop()
       userDataRefreshLoop.value = setInterval(
         () => {
+          console.log('Refreshing user data...')
           getUser(id.value)
         },
         1000 * 60 * 5 // 5 minutes
@@ -215,13 +216,13 @@ const useUsersStore = defineStore('users', () => {
       const user = await _getUser(id)
 
       const _permissions = {}
-      for (const key of user.permissions) {
+      for (const key of user?.permissions || []) {
         _permissions[key] = true
       }
       permissions.value = _permissions
 
-      roles.value = user.roles
-      notificationsCount.value = user.notifications
+      roles.value = user?.roles || []
+      notificationsCount.value = user?.notifications || 0
       userFromApi.value = user
 
       startUserDataRefreshLoop()
@@ -231,6 +232,15 @@ const useUsersStore = defineStore('users', () => {
       console.error(err)
     }
   }
+
+  watch(
+    () => keycloak_id.value,
+    (neo, old) => {
+      if (neo && neo !== old) {
+        getUser(keycloak_id.value)
+      }
+    }
+  )
 
   async function getNotifications(id) {
     // TODO: should be getNotificationsSetting
