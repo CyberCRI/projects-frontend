@@ -59,16 +59,31 @@ export async function getProjectCategoriesHierarchy(organizationCode: string, ro
   return await useAPI(`organization/${organizationCode}/category/${rootId}/hierarchy/`) //.data.value
 }
 
-export async function postProjectCategoryBackground({ id, body }) {
-  return await useAPI(`category/${id}/background/`, { body, method: 'POST' }) //.data.value
+export async function postProjectCategoryBackground(organizationCode: string, { id, body }) {
+  return await useAPI(`organization/${organizationCode}/category/${id}/background/`, {
+    body,
+    method: 'POST',
+  }) //.data.value
 }
 
-export async function patchProjectCategoryBackground({ id, imageId, body }) {
-  return await useAPI(`category/${id}/background/${imageId}/`, { body, method: 'PATCH' }) //.data.value
+export async function patchProjectCategoryBackground(
+  organizationCode: string,
+  { id, imageId, body }
+) {
+  return await useAPI(`organization/${organizationCode}/category/${id}/background/${imageId}/`, {
+    body,
+    method: 'PATCH',
+  }) //.data.value
 }
 
-export async function deleteProjectCategoryBackground({ category_id, id }) {
-  return await useAPI(`category/${category_id}/background/${id}/`, { method: 'DELETE' })
+export async function deleteProjectCategoryBackground(
+  organizationCode: string,
+  { category_id, id }
+) {
+  return await useAPI(
+    `organization/${organizationCode}/category/${category_id}/background/${id}/`,
+    { method: 'DELETE' }
+  )
 }
 
 export async function getProjectCategoriesFollow(userId: number) {

@@ -349,7 +349,8 @@ watch(
   () => category.value.background_image,
   (val) => {
     displayedImage.value = val && val.variations ? val.variations.small : null
-  }
+  },
+  { immediate: true }
 )
 
 const imageResizer = useTemplateRef('imageResizer')
