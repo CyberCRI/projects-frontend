@@ -78,6 +78,12 @@ const onTermApproved = async () => {
   try {
     await patchUser(user.id, payload)
     await usersStore.getUser(user.id)
+    if (window?.lpiSharedWorker) {
+      window?.lpiSharedWorker.port.postMessage({
+        type: 'TOS_ACCEPTED',
+        payload: JSON.parse(JSON.stringify(payload.signed_terms_and_conditions)),
+      })
+    }
   } catch (err) {
     console.error(err)
     toaster.pushError(t('tos.error-approving'))

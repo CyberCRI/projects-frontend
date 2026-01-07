@@ -5,7 +5,7 @@ import { registerEndpoint } from '@nuxt/test-utils/runtime'
 
 describe('TemplatesTab.vue', () => {
   it('BackendError', async () => {
-    registerEndpoint('organization/CRI/template', () => {
+    registerEndpoint(`organization/CRI/template`, () => {
       throw createError({ statusCode: 500 })
     })
     const wrapper = await lpiMount(TemplatesTab)
