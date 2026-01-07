@@ -168,6 +168,7 @@ export default defineNuxtConfig({
       appChatbotEnabled: 0,
       appChatbotExemples: '',
       appSorbobotApiUrl: '',
+      appGotembergServerUrl: '',
     },
   },
   i18n: {
