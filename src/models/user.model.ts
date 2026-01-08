@@ -6,7 +6,7 @@ import { ResearcherLight } from '@/interfaces/researcher'
 import { TagModel } from './tag.model'
 
 export interface UserModel {
-  id: string
+  id: number
   name: {
     firstname: string
     lastname: string
@@ -22,6 +22,10 @@ export interface UserModel {
   skills?: UserSkillModel[]
   notifications?: number
   researcher?: ResearcherLight
+  resources: {
+    files: number
+    links: number
+  }
   signed_terms_and_conditions?: {
     [key: string]: { version: number | null; date: string | null }
   } | null

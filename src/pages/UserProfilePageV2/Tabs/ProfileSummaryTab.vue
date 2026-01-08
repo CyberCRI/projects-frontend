@@ -127,6 +127,25 @@
           />
         </template>
       </UserProjectsSearch>
+      <!-- user resources -->
+      <UserProjectsSearch v-if="resourcesCount" :user="user">
+        <template #default>
+          <ResourcesRecap
+            class="unboxed"
+            :files="user.resources.files"
+            :links="user.resources.links"
+            :target="{
+              name: 'ProfileResourcesOther',
+              params: { userId: user.id },
+            }"
+            :redirect="{
+              name: 'ProfileResourcesOther',
+              params: { userId: user.id },
+              hash: '#tab',
+            }"
+          />
+        </template>
+      </UserProjectsSearch>
     </div>
     <div class="skills-mobile">
       <SkillSummary :user="user" />
@@ -184,6 +203,9 @@ export default {
   },
 
   computed: {
+    resourcesCount() {
+      return this.user.resources.files + this.user.resources.links
+    },
     documentsCount() {
       return this.user.researcher?.documents ?? {}
     },

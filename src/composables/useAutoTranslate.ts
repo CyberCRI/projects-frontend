@@ -1,3 +1,9 @@
+import { AttachmentFileModel, TranslatedAttachmentFile } from '@/models/attachment-file.model'
+import { AttachmentLinkModel, TranslatedAttachmentLink } from '@/models/attachment-link.model'
+
+// type can be computed or object
+type RefOrRaw<DataT> = ComputedRef<DataT> | Ref<DataT> | DataT
+
 export default function useAutoTranslate() {
   // TODO: memoize in local storage / user prefs
   const isAutoTranslateActivated = useState('isAutoTranslateActivated', () => true)
@@ -44,14 +50,14 @@ export default function useAutoTranslate() {
       return res
     })
 
-  const translateEntity = (entity, fields) =>
-    computed(() => ({
+  const translateEntity = <DataT = any>(entity, fields) =>
+    computed<DataT>(() => ({
       ...unref(entity || {}),
       $t: unref(getTranslatableFields(entity, fields)),
     }))
 
-  const translateEntities = (entities, translateFn) =>
-    computed(() => {
+  const translateEntities = <DataT = any>(entities, translateFn) =>
+    computed<DataT[]>(() => {
       const _entities = unref(entities)
       return _entities?.map((entity) => unref(translateFn(entity)) || [])
     })
@@ -91,11 +97,15 @@ export default function useAutoTranslate() {
   const translateReview = (review) => translateEntity(review, ['title', 'description'])
   const translateReviews = (reviews) => translateEntities(reviews, translateReview)
 
-  const translateLink = (link) => translateEntity(link, ['title', 'description'])
-  const translateLinks = (links) => translateEntities(links, translateLink)
+  const translateLink = (link: RefOrRaw<AttachmentLinkModel>) =>
+    translateEntity<TranslatedAttachmentLink>(link, ['title', 'description'])
+  const translateLinks = (links: RefOrRaw<AttachmentLinkModel[]>) =>
+    translateEntities<TranslatedAttachmentLink>(links, translateLink)
 
-  const translateFile = (file) => translateEntity(file, ['title', 'description'])
-  const translateFiles = (files) => translateEntities(files, translateFile)
+  const translateFile = (file: RefOrRaw<AttachmentFileModel>) =>
+    translateEntity<TranslatedAttachmentFile>(file, ['title', 'description'])
+  const translateFiles = (files: RefOrRaw<AttachmentFileModel[]>) =>
+    translateEntities<TranslatedAttachmentFile>(files, translateFile)
 
   const translateBlogEntry = (blogEntry) => translateEntity(blogEntry, ['title', 'content'])
   const translateBlogEntries = (blogEntries) => translateEntities(blogEntries, translateBlogEntry)
