@@ -9,7 +9,7 @@ import { getOrganizationByCode } from '@/api/organizations.service'
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
 const router = useRouter()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 const form = ref({
   email: '',
   given_name: '',
@@ -333,13 +333,13 @@ try {
   transition:
     transform 200ms ease-in-out,
     opacity 200ms ease-in-out;
-  transform: scale(1);
+  transform: translateZ(0) scale(1);
   opacity: 1;
 }
 
 .fade-enter-from,
 .fade-leave-to {
-  transform: scale(0);
+  transform: translateZ(0) scale(0);
 
   $opacity: 0;
 }

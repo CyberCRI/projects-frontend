@@ -473,6 +473,8 @@
     "page-title": "Categoría",
     "title": "Categorías",
     "all-categories": "Ver todas las categorías",
+    "follow-all-categories": "Seguir todas las categorías",
+    "following-all-categories": "Estás siguiendo todas las categorías",
     "all-projects": "Ver todos los proyectos",
     "edit": "Editar"
   },
@@ -527,13 +529,13 @@
     "link-copied-success": "Enlace copiado",
     "link-copied-failed": "Failed to copy link",
     "loading": "Cargando",
-    "login": "login",
+    "login": "Iniciar sesión",
     "modify": "Modificar",
     "more": "más",
     "need-login": "Necesitas estar conectado",
     "no": "no",
     "no-result": "Sin resultado",
-    "none": "ninguno",
+    "none": "Ninguno",
     "of": "de",
     "org": "portal members",
     "quit-project": "¿Seguro que quieres dejar este proyecto?",
@@ -548,7 +550,7 @@
     "see-more": "ver más",
     "see": "See",
     "see-all": "Ver todos",
-    "set-deadline": "plazo establecido",
+    "set-deadline": "Fecha límite",
     "shrink": "Reducir",
     "submit": "presentar",
     "the-project": "El proyecto",
@@ -563,7 +565,9 @@
     "link-to": "enlace",
     "other": "otros",
     "and": "y",
-    "create": "Crear"
+    "create": "Crear",
+    "order-asc": "más antiguo a más reciente",
+    "order-desc": "más reciente a la más antigua"
   },
   "complete-profile": {
     "bio": {
@@ -815,7 +819,7 @@
     "organization-name": "Nombre de tu comunidad",
     "description": "Descripción",
     "email": "Email",
-    "email-contact": "email",
+    "email-contact": "Email",
     "language": "Idioma",
     "title": "Título",
     "url": "url",
@@ -982,7 +986,7 @@
         "help": "Miembro"
       },
       "leaders": {
-        "label": "Group Leader",
+        "label": "Group leader",
         "help": "Group Leader"
       },
       "leaders-managers": {
@@ -1054,6 +1058,7 @@
   },
   "me": {
     "follow": "Proyectos que sigo",
+    "follow-category": "Categorías que sigo",
     "no-follow": "Aún no estás siguiendo un proyecto.",
     "groups": "Grupos Soy miembro de",
     "no-group": "Aún no eres miembro de un grupo",
@@ -1352,6 +1357,13 @@
           "placeholder": "Presente personalmente. ¡Cuéntanos sobre ti y tus pasiones!"
         }
       },
+      "categories": {
+        "followed": {
+          "label": "Categorías que sigo",
+          "notice": "Al seguir categorías, recibirás notificaciones sobre cualquier nueva actividad en proyectos de estas categorías. Si deseas seguir una categoría, visítala y haz clic en el botón \"Seguir\" junto al título.",
+          "empty": "Aún no sigues ninguna categoría."
+        }
+      },
       "projects": {
         "tab": "Proyectos",
         "member": {
@@ -1525,12 +1537,12 @@
         }
       },
       "publications": {
-        "no-editable": "Las publicaciones aún no están disponibles.",
-        "tab": "Publicaciones"
+        "tab": "Publicaciones",
+        "no-editable": "Las publicaciones de edición estarán disponibles a principios de enero de 2026"
       },
       "conferences": {
-        "no-editable": "Las conferencias aún no están disponibles.",
-        "tab": "Conferencias"
+        "tab": "Conferencias",
+        "no-editable": "Las conferencias de edición estarán disponibles a principios de enero de 2026"
       }
     },
     "go-to-page": "Ver página del perfil",
@@ -1554,11 +1566,11 @@
     "mentorship-offering": "Estás ofreciendo mentoría",
     "publications": "Publicaciones",
     "research-output-year": "Año de producción de investigación",
-    "publications-similars": "Publicaciones similares",
     "publications-empty": "No hay publicaciones.",
     "conferences": "Conferencias",
     "conferences-similars": "Conferencias similares",
-    "conferences-empty": "Sin conferencias."
+    "conferences-empty": "Sin conferencias.",
+    "publications-similars": "Publicaciones similares"
   },
   "profile-completed-modal": {
     "notice-congratulation": "Ahora está listo para usar la plataforma de proyectos.",
@@ -1577,7 +1589,7 @@
       "title": "Añadir al proyecto",
       "blog-entry": "Entrada del blog",
       "goal": "Objetivo",
-      "sdg": "ODS",
+      "sdg": "Sdg",
       "link-and-attached-document": "Recursos",
       "team-member": "Team member / group",
       "announcement": "Anuncio",
@@ -1593,6 +1605,7 @@
     "create-project": "Crear un proyecto",
     "create": {
       "choose-category-first": "Por favor seleccione una categoría primero",
+      "choose-template-first": "Por favor seleccione una plantilla primero",
       "help-link": "Estamos aquí para ayudar.",
       "notice": "Los campos marcados con * son obligatorios. Siempre puedes modificar esto más tarde. ¿No tienes idea de lo que deberías hacer?",
       "title": "Crear un nuevo proyecto"
@@ -1679,7 +1692,7 @@
       "blog-entry-create": "agregó una nueva entrada de blog de este proyecto",
       "description": "guardó la descripción de este proyecto"
     },
-    "view": "vista del proyecto",
+    "view": "Ver proyecto",
     "visibility": "Visibilidad del proyecto",
     "actions": "Medidas rápidas",
     "copy": "(copia)",
@@ -1692,7 +1705,7 @@
     "recommended": "Recomendado",
     "sort_by": "Ordenar por:"
   },
-  "projects": "proyectos",
+  "projects": "Proyectos",
   "recruit": {
     "about-you": "Cuéntanos sobre ti mismo y lo que te motiva",
     "add-announcement": "añadir un anuncio",
@@ -1704,13 +1717,13 @@
     "edit-announcement": "Anuncio de edición",
     "email": "Advertencia, necesitamos una dirección de correo electrónico válida para contactar con usted. (No guardaremos esta información en la plataforma).",
     "firstname": "Nombre",
-    "is-remunerated": "se remunera",
-    "job": "trabajo",
-    "lastname": "apellido",
+    "is-remunerated": "Se remunera",
+    "job": "Job",
+    "lastname": "Apellido",
     "motivation-hint": "Debe contener al menos 20 caracteres",
-    "new-announcement": "nuevo anuncio",
-    "participant": "participante",
-    "remunerated": "remunerados",
+    "new-announcement": "Nuevo anuncio",
+    "participant": "Participante",
+    "remunerated": "Remunerated",
     "send": "Enviar solicitud",
     "title": "Título",
     "traineeship": "Formación profesional",
@@ -1860,10 +1873,10 @@
     "all-filters": "Todos los filtros",
     "banner-portal": "También puede buscar proyectos de todas las comunidades en",
     "browse-map": "Examine por mapa",
-    "by-language": "por idioma",
-    "by-people": "por personas",
-    "by-tag": "por etiqueta",
-    "by-sdg": "SDG",
+    "by-language": "Por idioma",
+    "by-people": "Por gente",
+    "by-tag": "Por etiqueta",
+    "by-sdg": "Por sdg",
     "filter-by-language": "Agregar un idioma",
     "filter-by-people": "Agregar a una persona",
     "filter-by-tag": "Añadir una etiqueta",
@@ -1923,7 +1936,7 @@
     "pick-skill-preset": "O elegir una habilidad sugerida",
     "current-tag-description": "Escriba las primeras letras de la etiqueta y seleccione la etiqueta correcta",
     "current-skill-description": "Escriba la etiqueta de habilidad y seleccione la habilidad correcta",
-    "disambiguate": "(DISAMBIGUATION)",
+    "disambiguate": "(desambiguación)",
     "suggestions": "Propuestas",
     "choose-skill": "Haga clic en la habilidad elegida:",
     "main-tags": "o elegir entre las etiquetas principales"
@@ -2347,6 +2360,12 @@
         "no": "No"
       }
     },
+    "category": {
+      "project-created": "Categoría que sigues - creación",
+      "project-created-sub": "Recibe una notificación cuando se crea un nuevo proyecto en esta categoría",
+      "project-updated": "Categoría que sigues - actualización",
+      "project-updated-sub": "Recibe una notificación cuando se actualiza un proyecto en esta categoría"
+    },
     "project": {
       "title": "Notificación del proyecto",
       "changes": "Modificaciones",
@@ -2398,6 +2417,7 @@
       "reply": "{sender} respondió a su comentario en {project}",
       "review": "{sender} proyecto revisado {project}",
       "ready_for_review": "{sender} marcó su proyecto como listo para su revisión. Ahora puede revisar el proyecto {project}",
+      "project_created": "{sender} creó el proyecto {project}",
       "project_updated": "{sender} actualizado el proyecto {project}",
       "group_member_added": "{sender} añadió el grupo {group} como miembro del proyecto {project}",
       "group_member_added_self": "{sender} añadido el grupo {group} que es parte del proyecto {project}",
@@ -2730,7 +2750,11 @@
     "title": "Chatear con IA",
     "input-placeholder": "Escribe tu mensaje aquí...",
     "intro-message": "Hola, ¿cómo puedo ayudarte hoy?",
-    "drawer-button-label": "Asistente de IA"
+    "drawer-button-label": "Asistente de IA",
+    "fetching_tools": "Obteniendo herramientas...",
+    "fetching_data": "Obteniendo datos...",
+    "reasoning": "Pensando...",
+    "restart": "Reiniciar conversación"
   },
   "researcher": {
     "relators": {
@@ -3085,5 +3109,14 @@
       "Unknown": "desconocida",
       "Working-Paper": "Documento de trabajo"
     }
+  },
+  "tos": {
+    "evolved": "Nuestros Términos y Condiciones han sido actualizados, por favor tómese un momento para revisarlos y aprobarlos.",
+    "review-and-sign": "Por favor, lea y apruebe los Términos y Condiciones actualizados para continuar usando la plataforma.",
+    "scroll-notice": "Por favor, desplácese hasta el final de los términos antes de aprobar.",
+    "error-approving": "Error al aprobar los términos y condiciones, por favor intente de nuevo más tarde.",
+    "title": "Términos y Condiciones",
+    "approve-title": "Por favor, apruebe los Términos y Condiciones",
+    "approve-button": "Acepto"
   }
 }

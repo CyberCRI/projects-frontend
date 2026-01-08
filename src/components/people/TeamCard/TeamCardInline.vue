@@ -3,7 +3,7 @@
     class="team-card-small"
     :class="{ passive: !iconName }"
     :data-test="`user-card-${user.id}`"
-    @click="iconName ? $emit('user-clicked') : null"
+    @click="iconName ? emit('user-clicked') : null"
   >
     <div class="user-container">
       <CroppedApiImage
@@ -13,19 +13,19 @@
         class="img-container"
         :picture-data="user.profile_picture"
         picture-size="medium"
-        default-picture="/placeholders/user_placeholder.svg"
+        :default-picture="DEFAULT_USER_PATATOID"
       />
 
       <div class="user-info">
-        <div v-if="$filters.isNotGroup(user)" class="name">
-          {{ $filters.capitalize(user.given_name) }}
-          {{ $filters.capitalize(user.family_name) }}
+        <div v-if="isNotGroup(user)" class="name">
+          {{ capitalize(user.given_name) }}
+          {{ capitalize(user.family_name) }}
         </div>
         <div v-else class="name">
-          {{ $filters.capitalize(user.name) }}
+          {{ capitalize(user.name) }}
         </div>
         <div v-if="roleLabel" class="role">
-          {{ $t(roleLabel) }}
+          {{ t(roleLabel) }}
         </div>
 
         <div v-if="user.job" class="title">
@@ -35,57 +35,51 @@
     </div>
 
     <div v-if="iconName" class="icon">
-      <IconImage :name="iconName" @click="$emit('user-clicked')" />
+      <IconImage :name="iconName" @click="emit('user-clicked')" />
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
+import { capitalize } from '@/functs/string'
+import { isNotGroup } from '@/functs/users'
+
 import IconImage from '@/components/base/media/IconImage.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import useUsersStore from '@/stores/useUsers.ts'
+import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 
-export default {
-  name: 'TeamCardInline',
+defineOptions({ name: 'TeamCardInline' })
 
-  components: { IconImage, CroppedApiImage },
-
-  props: {
-    user: {
-      type: Object,
-      required: true,
-    },
-
-    roleLabel: {
-      type: [String, null],
-      default: null,
-    },
-
-    icon: {
-      type: String,
-      default: null,
-    },
+const props = defineProps({
+  user: {
+    type: Object,
+    required: true,
   },
 
-  emits: ['user-clicked'],
-  setup() {
-    const usersStore = useUsersStore()
-    return {
-      usersStore,
-    }
+  roleLabel: {
+    type: [String, null],
+    default: null,
   },
 
-  computed: {
-    currentUser() {
-      return this.usersStore.userFromApi
-    },
-
-    iconName() {
-      if (this.icon) return this.icon
-      return this.user.id !== this.currentUser.id ? 'Close' : null
-    },
+  icon: {
+    type: String,
+    default: null,
   },
-}
+})
+
+const emit = defineEmits(['user-clicked'])
+const { t } = useNuxtI18n()
+const usersStore = useUsersStore()
+
+const currentUser = computed(() => {
+  return usersStore.userFromApi
+})
+
+const iconName = computed(() => {
+  if (props.icon) return props.icon
+  return props.user.id !== currentUser.value.id ? 'Close' : null
+})
 </script>
 
 <style lang="scss" scoped>

@@ -17,7 +17,7 @@
 
     <LpiButton
       v-if="isInEditingMode && canEditProject"
-      :label="$filters.capitalize($t('sdg.add-short'))"
+      :label="$t('sdg.add-short')"
       class="add-sdg-btn"
       btn-icon="Plus"
       @click="showSdgModal"
@@ -47,7 +47,7 @@ export default {
   },
 
   setup() {
-    const { locale } = useI18n()
+    const { locale } = useNuxtI18n()
     const runtimeConfig = useRuntimeConfig()
     const { canEditProject } = usePermissions()
     return {
@@ -75,11 +75,12 @@ export default {
 .sdg-enter-active,
 .sdg-leave-active {
   transition: all 0.4s ease;
+  transform: translateZ(0);
 }
 
 .sdg-enter-from,
 .sdg-leave-to {
-  transform: scale(0) translateY(200%);
+  transform: translateZ(0) scale(0) translateY(200%);
 }
 
 .sdg-recap {

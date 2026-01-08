@@ -54,12 +54,11 @@
         </div>
         <div v-if="!preview && documentsRoleInfos.length" class="doc-roles-container">
           <!-- change button to div only if we are in preview (from summary page) -->
-          <component
-            :is="preview ? 'div' : 'button'"
+          <button
             v-for="[role, count] in documentsRoleInfos"
             :key="role"
             class="doc-roles"
-            @click="!preview && toggleQuery('roles', role)"
+            @click="toggleQuery('roles', role)"
           >
             <BadgeItem
               :class="{
@@ -69,7 +68,24 @@
               }"
               :label="`${t(`researcher.relators.${sanitizeTranslateKeys(role)}`)} ${count}`"
             />
-          </component>
+          </button>
+        </div>
+        <div v-if="!preview" class="doc-roles-container">
+          <!-- change button to div only if we are in preview (from summary page) -->
+          <button
+            class="doc-roles"
+            @click="
+              setQuery(
+                'ordering',
+                query.ordering === SORTING_DEFAULT ? 'publication_date' : '-publication_date'
+              )
+            "
+          >
+            <BadgeItem
+              :label="SORTING_RESULTS[query.ordering]"
+              :icon-name="query.ordering === SORTING_DEFAULT ? 'SortDesc' : 'SortAsc'"
+            />
+          </button>
         </div>
       </div>
       <div class="documents-list">
@@ -142,9 +158,15 @@ const documentsAnalytics = ref<ResearcherDocumentAnalytics>({
   roles: {},
 })
 
+const SORTING_RESULTS = {
+  publication_date: $t('common.order-asc'),
+  '-publication_date': $t('common.order-desc'),
+}
+const SORTING_DEFAULT = '-publication_date'
 // filter backend query
-// default role "author" to only show author form documents
-const { query, toggleQuery } = useQuery<QueryFilterDocument>({ roles: 'author' })
+const { query, toggleQuery, setQuery } = useQuery<QueryFilterDocument>({
+  ordering: SORTING_DEFAULT,
+})
 
 const getDocuments = () => {
   status.value = 'pending'
@@ -319,13 +341,14 @@ $profile-documents: 1rem;
 
   &:not(.preview) {
     cursor: pointer;
+    transform: translateZ(0);
 
     &:hover:not(.selected) {
-      transform: scale(120%);
+      transform: translateZ(0) scale(120%);
     }
 
     &.selected:hover {
-      transform: scale(105%);
+      transform: translateZ(0) scale(105%);
     }
 
     &:not(:hover).disabled {

@@ -3,44 +3,41 @@
     <slot />
     <template #custom-content>
       <div class="tip-ctn">
-        <p>{{ $t('profile.edit.skills.tip.intro-edit') }}</p>
+        <p>{{ t('profile.edit.skills.tip.intro-edit') }}</p>
         <ul>
           <li>
-            <strong>{{ $t('profile.edit.skills.tip.curious.title') }}</strong>
+            <strong>{{ t('profile.edit.skills.tip.curious.title') }}</strong>
             <br />
-            {{ $t('profile.edit.skills.tip.curious.description') }}
+            {{ t('profile.edit.skills.tip.curious.description') }}
           </li>
           <li>
-            <strong>{{ $t('profile.edit.skills.tip.basic.title') }}</strong>
+            <strong>{{ t('profile.edit.skills.tip.basic.title') }}</strong>
             <br />
-            {{ $t('profile.edit.skills.tip.basic.description') }}
+            {{ t('profile.edit.skills.tip.basic.description') }}
           </li>
           <li>
-            <strong>{{ $t('profile.edit.skills.tip.competent.title') }}</strong>
+            <strong>{{ t('profile.edit.skills.tip.competent.title') }}</strong>
             <br />
-            {{ $t('profile.edit.skills.tip.competent.description') }}
+            {{ t('profile.edit.skills.tip.competent.description') }}
           </li>
           <li>
-            <strong>{{ $t('profile.edit.skills.tip.expert.title') }}</strong>
+            <strong>{{ t('profile.edit.skills.tip.expert.title') }}</strong>
             <br />
-            {{ $t('profile.edit.skills.tip.expert.description') }}
+            {{ t('profile.edit.skills.tip.expert.description') }}
           </li>
         </ul>
       </div>
     </template>
   </ToolTip>
 </template>
-<script>
+
+<script setup>
 import ToolTip from '@/components/base/ToolTip.vue'
 
-export default {
-  name: 'SkillLevelTip',
-
-  components: {
-    ToolTip,
-  },
-}
+defineOptions({ name: 'SkillLevelTip' })
+const { t } = useNuxtI18n()
 </script>
+
 <style lang="scss" scoped>
 .tip-ctn {
   max-width: 20rem;

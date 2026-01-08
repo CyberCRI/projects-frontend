@@ -3,25 +3,25 @@
     type="button"
     class="drop-down-menu-item-content"
     :data-test="`project-form-${category.id}`"
-    @click="$emit('choose-category', category)"
+    @click="emit('choose-category', category)"
   >
-    <span class="label">{{ $filters.capitalize(category.name) }}</span>
+    <span class="label">{{ capitalize(category.name) }}</span>
   </button>
 </template>
 
-<script>
-export default {
-  name: 'ProjectCategoriesDropdownElementButton',
+<script setup>
+import { capitalize } from '@/functs/string'
 
-  props: {
-    category: {
-      type: Object,
-      required: true,
-    },
+defineOptions({ name: 'ProjectCategoriesDropdownElementButton' })
+
+defineProps({
+  category: {
+    type: Object,
+    required: true,
   },
+})
 
-  emits: ['choose-category'],
-}
+const emit = defineEmits(['choose-category'])
 </script>
 
 <style lang="scss" scoped>
@@ -37,6 +37,7 @@ export default {
   background-color: white;
   transition: transform 200ms ease-in-out;
   width: auto;
+  transform: translateZ(0);
 
   .label {
     transform-origin: left center;
@@ -46,7 +47,7 @@ export default {
 
   &:hover {
     background-color: $primary-light;
-    transform: scaleX(1.1);
+    transform: translateZ(0) scaleX(1.1);
   }
 }
 </style>

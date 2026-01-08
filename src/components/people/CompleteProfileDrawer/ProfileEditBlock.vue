@@ -7,18 +7,17 @@
   </section>
 </template>
 
-<script>
-export default {
-  name: 'ProfileEditBlock',
+<script setup>
+defineOptions({ name: 'ProfileEditBlock' })
 
-  props: {
-    blockTitle: {
-      type: String,
-      default: '',
-    },
+defineProps({
+  blockTitle: {
+    type: String,
+    default: '',
   },
-}
+})
 </script>
+
 <style lang="scss" scoped>
 .profile-edit-block {
   padding: pxToRem(43px) pxToRem(63px);

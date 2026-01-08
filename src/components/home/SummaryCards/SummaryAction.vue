@@ -1,33 +1,31 @@
 <template>
   <component :is="to ? 'NuxtLink' : 'vue:span'" :to="to" class="summary-action">
     <IconImage class="icon" :name="actionIcon" />
-    <span class="label">{{ $filters.capitalize(actionLabel) }}</span>
+    <span class="label">{{ capitalize(actionLabel) }}</span>
   </component>
 </template>
-<script>
+<script setup>
+import { capitalize } from '@/functs/string'
+
 import IconImage from '@/components/base/media/IconImage.vue'
-import { NuxtLink } from '#components'
-export default {
-  name: 'SummaryAction',
 
-  components: { IconImage, NuxtLink },
+defineOptions({ name: 'SummaryAction' })
 
-  props: {
-    actionIcon: {
-      type: String,
-      default: 'ArrowRight',
-    },
-
-    actionLabel: {
-      type: String,
-      default: '',
-    },
-    to: {
-      type: [Object, String, null],
-      default: null,
-    },
+defineProps({
+  actionIcon: {
+    type: String,
+    default: 'ArrowRight',
   },
-}
+
+  actionLabel: {
+    type: String,
+    default: '',
+  },
+  to: {
+    type: [Object, String, null],
+    default: null,
+  },
+})
 </script>
 <style lang="scss" scoped>
 .summary-action {
@@ -43,13 +41,13 @@ export default {
     z-index: 0;
     position: absolute;
     transform-origin: center center;
-    transform: scale(0, 1);
+    transform: translateZ(0) scale(0, 1);
     transition: 200ms ease-in-out;
     border-bottom: $border-width-m solid $primary-dark;
   }
 
   &:hover::before {
-    transform: scale(1, 1);
+    transform: translateZ(0) scale(1, 1);
   }
 
   .icon,

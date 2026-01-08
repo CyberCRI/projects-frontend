@@ -2,12 +2,18 @@
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import { getOrganizationByCode } from '@/api/organizations.service'
 
+const { isAdmin } = usePermissions()
+
 const { canCreateProject } = usePermissions()
 const projectCategoriesStore = useProjectCategories()
 const { searchFromQuery } = useSearch('projects')
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const forceSearch = ref(false)
+
+if (!projectCategoriesStore._root?.value?.id) {
+  await projectCategoriesStore.getRootProjectCategory()
+}
 
 const categories = computed(() => {
   return projectCategoriesStore.hierarchy
@@ -66,13 +72,21 @@ try {
   <div v-if="categories.length > 0" class="categories-layout page-top">
     <div class="page-section-extra-wide">
       <h1 class="page-title">
-        {{ $filters.capitalize($t('projects')) }}
+        {{ $t('projects') }}
       </h1>
 
       <SearchBlock :limit="30" section="projects" :freeze-search="isNavigating" />
     </div>
 
     <div v-if="canCreateProject" class="action-ctn page-section-extra-wide">
+      <div v-if="projectCategoriesStore._root?.id && isAdmin" class="follow-all">
+        <CategoryFollowButton
+          :category-id="projectCategoriesStore._root?.id"
+          class="follow-button"
+          message-follow="category.follow-all-categories"
+          message-following="category.following-all-categories"
+        />
+      </div>
       <LpiButton
         :label="$t('project.create-project')"
         btn-icon="Plus"
@@ -91,7 +105,7 @@ try {
     <template v-else>
       <div class="title-ctn page-section-wide">
         <h2 class="sub-title">
-          {{ $filters.capitalize($t('home.categories.title')) }}
+          {{ $t('home.categories.title') }}
         </h2>
       </div>
       <div class="categories page-section-wide">
@@ -120,7 +134,8 @@ try {
   }
 
   .action-ctn {
-    text-align: right;
+    display: flex;
+    align-items: center;
 
     button {
       margin-left: auto;
@@ -148,5 +163,13 @@ try {
     align-items: stretch;
     gap: $space-l;
   }
+}
+
+.follow-all {
+  margin-right: auto;
+  width: max-content;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: $primary-lighter;
 }
 </style>

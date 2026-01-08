@@ -51,9 +51,10 @@ export default {
   border-radius: 4rem;
   cursor: pointer;
   transition: 0.2s all ease-in-out;
+  transform: translateZ(0);
 
   &:hover {
-    transform: scale(1.03);
+    transform: translateZ(0) scale(1.03);
   }
 
   &.passive,

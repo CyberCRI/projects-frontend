@@ -38,7 +38,7 @@
     <p class="profile-document-description" :class="{ preview: preview }">
       {{ document.$t.description }}
     </p>
-    <span>
+    <span v-if="document.publication_date">
       {{
         new Date(document.publication_date).toLocaleDateString(locale, {
           year: 'numeric',
@@ -151,9 +151,10 @@ span.profile-document-contributor {
   padding: 0.2rem 0.4rem;
   transition: all 0.2s;
   background-color: $primary-light;
+  transform: translateZ(0);
 
   &:hover {
-    transform: scale(102%);
+    transform: translateZ(0) scale(102%);
   }
 }
 

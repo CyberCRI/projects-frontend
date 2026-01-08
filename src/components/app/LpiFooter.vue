@@ -63,11 +63,9 @@
             </NuxtLink>
           </li>
           <li v-else>
-            <FooterEnglishTips ref="copy-link-tooltip" item-title="terms of use">
-              <NuxtLink to="/terms-of-service">
-                {{ $t('footer.terms-of-service') }}
-              </NuxtLink>
-            </FooterEnglishTips>
+            <NuxtLink to="/terms-of-service">
+              {{ $t('footer.terms-of-service') }}
+            </NuxtLink>
           </li>
 
           <li v-if="canOpen" class="list-item">
@@ -160,6 +158,8 @@
     <ReportDrawer :is-opened="reportBugOpen" type="bug" @close="reportBugOpen = false" />
 
     <OnboardingScreens v-if="showOnboardingScreen && isConnected" />
+
+    <ApproveTermsModal v-if="approveTermIsActive" />
   </footer>
 </template>
 
@@ -188,7 +188,7 @@ export default {
     const organizationsStore = useOrganizationsStore()
     const usersStore = useUsersStore()
     const runtimeConfig = useRuntimeConfig()
-    const { locale } = useI18n()
+    const { locale } = useNuxtI18n()
     return {
       organizationsStore,
       usersStore,
@@ -222,6 +222,9 @@ export default {
     },
     isConnected() {
       return this.usersStore.isConnected
+    },
+    approveTermIsActive() {
+      return !!this.usersStore.userFromApi
     },
     showOnboardingScreen() {
       return this.organizationsStore.current?.onboarding_enabled

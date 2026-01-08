@@ -228,7 +228,7 @@
         "invisible": "Invisible",
         "logo": "Logotip",
         "size-min-logo": "Mida mínima del logotip: {minWidth}px * {minHeight}px",
-        "portal-referencing": "El portal pare fa referència",
+        "portal-referencing": "Un portal pare fa referència",
         "visible": "Visible",
         "public-image": "Imatge (el visor públic)",
         "wording": {
@@ -453,11 +453,11 @@
     }
   },
   "blog": {
-    "add-entry": "afegeix entrada de bloc",
+    "add-entry": "Afegeix entrada de bloc",
     "entry": "entrada de bloc",
     "last-publication": "Última entrada de bloc",
     "no-entry": "Encara no hi ha entrada...",
-    "posts": "Entrades de bloc",
+    "posts": "Entrades del bloc",
     "title": "Blog"
   },
   "browse": {
@@ -473,12 +473,14 @@
     "page-title": "Categoria",
     "title": "Categories",
     "all-categories": "Veure totes les categories",
+    "follow-all-categories": "Segueix totes les categories",
+    "following-all-categories": "Estàs seguint totes les categories",
     "all-projects": "Veure tots els projectes",
     "edit": "Edita"
   },
   "comment": {
     "add-comment": "Afegeix el teu comentari!",
-    "comment-verb": "comentari",
+    "comment-verb": "Comentari",
     "comments": "Comentaris",
     "deleted": "El comentari s' ha esborrat en el",
     "discard-comment": "Voleu descartar el comentari?",
@@ -503,22 +505,22 @@
     "activate": "Activa",
     "activated": "Activat",
     "add": "Afegeix",
-    "added-on-the": "afegit a",
+    "added-on-the": "Afegit a",
     "back": "darrere",
     "cancel": "Cancel· la",
     "chose-date": "Data seleccionada",
-    "confirm": "Confirma",
+    "confirm": "Confirmeu",
     "continue": "Continua",
     "confirm-delete": "Esteu segur que voleu esborrar això?",
-    "deadline": "Temps límit",
+    "deadline": "Línia límit",
     "delete": "Esborra",
     "delete-selection": "Elimina la selecció",
     "delete-user": "Esborra",
-    "description": "descripció",
+    "description": "Descripció",
     "destroy-confirm": "Esteu segur que voleu esborrar aquest projecte? Aquesta acció no es pot desfer.",
     "cant-quit-self": "Ets l'últim editor de l'equip. Cada projecte ha de tenir com a mínim un editor.\nPodeu afegir un altre editor abans d' abandonar el projecte o eliminar el projecte des de la pestanya Configuració.",
     "cant-quit-other": "Aquest és l'últim editor de l'equip. Cada projecte ha de tenir com a mínim un editor.\nPodeu afegir un altre editor supressió aquest, o eliminar el projecte de la pestanya Configuració.",
-    "edit": "Editar",
+    "edit": "Edita",
     "file-required": "Es requereix un fitxerName",
     "for": "per",
     "groups": "Grups",
@@ -527,24 +529,24 @@
     "link-copied-success": "Enllaç copiat",
     "link-copied-failed": "Ha fallat en copiar l' enllaç",
     "loading": "S' està carregant",
-    "login": "accés",
+    "login": "Entrada",
     "modify": "Modifica",
     "more": "més",
     "need-login": "S' ha d' accedir a",
     "no": "no",
     "no-result": "Sense resultats",
-    "none": "cap",
+    "none": "Cap",
     "of": "de",
-    "org": "Portals del portal",
+    "org": "Membres de Portal",
     "quit-project": "Esteu segur que voleu sortir d' aquest projecte?",
-    "people": "Gent",
-    "read": "lectura",
-    "reply": "resposta",
+    "people": "Persones",
+    "read": "Lectura",
+    "reply": "Respon",
     "remove-group": "Esteu segur que voleu eliminar aquest grup?",
     "remove-user": "Esteu segur que voleu eliminar aquest usuari?",
     "save": "Desa",
     "send": "Envia",
-    "see-less": "veure menys",
+    "see-less": "Veure menys",
     "see-more": "Veure més",
     "see": "Veure",
     "see-all": "Veure- ho tot",
@@ -552,7 +554,7 @@
     "shrink": "psiquiatre",
     "submit": "Envia",
     "the-project": "El projecte",
-    "title": "títol",
+    "title": "Títol",
     "yes": "sí",
     "disconnect": "Desconnecta",
     "confirm-close": "Esteu segur que voleu tancar l' editor? Qualsevol canvi que heu fet no serà desat.",
@@ -563,7 +565,9 @@
     "link-to": "enllaç a",
     "other": "altra",
     "and": "i",
-    "create": "Crea"
+    "create": "Crea",
+    "order-asc": "Més antiga al més nou",
+    "order-desc": "nova a la més antiga"
   },
   "complete-profile": {
     "bio": {
@@ -803,10 +807,10 @@
     "empty": "No hi ha notícies... encara!"
   },
   "file": {
-    "add-image": "afegeix una imatge",
-    "add-video": "afegeix un vídeo",
+    "add-image": "Afegeix una imatge",
+    "add-video": "Afegeix un vídeo",
     "add-video-hint": "Afegeix un vídeo introduint el seu URL de Youtube o vimeo.",
-    "attachment": "document adjuntat Šun document",
+    "attachment": "Document adjuntat, documents adjuntats",
     "upload": "Puja"
   },
   "form": {
@@ -815,7 +819,7 @@
     "organization-name": "Nom de la vostra comunitat",
     "description": "Descripció",
     "email": "Correu electrònic",
-    "email-contact": "correu electrònic",
+    "email-contact": "Correu electrònic",
     "language": "Idioma",
     "title": "Títol",
     "url": "URL",
@@ -892,10 +896,10 @@
     "pssi": "Planificació de seguretat (PSSI)"
   },
   "goal": {
-    "add": "Afegir un objectiu",
-    "completed-on-the": "finalitzada la",
-    "description": "descripció de l' objectiu",
-    "goals": "Atribucions",
+    "add": "Afegeix un objectiu",
+    "completed-on-the": "Completat sobre la",
+    "description": "Descripció d' objectiu",
+    "goals": "Objectius",
     "planned-for-the": "Planificació per a la",
     "status-title": "Estat",
     "title": "Títol de l' objectiu",
@@ -1012,14 +1016,14 @@
   "home": {
     "documents": "Documents",
     "all-projects": "Tots els projectes",
-    "announcements": "Anunciacions",
+    "announcements": "Anuncis",
     "news": "Notícies",
     "calendar": "Calendari",
     "instructions": "Instruccions",
     "communities": "Portals",
     "home": "Inici",
     "categories": {
-      "title": "Categories del projecte"
+      "title": "Categories dels projectes"
     },
     "login": "Entrada",
     "account-request": "Demana un compte",
@@ -1054,6 +1058,7 @@
   },
   "me": {
     "follow": "Projectes que segueixo",
+    "follow-category": "Categories que segueixo",
     "no-follow": "Encara no esteu seguint un projecte",
     "groups": "Grups, sóc membre de",
     "no-group": "Encara no sou membre d' un grup",
@@ -1061,7 +1066,7 @@
     "no-bio": "Encara no has escrit la teva biografia",
     "no-skill": "Encara no heu afegit habilitat",
     "page-title": "El meu perfil",
-    "projects-participate": "Projectes dels quals sóc membre",
+    "projects-participate": "Som membre del projecte",
     "no-project-participate": "Encara no sou membre d' un projecte",
     "projects-reviewing": "Estic revisant projectes",
     "no-project-reviewing": "Encara no esteu revisant un projecte",
@@ -1327,7 +1332,7 @@
           "label": "Etiquetes *"
         },
         "sdgs": {
-          "label": "SDGs",
+          "label": "Sdgs",
           "add": "Afegeix",
           "notice-start": "Afegeix",
           "notice-link": "Objectiu de desenvolupament sostenible (SDGs)",
@@ -1350,6 +1355,13 @@
         "personal-bio": {
           "label": "bio Personal",
           "placeholder": "Presenta't personalment. Parla'ns de tu i de les teves passions!"
+        }
+      },
+      "categories": {
+        "followed": {
+          "label": "Categories que segueixo",
+          "notice": "Quan seguiu categories, rebreu notificacions sobre qualsevol nova activitat en projectes d'aquestes categories. Si voleu seguir una categoria, visiteu-la i feu clic al botó \"Segueix\" al costat del títol.",
+          "empty": "Encara no seguiu cap categoria."
         }
       },
       "projects": {
@@ -1525,12 +1537,12 @@
         }
       },
       "publications": {
-        "no-editable": "Les publicacions encara no estan disponibles.",
-        "tab": "Publicacions"
+        "tab": "Publicacions",
+        "no-editable": "Les publicacions d' edició estaran disponibles al principi del 20 de gener del 2026"
       },
       "conferences": {
-        "no-editable": "Les conferències encara no estan disponibles.",
-        "tab": "Conferèncias"
+        "tab": "Conferèncias",
+        "no-editable": "L' edició de conferències estarà disponible al principi del 2026 de gener."
       }
     },
     "go-to-page": "Visualitza la pàgina del perfil",
@@ -1554,11 +1566,11 @@
     "mentorship-offering": "Estàs oferint mentors",
     "publications": "Publicacions",
     "research-output-year": "Any de sortida de recerca",
-    "publications-similars": "similar a Publicacions",
     "publications-empty": "Sense Publicacions.",
     "conferences": "Conferèncias",
     "conferences-similars": "Les conferències similars",
-    "conferences-empty": "No hi ha conferències."
+    "conferences-empty": "No hi ha conferències.",
+    "publications-similars": "Publicació similar"
   },
   "profile-completed-modal": {
     "notice-congratulation": "Ara estàs preparat per utilitzar la plataforma de projectes.",
@@ -1572,12 +1584,12 @@
     "add-location": "Afegeix una localització",
     "add-linked-project": "Afegeix un projecte enllaçat",
     "add-location-point": "Afegeix un punt d' emplaçament",
-    "add-review": "afegeix revisar",
+    "add-review": "Afegeix una revisió",
     "add-to-project": {
       "title": "Afegeix al projecte",
       "blog-entry": "Entrada de bloc",
       "goal": "Objectiu",
-      "sdg": "SDG",
+      "sdg": "Sdg",
       "link-and-attached-document": "Recursos",
       "team-member": "Grup del membre / grup",
       "announcement": "Anunci",
@@ -1593,6 +1605,7 @@
     "create-project": "Crea un projecte",
     "create": {
       "choose-category-first": "Primer seleccioneu una categoria",
+      "choose-template-first": "Primer seleccioneu una plantilla",
       "help-link": "Som aquí per ajudar.",
       "notice": "Els camps marcats amb * són obligatoris. Sempre ho pots modificar més tard. No saps què hauries de fer?",
       "title": "Crea un nou projecte"
@@ -1603,8 +1616,8 @@
     "edit-linked-project": "Edita el projecte enllaçat",
     "edit-location-point": "Edita el punt de localització",
     "edit-map": "Edita geolocalització",
-    "edit-review": "Edició de revisió",
-    "files": "Fitxers de projecte del projecte del projecte ubuntu",
+    "edit-review": "Edita la revisió",
+    "files": "Fitxers de projecte del projecte del projecte del projecte del Project",
     "follow": "Segueix",
     "followed": "Seguit",
     "form": {
@@ -1638,8 +1651,8 @@
       "upload": "Puja",
       "notice": "Pugeu una nova visual per a maximitzar l'impacte! Necessites una forma quadrada!"
     },
-    "impact": "impacte",
-    "language": "idioma del projecte",
+    "impact": "Impacte",
+    "language": "Idioma del projecte",
     "life-status": "Estat de la vida del projecte",
     "linked": "Projectes enllaçats per al projecte  LinkedName",
     "linked-project": "Projecte enllaçat",
@@ -1649,14 +1662,14 @@
     "file-confirm-delete": "Esteu segur que voleu esborrar aquest fitxer del projecte?",
     "blog-confirm-delete": "Esteu segur que voleu eliminar aquesta entrada del bloc del projecte?",
     "location-type-label": "Tipus d' emplaçament",
-    "lock": "Projecte de bloqueig",
+    "lock": "Bloqueja el projecte",
     "private": "Projectes privats",
-    "publish": "Publica el projecte",
+    "publish": "Publica projecte",
     "public": "projectes públics",
     "quit": "Surt del projecte",
     "random-image": "Imatge aleatòria",
     "resource": "Recurs de recursos de resource",
-    "review": "review",
+    "review": "Revisió",
     "reviews": "Revisió",
     "review-confirm-delete": "Esteu segur d' esborrar aquesta revisió?",
     "reviewable": "Preparat per revisar",
@@ -1665,7 +1678,7 @@
     "remove-user-title": "Elimina usuari",
     "remove-user": "Esborra",
     "show-n-projects": "Mostra els projectes {count}",
-    "suggested": "projectes similars del projecte Hongria",
+    "suggested": "Projectes similars a projectes similar al projecte",
     "suggested-hint": "Projectes que poden interessar-vos",
     "summary": "Resum",
     "settings": "Arranjament",
@@ -1679,7 +1692,7 @@
       "blog-entry-create": "Afegeix una nova entrada de bloc d' aquest projecte",
       "description": "Desa la descripció d' aquest projecte"
     },
-    "view": "projecte de vista",
+    "view": "Visualitza el projecte",
     "visibility": "Visibilitat del projecte",
     "actions": "Accions ràpides",
     "copy": "(copia)",
@@ -1692,31 +1705,31 @@
     "recommended": "Recomanat",
     "sort_by": "Ordena per:"
   },
-  "projects": "projectes",
+  "projects": "Projectes",
   "recruit": {
     "about-you": "Explica'ns el que et motiva.",
-    "add-announcement": "afegeix un anunci",
+    "add-announcement": "Afegeix una declaració",
     "announcement": "Anunci",
-    "announcements": "Sense anunci de 12154654 anunciacions 354",
-    "apply": "aplica",
-    "creation-date": "creat en",
+    "announcements": "No s'anuncia l'any {count} anunciava que s'anunciava el 1321544",
+    "apply": "Aplica",
+    "creation-date": "Creat el",
     "delete-announcement-message": "Voleu eliminar aquesta declaració?",
-    "edit-announcement": "Edició d'anuncis",
+    "edit-announcement": "Edita l' anunci",
     "email": "Avís, necessitem una adreça de correu vàlida per contactar amb tu. (No salvarem aquesta informació a la plataforma).",
-    "firstname": "firstname",
-    "is-remunerated": "està remenegat",
-    "job": "treball",
-    "lastname": "cognomname",
+    "firstname": "Nom",
+    "is-remunerated": "Està remenegat",
+    "job": "Treball",
+    "lastname": "Últim nom",
     "motivation-hint": "Hauria de contenir 20 caràcters com a mínim",
     "new-announcement": "Nova declaració",
-    "participant": "participant",
-    "remunerated": "Desmenerat",
+    "participant": "Participant",
+    "remunerated": "Remenegat",
     "send": "Envia aplicació",
     "title": "Títol",
-    "traineeship": "Entrenador de trensName",
-    "type": "Tipus d' anunci",
-    "updated": "s' ha actualitzat",
-    "valid-until-the": "vàlid fins",
+    "traineeship": "Entrenador",
+    "type": "Tipus de Anunci",
+    "updated": "Actualitzat",
+    "valid-until-the": "Vàlid fins",
     "view": "Visualitza"
   },
   "report": {
@@ -1730,23 +1743,23 @@
     "bug-url": "Copia enganxar l' URL de la pàgina on afegiu aquest problema."
   },
   "resource": {
-    "add": "afegeix recurs",
-    "add-file": "afegeix un fitxer",
-    "add-link": "afegeix un enllaç",
-    "add-link-url": "afegeix URL d' enllaç",
+    "add": "Afegeix un recurs",
+    "add-file": "Afegeix un fitxer",
+    "add-link": "Afegeix un enllaç",
+    "add-link-url": "Afegeix URL d' enllaç",
     "add-link-url-label": "URL",
-    "add-link-text": "afegeix text d' enllaç",
+    "add-link-text": "Afegeix text d' enllaç",
     "add-link-text-label": "Text",
-    "edit-link": "edita un enllaç",
-    "edit-file": "edit un fitxer",
+    "edit-link": "Edita un enllaç",
+    "edit-file": "Edita un fitxer",
     "max-size": "Mida màx. 10MB",
     "invalid-image": "Fitxer no acceptat... és aquesta una imatge?",
     "error-uploading-image": "S' ha produït un error en pujar la imatge",
     "cannot-upload-image": "No es pot pujar la imatge per ara",
-    "link-address": "adreça d' enllaç",
+    "link-address": "Adreça de l' enllaç",
     "resources": "Recursos",
-    "web": "enllaça als recursos web que s' apliquen als recursos web",
-    "web-link": "Enllaços web de l'enllaç web del web del web web web RT"
+    "web": "Enllaç als recursos web Tidy és un enllaç als recursos web",
+    "web-link": "Enllaços web de l'enllaç web  web del web del web web web web del web web web web web web  linkName"
   },
   "result_box": {
     "people": "gent",
@@ -1860,44 +1873,44 @@
     "all-filters": "Tots els filtres",
     "banner-portal": "També podeu cercar projectes de totes les comunitats en",
     "browse-map": "Navega per mapa",
-    "by-language": "per idioma",
-    "by-people": "per gent",
-    "by-tag": "per etiqueta",
-    "by-sdg": "per SDG",
+    "by-language": "Per idioma",
+    "by-people": "Per gent",
+    "by-tag": "Per etiqueta",
+    "by-sdg": "Per sdg",
     "filter-by-language": "Afegeix un idioma",
     "filter-by-people": "Afegeix una persona",
     "filter-by-tag": "Afegeix una etiqueta",
-    "filter-by-sdg": "Afegeix un SDD",
+    "filter-by-sdg": "Afegeix un sd",
     "filter-by-category": "Afegeix una categoria",
-    "language": "idioma",
-    "people": "gent",
-    "tag": "etiqueta",
-    "or": "o",
+    "language": "Idioma",
+    "people": "Persones",
+    "tag": "Etiqueta",
+    "or": "O",
     "ambiguousTag": "Etiqueta ambigua",
-    "subtitle-ambiguous-tag": "Aquesta etiqueta té diferents significats. Seleccioneu la que estigueu interessat:",
-    "sdg": "SDG",
-    "skills": "Habilitats",
-    "category": "categoria",
+    "subtitle-ambiguous-tag": "Aquesta etiqueta té diferents significats. Seleccioneu la que estigueu interessat en:",
+    "sdg": "Sdg",
+    "skills": "Skillsunit synonyms for matching user input",
+    "category": "Categoria",
     "choose": "Seleccioneu entre etiquetes principals o cerca d' etiquetes",
-    "filter": "filtre",
+    "filter": "Filtre",
     "filters": "Filtres",
     "add-filter": "Afegeix un filtre",
     "geographic-map": "Mapa geogràfic",
-    "nothing-found": "no s' ha trobat res",
+    "nothing-found": "No s' ha trobat res",
     "people-directory": "Cerca en el directori de la gent",
     "projects": "Cerca en projectes",
     "projects-tab": "Projectes ({count})",
     "projects-tab-label": "Projectes",
     "group-tab": "Grups ({count})",
     "people-tab": "Gent ({count})",
-    "search-tab": "Tots ({count})",
-    "peoples": "Gent",
+    "search-tab": "Tot ({count})",
+    "peoples": "Persones",
     "groups": "Grups",
     "all": "Tot",
     "projects-section": "Projectes",
     "all-section": "Totes les entitats",
     "groups-section": "Grups",
-    "people-section": "Gent",
+    "people-section": "Persones",
     "result": "Resultats de la cerca",
     "search-title": "Cerca",
     "search": "Cerca grup",
@@ -1906,24 +1919,24 @@
     "search-group": "Introduïu les primeres lletres del grup",
     "search-tag": "Escriu les primeres lletres de l' etiqueta",
     "search-skill": "Etiqueta de tipus d' habilitat",
-    "search-user": "Introduïu el nom de les primeres lletres de la persona",
-    "search-in": "Cerca projectes dins",
-    "specific-tags": "Trieu des de {organizationName} etiquetes",
-    "wiki-tags": "Escolliu les etiquetesomamàtiques",
-    "term-is-ambigous": "Term és ambigua. {0} Mireu els nostres suggeriments",
+    "search-user": "Nom de les primeres lletres del tipus persona",
+    "search-in": "Cerca projectes a",
+    "specific-tags": "Escolliu des de {organizationname} etiquetes",
+    "wiki-tags": "Escolliu les etiquetes temàtices",
+    "term-is-ambigous": "La paraula és ambigua. {0} presenta els nostres suggeriments",
     "info": "També podeu cercar projectes de totes les comunitats en",
     "geo-map": "Mapa geogràfic",
     "tag-map": "Mapa d' etiquetes",
     "geo-map-description": "Descobreix projectes en un mapa del món",
-    "tag-map-description": "Descobreix projetcs en un mapa d'etiqueta Wikipédia",
+    "tag-map-description": "Descobriu projetcs en un mapa d'etiqueta de wikipédia",
     "open-map": "Obre el mapa",
     "pick-tag-classification": "Escolliu un marc d' etiquetes",
     "pick-skill-classification": "Escolliu un marc de treball d' habilitat",
-    "pick-tag-preset": "O escolliu una etiqueta suggerida",
+    "pick-tag-preset": "O escollir una etiqueta suggerida",
     "pick-skill-preset": "O triar una habilitat suggerida",
     "current-tag-description": "Introduïu tag tag tag tag tags primera lletra i seleccioneu l' etiqueta correcta",
     "current-skill-description": "Tipus d' etiqueta i selecciona l' habilitat correcta",
-    "disambiguate": "(DISAMBIGUACIÓ)",
+    "disambiguate": "(disambició)",
     "suggestions": "Suggeriments",
     "choose-skill": "Feu clic sobre l' habilitat seleccionada:",
     "main-tags": "o escolliu des de les etiquetes principals"
@@ -1980,7 +1993,7 @@
     "17": {
       "title": "Associacions pels Objectius"
     },
-    "add-short": "afegeix un SDG",
+    "add-short": "Afegeix un sdg",
     "sdg-fulltext": "objectiu sostenible del desenvolupament"
   },
   "stats": {
@@ -1998,19 +2011,19 @@
     "updated": "Actualitzat"
   },
   "status": {
-    "complete": "finalitzada",
-    "completed": "finalitzada",
-    "cancel": "cancel· la",
-    "canceled": "cancel· lat",
-    "ended": "Fi",
+    "complete": "Completat",
+    "completed": "Completat",
+    "cancel": "Cancel· la",
+    "canceled": "Cancel· lat",
+    "ended": "Final",
     "ongoing": "En curs",
-    "private": "privat",
-    "public": "public",
-    "running": "executant- se",
+    "private": "Privat",
+    "public": "Públic",
+    "running": "En execució",
     "title": "Quin és l'estat de la vida del projecte?",
-    "toreview": "a revisar",
+    "toreview": "Per revisar",
     "updated": "Estat del projecte actualitzat",
-    "na": "cap"
+    "na": "Cap"
   },
   "tag": {
     "add-specific": "Crea etiquetes per organitzar projectes",
@@ -2035,8 +2048,8 @@
     "edit-tags": "Edita etiquetes",
     "blog-content": "Plantilla pel contingut del bloc",
     "blog-title": "Plantilla per al títol del bloc",
-    "advancement-goal-title": "plantilla per al títol de l' objectiu",
-    "advancement-goal-content": "plantilla per al contingut de l' objectiu",
+    "advancement-goal-title": "Plantilla per al títol de l' objectiu",
+    "advancement-goal-content": "Plantilla per al contingut de l' objectiu",
     "category": "Categoria de plantilla",
     "language": "Plantilla d' idioma",
     "info": "Si voleu suggerir als usuaris com organitzar el seu projecte en una categoria específica, podeu crear una plantilla per aquesta categoria. Llavors, quan un usuari crearà un projecte en aquesta categoria, el projecte serà inicials amb el text que heu definit a la plantilla. Aquest text està dissenyat com a guia per als usuaris.",
@@ -2074,7 +2087,7 @@
     "organization-email": "Contacta amb el teu portal.",
     "organization-language": "L' idioma per omissió del seu portal.",
     "organization-visibility": "Voleu un enllaç al portal des del portal principal dels projectes?",
-    "organization-logo": "El logotip apareixerà al portal pare en un fons blanc. Si el logotip que heu pujat prèviament no és compatible amb un fons blanc, seleccioneu un color de fons a sota."
+    "organization-logo": "El vostre logotip apareixerà al portal pare en un fons blanc. si el logotip que heu pujat prèviament no és compatible amb un fons blanc, si us plau, escolliu un color de fons a sota."
   },
   "toasts": {
     "abuse-report": {
@@ -2347,6 +2360,12 @@
         "no": "No"
       }
     },
+    "category": {
+      "project-created": "Categoria que seguiu - creació",
+      "project-created-sub": "Rebeu una notificació quan es crea un nou projecte en aquesta categoria",
+      "project-updated": "Categoria que seguiu - actualització",
+      "project-updated-sub": "Rebeu una notificació quan s'actualitza un projecte en aquesta categoria"
+    },
     "project": {
       "title": "Notificació del projecte",
       "changes": "Canvia les notificacions",
@@ -2398,6 +2417,7 @@
       "reply": "{sender} va respondre al vostre comentari en {project}",
       "review": "{sender} revisat el projecte {project}",
       "ready_for_review": "{sender} va marcar el seu projecte per revisar. Ara podeu revisar el projecte {project}",
+      "project_created": "{sender} va crear el projecte {project}",
       "project_updated": "12154654 actualitzat El projecte {project}",
       "group_member_added": "{sender} va afegir el grup {group} com a membre del projecte 13215446",
       "group_member_added_self": "{sender} va afegir al grup {group} que sou part del projecte {project}",
@@ -2558,7 +2578,7 @@
       "title": {
         "label": "Títol *",
         "required": "Es requereix el títol",
-        "placeholder": "el títol de les notícies"
+        "placeholder": "El títol de les notícies"
       },
       "content": {
         "label": "Contingut *",
@@ -2605,7 +2625,7 @@
       "title": {
         "label": "Títol *",
         "required": "Es requereix el títol",
-        "placeholder": "el títol de l' instrucció"
+        "placeholder": "El títol de l' instrucció"
       },
       "content": {
         "label": "Contingut *",
@@ -2730,7 +2750,11 @@
     "title": "Xateja amb IA",
     "input-placeholder": "Escriu el teu missatge aquí...",
     "intro-message": "Hola, com et puc ajudar avui?",
-    "drawer-button-label": "Assistent d'IA"
+    "drawer-button-label": "Assistent d'IA",
+    "fetching_tools": "Obtenció d'eines...",
+    "fetching_data": "Obtenció de dades...",
+    "reasoning": "Pensant...",
+    "restart": "Reinicia la conversa"
   },
   "researcher": {
     "relators": {
@@ -3085,5 +3109,14 @@
       "Unknown": "desconegut",
       "Working-Paper": "Paper en funcionament"
     }
+  },
+  "tos": {
+    "evolved": "Els nostres Termes i Condicions s'han actualitzat, si us plau, reviseu-los i aproveu-los.",
+    "review-and-sign": "Si us plau, llegeix i aprova els Termes i Condicions actualitzats per continuar utilitzant la plataforma.",
+    "scroll-notice": "Si us plau, desplaça't fins al final dels termes abans d'aprovar.",
+    "error-approving": "Error en aprovar els termes i condicions, torna-ho a provar més tard.",
+    "title": "Termes i Condicions",
+    "approve-title": "Si us plau, aprova els Termes i Condicions",
+    "approve-button": "Accepto"
   }
 }

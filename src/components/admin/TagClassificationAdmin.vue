@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch, computed, nextTick } from 'vue'
-import debounce from 'lodash.debounce'
+import { debounce } from 'es-toolkit'
 import { getOrgClassificationTags, deleteClassificationTag } from '@/api/tag-classification.service'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import FilterSearchInput from '@/components/search/Filters/FilterSearchInput.vue'
@@ -11,12 +11,12 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import EditTagModal from '@/components/admin/EditTagModal.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import useToasterStore from '@/stores/useToaster.ts'
-import { useI18n } from 'vue-i18n'
+
 import useTagTexts from '@/composables/useTagTexts.js'
 
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const organizationsStore = useOrganizationsStore()
 const toaster = useToasterStore()

@@ -5,32 +5,30 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'LpiSingleStatChart',
-  props: {
-    number: {
-      type: Number,
-      default: null,
-    },
+<script setup>
+defineOptions({ name: 'LpiSingleStatChart' })
+const props = defineProps({
+  number: {
+    type: Number,
+    default: null,
   },
-  data() {
-    return {
-      displayedNumber: 0,
-      interval: false,
-    }
-  },
-  mounted() {
-    if (this.chartData === this.displayedNumber) return
-    this.interval = window.setInterval(() => {
-      const change = (this.number - this.displayedNumber) / 10
-      this.displayedNumber += change > 0 ? Math.ceil(change) : Math.floor(change)
-    }, 20)
-  },
-  beforeUnmount() {
-    clearInterval(this.interval)
-  },
-}
+})
+
+const chartData = null
+const displayedNumber = ref(0)
+
+let intervalId = null
+onMounted(() => {
+  if (chartData === displayedNumber.value) return
+  intervalId = setInterval(() => {
+    const change = (props.number - displayedNumber.value) / 10
+    displayedNumber.value += change > 0 ? Math.ceil(change) : Math.floor(change)
+  }, 20)
+})
+
+onBeforeUnmount(() => {
+  clearInterval(intervalId)
+})
 </script>
 
 <style lang="scss" scoped>

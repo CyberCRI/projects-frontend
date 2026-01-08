@@ -175,13 +175,14 @@
 import allSdgs from '@/data/sdgs.json'
 import { getUser, patchUser, patchUserPicture, postUserPicture } from '@/api/people.service.ts'
 import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils.ts'
-import isEqual from 'lodash.isequal'
+import { isEqual } from 'es-toolkit'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import { VALID_NAME_REGEX } from '@/functs/constants.ts'
 import useToasterStore from '@/stores/useToaster.ts'
 import useUsersStore from '@/stores/useUsers.ts'
 import { useRuntimeConfig } from '#imports'
+import { usePatatoids } from '@/composables/usePatatoids'
 export default {
   name: 'CompleteProfileStep1',
 
@@ -189,25 +190,22 @@ export default {
 
   setup() {
     const toaster = useToasterStore()
-    const { locale } = useI18n()
+    const { locale } = useNuxtI18n()
     const usersStore = useUsersStore()
     const runtimeConfig = useRuntimeConfig()
     const { onboardingTrap } = useOnboardingStatus()
+    const defaultPictures = usePatatoids()
     return {
       toaster,
       locale,
       usersStore,
       runtimeConfig,
       onboardingTrap,
+      defaultPictures,
     }
   },
 
   data() {
-    const defaultPictures = [1, 2, 3, 4, 5, 6].map((index) => {
-      return `${
-        this.runtimeConfig.public.appPublicBinariesPrefix
-      }/patatoids-project/Patatoid-${index}.png`
-    })
     return {
       v$: useVuelidate(),
       user: null,
@@ -224,7 +222,6 @@ export default {
       bio: '<p></p>',
       exempleToShow: null,
       loading: false,
-      defaultPictures,
     }
   },
 
@@ -586,9 +583,10 @@ textarea {
     appearance: none;
     cursor: pointer;
     transition: transform 200ms ease-in-out;
+    transform: translateZ(0);
 
     &:hover {
-      transform: scale(1.1);
+      transform: translateZ(0) scale(1.1);
     }
   }
 
@@ -614,12 +612,12 @@ textarea {
     position: absolute;
     top: 0;
     right: 0;
-    transform: translate(50%, -50%) scale(0);
+    transform: translateZ(0) translate(50%, -50%) scale(0);
     transition: transform 200ms cubic-bezier(0, -1.59, 0.6, 0.59);
   }
 
   .sdg-checkbox {
-    transform: scale(0);
+    transform: translateZ(0) scale(0);
     opacity: 0;
     position: absolute;
 
@@ -629,7 +627,7 @@ textarea {
     }
 
     &:checked ~ .sdg-checkmark {
-      transform: translate(50%, -50%) scale(1);
+      transform: translateZ(0) translate(50%, -50%) scale(1);
       transition: transform 200ms cubic-bezier(0.65, 1.23, 1, 1.99);
     }
   }

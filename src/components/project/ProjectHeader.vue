@@ -173,7 +173,7 @@
                 v-if="usersStore.isConnected"
                 class="space-button bg-on-hover"
                 :label="followed ? $t('project.followed') : $t('project.follow')"
-                :btn-icon="followed ? 'Heart' : 'HeartOutline'"
+                :btn-icon="followed ? 'BookmarkFill' : 'BookmarkLine'"
                 vertical-layout
                 @click="toggleFollow"
               />
@@ -188,7 +188,7 @@
               />
               <ExternalLabelButton
                 class="space-button bg-on-hover"
-                :label="$filters.capitalize($t('comment.comment-verb'))"
+                :label="$t('comment.comment-verb')"
                 btn-icon="ChatBubble"
                 vertical-layout
                 @click="goToCommentView"
@@ -254,6 +254,8 @@
 </template>
 
 <script>
+import { capitalize } from '@/functs/string'
+
 import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import ExternalLabelButton from '@/components/base/button/ExternalLabelButton.vue'
@@ -323,6 +325,7 @@ export default {
       usersStore,
       runtimeConfig,
       canEditProject,
+      capitalize,
     }
   },
 
@@ -998,7 +1001,7 @@ export default {
         }
 
         &:hover {
-          transform: scale(1.2);
+          transform: translateZ(0) scale(1.2);
         }
       }
 
@@ -1011,12 +1014,12 @@ export default {
       .sdg-leave-active {
         transition: transform 0.4s ease;
         transform-origin: center center;
-        transform: scale(1) translateY(0);
+        transform: translateZ(0) scale(1);
       }
 
       .sdg-enter-from,
       .sdg-leave-to {
-        transform: scale(0) translateY(200%);
+        transform: translateZ(0) scale(0) translateY(200%);
       }
 
       .tag-list {

@@ -2,61 +2,46 @@
   <BarChart v-bind="barChartProps" />
 </template>
 
-<script>
+<script setup>
 import { BarChart, useBarChart } from 'vue-chart-3'
 import { Chart, registerables } from 'chart.js'
-import { onMounted, onUnmounted, ref } from 'vue'
-
-import debounce from 'lodash.debounce'
+import { debounce } from 'es-toolkit'
 
 Chart.register(...registerables)
-export default {
-  name: 'LpiBarChart',
+defineOptions({ name: 'LpiBarChart' })
 
-  components: {
-    BarChart,
+const props = defineProps({
+  chartData: {
+    type: Object,
+    default: null,
   },
 
-  props: {
-    chartData: {
-      type: Object,
-      default: null,
-    },
-
-    options: {
-      type: Object,
-      default: null,
-    },
+  options: {
+    type: Object,
+    default: null,
   },
+})
 
-  setup(props) {
-    const dataValue = ref(props.chartData)
-    const dataOptions = ref(props.options)
+const dataValue = ref(props.chartData)
+const dataOptions = ref(props.options)
 
-    const { barChartProps, barChartRef } = useBarChart({
-      chartData: dataValue,
-      options: dataOptions,
-    })
+const { barChartProps } = useBarChart({
+  chartData: dataValue,
+  options: dataOptions,
+})
 
-    const rerenderChart = function () {
-      useBarChart({
-        chartData: dataValue,
-        options: dataOptions,
-      })
-    }
+const rerenderChart = debounce(() => {
+  useBarChart({
+    chartData: dataValue,
+    options: dataOptions,
+  })
+}, 300)
 
-    onMounted(() => {
-      window.addEventListener('resize', debounce(rerenderChart, 300)) // Adapt chart's size to window
-    })
+onMounted(() => {
+  window.addEventListener('resize', rerenderChart) // Adapt chart's size to window
+})
 
-    onUnmounted(() => {
-      window.removeEventListener('resize', debounce(rerenderChart, 300)) // Adapt chart's size to window
-    })
-
-    return {
-      barChartRef,
-      barChartProps,
-    }
-  },
-}
+onUnmounted(() => {
+  window.removeEventListener('resize', rerenderChart) // Adapt chart's size to window
+})
 </script>

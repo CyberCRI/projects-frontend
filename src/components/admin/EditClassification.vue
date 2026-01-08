@@ -7,9 +7,8 @@ import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { postOrgClassification, putOrgClassification } from '@/api/tag-classification.service'
 import TagClassificationAdmin from '@/components/admin/TagClassificationAdmin.vue'
-import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
 

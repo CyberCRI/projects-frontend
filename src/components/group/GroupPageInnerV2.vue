@@ -125,7 +125,7 @@ export default {
 
     groupHierarchy() {
       const root = {
-        name: this.$filters.capitalize(this.$t('common.groups')),
+        name: this.$t('common.groups'),
         route: { name: 'Groups' },
       }
       if (!this.groupData) return [root]
@@ -247,6 +247,7 @@ export default {
           view: `/group/${this.$route.params.groupId}/projects/edit`,
           altView: `/group/${this.$route.params.groupId}/projects`,
           props: {
+            groupId: this.groupId,
             isInEditingMode: true,
             groupData: this.groupData,
             onReloadGroupProjects: this.loadGroupProjects,

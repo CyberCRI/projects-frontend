@@ -1,9 +1,9 @@
 <template>
-  <BaseDrawer :is-opened="isOpened" title="" class="full" no-footer @close="$emit('close')">
+  <BaseDrawer :is-opened="isOpened" title="" class="full" no-footer @close="emit('close')">
     <ExistingAccountChecker
       v-if="isAddMode && !targetUser"
       @check-done="onCheckDone"
-      @cancel="$emit('close')"
+      @cancel="emit('close')"
     />
     <AccountLayout
       v-else
@@ -11,71 +11,50 @@
       :is-add-mode="isAddMode"
       :is-invite-mode="isInviteMode"
       :selected-user="targetUser || selectedUser"
-      @close="$emit('close')"
+      @close="emit('close')"
     />
   </BaseDrawer>
 </template>
-<script>
+<script setup lang="ts">
+import { nextTick } from 'vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import AccountLayout from '@/components/people/Account/AccountLayout.vue'
 import ExistingAccountChecker from '@/components/people/Account/ExistingAccountChecker.vue'
 
-import useToasterStore from '@/stores/useToaster.ts'
-export default {
-  name: 'AccountDrawer',
+import useToasterStore from '@/stores/useToaster'
+import { UserModel } from '@/models/user.model'
+defineOptions({ name: 'AccountDrawer' })
 
-  components: { AccountLayout, BaseDrawer, ExistingAccountChecker },
+const props = withDefaults(
+  defineProps<{
+    isOpened?: boolean
+    selectedUser?: UserModel
+  }>(),
+  { isOpened: true, selectedUser: null }
+)
 
-  props: {
-    isOpened: {
-      type: Boolean,
-      required: true,
-    },
+const { t } = useNuxtI18n()
+const emit = defineEmits(['close'])
+const toaster = useToasterStore()
+const targetUser = ref(null)
 
-    selectedUser: {
-      type: Object,
-      default: null,
-    },
-  },
+const isAddMode = computed(() => {
+  return !props.selectedUser && !targetUser.value?.id
+})
 
-  emits: ['close'],
-  setup() {
-    const toaster = useToasterStore()
-    return {
-      toaster,
+const isInviteMode = computed(() => {
+  const user = targetUser.value || props.selectedUser
+  return !isAddMode.value && !user?.current_org_role // null if not in current org
+})
+
+const onCheckDone = (user: UserModel | { email: string }) => {
+  targetUser.value = user
+  nextTick(() => {
+    if (!isAddMode.value) {
+      toaster.pushWarning(
+        isInviteMode.value ? t('account.switch-to-invite') : t('account.switch-to-edit')
+      )
     }
-  },
-
-  data() {
-    return {
-      targetUser: null,
-    }
-  },
-
-  computed: {
-    isAddMode() {
-      return !this.selectedUser && !this.targetUser?.id
-    },
-
-    isInviteMode() {
-      const user = this.targetUser || this.selectedUser
-      return !this.isAddMode && !user?.current_org_role // null if not in current org
-    },
-  },
-
-  methods: {
-    onCheckDone(targetUser) {
-      this.targetUser = targetUser
-      this.$nextTick(() => {
-        if (!this.isAddMode) {
-          this.toaster.pushWarning(
-            this.isInviteMode
-              ? this.$t('account.switch-to-invite')
-              : this.$t('account.switch-to-edit')
-          )
-        }
-      })
-    },
-  },
+  })
 }
 </script>

@@ -398,7 +398,7 @@
       "none": "Mitte ükski",
       "users": "Kasutaja",
       "facilitators": "Vahendaja",
-      "admins": "Org"
+      "admins": "Orgihaldur"
     },
     "empty": "Gruppe pole",
     "main-groups": "Põhigrupid"
@@ -453,11 +453,11 @@
     }
   },
   "blog": {
-    "add-entry": "blogikirje lisamine",
+    "add-entry": "Blogi kirje lisamine",
     "entry": "blogikanne",
     "last-publication": "viimane blogikanne",
     "no-entry": "Sissekanne veel puudub...",
-    "posts": "blogikirjed",
+    "posts": "Blogikirjed",
     "title": "Blogi"
   },
   "browse": {
@@ -473,13 +473,15 @@
     "page-title": "Kategooria",
     "title": "Kategooriad",
     "all-categories": "Vaata kõiki kategooriaid",
+    "follow-all-categories": "Jälgi kõiki kategooriaid",
+    "following-all-categories": "Jälgid kõiki kategooriaid",
     "all-projects": "Vaata kõiki projekte",
     "edit": "Edit"
   },
   "comment": {
     "add-comment": "Lisa oma kommentaar!",
-    "comment-verb": "kommentaari",
-    "comments": "K",
+    "comment-verb": "Kommentaar",
+    "comments": "Märkused",
     "deleted": "Kommentaar välja jäetud",
     "discard-comment": "Kõrvalda kommentaar?",
     "discard-changes": "Kõrvaldamismuudatused?",
@@ -503,22 +505,22 @@
     "activate": "Aktiveeri",
     "activated": "Aktiveeritud",
     "add": "Lisa",
-    "added-on-the": "lisatud",
+    "added-on-the": "Lisatud",
     "back": "tagasi",
-    "cancel": "Tühista",
+    "cancel": "Tühistage",
     "chose-date": "Valitud kuupäev",
     "confirm": "Kinnita",
     "continue": "Jätkata",
     "confirm-delete": "Oled kindel, et soovid selle kustutada?",
-    "deadline": "tähtaeg",
+    "deadline": "Tähtaeg",
     "delete": "Kustuta",
     "delete-selection": "Kustuta valik",
     "delete-user": "Kustuta",
-    "description": "kirjeldus",
+    "description": "Kirjeldus",
     "destroy-confirm": "Kas oled kindel, et soovid projekti kustutada? Seda tegevust ei saa tagasi võtta.",
     "cant-quit-self": "Sa oled meeskonna viimane toimetaja. Igal projektil peab olema vähemalt üks toimetaja.\nVõite enne projektist lahkumist lisada teise redaktori või kustutada projekti kaardilt Seadistused.",
     "cant-quit-other": "See on meeskonna viimane toimetaja. Igal projektil peab olema vähemalt üks toimetaja.\nVõite lisada mõne muu redaktori, mis seda alla surub, või kustutada projekti kaardilt Seadistused.",
-    "edit": "Redigeerida",
+    "edit": "Edit",
     "file-required": "Vajalik on fail",
     "for": "jaoks",
     "groups": "Grupid",
@@ -527,32 +529,32 @@
     "link-copied-success": "Link kopeeriti",
     "link-copied-failed": "Lingi kopeerimine nurjus",
     "loading": "Laadimine",
-    "login": "sisselogimine",
+    "login": "Sisselogimine",
     "modify": "Muuda",
     "more": "rohkem",
     "need-login": "Sa pead olema sisse logitud",
     "no": "ei",
     "no-result": "Tulemust pole",
-    "none": "ükski",
+    "none": "Mitte ükski",
     "of": "ühest",
-    "org": "portaali liikmed",
+    "org": "Portaali liikmed",
     "quit-project": "Kas oled kindel, et soovid projektist loobuda?",
     "people": "Inimesed",
-    "read": "lugeda",
-    "reply": "vastata",
+    "read": "Loe",
+    "reply": "Vasta",
     "remove-group": "Kas tõesti kustutada see grupp?",
     "remove-user": "Kas tõesti kustutada see kasutaja?",
-    "save": "päästa",
+    "save": "Päästa",
     "send": "Saada",
-    "see-less": "vähem",
-    "see-more": "näha rohkem",
+    "see-less": "Näe vähem",
+    "see-more": "Näe rohkem",
     "see": "Vaata",
     "see-all": "Vaata kõiki",
-    "set-deadline": "määratud tähtaeg",
+    "set-deadline": "Tähtaja määramine",
     "shrink": "psühhiaatri",
     "submit": "esitada",
     "the-project": "Projekt",
-    "title": "tiitli",
+    "title": "Pealkiri",
     "yes": "jah",
     "disconnect": "Logi välja",
     "confirm-close": "Kas oled kindel, et soovid toimetaja sulgeda? Teie tehtud muudatusi ei salvestata.",
@@ -563,7 +565,9 @@
     "link-to": "link",
     "other": "teised",
     "and": "ja",
-    "create": "Loo"
+    "create": "Loo",
+    "order-asc": "vanim kuni uusim",
+    "order-desc": "uusim"
   },
   "complete-profile": {
     "bio": {
@@ -793,7 +797,7 @@
     "delete-confirm-content": "Kas oled kindel, et soovid kustutada portaali jaoks isikupärastatud abikaardi. Kogu selle sisu kustutatakse.",
     "delete-confirm-title": "Kohandatud abi kaardi kustutamine",
     "info": "On olemas üldine abi, millele pääseb juurde, klõpsates ülemises paremas nurgas nuppu \"Abi\". Kui soovite lisada oma portaalile omase abilehega vahekaardi, saate seda teha allpool.",
-    "portal": "Abi",
+    "portal": "Aita",
     "tab": "Kaardi nimi",
     "video": "Videoõpe"
   },
@@ -803,10 +807,10 @@
     "empty": "Ei mingeid uudiseid... veel!"
   },
   "file": {
-    "add-image": "pildi lisamine",
-    "add-video": "video",
+    "add-image": "Lisa pilt",
+    "add-video": "Lisa video",
     "add-video-hint": "Lisage video, sisestades oma YouTube'i või vimeo URL-i.",
-    "attachment": "lisatud dokument | lisatud dokumendid",
+    "attachment": "Lisatud dokument | lisatud dokumendid",
     "upload": "Laadi üles"
   },
   "form": {
@@ -815,13 +819,13 @@
     "organization-name": "Teie kogukonna nimi",
     "description": "Kirjeldus",
     "email": "Email",
-    "email-contact": "e-mail",
+    "email-contact": "Email",
     "language": "Keel",
     "title": "Pealkiri",
-    "url": "url",
+    "url": "Url",
     "contact": {
       "subtitle": "Täitke see vorm ja me võtame teiega peagi ühendust",
-      "subject": "Teema",
+      "subject": "Subjekt",
       "subject-placeholder": "Mida sa tahaksid meiega jagada?",
       "email": "Email",
       "email-placeholder": "Email",
@@ -892,13 +896,13 @@
     "pssi": "Turvaplaan (PSSI)"
   },
   "goal": {
-    "add": "väravat",
-    "completed-on-the": "lõpetatud",
-    "description": "eesmärgikirjeldus",
+    "add": "Lisa eesmärk",
+    "completed-on-the": "Lõpetasin",
+    "description": "Eesmärgi kirjeldus",
     "goals": "Eesmärgid",
-    "planned-for-the": "planeeritud",
-    "status-title": "staatus",
-    "title": "väravatiitel",
+    "planned-for-the": "Planeeritud",
+    "status-title": "Staatus",
+    "title": "Eesmärgi tiitel",
     "delete": "Kas soovite selle eesmärgi kustutada?"
   },
   "group": {
@@ -982,7 +986,7 @@
         "help": "Liikmesriik"
       },
       "leaders": {
-        "label": "grupijuht",
+        "label": "Grupijuht",
         "help": "grupijuht"
       },
       "leaders-managers": {
@@ -1012,14 +1016,14 @@
   "home": {
     "documents": "Dokumendid",
     "all-projects": "Kõik projektid",
-    "announcements": "Teadaandeid",
+    "announcements": "Teadaanne",
     "news": "Uudised",
     "calendar": "Kalender",
     "instructions": "Juhendid",
     "communities": "Portaalid",
     "home": "Kodu",
     "categories": {
-      "title": "Projektide kategooriad"
+      "title": "Projektikategooriad"
     },
     "login": "Sisselogimine",
     "account-request": "Konto küsimine",
@@ -1027,7 +1031,7 @@
     "short-title": {
       "events": "Kalender",
       "projects": "Sinu projektid",
-      "instructions": "Juhendid"
+      "instructions": "Juhised"
     },
     "create-project": "Projekti loomine",
     "check-locations": "Vaata meie asukohti",
@@ -1054,6 +1058,7 @@
   },
   "me": {
     "follow": "Projektid, mida jälgin",
+    "follow-category": "Kategooriad, mida ma jälgin",
     "no-follow": "Sa ei jälgi veel projekti",
     "groups": "Minu grupid",
     "no-group": "Sa ei ole veel grupi liige",
@@ -1061,7 +1066,7 @@
     "no-bio": "Sa ei ole veel oma elulugu kirjutanud.",
     "no-skill": "Sa ei ole veel oskusi lisanud.",
     "page-title": "Minu profiil",
-    "projects-participate": "Minu projektid",
+    "projects-participate": "Projektid, mille liige ma olen",
     "no-project-participate": "Sa ei ole veel projekti liige",
     "projects-reviewing": "Projektid, mida ma üle vaatan",
     "no-project-reviewing": "Sa ei ole veel projekti ülevaataja",
@@ -1327,7 +1332,7 @@
           "label": "Sildid *"
         },
         "sdgs": {
-          "label": "SDGs",
+          "label": "Sdgs",
           "add": "Lisa",
           "notice-start": "Lisa",
           "notice-link": "Säästva arengu eesmärgid",
@@ -1350,6 +1355,13 @@
         "personal-bio": {
           "label": "Isiklik biobioloogia",
           "placeholder": "Esitle ennast isiklikult. Räägi meile endast ja oma kirgedest!"
+        }
+      },
+      "categories": {
+        "followed": {
+          "label": "Kategooriad, mida ma jälgin",
+          "notice": "Jälgides kategooriaid, saate teateid mis tahes uue tegevuse kohta nende kategooriate projektides. Kui soovite kategooriat jälgida, külastage seda ja klõpsake pealkirja kõrval nuppu \"Jälgi\".",
+          "empty": "Te ei järgi veel ühtegi kategooriat."
         }
       },
       "projects": {
@@ -1525,12 +1537,12 @@
         }
       },
       "publications": {
-        "no-editable": "Väljaanded ei ole veel kättesaadavad.",
-        "tab": "Trükised"
+        "tab": "Trükised",
+        "no-editable": "Väljaannete toimetamine on saadaval 2026. aasta jaanuari alguses"
       },
       "conferences": {
-        "no-editable": "Konverentsid ei ole veel kättesaadavad.",
-        "tab": "Konverentsid"
+        "tab": "Konverentsid",
+        "no-editable": "Toimetuskonverentsid on saadaval 2026. aasta jaanuari alguses"
       }
     },
     "go-to-page": "Vaata profiili lehekülge",
@@ -1554,11 +1566,11 @@
     "mentorship-offering": "Sa pakud mentorlust",
     "publications": "Trükised",
     "research-output-year": "Teadustöö väljundaasta",
-    "publications-similars": "Väljaannete sarnased väljaanded",
     "publications-empty": "Ei mingeid väljaandeid.",
     "conferences": "Konverentsid",
     "conferences-similars": "Konverentsilaadsed",
-    "conferences-empty": "Ei mingeid konverentse."
+    "conferences-empty": "Ei mingeid konverentse.",
+    "publications-similars": "Sarnased väljaanded"
   },
   "profile-completed-modal": {
     "notice-congratulation": "Nüüd olete valmis kasutama projekti platvormi.",
@@ -1577,7 +1589,7 @@
       "title": "Lisa projektile",
       "blog-entry": "Blogikirje",
       "goal": "Värav",
-      "sdg": "SDG",
+      "sdg": "Sdg",
       "link-and-attached-document": "Ressursid",
       "team-member": "Rühma liige / rühm",
       "announcement": "Teadaanne",
@@ -1593,6 +1605,7 @@
     "create-project": "Projekti loomine",
     "create": {
       "choose-category-first": "Palun vali esmalt kategooria",
+      "choose-template-first": "Palun vali esmalt mall",
       "help-link": "Me oleme siin, et aidata.",
       "notice": "Tärniga * märgitud väljad on kohustuslikud. Seda saab alati hiljem muuta. Pole aimugi, mida sa tegema peaksid?",
       "title": "Uue projekti loomine"
@@ -1603,8 +1616,8 @@
     "edit-linked-project": "Seotud projekti muutmine",
     "edit-location-point": "Muuda asukohapunkti",
     "edit-map": "Geolokatsiooni muutmine",
-    "edit-review": "Redigeerida",
-    "files": "projektifail | projektifail | projektifailid",
+    "edit-review": "Redigeerimine ülevaade",
+    "files": "Projektifail | projektifail | projektifailid",
     "follow": "Järgne",
     "followed": "Järgnes",
     "form": {
@@ -1638,8 +1651,8 @@
       "upload": "Laadi üles",
       "notice": "Laadige üles uus visuaal, et maksimeerida mõju! Sul on vaja ruudukujulist kuju!"
     },
-    "impact": "mõju",
-    "language": "projektikeel",
+    "impact": "Mõju",
+    "language": "Projekti keel",
     "life-status": "Projekti eluiga",
     "linked": "Seotud projekt | Seotud projektid",
     "linked-project": "Seotud projekt",
@@ -1649,14 +1662,14 @@
     "file-confirm-delete": "Kas tõesti kustutada see fail projektist?",
     "blog-confirm-delete": "Kas tõesti kustutada see blogi kirje projektist?",
     "location-type-label": "Asukoha liik",
-    "lock": "lukuprojekt",
+    "lock": "Lukustusprojekt",
     "private": "Eraprojektid",
-    "publish": "avaldada projekti",
+    "publish": "Avalda projekt",
     "public": "Riiklikud projektid",
     "quit": "Lõpeta projekt",
     "random-image": "Juhuslik pilt",
     "resource": "Ressursid | Ressursid",
-    "review": "ülevaatus",
+    "review": "Läbivaatamine",
     "reviews": "Arvustused",
     "review-confirm-delete": "Kas olete kindel, et kustutate selle ülevaate?",
     "reviewable": "Läbivaatamiseks valmis",
@@ -1665,7 +1678,7 @@
     "remove-user-title": "Kustuta kasutaja",
     "remove-user": "Kustuta",
     "show-n-projects": "Näita {count} projekti",
-    "suggested": "sarnased projektid | sarnased projektid",
+    "suggested": "Sarnased projektid | sarnased projektid",
     "suggested-hint": "Projektid, mis võivad teile huvi pakkuda",
     "summary": "Kokkuvõte",
     "settings": "Seaded",
@@ -1679,7 +1692,7 @@
       "blog-entry-create": "Lisas projekti uue blogikirje",
       "description": "salvestas projekti kirjelduse"
     },
-    "view": "vaateprojekt",
+    "view": "Vaata projekti",
     "visibility": "Projekti nähtavus",
     "actions": "Kiire tegutsemine",
     "copy": "(koopia)",
@@ -1692,32 +1705,32 @@
     "recommended": "Soovitatav",
     "sort_by": "Sorteeri:"
   },
-  "projects": "projektid",
+  "projects": "Projektid",
   "recruit": {
     "about-you": "Räägi endast ja sellest, mis sind motiveerib",
-    "add-announcement": "teate lisamine",
-    "announcement": "teadaanne",
-    "announcements": "Teade puudub | {count} teadaanne | {count} teadaanne",
-    "apply": "kohaldada",
-    "creation-date": "loodud",
+    "add-announcement": "Lisa teade",
+    "announcement": "Teadaanne",
+    "announcements": "Teadaanne puudub | {count} teadaanne | {count} teadaannet",
+    "apply": "Rakenda",
+    "creation-date": "Loodud",
     "delete-announcement-message": "Kas kustutada see teadaanne?",
-    "edit-announcement": "redigeerimiskuulutus",
+    "edit-announcement": "Muuda kuulutust",
     "email": "Hoiatus: meil on vaja kehtivat e-posti aadressi, et teiega ühendust võtta. (Me ei salvesta seda teavet platvormil).",
-    "firstname": "eesnimi",
-    "is-remunerated": "makstakse",
-    "job": "tööd",
-    "lastname": "perekonnanimi",
+    "firstname": "Eesnimi",
+    "is-remunerated": "Tasustatakse",
+    "job": "Job",
+    "lastname": "Perekonnanimi",
     "motivation-hint": "See peaks sisaldama vähemalt 20 tähemärki.",
-    "new-announcement": "uus teadaanne",
-    "participant": "osaleja",
-    "remunerated": "tasustatud",
+    "new-announcement": "Uus teadaanne",
+    "participant": "Osaleja",
+    "remunerated": "Tasustatud",
     "send": "Saada taotlus",
     "title": "Pealkiri",
-    "traineeship": "praktika",
-    "type": "teatetüüp",
-    "updated": "uuendatud",
-    "valid-until-the": "kehtib",
-    "view": "vaade"
+    "traineeship": "Praktikakoht",
+    "type": "Teate liik",
+    "updated": "Uuendatud",
+    "valid-until-the": "Kehtiv kuni",
+    "view": "Vaade"
   },
   "report": {
     "abuse": "Kuritarvitamine",
@@ -1730,23 +1743,23 @@
     "bug-url": "Kopeerige selle lehe URL, kuhu te selle probleemi lisate."
   },
   "resource": {
-    "add": "lisada",
-    "add-file": "faili lisamine",
-    "add-link": "linki",
-    "add-link-url": "lingi URL",
-    "add-link-url-label": "URL",
-    "add-link-text": "lingi tekst",
+    "add": "Lisa ressurss",
+    "add-file": "Faili lisamine",
+    "add-link": "Lisa link",
+    "add-link-url": "Lisa lingi URL",
+    "add-link-url-label": "Url",
+    "add-link-text": "Lisa lingi tekst",
     "add-link-text-label": "Tekst",
-    "edit-link": "linki",
-    "edit-file": "redigeerida",
+    "edit-link": "Muuda linki",
+    "edit-file": "Faili redigeerimine",
     "max-size": "Maksimaalne suurus 10 MB",
     "invalid-image": "Toetamata fail ... Kas see on pilt?",
     "error-uploading-image": "Viga pildi üleslaadimisel",
     "cannot-upload-image": "Pildi üleslaadimine nurjus",
-    "link-address": "lingiaadress",
+    "link-address": "Linki aadress",
     "resources": "Ressursse",
-    "web": "link veebiressurssidele | lingid veebiressurssidele",
-    "web-link": "veebilink | veebilink | veebilingid"
+    "web": "Link veebiressurssidele | lingid veebiressurssidele",
+    "web-link": "Veebilink | veebilink | veebilingid"
   },
   "result_box": {
     "people": "inimesi",
@@ -1860,32 +1873,32 @@
     "all-filters": "Kõik filtrid",
     "banner-portal": "Võite otsida ka kõigi kogukondade projekte",
     "browse-map": "Sirvi kaardi järgi",
-    "by-language": "keeleliselt",
-    "by-people": "inimeste",
-    "by-tag": "sildiga",
-    "by-sdg": "SDG",
+    "by-language": "Keele järgi",
+    "by-people": "Inimeste poolt",
+    "by-tag": "Sildi",
+    "by-sdg": "Sdg",
     "filter-by-language": "Lisa keel",
     "filter-by-people": "Lisa inimene",
     "filter-by-tag": "Lisa silt",
     "filter-by-sdg": "Lisa SDD",
     "filter-by-category": "Lisa kategooria",
-    "language": "keele",
-    "people": "inimesi",
-    "tag": "Märksõnad",
-    "or": "või",
+    "language": "Keel",
+    "people": "Inimesed",
+    "tag": "Silt",
+    "or": "Või",
     "ambiguousTag": "Mitmetähenduslik silt",
     "subtitle-ambiguous-tag": "Sellel sildil on erinevad tähendused. Valige üks, millest olete huvitatud:",
-    "sdg": "SDG",
+    "sdg": "Sdg",
     "skills": "Oskused",
-    "category": "kategooria",
-    "choose": "valida peamiste siltide vahel või otsida silte",
-    "filter": "filter",
+    "category": "Kategooria",
+    "choose": "Vali peamiste siltide vahel või otsi silte",
+    "filter": "Filter",
     "filters": "Filtrid",
     "add-filter": "Filtri lisamine",
     "geographic-map": "Geograafiline kaart",
-    "nothing-found": "midagi ei leitud",
-    "people-directory": "otsing inimeste kataloogis",
-    "projects": "projektide otsing",
+    "nothing-found": "Midagi ei leitud",
+    "people-directory": "Otsimine inimeste kataloogis",
+    "projects": "Projektide otsimine",
     "projects-tab": "Projektid ({count})",
     "projects-tab-label": "Projektid",
     "group-tab": "Rühmad ({count})",
@@ -1898,7 +1911,7 @@
     "all-section": "Kõik üksused",
     "groups-section": "Grupid",
     "people-section": "Inimesed",
-    "result": "otsingutulemused",
+    "result": "Otsingutulemused",
     "search-title": "Otsi",
     "search": "Otsingurühm",
     "search-for-a-tag": "Sildi otsimine",
@@ -1908,22 +1921,22 @@
     "search-skill": "Tüübioskuse märgis",
     "search-user": "Tüüp isiku nimi eestähed",
     "search-in": "Otsimisprojektid",
-    "specific-tags": "valida {organizationName} sildi vahel",
-    "wiki-tags": "temaatiliste siltide valimine",
-    "term-is-ambigous": "Termin on mitmetähenduslik.{0} Vaata meie ettepanekuid",
+    "specific-tags": "Vali {organizationname} sildi vahel",
+    "wiki-tags": "Valdkondlike siltide valik",
+    "term-is-ambigous": "Termin on mitmetähenduslik.{0}Vaata meie soovitusi",
     "info": "Samuti saate otsida projekte igast kogukonnast",
     "geo-map": "Geograafiline kaart",
     "tag-map": "Sildikaart",
     "geo-map-description": "Projektide avastamine maailmakaardil",
-    "tag-map-description": "Projektide avastamine Wikipédia sildikaardil",
+    "tag-map-description": "Projetkide avastamine wikipédia sildikaardil",
     "open-map": "Ava kaart",
     "pick-tag-classification": "Sildiraamistiku valimine",
     "pick-skill-classification": "Vali oskuste raamistik",
-    "pick-tag-preset": "Või vali soovitatud märksõna",
+    "pick-tag-preset": "Või valida soovitatud sildi",
     "pick-skill-preset": "Või valida soovitatud oskus",
-    "current-tag-description": "Kirjuta märksõna esimesed tähed ja vali õige märksõna",
+    "current-tag-description": "Kirjuta sildi esimesed tähed ja vali õige silt",
     "current-skill-description": "Tüübi oskuste märgis ja vali õige oskus",
-    "disambiguate": "(Desambiguation)",
+    "disambiguate": "(täpsustus)",
     "suggestions": "Soovitused",
     "choose-skill": "Klõpsa valitud oskusel:",
     "main-tags": "või valida peasiltide hulgast"
@@ -1980,7 +1993,7 @@
     "17": {
       "title": "Partnerlus eesmärkide nimel"
     },
-    "add-short": "SDG",
+    "add-short": "Lisa sdg",
     "sdg-fulltext": "säästva arengu eesmärgid"
   },
   "stats": {
@@ -1998,19 +2011,19 @@
     "updated": "Uuendatud"
   },
   "status": {
-    "complete": "lõpetatud",
-    "completed": "lõpetatud",
-    "cancel": "tühistada",
-    "canceled": "tühistas",
-    "ended": "lõppes",
-    "ongoing": "käimas",
-    "private": "privaatse",
-    "public": "avalik",
-    "running": "jookseb",
+    "complete": "Lõpetasin",
+    "completed": "Lõpetasin",
+    "cancel": "Tühistage",
+    "canceled": "Tühistatud",
+    "ended": "Lõpp",
+    "ongoing": "Käimasolev",
+    "private": "Eraisik",
+    "public": "Avalik",
+    "running": "Jooksmine",
     "title": "Milline on projekti eluiga?",
-    "toreview": "ülevaatamiseks",
-    "updated": "projekti staatust uuendatakse",
-    "na": "ükski"
+    "toreview": "Ülevaatamiseks",
+    "updated": "Projekti staatust uuendatakse",
+    "na": "Mitte ükski"
   },
   "tag": {
     "add-specific": "Siltide loomine projektide korraldamiseks",
@@ -2018,14 +2031,14 @@
     "add-project-tag": "Siltide esitamine projektide linkimiseks teema järgi",
     "add-profile-tag": "Pane oskused oma kasutajaprofiilidele edasi",
     "add-project-tag-info": "Kui kasutaja loob projekti, saab ta lisada Wikipedia temaatilise sildi (nt biokeemia, füüsika jne). See lihtsustab projekti leidmist ja parandab projektisoovitusi temaatilise sarnasuse järgi. Saate välja tuua oma organisatsiooni jaoks olulised temaatilised sildid.",
-    "edit": "redigeerimissilte",
+    "edit": "Siltide muutmine",
     "title": "Sildid"
   },
   "team": {
-    "add": "lisada liikmeid/rühmi",
-    "edit": "meeskonnaliige",
-    "group-members": "grupiliikmed",
-    "project-members": "projektiliikmed",
+    "add": "Liikmete/gruppide lisamine",
+    "edit": "Muuda meeskonnaliiget",
+    "group-members": "Grupi liikmed",
+    "project-members": "Projekti liikmed",
     "no-user-message": "Ükski kasutaja ei vasta sinu otsingule",
     "remove-user-confirm": "Kas tõesti kustutada see kasutaja projektist?",
     "remove-group-confirm": "Kas tõesti kustutada see grupp projektist?",
@@ -2035,8 +2048,8 @@
     "edit-tags": "Siltide muutmine",
     "blog-content": "Blogi sisu mall",
     "blog-title": "Blogi pealkirja mall",
-    "advancement-goal-title": "edutamiseesmärgi tiitli mall",
-    "advancement-goal-content": "edutamise eesmärgi sisu mall",
+    "advancement-goal-title": "Edendamise eesmärgi tiitli mall",
+    "advancement-goal-content": "Ülestõusu eesmärgi sisu mall",
     "category": "Malli kategooria",
     "language": "Keelemall",
     "info": "Kui soovite kasutajatele soovitada, kuidas oma projekti konkreetses kategoorias korraldada, saate luua selle kategooria malli. Siis, kui kasutaja loob projekti selles kategoorias, projekti initsialiseeritakse teksti, et sa määratletud mall. See tekst on mõeldud juhendina kasutajatele.",
@@ -2074,7 +2087,7 @@
     "organization-email": "Võtke ühendust oma portaali e-postiga.",
     "organization-language": "Teie portaali vaikimisi keel.",
     "organization-visibility": "Kas soovite oma portaalile linki projekti peamisest portaalist?",
-    "organization-logo": "Teie logo kuvatakse lapsevanema portaalis valgel taustal. Kui varem üleslaaditud logo ei ühildu valge taustaga, vali allpool taustavärv."
+    "organization-logo": "Teie logo kuvatakse lapsevanema portaalis valgel taustal. kui varem üleslaaditud logo ei ühildu valge taustaga, vali allpool taustavärv."
   },
   "toasts": {
     "abuse-report": {
@@ -2347,6 +2360,12 @@
         "no": "Ei"
       }
     },
+    "category": {
+      "project-created": "Kategooria, mida jälgite - loomine",
+      "project-created-sub": "Saate teate, kui selles kategoorias luuakse uus projekt",
+      "project-updated": "Kategooria, mida jälgite - uuendus",
+      "project-updated-sub": "Saate teate, kui selles kategoorias uuendatakse projekti"
+    },
     "project": {
       "title": "Projektist teatamine",
       "changes": "Teadete muutmine",
@@ -2398,6 +2417,7 @@
       "reply": "{sender} vastas teie kommentaarile {project}",
       "review": "{sender} läbivaadatud projekt {project}",
       "ready_for_review": "{sender} märkis, et tema projekt on läbivaatamiseks valmis. Nüüd saate vaadata projekti {project}",
+      "project_created": "{sender} lõi projekti {project}",
       "project_updated": "{sender} uuendatud projekt {project}",
       "group_member_added": "{sender} lisas grupi {group} projekti liikmeks {project}",
       "group_member_added_self": "{sender} lisas grupi {group} olete osa projektist {project}",
@@ -2558,7 +2578,7 @@
       "title": {
         "label": "Pealkiri *",
         "required": "Pealkiri on vajalik",
-        "placeholder": "uudiste pealkirja"
+        "placeholder": "Uudise pealkiri"
       },
       "content": {
         "label": "Sisu *",
@@ -2605,7 +2625,7 @@
       "title": {
         "label": "Pealkiri *",
         "required": "Pealkiri on vajalik",
-        "placeholder": "juhise pealkiri"
+        "placeholder": "Juhise pealkiri"
       },
       "content": {
         "label": "Sisu *",
@@ -2730,7 +2750,11 @@
     "title": "Vestelda AI-ga",
     "input-placeholder": "Sisesta oma sõnum siia...",
     "intro-message": "Tere! Kuidas ma saan teid täna aidata?",
-    "drawer-button-label": "Tehisintellekti assistent"
+    "drawer-button-label": "Tehisintellekti assistent",
+    "fetching_tools": "Tööriistade hankimine...",
+    "fetching_data": "Andmete hankimine...",
+    "reasoning": "Mõtlemine...",
+    "restart": "Vestluse taaskäivitamine"
   },
   "researcher": {
     "relators": {
@@ -3085,5 +3109,14 @@
       "Unknown": "tundmatu",
       "Working-Paper": "töödokument"
     }
+  },
+  "tos": {
+    "evolved": "Meie teenusetingimusi on uuendatud, palun vaadake need üle ja kinnitage.",
+    "review-and-sign": "Palun lugege ja kinnitage uuendatud teenusetingimused, et platvormi kasutamist jätkata.",
+    "scroll-notice": "Enne kinnitamist kerige tingimuste lõppu.",
+    "error-approving": "Viga tingimuste kinnitamisel, palun proovige hiljem uuesti.",
+    "title": "Teenuse osutamise tingimused",
+    "approve-title": "Palun kinnitage teenusetingimused",
+    "approve-button": "Nõustun"
   }
 }

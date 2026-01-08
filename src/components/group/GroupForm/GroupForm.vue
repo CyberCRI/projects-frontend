@@ -49,7 +49,7 @@
 
     <!-- Image -->
     <div class="img-ctn">
-      <label>{{ $filters.capitalize($t('group.image-header')) }}</label>
+      <label>{{ $t('group.image-header') }}</label>
       <ImageEditor
         v-model:image-sizes="form.imageSizes"
         v-model:picture="form.header_image"
@@ -65,14 +65,14 @@
     <!-- Description -->
     <div class="description">
       <label>
-        {{ $filters.capitalize($t('group.form.description-label')) }}
+        {{ $t('group.form.description-label') }}
 
         <LpiButton
           v-if="!form.description || isAddMode"
           class="add-btn"
           :btn-icon="form.description ? 'Pen' : 'Plus'"
           data-test="add-description"
-          :label="$filters.capitalize($t(form.description ? 'group.form.edit' : 'group.form.add'))"
+          :label="$t(form.description ? 'group.form.edit' : 'group.form.add')"
           @click="descriptionIsOpened = true"
         />
       </label>
@@ -108,7 +108,7 @@
 
     <!-- Visibility -->
     <div class="visibility">
-      <label>{{ $filters.capitalize($t('group.form.visibility.title')) }}</label>
+      <label>{{ $t('group.form.visibility.title') }}</label>
       <div class="visibility-options">
         <template v-for="visibility in visibilities" :key="visibility.id">
           <label
@@ -169,6 +169,7 @@
 import { deleteGroup, getHierarchyGroups } from '@/api/groups.service.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { useRuntimeConfig } from '#imports'
+import { usePatatoids } from '@/composables/usePatatoids'
 export default {
   name: 'GroupForm',
 
@@ -196,18 +197,15 @@ export default {
   setup() {
     const organizationsStore = useOrganizationsStore()
     const runtimeConfig = useRuntimeConfig()
+    const defaultPictures = usePatatoids()
     return {
       organizationsStore,
       runtimeConfig,
+      defaultPictures,
     }
   },
 
   data() {
-    const defaultPictures = [1, 2, 3, 4, 5, 6].map((index) => {
-      return `${
-        this.runtimeConfig.public.appPublicBinariesPrefix
-      }/patatoids-project/Patatoid-${index}.png`
-    })
     return {
       loading: false,
       currentPatatoidIndex: 1,
@@ -247,7 +245,6 @@ export default {
       descriptionIsOpened: false,
       showRemoveQuit: false,
       groups: [],
-      defaultPictures,
     }
   },
 

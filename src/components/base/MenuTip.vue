@@ -101,12 +101,12 @@ $padding: 1rem;
 
 .scale-enter-from,
 .scale-leave-to {
-  transform: scale(0);
+  transform: translateZ(0) scale(0);
 }
 
 .scale-enter-to,
 .scale-leave-from {
-  transform: scale(1);
+  transform: translateZ(0) scale(1);
 }
 
 .scale-enter-active,

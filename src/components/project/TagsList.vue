@@ -85,7 +85,7 @@
   </div>
 </template>
 <script>
-import debounce from 'lodash.debounce'
+import { debounce } from 'es-toolkit'
 import BadgeItem from '@/components/base/BadgeItem.vue'
 
 export default {
@@ -115,7 +115,7 @@ export default {
   },
 
   setup() {
-    const { locale } = useI18n()
+    const { locale } = useNuxtI18n()
     return {
       locale,
     }
@@ -395,9 +395,10 @@ export default {
   transition: transform 0.3s ease-in-out;
   transform-origin: center bottom;
   display: inline-block;
+  transform: translateZ(0) scaleY(1);
 
   &:hover {
-    transform: scaleY(1.3);
+    transform: translateZ(0) scaleY(1.3);
   }
 }
 

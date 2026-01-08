@@ -4,7 +4,7 @@
       <SearchInput
         v-model="queryString"
         :full="true"
-        :placeholder="$filters.capitalize($t('search.projects'))"
+        :placeholder="$t('search.projects')"
         class="input"
         @enter="immediateSearch"
         @delete-query="deleteQuery"
@@ -13,7 +13,7 @@
         v-if="!isLoading"
         class="select-btn"
         :secondary="true"
-        :label="$filters.capitalize($t('drawer.select-all'))"
+        :label="$t('drawer.select-all')"
         @click="selectAll"
       />
     </section>
@@ -58,7 +58,7 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
 import SearchInput from '@/components/base/form/SearchInput.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import debounce from 'lodash.debounce'
+import { debounce } from 'es-toolkit'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import useAPI from '@/composables/useAPI.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'

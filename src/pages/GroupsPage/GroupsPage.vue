@@ -14,7 +14,7 @@ const organizationsStore = useOrganizationsStore()
 
 const { searchFromQuery } = useSearch('groups')
 
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 // ???
 // const permissions = usePermissions()
@@ -135,7 +135,7 @@ try {
 <template>
   <div class="page-section-extra-wide groups-layout page-top">
     <h1 class="page-title">
-      {{ $filters.capitalize($t('common.groups')) }}
+      {{ $t('common.groups') }}
     </h1>
 
     <div v-if="!groupId" class="search-input-container">

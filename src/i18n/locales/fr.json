@@ -118,6 +118,13 @@
     }
   },
   "admin": {
+    "terms": {
+      "title": "Conditions Générales d'Utilisation",
+      "using-default": "Vous utilisez actuellement les Conditions Générales d'Utilisation par défaut",
+      "error": "Une erreur s'est produite lors de l'enregistrement des Conditions Générales d'Utilisation.",
+      "saved": "Conditions Générales d'Utilisation enregistrées avec succès.",
+      "version": "Version :"
+    },
     "accounts": {
       "table": {
         "last-name": "Nom",
@@ -219,7 +226,8 @@
       "users": "Utilisateurs",
       "requests": "Demandes",
       "groups": "Groupes",
-      "settings": "Paramètres"
+      "settings": "Paramètres",
+      "terms": "CGU"
     },
     "page-title": "Admin",
     "portal": {
@@ -228,7 +236,7 @@
         "invisible": "Invisible",
         "logo": "Logo",
         "size-min-logo": "Taille minimale du logo : {minWidth}px * {minHeight}px",
-        "portal-referencing": "référencement sur le portail principal",
+        "portal-referencing": "Référencement sur le portail principal",
         "visible": "Visible",
         "public-image": "Image (vue publique)",
         "wording": {
@@ -453,11 +461,11 @@
     }
   },
   "blog": {
-    "add-entry": "ajouter une entrée de blog",
+    "add-entry": "Ajouter une entrée de blog",
     "entry": "entrée de blog",
     "last-publication": "dernière publication",
     "no-entry": "Pas encore d'entrée ...",
-    "posts": "entrées de blog",
+    "posts": "Entrées de blog",
     "title": "Blog"
   },
   "browse": {
@@ -473,12 +481,14 @@
     "page-title": "Categorie",
     "title": "Catégories",
     "all-categories": "Voir toutes les catégories",
+    "follow-all-categories": "Suivre toutes les catégories",
+    "following-all-categories": "Vous suivez toutes les catégories",
     "all-projects": "Voir tous les projets",
     "edit": "Modifier"
   },
   "comment": {
     "add-comment": "Ajoutez votre commentaire !",
-    "comment-verb": "commenter",
+    "comment-verb": "Commenter",
     "comments": "Commentaires",
     "deleted": "commentaire effacé le",
     "discard-comment": "Annuler le commentaire ?",
@@ -503,18 +513,18 @@
     "activate": "Activer",
     "activated": "Activé",
     "add": "Ajouter",
-    "added-on-the": "ajouté le",
+    "added-on-the": "Ajouté le",
     "back": "retour",
     "cancel": "Annuler",
     "chose-date": "Choisir date",
     "confirm": "Confirmer",
     "continue": "Continuer",
     "confirm-delete": "Êtes vous sûr de vouloir supprimer ceci ?",
-    "deadline": "échéance",
+    "deadline": "Échéance",
     "delete": "Effacer",
     "delete-selection": "Effacer la sélection",
     "delete-user": "Supprimer",
-    "description": "description",
+    "description": "Description",
     "destroy-confirm": "Etes vous sûr(e) de vouloir supprimer ce projet? Cette action ne pourra pas être annulée.",
     "cant-quit-self": "Vous êtes le dernier éditeur de l’équipe. Tout projet doit avoir au moins un éditeur.\nVous pouvez soit ajouter un autre éditeur avant de quitter le projet, soit supprimer le projet depuis l’onglet Configuration.",
     "cant-quit-other": "C'est le dernier éditeur de l’équipe. Tout projet doit avoir au moins un éditeur.\nVous pouvez soit ajouter un autre éditeur avant de supprimer celui-ci, soit supprimer le projet depuis l’onglet Configuration.",
@@ -527,32 +537,32 @@
     "link-copied-success": "Lien copié",
     "link-copied-failed": "La copie du lien a échoué",
     "loading": "Chargement",
-    "login": "connexion",
+    "login": "Connexion",
     "modify": "Modifier",
     "more": "plus",
     "need-login": "Vous devez être connecté",
     "no": "non",
     "no-result": "Pas de résultat",
-    "none": "aucun",
+    "none": "Aucun",
     "of": "de",
-    "org": "membres du portail",
+    "org": "Membres du portail",
     "quit-project": "Êtes-vous sûr(e) de vouloir quitter ce projet ?",
     "people": "Personnes",
-    "read": "lire",
-    "reply": "répondre",
+    "read": "Lire",
+    "reply": "Répondre",
     "remove-group": "Êtes-vous sûr(e) de vouloir supprimer ce groupe ?",
     "remove-user": "Êtes-vous sûr(e) de vouloir supprimer cet utilisateur ?",
-    "save": "enregistrer",
+    "save": "Enregistrer",
     "send": "Envoyer",
     "see": "Voir",
-    "see-less": "voir moins",
-    "see-more": "voir plus",
+    "see-less": "Voir moins",
+    "see-more": "Voir plus",
     "see-all": "Voir tout",
-    "set-deadline": "fixer une échéance",
+    "set-deadline": "Fixer une échéance",
     "shrink": "réduire",
     "submit": "valider",
     "the-project": "Le projet",
-    "title": "titre",
+    "title": "Titre",
     "yes": "oui",
     "disconnect": "Déconnexion",
     "confirm-close": "Êtes-vous sûr de vouloir fermer l'éditeur ? Vos modifications ne seront pas sauvegardées.",
@@ -563,7 +573,9 @@
     "link-to": "lien vers",
     "other": "autres",
     "and": "et",
-    "create": "Créer"
+    "create": "Créer",
+    "order-asc": "plus ancien à plus récent",
+    "order-desc": "Plus récent à plus ancien"
   },
   "complete-profile": {
     "bio": {
@@ -803,10 +815,10 @@
     "empty": "Pas de nouvelles... Pour le moment !"
   },
   "file": {
-    "add-image": "ajouter une image",
-    "add-video": "ajouter une vidéo",
+    "add-image": "Ajouter une image",
+    "add-video": "Ajouter une vidéo",
     "add-video-hint": "Ajouter une vidéo en entrant son URL youtube ou vimeo.",
-    "attachment": "pièce jointe | pièces jointes",
+    "attachment": "Pièce jointe | pièces jointes",
     "upload": "Ajouter"
   },
   "form": {
@@ -815,10 +827,10 @@
     "organization-name": "Nom de votre communauté",
     "description": "Description",
     "email": "Email",
-    "email-contact": "email",
+    "email-contact": "Email",
     "language": "Langue",
     "title": "Titre",
-    "url": "url",
+    "url": "Url",
     "contact": {
       "subtitle": "Remplissez ce court formulaire et nous vous recontacterons rapidement.",
       "subject": "Objet",
@@ -892,13 +904,13 @@
     "pssi": "Plan de Sécurité (PSSI)"
   },
   "goal": {
-    "add": "ajouter un objectif",
-    "completed-on-the": "terminé le",
-    "description": "description",
+    "add": "Ajouter un objectif",
+    "completed-on-the": "Terminé le",
+    "description": "Description",
     "goals": "Objectifs",
-    "planned-for-the": "planifié pour le",
-    "status-title": "statut",
-    "title": "titre de l'objectif",
+    "planned-for-the": "Planifié pour le",
+    "status-title": "Statut",
+    "title": "Titre de l'objectif",
     "delete": "Voulez vous effacer cet objectif ?"
   },
   "group": {
@@ -1054,6 +1066,7 @@
   },
   "me": {
     "follow": "Projets que je suis",
+    "follow-category": "Catégories que je suis",
     "no-follow": "Vous ne suivez pas encore de projet",
     "groups": "Groupes dont je fait partie",
     "no-group": "Vous n'êtes pas encore membre d'un groupe",
@@ -1327,7 +1340,7 @@
           "label": "Tags *"
         },
         "sdgs": {
-          "label": "ODDs",
+          "label": "Odds",
           "add": "Ajouter",
           "notice-start": "Ajouter des ",
           "notice-link": "Objectifs de Développement Durable (ODDs)",
@@ -1350,6 +1363,13 @@
         "personal-bio": {
           "label": "Bio personnelle",
           "placeholder": "Présentez-vous personnellement. Parlez-nous de vous et de vos passions !"
+        }
+      },
+      "categories": {
+        "followed": {
+          "label": "Catégories que je suis",
+          "notice": "En suivant des catégories, vous recevrez des notifications sur toute nouvelle activité concernant des projets dans ces catégories. Si vous souhaitez suivre une catégorie, visitez-la et cliquez sur le bouton \"Suivre\" à côté du titre.",
+          "empty": "Vous ne suivez encore aucune catégorie."
         }
       },
       "projects": {
@@ -1525,12 +1545,12 @@
         }
       },
       "publications": {
-        "no-editable": "Les publications ne sont pas encore disponibles.",
-        "tab": "Publications"
+        "tab": "Publications",
+        "no-editable": "Les publications d'édition seront disponibles début janvier 2026"
       },
       "conferences": {
-        "no-editable": "Les conférences ne sont pas encore disponibles.",
-        "tab": "Conférences"
+        "tab": "Conférences",
+        "no-editable": "Des conférences d'édition seront disponibles début janvier 2026"
       }
     },
     "go-to-page": "Voir la page du profil",
@@ -1554,11 +1574,11 @@
     "mentorship-offering": "Vous proposez un mentorat",
     "publications": "Publications",
     "research-output-year": "Année de production de la recherche",
-    "publications-similars": "Publications similaires",
     "publications-empty": "Pas de publications.",
     "conferences": "Conférences",
     "conferences-similars": "Conférences similaires",
-    "conferences-empty": "Pas de conférence."
+    "conferences-empty": "Pas de conférence.",
+    "publications-similars": "Publications similaires"
   },
   "profile-completed-modal": {
     "notice-congratulation": "Vous êtes maintenant prêt à utiliser la plateforme Projects.",
@@ -1577,7 +1597,7 @@
       "title": "Ajouter au projet",
       "blog-entry": "Article de blog",
       "goal": "Objectif",
-      "sdg": "ODD",
+      "sdg": "Odd",
       "link-and-attached-document": "Ressources",
       "team-member": "Membre de l'équipe / groupe",
       "announcement": "Annonce",
@@ -1593,6 +1613,7 @@
     "create-project": "Créer un projet",
     "create": {
       "choose-category-first": "Choisissez d'abord une catégorie",
+      "choose-template-first": "Veuillez d'abord choisir un modèle",
       "help-link": "On est là pour aider.",
       "notice": "Les champs marqués avec * sont obligatoires. Vous pourrez les modifier par la suite si besoin. Vous avez des questions ?",
       "title": "Créer un nouveau projet"
@@ -1604,7 +1625,7 @@
     "edit-location-point": "Modifier ce point de localisation",
     "edit-review": "Modifier la révision",
     "edit-map": "Modifier les emplacements",
-    "files": "fichier du projet | fichier du projet | fichiers du projet",
+    "files": "Fichier du projet | fichier du projet | fichiers du projet",
     "follow": "Suivre",
     "followed": "Suivi",
     "form": {
@@ -1639,7 +1660,7 @@
       "notice": "Téléchargez un nouveau visuel pour maximiser votre impact ! Vous aurez besoin d'une image carrée !"
     },
     "impact": "Impact",
-    "language": "langue du projet",
+    "language": "Langue du projet",
     "life-status": "État d'avancement du projet",
     "linked": "Projet lié | Projets liés",
     "linked-project": "Projet lié",
@@ -1649,23 +1670,23 @@
     "file-confirm-delete": "Êtes-vous sûr de vouloir supprimer ce fichier de votre projet ?",
     "blog-confirm-delete": "Êtes-vous sûr de vouloir supprimer cette entrée de blog de votre projet ?",
     "location-type-label": "Type de localisation",
-    "lock": "vérouiller le projet",
+    "lock": "Vérouiller le projet",
     "private": "Projets Privés",
-    "publish": "publier le projet",
+    "publish": "Publier le projet",
     "public": "Projets publics",
     "quit": "Quitter le projet",
     "random-image": "Image aléatoire",
     "remove-user-title": "Supprimer l'utilisateur ?",
     "remove-user": "Supprimer",
     "resource": "Ressource | Ressources",
-    "review": "réviser",
+    "review": "Réviser",
     "reviews": "Révisions",
     "review-confirm-delete": "Êtes-vous sûr de vouloir supprimer cette révision ?",
     "reviewable": "Prêt pour révision",
     "reviewed-on-the": "a évalué ce projet le",
     "remove-group": "Supprimer le groupe",
     "show-n-projects": "Afficher les {count} projets",
-    "suggested": "projet similaire | projets similaires",
+    "suggested": "Projet similaire | projets similaires",
     "suggested-hint": "Des projets qui pourraient vous intéresser",
     "summary": "Résumé",
     "settings": "Configuration",
@@ -1679,7 +1700,7 @@
       "blog-entry-create": "a ajouté une nouvelle entrée de blog de ce projet",
       "description": "a enregistré la description de ce projet"
     },
-    "view": "voir le projet",
+    "view": "Voir le projet",
     "visibility": "Visibilité du projet",
     "actions": "Actions rapides",
     "copy": "(copie)",
@@ -1692,32 +1713,32 @@
     "recommended": "Recommandés",
     "sort_by": "Trier par :"
   },
-  "projects": "projets",
+  "projects": "Projets",
   "recruit": {
     "about-you": "Parlez-nous de vous et de vos motivations",
-    "add-announcement": "ajouter une annonce",
-    "announcement": "annonce",
-    "announcements": "aucune annonce | {count} annonce | {count} annonces",
+    "add-announcement": "Ajouter une annonce",
+    "announcement": "Annonce",
+    "announcements": "Aucune annonce | {count} annonce | {count} annonces",
     "apply": "Répondre",
-    "creation-date": "créée le",
+    "creation-date": "Créée le",
     "delete-announcement-message": "Voulez-vous effacer cette annonce ?",
-    "edit-announcement": "modifier l'annonce",
-    "email": "Entrez une adresse e-mail valide afin que nous puissions vous contacter. (Cette adresse e-mail ne sera pas enregistrée sur notre plateforme).",
-    "firstname": "prénom",
-    "is-remunerated": "est rémunéré",
-    "job": "emploi",
-    "lastname": "nom",
+    "edit-announcement": "Modifier l'annonce",
+    "email": "Entrez une adresse e-mail valide afin que nous puissions vous contacter. (cette adresse e-mail ne sera pas enregistrée sur notre plateforme).",
+    "firstname": "Prénom",
+    "is-remunerated": "Est rémunéré",
+    "job": "Emploi",
+    "lastname": "Nom",
     "motivation-hint": "Doit contenir au moins 20 caractères",
-    "new-announcement": "nouvelle annonce",
-    "participant": "participant",
-    "remunerated": "rémunéré",
+    "new-announcement": "Nouvelle annonce",
+    "participant": "Participant",
+    "remunerated": "Rémunéré",
     "send": "Envoi de la candidature",
     "title": "Titre",
-    "traineeship": "stage",
-    "type": "type d'annonce",
-    "updated": "modifié une annonce",
-    "valid-until-the": "valide jusqu'au",
-    "view": "voir"
+    "traineeship": "Stage",
+    "type": "Type d'annonce",
+    "updated": "Modifié une annonce",
+    "valid-until-the": "Valide jusqu'au",
+    "view": "Voir"
   },
   "report": {
     "abuse": "Signaler un abus",
@@ -1730,23 +1751,23 @@
     "bug-url": "Copiez collez l'URL de la page sur laquelle vous avez rencontré ce problème."
   },
   "resource": {
-    "add": "ajouter des liens et pièces jointes",
-    "add-file": "ajouter un fichier",
-    "add-link": "ajouter un lien",
-    "add-link-url": "ajouter l'URL du lien",
-    "add-link-url-label": "URL",
-    "add-link-text": "ajouter le texte du lien",
+    "add": "Ajouter des liens et pièces jointes",
+    "add-file": "Ajouter un fichier",
+    "add-link": "Ajouter un lien",
+    "add-link-url": "Ajouter l'url du lien",
+    "add-link-url-label": "Url",
+    "add-link-text": "Ajouter le texte du lien",
     "add-link-text-label": "Texte",
-    "edit-link": "modifier un lien",
-    "edit-file": "modifier un fichier",
+    "edit-link": "Modifier un lien",
+    "edit-file": "Modifier un fichier",
     "max-size": "Taille max. 10Mo",
     "invalid-image": "Fichier non supporté... est-ce bien une image ?",
     "error-uploading-image": "Erreur à la sauvegarde de l'image ",
     "cannot-upload-image": "Impossible de sauveagrder l'image pour l'instant",
-    "link-address": "url du lien",
+    "link-address": "Url du lien",
     "resources": "Ressources",
-    "web": "lien aux ressources web | lien aux ressources web | liens aux ressources web",
-    "web-link": "lien web | liens web"
+    "web": "Lien aux ressources web | lien aux ressources web | liens aux ressources web",
+    "web-link": "Lien web | liens web"
   },
   "result_box": {
     "people": "personnes",
@@ -1860,33 +1881,33 @@
     "all-filters": "Tous les filtres",
     "banner-portal": "Vous pouvez également rechercher dans les projets de toutes les communautés sur ",
     "browse-map": "Rechercher par cartes",
-    "by-language": "par langue",
-    "by-people": "par personne",
-    "by-tag": "par tag",
-    "by-sdg": "par ODD",
+    "by-language": "Par langue",
+    "by-people": "Par personne",
+    "by-tag": "Par tag",
+    "by-sdg": "Par odd",
     "filter-by-language": "Ajouter une langue",
     "filter-by-people": "Ajouter une personne",
     "filter-by-tag": "Ajouter un tag",
-    "filter-by-sdg": "Ajouter un ODD",
-    "language": "langue",
-    "people": "personnes",
-    "tag": "tag",
-    "or": "ou",
+    "filter-by-sdg": "Ajouter un odd",
+    "language": "Langue",
+    "people": "Personnes",
+    "tag": "Tag",
+    "or": "Ou",
     "ambiguousTag": "Tag ambigu",
-    "subtitle-ambiguous-tag": "Ce tag a différentes significations. Sélectionnez celle qui vous intéresse :",
-    "sdg": "ODD",
+    "subtitle-ambiguous-tag": "Ce tag a différentes significations. sélectionnez celle qui vous intéresse :",
+    "sdg": "Odd",
     "skills": "Compétences",
-    "category": "catégorie",
+    "category": "Catégorie",
     "filter-by-category": "Ajouter une catégorie",
-    "choose": "choisir parmis les tags principaux ou chercher",
-    "filter": "filtrer",
+    "choose": "Choisir parmis les tags principaux ou chercher",
+    "filter": "Filtrer",
     "filters": "Filtres",
     "add-filter": "Ajouter un filtre",
     "geographic-map": "Carte géographique",
-    "main-tags": "ou choisir parmi les tags principaux",
+    "main-tags": "Ou choisir parmi les tags principaux",
     "nothing-found": "Aucun résultat",
-    "people-directory": "recherche dans l'annuaire",
-    "projects": "rechercher des projets",
+    "people-directory": "Recherche dans l'annuaire",
+    "projects": "Rechercher des projets",
     "projects-tab": "Projets ({count})",
     "projects-tab-label": "Projets",
     "people-tab": "Personnes ({count})",
@@ -1899,9 +1920,9 @@
     "all-section": "Toutes les entités",
     "groups-section": "Groupes",
     "people-section": "Personnes",
-    "result": "resultats de recherche",
+    "result": "Resultats de recherche",
     "search-title": "Rechercher",
-    "search": "rechercher",
+    "search": "Rechercher",
     "search-for-a-tag": "Rechercher un tag",
     "search-all": "Rechercher dans toutes les communautés",
     "search-group": "Tapez les premières lettres du groupe",
@@ -1909,14 +1930,14 @@
     "search-skill": "Tapez l'intitulé de la compétence",
     "search-user": "Tapez les premières lettres du nom",
     "search-in": "Rechercher dans la communauté",
-    "specific-tags": "choisissez parmi les tags de {organizationName}",
-    "wiki-tags": "choisissez des tags thématiques",
-    "term-is-ambigous": "Ce terme est ambigu.{0}Voir nos suggestions",
+    "specific-tags": "Choisissez parmi les tags de {organizationname}",
+    "wiki-tags": "Choisissez des tags thématiques",
+    "term-is-ambigous": "Ce terme est ambigu.{0}voir nos suggestions",
     "info": "Vous pouvez également rechercher dans les projets de toutes les communautés sur",
     "geo-map": "Carte géographique",
     "tag-map": "Carte des tags",
     "geo-map-description": "Découvrez les projets sur une carte du monde",
-    "tag-map-description": "Découvrez les projets sur une carte des tags Wikipédia",
+    "tag-map-description": "Découvrez les projets sur une carte des tags wikipédia",
     "open-map": "Ouvrir la carte",
     "pick-tag-classification": "Choisissez un référentiel de tags",
     "pick-skill-classification": "Choisissez un référentiel de compétences",
@@ -1924,7 +1945,7 @@
     "pick-skill-preset": "Ou choisissez une compétence suggérée",
     "current-tag-description": "Tapez les premières lettres du tag et sélectionnez le bon tag",
     "current-skill-description": "Tapez l'intitulé de la compétence et sélectionnez la bonne compétence",
-    "disambiguate": "(HOMONYMIE)",
+    "disambiguate": "(homonymie)",
     "suggestions": "Suggestions",
     "choose-skill": "Cliquez sur la compétence de votre choix :"
   },
@@ -1980,7 +2001,7 @@
     "17": {
       "title": "Partenariats pour la Réalisation des Objectifs"
     },
-    "add-short": "ajouter un ODD",
+    "add-short": "Ajouter un odd",
     "sdg-fulltext": "objectifs de développement durable"
   },
   "stats": {
@@ -1998,19 +2019,19 @@
     "updated": "Modifiés"
   },
   "status": {
-    "complete": "réalisé",
-    "completed": "réalisé",
-    "cancel": "annulé",
-    "canceled": "annulé",
-    "ended": "terminé",
-    "ongoing": "en cours",
-    "private": "privée",
-    "public": "publique",
-    "running": "en cours",
+    "complete": "Réalisé",
+    "completed": "Réalisé",
+    "cancel": "Annulé",
+    "canceled": "Annulé",
+    "ended": "Terminé",
+    "ongoing": "En cours",
+    "private": "Privée",
+    "public": "Publique",
+    "running": "En cours",
     "title": "Quel est l'état d'avancement du projet ?",
-    "toreview": "à réviser",
+    "toreview": "À réviser",
     "updated": "Statut du projet modifié",
-    "na": "aucun"
+    "na": "Aucun"
   },
   "tag": {
     "add-specific": "Créer des tags pour organiser les projets",
@@ -2018,14 +2039,14 @@
     "add-project-tag": "Mettre en avant des tags pour lier les projets par thème",
     "add-profile-tag": "Mettre en avant des compétences pour les profils utilisateurs",
     "add-project-tag-info": "Quand un utilisateur crée un projet, il peut rajouter un tag thématique issu de Wikipédia (ex : biochimie, physique, etc). Cela permet de plus facilement trouver le projet et d’améliorer les recommandations de projets par similarité thématique. Vous pouvez mettre en avant des tags thématiques importants pour votre organisation.",
-    "edit": "modifier les tags",
+    "edit": "Modifier les tags",
     "title": "Tags"
   },
   "team": {
-    "add": "ajouter un membre / groupe",
-    "edit": "modifier un membre de l'équipe",
-    "group-members": "membres du groupe",
-    "project-members": "membres du projet",
+    "add": "Ajouter un membre / groupe",
+    "edit": "Modifier un membre de l'équipe",
+    "group-members": "Membres du groupe",
+    "project-members": "Membres du projet",
     "no-user-message": "Aucun utilisateur ne correspond à votre recherche",
     "remove-user-confirm": "Êtes-vous sûr de vouloir supprimer cet utilisateur du projet ?",
     "remove-group-confirm": "Êtes-vous sûr de vouloir supprimer ce groupe du projet ?",
@@ -2033,10 +2054,10 @@
   },
   "template": {
     "edit-tags": "Modifier les tags",
-    "blog-content": "template de contenu de blog",
-    "blog-title": "template de titre de blog",
-    "advancement-goal-title": "template de titre d'objectif d'avancement",
-    "advancement-goal-content": "template de contenu d'objectif d'avancement",
+    "blog-content": "Template de contenu de blog",
+    "blog-title": "Template de titre de blog",
+    "advancement-goal-title": "Template de titre d'objectif d'avancement",
+    "advancement-goal-content": "Template de contenu d'objectif d'avancement",
     "category": "Catégorie du template",
     "language": "Langue du template",
     "info": "Si vous voulez suggérer à vos utilisateurs comment organiser leur projet dans une catégorie en particulier, vous pouvez créer un template pour cette catégorie. Ensuite, lorsque l'utilisateur créera un projet dans cette catégorie, le projet sera initialisé avec le texte que vous aurez défini dans le template. Ce texte est un guide pour l'utilisateur.",
@@ -2074,7 +2095,7 @@
     "organization-email": "Email de contact de votre portail.",
     "organization-language": "Langue par défaut de votre portail.",
     "organization-visibility": "Souhaiteriez-vous faire afficher sur le portail principal de Projects un lien vers votre portail?",
-    "organization-logo": "Votre logo apparaitra sur un fond blanc sur le portail principal de Projects. Si le logo précedemment choisi n'est pas compatible avec un fond blanc, vous pouvez choisir une autre couleur de fond ci-dessous."
+    "organization-logo": "Votre logo apparaitra sur un fond blanc sur le portail principal de projects. si le logo précedemment choisi n'est pas compatible avec un fond blanc, vous pouvez choisir une autre couleur de fond ci-dessous."
   },
   "toasts": {
     "abuse-report": {
@@ -2347,6 +2368,12 @@
         "no": "Non"
       }
     },
+    "category": {
+      "project-created": "Catégorie que vous suivez - création",
+      "project-created-sub": "Soyez notifié lorsqu'un nouveau projet est créé dans cette catégorie",
+      "project-updated": "Catégorie que vous suivez - mise à jour",
+      "project-updated-sub": "Soyez notifié lorsqu'un projet est mis à jour dans cette catégorie"
+    },
     "project": {
       "title": "Notifications de projet",
       "changes": "Notifications de changement",
@@ -2398,6 +2425,7 @@
       "reply": "{sender} a répondu à votre commentaire sur {project}",
       "review": "{sender} a révisé votre projet {project}",
       "ready_for_review": "{sender} a marqué son projet comme prêt à être revisé. Vous pouvez maintenant réviser le projet {project}",
+      "project_created": "{sender} a créé le projet {project}",
       "project_updated": "{sender} a mis à jour {project}",
       "group_member_added": "{sender} a ajouté le groupe {group} comme membre du projet {project}",
       "group_member_added_self": "{sender} a ajouté le groupe {group} dont vous faites partie au projet {project}",
@@ -2730,7 +2758,11 @@
     "title": "Discuter avec l'IA",
     "input-placeholder": "Tapez votre message ici...",
     "intro-message": "Bonjour, comment puis-je vous aider aujourd'hui ?",
-    "drawer-button-label": "Assistant IA"
+    "drawer-button-label": "Assistant IA",
+    "fetching_tools": "Récupération des outils...",
+    "fetching_data": "Récupération des données...",
+    "reasoning": "Réflexion en cours...",
+    "restart": "Redémarrer la conversation"
   },
   "researcher": {
     "relators": {
@@ -3085,5 +3117,14 @@
       "Unknown": "inconnu",
       "Working-Paper": "document de travail"
     }
+  },
+  "tos": {
+    "evolved": "Nos conditions générales d'utilisation ont été mises à jour, veuillez prendre un moment pour les examiner et les approuver.",
+    "review-and-sign": "Veuillez lire et approuver les conditions générales d'utilisation mises à jour pour continuer à utiliser la plateforme.",
+    "scroll-notice": "Veuillez faire défiler jusqu'en bas des conditions avant de les approuver.",
+    "error-approving": "Erreur lors de l'approbation des conditions générales d'utilisation, veuillez réessayer plus tard.",
+    "title": "Conditions générales d’utilisation",
+    "approve-title": "Veuillez approuver les conditions générales d'utilisation",
+    "approve-button": "J'accepte"
   }
 }

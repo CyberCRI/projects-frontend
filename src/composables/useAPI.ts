@@ -1,9 +1,9 @@
 import useToasterStore from '@/stores/useToaster'
 // import useProjectsStore from '@/stores/useProjects'
-import merge from 'lodash.merge'
+import { merge } from 'es-toolkit'
 import { useRuntimeConfig } from '#imports'
 
-const defaultOptions = () => {
+export const defaultOptions = () => {
   let _localStorage = null
   if (import.meta.client) _localStorage = window.localStorage
   const localStorage = _localStorage
@@ -86,11 +86,9 @@ const defaultOptions = () => {
   }
 }
 
-const useAPI = (url: string, options?: any) => {
+const useAPI = <T>(url: string, options?: any) => {
   const _options = merge(defaultOptions(), options || {})
-  return $fetch(url, _options)
+  return $fetch<T>(url, _options)
 }
 
 export default useAPI
-
-export { defaultOptions }

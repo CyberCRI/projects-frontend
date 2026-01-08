@@ -3,21 +3,21 @@
     class="drop-down-menu-item-content"
     :to="{ name: 'Category', params: { slugOrId: category.slug || category.id } }"
   >
-    <span class="label">{{ $filters.capitalize(category?.$t?.name) }}</span>
+    <span class="label">{{ capitalize(category?.$t?.name) }}</span>
   </NuxtLink>
 </template>
 
-<script>
-export default {
-  name: 'ProjectCategoriesDropdownElementLink',
+<script setup>
+import { capitalize } from '@/functs/string'
 
-  props: {
-    category: {
-      type: Object,
-      required: true,
-    },
+defineOptions({ name: 'ProjectCategoriesDropdownElementLink' })
+
+defineProps({
+  category: {
+    type: Object,
+    required: true,
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>
@@ -34,13 +34,14 @@ export default {
     transition: transform 200ms ease-in-out;
     font-weight: 400;
     font-size: $font-size-m;
+    transform: translateZ(0);
   }
 
   &:hover {
     background-color: $primary-light;
 
     .label {
-      transform: scaleX(1.1);
+      transform: translateZ(0) scaleX(1.1);
     }
   }
 }

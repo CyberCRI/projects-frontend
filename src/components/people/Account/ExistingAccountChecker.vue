@@ -1,10 +1,10 @@
 <template>
-  <div class="account-layout">
+  <div ref="container" class="account-layout">
     <AccountFormTitleBlock :main-title-label="$t('account.title-create-add')" :show-help="true" />
 
     <div class="input-field">
       <TextInput
-        v-model="email"
+        v-model="form.email"
         :label="$t('profile.edit.general.professional-email.label')"
         input-type="email"
         :placeholder="$t('profile.edit.general.professional-email.placeholder')"
@@ -17,7 +17,7 @@
     <div class="footer">
       <LpiButton
         :disabled="asyncing"
-        :label="$filters.capitalize($t('common.cancel'))"
+        :label="$t('common.cancel')"
         secondary
         class="footer__left-button"
         data-test="close-button"
@@ -26,7 +26,7 @@
 
       <LpiButton
         :disabled="v$.$invalid || asyncing"
-        :label="$filters.capitalize($t('common.confirm'))"
+        :label="$t('common.confirm')"
         :btn-icon="asyncing ? 'LoaderSimple' : null"
         class="footer__right-button"
         data-test="confirm-button"
@@ -35,78 +35,62 @@
     </div>
   </div>
 </template>
-<script>
+<script setup lang="ts">
 import AccountFormTitleBlock from '@/components/people/Account/AccountFormTitleBlock.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import { searchPeopleByExactMail } from '@/api/people.service'
 import useValidate from '@vuelidate/core'
-import { helpers, required, email } from '@vuelidate/validators'
+import { helpers, required, email as emailValidator } from '@vuelidate/validators'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import { UserModel } from '@/models/user.model'
 
-export default {
-  name: 'ExistingAccountChecker',
+defineOptions({ name: 'ExistingAccountChecker' })
 
-  components: { AccountFormTitleBlock, TextInput, LpiButton, FieldErrors },
+const emits = defineEmits<{
+  cancel: []
+  'check-done': [value: UserModel | { email: string }]
+}>()
 
-  emits: ['cancel', 'check-done'],
+const container = useTemplateRef('container')
+const organizationsStore = useOrganizationsStore()
+const organization = computed(() => organizationsStore.current)
 
-  setup() {
-    const organizationsStore = useOrganizationsStore()
-    return {
-      organizationsStore,
-    }
+const form = ref({ email: '' })
+const { t } = useNuxtI18n()
+const asyncing = ref(false)
+const rules = computed(() => ({
+  email: {
+    required: helpers.withMessage(t('project.form.title-errors.required'), required),
+    email: helpers.withMessage(t('form.report.email.format'), emailValidator),
   },
-  data() {
-    return {
-      email: '',
-      asyncing: false,
-      v$: useValidate(),
-    }
-  },
+}))
+const v$ = useValidate(rules, form)
 
-  validations() {
-    return {
-      email: {
-        required: helpers.withMessage(this.$t('project.form.title-errors.required'), required),
-        email: helpers.withMessage(this.$t('form.report.email.format'), email),
-      },
-    }
-  },
+onMounted(() => {
+  container.value?.querySelector<HTMLElement>('[type=email]')?.focus()
+})
 
-  computed: {
-    organization() {
-      return this.organizationsStore.current
-    },
-  },
+const searchUser = async () => {
+  if (v$.value.$invalid) return
+  // TODO this search method is too lax
+  // we need to search by exact email match
+  // and get 0 or 1 result only
 
-  mounted() {
-    this.$el?.querySelector('[type=email]')?.focus()
-  },
-
-  methods: {
-    async searchUser() {
-      if (this.v$.$invalid) return
-      // TODO this search method is too lax
-      // we need to search by exact email match
-      // and get 0 or 1 result only
-
-      let targetUser = { email: this.email }
-      this.asyncing = true
-      try {
-        // 404 if user doesn't exist
-        targetUser = await searchPeopleByExactMail(this.email, {
-          current_org_pk: this.organization.id,
-        })
-      } catch {
-        console.log('no user match, proceed to account cretaion')
-      } finally {
-        this.$emit('check-done', targetUser)
-        this.asyncing = false
-      }
-    },
-  },
+  let targetUser = form.value
+  asyncing.value = true
+  try {
+    // 404 if user doesn't exist
+    targetUser = await searchPeopleByExactMail(targetUser.email, {
+      current_org_pk: organization.value.id,
+    })
+  } catch {
+    console.log('no user match, proceed to account cretaion')
+  } finally {
+    emits('check-done', targetUser)
+    asyncing.value = false
+  }
 }
 </script>
 

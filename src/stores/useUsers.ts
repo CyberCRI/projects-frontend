@@ -1,4 +1,5 @@
 import type { AuthResult } from '@/api/auth/keycloak'
+import { getProjectCategoriesFollow } from '@/api/project-categories.service'
 
 import {
   logoutFromKeycloak,
@@ -24,7 +25,7 @@ export interface UsersState {
   refreshToken?: string
   refreshTokenExp?: number
   accessToken?: string
-  id?: string
+  id?: number
   keycloak_id?: string
   userFromToken?: any
   userFromApi?: any
@@ -34,6 +35,7 @@ export interface UsersState {
   notificationsCount?: number
   notificationsSettings?: NotificationsSettings
   userDataRefreshLoop?: ReturnType<typeof setInterval> | null
+  followedCategories?: any[]
 }
 
 const useUsersStore = defineStore('users', () => {
@@ -51,34 +53,41 @@ const useUsersStore = defineStore('users', () => {
   const notificationsCount = ref(0)
   const notificationsSettings = ref(null)
   const userDataRefreshLoop = ref(null)
+  const followedCategories = ref<any[]>([])
 
   const isConnected = computed((): boolean => {
     return !!userFromToken.value
   })
 
-  const id = computed((): string | undefined => {
+  const id = computed((): number | undefined => {
     return userFromApi.value?.id
   })
 
-  const user = computed((): UserModel | null => {
-    if (userFromToken.value) {
-      return {
-        id: userFromToken.value.pid,
-        name: {
-          firstname: userFromToken.value.given_name,
-          lastname: userFromToken.value.family_name,
-        },
-        email: userFromToken.value.email,
-        roles: userFromToken.value.roles || [],
-        orgs: funct.getOrgsFromRoles(userFromToken.value.roles),
-        permissions: permissions.value,
-        slug: userFromToken.value.slug,
-        researcher: userFromToken.value.researcher,
+  const user = computed(
+    ():
+      | (Omit<UserModel, 'permissions'> & {
+          permissions: { [key: string]: boolean }
+        })
+      | null => {
+      if (userFromToken.value) {
+        return {
+          id: userFromToken.value.pid,
+          name: {
+            firstname: userFromToken.value.given_name,
+            lastname: userFromToken.value.family_name,
+          },
+          email: userFromToken.value.email,
+          roles: userFromToken.value.roles || [],
+          orgs: funct.getOrgsFromRoles(userFromToken.value.roles),
+          permissions: permissions.value,
+          slug: userFromToken.value.slug,
+          researcher: userFromToken.value.researcher,
+          signed_terms_and_conditions: userFromApi.value?.signed_terms_and_conditions || {},
+        }
       }
+      return null
     }
-
-    return null
-  })
+  )
 
   function stopUserDataRefreshLoop() {
     if (userDataRefreshLoop.value) {
@@ -188,12 +197,17 @@ const useUsersStore = defineStore('users', () => {
       stopUserDataRefreshLoop()
       userDataRefreshLoop.value = setInterval(
         () => {
+          console.log('Refreshing user data...')
           getUser(id.value)
         },
         1000 * 60 * 5 // 5 minutes
       )
     }
   }
+
+  watchEffect(async () => {
+    if (id.value) await fetchFollowedCategories()
+  })
 
   async function getUser(id) {
     // id is keycloak_id OR django user id OR slug
@@ -202,13 +216,13 @@ const useUsersStore = defineStore('users', () => {
       const user = await _getUser(id)
 
       const _permissions = {}
-      for (const key of user.permissions) {
+      for (const key of user?.permissions || []) {
         _permissions[key] = true
       }
       permissions.value = _permissions
 
-      roles.value = user.roles
-      notificationsCount.value = user.notifications
+      roles.value = user?.roles || []
+      notificationsCount.value = user?.notifications || 0
       userFromApi.value = user
 
       startUserDataRefreshLoop()
@@ -218,6 +232,15 @@ const useUsersStore = defineStore('users', () => {
       console.error(err)
     }
   }
+
+  watch(
+    () => keycloak_id.value,
+    (neo, old) => {
+      if (neo && neo !== old) {
+        getUser(keycloak_id.value)
+      }
+    }
+  )
 
   async function getNotifications(id) {
     // TODO: should be getNotificationsSetting
@@ -245,6 +268,17 @@ const useUsersStore = defineStore('users', () => {
     }
   }
 
+  async function fetchFollowedCategories() {
+    if (!id.value) return
+    try {
+      // TODO check if paginated result workaround is needed
+      const resp = await getProjectCategoriesFollow(id.value)
+      followedCategories.value = resp.results
+    } catch (err) {
+      console.error('Error fetching followed categories:', err)
+    }
+  }
+
   return {
     // state
     refreshToken,
@@ -258,6 +292,7 @@ const useUsersStore = defineStore('users', () => {
     notificationsCount,
     notificationsSettings,
     userDataRefreshLoop,
+    followedCategories,
     // getters
     isConnected,
     id,
@@ -273,6 +308,7 @@ const useUsersStore = defineStore('users', () => {
     getUser,
     getNotifications,
     patchNotifications,
+    fetchFollowedCategories,
   }
 })
 

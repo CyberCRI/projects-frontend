@@ -1,5 +1,5 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
-import { beforeAll, describe, expect, it, vi } from 'vitest'
+import { beforeAll, describe, expect, it } from 'vitest'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import ResearcherDocumentsTab from '@/pages/UserProfilePageV2/Tabs/ResearcherDocumentsTab.vue'
 import { UserFactory } from '../../../../factories/user.factory'
@@ -16,20 +16,6 @@ describe('ResearcherDocumentsTab.vue', () => {
       user: UserFactory.generate(),
       docType: 'publications',
     }
-
-    vi.mock('#imports', () => ({
-      useRuntimeConfig: () => ({
-        public: {
-          appApiUrl: '',
-          APP_KEYCLOAK_URL: 'https://keycloak.tech',
-          APP_KEYCLOAK_REALM: 'RealmName',
-          APP_KEYCLOAK_CLIENT_ID: 'RealmId',
-          APP_KEYCLOAK_CLIENT_SECRET: 'ClientSecret',
-          APP_API_URL: '',
-          APP_API_DEFAULT_VERSION: '',
-        },
-      }),
-    }))
   })
 
   it('undefined researcher', async () => {
@@ -78,7 +64,6 @@ describe('ResearcherDocumentsTab.vue', () => {
         publications: 100,
       },
     }
-
     registerEndpoint(
       `crisalid/organization/${orgaCode}/researcher/${defaultProps.user.researcher.id}/publications/analytics/`,
       () => {

@@ -9,21 +9,19 @@
     <slot />
   </div>
 </template>
-<script>
-export default {
-  name: 'AccountSection',
+<script setup>
+defineOptions({ name: 'AccountSection' })
 
-  props: {
-    sectionTitle: {
-      type: String,
-      default: '',
-    },
-    sectionNotice: {
-      type: String,
-      default: '',
-    },
+defineProps({
+  sectionTitle: {
+    type: String,
+    default: '',
   },
-}
+  sectionNotice: {
+    type: String,
+    default: '',
+  },
+})
 </script>
 <style lang="scss" scoped>
 .sub-section {

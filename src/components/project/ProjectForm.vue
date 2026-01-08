@@ -117,7 +117,7 @@
       class="tags"
     >
       <label>
-        {{ $filters.capitalize($t('tag.title')) }}
+        {{ $t('tag.title') }}
         <span
           v-disable-focus="otherFieldDisabled"
           class="add-tags"
@@ -125,7 +125,7 @@
           @click="tagSearchIsOpened = true"
         >
           <IconImage name="Plus" />
-          <span>{{ $filters.capitalize($t('project.form.add-tags')) }}</span>
+          <span>{{ $t('project.form.add-tags') }}</span>
         </span>
       </label>
       <TagsFilterSummary v-model="tags" />
@@ -143,7 +143,7 @@
       :disabled="otherFieldDisabled"
       class="img-ctn"
     >
-      <label>{{ $filters.capitalize($t('project.image-header')) }}</label>
+      <label>{{ $t('project.image-header') }}</label>
       <ImageEditor
         v-model:image-sizes="form.imageSizes"
         v-model:picture="form.header_image"
@@ -165,7 +165,7 @@
       :disabled="otherFieldDisabled"
       class="language"
     >
-      <label>{{ $filters.capitalize($t('project.language')) }}</label>
+      <label>{{ $t('project.language') }}</label>
       <LpiSelect
         v-model="form.language"
         :value="form.language"
@@ -212,6 +212,7 @@ import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import LpiDropDown from '@/components/base/form/LpiDropDown.vue'
 import LpiDropDownElementButton from '@/components/base/form/LpiDropDownElementButton.vue'
 import { getTemplate } from '@/api/templates.service'
+import { usePatatoids } from '@/composables/usePatatoids'
 
 export default {
   name: 'ProjectForm',
@@ -257,20 +258,16 @@ export default {
     const organizationsStore = useOrganizationsStore()
     const runtimeConfig = useRuntimeConfig()
     const { translateTemplate } = useAutoTranslate()
+    const defaultPictures = usePatatoids()
     return {
       organizationsStore,
       runtimeConfig,
       translateTemplate,
+      defaultPictures,
     }
   },
 
   data() {
-    const defaultPictures = [1, 2, 3, 4, 5, 6].map((index) => {
-      return `${
-        this.runtimeConfig.public.appPublicBinariesPrefix
-      }/patatoids-project/Patatoid-${index}.png`
-    })
-
     return {
       loading: false,
       templates: [],
@@ -281,7 +278,6 @@ export default {
       tagSearchIsOpened: false,
       showImageResizer: false,
       tagsInProcess: [],
-      defaultPictures,
     }
   },
 
@@ -302,7 +298,11 @@ export default {
 
     otherFieldDisabled() {
       return (
-        this.isAddMode && !!this.categories && this.categories.length > 0 && !this.form.template
+        this.isAddMode &&
+        !!this.categories &&
+        this.categories.length > 0 &&
+        (!this.selectedCategory ||
+          (this.selectedCategory?.templates?.length && !this.form.template))
       )
     },
 
@@ -359,6 +359,10 @@ export default {
       if (template === null) {
         this.selectedTemplate = template
         this.form.template = null
+        if (this.isAddMode) {
+          this.form.title = ''
+          this.form.purpose = ''
+        }
         return
       }
       const { data } = await getTemplate(this.organizationsStore.current.code, template.id)

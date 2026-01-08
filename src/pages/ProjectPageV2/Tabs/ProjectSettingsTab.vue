@@ -68,11 +68,7 @@
           {{ $t('project.reviews') }}
         </h3>
         <div>
-          <LpiButton
-            :label="$filters.capitalize($t('project.review'))"
-            :secondary="true"
-            @click="toggleReviewDrawer"
-          />
+          <LpiButton :label="$t('project.review')" :secondary="true" @click="toggleReviewDrawer" />
         </div>
       </div>
       <div class="section">
@@ -314,19 +310,19 @@ export default {
       return [
         {
           value: 'private',
-          label: this.$filters.capitalize(this.$t('status.private')),
+          label: this.$t('status.private'),
           iconName: 'EyeSlash',
           condition: true,
         },
         {
           value: 'public',
-          label: this.$filters.capitalize(this.$t('status.public')),
+          label: this.$t('status.public'),
           iconName: 'Eye',
           condition: true,
         },
         {
           value: 'org',
-          label: this.$filters.capitalize(this.$t('common.org')),
+          label: this.$t('common.org'),
           iconName: 'PeopleGroup',
           condition: !organizationCodes.includes('DEFAULT'),
         },
@@ -344,13 +340,13 @@ export default {
       return [
         {
           value: 'running',
-          label: this.$filters.capitalize(this.$t('status.ongoing')),
+          label: this.$t('status.ongoing'),
           iconName: 'Spinner',
           condition: true,
         },
         {
           value: 'toreview',
-          label: this.$filters.capitalize(this.$t('project.reviewable')),
+          label: this.$t('project.reviewable'),
           iconName: 'ListCheck',
           condition:
             this.projectReviewers.length &&
@@ -358,7 +354,7 @@ export default {
         },
         {
           value: 'completed',
-          label: this.$filters.capitalize(this.$t('status.completed')),
+          label: this.$t('status.completed'),
           iconName: 'Check',
           condition: true,
         },
@@ -739,14 +735,14 @@ export default {
     content: '';
     width: pxToRem(12px);
     height: pxToRem(12px);
-    transform: scale(0);
+    transform: translateZ(0) scale(0);
     transition: 120ms transform ease-in-out;
     box-shadow: inset 1em 1em $primary-dark;
     border-radius: 50%;
   }
 
   input[type='radio']:checked::before {
-    transform: scale(1);
+    transform: translateZ(0) scale(1);
   }
 
   input[type='radio']:disabled {

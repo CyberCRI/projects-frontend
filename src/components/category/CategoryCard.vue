@@ -14,15 +14,20 @@
     />
 
     <div class="title-description-ctn">
-      <h3 class="title">
-        {{ $filters.capitalize(category?.$t?.name) }}
-      </h3>
+      <div class="title-ctn">
+        <h3 class="title">
+          {{ capitalize(category?.$t?.name) }}
+        </h3>
+        <CategoryFollowButton :category-id="category.id" @click.stop.prevent="" />
+      </div>
       <p class="description" v-html="category?.$t?.description" />
     </div>
   </NuxtLink>
 </template>
 
 <script>
+import { capitalize } from '@/functs/string'
+
 import CategoryCardImage from '@/components/category/CategoryCardImage.vue'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
 
@@ -38,6 +43,9 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  setup() {
+    return { capitalize }
   },
 
   computed: {
@@ -79,6 +87,13 @@ export default {
   .title-description-ctn {
     padding: $space-s $space-m $space-m $space-l;
 
+    .title-ctn {
+      display: flex;
+      justify-content: space-between;
+      gap: $space-m;
+      align-items: flex-start;
+    }
+
     .title {
       overflow: hidden;
       text-overflow: ellipsis;
@@ -89,6 +104,7 @@ export default {
       color: $black;
       border-bottom-left-radius: $border-radius-m;
       border-bottom-right-radius: $border-radius-m;
+      flex-grow: 1;
     }
 
     .description {

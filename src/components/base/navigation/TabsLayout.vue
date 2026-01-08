@@ -54,7 +54,7 @@
             </div>
             <LinkButton
               v-if="isMobile"
-              :label="$filters.capitalize(showMoreButtonLabel)"
+              :label="showMoreButtonLabel"
               class="more-btn"
               btn-icon="DotsHorizontal"
               data-test="extra-tabs-button-mobile"
@@ -104,7 +104,7 @@
 import IconImage from '@/components/base/media/IconImage.vue'
 import useViewportWidth from '@/composables/useViewportWidth.ts'
 import LinkButton from '@/components/base/button/LinkButton.vue'
-import debounce from 'lodash.debounce'
+import { debounce } from 'es-toolkit'
 
 export default {
   name: 'TabsLayout',
@@ -503,6 +503,7 @@ export default {
       user-select: none; // avoid text selection while clicking on tab
       transition: transform 0.3s ease-in-out;
       transform-origin: bottom center;
+      transform: translateZ(0);
       line-height: 1;
 
       &--no-border {
@@ -510,7 +511,7 @@ export default {
       }
 
       &:hover {
-        transform: scaleY(1.15);
+        transform: translateZ(0) scaleY(1.15);
       }
 
       &.selected {

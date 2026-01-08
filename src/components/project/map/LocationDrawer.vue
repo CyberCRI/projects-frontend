@@ -195,7 +195,7 @@ export default {
     const { canEditProject } = usePermissions()
     const toaster = useToasterStore()
     const runtimeConfig = useRuntimeConfig()
-    const { locale } = useI18n()
+    const { locale } = useNuxtI18n()
     return { canEditProject, toaster, runtimeConfig, locale }
   },
 

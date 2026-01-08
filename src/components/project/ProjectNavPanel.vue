@@ -25,7 +25,7 @@
         v-if="usersStore.isConnected"
         class="space-button"
         :label="followed ? $t('project.followed') : $t('project.follow')"
-        :btn-icon="followed ? 'Heart' : 'HeartOutline'"
+        :btn-icon="followed ? 'BookmarkFill' : 'BookmarkLine'"
         vertical-layout
         label-on-hover
         @click="toggleFollow"
@@ -42,7 +42,7 @@
       />
       <ExternalLabelButton
         class="space-button"
-        :label="$filters.capitalize($t('comment.comment-verb'))"
+        :label="$t('comment.comment-verb')"
         btn-icon="ChatBubble"
         vertical-layout
         label-on-hover

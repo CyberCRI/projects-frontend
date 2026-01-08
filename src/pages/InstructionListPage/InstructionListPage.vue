@@ -9,7 +9,7 @@ const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
 const { canCreateInstruction, canEditInstruction, canDeleteInstruction } = usePermissions()
 const router = useRouter()
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const _allInstructions = useState(() => [])
 const allInstructions = translateInstructions(_allInstructions)
@@ -85,7 +85,7 @@ try {
       <LpiButton
         v-if="canCreateInstruction"
         primary
-        :label="$filters.capitalize($t('instructions.list.create'))"
+        :label="$t('instructions.list.create')"
         data-test="create-instruction-button"
         btn-icon="Plus"
         class="create-instruction-button"

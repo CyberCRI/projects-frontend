@@ -15,7 +15,7 @@ export default {
   components: { LpiLoader },
 
   setup() {
-    const { locale } = useI18n()
+    const { locale } = useNuxtI18n()
     const runtimeConfig = useRuntimeConfig()
     const { isMobile, isTablet } = useViewportWidth()
     return {

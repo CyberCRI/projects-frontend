@@ -7,7 +7,7 @@
             :alt="`${user.given_name} ${user.family_name} image`"
             :picture-data="user.profile_picture"
             picture-size="medium"
-            default-picture="/placeholders/user_placeholder.svg"
+            :default-picture="DEFAULT_USER_PATATOID"
           />
         </div>
       </div>
@@ -24,7 +24,7 @@
           </div>
 
           <div class="job">
-            {{ $filters.capitalize(user?.$t?.job) }}
+            {{ capitalize(user?.$t?.job) }}
           </div>
 
           <div v-if="displayableGroups.length" class="group-ctn">
@@ -73,38 +73,30 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
+import { capitalize } from '@/functs/string'
+
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
-export default {
-  name: 'ProfileHeaderV2',
+defineOptions({ name: 'ProfileHeaderV2' })
 
-  props: {
-    user: {
-      type: Object,
-      default: () => {},
-    },
+const props = defineProps({
+  user: {
+    type: Object,
+    default: () => {},
   },
+})
 
-  emits: ['edit-profile'],
-  setup() {
-    const organizationsStore = useOrganizationsStore()
-    const runtimeConfig = useRuntimeConfig()
-    return {
-      organizationsStore,
-      runtimeConfig,
-    }
-  },
+const organizationsStore = useOrganizationsStore()
+const runtimeConfig = useRuntimeConfig()
 
-  computed: {
-    displayableGroups() {
-      return this.user?.people_groups
-        ? this.user.people_groups.filter(
-            (group) => group.organization === this.organizationsStore.current?.code
-          )
-        : []
-    },
-  },
-}
+const displayableGroups = computed(() => {
+  return props.user?.people_groups
+    ? props.user.people_groups.filter(
+        (group) => group.organization === organizationsStore.current?.code
+      )
+    : []
+})
 </script>
 
 <style lang="scss" scoped>
@@ -198,9 +190,10 @@ export default {
         transition: transform 0.3s ease-in-out;
         transform-origin: center bottom;
         display: inline-block;
+        transform: translateZ(0);
 
         &:hover {
-          transform: scaleY(1.3);
+          transform: translateZ(0) scaleY(1.3);
         }
       }
 
@@ -218,9 +211,10 @@ export default {
           width: pxToRem(40px);
           height: pxToRem(40px);
           transition: all 0.2s ease-in-out;
+          transform: translateZ(0);
 
           &:hover {
-            transform: scale(1.2);
+            transform: translateZ(0) scale(1.2);
           }
         }
       }

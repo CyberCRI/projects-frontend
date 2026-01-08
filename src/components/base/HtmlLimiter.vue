@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import debounce from 'lodash.debounce'
+import { debounce } from 'es-toolkit'
 import fixEditorContent from '@/functs/editorUtils.ts'
 
 const _timer = 0 // set this to some thing like 1000 for visual debugging
@@ -98,6 +98,10 @@ export default {
       this.$emit('computing')
       this.computing = true
       this.croppedHtml = this.html
+
+      if (!this.$refs.inner) {
+        return
+      }
 
       this.$refs.inner.innerHTML = this.croppedHtml
       if (this.preprocess) {

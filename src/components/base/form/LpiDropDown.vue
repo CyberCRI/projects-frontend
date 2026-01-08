@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import { capitalize } from 'es-toolkit'
+import { capitalize } from '@/functs/string'
 
 import IconImage from '@/components/base/media/IconImage.vue'
 import LpiDropdDownElement from '@/components/base/form/LpiDropDownElement.vue'
@@ -155,7 +155,7 @@ const showLabel = computed(() => {
 
 .slide-enter-to,
 .slide-leave-from {
-  transform: scaleY(1);
+  transform: translateZ(0) scaleY(1);
 
   :deep(a) {
     opacity: 0;
@@ -164,7 +164,7 @@ const showLabel = computed(() => {
 
 .slide-enter-from,
 .slide-leave-to {
-  transform: scaleY(0) translateY(-2rem);
+  transform: translateZ(0) scaleY(0) translateY(-2rem);
 
   :deep(a) {
     opacity: 0;

@@ -2,11 +2,7 @@
   <Drawer
     :confirm-action-name="$t('common.save')"
     :is-opened="isOpened"
-    :title="
-      $filters.capitalize(
-        !category?.id ? $t('admin.portal.categories.add') : $t('admin.portal.categories.edit')
-      )
-    "
+    :title="!category?.id ? $t('admin.portal.categories.add') : $t('admin.portal.categories.edit')"
     class="category-modal small"
     :asyncing="asyncing"
     @close="closeModal"
@@ -33,7 +29,7 @@
             </h4>
             <LpiButton
               :disabled="status !== 'success'"
-              :label="$filters.capitalize($t('category.edit'))"
+              :label="$t('category.edit')"
               @click="templateSearchIsOpened = true"
             />
           </div>
@@ -353,7 +349,8 @@ watch(
   () => category.value.background_image,
   (val) => {
     displayedImage.value = val && val.variations ? val.variations.small : null
-  }
+  },
+  { immediate: true }
 )
 
 const imageResizer = useTemplateRef('imageResizer')

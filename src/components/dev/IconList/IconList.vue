@@ -127,6 +127,12 @@ export default {
         'VipCrownLine',
         'SparklingFill',
         'InfoCardLine',
+        'Scales',
+        'SortAsc',
+        'SortDesc',
+        'RestartLeft',
+        'BookmarkLine',
+        'BookmarkFill',
       ],
     }
   },
