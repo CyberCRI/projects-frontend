@@ -75,7 +75,8 @@ export const sanitizeResearcherDocumentAnalyticsYears = (
   return info
 }
 
-const INVALID_CHAR_REGEX = /[^a-zA-Z0-9-_]/gi
+const NOT_ALPHA_NUMERIC_REGEX = /[^a-zA-Z0-9_-]/gi
+const TRIM_DASH_REGEX = /^-*|-*$/gi
 /**
  * sanitize translate relators/documenttype key for translate
  *
@@ -87,5 +88,5 @@ const INVALID_CHAR_REGEX = /[^a-zA-Z0-9-_]/gi
  * @exports
  */
 export const sanitizeTranslateKeys = (k: string): string => {
-  return k.replaceAll(INVALID_CHAR_REGEX, '-')
+  return k.replaceAll(NOT_ALPHA_NUMERIC_REGEX, '-').replaceAll(TRIM_DASH_REGEX, '')
 }
