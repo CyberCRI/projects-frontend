@@ -72,7 +72,7 @@ const showChild = ref(false)
 
 const showChildren = () => (showChild.value = !showChild.value)
 const goTo = (group) => {
-  router.push({ name: 'Group', params: { groupId: group.slug || group.id } })
+  router.push({ name: 'Group', params: { groupId: group.id } })
 }
 const addGroup = (group) => emit('add', group)
 const editGroup = (group) => emit('edit', group)

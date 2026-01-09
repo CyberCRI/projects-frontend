@@ -3,6 +3,7 @@ import { FaqModel } from '@/models/faq.model'
 import { LanguageType } from '@/models/types'
 import { OrganizationDirectoryModel } from '@/models/organization-directory.model'
 import { TagModel } from './tag.model'
+import { Translated } from '@/interfaces/translated'
 
 /**
  * @name OrganizationModel
@@ -25,9 +26,11 @@ export interface TermsAndConditions {
   id: number
   version: number
   content: string
+  displayed_version: number
+  displayed_content: string
 }
 
-export interface OrganizationModel extends BaseModel {
+export type OrganizationModel = BaseModel & {
   background_color: string
   banner_image: string
   code: string
@@ -45,6 +48,9 @@ export interface OrganizationModel extends BaseModel {
   enabled_projects_tag_classifications: object[] // TODO: define this type
   enabled_skills_tag_classifications: object[] // TODO: define this type
   terms_and_conditions: TermsAndConditions | null
+  description: string
+  chat_button_text: string
+  auto_translate_content: boolean
 }
 
 export type OrganizationPatchInput = Partial<OrganizationModel> & {
@@ -60,3 +66,8 @@ export type OrganizationOutput = BaseModel &
     access_request_enabled?: boolean
     languages?: string[]
   }
+
+export type TranslatedOrganizationModel = Translated<
+  OrganizationOutput,
+  'name' | 'dashboard_title' | 'dashboard_subtitle' | 'description' | 'chat_button_text'
+>

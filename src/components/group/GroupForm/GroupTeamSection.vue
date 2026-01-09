@@ -153,6 +153,7 @@ export default {
       return null
     },
     openDrawer(mode) {
+      console.log(this.teamModalMode)
       this.teamModalMode = mode
       this.teamModalVisible = true
     },

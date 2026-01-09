@@ -16,6 +16,7 @@ import { AnnouncementModel, AnnouncementOutput } from '@/models/announcement.mod
 import { FollowOutput } from '@/models/follow.model'
 import { TemplateModel } from '@/models/template.model'
 import { TagModel, TagOutput } from '@/models/tag.model'
+import { Translated } from '@/interfaces/translated'
 
 interface HeaderImage {
   id: number
@@ -63,6 +64,8 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
   goals: GoalOutput[]
   slug: string
 }
+
+export type TranslatedProjectModel = Translated<ProjectModel, 'title' | 'description' | 'purpose'>
 
 export type ProjectCreateInput = Required<ProjectModel> & {
   project_categories_ids: number

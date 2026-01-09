@@ -83,7 +83,7 @@ export default {
 }
 
 :deep(.picture) {
-  $picture-width: 72px;
+  $picture-width: 90px;
 
   display: flex;
   width: pxToRem($picture-width);

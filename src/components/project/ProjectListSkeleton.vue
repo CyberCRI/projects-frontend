@@ -18,30 +18,14 @@
   </DynamicGrid>
 </template>
 
-<script>
+<script setup lang="ts">
 import DynamicGrid from '@/components/base/DynamicGrid.vue'
-export default {
-  name: 'ProjectListSkeleton',
 
-  components: {
-    DynamicGrid,
-  },
-
-  props: {
-    limit: {
-      type: Number,
-      default: 12,
-    },
-    minGap: {
-      type: Number,
-      default: 0,
-    },
-    mode: {
-      type: String,
-      default: 'card', // 'card' or 'list'
-    },
-  },
-}
+withDefaults(defineProps<{ limit?: number; minGap?: number; mode?: 'card' | 'list' }>(), {
+  limit: 12,
+  minGap: 0,
+  mode: 'card',
+})
 </script>
 
 <style lang="scss" scoped>
@@ -56,28 +40,47 @@ export default {
   &.card .skeleton-text {
     padding-top: $space-m;
     width: 100%;
+    align-items: center;
   }
 
   &.list .skeleton-text {
     width: 100%;
+    justify-content: center;
+    height: 100%;
+  }
+
+  .skeleton-text {
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    gap: 0.4rem;
   }
 
   .image-placeholder {
-    width: pxToRem(72px);
-    height: pxToRem(72px);
+    width: pxToRem(90px);
+    height: pxToRem(90px);
     background: $lighter-gray;
     margin-bottom: $space-l;
-    border-radius: $border-radius-xs;
+    border-radius: 50%;
     animation: skeleton-loading 1s linear infinite alternate;
+  }
+
+  .project-picture {
+    box-shadow: none !important;
   }
 
   .text-placeholder {
     background: $lighter-gray;
     border-radius: $border-radius-xs;
-    width: 100%;
+    width: 80%;
     height: pxToRem(16px);
-    margin-bottom: pxToRem(16px);
     animation: skeleton-loading 1s linear infinite alternate;
+  }
+
+  &.list {
+    .text-placeholder:first-child {
+      width: 20%;
+    }
   }
 
   .subtext {
