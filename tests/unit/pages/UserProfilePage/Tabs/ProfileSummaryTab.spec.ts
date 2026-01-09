@@ -1,5 +1,5 @@
 import ProfileSummaryTab from '@/pages/UserProfilePageV2/Tabs/ProfileSummaryTab.vue'
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
+import { lpiMount, lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import { UserFactory } from '@/../tests/factories/user.factory'
 import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 import { flushPromises } from '@vue/test-utils'
@@ -13,6 +13,7 @@ import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useUsersStore from '@/stores/useUsers'
 import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
+import { exceptionFromError } from '@sentry/vue'
 vi.mock('@/api/follows.service', () => ({
   getUserFollows: vi.fn().mockResolvedValue({ results: [] }),
 }))
@@ -46,7 +47,8 @@ describe('ProfileSummaryTab', () => {
     // usersStore.$reset()
   })
   it('should render ProfileSummaryTab component', () => {
-    let wrapper = lpiShallowMount(ProfileSummaryTab, buildParams(UserFactory.generate()))
+    const user = UserFactory.generate()
+    let wrapper = lpiShallowMount(ProfileSummaryTab, buildParams(user))
 
     expect(wrapper.exists()).toBeTruthy()
   })
@@ -89,5 +91,23 @@ describe('ProfileSummaryTab', () => {
     await flushPromises()
     expect(wrapper.find('user-descriptions-stub').exists()).toBe(true)
     expect(wrapper.find('.empty-field').exists()).toBe(false)
+  })
+
+  it('shouldnt display resources', async () => {
+    const user = UserFactory.generate()
+    user.resources.files = user.resources.links = 0
+    const wrapper = lpiMount(ProfileSummaryTab, buildParams(user))
+
+    await flushPromises()
+    expect(wrapper.find('.resources-recap').exists()).toBe(false)
+  })
+
+  it('should display resources', async () => {
+    const user = UserFactory.generate()
+    user.resources.files = user.resources.links = 5
+    const wrapper = lpiMount(ProfileSummaryTab, buildParams(user))
+
+    await flushPromises()
+    expect(wrapper.find('.resources-recap').exists()).toBe(true)
   })
 })

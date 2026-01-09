@@ -17,25 +17,19 @@
   </NuxtLink>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
 
 defineOptions({ name: 'ResourceCount' })
-defineProps({
-  count: {
-    type: Number,
-    required: true,
-  },
-  target: {
-    type: String,
-    required: true,
-  },
 
-  isFile: {
-    type: Boolean,
-    default: true,
-  },
-})
+withDefaults(
+  defineProps<{
+    count: number
+    target: string
+    isFile?: boolean
+  }>(),
+  { isFile: true }
+)
 </script>
 
 <style lang="scss" scoped>

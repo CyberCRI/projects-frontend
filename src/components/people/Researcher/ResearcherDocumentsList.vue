@@ -129,6 +129,7 @@ import {
   TranslatedDocument,
 } from '@/interfaces/researcher'
 import { UserModel } from '@/models/user.model'
+import { AsyncDataRequestStatus } from 'nuxt/app'
 
 defineOptions({ name: 'ResearcherDocumentsList' })
 
@@ -138,6 +139,7 @@ const props = withDefaults(
 )
 const { t } = useNuxtI18n()
 const { translateResearcherDocuments } = useAutoTranslate()
+const orgaCode = useOrganizationCode()
 
 // when we click to "show similars documents"
 const documentSelected = ref<Document>()
@@ -149,7 +151,7 @@ const results = computed<Document[] | undefined>(() => documents.value?.results)
 const documentsTranslated: ComputedRef<TranslatedDocument[]> = translateResearcherDocuments(results)
 
 const pagination = usePagination(documents, { limit: props.limit ?? 10 })
-const status = ref('pending')
+const status = ref<AsyncDataRequestStatus>('pending')
 
 const documentsAnalytics = ref<ResearcherDocumentAnalytics>({
   document_types: {},
@@ -169,12 +171,15 @@ const { query, toggleQuery, setQuery } = useQuery<QueryFilterDocument>({
 
 const getDocuments = () => {
   status.value = 'pending'
-  useAPI(`crisalid/researcher/${props.user.researcher.id}/${props.docType}/`, {
-    query: {
-      ...query,
-      ...pagination.query(),
-    },
-  })
+  useAPI(
+    `crisalid/organization/${orgaCode}/researcher/${props.user.researcher.id}/${props.docType}/`,
+    {
+      query: {
+        ...query,
+        ...pagination.query(),
+      },
+    }
+  )
     .then((data) => {
       documents.value = sanitizeResearcherDocuments(data)
       status.value = 'success'
@@ -185,13 +190,16 @@ const getDocuments = () => {
 }
 
 const getDocumentsInfo = () => {
-  useAPI(`crisalid/researcher/${props.user.researcher.id}/${props.docType}/analytics/`, {
-    query: {
-      ...query,
-      // add only limit for preview (used to show only X year bar graph)
-      ...(props.preview ? { limit: 5 } : {}),
-    },
-  }).then((data) => {
+  useAPI(
+    `crisalid/organization/${orgaCode}/researcher/${props.user.researcher.id}/${props.docType}/analytics/`,
+    {
+      query: {
+        ...query,
+        // add only limit for preview (used to show only X year bar graph)
+        ...(props.preview ? { limit: 5 } : {}),
+      },
+    }
+  ).then((data) => {
     documentsAnalytics.value = data
   })
 }

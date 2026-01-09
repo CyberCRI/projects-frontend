@@ -1,6 +1,6 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import english from '@/i18n/locales/en.json'
-import ResourcesRecap from '@/components/project/resource/ResourcesRecap.vue'
+import ResourcesRecap from '@/components/resources/ResourcesRecap.vue'
 import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
 import pinia from '@/stores'
 import useProjectsStore from '@/stores/useProjects'

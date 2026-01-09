@@ -6,6 +6,7 @@ import { mcpFetch, API_BASE_URL } from '../projects/base'
 const runtimeConfig = useRuntimeConfig()
 const sorbobotApiUrl = runtimeConfig.public.appSorbobotApiUrl
 const sorbobotApiToken = runtimeConfig.appSorbobotApiToken
+const orgCode = runtimeConfig.public.appApiOrgCode
 
 export const sorbobotIsEnabled = sorbobotApiUrl && sorbobotApiToken
 
@@ -27,7 +28,7 @@ export async function resolveResearcherProfile(sorbobotResults, extras) {
   let idMap = {}
   try {
     const profileResponse: any = await mcpFetch(
-      `${API_BASE_URL}crisalid/researcher/search/?`,
+      `${API_BASE_URL}crisalid/organization/${orgCode}/researcher/search/?`,
       {
         query: {
           harvester: idSource,
