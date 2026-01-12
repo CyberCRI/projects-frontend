@@ -75,7 +75,7 @@ export class Doc extends Container {
     const contentString = this.content.join('\n')
     return `
         <html>
-          <head><style>${stylesString}</style></head>
+          <head><meta charset="UTF-8"><style>${stylesString}</style></head>
           <body>${contentString}</body>
       </html> `
   }

@@ -50,7 +50,12 @@ export default async function addTeamSectionFactory(title: string, team: any[]) 
             gap: .2cm;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
+          }
+          .team-card-title{
+            width: 100%;
+            font-weight: 700;
+            font-size: .4cm;
           }
           .team-card-photo {
             width: 3.5cm;

@@ -40,6 +40,8 @@ const {
   linkedProjectsLoading,
   postFecthProjectHook,
   //computed
+  fileResources,
+  linkResources,
   goals,
   team,
   blogEntries,
@@ -184,6 +186,9 @@ const getAsPDF = async () => {
     team: team.value,
     goals: goals.value,
     blogEntries: blogEntries.value,
+    fileResources: fileResources.value,
+    linkResources: linkResources.value,
+    linkedProjects: linkedProjects.value,
   })
 }
 </script>

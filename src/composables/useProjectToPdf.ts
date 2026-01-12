@@ -17,9 +17,19 @@ import addTeamSectionFactory from '@/composables/project-pdf-components/addTeamS
 import addGroupSectionFactory from '@/composables/project-pdf-components/addGroupSectionFactory'
 import addGoalsSectionFactory from '@/composables/project-pdf-components/addGoalsSectionFactory'
 import addBlogSectionFactory from '@/composables/project-pdf-components/addBlogSectionFactory'
+import addResourceSectionFactory from '@/composables/project-pdf-components/addResourceSectionFactory'
+import addLinkedProjectSectionFactory from '@/composables/project-pdf-components/addLinkedProjectSectionFactory'
 
 export default function useProjectToPdf() {
-  const generateAndDownloadPdf = async ({ project, team, goals, blogEntries }) => {
+  const generateAndDownloadPdf = async ({
+    project,
+    team,
+    goals,
+    blogEntries,
+    fileResources,
+    linkResources,
+    linkedProjects,
+  }) => {
     const runtimeConfig = useRuntimeConfig()
     const { locale, t } = useNuxtI18n()
 
@@ -83,6 +93,11 @@ export default function useProjectToPdf() {
     const addGoalsSection = await addGoalsSectionFactory(sortedGoals)
 
     const addBlogSection = await addBlogSectionFactory(blogEntries)
+
+    const addFileResourceSection = await addResourceSectionFactory(fileResources, 'file')
+    const addLinkResourceSection = await addResourceSectionFactory(linkResources, 'link')
+
+    const addLinkedProjectSection = await addLinkedProjectSectionFactory(linkedProjects || [])
 
     let sdgImages = []
     if (project.sdgs && project.sdgs.length > 0) {
@@ -178,6 +193,9 @@ export default function useProjectToPdf() {
         this.content.push(t('resource.resources'))
       })
       .render()
+      .add(addFileResourceSection)
+      .add(addLinkResourceSection)
+      .render()
 
     mainDoc
       .addContainer(Page)
@@ -185,6 +203,8 @@ export default function useProjectToPdf() {
       .add(function (this: PageTitle) {
         this.content.push(t('project.linked-projects'))
       })
+      .render()
+      .add(addLinkedProjectSection)
       .render()
 
     mainDoc
@@ -206,6 +226,7 @@ export default function useProjectToPdf() {
     // FINALIZE AND DOWNLOAD PDF
     const pdfContent = mainDoc.getContent()
     await fetchPdf(pdfContent, `${project.slug || `project-${project.id}`}.pdf`)
+    // document.body.innerHTML = pdfContent
   }
 
   return {
