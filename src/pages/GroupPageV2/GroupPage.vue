@@ -22,7 +22,7 @@
             :class="{ collapsed: isNavCollapsed }"
             :group-tabs="groupTabs"
             :current-tab="currentTab"
-            :email="groupEmail"
+            :email="group?.email"
             :can-edit-group="canEditGroup"
             :is-editing="isEditing"
             class="slide-panel"
@@ -67,10 +67,6 @@ watch(
   },
   { immediate: true }
 )
-
-const groupEmail = computed(() => {
-  return group.value?.email
-})
 
 const groupHierarchy = computed(() => {
   const root = {

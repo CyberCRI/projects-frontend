@@ -32,7 +32,10 @@ const props = defineProps<{
   group: TranslatedPeopleGroupModel
 }>()
 
-const limitSkeletons = computed(() => Math.min(props.group.modules?.featured_projects ?? 10, 10))
+const MAX_SKELETONS = 10
+const limitSkeletons = computed(() =>
+  Math.min(props.group.modules?.featured_projects ?? MAX_SKELETONS, MAX_SKELETONS)
+)
 const organizationCode = useOrganizationCode()
 const { data, isLoading, pagination } = getGroupProject(organizationCode, props.group.id)
 const { total, count } = pagination
