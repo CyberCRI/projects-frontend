@@ -1,0 +1,214 @@
+import { Doc, Page } from '@/composables/pdf-helpers/doc-builder'
+import {
+  convertImages,
+  fetchImageAsDataUrl,
+  fetchPdf,
+  proxyImageUrl,
+} from '@/composables/pdf-helpers/usePdfHelpers'
+
+import ProjectHeader from '@/composables/project-pdf-components/ProjectHeader'
+import ProjectHeaderContent from '@/composables/project-pdf-components/ProjectHeaderContent'
+import addProjectPhotoFactory from '@/composables/project-pdf-components/addProjectPhotoFactory'
+import addPurposeFactory from '@/composables/project-pdf-components/addPurposeFactory'
+import addTagsFactory from '@/composables/project-pdf-components/addTagFactory'
+import addSdgsFactory from '@/composables/project-pdf-components/addSdgsFactory'
+import PageTitle from '@/composables/project-pdf-components/PageTitle'
+import addTeamSectionFactory from '@/composables/project-pdf-components/addTeamSectionFactory'
+import addGroupSectionFactory from '@/composables/project-pdf-components/addGroupSectionFactory'
+import addGoalsSectionFactory from '@/composables/project-pdf-components/addGoalsSectionFactory'
+import addBlogSectionFactory from '@/composables/project-pdf-components/addBlogSectionFactory'
+
+export default function useProjectToPdf() {
+  const generateAndDownloadPdf = async ({ project, team, goals, blogEntries }) => {
+    const runtimeConfig = useRuntimeConfig()
+    const { locale, t } = useNuxtI18n()
+
+    const fixedDescription = await convertImages(project.description)
+
+    const sortedGoals = [...goals].sort((a, b) => {
+      if (!a.deadline_at && !b.deadline_at) {
+        return a.title < b.title ? -1 : 1
+      } else if (!a.deadline_at) {
+        return -1
+      } else if (!b.deadline_at) {
+        return 1
+      } else {
+        return a.deadline_at < b.deadline_at ? -1 : 1
+      }
+    })
+
+    const mainDoc = new Doc()
+    mainDoc.styles.add(/* CSS */ `
+      html, body {
+        margin: 20px;
+      }
+      @page {
+        margin-top: 2.5cm;
+        margin-bottom: 2cm;
+      }`)
+
+    // FIRST PAGE - HEADER
+
+    const defaultProjectPicture = `${runtimeConfig.public.appPublicBinariesPrefix}/placeholders/header_placeholder.png`
+    const projectPhoto = project.header_image?.variations?.medium || defaultProjectPicture
+    const projectPhotoDataUrl = await fetchImageAsDataUrl(proxyImageUrl(projectPhoto))
+    const projectPhotoHeader = addProjectPhotoFactory(projectPhotoDataUrl)
+
+    const addPurpose = addPurposeFactory(project)
+    const addTags = addTagsFactory(project, locale)
+
+    const addOwnerTeamSection = await addTeamSectionFactory(t('role.editors'), team?.owners || [])
+    const addEditorTeamSection = await addTeamSectionFactory(
+      t('role.teammates'),
+      team?.members || []
+    )
+    const addReviewerTeamSection = await addTeamSectionFactory(
+      t('role.reviewers'),
+      team?.reviewers || []
+    )
+
+    const addOwnerGroupSection = await addGroupSectionFactory(
+      t('role.editor-groups'),
+      team?.owner_groups || []
+    )
+    const addMemberGroupSection = await addGroupSectionFactory(
+      t('role.teammate-groups'),
+      team?.member_groups || []
+    )
+    const addReviewerGroupSection = await addGroupSectionFactory(
+      t('role.reviewer-groups'),
+      team?.reviewer_groups || []
+    )
+
+    const addGoalsSection = await addGoalsSectionFactory(sortedGoals)
+
+    const addBlogSection = await addBlogSectionFactory(blogEntries)
+
+    let sdgImages = []
+    if (project.sdgs && project.sdgs.length > 0) {
+      sdgImages = await Promise.all(
+        (project.sdgs || []).map((sdg) =>
+          fetchImageAsDataUrl(
+            proxyImageUrl(
+              `${runtimeConfig.public.appPublicBinariesPrefix}/sdgs/logo/SDG-${sdg}.svg`
+            )
+          )
+        )
+      )
+    }
+    const addSdgs = addSdgsFactory(sdgImages)
+
+    mainDoc
+      .addContainer(Page)
+      .add(function (this: Page) {
+        this.styles.add(/* CSS */ `
+          .project-title {
+            margin-bottom: 1cm;
+            color: #1d727c;
+            font-weight: bold;
+          }`)
+        this.content.push(/* HTML */ `
+          <h1 class="project-title">${project.$t.title}</h1>
+        `)
+      })
+      .addContainer(ProjectHeader)
+      .add(projectPhotoHeader)
+      .addContainer(ProjectHeaderContent)
+      .add(addPurpose)
+      .add(addTags)
+      .add(addSdgs)
+      .render() // ProjectHeaderContent
+      .render() // ProjectHeader
+      .render() // Page
+
+    // SECOND PAGE - DESCRIPTION
+    mainDoc
+      .addContainer(Page)
+      .addContainer(PageTitle)
+      .add(function (this: PageTitle) {
+        this.content.push(t('form.description'))
+      })
+      .render()
+      .add(function (this: Page) {
+        this.content.push(/* HTML */ `
+          <div>${fixedDescription}</div>
+        `)
+      })
+      .render()
+
+    mainDoc
+      .addContainer(Page)
+      .addContainer(PageTitle)
+      .add(function (this: PageTitle) {
+        this.content.push(t('team.team'))
+      })
+      .render()
+      .add(addOwnerTeamSection)
+      .add(addEditorTeamSection)
+      .add(addReviewerTeamSection)
+      .add(addOwnerGroupSection)
+      .add(addMemberGroupSection)
+      .add(addReviewerGroupSection)
+      .render()
+
+    mainDoc
+      .addContainer(Page)
+      .addContainer(PageTitle)
+      .add(function (this: PageTitle) {
+        this.content.push(t('goal.goals'))
+      })
+      .render()
+      .add(addGoalsSection)
+      .render()
+
+    mainDoc
+      .addContainer(Page)
+      .addContainer(PageTitle)
+      .add(function (this: PageTitle) {
+        this.content.push(t('blog.title'))
+      })
+      .render()
+      .add(addBlogSection)
+      .render()
+
+    mainDoc
+      .addContainer(Page)
+      .addContainer(PageTitle)
+      .add(function (this: PageTitle) {
+        this.content.push(t('resource.resources'))
+      })
+      .render()
+
+    mainDoc
+      .addContainer(Page)
+      .addContainer(PageTitle)
+      .add(function (this: PageTitle) {
+        this.content.push(t('project.linked-projects'))
+      })
+      .render()
+
+    mainDoc
+      .addContainer(Page)
+      .addContainer(PageTitle)
+      .add(function (this: PageTitle) {
+        this.content.push(t('home.announcements'))
+      })
+      .render()
+
+    mainDoc
+      .addContainer(Page)
+      .addContainer(PageTitle)
+      .add(function (this: PageTitle) {
+        this.content.push(t('comment.comments'))
+      })
+      .render()
+
+    // FINALIZE AND DOWNLOAD PDF
+    const pdfContent = mainDoc.getContent()
+    await fetchPdf(pdfContent, `${project.slug || `project-${project.id}`}.pdf`)
+  }
+
+  return {
+    generateAndDownloadPdf,
+  }
+}

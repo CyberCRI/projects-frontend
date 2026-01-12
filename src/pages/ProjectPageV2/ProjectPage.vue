@@ -40,6 +40,9 @@ const {
   linkedProjectsLoading,
   postFecthProjectHook,
   //computed
+  goals,
+  team,
+  blogEntries,
   mergedTeam,
   projectTabs,
   currentTab,
@@ -67,6 +70,8 @@ const { connectToSocket, cleanupProvider, projectPatched } = useProjectSocket({
   reloadProject,
   getBlogEntries,
 })
+
+const { generateAndDownloadPdf } = useProjectToPdf()
 
 const { translateProject } = useAutoTranslate()
 
@@ -172,6 +177,15 @@ const chooseGoalOrSdg = (choice) => {
   toggleAddModal(choice)
   toggleAddModal('goalOrSdg')
 }
+
+const getAsPDF = async () => {
+  generateAndDownloadPdf({
+    project: project.value,
+    team: team.value,
+    goals: goals.value,
+    blogEntries: blogEntries.value,
+  })
+}
 </script>
 <template>
   <div
@@ -206,6 +220,7 @@ const chooseGoalOrSdg = (choice) => {
           @update-follow="follow = $event"
           @navigated="onNavigated"
           @duplicate-project="onDuplicateProject"
+          @get-pdf="getAsPDF"
         />
       </template>
       <template #content>
