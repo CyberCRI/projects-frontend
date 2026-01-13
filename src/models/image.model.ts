@@ -1,3 +1,4 @@
+import { ImageSizesFromApi } from '@/functs/imageSizesUtils'
 import BaseModel from '@/models/base.model'
 
 /**
@@ -10,6 +11,17 @@ export interface ImageModel extends BaseModel {
   height?: number
   width?: number
 }
+
+export type Image = ImageModel &
+  ImageSizesFromApi & {
+    variations: {
+      full: string
+      large: string
+      medium: string
+      small: string
+      original: string
+    }
+  }
 
 export type ImageOutput = Required<ImageModel>
 

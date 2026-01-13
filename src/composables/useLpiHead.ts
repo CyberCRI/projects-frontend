@@ -1,6 +1,6 @@
 import useNuxtI18n from '@/composables/useNuxtI18n'
 import { RefOrRaw } from '@/interfaces/utils'
-import { ImageModel } from '@/models/image.model'
+import { Image } from '@/models/image.model'
 import useOrganizationsStore from '@/stores/useOrganizations'
 
 const useLpiHead = (url, _title, _description, image, dimensions = null) => {
@@ -124,7 +124,7 @@ export default useLpiHead
 type OptionsHead = {
   url?: RefOrRaw<string>
   title?: RefOrRaw<string>
-  image?: ImageModel
+  image?: Image
   description?: RefOrRaw<string>
 }
 

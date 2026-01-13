@@ -4,7 +4,7 @@
     :total="group.modules.featured_projects"
     :see-more="{
       name: 'groupProjects',
-      params: { groupId: $route.params.groupId },
+      params: { groupId: group.id },
     }"
   >
     <template #content>

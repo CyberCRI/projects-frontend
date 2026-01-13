@@ -3,7 +3,7 @@
     :title="$t('group.members')"
     :total="group.modules.members"
     :loading="loading"
-    :see-more="{ name: 'groupMembers', params: { groupId: $route.params.groupId } }"
+    :see-more="{ name: 'groupMembers', params: { groupId: group.id } }"
   >
     <template #skeleton>
       <MemberListSkeleton :min-gap="90" :desktop-columns-number="3" :limit="limitSkeletons" />
@@ -22,24 +22,24 @@
           />
         </DynamicGrid>
       </FetchLoader>
+      <BaseDrawer
+        no-footer
+        :is-opened="!!userIdDrawer"
+        :title="$t('profile.drawer_title')"
+        @close="closeProfile"
+        @confirm="closeProfile"
+      >
+        <UserProfileV2
+          v-if="!!userIdDrawer"
+          ref="profile-user"
+          :can-edit="false"
+          :user-id="userIdDrawer"
+          is-preview
+          @close="closeProfile"
+        />
+      </BaseDrawer>
     </template>
   </BaseGroupPreview>
-  <BaseDrawer
-    no-footer
-    :is-opened="!!userIdDrawer"
-    :title="$t('profile.drawer_title')"
-    @close="closeProfile"
-    @confirm="closeProfile"
-  >
-    <UserProfileV2
-      v-if="!!userIdDrawer"
-      ref="profile-user"
-      :can-edit="false"
-      :user-id="userIdDrawer"
-      is-preview
-      @close="closeProfile"
-    />
-  </BaseDrawer>
 </template>
 
 <script setup lang="ts">

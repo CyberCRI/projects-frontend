@@ -15,20 +15,15 @@
         :height-limit="400"
         class="description-content"
       />
-      <template v-for="([name], idx) in groupModules">
-        <GroupMembersPreview
-          v-if="name === 'members'"
-          :key="`members-${idx}`"
-          :group="group"
-          :is-loading="isLoading"
-        />
+      <!-- add new modules Here -->
+      <div data-test="group-modules">
         <GroupProjectsPreview
-          v-else-if="name === 'featured_projects'"
-          :key="`featured_projects-${idx}`"
+          v-if="groupModules.featured_projects"
           :group="group"
           :is-loading="isLoading"
         />
-      </template>
+        <GroupMembersPreview v-if="groupModules.members" :group="group" :is-loading="isLoading" />
+      </div>
     </div>
   </div>
 </template>
@@ -47,9 +42,12 @@ const props = defineProps<{
 // filters only modules with upper than zero elements
 const groupModules = computed(() => {
   if (!props.group || !props.group.modules) {
-    return []
+    return {
+      featured_projects: 0,
+      members: 0,
+    }
   }
-  return Object.entries(props.group.modules).filter(([, count]) => count > 0)
+  return props.group.modules
 })
 </script>
 

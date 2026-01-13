@@ -1,102 +1,45 @@
 import GroupSnapshotTab from '@/pages/GroupPageV2/Tabs/GroupSnapshotTab.vue'
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
+import { lpiMount, lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 import { flushPromises } from '@vue/test-utils'
 import MockComponent from '@/../tests/helpers/MockComponent.vue'
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
-
-import pinia from '@/stores'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import useUsersStore from '@/stores/useUsers'
-
-import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: loadLocaleMessages(),
-}
-
-const protoPropsLoading = () => ({
-  description: '',
-
-  projectsInitialRequest: {},
-
-  membersInitialRequest: {},
-
-  isProjectsLoading: true,
-
-  isMembersLoading: true,
-
-  isLoading: true,
-})
-
-const protoPropsLoaded = (members = [], projects = []) => ({
-  description: '<p>lorem ipsum</p>',
-
-  projectsInitialRequest: { count: projects.length, results: projects },
-
-  membersInitialRequest: { count: members.length, results: members },
-
-  isProjectsLoading: false,
-
-  isMembersLoading: false,
-
-  isLoading: false,
-})
-
-const buildParams = (props) => ({
-  i18n,
-  router: [
-    { path: '/', name: 'home', component: MockComponent },
-    { path: '/page404', name: 'page404', component: MockComponent },
-  ],
-  props,
-})
+import { groupTranslatedFactory } from '../../../../factories/group.factory'
 
 describe('GroupSnapshotTab', () => {
-  beforeEach(() => {
-    const usersStore = useUsersStore(pinia)
-    usersStore.$patch({
-      id: 123,
-      userFromApi: {},
-      permissions: {},
-      getUser: vi.fn(),
-    } as any)
-
-    const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.$patch({
-      current: { code: 'TEST' } as unknown as OrganizationOutput,
-    } as any)
-  })
-  it('should render GroupSnapshotTab component', () => {
-    let wrapper = lpiShallowMount(GroupSnapshotTab, buildParams(protoPropsLoading()))
+  it('should render without modules', () => {
+    const group = groupTranslatedFactory.generate()
+    const wrapper = lpiShallowMount(GroupSnapshotTab, {
+      props: {
+        group,
+        isLoading: false,
+      },
+    })
 
     expect(wrapper.exists()).toBeTruthy()
+    // no modules set
+    expect(wrapper.find("[data-test='group-modules']").element.childElementCount).toBe(0)
   })
+  it('should render with modules', () => {
+    const group = groupTranslatedFactory.generate()
+    const wrapper = lpiMount(GroupSnapshotTab, {
+      props: {
+        group: {
+          ...group,
+          modules: {
+            featured_projects: 100,
+            members: 2,
+          },
+        },
+        isLoading: false,
+      },
+    })
 
-  it('should display loading state then render', async () => {
-    let wrapper = lpiShallowMount(GroupSnapshotTab, buildParams(protoPropsLoading()))
-
-    expect(wrapper.find('.skeleton').exists()).toBe(true)
-    expect(wrapper.find('.projects .see-more-button').exists()).toBe(false)
-    expect(wrapper.find('.members .see-more-button').exists()).toBe(false)
-
-    wrapper.setProps(protoPropsLoaded([{ id: 1 }], [{ id: 2 }]))
-
-    await wrapper.vm.$nextTick()
-
-    expect(wrapper.find('.skeleton').exists()).toBe(false)
-    expect(wrapper.find('.projects .see-more-button').exists()).toBe(true)
-    expect(wrapper.find('.members .see-more-button').exists()).toBe(true)
-  })
-
-  it("should not display list section when there's no project or member", async () => {
-    let wrapper = lpiShallowMount(GroupSnapshotTab, buildParams(protoPropsLoaded([], [])))
-
-    expect(wrapper.find('.skeleton').exists()).toBe(false)
-    expect(wrapper.find('.projects').exists()).toBe(false)
-    expect(wrapper.find('.members').exists()).toBe(false)
+    expect(wrapper.exists()).toBeTruthy()
+    // no modules set
+    console.log(wrapper.html())
+    expect(wrapper.find("[data-test='group-modules']").element.childElementCount).toBe(2)
   })
 })

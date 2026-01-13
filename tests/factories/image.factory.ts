@@ -15,6 +15,12 @@ export const ImageFactory = createFactory<ImageOutput>((faker) => ({
   name: faker.lorem.word(),
   height: faker.datatype.number(),
   width: faker.datatype.number(),
+  variations: {
+    full: faker.datatype.string(),
+    medium: faker.datatype.string(),
+    small: faker.datatype.string(),
+    original: faker.datatype.string(),
+  },
 }))
 
 export const ImageInputFactory = createFactory<ImageInput>((faker) => ({
