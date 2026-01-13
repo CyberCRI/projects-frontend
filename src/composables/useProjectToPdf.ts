@@ -189,8 +189,14 @@ export default function useProjectToPdf() {
       .render()
 
     // FINALIZE AND DOWNLOAD PDF
+    const projectUrl = `${window.location.origin}/projects/${project.id}/`
     const pdfContent = mainDoc.getContent()
-    await fetchPdf(pdfContent, `${project.slug || `project-${project.id}`}.pdf`)
+    await fetchPdf(
+      pdfContent,
+      `${project.slug || `project-${project.id}`}.pdf`,
+      projectUrl,
+      project.$t.title
+    )
     // document.body.innerHTML = pdfContent
   }
 

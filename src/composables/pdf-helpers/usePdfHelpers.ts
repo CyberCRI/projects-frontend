@@ -91,10 +91,14 @@ export async function convertImages(html) {
   return html
 }
 
-export async function fetchPdf(pdfContent: string, fileName: string) {
+export async function fetchPdf(pdfContent: string, fileName: string, url?: string, title?: string) {
   const payload = new FormData()
   payload.append('files', new Blob([pdfContent], { type: 'text/html' }), 'index.html')
-  payload.append('files', new Blob([usePdfFooter()], { type: 'text/html' }), 'footer.html')
+  payload.append(
+    'files',
+    new Blob([await usePdfFooter(url, title)], { type: 'text/html' }),
+    'footer.html'
+  )
   payload.append('files', new Blob([await usePdfHeader()], { type: 'text/html' }), 'header.html')
   // payload.append('emulatedMediaType', 'screen')
   const resp = await fetch('/pdf-generator', {
@@ -102,10 +106,10 @@ export async function fetchPdf(pdfContent: string, fileName: string) {
     body: payload,
   })
   const respBlob = await resp.blob()
-  const url = window.URL.createObjectURL(respBlob)
+  const urlPdf = window.URL.createObjectURL(respBlob)
   const a = document.createElement('a')
   a.style.display = 'none'
-  a.href = url
+  a.href = urlPdf
   a.download = fileName
   document.body.appendChild(a) // we need to append the element to the dom -> otherwise it will not work in firefox
   a.click()

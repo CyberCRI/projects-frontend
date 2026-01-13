@@ -49,13 +49,18 @@
         @click="goToCommentView"
       />
       <ExternalLabelButton
+        v-if="!isProcessingPdf"
         class="space-button"
         :label="'Get as PDF'"
-        btn-icon="Archive"
+        btn-icon="FilePdfLine"
         vertical-layout
         label-on-hover
         @click="$emit('get-pdf')"
       />
+      <span v-else class="space-button-loader-ctn">
+        <LoaderSimple class="space-button-loader" />
+      </span>
+
       <SocialShareButton :shared-url="sharedUrl" />
     </div>
 
@@ -142,6 +147,10 @@ export default {
     actionMenu: {
       type: Array,
       default: () => [],
+    },
+    isProcessingPdf: {
+      type: Boolean,
+      default: false,
     },
   },
 
@@ -300,6 +309,16 @@ export default {
 
   --external-button-outer-size: 1.2rem;
   --external-button-inner-size: 1.2rem;
+
+  .space-button-loader-ctn {
+    display: inline-block;
+    padding-top: 1rem;
+  }
+
+  .space-button-loader {
+    width: var(--external-button-outer-size);
+    height: var(--external-button-outer-size);
+  }
 }
 
 .projects-infos-list {

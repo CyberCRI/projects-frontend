@@ -43,18 +43,16 @@ export default async function usePdfHeader() {
     
             header {
               width: 100%;
-              padding: 0 1rem;
+              padding: 0.2cm;
               display: flex;
               flex-direction: row;
               justify-content: space-between;
               align-items: center;
               gap: .5rem;
-              height: 1.6cm;
               border-bottom: 1px solid #ddd;
-              padding-bottom: 5mm;
             }
             .platform-logo {
-              height: 1.4rem;
+              height: 1.2cm;
               width: auto;
             }`)
       this.content.push(/* HTML */ `

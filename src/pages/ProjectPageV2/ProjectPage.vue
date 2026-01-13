@@ -180,8 +180,10 @@ const chooseGoalOrSdg = (choice) => {
   toggleAddModal('goalOrSdg')
 }
 
+const isProcessingPdf = ref(false)
 const getAsPDF = async () => {
-  generateAndDownloadPdf({
+  isProcessingPdf.value = true
+  await generateAndDownloadPdf({
     project: project.value,
     team: team.value,
     goals: goals.value,
@@ -190,6 +192,7 @@ const getAsPDF = async () => {
     linkResources: linkResources.value,
     linkedProjects: linkedProjects.value,
   })
+  isProcessingPdf.value = false
 }
 </script>
 <template>
@@ -220,6 +223,7 @@ const getAsPDF = async () => {
           :similar-projects="similarProjects"
           :follow="follow"
           :is-editing="isEditing"
+          :is-processing-pdf="isProcessingPdf"
           :action-menu="actionMenu"
           @toggle-editing="toggleEditing"
           @update-follow="follow = $event"
