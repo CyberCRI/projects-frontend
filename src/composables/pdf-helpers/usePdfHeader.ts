@@ -34,7 +34,7 @@ export default async function usePdfHeader() {
       this.styles.add(/* CSS */ `
             .platform-title {
               font-family: Ubuntu, Arial, sans-serif;
-              font-size: .8cm;
+              font-size: 1.2rem;
               line-height: 1.2;
               font-weight: bold;
               color: #1d727c;
@@ -43,19 +43,18 @@ export default async function usePdfHeader() {
     
             header {
               width: 100%;
-              padding: 0 .6cm;
+              padding: 0 1rem;
               display: flex;
               flex-direction: row;
               justify-content: space-between;
               align-items: center;
-              gap: .5cm;
+              gap: .5rem;
               height: 1.6cm;
               border-bottom: 1px solid #ddd;
               padding-bottom: 5mm;
-              margin-bottom: 1cm;
             }
             .platform-logo {
-              height: 1.6cm;
+              height: 1.4rem;
               width: auto;
             }`)
       this.content.push(/* HTML */ `

@@ -20,23 +20,21 @@ export default async function addGoalsSectionFactory(goals: any[]) {
           .goal-list {
             margin-top: .6cm;
             display: flex;
-            gap: 0.6cm;
+            gap: 0.2cm;
             flex-flow: column nowrap;
           }
 
           .goal {
+            --border-radius: 0.3cm;
+            --border-width: 0.05cm;
             position: relative;
-            outline: 0.1cm solid #000;
-            border-radius: 0.5cm;
             background: #FFF;
             transform: scale3d(1, 1, 1);
           }
-          .goal.shadow-box {
-            cursor: pointer;
-          }
+
+         
           .goal .content {
             display: flex;
-            min-height: 100px;
           }
           .goal .content .left {
             writing-mode: tb-rl;
@@ -44,44 +42,66 @@ export default async function addGoalsSectionFactory(goals: any[]) {
             background: #f0fffb;
             color: #000;
             text-align: center;
-            padding: 0.4cm;
+            padding:.2cm;
             box-sizing: border-box;
-            font-size: 0.4cm;
+            font-size: .7rem;
             font-weight: 500;
-            border-top-right-radius: 0.5cm;
-            border-bottom-right-radius: 0.5cm;
+            border-top-right-radius: var(--border-radius);
+            border-bottom-right-radius: var(--border-radius);
+            min-height: calc(8 * .7rem);
+            border: var(--border-width) solid #000;
           }
-          .goal .content .left.complete {
+
+          .goal.complete .left{
+            border-color: #00dba7;
             background: #00dba7;
           }
-          .goal .content .left.ongoing {
+          .goal.ongoing .left {
+            border-color: #99ffe7;
             background: #99ffe7;
           }
-          .goal .content .left.cancel {
+          .goal.cancel .left{
+            border-color: #bdbdbd;
             background: #bdbdbd;
             color: #999;
           }
+
           .goal .content .right {
             padding: 0.2cm 0.4cm;
             box-sizing: border-box;
             width: 20rem;
             flex-grow: 1;
+
+            border: var(--border-width) solid #000;
+            border-left: 0 none;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
           }
+
+          .goal.complete .right{
+            border-color: #00dba7;
+          }
+          .goal.ongoing .right {
+            border-color: #99ffe7;
+          }
+          .goal.cancel .right{
+            border-color: #bdbdbd;
+          }
+
           .goal .content .right .main-content {
             display: flex;
             flex-direction: column;
             justify-content: space-around;
-            height: 100px;
+            align-items: flex-start;
           }
           .goal .content .right .main-content p {
             margin: 0;
           }
           .goal .content .right .main-content .goal-title {
-            font-size: 0.6cm;
+            font-size: 1.2rem;
             font-weight: 900;
           }
           .goal .content .right .main-content .goal-deadline {
-            font-size: 0.5cm;
+            font-size: 1rem;
             font-weight: 400;
           }
           .goal .content .right .main-content .goal-deadline.complete {
@@ -99,7 +119,7 @@ export default async function addGoalsSectionFactory(goals: any[]) {
         .map(
           (goal) => /*HTML*/ `
           <div class="goal-ctn">
-            <div class="goal shadow-box">
+            <div class="goal shadow-box  ${goal.status}"">
               <div class="content">
                 <div class="left ${goal.status}">
                   ${t(`status.${goal.status}`)}

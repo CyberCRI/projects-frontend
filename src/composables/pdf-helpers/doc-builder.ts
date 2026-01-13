@@ -68,6 +68,7 @@ export class Doc extends Container {
           margin: 0;
           padding: 0;
           font-family: Ubuntu, Arial, sans-serif;
+          font-size: 0.4cm;
       }`)
   }
   override getContent(): string {

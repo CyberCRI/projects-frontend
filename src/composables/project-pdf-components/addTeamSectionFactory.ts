@@ -1,6 +1,12 @@
 import { Container } from '@/composables/pdf-helpers/doc-builder'
-import { fetchImageAsDataUrl, proxyImageUrl } from '@/composables/pdf-helpers/usePdfHelpers'
+import {
+  croppedImageData,
+  fetchImageAsDataUrl,
+  proxyImageUrl,
+} from '@/composables/pdf-helpers/usePdfHelpers'
+import { pictureApiToImageSizes } from '@/functs/imageSizesUtils'
 import { usePatatoids } from '@/composables/usePatatoids'
+import { cardListStyles } from '@/composables/project-pdf-components/common-styles'
 
 export default async function addTeamSectionFactory(title: string, team: any[]) {
   const defaultPatatoid = usePatatoids()[0]
@@ -9,9 +15,15 @@ export default async function addTeamSectionFactory(title: string, team: any[]) 
       const avatarDataUrl = await fetchImageAsDataUrl(
         proxyImageUrl(member.profile_picture?.variations?.medium || defaultPatatoid)
       )
+      const imageSizes = pictureApiToImageSizes(member.profile_picture || null)
+      const croppedAvatarDataUrl = await croppedImageData({
+        imgDataUrl: avatarDataUrl,
+        ratio: 1,
+        imageSizes,
+      })
       return {
         ...member,
-        avatar_url: avatarDataUrl,
+        avatar_url: croppedAvatarDataUrl,
       }
     })
   )
@@ -20,52 +32,26 @@ export default async function addTeamSectionFactory(title: string, team: any[]) 
   return function addTeamSection(this: Container) {
     let out = ''
     if (team.length > 0) {
+      this.styles.add(cardListStyles)
       this.styles.add(/* CSS */ `
-          .team-section {
-            break-inside: avoid;
-            break-after: auto;
-          }
-          .team-list {
-            margin-top: .6cm;
-            display: grid;
-            gap: 0.6cm;
-            grid-template-columns: repeat(auto-fill, 4cm);
-          }
-          .team-section-title {
-            font-size: .4cm;
-            font-weight: bold;
-            margin-bottom: .4cm;
-            color: #1d727c;
-            font-weight: bold;
-          }
-          .team-member {
-            width: 4cm;
-            height: auto;
-            padding: .2cm 0;
-            border: 1px solid #1d727c;
-            border-radius: .2cm;
-            text-align: center;
-            font-size: .3cm;
-            display: flex;
-            gap: .2cm;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-          }
           .team-card-title{
             width: 100%;
             font-weight: 700;
-            font-size: .4cm;
+            font-size: 1rem;
+          }
+          .team-card-title {
+            font-weight: 700;
           }
           .team-card-photo {
-            width: 3.5cm;
-            height: 3.5cm;
+            --photo-size: 2cm;
+            width: var(--photo-size);
+            height: var(--photo-size);
             border-radius: 50%;
           }`)
       const teamList = _team
         .map(
           (member) => /*HTML*/ `
-          <div class="team-member">
+          <div class="card-item team-member">
             <img class="team-card-photo" src="${member.avatar_url}" alt="${member.given_name} ${member.family_name}"/>
             <div class="team-card-title">
             ${member.given_name} ${member.family_name}
@@ -79,8 +65,8 @@ export default async function addTeamSectionFactory(title: string, team: any[]) 
 
       out = /* HTML */ `
         <div class="team-section">
-          <h3 class="team-section-title">${title}</h3>
-          <div class="team-list">${teamList}</div>
+          <h3 class="card-list-title team-section-title">${title}</h3>
+          <div class="card-list team-list">${teamList}</div>
         </div>
       `
     }

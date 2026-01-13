@@ -1,10 +1,5 @@
 import { Doc, Page } from '@/composables/pdf-helpers/doc-builder'
-import {
-  convertImages,
-  fetchImageAsDataUrl,
-  fetchPdf,
-  proxyImageUrl,
-} from '@/composables/pdf-helpers/usePdfHelpers'
+import { convertImages, fetchPdf } from '@/composables/pdf-helpers/usePdfHelpers'
 
 import ProjectHeader from '@/composables/project-pdf-components/ProjectHeader'
 import ProjectHeaderContent from '@/composables/project-pdf-components/ProjectHeaderContent'
@@ -30,7 +25,6 @@ export default function useProjectToPdf() {
     linkResources,
     linkedProjects,
   }) => {
-    const runtimeConfig = useRuntimeConfig()
     const { locale, t } = useNuxtI18n()
 
     const fixedDescription = await convertImages(project.description)
@@ -59,10 +53,7 @@ export default function useProjectToPdf() {
 
     // FIRST PAGE - HEADER
 
-    const defaultProjectPicture = `${runtimeConfig.public.appPublicBinariesPrefix}/placeholders/header_placeholder.png`
-    const projectPhoto = project.header_image?.variations?.medium || defaultProjectPicture
-    const projectPhotoDataUrl = await fetchImageAsDataUrl(proxyImageUrl(projectPhoto))
-    const projectPhotoHeader = addProjectPhotoFactory(projectPhotoDataUrl)
+    const projectPhotoHeader = await addProjectPhotoFactory(project)
 
     const addPurpose = addPurposeFactory(project)
     const addTags = addTagsFactory(project, locale)
@@ -99,25 +90,18 @@ export default function useProjectToPdf() {
 
     const addLinkedProjectSection = await addLinkedProjectSectionFactory(linkedProjects || [])
 
-    let sdgImages = []
-    if (project.sdgs && project.sdgs.length > 0) {
-      sdgImages = await Promise.all(
-        (project.sdgs || []).map((sdg) =>
-          fetchImageAsDataUrl(
-            proxyImageUrl(
-              `${runtimeConfig.public.appPublicBinariesPrefix}/sdgs/logo/SDG-${sdg}.svg`
-            )
-          )
-        )
-      )
-    }
-    const addSdgs = addSdgsFactory(sdgImages)
+    const addSdgs = await addSdgsFactory(project.sdgs || [])
 
     mainDoc
       .addContainer(Page)
       .add(function (this: Page) {
         this.styles.add(/* CSS */ `
+          .body {
+            padding-top: 1cm;
+            padding-bottom: 1cm;
+          }
           .project-title {
+            font-size: 1.6rem;
             margin-bottom: 1cm;
             color: #1d727c;
             font-weight: bold;
@@ -131,9 +115,16 @@ export default function useProjectToPdf() {
       .addContainer(ProjectHeaderContent)
       .add(addPurpose)
       .add(addTags)
-      .add(addSdgs)
       .render() // ProjectHeaderContent
       .render() // ProjectHeader
+      .addContainer(PageTitle)
+      .add(function (this: PageTitle) {
+        this.content.push(t('goal.goals'))
+      })
+      .render()
+      .add(addSdgs)
+      .add(addGoalsSection)
+      .render()
       .render() // Page
 
     // SECOND PAGE - DESCRIPTION
@@ -170,16 +161,6 @@ export default function useProjectToPdf() {
       .addContainer(Page)
       .addContainer(PageTitle)
       .add(function (this: PageTitle) {
-        this.content.push(t('goal.goals'))
-      })
-      .render()
-      .add(addGoalsSection)
-      .render()
-
-    mainDoc
-      .addContainer(Page)
-      .addContainer(PageTitle)
-      .add(function (this: PageTitle) {
         this.content.push(t('blog.title'))
       })
       .render()
@@ -205,22 +186,6 @@ export default function useProjectToPdf() {
       })
       .render()
       .add(addLinkedProjectSection)
-      .render()
-
-    mainDoc
-      .addContainer(Page)
-      .addContainer(PageTitle)
-      .add(function (this: PageTitle) {
-        this.content.push(t('home.announcements'))
-      })
-      .render()
-
-    mainDoc
-      .addContainer(Page)
-      .addContainer(PageTitle)
-      .add(function (this: PageTitle) {
-        this.content.push(t('comment.comments'))
-      })
       .render()
 
     // FINALIZE AND DOWNLOAD PDF

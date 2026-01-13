@@ -1,6 +1,12 @@
 import { Container } from '@/composables/pdf-helpers/doc-builder'
-import { fetchImageAsDataUrl, proxyImageUrl } from '@/composables/pdf-helpers/usePdfHelpers'
+import {
+  croppedImageData,
+  fetchImageAsDataUrl,
+  proxyImageUrl,
+} from '@/composables/pdf-helpers/usePdfHelpers'
 import { usePatatoids } from '@/composables/usePatatoids'
+import { cardListStyles } from '@/composables/project-pdf-components/common-styles'
+import { pictureApiToImageSizes } from '@/functs/imageSizesUtils'
 
 export default async function addGroupSectionFactory(title: string, group: any[]) {
   const defaultPatatoid = usePatatoids()[0]
@@ -9,9 +15,15 @@ export default async function addGroupSectionFactory(title: string, group: any[]
       const avatarDataUrl = await fetchImageAsDataUrl(
         proxyImageUrl(member.header_image?.variations?.medium || defaultPatatoid)
       )
+      const imageSizes = pictureApiToImageSizes(member.header_image || null)
+      const croppedAvatarDataUrl = await croppedImageData({
+        imgDataUrl: avatarDataUrl,
+        ratio: 1,
+        imageSizes,
+      })
       return {
         ...member,
-        avatar_url: avatarDataUrl,
+        avatar_url: croppedAvatarDataUrl,
       }
     })
   )
@@ -20,47 +32,25 @@ export default async function addGroupSectionFactory(title: string, group: any[]
   return function addGroupSection(this: Container) {
     let out = ''
     if (group.length > 0) {
+      this.styles.add(cardListStyles)
       this.styles.add(/* CSS */ `
           .group-section {
             break-inside: avoid;
             break-after: auto;
           }
-          .group-list {
-            margin-top: .6cm;
-            display: grid;
-            gap: 0.6cm;
-            grid-template-columns: repeat(auto-fill, 4cm);
-          }
-          .group-section-title {
-            font-size: .4cm;
-            font-weight: bold;
-            margin-bottom: .4cm;
-            color: #1d727c;
-            font-weight: bold;
-          }
-          .group-member {
-            width: 4cm;
-            height: auto;
-            padding: .2cm 0;
-            border: 1px solid #1d727c;
-            border-radius: .2cm;
-            text-align: center;
-            font-size: .3cm;
-            display: flex;
-            gap: .2cm;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-          }
+          .group-card-title{
+            font-weight: 700;
+          } 
           .group-card-photo {
-            width: 3.5cm;
-            height: 3.5cm;
+             --photo-size: 2cm;
+            width: var(--photo-size);
+            height: var(--photo-size);
             border-radius: 50%;
           }`)
       const groupList = _group
         .map(
           (member) => /*HTML*/ `
-          <div class="group-member">
+          <div class="card-item group-member">
             <img class="group-card-photo" src="${member.avatar_url}" alt="${getTranslatableField(member, 'name').value || ''}"/>
             <div class="group-card-group-count">
             </div>
@@ -76,8 +66,8 @@ export default async function addGroupSectionFactory(title: string, group: any[]
 
       out = /* HTML */ `
         <div class="group-section">
-          <h3 class="group-section-title">${title}</h3>
-          <div class="group-list">${groupList}</div>
+          <h3 class="card-list-title group-section-title">${title}</h3>
+          <div class="card-list group-list">${groupList}</div>
         </div>
       `
     }

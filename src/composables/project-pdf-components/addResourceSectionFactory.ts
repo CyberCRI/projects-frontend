@@ -11,9 +11,9 @@ export default async function addResourceSectionFactory(resources: any[], type: 
       this.styles.add(/* CSS */ `
 
           .resource-title {
-            font-size: .4cm;
+            font-size: 1rem;
             font-weight: bold;
-            margin-bottom: .4cm;
+            margin-bottom: 1rem;
             color: #1d727c;
             font-weight: bold;
           }
@@ -22,7 +22,7 @@ export default async function addResourceSectionFactory(resources: any[], type: 
             display: flex;
             flex-wrap: wrap;
             gap: .2cm;
-            padding: .4cm 0;
+            padding: 1rem 0;
           }
           .resource-list  div {
             width: calc(33% - .2cm);
@@ -37,7 +37,7 @@ export default async function addResourceSectionFactory(resources: any[], type: 
             border-radius: 0.3cm;
             display: flex;
             cursor: pointer;
-            height: 4cm;
+            min-height: 2.5cm;
             overflow: hidden;
             position: relative;
           }
@@ -68,7 +68,7 @@ export default async function addResourceSectionFactory(resources: any[], type: 
           }
           .resource-wrapper .resource-card .content {
             background-color: #fff;
-            font-size: 0.4cm;
+            font-size:  1rem;
             padding: 0.2cm 0.4cm;
             margin-right: auto;
             overflow: hidden;
@@ -83,7 +83,7 @@ export default async function addResourceSectionFactory(resources: any[], type: 
             word-wrap: break-word;
           }
           .resource-wrapper .resource-card .content .resource-subtitle {
-            font-size: 0.3cm;
+            font-size: .8rem;
             line-height: 1.1;
             display: -webkit-box;
             -webkit-line-clamp: 3;

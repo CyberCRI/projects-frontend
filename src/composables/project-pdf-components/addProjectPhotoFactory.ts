@@ -1,6 +1,24 @@
 import { Container } from '@/composables/pdf-helpers/doc-builder'
+import {
+  croppedImageData,
+  fetchImageAsDataUrl,
+  proxyImageUrl,
+} from '@/composables/pdf-helpers/usePdfHelpers'
+import { pictureApiToImageSizes } from '@/functs/imageSizesUtils'
 
-export default function addProjectPhotoFactory(projectPhotoDataUrl: string | ArrayBuffer) {
+export default async function addProjectPhotoFactory(project: any) {
+  const runtimeConfig = useRuntimeConfig()
+  const defaultProjectPicture = `${runtimeConfig.public.appPublicBinariesPrefix}/placeholders/header_placeholder.png`
+  const projectPhoto = project.header_image?.variations?.medium || defaultProjectPicture
+  const projectPhotoDataUrl = await fetchImageAsDataUrl(proxyImageUrl(projectPhoto))
+
+  const imageSizes = pictureApiToImageSizes(project.header_image || null)
+  const croppedPhotoDataUrl = await croppedImageData({
+    imgDataUrl: projectPhotoDataUrl,
+    ratio: 1,
+    imageSizes,
+  })
+
   return function addProjectPhoto(this: Container) {
     this.styles.add(/* CSS */ `
           .project-photo {
@@ -12,7 +30,7 @@ export default function addProjectPhotoFactory(projectPhotoDataUrl: string | Arr
           }
           `)
     this.content.push(/* HTML */ `
-      <img class="project-photo" src="${projectPhotoDataUrl}" alt="Project Image" />
+      <img class="project-photo" src="${croppedPhotoDataUrl}" alt="Project Image" />
     `)
   }
 }

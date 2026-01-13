@@ -17,13 +17,12 @@ export default async function addBlogSectionFactory(blogEntries: any[]) {
           }
 
           .blog-entry {
-            break-inside: avoid;
-            break-after: auto;
-            border-radius: 0.4cm;
-            border: 0.1cm solid #00dba7;
             box-sizing: border-box;
             background: #fff;
             position: relative;
+            border-bottom: 0.1cm solid #00dba7;
+            padding-bottom: 0.2cm;
+            margin-top: 0.2cm;
           }
           .blog-entry .blog-entry-header {
             display: flex;
@@ -31,18 +30,19 @@ export default async function addBlogSectionFactory(blogEntries: any[]) {
           }
           .blog-entry .blog-entry-header .header-main {
             display: flex;
-            align-items: center;
+            flex-flow: column nowrap; 
+            justify-content: flex-start;
             justify-content: space-between;
             padding: 0.3cm 0.5cm;
             font-weight: 700;
             width: 100%;
           }
           .blog-entry .blog-entry-header .header-main .entry-title {
-            font-size: 0.5cm;
+            font-size: 1.2rem;
             line-height: 1.1;
           }
           .blog-entry .blog-entry-header .header-main .date {
-            font-size: 0.3cm;
+            font-size: .8rem;
           }
           .blog-entry .entry-body {
             border-top: 0.1cms solid #00dba7;
@@ -62,11 +62,11 @@ export default async function addBlogSectionFactory(blogEntries: any[]) {
             <div class="blog-entry">
               <div class="blog-entry-header">
                 <div class="header-main">
-                  <div class="entry-title">
-                    ${blogEntry.$t.title}
-                  </div>
                   <div class="date">
                     ${d(new Date(blogEntry.created_at))}
+                  </div>
+                  <div class="entry-title">
+                    ${blogEntry.$t.title}
                   </div>
                 </div>
               </div>

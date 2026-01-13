@@ -8,7 +8,7 @@ export default class ProjectHeader extends Container {
             display: flex;
             flex-direction: row;
             align-items: flex-start;
-             gap: .6cm;
+            gap: .6cm;
             margin-bottom: 1cm;
           }   
           `)

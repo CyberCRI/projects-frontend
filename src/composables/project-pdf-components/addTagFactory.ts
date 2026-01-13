@@ -8,7 +8,7 @@ export default function addTagsFactory(project, locale) {
     if (project?.tags?.length) {
       this.styles.add(/* CSS */ `
           .tags {
-            font-size: .3cm;
+            font-size: .8rem;
             display: flex;
             flex-flow: row wrap;
             gap: .1cm;

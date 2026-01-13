@@ -4,12 +4,12 @@ export default function usePdfFooter() {
     .add(function (this: Doc) {
       this.styles.add(/* CSS */ `
           html, body {
-            font-size: 12px;
             text-align: center;
           }
           footer {
             width: 100%;
             border-top: 1px solid #ddd;
+            font-size: .8rem;
           }
           a {
             color: #1d727c;

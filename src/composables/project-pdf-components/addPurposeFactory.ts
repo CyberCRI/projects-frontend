@@ -6,7 +6,7 @@ export default function addPurposeFactory(project) {
     if (project.$t.purpose) {
       this.styles.add(/* CSS */ `
           .purpose {
-            font-size: .4cm;
+            font-size: 1rem;
             font-weight: bold;
             margin-bottom: .6cm;
           }`)

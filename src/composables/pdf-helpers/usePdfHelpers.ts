@@ -1,14 +1,46 @@
 import usePdfFooter from '@/composables/pdf-helpers/usePdfFooter'
 import usePdfHeader from '@/composables/pdf-helpers/usePdfHeader'
 
-// exeport function imageElementToDataUrl(imgElement) {
-//   const myCanvasElement = document.createElement('canvas')
-//   myCanvasElement.width = imgElement.naturalWidth
-//   myCanvasElement.height = imgElement.naturalHeight
-//   const context = myCanvasElement.getContext('2d')
-//   context.drawImage(imgElement, 0, 0)
-//   return myCanvasElement.toDataURL('image/png')
-// }
+export async function croppedImageData({ ratio, imgDataUrl, imageSizes }) {
+  imageSizes = imageSizes || { left: 0, top: 0, scaleX: 1, scaleY: 1, naturalRatio: 1 }
+  return await new Promise((resolve) => {
+    const img = new Image()
+    img.onload = function () {
+      const naturalWidth = img.naturalWidth
+      const naturalHeight = img.naturalHeight
+
+      const myCanvasElement = document.createElement('canvas')
+      const canvasRatio = ratio || 1
+      let outWidth = naturalWidth
+      let outHeight = naturalHeight
+      if (canvasRatio >= 1) outHeight = outWidth / canvasRatio
+      else outWidth = outHeight * canvasRatio
+      myCanvasElement.width = outWidth
+      myCanvasElement.height = outHeight
+
+      const context = myCanvasElement.getContext('2d')
+
+      const x = (-imageSizes.left / 100) * naturalWidth
+      const y = (-imageSizes.top / 100) * naturalHeight
+      const w = outWidth / imageSizes.scaleX
+      const h = outHeight / imageSizes.scaleY
+
+      context.drawImage(img, x, y, w, h, 0, 0, outWidth, outHeight) // Or at whatever offset you like
+      myCanvasElement.toBlob((blob) => {
+        const reader = new FileReader()
+        reader.onloadend = () => {
+          resolve(reader.result)
+        }
+        reader.onerror = () => {
+          console.error('Error reading blob as data URL for image resizing')
+          resolve('')
+        }
+        reader.readAsDataURL(blob)
+      }, 'image/png')
+    }
+    img.src = imgDataUrl
+  })
+}
 
 export function proxyImageUrl(url: string): string {
   return `/proxy-image?url=${encodeURIComponent(url)}`
