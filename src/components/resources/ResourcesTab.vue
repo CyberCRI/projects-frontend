@@ -36,7 +36,7 @@
       v-if="linkResources.length"
       :has-button="false"
       :quantity="linkResources.length"
-      :title="$filters.capitalize($t('resource.web', linkResources.length))"
+      :title="$t('resource.web', linkResources.length)"
       class="link-header"
     />
 
