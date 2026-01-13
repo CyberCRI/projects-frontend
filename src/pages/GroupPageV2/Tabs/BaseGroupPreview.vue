@@ -13,10 +13,13 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
-  title: string
-  total: number
-  seeMore: any
-  loading: boolean
-}>()
+withDefaults(
+  defineProps<{
+    title: string
+    total: number
+    seeMore: any
+    loading?: boolean
+  }>(),
+  { loading: false }
+)
 </script>

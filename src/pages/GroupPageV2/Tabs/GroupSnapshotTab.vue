@@ -35,8 +35,8 @@
 
 <script setup lang="ts">
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import GroupProjectsPreview from '@/pages/GroupPageV2/Tabs/previews/GroupProjectsPreview.vue'
-import GroupMembersPreview from '@/pages/GroupPageV2/Tabs/previews/GroupMembersPreview.vue'
+import GroupProjectsPreview from '@/pages/GroupPageV2/Tabs/Projects/GroupProjectsPreview.vue'
+import GroupMembersPreview from '@/pages/GroupPageV2/Tabs/Members/GroupMembersPreview.vue'
 
 defineOptions({ name: 'GroupSnapshotTab' })
 const props = defineProps<{

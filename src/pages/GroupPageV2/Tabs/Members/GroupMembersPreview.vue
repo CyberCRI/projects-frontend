@@ -45,7 +45,7 @@
 <script setup lang="ts">
 import { getGroupMember } from '@/api/v2/group.service'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import BaseGroupPreview from '@/pages/GroupPageV2/Tabs/previews/BaseGroupPreview.vue'
+import BaseGroupPreview from '@/pages/GroupPageV2/Tabs/BaseGroupPreview.vue'
 const LIMIT = 6
 
 const props = defineProps<{

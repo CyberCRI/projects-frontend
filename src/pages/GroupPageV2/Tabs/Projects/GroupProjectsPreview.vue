@@ -2,15 +2,14 @@
   <BaseGroupPreview
     :title="$t('group.projects')"
     :total="group.modules.featured_projects"
-    :loading="loading"
     :see-more="{
       name: 'groupProjects',
       params: { groupId: $route.params.groupId },
     }"
   >
     <template #content>
-      <FetchLoader :status="status">
-        <CardList :is-loading="isLoading" :items="data" :limit="limitSkeletons">
+      <FetchLoader :status="status" only-error>
+        <CardList :is-loading="loading" :items="data" :limit="limitSkeletons">
           <template #default="projectListSlotProps">
             <ProjectCard :horizontal-display="true" :project="projectListSlotProps.item" />
           </template>
@@ -23,7 +22,7 @@
 <script setup lang="ts">
 import { getGroupProject } from '@/api/v2/group.service'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import BaseGroupPreview from '@/pages/GroupPageV2/Tabs/previews/BaseGroupPreview.vue'
+import BaseGroupPreview from '@/pages/GroupPageV2/Tabs/BaseGroupPreview.vue'
 
 const props = defineProps<{
   group: TranslatedPeopleGroupModel
