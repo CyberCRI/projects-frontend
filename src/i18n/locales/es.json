@@ -219,7 +219,8 @@
       "users": "Usuarios",
       "requests": "Solicitudes",
       "groups": "Grupos",
-      "settings": "Ajustes"
+      "settings": "Ajustes",
+      "terms": "ToS"
     },
     "page-title": "Admin",
     "portal": {
@@ -337,6 +338,13 @@
       },
       "accept-success": "Solicitud aceptada con éxito",
       "decline-success": "Solicitud rechazada con éxito"
+    },
+    "terms": {
+      "title": "Términos y condiciones",
+      "using-default": "Usted está actualmente utilizando los Términos y Condiciones predeterminados",
+      "error": "Se produjo un error al guardar los Términos y Condiciones.",
+      "saved": "Términos y condiciones guardados con éxito",
+      "version": "Versión:"
     }
   },
   "account": {
