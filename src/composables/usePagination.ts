@@ -46,6 +46,7 @@ export type paginationConfig = {
 export type Pagination = {
   current: Ref<number>
   limit: Ref<number>
+  offset: ComputedRef<number>
   total: Ref<number>
   count: Ref<number>
   setPage: (page: number) => boolean
@@ -66,10 +67,11 @@ export const usePagination = (
   results: Ref<PaginationResult>,
   paginationConfig: paginationConfig = {}
 ): Pagination => {
-  const current = useState(() => 1)
-  const total = useState(() => 0)
-  const count = useState(() => 0)
-  const limit = useState(() => paginationConfig.limit ?? DEFAULT_PAGINATION_LIMIT)
+  const current = ref(1)
+  const total = ref(0)
+  const count = ref(0)
+  const limit = ref(paginationConfig.limit ?? DEFAULT_PAGINATION_LIMIT)
+  const offset = computed(() => Math.max((current.value - 1) * limit.value, 0))
 
   watch(
     results,
@@ -116,9 +118,8 @@ export const usePagination = (
 
   const query = (): PaginationQuery => {
     // page - 1 for first page
-    const offset = Math.max((current.value - 1) * limit.value, 0)
     return {
-      offset,
+      offset: offset.value,
       limit: limit.value,
     }
   }
@@ -126,6 +127,7 @@ export const usePagination = (
   return {
     current,
     limit,
+    offset,
     setPage,
     total,
     count,

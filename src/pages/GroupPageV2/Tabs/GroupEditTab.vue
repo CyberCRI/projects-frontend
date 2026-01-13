@@ -195,7 +195,7 @@ const createGroup = async () => {
 
     // save header
     await updateHeader(newGroupId)
-    await refreshNuxtData(`${organizationCode}::group::${newGroup.slug}`)
+    await refreshNuxtData(`${organizationCode}::group::${newGroup.id}`)
 
     startEditWatcher()
 

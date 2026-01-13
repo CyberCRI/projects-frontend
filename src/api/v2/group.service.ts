@@ -9,11 +9,7 @@ import { RefOrRaw } from '@/interfaces/utils'
 import { GroupModel, TranslatedGroupMember } from '@/models/group.model'
 import { OrganizationModel } from '@/models/organization.model'
 
-const DEFAULT_CONFIG = {
-  headers: {
-    'Cache-Control': 'max-age=60',
-  },
-}
+const DEFAULT_CONFIG = {}
 
 export const getGroup = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,

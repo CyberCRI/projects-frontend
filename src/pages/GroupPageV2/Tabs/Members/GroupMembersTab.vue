@@ -1,15 +1,15 @@
 <template>
   <div class="group-members">
-    <div class="members">
-      <div class="members-header">
-        <h2 class="title">
-          {{ $t('group.group-members') }}
-          <span v-show="countElement">( {{ countElement }} )</span>
-        </h2>
-      </div>
-      <MemberListSkeleton v-if="isLoading" :min-gap="90" :limit="limitSkeletons" />
-      <FetchLoader v-else :status="status" only-error>
-        <DynamicGrid :min-gap="90" class="members-container">
+    <FetchLoader :status="status" only-error>
+      <div class="members">
+        <div class="members-header">
+          <h2 class="title">
+            {{ $t('group.group-members') }}
+            <span v-show="countElement">( {{ countElement }} )</span>
+          </h2>
+        </div>
+        <MemberListSkeleton v-if="isLoading" :min-gap="90" :limit="limitSkeletons" />
+        <DynamicGrid v-else :min-gap="90" class="members-container">
           <GroupMemberItem
             v-for="member in data"
             :key="member.id"
@@ -18,28 +18,28 @@
             @user-click="openProfile"
           />
         </DynamicGrid>
-      </FetchLoader>
-    </div>
-    <div v-if="!isLoading && total > 1" class="pagination-container">
-      <PaginationButtons2 :pagination="pagination" />
-    </div>
+      </div>
+      <div v-if="!isLoading && total > 1" class="pagination-container">
+        <PaginationButtons2 :pagination="pagination" />
+      </div>
+      <BaseDrawer
+        no-footer
+        :is-opened="!!userIdDrawer"
+        :title="$t('profile.drawer_title')"
+        @close="closeProfile"
+        @confirm="closeProfile"
+      >
+        <UserProfileV2
+          v-if="!!userIdDrawer"
+          ref="profile-user"
+          :can-edit="false"
+          :user-id="userIdDrawer"
+          is-preview
+          @close="closeProfile"
+        />
+      </BaseDrawer>
+    </FetchLoader>
   </div>
-  <BaseDrawer
-    no-footer
-    :is-opened="!!userIdDrawer"
-    :title="$t('profile.drawer_title')"
-    @close="closeProfile"
-    @confirm="closeProfile"
-  >
-    <UserProfileV2
-      v-if="!!userIdDrawer"
-      ref="profile-user"
-      :can-edit="false"
-      :user-id="userIdDrawer"
-      is-preview
-      @close="closeProfile"
-    />
-  </BaseDrawer>
 </template>
 
 <script setup lang="ts">
@@ -52,10 +52,15 @@ const props = defineProps<{
   group: TranslatedPeopleGroupModel
 }>()
 
+const LIMIT = 10
 const organizationCode = useOrganizationCode()
-const limitSkeletons = computed(() => Math.min(props.group.modules?.members ?? 10, 10))
+const limitSkeletons = computed(() => Math.min(props.group.modules?.members ?? LIMIT, LIMIT))
 
-const { data, isLoading, pagination, status } = getGroupMember(organizationCode, props.group.id)
+const { data, isLoading, pagination, status } = getGroupMember(organizationCode, props.group.id, {
+  paginationConfig: {
+    limit: LIMIT,
+  },
+})
 const { total, count } = pagination
 
 const userIdDrawer = ref<number | null>()
