@@ -54,6 +54,8 @@ const save = async () => {
   await onboardingTrap('complete_profile', false)
   return true
 }
+
+defineExpose({ save })
 </script>
 <style lang="scss" scoped>
 .loader {
