@@ -8,15 +8,17 @@
         </h2>
       </div>
       <MemberListSkeleton v-if="isLoading" :min-gap="90" :limit="limitSkeletons" />
-      <DynamicGrid v-else :min-gap="90" class="members-container">
-        <GroupMemberItem
-          v-for="member in data"
-          :key="member.id"
-          :user="member"
-          class="cursor-pointer shadow-drop"
-          @user-click="openProfile"
-        />
-      </DynamicGrid>
+      <FetchLoader v-else :status="status" only-error>
+        <DynamicGrid :min-gap="90" class="members-container">
+          <GroupMemberItem
+            v-for="member in data"
+            :key="member.id"
+            :user="member"
+            class="cursor-pointer shadow-drop"
+            @user-click="openProfile"
+          />
+        </DynamicGrid>
+      </FetchLoader>
     </div>
     <div v-if="!isLoading && total > 1" class="pagination-container">
       <PaginationButtons2 :pagination="pagination" />
@@ -53,7 +55,7 @@ const props = defineProps<{
 const organizationCode = useOrganizationCode()
 const limitSkeletons = computed(() => Math.min(props.group.modules?.members ?? 10, 10))
 
-const { data, isLoading, pagination } = getGroupMember(organizationCode, props.group.id)
+const { data, isLoading, pagination, status } = getGroupMember(organizationCode, props.group.id)
 const { total, count } = pagination
 
 const userIdDrawer = ref<number | null>()

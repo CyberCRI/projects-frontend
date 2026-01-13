@@ -22,7 +22,6 @@ export const getGroup = (
 ) => {
   const { translateGroup } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}`)
-  watch(key, () => console.log(`key`, key.value), { immediate: true })
 
   return useAsyncAPI(
     key,

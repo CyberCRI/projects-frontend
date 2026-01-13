@@ -26,6 +26,7 @@ export const peopleGroupFactory = createFactory<PeopleGroupModel>((faker) => ({
   short_description: faker.lorem.text(20),
   email: faker.internet.email(),
   type: faker.datatype.string(),
+  // @ts-expect-error TS2322
   header_image: ImageFactory.generate(),
   publication_status: faker.datatype.string(),
   organization: OrganizationOutputFactory.generate(),

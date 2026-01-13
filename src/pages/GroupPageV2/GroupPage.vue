@@ -9,32 +9,34 @@
     }"
   >
     <div class="page-section-extra-wide">
-      <NavPanelLayout
-        :is-loading="isLoading"
-        :is-nav-collapsed="isNavCollapsed"
-        :breadcrumbs="groupHierarchy || []"
-        @toggle-nav-panel="toggleNavPanel"
-        @collapse-nav-panel="isNavCollapsed = true"
-      >
-        <template #nav-panel>
-          <LazyGroupNavPanel
-            v-if="!isLoading && !isNavCollapsed"
-            :class="{ collapsed: isNavCollapsed }"
-            :group-tabs="groupTabs"
-            :current-tab="currentTab"
-            :email="group?.email"
-            :can-edit-group="canEditGroup"
-            :is-editing="isEditing"
-            class="slide-panel"
-            @navigated="collapseIfUnderBreakpoint"
-            @toggle-editing="toggleEditing"
-          />
-        </template>
-        <template v-if="currentTab" #content>
-          <SubPageTitle :title-prefix="group.$t?.name" :current-tab="currentTab" />
-          <NuxtPage v-bind="currentTab.props" />
-        </template>
-      </NavPanelLayout>
+      <FetchLoader :status="status" only-error>
+        <NavPanelLayout
+          :is-loading="isLoading"
+          :is-nav-collapsed="isNavCollapsed"
+          :breadcrumbs="groupHierarchy || []"
+          @toggle-nav-panel="toggleNavPanel"
+          @collapse-nav-panel="isNavCollapsed = true"
+        >
+          <template #nav-panel>
+            <LazyGroupNavPanel
+              v-if="!isLoading && !isNavCollapsed"
+              :class="{ collapsed: isNavCollapsed }"
+              :group-tabs="groupTabs"
+              :current-tab="currentTab"
+              :email="group?.email"
+              :can-edit-group="canEditGroup"
+              :is-editing="isEditing"
+              class="slide-panel"
+              @navigated="collapseIfUnderBreakpoint"
+              @toggle-editing="toggleEditing"
+            />
+          </template>
+          <template v-if="currentTab" #content>
+            <SubPageTitle :title-prefix="group.$t?.name" :current-tab="currentTab" />
+            <NuxtPage v-bind="currentTab.props" />
+          </template>
+        </NavPanelLayout>
+      </FetchLoader>
     </div>
   </div>
 </template>
@@ -53,7 +55,7 @@ const route = useRoute()
 const { t } = useNuxtI18n()
 const groupId = computed(() => parseInt(route.params.groupId.toString(), 10))
 
-const { data: group, isLoading } = getGroup(organizationCode, groupId)
+const { data: group, isLoading, status } = getGroup(organizationCode, groupId)
 
 watchEffect(() => {
   useLpiHead2({

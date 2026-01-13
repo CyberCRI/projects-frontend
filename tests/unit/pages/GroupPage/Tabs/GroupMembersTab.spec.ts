@@ -1,76 +1,66 @@
 import GroupMembersTab from '@/pages/GroupPageV2/Tabs/Members/GroupMembersTab.vue'
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
+import { lpiMount, lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
-import { DOMWrapper, flushPromises } from '@vue/test-utils'
-import MockComponent from '@/../tests/helpers/MockComponent.vue'
 
-import pinia from '@/stores'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import useUsersStore from '@/stores/useUsers'
-
-import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
-
+import { groupTranslatedFactory } from '../../../../factories/group.factory'
+import { flushPromises } from '@vue/test-utils'
+import { register } from 'mixpanel-browser'
+import { registerEndpoint } from '@nuxt/test-utils/runtime'
+import GroupMemberFactory from '../../../../factories/group-member.factory'
+import { ProjectFactory } from '../../../../factories/project.factory'
+import nitroError from '@/server/plugins/nitroError'
+import { PaginationsFactory } from '../../../../factories/paginations.factory'
 const i18n = {
   locale: 'en',
   fallbackLocale: 'en',
   messages: loadLocaleMessages(),
 }
 
-const protoPropsLoading = () => ({
-  membersInitialRequest: {},
+describe('GroupProjectsTab', () => {
+  const orgaCode = useOrganizationCode()
 
-  isMembersLoading: true,
-})
+  it('Render', async () => {
+    const group = groupTranslatedFactory.generate()
+    registerEndpoint(`organization/${orgaCode}/people-group/${group.id}/member/`, () => {
+      return PaginationsFactory.generate({
+        results: [
+          GroupMemberFactory.generate(),
+          GroupMemberFactory.generate(),
+          GroupMemberFactory.generate(),
+          GroupMemberFactory.generate(),
+        ],
+      })
+    })
 
-const protoPropsLoaded = (members = []) => ({
-  membersInitialRequest: { count: members.length, results: members },
+    const wrapper = lpiMount(GroupMembersTab, {
+      props: {
+        group,
+        isLoading: false,
+      },
+    })
 
-  isMembersLoading: false,
-})
-
-const buildParams = (props) => ({
-  i18n,
-  router: [
-    { path: '/', name: 'home', component: MockComponent },
-    { path: '/page404', name: 'page404', component: MockComponent },
-  ],
-  props,
-})
-
-describe('GroupMembersTab', () => {
-  beforeEach(() => {
-    const usersStore = useUsersStore(pinia)
-    usersStore.$patch({
-      id: 123,
-      userFromApi: {},
-      permissions: {},
-      getUser: vi.fn(),
-    } as any)
-    const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore._current = { code: 'TEST' } as unknown as OrganizationOutput
+    // 4 number of factory
+    await flushPromises()
+    await flushPromises()
+    console.log(wrapper.html())
+    await expect.poll(() => wrapper.findAll('.user').length).toBe(4)
   })
 
-  it('should render GroupMembersTab component', () => {
-    let wrapper = lpiShallowMount(GroupMembersTab, buildParams(protoPropsLoading()))
+  it('Error fetch', async () => {
+    const group = groupTranslatedFactory.generate()
+    registerEndpoint(`organization/${orgaCode}/people-group/${group.id}/member/`, () => {
+      throw createError({ statusCode: 500 })
+    })
 
-    expect(wrapper.exists()).toBeTruthy()
-  })
+    const wrapper = lpiMount(GroupMembersTab, {
+      props: {
+        group,
+        isLoading: false,
+      },
+    })
 
-  it('should display memeber count when loaded', async () => {
-    let wrapper = lpiShallowMount(GroupMembersTab, buildParams(protoPropsLoading()))
-
-    expect(wrapper.find('.members-header .title span').exists()).toBe(false)
-
-    wrapper.setProps(protoPropsLoaded([{ id: 1 }, { id: 2 }]))
-
-    await wrapper.vm.$nextTick()
-
-    let counter = wrapper.find('.members-header .title span')
-
-    expect(counter.exists()).toBe(true)
-
-    expect(counter.html()).toContain('2')
+    // @ts-expect-error TS2349
+    await expect.poll(() => wrapper.text()).includes('An error occured')
   })
 })

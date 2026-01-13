@@ -8,14 +8,16 @@
         </h2>
       </div>
       <div class="projects-container">
-        <CardList :is-loading="isLoading" :items="data" :limit="limitSkeletons">
-          <template #default="projectListSlotProps">
-            <ProjectCard :project="projectListSlotProps.item" />
-          </template>
-        </CardList>
-        <div v-if="total > 1" class="pagination-container">
-          <PaginationButtons2 :pagination="pagination" />
-        </div>
+        <FetchLoader :status="status" only-error>
+          <CardList :is-loading="isLoading" :items="data" :limit="limitSkeletons">
+            <template #default="projectListSlotProps">
+              <ProjectCard :project="projectListSlotProps.item" />
+            </template>
+          </CardList>
+          <div v-if="total > 1" class="pagination-container">
+            <PaginationButtons2 :pagination="pagination" />
+          </div>
+        </FetchLoader>
       </div>
     </div>
   </div>
@@ -24,6 +26,7 @@
 <script setup lang="ts">
 import { getGroupProject } from '@/api/v2/group.service'
 import CardList from '@/components/base/CardList.vue'
+import FetchLoader from '@/components/base/FetchLoader.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
 
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
@@ -37,7 +40,7 @@ const limitSkeletons = computed(() =>
   Math.min(props.group.modules?.featured_projects ?? MAX_SKELETONS, MAX_SKELETONS)
 )
 const organizationCode = useOrganizationCode()
-const { data, isLoading, pagination } = getGroupProject(organizationCode, props.group.id)
+const { data, isLoading, pagination, status } = getGroupProject(organizationCode, props.group.id)
 const { total, count } = pagination
 
 const countElement = computed(
