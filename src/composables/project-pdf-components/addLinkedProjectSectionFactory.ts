@@ -82,7 +82,7 @@ export default async function addLinkedProjectSectionFactory(linkedProjects: any
             <img class="linked-project-photo" src="${linkedProject.photo_url}" alt="${getTranslatableField(linkedProject.project, 'title').value}"/>
             <div class="card-type">
               <div class="category-name">
-                ${linkedProject.project.categories[0].name}
+                ${linkedProject.project.categories?.[0]?.name}
               </div>
             </div>
             <div class="card-title">
