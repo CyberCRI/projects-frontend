@@ -115,9 +115,9 @@ export async function removeGroupMember(
 
 // GROUP PROJECTS
 
-export function getGroupProject(org: string, groupId: number, config = {}) {
+export function getGroupProject(organizationCode: string, groupId: number, config = {}) {
   return useAPI<PaginationResult<ProjectModel>>(
-    `organization/${org}/people-group/${groupId}/project/`,
+    `organization/${organizationCode}/people-group/${groupId}/project/`,
     config
   )
 }

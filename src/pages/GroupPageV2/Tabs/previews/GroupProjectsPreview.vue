@@ -10,7 +10,7 @@
   >
     <template #content>
       <FetchLoader :status="status">
-        <CardList :items="data">
+        <CardList :is-loading="isLoading" :items="data" :limit="limitSkeletons">
           <template #default="projectListSlotProps">
             <ProjectCard :horizontal-display="true" :project="projectListSlotProps.item" />
           </template>
@@ -30,12 +30,17 @@ const props = defineProps<{
   isLoading: boolean
 }>()
 
+const LIMIT = 6
+const limitSkeletons = computed(() =>
+  Math.min(props.group.modules?.featured_projects ?? LIMIT, LIMIT)
+)
+
 const organizationCode = useOrganizationCode()
 
 const {
   status,
   data,
   isLoading: isLoadingProject,
-} = getGroupProject(organizationCode, props.group.id, { paginationConfig: { limit: 6 } })
+} = getGroupProject(organizationCode, props.group.id, { paginationConfig: { limit: LIMIT } })
 const loading = computed(() => props.isLoading || isLoadingProject.value)
 </script>

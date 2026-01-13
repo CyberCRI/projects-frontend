@@ -71,7 +71,7 @@ const getDocuments = (query) => {
     })
 }
 
-watch(pagination.query, (query) => getDocuments(query))
+watch(pagination.query, (query) => props.document && getDocuments(query))
 watch(
   () => props.document,
   (doc) => doc && getDocuments(pagination.query()),

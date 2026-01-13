@@ -4,7 +4,8 @@ import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 
 // use group's org code if availabe
 // to allow edition of groups on the meta portal (PROJ-1032)
-const organizationCode = computed(() => props.group.organization?.code || useOrganizationCode())
+const originalOrganizationCode = useOrganizationCode()
+const organizationCode = computed(() => props.group.organization?.code || originalOrganizationCode)
 const props = defineProps<{ group: TranslatedPeopleGroupModel }>()
 const router = useRouter()
 const { data, status } = getGroupProject(organizationCode, props.group.id, {

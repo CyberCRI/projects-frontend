@@ -21,25 +21,25 @@
             @close="closeProfile"
           />
         </DynamicGrid>
-        <BaseDrawer
-          no-footer
-          :is-opened="!!userIdDrawer"
-          :title="$t('profile.drawer_title')"
-          @close="closeProfile"
-          @confirm="closeProfile"
-        >
-          <UserProfileV2
-            v-if="!!userIdDrawer"
-            ref="profile-user"
-            :can-edit="false"
-            :user-id="userIdDrawer"
-            is-preview
-            @close="closeProfile"
-          />
-        </BaseDrawer>
       </FetchLoader>
     </template>
   </BaseGroupPreview>
+  <BaseDrawer
+    no-footer
+    :is-opened="!!userIdDrawer"
+    :title="$t('profile.drawer_title')"
+    @close="closeProfile"
+    @confirm="closeProfile"
+  >
+    <UserProfileV2
+      v-if="!!userIdDrawer"
+      ref="profile-user"
+      :can-edit="false"
+      :user-id="userIdDrawer"
+      is-preview
+      @close="closeProfile"
+    />
+  </BaseDrawer>
 </template>
 
 <script setup lang="ts">
@@ -54,7 +54,7 @@ const props = defineProps<{
 }>()
 
 const organizationCode = useOrganizationCode()
-const limitSkeletons = computed(() => props.group.modules?.members ?? LIMIT)
+const limitSkeletons = computed(() => Math.min(props.group.modules?.members ?? LIMIT, LIMIT))
 
 const {
   status,

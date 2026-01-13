@@ -28,6 +28,7 @@ export interface TermsAndConditions {
   content: string
   displayed_version: number
   displayed_content: string
+  displayed_updated_at: number
 }
 
 export type OrganizationModel = BaseModel & {

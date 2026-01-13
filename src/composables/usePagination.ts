@@ -74,7 +74,7 @@ export const usePagination = (
   watch(
     results,
     () => {
-      current.value = results.value?.current_page ?? 0
+      current.value = results.value?.current_page ?? 1
       total.value = results.value?.total_page ?? 0
       count.value = results.value?.count ?? 0
     },

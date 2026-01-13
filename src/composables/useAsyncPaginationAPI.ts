@@ -66,9 +66,9 @@ export default function useAsyncPaginationAPI<DataT, Result = undefined>(
         Result
       >),
       watch: [...(params[2]?.watch || []), pagination.current, pagination.limit],
-      // default() {
-      //   return params[2]?.default?.() || []
-      // },
+      default() {
+        return params[2]?.default?.() || []
+      },
       transform(dataApi) {
         paginationData.value = dataApi
         const results = dataApi.results

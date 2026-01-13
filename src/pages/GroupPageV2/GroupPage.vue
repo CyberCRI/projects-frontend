@@ -41,7 +41,6 @@
 
 <script setup lang="ts">
 import { getGroup } from '@/api/v2/group.service'
-import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 
 const uniqueId = 'group-nav-panel'
 const { canEditGroup } = usePermissions()
@@ -56,17 +55,13 @@ const groupId = computed(() => parseInt(route.params.groupId.toString(), 10))
 
 const { data: group, isLoading } = getGroup(organizationCode, groupId)
 
-watch(
-  group,
-  () => {
-    useLpiHead2({
-      title: group.value?.name,
-      description: group.value?.description,
-      image: group.value?.header_image,
-    })
-  },
-  { immediate: true }
-)
+watchEffect(() => {
+  useLpiHead2({
+    title: group.value?.name,
+    description: group.value?.description,
+    image: group.value?.header_image,
+  })
+})
 
 const groupHierarchy = computed(() => {
   const root = {
@@ -83,7 +78,7 @@ const groupHierarchy = computed(() => {
   ]
 })
 
-const groupModules = computed<TranslatedPeopleGroupModel['modules']>(
+const groupModules = computed(
   () =>
     group.value?.modules ?? {
       members: 0,
@@ -139,10 +134,6 @@ const groupTabsDisplay = computed(() => {
   ]
 })
 
-const groupTabsDisplayFiltered = computed(() => {
-  return groupTabsDisplay.value.filter((tab) => tab.condition)
-})
-
 const groupTabsEdit = computed(() => {
   return [
     {
@@ -194,21 +185,25 @@ const groupTabsEdit = computed(() => {
   ]
 })
 
+const groupTabsDisplayFiltered = computed(() => {
+  return groupTabsDisplay.value.filter((tab) => tab.condition)
+})
+
 const groupTabsEditFiltered = computed(() => {
   return groupTabsEdit.value.filter((tab) => tab.condition)
 })
-
-const groupTabs = computed(() => {
-  return isEditing.value ? groupTabsEditFiltered.value : groupTabsDisplayFiltered.value
-})
-
-const allGroupsTabs = computed(() => [...groupTabsDisplay.value, ...groupTabsEdit.value])
 
 const currentTab = computed(() => {
   return allGroupsTabs.value.find((tab) => route.fullPath === tab.view)
 })
 
 const isEditing = computed(() => currentTab.value?.isEditing || false)
+
+const groupTabs = computed(() => {
+  return isEditing.value ? groupTabsEditFiltered.value : groupTabsDisplayFiltered.value
+})
+
+const allGroupsTabs = computed(() => [...groupTabsDisplay.value, ...groupTabsEdit.value])
 
 const toggleEditing = () => {
   const nextTab = allGroupsTabs.value.find((tab) => tab.view === currentTab.value.altView)
@@ -222,27 +217,13 @@ const toggleEditing = () => {
   }
 }
 
-watch(
-  canEditGroup,
-  (neo) => {
-    if (!neo && isEditing.value) {
-      if (import.meta.client) toggleEditing()
+if (import.meta.client) {
+  watchEffect(() => {
+    if (isEditing.value && !canEditGroup.value) {
+      toggleEditing()
     }
-  },
-  {
-    immediate: true,
-  }
-)
-
-watch(
-  isEditing,
-  (neo) => {
-    if (neo && !canEditGroup.value) {
-      if (import.meta.client) toggleEditing()
-    }
-  },
-  { immediate: true }
-)
+  })
+}
 </script>
 
 <style lang="scss" scoped>
