@@ -1,6 +1,6 @@
-<script setup>
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import useUsersStore from '@/stores/useUsers.ts'
+<script setup lang="ts">
+import useOrganizationsStore from '@/stores/useOrganizations'
+import useUsersStore from '@/stores/useUsers'
 import { getOrganizationByCode } from '@/api/organizations.service'
 const organizationsStore = useOrganizationsStore()
 const usersStore = useUsersStore()

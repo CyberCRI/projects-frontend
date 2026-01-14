@@ -63,7 +63,7 @@
     <iframe :src="docUrl" @load="helpIsLoading = false" />
   </BaseDrawer>
 </template>
-<script>
+<script setup lang="ts">
 import { toRaw } from 'vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
@@ -72,88 +72,68 @@ import CompleteProfileStep2 from '@/components/people/CompleteProfileDrawer/Comp
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import { useRuntimeConfig } from '#imports'
 
-export default {
-  name: 'CompleteProfileDrawer',
+const props = withDefaults(
+  defineProps<{
+    isOpened?: boolean
+    initialStep: number
+  }>(),
+  { isOpened: false }
+)
 
-  components: { LpiButton, CompleteProfileStep1, CompleteProfileStep2, BaseDrawer, LpiLoader },
-  props: {
-    isOpened: {
-      type: Boolean,
-      default: false,
-    },
-    initialStep: {
-      type: Number,
-      required: true,
-    },
-  },
+const emit = defineEmits<{
+  close: []
+  completed: []
+}>()
+const { locale } = useNuxtI18n()
+const runtimeConfig = useRuntimeConfig()
+const { onboardingTrapAll } = useOnboardingStatus()
 
-  emits: ['close', 'completed'],
+const currentStepComponent = useTemplateRef('currentStepComponent')
+const stepComponents = ref([CompleteProfileStep1, CompleteProfileStep2])
+const step = ref(props.initialStep)
+const saving = ref(false)
+const loading = ref(false)
+const invalid = ref(false)
+const helpOpened = ref(false)
+const helpIsLoading = ref(false)
 
-  setup() {
-    const { locale } = useNuxtI18n()
-    const runtimeConfig = useRuntimeConfig()
-    const { onboardingTrapAll } = useOnboardingStatus()
-    return {
-      locale,
-      runtimeConfig,
-      onboardingTrapAll,
+const stepComponent = computed(() => {
+  return toRaw(stepComponents.value[step.value])
+})
+
+const saveLabel = computed(() => {
+  return step.value < stepComponents.value.length - 1
+    ? 'complete-profile.save-and-next'
+    : 'complete-profile.save-and-finish'
+})
+const docUrl = computed(() => {
+  const url = new URL(runtimeConfig.public.appDoc)
+  // uppercase lang code are mandatory for this service
+  url.searchParams.append('lang', locale.value)
+
+  return url.toString()
+})
+
+watchEffect(() => {
+  if (helpOpened.value) {
+    helpIsLoading.value = true
+  }
+})
+
+const cancel = () => emit('close')
+const save = async () => {
+  const success = await currentStepComponent.value.save()
+  if (success) {
+    if (step.value < stepComponents.value.length - 1) {
+      step.value = step.value += 1
+      await onboardingTrapAll({
+        // +1 because 1-indexed here and 0-indexed in the component
+        show_complete_profile_modal: step.value + 1,
+      })
+    } else {
+      emit('completed')
     }
-  },
-
-  data() {
-    return {
-      stepComponents: [CompleteProfileStep1, CompleteProfileStep2],
-      step: this.initialStep,
-      saving: false,
-      loading: false,
-      invalid: false,
-      helpOpened: false,
-      helpIsLoading: false,
-    }
-  },
-
-  computed: {
-    stepComponent() {
-      return toRaw(this.stepComponents[this.step])
-    },
-
-    saveLabel() {
-      return this.step < this.stepComponents.length - 1
-        ? 'complete-profile.save-and-next'
-        : 'complete-profile.save-and-finish'
-    },
-    docUrl() {
-      const url = new URL(this.runtimeConfig.public.appDoc)
-      // uppercase lang code are mandatory for this service
-      url.searchParams.append('lang', this.locale)
-
-      return url
-    },
-  },
-  watch: {
-    helpOpened: function () {
-      this.helpIsLoading = true
-    },
-  },
-  methods: {
-    async cancel() {
-      this.$emit('close')
-    },
-    async save() {
-      const success = await this.$refs.currentStepComponent.save()
-      if (success) {
-        if (this.step < this.stepComponents.length - 1) {
-          this.step++
-          await this.onboardingTrapAll({
-            // +1 because 1-indexed here and 0-indexed in the component
-            show_complete_profile_modal: this.step + 1,
-          })
-        } else {
-          this.$emit('completed')
-        }
-      }
-    },
-  },
+  }
 }
 </script>
 <style lang="scss" scoped>

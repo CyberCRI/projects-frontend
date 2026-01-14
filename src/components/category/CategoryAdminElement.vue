@@ -1,9 +1,10 @@
-<script setup>
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
 import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 import { ref, computed, watch } from 'vue'
 import { Sortable } from 'sortablejs-vue3'
+import { ProjectCategoryModel } from '@/models/project-category.model'
 
 const emit = defineEmits([
   'edit-category',
@@ -13,30 +14,21 @@ const emit = defineEmits([
   'delete-category',
 ])
 
-const props = defineProps({
-  category: {
-    type: Object,
-    required: true,
-  },
+const props = withDefaults(
+  defineProps<{
+    category: ProjectCategoryModel
+    draggedCategory?: ProjectCategoryModel
+    dropTargetCategory?: ProjectCategoryModel
+  }>(),
+  {
+    draggedCategory: null,
+    dropTargetCategory: null,
+  }
+)
 
-  draggedCategory: {
-    type: Object,
-    default: null,
-  },
+const hasChildren = computed(() => props.category.children?.length)
 
-  dropTargetCategory: {
-    type: Object,
-    default: null,
-  },
-})
-
-const hasChildren = computed(() => {
-  return props.category.children?.length
-})
-
-const hasNoChild = computed(() => {
-  return !hasChildren.value
-})
+const hasNoChild = computed(() => !hasChildren.value)
 
 const hasNoProject = computed(() => {
   // will be false if undefined witch will forbid deletion if the api is not set up yet
@@ -172,7 +164,7 @@ watch(
     </div>
     <div class="child-list">
       <Sortable
-        :list="category.children"
+        :list="category.children as ProjectCategoryModel[]"
         :options="dragOptions"
         group="categories"
         tag="ul"

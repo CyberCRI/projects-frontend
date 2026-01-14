@@ -1,8 +1,8 @@
 <template>
   <NewsListSkeleton v-if="isLoading" :limit="5" />
-  <div v-else-if="newsfeed?.length">
+  <div v-else-if="transltedNewsFeed?.length">
     <div class="home-news-container">
-      <NewsFeed :newsfeed="newsfeed" @reload-newsfeed="loadNewsfeed" />
+      <NewsFeed :newsfeed="transltedNewsFeed" @reload-newsfeed="loadNewsfeed" />
     </div>
     <div v-if="hasMoreNews" class="see-all">
       <LpiButton :label="$t('feed.see-all')" :secondary="false" @click="seeAll" />
@@ -13,69 +13,37 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import NewsFeed from '@/components/app/NewsFeed.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import NewsListSkeleton from '@/components/news/NewsListSkeleton.vue'
-import { getNewsfeed } from '@/api/newsfeed.service.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-export default {
-  name: 'HomeNewsfeed',
+import { getNewsfeed } from '@/api/newsfeed.service'
 
-  components: { NewsFeed, LpiButton, NewsListSkeleton },
-  props: {
-    limit: {
-      type: Number,
-      default: 6,
-    },
-  },
-  setup() {
-    const organizationsStore = useOrganizationsStore()
-    const { translateNewsfeed } = useAutoTranslate()
-    const isLoading = ref(true)
-    const _newsfeed = ref([])
-    const newsfeed = translateNewsfeed(_newsfeed)
+const props = withDefaults(defineProps<{ limit?: number }>(), { limit: 6 })
+const organizationCode = useOrganizationCode()
+const { translateNewsfeed } = useAutoTranslate()
+const isLoading = ref(true)
+const newsfeed = ref([])
+const transltedNewsFeed = translateNewsfeed(newsfeed)
 
-    return {
-      organizationsStore,
-      isLoading,
-      _newsfeed,
-      newsfeed,
-    }
-  },
+const hasMoreNews = ref(false)
 
-  data() {
-    return {
-      hasMoreNews: false,
-    }
-  },
+const router = useRouter()
 
-  computed: {
-    organization() {
-      return this.organizationsStore.current
-    },
-  },
-
-  async mounted() {
-    await this.loadNewsfeed()
-  },
-
-  methods: {
-    async loadNewsfeed() {
-      this.isLoading = true
-      this._newsfeed = (
-        await getNewsfeed(this.organization.code, {
-          limit: this.limit,
-        })
-      ).results
-      this.isLoading = false
-    },
-
-    seeAll() {
-      this.$router.push({ name: 'Newsfeed' })
-    },
-  },
+const loadNewsfeed = async () => {
+  isLoading.value = true
+  newsfeed.value = (
+    await getNewsfeed(organizationCode, {
+      limit: props.limit,
+    })
+  ).results
+  isLoading.value = false
 }
+const seeAll = () => router.push({ name: 'Newsfeed' })
+
+onMounted(async () => {
+  await loadNewsfeed()
+})
 </script>
 
 <style lang="scss" scoped>

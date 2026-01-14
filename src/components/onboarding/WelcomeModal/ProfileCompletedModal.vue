@@ -17,17 +17,13 @@
         <LpiButton
           :label="$t('profile-completed-modal.skip')"
           :secondary="true"
-          :disabled="asyncing"
-          :btn-icon="asyncing == 'skip' ? 'LoaderSimple' : undefined"
           class="footer__left-button"
           data-test="close-button"
           @click="skip"
         />
 
         <LpiButton
-          :disabled="asyncing"
           :label="$t('profile-completed-modal.take-tour')"
-          :btn-icon="asyncing == 'proceed' ? 'LoaderSimple' : undefined"
           :secondary="false"
           class="footer__right-button"
           data-test="confirm-button"
@@ -37,44 +33,22 @@
     </template>
   </BaseModal>
 </template>
-<script>
+<script setup lang="ts">
 import BaseModal from '@/components/base/modal/BaseModal.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-export default {
-  name: 'ProfileCompletedModal',
+import useOrganizationsStore from '@/stores/useOrganizations'
 
-  components: { BaseModal, LpiButton },
+const emit = defineEmits<{
+  close: []
+  'take-tour': []
+}>()
+const organizationsStore = useOrganizationsStore()
+const organizationLogo = computed(() => {
+  return organizationsStore.current?.logo_image?.variations?.medium
+})
 
-  emits: ['close', 'take-tour'],
-  setup() {
-    const organizationsStore = useOrganizationsStore()
-    return {
-      organizationsStore,
-    }
-  },
-  data() {
-    return {
-      asyncing: false,
-    }
-  },
-
-  computed: {
-    organizationLogo() {
-      return this.organizationsStore.current?.logo_image?.variations?.medium
-    },
-  },
-
-  methods: {
-    async skip() {
-      this.$emit('close')
-    },
-
-    async takeTour() {
-      this.$emit('take-tour')
-    },
-  },
-}
+const skip = () => emit('close')
+const takeTour = () => emit('take-tour')
 </script>
 <style scoped lang="scss">
 .portal-logo-ctn {

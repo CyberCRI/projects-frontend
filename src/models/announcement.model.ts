@@ -1,5 +1,6 @@
+import { Translated } from '@/interfaces/translated'
 import BaseModel from '@/models/base.model'
-import { ProjectModel } from '@/models/project.model'
+import { ProjectModel, TranslatedProject } from '@/models/project.model'
 
 export interface AnnouncementModel extends BaseModel {
   description: string
@@ -9,6 +10,13 @@ export interface AnnouncementModel extends BaseModel {
   status: string
   deadline: Date
   is_remunerated: boolean
+}
+
+export type TranslatedAnnouncement = Omit<
+  Translated<AnnouncementModel, 'title' | 'description'>,
+  'project'
+> & {
+  project: TranslatedProject
 }
 
 export type AnnouncementInput = Required<AnnouncementModel> & {

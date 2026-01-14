@@ -1,8 +1,8 @@
-<script setup>
-import { ref } from 'vue'
-const locationButtonHover = ref(false)
+<script setup lang="ts">
 import LpiButton from '@/components/base/button/LpiButton.vue'
+const locationButtonHover = ref(false)
 </script>
+
 <template>
   <div class="locations-link" :class="{ 'is-hovered': locationButtonHover }">
     <LpiButton

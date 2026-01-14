@@ -1,27 +1,25 @@
-<script setup>
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
+import { ProjectCategoryModel } from '@/models/project-category.model'
 import { ref, computed, watchEffect } from 'vue'
 
-const emit = defineEmits(['pick-category'])
+const emit = defineEmits<{
+  'pick-category': []
+}>()
 
-const props = defineProps({
-  category: {
-    type: Object,
-    required: true,
-  },
-  selectedCategory: {
-    type: Object,
-    default: null,
-  },
-  selectedCategories: {
-    type: Object,
-    default: null,
-  },
-  type: {
-    type: String,
-    default: 'radio',
-  },
-})
+const props = withDefaults(
+  defineProps<{
+    category: ProjectCategoryModel
+    selectedCategory?: ProjectCategoryModel
+    selectedCategories?: ProjectCategoryModel[]
+    type?: string
+  }>(),
+  {
+    selectedCategory: null,
+    selectedCategories: null,
+    type: 'radio',
+  }
+)
 
 const isSelected = computed(
   () =>

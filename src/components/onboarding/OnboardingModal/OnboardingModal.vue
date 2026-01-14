@@ -50,26 +50,27 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import BaseModal from '@/components/base/modal/BaseModal.vue'
 import SkillSteps from '@/components/people/skill/SkillSteps.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 
 defineOptions({ name: 'OnboardingModal' })
 
-const props = defineProps({
-  stepNumber: {
-    type: Number,
-    default: 1,
-  },
+const props = withDefaults(
+  defineProps<{
+    stepNumber?: number
+    initialStep?: number
+  }>(),
+  {
+    stepNumber: 1,
+    initialStep: 1,
+  }
+)
 
-  initialStep: {
-    type: Number,
-    default: 1,
-  },
-})
-
-const emit = defineEmits(['stepped'])
+const emit = defineEmits<{
+  stepped: [number]
+}>()
 
 const { t } = useNuxtI18n()
 

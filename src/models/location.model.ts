@@ -1,3 +1,4 @@
+import { Translated } from '@/interfaces/translated'
 import BaseModel from '@/models/base.model'
 import { LocationType } from '@/models/types'
 
@@ -12,7 +13,11 @@ export interface LocationModel extends BaseModel {
   project: {
     id: string
   }
+  title: string
+  description: string
 }
+
+export type TranslatedLocation = Translated<LocationModel, 'title' | 'description'>
 
 export type LocationInput = Required<LocationModel> & {
   project_id: string

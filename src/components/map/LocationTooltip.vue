@@ -9,25 +9,16 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { cropIfTooLong } from '@/functs/string'
+import { TranslatedLocation } from '@/models/location.model'
 
 defineOptions({ name: 'LocationTooltip' })
 
-const props = defineProps({
-  location: {
-    type: Object,
-    required: true,
-  },
-})
+const props = defineProps<{ location: TranslatedLocation }>()
 
-const title = computed(() => {
-  return cropIfTooLong(props.location?.$t?.title, 45)
-})
-
-const description = computed(() => {
-  return cropIfTooLong(props.location?.$t?.description, 85)
-})
+const title = computed(() => cropIfTooLong(props.location?.$t?.title, 45))
+const description = computed(() => cropIfTooLong(props.location?.$t?.description, 85))
 </script>
 
 <style lang="scss" scoped>

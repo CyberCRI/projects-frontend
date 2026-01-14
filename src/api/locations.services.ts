@@ -1,10 +1,10 @@
-import type { LocationInput /*, LocationOutput*/ } from '@/models/location.model'
+import type { LocationInput /*, LocationOutput*/, LocationModel } from '@/models/location.model'
 // import type { APIResponseList } from '@/api/types'
 import utils from '@/functs/functions'
 import useAPI from '@/composables/useAPI'
 
 export async function getProjectLocations(projectId) {
-  return await useAPI(`project/${projectId}/location/`, {}) //.data.value
+  return await useAPI<LocationModel>(`project/${projectId}/location/`, {}) //.data.value
 }
 
 export async function getProjectLocation(body) {

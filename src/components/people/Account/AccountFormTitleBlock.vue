@@ -13,19 +13,13 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 defineOptions({ name: 'AccountFormTitleBlock' })
 
-defineProps({
-  mainTitleLabel: {
-    type: String,
-    required: true,
-  },
-  showHelp: {
-    type: Boolean,
-    required: true,
-  },
-})
+defineProps<{
+  mainTitleLabel: string
+  showHelp: boolean
+}>()
 const { t } = useNuxtI18n()
 </script>
 

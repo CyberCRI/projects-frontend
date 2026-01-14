@@ -1,8 +1,8 @@
-<script setup>
+<script setup lang="ts">
 import { defaultForm } from '@/components/event/EventForm/EventForm.vue'
 import { createEvent } from '@/api/event.service'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useToasterStore from '@/stores/useToaster'
+import useOrganizationsStore from '@/stores/useOrganizations'
 import { getOrganizationByCode } from '@/api/organizations.service'
 
 const toaster = useToasterStore()

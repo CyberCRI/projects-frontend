@@ -18,7 +18,7 @@
     </div>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
 
 defineOptions({ name: 'NewsListItemSkeleton' })

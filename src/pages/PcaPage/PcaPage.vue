@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { getOrganizationByCode } from '@/api/organizations.service'
 
 try {

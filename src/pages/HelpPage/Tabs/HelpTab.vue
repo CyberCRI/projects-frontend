@@ -5,54 +5,34 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-import { useRuntimeConfig } from '#imports'
 
-export default {
-  name: 'HelpTab',
+const { locale } = useNuxtI18n()
+const runtimeConfig = useRuntimeConfig()
+const { isMobile, isTablet } = useViewportWidth()
+const isLoading = ref(true)
 
-  components: { LpiLoader },
+const docUrl = computed(() => {
+  const url = new URL(runtimeConfig.public.appDoc)
+  // uppercase lang code are mandatory for this service
+  url.searchParams.append('lang', locale.value)
 
-  setup() {
-    const { locale } = useNuxtI18n()
-    const runtimeConfig = useRuntimeConfig()
-    const { isMobile, isTablet } = useViewportWidth()
+  return url.toString()
+})
+
+const iframeStyle = computed(() => {
+  if (isMobile.value || isTablet.value) {
     return {
-      locale,
-      runtimeConfig,
-      isMobile,
-      isTablet,
+      height: `calc(100vh - ${100}px)`,
     }
-  },
-  data() {
-    return {
-      isLoading: true,
-    }
-  },
+  }
+  return null
+})
 
-  computed: {
-    docUrl() {
-      const url = new URL(this.runtimeConfig.public.appDoc)
-      // uppercase lang code are mandatory for this service
-      url.searchParams.append('lang', this.locale)
-
-      return url
-    },
-
-    iframeStyle() {
-      if (this.isMobile || this.isTablet)
-        return {
-          height: `calc(100vh - ${100}px)`,
-        }
-      return null
-    },
-  },
-
-  activated() {
-    this.isLoading = true // component is "keep-alive" in tab, so redisplay loader while re-fetching iframe
-  },
-}
+onActivated(() => {
+  isLoading.value = true
+})
 </script>
 
 <style lang="scss" scoped>

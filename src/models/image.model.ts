@@ -9,6 +9,7 @@ export interface ImageModel extends BaseModel {
   name: string
   height?: number
   width?: number
+  scale_
 }
 
 export type ImageOutput = Required<ImageModel>

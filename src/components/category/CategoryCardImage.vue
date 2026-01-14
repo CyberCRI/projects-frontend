@@ -23,70 +23,42 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import CategoryCardDefaultBackground from '@/components/category/CategoryCardDefaultBackground.vue'
 import CroppedImage from '@/components/base/media/CroppedImage.vue'
 
-export default {
-  name: 'CategoryCardImage',
+const props = withDefaults(
+  defineProps<{
+    backgroundColor: string
+    shapesColor?: string
+    imageHeight: string
+    imageWidth: string
+    url?: string
+    imageSizes?: object
+    forcedRatio?: number
+  }>(),
+  {
+    shapesColor: '#FFF',
+    url: null,
+    imageSizes: null,
+    forcedRatio: null,
+  }
+)
 
-  components: {
-    CategoryCardDefaultBackground,
-    CroppedImage,
-  },
-
-  props: {
-    backgroundColor: {
-      type: String,
-      required: true,
-    },
-
-    shapesColor: {
-      type: String,
-      default: '#FFF',
-    },
-
-    imageHeight: {
-      type: String,
-      required: true,
-    },
-
-    imageWidth: {
-      type: String,
-      required: true,
-    },
-
-    url: {
-      type: String,
-      default: null,
-    },
-    imageSizes: {
-      type: Object,
-      required: false,
-      default: null,
-    },
-    forcedRatio: {
-      type: [Number, null],
-      default: null,
-    },
-  },
-  computed: {
-    imageStyle() {
-      if (this.forcedRatio) {
-        return {
-          display: 'flex', // ??? but this only work
-          position: 'static',
-          width: '100%',
-          height: 'auto',
-          transform: 'none',
-          aspectRatio: this.forcedRatio,
-          paddingBottom: 0,
-        }
-      }
-      return {}
-    },
-  },
-}
+const imageStyle = computed(() => {
+  if (props.forcedRatio) {
+    return {
+      display: 'flex', // ??? but this only work
+      position: 'static',
+      width: '100%',
+      height: 'auto',
+      transform: 'none',
+      aspectRatio: props.forcedRatio,
+      paddingBottom: 0,
+    }
+  }
+  return {}
+})
 </script>
 
 <style lang="scss" scoped>

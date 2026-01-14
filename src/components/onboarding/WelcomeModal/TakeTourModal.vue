@@ -1,5 +1,5 @@
 <template>
-  <BaseModal data-test="take-tour-modal" @close="$emit('close')">
+  <BaseModal data-test="take-tour-modal" @close="emit('close')">
     <template #content>
       <h2 class="welcome-title">
         {{ $t('plateform-tour-modal.title') }}
@@ -14,7 +14,7 @@
           :src="videoSrc"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen="allowfullscreen"
+          allowfullscreen
         />
       </div>
       <i18n-t keypath="plateform-tour-modal.notice-tutorial" tag="p" class="notice" scope="global">
@@ -22,7 +22,7 @@
           class="link"
           :to="{ name: 'HelpVideoTab' }"
           data-test="link-to-tutorials"
-          @click="$emit('close')"
+          @click="emit('close')"
         >
           {{ $t('plateform-tour-modal.tutorial') }}
         </NuxtLink>
@@ -33,37 +33,23 @@
     </template>
   </BaseModal>
 </template>
-<script>
+<script setup lang="ts">
 import BaseModal from '@/components/base/modal/BaseModal.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-export default {
-  name: 'TakeTourModal',
 
-  components: { BaseModal, LoaderSimple },
+const emit = defineEmits<{ close: [] }>()
+const { locale } = useNuxtI18n()
+const { onboardingTrap } = useOnboardingStatus()
 
-  emits: ['close'],
+const videoSrc = computed(() => {
+  return locale.value === 'fr'
+    ? 'https://www.youtube.com/embed/p5_DaK7CQUI?si=AH_F9MANlsPP_h1l'
+    : 'https://www.youtube.com/embed/0DncVa2JWQY?si=RKu3bY4QQiOvnBHk'
+})
 
-  setup() {
-    const { locale } = useNuxtI18n()
-
-    const { onboardingTrap } = useOnboardingStatus()
-    return {
-      locale,
-      onboardingTrap,
-    }
-  },
-
-  computed: {
-    videoSrc() {
-      return this.locale === 'fr'
-        ? 'https://www.youtube.com/embed/p5_DaK7CQUI?si=AH_F9MANlsPP_h1l'
-        : 'https://www.youtube.com/embed/0DncVa2JWQY?si=RKu3bY4QQiOvnBHk'
-    },
-  },
-  mounted() {
-    this.onboardingTrap('take_tour', false)
-  },
-}
+onMounted(() => {
+  onboardingTrap('take_tour', false)
+})
 </script>
 <style scoped lang="scss">
 .portal-logo-ctn {

@@ -50,7 +50,7 @@
     />
   </AccountSection>
 </template>
-<script setup>
+<script setup lang="ts">
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import AccountSection from '@/components/people/Account/AccountSection.vue'
@@ -58,18 +58,13 @@ import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { usePatatoids } from '@/composables/usePatatoids'
 defineOptions({ name: 'AccountInfos' })
 
-const props = defineProps({
-  modelValue: {
-    type: Object,
-    required: true,
-  },
-  v$: {
-    type: Object,
-    required: true,
-  },
-})
-
-const emit = defineEmits(['update:modelValue'])
+const props = defineProps<{
+  modelValue: object
+  v$: object
+}>()
+const emit = defineEmits<{
+  'update:modelValue': [object]
+}>()
 const { t } = useNuxtI18n()
 
 const defaultPictures = usePatatoids()

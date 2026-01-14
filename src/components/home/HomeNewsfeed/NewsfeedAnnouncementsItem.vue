@@ -3,7 +3,7 @@
     class="home-announcement-item shadow-box"
     :to="{
       name: 'projectAnnouncements',
-      params: { slugOrId: announcement.project.slug },
+      params: { slugOrId: announcement?.project?.slug },
       hash: '#tab',
     }"
   >
@@ -12,7 +12,7 @@
         :alt="`${announcement?.project?.$t?.title} image`"
         class="project-img"
         :ratio="1 / 1"
-        :picture-data="announcement.project?.header_image"
+        :picture-data="announcement?.project?.header_image"
         picture-size="medium"
         default-picture="/placeholders/header_placeholder.png"
       />
@@ -23,11 +23,11 @@
     </h3>
     <div class="announcement-infos">
       <span class="date-ctn">
-        {{ $d(new Date(announcement.updated_at)) }}
+        {{ $d(new Date(announcement?.updated_at)) }}
       </span>
-      <span v-if="announcement.type && announcement.type !== 'na'" class="dot">&#9679;</span>
-      <span v-if="announcement.type && announcement.type !== 'na'" class="announcement-type">
-        {{ $t(`recruit.${announcement.type}`) }}
+      <span v-if="announcement?.type && announcement.type !== 'na'" class="dot">&#9679;</span>
+      <span v-if="announcement?.type && announcement.type !== 'na'" class="announcement-type">
+        {{ $t(`recruit.${announcement?.type}`) }}
       </span>
     </div>
     <div class="announcement-description">
@@ -38,47 +38,32 @@
   </NuxtLink>
 </template>
 
-<script>
+<script setup lang="ts">
 import { capitalize } from '@/functs/string'
 
 import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
 import { useRuntimeConfig } from '#imports'
-export default {
-  name: 'NewsfeedAnnouncementsItem',
+import { TranslatedAnnouncement } from '@/models/announcement.model'
 
-  components: { SummaryAction, CroppedApiImage, HtmlLimiter },
+const props = withDefaults(
+  defineProps<{
+    announcement?: TranslatedAnnouncement
+  }>(),
+  { announcement: null }
+)
+const runtimeConfig = useRuntimeConfig()
 
-  props: {
-    announcement: {
-      type: Object,
-      default: () => {},
-    },
-  },
+const announcementStyle = computed(() => {
+  return {
+    'background-image': `url(${
+      runtimeConfig.public.appPublicBinariesPrefix
+    }/placeholders/announcement_placeholder.png)`,
+  }
+})
 
-  setup() {
-    const runtimeConfig = useRuntimeConfig()
-    return {
-      runtimeConfig,
-      capitalize,
-    }
-  },
-
-  computed: {
-    announcementStyle() {
-      return {
-        'background-image': `url(${
-          this.runtimeConfig.public.appPublicBinariesPrefix
-        }/placeholders/announcement_placeholder.png)`,
-      }
-    },
-
-    description() {
-      return this.announcement?.$t?.description || ''
-    },
-  },
-}
+const description = computed(() => props.announcement?.$t?.description || '')
 </script>
 
 <style lang="scss" scoped>
