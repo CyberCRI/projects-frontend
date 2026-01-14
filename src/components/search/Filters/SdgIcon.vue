@@ -2,7 +2,7 @@
   <div
     :class="{ 'sdg--unselected': !selected }"
     :style="{
-      'background-image': `url(${runtimeConfig.public.appPublicBinariesPrefix}/sdgs/${lang}/${sdgId}.svg)`,
+      'background-image': `url(${runtimeConfig.public.appPublicBinariesPrefix}/sdgs/${locale}/${sdgId}.svg)`,
     }"
     class="sdg"
     :data-test="`sdg-${sdgId}`"
@@ -12,46 +12,21 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
 
-export default {
-  name: 'SdgIcon',
-  components: { IconImage },
-  props: {
-    sdgId: {
-      type: [Number, String],
-      required: true,
-    },
+const props = defineProps<{
+  sdgId: number | string
+  selected: boolean
+}>()
 
-    selected: {
-      type: Boolean,
-      required: true,
-    },
-  },
-  emits: ['toggled'],
+const emit = defineEmits<{
+  toggled: [typeof props.sdgId]
+}>()
+const { locale } = useNuxtI18n()
+const runtimeConfig = useRuntimeConfig()
 
-  setup() {
-    const { locale } = useNuxtI18n()
-    const runtimeConfig = useRuntimeConfig()
-    return {
-      locale,
-      runtimeConfig,
-    }
-  },
-
-  computed: {
-    lang() {
-      return this.locale
-    },
-  },
-
-  methods: {
-    toggle() {
-      this.$emit('toggled', this.sdgId)
-    },
-  },
-}
+const toggle = () => emit('toggled', props.sdgId)
 </script>
 
 <style lang="scss" scoped>

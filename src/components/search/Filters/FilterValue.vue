@@ -10,31 +10,14 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
 
-export default {
-  name: 'FilterValue',
-
-  components: {
-    IconImage,
-  },
-  props: {
-    label: {
-      type: String,
-      default: () => {},
-    },
-
-    icon: {
-      type: String,
-      default: null,
-    },
-    type: {
-      type: String,
-      default: '',
-    },
-  },
-}
+withDefaults(defineProps<{ label?: string; icon?: string; type?: string }>(), {
+  label: '',
+  type: '',
+  icon: '',
+})
 </script>
 
 <style lang="scss" scoped>

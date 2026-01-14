@@ -11,55 +11,41 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import FilterValue from '@/components/search/Filters/FilterValue.vue'
 
-export default {
-  name: 'MembersFilterSummary',
+const props = defineProps<{
+  modelValue: any[]
+}>()
 
-  components: {
-    FilterValue,
-  },
+const emit = defineEmits<{
+  'update:model-value': [any[]]
+}>()
 
-  props: {
-    modelValue: {
-      type: Array,
-      required: true,
-    },
-  },
+const selection = ref([])
 
-  emits: ['update:model-value'],
-
-  data() {
-    return {
-      selection: [],
-      memberSearch: '',
-      memberList: [],
+watch(
+  () => props.modelValue,
+  (neo, old) => {
+    if (neo && neo != old) {
+      selection.value = [...neo]
     }
   },
+  {
+    immediate: true,
+    deep: true,
+  }
+)
 
-  watch: {
-    modelValue: {
-      handler: function (neo, old) {
-        if (neo && neo != old) {
-          this.selection = [...neo]
-        }
-      },
-      immediate: true,
-      deep: true,
-    },
-  },
+onMounted(() => {
+  selection.value = [...props.modelValue]
+})
 
-  mounted() {
-    this.selection = [...this.modelValue]
-  },
-
-  methods: {
-    removeFilter(index) {
-      this.selection.splice(index, 1)
-      this.$emit('update:model-value', this.selection)
-    },
-  },
+const removeFilter = (index) => {
+  const newSelection = [...selection.value]
+  newSelection.splice(index, 1)
+  selection.value = newSelection
+  emit('update:model-value', newSelection)
 }
 </script>
 

@@ -10,51 +10,35 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useOrganizationsStore from '@/stores/useOrganizations'
 
-export default {
-  name: 'LanguageFilter',
+const props = defineProps<{
+  modelValue: string[]
+}>()
 
-  components: { LpiCheckbox },
-  props: {
-    modelValue: {
-      type: Array,
-      required: true,
-    },
+const emits = defineEmits<{
+  'update:modelValue': [string[]]
+}>()
+const organizationsStore = useOrganizationsStore()
+const languages = computed(() => {
+  return organizationsStore.languages.map((lang) => ({
+    label: lang,
+    selected: props.modelValue.some((l) => l == lang),
+  }))
+})
+
+watch(
+  languages,
+  (neo) => {
+    emits(
+      'update:modelValue',
+      neo.filter((lang) => lang.selected).map((lang) => lang.label)
+    )
   },
-
-  emits: ['update:modelValue'],
-
-  setup() {
-    const organizationsStore = useOrganizationsStore()
-    return {
-      organizationsStore,
-    }
-  },
-
-  data() {
-    return {
-      languages: this.organizationsStore.languages.map((lang) => ({
-        label: lang,
-        selected: this.modelValue.some((l) => l == lang),
-      })),
-    }
-  },
-
-  watch: {
-    languages: {
-      handler: function (neo) {
-        this.$emit(
-          'update:modelValue',
-          neo.filter((lang) => lang.selected).map((lang) => lang.label)
-        )
-      },
-      deep: true,
-    },
-  },
-}
+  { deep: true }
+)
 </script>
 
 <style lang="scss" scoped>
