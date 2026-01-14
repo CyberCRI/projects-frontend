@@ -5,12 +5,12 @@ export default class PageTitle extends Container {
     super(parent)
     this.styles.add(/* CSS */ `
        .chapter-title {
-            font-size: 1.6rem;
-            font-weight: bold;
-            margin-bottom: .6cm;
-            color: #1d727c;
-          }   
-          `)
+          font-size: 1.6rem;
+          font-weight: bold;
+          margin-bottom: .6cm;
+          color: #1d727c;
+        } 
+        `)
   }
 
   override getContent(): string {

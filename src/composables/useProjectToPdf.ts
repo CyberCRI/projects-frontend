@@ -113,6 +113,7 @@ export default function useProjectToPdf() {
             margin-bottom: 1cm;
             color: #1d727c;
             font-weight: bold;
+            text-align: center;
           }`)
         this.content.push(/* HTML */ `
           <h1 class="project-title">${project.$t.title}</h1>

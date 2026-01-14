@@ -47,10 +47,16 @@ export class Container {
 export class Page extends Container {
   constructor(parent: Container) {
     super(parent)
-    this.styles.add(`
+    this.styles.add(/* CSS */ `
         .chapter {
-            page-break-after: always;
-        }`)
+          border-bottom: 0.15cm solid #1d727c;
+          padding-top: .4cm;
+          padding-bottom: .8cm;
+        }
+        .chapter:last-of-type {
+          border-bottom: none;
+        }
+        `)
   }
 
   override getContent(): string {
@@ -68,7 +74,7 @@ export class Doc extends Container {
           margin: 0;
           padding: 0;
           font-family: Ubuntu, Arial, sans-serif;
-          font-size: 0.4cm;
+          font-size: 0.3cm;
       }`)
   }
   override getContent(): string {
