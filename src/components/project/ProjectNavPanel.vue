@@ -51,7 +51,7 @@
       <ExternalLabelButton
         v-if="!isProcessingPdf"
         class="space-button"
-        :label="'Get as PDF'"
+        :label="$t('pdf.download-pdf')"
         btn-icon="FilePdfLine"
         vertical-layout
         label-on-hover

@@ -15,7 +15,7 @@ export default async function addLinkedProjectSectionFactory(linkedProjects: any
       const avatarDataUrl = await fetchImageAsDataUrl(
         proxyImageUrl(linkedProject.project?.header_image?.variations?.medium || defaultPatatoid)
       )
-      const imageSizes = pictureApiToImageSizes(linkedProject.project.header_image || null)
+      const imageSizes = pictureApiToImageSizes(linkedProject.project?.header_image || null)
       const croppedAvatarDataUrl = await croppedImageData({
         imgDataUrl: avatarDataUrl,
         ratio: 1,
@@ -71,25 +71,26 @@ export default async function addLinkedProjectSectionFactory(linkedProjects: any
             overflow: hidden;
           }
           .linked-project-photo {
-            width: 3.5cm;
-            height: 3.5cm;
+            --photo-size: 2cm;
+            width: var(--photo-size);
+            height: var(--photo-size);
             border-radius: .1cm;
           }`)
       const linkedProjectList = _linkedProjects
         .map(
           (linkedProject) => /*HTML*/ `
           <div class="card-item linked-project">
-            <img class="linked-project-photo" src="${linkedProject.photo_url}" alt="${getTranslatableField(linkedProject.project, 'title').value}"/>
+            <img class="linked-project-photo" src="${linkedProject.photo_url}" alt="${getTranslatableField(linkedProject.project, 'title').value || ''}"/>
             <div class="card-type">
               <div class="category-name">
-                ${linkedProject.project.categories?.[0]?.name}
+                ${linkedProject.project.categories?.[0]?.name || ''}
               </div>
             </div>
             <div class="card-title">
-              ${getTranslatableField(linkedProject.project, 'title').value}
+              ${getTranslatableField(linkedProject.project, 'title').value || ''}
             </div>
             <div  class="card-description">
-              ${getTranslatableField(linkedProject.project, 'purpose').value}
+              ${getTranslatableField(linkedProject.project, 'purpose').value || ''}
             </div>
           </div>`
         )

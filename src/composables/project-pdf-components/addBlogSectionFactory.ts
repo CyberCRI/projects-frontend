@@ -1,9 +1,8 @@
 import { Container } from '@/composables/pdf-helpers/doc-builder'
 
-export default async function addBlogSectionFactory(blogEntries: any[]) {
+export default async function addBlogSectionFactory(blogEntries: any[], MAX_BLOG_ENTRIES) {
   const { d } = useNuxtI18n()
   // const { getTranslatableField } = useAutoTranslate()
-
   return function addBlogSection(this: Container) {
     let out = ''
 
@@ -56,7 +55,9 @@ export default async function addBlogSectionFactory(blogEntries: any[]) {
           }
           
           `)
+
       const blogList = blogEntries
+        .slice(0, MAX_BLOG_ENTRIES)
         .map(
           (blogEntry) => /*HTML*/ `
             <div class="blog-entry">

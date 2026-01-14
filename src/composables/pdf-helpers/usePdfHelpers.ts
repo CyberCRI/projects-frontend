@@ -2,12 +2,34 @@ import usePdfFooter from '@/composables/pdf-helpers/usePdfFooter'
 import usePdfHeader from '@/composables/pdf-helpers/usePdfHeader'
 
 export async function croppedImageData({ ratio, imgDataUrl, imageSizes }) {
-  imageSizes = imageSizes || { left: 0, top: 0, scaleX: 1, scaleY: 1, naturalRatio: 1 }
   return await new Promise((resolve) => {
     const img = new Image()
     img.onload = function () {
       const naturalWidth = img.naturalWidth
       const naturalHeight = img.naturalHeight
+      if (!imageSizes) {
+        const naturalRatio = naturalWidth / naturalHeight
+        let left = 0
+        let top = 0
+        let scale = 1
+        if ((ratio >= 1 && naturalRatio < 1) || (ratio < 1 && naturalRatio >= 1)) {
+          // full width, crop top and bottom
+          top = (-100 * (naturalHeight / 2 - naturalWidth / ratio / 2)) / naturalHeight
+          scale = naturalHeight / naturalWidth / ratio
+        } else {
+          // full height, crop left and right
+          left = (-100 * (naturalWidth / 2 - (naturalHeight * ratio) / 2)) / naturalWidth
+          scale = naturalWidth / (naturalHeight * ratio)
+        }
+
+        imageSizes = {
+          left: left,
+          top: top,
+          scaleX: scale,
+          scaleY: scale,
+          naturalRatio: naturalRatio,
+        }
+      }
 
       const myCanvasElement = document.createElement('canvas')
       const canvasRatio = ratio || 1

@@ -3,6 +3,7 @@ import { Doc } from '@/composables/pdf-helpers/doc-builder'
 import QRCode from 'qrcode'
 
 export default async function usePdfFooter(url?: string, title?: string) {
+  const { t } = useNuxtI18n()
   let qrCodeImg = ''
   if (url) {
     const qrCodeDataUrl = await QRCode.toDataURL(url, { color: { dark: '#1d727c' } })
@@ -56,10 +57,12 @@ export default async function usePdfFooter(url?: string, title?: string) {
       this.content.push(/* HTML */ `
         <footer>
           ${qrCodeImg} ${titleHtml}
-          <p class="date-url">Generated on ${new Date().toLocaleDateString()}</p>
+          <p class="date-url">
+            ${t('pdf.generated-on', { date: new Date().toLocaleDateString() })}
+          </p>
           <p class="page-number">
             <span class="pageNumber"></span>
-            of
+            /
             <span class="totalPages"></span>
           </p>
         </footer>

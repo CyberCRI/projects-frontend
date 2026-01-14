@@ -14,6 +14,7 @@ import addGoalsSectionFactory from '@/composables/project-pdf-components/addGoal
 import addBlogSectionFactory from '@/composables/project-pdf-components/addBlogSectionFactory'
 import addResourceSectionFactory from '@/composables/project-pdf-components/addResourceSectionFactory'
 import addLinkedProjectSectionFactory from '@/composables/project-pdf-components/addLinkedProjectSectionFactory'
+import addBlogLimitWarningFactory from './project-pdf-components/addBlogLimitWarningFactory'
 
 export default function useProjectToPdf() {
   const generateAndDownloadPdf = async ({
@@ -83,7 +84,9 @@ export default function useProjectToPdf() {
 
     const addGoalsSection = await addGoalsSectionFactory(sortedGoals)
 
-    const addBlogSection = await addBlogSectionFactory(blogEntries)
+    const MAX_BLOG_ENTRIES = 10
+    const addBlogSection = await addBlogSectionFactory(blogEntries, MAX_BLOG_ENTRIES)
+    const addBlogLimitWarning = await addBlogLimitWarningFactory(blogEntries, MAX_BLOG_ENTRIES)
 
     const addFileResourceSection = await addResourceSectionFactory(fileResources, 'file')
     const addLinkResourceSection = await addResourceSectionFactory(linkResources, 'link')
@@ -164,6 +167,7 @@ export default function useProjectToPdf() {
         this.content.push(t('blog.title'))
       })
       .render()
+      .add(addBlogLimitWarning)
       .add(addBlogSection)
       .render()
 
