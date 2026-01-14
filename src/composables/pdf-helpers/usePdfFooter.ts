@@ -1,13 +1,14 @@
 import { Doc } from '@/composables/pdf-helpers/doc-builder'
 
 import QRCode from 'qrcode'
+import { lpiLogo } from '@/composables/project-pdf-components/common-styles'
 
 export default async function usePdfFooter(url?: string, title?: string) {
   const { t } = useNuxtI18n()
   let qrCodeImg = ''
   if (url) {
     const qrCodeDataUrl = await QRCode.toDataURL(url, { color: { dark: '#1d727c' } })
-    qrCodeImg = `<img src="${qrCodeDataUrl}" alt="QR Code" class="qr-code"/>`
+    qrCodeImg = `<a class="project-qr-code-link" href="${url}"><img src="${qrCodeDataUrl}" alt="QR Code" class="project-qr-code"/></a>`
   }
 
   let titleHtml = ''
@@ -35,12 +36,24 @@ export default async function usePdfFooter(url?: string, title?: string) {
             height: 4.cm;
           }
 
-          .qr-code {
+          .project-qr-code-link, .project-qr-code-link:hover, .project-qr-code-link:visited, .project-qr-code-link:active {
+            text-decoration: none;
+            display: inline-block;
+          }
+
+          .lpi-logo, .project-qr-code {
             position: absolute;
             height: 2cm;
             width: auto;
-            left: .1cm;
             top: .1cm;
+          }
+ 
+          .lpi-logo {
+            right: .1cm;
+          }
+
+          .project-qr-code {
+            left: .1cm;
           }
           p.title { font-weight: bold; color: #1d727c; }
           p { margin: 0; padding: 0; }
@@ -65,6 +78,7 @@ export default async function usePdfFooter(url?: string, title?: string) {
             /
             <span class="totalPages"></span>
           </p>
+          ${lpiLogo}
         </footer>
       `)
     })

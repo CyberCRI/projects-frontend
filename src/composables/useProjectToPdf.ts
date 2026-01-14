@@ -11,24 +11,28 @@ import PageTitle from '@/composables/project-pdf-components/PageTitle'
 import addTeamSectionFactory from '@/composables/project-pdf-components/addTeamSectionFactory'
 import addGroupSectionFactory from '@/composables/project-pdf-components/addGroupSectionFactory'
 import addGoalsSectionFactory from '@/composables/project-pdf-components/addGoalsSectionFactory'
-import addBlogSectionFactory from '@/composables/project-pdf-components/addBlogSectionFactory'
+// TODO: blog are disabled for now (as per client request) keep code for later use
+// import addBlogSectionFactory from '@/composables/project-pdf-components/addBlogSectionFactory'
+// import addBlogLimitWarningFactory from './project-pdf-components/addBlogLimitWarningFactory'
 import addResourceSectionFactory from '@/composables/project-pdf-components/addResourceSectionFactory'
 import addLinkedProjectSectionFactory from '@/composables/project-pdf-components/addLinkedProjectSectionFactory'
-import addBlogLimitWarningFactory from './project-pdf-components/addBlogLimitWarningFactory'
 
 export default function useProjectToPdf() {
   const generateAndDownloadPdf = async ({
     project,
     team,
     goals,
-    blogEntries,
+    // TODO: blog are disabled for now (as per client request) keep code for later use
+    // blogEntries,
     fileResources,
     linkResources,
     linkedProjects,
   }) => {
     const { locale, t } = useNuxtI18n()
 
-    const fixedDescription = await convertImages(project.description)
+    let fixedDescription = await convertImages(project.description)
+    // TODO: replace with a link to video ?
+    fixedDescription = fixedDescription.replaceAll(/<video.*?>.*?<\/video>/g, '')
 
     const sortedGoals = [...goals].sort((a, b) => {
       if (!a.deadline_at && !b.deadline_at) {
@@ -84,18 +88,19 @@ export default function useProjectToPdf() {
 
     const addGoalsSection = await addGoalsSectionFactory(sortedGoals)
 
-    const MAX_BLOG_ENTRIES = 10
-    const addBlogSection = await addBlogSectionFactory(blogEntries, MAX_BLOG_ENTRIES)
-    const addBlogLimitWarning = await addBlogLimitWarningFactory(blogEntries, MAX_BLOG_ENTRIES)
+    // TODO: blog are disabled for now (as per client request) keep code for later use
+    // const MAX_BLOG_ENTRIES = 10
+    // const addBlogSection = await addBlogSectionFactory(blogEntries, MAX_BLOG_ENTRIES)
+    // const addBlogLimitWarning = await addBlogLimitWarningFactory(blogEntries, MAX_BLOG_ENTRIES)
 
-    const addFileResourceSection = await addResourceSectionFactory(fileResources, 'file')
-    const addLinkResourceSection = await addResourceSectionFactory(linkResources, 'link')
+    const addFileResourceSection = await addResourceSectionFactory(project, fileResources, 'file')
+    const addLinkResourceSection = await addResourceSectionFactory(project, linkResources, 'link')
 
     const addLinkedProjectSection = await addLinkedProjectSectionFactory(linkedProjects || [])
 
     const addSdgs = await addSdgsFactory(project.sdgs || [])
 
-    mainDoc
+    const firstPage = mainDoc
       .addContainer(Page)
       .add(function (this: Page) {
         this.styles.add(/* CSS */ `
@@ -120,77 +125,98 @@ export default function useProjectToPdf() {
       .add(addTags)
       .render() // ProjectHeaderContent
       .render() // ProjectHeader
-      .addContainer(PageTitle)
-      .add(function (this: PageTitle) {
-        this.content.push(t('goal.goals'))
-      })
-      .render()
-      .add(addSdgs)
-      .add(addGoalsSection)
-      .render()
+
+    if (sortedGoals?.length || project.sdgs?.length) {
+      firstPage
+        .addContainer(PageTitle)
+        .add(function (this: PageTitle) {
+          this.content.push(t('goal.goals'))
+        })
+        .render()
+      if (project.sdgs?.length) firstPage.add(addSdgs)
+      if (sortedGoals?.length) firstPage.add(addGoalsSection)
+    }
+    firstPage
       .render() // Page
+      .render() // Doc
 
     // SECOND PAGE - DESCRIPTION
-    mainDoc
-      .addContainer(Page)
-      .addContainer(PageTitle)
-      .add(function (this: PageTitle) {
-        this.content.push(t('form.description'))
-      })
-      .render()
-      .add(function (this: Page) {
-        this.content.push(/* HTML */ `
-          <div>${fixedDescription}</div>
-        `)
-      })
-      .render()
+    if (fixedDescription?.length && fixedDescription !== '<p></p>') {
+      mainDoc
+        .addContainer(Page)
+        .addContainer(PageTitle)
+        .add(function (this: PageTitle) {
+          this.content.push(t('form.description'))
+        })
+        .render()
+        .add(function (this: Page) {
+          this.content.push(/* HTML */ `
+            <div>${fixedDescription}</div>
+          `)
+        })
+        .render()
+    }
 
-    mainDoc
-      .addContainer(Page)
-      .addContainer(PageTitle)
-      .add(function (this: PageTitle) {
-        this.content.push(t('team.team'))
-      })
-      .render()
-      .add(addOwnerTeamSection)
-      .add(addEditorTeamSection)
-      .add(addReviewerTeamSection)
-      .add(addOwnerGroupSection)
-      .add(addMemberGroupSection)
-      .add(addReviewerGroupSection)
-      .render()
+    if (
+      team?.owners?.length ||
+      team?.members?.length ||
+      team?.reviewers?.length ||
+      team?.owner_groups?.length ||
+      team?.member_groups?.length ||
+      team?.reviewer_groups?.length
+    ) {
+      mainDoc
+        .addContainer(Page)
+        .addContainer(PageTitle)
+        .add(function (this: PageTitle) {
+          this.content.push(t('team.team'))
+        })
+        .render()
+        .add(addOwnerTeamSection)
+        .add(addEditorTeamSection)
+        .add(addReviewerTeamSection)
+        .add(addOwnerGroupSection)
+        .add(addMemberGroupSection)
+        .add(addReviewerGroupSection)
+        .render()
+    }
 
-    mainDoc
-      .addContainer(Page)
-      .addContainer(PageTitle)
-      .add(function (this: PageTitle) {
-        this.content.push(t('blog.title'))
-      })
-      .render()
-      .add(addBlogLimitWarning)
-      .add(addBlogSection)
-      .render()
+    // TODO: blog are disabled for now (as per client request) keep code for later use
+    // mainDoc
+    //   .addContainer(Page)
+    //   .addContainer(PageTitle)
+    //   .add(function (this: PageTitle) {
+    //     this.content.push(t('blog.title'))
+    //   })
+    //   .render()
+    //   .add(addBlogLimitWarning)
+    //   .add(addBlogSection)
+    //   .render()
 
-    mainDoc
-      .addContainer(Page)
-      .addContainer(PageTitle)
-      .add(function (this: PageTitle) {
-        this.content.push(t('resource.resources'))
-      })
-      .render()
-      .add(addFileResourceSection)
-      .add(addLinkResourceSection)
-      .render()
+    if (fileResources?.length || linkResources?.length) {
+      mainDoc
+        .addContainer(Page)
+        .addContainer(PageTitle)
+        .add(function (this: PageTitle) {
+          this.content.push(t('resource.resources'))
+        })
+        .render()
+        .add(addFileResourceSection)
+        .add(addLinkResourceSection)
+        .render()
+    }
 
-    mainDoc
-      .addContainer(Page)
-      .addContainer(PageTitle)
-      .add(function (this: PageTitle) {
-        this.content.push(t('project.linked-projects'))
-      })
-      .render()
-      .add(addLinkedProjectSection)
-      .render()
+    if (linkedProjects?.length) {
+      mainDoc
+        .addContainer(Page)
+        .addContainer(PageTitle)
+        .add(function (this: PageTitle) {
+          this.content.push(t('project.linked-projects'))
+        })
+        .render()
+        .add(addLinkedProjectSection)
+        .render()
+    }
 
     // FINALIZE AND DOWNLOAD PDF
     const projectUrl = `${window.location.origin}/projects/${project.id}/`
