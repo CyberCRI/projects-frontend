@@ -16,6 +16,7 @@ import addGoalsSectionFactory from '@/composables/project-pdf-components/addGoal
 // import addBlogLimitWarningFactory from './project-pdf-components/addBlogLimitWarningFactory'
 import addResourceSectionFactory from '@/composables/project-pdf-components/addResourceSectionFactory'
 import addLinkedProjectSectionFactory from '@/composables/project-pdf-components/addLinkedProjectSectionFactory'
+import useOrganizationsStore from '@/stores/useOrganizations'
 
 export default function useProjectToPdf() {
   const generateAndDownloadPdf = async ({
@@ -29,6 +30,8 @@ export default function useProjectToPdf() {
     linkedProjects,
   }) => {
     const { locale, t } = useNuxtI18n()
+    const organizationsStore = useOrganizationsStore()
+    const organisation = organizationsStore.current
 
     let fixedDescription = await convertImages(project.description)
     // TODO: replace with a link to video ?
@@ -220,7 +223,7 @@ export default function useProjectToPdf() {
     }
 
     // FINALIZE AND DOWNLOAD PDF
-    const projectUrl = `${window.location.origin}/projects/${project.id}/`
+    const projectUrl = `${organisation.website_url}/projects/${project.id}/`
     const pdfContent = mainDoc.getContent()
     await fetchPdf(
       pdfContent,

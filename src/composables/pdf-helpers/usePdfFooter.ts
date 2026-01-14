@@ -41,19 +41,28 @@ export default async function usePdfFooter(url?: string, title?: string) {
             display: inline-block;
           }
 
-          .lpi-logo, .project-qr-code {
+          .lpi-logo, .project-qr-code-link {
             position: absolute;
+          }
+
+          .lpi-logo, .project-qr-code {
             height: 2cm;
             width: auto;
-            top: .1cm;
           }
  
           .lpi-logo {
             right: .1cm;
+            top: .1cm;
           }
 
-          .project-qr-code {
+          .project-qr-code-link {
+            display: inline-block;
+            padding: 0;
+            margin: 0;
+            height: 2cm;
+            width: min-content;
             left: .1cm;
+            top: 0;
           }
           p.title { font-weight: bold; color: #1d727c; }
           p { margin: 0; padding: 0; }

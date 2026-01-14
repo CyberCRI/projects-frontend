@@ -48,18 +48,20 @@
         label-on-hover
         @click="goToCommentView"
       />
-      <ExternalLabelButton
-        v-if="!isProcessingPdf"
-        class="space-button"
-        :label="$t('pdf.download-pdf')"
-        btn-icon="FilePdfLine"
-        vertical-layout
-        label-on-hover
-        @click="$emit('get-pdf')"
-      />
-      <span v-else class="space-button-loader-ctn">
-        <LoaderSimple class="space-button-loader" />
-      </span>
+      <template v-if="true || appGotenbergEnabled">
+        <ExternalLabelButton
+          v-if="!isProcessingPdf"
+          class="space-button"
+          :label="$t('pdf.download-pdf')"
+          btn-icon="FilePdfLine"
+          vertical-layout
+          label-on-hover
+          @click="$emit('get-pdf')"
+        />
+        <span v-else class="space-button-loader-ctn">
+          <LoaderSimple class="space-button-loader" />
+        </span>
+      </template>
 
       <SocialShareButton :shared-url="sharedUrl" />
     </div>
@@ -159,11 +161,13 @@ export default {
   setup() {
     const usersStore = useUsersStore()
     const { canEditProject, isAdmin, isOrgAdmin } = usePermissions()
+    const { appGotenbergEnabled } = useRuntimeConfig().public
     return {
       usersStore,
       canEditProject,
       isAdmin,
       isOrgAdmin,
+      appGotenbergEnabled,
     }
   },
 
