@@ -49,7 +49,7 @@ export class Page extends Container {
     super(parent)
     this.styles.add(/* CSS */ `
         .chapter {
-          border-bottom: 0.15cm solid #1d727c;
+          border-bottom: 0.1cm solid #1d727c;
           padding-top: .4cm;
           padding-bottom: .8cm;
         }
@@ -74,7 +74,7 @@ export class Doc extends Container {
           margin: 0;
           padding: 0;
           font-family: Ubuntu, Arial, sans-serif;
-          font-size: 0.36cm;
+          font-size: 0.33cm;
       }`)
   }
   override getContent(): string {
