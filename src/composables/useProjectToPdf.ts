@@ -17,6 +17,7 @@ import addGoalsSectionFactory from '@/composables/project-pdf-components/addGoal
 import addResourceSectionFactory from '@/composables/project-pdf-components/addResourceSectionFactory'
 import addLinkedProjectSectionFactory from '@/composables/project-pdf-components/addLinkedProjectSectionFactory'
 import useOrganizationsStore from '@/stores/useOrganizations'
+import { tiptapContentStyles } from './project-pdf-components/common-styles'
 
 export default function useProjectToPdf() {
   const generateAndDownloadPdf = async ({
@@ -151,11 +152,12 @@ export default function useProjectToPdf() {
         .addContainer(PageTitle)
         .add(function (this: PageTitle) {
           this.content.push(t('form.description'))
+          this.styles.add(tiptapContentStyles)
         })
         .render()
         .add(function (this: Page) {
           this.content.push(/* HTML */ `
-            <div>${fixedDescription}</div>
+            <div class="tiptap-content">${fixedDescription}</div>
           `)
         })
         .render()

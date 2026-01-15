@@ -32,6 +32,522 @@ export const cardListStyles = /* CSS */ `
 }
 `
 
+export const tiptapContentStyles = /* CSS */ `
+.tiptap-content pre.lpi-code-block code.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1em;
+}
+.tiptap-content pre.lpi-code-block code.hljs, .tiptap-content pre.lpi-code-block code.hljs > * {
+  font-family: monospace;
+  font-size: calc(var(--font-base-scale, 1) * 1rem);
+  tab-size: 2;
+}
+.tiptap-content pre.lpi-code-block.tab-4 code.hljs, .tiptap-content pre.lpi-code-block.tab-4 code.hljs > * {
+  tab-size: 4;
+}
+.tiptap-content pre.lpi-code-block.theme-light {
+  /*!
+    Theme: GitHub
+    Description: Light theme as seen on github.com
+    Author: github.com
+    Maintainer: @Hirse
+    Updated: 2021-05-15
+
+    Outdated base version: https://github.com/primer/github-syntax-light
+    Current colors taken from GitHub's CSS
+    */
+}
+.tiptap-content pre.lpi-code-block.theme-light .hljs {
+  color: #24292e;
+  background: #fff;
+}
+.tiptap-content pre.lpi-code-block.theme-light .hljs-doctag,
+.tiptap-content pre.lpi-code-block.theme-light .hljs-keyword,
+.tiptap-content pre.lpi-code-block.theme-light .hljs-meta .hljs-keyword,
+.tiptap-content pre.lpi-code-block.theme-light .hljs-template-tag,
+.tiptap-content pre.lpi-code-block.theme-light .hljs-template-variable,
+.tiptap-content pre.lpi-code-block.theme-light .hljs-type,
+.tiptap-content pre.lpi-code-block.theme-light .hljs-variable.language_ {
+  /* prettylights-syntax-keyword */
+  color: #d73a49;
+}
+.tiptap-content pre.lpi-code-block.theme-light .hljs-title,
+.tiptap-content pre.lpi-code-block.theme-light .hljs-title.class_,
+.tiptap-content pre.lpi-code-block.theme-light .hljs-title.class_.inherited__,
+.tiptap-content pre.lpi-code-block.theme-light .hljs-title.function_ {
+  /* prettylights-syntax-entity */
+  color: #6f42c1;
+}
+.tiptap-content pre.lpi-code-block.theme-light .hljs-attr,
+.tiptap-content pre.lpi-code-block.theme-light .hljs-attribute,
+.tiptap-content pre.lpi-code-block.theme-light .hljs-literal,
+.tiptap-content pre.lpi-code-block.theme-light .hljs-meta,
+.tiptap-content pre.lpi-code-block.theme-light .hljs-number,
+.tiptap-content pre.lpi-code-block.theme-light .hljs-operator,
+.tiptap-content pre.lpi-code-block.theme-light .hljs-variable,
+.tiptap-content pre.lpi-code-block.theme-light .hljs-selector-attr,
+.tiptap-content pre.lpi-code-block.theme-light .hljs-selector-class,
+.tiptap-content pre.lpi-code-block.theme-light .hljs-selector-id {
+  /* prettylights-syntax-constant */
+  color: #005cc5;
+}
+.tiptap-content pre.lpi-code-block.theme-light .hljs-regexp,
+.tiptap-content pre.lpi-code-block.theme-light .hljs-string,
+.tiptap-content pre.lpi-code-block.theme-light .hljs-meta .hljs-string {
+  /* prettylights-syntax-string */
+  color: #032f62;
+}
+.tiptap-content pre.lpi-code-block.theme-light .hljs-built_in,
+.tiptap-content pre.lpi-code-block.theme-light .hljs-symbol {
+  /* prettylights-syntax-variable */
+  color: #e36209;
+}
+.tiptap-content pre.lpi-code-block.theme-light .hljs-comment,
+.tiptap-content pre.lpi-code-block.theme-light .hljs-code,
+.tiptap-content pre.lpi-code-block.theme-light .hljs-formula {
+  /* prettylights-syntax-comment */
+  color: #6a737d;
+}
+.tiptap-content pre.lpi-code-block.theme-light .hljs-name,
+.tiptap-content pre.lpi-code-block.theme-light .hljs-quote,
+.tiptap-content pre.lpi-code-block.theme-light .hljs-selector-tag,
+.tiptap-content pre.lpi-code-block.theme-light .hljs-selector-pseudo {
+  /* prettylights-syntax-entity-tag */
+  color: #22863a;
+}
+.tiptap-content pre.lpi-code-block.theme-light .hljs-subst {
+  /* prettylights-syntax-storage-modifier-import */
+  color: #24292e;
+}
+.tiptap-content pre.lpi-code-block.theme-light .hljs-section {
+  /* prettylights-syntax-markup-heading */
+  color: #005cc5;
+  font-weight: bold;
+}
+.tiptap-content pre.lpi-code-block.theme-light .hljs-bullet {
+  /* prettylights-syntax-markup-list */
+  color: #735c0f;
+}
+.tiptap-content pre.lpi-code-block.theme-light .hljs-emphasis {
+  /* prettylights-syntax-markup-italic */
+  color: #24292e;
+  font-style: italic;
+}
+.tiptap-content pre.lpi-code-block.theme-light .hljs-strong {
+  /* prettylights-syntax-markup-bold */
+  color: #24292e;
+  font-weight: bold;
+}
+.tiptap-content pre.lpi-code-block.theme-light .hljs-addition {
+  /* prettylights-syntax-markup-inserted */
+  color: #22863a;
+  background-color: #f0fff4;
+}
+.tiptap-content pre.lpi-code-block.theme-light .hljs-deletion {
+  /* prettylights-syntax-markup-deleted */
+  color: #b31d28;
+  background-color: #ffeef0;
+}
+.tiptap-content pre.lpi-code-block.theme-light {
+  /*
+    .hljs-char.escape_,
+    .hljs-link,
+    .hljs-params,
+    .hljs-property,
+    .hljs-punctuation,
+    .hljs-tag {
+        purposely ignored
+
+    } */
+}
+.tiptap-content pre.lpi-code-block.theme-dark {
+  /*!
+        Theme: GitHub Dark
+        Description: Dark theme as seen on github.com
+        Author: github.com
+        Maintainer: @Hirse
+        Updated: 2021-05-15
+
+        Outdated base version: https://github.com/primer/github-syntax-dark
+        Current colors taken from GitHub's CSS
+    */
+}
+.tiptap-content pre.lpi-code-block.theme-dark .hljs {
+  color: #c9d1d9;
+  background: #0d1117;
+}
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-doctag,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-keyword,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-meta .hljs-keyword,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-template-tag,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-template-variable,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-type,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-variable.language_ {
+  /* prettylights-syntax-keyword */
+  color: #ff7b72;
+}
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-title,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-title.class_,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-title.class_.inherited__,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-title.function_ {
+  /* prettylights-syntax-entity */
+  color: #d2a8ff;
+}
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-attr,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-attribute,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-literal,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-meta,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-number,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-operator,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-variable,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-selector-attr,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-selector-class,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-selector-id {
+  /* prettylights-syntax-constant */
+  color: #79c0ff;
+}
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-regexp,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-string,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-meta .hljs-string {
+  /* prettylights-syntax-string */
+  color: #a5d6ff;
+}
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-built_in,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-symbol {
+  /* prettylights-syntax-variable */
+  color: #ffa657;
+}
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-comment,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-code,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-formula {
+  /* prettylights-syntax-comment */
+  color: #8b949e;
+}
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-name,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-quote,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-selector-tag,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-selector-pseudo {
+  /* prettylights-syntax-entity-tag */
+  color: #7ee787;
+}
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-subst {
+  /* prettylights-syntax-storage-modifier-import */
+  color: #c9d1d9;
+}
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-section {
+  /* prettylights-syntax-markup-heading */
+  color: #1f6feb;
+  font-weight: bold;
+}
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-bullet {
+  /* prettylights-syntax-markup-list */
+  color: #f2cc60;
+}
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-emphasis {
+  /* prettylights-syntax-markup-italic */
+  color: #c9d1d9;
+  font-style: italic;
+}
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-strong {
+  /* prettylights-syntax-markup-bold */
+  color: #c9d1d9;
+  font-weight: bold;
+}
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-addition {
+  /* prettylights-syntax-markup-inserted */
+  color: #aff5b4;
+  background-color: #033a16;
+}
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-deletion {
+  /* prettylights-syntax-markup-deleted */
+  color: #ffdcd7;
+  background-color: #67060c;
+}
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-char.escape_,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-link,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-params,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-property,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-punctuation,
+.tiptap-content pre.lpi-code-block.theme-dark .hljs-tag {
+  /* purposely ignored */
+}
+.tiptap-content .tiptap-table-wrapper {
+  max-width: 100%;
+  overflow-x: auto;
+  position: relative;
+  word-break: break-word;
+}
+.tiptap-content .tiptap-table-wrapper table.auto-width {
+  width: auto;
+}
+.tiptap-content table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  overflow: hidden;
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+  width: fit-content;
+}
+.tiptap-content table th {
+  background-color: #f1f1f1;
+  padding: 0.5rem 0.75rem;
+  color: #101010;
+  font-weight: bold;
+}
+.tiptap-content table td,
+.tiptap-content table th {
+  border: 1px solid #d4d4d4 !important;
+  min-width: 1em;
+  padding: 3px 5px;
+  vertical-align: top;
+  box-sizing: border-box;
+  position: relative;
+  hyphens: auto;
+}
+.tiptap-content table td {
+  border: 1px solid #d4d4d4;
+  padding: 0.75rem 1rem;
+}
+.tiptap-content table > * {
+  margin-bottom: 0;
+}
+.tiptap-content table .selectedCell::after {
+  z-index: 2;
+  position: absolute;
+  content: "";
+  inset: 0;
+  background: rgba(200, 200, 255, 0.4);
+  pointer-events: none;
+}
+.tiptap-content table .column-resize-handle {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  bottom: -2px;
+  width: 4px;
+  background-color: #adf;
+  pointer-events: none;
+}
+.tiptap-content .tableWrapper {
+  padding: 1rem 0;
+  overflow-x: auto;
+}
+.tiptap-content .resize-cursor {
+  cursor: ew-resize;
+  cursor: col-resize;
+}
+.tiptap-content a {
+  color: #1d727c !important;
+  cursor: pointer;
+  text-decoration: none;
+  overflow-wrap: break-word;
+}
+.tiptap-content a:hover {
+  text-decoration: underline;
+}
+.tiptap-content h1 {
+  font-size: calc(var(--font-base-scale, 1) * 2.1875rem);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  margin-top: 0.75rem;
+  line-height: 1.2;
+}
+.tiptap-content h2 {
+  font-size: calc(var(--font-base-scale, 1) * 1.5rem);
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  line-height: 1.2;
+}
+.tiptap-content h3 {
+  font-size: calc(var(--font-base-scale, 1) * 1.375rem);
+  font-weight: 700;
+  letter-spacing: 0;
+  margin-bottom: 0.75rem;
+  line-height: 1.2;
+}
+.tiptap-content h4 {
+  font-size: calc(var(--font-base-scale, 1) * 1.25rem);
+  font-weight: 700;
+  line-height: 1.2;
+}
+.tiptap-content p {
+  margin-bottom: 0.5rem;
+}
+.tiptap-content u {
+  text-decoration: underline;
+}
+.tiptap-content strong {
+  font-weight: 700;
+}
+.tiptap-content blockquote {
+  margin: 20px 0;
+  font-style: italic;
+  border-left: 4px solid #1d727c;
+  padding-left: 20px;
+  color: #101010;
+}
+.tiptap-content img {
+  border-radius: 4px;
+  height: auto;
+  max-width: 100%;
+}
+.tiptap-content em {
+  font-style: italic;
+}
+.tiptap-content ul {
+  list-style-type: disc;
+}
+.tiptap-content ol {
+  list-style-type: numeric;
+}
+.tiptap-content ul li,
+.tiptap-content ol li {
+  margin-left: 35px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+.tiptap-content .custom-image-small {
+  width: 25%;
+}
+.tiptap-content .custom-image-medium {
+  width: 50%;
+}
+.tiptap-content .custom-image-large {
+  width: 75%;
+}
+.tiptap-content .custom-image-full {
+  width: 100%;
+}
+.tiptap-content .custom-image-original {
+  width: auto;
+  max-width: 100%;
+}
+.tiptap-content > * {
+  margin-bottom: 0.75rem;
+}
+
+.custom-video-wrapper {
+  margin: 0 auto;
+  height: 0;
+  padding-bottom: 56.25%;
+  position: relative;
+}
+.custom-video-wrapper.custom-video-wrapper-left {
+  margin-left: 0;
+}
+.custom-video-wrapper.custom-video-wrapper-right {
+  margin-right: 0;
+}
+
+table .custom-video-ctn {
+  min-width: 16rem;
+}
+
+.editor .custom-video-wrapper::after {
+  content: "";
+  position: absolute;
+  z-index: 100;
+  inset: 0;
+}
+
+.ProseMirror-focused .ProseMirror-selectednode .custom-video-wrapper::after {
+  color: white;
+  font-size: calc(var(--font-base-scale, 1) * 1rem);
+  text-align: center;
+  padding: 15%;
+  background-color: rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+
+.custom-video {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: black url("data:image/gif;base64,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") center center no-repeat;
+}
+
+.custom-video-wrapper-small .custom-video,
+.custom-video-wrapper-medium .custom-video,
+.custom-video-wrapper-large .custom-video,
+.custom-video-wrapper-full .custom-video {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.custom-video-wrapper-small {
+  width: 25%;
+  padding-bottom: 14.0625%;
+}
+
+.custom-video-wrapper-medium {
+  width: 50%;
+  padding-bottom: 28.125%;
+}
+
+.custom-video-wrapper-large {
+  width: 75%;
+  padding-bottom: 42.1875%;
+}
+
+.custom-video-wrapper-full {
+  width: 100%;
+  padding-bottom: 56.25%;
+}
+
+.custom-video-wrapper.custom-video-wrapper-custom {
+  position: relative;
+  display: inline-block;
+  width: auto;
+  padding-bottom: 0;
+}
+.custom-video-wrapper.custom-video-wrapper-custom .custom-video {
+  position: static;
+}
+
+.ProseMirror {
+  /* Makes the editor clickable on all allocated space */
+  min-height: 100px;
+}
+.ProseMirror:focus-within, .ProseMirror:focus-visible {
+  outline: none;
+}
+
+.content--open h1 {
+  font-size: calc(var(--font-base-scale, 1) * 1.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+.content--open h2 {
+  font-size: calc(var(--font-base-scale, 1) * 1.375rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+.content--open h3 {
+  font-size: calc(var(--font-base-scale, 1) * 1.25rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0;
+  margin-bottom: 8px;
+}
+.content--open h4 {
+  font-size: calc(var(--font-base-scale, 1) * 0.875rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+.content--open p {
+  font-size: calc(var(--font-base-scale, 1) * 0.875rem);
+  margin-bottom: 1.5rem;
+}
+`
+
 export const lpiLogo = /* HTML */ `
   <img
     class="lpi-logo"
