@@ -23,48 +23,16 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
-import { ref } from 'vue'
 
-let openedMenuTip = ref(null)
+const openedMenuTip = ref(null)
+const uniqueId = (Math.random() + 1).toString(36).substring(7)
+const isOpen = computed(() => openedMenuTip.value === uniqueId)
 
-export default {
-  name: 'MenuTip',
-
-  components: {
-    ContextActionButton,
-  },
-
-  data() {
-    return {
-      uniqueId: (Math.random() + 1).toString(36).substring(7),
-      openedMenuTip,
-    }
-  },
-
-  computed: {
-    isOpen() {
-      return openedMenuTip.value === this.uniqueId
-    },
-  },
-
-  methods: {
-    open() {
-      openedMenuTip.value = this.uniqueId
-    },
-
-    close() {
-      openedMenuTip.value = null
-    },
-
-    closeAfterClick() {
-      this.$nextTick(() => {
-        this.close()
-      })
-    },
-  },
-}
+const open = () => (openedMenuTip.value = uniqueId)
+const close = () => (openedMenuTip.value = null)
+const closeAfterClick = () => nextTick(() => close())
 </script>
 
 <style lang="scss" scoped>

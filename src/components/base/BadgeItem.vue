@@ -13,53 +13,32 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
 
-export default {
-  name: 'BadgeItem',
-
-  components: { IconImage },
-
-  props: {
-    label: {
-      type: String,
-      required: true,
-    },
-
-    iconName: {
-      type: String,
-      default: null,
-    },
-
-    size: {
-      type: String,
-      default: 'big',
-    },
-
-    simpleText: {
-      type: Boolean,
-      default: false,
-    },
-    colors: {
-      type: String,
-      default: 'primary-light',
-      validator(value) {
-        return [
-          null,
-          '',
-          'primary-light',
-          'primary-dark',
-          'green',
-          'orange',
-          'ok',
-          'warning',
-          'disabled',
-        ].includes(value)
-      },
-    },
-  },
-}
+withDefaults(
+  defineProps<{
+    label: string
+    iconName?: string
+    size?: string
+    simpleText?: boolean
+    colors?:
+      | 'primary-light'
+      | 'primary-dark'
+      | 'green'
+      | 'orange'
+      | 'ok'
+      | 'warning'
+      | 'disabled'
+      | ''
+  }>(),
+  {
+    iconName: null,
+    size: 'big',
+    simpleText: false,
+    colors: 'primary-light',
+  }
+)
 </script>
 
 <style lang="scss" scoped>

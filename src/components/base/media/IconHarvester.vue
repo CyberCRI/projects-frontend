@@ -1,10 +1,10 @@
 <template>
   <span :title="title ?? harvester">
-    <component :is="icons[harvester]" class="icons" />
+    <component :is="ICONS[harvester]" class="icons" />
   </span>
 </template>
 
-<script>
+<script setup lang="ts">
 import halIcon from '@/assets/svg/hal.svg'
 import doiIcon from '@/assets/svg/doi.svg'
 import idrefIcon from '@/assets/svg/idref.svg'
@@ -13,7 +13,7 @@ import orcidIcon from '@/assets/svg/orcid.svg'
 import openalexIcon from '@/assets/svg/openalex.svg'
 import scanrIcon from '@/assets/svg/scanr.svg'
 
-const icons = {
+const ICONS = {
   hal: halIcon,
   idref: idrefIcon,
   scopus: scopusIcon,
@@ -22,29 +22,19 @@ const icons = {
   scanr: scanrIcon,
   doi: doiIcon,
   local: null,
-}
-</script>
+} as const
 
-<script setup>
-defineOptions({
-  name: 'IconHarvester',
-})
-
-defineProps({
-  harvester: {
-    type: String,
-    required: true,
-    validator: (val) => Object.keys(icons).includes(val),
-  },
-  title: {
-    type: String,
-    default: null,
-  },
-  height: {
-    type: String,
-    default: '2rem',
-  },
-})
+withDefaults(
+  defineProps<{
+    harvester: keyof typeof ICONS
+    title?: string
+    height?: string
+  }>(),
+  {
+    title: null,
+    height: '2rem',
+  }
+)
 </script>
 
 <style scoped>

@@ -5,6 +5,7 @@ import BaseFactory from './base.factory'
 
 export const FaqFactory = createFactory<FaqModel>((faker) => ({
   ...BaseFactory.generate(),
+  id: faker.datatype.number(),
   organization_code: faker.datatype.number(),
   title: faker.name.title(),
   content: faker.lorem.paragraphs(),
@@ -13,6 +14,7 @@ export const FaqFactory = createFactory<FaqModel>((faker) => ({
 
 export const FaqInputFactory = createFactory<FaqInput>((faker) => ({
   ...BaseFactory.generate(),
+  id: faker.datatype.number(),
   organization_code: faker.datatype.string(),
   title: faker.name.title(),
   content: faker.lorem.paragraphs(),

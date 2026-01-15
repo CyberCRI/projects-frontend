@@ -3,6 +3,7 @@ import BaseModel from '@/models/base.model'
 import { ProjectModel, TranslatedProject } from '@/models/project.model'
 
 export interface AnnouncementModel extends BaseModel {
+  id: number
   description: string
   title: string
   type: string
@@ -10,6 +11,7 @@ export interface AnnouncementModel extends BaseModel {
   status: string
   deadline: Date
   is_remunerated: boolean
+  updated_at: Date
 }
 
 export type TranslatedAnnouncement = Omit<

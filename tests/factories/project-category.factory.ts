@@ -12,6 +12,7 @@ import TemplateFactory from './template.factory'
 
 const ProjectCategoryFactory = createFactory<ProjectCategoryOutput>((faker) => ({
   ...BaseFactory.generate(),
+  id: faker.datatype.number(),
   slug: faker.datatype.string(),
   organization_code: faker.datatype.string(),
   background_color: faker.internet.color(),
@@ -43,6 +44,7 @@ const ProjectCategoryFactory = createFactory<ProjectCategoryOutput>((faker) => (
   tags: TagFactory.generateMany(2),
   children: [],
   hierarchy: [],
+  projects_count: faker.datatype.number(),
 }))
 
 export const ProjectCategoryOutputFactory = createFactory<ProjectCategoryOutput>(() => ({

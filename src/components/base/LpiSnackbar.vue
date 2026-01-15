@@ -10,46 +10,26 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
 
-export default {
-  name: 'LpiSnackbar',
+withDefaults(
+  defineProps<{
+    type?: string
+    icon?: string
+    closable?: boolean
+    border?: boolean
+  }>(),
+  {
+    type: '',
+    icon: '',
+    closable: false,
+    border: false,
+  }
+)
 
-  components: {
-    IconImage,
-  },
-
-  props: {
-    type: {
-      type: String,
-      default: '',
-    },
-
-    icon: {
-      type: String,
-      default: '',
-    },
-
-    closable: {
-      type: Boolean,
-      default: false,
-    },
-
-    border: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  emits: ['close'],
-
-  methods: {
-    close() {
-      this.$emit('close')
-    },
-  },
-}
+const emit = defineEmits<{ close: [] }>()
+const close = () => emit('close')
 </script>
 
 <style lang="scss" scoped>

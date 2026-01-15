@@ -11,28 +11,12 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
-export default {
-  name: 'PageIndex',
 
-  components: { IconImage },
-
-  data() {
-    return {
-      open: false,
-    }
-  },
-
-  methods: {
-    toggle() {
-      this.open = !this.open
-    },
-    close() {
-      this.open = false
-    },
-  },
-}
+const open = ref(false)
+const toggle = () => (open.value = !open.value)
+const close = () => (open.value = false)
 </script>
 
 <style lang="scss" scoped>

@@ -7,6 +7,7 @@ import { LocationType } from '@/models/types'
  * @description Location of a project
  */
 export interface LocationModel extends BaseModel {
+  id: number
   lat: number
   lng: number
   type: LocationType

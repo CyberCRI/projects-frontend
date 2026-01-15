@@ -14,6 +14,6 @@ export interface EventModel extends BaseModel {
 
 export type EventOutput = BaseModel & Required<EventModel>
 
-export type EventInput = Required<EventModel> & {
+export type EventInput = Required<Omit<EventModel, 'id'>> & {
   organization_code: string
 }

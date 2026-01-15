@@ -4,6 +4,9 @@ import BaseFactory from './base.factory'
 
 export const LocationsFactory = createFactory<LocationModel>((faker) => ({
   ...BaseFactory.generate(),
+  id: faker.datatype.number(),
+  title: faker.lorem.text(),
+  description: faker.lorem.text(),
   lat: faker.datatype.number(),
   lng: faker.datatype.number(),
   type: 'team',

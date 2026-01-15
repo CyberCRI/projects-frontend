@@ -5,6 +5,7 @@ import BaseFactory from './base.factory'
 
 export const AttachmentFileFactory = createFactory<AttachmentFileOutput>((faker) => ({
   ...BaseFactory.generate(),
+  id: faker.datatype.number(),
   file: new File([], 'test-file.png'),
   title: faker.lorem.word(),
   attachment_type: 'file',

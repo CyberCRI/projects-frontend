@@ -44,75 +44,47 @@
   </BaseModal>
 </template>
 
-<script>
+<script setup lang="ts">
 import BaseModal from '@/components/base/modal/BaseModal.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 
-export default {
-  name: 'DialogModal',
+const props = withDefaults(
+  defineProps<{
+    width?: string
+    height?: string
+    canClose?: boolean
+    isSmall?: boolean
+    asyncing?: boolean
+    disabled?: boolean
+    confirmButtonLabel?: string
+    cancelButtonLabel?: string
+    noFooter?: boolean
+    noSecondButton?: boolean
+  }>(),
+  {
+    width: null,
+    height: null,
+    canClose: true,
+    isSmall: false,
+    asyncing: false,
+    disabled: false,
+    confirmButtonLabel: null,
+    cancelButtonLabel: null,
+    noFooter: false,
+    noSecondButton: false,
+  }
+)
 
-  components: { BaseModal, LpiButton },
+const emit = defineEmits<{
+  close: []
+  submit: []
+}>()
 
-  props: {
-    width: {
-      type: String,
-      default: null,
-    },
-
-    height: {
-      type: String,
-      default: null,
-    },
-
-    canClose: {
-      type: Boolean,
-      default: true,
-    },
-
-    isSmall: {
-      type: Boolean,
-      default: false,
-    },
-
-    asyncing: {
-      type: Boolean,
-      default: false,
-    },
-
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-    confirmButtonLabel: {
-      type: String,
-      default: null,
-    },
-    cancelButtonLabel: {
-      type: String,
-      default: null,
-    },
-
-    noFooter: {
-      type: Boolean,
-      default: false,
-    },
-    noSecondButton: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  emits: ['close', 'submit'],
-
-  methods: {
-    close() {
-      this.$emit('close')
-    },
-
-    submit() {
-      if (!this.disabled && !this.asyncing) this.$emit('submit')
-    },
-  },
+const close = () => emit('close')
+const submit = () => {
+  if (!props.disabled && props.asyncing) {
+    emit('submit')
+  }
 }
 </script>
 
