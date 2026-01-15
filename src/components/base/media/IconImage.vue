@@ -112,7 +112,7 @@ const ICONS = {
 } as const
 
 const props = defineProps<{
-  name: keyof typeof ICONS | string
+  name: keyof typeof ICONS | ''
 }>()
 
 const emit = defineEmits<{
