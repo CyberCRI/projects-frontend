@@ -14,11 +14,12 @@
 </template>
 
 <script setup lang="ts">
+import { IconImageChoice } from '@/functs/IconImage'
 import IconImage from '@/components/base/media/IconImage.vue'
 
 withDefaults(
   defineProps<{
-    actionIcon: string
+    actionIcon: IconImageChoice
     secondary?: boolean
     noBorder?: boolean
     actionLabel?: string

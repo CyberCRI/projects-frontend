@@ -15,11 +15,13 @@
 </template>
 
 <script setup lang="ts">
+import { IconImageChoice } from '@/functs/IconImage'
+
 const props = withDefaults(
   defineProps<{
     label?: string
     secondary?: boolean
-    btnIcon?: string
+    btnIcon?: IconImageChoice | 'LoaderSimple'
     disabled?: boolean
     reversedOrder?: boolean
     noTextTransform?: boolean

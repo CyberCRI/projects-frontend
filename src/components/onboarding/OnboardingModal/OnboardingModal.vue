@@ -29,7 +29,7 @@
             v-show="hasPrevious"
             class="button-footer"
             :label="t('onboarding-modal.previous')"
-            btn-icon="Previous"
+            btn-icon="ArrowLeft"
             :secondary="true"
             @click="previous()"
           />
@@ -39,7 +39,7 @@
             v-show="hasNext"
             class="button-footer"
             :label="t('onboarding-modal.next')"
-            btn-icon="Next"
+            btn-icon="ArrowRight"
             :reversed-order="true"
             :secondary="true"
             @click="next()"

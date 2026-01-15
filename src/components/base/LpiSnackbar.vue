@@ -11,18 +11,19 @@
 </template>
 
 <script setup lang="ts">
+import { IconImageChoice } from '@/functs/IconImage'
 import IconImage from '@/components/base/media/IconImage.vue'
 
 withDefaults(
   defineProps<{
     type?: string
-    icon?: string
+    icon?: IconImageChoice
     closable?: boolean
     border?: boolean
   }>(),
   {
     type: '',
-    icon: '',
+    icon: null,
     closable: false,
     border: false,
   }

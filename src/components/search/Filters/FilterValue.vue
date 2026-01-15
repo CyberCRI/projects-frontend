@@ -11,12 +11,13 @@
 </template>
 
 <script setup lang="ts">
+import { IconImageChoice } from '@/functs/IconImage'
 import IconImage from '@/components/base/media/IconImage.vue'
 
-withDefaults(defineProps<{ label?: string; icon?: string; type?: string }>(), {
+withDefaults(defineProps<{ label?: string; icon?: IconImageChoice; type?: string }>(), {
   label: '',
   type: '',
-  icon: '',
+  icon: null,
 })
 </script>
 

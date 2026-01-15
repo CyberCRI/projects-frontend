@@ -20,12 +20,13 @@
 </template>
 
 <script setup lang="ts">
+import { IconImageChoice } from '@/functs/IconImage'
 import IconImage from '@/components/base/media/IconImage.vue'
 
 withDefaults(
   defineProps<{
     label?: string
-    btnIcon?: string
+    btnIcon?: IconImageChoice
     verticalLayout?: boolean
     reversedOrder?: boolean
     hasBorder?: boolean

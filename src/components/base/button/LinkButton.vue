@@ -7,15 +7,18 @@
     class="link-button"
   >
     <ButtonContent :label="label" :btn-icon="btnIcon" :no-text-transform="noTextTransform" />
+    <!-- <IconImage name="" /> -->
   </component>
 </template>
 
 <script setup lang="ts">
+import { IconImageChoice } from '@/functs/IconImage'
+
 const props = withDefaults(
   defineProps<{
     label?: string
     to?: string | object
-    btnIcon?: string
+    btnIcon?: IconImageChoice | 'LoaderSimple'
     noTextTransform?: boolean
   }>(),
   {

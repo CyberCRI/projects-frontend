@@ -17,12 +17,13 @@
 </template>
 
 <script setup lang="ts">
+import { IconImageChoice } from '@/functs/IconImage'
 import IconImage from '@/components/base/media/IconImage.vue'
 
 const props = withDefaults(
   defineProps<{
     label?: string
-    icon?: string
+    icon?: IconImageChoice
     routes?: any[]
     roundedIcon?: boolean
     dataTest?: string
