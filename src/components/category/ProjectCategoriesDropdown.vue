@@ -5,7 +5,7 @@
     class="project-categories-dropdown"
     :class="{ 'is-open': open }"
   >
-    <button type="button" class="categories toggle-btn" @click="toggle_categories">
+    <button type="button" class="categories toggle-btn" @click="toggleCategories">
       <span class="categories-btn">{{ dropdownLabel }}</span>
       <IconImage class="caret" :name="open ? 'ChevronUp' : 'ChevronDown'" />
     </button>
@@ -29,53 +29,19 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
 import ProjectCategoriesDropdownElement from '@/components/category/ProjectCategoriesDropdownElement.vue'
-import useProjectCategories from '@/stores/useProjectCategories.ts'
-export default {
-  name: 'ProjectCategoriesDropdown',
+import useProjectCategories from '@/stores/useProjectCategories'
 
-  components: {
-    IconImage,
-    ProjectCategoriesDropdownElement,
-  },
+defineProps<{ dropdownLabel: string }>()
+defineEmits<{ close: [] }>()
 
-  props: {
-    dropdownLabel: {
-      type: String,
-      required: true,
-    },
-  },
-
-  emits: ['close'],
-
-  setup() {
-    const projectCategoriesStore = useProjectCategories()
-    return {
-      projectCategoriesStore,
-    }
-  },
-
-  data() {
-    return {
-      open: false,
-    }
-  },
-  computed: {
-    categories() {
-      return this.projectCategoriesStore.hierarchy
-    },
-  },
-  methods: {
-    close() {
-      this.open = false
-    },
-    toggle_categories() {
-      this.open = !this.open
-    },
-  },
-}
+const projectCategoriesStore = useProjectCategories()
+const open = ref(false)
+const categories = computed(() => projectCategoriesStore.hierarchy)
+const close = (open.value = false)
+const toggleCategories = () => (open.value = !open.value)
 </script>
 
 <style lang="scss" scoped>

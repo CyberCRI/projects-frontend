@@ -43,7 +43,7 @@ withDefaults(
     selectedGroups: object
   }>(),
   {
-    parent: () => ({}),
+    parent: null,
   }
 )
 const emit = defineEmits<{ 'add-group': [number] }>()

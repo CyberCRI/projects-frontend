@@ -4,6 +4,7 @@ import english from '@/i18n/locales/en.json'
 
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
+import flushPromises from 'flush-promises'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
 
@@ -43,9 +44,11 @@ describe('LanguageFilter.vue', () => {
 
   it('should emit event update is triggered', async () => {
     const wrapper = factory({ modelValue: [] })
-    const buttonContainer = wrapper.find('[type=checkbox]')
+    const buttonContainer = wrapper.find<HTMLInputElement>('[type=checkbox]')
+    // buttonContainer.set
     ;(buttonContainer as any).setChecked()
     await wrapper.vm.$nextTick()
+    await flushPromises()
     expect(wrapper.emitted('update:modelValue')).toBeTruthy()
   })
 })

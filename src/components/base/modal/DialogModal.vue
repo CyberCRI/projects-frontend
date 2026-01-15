@@ -82,7 +82,7 @@ const emit = defineEmits<{
 
 const close = () => emit('close')
 const submit = () => {
-  if (!props.disabled && props.asyncing) {
+  if (!props.disabled && !props.asyncing) {
     emit('submit')
   }
 }

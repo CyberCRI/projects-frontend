@@ -22,12 +22,12 @@ const emits = defineEmits<{
   'update:modelValue': [string[]]
 }>()
 const organizationsStore = useOrganizationsStore()
-const languages = computed(() => {
-  return organizationsStore.languages.map((lang) => ({
+const languages = ref(
+  organizationsStore.languages.map((lang) => ({
     label: lang,
     selected: props.modelValue.some((l) => l == lang),
   }))
-})
+)
 
 watch(
   languages,
