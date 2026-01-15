@@ -30,12 +30,13 @@
 
 <script setup lang="ts">
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
+import { ImageModel } from '@/models/image.model'
 
 defineOptions({ name: 'GroupHeaderV2' })
 const props = withDefaults(
   defineProps<{
     title: string
-    image: object | null
+    image: ImageModel | null
     visibility: string
     isLoading?: boolean
     shortDescription?: string

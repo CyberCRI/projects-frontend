@@ -62,17 +62,17 @@
   </BaseDrawer>
 </template>
 
-<script>
+<script setup lang="ts">
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import useValidate from '@vuelidate/core'
 import { email, helpers, required } from '@vuelidate/validators'
 import { contactUs } from '@/api/report.service'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useToasterStore from '@/stores/useToaster'
+import useOrganizationsStore from '@/stores/useOrganizations'
 
-function defaultForm() {
+const defaultForm = () => {
   return {
     subject: '',
     email: '',
@@ -80,89 +80,58 @@ function defaultForm() {
   }
 }
 
-export default {
-  name: 'ContactDrawer',
+const props = defineProps<{ isOpened: boolean }>()
+const emit = defineEmits<{ close: [] }>()
 
-  components: { TextInput, BaseDrawer, FieldErrors },
-
-  props: {
-    isOpened: {
-      type: Boolean,
-      required: true,
-    },
+const toaster = useToasterStore()
+const organizationsStore = useOrganizationsStore()
+const { t } = useNuxtI18n()
+const rules = computed(() => ({
+  subject: {
+    required: helpers.withMessage(t('form.report.message'), required),
   },
+  email: {
+    required: helpers.withMessage(t('form.report.email.required'), required),
+    email: helpers.withMessage(t('form.report.email.format'), email),
+  },
+  content: {
+    required: helpers.withMessage(t('form.report.content'), required),
+  },
+}))
+const form = ref(defaultForm())
+const v$ = useValidate(rules, form)
+const isLoading = ref(false)
+const customNotificationStyle = {
+  maxHeight: 'unset',
+  padding: 'unset',
+}
+const orgCode = computed(() => organizationsStore?.current?.code)
 
-  emits: ['close'],
-  setup() {
-    const toaster = useToasterStore()
-    const organizationsStore = useOrganizationsStore()
-    return {
-      toaster,
-      organizationsStore,
+watch(
+  () => props.isOpened,
+  () => {
+    v$.value.$reset()
+    form.value = defaultForm()
+  }
+)
+
+const submit = async () => {
+  const isValid = await v$.value.$validate()
+
+  if (isValid) {
+    isLoading.value = true
+
+    try {
+      await contactUs(orgCode.value, form.value)
+      toaster.pushSuccess(t('toasts.contact.success'))
+    } catch (error) {
+      toaster.pushError(`${t('toasts.contact.error')} (${error})`)
+      console.error(error)
+    } finally {
+      isLoading.value = false
+      emit('close')
     }
-  },
-
-  data() {
-    return {
-      v$: useValidate(),
-      form: defaultForm(),
-      isLoading: false,
-      asyncing: false,
-      customNotificationStyle: {
-        maxHeight: 'unset',
-        padding: 'unset',
-      },
-    }
-  },
-
-  computed: {
-    orgCode() {
-      return this.organizationsStore?.current?.code
-    },
-  },
-  validations() {
-    return {
-      form: {
-        subject: {
-          required: helpers.withMessage(this.$t('form.report.message'), required),
-        },
-        email: {
-          required: helpers.withMessage(this.$t('form.report.email.required'), required),
-          email: helpers.withMessage(this.$t('form.report.email.format'), email),
-        },
-        content: {
-          required: helpers.withMessage(this.$t('form.report.content'), required),
-        },
-      },
-    }
-  },
-  watch: {
-    isOpened() {
-      this.v$.$reset()
-      this.form = defaultForm()
-    },
-  },
-
-  methods: {
-    async submit() {
-      const isValid = await this.v$.$validate()
-
-      if (isValid) {
-        this.isLoading = true
-
-        try {
-          await contactUs(this.orgCode, this.form)
-          this.toaster.pushSuccess(this.$t('toasts.contact.success'))
-        } catch (error) {
-          this.toaster.pushError(`${this.$t('toasts.contact.error')} (${error})`)
-          console.error(error)
-        } finally {
-          this.isLoading = false
-          this.$emit('close')
-        }
-      }
-    },
-  },
+  }
 }
 </script>
 

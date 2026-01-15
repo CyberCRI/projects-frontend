@@ -225,23 +225,17 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import BadgeItem from '@/components/base/BadgeItem.vue'
 
-export default {
-  name: 'LoaderComplex',
-
-  components: {
-    BadgeItem,
-  },
-
-  props: {
-    label: {
-      type: String,
-      default: null,
-    },
-  },
-}
+withDefaults(
+  defineProps<{
+    label?: string
+  }>(),
+  {
+    label: null,
+  }
+)
 </script>
 
 <style scoped lang="scss">

@@ -16,7 +16,7 @@ export default {
     analytics.track('chatbot_get_response', { message: message })
   },
 
-  error: (error: string) => {
+  error: (error: string | Error) => {
     analytics.track('chatbot_error', { error: error })
   },
 }

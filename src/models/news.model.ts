@@ -1,4 +1,6 @@
+import { Translated } from '@/interfaces/translated'
 import BaseModel from '@/models/base.model'
+import { ImageModel } from '@/models/image.model'
 
 /**
  * @name NewsModel
@@ -9,7 +11,10 @@ export interface NewsModel extends BaseModel {
   title: string
   content: string
   images: NewsImageModel[]
+  header_image: ImageModel
 }
+
+export type TranslatedNews = Translated<NewsModel, 'title' | 'content'>
 
 export interface NewsImageModel {
   file: string

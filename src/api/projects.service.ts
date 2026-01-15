@@ -6,7 +6,7 @@ import type {
   // ProjectOutput,
   ProjectPatchInput,
 } from '@/models/project.model'
-import type { APIParams /*, APIResponseList*/, SearchParams } from '@/api/types'
+import type { SearchParams } from '@/api/types'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import useAPI from '@/composables/useAPI'
 
@@ -79,11 +79,11 @@ export async function getProject(slugOrId: string, noError: boolean = false) {
   }) //.data.value
 }
 
-export async function getAllRecommendedProjects(params: APIParams) {
+export async function getAllRecommendedProjects(params: SearchParams) {
   return await useAPI(`project/misc/top/`, { ..._adaptParamsToGetQuery(params) }) //.data.value
 }
 
-export async function getAllRandomProjects(params: APIParams) {
+export async function getAllRandomProjects(params: SearchParams) {
   return await useAPI(`project/misc/random/`, { ..._adaptParamsToGetQuery(params) }) //.data.value
 }
 

@@ -7,7 +7,7 @@ import { SdgOutput } from '@/models/sdg.model'
 import { GoalOutput } from '@/models/goal.model'
 import { AttachmentLinkOutput } from '@/models/attachment-link.model'
 import { AttachmentFileOutput } from '@/models/attachment-file.model'
-import { ImageOutput } from '@/models/image.model'
+import { ImageModel, ImageOutput } from '@/models/image.model'
 import { CommentOutput } from '@/models/comment.model'
 import { BlogEntryOutput } from '@/models/blog-entry.model'
 import { OrganizationOutput } from '@/models/organization.model'
@@ -18,22 +18,6 @@ import { TemplateModel } from '@/models/template.model'
 import { TagModel, TagOutput } from '@/models/tag.model'
 import { Translated } from '@/interfaces/translated'
 
-interface HeaderImage {
-  id: number
-  name: string
-  url: string
-  height: number
-  width: number
-  created_at: Date
-  variations: {
-    full: string
-    large: string
-    medium: string
-    original: string
-    small: string
-  }
-}
-
 /**
  * @name ProjectModel
  * @description Project
@@ -42,7 +26,7 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
   id: string // Id project are a string
   title: string
   description: string
-  header_image: HeaderImage
+  header_image: ImageModel
   is_locked: boolean
   is_shareable: boolean
   purpose: string

@@ -59,11 +59,11 @@ import { usePatatoids } from '@/composables/usePatatoids'
 defineOptions({ name: 'AccountInfos' })
 
 const props = defineProps<{
-  modelValue: object
-  v$: object
+  modelValue: any
+  v$: any
 }>()
 const emit = defineEmits<{
-  'update:modelValue': [object]
+  'update:modelValue': [any]
 }>()
 const { t } = useNuxtI18n()
 

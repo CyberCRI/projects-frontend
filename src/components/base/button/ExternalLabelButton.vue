@@ -19,52 +19,29 @@
   </button>
 </template>
 
-<script>
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
 
-export default {
-  name: 'ExternalLabelButton',
-
-  components: {
-    IconImage,
-  },
-
-  props: {
-    label: {
-      type: String,
-      default: '',
-    },
-
-    btnIcon: {
-      type: String,
-      default: null,
-    },
-
-    verticalLayout: {
-      type: Boolean,
-      default: false,
-    },
-
-    reversedOrder: {
-      type: Boolean,
-      default: false,
-    },
-
-    hasBorder: {
-      type: Boolean,
-      default: false,
-    },
-
-    nbButton: {
-      type: String,
-      default: null,
-    },
-    labelOnHover: {
-      type: Boolean,
-      default: false,
-    },
-  },
-}
+withDefaults(
+  defineProps<{
+    label?: string
+    btnIcon?: string
+    verticalLayout?: boolean
+    reversedOrder?: boolean
+    hasBorder?: boolean
+    nbButton?: string
+    labelOnHover?: boolean
+  }>(),
+  {
+    label: '',
+    btnIcon: null,
+    verticalLayout: false,
+    reversedOrder: false,
+    hasBorder: false,
+    nbButton: null,
+    labelOnHover: false,
+  }
+)
 </script>
 
 <style lang="scss" scoped>

@@ -13,20 +13,7 @@ export interface ProjectCategoryModel extends BaseModel {
   id: number
   slug?: string
   background_color: string
-  background_image: ImageModel & {
-    scale_x: number
-    scale_y: number
-    left: number
-    top: number
-    natural_ratio: number
-    variations: {
-      full: string
-      large: string
-      medium: string
-      original: string
-      small: string
-    }
-  }
+  background_image: ImageModel
   description: string
   foreground_color: string // Text color
   is_reviewable: string

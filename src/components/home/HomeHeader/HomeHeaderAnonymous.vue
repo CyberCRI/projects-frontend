@@ -85,6 +85,8 @@ const hasBannerImage = computed(() => organization.value && organization.value.b
 const hasDescription = computed(() => !!organization.value?.description)
 const isAccessRequestEnabled = computed(() => organization.value?.access_request_enabled)
 
+// TODO(remi): heightLimit is not defined before refacto
+const heightLimit = 0
 const computeDescriptionLayout = () => {
   styleDescription.value = { height: `${heightLimit}px` }
   descriptionComputed.value = false

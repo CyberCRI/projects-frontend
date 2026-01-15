@@ -14,12 +14,6 @@
   </svg>
 </template>
 
-<script>
-export default {
-  name: 'LoaderSimple',
-}
-</script>
-
 <style scoped lang="scss">
 .loader-simple {
   animation: rotation 1s infinite linear;

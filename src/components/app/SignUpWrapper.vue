@@ -21,38 +21,19 @@
     </div>
   </div>
 </template>
-<script>
+<script setup lang="ts">
 import ProjectLogo from '@/components/base/media/ProjectLogo.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-export default {
-  name: 'SignUpWrapper',
+import useOrganizationsStore from '@/stores/useOrganizations'
 
-  components: {
-    ProjectLogo,
-  },
-  props: {
-    signUpTitle: {
-      type: String,
-      default: '',
-    },
-  },
+withDefaults(defineProps<{ signUpTitle?: string }>(), { signUpTitle: '' })
+const organizationsStore = useOrganizationsStore()
 
-  setup() {
-    const organizationsStore = useOrganizationsStore()
-    return {
-      organizationsStore,
-    }
-  },
-
-  computed: {
-    organizationLogo() {
-      return this.organizationsStore.current?.logo_image?.variations?.medium
-    },
-    orgLogoStyle() {
-      return { 'background-image': `url(${this.organizationLogo})` }
-    },
-  },
-}
+const organizationLogo = computed(() => {
+  return organizationsStore.current?.logo_image?.variations?.medium
+})
+const orgLogoStyle = computed(() => {
+  return { 'background-image': `url(${organizationLogo})` }
+})
 </script>
 
 <style lang="scss" scoped>

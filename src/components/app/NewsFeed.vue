@@ -31,67 +31,44 @@
     :title="$t('news.delete.title')"
     :asyncing="isDeletingNews"
     @cancel="newsToDelete = null"
-    @confirm="deleteNews"
+    @confirm="localDeleteNews"
   />
 </template>
-<script>
+<script setup lang="ts">
 import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import NewsfeedAnnouncementsItem from '@/components/home/HomeNewsfeed/NewsfeedAnnouncementsItem.vue'
 import NewsfeedProjectItem from '@/components/home/HomeNewsfeed/NewsfeedProjectItem.vue'
 import NewsListItem from '@/components/news/NewsListItem/NewsListItem.vue'
-import { deleteNews } from '@/api/news.service.ts'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-export default {
-  name: 'NewsFeed',
-  components: {
-    NewsfeedAnnouncementsItem,
-    NewsfeedProjectItem,
-    NewsListItem,
-    EditNewsDrawer,
-    ConfirmModal,
-  },
+import { deleteNews } from '@/api/news.service'
+import useToasterStore from '@/stores/useToaster'
+import { NewsfeedModel } from '@/models/newsfeed.model'
 
-  props: {
-    newsfeed: {
-      type: Array,
-      required: true,
-    },
-  },
-  emits: ['reload-newsfeed'],
-  setup() {
-    const toaster = useToasterStore()
-    const organizationsStore = useOrganizationsStore()
-    return {
-      toaster,
-      organizationsStore,
-    }
-  },
-  data() {
-    return {
-      editedNews: null,
-      newsToDelete: null,
-      isDeletingNews: false,
-    }
-  },
+defineProps<{ newsfeed: NewsfeedModel[] }>()
 
-  methods: {
-    async deleteNews() {
-      this.isDeletingNews = true
-      try {
-        await deleteNews(this.organizationsStore.current?.code, this.newsToDelete.id)
-        this.toaster.pushSuccess(this.$t('news.delete.success'))
+const emit = defineEmits<{
+  'reload-newsfeed': []
+}>()
+const toaster = useToasterStore()
+const organizationCode = useOrganizationCode()
+const editedNews = ref(null)
+const newsToDelete = ref(null)
+const isDeletingNews = ref(false)
+const { t } = useNuxtI18n()
 
-        this.$emit('reload-newsfeed')
-      } catch (err) {
-        this.toaster.pushError(`${this.$t('news.delete.error')} (${err})`)
-        console.error(err)
-      } finally {
-        this.newsToDelete = null
-        this.isDeletingNews = false
-      }
-    },
-  },
+const localDeleteNews = async () => {
+  isDeletingNews.value = true
+  try {
+    await deleteNews(organizationCode, newsToDelete.value.id)
+    toaster.pushSuccess(t('news.delete.success'))
+
+    emit('reload-newsfeed')
+  } catch (err) {
+    toaster.pushError(`${t('news.delete.error')} (${err})`)
+    console.error(err)
+  } finally {
+    newsToDelete.value = null
+    isDeletingNews.value = false
+  }
 }
 </script>

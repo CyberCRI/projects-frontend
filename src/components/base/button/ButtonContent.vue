@@ -11,34 +11,22 @@
     {{ label }}
   </span>
 </template>
-<script>
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-export default {
-  name: 'ButtonContent',
 
-  components: {
-    IconImage,
-    LoaderSimple,
-  },
-
-  props: {
-    label: {
-      type: String,
-      default: null,
-    },
-
-    btnIcon: {
-      type: [String, Object],
-      default: null,
-    },
-
-    noTextTransform: {
-      type: Boolean,
-      default: false,
-    },
-  },
-}
+withDefaults(
+  defineProps<{
+    label?: string
+    btnIcon?: string
+    noTextTransform?: boolean
+  }>(),
+  {
+    label: null,
+    btnIcon: null,
+    noTextTransform: false,
+  }
+)
 </script>
 <style lang="scss" scoped>
 .label {

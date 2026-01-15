@@ -61,14 +61,15 @@ import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
 import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
 import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
+import { TranslatedNews } from '@/models/news.model'
 
 defineOptions({ name: 'NewsListItem' })
 
-defineProps<{ news: object }>()
+defineProps<{ news: TranslatedNews }>()
 
 const emit = defineEmits<{
-  'delete-news': []
-  'edit-news': []
+  'delete-news': [TranslatedNews]
+  'edit-news': [TranslatedNews]
 }>()
 
 const { t } = useNuxtI18n()

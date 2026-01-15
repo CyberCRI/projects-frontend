@@ -4,8 +4,7 @@
   </NavPanelAside>
 </template>
 
-<script setup>
-defineOptions({ name: 'AdminNavPanel' })
+<script setup lang="ts">
 defineProps({
   groupTabs: { type: Array, required: true },
   currentTab: {
@@ -14,6 +13,6 @@ defineProps({
   },
 })
 
-const emit = defineEmits(['navigated'])
+const emit = defineEmits<{ navigated: [] }>()
 const navigated = () => emit('navigated')
 </script>

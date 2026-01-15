@@ -13,38 +13,24 @@
   </button>
 </template>
 
-<script>
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
-export default {
-  name: 'ContextActionButton',
 
-  components: {
-    IconImage,
-  },
-
-  props: {
-    actionIcon: {
-      type: [String, Object],
-      required: true,
-    },
-    secondary: {
-      type: Boolean,
-      default: false,
-    },
-    noBorder: {
-      type: Boolean,
-      default: false,
-    },
-    actionLabel: {
-      type: String,
-      default: '',
-    },
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-  },
-}
+withDefaults(
+  defineProps<{
+    actionIcon: string
+    secondary?: boolean
+    noBorder?: boolean
+    actionLabel?: string
+    disabled?: boolean
+  }>(),
+  {
+    secondary: false,
+    noBorder: false,
+    actionLabel: '',
+    disabled: false,
+  }
+)
 </script>
 
 <style lang="scss" scoped>

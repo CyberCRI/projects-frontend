@@ -163,74 +163,39 @@
   </footer>
 </template>
 
-<script>
+<script setup lang="ts">
 import LpiLogo from '@/components/app/LpiLogo.vue'
 import ReportDrawer from '@/components/app/ReportDrawer.vue'
 import ContactDrawer from '@/components/app/ContactDrawer.vue'
 import ProjectLogo from '@/components/base/media/ProjectLogo.vue'
 import FooterEnglishTips from '@/components/app/FooterEnglishTips.vue'
 import OnboardingScreens from '@/components/onboarding/OnboardingScreens/OnboardingScreens.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import useUsersStore from '@/stores/useUsers.ts'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import useUsersStore from '@/stores/useUsers'
 import { useRuntimeConfig } from '#imports'
 
-export default {
-  name: 'LpiFooter',
-  components: {
-    LpiLogo,
-    ReportDrawer,
-    ContactDrawer,
-    ProjectLogo,
-    OnboardingScreens,
-    FooterEnglishTips,
-  },
-  setup() {
-    const organizationsStore = useOrganizationsStore()
-    const usersStore = useUsersStore()
-    const runtimeConfig = useRuntimeConfig()
-    const { locale } = useNuxtI18n()
-    return {
-      organizationsStore,
-      usersStore,
-      runtimeConfig,
-      locale,
-    }
-  },
-  data() {
-    return {
-      reportBugOpen: false,
-      showContactUsDrawer: false,
-    }
-  },
-  computed: {
-    canOpen() {
-      return this.locale === 'fr'
-    },
-    showDirectoryLink() {
-      const organization = this.organizationsStore.current
-      if (organization && organization.code === 'DEFAULT') {
-        return false
-      }
-      return true
-    },
+const organizationsStore = useOrganizationsStore()
+const usersStore = useUsersStore()
+const runtimeConfig = useRuntimeConfig()
+const { locale } = useNuxtI18n()
+const reportBugOpen = ref(false)
+const showContactUsDrawer = ref(false)
 
-    isRegisterPage() {
-      return this.$route.name === 'Register'
-    },
-    appVersion() {
-      return this.runtimeConfig.public.appVersion
-    },
-    isConnected() {
-      return this.usersStore.isConnected
-    },
-    approveTermIsActive() {
-      return !!this.usersStore.userFromApi
-    },
-    showOnboardingScreen() {
-      return this.organizationsStore.current?.onboarding_enabled
-    },
-  },
-}
+const canOpen = computed(() => locale.value === 'fr')
+const showDirectoryLink = computed(() => {
+  const organization = organizationsStore.current
+  if (organization && organization.code === 'DEFAULT') {
+    return false
+  }
+  return true
+})
+const route = useRoute()
+
+const isRegisterPage = computed(() => route.name === 'Register')
+const appVersion = computed(() => runtimeConfig.public.appVersion)
+const isConnected = computed(() => usersStore.isConnected)
+const approveTermIsActive = computed(() => !!usersStore.userFromApi)
+const showOnboardingScreen = computed(() => organizationsStore.current?.onboarding_enabled)
 </script>
 
 <style lang="scss" scoped>

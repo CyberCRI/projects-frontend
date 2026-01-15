@@ -14,53 +14,27 @@
   </button>
 </template>
 
-<script>
-import ButtonContent from '@/components/base/button/ButtonContent.vue'
-export default {
-  name: 'LpiButton',
+<script setup lang="ts">
+const props = withDefaults(
+  defineProps<{
+    label?: string
+    secondary?: boolean
+    btnIcon?: string
+    disabled?: boolean
+    reversedOrder?: boolean
+    noTextTransform?: boolean
+  }>(),
+  {
+    label: null,
+    secondary: false,
+    btnIcon: null,
+    disabled: false,
+    reversedOrder: false,
+    noTextTransform: false,
+  }
+)
 
-  components: {
-    ButtonContent,
-  },
-
-  props: {
-    label: {
-      type: String,
-      default: null,
-    },
-
-    secondary: {
-      type: Boolean,
-      default: false,
-    },
-
-    btnIcon: {
-      type: [String, Object],
-      default: null,
-    },
-
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-
-    reversedOrder: {
-      type: Boolean,
-      default: false,
-    },
-
-    noTextTransform: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  computed: {
-    iconOnly() {
-      return (!this.label || !this.label.length) && this.btnIcon
-    },
-  },
-}
+const iconOnly = computed(() => (!props.label || !props.label.length) && props.btnIcon)
 </script>
 
 <style lang="scss" scoped>

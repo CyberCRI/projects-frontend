@@ -1,5 +1,5 @@
-import { AnnouncementModel } from './announcement.model'
-import { ProjectModel } from './project.model'
+import { TranslatedAnnouncement } from './announcement.model'
+import { TranslatedProject } from './project.model'
 
 /**
  * @name NewsfeedModel
@@ -9,7 +9,7 @@ import { ProjectModel } from './project.model'
 export interface NewsfeedModel {
   id: number
   type: 'project' | 'announcement' | 'news'
-  project?: ProjectModel
+  project?: TranslatedProject
   news?: any // TODO: Define news model
-  announcement?: AnnouncementModel
+  announcement?: TranslatedAnnouncement
 }
