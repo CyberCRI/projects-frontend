@@ -44,10 +44,8 @@ describe('LanguageFilter.vue', () => {
 
   it('should emit event update is triggered', async () => {
     const wrapper = factory({ modelValue: [] })
-    const buttonContainer = wrapper.find<HTMLInputElement>('[type=checkbox]')
-    // buttonContainer.set
+    const buttonContainer = wrapper.find('[type=checkbox]')
     ;(buttonContainer as any).setChecked()
-    await wrapper.vm.$nextTick()
     await flushPromises()
     expect(wrapper.emitted('update:modelValue')).toBeTruthy()
   })
