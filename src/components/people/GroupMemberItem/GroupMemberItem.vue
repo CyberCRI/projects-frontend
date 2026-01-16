@@ -134,7 +134,7 @@ const click = () => {
   transform: unset !important;
   text-shadow: unset !important;
   cursor: not-allowed !important;
-  pointer-event: none;
+  pointer-events: none;
 
   svg {
     cursor: not-allowed !important;
