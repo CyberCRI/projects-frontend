@@ -1,11 +1,5 @@
 <template>
-  <component
-    :is="to ? 'NuxtLink' : 'button'"
-    :to="to"
-    :class="{ 'icon-only': iconOnly }"
-    type="button"
-    class="link-button"
-  >
+  <component :is="is" :to="to" :class="{ 'icon-only': iconOnly }" type="button" class="link-button">
     <ButtonContent :label="label" :btn-icon="btnIcon" :no-text-transform="noTextTransform" />
     <!-- <IconImage name="" /> -->
   </component>
@@ -28,6 +22,11 @@ const props = withDefaults(
     noTextTransform: false,
   }
 )
+
+const is = computed(() => {
+  if (props.to) return resolveComponent('NuxtLink')
+  return 'button'
+})
 
 const iconOnly = computed(() => (!props.label || !props.label.length) && props.btnIcon)
 </script>

@@ -40,7 +40,7 @@ defineEmits<{ close: [] }>()
 const projectCategoriesStore = useProjectCategories()
 const open = ref(false)
 const categories = computed(() => projectCategoriesStore.hierarchy)
-const close = (open.value = false)
+const close = () => (open.value = false)
 const toggleCategories = () => (open.value = !open.value)
 </script>
 

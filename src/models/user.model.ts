@@ -15,6 +15,8 @@ export interface UserModel {
   email: string
   roles: string[]
   orgs: string[]
+  given_name: string
+  family_name: string
   profile_picture?: object
   permissions: string[]
   description?: string

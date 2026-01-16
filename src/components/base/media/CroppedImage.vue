@@ -57,7 +57,7 @@ const imageStyles = computed(() => {
 })
 
 onMounted(() => {
-  if (props.src) {
+  if (!props.src) {
     // chrome doesn't trigger error on null src so do it manually
     emit('error', new Error('src is null'))
   }

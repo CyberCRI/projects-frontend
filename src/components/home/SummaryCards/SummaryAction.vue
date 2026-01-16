@@ -1,30 +1,30 @@
 <template>
-  <component :is="to ? 'NuxtLink' : 'vue:span'" :to="to" class="summary-action">
+  <component :is="is" :to="to" class="summary-action">
     <IconImage class="icon" :name="actionIcon" />
     <span class="label">{{ capitalize(actionLabel) }}</span>
   </component>
 </template>
-<script setup>
+<script setup lang="ts">
 import { capitalize } from '@/functs/string'
-
 import IconImage from '@/components/base/media/IconImage.vue'
+import { IconImageChoice } from '@/functs/IconImage'
 
-defineOptions({ name: 'SummaryAction' })
+const props = withDefaults(
+  defineProps<{
+    actionIcon?: IconImageChoice
+    actionLabel?: string
+    to?: string | object
+  }>(),
+  {
+    actionIcon: 'ArrowRight',
+    actionLabel: '',
+    to: null,
+  }
+)
 
-defineProps({
-  actionIcon: {
-    type: String,
-    default: 'ArrowRight',
-  },
-
-  actionLabel: {
-    type: String,
-    default: '',
-  },
-  to: {
-    type: [Object, String, null],
-    default: null,
-  },
+const is = computed(() => {
+  if (props.to) return resolveComponent('NuxtLink')
+  return 'vue:span'
 })
 </script>
 <style lang="scss" scoped>

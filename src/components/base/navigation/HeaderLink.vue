@@ -1,6 +1,6 @@
 <template>
   <component
-    :is="to ? 'NuxtLink' : 'button'"
+    :is="is"
     :to="to"
     class="header-link"
     :class="{ underlined }"
@@ -40,6 +40,11 @@ const props = withDefaults(
 )
 
 defineEmits<{ click: [] }>()
+
+const is = computed(() => {
+  if (props.to) return resolveComponent('NuxtLink')
+  return 'button'
+})
 
 const route = useRoute()
 

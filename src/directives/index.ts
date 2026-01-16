@@ -1,12 +1,13 @@
-import { defineNuxtPlugin } from '#imports'
+import { defineNuxtPlugin, DirectiveBinding } from '#imports'
 
 export const clickOutside = {
-  beforeMount: (el, binding) => {
+  beforeMount: (el: HTMLElement, binding: DirectiveBinding<(Event) => void>) => {
     const clickEventHandler = (event) => {
       if (!el.contains(event.target) && el !== event.target) {
         binding.value(event)
       }
     }
+    // @ts-expect-error global set event to remove event
     el.__vueClickEventHandler__ = clickEventHandler
     document.addEventListener('click', clickEventHandler)
   },
@@ -17,11 +18,11 @@ export const clickOutside = {
 }
 
 export const disableFocus = {
-  beforeMount: (el) => {
+  beforeMount: (el: HTMLElement) => {
     const oldTabindex = el.getAttribute('tabindex')
     if (oldTabindex) el.setAttribute('data-oldtabindex', oldTabindex)
   },
-  updated: (el, binding) => {
+  updated: (el: HTMLElement, binding: DirectiveBinding) => {
     if (binding.value) {
       el.tabIndex = -1
     } else {
@@ -29,7 +30,7 @@ export const disableFocus = {
       if (oldTabindex) {
         el.tabIndex = parseInt(oldTabindex)
       } else {
-        el.tabIndex = ''
+        el.tabIndex = 0
       }
     }
   },

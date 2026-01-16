@@ -347,7 +347,7 @@ export default {
         {
           // watch out for the order of this tab
           // this tab index (4) is used in SkillSummary.vue
-          label: this.$t('profile.resources'),
+          label: this.$t('resource.resources'),
           key: 'resources',
           id: 'profile-resources',
           // view: `/profile/${this.pathInfix}skills`,
@@ -507,7 +507,7 @@ export default {
           actionIcon: 'Pen',
         },
         {
-          label: this.$t('profile.edit.resources.tab'),
+          label: this.$t('resource.resources'),
           key: 'resources',
           id: 'profile-edit-resources',
           view: {
