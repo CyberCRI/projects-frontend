@@ -5,11 +5,6 @@
     </div>
   </div>
 </template>
-<script>
-export default {
-  name: 'NavPanelAside',
-}
-</script>
 <style scoped lang="scss">
 .nav-panel {
   flex-shrink: 0;

@@ -15,22 +15,19 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import BaseMap from '@/components/map/BaseMap.vue'
 import MapPointer from '@/components/map/MapPointer.vue'
 
 defineOptions({ name: 'GeneralMap' })
 
-const props = defineProps({
-  locations: {
-    type: Array,
-    required: true,
-  },
-  loading: {
-    type: Boolean,
-    default: true,
-  },
-})
+const props = withDefaults(
+  defineProps<{
+    locations: any[]
+    loading?: boolean
+  }>(),
+  { loading: true }
+)
 
 const config = {
   mapUrl: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',

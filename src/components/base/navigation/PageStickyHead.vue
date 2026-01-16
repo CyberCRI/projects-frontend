@@ -10,17 +10,10 @@
     ></slot>
   </aside>
 </template>
-<script setup>
+<script setup lang="ts">
 import { throttle } from 'es-toolkit'
 
-defineOptions({ name: 'PageStickyHead' })
-
-defineProps({
-  pageTitle: {
-    type: String,
-    required: true,
-  },
-})
+defineProps<{ pageTitle: string }>()
 
 const anchorOffset = ref(0)
 const isHeaderSticked = ref(false)

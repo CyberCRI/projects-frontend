@@ -1,27 +1,25 @@
-<script setup>
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
+import { ProjectCategoryModel } from '@/models/project-category.model'
 import { ref, computed, watchEffect } from 'vue'
 
-const emit = defineEmits(['pick-category'])
+const emit = defineEmits<{
+  'pick-category': [ProjectCategoryModel]
+}>()
 
-const props = defineProps({
-  category: {
-    type: Object,
-    required: true,
-  },
-  selectedCategory: {
-    type: Object,
-    default: null,
-  },
-  selectedCategories: {
-    type: Object,
-    default: null,
-  },
-  type: {
-    type: String,
-    default: 'radio',
-  },
-})
+const props = withDefaults(
+  defineProps<{
+    category: ProjectCategoryModel
+    selectedCategory?: ProjectCategoryModel
+    selectedCategories?: ProjectCategoryModel[]
+    type?: string
+  }>(),
+  {
+    selectedCategory: null,
+    selectedCategories: null,
+    type: 'radio',
+  }
+)
 
 const isSelected = computed(
   () =>
@@ -34,12 +32,13 @@ const hasChildren = computed(() => {
 })
 const showChild = ref(false)
 watchEffect(() => {
+  const hierarchy = props.selectedCategory?.hierarchy as ProjectCategoryModel[]
   if (
-    props.selectedCategory?.hierarchy?.find(({ id: parentId }) => parentId == props.category.id) ||
-    props.selectedCategories?.some(
-      (selectedCategory) =>
-        !!selectedCategory?.hierarchy?.find(({ id: parentId }) => parentId == props.category.id)
-    )
+    hierarchy?.find(({ id: parentId }) => parentId == props.category.id) ||
+    props.selectedCategories?.some((selectedCategory) => {
+      const selectedHierarchy = selectedCategory?.hierarchy as ProjectCategoryModel[]
+      return !!selectedHierarchy?.find(({ id: parentId }) => parentId == props.category.id)
+    })
   )
     showChild.value = true
 })
@@ -87,7 +86,7 @@ const chevronImage = computed(() => {
     <div class="child-list">
       <ul>
         <CategoryPicker
-          v-for="child in category.children"
+          v-for="child in category.children as ProjectCategoryModel[]"
           v-show="showChild"
           :key="child.id"
           :category="child"

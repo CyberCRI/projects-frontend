@@ -15,37 +15,24 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
 import SkillSteps from '@/components/people/skill/SkillSteps.vue'
 
-export default {
-  name: 'OnboardingStepCard',
-
-  components: { IconImage, SkillSteps },
-
-  props: {
-    stepTitle: {
-      type: String,
-      default: '',
-    },
-
-    buttonLabel: {
-      type: String,
-      default: '',
-    },
-
-    activeStep: {
-      type: Number,
-      default: 1,
-    },
-
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-  },
-}
+withDefaults(
+  defineProps<{
+    stepTitle?: string
+    buttonLabel?: string
+    activeStep?: number
+    disabled?: boolean
+  }>(),
+  {
+    stepTitle: '',
+    buttonLabel: '',
+    activeStep: 1,
+    disabled: false,
+  }
+)
 </script>
 
 <style lang="scss" scoped>

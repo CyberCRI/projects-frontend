@@ -18,28 +18,26 @@
   </div>
 </template>
 
-<script setup>
-import { getUser } from '@/api/people.service.ts'
+<script setup lang="ts">
+import { getUser } from '@/api/people.service'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import AccountFormTitleBlock from '@/components/people/Account/AccountFormTitleBlock.vue'
 import AccountForm from '@/components/people/Account/AccountForm.vue'
 
 defineOptions({ name: 'AccountLayout' })
 
-const props = defineProps({
-  isAddMode: {
-    type: Boolean,
-    default: true,
-  },
-  isInviteMode: {
-    type: Boolean,
-    default: false,
-  },
-  selectedUser: {
-    type: Object,
-    default: null,
-  },
-})
+const props = withDefaults(
+  defineProps<{
+    isAddMode?: boolean
+    isInviteMode?: boolean
+    selectedUser?: any
+  }>(),
+  {
+    isAddMode: true,
+    isInviteMode: false,
+    selectedUser: null,
+  }
+)
 
 const emit = defineEmits(['close'])
 
@@ -64,12 +62,14 @@ const setFormFromSelectedUser = async () => {
 }
 
 onMounted(async () => {
-  if (props.selectedUser?.id) await setFormFromSelectedUser()
-  else
+  if (props.selectedUser?.id) {
+    await setFormFromSelectedUser()
+  } else {
     currentUser.value = {
       ...props.selectedUser,
       current_org_role: props.selectedUser?.current_org_role,
     }
+  }
   isLoading.value = false
 })
 </script>

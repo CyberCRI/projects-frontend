@@ -1,10 +1,10 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed, watchEffect } from 'vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useToasterStore from '@/stores/useToaster'
+import useOrganizationsStore from '@/stores/useOrganizations'
 import { postOrgClassification, putOrgClassification } from '@/api/tag-classification.service'
 import TagClassificationAdmin from '@/components/admin/TagClassificationAdmin.vue'
 

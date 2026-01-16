@@ -28,6 +28,7 @@ export interface TermsAndConditions {
 }
 
 export interface OrganizationModel extends BaseModel {
+  id: number
   background_color: string
   banner_image: string
   code: string

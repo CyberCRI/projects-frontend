@@ -14,6 +14,7 @@ export const TemplateFactory = createFactory<TemplateModel>((faker) => ({
 }))
 
 export const TemplateInputFactory = createFactory<TemplateCreateInput>((faker) => ({
+  ...BaseFactory.generate(),
   ...TemplateFactory.generate(),
   project_categories_ids: [faker.datatype.number()],
 }))

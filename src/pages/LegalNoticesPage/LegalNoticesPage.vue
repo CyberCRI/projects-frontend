@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { getOrganizationByCode } from '@/api/organizations.service'
 
 try {
@@ -15,6 +15,7 @@ try {
 } catch (err) {
   console.log(err)
 }
+// TODO(remi): i18n legal notices
 </script>
 <template>
   <div class="page-section-narrow legal-page legal-notices page-top">

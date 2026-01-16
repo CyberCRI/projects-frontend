@@ -1,5 +1,5 @@
-<script setup>
-import useToasterStore from '@/stores/useToaster.ts'
+<script setup lang="ts">
+import useToasterStore from '@/stores/useToaster'
 
 const toaster = useToasterStore()
 const { t } = useNuxtI18n()

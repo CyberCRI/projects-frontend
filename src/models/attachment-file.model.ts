@@ -7,6 +7,7 @@ import { AttachmentType } from '@/models/types'
  * @description Files attached to a project
  */
 export interface AttachmentFileModel extends BaseModel {
+  id: number
   file: File
   title: string
   attachment_type: AttachmentType

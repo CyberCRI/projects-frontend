@@ -2,7 +2,7 @@
   <LineChart v-bind="lineChartProps" />
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { LineChart, useLineChart } from 'vue-chart-3'
 import { Chart, registerables } from 'chart.js'
 import { debounce } from 'es-toolkit'
@@ -10,30 +10,25 @@ import { debounce } from 'es-toolkit'
 Chart.register(...registerables)
 defineOptions({ name: 'LpiLineChart' })
 
-const props = defineProps({
-  chartData: {
-    type: Object,
-    default: null,
-  },
-
-  options: {
-    type: Object,
-    default: null,
-  },
-})
-
-const dataValue = ref(props.chartData)
-const dataOptions = ref(props.options)
+const props = withDefaults(
+  defineProps<{
+    chartData?: {
+      datasets: any[]
+    }
+    options?: object
+  }>(),
+  { chartData: null, options: null }
+)
 
 const { lineChartProps } = useLineChart({
-  chartData: dataValue,
-  options: dataOptions,
+  chartData: props.chartData,
+  options: props.options,
 })
 
 const rerenderChart = debounce(() => {
   useLineChart({
-    chartData: dataValue,
-    options: dataOptions,
+    chartData: props.chartData,
+    options: props.options,
   })
 }, 300)
 

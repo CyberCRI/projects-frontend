@@ -5,6 +5,7 @@ import BaseFactory from './base.factory'
 
 export const AttachmentLinkFactory = createFactory<AttachmentLinkOutput>((faker) => ({
   ...BaseFactory.generate(),
+  id: faker.datatype.number(),
   attachment_type: 'file',
   description: faker.lorem.sentence(),
   preview_image_url: faker.internet.url(),

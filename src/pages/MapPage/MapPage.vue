@@ -1,6 +1,6 @@
-<script setup>
+<script setup lang="ts">
 import { getLocations } from '@/api/locations.services'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useOrganizationsStore from '@/stores/useOrganizations'
 import { getOrganizationByCode } from '@/api/organizations.service'
 
 const isClient = import.meta.client

@@ -1,6 +1,6 @@
-<script setup>
+<script setup lang="ts">
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
-import useUsersStore from '@/stores/useUsers.ts'
+import useUsersStore from '@/stores/useUsers'
 
 const runtimeConfig = useRuntimeConfig()
 const usersStore = useUsersStore()

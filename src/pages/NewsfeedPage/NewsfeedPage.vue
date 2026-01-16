@@ -1,7 +1,7 @@
-<script setup>
-import { getNewsfeed } from '@/api/newsfeed.service.ts'
-import useAPI from '@/composables/useAPI.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+<script setup lang="ts">
+import { getNewsfeed } from '@/api/newsfeed.service'
+import useAPI from '@/composables/useAPI'
+import useOrganizationsStore from '@/stores/useOrganizations'
 import { getOrganizationByCode } from '@/api/organizations.service'
 
 const { translateNewsfeed } = useAutoTranslate()
@@ -10,7 +10,15 @@ const organizationsStore = useOrganizationsStore()
 const { t } = useNuxtI18n()
 
 const isLoading = useState(() => false)
-const request = useState(() => ({ results: [] }))
+const request = useState(() => ({
+  results: [],
+  current_page: 1,
+  total_page: 0,
+  previous: '',
+  next: '',
+  first: '',
+  last: '',
+}))
 
 const _newsfeed = computed(() => {
   return request.value ? request.value.results : []

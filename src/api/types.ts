@@ -5,6 +5,9 @@ export interface APIParams {
   limit?: number // Number of results to return per page.
   offset?: number // The initial index from which to return the results.
   organizations?: number[]
+  search?: string
+  order_by?: string
+  ordering?: string
 }
 
 export interface APIResponseList<T> {

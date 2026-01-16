@@ -27,27 +27,24 @@
     <ContextActionButton secondary no-border action-icon="DotsHorizontal" class="remove-btn" />
   </MenuTip>
 </template>
-<script>
+<script setup lang="ts">
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 import MenuTip from '@/components/base/MenuTip.vue'
-export default {
-  name: 'ContextActionMenu',
-  components: {
-    ContextActionButton,
-    MenuTip,
-  },
-  props: {
-    canEdit: {
-      type: Boolean,
-      default: false,
-    },
-    canDelete: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  emits: ['delete', 'edit'],
-}
+
+withDefaults(
+  defineProps<{
+    canEdit?: boolean
+    canDelete?: boolean
+  }>(),
+  {
+    canEdit: false,
+    canDelete: false,
+  }
+)
+defineEmits<{
+  delete: []
+  edit: []
+}>()
 </script>
 <style lang="scss" scoped>
 .context-action-menu {

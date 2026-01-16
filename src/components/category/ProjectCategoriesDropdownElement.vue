@@ -15,17 +15,8 @@
   </li>
 </template>
 
-<script>
-export default {
-  name: 'ProjectCategoriesDropdownElement',
-
-  props: {
-    category: {
-      type: Object,
-      required: true,
-    },
-  },
-}
+<script setup lang="ts">
+defineProps<{ category: any }>()
 </script>
 
 <style lang="scss" scoped>

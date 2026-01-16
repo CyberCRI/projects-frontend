@@ -1,11 +1,11 @@
 <template>
   <NuxtLink
-    :to="{ name: 'pageProject', params: { slugOrId: project.slug } }"
+    :to="{ name: 'pageProject', params: { slugOrId: project?.slug } }"
     class="home-project-item shadow-box"
   >
     <div class="project-img-container">
       <CroppedApiImage
-        :alt="`${project.title} image`"
+        :alt="`${project?.title} image`"
         class="project-img"
         :ratio="1 / 1"
         :picture-data="project?.header_image"
@@ -25,24 +25,25 @@
   </NuxtLink>
 </template>
 
-<script setup>
-import { capitalize } from '@/functs/string'
+<script setup lang="ts">
+import { capitalize, cropIfTooLong } from '@/functs/string'
 
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
+import { TranslatedProject } from '@/models/project.model'
 
 defineOptions({ name: 'NewsfeedProjectItem' })
 
-const props = defineProps({
-  project: {
-    type: Object,
-    default: () => {},
-  },
-})
+const props = withDefaults(
+  defineProps<{
+    project?: TranslatedProject
+  }>(),
+  { project: null }
+)
 
 const purpose = computed(() => {
   const sanitized = props.project?.$t?.purpose.replace(/<[^>]+>/g, ' ') || ''
-  return sanitized.substring(0, 255) + (sanitized.length > 255 ? '...' : '')
+  return cropIfTooLong(sanitized, 255)
 })
 </script>
 

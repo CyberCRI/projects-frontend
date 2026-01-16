@@ -7,29 +7,18 @@
   </span>
 </template>
 
-<script>
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
 
-export default {
-  name: 'NotificationIcon',
+withDefaults(
+  defineProps<{
+    notificationCount?: number
+    color?: string
+  }>(),
+  { notificationCount: 0, color: '' }
+)
 
-  components: {
-    IconImage,
-  },
-
-  props: {
-    notificationCount: {
-      type: Number,
-      default: 0,
-    },
-    color: {
-      type: String,
-      default: '',
-    },
-  },
-
-  emits: ['click'],
-}
+defineEmits<{ click: [] }>()
 </script>
 
 <style lang="scss" scoped>

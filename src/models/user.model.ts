@@ -77,6 +77,9 @@ export interface UserPatchModel {
   roles_to_remove?: number[]
   permissions_ids?: number[]
   onboarding_status?: object
+  signed_terms_and_conditions?: {
+    [key: string]: { version: number | null; date: string | null }
+  } | null
 }
 
 export type PrivacyValue = 'hide' | 'org' | 'pub'

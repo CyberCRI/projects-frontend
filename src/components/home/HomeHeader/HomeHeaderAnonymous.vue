@@ -65,68 +65,38 @@
     </div>
   </div>
 </template>
-<script>
+<script setup lang="ts">
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useOrganizationsStore from '@/stores/useOrganizations'
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 
-export default {
-  name: 'HomeHeaderAnonymous',
-  components: {
-    CroppedApiImage,
-    HtmlLimiter,
-    LpiButton,
-    LinkButton,
-  },
-  setup() {
-    const organizationsStore = useOrganizationsStore()
-    return {
-      organizationsStore,
-      DEFAULT_USER_PATATOID,
-    }
-  },
-  data() {
-    return {
-      styleDescription: {},
-      isDescriptionLimited: false,
-      showLessDescription: true,
-      descriptionComputed: false,
-    }
-  },
+const organizationsStore = useOrganizationsStore()
+const styleDescription = ref({})
+const isDescriptionLimited = ref(false)
+const showLessDescription = ref(true)
+const descriptionComputed = ref(false)
 
-  computed: {
-    organization() {
-      return this.organizationsStore.current
-    },
-    hasBannerImage() {
-      return this.organization && this.organization.banner_image
-    },
-    hasDescription() {
-      return !!this.organization?.description
-    },
-    isAccessRequestEnabled() {
-      return this.organization?.access_request_enabled
-    },
-  },
-  methods: {
-    computeDescriptionLayout() {
-      this.styleDescription = { height: `${this.heightLimit}px` }
-      this.descriptionComputed = false
-    },
-    descriptionLayoutComputed(event) {
-      this.styleDescription = { height: event.height + 'px' }
-      this.isDescriptionLimited = event.croppedHtml != this.organization.description
-      this.descriptionComputed = true
-    },
-    logInUser() {
-      goToKeycloakLoginPage()
-    },
-  },
+const organization = computed(() => organizationsStore.current)
+const hasBannerImage = computed(() => organization.value && organization.value.banner_image)
+const hasDescription = computed(() => !!organization.value?.description)
+const isAccessRequestEnabled = computed(() => organization.value?.access_request_enabled)
+
+// TODO(remi): heightLimit is not defined before refacto
+const heightLimit = 0
+const computeDescriptionLayout = () => {
+  styleDescription.value = { height: `${heightLimit}px` }
+  descriptionComputed.value = false
 }
+const descriptionLayoutComputed = (event) => {
+  styleDescription.value = { height: event.height + 'px' }
+  isDescriptionLimited.value = event.croppedHtml != organization.value.description
+  descriptionComputed.value = true
+}
+const logInUser = () => goToKeycloakLoginPage()
 </script>
 <style lang="scss" scoped>
 .introduction {

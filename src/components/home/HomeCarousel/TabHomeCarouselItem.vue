@@ -19,14 +19,8 @@
   </div>
 </template>
 
-<script setup>
-defineOptions({ name: 'TabHomeCarouselItem' })
-defineProps({
-  tab: {
-    type: Object,
-    default: () => {},
-  },
-})
+<script setup lang="ts">
+withDefaults(defineProps<{ tab?: any }>(), { tab: () => ({}) })
 const { t } = useNuxtI18n()
 </script>
 

@@ -12,43 +12,28 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { IconImageChoice } from '@/functs/IconImage'
 import IconImage from '@/components/base/media/IconImage.vue'
 
-export default {
-  name: 'FilterWrapper',
+const props = withDefaults(
+  defineProps<{
+    isToggleable?: boolean
+    rightIcon?: IconImageChoice
+    filterKey: string
+    hasFilters?: boolean
+  }>(),
+  { isToggleable: false, rightIcon: 'ChevronRight', hasFilters: true }
+)
 
-  components: { IconImage },
+const emits = defineEmits<{
+  'toogle-filter': [(typeof props)['filterKey']]
+}>()
 
-  props: {
-    isToggleable: {
-      type: Boolean,
-      default: false,
-    },
-
-    rightIcon: {
-      type: String,
-      default: 'ChevronRight',
-    },
-
-    filterKey: {
-      type: String,
-      required: true,
-    },
-
-    hasFilters: {
-      type: Boolean,
-      default: true,
-    },
-  },
-
-  emits: ['toggle-filter'],
-
-  methods: {
-    toggle() {
-      if (this.isToggleable) this.$emit('toggle-filter', this.filterKey)
-    },
-  },
+const toggle = () => {
+  if (props.isToggleable) {
+    emits('toogle-filter', props.filterKey)
+  }
 }
 </script>
 

@@ -7,7 +7,7 @@ import { SdgOutput } from '@/models/sdg.model'
 import { GoalOutput } from '@/models/goal.model'
 import { AttachmentLinkOutput } from '@/models/attachment-link.model'
 import { AttachmentFileOutput } from '@/models/attachment-file.model'
-import { ImageOutput } from '@/models/image.model'
+import { ImageModel, ImageOutput } from '@/models/image.model'
 import { CommentOutput } from '@/models/comment.model'
 import { BlogEntryOutput } from '@/models/blog-entry.model'
 import { OrganizationOutput } from '@/models/organization.model'
@@ -16,22 +16,7 @@ import { AnnouncementModel, AnnouncementOutput } from '@/models/announcement.mod
 import { FollowOutput } from '@/models/follow.model'
 import { TemplateModel } from '@/models/template.model'
 import { TagModel, TagOutput } from '@/models/tag.model'
-
-interface HeaderImage {
-  id: number
-  name: string
-  url: string
-  height: number
-  width: number
-  created_at: Date
-  variations: {
-    full: string
-    large: string
-    medium: string
-    original: string
-    small: string
-  }
-}
+import { Translated } from '@/interfaces/translated'
 
 /**
  * @name ProjectModel
@@ -41,7 +26,7 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
   id: string // Id project are a string
   title: string
   description: string
-  header_image: HeaderImage
+  header_image: ImageModel
   is_locked: boolean
   is_shareable: boolean
   purpose: string
@@ -63,6 +48,8 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
   goals: GoalOutput[]
   slug: string
 }
+
+export type TranslatedProject = Translated<ProjectModel, 'title' | 'description' | 'purpose'>
 
 export type ProjectCreateInput = Required<ProjectModel> & {
   project_categories_ids: number

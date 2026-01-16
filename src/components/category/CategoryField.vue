@@ -1,11 +1,17 @@
-<script setup>
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
 import { ref } from 'vue'
-const props = defineProps({
-  label: { type: String, required: true },
-  isToggleable: { type: Boolean, default: false },
-  isInitialyOpen: { type: Boolean, default: false },
-})
+const props = withDefaults(
+  defineProps<{
+    label: string
+    isToggleable?: boolean
+    isInitialyOpen?: boolean
+  }>(),
+  {
+    isToggleable: false,
+    isInitialyOpen: false,
+  }
+)
 
 const isOpen = ref(props.isInitialyOpen)
 </script>

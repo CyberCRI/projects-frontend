@@ -1,8 +1,8 @@
-<script setup>
-import { getAllNews, deleteNews } from '@/api/news.service.ts'
-import useAPI from '@/composables/useAPI.ts'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+<script setup lang="ts">
+import { getAllNews, deleteNews } from '@/api/news.service'
+import useAPI from '@/composables/useAPI'
+import useToasterStore from '@/stores/useToaster'
+import useOrganizationsStore from '@/stores/useOrganizations'
 import { getOrganizationByCode } from '@/api/organizations.service'
 
 const { translateNews } = useAutoTranslate()
@@ -24,8 +24,8 @@ const pagination = useState(() => ({
   first: undefined,
   last: undefined,
 }))
-const newsRequest = ref(() => null)
-const maxNewsPerPage = ref(() => 12)
+const newsRequest = ref(null)
+const maxNewsPerPage = ref(12)
 
 const _allNews = computed(() => {
   return newsRequest.value?.results || []
@@ -33,7 +33,7 @@ const _allNews = computed(() => {
 
 const allNews = translateNews(_allNews)
 
-watchEffect(
+watch(
   () => [newsRequest],
   (response) => {
     updatePagination(response)

@@ -5,6 +5,7 @@ import BaseFactory from './base.factory'
 
 const OrganizationTagFactory = createFactory<TagOutput>((faker) => ({
   ...BaseFactory.generate(),
+  id: faker.datatype.number(),
   title: faker.name.title(),
   title_en: faker.name.title(),
   title_fr: faker.name.title(),

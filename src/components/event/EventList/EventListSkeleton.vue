@@ -11,18 +11,9 @@
     </div>
   </div>
 </template>
-<script>
+<script setup lang="ts">
 import EventItemSkeleton from './EventItemSkeleton.vue'
 import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
-
-export default {
-  name: 'EventListSkeleton',
-
-  components: {
-    EventItemSkeleton,
-    SkeletonComponent,
-  },
-}
 </script>
 <style lang="scss" scoped>
 .event-list {

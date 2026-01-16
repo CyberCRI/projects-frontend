@@ -6,12 +6,8 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
-export default {
-  name: 'BreadCrumbsSkeleton',
-  components: { SkeletonComponent },
-}
 </script>
 
 <style lang="scss" scoped>

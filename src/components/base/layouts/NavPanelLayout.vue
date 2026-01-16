@@ -1,28 +1,25 @@
-<script setup>
-defineProps({
-  breadcrumbs: {
-    type: Array,
-    default: () => [],
-  },
-  isNavCollapsed: {
-    type: Boolean,
-    default: false,
-  },
-  isLoading: {
-    type: Boolean,
-    default: false,
-  },
-})
+<script setup lang="ts">
+withDefaults(
+  defineProps<{
+    breadcrumbs?: any[]
+    isNavCollapsed?: boolean
+    isLoading?: boolean
+  }>(),
+  {
+    breadcrumbs: () => [],
+    isNavCollapsed: false,
+    isLoading: false,
+  }
+)
 
-const emit = defineEmits(['toggle-nav-panel', 'collapse-nav-panel'])
+const emit = defineEmits<{
+  'toggle-nav-panel': []
+  'collapse-nav-panel': []
+}>()
 
-const toggleNavPanel = () => {
-  emit('toggle-nav-panel')
-}
+const toggleNavPanel = () => emit('toggle-nav-panel')
 
-const collapseNavPanel = () => {
-  emit('collapse-nav-panel')
-}
+const collapseNavPanel = () => emit('collapse-nav-panel')
 
 const { isMobile } = useViewportWidth()
 </script>

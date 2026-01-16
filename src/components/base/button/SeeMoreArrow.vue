@@ -9,34 +9,18 @@
     <span class="arrow-ctn"><IconImage name="ArrowRight" class="arrow" /></span>
   </component>
 </template>
-<script>
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
-import { NuxtLink } from '#components'
-export default {
-  name: 'SeeMoreArrow',
-
-  components: {
-    IconImage,
-    NuxtLink,
-  },
-
-  props: {
-    to: {
-      default: null,
-      validator(value) {
-        // use custom validator insted of types to allow null or undefined
-        return !value || typeof value === 'string' || typeof value === 'object'
-      },
-    },
-    label: {
-      default: null,
-      validator(value) {
-        // use custom validator insted of types to allow null or undefined
-        return !value || typeof value === 'string'
-      },
-    },
-  },
-}
+withDefaults(
+  defineProps<{
+    to?: string | object
+    label?: string
+  }>(),
+  {
+    to: null,
+    label: null,
+  }
+)
 </script>
 <style lang="scss" scoped>
 $icon-size: pxToRem(18px);

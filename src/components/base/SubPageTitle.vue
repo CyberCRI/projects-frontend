@@ -1,14 +1,14 @@
-<script setup>
-defineProps({
-  titlePrefix: {
-    type: String,
-    default: '',
-  },
-  currentTab: {
-    type: Object,
-    default: () => ({}),
-  },
-})
+<script setup lang="ts">
+withDefaults(
+  defineProps<{
+    titlePrefix?: string
+    currentTab?: any
+  }>(),
+  {
+    titlePrefix: '',
+    currentTab: () => ({}),
+  }
+)
 </script>
 <template>
   <h2 v-if="currentTab && !currentTab.noTitle" class="sub-page-title">

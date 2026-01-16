@@ -1,8 +1,8 @@
-<script setup>
+<script setup lang="ts">
 // import { getOrganizationByCode } from '@/api/organizations.service'
 import useOrganizations from '@/stores/useOrganizations'
 import useUsersStore from '@/stores/useUsers'
-import useToasterStore from '@/stores/useToaster.ts'
+import useToasterStore from '@/stores/useToaster'
 import { patchUser } from '@/api/people.service'
 const organizationsStore = useOrganizations()
 const usersStore = useUsersStore()
@@ -99,9 +99,6 @@ const onTermApproved = async () => {
   <BaseModal
     v-if="needsAproval"
     modal-id="approve-terms-modal"
-    :width="width"
-    :height="height"
-    :is-small="isSmall"
     :can-close="false"
     @content-scroll="onTosScroll"
   >

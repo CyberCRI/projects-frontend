@@ -28,45 +28,27 @@
   </li>
 </template>
 
-<script>
+<script setup lang="ts">
 import AccordionItem from '@/components/base/AccordionItem.vue'
 import BadgeItem from '@/components/base/BadgeItem.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 
-export default {
-  name: 'HeaderItemList',
+const props = defineProps<{ item: any }>()
 
-  components: { IconImage, AccordionItem, BadgeItem },
+const emit = defineEmits<{ close: [] }>()
+const isActive = ref(false)
+const router = useRouter()
 
-  props: {
-    item: {
-      type: Object,
-      required: true,
-    },
-  },
-
-  emits: ['close'],
-
-  data() {
-    return {
-      isActive: false,
-    }
-  },
-
-  methods: {
-    menuAction(item) {
-      this.$emit('close')
-      if (item.action) item.action()
-      else if (item.to) {
-        this.$router.push(item.to)
-      }
-    },
-
-    setActive(e) {
-      this.isActive = e
-    },
-  },
+const menuAction = (item) => {
+  emit('close')
+  if (props.item.action) {
+    item.action()
+  } else if (item.to) {
+    router.push(item.to)
+  }
 }
+
+const setActive = (val) => (isActive.value = val)
 </script>
 
 <style scoped lang="scss">

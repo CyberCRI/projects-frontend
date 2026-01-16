@@ -9,47 +9,36 @@
     @load="onImageLoaded"
   />
 </template>
-<script setup>
+<script setup lang="ts">
 import CroppedImage from '@/components/base/media/CroppedImage.vue'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
+import { pictureApiToImageSizes } from '@/functs/imageSizesUtils'
+import { ImageModel } from '@/models/image.model'
 
 defineOptions({ name: 'CroppedApiImage' })
 
-const props = defineProps({
-  pictureData: {
-    type: [Object, null],
-    required: true,
-  },
-
-  pictureSize: {
-    type: String, // 'small', 'medium', 'large'
-    required: false,
-    default: 'medium',
-  },
-
-  defaultPicture: {
-    type: String,
-    required: true,
-  },
-  alt: {
-    type: String,
-    required: false,
-    default: '',
-  },
-  contain: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-
-  ratio: {
+const props = withDefaults(
+  defineProps<{
+    pictureData?: ImageModel
+    pictureSize?: 'small' | 'medium' | 'large'
+    defaultPicture: string
+    alt?: string
+    contain?: boolean
+    ratio?: number
+  }>(),
+  {
+    pictureData: null,
+    pictureSize: 'medium',
+    alt: '',
+    contain: false,
     // crop area aspect ratio
-    type: Number,
-    default: 1,
-  },
-})
+    ratio: 1,
+  }
+)
 
-const emit = defineEmits(['load', 'error'])
+const emit = defineEmits<{
+  load: [Event]
+  error: [Error]
+}>()
 const runtimeConfig = useRuntimeConfig()
 const imageLoaded = ref(false)
 const imageError = ref(false)
@@ -59,21 +48,20 @@ const _src = computed(() => {
 })
 
 const src = computed(() => {
-  return (
-    imageError.value ||
-    _src.value ||
-    `${runtimeConfig.public.appPublicBinariesPrefix}${props.defaultPicture}`
-  )
+  if (imageError.value) {
+    return ''
+  }
+  return _src.value || `${runtimeConfig.public.appPublicBinariesPrefix}${props.defaultPicture}`
 })
 
 const imageSizes = computed(() => {
   return imageError.value ? null : pictureApiToImageSizes(props.pictureData)
 })
 
-const onImageError = (event) => {
+const onImageError = (error) => {
   imageError.value = true
   imageLoaded.value = true
-  emit('error', event)
+  emit('error', error)
 }
 const onImageLoaded = (event) => {
   imageLoaded.value = true

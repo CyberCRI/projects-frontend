@@ -27,9 +27,3 @@
     />
   </svg>
 </template>
-
-<script>
-export default {
-  name: 'ProjectLogo',
-}
-</script>

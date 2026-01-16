@@ -1,4 +1,4 @@
-type ImageSizes = {
+export type ImageSizes = {
   scaleX: number
   scaleY: number
   left: number
@@ -6,7 +6,7 @@ type ImageSizes = {
   naturalRatio: number
 } | null
 
-interface ImageSizesFromApi {
+export interface ImageSizesFromApi {
   scale_x: number | null
   scale_y: number | null
   left: number | null

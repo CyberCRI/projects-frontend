@@ -1,12 +1,11 @@
-<script setup>
+<script setup lang="ts">
 import { defaultForm } from '@/components/event/EventForm/EventForm.vue'
 import { createEvent } from '@/api/event.service'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useToasterStore from '@/stores/useToaster'
 import { getOrganizationByCode } from '@/api/organizations.service'
 
 const toaster = useToasterStore()
-const organizationsStore = useOrganizationsStore()
+const organizationCode = useOrganizationCode()
 const router = useRouter()
 const { t } = useNuxtI18n()
 
@@ -29,13 +28,14 @@ const saveEvent = async () => {
   try {
     asyncing.value = true
     const formData = {
+      organization_code: organizationCode,
       ...form.value,
       event_date: form.value.event_date,
       people_groups: Object.entries(form.value.people_groups)
         .filter(([, value]) => value)
         .map(([id]) => id),
     }
-    await createEvent(organizationsStore.current?.code, formData)
+    await createEvent(organizationCode, formData)
     toaster.pushSuccess(t('event.save.success'))
   } catch (err) {
     toaster.pushError(`${t('event.save.error')} (${err})`)

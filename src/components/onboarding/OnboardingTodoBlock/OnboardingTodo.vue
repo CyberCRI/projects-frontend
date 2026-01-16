@@ -7,36 +7,22 @@
     </span>
   </button>
 </template>
-<script>
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-export default {
-  name: 'OnboardingTodo',
 
-  components: {
-    IconImage,
-    LoaderSimple,
-  },
-
-  props: {
-    todoLabel: {
-      type: String,
-      required: true,
-    },
-    todoDone: {
-      type: Boolean,
-      required: true,
-    },
-    asyncing: {
-      type: Boolean,
-      default: false,
-    },
-    passive: {
-      type: Boolean,
-      default: false,
-    },
-  },
-}
+withDefaults(
+  defineProps<{
+    todoLabel: string
+    todoDone: boolean
+    asyncing?: boolean
+    passive?: boolean
+  }>(),
+  {
+    asyncing: false,
+    passive: false,
+  }
+)
 </script>
 <style lang="scss" scoped>
 .onboarding-todo {

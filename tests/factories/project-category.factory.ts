@@ -12,10 +12,20 @@ import TemplateFactory from './template.factory'
 
 const ProjectCategoryFactory = createFactory<ProjectCategoryOutput>((faker) => ({
   ...BaseFactory.generate(),
+  id: faker.datatype.number(),
   slug: faker.datatype.string(),
   organization_code: faker.datatype.string(),
   background_color: faker.internet.color(),
   background_image: {
+    scale_x: faker.datatype.number(),
+    scale_y: faker.datatype.number(),
+    left: faker.datatype.number(),
+    top: faker.datatype.number(),
+    natural_ratio: faker.datatype.number(),
+    file: faker.image.image(),
+    name: faker.name.lastName(),
+    height: faker.datatype.number(),
+    width: faker.datatype.number(),
     variations: {
       full: faker.image.image(),
       large: faker.image.image(),
@@ -34,6 +44,7 @@ const ProjectCategoryFactory = createFactory<ProjectCategoryOutput>((faker) => (
   tags: TagFactory.generateMany(2),
   children: [],
   hierarchy: [],
+  projects_count: faker.datatype.number(),
 }))
 
 export const ProjectCategoryOutputFactory = createFactory<ProjectCategoryOutput>(() => ({

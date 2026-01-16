@@ -1,13 +1,13 @@
 <template>
   <NuxtLink
     class="category-card shadow-box"
-    :style="{ width: imageWidth }"
+    :style="{ width: IMAGE_WIDTH }"
     :to="{ name: 'Category', params: { slugOrId: category?.slug || category?.id } }"
   >
     <CategoryCardImage
       :background-color="category.background_color"
-      :image-height="imageHeight"
-      :image-width="imageWidth"
+      :image-height="IMAGE_HEIGHT"
+      :image-width="IMAGE_WIDTH"
       :url="imageSource"
       :image-sizes="imageSizes"
       class="category-card-image"
@@ -25,47 +25,25 @@
   </NuxtLink>
 </template>
 
-<script>
+<script setup lang="ts">
 import { capitalize } from '@/functs/string'
 
 import CategoryCardImage from '@/components/category/CategoryCardImage.vue'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
+import { pictureApiToImageSizes } from '@/functs/imageSizesUtils'
+import { TranslatedProjectCategory } from '@/models/project-category.model'
 
-export default {
-  name: 'CategoryCard',
+const props = defineProps<{ category: TranslatedProjectCategory }>()
 
-  components: {
-    CategoryCardImage,
-  },
+const IMAGE_WIDTH = '288px'
+const IMAGE_HEIGHT = '76px'
+const imageSource = computed(() => {
+  return props.category?.background_image?.variations?.small || null
+})
 
-  props: {
-    category: {
-      type: Object,
-      required: true,
-    },
-  },
-  setup() {
-    return { capitalize }
-  },
-
-  computed: {
-    imageWidth() {
-      return '288px'
-    },
-
-    imageHeight() {
-      return '76px'
-    },
-
-    imageSource() {
-      return this.category?.background_image?.variations?.small || null
-    },
-    imageSizes() {
-      const bgImage = this.category?.background_image
-      return (bgImage && pictureApiToImageSizes(bgImage)) || null
-    },
-  },
-}
+const imageSizes = computed(() => {
+  const bgImage = props.category?.background_image
+  return (bgImage && pictureApiToImageSizes(bgImage)) || null
+})
 </script>
 
 <style lang="scss" scoped>

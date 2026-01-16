@@ -4,44 +4,18 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+// TODO(remi): component no needed ?
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
-export default {
-  name: 'OnBoardingTab',
 
-  components: { TipTapOutput },
+const onBoardingData = ref({
+  content: '',
+})
+const router = useRouter()
 
-  inject: {
-    hasFaq: { from: 'helpPageHasFaq', default: false },
-    faq: { from: 'helpPageFaq', default: {} },
-  },
-
-  data() {
-    return {
-      onBoardingData: {},
-    }
-  },
-
-  mounted() {
-    // if (!this.hasFaq) {
-    this.$router.replace({ name: 'HelpHelpTab' })
-    // }
-    // this.getCustomData()
-  },
-
-  // methods: {
-  //     async getCustomData() {
-  //         if (
-  //             this.hasFaq &&
-  //             this.faq.title &&
-  //             this.faq.content &&
-  //             this.faq.content !== '<p></p>'
-  //         ) {
-  //             this.onBoardingData = this.faq
-  //         }
-  //     },
-  // },
-}
+onMounted(() => {
+  router.replace({ name: 'HelpHelpTab' })
+})
 </script>
 
 <style lang="scss" scoped>

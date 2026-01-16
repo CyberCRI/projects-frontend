@@ -1,7 +1,7 @@
-<script setup>
+<script setup lang="ts">
 import { getInstruction, deleteInstruction } from '@/api/instruction.service'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useToasterStore from '@/stores/useToaster'
+import useOrganizationsStore from '@/stores/useOrganizations'
 import { getOrganizationByCode } from '@/api/organizations.service'
 
 const props = defineProps({

@@ -12,6 +12,7 @@ import TagFactory from './tag.factory'
 
 const OrganizationFactory = createFactory<OrganizationModel>((faker) => ({
   ...BaseFactory.generate(),
+  id: faker.datatype.number(),
   background_color: faker.datatype.string(),
   banner_image: faker.image.image(),
   code: faker.datatype.string(),

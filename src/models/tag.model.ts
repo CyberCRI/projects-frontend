@@ -5,6 +5,7 @@ import BaseModel from '@/models/base.model'
  * @description Tag of an organization or project or project-category
  */
 export interface TagModel extends BaseModel {
+  id: number
   title: string
   title_en: string
   title_fr: string

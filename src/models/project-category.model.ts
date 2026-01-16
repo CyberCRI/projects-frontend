@@ -2,23 +2,18 @@ import BaseModel from '@/models/base.model'
 import { OrganizationOutput } from '@/models/organization.model'
 import { TemplateOutput } from '@/models/template.model'
 import { TagOutput } from '@/models/tag.model'
+import { ImageModel } from '@/models/image.model'
+import { Translated } from '@/interfaces/translated'
 
 /**
  * @name ProjectCategoryModel
  * @description Category of an organization or project
  */
 export interface ProjectCategoryModel extends BaseModel {
+  id: number
   slug?: string
   background_color: string
-  background_image: {
-    variations: {
-      full: string
-      large: string
-      medium: string
-      original: string
-      small: string
-    }
-  }
+  background_image: ImageModel
   description: string
   foreground_color: string // Text color
   is_reviewable: string
@@ -26,7 +21,10 @@ export interface ProjectCategoryModel extends BaseModel {
   order_index: number
   children: ProjectCategoryOutput[] | number[]
   hierarchy?: ProjectCategoryOutput[] | number[]
+  projects_count?: number
 }
+
+export type TranslatedProjectCategory = Translated<ProjectCategoryModel, 'name' | 'description'>
 
 export type ProjectCategoryCreateInput = Required<ProjectCategoryModel> & {
   organization_code: string

@@ -25,16 +25,14 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useOrganizationsStore from '@/stores/useOrganizations'
 
 defineOptions({ name: 'HomeButtons' })
 const organizationsStore = useOrganizationsStore()
 
-const organization = computed(() => {
-  return organizationsStore.current
-})
+const organization = computed(() => organizationsStore.current)
 const router = useRouter()
 
 const goToChat = () => {
