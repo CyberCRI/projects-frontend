@@ -219,7 +219,8 @@
       "users": "Gebruikers",
       "requests": "Verzoeken",
       "groups": "Groepen",
-      "settings": "Instellingen"
+      "settings": "Instellingen",
+      "terms": "TOS"
     },
     "page-title": "Beheerder",
     "portal": {
@@ -337,6 +338,13 @@
       },
       "accept-success": "Toepassing succesvol aanvaard",
       "decline-success": "Aanvraag succesvol afgewezen"
+    },
+    "terms": {
+      "title": "Algemene voorwaarden",
+      "using-default": "U gebruikt momenteel standaardvoorwaarden",
+      "error": "Er is een fout opgetreden bij het opslaan van de Algemene Voorwaarden.",
+      "saved": "Voorwaarden succesvol opgeslagen",
+      "version": "Versie:"
     }
   },
   "account": {
@@ -1073,7 +1081,8 @@
     "hobbies": "Hobby's",
     "levels-help-link": "Vaardigheden",
     "publications": "Mijn publicaties",
-    "conferences": "Mijn conferenties"
+    "conferences": "Mijn conferenties",
+    "follow-category": "Categorieën Ik volg je."
   },
   "you": {
     "no-follow": "Nog geen projecten gevolgd",

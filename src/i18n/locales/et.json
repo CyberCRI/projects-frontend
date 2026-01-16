@@ -219,7 +219,8 @@
       "users": "Kasutajad",
       "requests": "Taotlused",
       "groups": "Grupid",
-      "settings": "Seadistused"
+      "settings": "Seadistused",
+      "terms": "Tos"
     },
     "page-title": "Admin",
     "portal": {
@@ -337,6 +338,13 @@
       },
       "accept-success": "Edukalt vastu võetud taotlus",
       "decline-success": "Rakendus lükati edukalt tagasi"
+    },
+    "terms": {
+      "title": "Tingimused",
+      "using-default": "Praegu kasutate vaikimisi tingimusi ja tingimusi",
+      "error": "Tingimuste salvestamisel tekkis viga.",
+      "saved": "Tingimused salvestati edukalt",
+      "version": "Versioon:"
     }
   },
   "account": {
