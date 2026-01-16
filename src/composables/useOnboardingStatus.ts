@@ -13,7 +13,7 @@ type OnboardingKey =
   | 'show_take_tour_modal'
 
 export type OnboardingStatusType = {
-  [key in OnboardingKey]: boolean | number
+  [key in OnboardingKey]?: boolean | number
 }
 export default function useOnboardingStatus() {
   const onboardingTrap = async (key: OnboardingKey, val: boolean) => {

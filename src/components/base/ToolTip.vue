@@ -23,88 +23,48 @@
   </ClientOnly>
 </template>
 
-<script>
+<script setup lang="ts">
 import Popper from 'vue3-popper'
 
-export default {
-  name: 'ToolTip',
-
-  components: {
-    Popper,
-  },
-
-  props: {
-    interactive: {
-      type: Boolean,
-      default: true,
-    },
-
-    hover: {
-      type: Boolean,
-      default: false,
-    },
-
-    placement: {
-      type: String,
-      default: 'auto',
-      validator(value) {
-        return [
-          'auto',
-          'top-start',
-          'top',
-          'top-end',
-          'right-start',
-          'right',
-          'right-end',
-          'bottom-start',
-          'bottom',
-          'bottom-end',
-          'left-start',
-          'left',
-          'left-end',
-        ].includes(value)
-      },
-    },
-
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-
-    arrow: {
-      type: Boolean,
-      default: true,
-    },
-
-    forceShow: {
-      type: [Boolean, null],
-      default: null,
-    },
-
-    offsetDistance: {
-      type: String,
-      default: '12',
-    },
-    offsetSkid: {
-      type: String,
-      default: '0',
-    },
-
-    secondary: {
-      type: Boolean,
-      default: false,
-    },
-
-    content: {
-      type: String,
-      default: null,
-    },
-  },
-
-  mounted() {
-    // if (!this.isTextContent) this.$refs['popper-ctn'].popper.classList.add('popper') // to show an arrow on custom tooltip contents
-  },
-}
+withDefaults(
+  defineProps<{
+    interactive?: boolean
+    hover?: boolean
+    placement?:
+      | 'auto'
+      | 'top-start'
+      | 'top'
+      | 'top-end'
+      | 'right-start'
+      | 'right'
+      | 'right-end'
+      | 'bottom-start'
+      | 'bottom'
+      | 'bottom-end'
+      | 'left-start'
+      | 'left'
+      | 'left-end'
+    disabled?: boolean
+    arrow?: boolean
+    forceShow?: boolean
+    offsetDistance?: string
+    offsetSkid?: string
+    secondary?: boolean
+    content?: string
+  }>(),
+  {
+    interactive: true,
+    hover: false,
+    placement: 'auto',
+    disabled: false,
+    arrow: true,
+    forceShow: null,
+    offsetDistance: '12',
+    offsetSkid: '0',
+    secondary: false,
+    content: null,
+  }
+)
 </script>
 
 <style lang="scss" scoped>

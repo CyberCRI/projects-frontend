@@ -18,9 +18,9 @@
     <template #footer>
       <div class="footer">
         <LpiButton
-          :disabled="!!asyncing"
+          :disabled="!!status"
           :label="$t('welcome-modal.complete-later')"
-          :btn-icon="asyncing == 'skip' ? 'LoaderSimple' : undefined"
+          :btn-icon="status == 'skip' ? 'LoaderSimple' : undefined"
           :secondary="true"
           class="footer__left-button"
           data-test="close-button"
@@ -28,9 +28,9 @@
         />
 
         <LpiButton
-          :disabled="!!asyncing"
+          :disabled="!!status"
           :label="$t('welcome-modal.complete-now')"
-          :btn-icon="asyncing == 'proceed' ? 'LoaderSimple' : undefined"
+          :btn-icon="status == 'proceed' ? 'LoaderSimple' : undefined"
           :secondary="false"
           class="footer__right-button"
           data-test="confirm-button"
@@ -40,70 +40,52 @@
     </template>
   </BaseModal>
 </template>
-<script>
+<script setup lang="ts">
 import BaseModal from '@/components/base/modal/BaseModal.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-export default {
-  name: 'WelcomeModal',
+import useOrganizationsStore from '@/stores/useOrganizations'
 
-  components: { BaseModal, LpiButton },
+const emit = defineEmits<{
+  close: []
+  'complete-profile': []
+}>()
+const organizationsStore = useOrganizationsStore()
+const { onboardingTrapAll } = useOnboardingStatus()
+const status = ref<'proceed' | 'skip' | ''>('')
 
-  emits: ['close', 'complete-profile'],
+const organizationLogo = computed(() => {
+  return organizationsStore.current?.logo_image?.variations?.medium
+})
+const organizationTitle = computed(() => {
+  return organizationsStore.current?.name || ''
+})
 
-  setup() {
-    const organizationsStore = useOrganizationsStore()
-    const { onboardingTrapAll } = useOnboardingStatus()
-    return {
-      organizationsStore,
-      onboardingTrapAll,
-    }
-  },
+const completeLater = async () => {
+  await patchUser('skip')
+  emit('close')
+}
 
-  data() {
-    return {
-      asyncing: false,
-    }
-  },
+const completeNow = async () => {
+  await patchUser('proceed')
+  emit('complete-profile')
+}
 
-  computed: {
-    organizationLogo() {
-      return this.organizationsStore.current?.logo_image?.variations?.medium
-    },
-    organizationTitle() {
-      return this.organizationsStore.current?.name || ''
-    },
-  },
+const patchUser = async (choice) => {
+  status.value = choice
+  // register that the user has seen the welcome modal
+  // and set the next todos
+  await onboardingTrapAll({
+    show_welcome: false,
+    // use 1 for step insted of 0 to have a truthy value
+    show_complete_profile_modal: choice == 'proceed' ? 1 : false,
+    show_progress: true,
+    complete_profile: true,
+    explore_projects: true,
+    create_project: true,
+    take_tour: true,
+  })
 
-  methods: {
-    async completeLater() {
-      await this.patchUser('skip')
-      this.$emit('close')
-    },
-
-    async completeNow() {
-      await this.patchUser('proceed')
-      this.$emit('complete-profile')
-    },
-
-    async patchUser(choice) {
-      this.asyncing = choice
-      // register that the user has seen the welcome modal
-      // and set the next todos
-      await this.onboardingTrapAll({
-        show_welcome: false,
-        // use 1 for step insted of 0 to have a truthy value
-        show_complete_profile_modal: choice == 'proceed' ? 1 : false,
-        show_progress: true,
-        complete_profile: true,
-        explore_projects: true,
-        create_project: true,
-        take_tour: true,
-      })
-
-      this.asyncing = false
-    },
-  },
+  status.value = ''
 }
 </script>
 <style scoped lang="scss">

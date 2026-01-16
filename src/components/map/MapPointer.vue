@@ -23,34 +23,32 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import ProjectTooltip from '@/components/map/ProjectTooltip.vue'
 import LocationTooltip from '@/components/map/LocationTooltip.vue'
+import { TranslatedLocation } from '@/models/location.model'
 defineOptions({ name: 'MapPointer' })
 
-const props = defineProps({
-  location: {
-    type: Object,
-    default: null,
-  },
+const props = withDefaults(
+  defineProps<{
+    location?: TranslatedLocation
+    hasProjectTip?: boolean
+    hasLocationTip?: boolean
+    isEditable?: boolean
+  }>(),
+  {
+    location: null,
+    hasProjectTip: false,
+    hasLocationTip: false,
+    isEditable: false,
+  }
+)
 
-  hasProjectTip: {
-    type: Boolean,
-    default: false,
-  },
-
-  hasLocationTip: {
-    type: Boolean,
-    default: false,
-  },
-
-  isEditable: {
-    type: Boolean,
-    default: false,
-  },
-})
-
-const emit = defineEmits(['mounted', 'unmounted', 'edit-location'])
+const emit = defineEmits<{
+  mounted: [object]
+  unmounted: [TranslatedLocation | null]
+  'edit-location': [TranslatedLocation | null]
+}>()
 const { t } = useNuxtI18n()
 const pointerLabel = computed(() => {
   return props.location.type === 'impact' ? t('project.impact') : t('team.team')

@@ -5,8 +5,11 @@ import BaseFactory from './base.factory'
 
 export const BlogEntryFactory = createFactory<BlogEntryOutput>((faker) => ({
   ...BaseFactory.generate(),
+  id: faker.datatype.number(),
   title: faker.lorem.word(),
   content: faker.lorem.sentence(),
+  updated_at: faker.datatype.datetime(),
+  created_at: faker.datatype.datetime(),
 }))
 
 export const BlogEntryInputFactory = createFactory<BlogEntryInput>((faker) => ({

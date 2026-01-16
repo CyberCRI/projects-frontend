@@ -1,5 +1,4 @@
-<script setup>
-// import analytics from '@/analytics'
+<script setup lang="ts">
 import { getOrganizationByCode } from '@/api/organizations.service'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import { deleteOrganizationFile, getOrganizationFiles } from '@/api/organization-files.service'
@@ -69,7 +68,7 @@ const deleteResource = async (resource) => {
   }
 }
 
-const openDrawer = (resource) => {
+const openDrawer = (resource = null) => {
   editedItem.value = resource
   isDrawerOpen.value = true
 }
@@ -104,7 +103,7 @@ try {
         class="add-item-btn"
         btn-icon="Plus"
         data-test="in-page-add-resources"
-        @click="openDrawer()"
+        @click="() => openDrawer()"
       />
     </div>
     <div v-if="asyncing" class="loader">

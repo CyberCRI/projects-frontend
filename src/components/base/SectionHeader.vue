@@ -15,40 +15,25 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
 
-export default {
-  name: 'SectionHeader',
+withDefaults(
+  defineProps<{
+    title?: string
+    buttonLabel?: string
+    quantity?: number
+    hasButton?: boolean
+  }>(),
+  {
+    title: '',
+    buttonLabel: null,
+    quantity: null,
+    hasButton: true,
+  }
+)
 
-  components: {
-    SeeMoreArrow,
-  },
-
-  props: {
-    title: {
-      type: String,
-      default: '',
-    },
-
-    buttonLabel: {
-      type: String,
-      default: null,
-    },
-
-    quantity: {
-      type: Number,
-      default: null,
-    },
-
-    hasButton: {
-      type: Boolean,
-      default: true,
-    },
-  },
-
-  emits: ['redirect-button-clicked'],
-}
+defineEmits<{ 'redirect-button-clicked': [] }>()
 </script>
 
 <style lang="scss" scoped>

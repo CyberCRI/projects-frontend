@@ -76,17 +76,16 @@
   </BaseDrawer>
 </template>
 
-<script>
+<script setup lang="ts">
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import { reportBug, reportAbuse } from '@/api/report.service'
 import TextInput from '@/components/base/form/TextInput.vue'
 import useValidate from '@vuelidate/core'
 import { helpers, url, required, email } from '@vuelidate/validators'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useToasterStore from '@/stores/useToaster'
 
-function defaultForm() {
+const defaultForm = () => {
   return {
     title: '',
     message: '',
@@ -95,107 +94,75 @@ function defaultForm() {
   }
 }
 
-export default {
-  name: 'ReportDrawer',
+const props = withDefaults(defineProps<{ type?: string; isOpened?: boolean }>(), {
+  type: '',
+  isOpened: false,
+})
 
-  components: { TextInput, BaseDrawer, FieldErrors },
+const emit = defineEmits<{ close: [] }>()
 
-  props: {
-    type: {
-      type: String,
-      default: '',
-    },
-    isOpened: {
-      type: Boolean,
-      default: false,
-    },
+const toaster = useToasterStore()
+const { t } = useNuxtI18n()
+const rules = computed(() => ({
+  message: {
+    required: helpers.withMessage(t('form.report.message'), required),
   },
-
-  emits: ['close'],
-  setup() {
-    const toaster = useToasterStore()
-    const organizationsStore = useOrganizationsStore()
-    return {
-      toaster,
-      organizationsStore,
-    }
+  url: {
+    required: helpers.withMessage(t('form.report.url.required'), required),
+    url: helpers.withMessage(t('form.report.url.format'), url),
   },
-
-  data() {
-    return {
-      v$: useValidate(),
-      isLoading: false,
-      form: defaultForm(),
-    }
+  reported_by: {
+    required: helpers.withMessage(t('form.report.email.required'), required),
+    email: helpers.withMessage(t('form.report.email.format'), email),
   },
-
-  computed: {
-    orgCode() {
-      return this.organizationsStore?.current?.code
-    },
+  title: {
+    required: helpers.withMessage(t('form.report.title'), required),
   },
+}))
+const form = ref(defaultForm())
+const v$ = useValidate(rules, form)
+const isLoading = ref(false)
 
-  validations() {
-    return {
-      form: {
-        message: {
-          required: helpers.withMessage(this.$t('form.report.message'), required),
-        },
-        url: {
-          required: helpers.withMessage(this.$t('form.report.url.required'), required),
-          url: helpers.withMessage(this.$t('form.report.url.format'), url),
-        },
-        reported_by: {
-          required: helpers.withMessage(this.$t('form.report.email.required'), required),
-          email: helpers.withMessage(this.$t('form.report.email.format'), email),
-        },
-        title: {
-          required: helpers.withMessage(this.$t('form.report.title'), required),
-        },
-      },
-    }
-  },
+const orgCode = useOrganizationCode()
 
-  watch: {
-    isOpened() {
-      this.v$.$reset()
-      this.form = defaultForm()
-    },
-  },
+watch(
+  () => props.isOpened,
+  () => {
+    v$.value.$reset()
+    form.value = defaultForm()
+  }
+)
 
-  methods: {
-    async submit() {
-      const isValid = await this.v$.$validate()
+const submit = async () => {
+  const isValid = await v$.value.$validate()
 
-      if (isValid) {
-        this.isLoading = true
+  if (isValid) {
+    isLoading.value = true
 
-        if (this.type === 'abuse') {
-          try {
-            await reportAbuse(this.orgCode, this.form)
-            this.toaster.pushSuccess(this.$t('toasts.abuse-report.success'))
-          } catch (error) {
-            this.toaster.pushError(`${this.$t('toasts.abuse-report.error')} (${error})`)
-            console.error(error)
-          } finally {
-            this.isLoading = false
-            this.$emit('close')
-          }
-        } else if (this.type === 'bug') {
-          try {
-            await reportBug(this.orgCode, this.form)
-            this.toaster.pushSuccess(this.$t('toasts.bug-report.success'))
-          } catch (error) {
-            this.toaster.pushError(`${this.$t('toasts.bug-report.error')} (${error})`)
-            console.error(error)
-          } finally {
-            this.isLoading = false
-            this.$emit('close')
-          }
-        }
+    if (props.type === 'abuse') {
+      try {
+        await reportAbuse(orgCode, form.value)
+        toaster.pushSuccess(t('toasts.abuse-report.success'))
+      } catch (error) {
+        toaster.pushError(`${t('toasts.abuse-report.error')} (${error})`)
+        console.error(error)
+      } finally {
+        isLoading.value = false
+        emit('close')
       }
-    },
-  },
+    } else if (props.type === 'bug') {
+      try {
+        await reportBug(orgCode, form.value)
+        toaster.pushSuccess(t('toasts.bug-report.success'))
+      } catch (error) {
+        toaster.pushError(`${t('toasts.bug-report.error')} (${error})`)
+        console.error(error)
+      } finally {
+        isLoading.value = false
+        emit('close')
+      }
+    }
+  }
 }
 </script>
 

@@ -19,29 +19,21 @@
   <BreadCrumbsSkeleton v-else />
 </template>
 
-<script>
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
 import BreadCrumbsSkeleton from '@/components/base/navigation/BreadCrumbsSkeleton.vue'
-export default {
-  name: 'BreadCrumbs',
-  components: { IconImage, BreadCrumbsSkeleton },
-  props: {
-    breadcrumbs: {
-      type: Array,
-      required: true,
-    },
 
-    groupName: {
-      type: String,
-      default: '',
-    },
-    isLoading: {
-      type: Boolean,
-      default: false,
-      required: false,
-    },
-  },
-}
+withDefaults(
+  defineProps<{
+    breadcrumbs: any[]
+    groupName?: string
+    isLoading?: boolean
+  }>(),
+  {
+    groupName: '',
+    isLoading: false,
+  }
+)
 </script>
 
 <style lang="scss" scoped>

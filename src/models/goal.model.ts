@@ -6,6 +6,7 @@ import { StatusType } from '@/models/types'
  * @description Goal of a project
  */
 export interface GoalModel extends BaseModel {
+  id: number
   title: string
   description: string
   deadline_at: Date

@@ -82,10 +82,10 @@ export default {
       featuredrojects = []
     }
 
-    const projectRecommendations = await getRandomProjectsRecommendationsForUser({
-      organization: this.organization.code,
-      params: { count: 4, pool: 25 },
-    })
+    const projectRecommendations = await getRandomProjectsRecommendationsForUser(
+      this.organization.code,
+      { count: 4, pool: 25 }
+    )
 
     this._projectRecommendations = [
       ...featuredrojects.map((p) => ({ ...p, isFeatured: true })),

@@ -30,22 +30,20 @@
     </div>
   </NuxtLink>
 </template>
-<script setup>
+<script setup lang="ts">
 import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
 import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
 import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
 
 defineOptions({ name: 'InstructionListItem' })
 
-defineProps({
-  instruction: {
-    type: Object,
-    required: true,
-  },
-})
+defineProps<{ instruction: any }>()
 
 const { t } = useNuxtI18n()
-const emit = defineEmits(['delete-instruction', 'edit-instruction'])
+const emit = defineEmits<{
+  'delete-instruction': [any]
+  'edit-instruction': [any]
+}>()
 
 const { canEditInstruction, canDeleteInstruction } = usePermissions()
 

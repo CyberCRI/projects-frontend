@@ -15,35 +15,22 @@
     />
   </ToolTip>
 </template>
-<script>
-export default {
-  name: 'SocialShareButton',
+<script setup lang="ts">
+const props = withDefaults(
+  defineProps<{
+    sharedUrl?: string
+  }>(),
+  {
+    sharedUrl: '',
+  }
+)
 
-  props: {
-    sharedUrl: {
-      type: String,
-      default: '',
-    },
-  },
+const url = computed(() => props.sharedUrl || window?.location?.origin)
 
-  computed: {
-    url() {
-      return this.sharedUrl || window?.location?.origin
-    },
-  },
-
-  methods: {
-    facebookShare() {
-      window?.open(`https://www.facebook.com/sharer/sharer.php?u=${this.url}`)
-    },
-    // twitterShare() {
-    //     window?.open(`https://twitter.com/intent/tweet?url=${this.url}&text=`)
-    // },
-    linkedinShare() {
-      window?.open(`https://www.linkedin.com/shareArticle?mini=true&url=${this.url}`)
-    },
-  },
-}
+const facebookShare = () =>
+  window?.open(`https://www.facebook.com/sharer/sharer.php?u=${url.value}`)
+const linkedinShare = () =>
+  window?.open(`https://www.linkedin.com/shareArticle?mini=true&url=${url.value}`)
 </script>
 <style scoped lang="scss">
 .share-ctn {

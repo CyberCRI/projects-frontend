@@ -7,6 +7,7 @@ import { AttachmentType } from '@/models/types'
  * @description Link attached to a project
  */
 export interface AttachmentLinkModel extends BaseModel {
+  id: number
   attachment_type: AttachmentType
   description: string
   preview_image_url: string

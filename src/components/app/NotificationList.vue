@@ -35,81 +35,56 @@
   </BaseDrawer>
 </template>
 
-<script>
+<script setup lang="ts">
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
 import NotificationItem from '@/components/app/NotificationItem.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import { getNotifications } from '@/api/notifications.service'
-import useUsersStore from '@/stores/useUsers.ts'
+import useUsersStore from '@/stores/useUsers'
 import LpiButton from '@/components//base/button/LpiButton.vue'
-import useAPI from '@/composables/useAPI.ts'
+import useAPI from '@/composables/useAPI'
 
-export default {
-  name: 'NotificationList',
+const props = withDefaults(defineProps<{ isOpened?: boolean }>(), { isOpened: false })
 
-  components: { NotificationItem, LpiLoader, BaseDrawer, LpiButton },
+defineEmits<{ close: [] }>()
+const usersStore = useUsersStore()
+const customNotificationStyle = ref({
+  maxHeight: 'unset',
+  padding: 'unset',
+})
+const notifications = ref([])
+const isLoading = ref(false)
+const isLoadingMore = ref(false)
+const nextPage = ref(null)
 
-  props: {
-    isOpened: {
-      type: Boolean,
-      default: false,
-    },
-  },
+watchEffect(() => {
+  if (props.isOpened) {
+    localGetNotifications()
+  }
+})
 
-  emits: ['close'],
-  setup() {
-    const usersStore = useUsersStore()
-    return {
-      usersStore,
-    }
-  },
+const localGetNotifications = async () => {
+  isLoading.value = true
+  try {
+    const result = await getNotifications({ limit: 20 })
+    notifications.value = result.results
+    nextPage.value = result.next
+    usersStore.notificationsCount = 0
+  } catch (err) {
+    console.error(err)
+  } finally {
+    isLoading.value = false
+  }
+}
 
-  data() {
-    return {
-      customNotificationStyle: {
-        maxHeight: 'unset',
-        padding: 'unset',
-      },
-      notifications: [],
-      isLoading: false,
-      isLoadingMore: false,
-      nextPage: null,
-    }
-  },
-
-  watch: {
-    isOpened(isOpened) {
-      if (isOpened) {
-        this.getNotifications()
-      }
-    },
-  },
-
-  methods: {
-    async getNotifications() {
-      this.isLoading = true
-      try {
-        const result = await getNotifications({ limit: 20 })
-        this.notifications = result.results
-        this.nextPage = result.next
-        this.usersStore.notificationsCount = 0
-      } catch (err) {
-        console.error(err)
-      } finally {
-        this.isLoading = false
-      }
-    },
-
-    async loadNextPage() {
-      if (this.nextPage) {
-        this.isLoadingMore = true
-        const result = (await useAPI(this.nextPage, {})).data
-        this.notifications.push(...result.results)
-        this.nextPage = result.next
-        this.isLoadingMore = false
-      }
-    },
-  },
+const loadNextPage = async () => {
+  if (nextPage.value) {
+    isLoadingMore.value = true
+    const result = (await useAPI(nextPage.value, {})).data
+    notifications.value.push(...result.results)
+    nextPage.value = result.next
+    isLoadingMore.value = false
+  }
 }
 </script>
 

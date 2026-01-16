@@ -20,183 +20,162 @@
     </div>
   </div>
 </template>
-<script>
+<script setup lang="ts">
 import GroupButton from '@/components/base/button/GroupButton.vue'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-import useUsersStore from '@/stores/useUsers.ts'
+import useUsersStore from '@/stores/useUsers'
 
-export default {
-  name: 'NotificationsSettingsTab',
+const usersStore = useUsersStore()
+const form = ref({
+  followed_project_has_been_edited: false,
+  notify_added_to_project: false,
+  project_has_been_commented: false,
+  project_has_been_edited: false,
+  announcement_published: false,
+  project_ready_for_review: false,
+  project_has_been_reviewed: false,
+  project_has_new_private_message: false,
+  comment_received_a_response: false,
+  organization_has_new_access_request: false,
+  invitation_link_will_expire: false,
+  new_instruction: false,
+  category_project_created: false,
+  category_project_updated: false,
+})
+const isLoading = ref(true)
 
-  components: {
-    LpiLoader,
-    GroupButton,
-  },
+const notifications = computed(() => {
+  return usersStore.notificationsSettings || {}
+})
 
-  setup() {
-    const usersStore = useUsersStore()
-    return {
-      usersStore,
-    }
-  },
-  data() {
-    return {
-      form: {
-        followed_project_has_been_edited: false,
-        notify_added_to_project: false,
-        project_has_been_commented: false,
-        project_has_been_edited: false,
-        announcement_published: false,
-        project_ready_for_review: false,
-        project_has_been_reviewed: false,
-        project_has_new_private_message: false,
-        comment_received_a_response: false,
-        organization_has_new_access_request: false,
-        invitation_link_will_expire: false,
-        new_instruction: false,
-        category_project_created: false,
-        category_project_updated: false,
-      },
-      isLoading: true,
-    }
-  },
+const { t } = useNuxtI18n()
 
-  computed: {
-    notifications() {
-      return this.usersStore.notificationsSettings || {}
+const options = computed(() => {
+  return [
+    {
+      value: true,
+      label: t('notifications.tabs.options.yes'),
     },
-
-    options() {
-      return [
-        {
-          value: true,
-          label: this.$t('notifications.tabs.options.yes'),
-        },
-        {
-          value: false,
-          label: this.$t('notifications.tabs.options.no'),
-        },
-      ]
+    {
+      value: false,
+      label: t('notifications.tabs.options.no'),
     },
+  ]
+})
 
-    switches() {
-      return [
-        {
-          label: this.$t('notifications.category.project-created'),
-          subLabel: this.$t('notifications.category.project-created-sub'),
-          value: this.form.category_project_created,
-          settingValue: 'category_project_created',
-        },
-        {
-          label: this.$t('notifications.category.project-updated'),
-          subLabel: this.$t('notifications.category.project-updated-sub'),
-          value: this.form.category_project_updated,
-          settingValue: 'category_project_updated',
-        },
-        {
-          label: this.$t('notifications.projects.follow'),
-          subLabel: this.$t('notifications.projects.follow-sub'),
-          value: this.form.followed_project_has_been_edited,
-          settingValue: 'followed_project_has_been_edited',
-        },
-        {
-          label: this.$t('notifications.projects.member'),
-          subLabel: this.$t('notifications.projects.member-sub'),
-          value: this.form.notify_added_to_project,
-          settingValue: 'notify_added_to_project',
-        },
-        {
-          label: this.$t('notifications.projects.comment'),
-          subLabel: this.$t('notifications.projects.comment-sub'),
-          value: this.form.project_has_been_commented,
-          settingValue: 'project_has_been_commented',
-        },
-        {
-          label: this.$t('notifications.projects.internal-message'),
-          subLabel: this.$t('notifications.projects.internal-message-sub'),
-          value: this.form.project_has_new_private_message,
-          settingValue: 'project_has_new_private_message',
-        },
-        {
-          label: this.$t('notifications.projects.project'),
-          subLabel: this.$t('notifications.projects.project-sub'),
-          value: this.form.project_has_been_edited,
-          settingValue: 'project_has_been_edited',
-        },
-        {
-          label: this.$t('notifications.projects.announcement'),
-          subLabel: this.$t('notifications.projects.announcement-sub'),
-          value: this.form.announcement_published,
-          settingValue: 'announcement_published',
-        },
-        {
-          label: this.$t('notifications.projects.review'),
-          subLabel: this.$t('notifications.projects.review-sub'),
-          value: this.form.project_ready_for_review,
-          settingValue: 'project_ready_for_review',
-        },
-        {
-          label: this.$t('notifications.projects.reviewed'),
-          subLabel: this.$t('notifications.projects.reviewed-sub'),
-          value: this.form.project_has_been_reviewed,
-          settingValue: 'project_has_been_reviewed',
-        },
-        {
-          label: this.$t('notifications.projects.reply'),
-          subLabel: this.$t('notifications.projects.reply-sub'),
-          value: this.form.comment_received_a_response,
-          settingValue: 'comment_received_a_response',
-        },
-        {
-          label: this.$t('notifications.organization.access'),
-          subLabel: this.$t('notifications.organization.access-sub'),
-          value: this.form.organization_has_new_access_request,
-          settingValue: 'organization_has_new_access_request',
-        },
-        {
-          label: this.$t('notifications.organization.invitation'),
-          subLabel: this.$t('notifications.organization.invitation-sub'),
-          value: this.form.invitation_link_will_expire,
-          settingValue: 'invitation_link_will_expire',
-        },
-        {
-          label: this.$t('notifications.organization.instruction'),
-          subLabel: this.$t('notifications.organization.instruction-sub'),
-          value: this.form.new_instruction,
-          settingValue: 'new_instruction',
-        },
-      ]
+const switches = computed(() => {
+  return [
+    {
+      label: t('notifications.category.project-created'),
+      subLabel: t('notifications.category.project-created-sub'),
+      value: form.value.category_project_created,
+      settingValue: 'category_project_created',
     },
-  },
-
-  async mounted() {
-    await this.usersStore.getNotifications(this.usersStore.id)
-    this.initNotificationSettings()
-  },
-
-  methods: {
-    initNotificationSettings() {
-      this.form = { ...this.notifications }
-
-      this.isLoading = false
+    {
+      label: t('notifications.category.project-updated'),
+      subLabel: t('notifications.category.project-updated-sub'),
+      value: form.value.category_project_updated,
+      settingValue: 'category_project_updated',
     },
-
-    async updateNotifications(setting) {
-      const payload = {
-        ...this.notifications,
-      }
-
-      payload[setting] = !this.notifications[setting]
-
-      const body = {
-        id: this.usersStore.id,
-        payload: payload,
-      }
-
-      await this.usersStore.patchNotifications(body)
+    {
+      label: t('notifications.projects.follow'),
+      subLabel: t('notifications.projects.follow-sub'),
+      value: form.value.followed_project_has_been_edited,
+      settingValue: 'followed_project_has_been_edited',
     },
-  },
+    {
+      label: t('notifications.projects.member'),
+      subLabel: t('notifications.projects.member-sub'),
+      value: form.value.notify_added_to_project,
+      settingValue: 'notify_added_to_project',
+    },
+    {
+      label: t('notifications.projects.comment'),
+      subLabel: t('notifications.projects.comment-sub'),
+      value: form.value.project_has_been_commented,
+      settingValue: 'project_has_been_commented',
+    },
+    {
+      label: t('notifications.projects.internal-message'),
+      subLabel: t('notifications.projects.internal-message-sub'),
+      value: form.value.project_has_new_private_message,
+      settingValue: 'project_has_new_private_message',
+    },
+    {
+      label: t('notifications.projects.project'),
+      subLabel: t('notifications.projects.project-sub'),
+      value: form.value.project_has_been_edited,
+      settingValue: 'project_has_been_edited',
+    },
+    {
+      label: t('notifications.projects.announcement'),
+      subLabel: t('notifications.projects.announcement-sub'),
+      value: form.value.announcement_published,
+      settingValue: 'announcement_published',
+    },
+    {
+      label: t('notifications.projects.review'),
+      subLabel: t('notifications.projects.review-sub'),
+      value: form.value.project_ready_for_review,
+      settingValue: 'project_ready_for_review',
+    },
+    {
+      label: t('notifications.projects.reviewed'),
+      subLabel: t('notifications.projects.reviewed-sub'),
+      value: form.value.project_has_been_reviewed,
+      settingValue: 'project_has_been_reviewed',
+    },
+    {
+      label: t('notifications.projects.reply'),
+      subLabel: t('notifications.projects.reply-sub'),
+      value: form.value.comment_received_a_response,
+      settingValue: 'comment_received_a_response',
+    },
+    {
+      label: t('notifications.organization.access'),
+      subLabel: t('notifications.organization.access-sub'),
+      value: form.value.organization_has_new_access_request,
+      settingValue: 'organization_has_new_access_request',
+    },
+    {
+      label: t('notifications.organization.invitation'),
+      subLabel: t('notifications.organization.invitation-sub'),
+      value: form.value.invitation_link_will_expire,
+      settingValue: 'invitation_link_will_expire',
+    },
+    {
+      label: t('notifications.organization.instruction'),
+      subLabel: t('notifications.organization.instruction-sub'),
+      value: form.value.new_instruction,
+      settingValue: 'new_instruction',
+    },
+  ]
+})
+
+const initNotificationSettings = () => {
+  form.value = { ...notifications.value }
+  isLoading.value = false
 }
+
+const updateNotifications = async (setting) => {
+  const payload = {
+    ...notifications.value,
+  }
+
+  payload[setting] = !notifications.value[setting]
+
+  const body = {
+    id: usersStore.id,
+    payload: payload,
+  }
+
+  await usersStore.patchNotifications(body)
+}
+
+onMounted(async () => {
+  await usersStore.getNotifications(usersStore.id)
+  initNotificationSettings()
+})
 </script>
 
 <style lang="scss" scoped>

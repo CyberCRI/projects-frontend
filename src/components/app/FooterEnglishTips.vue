@@ -12,22 +12,10 @@
     <slot />
   </ToolTip>
 </template>
-<script>
+<script setup lang="ts">
 import ToolTip from '@/components/base/ToolTip.vue'
-export default {
-  name: 'FooterEnglishTips',
 
-  components: {
-    ToolTip,
-  },
-
-  props: {
-    itemTitle: {
-      type: String,
-      default: 'page',
-    },
-  },
-}
+withDefaults(defineProps<{ itemTitle?: string }>(), { itemTitle: 'page' })
 </script>
 <style lang="scss" scoped>
 .tos-tooltip-content {

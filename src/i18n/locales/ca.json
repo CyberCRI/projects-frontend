@@ -219,7 +219,8 @@
       "users": "Usuaris",
       "requests": "Peticions",
       "groups": "Grups",
-      "settings": "Arranjament"
+      "settings": "Arranjament",
+      "terms": "ToS"
     },
     "page-title": "Administrador",
     "portal": {
@@ -337,6 +338,13 @@
       },
       "accept-success": "L' aplicació s' ha acceptat correctament",
       "decline-success": "L' aplicació s' ha rebutjat correctament"
+    },
+    "terms": {
+      "title": "Termes i condicions",
+      "using-default": "Actualment esteu usant termes per omissió i Condicions",
+      "error": "Hi ha hagut un error en desar els termes i les Condicions.",
+      "saved": "Termes i condicions desades amb èxit",
+      "version": "Versió:"
     }
   },
   "account": {

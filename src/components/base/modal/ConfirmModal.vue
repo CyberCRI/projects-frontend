@@ -19,47 +19,32 @@
   </DialogModal>
 </template>
 
-<script>
+<script setup lang="ts">
 import DialogModal from '@/components/base/modal/DialogModal.vue'
 
-export default {
-  name: 'ConfirmModal',
+withDefaults(
+  defineProps<{
+    title?: string
+    content?: string
+    cancelButtonLabel?: string
+    confirmButtonLabel?: string
+    noSecondButton?: boolean
+    asyncing?: boolean
+  }>(),
+  {
+    title: '',
+    content: '',
+    cancelButtonLabel: 'common.no',
+    confirmButtonLabel: 'common.yes',
+    noSecondButton: false,
+    asyncing: false,
+  }
+)
 
-  components: { DialogModal },
-
-  props: {
-    title: {
-      type: String,
-      default: '',
-    },
-
-    content: {
-      type: String,
-      default: '',
-    },
-
-    cancelButtonLabel: {
-      type: String,
-      default: 'common.no',
-    },
-
-    confirmButtonLabel: {
-      type: String,
-      default: 'common.yes',
-    },
-
-    noSecondButton: {
-      type: Boolean,
-      default: false,
-    },
-    asyncing: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  emits: ['cancel', 'confirm'],
-}
+defineEmits<{
+  cancel: []
+  confirm: []
+}>()
 </script>
 <style lang="scss" scoped>
 .confirm-modal {

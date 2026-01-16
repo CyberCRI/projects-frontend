@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { getHierarchyGroups } from '@/api/v2/group.service'
+import { useLpiHead2 } from '@/composables/useLpiHead'
 
 const router = useRouter()
 const props = withDefaults(defineProps<{ groupId?: string }>(), { groupId: '' })

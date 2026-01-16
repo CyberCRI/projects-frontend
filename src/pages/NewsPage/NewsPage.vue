@@ -1,7 +1,7 @@
-<script setup>
-import { getNews, getAllNews, deleteNews } from '@/api/news.service.ts'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+<script setup lang="ts">
+import { getNews, getAllNews, deleteNews } from '@/api/news.service'
+import useToasterStore from '@/stores/useToaster'
+import useOrganizationsStore from '@/stores/useOrganizations'
 
 const props = defineProps({
   slugOrId: {
@@ -92,7 +92,7 @@ const onNewsEdited = (editedNews) => {
   }
 }
 
-watchEffect(() => [props.slugOrId], load)
+watch(() => props.slugOrId, load)
 
 onMounted(async () => {
   await load()

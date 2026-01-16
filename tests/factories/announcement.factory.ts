@@ -5,6 +5,8 @@ import BaseFactory from './base.factory'
 
 export const AnnouncementFactory = createFactory<AnnouncementOutput>((faker) => ({
   ...BaseFactory.generate(),
+  id: faker.datatype.number(),
+  updated_at: faker.datatype.datetime(),
   description: faker.lorem.paragraph(),
   title: faker.datatype.string(),
   type: ['na', 'job', 'traineeship'][Math.floor(Math.random() * 3)],

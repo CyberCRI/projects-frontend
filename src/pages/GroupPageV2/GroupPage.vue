@@ -43,6 +43,7 @@
 
 <script setup lang="ts">
 import { getGroup } from '@/api/v2/group.service'
+import { useLpiHead2 } from '@/composables/useLpiHead'
 
 const uniqueId = 'group-nav-panel'
 const { canEditGroup } = usePermissions()

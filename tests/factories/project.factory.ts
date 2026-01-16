@@ -18,31 +18,14 @@ import { TemplateFactory } from './template.factory'
 import BlogEntryFactory from './blog-entry.factory'
 import TagFactory from './tag.factory'
 
-// Remove id type number
-const { id, ...restBaseFactory } = BaseFactory.generate()
-
 export const ProjectFactory = createFactory<ProjectModel>((faker) => ({
-  ...restBaseFactory,
+  ...BaseFactory.generate(),
   id: faker.datatype.string(),
   category_id: faker.datatype.number(),
   categories: ProjectCategoryOutputFactory.generateMany(2),
   title: faker.lorem.sentence(),
   description: faker.lorem.paragraphs(),
-  header_image: {
-    id: faker.datatype.number(),
-    name: faker.datatype.string(),
-    url: faker.datatype.string(),
-    height: faker.datatype.number(),
-    width: faker.datatype.number(),
-    created_at: new Date(),
-    variations: {
-      full: faker.image.image(),
-      large: faker.image.image(),
-      medium: faker.image.image(),
-      original: faker.image.image(),
-      small: faker.image.image(),
-    },
-  },
+  header_image: ImageFactory.generate(),
   is_locked: faker.datatype.boolean(),
   is_shareable: faker.datatype.boolean(),
   purpose: faker.lorem.sentence(),

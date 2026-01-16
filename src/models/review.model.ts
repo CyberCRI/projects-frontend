@@ -5,6 +5,7 @@ import BaseModel from '@/models/base.model'
  * @description Review of a project
  */
 export interface ReviewModel extends BaseModel {
+  id: number
   description: string
   title: string
   reviewer: {

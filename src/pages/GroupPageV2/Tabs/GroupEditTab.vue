@@ -13,6 +13,7 @@ import { isEqual } from 'es-toolkit'
 import useToasterStore from '@/stores/useToaster'
 import usePeopleGroupsStore from '@/stores/usePeopleGroups'
 import useUsersStore from '@/stores/useUsers'
+import { useLpiHead2 } from '@/composables/useLpiHead'
 
 const props = defineProps({
   group: {

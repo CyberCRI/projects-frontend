@@ -23,27 +23,19 @@
   </div>
 </template>
 
-<script>
-import { NuxtLink } from '#components'
-export default {
-  name: 'BasicCard',
+<script setup lang="ts">
+withDefaults(
+  defineProps<{
+    toLink?: string | object
+    mode?: 'card' | 'list'
+  }>(),
+  {
+    toLink: null,
+    mode: 'card',
+  }
+)
 
-  components: {
-    NuxtLink,
-  },
-  props: {
-    toLink: {
-      type: [String, Object],
-      default: null,
-    },
-    mode: {
-      type: String,
-      default: 'card', // 'card' or 'list'
-    },
-  },
-
-  emits: ['click'],
-}
+defineEmits<{ click: [] }>()
 </script>
 
 <style lang="scss" scoped>

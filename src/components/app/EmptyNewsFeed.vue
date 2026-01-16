@@ -1,6 +1,3 @@
-<script setup>
-//NADA
-</script>
 <template>
   <p class="no-news">
     {{ $t('feed.empty') }}

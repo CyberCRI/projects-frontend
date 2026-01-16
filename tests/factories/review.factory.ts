@@ -4,6 +4,7 @@ import BaseFactory from './base.factory'
 
 export const ReviewFactory = createFactory<ReviewModel>((faker) => ({
   ...BaseFactory.generate(),
+  id: faker.datatype.number(),
   description: faker.datatype.string(),
   title: faker.datatype.string(),
   reviewer: {

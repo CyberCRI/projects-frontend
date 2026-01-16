@@ -16,55 +16,39 @@
   </component>
 </template>
 
-<script>
+<script setup lang="ts">
+import { IconImageChoice } from '@/functs/IconImage'
 import IconImage from '@/components/base/media/IconImage.vue'
-import { NuxtLink } from '#components'
-export default {
-  name: 'HeaderLink',
 
-  components: {
-    IconImage,
-    NuxtLink,
-  },
+const props = withDefaults(
+  defineProps<{
+    label?: string
+    icon?: IconImageChoice
+    routes?: any[]
+    roundedIcon?: boolean
+    dataTest?: string
+    to?: string | object
+  }>(),
+  {
+    label: null,
+    icon: null,
+    routes: null,
+    roundedIcon: false,
+    dataTest: null,
+    to: null,
+  }
+)
 
-  props: {
-    label: {
-      type: String,
-      default: null,
-    },
+defineEmits<{ click: [] }>()
 
-    icon: {
-      type: String,
-      default: null,
-    },
+const route = useRoute()
 
-    routes: {
-      type: Array,
-      default: null,
-    },
-
-    roundedIcon: {
-      type: Boolean,
-      default: false,
-    },
-    dataTest: {
-      type: String,
-      default: null,
-    },
-    to: {
-      type: [String, Object],
-      default: null,
-    },
-  },
-
-  emits: ['click'],
-
-  computed: {
-    underlined() {
-      return this.routes && this.routes.length && this.routes.includes(this.$route.name)
-    },
-  },
-}
+const underlined = computed(() => {
+  if (props.routes) {
+    return props.routes.includes(route.name)
+  }
+  return false
+})
 </script>
 
 <style lang="scss" scoped>

@@ -5,12 +5,20 @@ import BaseModel from '@/models/base.model'
  * @name ImageModel
  * @description Image of a project
  */
-export interface ImageModel extends BaseModel {
-  file: string
-  name: string
-  height?: number
-  width?: number
-}
+export type ImageModel = BaseModel &
+  ImageSizesFromApi & {
+    file: string
+    name: string
+    height?: number
+    width?: number
+    variations: {
+      full: string
+      large: string
+      medium: string
+      original: string
+      small: string
+    }
+  }
 
 export type Image = ImageModel &
   ImageSizesFromApi & {

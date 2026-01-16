@@ -15,89 +15,70 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'TheVideoPlayer',
-  setup() {
-    const { locale } = useNuxtI18n()
-    return {
-      locale,
-    }
-  },
-  data() {
-    return {
-      videos: {
-        fr: [
-          {
-            title: 'Tutoriel Projects partie 1',
-            description: 'Description 1',
-            id: '557118437',
-            thumbnail: 'https://i.vimeocdn.com/video/1151481938_640',
-          },
-          {
-            title: 'Tutoriel Projects partie 2',
-            description: 'Description 2',
-            id: '557118584',
-            thumbnail: 'https://i.vimeocdn.com/video/1151482228_640',
-          },
-          {
-            title: 'Tutoriel Projects partie 3',
-            description: 'Description 3',
-            id: '557118498',
-            thumbnail: 'https://i.vimeocdn.com/video/1151482047_640',
-          },
-          {
-            title: 'Tutoriel Projects partie 4',
-            description: 'Description 4',
-            id: '557118551',
-            thumbnail: 'https://i.vimeocdn.com/video/1151482372_640',
-          },
-        ],
-        en: [
-          {
-            title: 'Projects tutorial part 1',
-            description: 'Description 1 EN',
-            id: '557116523',
-            thumbnail: 'https://i.vimeocdn.com/video/1151477986_640',
-          },
-          {
-            title: 'Projects tutorial part 1.5',
-            description: 'Description 1.5 EN',
-            id: '557116896',
-            thumbnail: 'https://i.vimeocdn.com/video/1151478970_640',
-          },
-          {
-            title: 'Projects tutorial part 2',
-            description: 'Description 2 EN',
-            id: '557116675',
-            thumbnail: 'https://i.vimeocdn.com/video/1151478343_640',
-          },
-          {
-            title: 'Projects tutorial part 3',
-            description: 'Description 3 EN',
-            id: '557116700',
-            thumbnail: 'https://i.vimeocdn.com/video/1151479038_640',
-          },
-        ],
-      },
-      video: null,
-    }
-  },
-
-  computed: {
-    videoSrc() {
-      return this.locale === 'fr'
-        ? 'https://www.youtube.com/embed/p5_DaK7CQUI?si=AH_F9MANlsPP_h1l'
-        : 'https://www.youtube.com/embed/0DncVa2JWQY?si=RKu3bY4QQiOvnBHk'
+<script setup lang="ts">
+const { locale } = useNuxtI18n()
+const VIDEOS = {
+  fr: [
+    {
+      title: 'Tutoriel Projects partie 1',
+      description: 'Description 1',
+      id: '557118437',
+      thumbnail: 'https://i.vimeocdn.com/video/1151481938_640',
     },
-  },
-
-  mounted() {
-    if (this.videos) {
-      this.video = this.videos[this.locale][0]
-    }
-  },
+    {
+      title: 'Tutoriel Projects partie 2',
+      description: 'Description 2',
+      id: '557118584',
+      thumbnail: 'https://i.vimeocdn.com/video/1151482228_640',
+    },
+    {
+      title: 'Tutoriel Projects partie 3',
+      description: 'Description 3',
+      id: '557118498',
+      thumbnail: 'https://i.vimeocdn.com/video/1151482047_640',
+    },
+    {
+      title: 'Tutoriel Projects partie 4',
+      description: 'Description 4',
+      id: '557118551',
+      thumbnail: 'https://i.vimeocdn.com/video/1151482372_640',
+    },
+  ],
+  en: [
+    {
+      title: 'Projects tutorial part 1',
+      description: 'Description 1 EN',
+      id: '557116523',
+      thumbnail: 'https://i.vimeocdn.com/video/1151477986_640',
+    },
+    {
+      title: 'Projects tutorial part 1.5',
+      description: 'Description 1.5 EN',
+      id: '557116896',
+      thumbnail: 'https://i.vimeocdn.com/video/1151478970_640',
+    },
+    {
+      title: 'Projects tutorial part 2',
+      description: 'Description 2 EN',
+      id: '557116675',
+      thumbnail: 'https://i.vimeocdn.com/video/1151478343_640',
+    },
+    {
+      title: 'Projects tutorial part 3',
+      description: 'Description 3 EN',
+      id: '557116700',
+      thumbnail: 'https://i.vimeocdn.com/video/1151479038_640',
+    },
+  ],
 }
+
+const video = computed(() => VIDEOS[locale.value] ?? VIDEOS.en)
+const videoSrc = computed(() => {
+  if (locale.value === 'fr') {
+    return 'https://www.youtube.com/embed/p5_DaK7CQUI?si=AH_F9MANlsPP_h1l'
+  }
+  return 'https://www.youtube.com/embed/0DncVa2JWQY?si=RKu3bY4QQiOvnBHk'
+})
 </script>
 
 <style lang="scss" scoped>

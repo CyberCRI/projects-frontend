@@ -1,4 +1,4 @@
-import type { APIParams } from '@/api/types'
+import type { APIParams, SearchParams } from '@/api/types'
 // import type { ProjectOutput } from '@/models/project.model'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
 // import type { UserModel } from '@/models/user.model'
@@ -15,9 +15,12 @@ export async function getProjectsRecommendationsForUser(orgCode: string, params:
   }) //.data.value
 }
 
-export async function getRandomProjectsRecommendationsForUser(body: RecommendationsParams) {
-  return await useAPI(`organization/${body.organization}/recommended-project/user/random/`, {
-    ..._adaptParamsToGetQuery(body.params),
+export async function getRandomProjectsRecommendationsForUser(
+  orgCode: string,
+  params: SearchParams
+) {
+  return await useAPI(`organization/${orgCode}/recommended-project/user/random/`, {
+    ..._adaptParamsToGetQuery(params),
   }) //.data.value
 }
 

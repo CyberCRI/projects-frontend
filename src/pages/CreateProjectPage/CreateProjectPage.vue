@@ -1,10 +1,10 @@
-<script setup>
+<script setup lang="ts">
 import useValidate from '@vuelidate/core'
 import { required, minLength, maxLength, helpers } from '@vuelidate/validators'
-import useToasterStore from '@/stores/useToaster.ts'
-import useProjectCategories from '@/stores/useProjectCategories.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import useUsersStore from '@/stores/useUsers.ts'
+import useToasterStore from '@/stores/useToaster'
+import useProjectCategories from '@/stores/useProjectCategories'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import useUsersStore from '@/stores/useUsers'
 
 import analytics from '@/analytics'
 import { createProject, createProjectHeader } from '@/api/projects.service'

@@ -5,6 +5,7 @@ import BaseFactory from './base.factory'
 
 export const GoalFactory = createFactory<GoalModel>((faker) => ({
   ...BaseFactory.generate(),
+  id: faker.datatype.number(),
   title: faker.datatype.string(),
   description: faker.lorem.sentence(),
   deadline_at: new Date(),

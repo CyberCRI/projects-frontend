@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import NotificationsSettingsTab from './Tabs/NotificationsSettingsTab.vue'
 import { getOrganizationByCode } from '@/api/organizations.service'
 

@@ -1598,22 +1598,14 @@
   </svg>
 </template>
 
-<script>
-export default {
-  name: 'PatatoidIcon',
-
-  props: {
-    fill: {
-      type: String,
-      default: '#000',
-    },
-
-    background: {
-      type: String,
-      default: '#fff',
-    },
-  },
-}
+<script setup lang="ts">
+withDefaults(
+  defineProps<{
+    fill?: string
+    background?: string
+  }>(),
+  { fill: '#000', background: '#fff' }
+)
 </script>
 
 <style lang="scss" scoped>

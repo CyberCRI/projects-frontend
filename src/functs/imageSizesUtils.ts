@@ -1,4 +1,4 @@
-type ImageSizes = {
+export type ImageSizes = {
   scaleX: number
   scaleY: number
   left: number

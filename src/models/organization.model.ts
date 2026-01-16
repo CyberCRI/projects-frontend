@@ -4,6 +4,7 @@ import { LanguageType } from '@/models/types'
 import { OrganizationDirectoryModel } from '@/models/organization-directory.model'
 import { TagModel } from './tag.model'
 import { Translated } from '@/interfaces/translated'
+import { ImageModel } from '@/models/image.model'
 
 /**
  * @name OrganizationModel
@@ -31,9 +32,10 @@ export interface TermsAndConditions {
   displayed_updated_at: number
 }
 
-export type OrganizationModel = BaseModel & {
+export interface OrganizationModel extends BaseModel {
+  id: number
   background_color: string
-  banner_image: string
+  banner_image: ImageModel
   code: string
   contact_email: string
   dashboard_title: string
@@ -46,12 +48,14 @@ export type OrganizationModel = BaseModel & {
   website_url: string
   faq: FaqModel
   children: string[]
-  enabled_projects_tag_classifications: object[] // TODO: define this type
-  enabled_skills_tag_classifications: object[] // TODO: define this type
+  enabled_projects_tag_classifications: any[] // TODO: define this type
+  enabled_skills_tag_classifications: any[] // TODO: define this type
   terms_and_conditions: TermsAndConditions | null
   description: string
   chat_button_text: string
   auto_translate_content: boolean
+  onboarding_enabled: boolean
+  chat_url?: string
 }
 
 export type OrganizationPatchInput = Partial<OrganizationModel> & {

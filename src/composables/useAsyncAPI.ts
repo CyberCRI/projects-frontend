@@ -1,3 +1,5 @@
+import useLoadingFromStatus from '@/composables/useLoadingFromStatus'
+
 export type AsyncConfig<ResDataT, DataT, Result> = Parameters<
   typeof useAsyncData<ResDataT, unknown, DataT>
 >['2'] & {

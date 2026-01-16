@@ -1,16 +1,16 @@
-<script setup>
+<script setup lang="ts">
 import { ref, watch, computed, nextTick } from 'vue'
 import { debounce } from 'es-toolkit'
 import { getOrgClassificationTags, deleteClassificationTag } from '@/api/tag-classification.service'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useOrganizationsStore from '@/stores/useOrganizations'
 import FilterSearchInput from '@/components/search/Filters/FilterSearchInput.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import useAPI from '@/composables/useAPI.ts'
+import useAPI from '@/composables/useAPI'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import EditTagModal from '@/components/admin/EditTagModal.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import useToasterStore from '@/stores/useToaster.ts'
+import useToasterStore from '@/stores/useToaster'
 
 import useTagTexts from '@/composables/useTagTexts.js'
 

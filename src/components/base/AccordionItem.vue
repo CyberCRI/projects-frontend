@@ -20,45 +20,21 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
 
-export default {
-  name: 'AccordionItem',
+const emit = defineEmits<{ 'is-active': [boolean] }>()
+const show = ref(false)
 
-  components: { IconImage },
-
-  emits: ['is-active'],
-
-  data() {
-    return {
-      show: false,
-    }
-  },
-
-  methods: {
-    toggle() {
-      this.show = !this.show
-      this.$emit('is-active', this.show)
-    },
-
-    beforeEnter(el) {
-      el.style.height = '0'
-    },
-
-    enter(el) {
-      el.style.height = '100%'
-    },
-
-    beforeLeave(el) {
-      el.style.height = '100%'
-    },
-
-    leave(el) {
-      el.style.height = '0'
-    },
-  },
+const toggle = () => {
+  show.value = !show.value
+  emit('is-active', show.value)
 }
+const beforeEnter = (el) => (el.style.height = '0')
+const enter = (el) => (el.style.height = '100%')
+
+const beforeLeave = (el) => (el.style.height = '100%')
+const leave = (el) => (el.style.height = '0')
 </script>
 
 <style scoped lang="scss">

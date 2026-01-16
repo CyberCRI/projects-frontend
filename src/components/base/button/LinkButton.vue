@@ -7,51 +7,29 @@
     class="link-button"
   >
     <ButtonContent :label="label" :btn-icon="btnIcon" :no-text-transform="noTextTransform" />
+    <!-- <IconImage name="" /> -->
   </component>
 </template>
 
-<script>
-import ButtonContent from '@/components/base/button/ButtonContent.vue'
-import { NuxtLink } from '#components'
-export default {
-  name: 'LinkButton',
+<script setup lang="ts">
+import { IconImageChoice } from '@/functs/IconImage'
 
-  components: {
-    ButtonContent,
-    NuxtLink,
-  },
+const props = withDefaults(
+  defineProps<{
+    label?: string
+    to?: string | object
+    btnIcon?: IconImageChoice | 'LoaderSimple'
+    noTextTransform?: boolean
+  }>(),
+  {
+    label: null,
+    to: null,
+    btnIcon: null,
+    noTextTransform: false,
+  }
+)
 
-  props: {
-    label: {
-      type: String,
-      default: null,
-    },
-
-    to: {
-      default: null,
-      validator(value) {
-        // use custom validator insted of types to allow null or undefined
-        return !value || typeof value === 'string' || typeof value === 'object'
-      },
-    },
-
-    btnIcon: {
-      type: [String, Object],
-      default: null,
-    },
-
-    noTextTransform: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  computed: {
-    iconOnly() {
-      return (!this.label || !this.label.length) && this.btnIcon
-    },
-  },
-}
+const iconOnly = computed(() => (!props.label || !props.label.length) && props.btnIcon)
 </script>
 
 <style lang="scss" scoped>

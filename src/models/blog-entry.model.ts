@@ -5,6 +5,7 @@ import BaseModel from '@/models/base.model'
  * @description Article/Blog attached to a project
  */
 export interface BlogEntryModel extends BaseModel {
+  id: number
   title: string
   content: string
 }

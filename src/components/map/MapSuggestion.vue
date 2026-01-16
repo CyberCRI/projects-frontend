@@ -13,17 +13,16 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 defineOptions({ name: 'MapSuggestion' })
 
-const props = defineProps({
-  location: {
-    type: Object,
-    default: null,
-  },
-})
+const props = withDefaults(defineProps<{ location?: any }>(), { location: null })
 
-const emit = defineEmits(['mounted', 'unmounted', 'pick-location'])
+const emit = defineEmits<{
+  mounted: [any]
+  unmounted: [any]
+  'pick-location': [any]
+}>()
 
 const markerRef = useTemplateRef('marker')
 onMounted(() => {

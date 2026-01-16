@@ -219,7 +219,8 @@
       "users": "Benutzer",
       "requests": "Anträge",
       "groups": "Gruppen",
-      "settings": "Einstellungen"
+      "settings": "Einstellungen",
+      "terms": "ToS"
     },
     "page-title": "Admin",
     "portal": {
@@ -337,6 +338,13 @@
       },
       "accept-success": "Erfolgreiche Anwendung",
       "decline-success": "Antrag abgelehnt erfolgreich"
+    },
+    "terms": {
+      "title": "Allgemeine Geschäftsbedingungen",
+      "using-default": "Sie verwenden aktuell Standardbedingungen",
+      "error": "Ein Fehler trat beim Speichern der Allgemeinen Geschäftsbedingungen auf.",
+      "saved": "Geschäftsbedingungen erfolgreich gespeichert",
+      "version": "Ausführung:"
     }
   },
   "account": {

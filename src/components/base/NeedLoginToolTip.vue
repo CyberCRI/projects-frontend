@@ -11,30 +11,14 @@
     <slot :need-login="!usersStore.isConnected" />
   </ToolTip>
 </template>
-<script>
+<script setup lang="ts">
 import ToolTip from '@/components/base/ToolTip.vue'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import useUsersStore from '@/stores/useUsers.ts'
+import useUsersStore from '@/stores/useUsers'
 
-export default {
-  name: 'NeedLoginToolTip',
-  components: {
-    ToolTip,
-    LpiButton,
-  },
-  setup() {
-    const usersStore = useUsersStore()
-    return {
-      usersStore,
-    }
-  },
-  methods: {
-    logInUser() {
-      goToKeycloakLoginPage()
-    },
-  },
-}
+const usersStore = useUsersStore()
+const logInUser = () => goToKeycloakLoginPage()
 </script>
 <style lang="scss" scoped>
 .notice {

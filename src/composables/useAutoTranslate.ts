@@ -1,7 +1,7 @@
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import { TranslatedOrganizationModel } from '@/models/organization.model'
 import { TranslatedPeopleModel } from '@/models/people.model'
-import { TranslatedProjectModel } from '@/models/project.model'
+import { TranslatedProject } from '@/models/project.model'
 import { AttachmentFileModel, TranslatedAttachmentFile } from '@/models/attachment-file.model'
 import { AttachmentLinkModel, TranslatedAttachmentLink } from '@/models/attachment-link.model'
 
@@ -69,7 +69,7 @@ export default function useAutoTranslate() {
   // --------------------
   // Projects
   const translateProject = (project) => {
-    return computed<TranslatedProjectModel>(() => {
+    return computed<TranslatedProject>(() => {
       const unrefProject = unref(project)
       if (!unrefProject) return project
       return {
@@ -79,7 +79,7 @@ export default function useAutoTranslate() {
     })
   }
   const translateProjects = (projects) =>
-    translateEntities<TranslatedProjectModel>(projects, translateProject)
+    translateEntities<TranslatedProject>(projects, translateProject)
 
   const translateComment = (comment) => {
     const _comment = unref(comment)

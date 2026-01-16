@@ -38,7 +38,7 @@
           <div class="file-input-ctn">
             <ImageInput
               id="add-file-input"
-              :label="$t('file.upload' + ' *')"
+              :label="$t('file.upload') + ' *'"
               class="text-input"
               file-types="*/*"
               @upload-image="uploadImage"
@@ -53,7 +53,7 @@
         <template v-if="isLink">
           <TextInput
             v-model="link"
-            :label="$t('resource.link-address' + ' *')"
+            :label="$t('resource.link-address') + ' *'"
             class="text-input"
             data-test="input-link-adress"
             placeholder="https://..."
@@ -64,7 +64,7 @@
 
         <TextInput
           v-model="title"
-          :label="$t('common.title' + ' *')"
+          :label="$t('common.title') + ' *'"
           :placeholder="$t('common.title')"
           class="text-input"
           data-test="input-link-title"
@@ -75,7 +75,7 @@
 
         <TextInput
           v-model="description"
-          :label="$t('form.description' + ' *')"
+          :label="$t('form.description') + ' *'"
           :placeholder="$t('form.description')"
           class="text-input"
           data-test="input-link-description"

@@ -1,13 +1,13 @@
 ARG NODE_VERSION=22.13.1
 
-FROM node:${NODE_VERSION}-alpine as base
+FROM node:${NODE_VERSION}-alpine AS base
 
 ARG PORT=3000
 
 WORKDIR /app
 RUN apk add --no-cache bash
 
-FROM base as builder
+FROM base AS builder
 
 WORKDIR /app
 COPY --link package.json yarn.lock ./

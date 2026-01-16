@@ -321,9 +321,3 @@
     />
   </svg>
 </template>
-
-<script>
-export default {
-  name: 'LpiLogo',
-}
-</script>
