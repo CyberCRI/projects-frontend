@@ -129,10 +129,12 @@ const click = () => {
 
 .user.anonymous,
 .user.anonymous:hover {
+  opacity: 0.6;
   filter: unset !important;
   transform: unset !important;
   text-shadow: unset !important;
   cursor: not-allowed !important;
+  pointer-event: none;
 
   svg {
     cursor: not-allowed !important;
