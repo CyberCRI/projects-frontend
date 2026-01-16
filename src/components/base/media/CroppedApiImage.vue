@@ -48,10 +48,13 @@ const _src = computed(() => {
 })
 
 const src = computed(() => {
-  if (imageError.value) {
-    return ''
+  if (_src.value) {
+    if (imageError.value) {
+      return ''
+    }
+    return _src.value
   }
-  return _src.value || `${runtimeConfig.public.appPublicBinariesPrefix}${props.defaultPicture}`
+  return `${runtimeConfig.public.appPublicBinariesPrefix}${props.defaultPicture}`
 })
 
 const imageSizes = computed(() => {

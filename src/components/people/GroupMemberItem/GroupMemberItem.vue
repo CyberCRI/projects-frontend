@@ -1,5 +1,5 @@
 <template>
-  <div class="user" @click="emit('user-click', user)">
+  <div :class="['user', isAnonymous ? 'anonymous' : '']" @click="click">
     <CroppedApiImage
       :alt="user.id ? `${user.given_name} ${user.family_name} image` : `${user.name} image`"
       class="picture"
@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import { isNotGroup, isGroup } from '@/functs/users'
+import { isNotGroup, isGroup, isAnonymousUser } from '@/functs/users'
 
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
@@ -47,6 +47,8 @@ const props = defineProps({
 
 const emit = defineEmits(['user-click'])
 
+const isAnonymous = computed(() => isAnonymousUser(props.user))
+
 const userName = computed(() => {
   return `${props.user.given_name?.toLowerCase()} ${props.user.family_name?.toLowerCase()}`
 })
@@ -59,6 +61,13 @@ const roleLabel = computed(() => {
   }
   return null
 })
+
+const click = () => {
+  if (isAnonymous.value) {
+    return
+  }
+  emit('user-click', props.user)
+}
 </script>
 
 <style lang="scss" scoped>
@@ -115,6 +124,18 @@ const roleLabel = computed(() => {
     margin-top: $space-s;
     text-align: center;
     font-size: $font-size-s;
+  }
+}
+
+.user.anonymous,
+.user.anonymous:hover {
+  filter: unset !important;
+  transform: unset !important;
+  text-shadow: unset !important;
+  cursor: not-allowed !important;
+
+  svg {
+    cursor: not-allowed !important;
   }
 }
 </style>

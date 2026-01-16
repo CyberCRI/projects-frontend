@@ -1,17 +1,12 @@
 <template>
-  <component
-    :is="to ? 'NuxtLink' : 'a'"
-    class="see-more-arrow"
-    :to="to"
-    :href="to ? undefined : '#'"
-  >
+  <component :is="is" class="see-more-arrow" :to="to" :href="to ? undefined : '#'">
     <span class="label-ctn">{{ label ? label : $t('common.see-more') }}</span>
     <span class="arrow-ctn"><IconImage name="ArrowRight" class="arrow" /></span>
   </component>
 </template>
 <script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
-withDefaults(
+const props = withDefaults(
   defineProps<{
     to?: string | object
     label?: string
@@ -21,6 +16,10 @@ withDefaults(
     label: null,
   }
 )
+const is = computed(() => {
+  if (props.to) return resolveComponent('NuxtLink')
+  return 'a'
+})
 </script>
 <style lang="scss" scoped>
 $icon-size: pxToRem(18px);
