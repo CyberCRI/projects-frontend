@@ -3126,5 +3126,10 @@
     "title": "Conditions générales d’utilisation",
     "approve-title": "Veuillez approuver les conditions générales d'utilisation",
     "approve-button": "J'accepte"
+  },
+  "pdf": {
+    "blog-entries-limited-warning": "Seuls les {max} premiers articles de blog sont inclus dans l'export PDF (sur un total de {total}).",
+    "download-pdf": "PDF",
+    "generated-on": "Généré le {date}"
   }
 }

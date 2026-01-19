@@ -137,6 +137,7 @@ export default defineNuxtConfig({
     appSorbobotApiToken: '',
     appMcpServerTrace: 0,
     appSorbobotApiTrace: 0,
+    appGotenbergServerUrl: '',
     public: {
       appVersion: '',
       appApiOrgCode: '',
@@ -168,6 +169,7 @@ export default defineNuxtConfig({
       appChatbotEnabled: 0,
       appChatbotExemples: '',
       appSorbobotApiUrl: '',
+      appGotenbergEnabled: '',
     },
   },
   i18n: {

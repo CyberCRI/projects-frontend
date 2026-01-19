@@ -5,7 +5,7 @@
     xmlns="http://www.w3.org/2000/svg"
     @click="$emit('click')"
     v-html="icon"
-  />
+  ></svg>
 </template>
 
 <script setup lang="ts">
