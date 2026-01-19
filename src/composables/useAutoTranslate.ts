@@ -4,6 +4,7 @@ import { TranslatedPeopleModel } from '@/models/people.model'
 import { TranslatedProject } from '@/models/project.model'
 import { AttachmentFileModel, TranslatedAttachmentFile } from '@/models/attachment-file.model'
 import { AttachmentLinkModel, TranslatedAttachmentLink } from '@/models/attachment-link.model'
+import { TranslatedDocument } from '@/interfaces/researcher'
 
 // type can be computed or object
 type RefOrRaw<DataT> = ComputedRef<DataT> | Ref<DataT> | DataT
@@ -246,9 +247,10 @@ export default function useAutoTranslate() {
     researcher document
   */
 
-  const translateResearcherDocument = (data) => translateEntity(data, ['title', 'description'])
+  const translateResearcherDocument = (data) =>
+    translateEntity<TranslatedDocument>(data, ['title', 'description'])
   const translateResearcherDocuments = (datas) =>
-    translateEntities(datas, translateResearcherDocument)
+    translateEntities<TranslatedDocument>(datas, translateResearcherDocument)
 
   return {
     isAutoTranslateActivated,

@@ -10,7 +10,7 @@
     <FetchLoader :status="status">
       <div class="documents-list-similars">
         <ResearcherDocument
-          v-for="doc in documentsTranslated"
+          v-for="doc in documents"
           :key="doc.id"
           :document="doc"
           :doc-type="docType"
@@ -25,58 +25,26 @@
 </template>
 
 <script setup lang="ts">
-import { sanitizeResearcherDocuments } from '@/api/sanitizes/researcher'
+import { getResearchDocumentSimilars } from '@/api/v2/crisalid.service'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
-import { PaginationResult, usePagination } from '@/composables/usePagination'
-import { Document, TranslatedDocument } from '@/interfaces/researcher'
-import { UserModel } from '@/models/user.model'
-import { AsyncDataRequestStatus } from 'nuxt/app'
-
-defineOptions({ name: 'ResearcherDocumentSimilars' })
+import { TranslatedDocument } from '@/interfaces/researcher'
 
 const { t } = useNuxtI18n()
 const emit = defineEmits(['close'])
 const props = defineProps<{
-  document?: Document
+  document?: TranslatedDocument
   docType: string
-  user: UserModel
 }>()
 
-const status = ref<AsyncDataRequestStatus>('pending')
-const documents = ref<PaginationResult<Document>>()
-const pagination = usePagination(documents, { limit: 10 })
+const organizationCode = useOrganizationCode()
+const documentId = computed(() => props.document?.id)
+const {
+  status,
+  pagination,
+  data: documents,
+} = getResearchDocumentSimilars(organizationCode, documentId)
 const { count } = pagination
-const { translateResearcherDocuments } = useAutoTranslate()
-const orgaCode = useOrganizationCode()
-
-// get results list from paginated response
-const results = computed<Document[] | undefined>(() => documents.value?.results)
-const documentsTranslated: ComputedRef<TranslatedDocument[]> = translateResearcherDocuments(results)
-
-const getDocuments = (query) => {
-  status.value = 'pending'
-  useAPI(
-    `crisalid/organization/${orgaCode}/researcher/${props.user.researcher.id}/${props.docType}/${props.document.id}/similars/`,
-    {
-      query,
-    }
-  )
-    .then((data) => {
-      documents.value = sanitizeResearcherDocuments(data)
-      status.value = 'success'
-    })
-    .catch(() => {
-      status.value = 'error'
-    })
-}
-
-watch(pagination.query, (query) => props.document && getDocuments(query))
-watch(
-  () => props.document,
-  (doc) => doc && getDocuments(pagination.query()),
-  { immediate: true }
-)
 </script>
 
 <style lang="scss">

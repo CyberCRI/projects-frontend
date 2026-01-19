@@ -13,7 +13,7 @@
           class="profile-document-contributor"
           :to="{ name: 'ProfileOtherUser', params: { userId: author.user.slug } }"
         >
-          <strong>{{ author.display_name }}</strong>
+          <strong>{{ author.user.display_name }}</strong>
         </NuxtLink>
         <!-- else , ceate a link to the harvester (hal,idref..ect) -->
         <a

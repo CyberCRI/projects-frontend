@@ -1,9 +1,4 @@
-import {
-  PaginationResult,
-  paginationConfig,
-  PaginationQuery,
-  usePagination,
-} from '@/composables/usePagination'
+import { PaginationResult, paginationConfig, usePagination } from '@/composables/usePagination'
 import { omit } from 'es-toolkit'
 
 import type { AsyncConfig } from './useAsyncAPI'
@@ -12,7 +7,7 @@ import useAsyncAPI from './useAsyncAPI'
 type AsyncPaginationHandler = {
   ctx?: Parameters<Parameters<typeof useAsyncData>['1']>[0]
   config: {
-    query: PaginationQuery
+    query: object
   }
 }
 
@@ -55,11 +50,14 @@ export default function useAsyncPaginationAPI<DataT, Result = undefined>(
 
   const rest = useAsyncAPI(
     key,
-    (ctx) => {
+    ({ config }) => {
+      console.log(config)
       return params[1]({
-        ctx,
         config: {
-          query: pagination.query(),
+          query: {
+            ...config.query,
+            ...pagination.query(),
+          },
         },
       })
     },
