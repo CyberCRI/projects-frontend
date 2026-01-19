@@ -1,7 +1,10 @@
 <template>
-  <div class="group">
+  <div class="group shadowed-box">
     <div class="group-header">
-      <h2 class="title">{{ title }} ( {{ total }} )</h2>
+      <div class="title-container">
+        <IconImage v-if="icon" :name="icon" class="icon" />
+        <h2 class="title">{{ title }} ( {{ total }} )</h2>
+      </div>
       <SeeMoreArrow v-if="!loading" class="see-more-button" :to="seeMore" />
     </div>
 
@@ -13,13 +16,51 @@
 </template>
 
 <script setup lang="ts">
+import IconImage from '@/components/base/media/IconImage.vue'
+import { IconImageChoice } from '@/functs/IconImage'
+
 withDefaults(
   defineProps<{
     title: string
     total: number
     seeMore: any
     loading?: boolean
+    icon?: IconImageChoice
   }>(),
-  { loading: false }
+  { loading: false, icon: null }
 )
 </script>
+
+<style lang="scss" scoped>
+.group {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+}
+
+.group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-transform: uppercase;
+}
+
+.group-container {
+  margin-top: 2rem;
+}
+
+.title-container {
+  color: $primary-dark;
+  fill: $primary-dark;
+  display: flex;
+  align-items: center;
+  .icon {
+    display: inline-block;
+    width: 1.5rem;
+    margin: 0 0.3rem;
+  }
+  .title {
+    display: inline-block;
+  }
+}
+</style>

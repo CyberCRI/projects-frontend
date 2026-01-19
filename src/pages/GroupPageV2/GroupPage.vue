@@ -32,8 +32,10 @@
             />
           </template>
           <template v-if="currentTab" #content>
-            <SubPageTitle :title-prefix="group.$t?.name" :current-tab="currentTab" />
-            <NuxtPage v-bind="currentTab.props" />
+            <div class="group-content">
+              <SubPageTitle :title-prefix="group.$t?.name" :current-tab="currentTab" />
+              <NuxtPage v-bind="currentTab.props" />
+            </div>
           </template>
         </NavPanelLayout>
       </FetchLoader>
@@ -86,6 +88,8 @@ const groupModules = computed(
     group.value?.modules ?? {
       members: 0,
       featured_projects: 0,
+      publications: 0,
+      conferences: 0,
     }
 )
 
@@ -132,7 +136,37 @@ const groupTabsDisplay = computed(() => {
         isLoading: isLoading.value,
       },
       condition: groupModules.value.featured_projects,
-      icon: 'Archive',
+      icon: 'Briefcase',
+    },
+    {
+      isEditing: false,
+      key: 'group-publications',
+      dataTest: 'group-publications',
+      label: t('group.publications'),
+      view: `/group/${route.params.groupId}/publications`,
+      altView: `/group/${route.params.groupId}/publications/edit`,
+      props: {
+        documentType: "publications",
+        group: group.value,
+        isLoading: isLoading.value,
+      },
+      condition: groupModules.value.publications,
+      icon: 'Article',
+    },
+    {
+      isEditing: false,
+      key: 'group-conferences',
+      dataTest: 'group-conferences',
+      label: t('group.conferences'),
+      view: `/group/${route.params.groupId}/conferences`,
+      altView: `/group/${route.params.groupId}/conferences/edit`,
+      props: {
+        documentType: "conferences",
+        group: group.value,
+        isLoading: isLoading.value,
+      },
+      condition: groupModules.value.conferences,
+      icon: 'Article',
     },
   ]
 })
@@ -178,6 +212,38 @@ const groupTabsEdit = computed(() => {
       view: `/group/${route.params.groupId}/projects/edit`,
       altView: `/group/${route.params.groupId}/projects`,
       props: {
+        isInEditingMode: true,
+        group: group.value,
+        isLoading: isLoading.value,
+      },
+      condition: true,
+      icon: 'Pen',
+    },
+r    {
+      isEditing: true,
+      key: 'group-publications-edit',
+      dataTest: 'group-publications-edit',
+      label: t('group.publications'),
+      view: `/group/${route.params.groupId}/publications/edit`,
+      altView: `/group/${route.params.groupId}/publications`,
+      props: {
+        documentType: "publications",
+        isInEditingMode: true,
+        group: group.value,
+        isLoading: isLoading.value,
+      },
+      condition: true,
+      icon: 'Pen',
+    },
+    {
+      isEditing: true,
+      key: 'group-conferences-edit',
+      dataTest: 'group-conferences-edit',
+      label: t('group.conferences'),
+      view: `/group/${route.params.groupId}/conferences/edit`,
+      altView: `/group/${route.params.groupId}/conferences`,
+      props: {
+        documentType: "conferences",
         isInEditingMode: true,
         group: group.value,
         isLoading: isLoading.value,
@@ -237,5 +303,11 @@ if (import.meta.client) {
 
 .recommandations {
   margin-top: $space-2xl;
+}
+
+.group-content {
+  //   background-color: #f0f3f5;
+  //   padding: 1rem;
+  //   border-radius: 0.5rem;
 }
 </style>

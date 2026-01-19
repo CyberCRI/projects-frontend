@@ -16,13 +16,25 @@
         class="description-content"
       />
       <!-- add new modules Here -->
-      <div data-test="group-modules">
+      <div class="group-modules-list" data-test="group-modules">
         <GroupProjectsPreview
           v-if="groupModules.featured_projects"
           :group="group"
           :is-loading="isLoading"
         />
         <GroupMembersPreview v-if="groupModules.members" :group="group" :is-loading="isLoading" />
+        <GroupDocumentsPreview
+          v-if="groupModules.publications"
+          document-type="publications"
+          :group="group"
+          :is-loading="isLoading"
+        />
+        <GroupDocumentsPreview
+          v-if="groupModules.conferences"
+          document-type="publications"
+          :group="group"
+          :is-loading="isLoading"
+        />
       </div>
     </div>
   </div>
@@ -32,6 +44,7 @@
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import GroupProjectsPreview from '@/pages/GroupPageV2/Tabs/Projects/GroupProjectsPreview.vue'
 import GroupMembersPreview from '@/pages/GroupPageV2/Tabs/Members/GroupMembersPreview.vue'
+import GroupDocumentsPreview from '@/pages/GroupPageV2/Tabs/Documents/GroupDocumentsPreview.vue'
 
 defineOptions({ name: 'GroupSnapshotTab' })
 const props = defineProps<{
@@ -45,6 +58,8 @@ const groupModules = computed(() => {
     return {
       featured_projects: 0,
       members: 0,
+      publications: 0,
+      conferences: 0,
     }
   }
   return props.group.modules
@@ -116,5 +131,10 @@ const groupModules = computed(() => {
   .description {
     padding: $space-m $space-m 0 $space-m;
   }
+}
+.group-modules-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 </style>

@@ -25,7 +25,7 @@ export async function getGroupResearchDocument(
   config = {}
 ) {
   return await useAPI<PaginationResult<Document>>(
-    `crisalid/organization/${organisationCode}/group/${groupId}/${documentType}/`,
+    `crisalid/organization/${organisationCode}/people-group/${groupId}/${documentType}/`,
     config
   )
 }
@@ -37,7 +37,7 @@ export async function getOwnResearchDocumentAnalytics(
   config = {}
 ) {
   return await useAPI<ResearcherDocumentAnalytics>(
-    `crisalid/organization/${organisationCode}/researcher/${researchId}/${documentType}/analytics`,
+    `crisalid/organization/${organisationCode}/researcher/${researchId}/${documentType}/analytics/`,
     config
   )
 }
@@ -49,7 +49,7 @@ export async function getGroupResearchDocumentAnalytics(
   config = {}
 ) {
   return await useAPI<ResearcherDocumentAnalytics>(
-    `crisalid/organization/${organisationCode}/group/${groupId}/${documentType}/analytics`,
+    `crisalid/organization/${organisationCode}/people-group/${groupId}/${documentType}/analytics/`,
     config
   )
 }

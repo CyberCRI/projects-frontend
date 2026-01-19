@@ -22,6 +22,22 @@ export default function useGroupPagesRoutes() {
           name: 'groupProjects',
           component: () => import('../pages/GroupPageV2/Tabs/Projects/GroupProjectsTab.vue'),
         },
+        {
+          path: 'publications',
+          name: 'groupPublications',
+          component: () => import('../pages/GroupPageV2/Tabs/Documents/GroupDocumentsTab.vue'),
+          props: (route) => ({
+            documentType: 'publications',
+          }),
+        },
+        {
+          path: 'conferences',
+          name: 'groupConferences',
+          component: () => import('../pages/GroupPageV2/Tabs/Documents/GroupDocumentsTab.vue'),
+          props: (route) => ({
+            documentType: 'conferences',
+          }),
+        },
         // retro compat
         {
           path: 'Edit',
@@ -47,6 +63,22 @@ export default function useGroupPagesRoutes() {
           path: 'projects/edit',
           name: 'groupProjectsEdit',
           component: () => import('../pages/GroupPageV2/Tabs/Projects/GroupProjectsEditTab.vue'),
+        },
+        {
+          path: 'publications/edit',
+          name: 'groupPublicationsEdit',
+          component: () => import('../pages/GroupPageV2/Tabs/Documents/GroupDocumentsEditTab.vue'),
+          props: (route) => ({
+            documentType: 'publications',
+          }),
+        },
+        {
+          path: 'conferences/edit',
+          name: 'groupConferencesEdit',
+          component: () => import('../pages/GroupPageV2/Tabs/Documents/GroupDocumentsEditTab.vue'),
+          props: (route) => ({
+            documentType: 'conferences',
+          }),
         },
       ],
       props: true,

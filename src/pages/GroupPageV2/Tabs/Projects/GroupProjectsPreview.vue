@@ -2,6 +2,7 @@
   <BaseGroupPreview
     :title="$t('group.projects')"
     :total="group.modules.featured_projects"
+    icon="Briefcase"
     :see-more="{
       name: 'groupProjects',
       params: { groupId: group.id },

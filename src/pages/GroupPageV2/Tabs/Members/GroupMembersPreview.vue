@@ -2,6 +2,7 @@
   <BaseGroupPreview
     :title="$t('group.members')"
     :total="group.modules.members"
+    icon="Users"
     :loading="loading"
     :see-more="{ name: 'groupMembers', params: { groupId: group.id } }"
   >

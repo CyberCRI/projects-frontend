@@ -19,6 +19,8 @@ export interface PeopleGroupModel {
   modules: {
     members: number
     featured_projects: number
+    publications: number
+    conferences: number
   }
 }
 
