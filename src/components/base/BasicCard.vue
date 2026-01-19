@@ -7,12 +7,7 @@
       <slot name="actions-right" />
     </div>
 
-    <component
-      :is="toLink ? 'NuxtLink' : 'div'"
-      class="card-inner"
-      :to="toLink"
-      @click="$emit('click')"
-    >
+    <component :is="is" class="card-inner" :to="toLink" @click="$emit('click')">
       <!-- Content -->
       <div class="content">
         <slot />
@@ -24,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-withDefaults(
+const props = withDefaults(
   defineProps<{
     toLink?: string | object
     mode?: 'card' | 'list'
@@ -36,6 +31,11 @@ withDefaults(
 )
 
 defineEmits<{ click: [] }>()
+
+const is = computed(() => {
+  if (props.toLink) return resolveComponent('NuxtLink')
+  return 'div'
+})
 </script>
 
 <style lang="scss" scoped>

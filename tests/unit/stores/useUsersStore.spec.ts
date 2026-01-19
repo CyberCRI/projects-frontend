@@ -295,6 +295,8 @@ describe('Store module | users | getters', () => {
         firstname: stateWithSessionToken.userFromToken.given_name,
         lastname: stateWithSessionToken.userFromToken.family_name,
       },
+      given_name: stateWithSessionToken.userFromToken.given_name,
+      family_name: stateWithSessionToken.userFromToken.family_name,
       email: stateWithSessionToken.userFromToken.email,
       roles: [],
       orgs: funct.getOrgsFromRoles([]),
