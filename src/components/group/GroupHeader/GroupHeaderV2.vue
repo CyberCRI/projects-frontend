@@ -32,7 +32,6 @@
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 import { ImageModel } from '@/models/image.model'
 
-defineOptions({ name: 'GroupHeaderV2' })
 const props = withDefaults(
   defineProps<{
     title: string

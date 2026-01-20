@@ -3,9 +3,12 @@
     <div class="group-header">
       <div class="title-container">
         <IconImage v-if="icon" :name="icon" class="icon" />
-        <h2 class="title">{{ title }} ( {{ total }} )</h2>
+        <h2 class="title">
+          {{ title }}
+          <span v-if="!isNil(total)">( {{ total }} )</span>
+        </h2>
       </div>
-      <SeeMoreArrow v-if="!loading" class="see-more-button" :to="seeMore" />
+      <SeeMoreArrow v-if="!loading && seeMore" class="see-more-button" :to="seeMore" />
     </div>
 
     <div class="group-container">
@@ -18,16 +21,17 @@
 <script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
 import { IconImageChoice } from '@/functs/IconImage'
+import { isNil } from 'es-toolkit'
 
 withDefaults(
   defineProps<{
     title: string
-    total: number
-    seeMore: any
+    total?: number
+    seeMore?: any
     loading?: boolean
     icon?: IconImageChoice
   }>(),
-  { loading: false, icon: null }
+  { loading: false, icon: null, total: null, seeMore: null }
 )
 </script>
 
