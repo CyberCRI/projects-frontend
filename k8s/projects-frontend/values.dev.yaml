@@ -3,7 +3,7 @@ config:
     NUXT_PUBLIC_APP_KEYCLOAK_URL: https://keycloak.k8s.lp-i.dev
     NUXT_PUBLIC_APP_VERSION: "{{ .Values.application.revision }}"
     NUXT_PUBLIC_APP_ENVIRONMENT: dev
-    NUXT_APP_GOTENBERG_SERVER_URL: 'https://projects-gotenberg'
+    NUXT_APP_GOTENBERG_SERVER_URL: 'http://projects-gotenberg'
     NUXT_PUBLIC_APP_GOTENBERG_ENABLED: 'true'
 
 domain: k8s.lp-i.dev
