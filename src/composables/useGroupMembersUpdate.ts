@@ -7,7 +7,6 @@ export default function useGroupMembersUpdate(orgCode, groupId, form) {
 
   const setMembersData = async () => {
     // fetch members
-    console.log('fooo')
     const _groupMemberData = (await getGroupMember(orgCode.value, groupId)).results
     groupMemberData.value = _groupMemberData.map((member) => ({ ...member })) // mapping and destructiring to avoid updating both arrays/object at the same time
     form.value.members = _groupMemberData.map((member) => ({ ...member })) // this.groupMemberData will serve as reference for add/delete ops
