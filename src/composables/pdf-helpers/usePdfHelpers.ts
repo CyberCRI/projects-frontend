@@ -69,19 +69,24 @@ export function proxyImageUrl(url: string): string {
 }
 
 export async function fetchImageAsDataUrl(url): Promise<string | ArrayBuffer> {
-  const response = await fetch(url)
-  const blob = await response.blob()
-  return new Promise((resolve) => {
-    const reader = new FileReader()
-    reader.onloadend = () => {
-      resolve(reader.result)
-    }
-    reader.onerror = () => {
-      console.error('Error reading blob as data URL for url:', url)
-      resolve('')
-    }
-    reader.readAsDataURL(blob)
-  })
+  try {
+    const response = await fetch(url)
+    const blob = await response.blob()
+    return new Promise((resolve) => {
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        resolve(reader.result)
+      }
+      reader.onerror = () => {
+        console.error('Error reading blob as data URL for url:', url)
+        resolve('')
+      }
+      reader.readAsDataURL(blob)
+    })
+  } catch (e) {
+    console.error('Error fetching image for url:', url, e)
+    return Promise.resolve('')
+  }
 }
 
 export async function convertImages(html) {
