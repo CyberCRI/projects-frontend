@@ -23,10 +23,10 @@
           class="text-input"
           data-test="contact-subject"
           :placeholder="$t('form.contact.subject-placeholder')"
-          @blur="v$.form.subject.$validate"
+          @blur="v$.subject.$validate"
         />
 
-        <FieldErrors :errors="v$.form.subject.$errors" />
+        <FieldErrors :errors="v$.subject.$errors" />
       </div>
 
       <div class="form-input">
@@ -38,9 +38,9 @@
           class="text-input"
           data-test="contact-email"
           :placeholder="$t('form.contact.email-placeholder')"
-          @blur="v$.form.email.$validate"
+          @blur="v$.email.$validate"
         />
-        <FieldErrors :errors="v$.form.email.$errors" />
+        <FieldErrors :errors="v$.email.$errors" />
       </div>
 
       <div class="form-input">
@@ -54,9 +54,9 @@
           class="text-input"
           data-test="contact-content"
           :placeholder="$t('form.contact.content-placeholder')"
-          @blur="v$.form.content.$validate"
+          @blur="v$.content.$validate"
         />
-        <FieldErrors :errors="v$.form.content.$errors" />
+        <FieldErrors :errors="v$.content.$errors" />
       </div>
     </form>
   </BaseDrawer>
