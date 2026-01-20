@@ -8,7 +8,9 @@
           <span v-if="!isNil(total)">( {{ total }} )</span>
         </h2>
       </div>
-      <SeeMoreArrow v-if="!loading && seeMore" class="see-more-button" :to="seeMore" />
+      <slot v-if="!loading" name="header">
+        <SeeMoreArrow v-if="seeMore" class="see-more-button" :to="seeMore" />
+      </slot>
     </div>
 
     <div class="group-container">

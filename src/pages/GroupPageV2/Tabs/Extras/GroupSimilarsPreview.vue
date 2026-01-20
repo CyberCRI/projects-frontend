@@ -10,5 +10,3 @@ import BaseGroupPreview from '@/pages/GroupPageV2/Tabs/BaseGroupPreview.vue'
 
 defineProps<{ group: TranslatedPeopleGroupModel }>()
 </script>
-
-<style scoped></style>

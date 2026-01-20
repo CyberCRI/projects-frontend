@@ -62,11 +62,13 @@ const lastUpdated = computed(() => {
   grid-template-columns: 1fr 87px;
   column-gap: 1rem;
 }
+
 .project-link {
   display: grid;
   grid-template-columns: 87px 1fr;
   column-gap: 1rem;
   transition: transform 0.2s;
+
   &:hover {
     transform: scale(102%);
   }
@@ -76,17 +78,20 @@ const lastUpdated = computed(() => {
   border-radius: 10px;
   height: 87px;
 }
+
 .project-info {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
 }
+
 .project-extra {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-end;
 }
+
 .icon {
   width: 30px;
 }

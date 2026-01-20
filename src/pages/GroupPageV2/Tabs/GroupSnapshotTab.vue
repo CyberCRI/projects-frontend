@@ -1,44 +1,30 @@
 <template>
-  <div class="group-snapshot">
-    <GroupHeaderV2
-      :title="group.$t.name"
-      :image="group.header_image"
-      :visibility="group.publication_status"
-      :email="group.email"
-      :short-description="group.$t.short_description"
+  <!-- add new modules Here -->
+  <div class="group-modules-list" data-test="group-modules">
+    <GroupHeaderV2 :group="group" :is-loading="isLoading" />
+    <SubGroups v-if="group.children?.length" :subgroups="group.children" :is-loading="isLoading" />
+    <div class="group-infos">
+      <GroupDescriptionPreview :group="group" />
+      <GroupSimilarsPreview :group="group" />
+    </div>
+    <GroupProjectsPreview
+      v-if="groupModules.featured_projects"
+      :group="group"
       :is-loading="isLoading"
     />
-    <SubGroups v-if="group.children?.length" :subgroups="group.children" :is-loading="isLoading" />
-    <!-- <DescriptionExpandable
-      :description="group.$t.description"
-      :height-limit="400"
-      class="description-content"
-      /> -->
-    <!-- add new modules Here -->
-    <div class="group-modules-list" data-test="group-modules">
-      <div class="group-infos">
-        <GroupDescriptionPreview :group="group" />
-        <GroupSimilarsPreview :group="group" />
-      </div>
-      <GroupProjectsPreview
-        v-if="groupModules.featured_projects"
-        :group="group"
-        :is-loading="isLoading"
-      />
-      <GroupMembersPreview v-if="groupModules.members" :group="group" :is-loading="isLoading" />
-      <GroupDocumentsPreview
-        v-if="groupModules.publications"
-        document-type="publications"
-        :group="group"
-        :is-loading="isLoading"
-      />
-      <GroupDocumentsPreview
-        v-if="groupModules.conferences"
-        document-type="publications"
-        :group="group"
-        :is-loading="isLoading"
-      />
-    </div>
+    <GroupMembersPreview v-if="groupModules.members" :group="group" :is-loading="isLoading" />
+    <GroupDocumentsPreview
+      v-if="groupModules.publications"
+      document-type="publications"
+      :group="group"
+      :is-loading="isLoading"
+    />
+    <GroupDocumentsPreview
+      v-if="groupModules.conferences"
+      document-type="publications"
+      :group="group"
+      :is-loading="isLoading"
+    />
   </div>
 </template>
 
@@ -70,72 +56,6 @@ const groupModules = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-.members {
-  margin-top: $space-xl;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: $space-xl;
-
-  &-header {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    width: 100%;
-    gap: $space-l;
-
-    .title {
-      font-weight: 700;
-      font-size: $font-size-l;
-      color: $primary-dark;
-    }
-  }
-
-  &-container {
-    width: 100%;
-    justify-content: space-between;
-
-    .cursor-pointer {
-      cursor: pointer;
-    }
-  }
-}
-
-.skeleton {
-  margin: $space-xl 0;
-}
-
-.projects {
-  margin-top: $space-2xl;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  &-header {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    width: 100%;
-    gap: $space-l;
-
-    .title {
-      font-weight: 700;
-      font-size: $font-size-l;
-      color: $primary-dark;
-    }
-  }
-
-  &-container {
-    width: 100%;
-  }
-}
-
-@media screen and (max-width: $med-mobile) {
-  .description {
-    padding: $space-m $space-m 0 $space-m;
-  }
-}
-
 .group-modules-list {
   display: flex;
   flex-direction: column;
