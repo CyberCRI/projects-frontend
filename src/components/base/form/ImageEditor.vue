@@ -207,7 +207,7 @@ export default {
       }
     },
     imageOnClick() {
-      if (!this.disabled) this.$refs.imageInput?.$refs?.header_image?.click()
+      if (!this.disabled) this.openImageResizer()
     },
   },
 }
