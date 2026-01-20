@@ -12,7 +12,7 @@ import {
 } from '@/api/project-categories.service'
 import analytics from '@/analytics'
 
-async function follow(follow: FollowInput): Promise<FollowOutput> {
+async function follow(follow: FollowInput) {
   const result = await postFollow(follow)
 
   analytics.follow.follow({

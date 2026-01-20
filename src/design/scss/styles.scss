@@ -202,3 +202,14 @@ body[class*='has-open-modal-'] {
   background-color: $mid-gray;
   opacity: 0.4;
 }
+
+.list-divider {
+  & > *:not(:last-child)::after {
+    content: '';
+    display: inline-block;
+    width: 100%;
+    height: 1.5px;
+    opacity: 0.7;
+    background-color: #d4d4d4;
+  }
+}

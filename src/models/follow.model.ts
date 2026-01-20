@@ -1,4 +1,5 @@
 import BaseModel from '@/models/base.model'
+import { ProjectModel } from '@/models/project.model'
 
 /**
  * @name FollowModel
@@ -43,6 +44,10 @@ export type FollowManyOutput = Required<FollowOutput> & {
   project: {
     id: string
   }
+}
+
+export type FollowProjectOutput = Required<FollowOutput> & {
+  project: ProjectModel
 }
 
 export type FollowOutputList = FollowManyOutput[]

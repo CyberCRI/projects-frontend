@@ -9,12 +9,12 @@
     }"
   >
     <template #content>
-      <FetchLoader :status="status" only-error>
-        <CardList :is-loading="loading" :items="data" :limit="limitSkeletons">
-          <template #default="projectListSlotProps">
-            <ProjectCard :horizontal-display="true" :project="projectListSlotProps.item" />
-          </template>
-        </CardList>
+      <FetchLoader :status="status" :with-data="!!data && !!data?.[0]">
+        <ul class="project-list list-divider">
+          <li v-for="project in data">
+            <ProjectPreview :project="project" />
+          </li>
+        </ul>
       </FetchLoader>
     </template>
   </BaseGroupPreview>
@@ -22,6 +22,7 @@
 
 <script setup lang="ts">
 import { getGroupProject } from '@/api/v2/group.service'
+import ProjectPreview from '@/components/project/ProjectPreview.vue'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupPreview from '@/pages/GroupPageV2/Tabs/BaseGroupPreview.vue'
 
@@ -44,3 +45,11 @@ const {
 } = getGroupProject(organizationCode, props.group.id, { paginationConfig: { limit: LIMIT } })
 const loading = computed(() => props.isLoading || isLoadingProject.value)
 </script>
+
+<style lang="scss" scoped>
+.project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+</style>

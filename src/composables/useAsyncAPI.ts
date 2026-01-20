@@ -82,7 +82,7 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
   const isLoading = useLoadingFromStatus(status)
 
   // @ts-expect-error 2345 todo check why
-  const dataWrapped = params[2]?.translate?.(data) || data
+  const dataWrapped = params[2]?.translate ? params[2]?.translate(data) : data
 
   const results = {
     ...res,
