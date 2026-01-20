@@ -60,7 +60,7 @@ export async function getResearchDocumentSimilars(
   config = {}
 ) {
   return await useAPI<PaginationResult<Document>>(
-    `crisalid/organization/${organisationCode}/${documentId}/similars/`,
+    `crisalid/organization/${organisationCode}/document/${documentId}/similars/`,
     config
   )
 }

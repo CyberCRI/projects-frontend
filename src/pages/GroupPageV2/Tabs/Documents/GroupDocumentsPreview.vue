@@ -28,7 +28,6 @@ import BaseGroupPreview from '@/pages/GroupPageV2/Tabs/BaseGroupPreview.vue'
 const props = defineProps<{
   documentType: DocumentType
   group: TranslatedPeopleGroupModel
-  isLoading: boolean
 }>()
 
 const routeName = computed(() => {

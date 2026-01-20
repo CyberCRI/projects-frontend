@@ -54,11 +54,13 @@ withDefaults(
   fill: $primary-dark;
   display: flex;
   align-items: center;
+
   .icon {
     display: inline-block;
     width: 1.5rem;
     margin: 0 0.3rem;
   }
+
   .title {
     display: inline-block;
   }

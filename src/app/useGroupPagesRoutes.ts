@@ -26,7 +26,7 @@ export default function useGroupPagesRoutes() {
           path: 'publications',
           name: 'groupPublications',
           component: () => import('../pages/GroupPageV2/Tabs/Documents/GroupDocumentsTab.vue'),
-          props: (route) => ({
+          props: () => ({
             documentType: 'publications',
           }),
         },
@@ -34,7 +34,7 @@ export default function useGroupPagesRoutes() {
           path: 'conferences',
           name: 'groupConferences',
           component: () => import('../pages/GroupPageV2/Tabs/Documents/GroupDocumentsTab.vue'),
-          props: (route) => ({
+          props: () => ({
             documentType: 'conferences',
           }),
         },
@@ -68,7 +68,7 @@ export default function useGroupPagesRoutes() {
           path: 'publications/edit',
           name: 'groupPublicationsEdit',
           component: () => import('../pages/GroupPageV2/Tabs/Documents/GroupDocumentsEditTab.vue'),
-          props: (route) => ({
+          props: () => ({
             documentType: 'publications',
           }),
         },
@@ -76,7 +76,7 @@ export default function useGroupPagesRoutes() {
           path: 'conferences/edit',
           name: 'groupConferencesEdit',
           component: () => import('../pages/GroupPageV2/Tabs/Documents/GroupDocumentsEditTab.vue'),
-          props: (route) => ({
+          props: () => ({
             documentType: 'conferences',
           }),
         },

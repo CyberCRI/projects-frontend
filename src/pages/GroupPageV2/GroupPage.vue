@@ -9,7 +9,7 @@
     }"
   >
     <div class="page-section-extra-wide">
-      <FetchLoader :status="status" only-error>
+      <FetchLoader :status="status">
         <NavPanelLayout
           :is-loading="isLoading"
           :is-nav-collapsed="isNavCollapsed"
@@ -146,7 +146,7 @@ const groupTabsDisplay = computed(() => {
       view: `/group/${route.params.groupId}/publications`,
       altView: `/group/${route.params.groupId}/publications/edit`,
       props: {
-        documentType: "publications",
+        documentType: 'publications',
         group: group.value,
         isLoading: isLoading.value,
       },
@@ -161,7 +161,7 @@ const groupTabsDisplay = computed(() => {
       view: `/group/${route.params.groupId}/conferences`,
       altView: `/group/${route.params.groupId}/conferences/edit`,
       props: {
-        documentType: "conferences",
+        documentType: 'conferences',
         group: group.value,
         isLoading: isLoading.value,
       },
@@ -219,7 +219,7 @@ const groupTabsEdit = computed(() => {
       condition: true,
       icon: 'Pen',
     },
-r    {
+    {
       isEditing: true,
       key: 'group-publications-edit',
       dataTest: 'group-publications-edit',
@@ -227,7 +227,7 @@ r    {
       view: `/group/${route.params.groupId}/publications/edit`,
       altView: `/group/${route.params.groupId}/publications`,
       props: {
-        documentType: "publications",
+        documentType: 'publications',
         isInEditingMode: true,
         group: group.value,
         isLoading: isLoading.value,
@@ -243,7 +243,7 @@ r    {
       view: `/group/${route.params.groupId}/conferences/edit`,
       altView: `/group/${route.params.groupId}/conferences`,
       props: {
-        documentType: "conferences",
+        documentType: 'conferences',
         isInEditingMode: true,
         group: group.value,
         isLoading: isLoading.value,

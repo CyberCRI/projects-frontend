@@ -46,7 +46,6 @@ import GroupProjectsPreview from '@/pages/GroupPageV2/Tabs/Projects/GroupProject
 import GroupMembersPreview from '@/pages/GroupPageV2/Tabs/Members/GroupMembersPreview.vue'
 import GroupDocumentsPreview from '@/pages/GroupPageV2/Tabs/Documents/GroupDocumentsPreview.vue'
 
-defineOptions({ name: 'GroupSnapshotTab' })
 const props = defineProps<{
   group: TranslatedPeopleGroupModel
   isLoading: boolean
@@ -132,6 +131,7 @@ const groupModules = computed(() => {
     padding: $space-m $space-m 0 $space-m;
   }
 }
+
 .group-modules-list {
   display: flex;
   flex-direction: column;

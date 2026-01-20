@@ -13,7 +13,7 @@
           class="profile-document-contributor"
           :to="{ name: 'ProfileOtherUser', params: { userId: author.user.slug } }"
         >
-          <strong>{{ author.user.display_name }}</strong>
+          <strong>{{ author.display_name }}</strong>
         </NuxtLink>
         <!-- else , ceate a link to the harvester (hal,idref..ect) -->
         <a
@@ -74,8 +74,6 @@ import { documentTypeHarverToUrl, researcherHarvesterToUrl } from '@/functs/rese
 import { TranslatedDocument } from '@/interfaces/researcher'
 import PushPinSvg from '@/assets/svg/pushpin.svg'
 import { sanitizeTranslateKeys } from '@/api/sanitizes/researcher'
-
-defineOptions({ name: 'ResearcherDocument' })
 
 const { t, locale } = useNuxtI18n()
 const emit = defineEmits(['similar'])

@@ -41,7 +41,7 @@ type AsyncPaginationParameters<ResDataT, DataT, Result> = [
 export default function useAsyncPaginationAPI<DataT, Result = undefined>(
   ...params: AsyncPaginationParameters<PaginationResult<DataT>, DataT[], Result>
 ) {
-  const paginationData = useState<PaginationResult>()
+  const paginationData = ref<PaginationResult>()
   const pagination = usePagination(paginationData, params[2]?.paginationConfig)
   // add paginations in query
   const key = computed(
@@ -51,7 +51,6 @@ export default function useAsyncPaginationAPI<DataT, Result = undefined>(
   const rest = useAsyncAPI(
     key,
     ({ config }) => {
-      console.log(config)
       return params[1]({
         config: {
           query: {
@@ -62,15 +61,14 @@ export default function useAsyncPaginationAPI<DataT, Result = undefined>(
       })
     },
     {
+      // default arrays
+      default: () => [],
       ...((omit(params[2] ?? {}, ['transform']) ?? {}) as AsyncConfig<
         PaginationResult<DataT>,
         DataT[],
         Result
       >),
       watch: [...(params[2]?.watch || []), pagination.current, pagination.limit],
-      default() {
-        return params[2]?.default?.() || []
-      },
       transform(dataApi) {
         paginationData.value = dataApi
         const results = dataApi.results

@@ -156,7 +156,6 @@ const emit = defineEmits<{
 }>()
 
 watch(query, (n) => {
-  void n
   emit('onFilter', toRaw(n))
 })
 

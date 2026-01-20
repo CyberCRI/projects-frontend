@@ -55,6 +55,13 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
     params[2].watch.push(params[2].query)
   }
 
+  let immediate = true
+  if (params[2].immediate === false) {
+    immediate = true
+  } else {
+    params[2].immediate = false
+  }
+
   const checkArgs = computed(() => {
     return params[2].watch.map((v) => unref(v)).filter((v) => isNil(v)).length === 0
   })
@@ -62,10 +69,6 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
   const { status, data, ...res } = useAsyncData<ResDataT, unknown, DataT>(
     params[0],
     ({}) => {
-      if (params[2].checkArgs && checkArgs.value === false) {
-        return new Promise(() => params[2]?.default() || {})
-      }
-
       const conf = {} as AsyncHandler['config']
       if (params[2].query) {
         conf.query = unref(params[2].query)
@@ -88,11 +91,19 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
     data: dataWrapped,
   }
 
+  if (immediate) {
+    watchEffect(() => {
+      if (checkArgs.value) {
+        results.refresh()
+      }
+    })
+  }
+
   // log error only in dev
   if (import.meta.dev) {
     watchEffect(() => {
       if (results.error.value) {
-        console.error(results.error.value)
+        console.error(params[0], results.error.value)
       }
     })
   }

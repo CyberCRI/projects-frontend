@@ -33,6 +33,8 @@ export const peopleGroupFactory = createFactory<PeopleGroupModel>((faker) => ({
   modules: {
     members: 0,
     featured_projects: 0,
+    publications: 0,
+    conferences: 0,
   },
   hierarchy: null,
 }))
