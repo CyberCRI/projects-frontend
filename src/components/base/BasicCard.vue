@@ -70,6 +70,7 @@ const is = computed(() => {
     .card-inner {
       flex-flow: column;
     }
+
     .inactive {
       pointer-events: none;
       opacity: 0.6;
