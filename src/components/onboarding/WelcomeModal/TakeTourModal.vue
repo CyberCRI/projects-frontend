@@ -1,5 +1,5 @@
 <template>
-  <BaseModal data-test="take-tour-modal" @close="emit('close')">
+  <BaseModal modal-data-test="take-tour-modal" @close="emit('close')">
     <template #content>
       <h2 class="welcome-title">
         {{ $t('plateform-tour-modal.title') }}

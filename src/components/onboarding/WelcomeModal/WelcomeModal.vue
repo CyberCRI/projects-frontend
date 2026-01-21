@@ -1,5 +1,5 @@
 <template>
-  <BaseModal data-test="welcome-modal" @close="completeLater">
+  <BaseModal modal-data-test="welcome-modal" @close="completeLater">
     <template #content>
       <div class="portal-logo-ctn" :style="{ 'background-image': `url(${organizationLogo})` }" />
       <i18n-t keypath="welcome-modal.title" tag="h2" class="welcome-title" scope="global">
