@@ -1,5 +1,6 @@
 <template>
   <BaseGroupPreview
+    id="featured_projects"
     :title="$t('group.projects')"
     :total="group.modules.featured_projects"
     icon="Briefcase"

@@ -34,13 +34,38 @@
             class="short-description"
             v-html="group.$t.short_description"
           />
+          <TagsList
+            v-if="group.tags"
+            :tags="group.tags"
+            :to="{
+              name: 'GroupSearch',
+              query: {
+                sections: 'groups',
+              },
+            }"
+          />
         </div>
+      </div>
+      <div class="group-info-extras">
+        <div></div>
+
+        <SdgList
+          :sdgs="group.sdgs"
+          :to="{
+            name: 'Search',
+            query: {
+              section: 'groups',
+              page: 1,
+            },
+          }"
+        />
       </div>
     </template>
   </BaseGroupPreview>
 </template>
 
 <script setup lang="ts">
+import SdgList from '@/components/base/SdgList.vue'
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupPreview from '@/pages/GroupPageV2/Tabs/BaseGroupPreview.vue'
@@ -107,5 +132,16 @@ const groupVisibilityIcon = computed(() =>
       height: $layout-size-m;
     }
   }
+}
+
+.group-info-extras {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+  border: 1px solid $primary;
+  height: 30px;
+  margin-top: 1rem;
 }
 </style>

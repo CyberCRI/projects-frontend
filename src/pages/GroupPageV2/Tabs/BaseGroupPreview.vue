@@ -9,7 +9,11 @@
         </h2>
       </div>
       <slot v-if="!loading" name="header">
-        <SeeMoreArrow v-if="seeMore" class="see-more-button" :to="seeMore" />
+        <SeeMoreArrow
+          v-if="seeMore && seeMorePosition === 'top'"
+          class="see-more-button"
+          :to="seeMore"
+        />
       </slot>
     </div>
 
@@ -17,6 +21,13 @@
       <slot v-if="loading" name="skeleton" />
       <slot v-else name="content" />
     </div>
+    <slot v-if="!loading" name="footer">
+      <SeeMoreArrow
+        v-if="seeMore && seeMorePosition === 'bottom'"
+        class="see-more-button"
+        :to="seeMore"
+      />
+    </slot>
   </div>
 </template>
 
@@ -32,13 +43,16 @@ withDefaults(
     seeMore?: any
     loading?: boolean
     icon?: IconImageChoice
+    seeMorePosition?: 'bottom' | 'top'
   }>(),
-  { loading: false, icon: null, total: null, seeMore: null }
+  { loading: false, icon: null, total: null, seeMore: null, seeMorePosition: 'top' }
 )
 </script>
 
 <style lang="scss" scoped>
 .group {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
   background-color: white;
   border-radius: 0.5rem;
   padding: 1.5rem;

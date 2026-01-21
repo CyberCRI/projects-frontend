@@ -1,6 +1,7 @@
 <template>
   <BaseGroupPreview
-    :title="$t(`you.${documentType}`)"
+    :id="documentType"
+    :title="$t(`group.${documentType}`)"
     :total="group.modules[documentType]"
     :see-more="{
       name: routeName,

@@ -1,5 +1,6 @@
 <template>
   <BaseGroupPreview
+    id="members"
     :title="$t('group.members')"
     :total="group.modules.members"
     icon="Users"

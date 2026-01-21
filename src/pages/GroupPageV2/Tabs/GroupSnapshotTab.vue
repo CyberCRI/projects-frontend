@@ -2,10 +2,11 @@
   <!-- add new modules Here -->
   <div class="group-modules-list" data-test="group-modules">
     <GroupHeaderV2 :group="group" :is-loading="isLoading" />
-    <SubGroups v-if="group.children?.length" :subgroups="group.children" :is-loading="isLoading" />
-    <div class="group-infos">
+    <GroupSubPreview v-if="group.children" :subgroups="group.children" :is-loading="isLoading" />
+    <GroupRecapPreview :group="group" />
+    <div :class="['group-infos', group.modules.similars ? 'group-infos-children' : '']">
       <GroupDescriptionPreview :group="group" />
-      <GroupSimilarsPreview :group="group" />
+      <GroupSimilarsPreview v-if="group.modules.similars" :group="group" />
     </div>
     <GroupProjectsPreview
       v-if="groupModules.featured_projects"
@@ -35,6 +36,8 @@ import GroupMembersPreview from '@/pages/GroupPageV2/Tabs/Members/GroupMembersPr
 import GroupDocumentsPreview from '@/pages/GroupPageV2/Tabs/Documents/GroupDocumentsPreview.vue'
 import GroupDescriptionPreview from '@/pages/GroupPageV2/Tabs/Extras/GroupDescriptionPreview.vue'
 import GroupSimilarsPreview from '@/pages/GroupPageV2/Tabs/Extras/GroupSimilarsPreview.vue'
+import GroupRecapPreview from '@/components/group/Modules/GroupRecapPreview.vue'
+import GroupSubPreview from '@/components/group/Modules/GroupSubPreview.vue'
 
 const props = defineProps<{
   group: TranslatedPeopleGroupModel
@@ -64,7 +67,16 @@ const groupModules = computed(() => {
 
 .group-infos {
   display: grid;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: 3fr auto;
+}
+
+.group-infos-children {
   gap: 1rem;
+}
+
+@media screen and (max-width: $min-desktop) {
+  .group-infos {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

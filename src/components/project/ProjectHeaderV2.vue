@@ -67,6 +67,12 @@
                 :tags="project.tags"
                 class="tag-list"
                 prefix="desktop"
+                :to="{
+                  name: 'ProjectSearch',
+                  query: {
+                    section: 'projects',
+                  },
+                }"
               />
             </div>
             <SkeletonComponent v-if="loading" class="skeleton-block" height="24px" />
@@ -102,6 +108,12 @@
                 :tags="project.tags"
                 class="tag-list"
                 prefix="mobile"
+                :to="{
+                  name: 'ProjectSearch',
+                  query: {
+                    section: 'projects',
+                  },
+                }"
               />
             </div>
 

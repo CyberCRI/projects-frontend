@@ -19,7 +19,15 @@
       <div class="project-info">
         <h3>{{ project.$t.title }}</h3>
         <pre>{{ purpose }}</pre>
-        <TagsList :tags="tags" />
+        <TagsList
+          :tags="tags"
+          :to="{
+            name: 'ProjectSearch',
+            query: {
+              section: 'projects',
+            },
+          }"
+        />
       </div>
     </NuxtLink>
     <div class="project-extra">
@@ -38,7 +46,7 @@
 
 <script setup lang="ts">
 import ProjectFollowIcon from '@/components/project/ProjectFollowIcon.vue'
-import TagsList from '@/components/project/TagsList.vue'
+import TagsList from '@/components/common/TagsList.vue'
 import { cropIfTooLong } from '@/functs/string'
 import { TranslatedProject } from '@/models/project.model'
 

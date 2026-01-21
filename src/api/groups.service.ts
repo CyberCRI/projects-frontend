@@ -159,3 +159,10 @@ export async function patchGroupHeader(org: string, group_id: number, headerData
     method: 'PATCH',
   }) //.data.value
 }
+
+export function getGroupSimilar(organizationCode: string, groupId: number, config = {}) {
+  return useAPI<PaginationResult<PeopleGroupModel>>(
+    `organization/${organizationCode}/people-group/${groupId}/similars`,
+    config
+  )
+}

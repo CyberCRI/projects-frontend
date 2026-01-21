@@ -59,6 +59,12 @@
           class="tag-list"
           prefix="desktop"
           :internal="data.internal"
+          :to="{
+            name: 'ProjectSearch',
+            query: {
+              section: 'projects',
+            },
+          }"
         />
       </div>
       <span v-if="data.title3">{{ $t(data.title3) }}</span>
@@ -69,7 +75,7 @@
 </template>
 
 <script>
-import TagsList from '@/components/project/TagsList.vue'
+import TagsList from '@/components/common/TagsList.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 
 export default {
