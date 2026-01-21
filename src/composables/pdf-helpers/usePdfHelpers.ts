@@ -11,17 +11,16 @@ export async function croppedImageData({ ratio, imgDataUrl, imageSizes }) {
         const naturalRatio = naturalWidth / naturalHeight
         let left = 0
         let top = 0
-        let scale = 1
-        if ((ratio >= 1 && naturalRatio < 1) || (ratio < 1 && naturalRatio >= 1)) {
+        const scale = 1
+        if (ratio > naturalRatio) {
           // full width, crop top and bottom
-          top = (-100 * (naturalHeight / 2 - naturalWidth / ratio / 2)) / naturalHeight
-          scale = naturalHeight / naturalWidth / ratio
+          const croppedHeight = naturalWidth / ratio
+          top = 100 * ((croppedHeight - naturalHeight) / 2 / naturalHeight)
         } else {
           // full height, crop left and right
-          left = (-100 * (naturalWidth / 2 - (naturalHeight * ratio) / 2)) / naturalWidth
-          scale = naturalWidth / (naturalHeight * ratio)
+          const croppedWidth = naturalHeight * ratio
+          left = 100 * ((croppedWidth - naturalWidth) / 2 / naturalWidth)
         }
-
         imageSizes = {
           left: left,
           top: top,
