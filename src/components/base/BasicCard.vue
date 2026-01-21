@@ -1,5 +1,5 @@
 <template>
-  <div class="basic-card shadow-box" tabindex="1" :class="mode">
+  <div class="basic-card" :class="{ 'shadow-box': !props.isInactive, [mode]: true }" tabindex="1">
     <div class="action-left-wrapper">
       <slot name="actions-left" />
     </div>
@@ -7,7 +7,13 @@
       <slot name="actions-right" />
     </div>
 
-    <component :is="is" class="card-inner" :to="toLink" @click="$emit('click')">
+    <component
+      :is="is"
+      class="card-inner"
+      :class="{ inactive: props.isInactive }"
+      :to="toLink"
+      @click="!props.isInactive && $emit('click')"
+    >
       <!-- Content -->
       <div class="content">
         <slot />
@@ -23,17 +29,19 @@ const props = withDefaults(
   defineProps<{
     toLink?: string | object
     mode?: 'card' | 'list'
+    isInactive?: boolean
   }>(),
   {
     toLink: null,
     mode: 'card',
+    isInactive: false,
   }
 )
 
 defineEmits<{ click: [] }>()
 
 const is = computed(() => {
-  if (props.toLink) return resolveComponent('NuxtLink')
+  if (props.toLink && !props.isInactive) return resolveComponent('NuxtLink')
   return 'div'
 })
 </script>
@@ -61,6 +69,12 @@ const is = computed(() => {
 
     .card-inner {
       flex-flow: column;
+    }
+
+    .inactive {
+      pointer-events: none;
+      opacity: 0.6;
+      cursor: not-allowed;
     }
   }
 
