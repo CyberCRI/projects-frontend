@@ -21,6 +21,12 @@ export async function logIn(page: Page, user: User) {
   // await page navigation check
   page.waitForLoadState('networkidle')
   // check if acceot tos modal is present
+
+  // pass loader
+  const appLoader = await page.locator('.app-loader')
+  await expect(appLoader).toBeVisible()
+  await expect(appLoader).not.toBeVisible()
+
   const acceptTosModal = page.locator('#approve-terms-modal')
   if (await acceptTosModal.isVisible()) {
     logger.info('Accept TOS modal is visible, accepting terms of service')
