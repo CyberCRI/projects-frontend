@@ -1,5 +1,9 @@
 <template>
-  <div class="user" @click="emit('user-click', user)">
+  <div
+    class="user"
+    :class="{ inactive: isPrivateUser }"
+    @click="!isPrivateUser && emit('user-click', user)"
+  >
     <CroppedApiImage
       :alt="user.id ? `${user.given_name} ${user.family_name} image` : `${user.name} image`"
       class="picture"
@@ -46,6 +50,11 @@ const props = defineProps({
 const { t } = useNuxtI18n()
 const emit = defineEmits(['user-click'])
 
+const isPrivateUser = computed(() => {
+  // Private users do not return an iD from API call
+  return !props.user?.id
+})
+
 const userName = computed(
   () => `${props.user.given_name?.toLowerCase()} ${props.user.family_name?.toLowerCase()}`
 )
@@ -76,6 +85,12 @@ const roleLabel = computed(() => {
   flex-direction: column;
   align-items: center;
   width: min-content;
+
+  &.inactive {
+    pointer-events: none;
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 
   .picture {
     width: pxToRem(120px);
