@@ -17,34 +17,34 @@ export async function handleSkills(page) {
   logger.info('Add Skills')
   await removeSkills(page, 'skills')
   await page.waitForSelector('[data-test="initial-add-skills-button"]')
-  let addSkillBtn = await page.locator('[data-test="initial-add-skills-button"]')
+  const addSkillBtn = await page.locator('[data-test="initial-add-skills-button"]')
   logger.info(await addSkillBtn.count())
   // if ((await addSkillBtn.count()) == 0) {
   //  addSkillBtn = await page.locator('[data-test="initial-add-skills-button"]')
   //}
   addSkillBtn.click()
-  // await addSkills(page, 'skills', 'biolog') // tmp 5 char min fix
-  // await delay(1000)
-  await page.locator('[data-test="add-skills-button"]').click()
-  await addSkills(page, 'skills', 'biolog')
+  await addSkills(page, 'skills', 'biolog') // tmp 5 char min fix
   await delay(1000)
-  //await removeSkills(page, 'skills')
+  // TODO: this requires a second predetermined skill
+  // await page.locator('[data-test="add-skills-button"]').click()
+  // await addSkills(page, 'skills', 'biolog')
+  // await delay(1000)
 
   logger.info('Add Hobby')
   await removeSkills(page, 'hobbies')
   await page.waitForSelector('[data-test="initial-add-hobbies-button"]')
-  let addHobbyBtn = await page.locator('[data-test="initial-add-hobbies-button"]')
+  const addHobbyBtn = await page.locator('[data-test="initial-add-hobbies-button"]')
   logger.info(await addHobbyBtn.count())
   // if ((await addHobbyBtn.count()) == 0) {
   //  addHobbyBtn = await page.locator('[data-test="initial-add-hobbies-button"]')
   //}
   addHobbyBtn.click()
-  // await addSkills(page, 'hobbies', 'biolog') // tmp 5 char min fix
-  // await delay(1000)
-  await page.locator('[data-test="add-hobbies-button"]').click()
-  await addSkills(page, 'hobbies', 'biolog')
+  await addSkills(page, 'hobbies', 'biolog') // tmp 5 char min fix
   await delay(1000)
-  // await removeSkills(page, 'hobbies')
+  // TODO: this requires a second predetermined hobby
+  // await page.locator('[data-test="add-hobbies-button"]').click()
+  // await addSkills(page, 'hobbies', 'biolog')
+  // await delay(1000)
 }
 
 async function addSkills(page, _type, query) {
