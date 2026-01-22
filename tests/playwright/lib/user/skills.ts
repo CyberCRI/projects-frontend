@@ -23,8 +23,8 @@ export async function handleSkills(page) {
   //  addSkillBtn = await page.locator('[data-test="initial-add-skills-button"]')
   //}
   addSkillBtn.click()
-  await addSkills(page, 'skills', 'biolog') // tmp 5 char min fix
-  await delay(1000)
+  // await addSkills(page, 'skills', 'biolog') // tmp 5 char min fix
+  // await delay(1000)
   await page.locator('[data-test="add-skills-button"]').click()
   await addSkills(page, 'skills', 'biolog')
   await delay(1000)
@@ -39,8 +39,8 @@ export async function handleSkills(page) {
   //  addHobbyBtn = await page.locator('[data-test="initial-add-hobbies-button"]')
   //}
   addHobbyBtn.click()
-  await addSkills(page, 'hobbies', 'biolog') // tmp 5 char min fix
-  await delay(1000)
+  // await addSkills(page, 'hobbies', 'biolog') // tmp 5 char min fix
+  // await delay(1000)
   await page.locator('[data-test="add-hobbies-button"]').click()
   await addSkills(page, 'hobbies', 'biolog')
   await delay(1000)
