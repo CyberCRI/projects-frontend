@@ -25,7 +25,7 @@ export const projectSkeleton: Omit<ProjectModel, 'id'> = {
   life_status: 'completed',
   reviews: [],
   // @ts-expect-error no id in tags
-  tags: toArray(tag, 3),
+  tags: toArray(tagSkeleton, 3),
   is_followed: {
     is_followed: false,
     follow_id: null,

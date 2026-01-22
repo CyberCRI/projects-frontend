@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ skeletons: inLoading && skeleton }">
+  <div :class="{ skeletons: inSkeletons }">
     <div v-if="loading" class="m-auto w-fit flex justify-center items-center flex-col">
       <LpiLoader type="simple" />
       <span class="loading">
@@ -44,6 +44,8 @@ const props = withDefaults(
   { withData: false, label: null, onlyError: false, skeleton: false }
 )
 
+const firstLoading = ref(false)
+
 const actualStatus = computed(() => {
   let status = props.status
   if (!Array.isArray(status)) {
@@ -71,6 +73,16 @@ const loading = computed(() => {
     return false
   }
   return inLoading.value
+})
+
+const inSkeletons = computed(() => {
+  return inLoading.value && !firstLoading.value && props.skeleton
+})
+
+watch(inLoading, (newValue, oldValue) => {
+  if (oldValue === true && newValue === false && !firstLoading.value) {
+    firstLoading.value = true
+  }
 })
 </script>
 

@@ -59,8 +59,6 @@ const onClose = () => (showMore.value = false)
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-
-    // flex-direction: column;
     gap: 1rem;
   }
 }

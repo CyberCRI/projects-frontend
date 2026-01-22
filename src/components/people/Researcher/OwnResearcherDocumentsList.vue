@@ -1,5 +1,5 @@
 <template>
-  <FetchLoader :status="[status, statusAnalytics]" only-error skeleton>
+  <FetchLoader :status="[status, statusAnalytics]" :with-data="!!documents" skeleton>
     <ResearcherDocumentsListBase
       :preview="preview"
       :pagination="pagination"
@@ -17,7 +17,7 @@ import ResearcherDocumentsListBase from '@/components/people/Researcher/Research
 import { DocumentType } from '@/interfaces/researcher'
 import { UserModel } from '@/models/user.model'
 import { toArray } from '@/skeletons/base.skeletons'
-import { researchDocumentSkeleton } from '@/skeletons/crisalid.skeletons'
+import { researchDocumentSkeleton, documentAnalyticsSkeleton } from '@/skeletons/crisalid.skeletons'
 
 const props = withDefaults(
   defineProps<{ preview?: boolean; limit?: number; user: UserModel; docType: DocumentType }>(),
@@ -32,7 +32,11 @@ const onFilter = (filters) => (query.value = { ...filters })
 const { data: documentAnalytics, status: statusAnalytics } = getOwnResearchDocumentAnalytics(
   orgaCode,
   researchId,
-  props.docType
+  props.docType,
+  {
+    query,
+    default: () => documentAnalyticsSkeleton,
+  }
 )
 const {
   pagination,

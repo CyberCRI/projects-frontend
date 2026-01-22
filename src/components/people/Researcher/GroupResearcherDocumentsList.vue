@@ -1,5 +1,5 @@
 <template>
-  <FetchLoader :status="[status, statusAnalytics]" only-error skeleton>
+  <FetchLoader :status="[status, statusAnalytics]" :with-data="!!documents" skeleton>
     <ResearcherDocumentsListBase
       :preview="preview"
       :pagination="pagination"
@@ -42,6 +42,7 @@ const { data: documentAnalytics, status: statusAnalytics } = getGroupResearchDoc
   groupId,
   props.docType,
   {
+    query,
     default: () => documentAnalyticsSkeleton,
   }
 )
