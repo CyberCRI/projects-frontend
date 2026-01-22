@@ -13,12 +13,9 @@
 </template>
 
 <script setup lang="ts">
-import { isNotGroup, isGroup, isAnonymousUser } from '@/functs/users'
+import { isAnonymousUser } from '@/functs/users'
 
-import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 import UserCard from '@/components/people/UserCard.vue'
-import { TranslatedGroupMember } from '@/models/group.model'
 
 defineOptions({ name: 'GroupMemberItem' })
 

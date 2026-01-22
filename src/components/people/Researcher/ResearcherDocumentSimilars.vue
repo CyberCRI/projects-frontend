@@ -7,7 +7,7 @@
     no-footer
     @close="emit('close')"
   >
-    <FetchLoader :status="status">
+    <FetchLoader :status="status" only-error skeleton>
       <div class="documents-list-similars">
         <ResearcherDocument
           v-for="doc in documents"
@@ -29,6 +29,8 @@ import { getResearchDocumentSimilars } from '@/api/v2/crisalid.service'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { TranslatedDocument } from '@/interfaces/researcher'
+import { toArray } from '@/skeletons/base.skeletons'
+import { researchDocumentSkeleton } from '@/skeletons/crisalid.skeletons'
 
 const { t } = useNuxtI18n()
 const emit = defineEmits(['close'])
@@ -39,11 +41,17 @@ const props = defineProps<{
 
 const organizationCode = useOrganizationCode()
 const documentId = computed(() => props.document?.id)
+const LIMIT = 10
 const {
   status,
   pagination,
   data: documents,
-} = getResearchDocumentSimilars(organizationCode, documentId)
+} = getResearchDocumentSimilars(organizationCode, documentId, {
+  paginationConfig: {
+    limit: LIMIT,
+  },
+  default: () => toArray(researchDocumentSkeleton, LIMIT),
+})
 const { count } = pagination
 </script>
 

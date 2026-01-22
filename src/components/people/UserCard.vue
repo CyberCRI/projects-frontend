@@ -7,17 +7,17 @@
     </template>
     <CroppedApiImage
       :alt="`${user.given_name} ${user.family_name} image`"
-      class="picture picture-user"
+      class="picture picture-user skeletons-image"
       :picture-data="user.profile_picture"
       picture-size="medium"
       :default-picture="DEFAULT_USER_PATATOID"
     />
     <div class="text text-limit">
-      <div v-if="role" class="card-type badge w-fit">
+      <div v-if="role" class="card-type badge w-fit skeletons-text">
         {{ role }}
       </div>
-      <div class="card-title">{{ user.given_name }} {{ user.family_name }}</div>
-      <div class="card-description">
+      <div class="card-title skeletons-text">{{ user.given_name }} {{ user.family_name }}</div>
+      <div class="card-description skeletons-text">
         {{ translatedJob }}
       </div>
     </div>
@@ -43,7 +43,7 @@ const props = defineProps({
   },
   role: {
     type: String,
-    defualt: '',
+    default: '',
   },
   mode: {
     type: String,

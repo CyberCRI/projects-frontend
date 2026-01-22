@@ -37,7 +37,7 @@ export type PaginationQuery = {
   offset?: number
 }
 
-const DEFAULT_PAGINATION_LIMIT = 10
+export const DEFAULT_PAGINATION_LIMIT = 10
 export type paginationConfig = {
   limit?: number
   offset?: number

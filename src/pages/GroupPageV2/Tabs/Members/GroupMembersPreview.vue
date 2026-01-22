@@ -19,28 +19,10 @@ import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupPreview from '@/pages/GroupPageV2/Tabs/BaseGroupPreview.vue'
 import BaseMembersPreview from '@/pages/GroupPageV2/Tabs/Members/BaseMembersPreview.vue'
 
-const props = defineProps<{
+defineProps<{
   group: TranslatedPeopleGroupModel
   isLoading: boolean
 }>()
-
-// const organizationCode = useOrganizationCode()
-// const limitSkeletons = computed(() => Math.min(props.group.modules?.members ?? LIMIT, LIMIT))
-
-// const {
-//   status,
-//   data,
-//   isLoading: isLoadingMember,
-// } = getGroupMember(organizationCode, props.group.id, {
-//   paginationConfig: {
-//     limit: LIMIT,
-//   },
-// })
-// const loading = computed(() => props.isLoading || isLoadingMember.value)
-
-// const userIdDrawer = ref<number | null>()
-// const openProfile = (user) => (userIdDrawer.value = user.id)
-// const closeProfile = () => (userIdDrawer.value = null)
 </script>
 
 <style lang="scss" scoped>

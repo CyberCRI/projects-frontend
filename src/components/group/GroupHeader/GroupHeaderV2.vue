@@ -26,7 +26,7 @@
           />
         </div>
         <div class="group-infos list-divider">
-          <h1 class="group-title">
+          <h1 class="group-title skeleton-block">
             {{ group.$t.name }}
           </h1>
           <p

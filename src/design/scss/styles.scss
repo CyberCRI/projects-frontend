@@ -22,16 +22,24 @@ $shadow-hover-def-1: 0 5px 10px rgb(0 0 0 / 12%);
 $shadow-hover-def-2: 0 4px 8px rgb(0 0 0 / 6%);
 $shadow-hover-scale: scale(1.01);
 
-.shadow-box {
+%shadow-box-transform {
+  transform: translateZ(0) $shadow-hover-scale !important;
+  box-shadow: $shadow-hover-def-1, $shadow-hover-def-2;
+}
+
+%shadow-box-transition {
   transform: translateZ(0);
   transition:
     $shadow-hover-duration transform $shadow-hover-easing,
     $shadow-hover-duration box-shadow,
     $shadow-hover-duration -webkit-transform $shadow-hover-easing;
+}
+
+.shadow-box {
+  @extend %shadow-box-transition;
 
   &:hover {
-    transform: translateZ(0) $shadow-hover-scale;
-    box-shadow: $shadow-hover-def-1, $shadow-hover-def-2;
+    @extend %shadow-box-transform;
   }
 }
 

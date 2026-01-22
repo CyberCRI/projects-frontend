@@ -381,7 +381,7 @@ export default {
   right: 0;
   left: 0;
   background-color: $white;
-  border: $border-width-s solid $primary;
+  border: $border-width-s solid var(--primary);
   border-radius: $border-radius-m;
   padding: $space-m;
   z-index: 1;

@@ -110,3 +110,25 @@ $zindex-toast: 4000;
 // CARDS
 $card_width: pxToRem(184px);
 $card_height: pxToRem(260px);
+
+:root {
+  --primary: #{$primary};
+  --primary-lighter: #{$primary-lighter};
+  --primary-light: #{$primary-light};
+  --primary-dark: #{$primary-dark};
+  --black: #{$black};
+  --almost-black: #{$almost-black};
+  --mid-gray: #{$mid-gray};
+  --light-gray: #{$light-gray};
+  --lighter-gray: #{$lighter-gray};
+  --almost-white: #{$almost-white};
+  --white: #{$white};
+  --blue: #{$blue};
+  --salmon: #{$salmon};
+  --violet: #{$violet};
+  --yellow: #{$yellow};
+  --red: #{$red};
+  --skeleton-0: #{$skeleton-0};
+  --skeleton-100: #{$skeleton-100};
+  --modal-background: #{$modal-background};
+}

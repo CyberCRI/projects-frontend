@@ -18,8 +18,8 @@ import { PeopleGroupModel } from '@/models/invitation.model'
 
 // HIERARCHY
 
-export function getHierarchyGroups(organizationCode: string, config = {}) {
-  return useAPI<HierarchyGroupModel>(
+export async function getHierarchyGroups(organizationCode: string, config = {}) {
+  return await useAPI<HierarchyGroupModel>(
     `organization/${organizationCode}/people-groups-hierarchy/`,
     config
   )
@@ -84,8 +84,8 @@ export async function deleteGroup(organizationCode: string, groupName: string) {
 
 // GROUP MEMBERS
 
-export function getGroupMember(organizationCode: string, groupId: number, config = {}) {
-  return useAPI<PaginationResult<GroupMember>>(
+export async function getGroupMember(organizationCode: string, groupId: number, config = {}) {
+  return await useAPI<PaginationResult<GroupMember>>(
     `organization/${organizationCode}/people-group/${groupId}/member/`,
     config
   )
@@ -115,8 +115,8 @@ export async function removeGroupMember(
 
 // GROUP PROJECTS
 
-export function getGroupProject(organizationCode: string, groupId: number, config = {}) {
-  return useAPI<PaginationResult<ProjectModel>>(
+export async function getGroupProject(organizationCode: string, groupId: number, config = {}) {
+  return await useAPI<PaginationResult<ProjectModel>>(
     `organization/${organizationCode}/people-group/${groupId}/project/`,
     config
   )
@@ -160,15 +160,15 @@ export async function patchGroupHeader(org: string, group_id: number, headerData
   }) //.data.value
 }
 
-export function getGroupSimilar(organizationCode: string, groupId: number, config = {}) {
-  return useAPI<PaginationResult<PeopleGroupModel>>(
+export async function getGroupSimilar(organizationCode: string, groupId: number, config = {}) {
+  return await useAPI<PaginationResult<PeopleGroupModel>>(
     `organization/${organizationCode}/people-group/${groupId}/similars/`,
     config
   )
 }
 
-export function getSubGroup(organizationCode: string, groupId: number, config = {}) {
-  return useAPI<PaginationResult<PeopleGroupModel>>(
+export async function getSubGroup(organizationCode: string, groupId: number, config = {}) {
+  return await useAPI<PaginationResult<PeopleGroupModel>>(
     `organization/${organizationCode}/people-group/${groupId}/subgroups/`,
     config
   )

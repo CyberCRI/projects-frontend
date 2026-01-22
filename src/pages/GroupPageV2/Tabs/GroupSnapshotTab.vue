@@ -38,7 +38,6 @@ import GroupDescriptionPreview from '@/pages/GroupPageV2/Tabs/Extras/GroupDescri
 import GroupSimilarsPreview from '@/pages/GroupPageV2/Tabs/Extras/GroupSimilarsPreview.vue'
 import GroupRecapPreview from '@/components/group/Modules/GroupRecapPreview.vue'
 import GroupSubPreview from '@/components/group/Modules/GroupSub/GroupSubPreview.vue'
-import SubGroups from '@/components/group/SubGroups/SubGroups.vue'
 
 const props = defineProps<{
   group: TranslatedPeopleGroupModel

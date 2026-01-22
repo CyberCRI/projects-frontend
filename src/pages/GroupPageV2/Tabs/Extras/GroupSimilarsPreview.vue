@@ -8,7 +8,11 @@
       <FetchLoader :status="status">
         <div class="group-similars">
           <div class="group-similars-list">
-            <GroupCard v-for="group in groups" :key="group.id" :group="group" />
+            <GroupCard
+              v-for="groupSimilar in groups"
+              :key="groupSimilar.id"
+              :group="groupSimilar"
+            />
           </div>
         </div>
       </FetchLoader>

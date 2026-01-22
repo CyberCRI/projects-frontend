@@ -7,7 +7,7 @@
 }
 
 .border-primary {
-  border: 2px solid $primary-light;
+  border: 2px solid var(--primary-light);
   border-radius: 5px;
 }
 

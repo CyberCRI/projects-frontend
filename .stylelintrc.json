@@ -21,11 +21,12 @@
     "at-rule-no-unknown": [
       true,
       {
-        "ignoreAtRules": ["function", "return"]
+        "ignoreAtRules": ["function", "return", "extend"]
       }
     ],
 
     "scss/operator-no-unspaced": null,
+    "scss/at-rule-no-unknown": true,
 
     "selector-class-pattern": null,
     "selector-id-pattern": null,

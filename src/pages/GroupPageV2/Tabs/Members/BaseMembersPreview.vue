@@ -1,5 +1,5 @@
 <template>
-  <FetchLoader :status="status">
+  <FetchLoader :status="status" only-error skeleton>
     <GroupMemberItem
       v-for="member in data"
       :key="member.id"
@@ -10,7 +10,6 @@
       no-footer
       :is-opened="!!userIdDrawer"
       :title="$t('profile.drawer_title')"
-      GroupMemberItem
       @close="closeProfile"
       @confirm="closeProfile"
     >
@@ -29,19 +28,22 @@
 <script setup lang="ts">
 import { getGroupMember } from '@/api/v2/group.service'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-const LIMIT = 6
+import { toArray } from '@/skeletons/base.skeletons'
+import { memberSkeleton } from '@/skeletons/group.skeletons'
 
+const LIMIT = 6
 const props = defineProps<{
   group: TranslatedPeopleGroupModel
-  isLoading: boolean
 }>()
 
 const organizationCode = useOrganizationCode()
+const limitSkeletons = computed(() => Math.min(props.group.modules?.members ?? LIMIT, LIMIT))
 
 const { status, data } = getGroupMember(organizationCode, props.group.id, {
   paginationConfig: {
     limit: LIMIT,
   },
+  default: () => toArray(memberSkeleton, limitSkeletons.value),
 })
 
 const userIdDrawer = ref<number | null>()

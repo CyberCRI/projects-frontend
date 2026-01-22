@@ -7,9 +7,9 @@
     no-footer
     @close="emit('close')"
   >
-    <FetchLoader :status="status">
+    <FetchLoader :status="status" only-error skeleton>
       <div class="groups-list-similars">
-        <GroupCard v-for="group in groups" :key="group.id" :group="group" />
+        <GroupCard v-for="groupSimilar in groups" :key="groupSimilar.id" :group="groupSimilar" />
       </div>
       <div class="groups-paginations">
         <PaginationButtons2 :pagination="pagination" />
@@ -23,6 +23,8 @@ import { getGroupSimilar } from '@/api/v2/group.service'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import { toArray } from '@/skeletons/base.skeletons'
+import { groupSkeleton } from '@/skeletons/group.skeletons'
 
 const { t } = useNuxtI18n()
 const emit = defineEmits(['close'])
@@ -35,7 +37,13 @@ const props = withDefaults(
 
 const organizationCode = useOrganizationCode()
 const groupId = computed(() => props.group?.id)
-const { status, pagination, data: groups } = getGroupSimilar(organizationCode, groupId)
+const {
+  status,
+  pagination,
+  data: groups,
+} = getGroupSimilar(organizationCode, groupId, {
+  default: () => toArray(groupSkeleton),
+})
 const { count } = pagination
 </script>
 

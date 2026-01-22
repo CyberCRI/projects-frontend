@@ -1,5 +1,5 @@
 <template>
-  <FetchLoader :status="[status, statusAnalytics]" :with-data="!!documents">
+  <FetchLoader :status="[status, statusAnalytics]" only-error skeleton>
     <ResearcherDocumentsListBase
       :preview="preview"
       :pagination="pagination"
@@ -19,6 +19,8 @@ import {
 import ResearcherDocumentsListBase from '@/components/people/Researcher/ResearcherDocumentsListBase.vue'
 import { DocumentType } from '@/interfaces/researcher'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import { toArray } from '@/skeletons/base.skeletons'
+import { documentAnalyticsSkeleton, researchDocumentSkeleton } from '@/skeletons/crisalid.skeletons'
 
 const props = withDefaults(
   defineProps<{
@@ -38,7 +40,10 @@ const onFilter = (filters) => (query.value = { ...filters })
 const { data: documentAnalytics, status: statusAnalytics } = getGroupResearchDocumentAnalytics(
   orgaCode,
   groupId,
-  props.docType
+  props.docType,
+  {
+    default: () => documentAnalyticsSkeleton,
+  }
 )
 const {
   pagination,
@@ -49,6 +54,7 @@ const {
   paginationConfig: {
     limit: props.limit,
   },
+  default: () => toArray(researchDocumentSkeleton, props.limit),
 })
 </script>
 

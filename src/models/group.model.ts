@@ -1,4 +1,3 @@
-import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import { UserFromJWTModel, UserModel } from '@/models/user.model'
 
 /**

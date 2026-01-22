@@ -13,12 +13,13 @@
         :alt="`${project.$t.title} image`"
         :picture-data="project.header_image"
         picture-size="small"
+        class="skeletons-image"
         default-picture="/placeholders/header_placeholder.png"
       />
 
       <div class="project-info">
-        <h3>{{ project.$t.title }}</h3>
-        <pre>{{ purpose }}</pre>
+        <h3 class="skeletons-text">{{ project.$t.title }}</h3>
+        <pre class="skeletons-text">{{ purpose }}</pre>
         <TagsList
           :tags="tags"
           :to="{
@@ -37,7 +38,7 @@
         @follow="emit('refresh')"
         @unfollow="emit('refresh')"
       />
-      <time :datetime="project.updated_at">
+      <time class="skeletons-text" :datetime="project.updated_at">
         {{ lastUpdated }}
       </time>
     </div>

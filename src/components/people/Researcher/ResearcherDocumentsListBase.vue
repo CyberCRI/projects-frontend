@@ -3,17 +3,19 @@
     <div class="profile-info-container" :class="{ preview: preview }">
       <div class="doc-year-container">
         <h5>
-          {{ t('profile.research-output-year') }}
-          {{ query.year ? `${query.year} (${paginationCount})` : '' }}
+          <span class="skeletons-text">
+            {{ t('profile.research-output-year') }}
+            {{ query.year ? `${query.year} (${paginationCount})` : '' }}
+          </span>
         </h5>
         <div v-if="yearsInfo" class="doc-year-info">
-          <span class="doc-year-info-minyear">{{ yearsInfo.minYear }}</span>
+          <span class="doc-year-info-minyear skeletons-text">{{ yearsInfo.minYear }}</span>
           <div>
             <component
               :is="preview ? 'button' : 'div'"
               v-for="obj in yearsInfo.bar"
               :key="obj.year"
-              class="doc-year-bar"
+              class="doc-year-bar skeletons-background"
               :class="{
                 disabled: query.year && query.year !== obj.year,
                 selected: query.year === obj.year,
@@ -26,7 +28,7 @@
               <span>{{ obj.year }}</span>
             </component>
           </div>
-          <span class="doc-year-info-maxyear">{{ yearsInfo.maxYear }}</span>
+          <span class="doc-year-info-maxyear skeletons-text">{{ yearsInfo.maxYear }}</span>
         </div>
       </div>
       <div class="doc-numbers-container">
@@ -34,7 +36,7 @@
           :is="preview ? 'div' : 'button'"
           v-for="[name, count] in documentTypeInfos"
           :key="name"
-          class="doc-numbers"
+          class="doc-numbers skeletons-background"
           :class="{
             disabled: query.document_type !== undefined && query.document_type !== (name ?? ''),
             selected: query.document_type === (name ?? ''),

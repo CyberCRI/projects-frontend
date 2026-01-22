@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="{ skeletons: inLoading && skeleton }">
     <div v-if="loading" class="m-auto w-fit flex justify-center items-center flex-col">
       <LpiLoader type="simple" />
       <span class="loading">
@@ -39,8 +39,9 @@ const props = withDefaults(
     label?: string
     withData?: boolean
     onlyError?: boolean
+    skeleton?: boolean
   }>(),
-  { withData: false, label: null, onlyError: false }
+  { withData: false, label: null, onlyError: false, skeleton: false }
 )
 
 const actualStatus = computed(() => {
@@ -60,12 +61,16 @@ const actualStatus = computed(() => {
   return 'success'
 })
 
+const inLoading = computed(() => {
+  return ['pending', 'idle'].includes(actualStatus.value)
+})
+
 const loading = computed(() => {
   // if data already set, dont add loading
   if (props.withData === true || props.onlyError) {
     return false
   }
-  return ['pending', 'idle'].includes(actualStatus.value)
+  return inLoading.value
 })
 </script>
 

@@ -66,7 +66,7 @@ const is = computed(() => {
 
   &.list {
     flex-direction: row;
-    border-bottom: $border-width-s solid #00dba7;
+    border-bottom: $border-width-s solid var(--primary);
 
     .card-inner {
       flex-flow: row;

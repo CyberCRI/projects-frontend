@@ -77,7 +77,9 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
       }
       return params[1]({ config: conf })
     },
-    params[2]
+    {
+      ...params[2],
+    }
   )
   const isLoading = useLoadingFromStatus(status)
 

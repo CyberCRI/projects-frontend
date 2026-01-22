@@ -1,7 +1,7 @@
 <template>
   <component
     :is="is"
-    class="see-more-arrow"
+    class="see-more-arrow skeletons-background"
     :to="to"
     :href="to ? undefined : '#'"
     @click="emit('click')"

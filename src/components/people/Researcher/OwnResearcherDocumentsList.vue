@@ -1,5 +1,5 @@
 <template>
-  <FetchLoader :status="[status, statusAnalytics]" :with-data="!!documents">
+  <FetchLoader :status="[status, statusAnalytics]" only-error skeleton>
     <ResearcherDocumentsListBase
       :preview="preview"
       :pagination="pagination"
@@ -16,6 +16,8 @@ import { getOwnResearchDocument, getOwnResearchDocumentAnalytics } from '@/api/v
 import ResearcherDocumentsListBase from '@/components/people/Researcher/ResearcherDocumentsListBase.vue'
 import { DocumentType } from '@/interfaces/researcher'
 import { UserModel } from '@/models/user.model'
+import { toArray } from '@/skeletons/base.skeletons'
+import { researchDocumentSkeleton } from '@/skeletons/crisalid.skeletons'
 
 const props = withDefaults(
   defineProps<{ preview?: boolean; limit?: number; user: UserModel; docType: DocumentType }>(),
@@ -41,6 +43,7 @@ const {
   paginationConfig: {
     limit: props.limit,
   },
+  default: () => toArray(researchDocumentSkeleton, props.limit),
 })
 </script>
 
