@@ -4,6 +4,7 @@ import {
   getHierarchyGroups as fetchGetHierarchyGroups,
   getGroupMember as fetchGetGroupMember,
   getGroupSimilar as fetchGetGroupSimilar,
+  getSubGroup as fetchGetSubGroup,
 } from '@/api/groups.service'
 import useAsyncAPI from '@/composables/useAsyncAPI'
 import useAsyncPaginationAPI from '@/composables/useAsyncPaginationAPI'
@@ -103,6 +104,29 @@ export const getGroupSimilar = (
     key,
     ({ config }) =>
       fetchGetGroupSimilar(unref(organizationCode), unref(groupId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
+    {
+      translate: translateGroups,
+      watch: onlyRefs([organizationCode, groupId]),
+      ...config,
+    }
+  )
+}
+
+export const getSubGroup = (
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
+  groupId: RefOrRaw<GroupModel['id']>,
+  config = {}
+) => {
+  const { translateGroups } = useAutoTranslate()
+  const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::subgroup`)
+
+  return useAsyncPaginationAPI(
+    key,
+    ({ config }) =>
+      fetchGetSubGroup(unref(organizationCode), unref(groupId), {
         ...DEFAULT_CONFIG,
         ...config,
       }),

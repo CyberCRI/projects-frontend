@@ -2,18 +2,18 @@
   <!-- add new modules Here -->
   <div class="group-modules-list" data-test="group-modules">
     <GroupHeaderV2 :group="group" :is-loading="isLoading" />
-    <GroupSubPreview v-if="group.children" :subgroups="group.children" :is-loading="isLoading" />
     <GroupRecapPreview :group="group" />
     <div :class="['group-infos', group.modules.similars ? 'group-infos-children' : '']">
       <GroupDescriptionPreview :group="group" />
       <GroupSimilarsPreview v-if="group.modules.similars" :group="group" />
     </div>
+    <GroupMembersPreview v-if="groupModules.members" :group="group" :is-loading="isLoading" />
     <GroupProjectsPreview
       v-if="groupModules.featured_projects"
       :group="group"
       :is-loading="isLoading"
     />
-    <GroupMembersPreview v-if="groupModules.members" :group="group" :is-loading="isLoading" />
+    <GroupSubPreview v-if="group.modules.subgroups" :group="group" :is-loading="isLoading" />
     <GroupDocumentsPreview
       v-if="groupModules.publications"
       document-type="publications"
@@ -37,7 +37,8 @@ import GroupDocumentsPreview from '@/pages/GroupPageV2/Tabs/Documents/GroupDocum
 import GroupDescriptionPreview from '@/pages/GroupPageV2/Tabs/Extras/GroupDescriptionPreview.vue'
 import GroupSimilarsPreview from '@/pages/GroupPageV2/Tabs/Extras/GroupSimilarsPreview.vue'
 import GroupRecapPreview from '@/components/group/Modules/GroupRecapPreview.vue'
-import GroupSubPreview from '@/components/group/Modules/GroupSubPreview.vue'
+import GroupSubPreview from '@/components/group/Modules/GroupSub/GroupSubPreview.vue'
+import SubGroups from '@/components/group/SubGroups/SubGroups.vue'
 
 const props = defineProps<{
   group: TranslatedPeopleGroupModel
@@ -52,6 +53,7 @@ const groupModules = computed(() => {
       members: 0,
       publications: 0,
       conferences: 0,
+      subgroups: 0,
     }
   }
   return props.group.modules

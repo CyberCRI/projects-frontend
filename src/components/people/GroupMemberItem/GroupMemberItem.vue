@@ -1,63 +1,44 @@
 <template>
-  <div :class="['user', isAnonymous ? 'anonymous' : '']" @click="click">
-    <CroppedApiImage
-      :alt="user.id ? `${user.given_name} ${user.family_name} image` : `${user.name} image`"
-      class="picture"
-      :picture-data="user.profile_picture"
-      picture-size="medium"
-      :default-picture="DEFAULT_USER_PATATOID"
-    />
-    <span v-if="roleLabel" class="badge" data-test="leader-badge">
-      {{ $t(roleLabel) }}
-    </span>
-
-    <div v-if="isNotGroup(user)" class="name-ctn">
-      <h4 class="user-name">
-        {{ userName }}
-      </h4>
-    </div>
-
-    <!--        TODO: ask Api to send information-->
-    <div v-if="isNotGroup(user)" class="job">
-      {{ user?.$t?.job }}
-    </div>
-
-    <div v-if="isGroup(user)" class="name-ctn">
-      <h4 class="user-name">
-        {{ user.name }}
-      </h4>
-    </div>
-  </div>
+  <UserCard
+    :user="member"
+    :role="roleLabel"
+    mode="list"
+    class="cursor-pointer shadow-drop border-primary"
+    @click="click"
+  >
+    <template #actions>
+      <template />
+    </template>
+  </UserCard>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { isNotGroup, isGroup, isAnonymousUser } from '@/functs/users'
 
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
+import UserCard from '@/components/people/UserCard.vue'
+import { TranslatedGroupMember } from '@/models/group.model'
 
 defineOptions({ name: 'GroupMemberItem' })
 
-const props = defineProps({
-  user: {
-    type: Object,
-    default: () => {},
-  },
-})
+const props = defineProps<{
+  member: any
+}>()
 
-const emit = defineEmits(['user-click'])
+const { t } = useNuxtI18n()
 
-const isAnonymous = computed(() => isAnonymousUser(props.user))
+const emit = defineEmits(['click'])
 
-const userName = computed(() => {
-  return `${props.user.given_name?.toLowerCase()} ${props.user.family_name?.toLowerCase()}`
-})
+const isAnonymous = computed(() => isAnonymousUser(props.member))
+
 const roleLabel = computed(() => {
-  if (props.user) {
-    if (props.user.is_leader && props.user.is_manager) return 'group.role.leaders-managers.label'
-    else if (props.user.is_manager) return 'group.role.managers.label'
-    else if (props.user.is_leader) return 'group.role.leaders.label'
-    else return 'group.role.members.label'
+  if (props.member) {
+    if (props.member.is_leader && props.member.is_manager)
+      return t('group.role.leaders-managers.label')
+    else if (props.member.is_manager) return t('group.role.managers.label')
+    else if (props.member.is_leader) return t('group.role.leaders.label')
+    else return t('group.role.members.label')
   }
   return null
 })
@@ -66,7 +47,7 @@ const click = () => {
   if (isAnonymous.value) {
     return
   }
-  emit('user-click', props.user)
+  emit('click', props.member)
 }
 </script>
 

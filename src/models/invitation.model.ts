@@ -1,6 +1,7 @@
 import { IconImageChoice } from '@/functs/IconImage'
 import { Translated } from '@/interfaces/translated'
 import { Image } from '@/models/image.model'
+import { LocationModel } from '@/models/location.model'
 import { OrganizationModel } from '@/models/organization.model'
 import { TagModel } from '@/models/tag.model'
 
@@ -24,12 +25,14 @@ export interface PeopleGroupModel {
   hierarchy: any
   sdgs: number[]
   tags: TagModel[]
+  location: LocationModel | null
   modules: {
     members: number
     featured_projects: number
     publications: number
     conferences: number
     similars: number
+    subgroups: number
   }
 }
 
@@ -46,6 +49,7 @@ export const GroupModuleIcon: { [key in PeopleGroupModulesKeys]: IconImageChoice
   publications: 'Article',
   members: 'Users',
   similars: 'PeopleGroup',
+  subgroups: 'Users',
 }
 
 export const GroupModuleTitle: { [key in PeopleGroupModulesKeys]: string } = {
@@ -54,6 +58,7 @@ export const GroupModuleTitle: { [key in PeopleGroupModulesKeys]: string } = {
   publications: 'group.publications',
   members: 'group.members',
   similars: 'group.similars',
+  subgroups: 'group.subgroups',
 }
 
 export interface ProfilePictureVariationsModel {

@@ -15,9 +15,11 @@ export interface GroupModel {
 
 export type GroupMember = UserModel & {
   is_manager: boolean
+  is_leader: boolean
 }
 
-export type TranslatedGroupMember = TranslatedPeopleGroupModel & GroupMember
+// TODO translted
+export type TranslatedGroupMember = GroupMember
 
 export interface HierarchyGroupModel {
   id: number

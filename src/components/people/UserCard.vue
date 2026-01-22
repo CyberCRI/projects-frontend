@@ -13,8 +13,8 @@
       :default-picture="DEFAULT_USER_PATATOID"
     />
     <div class="text text-limit">
-      <div class="card-type">
-        {{ userGroups }}
+      <div v-if="role" class="card-type badge w-fit">
+        {{ role }}
       </div>
       <div class="card-title">{{ user.given_name }} {{ user.family_name }}</div>
       <div class="card-description">
@@ -41,6 +41,10 @@ const props = defineProps({
     type: [String, Object],
     default: null,
   },
+  role: {
+    type: String,
+    defualt: '',
+  },
   mode: {
     type: String,
     default: 'card', // 'card' or 'list'
@@ -54,11 +58,6 @@ const translatedJob = getTranslatableField(props.user, 'job')
 const isPrivateUser = computed(() => {
   // Private users do not return an iD from API call
   return !props.user.id
-})
-const userGroups = computed(() => {
-  // TODO: use first group name plus groups number (ex: "Staff (+4)")
-  // when data will be available in api
-  return ''
 })
 
 const mailTo = () => {
@@ -78,5 +77,15 @@ const userAction = (event) => {
 
 .card-title {
   text-transform: capitalize;
+}
+
+.badge {
+  background: $primary-dark;
+  font-weight: 400;
+  font-size: $font-size-s;
+  margin-top: $space-s;
+  padding: $space-2xs;
+  color: $white;
+  border-radius: 10px;
 }
 </style>

@@ -47,7 +47,12 @@
         </div>
       </div>
       <div class="group-info-extras">
-        <div></div>
+        <div>
+          <div v-if="group.location" class="group-recap-element">
+            <IconImage name="MapMarker" />
+            <span class="group-recap-title">{{ t('group.location') }}</span>
+          </div>
+        </div>
 
         <SdgList
           :sdgs="group.sdgs"
@@ -143,5 +148,22 @@ const groupVisibilityIcon = computed(() =>
   border: 1px solid $primary;
   height: 30px;
   margin-top: 1rem;
+}
+
+.group-recap-element {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $primary-dark;
+  gap: 0.4rem;
+
+  svg {
+    width: 32px;
+    fill: $primary;
+  }
+}
+
+.group-recap-title {
+  font-weight: bold;
 }
 </style>

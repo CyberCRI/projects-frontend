@@ -162,7 +162,14 @@ export async function patchGroupHeader(org: string, group_id: number, headerData
 
 export function getGroupSimilar(organizationCode: string, groupId: number, config = {}) {
   return useAPI<PaginationResult<PeopleGroupModel>>(
-    `organization/${organizationCode}/people-group/${groupId}/similars`,
+    `organization/${organizationCode}/people-group/${groupId}/similars/`,
+    config
+  )
+}
+
+export function getSubGroup(organizationCode: string, groupId: number, config = {}) {
+  return useAPI<PaginationResult<PeopleGroupModel>>(
+    `organization/${organizationCode}/people-group/${groupId}/subgroups/`,
     config
   )
 }

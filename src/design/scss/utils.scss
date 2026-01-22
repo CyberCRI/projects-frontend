@@ -5,3 +5,12 @@
 .w-fit {
   width: fit-content;
 }
+
+.border-primary {
+  border: 2px solid $primary-light;
+  border-radius: 5px;
+}
+
+.contents {
+  display: contents;
+}
