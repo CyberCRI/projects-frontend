@@ -34,6 +34,8 @@ test(`test-${users.admin.email}`, async ({ page }) => {
     throw err
   }
 
+  await delay(2000) // wait for the group to be indexed by algolia
+
   await page.locator('[data-test="lpi-logo"]').waitFor({ state: 'attached' })
   await page.locator('[data-test="lpi-logo"]').click()
 

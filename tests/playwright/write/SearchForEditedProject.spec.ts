@@ -28,7 +28,7 @@ for (let i = 0; i < users.length; i++) {
       logger.error(err)
       throw err
     }
-    await delay(1000) // gives tiume for algolia to index
+    await delay(2000) // gives tiume for algolia to index
     try {
       await search(page, projId)
       logger.info(`searching for SearchTest_${i}`)
@@ -45,7 +45,7 @@ for (let i = 0; i < users.length; i++) {
       logger.error(err)
       throw err
     }
-    await delay(1000) // gives tiume for algolia to reindex
+    await delay(2000) // gives tiume for algolia to reindex
     try {
       await search(page, projId2)
       logger.info(`searching for SearchTest_${projId2}`)
