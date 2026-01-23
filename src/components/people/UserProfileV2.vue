@@ -568,7 +568,7 @@ export default {
 
   watch: {
     async isEditing(newVal) {
-      if (newVal && this.user.onboarding_status?.complete_profile) {
+      if (newVal && this.isSelf && this.user.onboarding_status?.complete_profile) {
         await this.onboardingTrap('complete_profile', false)
       }
     },
