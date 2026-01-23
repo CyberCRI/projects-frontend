@@ -13,7 +13,7 @@
           <GroupMemberItem
             v-for="member in data"
             :key="member.id"
-            :user="member"
+            :member="member"
             class="cursor-pointer shadow-drop"
             @user-click="openProfile"
           />
@@ -44,6 +44,7 @@
 
 <script setup lang="ts">
 import { getGroupMember } from '@/api/v2/group.service'
+import GroupMemberItem from '@/components/group/Modules/Members/GroupMemberItem.vue'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 
 defineOptions({ name: 'GroupMembersTab' })

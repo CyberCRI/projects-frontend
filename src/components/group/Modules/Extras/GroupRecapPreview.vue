@@ -1,15 +1,19 @@
 <template>
   <div class="group-recap">
-    <NuxtLink
-      v-for="module in modules"
+    <component
+      :is="is"
+      v-for="module in modulesArray"
       :key="module.name"
       :to="`#${module.key}`"
       class="group-recap-element"
       external
     >
       <IconImage :name="module.icon" />
-      <span class="group-recap-title">{{ module.count }} {{ module.name }}</span>
-    </NuxtLink>
+      <span class="group-recap-title">
+        {{ module.count }}
+        {{ module.name }}
+      </span>
+    </component>
   </div>
 </template>
 
@@ -17,24 +21,41 @@
 import {
   GroupModuleIcon,
   GroupModuleTitle,
+  PeopleGroupModulesKeys,
   TranslatedPeopleGroupModel,
 } from '@/models/invitation.model'
 
-const props = defineProps<{
-  group: TranslatedPeopleGroupModel
-}>()
+const props = withDefaults(
+  defineProps<{
+    group: TranslatedPeopleGroupModel
+    noTitle?: boolean
+    is?: string
+    modules?: PeopleGroupModulesKeys[]
+  }>(),
+  { noTitle: false, is: null, modules: null }
+)
 
 const { t } = useNuxtI18n()
 
-const modules = computed(() => {
+const is = computed(() => {
+  if (!props.is) return resolveComponent('NuxtLink')
+  return props.is
+})
+
+const modulesArray = computed(() => {
   return (
     Object.entries(props.group.modules)
       // remove modules with 0 elements
-      .filter(([, count]) => count > 0)
+      .filter(([name, count]) => {
+        return (
+          count > 0 &&
+          (props.modules === null || props.modules.includes(name as PeopleGroupModulesKeys))
+        )
+      })
       .map(([name, count]) => {
         const obj = {
           key: name,
-          name: t(GroupModuleTitle[name]),
+          name: props.noTitle ? '' : t(GroupModuleTitle[name]),
           count,
           icon: GroupModuleIcon[name],
         }

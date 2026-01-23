@@ -46,6 +46,7 @@
 <script setup lang="ts">
 import { getGroup } from '@/api/v2/group.service'
 import { useLpiHead2 } from '@/composables/useLpiHead'
+import { GroupModuleIcon, GroupModuleTitle } from '@/models/invitation.model'
 
 const uniqueId = 'group-nav-panel'
 const { canEditGroup } = usePermissions()
@@ -90,6 +91,8 @@ const groupModules = computed(
       featured_projects: 0,
       publications: 0,
       conferences: 0,
+      similars: 0,
+      subgroups: 0,
     }
 )
 
@@ -114,7 +117,7 @@ const groupTabsDisplay = computed(() => {
       isEditing: false,
       key: 'group-members',
       dataTest: 'group-members',
-      label: t('group.members'),
+      label: t(GroupModuleTitle.members),
       view: `/group/${route.params.groupId}/members`,
       altView: `/group/${route.params.groupId}/members/edit`,
       props: {
@@ -122,13 +125,13 @@ const groupTabsDisplay = computed(() => {
         isLoading: isLoading.value,
       },
       condition: groupModules.value.members,
-      icon: 'Users',
+      icon: GroupModuleIcon.members,
     },
     {
       isEditing: false,
       key: 'group-projects',
       dataTest: 'group-projects',
-      label: t('group.projects'),
+      label: t(GroupModuleTitle.featured_projects),
       view: `/group/${route.params.groupId}/projects`,
       altView: `/group/${route.params.groupId}/projects/edit`,
       props: {
@@ -136,13 +139,13 @@ const groupTabsDisplay = computed(() => {
         isLoading: isLoading.value,
       },
       condition: groupModules.value.featured_projects,
-      icon: 'Briefcase',
+      icon: GroupModuleIcon.featured_projects,
     },
     {
       isEditing: false,
       key: 'group-publications',
       dataTest: 'group-publications',
-      label: t('group.publications'),
+      label: t(GroupModuleTitle.publications),
       view: `/group/${route.params.groupId}/publications`,
       altView: `/group/${route.params.groupId}/publications/edit`,
       props: {
@@ -151,13 +154,13 @@ const groupTabsDisplay = computed(() => {
         isLoading: isLoading.value,
       },
       condition: groupModules.value.publications,
-      icon: 'Article',
+      icon: GroupModuleIcon.publications,
     },
     {
       isEditing: false,
       key: 'group-conferences',
       dataTest: 'group-conferences',
-      label: t('group.conferences'),
+      label: t(GroupModuleTitle.conferences),
       view: `/group/${route.params.groupId}/conferences`,
       altView: `/group/${route.params.groupId}/conferences/edit`,
       props: {
@@ -166,7 +169,21 @@ const groupTabsDisplay = computed(() => {
         isLoading: isLoading.value,
       },
       condition: groupModules.value.conferences,
-      icon: 'Article',
+      icon: GroupModuleIcon.conferences,
+    },
+    {
+      isEditing: false,
+      key: 'group-subs',
+      dataTest: 'group-subs',
+      label: t(GroupModuleTitle.subgroups),
+      view: `/group/${route.params.groupId}/sub-groups`,
+      altView: `/group/${route.params.groupId}/sub-groups/edit`,
+      props: {
+        group: group.value,
+        isLoading: isLoading.value,
+      },
+      condition: groupModules.value.subgroups,
+      icon: GroupModuleIcon.subgroups,
     },
   ]
 })

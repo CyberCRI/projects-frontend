@@ -35,6 +35,14 @@ $shadow-hover-scale: scale(1.01);
     $shadow-hover-duration -webkit-transform $shadow-hover-easing;
 }
 
+.shadow-box-transition {
+  @extend %shadow-box-transition;
+}
+
+.shadow-box-transform {
+  @extend %shadow-box-transform;
+}
+
 .shadow-box {
   @extend %shadow-box-transition;
 

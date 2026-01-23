@@ -7,7 +7,7 @@
     @click="click"
   >
     <template #actions>
-      <template />
+      <span class="d-none" />
     </template>
   </UserCard>
 </template>

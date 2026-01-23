@@ -49,7 +49,7 @@ export const GroupModuleIcon: { [key in PeopleGroupModulesKeys]: IconImageChoice
   publications: 'Article',
   members: 'Users',
   similars: 'PeopleGroup',
-  subgroups: 'Users',
+  subgroups: 'nodeTree',
 }
 
 export const GroupModuleTitle: { [key in PeopleGroupModulesKeys]: string } = {
@@ -58,7 +58,7 @@ export const GroupModuleTitle: { [key in PeopleGroupModulesKeys]: string } = {
   publications: 'group.publications',
   members: 'group.members',
   similars: 'group.similars',
-  subgroups: 'group.subgroups',
+  subgroups: 'group.see-subgroups',
 }
 
 export interface ProfilePictureVariationsModel {

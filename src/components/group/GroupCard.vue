@@ -19,28 +19,34 @@
 
     <CroppedApiImage
       :alt="`${group.name} image`"
-      class="picture picture-group"
+      class="picture picture-group skeletons-image"
       :picture-data="group.header_image"
       picture-size="medium"
       :default-picture="DEFAULT_USER_PATATOID"
     />
 
     <div class="text text-limit">
-      <div v-if="group.members_count !== undefined" class="group-count">
+      <div v-if="group.members_count !== undefined" class="group-count skeletons-background">
         <IconImage name="MultiplePerson" class="icon" />
         {{ group.members_count }}
       </div>
-      <div class="card-type">
+      <div class="card-type skeletons-text">
         {{ translatedName }}
       </div>
-      <p v-html="translatedShortDescription" />
+      <p class="skeletons-text" v-html="translatedShortDescription" />
     </div>
 
     <template v-if="hasSubGroupsLink" #footer>
-      <div class="subgroups-link" @click.prevent="gotoSubgroup(group)">
+      <NuxtLink
+        :to="{
+          name: 'Groups',
+          params: { groupId: group.id },
+        }"
+        class="subgroups-link"
+      >
         {{ $t('group.see-subgroups', group.children.length) }}
         <IconImage class="arrow" name="ArrowRight" />
-      </div>
+      </NuxtLink>
     </template>
   </BasicCard>
 </template>
@@ -124,10 +130,6 @@ export default {
       // this is a quick and dirty fix to make whole card clickable for selection
       if (this.hasAddIcon) this.$emit('add')
       else this.$emit('navigated-away')
-    },
-
-    gotoSubgroup(group) {
-      this.$router.push({ name: 'Groups', params: { groupId: group.id } })
     },
   },
 }

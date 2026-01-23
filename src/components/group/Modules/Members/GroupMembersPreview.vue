@@ -8,7 +8,12 @@
   >
     <template #content>
       <div class="group-members">
-        <BaseMembersPreview :group="group" :is-loading="isLoading" class="contents" />
+        <BaseMembersPreview
+          :group="group"
+          :is-loading="isLoading"
+          class="contents"
+          :with-pagination="false"
+        />
       </div>
     </template>
   </BaseGroupPreview>
@@ -16,8 +21,8 @@
 
 <script setup lang="ts">
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import BaseGroupPreview from '@/pages/GroupPageV2/Tabs/BaseGroupPreview.vue'
-import BaseMembersPreview from '@/pages/GroupPageV2/Tabs/Members/BaseMembersPreview.vue'
+import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
+import BaseMembersPreview from '@/components/group/Modules/Members/BaseMembersPreview.vue'
 
 defineProps<{
   group: TranslatedPeopleGroupModel

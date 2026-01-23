@@ -1,5 +1,8 @@
 <template>
   <div :class="{ skeletons: inSkeletons }">
+    <!-- <ul>
+      <li v-for="mem in memory">{{ mem }}</li>
+    </ul> -->
     <div v-if="loading" class="m-auto w-fit flex justify-center items-center flex-col">
       <LpiLoader type="simple" />
       <span class="loading">
@@ -68,7 +71,6 @@ const inLoading = computed(() => {
 })
 
 const loading = computed(() => {
-  // if data already set, dont add loading
   if (props.withData === true || props.onlyError) {
     return false
   }

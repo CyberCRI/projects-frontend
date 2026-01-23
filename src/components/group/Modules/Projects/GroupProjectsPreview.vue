@@ -25,7 +25,7 @@
 import { getGroupProject } from '@/api/v2/group.service'
 import ProjectPreview from '@/components/project/ProjectPreview.vue'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import BaseGroupPreview from '@/pages/GroupPageV2/Tabs/BaseGroupPreview.vue'
+import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
 import { toArray } from '@/skeletons/base.skeletons'
 import { projectSkeleton } from '@/skeletons/project.skeletons'
 

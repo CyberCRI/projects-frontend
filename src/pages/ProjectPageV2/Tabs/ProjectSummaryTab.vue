@@ -100,10 +100,13 @@
 </template>
 
 <script>
+import ProjectMemberSection from '@/components/project/ProjectMemberSection/ProjectMemberSection.vue'
 import { isNotGroup } from '@/functs/users'
 
 export default {
   name: 'ProjectSummaryTab',
+
+  components: [ProjectMemberSection],
 
   props: {
     project: {

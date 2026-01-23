@@ -1,11 +1,10 @@
 <template>
-  <BaseGroupPreview
-    v-if="group.$t.description"
-    :title="$t('group.similars')"
-    :total="group.modules.similars"
-  >
+  <BaseGroupPreview :title="$t(GroupModuleTitle.similars)" :total="group.modules.similars">
+    <template #header>
+      <SeeMoreArrow is="button" class="see-more-btn header" @click="onClick" />
+    </template>
     <template #content>
-      <FetchLoader :status="status">
+      <FetchLoader :status="status" only-error skeleton>
         <div class="group-similars">
           <div class="group-similars-list">
             <GroupCard
@@ -18,7 +17,7 @@
       </FetchLoader>
     </template>
     <template #footer>
-      <SeeMoreArrow is="button" class="see-more-btn" @click="onClick" />
+      <SeeMoreArrow is="button" class="see-more-btn footer" @click="onClick" />
       <GroupSimilarDrawer :group="showMore ? group : null" @close="onClose" />
     </template>
   </BaseGroupPreview>
@@ -29,18 +28,22 @@ import { getGroupSimilar } from '@/api/v2/group.service'
 import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
 import GroupCard from '@/components/group/GroupCard.vue'
 import GroupSimilarDrawer from '@/components/group/GroupSimilarDrawer.vue'
-import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import BaseGroupPreview from '@/pages/GroupPageV2/Tabs/BaseGroupPreview.vue'
+import { GroupModuleTitle, TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
+import { toArray } from '@/skeletons/base.skeletons'
+import { groupSkeleton } from '@/skeletons/group.skeletons'
 
-const props = defineProps<{ group: TranslatedPeopleGroupModel }>()
+const props = withDefaults(defineProps<{ group: TranslatedPeopleGroupModel; limit?: number }>(), {
+  limit: 3,
+})
 
 const organizationCode = useOrganizationCode()
 const groupId = computed(() => props.group?.id)
-const LIMIT = 3
 const { status, data: groups } = getGroupSimilar(organizationCode, groupId, {
   paginationConfig: {
-    limit: LIMIT,
+    limit: props.limit,
   },
+  default: () => toArray(groupSkeleton, props.limit),
 })
 
 const showMore = ref(false)
@@ -70,9 +73,23 @@ const onClose = () => (showMore.value = false)
   font-size: unset;
 }
 
+.see-more-btn.footer {
+  display: none;
+}
+
+.see-more-btn.header {
+  display: block;
+}
+
 @media screen and (min-width: $min-desktop) {
-  .group-similars-list {
-    flex-direction: column;
+  // .group-similars-list {
+  //   flex-direction: column;
+  // }
+  .see-more-btn.footer {
+    display: none;
+  }
+  .see-more-btn.header {
+    display: block;
   }
 }
 </style>

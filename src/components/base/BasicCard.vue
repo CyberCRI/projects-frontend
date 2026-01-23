@@ -55,7 +55,7 @@ const is = computed(() => {
     justify-content: space-between;
     height: $card_height;
     width: $card_width;
-    border: $border-width-s solid $primary;
+    border: $border-width-s solid var(--primary);
     border-radius: $border-radius-m;
     text-align: center;
 

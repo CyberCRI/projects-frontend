@@ -38,6 +38,12 @@ export default function useGroupPagesRoutes() {
             documentType: 'conferences',
           }),
         },
+        {
+          path: 'sub-groups',
+          name: 'groupSubs',
+          component: () => import('../pages/GroupPageV2/Tabs/GroupSubs/GroupSubsTab.vue'),
+        },
+
         // retro compat
         {
           path: 'Edit',

@@ -73,7 +73,7 @@
 import SdgList from '@/components/base/SdgList.vue'
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import BaseGroupPreview from '@/pages/GroupPageV2/Tabs/BaseGroupPreview.vue'
+import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
 
 const props = withDefaults(
   defineProps<{

@@ -1,5 +1,5 @@
 <template>
-  <BaseGroupPreview v-if="group.$t.description" :title="$t('group.presentation')" icon="Article">
+  <BaseGroupPreview :title="$t('group.presentation')" icon="Article">
     <template #content>
       <DescriptionExpandable
         :description="group.$t.description"
@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import BaseGroupPreview from '@/pages/GroupPageV2/Tabs/BaseGroupPreview.vue'
+import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
 
 defineProps<{ group: TranslatedPeopleGroupModel }>()
 </script>
