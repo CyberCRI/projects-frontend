@@ -34,7 +34,8 @@ const emit = defineEmits(['close'])
 const IS_STREAMED = ref(true)
 
 const connectOptions = {
-  url: IS_STREAMED.value ? '/api/chat-stream' : '/api/chat',
+  // url: IS_STREAMED.value ? '/api/chat-stream' : '/api/chat',
+  url: '/api/chat-lg-stream',
   stream: IS_STREAMED.value,
 }
 const usersStore = useUsersStore()
