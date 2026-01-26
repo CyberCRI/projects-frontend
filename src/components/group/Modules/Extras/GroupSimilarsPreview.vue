@@ -17,7 +17,7 @@
       </FetchLoader>
     </template>
     <template #footer>
-      <SeeMoreArrow is="button" class="see-more-btn footer" @clicfooterk="onClick" />
+      <SeeMoreArrow is="button" class="see-more-btn footer" @click="onClick" />
       <GroupSimilarDrawer :group="showMore ? group : null" @close="onClose" />
     </template>
   </BaseGroupPreview>
