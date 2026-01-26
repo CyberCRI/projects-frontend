@@ -93,7 +93,7 @@ try {
   position: relative; // higher than home category dropdown and buttons and suggestions
   z-index: 10;
 
-  @media (min-width: $min-tablet) {
+  @media (min-width: $min-desktop) {
     padding-left: $space-2xl;
     padding-right: $space-2xl;
   }
@@ -115,7 +115,7 @@ try {
   flex-direction: column;
   gap: $space-2xl;
 
-  @media (min-width: $min-tablet) {
+  @media (min-width: $min-desktop) {
     flex-direction: row;
     align-items: flex-start;
   }
@@ -124,7 +124,7 @@ try {
 .projects-and-people {
   margin-bottom: $space-xl;
 
-  @media (min-width: $min-tablet) {
+  @media (min-width: $min-desktop) {
     flex-basis: 35%;
     margin-bottom: 0;
     flex-shrink: 0;
@@ -148,7 +148,7 @@ try {
     align-items: center;
     width: 100%;
 
-    @media (min-width: $min-tablet) {
+    @media (min-width: $min-desktop) {
       margin-top: $space-l;
     }
 
@@ -169,7 +169,7 @@ try {
 .all-news {
   height: fit-content;
 
-  @media (min-width: $min-tablet) {
+  @media (min-width: $min-desktop) {
     flex-basis: 65%;
   }
 
