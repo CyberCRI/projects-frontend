@@ -14,9 +14,8 @@
 
 <script setup lang="ts">
 import { getSubGroup } from '@/api/v2/group.service'
-import { DEFAULT_PAGINATION_LIMIT } from '@/composables/usePagination'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import { toPagination } from '@/skeletons/base.skeletons'
+import { maxSkeleton, toPagination } from '@/skeletons/base.skeletons'
 import { groupSkeleton } from '@/skeletons/group.skeletons'
 import GroupSubTeamItem from '@/components/group/Modules/GroupSub/GroupSubTeamItem.vue'
 
@@ -26,14 +25,13 @@ const props = withDefaults(
     limit?: number
     withPagination?: boolean
   }>(),
-  { limit: DEFAULT_PAGINATION_LIMIT, withPagination: true }
+  { limit: null, withPagination: true }
 )
 
 const organizationCode = useOrganizationCode()
 const groupId = computed(() => props.group?.id)
-const limitSkeletons = computed(() =>
-  Math.min(props.group.modules?.subgroups ?? props.limit, props.limit)
-)
+
+const limitSkeletons = computed(() => maxSkeleton(props.group?.modules?.subgroups, props.limit))
 
 const {
   status,

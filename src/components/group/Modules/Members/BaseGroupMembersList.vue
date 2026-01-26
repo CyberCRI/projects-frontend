@@ -36,7 +36,7 @@
 import { getGroupMember } from '@/api/v2/group.service'
 import GroupMemberItem from '@/components/group/Modules/Members/GroupMemberItem.vue'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import { toPagination } from '@/skeletons/base.skeletons'
+import { maxSkeleton, toPagination } from '@/skeletons/base.skeletons'
 import { memberSkeleton } from '@/skeletons/group.skeletons'
 
 const props = withDefaults(
@@ -49,9 +49,8 @@ const props = withDefaults(
 )
 
 const organizationCode = useOrganizationCode()
-const limitSkeletons = computed(() =>
-  Math.min(props.group.modules?.members ?? props.limit, props.limit)
-)
+const limitSkeletons = computed(() => maxSkeleton(props.group?.modules?.members, props.limit))
+
 const groupId = computed(() => props.group?.id)
 
 const { status, data, pagination } = getGroupMember(organizationCode, groupId, {

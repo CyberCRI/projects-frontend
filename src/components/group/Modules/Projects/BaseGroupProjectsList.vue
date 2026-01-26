@@ -12,7 +12,7 @@
 import { getGroupProject } from '@/api/v2/group.service'
 import ProjectPreview from '@/components/project/ProjectPreview.vue'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import { toPagination } from '@/skeletons/base.skeletons'
+import { maxSkeleton, toPagination } from '@/skeletons/base.skeletons'
 import { projectSkeleton } from '@/skeletons/project.skeletons'
 
 const props = withDefaults(
@@ -24,11 +24,12 @@ const props = withDefaults(
 )
 
 const limitSkeletons = computed(() =>
-  Math.min(props.group.modules?.featured_projects ?? props.limit, props.limit)
+  maxSkeleton(props.group?.modules?.featured_projects, props.limit)
 )
 const organizationCode = useOrganizationCode()
+const groupId = computed(() => props.group?.id)
 
-const { status, data } = getGroupProject(organizationCode, props.group.id, {
+const { status, data } = getGroupProject(organizationCode, groupId, {
   paginationConfig: { limit: props.limit },
   default: () => toPagination(projectSkeleton, limitSkeletons.value),
 })

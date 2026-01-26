@@ -15,3 +15,8 @@ export const toPagination = <T>(
     results,
   }
 }
+
+export const maxSkeleton = (elementCount: number, limit: number | null): number => {
+  const sanLimit = limit ?? DEFAULT_PAGINATION_LIMIT
+  return Math.min(elementCount ?? sanLimit, sanLimit)
+}

@@ -5,7 +5,7 @@
     <GroupRecapPreview :group="group" />
     <div :class="['group-infos', group.modules.similars ? 'group-infos-children' : '']">
       <GroupDescriptionPreview v-if="group.$t.description" :group="group" />
-      <GroupSimilarsPreview v-if="group.modules.similars" :group="group" />
+      <GroupSimilarsPreview v-if="group.modules.similars" :group="group" :limit="3" />
     </div>
     <GroupMembersPreview v-if="groupModules.members" :group="group" :is-loading="isLoading" />
     <GroupProjectsPreview
@@ -74,6 +74,10 @@ const groupModules = computed(() => {
 
 .group-infos-children {
   gap: 1rem;
+}
+
+.group-infos:not(.group-infos-children) {
+  grid-template-columns: 1fr;
 }
 
 @media screen and (max-width: $min-desktop) {
