@@ -4,6 +4,7 @@
     :to-link="toLink"
     :data-test="`group-card-${group.name}`"
     :mode="mode"
+    :line-clamp="lineClamp"
     @click="toGroupPage"
   >
     <template #actions-right>
@@ -26,9 +27,9 @@
     />
 
     <div class="text text-limit">
-      <div v-if="group.members_count !== undefined" class="group-count skeletons-background">
+      <div v-if="group.modules.members" class="group-count skeletons-background">
         <IconImage name="MultiplePerson" class="icon" />
-        {{ group.members_count }}
+        {{ group.modules.members }}
       </div>
       <div class="card-type skeletons-text">
         {{ translatedName }}
@@ -36,7 +37,7 @@
       <p class="skeletons-text" v-html="translatedShortDescription" />
     </div>
 
-    <template v-if="hasSubGroupsLink" #footer>
+    <template v-if="group.modules.subgroups" #footer>
       <NuxtLink
         :to="{
           name: 'Groups',
@@ -44,94 +45,74 @@
         }"
         class="subgroups-link"
       >
-        {{ $t('group.see-subgroups', group.children.length) }}
+        {{ $t('group.see-subgroups', group.modules.subgroups) }}
         <IconImage class="arrow" name="ArrowRight" />
       </NuxtLink>
     </template>
   </BasicCard>
 </template>
 
-<script>
+<script setup lang="ts">
 import BasicCard from '@/components/base/BasicCard.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
+import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 
-export default {
-  name: 'GroupCard',
+const props = withDefaults(
+  defineProps<{
+    group: TranslatedPeopleGroupModel
+    hasAddIcon?: boolean
+    hasCloseIcon?: boolean
+    mode?: 'card' | 'list'
+  }>(),
+  {
+    hasAddIcon: false,
+    hasCloseIcon: false,
+    mode: 'card',
+  }
+)
 
-  components: {
-    BasicCard,
-    IconImage,
-    CroppedApiImage,
-  },
+const emit = defineEmits<{
+  add: []
+  unselect: [TranslatedPeopleGroupModel]
+  click: [TranslatedPeopleGroupModel]
+  'navigated-away': []
+}>()
 
-  props: {
-    group: {
-      type: Object,
-      required: true,
-    },
+const { getTranslatableField } = useAutoTranslate()
+const translatedName = getTranslatableField(props.group, 'name')
+const translatedShortDescription = getTranslatableField(props.group, 'short_description')
 
-    hasAddIcon: {
-      type: Boolean,
-      default: false,
-    },
+const showAddButton = computed(() => props.hasAddIcon)
+const showCloseButton = computed(() => props.hasCloseIcon)
+const toLink = computed(() => {
+  // a to-link attribute make the basic card a NuxtLink
+  // witch we dont want when just selecting project
+  return showAddButton.value ? null : { name: 'Group', params: { groupId: props.group.id } }
+})
 
-    hasCloseIcon: {
-      type: Boolean,
-      default: false,
-    },
-    hasSubGroupsLink: {
-      type: Boolean,
-      default: false,
-    },
-    mode: {
-      type: String,
-      default: 'card', // 'card' or 'list'
-    },
-  },
+// calculate lineClamp description
+const lineClamp = computed(() => {
+  let defaultLineClamp = 6
+  if (props.group.modules.subgroups) {
+    defaultLineClamp -= 2
+  }
+  if (props.group.modules.members) {
+    defaultLineClamp -= 1
+  }
 
-  emits: ['add', 'unselect', 'click', 'navigated-away'],
+  return defaultLineClamp
+})
 
-  setup(props) {
-    const { getTranslatableField } = useAutoTranslate()
-    const translatedName = getTranslatableField(props.group, 'name')
-    const translatedShortDescription = getTranslatableField(props.group, 'short_description')
-
-    return {
-      translatedName,
-      translatedShortDescription,
-      DEFAULT_USER_PATATOID,
-    }
-  },
-
-  computed: {
-    showAddButton() {
-      return this.hasAddIcon
-    },
-
-    showCloseButton() {
-      return this.hasCloseIcon
-    },
-
-    toLink() {
-      // a to-link attribute make the basic card a NuxtLink
-      // witch we dont want when just selecting project
-      return this.hasAddIcon ? null : { name: 'Group', params: { groupId: this.group.id } }
-    },
-  },
-
-  methods: {
-    mailTo() {
-      document.location.href = `mailto:${this.group.email}`
-    },
-
-    toGroupPage() {
-      // this is a quick and dirty fix to make whole card clickable for selection
-      if (this.hasAddIcon) this.$emit('add')
-      else this.$emit('navigated-away')
-    },
-  },
+const mailTo = () => (document.location.href = `mailto:${props.group.email}`)
+const toGroupPage = () => {
+  // this is a quick and dirty fix to make whole card clickable for selection
+  if (showAddButton.value) {
+    emit('add')
+  } else {
+    emit('navigated-away')
+  }
 }
 </script>
 

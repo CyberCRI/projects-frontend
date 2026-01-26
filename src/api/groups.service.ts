@@ -19,7 +19,7 @@ import { PeopleGroupModel } from '@/models/invitation.model'
 // HIERARCHY
 
 export async function getHierarchyGroups(organizationCode: string, config = {}) {
-  return await useAPI<HierarchyGroupModel>(
+  return await useAPI<PaginationResult<HierarchyGroupModel>>(
     `organization/${organizationCode}/people-groups-hierarchy/`,
     config
   )
@@ -168,6 +168,7 @@ export async function getGroupSimilar(organizationCode: string, groupId: number,
 }
 
 export async function getSubGroup(organizationCode: string, groupId: number, config = {}) {
+  // await delay(2000)
   return await useAPI<PaginationResult<PeopleGroupModel>>(
     `organization/${organizationCode}/people-group/${groupId}/subgroups/`,
     config

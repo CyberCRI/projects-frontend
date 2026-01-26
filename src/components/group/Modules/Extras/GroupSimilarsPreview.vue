@@ -17,7 +17,7 @@
       </FetchLoader>
     </template>
     <template #footer>
-      <SeeMoreArrow is="button" class="see-more-btn footer" @click="onClick" />
+      <SeeMoreArrow is="button" class="see-more-btn footer" @clicfooterk="onClick" />
       <GroupSimilarDrawer :group="showMore ? group : null" @close="onClose" />
     </template>
   </BaseGroupPreview>
@@ -27,11 +27,11 @@
 import { getGroupSimilar } from '@/api/v2/group.service'
 import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
 import GroupCard from '@/components/group/GroupCard.vue'
-import GroupSimilarDrawer from '@/components/group/GroupSimilarDrawer.vue'
 import { GroupModuleTitle, TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
-import { toArray } from '@/skeletons/base.skeletons'
+import { toPagination } from '@/skeletons/base.skeletons'
 import { groupSkeleton } from '@/skeletons/group.skeletons'
+import GroupSimilarDrawer from '@/components/group/Modules/Extras/GroupSimilarDrawer.vue'
 
 const props = withDefaults(defineProps<{ group: TranslatedPeopleGroupModel; limit?: number }>(), {
   limit: 3,
@@ -43,7 +43,7 @@ const { status, data: groups } = getGroupSimilar(organizationCode, groupId, {
   paginationConfig: {
     limit: props.limit,
   },
-  default: () => toArray(groupSkeleton, props.limit),
+  default: () => toPagination(groupSkeleton, props.limit),
 })
 
 const showMore = ref(false)
@@ -66,13 +66,6 @@ const onClose = () => (showMore.value = false)
   }
 }
 
-// reset button default css
-.see-more-btn {
-  background-color: unset;
-  border: unset;
-  font-size: unset;
-}
-
 .see-more-btn.footer {
   display: none;
 }
@@ -82,14 +75,12 @@ const onClose = () => (showMore.value = false)
 }
 
 @media screen and (min-width: $min-desktop) {
-  // .group-similars-list {
-  //   flex-direction: column;
-  // }
   .see-more-btn.footer {
-    display: none;
-  }
-  .see-more-btn.header {
     display: block;
+  }
+
+  .see-more-btn.header {
+    display: none;
   }
 }
 </style>

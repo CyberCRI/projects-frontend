@@ -4,13 +4,13 @@
     :title="t(GroupModuleTitle.subgroups)"
     :total="group.modules.subgroups"
     :icon="GroupModuleIcon.subgroups"
-    :see-more="{
-      name: 'groupSubs',
-      params: { groupId: group.id },
-    }"
   >
+    <template #header>
+      <SeeMoreArrow is="button" class="see-more-btn" @click="onMore" />
+    </template>
     <template #content>
       <GroupSubList :group="group" :limit="2" :with-pagination="false" />
+      <GroupSubDrawer :group="selectedGroup" @close="onClose" />
     </template>
   </BaseGroupPreview>
 </template>
@@ -23,8 +23,12 @@ import {
 } from '@/models/invitation.model'
 import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
 import GroupSubList from '@/components/group/Modules/GroupSub/GroupSubList.vue'
+import GroupSubDrawer from '@/components/group/Modules/GroupSub/GroupSubDrawer.vue'
 
-defineProps<{ group: TranslatedPeopleGroupModel }>()
+const props = defineProps<{ group: TranslatedPeopleGroupModel }>()
 
 const { t } = useNuxtI18n()
+const selectedGroup = ref<TranslatedPeopleGroupModel | null>(null)
+const onMore = () => (selectedGroup.value = props.group)
+const onClose = () => (selectedGroup.value = null)
 </script>

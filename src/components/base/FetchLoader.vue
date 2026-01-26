@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ skeletons: inSkeletons }">
+  <div :class="{ skeletons: inSkeletons }" class="contents">
     <!-- <ul>
       <li v-for="mem in memory">{{ mem }}</li>
     </ul> -->
@@ -99,9 +99,11 @@ watch(inLoading, (newValue, oldValue) => {
   opacity: 0.8;
   font-style: italic;
   text-align: center;
+  margin: 0 auto;
 
   & > * {
     vertical-align: middle;
+    margin: 0 auto;
   }
 }
 

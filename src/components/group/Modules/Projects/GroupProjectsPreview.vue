@@ -26,7 +26,7 @@ import { getGroupProject } from '@/api/v2/group.service'
 import ProjectPreview from '@/components/project/ProjectPreview.vue'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
-import { toArray } from '@/skeletons/base.skeletons'
+import { toPagination } from '@/skeletons/base.skeletons'
 import { projectSkeleton } from '@/skeletons/project.skeletons'
 
 const props = defineProps<{
@@ -41,7 +41,7 @@ const organizationCode = useOrganizationCode()
 
 const { status, data } = getGroupProject(organizationCode, props.group.id, {
   paginationConfig: { limit: LIMIT },
-  default: () => toArray(projectSkeleton, limitSkeletons.value),
+  default: () => toPagination(projectSkeleton, limitSkeletons.value),
 })
 </script>
 

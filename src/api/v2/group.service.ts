@@ -10,7 +10,7 @@ import useAsyncAPI from '@/composables/useAsyncAPI'
 import useAsyncPaginationAPI from '@/composables/useAsyncPaginationAPI'
 import { onlyRefs } from '@/functs/onlyRefs'
 import { RefOrRaw } from '@/interfaces/utils'
-import { GroupModel, TranslatedGroupMember } from '@/models/group.model'
+import { GroupModel } from '@/models/group.model'
 import { OrganizationModel } from '@/models/organization.model'
 
 const DEFAULT_CONFIG = {}
@@ -34,14 +34,21 @@ export const getGroup = (
   )
 }
 
-export const getHierarchyGroups = (organizationCode: RefOrRaw<OrganizationModel['code']>) => {
-  const key = computed(() => `${unref(organizationCode)}::group::hierarchy`)
+export const getHierarchyGroups = (
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
+  config = {}
+) => {
+  const { translateGroup } = useAutoTranslate()
+  const key = computed(() => `${unref(organizationCode)}::hierarchy-groups`)
 
   return useAsyncAPI(
     key,
-    () => fetchGetHierarchyGroups(unref(organizationCode), { ...DEFAULT_CONFIG }),
+    ({ config }) =>
+      fetchGetHierarchyGroups(unref(organizationCode), { ...DEFAULT_CONFIG, ...config }),
     {
+      translate: translateGroup,
       watch: onlyRefs([organizationCode]),
+      ...config,
     }
   )
 }
@@ -74,7 +81,6 @@ export const getGroupMember = (
   groupId: RefOrRaw<GroupModel['id']>,
   config = {}
 ) => {
-  const { translateUsers } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::members`)
 
   return useAsyncPaginationAPI(
@@ -85,7 +91,6 @@ export const getGroupMember = (
         ...config,
       }),
     {
-      translate: (data) => translateUsers<TranslatedGroupMember>(data),
       watch: onlyRefs([organizationCode, groupId]),
       ...config,
     }

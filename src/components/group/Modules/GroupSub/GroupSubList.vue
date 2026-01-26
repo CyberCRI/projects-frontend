@@ -16,7 +16,7 @@
 import { getSubGroup } from '@/api/v2/group.service'
 import { DEFAULT_PAGINATION_LIMIT } from '@/composables/usePagination'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import { toArray } from '@/skeletons/base.skeletons'
+import { toPagination } from '@/skeletons/base.skeletons'
 import { groupSkeleton } from '@/skeletons/group.skeletons'
 import GroupSubTeamItem from '@/components/group/Modules/GroupSub/GroupSubTeamItem.vue'
 
@@ -43,7 +43,7 @@ const {
   paginationConfig: {
     limit: props.limit,
   },
-  default: () => toArray(groupSkeleton, limitSkeletons.value),
+  default: () => toPagination(groupSkeleton, limitSkeletons.value),
 })
 </script>
 

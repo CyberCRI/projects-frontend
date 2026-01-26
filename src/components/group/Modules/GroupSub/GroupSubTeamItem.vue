@@ -15,8 +15,8 @@
       </div>
     </NuxtLink>
     <BaseMembersPreview
+      v-if="group.modules.members"
       :group="group"
-      :is-loading="false"
       class="contents"
       :with-pagination="withPagination"
     />
@@ -55,6 +55,7 @@ const onMouseout = () => {
   grid-template-columns: 1fr 1fr;
   width: 100%;
   gap: 1rem;
+  height: 100%;
 
   > :last-child {
     margin-bottom: -1rem;

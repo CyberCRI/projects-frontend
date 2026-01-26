@@ -1,7 +1,7 @@
 <template>
   <component
     :is="is"
-    class="see-more-arrow skeletons-background"
+    class="see-more-arrow skeletons-background see-more"
     :to="to"
     :href="to ? undefined : '#'"
     @click="emit('click')"
@@ -37,6 +37,13 @@ const is = computed(() => {
 </script>
 <style lang="scss" scoped>
 $icon-size: pxToRem(18px);
+
+// reset button default css
+button.see-more {
+  background-color: unset;
+  border: unset;
+  font-size: unset;
+}
 
 .see-more-arrow {
   color: $primary-dark;

@@ -171,20 +171,6 @@ const groupTabsDisplay = computed(() => {
       condition: groupModules.value.conferences,
       icon: GroupModuleIcon.conferences,
     },
-    {
-      isEditing: false,
-      key: 'group-subs',
-      dataTest: 'group-subs',
-      label: t(GroupModuleTitle.subgroups),
-      view: `/group/${route.params.groupId}/sub-groups`,
-      altView: `/group/${route.params.groupId}/sub-groups/edit`,
-      props: {
-        group: group.value,
-        isLoading: isLoading.value,
-      },
-      condition: groupModules.value.subgroups,
-      icon: GroupModuleIcon.subgroups,
-    },
   ]
 })
 

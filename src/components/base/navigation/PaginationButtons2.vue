@@ -1,19 +1,21 @@
 <template>
-  <ul class="pagination">
-    <li :class="{ hidden: pagination.canPrev }">
+  <ul v-if="!hideEmpty || canPrev || canNext" class="pagination">
+    <li :class="{ hidden: !canPrev }">
       <IconImage name="ChevronLeft" @click="pagination.prev()" />
     </li>
 
-    <li
-      v-for="(page, i) in pageArray"
-      :key="i"
-      :class="{ current: page.current, ellipsis: page.value === ELLIPSIS }"
-      @click="setPage(page.value)"
-    >
-      {{ page.value }}
-    </li>
+    <template v-if="showNumber">
+      <li
+        v-for="(page, i) in pageArray"
+        :key="i"
+        :class="{ current: page.current, ellipsis: page.value === ELLIPSIS }"
+        @click="setPage(page.value)"
+      >
+        {{ page.value }}
+      </li>
+    </template>
 
-    <li :class="{ hidden: pagination.canNext }">
+    <li :class="{ hidden: !canNext }">
       <IconImage name="ChevronRight" @click="pagination.next()" />
     </li>
   </ul>
@@ -25,7 +27,12 @@ import { Pagination } from '@/composables/usePagination'
 
 defineOptions({ name: 'PaginationButtons2' })
 
-const props = defineProps<{ pagination: Pagination }>()
+const props = withDefaults(
+  defineProps<{ pagination: Pagination; showNumber?: boolean; hideEmpty?: boolean }>(),
+  { showNumber: true, hideEmpty: false }
+)
+
+const { canNext, canPrev } = props.pagination
 
 const ELLIPSIS = '...'
 

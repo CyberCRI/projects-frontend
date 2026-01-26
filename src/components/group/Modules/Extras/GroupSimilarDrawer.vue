@@ -23,7 +23,7 @@ import { getGroupSimilar } from '@/api/v2/group.service'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import { toArray } from '@/skeletons/base.skeletons'
+import { toPagination } from '@/skeletons/base.skeletons'
 import { groupSkeleton } from '@/skeletons/group.skeletons'
 
 const { t } = useNuxtI18n()
@@ -42,7 +42,7 @@ const {
   pagination,
   data: groups,
 } = getGroupSimilar(organizationCode, groupId, {
-  default: () => toArray(groupSkeleton),
+  default: () => toPagination(groupSkeleton),
 })
 const { count } = pagination
 </script>

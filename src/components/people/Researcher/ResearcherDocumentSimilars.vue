@@ -29,7 +29,7 @@ import { getResearchDocumentSimilars } from '@/api/v2/crisalid.service'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { TranslatedDocument } from '@/interfaces/researcher'
-import { toArray } from '@/skeletons/base.skeletons'
+import { toPagination } from '@/skeletons/base.skeletons'
 import { researchDocumentSkeleton } from '@/skeletons/crisalid.skeletons'
 
 const { t } = useNuxtI18n()
@@ -50,7 +50,7 @@ const {
   paginationConfig: {
     limit: LIMIT,
   },
-  default: () => toArray(researchDocumentSkeleton, LIMIT),
+  default: () => toPagination(researchDocumentSkeleton, LIMIT),
 })
 const { count } = pagination
 </script>

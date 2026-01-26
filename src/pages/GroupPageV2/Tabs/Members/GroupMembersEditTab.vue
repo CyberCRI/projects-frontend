@@ -1,3 +1,18 @@
+<template>
+  <div class="team">
+    <ClientOnly>
+      <FormPanel
+        :confirm-action-name="$t('common.save')"
+        :asyncing="isSaving"
+        @close="redirect(groupMemberData)"
+        @confirm="save"
+      >
+        <GroupTeamSection v-model="form.members" />
+      </FormPanel>
+    </ClientOnly>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 
@@ -45,18 +60,3 @@ onMounted(async () => {
   startEditWatcher()
 })
 </script>
-
-<template>
-  <div class="team">
-    <ClientOnly>
-      <FormPanel
-        :confirm-action-name="$t('common.save')"
-        :asyncing="isSaving"
-        @close="redirect(groupMemberData)"
-        @confirm="save"
-      >
-        <GroupTeamSection v-model="form.members" />
-      </FormPanel>
-    </ClientOnly>
-  </div>
-</template>

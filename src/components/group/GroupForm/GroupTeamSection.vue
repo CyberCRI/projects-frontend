@@ -36,10 +36,9 @@
       <TeamCardInline
         v-for="user in showFullList ? modelValue : shortList"
         :key="user.id"
+        :member="user"
         icon="Close"
-        :role-label="roleLabel(user)"
-        :user="user"
-        @user-clicked="removeUser(user)"
+        @click="removeUser(user)"
       />
     </div>
     <div class="show-more">
@@ -142,15 +141,6 @@ export default {
       // this.groupMembers.splice(userIndexToDelete, 1)
       const team = this.modelValue.filter((member) => user.id !== member.id)
       this.$emit('update:model-value', team)
-    },
-    roleLabel(user) {
-      if (user) {
-        if (user.is_leader && user.is_manager) return 'group.role.leaders-managers.label'
-        else if (user.is_manager) return 'group.role.managers.label'
-        else if (user.is_leader) return 'group.role.leaders.label'
-        else return 'group.role.members.label'
-      }
-      return null
     },
     openDrawer(mode) {
       console.log(this.teamModalMode)

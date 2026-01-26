@@ -16,7 +16,7 @@ import { getOwnResearchDocument, getOwnResearchDocumentAnalytics } from '@/api/v
 import ResearcherDocumentsListBase from '@/components/people/Researcher/ResearcherDocumentsListBase.vue'
 import { DocumentType } from '@/interfaces/researcher'
 import { UserModel } from '@/models/user.model'
-import { toArray } from '@/skeletons/base.skeletons'
+import { toPagination } from '@/skeletons/base.skeletons'
 import { researchDocumentSkeleton, documentAnalyticsSkeleton } from '@/skeletons/crisalid.skeletons'
 
 const props = withDefaults(
@@ -47,7 +47,7 @@ const {
   paginationConfig: {
     limit: props.limit,
   },
-  default: () => toArray(researchDocumentSkeleton, props.limit),
+  default: () => toPagination(researchDocumentSkeleton, props.limit),
 })
 </script>
 

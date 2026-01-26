@@ -9,7 +9,9 @@ const organizationCode = useOrganizationCode()
 const { searchFromQuery } = useSearch('groups')
 const { t } = useNuxtI18n()
 
-const { data, isLoading } = getHierarchyGroups(organizationCode)
+const { data, isLoading } = getHierarchyGroups(organizationCode, {
+  query: { modules: ['members', 'subgroups'] },
+})
 const rootId = computed(() => data.value?.id)
 // const isLoading = true
 const groupsIndex = computed(() => {
@@ -138,11 +140,7 @@ useLpiHead2({
             switchable-display
           >
             <template #default="cardListSlotProps">
-              <GroupCard
-                :group="cardListSlotProps.item"
-                :has-sub-groups-link="!!cardListSlotProps.item?.children?.length"
-                :mode="cardListSlotProps.mode"
-              />
+              <GroupCard :group="cardListSlotProps.item" :mode="cardListSlotProps.mode" />
             </template>
           </CardList>
         </div>

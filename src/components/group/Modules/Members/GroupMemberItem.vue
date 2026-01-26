@@ -7,7 +7,9 @@
     @click="click"
   >
     <template #actions>
-      <span class="d-none" />
+      <slot name="actions">
+        <span class="d-none" />
+      </slot>
     </template>
   </UserCard>
 </template>
@@ -21,6 +23,7 @@ defineOptions({ name: 'GroupMemberItem' })
 
 const props = defineProps<{
   member: any
+  roleLabel?: string
 }>()
 
 const { t } = useNuxtI18n()
@@ -30,6 +33,9 @@ const emit = defineEmits(['click'])
 const isAnonymous = computed(() => isAnonymousUser(props.member))
 
 const roleLabel = computed(() => {
+  if (props.roleLabel) {
+    return props.roleLabel
+  }
   if (props.member) {
     if (props.member.is_leader && props.member.is_manager)
       return t('group.role.leaders-managers.label')

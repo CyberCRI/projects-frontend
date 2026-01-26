@@ -23,10 +23,12 @@ const props = withDefaults(
   defineProps<{
     toLink?: string | object
     mode?: 'card' | 'list'
+    lineClamp?: number
   }>(),
   {
     toLink: null,
     mode: 'card',
+    lineClamp: 6,
   }
 )
 
@@ -173,7 +175,7 @@ const is = computed(() => {
 
 .card :deep(.text-limit) {
   display: -webkit-box;
-  -webkit-line-clamp: 6;
+  -webkit-line-clamp: v-bind('lineClamp');
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;

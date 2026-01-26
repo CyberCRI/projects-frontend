@@ -21,8 +21,8 @@
         v-for="user in projectUsers"
         :key="user?.user.id"
         :role-label="roleLabel(user.role)"
-        :user="user.user"
-        @user-clicked="removeUser(user)"
+        :member="user.user"
+        @click="removeUser(user)"
       />
     </div>
 
@@ -133,12 +133,12 @@ export default {
 
     roleLabel(role) {
       if (role) {
-        if (role === 'owners') return 'role.editor'
-        else if (role === 'members') return 'role.teammate'
-        else if (role === 'reviewers') return 'role.reviewer'
-        else if (role === 'owner_groups') return 'role.editor-groups'
-        else if (role === 'reviewer_groups') return 'role.reviewer-groups'
-        else if (role === 'member_groups') return 'role.teammate-groups'
+        if (role === 'owners') return this.$t('role.editor')
+        else if (role === 'members') return this.$t('role.teammate')
+        else if (role === 'reviewers') return this.$t('role.reviewer')
+        else if (role === 'owner_groups') return this.$t('role.editor-groups')
+        else if (role === 'reviewer_groups') return this.$t('role.reviewer-groups')
+        else if (role === 'member_groups') return this.$t('role.teammate-groups')
       }
       return null
     },
