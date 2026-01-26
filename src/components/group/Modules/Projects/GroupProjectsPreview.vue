@@ -10,39 +10,19 @@
     }"
   >
     <template #content>
-      <FetchLoader :status="status" only-error skeleton>
-        <ul class="project-list list-divider">
-          <li v-for="project in data" :key="project.id">
-            <ProjectPreview :project="project" />
-          </li>
-        </ul>
-      </FetchLoader>
+      <BaseGroupProjectsList :group="group" :limit="6" />
     </template>
   </BaseGroupPreview>
 </template>
 
 <script setup lang="ts">
-import { getGroupProject } from '@/api/v2/group.service'
-import ProjectPreview from '@/components/project/ProjectPreview.vue'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
-import { toPagination } from '@/skeletons/base.skeletons'
-import { projectSkeleton } from '@/skeletons/project.skeletons'
+import BaseGroupProjectsList from '@/components/group/Modules/Projects/BaseGroupProjectsList.vue'
 
-const props = defineProps<{
+defineProps<{
   group: TranslatedPeopleGroupModel
 }>()
-
-const LIMIT = 6
-const limitSkeletons = computed(() =>
-  Math.min(props.group.modules?.featured_projects ?? LIMIT, LIMIT)
-)
-const organizationCode = useOrganizationCode()
-
-const { status, data } = getGroupProject(organizationCode, props.group.id, {
-  paginationConfig: { limit: LIMIT },
-  default: () => toPagination(projectSkeleton, limitSkeletons.value),
-})
 </script>
 
 <style lang="scss" scoped>

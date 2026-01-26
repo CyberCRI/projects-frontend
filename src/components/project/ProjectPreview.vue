@@ -32,15 +32,17 @@
       </div>
     </NuxtLink>
     <div class="project-extra">
-      <ProjectFollowIcon
-        class="icon"
-        :project="project"
-        @follow="emit('refresh')"
-        @unfollow="emit('refresh')"
-      />
-      <time class="skeletons-text" :datetime="project.updated_at">
-        {{ lastUpdated }}
-      </time>
+      <slot name="action">
+        <ProjectFollowIcon
+          class="icon"
+          :project="project"
+          @follow="emit('refresh')"
+          @unfollow="emit('refresh')"
+        />
+        <time class="skeletons-text" :datetime="project.updated_at">
+          {{ lastUpdated }}
+        </time>
+      </slot>
     </div>
   </div>
 </template>
@@ -59,7 +61,7 @@ const emit = defineEmits(['refresh'])
 
 const { locale } = useNuxtI18n()
 const purpose = computed(() => cropIfTooLong(props.project.$t.purpose, 50))
-const tags = computed(() => props.project.tags.slice(0, 3))
+const tags = computed(() => (props.project.tags ?? []).slice(0, 3))
 const lastUpdated = computed(() => {
   return new Date(props.project.updated_at).toLocaleDateString(locale.value)
 })

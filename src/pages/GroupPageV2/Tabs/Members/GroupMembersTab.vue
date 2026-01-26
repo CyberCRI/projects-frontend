@@ -1,23 +1,15 @@
 <template>
-  <div class="group-members">
-    <div class="members">
-      <div class="members-header">
-        <h2 class="title">
-          {{ $t('group.group-members') }}
-          <span v-show="countElement">( {{ countElement }} )</span>
-        </h2>
-      </div>
-      <div class="container">
-        <BaseMembersPreview :group="group" :limit="DEFAULT_PAGINATION_LIMIT" />
-      </div>
+  <BaseGroupTab :title="$t(GroupModuleTitle.members)" :count="countElement">
+    <div class="container">
+      <BaseGroupMembersList :group="group" />
     </div>
-  </div>
+  </BaseGroupTab>
 </template>
 
 <script setup lang="ts">
-import BaseMembersPreview from '@/components/group/Modules/Members/BaseMembersPreview.vue'
-import { DEFAULT_PAGINATION_LIMIT } from '@/composables/usePagination'
-import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import BaseGroupMembersList from '@/components/group/Modules/Members/BaseGroupMembersList.vue'
+import { GroupModuleTitle, TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import BaseGroupTab from '@/pages/GroupPageV2/Tabs/BaseGroupTab.vue'
 
 defineOptions({ name: 'GroupMembersTab' })
 
@@ -29,29 +21,6 @@ const countElement = computed<number>(() => props.group.modules?.members)
 </script>
 
 <style lang="scss" scoped>
-.group-members {
-  .members {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: $space-xl;
-
-    &-header {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      width: 100%;
-      gap: $space-l;
-
-      .title {
-        font-weight: 700;
-        font-size: $font-size-l;
-        color: $primary-dark;
-      }
-    }
-  }
-}
-
 .container {
   width: 100%;
   display: grid;

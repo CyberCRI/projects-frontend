@@ -14,7 +14,7 @@
         <GroupRecapPreview is="span" :group="group" no-title :modules="['members', 'subgroups']" />
       </div>
     </NuxtLink>
-    <BaseMembersPreview
+    <BaseGroupMembersList
       v-if="group.modules.members"
       :group="group"
       class="contents"
@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import GroupRecapPreview from '@/components/group/Modules/Extras/GroupRecapPreview.vue'
-import BaseMembersPreview from '@/components/group/Modules/Members/BaseMembersPreview.vue'
+import BaseGroupMembersList from '@/components/group/Modules/Members/BaseGroupMembersList.vue'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 
 withDefaults(

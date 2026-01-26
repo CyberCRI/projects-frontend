@@ -4,12 +4,20 @@ export default function useGroupProjectsUpdate(orgCode, groupId, form) {
   const groupProjectData = ref(null)
 
   const isSaving = ref(false)
+  const isLoading = ref(false)
+
+  const { translateProjects } = useAutoTranslate()
 
   const setProjectsData = async () => {
+    isLoading.value = true
     const _groupProjectData = (await getGroupProject(orgCode.value, groupId)).results
+    const _translatedGroupProjectData = translateProjects(_groupProjectData)
 
-    groupProjectData.value = _groupProjectData.map((project) => ({ ...project })) // mapping and destructiring to avoid updating both arrays/object at the same time
-    form.value.featuredProjects = _groupProjectData.map((project) => ({ ...project })) // this.groupProjectData  will serve as reference for add/delete ops
+    groupProjectData.value = _translatedGroupProjectData.value.map((project) => ({ ...project })) // mapping and destructiring to avoid updating both arrays/object at the same time
+    form.value.featuredProjects = _translatedGroupProjectData.value.map((project) => ({
+      ...project,
+    })) // this.groupProjectData  will serve as reference for add/delete ops
+    isLoading.value = false
   }
 
   const updateGroupProjects = async () => {
@@ -54,5 +62,5 @@ export default function useGroupProjectsUpdate(orgCode, groupId, form) {
     }
   }
 
-  return { groupProjectData, isSaving, setProjectsData, updateGroupProjects }
+  return { groupProjectData, isSaving, setProjectsData, updateGroupProjects, isLoading }
 }

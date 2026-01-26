@@ -15,14 +15,23 @@
     </label>
 
     <div v-if="modelValue.length" class="team-grid">
-      <ProjectCard
+      <ProjectPreview
         v-for="project in showFullList ? modelValue : shortList"
         :key="project.id"
-        :has-close-icon="true"
         :project="project"
+        @click="onRemoveProject(project)"
+      >
+        <template #action>
+          <div class="close-icon">
+            <IconImage name="Close" @click="onRemoveProject(project)" />
+          </div>
+        </template>
+      </ProjectPreview>
+      <!-- <ProjectCard
+        :has-close-icon="true"
         class="selected-card"
         @unselect="onRemoveProject(project)"
-      />
+      /> -->
     </div>
     <div class="show-more">
       <LinkButton
@@ -45,6 +54,8 @@
 </template>
 
 <script setup>
+import ProjectPreview from '@/components/project/ProjectPreview.vue'
+
 defineOptions({ name: 'ProjectSection' })
 
 const props = defineProps({
@@ -118,5 +129,11 @@ const onRemoveProject = (project) => {
     justify-content: center;
     margin-top: $space-l;
   }
+}
+
+.close-icon {
+  width: 2rem;
+  fill: var(--primary-dark);
+  cursor: pointer;
 }
 </style>

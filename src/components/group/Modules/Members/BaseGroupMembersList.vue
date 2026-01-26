@@ -45,7 +45,7 @@ const props = withDefaults(
     withPagination?: boolean
     limit?: number
   }>(),
-  { withPagination: true, limit: 6 }
+  { withPagination: true, limit: null }
 )
 
 const organizationCode = useOrganizationCode()

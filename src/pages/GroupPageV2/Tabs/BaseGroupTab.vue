@@ -24,7 +24,7 @@ withDefaults(
     count?: number
     header?: boolean
   }>(),
-  { header: false, title: '', count: 0 }
+  { header: true, title: '', count: 0 }
 )
 </script>
 
@@ -46,6 +46,7 @@ withDefaults(
         font-weight: 700;
         font-size: $font-size-l;
         color: $primary-dark;
+        margin-bottom: 1rem;
       }
     }
 

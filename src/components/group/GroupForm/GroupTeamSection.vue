@@ -36,8 +36,8 @@
       <TeamCardInline
         v-for="user in showFullList ? modelValue : shortList"
         :key="user.id"
-        :member="user"
         icon="Close"
+        :member="user"
         @click="removeUser(user)"
       />
     </div>

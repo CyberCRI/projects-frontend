@@ -89,8 +89,14 @@ export default {
 
   setup() {
     const organizationsStore = useOrganizationsStore()
+    const results = ref([])
+    const { translateProjects } = useAutoTranslate()
+    const transltedResult = translateProjects(results)
     return {
       organizationsStore,
+      translateProjects,
+      results,
+      transltedResult,
     }
   },
   data() {
@@ -104,9 +110,7 @@ export default {
   computed: {
     matchingProjects() {
       // api can result either project or a meta type that contain a project
-      return this.request && this.request.results
-        ? this.request.results.map((result) => (result.project ? result.project : result))
-        : []
+      return [...(this.transltedResult ?? [])]
     },
     matchingProjectsFiltered() {
       // mark already selected project as such
@@ -132,6 +136,13 @@ export default {
     queryString: function (val) {
       if (val.length >= 3) this.launchSearch()
       if (this.queryString === '') this.request = {}
+    },
+  },
+  watch: {
+    request() {
+      this.results = (this.request?.results ?? []).map((result) =>
+        result.project ? result.project : result
+      )
     },
   },
 
