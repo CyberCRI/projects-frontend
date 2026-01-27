@@ -4,9 +4,11 @@
       :is="is"
       v-for="module in modulesArray"
       :key="module.name"
-      :to="`#${module.key}`"
       class="group-recap-element"
-      external
+      :class="{
+        'reset-btn shadow-box': isLink,
+      }"
+      @click="isLink && scrollToHash(module.key)"
     >
       <IconImage :name="module.icon" />
       <span class="group-recap-title">
@@ -18,6 +20,7 @@
 </template>
 
 <script setup lang="ts">
+import { scrollToHash } from '@/composables/useScrollToTab'
 import {
   GroupModuleIcon,
   GroupModuleTitle,
@@ -29,18 +32,15 @@ const props = withDefaults(
   defineProps<{
     group: TranslatedPeopleGroupModel
     noTitle?: boolean
-    is?: string
     modules?: PeopleGroupModulesKeys[]
+    isLink?: boolean
   }>(),
-  { noTitle: false, is: null, modules: null }
+  { noTitle: false, modules: null, isLink: false }
 )
 
 const { t } = useNuxtI18n()
 
-const is = computed(() => {
-  if (!props.is) return resolveComponent('NuxtLink')
-  return props.is
-})
+const is = computed(() => (props.isLink ? 'button' : 'div'))
 
 const modulesArray = computed(() => {
   return (
@@ -81,6 +81,8 @@ const modulesArray = computed(() => {
   align-items: center;
   color: $primary-dark;
   gap: 0.4rem;
+  cursor: pointer;
+  border-radius: 10px;
 
   svg {
     width: 32px;

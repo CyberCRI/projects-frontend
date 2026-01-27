@@ -38,13 +38,6 @@ const is = computed(() => {
 <style lang="scss" scoped>
 $icon-size: pxToRem(18px);
 
-// reset button default css
-button.see-more {
-  background-color: unset;
-  border: unset;
-  font-size: unset;
-}
-
 .see-more-arrow {
   color: $primary-dark;
   padding: 0 $space-l;

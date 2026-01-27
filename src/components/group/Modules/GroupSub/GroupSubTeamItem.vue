@@ -15,12 +15,7 @@
       >
         <h4>{{ group.$t.name }}</h4>
         <div>
-          <GroupRecapPreview
-            is="span"
-            :group="group"
-            no-title
-            :modules="['members', 'subgroups']"
-          />
+          <GroupRecapPreview :group="group" no-title :modules="['members', 'subgroups']" />
         </div>
       </NuxtLink>
       <BaseGroupMembersList

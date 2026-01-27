@@ -2,7 +2,7 @@
   <!-- add new modules Here -->
   <div class="group-modules-list" data-test="group-modules">
     <GroupHeader :group="group" :is-loading="isLoading" />
-    <GroupRecapPreview :group="group" />
+    <GroupRecapPreview :group="group" is-link />
     <div class="group-infos">
       <GroupDescriptionPreview v-if="group.$t.description" :group="group" />
       <GroupSimilarsPreview v-if="group.modules.similars" :group="group" :limit="3" />

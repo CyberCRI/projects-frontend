@@ -1,12 +1,12 @@
 <template>
   <BaseGroupPreview
-    id="subgroup"
+    id="subgroups"
     :title="t(GroupModuleTitle.subgroups)"
     :total="group.modules.subgroups"
     :icon="GroupModuleIcon.subgroups"
   >
     <template #header>
-      <SeeMoreArrow is="button" class="see-more-btn" @click="onMore" />
+      <SeeMoreArrow is="button" class="see-more-btn reset-btn" @click="onMore" />
     </template>
     <template #content>
       <GroupSubList :group="group" :limit="2" :limit-members="6" :with-pagination="false" />

@@ -1,7 +1,11 @@
 <template>
-  <BaseGroupPreview :title="$t(GroupModuleTitle.similars)" :total="group.modules.similars">
+  <BaseGroupPreview
+    id="similars"
+    :title="$t(GroupModuleTitle.similars)"
+    :total="group.modules.similars"
+  >
     <template #header>
-      <SeeMoreArrow is="button" class="see-more-btn header" @click="onClick" />
+      <SeeMoreArrow is="button" class="see-more-btn reset-btn header" @click="onClick" />
     </template>
     <template #content>
       <FetchLoader :status="status" only-error skeleton>
@@ -17,7 +21,7 @@
       </FetchLoader>
     </template>
     <template #footer>
-      <SeeMoreArrow is="button" class="see-more-btn footer" @click="onClick" />
+      <SeeMoreArrow is="button" class="see-more-btn reset-btn footer" @click="onClick" />
       <GroupSimilarDrawer :group="showMore ? group : null" @close="onClose" />
     </template>
   </BaseGroupPreview>
