@@ -49,7 +49,7 @@
 
 <script setup lang="ts">
 import ProjectFollowIcon from '@/components/project/ProjectFollowIcon.vue'
-import TagsList from '@/components/common/TagsList.vue'
+import TagsList from '@/components/tags/TagsList.vue'
 import { cropIfTooLong } from '@/functs/string'
 import { TranslatedProject } from '@/models/project.model'
 

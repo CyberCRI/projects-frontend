@@ -1,32 +1,48 @@
 <template>
   <div class="sdg-ctn">
-    <NuxtLink v-for="sdg in sdgsArray" :key="sdg.id" :to="sdg.to">
+    <component :is="is" v-for="sdg in sdgsArray" :key="sdg.id" :to="sdg.to">
       <img
         :alt="sdg.alt"
         :src="`${runtimeConfig.public.appPublicBinariesPrefix}/sdgs/logo/SDG-${sdg.id}.svg`"
         class="sdg-img"
       />
-    </NuxtLink>
+    </component>
   </div>
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
-  sdgs: number[]
-  to: any
-}>()
+const props = withDefaults(
+  defineProps<{
+    sdgs: number[]
+    to?: any
+  }>(),
+  {
+    to: null,
+  }
+)
 
 const runtimeConfig = useRuntimeConfig()
 
+const is = computed(() => {
+  if (props.to) {
+    return resolveComponent('NuxtLink')
+  }
+  return 'div'
+})
+
 const sdgsArray = computed(() => {
-  return props.sdgs.map((sdgId) => {
-    const to = {
-      ...props.to,
-      query: {
-        ...(props.to.query ?? {}),
-        sdgs: sdgId,
-      },
-    }
+  const sdgs = props.sdgs.toSorted((a, b) => a - b)
+  return sdgs.map((sdgId) => {
+    const to = props.to
+      ? {
+          ...props.to,
+          query: {
+            ...(props.to.query ?? {}),
+            sdgs: sdgId,
+          },
+        }
+      : null
+
     return {
       id: sdgId,
       to,

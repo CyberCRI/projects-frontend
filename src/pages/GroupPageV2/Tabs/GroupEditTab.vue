@@ -62,6 +62,8 @@ const form = ref({
   parentGroup: null, // group object
   organization: '',
   members: [],
+  sdgs: [],
+  tags: [],
   featuredProjects: [],
   header_image: null,
   imageSizes: null,
@@ -180,6 +182,8 @@ const buildPayload = () => {
     short_description: form.value.short_description,
     email: form.value.email,
     type: 'group', // this.form.type, // TODO ??? club | group
+    sdgs: form.value.sdgs,
+    tags: form.value.tags.map((tag) => tag.id),
     parent: form.value.parentGroup?.id || null, // undefined ,
     organization: orgCode.value,
     publication_status: form.value.publication_status,
@@ -306,6 +310,8 @@ onMounted(async () => {
       form.value.description = _groupData.description
       form.value.short_description = _groupData.short_description
       form.value.email = _groupData.email
+      form.value.sdgs = [..._groupData.sdgs]
+      form.value.tags = [..._groupData.tags]
       // first group in hierarchy is always org group
       // witch is not diplayed and considered null parent for the form and api purpose
       // parent group is always the last group in hierarchy

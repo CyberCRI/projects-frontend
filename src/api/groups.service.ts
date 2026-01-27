@@ -67,7 +67,7 @@ export function getGroup(organizationCode: string, groupId: number, config = {})
 
 export async function patchGroup(
   organizationCode: string,
-  groupName: string,
+  groupName: number,
   groupData: Partial<PostGroupData>
 ) {
   return await useAPI(`organization/${organizationCode}/people-group/${groupName}/`, {

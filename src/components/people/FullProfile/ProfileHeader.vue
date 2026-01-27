@@ -116,7 +116,7 @@ import SocialNetworks from './SocialNetworks.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
-import SdgList from '@/components/base/SdgList.vue'
+import SdgList from '@/components/sdgs/SdgList.vue'
 
 defineOptions({ name: 'ProfileHeader' })
 

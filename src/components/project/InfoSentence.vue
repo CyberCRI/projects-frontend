@@ -75,8 +75,8 @@
 </template>
 
 <script>
-import TagsList from '@/components/common/TagsList.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
+import TagsList from '@/components/tags/TagsList.vue'
 
 export default {
   name: 'InfoSentence',

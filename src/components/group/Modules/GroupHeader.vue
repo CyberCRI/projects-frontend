@@ -47,14 +47,14 @@
         </div>
       </div>
       <div class="group-info-extras">
-        <div>
+        <div class="group-info-links">
           <div v-if="group.location" class="group-recap-element">
             <IconImage name="MapMarker" />
             <span class="group-recap-title">{{ t('group.location') }}</span>
           </div>
         </div>
-
         <SdgList
+          class="group-info-sdgs"
           :sdgs="group.sdgs"
           :to="{
             name: 'Search',
@@ -70,10 +70,11 @@
 </template>
 
 <script setup lang="ts">
-import SdgList from '@/components/base/SdgList.vue'
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
+import SdgList from '@/components/sdgs/SdgList.vue'
+import TagsList from '@/components/tags/TagsList.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -141,13 +142,26 @@ const groupVisibilityIcon = computed(() =>
 
 .group-info-extras {
   padding: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   border-radius: 5px;
   border: 1px solid $primary;
-  height: 30px;
+  height: auto;
   margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.group-info-links {
+  display: flex;
+  justify-content: flex-start;
+  align-items: start;
+  flex-wrap: wrap;
+}
+
+.group-info-sdgs {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .group-recap-element {
