@@ -6,6 +6,7 @@
         :key="sub.id"
         :group="sub"
         :with-pagination="withPagination"
+        :limit-members="limitMembers"
       />
       <PaginationButtons2 v-if="withPagination" class="m-auto" :pagination="pagination" />
     </div>
@@ -15,7 +16,7 @@
 <script setup lang="ts">
 import { getSubGroup } from '@/api/v2/group.service'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import { maxSkeleton, toPagination } from '@/skeletons/base.skeletons'
+import { maxSkeleton, factoryPagination } from '@/skeletons/base.skeletons'
 import { groupSkeleton } from '@/skeletons/group.skeletons'
 import GroupSubTeamItem from '@/components/group/Modules/GroupSub/GroupSubTeamItem.vue'
 
@@ -23,9 +24,10 @@ const props = withDefaults(
   defineProps<{
     group: TranslatedPeopleGroupModel
     limit?: number
+    limitMembers?: number
     withPagination?: boolean
   }>(),
-  { limit: null, withPagination: true }
+  { limit: null, withPagination: true, limitMembers: null }
 )
 
 const organizationCode = useOrganizationCode()
@@ -41,7 +43,7 @@ const {
   paginationConfig: {
     limit: props.limit,
   },
-  default: () => toPagination(groupSkeleton, limitSkeletons.value),
+  default: () => factoryPagination(groupSkeleton, limitSkeletons.value),
 })
 </script>
 
@@ -49,6 +51,6 @@ const {
 .subgroup-list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
 }
 </style>

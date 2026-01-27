@@ -29,7 +29,7 @@ import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
 import GroupCard from '@/components/group/GroupCard.vue'
 import { GroupModuleTitle, TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
-import { maxSkeleton, toPagination } from '@/skeletons/base.skeletons'
+import { maxSkeleton, factoryPagination } from '@/skeletons/base.skeletons'
 import { groupSkeleton } from '@/skeletons/group.skeletons'
 import GroupSimilarDrawer from '@/components/group/Modules/Extras/GroupSimilarDrawer.vue'
 
@@ -45,7 +45,7 @@ const { status, data: groups } = getGroupSimilar(organizationCode, groupId, {
   paginationConfig: {
     limit: props.limit,
   },
-  default: () => toPagination(groupSkeleton, limitSkeletons.value),
+  default: () => factoryPagination(groupSkeleton, limitSkeletons.value),
 })
 
 const showMore = ref(false)

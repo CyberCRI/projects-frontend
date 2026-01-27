@@ -27,11 +27,6 @@
           </div>
         </template>
       </ProjectPreview>
-      <!-- <ProjectCard
-        :has-close-icon="true"
-        class="selected-card"
-        @unselect="onRemoveProject(project)"
-      /> -->
     </div>
     <div class="show-more">
       <LinkButton

@@ -34,7 +34,7 @@
     <div class="project-extra">
       <slot name="action">
         <ProjectFollowIcon
-          class="icon"
+          class="icon skeletons-image"
           :project="project"
           @follow="emit('refresh')"
           @unfollow="emit('refresh')"

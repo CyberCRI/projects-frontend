@@ -1,33 +1,41 @@
-import { Document, ResearcherDocumentAnalytics } from '@/interfaces/researcher'
+import { Document, Identifier, ResearcherDocumentAnalytics } from '@/interfaces/researcher'
+import { factoriesSkeleton } from '@/skeletons/base.skeletons'
+import { randomInt } from 'es-toolkit'
 
-export const documentAnalyticsSkeleton: ResearcherDocumentAnalytics = {
+export const documentAnalyticsSkeleton = (): ResearcherDocumentAnalytics => ({
   document_types: {
-    skeleton: 0,
-    skeleton1: 0,
-    skeleton2: 0,
+    Book: randomInt(10),
+    Grant: randomInt(10),
+    Note: randomInt(10),
   },
   years: [
-    { year: 2020, total: Math.ceil(Math.random() * 10) },
-    { year: 2021, total: Math.ceil(Math.random() * 10) },
-    { year: 2022, total: Math.ceil(Math.random() * 10) },
-    { year: 2023, total: Math.ceil(Math.random() * 10) },
-    { year: 2024, total: Math.ceil(Math.random() * 10) },
-    { year: 2025, total: Math.ceil(Math.random() * 10) },
-    { year: 2026, total: Math.ceil(Math.random() * 10) },
+    { year: 2020, total: randomInt(10) },
+    { year: 2021, total: randomInt(10) },
+    { year: 2022, total: randomInt(10) },
+    { year: 2023, total: randomInt(10) },
+    { year: 2024, total: randomInt(10) },
+    { year: 2025, total: randomInt(10) },
+    { year: 2026, total: randomInt(10) },
   ],
   roles: {
-    skeleton: 0,
-    skeleton1: 0,
-    skeleton2: 0,
+    actor: randomInt(10),
+    client: randomInt(10),
+    funder: randomInt(10),
   },
-}
+})
 
-export const researchDocumentSkeleton: Omit<Document, 'id'> = {
+export const identifierSkeleton = (): Omit<Identifier, 'id'> => ({
+  value: 'lorem',
+  harvester: 'hal',
+})
+
+export const researchDocumentSkeleton = (): Omit<Document, 'id'> => ({
   title: 'Ipsum nostrud officia dolor esse exercitation mollit.',
   description: 'Ipsum nostrud officia dolor esse exercitation mollit.',
-  document_type: 'skeletons',
+  document_type: 'Book',
   contributors: [],
-  identifiers: [],
+  // @ts-expect-error ignore not id
+  identifiers: factoriesSkeleton(identifierSkeleton, randomInt(5)),
   publication_date: null,
   similars: 0,
-}
+})

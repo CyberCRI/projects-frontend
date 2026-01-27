@@ -63,13 +63,16 @@
   --primary-light: #{$lighter-gray};
   --primary-dark: #{$lighter-gray};
 
-  // pointer-events: none;
+  pointer-events: none;
+
   .skeletons-text {
     @extend %skeleton-text-block;
   }
 
   .skeletons-image:is(img),
-  .skeletons-image img {
+  .skeletons-image img,
+  .skeletons-image:is(svg),
+  .skeletons-image svg {
     @extend %skeleton-background-block;
 
     content: url('');
@@ -77,9 +80,5 @@
 
   .skeletons-background {
     @extend %skeleton-background-block;
-  }
-
-  svg {
-    @extend %skeleton-text-block;
   }
 }

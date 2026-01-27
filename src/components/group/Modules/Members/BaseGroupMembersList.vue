@@ -8,10 +8,10 @@
     />
     <PaginationButtons2
       v-if="withPagination"
-      :show-number="false"
       hide-empty
-      class="pagination"
+      class="pagination-span"
       :pagination="pagination"
+      :disable="isLoading"
     />
     <BaseDrawer
       no-footer
@@ -36,7 +36,7 @@
 import { getGroupMember } from '@/api/v2/group.service'
 import GroupMemberItem from '@/components/group/Modules/Members/GroupMemberItem.vue'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import { maxSkeleton, toPagination } from '@/skeletons/base.skeletons'
+import { maxSkeleton, factoryPagination } from '@/skeletons/base.skeletons'
 import { memberSkeleton } from '@/skeletons/group.skeletons'
 
 const props = withDefaults(
@@ -53,11 +53,11 @@ const limitSkeletons = computed(() => maxSkeleton(props.group?.modules?.members,
 
 const groupId = computed(() => props.group?.id)
 
-const { status, data, pagination } = getGroupMember(organizationCode, groupId, {
+const { status, data, pagination, isLoading } = getGroupMember(organizationCode, groupId, {
   paginationConfig: {
     limit: props.limit,
   },
-  default: () => toPagination(memberSkeleton, limitSkeletons.value),
+  default: () => factoryPagination(memberSkeleton, limitSkeletons.value),
 })
 
 const userIdDrawer = ref<number | null>()
@@ -66,7 +66,7 @@ const closeProfile = () => (userIdDrawer.value = null)
 </script>
 
 <style lang="scss" scoped>
-.pagination {
+.pagination-span {
   grid-column: span 2;
   margin: auto;
 }

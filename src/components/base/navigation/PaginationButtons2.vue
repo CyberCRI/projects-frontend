@@ -1,5 +1,11 @@
 <template>
-  <ul v-if="!hideEmpty || canPrev || canNext" class="pagination">
+  <ul
+    v-if="!hideEmpty || canPrev || canNext"
+    class="pagination"
+    :class="{
+      disable: disable,
+    }"
+  >
     <li :class="{ hidden: !canPrev }">
       <IconImage name="ChevronLeft" @click="pagination.prev()" />
     </li>
@@ -28,8 +34,13 @@ import { Pagination } from '@/composables/usePagination'
 defineOptions({ name: 'PaginationButtons2' })
 
 const props = withDefaults(
-  defineProps<{ pagination: Pagination; showNumber?: boolean; hideEmpty?: boolean }>(),
-  { showNumber: true, hideEmpty: false }
+  defineProps<{
+    pagination: Pagination
+    showNumber?: boolean
+    hideEmpty?: boolean
+    disable?: boolean
+  }>(),
+  { showNumber: true, hideEmpty: false, disable: false }
 )
 
 const { canNext, canPrev } = props.pagination
@@ -68,6 +79,12 @@ const setPage = (value) => {
 .pagination {
   display: flex;
   align-items: center;
+  transition: opacity 0.2s;
+
+  &.disable {
+    pointer-events: none;
+    opacity: 0.5;
+  }
 
   li {
     fill: $primary-dark;

@@ -1,26 +1,37 @@
 <template>
-  <div ref="groupItem" class="subgroup-element shadow-box-transition no-transform">
-    <NuxtLink
-      :to="{
-        name: 'Group',
-        params: { groupId: group.id },
-      }"
-      class="subgroup-header border-primary skeletons-text"
-      @mouseover.prevent="onMouseover"
-      @mouseout.prevent="onMouseout"
-    >
-      <h4>{{ group.$t.name }}</h4>
-      <div>
-        <GroupRecapPreview is="span" :group="group" no-title :modules="['members', 'subgroups']" />
-      </div>
-    </NuxtLink>
-    <BaseGroupMembersList
-      v-if="group.modules.members"
-      :group="group"
-      class="contents"
-      :with-pagination="withPagination"
-    />
-  </div>
+  <ToolTip :hover="true" offset-distance="5" :disabled="disableToolTip" placement="top">
+    <template #custom-content>
+      {{ $t('common.see-more') }}
+    </template>
+    <div ref="groupItem" class="subgroup-element shadow-box-transition no-transform">
+      <NuxtLink
+        :to="{
+          name: 'Group',
+          params: { groupId: group.id },
+        }"
+        class="subgroup-header border-primary skeletons-text"
+        @mouseover.prevent="onMouseover"
+        @mouseout.prevent="onMouseout"
+      >
+        <h4>{{ group.$t.name }}</h4>
+        <div>
+          <GroupRecapPreview
+            is="span"
+            :group="group"
+            no-title
+            :modules="['members', 'subgroups']"
+          />
+        </div>
+      </NuxtLink>
+      <BaseGroupMembersList
+        v-if="group.modules.members"
+        :group="group"
+        class="subgroup-members"
+        :with-pagination="withPagination"
+        :limit="limitMembers"
+      />
+    </div>
+  </ToolTip>
 </template>
 
 <script setup lang="ts">
@@ -32,16 +43,20 @@ withDefaults(
   defineProps<{
     group: TranslatedPeopleGroupModel
     withPagination?: boolean
+    limitMembers?: number
   }>(),
-  { withPagination: true }
+  { withPagination: true, limitMembers: null }
 )
 
+const disableToolTip = ref(false)
 const groupItem = useTemplateRef('groupItem')
 const onMouseover = () => {
   groupItem.value?.classList.add('shadow-box-transform')
+  disableToolTip.value = false
 }
 const onMouseout = () => {
   groupItem.value?.classList.remove('shadow-box-transform')
+  disableToolTip.value = true
 }
 </script>
 
@@ -52,17 +67,12 @@ const onMouseout = () => {
 
 .subgroup-element {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
   width: 100%;
   gap: 1rem;
-  height: 100%;
-
-  > :last-child {
-    margin-bottom: -1rem;
-  }
+  min-height: pxToRem(85px);
 
   .subgroup-header {
-    grid-column: span 2;
     padding: 1rem 1.5rem;
     background-color: color-mix(in srgb, $primary, transparent 90%);
     display: flex;
@@ -70,18 +80,12 @@ const onMouseout = () => {
     align-items: center;
   }
 }
-
-.subgroup-sub {
-  display: flex;
-  gap: 0.2rem;
-  align-items: center;
-  justify-content: flex-end;
-
-  svg {
-    fill: $primary;
-    display: inline-block;
-    width: 1.5rem;
-    margin: 0 0.3rem;
-  }
+.subgroup-members {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: calc(100% - 2rem);
+  gap: 1rem;
+  padding: 0 1rem;
+  min-height: pxToRem(85px);
 }
 </style>

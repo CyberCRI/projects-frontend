@@ -1,9 +1,6 @@
 <template>
   <div :class="{ skeletons: inSkeletons }" class="contents">
-    <!-- <ul>
-      <li v-for="mem in memory">{{ mem }}</li>
-    </ul> -->
-    <div v-if="loading" class="m-auto w-fit flex justify-center items-center flex-col">
+    <div v-if="loading" class="loader">
       <LpiLoader type="simple" />
       <span class="loading">
         {{ props.label ?? t('common.loading') }}
@@ -78,7 +75,7 @@ const loading = computed(() => {
 })
 
 const inSkeletons = computed(() => {
-  return inLoading.value && !firstLoading.value && props.skeleton
+  return inLoading.value && (!firstLoading.value || !props.withData) && props.skeleton
 })
 
 watch(inLoading, (newValue, oldValue) => {
@@ -93,6 +90,15 @@ watch(inLoading, (newValue, oldValue) => {
   font-style: italic;
   opacity: 0.4;
   padding-top: 0.5rem;
+}
+
+.loader {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
 }
 
 .error {

@@ -1,7 +1,7 @@
 import { GroupMember } from '@/models/group.model'
 import { PeopleGroupModel } from '@/models/invitation.model'
 
-export const groupSkeleton: Omit<PeopleGroupModel, 'id'> = {
+export const groupSkeleton = (): Omit<PeopleGroupModel, 'id'> => ({
   slug: 'slug',
   name: 'name',
   description: 'Esse culpa qui quis ea aliqua commodo reprehenderit minim elit dolore amet Lorem.',
@@ -25,9 +25,9 @@ export const groupSkeleton: Omit<PeopleGroupModel, 'id'> = {
     similars: 0,
     subgroups: 0,
   },
-}
+})
 
-export const memberSkeleton: Omit<GroupMember, 'id'> = {
+export const memberSkeleton = (): Omit<GroupMember, 'id'> => ({
   name: {
     firstname: 'firstname',
     lastname: 'lastname',
@@ -46,4 +46,4 @@ export const memberSkeleton: Omit<GroupMember, 'id'> = {
   },
   is_manager: false,
   is_leader: false,
-}
+})

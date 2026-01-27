@@ -1,8 +1,9 @@
 import { ProjectModel } from '@/models/project.model'
 import { TagModel } from '@/models/tag.model'
-import { toArray } from '@/skeletons/base.skeletons'
+import { factoriesSkeleton } from '@/skeletons/base.skeletons'
+import { randomInt } from 'es-toolkit'
 
-export const tagSkeleton: Omit<TagModel, 'id'> = {
+export const tagSkeleton = (): Omit<TagModel, 'id'> => ({
   title: 'Occaecat',
   title_fr: 'Occaecat',
   title_en: 'Occaecat',
@@ -10,9 +11,9 @@ export const tagSkeleton: Omit<TagModel, 'id'> = {
   description_en: 'Anim cupidatat nulla deserunt aliqua magna enim occaecat quis cupidatat Lorem.',
   description_fr:
     'Velit id fugiat sint occaecat ad laborum reprehenderit eu minim ut Lorem pariatur nulla voluptate.',
-}
+})
 
-export const projectSkeleton: Omit<ProjectModel, 'id'> = {
+export const projectSkeleton = (): Omit<ProjectModel, 'id'> => ({
   title: 'title',
   description: 'Elit veniam consectetur sunt officia.',
   header_image: null,
@@ -25,7 +26,7 @@ export const projectSkeleton: Omit<ProjectModel, 'id'> = {
   life_status: 'completed',
   reviews: [],
   // @ts-expect-error no id in tags
-  tags: toArray(tagSkeleton, 3),
+  tags: factoriesSkeleton(tagSkeleton, randomInt(3)),
   is_followed: {
     is_followed: false,
     follow_id: null,
@@ -38,4 +39,4 @@ export const projectSkeleton: Omit<ProjectModel, 'id'> = {
   goals: [],
   slug: 'slug',
   updated_at: '',
-}
+})

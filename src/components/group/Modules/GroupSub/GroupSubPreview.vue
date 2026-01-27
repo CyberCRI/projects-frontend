@@ -9,7 +9,7 @@
       <SeeMoreArrow is="button" class="see-more-btn" @click="onMore" />
     </template>
     <template #content>
-      <GroupSubList :group="group" :limit="2" :with-pagination="false" />
+      <GroupSubList :group="group" :limit="2" :limit-members="6" :with-pagination="false" />
       <GroupSubDrawer :group="selectedGroup" @close="onClose" />
     </template>
   </BaseGroupPreview>

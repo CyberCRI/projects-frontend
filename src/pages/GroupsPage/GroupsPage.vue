@@ -9,9 +9,7 @@ const organizationCode = useOrganizationCode()
 const { searchFromQuery } = useSearch('groups')
 const { t } = useNuxtI18n()
 
-const { data, isLoading } = getHierarchyGroups(organizationCode, {
-  query: { modules: ['members', 'subgroups'] },
-})
+const { data, isLoading } = getHierarchyGroups(organizationCode)
 const rootId = computed(() => data.value?.id)
 // const isLoading = true
 const groupsIndex = computed(() => {

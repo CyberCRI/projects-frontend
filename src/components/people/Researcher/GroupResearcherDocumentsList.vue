@@ -19,7 +19,7 @@ import {
 import ResearcherDocumentsListBase from '@/components/people/Researcher/ResearcherDocumentsListBase.vue'
 import { DocumentType } from '@/interfaces/researcher'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import { toPagination } from '@/skeletons/base.skeletons'
+import { factoryPagination } from '@/skeletons/base.skeletons'
 import { documentAnalyticsSkeleton, researchDocumentSkeleton } from '@/skeletons/crisalid.skeletons'
 
 const props = withDefaults(
@@ -43,7 +43,7 @@ const { data: documentAnalytics, status: statusAnalytics } = getGroupResearchDoc
   props.docType,
   {
     query,
-    default: () => documentAnalyticsSkeleton,
+    default: () => documentAnalyticsSkeleton(),
   }
 )
 const {
@@ -55,7 +55,7 @@ const {
   paginationConfig: {
     limit: props.limit,
   },
-  default: () => toPagination(researchDocumentSkeleton, props.limit),
+  default: () => factoryPagination(researchDocumentSkeleton, props.limit),
 })
 </script>
 
