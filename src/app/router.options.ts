@@ -336,8 +336,7 @@ const routes = ({
   {
     path: '/newsfeed',
     name: 'Newsfeed',
-    component: () =>
-      import(/* webpackChunkName: NewsfeedPage" */ '../pages/NewsfeedPage/NewsfeedPage.vue'),
+    component: () => import('../pages/NewsfeedPage/NewsfeedPage.vue'),
     meta: {
       resetScroll: true,
     },
