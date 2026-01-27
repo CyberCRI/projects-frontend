@@ -230,8 +230,29 @@ export default defineLazyEventHandler(() => {
           })}\n\n`
         )
       } else {
-        traceMcp('Unhandled chat stream chunk type:', chunk)
+        console.log('Unhandled chat stream chunk type:', chunk)
       }
+
+      if (chunk.type === 'ai') {
+        const { content, response_metadata } = chunk
+        // sort in ascending index order and join texts
+        const ordered_content = content.sort((a, b) => a.index - b.index)
+        const text = ordered_content
+          .filter((part) => part.type == 'text')
+          .map((part) => part.text)
+          .join('')
+        const is_done = response_metadata.status === 'completed'
+        const role = 'ai'
+        event.node.res.write(
+          `data: ${JSON.stringify({
+            text,
+            role,
+            is_done,
+            conversationId,
+          })}\n\n`
+        )
+      }
+
       // MCP tool call
       // } else if (chunk.type === 'response.mcp_list_tools.in_progress') {
       //   console.log('MCP LIST TOOLS IN PROGRESS')
