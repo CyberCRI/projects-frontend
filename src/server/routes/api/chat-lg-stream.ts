@@ -1,5 +1,8 @@
 // import OpenAI from 'openai'
 import { ChatOpenAI } from '@langchain/openai'
+import { createAgent } from 'langchain'
+import { MemorySaver } from '@langchain/langgraph'
+import { SystemMessage, HumanMessage } from '@langchain/core/messages'
 import { v4 as uuidv4 } from 'uuid'
 const runtimeConfig = useRuntimeConfig()
 const {
@@ -15,7 +18,8 @@ const {
 const { appChatbotEnabled } = runtimeConfig.public
 
 // Map conversationId to token and date for authed api requests in MCP
-export const tokenMap = new Map<string, { date: Date; token: string; conversation: any[] }>()
+export const tokenMap = new Map<string, { date: Date; token: string }>()
+export const checkpointer = new MemorySaver()
 
 export const traceMcp = (...args) => {
   if (appMcpServerTrace) {
@@ -74,6 +78,7 @@ export default defineLazyEventHandler(() => {
     if (!conversationId) {
       // if no conversationId, we start a new conversation
       conversationId = uuidv4()
+      console.log('Starting new conversation with id:', conversationId)
     }
 
     const tools = []
@@ -97,195 +102,103 @@ export default defineLazyEventHandler(() => {
         vector_store_ids: [appOpenaiApiVectorStoreId],
       })
     }
-    const chatbot = appOpenaiApiKey
+    const model = appOpenaiApiKey
       ? new ChatOpenAI({
           apiKey: appOpenaiApiKey,
           model: 'gpt-4o-mini',
           temperature: 0,
-        }).bindTools(tools)
+        })
       : null
+
+    const agent = createAgent({
+      model,
+      tools,
+      checkpointer,
+      systemPrompt: new SystemMessage({
+        content: [
+          {
+            type: 'text',
+            content: appLangchainPrompt,
+          },
+        ],
+      }),
+    })
 
     traceMcp(
       `Starting chat stream for conversation ${conversationId} with ${messages.length} messages`
     )
 
-    const adaptedMessages = [
-      { role: 'system', content: appLangchainPrompt },
-      ...messages.map((message) => {
-        return {
-          role: message.role,
-          content: message.text,
-        }
-      }),
-    ]
-
     tokenMap.set(conversationId, {
       date: new Date(),
       token: ('' + tokenHeader).replace('Bearer ', ''),
-      conversation: adaptedMessages,
     })
+    const config = {
+      configurable: { thread_id: conversationId },
+    }
 
-    // const prompt = {
-    //   id: appOpenaiApiPromptId,
-    // }
-    // if (appOpenaiApiPromptVersion) {
-    //   prompt['version'] = String(appOpenaiApiPromptVersion)
-    // }
+    /*
+      EXEMPLE OUTUT PUT TOKENS:
 
-    // const requestOptions: any = {
-    //   prompt,
-    //   //store: false, // do not store in OpenAI's servers, we do this on client side
-    //   store: true, // we want to store it to be able to use follow-up questions
-    //   input: adaptedMessages, // [{ role: 'user', content: messages[0].content }]
-    //   conversation: conversationId,
-    //   reasoning: {},
-    //   tools: [],
-    //   stream: true,
-    // }
-
-    const stream: any = await chatbot.stream(adaptedMessages as any, {
-      // options: { stream: true },
-      // previous_response_id: conversationId,
-    })
-
-    for await (const chunk of stream) {
-      console.log('CHAT STREAM CHUNK:', chunk.type)
-
-      // TODO: handle other chunk types (like error)
-      if (chunk.type === 'response.output_text.delta') {
-        event.node.res.write(
-          `data: ${JSON.stringify({
-            text: chunk.delta,
-            role: 'assistant',
-            is_done: false,
-            conversationId: conversationId,
-          })}\n\n`
-        )
-      } else if (chunk.type === 'response.output_text.done') {
-        event.node.res.write(
-          // hackish: we send empty text so deepchat doesnt rerender it again
-          // and done_text with complete response to add to conversation history
-          `data: ${JSON.stringify({
-            text: '',
-            done_text: chunk.text,
-            role: 'assistant',
-            is_done: true,
-            conversationId: conversationId,
-          })}\n\n`
-        )
-      } else if (chunk.type === 'response.mcp_list_tools.in_progress') {
-        event.node.res.write(
-          `data: ${JSON.stringify({
-            text: 'fetching_tools',
-            role: 'meta',
-            is_done: false,
-            conversationId: conversationId,
-          })}\n\n`
-        )
-      } else if (chunk.type === 'response.mcp_list_tools.completed') {
-        event.node.res.write(
-          `data: ${JSON.stringify({
-            text: 'fetching_tools',
-            role: 'meta',
-            is_done: true,
-            conversationId: conversationId,
-          })}\n\n`
-        )
-      } else if (chunk.type === 'response.mcp_call.in_progress') {
-        event.node.res.write(
-          `data: ${JSON.stringify({
-            text: 'fetching_data',
-            role: 'meta',
-            is_done: false,
-            conversationId: conversationId,
-          })}\n\n`
-        )
-      } else if (chunk.type === 'response.mcp_call.completed') {
-        event.node.res.write(
-          `data: ${JSON.stringify({
-            text: 'fetching_data',
-            role: 'meta',
-            is_done: true,
-            conversationId: conversationId,
-          })}\n\n`
-        )
-        // Reasoning
-      } else if (chunk.type === 'response.reasoning_summary_part.added') {
-        event.node.res.write(
-          `data: ${JSON.stringify({
-            text: 'reasoning',
-            role: 'meta',
-            is_done: false,
-            conversationId: conversationId,
-          })}\n\n`
-        )
-      } else if (chunk.type === 'response.reasoning_summary_part.done') {
-        // console.log(JSON.stringify(chunk, null, 2))
-        event.node.res.write(
-          `data: ${JSON.stringify({
-            text: 'reasoning',
-            role: 'meta',
-            is_done: true,
-            conversationId: conversationId,
-          })}\n\n`
-        )
-      } else {
-        console.log('Unhandled chat stream chunk type:', chunk)
+      {
+      "type": "text",
+      "index": 0,
+      "text": " learning"
       }
-
-      if (chunk.type === 'ai') {
-        const { content, response_metadata } = chunk
-        // sort in ascending index order and join texts
-        const ordered_content = content.sort((a, b) => a.index - b.index)
-        const text = ordered_content
-          .filter((part) => part.type == 'text')
-          .map((part) => part.text)
-          .join('')
-        const is_done = response_metadata.status === 'completed'
-        const role = 'ai'
-        event.node.res.write(
-          `data: ${JSON.stringify({
-            text,
-            role,
-            is_done,
-            conversationId,
-          })}\n\n`
-        )
+      ][
+      {
+      "type": "text",
+      "index": 0,
+      "text": " environments"
       }
-
-      // MCP tool call
-      // } else if (chunk.type === 'response.mcp_list_tools.in_progress') {
-      //   console.log('MCP LIST TOOLS IN PROGRESS')
-      //   console.log(JSON.stringify(chunk, null, 2))
-      // } else if (chunk.type === 'response.mcp_list_tools.completed') {
-      //   console.log('MCP LIST TOOLS COMPLETE')
-      //   console.log(JSON.stringify(chunk, null, 2))
-      // } else if (chunk.type === 'response.mcp_call.in_progress') {
-      //   console.log('MCP CALL TOOLS IN PROGRESS')
-      //   console.log(JSON.stringify(chunk, null, 2))
-      // } else if (chunk.type === 'response.mcp_call.arguments.delta') {
-      //   console.log('MCP CALL TOOLS ARGUMENTS DELTA')
-      //   console.log(JSON.stringify(chunk, null, 2))
-      // } else if (chunk.type === 'response.mcp_call.arguments.done') {
-      //   console.log('MCP CALL TOOLS ARGUMENTS DONE')
-      //   console.log(JSON.stringify(chunk, null, 2))
-      // } else if (chunk.type === 'response.mcp_call.completed') {
-      //   console.log('MCP CALL TOOLS COMPLETED')
-      //   console.log(JSON.stringify(chunk, null, 2))
-      //   // Reasoning
-      // } else if (chunk.type === 'response.reasoning_summary_part.added') {
-      //   console.log('REASONING SUMMARY PART ADDED')
-      //   console.log(JSON.stringify(chunk, null, 2))
-      // } else if (chunk.type === 'response.reasoning_summary_text.delta') {
-      //   console.log('REASONING SUMMARY COMPLETED')
-      //  // console.log(JSON.stringify(chunk, null, 2))
-      // } else if (chunk.type === 'response.reasoning_summary_text.done') {
-      //   console.log('REASONING SUMMARY TEXT DONE')
-      //   console.log(JSON.stringify(chunk, null, 2))
-      // } else if (chunk.type === 'response.reasoning_summary_part.done') {
-      //   console.log('REASONING SUMMARY PART DONE')
-      //   console.log(JSON.stringify(chunk, null, 2))
-      // }
+      ][
+      {
+      "type": "text",
+      "index": 0,
+      "text": "",
+      "annotations": [
+      {
+      "type": "citation",
+      "source": "file_citation",
+      "title": "FAQ - THE PROVEST PROJECT CONTEXT.txt",
+      "startIndex": 522,
+      "file_id": "file-R1phfjqpukKyqdBHFNRhm2"
+      }
+      ]
+      }
+      ]
+  */
+    // TODO: fix typescript mess with agent.stream return type
+    for await (const [token, metadata] of (await agent.stream(
+      { messages: messages.map((msg) => new HumanMessage(msg.text)) } as any,
+      { ...config, streamMode: 'messages' }
+      // ,{ options: { stream: true }, previous_response_id: conversationId,}
+    )) as AsyncIterableIterator<
+      [
+        {
+          contentBlocks?: Array<{ type: string; index: number; text: string }>
+        },
+        { status: string; langgraph_node?: any },
+      ]
+    >) {
+      // TODO: handle tools and reaoning chunks
+      // console.log('chunk from lg node', metadata.langgraph_node)
+      const content = token.contentBlocks || []
+      // sort in ascending index order and join texts (is it really necessary ?)
+      const ordered_content = content.sort((a, b) => a.index - b.index)
+      const text = ordered_content
+        .filter((part) => part.type == 'text')
+        .map((part) => part.text)
+        .join('')
+      const is_done = metadata.status === 'completed'
+      const role = 'ai'
+      event.node.res.write(
+        `data: ${JSON.stringify({
+          text,
+          role,
+          is_done,
+          conversationId,
+        })}\n\n`
+      )
     }
 
     event.node.res.end()
