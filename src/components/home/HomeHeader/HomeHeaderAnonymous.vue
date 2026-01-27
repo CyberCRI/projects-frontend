@@ -93,7 +93,7 @@ const computeDescriptionLayout = () => {
 }
 const descriptionLayoutComputed = (event) => {
   styleDescription.value = { height: event.height + 'px' }
-  isDescriptionLimited.value = event.croppedHtml != organization.value.description
+  isDescriptionLimited.value = event.croppedHtml != organization.value?.$t?.description
   descriptionComputed.value = true
 }
 const logInUser = () => goToKeycloakLoginPage()
@@ -128,6 +128,10 @@ const logInUser = () => goToKeycloakLoginPage()
       @media screen and (min-width: $min-tablet) {
         flex-basis: 30%;
         flex-shrink: 0;
+        .organization-banner {
+          width: 17rem;
+          height: 17rem;
+        }
       }
     }
 
@@ -208,6 +212,7 @@ const logInUser = () => goToKeycloakLoginPage()
   align-self: stretch;
 
   @media screen and (max-width: $min-tablet) {
+    min-height: 8rem;
     height: 8rem;
   }
 }
