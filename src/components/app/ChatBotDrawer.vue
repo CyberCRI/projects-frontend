@@ -128,6 +128,7 @@ const spinnerMD = `![](data:image/svg+xml;base64,${btoa(spinner)}) `
 // to handle 'meta' messages get replaced by next message
 let replacedByNext = false
 const responseInterceptor = (response) => {
+  console.log('ChatBotDrawer responseInterceptor', response)
   if (response.role === 'meta') {
     let text = spinnerMD + t(`chatbot.${response.text}`)
     if (response.is_done) {
@@ -146,9 +147,10 @@ const responseInterceptor = (response) => {
       role: 'assistant',
       text: IS_STREAMED.value ? response.done_text : response.text,
     })
-    conversationId.value = response.conversationId
     analytics.chatbot.receive(response)
   }
+  // console.log('Updated conversation', response.conversationId)
+  conversationId.value = response.conversationId
   const overwrite = replacedByNext
   // no way to know when a true message begin, so just assume next is not overwrite
   replacedByNext = false
