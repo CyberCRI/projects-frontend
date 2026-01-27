@@ -128,6 +128,7 @@ const logInUser = () => goToKeycloakLoginPage()
       @media screen and (min-width: $min-tablet) {
         flex-basis: 30%;
         flex-shrink: 0;
+
         .organization-banner {
           width: 17rem;
           height: 17rem;
