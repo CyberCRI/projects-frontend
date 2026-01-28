@@ -2,12 +2,7 @@
   <div class="map-recap">
     <div class="map-inner-ctn">
       <div class="map">
-        <BaseMap
-          ref="summary-map"
-          :config="CONFIG"
-          :use-cluster="true"
-          @map-moved="$emit('map-moved')"
-        >
+        <BaseMap ref="summary-map" :config="CONFIG" use-cluster @map-moved="$emit('map-moved')">
           <template #default="slotProps">
             <template v-if="slotProps.map">
               <MapPointer
@@ -22,9 +17,13 @@
           </template>
         </BaseMap>
       </div>
+      <ContextActionButton
+        :secondary="true"
+        class="map-button"
+        action-icon="Expand"
+        @click="projectLayoutToggleAddModal('location')"
+      />
     </div>
-
-    <ContextActionButton :secondary="true" class="map-button" action-icon="Expand" />
   </div>
 </template>
 
@@ -45,19 +44,18 @@ const props = withDefaults(
   }
 )
 
+const projectLayoutToggleAddModal: any = inject('projectLayoutToggleAddModal')
 defineEmits(['map-moved'])
 
+const summaryMapRef = useTemplateRef('summary-map')
 const CONFIG = {
   zoom: 5,
   maxZoom: 17,
 }
 
-const summaryMapRef = useTemplateRef('summary-map')
 watch(
   () => props.locations,
-  () => {
-    summaryMapRef.value?.centerMap()
-  },
+  () => summaryMapRef.value?.centerMap(),
   { deep: true }
 )
 

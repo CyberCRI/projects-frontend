@@ -18,6 +18,7 @@ import 'leaflet.markercluster'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet.markercluster/dist/MarkerCluster.css'
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css'
+import { LocationModel } from '@/models/location.model'
 
 const props = withDefaults(
   defineProps<{
@@ -39,7 +40,7 @@ const emit = defineEmits<{
 const mapInstance = ref<L.Map>(null)
 const markerClusterInstance = ref<L.MarkerClusterGroup>(null)
 const mapRef = useTemplateRef('map')
-const markers = ref(new Map())
+const markers = ref<Map<number, L.Marker>>(new Map())
 
 const MAP_URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
 const CONFIG: L.MapOptions = {
@@ -163,16 +164,19 @@ const addPointer = async ({ markerContent, location, tooltip }, eventHandlers: a
   }
 }
 
-const removePointer = (location) => {
+const removePointer = (location: LocationModel) => {
   const marker = markers.value.get(location.id)
 
-  if (marker) {
-    if (markerClusterInstance.value) {
-      marker.value.removeFrom(markerClusterInstance.value)
-    } else {
-      mapInstance.value.removeLayer(marker)
-    }
+  if (!mapInstance.value || !marker) {
+    return
   }
+
+  if (markerClusterInstance.value) {
+    marker.removeFrom(markerClusterInstance.value)
+  } else {
+    mapInstance.value.removeLayer(marker)
+  }
+
   markers.value.delete(location.id)
   if (markerClusterInstance.value) {
     markerClusterInstance.value.refreshClusters()

@@ -1,12 +1,12 @@
 <template>
   <div class="leaflet-map" :class="{ loading }">
-    <BaseMap ref="map" :config="CONFIG" :use-cluster="true">
+    <BaseMap ref="map" :config="CONFIG" use-cluster>
       <template #default="slotProps">
         <MapPointer
           v-for="location in locations"
           :key="location.id"
           :location="location"
-          :has-project-tip="true"
+          has-project-tip
           @mounted="slotProps.addPointer"
           @unmounted="slotProps.removePointer(location)"
         />
