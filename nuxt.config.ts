@@ -138,6 +138,7 @@ export default defineNuxtConfig({
     appMcpServerTrace: 0,
     appSorbobotApiTrace: 0,
     appGotenbergServerUrl: '',
+    appLangchainPrompt: '',
     public: {
       appVersion: '',
       appApiOrgCode: '',
