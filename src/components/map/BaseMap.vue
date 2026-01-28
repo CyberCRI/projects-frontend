@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import * as L from 'leaflet'
 import fixLeaflet from '@/app/fixLeaflet'
-import 'leaflet.markercluster/dist/leaflet.markercluster.js'
+import 'leaflet.markercluster'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet.markercluster/dist/MarkerCluster.css'
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css'
@@ -36,9 +36,9 @@ const emit = defineEmits<{
   'map-moved': []
 }>()
 
-const mapInstance = ref(null)
+const mapInstance = ref<L.Map>(null)
+const markerClusterInstance = ref<L.MarkerClusterGroup>(null)
 const mapRef = useTemplateRef('map')
-const markerCluster = ref(null)
 const markers = ref(new Map())
 
 const MAP_URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
@@ -155,28 +155,27 @@ const addPointer = async ({ markerContent, location, tooltip }, eventHandlers: a
 
   markers.value.set(location.id, marker)
 
-  if (markerCluster.value) {
-    markerCluster.value.addLayers(marker)
+  if (markerClusterInstance.value) {
+    markerClusterInstance.value.addLayers([marker])
+    markerClusterInstance.value.refreshClusters()
   } else {
-    marker.addTo(mapInstance.value)
+    marker.addTo(mapInstance.value as L.Map)
   }
-
-  if (markerCluster.value) markerCluster.value.refreshClusters()
 }
 
 const removePointer = (location) => {
   const marker = markers.value.get(location.id)
 
   if (marker) {
-    if (markerCluster.value) {
-      marker.value.removeFrom(markerCluster.value)
+    if (markerClusterInstance.value) {
+      marker.value.removeFrom(markerClusterInstance.value)
     } else {
       mapInstance.value.removeLayer(marker)
     }
   }
   markers.value.delete(location.id)
-  if (markerCluster.value) {
-    markerCluster.value.refreshClusters()
+  if (markerClusterInstance.value) {
+    markerClusterInstance.value.refreshClusters()
   }
   // force readraw
   mapInstance.value.invalidateSize()
@@ -197,7 +196,6 @@ onMounted(() => {
   const map = L.map(mapRef.value, CONFIG)
 
   if (props.useCluster) {
-    // @ts-expect-error ignore markercluster
     const markerCluster = L.markerClusterGroup({
       removeOutsideVisibleBounds: true,
       chunkedLoading: true,
@@ -205,7 +203,7 @@ onMounted(() => {
     })
 
     map.addLayer(markerCluster)
-    markerCluster.value = markerCluster
+    markerClusterInstance.value = markerCluster
   }
 
   map.on('contextmenu', (e) => emit('contextmenu', e))

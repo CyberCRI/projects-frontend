@@ -224,7 +224,7 @@ watchEffect(() => {
 
 const mapRef = useTemplateRef('map')
 
-const centerMap = () => mapRef.value?.map.centerMap()
+const centerMap = () => mapRef.value?.centerMap()
 
 const onLocationCreated = (location) => {
   suggestedLocations.value = null
