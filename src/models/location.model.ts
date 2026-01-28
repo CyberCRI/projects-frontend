@@ -24,4 +24,4 @@ export type LocationInput = Required<LocationModel> & {
   project_id: string
 }
 
-export type LocationOutput = Required<LocationModel>
+export type LocationOutput = Omit<Required<LocationModel>, 'project'>

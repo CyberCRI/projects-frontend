@@ -1,6 +1,6 @@
 <template>
   <div class="leaflet-map" :class="{ loading }">
-    <BaseMap ref="map" :config="config" :use-cluster="true">
+    <BaseMap ref="map" :config="CONFIG" :use-cluster="true">
       <template #default="slotProps">
         <MapPointer
           v-for="location in locations"
@@ -29,19 +29,10 @@ const props = withDefaults(
   { loading: true }
 )
 
-const config = {
-  mapUrl: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+const CONFIG = {
   zoom: 1,
   maxZoom: 17,
   minZoom: 0,
-  maxBounds: [
-    [-90, -175],
-    [84, 195],
-  ],
-  maxBoundsViscosity: 1.0,
-  iconSize: [80, 69],
-  useCluster: true,
-  worldCopyJump: true,
 }
 
 const mapRef = useTemplateRef('map')
@@ -50,7 +41,6 @@ watch(
   () => props.loading,
   (neo) => {
     if (!neo && mapRef.value) {
-      console.log('center')
       mapRef.value.centerMap()
     }
   }

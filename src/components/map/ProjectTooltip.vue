@@ -43,10 +43,8 @@
 </template>
 
 <script setup lang="ts">
-import { capitalize } from '@/functs/string'
-
+import { capitalize, cropIfTooLong } from '@/functs/string'
 import LinkButton from '@/components/base/button/LinkButton.vue'
-import { cropIfTooLong } from '@/functs/string'
 
 defineOptions({ name: 'ProjectTooltip' })
 
@@ -57,7 +55,14 @@ const props = withDefaults(defineProps<{ location?: any }>(), {
 const { t } = useNuxtI18n()
 const project = computed(() => props.location.project)
 const typeLabel = computed(() => {
-  return props.location.type === 'impact' ? t('project.impact') : t('team.team')
+  switch (props.location.type) {
+    case 'impact':
+      return t('project.impact')
+    case 'team':
+      return t('team.team')
+    case 'address':
+      return t('geocoding.address')
+  }
 })
 const title = computed(() => cropIfTooLong(project.value.title, 45))
 const purpose = computed(() => cropIfTooLong(project.value.purpose, 85))
@@ -94,6 +99,10 @@ const purpose = computed(() => cropIfTooLong(project.value.purpose, 85))
       }
 
       &.team {
+        background: $primary;
+      }
+
+      &.address {
         background: $primary;
       }
     }

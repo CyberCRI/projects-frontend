@@ -64,6 +64,10 @@
       &.team {
         background: $primary;
       }
+
+      &.address {
+        background: $primary;
+      }
     }
 
     &__label {
@@ -127,6 +131,10 @@
       }
 
       &.team {
+        background: $primary;
+      }
+
+      &.address {
         background: $primary;
       }
     }
@@ -271,6 +279,10 @@
 
       &.impact {
         background: $violet;
+      }
+
+      &.address {
+        background: $primary;
       }
     }
   }

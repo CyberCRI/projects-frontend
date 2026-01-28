@@ -48,6 +48,10 @@ const description = computed(() => cropIfTooLong(props.location?.$t?.description
       &.team {
         background: $primary;
       }
+
+      &.address {
+        background: $primary;
+      }
     }
   }
 }

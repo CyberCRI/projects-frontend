@@ -8,24 +8,24 @@
       <GroupSimilarsPreview v-if="group.modules.similars" :group="group" :limit="3" />
     </div>
     <GroupMembersPreview v-if="group.modules.members" :group="group" :is-loading="isLoading" />
+    <GroupSubPreview v-if="group.modules.subgroups" :group="group" :is-loading="isLoading" />
     <GroupProjectsPreview
       v-if="group.modules.featured_projects"
       :group="group"
       :is-loading="isLoading"
     />
-    <GroupSubPreview v-if="group.modules.subgroups" :group="group" :is-loading="isLoading" />
-    <!-- <GroupDocumentsPreview
+    <GroupDocumentsPreview
       v-if="group.modules.publications"
       document-type="publications"
       :group="group"
       :is-loading="isLoading"
-    /> -->
-    <!-- <GroupDocumentsPreview
+    />
+    <GroupDocumentsPreview
       v-if="group.modules.conferences"
       document-type="publications"
       :group="group"
       :is-loading="isLoading"
-    /> -->
+    />
   </div>
 </template>
 

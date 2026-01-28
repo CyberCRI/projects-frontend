@@ -64,6 +64,7 @@ const form = ref({
   members: [],
   sdgs: [],
   tags: [],
+  location: null,
   featuredProjects: [],
   header_image: null,
   imageSizes: null,
@@ -185,6 +186,7 @@ const buildPayload = () => {
     sdgs: form.value.sdgs,
     tags: form.value.tags.map((tag) => tag.id),
     parent: form.value.parentGroup?.id || null, // undefined ,
+    location: form.value.location,
     organization: orgCode.value,
     publication_status: form.value.publication_status,
     team,
@@ -310,8 +312,10 @@ onMounted(async () => {
       form.value.description = _groupData.description
       form.value.short_description = _groupData.short_description
       form.value.email = _groupData.email
+      form.value.location = _groupData.location
+
       form.value.sdgs = [..._groupData.sdgs]
-      form.value.tags = [..._groupData.tags]
+      form.value.tags = structuredClone(_groupData.tags)
       // first group in hierarchy is always org group
       // witch is not diplayed and considered null parent for the form and api purpose
       // parent group is always the last group in hierarchy

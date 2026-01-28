@@ -1,16 +1,8 @@
-<script setup>
-defineProps({
-  location: { type: Object, required: true },
-  isEditable: { type: Boolean, default: false },
-})
-
-defineEmits(['focus-location', 'delete-location', 'edit-location'])
-</script>
 <template>
   <div class="location-list-item">
     <div class="location-title">
-      <h4>{{ location?.$t?.title }}</h4>
-      <p>{{ location?.$t?.description }}</p>
+      <h4>{{ location.$t.title }}</h4>
+      <p>{{ location.$t.description }}</p>
     </div>
     <ContextActionButton
       secondary
@@ -28,6 +20,27 @@ defineEmits(['focus-location', 'delete-location', 'edit-location'])
     />
   </div>
 </template>
+
+<script setup lang="ts">
+import { TranslatedLocation } from '@/models/location.model'
+
+withDefaults(
+  defineProps<{
+    location: TranslatedLocation
+    isEditable?: boolean
+  }>(),
+  {
+    isEditable: false,
+  }
+)
+
+defineEmits<{
+  'focus-location': [TranslatedLocation]
+  'delete-location': [TranslatedLocation]
+  'edit-location': [TranslatedLocation]
+}>()
+</script>
+
 <style scoped lang="scss">
 .location-list-item {
   display: flex;

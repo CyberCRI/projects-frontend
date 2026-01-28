@@ -45,13 +45,20 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  mounted: [object]
+  mounted: [any]
   unmounted: [TranslatedLocation | null]
   'edit-location': [TranslatedLocation | null]
 }>()
 const { t } = useNuxtI18n()
 const pointerLabel = computed(() => {
-  return props.location.type === 'impact' ? t('project.impact') : t('team.team')
+  switch (props.location.type) {
+    case 'impact':
+      return t('project.impact')
+    case 'team':
+      return t('team.team')
+    case 'address':
+      return t('geocoding.address')
+  }
 })
 
 const tooltipRef = useTemplateRef('tooltip')
@@ -105,6 +112,10 @@ onUnmounted(() => {
       }
 
       &.team {
+        background: $primary;
+      }
+
+      &.address {
         background: $primary;
       }
     }

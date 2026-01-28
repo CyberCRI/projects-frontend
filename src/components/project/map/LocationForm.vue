@@ -36,171 +36,174 @@
         :disabled="asyncing"
         :btn-icon="asyncing ? 'LoaderSimple' : null"
         :label="$t('common.delete')"
-        @click="deleteLocation"
+        @click="onDeleteLocation"
       />
     </template>
   </DialogModal>
 </template>
 
-<script>
+<script setup lang="ts">
 import DialogModal from '@/components/base/modal/DialogModal.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import GroupButton from '@/components/base/button/GroupButton.vue'
 import analytics from '@/analytics'
 import { postLocations, patchLocation, deleteLocation } from '@/api/locations.services'
-import useToasterStore from '@/stores/useToaster.ts'
+import useToasterStore from '@/stores/useToaster'
 import LpiButton from '@/components/base/button/LpiButton.vue'
+import { LocationOutput, TranslatedLocation } from '@/models/location.model'
+import { LocationType } from '@/models/types'
 
-export default {
-  name: 'LocationForm',
+const props = withDefaults(
+  defineProps<{
+    locationToBeEdited?: TranslatedLocation
+    newCoordinates?: any[]
+    projectId?: string
+    address?: string
+  }>(),
+  {
+    locationToBeEdited: null,
+    newCoordinates: () => [],
+    address: null,
+    projectId: null,
+  }
+)
 
-  components: { DialogModal, TextInput, GroupButton, LpiButton },
+const emit = defineEmits<{
+  close: []
+  'center-map': []
+  'location-edited': [LocationOutput]
+  'location-created': [LocationOutput]
+  'location-deleted': []
+}>()
 
-  props: {
-    locationToBeEdited: {
-      type: Object,
-      default: null,
-    },
+const toaster = useToasterStore()
+const { t } = useNuxtI18n()
 
-    newCoordinates: {
-      type: Array,
-      default: () => [],
-    },
+const asyncing = ref(false)
+const form = ref({
+  type: 'team' as LocationType,
+  title: '',
+  description: '',
+  lat: null,
+  lng: null,
+})
 
-    projectId: {
-      type: String,
-      default: null,
-    },
-    address: {
-      type: [String, null],
-      default: null,
-    },
+const locationTypeOptions = computed(() => [
+  {
+    value: 'team',
+    label: t('team.team'),
   },
+  {
+    value: 'impact',
+    label: t('project.impact'),
+  },
+  {
+    value: 'address',
+    label: t('geocoding.address'),
+  },
+])
 
-  emits: ['close', 'center-map', 'location-edited', 'location-created', 'location-deleted'],
-  setup() {
-    const toaster = useToasterStore()
-    return {
-      toaster,
+onBeforeMount(() => {
+  if (props.locationToBeEdited) {
+    form.value = {
+      lat: props.locationToBeEdited.lat,
+      lng: props.locationToBeEdited.lng,
+      description: props.locationToBeEdited.description,
+      type: props.locationToBeEdited.type,
+      title: props.locationToBeEdited.title,
     }
-  },
+  }
+  if (props.address && !form.value.description) {
+    form.value.description = props.address
+  }
+})
 
-  data() {
-    return {
-      asyncing: false,
-      form: {
-        type: 'team',
-        title: '',
-        description: '',
+const onAddLocation = async () => {
+  try {
+    asyncing.value = true
+    const body = {
+      ...form.value,
+      lat: props.newCoordinates[0],
+      lng: props.newCoordinates[1],
+      project_id: props.projectId,
+    }
+    const result = await postLocations(props.projectId, body)
+
+    analytics.location.addLocationMapPoint({
+      project: {
+        id: props.projectId,
       },
-      locationTypeOptions: [
-        {
-          value: 'team',
-          label: this.$t('team.team'),
-        },
-        {
-          value: 'impact',
-          label: this.$t('project.impact'),
-        },
-      ],
-    }
-  },
+      location: body,
+    })
 
-  created() {
-    if (this.locationToBeEdited) {
-      this.form = { ...this.locationToBeEdited }
-    }
-    if (this.address && !this.form.description) {
-      this.form.description = this.address
-    }
-  },
+    toaster.pushSuccess(t('toasts.location-create.success'))
 
-  methods: {
-    submit() {
-      if (this.locationToBeEdited) this.editLocation()
-      else this.addLocation()
-    },
+    emit('location-created', result)
+    nextTick(() => emit('center-map'))
+  } catch (error) {
+    toaster.pushError(`${t('toasts.location-create.error')} (${error})`)
+    console.error(error)
+  } finally {
+    emit('close')
+    asyncing.value = false
+  }
+}
 
-    async addLocation() {
-      try {
-        this.asyncing = true
-        const location = {
-          ...this.form,
-          lat: this.newCoordinates[0],
-          lng: this.newCoordinates[1],
-          project_id: this.projectId,
-        }
-        const result = await postLocations(location)
+const onEditLocation = async () => {
+  try {
+    asyncing.value = true
+    const result = await patchLocation(props.projectId, props.locationToBeEdited.id, form.value)
 
-        analytics.location.addLocationMapPoint({
-          project: {
-            id: this.projectId,
-          },
-          location: result,
-        })
+    analytics.location.updateLocationMapPoint({
+      project: {
+        id: props.projectId,
+      },
+      location: result,
+    })
 
-        this.toaster.pushSuccess(this.$t('toasts.location-create.success'))
+    toaster.pushSuccess(t('toasts.location-update.success'))
 
-        this.$emit('location-created', result)
-        this.$nextTick(() => this.$emit('center-map'))
-      } catch (error) {
-        this.toaster.pushError(`${this.$t('toasts.location-create.error')} (${error})`)
-        console.error(error)
-      } finally {
-        this.$emit('close')
-        this.asyncing = false
-      }
-    },
+    emit('location-edited', result)
+  } catch (error) {
+    toaster.pushError(`${t('toasts.location-update.error')} (${error})`)
+    console.error(error)
+  } finally {
+    emit('close')
+    asyncing.value = false
+  }
+}
 
-    async editLocation() {
-      try {
-        this.asyncing = true
-        const result = await patchLocation(this.form)
+const onDeleteLocation = async () => {
+  try {
+    asyncing.value = true
+    await deleteLocation(props.projectId, props.locationToBeEdited.id)
 
-        analytics.location.updateLocationMapPoint({
-          project: {
-            id: this.projectId,
-          },
-          location: result,
-        })
+    analytics.location.deleteLocationMapPoint({
+      project: {
+        id: props.projectId,
+      },
+      location: form.value,
+    })
 
-        this.toaster.pushSuccess(this.$t('toasts.location-update.success'))
+    toaster.pushSuccess(t('toasts.location-delete.success'))
 
-        this.$emit('location-edited', result)
-      } catch (error) {
-        this.toaster.pushError(`${this.$t('toasts.location-update.error')} (${error})`)
-        console.error(error)
-      } finally {
-        this.$emit('close')
-        this.asyncing = false
-      }
-    },
+    emit('location-deleted')
+    nextTick(() => emit('center-map'))
+  } catch (error) {
+    toaster.pushError(`${t('toasts.location-delete.error')} (${error})`)
+    console.error(error)
+  } finally {
+    emit('close')
+    asyncing.value = true
+  }
+}
 
-    async deleteLocation() {
-      try {
-        this.asyncing = true
-        await deleteLocation(this.form)
-
-        analytics.location.deleteLocationMapPoint({
-          project: {
-            id: this.projectId,
-          },
-          location: this.form,
-        })
-
-        this.toaster.pushSuccess(this.$t('toasts.location-delete.success'))
-
-        this.$emit('location-deleted')
-        this.$nextTick(() => this.$emit('center-map'))
-      } catch (error) {
-        this.toaster.pushError(`${this.$t('toasts.location-delete.error')} (${error})`)
-        console.error(error)
-      } finally {
-        this.$emit('close')
-        this.asyncing = true
-      }
-    },
-  },
+const submit = () => {
+  if (props.locationToBeEdited) {
+    onEditLocation()
+  } else {
+    onAddLocation()
+  }
 }
 </script>
 

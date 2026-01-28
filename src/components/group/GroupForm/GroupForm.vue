@@ -115,6 +115,12 @@
     <div class="spacer" />
 
     <template v-if="!isReducedMode">
+      {{ JSON.stringify(form.location) }}
+    </template>
+
+    <div class="spacer" />
+
+    <template v-if="!isReducedMode">
       <!-- Team -->
       <div class="team">
         <GroupTeamSection v-model="form.members" />
@@ -281,6 +287,7 @@ export default {
         members: [],
         sdgs: [],
         tags: [],
+        location: null,
         featuredProjects: [],
         header_image: null,
         imageSizes: null,

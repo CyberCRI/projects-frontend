@@ -7,56 +7,50 @@
 
       <LpiButton
         class="add-parent-group-card"
-        :btn-icon="modelValue ? 'Pen' : 'Plus'"
-        :label="t(modelValue ? 'group.form.edit' : 'group.form.add')"
+        :btn-icon="model ? 'Pen' : 'Plus'"
+        :label="t(model ? 'group.form.edit' : 'group.form.add')"
         data-test="add-parent-group-card"
-        @click="drawerIsOpen = true"
+        @click="open"
       />
     </label>
 
-    <div v-if="modelValue" class="group-grid">
-      <GroupCard :group="modelValue" />
+    <div v-if="model" class="group-grid">
+      <GroupCard :group="model" />
     </div>
 
     <PickGroupDrawer
       :drawer-title="t('group.form.add-parent-group')"
       :subtitle="t('admin.groups.subtitle-edit-child')"
-      :is-opened="drawerIsOpen"
+      :is-opened="state"
       :groups="groups"
-      :initial-group="modelValue"
-      :forbidden-ids="forbiddenIds"
+      :initial-group="model"
       :rooted="true"
-      @close="closeDrawer"
+      @close="close"
       @confirm="confirmGroup"
     />
   </div>
 </template>
 
-<script setup>
-defineOptions({ name: 'ParentGroupSection' })
+<script setup lang="ts">
+import useModal from '@/composables/useModal'
+import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 
-defineProps({
-  modelValue: {
-    type: [Object, null],
-    default: null,
-  },
-  groups: {
-    type: Array,
-    default: () => [],
-  },
-})
+withDefaults(
+  defineProps<{
+    groups?: TranslatedPeopleGroupModel[]
+  }>(),
+  {
+    groups: () => [],
+  }
+)
+const model = defineModel<TranslatedPeopleGroupModel | null>()
 
-const emit = defineEmits(['update:modelValue'])
 const { t } = useNuxtI18n()
-const drawerIsOpen = ref(false)
-const forbiddenIds = ref([])
+const { close, open, state } = useModal()
 
-const closeDrawer = () => {
-  drawerIsOpen.value = false
-}
 const confirmGroup = (group) => {
-  emit('update:modelValue', group)
-  closeDrawer()
+  model.value = group
+  close()
 }
 </script>
 

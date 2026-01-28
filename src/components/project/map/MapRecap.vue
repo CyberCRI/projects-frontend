@@ -4,7 +4,7 @@
       <div class="map">
         <BaseMap
           ref="summary-map"
-          :config="config"
+          :config="CONFIG"
           :use-cluster="true"
           @map-moved="$emit('map-moved')"
         >
@@ -28,72 +28,51 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 import MapPointer from '@/components/map/MapPointer.vue'
 import BaseMap from '@/components/map/BaseMap.vue'
+import { TranslatedLocation } from '@/models/location.model'
 
-export default {
-  name: 'MapRecap',
+const props = withDefaults(
+  defineProps<{
+    locations?: TranslatedLocation[]
+    focusedLocation?: TranslatedLocation
+  }>(),
+  {
+    locations: () => [],
+    focusedLocation: null,
+  }
+)
 
-  components: {
-    ContextActionButton,
-    MapPointer,
-    BaseMap,
-  },
-  props: {
-    locations: {
-      type: Array,
-      default: () => [],
-    },
-    focusedLocation: {
-      type: [Object, null],
-      default: null,
-    },
-  },
+defineEmits(['map-moved'])
 
-  emits: ['map-moved'],
-
-  setup() {
-    const { canEditProject } = usePermissions()
-    return {
-      canEditProject,
-    }
-  },
-
-  data() {
-    return {
-      config: {
-        mapUrl: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-        zoom: 5,
-        maxZoom: 17,
-        minZoom: 2,
-        maxBounds: [
-          [-90, -175],
-          [84, 195],
-        ],
-
-        iconSize: [80, 69],
-        maxBoundsViscosity: 1,
-        worldCopyJump: true,
-      },
-    }
-  },
-
-  watch: {
-    locations: {
-      handler() {
-        if (this.$refs['summary-map']) this.$refs['summary-map'].centerMap()
-      },
-      deep: true,
-    },
-    focusedLocation(neo, old) {
-      if (this.$refs['summary-map'] && neo && (!old || neo.lat != old.lat || neo.lng != old.lng)) {
-        this.$refs['summary-map'].flyTo(neo)
-      }
-    },
-  },
+const CONFIG = {
+  zoom: 5,
+  maxZoom: 17,
 }
+
+const summaryMapRef = useTemplateRef('summary-map')
+watch(
+  () => props.locations,
+  () => {
+    summaryMapRef.value?.centerMap()
+  },
+  { deep: true }
+)
+
+watch(
+  () => props.focusedLocation,
+  (neo, old) => {
+    if (neo && (neo.lat !== old?.lat || neo.lng !== old?.lng)) {
+      summaryMapRef.value?.flyTo(neo, 8)
+    }
+  }
+)
+
+defineExpose({
+  map: summaryMapRef,
+})
 </script>
 
 <style lang="scss">

@@ -83,6 +83,10 @@ onUnmounted(() => {
       &.team {
         background: $primary;
       }
+
+      &.address {
+        background: $primary;
+      }
     }
 
     &__label {
