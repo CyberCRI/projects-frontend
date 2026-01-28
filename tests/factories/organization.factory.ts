@@ -9,12 +9,13 @@ import BaseFactory from './base.factory'
 import FaqFactory from './faq.factory'
 import OrganizationDirectoryFactory from './organization-directory.factory'
 import TagFactory from './tag.factory'
+import { ImageFactory } from './image.factory'
 
 const OrganizationFactory = createFactory<OrganizationModel>((faker) => ({
   ...BaseFactory.generate(),
   id: faker.datatype.number(),
   background_color: faker.datatype.string(),
-  banner_image: faker.image.image(),
+  banner_image: ImageFactory.generate(),
   code: faker.datatype.string(),
   contact_email: faker.internet.email(),
   dashboard_title: faker.lorem.sentence(),
@@ -41,14 +42,19 @@ const OrganizationFactory = createFactory<OrganizationModel>((faker) => ({
   enabled_projects_tag_classifications: [], // TODO: define this type
   enabled_skills_tag_classifications: [], // TODO: define this type
   terms_and_conditions: null,
+  auto_translate_content: false,
+  description: '',
+  chat_button_text: '',
+  onboarding_enabled: false,
 }))
 
-export const OrganizationOutputFactory = createFactory<OrganizationOutput>(() => ({
+export const OrganizationOutputFactory = createFactory<OrganizationOutput>((faker) => ({
   ...OrganizationFactory.generate(),
   faq: FaqFactory.generate(),
   organization_directory: OrganizationDirectoryFactory.generate(),
   tags: TagFactory.generateMany(2),
   children: [],
+  chat_url: faker.internet.url(),
 }))
 
 export const OrganizationPatchInputFactory = createFactory<OrganizationPatchInput>(() => ({

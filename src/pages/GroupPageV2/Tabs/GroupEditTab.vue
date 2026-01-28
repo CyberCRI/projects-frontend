@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import {
   postGroup,
   postGroupHeader,
@@ -8,19 +8,17 @@ import {
 } from '@/api/groups.service'
 import useValidate from '@vuelidate/core'
 import { required, maxLength, helpers, email } from '@vuelidate/validators'
-import { imageSizesFormData, pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
+import { imageSizesFormData, pictureApiToImageSizes } from '@/functs/imageSizesUtils'
 import { isEqual } from 'es-toolkit'
-import useToasterStore from '@/stores/useToaster.ts'
+import useToasterStore from '@/stores/useToaster'
 import usePeopleGroupsStore from '@/stores/usePeopleGroups'
-import useUsersStore from '@/stores/useUsers.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import { getOrganizationByCode } from '@/api/organizations.service'
+import useUsersStore from '@/stores/useUsers'
+import { useLpiHead2 } from '@/composables/useLpiHead'
 
 const props = defineProps({
-  groupId: {
-    // watch out : this can be a slug or an id
-    type: [String, null],
-    default: null,
+  group: {
+    type: Object,
+    required: true,
   },
   postCancelRouteFactory: {
     type: [Function, null],
@@ -46,7 +44,7 @@ const props = defineProps({
 const emit = defineEmits(['close', 'reload-group'])
 const toaster = useToasterStore()
 const peopleGroupsStore = usePeopleGroupsStore()
-const organizationsStore = useOrganizationsStore()
+const organizationCode = useOrganizationCode()
 const usersStore = useUsersStore()
 const { canCreateGroup, canEditGroup } = usePermissions()
 const route = useRoute()
@@ -98,17 +96,11 @@ const rules = computed(() => ({
 
 const v$ = useValidate(rules, { form })
 
-const formIsInvalid = computed(() => {
-  return v$.value.$invalid
-})
-const isEdit = computed(() => {
-  return !!props.groupId
-})
-const orgCode = computed(() => {
-  // use group's org code if availabe
-  // to allow edition of groups on the meta portal (PROJ-1032)
-  return groupData.value ? groupData.value.organization : organizationsStore.current.code
-})
+const formIsInvalid = computed(() => v$.value.$invalid)
+const isEdit = computed(() => !!props.group?.id)
+// use group's org code if availabe
+// to allow edition of groups on the meta portal (PROJ-1032)
+const orgCode = computed(() => groupData.value?.organization ?? organizationCode)
 
 const redirectTo404 = () => {
   router.replace({
@@ -117,11 +109,11 @@ const redirectTo404 = () => {
   })
 }
 const cancel = () => {
-  if (props.groupId) {
+  if (props.group.id) {
     router.push(
       props.postCancelRouteFactory
-        ? props.postCancelRouteFactory(props.groupId)
-        : { name: 'Group', params: { groupId: props.groupId } }
+        ? props.postCancelRouteFactory(props.group.id)
+        : { name: 'Group', params: { groupId: props.group.id } }
     )
   } else {
     router.push(
@@ -130,12 +122,8 @@ const cancel = () => {
   }
 }
 
-const { setProjectsData, updateGroupProjects } = useGroupProjectsUpdate(
-  orgCode,
-  props.groupId,
-  form
-)
-const { setMembersData, updateGroupMembers } = useGroupMembersUpdate(orgCode, props.groupId, form)
+const { setProjectsData } = useGroupProjectsUpdate(orgCode, props.group.id, form)
+const { setMembersData } = useGroupMembersUpdate(orgCode, props.group.id, form)
 
 const updateHeader = async (groupId) => {
   // check if header has changed
@@ -150,12 +138,14 @@ const updateHeader = async (groupId) => {
       payloadHeader.append('file', form.value.header_image, form.value.header_image.name)
 
       await postGroupHeader(orgCode.value, groupId, payloadHeader)
+      await refreshNuxtData(`${organizationCode}::group::${groupData.value.id}`)
 
       // TODO: make this in POST when backend allows it
       payloadHeader.delete('file')
     } else if (form.value.imageSizes) {
       // TODO else ?
       await patchGroupHeader(orgCode.value, groupId, payloadHeader)
+      await refreshNuxtData(`${organizationCode}::group::${groupData.value.id}`)
     }
   }
 }
@@ -201,10 +191,12 @@ const createGroup = async () => {
   try {
     const payload = buildPayload()
 
-    const newGroupId = (await postGroup(orgCode.value, payload)).id
+    const newGroup = await postGroup(orgCode.value, payload)
+    const newGroupId = newGroup.id
 
     // save header
     await updateHeader(newGroupId)
+    await refreshNuxtData(`${organizationCode}::group::${newGroup.id}`)
 
     startEditWatcher()
 
@@ -229,19 +221,16 @@ const updateGroup = async () => {
   isSaving.value = true
   try {
     const payload = buildPayload()
-    payload.id = props.groupId
+    // @ts-expect-error 2339
+    payload.id = props.group.id
     payload.type = form.value.type
 
-    await patchGroup(orgCode.value, props.groupId, payload)
+    await patchGroup(orgCode.value, props.group.id, payload)
 
     // save header
-    await updateHeader(props.groupId)
+    await updateHeader(props.group.id)
 
-    // save members
-    await updateGroupMembers(props.groupId)
-
-    //save featured projects
-    await updateGroupProjects(props.groupId)
+    await refreshNuxtData(`${organizationCode}::group::${groupData.value.id}`)
 
     startEditWatcher()
 
@@ -253,8 +242,8 @@ const updateGroup = async () => {
 
     router.push(
       props.postUpdateRouteFactory
-        ? props.postUpdateRouteFactory(props.groupId)
-        : { name: 'Group', params: { groupId: props.groupId } }
+        ? props.postUpdateRouteFactory(props.group.id)
+        : { name: 'Group', params: { groupId: props.group.id } }
     )
   } catch (error) {
     toaster.pushError(`${t('toasts.group-edit.error')} (${error})`)
@@ -279,7 +268,7 @@ const submit = async () => {
 
 onMounted(async () => {
   stopEditWatcher()
-  if (!props.groupId) {
+  if (!props.group.id) {
     peopleGroupsStore.currentId = null
     // check right to create (if no grouip id passed) or edit (if group id passed)
     // and 404 if not allowed
@@ -291,14 +280,13 @@ onMounted(async () => {
     // load data
     // general data
     try {
-      const _groupData = await getGroup(orgCode.value, props.groupId)
-
+      const _groupData = await getGroup(orgCode.value, props.group.id)
       // now we can get the real id (not slug)
       peopleGroupsStore.currentId = _groupData.id
       if (!canEditGroup.value) {
         router.push({
           name: 'Group',
-          params: { groupId: props.groupId },
+          params: { groupId: props.group.id },
         })
         return
       }
@@ -314,6 +302,7 @@ onMounted(async () => {
       form.value.parentGroup = _groupData.hierarchy?.length
         ? _groupData.hierarchy[_groupData.hierarchy.length - 1]
         : null
+      // @ts-expect-error 2322
       form.value.organization = _groupData.organization
       form.value.type = _groupData.type
       form.value.publication_status = _groupData.publication_status
@@ -332,20 +321,9 @@ onMounted(async () => {
   }
 })
 
-try {
-  const runtimeConfig = useRuntimeConfig()
-  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
-  useLpiHead(
-    useRequestURL().toString(),
-    computed(() => (isEdit.value ? t('group.edit.title') : t('group.create.title'))),
-    organization?.dashboard_subtitle,
-    image,
-    dimensions
-  )
-} catch (err) {
-  console.log(err)
-}
+useLpiHead2({
+  title: computed(() => (isEdit.value ? t('group.edit.title') : t('group.create.title'))),
+})
 </script>
 <template>
   <div class="create-group">
@@ -356,7 +334,7 @@ try {
         ref="groupForm"
         v-model="form"
         :validation="v$"
-        :is-add-mode="!groupId"
+        :is-add-mode="!group.id"
         :is-reduced-mode="isReducedMode"
         @close="$emit('close')"
       />

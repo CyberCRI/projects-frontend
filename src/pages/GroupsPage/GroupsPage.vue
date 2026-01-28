@@ -1,29 +1,47 @@
-<script setup>
-import { getHierarchyGroups } from '@/api/groups.service.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import { getOrganizationByCode } from '@/api/organizations.service'
-
-const props = defineProps({
-  groupId: {
-    type: String,
-    default: '',
-  },
-})
-
-const organizationsStore = useOrganizationsStore()
-
-const { searchFromQuery } = useSearch('groups')
-
-const { t } = useNuxtI18n()
-
-// ???
-// const permissions = usePermissions()
+<script setup lang="ts">
+import { getHierarchyGroups } from '@/api/v2/group.service'
+import { useLpiHead2 } from '@/composables/useLpiHead'
 
 const router = useRouter()
+const props = withDefaults(defineProps<{ groupId?: string }>(), { groupId: '' })
+const organizationCode = useOrganizationCode()
 
-const isLoading = ref(true)
-const groupsIndex = ref(null)
-const rootId = ref(null)
+const { searchFromQuery } = useSearch('groups')
+const { t } = useNuxtI18n()
+
+const { data, isLoading } = getHierarchyGroups(organizationCode)
+const rootId = computed(() => data.value?.id)
+// const isLoading = true
+const groupsIndex = computed(() => {
+  const groups = data.value
+  const index = {}
+  const iterate = (subgroups, hierarchy) => {
+    subgroups.forEach((group) => {
+      const route = {
+        name: 'Groups',
+        params: {},
+      }
+      if (hierarchy.length !== 0) {
+        route.params = {
+          groupId: group.id,
+        }
+      }
+      index[group.id] = {
+        ...group,
+        hierarchy: [...hierarchy],
+        route,
+        children: group.children?.map((g) => g.id) || [],
+      }
+      // use group id in hierachy an rehydrate when needed
+      // to avoid self reference hell
+      if (group.children && group.children.length) iterate(group.children, [...hierarchy, group.id])
+    })
+  }
+
+  iterate(groups ? [groups] : [], [])
+
+  return index
+})
 
 const currentGroup = computed(() => {
   if (!groupsIndex.value) return null
@@ -46,9 +64,7 @@ const hierarchy = computed(() => {
   return (currentGroup.value?.hierarchy || []).map((groupId) => groupsIndex.value[groupId])
 })
 
-const hasSearch = computed(() => {
-  return !!searchFromQuery.value.search
-})
+const hasSearch = computed(() => !!searchFromQuery.value.search)
 
 const fixedSearch = computed(() => {
   return {
@@ -71,67 +87,12 @@ watchEffect(() => {
   }
 })
 
-const buildIndex = (groups) => {
-  const index = {}
-  const iterate = (subgroups, hierarchy) => {
-    subgroups.forEach((group) => {
-      const route = {
-        name: 'Groups',
-      }
-      if (hierarchy.length !== 0) {
-        route.params = {
-          groupId: group.id,
-        }
-      }
-      index[group.id] = {
-        ...group,
-        hierarchy: [...hierarchy],
-        route,
-        children: group.children?.map((g) => g.id) || [],
-      }
-      // use group id in hierachy an rehydrate when needed
-      // to avoid self reference hell
-      if (group.children && group.children.length) iterate(group.children, [...hierarchy, group.id])
-    })
-  }
-
-  iterate(groups ? [groups] : [], [])
-
-  groupsIndex.value = index
-}
-
-const loadGroups = async () => {
-  isLoading.value = true
-  const groups = await getHierarchyGroups(organizationsStore.current.code)
-  rootId.value = groups.id
-  buildIndex(groups)
-  isLoading.value = false
-}
-
-const showGroups = () => {
-  navigateTo({ query: {} })
-}
-
-onMounted(async () => {
-  await loadGroups()
+const showGroups = () => navigateTo({ query: {} })
+useLpiHead2({
+  title: computed(() => t('common.groups')),
 })
-
-try {
-  const runtimeConfig = useRuntimeConfig()
-  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
-  useLpiHead(
-    useRequestURL().toString(),
-    computed(() => t('common.groups')),
-    organization?.dashboard_subtitle,
-    image,
-    dimensions
-  )
-} catch (err) {
-  // DGAF
-  console.log(err)
-}
 </script>
+
 <template>
   <div class="page-section-extra-wide groups-layout page-top">
     <h1 class="page-title">

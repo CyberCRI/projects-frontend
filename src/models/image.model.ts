@@ -20,6 +20,17 @@ export type ImageModel = BaseModel &
     }
   }
 
+export type Image = ImageModel &
+  ImageSizesFromApi & {
+    variations: {
+      full: string
+      large: string
+      medium: string
+      small: string
+      original: string
+    }
+  }
+
 export type ImageOutput = Required<ImageModel>
 
 export type ImageOrganizationOutput = Partial<ImageModel> & {

@@ -38,8 +38,9 @@ const props = withDefaults(
     status: AsyncDataRequestStatus | AsyncDataRequestStatus[]
     label?: string
     withData?: boolean
+    onlyError?: boolean
   }>(),
-  { withData: false, label: null }
+  { withData: false, label: null, onlyError: false }
 )
 
 const actualStatus = computed(() => {
@@ -61,7 +62,7 @@ const actualStatus = computed(() => {
 
 const loading = computed(() => {
   // if data already set, dont add loading
-  if (props.withData === true) {
+  if (props.withData === true || props.onlyError) {
     return false
   }
   return ['pending', 'idle'].includes(actualStatus.value)
