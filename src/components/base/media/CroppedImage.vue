@@ -44,7 +44,7 @@ const imageStyles = computed(() => {
       objectFit: 'unset' as CSSProperties['object-fit'],
       objectPosition: 'unset',
       transform: `translateZ(0)  scale(${props.imageSizes.scaleX}, ${props.imageSizes.scaleY}) translate(${props.imageSizes.left}%, ${props.imageSizes.top}%)`,
-      // position: 'absolute',
+      position: 'absolute',
       top: 0,
       left: 0,
       'transform-origin': 'top left',
