@@ -14,16 +14,6 @@ export interface ImageSizesFromApi {
   natural_ratio: number | null
 }
 
-// fix for weird new defaults on prod
-export function isDefaultImageSizes(pictureApiData: ImageSizesFromApi): boolean {
-  return (
-    pictureApiData.scale_x === 1 &&
-    pictureApiData.scale_y === 1 &&
-    pictureApiData.left === 0 &&
-    pictureApiData.top === 0
-  )
-}
-
 export function pictureApiToImageSizes(pictureApiData: ImageSizesFromApi | null): ImageSizes {
   return pictureApiData &&
     ['scale_x', 'scale_y', 'left', 'top', 'natural_ratio'].reduce(
@@ -34,8 +24,7 @@ export function pictureApiToImageSizes(pictureApiData: ImageSizesFromApi | null)
       // null scale or ratio mean a null image size
       (acc, key) => acc && pictureApiData[key] != 0,
       true
-    ) &&
-    !isDefaultImageSizes(pictureApiData)
+    )
     ? {
         scaleX: pictureApiData.scale_x,
         scaleY: pictureApiData.scale_y,
