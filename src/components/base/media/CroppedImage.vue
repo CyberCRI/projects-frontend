@@ -11,7 +11,7 @@
 </template>
 <script setup lang="ts">
 import { ImageSizes } from '@/functs/imageSizesUtils'
-import { CSSProperties } from 'vue'
+import { StyleValue } from 'vue'
 
 const props = withDefaults(
   defineProps<{
@@ -36,15 +36,15 @@ const emit = defineEmits<{
   error: [Error | Event]
 }>()
 
-const imageStyles = computed(() => {
+const imageStyles = computed<StyleValue>(() => {
   if (props.imageSizes) {
     return {
       width: props.ratio >= props.imageSizes.naturalRatio ? '100%' : 'auto',
       height: props.ratio < props.imageSizes.naturalRatio ? '100%' : 'auto',
-      objectFit: 'unset' as CSSProperties['object-fit'],
+      objectFit: 'unset',
       objectPosition: 'unset',
       transform: `translateZ(0)  scale(${props.imageSizes.scaleX}, ${props.imageSizes.scaleY}) translate(${props.imageSizes.left}%, ${props.imageSizes.top}%)`,
-      // position: 'absolute',
+      position: 'absolute',
       top: 0,
       left: 0,
       'transform-origin': 'top left',
