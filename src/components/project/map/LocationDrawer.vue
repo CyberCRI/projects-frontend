@@ -154,6 +154,7 @@ import analytics from '@/analytics'
 import { deleteLocation } from '@/api/locations.services'
 import { TranslatedLocation } from '@/models/location.model'
 import LocationTooltip from '@/components/map/LocationTooltip.vue'
+import { Geocoding } from '@/interfaces/maps'
 
 const props = withDefaults(
   defineProps<{
@@ -192,7 +193,7 @@ const deleteAsyncing = ref(false)
 const geocodingAsyncing = ref(false)
 
 // null be no search done, empty array mean no result
-const suggestedLocations = ref(null)
+const suggestedLocations = ref<Geocoding[]>(null)
 const suggestedLocationsFilters = ref({})
 
 const isGeocodingEnabled = computed(() => !!runtimeConfig.public.appGeocodingApiUrl)
@@ -252,7 +253,7 @@ const suggestLocations = async () => {
   const address = newLocationAddress.value
   geocodingAsyncing.value = true
   try {
-    const res = await $fetch('/geocoding', {
+    const res = await $fetch<Geocoding[]>('/geocoding', {
       query: {
         address,
         locale: locale.value,

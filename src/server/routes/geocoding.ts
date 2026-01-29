@@ -1,3 +1,5 @@
+import { Geocoding } from '@/interfaces/maps'
+
 async function fetchFromPhoton(address, locale, runtimeConfig) {
   // TODO: use an env variable for the geocoding API URL
   const res: any = await $fetch(runtimeConfig.public.appGeocodingApiUrl, {
@@ -9,7 +11,7 @@ async function fetchFromPhoton(address, locale, runtimeConfig) {
 
   //console.log('Geocoding response:', res)
 
-  const suggestedLocations = (res?.features || [])
+  const suggestedLocations: Geocoding[] = (res?.features || [])
     .filter((feature) => feature.geometry.type === 'Point')
     .map((feature) => {
       const lng = feature.geometry.coordinates[0]
@@ -44,7 +46,7 @@ async function fetchFromGoogle(address, locale, runtimeConfig) {
 
   //console.log('Geocoding response:', res)
 
-  const suggestedLocations = (res?.results || [])
+  const suggestedLocations: Geocoding[] = (res?.results || [])
     .filter((feature) => !!feature.geometry.location)
     .map((feature) => {
       const lng = feature.geometry.location.lng

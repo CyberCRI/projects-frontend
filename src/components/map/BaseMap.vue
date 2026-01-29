@@ -15,8 +15,8 @@
 import * as L from 'leaflet'
 import fixLeaflet from '@/app/fixLeaflet'
 import 'leaflet.markercluster'
-import { LocationModel } from '@/models/location.model'
-import { MapPointerOption } from '@/interfaces/maps'
+import { LocationModel, TranslatedLocation } from '@/models/location.model'
+import { Geocoding, MapPointerOption } from '@/interfaces/maps'
 
 const props = withDefaults(
   defineProps<{
@@ -30,7 +30,13 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  contextmenu: [any]
+  contextmenu: [
+    {
+      isEdit: boolean
+      location: TranslatedLocation | Geocoding
+      latlng: [number, number]
+    },
+  ]
   click: [any]
   'map-moved': []
 }>()
@@ -38,7 +44,7 @@ const emit = defineEmits<{
 const mapInstance = ref<L.Map>(null)
 const markerClusterInstance = ref<L.MarkerClusterGroup>(null)
 const mapRef = useTemplateRef('map')
-const markers = ref(new Map<number, L.Marker>())
+const markers = ref(new Map<TranslatedLocation['id'] | Geocoding['id'], L.Marker>())
 
 const MAP_URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
 const CONFIG: L.MapOptions = {
@@ -137,7 +143,6 @@ const addPointer = async (
     // fix right click not triggering edit location
     // in project map edition
     tooltip.addEventListener('contextmenu', (e) => {
-      console.log('icic')
       e.stopPropagation()
       e.preventDefault()
       emit('contextmenu', {
@@ -164,7 +169,7 @@ const addPointer = async (
   }
 }
 
-const removePointer = (location: LocationModel) => {
+const removePointer = (location: LocationModel | Geocoding) => {
   const marker = markers.value.get(location.id) as L.Marker
 
   if (!mapInstance.value || !marker) {
@@ -211,7 +216,10 @@ onMounted(() => {
     markerClusterInstance.value = markerCluster
   }
 
-  map.on('contextmenu', (e) => emit('contextmenu', e))
+  map.on('contextmenu', (e) => {
+    // @ts-expect-error needed thats ?
+    emit('contextmenu', e)
+  })
   map.on('click', (e) => emit('click', e))
   L.tileLayer(MAP_URL, {
     attribution:
