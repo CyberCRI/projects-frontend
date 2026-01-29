@@ -21,6 +21,7 @@
 <script setup lang="ts">
 import BaseMap from '@/components/map/BaseMap.vue'
 import MapPointer from '@/components/map/MapPointer.vue'
+import ProjectTooltip from '@/components/project/map/ProjectTooltip.vue'
 import { TranslatedLocation } from '@/models/location.model'
 
 const props = withDefaults(
