@@ -131,13 +131,13 @@ const centerMap = () => mapRef.value?.map?.centerMap()
 const onConfirmDeleteLocation = async () => {
   try {
     deleteAsyncing.value = true
-    console.log(props)
     await deleteLocation(props.project.id, locationToDelete.value.id)
 
     analytics.location.deleteLocationMapPoint({
       project: {
         id: props.project.id,
       },
+      // @ts-expect-error wrong type (translatedLocation !== Location)
       location: locationToDelete.value,
     })
 

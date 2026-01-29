@@ -29,3 +29,13 @@ export type LocationInput = Required<LocationModel> & {
 }
 
 export type LocationOutput = Omit<Required<LocationModel>, 'project'>
+
+export type LocationForm = Partial<
+  Omit<LocationModel, 'id' | 'project'> & {
+    id?: LocationModel['id']
+  }
+>
+
+export type ProjectLocationForm = LocationForm & {
+  project_id: string
+}

@@ -1,4 +1,4 @@
-import type { LocationModel, LocationOutput } from '@/models/location.model'
+import type { LocationModel, ProjectLocationForm } from '@/models/location.model'
 import utils from '@/functs/functions'
 import useAPI from '@/composables/useAPI'
 
@@ -19,7 +19,7 @@ export async function getLocations(params, next) {
   return await useAPI(`location/`, { ...utils.adaptParam(params) }) //.data.value
 }
 
-export async function postLocations(projectId: string, body: Omit<LocationOutput, 'id'>) {
+export async function postLocations(projectId: string, body: ProjectLocationForm) {
   return await useAPI<LocationModel>(`project/${projectId}/location/`, {
     body,
     method: 'POST',
@@ -29,7 +29,7 @@ export async function postLocations(projectId: string, body: Omit<LocationOutput
 export async function patchLocation(
   projectId: string,
   locationId: number,
-  body: Partial<LocationOutput>
+  body: ProjectLocationForm
 ) {
   return await useAPI<LocationModel>(`project/${projectId}/location/${locationId}/`, {
     body,

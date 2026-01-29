@@ -1,70 +1,31 @@
 <template>
-  <DialogModal
-    :confirm-button-label="locationToBeEdited ? $t('common.edit') : $t('common.add')"
-    :cancel-button-label="$t('common.cancel')"
-    :asyncing="asyncing"
-    @close="$emit('close')"
+  <LocationForm
+    v-model="form"
+    :loading="asyncing"
     @submit="submit"
-  >
-    <template #header>
-      {{
-        locationToBeEdited ? $t('project.edit-location-point') : $t('project.add-location-point')
-      }}
-    </template>
-
-    <template #body>
-      <div class="location-type-ctn">
-        <div class="location-type-label">
-          {{ $t('project.location-type-label') }}
-        </div>
-        <GroupButton v-model="form.type" :options="locationTypeOptions" />
-      </div>
-
-      <TextInput v-model="form.title" :label="$t('common.title')" />
-
-      <TextInput
-        v-model="form.description"
-        input-type="textarea"
-        :label="$t('common.description')"
-        class="description-input"
-      />
-    </template>
-
-    <template v-if="locationToBeEdited" #extra-buttons>
-      <LpiButton
-        class="delete-button"
-        :disabled="asyncing"
-        :btn-icon="asyncing ? 'LoaderSimple' : null"
-        :label="$t('common.delete')"
-        @click="onDeleteLocation"
-      />
-    </template>
-  </DialogModal>
+    @close="$emit('close')"
+    @delete="onDeleteLocation"
+  />
 </template>
 
 <script setup lang="ts">
-import DialogModal from '@/components/base/modal/DialogModal.vue'
-import TextInput from '@/components/base/form/TextInput.vue'
-import GroupButton from '@/components/base/button/GroupButton.vue'
 import analytics from '@/analytics'
 import { postLocations, patchLocation, deleteLocation } from '@/api/locations.services'
 import useToasterStore from '@/stores/useToaster'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import { LocationOutput, TranslatedLocation } from '@/models/location.model'
-import { LocationType } from '@/models/types'
+import { ProjectLocationForm, LocationOutput, TranslatedLocation } from '@/models/location.model'
+import LocationForm from '@/components/map/LocationForm.vue'
 
 const props = withDefaults(
   defineProps<{
     locationToBeEdited?: TranslatedLocation
     newCoordinates?: any[]
-    projectId?: string
+    projectId: string
     address?: string
   }>(),
   {
     locationToBeEdited: null,
     newCoordinates: () => [],
     address: null,
-    projectId: null,
   }
 )
 
@@ -80,38 +41,25 @@ const toaster = useToasterStore()
 const { t } = useNuxtI18n()
 
 const asyncing = ref(false)
-const form = ref({
-  type: 'team' as LocationType,
-  title: '',
-  description: '',
-  lat: null,
-  lng: null,
+const form = ref<ProjectLocationForm>({
+  project_id: props.projectId,
 })
-
-const locationTypeOptions = computed(() => [
-  {
-    value: 'team',
-    label: t('team.team'),
-  },
-  {
-    value: 'impact',
-    label: t('project.impact'),
-  },
-  {
-    value: 'address',
-    label: t('geocoding.address'),
-  },
-])
 
 onBeforeMount(() => {
   if (props.locationToBeEdited) {
     form.value = {
+      ...form.value,
+      id: props.locationToBeEdited.id,
       lat: props.locationToBeEdited.lat,
       lng: props.locationToBeEdited.lng,
       description: props.locationToBeEdited.description,
       type: props.locationToBeEdited.type,
       title: props.locationToBeEdited.title,
     }
+  }
+  if (props.newCoordinates.length) {
+    form.value.lat = props.newCoordinates[0]
+    form.value.lng = props.newCoordinates[1]
   }
   if (props.address && !form.value.description) {
     form.value.description = props.address
@@ -123,8 +71,6 @@ const onAddLocation = async () => {
     asyncing.value = true
     const body = {
       ...form.value,
-      lat: props.newCoordinates[0],
-      lng: props.newCoordinates[1],
       project_id: props.projectId,
     }
     const result = await postLocations(props.projectId, body)
@@ -158,7 +104,7 @@ const onEditLocation = async () => {
       project: {
         id: props.projectId,
       },
-      location: result,
+      location: form.value,
     })
 
     toaster.pushSuccess(t('toasts.location-update.success'))

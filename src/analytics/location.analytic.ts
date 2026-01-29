@@ -1,15 +1,11 @@
 import analytics from '@/analytics/index'
-import { LocationType } from '@/models/types'
+import { ProjectLocationForm } from '@/models/location.model'
 
 export interface LocationAnalytic {
   project: {
     id: string
   }
-  location: {
-    lat: number
-    lng: number
-    type: LocationType
-  }
+  location: ProjectLocationForm
 }
 
 export default {

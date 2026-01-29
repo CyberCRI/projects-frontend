@@ -1,28 +1,11 @@
 <template>
-  <div class="project-tooltip">
-    <div class="project-tooltip__header">
-      <div :class="location.type" class="project-tooltip__header--dot" />
-      <h2 class="project-tooltip__header--title">
-        {{ typeLabel }}
-      </h2>
-    </div>
-
-    <div class="project-tooltip__location">
-      <h3 class="project-tooltip__location--title">
-        {{ location.title }}
-      </h3>
-      <p class="project-tooltip__location--description">
-        {{ location.description }}
-      </p>
-
-      <LinkButton
-        :label="$t('project.view')"
-        class="project-tooltip__button"
-        btn-icon="ArrowRight"
-        :to="{ name: 'pageProject', params: { slugOrId: project.slug || project.id } }"
-      />
-    </div>
-
+  <LocationTooltip :location="location">
+    <LinkButton
+      :label="$t('project.view')"
+      class="project-tooltip__button"
+      btn-icon="ArrowRight"
+      :to="{ name: 'pageProject', params: { slugOrId: project.slug || project.id } }"
+    />
     <div class="project-tooltip__content">
       <img
         :alt="project.header_image?.name"
@@ -39,86 +22,23 @@
         </p>
       </div>
     </div>
-  </div>
+  </LocationTooltip>
 </template>
 
 <script setup lang="ts">
 import { cropIfTooLong } from '@/functs/string'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import { TranslatedLocation } from '@/models/location.model'
+import LocationTooltip from '@/components/map/LocationTooltip.vue'
 
 const props = defineProps<{ location: TranslatedLocation }>()
-
-const { t } = useNuxtI18n()
 const project = computed(() => props.location.project)
-const typeLabel = computed(() => {
-  switch (props.location.type) {
-    case 'impact':
-      return t('project.impact')
-    case 'team':
-      return t('team.team')
-    case 'address':
-      return t('geocoding.address')
-  }
-})
 const title = computed(() => cropIfTooLong(project.value.$t.title, 45))
 const purpose = computed(() => cropIfTooLong(project.value.$t.purpose, 85))
 </script>
 
 <style lang="scss" scoped>
 .project-tooltip {
-  overflow: hidden;
-  display: flex;
-  width: 100%;
-  height: 100%;
-  transition: opacity 0.15s ease-in-out;
-  flex-direction: column;
-
-  &__header {
-    display: flex;
-    justify-content: flex-start;
-    padding: $space-s;
-
-    &--title {
-      color: $primary-dark;
-      font-weight: 700;
-      font-size: $font-size-s;
-    }
-
-    &--dot {
-      width: pxToRem(16px);
-      height: pxToRem(16px);
-      border-radius: 50%;
-      margin-right: $space-s;
-
-      &.impact {
-        background: $violet;
-      }
-
-      &.team {
-        background: $primary;
-      }
-
-      &.address {
-        background: $primary;
-      }
-    }
-  }
-
-  &__location {
-    padding: $space-s;
-
-    &--title {
-      font-weight: 500;
-      font-size: $font-size-xl;
-    }
-
-    &--description {
-      font-weight: 400;
-      font-size: $font-size-m;
-    }
-  }
-
   &__button {
     padding: initial;
     margin-top: $space-m;
@@ -153,17 +73,6 @@ const purpose = computed(() => cropIfTooLong(project.value.$t.purpose, 85))
       font-size: $font-size-s;
       margin: $space-s 0;
     }
-  }
-}
-
-.icon {
-  width: pxToRem(18px);
-  height: pxToRem(18px);
-
-  &--close {
-    background: $primary-dark;
-    fill: $white;
-    border-radius: 50%;
   }
 }
 </style>

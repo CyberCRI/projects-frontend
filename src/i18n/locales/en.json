@@ -1057,7 +1057,10 @@
     "auto-translate-off": "Auto translate off"
   },
   "location": {
-    "loading": "Loading locations"
+    "loading": "Loading locations",
+    "impact": "impact",
+    "team": "team",
+    "address": "address"
   },
   "map": {
     "empty": "Nothing here yet... Contributors did not localize any projects yet.",
