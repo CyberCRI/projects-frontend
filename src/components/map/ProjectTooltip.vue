@@ -9,10 +9,10 @@
 
     <div class="project-tooltip__location">
       <h3 class="project-tooltip__location--title">
-        {{ capitalize(location.title) }}
+        {{ location.title }}
       </h3>
       <p class="project-tooltip__location--description">
-        {{ capitalize(location.description) }}
+        {{ location.description }}
       </p>
 
       <LinkButton
@@ -43,14 +43,11 @@
 </template>
 
 <script setup lang="ts">
-import { capitalize, cropIfTooLong } from '@/functs/string'
+import { cropIfTooLong } from '@/functs/string'
 import LinkButton from '@/components/base/button/LinkButton.vue'
+import { TranslatedLocation } from '@/models/location.model'
 
-defineOptions({ name: 'ProjectTooltip' })
-
-const props = withDefaults(defineProps<{ location?: any }>(), {
-  location: () => ({}),
-})
+const props = defineProps<{ location: TranslatedLocation }>()
 
 const { t } = useNuxtI18n()
 const project = computed(() => props.location.project)
@@ -64,8 +61,8 @@ const typeLabel = computed(() => {
       return t('geocoding.address')
   }
 })
-const title = computed(() => cropIfTooLong(project.value.title, 45))
-const purpose = computed(() => cropIfTooLong(project.value.purpose, 85))
+const title = computed(() => cropIfTooLong(project.value.$t.title, 45))
+const purpose = computed(() => cropIfTooLong(project.value.$t.purpose, 85))
 </script>
 
 <style lang="scss" scoped>

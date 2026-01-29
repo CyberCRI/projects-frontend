@@ -1,29 +1,31 @@
 <template>
   <div class="leaflet-map" :class="{ loading }">
-    <BaseMap ref="map" :config="CONFIG" use-cluster>
-      <template #default="slotProps">
-        <MapPointer
-          v-for="location in locations"
-          :key="location.id"
-          :location="location"
-          has-project-tip
-          @mounted="slotProps.addPointer"
-          @unmounted="slotProps.removePointer(location)"
-        />
-      </template>
-    </BaseMap>
+    <client-only>
+      <BaseMap ref="map" :config="CONFIG" use-cluster>
+        <template #default="slotProps">
+          <MapPointer
+            v-for="location in locations"
+            :key="location.id"
+            :location="location"
+            @mounted="slotProps.addPointer"
+            @unmounted="slotProps.removePointer(location)"
+          >
+            <ProjectTooltip :location="location" />
+          </MapPointer>
+        </template>
+      </BaseMap>
+    </client-only>
   </div>
 </template>
 
 <script setup lang="ts">
 import BaseMap from '@/components/map/BaseMap.vue'
 import MapPointer from '@/components/map/MapPointer.vue'
-
-defineOptions({ name: 'GeneralMap' })
+import { TranslatedLocation } from '@/models/location.model'
 
 const props = withDefaults(
   defineProps<{
-    locations: any[]
+    locations: TranslatedLocation[]
     loading?: boolean
   }>(),
   { loading: true }
@@ -36,21 +38,12 @@ const CONFIG = {
 }
 
 const mapRef = useTemplateRef('map')
-
-watch(
-  () => props.loading,
-  (neo) => {
-    if (!neo && mapRef.value) {
-      mapRef.value.centerMap()
-    }
+watchEffect(() => {
+  if (!props.loading && mapRef.value) {
+    mapRef.value.centerMap()
   }
-)
+})
 </script>
-
-<style lang="scss">
-// do NOT scope this style, it will break the map
-@import '@/design/scss/map';
-</style>
 
 <style lang="scss" scoped>
 .leaflet-map {

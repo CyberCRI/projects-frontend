@@ -13,8 +13,6 @@
 import { cropIfTooLong } from '@/functs/string'
 import { TranslatedLocation } from '@/models/location.model'
 
-defineOptions({ name: 'LocationTooltip' })
-
 const props = defineProps<{ location: TranslatedLocation }>()
 
 const title = computed(() => cropIfTooLong(props.location?.$t?.title, 45))

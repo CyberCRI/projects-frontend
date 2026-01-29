@@ -15,10 +15,8 @@
 import * as L from 'leaflet'
 import fixLeaflet from '@/app/fixLeaflet'
 import 'leaflet.markercluster'
-import 'leaflet/dist/leaflet.css'
-import 'leaflet.markercluster/dist/MarkerCluster.css'
-import 'leaflet.markercluster/dist/MarkerCluster.Default.css'
 import { LocationModel } from '@/models/location.model'
+import { MapPointerOption } from '@/interfaces/maps'
 
 const props = withDefaults(
   defineProps<{
@@ -40,7 +38,7 @@ const emit = defineEmits<{
 const mapInstance = ref<L.Map>(null)
 const markerClusterInstance = ref<L.MarkerClusterGroup>(null)
 const mapRef = useTemplateRef('map')
-const markers = ref<Map<number, L.Marker>>(new Map())
+const markers = ref(new Map<number, L.Marker>())
 
 const MAP_URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
 const CONFIG: L.MapOptions = {
@@ -75,30 +73,28 @@ const createClusterIcons = (cluster) => {
 
   const clusterMarker = document.createElement('div')
   clusterMarker.className = 'cluster-ctn'
-  let teamHTML, impactHtml, addressHtml
 
   if (teamCluster.length) {
-    teamHTML = document.createElement('div')
+    const teamHTML = document.createElement('div')
     teamHTML.className = 'team marker-ctn'
     teamHTML.appendChild(document.createTextNode('' + teamCluster.length))
     clusterMarker.appendChild(teamHTML)
   }
   if (impactCluster.length) {
-    impactHtml = document.createElement('div')
+    const impactHtml = document.createElement('div')
     impactHtml.className = 'impact marker-ctn'
     impactHtml.appendChild(document.createTextNode('' + impactCluster.length))
     clusterMarker.appendChild(impactHtml)
   }
 
   if (addressCluster.length) {
-    addressHtml = document.createElement('div')
+    const addressHtml = document.createElement('div')
     addressHtml.className = 'address marker-ctn'
     addressHtml.appendChild(document.createTextNode('' + addressCluster.length))
     clusterMarker.appendChild(addressHtml)
   }
 
-  let clusterMarkerString = clusterMarker.outerHTML
-  clusterMarkerString += '<span class="line" />'
+  const clusterMarkerString = `${clusterMarker.outerHTML}<span class="line" />`
 
   const sizeClass = (cluster.getChildCount() + '').length
   return L.divIcon({
@@ -125,7 +121,10 @@ const centerMap = () => {
   })
 }
 
-const addPointer = async ({ markerContent, location, tooltip }, eventHandlers: any = null) => {
+const addPointer = async (
+  { markerContent, location, tooltip }: MapPointerOption,
+  eventHandlers: any = null
+) => {
   const icon = L.divIcon({
     html: markerContent,
     className: location.type,
@@ -137,7 +136,8 @@ const addPointer = async ({ markerContent, location, tooltip }, eventHandlers: a
   if (tooltip) {
     // fix right click not triggering edit location
     // in project map edition
-    tooltip.$el.addEventListener('contextmenu', (e) => {
+    tooltip.addEventListener('contextmenu', (e) => {
+      console.log('icic')
       e.stopPropagation()
       e.preventDefault()
       emit('contextmenu', {
@@ -146,7 +146,7 @@ const addPointer = async ({ markerContent, location, tooltip }, eventHandlers: a
         latlng: [location.lat, location.lng],
       })
     })
-    marker.bindPopup(tooltip.$el)
+    marker.bindPopup(tooltip)
   }
   if (eventHandlers) {
     for (const [enventName, eventHandler] of Object.entries(eventHandlers)) {
@@ -165,13 +165,14 @@ const addPointer = async ({ markerContent, location, tooltip }, eventHandlers: a
 }
 
 const removePointer = (location: LocationModel) => {
-  const marker = markers.value.get(location.id)
+  const marker = markers.value.get(location.id) as L.Marker
 
   if (!mapInstance.value || !marker) {
     return
   }
 
   if (markerClusterInstance.value) {
+    // @ts-expect-error TODO why ts leaflet not work
     marker.removeFrom(markerClusterInstance.value)
   } else {
     mapInstance.value.removeLayer(marker)
@@ -223,6 +224,12 @@ onMounted(() => {
   mapInstance.value = map
 })
 </script>
+
+<style lang="scss">
+// do NOT scope this style, it will break the map
+@import '@/design/scss/map';
+</style>
+
 <style lang="scss" scoped>
 .map {
   height: 100%;

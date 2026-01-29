@@ -18,37 +18,33 @@
 
       <div class="line" />
     </div>
-    <ProjectTooltip v-if="hasProjectTip" ref="tooltip" :location="location" />
-    <LocationTooltip v-else-if="hasLocationTip" ref="tooltip" :location="location" />
+    <div ref="tooltip">
+      <slot />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import ProjectTooltip from '@/components/map/ProjectTooltip.vue'
-import LocationTooltip from '@/components/map/LocationTooltip.vue'
+import { MapPointerOption } from '@/interfaces/maps'
 import { TranslatedLocation } from '@/models/location.model'
-defineOptions({ name: 'MapPointer' })
 
 const props = withDefaults(
   defineProps<{
     location?: TranslatedLocation
-    hasProjectTip?: boolean
-    hasLocationTip?: boolean
     isEditable?: boolean
   }>(),
   {
     location: null,
-    hasProjectTip: false,
-    hasLocationTip: false,
     isEditable: false,
   }
 )
 
 const emit = defineEmits<{
-  mounted: [any]
+  mounted: [MapPointerOption]
   unmounted: [TranslatedLocation | null]
   'edit-location': [TranslatedLocation | null]
 }>()
+
 const { t } = useNuxtI18n()
 const pointerLabel = computed(() => {
   switch (props.location.type) {
@@ -61,8 +57,8 @@ const pointerLabel = computed(() => {
   }
 })
 
-const tooltipRef = useTemplateRef('tooltip')
 const markerRef = useTemplateRef('marker')
+const tooltipRef = useTemplateRef('tooltip')
 onMounted(() => {
   emit('mounted', {
     location: props.location,

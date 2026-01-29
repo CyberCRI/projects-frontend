@@ -68,15 +68,6 @@
             <p class="notice">
               {{ $t('geocoding.found-number', { number: suggestedLocations.length }) }}
             </p>
-            <!--div class="suggested-locations-filter">
-              <p>{{ $t('geocoding.filter-by-type') }}</p>
-              <LpiCheckbox
-                v-for="(value, key) in suggestedLocationsFilters"
-                :key="key"
-                v-model="suggestedLocationsFilters[key]"
-                :label="$t(`geocoding.feature-type.${key}`)"
-              />
-            </div-->
             <p class="notice">{{ $t('geocoding.pick-location') }}</p>
 
             <div class="buttons-line">
@@ -89,38 +80,42 @@
       <div class="full-screen-map-ctn project-map-ctn">
         <div class="map-inner-ctn">
           <div class="map">
-            <LazyBaseMap
-              ref="map"
-              :key="mapkey"
-              @click="addMode === CLICK_MODE ? openAddModal($event) : null"
-            >
-              <template #default="slotProps">
-                <template v-if="slotProps.map && !suggestedLocations">
-                  <MapPointer
-                    v-for="location in locations"
-                    :key="location.id"
-                    is-deletable
-                    is-editable
-                    :location="location"
-                    :has-location-tip="location.title.length > 0 || location.description.length > 0"
-                    @delete-location="locationToDelete = $event"
-                    @edit-location="openEditModal"
-                    @mounted="slotProps.addPointer($event, {})"
-                    @unmounted="slotProps.removePointer(location)"
-                  />
+            <client-only>
+              <LazyBaseMap
+                ref="map"
+                :key="mapkey"
+                @click="addMode === CLICK_MODE ? openAddModal($event) : null"
+              >
+                <template #default="slotProps">
+                  <template v-if="slotProps.map && !suggestedLocations">
+                    <MapPointer
+                      v-for="location in locations"
+                      :key="location.id"
+                      is-editable
+                      :location="location"
+                      @edit-location="openEditModal"
+                      @mounted="slotProps.addPointer($event, {})"
+                      @unmounted="slotProps.removePointer(location)"
+                    >
+                      <LocationTooltip
+                        v-if="location.title || location.description"
+                        :location="location"
+                      />
+                    </MapPointer>
+                  </template>
+                  <template v-if="slotProps.map && filteredSuggestedLocations">
+                    <MapSuggestion
+                      v-for="location in filteredSuggestedLocations"
+                      :key="location.id"
+                      :location="location"
+                      @pick-location="openAddModal"
+                      @mounted="slotProps.addPointer($event, {})"
+                      @unmounted="slotProps.removePointer(location)"
+                    />
+                  </template>
                 </template>
-                <template v-if="slotProps.map && filteredSuggestedLocations">
-                  <MapSuggestion
-                    v-for="location in filteredSuggestedLocations"
-                    :key="location.id"
-                    :location="location"
-                    @pick-location="openAddModal"
-                    @mounted="slotProps.addPointer($event, {})"
-                    @unmounted="slotProps.removePointer(location)"
-                  />
-                </template>
-              </template>
-            </LazyBaseMap>
+              </LazyBaseMap>
+            </client-only>
           </div>
         </div>
       </div>
@@ -154,12 +149,11 @@
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import MapPointer from '@/components/map/MapPointer.vue'
 import LocationForm from '@/components/project/map/LocationForm.vue'
-//import LocationTooltip from '@/components/map/LocationTooltip.vue'
-// import { LazyBaseMap } from '#components'
 import useToasterStore from '@/stores/useToaster'
 import analytics from '@/analytics'
 import { deleteLocation } from '@/api/locations.services'
 import { TranslatedLocation } from '@/models/location.model'
+import LocationTooltip from '@/components/map/LocationTooltip.vue'
 
 const props = withDefaults(
   defineProps<{

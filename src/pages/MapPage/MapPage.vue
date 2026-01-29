@@ -1,14 +1,40 @@
+<template>
+  <div id="projects-map">
+    <Transition name="fade">
+      <div v-if="loading" class="map-loader">
+        <LoaderComplex :label="$t('location.loading')" />
+      </div>
+    </Transition>
+    <GeneralMap :locations="transltedProjectLocations" :loading="loading" />
+    <div v-if="!loading && !projectLocations.length" class="empty-map">
+      {{ $t('map.empty') }}
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { getLocations } from '@/api/locations.services'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import { getOrganizationByCode } from '@/api/organizations.service'
+import GeneralMap from '@/components/map/GeneralMap.vue'
+import { TranslatedLocation } from '@/models/location.model'
 
-const isClient = import.meta.client
 const organizationsStore = useOrganizationsStore()
 const { t } = useNuxtI18n()
 
+const { translateProject, translateLocation } = useAutoTranslate()
+
 const projectLocations = ref([])
 const loading = ref(true)
+
+const transltedProjectLocations = computed<TranslatedLocation[]>(() => {
+  return projectLocations.value.map((loca) => {
+    return {
+      ...unref(translateLocation(loca)),
+      project: unref(translateProject(loca.project)),
+    }
+  })
+})
 
 const loadLocations = async (page = null) => {
   loading.value = true
@@ -53,24 +79,6 @@ try {
   console.log(err)
 }
 </script>
-<template>
-  <div id="projects-map">
-    <Transition name="fade">
-      <div v-if="loading" class="map-loader">
-        <LoaderComplex :label="$t('location.loading')" />
-      </div>
-    </Transition>
-    <LazyGeneralMap v-if="isClient" :locations="projectLocations" :loading="loading" />
-    <div v-if="!loading && !projectLocations.length" class="empty-map">
-      {{ $t('map.empty') }}
-    </div>
-  </div>
-</template>
-
-<style lang="scss">
-// do NOT scope this style, it will break the map
-@import '@/design/scss/map';
-</style>
 
 <style lang="scss" scoped>
 #projects-map {

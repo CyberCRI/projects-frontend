@@ -2,20 +2,26 @@
   <div class="map-recap">
     <div class="map-inner-ctn">
       <div class="map">
-        <BaseMap ref="summary-map" :config="CONFIG" use-cluster @map-moved="$emit('map-moved')">
-          <template #default="slotProps">
-            <template v-if="slotProps.map">
-              <MapPointer
-                v-for="location in locations"
-                :key="location.id"
-                :location="location"
-                :has-location-tip="location.title.length > 0 || location.description.length > 0"
-                @mounted="slotProps.addPointer"
-                @unmounted="slotProps.removePointer(location)"
-              />
+        <ClientOnly>
+          <BaseMap ref="summary-map" :config="CONFIG" use-cluster @map-moved="$emit('map-moved')">
+            <template #default="slotProps">
+              <template v-if="slotProps.map">
+                <MapPointer
+                  v-for="location in locations"
+                  :key="location.id"
+                  :location="location"
+                  @mounted="slotProps.addPointer"
+                  @unmounted="slotProps.removePointer(location)"
+                >
+                  <LocationTooltip
+                    v-if="location.title || location.description"
+                    :location="location"
+                  />
+                </MapPointer>
+              </template>
             </template>
-          </template>
-        </BaseMap>
+          </BaseMap>
+        </ClientOnly>
       </div>
       <ContextActionButton
         :secondary="true"
@@ -32,6 +38,7 @@ import ContextActionButton from '@/components/base/button/ContextActionButton.vu
 import MapPointer from '@/components/map/MapPointer.vue'
 import BaseMap from '@/components/map/BaseMap.vue'
 import { TranslatedLocation } from '@/models/location.model'
+import LocationTooltip from '@/components/map/LocationTooltip.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -72,10 +79,6 @@ defineExpose({
   map: summaryMapRef,
 })
 </script>
-
-<style lang="scss">
-@import '@/design/scss/map';
-</style>
 
 <style lang="scss" scoped>
 .map-recap {

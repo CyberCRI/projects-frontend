@@ -14,14 +14,15 @@
 </template>
 
 <script setup lang="ts">
-defineOptions({ name: 'MapSuggestion' })
+import { MapPointerOption } from '@/interfaces/maps'
+import { TranslatedLocation } from '@/models/location.model'
 
-const props = withDefaults(defineProps<{ location?: any }>(), { location: null })
+const props = withDefaults(defineProps<{ location?: TranslatedLocation }>(), { location: null })
 
 const emit = defineEmits<{
-  mounted: [any]
+  mounted: [MapPointerOption]
   unmounted: [any]
-  'pick-location': [any]
+  'pick-location': [TranslatedLocation]
 }>()
 
 const markerRef = useTemplateRef('marker')
