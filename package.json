@@ -43,7 +43,7 @@
     "@hocuspocus/provider": "^2.15.0",
     "@intlify/vue-i18n-loader": "^4.2.0",
     "@mdi/font": "^6",
-    "@modelcontextprotocol/sdk": "^1.20.2",
+    "@modelcontextprotocol/sdk": "^1.24.0",
     "@nuxt/test-utils": "^3.19.2",
     "@nuxtjs/i18n": "^10.1.0",
     "@panva/oauth4webapi": "^1.0.4",
