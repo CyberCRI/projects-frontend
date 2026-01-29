@@ -14,9 +14,11 @@
         v-if="locations.length"
         ref="map"
         class="unboxed"
+        expand
         :locations="locations"
         :focused-location="focusedLocation"
         @map-moved="focusedLocation = null"
+        @expand="projectLayoutToggleAddModal('location')"
       />
     </div>
 
@@ -94,6 +96,7 @@ import { deleteLocation } from '@/api/locations.services'
 import { TranslatedLocation } from '@/models/location.model'
 import { TranslatedProject } from '@/models/project.model'
 import LocationForm from '@/components/project/map/LocationForm.vue'
+import LocationListItem from '@/components/map/LocationListItem.vue'
 
 const projectLayoutToggleAddModal: any = inject('projectLayoutToggleAddModal')
 

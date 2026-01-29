@@ -29,7 +29,13 @@
       />
 
       <!-- locations -->
-      <LazyMapRecap v-if="locations.length" class="unboxed" :locations="locations" />
+      <LazyMapRecap
+        v-if="locations.length"
+        class="unboxed"
+        expand
+        :locations="locations"
+        @expand="projectLayoutToggleAddModal('location')"
+      />
 
       <!-- goals -->
       <GoalsRecap v-if="filteredGoals.length" class="unboxed" :goals="filteredGoals" />
@@ -107,6 +113,12 @@ export default {
   name: 'ProjectSummaryTab',
 
   components: [ProjectMemberSection],
+
+  inject: {
+    projectLayoutToggleAddModal: {
+      from: 'projectLayoutToggleAddModal',
+    },
+  },
 
   props: {
     project: {

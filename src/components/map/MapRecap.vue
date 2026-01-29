@@ -24,10 +24,11 @@
         </ClientOnly>
       </div>
       <ContextActionButton
+        v-if="expand"
         :secondary="true"
         class="map-button"
         action-icon="Expand"
-        @click="projectLayoutToggleAddModal('location')"
+        @click="$emit('expand')"
       />
     </div>
   </div>
@@ -44,15 +45,16 @@ const props = withDefaults(
   defineProps<{
     locations?: TranslatedLocation[]
     focusedLocation?: TranslatedLocation
+    expand?: boolean
   }>(),
   {
     locations: () => [],
     focusedLocation: null,
+    expand: false,
   }
 )
 
-const projectLayoutToggleAddModal: any = inject('projectLayoutToggleAddModal')
-defineEmits(['map-moved'])
+defineEmits(['map-moved', 'expand'])
 
 const summaryMapRef = useTemplateRef('summary-map')
 const CONFIG = {
