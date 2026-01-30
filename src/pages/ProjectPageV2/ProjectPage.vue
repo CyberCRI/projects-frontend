@@ -62,6 +62,8 @@ const {
   duplicateProject,
 } = useProjectData({ toggleAddModal })
 
+const { canEditProject } = usePermissions()
+
 const { connectToSocket, cleanupProvider, projectPatched } = useProjectSocket({
   project,
   reloadProject,
@@ -172,6 +174,8 @@ const chooseGoalOrSdg = (choice) => {
   toggleAddModal(choice)
   toggleAddModal('goalOrSdg')
 }
+
+const editable = computed(() => isEditing.value && canEditProject.value)
 </script>
 <template>
   <div
@@ -265,11 +269,12 @@ const chooseGoalOrSdg = (choice) => {
       @reload-linked-projects="getLinkedProjects($event)"
       @close="closeModal('linkedProject')"
     />
-    <LazyLocationDrawer
-      :project-id="project?.id"
+    <LazyProjectLocationDrawer
+      :project="project"
       :locations="locations"
       :is-opened="modals.location.visible"
-      @reload-locations="getProjectLocations"
+      :editable="editable"
+      @reload="getProjectLocations"
       @close="closeModal('location')"
     />
     <LazyBlogDrawer

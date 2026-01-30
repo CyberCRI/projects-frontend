@@ -6,9 +6,8 @@
         <div class="badge__label">
           {{ pointerLabel }}
         </div>
-        <div v-if="isEditable" class="actions">
+        <div v-if="editable" class="actions">
           <ContextActionButton
-            v-if="isEditable"
             action-icon="Pen"
             class="edit-btn small"
             @click.stop="emit('edit-location', location)"
@@ -31,11 +30,11 @@ import { TranslatedLocation } from '@/models/location.model'
 const props = withDefaults(
   defineProps<{
     location?: TranslatedLocation
-    isEditable?: boolean
+    editable?: boolean
   }>(),
   {
     location: null,
-    isEditable: false,
+    editable: false,
   }
 )
 

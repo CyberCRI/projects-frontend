@@ -18,7 +18,6 @@
         </div>
         <GroupButton v-model="form.type" :options="locationTypeOptions" />
       </div>
-
       <TextInput v-model="form.title" :errors="errors.title" :label="$t('common.title')" />
 
       <TextInput
@@ -104,6 +103,7 @@ const locationTypeOptions = computed(() => [
 
 .delete-button {
   color: $white;
+  border-color: $salmon;
   background: $salmon;
 }
 </style>

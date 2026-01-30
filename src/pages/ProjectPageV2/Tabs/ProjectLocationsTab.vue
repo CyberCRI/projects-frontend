@@ -1,6 +1,6 @@
 <template>
   <div class="project-locations">
-    <div v-if="isInEditingMode && canEditProject" class="actions">
+    <div v-if="editable" class="actions">
       <LpiButton
         btn-icon="Plus"
         class="edit-btn"
@@ -10,81 +10,37 @@
     </div>
 
     <div class="main-ctn">
+      {{ editable }}
       <LazyMapRecap
-        v-if="locations.length"
         ref="map"
         class="unboxed"
         expand
+        :editable="editable"
         :locations="locations"
-        :focused-location="focusedLocation"
-        @map-moved="focusedLocation = null"
         @expand="projectLayoutToggleAddModal('location')"
       />
     </div>
-
-    <div class="location-lists">
-      <div v-if="teamLocations.length" class="location-list-wrapper">
-        <h3 class="list-title">{{ $t('team.team') }}</h3>
-        <ul class="location-list">
-          <li v-for="location in teamLocations" :key="location.id" class="location">
-            <LocationListItem
-              :location="location"
-              :is-editable="isInEditingMode"
-              @focus-location="focusedLocation = $event"
-              @delete-location="locationToDelete = $event"
-              @edit-location="openEditModal"
-            />
-          </li>
-        </ul>
-      </div>
-      <div v-if="impactLocations.length" class="location-list-wrapper">
-        <h3 class="list-title">{{ $t('project.impact') }}</h3>
-        <ul class="location-list">
-          <li v-for="location in impactLocations" :key="location.id" class="location">
-            <LocationListItem
-              :location="location"
-              :is-editable="isInEditingMode"
-              @focus-location="focusedLocation = $event"
-              @delete-location="locationToDelete = $event"
-              @edit-location="openEditModal"
-            />
-          </li>
-        </ul>
-      </div>
-      <div v-if="addressLocations.length" class="location-list-wrapper">
-        <h3 class="list-title">{{ $t('geocoding.address') }}</h3>
-        <ul class="location-list">
-          <li v-for="location in addressLocations" :key="location.id" class="location">
-            <LocationListItem
-              :location="location"
-              :is-editable="isInEditingMode"
-              @focus-location="focusedLocation = $event"
-              @delete-location="locationToDelete = $event"
-              @edit-location="openEditModal"
-            />
-          </li>
-        </ul>
-      </div>
-    </div>
-
+    <LocationList
+      :locations="locations"
+      :editable="editable"
+      @focus="onFocus($event)"
+      @edit="onEditForm($event)"
+      @delete="locationToDelete = $event"
+    />
     <LocationForm
       v-if="formVisible"
-      :project-id="project.id"
-      :location-to-be-edited="locationToBeEdited"
-      @close="closeLocationForm"
-      @center-map="centerMap"
-      @location-edited="$emit('reload-locations')"
-      @location-created="$emit('reload-locations')"
-      @location-deleted="$emit('reload-locations')"
+      v-model="form"
+      @close="onCloseForm()"
+      @submit="onSubmit(form)"
+      @delete="onDelete(form)"
     />
-
     <ConfirmModal
       v-if="locationToDelete"
-      :asyncing="deleteAsyncing"
+      :asyncing="asyncing"
       :title="$t('geocoding.delete-location')"
       :content="$t('geocoding.confirm-delete-location')"
       @cancel="locationToDelete = null"
-      @confirm="onConfirmDeleteLocation"
+      @confirm="onDelete(locationToDelete)"
     />
   </div>
 </template>
@@ -92,11 +48,11 @@
 <script setup lang="ts">
 import useToasterStore from '@/stores/useToaster'
 import analytics from '@/analytics'
-import { deleteLocation } from '@/api/locations.services'
+import { deleteLocation, patchLocation, postLocations } from '@/api/locations.services'
 import { TranslatedLocation } from '@/models/location.model'
 import { TranslatedProject } from '@/models/project.model'
-import LocationForm from '@/components/project/map/LocationForm.vue'
-import LocationListItem from '@/components/map/LocationListItem.vue'
+import LocationList from '@/components/map/LocationList.vue'
+import LocationForm from '@/components/map/LocationForm.vue'
 
 const projectLayoutToggleAddModal: any = inject('projectLayoutToggleAddModal')
 
@@ -111,60 +67,115 @@ const props = withDefaults(
     isInEditingMode: false,
   }
 )
-const emit = defineEmits(['reload-locations'])
+const form = ref()
+
+const emit = defineEmits(['reload'])
 const { canEditProject } = usePermissions()
 const { t } = useNuxtI18n()
 const toaster = useToasterStore()
 const formVisible = ref(false)
-const locationToBeEdited = ref(null)
 const locationToDelete = ref<TranslatedLocation>(null)
-const deleteAsyncing = ref(false)
-const focusedLocation = ref(null)
-
-const teamLocations = computed(() => props.locations.filter((l) => l.type === 'team'))
-const impactLocations = computed(() => props.locations.filter((l) => l.type === 'impact'))
-const addressLocations = computed(() => props.locations.filter((l) => l.type === 'address'))
+const asyncing = ref(false)
 
 const mapRef = useTemplateRef('map')
 const centerMap = () => mapRef.value?.map?.centerMap()
+const onFocus = (location) => mapRef.value?.map?.flyTo(location)
 
-const onConfirmDeleteLocation = async () => {
+const editable = computed(() => props.isInEditingMode && canEditProject.value)
+
+const onCloseForm = () => (formVisible.value = formVisible.value = false)
+
+const onCreate = async (body) => {
   try {
-    deleteAsyncing.value = true
-    await deleteLocation(props.project.id, locationToDelete.value.id)
+    asyncing.value = true
+    await postLocations(props.project.id, body)
+
+    analytics.location.addLocationMapPoint({
+      project: {
+        id: props.project.id,
+      },
+      location: body,
+    })
+
+    toaster.pushSuccess(t('toasts.location-create.success'))
+
+    emit('reload')
+    nextTick(() => centerMap())
+  } catch (error) {
+    toaster.pushError(`${t('toasts.location-create.error')} (${error})`)
+    console.error(error)
+  } finally {
+    asyncing.value = false
+    onCloseForm()
+  }
+}
+
+const onEdit = async (body) => {
+  try {
+    asyncing.value = true
+    await patchLocation(props.project.id, body.id, body)
+
+    analytics.location.updateLocationMapPoint({
+      project: {
+        id: props.project.id,
+      },
+      location: body,
+    })
+
+    toaster.pushSuccess(t('toasts.location-update.success'))
+
+    emit('reload')
+  } catch (error) {
+    toaster.pushError(`${t('toasts.location-update.error')} (${error})`)
+    console.error(error)
+  } finally {
+    asyncing.value = false
+    onCloseForm()
+  }
+}
+
+const onDelete = async (body) => {
+  try {
+    asyncing.value = true
+    await deleteLocation(props.project.id, body.id)
 
     analytics.location.deleteLocationMapPoint({
       project: {
         id: props.project.id,
       },
-      // @ts-expect-error wrong type (translatedLocation !== Location)
-      location: locationToDelete.value,
+      location: body,
     })
 
     toaster.pushSuccess(t('toasts.location-delete.success'))
 
-    emit('reload-locations')
+    emit('reload')
     nextTick(() => centerMap())
   } catch (error) {
     toaster.pushError(`${t('toasts.location-delete.error')} (${error})`)
     console.error(error)
   } finally {
-    deleteAsyncing.value = false
+    asyncing.value = false
     locationToDelete.value = null
+    onCloseForm()
   }
 }
 
-const openEditModal = (location) => {
-  if (props.isInEditingMode) {
-    // restart from source locations because the map ones are not reactive
-    locationToBeEdited.value = location
-    formVisible.value = true
+const onSubmit = (eventForm) => {
+  const body = {
+    ...eventForm,
+    project_id: props.project.id,
+  }
+
+  if (body.id) {
+    onEdit(body)
+  } else {
+    onCreate(body)
   }
 }
 
-const closeLocationForm = () => {
-  locationToBeEdited.value = null
-  formVisible.value = false
+const onEditForm = (location) => {
+  form.value = { ...location }
+  formVisible.value = true
 }
 </script>
 <style scoped lang="scss">
@@ -174,32 +185,5 @@ const closeLocationForm = () => {
   justify-content: flex-end;
   align-items: center;
   gap: 1rem;
-}
-
-.location-list-wrapper {
-  margin-top: 2rem;
-}
-
-.list-title {
-  text-transform: uppercase;
-  font-size: $font-size-l;
-  color: $primary-dark;
-  font-weight: 700;
-}
-
-.location-list {
-  list-style: none;
-  display: grid;
-  margin-top: 1rem;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 1rem;
-
-  @media screen and (max-width: $max-tablet) {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  @media screen and (max-width: $min-tablet) {
-    grid-template-columns: 1fr;
-  }
 }
 </style>

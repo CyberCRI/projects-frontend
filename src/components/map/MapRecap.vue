@@ -10,11 +10,12 @@
                   v-for="location in locations"
                   :key="location.id"
                   :location="location"
+                  :editable="editable"
                   @mounted="slotProps.addPointer"
                   @unmounted="slotProps.removePointer(location)"
                 >
                   <LocationTooltip
-                    v-if="location.title || location.description"
+                    v-if="location.$t.title || location.$t.description"
                     :location="location"
                   />
                 </MapPointer>
@@ -44,13 +45,13 @@ import LocationTooltip from '@/components/map/LocationTooltip.vue'
 const props = withDefaults(
   defineProps<{
     locations?: TranslatedLocation[]
-    focusedLocation?: TranslatedLocation
     expand?: boolean
+    editable?: boolean
   }>(),
   {
     locations: () => [],
-    focusedLocation: null,
     expand: false,
+    editable: false,
   }
 )
 
@@ -66,15 +67,6 @@ watch(
   () => props.locations,
   () => summaryMapRef.value?.centerMap(),
   { deep: true }
-)
-
-watch(
-  () => props.focusedLocation,
-  (neo, old) => {
-    if (neo && (neo.lat !== old?.lat || neo.lng !== old?.lng)) {
-      summaryMapRef.value?.flyTo(neo, 8)
-    }
-  }
 )
 
 defineExpose({

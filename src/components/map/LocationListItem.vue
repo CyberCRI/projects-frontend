@@ -8,15 +8,15 @@
       secondary
       no-border
       action-icon="MapMarker"
-      @click="$emit('focus-location', location)"
+      @click="$emit('focus', location)"
     />
     <ContextActionMenu
-      v-if="isEditable"
+      v-if="editable"
       class="location-actions"
       can-edit
       can-delete
-      @edit="$emit('edit-location', location)"
-      @delete="$emit('delete-location', location)"
+      @edit="$emit('edit', location)"
+      @delete="$emit('delete', location)"
     />
   </div>
 </template>
@@ -27,17 +27,17 @@ import { TranslatedLocation } from '@/models/location.model'
 withDefaults(
   defineProps<{
     location: TranslatedLocation
-    isEditable?: boolean
+    editable?: boolean
   }>(),
   {
-    isEditable: false,
+    editable: false,
   }
 )
 
 defineEmits<{
-  'focus-location': [TranslatedLocation]
-  'delete-location': [TranslatedLocation]
-  'edit-location': [TranslatedLocation]
+  focus: [TranslatedLocation]
+  delete: [TranslatedLocation]
+  edit: [TranslatedLocation]
 }>()
 </script>
 

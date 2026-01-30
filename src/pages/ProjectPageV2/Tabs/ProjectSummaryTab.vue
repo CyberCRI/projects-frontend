@@ -33,6 +33,7 @@
         v-if="locations.length"
         class="unboxed"
         expand
+        :editable="false"
         :locations="locations"
         @expand="projectLayoutToggleAddModal('location')"
       />
