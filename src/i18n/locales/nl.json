@@ -1057,12 +1057,19 @@
     "auto-translate-off": "Automatisch vertalen uit"
   },
   "location": {
-    "loading": "Locatie laden"
+    "loading": "Locatie laden",
+    "focus-on-map": "focus op de kaart",
+    "expand-map": "Kaart vergroten",
+    "edit-location-point": "Locatiepunt bewerken",
+    "location-type-label": "Locatietype",
+    "impact": "Effect",
+    "team": "Team",
+    "address": "Adres"
   },
   "map": {
-    "empty": "Nog niets hier... Medewerkers hebben nog geen projecten gelokaliseerd.",
     "page-title": "Kaart",
-    "projects": "projectkaart"
+    "projects": "projectkaart",
+    "empty": "Nog niets hier... Medewerkers hebben nog geen punten gelokaliseerd."
   },
   "me": {
     "follow": "Projecten die ik volg",
@@ -1669,7 +1676,6 @@
     "link-confirm-delete": "Weet u zeker dat u deze link uit het project wilt verwijderen?",
     "file-confirm-delete": "Weet u zeker dat u dit bestand uit het project wilt verwijderen?",
     "blog-confirm-delete": "Weet u zeker dat u deze blogitem wilt verwijderen uit het project?",
-    "location-type-label": "Locatietype",
     "lock": "Project vergrendelen",
     "private": "Particuliere projecten",
     "publish": "Project publiceren",

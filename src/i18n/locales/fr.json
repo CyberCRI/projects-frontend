@@ -1057,10 +1057,17 @@
     "auto-translate-off": "Traduction automatique désactivée"
   },
   "location": {
-    "loading": "Chargement des lieux en cours"
+    "loading": "Chargement des lieux en cours",
+    "focus-on-map": "mettre l'accent sur la carte",
+    "expand-map": "Agrandir la carte",
+    "edit-location-point": "Modifier le point d'emplacement",
+    "location-type-label": "Type de localisation",
+    "impact": "Impact",
+    "team": "Équipe",
+    "address": "Adresse"
   },
   "map": {
-    "empty": "Rien ici pour l’instant… Les contributeurs n’ont pas encore localisé de projets.",
+    "empty": "Rien ici pour l’instant… Les contributeurs n’ont pas encore localisé des points.",
     "page-title": "Carte",
     "projects": "carte des projets"
   },
@@ -1669,7 +1676,6 @@
     "link-confirm-delete": "Êtes-vous sûr de vouloir supprimer ce lien de votre projet ?",
     "file-confirm-delete": "Êtes-vous sûr de vouloir supprimer ce fichier de votre projet ?",
     "blog-confirm-delete": "Êtes-vous sûr de vouloir supprimer cette entrée de blog de votre projet ?",
-    "location-type-label": "Type de localisation",
     "lock": "Vérouiller le projet",
     "private": "Projets Privés",
     "publish": "Publier le projet",

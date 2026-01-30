@@ -18,8 +18,8 @@
         </li>
       </ul>
     </div>
-    <div v-if="!locationsGrouped.length" class="location-empty">
-      {{ $t('location.empty') }}
+    <div v-if="!locations.length" class="location-empty">
+      {{ $t('map.empty') }}
     </div>
   </div>
 </template>

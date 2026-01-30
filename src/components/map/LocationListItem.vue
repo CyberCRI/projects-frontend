@@ -4,12 +4,14 @@
       <h4>{{ location.$t.title }}</h4>
       <p>{{ location.$t.description }}</p>
     </div>
-    <ContextActionButton
-      secondary
-      no-border
-      action-icon="MapMarker"
-      @click="$emit('focus', location)"
-    />
+    <ToolTip hover :content="$t('location.focus-on-map')" placement="top">
+      <ContextActionButton
+        secondary
+        no-border
+        action-icon="MapMarker"
+        @click="$emit('focus', location)"
+      />
+    </ToolTip>
     <ContextActionMenu
       v-if="editable"
       class="location-actions"

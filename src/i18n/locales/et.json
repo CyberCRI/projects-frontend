@@ -1057,12 +1057,19 @@
     "auto-translate-off": "Automaatne tõlge välja lülitatud"
   },
   "location": {
-    "loading": "Laadimiskohad"
+    "loading": "Laadimiskohad",
+    "focus-on-map": "keskendu kaardile",
+    "expand-map": "Suurenda kaart",
+    "edit-location-point": "Muuda asukohapunkti",
+    "location-type-label": "Asukoha liik",
+    "impact": "Mõju",
+    "team": "Meeskond",
+    "address": "Aadress"
   },
   "map": {
-    "empty": "Siin pole veel midagi... Osalejad ei ole veel ühtegi projekti lokaliseeritud.",
     "page-title": "Kaart",
-    "projects": "projektide kaart"
+    "projects": "projektide kaart",
+    "empty": "Siin pole veel midagi... Panustajad ei ole veel ühtegi punkti lokaliseeritud."
   },
   "me": {
     "follow": "Projektid, mida jälgin",
@@ -1669,7 +1676,6 @@
     "link-confirm-delete": "Kas tõesti kustutada see link projektist?",
     "file-confirm-delete": "Kas tõesti kustutada see fail projektist?",
     "blog-confirm-delete": "Kas tõesti kustutada see blogi kirje projektist?",
-    "location-type-label": "Asukoha liik",
     "lock": "Lukustusprojekt",
     "private": "Eraprojektid",
     "publish": "Avalda projekt",

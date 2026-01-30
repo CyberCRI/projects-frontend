@@ -10,13 +10,13 @@
     </div>
 
     <div class="main-ctn">
-      {{ editable }}
       <LazyMapRecap
         ref="map"
         class="unboxed"
         expand
         :editable="editable"
         :locations="locations"
+        @edit="onEditForm($event)"
         @expand="projectLayoutToggleAddModal('location')"
       />
     </div>

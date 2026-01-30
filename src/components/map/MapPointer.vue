@@ -10,7 +10,7 @@
           <ContextActionButton
             action-icon="Pen"
             class="edit-btn small"
-            @click.stop="emit('edit-location', location)"
+            @click.stop="emit('edit', location)"
           />
         </div>
       </div>
@@ -29,11 +29,10 @@ import { TranslatedLocation } from '@/models/location.model'
 
 const props = withDefaults(
   defineProps<{
-    location?: TranslatedLocation
+    location: TranslatedLocation
     editable?: boolean
   }>(),
   {
-    location: null,
     editable: false,
   }
 )
@@ -41,18 +40,18 @@ const props = withDefaults(
 const emit = defineEmits<{
   mounted: [MapPointerOption]
   unmounted: [TranslatedLocation | null]
-  'edit-location': [TranslatedLocation | null]
+  edit: [TranslatedLocation | null]
 }>()
 
 const { t } = useNuxtI18n()
 const pointerLabel = computed(() => {
   switch (props.location.type) {
     case 'impact':
-      return t('project.impact')
+      return t('location.impact')
     case 'team':
-      return t('team.team')
+      return t('location.team')
     case 'address':
-      return t('geocoding.address')
+      return t('location.address')
   }
 })
 

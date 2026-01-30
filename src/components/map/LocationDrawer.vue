@@ -89,7 +89,7 @@
                       :key="location.id"
                       :editable="editable"
                       :location="location"
-                      @edit-location="openEditModal"
+                      @edit="openEditModal"
                       @mounted="slotProps.addPointer($event, {})"
                       @unmounted="slotProps.removePointer(location)"
                     >
@@ -186,6 +186,7 @@ const formMode = ref<'click' | 'form'>()
 const form = ref(null)
 
 const openEditModal = (location) => {
+  console.log(location)
   form.value = location
   showForm.value = true
 }

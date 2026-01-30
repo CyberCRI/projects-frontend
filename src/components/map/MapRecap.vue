@@ -11,6 +11,7 @@
                   :key="location.id"
                   :location="location"
                   :editable="editable"
+                  @edit="$emit('edit', $event)"
                   @mounted="slotProps.addPointer"
                   @unmounted="slotProps.removePointer(location)"
                 >
@@ -24,13 +25,15 @@
           </BaseMap>
         </ClientOnly>
       </div>
-      <ContextActionButton
-        v-if="expand"
-        :secondary="true"
-        class="map-button"
-        action-icon="Expand"
-        @click="$emit('expand')"
-      />
+      <div>
+        <ContextActionButton
+          v-if="expand"
+          :secondary="true"
+          class="map-button"
+          action-icon="Expand"
+          @click="$emit('expand')"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -55,7 +58,11 @@ const props = withDefaults(
   }
 )
 
-defineEmits(['map-moved', 'expand'])
+defineEmits<{
+  'map-moved': []
+  expand: []
+  edit: [TranslatedLocation]
+}>()
 
 const summaryMapRef = useTemplateRef('summary-map')
 const CONFIG = {
