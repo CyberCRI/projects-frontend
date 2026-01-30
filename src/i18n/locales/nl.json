@@ -2752,7 +2752,8 @@
       "state": "Staat",
       "country": "Land",
       "other": "Andere"
-    }
+    },
+    "current-position": "Huidige positie"
   },
   "card-list": {
     "list": "Lijst",

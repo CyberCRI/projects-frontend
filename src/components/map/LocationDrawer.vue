@@ -27,6 +27,11 @@
               :label="$t('geocoding.form-method')"
               @click="formMode = 'form'"
             />
+            <LpiButton
+              :label="$t('geocoding.current-position')"
+              btn-icon="CurrentPosition"
+              @click="currentPosition"
+            />
           </div>
         </div>
         <div v-else-if="formMode === 'click'">
@@ -190,7 +195,6 @@ const formMode = ref<'click' | 'form'>()
 const form = ref(null)
 
 const openEditModal = (location) => {
-  console.log(location)
   form.value = location
   showForm.value = true
 }
@@ -207,6 +211,25 @@ watch(
 )
 
 const suggestedLocations = ref<Geocoding[]>(null)
+
+const currentPosition = async () => {
+  navigator.geolocation.getCurrentPosition(
+    (postiion) => {
+      openEditModal({
+        lat: postiion.coords.latitude,
+        lng: postiion.coords.longitude,
+      })
+    },
+    (err) => {
+      console.error(err)
+      toaster.pushError(t('geocoding.error'))
+    },
+    {
+      enableHighAccuracy: true,
+      timeout: 4000,
+    }
+  )
+}
 
 const suggestLocations = async () => {
   geocodingLoading.value = true

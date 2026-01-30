@@ -2752,7 +2752,8 @@
       "state": "Bundesland",
       "country": "Land",
       "other": "Andere"
-    }
+    },
+    "current-position": "Aktuelle Position"
   },
   "card-list": {
     "list": "Liste",

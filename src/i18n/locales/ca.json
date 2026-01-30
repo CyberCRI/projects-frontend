@@ -2752,7 +2752,8 @@
       "state": "Estat",
       "country": "País",
       "other": "Altres"
-    }
+    },
+    "current-position": "Posició actual"
   },
   "card-list": {
     "list": "Llista",

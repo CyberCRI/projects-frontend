@@ -2752,7 +2752,8 @@
       "state": "État",
       "country": "Pays",
       "other": "Autre"
-    }
+    },
+    "current-position": "Situation actuelle"
   },
   "card-list": {
     "list": "Liste",

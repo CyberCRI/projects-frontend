@@ -2732,6 +2732,7 @@
     "click-method": "Click on the map",
     "click-method-no-geocoding": "Add a location",
     "click-method-notice": "Click on the map to choose the location",
+    "current-position": "Current position",
     "form-method": "Enter the address",
     "form-method-notice": "Enter the address in the field below",
     "address": "Address",

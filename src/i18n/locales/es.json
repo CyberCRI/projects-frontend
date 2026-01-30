@@ -2752,7 +2752,8 @@
       "state": "Estado",
       "country": "País",
       "other": "Otros"
-    }
+    },
+    "current-position": "Cargo actual"
   },
   "card-list": {
     "list": "Lista",

@@ -2752,7 +2752,8 @@
       "state": "osariik",
       "country": "Riik",
       "other": "Teised"
-    }
+    },
+    "current-position": "Praegune positsioon"
   },
   "card-list": {
     "list": "Nimekiri",
