@@ -1,5 +1,5 @@
 <template>
-  <div class="map-recap">
+  <div class="map-recap skeletons-background">
     <div class="map-inner-ctn">
       <div class="map">
         <ClientOnly>
@@ -15,10 +15,12 @@
                   @mounted="slotProps.addPointer"
                   @unmounted="slotProps.removePointer(location)"
                 >
-                  <LocationTooltip
-                    v-if="location.$t.title || location.$t.description"
-                    :location="location"
-                  />
+                  <slot name="tooltip" :location="location">
+                    <LocationTooltip
+                      v-if="location.$t.title || location.$t.description"
+                      :location="location"
+                    />
+                  </slot>
                 </MapPointer>
               </template>
             </template>

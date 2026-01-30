@@ -29,7 +29,7 @@
       />
     </template>
 
-    <template v-if="isExist" #extra-buttons>
+    <template #extra-buttons>
       <LpiButton
         class="delete-button"
         :label="$t('common.delete')"
@@ -47,13 +47,16 @@ import GroupButton from '@/components/base/button/GroupButton.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import { LocationForm } from '@/models/location.model'
 import { useLocationForm } from '@/form/location'
+import { LocationType } from '@/models/types'
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     loading?: boolean
+    locationTypes?: LocationType[]
   }>(),
   {
     loading: false,
+    locationTypes: null,
   }
 )
 defineEmits(['submit', 'close', 'delete'])
@@ -63,20 +66,26 @@ const model = defineModel<LocationForm>()
 const { form, isValid, errors } = useLocationForm({ model })
 const isExist = computed(() => !!form.value.id)
 
-const locationTypeOptions = computed(() => [
-  {
-    value: 'team',
-    label: t('location.team'),
-  },
-  {
-    value: 'impact',
-    label: t('location.impact'),
-  },
-  {
-    value: 'address',
-    label: t('location.address'),
-  },
-])
+const locationTypeOptions = computed(() => {
+  const arr: { value: LocationType; label: string }[] = [
+    {
+      value: 'team',
+      label: t('location.team'),
+    },
+    {
+      value: 'impact',
+      label: t('location.impact'),
+    },
+    {
+      value: 'address',
+      label: t('location.address'),
+    },
+  ]
+  if (props.locationTypes) {
+    return arr.filter(({ value }) => props.locationTypes.includes(value))
+  }
+  return arr
+})
 </script>
 
 <style lang="scss" scoped>

@@ -114,9 +114,29 @@
 
     <div class="spacer" />
 
-    <template v-if="!isReducedMode">
-      {{ JSON.stringify(form.location) }}
-    </template>
+    <!-- location -->
+    <div class="description">
+      <label>
+        {{ $t('group.form.location') }}
+        <LpiButton
+          class="add-btn"
+          :btn-icon="form.location ? 'Pen' : 'Plus'"
+          data-test="add-location"
+          :label="$t(form.location ? 'group.form.edit' : 'group.form.add')"
+          @click="openModal('location')"
+        />
+      </label>
+      <LocationListItem v-if="form.location" :location="form.location" :focus="false" />
+      <LocationDrawer
+        :is-opened="stateModal.location"
+        :locations="form.location ? [form.location] : []"
+        editable
+        :location-types="['address']"
+        @close="closeModal('location')"
+        @submit="submitLocation"
+        @delete="removeLocation"
+      />
+    </div>
 
     <div class="spacer" />
 
@@ -210,6 +230,7 @@ import SdgsDrawer from '@/components/sdgs/SdgsDrawer.vue'
 import SdgList from '@/components/sdgs/SdgList.vue'
 import TagsDrawer from '@/components/tags/TagsDrawer.vue'
 import TagsFilterSummary from '@/components/search/Filters/TagsFilterSummary.vue'
+import LocationDrawer from '@/components/map/LocationDrawer.vue'
 
 export default {
   name: 'GroupForm',
@@ -219,6 +240,7 @@ export default {
     SdgsDrawer,
     TagsDrawer,
     TagsFilterSummary,
+    LocationDrawer,
   },
 
   props: {
@@ -246,10 +268,14 @@ export default {
     const organizationsStore = useOrganizationsStore()
     const runtimeConfig = useRuntimeConfig()
     const defaultPictures = usePatatoids()
+    const { stateModal, openModal, closeModal } = useModal()
     return {
       organizationsStore,
       runtimeConfig,
       defaultPictures,
+      stateModal,
+      openModal,
+      closeModal,
     }
   },
 
@@ -372,6 +398,15 @@ export default {
         name: 'HomeRoot',
       })
     },
+    removeLocation() {
+      this.form.location = null
+      this.closeModal('location')
+    },
+    submitLocation(location) {
+      console.log(location, this.form.location)
+      this.form.location = location
+      this.closeModal('location')
+    },
   },
 }
 </script>
@@ -405,7 +440,8 @@ export default {
 
   .team,
   .parent-group,
-  .project {
+  .project,
+  .location {
     margin-bottom: $space-xl;
   }
 

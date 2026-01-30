@@ -1064,7 +1064,11 @@
     "location-type-label": "Tipo de ubicación",
     "impact": "Impacto",
     "team": "Equipo",
-    "address": "Dirección"
+    "address": "Dirección",
+    "edit-map": "Editar geolocalización",
+    "map": "Geolocalización",
+    "add-location": "Agregar un lugar",
+    "add-location-point": "Agregar un punto de ubicación"
   },
   "map": {
     "page-title": "Mapa",
@@ -1596,9 +1600,7 @@
   },
   "project": {
     "infos": "Infos",
-    "add-location": "Agregar un lugar",
     "add-linked-project": "Agregar un proyecto vinculado",
-    "add-location-point": "Agregar un punto de ubicación",
     "add-review": "Añádase una revisión",
     "add-to-project": {
       "title": "Añadir al proyecto",

@@ -1,25 +1,38 @@
 /**
- * composable to easie use for drawer/modal with close/open/toogle
+ * interacte with multiple modals
  *
- * @function
+ * @constant
  * @name useModal
  * @kind variable
- * @param {boolean) => { close} initialState
- * @param {() => boolean toggle} () => boolean open
- * @param {any} (
- * @returns {boolean; state: globalThis.Ref<boolean, boolean>; }}
+ * @type {<modalNames = { [key: string]: boolean; }>(defaultValue: Partial<modalNames>) => { stateModal: [Partial<modalNames>] extends [globalThis.Ref<any, any>] ? IfAny<globalThis.Ref<any, any> & Partial<modalNames>, globalThis.Ref<globalThis.Ref<any, any> & Partial<modalNames>, globalThis.Ref<any, any> & Partial<modalNames>>, globalThis.Ref<any, any> & Partial<modalNames>> : globalThis.Ref<...>; openModal: <K extends keyof modalNames>(key: K) => void; closeModal: <K extends keyof modalNames>(key: K) => void; toggleModal: <K extends keyof modalNames>(key: K) => void; }}
+ * @exports
  */
-const useModal = (initialState: boolean = false) => {
-  const state = ref(initialState)
-  const close = () => (state.value = false)
-  const open = () => (state.value = true)
-  const toggle = () => (state.value = !state.value)
+const useModal = <modalNames = { [key: string]: boolean }>(defaultValue: Partial<modalNames>) => {
+  const stateModal = ref<Partial<modalNames>>(defaultValue ?? {})
+  const openModal = <K extends keyof modalNames>(key: K) => {
+    stateModal.value[key] = true
+  }
+
+  const closeModal = <K extends keyof modalNames>(key: K) => {
+    stateModal.value[key] = false
+  }
+
+  /**
+   * toggle value in object ( if exists with the same value, remove it else set it)
+   */
+  const toggleModal = <K extends keyof modalNames>(key: K) => {
+    if (stateModal.value[key]) {
+      closeModal(key)
+    } else {
+      openModal(key)
+    }
+  }
 
   return {
-    close,
-    open,
-    toggle,
-    state,
+    stateModal,
+    openModal,
+    closeModal,
+    toggleModal,
   }
 }
 

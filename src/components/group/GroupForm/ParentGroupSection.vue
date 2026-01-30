@@ -10,7 +10,7 @@
         :btn-icon="model ? 'Pen' : 'Plus'"
         :label="t(model ? 'group.form.edit' : 'group.form.add')"
         data-test="add-parent-group-card"
-        @click="open"
+        @click="openModal('pickGroup')"
       />
     </label>
 
@@ -21,18 +21,17 @@
     <PickGroupDrawer
       :drawer-title="t('group.form.add-parent-group')"
       :subtitle="t('admin.groups.subtitle-edit-child')"
-      :is-opened="state"
+      :is-opened="stateModal.pickGroup"
       :groups="groups"
       :initial-group="model"
       :rooted="true"
-      @close="close"
+      @close="closeModal('pickGroup')"
       @confirm="confirmGroup"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import useModal from '@/composables/useModal'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 
 withDefaults(
@@ -46,7 +45,7 @@ withDefaults(
 const model = defineModel<TranslatedPeopleGroupModel | null>()
 
 const { t } = useNuxtI18n()
-const { close, open, state } = useModal()
+const { closeModal, openModal, stateModal } = useModal({ pickGroup: false })
 
 const confirmGroup = (group) => {
   model.value = group

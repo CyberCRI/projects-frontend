@@ -3,7 +3,7 @@
     <BaseDrawer
       no-footer
       :is-opened="isOpened"
-      :title="$t('location.edit-map')"
+      :title="editable ? $t('location.edit-map') : $t('location.map')"
       :confirm-action-name="$t('common.save')"
       @close="$emit('close')"
       @confirm="$emit('close')"
@@ -120,6 +120,7 @@
     <LocationForm
       v-if="editable && showForm"
       v-model="form"
+      :location-types="locationTypes"
       @close="closeModal"
       @submit="onSubmit"
       @delete="onDelete(form)"
@@ -144,17 +145,20 @@ import LocationTooltip from '@/components/map/LocationTooltip.vue'
 import { Geocoding } from '@/interfaces/maps'
 import { useSuggestLocations } from '@/api/geocoding.service'
 import LocationForm from '@/components/map/LocationForm.vue'
+import { LocationType } from '@/models/types'
 
 const props = withDefaults(
   defineProps<{
     isOpened?: boolean
     locations?: TranslatedLocation[]
     editable?: boolean
+    locationTypes?: LocationType[]
   }>(),
   {
     isOpened: false,
     editable: false,
     locations: () => [],
+    locationTypes: null,
   }
 )
 

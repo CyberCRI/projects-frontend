@@ -1064,7 +1064,11 @@
     "location-type-label": "Standort",
     "impact": "Auswirkungen",
     "team": "Team",
-    "address": "Anschrift"
+    "address": "Anschrift",
+    "edit-map": "Geolokation bearbeiten",
+    "map": "Standort",
+    "add-location": "Standort hinzufügen",
+    "add-location-point": "Einen Ortspunkt hinzufügen"
   },
   "map": {
     "page-title": "Landkarte",
@@ -1596,9 +1600,7 @@
   },
   "project": {
     "infos": "Infos",
-    "add-location": "Standort hinzufügen",
     "add-linked-project": "Ein verknüpftes Projekt hinzufügen",
-    "add-location-point": "Einen Ortspunkt hinzufügen",
     "add-review": "Bewertung hinzufügen",
     "add-to-project": {
       "title": "Projekt hinzufügen",

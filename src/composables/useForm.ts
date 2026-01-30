@@ -1,5 +1,4 @@
 import useValidate from '@vuelidate/core'
-import { debounce } from 'es-toolkit'
 
 type OptionsForm<T, CleanResult> = {
   default?: T
@@ -44,8 +43,8 @@ const useForm = <T, CleanResult = T>(
   const v$ = useValidate(options.rules ?? {}, form)
 
   const validate = () => v$.value.$validate().then((v) => (isValid.value = v))
-  const debounceValidate = debounce(validate, options.validateTimeout ?? 50)
-  watch(form, () => debounceValidate(), { deep: true, immediate: true })
+  // const debounceValidate = debounce(validate, options.validateTimeout ?? 50)
+  watch(form, () => validate(), { deep: true, immediate: true })
 
   const errors = computed<{
     [key: string]: string[]

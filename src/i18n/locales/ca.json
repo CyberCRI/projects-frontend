@@ -1064,7 +1064,11 @@
     "location-type-label": "Tipus d' emplaçament",
     "impact": "Impacte",
     "team": "Equip",
-    "address": "Adreça"
+    "address": "Adreça",
+    "edit-map": "Edita geolocalització",
+    "map": "Geolocalització",
+    "add-location": "Afegeix una ubicació",
+    "add-location-point": "Afegeix un punt d' emplaçament"
   },
   "map": {
     "page-title": "Mapa",
@@ -1596,9 +1600,7 @@
   },
   "project": {
     "infos": "Infos",
-    "add-location": "Afegeix una localització",
     "add-linked-project": "Afegeix un projecte enllaçat",
-    "add-location-point": "Afegeix un punt d' emplaçament",
     "add-review": "Afegeix una revisió",
     "add-to-project": {
       "title": "Afegeix al projecte",

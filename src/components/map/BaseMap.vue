@@ -241,5 +241,6 @@ onMounted(() => {
 <style lang="scss" scoped>
 .map {
   height: 100%;
+  background-color: #cee2ea;
 }
 </style>

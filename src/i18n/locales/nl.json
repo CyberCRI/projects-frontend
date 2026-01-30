@@ -1064,7 +1064,11 @@
     "location-type-label": "Locatietype",
     "impact": "Effect",
     "team": "Team",
-    "address": "Adres"
+    "address": "Adres",
+    "edit-map": "Geolocatie bewerken",
+    "map": "Geolocatie",
+    "add-location": "Plaats toevoegen",
+    "add-location-point": "Plaatspunt toevoegen"
   },
   "map": {
     "page-title": "Kaart",
@@ -1596,9 +1600,7 @@
   },
   "project": {
     "infos": "Infos",
-    "add-location": "Voeg een locatie toe",
     "add-linked-project": "Een gekoppeld project toevoegen",
-    "add-location-point": "Plaatspunt toevoegen",
     "add-review": "Een beoordeling toevoegen",
     "add-to-project": {
       "title": "Toevoegen aan project",

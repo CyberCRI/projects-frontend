@@ -1064,7 +1064,11 @@
     "location-type-label": "Asukoha liik",
     "impact": "Mõju",
     "team": "Meeskond",
-    "address": "Aadress"
+    "address": "Aadress",
+    "edit-map": "Muuda geolokatsiooni",
+    "map": "Geolokatsioon",
+    "add-location": "Lisa asukoht",
+    "add-location-point": "Asukohapunkti lisamine"
   },
   "map": {
     "page-title": "Kaart",
@@ -1596,9 +1600,7 @@
   },
   "project": {
     "infos": "Infos",
-    "add-location": "Lisa asukoht",
     "add-linked-project": "Lisa seotud projekt",
-    "add-location-point": "Asukohapunkti lisamine",
     "add-review": "Lisa ülevaade",
     "add-to-project": {
       "title": "Lisa projektile",

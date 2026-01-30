@@ -5,6 +5,7 @@ import { TranslatedProject } from '@/models/project.model'
 import { AttachmentFileModel, TranslatedAttachmentFile } from '@/models/attachment-file.model'
 import { AttachmentLinkModel, TranslatedAttachmentLink } from '@/models/attachment-link.model'
 import { TranslatedDocument } from '@/interfaces/researcher'
+import { TranslatedLocation } from '@/models/location.model'
 
 // type can be computed or object
 type RefOrRaw<DataT> = ComputedRef<DataT> | Ref<DataT> | DataT
@@ -119,8 +120,24 @@ export default function useAutoTranslate() {
   const translateGoal = (goal) => translateEntity(goal, ['title', 'description'])
   const translateGoals = (goals) => translateEntities(goals, translateGoal)
 
-  const translateLocation = (location) => translateEntity(location, ['title', 'description'])
-  const translateLocations = (locations) => translateEntities(locations, translateLocation)
+  const translateLocation = (location) =>
+    translateEntity<TranslatedLocation>(location, ['title', 'description'])
+  const translateLocations = (locations) =>
+    translateEntities<TranslatedLocation>(locations, translateLocation)
+
+  const translateProjectLocation = (location) => {
+    return computed<TranslatedLocation>(() => {
+      if (!location) {
+        return location
+      }
+      return {
+        ...unref(translateLocation(location)),
+        project: unref(translateProject(location.project)),
+      }
+    })
+  }
+  const translateProjectLocations = (Locations) =>
+    translateEntities<TranslatedLocation>(Locations, translateProjectLocation)
 
   const translateProjectMessage = (message) => translateEntity(message, ['content'])
   const translateProjectMessages = (messages) =>
@@ -278,6 +295,9 @@ export default function useAutoTranslate() {
     translateLocations,
     translateProjectMessage,
     translateProjectMessages,
+
+    translateProjectLocation,
+    translateProjectLocations,
 
     // people
     translateUser,

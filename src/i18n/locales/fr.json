@@ -1064,7 +1064,11 @@
     "location-type-label": "Type de localisation",
     "impact": "Impact",
     "team": "Équipe",
-    "address": "Adresse"
+    "address": "Adresse",
+    "edit-map": "Modifier la géolocalisation",
+    "map": "Géolocalisation",
+    "add-location": "Ajouter un emplacement",
+    "add-location-point": "Ajouter un point d'emplacement"
   },
   "map": {
     "empty": "Rien ici pour l’instant… Les contributeurs n’ont pas encore localisé des points.",
@@ -1596,9 +1600,7 @@
   },
   "project": {
     "infos": "Infos",
-    "add-location": "Ajouter une localisation",
     "add-linked-project": "Ajouter un projet lié",
-    "add-location-point": "Ajouter un point de localisation",
     "add-review": "Ajouter une révision",
     "add-to-project": {
       "title": "Ajouter au projet",

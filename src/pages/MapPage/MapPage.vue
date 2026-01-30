@@ -17,25 +17,16 @@ import { getLocations } from '@/api/locations.services'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import { getOrganizationByCode } from '@/api/organizations.service'
 import GeneralMap from '@/components/map/GeneralMap.vue'
-import { TranslatedLocation } from '@/models/location.model'
 
 const organizationsStore = useOrganizationsStore()
 const { t } = useNuxtI18n()
 
-const { translateProject, translateLocation } = useAutoTranslate()
+const { translateProjectLocations } = useAutoTranslate()
 
 const projectLocations = ref([])
 const loading = ref(true)
 
-const transltedProjectLocations = computed<TranslatedLocation[]>(() => {
-  return projectLocations.value.map((loca) => {
-    return {
-      ...unref(translateLocation(loca)),
-      project: unref(translateProject(loca.project)),
-    }
-  })
-})
-
+const transltedProjectLocations = translateProjectLocations(projectLocations)
 const loadLocations = async (page = null) => {
   loading.value = true
   const locations = await getLocations({ organizations: [organizationsStore.current.code] }, page)

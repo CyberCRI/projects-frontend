@@ -1064,7 +1064,11 @@
     "focus-on-map": "focus on the map",
     "expand-map": "Enlarge map",
     "edit-location-point": "Edit location point",
-    "location-type-label": "Location type"
+    "location-type-label": "Location type",
+    "edit-map": "Edit geolocation",
+    "map": "Geolocation",
+    "add-location": "Add a location",
+    "add-location-point": "Add a location point"
   },
   "map": {
     "empty": "Nothing here yet... Contributors did not localize any points yet.",
@@ -1596,9 +1600,7 @@
   },
   "project": {
     "infos": "Infos",
-    "add-location": "Add a location",
     "add-linked-project": "Add a linked project",
-    "add-location-point": "Add a location point",
     "add-review": "Add a review",
     "add-to-project": {
       "title": "Add to project",

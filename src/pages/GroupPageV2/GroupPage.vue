@@ -93,6 +93,7 @@ const groupModules = computed(
       conferences: 0,
       similars: 0,
       subgroups: 0,
+      locations: 0,
     }
 )
 
@@ -171,6 +172,20 @@ const groupTabsDisplay = computed(() => {
       condition: groupModules.value.conferences,
       icon: GroupModuleIcon.conferences,
     },
+    {
+      isEditing: false,
+      key: 'group-locations',
+      dataTest: 'group-locations',
+      label: t(GroupModuleTitle.locations),
+      view: `/group/${route.params.groupId}/locations`,
+      altView: `/group/${route.params.groupId}/locations/edit`,
+      props: {
+        group: group.value,
+        isLoading: isLoading.value,
+      },
+      condition: groupModules.value.locations,
+      icon: GroupModuleIcon.locations,
+    },
   ]
 })
 
@@ -247,6 +262,21 @@ const groupTabsEdit = computed(() => {
       altView: `/group/${route.params.groupId}/conferences`,
       props: {
         documentType: 'conferences',
+        isInEditingMode: true,
+        group: group.value,
+        isLoading: isLoading.value,
+      },
+      condition: true,
+      icon: 'Pen',
+    },
+    {
+      isEditing: true,
+      key: 'group-locations-edit',
+      dataTest: 'group-locations-edit',
+      label: t(GroupModuleTitle.locations),
+      view: `/group/${route.params.groupId}/locations/edit`,
+      altView: `/group/${route.params.groupId}/locations`,
+      props: {
         isInEditingMode: true,
         group: group.value,
         isLoading: isLoading.value,

@@ -1,10 +1,10 @@
 <template>
   <div class="location-list-item">
     <div class="location-title">
-      <h4>{{ location.$t.title }}</h4>
-      <p>{{ location.$t.description }}</p>
+      <h4>{{ title }}</h4>
+      <p>{{ description }}</p>
     </div>
-    <ToolTip hover :content="$t('location.focus-on-map')" placement="top">
+    <ToolTip v-if="focus" hover :content="$t('location.focus-on-map')" placement="top">
       <ContextActionButton
         secondary
         no-border
@@ -26,15 +26,21 @@
 <script setup lang="ts">
 import { TranslatedLocation } from '@/models/location.model'
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     location: TranslatedLocation
     editable?: boolean
+    focus?: boolean
   }>(),
   {
     editable: false,
+    focus: false,
   }
 )
+
+// need to safe guard with translated title (if we are in edit/create mode)
+const title = computed(() => props.location.$t?.title ?? props.location.title)
+const description = computed(() => props.location.$t?.description ?? props.location.description)
 
 defineEmits<{
   focus: [TranslatedLocation]

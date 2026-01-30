@@ -174,3 +174,10 @@ export async function getSubGroup(organizationCode: string, groupId: number, con
     config
   )
 }
+
+export async function getGroupLocation(organizationCode: string, groupId: number, config = {}) {
+  return await useAPI<PaginationResult<PeopleGroupModel>>(
+    `organization/${organizationCode}/people-group/${groupId}/locations/`,
+    config
+  )
+}

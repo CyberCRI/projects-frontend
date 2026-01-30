@@ -14,6 +14,7 @@
       :group="group"
       :is-loading="isLoading"
     />
+    <GroupLocationPreview v-if="group.modules.locations" :group="group" :is-loading="isLoading" />
     <GroupDocumentsPreview
       v-if="group.modules.publications"
       document-type="publications"
@@ -37,8 +38,9 @@ import GroupDescriptionPreview from '@/components/group/Modules/Extras/GroupDesc
 import GroupSimilarsPreview from '@/components/group/Modules/Extras/GroupSimilarsPreview.vue'
 import GroupMembersPreview from '@/components/group/Modules/Members/GroupMembersPreview.vue'
 import GroupProjectsPreview from '@/components/group/Modules/Projects/GroupProjectsPreview.vue'
-// import GroupDocumentsPreview from '@/components/group/Modules/Documents/GroupDocumentsPreview.vue'
+import GroupDocumentsPreview from '@/components/group/Modules/Documents/GroupDocumentsPreview.vue'
 import GroupHeader from '@/components/group/Modules/GroupHeader.vue'
+import GroupLocationPreview from '@/components/group/Modules/Locations/GroupLocationPreview.vue'
 
 defineProps<{
   group: TranslatedPeopleGroupModel

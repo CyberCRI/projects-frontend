@@ -1,7 +1,7 @@
 import { IconImageChoice } from '@/functs/IconImage'
 import { Translated } from '@/interfaces/translated'
 import { Image } from '@/models/image.model'
-import { LocationModel } from '@/models/location.model'
+import { LocationModel, TranslatedLocation } from '@/models/location.model'
 import { OrganizationModel } from '@/models/organization.model'
 import { TagModel } from '@/models/tag.model'
 
@@ -33,15 +33,18 @@ export interface PeopleGroupModel {
     conferences: number
     similars: number
     subgroups: number
+    locations: number
   }
 }
 
 export type PeopleGroupModulesKeys = keyof PeopleGroupModel['modules']
 
-export type TranslatedPeopleGroupModel = Translated<
-  PeopleGroupModel,
-  'name' | 'description' | 'short_description'
->
+export type TranslatedPeopleGroupModel = Omit<
+  Translated<PeopleGroupModel, 'name' | 'description' | 'short_description'>,
+  'location'
+> & {
+  location: TranslatedLocation | null
+}
 
 export const GroupModuleIcon: { [key in PeopleGroupModulesKeys]: IconImageChoice } = {
   conferences: 'Article',
@@ -50,6 +53,7 @@ export const GroupModuleIcon: { [key in PeopleGroupModulesKeys]: IconImageChoice
   members: 'Users',
   similars: 'PeopleGroup',
   subgroups: 'nodeTree',
+  locations: 'Map',
 }
 
 export const GroupModuleTitle: { [key in PeopleGroupModulesKeys]: string } = {
@@ -59,6 +63,7 @@ export const GroupModuleTitle: { [key in PeopleGroupModulesKeys]: string } = {
   members: 'group.members',
   similars: 'group.similars',
   subgroups: 'group.see-subgroups',
+  locations: 'group.locations',
 }
 
 export interface ProfilePictureVariationsModel {

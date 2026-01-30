@@ -48,10 +48,14 @@
       </div>
       <div class="group-info-extras">
         <div class="group-info-links">
-          <div v-if="group.location" class="group-recap-element">
+          <button
+            v-if="group.location"
+            class="group-recap-element group-location reset-btn"
+            @click="openModal('location')"
+          >
             <IconImage name="MapMarker" />
             <span class="group-recap-title">{{ t('group.location') }}</span>
-          </div>
+          </button>
         </div>
         <SdgList
           class="group-info-sdgs"
@@ -65,6 +69,13 @@
           }"
         />
       </div>
+      <!-- drawer views -->
+      <LocationDrawer
+        v-if="group.location"
+        :is-opened="stateModal.location"
+        :locations="[group.location]"
+        @close="closeModal('location')"
+      />
     </template>
   </BaseGroupPreview>
 </template>
@@ -75,6 +86,7 @@ import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
 import SdgList from '@/components/sdgs/SdgList.vue'
 import TagsList from '@/components/tags/TagsList.vue'
+import LocationDrawer from '@/components/map/LocationDrawer.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -85,6 +97,7 @@ const props = withDefaults(
 )
 
 const { t } = useNuxtI18n()
+const { openModal, closeModal, stateModal } = useModal({ location: false })
 
 const groupVisibilityLabel = computed(() => {
   if (props.group.publication_status === 'public') {
@@ -179,5 +192,9 @@ const groupVisibilityIcon = computed(() =>
 
 .group-recap-title {
   font-weight: bold;
+}
+
+.group-location {
+  cursor: pointer;
 }
 </style>
