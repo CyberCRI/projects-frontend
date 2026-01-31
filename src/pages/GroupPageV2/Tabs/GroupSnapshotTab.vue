@@ -1,204 +1,54 @@
 <template>
   <div class="group-snapshot">
     <GroupHeaderV2
-      :title="groupName"
-      :image="groupImage"
-      :visibility="groupVisibility"
-      :email="groupEmail"
-      :short-description="groupShortDescription"
+      :title="group.$t.name"
+      :image="group.header_image"
+      :visibility="group.publication_status"
+      :email="group.email"
+      :short-description="group.$t.short_description"
       :is-loading="isLoading"
     />
-    <SubGroups v-if="groupChildren.length > 0" :subgroups="groupChildren" :is-loading="isLoading" />
-    <div v-if="!isLoading" class="description">
+    <SubGroups v-if="group.children?.length" :subgroups="group.children" :is-loading="isLoading" />
+    <div class="description">
       <DescriptionExpandable
-        :description="description"
+        :description="group.$t.description"
         :height-limit="400"
         class="description-content"
       />
-    </div>
-    <div v-else class="skeleton">
-      <SkeletonComponent width="60%" height="25px" border-radius="10px" />
-      <SkeletonComponent width="80%" height="20px" border-radius="10px" />
-      <SkeletonComponent width="45%" height="20px" border-radius="10px" />
-      <SkeletonComponent width="100%" height="15px" border-radius="10px" />
-      <SkeletonComponent width="90%" height="15px" border-radius="10px" />
-      <SkeletonComponent width="95%" height="15px" border-radius="10px" />
-    </div>
-
-    <div v-if="membersCount > 0 || isMembersLoading" class="members">
-      <div class="members-header">
-        <h2 class="title">
-          {{ $t('group.members') }}
-          <span v-if="membersCount">( {{ membersCount }} )</span>
-        </h2>
-
-        <SeeMoreArrow
-          v-if="!isMembersLoading"
-          class="see-more-button"
-          :to="{ name: 'groupMembers', params: { groupId: $route.params.groupId } }"
+      <!-- add new modules Here -->
+      <div data-test="group-modules">
+        <GroupProjectsPreview
+          v-if="groupModules.featured_projects"
+          :group="group"
+          :is-loading="isLoading"
         />
-      </div>
-
-      <div v-if="isMembersLoading" class="members-container">
-        <MemberListSkeleton :min-gap="90" :desktop-columns-number="6" />
-      </div>
-      <DynamicGrid v-else :min-gap="90" class="members-container">
-        <GroupMemberItem
-          v-for="member in members.slice(0, totalDisplayed)"
-          :key="member.id"
-          :user="member"
-          :is-manager="member.is_manager"
-          class="cursor-pointer shadow-drop"
-          @user-click="openProfileDrawer"
-          @close="closeProfileDrawer"
-        />
-      </DynamicGrid>
-    </div>
-
-    <div v-if="projectsCount > 0 || isProjectsLoading" class="projects">
-      <div class="projects-header">
-        <h2 class="title">
-          {{ $t('group.projects') }}
-          <span v-if="projectsCount">( {{ projectsCount }} )</span>
-        </h2>
-        <SeeMoreArrow
-          v-if="!isProjectsLoading"
-          class="see-more-button"
-          :to="{
-            name: 'groupProjects',
-            params: { groupId: $route.params.groupId },
-          }"
-        />
-      </div>
-      <div class="projects-container">
-        <CardList :is-loading="isProjectsLoading" :items="projects.slice(0, totalDisplayed)">
-          <template #default="projectListSlotProps">
-            <ProjectCard :horizontal-display="true" :project="projectListSlotProps.item" />
-          </template>
-        </CardList>
+        <GroupMembersPreview v-if="groupModules.members" :group="group" :is-loading="isLoading" />
       </div>
     </div>
-    <BaseDrawer
-      no-footer
-      :is-opened="profileDrawer.isOpened"
-      :title="$t('profile.drawer_title')"
-      @close="closeProfileDrawer"
-      @confirm="closeProfileDrawer"
-    >
-      <UserProfileV2
-        v-if="profileDrawer.isOpened"
-        ref="profile-user"
-        :can-edit="false"
-        :user-id="profileDrawer.user_id"
-        is-preview
-        @close="closeProfileDrawer"
-      />
-    </BaseDrawer>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'GroupSnapshotTab',
+<script setup lang="ts">
+import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import GroupProjectsPreview from '@/pages/GroupPageV2/Tabs/Projects/GroupProjectsPreview.vue'
+import GroupMembersPreview from '@/pages/GroupPageV2/Tabs/Members/GroupMembersPreview.vue'
 
-  props: {
-    description: {
-      type: String,
-      default: '',
-    },
+defineOptions({ name: 'GroupSnapshotTab' })
+const props = defineProps<{
+  group: TranslatedPeopleGroupModel
+  isLoading: boolean
+}>()
 
-    projectsInitialRequest: {
-      type: Object,
-      default: () => ({}),
-    },
-
-    isProjectsLoading: {
-      type: Boolean,
-      default: true,
-    },
-
-    membersInitialRequest: {
-      type: Object,
-      default: () => ({}),
-    },
-
-    isMembersLoading: {
-      type: Boolean,
-      default: true,
-    },
-
-    isLoading: {
-      type: Boolean,
-      default: true,
-    },
-    groupName: {
-      type: String,
-      default: '',
-    },
-    groupImage: {
-      type: [Object, null],
-      default: null,
-    },
-    groupEmail: {
-      type: String,
-      default: '',
-    },
-    groupVisibility: {
-      type: String,
-      default: '',
-    },
-    groupShortDescription: {
-      type: String,
-      default: '',
-    },
-    groupChildren: {
-      type: Array,
-      default: () => [],
-    },
-  },
-
-  setup(props) {
-    const { translateUsers, translateProjects } = useAutoTranslate()
-    const rawMembers = computed(() => props.membersInitialRequest.results || [])
-    const members = translateUsers(rawMembers)
-    const membersCount = computed(() => props.membersInitialRequest.count || 0)
-
-    const rawProjects = computed(() => props.projectsInitialRequest.results || [])
-    const projects = translateProjects(rawProjects)
-    const projectsCount = computed(() => props.projectsInitialRequest.count || 0)
-
+// filters only modules with upper than zero elements
+const groupModules = computed(() => {
+  if (!props.group || !props.group.modules) {
     return {
-      members,
-      membersCount,
-      projects,
-      projectsCount,
+      featured_projects: 0,
+      members: 0,
     }
-  },
-
-  data() {
-    return {
-      style: {},
-      totalDisplayed: 12,
-      profileDrawer: {
-        isOpened: false,
-        user_id: null,
-      },
-    }
-  },
-
-  methods: {
-    async openProfileDrawer(user) {
-      this.profileDrawer.user_id = user.id
-      this.profileDrawer.isOpened = true
-    },
-
-    closeProfileDrawer() {
-      this.isEditMode = false
-      this.profileDrawer.isOpened = false
-      this.profileDrawer.user_id = null
-    },
-  },
-}
+  }
+  return props.group.modules
+})
 </script>
 
 <style lang="scss" scoped>

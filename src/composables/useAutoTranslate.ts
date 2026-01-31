@@ -1,3 +1,7 @@
+import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import { TranslatedOrganizationModel } from '@/models/organization.model'
+import { TranslatedPeopleModel } from '@/models/people.model'
+import { TranslatedProject } from '@/models/project.model'
 import { AttachmentFileModel, TranslatedAttachmentFile } from '@/models/attachment-file.model'
 import { AttachmentLinkModel, TranslatedAttachmentLink } from '@/models/attachment-link.model'
 
@@ -65,7 +69,7 @@ export default function useAutoTranslate() {
   // --------------------
   // Projects
   const translateProject = (project) => {
-    return computed(() => {
+    return computed<TranslatedProject>(() => {
       const unrefProject = unref(project)
       if (!unrefProject) return project
       return {
@@ -74,7 +78,8 @@ export default function useAutoTranslate() {
       }
     })
   }
-  const translateProjects = (projects) => translateEntities(projects, translateProject)
+  const translateProjects = (projects) =>
+    translateEntities<TranslatedProject>(projects, translateProject)
 
   const translateComment = (comment) => {
     const _comment = unref(comment)
@@ -122,8 +127,10 @@ export default function useAutoTranslate() {
 
   // --------------------
   // People
-  const translateUser = (user) => translateEntity(user, ['description', 'short_description', 'job'])
-  const translateUsers = (users) => translateEntities(users, translateUser)
+  const translateUser = <Model = TranslatedPeopleModel>(user) =>
+    translateEntity<Model>(user, ['description', 'short_description', 'job'])
+  const translateUsers = <Model = TranslatedPeopleModel>(users) =>
+    translateEntities<Model>(users, translateUser)
 
   const translateTeam = (team) =>
     computed(() => {
@@ -144,19 +151,21 @@ export default function useAutoTranslate() {
   // -----------------
   // groups
   const translateGroup = (group) =>
-    translateEntity(group, ['name', 'description', 'short_description'])
-  const translateGroups = (groups) => translateEntities(groups, translateGroup)
+    translateEntity<TranslatedPeopleGroupModel>(group, ['name', 'description', 'short_description'])
+  const translateGroups = (groups) =>
+    translateEntities<TranslatedPeopleGroupModel>(groups, translateGroup)
 
   // orgs
   const translateOrganization = (org) =>
-    translateEntity(org, [
+    translateEntity<TranslatedOrganizationModel>(org, [
       'name',
       'dashboard_title',
       'dashboard_subtitle',
       'description',
       'chat_button_text',
     ])
-  const translateOrganizations = (orgs) => translateEntities(orgs, translateOrganization)
+  const translateOrganizations = (orgs) =>
+    translateEntities<TranslatedOrganizationModel>(orgs, translateOrganization)
 
   const translateTemplate = (template) => {
     const _template = unref(template)

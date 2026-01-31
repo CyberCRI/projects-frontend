@@ -47,6 +47,11 @@ export default function useGroupProjectsUpdate(orgCode, groupId, form) {
       await removeGroupProject(orgCode.value, groupId, payloadProjects as any)
     }
     isSaving.value = false
+
+    return {
+      removed: projectsToRemove.length,
+      added: projectsToAdd.length,
+    }
   }
 
   return { groupProjectData, isSaving, setProjectsData, updateGroupProjects }

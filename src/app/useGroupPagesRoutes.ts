@@ -15,12 +15,12 @@ export default function useGroupPagesRoutes() {
         {
           path: 'members',
           name: 'groupMembers',
-          component: () => import('../pages/GroupPageV2/Tabs/GroupMembersTab.vue'),
+          component: () => import('../pages/GroupPageV2/Tabs/Members/GroupMembersTab.vue'),
         },
         {
           path: 'projects',
           name: 'groupProjects',
-          component: () => import('../pages/GroupPageV2/Tabs/GroupProjectsTab.vue'),
+          component: () => import('../pages/GroupPageV2/Tabs/Projects/GroupProjectsTab.vue'),
         },
         // retro compat
         {
@@ -36,17 +36,17 @@ export default function useGroupPagesRoutes() {
             isReducedMode: true,
             groupId: route.params.groupId,
           }),
-          component: () => import('../pages/CreateEditGroupPage/CreateEditGroupPage.vue'),
+          component: () => import('../pages/GroupPageV2/Tabs/GroupEditTab.vue'),
         },
         {
           path: 'members/edit',
           name: 'groupMembersEdit',
-          component: () => import('../pages/GroupPageV2/Tabs/GroupMembersEditTab.vue'),
+          component: () => import('../pages/GroupPageV2/Tabs/Members/GroupMembersEditTab.vue'),
         },
         {
           path: 'projects/edit',
           name: 'groupProjectsEdit',
-          component: () => import('../pages/GroupPageV2/Tabs/GroupProjectsEditTab.vue'),
+          component: () => import('../pages/GroupPageV2/Tabs/Projects/GroupProjectsEditTab.vue'),
         },
       ],
       props: true,
