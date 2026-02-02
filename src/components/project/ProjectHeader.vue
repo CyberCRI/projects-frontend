@@ -23,7 +23,7 @@
             ref="projectImg"
             :picture-data="project.header_image"
             picture-size="medium"
-            default-picture="/placeholders/header_placeholder.png"
+            :default-picture="DEFAULT_PROJECT_PATATOID"
           />
         </div>
       </div>
@@ -38,7 +38,7 @@
                 ref="projectImg"
                 :picture-data="project.header_image"
                 picture-size="medium"
-                default-picture="/placeholders/header_placeholder.png"
+                :default-picture="DEFAULT_PROJECT_PATATOID"
                 :alt="`${project.title} image`"
               />
             </div>
@@ -280,6 +280,7 @@ import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useUsersStore from '@/stores/useUsers.ts'
 import TagsList from '@/components/tags/TagsList.vue'
+import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
 
 export default {
   name: 'ProjectHeader',
@@ -338,6 +339,7 @@ export default {
       runtimeConfig,
       canEditProject,
       capitalize,
+      DEFAULT_PROJECT_PATATOID,
     }
   },
 

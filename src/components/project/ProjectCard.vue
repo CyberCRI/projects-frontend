@@ -36,7 +36,7 @@
     <CroppedApiImage
       :picture-data="project.header_image"
       picture-size="medium"
-      default-picture="/placeholders/header_placeholder.png"
+      :default-picture="DEFAULT_PROJECT_PATATOID"
       :alt="`${translatedTitle} image`"
       class="picture picture-project"
     />
@@ -65,6 +65,7 @@ import IconImage from '@/components/base/media/IconImage.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import useUsersStore from '@/stores/useUsers.ts'
 import ProjectFollowIcon from '@/components/project/ProjectFollowIcon.vue'
+import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
 
 export default {
   name: 'ProjectCard',
@@ -130,6 +131,7 @@ export default {
       usersStore,
       translatedTitle,
       translatedPurpose,
+      DEFAULT_PROJECT_PATATOID,
     }
   },
 

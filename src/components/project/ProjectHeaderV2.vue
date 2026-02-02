@@ -10,7 +10,7 @@
             ref="projectImg"
             :picture-data="project.header_image"
             picture-size="medium"
-            default-picture="/placeholders/header_placeholder.png"
+            :default-picture="DEFAULT_PROJECT_PATATOID"
           />
         </div>
       </div>
@@ -25,7 +25,7 @@
                 ref="projectImg"
                 :picture-data="project.header_image"
                 picture-size="medium"
-                default-picture="/placeholders/header_placeholder.png"
+                :default-picture="DEFAULT_PROJECT_PATATOID"
                 :alt="`${project.title} image`"
               />
             </div>
@@ -172,6 +172,7 @@
 </template>
 
 <script>
+import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
 import { capitalize } from '@/functs/string'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useUsersStore from '@/stores/useUsers.ts'
@@ -206,6 +207,7 @@ export default {
       organizationsStore,
       usersStore,
       runtimeConfig,
+      DEFAULT_PROJECT_PATATOID,
     }
   },
 

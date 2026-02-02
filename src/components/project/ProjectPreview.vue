@@ -14,7 +14,7 @@
         :picture-data="project.header_image"
         picture-size="small"
         class="skeletons-image"
-        default-picture="/placeholders/header_placeholder.png"
+        :default-picture="DEFAULT_PROJECT_PATATOID"
       />
 
       <div class="project-info">
@@ -50,6 +50,7 @@
 <script setup lang="ts">
 import ProjectFollowIcon from '@/components/project/ProjectFollowIcon.vue'
 import TagsList from '@/components/tags/TagsList.vue'
+import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
 import { cropIfTooLong } from '@/functs/string'
 import { TranslatedProject } from '@/models/project.model'
 

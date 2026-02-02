@@ -14,7 +14,7 @@
         :ratio="1 / 1"
         :picture-data="announcement?.project?.header_image"
         picture-size="medium"
-        default-picture="/placeholders/header_placeholder.png"
+        :default-picture="DEFAULT_PROJECT_PATATOID"
       />
       <div :style="announcementStyle" class="announcement-overlay" />
     </div>
@@ -46,6 +46,7 @@ import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
 import { useRuntimeConfig } from '#imports'
 import { TranslatedAnnouncement } from '@/models/announcement.model'
+import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
 
 const props = withDefaults(
   defineProps<{
