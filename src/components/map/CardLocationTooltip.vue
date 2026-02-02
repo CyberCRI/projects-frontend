@@ -4,7 +4,7 @@
       :label="label"
       class="card-tooltip-button"
       btn-icon="ArrowRight"
-      :title="props.title"
+      :title="label"
       :to="to"
     />
     <div class="card-tooltip-content" :class="[location.type]">
@@ -14,10 +14,10 @@
         class="card-tooltip__image"
       />
       <div>
-        <h3 class="card-title">
+        <h3 class="card-title" :title="props.title">
           {{ title }}
         </h3>
-        <p class="card-purpose">
+        <p class="card-purpose" :title="props.description">
           {{ description }}
         </p>
       </div>
