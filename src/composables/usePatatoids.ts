@@ -3,6 +3,8 @@ const DEFAULT_PATATOID = [1, 2, 3, 4, 5, 6].map(
 )
 
 const DEFAULT_USER_PATATOID = DEFAULT_PATATOID[0]
+const DEFAULT_GROUP_PATATOID = DEFAULT_PATATOID[1]
+const DEFAULT_PROJECT_PATATOID = DEFAULT_PATATOID[2]
 
 /**
  * return default 6 patatoids
@@ -17,4 +19,10 @@ const usePatatoids = () => {
   return DEFAULT_PATATOID.map((url) => `${runtimeConfig.public.appPublicBinariesPrefix}${url}`)
 }
 
-export { usePatatoids, DEFAULT_USER_PATATOID, DEFAULT_PATATOID }
+export {
+  usePatatoids,
+  DEFAULT_USER_PATATOID,
+  DEFAULT_PATATOID,
+  DEFAULT_GROUP_PATATOID,
+  DEFAULT_PROJECT_PATATOID,
+}

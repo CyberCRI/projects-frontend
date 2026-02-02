@@ -1,17 +1,15 @@
 <template>
   <div class="location-tooltip" :class="location.type">
-    <div class="location-tooltip__header">
-      <div :class="location.type" class="location-tooltip__header--dot" />
-      <h2 class="location-tooltip__header--title">
-        {{ typeLabel }}
-      </h2>
+    <div class="location-tooltip-header">
+      <LocationType :location="location" />
+      <LpiButton btn-icon="Close" class="location-tooltip-icon" @click="closePopUp" />
     </div>
 
-    <div class="location-tooltip__location">
-      <h3 class="location-tooltip__location--title">
+    <div class="location-tooltip-info">
+      <h3>
         {{ title }}
       </h3>
-      <p class="location-tooltip__location--description">
+      <p>
         {{ description }}
       </p>
     </div>
@@ -20,80 +18,65 @@
 </template>
 
 <script setup lang="ts">
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import LocationType from '@/components/map/LocationType.vue'
 import { cropIfTooLong } from '@/functs/string'
 import { TranslatedLocation } from '@/models/location.model'
 
 const props = defineProps<{ location: TranslatedLocation }>()
 
-const { t } = useNuxtI18n()
-
 const title = computed(() => cropIfTooLong(props.location?.$t?.title, 45))
 const description = computed(() => cropIfTooLong(props.location?.$t?.description, 85))
 
-const typeLabel = computed(() => {
-  switch (props.location.type) {
-    case 'impact':
-      return t('location.impact')
-    case 'team':
-      return t('location.team')
-    case 'address':
-      return t('location.address')
-  }
-})
+const closePopUp = inject('closePopUp')
 </script>
 
 <style lang="scss" scoped>
 .location-tooltip {
   overflow: hidden;
-  display: flex;
-  width: 100%;
-  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 0.2rem;
   transition: opacity 0.15s ease-in-out;
-  flex-direction: column;
+  border: $border-width-l solid;
+  border-radius: $border-radius-m;
 
-  &__header {
-    display: flex;
-    justify-content: flex-start;
-    padding: $space-s;
-
-    &--title {
-      color: $primary-dark;
-      font-weight: 700;
-      font-size: $font-size-s;
-    }
-
-    &--dot {
-      width: pxToRem(16px);
-      height: pxToRem(16px);
-      border-radius: 50%;
-      margin-right: $space-s;
-
-      &.impact {
-        background: $violet;
-      }
-
-      &.team {
-        background: $primary;
-      }
-
-      &.address {
-        background: $primary;
-      }
-    }
+  &.impact {
+    border-color: $location-impact;
   }
 
-  &__location {
-    padding: $space-s;
+  &.team {
+    border-color: $location-team;
+  }
 
-    &--title {
-      font-weight: 500;
-      font-size: $font-size-xl;
-    }
+  &.address {
+    border-color: $location-address;
+  }
 
-    &--description {
-      font-weight: 400;
-      font-size: $font-size-m;
-    }
+  > * {
+    padding: 0 1rem;
+  }
+
+  > *:first-child {
+    padding: 1rem;
+  }
+}
+
+.location-tooltip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.location-tooltip-icon {
+  width: 22px !important;
+  height: 22px !important;
+}
+
+.location-tooltip-info {
+  h3 {
+    font-size: large;
   }
 }
 </style>

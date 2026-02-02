@@ -17,6 +17,9 @@ import fixLeaflet from '@/app/fixLeaflet'
 import 'leaflet.markercluster'
 import { LocationModel, TranslatedLocation } from '@/models/location.model'
 import { Geocoding, MapPointerOption } from '@/interfaces/maps'
+import { IconMapLocationType } from '@/functs/maps'
+import { ICONS } from '@/functs/IconImage'
+import { LocationType } from '@/models/types'
 
 const props = withDefaults(
   defineProps<{
@@ -45,6 +48,7 @@ const mapInstance = shallowRef<L.Map>(null)
 const markerClusterInstance = ref<L.MarkerClusterGroup>(null)
 const mapRef = useTemplateRef('map')
 const markers = ref(new Map<TranslatedLocation['id'] | Geocoding['id'], L.Marker>())
+const { t } = useNuxtI18n()
 
 const MAP_URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
 const CONFIG: L.MapOptions = {
@@ -66,46 +70,35 @@ const ICON_ANCHOR: L.PointTuple = ICON_SIZE ? [ICON_SIZE[0] / 2, ICON_SIZE[1]] :
 const createClusterIcons = (cluster) => {
   const markers = cluster.getAllChildMarkers()
 
-  const teamCluster = []
-  const impactCluster = []
-  const addressCluster = []
+  const counterLocationType: { [key in LocationType]?: number } = {}
 
   markers.forEach((m) => {
     const className = m.getIcon().options.className
-    if (className === 'team') teamCluster.push(className)
-    else if (className === 'impact') impactCluster.push(className)
-    else if (className === 'address') addressCluster.push(className)
+    counterLocationType[className] ??= 0
+    counterLocationType[className] += 1
   })
 
   const clusterMarker = document.createElement('div')
-  clusterMarker.className = 'cluster-ctn'
+  clusterMarker.className = 'cluster-container shadowed-box'
 
-  if (teamCluster.length) {
-    const teamHTML = document.createElement('div')
-    teamHTML.className = 'team marker-ctn'
-    teamHTML.appendChild(document.createTextNode('' + teamCluster.length))
-    clusterMarker.appendChild(teamHTML)
-  }
-  if (impactCluster.length) {
-    const impactHtml = document.createElement('div')
-    impactHtml.className = 'impact marker-ctn'
-    impactHtml.appendChild(document.createTextNode('' + impactCluster.length))
-    clusterMarker.appendChild(impactHtml)
-  }
+  Object.entries(counterLocationType).forEach(([LocationType, count]) => {
+    const container = document.createElement('div')
+    container.className = `cluster-element ${LocationType}`
+    container.title = t(`location.${LocationType}`)
+    const icon = ICONS[IconMapLocationType(LocationType as LocationType)]
+    container.innerHTML = `
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="location-icon">${icon}</svg>
+      <span>${count}</span>
+    `
+    clusterMarker.appendChild(container)
+  })
 
-  if (addressCluster.length) {
-    const addressHtml = document.createElement('div')
-    addressHtml.className = 'address marker-ctn'
-    addressHtml.appendChild(document.createTextNode('' + addressCluster.length))
-    clusterMarker.appendChild(addressHtml)
-  }
+  const clusterMarkerString = `${clusterMarker.outerHTML}<div class="line" />`
 
-  const clusterMarkerString = `${clusterMarker.outerHTML}<span class="line" />`
-
-  const sizeClass = (cluster.getChildCount() + '').length
+  // const sizeClass = (cluster.getChildCount() + '').length
   return L.divIcon({
     html: clusterMarkerString,
-    className: 'marker-cluster team size-' + sizeClass,
+    className: 'cluster-parent',
     iconSize: null,
   })
 }
@@ -134,11 +127,19 @@ const flyTo = (coordinates, zoom) => {
   map?.flyTo([coordinates.lat, coordinates.lng], zoom)
 }
 
+const closePopUp = () => {
+  const map = toRaw(mapInstance.value)
+  map.closePopup()
+}
+
 defineExpose({
   flyTo,
   centerMap,
+  closePopUp,
   map: mapInstance,
 })
+
+provide('closePopUp', closePopUp)
 
 const addPointer = async (
   { markerContent, location, tooltip }: MapPointerOption,
@@ -147,9 +148,12 @@ const addPointer = async (
   const icon = L.divIcon({
     html: markerContent,
     className: location.type,
-    // iconSize: ICON_SIZE,
-    // iconAnchor: ICON_ANCHOR,
+    iconSize: ICON_SIZE,
+    iconAnchor: ICON_ANCHOR,
   })
+
+  const map = toRaw(mapInstance.value)
+  const cluster = toRaw(markerClusterInstance.value)
 
   const marker = L.marker([location.lat, location.lng], { icon })
   if (tooltip) {
@@ -173,9 +177,6 @@ const addPointer = async (
   }
 
   markers.value.set(location.id, marker)
-
-  const map = toRaw(mapInstance.value)
-  const cluster = toRaw(markerClusterInstance.value)
 
   if (cluster) {
     cluster.addLayer(marker)

@@ -10,7 +10,12 @@
             @mounted="slotProps.addPointer"
             @unmounted="slotProps.removePointer"
           >
-            <ProjectLocationTooltip :location="location" />
+            <GroupLocationToolTip
+              v-if="location.group"
+              :location="location"
+              :group="location.group"
+            />
+            <ProjectLocationTooltip v-else :location="location" :project="location.project" />
           </MapPointer>
         </template>
       </BaseMap>
@@ -19,6 +24,7 @@
 </template>
 
 <script setup lang="ts">
+import GroupLocationToolTip from '@/components/group/map/GroupLocationToolTip.vue'
 import BaseMap from '@/components/map/BaseMap.vue'
 import MapPointer from '@/components/map/MapPointer.vue'
 import ProjectLocationTooltip from '@/components/project/map/ProjectLocationTooltip.vue'

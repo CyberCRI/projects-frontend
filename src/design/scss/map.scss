@@ -13,14 +13,7 @@
 
   .leaflet-popup-content {
     margin: 0;
-    overflow: hidden;
-    border: $border-width-l solid $primary-dark;
-    border-radius: $border-radius-m;
     box-sizing: border-box;
-
-    p {
-      margin: 0;
-    }
   }
 
   .leaflet-popup-close-button,
@@ -30,7 +23,6 @@
 }
 
 // MAP POINTER
-
 .map-pointer {
   display: flex;
   flex-direction: column;
@@ -41,37 +33,50 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: $space-m;
+    padding: $space-m $space-m $space-m $space-2xs;
     height: 34px;
     box-sizing: border-box;
-    border: $border-width-s solid $primary-dark;
+    border: $border-width-m solid $primary-dark;
     border-radius: $border-radius-l;
     cursor: pointer;
     transition:
       height 0.15s ease-in-out,
       width 0.15s ease-in-out;
 
+    &.impact {
+      border-color: $location-impact;
+    }
+
+    &.team {
+      border-color: $location-team;
+    }
+
+    &.address {
+      border-color: $location-address;
+    }
+
     &__dot {
-      width: 16px;
-      height: 16px;
+      width: 20px;
+      height: 20px;
+      padding: 0.2rem;
       border-radius: 50%;
       margin-right: $space-s;
 
       &.impact {
-        background: $violet;
+        background: $location-impact;
       }
 
       &.team {
-        background: $primary;
+        background: $location-team;
       }
 
       &.address {
-        background: $primary;
+        background: $location-address;
       }
     }
 
     &__label {
-      color: $primary-dark;
+      color: $almost-black;
       font-size: $font-size-xs;
       text-transform: uppercase;
       font-weight: 700;
@@ -100,7 +105,7 @@
 
 // PROJECT TOOLTIP
 
-.project-tooltip {
+.card-tooltip {
   overflow: hidden;
   display: flex;
   width: 100%;
@@ -127,15 +132,15 @@
       margin-right: $space-s;
 
       &.impact {
-        background: $violet;
+        background: $location-impact;
       }
 
       &.team {
-        background: $primary;
+        background: $location-team;
       }
 
       &.address {
-        background: $primary;
+        background: $location-address;
       }
     }
   }
@@ -160,7 +165,8 @@
     margin-top: $space-m;
   }
 
-  &__image {
+  &__image,
+  &__image img {
     width: pxToRem(72px);
     flex-basis: pxToRem(72px);
     flex-shrink: 0;
@@ -180,13 +186,13 @@
     display: flex;
     justify-content: space-between;
 
-    .project-title {
+    .card-title {
       font-size: $font-size-m;
       font-weight: 700;
       line-height: $line-height-tight;
     }
 
-    .project-purpose {
+    .card-purpose {
       font-size: $font-size-s;
       margin: $space-s;
     }
@@ -204,7 +210,7 @@
   }
 
   // LpiButton
-  .project-tooltip__button {
+  .card-tooltip__button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -234,55 +240,61 @@
 }
 
 // CLUSTER
+.cluster-parent {
+  border-radius: 22px;
 
-.marker-cluster {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: -69px;
-  width: 100%;
-
-  .cluster-ctn {
-    display: flex;
-    margin-left: 0;
-    margin-top: -30px;
-    width: unset;
+  .cluster-container {
     height: unset;
+    margin-left: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: -69px;
+    width: 100%;
+    background-color: white;
+    border-radius: 22px;
+    gap: 0.4rem;
+    padding: 0.2rem 0.1rem;
+    transform: translateX(-50%);
+    border: $border-width-m solid $primary-dark;
 
-    .marker-ctn {
-      background: $primary;
-      min-width: 40px;
-      height: 40px;
-      line-height: 40px;
-      border: $border-width-s solid $primary-dark;
-      margin-left: 0;
-      text-align: center;
-      font-size: $font-size-m;
-      font-weight: 900;
-      color: $white;
-      border-radius: 0;
-      padding: 0 $space-s;
+    .cluster-element {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.4rem;
 
-      &:first-child {
-        border-top-left-radius: $border-radius-l;
-        border-bottom-left-radius: $border-radius-l;
+      > * {
+        margin: auto;
+      }
+
+      svg {
+        padding: 0.2rem;
+        width: 16px;
+        height: 16px;
+        border-radius: 22px;
+      }
+
+      span {
+        // padding: .5rem;
+        font-weight: bolder;
+      }
+
+      &.team svg {
+        background-color: $location-team;
+      }
+
+      &.impact svg {
+        background-color: $location-impact;
+      }
+
+      &.address svg {
+        background-color: $location-address;
       }
 
       &:last-child {
-        border-top-right-radius: $border-radius-l;
-        border-bottom-right-radius: $border-radius-l;
-      }
-
-      &.team {
-        background: $primary;
-      }
-
-      &.impact {
-        background: $violet;
-      }
-
-      &.address {
-        background: $primary;
+        margin-right: 0.4rem;
       }
     }
   }

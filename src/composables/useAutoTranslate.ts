@@ -169,7 +169,19 @@ export default function useAutoTranslate() {
   // -----------------
   // groups
   const translateGroup = (group) =>
-    translateEntity<TranslatedPeopleGroupModel>(group, ['name', 'description', 'short_description'])
+    computed(() => {
+      const _group = unref(
+        translateEntity<TranslatedPeopleGroupModel>(group, [
+          'name',
+          'description',
+          'short_description',
+        ])
+      )
+      return {
+        ..._group,
+        location: _group?.location ? unref(translateLocation(_group.location)) : null,
+      }
+    })
   const translateGroups = (groups) =>
     translateEntities<TranslatedPeopleGroupModel>(groups, translateGroup)
 

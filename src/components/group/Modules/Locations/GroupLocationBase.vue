@@ -2,7 +2,7 @@
   <FetchLoader :status="status" skeleton only-error>
     <MapRecap :locations="locations" expand :editable="isEdit" @expand="opened = true">
       <template #tooltip="{ location }">
-        <ProjectLocationTooltip :location="location" />
+        <ProjectLocationTooltip :location="location" :project="location.project" />
       </template>
     </MapRecap>
     <LocationDrawer

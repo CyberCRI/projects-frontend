@@ -22,7 +22,7 @@
             :alt="`${group.$t.name} image`"
             :picture-data="group.header_image"
             picture-size="medium"
-            :default-picture="DEFAULT_USER_PATATOID"
+            :default-picture="DEFAULT_GROUP_PATATOID"
           />
         </div>
         <div class="group-infos list-divider">
@@ -81,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
+import { DEFAULT_GROUP_PATATOID } from '@/composables/usePatatoids'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
 import SdgList from '@/components/sdgs/SdgList.vue'

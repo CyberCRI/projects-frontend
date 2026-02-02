@@ -31,7 +31,7 @@
         />
       </div>
     </NuxtLink>
-    <div class="project-extra">
+    <div v-if="extra" class="project-extra">
       <slot name="action">
         <ProjectFollowIcon
           class="icon skeletons-image"
@@ -53,9 +53,13 @@ import TagsList from '@/components/tags/TagsList.vue'
 import { cropIfTooLong } from '@/functs/string'
 import { TranslatedProject } from '@/models/project.model'
 
-const props = defineProps<{
-  project: TranslatedProject
-}>()
+const props = withDefaults(
+  defineProps<{
+    project: TranslatedProject
+    extra?: boolean
+  }>(),
+  { extra: false }
+)
 
 const emit = defineEmits(['refresh'])
 
