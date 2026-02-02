@@ -3,24 +3,22 @@ import BaseModel from '@/models/base.model'
 import { ProjectModel, TranslatedProject } from '@/models/project.model'
 import { LocationType } from '@/models/types'
 
-/**
- * @name LocationModel
- * @description Location of a project
- */
-export interface LocationModel extends BaseModel {
+export interface BaseLocationModel extends BaseModel {
   id: number
   lat: number
   lng: number
   type: LocationType
-  project: ProjectModel
   title: string
   description: string
 }
 
-export type TranslatedLocation = Omit<
-  Translated<LocationModel, 'title' | 'description'>,
-  'project'
-> & {
+export type BaseTranslatedLocationModel = Translated<BaseLocationModel, 'title' | 'description'>
+
+export interface LocationModel extends BaseLocationModel {
+  project: ProjectModel
+}
+
+export type TranslatedLocation = BaseTranslatedLocationModel & {
   project: TranslatedProject
 }
 
@@ -39,3 +37,6 @@ export type LocationForm = Partial<
 export type ProjectLocationForm = LocationForm & {
   project_id: string
 }
+
+export type AnyLocation = BaseLocationModel & { [key: string]: any }
+export type AnyTranslatedLocation = BaseTranslatedLocationModel & { [key: string]: any }

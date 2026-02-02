@@ -27,11 +27,6 @@
               :label="$t('geocoding.form-method')"
               @click="formMode = 'form'"
             />
-            <LpiButton
-              :label="$t('geocoding.current-position')"
-              btn-icon="CurrentPosition"
-              @click="currentPosition"
-            />
           </div>
         </div>
         <div v-else-if="formMode === 'click'">
@@ -86,7 +81,7 @@
         <div class="map-inner-ctn">
           <div class="map">
             <client-only>
-              <LazyBaseMap ref="map" @click="formMode === 'click' ? openAddModal($event) : null">
+              <LazyBaseMap ref="map" @click="formMode === 'click' ? clickOnMap($event) : null">
                 <template #default="slotProps">
                   <template v-if="slotProps.map && !suggestedLocations">
                     <MapPointer
@@ -105,14 +100,17 @@
                     </MapPointer>
                   </template>
                   <template v-if="slotProps.map && suggestedLocations">
-                    <MapSuggestion
+                    <MapPointer
                       v-for="location in suggestedLocations"
                       :key="location.id"
                       :location="location"
-                      @pick-location="openAddModal"
-                      @mounted="slotProps.addPointer($event, {})"
-                      @unmounted="slotProps.removePointer(location)"
-                    />
+                      @mounted="slotProps.addPointer"
+                      @unmounted="slotProps.removePointer"
+                    >
+                      <template #marker>
+                        <MarkerSuggestion :location="location" @click="openAddModal(location)" />
+                      </template>
+                    </MapPointer>
                   </template>
                 </template>
               </LazyBaseMap>
@@ -145,17 +143,18 @@
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import MapPointer from '@/components/map/MapPointer.vue'
 import useToasterStore from '@/stores/useToaster'
-import { LocationForm as LocationFormType, TranslatedLocation } from '@/models/location.model'
+import { AnyTranslatedLocation, LocationForm as LocationFormType } from '@/models/location.model'
 import LocationTooltip from '@/components/map/LocationTooltip.vue'
 import { Geocoding } from '@/interfaces/maps'
 import { useSuggestLocations } from '@/api/geocoding.service'
 import LocationForm from '@/components/map/LocationForm.vue'
 import { LocationType } from '@/models/types'
+import MarkerSuggestion from '@/components/map/MarkerSuggestion.vue'
 
 const props = withDefaults(
   defineProps<{
     isOpened?: boolean
-    locations?: TranslatedLocation[]
+    locations?: AnyTranslatedLocation[]
     editable?: boolean
     locationTypes?: LocationType[]
   }>(),
@@ -198,11 +197,22 @@ const openEditModal = (location) => {
   form.value = location
   showForm.value = true
 }
-const openAddModal = (event) => openEditModal({ lat: event.latlng.lat, lng: event.latlng.lng })
+const openAddModal = (newLocation) =>
+  openEditModal({
+    title: newLocation.title ?? '',
+    description: newLocation.description ?? '',
+    lat: newLocation.lat,
+    lng: newLocation.lng,
+    type: 'address',
+  })
+// method for event on leaftlet
+const clickOnMap = (event) => openAddModal({ lat: event.latlng.lat, lng: event.latlng.lng })
+
 const closeModal = () => {
   formMode.value = null
   form.value = null
   showForm.value = false
+  suggestedLocations.value = null
 }
 
 watch(
@@ -211,25 +221,6 @@ watch(
 )
 
 const suggestedLocations = ref<Geocoding[]>(null)
-
-const currentPosition = async () => {
-  navigator.geolocation.getCurrentPosition(
-    (postiion) => {
-      openEditModal({
-        lat: postiion.coords.latitude,
-        lng: postiion.coords.longitude,
-      })
-    },
-    (err) => {
-      console.error(err)
-      toaster.pushError(t('geocoding.error'))
-    },
-    {
-      enableHighAccuracy: true,
-      timeout: 4000,
-    }
-  )
-}
 
 const suggestLocations = async () => {
   geocodingLoading.value = true

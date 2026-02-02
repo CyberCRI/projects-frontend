@@ -11,7 +11,7 @@
                   :key="location.id"
                   :location="location"
                   :editable="editable"
-                  @edit="$emit('edit', $event)"
+                  @edit="$emit('edit', location)"
                   @mounted="slotProps.addPointer"
                   @unmounted="slotProps.removePointer(location)"
                 >

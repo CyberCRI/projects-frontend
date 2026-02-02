@@ -1,50 +1,29 @@
 <template>
   <div id="projects-map">
     <Transition name="fade">
-      <div v-if="loading" class="map-loader">
+      <div v-if="isLoading" class="map-loader">
         <LoaderComplex :label="$t('location.loading')" />
       </div>
     </Transition>
-    <GeneralMap :locations="transltedProjectLocations" :loading="loading" />
-    <div v-if="!loading && !projectLocations.length" class="empty-map">
+    <GeneralMap :locations="data" :loading="isLoading" />
+    <div v-if="!isLoading && isEmpty" class="empty-map">
       {{ $t('map.empty') }}
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { getLocations } from '@/api/locations.services'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import { getOrganizationByCode } from '@/api/organizations.service'
+import { getLocations } from '@/api/v2/location.service'
 import GeneralMap from '@/components/map/GeneralMap.vue'
 
-const organizationsStore = useOrganizationsStore()
+const organizationCode = useOrganizationCode()
 const { t } = useNuxtI18n()
 
-const { translateProjectLocations } = useAutoTranslate()
+const { isLoading, data } = getLocations(organizationCode)
 
-const projectLocations = ref([])
-const loading = ref(true)
+watch(data, () => console.log(data))
 
-const transltedProjectLocations = translateProjectLocations(projectLocations)
-const loadLocations = async (page = null) => {
-  loading.value = true
-  const locations = await getLocations({ organizations: [organizationsStore.current.code] }, page)
-  projectLocations.value.push(...locations)
-  // if (
-  //     locations.total_page > 1 &&
-  //     !!locations.next_page &&
-  //     locations.current_page < locations.total_page // weird backend bug: if no location we still get a next page
-  // ) {
-  //     await this.loadLocations(locations.next)
-  // } else
-  // if (this.$refs && this.$refs.map) this.$refs.map.centerMap()
-  /*
-   ** The previous line checks if the refs are still set, in case the user leaves the page to fast
-   ** Not checking this might create an error after the API calls are done.
-   */
-  loading.value = false
-}
+const isEmpty = computed(() => data.value.groups.length + data.value.projects.length === 0)
 
 onBeforeUnmount(() => {
   document.getElementsByTagName('body')[0].classList.remove('map-no-scroll')
@@ -52,23 +31,12 @@ onBeforeUnmount(() => {
 
 onMounted(async () => {
   document.getElementsByTagName('body')[0].classList.add('map-no-scroll')
-  await loadLocations()
 })
 
-try {
-  const runtimeConfig = useRuntimeConfig()
-  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
-  useLpiHead(
-    useRequestURL().toString(),
-    computed(() => t('map.page-title')),
-    computed(() => t('map.page-title')),
-    image,
-    dimensions
-  )
-} catch (err) {
-  console.log(err)
-}
+useLpiHead2({
+  title: computed(() => t('map.page-title')),
+  description: computed(() => t('map.page-title')),
+})
 </script>
 
 <style lang="scss" scoped>

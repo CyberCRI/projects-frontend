@@ -21,12 +21,14 @@
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import LocationType from '@/components/map/LocationType.vue'
 import { cropIfTooLong } from '@/functs/string'
-import { TranslatedLocation } from '@/models/location.model'
+import { AnyLocation } from '@/models/location.model'
 
-const props = defineProps<{ location: TranslatedLocation }>()
+const props = defineProps<{ location: AnyLocation }>()
 
-const title = computed(() => cropIfTooLong(props.location?.$t?.title, 45))
-const description = computed(() => cropIfTooLong(props.location?.$t?.description, 85))
+const title = computed(() => cropIfTooLong(props.location?.$t?.title ?? props.location.title, 45))
+const description = computed(() =>
+  cropIfTooLong(props.location?.$t?.description ?? props.location.description, 85)
+)
 
 const closePopUp = inject('closePopUp')
 </script>

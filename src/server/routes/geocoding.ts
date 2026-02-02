@@ -2,6 +2,7 @@ import { Geocoding } from '@/interfaces/maps'
 
 async function fetchFromPhoton(address, locale, runtimeConfig) {
   // TODO: use an env variable for the geocoding API URL
+
   const res: any = await $fetch(runtimeConfig.public.appGeocodingApiUrl, {
     query: {
       q: address,
@@ -13,28 +14,34 @@ async function fetchFromPhoton(address, locale, runtimeConfig) {
 
   const suggestedLocations: Geocoding[] = (res?.features || [])
     .filter((feature) => feature.geometry.type === 'Point')
-    .map((feature) => {
+    .map((feature, idx) => {
       const lng = feature.geometry.coordinates[0]
       const lat = feature.geometry.coordinates[1]
-      const latlng = {
-        lat,
-        lng,
-      }
 
       return {
-        id: Math.random().toString(36).substring(2, 15),
-        label: `${feature.properties.name || ''} ${feature.properties.country || ''}`,
+        id: idx,
+        title: `${feature.properties.name || ''} ${feature.properties.country || ''}`,
         lat,
         lng,
-        latlng,
-        type: feature.properties.type,
-      }
+        description: '',
+        type: 'address',
+      } satisfies Geocoding
     })
 
   return suggestedLocations
 }
 
 async function fetchFromGoogle(address, locale, runtimeConfig) {
+  return [
+    {
+      id: 55,
+      title: 'Giv, Qom Province, Iran',
+      lat: 0,
+      lng: 0,
+      description: '',
+      type: 'address',
+    },
+  ] as Geocoding[]
   // TODO: use an env variable for the geocoding API URL
   const res: any = await $fetch(runtimeConfig.public.appGeocodingApiUrl, {
     query: {
@@ -48,22 +55,18 @@ async function fetchFromGoogle(address, locale, runtimeConfig) {
 
   const suggestedLocations: Geocoding[] = (res?.results || [])
     .filter((feature) => !!feature.geometry.location)
-    .map((feature) => {
+    .map((feature, idx) => {
       const lng = feature.geometry.location.lng
       const lat = feature.geometry.location.lat
-      const latlng = {
-        lat,
-        lng,
-      }
 
       return {
-        id: Math.random().toString(36).substring(2, 15),
-        label: feature.formatted_address || '',
+        id: idx,
+        title: feature.formatted_address || '',
         lat,
         lng,
-        latlng,
-        type: feature.types.length ? feature.types[0] : '',
-      }
+        description: '',
+        type: 'address',
+      } satisfies Geocoding
     })
   return suggestedLocations
 }

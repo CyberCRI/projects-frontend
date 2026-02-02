@@ -1,7 +1,7 @@
 import { IconImageChoice } from '@/functs/IconImage'
 import { Translated } from '@/interfaces/translated'
 import { Image } from '@/models/image.model'
-import { LocationModel, TranslatedLocation } from '@/models/location.model'
+import { BaseLocationModel, BaseTranslatedLocationModel } from '@/models/location.model'
 import { OrganizationModel } from '@/models/organization.model'
 import { TagModel } from '@/models/tag.model'
 
@@ -9,6 +9,7 @@ export type SubGroup = {
   id: number
   name: string
 }
+
 // TODO remove once merged with group PR
 export interface PeopleGroupModel {
   id: number
@@ -25,7 +26,7 @@ export interface PeopleGroupModel {
   hierarchy: any
   sdgs: number[]
   tags: TagModel[]
-  location: LocationModel | null
+  location: BaseLocationModel | null
   modules: {
     members: number
     featured_projects: number
@@ -43,7 +44,11 @@ export type TranslatedPeopleGroupModel = Omit<
   Translated<PeopleGroupModel, 'name' | 'description' | 'short_description'>,
   'location'
 > & {
-  location: TranslatedLocation | null
+  location: BaseTranslatedLocationModel | null
+}
+
+export type GeneralLocationPeopleGroup = BaseTranslatedLocationModel & {
+  group: TranslatedPeopleGroupModel
 }
 
 export const GroupModuleIcon: { [key in PeopleGroupModulesKeys]: IconImageChoice } = {

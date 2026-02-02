@@ -4,18 +4,22 @@
       <BaseMap ref="map" :config="CONFIG" use-cluster>
         <template #default="slotProps">
           <MapPointer
-            v-for="location in locations"
+            v-for="location in locations.groups"
             :key="location.id"
             :location="location"
             @mounted="slotProps.addPointer"
             @unmounted="slotProps.removePointer"
           >
-            <GroupLocationToolTip
-              v-if="location.group"
-              :location="location"
-              :group="location.group"
-            />
-            <ProjectLocationTooltip v-else :location="location" :project="location.project" />
+            <GroupLocationToolTip :location="location" :group="location.group" />
+          </MapPointer>
+          <MapPointer
+            v-for="location in locations.projects"
+            :key="location.id"
+            :location="location"
+            @mounted="slotProps.addPointer"
+            @unmounted="slotProps.removePointer"
+          >
+            <ProjectLocationTooltip :location="location" :project="location.project" />
           </MapPointer>
         </template>
       </BaseMap>
@@ -28,14 +32,19 @@ import GroupLocationToolTip from '@/components/group/map/GroupLocationToolTip.vu
 import BaseMap from '@/components/map/BaseMap.vue'
 import MapPointer from '@/components/map/MapPointer.vue'
 import ProjectLocationTooltip from '@/components/project/map/ProjectLocationTooltip.vue'
-import { TranslatedLocation } from '@/models/location.model'
+import { TranslatedLocations } from '@/interfaces/maps'
 
 const props = withDefaults(
   defineProps<{
-    locations: TranslatedLocation[]
+    locations: TranslatedLocations
     loading?: boolean
   }>(),
   { loading: true }
+)
+
+watch(
+  () => props.locations,
+  () => console.log(props.locations)
 )
 
 const CONFIG = {

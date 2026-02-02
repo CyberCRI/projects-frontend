@@ -1,4 +1,4 @@
-import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import { GeneralLocationPeopleGroup, TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import { TranslatedOrganizationModel } from '@/models/organization.model'
 import { TranslatedPeopleModel } from '@/models/people.model'
 import { TranslatedProject } from '@/models/project.model'
@@ -138,6 +138,20 @@ export default function useAutoTranslate() {
   }
   const translateProjectLocations = (Locations) =>
     translateEntities<TranslatedLocation>(Locations, translateProjectLocation)
+
+  const translatePeopleGroupLocation = (location) => {
+    return computed<GeneralLocationPeopleGroup>(() => {
+      if (!location) {
+        return location
+      }
+      return {
+        ...unref(translateLocation(location)),
+        group: unref(translateGroup(location.group)),
+      }
+    })
+  }
+  const translatePeopleGroupLocations = (Locations) =>
+    translateEntities<GeneralLocationPeopleGroup>(Locations, translatePeopleGroupLocation)
 
   const translateProjectMessage = (message) => translateEntity(message, ['content'])
   const translateProjectMessages = (messages) =>
@@ -322,6 +336,8 @@ export default function useAutoTranslate() {
     // groups
     translateGroup,
     translateGroups,
+    translatePeopleGroupLocation,
+    translatePeopleGroupLocations,
 
     // org
     translateOrganization,

@@ -11,10 +11,16 @@
 </template>
 
 <script setup lang="ts">
-import { TranslatedLocation } from '@/models/location.model'
+import { AnyTranslatedLocation } from '@/models/location.model'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import { DEFAULT_GROUP_PATATOID } from '@/composables/usePatatoids'
 import CardLocationTooltip from '@/components/map/CardLocationTooltip.vue'
 
-defineProps<{ location: TranslatedLocation; group: TranslatedPeopleGroupModel }>()
+const props = defineProps<{ location: AnyTranslatedLocation; group: TranslatedPeopleGroupModel }>()
+
+watch(
+  () => props.group,
+  () => console.log(props.group),
+  { immediate: true }
+)
 </script>

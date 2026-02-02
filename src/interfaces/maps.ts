@@ -1,20 +1,27 @@
-import { TranslatedLocation } from '@/models/location.model'
+import { GeneralLocationPeopleGroup, PeopleGroupModel } from '@/models/invitation.model'
+import {
+  AnyLocation,
+  BaseLocationModel,
+  LocationModel,
+  TranslatedLocation,
+} from '@/models/location.model'
 
-export type Geocoding = {
-  id: string
-  label: string
-  lat: number
-  lng: number
-  latlng: {
-    lat: number
-    lng: number
-  }
-  // TODO(remi): return all googlemaps type
-  type: 'locality' | 'country' | 'route'
+export type Geocoding = BaseLocationModel & {
+  label?: string
 }
 
 export type MapPointerOption = {
   markerContent: HTMLElement
-  location: TranslatedLocation | Geocoding
+  location: AnyLocation
   tooltip?: HTMLElement
+}
+
+export type Locations = {
+  groups: PeopleGroupModel[]
+  projects: LocationModel[]
+}
+
+export type TranslatedLocations = {
+  groups: GeneralLocationPeopleGroup[]
+  projects: TranslatedLocation[]
 }

@@ -403,7 +403,6 @@ export default {
       this.closeModal('location')
     },
     submitLocation(location) {
-      console.log(location, this.form.location)
       this.form.location = location
       this.closeModal('location')
     },

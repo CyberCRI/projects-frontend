@@ -1,17 +1,18 @@
 <template>
   <div class="wrapper">
     <div ref="marker" class="map-pointer" :data-location-type="location.type">
-      <div :class="['badge', location.type]">
-        <LocationType :location="location" />
-        <div v-if="editable" class="actions">
-          <ContextActionButton
-            action-icon="Pen"
-            class="edit-btn small"
-            @click.stop="emit('edit', location)"
-          />
+      <slot name="marker">
+        <div :class="['badge', location.type]">
+          <LocationType :location="location" />
+          <div v-if="editable" class="actions">
+            <ContextActionButton
+              action-icon="Pen"
+              class="edit-btn small"
+              @click.stop="emit('edit', location)"
+            />
+          </div>
         </div>
-      </div>
-
+      </slot>
       <div class="line" />
     </div>
     <div ref="tooltip">
@@ -23,11 +24,11 @@
 <script setup lang="ts">
 import LocationType from '@/components/map/LocationType.vue'
 import { MapPointerOption } from '@/interfaces/maps'
-import { TranslatedLocation } from '@/models/location.model'
+import { AnyLocation } from '@/models/location.model'
 
 const props = withDefaults(
   defineProps<{
-    location: TranslatedLocation
+    location: AnyLocation
     editable?: boolean
   }>(),
   {
@@ -37,17 +38,18 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   mounted: [MapPointerOption]
-  unmounted: [TranslatedLocation | null]
-  edit: [TranslatedLocation | null]
+  unmounted: [AnyLocation | null]
+  edit: [AnyLocation | null]
 }>()
 
 const markerRef = useTemplateRef('marker')
 const tooltipRef = useTemplateRef('tooltip')
+
 onMounted(() => {
   emit('mounted', {
     location: props.location,
     markerContent: markerRef.value,
-    tooltip: tooltipRef.value,
+    tooltip: tooltipRef.value.childElementCount ? tooltipRef.value : null,
   })
 })
 

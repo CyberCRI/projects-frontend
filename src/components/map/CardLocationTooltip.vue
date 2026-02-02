@@ -22,13 +22,13 @@
 <script setup lang="ts">
 import { cropIfTooLong } from '@/functs/string'
 import LinkButton from '@/components/base/button/LinkButton.vue'
-import { TranslatedLocation } from '@/models/location.model'
+import { AnyTranslatedLocation } from '@/models/location.model'
 import LocationTooltip from '@/components/map/LocationTooltip.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import { Image } from '@/models/image.model'
 
 const props = defineProps<{
-  location: TranslatedLocation
+  location: AnyTranslatedLocation
   label: string
   to: any
   title: string

@@ -15,7 +15,7 @@
 import * as L from 'leaflet'
 import fixLeaflet from '@/app/fixLeaflet'
 import 'leaflet.markercluster'
-import { LocationModel, TranslatedLocation } from '@/models/location.model'
+import { AnyLocation, TranslatedLocation } from '@/models/location.model'
 import { Geocoding, MapPointerOption } from '@/interfaces/maps'
 import { IconMapLocationType } from '@/functs/maps'
 import { ICONS } from '@/functs/IconImage'
@@ -36,7 +36,7 @@ const emit = defineEmits<{
   contextmenu: [
     {
       isEdit: boolean
-      location: TranslatedLocation | Geocoding
+      location: AnyLocation
       latlng: [number, number]
     },
   ]
@@ -186,7 +186,7 @@ const addPointer = async (
   }
 }
 
-const removePointer = (location: LocationModel | Geocoding) => {
+const removePointer = (location: AnyLocation) => {
   const marker = markers.value.get(location.id) as L.Marker
 
   const map = toRaw(mapInstance.value)
