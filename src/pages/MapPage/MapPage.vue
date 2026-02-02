@@ -26,11 +26,11 @@ watch(data, () => console.log(data))
 const isEmpty = computed(() => data.value.groups.length + data.value.projects.length === 0)
 
 onBeforeUnmount(() => {
-  document.getElementsByTagName('body')[0].classList.remove('map-no-scroll')
+  document.body.classList.remove('map-no-scroll')
 })
 
 onMounted(async () => {
-  document.getElementsByTagName('body')[0].classList.add('map-no-scroll')
+  document.body.classList.add('map-no-scroll')
 })
 
 useLpiHead2({
@@ -99,9 +99,5 @@ useLpiHead2({
       border-radius: 50%;
     }
   }
-}
-
-body.map-no-scroll {
-  overflow: hidden;
 }
 </style>

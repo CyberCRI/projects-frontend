@@ -6,7 +6,7 @@
     :image="group.header_image"
     :default-picture="DEFAULT_GROUP_PATATOID"
     :title="group.$t.name"
-    :description="group.$t.short_description"
+    :description="group.$t.short_description ?? group.$t.description"
   />
 </template>
 

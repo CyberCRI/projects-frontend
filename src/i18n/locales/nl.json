@@ -575,7 +575,8 @@
     "and": "en",
     "create": "Aanmaken",
     "order-asc": "oudste tot nieuwste",
-    "order-desc": "nieuwste naar oudste"
+    "order-desc": "nieuwste naar oudste",
+    "close": "sluiten"
   },
   "complete-profile": {
     "bio": {

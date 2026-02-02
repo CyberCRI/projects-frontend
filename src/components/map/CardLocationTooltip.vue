@@ -1,6 +1,12 @@
 <template>
   <LocationTooltip :location="location">
-    <LinkButton :label="label" class="card-tooltip-button" btn-icon="ArrowRight" :to="to" />
+    <LinkButton
+      :label="label"
+      class="card-tooltip-button"
+      btn-icon="ArrowRight"
+      :title="props.title"
+      :to="to"
+    />
     <div class="card-tooltip-content" :class="[location.type]">
       <CroppedApiImage
         :picture-data="image"
@@ -12,7 +18,7 @@
           {{ title }}
         </h3>
         <p class="card-purpose">
-          {{ purpose }}
+          {{ description }}
         </p>
       </div>
     </div>
@@ -27,18 +33,21 @@ import LocationTooltip from '@/components/map/LocationTooltip.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import { Image } from '@/models/image.model'
 
-const props = defineProps<{
-  location: AnyTranslatedLocation
-  label: string
-  to: any
-  title: string
-  description: string
-  image: Image
-  defaultPicture: string
-}>()
+const props = withDefaults(
+  defineProps<{
+    location: AnyTranslatedLocation
+    label: string
+    to: any
+    title: string
+    description?: string
+    image: Image
+    defaultPicture: string
+  }>(),
+  { description: '' }
+)
 
 const title = computed(() => cropIfTooLong(props.title, 45))
-const purpose = computed(() => cropIfTooLong(props.description, 85))
+const description = computed(() => cropIfTooLong(props.description, 85))
 </script>
 
 <style lang="scss" scoped>

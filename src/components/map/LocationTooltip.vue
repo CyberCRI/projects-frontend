@@ -1,11 +1,16 @@
 <template>
-  <div class="location-tooltip" :class="location.type">
+  <div class="location-tooltip" :class="location.type" @scroll="console.log">
     <div class="location-tooltip-header">
       <LocationType :location="location" />
-      <LpiButton btn-icon="Close" class="location-tooltip-icon" @click="closePopUp" />
+      <LpiButton
+        btn-icon="Close"
+        class="location-tooltip-icon"
+        :title="$t('common.close')"
+        @click="closePopUp"
+      />
     </div>
 
-    <div class="location-tooltip-info">
+    <div v-if="title || description" class="location-tooltip-info">
       <h3>
         {{ title }}
       </h3>
@@ -25,6 +30,7 @@ import { AnyLocation } from '@/models/location.model'
 
 const props = defineProps<{ location: AnyLocation }>()
 
+// when create new point (from locationDrawer) we not have $t
 const title = computed(() => cropIfTooLong(props.location?.$t?.title ?? props.location.title, 45))
 const description = computed(() =>
   cropIfTooLong(props.location?.$t?.description ?? props.location.description, 85)

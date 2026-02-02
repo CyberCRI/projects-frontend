@@ -6,7 +6,7 @@
     :image="project.header_image"
     :default-picture="DEFAULT_PROJECT_PATATOID"
     :title="project.$t.title"
-    :description="project.$t.purpose"
+    :description="project.$t.purpose ?? project.$t.description"
   />
 </template>
 
