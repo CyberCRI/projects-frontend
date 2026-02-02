@@ -95,8 +95,8 @@
                       :editable="editable"
                       :location="location"
                       @edit="openEditModal"
-                      @mounted="slotProps.addPointer($event, {})"
-                      @unmounted="slotProps.removePointer(location)"
+                      @mounted="slotProps.addPointer"
+                      @unmounted="slotProps.removePointer"
                     >
                       <LocationTooltip
                         v-if="location.title || location.description"

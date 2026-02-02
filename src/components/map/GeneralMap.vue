@@ -8,7 +8,7 @@
             :key="location.id"
             :location="location"
             @mounted="slotProps.addPointer"
-            @unmounted="slotProps.removePointer(location)"
+            @unmounted="slotProps.removePointer"
           >
             <ProjectLocationTooltip :location="location" />
           </MapPointer>

@@ -41,7 +41,7 @@ const emit = defineEmits<{
   'map-moved': []
 }>()
 
-const mapInstance = ref<L.Map>(null)
+const mapInstance = shallowRef<L.Map>(null)
 const markerClusterInstance = ref<L.MarkerClusterGroup>(null)
 const mapRef = useTemplateRef('map')
 const markers = ref(new Map<TranslatedLocation['id'] | Geocoding['id'], L.Marker>())
@@ -112,7 +112,8 @@ const createClusterIcons = (cluster) => {
 
 const centerMap = () => {
   nextTick(() => {
-    if (!mapInstance.value) {
+    const map = toRaw(mapInstance.value)
+    if (!map) {
       return // fix error if quiting the map before it's loaded
     }
 
@@ -122,10 +123,22 @@ const centerMap = () => {
     })
     // Make sure to "unproxy" the map before using it with Leaflet
     if (bounds.length) {
-      mapInstance.value.fitBounds(bounds, { maxZoom: 5 })
+      map.fitBounds(bounds, { maxZoom: 5 })
     }
   })
 }
+
+// this is called by other components
+const flyTo = (coordinates, zoom) => {
+  const map = toRaw(mapInstance.value)
+  map?.flyTo([coordinates.lat, coordinates.lng], zoom)
+}
+
+defineExpose({
+  flyTo,
+  centerMap,
+  map: mapInstance,
+})
 
 const addPointer = async (
   { markerContent, location, tooltip }: MapPointerOption,
@@ -134,8 +147,8 @@ const addPointer = async (
   const icon = L.divIcon({
     html: markerContent,
     className: location.type,
-    iconSize: ICON_SIZE,
-    iconAnchor: ICON_ANCHOR,
+    // iconSize: ICON_SIZE,
+    // iconAnchor: ICON_ANCHOR,
   })
 
   const marker = L.marker([location.lat, location.lng], { icon })
@@ -161,45 +174,40 @@ const addPointer = async (
 
   markers.value.set(location.id, marker)
 
-  if (markerClusterInstance.value) {
-    markerClusterInstance.value.addLayers([marker])
-    markerClusterInstance.value.refreshClusters()
+  const map = toRaw(mapInstance.value)
+  const cluster = toRaw(markerClusterInstance.value)
+
+  if (cluster) {
+    cluster.addLayer(marker)
+    cluster.refreshClusters()
   } else {
-    marker.addTo(mapInstance.value as L.Map)
+    map.addLayer(marker)
   }
 }
 
 const removePointer = (location: LocationModel | Geocoding) => {
   const marker = markers.value.get(location.id) as L.Marker
 
-  if (!mapInstance.value || !marker) {
+  const map = toRaw(mapInstance.value)
+  const cluster = toRaw(markerClusterInstance.value)
+
+  if (!map || !marker) {
     return
   }
 
-  if (markerClusterInstance.value) {
-    // @ts-expect-error TODO why ts leaflet not work
-    marker.removeFrom(markerClusterInstance.value)
+  if (cluster) {
+    cluster.removeLayer(marker)
   } else {
-    mapInstance.value.removeLayer(marker)
+    map.removeLayer(marker)
   }
 
   markers.value.delete(location.id)
-  if (markerClusterInstance.value) {
-    markerClusterInstance.value.refreshClusters()
+  if (cluster) {
+    cluster.refreshClusters()
   }
   // force readraw
-  mapInstance.value.invalidateSize()
+  map.invalidateSize()
 }
-
-// this is called by other components
-const flyTo = (coordinates, zoom) =>
-  mapInstance.value?.flyTo([coordinates.lat, coordinates.lng], zoom)
-
-defineExpose({
-  flyTo,
-  centerMap,
-  map: mapInstance,
-})
 
 onBeforeMount(() => fixLeaflet())
 onMounted(() => {

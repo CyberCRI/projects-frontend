@@ -9,6 +9,7 @@ export type Geocoding = {
     lat: number
     lng: number
   }
+  // TODO(remi): return all googlemaps type
   type: 'locality' | 'country' | 'route'
 }
 
