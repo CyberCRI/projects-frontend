@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import N from './zod-schema-utils'
 
 const runtimeConfig = useRuntimeConfig()
 
@@ -104,11 +105,11 @@ export const mapSDG = (s: any) => {
 }
 
 export const SDG_OUTPUT_SCHEMA = z.object({
-  id: z.number().describe('The ID of the Sustainable Development Goal (SDG)'),
-  title: z.string().describe('The title of the Sustainable Development Goal (SDG)'),
-  description: z.string().describe('The description of the Sustainable Development Goal (SDG)'),
-  item_image: z.string().describe('The image URL of the Sustainable Development Goal (SDG)'),
-  item_type: z.literal('sdg').describe('The type of the item, always sdg'),
+  id: N.number().describe('The ID of the Sustainable Development Goal (SDG)'),
+  title: N.string().describe('The title of the Sustainable Development Goal (SDG)'),
+  description: N.string().describe('The description of the Sustainable Development Goal (SDG)'),
+  item_image: N.string().describe('The image URL of the Sustainable Development Goal (SDG)'),
+  item_type: N.literal('sdg').describe('The type of the item, always sdg'),
 })
 
 export default (server) => {
@@ -120,7 +121,7 @@ export default (server) => {
       description: 'Get name, description and id of all SDGs Sustainable Development Goals.',
       inputSchema: {},
       outputSchema: {
-        results: z.array(SDG_OUTPUT_SCHEMA),
+        results: N.array(SDG_OUTPUT_SCHEMA),
       },
     },
     async function () {
@@ -140,9 +141,9 @@ export default (server) => {
       title: 'List of all SDGs Sustainable Development Goals',
       description: 'Get name, description and id of all SDGs Sustainable Development Goals.',
       inputSchema: {
-        sdgId: z
-          .number()
-          .describe('The ID of the Sustainable Development Goal (SDG) between 1 and 17'),
+        sdgId: N.number().describe(
+          'The ID of the Sustainable Development Goal (SDG) between 1 and 17'
+        ),
       },
       outputSchema: { results: SDG_OUTPUT_SCHEMA },
     },

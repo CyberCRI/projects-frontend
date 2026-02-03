@@ -1,13 +1,14 @@
 import { z } from 'zod'
+import N from './zod-schema-utils'
 import { mcpFetch, API_BASE_URL, orgCode } from './base'
 
-const NEWS_ARTICLE_OUTPUT_SCHEMA = z.object({
-  id: z.number().describe('The ID of the news article'),
-  slug: z.string().describe('The slug of the news article'),
-  title: z.string().describe('The title of the news article'),
-  content: z.string().describe('The content of the news article'),
-  publication_date: z.string().describe('The publication date of the news article'),
-  item_type: z.literal('news_article').describe('The type of the item, always news_article'),
+const NEWS_ARTICLE_OUTPUT_SCHEMA = N.object({
+  id: N.number().describe('The ID of the news article'),
+  slug: N.string().describe('The slug of the news article'),
+  title: N.string().describe('The title of the news article'),
+  content: N.string().describe('The content of the news article'),
+  publication_date: N.string().describe('The publication date of the news article'),
+  item_type: N.literal('news_article').describe('The type of the item, always news_article'),
 })
 
 const mapNewsArticle = (n: any) => ({
