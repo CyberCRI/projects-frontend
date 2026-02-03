@@ -1,7 +1,7 @@
 <template>
   <div class="location-list-item">
     <div class="location-title">
-      <LocationType :location="location" />
+      <LocationType v-if="showLocationType" :location-type="location.type" />
       <h4>{{ title }}</h4>
       <p>{{ description }}</p>
     </div>
@@ -26,6 +26,7 @@
 
 <script setup lang="ts">
 import LocationType from '@/components/map/LocationType.vue'
+import { cropIfTooLong } from '@/functs/string'
 import { TranslatedLocation } from '@/models/location.model'
 
 const props = withDefaults(
@@ -33,10 +34,12 @@ const props = withDefaults(
     location: TranslatedLocation
     editable?: boolean
     focus?: boolean
+    showLocationType?: boolean
   }>(),
   {
     editable: false,
     focus: true,
+    showLocationType: false,
   }
 )
 
@@ -47,8 +50,10 @@ defineEmits<{
 }>()
 
 // need to safe guard with translated title (if we are in edit/create mode)
-const title = computed(() => props.location.$t?.title ?? props.location.title)
-const description = computed(() => props.location.$t?.description ?? props.location.description)
+const title = computed(() => cropIfTooLong(props.location.$t?.title ?? props.location.title, 40))
+const description = computed(() =>
+  cropIfTooLong(props.location.$t?.description ?? props.location.description, 80)
+)
 </script>
 
 <style scoped lang="scss">

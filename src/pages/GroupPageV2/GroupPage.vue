@@ -250,7 +250,7 @@ const groupTabsEdit = computed(() => {
         group: group.value,
         isLoading: isLoading.value,
       },
-      condition: true,
+      condition: false,
       icon: 'Pen',
     },
     {
@@ -266,7 +266,7 @@ const groupTabsEdit = computed(() => {
         group: group.value,
         isLoading: isLoading.value,
       },
-      condition: true,
+      condition: false,
       icon: 'Pen',
     },
     {
@@ -281,7 +281,7 @@ const groupTabsEdit = computed(() => {
         group: group.value,
         isLoading: isLoading.value,
       },
-      condition: true,
+      condition: false,
       icon: 'Pen',
     },
   ]

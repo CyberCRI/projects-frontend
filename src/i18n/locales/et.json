@@ -1006,7 +1006,11 @@
         "help": "Toimetaja"
       }
     },
-    "view": "Vaade grupp"
+    "view": "Vaade grupp",
+    "conferences": "Konverentsid",
+    "publications": "Trükised",
+    "similars": "Rühmad sarnased",
+    "locations": "Asukohad"
   },
   "header": {
     "private": "Privaatne: nähtav ainult meeskonnaliikmetele",

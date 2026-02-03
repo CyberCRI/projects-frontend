@@ -1,6 +1,6 @@
 <template>
-  <div class="location-header" :class="[location.type]" :title="typeLabel">
-    <IconImage :name="pointerIcon" :class="['location-icon', location.type]" />
+  <div class="location-header" :class="[locationType]" :title="typeLabel">
+    <IconImage :name="pointerIcon" :class="['location-icon', locationType]" />
     <h2 v-if="label" class="location-title">
       {{ typeLabel }}
     </h2>
@@ -9,16 +9,16 @@
 
 <script setup lang="ts">
 import { IconMapLocationType } from '@/functs/maps'
-import { AnyLocation } from '@/models/location.model'
+import { LocationType } from '@/models/types'
 
-const props = withDefaults(defineProps<{ location: AnyLocation; label?: boolean }>(), {
+const props = withDefaults(defineProps<{ locationType: LocationType; label?: boolean }>(), {
   label: true,
 })
 
 const { t } = useNuxtI18n()
 
 const typeLabel = computed(() => {
-  switch (props.location.type) {
+  switch (props.locationType) {
     case 'impact':
       return t('location.impact')
     case 'team':
@@ -28,7 +28,7 @@ const typeLabel = computed(() => {
   }
 })
 
-const pointerIcon = computed(() => IconMapLocationType(props.location.type))
+const pointerIcon = computed(() => IconMapLocationType(props.locationType))
 </script>
 
 <style lang="scss" scoped>

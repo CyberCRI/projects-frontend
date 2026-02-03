@@ -1006,7 +1006,11 @@
         "help": "Editor"
       }
     },
-    "view": "Visualitza el grup"
+    "view": "Visualitza el grup",
+    "conferences": "Conferèncias",
+    "publications": "Publicacions",
+    "similars": "Grups similars",
+    "locations": "Ubicacions"
   },
   "header": {
     "private": "Privat: només visible per als membres de l' equip",

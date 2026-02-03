@@ -1006,7 +1006,11 @@
         "help": "Teammitglieder"
       }
     },
-    "view": "Gruppe anzeigen"
+    "view": "Gruppe anzeigen",
+    "conferences": "Konferenzen",
+    "publications": "Veröffentlichungen",
+    "similars": "Gruppen ähnliche",
+    "locations": "Standorte"
   },
   "header": {
     "private": "Private: nur für Teammitglieder sichtbar",

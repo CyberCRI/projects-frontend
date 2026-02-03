@@ -1,7 +1,7 @@
 <template>
   <div class="location-tooltip" :class="location.type">
     <div class="location-tooltip-header">
-      <LocationType :location="location" />
+      <LocationType :location-type="location.type" />
       <LpiButton
         btn-icon="Close"
         class="location-tooltip-icon"

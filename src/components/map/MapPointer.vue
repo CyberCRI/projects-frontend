@@ -3,7 +3,7 @@
     <div ref="marker" class="map-pointer" :data-location-type="location.type">
       <slot name="marker">
         <div :class="['badge', location.type]">
-          <LocationType :location="location" />
+          <LocationType :location-type="location.type" />
           <div v-if="editable" class="actions">
             <ContextActionButton
               action-icon="Pen"

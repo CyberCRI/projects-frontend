@@ -15,7 +15,7 @@
       />
     </template>
     <template #content>
-      <GroupLocationBase :group="group" />
+      <GroupLocationBase :group="group" preview />
     </template>
   </BaseGroupPreview>
 </template>

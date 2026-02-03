@@ -122,7 +122,12 @@
           @click="openModal('location')"
         />
       </label>
-      <LocationItem v-if="form.location" :location="form.location" :focus="false" />
+      <LocationItem
+        v-if="form.location"
+        :location="form.location"
+        :focus="false"
+        show-location-type
+      />
       <LocationDrawer
         :is-opened="stateModal.location"
         :locations="form.location ? [form.location] : []"

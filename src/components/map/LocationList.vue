@@ -5,7 +5,9 @@
       :key="locationType"
       class="location-list-wrapper"
     >
-      <h3 class="list-title">{{ $t(`location.${locationType}`) }}</h3>
+      <h3 class="list-title">
+        <LocationType :location-type="locationType" />
+      </h3>
       <ul class="location-list">
         <li v-for="location in locationsList" :key="location.id" class="location">
           <LocationItem
@@ -26,6 +28,7 @@
 
 <script setup lang="ts">
 import LocationItem from '@/components/map/LocationItem.vue'
+import LocationType from '@/components/map/LocationType.vue'
 import { TranslatedLocation } from '@/models/location.model'
 import { groupBy } from 'es-toolkit'
 

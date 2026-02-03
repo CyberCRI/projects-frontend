@@ -1006,7 +1006,11 @@
         "help": "Editor"
       }
     },
-    "view": "Ver grupo"
+    "view": "Ver grupo",
+    "conferences": "Conferencias",
+    "publications": "Publicaciones",
+    "similars": "Grupos similares",
+    "locations": "Lugares"
   },
   "header": {
     "private": "Privada: visible sólo a los miembros del equipo",

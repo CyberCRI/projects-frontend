@@ -1,6 +1,6 @@
 <template>
   <FetchLoader :status="status" skeleton only-error>
-    <MapRecap :locations="locations" expand :editable="isEdit" @expand="opened = true">
+    <MapRecap ref="map" :locations="locations" expand :editable="isEdit" @expand="opened = true">
       <template #tooltip="{ location }">
         <ProjectLocationTooltip
           :location="location as TranslatedLocation"
@@ -14,12 +14,19 @@
       :locations="locations"
       @close="opened = false"
     />
+    <LocationList
+      v-if="!props.preview"
+      :editable="isEdit"
+      :locations="locations"
+      @focus="onFocus"
+    />
   </FetchLoader>
 </template>
 
 <script setup lang="ts">
 import { getGroupLocation } from '@/api/v2/group.service'
 import LocationDrawer from '@/components/map/LocationDrawer.vue'
+import LocationList from '@/components/map/LocationList.vue'
 import MapRecap from '@/components/map/MapRecap.vue'
 import ProjectLocationTooltip from '@/components/project/map/ProjectLocationTooltip.vue'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
@@ -41,6 +48,9 @@ const isEdit = computed(() => props.editable && !props.preview)
 const opened = ref(false)
 const organizationCode = useOrganizationCode()
 const groupId = computed(() => props.group.id)
+
+const mapRef = useTemplateRef('map')
+const onFocus = (location) => mapRef.value?.map?.flyTo(location, 8)
 
 const { status, data: locations } = getGroupLocation(organizationCode, groupId, {
   default: () => [],

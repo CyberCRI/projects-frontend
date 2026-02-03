@@ -122,7 +122,7 @@ const centerMap = () => {
 }
 
 // this is called by other components
-const flyTo = (coordinates, zoom) => {
+const flyTo = (coordinates, zoom = undefined) => {
   const map = toRaw(mapInstance.value)
   map?.flyTo([coordinates.lat, coordinates.lng], zoom)
 }
