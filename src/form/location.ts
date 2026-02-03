@@ -1,4 +1,4 @@
-import { required, minLength } from '@vuelidate/validators'
+import { required, maxLength } from '@vuelidate/validators'
 import useForm from '@/composables/useForm'
 import { clone } from 'es-toolkit'
 import { LocationForm } from '@/models/location.model'
@@ -13,13 +13,9 @@ const DEFAULT_FORM: LocationForm = {
 
 const RULES = {
   title: {
-    required,
-    minLengthValue: minLength(1),
+    maxLengthValue: maxLength(255),
   },
-  description: {
-    required,
-    minLengthValue: minLength(1),
-  },
+  description: {},
   lat: { required },
   lng: { required },
   type: { required },

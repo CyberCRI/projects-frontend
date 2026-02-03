@@ -1,5 +1,5 @@
 <template>
-  <div class="location-tooltip" :class="location.type" @scroll="console.log">
+  <div class="location-tooltip" :class="location.type">
     <div class="location-tooltip-header">
       <LocationType :location="location" />
       <LpiButton

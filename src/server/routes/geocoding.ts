@@ -32,16 +32,6 @@ async function fetchFromPhoton(address, locale, runtimeConfig) {
 }
 
 async function fetchFromGoogle(address, locale, runtimeConfig) {
-  return [
-    {
-      id: 55,
-      title: 'Giv, Qom Province, Iran',
-      lat: 0,
-      lng: 0,
-      description: '',
-      type: 'address',
-    },
-  ] as Geocoding[]
   // TODO: use an env variable for the geocoding API URL
   const res: any = await $fetch(runtimeConfig.public.appGeocodingApiUrl, {
     query: {

@@ -1005,7 +1005,8 @@
         "label": "Herausgeber",
         "help": "Teammitglieder"
       }
-    }
+    },
+    "view": "Gruppe anzeigen"
   },
   "header": {
     "private": "Private: nur für Teammitglieder sichtbar",

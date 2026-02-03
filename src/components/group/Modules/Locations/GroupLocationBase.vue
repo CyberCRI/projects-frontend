@@ -2,7 +2,10 @@
   <FetchLoader :status="status" skeleton only-error>
     <MapRecap :locations="locations" expand :editable="isEdit" @expand="opened = true">
       <template #tooltip="{ location }">
-        <ProjectLocationTooltip :location="location" :project="location.project" />
+        <ProjectLocationTooltip
+          :location="location as TranslatedLocation"
+          :project="location.project"
+        />
       </template>
     </MapRecap>
     <LocationDrawer
@@ -20,6 +23,7 @@ import LocationDrawer from '@/components/map/LocationDrawer.vue'
 import MapRecap from '@/components/map/MapRecap.vue'
 import ProjectLocationTooltip from '@/components/project/map/ProjectLocationTooltip.vue'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import { TranslatedLocation } from '@/models/location.model'
 
 const props = withDefaults(
   defineProps<{

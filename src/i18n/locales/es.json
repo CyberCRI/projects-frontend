@@ -1005,7 +1005,8 @@
         "label": "Editor",
         "help": "Editor"
       }
-    }
+    },
+    "view": "Ver grupo"
   },
   "header": {
     "private": "Privada: visible sólo a los miembros del equipo",

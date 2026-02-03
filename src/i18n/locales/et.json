@@ -1005,7 +1005,8 @@
         "label": "Toimetaja",
         "help": "Toimetaja"
       }
-    }
+    },
+    "view": "Vaade grupp"
   },
   "header": {
     "private": "Privaatne: nähtav ainult meeskonnaliikmetele",

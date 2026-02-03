@@ -12,6 +12,11 @@
     </template>
 
     <template #body>
+      <div class="location-map-ctn">
+        <!-- form not have it, so ignore typescript -->
+        <MapRecap :locations="[form as any]" :expand="false" />
+      </div>
+
       <div class="location-type-ctn">
         <div class="location-type-label">
           {{ $t('location.location-type-label') }}
@@ -48,6 +53,7 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import { LocationForm } from '@/models/location.model'
 import { useLocationForm } from '@/form/location'
 import { LocationType } from '@/models/types'
+import MapRecap from '@/components/map/MapRecap.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -61,10 +67,6 @@ const props = withDefaults(
 )
 defineEmits(['submit', 'close', 'delete'])
 const { t } = useNuxtI18n()
-
-const model = defineModel<LocationForm>()
-const { form, isValid, errors } = useLocationForm({ model })
-const isExist = computed(() => !!form.value.id)
 
 const locationTypeOptions = computed(() => {
   const arr: { value: LocationType; label: string }[] = [
@@ -86,6 +88,20 @@ const locationTypeOptions = computed(() => {
   }
   return arr
 })
+
+const model = defineModel<LocationForm>()
+
+const { form, isValid, errors } = useLocationForm({ model })
+
+// safe guard for not locationsType exists
+watch(locationTypeOptions, () => {
+  const values = locationTypeOptions.value.map(({ value }) => value)
+  if (form.value.type && !values.includes(form.value.type)) {
+    form.value.type = values[0]
+  }
+})
+
+const isExist = computed(() => !!form.value.id)
 </script>
 
 <style lang="scss" scoped>
@@ -114,5 +130,11 @@ const locationTypeOptions = computed(() => {
   color: $white;
   border-color: $salmon;
   background: $salmon;
+}
+</style>
+
+<style>
+.location-map-ctn .map-recap {
+  height: 250px;
 }
 </style>

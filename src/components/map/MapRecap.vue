@@ -17,7 +17,7 @@
                 >
                   <slot name="tooltip" :location="location">
                     <LocationTooltip
-                      v-if="location.$t.title || location.$t.description"
+                      v-if="location.title || location.description"
                       :location="location"
                     />
                   </slot>
@@ -44,12 +44,12 @@
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 import MapPointer from '@/components/map/MapPointer.vue'
 import BaseMap from '@/components/map/BaseMap.vue'
-import { TranslatedLocation } from '@/models/location.model'
+import { AnyTranslatedLocation } from '@/models/location.model'
 import LocationTooltip from '@/components/map/LocationTooltip.vue'
 
 const props = withDefaults(
   defineProps<{
-    locations?: TranslatedLocation[]
+    locations?: AnyTranslatedLocation[]
     expand?: boolean
     editable?: boolean
   }>(),
@@ -63,7 +63,7 @@ const props = withDefaults(
 defineEmits<{
   'map-moved': []
   expand: []
-  edit: [TranslatedLocation]
+  edit: [AnyTranslatedLocation]
 }>()
 
 const summaryMapRef = useTemplateRef('summary-map')

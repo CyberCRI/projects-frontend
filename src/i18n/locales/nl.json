@@ -1005,7 +1005,8 @@
         "label": "Editor",
         "help": "Editor"
       }
-    }
+    },
+    "view": "Beeldgroep"
   },
   "header": {
     "private": "Privé: alleen zichtbaar voor teamleden",
