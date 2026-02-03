@@ -60,8 +60,6 @@
       />
     </div>
 
-    <div class="spacer" />
-
     <!-- Description -->
     <div class="description">
       <label>
@@ -112,8 +110,6 @@
       <SdgsDrawer v-model="form.sdgs" :is-opened="openSdg" @close="openSdg = false" />
     </div>
 
-    <div class="spacer" />
-
     <!-- location -->
     <div class="description">
       <label>
@@ -138,29 +134,21 @@
       />
     </div>
 
-    <div class="spacer" />
-
     <template v-if="!isReducedMode">
       <!-- Team -->
       <div class="team">
         <GroupTeamSection v-model="form.members" />
       </div>
 
-      <div class="spacer" />
-
       <!-- Featured projects -->
       <div class="project">
         <ProjectSection v-model="form.featuredProjects" />
       </div>
-
-      <div class="spacer" />
     </template>
     <!-- Parent group -->
     <div class="parent-group">
       <ParentGroupSection v-model="form.parentGroup" :groups="groups" />
     </div>
-
-    <div class="spacer" />
 
     <!-- Visibility -->
     <div class="visibility">
@@ -623,9 +611,11 @@ export default {
     display: block;
   }
 
-  .spacer {
+  > *::after {
     border-top: 1px solid $lighter-gray;
-    margin-bottom: 34px;
+    margin: 34px 0;
+    content: '';
+    display: block;
   }
 }
 </style>

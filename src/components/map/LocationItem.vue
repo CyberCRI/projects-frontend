@@ -1,6 +1,7 @@
 <template>
   <div class="location-list-item">
     <div class="location-title">
+      <LocationType :location="location" />
       <h4>{{ title }}</h4>
       <p>{{ description }}</p>
     </div>
@@ -24,6 +25,7 @@
 </template>
 
 <script setup lang="ts">
+import LocationType from '@/components/map/LocationType.vue'
 import { TranslatedLocation } from '@/models/location.model'
 
 const props = withDefaults(
@@ -38,15 +40,15 @@ const props = withDefaults(
   }
 )
 
-// need to safe guard with translated title (if we are in edit/create mode)
-const title = computed(() => props.location.$t?.title ?? props.location.title)
-const description = computed(() => props.location.$t?.description ?? props.location.description)
-
 defineEmits<{
   focus: [TranslatedLocation]
   delete: [TranslatedLocation]
   edit: [TranslatedLocation]
 }>()
+
+// need to safe guard with translated title (if we are in edit/create mode)
+const title = computed(() => props.location.$t?.title ?? props.location.title)
+const description = computed(() => props.location.$t?.description ?? props.location.description)
 </script>
 
 <style scoped lang="scss">

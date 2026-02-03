@@ -35,7 +35,7 @@
             v-html="group.$t.short_description"
           />
           <TagsList
-            v-if="group.tags"
+            v-if="group.tags.length"
             :tags="group.tags"
             :to="{
               name: 'GroupSearch',
@@ -46,7 +46,7 @@
           />
         </div>
       </div>
-      <div class="group-info-extras">
+      <div v-if="hasExtras" class="group-info-extras">
         <div class="group-info-links">
           <button
             v-if="group.location"
@@ -111,6 +111,10 @@ const groupVisibilityLabel = computed(() => {
 const groupVisibilityIcon = computed(() =>
   props.group.publication_status === 'public' ? 'Eye' : 'EyeSlash'
 )
+
+const hasExtras = computed(() => {
+  return props.group.sdgs.length || props.group.location
+})
 </script>
 
 <style lang="scss" scoped>

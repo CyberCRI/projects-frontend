@@ -34,7 +34,6 @@ const pointerIcon = computed(() => IconMapLocationType(props.location.type))
 <style lang="scss" scoped>
 .location-header {
   display: flex;
-  justify-content: center;
   align-items: center;
   gap: 0.5rem;
 

@@ -15,7 +15,7 @@
     </label>
 
     <div v-if="model" class="group-grid">
-      <GroupCard :group="model" />
+      <GroupCard :group="model" mode="list" />
     </div>
 
     <PickGroupDrawer
@@ -49,7 +49,7 @@ const { closeModal, openModal, stateModal } = useModal({ pickGroup: false })
 
 const confirmGroup = (group) => {
   model.value = group
-  close()
+  closeModal('pickGroup')
 }
 </script>
 
@@ -73,7 +73,7 @@ const confirmGroup = (group) => {
 
   .group-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     justify-items: stretch;
     gap: $space-l;
   }

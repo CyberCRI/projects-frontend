@@ -27,9 +27,9 @@
     />
 
     <div class="text text-limit">
-      <div v-if="group.modules.members" class="group-count skeletons-background">
+      <div v-if="modules.members" class="group-count skeletons-background">
         <IconImage name="MultiplePerson" class="icon" />
-        {{ group.modules.members }}
+        {{ modules.members }}
       </div>
       <div class="card-type skeletons-text">
         {{ translatedName }}
@@ -37,7 +37,7 @@
       <p class="skeletons-text" v-html="translatedShortDescription" />
     </div>
 
-    <template v-if="group.modules.subgroups" #footer>
+    <template v-if="modules.subgroups" #footer>
       <NuxtLink
         :to="{
           name: 'Groups',
@@ -45,7 +45,7 @@
         }"
         class="subgroups-link"
       >
-        {{ $t('group.see-subgroups', group.modules.subgroups) }}
+        {{ $t('group.see-subgroups', modules.subgroups) }}
         <IconImage class="arrow" name="ArrowRight" />
       </NuxtLink>
     </template>
@@ -80,9 +80,10 @@ const emit = defineEmits<{
   'navigated-away': []
 }>()
 
-const { getTranslatableField } = useAutoTranslate()
-const translatedName = getTranslatableField(props.group, 'name')
-const translatedShortDescription = getTranslatableField(props.group, 'short_description')
+const translatedName = computed(() => props.group.$t?.name ?? props.group.name)
+const translatedShortDescription = computed(
+  () => props.group.$t?.short_description ?? props.group.short_description
+)
 
 const showAddButton = computed(() => props.hasAddIcon)
 const showCloseButton = computed(() => props.hasCloseIcon)
@@ -92,13 +93,15 @@ const toLink = computed(() => {
   return showAddButton.value ? null : { name: 'Group', params: { groupId: props.group.id } }
 })
 
+const modules = computed(() => props.group.modules ?? ({} as TranslatedPeopleGroupModel['modules']))
+
 // calculate lineClamp description
 const lineClamp = computed(() => {
   let defaultLineClamp = 6
-  if (props.group.modules.subgroups) {
+  if (modules.value.subgroups) {
     defaultLineClamp -= 2
   }
-  if (props.group.modules.members) {
+  if (modules.value.members) {
     defaultLineClamp -= 1
   }
 
