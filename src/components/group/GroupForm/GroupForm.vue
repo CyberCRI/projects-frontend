@@ -126,7 +126,7 @@
           @click="openModal('location')"
         />
       </label>
-      <LocationListItem v-if="form.location" :location="form.location" :focus="false" />
+      <LocationItem v-if="form.location" :location="form.location" :focus="false" />
       <LocationDrawer
         :is-opened="stateModal.location"
         :locations="form.location ? [form.location] : []"
@@ -231,6 +231,7 @@ import SdgList from '@/components/sdgs/SdgList.vue'
 import TagsDrawer from '@/components/tags/TagsDrawer.vue'
 import TagsFilterSummary from '@/components/search/Filters/TagsFilterSummary.vue'
 import LocationDrawer from '@/components/map/LocationDrawer.vue'
+import LocationItem from '@/components/map/LocationItem.vue'
 
 export default {
   name: 'GroupForm',
@@ -241,6 +242,7 @@ export default {
     TagsDrawer,
     TagsFilterSummary,
     LocationDrawer,
+    LocationItem,
   },
 
   props: {
@@ -403,7 +405,7 @@ export default {
       this.closeModal('location')
     },
     submitLocation(location) {
-      this.form.location = location
+      this.form.location = { ...location }
       this.closeModal('location')
     },
   },

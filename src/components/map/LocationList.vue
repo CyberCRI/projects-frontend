@@ -8,7 +8,7 @@
       <h3 class="list-title">{{ $t(`location.${locationType}`) }}</h3>
       <ul class="location-list">
         <li v-for="location in locationsList" :key="location.id" class="location">
-          <LocationListItem
+          <LocationItem
             :location="location"
             :editable="editable"
             @focus="$emit('focus', $event)"
@@ -25,7 +25,9 @@
 </template>
 
 <script setup lang="ts">
+import LocationItem from '@/components/map/LocationItem.vue'
 import { TranslatedLocation } from '@/models/location.model'
+import { groupBy } from 'es-toolkit'
 
 const props = withDefaults(
   defineProps<{
@@ -37,17 +39,7 @@ const props = withDefaults(
 
 defineEmits(['edit', 'focus', 'delete'])
 
-const locationsGrouped = computed<{ [key: string]: TranslatedLocation[] }>(() => {
-  const group = {}
-  props.locations.forEach((location) => {
-    if (!group[location.type]) {
-      group[location.type] = []
-    }
-    group[location.type].push(location)
-  })
-
-  return group
-})
+const locationsGrouped = computed(() => groupBy(props.locations, (location) => location.type))
 </script>
 
 <style lang="scss" scoped>

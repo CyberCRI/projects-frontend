@@ -34,7 +34,7 @@ const props = withDefaults(
   }>(),
   {
     editable: false,
-    focus: false,
+    focus: true,
   }
 )
 
