@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import GroupLocationToolTip from '@/components/group/map/GroupLocationToolTip.vue'
+import GroupLocationToolTip from '@/components/group/Map/GroupLocationToolTip.vue'
 import BaseMap from '@/components/map/BaseMap.vue'
 import MapPointer from '@/components/map/MapPointer.vue'
 import ProjectLocationTooltip from '@/components/project/map/ProjectLocationTooltip.vue'

@@ -25,6 +25,7 @@ export const groupSkeleton = (): Omit<PeopleGroupModel, 'id'> => ({
     similars: 0,
     subgroups: 0,
     locations: 0,
+    gallery: 0,
   },
 })
 

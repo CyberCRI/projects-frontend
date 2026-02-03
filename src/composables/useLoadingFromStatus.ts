@@ -7,7 +7,10 @@
  * @param {any} status
  * @returns {globalThis.ComputedRef<boolean>}
  */
-const useLoadingFromStatus = (status: Ref<'pending' | 'error' | 'success' | 'idle'>) => {
+
+import { AsyncDataRequestStatus } from 'nuxt/app'
+
+const useLoadingFromStatus = (status: Ref<AsyncDataRequestStatus>) => {
   const loading = computed(() => ['idle', 'pending'].includes(status.value))
 
   return loading

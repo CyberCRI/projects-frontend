@@ -4,7 +4,6 @@
     data-test="add-default-skills-drawer"
     :title="`${t(`profile.${docType}-similars`)} (${count})`"
     class="medium"
-    no-footer
     @close="emit('close')"
   >
     <FetchLoader :status="status" only-error skeleton>
@@ -17,10 +16,12 @@
           :similar="false"
         />
       </div>
+    </FetchLoader>
+    <template #footer>
       <div class="documents-paginations">
         <PaginationButtons2 :pagination="pagination" />
       </div>
-    </FetchLoader>
+    </template>
   </BaseDrawer>
 </template>
 

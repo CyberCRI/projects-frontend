@@ -11,8 +11,6 @@ import GroupLocationBase from '@/components/group/Modules/Locations/GroupLocatio
 import { GroupModuleTitle, TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupTab from '@/pages/GroupPageV2/Tabs/BaseGroupTab.vue'
 
-defineOptions({ name: 'GroupMembersTab' })
-
 const props = defineProps<{
   group: TranslatedPeopleGroupModel
 }>()

@@ -47,6 +47,7 @@
 import { getGroup } from '@/api/v2/group.service'
 import { useLpiHead2 } from '@/composables/useLpiHead'
 import { GroupModuleIcon, GroupModuleTitle } from '@/models/invitation.model'
+import { groupSkeleton } from '@/skeletons/group.skeletons'
 
 const uniqueId = 'group-nav-panel'
 const { canEditGroup } = usePermissions()
@@ -84,18 +85,7 @@ const groupHierarchy = computed(() => {
   ]
 })
 
-const groupModules = computed(
-  () =>
-    group.value?.modules ?? {
-      members: 0,
-      featured_projects: 0,
-      publications: 0,
-      conferences: 0,
-      similars: 0,
-      subgroups: 0,
-      locations: 0,
-    }
-)
+const groupModules = computed(() => group.value?.modules ?? groupSkeleton()['modules'])
 
 const groupTabsDisplay = computed(() => {
   return [
@@ -185,6 +175,20 @@ const groupTabsDisplay = computed(() => {
       },
       condition: groupModules.value.locations,
       icon: GroupModuleIcon.locations,
+    },
+    {
+      isEditing: false,
+      key: 'group-gallery',
+      dataTest: 'group-gallery',
+      label: t(GroupModuleTitle.gallery),
+      view: `/group/${route.params.groupId}/gallery`,
+      altView: `/group/${route.params.groupId}/gallery/edit`,
+      props: {
+        group: group.value,
+        isLoading: isLoading.value,
+      },
+      condition: groupModules.value.gallery,
+      icon: GroupModuleIcon.gallery,
     },
   ]
 })
@@ -282,6 +286,21 @@ const groupTabsEdit = computed(() => {
         isLoading: isLoading.value,
       },
       condition: false,
+      icon: 'Pen',
+    },
+    {
+      isEditing: true,
+      key: 'group-gallery-edit',
+      dataTest: 'group-gallery-edit',
+      label: t(GroupModuleTitle.gallery),
+      view: `/group/${route.params.groupId}/gallery/edit`,
+      altView: `/group/${route.params.groupId}/gallery`,
+      props: {
+        isInEditingMode: true,
+        group: group.value,
+        isLoading: isLoading.value,
+      },
+      condition: true,
       icon: 'Pen',
     },
   ]

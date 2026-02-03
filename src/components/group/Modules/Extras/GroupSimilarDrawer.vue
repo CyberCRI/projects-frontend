@@ -4,17 +4,19 @@
     data-test="add-default-skills-drawer"
     :title="`${t(`group.similars`)} (${count})`"
     class="medium"
-    no-footer
     @close="emit('close')"
   >
     <FetchLoader :status="status" only-error skeleton>
       <div class="groups-list-similars">
         <GroupCard v-for="groupSimilar in groups" :key="groupSimilar.id" :group="groupSimilar" />
       </div>
+    </FetchLoader>
+
+    <template #footer>
       <div class="groups-paginations">
         <PaginationButtons2 :pagination="pagination" />
       </div>
-    </FetchLoader>
+    </template>
   </BaseDrawer>
 </template>
 

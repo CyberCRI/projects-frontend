@@ -245,6 +245,11 @@ $slide-duration: 400ms;
     max-width: 100vw;
   }
 
+  .transparent > &,
+  .transparent > &__footer {
+    background-color: color-mix(in srgb, $modal-background, transparent 10%);
+  }
+
   &__header {
     flex-shrink: 0;
     min-height: 64px;
@@ -273,6 +278,11 @@ $slide-duration: 400ms;
     background: $white;
     gap: $space-l;
 
+    .transparent > & {
+      background-color: color-mix(in srgb, $modal-background, transparent 10%);
+      color: white;
+    }
+
     button ~ button {
       text-transform: capitalize;
     }
@@ -287,6 +297,11 @@ $slide-duration: 400ms;
   .header__title {
     font-size: $font-size-2xl;
     color: $black;
+
+    .transparent & {
+      color: white;
+    }
+
     font-weight: 700;
     display: flex;
     align-items: center;
@@ -307,6 +322,14 @@ $slide-duration: 400ms;
     border-radius: 2rem;
     position: relative;
     display: inline-block;
+
+    .transparent & {
+      background-color: white;
+
+      svg {
+        fill: black;
+      }
+    }
 
     svg {
       position: absolute;
