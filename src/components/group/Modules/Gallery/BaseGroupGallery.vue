@@ -1,11 +1,19 @@
 <template>
   <div class="gallery-container">
-    <GalleryList :images="images" @click="onSelect" />
-    <PaginationButtons2 v-if="pagination" :pagination="pagination" />
+    <LpiButton
+      v-if="isInEditingMode"
+      btn-icon="Plus"
+      :label="$t('group.form.add')"
+      class="edit-btn"
+      @click="showEdit = true"
+    />
+    <GalleryForm v-if="showEdit" v-model="form" @close="showEdit = false" @submit="submit" />
+    <GalleryList :images="data" @click="onSelect" />
+    <PaginationButtons2 v-if="!preview" :pagination="pagination" />
     <GalleryDrawer
       :is-opened="selected !== null"
       :status="status"
-      :images="images"
+      :images="data"
       :selected="selected"
       :pagination="pagination"
       @close="selected = null"
@@ -14,66 +22,47 @@
 </template>
 
 <script setup lang="ts">
+import { getGroupGallery } from '@/api/v2/group.service'
 import GalleryDrawer from '@/components/base/gallery/GalleryDrawer.vue'
+import GalleryForm from '@/components/base/gallery/GalleryForm.vue'
 import GalleryList from '@/components/base/gallery/GalleryList.vue'
-import { AsyncDataRequestStatus } from 'nuxt/app'
+import { ImageGalleryForm } from '@/interfaces/gallery'
+import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 
-// withDefaults(
-//   defineProps<{
-//     group: TranslatedPeopleGroupModel
-//     preview?: boolean
-//     limit?: number
-//   }>(),
-//   { preview: false }
-// )
+const props = withDefaults(
+  defineProps<{
+    group: TranslatedPeopleGroupModel
+    preview?: boolean
+    limit?: number
+    isInEditingMode?: boolean
+  }>(),
+  { preview: false, isInEditingMode: false, limit: null }
+)
 
-const images = [
-  {
-    src: 'https://www.airproducts.fr/-/media/images/1440x810/masthead/949946968-laboratory-16x9.jpg?as=0&w=1439&hash=BECD74768EC803085E4B64DA85E5BA12',
-    atl: '',
-  },
-  {
-    src: 'https://www.airproducts.fr/-/media/images/1440x810/masthead/949946968-laboratory-16x9.jpg?as=0&w=1439&hash=BECD74768EC803085E4B64DA85E5BA12',
-    atl: '',
-  },
-  {
-    src: 'https://www.airproducts.fr/-/media/images/1440x810/masthead/949946968-laboratory-16x9.jpg?as=0&w=1439&hash=BECD74768EC803085E4B64DA85E5BA12',
-    atl: '',
-  },
-  {
-    src: 'https://www.airproducts.fr/-/media/images/1440x810/masthead/949946968-laboratory-16x9.jpg?as=0&w=1439&hash=BECD74768EC803085E4B64DA85E5BA12',
-    atl: '',
-  },
-  {
-    src: 'https://www.airproducts.fr/-/media/images/1440x810/masthead/949946968-laboratory-16x9.jpg?as=0&w=1439&hash=BECD74768EC803085E4B64DA85E5BA12',
-    atl: '',
-  },
-  {
-    src: 'https://www.airproducts.fr/-/media/images/1440x810/masthead/949946968-laboratory-16x9.jpg?as=0&w=1439&hash=BECD74768EC803085E4B64DA85E5BA12',
-    atl: '',
-  },
-]
-
-const res = ref<PaginationResult>({
-  count: 66,
-  total_page: 44,
-  current_page: 1,
-  results: [],
+const form = ref<ImageGalleryForm>({
+  header_image: null,
+  imageSizes: null,
 })
+const showEdit = ref(false)
 const selected = ref(null)
-const pagination = usePagination(res)
+
+const organizationCode = useOrganizationCode()
+const groupId = computed(() => props.group.id)
+const { pagination, data, status } = getGroupGallery(organizationCode, groupId, {
+  paginationConfig: {
+    limit: props.limit,
+  },
+})
+
+const submit = () => {
+  console.log(form.value)
+  showEdit.value = false
+}
 
 const onSelect = (image) => {
   console.log('select', image)
   selected.value = image
 }
-
-const status = ref<AsyncDataRequestStatus>('success')
-watch(pagination.current, () => {
-  status.value = 'pending'
-
-  setTimeout(() => (status.value = 'success'), 2000)
-})
 </script>
 
 <style lang="scss">
@@ -82,5 +71,9 @@ watch(pagination.current, () => {
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+}
+
+.edit-btn {
+  align-self: end;
 }
 </style>

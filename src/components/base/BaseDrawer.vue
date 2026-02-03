@@ -51,106 +51,65 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import { capitalize } from '@/functs/string'
+import { StyleValue } from 'vue'
 
-export default {
-  name: 'BaseDrawer',
+const props = withDefaults(
+  defineProps<{
+    isOpened?: boolean
+    title: string
+    confirmActionName?: string
+    noFooter?: boolean
+    customStyle?: StyleValue
+    confirmActionDisabled?: boolean
+    asyncing?: boolean
+  }>(),
+  {
+    isOpened: false,
+    confirmActionName: null,
+    noFooter: false,
+    customStyle: () => ({}),
+    confirmActionDisabled: false,
+    asyncing: false,
+  }
+)
 
-  components: {
-    IconImage,
-    LpiButton,
-  },
+const emit = defineEmits(['close', 'confirm', 'unselect'])
 
-  props: {
-    isOpened: {
-      type: Boolean,
-      default: false,
-    },
+const scrolled = ref(false)
+const uniqueId = (Math.random() + 1).toString(36).substring(7)
+const mainRef = useTemplateRef('main')
 
-    title: {
-      type: String,
-      required: true,
-    },
+const close = () => emit('close')
+const confirm = () => emit('confirm')
+const onScroll = () => (scrolled.value = mainRef.value && mainRef.value.scrollTop > 10)
 
-    confirmActionName: {
-      type: String,
-      default: null,
-    },
-
-    noFooter: {
-      type: Boolean,
-      default: false,
-    },
-
-    customStyle: {
-      type: Object,
-      default: () => {},
-    },
-
-    confirmActionDisabled: {
-      type: Boolean,
-      default: false,
-    },
-
-    asyncing: {
-      type: Boolean,
-      deafault: false,
-    },
-  },
-
-  emits: ['close', 'confirm', 'unselect'],
-  setup() {
-    return { capitalize }
-  },
-
-  data() {
-    return {
-      scrolled: false,
-      uniqueId: (Math.random() + 1).toString(36).substring(7),
+watch(
+  () => props.isOpened,
+  (neo, old) => {
+    if (!import.meta.client) return
+    if (neo !== old) {
+      if (neo) {
+        document.querySelector('body').classList.add(`has-open-drawer-${uniqueId}`)
+        nextTick(() => (mainRef.value ? mainRef.value.addEventListener('scroll', onScroll) : null))
+      } else {
+        document.querySelector('body').classList.remove(`has-open-drawer-${uniqueId}`)
+        if (mainRef.value) mainRef.value.removeEventListener('scroll', onScroll)
+      }
     }
   },
+  { immediate: true }
+)
 
-  watch: {
-    isOpened: {
-      handler: function (neo, old) {
-        if (!import.meta.client) return
-        if (neo !== old) {
-          if (neo) {
-            document.querySelector('body').classList.add(`has-open-drawer-${this.uniqueId}`)
-            this.$nextTick(() =>
-              this.$refs.main ? this.$refs.main.addEventListener('scroll', this.onScroll) : null
-            )
-          } else {
-            document.querySelector('body').classList.remove(`has-open-drawer-${this.uniqueId}`)
-            if (this.$refs.main) this.$refs.main.removeEventListener('scroll', this.onScroll)
-          }
-        }
-      },
-      immediate: true,
-    },
-  },
-
-  unmounted() {
-    if (!import.meta.client) return
+onUnmounted(() => {
+  if (import.meta.client) {
     // if destroyed before closing, need to cleanup un-scrollable body
-    document.querySelector('body').classList.remove(`has-open-drawer-${this.uniqueId}`)
-  },
-
-  methods: {
-    close() {
-      this.$emit('close')
-    },
-    confirm() {
-      this.$emit('confirm')
-    },
-    onScroll() {
-      this.scrolled = this.$refs.main && this.$refs.main.scrollTop > 10
-    },
-  },
-}
+    document.querySelector('body').classList.remove(`has-open-drawer-${uniqueId}`)
+  }
+})
 </script>
 
 <style lang="scss" scoped>

@@ -1,7 +1,7 @@
 <template>
   <BaseGroupTab :title="$t(GroupModuleTitle.gallery)" :count="countElement">
     <div class="">
-      <BaseGroupGallery :group="group" />
+      <BaseGroupGallery :group="group" :is-in-editing-mode="isInEditingMode" />
     </div>
   </BaseGroupTab>
 </template>
@@ -13,6 +13,7 @@ import BaseGroupTab from '@/pages/GroupPageV2/Tabs/BaseGroupTab.vue'
 
 const props = defineProps<{
   group: TranslatedPeopleGroupModel
+  isInEditingMode: boolean
 }>()
 
 const countElement = computed<number>(() => props.group.modules?.gallery)

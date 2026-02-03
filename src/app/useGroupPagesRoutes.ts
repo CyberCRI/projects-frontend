@@ -98,7 +98,7 @@ export default function useGroupPagesRoutes() {
         {
           path: 'gallery/edit',
           name: 'groupGalleryEdit',
-          component: () => import('../pages/GroupPageV2/Tabs/Gallery/GroupGalleryEditTab.vue'),
+          component: () => import('../pages/GroupPageV2/Tabs/Gallery/GroupGalleryTab.vue'),
         },
       ],
       props: true,

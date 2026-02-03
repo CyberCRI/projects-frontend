@@ -47,7 +47,7 @@
         </div>
       </div>
       <div v-if="hasExtras" class="group-info-extras">
-        <div class="group-info-links">
+        <div v-if="hasLinks" class="group-info-links">
           <button
             v-if="group.location"
             class="group-recap-element group-location reset-btn"
@@ -112,8 +112,11 @@ const groupVisibilityIcon = computed(() =>
   props.group.publication_status === 'public' ? 'Eye' : 'EyeSlash'
 )
 
+const hasLinks = computed(() => {
+  return props.group.location
+})
 const hasExtras = computed(() => {
-  return props.group.sdgs.length || props.group.location
+  return props.group.sdgs.length || hasLinks.value
 })
 </script>
 
@@ -165,6 +168,10 @@ const hasExtras = computed(() => {
   margin-top: 1rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
+
+  & > *:only-child {
+    grid-column: span 2;
+  }
 }
 
 .group-info-links {

@@ -71,7 +71,7 @@ const modulesArray = computed(() => {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 2rem;
+  gap: 1rem;
   padding: 1rem 0;
 }
 
@@ -83,6 +83,7 @@ const modulesArray = computed(() => {
   gap: 0.4rem;
   cursor: pointer;
   border-radius: 10px;
+  padding: 0.4rem 0.8rem;
 
   svg {
     width: 32px;

@@ -7,9 +7,7 @@
     @close="$emit('close')"
   >
     <template #header_clear>
-      <span class="gallery-info">
-        {{ selectedIndex + 1 }} / {{ pagination.total.value }} ({{ localindex }})
-      </span>
+      <span class="gallery-info">{{ selectedIndex + 1 }} / {{ pagination.count.value }}</span>
     </template>
     <FetchLoader :status="status">
       <div class="gallery-switch">
@@ -22,7 +20,11 @@
             @click="prev"
           />
         </div>
-        <GalleryItem :image="selectedImage" class="gallery-item" />
+        <div class="container">
+          <Transition appear :name="transition">
+            <GalleryItem :key="localindex" :image="imageSelected" class="gallery-item" />
+          </Transition>
+        </div>
         <div class="gallery-button">
           <LpiButton
             v-show="canNext"
@@ -34,27 +36,27 @@
         </div>
       </div>
     </FetchLoader>
-    {{ pagination.offset.value }}
-    {{ pagination.limit.value }}
   </BaseDrawer>
 </template>
 
 <script setup lang="ts">
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import GalleryItem from '@/components/base/gallery/GalleryItem.vue'
+import { ImageGallery } from '@/interfaces/gallery'
 import { AsyncDataRequestStatus } from 'nuxt/app'
 
 const props = defineProps<{
   isOpened: boolean
-  images: any[]
+  images: ImageGallery[]
   pagination: Pagination
-  selected: any
+  selected: ImageGallery
   status: AsyncDataRequestStatus
 }>()
 
 defineEmits(['close'])
 
 const localindex = ref(null)
+const transition = ref('')
 
 watch(
   () => props.isOpened,
@@ -68,13 +70,20 @@ watch(
   }
 )
 
-const selectedIndex = computed(() => {
-  return props.pagination.offset.value + localindex.value
-})
+const imageSelected = computed(() => props.images[localindex.value])
+const selectedIndex = computed(() => props.pagination.offset.value + localindex.value)
 
-const selectedImage = computed(() => {
-  return props.selected
-})
+watch(
+  selectedIndex,
+  (newIndex, oldIndex) => {
+    if (newIndex < oldIndex) {
+      transition.value = 'slide-left'
+    } else {
+      transition.value = 'slide-right'
+    }
+  },
+  { flush: 'pre', immediate: true }
+)
 
 const canPrev = computed(() => {
   return selectedIndex.value !== 0
@@ -104,9 +113,9 @@ const next = () => {
 .gallery-switch {
   display: grid;
   grid-template-columns: pxToRem(40px) 1fr pxToRem(40px);
-  margin: auto;
+  margin: 0 auto;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 64px);
 }
 
 .gallery-info {
@@ -114,10 +123,12 @@ const next = () => {
   font-weight: bold;
   padding: 0 1rem;
   font-style: italic;
+  font-size: small;
+  opacity: 0.4;
 }
 
 .gallery-button {
-  margin: auto;
+  margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -127,5 +138,30 @@ const next = () => {
 
 .gallery-item {
   pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.slide-right-leave-active,
+.slide-right-enter-active,
+.slide-left-leave-active,
+.slide-left-enter-active {
+  transition: transform 0.2s;
+  transform: translateX(0);
+}
+
+.slide-left-enter-from,
+.slide-right-leave-to {
+  transform: translateX(-100vw);
+}
+
+.slide-left-leave-to,
+.slide-right-enter-from {
+  transform: translateX(100vw);
+}
+
+.container {
+  position: relative;
 }
 </style>

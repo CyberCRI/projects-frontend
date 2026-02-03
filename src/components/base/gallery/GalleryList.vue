@@ -11,10 +11,11 @@
 
 <script setup lang="ts">
 import GalleryItem from '@/components/base/gallery/GalleryItem.vue'
+import { ImageGallery } from '@/interfaces/gallery'
 
 withDefaults(
   defineProps<{
-    images: any[]
+    images: ImageGallery[]
   }>(),
   {}
 )

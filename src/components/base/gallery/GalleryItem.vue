@@ -8,9 +8,11 @@
 </template>
 
 <script setup lang="ts">
+import { ImageGallery } from '@/interfaces/gallery'
+
 withDefaults(
   defineProps<{
-    image: any
+    image: ImageGallery
   }>(),
   {}
 )
@@ -27,6 +29,11 @@ defineEmits(['click'])
 
 .gallery-item {
   width: 100%;
+
+  // height: 100%;
+  max-height: 100%;
+  height: 100%;
+  object-fit: contain;
   border-radius: 5px;
 }
 </style>

@@ -936,6 +936,7 @@
     "snapshot": "Snapshot",
     "members": "Members",
     "projects": "Projects",
+    "gallery": "Group gallery",
     "visibility-private": "Visibility : private",
     "visibility-public": "Visibility : public",
     "visibility-org": "Visibility : portal",
@@ -1080,6 +1081,9 @@
     "empty": "Nothing here yet... Contributors did not localize any points yet.",
     "page-title": "Map",
     "projects": "projects map"
+  },
+  "gallery": {
+    "title": "Gallery"
   },
   "me": {
     "follow": "Projects I follow",
