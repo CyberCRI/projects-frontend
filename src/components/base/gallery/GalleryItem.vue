@@ -3,37 +3,42 @@
     class="reset-btn gallery-button shadow-box skeletons-background"
     :class="editable ? 'pointer-events-none' : ''"
     :title="$t('gallery.view')"
-    @click.stop="$emit('click')"
+    @click.stop="$emit('click', image)"
   >
-    <img :src="image.src" :alt="image.alt" :style="styleImg" class="gallery-item" />
+    <img :src="src" :alt="image.name" :style="styleImg" class="gallery-item" />
     <LpiButton
       v-if="editable"
       :title="$t('common.delete')"
       btn-icon="Close"
       class="gallery-item-delete"
-      @click.stop="$emit('delete')"
+      @click.stop="$emit('delete', image)"
     />
   </button>
 </template>
 
 <script setup lang="ts">
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import { ImageGallery } from '@/interfaces/gallery'
+import { ImageModel } from '@/models/image.model'
 import { StyleValue } from 'vue'
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
-    image: ImageGallery
+    image: ImageModel
     editable?: boolean
     styleImg?: StyleValue
+    size?: keyof ImageModel['variations']
   }>(),
-  { editable: false, styleImg: null }
+  { editable: false, styleImg: null, size: 'original' }
 )
 
 defineEmits<{
-  click: []
-  delete: []
+  click: [ImageModel]
+  delete: [ImageModel]
 }>()
+
+const src = computed(() => {
+  return props.image.variations[props.size]
+})
 </script>
 
 <style lang="scss">

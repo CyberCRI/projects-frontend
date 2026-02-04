@@ -1,32 +1,35 @@
 <template>
   <div class="gallery-grid">
-    <GalleryItem
-      v-for="image in images"
-      :key="image.id"
-      :image="image"
-      :editable="editable"
-      :style-img="{ objectFit: 'cover' }"
-      @delete="$emit('delete', image)"
-      @click="$emit('click', image)"
-    />
+    <template v-for="image in images">
+      <slot :image="image">
+        <GalleryItem
+          :key="image.url"
+          :image="image"
+          :editable="editable"
+          :style-img="{ objectFit: 'cover' }"
+          @delete="$emit('delete', image)"
+          @click="$emit('click', image)"
+        />
+      </slot>
+    </template>
   </div>
 </template>
 
 <script setup lang="ts">
 import GalleryItem from '@/components/base/gallery/GalleryItem.vue'
-import { ImageGallery } from '@/interfaces/gallery'
+import { ImageModel } from '@/models/image.model'
 
 withDefaults(
   defineProps<{
-    images: ImageGallery[]
+    images: ImageModel[]
     editable?: boolean
   }>(),
   { editable: false }
 )
 
 defineEmits<{
-  click: [ImageGallery]
-  delete: [ImageGallery]
+  click: [ImageModel]
+  delete: [ImageModel]
 }>()
 </script>
 

@@ -63,7 +63,7 @@ const useForm = <T, CleanResult = T>(
   watch(
     [form, isValid],
     () => {
-      const formContent = { ...form.value }
+      const formContent = { ...toRaw(form.value) }
 
       let cleanded = null
       if (isValid.value) {

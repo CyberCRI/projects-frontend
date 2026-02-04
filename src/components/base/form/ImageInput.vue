@@ -87,7 +87,6 @@ const uploadImage = (event) => {
   const files: File[] = []
 
   Array.from(inputRef.value.files).forEach((item) => {
-    console.log(item)
     if (isFileMaxSize(item)) {
       fileIsTooLarge.value = true
     } else {

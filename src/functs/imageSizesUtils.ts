@@ -1,3 +1,5 @@
+import { ImageModel } from '@/models/image.model'
+
 export type ImageSizes = {
   scaleX: number
   scaleY: number
@@ -86,4 +88,52 @@ export function imageSizesFormDataPost(formData: FormData, imageSizes: ImageSize
     naturalRatio: 'profile_picture_natural_ratio',
   }
   _imageSizesFormData(formData, imageSizes, keyMap)
+}
+
+/**
+ * convert url object to imageModel
+ *
+ * @function
+ * @name urlToImageModel
+ * @kind variable
+ * @param {File} file
+ * @returns {ImageModel}
+ * @exports
+ */
+export const urlToImageModel = (url: string): ImageModel => {
+  return {
+    url,
+    name: '',
+    file: null,
+    variations: {
+      large: url,
+      full: url,
+      medium: url,
+      small: url,
+      original: url,
+    },
+    scale_x: 0,
+    scale_y: 0,
+    left: 0,
+    top: 0,
+    natural_ratio: 0,
+  }
+}
+
+/**
+ * convert file object (from input) to imageModel
+ *
+ * @function
+ * @name fileToImageModel
+ * @kind variable
+ * @param {File} file
+ * @returns {ImageModel}
+ * @exports
+ */
+export const fileToImageModel = (file: File): ImageModel => {
+  const url = URL.createObjectURL(file)
+  const v = urlToImageModel(url)
+  // @ts-expect-error
+  v.file = file
+  return v
 }

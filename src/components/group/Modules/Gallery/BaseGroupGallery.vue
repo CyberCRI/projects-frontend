@@ -7,14 +7,8 @@
       class="edit-btn"
       @click="openModals('create')"
     />
-    <GalleryForm
-      v-if="stateModals.create"
-      v-model="form"
-      :loading="loading"
-      @close="closeModals('create')"
-      @submit="createImage"
-    />
     <GalleryList :images="data" :editable="editable" @click="onView" @delete="onDelete" />
+    <EmptyLabel v-if="data.length === 0" :label="$t('gallery.empty')" />
     <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
     <GalleryDeleteModal
       v-if="stateModals.delete"
@@ -31,16 +25,30 @@
       :pagination="pagination"
       @close="closeModals('gallery')"
     />
+    <GalleryForm
+      v-if="stateModals.create"
+      :loading="loading"
+      :status="imagesStatusUploading"
+      @close="closeModals('create')"
+      @submit="createImage"
+    />
+    <!-- <GalleryUploadStatusModal
+      v-if="stateModals.status"
+      :status="imagesStatusUploading"
+      @close="closeModals('status')"
+    /> -->
   </div>
 </template>
 
 <script setup lang="ts">
 import { deleteGroupGallery, postGroupGallery } from '@/api/groups.service'
 import { getGroupGallery } from '@/api/v2/group.service'
+import EmptyLabel from '@/components/base/EmptyLabel.vue'
 import GalleryDeleteModal from '@/components/base/gallery/GalleryDeleteModal.vue'
 import GalleryDrawer from '@/components/base/gallery/GalleryDrawer.vue'
 import GalleryForm from '@/components/base/gallery/GalleryForm.vue'
 import GalleryList from '@/components/base/gallery/GalleryList.vue'
+import GalleryUploadStatusModal from '@/components/base/gallery/GalleryUploadStatusModal.vue'
 import PaginationButtonsV2 from '@/components/base/navigation/PaginationButtonsV2.vue'
 import { useModals } from '@/composables/useModal'
 import { ImageGalleryForm } from '@/interfaces/gallery'
@@ -48,6 +56,8 @@ import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import { imageGallerySkeleton } from '@/skeletons/gallery.skeletons'
 import useToasterStore from '@/stores/useToaster'
+import { delay } from 'es-toolkit'
+import { AsyncDataRequestStatus } from 'nuxt/app'
 
 const props = withDefaults(
   defineProps<{
@@ -59,9 +69,6 @@ const props = withDefaults(
   { preview: false, editable: false, limit: null }
 )
 const { t } = useNuxtI18n()
-const form = ref<ImageGalleryForm>({
-  pictures: null,
-})
 const loading = ref(false)
 const selected = ref(null)
 const toaster = useToasterStore()
@@ -69,6 +76,7 @@ const { stateModals, closeModals, openModals } = useModals({
   delete: false,
   gallery: false,
   create: false,
+  status: false,
 })
 
 const limitSkeletons = computed(() => maxSkeleton(props.group?.modules?.gallery, props.limit))
@@ -105,9 +113,31 @@ const deleteImage = () => {
     })
 }
 
-const createImage = () => {
+const imagesStatusUploading = ref<Map<File, AsyncDataRequestStatus>>(null)
+const createImage = (form: ImageGalleryForm) => {
   loading.value = true
-  postGroupGallery(organizationCode, groupId.value, form.value)
+  imagesStatusUploading.value = new Map()
+  openModals('status')
+
+  Promise.all(
+    form.files.map((file) => {
+      const body = new FormData()
+      body.append('file', file)
+
+      imagesStatusUploading.value.set(file, 'pending')
+
+      return delay(30000)
+
+      return postGroupGallery(organizationCode, groupId.value, body)
+        .then(() => {
+          imagesStatusUploading.value.set(file, 'success')
+        })
+        .catch((err) => {
+          imagesStatusUploading.value.set(file, 'error')
+          throw err
+        })
+    })
+  )
     .then(() => {
       toaster.pushSuccess(t('gallery.success-create'))
       // refetch new datas

@@ -43,15 +43,16 @@
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import GalleryItem from '@/components/base/gallery/GalleryItem.vue'
 import { DEFAULT_IMAGE_PATATOID } from '@/composables/usePatatoids'
-import { ImageGallery } from '@/interfaces/gallery'
+import { urlToImageModel } from '@/functs/imageSizesUtils'
+import { ImageModel } from '@/models/image.model'
 import { AsyncDataRequestStatus } from 'nuxt/app'
 
 const props = withDefaults(
   defineProps<{
     isOpened: boolean
-    images?: ImageGallery[]
+    images?: ImageModel[]
     pagination: Pagination
-    selected?: ImageGallery
+    selected?: ImageModel
     status?: AsyncDataRequestStatus
   }>(),
   {
@@ -80,11 +81,9 @@ watch(
   }
 )
 
-const DEFAULT_IMAGE = {
-  id: -1,
-  alt: '',
-  src: `${runtimeConfig.public.appPublicBinariesPrefix}${DEFAULT_IMAGE_PATATOID}`,
-}
+const DEFAULT_IMAGE = urlToImageModel(
+  `${runtimeConfig.public.appPublicBinariesPrefix}${DEFAULT_IMAGE_PATATOID}`
+)
 const imageSelected = computed(() => props.images[localindex.value] ?? DEFAULT_IMAGE)
 const selectedIndex = computed(() => props.pagination.offset.value + localindex.value)
 
@@ -112,7 +111,7 @@ const prev = () => {
   }
 }
 const canNext = computed(() => {
-  return selectedIndex.value < props.pagination.count.value
+  return selectedIndex.value + 1 < props.pagination.count.value
 })
 const next = () => {
   if (localindex.value + 1 === props.pagination.limit.value) {

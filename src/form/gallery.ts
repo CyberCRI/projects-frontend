@@ -4,11 +4,11 @@ import { clone } from 'es-toolkit'
 import { ImageGalleryForm } from '@/interfaces/gallery'
 
 const DEFAULT_FORM: ImageGalleryForm = {
-  pictures: null,
+  files: null,
 }
 
 const RULES = {
-  pictures: { required },
+  files: { required },
 }
 
 export const useGalleryImageForm = (options = {}) => {

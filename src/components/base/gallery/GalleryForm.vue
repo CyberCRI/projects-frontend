@@ -5,24 +5,42 @@
     :asyncing="loading"
     :disabled="loading || !isValid"
     @close="$emit('close')"
-    @submit="$emit('submit')"
+    @submit="submit"
   >
     <template #header>
       <h3>
         {{ $t('gallery.add') }}
-        <span v-if="form.pictures?.length" class="gallery-length">
-          ({{ form.pictures.length }})
-        </span>
+        <span v-if="form.files?.length" class="gallery-length">({{ form.files.length }})</span>
       </h3>
     </template>
 
     <template #body>
       <div v-if="images.length" class="gallery-image-editor">
-        <GalleryList :images="images" editable @delete="deleteImage" />
+        <GalleryList v-slot="{ image }" :images="images" :editable="!loading">
+          <div class="pointer-events-none gallery-uploading">
+            <GalleryItem
+              :key="image.url"
+              :image="image"
+              class="gallery-uploading-image"
+              :style-img="{ objectFit: 'cover' }"
+              :editable="!loading"
+              @delete="deleteImage"
+            />
+            <div v-if="status" class="gallery-uploading-status">
+              <LoaderSimple v-if="status[image.file] === 'pending'" />
+              <!-- <IconImage v-if="image.status === 'pending'" name="Circle" class="pending" /> -->
+              <IconImage
+                v-else-if="status[image.file] === 'success'"
+                name="Check"
+                class="success"
+              />
+              <IconImage v-else-if="status[image.file] === 'error'" name="Close" class="error" />
+              <IconImage v-else name="Alert" class="warning" />
+            </div>
+          </div>
+        </GalleryList>
       </div>
-      <div v-else class="gallery-empty">
-        {{ $t('gallery.add-picture') }}
-      </div>
+      <EmptyLabel v-else :label="$t('gallery.add-picture')" />
     </template>
 
     <template #extra-buttons>
@@ -35,42 +53,47 @@
 import DialogModal from '@/components/base/modal/DialogModal.vue'
 import { useGalleryImageForm } from '@/form/gallery'
 import GalleryList from '@/components/base/gallery/GalleryList.vue'
-import { ImageGallery } from '@/interfaces/gallery'
+import { ImageGalleryForm } from '@/interfaces/gallery'
+import EmptyLabel from '@/components/base/EmptyLabel.vue'
+import { ImageModel } from '@/models/image.model'
+import { fileToImageModel } from '@/functs/imageSizesUtils'
+import GalleryItem from '@/components/base/gallery/GalleryItem.vue'
 
 withDefaults(
   defineProps<{
     loading?: boolean
+    status?: any
   }>(),
   {
     loading: false,
+    status: null,
   }
 )
-defineEmits(['submit', 'close', 'delete'])
+const emit = defineEmits<{
+  close: []
+  submit: [ImageGalleryForm]
+}>()
 
-const { form, isValid } = useGalleryImageForm()
+const { form, isValid, cleanedData } = useGalleryImageForm()
 
 // create temporary uploaded pictures preview
 const images = computed(() => {
-  const img: ImageGallery[] = []
-  const files = form.value.pictures ?? []
-
-  files.forEach((image) => {
-    img.push({
-      alt: '',
-      src: URL.createObjectURL(image),
-    } as ImageGallery)
-  })
-  return img
+  const files = form.value.files ?? []
+  return files.map((file) => fileToImageModel(file))
 })
 
-const uploadImages = (pictures: File[]) => (form.value.pictures = pictures)
+const uploadImages = (pictures: File[]) => (form.value.files = pictures)
 
 // remove "uploaded selected picture"
 const deleteImage = (image) => {
   const index = images.value.findIndex((el) => el === image)
-  const pictures = form.value.pictures
+  const pictures = form.value.files
   pictures.splice(index, 1)
-  form.value.pictures = [...pictures]
+  // form.value.files = [...pictures]
+}
+
+const submit = () => {
+  emit('submit', toRaw(cleanedData.value))
 }
 </script>
 
@@ -100,12 +123,6 @@ const deleteImage = (image) => {
   color: $white;
   border-color: $salmon;
   background: $salmon;
-}
-
-.gallery-empty {
-  text-align: center;
-  font-style: italic;
-  opacity: 0.5;
 }
 
 .gallery-length {

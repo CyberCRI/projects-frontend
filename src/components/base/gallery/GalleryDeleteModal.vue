@@ -15,9 +15,9 @@
 <script setup lang="ts">
 import GalleryItem from '@/components/base/gallery/GalleryItem.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import { ImageGallery } from '@/interfaces/gallery'
+import { ImageModel } from '@/models/image.model'
 
-defineProps<{ image: ImageGallery; loading?: boolean }>()
+defineProps<{ image: ImageModel; loading?: boolean }>()
 defineEmits(['close', 'submit'])
 </script>
 
