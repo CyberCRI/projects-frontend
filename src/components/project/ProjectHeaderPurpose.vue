@@ -60,24 +60,6 @@ const showFullPurposeIcon = ref(false)
   position: relative;
 }
 
-.purpose-block {
-  margin-bottom: pxToRem(16px);
-}
-
-@media screen and (max-width: $min-tablet) {
-  .purpose-block {
-    margin-top: 0;
-  }
-
-  .purpose-block {
-    margin-bottom: $space-l;
-  }
-
-  .close-button {
-    display: none;
-  }
-}
-
 .full-purpose-block {
   position: absolute;
   top: 0;

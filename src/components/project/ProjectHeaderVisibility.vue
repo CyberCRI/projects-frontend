@@ -15,7 +15,7 @@
   </div>
 </template>
 <script setup>
-defineProps({
+const props = defineProps({
   project: {
     type: Object,
     default: () => ({}),
@@ -45,4 +45,11 @@ const visibility = computed(() => {
   return ret
 })
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.visibility {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: $line-height-compact;
+  color: $primary-dark;
+}
+</style>

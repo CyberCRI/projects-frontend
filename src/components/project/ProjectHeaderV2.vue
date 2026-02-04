@@ -1,34 +1,28 @@
 <template>
-  <div class="whole-content">
-    <div :class="{ loading }" class="project-header-ctn">
-      <div class="img-block">
-        <ProjectHeaderImage class="img-ctn" :project="project" :loading="loading" />
-      </div>
-      <div class="content-ctn">
-        <div :class="{ 'has-sdg': sdgs?.length }" class="main-info-ctn">
-          <div class="text-content">
-            <ProjectHeaderTitle class="title-block" :project="project" :loading="loading" />
+  <div :class="{ loading }" class="project-header-ctn">
+    <div class="img-block">
+      <ProjectHeaderImage class="img-ctn" :project="project" :loading="loading" />
+    </div>
+    <div class="text-content">
+      <ProjectHeaderTitle class="title-block" :project="project" :loading="loading" />
 
-            <ProjectHeaderTagList
-              class="tag-list-bloc tag-list-desktop"
-              :project="project"
-              :loading="loading"
-              tag-prefix="desktop"
-            />
+      <ProjectHeaderTagList
+        class="tag-list-bloc tag-list-desktop"
+        :project="project"
+        :loading="loading"
+        tag-prefix="desktop"
+      />
 
-            <ProjectHeaderPurpose
-              v-if="showPurposeWithEmptyContent"
-              class="purpose-block"
-              :project="project"
-              :loading="loading"
-            />
+      <ProjectHeaderPurpose
+        v-if="showPurposeWithEmptyContent"
+        class="purpose-block"
+        :project="project"
+        :loading="loading"
+      />
 
-            <ProjectHeaderVisibility class="visibility-ctn" :project="project" :loading="loading" />
+      <ProjectHeaderVisibility class="visibility-ctn" :project="project" :loading="loading" />
 
-            <ProjectHeaderSdgList :sdgs="sdgs" :loading="loading" class="sdg-ctn" />
-          </div>
-        </div>
-      </div>
+      <ProjectHeaderSdgList :sdgs="sdgs" :loading="loading" class="sdg-ctn" />
     </div>
   </div>
 </template>
@@ -87,34 +81,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.whole-content {
-  display: block !important;
-}
-
 .project-header-ctn {
   position: relative;
   display: flex;
   flex-flow: column nowrap;
-  padding: pxToRem(40px);
-  gap: pxToRem(40px);
+  gap: 1.25rem;
 
   @media screen and (min-width: $min-tablet) {
     border: $border-width-s solid $primary;
     border-radius: $border-radius-l;
     z-index: 1;
+    padding: 2.5rem;
   }
 
   @media screen and (min-width: $max-tablet) {
     flex-flow: row nowrap;
     align-items: center;
+    gap: 2.5rem;
   }
-}
-
-.visibility {
-  font-weight: 700;
-  font-size: 14px;
-  line-height: $line-height-compact;
-  color: $primary-dark;
 }
 
 .img-block {
@@ -124,22 +108,13 @@ export default {
   justify-content: center;
 }
 
-.content-ctn {
-  position: relative;
-  height: 100%;
-  width: 100%;
-}
-
-.main-info-ctn {
-  position: relative;
-  background: $white;
-}
-
 .text-content {
   display: flex;
   flex-direction: column;
   justify-content: center;
   flex-grow: 1;
+  position: relative;
+  gap: 1.25rem;
   @media screen and (max-width: $min-tablet) {
     .title-block {
       order: 1;

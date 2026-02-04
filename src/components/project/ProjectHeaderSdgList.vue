@@ -52,10 +52,6 @@ $sdg-size: pxToRem(38px);
   display: inline-block;
   transition: all 0.2s ease-in-out;
 
-  @media screen and (max-width: $min-tablet) {
-    margin-bottom: $space-l;
-  }
-
   &:hover {
     transform: translateZ(0) scale(1.2);
   }

@@ -92,23 +92,6 @@ const showFullTitleIcon = ref(false)
   position: relative;
 }
 
-.title-block {
-  margin-top: pxToRem(16px);
-}
-
-@media screen and (min-width: $min-tablet) {
-  .title-block {
-    margin-top: 10px;
-  }
-}
-
-@media screen and (max-width: $min-tablet) {
-  .title-block,
-  .purpose-block {
-    margin-top: 0;
-  }
-}
-
 // -----
 
 .icon {

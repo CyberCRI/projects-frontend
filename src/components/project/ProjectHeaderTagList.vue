@@ -36,24 +36,9 @@ defineProps({
 <style scoped lang="scss">
 .tag-ctn-skeleton {
   margin: 0;
-  margin-top: $space-l;
   display: flex;
   flex-wrap: nowrap;
   gap: $space-2xs;
   overflow: hidden;
-}
-
-.tag-list {
-  margin-top: $space-l;
-  margin-bottom: $space-l;
-
-  @media screen and (max-width: $min-tablet) {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-}
-
-.tag-list + .sdg-ctn {
-  margin-top: $space-l;
 }
 </style>
