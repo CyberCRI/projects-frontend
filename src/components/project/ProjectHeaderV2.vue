@@ -115,19 +115,24 @@ export default {
   flex-grow: 1;
   position: relative;
   gap: 1.25rem;
+
   @media screen and (max-width: $min-tablet) {
     .title-block {
       order: 1;
     }
+
     .purpose-block {
       order: 2;
     }
+
     .tag-list-bloc {
       order: 3;
     }
+
     .sdg-ctn {
       order: 4;
     }
+
     .visibility-ctn {
       order: 5;
     }
