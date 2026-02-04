@@ -12,9 +12,6 @@
         </p>
       </div>
     </template>
-    <template #skeleton>
-      <GroupHeaderSkeleton />
-    </template>
     <template #content>
       <div class="group-info-container">
         <div class="group-image">

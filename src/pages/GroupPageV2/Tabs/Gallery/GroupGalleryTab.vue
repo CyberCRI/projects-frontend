@@ -11,10 +11,13 @@ import BaseGroupGallery from '@/components/group/Modules/Gallery/BaseGroupGaller
 import { GroupModuleTitle, TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupTab from '@/pages/GroupPageV2/Tabs/BaseGroupTab.vue'
 
-const props = defineProps<{
-  group: TranslatedPeopleGroupModel
-  isInEditingMode: boolean
-}>()
+const props = withDefaults(
+  defineProps<{
+    group: TranslatedPeopleGroupModel
+    isInEditingMode?: boolean
+  }>(),
+  { isInEditingMode: false }
+)
 
 const countElement = computed<number>(() => props.group.modules?.gallery)
 </script>

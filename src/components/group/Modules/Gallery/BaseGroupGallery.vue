@@ -45,6 +45,8 @@ import PaginationButtonsV2 from '@/components/base/navigation/PaginationButtonsV
 import { useModals } from '@/composables/useModal'
 import { ImageGalleryForm } from '@/interfaces/gallery'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
+import { imageGallerySkeleton } from '@/skeletons/gallery.skeletons'
 import useToasterStore from '@/stores/useToaster'
 
 const props = withDefaults(
@@ -69,12 +71,14 @@ const { stateModals, closeModals, openModals } = useModals({
   create: false,
 })
 
+const limitSkeletons = computed(() => maxSkeleton(props.group?.modules?.gallery, props.limit))
 const organizationCode = useOrganizationCode()
 const groupId = computed(() => props.group.id)
 const { pagination, data, status, refresh } = getGroupGallery(organizationCode, groupId, {
   paginationConfig: {
     limit: props.limit,
   },
+  default: () => factoryPagination(imageGallerySkeleton, limitSkeletons.value),
 })
 
 const onView = (image) => {

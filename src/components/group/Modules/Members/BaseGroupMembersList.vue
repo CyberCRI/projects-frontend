@@ -6,7 +6,7 @@
       :member="member"
       @click="openProfile"
     />
-    <Pagination
+    <PaginationButtonsV2
       v-if="withPagination"
       hide-empty
       class="pagination-span"
@@ -34,6 +34,7 @@
 
 <script setup lang="ts">
 import { getGroupMember } from '@/api/v2/group.service'
+import PaginationButtonsV2 from '@/components/base/navigation/PaginationButtonsV2.vue'
 import GroupMemberItem from '@/components/group/Modules/Members/GroupMemberItem.vue'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import { maxSkeleton, factoryPagination } from '@/skeletons/base.skeletons'

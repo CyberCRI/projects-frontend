@@ -49,13 +49,15 @@ import { AsyncDataRequestStatus } from 'nuxt/app'
 const props = withDefaults(
   defineProps<{
     isOpened: boolean
-    images: ImageGallery[]
+    images?: ImageGallery[]
     pagination: Pagination
-    selected: ImageGallery
+    selected?: ImageGallery
     status?: AsyncDataRequestStatus
   }>(),
   {
     status: 'success',
+    images: () => [],
+    selected: null,
   }
 )
 

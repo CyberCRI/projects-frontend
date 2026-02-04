@@ -95,8 +95,6 @@ const uploadImage = (event) => {
     }
   })
 
-  console.log(files)
-
   if (files.length) {
     if (props.multiple) {
       emit('upload-images', files)
