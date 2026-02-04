@@ -73,12 +73,6 @@ const showFullPurposeIcon = ref(false)
   align-items: center;
   min-width: 100%;
   z-index: 1;
-
-  //   .full-purpose {
-  //     font-weight: 700;
-  //     font-size: $font-size-xl;
-  // line-height: $line-height-tight;
-  //   }
 }
 
 .purpose {
@@ -91,6 +85,13 @@ const showFullPurposeIcon = ref(false)
 .full-purpose {
   font-weight: 400;
   font-size: $font-size-m;
+}
+
+.purpose-block {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  position: relative;
 }
 
 // --------

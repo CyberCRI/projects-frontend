@@ -10,7 +10,6 @@
         class="tag-list-bloc tag-list-desktop"
         :project="project"
         :loading="loading"
-        tag-prefix="desktop"
       />
 
       <ProjectHeaderPurpose
@@ -99,13 +98,6 @@ export default {
     align-items: center;
     gap: 2.5rem;
   }
-}
-
-.img-block {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .text-content {

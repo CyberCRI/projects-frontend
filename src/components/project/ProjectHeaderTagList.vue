@@ -6,12 +6,7 @@
       <SkeletonComponent height="19px" width="50px" />
     </div>
 
-    <TagsList
-      v-else-if="project?.tags?.length"
-      :tags="project.tags"
-      class="tag-list"
-      :prefix="tagPrefix"
-    />
+    <TagsList v-else-if="project?.tags?.length" :tags="project.tags" class="tag-list" />
   </div>
 </template>
 
@@ -24,11 +19,6 @@ defineProps({
   loading: {
     type: Boolean,
     required: true,
-  },
-  tagPrefix: {
-    type: String,
-    required: false,
-    default: 'desktop',
   },
 })
 </script>

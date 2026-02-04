@@ -25,14 +25,15 @@
 </script>
 <style scoped lang="scss">
 .project-header-image-ctn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
   border-radius: $border-radius-l;
-  overflow: hidden;
   height: 260px;
   width: 260px;
+  overflow: hidden;
   background-color: $white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 
   .cropped-image {
     width: 100%;

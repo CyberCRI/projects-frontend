@@ -3,7 +3,7 @@
     <template v-if="loading">
       <SkeletonComponent border-radius="50%" height="30px" width="30px" />
     </template>
-    <TransitionGroup v-else name="sdg" tag="div">
+    <TransitionGroup v-else name="sdg" class="sdg-list" tag="div">
       <NuxtLink
         v-for="sdg in sdgs || []"
         :key="sdg"
@@ -62,6 +62,13 @@ $sdg-size: pxToRem(38px);
   height: 100%;
 }
 
+.sdg-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-xs;
+  row-gap: $space-m;
+}
+
 .sdg-enter-active,
 .sdg-leave-active {
   transition: transform 0.4s ease;
@@ -72,9 +79,5 @@ $sdg-size: pxToRem(38px);
 .sdg-enter-from,
 .sdg-leave-to {
   transform: translateZ(0) scale(0) translateY(200%);
-}
-
-.sdg-ctn a:not(:first-of-type) {
-  margin-left: $space-m;
 }
 </style>

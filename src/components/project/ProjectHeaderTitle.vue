@@ -84,8 +84,7 @@ const showFullTitleIcon = ref(false)
   }
 }
 
-.title-block,
-.purpose-block {
+.title-block {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
