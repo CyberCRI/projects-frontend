@@ -1,35 +1,14 @@
 <template>
   <SkeletonComponent v-if="loading" class="skeleton-block" height="42px" tag="h1" />
-  <div v-else class="title-block">
-    <LineClamped
-      v-if="project && project.title"
-      id="project-title"
-      class="title"
-      tag="h1"
-      line-number="2"
-      @overflow-state="showFullTitleIcon = $event"
-    >
-      {{ capitalizedTitle }}
-    </LineClamped>
-    <IconImage
-      v-if="showFullTitleIcon"
-      class="icon title-chevron"
-      name="ChevronDown"
-      @click="showFullTitle = !showFullTitle"
-    />
-
-    <div v-if="project && project.title && showFullTitle" class="full-title-block">
-      <h1 v-if="project && project.title" class="full-title">
-        {{ capitalizedTitle }}
-      </h1>
-
-      <IconImage
-        class="icon icon-open title-chevron"
-        name="ChevronUp"
-        @click="showFullTitle = !showFullTitle"
-      />
-    </div>
-  </div>
+  <RevealableClamped
+    v-else
+    class="title-block"
+    :text-content="capitalizedTitle"
+    tag="h1"
+    :line-number="2"
+    :style-limited="styleLimited"
+    :style-full="styleFull"
+  />
 </template>
 <script setup>
 import { capitalize } from '@/functs/string'
@@ -50,72 +29,21 @@ const capitalizedTitle = computed(() => {
   return capitalize(title)
 })
 
-const showFullTitle = ref(false)
-const showFullTitleIcon = ref(false)
+const styleLimited = ref({
+  fontWeight: 700,
+  fontSize: '32px',
+  lineHeight: 1,
+  width: '100%',
+})
+
+const styleFull = ref({
+  fontWeight: 700,
+  fontSize: '24px',
+  lineHeight: 1,
+  width: '100%',
+})
 </script>
 <style scoped lang="scss">
-.title {
-  font-weight: 700;
-  font-size: $font-size-3xl;
-  width: 100%;
-  line-height: 1;
-  border: 0 none;
-  position: relative;
-}
-
-.full-title-block {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: $white;
-  box-shadow: 0 0 6px rgb(0 0 0 / 15%);
-  border-radius: 16px;
-  padding: $space-m;
-  min-height: 90%;
-  display: flex;
-  align-items: center;
-  min-width: 100%;
-  z-index: 1;
-
-  .full-title {
-    font-weight: 700;
-    font-size: $font-size-xl;
-    line-height: $line-height-tight;
-  }
-}
-
-.title-block {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  position: relative;
-}
-
-// -----
-
-.icon {
-  width: 24px;
-  fill: $white;
-  cursor: pointer;
-  border: 1px solid $primary-dark;
-  border-radius: 50%;
-  background-color: $primary-dark;
-
-  &--open {
-    position: absolute;
-    bottom: 8px;
-    right: 8px;
-  }
-
-  &.title-chevron {
-    margin-bottom: 10px;
-  }
-
-  &.purpose-chevron {
-    margin-bottom: 3px;
-  }
-}
-
 .skeleton-block {
   margin-top: 12px;
 }
