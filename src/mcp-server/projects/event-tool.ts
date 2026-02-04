@@ -1,13 +1,14 @@
 import { z } from 'zod'
+import N from './zod-schema-utils'
 import { mcpFetch, API_BASE_URL, orgCode } from './base'
 
-const EVENT_OUTPUT_SCHEMA = z.object({
-  id: z.number().describe('The ID of the event'),
-  slug: z.string().describe('The slug of the event'),
-  title: z.string().describe('The title of the event'),
-  content: z.string().describe('The content of the event'),
-  event_date: z.string().describe('The date of the event'),
-  item_type: z.literal('event').describe('The type of the item, always event'),
+const EVENT_OUTPUT_SCHEMA = N.object({
+  id: N.number().describe('The ID of the event'),
+  slug: N.string().describe('The slug of the event'),
+  title: N.string().describe('The title of the event'),
+  content: N.string().describe('The content of the event'),
+  event_date: N.string().describe('The date of the event'),
+  item_type: N.literal('event').describe('The type of the item, always event'),
 })
 
 const mapEvent = (e: any) => ({

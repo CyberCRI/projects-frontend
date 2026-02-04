@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import N from './zod-schema-utils'
 import { mcpFetch, API_BASE_URL } from './base'
 import {
   USER_PREVIEW_OUTPUT_SCHEMA,
@@ -9,12 +10,12 @@ import {
 import { SDG_OUTPUT_SCHEMA, mapSDG } from './sdg-tool'
 import { tagMapper } from './tag-schema'
 
-export const CATEGORY_PREVIEW_OUTPUT_SCHEMA = z.object({
-  id: z.number().describe('The ID of the category'),
-  slug: z.string().describe('The slug of the category'),
-  name: z.string().describe('The name of the category'),
-  item_type: z.literal('category').describe('The type of the item, always category'),
-  link_url: z.string().describe('The URL link to the category'),
+export const CATEGORY_PREVIEW_OUTPUT_SCHEMA = N.object({
+  id: N.number().describe('The ID of the category'),
+  slug: N.string().describe('The slug of the category'),
+  name: N.string().describe('The name of the category'),
+  item_type: N.literal('category').describe('The type of the item, always category'),
+  link_url: N.string().describe('The URL link to the category'),
 })
 
 export const categoryMapper = (c: any) => ({
@@ -25,17 +26,17 @@ export const categoryMapper = (c: any) => ({
   item_type: 'category',
 })
 
-export const PROJECT_PREVIEW_OUTPUT_SCHEMA = z.object({
-  id: z.string().describe('The ID of the project'),
-  slug: z.string().describe('The slug of the project'),
-  item_type: z.literal('project').describe('The type of the item, always project'),
-  title: z.string().describe('The title of the project'),
-  purpose: z.string().describe('The purpose of the project'),
-  categories: z
-    .array(CATEGORY_PREVIEW_OUTPUT_SCHEMA)
-    .describe('The list of categories of the project'),
-  link_url: z.string().describe('The URL link to the project'),
-  item_image: z.string().nullable().describe('The image URL of the project'),
+export const PROJECT_PREVIEW_OUTPUT_SCHEMA = N.object({
+  id: N.string().describe('The ID of the project'),
+  slug: N.string().describe('The slug of the project'),
+  item_type: N.literal('project').describe('The type of the item, always project'),
+  title: N.string().describe('The title of the project'),
+  purpose: N.string().describe('The purpose of the project'),
+  categories: N.array(CATEGORY_PREVIEW_OUTPUT_SCHEMA).describe(
+    'The list of categories of the project'
+  ),
+  link_url: N.string().describe('The URL link to the project'),
+  item_image: N.string().nullable().describe('The image URL of the project'),
 })
 
 export const mapProjectPreview = (p: any) => ({
@@ -49,10 +50,10 @@ export const mapProjectPreview = (p: any) => ({
   item_image: p.header_image?.variations?.small,
 })
 
-const BLOG_ENTRY_OUTPUT_SCHEMA = z.object({
-  id: z.number().describe('The ID of the blog entry'),
-  title: z.string().describe('The title of the blog entry'),
-  content: z.string().describe('The content of the blog entry'),
+const BLOG_ENTRY_OUTPUT_SCHEMA = N.object({
+  id: N.number().describe('The ID of the blog entry'),
+  title: N.string().describe('The title of the blog entry'),
+  content: N.string().describe('The content of the blog entry'),
 })
 
 export const FETCH_PROJECT_SLUG_OR_ID =
@@ -74,106 +75,94 @@ export default (server) => {
       inputSchema: { idOrSlug: z.string().describe('The id or slug of the project') },
       outputSchema: {
         project_data: PROJECT_PREVIEW_OUTPUT_SCHEMA.extend({
-          purpose: z.string().describe('The purpose of the project'),
-          description: z.string().nullable().describe('The description of the project'),
-          sdgs: z.array(SDG_OUTPUT_SCHEMA).describe('The list of SDGs related to the project'),
-          tags: z
-            .array(z.object({ id: z.number(), title: z.string(), description: z.string() }))
-            .describe('The list of tags of the project'),
-          goals: z
-            .array(
-              z.object({
-                id: z.number(),
-                title: z.string().describe('The title of the goal'),
-                description: z.string().describe('The description of the goal'),
-                status: z.string().describe('The status of the goal'),
-              })
-            )
-            .describe('The list of goals of the project'),
-          reviews: z
-            .array(
-              z.object({
-                title: z.string().describe('The title of the review'),
-                description: z.string().describe('The description of the review'),
-                reviewer: USER_PREVIEW_OUTPUT_SCHEMA.nullable().describe(
-                  'The reviewer of the review'
-                ),
-              })
-            )
-            .describe('The list of reviews of the project'),
-          locations: z
-            .array(
-              z.object({
-                id: z.number(),
-                title: z.string().describe('The title of the location'),
-                description: z.string().describe('The description of the location'),
-                type: z.string().describe('The type of the location'),
-                lat: z.number().describe('The latitude of the location'),
-                lng: z.number().describe('The longitude of the location'),
-              })
-            )
-            .describe('The list of locations of the project'),
-          announcements: z
-            .array(
-              z.object({
-                id: z.number(),
-                title: z.string().describe('The title of the announcement'),
-                description: z.string().describe('The description of the announcement'),
-                status: z.string().describe('The status of the announcement'),
-                deadline: z.string().nullable().describe('The deadline of the announcement'),
-                is_remunerated: z.boolean().describe('Whether the announcement is remunerated'),
-              })
-            )
-            .describe('The list of announcements of the project'),
-          links: z
-            .array(
-              z.object({
-                id: z.number(),
-                title: z.string().describe('The title of the link'),
-                category: z.string(),
-                description: z.string().describe('The description of the link'),
-                site_name: z.string(),
-                site_url: z.string(),
-              })
-            )
-            .describe('The list of links of the project'),
-          files: z
-            .array(
-              z.object({
-                id: z.number(),
-                title: z.string().describe('The title of the file'),
-                description: z.string().describe('The description of the file'),
-                file: z.string(),
-                mime: z.string(),
-              })
-            )
-            .describe('The list of files of the project'),
-          blog_entries: z
-            .array(BLOG_ENTRY_OUTPUT_SCHEMA)
-            .describe('The list of blog entries of the project'),
-          linked_projects: z
-            .array(PROJECT_PREVIEW_OUTPUT_SCHEMA)
-            .describe('The list of linked projects of the project'),
-          views: z.number().describe('The number of views of the project'),
-          team: z.object({
-            members: z
-              .array(USER_PREVIEW_OUTPUT_SCHEMA)
-              .describe('The list of team members of the project'),
-            owners: z
-              .array(USER_PREVIEW_OUTPUT_SCHEMA)
-              .describe('The list of team owners of the project'),
-            reviewers: z
-              .array(USER_PREVIEW_OUTPUT_SCHEMA)
-              .describe('The list of team reviewers of the project'),
-            member_groups: z
-              .array(PEOPLE_GROUP_PREVIEW_OUTPUT_SCHEMA)
-              .describe('The list of team member groups of the project'),
-            owner_groups: z
-              .array(PEOPLE_GROUP_PREVIEW_OUTPUT_SCHEMA)
-              .describe('The list of team owner groups of the project'),
-            reviewer_groups: z
-              .array(PEOPLE_GROUP_PREVIEW_OUTPUT_SCHEMA)
-              .describe('The list of team reviewer groups of the project'),
+          purpose: N.string().describe('The purpose of the project'),
+          description: N.string().nullable().describe('The description of the project'),
+          sdgs: N.array(SDG_OUTPUT_SCHEMA).describe('The list of SDGs related to the project'),
+          tags: N.array(
+            N.object({ id: N.number(), title: N.string(), description: N.string() })
+          ).describe('The list of tags of the project'),
+          goals: N.array(
+            N.object({
+              id: N.number(),
+              title: N.string().describe('The title of the goal'),
+              description: N.string().describe('The description of the goal'),
+              status: N.string().describe('The status of the goal'),
+            })
+          ).describe('The list of goals of the project'),
+          reviews: N.array(
+            N.object({
+              title: N.string().describe('The title of the review'),
+              description: N.string().describe('The description of the review'),
+              reviewer: USER_PREVIEW_OUTPUT_SCHEMA.nullable().describe(
+                'The reviewer of the review'
+              ),
+            })
+          ).describe('The list of reviews of the project'),
+          locations: N.array(
+            N.object({
+              id: N.number(),
+              title: N.string().describe('The title of the location'),
+              description: N.string().describe('The description of the location'),
+              type: N.string().describe('The type of the location'),
+              lat: N.number().describe('The latitude of the location'),
+              lng: N.number().describe('The longitude of the location'),
+            })
+          ).describe('The list of locations of the project'),
+          announcements: N.array(
+            N.object({
+              id: N.number(),
+              title: N.string().describe('The title of the announcement'),
+              description: N.string().describe('The description of the announcement'),
+              status: N.string().describe('The status of the announcement'),
+              deadline: z.string().nullable().describe('The deadline of the announcement'),
+              is_remunerated: z.boolean().describe('Whether the announcement is remunerated'),
+            })
+          ).describe('The list of announcements of the project'),
+          links: N.array(
+            N.object({
+              id: N.number(),
+              title: N.string().describe('The title of the link'),
+              category: N.string(),
+              description: N.string().describe('The description of the link'),
+              site_name: N.string(),
+              site_url: N.string(),
+            })
+          ).describe('The list of links of the project'),
+          files: N.array(
+            N.object({
+              id: N.number(),
+              title: N.string().describe('The title of the file'),
+              description: N.string().describe('The description of the file'),
+              file: N.string(),
+              mime: N.string(),
+            })
+          ).describe('The list of files of the project'),
+          blog_entries: N.array(BLOG_ENTRY_OUTPUT_SCHEMA).describe(
+            'The list of blog entries of the project'
+          ),
+          linked_projects: N.array(PROJECT_PREVIEW_OUTPUT_SCHEMA).describe(
+            'The list of linked projects of the project'
+          ),
+          views: N.number().describe('The number of views of the project'),
+          team: N.object({
+            members: N.array(USER_PREVIEW_OUTPUT_SCHEMA).describe(
+              'The list of team members of the project'
+            ),
+            owners: N.array(USER_PREVIEW_OUTPUT_SCHEMA).describe(
+              'The list of team owners of the project'
+            ),
+            reviewers: N.array(USER_PREVIEW_OUTPUT_SCHEMA).describe(
+              'The list of team reviewers of the project'
+            ),
+            member_groups: N.array(PEOPLE_GROUP_PREVIEW_OUTPUT_SCHEMA).describe(
+              'The list of team member groups of the project'
+            ),
+            owner_groups: N.array(PEOPLE_GROUP_PREVIEW_OUTPUT_SCHEMA).describe(
+              'The list of team owner groups of the project'
+            ),
+            reviewer_groups: N.array(PEOPLE_GROUP_PREVIEW_OUTPUT_SCHEMA).describe(
+              'The list of team reviewer groups of the project'
+            ),
           }),
         }),
       },
@@ -308,7 +297,7 @@ export default (server) => {
       description: `Get main blog entries about a project given its id or slug. ${FETCH_PROJECT_SLUG_OR_ID}`,
       inputSchema: { idOrSlug: z.string().describe('The id or slug of the project') },
       outputSchema: {
-        results: z.array(BLOG_ENTRY_OUTPUT_SCHEMA).describe('The list of blog entries'),
+        results: N.array(BLOG_ENTRY_OUTPUT_SCHEMA).describe('The list of blog entries'),
       },
     },
     async ({ idOrSlug }, extras) => {
