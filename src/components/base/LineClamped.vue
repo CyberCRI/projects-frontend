@@ -30,22 +30,12 @@ function checkOverflowing() {
   const lineClamp = parseInt(styles.webkitLineClamp || '0')
   console.log('lineHeight', lineHeight, 'lineClamp', lineClamp)
 
-  // for some reason scollHeight is sometime just a few pixel large that height
-  // hence this fix
+  // for some reason scollHeight is sometime just a few pixel large that height - hence this fix
   let isOverflowingHeight = element.scrollHeight > Math.ceil(height)
   if (lineHeight && lineClamp) {
     const desiredLines = Math.round(element.scrollHeight / lineHeight)
     isOverflowingHeight = desiredLines > lineClamp
   }
-
-  console.log(
-    'element',
-    element,
-    element.scrollHeight,
-    Math.ceil(height),
-    element.scrollWidth,
-    Math.ceil(width)
-  )
 
   const isOverflowingWidth = element.scrollWidth > Math.ceil(width)
 

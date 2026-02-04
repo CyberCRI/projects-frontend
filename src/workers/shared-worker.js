@@ -1,5 +1,4 @@
 let connections = []
-console.log('barroo')
 onconnect = (e) => {
   const port = e.ports[0]
   connections.push(port)
