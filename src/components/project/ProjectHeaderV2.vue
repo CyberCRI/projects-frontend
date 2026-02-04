@@ -33,15 +33,23 @@
           <div class="text-content">
             <SkeletonComponent v-if="loading" class="skeleton-block" height="42px" tag="h1" />
             <div v-else class="title-block">
-              <h1 v-if="project && project.title" id="project-title" class="title">
+              <LineClamped
+                v-if="project && project.title"
+                id="project-title"
+                class="title"
+                tag="h1"
+                line-number="2"
+                @overflow-state="showFullTitleIcon = $event"
+              >
                 {{ capitalizedTitle }}
-              </h1>
+              </LineClamped>
               <IconImage
                 v-if="showFullTitleIcon"
                 class="icon title-chevron"
                 name="ChevronDown"
                 @click="showFullTitle = !showFullTitle"
               />
+
               <div v-if="project && project.title && showFullTitle" class="full-title-block">
                 <h1 v-if="project && project.title" class="full-title">
                   {{ capitalizedTitle }}
@@ -71,9 +79,16 @@
             </div>
             <SkeletonComponent v-if="loading" class="skeleton-block" height="24px" />
             <div v-else-if="showPurposeWithEmptyContent" class="purpose-block">
-              <h4 v-if="project && project.purpose" id="project-purpose" class="purpose">
+              <LineClamped
+                v-if="project && project.purpose"
+                id="project-purpose"
+                class="purpose"
+                tag="h4"
+                line-number="3"
+                @overflow-state="showFullPurposeIcon = $event"
+              >
                 {{ capitalizedPurpose }}
-              </h4>
+              </LineClamped>
               <IconImage
                 v-if="showFullPurposeIcon"
                 class="icon purpose-chevron"
@@ -240,19 +255,12 @@ export default {
       return capitalize(purpose)
     },
   },
-  watch: {
-    loading() {
-      this.setToggleIcon()
-    },
-  },
 
   mounted() {
-    window.addEventListener('resize', this.setToggleIcon)
     window.addEventListener('click', this.onClick)
   },
 
   unmounted() {
-    window.removeEventListener('resize', this.setToggleIcon)
     window.removeEventListener('click', this.onClick)
   },
 
@@ -274,22 +282,6 @@ export default {
         this.moreInfo = false
         this.plusButton = 0
       }
-    },
-
-    setToggleIcon() {
-      this.$nextTick(() => {
-        const title = document.getElementById('project-title')
-        const purpose = document.getElementById('project-purpose')
-
-        this.showFullTitleIcon = title
-          ? title.scrollHeight > title.clientHeight || title.scrollHeight > title.clientHeight
-          : false
-
-        this.showFullPurposeIcon = purpose
-          ? purpose.scrollHeight > purpose.clientHeight ||
-            purpose.scrollHeight > purpose.clientHeight
-          : false
-      })
     },
 
     browseProjectsWithQuery(queryField, queryValue) {
@@ -619,23 +611,18 @@ export default {
 
       .title {
         font-weight: 700;
-        font-size: $font-size-5xl;
-        line-height: $line-height-tight;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
+        font-size: $font-size-3xl;
         width: 100%;
+        line-height: 1;
+        border: 0 none;
+        position: relative;
       }
 
       .purpose {
         font-weight: 400;
-        font-size: $font-size-l;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
+        font-size: $font-size-m;
         width: 100%;
+        line-height: 1.1;
       }
 
       .tag-ctn-skeleton {
