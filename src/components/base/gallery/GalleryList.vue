@@ -4,6 +4,9 @@
       v-for="image in images"
       :key="image.id"
       :image="image"
+      :editable="editable"
+      :style-img="{ objectFit: 'cover' }"
+      @delete="$emit('delete', image)"
       @click="$emit('click', image)"
     />
   </div>
@@ -16,11 +19,15 @@ import { ImageGallery } from '@/interfaces/gallery'
 withDefaults(
   defineProps<{
     images: ImageGallery[]
+    editable?: boolean
   }>(),
-  {}
+  { editable: false }
 )
 
-defineEmits(['click'])
+defineEmits<{
+  click: [ImageGallery]
+  delete: [ImageGallery]
+}>()
 </script>
 
 <style lang="scss">

@@ -1010,7 +1010,8 @@
     "conferences": "Conférences",
     "publications": "Publications",
     "similars": "Groupes similaires",
-    "locations": "Emplacements"
+    "locations": "Emplacements",
+    "gallery": "Galerie de groupes"
   },
   "header": {
     "private": "Privée: visible uniquement par les membres de l’équipe",
@@ -3141,5 +3142,17 @@
     "title": "Conditions générales d’utilisation",
     "approve-title": "Veuillez approuver les conditions générales d'utilisation",
     "approve-button": "J'accepte"
+  },
+  "gallery": {
+    "title": "Galerie",
+    "view": "Voir la galerie.",
+    "delete": "Supprimer l'image.",
+    "add": "Ajouter des images",
+    "add-picture": "Veuillez sélectionner une ou plusieurs photos à envoyer.",
+    "confirm-delete": "Voulez-vous vraiment supprimer cette image ?",
+    "success-delete": "Image supprimée.",
+    "error-delete": "Une erreur s'est produite en supprimant l'image.",
+    "success-create": "Photo créée.",
+    "error-create": "Une erreur s'est produite image créée."
   }
 }

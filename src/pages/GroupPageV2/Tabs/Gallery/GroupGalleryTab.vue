@@ -1,7 +1,7 @@
 <template>
   <BaseGroupTab :title="$t(GroupModuleTitle.gallery)" :count="countElement">
     <div class="">
-      <BaseGroupGallery :group="group" :is-in-editing-mode="isInEditingMode" />
+      <BaseGroupGallery :group="group" :editable="isInEditingMode" />
     </div>
   </BaseGroupTab>
 </template>

@@ -7,6 +7,5 @@ export type ImageGallery = {
 
 export type ImageGalleryForm = {
   id?: number
-  imageSizes: any
-  header_image: any
+  pictures: File[]
 }

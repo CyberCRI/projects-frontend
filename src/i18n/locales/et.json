@@ -1010,7 +1010,8 @@
     "conferences": "Konverentsid",
     "publications": "Trükised",
     "similars": "Rühmad sarnased",
-    "locations": "Asukohad"
+    "locations": "Asukohad",
+    "gallery": "Grupi galerii"
   },
   "header": {
     "private": "Privaatne: nähtav ainult meeskonnaliikmetele",
@@ -3141,5 +3142,17 @@
     "title": "Teenuse osutamise tingimused",
     "approve-title": "Palun kinnitage teenusetingimused",
     "approve-button": "Nõustun"
+  },
+  "gallery": {
+    "title": "galeriis",
+    "view": "Vaata galeriid.",
+    "delete": "Kustuta pilt.",
+    "add": "Lisa pilte",
+    "add-picture": "Palun valige üks või mitu fotot, mida saata.",
+    "confirm-delete": "Kas tõesti kustutada see pilt?",
+    "success-delete": "Pilt kustutatud.",
+    "error-delete": "Tekkis viga pildi kustutamisel.",
+    "success-create": "Pilt loodud.",
+    "error-create": "Tekkis viga loodud pildis."
   }
 }

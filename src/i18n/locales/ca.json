@@ -1010,7 +1010,8 @@
     "conferences": "Conferèncias",
     "publications": "Publicacions",
     "similars": "Grups similars",
-    "locations": "Ubicacions"
+    "locations": "Ubicacions",
+    "gallery": "Galeria de grup"
   },
   "header": {
     "private": "Privat: només visible per als membres de l' equip",
@@ -3141,5 +3142,17 @@
     "title": "Termes i Condicions",
     "approve-title": "Si us plau, aprova els Termes i Condicions",
     "approve-button": "Accepto"
+  },
+  "gallery": {
+    "title": "Galeria",
+    "view": "Veure la galeria.",
+    "delete": "Esborra la imatge.",
+    "add": "Afegeix fotografies",
+    "add-picture": "Seleccioneu una o més fotos a enviar.",
+    "confirm-delete": "Esteu segur que voleu esborrar aquesta imatge?",
+    "success-delete": "S' ha esborrat la imatge.",
+    "error-delete": "Hi ha hagut un error en esborrar la imatge.",
+    "success-create": "Imatge creada.",
+    "error-create": "S' ha creat un error."
   }
 }

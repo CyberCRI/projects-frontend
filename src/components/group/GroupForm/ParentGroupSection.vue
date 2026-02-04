@@ -10,7 +10,7 @@
         :btn-icon="model ? 'Pen' : 'Plus'"
         :label="t(model ? 'group.form.edit' : 'group.form.add')"
         data-test="add-parent-group-card"
-        @click="openModal('pickGroup')"
+        @click="openModal()"
       />
     </label>
 
@@ -21,11 +21,11 @@
     <PickGroupDrawer
       :drawer-title="t('group.form.add-parent-group')"
       :subtitle="t('admin.groups.subtitle-edit-child')"
-      :is-opened="stateModal.pickGroup"
+      :is-opened="stateModal"
       :groups="groups"
       :initial-group="model"
       :rooted="true"
-      @close="closeModal('pickGroup')"
+      @close="closeModal()"
       @confirm="confirmGroup"
     />
   </div>
@@ -45,11 +45,11 @@ withDefaults(
 const model = defineModel<TranslatedPeopleGroupModel | null>()
 
 const { t } = useNuxtI18n()
-const { closeModal, openModal, stateModal } = useModal({ pickGroup: false })
+const { closeModal, openModal, stateModal } = useModal()
 
 const confirmGroup = (group) => {
   model.value = group
-  closeModal('pickGroup')
+  closeModal()
 }
 </script>
 

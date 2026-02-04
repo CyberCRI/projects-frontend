@@ -6,7 +6,7 @@
         v-disable-focus="unfocusable"
         btn-icon="Upload"
         :label="displayedLabel"
-        @click.prevent="$refs?.label?.click()"
+        @click.prevent="labelRef.click()"
       />
 
       <LpiButton
@@ -14,89 +14,97 @@
         v-disable-focus="unfocusable"
         btn-icon="Upload"
         :label="displayedLabel"
-        @click.prevent="$refs?.label?.click()"
+        @click.prevent="labelRef.click()"
       />
     </label>
 
-    <input :id="uniqueId" :ref="uniqueId" type="file" :accept="fileTypes" @change="uploadImage" />
+    <input
+      :id="uniqueId"
+      ref="fileInput"
+      type="file"
+      :accept="fileTypes"
+      :multiple="multiple"
+      @change="uploadImage"
+    />
     <p v-if="fileIsTooLarge" class="error-message">
       {{ $t('common.file-too-big', { maxSize: maxSizeMb }) }}
     </p>
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
+import { useUniqueId } from '@/composables/useUniqueId'
 
-export default {
-  name: 'ImageInput',
+const props = withDefaults(
+  defineProps<{
+    existingImage?: string
+    unfocusable?: boolean
+    label?: string
+    isLink?: boolean
+    maxSizeMb?: number
+    fileTypes?: string
+    multiple?: boolean
+  }>(),
+  {
+    existingImage: null,
+    unfocusable: false,
+    label: null,
+    isLink: false,
+    maxSizeMb: 2.25,
+    fileTypes: 'image/*',
+    multiple: false,
+  }
+)
 
-  components: {
-    LpiButton,
-    LinkButton,
-  },
+const emit = defineEmits<{
+  'upload-image': [File]
+  'upload-images': [File[]]
+}>()
 
-  props: {
-    existingImage: {
-      type: String,
-      default: null,
-    },
-    unfocusable: {
-      type: Boolean,
-      default: false,
-    },
+const uniqueId = useUniqueId()
 
-    label: {
-      type: String,
-      default: null,
-    },
-    isLink: {
-      type: Boolean,
-      default: false,
-    },
-    maxSizeMb: {
-      type: Number,
-      default: 2.25,
-    },
-    fileTypes: {
-      type: String,
-      default: 'image/*',
-    },
-  },
+const displayedLabel = computed(() => {
+  if (props.label) {
+    return props.label
+  }
+  if (props.existingImage) {
+    return $t('picture.change-picture')
+  }
+  return $t('picture.add-picture')
+})
 
-  emits: ['upload-image'],
+const labelRef = useTemplateRef('label')
+const inputRef = useTemplateRef('fileInput')
+const fileIsTooLarge = ref(false)
 
-  data() {
-    return {
-      uniqueId: (Math.random() + 1).toString(36).substring(7),
-      fileIsTooLarge: false,
+const isFileMaxSize = (file: File) => {
+  return props.maxSizeMb && file.size > Math.round(props.maxSizeMb * 1024 * 1024)
+}
+
+const uploadImage = (event) => {
+  const files: File[] = []
+
+  Array.from(inputRef.value.files).forEach((item) => {
+    console.log(item)
+    if (isFileMaxSize(item)) {
+      fileIsTooLarge.value = true
+    } else {
+      files.push(item)
     }
-  },
+  })
 
-  computed: {
-    displayedLabel() {
-      return this.label
-        ? this.label
-        : this.existingImage
-          ? this.$t('picture.change-picture')
-          : this.$t('picture.add-picture')
-    },
-  },
+  console.log(files)
 
-  methods: {
-    uploadImage(event) {
-      this.fileIsTooLarge = false
-      const file = this.$refs[this.uniqueId].files[0]
-      if (!file) return
-      if (this.maxSizeMb && file.size > Math.round(this.maxSizeMb * 1024 * 1024)) {
-        this.fileIsTooLarge = true
-      } else {
-        this.$emit('upload-image', file)
-      }
-      event.target.value = ''
-    },
-  },
+  if (files.length) {
+    if (props.multiple) {
+      emit('upload-images', files)
+    } else {
+      emit('upload-image', files[0])
+    }
+  }
+  event.target.value = ''
 }
 </script>
 

@@ -51,7 +51,7 @@
           <button
             v-if="group.location"
             class="group-recap-element group-location reset-btn"
-            @click="openModal('location')"
+            @click="openModal()"
           >
             <IconImage name="MapMarker" />
             <span class="group-recap-title">{{ t('group.location') }}</span>
@@ -72,9 +72,9 @@
       <!-- drawer views -->
       <LocationDrawer
         v-if="group.location"
-        :is-opened="stateModal.location"
+        :is-opened="stateModal"
         :locations="[group.location]"
-        @close="closeModal('location')"
+        @close="closeModal()"
       />
     </template>
   </BaseGroupPreview>
@@ -97,7 +97,7 @@ const props = withDefaults(
 )
 
 const { t } = useNuxtI18n()
-const { openModal, closeModal, stateModal } = useModal({ location: false })
+const { openModal, closeModal, stateModal } = useModal()
 
 const groupVisibilityLabel = computed(() => {
   if (props.group.publication_status === 'public') {

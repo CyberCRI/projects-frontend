@@ -42,18 +42,26 @@
 <script setup lang="ts">
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import GalleryItem from '@/components/base/gallery/GalleryItem.vue'
+import { DEFAULT_IMAGE_PATATOID } from '@/composables/usePatatoids'
 import { ImageGallery } from '@/interfaces/gallery'
 import { AsyncDataRequestStatus } from 'nuxt/app'
 
-const props = defineProps<{
-  isOpened: boolean
-  images: ImageGallery[]
-  pagination: Pagination
-  selected: ImageGallery
-  status: AsyncDataRequestStatus
-}>()
+const props = withDefaults(
+  defineProps<{
+    isOpened: boolean
+    images: ImageGallery[]
+    pagination: Pagination
+    selected: ImageGallery
+    status?: AsyncDataRequestStatus
+  }>(),
+  {
+    status: 'success',
+  }
+)
 
 defineEmits(['close'])
+
+const runtimeConfig = useRuntimeConfig()
 
 const localindex = ref(null)
 const transition = ref('')
@@ -70,7 +78,12 @@ watch(
   }
 )
 
-const imageSelected = computed(() => props.images[localindex.value])
+const DEFAULT_IMAGE = {
+  id: -1,
+  alt: '',
+  src: `${runtimeConfig.public.appPublicBinariesPrefix}${DEFAULT_IMAGE_PATATOID}`,
+}
+const imageSelected = computed(() => props.images[localindex.value] ?? DEFAULT_IMAGE)
 const selectedIndex = computed(() => props.pagination.offset.value + localindex.value)
 
 watch(
@@ -97,7 +110,7 @@ const prev = () => {
   }
 }
 const canNext = computed(() => {
-  return selectedIndex.value < props.pagination.total.value
+  return selectedIndex.value < props.pagination.count.value
 })
 const next = () => {
   if (localindex.value + 1 === props.pagination.limit.value) {

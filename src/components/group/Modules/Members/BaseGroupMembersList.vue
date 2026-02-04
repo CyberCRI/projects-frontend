@@ -6,7 +6,7 @@
       :member="member"
       @click="openProfile"
     />
-    <PaginationButtons2
+    <Pagination
       v-if="withPagination"
       hide-empty
       class="pagination-span"

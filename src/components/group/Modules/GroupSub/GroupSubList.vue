@@ -8,7 +8,7 @@
         :with-pagination="withPagination"
         :limit-members="limitMembers"
       />
-      <PaginationButtons2 v-if="withPagination" class="m-auto" :pagination="pagination" />
+      <PaginationButtonsV2 v-if="withPagination" class="m-auto" :pagination="pagination" />
     </div>
   </FetchLoader>
 </template>
@@ -19,6 +19,7 @@ import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import { maxSkeleton, factoryPagination } from '@/skeletons/base.skeletons'
 import { groupSkeleton } from '@/skeletons/group.skeletons'
 import GroupSubTeamItem from '@/components/group/Modules/GroupSub/GroupSubTeamItem.vue'
+import PaginationButtonsV2 from '@/components/base/navigation/PaginationButtonsV2.vue'
 
 const props = withDefaults(
   defineProps<{

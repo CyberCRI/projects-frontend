@@ -14,7 +14,7 @@
 
     <template #footer>
       <div class="groups-paginations">
-        <PaginationButtons2 :pagination="pagination" />
+        <PaginationButtonsV2 :pagination="pagination" />
       </div>
     </template>
   </BaseDrawer>
@@ -24,6 +24,7 @@
 import { getGroupSimilar } from '@/api/v2/group.service'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
+import PaginationButtonsV2 from '@/components/base/navigation/PaginationButtonsV2.vue'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import { factoryPagination } from '@/skeletons/base.skeletons'
 import { groupSkeleton } from '@/skeletons/group.skeletons'

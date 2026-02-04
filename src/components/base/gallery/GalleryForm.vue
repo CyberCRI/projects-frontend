@@ -1,6 +1,6 @@
 <template>
   <DialogModal
-    :confirm-button-label="isExist ? $t('common.edit') : $t('common.add')"
+    :confirm-button-label="$t('common.save')"
     :cancel-button-label="$t('common.cancel')"
     :asyncing="loading"
     :disabled="loading || !isValid"
@@ -8,35 +8,34 @@
     @submit="$emit('submit')"
   >
     <template #header>
-      {{ isExist ? $t('gallery.edit') : $t('gallery.add') }}
+      <h3>
+        {{ $t('gallery.add') }}
+        <span v-if="form.pictures?.length" class="gallery-length">
+          ({{ form.pictures.length }})
+        </span>
+      </h3>
     </template>
 
     <template #body>
-      <div class="gallery-map-ctn">
-        <ImageEditor
-          v-model:image-sizes="form.imageSizes"
-          v-model:picture="form.header_image"
-          :no-resize="true"
-        />
+      <div v-if="images.length" class="gallery-image-editor">
+        <GalleryList :images="images" editable @delete="deleteImage" />
+      </div>
+      <div v-else class="gallery-empty">
+        {{ $t('gallery.add-picture') }}
       </div>
     </template>
 
     <template #extra-buttons>
-      <LpiButton
-        class="delete-button"
-        :label="$t('common.delete')"
-        :btn-icon="loading ? 'LoaderSimple' : null"
-        @click="$emit('delete')"
-      />
+      <ImageInput :label="$t('common.add')" multiple @upload-images="uploadImages" />
     </template>
   </DialogModal>
 </template>
 
 <script setup lang="ts">
 import DialogModal from '@/components/base/modal/DialogModal.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import { ImageGalleryForm } from '@/interfaces/gallery'
 import { useGalleryImageForm } from '@/form/gallery'
+import GalleryList from '@/components/base/gallery/GalleryList.vue'
+import { ImageGallery } from '@/interfaces/gallery'
 
 withDefaults(
   defineProps<{
@@ -48,11 +47,31 @@ withDefaults(
 )
 defineEmits(['submit', 'close', 'delete'])
 
-const model = defineModel<ImageGalleryForm>()
+const { form, isValid } = useGalleryImageForm()
 
-const { form, isValid } = useGalleryImageForm({ model })
+// create temporary uploaded pictures preview
+const images = computed(() => {
+  const img: ImageGallery[] = []
+  const files = form.value.pictures ?? []
 
-const isExist = computed(() => !!form.value.id)
+  files.forEach((image) => {
+    img.push({
+      alt: '',
+      src: URL.createObjectURL(image),
+    } as ImageGallery)
+  })
+  return img
+})
+
+const uploadImages = (pictures: File[]) => (form.value.pictures = pictures)
+
+// remove "uploaded selected picture"
+const deleteImage = (image) => {
+  const index = images.value.findIndex((el) => el === image)
+  const pictures = form.value.pictures
+  pictures.splice(index, 1)
+  form.value.pictures = [...pictures]
+}
 </script>
 
 <style lang="scss" scoped>
@@ -82,10 +101,40 @@ const isExist = computed(() => !!form.value.id)
   border-color: $salmon;
   background: $salmon;
 }
+
+.gallery-empty {
+  text-align: center;
+  font-style: italic;
+  opacity: 0.5;
+}
+
+.gallery-length {
+  font-style: italic;
+  opacity: 0.4;
+  font-size: small;
+}
 </style>
 
 <style>
 .gallery-map-ctn .map-recap {
   height: 250px;
+}
+</style>
+
+<style lang="scss">
+.gallery-image-editor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  .gallery-grid {
+    grid-template-columns: repeat(4, 1fr);
+
+    > * {
+      height: pxToRem(130px);
+    }
+  }
 }
 </style>

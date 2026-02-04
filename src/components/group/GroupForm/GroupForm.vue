@@ -119,7 +119,7 @@
           :btn-icon="form.location ? 'Pen' : 'Plus'"
           data-test="add-location"
           :label="$t(form.location ? 'group.form.edit' : 'group.form.add')"
-          @click="openModal('location')"
+          @click="openModal()"
         />
       </label>
       <LocationItem
@@ -129,7 +129,7 @@
         show-location-type
       />
       <LocationDrawer
-        :is-opened="stateModal.location"
+        :is-opened="stateModal"
         :locations="form.location ? [form.location] : []"
         editable
         :location-types="['address']"
@@ -395,11 +395,11 @@ export default {
     },
     removeLocation() {
       this.form.location = null
-      this.closeModal('location')
+      this.closeModal()
     },
     submitLocation(location) {
       this.form.location = { ...location }
-      this.closeModal('location')
+      this.closeModal()
     },
   },
 }

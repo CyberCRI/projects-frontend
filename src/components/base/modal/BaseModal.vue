@@ -2,7 +2,7 @@
   <div>
     <teleport to="body">
       <transition name="modal-fade">
-        <div v-if="open" class="modal-backdrop" data-test="modal-backdrop">
+        <div v-if="stateModal" class="modal-backdrop" data-test="modal-backdrop">
           <div :id="modalId" class="modal-wrapper" :class="{ 'full-screen': fullScreen }">
             <div v-if="$slots.topping" class="modal-topping">
               <slot name="topping" />
@@ -21,7 +21,7 @@
                 </div>
 
                 <div class="dismiss-button">
-                  <slot name="dismiss-button">
+                  <slot name="dismiss-button" :close="close">
                     <ContextActionButton
                       v-if="canClose"
                       secondary
@@ -52,81 +52,57 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
-export default {
-  name: 'BaseModal',
+import { useUniqueId } from '@/composables/useUniqueId'
+import { delay } from 'es-toolkit'
 
-  components: { ContextActionButton },
+const props = withDefaults(
+  defineProps<{
+    width?: string
+    height?: string
+    canClose?: boolean
+    isSmall?: boolean
+    fullScreen?: boolean
+    modalId?: string
+  }>(),
+  {
+    width: null,
+    height: null,
+    canClose: true,
+    isSmall: false,
+    fullScreen: false,
+    modalId: null,
+  }
+)
 
-  props: {
-    width: {
-      type: String,
-      default: null,
-    },
+const emit = defineEmits<{
+  close: []
+  submit: []
+  'content-scroll': [any]
+}>()
 
-    height: {
-      type: String,
-      default: null,
-    },
+const { stateModal, closeModal, openModal } = useModal()
+const uniqueId = useUniqueId()
 
-    canClose: {
-      type: Boolean,
-      default: true,
-    },
+const customSize = computed(() => ({
+  width: props.width,
+  height: props.height,
+}))
 
-    isSmall: {
-      type: Boolean,
-      default: false,
-    },
-
-    fullScreen: {
-      type: Boolean,
-      default: false,
-    },
-    modalId: {
-      type: [String, undefined],
-      default: undefined,
-    },
-  },
-
-  emits: ['close', 'submit', 'content-scroll'],
-
-  data() {
-    return {
-      uniqueId: (Math.random() + 1).toString(36).substring(7),
-      open: false,
-    }
-  },
-
-  computed: {
-    customSize() {
-      return {
-        width: this.width,
-        height: this.height,
-      }
-    },
-  },
-
-  mounted() {
-    document.querySelector('body').classList.add(`has-open-modal-${this.uniqueId}`)
-    this.$nextTick(() => {
-      this.open = true
-    })
-  },
-
-  beforeUnmount() {
-    document.querySelector('body').classList.remove(`has-open-modal-${this.uniqueId}`)
-  },
-
-  methods: {
-    async close() {
-      this.open = false
-      await new Promise((resolve) => setTimeout(resolve, 500))
-      this.$emit('close')
-    },
-  },
+const close = () => {
+  closeModal()
+  delay(500).then(() => emit('close'))
 }
+
+onMounted(() => {
+  document.body.classList.add(`has-open-modal-${uniqueId}`)
+  nextTick(() => openModal())
+})
+
+onBeforeUnmount(() => {
+  document.body.classList.remove(`has-open-modal-${uniqueId}`)
+})
 </script>
 
 <style lang="scss" scoped>

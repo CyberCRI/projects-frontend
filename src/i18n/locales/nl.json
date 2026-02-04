@@ -1010,7 +1010,8 @@
     "conferences": "Conferenties",
     "publications": "Publicaties",
     "similars": "Groepen vergelijkbaar",
-    "locations": "Locaties"
+    "locations": "Locaties",
+    "gallery": "Groepsgalerie"
   },
   "header": {
     "private": "Privé: alleen zichtbaar voor teamleden",
@@ -3141,5 +3142,17 @@
     "title": "Servicevoorwaarden",
     "approve-title": "Gelieve de servicevoorwaarden goed te keuren",
     "approve-button": "Ik accepteer"
+  },
+  "gallery": {
+    "title": "Galerij",
+    "view": "Galerie bekijken.",
+    "delete": "Foto verwijderen.",
+    "add": "Foto's toevoegen",
+    "add-picture": "Selecteer een of meer foto's om te versturen.",
+    "confirm-delete": "Weet u zeker dat u deze foto wilt verwijderen?",
+    "success-delete": "Foto verwijderd.",
+    "error-delete": "Er is een fout opgetreden bij het verwijderen van afbeelding.",
+    "success-create": "Foto gemaakt.",
+    "error-create": "Er is een fout opgetreden bij het maken van een foto."
   }
 }

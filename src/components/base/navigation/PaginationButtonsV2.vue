@@ -29,13 +29,11 @@
 
 <script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
-import { Pagination } from '@/composables/usePagination'
-
-defineOptions({ name: 'PaginationButtons2' })
+import { Pagination as PaginationType } from '@/composables/usePagination'
 
 const props = withDefaults(
   defineProps<{
-    pagination: Pagination
+    pagination: PaginationType
     showNumber?: boolean
     hideEmpty?: boolean
     disable?: boolean
