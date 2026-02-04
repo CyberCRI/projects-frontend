@@ -1,11 +1,11 @@
 <template>
   <svg
-    ref="icon"
+    ref="svgIcon"
     viewBox="0 0 24 24"
     xmlns="http://www.w3.org/2000/svg"
     @click="$emit('click')"
     v-html="icon"
-  />
+  ></svg>
 </template>
 
 <script setup lang="ts">
@@ -20,6 +20,8 @@ const emit = defineEmits<{
   unmounted: []
 }>()
 
+const svgRef = useTemplateRef('svgIcon')
+
 const icon = computed(() => {
   const content = ICONS[props.name]
   if (content) {
@@ -30,7 +32,7 @@ const icon = computed(() => {
   }
   return ''
 })
-const el = useTemplateRef('icon')
-onMounted(() => emit('mounted', el.value))
+
+onMounted(() => emit('mounted', svgRef.value))
 onUnmounted(() => emit('unmounted'))
 </script>

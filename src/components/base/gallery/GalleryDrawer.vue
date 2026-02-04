@@ -9,20 +9,26 @@
     <template #header_clear>
       <span class="gallery-info">{{ selectedIndex + 1 }} / {{ pagination.count.value }}</span>
     </template>
-    <FetchLoader :status="status">
+    <FetchLoader :status="status" class-loading="loader-text" class-error="loader-text">
       <div class="gallery-switch">
         <div class="gallery-button">
           <LpiButton
             v-show="canPrev"
             class="skeletons-background"
             btn-icon="ArrowLeft"
+            :aria-label="$t('pagination.previous')"
             :disabled="!canPrev"
             @click="prev"
           />
         </div>
         <div class="container">
           <Transition appear :name="transition">
-            <GalleryItem :key="localindex" :image="imageSelected" class="gallery-item" />
+            <GalleryItem
+              :key="localindex"
+              :image="imageSelected"
+              class="gallery-item"
+              size="original"
+            />
           </Transition>
         </div>
         <div class="gallery-button">
@@ -30,6 +36,7 @@
             v-show="canNext"
             class="skeletons-background"
             btn-icon="ArrowRight"
+            :aria-label="$t('pagination.next')"
             :disabled="!canNext"
             @click="next"
           />
@@ -42,7 +49,7 @@
 <script setup lang="ts">
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import GalleryItem from '@/components/base/gallery/GalleryItem.vue'
-import { DEFAULT_IMAGE_PATATOID } from '@/composables/usePatatoids'
+import { DEFAULT_IMAGE_PATATOID, usePatatoid } from '@/composables/usePatatoids'
 import { urlToImageModel } from '@/functs/imageSizesUtils'
 import { ImageModel } from '@/models/image.model'
 import { AsyncDataRequestStatus } from 'nuxt/app'
@@ -64,8 +71,6 @@ const props = withDefaults(
 
 defineEmits(['close'])
 
-const runtimeConfig = useRuntimeConfig()
-
 const localindex = ref(null)
 const transition = ref('')
 
@@ -81,9 +86,7 @@ watch(
   }
 )
 
-const DEFAULT_IMAGE = urlToImageModel(
-  `${runtimeConfig.public.appPublicBinariesPrefix}${DEFAULT_IMAGE_PATATOID}`
-)
+const DEFAULT_IMAGE = urlToImageModel(usePatatoid(DEFAULT_IMAGE_PATATOID))
 const imageSelected = computed(() => props.images[localindex.value] ?? DEFAULT_IMAGE)
 const selectedIndex = computed(() => props.pagination.offset.value + localindex.value)
 
@@ -146,8 +149,6 @@ const next = () => {
   display: flex;
   justify-content: center;
   align-items: center;
-
-  // padding: .5rem;
 }
 
 .gallery-item {
@@ -177,5 +178,19 @@ const next = () => {
 
 .container {
   position: relative;
+}
+</style>
+
+<style lang="scss">
+.loader-text {
+  color: white;
+
+  .loading {
+    opacity: 0.9;
+  }
+
+  svg {
+    fill: white;
+  }
 }
 </style>

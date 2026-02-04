@@ -1,5 +1,6 @@
 <template>
   <div class="gallery-container">
+    <!-- editable button -->
     <LpiButton
       v-if="editable"
       btn-icon="Plus"
@@ -7,9 +8,19 @@
       class="edit-btn"
       @click="openModals('create')"
     />
-    <GalleryList :images="data" :editable="editable" @click="onView" @delete="onDelete" />
-    <EmptyLabel v-if="data.length === 0" :label="$t('gallery.empty')" />
-    <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
+
+    <FetchLoader :status="status" skeleton only-error>
+      <GalleryList
+        :images="data"
+        :editable="editable"
+        :image-size="preview ? 'small' : 'medium'"
+        @click="onView"
+        @delete="onDelete"
+      />
+      <EmptyLabel v-if="data.length === 0" :label="$t('gallery.empty')" />
+      <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
+    </FetchLoader>
+
     <GalleryDeleteModal
       v-if="stateModals.delete"
       :loading="loading"
@@ -29,14 +40,9 @@
       v-if="stateModals.create"
       :loading="loading"
       :status="imagesStatusUploading"
-      @close="closeModals('create')"
+      @close="closeForm"
       @submit="createImage"
     />
-    <!-- <GalleryUploadStatusModal
-      v-if="stateModals.status"
-      :status="imagesStatusUploading"
-      @close="closeModals('status')"
-    /> -->
   </div>
 </template>
 
@@ -44,11 +50,11 @@
 import { deleteGroupGallery, postGroupGallery } from '@/api/groups.service'
 import { getGroupGallery } from '@/api/v2/group.service'
 import EmptyLabel from '@/components/base/EmptyLabel.vue'
+import FetchLoader from '@/components/base/FetchLoader.vue'
 import GalleryDeleteModal from '@/components/base/gallery/GalleryDeleteModal.vue'
 import GalleryDrawer from '@/components/base/gallery/GalleryDrawer.vue'
 import GalleryForm from '@/components/base/gallery/GalleryForm.vue'
 import GalleryList from '@/components/base/gallery/GalleryList.vue'
-import GalleryUploadStatusModal from '@/components/base/gallery/GalleryUploadStatusModal.vue'
 import PaginationButtonsV2 from '@/components/base/navigation/PaginationButtonsV2.vue'
 import { useModals } from '@/composables/useModal'
 import { ImageGalleryForm } from '@/interfaces/gallery'
@@ -56,7 +62,6 @@ import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import { imageGallerySkeleton } from '@/skeletons/gallery.skeletons'
 import useToasterStore from '@/stores/useToaster'
-import { delay } from 'es-toolkit'
 import { AsyncDataRequestStatus } from 'nuxt/app'
 
 const props = withDefaults(
@@ -103,7 +108,7 @@ const deleteImage = () => {
   deleteGroupGallery(organizationCode, groupId.value, selected.value.id)
     .then(() => {
       toaster.pushSuccess(t('gallery.success-delete'))
-      // refetch new datas
+      refreshNuxtData(`${organizationCode}::group::${groupId.value}`)
       refresh()
     })
     .catch(() => toaster.pushError(t('gallery.error-delete')))
@@ -113,27 +118,24 @@ const deleteImage = () => {
     })
 }
 
-const imagesStatusUploading = ref<Map<File, AsyncDataRequestStatus>>(null)
+const imagesStatusUploading = ref<Map<string, AsyncDataRequestStatus>>(null)
 const createImage = (form: ImageGalleryForm) => {
   loading.value = true
   imagesStatusUploading.value = new Map()
   openModals('status')
 
   Promise.all(
-    form.files.map((file) => {
+    form.files.map((el) => {
       const body = new FormData()
-      body.append('file', file)
+      body.append('file', el.file)
 
-      imagesStatusUploading.value.set(file, 'pending')
-
-      return delay(30000)
-
+      imagesStatusUploading.value.set(el.url, 'pending')
       return postGroupGallery(organizationCode, groupId.value, body)
         .then(() => {
-          imagesStatusUploading.value.set(file, 'success')
+          imagesStatusUploading.value.set(el.url, 'success')
         })
         .catch((err) => {
-          imagesStatusUploading.value.set(file, 'error')
+          imagesStatusUploading.value.set(el.url, 'error')
           throw err
         })
     })
@@ -141,13 +143,16 @@ const createImage = (form: ImageGalleryForm) => {
     .then(() => {
       toaster.pushSuccess(t('gallery.success-create'))
       // refetch new datas
+      refreshNuxtData(`${organizationCode}::group::${groupId.value}`)
       refresh()
     })
     .catch(() => toaster.pushError(t('gallery.error-create')))
-    .finally(() => {
-      loading.value = false
-      closeModals('create')
-    })
+    .finally(() => (loading.value = false))
+}
+
+const closeForm = () => {
+  imagesStatusUploading.value = null
+  closeModals('create')
 }
 </script>
 

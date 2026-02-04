@@ -1,13 +1,13 @@
 <template>
   <div :class="{ skeletons: inSkeletons }" class="contents">
-    <div v-if="loading" class="loader">
+    <div v-if="loading" class="center" :class="[classLoading]">
       <LpiLoader type="simple" />
       <span class="loading">
         {{ props.label ?? t('common.loading') }}
       </span>
     </div>
     <slot v-else-if="actualStatus === 'error'" name="error">
-      <div class="error">
+      <div class="center error" :class="[classError]">
         <IconImage name="AlertOutline" class="icon" />
         <span>
           {{ t('message.error-default') }}
@@ -40,8 +40,17 @@ const props = withDefaults(
     withData?: boolean
     onlyError?: boolean
     skeleton?: boolean
+    classLoading?: string
+    classError?: string
   }>(),
-  { withData: false, label: null, onlyError: false, skeleton: false }
+  {
+    withData: false,
+    label: null,
+    onlyError: false,
+    skeleton: false,
+    classLoading: '',
+    classError: '',
+  }
 )
 
 const firstLoading = ref(false)
@@ -92,7 +101,7 @@ watch(inLoading, (newValue, oldValue) => {
   padding-top: 0.5rem;
 }
 
-.loader {
+.center {
   margin: auto;
   display: flex;
   justify-content: center;
@@ -105,11 +114,11 @@ watch(inLoading, (newValue, oldValue) => {
   opacity: 0.8;
   font-style: italic;
   text-align: center;
-  margin: 0 auto;
+  margin: auto;
 
   & > * {
     vertical-align: middle;
-    margin: 0 auto;
+    margin: auto;
   }
 }
 

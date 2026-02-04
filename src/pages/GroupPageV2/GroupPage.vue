@@ -9,9 +9,9 @@
     }"
   >
     <div class="page-section-extra-wide">
-      <FetchLoader :status="status">
+      <FetchLoader :status="status" :with-data="!!group">
         <NavPanelLayout
-          :is-loading="isLoading"
+          :is-loading="groupLoading"
           :is-nav-collapsed="isNavCollapsed"
           :breadcrumbs="groupHierarchy || []"
           @toggle-nav-panel="toggleNavPanel"
@@ -19,7 +19,7 @@
         >
           <template #nav-panel>
             <LazyGroupNavPanel
-              v-if="!isLoading && !isNavCollapsed"
+              v-if="!groupLoading && !isNavCollapsed"
               :class="{ collapsed: isNavCollapsed }"
               :group-tabs="groupTabs"
               :current-tab="currentTab"
@@ -62,6 +62,8 @@ const groupId = computed(() => parseInt(route.params.groupId.toString(), 10))
 
 const { data: group, isLoading, status } = getGroup(organizationCode, groupId)
 
+const groupLoading = computed(() => isLoading.value && !group.value)
+
 watchEffect(() => {
   useLpiHead2({
     title: group.value?.name,
@@ -98,7 +100,7 @@ const groupTabsDisplay = computed(() => {
       altView: `/group/${route.params.groupId}/snapshot/edit`,
       props: {
         group: group.value,
-        isLoading: isLoading.value,
+        isLoading: groupLoading.value,
       },
       condition: true,
       noTitle: true,
@@ -113,7 +115,7 @@ const groupTabsDisplay = computed(() => {
       altView: `/group/${route.params.groupId}/members/edit`,
       props: {
         group: group.value,
-        isLoading: isLoading.value,
+        isLoading: groupLoading.value,
       },
       condition: groupModules.value.members,
       icon: GroupModuleIcon.members,
@@ -127,7 +129,7 @@ const groupTabsDisplay = computed(() => {
       altView: `/group/${route.params.groupId}/projects/edit`,
       props: {
         group: group.value,
-        isLoading: isLoading.value,
+        isLoading: groupLoading.value,
       },
       condition: groupModules.value.featured_projects,
       icon: GroupModuleIcon.featured_projects,
@@ -142,7 +144,7 @@ const groupTabsDisplay = computed(() => {
       props: {
         documentType: 'publications',
         group: group.value,
-        isLoading: isLoading.value,
+        isLoading: groupLoading.value,
       },
       condition: groupModules.value.publications,
       icon: GroupModuleIcon.publications,
@@ -157,7 +159,7 @@ const groupTabsDisplay = computed(() => {
       props: {
         documentType: 'conferences',
         group: group.value,
-        isLoading: isLoading.value,
+        isLoading: groupLoading.value,
       },
       condition: groupModules.value.conferences,
       icon: GroupModuleIcon.conferences,
@@ -171,7 +173,7 @@ const groupTabsDisplay = computed(() => {
       altView: `/group/${route.params.groupId}/locations/edit`,
       props: {
         group: group.value,
-        isLoading: isLoading.value,
+        isLoading: groupLoading.value,
       },
       condition: groupModules.value.locations,
       icon: GroupModuleIcon.locations,
@@ -185,7 +187,7 @@ const groupTabsDisplay = computed(() => {
       altView: `/group/${route.params.groupId}/gallery/edit`,
       props: {
         group: group.value,
-        isLoading: isLoading.value,
+        isLoading: groupLoading.value,
       },
       condition: groupModules.value.gallery,
       icon: GroupModuleIcon.gallery,
@@ -205,7 +207,7 @@ const groupTabsEdit = computed(() => {
       props: {
         isInEditingMode: true,
         group: group.value,
-        isLoading: isLoading.value,
+        isLoading: groupLoading.value,
       },
       condition: true,
       noTitle: true,
@@ -221,7 +223,7 @@ const groupTabsEdit = computed(() => {
       props: {
         isInEditingMode: true,
         group: group.value,
-        isLoading: isLoading.value,
+        isLoading: groupLoading.value,
       },
       condition: true,
       icon: 'Pen',
@@ -236,7 +238,7 @@ const groupTabsEdit = computed(() => {
       props: {
         isInEditingMode: true,
         group: group.value,
-        isLoading: isLoading.value,
+        isLoading: groupLoading.value,
       },
       condition: true,
       icon: 'Pen',
@@ -252,7 +254,7 @@ const groupTabsEdit = computed(() => {
         documentType: 'publications',
         isInEditingMode: true,
         group: group.value,
-        isLoading: isLoading.value,
+        isLoading: groupLoading.value,
       },
       condition: false,
       icon: 'Pen',
@@ -268,7 +270,7 @@ const groupTabsEdit = computed(() => {
         documentType: 'conferences',
         isInEditingMode: true,
         group: group.value,
-        isLoading: isLoading.value,
+        isLoading: groupLoading.value,
       },
       condition: false,
       icon: 'Pen',
@@ -283,7 +285,7 @@ const groupTabsEdit = computed(() => {
       props: {
         isInEditingMode: true,
         group: group.value,
-        isLoading: isLoading.value,
+        isLoading: groupLoading.value,
       },
       condition: false,
       icon: 'Pen',
@@ -298,7 +300,7 @@ const groupTabsEdit = computed(() => {
       props: {
         isInEditingMode: true,
         group: group.value,
-        isLoading: isLoading.value,
+        isLoading: groupLoading.value,
       },
       condition: true,
       icon: 'Pen',

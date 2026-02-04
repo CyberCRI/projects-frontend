@@ -3152,6 +3152,12 @@
     "success-delete": "Bild gelöscht.",
     "error-delete": "Ein Fehler beim Löschen des Bildes.",
     "success-create": "Bild erstellt.",
-    "error-create": "Ein Fehler wurde erstellt."
+    "error-create": "Ein Fehler wurde erstellt.",
+    "empty": "Keine Bilder."
+  },
+  "pagination": {
+    "previous": "Vorherige Seite",
+    "next": "Nächste Seite",
+    "page": "Seite"
   }
 }

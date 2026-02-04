@@ -3152,6 +3152,12 @@
     "success-delete": "Pilt kustutatud.",
     "error-delete": "Tekkis viga pildi kustutamisel.",
     "success-create": "Pilt loodud.",
-    "error-create": "Tekkis viga loodud pildis."
+    "error-create": "Tekkis viga loodud pildis.",
+    "empty": "Pilte pole tehtud."
+  },
+  "pagination": {
+    "previous": "Eelmine leht",
+    "next": "Järgmine",
+    "page": "Page"
   }
 }

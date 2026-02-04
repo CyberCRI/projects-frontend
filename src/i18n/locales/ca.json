@@ -3152,6 +3152,12 @@
     "success-delete": "S' ha esborrat la imatge.",
     "error-delete": "Hi ha hagut un error en esborrar la imatge.",
     "success-create": "Imatge creada.",
-    "error-create": "S' ha creat un error."
+    "error-create": "S' ha creat un error.",
+    "empty": "No hi ha fotos fixades."
+  },
+  "pagination": {
+    "previous": "Pàgina anterior",
+    "next": "Pàgina següent",
+    "page": "Pàgina"
   }
 }

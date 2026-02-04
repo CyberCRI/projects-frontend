@@ -3152,6 +3152,12 @@
     "success-delete": "Foto verwijderd.",
     "error-delete": "Er is een fout opgetreden bij het verwijderen van afbeelding.",
     "success-create": "Foto gemaakt.",
-    "error-create": "Er is een fout opgetreden bij het maken van een foto."
+    "error-create": "Er is een fout opgetreden bij het maken van een foto.",
+    "empty": "Geen foto's gezet."
+  },
+  "pagination": {
+    "previous": "Vorige pagina",
+    "next": "Volgende pagina",
+    "page": "Bladzijde"
   }
 }

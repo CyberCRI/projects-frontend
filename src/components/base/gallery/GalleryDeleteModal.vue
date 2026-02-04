@@ -7,7 +7,7 @@
   >
     <div class="gallery-container">
       <span class="m-auto">{{ $t('gallery.confirm-delete') }}</span>
-      <GalleryItem :image="image" class="pointer-events-none" />
+      <GalleryItem :image="image" class="pointer-events-none" size="full" />
     </div>
   </ConfirmModal>
 </template>

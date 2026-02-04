@@ -6,6 +6,7 @@
           :key="image.url"
           :image="image"
           :editable="editable"
+          :size="imageSize"
           :style-img="{ objectFit: 'cover' }"
           @delete="$emit('delete', image)"
           @click="$emit('click', image)"
@@ -23,8 +24,9 @@ withDefaults(
   defineProps<{
     images: ImageModel[]
     editable?: boolean
+    imageSize?: keyof ImageModel['variations']
   }>(),
-  { editable: false }
+  { editable: false, imageSize: null }
 )
 
 defineEmits<{
@@ -40,6 +42,10 @@ defineEmits<{
   gap: 0.5rem;
   width: 100%;
   height: 100%;
+
+  > * {
+    height: pxToRem(130px);
+  }
 
   @media screen and (min-width: $min-desktop) {
     grid-template-columns: 1fr 1fr 1fr 1fr;

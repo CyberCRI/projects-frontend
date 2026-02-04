@@ -16,9 +16,7 @@
             <slot name="header_clear" />
           </div>
 
-          <div class="header__close" @click="close">
-            <span class="icon-circle shadow-box"><IconImage name="Close" /></span>
-          </div>
+          <LpiButton btn-icon="Close" :aria-label="$t('common.close')" @click="close" />
         </header>
 
         <main ref="main" :style="customStyle" class="drawer__main custom-scrollbar">
@@ -52,7 +50,6 @@
 </template>
 
 <script setup lang="ts">
-import IconImage from '@/components/base/media/IconImage.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import { capitalize } from '@/functs/string'
 import { StyleValue } from 'vue'
@@ -264,40 +261,6 @@ $slide-duration: 400ms;
     font-weight: 700;
     display: flex;
     align-items: center;
-  }
-}
-
-.header__close {
-  width: min-content;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-
-  .icon-circle {
-    width: 2rem;
-    height: 2rem;
-    border: $border-width-s solid $primary-dark;
-    border-radius: 2rem;
-    position: relative;
-    display: inline-block;
-
-    .transparent & {
-      background-color: white;
-
-      svg {
-        fill: black;
-      }
-    }
-
-    svg {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: $layout-size-m;
-      fill: $primary-dark;
-    }
   }
 }
 </style>

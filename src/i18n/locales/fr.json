@@ -3152,6 +3152,12 @@
     "success-delete": "Image supprimée.",
     "error-delete": "Une erreur s'est produite en supprimant l'image.",
     "success-create": "Photo créée.",
-    "error-create": "Une erreur s'est produite image créée."
+    "error-create": "Une erreur s'est produite image créée.",
+    "empty": "Pas de photos."
+  },
+  "pagination": {
+    "previous": "Page précédente",
+    "next": "Page suivante",
+    "page": "Page"
   }
 }

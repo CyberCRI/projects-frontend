@@ -132,8 +132,5 @@ export const urlToImageModel = (url: string): ImageModel => {
  */
 export const fileToImageModel = (file: File): ImageModel => {
   const url = URL.createObjectURL(file)
-  const v = urlToImageModel(url)
-  // @ts-expect-error
-  v.file = file
-  return v
+  return urlToImageModel(url)
 }

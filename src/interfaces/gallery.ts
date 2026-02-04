@@ -1,3 +1,6 @@
 export type ImageGalleryForm = {
-  files: File[]
+  files: {
+    file: File
+    url: string
+  }[]
 }

@@ -3152,6 +3152,12 @@
     "success-delete": "Imagen borrada.",
     "error-delete": "Se produjo un error borrando la imagen.",
     "success-create": "Imagen creada.",
-    "error-create": "Un error ocurrió imagen creada."
+    "error-create": "Un error ocurrió imagen creada.",
+    "empty": "No hay fotos."
+  },
+  "pagination": {
+    "previous": "Página anterior",
+    "next": "Página siguiente",
+    "page": "Página"
   }
 }
