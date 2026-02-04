@@ -100,6 +100,19 @@ export default {
   }
 }
 
+.img-block {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-basis: 260px;
+  max-height: 260px;
+  max-width: 260px;
+  height: 100%;
+  width: 100%;
+  align-self: center;
+}
+
 .text-content {
   display: flex;
   flex-direction: column;
