@@ -59,6 +59,7 @@ const isClamped = ref(false)
 
 .revealable-full {
   $pad: $space-m;
+
   position: absolute;
   top: -$pad;
   left: -$pad;
