@@ -206,6 +206,7 @@ export default {
       ),
       showExtraTags: false,
       straightCorner: false,
+      onResizeLayoutTagsBis: debounce(this.layoutTagsBis, 42, { leading: false, trailing: true }),
     }
   },
 
@@ -242,16 +243,13 @@ export default {
   async mounted() {
     this.layoutTags()
     document.addEventListener('click', this.extraTagClickOutside)
-    window.addEventListener(
-      'resize',
-      debounce(this.layoutTagsBis, 42, { leading: false, trailing: true })
-    )
+    window.addEventListener('resize', this.onResizeLayoutTagsBis)
   },
 
   unmounted() {
     document.removeEventListener('click', this.extraTagClickOutside)
 
-    window.removeEventListener('resize', this.layoutTagsBis)
+    window.removeEventListener('resize', this.onResizeLayoutTagsBis)
   },
 
   methods: {
