@@ -85,7 +85,7 @@
     "leaflet.markercluster": "^1.5.3",
     "lowlight": "^3.3.0",
     "mixpanel-browser": "^2.48.1",
-    "nuxt": "^3.19.3",
+    "nuxt": "^3.20.0",
     "nuxt-svgo": "4.2.6",
     "openai": "^5.23.0",
     "pinia": "^3.0.3",
