@@ -81,7 +81,11 @@
         <div class="map-inner-ctn">
           <div class="map">
             <client-only>
-              <LazyBaseMap ref="map" @click="formMode === 'click' ? clickOnMap($event) : null">
+              <LazyBaseMap
+                ref="map"
+                :use-cluster="useCluster"
+                @click="formMode === 'click' ? clickOnMap($event) : null"
+              >
                 <template #default="slotProps">
                   <template v-if="slotProps.map && !suggestedLocations">
                     <MapPointer
@@ -157,6 +161,7 @@ const props = withDefaults(
     locations?: AnyTranslatedLocation[]
     editable?: boolean
     locationTypes?: LocationType[]
+    useCluster?: boolean
   }>(),
   {
     isOpened: false,

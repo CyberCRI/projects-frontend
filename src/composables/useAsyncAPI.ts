@@ -51,7 +51,7 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
   */
   params[2] ??= {}
   params[2].watch ??= []
-  if (params[2].query) {
+  if (params[2].query && isReactive(params[2].query)) {
     params[2].watch.push(params[2].query)
   }
 

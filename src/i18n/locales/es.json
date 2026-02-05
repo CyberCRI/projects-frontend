@@ -1011,7 +1011,8 @@
     "publications": "Publicaciones",
     "similars": "Grupos similares",
     "locations": "Lugares",
-    "presentation": "Presentación"
+    "presentation": "Presentación",
+    "location": "Dirección"
   },
   "header": {
     "private": "Privada: visible sólo a los miembros del equipo",
@@ -3161,5 +3162,10 @@
     "previous": "Página anterior",
     "next": "Página siguiente",
     "page": "Página"
+  },
+  "pdf": {
+    "blog-entries-limited-warning": "Sólo las primeras {max} entradas del blog se incluyen en la exportación de PDF (del total {total}).",
+    "download-pdf": "PDF",
+    "generated-on": "Generado en {date}"
   }
 }

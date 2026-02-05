@@ -1,6 +1,6 @@
 import { ImageModel } from '@/models/image.model'
 
-export const imageGallerySkeleton = (): Omit<ImageModel, 'id'> => {
+export const imageGallerySkeleton = (def?: Partial<ImageModel>): Omit<ImageModel, 'id'> => {
   const url = ''
   return {
     url,
@@ -18,5 +18,6 @@ export const imageGallerySkeleton = (): Omit<ImageModel, 'id'> => {
     left: 0,
     top: 0,
     natural_ratio: 0,
+    ...(def || {}),
   }
 }

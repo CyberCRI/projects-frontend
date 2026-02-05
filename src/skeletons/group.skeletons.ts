@@ -1,13 +1,13 @@
 import { GroupMember } from '@/models/group.model'
 import { PeopleGroupModel } from '@/models/invitation.model'
 
-export const groupSkeleton = (): Omit<PeopleGroupModel, 'id'> => ({
+export const groupSkeleton = (def?: Partial<PeopleGroupModel>): Omit<PeopleGroupModel, 'id'> => ({
   slug: 'slug',
   name: 'name',
   description: 'Esse culpa qui quis ea aliqua commodo reprehenderit minim elit dolore amet Lorem.',
   short_description:
     'Esse culpa qui quis ea aliqua commodo reprehenderit minim elit dolore amet Lorem.',
-  email: 'email@email.fr',
+  email: '',
   type: 'type',
   header_image: null,
   publication_status: 'public',
@@ -27,9 +27,10 @@ export const groupSkeleton = (): Omit<PeopleGroupModel, 'id'> => ({
     locations: 0,
     gallery: 0,
   },
+  ...(def || {}),
 })
 
-export const memberSkeleton = (): Omit<GroupMember, 'id'> => ({
+export const memberSkeleton = (def?: Partial<GroupMember>): Omit<GroupMember, 'id'> => ({
   name: {
     firstname: 'firstname',
     lastname: 'lastname',
@@ -48,4 +49,5 @@ export const memberSkeleton = (): Omit<GroupMember, 'id'> => ({
   },
   is_manager: false,
   is_leader: false,
+  ...(def || {}),
 })

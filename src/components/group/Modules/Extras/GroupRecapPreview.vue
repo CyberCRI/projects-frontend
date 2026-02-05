@@ -55,7 +55,7 @@ const modulesArray = computed(() => {
       .map(([name, count]) => {
         const obj = {
           key: name,
-          name: props.noTitle ? '' : t(GroupModuleTitle[name]),
+          name: props.noTitle ? '' : t(GroupModuleTitle[name], count),
           count,
           icon: GroupModuleIcon[name],
         }

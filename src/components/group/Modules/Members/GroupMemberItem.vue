@@ -2,7 +2,7 @@
   <UserCard
     :user="member"
     :role="roleLabel"
-    mode="list"
+    :mode="mode"
     class="cursor-pointer shadow-drop border-primary"
     @click="click"
   >
@@ -21,10 +21,14 @@ import UserCard from '@/components/people/UserCard.vue'
 
 defineOptions({ name: 'GroupMemberItem' })
 
-const props = defineProps<{
-  member: any
-  roleLabel?: string
-}>()
+const props = withDefaults(
+  defineProps<{
+    member: any
+    roleLabel?: string
+    mode?: 'list' | 'card'
+  }>(),
+  { mode: 'list', roleLabel: undefined }
+)
 
 const { t } = useNuxtI18n()
 
@@ -33,7 +37,7 @@ const emit = defineEmits(['click'])
 const isAnonymous = computed(() => isAnonymousUser(props.member))
 
 const roleLabel = computed(() => {
-  if (props.roleLabel) {
+  if (props.roleLabel !== undefined) {
     return props.roleLabel
   }
   if (props.member) {

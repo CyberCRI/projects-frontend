@@ -1011,7 +1011,8 @@
     "publications": "Publicaties",
     "similars": "Groepen vergelijkbaar",
     "locations": "Locaties",
-    "presentation": "Presentatie"
+    "presentation": "Presentatie",
+    "location": "Adres"
   },
   "header": {
     "private": "Privé: alleen zichtbaar voor teamleden",
@@ -3161,5 +3162,10 @@
     "previous": "Vorige pagina",
     "next": "Volgende pagina",
     "page": "Bladzijde"
+  },
+  "pdf": {
+    "blog-entries-limited-warning": "Alleen de eerste {max} blogvermeldingen zijn opgenomen in de PDF-export (van {total} totaal).",
+    "download-pdf": "PDF",
+    "generated-on": "Gegenereerd op {date}"
   }
 }

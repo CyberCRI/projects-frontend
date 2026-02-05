@@ -69,7 +69,7 @@ export const GroupModuleTitle: { [key in PeopleGroupModulesKeys]: string } = {
   publications: 'group.publications',
   members: 'group.members',
   similars: 'group.similars',
-  subgroups: 'group.see-subgroups',
+  subgroups: 'group.subgroups',
   locations: 'group.locations',
   gallery: 'gallery.title',
 }

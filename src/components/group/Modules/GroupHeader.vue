@@ -22,6 +22,7 @@
             :default-picture="DEFAULT_GROUP_PATATOID"
           />
         </div>
+        <!-- infos -->
         <div class="group-infos list-divider">
           <h1 class="group-title skeleton-block">
             {{ group.$t.name }}
@@ -31,6 +32,17 @@
             class="short-description"
             v-html="group.$t.short_description"
           />
+          <FetchLoader :status="status" only-error skeleton>
+            <div class="group-leaders">
+              <GroupMemberItem
+                v-for="member in leaders"
+                :key="member.id"
+                :member="member"
+                role-label=""
+                mode="list"
+              />
+            </div>
+          </FetchLoader>
           <TagsList
             v-if="group.tags.length"
             :tags="group.tags"
@@ -84,6 +96,11 @@ import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
 import SdgList from '@/components/sdgs/SdgList.vue'
 import TagsList from '@/components/tags/TagsList.vue'
 import LocationDrawer from '@/components/map/LocationDrawer.vue'
+import { getGroupMember } from '@/api/v2/group.service'
+import GroupMemberItem from '@/components/group/Modules/Members/GroupMemberItem.vue'
+import FetchLoader from '@/components/base/FetchLoader.vue'
+import { memberSkeleton } from '@/skeletons/group.skeletons'
+import { factoryPagination } from '@/skeletons/base.skeletons'
 
 const props = withDefaults(
   defineProps<{
@@ -95,6 +112,14 @@ const props = withDefaults(
 
 const { t } = useNuxtI18n()
 const { openModal, closeModal, stateModal } = useModal()
+const organizationCode = useOrganizationCode()
+const groupId = computed(() => props.group.id)
+
+const { data: members, status } = getGroupMember(organizationCode, groupId, {
+  query: { limit: 5 },
+  default: () => factoryPagination(() => memberSkeleton({ is_leader: true }), 2),
+})
+const leaders = computed(() => members.value?.filter((item) => item.is_leader))
 
 const groupVisibilityLabel = computed(() => {
   if (props.group.publication_status === 'public') {
@@ -204,5 +229,27 @@ const hasExtras = computed(() => {
 
 .group-location {
   cursor: pointer;
+}
+</style>
+
+<style lang="scss">
+.group-leaders {
+  display: flex;
+  justify-content: start;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+
+  > * {
+    pointer-events: none;
+
+    // width: 100%;
+    height: unset !important;
+    border: none !important;
+
+    .picture-user {
+      width: 2.5rem !important;
+      height: 2.5rem !important;
+    }
+  }
 }
 </style>

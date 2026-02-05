@@ -1,6 +1,6 @@
 import { Doc } from '@/composables/pdf-helpers/doc-builder'
 
-import QRCode from 'qrcode'
+// import QRCode from 'qrcode'
 import { lpiLogo } from '@/composables/project-pdf-components/common-styles'
 
 export default async function usePdfFooter(url?: string, title?: string) {
@@ -49,7 +49,7 @@ export default async function usePdfFooter(url?: string, title?: string) {
             height: 2cm;
             width: auto;
           }
- 
+
           .lpi-logo {
             right: .1cm;
             top: .1cm;

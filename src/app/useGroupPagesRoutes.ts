@@ -75,27 +75,6 @@ export default function useGroupPagesRoutes() {
           component: () => import('../pages/GroupPageV2/Tabs/Projects/GroupProjectsEditTab.vue'),
         },
         {
-          path: 'publications/edit',
-          name: 'groupPublicationsEdit',
-          component: () => import('../pages/GroupPageV2/Tabs/Documents/GroupDocumentsEditTab.vue'),
-          props: () => ({
-            documentType: 'publications',
-          }),
-        },
-        {
-          path: 'conferences/edit',
-          name: 'groupConferencesEdit',
-          component: () => import('../pages/GroupPageV2/Tabs/Documents/GroupDocumentsEditTab.vue'),
-          props: () => ({
-            documentType: 'conferences',
-          }),
-        },
-        {
-          path: 'locations/edit',
-          name: 'groupLocationsEdit',
-          component: () => import('../pages/GroupPageV2/Tabs/Locations/GroupLocationsEditTab.vue'),
-        },
-        {
           path: 'gallery/edit',
           name: 'groupGalleryEdit',
           component: () => import('../pages/GroupPageV2/Tabs/Gallery/GroupGalleryTab.vue'),

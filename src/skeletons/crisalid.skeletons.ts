@@ -2,7 +2,9 @@ import { Document, Identifier, ResearcherDocumentAnalytics } from '@/interfaces/
 import { factoriesSkeleton } from '@/skeletons/base.skeletons'
 import { randomInt } from 'es-toolkit'
 
-export const documentAnalyticsSkeleton = (): ResearcherDocumentAnalytics => ({
+export const documentAnalyticsSkeleton = (
+  def?: Partial<ResearcherDocumentAnalytics>
+): ResearcherDocumentAnalytics => ({
   document_types: {
     Book: randomInt(10),
     Grant: randomInt(10),
@@ -22,14 +24,16 @@ export const documentAnalyticsSkeleton = (): ResearcherDocumentAnalytics => ({
     client: randomInt(10),
     funder: randomInt(10),
   },
+  ...(def || {}),
 })
 
-export const identifierSkeleton = (): Omit<Identifier, 'id'> => ({
+export const identifierSkeleton = (def?: Partial<Identifier>): Omit<Identifier, 'id'> => ({
   value: 'lorem',
   harvester: 'hal',
+  ...(def || {}),
 })
 
-export const researchDocumentSkeleton = (): Omit<Document, 'id'> => ({
+export const researchDocumentSkeleton = (def?: Partial<Document>): Omit<Document, 'id'> => ({
   title: 'Ipsum nostrud officia dolor esse exercitation mollit.',
   description: 'Ipsum nostrud officia dolor esse exercitation mollit.',
   document_type: 'Book',
@@ -38,4 +42,5 @@ export const researchDocumentSkeleton = (): Omit<Document, 'id'> => ({
   identifiers: factoriesSkeleton(identifierSkeleton, randomInt(5)),
   publication_date: null,
   similars: 0,
+  ...(def || {}),
 })

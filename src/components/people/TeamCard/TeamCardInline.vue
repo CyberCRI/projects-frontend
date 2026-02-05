@@ -21,7 +21,7 @@ const props = withDefaults(
     icon?: IconImageChoice
     roleLabel?: string
   }>(),
-  { icon: null, roleLabel: null }
+  { icon: null, roleLabel: undefined }
 )
 
 const emit = defineEmits(['click'])

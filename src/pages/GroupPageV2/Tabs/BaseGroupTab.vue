@@ -15,11 +15,8 @@
 </template>
 
 <script setup lang="ts">
-// import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-
 withDefaults(
   defineProps<{
-    // group: TranslatedPeopleGroupModel
     title?: string
     count?: number
     header?: boolean
@@ -53,14 +50,6 @@ withDefaults(
     &-container {
       width: 100%;
     }
-  }
-
-  .pagination-container {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: $space-xl;
   }
 }
 </style>

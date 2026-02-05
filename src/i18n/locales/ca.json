@@ -1011,7 +1011,8 @@
     "publications": "Publicacions",
     "similars": "Grups similars",
     "locations": "Ubicacions",
-    "presentation": "Presentació"
+    "presentation": "Presentació",
+    "location": "Adreça"
   },
   "header": {
     "private": "Privat: només visible per als membres de l' equip",
@@ -3161,5 +3162,10 @@
     "previous": "Pàgina anterior",
     "next": "Pàgina següent",
     "page": "Pàgina"
+  },
+  "pdf": {
+    "blog-entries-limited-warning": "Només s' inclouen les primeres entrades del bloc {max} en l' exportació PDF (de {total} total).",
+    "download-pdf": "PDF",
+    "generated-on": "Generat el {date}"
   }
 }

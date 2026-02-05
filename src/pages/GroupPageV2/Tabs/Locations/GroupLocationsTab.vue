@@ -1,8 +1,6 @@
 <template>
   <BaseGroupTab :title="$t(GroupModuleTitle.locations)" :count="countElement">
-    <div class="container">
-      <GroupLocationBase :group="group" />
-    </div>
+    <GroupLocationBase :group="group" />
   </BaseGroupTab>
 </template>
 
@@ -17,12 +15,3 @@ const props = defineProps<{
 
 const countElement = computed<number>(() => props.group.modules?.locations)
 </script>
-
-<style lang="scss" scoped>
-.container {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-}
-</style>

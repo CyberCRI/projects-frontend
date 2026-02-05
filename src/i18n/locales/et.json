@@ -1011,7 +1011,8 @@
     "publications": "Trükised",
     "similars": "Rühmad sarnased",
     "locations": "Asukohad",
-    "presentation": "Esitlus"
+    "presentation": "Esitlus",
+    "location": "Aadress"
   },
   "header": {
     "private": "Privaatne: nähtav ainult meeskonnaliikmetele",
@@ -3161,5 +3162,10 @@
     "previous": "Eelmine leht",
     "next": "Järgmine",
     "page": "Page"
+  },
+  "pdf": {
+    "blog-entries-limited-warning": "PDF-i ekspordi hulka kuuluvad ainult esimesed {max} blogikirjed (kokku {total}).",
+    "download-pdf": "PDF",
+    "generated-on": "Geneeritud {date}"
   }
 }

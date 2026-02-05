@@ -12,6 +12,7 @@
       :is-opened="opened"
       :editable="isEdit"
       :locations="locations"
+      :use-cluster="true"
       @close="opened = false"
     />
     <LocationList

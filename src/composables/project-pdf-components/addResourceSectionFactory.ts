@@ -1,5 +1,5 @@
 import { Container } from '@/composables/pdf-helpers/doc-builder'
-import QRCode from 'qrcode'
+// import QRCode from 'qrcode'
 
 export default async function addResourceSectionFactory(
   project: any,
@@ -60,7 +60,7 @@ export default async function addResourceSectionFactory(
             justify-content: stretch;
             break-inside: avoid;
           }
-          
+
           .resource-qr-code-ctn {
             width: 2cm;
             height: 2cm;
@@ -77,7 +77,7 @@ export default async function addResourceSectionFactory(
             width: 2cm;
             height: auto;
           }
-        
+
           .resource-wrapper .content {
             font-size:  1rem;
             flex-grow: 1;
