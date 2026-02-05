@@ -4,7 +4,7 @@
   </div>
   <template v-else>
     <ProfileEditBlock :block-title="t('complete-profile.skills.title')">
-      <ProfileSkillsEditTab v-if="user" :user="user" @edited="loadUser" />
+      <ProfileSkillsEditTab v-if="user" :user="user" @profile-edited="loadUser" />
     </ProfileEditBlock>
   </template>
 </template>

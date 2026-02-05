@@ -1,5 +1,10 @@
 <template>
-  <BasicCard :to-link="!isPrivateUser ? toLink : null" :mode="mode" @click="userAction($event)">
+  <BasicCard
+    :is-inactive="isPrivateUser"
+    :to-link="!isPrivateUser ? toLink : null"
+    :mode="mode"
+    @click="userAction($event)"
+  >
     <template #actions-right>
       <slot name="actions">
         <IconImage v-if="user.email" class="icon" name="EmailOutline" @click="mailTo" />
@@ -57,15 +62,13 @@ const translatedJob = getTranslatableField(props.user, 'job')
 
 const isPrivateUser = computed(() => {
   // Private users do not return an iD from API call
-  return !props.user.id
+  return !props.user?.id
 })
 
 const mailTo = () => {
   document.location.href = 'mailto:' + props.user.email
 }
 const userAction = (event) => {
-  if (isPrivateUser.value) return
-
   emit('click', event)
 }
 </script>

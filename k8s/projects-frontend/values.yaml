@@ -42,6 +42,8 @@ config:
     NUXT_PUBLIC_APP_CHATBOT_EXEMPLES: ''
     NUXT_APP_MCP_SERVER_TRACE: ''
     NUXT_APP_SORBOBOT_API_TRACE: ''
+    NUXT_APP_GOTENBERG_SERVER_URL: ''
+    NUXT_PUBLIC_APP_GOTENBERG_ENABLED: ''
 e2eEnv:
   nonSensitive:
     USER_ADMIN_EMAIL: testautomatatiquedministrateur1@outlook.fr

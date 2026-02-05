@@ -3,7 +3,12 @@
     <teleport to="body">
       <transition name="modal-fade">
         <div v-if="stateModal" class="modal-backdrop" data-test="modal-backdrop">
-          <div :id="modalId" class="modal-wrapper" :class="{ 'full-screen': fullScreen }">
+          <div
+            :id="modalId"
+            class="modal-wrapper"
+            :data-test="modalDataTest"
+            :class="{ 'full-screen': fullScreen }"
+          >
             <div v-if="$slots.topping" class="modal-topping">
               <slot name="topping" />
             </div>
@@ -28,6 +33,7 @@
                       aria-label="Close modal"
                       class="btn-close"
                       action-icon="Close"
+                      data-test="modal-dismiss-button"
                       @click="close"
                     />
                   </slot>
@@ -65,6 +71,7 @@ const props = withDefaults(
     isSmall?: boolean
     fullScreen?: boolean
     modalId?: string
+    modalDataTest?: string
   }>(),
   {
     width: null,
@@ -73,6 +80,7 @@ const props = withDefaults(
     isSmall: false,
     fullScreen: false,
     modalId: null,
+    modalDataTest: null,
   }
 )
 

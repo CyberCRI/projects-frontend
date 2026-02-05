@@ -41,8 +41,8 @@ const imageStyles = computed<StyleValue>(() => {
     return {
       width: props.ratio >= props.imageSizes.naturalRatio ? '100%' : 'auto',
       height: props.ratio < props.imageSizes.naturalRatio ? '100%' : 'auto',
-      'object-fit': 'unset',
-      'object-position': 'unset',
+      objectFit: 'unset',
+      objectPosition: 'unset',
       transform: `translateZ(0)  scale(${props.imageSizes.scaleX}, ${props.imageSizes.scaleY}) translate(${props.imageSizes.left}%, ${props.imageSizes.top}%)`,
       position: 'absolute',
       top: 0,

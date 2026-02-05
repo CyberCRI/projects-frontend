@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import N from './zod-schema-utils'
 import { mcpFetch, API_BASE_URL, orgCode } from './base'
 import { PROJECT_PREVIEW_OUTPUT_SCHEMA, mapProjectPreview } from './project-tool'
 
@@ -12,27 +13,17 @@ export default (server) => {
         'Get main general data about the platform organization such as its  description, title and terms and conditions. ',
       inputSchema: {},
       outputSchema: {
-        organization_data: z
-          .object({
-            id: z.number().describe('The ID of the organization'),
-            code: z.string().describe('The code of the organization'),
-            terms_and_conditions: z
-              .string()
-              .describe('The terms and conditions of the organization'),
-            name: z.string().describe('The name of the organization'),
-            contact_email: z.string().nullable().describe('The contact email of the organization'),
-            dashboard_title: z
-              .string()
-              .nullable()
-              .describe('The dashboard title of the organization'),
-            dashboard_subtitle: z
-              .string()
-              .nullable()
-              .describe('The dashboard subtitle of the organization'),
-            description: z.string().nullable().describe('The description of the organization'),
-            website_url: z.string().nullable().describe('The website URL of the organization'),
-          })
-          .describe('The organization general data'),
+        organization_data: N.object({
+          id: N.number().describe('The ID of the organization'),
+          code: N.string().describe('The code of the organization'),
+          terms_and_conditions: N.string().describe('The terms and conditions of the organization'),
+          name: N.string().describe('The name of the organization'),
+          contact_email: N.string().nullable().describe('The contact email of the organization'),
+          dashboard_title: N.string().describe('The dashboard title of the organization'),
+          dashboard_subtitle: N.string().describe('The dashboard subtitle of the organization'),
+          description: N.string().describe('The description of the organization'),
+          website_url: N.string().describe('The website URL of the organization'),
+        }).describe('The organization general data'),
       },
     },
     async (_input, extras) => {

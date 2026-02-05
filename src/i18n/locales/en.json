@@ -3161,5 +3161,10 @@
     "previous": "Previous page",
     "next": "Next page",
     "page": "Page"
+  },
+  "pdf": {
+    "blog-entries-limited-warning": "Only the first {max} blog entries are included in the PDF export (of {total} total).",
+    "download-pdf": "PDF",
+    "generated-on": "Generated on {date}"
   }
 }

@@ -96,7 +96,7 @@ export default {
   setup() {
     const usersStore = useUsersStore()
     const { canEditUser } = usePermissions()
-
+    const { onboardingTrap } = useOnboardingStatus()
     const { t } = useNuxtI18n()
     const uniqueId = 'project-nav-panel'
     const { isNavCollapsed, toggleNavPanel, collapseIfUnderBreakpoint } =
@@ -124,6 +124,7 @@ export default {
       _user,
       user,
       isLoading,
+      onboardingTrap,
     }
   },
 
@@ -562,6 +563,14 @@ export default {
 
     isEditing() {
       return this.currentTab?.isEditing || false
+    },
+  },
+
+  watch: {
+    async isEditing(newVal) {
+      if (newVal && this.isSelf && this.user.onboarding_status?.complete_profile) {
+        await this.onboardingTrap('complete_profile', false)
+      }
     },
   },
 

@@ -40,6 +40,11 @@ const {
   linkedProjectsLoading,
   postFecthProjectHook,
   //computed
+  fileResources,
+  linkResources,
+  goals,
+  team,
+  blogEntries,
   mergedTeam,
   projectTabs,
   currentTab,
@@ -69,6 +74,8 @@ const { connectToSocket, cleanupProvider, projectPatched } = useProjectSocket({
   reloadProject,
   getBlogEntries,
 })
+
+const { generateAndDownloadPdf } = useProjectToPdf()
 
 const { translateProject } = useAutoTranslate()
 
@@ -176,6 +183,20 @@ const chooseGoalOrSdg = (choice) => {
 }
 
 const editable = computed(() => isEditing.value && canEditProject.value)
+const isProcessingPdf = ref(false)
+const getAsPDF = async () => {
+  isProcessingPdf.value = true
+  await generateAndDownloadPdf({
+    project: project.value,
+    team: team.value,
+    goals: goals.value,
+    blogEntries: blogEntries.value,
+    fileResources: fileResources.value,
+    linkResources: linkResources.value,
+    linkedProjects: linkedProjects.value,
+  })
+  isProcessingPdf.value = false
+}
 </script>
 <template>
   <div
@@ -205,11 +226,13 @@ const editable = computed(() => isEditing.value && canEditProject.value)
           :similar-projects="similarProjects"
           :follow="follow"
           :is-editing="isEditing"
+          :is-processing-pdf="isProcessingPdf"
           :action-menu="actionMenu"
           @toggle-editing="toggleEditing"
           @update-follow="follow = $event"
           @navigated="onNavigated"
           @duplicate-project="onDuplicateProject"
+          @get-pdf="getAsPDF"
         />
       </template>
       <template #content>

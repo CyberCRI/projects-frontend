@@ -3161,5 +3161,10 @@
     "previous": "Page précédente",
     "next": "Page suivante",
     "page": "Page"
+  },
+  "pdf": {
+    "blog-entries-limited-warning": "Seuls les {max} premiers articles de blog sont inclus dans l'export PDF (sur un total de {total}).",
+    "download-pdf": "PDF",
+    "generated-on": "Généré le {date}"
   }
 }

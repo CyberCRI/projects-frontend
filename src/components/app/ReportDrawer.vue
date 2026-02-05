@@ -18,9 +18,9 @@
           v-model="form.reported_by"
           class="text-input"
           data-test="report-email"
-          @blur="v$.form.reported_by.$validate"
+          @blur="v$.reported_by.$validate"
         />
-        <FieldErrors :errors="v$.form.reported_by.$errors" />
+        <FieldErrors :errors="v$.reported_by.$errors" />
       </div>
 
       <div>
@@ -34,9 +34,9 @@
           v-model="form.url"
           class="text-input"
           data-test="report-url"
-          @blur="v$.form.url.$validate"
+          @blur="v$.url.$validate"
         />
-        <FieldErrors :errors="v$.form.url.$errors" />
+        <FieldErrors :errors="v$.url.$errors" />
       </div>
 
       <div>
@@ -50,9 +50,9 @@
           v-model="form.title"
           class="text-input"
           data-test="report-title"
-          @blur="v$.form.title.$validate"
+          @blur="v$.title.$validate"
         />
-        <FieldErrors :errors="v$.form.title.$errors" />
+        <FieldErrors :errors="v$.title.$errors" />
       </div>
 
       <div>
@@ -68,9 +68,9 @@
           input-type="textarea"
           rows="10"
           data-test="report-description"
-          @blur="v$.form.message.$validate"
+          @blur="v$.message.$validate"
         />
-        <FieldErrors :errors="v$.form.message.$errors" />
+        <FieldErrors :errors="v$.message.$errors" />
       </div>
     </div>
   </BaseDrawer>
@@ -120,7 +120,7 @@ const rules = computed(() => ({
   },
 }))
 const form = ref(defaultForm())
-const v$ = useValidate(rules, form)
+const v$ = useValidate(rules.value, form)
 const isLoading = ref(false)
 
 const orgCode = useOrganizationCode()

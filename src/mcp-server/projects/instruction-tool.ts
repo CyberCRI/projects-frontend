@@ -1,12 +1,13 @@
 import { z } from 'zod'
+import N from './zod-schema-utils'
 import { mcpFetch, API_BASE_URL, orgCode } from './base'
 
-const INSTRUCTION_ARTICLE_OUTPUT_SCHEMA = z.object({
-  id: z.number().describe('The ID of the instruction article'),
-  slug: z.string().describe('The slug of the instruction article'),
-  title: z.string().describe('The title of the instruction article'),
-  content: z.string().describe('The content of the instruction article'),
-  publication_date: z.string().describe('The publication date of the instruction article'),
+const INSTRUCTION_ARTICLE_OUTPUT_SCHEMA = N.object({
+  id: N.number().describe('The ID of the instruction article'),
+  slug: N.string().describe('The slug of the instruction article'),
+  title: N.string().describe('The title of the instruction article'),
+  content: N.string().describe('The content of the instruction article'),
+  publication_date: N.string().describe('The publication date of the instruction article'),
   item_type: z
     .literal('instruction_article')
     .describe('The type of the item, always instruction_article'),

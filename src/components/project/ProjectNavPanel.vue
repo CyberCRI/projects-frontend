@@ -48,6 +48,21 @@
         label-on-hover
         @click="goToCommentView"
       />
+      <template v-if="appGotenbergEnabled">
+        <ExternalLabelButton
+          v-if="!isProcessingPdf"
+          class="space-button"
+          :label="$t('pdf.download-pdf')"
+          btn-icon="FilePdfLine"
+          vertical-layout
+          label-on-hover
+          @click="$emit('get-pdf')"
+        />
+        <span v-else class="space-button-loader-ctn">
+          <LoaderSimple class="space-button-loader" />
+        </span>
+      </template>
+
       <SocialShareButton :shared-url="sharedUrl" />
     </div>
 
@@ -135,18 +150,24 @@ export default {
       type: Array,
       default: () => [],
     },
+    isProcessingPdf: {
+      type: Boolean,
+      default: false,
+    },
   },
 
-  emits: ['update-follow', 'navigated', 'toggle-editing', 'duplicate-project'],
+  emits: ['update-follow', 'navigated', 'toggle-editing', 'duplicate-project', 'get-pdf'],
 
   setup() {
     const usersStore = useUsersStore()
     const { canEditProject, isAdmin, isOrgAdmin } = usePermissions()
+    const { appGotenbergEnabled } = useRuntimeConfig().public
     return {
       usersStore,
       canEditProject,
       isAdmin,
       isOrgAdmin,
+      appGotenbergEnabled,
     }
   },
 
@@ -292,6 +313,16 @@ export default {
 
   --external-button-outer-size: 1.2rem;
   --external-button-inner-size: 1.2rem;
+
+  .space-button-loader-ctn {
+    display: inline-block;
+    padding-top: 1rem;
+  }
+
+  .space-button-loader {
+    width: var(--external-button-outer-size);
+    height: var(--external-button-outer-size);
+  }
 }
 
 .projects-infos-list {

@@ -150,18 +150,15 @@
 
             <div v-show="!loading && sdgs?.length" class="sdg-ctn">
               <TransitionGroup name="sdg" tag="div">
-                <NuxtLink
-                  v-for="sdg in sdgs || []"
-                  :key="sdg"
-                  :to="browseProjectsWithQuery('sdgs', sdg)"
-                  class="sdg-link"
-                >
-                  <img
-                    :alt="sdg"
-                    :src="`${runtimeConfig.public.appPublicBinariesPrefix}/sdgs/logo/SDG-${sdg}.svg`"
-                    class="sdg"
-                  />
-                </NuxtLink>
+                <SdgList
+                  :sdgs="sdgs || []"
+                  :to="{
+                    name: 'ProjectSearch',
+                    query: {
+                      section: 'projects',
+                    },
+                  }"
+                />
               </TransitionGroup>
             </div>
 
@@ -281,6 +278,7 @@ import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useUsersStore from '@/stores/useUsers.ts'
 import TagsList from '@/components/tags/TagsList.vue'
 import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
+import SdgList from '@/components/sdgs/SdgList.vue'
 
 export default {
   name: 'ProjectHeader',
@@ -295,6 +293,7 @@ export default {
     InfoSentence,
     LinkButton,
     BreadCrumbs,
+    SdgList,
   },
 
   inject: ['projectLayoutToggleAddModal', 'projectLayoutGoToTab'],
@@ -557,16 +556,6 @@ export default {
             purpose.scrollHeight > purpose.clientHeight
           : false
       })
-    },
-
-    browseProjectsWithQuery(queryField, queryValue) {
-      return {
-        name: 'ProjectSearch',
-        query: {
-          [queryField]: queryValue,
-          section: 'projects',
-        },
-      }
     },
 
     async toggleFollow() {

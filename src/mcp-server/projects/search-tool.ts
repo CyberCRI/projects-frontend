@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import N from './zod-schema-utils'
 import { mcpFetch, API_BASE_URL, orgCode } from './base'
 import { PROJECT_PREVIEW_OUTPUT_SCHEMA, mapProjectPreview } from './project-tool'
 import {
@@ -39,15 +40,13 @@ export default (server) => {
       description: `Search on the platform for projects, people profile (user) and groups (of users) related to a query. ${sorbobotIsEnabled ? SORBOBOT_EXTRA : ''}`,
       inputSchema: { queryTerms: z.string().describe('The search query terms') },
       outputSchema: {
-        results: z
-          .array(
-            z.union([
-              PROJECT_PREVIEW_OUTPUT_SCHEMA,
-              USER_PREVIEW_OUTPUT_SCHEMA,
-              PEOPLE_GROUP_PREVIEW_OUTPUT_SCHEMA,
-            ])
-          )
-          .describe('The list of search results'),
+        results: N.array(
+          z.union([
+            PROJECT_PREVIEW_OUTPUT_SCHEMA,
+            USER_PREVIEW_OUTPUT_SCHEMA,
+            PEOPLE_GROUP_PREVIEW_OUTPUT_SCHEMA,
+          ])
+        ).describe('The list of search results'),
       },
     },
     async ({ queryTerms }, extras) => {
@@ -101,7 +100,7 @@ export default (server) => {
         // categories: z.array(z.string()).optional().describe('List of categories to filter by'),
       },
       outputSchema: {
-        results: z.array(PROJECT_PREVIEW_OUTPUT_SCHEMA).describe('The list of search results'),
+        results: N.array(PROJECT_PREVIEW_OUTPUT_SCHEMA).describe('The list of search results'),
       },
     },
     async ({ queryTerms, tags, sdgs, members /*categories */ }, extras) => {
@@ -167,7 +166,7 @@ export default (server) => {
         categories: z.array(z.string()).optional().describe('List of categories to filter by'),
       },
       outputSchema: {
-        results: z.array(USER_PREVIEW_OUTPUT_SCHEMA).describe('The list of search results'),
+        results: N.array(USER_PREVIEW_OUTPUT_SCHEMA).describe('The list of search results'),
       },
     },
     async ({ queryTerms, skills, sdgs }, extras) => {

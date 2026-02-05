@@ -42,6 +42,7 @@ const open = ref(false)
 const categories = computed(() => projectCategoriesStore.hierarchy)
 const close = () => (open.value = false)
 const toggleCategories = () => (open.value = !open.value)
+defineExpose({ close })
 </script>
 
 <style lang="scss" scoped>
