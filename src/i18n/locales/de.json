@@ -1010,7 +1010,8 @@
     "conferences": "Konferenzen",
     "publications": "Veröffentlichungen",
     "similars": "Gruppen ähnliche",
-    "locations": "Standorte"
+    "locations": "Standorte",
+    "presentation": "Präsentation"
   },
   "header": {
     "private": "Private: nur für Teammitglieder sichtbar",

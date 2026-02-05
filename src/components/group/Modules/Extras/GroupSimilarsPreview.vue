@@ -59,9 +59,6 @@ const onClose = () => (showMore.value = false)
 
 <style lang="scss" scoped>
 .group-similars {
-  overflow-y: scroll;
-  max-height: 400px;
-
   .group-similars-list {
     padding: 1rem;
     display: flex;

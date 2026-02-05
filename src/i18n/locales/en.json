@@ -918,6 +918,7 @@
     "is-other-org": "This group belongs to another platform",
     "contact": "Contact",
     "edit-group": "Edit group",
+    "presentation": "Presentation",
     "see-more-people-button": "See {users} more",
     "see-subgroups": "See {count} subgroup | See {count} subgroups",
     "conferences": "Conferences",

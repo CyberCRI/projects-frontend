@@ -9,7 +9,7 @@
     }"
   >
     <div class="page-section-extra-wide">
-      <FetchLoader :status="status" :with-data="!!group">
+      <FetchLoader :status="status" :with-data="!!group.id">
         <NavPanelLayout
           :is-loading="groupLoading"
           :is-nav-collapsed="isNavCollapsed"
@@ -62,7 +62,7 @@ const groupId = computed(() => parseInt(route.params.groupId.toString(), 10))
 
 const { data: group, isLoading, status } = getGroup(organizationCode, groupId)
 
-const groupLoading = computed(() => isLoading.value && !group.value)
+const groupLoading = computed(() => isLoading.value && !group.value?.id)
 
 watchEffect(() => {
   useLpiHead2({

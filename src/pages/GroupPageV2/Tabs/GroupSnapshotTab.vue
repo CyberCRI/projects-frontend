@@ -5,14 +5,10 @@
     <GroupRecapPreview :group="group" is-link />
     <div class="group-infos">
       <GroupDescriptionPreview v-if="group.$t.description" :group="group" />
-      <GroupSimilarsPreview v-if="group.modules.similars" :group="group" :limit="3" />
+      <GroupSimilarsPreview v-if="group.modules.similars" :group="group" :limit="2" />
     </div>
     <GroupMembersPreview v-if="group.modules.members" :group="group" :is-loading="isLoading" />
-    <GroupGalleryPreview
-      v-if="group.modules.gallery || true"
-      :group="group"
-      :is-loading="isLoading"
-    />
+    <GroupGalleryPreview v-if="group.modules.gallery" :group="group" :is-loading="isLoading" />
     <GroupSubPreview v-if="group.modules.subgroups" :group="group" :is-loading="isLoading" />
     <GroupProjectsPreview
       v-if="group.modules.featured_projects"

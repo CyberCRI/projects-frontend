@@ -1010,7 +1010,8 @@
     "conferences": "Konverentsid",
     "publications": "Trükised",
     "similars": "Rühmad sarnased",
-    "locations": "Asukohad"
+    "locations": "Asukohad",
+    "presentation": "Esitlus"
   },
   "header": {
     "private": "Privaatne: nähtav ainult meeskonnaliikmetele",
