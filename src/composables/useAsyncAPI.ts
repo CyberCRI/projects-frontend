@@ -19,7 +19,7 @@ export type AsyncConfig<ResDataT, DataT, Result> = Parameters<
 export type AsyncParameters<ResDataT, DataT, Result> = [
   Parameters<typeof useAsyncData<ResDataT, unknown, DataT>>['0'],
   (obj: AsyncHandler) => ReturnType<Parameters<typeof useAsyncData<ResDataT, unknown, DataT>>['1']>,
-  AsyncConfig<ResDataT, DataT, Result>?,
+  AsyncConfig<ResDataT, DataT, Result>,
 ]
 
 type AsyncReturn<ResDataT, DataT, Result> = Omit<
@@ -51,7 +51,7 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
   */
   params[2] ??= {}
   params[2].watch ??= []
-  if (params[2].query) {
+  if (params[2].query && isReactive(params[2].query)) {
     params[2].watch.push(params[2].query)
   }
 
@@ -70,9 +70,6 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
     params[0],
     ({}) => {
       const conf = {} as AsyncHandler['config']
-      if (!checkArgs.value) {
-        return null
-      }
       if (params[2].query) {
         conf.query = unref(params[2].query)
       } else {
