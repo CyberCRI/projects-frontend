@@ -1,5 +1,5 @@
 import { Container } from '@/composables/pdf-helpers/doc-builder'
-// import QRCode from 'qrcode'
+import QRCode from 'qrcode'
 
 export default async function addResourceSectionFactory(
   project: any,
