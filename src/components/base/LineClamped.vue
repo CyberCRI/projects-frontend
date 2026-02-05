@@ -28,7 +28,6 @@ function checkOverflowing() {
   const styles = getComputedStyle(element)
   const lineHeight = parseFloat(styles.lineHeight)
   const lineClamp = parseInt(styles.webkitLineClamp || '0')
-  console.log('lineHeight', lineHeight, 'lineClamp', lineClamp)
 
   // for some reason scollHeight is sometime just a few pixel large that height - hence this fix
   let isOverflowingHeight = element.scrollHeight > Math.ceil(height)
@@ -59,12 +58,23 @@ watch(
   { immediate: true }
 )
 
+const resizeObserver = ResizeObserver
+  ? new ResizeObserver(() => {
+      throttledCheckOverflowing()
+    })
+  : null
+
 onMounted(() => {
   checkOverflowing()
+  if (containerRef.value && resizeObserver) {
+    console.log('on observe')
+    resizeObserver.observe(containerRef.value)
+  }
   window.addEventListener('resize', throttledCheckOverflowing)
 })
 
 onBeforeUnmount(() => {
+  resizeObserver.disconnect()
   window.removeEventListener('resize', throttledCheckOverflowing)
 })
 
