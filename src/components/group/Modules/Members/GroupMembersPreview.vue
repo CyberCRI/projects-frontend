@@ -13,6 +13,7 @@
           :is-loading="isLoading"
           class="contents"
           :with-pagination="false"
+          focus-leader
         />
       </div>
     </template>

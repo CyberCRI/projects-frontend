@@ -24,6 +24,7 @@
         class="subgroup-members"
         :with-pagination="withPagination"
         :limit="limitMembers"
+        focus-leader
       />
     </div>
   </ToolTip>

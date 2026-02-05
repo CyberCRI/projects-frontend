@@ -1075,7 +1075,8 @@
     "edit-map": "Muuda geolokatsiooni",
     "map": "Geolokatsioon",
     "add-location": "Lisa asukoht",
-    "add-location-point": "Asukohapunkti lisamine"
+    "add-location-point": "Asukohapunkti lisamine",
+    "default-title": "Asukoht"
   },
   "map": {
     "page-title": "Kaart",

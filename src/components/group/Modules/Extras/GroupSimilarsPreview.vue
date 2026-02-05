@@ -15,6 +15,7 @@
               v-for="groupSimilar in groups"
               :key="groupSimilar.id"
               :group="groupSimilar"
+              :mode="mode"
             />
           </div>
         </div>
@@ -36,6 +37,7 @@ import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
 import { maxSkeleton, factoryPagination } from '@/skeletons/base.skeletons'
 import { groupSkeleton } from '@/skeletons/group.skeletons'
 import GroupSimilarDrawer from '@/components/group/Modules/Extras/GroupSimilarDrawer.vue'
+import { onMediaChange } from '@/composables/onResize'
 
 const props = withDefaults(defineProps<{ group: TranslatedPeopleGroupModel; limit?: number }>(), {
   limit: null,
@@ -52,9 +54,19 @@ const { status, data: groups } = getGroupSimilar(organizationCode, groupId, {
   default: () => factoryPagination(groupSkeleton, limitSkeletons.value),
 })
 
+const mode = ref<'card' | 'list'>('card')
+
 const showMore = ref(false)
 const onClick = () => (showMore.value = true)
 const onClose = () => (showMore.value = false)
+
+onMediaChange(
+  '(min-width: 1200px)',
+  (matches) => {
+    mode.value = matches ? 'card' : 'list'
+  },
+  { immediate: true }
+)
 </script>
 
 <style lang="scss" scoped>
@@ -84,6 +96,20 @@ const onClose = () => (showMore.value = false)
 
   .see-more-btn.header {
     display: none;
+  }
+}
+</style>
+
+<style lang="scss">
+@media screen and (max-width: $min-desktop) {
+  .group-similars {
+    .group-similars-list {
+      width: 100%;
+
+      > * {
+        width: 100%;
+      }
+    }
   }
 }
 </style>

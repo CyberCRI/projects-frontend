@@ -1075,7 +1075,8 @@
     "edit-map": "Edita geolocalització",
     "map": "Geolocalització",
     "add-location": "Afegeix una ubicació",
-    "add-location-point": "Afegeix un punt d' emplaçament"
+    "add-location-point": "Afegeix un punt d' emplaçament",
+    "default-title": "Localització"
   },
   "map": {
     "page-title": "Mapa",

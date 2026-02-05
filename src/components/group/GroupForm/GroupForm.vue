@@ -127,6 +127,7 @@
         :location="form.location"
         :focus="false"
         show-location-type
+        :default-title="$t('location.default-title')"
       />
       <LocationDrawer
         :is-opened="stateModal"

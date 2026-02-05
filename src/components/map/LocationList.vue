@@ -9,10 +9,11 @@
         <LocationType :location-type="locationType" />
       </h3>
       <ul class="location-list">
-        <li v-for="location in locationsList" :key="location.id" class="location">
+        <li v-for="(location, idx) in locationsList" :key="location.id" class="location">
           <LocationItem
             :location="location"
             :editable="editable"
+            :default-title="`${$t('location.default-title')} #${idx + 1}`"
             @focus="$emit('focus', $event)"
             @delete="$emit('delete', $event)"
             @edit="$emit('edit', $event)"

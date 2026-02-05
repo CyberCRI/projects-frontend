@@ -4,7 +4,7 @@
       <LpiButton
         btn-icon="Plus"
         class="edit-btn"
-        :label="$t('project.add-location')"
+        :label="$t('location.add-location')"
         @click="projectLayoutToggleAddModal('location')"
       />
     </div>

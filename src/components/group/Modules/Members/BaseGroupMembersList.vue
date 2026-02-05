@@ -4,6 +4,9 @@
       v-for="member in data"
       :key="member.id"
       :member="member"
+      :class="{
+        'focus-leader': focusLeader && member.is_leader,
+      }"
       @click="openProfile"
     />
     <PaginationButtonsV2
@@ -45,8 +48,9 @@ const props = withDefaults(
     group: TranslatedPeopleGroupModel
     withPagination?: boolean
     limit?: number
+    focusLeader?: boolean
   }>(),
-  { withPagination: true, limit: null }
+  { withPagination: true, limit: null, focusLeader: false }
 )
 
 const organizationCode = useOrganizationCode()
@@ -70,5 +74,11 @@ const closeProfile = () => (userIdDrawer.value = null)
 .pagination-span {
   grid-column: span 2;
   margin: auto;
+}
+</style>
+
+<style lang="scss">
+.focus-leader {
+  grid-column: span 2;
 }
 </style>

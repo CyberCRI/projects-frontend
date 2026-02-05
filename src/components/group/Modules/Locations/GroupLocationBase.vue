@@ -50,7 +50,7 @@ const organizationCode = useOrganizationCode()
 const groupId = computed(() => props.group.id)
 
 const mapRef = useTemplateRef('map')
-const onFocus = (location) => mapRef.value?.map?.flyTo(location, 8)
+const onFocus = (location) => mapRef.value?.map?.flyTo(location)
 
 const { status, data: locations } = getGroupLocation(organizationCode, groupId, {
   default: () => [],

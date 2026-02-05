@@ -1075,7 +1075,8 @@
     "edit-map": "Modifier la géolocalisation",
     "map": "Géolocalisation",
     "add-location": "Ajouter un emplacement",
-    "add-location-point": "Ajouter un point d'emplacement"
+    "add-location-point": "Ajouter un point d'emplacement",
+    "default-title": "Lieu"
   },
   "map": {
     "empty": "Rien ici pour l’instant… Les contributeurs n’ont pas encore localisé des points.",

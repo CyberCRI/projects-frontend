@@ -35,6 +35,7 @@ const props = withDefaults(
     editable?: boolean
     focus?: boolean
     showLocationType?: boolean
+    defaultTitle: string
   }>(),
   {
     editable: false,
@@ -50,9 +51,11 @@ defineEmits<{
 }>()
 
 // need to safe guard with translated title (if we are in edit/create mode)
-const title = computed(() => cropIfTooLong(props.location.$t?.title ?? props.location.title, 40))
+const title = computed(() =>
+  cropIfTooLong(props.location.$t?.title || props.location.title || props.defaultTitle, 40)
+)
 const description = computed(() =>
-  cropIfTooLong(props.location.$t?.description ?? props.location.description, 80)
+  cropIfTooLong(props.location.$t?.description || props.location.description, 80)
 )
 </script>
 
