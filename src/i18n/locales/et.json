@@ -1057,7 +1057,19 @@
     "auto-translate-off": "Automaatne tõlge välja lülitatud"
   },
   "location": {
-    "loading": "Laadimiskohad"
+    "loading": "Laadimiskohad",
+    "impact": "Mõju",
+    "team": "Meeskond",
+    "address": "Aadress",
+    "focus-on-map": "keskendu kaardile",
+    "expand-map": "Suurenda kaart",
+    "edit-location-point": "Muuda asukohapunkti",
+    "location-type-label": "Asukoha liik",
+    "edit-map": "Muuda geolokatsiooni",
+    "map": "Geolokatsioon",
+    "add-location": "Lisa asukoht",
+    "add-location-point": "Asukohapunkti lisamine",
+    "default-title": "Asukoht"
   },
   "map": {
     "empty": "Siin pole veel midagi... Osalejad ei ole veel ühtegi projekti lokaliseeritud.",
@@ -2744,7 +2756,8 @@
       "state": "osariik",
       "country": "Riik",
       "other": "Teised"
-    }
+    },
+    "current-position": "Praegune positsioon"
   },
   "card-list": {
     "list": "Nimekiri",
@@ -3126,5 +3139,10 @@
     "title": "Teenuse osutamise tingimused",
     "approve-title": "Palun kinnitage teenusetingimused",
     "approve-button": "Nõustun"
+  },
+  "pdf": {
+    "blog-entries-limited-warning": "PDF-i ekspordi hulka kuuluvad ainult esimesed {max} blogikirjed (kokku {total}).",
+    "download-pdf": "PDF",
+    "generated-on": "Geneeritud {date}"
   }
 }

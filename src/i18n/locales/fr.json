@@ -1057,7 +1057,19 @@
     "auto-translate-off": "Traduction automatique désactivée"
   },
   "location": {
-    "loading": "Chargement des lieux en cours"
+    "loading": "Chargement des lieux en cours",
+    "impact": "Impact",
+    "team": "Équipe",
+    "address": "Adresse",
+    "focus-on-map": "mettre l'accent sur la carte",
+    "expand-map": "Agrandir la carte",
+    "edit-location-point": "Modifier le point d'emplacement",
+    "location-type-label": "Type de localisation",
+    "edit-map": "Modifier la géolocalisation",
+    "map": "Géolocalisation",
+    "add-location": "Ajouter un emplacement",
+    "add-location-point": "Ajouter un point d'emplacement",
+    "default-title": "Lieu"
   },
   "map": {
     "empty": "Rien ici pour l’instant… Les contributeurs n’ont pas encore localisé de projets.",
@@ -2744,7 +2756,8 @@
       "state": "État",
       "country": "Pays",
       "other": "Autre"
-    }
+    },
+    "current-position": "Situation actuelle"
   },
   "card-list": {
     "list": "Liste",

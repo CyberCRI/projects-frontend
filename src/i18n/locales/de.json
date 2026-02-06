@@ -1057,7 +1057,19 @@
     "auto-translate-off": "Automatische Übersetzung deaktiviert"
   },
   "location": {
-    "loading": "Ladestellen"
+    "loading": "Ladestellen",
+    "impact": "Auswirkungen",
+    "team": "Team",
+    "address": "Anschrift",
+    "focus-on-map": "Fokus auf der Karte",
+    "expand-map": "Karte vergrößern",
+    "edit-location-point": "Standortpunkt bearbeiten",
+    "location-type-label": "Standort",
+    "edit-map": "Geolokation bearbeiten",
+    "map": "Standort",
+    "add-location": "Standort hinzufügen",
+    "add-location-point": "Einen Ortspunkt hinzufügen",
+    "default-title": "Standort"
   },
   "map": {
     "empty": "Nichts hier noch... Die Mitarbeiter haben noch keine Projekte lokalisiert.",
@@ -2744,7 +2756,8 @@
       "state": "Bundesland",
       "country": "Land",
       "other": "Andere"
-    }
+    },
+    "current-position": "Aktuelle Position"
   },
   "card-list": {
     "list": "Liste",
@@ -3126,5 +3139,10 @@
     "title": "Nutzungsbedingungen",
     "approve-title": "Bitte akzeptieren Sie die Nutzungsbedingungen",
     "approve-button": "Ich akzeptiere"
+  },
+  "pdf": {
+    "blog-entries-limited-warning": "Nur die ersten {max} Blogeinträge sind im PDF-Export enthalten (von {total} insgesamt).",
+    "download-pdf": "PDF",
+    "generated-on": "Erstellt am {date}"
   }
 }

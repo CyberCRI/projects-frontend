@@ -1057,7 +1057,19 @@
     "auto-translate-off": "Automatisch vertalen uit"
   },
   "location": {
-    "loading": "Locatie laden"
+    "loading": "Locatie laden",
+    "impact": "Effect",
+    "team": "Team",
+    "address": "Adres",
+    "focus-on-map": "focus op de kaart",
+    "expand-map": "Kaart vergroten",
+    "edit-location-point": "Locatiepunt bewerken",
+    "location-type-label": "Locatietype",
+    "edit-map": "Geolocatie bewerken",
+    "map": "Geolocatie",
+    "add-location": "Plaats toevoegen",
+    "add-location-point": "Plaatspunt toevoegen",
+    "default-title": "Locatie"
   },
   "map": {
     "empty": "Nog niets hier... Medewerkers hebben nog geen projecten gelokaliseerd.",
@@ -2744,7 +2756,8 @@
       "state": "Staat",
       "country": "Land",
       "other": "Andere"
-    }
+    },
+    "current-position": "Huidige positie"
   },
   "card-list": {
     "list": "Lijst",
@@ -3126,5 +3139,10 @@
     "title": "Servicevoorwaarden",
     "approve-title": "Gelieve de servicevoorwaarden goed te keuren",
     "approve-button": "Ik accepteer"
+  },
+  "pdf": {
+    "blog-entries-limited-warning": "Alleen de eerste {max} blogvermeldingen zijn opgenomen in de PDF-export (van {total} totaal).",
+    "download-pdf": "PDF",
+    "generated-on": "Gegenereerd op {date}"
   }
 }

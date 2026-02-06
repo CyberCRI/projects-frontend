@@ -1057,7 +1057,19 @@
     "auto-translate-off": "Traducció automàtica desactivada"
   },
   "location": {
-    "loading": "S' estan carregant les localitzacions"
+    "loading": "S' estan carregant les localitzacions",
+    "impact": "Impacte",
+    "team": "Equip",
+    "address": "Adreça",
+    "focus-on-map": "Centra't en el mapa",
+    "expand-map": "Augmenta el mapa",
+    "edit-location-point": "Edita el punt de localització",
+    "location-type-label": "Tipus d' emplaçament",
+    "edit-map": "Edita geolocalització",
+    "map": "Geolocalització",
+    "add-location": "Afegeix una ubicació",
+    "add-location-point": "Afegeix un punt d' emplaçament",
+    "default-title": "Localització"
   },
   "map": {
     "empty": "No hi ha res aquí encara... Els Col·laboradors encara no van localitzar cap projecte.",
@@ -2744,7 +2756,8 @@
       "state": "Estat",
       "country": "País",
       "other": "Altres"
-    }
+    },
+    "current-position": "Posició actual"
   },
   "card-list": {
     "list": "Llista",
@@ -3126,5 +3139,10 @@
     "title": "Termes i Condicions",
     "approve-title": "Si us plau, aprova els Termes i Condicions",
     "approve-button": "Accepto"
+  },
+  "pdf": {
+    "blog-entries-limited-warning": "Només s' inclouen les primeres entrades del bloc {max} en l' exportació PDF (de {total} total).",
+    "download-pdf": "PDF",
+    "generated-on": "Generat el {date}"
   }
 }

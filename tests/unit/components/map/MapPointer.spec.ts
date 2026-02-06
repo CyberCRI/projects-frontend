@@ -41,19 +41,15 @@ describe('MapPointer.vue', () => {
 
   it('should display impact badge', () => {
     const wrapper = factory({ project, isExpanded: false, location: { type: 'impact' } })
-    const hiddenBadge = wrapper.find('.badge--hidden')
-    const badgeLabel = wrapper.find('.badge__label')
+    const badgeLabel = wrapper.find('.badge .impact')
 
-    expect(hiddenBadge.exists()).toBeFalsy()
     expect(badgeLabel.text()).toBe('Impact')
   })
 
   it('should display team badge', () => {
     const wrapper = factory({ project, isExpanded: false, location: { type: 'team' } })
-    const hiddenBadge = wrapper.find('.badge--hidden')
-    const badgeLabel = wrapper.find('.badge__label')
+    const badgeLabel = wrapper.find('.badge .team')
 
-    expect(hiddenBadge.exists()).toBeFalsy()
     expect(badgeLabel.text()).toBe('Team')
   })
 })
