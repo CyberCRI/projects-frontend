@@ -17,7 +17,7 @@ const toaster = useToasterStore()
 
 const { t } = useNuxtI18n()
 
-const { modals, toggleAddModal } = useProjectModals()
+const { modals, toggleAddModal, closeModal } = useProjectModals()
 
 const loading = ref(true)
 
@@ -66,6 +66,8 @@ const {
   toggleEditing,
   duplicateProject,
 } = useProjectData({ toggleAddModal })
+
+const { canEditProject } = usePermissions()
 
 const { connectToSocket, cleanupProvider, projectPatched } = useProjectSocket({
   project,
@@ -180,6 +182,7 @@ const chooseGoalOrSdg = (choice) => {
   toggleAddModal('goalOrSdg')
 }
 
+const editable = computed(() => isEditing.value && canEditProject.value)
 const isProcessingPdf = ref(false)
 const getAsPDF = async () => {
   isProcessingPdf.value = true
@@ -244,14 +247,14 @@ const getAsPDF = async () => {
     <LazyProjectDrawer
       v-if="modals.project.visible"
       :is-opened="modals.project.visible"
-      @close="toggleAddModal('project')"
+      @close="closeModal('project')"
       @project-edited="reloadProject"
     />
     <LazyGoalDrawer
       :project="project"
       :edited-goal="modals.goal.editedItem"
       :is-opened="modals.goal.visible"
-      @close="toggleAddModal('goal')"
+      @close="closeModal('goal')"
       @reload-goals="getGoals"
     />
     <LazyTeamDrawer
@@ -260,7 +263,7 @@ const getAsPDF = async () => {
       :selected-categories="project?.categories || []"
       :edited-user="modals.teamMember?.editedItem || null"
       :is-opened="modals.teamMember.visible"
-      @close="toggleAddModal('teamMember')"
+      @close="closeModal('teamMember')"
       @reload-team="reloadTeam"
     />
     <LazyProjectResourceDrawer
@@ -268,7 +271,7 @@ const getAsPDF = async () => {
       :is-add-mode="!modals.resource.editedItem"
       :is-opened="modals.resource.visible"
       :selected-item="modals.resource.editedItem"
-      @close="toggleAddModal('resource')"
+      @close="closeModal('resource')"
       @reload-file-resources="getFileResources"
       @reload-link-resources="getLinkResources"
     />
@@ -278,7 +281,7 @@ const getAsPDF = async () => {
       :is-add-mode="!modals.announcement.editedItem"
       :is-opened="modals.announcement.visible"
       @reload-announcements="getAnnouncements"
-      @close="toggleAddModal('announcement')"
+      @close="closeModal('announcement')"
     />
     <LazyLinkedProjectDrawer
       :project="project"
@@ -287,45 +290,42 @@ const getAsPDF = async () => {
       :is-opened="modals.linkedProject.visible"
       :is-loading="linkedProjectsLoading"
       @reload-linked-projects="getLinkedProjects($event)"
-      @close="toggleAddModal('linkedProject')"
+      @close="closeModal('linkedProject')"
     />
-    <LazyLocationDrawer
-      :project-id="project?.id"
+    <LazyProjectLocationDrawer
+      :project="project"
       :locations="locations"
       :is-opened="modals.location.visible"
-      @reload-locations="getProjectLocations"
-      @close="toggleAddModal('location')"
+      :editable="editable"
+      @reload="getProjectLocations"
+      @close="closeModal('location')"
     />
     <LazyBlogDrawer
       :project="project"
       :edited-blog="modals.blogEntry.editedItem"
       :is-add-mode="!modals.blogEntry.editedItem"
       :is-opened="modals.blogEntry.visible"
-      @close="toggleAddModal('blogEntry')"
+      @close="closeModal('blogEntry')"
       @reload-blog-entries="getBlogEntries"
     />
 
-    <LazySdgsDrawer
+    <LazyProjectSdgsDrawer
       class="medium"
       :project="project"
       :is-opened="modals.sdg.visible"
       :sdgs="sdgs || []"
       @reload-sdgs="getSdgs"
-      @close="toggleAddModal('sdg')"
+      @close="closeModal('sdg')"
     />
     <LazyGoalOrSdgsDrawer
       :is-opened="modals.goalOrSdg.visible"
-      @close="toggleAddModal('goalOrSdg')"
+      @close="closeModal('goalOrSdg')"
       @choice-made="chooseGoalOrSdg"
     />
 
-    <LazyReportDrawer :is-opened="modals.bug.visible" type="bug" @close="toggleAddModal('bug')" />
+    <LazyReportDrawer :is-opened="modals.bug.visible" type="bug" @close="closeModal('bug')" />
 
-    <LazyReportDrawer
-      :is-opened="modals.abuse.visible"
-      type="abuse"
-      @close="toggleAddModal('abuse')"
-    />
+    <LazyReportDrawer :is-opened="modals.abuse.visible" type="abuse" @close="closeModal('abuse')" />
   </div>
 </template>
 

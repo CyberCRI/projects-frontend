@@ -1,6 +1,7 @@
 <script setup>
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
+import { onResize } from '@/composables/onResize'
 
 const props = defineProps({
   slugOrId: {
@@ -79,20 +80,15 @@ onBeforeRouteLeave((to, from, next) => {
 })
 
 const bannerRatio = ref(16 / 9)
-function onResize() {
-  const rect = document.querySelector('.banner-ctn .banner')?.getBoundingClientRect()
-  if (rect?.width && rect?.height) {
-    bannerRatio.value = rect.width / rect.height
-  }
-}
-onMounted(() => {
-  onResize()
-  window.addEventListener('resize', onResize)
-})
-
-onBeforeUnmount(() => {
-  window.removeEventListener('resize', onResize)
-})
+onResize(
+  () => {
+    const rect = document.querySelector('.banner-ctn .banner')?.getBoundingClientRect()
+    if (rect?.width && rect?.height) {
+      bannerRatio.value = rect.width / rect.height
+    }
+  },
+  { immediate: true }
+)
 
 const { image, dimensions } = useImageAndDimension(category.value?.background_image, 'medium')
 useLpiHead(
