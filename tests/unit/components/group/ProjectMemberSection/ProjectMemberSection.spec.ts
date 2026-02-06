@@ -1,8 +1,8 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
 import english from '@/i18n/locales/en.json'
-import ProjectMemberSection from '@/components/group/ProjectMemberSection/ProjectMemberSection.vue'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { GroupMemberFactory } from '@/../tests/factories/group-member.factory'
+import ProjectMemberSection from '@/components/project/ProjectMemberSection/ProjectMemberSection.vue'
 
 const i18n = {
   locale: 'en',

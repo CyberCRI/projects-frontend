@@ -3,7 +3,6 @@ import {
   FollowOutput,
   FollowCategoryInput,
   UnfollowCategoryInput,
-  FollowProjectOutput,
 } from '@/models/follow.model'
 import { deleteFollow, postFollow, postFollowMany } from '@/api/follows.service'
 import {
