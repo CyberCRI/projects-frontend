@@ -1067,7 +1067,10 @@
     "map": "Standort",
     "add-location": "Standort hinzufügen",
     "add-location-point": "Einen Ortspunkt hinzufügen",
-    "default-title": "Standort"
+    "default-title": "Standort",
+    "impact": "Auswirkungen",
+    "team": "Team",
+    "address": "Anschrift"
   },
   "map": {
     "empty": "Nichts hier noch... Die Mitarbeiter haben noch keine Projekte lokalisiert.",
