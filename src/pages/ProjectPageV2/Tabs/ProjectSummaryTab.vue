@@ -107,7 +107,7 @@
 </template>
 
 <script>
-import ProjectMemberSection from '@/components/project/ProjectMemberSection/ProjectMemberSection.vue'
+import ProjectMemberSection from '@/components/group/ProjectMemberSection/ProjectMemberSection.vue'
 import { isNotGroup } from '@/functs/users'
 
 export default {
