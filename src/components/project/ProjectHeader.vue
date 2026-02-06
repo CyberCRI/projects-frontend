@@ -80,6 +80,12 @@
                 :tags="project.tags"
                 class="tag-list"
                 prefix="desktop"
+                :to="{
+                  name: 'ProjectSearch',
+                  query: {
+                    section: 'projects',
+                  },
+                }"
               />
             </div>
             <SkeletonComponent v-if="loading" class="skeleton-block" height="24px" />
@@ -261,13 +267,13 @@ import LinkButton from '@/components/base/button/LinkButton.vue'
 import ExternalLabelButton from '@/components/base/button/ExternalLabelButton.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import ToolTip from '@/components/base/ToolTip.vue'
-import TagsList from '@/components/project/TagsList.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import InfoSentence from '@/components/project/InfoSentence.vue'
 import followUtils from '@/functs/followUtils.ts'
 import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useUsersStore from '@/stores/useUsers.ts'
+import TagsList from '@/components/tags/TagsList.vue'
 
 export default {
   name: 'ProjectHeader',

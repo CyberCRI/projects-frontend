@@ -11,6 +11,7 @@
   </aside>
 </template>
 <script setup lang="ts">
+import { onResize } from '@/composables/onResize'
 import { throttle } from 'es-toolkit'
 
 defineProps<{ pageTitle: string }>()
@@ -31,18 +32,17 @@ const checkIfSummaryIsSticked = throttle(() => {
     window?.innerWidth > 768 /* $min-tablet */
 }, 16)
 
+onResize(computeAnchorOffset)
+onResize(checkIfSummaryIsSticked)
+
 onMounted(() => {
   computeAnchorOffset()
   // in unit tests, window might be undefined
-  window?.addEventListener('resize', computeAnchorOffset)
-  window?.addEventListener('resize', checkIfSummaryIsSticked)
   window?.addEventListener('scroll', checkIfSummaryIsSticked)
 })
 onBeforeUnmount(() => {
   // in unit tests, window might be undefined
-  window?.removeEventListener('resize', computeAnchorOffset)
-  window?.addEventListener('resize', checkIfSummaryIsSticked)
-  window?.addEventListener('scroll', checkIfSummaryIsSticked)
+  window?.removeEventListener('scroll', checkIfSummaryIsSticked)
 })
 </script>
 <style scoped lang="scss">

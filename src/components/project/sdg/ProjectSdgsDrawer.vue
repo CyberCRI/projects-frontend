@@ -1,28 +1,23 @@
 <template>
-  <BaseDrawer
-    :confirm-action-name="$t('common.confirm')"
+  <SdgsDrawer
+    v-model="selection"
     :is-opened="isOpened"
-    :title="$t('sdg.sdg-fulltext')"
-    class="small"
     :asyncing="asyncing"
     @close="close"
     @confirm="saveSdgs"
-  >
-    <SdgsFilter ref="sdg-grid" v-model="selection" />
-  </BaseDrawer>
+  />
 </template>
 
 <script>
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import SdgsFilter from '@/components/search/Filters/SdgsFilter.vue'
 import { patchProject } from '@/api/projects.service'
 import analytics from '@/analytics'
 import useToasterStore from '@/stores/useToaster.ts'
+import SdgsDrawer from '@/components/sdgs/SdgsDrawer.vue'
 
 export default {
-  name: 'SdgsDrawer',
+  name: 'ProjectSdgsDrawer',
 
-  components: { BaseDrawer, SdgsFilter },
+  components: { SdgsDrawer },
 
   props: {
     project: {

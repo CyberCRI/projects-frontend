@@ -1,5 +1,11 @@
 <template>
-  <component :is="is" class="see-more-arrow" :to="to" :href="to ? undefined : '#'">
+  <component
+    :is="is"
+    class="see-more-arrow skeletons-background see-more"
+    :to="to"
+    :href="to ? undefined : '#'"
+    @click="emit('click')"
+  >
     <span class="label-ctn">{{ label ? label : $t('common.see-more') }}</span>
     <span class="arrow-ctn"><IconImage name="ArrowRight" class="arrow" /></span>
   </component>
@@ -10,13 +16,21 @@ const props = withDefaults(
   defineProps<{
     to?: string | object
     label?: string
+    is?: string
   }>(),
   {
     to: null,
     label: null,
+    is: null,
   }
 )
+
+const emit = defineEmits(['click'])
+
 const is = computed(() => {
+  if (props.is) {
+    return props.is
+  }
   if (props.to) return resolveComponent('NuxtLink')
   return 'a'
 })

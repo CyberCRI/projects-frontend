@@ -98,7 +98,7 @@
           @similar="documentSelected = doc"
         />
       </div>
-      <PaginationButtons2 v-if="props.preview === false" class="m-auto" :pagination="pagination" />
+      <PaginationButtonsV2 v-if="props.preview === false" class="m-auto" :pagination="pagination" />
     </div>
     <div v-else class="documents-empty">
       {{ t(`profile.${docType}-empty`) }}
@@ -118,6 +118,7 @@ import {
   sanitizeTranslateKeys,
   sanitizeResearcherDocumentAnalyticsYears,
 } from '@/api/sanitizes/researcher'
+import PaginationButtonsV2 from '@/components/base/navigation/PaginationButtonsV2.vue'
 import ResearcherDocument from '@/components/people/Researcher/ResearcherDocument.vue'
 import ResearcherDocumentSimilars from '@/components/people/Researcher/ResearcherDocumentSimilars.vue'
 import { PaginationResult, usePagination } from '@/composables/usePagination'

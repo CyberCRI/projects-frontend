@@ -11,19 +11,13 @@
     </template>
 
     <template #actions-right>
-      <IconImage
+      <ProjectFollowIcon
         v-if="showFollowButton"
-        class="icon"
-        name="BookmarkLine"
-        tabindex="1"
-        @click="updateFollow"
-      />
-      <IconImage
-        v-else-if="showUnfollowButton"
-        class="icon"
-        name="BookmarkFill"
-        tabindex="1"
-        @click="updateFollow"
+        ref="follow"
+        :project="project"
+        :target-user-id="targetUserId"
+        @follow="$emit('card-update')"
+        @unfollow="$emit('card-update')"
       />
       <IconImage v-if="showAddButton" class="icon" name="Plus" @click="$emit('add')" />
       <IconImage
@@ -42,7 +36,7 @@
     <CroppedApiImage
       :picture-data="project.header_image"
       picture-size="medium"
-      default-picture="/placeholders/header_placeholder.png"
+      :default-picture="DEFAULT_PROJECT_PATATOID"
       :alt="`${translatedTitle} image`"
       class="picture picture-project"
     />
@@ -67,10 +61,11 @@
 
 <script>
 import BasicCard from '@/components/base/BasicCard.vue'
-import followUtils from '@/functs/followUtils.ts'
 import IconImage from '@/components/base/media/IconImage.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import useUsersStore from '@/stores/useUsers.ts'
+import ProjectFollowIcon from '@/components/project/ProjectFollowIcon.vue'
+import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
 
 export default {
   name: 'ProjectCard',
@@ -79,6 +74,7 @@ export default {
     BasicCard,
     IconImage,
     CroppedApiImage,
+    ProjectFollowIcon,
   },
   props: {
     project: {
@@ -135,6 +131,7 @@ export default {
       usersStore,
       translatedTitle,
       translatedPurpose,
+      DEFAULT_PROJECT_PATATOID,
     }
   },
 
@@ -163,21 +160,7 @@ export default {
 
     showFollowButton() {
       return (
-        !this.follow.is_followed &&
-        !this.hasAddIcon &&
-        !this.customIcon &&
-        !this.hasCloseIcon &&
-        this.usersStore.isConnected
-      )
-    },
-
-    showUnfollowButton() {
-      return (
-        !this.hasAddIcon &&
-        !this.hasCloseIcon &&
-        !this.customIcon &&
-        this.follow.is_followed &&
-        this.usersStore.isConnected
+        !this.hasAddIcon && !this.customIcon && !this.hasCloseIcon && this.usersStore.isConnected
       )
     },
 
@@ -224,29 +207,9 @@ export default {
       // this is a quick and dirty fix to make whole card clickable for selection
       if (this.hasAddIcon) this.$emit('add')
       else if (this.hasCloseIcon) this.$emit('unselect', this.project)
-      else if (this.followOnClick) this.updateFollow()
-      else this.$emit('navigated-away')
-    },
-
-    async updateFollow() {
-      try {
-        if (this.follow.is_followed) {
-          await followUtils.unfollow({
-            follower_id: this.follow.follow_id,
-            project_id: this.project.id,
-          })
-          this.follow.is_followed = false
-        } else {
-          const result = await followUtils.follow({
-            follower_id: this.targetUserId || this.usersStore.id,
-            project_id: this.project.id,
-          })
-          this.follow = result.project.is_followed
-        }
-        this.$emit('card-update')
-      } catch (error) {
-        console.error('Error updating follow', error)
-      }
+      else if (this.followOnClick) {
+        this.$refs.follow.actionFollow()
+      } else this.$emit('navigated-away')
     },
   },
 }

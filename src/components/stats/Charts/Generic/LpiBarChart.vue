@@ -6,6 +6,7 @@
 import { BarChart, useBarChart } from 'vue-chart-3'
 import { Chart, registerables } from 'chart.js'
 import { debounce } from 'es-toolkit'
+import { onResize } from '@/composables/onResize'
 
 Chart.register(...registerables)
 defineOptions({ name: 'LpiBarChart' })
@@ -30,18 +31,13 @@ const { barChartProps } = useBarChart({
   options: dataOptions,
 })
 
-const rerenderChart = debounce(() => {
-  useBarChart({
-    chartData: dataValue,
-    options: dataOptions,
-  })
-}, 300)
-
-onMounted(() => {
-  window.addEventListener('resize', rerenderChart) // Adapt chart's size to window
-})
-
-onUnmounted(() => {
-  window.removeEventListener('resize', rerenderChart) // Adapt chart's size to window
-})
+onResize(
+  debounce(() => {
+    // Adapt chart's size to window
+    useBarChart({
+      chartData: dataValue,
+      options: dataOptions,
+    })
+  }, 300)
+)
 </script>

@@ -8,7 +8,7 @@
         :alt="`${project.title} image`"
         :picture-data="project.header_image"
         picture-size="small"
-        default-picture="/placeholders/header_placeholder.png"
+        :default-picture="DEFAULT_PROJECT_PATATOID"
         class="picture"
       />
     </div>
@@ -20,23 +20,14 @@
   </NuxtLink>
 </template>
 
-<script>
+<script setup lang="ts">
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
+import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
+import { TranslatedProject } from '@/models/project.model'
 
-export default {
-  name: 'FeaturedProjectAdminListItem',
-
-  components: {
-    CroppedApiImage,
-  },
-
-  props: {
-    project: {
-      type: Object,
-      required: true,
-    },
-  },
-}
+defineProps<{
+  project: TranslatedProject
+}>()
 </script>
 <style scoped lang="scss">
 .featured-project-admin-list-item {

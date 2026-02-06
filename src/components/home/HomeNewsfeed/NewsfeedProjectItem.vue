@@ -10,7 +10,7 @@
         :ratio="1 / 1"
         :picture-data="project?.header_image"
         picture-size="medium"
-        default-picture="/placeholders/header_placeholder.png"
+        :default-picture="DEFAULT_PROJECT_PATATOID"
       />
     </div>
     <h3 class="project-title">
@@ -31,6 +31,7 @@ import { capitalize, cropIfTooLong } from '@/functs/string'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
 import { TranslatedProject } from '@/models/project.model'
+import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
 
 defineOptions({ name: 'NewsfeedProjectItem' })
 

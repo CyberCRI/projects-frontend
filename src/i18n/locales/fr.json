@@ -575,7 +575,8 @@
     "and": "et",
     "create": "Créer",
     "order-asc": "plus ancien à plus récent",
-    "order-desc": "Plus récent à plus ancien"
+    "order-desc": "Plus récent à plus ancien",
+    "close": "fermer"
   },
   "complete-profile": {
     "bio": {
@@ -3131,5 +3132,10 @@
     "blog-entries-limited-warning": "Seuls les {max} premiers articles de blog sont inclus dans l'export PDF (sur un total de {total}).",
     "download-pdf": "PDF",
     "generated-on": "Généré le {date}"
+  },
+  "pagination": {
+    "previous": "Page précédente",
+    "next": "Page suivante",
+    "page": "Page"
   }
 }
