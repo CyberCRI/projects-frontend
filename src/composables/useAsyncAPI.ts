@@ -19,7 +19,7 @@ export type AsyncConfig<ResDataT, DataT, Result> = Parameters<
 export type AsyncParameters<ResDataT, DataT, Result> = [
   Parameters<typeof useAsyncData<ResDataT, unknown, DataT>>['0'],
   (obj: AsyncHandler) => ReturnType<Parameters<typeof useAsyncData<ResDataT, unknown, DataT>>['1']>,
-  AsyncConfig<ResDataT, DataT, Result>,
+  AsyncConfig<ResDataT, DataT, Result>?,
 ]
 
 type AsyncReturn<ResDataT, DataT, Result> = Omit<
@@ -94,11 +94,15 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
   }
 
   if (immediate) {
-    watchEffect(() => {
-      if (checkArgs.value) {
-        results.refresh()
-      }
-    })
+    watch(
+      checkArgs,
+      (newValue) => {
+        if (newValue) {
+          results.refresh()
+        }
+      },
+      { immediate: true }
+    )
   }
 
   // log error only in dev

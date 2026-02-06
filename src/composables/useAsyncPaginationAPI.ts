@@ -1,5 +1,6 @@
 import {
   Pagination,
+  PaginationQuery,
   PaginationResult,
   paginationConfig,
   usePagination,
@@ -12,7 +13,9 @@ import useAsyncAPI from './useAsyncAPI'
 type AsyncPaginationHandler = {
   ctx?: Parameters<Parameters<typeof useAsyncAPI>['1']>[0]
   config: {
-    query: object
+    query: PaginationQuery & {
+      [key: string]: any
+    }
   }
 }
 
@@ -56,6 +59,7 @@ export default function useAsyncPaginationAPI<DataT, Result = undefined>(
 ): AsyncPaginationcReturn<PaginationResult<DataT>, PaginationResult<DataT>, Result> {
   const paginationData = ref<PaginationResult>()
   const pagination = usePagination(paginationData, params[2]?.paginationConfig)
+
   // add paginations in query
   const key = computed(
     () => `${unref(params[0])}::${pagination.current.value}::${pagination.limit.value}`
@@ -74,8 +78,6 @@ export default function useAsyncPaginationAPI<DataT, Result = undefined>(
       })
     },
     {
-      // default arrays
-      // default: () => ({ count: 0, results: [] }) as PaginationResult<DataT>,
       ...((omit(params[2] ?? {}, ['transform', 'translate']) ?? {}) as Omit<
         AsyncConfig<PaginationResult<DataT>, PaginationResult<DataT>, Result>,
         'translate'

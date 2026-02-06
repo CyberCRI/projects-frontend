@@ -34,7 +34,7 @@ export type PaginationResult<T = any> = {
 
 export type PaginationQuery = {
   limit: number
-  offset?: number
+  offset: number
 }
 
 export const DEFAULT_PAGINATION_LIMIT = 10
@@ -76,7 +76,7 @@ export const usePagination = (
   watch(
     results,
     () => {
-      current.value = results.value?.current_page ?? 1
+      current.value = results.value?.current_page || 1
       total.value = results.value?.total_page ?? 0
       count.value = results.value?.count ?? 0
     },
