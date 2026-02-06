@@ -3126,5 +3126,15 @@
     "title": "Nutzungsbedingungen",
     "approve-title": "Bitte akzeptieren Sie die Nutzungsbedingungen",
     "approve-button": "Ich akzeptiere"
+  },
+  "pagination": {
+    "previous": "Vorherige Seite",
+    "next": "Nächste Seite",
+    "page": "Seite"
+  },
+  "pdf": {
+    "blog-entries-limited-warning": "Nur die ersten {max} Blogeinträge sind im PDF-Export enthalten (von {total} insgesamt).",
+    "download-pdf": "PDF",
+    "generated-on": "Erstellt am {date}"
   }
 }

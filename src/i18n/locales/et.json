@@ -3126,5 +3126,15 @@
     "title": "Teenuse osutamise tingimused",
     "approve-title": "Palun kinnitage teenusetingimused",
     "approve-button": "Nõustun"
+  },
+  "pagination": {
+    "previous": "Eelmine leht",
+    "next": "Järgmine",
+    "page": "Page"
+  },
+  "pdf": {
+    "blog-entries-limited-warning": "PDF-i ekspordi hulka kuuluvad ainult esimesed {max} blogikirjed (kokku {total}).",
+    "download-pdf": "PDF",
+    "generated-on": "Geneeritud {date}"
   }
 }

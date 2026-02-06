@@ -3126,5 +3126,15 @@
     "title": "Servicevoorwaarden",
     "approve-title": "Gelieve de servicevoorwaarden goed te keuren",
     "approve-button": "Ik accepteer"
+  },
+  "pagination": {
+    "previous": "Vorige pagina",
+    "next": "Volgende pagina",
+    "page": "Bladzijde"
+  },
+  "pdf": {
+    "blog-entries-limited-warning": "Alleen de eerste {max} blogvermeldingen zijn opgenomen in de PDF-export (van {total} totaal).",
+    "download-pdf": "PDF",
+    "generated-on": "Gegenereerd op {date}"
   }
 }

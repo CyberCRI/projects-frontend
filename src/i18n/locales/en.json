@@ -3127,6 +3127,11 @@
     "approve-title": "Please Approve the Terms and Conditions",
     "approve-button": "I accept"
   },
+  "pagination": {
+    "previous": "Previous page",
+    "next": "Next page",
+    "page": "Page"
+  },
   "pdf": {
     "blog-entries-limited-warning": "Only the first {max} blog entries are included in the PDF export (of {total} total).",
     "download-pdf": "PDF",

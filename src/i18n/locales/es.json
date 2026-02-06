@@ -3126,5 +3126,15 @@
     "title": "Términos y Condiciones",
     "approve-title": "Por favor, apruebe los Términos y Condiciones",
     "approve-button": "Acepto"
+  },
+  "pagination": {
+    "previous": "Página anterior",
+    "next": "Página siguiente",
+    "page": "Página"
+  },
+  "pdf": {
+    "blog-entries-limited-warning": "Sólo las primeras {max} entradas del blog se incluyen en la exportación de PDF (del total {total}).",
+    "download-pdf": "PDF",
+    "generated-on": "Generado en {date}"
   }
 }
