@@ -1059,13 +1059,13 @@
   },
   "location": {
     "loading": "Laadimiskohad",
-    "impact": "Mõju",
-    "team": "Meeskond",
-    "address": "Aadress",
     "focus-on-map": "keskendu kaardile",
     "expand-map": "Suurenda kaart",
     "edit-location-point": "Muuda asukohapunkti",
     "location-type-label": "Asukoha liik",
+    "impact": "Mõju",
+    "team": "Meeskond",
+    "address": "Aadress",
     "edit-map": "Muuda geolokatsiooni",
     "map": "Geolokatsioon",
     "add-location": "Lisa asukoht",
@@ -1073,9 +1073,9 @@
     "default-title": "Asukoht"
   },
   "map": {
-    "empty": "Siin pole veel midagi... Osalejad ei ole veel ühtegi projekti lokaliseeritud.",
     "page-title": "Kaart",
-    "projects": "projektide kaart"
+    "projects": "projektide kaart",
+    "empty": "Siin pole veel midagi... Panustajad ei ole veel ühtegi punkti lokaliseeritud."
   },
   "me": {
     "follow": "Projektid, mida jälgin",
@@ -1602,9 +1602,7 @@
   },
   "project": {
     "infos": "Infos",
-    "add-location": "Lisa asukoht",
     "add-linked-project": "Lisa seotud projekt",
-    "add-location-point": "Asukohapunkti lisamine",
     "add-review": "Lisa ülevaade",
     "add-to-project": {
       "title": "Lisa projektile",
@@ -1682,7 +1680,6 @@
     "link-confirm-delete": "Kas tõesti kustutada see link projektist?",
     "file-confirm-delete": "Kas tõesti kustutada see fail projektist?",
     "blog-confirm-delete": "Kas tõesti kustutada see blogi kirje projektist?",
-    "location-type-label": "Asukoha liik",
     "lock": "Lukustusprojekt",
     "private": "Eraprojektid",
     "publish": "Avalda projekt",

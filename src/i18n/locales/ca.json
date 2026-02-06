@@ -1073,9 +1073,9 @@
     "default-title": "Localització"
   },
   "map": {
-    "empty": "No hi ha res aquí encara... Els Col·laboradors encara no van localitzar cap projecte.",
     "page-title": "Mapa",
-    "projects": "Mapa de projectes"
+    "projects": "Mapa de projectes",
+    "empty": "No hi ha res aquí encara... Els col·laboradors encara no han localitzat cap punt."
   },
   "me": {
     "follow": "Projectes que segueixo",
@@ -1602,9 +1602,7 @@
   },
   "project": {
     "infos": "Infos",
-    "add-location": "Afegeix una localització",
     "add-linked-project": "Afegeix un projecte enllaçat",
-    "add-location-point": "Afegeix un punt d' emplaçament",
     "add-review": "Afegeix una revisió",
     "add-to-project": {
       "title": "Afegeix al projecte",
@@ -1682,7 +1680,6 @@
     "link-confirm-delete": "Esteu segur que voleu eliminar aquest enllaç del projecte?",
     "file-confirm-delete": "Esteu segur que voleu esborrar aquest fitxer del projecte?",
     "blog-confirm-delete": "Esteu segur que voleu eliminar aquesta entrada del bloc del projecte?",
-    "location-type-label": "Tipus d' emplaçament",
     "lock": "Bloqueja el projecte",
     "private": "Projectes privats",
     "publish": "Publica projecte",

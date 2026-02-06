@@ -1059,13 +1059,13 @@
   },
   "location": {
     "loading": "Chargement des lieux en cours",
-    "impact": "Impact",
-    "team": "Équipe",
-    "address": "Adresse",
     "focus-on-map": "mettre l'accent sur la carte",
     "expand-map": "Agrandir la carte",
     "edit-location-point": "Modifier le point d'emplacement",
     "location-type-label": "Type de localisation",
+    "impact": "Impact",
+    "team": "Équipe",
+    "address": "Adresse",
     "edit-map": "Modifier la géolocalisation",
     "map": "Géolocalisation",
     "add-location": "Ajouter un emplacement",
@@ -1073,7 +1073,7 @@
     "default-title": "Lieu"
   },
   "map": {
-    "empty": "Rien ici pour l’instant… Les contributeurs n’ont pas encore localisé de projets.",
+    "empty": "Rien ici pour l’instant… Les contributeurs n’ont pas encore localisé des points.",
     "page-title": "Carte",
     "projects": "carte des projets"
   },
@@ -1602,9 +1602,7 @@
   },
   "project": {
     "infos": "Infos",
-    "add-location": "Ajouter une localisation",
     "add-linked-project": "Ajouter un projet lié",
-    "add-location-point": "Ajouter un point de localisation",
     "add-review": "Ajouter une révision",
     "add-to-project": {
       "title": "Ajouter au projet",
@@ -1682,7 +1680,6 @@
     "link-confirm-delete": "Êtes-vous sûr de vouloir supprimer ce lien de votre projet ?",
     "file-confirm-delete": "Êtes-vous sûr de vouloir supprimer ce fichier de votre projet ?",
     "blog-confirm-delete": "Êtes-vous sûr de vouloir supprimer cette entrée de blog de votre projet ?",
-    "location-type-label": "Type de localisation",
     "lock": "Vérouiller le projet",
     "private": "Projets Privés",
     "publish": "Publier le projet",
@@ -2758,7 +2755,7 @@
       "country": "Pays",
       "other": "Autre"
     },
-    "current-position": "Situation actuelle"
+    "current-position": "Position actuelle"
   },
   "card-list": {
     "list": "Liste",

@@ -1602,9 +1602,7 @@
   },
   "project": {
     "infos": "Infos",
-    "add-location": "Add a location",
     "add-linked-project": "Add a linked project",
-    "add-location-point": "Add a location point",
     "add-review": "Add a review",
     "add-to-project": {
       "title": "Add to project",
@@ -1717,8 +1715,7 @@
     "actions": "Quick actions",
     "copy": "(copy)",
     "nothing": "Nothing here...",
-    "tag-warning": "NB: If a user switches languages in your portal, the tags with translations will we translated for them. Otherwise, the tags will be shown in English.",
-    "location-type-label": "Type of location"
+    "tag-warning": "NB: If a user switches languages in your portal, the tags with translations will we translated for them. Otherwise, the tags will be shown in English."
   },
   "project_list": {
     "updated_at": "Latest active",

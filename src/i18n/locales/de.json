@@ -1059,9 +1059,6 @@
   },
   "location": {
     "loading": "Ladestellen",
-    "impact": "Auswirkungen",
-    "team": "Team",
-    "address": "Anschrift",
     "focus-on-map": "Fokus auf der Karte",
     "expand-map": "Karte vergrößern",
     "edit-location-point": "Standortpunkt bearbeiten",
@@ -1602,9 +1599,7 @@
   },
   "project": {
     "infos": "Infos",
-    "add-location": "Standort hinzufügen",
     "add-linked-project": "Ein verknüpftes Projekt hinzufügen",
-    "add-location-point": "Einen Ortspunkt hinzufügen",
     "add-review": "Bewertung hinzufügen",
     "add-to-project": {
       "title": "Projekt hinzufügen",
@@ -1682,7 +1677,6 @@
     "link-confirm-delete": "Sind Sie sicher, dass Sie diesen Link aus dem Projekt löschen möchten?",
     "file-confirm-delete": "Sind Sie sicher, dass Sie diese Datei aus dem Projekt löschen möchten?",
     "blog-confirm-delete": "Sind Sie sicher, dass Sie diesen Blogeintrag aus dem Projekt löschen möchten?",
-    "location-type-label": "Standort",
     "lock": "Projekt schließen",
     "private": "Private Projekte",
     "publish": "Projekt veröffentlichen",
