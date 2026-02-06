@@ -37,15 +37,17 @@ export type AddManyFollowedProject = {
   follows: FollowedProjectRef[]
 }
 
-export type FollowOutput = Required<FollowModel> & {
-  project: ProjectModel
-}
+export type FollowOutput = Required<FollowModel>
 
 export type FollowManyOutput = Required<FollowOutput> & {
   id: number
   project: {
     id: string
   }
+}
+
+export type FollowProjectOutput = Required<FollowOutput> & {
+  project: ProjectModel
 }
 
 export type FollowOutputList = FollowManyOutput[]

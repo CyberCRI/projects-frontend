@@ -1,3 +1,5 @@
+import { Translated } from '@/interfaces/translated'
+
 /**
  * @name PeopleModel
  * @description user data from people
@@ -33,6 +35,11 @@ export interface PeopleModel {
   landline_phone?: string
   twitter?: string
 }
+
+export type TranslatedPeopleModel = Translated<
+  PeopleModel,
+  'description' | 'short_description' | 'job'
+>
 
 export interface UserPostData {
   email: string
