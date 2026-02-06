@@ -48,10 +48,6 @@ const pointerIcon = computed(() => IconMapLocationType(props.locationType))
     &.team {
       background-color: $location-team;
     }
-
-    &.address {
-      background-color: $location-address;
-    }
   }
 
   .location-title {

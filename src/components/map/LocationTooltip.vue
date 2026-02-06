@@ -57,10 +57,6 @@ const closePopUp = inject('closePopUp')
     border-color: $location-team;
   }
 
-  &.address {
-    border-color: $location-address;
-  }
-
   > * {
     padding: 0 1rem;
   }

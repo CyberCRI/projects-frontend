@@ -66,10 +66,6 @@ const description = computed(() => cropIfTooLong(props.description, 85))
     background-color: color-mix(in srgb, $location-impact, transparent 90%);
   }
 
-  &.address {
-    background-color: color-mix(in srgb, $location-address, transparent 90%);
-  }
-
   &.team {
     background-color: color-mix(in srgb, $location-team, transparent 90%);
   }
