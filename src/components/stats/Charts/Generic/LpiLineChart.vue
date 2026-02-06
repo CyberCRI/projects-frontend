@@ -6,6 +6,7 @@
 import { LineChart, useLineChart } from 'vue-chart-3'
 import { Chart, registerables } from 'chart.js'
 import { debounce } from 'es-toolkit'
+import { onResize } from '@/composables/onResize'
 
 Chart.register(...registerables)
 defineOptions({ name: 'LpiLineChart' })
@@ -25,18 +26,13 @@ const { lineChartProps } = useLineChart({
   options: props.options,
 })
 
-const rerenderChart = debounce(() => {
-  useLineChart({
-    chartData: props.chartData,
-    options: props.options,
-  })
-}, 300)
-
-onMounted(() => {
-  window.addEventListener('resize', rerenderChart) // Adapt chart's size to window
-})
-
-onUnmounted(() => {
-  window.removeEventListener('resize', rerenderChart) // Adapt chart's size to window
-})
+onResize(
+  debounce(() => {
+    // Adapt chart's size to window
+    useLineChart({
+      chartData: props.chartData,
+      options: props.options,
+    })
+  }, 300)
+)
 </script>

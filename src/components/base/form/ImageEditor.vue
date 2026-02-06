@@ -79,7 +79,7 @@ export default {
   props: {
     imageSizes: {
       type: [Object, null],
-      required: true,
+      default: null,
     },
 
     picture: {

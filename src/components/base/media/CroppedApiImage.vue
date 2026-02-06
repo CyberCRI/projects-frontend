@@ -39,7 +39,6 @@ const emit = defineEmits<{
   load: [Event]
   error: [Error]
 }>()
-const runtimeConfig = useRuntimeConfig()
 const imageLoaded = ref(false)
 const imageError = ref(false)
 
@@ -48,13 +47,11 @@ const _src = computed(() => {
 })
 
 const src = computed(() => {
-  if (_src.value) {
-    if (imageError.value) {
-      return ''
-    }
-    return _src.value
+  const defaultPicture = usePublicURL(props.defaultPicture)
+  if (imageError.value) {
+    return defaultPicture
   }
-  return `${runtimeConfig.public.appPublicBinariesPrefix}${props.defaultPicture}`
+  return _src.value || defaultPicture
 })
 
 const imageSizes = computed(() => {

@@ -101,6 +101,7 @@ export default {
       sliderStyle: null,
       uniqueId: (Math.random() + 1).toString(36).substring(7),
       mountedIcons: [],
+      onResize: debounce(this.setSliderStyle, 300),
     }
   },
 
@@ -123,7 +124,10 @@ export default {
   mounted() {
     this.$nextTick(this.setSliderStyle)
 
-    window.addEventListener('resize', debounce(this.setSliderStyle, 300))
+    window.addEventListener('resize', this.onResize)
+  },
+  unmounted() {
+    window.removeEventListener('resize', this.onResize)
   },
 
   methods: {
