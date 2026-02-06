@@ -575,7 +575,8 @@
     "and": "i",
     "create": "Crea",
     "order-asc": "Més antiga al més nou",
-    "order-desc": "nova a la més antiga"
+    "order-desc": "nova a la més antiga",
+    "close": "tanca"
   },
   "complete-profile": {
     "bio": {
@@ -3139,6 +3140,11 @@
     "title": "Termes i Condicions",
     "approve-title": "Si us plau, aprova els Termes i Condicions",
     "approve-button": "Accepto"
+  },
+  "pagination": {
+    "previous": "Pàgina anterior",
+    "next": "Pàgina següent",
+    "page": "Pàgina"
   },
   "pdf": {
     "blog-entries-limited-warning": "Només s' inclouen les primeres entrades del bloc {max} en l' exportació PDF (de {total} total).",

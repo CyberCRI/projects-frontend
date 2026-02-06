@@ -575,7 +575,8 @@
     "and": "ja",
     "create": "Loo",
     "order-asc": "vanim kuni uusim",
-    "order-desc": "uusim"
+    "order-desc": "uusim",
+    "close": "lähedal"
   },
   "complete-profile": {
     "bio": {
@@ -3139,6 +3140,11 @@
     "title": "Teenuse osutamise tingimused",
     "approve-title": "Palun kinnitage teenusetingimused",
     "approve-button": "Nõustun"
+  },
+  "pagination": {
+    "previous": "Eelmine leht",
+    "next": "Järgmine",
+    "page": "Page"
   },
   "pdf": {
     "blog-entries-limited-warning": "PDF-i ekspordi hulka kuuluvad ainult esimesed {max} blogikirjed (kokku {total}).",
