@@ -575,7 +575,8 @@
     "and": "et",
     "create": "Créer",
     "order-asc": "plus ancien à plus récent",
-    "order-desc": "Plus récent à plus ancien"
+    "order-desc": "Plus récent à plus ancien",
+    "close": "fermer"
   },
   "complete-profile": {
     "bio": {

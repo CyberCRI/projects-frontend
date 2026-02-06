@@ -575,7 +575,8 @@
     "and": "i",
     "create": "Crea",
     "order-asc": "Més antiga al més nou",
-    "order-desc": "nova a la més antiga"
+    "order-desc": "nova a la més antiga",
+    "close": "tanca"
   },
   "complete-profile": {
     "bio": {

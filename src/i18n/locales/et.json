@@ -575,7 +575,8 @@
     "and": "ja",
     "create": "Loo",
     "order-asc": "vanim kuni uusim",
-    "order-desc": "uusim"
+    "order-desc": "uusim",
+    "close": "lähedal"
   },
   "complete-profile": {
     "bio": {
