@@ -98,9 +98,10 @@ const customSize = computed(() => ({
   height: props.height,
 }))
 
-const close = () => {
+const close = async () => {
   closeModal()
-  delay(500).then(() => emit('close'))
+  await delay(500)
+  emit('close')
 }
 
 onMounted(() => {

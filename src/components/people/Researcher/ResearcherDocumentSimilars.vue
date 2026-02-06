@@ -16,6 +16,9 @@
           :similar="false"
         />
       </div>
+      <div class="documents-paginations">
+        <PaginationButtonsV2 :pagination="pagination" />
+      </div>
     </FetchLoader>
     <template #footer>
       <div class="documents-paginations">
@@ -33,6 +36,8 @@ import PaginationButtonsV2 from '@/components/base/navigation/PaginationButtonsV
 import { TranslatedDocument } from '@/interfaces/researcher'
 import { factoryPagination } from '@/skeletons/base.skeletons'
 import { researchDocumentSkeleton } from '@/skeletons/crisalid.skeletons'
+
+defineOptions({ name: 'ResearcherDocumentSimilars' })
 
 const { t } = useNuxtI18n()
 const emit = defineEmits(['close'])

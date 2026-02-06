@@ -16,7 +16,12 @@
             <slot name="header_clear" />
           </div>
 
-          <LpiButton btn-icon="Close" :aria-label="$t('common.close')" @click="close" />
+          <LpiButton
+            data-test="drawer-close"
+            btn-icon="Close"
+            :aria-label="$t('common.close')"
+            @click="close"
+          />
         </header>
 
         <main ref="main" :style="customStyle" class="drawer__main custom-scrollbar">

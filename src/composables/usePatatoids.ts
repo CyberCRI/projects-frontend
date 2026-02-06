@@ -1,3 +1,5 @@
+import { usePublicURL } from '@/composables/usePublic'
+
 const DEFAULT_PATATOID = [1, 2, 3, 4, 5, 6].map(
   (index) => `/patatoids-project/Patatoid-${index}.png`
 )
@@ -6,11 +8,6 @@ const DEFAULT_USER_PATATOID = DEFAULT_PATATOID[0]
 const DEFAULT_GROUP_PATATOID = DEFAULT_PATATOID[1]
 const DEFAULT_PROJECT_PATATOID = DEFAULT_PATATOID[2]
 const DEFAULT_IMAGE_PATATOID = DEFAULT_PATATOID[3]
-
-const usePatatoid = (url) => {
-  const runtimeConfig = useRuntimeConfig()
-  return `${runtimeConfig.public.appPublicBinariesPrefix}${url}`
-}
 
 /**
  * return default 6 patatoids
@@ -21,8 +18,7 @@ const usePatatoid = (url) => {
  * @returns {string[]}
  */
 const usePatatoids = () => {
-  const runtimeConfig = useRuntimeConfig()
-  return DEFAULT_PATATOID.map((url) => `${runtimeConfig.public.appPublicBinariesPrefix}${url}`)
+  return DEFAULT_PATATOID.map((url) => usePublicURL(url))
 }
 
 export {

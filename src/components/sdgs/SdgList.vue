@@ -1,11 +1,7 @@
 <template>
   <div class="sdg-ctn">
     <component :is="is" v-for="sdg in sdgsArray" :key="sdg.id" :to="sdg.to">
-      <img
-        :alt="sdg.alt"
-        :src="`${runtimeConfig.public.appPublicBinariesPrefix}/sdgs/logo/SDG-${sdg.id}.svg`"
-        class="sdg-img"
-      />
+      <img :alt="sdg.alt" :src="sdg.src" class="sdg-img" />
     </component>
   </div>
 </template>
@@ -20,8 +16,6 @@ const props = withDefaults(
     to: null,
   }
 )
-
-const runtimeConfig = useRuntimeConfig()
 
 const is = computed(() => {
   if (props.to) {
@@ -43,11 +37,13 @@ const sdgsArray = computed(() => {
         }
       : null
 
+    const src = usePublicURL(`/sdgs/logo/SDG-${sdgId}.svg`)
     return {
       id: sdgId,
       to,
       // TODO(remi): convert sdgId alt text to i18n name sdg ?
       alt: `sdg number ${sdgId}`,
+      src,
     }
   })
 })

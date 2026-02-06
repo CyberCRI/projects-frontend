@@ -19,7 +19,7 @@ export type AsyncConfig<ResDataT, DataT, Result> = Parameters<
 export type AsyncParameters<ResDataT, DataT, Result> = [
   Parameters<typeof useAsyncData<ResDataT, unknown, DataT>>['0'],
   (obj: AsyncHandler) => ReturnType<Parameters<typeof useAsyncData<ResDataT, unknown, DataT>>['1']>,
-  AsyncConfig<ResDataT, DataT, Result>,
+  AsyncConfig<ResDataT, DataT, Result>?,
 ]
 
 type AsyncReturn<ResDataT, DataT, Result> = Omit<
@@ -51,7 +51,11 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
   */
   params[2] ??= {}
   params[2].watch ??= []
-  if (params[2].query && isReactive(params[2].query)) {
+  if (
+    params[2].query &&
+    (isRef(params[2].query) || isReactive(params[2].query)) &&
+    !params[2].watch.includes(params[2].query)
+  ) {
     params[2].watch.push(params[2].query)
   }
 
@@ -69,6 +73,9 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
   const { status, data, ...res } = useAsyncData<ResDataT, unknown, DataT>(
     params[0],
     ({}) => {
+      if (!checkArgs.value) {
+        return null
+      }
       const conf = {} as AsyncHandler['config']
       if (params[2].query) {
         conf.query = unref(params[2].query)
@@ -94,11 +101,15 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
   }
 
   if (immediate) {
-    watchEffect(() => {
-      if (checkArgs.value) {
-        results.refresh()
-      }
-    })
+    watch(
+      checkArgs,
+      (newValue) => {
+        if (newValue) {
+          results.refresh()
+        }
+      },
+      { immediate: true }
+    )
   }
 
   // log error only in dev

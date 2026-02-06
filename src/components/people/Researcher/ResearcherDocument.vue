@@ -60,11 +60,12 @@
       </a>
     </div>
     <SeeMoreArrow
+      is="button"
       v-if="similar && document.similars > 0"
       :data-test="`see-more-${document.id}`"
       class="no-padding"
       :label="`${document.similars} ${t(`profile.${docType}-similars`)}`"
-      @click.prevent="emit('similar', document)"
+      @click="emit('similar', document)"
     />
   </article>
 </template>
@@ -74,6 +75,7 @@ import { documentTypeHarverToUrl, researcherHarvesterToUrl } from '@/functs/rese
 import { TranslatedDocument } from '@/interfaces/researcher'
 import PushPinSvg from '@/assets/svg/pushpin.svg'
 import { sanitizeTranslateKeys } from '@/api/sanitizes/researcher'
+import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
 
 const { t, locale } = useNuxtI18n()
 const emit = defineEmits(['similar'])
