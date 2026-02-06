@@ -84,7 +84,7 @@ describe('useAsyncAPI composable', () => {
       return computed(() => `${result.value}--translate`)
     }
 
-    const query = ref({ page: 0 })
+    const query = reactive({ page: 0 })
     const { data } = useAsyncAPI(
       'with translate',
       async ({ config }) => {
@@ -98,7 +98,7 @@ describe('useAsyncAPI composable', () => {
     await flushPromises()
     expect(data.value).toBe('data-0--translate')
 
-    query.value.page = 666
+    query.page = 666
     await flushPromises()
     expect(data.value).toBe('data-666--translate')
   })

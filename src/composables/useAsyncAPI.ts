@@ -51,7 +51,11 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
   */
   params[2] ??= {}
   params[2].watch ??= []
-  if (params[2].query && isReactive(params[2].query)) {
+  if (
+    params[2].query &&
+    (isRef(params[2].query) || isReactive(params[2].query)) &&
+    !params[2].watch.includes(params[2].query)
+  ) {
     params[2].watch.push(params[2].query)
   }
 
@@ -69,6 +73,9 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
   const { status, data, ...res } = useAsyncData<ResDataT, unknown, DataT>(
     params[0],
     ({}) => {
+      if (!checkArgs.value) {
+        return null
+      }
       const conf = {} as AsyncHandler['config']
       if (params[2].query) {
         conf.query = unref(params[2].query)
