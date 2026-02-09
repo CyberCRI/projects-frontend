@@ -388,7 +388,8 @@
       "none": "Geen",
       "user": "Gebruiker",
       "facilitator": "Vergemakkelijking",
-      "admin": "org admin"
+      "admin": "org admin",
+      "viewer": "Kijker"
     },
     "user-exists-in-other-org": "Een gebruiker met dezelfde e-mail bestaat in onze database. We kunnen hem toevoegen aan uw portaal hier."
   },

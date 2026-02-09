@@ -388,7 +388,8 @@
       "none": "Cap",
       "user": "Usuari",
       "facilitator": "Facilitor",
-      "admin": "Org administrador"
+      "admin": "Org administrador",
+      "viewer": "Visualitzador"
     },
     "user-exists-in-other-org": "Existeix un usuari amb el mateix correu electrònic a la nostra base de dades. Podem afegir-lo al seu portal aquí."
   },

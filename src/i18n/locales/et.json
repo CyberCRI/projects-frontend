@@ -388,7 +388,8 @@
       "none": "Mitte ükski",
       "user": "Kasutaja",
       "facilitator": "Vahendaja",
-      "admin": "Org"
+      "admin": "Org",
+      "viewer": "Vaataja"
     },
     "user-exists-in-other-org": "Sama e-posti kasutaja on meie andmebaasis olemas. Me võime teda teie portaali lisada siin."
   },

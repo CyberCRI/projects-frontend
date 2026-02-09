@@ -78,6 +78,14 @@ export default function usePermissions() {
     )
   })
 
+  const isViewer = computed(() => {
+    const orgId = currentOrganizationForPermissions.value?.id
+    return (
+      isConnectedForPermissions.value &&
+      getUserRolesForPermissions.value.some((role) => role === `organization:#${orgId}:viewer`)
+    )
+  })
+
   const isOrgAdmin = computed(() => {
     const orgId = currentOrganizationForPermissions.value?.id
     return (
@@ -109,7 +117,7 @@ export default function usePermissions() {
   /* PROJECTS */
 
   const canCreateProject = computed(() => {
-    return isConnectedForPermissions.value
+    return isConnectedForPermissions.value && !isViewer.value
   })
 
   const canEditProject = computed(() => {
@@ -339,6 +347,8 @@ export default function usePermissions() {
     isSuperAdmin,
 
     isFacilitator,
+
+    isViewer,
 
     isOrgAdmin,
 
