@@ -103,4 +103,28 @@ describe('useForm', () => {
     expect(errors.value.childrens).toBeTruthy()
     expect(cleanedData.value).toBeNull()
   })
+
+  it('with v-model', async () => {
+    const model = ref({
+      name: 'jaques',
+    })
+
+    const onClean = (data) => {
+      return {
+        name: 'newName',
+      }
+    }
+
+    const rules = {
+      name: { required, minLengthValue: minLength(4) },
+    }
+    const { form, cleanedData } = useForm({ rules, model, onClean })
+
+    expect(form.value.name).toEqual('jaques')
+    await delay(10)
+    expect(cleanedData.value.name).toEqual('newName')
+    form.value.name = 'li'
+    await delay(10)
+    expect(cleanedData.value).toBe(null)
+  })
 })
