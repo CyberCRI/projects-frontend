@@ -38,6 +38,7 @@
           />
 
           <OnboardingTodo
+            v-if="canCreateProject"
             :todo-label="$t('onboarding-todo.create-project')"
             :todo-done="!create_project"
             :asyncing="asyncing.create_project"
@@ -85,8 +86,10 @@ export default {
 
   setup() {
     const usersStore = useUsersStore()
+    const { canCreateProject } = usePermissions()
     return {
       usersStore,
+      canCreateProject,
     }
   },
 
@@ -308,6 +311,7 @@ export default {
   list-style: none;
   display: flex;
   flex-flow: row nowrap;
+  justify-content: space-around;
   gap: $space-unit;
   padding: $space-unit;
   background-color: rgb(108 213 255 / 40%);

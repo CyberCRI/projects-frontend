@@ -20,7 +20,11 @@
         </div-->
     <div v-if="!isLoading" class="summary-cards" data-test="home-user-header">
       <div v-if="!isEmptyDashboard" class="summary-container page-section-wide">
-        <ProjectSummaryBlock :projects="displayableProjects" :inlined="numberOfSummaryBlock < 2" />
+        <ProjectSummaryBlock
+          v-if="canCreateProject"
+          :projects="displayableProjects"
+          :inlined="numberOfSummaryBlock < 2"
+        />
 
         <EventSummaryBlock
           v-if="displayableEvents.length"
@@ -88,6 +92,7 @@ export default {
     const summaryMaxInstructions = ref(1)
     const isLoading = ref(true)
 
+    const { canCreateProject } = usePermissions()
     return {
       organizationsStore,
       usersStore,
@@ -101,6 +106,7 @@ export default {
       summaryMaxProjects,
       summaryMaxInstructions,
       isLoading,
+      canCreateProject,
     }
   },
 
