@@ -1,0 +1,84 @@
+// Skeleton-loading
+@keyframes skeleton-loading {
+  0% {
+    background-color: $skeleton-0;
+  }
+
+  100% {
+    background-color: $skeleton-100;
+  }
+}
+
+@keyframes skeleton-background-loading {
+  0% {
+    background-color: $skeleton-0;
+  }
+
+  100% {
+    background-color: $skeleton-100;
+  }
+}
+
+@keyframes skeleton-text-loading {
+  0% {
+    filter: drop-shadow(2px 2px 2px $skeleton-0) blur(6px);
+    color: $skeleton-0;
+    fill: $skeleton-0;
+  }
+
+  100% {
+    filter: drop-shadow(2px 2px 2px $skeleton-100) blur(3px);
+    color: $skeleton-100;
+    fill: $skeleton-100;
+  }
+}
+
+%skeleton-background-block {
+  animation: skeleton-background-loading 1s linear infinite alternate !important;
+  color: transparent !important;
+  fill: transparent !important;
+  filter: drop-shadow(2px 2px 2px $skeleton-0) blur(2px);
+
+  > * {
+    opacity: 0;
+  }
+}
+
+%skeleton-text-block {
+  border-radius: $border-radius-xs;
+  color: transparent !important;
+  fill: transparent !important;
+  filter: drop-shadow(2px 2px 2px $skeleton-0) blur(2px);
+
+  * {
+    opacity: 0;
+  }
+
+  animation: skeleton-background-loading 1s linear infinite alternate !important;
+}
+
+.skeletons {
+  --primary: #{$lighter-gray};
+  --primary-lighter: #{$lighter-gray};
+  --primary-light: #{$lighter-gray};
+  --primary-dark: #{$lighter-gray};
+
+  pointer-events: none;
+
+  .skeletons-text {
+    @extend %skeleton-text-block;
+  }
+
+  .skeletons-image:is(img),
+  .skeletons-image img,
+  .skeletons-image:is(svg),
+  .skeletons-image svg {
+    @extend %skeleton-background-block;
+
+    content: url('');
+  }
+
+  .skeletons-background {
+    @extend %skeleton-background-block;
+  }
+}

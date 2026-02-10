@@ -170,14 +170,8 @@
         </a>
         {{ $t('profile.edit.general.sdgs.notice-end') }}
       </p>
-      <TransitionGroup v-if="form.sdgs && form.sdgs.length" tag="div" name="sdg" class="sdgs-list">
-        <img
-          v-for="sdg in form.sdgs"
-          :key="sdg"
-          :alt="sdg"
-          :src="`${runtimeConfig.public.appPublicBinariesPrefix}/sdgs/logo/SDG-${sdg}.svg`"
-          class="sdg-picture"
-        />
+      <TransitionGroup v-if="form.sdgs && form.sdgs.length" tag="div" name="sdg">
+        <SdgList :sdgs="form.sdgs" />
       </TransitionGroup>
     </div>
 
@@ -238,6 +232,7 @@ import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesU
 import { VALID_NAME_REGEX } from '@/functs/constants.ts'
 import useToasterStore from '@/stores/useToaster.ts'
 import useUsersStore from '@/stores/useUsers.ts'
+import SdgList from '@/components/sdgs/SdgList.vue'
 
 function defaultForm() {
   return {
@@ -261,6 +256,10 @@ function defaultForm() {
 
 export default {
   name: 'ProfileGeneralEditTab',
+
+  components: {
+    SdgList,
+  },
 
   props: {
     user: {
@@ -526,12 +525,6 @@ $sdg-size: $layout-size-4xl;
   grid-template-columns: repeat(auto-fill, minmax($sdg-size, 1fr));
   gap: $space-m;
   margin-top: $space-m;
-}
-
-.sdg-picture {
-  display: inline-block;
-  width: $sdg-size;
-  height: $sdg-size;
 }
 
 .sdg-enter-active,

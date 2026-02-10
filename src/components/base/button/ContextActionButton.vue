@@ -124,7 +124,8 @@ withDefaults(
     }
   }
 
-  &.Plus:hover {
+  &.Plus:hover,
+  &.Expand:hover {
     .action-icon {
       animation: scale-plus 1s ease-in-out infinite;
       transform-origin: bottom center;

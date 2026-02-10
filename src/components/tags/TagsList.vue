@@ -112,6 +112,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    to: {
+      type: Object,
+      required: true,
+    },
   },
 
   setup() {
@@ -202,6 +206,7 @@ export default {
       ),
       showExtraTags: false,
       straightCorner: false,
+      onResizeLayoutTagsBis: debounce(this.layoutTagsBis, 42, { leading: false, trailing: true }),
     }
   },
 
@@ -238,16 +243,13 @@ export default {
   async mounted() {
     this.layoutTags()
     document.addEventListener('click', this.extraTagClickOutside)
-    window.addEventListener(
-      'resize',
-      debounce(this.layoutTagsBis, 42, { leading: false, trailing: true })
-    )
+    window.addEventListener('resize', this.onResizeLayoutTagsBis)
   },
 
   unmounted() {
     document.removeEventListener('click', this.extraTagClickOutside)
 
-    window.removeEventListener('resize', this.layoutTagsBis)
+    window.removeEventListener('resize', this.onResizeLayoutTagsBis)
   },
 
   methods: {
@@ -329,10 +331,10 @@ export default {
 
     browsePageWithQuery(queryField, queryValue) {
       return {
-        name: 'ProjectSearch',
+        ...this.to,
         query: {
+          ...(this.to.query ?? {}),
           [queryField]: queryValue,
-          section: 'projects',
         },
       }
     },
@@ -377,7 +379,7 @@ export default {
   right: 0;
   left: 0;
   background-color: $white;
-  border: $border-width-s solid $primary;
+  border: $border-width-s solid var(--primary);
   border-radius: $border-radius-m;
   padding: $space-m;
   z-index: 1;

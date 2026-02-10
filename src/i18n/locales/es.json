@@ -575,7 +575,8 @@
     "and": "y",
     "create": "Crear",
     "order-asc": "más antiguo a más reciente",
-    "order-desc": "más reciente a la más antigua"
+    "order-desc": "más reciente a la más antigua",
+    "close": "cerca"
   },
   "complete-profile": {
     "bio": {
@@ -1057,12 +1058,24 @@
     "auto-translate-off": "Traducción automática desactivada"
   },
   "location": {
-    "loading": "Lugares de carga"
+    "loading": "Lugares de carga",
+    "focus-on-map": "centrarse en el mapa",
+    "expand-map": "Ver mapa más grande",
+    "edit-location-point": "Editar punto de ubicación",
+    "location-type-label": "Tipo de ubicación",
+    "impact": "Impacto",
+    "team": "Equipo",
+    "address": "Dirección",
+    "edit-map": "Editar geolocalización",
+    "map": "Geolocalización",
+    "add-location": "Agregar un lugar",
+    "add-location-point": "Agregar un punto de ubicación",
+    "default-title": "Ubicación"
   },
   "map": {
-    "empty": "Nada aquí todavía... Los colaboradores aún no han localizado ningún proyecto.",
     "page-title": "Mapa",
-    "projects": "mapa de proyectos"
+    "projects": "mapa de proyectos",
+    "empty": "Nada aquí todavía... Los colaboradores aún no han localizado ningún punto."
   },
   "me": {
     "follow": "Proyectos que sigo",
@@ -1589,9 +1602,7 @@
   },
   "project": {
     "infos": "Infos",
-    "add-location": "Agregar un lugar",
     "add-linked-project": "Agregar un proyecto vinculado",
-    "add-location-point": "Agregar un punto de ubicación",
     "add-review": "Añádase una revisión",
     "add-to-project": {
       "title": "Añadir al proyecto",
@@ -1669,7 +1680,6 @@
     "link-confirm-delete": "¿Estás seguro de que quieres borrar este enlace del proyecto?",
     "file-confirm-delete": "¿Estás seguro de que quieres borrar este archivo del proyecto?",
     "blog-confirm-delete": "¿Estás seguro de que quieres borrar esta entrada de blog del proyecto?",
-    "location-type-label": "Tipo de ubicación",
     "lock": "proyecto de cierre",
     "private": "Proyectos privados",
     "publish": "Publicar proyecto",
@@ -2744,7 +2754,8 @@
       "state": "Estado",
       "country": "País",
       "other": "Otros"
-    }
+    },
+    "current-position": "Cargo actual"
   },
   "card-list": {
     "list": "Lista",
@@ -3126,5 +3137,15 @@
     "title": "Términos y Condiciones",
     "approve-title": "Por favor, apruebe los Términos y Condiciones",
     "approve-button": "Acepto"
+  },
+  "pagination": {
+    "previous": "Página anterior",
+    "next": "Página siguiente",
+    "page": "Página"
+  },
+  "pdf": {
+    "blog-entries-limited-warning": "Sólo las primeras {max} entradas del blog se incluyen en la exportación de PDF (del total {total}).",
+    "download-pdf": "PDF",
+    "generated-on": "Generado en {date}"
   }
 }

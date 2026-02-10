@@ -5,7 +5,6 @@ import type {
   AddGroupMembers,
   RemoveGroupMember,
   PostGroupProjects,
-  RemoveGroupProject,
   AddParentGroupModelInput,
 } from '@/models/group.model'
 // import type { HierarchyGroupModel } from '@/models/group.model'
@@ -121,11 +120,7 @@ export async function postGroupProjects(
   }) //.data.value
 }
 
-export async function removeGroupProject(
-  org: string,
-  group_id: number,
-  projectsData: RemoveGroupProject
-) {
+export async function removeGroupProject(org: string, group_id: number, projectsData: any) {
   return await useAPI(`organization/${org}/people-group/${group_id}/project/remove/`, {
     body: projectsData,
     method: 'POST',

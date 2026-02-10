@@ -575,7 +575,8 @@
     "and": "i",
     "create": "Crea",
     "order-asc": "Més antiga al més nou",
-    "order-desc": "nova a la més antiga"
+    "order-desc": "nova a la més antiga",
+    "close": "tanca"
   },
   "complete-profile": {
     "bio": {
@@ -1057,12 +1058,24 @@
     "auto-translate-off": "Traducció automàtica desactivada"
   },
   "location": {
-    "loading": "S' estan carregant les localitzacions"
+    "loading": "S' estan carregant les localitzacions",
+    "impact": "Impacte",
+    "team": "Equip",
+    "address": "Adreça",
+    "focus-on-map": "Centra't en el mapa",
+    "expand-map": "Augmenta el mapa",
+    "edit-location-point": "Edita el punt de localització",
+    "location-type-label": "Tipus d' emplaçament",
+    "edit-map": "Edita geolocalització",
+    "map": "Geolocalització",
+    "add-location": "Afegeix una ubicació",
+    "add-location-point": "Afegeix un punt d' emplaçament",
+    "default-title": "Localització"
   },
   "map": {
-    "empty": "No hi ha res aquí encara... Els Col·laboradors encara no van localitzar cap projecte.",
     "page-title": "Mapa",
-    "projects": "Mapa de projectes"
+    "projects": "Mapa de projectes",
+    "empty": "No hi ha res aquí encara... Els col·laboradors encara no han localitzat cap punt."
   },
   "me": {
     "follow": "Projectes que segueixo",
@@ -1589,9 +1602,7 @@
   },
   "project": {
     "infos": "Infos",
-    "add-location": "Afegeix una localització",
     "add-linked-project": "Afegeix un projecte enllaçat",
-    "add-location-point": "Afegeix un punt d' emplaçament",
     "add-review": "Afegeix una revisió",
     "add-to-project": {
       "title": "Afegeix al projecte",
@@ -1669,7 +1680,6 @@
     "link-confirm-delete": "Esteu segur que voleu eliminar aquest enllaç del projecte?",
     "file-confirm-delete": "Esteu segur que voleu esborrar aquest fitxer del projecte?",
     "blog-confirm-delete": "Esteu segur que voleu eliminar aquesta entrada del bloc del projecte?",
-    "location-type-label": "Tipus d' emplaçament",
     "lock": "Bloqueja el projecte",
     "private": "Projectes privats",
     "publish": "Publica projecte",
@@ -2744,7 +2754,8 @@
       "state": "Estat",
       "country": "País",
       "other": "Altres"
-    }
+    },
+    "current-position": "Posició actual"
   },
   "card-list": {
     "list": "Llista",
@@ -3126,5 +3137,15 @@
     "title": "Termes i Condicions",
     "approve-title": "Si us plau, aprova els Termes i Condicions",
     "approve-button": "Accepto"
+  },
+  "pagination": {
+    "previous": "Pàgina anterior",
+    "next": "Pàgina següent",
+    "page": "Pàgina"
+  },
+  "pdf": {
+    "blog-entries-limited-warning": "Només s' inclouen les primeres entrades del bloc {max} en l' exportació PDF (de {total} total).",
+    "download-pdf": "PDF",
+    "generated-on": "Generat el {date}"
   }
 }

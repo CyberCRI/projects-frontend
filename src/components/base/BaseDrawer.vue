@@ -16,9 +16,12 @@
             <slot name="header_clear" />
           </div>
 
-          <div class="header__close" @click="close">
-            <span class="icon-circle shadow-box"><IconImage name="Close" /></span>
-          </div>
+          <LpiButton
+            data-test="drawer-close"
+            btn-icon="Close"
+            :aria-label="$t('common.close')"
+            @click="close"
+          />
         </header>
 
         <main ref="main" :style="customStyle" class="drawer__main custom-scrollbar">
@@ -51,106 +54,64 @@
   </div>
 </template>
 
-<script>
-import IconImage from '@/components/base/media/IconImage.vue'
+<script setup lang="ts">
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import { capitalize } from '@/functs/string'
+import { StyleValue } from 'vue'
 
-export default {
-  name: 'BaseDrawer',
+const props = withDefaults(
+  defineProps<{
+    isOpened?: boolean
+    title: string
+    confirmActionName?: string
+    noFooter?: boolean
+    customStyle?: StyleValue
+    confirmActionDisabled?: boolean
+    asyncing?: boolean
+  }>(),
+  {
+    isOpened: false,
+    confirmActionName: null,
+    noFooter: false,
+    customStyle: () => ({}),
+    confirmActionDisabled: false,
+    asyncing: false,
+  }
+)
 
-  components: {
-    IconImage,
-    LpiButton,
-  },
+const emit = defineEmits(['close', 'confirm', 'unselect'])
 
-  props: {
-    isOpened: {
-      type: Boolean,
-      default: false,
-    },
+const scrolled = ref(false)
+const uniqueId = (Math.random() + 1).toString(36).substring(7)
+const mainRef = useTemplateRef('main')
 
-    title: {
-      type: String,
-      required: true,
-    },
+const close = () => emit('close')
+const confirm = () => emit('confirm')
+const onScroll = () => (scrolled.value = mainRef.value && mainRef.value.scrollTop > 10)
 
-    confirmActionName: {
-      type: String,
-      default: null,
-    },
-
-    noFooter: {
-      type: Boolean,
-      default: false,
-    },
-
-    customStyle: {
-      type: Object,
-      default: () => {},
-    },
-
-    confirmActionDisabled: {
-      type: Boolean,
-      default: false,
-    },
-
-    asyncing: {
-      type: Boolean,
-      deafault: false,
-    },
-  },
-
-  emits: ['close', 'confirm', 'unselect'],
-  setup() {
-    return { capitalize }
-  },
-
-  data() {
-    return {
-      scrolled: false,
-      uniqueId: (Math.random() + 1).toString(36).substring(7),
+watch(
+  () => props.isOpened,
+  (neo, old) => {
+    if (!import.meta.client) return
+    if (neo !== old) {
+      if (neo) {
+        document.querySelector('body').classList.add(`has-open-drawer-${uniqueId}`)
+        nextTick(() => (mainRef.value ? mainRef.value.addEventListener('scroll', onScroll) : null))
+      } else {
+        document.querySelector('body').classList.remove(`has-open-drawer-${uniqueId}`)
+        if (mainRef.value) mainRef.value.removeEventListener('scroll', onScroll)
+      }
     }
   },
+  { immediate: true }
+)
 
-  watch: {
-    isOpened: {
-      handler: function (neo, old) {
-        if (!import.meta.client) return
-        if (neo !== old) {
-          if (neo) {
-            document.querySelector('body').classList.add(`has-open-drawer-${this.uniqueId}`)
-            this.$nextTick(() =>
-              this.$refs.main ? this.$refs.main.addEventListener('scroll', this.onScroll) : null
-            )
-          } else {
-            document.querySelector('body').classList.remove(`has-open-drawer-${this.uniqueId}`)
-            if (this.$refs.main) this.$refs.main.removeEventListener('scroll', this.onScroll)
-          }
-        }
-      },
-      immediate: true,
-    },
-  },
-
-  unmounted() {
-    if (!import.meta.client) return
+onUnmounted(() => {
+  if (import.meta.client) {
     // if destroyed before closing, need to cleanup un-scrollable body
-    document.querySelector('body').classList.remove(`has-open-drawer-${this.uniqueId}`)
-  },
-
-  methods: {
-    close() {
-      this.$emit('close')
-    },
-    confirm() {
-      this.$emit('confirm')
-    },
-    onScroll() {
-      this.scrolled = this.$refs.main && this.$refs.main.scrollTop > 10
-    },
-  },
-}
+    document.querySelector('body').classList.remove(`has-open-drawer-${uniqueId}`)
+  }
+})
 </script>
 
 <style lang="scss" scoped>
@@ -245,6 +206,11 @@ $slide-duration: 400ms;
     max-width: 100vw;
   }
 
+  .transparent > &,
+  .transparent > &__footer {
+    background-color: color-mix(in srgb, $modal-background, transparent 10%);
+  }
+
   &__header {
     flex-shrink: 0;
     min-height: 64px;
@@ -273,6 +239,11 @@ $slide-duration: 400ms;
     background: $white;
     gap: $space-l;
 
+    .transparent > & {
+      background-color: color-mix(in srgb, $modal-background, transparent 10%);
+      color: white;
+    }
+
     button ~ button {
       text-transform: capitalize;
     }
@@ -287,35 +258,14 @@ $slide-duration: 400ms;
   .header__title {
     font-size: $font-size-2xl;
     color: $black;
+
+    .transparent & {
+      color: white;
+    }
+
     font-weight: 700;
     display: flex;
     align-items: center;
-  }
-}
-
-.header__close {
-  width: min-content;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-
-  .icon-circle {
-    width: 2rem;
-    height: 2rem;
-    border: $border-width-s solid $primary-dark;
-    border-radius: 2rem;
-    position: relative;
-    display: inline-block;
-
-    svg {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: $layout-size-m;
-      fill: $primary-dark;
-    }
   }
 }
 </style>

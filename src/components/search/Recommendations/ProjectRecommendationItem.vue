@@ -13,7 +13,7 @@
         class="img-container"
         :picture-data="recommendation?.header_image"
         picture-size="small"
-        default-picture="/placeholders/header_placeholder.png"
+        :default-picture="DEFAULT_PROJECT_PATATOID"
       />
       <div class="text-container">
         <span class="project-title">
@@ -27,21 +27,13 @@
   </li>
 </template>
 
-<script>
+<script setup lang="ts">
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
+import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
 
-export default {
-  name: 'ProjectRecommendationItem',
-
-  components: { CroppedApiImage },
-
-  props: {
-    recommendation: {
-      type: Object,
-      required: true,
-    },
-  },
-}
+defineProps<{
+  recommendation: any
+}>()
 </script>
 
 <style lang="scss" scoped>

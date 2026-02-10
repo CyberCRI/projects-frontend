@@ -1,31 +1,64 @@
 <template>
-  <ul class="pagination">
-    <li :class="{ hidden: pagination.canPrev }">
-      <IconImage name="ChevronLeft" @click="pagination.prev()" />
-    </li>
-
-    <li
-      v-for="(page, i) in pageArray"
-      :key="i"
-      :class="{ current: page.current, ellipsis: page.value === ELLIPSIS }"
-      @click="setPage(page.value)"
+  <nav
+    v-if="!hideEmpty || canPrev || canNext"
+    class="pagination"
+    :class="{
+      disable: disable,
+    }"
+  >
+    <button
+      :class="{ hidden: !canPrev }"
+      class="reset-btn"
+      type="button"
+      rel="noopener"
+      :aria-label="$t('pagination.previous')"
     >
-      {{ page.value }}
-    </li>
+      <IconImage name="ChevronLeft" @click="pagination.prev()" />
+    </button>
 
-    <li :class="{ hidden: pagination.canNext }">
+    <template v-if="showNumber">
+      <button
+        v-for="(page, i) in pageArray"
+        :key="i"
+        :class="{ current: page.current, ellipsis: page.value === ELLIPSIS }"
+        type="button"
+        rel="noopener"
+        class="reset-btn"
+        :aria-label="`${$t('pagination.page')} ${page.value}`"
+        :value="page.value"
+        @click="setPage(page.value)"
+      >
+        {{ page.value }}
+      </button>
+    </template>
+
+    <button
+      :class="{ hidden: !canNext }"
+      class="reset-btn"
+      type="button"
+      rel="noopener"
+      :aria-label="$t('pagination.next')"
+    >
       <IconImage name="ChevronRight" @click="pagination.next()" />
-    </li>
-  </ul>
+    </button>
+  </nav>
 </template>
 
 <script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
-import { Pagination } from '@/composables/usePagination'
+import { Pagination as PaginationType } from '@/composables/usePagination'
 
-defineOptions({ name: 'PaginationButtons2' })
+const props = withDefaults(
+  defineProps<{
+    pagination: PaginationType
+    showNumber?: boolean
+    hideEmpty?: boolean
+    disable?: boolean
+  }>(),
+  { showNumber: true, hideEmpty: false, disable: false }
+)
 
-const props = defineProps<{ pagination: Pagination }>()
+const { canNext, canPrev } = props.pagination
 
 const ELLIPSIS = '...'
 
@@ -61,8 +94,14 @@ const setPage = (value) => {
 .pagination {
   display: flex;
   align-items: center;
+  transition: opacity 0.2s;
 
-  li {
+  &.disable {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  button {
     fill: $primary-dark;
     color: $primary-dark;
     font-weight: bold;
@@ -78,7 +117,7 @@ const setPage = (value) => {
 
     &.current {
       background: $primary-light;
-      padding: $space-xs $space-m;
+      padding: 0.54rem 0.75rem;
       border-radius: $border-radius-l;
     }
 
@@ -99,6 +138,7 @@ const setPage = (value) => {
 
   .ellipsis {
     cursor: initial;
+    pointer-events: none;
   }
 
   .hidden {

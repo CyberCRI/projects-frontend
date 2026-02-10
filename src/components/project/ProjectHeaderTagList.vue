@@ -5,12 +5,24 @@
       <SkeletonComponent height="19px" width="50px" />
       <SkeletonComponent height="19px" width="50px" />
     </div>
-
-    <TagsList v-else-if="project?.tags?.length" :tags="project.tags" class="tag-list" />
+    <TagsList
+      v-else-if="project?.tags?.length"
+      :tags="project.tags"
+      class="tag-list"
+      prefix="mobile"
+      :to="{
+        name: 'ProjectSearch',
+        query: {
+          section: 'projects',
+        },
+      }"
+    />
   </div>
 </template>
 
 <script setup>
+import TagsList from '@/components/tags/TagsList.vue'
+
 defineProps({
   project: {
     type: Object,

@@ -1,54 +1,86 @@
 <template>
   <div class="location-tooltip" :class="location.type">
-    <div class="title">
-      <div :class="location.type" />
-      <span>{{ title }}</span>
+    <div class="location-tooltip-header">
+      <LocationType :location-type="location.type" />
+      <LpiButton
+        btn-icon="Close"
+        class="location-tooltip-icon"
+        :title="$t('common.close')"
+        @click="closePopUp"
+      />
     </div>
 
-    <p>{{ description }}</p>
+    <div v-if="title || description" class="location-tooltip-info">
+      <h3>
+        {{ title }}
+      </h3>
+      <p>
+        {{ description }}
+      </p>
+    </div>
+    <slot />
   </div>
 </template>
 
 <script setup lang="ts">
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import LocationType from '@/components/map/LocationType.vue'
 import { cropIfTooLong } from '@/functs/string'
-import { TranslatedLocation } from '@/models/location.model'
+import { AnyLocation } from '@/models/location.model'
 
-defineOptions({ name: 'LocationTooltip' })
+const props = defineProps<{ location: AnyLocation }>()
 
-const props = defineProps<{ location: TranslatedLocation }>()
+// when create new point (from locationDrawer) we not have $t
+const title = computed(() => cropIfTooLong(props.location?.$t?.title ?? props.location.title, 45))
+const description = computed(() =>
+  cropIfTooLong(props.location?.$t?.description ?? props.location.description, 85)
+)
 
-const title = computed(() => cropIfTooLong(props.location?.$t?.title, 45))
-const description = computed(() => cropIfTooLong(props.location?.$t?.description, 85))
+const closePopUp = inject('closePopUp')
 </script>
 
 <style lang="scss" scoped>
 .location-tooltip {
-  min-width: 100px;
-  padding: $space-m;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 0.2rem;
+  transition: opacity 0.15s ease-in-out;
+  border: $border-width-l solid;
+  border-radius: $border-radius-m;
 
-  .title {
-    color: $primary-dark;
-    font-weight: 700;
-    margin-bottom: $space-xs;
-    font-size: $font-size-m;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+  &.impact {
+    border-color: $location-impact;
+  }
 
-    > div {
-      height: 15px;
-      width: 15px;
-      border-radius: 50%;
-      margin-right: $space-s;
+  &.team {
+    border-color: $location-team;
+  }
 
-      &.impact {
-        background: $violet;
-      }
+  > * {
+    padding: 0 1rem;
+  }
 
-      &.team {
-        background: $primary;
-      }
-    }
+  > *:first-child {
+    padding: 1rem;
+  }
+}
+
+.location-tooltip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.location-tooltip-icon {
+  width: 22px !important;
+  height: 22px !important;
+}
+
+.location-tooltip-info {
+  h3 {
+    font-size: large;
   }
 }
 </style>

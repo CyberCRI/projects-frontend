@@ -521,6 +521,7 @@
     "add": "Add",
     "added-on-the": "Added on",
     "back": "back",
+    "close": "close",
     "cancel": "Cancel",
     "chose-date": "Chose date",
     "confirm": "Confirm",
@@ -1057,10 +1058,22 @@
     "auto-translate-off": "Auto translate off"
   },
   "location": {
-    "loading": "Loading locations"
+    "loading": "Loading locations",
+    "impact": "Impact",
+    "team": "Team",
+    "address": "Address",
+    "focus-on-map": "focus on the map",
+    "expand-map": "Enlarge map",
+    "edit-location-point": "Edit location point",
+    "location-type-label": "Location type",
+    "edit-map": "Edit geolocation",
+    "map": "Geolocation",
+    "add-location": "Add a location",
+    "add-location-point": "Add a location point",
+    "default-title": "Location"
   },
   "map": {
-    "empty": "Nothing here yet... Contributors did not localize any projects yet.",
+    "empty": "Nothing here yet... Contributors did not localize any points yet.",
     "page-title": "Map",
     "projects": "projects map"
   },
@@ -1589,9 +1602,7 @@
   },
   "project": {
     "infos": "Infos",
-    "add-location": "Add a location",
     "add-linked-project": "Add a linked project",
-    "add-location-point": "Add a location point",
     "add-review": "Add a review",
     "add-to-project": {
       "title": "Add to project",
@@ -1669,7 +1680,6 @@
     "link-confirm-delete": "Are you sure you want to delete this link from the project?",
     "file-confirm-delete": "Are you sure you want to delete this file from the project?",
     "blog-confirm-delete": "Are you sure you want to delete this blog entry from the project?",
-    "location-type-label": "Location type",
     "lock": "Lock project",
     "private": "Private Projects",
     "publish": "Publish project",
@@ -2724,6 +2734,7 @@
     "click-method": "Click on the map",
     "click-method-no-geocoding": "Add a location",
     "click-method-notice": "Click on the map to choose the location",
+    "current-position": "Current position",
     "form-method": "Enter the address",
     "form-method-notice": "Enter the address in the field below",
     "address": "Address",
@@ -3126,6 +3137,11 @@
     "title": "Terms and Conditions",
     "approve-title": "Please Approve the Terms and Conditions",
     "approve-button": "I accept"
+  },
+  "pagination": {
+    "previous": "Previous page",
+    "next": "Next page",
+    "page": "Page"
   },
   "pdf": {
     "blog-entries-limited-warning": "Only the first {max} blog entries are included in the PDF export (of {total} total).",

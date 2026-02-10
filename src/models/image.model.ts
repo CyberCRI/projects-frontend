@@ -7,6 +7,8 @@ import BaseModel from '@/models/base.model'
  */
 export type ImageModel = BaseModel &
   ImageSizesFromApi & {
+    id?: number
+    url: string
     file: string
     name: string
     height?: number
@@ -17,6 +19,17 @@ export type ImageModel = BaseModel &
       medium: string
       original: string
       small: string
+    }
+  }
+
+export type Image = ImageModel &
+  ImageSizesFromApi & {
+    variations: {
+      full: string
+      large: string
+      medium: string
+      small: string
+      original: string
     }
   }
 
