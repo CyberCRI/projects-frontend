@@ -82,7 +82,7 @@ export default function usePermissions() {
     const orgId = currentOrganizationForPermissions.value?.id
     return (
       isConnectedForPermissions.value &&
-      getUserRolesForPermissions.value.some((role) => role === `organization:#${orgId}:viewer`)
+      getUserRolesForPermissions.value.some((role) => role === `organization:#${orgId}:viewers`)
     )
   })
 
@@ -117,6 +117,8 @@ export default function usePermissions() {
   /* PROJECTS */
 
   const canCreateProject = computed(() => {
+    console.log('isConnectedForPermissions.value', isConnectedForPermissions.value)
+    console.log('isViewer.value', isViewer.value)
     return isConnectedForPermissions.value && !isViewer.value
   })
 

@@ -6,6 +6,8 @@ const organizationsStore = useOrganizationsStore()
 const usersStore = useUsersStore()
 const router = useRouter()
 
+const { canCreateProject } = usePermissions()
+
 const organization = computed(() => {
   return organizationsStore.current
 })
@@ -22,7 +24,7 @@ const showOnbordingTodos = computed(() => {
     status.show_progress &&
     (status.complete_profile ||
       status.explore_projects ||
-      status.create_project ||
+      (status.create_project && canCreateProject.value) ||
       status.take_tour)
   )
 })
