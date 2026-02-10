@@ -48,7 +48,7 @@
         label-on-hover
         @click="goToCommentView"
       />
-      <template v-if="appGotenbergEnabled">
+      <template v-if="appGotenbergEnabled && usersStore.isConnected">
         <ExternalLabelButton
           v-if="!isProcessingPdf"
           class="space-button"
