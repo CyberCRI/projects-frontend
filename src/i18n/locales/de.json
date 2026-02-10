@@ -575,7 +575,8 @@
     "and": "und",
     "create": "Erstellung",
     "order-asc": "Älter als neuster",
-    "order-desc": "neuste bis älteste"
+    "order-desc": "neuste bis älteste",
+    "close": "Nähe"
   },
   "complete-profile": {
     "bio": {
@@ -1004,7 +1005,14 @@
         "label": "Herausgeber",
         "help": "Teammitglieder"
       }
-    }
+    },
+    "view": "Gruppe anzeigen",
+    "conferences": "Konferenzen",
+    "publications": "Veröffentlichungen",
+    "similars": "Gruppen ähnliche",
+    "locations": "Standorte",
+    "presentation": "Präsentation",
+    "location": "Anschrift"
   },
   "header": {
     "private": "Private: nur für Teammitglieder sichtbar",
@@ -1057,12 +1065,24 @@
     "auto-translate-off": "Automatische Übersetzung deaktiviert"
   },
   "location": {
-    "loading": "Ladestellen"
+    "loading": "Ladestellen",
+    "focus-on-map": "Fokus auf der Karte",
+    "expand-map": "Karte vergrößern",
+    "edit-location-point": "Standortpunkt bearbeiten",
+    "location-type-label": "Standort",
+    "impact": "Auswirkungen",
+    "team": "Team",
+    "address": "Anschrift",
+    "edit-map": "Geolokation bearbeiten",
+    "map": "Standort",
+    "add-location": "Standort hinzufügen",
+    "add-location-point": "Einen Ortspunkt hinzufügen",
+    "default-title": "Standort"
   },
   "map": {
-    "empty": "Nichts hier noch... Die Mitarbeiter haben noch keine Projekte lokalisiert.",
     "page-title": "Landkarte",
-    "projects": "Projekte Landkarte"
+    "projects": "Projekte Landkarte",
+    "empty": "Noch nichts hier... Die Mitarbeiter haben noch keine Punkte lokalisiert."
   },
   "me": {
     "follow": "Projekte, die ich folge",
@@ -1589,9 +1609,7 @@
   },
   "project": {
     "infos": "Infos",
-    "add-location": "Standort hinzufügen",
     "add-linked-project": "Ein verknüpftes Projekt hinzufügen",
-    "add-location-point": "Einen Ortspunkt hinzufügen",
     "add-review": "Bewertung hinzufügen",
     "add-to-project": {
       "title": "Projekt hinzufügen",
@@ -1669,7 +1687,6 @@
     "link-confirm-delete": "Sind Sie sicher, dass Sie diesen Link aus dem Projekt löschen möchten?",
     "file-confirm-delete": "Sind Sie sicher, dass Sie diese Datei aus dem Projekt löschen möchten?",
     "blog-confirm-delete": "Sind Sie sicher, dass Sie diesen Blogeintrag aus dem Projekt löschen möchten?",
-    "location-type-label": "Standort",
     "lock": "Projekt schließen",
     "private": "Private Projekte",
     "publish": "Projekt veröffentlichen",
@@ -2744,7 +2761,8 @@
       "state": "Bundesland",
       "country": "Land",
       "other": "Andere"
-    }
+    },
+    "current-position": "Aktuelle Position"
   },
   "card-list": {
     "list": "Liste",
@@ -3126,5 +3144,28 @@
     "title": "Nutzungsbedingungen",
     "approve-title": "Bitte akzeptieren Sie die Nutzungsbedingungen",
     "approve-button": "Ich akzeptiere"
+  },
+  "gallery": {
+    "title": "Galerie",
+    "view": "Galerie anzeigen.",
+    "delete": "Bild löschen.",
+    "add": "Bilder hinzufügen",
+    "add-picture": "Bitte wählen Sie ein oder mehrere Fotos, um zu senden.",
+    "confirm-delete": "Sind Sie sicher, dass Sie dieses Bild löschen möchten?",
+    "success-delete": "Bild gelöscht.",
+    "error-delete": "Ein Fehler beim Löschen des Bildes.",
+    "success-create": "Bild erstellt.",
+    "error-create": "Ein Fehler wurde erstellt.",
+    "empty": "Keine Bilder."
+  },
+  "pagination": {
+    "previous": "Vorherige Seite",
+    "next": "Nächste Seite",
+    "page": "Seite"
+  },
+  "pdf": {
+    "blog-entries-limited-warning": "Nur die ersten {max} Blogeinträge sind im PDF-Export enthalten (von {total} insgesamt).",
+    "download-pdf": "PDF",
+    "generated-on": "Erstellt am {date}"
   }
 }

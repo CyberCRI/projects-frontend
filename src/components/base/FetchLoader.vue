@@ -1,13 +1,13 @@
 <template>
-  <div>
-    <div v-if="loading" class="m-auto w-fit flex justify-center items-center flex-col">
+  <div :class="{ skeletons: inSkeletons }" class="contents">
+    <div v-if="loading" class="center" :class="[classLoading]">
       <LpiLoader type="simple" />
       <span class="loading">
         {{ props.label ?? t('common.loading') }}
       </span>
     </div>
     <slot v-else-if="actualStatus === 'error'" name="error">
-      <div class="error">
+      <div class="center error" :class="[classError]">
         <IconImage name="AlertOutline" class="icon" />
         <span>
           {{ t('message.error-default') }}
@@ -38,9 +38,22 @@ const props = withDefaults(
     status: AsyncDataRequestStatus | AsyncDataRequestStatus[]
     label?: string
     withData?: boolean
+    onlyError?: boolean
+    skeleton?: boolean
+    classLoading?: string
+    classError?: string
   }>(),
-  { withData: false, label: null }
+  {
+    withData: false,
+    label: null,
+    onlyError: false,
+    skeleton: false,
+    classLoading: '',
+    classError: '',
+  }
 )
+
+const firstLoading = ref(false)
 
 const actualStatus = computed(() => {
   let status = props.status
@@ -59,12 +72,25 @@ const actualStatus = computed(() => {
   return 'success'
 })
 
+const inLoading = computed(() => {
+  return ['pending', 'idle'].includes(actualStatus.value)
+})
+
 const loading = computed(() => {
-  // if data already set, dont add loading
-  if (props.withData === true) {
+  if (props.withData === true || props.onlyError) {
     return false
   }
-  return ['pending', 'idle'].includes(actualStatus.value)
+  return inLoading.value
+})
+
+const inSkeletons = computed(() => {
+  return inLoading.value && (!firstLoading.value || !props.withData) && props.skeleton
+})
+
+watch(inLoading, (newValue, oldValue) => {
+  if (oldValue === true && newValue === false && !firstLoading.value) {
+    firstLoading.value = true
+  }
 })
 </script>
 
@@ -75,13 +101,24 @@ const loading = computed(() => {
   padding-top: 0.5rem;
 }
 
+.center {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
 .error {
   opacity: 0.8;
   font-style: italic;
   text-align: center;
+  margin: auto;
 
   & > * {
     vertical-align: middle;
+    margin: auto;
   }
 }
 

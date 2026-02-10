@@ -4,10 +4,10 @@
  * @constant
  * @name useQuery
  * @kind variable
- * @type {<DataQuery = { [key: string]: string | number; }>(defaultValue: Partial<DataQuery>) => { query: Reactive<Partial<DataQuery>>; setQuery: <K extends keyof DataQuery>(key: K, value: DataQuery[K]) => void; removeQuery: <K extends keyof DataQuery>(key: K) => void; toggleQuery: <K extends keyof DataQuery>(key: K, value: DataQuery[K]) => void; }}
+ * @type {<DataQuery = { [key: string]: string | number | boolean; }>(defaultValue: Partial<DataQuery>) => { query: Reactive<Partial<DataQuery>>; setQuery: <K extends keyof DataQuery>(key: K, value: DataQuery[K]) => void; removeQuery: <K extends keyof DataQuery>(key: K) => void; toggleQuery: <K extends keyof DataQuery>(key: K, value: DataQuery[K]) => void; }}
  * @exports
  */
-export const useQuery = <DataQuery = { [key: string]: string | number }>(
+export const useQuery = <DataQuery = { [key: string]: string | number | boolean }>(
   defaultValue: Partial<DataQuery>
 ) => {
   const query = reactive<Partial<DataQuery>>(defaultValue ?? {})

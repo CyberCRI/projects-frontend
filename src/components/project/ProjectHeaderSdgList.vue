@@ -4,25 +4,20 @@
       <SkeletonComponent border-radius="50%" height="30px" width="30px" />
     </template>
     <TransitionGroup v-else name="sdg" class="sdg-list" tag="div">
-      <NuxtLink
-        v-for="sdg in sdgs || []"
-        :key="sdg"
-        :to="browseProjectsWithQuery('sdgs', sdg)"
-        class="sdg-link"
-      >
-        <img
-          :alt="sdg"
-          :src="`${runtimeConfig.public.appPublicBinariesPrefix}/sdgs/logo/SDG-${sdg}.svg`"
-          class="sdg"
-        />
-      </NuxtLink>
+      <SdgList
+        :sdgs="sdgs || []"
+        :to="{
+          name: 'ProjectSearch',
+          query: {
+            section: 'projects',
+          },
+        }"
+      />
     </TransitionGroup>
   </div>
 </template>
 <script setup>
-const runtimeConfig = useRuntimeConfig()
-
-/* const props = */ defineProps({
+defineProps({
   sdgs: {
     type: Object,
     required: true,
@@ -32,16 +27,6 @@ const runtimeConfig = useRuntimeConfig()
     required: true,
   },
 })
-
-function browseProjectsWithQuery(queryField, queryValue) {
-  return {
-    name: 'ProjectSearch',
-    query: {
-      [queryField]: queryValue,
-      section: 'projects',
-    },
-  }
-}
 </script>
 <style scoped lang="scss">
 $sdg-size: pxToRem(38px);

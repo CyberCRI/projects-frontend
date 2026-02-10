@@ -54,19 +54,17 @@
             v-html="user.short_description"
           />
 
-          <div v-if="user && user.sdgs && user.sdgs.length" class="sdg-ctn">
-            <NuxtLink
-              v-for="sdg in user.sdgs"
-              :key="sdg"
-              :to="`/search/people?sdgs=${sdg}&section=people&page=1`"
-            >
-              <img
-                :alt="sdg"
-                :src="`${runtimeConfig.public.appPublicBinariesPrefix}/sdgs/logo/SDG-${sdg}.svg`"
-                class="sdg-img"
-              />
-            </NuxtLink>
-          </div>
+          <SdgList
+            v-if="user && user.sdgs && user.sdgs.length"
+            :sdgs="user.sdgs"
+            :to="{
+              name: 'Search',
+              query: {
+                section: 'people',
+                page: 1,
+              },
+            }"
+          />
         </div>
       </div>
 
@@ -118,6 +116,7 @@ import SocialNetworks from './SocialNetworks.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
+import SdgList from '@/components/sdgs/SdgList.vue'
 
 defineOptions({ name: 'ProfileHeader' })
 
@@ -129,7 +128,6 @@ const props = defineProps({
 })
 
 const organizationsStore = useOrganizationsStore()
-const runtimeConfig = useRuntimeConfig()
 
 const displayableGroups = computed(() => {
   return props.user?.people_groups
@@ -244,24 +242,6 @@ const fixLocation = (l) => {
 
       .group {
         cursor: pointer;
-      }
-
-      .sdg-ctn {
-        display: flex;
-        flex-wrap: wrap;
-        gap: $space-s;
-        margin-top: $space-l;
-
-        .sdg-img {
-          width: pxToRem(40px);
-          height: pxToRem(40px);
-          transition: all 0.2s ease-in-out;
-          transform: translateZ(0);
-
-          &:hover {
-            transform: translateZ(0) scale(1.2);
-          }
-        }
       }
     }
   }

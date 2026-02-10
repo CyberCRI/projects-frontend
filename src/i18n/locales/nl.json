@@ -575,7 +575,8 @@
     "and": "en",
     "create": "Aanmaken",
     "order-asc": "oudste tot nieuwste",
-    "order-desc": "nieuwste naar oudste"
+    "order-desc": "nieuwste naar oudste",
+    "close": "sluiten"
   },
   "complete-profile": {
     "bio": {
@@ -1004,7 +1005,14 @@
         "label": "Editor",
         "help": "Editor"
       }
-    }
+    },
+    "view": "Beeldgroep",
+    "conferences": "Conferenties",
+    "publications": "Publicaties",
+    "similars": "Groepen vergelijkbaar",
+    "locations": "Locaties",
+    "presentation": "Presentatie",
+    "location": "Adres"
   },
   "header": {
     "private": "Privé: alleen zichtbaar voor teamleden",
@@ -1057,12 +1065,24 @@
     "auto-translate-off": "Automatisch vertalen uit"
   },
   "location": {
-    "loading": "Locatie laden"
+    "loading": "Locatie laden",
+    "focus-on-map": "focus op de kaart",
+    "expand-map": "Kaart vergroten",
+    "edit-location-point": "Locatiepunt bewerken",
+    "location-type-label": "Locatietype",
+    "impact": "Effect",
+    "team": "Team",
+    "address": "Adres",
+    "edit-map": "Geolocatie bewerken",
+    "map": "Geolocatie",
+    "add-location": "Plaats toevoegen",
+    "add-location-point": "Plaatspunt toevoegen",
+    "default-title": "Locatie"
   },
   "map": {
-    "empty": "Nog niets hier... Medewerkers hebben nog geen projecten gelokaliseerd.",
     "page-title": "Kaart",
-    "projects": "projectkaart"
+    "projects": "projectkaart",
+    "empty": "Nog niets hier... Medewerkers hebben nog geen punten gelokaliseerd."
   },
   "me": {
     "follow": "Projecten die ik volg",
@@ -1589,9 +1609,7 @@
   },
   "project": {
     "infos": "Infos",
-    "add-location": "Voeg een locatie toe",
     "add-linked-project": "Een gekoppeld project toevoegen",
-    "add-location-point": "Plaatspunt toevoegen",
     "add-review": "Een beoordeling toevoegen",
     "add-to-project": {
       "title": "Toevoegen aan project",
@@ -1669,7 +1687,6 @@
     "link-confirm-delete": "Weet u zeker dat u deze link uit het project wilt verwijderen?",
     "file-confirm-delete": "Weet u zeker dat u dit bestand uit het project wilt verwijderen?",
     "blog-confirm-delete": "Weet u zeker dat u deze blogitem wilt verwijderen uit het project?",
-    "location-type-label": "Locatietype",
     "lock": "Project vergrendelen",
     "private": "Particuliere projecten",
     "publish": "Project publiceren",
@@ -2744,7 +2761,8 @@
       "state": "Staat",
       "country": "Land",
       "other": "Andere"
-    }
+    },
+    "current-position": "Huidige positie"
   },
   "card-list": {
     "list": "Lijst",
@@ -3126,5 +3144,28 @@
     "title": "Servicevoorwaarden",
     "approve-title": "Gelieve de servicevoorwaarden goed te keuren",
     "approve-button": "Ik accepteer"
+  },
+  "gallery": {
+    "title": "Galerij",
+    "view": "Galerie bekijken.",
+    "delete": "Foto verwijderen.",
+    "add": "Foto's toevoegen",
+    "add-picture": "Selecteer een of meer foto's om te versturen.",
+    "confirm-delete": "Weet u zeker dat u deze foto wilt verwijderen?",
+    "success-delete": "Foto verwijderd.",
+    "error-delete": "Er is een fout opgetreden bij het verwijderen van afbeelding.",
+    "success-create": "Foto gemaakt.",
+    "error-create": "Er is een fout opgetreden bij het maken van een foto.",
+    "empty": "Geen foto's gezet."
+  },
+  "pagination": {
+    "previous": "Vorige pagina",
+    "next": "Volgende pagina",
+    "page": "Bladzijde"
+  },
+  "pdf": {
+    "blog-entries-limited-warning": "Alleen de eerste {max} blogvermeldingen zijn opgenomen in de PDF-export (van {total} totaal).",
+    "download-pdf": "PDF",
+    "generated-on": "Gegenereerd op {date}"
   }
 }

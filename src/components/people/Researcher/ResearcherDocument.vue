@@ -1,11 +1,11 @@
 <template>
   <article class="profile-documents">
-    <span class="icon-container">
+    <span class="icon-container skeletons-text">
       <PushPinSvg />
       {{ t(`researcher.document_types.${sanitizeTranslateKeys(document.document_type)}`) }}
     </span>
-    <h2>{{ document.$t.title }}</h2>
-    <div>
+    <h2 class="skeletons-text">{{ document.$t.title }}</h2>
+    <div class="skeletons-text">
       <span v-for="(author, idx) in document.contributors" :key="author.id">
         <!-- if author.user isa projectsUser, create a nuxtlink to go to the user -->
         <NuxtLink
@@ -35,10 +35,10 @@
         </span>
       </span>
     </div>
-    <p class="profile-document-description" :class="{ preview: preview }">
+    <p class="profile-document-description skeletons-text" :class="{ preview: preview }">
       {{ document.$t.description }}
     </p>
-    <span v-if="document.publication_date">
+    <span v-if="document.publication_date" class="skeletons-text">
       {{
         new Date(document.publication_date).toLocaleDateString(locale, {
           year: 'numeric',
@@ -54,17 +54,18 @@
         :title="`${t('common.link-to')} ${identifier.harvester}`"
         target="_blank"
         rel="referer,noopener"
-        class="doc-sources"
+        class="doc-sources skeletons-background"
       >
         <IconHarvester :harvester="identifier.harvester" height="1.3rem" />
       </a>
     </div>
     <SeeMoreArrow
+      is="button"
       v-if="similar && document.similars > 0"
       :data-test="`see-more-${document.id}`"
       class="no-padding"
       :label="`${document.similars} ${t(`profile.${docType}-similars`)}`"
-      @click.prevent="emit('similar', document)"
+      @click="emit('similar', document)"
     />
   </article>
 </template>
@@ -74,8 +75,7 @@ import { documentTypeHarverToUrl, researcherHarvesterToUrl } from '@/functs/rese
 import { TranslatedDocument } from '@/interfaces/researcher'
 import PushPinSvg from '@/assets/svg/pushpin.svg'
 import { sanitizeTranslateKeys } from '@/api/sanitizes/researcher'
-
-defineOptions({ name: 'ResearcherDocument' })
+import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
 
 const { t, locale } = useNuxtI18n()
 const emit = defineEmits(['similar'])

@@ -29,6 +29,7 @@
         :disabled="disabled"
         :data-test="dataTest"
         :maxlength="maxLength"
+        @change="$emit('change', $event)"
         @keydown.enter="$emit('enter')"
         @focus="$emit('focus', $event)"
         @blur="$emit('blur', $event)"
@@ -42,15 +43,18 @@
     </span>
 
     <small v-if="bottomText">{{ bottomText }}</small>
+
+    <FieldErrors :errors="errors" />
   </div>
 </template>
 
 <script>
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 export default {
   name: 'TextInput',
 
-  components: { IconImage },
+  components: { IconImage, FieldErrors },
 
   props: {
     autofocus: {
@@ -113,9 +117,13 @@ export default {
       type: [Number, String],
       default: 3,
     },
+    errors: {
+      type: Array,
+      default: () => [],
+    },
   },
 
-  emits: ['update:modelValue', 'enter', 'focus', 'blur'],
+  emits: ['update:modelValue', 'enter', 'focus', 'blur', 'change'],
 
   data() {
     return {

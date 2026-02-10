@@ -44,7 +44,8 @@ type AnalyticsYears = {
  * @exports
  */
 export const sanitizeResearcherDocumentAnalyticsYears = (
-  data: ResearcherDocumentAnalytics['years']
+  data: ResearcherDocumentAnalytics['years'],
+  limit?: number
 ): AnalyticsYears => {
   const info: AnalyticsYears = {
     minYear: null,
@@ -52,12 +53,6 @@ export const sanitizeResearcherDocumentAnalyticsYears = (
     bar: [],
   }
   data.forEach((o) => {
-    if (info.minYear == null || info.minYear > o.year) {
-      info.minYear = o.year
-    }
-    if (info.maxYear == null || info.maxYear < o.year) {
-      info.maxYear = o.year
-    }
     info.bar.push({
       count: o.total,
       year: o.year,
@@ -65,12 +60,17 @@ export const sanitizeResearcherDocumentAnalyticsYears = (
     })
   })
 
+  info.bar = info.bar.toSorted((a, b) => a.year - b.year)
+  if (limit) {
+    info.bar = info.bar.slice(-limit)
+  }
+  info.minYear = info.bar.at(0).year
+  info.maxYear = info.bar.at(-1).year
+
   const maxCount = Math.max(...info.bar.map((el) => el.count))
   info.bar.forEach((obj) => {
     obj.height = (obj.count / maxCount) * 100
   })
-
-  info.bar = info.bar.reverse()
 
   return info
 }

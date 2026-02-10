@@ -575,7 +575,8 @@
     "and": "ja",
     "create": "Loo",
     "order-asc": "vanim kuni uusim",
-    "order-desc": "uusim"
+    "order-desc": "uusim",
+    "close": "lähedal"
   },
   "complete-profile": {
     "bio": {
@@ -1004,7 +1005,14 @@
         "label": "Toimetaja",
         "help": "Toimetaja"
       }
-    }
+    },
+    "view": "Vaade grupp",
+    "conferences": "Konverentsid",
+    "publications": "Trükised",
+    "similars": "Rühmad sarnased",
+    "locations": "Asukohad",
+    "presentation": "Esitlus",
+    "location": "Aadress"
   },
   "header": {
     "private": "Privaatne: nähtav ainult meeskonnaliikmetele",
@@ -1057,12 +1065,24 @@
     "auto-translate-off": "Automaatne tõlge välja lülitatud"
   },
   "location": {
-    "loading": "Laadimiskohad"
+    "loading": "Laadimiskohad",
+    "focus-on-map": "keskendu kaardile",
+    "expand-map": "Suurenda kaart",
+    "edit-location-point": "Muuda asukohapunkti",
+    "location-type-label": "Asukoha liik",
+    "impact": "Mõju",
+    "team": "Meeskond",
+    "address": "Aadress",
+    "edit-map": "Muuda geolokatsiooni",
+    "map": "Geolokatsioon",
+    "add-location": "Lisa asukoht",
+    "add-location-point": "Asukohapunkti lisamine",
+    "default-title": "Asukoht"
   },
   "map": {
-    "empty": "Siin pole veel midagi... Osalejad ei ole veel ühtegi projekti lokaliseeritud.",
     "page-title": "Kaart",
-    "projects": "projektide kaart"
+    "projects": "projektide kaart",
+    "empty": "Siin pole veel midagi... Panustajad ei ole veel ühtegi punkti lokaliseeritud."
   },
   "me": {
     "follow": "Projektid, mida jälgin",
@@ -1589,9 +1609,7 @@
   },
   "project": {
     "infos": "Infos",
-    "add-location": "Lisa asukoht",
     "add-linked-project": "Lisa seotud projekt",
-    "add-location-point": "Asukohapunkti lisamine",
     "add-review": "Lisa ülevaade",
     "add-to-project": {
       "title": "Lisa projektile",
@@ -1669,7 +1687,6 @@
     "link-confirm-delete": "Kas tõesti kustutada see link projektist?",
     "file-confirm-delete": "Kas tõesti kustutada see fail projektist?",
     "blog-confirm-delete": "Kas tõesti kustutada see blogi kirje projektist?",
-    "location-type-label": "Asukoha liik",
     "lock": "Lukustusprojekt",
     "private": "Eraprojektid",
     "publish": "Avalda projekt",
@@ -2744,7 +2761,8 @@
       "state": "osariik",
       "country": "Riik",
       "other": "Teised"
-    }
+    },
+    "current-position": "Praegune positsioon"
   },
   "card-list": {
     "list": "Nimekiri",
@@ -3126,5 +3144,28 @@
     "title": "Teenuse osutamise tingimused",
     "approve-title": "Palun kinnitage teenusetingimused",
     "approve-button": "Nõustun"
+  },
+  "gallery": {
+    "title": "galeriis",
+    "view": "Vaata galeriid.",
+    "delete": "Kustuta pilt.",
+    "add": "Lisa pilte",
+    "add-picture": "Palun valige üks või mitu fotot, mida saata.",
+    "confirm-delete": "Kas tõesti kustutada see pilt?",
+    "success-delete": "Pilt kustutatud.",
+    "error-delete": "Tekkis viga pildi kustutamisel.",
+    "success-create": "Pilt loodud.",
+    "error-create": "Tekkis viga loodud pildis.",
+    "empty": "Pilte pole tehtud."
+  },
+  "pagination": {
+    "previous": "Eelmine leht",
+    "next": "Järgmine",
+    "page": "Page"
+  },
+  "pdf": {
+    "blog-entries-limited-warning": "PDF-i ekspordi hulka kuuluvad ainult esimesed {max} blogikirjed (kokku {total}).",
+    "download-pdf": "PDF",
+    "generated-on": "Geneeritud {date}"
   }
 }

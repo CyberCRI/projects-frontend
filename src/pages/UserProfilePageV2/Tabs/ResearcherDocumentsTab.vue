@@ -5,7 +5,7 @@
         {{ title }}
         <span>({{ documentsCount }})</span>
       </h4>
-      <ResearcherDocumentsList v-if="documentsCount > 0" :doc-type="docType" :user="user" />
+      <OwnResearcherDocumentsList v-if="documentsCount > 0" :doc-type="docType" :user="user" />
       <div v-else class="document-tab-empty">
         {{ documentEmpty }}
       </div>
@@ -14,14 +14,15 @@
 </template>
 
 <script setup lang="ts">
-import ResearcherDocumentsList from '@/components/people/Researcher/ResearcherDocumentsList.vue'
+import OwnResearcherDocumentsList from '@/components/people/Researcher/OwnResearcherDocumentsList.vue'
+import { DocumentType } from '@/interfaces/researcher'
 import { UserModel } from '@/models/user.model'
 
 defineOptions({ name: 'ResearcherDocumentsTab' })
 
 const { t } = useNuxtI18n()
 
-const props = defineProps<{ docType: string; user: UserModel }>()
+const props = defineProps<{ docType: DocumentType; user: UserModel }>()
 
 const title = computed(() => t(`me.${props.docType}`))
 const documentEmpty = computed(() => t(`you.no-${props.docType}`))

@@ -2,6 +2,7 @@ import { Icon } from 'leaflet'
 
 export default function fixLeaflet() {
   // Resolves an issue where the markers would not appear
+  // @ts-expect-error ignore prototype error
   delete Icon.Default.prototype._getIconUrl
   Icon.Default.mergeOptions({
     iconRetinaUrl: 'leaflet/dist/images/marker-icon-2x.png',

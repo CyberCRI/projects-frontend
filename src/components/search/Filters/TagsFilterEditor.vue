@@ -98,6 +98,11 @@ export default {
       default: () => [],
     },
 
+    useProjects: {
+      type: Boolean,
+      default: true,
+    },
+
     hideOrganizationTags: {
       // dont show org suggested tags
       type: Boolean,
@@ -135,7 +140,7 @@ export default {
       showTagSearch,
       resetTagSearch,
     } = useTagSearch({
-      useProjects: true,
+      useProjects: props.useProjects,
       hideOrganizationTags: props.hideOrganizationTags,
     })
     return {

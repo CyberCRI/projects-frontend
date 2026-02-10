@@ -49,7 +49,7 @@ export default async function usePdfFooter(url?: string, title?: string) {
             height: 2cm;
             width: auto;
           }
- 
+
           .lpi-logo {
             right: .1cm;
             top: .1cm;

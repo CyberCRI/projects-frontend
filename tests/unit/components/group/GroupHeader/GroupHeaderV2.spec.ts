@@ -1,6 +1,6 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
+import GroupHeader from '@/components/group/Modules/GroupHeader.vue'
 import english from '@/i18n/locales/en.json'
-import GroupHeaderV2 from '@/components/group/GroupHeader/GroupHeaderV2.vue'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 const i18n = {
@@ -38,7 +38,7 @@ describe('GroupHeaderV2.vue', () => {
   })
 
   it('should render GroupHeaderV2 component', () => {
-    wrapper = lpiMount(GroupHeaderV2, defaultParams)
+    wrapper = lpiMount(GroupHeader, defaultParams)
     expect(wrapper.exists()).toBe(true)
   })
 })

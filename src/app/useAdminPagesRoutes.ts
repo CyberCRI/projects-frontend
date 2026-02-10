@@ -103,7 +103,7 @@ export default function useAdminPagesRoutes() {
             {
               path: 'create',
               name: 'adminCreateGroup',
-              component: () => import('../pages/CreateEditGroupPage/CreateEditGroupPage.vue'),
+              component: () => import('../pages/GroupPageV2/Tabs/GroupEditTab.vue'),
               props: {
                 postCancelRouteFactory: () => ({ name: 'groupsList' }),
                 postCreateRouteFactory: () => ({ name: 'groupsList' }),
@@ -120,7 +120,7 @@ export default function useAdminPagesRoutes() {
                 postCreateRouteFactory: () => ({ name: 'groupsList' }),
                 postUpdateRouteFactory: () => ({ name: 'groupsList' }),
               }),
-              component: () => import('../pages/CreateEditGroupPage/CreateEditGroupPage.vue'),
+              component: () => import('../pages/GroupPageV2/Tabs/GroupEditTab.vue'),
             },
           ],
         },
