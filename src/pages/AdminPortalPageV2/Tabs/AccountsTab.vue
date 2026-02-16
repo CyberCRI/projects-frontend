@@ -316,7 +316,7 @@ export default {
 
       const activeFilter = this.filters.find((filter) => filter.isActive)
       const params = activeFilter ? { ordering: activeFilter.order + activeFilter.filter } : {}
-      params.current_org_role = 'admins,facilitators,users'
+      params.current_org_role = 'admins,facilitators,users,viewers'
       params.limit = this.numResults
       this.request = await searchPeopleAdmin({
         search: this.searchFilter,
