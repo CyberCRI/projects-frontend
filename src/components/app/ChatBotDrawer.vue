@@ -292,10 +292,13 @@ const handleChatClick = (evt) => {
   // short-circuit target blank for internal links in chatbot messages
   if (evt.target.tagName === 'A') {
     const href = evt.target.getAttribute('href')
+    if (!href) return
     const origin = window.location.origin
     if ((!href.startsWith('http') || href.startsWith(origin)) && !href.startsWith('email:')) {
       evt.preventDefault()
-      router.push({ path: href })
+      // strip origin otherwise router append url to current path instead of replacing
+      const cleanHref = href.replace(new RegExp('^' + origin), '')
+      router.push({ path: cleanHref })
       emit('close')
     }
   }

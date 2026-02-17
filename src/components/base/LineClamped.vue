@@ -67,7 +67,6 @@ const resizeObserver = ResizeObserver
 onMounted(() => {
   checkOverflowing()
   if (containerRef.value && resizeObserver) {
-    console.log('on observe')
     resizeObserver.observe(containerRef.value)
   }
   window.addEventListener('resize', throttledCheckOverflowing)

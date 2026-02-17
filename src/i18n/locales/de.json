@@ -388,7 +388,8 @@
       "none": "Keine",
       "user": "Benutzer",
       "facilitator": "Fazit",
-      "admin": "Org admin"
+      "admin": "Org admin",
+      "viewer": "Betrachter"
     },
     "user-exists-in-other-org": "Ein Benutzer mit der gleichen E-Mail existiert in unserer Datenbank. Wir können ihn hier zu Ihrem Portal hinzufügen."
   },

@@ -31,6 +31,8 @@
   border-radius: $border-radius-l;
   overflow: hidden;
   background-color: $white;
+  position: absolute;
+  inset: 0;
 
   .cropped-image {
     width: 100%;

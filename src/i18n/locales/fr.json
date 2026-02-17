@@ -388,7 +388,8 @@
       "none": "Aucun",
       "user": "Utilisateur",
       "facilitator": "Facilitateur",
-      "admin": "Org admin"
+      "admin": "Org admin",
+      "viewer": "Visualisateur"
     },
     "user-exists-in-other-org": "Un utilisateur avec le même email existe dans notre base de données. Nous pouvons l'ajouter à votre portail ici."
   },
