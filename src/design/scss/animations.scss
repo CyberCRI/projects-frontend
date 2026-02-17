@@ -40,20 +40,6 @@
   transform: translate3d(-100%, 0, 0);
 }
 
-// Skeleton-loading
-
-@keyframes skeleton-loading {
-  0% {
-    background-color: $skeleton-0;
-  }
-
-  100% {
-    background-color: $skeleton-100;
-  }
-}
-
-// Toasts (notifications)
-
 .toast-enter-active {
   opacity: 0;
   transform: translateY(-100%);

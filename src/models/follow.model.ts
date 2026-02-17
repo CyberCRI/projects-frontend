@@ -48,4 +48,8 @@ export type FollowManyOutput = Required<FollowOutput> & {
   }
 }
 
+export type FollowProjectOutput = Required<FollowOutput> & {
+  project: ProjectModel
+}
+
 export type FollowOutputList = FollowManyOutput[]

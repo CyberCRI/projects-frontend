@@ -1059,7 +1059,19 @@
     "auto-translate-off": "Automatische Übersetzung deaktiviert"
   },
   "location": {
-    "loading": "Ladestellen"
+    "loading": "Ladestellen",
+    "focus-on-map": "Fokus auf der Karte",
+    "expand-map": "Karte vergrößern",
+    "edit-location-point": "Standortpunkt bearbeiten",
+    "location-type-label": "Standort",
+    "edit-map": "Geolokation bearbeiten",
+    "map": "Standort",
+    "add-location": "Standort hinzufügen",
+    "add-location-point": "Einen Ortspunkt hinzufügen",
+    "default-title": "Standort",
+    "impact": "Auswirkungen",
+    "team": "Team",
+    "address": "Anschrift"
   },
   "map": {
     "empty": "Nichts hier noch... Die Mitarbeiter haben noch keine Projekte lokalisiert.",
@@ -1591,9 +1603,7 @@
   },
   "project": {
     "infos": "Infos",
-    "add-location": "Standort hinzufügen",
     "add-linked-project": "Ein verknüpftes Projekt hinzufügen",
-    "add-location-point": "Einen Ortspunkt hinzufügen",
     "add-review": "Bewertung hinzufügen",
     "add-to-project": {
       "title": "Projekt hinzufügen",
@@ -1671,7 +1681,6 @@
     "link-confirm-delete": "Sind Sie sicher, dass Sie diesen Link aus dem Projekt löschen möchten?",
     "file-confirm-delete": "Sind Sie sicher, dass Sie diese Datei aus dem Projekt löschen möchten?",
     "blog-confirm-delete": "Sind Sie sicher, dass Sie diesen Blogeintrag aus dem Projekt löschen möchten?",
-    "location-type-label": "Standort",
     "lock": "Projekt schließen",
     "private": "Private Projekte",
     "publish": "Projekt veröffentlichen",
@@ -2746,7 +2755,8 @@
       "state": "Bundesland",
       "country": "Land",
       "other": "Andere"
-    }
+    },
+    "current-position": "Aktuelle Position"
   },
   "card-list": {
     "list": "Liste",

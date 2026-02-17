@@ -111,6 +111,10 @@ $zindex-toast: 4000;
 $card_width: pxToRem(184px);
 $card_height: pxToRem(260px);
 
+// LOCATION
+$location-impact: $primary;
+$location-team: $violet;
+
 :root {
   --primary: #{$primary};
   --primary-lighter: #{$primary-lighter};

@@ -11,9 +11,7 @@ const LocationFactory = createFactory<LocationModel>((faker) => ({
   lat: Number(faker.address.latitude()),
   lng: Number(faker.address.longitude()),
   type: 'team',
-  project: {
-    id: faker.datatype.string(),
-  },
+  project: null,
 }))
 
 export default LocationFactory

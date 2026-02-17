@@ -1,41 +1,45 @@
-import type { LocationInput /*, LocationOutput*/, LocationModel } from '@/models/location.model'
-// import type { APIResponseList } from '@/api/types'
-import utils from '@/functs/functions'
+import type { LocationModel, ProjectLocationForm } from '@/models/location.model'
 import useAPI from '@/composables/useAPI'
+import utils from '@/functs/functions'
+import { Locations } from '@/interfaces/maps'
 
-export async function getProjectLocations(projectId) {
-  return await useAPI<LocationModel>(`project/${projectId}/location/`, {}) //.data.value
+export async function getProjectLocations(projectId: number) {
+  return await useAPI<LocationModel[]>(`project/${projectId}/location/`)
 }
 
-export async function getProjectLocation(body) {
-  return await useAPI(`project/${body.projectId}/location/${body.locationId}/`, {}) //.data.value
+export async function getProjectLocation(projectId: string, locationId: number) {
+  return await useAPI<LocationModel>(`project/${projectId}/location/${locationId}/`)
 }
 
 export async function getLocations(params, next) {
   if (next) {
     // TODO: nuxt check next works
-    return await useAPI(next, {}) //.data.value
+    return await useAPI<Locations>(next, {}) //.data.value
   }
 
-  return await useAPI(`location/`, { ...utils.adaptParam(params) }) //.data.value
+  return await useAPI<Locations>(`location/`, { ...utils.adaptParam(params) }) //.data.value
 }
 
-export async function postLocations(location: LocationInput) {
-  return await useAPI(`project/${location.project_id}/location/`, {
-    body: location,
+export async function postLocations(projectId: string, body: ProjectLocationForm) {
+  return await useAPI<LocationModel>(`project/${projectId}/location/`, {
+    body,
     method: 'POST',
-  }) //.data.value
+  })
 }
 
-export async function patchLocation(location: LocationInput) {
-  return await useAPI(`project/${location.project.id}/location/${location.id}/`, {
-    body: location,
+export async function patchLocation(
+  projectId: string,
+  locationId: number,
+  body: ProjectLocationForm
+) {
+  return await useAPI<LocationModel>(`project/${projectId}/location/${locationId}/`, {
+    body,
     method: 'PATCH',
-  }) //.data.value
+  })
 }
 
-export async function deleteLocation(location: LocationInput) {
-  return await useAPI(`project/${location.project.id}/location/${location.id}/`, {
+export async function deleteLocation(projectId: string, locationId: number) {
+  return await useAPI<LocationModel>(`project/${projectId}/location/${locationId}/`, {
     method: 'DELETE',
-  }) //.data.value
+  })
 }

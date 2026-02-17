@@ -1,167 +1,181 @@
 <template>
   <div class="project-locations">
-    <div v-if="isInEditingMode && canEditProject" class="actions">
+    <div v-if="editable" class="actions">
       <LpiButton
         btn-icon="Plus"
         class="edit-btn"
-        :label="$t('project.add-location')"
+        :label="$t('location.add-location')"
         @click="projectLayoutToggleAddModal('location')"
       />
     </div>
 
     <div class="main-ctn">
       <LazyMapRecap
-        v-if="locations.length"
+        ref="map"
         class="unboxed"
+        expand
+        :editable="editable"
         :locations="locations"
-        :focused-location="focusedLocation"
-        @map-moved="focusedLocation = null"
+        @edit="onEditForm($event)"
+        @expand="projectLayoutToggleAddModal('location')"
       />
     </div>
-
-    <div class="location-lists">
-      <div v-if="teamLocations.length" class="location-list-wrapper">
-        <h3 class="list-title">{{ $t('team.team') }}</h3>
-        <ul class="location-list">
-          <li v-for="location in teamLocations" :key="location.id" class="location">
-            <LocationListItem
-              :location="location"
-              :is-editable="isInEditingMode"
-              @focus-location="focusedLocation = $event"
-              @delete-location="locationToDelete = $event"
-              @edit-location="openEditModal"
-            />
-          </li>
-        </ul>
-      </div>
-      <div v-if="impactLocations.length" class="location-list-wrapper">
-        <h3 class="list-title">{{ $t('project.impact') }}</h3>
-        <ul class="location-list">
-          <li v-for="location in impactLocations" :key="location.id" class="location">
-            <LocationListItem
-              :location="location"
-              :is-editable="isInEditingMode"
-              @focus-location="focusedLocation = $event"
-              @delete-location="locationToDelete = $event"
-              @edit-location="openEditModal"
-            />
-          </li>
-        </ul>
-      </div>
-    </div>
-
+    <LocationList
+      :locations="locations"
+      :editable="editable"
+      @focus="onFocus($event)"
+      @edit="onEditForm($event)"
+      @delete="locationToDelete = $event"
+    />
     <LocationForm
       v-if="formVisible"
-      :project-id="projectId"
-      :address="newLocationAddress"
-      :location-to-be-edited="locationToBeEdited"
-      :new-coordinates="newCoordinates"
-      @close="closeLocationForm"
-      @center-map="centerMap"
-      @location-edited="$emit('reload-locations')"
-      @location-created="onLocationCreated"
-      @location-deleted="$emit('reload-locations')"
+      v-model="form"
+      @close="onCloseForm()"
+      @submit="onSubmit(form)"
+      @delete="onDelete(form)"
     />
-
     <ConfirmModal
       v-if="locationToDelete"
-      :asyncing="deleteAsyncing"
+      :asyncing="asyncing"
       :title="$t('geocoding.delete-location')"
       :content="$t('geocoding.confirm-delete-location')"
       @cancel="locationToDelete = null"
-      @confirm="onConfirmDeleteLocation"
+      @confirm="onDelete(locationToDelete)"
     />
   </div>
 </template>
-<script>
+
+<script setup lang="ts">
 import useToasterStore from '@/stores/useToaster'
 import analytics from '@/analytics'
-import { deleteLocation } from '@/api/locations.services'
+import { deleteLocation, patchLocation, postLocations } from '@/api/locations.services'
+import { TranslatedLocation } from '@/models/location.model'
+import { TranslatedProject } from '@/models/project.model'
+import LocationList from '@/components/map/LocationList.vue'
+import LocationForm from '@/components/map/LocationForm.vue'
 
-export default {
-  name: 'ProjectLocationsTab',
+const projectLayoutToggleAddModal: any = inject('projectLayoutToggleAddModal')
 
-  inject: ['projectLayoutToggleAddModal'],
+const props = withDefaults(
+  defineProps<{
+    project: TranslatedProject
+    locations?: TranslatedLocation[]
+    isInEditingMode?: boolean
+  }>(),
+  {
+    locations: () => [],
+    isInEditingMode: false,
+  }
+)
+const form = ref()
 
-  props: {
-    locations: {
-      type: Array,
-      default: () => [],
-    },
-    isInEditingMode: {
-      type: Boolean,
-      default: false,
-    },
-  },
+const emit = defineEmits(['reload'])
+const { canEditProject } = usePermissions()
+const { t } = useNuxtI18n()
+const toaster = useToasterStore()
+const formVisible = ref(false)
+const locationToDelete = ref<TranslatedLocation>(null)
+const asyncing = ref(false)
 
-  emits: ['reload-locations'],
+const mapRef = useTemplateRef('map')
+const centerMap = () => mapRef.value?.map?.centerMap()
+const onFocus = (location) => mapRef.value?.map?.flyTo(location)
 
-  setup() {
-    const { canEditProject } = usePermissions()
-    const toaster = useToasterStore()
-    return {
-      canEditProject,
-      toaster,
-    }
-  },
-  data() {
-    return {
-      formVisible: false,
-      locationToBeEdited: null,
-      locationToDelete: null,
-      deleteAsyncing: false,
-      focusedLocation: null,
-    }
-  },
+const editable = computed(() => props.isInEditingMode && canEditProject.value)
 
-  computed: {
-    teamLocations() {
-      return this.locations.filter((l) => l.type === 'team')
-    },
-    impactLocations() {
-      return this.locations.filter((l) => l.type === 'impact')
-    },
-  },
+const onCloseForm = () => (formVisible.value = formVisible.value = false)
 
-  methods: {
-    async onConfirmDeleteLocation() {
-      try {
-        this.deleteAsyncing = true
-        await deleteLocation(this.locationToDelete)
+const onCreate = async (body) => {
+  try {
+    asyncing.value = true
+    await postLocations(props.project.id, body)
 
-        analytics.location.deleteLocationMapPoint({
-          project: {
-            id: this.projectId,
-          },
-          location: this.locationToDelete,
-        })
+    analytics.location.addLocationMapPoint({
+      project: {
+        id: props.project.id,
+      },
+      location: body,
+    })
 
-        this.toaster.pushSuccess(this.$t('toasts.location-delete.success'))
+    toaster.pushSuccess(t('toasts.location-create.success'))
 
-        this.$emit('reload-locations')
-        this.$nextTick(() => this.centerMap())
-      } catch (error) {
-        this.toaster.pushError(`${this.$t('toasts.location-delete.error')} (${error})`)
-        console.error(error)
-      } finally {
-        this.deleteAsyncing = false
-        this.locationToDelete = null
-      }
-    },
+    emit('reload')
+    nextTick(() => centerMap())
+  } catch (error) {
+    toaster.pushError(`${t('toasts.location-create.error')} (${error})`)
+    console.error(error)
+  } finally {
+    asyncing.value = false
+    onCloseForm()
+  }
+}
 
-    openEditModal(location) {
-      if (this.isInEditingMode) {
-        // restart from source locations because the map ones are not reactive
-        this.locationToBeEdited = location
-        this.formVisible = true
-      }
-    },
+const onEdit = async (body) => {
+  try {
+    asyncing.value = true
+    await patchLocation(props.project.id, body.id, body)
 
-    closeLocationForm() {
-      this.locationToBeEdited = null
-      this.formVisible = false
-    },
-  },
+    analytics.location.updateLocationMapPoint({
+      project: {
+        id: props.project.id,
+      },
+      location: body,
+    })
+
+    toaster.pushSuccess(t('toasts.location-update.success'))
+
+    emit('reload')
+  } catch (error) {
+    toaster.pushError(`${t('toasts.location-update.error')} (${error})`)
+    console.error(error)
+  } finally {
+    asyncing.value = false
+    onCloseForm()
+  }
+}
+
+const onDelete = async (body) => {
+  try {
+    asyncing.value = true
+    await deleteLocation(props.project.id, body.id)
+
+    analytics.location.deleteLocationMapPoint({
+      project: {
+        id: props.project.id,
+      },
+      location: body,
+    })
+
+    toaster.pushSuccess(t('toasts.location-delete.success'))
+
+    emit('reload')
+    nextTick(() => centerMap())
+  } catch (error) {
+    toaster.pushError(`${t('toasts.location-delete.error')} (${error})`)
+    console.error(error)
+  } finally {
+    asyncing.value = false
+    locationToDelete.value = null
+    onCloseForm()
+  }
+}
+
+const onSubmit = (eventForm) => {
+  const body = {
+    ...eventForm,
+    project_id: props.project.id,
+  }
+
+  if (body.id) {
+    onEdit(body)
+  } else {
+    onCreate(body)
+  }
+}
+
+const onEditForm = (location) => {
+  form.value = { ...location }
+  formVisible.value = true
 }
 </script>
 <style scoped lang="scss">
@@ -171,32 +185,5 @@ export default {
   justify-content: flex-end;
   align-items: center;
   gap: 1rem;
-}
-
-.location-list-wrapper {
-  margin-top: 2rem;
-}
-
-.list-title {
-  text-transform: uppercase;
-  font-size: $font-size-l;
-  color: $primary-dark;
-  font-weight: 700;
-}
-
-.location-list {
-  list-style: none;
-  display: grid;
-  margin-top: 1rem;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 1rem;
-
-  @media screen and (max-width: $max-tablet) {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  @media screen and (max-width: $min-tablet) {
-    grid-template-columns: 1fr;
-  }
 }
 </style>

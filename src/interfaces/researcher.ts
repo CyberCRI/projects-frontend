@@ -5,7 +5,7 @@ export type QueryFilterDocument = {
   year?: number
   document_type?: string
   roles?: string
-  ordering: 'publication_date' | '-publication_date'
+  ordering?: 'publication_date' | '-publication_date'
 }
 
 export type HarvesterType =
@@ -38,6 +38,8 @@ export type ResearcherLight = Researcher & {
     conferences: number
   }
 }
+
+export type DocumentType = keyof ResearcherLight['documents']
 
 export type Document = {
   id: number

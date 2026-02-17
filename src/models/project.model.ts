@@ -47,6 +47,7 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
   blog_entries: BlogEntryOutput[]
   goals: GoalOutput[]
   slug: string
+  updated_at: string
 }
 
 export type TranslatedProject = Translated<ProjectModel, 'title' | 'description' | 'purpose'>

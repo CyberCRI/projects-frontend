@@ -21,6 +21,7 @@ const ProjectCategoryFactory = createFactory<ProjectCategoryOutput>((faker) => (
     scale_y: faker.datatype.number(),
     left: faker.datatype.number(),
     top: faker.datatype.number(),
+    url: faker.internet.url(),
     natural_ratio: faker.datatype.number(),
     file: faker.image.image(),
     name: faker.name.lastName(),

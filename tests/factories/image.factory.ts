@@ -11,6 +11,8 @@ import BaseFactory from './base.factory'
 
 export const ImageFactory = createFactory<ImageOutput>((faker) => ({
   ...BaseFactory.generate(),
+  id: faker.datatype.number(),
+  url: faker.internet.url(),
   scale_x: faker.datatype.number(),
   scale_y: faker.datatype.number(),
   left: faker.datatype.number(),

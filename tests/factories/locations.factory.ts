@@ -10,9 +10,7 @@ export const LocationsFactory = createFactory<LocationModel>((faker) => ({
   lat: faker.datatype.number(),
   lng: faker.datatype.number(),
   type: 'team',
-  project: {
-    id: faker.datatype.string(),
-  },
+  project: null,
 }))
 
 export const LocationsInputFactory = createFactory<LocationInput>((faker) => ({

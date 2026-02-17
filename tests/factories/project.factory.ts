@@ -47,6 +47,7 @@ export const ProjectFactory = createFactory<ProjectModel>((faker) => ({
   blog_entries: BlogEntryFactory.generateMany(2),
   goals: GoalFactory.generateMany(2),
   slug: faker.lorem.word(),
+  updated_at: faker.date.past().toString(),
 }))
 
 export const ProjectOutputFactory = createFactory<ProjectOutput>((faker) => ({
