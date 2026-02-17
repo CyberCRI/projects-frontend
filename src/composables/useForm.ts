@@ -1,18 +1,20 @@
 import useValidate from '@vuelidate/core'
-import { debounce } from 'es-toolkit'
 
-type OptionsForm = {
-  default?: object
+type OptionsForm<T, CleanResult> = {
+  default?: T
   rules?: object
   validateTimeout?: number
-  onClean: (data: object) => object
+  onClean?: (data: T) => CleanResult
+  model?: Ref<T>
 }
 
-type UseFormResult = {
-  form: Ref<object>
+export type UseFormResult<T, CleanResult> = {
+  form: Ref<T>
   isValid: Ref<boolean>
-  errors: Ref<object>
-  cleanedData: null | Ref<object>
+  errors: ComputedRef<{
+    [key: string]: any
+  }>
+  cleanedData: null | Ref<CleanResult>
 }
 
 const onClean = (d) => d
@@ -26,19 +28,27 @@ const onClean = (d) => d
  * @param {OptionsForm} options?
  * @returns {UseFormResult}
  */
-const useForm = (options: OptionsForm = { onClean }): UseFormResult => {
-  const form = ref<object>({ ...(options.default ?? {}) })
+const useForm = <T, CleanResult = T>(
+  options: OptionsForm<T, CleanResult> = { onClean }
+): UseFormResult<T, CleanResult> => {
+  const def = {
+    ...(options.default ?? {}),
+    ...unref(options.model?.value ?? {}),
+  } as T
+
+  const form = ref<T>(def) as Ref<T>
   const _onClean = options.onClean ?? onClean
 
   const isValid = ref<boolean>(false)
   const v$ = useValidate(options.rules ?? {}, form)
 
-  // debounce validate to optimize check
   const validate = () => v$.value.$validate().then((v) => (isValid.value = v))
-  const debounceValidate = debounce(validate, options.validateTimeout ?? 200)
-  watch(form, () => debounceValidate(), { deep: true, immediate: true })
+  // const debounceValidate = debounce(validate, options.validateTimeout ?? 50)
+  watch(form, () => validate(), { deep: true, immediate: true })
 
-  const errors = computed(() => {
+  const errors = computed<{
+    [key: string]: string[]
+  }>(() => {
     const err = {}
     Object.keys(form.value).forEach((k) => {
       if (v$.value[k]?.$errors) {
@@ -48,13 +58,24 @@ const useForm = (options: OptionsForm = { onClean }): UseFormResult => {
     return err
   })
 
-  // clean data (before send to backend)
-  const cleanedData = computed(() => {
-    if (!isValid.value) {
-      return null
-    }
-    return _onClean(form.value)
-  })
+  const cleanedData = ref<CleanResult>()
+
+  watch(
+    [form, isValid],
+    () => {
+      const formContent = { ...toRaw(form.value) }
+
+      let cleanded = null
+      if (isValid.value) {
+        cleanded = _onClean(formContent)
+      }
+      if (options.model) {
+        options.model.value = cleanded
+      }
+      cleanedData.value = cleanded
+    },
+    { deep: true, immediate: true }
+  )
 
   return {
     form,

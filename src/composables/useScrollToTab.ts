@@ -15,3 +15,20 @@ export default function useScrollToTab() {
     }
   })
 }
+
+/**
+ * function to scroll to hash element (id="#myhash")
+ *
+ * @function
+ * @name scrollToHash
+ * @kind variable
+ * @param {string} hash
+ * @returns {void}
+ * @exports
+ */
+export const scrollToHash = (hash: string) => {
+  const target = document.getElementById(hash)
+  if (target) {
+    funct.scrollTo(target)
+  }
+}
