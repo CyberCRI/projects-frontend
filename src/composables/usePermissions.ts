@@ -117,8 +117,6 @@ export default function usePermissions() {
   /* PROJECTS */
 
   const canCreateProject = computed(() => {
-    console.log('isConnectedForPermissions.value', isConnectedForPermissions.value)
-    console.log('isViewer.value', isViewer.value)
     return isConnectedForPermissions.value && !isViewer.value
   })
 
