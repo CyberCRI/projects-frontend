@@ -6,6 +6,7 @@ import { UserFactory } from '../../../../factories/user.factory'
 import { delay } from 'es-toolkit'
 import { DocumentFactory, ResearcherFactory } from '../../../../factories/researcher.factory'
 import { PaginationsFactory } from '../../../../factories/paginations.factory'
+import flushPromises from 'flush-promises'
 
 describe('ResearcherDocumentsTab.vue', () => {
   let defaultProps
@@ -131,6 +132,7 @@ describe('ResearcherDocumentsTab.vue', () => {
       .find(`[data-test="see-more-${docWithSimilars.id}"]`)
       .element.dispatchEvent(new Event('click'))
     await delay(100)
+    await flushPromises()
     expect(wrapper.find('.documents-list-similars').element.childElementCount).toEqual(2)
   })
 })

@@ -4,7 +4,7 @@
     :to="{
       name: 'projectSummary',
       params: {
-        slugOrId: project.slug,
+        slugOrId: project?.slug,
       },
     }"
   >
@@ -13,28 +13,21 @@
       :alt="`${project?.$t?.title} image`"
       :picture-data="project.header_image"
       picture-size="small"
-      default-picture="/placeholders/header_placeholder.png"
+      :default-picture="DEFAULT_PROJECT_PATATOID"
     />
 
     <p>{{ project?.$t?.title }}</p>
   </NuxtLink>
 </template>
 
-<script>
+<script setup lang="ts">
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
+import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
+import { TranslatedProject } from '@/models/project.model'
 
-export default {
-  name: 'SimilarProjectsItem',
-
-  components: { CroppedApiImage },
-
-  props: {
-    project: {
-      type: Object,
-      default: () => ({}),
-    },
-  },
-}
+defineProps<{
+  project?: TranslatedProject
+}>()
 </script>
 
 <style lang="scss" scoped>

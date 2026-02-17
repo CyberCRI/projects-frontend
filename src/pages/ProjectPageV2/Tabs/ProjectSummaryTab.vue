@@ -29,7 +29,14 @@
       />
 
       <!-- locations -->
-      <LazyMapRecap v-if="locations.length" class="unboxed" :locations="locations" />
+      <LazyMapRecap
+        v-if="locations.length"
+        class="unboxed"
+        expand
+        :editable="false"
+        :locations="locations"
+        @expand="projectLayoutToggleAddModal('location')"
+      />
 
       <!-- goals -->
       <GoalsRecap v-if="filteredGoals.length" class="unboxed" :goals="filteredGoals" />
@@ -100,10 +107,19 @@
 </template>
 
 <script>
+import ProjectMemberSection from '@/components/group/ProjectMemberSection/ProjectMemberSection.vue'
 import { isNotGroup } from '@/functs/users'
 
 export default {
   name: 'ProjectSummaryTab',
+
+  components: [ProjectMemberSection],
+
+  inject: {
+    projectLayoutToggleAddModal: {
+      from: 'projectLayoutToggleAddModal',
+    },
+  },
 
   props: {
     project: {

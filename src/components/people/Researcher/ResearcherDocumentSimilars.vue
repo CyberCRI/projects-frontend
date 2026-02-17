@@ -18,7 +18,7 @@
         />
       </div>
       <div class="documents-paginations">
-        <PaginationButtons2 :pagination="pagination" />
+        <PaginationButtonsV2 :pagination="pagination" />
       </div>
     </FetchLoader>
   </BaseDrawer>
@@ -28,6 +28,7 @@
 import { sanitizeResearcherDocuments } from '@/api/sanitizes/researcher'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
+import PaginationButtonsV2 from '@/components/base/navigation/PaginationButtonsV2.vue'
 import { PaginationResult, usePagination } from '@/composables/usePagination'
 import { Document, TranslatedDocument } from '@/interfaces/researcher'
 import { UserModel } from '@/models/user.model'

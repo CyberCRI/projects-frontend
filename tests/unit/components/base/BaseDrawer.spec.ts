@@ -50,7 +50,7 @@ describe('BaseDrawer', () => {
 
   it('should emit close event when clicking close', async () => {
     wrapper = lpiMount(BaseDrawer, defaultParams)
-    const closeButton = wrapper.find('.header__close')
+    const closeButton = wrapper.find('[data-test="drawer-close"]')
 
     expect(closeButton.exists()).toBeTruthy()
 

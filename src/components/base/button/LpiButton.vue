@@ -8,6 +8,7 @@
     }"
     :disabled="disabled"
     type="button"
+    rel="noopener"
     class="lpi-button shadow-box"
   >
     <ButtonContent :label="label" :btn-icon="btnIcon" :no-text-transform="noTextTransform" />

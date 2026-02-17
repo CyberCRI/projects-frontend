@@ -5,3 +5,20 @@
 .w-fit {
   width: fit-content;
 }
+
+.d-none {
+  display: none;
+}
+
+.border-primary {
+  border: 2px solid var(--primary-light);
+  border-radius: 5px;
+}
+
+.contents {
+  display: contents;
+}
+
+.pointer-events-none {
+  pointer-events: none;
+}

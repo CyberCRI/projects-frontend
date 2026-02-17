@@ -1,5 +1,5 @@
 <template>
-  <div class="basic-card" :class="{ 'shadow-box': !props.isInactive, [mode]: true }" tabindex="1">
+  <div class="basic-card" :class="{ 'shadow-box': !isInactive, [mode]: true }" tabindex="1">
     <div class="action-left-wrapper">
       <slot name="actions-left" />
     </div>
@@ -10,9 +10,9 @@
     <component
       :is="is"
       class="card-inner"
-      :class="{ inactive: props.isInactive }"
+      :class="{ inactive: isInactive }"
       :to="toLink"
-      @click="!props.isInactive && $emit('click')"
+      @click="!isInactive && $emit('click')"
     >
       <!-- Content -->
       <div class="content">
@@ -29,11 +29,13 @@ const props = withDefaults(
   defineProps<{
     toLink?: string | object
     mode?: 'card' | 'list'
+    lineClamp?: number
     isInactive?: boolean
   }>(),
   {
     toLink: null,
     mode: 'card',
+    lineClamp: 6,
     isInactive: false,
   }
 )
@@ -63,7 +65,7 @@ const is = computed(() => {
     justify-content: space-between;
     height: $card_height;
     width: $card_width;
-    border: $border-width-s solid $primary;
+    border: $border-width-s solid var(--primary);
     border-radius: $border-radius-m;
     text-align: center;
 
@@ -80,7 +82,7 @@ const is = computed(() => {
 
   &.list {
     flex-direction: row;
-    border-bottom: $border-width-s solid #00dba7;
+    border-bottom: $border-width-s solid var(--primary);
 
     .card-inner {
       flex-flow: row;
@@ -89,7 +91,7 @@ const is = computed(() => {
 }
 
 :deep(.picture) {
-  $picture-width: 72px;
+  $picture-width: 90px;
 
   display: flex;
   width: pxToRem($picture-width);
@@ -187,7 +189,7 @@ const is = computed(() => {
 
 .card :deep(.text-limit) {
   display: -webkit-box;
-  -webkit-line-clamp: 6;
+  -webkit-line-clamp: v-bind('lineClamp');
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;

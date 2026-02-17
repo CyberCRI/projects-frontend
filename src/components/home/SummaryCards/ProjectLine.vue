@@ -9,7 +9,7 @@
       class="img-container"
       :picture-data="project?.header_image"
       picture-size="medium"
-      default-picture="/placeholders/header_placeholder.png"
+      :default-picture="DEFAULT_PROJECT_PATATOID"
     />
     <div class="project-title">
       {{ capitalize(project?.$t?.title) }}
@@ -17,19 +17,16 @@
   </NuxtLink>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { capitalize } from '@/functs/string'
 
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
+import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
+import { TranslatedProject } from '@/models/project.model'
 
-defineOptions({ name: 'ProjectLine' })
-
-defineProps({
-  project: {
-    type: Object,
-    required: true,
-  },
-})
+defineProps<{
+  project: TranslatedProject
+}>()
 </script>
 
 <style lang="scss" scoped>

@@ -1,53 +1,27 @@
 <template>
   <div class="sdg-filter-container">
     <SdgIcon
-      v-for="(selected, sdgId) in sdgsFilters"
-      :key="sdgId"
-      :sdg-id="sdgId"
-      :selected="selected"
+      v-for="sdg in allSdgs"
+      :key="sdg.id"
+      :sdg-id="sdg.id"
+      :selected="model.includes(sdg.id)"
       @toggled="toggleSdg"
     />
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import SdgIcon from '@/components/search/Filters/SdgIcon.vue'
 import allSdgs from '@/data/sdgs.json'
 
-export default {
-  name: 'SdgsFilter',
+const model = defineModel<number[]>()
 
-  components: { SdgIcon },
-
-  props: {
-    modelValue: {
-      type: Array,
-      default: () => [],
-    },
-  },
-
-  emits: ['update:modelValue'],
-
-  computed: {
-    sdgsFilters() {
-      return allSdgs.reduce((acc, sdg) => {
-        acc[sdg.id] = this.modelValue.some((selected_id) => selected_id == sdg.id)
-        return acc
-      }, {})
-    },
-  },
-
-  methods: {
-    toggleSdg(sdgId) {
-      this.sdgsFilters[sdgId] = !this.sdgsFilters[sdgId]
-      this.$emit(
-        'update:modelValue',
-        Object.entries(this.sdgsFilters)
-          .filter((entry) => entry[1])
-          .map((entry) => entry[0])
-      )
-    },
-  },
+const toggleSdg = (sdgId) => {
+  if (model.value.includes(sdgId)) {
+    model.value = model.value.filter((id) => id !== sdgId)
+  } else {
+    model.value = [...model.value, sdgId]
+  }
 }
 </script>
 

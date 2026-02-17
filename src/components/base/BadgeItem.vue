@@ -1,10 +1,14 @@
 <template>
   <div
     :class="[{ 'has-icon': iconName, 'simple-text': simpleText }, size, colors || 'primary-light']"
-    class="badge"
+    class="badge skeletons-background"
   >
     <span v-if="iconName" class="icon-container">
-      <IconImage :class="{ 'icon-small': size === 'small' }" :name="iconName" class="icon" />
+      <IconImage
+        :class="{ 'icon-small': size === 'small' }"
+        :name="iconName"
+        class="icon skeletons-image"
+      />
     </span>
 
     <span :class="size" class="label">{{ label }}</span>
@@ -53,7 +57,7 @@ withDefaults(
   white-space: nowrap;
 
   &.primary-light {
-    background-color: $primary-light;
+    background-color: var(--primary-light);
 
     .label {
       color: $primary-dark;
@@ -61,7 +65,7 @@ withDefaults(
   }
 
   &.primary-dark {
-    background-color: $primary-dark;
+    background-color: var(--primary-dark);
 
     .label {
       color: $white;
@@ -78,7 +82,7 @@ withDefaults(
 
   &.green,
   &.ok {
-    background-color: $primary;
+    background-color: var(--primary);
 
     .label {
       color: $black;
@@ -112,7 +116,7 @@ withDefaults(
   &.is-open-tab {
     border-radius: $border-radius-m $border-radius-m 0 0;
     background-color: $white;
-    border: $border-width-s solid $primary;
+    border: $border-width-s solid var(--primary);
     border-bottom: $border-width-s solid $white;
     box-sizing: border-box;
   }
@@ -164,7 +168,7 @@ withDefaults(
 
 .icon-container {
   .icon {
-    fill: $primary-dark;
+    fill: var(--primary-dark);
     width: 10px;
     height: 100%;
   }

@@ -59,5 +59,10 @@ export default function useProjectModals() {
 
     modals.value[modalType].visible = !modals.value[modalType].visible
   }
-  return { modals, toggleAddModal }
+
+  const closeModal = (modalType) => {
+    modals.value[modalType].visible = false
+  }
+
+  return { modals, toggleAddModal, closeModal }
 }

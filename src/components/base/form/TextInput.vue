@@ -42,15 +42,18 @@
     </span>
 
     <small v-if="bottomText">{{ bottomText }}</small>
+
+    <FieldErrors :errors="errors" />
   </div>
 </template>
 
 <script>
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 export default {
   name: 'TextInput',
 
-  components: { IconImage },
+  components: { IconImage, FieldErrors },
 
   props: {
     autofocus: {
@@ -112,6 +115,10 @@ export default {
     rows: {
       type: [Number, String],
       default: 3,
+    },
+    errors: {
+      type: Array,
+      default: () => [],
     },
   },
 

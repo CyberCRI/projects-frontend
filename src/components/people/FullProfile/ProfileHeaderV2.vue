@@ -55,17 +55,15 @@
           />
 
           <div v-if="user && user.sdgs && user.sdgs.length" class="sdg-ctn">
-            <NuxtLink
-              v-for="sdg in user.sdgs"
-              :key="sdg"
-              :to="`/search/people?sdgs=${sdg}&section=people&page=1`"
-            >
-              <img
-                :alt="sdg"
-                :src="`${runtimeConfig.public.appPublicBinariesPrefix}/sdgs/logo/SDG-${sdg}.svg`"
-                class="sdg-img"
-              />
-            </NuxtLink>
+            <SdgList
+              :sdgs="user.sdgs || []"
+              :to="{
+                name: 'PeopleSearch',
+                query: {
+                  section: 'people',
+                },
+              }"
+            />
           </div>
         </div>
       </div>
@@ -74,6 +72,7 @@
 </template>
 
 <script setup>
+import SdgList from '@/components/sdgs/SdgList.vue'
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 import { capitalize } from '@/functs/string'
 
@@ -88,7 +87,6 @@ const props = defineProps({
 })
 
 const organizationsStore = useOrganizationsStore()
-const runtimeConfig = useRuntimeConfig()
 
 const displayableGroups = computed(() => {
   return props.user?.people_groups
