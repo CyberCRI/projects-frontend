@@ -11,3 +11,17 @@ export type ProjectMemberRoleType = 'owners' | 'members' | 'reviewers'
 export type StatusType = 'na' | 'ongoing' | 'complete' | 'cancel'
 
 export type LocationType = 'team' | 'impact' | 'address'
+
+// Project ->
+// - team
+// - impact
+
+// Group ->
+// - instruments
+// - address
+
+// Events ->
+// - address
+
+// Person ->
+// - address

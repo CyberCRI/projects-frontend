@@ -23,7 +23,6 @@ const usePatatoids = () => {
 
 export {
   usePatatoids,
-  usePatatoid,
   DEFAULT_PATATOID,
   DEFAULT_USER_PATATOID,
   DEFAULT_GROUP_PATATOID,

@@ -20,13 +20,13 @@
         :description="project.$t.description"
       />
 
-      <!-- team -->
+      <!-- team
       <ProjectMemberSection
         v-if="mergedTeam?.length"
         class="unboxed"
         :members="mergedTeam"
         @user-click="openProfileDrawer"
-      />
+      /> -->
 
       <!-- locations -->
       <LazyMapRecap
@@ -107,13 +107,13 @@
 </template>
 
 <script>
-import ProjectMemberSection from '@/components/group/ProjectMemberSection/ProjectMemberSection.vue'
+// import ProjectMemberSection from '@/components/group/ProjectMemberSection/ProjectMemberSection.vue'
 import { isNotGroup } from '@/functs/users'
 
 export default {
   name: 'ProjectSummaryTab',
 
-  components: [ProjectMemberSection],
+  // components: [ProjectMemberSection],
 
   inject: {
     projectLayoutToggleAddModal: {

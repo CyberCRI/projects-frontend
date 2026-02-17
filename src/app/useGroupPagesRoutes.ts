@@ -48,6 +48,12 @@ export default function useGroupPagesRoutes() {
           name: 'groupGallery',
           component: () => import('../pages/GroupPageV2/Tabs/Gallery/GroupGalleryTab.vue'),
         },
+        {
+          path: 'news',
+          name: 'groupNews',
+          component: () => import('../pages/GroupPageV2/Tabs/News/GroupNewsTab.vue'),
+        },
+
         // retro compat
         {
           path: 'Edit',
@@ -78,6 +84,11 @@ export default function useGroupPagesRoutes() {
           path: 'gallery/edit',
           name: 'groupGalleryEdit',
           component: () => import('../pages/GroupPageV2/Tabs/Gallery/GroupGalleryTab.vue'),
+        },
+        {
+          path: 'news/edit',
+          name: 'groupNewsEdit',
+          component: () => import('../pages/GroupPageV2/Tabs/News/GroupNewsTab.vue'),
         },
       ],
       props: true,

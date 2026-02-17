@@ -39,7 +39,7 @@ defineEmits<{
   delete: [ImageModel]
 }>()
 
-const defaultPicture = usePatatoid(DEFAULT_IMAGE_PATATOID)
+const defaultPicture = usePublicURL(DEFAULT_IMAGE_PATATOID)
 
 const error = ref(false)
 const onError = () => (error.value = true)

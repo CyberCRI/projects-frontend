@@ -86,7 +86,7 @@ watch(
   }
 )
 
-const DEFAULT_IMAGE = urlToImageModel(usePatatoid(DEFAULT_IMAGE_PATATOID))
+const DEFAULT_IMAGE = urlToImageModel(usePublicURL(DEFAULT_IMAGE_PATATOID))
 const imageSelected = computed(() => props.images[localindex.value] ?? DEFAULT_IMAGE)
 const selectedIndex = computed(() => props.pagination.offset.value + localindex.value)
 

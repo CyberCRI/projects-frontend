@@ -192,6 +192,20 @@ const groupTabsDisplay = computed(() => {
       condition: groupModules.value.gallery,
       icon: GroupModuleIcon.gallery,
     },
+    {
+      isEditing: false,
+      key: 'group-news',
+      dataTest: 'group-news',
+      label: t(GroupModuleTitle.news),
+      view: `/group/${route.params.groupId}/news`,
+      altView: `/group/${route.params.groupId}/news/edit`,
+      props: {
+        group: group.value,
+        isLoading: groupLoading.value,
+      },
+      condition: groupModules.value.news,
+      icon: GroupModuleIcon.news,
+    },
   ]
 })
 
@@ -297,6 +311,21 @@ const groupTabsEdit = computed(() => {
       label: t(GroupModuleTitle.gallery),
       view: `/group/${route.params.groupId}/gallery/edit`,
       altView: `/group/${route.params.groupId}/gallery`,
+      props: {
+        isInEditingMode: true,
+        group: group.value,
+        isLoading: groupLoading.value,
+      },
+      condition: true,
+      icon: 'Pen',
+    },
+    {
+      isEditing: true,
+      key: 'group-news-edit',
+      dataTest: 'group-news-edit',
+      label: t(GroupModuleTitle.news),
+      view: `/group/${route.params.groupId}/news/edit`,
+      altView: `/group/${route.params.groupId}/news`,
       props: {
         isInEditingMode: true,
         group: group.value,
