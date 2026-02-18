@@ -54,7 +54,6 @@
         </component>
       </div>
       <div v-if="!preview && documentsRoleInfos.length" class="doc-roles-container">
-        <!-- change button to div only if we are in preview (from summary page) -->
         <button
           v-for="[role, count] in documentsRoleInfos"
           :key="role"
@@ -72,7 +71,6 @@
         </button>
       </div>
       <div v-if="!preview" class="doc-roles-container">
-        <!-- change button to div only if we are in preview (from summary page) -->
         <button
           class="doc-roles"
           @click="
