@@ -1,5 +1,5 @@
 <template>
-  <div class="home-buttons" v-if="canCreateProject || hasChatButton">
+  <div v-if="canCreateProject || hasChatButton" class="home-buttons">
     <div class="home-btn-container">
       <LpiButton
         v-if="canCreateProject"
