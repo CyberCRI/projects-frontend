@@ -29,13 +29,15 @@ describe('GroupMemberItem.vue', () => {
     expect(wrapper.exists()).toBe(true)
   }),
     it('should emit user-click event when clicking close', async () => {
-      wrapper = lpiShallowMount(GroupMemberItem, defaultParams)
-      const closeButton = wrapper.find('.user')
+      wrapper = lpiMount(GroupMemberItem, defaultParams)
+      const closeButton = wrapper.find('.card-inner')
 
       expect(closeButton.exists()).toBeTruthy()
 
-      closeButton.trigger('click')
+      await closeButton.element.dispatchEvent(new Event('click'))
+      await closeButton.trigger('click')
+
       await wrapper.vm.$nextTick()
-      expect(wrapper.emitted('user-click')).toBeTruthy()
+      expect(wrapper.emitted('click')).toBeTruthy()
     }))
 })

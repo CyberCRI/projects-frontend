@@ -52,9 +52,9 @@ describe('ResearcherDocumentsTab.vue', () => {
     )
 
     const wrapper = await lpiMount(ResearcherDocumentsTab, { props: defaultProps })
-    expect(wrapper.find('.loading').exists()).toBeTruthy()
+    expect(wrapper.find('.skeletons').exists()).toBeTruthy()
     await delay(100)
-    expect(wrapper.find('.loading').exists()).toBeFalsy()
+    expect(wrapper.find('.skeletons').exists()).toBeFalsy()
     expect(wrapper.find('.error').exists()).toBeTruthy()
   })
 
@@ -98,8 +98,9 @@ describe('ResearcherDocumentsTab.vue', () => {
       document_type: 'JournalArticle',
       similars: 0,
     })
+
     registerEndpoint(
-      `crisalid/organization/${orgaCode}/researcher/${defaultProps.user.researcher.id}/publications/${docWithSimilars.id}/similars/`,
+      `crisalid/organization/${orgaCode}/document/${docWithSimilars.id}/similars/`,
       () => {
         return PaginationsFactory.generate({
           results: [
@@ -120,9 +121,9 @@ describe('ResearcherDocumentsTab.vue', () => {
     )
 
     const wrapper = await lpiMount(ResearcherDocumentsTab, { props: defaultProps })
-    expect(wrapper.find('.loading').exists()).toBeTruthy()
+    expect(wrapper.find('.skeletons').exists()).toBeTruthy()
     await delay(100)
-    expect(wrapper.find('.loading').exists()).toBeFalsy()
+    expect(wrapper.find('.skeletons').exists()).toBeFalsy()
 
     expect(wrapper.find('.documents-list').element.childElementCount).toEqual(2)
     // no similars button show
