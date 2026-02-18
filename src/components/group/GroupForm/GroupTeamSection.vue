@@ -135,15 +135,10 @@ export default {
     },
 
     removeUser(user) {
-      // const userIndexToDelete = this.groupMembers.findIndex((projectUser) => {
-      //     return projectUser.user.id === user.user.id
-      // })
-      // this.groupMembers.splice(userIndexToDelete, 1)
       const team = this.modelValue.filter((member) => user.id !== member.id)
       this.$emit('update:model-value', team)
     },
     openDrawer(mode) {
-      console.log(this.teamModalMode)
       this.teamModalMode = mode
       this.teamModalVisible = true
     },
