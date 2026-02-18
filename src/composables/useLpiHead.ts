@@ -1,6 +1,9 @@
 import useNuxtI18n from '@/composables/useNuxtI18n'
+import { RefOrRaw } from '@/interfaces/utils'
+import { Image } from '@/models/image.model'
+import useOrganizationsStore from '@/stores/useOrganizations'
 
-export default (url, _title, _description, image, dimensions = null) => {
+const useLpiHead = (url, _title, _description, image, dimensions = null) => {
   const runtimeConfig = useRuntimeConfig()
   const { locale } = useNuxtI18n()
 
@@ -114,4 +117,50 @@ export default (url, _title, _description, image, dimensions = null) => {
   setHead()
 
   watch(() => [locale.value], setHead)
+}
+
+export default useLpiHead
+
+type OptionsHead = {
+  url?: RefOrRaw<string>
+  title?: RefOrRaw<string>
+  image?: Image
+  description?: RefOrRaw<string>
+}
+
+/**
+ * default value for useLpiHead
+ *
+ * @function
+ * @name useLpiHead2
+ * @kind variable
+ * @param {OptionsHead} options
+ * @returns {void}
+ * @exports
+ */
+export const useLpiHead2 = async (options: OptionsHead) => {
+  // TODO(remi): remove try/catch
+
+  const store = useOrganizationsStore()
+  try {
+    const organization = await store.getOrFetchOrganization()
+    const url = options.url ?? useRequestURL().toString()
+    const title = options.title ?? organization?.$t.name ?? ''
+    const description = options.description ?? organization?.$t.description ?? ''
+
+    let [image, dimensions] = [null, null]
+    if (typeof options.image === 'object') {
+      const tmp = useImageAndDimension(options.image, 'medium')
+      image = tmp.image
+      dimensions = tmp.dimensions
+    } else {
+      const tmp = useImageAndDimension(organization?.banner_image, 'medium')
+      image = tmp.image
+      dimensions = tmp.dimensions
+    }
+
+    useLpiHead(url, title, description, image, dimensions)
+  } catch (e) {
+    console.error(e)
+  }
 }

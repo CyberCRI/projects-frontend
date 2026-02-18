@@ -1006,7 +1006,12 @@
         "label": "Herausgeber",
         "help": "Teammitglieder"
       }
-    }
+    },
+    "view": "Gruppe anzeigen",
+    "conferences": "Konferenzen",
+    "publications": "Veröffentlichungen",
+    "similars": "Gruppen ähnliche",
+    "presentation": "Präsentation"
   },
   "header": {
     "private": "Private: nur für Teammitglieder sichtbar",

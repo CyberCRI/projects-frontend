@@ -21,8 +21,8 @@
         v-for="user in projectUsers"
         :key="user?.user.id"
         :role-label="roleLabel(user.role)"
-        :user="user.user"
-        @user-clicked="removeUser(user)"
+        :member="user.user"
+        @click="removeUser(user)"
       />
     </div>
 
@@ -41,6 +41,7 @@ import TeamDrawer from '@/components/people/ProjectTeamDrawer/TeamDrawer.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import TeamCardInline from '@/components/people/TeamCard/TeamCardInline.vue'
 import useUsersStore from '@/stores/useUsers'
+import { TEAMS_ROLE_I18N } from '@/interfaces/user'
 
 export default {
   name: 'TeamSection',
@@ -132,15 +133,8 @@ export default {
     },
 
     roleLabel(role) {
-      if (role) {
-        if (role === 'owners') return 'role.editor'
-        else if (role === 'members') return 'role.teammate'
-        else if (role === 'reviewers') return 'role.reviewer'
-        else if (role === 'owner_groups') return 'role.editor-groups'
-        else if (role === 'reviewer_groups') return 'role.reviewer-groups'
-        else if (role === 'member_groups') return 'role.teammate-groups'
-      }
-      return null
+      const key = TEAMS_ROLE_I18N[role]
+      return role ? this.$t(key) : null
     },
   },
 }

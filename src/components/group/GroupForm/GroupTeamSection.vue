@@ -37,9 +37,8 @@
         v-for="user in showFullList ? modelValue : shortList"
         :key="user.id"
         icon="Close"
-        :role-label="roleLabel(user)"
-        :user="user"
-        @user-clicked="removeUser(user)"
+        :member="user"
+        @click="removeUser(user)"
       />
     </div>
     <div class="show-more">
@@ -136,21 +135,8 @@ export default {
     },
 
     removeUser(user) {
-      // const userIndexToDelete = this.groupMembers.findIndex((projectUser) => {
-      //     return projectUser.user.id === user.user.id
-      // })
-      // this.groupMembers.splice(userIndexToDelete, 1)
       const team = this.modelValue.filter((member) => user.id !== member.id)
       this.$emit('update:model-value', team)
-    },
-    roleLabel(user) {
-      if (user) {
-        if (user.is_leader && user.is_manager) return 'group.role.leaders-managers.label'
-        else if (user.is_manager) return 'group.role.managers.label'
-        else if (user.is_leader) return 'group.role.leaders.label'
-        else return 'group.role.members.label'
-      }
-      return null
     },
     openDrawer(mode) {
       this.teamModalMode = mode

@@ -1,102 +1,68 @@
 import GroupSnapshotTab from '@/pages/GroupPageV2/Tabs/GroupSnapshotTab.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 import { flushPromises } from '@vue/test-utils'
-import MockComponent from '@/../tests/helpers/MockComponent.vue'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
-import pinia from '@/stores'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import useUsersStore from '@/stores/useUsers'
-
-import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: loadLocaleMessages(),
-}
-
-const protoPropsLoading = () => ({
-  description: '',
-
-  projectsInitialRequest: {},
-
-  membersInitialRequest: {},
-
-  isProjectsLoading: true,
-
-  isMembersLoading: true,
-
-  isLoading: true,
-})
-
-const protoPropsLoaded = (members = [], projects = []) => ({
-  description: '<p>lorem ipsum</p>',
-
-  projectsInitialRequest: { count: projects.length, results: projects },
-
-  membersInitialRequest: { count: members.length, results: members },
-
-  isProjectsLoading: false,
-
-  isMembersLoading: false,
-
-  isLoading: false,
-})
-
-const buildParams = (props) => ({
-  i18n,
-  router: [
-    { path: '/', name: 'home', component: MockComponent },
-    { path: '/page404', name: 'page404', component: MockComponent },
-  ],
-  props,
-})
+import { groupTranslatedFactory } from '../../../../factories/group.factory'
+import { groupSkeleton } from '@/skeletons/group.skeletons'
+import GroupProjectsPreview from '@/components/group/Modules/Projects/GroupProjectsPreview.vue'
+import GroupMembersPreview from '@/components/group/Modules/Members/GroupMembersPreview.vue'
+import GroupDescriptionPreview from '@/components/group/Modules/Extras/GroupDescriptionPreview.vue'
+import GroupSimilarsPreview from '@/components/group/Modules/Extras/GroupSimilarsPreview.vue'
+import GroupSubPreview from '@/components/group/Modules/GroupSub/GroupSubPreview.vue'
+import GroupDocumentsPreview from '@/components/group/Modules/Documents/GroupDocumentsPreview.vue'
+import OrganizationTagFactory from '../../../../factories/tag.factory'
 
 describe('GroupSnapshotTab', () => {
-  beforeEach(() => {
-    const usersStore = useUsersStore(pinia)
-    usersStore.$patch({
-      id: 123,
-      userFromApi: {},
-      permissions: {},
-      getUser: vi.fn(),
-    } as any)
+  it('display modules', async () => {
+    const group = groupTranslatedFactory.generate(groupSkeleton())
+    group.sdgs = [1, 2, 3, 4, 5]
+    group.tags = [
+      OrganizationTagFactory.generate(),
+      OrganizationTagFactory.generate(),
+      OrganizationTagFactory.generate(),
+    ]
+    group.$t.description = ''
 
-    const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore.$patch({
-      current: { code: 'TEST' } as unknown as OrganizationOutput,
-    } as any)
-  })
-  it('should render GroupSnapshotTab component', () => {
-    let wrapper = lpiShallowMount(GroupSnapshotTab, buildParams(protoPropsLoading()))
+    console.log(group)
 
-    expect(wrapper.exists()).toBeTruthy()
-  })
+    const wrapper = lpiShallowMount(GroupSnapshotTab, {
+      props: {
+        group,
+      },
+    })
 
-  it('should display loading state then render', async () => {
-    let wrapper = lpiShallowMount(GroupSnapshotTab, buildParams(protoPropsLoading()))
+    expect(wrapper.findComponent(GroupDescriptionPreview).exists()).toBe(false)
+    expect(wrapper.findComponent(GroupSimilarsPreview).exists()).toBe(false)
+    expect(wrapper.findComponent(GroupMembersPreview).exists()).toBe(false)
+    expect(wrapper.findComponent(GroupSubPreview).exists()).toBe(false)
+    expect(wrapper.findComponent(GroupMembersPreview).exists()).toBe(false)
+    expect(wrapper.findComponent(GroupProjectsPreview).exists()).toBe(false)
+    expect(wrapper.findComponent(GroupDocumentsPreview).exists()).toBe(false)
 
-    expect(wrapper.find('.skeleton').exists()).toBe(true)
-    expect(wrapper.find('.projects .see-more-button').exists()).toBe(false)
-    expect(wrapper.find('.members .see-more-button').exists()).toBe(false)
+    // add modules numbers
+    const newGroup = groupTranslatedFactory.generate()
+    newGroup.modules.featured_projects = 6
+    newGroup.modules.members = 8
+    newGroup.modules.conferences = 8
+    newGroup.modules.publications = 8
+    newGroup.modules.similars = 8
+    newGroup.modules.subgroups = 8
+    newGroup.$t.description = 'description'
 
-    wrapper.setProps(protoPropsLoaded([{ id: 1 }], [{ id: 2 }]))
+    wrapper.setProps({
+      group: newGroup,
+    })
 
-    await wrapper.vm.$nextTick()
+    await flushPromises()
 
-    expect(wrapper.find('.skeleton').exists()).toBe(false)
-    expect(wrapper.find('.projects .see-more-button').exists()).toBe(true)
-    expect(wrapper.find('.members .see-more-button').exists()).toBe(true)
-  })
-
-  it("should not display list section when there's no project or member", async () => {
-    let wrapper = lpiShallowMount(GroupSnapshotTab, buildParams(protoPropsLoaded([], [])))
-
-    expect(wrapper.find('.skeleton').exists()).toBe(false)
-    expect(wrapper.find('.projects').exists()).toBe(false)
-    expect(wrapper.find('.members').exists()).toBe(false)
+    expect(wrapper.findComponent(GroupDescriptionPreview).exists()).toBe(true)
+    expect(wrapper.findComponent(GroupSimilarsPreview).exists()).toBe(true)
+    expect(wrapper.findComponent(GroupMembersPreview).exists()).toBe(true)
+    expect(wrapper.findComponent(GroupSubPreview).exists()).toBe(true)
+    expect(wrapper.findComponent(GroupMembersPreview).exists()).toBe(true)
+    expect(wrapper.findComponent(GroupProjectsPreview).exists()).toBe(true)
+    expect(wrapper.findComponent(GroupDocumentsPreview).exists()).toBe(true)
   })
 })

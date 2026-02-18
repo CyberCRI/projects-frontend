@@ -46,6 +46,7 @@ import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
 import { TranslatedAnnouncement } from '@/models/announcement.model'
 import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
+import { usePublicURL } from '@/composables/usePublic'
 
 const props = withDefaults(
   defineProps<{

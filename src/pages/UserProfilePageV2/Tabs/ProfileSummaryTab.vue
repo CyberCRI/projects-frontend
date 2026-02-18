@@ -26,7 +26,7 @@
               :to="{ name: 'ResearcherPublicationsOther', params: { userId: user.id } }"
             />
           </div>
-          <ResearcherDocumentsList
+          <OwnResearcherDocumentsList
             doc-type="publications"
             preview
             :limit="documentsLimit"
@@ -47,7 +47,7 @@
               :to="{ name: 'ResearcherConferencesOther', params: { userId: user.id } }"
             />
           </div>
-          <ResearcherDocumentsList
+          <OwnResearcherDocumentsList
             doc-type="conferences"
             preview
             :limit="documentsLimit"
@@ -160,7 +160,7 @@ import UserDescriptions from '@/components/people/UserDescriptions.vue'
 import SkillSummary from '@/components/people/skill/SkillSummary.vue'
 import useUsersStore from '@/stores/useUsers.ts'
 import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
-import ResearcherDocumentsList from '@/components/people/Researcher/ResearcherDocumentsList.vue'
+import OwnResearcherDocumentsList from '@/components/people/Researcher/OwnResearcherDocumentsList.vue'
 
 export default {
   name: 'ProfileSummaryTab',
@@ -171,7 +171,7 @@ export default {
     UserDescriptions,
     SkillSummary,
     SeeMoreArrow,
-    ResearcherDocumentsList,
+    OwnResearcherDocumentsList,
   },
 
   inject: {

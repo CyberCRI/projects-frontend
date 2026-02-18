@@ -8,7 +8,7 @@ const organizationsStore = useOrganizations()
 const usersStore = useUsersStore()
 const toaster = useToasterStore()
 
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 
 const orgCode = computed(() => organizationsStore?.current?.code || '')
 

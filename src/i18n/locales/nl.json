@@ -1006,7 +1006,12 @@
         "label": "Editor",
         "help": "Editor"
       }
-    }
+    },
+    "view": "Beeldgroep",
+    "conferences": "Conferenties",
+    "publications": "Publicaties",
+    "similars": "Groepen vergelijkbaar",
+    "presentation": "Presentatie"
   },
   "header": {
     "private": "Privé: alleen zichtbaar voor teamleden",

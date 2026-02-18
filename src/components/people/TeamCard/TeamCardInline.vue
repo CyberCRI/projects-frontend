@@ -1,85 +1,42 @@
 <template>
-  <div
-    class="team-card-small"
-    :class="{ passive: !iconName }"
-    :data-test="`user-card-${user.id}`"
-    @click="iconName ? emit('user-clicked') : null"
-  >
-    <div class="user-container">
-      <CroppedApiImage
-        :alt="
-          user.keycloack_id ? `${user.given_name} ${user.family_name} image` : `${user.name} image`
-        "
-        class="img-container"
-        :picture-data="user.profile_picture"
-        picture-size="medium"
-        :default-picture="DEFAULT_USER_PATATOID"
-      />
-
-      <div class="user-info">
-        <div v-if="isNotGroup(user)" class="name">
-          {{ capitalize(user.given_name) }}
-          {{ capitalize(user.family_name) }}
-        </div>
-        <div v-else class="name">
-          {{ capitalize(user.name) }}
-        </div>
-        <div v-if="roleLabel" class="role">
-          {{ t(roleLabel) }}
-        </div>
-
-        <div v-if="user.job" class="title">
-          {{ user.job }}
-        </div>
+  <GroupMemberItem :member="user" :role-label="roleLabel" @click="removeMember">
+    <template #actions>
+      <div v-if="iconName" class="icon">
+        <IconImage :name="iconName" @click="removeMember" />
       </div>
-    </div>
-
-    <div v-if="iconName" class="icon">
-      <IconImage :name="iconName" @click="emit('user-clicked')" />
-    </div>
-  </div>
+    </template>
+  </GroupMemberItem>
 </template>
 
-<script setup>
-import { capitalize } from '@/functs/string'
-import { isNotGroup } from '@/functs/users'
-
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
-import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import useUsersStore from '@/stores/useUsers.ts'
-import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
+import useUsersStore from '@/stores/useUsers'
+import GroupMemberItem from '@/components/group/Modules/Members/GroupMemberItem.vue'
+import { GroupMember } from '@/models/group.model'
+import { IconImageChoice } from '@/functs/IconImage'
 
-defineOptions({ name: 'TeamCardInline' })
+const props = withDefaults(
+  defineProps<{
+    user: GroupMember
+    icon?: IconImageChoice
+    roleLabel?: string
+  }>(),
+  { icon: null, roleLabel: undefined }
+)
 
-const props = defineProps({
-  user: {
-    type: Object,
-    required: true,
-  },
-
-  roleLabel: {
-    type: [String, null],
-    default: null,
-  },
-
-  icon: {
-    type: String,
-    default: null,
-  },
-})
-
-const emit = defineEmits(['user-clicked'])
-const { t } = useNuxtI18n()
+const emit = defineEmits(['click'])
 const usersStore = useUsersStore()
-
-const currentUser = computed(() => {
-  return usersStore.userFromApi
-})
 
 const iconName = computed(() => {
   if (props.icon) return props.icon
-  return props.user.id !== currentUser.value.id ? 'Close' : null
+  return props.user.id !== usersStore.userFromApi.id ? 'Close' : null
 })
+
+const removeMember = () => {
+  if (props.icon) {
+    emit('click')
+  }
+}
 </script>
 
 <style lang="scss" scoped>

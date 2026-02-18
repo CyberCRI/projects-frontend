@@ -1006,7 +1006,12 @@
         "label": "Editor",
         "help": "Editor"
       }
-    }
+    },
+    "view": "Ver grupo",
+    "conferences": "Conferencias",
+    "publications": "Publicaciones",
+    "similars": "Grupos similares",
+    "presentation": "Presentación"
   },
   "header": {
     "private": "Privada: visible sólo a los miembros del equipo",
