@@ -1011,7 +1011,9 @@
     "conferences": "Conferèncias",
     "publications": "Publicacions",
     "similars": "Grups similars",
-    "presentation": "Presentació"
+    "presentation": "Presentació",
+    "locations": "Ubicacions",
+    "location": "Adreça"
   },
   "header": {
     "private": "Privat: només visible per als membres de l' equip",

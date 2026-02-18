@@ -1011,7 +1011,9 @@
     "conferences": "Conférences",
     "publications": "Publications",
     "similars": "Groupes similaires",
-    "presentation": "Présentation"
+    "presentation": "Présentation",
+    "locations": "Emplacements",
+    "location": "Adresse"
   },
   "header": {
     "private": "Privée: visible uniquement par les membres de l’équipe",

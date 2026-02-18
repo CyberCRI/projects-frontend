@@ -1011,7 +1011,9 @@
     "conferences": "Conferenties",
     "publications": "Publicaties",
     "similars": "Groepen vergelijkbaar",
-    "presentation": "Presentatie"
+    "presentation": "Presentatie",
+    "locations": "Locaties",
+    "location": "Adres"
   },
   "header": {
     "private": "Privé: alleen zichtbaar voor teamleden",

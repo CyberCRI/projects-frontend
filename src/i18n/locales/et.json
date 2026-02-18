@@ -1011,7 +1011,9 @@
     "conferences": "Konverentsid",
     "publications": "Trükised",
     "similars": "Rühmad sarnased",
-    "presentation": "Esitlus"
+    "presentation": "Esitlus",
+    "locations": "Asukohad",
+    "location": "Aadress"
   },
   "header": {
     "private": "Privaatne: nähtav ainult meeskonnaliikmetele",
