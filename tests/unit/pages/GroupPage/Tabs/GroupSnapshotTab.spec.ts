@@ -14,6 +14,7 @@ import GroupSubPreview from '@/components/group/Modules/GroupSub/GroupSubPreview
 import GroupDocumentsPreview from '@/components/group/Modules/Documents/GroupDocumentsPreview.vue'
 import OrganizationTagFactory from '../../../../factories/tag.factory'
 import GroupLocationPreview from '@/components/group/Modules/Locations/GroupLocationPreview.vue'
+import GroupGalleryPreview from '@/components/group/Modules/Gallery/GroupGalleryPreview.vue'
 
 describe('GroupSnapshotTab', () => {
   it('display modules', async () => {
@@ -42,6 +43,7 @@ describe('GroupSnapshotTab', () => {
     expect(wrapper.findComponent(GroupProjectsPreview).exists()).toBe(false)
     expect(wrapper.findComponent(GroupDocumentsPreview).exists()).toBe(false)
     expect(wrapper.findComponent(GroupLocationPreview).exists()).toBe(false)
+    expect(wrapper.findComponent(GroupGalleryPreview).exists()).toBe(false)
 
     // add modules numbers
     const newGroup = groupTranslatedFactory.generate()
@@ -52,6 +54,7 @@ describe('GroupSnapshotTab', () => {
     newGroup.modules.similars = 8
     newGroup.modules.subgroups = 8
     newGroup.modules.locations = 8
+    newGroup.modules.gallery = 8
     newGroup.$t.description = 'description'
 
     wrapper.setProps({
@@ -68,5 +71,6 @@ describe('GroupSnapshotTab', () => {
     expect(wrapper.findComponent(GroupProjectsPreview).exists()).toBe(true)
     expect(wrapper.findComponent(GroupDocumentsPreview).exists()).toBe(true)
     expect(wrapper.findComponent(GroupLocationPreview).exists()).toBe(true)
+    expect(wrapper.findComponent(GroupGalleryPreview).exists()).toBe(true)
   })
 })

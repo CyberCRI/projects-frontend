@@ -43,6 +43,11 @@ export default function useGroupPagesRoutes() {
           name: 'groupLocations',
           component: () => import('../pages/GroupPageV2/Tabs/Locations/GroupLocationsTab.vue'),
         },
+        {
+          path: 'gallery',
+          name: 'groupGallery',
+          component: () => import('../pages/GroupPageV2/Tabs/Gallery/GroupGalleryTab.vue'),
+        },
         // retro compat
         {
           path: 'Edit',
@@ -68,6 +73,11 @@ export default function useGroupPagesRoutes() {
           path: 'projects/edit',
           name: 'groupProjectsEdit',
           component: () => import('../pages/GroupPageV2/Tabs/Projects/GroupProjectsEditTab.vue'),
+        },
+        {
+          path: 'gallery/edit',
+          name: 'groupGalleryEdit',
+          component: () => import('../pages/GroupPageV2/Tabs/Gallery/GroupGalleryTab.vue'),
         },
       ],
       props: true,
