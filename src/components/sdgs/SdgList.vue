@@ -7,6 +7,8 @@
 </template>
 
 <script setup lang="ts">
+import { usePublicURL } from '@/composables/usePublic'
+
 const props = withDefaults(
   defineProps<{
     sdgs: number[]

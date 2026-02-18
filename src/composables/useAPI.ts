@@ -2,13 +2,14 @@ import useToasterStore from '@/stores/useToaster'
 // import useProjectsStore from '@/stores/useProjects'
 import { merge } from 'es-toolkit'
 import { useRuntimeConfig } from '#imports'
+import useUsersStore from '@/stores/useUsers'
 
 export const defaultOptions = () => {
   let _localStorage = null
   if (import.meta.client) _localStorage = window.localStorage
   const localStorage = _localStorage
   const runtimeConfig = useRuntimeConfig()
-  const usersStore = useUsers()
+  const usersStore = useUsersStore()
   const headers = useRequestHeaders(['cookie'])
 
   return {

@@ -143,7 +143,7 @@ const { translateResearcherDocuments } = useAutoTranslate()
 const orgaCode = useOrganizationCode()
 
 // when we click to "show similars documents"
-const documentSelected = ref<Document>()
+const documentSelected = ref<TranslatedDocument>()
 
 const documents = ref<PaginationResult<Document>>()
 
@@ -161,8 +161,8 @@ const documentsAnalytics = ref<ResearcherDocumentAnalytics>({
 })
 
 const SORTING_RESULTS = {
-  publication_date: $t('common.order-asc'),
-  '-publication_date': $t('common.order-desc'),
+  publication_date: t('common.order-asc'),
+  '-publication_date': t('common.order-desc'),
 }
 const SORTING_DEFAULT = '-publication_date'
 // filter backend query

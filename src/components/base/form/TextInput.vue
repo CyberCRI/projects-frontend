@@ -29,6 +29,7 @@
         :disabled="disabled"
         :data-test="dataTest"
         :maxlength="maxLength"
+        @change="$emit('change', $event)"
         @keydown.enter="$emit('enter')"
         @focus="$emit('focus', $event)"
         @blur="$emit('blur', $event)"
@@ -122,7 +123,7 @@ export default {
     },
   },
 
-  emits: ['update:modelValue', 'enter', 'focus', 'blur'],
+  emits: ['update:modelValue', 'enter', 'focus', 'blur', 'change'],
 
   data() {
     return {

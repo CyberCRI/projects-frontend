@@ -1006,7 +1006,12 @@
         "label": "Toimetaja",
         "help": "Toimetaja"
       }
-    }
+    },
+    "view": "Vaade grupp",
+    "conferences": "Konverentsid",
+    "publications": "Trükised",
+    "similars": "Rühmad sarnased",
+    "presentation": "Esitlus"
   },
   "header": {
     "private": "Privaatne: nähtav ainult meeskonnaliikmetele",

@@ -3,7 +3,6 @@ import {
   FollowOutput,
   FollowCategoryInput,
   UnfollowCategoryInput,
-  FollowProjectOutput,
 } from '@/models/follow.model'
 import { deleteFollow, postFollow, postFollowMany } from '@/api/follows.service'
 import {
@@ -13,7 +12,7 @@ import {
 } from '@/api/project-categories.service'
 import analytics from '@/analytics'
 
-async function follow(follow: FollowInput): Promise<FollowProjectOutput> {
+async function follow(follow: FollowInput) {
   const result = await postFollow(follow)
 
   analytics.follow.follow({

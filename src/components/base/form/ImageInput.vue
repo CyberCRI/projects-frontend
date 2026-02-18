@@ -58,6 +58,8 @@ const props = withDefaults(
   }
 )
 
+const { t } = useNuxtI18n()
+
 const emit = defineEmits<{
   'upload-image': [File]
   'upload-images': [File[]]
@@ -70,9 +72,9 @@ const displayedLabel = computed(() => {
     return props.label
   }
   if (props.existingImage) {
-    return $t('picture.change-picture')
+    return t('picture.change-picture')
   }
-  return $t('picture.add-picture')
+  return t('picture.add-picture')
 })
 
 const labelRef = useTemplateRef('label')

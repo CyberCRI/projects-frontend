@@ -1,6 +1,7 @@
 import type {
   AddManyFollowedProject,
   FollowInput,
+  FollowProjectOutput,
   // FollowOutput,
   // FollowOutputList,
 } from '@/models/follow.model'
@@ -16,7 +17,10 @@ export async function getUserFollows(body: FollowInput, params) {
 }
 
 export async function postFollow(follow: FollowInput) {
-  return await useAPI(`project/${follow.project_id}/follow/`, { body: follow, method: 'POST' })
+  return await useAPI<FollowProjectOutput>(`project/${follow.project_id}/follow/`, {
+    body: follow,
+    method: 'POST',
+  })
   //.data.value
 }
 

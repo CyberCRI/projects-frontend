@@ -5,8 +5,6 @@ import {
   getGroupMember as fetchGetGroupMember,
   getGroupSimilar as fetchGetGroupSimilar,
   getSubGroup as fetchGetSubGroup,
-  getGroupLocation as fetchLocationsGroup,
-  getGroupGallery as fetchGroupGallery,
 } from '@/api/groups.service'
 import useAsyncAPI from '@/composables/useAsyncAPI'
 import useAsyncPaginationAPI from '@/composables/useAsyncPaginationAPI'
