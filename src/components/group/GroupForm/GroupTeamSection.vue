@@ -139,7 +139,6 @@ export default {
       this.$emit('update:model-value', team)
     },
     openDrawer(mode) {
-      console.log(this.teamModalMode)
       this.teamModalMode = mode
       this.teamModalVisible = true
     },

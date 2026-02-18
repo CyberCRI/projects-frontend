@@ -17,10 +17,4 @@ import { DEFAULT_GROUP_PATATOID } from '@/composables/usePatatoids'
 import CardLocationTooltip from '@/components/map/CardLocationTooltip.vue'
 
 const props = defineProps<{ location: AnyTranslatedLocation; group: TranslatedPeopleGroupModel }>()
-
-watch(
-  () => props.group,
-  () => console.log(props.group),
-  { immediate: true }
-)
 </script>
