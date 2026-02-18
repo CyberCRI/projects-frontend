@@ -7,5 +7,7 @@ export const IconMapLocationType = (locationType: LocationType): IconImageChoice
       return 'Sun'
     case 'team':
       return 'Users'
+    case 'address':
+      return 'Home'
   }
 }

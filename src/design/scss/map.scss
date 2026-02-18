@@ -51,6 +51,10 @@
       border-color: $location-team;
     }
 
+    &.address {
+      border-color: $location-address;
+    }
+
     &__dot {
       width: 20px;
       height: 20px;
@@ -64,6 +68,10 @@
 
       &.team {
         background: $location-team;
+      }
+
+      &.address {
+        background: $location-address;
       }
     }
 
@@ -129,6 +137,10 @@
 
       &.team {
         background: $location-team;
+      }
+
+      &.address {
+        background: $location-address;
       }
     }
   }
@@ -275,6 +287,10 @@
 
       &.impact svg {
         background-color: $location-impact;
+      }
+
+      &.address svg {
+        background-color: $location-address;
       }
 
       &:last-child {

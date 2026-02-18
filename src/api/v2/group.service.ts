@@ -5,6 +5,8 @@ import {
   getGroupMember as fetchGetGroupMember,
   getGroupSimilar as fetchGetGroupSimilar,
   getSubGroup as fetchGetSubGroup,
+  getGroupLocation as fetchLocationsGroup,
+  getGroupGallery as fetchGroupGallery,
 } from '@/api/groups.service'
 import useAsyncAPI from '@/composables/useAsyncAPI'
 import useAsyncPaginationAPI from '@/composables/useAsyncPaginationAPI'
@@ -137,6 +139,51 @@ export const getSubGroup = (
       }),
     {
       translate: translateGroups,
+      watch: onlyRefs([organizationCode, groupId]),
+      ...config,
+    }
+  )
+}
+
+export const getGroupLocation = (
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
+  groupId: RefOrRaw<GroupModel['id']>,
+  config = {}
+) => {
+  const { translateProjectLocations } = useAutoTranslate()
+  const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::locations`)
+
+  return useAsyncAPI(
+    key,
+    ({ config }) =>
+      fetchLocationsGroup(unref(organizationCode), unref(groupId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
+    {
+      translate: translateProjectLocations,
+      watch: onlyRefs([organizationCode, groupId]),
+      ...config,
+    }
+  )
+}
+
+export const getGroupGallery = (
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
+  groupId: RefOrRaw<GroupModel['id']>,
+  config = {}
+) => {
+  const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::gallery`)
+
+  return useAsyncPaginationAPI(
+    key,
+    async ({ config }) => {
+      return fetchGroupGallery(unref(organizationCode), unref(groupId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      })
+    },
+    {
       watch: onlyRefs([organizationCode, groupId]),
       ...config,
     }

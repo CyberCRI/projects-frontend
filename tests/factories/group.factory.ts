@@ -4,6 +4,7 @@ import { GroupModel, GroupModelInput } from '@/models/group.model'
 import { PeopleGroupModel, TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import { ImageFactory } from './image.factory'
 import { OrganizationOutputFactory } from './organization.factory'
+import { BaseTranslatedLocationFactory } from './location.factory'
 
 export const groupFactory = createFactory<GroupModel>((faker) => ({
   ...BaseFactory.generate(),
@@ -37,14 +38,17 @@ export const peopleGroupFactory = createFactory<PeopleGroupModel>((faker) => ({
     conferences: 0,
     subgroups: 0,
     similars: 0,
+    locations: 0,
   },
   sdgs: [],
   tags: [],
+  location: null,
   hierarchy: null,
 }))
 
 export const groupTranslatedFactory = createFactory<TranslatedPeopleGroupModel>((faker) => ({
   ...peopleGroupFactory.generate(),
+  location: BaseTranslatedLocationFactory.generate(),
   $t: {
     name: faker.name.title(),
     description: faker.lorem.text(100),

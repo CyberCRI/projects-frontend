@@ -1,10 +1,11 @@
-import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import { GeneralLocationPeopleGroup, TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import { TranslatedOrganizationModel } from '@/models/organization.model'
 import { TranslatedPeopleModel } from '@/models/people.model'
 import { TranslatedProject } from '@/models/project.model'
 import { AttachmentFileModel, TranslatedAttachmentFile } from '@/models/attachment-file.model'
 import { AttachmentLinkModel, TranslatedAttachmentLink } from '@/models/attachment-link.model'
 import { TranslatedDocument } from '@/interfaces/researcher'
+import { TranslatedLocation } from '@/models/location.model'
 
 // type can be computed or object
 type RefOrRaw<DataT> = ComputedRef<DataT> | Ref<DataT> | DataT
@@ -119,8 +120,38 @@ export default function useAutoTranslate() {
   const translateGoal = (goal) => translateEntity(goal, ['title', 'description'])
   const translateGoals = (goals) => translateEntities(goals, translateGoal)
 
-  const translateLocation = (location) => translateEntity(location, ['title', 'description'])
-  const translateLocations = (locations) => translateEntities(locations, translateLocation)
+  const translateLocation = (location) =>
+    translateEntity<TranslatedLocation>(location, ['title', 'description'])
+  const translateLocations = (locations) =>
+    translateEntities<TranslatedLocation>(locations, translateLocation)
+
+  const translateProjectLocation = (location) => {
+    return computed<TranslatedLocation>(() => {
+      if (!location) {
+        return location
+      }
+      return {
+        ...unref(translateLocation(location)),
+        project: unref(translateProject(location.project)),
+      }
+    })
+  }
+  const translateProjectLocations = (Locations) =>
+    translateEntities<TranslatedLocation>(Locations, translateProjectLocation)
+
+  const translatePeopleGroupLocation = (location) => {
+    return computed<GeneralLocationPeopleGroup>(() => {
+      if (!location) {
+        return location
+      }
+      return {
+        ...unref(translateLocation(location)),
+        group: unref(translateGroup(location.group)),
+      }
+    })
+  }
+  const translatePeopleGroupLocations = (Locations) =>
+    translateEntities<GeneralLocationPeopleGroup>(Locations, translatePeopleGroupLocation)
 
   const translateProjectMessage = (message) => translateEntity(message, ['content'])
   const translateProjectMessages = (messages) =>
@@ -152,7 +183,19 @@ export default function useAutoTranslate() {
   // -----------------
   // groups
   const translateGroup = (group) =>
-    translateEntity<TranslatedPeopleGroupModel>(group, ['name', 'description', 'short_description'])
+    computed(() => {
+      const _group = unref(
+        translateEntity<TranslatedPeopleGroupModel>(group, [
+          'name',
+          'description',
+          'short_description',
+        ])
+      )
+      return {
+        ..._group,
+        location: _group?.location ? unref(translateLocation(_group.location)) : null,
+      }
+    })
   const translateGroups = (groups) =>
     translateEntities<TranslatedPeopleGroupModel>(groups, translateGroup)
 
@@ -279,6 +322,9 @@ export default function useAutoTranslate() {
     translateProjectMessage,
     translateProjectMessages,
 
+    translateProjectLocation,
+    translateProjectLocations,
+
     // people
     translateUser,
     translateUsers,
@@ -290,6 +336,8 @@ export default function useAutoTranslate() {
     // groups
     translateGroup,
     translateGroups,
+    translatePeopleGroupLocation,
+    translatePeopleGroupLocations,
 
     // org
     translateOrganization,

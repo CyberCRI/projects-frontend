@@ -14,6 +14,7 @@
       :group="group"
       :is-loading="isLoading"
     />
+    <GroupLocationPreview v-if="group.modules.locations" :group="group" :is-loading="isLoading" />
     <GroupDocumentsPreview
       v-if="group.modules.publications"
       document-type="publications"
