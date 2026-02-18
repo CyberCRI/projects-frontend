@@ -6,7 +6,6 @@ import {
   getGroupSimilar as fetchGetGroupSimilar,
   getSubGroup as fetchGetSubGroup,
   getGroupLocation as fetchLocationsGroup,
-  getGroupGallery as fetchGroupGallery,
 } from '@/api/groups.service'
 import useAsyncAPI from '@/composables/useAsyncAPI'
 import useAsyncPaginationAPI from '@/composables/useAsyncPaginationAPI'
@@ -162,28 +161,6 @@ export const getGroupLocation = (
       }),
     {
       translate: translateProjectLocations,
-      watch: onlyRefs([organizationCode, groupId]),
-      ...config,
-    }
-  )
-}
-
-export const getGroupGallery = (
-  organizationCode: RefOrRaw<OrganizationModel['code']>,
-  groupId: RefOrRaw<GroupModel['id']>,
-  config = {}
-) => {
-  const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::gallery`)
-
-  return useAsyncPaginationAPI(
-    key,
-    async ({ config }) => {
-      return fetchGroupGallery(unref(organizationCode), unref(groupId), {
-        ...DEFAULT_CONFIG,
-        ...config,
-      })
-    },
-    {
       watch: onlyRefs([organizationCode, groupId]),
       ...config,
     }

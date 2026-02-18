@@ -12,7 +12,6 @@ import useAPI from '@/composables/useAPI'
 import { ProjectModel } from '@/models/project.model'
 import { PeopleGroupModel } from '@/models/invitation.model'
 import { LocationModel } from '@/models/location.model'
-import { ImageModel } from '@/models/image.model'
 
 // HIERARCHY
 export async function getHierarchyGroups(organizationCode: string, config = {}) {
@@ -175,41 +174,4 @@ export async function getGroupLocation(organizationCode: string, groupId: number
     `organization/${organizationCode}/people-group/${groupId}/locations/`,
     config
   )
-}
-
-export function getGroupGallery(organizationCode: string, groupId: number, config = {}) {
-  return useAPI<PaginationResult<ImageModel>>(
-    `organization/${organizationCode}/people-group/${groupId}/gallery/`,
-    {
-      ...config,
-    }
-  )
-}
-
-export function deleteGroupGallery(
-  organizationCode: string,
-  groupId: number,
-  imageId: number,
-  config = {}
-) {
-  return useAPI<ImageModel>(
-    `organization/${organizationCode}/people-group/${groupId}/gallery/${imageId}/`,
-    {
-      ...config,
-      method: 'DELETE',
-    }
-  )
-}
-
-export function postGroupGallery(
-  organizationCode: string,
-  groupId: number,
-  body: FormData,
-  config = {}
-) {
-  return useAPI<ImageModel>(`organization/${organizationCode}/people-group/${groupId}/gallery/`, {
-    ...config,
-    body,
-    method: 'POST',
-  })
 }
