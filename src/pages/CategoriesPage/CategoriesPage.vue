@@ -2,9 +2,7 @@
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import { getOrganizationByCode } from '@/api/organizations.service'
 
-const { isAdmin } = usePermissions()
-
-const { canCreateProject } = usePermissions()
+const { isAdmin, canCreateProject } = usePermissions()
 const projectCategoriesStore = useProjectCategories()
 const { searchFromQuery } = useSearch('projects')
 const { t } = useNuxtI18n()

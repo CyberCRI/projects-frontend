@@ -281,6 +281,12 @@ export default {
           label: this.$t('account.role.facilitator'),
           value: `organization:#${this.organizationsStore.current.id}:facilitators`,
         },
+
+        {
+          name: 'viewers',
+          label: this.$t('account.role.viewer'),
+          value: `organization:#${this.organizationsStore.current.id}:viewers`,
+        },
         {
           name: 'admins',
           label: this.$t('account.role.admin'),

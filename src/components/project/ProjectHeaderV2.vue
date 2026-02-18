@@ -108,9 +108,10 @@ export default {
   flex-basis: 260px;
   max-height: 260px;
   max-width: 260px;
-  height: 100%;
+  height: 100vh; /* hacky way to give some height - 100% doesnt - clamped by */
   width: 100%;
   align-self: center;
+  position: relative;
 }
 
 .text-content {
