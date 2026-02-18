@@ -60,15 +60,11 @@
       />
     </div>
 
-    <div class="spacer" />
-
     <!-- Description -->
     <div class="description">
       <label>
         {{ $t('group.form.description-label') }}
-
         <LpiButton
-          v-if="!form.description || isAddMode"
           class="add-btn"
           :btn-icon="form.description ? 'Pen' : 'Plus'"
           data-test="add-description"
@@ -82,7 +78,37 @@
       </div>
     </div>
 
-    <div class="spacer" />
+    <!-- tags -->
+    <div class="description">
+      <label>
+        {{ $t('group.form.tags') }}
+        <LpiButton
+          class="add-btn"
+          :btn-icon="form.tags?.length ? 'Pen' : 'Plus'"
+          data-test="add-sdgs"
+          :label="$t(form.tags?.length ? 'group.form.edit' : 'group.form.add')"
+          @click="openTags = true"
+        />
+      </label>
+      <TagsFilterSummary v-model="form.tags" />
+      <TagsDrawer v-model="form.tags" :is-opened="openTags" @close="openTags = false" />
+    </div>
+
+    <!-- Sdg -->
+    <div class="description">
+      <label>
+        {{ $t('group.form.sdg-label') }}
+        <LpiButton
+          class="add-btn"
+          :btn-icon="form.sdgs?.length ? 'Pen' : 'Plus'"
+          data-test="add-sdgs"
+          :label="$t(form.sdgs?.length ? 'group.form.edit' : 'group.form.add')"
+          @click="openSdg = true"
+        />
+      </label>
+      <SdgList :sdgs="form.sdgs" />
+      <SdgsDrawer v-model="form.sdgs" :is-opened="openSdg" @close="openSdg = false" />
+    </div>
 
     <template v-if="!isReducedMode">
       <!-- Team -->
@@ -90,21 +116,15 @@
         <GroupTeamSection v-model="form.members" />
       </div>
 
-      <div class="spacer" />
-
       <!-- Featured projects -->
       <div class="project">
         <ProjectSection v-model="form.featuredProjects" />
       </div>
-
-      <div class="spacer" />
     </template>
     <!-- Parent group -->
     <div class="parent-group">
       <ParentGroupSection v-model="form.parentGroup" :groups="groups" />
     </div>
-
-    <div class="spacer" />
 
     <!-- Visibility -->
     <div class="visibility">
@@ -170,8 +190,19 @@ import { deleteGroup, getHierarchyGroups } from '@/api/groups.service.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { useRuntimeConfig } from '#imports'
 import { usePatatoids } from '@/composables/usePatatoids'
+import SdgsDrawer from '@/components/sdgs/SdgsDrawer.vue'
+import SdgList from '@/components/sdgs/SdgList.vue'
+import TagsDrawer from '@/components/tags/TagsDrawer.vue'
+import TagsFilterSummary from '@/components/search/Filters/TagsFilterSummary.vue'
 export default {
   name: 'GroupForm',
+
+  components: {
+    SdgList,
+    SdgsDrawer,
+    TagsDrawer,
+    TagsFilterSummary,
+  },
 
   props: {
     isAddMode: {
@@ -198,15 +229,21 @@ export default {
     const organizationsStore = useOrganizationsStore()
     const runtimeConfig = useRuntimeConfig()
     const defaultPictures = usePatatoids()
+    const { stateModal, openModal, closeModal } = useModal()
     return {
       organizationsStore,
       runtimeConfig,
       defaultPictures,
+      stateModal,
+      openModal,
+      closeModal,
     }
   },
 
   data() {
     return {
+      openSdg: false,
+      openTags: false,
       loading: false,
       currentPatatoidIndex: 1,
       visibilities: [
@@ -235,6 +272,8 @@ export default {
         parentGroup: null, // group object
         organization: '',
         members: [],
+        sdgs: [],
+        tags: [],
         featuredProjects: [],
         header_image: null,
         imageSizes: null,
@@ -533,9 +572,11 @@ export default {
     display: block;
   }
 
-  .spacer {
+  > *::after {
     border-top: 1px solid $lighter-gray;
-    margin-bottom: 34px;
+    margin: 34px 0;
+    content: '';
+    display: block;
   }
 }
 </style>

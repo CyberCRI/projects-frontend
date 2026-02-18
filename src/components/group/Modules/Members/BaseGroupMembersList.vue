@@ -17,28 +17,18 @@
       :pagination="pagination"
       :disable="isLoading"
     />
-    <BaseDrawer
-      no-footer
+    <GroupMemberDrawer
       :is-opened="!!userIdDrawer"
-      :title="$t('profile.drawer_title')"
+      :member-id="userIdDrawer"
       @close="closeProfile"
-      @confirm="closeProfile"
-    >
-      <UserProfileV2
-        v-if="!!userIdDrawer"
-        ref="profile-user"
-        :can-edit="false"
-        :user-id="userIdDrawer"
-        is-preview
-        @close="closeProfile"
-      />
-    </BaseDrawer>
+    />
   </FetchLoader>
 </template>
 
 <script setup lang="ts">
 import { getGroupMember } from '@/api/v2/group.service'
 import PaginationButtonsV2 from '@/components/base/navigation/PaginationButtonsV2.vue'
+import GroupMemberDrawer from '@/components/group/Modules/Members/GroupMemberDrawer.vue'
 import GroupMemberItem from '@/components/group/Modules/Members/GroupMemberItem.vue'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import { maxSkeleton, factoryPagination } from '@/skeletons/base.skeletons'

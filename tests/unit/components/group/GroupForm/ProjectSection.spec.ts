@@ -2,7 +2,7 @@ import { lpiMount } from '@/../tests/helpers/LpiMount'
 import english from '@/i18n/locales/en.json'
 import ProjectSection from '@/components/group/GroupForm/ProjectSection.vue'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { ProjectFactory } from '@/../tests/factories/project.factory'
+import { TranslatedProjectFactory } from '@/../tests/factories/project.factory'
 
 const i18n = {
   locale: 'en',
@@ -12,7 +12,7 @@ const i18n = {
   },
 }
 
-const projects = ProjectFactory.generateMany(2).map((project) => ({ ...project }))
+const projects = TranslatedProjectFactory.generateMany(2).map((project) => ({ ...project }))
 
 describe('ProjectSection.vue', () => {
   let wrapper

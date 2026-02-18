@@ -1,6 +1,6 @@
 import { createFactory } from 'faker-create-factory'
 
-import { ProjectModel, ProjectOutput } from '@/models/project.model'
+import { ProjectModel, ProjectOutput, TranslatedProject } from '@/models/project.model'
 import { BaseFactory } from './base.factory'
 import { ProjectCategoryOutputFactory } from './project-category.factory'
 import { ProjectTeamOutputFactory } from './project-member.factory'
@@ -49,6 +49,19 @@ export const ProjectFactory = createFactory<ProjectModel>((faker) => ({
   slug: faker.lorem.word(),
   updated_at: faker.date.past().toString(),
 }))
+
+export const TranslatedProjectFactory = createFactory<TranslatedProject>(() => {
+  const project = ProjectFactory.generate()
+
+  return {
+    ...project,
+    $t: {
+      title: project.title,
+      description: project.description,
+      purpose: project.purpose,
+    },
+  }
+})
 
 export const ProjectOutputFactory = createFactory<ProjectOutput>((faker) => ({
   ...ProjectFactory.generate(),

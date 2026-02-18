@@ -32,7 +32,7 @@
         v-for="group in listGroups"
         :key="group.id"
         :group="group"
-        :has-add-icon="true"
+        has-add-icon
         :data-test="`drawer-group-card-${group.id}`"
         @add="selectGroup(group)"
       />

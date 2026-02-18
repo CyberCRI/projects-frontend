@@ -40,8 +40,14 @@
                 :member="member"
                 role-label=""
                 mode="list"
+                @click="openProfile(member)"
               />
             </div>
+            <GroupMemberDrawer
+              :is-opened="!!leaderIdDrawer"
+              :member-id="leaderIdDrawer"
+              @close="closeProfile"
+            />
           </FetchLoader>
           <TagsList
             v-if="group.tags.length"
@@ -83,6 +89,7 @@ import GroupMemberItem from '@/components/group/Modules/Members/GroupMemberItem.
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { memberSkeleton } from '@/skeletons/group.skeletons'
 import { factoryPagination } from '@/skeletons/base.skeletons'
+import GroupMemberDrawer from '@/components/group/Modules/Members/GroupMemberDrawer.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -98,7 +105,7 @@ const groupId = computed(() => props.group.id)
 
 const { data: members, status } = getGroupMember(organizationCode, groupId, {
   query: { limit: 5 },
-  default: () => factoryPagination(() => memberSkeleton({ is_leader: true }), 2),
+  default: () => factoryPagination(() => memberSkeleton({ is_leader: true }), 1),
 })
 const leaders = computed(() => members.value?.filter((item) => item.is_leader))
 
@@ -118,6 +125,11 @@ const groupVisibilityIcon = computed(() =>
 const hasExtras = computed(() => {
   return props.group.sdgs.length
 })
+
+// preview leader
+const leaderIdDrawer = ref<number>()
+const openProfile = (leader) => (leaderIdDrawer.value = leader.id)
+const closeProfile = () => (leaderIdDrawer.value = null)
 </script>
 
 <style lang="scss" scoped>
@@ -214,9 +226,7 @@ const hasExtras = computed(() => {
   gap: 0.2rem;
 
   > * {
-    pointer-events: none;
-
-    // width: 100%;
+    width: 100%;
     height: unset !important;
     border: none !important;
 
