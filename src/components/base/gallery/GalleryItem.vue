@@ -20,9 +20,10 @@
 
 <script setup lang="ts">
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import { DEFAULT_IMAGE_PATATOID, usePatatoid } from '@/composables/usePatatoids'
+import { DEFAULT_IMAGE_PATATOID } from '@/composables/usePatatoids'
 import { ImageModel } from '@/models/image.model'
 import { StyleValue } from 'vue'
+import { usePublicURL } from '@/composables/usePublic'
 
 const props = withDefaults(
   defineProps<{
@@ -39,7 +40,7 @@ defineEmits<{
   delete: [ImageModel]
 }>()
 
-const defaultPicture = usePatatoid(DEFAULT_IMAGE_PATATOID)
+const defaultPicture = usePublicURL(DEFAULT_IMAGE_PATATOID)
 
 const error = ref(false)
 const onError = () => (error.value = true)

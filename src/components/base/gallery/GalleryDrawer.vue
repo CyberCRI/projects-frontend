@@ -49,10 +49,11 @@
 <script setup lang="ts">
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import GalleryItem from '@/components/base/gallery/GalleryItem.vue'
-import { DEFAULT_IMAGE_PATATOID, usePatatoid } from '@/composables/usePatatoids'
+import { DEFAULT_IMAGE_PATATOID } from '@/composables/usePatatoids'
 import { urlToImageModel } from '@/functs/imageSizesUtils'
 import { ImageModel } from '@/models/image.model'
 import { AsyncDataRequestStatus } from 'nuxt/app'
+import { usePublicURL } from '@/composables/usePublic'
 
 const props = withDefaults(
   defineProps<{
@@ -86,7 +87,7 @@ watch(
   }
 )
 
-const DEFAULT_IMAGE = urlToImageModel(usePatatoid(DEFAULT_IMAGE_PATATOID))
+const DEFAULT_IMAGE = urlToImageModel(usePublicURL(DEFAULT_IMAGE_PATATOID))
 const imageSelected = computed(() => props.images[localindex.value] ?? DEFAULT_IMAGE)
 const selectedIndex = computed(() => props.pagination.offset.value + localindex.value)
 
