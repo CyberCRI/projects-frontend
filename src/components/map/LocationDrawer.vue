@@ -97,10 +97,7 @@
                       @mounted="slotProps.addPointer"
                       @unmounted="slotProps.removePointer"
                     >
-                      <LocationTooltip
-                        v-if="location.title || location.description"
-                        :location="location"
-                      />
+                      <LocationTooltip :location="location" />
                     </MapPointer>
                   </template>
                   <template v-if="slotProps.map && suggestedLocations">

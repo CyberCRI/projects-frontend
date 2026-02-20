@@ -926,7 +926,6 @@
     "conferences": "Conferences",
     "publications": "Publications",
     "similars": "Groups similars",
-    "projects-locations": "Locations",
     "location": "Address",
     "share": "Share",
     "the-team": "The team ({users})",
@@ -1013,7 +1012,8 @@
         "label": "Editor",
         "help": "Editor"
       }
-    }
+    },
+    "projects-locations": "Project locations"
   },
   "header": {
     "private": "Private: visible only to team members",
