@@ -44,7 +44,6 @@ export const peopleGroupFactory = createFactory<PeopleGroupModel>((faker) => ({
   },
   sdgs: [],
   tags: [],
-  location: null,
   hierarchy: null,
 }))
 
