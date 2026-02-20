@@ -87,10 +87,14 @@ watch(
   }
 )
 
+// if error can't be charged
 const DEFAULT_IMAGE = urlToImageModel(usePublicURL(DEFAULT_IMAGE_PATATOID))
 const imageSelected = computed(() => props.images[localindex.value] ?? DEFAULT_IMAGE)
 const selectedIndex = computed(() => props.pagination.offset.value + localindex.value)
 
+// this change the "transition" postion
+// if we press `previous` we go to left
+// otherwise to right
 watch(
   selectedIndex,
   (newIndex, oldIndex) => {
@@ -103,22 +107,18 @@ watch(
   { flush: 'pre', immediate: true }
 )
 
-const canPrev = computed(() => {
-  return selectedIndex.value !== 0
-})
+const canPrev = computed(() => selectedIndex.value !== 0)
 const prev = () => {
-  if (localindex.value === 0) {
+  if (localindex.value <= 0) {
     props.pagination.prev()
     localindex.value = props.pagination.limit.value - 1
   } else {
     localindex.value -= 1
   }
 }
-const canNext = computed(() => {
-  return selectedIndex.value + 1 < props.pagination.count.value
-})
+const canNext = computed(() => selectedIndex.value + 1 < props.pagination.count.value)
 const next = () => {
-  if (localindex.value + 1 === props.pagination.limit.value) {
+  if (localindex.value + 1 >= props.pagination.limit.value) {
     props.pagination.next()
     localindex.value = 0
   } else {
