@@ -81,7 +81,7 @@
     <!-- tags -->
     <div class="description">
       <label>
-        {{ $t('group.form.tags') }}
+        {{ $t('tag.title') }}
         <LpiButton
           class="add-btn"
           :btn-icon="form.tags?.length ? 'Pen' : 'Plus'"
@@ -97,7 +97,7 @@
     <!-- Sdg -->
     <div class="description">
       <label>
-        {{ $t('group.form.sdg-label') }}
+        {{ $t('sdg.title') }}
         <LpiButton
           class="add-btn"
           :btn-icon="form.sdgs?.length ? 'Pen' : 'Plus'"
@@ -108,6 +108,30 @@
       </label>
       <SdgList :sdgs="form.sdgs" />
       <SdgsDrawer v-model="form.sdgs" :is-opened="openSdg" @close="openSdg = false" />
+    </div>
+
+    <!-- locations -->
+    <div class="description">
+      <label>
+        {{ $t('group.location') }}
+        <LpiButton
+          class="add-btn"
+          :btn-icon="form.locations.length ? 'Pen' : 'Plus'"
+          data-test="add-location"
+          :label="$t(form.locations.length ? 'group.form.edit' : 'group.form.add')"
+          @click="openModal()"
+        />
+      </label>
+      <LocationList :locations="form.locations" editable @delete="removeLocations" />
+      <LocationDrawer
+        :is-opened="stateModal"
+        :locations="form.locations"
+        editable
+        :location-types="['address']"
+        @close="closeModal()"
+        @submit="submitLocations"
+        @delete="removeLocations"
+      />
     </div>
 
     <template v-if="!isReducedMode">
@@ -186,7 +210,13 @@
 </template>
 
 <script>
-import { deleteGroup, getHierarchyGroups } from '@/api/groups.service.ts'
+import {
+  deleteGroup,
+  getHierarchyGroups,
+  patchGroupLocation,
+  postGroupLocation,
+  removeGroupLocation,
+} from '@/api/groups.service.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { useRuntimeConfig } from '#imports'
 import { usePatatoids } from '@/composables/usePatatoids'
@@ -194,6 +224,9 @@ import SdgsDrawer from '@/components/sdgs/SdgsDrawer.vue'
 import SdgList from '@/components/sdgs/SdgList.vue'
 import TagsDrawer from '@/components/tags/TagsDrawer.vue'
 import TagsFilterSummary from '@/components/search/Filters/TagsFilterSummary.vue'
+import LocationDrawer from '@/components/map/LocationDrawer.vue'
+import LocationList from '@/components/map/LocationList.vue'
+
 export default {
   name: 'GroupForm',
 
@@ -202,6 +235,8 @@ export default {
     SdgsDrawer,
     TagsDrawer,
     TagsFilterSummary,
+    LocationDrawer,
+    LocationList,
   },
 
   props: {
@@ -274,6 +309,7 @@ export default {
         members: [],
         sdgs: [],
         tags: [],
+        locations: [],
         featuredProjects: [],
         header_image: null,
         imageSizes: null,
@@ -358,6 +394,44 @@ export default {
         name: 'HomeRoot',
       })
     },
+    async removeLocations(location) {
+      // remove location (if already exists, send request)
+      if (location.id) {
+        await removeGroupLocation(
+          this.organizationsStore.current.code,
+          this.$route.params.groupId,
+          location.id
+        )
+        this.form.locations = this.form.locations.filter((el) => el.id !== location.id)
+      } else {
+        this.form.locations = this.form.locations.filter((el) => el !== location)
+      }
+      this.closeModal()
+    },
+    async submitLocations(location) {
+      const groupId = this.$route.params.groupId
+      let locationElement = location
+
+      if (groupId) {
+        if (location.id) {
+          this.form.locations = this.form.locations.filter((el) => el.id !== location.id)
+          locationElement = await patchGroupLocation(
+            this.organizationsStore.current.code,
+            this.$route.params.groupId,
+            location.id,
+            location
+          )
+        } else {
+          locationElement = await postGroupLocation(
+            this.organizationsStore.current.code,
+            this.$route.params.groupId,
+            location
+          )
+        }
+      }
+      this.form.locations = [...this.form.locations, locationElement]
+      this.closeModal()
+    },
   },
 }
 </script>
@@ -391,7 +465,8 @@ export default {
 
   .team,
   .parent-group,
-  .project {
+  .project,
+  .location {
     margin-bottom: $space-xl;
   }
 

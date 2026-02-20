@@ -6,7 +6,7 @@ import { LocationForm } from '@/models/location.model'
 const DEFAULT_FORM: LocationForm = {
   lat: null,
   lng: null,
-  type: 'team',
+  type: 'address',
   title: '',
   description: '',
 }

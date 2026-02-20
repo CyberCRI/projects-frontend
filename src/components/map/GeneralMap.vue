@@ -4,7 +4,16 @@
       <BaseMap ref="map" :config="CONFIG" use-cluster>
         <template #default="slotProps">
           <MapPointer
-            v-for="location in locations"
+            v-for="location in locations.groups"
+            :key="location.id"
+            :location="location"
+            @mounted="slotProps.addPointer"
+            @unmounted="slotProps.removePointer"
+          >
+            <GroupLocationToolTip :location="location" :group="location.people_group" />
+          </MapPointer>
+          <MapPointer
+            v-for="location in locations.projects"
             :key="location.id"
             :location="location"
             @mounted="slotProps.addPointer"
@@ -19,6 +28,7 @@
 </template>
 
 <script setup lang="ts">
+import GroupLocationToolTip from '@/components/group/Map/GroupLocationToolTip.vue'
 import BaseMap from '@/components/map/BaseMap.vue'
 import MapPointer from '@/components/map/MapPointer.vue'
 import ProjectLocationTooltip from '@/components/project/map/ProjectLocationTooltip.vue'
@@ -30,11 +40,6 @@ const props = withDefaults(
     loading?: boolean
   }>(),
   { loading: true }
-)
-
-watch(
-  () => props.locations,
-  () => console.log(props.locations)
 )
 
 const CONFIG = {

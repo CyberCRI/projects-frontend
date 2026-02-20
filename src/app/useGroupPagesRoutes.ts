@@ -38,6 +38,11 @@ export default function useGroupPagesRoutes() {
             documentType: 'conferences',
           }),
         },
+        {
+          path: 'locations',
+          name: 'groupLocations',
+          component: () => import('../pages/GroupPageV2/Tabs/Locations/GroupLocationsTab.vue'),
+        },
         // retro compat
         {
           path: 'Edit',

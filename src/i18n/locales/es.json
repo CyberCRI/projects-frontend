@@ -1011,7 +1011,8 @@
     "conferences": "Conferencias",
     "publications": "Publicaciones",
     "similars": "Grupos similares",
-    "presentation": "Presentación"
+    "presentation": "Presentación",
+    "location": "Dirección"
   },
   "header": {
     "private": "Privada: visible sólo a los miembros del equipo",
@@ -2018,7 +2019,8 @@
       "title": "Asociaciones para los Objetivos"
     },
     "add-short": "añadir un ODS",
-    "sdg-fulltext": "Objetivos de desarrollo sostenible"
+    "sdg-fulltext": "Objetivos de desarrollo sostenible",
+    "title": "ODS"
   },
   "stats": {
     "cumulated-projects": "Proyectos nuevos acumulativos",

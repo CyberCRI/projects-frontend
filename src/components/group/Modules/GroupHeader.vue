@@ -62,6 +62,16 @@
         </div>
       </div>
       <div v-if="hasExtras" class="group-info-extras">
+        <div v-if="hasLinks" class="group-info-links">
+          <button
+            v-if="group.locations.length"
+            class="group-recap-element group-location reset-btn"
+            @click="openModal()"
+          >
+            <IconImage name="MapMarker" />
+            <span class="group-recap-title">{{ t('group.location') }}</span>
+          </button>
+        </div>
         <SdgList
           class="group-info-sdgs"
           :sdgs="group.sdgs"
@@ -74,6 +84,13 @@
           }"
         />
       </div>
+      <!-- drawer views -->
+      <LocationDrawer
+        v-if="group.locations.length"
+        :is-opened="stateModal"
+        :locations="group.locations"
+        @close="closeModal()"
+      />
     </template>
   </BaseGroupPreview>
 </template>
@@ -84,6 +101,7 @@ import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
 import SdgList from '@/components/sdgs/SdgList.vue'
 import TagsList from '@/components/tags/TagsList.vue'
+import LocationDrawer from '@/components/map/LocationDrawer.vue'
 import { getGroupMember } from '@/api/v2/group.service'
 import GroupMemberItem from '@/components/group/Modules/Members/GroupMemberItem.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
@@ -100,6 +118,7 @@ const props = withDefaults(
 )
 
 const { t } = useNuxtI18n()
+const { openModal, closeModal, stateModal } = useModal()
 const organizationCode = useOrganizationCode()
 const groupId = computed(() => props.group.id)
 
@@ -122,8 +141,11 @@ const groupVisibilityIcon = computed(() =>
   props.group.publication_status === 'public' ? 'Eye' : 'EyeSlash'
 )
 
+const hasLinks = computed(() => {
+  return props.group.locations.length
+})
 const hasExtras = computed(() => {
-  return props.group.sdgs.length
+  return props.group.sdgs.length || hasLinks.value
 })
 
 // preview leader
@@ -215,6 +237,10 @@ const closeProfile = () => (leaderIdDrawer.value = null)
 
 .group-recap-title {
   font-weight: bold;
+}
+
+.group-location {
+  cursor: pointer;
 }
 </style>
 

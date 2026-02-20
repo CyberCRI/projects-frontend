@@ -14,6 +14,7 @@
             :location="location"
             :editable="editable"
             :default-title="`${$t('location.default-title')} #${idx + 1}`"
+            :focus="focus"
             @focus="$emit('focus', $event)"
             @delete="$emit('delete', $event)"
             @edit="$emit('edit', $event)"
@@ -37,8 +38,9 @@ const props = withDefaults(
   defineProps<{
     locations: TranslatedLocation[]
     editable?: boolean
+    focus?: boolean
   }>(),
-  { editable: true }
+  { editable: true, focus: true }
 )
 
 defineEmits(['edit', 'focus', 'delete'])

@@ -926,6 +926,7 @@
     "conferences": "Conferences",
     "publications": "Publications",
     "similars": "Groups similars",
+    "location": "Address",
     "share": "Share",
     "the-team": "The team ({users})",
     "news": "Announcements",
@@ -1011,7 +1012,8 @@
         "label": "Editor",
         "help": "Editor"
       }
-    }
+    },
+    "projects-locations": "Project locations"
   },
   "header": {
     "private": "Private: visible only to team members",
@@ -2018,7 +2020,8 @@
       "title": "Partnerships for the Goals"
     },
     "add-short": "Add a sdg",
-    "sdg-fulltext": "sustainable development goals"
+    "sdg-fulltext": "sustainable development goals",
+    "title": "SDG"
   },
   "stats": {
     "cumulated-projects": "Cumulative new projects",

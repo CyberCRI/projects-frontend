@@ -24,7 +24,7 @@ async function fetchFromPhoton(address, locale, runtimeConfig) {
         lat,
         lng,
         description: '',
-        type: 'team',
+        type: 'address',
       } satisfies Geocoding
     })
 
@@ -55,7 +55,7 @@ async function fetchFromGoogle(address, locale, runtimeConfig) {
         lat,
         lng,
         description: '',
-        type: 'team',
+        type: 'address',
       } satisfies Geocoding
     })
   return suggestedLocations

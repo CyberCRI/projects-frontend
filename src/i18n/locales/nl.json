@@ -1011,7 +1011,8 @@
     "conferences": "Conferenties",
     "publications": "Publicaties",
     "similars": "Groepen vergelijkbaar",
-    "presentation": "Presentatie"
+    "presentation": "Presentatie",
+    "location": "Adres"
   },
   "header": {
     "private": "Privé: alleen zichtbaar voor teamleden",
@@ -2018,7 +2019,8 @@
       "title": "Partnerschappen voor de doelstellingen"
     },
     "add-short": "Een sdg toevoegen",
-    "sdg-fulltext": "Duurzame ontwikkelingsdoelstellingen"
+    "sdg-fulltext": "Duurzame ontwikkelingsdoelstellingen",
+    "title": "SDG"
   },
   "stats": {
     "cumulated-projects": "Cumulatieve nieuwe projecten",

@@ -1,3 +1,4 @@
+import { GeneralLocationPeopleGroup, PeopleGroupModel } from '@/models/invitation.model'
 import {
   AnyLocation,
   BaseLocationModel,
@@ -15,6 +16,12 @@ export type MapPointerOption = {
   tooltip?: HTMLElement
 }
 
-export type Locations = LocationModel[]
+export type Locations = {
+  groups: PeopleGroupModel[]
+  projects: LocationModel[]
+}
 
-export type TranslatedLocations = TranslatedLocation[]
+export type TranslatedLocations = {
+  groups: GeneralLocationPeopleGroup[]
+  projects: TranslatedLocation[]
+}

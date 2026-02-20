@@ -11,6 +11,7 @@ import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import useAPI from '@/composables/useAPI'
 import { ProjectModel } from '@/models/project.model'
 import { PeopleGroupModel } from '@/models/invitation.model'
+import { BaseLocationModel, LocationModel } from '@/models/location.model'
 
 // HIERARCHY
 export async function getHierarchyGroups(organizationCode: string, config = {}) {
@@ -165,5 +166,71 @@ export async function getSubGroup(organizationCode: string, groupId: number, con
   return await useAPI<PaginationResult<PeopleGroupModel>>(
     `organization/${organizationCode}/people-group/${groupId}/subgroups/`,
     config
+  )
+}
+
+export async function getGroupProjectsLocation(
+  organizationCode: string,
+  groupId: number,
+  config = {}
+) {
+  return await useAPI<PaginationResult<LocationModel>>(
+    `organization/${organizationCode}/people-group/${groupId}/projects-locations/`,
+    config
+  )
+}
+
+export async function getGroupLocation(organizationCode: string, groupId: number, config = {}) {
+  return await useAPI<PaginationResult<LocationModel>>(
+    `organization/${organizationCode}/people-group/${groupId}/locations/`,
+    config
+  )
+}
+
+export async function removeGroupLocation(
+  organizationCode: string,
+  groupId: number,
+  locationId: number,
+  config = {}
+) {
+  return await useAPI<PaginationResult<LocationModel>>(
+    `organization/${organizationCode}/people-group/${groupId}/locations/${locationId}/`,
+    {
+      ...config,
+      method: 'DELETE',
+    }
+  )
+}
+
+export async function patchGroupLocation(
+  organizationCode: string,
+  groupId: number,
+  locationId: number,
+  payload: Partial<BaseLocationModel>,
+  config = {}
+) {
+  return await useAPI<PaginationResult<LocationModel>>(
+    `organization/${organizationCode}/people-group/${groupId}/locations/${locationId}/`,
+    {
+      ...config,
+      body: payload,
+      method: 'PATCH',
+    }
+  )
+}
+
+export async function postGroupLocation(
+  organizationCode: string,
+  groupId: number,
+  payload: BaseLocationModel,
+  config = {}
+) {
+  return await useAPI<PaginationResult<LocationModel>>(
+    `organization/${organizationCode}/people-group/${groupId}/locations/`,
+    {
+      ...config,
+      body: payload,
+      method: 'POST',
+    }
   )
 }

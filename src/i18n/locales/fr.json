@@ -1011,7 +1011,9 @@
     "conferences": "Conférences",
     "publications": "Publications",
     "similars": "Groupes similaires",
-    "presentation": "Présentation"
+    "presentation": "Présentation",
+    "projects-locations": "Localisations des projects",
+    "location": "Adresse"
   },
   "header": {
     "private": "Privée: visible uniquement par les membres de l’équipe",
@@ -2018,7 +2020,8 @@
       "title": "Partenariats pour la Réalisation des Objectifs"
     },
     "add-short": "Ajouter un odd",
-    "sdg-fulltext": "objectifs de développement durable"
+    "sdg-fulltext": "objectifs de développement durable",
+    "title": "ODD"
   },
   "stats": {
     "cumulated-projects": "Nouveaux projets cumulés",

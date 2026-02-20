@@ -1011,7 +1011,8 @@
     "conferences": "Konverentsid",
     "publications": "Trükised",
     "similars": "Rühmad sarnased",
-    "presentation": "Esitlus"
+    "presentation": "Esitlus",
+    "location": "Aadress"
   },
   "header": {
     "private": "Privaatne: nähtav ainult meeskonnaliikmetele",
@@ -2018,7 +2019,8 @@
       "title": "Partnerlus eesmärkide nimel"
     },
     "add-short": "Lisa sdg",
-    "sdg-fulltext": "säästva arengu eesmärgid"
+    "sdg-fulltext": "säästva arengu eesmärgid",
+    "title": "SDG"
   },
   "stats": {
     "cumulated-projects": "Uued kumulatiivsed projektid",
