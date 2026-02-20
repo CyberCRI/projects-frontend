@@ -1,6 +1,6 @@
 <template>
   <button
-    class="reset-btn gallery-button shadow-box skeletons-background"
+    class="reset-btn gallery-img-button shadow-box skeletons-background"
     :class="editable ? 'pointer-events-none' : ''"
     type="button"
     rel="noopener"
@@ -54,7 +54,7 @@ const src = computed(() => {
 </script>
 
 <style lang="scss">
-.gallery-button {
+.gallery-img-button {
   cursor: pointer;
   width: 100%;
   height: 100%;
