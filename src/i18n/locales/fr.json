@@ -1011,7 +1011,9 @@
     "conferences": "Conférences",
     "publications": "Publications",
     "similars": "Groupes similaires",
-    "presentation": "Présentation"
+    "presentation": "Présentation",
+    "projects-locations": "Localisations des projects",
+    "location": "Adresse"
   },
   "header": {
     "private": "Privée: visible uniquement par les membres de l’équipe",
@@ -2018,7 +2020,8 @@
       "title": "Partenariats pour la Réalisation des Objectifs"
     },
     "add-short": "Ajouter un odd",
-    "sdg-fulltext": "objectifs de développement durable"
+    "sdg-fulltext": "objectifs de développement durable",
+    "title": "ODD"
   },
   "stats": {
     "cumulated-projects": "Nouveaux projets cumulés",
@@ -3153,5 +3156,18 @@
     "previous": "Page précédente",
     "next": "Page suivante",
     "page": "Page"
+  },
+  "gallery": {
+    "title": "Galerie",
+    "view": "Voir la galerie.",
+    "delete": "Supprimer l'image.",
+    "add": "Ajouter des images",
+    "empty": "Pas de photos.",
+    "add-picture": "Veuillez sélectionner une ou plusieurs photos à envoyer.",
+    "confirm-delete": "Voulez-vous vraiment supprimer cette image ?",
+    "success-delete": "Image supprimée.",
+    "error-delete": "Une erreur s'est produite en supprimant l'image.",
+    "success-create": "Photo créée.",
+    "error-create": "Une erreur s'est produite image créée."
   }
 }

@@ -1011,7 +1011,8 @@
     "conferences": "Konverentsid",
     "publications": "Trükised",
     "similars": "Rühmad sarnased",
-    "presentation": "Esitlus"
+    "presentation": "Esitlus",
+    "location": "Aadress"
   },
   "header": {
     "private": "Privaatne: nähtav ainult meeskonnaliikmetele",
@@ -2018,7 +2019,8 @@
       "title": "Partnerlus eesmärkide nimel"
     },
     "add-short": "Lisa sdg",
-    "sdg-fulltext": "säästva arengu eesmärgid"
+    "sdg-fulltext": "säästva arengu eesmärgid",
+    "title": "SDG"
   },
   "stats": {
     "cumulated-projects": "Uued kumulatiivsed projektid",
@@ -3153,5 +3155,18 @@
     "blog-entries-limited-warning": "PDF-i ekspordi hulka kuuluvad ainult esimesed {max} blogikirjed (kokku {total}).",
     "download-pdf": "PDF",
     "generated-on": "Geneeritud {date}"
+  },
+  "gallery": {
+    "title": "galeriis",
+    "view": "Vaata galeriid.",
+    "delete": "Kustuta pilt.",
+    "add": "Lisa pilte",
+    "empty": "Pilte pole tehtud.",
+    "add-picture": "Palun valige üks või mitu fotot, mida saata.",
+    "confirm-delete": "Kas tõesti kustutada see pilt?",
+    "success-delete": "Pilt kustutatud.",
+    "error-delete": "Tekkis viga pildi kustutamisel.",
+    "success-create": "Pilt loodud.",
+    "error-create": "Tekkis viga loodud pildis."
   }
 }

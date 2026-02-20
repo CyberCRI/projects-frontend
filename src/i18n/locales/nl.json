@@ -1011,7 +1011,8 @@
     "conferences": "Conferenties",
     "publications": "Publicaties",
     "similars": "Groepen vergelijkbaar",
-    "presentation": "Presentatie"
+    "presentation": "Presentatie",
+    "location": "Adres"
   },
   "header": {
     "private": "Privé: alleen zichtbaar voor teamleden",
@@ -2018,7 +2019,8 @@
       "title": "Partnerschappen voor de doelstellingen"
     },
     "add-short": "Een sdg toevoegen",
-    "sdg-fulltext": "Duurzame ontwikkelingsdoelstellingen"
+    "sdg-fulltext": "Duurzame ontwikkelingsdoelstellingen",
+    "title": "SDG"
   },
   "stats": {
     "cumulated-projects": "Cumulatieve nieuwe projecten",
@@ -3153,5 +3155,18 @@
     "blog-entries-limited-warning": "Alleen de eerste {max} blogvermeldingen zijn opgenomen in de PDF-export (van {total} totaal).",
     "download-pdf": "PDF",
     "generated-on": "Gegenereerd op {date}"
+  },
+  "gallery": {
+    "title": "Galerij",
+    "view": "Galerie bekijken.",
+    "delete": "Foto verwijderen.",
+    "add": "Foto's toevoegen",
+    "empty": "Geen foto's gezet.",
+    "add-picture": "Selecteer een of meer foto's om te versturen.",
+    "confirm-delete": "Weet u zeker dat u deze foto wilt verwijderen?",
+    "success-delete": "Foto verwijderd.",
+    "error-delete": "Er is een fout opgetreden bij het verwijderen van afbeelding.",
+    "success-create": "Foto gemaakt.",
+    "error-create": "Er is een fout opgetreden bij het maken van een foto."
   }
 }

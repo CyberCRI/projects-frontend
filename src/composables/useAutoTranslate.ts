@@ -146,7 +146,7 @@ export default function useAutoTranslate() {
       }
       return {
         ...unref(translateLocation(location)),
-        group: unref(translateGroup(location.group)),
+        people_group: unref(translateGroup(location.people_group)),
       }
     })
   }
@@ -193,7 +193,7 @@ export default function useAutoTranslate() {
       )
       return {
         ..._group,
-        location: _group?.location ? unref(translateLocation(_group.location)) : null,
+        locations: _group?.locations ? unref(translateLocations(_group.locations)) : null,
       }
     })
   const translateGroups = (groups) =>

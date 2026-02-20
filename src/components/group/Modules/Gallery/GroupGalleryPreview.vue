@@ -3,7 +3,7 @@
     id="gallery"
     :title="$t(GroupModuleTitle.gallery)"
     :total="group.modules.gallery"
-    :icon="GroupModuleIcon.locations"
+    :icon="GroupModuleIcon.gallery"
   >
     <template #header>
       <SeeMoreArrow

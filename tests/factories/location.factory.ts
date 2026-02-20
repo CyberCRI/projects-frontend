@@ -14,7 +14,7 @@ const LocationFactory = createFactory<LocationModel>((faker) => ({
   project: null,
 }))
 
-export const BaseTranslatedLocationFactory = createFactory<BaseTranslatedLocationModel>(
+export const BaseTranslatedLocationModelFactory = createFactory<BaseTranslatedLocationModel>(
   (faker) => ({
     ...BaseFactory.generate(),
     id: faker.datatype.number(),
@@ -23,11 +23,16 @@ export const BaseTranslatedLocationFactory = createFactory<BaseTranslatedLocatio
     lat: Number(faker.address.latitude()),
     lng: Number(faker.address.longitude()),
     type: 'team',
-    project: null,
     $t: {
       title: faker.lorem.text(),
       description: faker.lorem.text(),
     },
+  })
+)
+export const BaseTranslatedLocationFactory = createFactory<BaseTranslatedLocationModel>(
+  (faker) => ({
+    ...BaseTranslatedLocationModelFactory.generate(),
+    project: null,
   })
 )
 

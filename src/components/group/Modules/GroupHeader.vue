@@ -64,7 +64,7 @@
       <div v-if="hasExtras" class="group-info-extras">
         <div v-if="hasLinks" class="group-info-links">
           <button
-            v-if="group.location"
+            v-if="group.locations.length"
             class="group-recap-element group-location reset-btn"
             @click="openModal()"
           >
@@ -86,9 +86,9 @@
       </div>
       <!-- drawer views -->
       <LocationDrawer
-        v-if="group.location"
+        v-if="group.locations.length"
         :is-opened="stateModal"
-        :locations="[group.location]"
+        :locations="group.locations"
         @close="closeModal()"
       />
     </template>
@@ -142,7 +142,7 @@ const groupVisibilityIcon = computed(() =>
 )
 
 const hasLinks = computed(() => {
-  return props.group.location
+  return props.group.locations.length
 })
 const hasExtras = computed(() => {
   return props.group.sdgs.length || hasLinks.value

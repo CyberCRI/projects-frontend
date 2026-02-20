@@ -1011,7 +1011,8 @@
     "conferences": "Conferencias",
     "publications": "Publicaciones",
     "similars": "Grupos similares",
-    "presentation": "Presentación"
+    "presentation": "Presentación",
+    "location": "Dirección"
   },
   "header": {
     "private": "Privada: visible sólo a los miembros del equipo",
@@ -2018,7 +2019,8 @@
       "title": "Asociaciones para los Objetivos"
     },
     "add-short": "añadir un ODS",
-    "sdg-fulltext": "Objetivos de desarrollo sostenible"
+    "sdg-fulltext": "Objetivos de desarrollo sostenible",
+    "title": "ODS"
   },
   "stats": {
     "cumulated-projects": "Proyectos nuevos acumulativos",
@@ -3153,5 +3155,18 @@
     "blog-entries-limited-warning": "Sólo las primeras {max} entradas del blog se incluyen en la exportación de PDF (del total {total}).",
     "download-pdf": "PDF",
     "generated-on": "Generado en {date}"
+  },
+  "gallery": {
+    "title": "Galería",
+    "view": "Ver galería.",
+    "delete": "Borrar la imagen.",
+    "add": "Agregar fotos",
+    "empty": "No hay fotos.",
+    "add-picture": "Por favor, seleccione una o más fotos para enviar.",
+    "confirm-delete": "¿Seguro que quieres borrar esta foto?",
+    "success-delete": "Imagen borrada.",
+    "error-delete": "Se produjo un error borrando la imagen.",
+    "success-create": "Imagen creada.",
+    "error-create": "Un error ocurrió imagen creada."
   }
 }

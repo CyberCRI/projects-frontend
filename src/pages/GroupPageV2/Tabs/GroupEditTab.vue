@@ -64,7 +64,7 @@ const form = ref({
   members: [],
   sdgs: [],
   tags: [],
-  location: null,
+  locations: [],
   featuredProjects: [],
   header_image: null,
   imageSizes: null,
@@ -145,14 +145,14 @@ const updateHeader = async (groupId) => {
       payloadHeader.append('file', form.value.header_image, form.value.header_image.name)
 
       await postGroupHeader(orgCode.value, groupId, payloadHeader)
-      await refreshNuxtData(`${organizationCode}::group::${groupData.value.id}`)
+      await refreshNuxtData(`${organizationCode}::group::${groupId}`)
 
       // TODO: make this in POST when backend allows it
       payloadHeader.delete('file')
     } else if (form.value.imageSizes) {
       // TODO else ?
       await patchGroupHeader(orgCode.value, groupId, payloadHeader)
-      await refreshNuxtData(`${organizationCode}::group::${groupData.value.id}`)
+      await refreshNuxtData(`${organizationCode}::group::${groupId}`)
     }
   }
 }
@@ -186,7 +186,7 @@ const buildPayload = () => {
     sdgs: form.value.sdgs,
     tags: form.value.tags.map((tag) => tag.id),
     parent: form.value.parentGroup?.id || null, // undefined ,
-    location: form.value.location,
+    locations: form.value.locations,
     organization: orgCode.value,
     publication_status: form.value.publication_status,
     team,
@@ -312,7 +312,7 @@ onMounted(async () => {
       form.value.description = _groupData.description
       form.value.short_description = _groupData.short_description
       form.value.email = _groupData.email
-      form.value.location = _groupData.location
+      form.value.locations = _groupData.locations
 
       form.value.sdgs = [..._groupData.sdgs]
       form.value.tags = structuredClone(_groupData.tags)

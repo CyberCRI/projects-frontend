@@ -5,8 +5,8 @@ import {
   getGroupMember as fetchGetGroupMember,
   getGroupSimilar as fetchGetGroupSimilar,
   getSubGroup as fetchGetSubGroup,
-  getGroupLocation as fetchLocationsGroup,
   getGroupGallery as fetchGroupGallery,
+  getGroupProjectsLocation as fetchGroupProjectsLocation,
 } from '@/api/groups.service'
 import useAsyncAPI from '@/composables/useAsyncAPI'
 import useAsyncPaginationAPI from '@/composables/useAsyncPaginationAPI'
@@ -145,7 +145,7 @@ export const getSubGroup = (
   )
 }
 
-export const getGroupLocation = (
+export const getGroupProjectsLocation = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   groupId: RefOrRaw<GroupModel['id']>,
   config = {}
@@ -156,7 +156,7 @@ export const getGroupLocation = (
   return useAsyncAPI(
     key,
     ({ config }) =>
-      fetchLocationsGroup(unref(organizationCode), unref(groupId), {
+      fetchGroupProjectsLocation(unref(organizationCode), unref(groupId), {
         ...DEFAULT_CONFIG,
         ...config,
       }),

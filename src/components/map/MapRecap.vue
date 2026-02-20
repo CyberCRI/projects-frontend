@@ -16,10 +16,7 @@
                   @unmounted="slotProps.removePointer(location)"
                 >
                   <slot name="tooltip" :location="location">
-                    <LocationTooltip
-                      v-if="location.title || location.description"
-                      :location="location"
-                    />
+                    <LocationTooltip :location="location" />
                   </slot>
                 </MapPointer>
               </template>
