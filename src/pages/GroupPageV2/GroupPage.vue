@@ -168,15 +168,15 @@ const groupTabsDisplay = computed(() => {
       isEditing: false,
       key: 'group-locations',
       dataTest: 'group-locations',
-      label: t(GroupModuleTitle.locations),
+      label: t(GroupModuleTitle.projects_locations),
       view: `/group/${route.params.groupId}/locations`,
       altView: `/group/${route.params.groupId}/locations/edit`,
       props: {
         group: group.value,
         isLoading: groupLoading.value,
       },
-      condition: groupModules.value.locations,
-      icon: GroupModuleIcon.locations,
+      condition: groupModules.value.projects_locations,
+      icon: GroupModuleIcon.projects_locations,
     },
   ]
 })

@@ -26,7 +26,7 @@ export interface PeopleGroupModel {
   hierarchy: any
   sdgs: number[]
   tags: TagModel[]
-  location: BaseLocationModel | null
+  locations: BaseLocationModel[]
   modules: {
     members: number
     featured_projects: number
@@ -34,7 +34,7 @@ export interface PeopleGroupModel {
     conferences: number
     similars: number
     subgroups: number
-    locations: number
+    projects_locations: number
   }
 }
 
@@ -42,13 +42,13 @@ export type PeopleGroupModulesKeys = keyof PeopleGroupModel['modules']
 
 export type TranslatedPeopleGroupModel = Omit<
   Translated<PeopleGroupModel, 'name' | 'description' | 'short_description'>,
-  'location'
+  'locations'
 > & {
-  location: BaseTranslatedLocationModel | null
+  locations: BaseTranslatedLocationModel[]
 }
 
 export type GeneralLocationPeopleGroup = BaseTranslatedLocationModel & {
-  group: TranslatedPeopleGroupModel
+  people_group: TranslatedPeopleGroupModel
 }
 
 export const GroupModuleIcon: { [key in PeopleGroupModulesKeys]: IconImageChoice } = {
@@ -58,7 +58,7 @@ export const GroupModuleIcon: { [key in PeopleGroupModulesKeys]: IconImageChoice
   members: 'Users',
   similars: 'PeopleGroup',
   subgroups: 'nodeTree',
-  locations: 'Map',
+  projects_locations: 'Map',
 }
 
 export const GroupModuleTitle: { [key in PeopleGroupModulesKeys]: string } = {
@@ -68,7 +68,7 @@ export const GroupModuleTitle: { [key in PeopleGroupModulesKeys]: string } = {
   members: 'group.members',
   similars: 'group.similars',
   subgroups: 'group.subgroups',
-  locations: 'group.locations',
+  projects_locations: 'group.projects-locations',
 }
 
 export interface ProfilePictureVariationsModel {

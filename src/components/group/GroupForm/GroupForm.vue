@@ -81,7 +81,7 @@
     <!-- tags -->
     <div class="description">
       <label>
-        {{ $t('group.form.tags') }}
+        {{ $t('tag.title') }}
         <LpiButton
           class="add-btn"
           :btn-icon="form.tags?.length ? 'Pen' : 'Plus'"
@@ -97,7 +97,7 @@
     <!-- Sdg -->
     <div class="description">
       <label>
-        {{ $t('group.form.sdg-label') }}
+        {{ $t('sdg.title') }}
         <LpiButton
           class="add-btn"
           :btn-icon="form.sdgs?.length ? 'Pen' : 'Plus'"
@@ -110,33 +110,27 @@
       <SdgsDrawer v-model="form.sdgs" :is-opened="openSdg" @close="openSdg = false" />
     </div>
 
-    <!-- location -->
+    <!-- locations -->
     <div class="description">
       <label>
-        {{ $t('group.form.location') }}
+        {{ $t('group.location') }}
         <LpiButton
           class="add-btn"
-          :btn-icon="form.location ? 'Pen' : 'Plus'"
+          :btn-icon="form.locations.length ? 'Pen' : 'Plus'"
           data-test="add-location"
-          :label="$t(form.location ? 'group.form.edit' : 'group.form.add')"
+          :label="$t(form.locations.length ? 'group.form.edit' : 'group.form.add')"
           @click="openModal()"
         />
       </label>
-      <LocationItem
-        v-if="form.location"
-        :location="form.location"
-        :focus="false"
-        show-location-type
-        :default-title="$t('location.default-title')"
-      />
+      <LocationList :locations="form.locations" editable @delete="removeLocations" />
       <LocationDrawer
         :is-opened="stateModal"
-        :locations="form.location ? [form.location] : []"
+        :locations="form.locations"
         editable
         :location-types="['address']"
-        @close="closeModal('location')"
-        @submit="submitLocation"
-        @delete="removeLocation"
+        @close="closeModal()"
+        @submit="submitLocations"
+        @delete="removeLocations"
       />
     </div>
 
@@ -216,7 +210,13 @@
 </template>
 
 <script>
-import { deleteGroup, getHierarchyGroups } from '@/api/groups.service.ts'
+import {
+  deleteGroup,
+  getHierarchyGroups,
+  patchGroupLocation,
+  postGroupLocation,
+  removeGroupLocation,
+} from '@/api/groups.service.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { useRuntimeConfig } from '#imports'
 import { usePatatoids } from '@/composables/usePatatoids'
@@ -225,7 +225,7 @@ import SdgList from '@/components/sdgs/SdgList.vue'
 import TagsDrawer from '@/components/tags/TagsDrawer.vue'
 import TagsFilterSummary from '@/components/search/Filters/TagsFilterSummary.vue'
 import LocationDrawer from '@/components/map/LocationDrawer.vue'
-import LocationItem from '@/components/map/LocationItem.vue'
+import LocationList from '@/components/map/LocationList.vue'
 
 export default {
   name: 'GroupForm',
@@ -236,7 +236,7 @@ export default {
     TagsDrawer,
     TagsFilterSummary,
     LocationDrawer,
-    LocationItem,
+    LocationList,
   },
 
   props: {
@@ -309,7 +309,7 @@ export default {
         members: [],
         sdgs: [],
         tags: [],
-        location: null,
+        locations: [],
         featuredProjects: [],
         header_image: null,
         imageSizes: null,
@@ -394,12 +394,42 @@ export default {
         name: 'HomeRoot',
       })
     },
-    removeLocation() {
-      this.form.location = null
+    async removeLocations(location) {
+      // remove location (if already exists, send request)
+      if (location.id) {
+        await removeGroupLocation(
+          this.organizationsStore.current.code,
+          this.$route.params.groupId,
+          location.id
+        )
+        this.form.locations = this.form.locations.filter((el) => el.id !== location.id)
+      } else {
+        this.form.locations = this.form.locations.filter((el) => el !== location)
+      }
       this.closeModal()
     },
-    submitLocation(location) {
-      this.form.location = { ...location }
+    async submitLocations(location) {
+      const groupId = this.$route.params.groupId
+      let locationElement = location
+
+      if (groupId) {
+        if (location.id) {
+          this.form.locations = this.form.locations.filter((el) => el.id !== location.id)
+          locationElement = await patchGroupLocation(
+            this.organizationsStore.current.code,
+            this.$route.params.groupId,
+            location.id,
+            location
+          )
+        } else {
+          locationElement = await postGroupLocation(
+            this.organizationsStore.current.code,
+            this.$route.params.groupId,
+            location
+          )
+        }
+      }
+      this.form.locations = [...this.form.locations, locationElement]
       this.closeModal()
     },
   },

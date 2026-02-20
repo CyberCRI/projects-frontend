@@ -926,7 +926,7 @@
     "conferences": "Conferences",
     "publications": "Publications",
     "similars": "Groups similars",
-    "locations": "Locations",
+    "projects-locations": "Locations",
     "location": "Address",
     "share": "Share",
     "the-team": "The team ({users})",
@@ -2020,7 +2020,8 @@
       "title": "Partnerships for the Goals"
     },
     "add-short": "Add a sdg",
-    "sdg-fulltext": "sustainable development goals"
+    "sdg-fulltext": "sustainable development goals",
+    "title": "SDG"
   },
   "stats": {
     "cumulated-projects": "Cumulative new projects",

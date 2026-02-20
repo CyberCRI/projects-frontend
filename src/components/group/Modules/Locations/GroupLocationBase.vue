@@ -17,6 +17,7 @@
     />
     <LocationList
       v-if="!props.preview"
+      focus
       :editable="isEdit"
       :locations="locations"
       @focus="onFocus"
@@ -25,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { getGroupLocation } from '@/api/v2/group.service'
+import { getGroupProjectsLocation } from '@/api/v2/group.service'
 import LocationDrawer from '@/components/map/LocationDrawer.vue'
 import LocationList from '@/components/map/LocationList.vue'
 import MapRecap from '@/components/map/MapRecap.vue'
@@ -53,7 +54,7 @@ const groupId = computed(() => props.group.id)
 const mapRef = useTemplateRef('map')
 const onFocus = (location) => mapRef.value?.map?.flyTo(location)
 
-const { status, data: locations } = getGroupLocation(organizationCode, groupId, {
+const { status, data: locations } = getGroupProjectsLocation(organizationCode, groupId, {
   default: () => [],
 })
 </script>

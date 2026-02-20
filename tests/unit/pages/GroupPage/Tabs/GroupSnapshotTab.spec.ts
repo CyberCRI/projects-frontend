@@ -51,7 +51,7 @@ describe('GroupSnapshotTab', () => {
     newGroup.modules.publications = 8
     newGroup.modules.similars = 8
     newGroup.modules.subgroups = 8
-    newGroup.modules.locations = 8
+    newGroup.modules.projects_locations = 8
     newGroup.$t.description = 'description'
 
     wrapper.setProps({

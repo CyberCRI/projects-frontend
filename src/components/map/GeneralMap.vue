@@ -10,7 +10,7 @@
             @mounted="slotProps.addPointer"
             @unmounted="slotProps.removePointer"
           >
-            <GroupLocationToolTip :location="location" :group="location.group" />
+            <GroupLocationToolTip :location="location" :group="location.people_group" />
           </MapPointer>
           <MapPointer
             v-for="location in locations.projects"
@@ -40,11 +40,6 @@ const props = withDefaults(
     loading?: boolean
   }>(),
   { loading: true }
-)
-
-watch(
-  () => props.locations,
-  () => console.log(props.locations)
 )
 
 const CONFIG = {

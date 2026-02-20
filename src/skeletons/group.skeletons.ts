@@ -15,7 +15,7 @@ export const groupSkeleton = (def?: Partial<PeopleGroupModel>): Omit<PeopleGroup
   hierarchy: [],
   sdgs: [],
   tags: [],
-  location: null,
+  locations: [],
   children: [],
   modules: {
     members: 0,
@@ -24,7 +24,7 @@ export const groupSkeleton = (def?: Partial<PeopleGroupModel>): Omit<PeopleGroup
     conferences: 0,
     similars: 0,
     subgroups: 0,
-    locations: 0,
+    projects_locations: 0,
   },
   ...(def || {}),
 })
