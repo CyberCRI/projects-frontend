@@ -3155,5 +3155,18 @@
     "blog-entries-limited-warning": "Nur die ersten {max} Blogeinträge sind im PDF-Export enthalten (von {total} insgesamt).",
     "download-pdf": "PDF",
     "generated-on": "Erstellt am {date}"
+  },
+  "gallery": {
+    "title": "Galerie",
+    "view": "Galerie anzeigen.",
+    "delete": "Bild löschen.",
+    "add": "Bilder hinzufügen",
+    "empty": "Keine Bilder.",
+    "add-picture": "Bitte wählen Sie ein oder mehrere Fotos, um zu senden.",
+    "confirm-delete": "Sind Sie sicher, dass Sie dieses Bild löschen möchten?",
+    "success-delete": "Bild gelöscht.",
+    "error-delete": "Ein Fehler beim Löschen des Bildes.",
+    "success-create": "Bild erstellt.",
+    "error-create": "Ein Fehler wurde erstellt."
   }
 }

@@ -8,6 +8,7 @@
       <GroupSimilarsPreview v-if="group.modules.similars" :group="group" :limit="2" />
     </div>
     <GroupMembersPreview v-if="group.modules.members" :group="group" :is-loading="isLoading" />
+    <GroupGalleryPreview v-if="group.modules.gallery" :group="group" :is-loading="isLoading" />
     <GroupSubPreview v-if="group.modules.subgroups" :group="group" :is-loading="isLoading" />
     <GroupProjectsPreview
       v-if="group.modules.featured_projects"
@@ -44,6 +45,7 @@ import GroupMembersPreview from '@/components/group/Modules/Members/GroupMembers
 import GroupProjectsPreview from '@/components/group/Modules/Projects/GroupProjectsPreview.vue'
 import GroupDocumentsPreview from '@/components/group/Modules/Documents/GroupDocumentsPreview.vue'
 import GroupHeader from '@/components/group/Modules/GroupHeader.vue'
+import GroupGalleryPreview from '@/components/group/Modules/Gallery/GroupGalleryPreview.vue'
 
 defineProps<{
   group: TranslatedPeopleGroupModel

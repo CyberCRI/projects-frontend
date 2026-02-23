@@ -1085,6 +1085,19 @@
     "page-title": "Map",
     "projects": "projects map"
   },
+  "gallery": {
+    "title": "Gallery",
+    "view": "View gallery.",
+    "delete": "Delete picture.",
+    "add": "Add pictures",
+    "empty": "No pictures set.",
+    "add-picture": "Please select one or more photos to send.",
+    "confirm-delete": "Are you sure you want to delete this picture?",
+    "success-delete": "Picture deleted.",
+    "error-delete": "An error occured deleting picture.",
+    "success-create": "Picture created.",
+    "error-create": "An error occured created picture."
+  },
   "me": {
     "follow": "Projects I follow",
     "follow-category": "Categories I follow",

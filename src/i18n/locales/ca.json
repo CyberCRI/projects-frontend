@@ -3155,5 +3155,18 @@
     "blog-entries-limited-warning": "Només s' inclouen les primeres entrades del bloc {max} en l' exportació PDF (de {total} total).",
     "download-pdf": "PDF",
     "generated-on": "Generat el {date}"
+  },
+  "gallery": {
+    "title": "Galeria",
+    "view": "Veure la galeria.",
+    "delete": "Esborra la imatge.",
+    "add": "Afegeix fotografies",
+    "empty": "No hi ha fotos fixades.",
+    "add-picture": "Seleccioneu una o més fotos a enviar.",
+    "confirm-delete": "Esteu segur que voleu esborrar aquesta imatge?",
+    "success-delete": "S' ha esborrat la imatge.",
+    "error-delete": "Hi ha hagut un error en esborrar la imatge.",
+    "success-create": "Imatge creada.",
+    "error-create": "S' ha creat un error."
   }
 }
