@@ -1011,9 +1011,9 @@
     "publications": "Publications",
     "similars": "Groupes similaires",
     "presentation": "Présentation",
-    "location": "Adresse",
+    "location": "Adresse | Adresses",
     "subgroups": "Sous-groupes",
-    "projects-locations": "Emplacements des projets"
+    "projects-locations": "Localisations des projets"
   },
   "header": {
     "private": "Privée: visible uniquement par les membres de l’équipe",

@@ -915,106 +915,6 @@
     "title": "Goal's title",
     "delete": "Would you like to delete this goal?"
   },
-  "group": {
-    "is-other-org": "This group belongs to another platform",
-    "contact": "Contact",
-    "edit-group": "Edit group",
-    "presentation": "Presentation",
-    "see-more-people-button": "See {users} more",
-    "see-subgroups": "See {count} subgroup | See {count} subgroups",
-    "subgroups": "Subgroup | Subgroups",
-    "conferences": "Conferences",
-    "publications": "Publications",
-    "similars": "Groups similars",
-    "location": "Address",
-    "share": "Share",
-    "the-team": "The team ({users})",
-    "news": "Announcements",
-    "more": "More",
-    "less": "Less",
-    "view": "View group",
-    "see-more": "See more",
-    "see-less": "See less",
-    "snapshot": "Snapshot",
-    "members": "Members",
-    "projects": "Projects",
-    "visibility-private": "Visibility : private",
-    "visibility-public": "Visibility : public",
-    "visibility-org": "Visibility : portal",
-    "group-members": "Group members",
-    "group-projects": "Group projects",
-    "select-group": "Select a group",
-    "image-header": "Image",
-    "root": "(Root)",
-    "create": {
-      "help-link": "We're here to help.",
-      "notice": "Fields marked with * are mandatory. You can always modify this later. No idea what you should do?",
-      "title": "Create a new group"
-    },
-    "edit": {
-      "title": "Edit a group"
-    },
-    "form": {
-      "add": "Add",
-      "add-projects": "Add featured projects",
-      "edit": "Edit",
-      "edit-members": "Edit members",
-      "edit-roles": "Edit roles",
-      "form-incomplete": "Fields are missing or invalid, complete to be able to save.",
-      "create-group": "Create group",
-      "edit-group": "Edit group",
-      "edit-name": "Edit name of the group",
-      "email-label": "Email",
-      "email-placeholder": "Ex. surname.name{'@'}myuniversity.fr",
-      "short-description-label": "Headline",
-      "short-description-placeholder": "Describe your group in one sentence",
-      "name-label": "Group name",
-      "name-placeholder": "Ex. Hitbox: interactive boxing bag",
-      "description-label": "Description",
-      "add-description": "Add description",
-      "add-parent-group": "Add parent group",
-      "project-label": "Featured projects",
-      "parent-group-label": "Parent group",
-      "visibility": {
-        "title": "Group visibility",
-        "public": "Public",
-        "private": "Private",
-        "members": "Members",
-        "public_description": "Public: anyone can find this group on Internet",
-        "private_description": "Private: visible only by the admins and the group members",
-        "members_description": "Members: visible only by the members of this portal"
-      },
-      "name-errors": {
-        "required": "The group name field is required",
-        "max": "The group name field may not be greater than 180 characters"
-      },
-      "short-description-errors": {
-        "max": "The headline field may not be greater than 150 characters"
-      },
-      "publication-status-errors": {
-        "required": "This field is required"
-      },
-      "delete": "Delete group"
-    },
-    "role": {
-      "members": {
-        "label": "Member",
-        "help": "Member"
-      },
-      "leaders": {
-        "label": "Group leader",
-        "help": "Group Leader"
-      },
-      "leaders-managers": {
-        "label": "Leader and Manager"
-      },
-      "managers": {
-        "label": "Editor",
-        "help": "Editor"
-      }
-    },
-    "projects-locations": "Projects locations"
-  },
   "header": {
     "private": "Private: visible only to team members",
     "org": "Only visible to the members of your portal",
@@ -1084,20 +984,6 @@
     "empty": "Nothing here yet... Contributors did not localize any points yet.",
     "page-title": "Map",
     "projects": "projects map"
-  },
-  "gallery": {
-    "title": "Gallery",
-    "view": "View gallery.",
-    "delete": "Delete picture.",
-    "add": "Add pictures",
-    "empty": "No pictures set.",
-    "add-picture": "Please select one or more photos to send.",
-    "confirm-delete": "Are you sure you want to delete this picture?",
-    "success-delete": "Picture deleted.",
-    "error-delete": "An error occured deleting picture.",
-    "success-create": "Picture created.",
-    "error-create": "An error occured created picture.",
-    "pictures": "Images"
   },
   "me": {
     "follow": "Projects I follow",
@@ -3172,5 +3058,119 @@
     "blog-entries-limited-warning": "Only the first {max} blog entries are included in the PDF export (of {total} total).",
     "download-pdf": "PDF",
     "generated-on": "Generated on {date}"
+  },
+  "group": {
+    "is-other-org": "This group belongs to another platform",
+    "contact": "Contact",
+    "edit-group": "Edit Group",
+    "see-more-people-button": "See {users} additional persons",
+    "see-subgroups": "See {count} subgroups",
+    "share": "Share",
+    "the-team": "Team ({users}4)",
+    "news": "Announced",
+    "more": "More",
+    "less": "Less",
+    "see-more": "See more",
+    "see-less": "See less",
+    "snapshot": "Executive summary",
+    "members": "Members",
+    "projects": "Projects",
+    "visibility-private": "Visibility: private",
+    "visibility-public": "Visibility: public",
+    "visibility-org": "Visibility: portal",
+    "group-members": "Group members",
+    "group-projects": "Group projects",
+    "select-group": "Choose a group",
+    "image-header": "Image",
+    "root": "(Racine)",
+    "create": {
+      "help-link": "We're here to help.",
+      "notice": "Fields marked with run.sh translate.py are mandatory. You can modify them later if necessary. Do you have any questions?",
+      "title": "Create a new group"
+    },
+    "edit": {
+      "title": "Edit Group"
+    },
+    "form": {
+      "add": "Add",
+      "add-projects": "Add Featured Projects",
+      "edit": "Modify",
+      "edit-members": "Edit members",
+      "edit-roles": "Edit roles",
+      "form-incomplete": "Fields are missing or invalid, complete to be able to save.",
+      "create-group": "Create Group",
+      "edit-group": "Edit Group",
+      "edit-name": "Change group name",
+      "email-label": "Email",
+      "email-placeholder": "Ex. surname.name{'@'}myuniversity.fr",
+      "short-description-label": "Short description of the group",
+      "short-description-placeholder": "Describe your group in one sentence",
+      "name-label": "Name of group",
+      "name-placeholder": "Ex. Hitbox: interactive boxing bag",
+      "description-label": "Description",
+      "add-description": "Add Description",
+      "add-parent-group": "Add a parent group",
+      "project-label": "Featured projects",
+      "parent-group-label": "Parent group",
+      "visibility": {
+        "title": "Group visibility",
+        "public": "Public",
+        "private": "Private",
+        "members": "Members",
+        "public_description": "Audience: Everyone can find this group on the Internet",
+        "private_description": "Private: visible only by directors and group members",
+        "members_description": "Members: visible only by members of this portal"
+      },
+      "name-errors": {
+        "required": "The group name field is mandatory",
+        "max": "The group name field cannot contain more than 120 characters"
+      },
+      "short-description-errors": {
+        "max": "The short description field must be less than 150 characters"
+      },
+      "publication-status-errors": {
+        "required": "This field is required"
+      },
+      "delete": "Delete group"
+    },
+    "role": {
+      "members": {
+        "label": "Member",
+        "help": "Member"
+      },
+      "leaders": {
+        "label": "Head of Group",
+        "help": "Head of Group"
+      },
+      "leaders-managers": {
+        "label": "Leader and Manager"
+      },
+      "managers": {
+        "label": "Publisher",
+        "help": "Publisher"
+      }
+    },
+    "view": "See group",
+    "conferences": "Conferences",
+    "publications": "Publications",
+    "similars": "Similar groups",
+    "presentation": "Introduction",
+    "location": "Address",
+    "subgroups": "Sub-groups",
+    "projects-locations": "Project locations"
+  },
+  "gallery": {
+    "title": "Gallery",
+    "view": "See the gallery.",
+    "delete": "Delete image.",
+    "add": "Add Images",
+    "empty": "No photos.",
+    "pictures": "Images",
+    "add-picture": "Please select one or more photos to send.",
+    "confirm-delete": "Do you really want to delete this image?",
+    "success-delete": "Image deleted.",
+    "error-delete": "An error occurred by deleting the image.",
+    "success-create": "Photo created.",
+    "error-create": "An error occurred created image."
   }
 }

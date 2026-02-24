@@ -915,106 +915,6 @@
     "title": "Eesmärgi tiitel",
     "delete": "Kas soovite selle eesmärgi kustutada?"
   },
-  "group": {
-    "is-other-org": "See grupp kuulub teisele platvormile",
-    "contact": "Kontakt",
-    "edit-group": "Redigeerimisgrupp",
-    "see-more-people-button": "Vt {users} rohkem",
-    "see-subgroups": "Vt {count} alagrupp | Vt {count} alagrupi",
-    "share": "Jaga",
-    "the-team": "Meeskond ({users})",
-    "news": "Teadaanne",
-    "more": "Rohkem",
-    "less": "Vähem",
-    "see-more": "Näe rohkem",
-    "see-less": "Näe vähem",
-    "snapshot": "Pilt",
-    "members": "Liikmed",
-    "projects": "Projektid",
-    "visibility-private": "Nähtavus : privaatne",
-    "visibility-public": "Nähtavus : avalik",
-    "visibility-org": "Nähtavus : portaal",
-    "group-members": "Grupi liikmed",
-    "group-projects": "Grupiprojektid",
-    "select-group": "Vali grupp",
-    "image-header": "Pilt",
-    "root": "(Juur)",
-    "create": {
-      "help-link": "Me oleme siin, et aidata.",
-      "notice": "Tärniga * märgitud väljad on kohustuslikud. Seda saab alati hiljem muuta. Pole aimugi, mida sa tegema peaksid?",
-      "title": "Uue grupi loomine"
-    },
-    "edit": {
-      "title": "Redigeerimine grupp"
-    },
-    "form": {
-      "add": "Lisa",
-      "add-projects": "Lisa esiletõstetud projektid",
-      "edit": "Edit",
-      "edit-members": "Muuda liikmeid",
-      "edit-roles": "Rollide muutmine",
-      "form-incomplete": "Väljad on puudu või vigased, täielikud, et neid oleks võimalik salvestada.",
-      "create-group": "Grupi loomine",
-      "edit-group": "Redigeerimisgrupp",
-      "edit-name": "Grupi nime muutmine",
-      "email-label": "Email",
-      "email-placeholder": "ex. perekonnanimi.name{'@'}myuniversity.fr",
-      "short-description-label": "Pealkiri",
-      "short-description-placeholder": "Kirjeldage oma rühma ühes lauses",
-      "name-label": "Grupi nimi",
-      "name-placeholder": "Ex. Hitbox: interaktiivne poksikott",
-      "description-label": "Kirjeldus",
-      "add-description": "Lisa kirjeldus",
-      "add-parent-group": "Eellasgrupi lisamine",
-      "project-label": "Omanäolised projektid",
-      "parent-group-label": "Vanemarühm",
-      "visibility": {
-        "title": "Grupi nähtavus",
-        "public": "Avalik",
-        "private": "Eraisik",
-        "members": "Liikmed",
-        "public_description": "Avalik: igaüks võib leida selle grupi Internetis",
-        "private_description": "Privaatne: nähtav ainult administraatoritele ja grupi liikmetele",
-        "members_description": "Liikmed: nähtavad ainult selle portaali liikmetele"
-      },
-      "name-errors": {
-        "required": "Grupi nime väli on nõutav",
-        "max": "Grupi nimeväli ei tohi olla suurem kui 180 märki"
-      },
-      "short-description-errors": {
-        "max": "Pealkirjaväli ei tohi olla suurem kui 150 märki"
-      },
-      "publication-status-errors": {
-        "required": "See väli on nõutav"
-      },
-      "delete": "Kustuta grupp"
-    },
-    "role": {
-      "members": {
-        "label": "Liikmesriik",
-        "help": "Liikmesriik"
-      },
-      "leaders": {
-        "label": "Grupijuht",
-        "help": "grupijuht"
-      },
-      "leaders-managers": {
-        "label": "Juht ja juht"
-      },
-      "managers": {
-        "label": "Toimetaja",
-        "help": "Toimetaja"
-      }
-    },
-    "view": "Vaade grupp",
-    "conferences": "Konverentsid",
-    "publications": "Trükised",
-    "similars": "Rühmad sarnased",
-    "presentation": "Esitlus",
-    "location": "Aadress",
-    "projects-locations": "Projektide asukohad",
-    "subgroups": "Alarühm | Alarühmad"
-  },
   "header": {
     "private": "Privaatne: nähtav ainult meeskonnaliikmetele",
     "org": "Ainult teie portaali liikmetele nähtav",
@@ -3159,18 +3059,118 @@
     "download-pdf": "PDF",
     "generated-on": "Geneeritud {date}"
   },
+  "group": {
+    "is-other-org": "See grupp kuulub teisele platvormile",
+    "contact": "Kontakt",
+    "edit-group": "Redigeerimisgrupp",
+    "see-more-people-button": "Vt {users} täiendavad isikud",
+    "see-subgroups": "Vt alarühmad {count}",
+    "share": "Jaga",
+    "the-team": "Meeskond ({users}4)",
+    "news": "Kuulutatud",
+    "more": "Rohkem",
+    "less": "Vähem",
+    "see-more": "Näe rohkem",
+    "see-less": "Näe vähem",
+    "snapshot": "Kommenteeritud kokkuvõte",
+    "members": "Liikmed",
+    "projects": "Projektid",
+    "visibility-private": "Nähtavus: isiklik",
+    "visibility-public": "Nähtavus: avalikkus",
+    "visibility-org": "Nähtavus: portaal",
+    "group-members": "Grupi liikmed",
+    "group-projects": "Grupiprojektid",
+    "select-group": "Vali grupp",
+    "image-header": "Pilt",
+    "root": "(Racine)",
+    "create": {
+      "help-link": "Me oleme siin, et aidata.",
+      "notice": "Run.sh translate.py-ga tähistatud väljad on kohustuslikud. Vajadusel saate neid hiljem muuta. On sul küsimusi?",
+      "title": "Uue grupi loomine"
+    },
+    "edit": {
+      "title": "Redigeerimisgrupp"
+    },
+    "form": {
+      "add": "Lisa",
+      "add-projects": "Lisa funktsioonid projektid",
+      "edit": "Muuda",
+      "edit-members": "Muuda liikmeid",
+      "edit-roles": "Rollide muutmine",
+      "form-incomplete": "Väljad on puudu või vigased, täielikud, et neid oleks võimalik salvestada.",
+      "create-group": "Grupi loomine",
+      "edit-group": "Redigeerimisgrupp",
+      "edit-name": "Muuda grupi nime",
+      "email-label": "Email",
+      "email-placeholder": "ex. perekonnanimi.name{'@'}myuniversity.fr",
+      "short-description-label": "Grupi lühikirjeldus",
+      "short-description-placeholder": "Kirjeldage oma rühma ühes lauses",
+      "name-label": "Rühma nimi",
+      "name-placeholder": "Ex. Hitbox: interaktiivne poksikott",
+      "description-label": "Kirjeldus",
+      "add-description": "Lisa kirjeldus",
+      "add-parent-group": "Lisa eellasgrupp",
+      "project-label": "Omanäolised projektid",
+      "parent-group-label": "Vanemarühm",
+      "visibility": {
+        "title": "Grupi nähtavus",
+        "public": "Avalik",
+        "private": "Eraisik",
+        "members": "Liikmed",
+        "public_description": "Publik: Igaüks võib leida selle grupi Internetis",
+        "private_description": "Privaatne: nähtav ainult direktoritele ja grupi liikmetele",
+        "members_description": "Liikmed: nähtavad ainult selle portaali liikmetele"
+      },
+      "name-errors": {
+        "required": "Grupi nimeväli on kohustuslik",
+        "max": "Grupi nimeväli ei tohi sisaldada rohkem kui 120 märki"
+      },
+      "short-description-errors": {
+        "max": "Lühikirjelduse väli peab olema alla 150 tähemärgi."
+      },
+      "publication-status-errors": {
+        "required": "See väli on nõutav"
+      },
+      "delete": "Kustuta grupp"
+    },
+    "role": {
+      "members": {
+        "label": "Liikmesriik",
+        "help": "Liikmesriik"
+      },
+      "leaders": {
+        "label": "Grupi juht",
+        "help": "Grupi juht"
+      },
+      "leaders-managers": {
+        "label": "Juht ja juht"
+      },
+      "managers": {
+        "label": "Kirjastaja",
+        "help": "Kirjastaja"
+      }
+    },
+    "view": "Vaata gruppi",
+    "conferences": "Konverentsid",
+    "publications": "Trükised",
+    "similars": "Sarnased rühmad",
+    "presentation": "Sissejuhatus",
+    "location": "Aadress",
+    "subgroups": "Alarühmad",
+    "projects-locations": "Projekti asukohad"
+  },
   "gallery": {
     "title": "galeriis",
     "view": "Vaata galeriid.",
     "delete": "Kustuta pilt.",
-    "add": "Lisa pilte",
-    "empty": "Pilte pole tehtud.",
+    "add": "Lisa pildid",
+    "empty": "Ei mingeid fotosid.",
+    "pictures": "Pildid",
     "add-picture": "Palun valige üks või mitu fotot, mida saata.",
     "confirm-delete": "Kas tõesti kustutada see pilt?",
     "success-delete": "Pilt kustutatud.",
-    "error-delete": "Tekkis viga pildi kustutamisel.",
-    "success-create": "Pilt loodud.",
-    "error-create": "Tekkis viga loodud pildis.",
-    "pictures": "Pildid"
+    "error-delete": "Pildi kustutamisel tekkis viga.",
+    "success-create": "Foto loodud.",
+    "error-create": "Tekkis viga loodud pildis."
   }
 }

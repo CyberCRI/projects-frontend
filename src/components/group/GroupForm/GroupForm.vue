@@ -115,7 +115,7 @@
     <!-- locations -->
     <div class="description">
       <label>
-        {{ $t('group.location') }}
+        {{ $t('group.location', form.locations.length) }}
         <LpiButton
           class="add-btn"
           :btn-icon="form.locations.length ? 'Pen' : 'Plus'"

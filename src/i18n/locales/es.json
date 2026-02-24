@@ -915,106 +915,6 @@
     "title": "título de gol",
     "delete": "¿Te gustaría eliminar este objetivo?"
   },
-  "group": {
-    "is-other-org": "Este grupo pertenece a otra plataforma",
-    "contact": "Contacto",
-    "edit-group": "Editar grupo",
-    "see-more-people-button": "Véase {users} más",
-    "see-subgroups": "See {count} subgroup tención See {count} subgroups",
-    "share": "Compartir",
-    "the-team": "El equipo ({users})",
-    "news": "Anuncios",
-    "more": "Más",
-    "less": "Menos",
-    "see-more": "Ver más",
-    "see-less": "Ver menos",
-    "snapshot": "Captura",
-    "members": "Miembros",
-    "projects": "Proyectos",
-    "visibility-private": "Visibilidad : privado",
-    "visibility-public": "Visibilidad : público",
-    "visibility-org": "Visibilidad : portal",
-    "group-members": "Miembros de grupos",
-    "group-projects": "Proyectos de grupo",
-    "select-group": "Seleccione un grupo",
-    "image-header": "Imagen",
-    "root": "(Root)",
-    "create": {
-      "help-link": "Estamos aquí para ayudar.",
-      "notice": "Los campos marcados con * son obligatorios. Siempre puedes modificar esto más tarde. ¿No tienes idea de lo que deberías hacer?",
-      "title": "Crear un nuevo grupo"
-    },
-    "edit": {
-      "title": "Editar un grupo"
-    },
-    "form": {
-      "add": "Añadir",
-      "add-projects": "Agregar proyectos destacados",
-      "edit": "Editar",
-      "edit-members": "Editar miembros",
-      "edit-roles": "Edición de funciones",
-      "form-incomplete": "Los campos están desaparecidos o inválidos, completos para poder salvar.",
-      "create-group": "Crear grupo",
-      "edit-group": "Editar grupo",
-      "edit-name": "Editar nombre del grupo",
-      "email-label": "Email",
-      "email-placeholder": "Apellido.name{'@'}myuniversity.fr",
-      "short-description-label": "Título",
-      "short-description-placeholder": "Describa su grupo en una oración",
-      "name-label": "Nombre del grupo",
-      "name-placeholder": "Ex. Hitbox: bolsa de boxeo interactiva",
-      "description-label": "Descripción",
-      "add-description": "Añadir descripción",
-      "add-parent-group": "Agregar grupo padre",
-      "project-label": "Proyectos destacados",
-      "parent-group-label": "Grupo de expertos",
-      "visibility": {
-        "title": "Visión del grupo",
-        "public": "Público",
-        "private": "Privado",
-        "members": "Miembros",
-        "public_description": "Público: cualquiera puede encontrar este grupo en Internet",
-        "private_description": "Privada: visible sólo por los administradores y miembros del grupo",
-        "members_description": "Miembros: visibles sólo por los miembros de este portal"
-      },
-      "name-errors": {
-        "required": "El campo de nombres de grupo es necesario",
-        "max": "El campo de nombres de grupo puede no ser mayor que 180 caracteres"
-      },
-      "short-description-errors": {
-        "max": "El campo de titulares puede no ser mayor que 150 caracteres"
-      },
-      "publication-status-errors": {
-        "required": "Este campo es necesario"
-      },
-      "delete": "Grupo Suprímase"
-    },
-    "role": {
-      "members": {
-        "label": "Miembro",
-        "help": "Miembro"
-      },
-      "leaders": {
-        "label": "Group leader",
-        "help": "Group Leader"
-      },
-      "leaders-managers": {
-        "label": "Leader and Manager"
-      },
-      "managers": {
-        "label": "Editor",
-        "help": "Editor"
-      }
-    },
-    "view": "Ver grupo",
-    "conferences": "Conferencias",
-    "publications": "Publicaciones",
-    "similars": "Grupos similares",
-    "presentation": "Presentación",
-    "location": "Dirección",
-    "projects-locations": "Localizaciones de proyectos",
-    "subgroups": "Subgrupos"
-  },
   "header": {
     "private": "Privada: visible sólo a los miembros del equipo",
     "org": "Sólo visible para los miembros de su portal",
@@ -3159,18 +3059,118 @@
     "download-pdf": "PDF",
     "generated-on": "Generado en {date}"
   },
+  "group": {
+    "is-other-org": "Este grupo pertenece a otra plataforma",
+    "contact": "Contacto",
+    "edit-group": "Edit Group",
+    "see-more-people-button": "Véase {users} personas adicionales",
+    "see-subgroups": "Véase {count} subgrupos",
+    "share": "Compartir",
+    "the-team": "Equipo ({users}4)",
+    "news": "Anuncio",
+    "more": "Más",
+    "less": "Menos",
+    "see-more": "Ver más",
+    "see-less": "Ver menos",
+    "snapshot": "Resumen",
+    "members": "Miembros",
+    "projects": "Proyectos",
+    "visibility-private": "Visibilidad: privada",
+    "visibility-public": "Visibilidad: público",
+    "visibility-org": "Visibilidad: portal",
+    "group-members": "Miembros de grupos",
+    "group-projects": "Proyectos de grupo",
+    "select-group": "Elija un grupo",
+    "image-header": "Imagen",
+    "root": "(Racine)",
+    "create": {
+      "help-link": "Estamos aquí para ayudar.",
+      "notice": "Los campos marcados con run.sh traduce.py son obligatorios. Puedes modificarlos más tarde si es necesario. ¿Tiene alguna pregunta?",
+      "title": "Crear un nuevo grupo"
+    },
+    "edit": {
+      "title": "Edit Group"
+    },
+    "form": {
+      "add": "Añadir",
+      "add-projects": "Agregar Proyectos Destacados",
+      "edit": "Modificar",
+      "edit-members": "Editar miembros",
+      "edit-roles": "Edición de funciones",
+      "form-incomplete": "Los campos están desaparecidos o inválidos, completos para poder salvar.",
+      "create-group": "Crear grupo",
+      "edit-group": "Edit Group",
+      "edit-name": "Nombre del grupo de cambio",
+      "email-label": "Email",
+      "email-placeholder": "Apellido.name{'@'}myuniversity.fr",
+      "short-description-label": "Breve descripción del grupo",
+      "short-description-placeholder": "Describa su grupo en una oración",
+      "name-label": "Nombre del grupo",
+      "name-placeholder": "Ex. Hitbox: bolsa de boxeo interactiva",
+      "description-label": "Descripción",
+      "add-description": "Añadir Descripción",
+      "add-parent-group": "Agregar un grupo padre",
+      "project-label": "Proyectos destacados",
+      "parent-group-label": "Grupo de expertos",
+      "visibility": {
+        "title": "Visión del grupo",
+        "public": "Público",
+        "private": "Privado",
+        "members": "Miembros",
+        "public_description": "Audiencia: Todo el mundo puede encontrar este grupo en Internet",
+        "private_description": "Privada: visible sólo por directores y miembros del grupo",
+        "members_description": "Miembros: visibles sólo por miembros de este portal"
+      },
+      "name-errors": {
+        "required": "El campo de nombres de grupo es obligatorio",
+        "max": "El campo de nombres de grupo no puede contener más de 120 caracteres"
+      },
+      "short-description-errors": {
+        "max": "El campo de descripción corta debe ser inferior a 150 caracteres"
+      },
+      "publication-status-errors": {
+        "required": "Este campo es necesario"
+      },
+      "delete": "Grupo Suprímase"
+    },
+    "role": {
+      "members": {
+        "label": "Miembro",
+        "help": "Miembro"
+      },
+      "leaders": {
+        "label": "Head of Group",
+        "help": "Head of Group"
+      },
+      "leaders-managers": {
+        "label": "Leader and Manager"
+      },
+      "managers": {
+        "label": "Editorial",
+        "help": "Editorial"
+      }
+    },
+    "view": "Ver grupo",
+    "conferences": "Conferencias",
+    "publications": "Publicaciones",
+    "similars": "Grupos similares",
+    "presentation": "Introducción",
+    "location": "Dirección",
+    "subgroups": "Subgrupos",
+    "projects-locations": "Localizaciones de proyectos"
+  },
   "gallery": {
     "title": "Galería",
-    "view": "Ver galería.",
+    "view": "Mira la galería.",
     "delete": "Borrar la imagen.",
-    "add": "Agregar fotos",
+    "add": "Agregar imágenes",
     "empty": "No hay fotos.",
+    "pictures": "Imágenes",
     "add-picture": "Por favor, seleccione una o más fotos para enviar.",
-    "confirm-delete": "¿Seguro que quieres borrar esta foto?",
-    "success-delete": "Imagen borrada.",
-    "error-delete": "Se produjo un error borrando la imagen.",
-    "success-create": "Imagen creada.",
-    "error-create": "Un error ocurrió imagen creada.",
-    "pictures": "Imágenes"
+    "confirm-delete": "¿De verdad quieres borrar esta imagen?",
+    "success-delete": "Imagen eliminada.",
+    "error-delete": "Se produjo un error eliminando la imagen.",
+    "success-create": "Foto creada.",
+    "error-create": "Un error ocurrió imagen creada."
   }
 }
