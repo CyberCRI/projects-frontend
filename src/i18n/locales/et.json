@@ -928,7 +928,6 @@
     "less": "Vähem",
     "see-more": "Näe rohkem",
     "see-less": "Näe vähem",
-    "subgroups": "alamrühmad",
     "snapshot": "Pilt",
     "members": "Liikmed",
     "projects": "Projektid",
@@ -1012,7 +1011,9 @@
     "publications": "Trükised",
     "similars": "Rühmad sarnased",
     "presentation": "Esitlus",
-    "location": "Aadress"
+    "location": "Aadress",
+    "projects-locations": "Projektide asukohad",
+    "subgroups": "Alarühm | Alarühmad"
   },
   "header": {
     "private": "Privaatne: nähtav ainult meeskonnaliikmetele",
@@ -2020,7 +2021,8 @@
     },
     "add-short": "Lisa sdg",
     "sdg-fulltext": "säästva arengu eesmärgid",
-    "title": "SDG"
+    "title": "SDG",
+    "empty": "Siin pole veel midagi... Säästva arengu eesmärke panustajad veel ei lisanud."
   },
   "stats": {
     "cumulated-projects": "Uued kumulatiivsed projektid",
@@ -2058,7 +2060,8 @@
     "add-profile-tag": "Pane oskused oma kasutajaprofiilidele edasi",
     "add-project-tag-info": "Kui kasutaja loob projekti, saab ta lisada Wikipedia temaatilise sildi (nt biokeemia, füüsika jne). See lihtsustab projekti leidmist ja parandab projektisoovitusi temaatilise sarnasuse järgi. Saate välja tuua oma organisatsiooni jaoks olulised temaatilised sildid.",
     "edit": "Siltide muutmine",
-    "title": "Sildid"
+    "title": "Sildid",
+    "empty": "Siin pole veel midagi... Panustajad ei ole veel silte lisanud."
   },
   "team": {
     "add": "Liikmete/gruppide lisamine",
@@ -3167,6 +3170,7 @@
     "success-delete": "Pilt kustutatud.",
     "error-delete": "Tekkis viga pildi kustutamisel.",
     "success-create": "Pilt loodud.",
-    "error-create": "Tekkis viga loodud pildis."
+    "error-create": "Tekkis viga loodud pildis.",
+    "pictures": "Pildid"
   }
 }

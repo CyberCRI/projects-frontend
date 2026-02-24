@@ -928,7 +928,6 @@
     "less": "Weniger",
     "see-more": "Mehr erfahren",
     "see-less": "weniger",
-    "subgroups": "STELLUNGNAHMEN",
     "snapshot": "Schnappschuss",
     "members": "Mitglieder",
     "projects": "Projekte",
@@ -1012,7 +1011,9 @@
     "publications": "Veröffentlichungen",
     "similars": "Gruppen ähnliche",
     "presentation": "Präsentation",
-    "location": "Anschrift"
+    "location": "Anschrift",
+    "projects-locations": "Standorte",
+    "subgroups": "Untergruppe | Untergruppen"
   },
   "header": {
     "private": "Private: nur für Teammitglieder sichtbar",
@@ -2020,7 +2021,8 @@
     },
     "add-short": "SDG hinzufügen",
     "sdg-fulltext": "Nachhaltigkeitsziele",
-    "title": "SDG"
+    "title": "SDG",
+    "empty": "Noch nichts hier... Die Mitarbeiter haben noch keine SDGs hinzugefügt."
   },
   "stats": {
     "cumulated-projects": "Neue Projekte kumulieren",
@@ -2058,7 +2060,8 @@
     "add-profile-tag": "Fertigkeiten für Ihre Benutzerprofile",
     "add-project-tag-info": "Wenn ein Benutzer ein Projekt erstellt, können sie einen thematischen Tag aus Wikipedia (z.B. Biochemie, Physik, etc.) hinzufügen. Damit ist es einfacher, das Projekt zu finden und Projektempfehlungen durch thematische Ähnlichkeit zu verbessern. Sie können wichtige thematische Tags für Ihre Organisation hervorheben.",
     "edit": "Tags bearbeiten",
-    "title": "Schlagwörter"
+    "title": "Schlagwörter",
+    "empty": "Noch nichts hier... Die Mitarbeiter haben noch keine Tags hinzugefügt."
   },
   "team": {
     "add": "Mitglieder / Gruppen hinzufügen",
@@ -3167,6 +3170,7 @@
     "success-delete": "Bild gelöscht.",
     "error-delete": "Ein Fehler beim Löschen des Bildes.",
     "success-create": "Bild erstellt.",
-    "error-create": "Ein Fehler wurde erstellt."
+    "error-create": "Ein Fehler wurde erstellt.",
+    "pictures": "Bilder"
   }
 }

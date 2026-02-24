@@ -928,7 +928,6 @@
     "less": "Moins",
     "see-more": "Voir plus",
     "see-less": "Voir moins",
-    "subgroups": "SOUS-GROUPES",
     "snapshot": "Résumé",
     "members": "Membres",
     "projects": "Projets",
@@ -1012,8 +1011,9 @@
     "publications": "Publications",
     "similars": "Groupes similaires",
     "presentation": "Présentation",
-    "projects-locations": "Localisations des projects",
-    "location": "Adresse"
+    "location": "Adresse",
+    "subgroups": "Sous-groupes",
+    "projects-locations": "Emplacements des projets"
   },
   "header": {
     "private": "Privée: visible uniquement par les membres de l’équipe",
@@ -2021,7 +2021,8 @@
     },
     "add-short": "Ajouter un odd",
     "sdg-fulltext": "objectifs de développement durable",
-    "title": "ODD"
+    "title": "ODD",
+    "empty": "Rien ici... Les contributeurs n'ont pas encore ajouté d'ODD."
   },
   "stats": {
     "cumulated-projects": "Nouveaux projets cumulés",
@@ -2059,7 +2060,8 @@
     "add-profile-tag": "Mettre en avant des compétences pour les profils utilisateurs",
     "add-project-tag-info": "Quand un utilisateur crée un projet, il peut rajouter un tag thématique issu de Wikipédia (ex : biochimie, physique, etc). Cela permet de plus facilement trouver le projet et d’améliorer les recommandations de projets par similarité thématique. Vous pouvez mettre en avant des tags thématiques importants pour votre organisation.",
     "edit": "Modifier les tags",
-    "title": "Tags"
+    "title": "Tags",
+    "empty": "Rien ici... Les contributeurs n'ont pas encore ajouté de tags."
   },
   "team": {
     "add": "Ajouter un membre / groupe",
@@ -3163,6 +3165,7 @@
     "delete": "Supprimer l'image.",
     "add": "Ajouter des images",
     "empty": "Pas de photos.",
+    "pictures": "Image | Images",
     "add-picture": "Veuillez sélectionner une ou plusieurs photos à envoyer.",
     "confirm-delete": "Voulez-vous vraiment supprimer cette image ?",
     "success-delete": "Image supprimée.",

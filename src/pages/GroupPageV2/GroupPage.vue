@@ -182,7 +182,7 @@ const groupTabsDisplay = computed(() => {
       isEditing: false,
       key: 'group-gallery',
       dataTest: 'group-gallery',
-      label: t(GroupModuleTitle.gallery),
+      label: t(GroupModuleTitle.gallery, groupModules.value.gallery),
       view: `/group/${route.params.groupId}/gallery`,
       altView: `/group/${route.params.groupId}/gallery/edit`,
       props: {

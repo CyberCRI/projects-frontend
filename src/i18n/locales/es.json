@@ -928,7 +928,6 @@
     "less": "Menos",
     "see-more": "Ver más",
     "see-less": "Ver menos",
-    "subgroups": "SUBGROUPS",
     "snapshot": "Captura",
     "members": "Miembros",
     "projects": "Proyectos",
@@ -1012,7 +1011,9 @@
     "publications": "Publicaciones",
     "similars": "Grupos similares",
     "presentation": "Presentación",
-    "location": "Dirección"
+    "location": "Dirección",
+    "projects-locations": "Localizaciones de proyectos",
+    "subgroups": "Subgrupos"
   },
   "header": {
     "private": "Privada: visible sólo a los miembros del equipo",
@@ -2020,7 +2021,8 @@
     },
     "add-short": "añadir un ODS",
     "sdg-fulltext": "Objetivos de desarrollo sostenible",
-    "title": "ODS"
+    "title": "ODS",
+    "empty": "Nada aquí todavía... Los colaboradores aún no han añadido ODS."
   },
   "stats": {
     "cumulated-projects": "Proyectos nuevos acumulativos",
@@ -2058,7 +2060,8 @@
     "add-profile-tag": "Avanzar habilidades para sus perfiles de usuarios",
     "add-project-tag-info": "Cuando un usuario crea un proyecto, puede agregar una etiqueta temática de Wikipedia (por ejemplo, bioquímica, física, etc.). Esto hace más fácil encontrar el proyecto y mejorar las recomendaciones de proyectos por similitud temática. Puede destacar importantes etiquetas temáticas para su organización.",
     "edit": "Etiquetas de edición",
-    "title": "Etiquetas"
+    "title": "Etiquetas",
+    "empty": "Nada aquí todavía... Los colaboradores aún no han añadido etiquetas."
   },
   "team": {
     "add": "añadir miembros / grupos",
@@ -3167,6 +3170,7 @@
     "success-delete": "Imagen borrada.",
     "error-delete": "Se produjo un error borrando la imagen.",
     "success-create": "Imagen creada.",
-    "error-create": "Un error ocurrió imagen creada."
+    "error-create": "Un error ocurrió imagen creada.",
+    "pictures": "Imágenes"
   }
 }

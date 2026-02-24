@@ -928,7 +928,6 @@
     "less": "Minder",
     "see-more": "Zie meer",
     "see-less": "Minder zien",
-    "subgroups": "SUBGROUPS",
     "snapshot": "Snapshot",
     "members": "Leden",
     "projects": "Projecten",
@@ -1012,7 +1011,9 @@
     "publications": "Publicaties",
     "similars": "Groepen vergelijkbaar",
     "presentation": "Presentatie",
-    "location": "Adres"
+    "location": "Adres",
+    "projects-locations": "Plaatsen van projecten",
+    "subgroups": "Subgroep"
   },
   "header": {
     "private": "Privé: alleen zichtbaar voor teamleden",
@@ -2020,7 +2021,8 @@
     },
     "add-short": "Een sdg toevoegen",
     "sdg-fulltext": "Duurzame ontwikkelingsdoelstellingen",
-    "title": "SDG"
+    "title": "SDG",
+    "empty": "Nog niets hier... Medewerkers hebben nog geen SDG's toegevoegd."
   },
   "stats": {
     "cumulated-projects": "Cumulatieve nieuwe projecten",
@@ -2058,7 +2060,8 @@
     "add-profile-tag": "Vaardigheden naar voren voor uw gebruikersprofielen",
     "add-project-tag-info": "Wanneer een gebruiker een project aanmaakt, kunnen ze een thematische tag uit Wikipedia toevoegen (bijv. biochemie, natuurkunde, enz.). Dit maakt het gemakkelijker om het project te vinden en de projectaanbevelingen te verbeteren door thematische overeenkomsten. U kunt belangrijke thematische tags voor uw organisatie markeren.",
     "edit": "Tags bewerken",
-    "title": "Tags"
+    "title": "Tags",
+    "empty": "Nog niets hier... Medewerkers hebben nog geen tags toegevoegd."
   },
   "team": {
     "add": "Leden/groepen toevoegen",
@@ -3167,6 +3170,7 @@
     "success-delete": "Foto verwijderd.",
     "error-delete": "Er is een fout opgetreden bij het verwijderen van afbeelding.",
     "success-create": "Foto gemaakt.",
-    "error-create": "Er is een fout opgetreden bij het maken van een foto."
+    "error-create": "Er is een fout opgetreden bij het maken van een foto.",
+    "pictures": "Afbeeldingen"
   }
 }

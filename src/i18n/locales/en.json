@@ -1013,7 +1013,7 @@
         "help": "Editor"
       }
     },
-    "projects-locations": "Project locations"
+    "projects-locations": "Projects locations"
   },
   "header": {
     "private": "Private: visible only to team members",
@@ -1096,7 +1096,8 @@
     "success-delete": "Picture deleted.",
     "error-delete": "An error occured deleting picture.",
     "success-create": "Picture created.",
-    "error-create": "An error occured created picture."
+    "error-create": "An error occured created picture.",
+    "pictures": "Images"
   },
   "me": {
     "follow": "Projects I follow",
@@ -2034,7 +2035,8 @@
     },
     "add-short": "Add a sdg",
     "sdg-fulltext": "sustainable development goals",
-    "title": "SDG"
+    "title": "SDG",
+    "empty": "Nothing here yet... Contributors did not added SDGs yet."
   },
   "stats": {
     "cumulated-projects": "Cumulative new projects",
@@ -2072,7 +2074,8 @@
     "add-profile-tag": "Put skills forward for your users profiles",
     "add-project-tag-info": "When a user creates a project, they can add a thematic tag from Wikipedia (e.g. biochemistry, physics, etc.). This makes it easier to find the project and improve project recommendations by thematic similarity. You can highlight important thematic tags for your organization.",
     "edit": "Edit tags",
-    "title": "Tags"
+    "title": "Tags",
+    "empty": "Nothing here yet... Contributors did not added tags yet."
   },
   "team": {
     "add": "Add members / groups",

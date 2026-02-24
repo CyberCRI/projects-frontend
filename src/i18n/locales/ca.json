@@ -928,7 +928,6 @@
     "less": "Menys",
     "see-more": "Veure més",
     "see-less": "Veure menys",
-    "subgroups": "SUBGROUPSConstellation name (optional)",
     "snapshot": "Visió general",
     "members": "Membres",
     "projects": "Projectes",
@@ -1012,7 +1011,9 @@
     "publications": "Publicacions",
     "similars": "Grups similars",
     "presentation": "Presentació",
-    "location": "Adreça"
+    "location": "Adreça",
+    "projects-locations": "Ubicació dels projectes",
+    "subgroups": "Subagrupa els subagrupats"
   },
   "header": {
     "private": "Privat: només visible per als membres de l' equip",
@@ -2020,7 +2021,8 @@
     },
     "add-short": "Afegeix un sdg",
     "sdg-fulltext": "objectiu sostenible del desenvolupament",
-    "title": "SDG"
+    "title": "SDG",
+    "empty": "No hi ha res aquí encara... Els col·laboradors encara no han afegit SDGs."
   },
   "stats": {
     "cumulated-projects": "Projectes curatius",
@@ -2058,7 +2060,8 @@
     "add-profile-tag": "Poseu habilitats cap endavant pels perfils dels vostres usuaris",
     "add-project-tag-info": "Quan un usuari crea un projecte, poden afegir una etiqueta temàtica de la Viquipèdia (p. ex. bioquímica, física, etc.). Això fa més fàcil trobar el projecte i millorar les recomanacions del projecte per la similitud temàtica. Podeu ressaltar les etiquetes orgmàtiques importants per la vostra organització.",
     "edit": "Edita etiquetes",
-    "title": "Etiquetes"
+    "title": "Etiquetes",
+    "empty": "No hi ha res aquí encara... Els col· laboradors encara no han afegit etiquetes."
   },
   "team": {
     "add": "Afegeix membres / grups",
@@ -3167,6 +3170,7 @@
     "success-delete": "S' ha esborrat la imatge.",
     "error-delete": "Hi ha hagut un error en esborrar la imatge.",
     "success-create": "Imatge creada.",
-    "error-create": "S' ha creat un error."
+    "error-create": "S' ha creat un error.",
+    "pictures": "Imatges"
   }
 }

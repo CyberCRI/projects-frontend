@@ -91,6 +91,7 @@
         />
       </label>
       <TagsFilterSummary v-model="form.tags" />
+      <empty-label v-if="form.tags.length === 0" :label="$t('tag.empty')" />
       <TagsDrawer v-model="form.tags" :is-opened="openTags" @close="openTags = false" />
     </div>
 
@@ -107,6 +108,7 @@
         />
       </label>
       <SdgList :sdgs="form.sdgs" />
+      <empty-label v-if="form.sdgs.length === 0" :label="$t('sdg.empty')" />
       <SdgsDrawer v-model="form.sdgs" :is-opened="openSdg" @close="openSdg = false" />
     </div>
 
@@ -161,6 +163,7 @@
     <!-- Parent group -->
     <div class="parent-group">
       <ParentGroupSection v-model="form.parentGroup" :groups="groups" />
+      <empty-label v-if="!form.parentGroup" :label="$t('empty')" />
     </div>
 
     <!-- Visibility -->

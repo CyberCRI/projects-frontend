@@ -71,7 +71,7 @@ export const GroupModuleTitle: { [key in PeopleGroupModulesKeys]: string } = {
   similars: 'group.similars',
   subgroups: 'group.subgroups',
   projects_locations: 'group.projects-locations',
-  gallery: 'gallery.title',
+  gallery: 'gallery.pictures',
 }
 
 export interface ProfilePictureVariationsModel {
