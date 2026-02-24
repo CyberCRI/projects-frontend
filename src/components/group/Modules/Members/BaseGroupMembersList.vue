@@ -7,7 +7,7 @@
       :class="{
         'focus-leader': focusLeader && member.is_leader,
       }"
-      role-label=""
+      :role-label="member.is_leader ? undefined : ''"
       @click="openProfile"
     />
     <PaginationButtonsV2
