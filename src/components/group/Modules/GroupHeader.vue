@@ -36,7 +36,6 @@
                 v-for="member in leaders"
                 :key="member.id"
                 :member="member"
-                role-label=""
                 mode="list"
                 @click="openProfile(member)"
               />
@@ -260,6 +259,10 @@ const closeProfile = () => (leaderIdDrawer.value = null)
   flex-wrap: wrap;
   gap: 0.2rem;
 
+  .basic-card .content {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
   > * {
     width: 100%;
     height: unset !important;

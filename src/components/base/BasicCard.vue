@@ -172,7 +172,7 @@ const is = computed(() => {
 
 .list :deep(.content) {
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   padding: 0.75rem;
   gap: 1rem;
   flex-basis: 100%;
