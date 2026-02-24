@@ -53,8 +53,7 @@ export default function useContextualFilters({
           : selectedFilters.value?.tags?.map((tag) => tag[`title_${locale.value}`] || tag.title) ||
             [],
         dataTest: 'contextual-filter-tags',
-        condition:
-          selectedSection.value === PROJECT_SECTION_KEY && !filterBlackList.value.includes('tags'),
+        condition: !filterBlackList.value.includes('tags'),
         // drawer config part
         title: 'tag',
         toggleable: true,

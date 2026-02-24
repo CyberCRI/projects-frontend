@@ -55,7 +55,7 @@
             :to="{
               name: 'GroupSearch',
               query: {
-                sections: 'groups',
+                section: 'groups',
               },
             }"
           />
