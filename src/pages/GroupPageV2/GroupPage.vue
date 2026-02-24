@@ -9,7 +9,7 @@
     }"
   >
     <div class="page-section-extra-wide">
-      <FetchLoader :status="status" :with-data="!!group.id">
+      <FetchLoader :status="status" :error="error" redirect-404 :with-data="!!group.id">
         <NavPanelLayout
           :is-loading="groupLoading"
           :is-nav-collapsed="isNavCollapsed"
@@ -60,7 +60,7 @@ const route = useRoute()
 const { t } = useNuxtI18n()
 const groupId = computed(() => parseInt(route.params.groupId.toString(), 10))
 
-const { data: group, isLoading, status } = getGroup(organizationCode, groupId)
+const { data: group, isLoading, status, error } = getGroup(organizationCode, groupId)
 
 const groupLoading = computed(() => isLoading.value && !group.value?.id)
 

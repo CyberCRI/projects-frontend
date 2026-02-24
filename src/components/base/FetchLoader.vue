@@ -6,7 +6,7 @@
         {{ props.label ?? t('common.loading') }}
       </span>
     </div>
-    <slot v-else-if="actualStatus === 'error'" name="error">
+    <slot v-else-if="isError" name="error">
       <div class="center error" :class="[classError]">
         <IconImage name="AlertOutline" class="icon" />
         <span>
@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { AsyncDataRequestStatus } from 'nuxt/app'
+import { AsyncDataRequestStatus, NuxtError } from 'nuxt/app'
 
 /*
   componets wrappers aroud usefetch status result
@@ -37,6 +37,8 @@ const props = withDefaults(
     // stauts from fetchOptions
     status: AsyncDataRequestStatus | AsyncDataRequestStatus[]
     label?: string
+    error?: NuxtError
+    error404?: boolean
     withData?: boolean
     onlyError?: boolean
     skeleton?: boolean
@@ -50,6 +52,8 @@ const props = withDefaults(
     skeleton: false,
     classLoading: '',
     classError: '',
+    error: null,
+    error404: true,
   }
 )
 
@@ -76,6 +80,10 @@ const inLoading = computed(() => {
   return ['pending', 'idle'].includes(actualStatus.value)
 })
 
+const isError = computed(() => {
+  return actualStatus.value === 'error'
+})
+
 const loading = computed(() => {
   if (props.withData === true || props.onlyError) {
     return false
@@ -92,6 +100,19 @@ watch(inLoading, (newValue, oldValue) => {
     firstLoading.value = true
   }
 })
+
+// if error are set and error 404 is set to true, redirect to page 404
+const router = useRouter()
+watch(
+  () => [props.error, props.error404, isError.value],
+  () => {
+    if (isError.value) {
+      if (props.error?.statusCode === 404 && props.error404) {
+        router.push({ name: 'page404' })
+      }
+    }
+  }
+)
 </script>
 
 <style lang="scss" scoped>
