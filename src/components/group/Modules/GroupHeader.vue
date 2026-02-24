@@ -32,7 +32,7 @@
             class="short-description"
             v-html="group.$t.short_description"
           />
-          <FetchLoader :status="status" only-error skeleton>
+          <FetchLoader v-if="leaders.length" :status="status" only-error skeleton>
             <div class="group-leaders">
               <GroupMemberItem
                 v-for="member in leaders"
@@ -43,11 +43,6 @@
                 @click="openProfile(member)"
               />
             </div>
-            <GroupMemberDrawer
-              :is-opened="!!leaderIdDrawer"
-              :member-id="leaderIdDrawer"
-              @close="closeProfile"
-            />
           </FetchLoader>
           <TagsList
             v-if="group.tags.length"
@@ -90,6 +85,11 @@
         :is-opened="stateModal"
         :locations="group.locations"
         @close="closeModal()"
+      />
+      <GroupMemberDrawer
+        :is-opened="!!leaderIdDrawer"
+        :member-id="leaderIdDrawer"
+        @close="closeProfile"
       />
     </template>
   </BaseGroupPreview>
