@@ -69,7 +69,7 @@
             @click="openModal()"
           >
             <IconImage name="MapMarker" />
-            <span class="group-recap-title">{{ t('group.location', form.locations.length) }}</span>
+            <span class="group-recap-title">{{ t('group.location', group.locations.length) }}</span>
           </button>
         </div>
         <SdgList
