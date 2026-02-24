@@ -66,10 +66,10 @@ const onMouseout = () => {
   grid-template-rows: 1fr;
   width: 100%;
   gap: 1rem;
-  min-height: pxToRem(85px);
+  min-height: pxToRem(80px);
 
   .subgroup-header {
-    padding: 1rem 1.5rem;
+    padding: 0 1.5rem;
     background-color: color-mix(in srgb, $primary, transparent 90%);
     display: flex;
     justify-content: space-between;
