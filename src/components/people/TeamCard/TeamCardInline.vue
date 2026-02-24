@@ -1,5 +1,5 @@
 <template>
-  <GroupMemberItem :member="user" :role-label="roleLabel" @click="removeMember">
+  <GroupMemberItem :member="member" :role-label="roleLabel" @click="removeMember">
     <template #actions>
       <div v-if="iconName" class="icon">
         <IconImage :name="iconName" @click="removeMember" />
@@ -17,19 +17,19 @@ import { IconImageChoice } from '@/functs/IconImage'
 
 const props = withDefaults(
   defineProps<{
-    user: GroupMember
+    member: GroupMember
     icon?: IconImageChoice
     roleLabel?: string
   }>(),
-  { icon: null, roleLabel: undefined }
+  { icon: undefined, roleLabel: undefined }
 )
 
 const emit = defineEmits(['click'])
 const usersStore = useUsersStore()
 
 const iconName = computed(() => {
-  if (props.icon) return props.icon
-  return props.user.id !== usersStore.userFromApi.id ? 'Close' : null
+  if (props.icon !== undefined) return props.icon
+  return props.member.id !== usersStore.userFromApi.id ? 'Close' : null
 })
 
 const removeMember = () => {

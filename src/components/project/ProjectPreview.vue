@@ -59,7 +59,7 @@ const props = withDefaults(
     project: TranslatedProject
     extra?: boolean
   }>(),
-  { extra: false }
+  { extra: true }
 )
 
 const emit = defineEmits(['refresh'])

@@ -38,8 +38,16 @@
         :key="user.id"
         icon="Close"
         :member="user"
-        @click="removeUser(user)"
+        @click="onConfirmRemoveUser(user)"
       />
+      <ConfirmModal
+        v-if="stateModal"
+        :title="$t('common.remove-user')"
+        @cancel="closeModal"
+        @confirm="onRemoveUser"
+      >
+        <TeamCardInline :member="removeUser" :icon="null" class="pointer-events-none" />
+      </ConfirmModal>
     </div>
     <div class="show-more">
       <LinkButton
@@ -78,8 +86,12 @@ export default {
   emits: ['update-team', 'remove-user', 'update:model-value'],
   setup() {
     const usersStore = useUsersStore()
+    const { stateModal, closeModal, openModal } = useModal()
     return {
       usersStore,
+      stateModal,
+      closeModal,
+      openModal,
     }
   },
 
@@ -89,6 +101,7 @@ export default {
       teamModalVisible: false,
       teamModalMode: 'select', // 'select' or 'roles'
       showFullList: false,
+      removeUser: null,
     }
   },
 
@@ -134,13 +147,20 @@ export default {
       this.$emit('update:model-value', team)
     },
 
-    removeUser(user) {
-      const team = this.modelValue.filter((member) => user.id !== member.id)
+    onRemoveUser() {
+      const team = this.modelValue.filter((member) => this.removeUser.id !== member.id)
       this.$emit('update:model-value', team)
+      this.removeUser = null
+      this.closeModal()
     },
     openDrawer(mode) {
       this.teamModalMode = mode
       this.teamModalVisible = true
+    },
+
+    onConfirmRemoveUser(user) {
+      this.removeUser = user
+      this.openModal()
     },
   },
 }
