@@ -1,15 +1,13 @@
 <template>
-  <BaseGroupPreview :loading="isLoading" title="">
+  <BaseGroupPreview class="group-header-info" :loading="isLoading" title="">
     <template #header>
       <div class="group-visibility">
-        <p>
-          <span class="icon">
-            <IconImage :name="groupVisibilityIcon" />
-          </span>
-          <span>
-            {{ groupVisibilityLabel }}
-          </span>
-        </p>
+        <span class="icon">
+          <IconImage :name="groupVisibilityIcon" />
+        </span>
+        <span>
+          {{ groupVisibilityLabel }}
+        </span>
       </div>
     </template>
     <template #content>
@@ -161,7 +159,7 @@ const closeProfile = () => (leaderIdDrawer.value = null)
 }
 
 .group-infos {
-  padding: 1rem;
+  padding: 0 1rem;
   gap: 0.3rem;
   display: flex;
   flex-direction: column;
@@ -174,23 +172,20 @@ const closeProfile = () => (leaderIdDrawer.value = null)
 .group-image {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: start;
 }
 
 .group-visibility {
-  p {
-    font-weight: 700;
-    font-size: $font-size-xs;
-    color: $primary-dark;
-    display: flex;
-    align-items: center;
-    gap: $space-s;
+  font-weight: 700;
+  font-size: $font-size-xs;
+  color: $primary-dark;
+  display: flex;
+  align-items: center;
 
-    .icon svg {
-      fill: $primary-dark;
-      width: $layout-size-xl;
-      height: $layout-size-m;
-    }
+  .icon svg {
+    fill: $primary-dark;
+    width: $layout-size-xl;
+    height: $layout-size-m;
   }
 }
 
@@ -245,6 +240,9 @@ const closeProfile = () => (leaderIdDrawer.value = null)
 </style>
 
 <style lang="scss">
+.group-header-info .group-container {
+  margin-top: 0 !important;
+}
 .group-leaders {
   display: flex;
   justify-content: start;
