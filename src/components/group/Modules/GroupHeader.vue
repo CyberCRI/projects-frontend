@@ -62,7 +62,7 @@
             @click="openModal()"
           >
             <IconImage name="MapMarker" />
-            <span class="group-recap-title">{{ t('group.location', group.locations.length) }}</span>
+            <span class="group-recap-title">{{ locationTitle }}</span>
           </button>
         </div>
         <SdgList
@@ -144,6 +144,17 @@ const hasLinks = computed(() => {
 })
 const hasExtras = computed(() => {
   return props.group.sdgs.length || hasLinks.value
+})
+
+const locationTitle = computed(() => {
+  // if many location are linked to this group
+  // return global text "locations"
+  // else if only one linked, return the title of first location
+  if (props.group.locations.length > 1) {
+    return t('group.location', props.group.locations.length)
+  }
+  const location = props.group.locations[0]
+  return location.$t.title || t('group.location')
 })
 
 // preview leader
