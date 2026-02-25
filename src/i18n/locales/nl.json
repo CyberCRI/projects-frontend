@@ -915,105 +915,6 @@
     "title": "Titel van het doel",
     "delete": "Wilt u dit doel verwijderen?"
   },
-  "group": {
-    "is-other-org": "Deze groep behoort tot een ander platform",
-    "contact": "Contactpersoon",
-    "edit-group": "Groep bewerken",
-    "see-more-people-button": "Zie {users} meer",
-    "see-subgroups": "Zie de subgroep | Zie {count} subgroepen",
-    "share": "Delen",
-    "the-team": "Het team ({users})",
-    "news": "Mededelingen",
-    "more": "Meer",
-    "less": "Minder",
-    "see-more": "Zie meer",
-    "see-less": "Minder zien",
-    "subgroups": "SUBGROUPS",
-    "snapshot": "Snapshot",
-    "members": "Leden",
-    "projects": "Projecten",
-    "visibility-private": "Zichtbaarheid: particulier",
-    "visibility-public": "Zichtbaarheid: publiek",
-    "visibility-org": "Zichtbaarheid: portaal",
-    "group-members": "Groepsleden",
-    "group-projects": "Groepsprojecten",
-    "select-group": "Een groep selecteren",
-    "image-header": "Afbeelding",
-    "root": "(Root)",
-    "create": {
-      "help-link": "We zijn hier om te helpen.",
-      "notice": "Velden gemarkeerd met * zijn verplicht. Je kunt dit altijd later aanpassen. Geen idee wat je moet doen?",
-      "title": "Een nieuwe groep aanmaken"
-    },
-    "edit": {
-      "title": "Groep bewerken"
-    },
-    "form": {
-      "add": "Voeg toe",
-      "add-projects": "Bewezen projecten toevoegen",
-      "edit": "Bewerken",
-      "edit-members": "Leden bewerken",
-      "edit-roles": "Rollen bewerken",
-      "form-incomplete": "Velden ontbreken of zijn ongeldig, volledig om op te slaan.",
-      "create-group": "Groep aanmaken",
-      "edit-group": "Groep bewerken",
-      "edit-name": "Naam van de groep bewerken",
-      "email-label": "E-mail",
-      "email-placeholder": "Ex. achternaam{'@'}myuniversity.fr",
-      "short-description-label": "Hoofdlijn",
-      "short-description-placeholder": "Beschrijf uw groep in één zin",
-      "name-label": "Groep",
-      "name-placeholder": "Ex. Hitbox: interactieve bokszak",
-      "description-label": "Omschrijving",
-      "add-description": "Beschrijving toevoegen",
-      "add-parent-group": "Oudergroep toevoegen",
-      "project-label": "Uitgelichte projecten",
-      "parent-group-label": "Oudergroep",
-      "visibility": {
-        "title": "Zichtbaarheid van de groep",
-        "public": "Openbaar",
-        "private": "Privé",
-        "members": "Leden",
-        "public_description": "Publiek: iedereen kan deze groep vinden op Internet",
-        "private_description": "Privé: alleen zichtbaar door de beheerders en de groepsleden",
-        "members_description": "Leden: alleen zichtbaar door de leden van dit portaal"
-      },
-      "name-errors": {
-        "required": "Het groepsnaamveld is vereist",
-        "max": "Het groepsnaamveld mag niet groter zijn dan 180 tekens"
-      },
-      "short-description-errors": {
-        "max": "Het hoofdveld mag niet groter zijn dan 150 tekens"
-      },
-      "publication-status-errors": {
-        "required": "Dit veld is vereist"
-      },
-      "delete": "Groep verwijderen"
-    },
-    "role": {
-      "members": {
-        "label": "Lid",
-        "help": "Lid"
-      },
-      "leaders": {
-        "label": "Groepsleider",
-        "help": "Groepsleider"
-      },
-      "leaders-managers": {
-        "label": "Leider en beheerder"
-      },
-      "managers": {
-        "label": "Editor",
-        "help": "Editor"
-      }
-    },
-    "view": "Beeldgroep",
-    "conferences": "Conferenties",
-    "publications": "Publicaties",
-    "similars": "Groepen vergelijkbaar",
-    "presentation": "Presentatie",
-    "location": "Adres"
-  },
   "header": {
     "private": "Privé: alleen zichtbaar voor teamleden",
     "org": "Alleen zichtbaar voor de leden van uw portaal",
@@ -2020,7 +1921,8 @@
     },
     "add-short": "Een sdg toevoegen",
     "sdg-fulltext": "Duurzame ontwikkelingsdoelstellingen",
-    "title": "SDG"
+    "title": "SDG",
+    "empty": "Nog niets hier... Medewerkers hebben nog geen SDG's toegevoegd."
   },
   "stats": {
     "cumulated-projects": "Cumulatieve nieuwe projecten",
@@ -2058,7 +1960,8 @@
     "add-profile-tag": "Vaardigheden naar voren voor uw gebruikersprofielen",
     "add-project-tag-info": "Wanneer een gebruiker een project aanmaakt, kunnen ze een thematische tag uit Wikipedia toevoegen (bijv. biochemie, natuurkunde, enz.). Dit maakt het gemakkelijker om het project te vinden en de projectaanbevelingen te verbeteren door thematische overeenkomsten. U kunt belangrijke thematische tags voor uw organisatie markeren.",
     "edit": "Tags bewerken",
-    "title": "Tags"
+    "title": "Tags",
+    "empty": "Nog niets hier... Medewerkers hebben nog geen tags toegevoegd."
   },
   "team": {
     "add": "Leden/groepen toevoegen",
@@ -3156,17 +3059,118 @@
     "download-pdf": "PDF",
     "generated-on": "Gegenereerd op {date}"
   },
+  "group": {
+    "is-other-org": "Deze groep behoort tot een ander platform",
+    "contact": "Contactpersoon",
+    "edit-group": "Groep bewerken",
+    "see-more-people-button": "Zie {users} extra personen",
+    "see-subgroups": "Zie {count} subgroepen",
+    "share": "Delen",
+    "the-team": "Team ({users}4)",
+    "news": "Aangekondigd",
+    "more": "Meer",
+    "less": "Minder",
+    "see-more": "Zie meer",
+    "see-less": "Minder zien",
+    "snapshot": "Samenvatting",
+    "members": "Leden",
+    "projects": "Projecten",
+    "visibility-private": "Zichtbaarheid: privé",
+    "visibility-public": "Zichtbaarheid: publiek",
+    "visibility-org": "Zichtbaarheid: portaal",
+    "group-members": "Groepsleden",
+    "group-projects": "Groepsprojecten",
+    "select-group": "Kies een groep",
+    "image-header": "Afbeelding",
+    "root": "(Racine)",
+    "create": {
+      "help-link": "We zijn hier om te helpen.",
+      "notice": "Velden gemarkeerd met run.sh translate.py zijn verplicht. U kunt ze later aanpassen indien nodig. Heb je nog vragen?",
+      "title": "Een nieuwe groep aanmaken"
+    },
+    "edit": {
+      "title": "Groep bewerken"
+    },
+    "form": {
+      "add": "Voeg toe",
+      "add-projects": "Aanbevolen projecten toevoegen",
+      "edit": "Wijzigen",
+      "edit-members": "Leden bewerken",
+      "edit-roles": "Rollen bewerken",
+      "form-incomplete": "Velden ontbreken of zijn ongeldig, volledig om op te slaan.",
+      "create-group": "Groep aanmaken",
+      "edit-group": "Groep bewerken",
+      "edit-name": "Groepsnaam wijzigen",
+      "email-label": "E-mail",
+      "email-placeholder": "Ex. achternaam{'@'}myuniversity.fr",
+      "short-description-label": "Korte beschrijving van de groep",
+      "short-description-placeholder": "Beschrijf uw groep in één zin",
+      "name-label": "Groepsnaam",
+      "name-placeholder": "Ex. Hitbox: interactieve bokszak",
+      "description-label": "Omschrijving",
+      "add-description": "Beschrijving toevoegen",
+      "add-parent-group": "Een oudergroep toevoegen",
+      "project-label": "Uitgelichte projecten",
+      "parent-group-label": "Oudergroep",
+      "visibility": {
+        "title": "Zichtbaarheid van de groep",
+        "public": "Openbaar",
+        "private": "Privé",
+        "members": "Leden",
+        "public_description": "Publiek: Iedereen kan deze groep vinden op het internet",
+        "private_description": "Privé: alleen zichtbaar door bestuurders en groepsleden",
+        "members_description": "Leden: alleen zichtbaar door leden van dit portaal"
+      },
+      "name-errors": {
+        "required": "Het groepsnaamveld is verplicht",
+        "max": "Het groepsnaamveld kan niet meer dan 120 tekens bevatten"
+      },
+      "short-description-errors": {
+        "max": "Het veld met korte beschrijving moet minder dan 150 tekens bedragen"
+      },
+      "publication-status-errors": {
+        "required": "Dit veld is vereist"
+      },
+      "delete": "Groep verwijderen"
+    },
+    "role": {
+      "members": {
+        "label": "Lid",
+        "help": "Lid"
+      },
+      "leaders": {
+        "label": "Groepshoofd",
+        "help": "Groepshoofd"
+      },
+      "leaders-managers": {
+        "label": "Leider en beheerder"
+      },
+      "managers": {
+        "label": "Uitgever",
+        "help": "Uitgever"
+      }
+    },
+    "view": "Zie groep",
+    "conferences": "Conferenties",
+    "publications": "Publicaties",
+    "similars": "Soortgelijke groepen",
+    "presentation": "Inleiding",
+    "location": "Adres",
+    "subgroups": "Subgroepen",
+    "projects-locations": "Kaart van de projecten"
+  },
   "gallery": {
     "title": "Galerij",
-    "view": "Galerie bekijken.",
-    "delete": "Foto verwijderen.",
-    "add": "Foto's toevoegen",
-    "empty": "Geen foto's gezet.",
+    "view": "Zie de galerie.",
+    "delete": "Afbeelding verwijderen.",
+    "add": "Afbeeldingen toevoegen",
+    "empty": "Geen foto's.",
+    "pictures": "Afbeeldingen",
     "add-picture": "Selecteer een of meer foto's om te versturen.",
-    "confirm-delete": "Weet u zeker dat u deze foto wilt verwijderen?",
-    "success-delete": "Foto verwijderd.",
-    "error-delete": "Er is een fout opgetreden bij het verwijderen van afbeelding.",
+    "confirm-delete": "Wilt u deze afbeelding verwijderen?",
+    "success-delete": "Afbeelding verwijderd.",
+    "error-delete": "Er is een fout opgetreden door het verwijderen van de afbeelding.",
     "success-create": "Foto gemaakt.",
-    "error-create": "Er is een fout opgetreden bij het maken van een foto."
+    "error-create": "Er is een fout opgetreden bij het aanmaken van afbeelding."
   }
 }

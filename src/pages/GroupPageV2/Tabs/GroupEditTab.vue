@@ -379,7 +379,7 @@ useLpiHead2({
         />
         <LpiButton
           :disabled="formIsInvalid || isSaving"
-          :label="isEdit ? $t('group.form.edit-group') : $t('group.form.create-group')"
+          :label="$t('common.save')"
           :btn-icon="isSaving ? 'LoaderSimple' : null"
           class="submit-btn"
           data-test="group-create-button"

@@ -91,6 +91,7 @@
         />
       </label>
       <TagsFilterSummary v-model="form.tags" />
+      <empty-label v-if="form.tags.length === 0" :label="$t('tag.empty')" />
       <TagsDrawer v-model="form.tags" :is-opened="openTags" @close="openTags = false" />
     </div>
 
@@ -107,28 +108,42 @@
         />
       </label>
       <SdgList :sdgs="form.sdgs" />
+      <empty-label v-if="form.sdgs.length === 0" :label="$t('sdg.empty')" />
       <SdgsDrawer v-model="form.sdgs" :is-opened="openSdg" @close="openSdg = false" />
     </div>
 
     <!-- locations -->
     <div class="description">
       <label>
-        {{ $t('group.location') }}
+        {{ $t('group.location', form.locations.length) }}
         <LpiButton
           class="add-btn"
           :btn-icon="form.locations.length ? 'Pen' : 'Plus'"
           data-test="add-location"
           :label="$t(form.locations.length ? 'group.form.edit' : 'group.form.add')"
-          @click="openModal()"
+          @click="openModals('LocationDrawer')"
         />
       </label>
-      <LocationList :locations="form.locations" editable @delete="removeLocations" />
+      <LocationList
+        :locations="form.locations"
+        editable
+        :focus="false"
+        @edit="onLocationEdit"
+        @delete="removeLocations"
+      />
+      <LocationForm
+        v-if="stateModals.LocationForm"
+        v-model="locationEdit"
+        @close="closeModals('LocationForm')"
+        @submit="submitLocations(locationEdit)"
+        @delete="removeLocations(locationEdit)"
+      />
       <LocationDrawer
-        :is-opened="stateModal"
+        :is-opened="stateModals.LocationDrawer"
         :locations="form.locations"
         editable
         :location-types="['address']"
-        @close="closeModal()"
+        @close="closeModals('LocationDrawer')"
         @submit="submitLocations"
         @delete="removeLocations"
       />
@@ -148,6 +163,7 @@
     <!-- Parent group -->
     <div class="parent-group">
       <ParentGroupSection v-model="form.parentGroup" :groups="groups" />
+      <empty-label v-if="!form.parentGroup" :label="$t('empty')" />
     </div>
 
     <!-- Visibility -->
@@ -264,14 +280,17 @@ export default {
     const organizationsStore = useOrganizationsStore()
     const runtimeConfig = useRuntimeConfig()
     const defaultPictures = usePatatoids()
-    const { stateModal, openModal, closeModal } = useModal()
+    const { stateModals, openModals, closeModals } = useModals({
+      LocationForm: false,
+      LocationDrawer: false,
+    })
     return {
       organizationsStore,
       runtimeConfig,
       defaultPictures,
-      stateModal,
-      openModal,
-      closeModal,
+      stateModals,
+      openModals,
+      closeModals,
     }
   },
 
@@ -320,6 +339,7 @@ export default {
       descriptionIsOpened: false,
       showRemoveQuit: false,
       groups: [],
+      locationEdit: null,
     }
   },
 
@@ -406,7 +426,7 @@ export default {
       } else {
         this.form.locations = this.form.locations.filter((el) => el !== location)
       }
-      this.closeModal()
+      this.closeModals('LocationDrawer', 'LocationForm')
     },
     async submitLocations(location) {
       const groupId = this.$route.params.groupId
@@ -430,7 +450,13 @@ export default {
         }
       }
       this.form.locations = [...this.form.locations, locationElement]
-      this.closeModal()
+      this.closeModals('LocationDrawer', 'LocationForm')
+    },
+
+    onLocationEdit(location) {
+      this.locationEdit = location
+      console.log(location)
+      this.openModals('LocationForm')
     },
   },
 }

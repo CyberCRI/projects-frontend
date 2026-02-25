@@ -83,12 +83,11 @@ const userAction = (event) => {
 }
 
 .badge {
-  background: $primary-dark;
+  border-bottom: 1px solid $primary-dark;
+  color: black;
   font-weight: 400;
   font-size: $font-size-s;
   margin-top: $space-s;
-  padding: $space-2xs;
-  color: $white;
-  border-radius: 10px;
+  padding: $space-2xs 0;
 }
 </style>

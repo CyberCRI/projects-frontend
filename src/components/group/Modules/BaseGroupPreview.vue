@@ -66,7 +66,7 @@ withDefaults(
 }
 
 .group-container {
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 .title-container {

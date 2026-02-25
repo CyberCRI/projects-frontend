@@ -9,7 +9,7 @@
     }"
   >
     <div class="page-section-extra-wide">
-      <FetchLoader :status="status" :with-data="!!group.id">
+      <FetchLoader :status="status" :error="error" redirect-404 :with-data="!!group.id">
         <NavPanelLayout
           :is-loading="groupLoading"
           :is-nav-collapsed="isNavCollapsed"
@@ -60,7 +60,7 @@ const route = useRoute()
 const { t } = useNuxtI18n()
 const groupId = computed(() => parseInt(route.params.groupId.toString(), 10))
 
-const { data: group, isLoading, status } = getGroup(organizationCode, groupId)
+const { data: group, isLoading, status, error } = getGroup(organizationCode, groupId)
 
 const groupLoading = computed(() => isLoading.value && !group.value?.id)
 
@@ -136,6 +136,20 @@ const groupTabsDisplay = computed(() => {
     },
     {
       isEditing: false,
+      key: 'subgroup',
+      dataTest: 'subgroup',
+      label: t(GroupModuleTitle.subgroups, groupModules.value.subgroups),
+      view: `/group/${route.params.groupId}/subgroups`,
+      altView: '',
+      props: {
+        group: group.value,
+        isLoading: groupLoading.value,
+      },
+      condition: groupModules.value.subgroups,
+      icon: GroupModuleIcon.subgroups,
+    },
+    {
+      isEditing: false,
       key: 'group-publications',
       dataTest: 'group-publications',
       label: t(GroupModuleTitle.publications),
@@ -182,7 +196,7 @@ const groupTabsDisplay = computed(() => {
       isEditing: false,
       key: 'group-gallery',
       dataTest: 'group-gallery',
-      label: t(GroupModuleTitle.gallery),
+      label: t(GroupModuleTitle.gallery, groupModules.value.gallery),
       view: `/group/${route.params.groupId}/gallery`,
       altView: `/group/${route.params.groupId}/gallery/edit`,
       props: {

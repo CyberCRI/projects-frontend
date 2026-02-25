@@ -19,14 +19,19 @@
         v-for="project in showFullList ? modelValue : shortList"
         :key="project.id"
         :project="project"
-        @click="onRemoveProject(project)"
       >
         <template #action>
-          <div class="close-icon">
-            <IconImage name="Close" @click="onRemoveProject(project)" />
-          </div>
+          <LpiButton btn-icon="Close" @click="modalConfirmRemoveProject(project)" />
         </template>
       </ProjectPreview>
+      <ConfirmModal
+        v-if="stateModal"
+        :title="$t('common.quit-project')"
+        @cancel="closeModal"
+        @confirm="onRemoveProject"
+      >
+        <ProjectPreview :project="removeProject" />
+      </ConfirmModal>
     </div>
     <div class="show-more">
       <LinkButton
@@ -65,6 +70,8 @@ const emit = defineEmits(['update:model-value'])
 const drawerIsOpen = ref(false)
 const showFullList = ref(false)
 
+const { stateModal, closeModal, openModal } = useModal()
+
 const { t } = useNuxtI18n()
 
 const shortList = computed(() => {
@@ -74,14 +81,23 @@ const seeMoreLabel = computed(() => {
   return showFullList.value ? 'common.see-less' : 'common.see-more'
 })
 
+const removeProject = ref()
+const modalConfirmRemoveProject = (project) => {
+  removeProject.value = project
+  openModal()
+}
+
 const onProjectsPicked = (projects) => {
   emit('update:model-value', [...projects])
   drawerIsOpen.value = false
+  closeModal()
 }
 
-const onRemoveProject = (project) => {
-  const projects = props.modelValue.filter((p) => p.id !== project.id)
+const onRemoveProject = () => {
+  const projects = props.modelValue.filter((p) => p.id !== removeProject.value.id)
   emit('update:model-value', [...projects])
+  removeProject.value = null
+  closeModal()
 }
 </script>
 
@@ -124,11 +140,5 @@ const onRemoveProject = (project) => {
     justify-content: center;
     margin-top: $space-l;
   }
-}
-
-.close-icon {
-  width: 2rem;
-  fill: var(--primary-dark);
-  cursor: pointer;
 }
 </style>

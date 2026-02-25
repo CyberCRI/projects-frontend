@@ -915,105 +915,6 @@
     "title": "Títol de l' objectiu",
     "delete": "Voleu esborrar aquest objectiu?"
   },
-  "group": {
-    "is-other-org": "Aquest grup pertany a una altra plataforma",
-    "contact": "Contacte",
-    "edit-group": "Edita grup",
-    "see-more-people-button": "Vegeu {users} més",
-    "see-subgroups": "Veure el subgrup | Veure {count} subgrups",
-    "share": "Comparteix",
-    "the-team": "L' equip ({users})",
-    "news": "Anuncis",
-    "more": "Més",
-    "less": "Menys",
-    "see-more": "Veure més",
-    "see-less": "Veure menys",
-    "subgroups": "SUBGROUPSConstellation name (optional)",
-    "snapshot": "Visió general",
-    "members": "Membres",
-    "projects": "Projectes",
-    "visibility-private": "Visibilitat: privat",
-    "visibility-public": "Visibilitat: públic",
-    "visibility-org": "Visibilitat: portal",
-    "group-members": "Membres de grup",
-    "group-projects": "Grup de projectes",
-    "select-group": "Seleccioneu un grup",
-    "image-header": "Imatge",
-    "root": "(Root)",
-    "create": {
-      "help-link": "Som aquí per ajudar.",
-      "notice": "Els camps marcats amb * són obligatoris. Sempre ho pots modificar més tard. No saps què hauries de fer?",
-      "title": "Crea un nou grup"
-    },
-    "edit": {
-      "title": "Edita un grup"
-    },
-    "form": {
-      "add": "Afegeix",
-      "add-projects": "Afegeix projectes de representació",
-      "edit": "Edita",
-      "edit-members": "Edita els membres",
-      "edit-roles": "Edita els rols",
-      "form-incomplete": "Els camps no s' han trobat o no són vàlids, complets per a poder desar.",
-      "create-group": "Crea un grup",
-      "edit-group": "Edita grup",
-      "edit-name": "Edita el nom del grup",
-      "email-label": "Correu electrònic",
-      "email-placeholder": "Cognom. name{'@'}myunitat.fr",
-      "short-description-label": "Titular",
-      "short-description-placeholder": "Descriu el vostre grup en una frase",
-      "name-label": "Nom de grup",
-      "name-placeholder": "Ex. Bitkbox: bossa interactiva de caixa",
-      "description-label": "Descripció",
-      "add-description": "Afegeix descripció",
-      "add-parent-group": "Afegeix grup pare",
-      "project-label": "Projectes de característiques",
-      "parent-group-label": "Grup pare",
-      "visibility": {
-        "title": "visibilitat de grup",
-        "public": "Públic",
-        "private": "Privat",
-        "members": "Membres",
-        "public_description": "Públic: Qualsevol pot trobar aquest grup a Internet",
-        "private_description": "Privat: tan sols visible pels administradors i membres del grup",
-        "members_description": "Membres: només visibles pels membres d' aquest portal"
-      },
-      "name-errors": {
-        "required": "Es requereix el camp de nom de grup",
-        "max": "El camp Nom de grup no pot ser més gran que 180 caràcters"
-      },
-      "short-description-errors": {
-        "max": "El camp de titular pot no ser més gran que 150 caràcters"
-      },
-      "publication-status-errors": {
-        "required": "Aquest camp es requereix"
-      },
-      "delete": "Esborra el grup"
-    },
-    "role": {
-      "members": {
-        "label": "Estats membres",
-        "help": "Estats membres"
-      },
-      "leaders": {
-        "label": "Líder del grup",
-        "help": "Líder del grup"
-      },
-      "leaders-managers": {
-        "label": "Líder i gestor"
-      },
-      "managers": {
-        "label": "Editor",
-        "help": "Editor"
-      }
-    },
-    "view": "Visualitza el grup",
-    "conferences": "Conferèncias",
-    "publications": "Publicacions",
-    "similars": "Grups similars",
-    "presentation": "Presentació",
-    "location": "Adreça"
-  },
   "header": {
     "private": "Privat: només visible per als membres de l' equip",
     "org": "Només visible als membres del portal",
@@ -2020,7 +1921,8 @@
     },
     "add-short": "Afegeix un sdg",
     "sdg-fulltext": "objectiu sostenible del desenvolupament",
-    "title": "SDG"
+    "title": "SDG",
+    "empty": "No hi ha res aquí encara... Els col·laboradors encara no han afegit SDGs."
   },
   "stats": {
     "cumulated-projects": "Projectes curatius",
@@ -2058,7 +1960,8 @@
     "add-profile-tag": "Poseu habilitats cap endavant pels perfils dels vostres usuaris",
     "add-project-tag-info": "Quan un usuari crea un projecte, poden afegir una etiqueta temàtica de la Viquipèdia (p. ex. bioquímica, física, etc.). Això fa més fàcil trobar el projecte i millorar les recomanacions del projecte per la similitud temàtica. Podeu ressaltar les etiquetes orgmàtiques importants per la vostra organització.",
     "edit": "Edita etiquetes",
-    "title": "Etiquetes"
+    "title": "Etiquetes",
+    "empty": "No hi ha res aquí encara... Els col· laboradors encara no han afegit etiquetes."
   },
   "team": {
     "add": "Afegeix membres / grups",
@@ -3156,17 +3059,118 @@
     "download-pdf": "PDF",
     "generated-on": "Generat el {date}"
   },
+  "group": {
+    "is-other-org": "Aquest grup pertany a una altra plataforma",
+    "contact": "Contacte",
+    "edit-group": "Edita el grup",
+    "see-more-people-button": "Vegeu {users} persones addicionals",
+    "see-subgroups": "Mireu els subgrups {count}",
+    "share": "Comparteix",
+    "the-team": "Equip ({users}4)",
+    "news": "Anunci",
+    "more": "Més",
+    "less": "Menys",
+    "see-more": "Veure més",
+    "see-less": "Veure menys",
+    "snapshot": "Resum executiu",
+    "members": "Membres",
+    "projects": "Projectes",
+    "visibility-private": "Visibilitat: privat",
+    "visibility-public": "Visibilitat: públic",
+    "visibility-org": "Visibilitat: portal",
+    "group-members": "Membres de grup",
+    "group-projects": "Grup de projectes",
+    "select-group": "Escolliu un grup",
+    "image-header": "Imatge",
+    "root": "(Racine)",
+    "create": {
+      "help-link": "Som aquí per ajudar.",
+      "notice": "Els camps marcats amb l' execució.sh translate.py són obligatoris. Els podreu modificar més tard si cal. Tens alguna pregunta?",
+      "title": "Crea un nou grup"
+    },
+    "edit": {
+      "title": "Edita el grup"
+    },
+    "form": {
+      "add": "Afegeix",
+      "add-projects": "Afegeix projectes característiques",
+      "edit": "Modifica",
+      "edit-members": "Edita els membres",
+      "edit-roles": "Edita els rols",
+      "form-incomplete": "Els camps no s' han trobat o no són vàlids, complets per a poder desar.",
+      "create-group": "Crea un grup",
+      "edit-group": "Edita el grup",
+      "edit-name": "Canvia el nom del grup",
+      "email-label": "Correu electrònic",
+      "email-placeholder": "Cognom. name{'@'}myunitat.fr",
+      "short-description-label": "Descripció curta del grup",
+      "short-description-placeholder": "Descriu el vostre grup en una frase",
+      "name-label": "Nom del grup",
+      "name-placeholder": "Ex. Bitkbox: bossa interactiva de caixa",
+      "description-label": "Descripció",
+      "add-description": "Afegeix descripció",
+      "add-parent-group": "Afegeix un grup pare",
+      "project-label": "Projectes de característiques",
+      "parent-group-label": "Grup pare",
+      "visibility": {
+        "title": "visibilitat de grup",
+        "public": "Públic",
+        "private": "Privat",
+        "members": "Membres",
+        "public_description": "Públic: Tothom pot trobar aquest grup a Internet",
+        "private_description": "Privat: tan sols visible per directors i membres del grup",
+        "members_description": "Membres: tan sols visibles per membres d' aquest portal"
+      },
+      "name-errors": {
+        "required": "El camp Nom del grup és obligatori",
+        "max": "El camp de nom de grup no pot contenir més de 120 caràcters"
+      },
+      "short-description-errors": {
+        "max": "El camp de descripció curt ha de ser inferior a 150 caràcters"
+      },
+      "publication-status-errors": {
+        "required": "Cal aquest camp"
+      },
+      "delete": "Esborra el grup"
+    },
+    "role": {
+      "members": {
+        "label": "Estats membres",
+        "help": "Estats membres"
+      },
+      "leaders": {
+        "label": "Capçalera de grup",
+        "help": "Capçalera de grup"
+      },
+      "leaders-managers": {
+        "label": "Líder i gestor"
+      },
+      "managers": {
+        "label": "Editor",
+        "help": "Editor"
+      }
+    },
+    "view": "Mireu el grup",
+    "conferences": "Conferèncias",
+    "publications": "Publicacions",
+    "similars": "Grups similars",
+    "presentation": "Introducció",
+    "location": "Adreça",
+    "subgroups": "Subgrups",
+    "projects-locations": "Mapa de projectes"
+  },
   "gallery": {
     "title": "Galeria",
-    "view": "Veure la galeria.",
+    "view": "Mira la galeria.",
     "delete": "Esborra la imatge.",
-    "add": "Afegeix fotografies",
-    "empty": "No hi ha fotos fixades.",
+    "add": "Afegeix imatges",
+    "empty": "Sense fotos.",
+    "pictures": "Imatges",
     "add-picture": "Seleccioneu una o més fotos a enviar.",
     "confirm-delete": "Esteu segur que voleu esborrar aquesta imatge?",
-    "success-delete": "S' ha esborrat la imatge.",
-    "error-delete": "Hi ha hagut un error en esborrar la imatge.",
-    "success-create": "Imatge creada.",
-    "error-create": "S' ha creat un error."
+    "success-delete": "Imatge esborrada.",
+    "error-delete": "Hi ha hagut un error esborrant la imatge.",
+    "success-create": "Foto creada.",
+    "error-create": "Hi ha hagut un error en crear la imatge."
   }
 }

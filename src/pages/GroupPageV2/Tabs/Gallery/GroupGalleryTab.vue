@@ -1,5 +1,5 @@
 <template>
-  <BaseGroupTab :title="$t(GroupModuleTitle.gallery)" :count="countElement">
+  <BaseGroupTab :title="$t(GroupModuleTitle.gallery, countElement)" :count="countElement">
     <div class="">
       <BaseGroupGallery :group="group" :editable="isInEditingMode" />
     </div>

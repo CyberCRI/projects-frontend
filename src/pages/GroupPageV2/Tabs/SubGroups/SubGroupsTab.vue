@@ -1,20 +1,12 @@
 <template>
-  <BaseGroupPreview
+  <BaseGroupTab
     id="subgroups"
     :title="$t(GroupModuleTitle.subgroups, group.modules.subgroups)"
-    :total="group.modules.subgroups"
+    :count="group.modules.subgroups"
     :icon="GroupModuleIcon.subgroups"
-    :see-more="{
-      name: 'subGroups',
-      params: {
-        groupId: group.id,
-      },
-    }"
   >
-    <template #content>
-      <GroupSubList :group="group" :limit="2" :limit-members="6" :with-pagination="false" />
-    </template>
-  </BaseGroupPreview>
+    <GroupSubList :group="group" />
+  </BaseGroupTab>
 </template>
 
 <script setup lang="ts">
@@ -23,8 +15,8 @@ import {
   GroupModuleTitle,
   TranslatedPeopleGroupModel,
 } from '@/models/invitation.model'
-import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
 import GroupSubList from '@/components/group/Modules/GroupSub/GroupSubList.vue'
+import BaseGroupTab from '@/pages/GroupPageV2/Tabs/BaseGroupTab.vue'
 
 defineProps<{ group: TranslatedPeopleGroupModel }>()
 </script>

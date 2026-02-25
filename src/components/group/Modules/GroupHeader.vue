@@ -1,15 +1,13 @@
 <template>
-  <BaseGroupPreview :loading="isLoading" title="">
+  <BaseGroupPreview class="group-header-info" :loading="isLoading" title="">
     <template #header>
       <div class="group-visibility">
-        <p>
-          <span class="icon">
-            <IconImage :name="groupVisibilityIcon" />
-          </span>
-          <span>
-            {{ groupVisibilityLabel }}
-          </span>
-        </p>
+        <span class="icon">
+          <IconImage :name="groupVisibilityIcon" />
+        </span>
+        <span>
+          {{ groupVisibilityLabel }}
+        </span>
       </div>
     </template>
     <template #content>
@@ -32,22 +30,16 @@
             class="short-description"
             v-html="group.$t.short_description"
           />
-          <FetchLoader :status="status" only-error skeleton>
+          <FetchLoader v-if="leaders.length" :status="status" only-error skeleton>
             <div class="group-leaders">
               <GroupMemberItem
                 v-for="member in leaders"
                 :key="member.id"
                 :member="member"
-                role-label=""
                 mode="list"
                 @click="openProfile(member)"
               />
             </div>
-            <GroupMemberDrawer
-              :is-opened="!!leaderIdDrawer"
-              :member-id="leaderIdDrawer"
-              @close="closeProfile"
-            />
           </FetchLoader>
           <TagsList
             v-if="group.tags.length"
@@ -55,7 +47,7 @@
             :to="{
               name: 'GroupSearch',
               query: {
-                sections: 'groups',
+                section: 'groups',
               },
             }"
           />
@@ -63,14 +55,24 @@
       </div>
       <div v-if="hasExtras" class="group-info-extras">
         <div v-if="hasLinks" class="group-info-links">
+          <!-- locations -->
           <button
             v-if="group.locations.length"
             class="group-recap-element group-location reset-btn"
             @click="openModal()"
           >
-            <IconImage name="MapMarker" />
-            <span class="group-recap-title">{{ t('group.location') }}</span>
+            <IconImage class="fill-primary" name="MapMarkerOutline" />
+            <span class="group-recap-title text-ellipsis">{{ locationTitle }}</span>
           </button>
+          <!-- contact -->
+          <a
+            v-if="group.email"
+            :href="`mailto:${group.email}`"
+            class="group-recap-element reset-btn"
+          >
+            <IconImage name="EmailOutline" />
+            <span class="group-recap-title">{{ $t('group.contact') }}</span>
+          </a>
         </div>
         <SdgList
           class="group-info-sdgs"
@@ -90,6 +92,11 @@
         :is-opened="stateModal"
         :locations="group.locations"
         @close="closeModal()"
+      />
+      <GroupMemberDrawer
+        :is-opened="!!leaderIdDrawer"
+        :member-id="leaderIdDrawer"
+        @close="closeProfile"
       />
     </template>
   </BaseGroupPreview>
@@ -148,6 +155,17 @@ const hasExtras = computed(() => {
   return props.group.sdgs.length || hasLinks.value
 })
 
+const locationTitle = computed(() => {
+  // if many location are linked to this group
+  // return global text "locations"
+  // else if only one linked, return the title of first location
+  if (props.group.locations.length > 1) {
+    return t('group.location', props.group.locations.length)
+  }
+  const location = props.group.locations[0]
+  return location.$t.title || t('group.location')
+})
+
 // preview leader
 const leaderIdDrawer = ref<number>()
 const openProfile = (leader) => (leaderIdDrawer.value = leader.id)
@@ -161,7 +179,7 @@ const closeProfile = () => (leaderIdDrawer.value = null)
 }
 
 .group-infos {
-  padding: 1rem;
+  padding: 0 1rem;
   gap: 0.3rem;
   display: flex;
   flex-direction: column;
@@ -174,23 +192,20 @@ const closeProfile = () => (leaderIdDrawer.value = null)
 .group-image {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: start;
 }
 
 .group-visibility {
-  p {
-    font-weight: 700;
-    font-size: $font-size-xs;
-    color: $primary-dark;
-    display: flex;
-    align-items: center;
-    gap: $space-s;
+  font-weight: 700;
+  font-size: $font-size-xs;
+  color: $primary-dark;
+  display: flex;
+  align-items: center;
 
-    .icon svg {
-      fill: $primary-dark;
-      width: $layout-size-xl;
-      height: $layout-size-m;
-    }
+  .icon svg {
+    fill: $primary-dark;
+    width: $layout-size-xl;
+    height: $layout-size-m;
   }
 }
 
@@ -203,6 +218,11 @@ const closeProfile = () => (leaderIdDrawer.value = null)
   display: grid;
   grid-template-columns: 1fr 1fr;
 
+  @media screen and (max-width: $min-desktop) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
   & > *:only-child {
     grid-column: span 2;
   }
@@ -210,9 +230,19 @@ const closeProfile = () => (leaderIdDrawer.value = null)
 
 .group-info-links {
   display: flex;
-  justify-content: flex-start;
-  align-items: start;
+
+  // justify-content: flex-start;
+  // align-items: start;
   flex-wrap: wrap;
+  gap: 0.2rem;
+  overflow: hidden;
+
+  @media screen and (max-width: $min-desktop) {
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-content: start;
+    align-items: start;
+  }
 }
 
 .group-info-sdgs {
@@ -220,36 +250,52 @@ const closeProfile = () => (leaderIdDrawer.value = null)
   justify-content: flex-end;
   align-items: center;
   flex-wrap: wrap;
+
+  @media screen and (max-width: $min-desktop) {
+    justify-content: flex-start;
+  }
 }
 
 .group-recap-element {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: $primary-dark;
+  color: var(--primary-dark);
   gap: 0.4rem;
 
   svg {
     width: 32px;
-    fill: $primary;
+    fill: var(--primary-dark);
   }
 }
 
 .group-recap-title {
   font-weight: bold;
+  text-align: start;
 }
 
 .group-location {
   cursor: pointer;
+  overflow: hidden;
+  width: 100%;
 }
 </style>
 
 <style lang="scss">
+.group-header-info .group-container {
+  margin-top: 0 !important;
+}
+
 .group-leaders {
   display: flex;
   justify-content: start;
   flex-wrap: wrap;
   gap: 0.2rem;
+
+  .basic-card .content {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
 
   > * {
     width: 100%;

@@ -1,70 +1,83 @@
 <template>
   <div class="outer">
-    <template v-if="showLess">
-      <div :style="style" class="description description-limited">
-        <HtmlLimiter
-          :html="description"
-          :striped-tags="[]"
-          class="description-content"
-          preprocess
-          @computed="layoutComputed"
-          @computing="computeLayout"
-        />
-      </div>
-    </template>
-    <TipTapOutput v-else class="description" :content="description" />
-    <div v-if="isLimited" class="toggle-ctn">
-      <span class="toggle" @click="toggleDescription">
-        {{ showLess ? $t('group.see-more') : $t('group.see-less') }}
-      </span>
+    <div
+      class="description-container"
+      :class="{
+        limited: isLimited && showLess,
+      }"
+    >
+      <TipTapOutput ref="content" class="description" :content="description" />
+      <div class="description-limited-transparancy" />
     </div>
+    <LpiButton
+      v-if="isLimited"
+      secondary
+      class="no-border"
+      :btn-icon="showLess ? 'ChevronDown' : 'ChevronUp'"
+      :label="showLess ? $t('group.see-more') : $t('group.see-less')"
+      @click="toggleDescription"
+    >
+      {{ showLess ? $t('group.see-more') : $t('group.see-less') }}
+    </LpiButton>
   </div>
 </template>
 
-<script>
-import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
+<script setup lang="ts">
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
-export default {
-  name: 'DescriptionExpandable',
-  components: { HtmlLimiter, TipTapOutput },
-  props: {
-    description: {
-      type: String,
-      required: true,
-    },
-    heightLimit: {
-      type: Number,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      showLess: true,
-      isLimited: true,
-      style: { height: `${this.heightLimit}px` },
-    }
-  },
-  methods: {
-    toggleDescription() {
-      this.showLess = !this.showLess
-    },
 
-    computeLayout() {
-      this.style = { height: `${this.heightLimit}px` }
-    },
-    layoutComputed(event) {
-      this.style = { height: event.height + 'px' }
-      this.isLimited = event.croppedHtml != this.description
-    },
-  },
+const props = defineProps<{
+  description: string
+  heightLimit: number
+}>()
+
+const showLess = ref(true)
+const isLimited = ref(true)
+const contentRef = useTemplateRef('content')
+
+const actualHeight = ref(0)
+const checkLimited = () => {
+  const rect = contentRef.value.$el.getBoundingClientRect()
+  actualHeight.value = rect.height
+  isLimited.value = rect.height > props.heightLimit
 }
+
+watch(() => props.description, checkLimited)
+onResize(checkLimited, { immediate: true })
+
+const toggleDescription = () => (showLess.value = !showLess.value)
+
+const minHeight = computed(() => Math.min(props.heightLimit, actualHeight.value))
 </script>
 
 <style lang="scss" scoped>
-.description-limited {
+.no-border {
+  border: 0 !important;
+}
+
+.description-container {
+  overflow: hidden;
   position: relative;
-  display: flex;
-  flex-flow: column;
+  transition: height 0.2s;
+  height: calc(v-bind('actualHeight') * 1px + 1rem);
+
+  .description-limited-transparancy {
+    display: none;
+  }
+
+  &.limited {
+    height: calc(v-bind('minHeight') * 1px);
+
+    .description-limited-transparancy {
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: calc(v-bind('heightLimit') * 1px / 5);
+      background: white;
+      background: linear-gradient(0deg, rgb(255 255 255 / 100%) 5%, rgb(255 255 255 / 0%) 100%);
+    }
+  }
 }
 
 .outer {

@@ -915,105 +915,6 @@
     "title": "Titel des Ziels",
     "delete": "Möchten Sie dieses Ziel löschen?"
   },
-  "group": {
-    "is-other-org": "Diese Gruppe gehört zu einer anderen Plattform",
-    "contact": "Kontakt",
-    "edit-group": "Gruppe bearbeiten",
-    "see-more-people-button": "Siehe {users} mehr",
-    "see-subgroups": "Siehe {count} Untergruppe | {count} Untergruppen ansehen",
-    "share": "Teilen",
-    "the-team": "Das Team ({users})",
-    "news": "Ankündigungen",
-    "more": "Mehr",
-    "less": "Weniger",
-    "see-more": "Mehr erfahren",
-    "see-less": "weniger",
-    "subgroups": "STELLUNGNAHMEN",
-    "snapshot": "Schnappschuss",
-    "members": "Mitglieder",
-    "projects": "Projekte",
-    "visibility-private": "Sichtbarkeit: privat",
-    "visibility-public": "Sichtbarkeit : öffentlich",
-    "visibility-org": "Sichtbarkeit: Portal",
-    "group-members": "Mitglieder der Gruppe",
-    "group-projects": "Gruppenprojekte",
-    "select-group": "Wählen Sie eine Gruppe",
-    "image-header": "Bild",
-    "root": "(Root)",
-    "create": {
-      "help-link": "Wir sind hier, um zu helfen.",
-      "notice": "Mit * gekennzeichnete Felder sind obligatorisch. Sie können das immer später ändern. Keine Ahnung, was du tun solltest?",
-      "title": "Eine neue Gruppe erstellen"
-    },
-    "edit": {
-      "title": "Eine Gruppe bearbeiten"
-    },
-    "form": {
-      "add": "Hinzufügen",
-      "add-projects": "Fügen Sie wichtige Projekte hinzu",
-      "edit": "Bearbeiten",
-      "edit-members": "Mitglieder bearbeiten",
-      "edit-roles": "Rollen bearbeiten",
-      "form-incomplete": "Felder fehlen oder ungültig, komplett um speichern zu können.",
-      "create-group": "Gruppe erstellen",
-      "edit-group": "Gruppe bearbeiten",
-      "edit-name": "Name der Gruppe bearbeiten",
-      "email-label": "E-Mail senden",
-      "email-placeholder": "Ex. Nachname.name{'@'}myuniversity.fr",
-      "short-description-label": "Kopf",
-      "short-description-placeholder": "Beschreiben Sie Ihre Gruppe in einem Satz",
-      "name-label": "Bezeichnung",
-      "name-placeholder": "Ex. Hitbox: interaktive Boxsack",
-      "description-label": "Beschreibung",
-      "add-description": "Beschreibung hinzufügen",
-      "add-parent-group": "Stammgruppe hinzufügen",
-      "project-label": "Empfohlene Projekte",
-      "parent-group-label": "Gruppe",
-      "visibility": {
-        "title": "Sicht der Gruppe",
-        "public": "Öffentliche",
-        "private": "Privatpersonen",
-        "members": "Mitglieder",
-        "public_description": "Public: jeder kann diese Gruppe im Internet finden",
-        "private_description": "Private: nur von den Admins und den Gruppenmitgliedern sichtbar",
-        "members_description": "Mitglieder: nur von den Mitgliedern dieses Portals sichtbar"
-      },
-      "name-errors": {
-        "required": "Das Gruppennamenfeld ist erforderlich",
-        "max": "Das Gruppennamenfeld darf nicht größer als 180 Zeichen sein"
-      },
-      "short-description-errors": {
-        "max": "Das Headline-Feld darf nicht größer als 150 Zeichen sein"
-      },
-      "publication-status-errors": {
-        "required": "Dieses Feld ist erforderlich"
-      },
-      "delete": "Gruppe löschen"
-    },
-    "role": {
-      "members": {
-        "label": "Mitglied",
-        "help": "Mitglied"
-      },
-      "leaders": {
-        "label": "Gruppenleiter",
-        "help": "Gruppenleiter"
-      },
-      "leaders-managers": {
-        "label": "Leiter und Manager"
-      },
-      "managers": {
-        "label": "Herausgeber",
-        "help": "Teammitglieder"
-      }
-    },
-    "view": "Gruppe anzeigen",
-    "conferences": "Konferenzen",
-    "publications": "Veröffentlichungen",
-    "similars": "Gruppen ähnliche",
-    "presentation": "Präsentation",
-    "location": "Anschrift"
-  },
   "header": {
     "private": "Private: nur für Teammitglieder sichtbar",
     "org": "Nur für die Mitglieder Ihres Portals sichtbar",
@@ -2020,7 +1921,8 @@
     },
     "add-short": "SDG hinzufügen",
     "sdg-fulltext": "Nachhaltigkeitsziele",
-    "title": "SDG"
+    "title": "SDG",
+    "empty": "Noch nichts hier... Die Mitarbeiter haben noch keine SDGs hinzugefügt."
   },
   "stats": {
     "cumulated-projects": "Neue Projekte kumulieren",
@@ -2058,7 +1960,8 @@
     "add-profile-tag": "Fertigkeiten für Ihre Benutzerprofile",
     "add-project-tag-info": "Wenn ein Benutzer ein Projekt erstellt, können sie einen thematischen Tag aus Wikipedia (z.B. Biochemie, Physik, etc.) hinzufügen. Damit ist es einfacher, das Projekt zu finden und Projektempfehlungen durch thematische Ähnlichkeit zu verbessern. Sie können wichtige thematische Tags für Ihre Organisation hervorheben.",
     "edit": "Tags bearbeiten",
-    "title": "Schlagwörter"
+    "title": "Schlagwörter",
+    "empty": "Noch nichts hier... Die Mitarbeiter haben noch keine Tags hinzugefügt."
   },
   "team": {
     "add": "Mitglieder / Gruppen hinzufügen",
@@ -3156,17 +3059,118 @@
     "download-pdf": "PDF",
     "generated-on": "Erstellt am {date}"
   },
+  "group": {
+    "is-other-org": "Diese Gruppe gehört zu einer anderen Plattform",
+    "contact": "Kontakt",
+    "edit-group": "Gruppe bearbeiten",
+    "see-more-people-button": "Siehe {users} zusätzliche Personen",
+    "see-subgroups": "Siehe {count} Untergruppen",
+    "share": "Anteil",
+    "the-team": "Team ({users}4)",
+    "news": "Ankündigung",
+    "more": "Mehr",
+    "less": "Weniger",
+    "see-more": "Mehr erfahren",
+    "see-less": "weniger",
+    "snapshot": "Zusammenfassung",
+    "members": "Mitglieder",
+    "projects": "Projekte",
+    "visibility-private": "Sichtbarkeit: privat",
+    "visibility-public": "Sichtbarkeit: öffentlich",
+    "visibility-org": "Sichtbarkeit: Portal",
+    "group-members": "Mitglieder der Gruppe",
+    "group-projects": "Gruppenprojekte",
+    "select-group": "Wählen Sie eine Gruppe",
+    "image-header": "Bild",
+    "root": "(Racin)",
+    "create": {
+      "help-link": "Wir sind hier, um zu helfen.",
+      "notice": "Felder mit run.sh translate.py sind obligatorisch. Sie können sie später ändern, wenn nötig. Haben Sie Fragen?",
+      "title": "Eine neue Gruppe erstellen"
+    },
+    "edit": {
+      "title": "Gruppe bearbeiten"
+    },
+    "form": {
+      "add": "Hinzufügen",
+      "add-projects": "Empfohlene Projekte hinzufügen",
+      "edit": "Änderung",
+      "edit-members": "Mitglieder bearbeiten",
+      "edit-roles": "Rollen bearbeiten",
+      "form-incomplete": "Felder fehlen oder ungültig, komplett um speichern zu können.",
+      "create-group": "Gruppe erstellen",
+      "edit-group": "Gruppe bearbeiten",
+      "edit-name": "Gruppenname ändern",
+      "email-label": "E-Mail senden",
+      "email-placeholder": "Ex. Nachname.name{'@'}myuniversity.fr",
+      "short-description-label": "Kurzbeschreibung der Gruppe",
+      "short-description-placeholder": "Beschreiben Sie Ihre Gruppe in einem Satz",
+      "name-label": "Name der Gruppe",
+      "name-placeholder": "Ex. Hitbox: interaktive Boxsack",
+      "description-label": "Warenbezeichnung",
+      "add-description": "Beschreibung hinzufügen",
+      "add-parent-group": "Eine Elterngruppe hinzufügen",
+      "project-label": "Empfohlene Projekte",
+      "parent-group-label": "Gruppe",
+      "visibility": {
+        "title": "Sicht der Gruppe",
+        "public": "Öffentliche",
+        "private": "Privatpersonen",
+        "members": "Mitglieder",
+        "public_description": "Publikum: Jeder kann diese Gruppe im Internet finden",
+        "private_description": "Private: nur von Regisseuren und Gruppenmitgliedern sichtbar",
+        "members_description": "Mitglieder: nur von Mitgliedern dieses Portals sichtbar"
+      },
+      "name-errors": {
+        "required": "Das Gruppennamenfeld ist obligatorisch",
+        "max": "Das Gruppennamenfeld kann nicht mehr als 120 Zeichen enthalten"
+      },
+      "short-description-errors": {
+        "max": "Das kurze Beschreibungsfeld muss weniger als 150 Zeichen sein"
+      },
+      "publication-status-errors": {
+        "required": "Dieses Feld ist erforderlich"
+      },
+      "delete": "Gruppe löschen"
+    },
+    "role": {
+      "members": {
+        "label": "Mitglied",
+        "help": "Mitglied"
+      },
+      "leaders": {
+        "label": "Gruppenleiter",
+        "help": "Gruppenleiter"
+      },
+      "leaders-managers": {
+        "label": "Leiter und Manager"
+      },
+      "managers": {
+        "label": "Verlag",
+        "help": "Verlag"
+      }
+    },
+    "view": "Siehe Gruppe",
+    "conferences": "Konferenzen",
+    "publications": "Veröffentlichungen",
+    "similars": "Ähnliche Gruppen",
+    "presentation": "Einleitung",
+    "location": "Anschrift",
+    "subgroups": "Untergruppen",
+    "projects-locations": "Karte der Projekte"
+  },
   "gallery": {
     "title": "Galerie",
-    "view": "Galerie anzeigen.",
+    "view": "Sehen Sie die Galerie.",
     "delete": "Bild löschen.",
     "add": "Bilder hinzufügen",
-    "empty": "Keine Bilder.",
+    "empty": "Keine Fotos.",
+    "pictures": "Bilder",
     "add-picture": "Bitte wählen Sie ein oder mehrere Fotos, um zu senden.",
-    "confirm-delete": "Sind Sie sicher, dass Sie dieses Bild löschen möchten?",
+    "confirm-delete": "Möchten Sie dieses Bild wirklich löschen?",
     "success-delete": "Bild gelöscht.",
-    "error-delete": "Ein Fehler beim Löschen des Bildes.",
-    "success-create": "Bild erstellt.",
+    "error-delete": "Ein Fehler geschah durch Löschen des Bildes.",
+    "success-create": "Foto erstellt.",
     "error-create": "Ein Fehler wurde erstellt."
   }
 }

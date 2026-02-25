@@ -18,8 +18,8 @@
       />
 
       <div class="project-info">
-        <h3 class="skeletons-text">{{ project.$t.title }}</h3>
-        <pre class="skeletons-text">{{ purpose }}</pre>
+        <h3 class="skeletons-text text-ellipsis">{{ project.$t.title }}</h3>
+        <pre class="skeletons-text text-ellipsis">{{ project.$t.purpose }}</pre>
         <TagsList
           :tags="tags"
           :to="{
@@ -51,7 +51,6 @@
 import ProjectFollowIcon from '@/components/project/ProjectFollowIcon.vue'
 import TagsList from '@/components/tags/TagsList.vue'
 import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
-import { cropIfTooLong } from '@/functs/string'
 import { TranslatedProject } from '@/models/project.model'
 
 const props = withDefaults(
@@ -59,13 +58,12 @@ const props = withDefaults(
     project: TranslatedProject
     extra?: boolean
   }>(),
-  { extra: false }
+  { extra: true }
 )
 
 const emit = defineEmits(['refresh'])
 
 const { locale } = useNuxtI18n()
-const purpose = computed(() => cropIfTooLong(props.project.$t.purpose, 50))
 const tags = computed(() => (props.project.tags ?? []).slice(0, 3))
 const lastUpdated = computed(() => {
   return new Date(props.project.updated_at).toLocaleDateString(locale.value)
@@ -99,6 +97,7 @@ const lastUpdated = computed(() => {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
+  overflow: hidden;
 }
 
 .project-extra {
@@ -110,5 +109,11 @@ const lastUpdated = computed(() => {
 
 .icon {
   width: 30px;
+}
+
+.project-info-purpose {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 </style>

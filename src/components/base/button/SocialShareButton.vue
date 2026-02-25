@@ -6,26 +6,20 @@
         <LinkButton btn-icon="Linkedin" @click="linkedinShare" />
       </div>
     </template>
-    <ExternalLabelButton
-      class="space-button"
-      :label="$t('group.share')"
-      btn-icon="Share"
-      vertical-layout
-      label-on-hover
-    />
+    <ExternalLabelButton class="space-button" :label="$t('group.share')" btn-icon="Share" />
   </ToolTip>
 </template>
 <script setup lang="ts">
 const props = withDefaults(
   defineProps<{
-    sharedUrl?: string
+    sharedUrl?: string | URL
   }>(),
   {
     sharedUrl: '',
   }
 )
 
-const url = computed(() => props.sharedUrl || window?.location?.origin)
+const url = computed(() => props.sharedUrl.toString() || window?.location?.origin)
 
 const facebookShare = () =>
   window?.open(`https://www.facebook.com/sharer/sharer.php?u=${url.value}`)

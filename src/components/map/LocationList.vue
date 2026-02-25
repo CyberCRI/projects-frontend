@@ -22,9 +22,7 @@
         </li>
       </ul>
     </div>
-    <div v-if="!locations.length" class="location-empty">
-      {{ $t('map.empty') }}
-    </div>
+    <empty-label v-if="locations.length === 0" :label="$t('map.empty')" />
   </div>
 </template>
 
@@ -74,13 +72,5 @@ const locationsGrouped = computed(() => groupBy(props.locations, (location) => l
   font-size: $font-size-l;
   color: $primary-dark;
   font-weight: 700;
-}
-
-.location-empty {
-  width: 100%;
-  font-style: italic;
-  opacity: 0.6;
-  text-align: center;
-  margin-top: 2rem;
 }
 </style>

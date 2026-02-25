@@ -32,11 +32,12 @@ export default function useSearch(forcedSection = null) {
     // compute allowed filters according to current section
     // so that filter of one section (ie skills on people) dont persist on other section (ie skills on project)
     const isProject = selectedSection.value === 'projects'
+    const isGroups = selectedSection.value === 'groups'
     const isPeople = selectedSection.value === 'people'
     const map = {
       search: true,
       categories: isProject,
-      tags: isProject,
+      tags: isProject || isGroups,
       members: false,
       sdgs: isProject || isPeople,
       languages: isProject,

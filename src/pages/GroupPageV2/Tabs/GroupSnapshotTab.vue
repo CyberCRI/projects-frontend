@@ -28,7 +28,7 @@
     />
     <GroupDocumentsPreview
       v-if="group.modules.conferences"
-      document-type="publications"
+      document-type="conferences"
       :group="group"
       :is-loading="isLoading"
     />
