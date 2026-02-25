@@ -48,6 +48,11 @@ export default function useGroupPagesRoutes() {
           name: 'groupGallery',
           component: () => import('../pages/GroupPageV2/Tabs/Gallery/GroupGalleryTab.vue'),
         },
+        {
+          path: 'subgroups',
+          name: 'subGroups',
+          component: () => import('../pages/GroupPageV2/Tabs/SubGroups/SubGroupsTab.vue'),
+        },
         // retro compat
         {
           path: 'Edit',

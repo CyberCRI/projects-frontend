@@ -136,6 +136,20 @@ const groupTabsDisplay = computed(() => {
     },
     {
       isEditing: false,
+      key: 'subgroup',
+      dataTest: 'subgroup',
+      label: t(GroupModuleTitle.subgroups, groupModules.value.subgroups),
+      view: `/group/${route.params.groupId}/subgroups`,
+      altView: '',
+      props: {
+        group: group.value,
+        isLoading: groupLoading.value,
+      },
+      condition: groupModules.value.subgroups,
+      icon: GroupModuleIcon.subgroups,
+    },
+    {
+      isEditing: false,
       key: 'group-publications',
       dataTest: 'group-publications',
       label: t(GroupModuleTitle.publications),
