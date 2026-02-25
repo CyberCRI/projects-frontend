@@ -55,14 +55,24 @@
       </div>
       <div v-if="hasExtras" class="group-info-extras">
         <div v-if="hasLinks" class="group-info-links">
+          <!-- locations -->
           <button
             v-if="group.locations.length"
             class="group-recap-element group-location reset-btn"
             @click="openModal()"
           >
-            <IconImage name="MapMarker" />
-            <span class="group-recap-title">{{ locationTitle }}</span>
+            <IconImage class="fill-primary" name="MapMarkerOutline" />
+            <span class="group-recap-title text-ellipsis">{{ locationTitle }}</span>
           </button>
+          <!-- contact -->
+          <a
+            v-if="group.email"
+            :href="`mailto:${group.email}`"
+            class="group-recap-element reset-btn"
+          >
+            <IconImage name="EmailOutline" />
+            <span class="group-recap-title">{{ $t('group.contact') }}</span>
+          </a>
         </div>
         <SdgList
           class="group-info-sdgs"
@@ -208,6 +218,11 @@ const closeProfile = () => (leaderIdDrawer.value = null)
   display: grid;
   grid-template-columns: 1fr 1fr;
 
+  @media screen and (max-width: $min-desktop) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
   & > *:only-child {
     grid-column: span 2;
   }
@@ -215,9 +230,19 @@ const closeProfile = () => (leaderIdDrawer.value = null)
 
 .group-info-links {
   display: flex;
-  justify-content: flex-start;
-  align-items: start;
+
+  // justify-content: flex-start;
+  // align-items: start;
   flex-wrap: wrap;
+  gap: 0.2rem;
+  overflow: hidden;
+
+  @media screen and (max-width: $min-desktop) {
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-content: start;
+    align-items: start;
+  }
 }
 
 .group-info-sdgs {
@@ -225,27 +250,34 @@ const closeProfile = () => (leaderIdDrawer.value = null)
   justify-content: flex-end;
   align-items: center;
   flex-wrap: wrap;
+
+  @media screen and (max-width: $min-desktop) {
+    justify-content: flex-start;
+  }
 }
 
 .group-recap-element {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: $primary-dark;
+  color: var(--primary-dark);
   gap: 0.4rem;
 
   svg {
     width: 32px;
-    fill: $primary;
+    fill: var(--primary-dark);
   }
 }
 
 .group-recap-title {
   font-weight: bold;
+  text-align: start;
 }
 
 .group-location {
   cursor: pointer;
+  overflow: hidden;
+  width: 100%;
 }
 </style>
 
@@ -253,6 +285,7 @@ const closeProfile = () => (leaderIdDrawer.value = null)
 .group-header-info .group-container {
   margin-top: 0 !important;
 }
+
 .group-leaders {
   display: flex;
   justify-content: start;
@@ -263,6 +296,7 @@ const closeProfile = () => (leaderIdDrawer.value = null)
     padding-top: 0 !important;
     padding-bottom: 0 !important;
   }
+
   > * {
     width: 100%;
     height: unset !important;

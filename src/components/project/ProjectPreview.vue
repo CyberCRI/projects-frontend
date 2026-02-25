@@ -21,7 +21,7 @@
         <h3 class="skeletons-text text-ellipsis">{{ project.$t.title }}</h3>
         <pre class="skeletons-text text-ellipsis">{{ project.$t.purpose }}</pre>
         <TagsList
-          :tags="props.project.tags"
+          :tags="tags"
           :to="{
             name: 'ProjectSearch',
             query: {
@@ -51,7 +51,6 @@
 import ProjectFollowIcon from '@/components/project/ProjectFollowIcon.vue'
 import TagsList from '@/components/tags/TagsList.vue'
 import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
-import { cropIfTooLong } from '@/functs/string'
 import { TranslatedProject } from '@/models/project.model'
 
 const props = withDefaults(
@@ -65,7 +64,7 @@ const props = withDefaults(
 const emit = defineEmits(['refresh'])
 
 const { locale } = useNuxtI18n()
-// const tags = computed(() => (props.project.tags ?? []).slice(0, 3))
+const tags = computed(() => (props.project.tags ?? []).slice(0, 3))
 const lastUpdated = computed(() => {
   return new Date(props.project.updated_at).toLocaleDateString(locale.value)
 })

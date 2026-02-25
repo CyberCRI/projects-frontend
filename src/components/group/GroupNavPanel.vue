@@ -15,52 +15,28 @@
     </div>
 
     <NavPanelMenu :menu-entries="groupTabs" :current-tab="currentTab" @navigated="navigated" />
-
-    <div class="group-contacts-ctn">
-      <ToolTip v-if="email" class="share-tip shadowed" placement="bottom" trigger="clickToOpen">
-        <template #custom-content>
-          <a :href="'mailto:' + email">
-            {{ email }}
-          </a>
-        </template>
-        <ExternalLabelButton
-          :label="t('group.contact')"
-          btn-icon="EmailOutline"
-          vertical-layout
-          label-on-hover
-        />
-      </ToolTip>
-      <SocialShareButton :shared-url="sharedUrl" />
-    </div>
   </NavPanelAside>
 </template>
 
-<script setup>
-defineOptions({ name: 'GroupNavPanel' })
+<script setup lang="ts">
+const props = withDefaults(
+  defineProps<{
+    groupTabs: any
+    currentTab?: object
+    canEditGroup?: boolean
+    isEditing?: boolean
+  }>(),
+  {
+    currentTab: () => ({}),
+    canEditGroup: false,
+    isEditing: false,
+  }
+)
 
-const props = defineProps({
-  email: {
-    type: String,
-    default: '',
-  },
-  groupTabs: { type: Array, required: true },
-  currentTab: {
-    type: Object,
-    default: () => {},
-  },
-  canEditGroup: {
-    type: Boolean,
-    default: false,
-  },
-  isEditing: {
-    type: Boolean,
-    default: false,
-  },
-})
-
-const { t } = useNuxtI18n()
-const emit = defineEmits(['navigated', 'toggle-editing'])
-const sharedUrl = useRequestURL().toString()
+const emit = defineEmits<{
+  navigated: []
+  'toggle-editing': [boolean]
+}>()
 
 const navigated = () => emit('navigated')
 const switchView = () => emit('toggle-editing', !props.isEditing)

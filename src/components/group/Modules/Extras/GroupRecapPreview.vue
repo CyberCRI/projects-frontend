@@ -72,7 +72,6 @@ const modulesArray = computed(() => {
   justify-content: center;
   flex-wrap: wrap;
   gap: 1rem;
-  padding: 1rem 0;
 }
 
 .group-recap-element {
