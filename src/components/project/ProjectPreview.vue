@@ -18,10 +18,10 @@
       />
 
       <div class="project-info">
-        <h3 class="skeletons-text">{{ project.$t.title }}</h3>
-        <pre class="skeletons-text">{{ purpose }}</pre>
+        <h3 class="skeletons-text text-ellipsis">{{ project.$t.title }}</h3>
+        <pre class="skeletons-text text-ellipsis">{{ project.$t.purpose }}</pre>
         <TagsList
-          :tags="tags"
+          :tags="props.project.tags"
           :to="{
             name: 'ProjectSearch',
             query: {
@@ -65,8 +65,7 @@ const props = withDefaults(
 const emit = defineEmits(['refresh'])
 
 const { locale } = useNuxtI18n()
-const purpose = computed(() => cropIfTooLong(props.project.$t.purpose, 50))
-const tags = computed(() => (props.project.tags ?? []).slice(0, 3))
+// const tags = computed(() => (props.project.tags ?? []).slice(0, 3))
 const lastUpdated = computed(() => {
   return new Date(props.project.updated_at).toLocaleDateString(locale.value)
 })
@@ -99,6 +98,7 @@ const lastUpdated = computed(() => {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
+  overflow: hidden;
 }
 
 .project-extra {
@@ -110,5 +110,11 @@ const lastUpdated = computed(() => {
 
 .icon {
   width: 30px;
+}
+
+.project-info-purpose {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 </style>
