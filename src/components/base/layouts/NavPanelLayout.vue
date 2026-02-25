@@ -114,7 +114,7 @@ const { isMobile } = useViewportWidth()
 
 .panels-ctn {
   display: flex;
-  gap: 0.5rem;
+  gap: 1.5rem;
   position: relative;
 
   @media (max-width: $min-tablet) {
