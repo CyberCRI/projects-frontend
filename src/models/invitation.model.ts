@@ -39,6 +39,10 @@ export interface PeopleGroupModel {
   }
 }
 
+export type RootPeopleGroupModel = PeopleGroupModel & {
+  childrens: PeopleGroupModel[]
+}
+
 export type PeopleGroupModulesKeys = keyof PeopleGroupModel['modules']
 
 export type TranslatedPeopleGroupModel = Omit<
@@ -46,6 +50,10 @@ export type TranslatedPeopleGroupModel = Omit<
   'locations'
 > & {
   locations: BaseTranslatedLocationModel[]
+}
+
+export type TranslatedRootPeopleGroupModel = TranslatedPeopleGroupModel & {
+  childrens: TranslatedPeopleGroupModel[]
 }
 
 export type GeneralLocationPeopleGroup = BaseTranslatedLocationModel & {

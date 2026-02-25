@@ -1,67 +1,75 @@
 <script setup lang="ts">
-import { getHierarchyGroups } from '@/api/v2/group.service'
+import { getGroup, getRootGroups, getSubGroup } from '@/api/v2/group.service'
+import PaginationButtonsV2 from '@/components/base/navigation/PaginationButtonsV2.vue'
 import { useLpiHead2 } from '@/composables/useLpiHead'
+import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import { factoriesSkeleton, factoryPagination } from '@/skeletons/base.skeletons'
+import { groupSkeleton } from '@/skeletons/group.skeletons'
 
-const router = useRouter()
 const props = withDefaults(defineProps<{ groupId?: string }>(), { groupId: '' })
 const organizationCode = useOrganizationCode()
 
 const { searchFromQuery } = useSearch('groups')
 const { t } = useNuxtI18n()
 
-const { data, isLoading } = getHierarchyGroups(organizationCode)
-const rootId = computed(() => data.value?.id)
-// const isLoading = true
-const groupsIndex = computed(() => {
-  const groups = data.value
-  const index = {}
-  const iterate = (subgroups, hierarchy) => {
-    subgroups.forEach((group) => {
-      const route = {
-        name: 'Groups',
-        params: {},
-      }
-      if (hierarchy.length !== 0) {
-        route.params = {
-          groupId: group.id,
-        }
-      }
-      index[group.id] = {
-        ...group,
-        hierarchy: [...hierarchy],
-        route,
-        children: group.children?.map((g) => g.id) || [],
-      }
-      // use group id in hierachy an rehydrate when needed
-      // to avoid self reference hell
-      if (group.children && group.children.length) iterate(group.children, [...hierarchy, group.id])
-    })
+// get info from root group organizations
+const {
+  data: rootGroup,
+  status: statusRoot,
+  error: errorRoot,
+} = getRootGroups(organizationCode, {
+  default: () => factoriesSkeleton(groupSkeleton, 5),
+})
+
+// if groupId is set, get group info
+const groupId = computed(() => parseInt(props.groupId, 10) || null)
+const {
+  data: currentGroup,
+  status: statusGroup,
+  error: errorGroup,
+} = getGroup(organizationCode, groupId, {
+  default: () => groupSkeleton(),
+})
+const {
+  data: subgroups,
+  status: statusSubGroup,
+  error: errorSubGroup,
+  pagination,
+} = getSubGroup(organizationCode, groupId, {
+  default: () => factoryPagination(groupSkeleton, 5),
+})
+
+// return correct status fetch (if not groupId is set)
+const status = computed(() => {
+  if (groupId.value) {
+    return [statusRoot.value, statusGroup.value, statusSubGroup.value]
   }
-
-  iterate(groups ? [groups] : [], [])
-
-  return index
+  return [statusRoot.value]
 })
 
-const currentGroup = computed(() => {
-  if (!groupsIndex.value) return null
-  if (!props.groupId) return groupsIndex.value[rootId.value]
-  return groupsIndex.value[props.groupId]
-})
-
-const childGroup = computed(() => {
-  return (currentGroup.value?.children || [])
-    .map((gid) => groupsIndex.value[gid])
-    .sort((a, b) => {
-      if (a.name.toLowerCase() < b.name.toLowerCase()) return -1
-      if (a.name.toLowerCase() > b.name.toLowerCase()) return 1
-
-      return 0
-    })
+// same as status but for error
+const error = computed(() => {
+  if (groupId.value) {
+    return [errorRoot.value, errorGroup.value, errorSubGroup.value]
+  }
+  return [errorRoot.value]
 })
 
 const hierarchy = computed(() => {
-  return (currentGroup.value?.hierarchy || []).map((groupId) => groupsIndex.value[groupId])
+  if (!groupId.value) {
+    return []
+  }
+
+  return [rootGroup.value, ...currentGroup.value.hierarchy].map((group, idx) => {
+    return {
+      name: group.name,
+      route: {
+        name: 'Groups',
+        // if firt element (groupRoot) not redirect with id
+        params: idx !== 0 ? { groupId: group.id } : null,
+      },
+    }
+  })
 })
 
 const hasSearch = computed(() => !!searchFromQuery.value.search)
@@ -79,13 +87,12 @@ onBeforeRouteLeave((to, from, next) => {
   next()
 })
 
-watchEffect(() => {
-  if (!currentGroup.value && groupsIndex.value && props.groupId) {
-    router.push({
-      name: 'Groups',
-    })
-  }
+const childGroup = computed<TranslatedPeopleGroupModel[]>(() => {
+  return groupId.value ? subgroups.value : rootGroup.value.childrens
 })
+
+onMounted(() => console.log('mounted'))
+onBeforeUnmount(() => console.log('unmounted'))
 
 const showGroups = () => navigateTo({ query: {} })
 useLpiHead2({
@@ -109,40 +116,40 @@ useLpiHead2({
       </div>
     </div>
     <template v-else>
-      <div class="current-group-ctn">
-        <div class="breadcrumb">
-          <BreadCrumbs
-            v-if="hierarchy?.length"
-            :breadcrumbs="hierarchy"
-            group-name=""
-            :is-loading="isLoading"
-          />
+      <FetchLoader
+        :status="status"
+        :error="error"
+        :error404="{ name: 'Groups' }"
+        only-error
+        skeleton
+      >
+        <div class="current-group-ctn">
+          <div class="breadcrumb">
+            <BreadCrumbs
+              v-if="hierarchy.length"
+              :breadcrumbs="hierarchy"
+              :group-name="
+                groupId ? `${currentGroup.$t.name} (${currentGroup.modules.subgroups})` : ''
+              "
+            />
+          </div>
+          <div class="groups-list">
+            <CardList
+              :desktop-columns-number="6"
+              :items="childGroup"
+              class="list-container"
+              switchable-display
+            >
+              <template #default="cardListSlotProps">
+                <GroupCard :group="cardListSlotProps.item" :mode="cardListSlotProps.mode" />
+              </template>
+            </CardList>
+          </div>
+          <div class="pagination">
+            <PaginationButtonsV2 v-if="groupId" :pagination="pagination" />
+          </div>
         </div>
-        <div class="current-group">
-          <h3 v-if="!isLoading && currentGroup">
-            {{ currentGroup.name }} ({{ currentGroup.children.length }})
-          </h3>
-          <template v-if="isLoading">
-            <SkeletonComponent width="110px" class="current-group-skeleton" />
-            <SkeletonComponent width="40px" class="current-group-skeleton" />
-          </template>
-        </div>
-
-        <div class="groups-list">
-          <CardList
-            :desktop-columns-number="6"
-            :is-loading="isLoading"
-            :limit="12"
-            :items="childGroup"
-            class="list-container"
-            switchable-display
-          >
-            <template #default="cardListSlotProps">
-              <GroupCard :group="cardListSlotProps.item" :mode="cardListSlotProps.mode" />
-            </template>
-          </CardList>
-        </div>
-      </div>
+      </FetchLoader>
     </template>
   </div>
 </template>
@@ -185,5 +192,14 @@ useLpiHead2({
     border-radius: $border-radius-m;
     margin-right: $layout-size-s;
   }
+}
+
+.current-group-ctn {
+  margin-bottom: 0.5rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
 }
 </style>

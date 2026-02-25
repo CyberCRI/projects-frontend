@@ -7,6 +7,7 @@ import {
   getSubGroup as fetchGetSubGroup,
   getGroupGallery as fetchGroupGallery,
   getGroupProjectsLocation as fetchGroupProjectsLocation,
+  getRootGroups as fetchGetRootGroups,
 } from '@/api/groups.service'
 import useAsyncAPI from '@/composables/useAsyncAPI'
 import useAsyncPaginationAPI from '@/composables/useAsyncPaginationAPI'
@@ -31,6 +32,41 @@ export const getGroup = (
     {
       translate: translateGroup,
       watch: onlyRefs([organizationCode, groupId]),
+      ...config,
+    }
+  )
+}
+
+export const getRootGroups = (
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
+  config = {}
+) => {
+  const { translateGroup, translateGroups } = useAutoTranslate()
+  const key = computed(() => `${unref(organizationCode)}::root-groups`)
+
+  // translate groups and childrens
+  const translateRootGroup = (
+    data: ComputedRef<Awaited<ReturnType<typeof fetchGetRootGroups>>>
+  ) => {
+    return computed(() => {
+      const group = unref(data)
+      return {
+        ...unref(translateGroup(group)),
+        childrens: unref(translateGroups(group.childrens)),
+      }
+    })
+  }
+
+  return useAsyncAPI(
+    key,
+    ({ config }) =>
+      fetchGetRootGroups(unref(organizationCode), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
+    {
+      translate: translateRootGroup,
+      watch: onlyRefs([organizationCode]),
       ...config,
     }
   )

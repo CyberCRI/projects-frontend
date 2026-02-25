@@ -10,22 +10,23 @@ import type {
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import useAPI from '@/composables/useAPI'
 import { ProjectModel } from '@/models/project.model'
-import { PeopleGroupModel } from '@/models/invitation.model'
+import { PeopleGroupModel, RootPeopleGroupModel } from '@/models/invitation.model'
 import { ImageModel } from '@/models/image.model'
 import { BaseLocationModel, LocationModel } from '@/models/location.model'
 
 // HIERARCHY
 export async function getHierarchyGroups(organizationCode: string, config = {}) {
-  return await useAPI<PaginationResult<HierarchyGroupModel>>(
+  return await useAPI<HierarchyGroupModel[]>(
     `organization/${organizationCode}/people-groups-hierarchy/`,
     config
   )
 }
 
-export async function getPeopleGroupsHierarchy(org_code, params) {
-  return await useAPI(`organization/${org_code}/people-groups-hierarchy/`, {
-    ..._adaptParamsToGetQuery(params),
-  })
+export async function getRootGroups(organizationCode: string, config = {}) {
+  return await useAPI<RootPeopleGroupModel>(
+    `organization/${organizationCode}/root-people-groups/`,
+    config
+  )
 }
 
 export async function getGroups(org_id) {
