@@ -8,12 +8,6 @@
   >
     <template #actions-right>
       <IconImage
-        v-if="group.email"
-        class="icon skeletons-background"
-        name="EmailOutline"
-        @click="mailTo"
-      />
-      <IconImage
         v-if="showAddButton"
         class="icon skeletons-background"
         name="Plus"
@@ -43,7 +37,7 @@
       <div class="card-type skeletons-text">
         {{ translatedName }}
       </div>
-      <p class="skeletons-text" v-html="translatedShortDescription" />
+      <p class="skeletons-text card-description" v-html="translatedShortDescription" />
     </div>
 
     <template v-if="modules.subgroups" #footer>
@@ -119,7 +113,6 @@ const lineClamp = computed(() => {
   return defaultLineClamp
 })
 
-const mailTo = () => (document.location.href = `mailto:${props.group.email}`)
 const toGroupPage = () => {
   // this is a quick and dirty fix to make whole card clickable for selection
   if (showAddButton.value) {
@@ -151,9 +144,14 @@ const toGroupPage = () => {
 }
 
 .card-type {
-  font-weight: 700;
-  font-size: $font-size-m;
+  font-weight: 500;
+  font-size: $font-size-s;
   color: $almost-black;
+}
+
+.card-description {
+  font-weight: 300;
+  font-size: calc(var(--font-base-scale, 1) * 0.875rem);
 }
 
 .subgroups-link {

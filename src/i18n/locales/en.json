@@ -3155,9 +3155,9 @@
     "publications": "Publications",
     "similars": "Similar groups",
     "presentation": "Introduction",
-    "location": "Address",
     "subgroups": "Sub-groups",
-    "projects-locations": "Map of projects"
+    "projects-locations": "Map",
+    "location": "Address | Addresses"
   },
   "gallery": {
     "title": "Gallery",

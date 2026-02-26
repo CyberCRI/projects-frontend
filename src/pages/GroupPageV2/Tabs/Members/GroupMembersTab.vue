@@ -25,6 +25,6 @@ const countElement = computed<number>(() => props.group.modules?.members)
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 </style>

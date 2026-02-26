@@ -3155,9 +3155,9 @@
     "publications": "Publicaties",
     "similars": "Soortgelijke groepen",
     "presentation": "Inleiding",
-    "location": "Adres",
     "subgroups": "Subgroepen",
-    "projects-locations": "Kaart van de projecten"
+    "projects-locations": "Kaart",
+    "location": "Adres"
   },
   "gallery": {
     "title": "Galerij",

@@ -81,8 +81,8 @@ const onMouseout = () => {
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: calc(100% - 2rem);
-  gap: 1rem;
-  padding: 0 1rem;
+  gap: 0.5rem;
+  padding: 0 0.5rem;
   min-height: pxToRem(85px);
 }
 </style>

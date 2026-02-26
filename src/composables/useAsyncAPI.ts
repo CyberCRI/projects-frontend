@@ -51,13 +51,13 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
   */
   params[2] ??= {}
   params[2].watch ??= []
-  if (
-    params[2].query &&
-    (isRef(params[2].query) || isReactive(params[2].query)) &&
-    !params[2].watch.includes(params[2].query)
-  ) {
-    params[2].watch.push(params[2].query)
-  }
+
+  // wraps query around computed to "watch change"
+  const orginalQuery = params[2].query
+  params[2].query = computed(() => {
+    return { ...(unref(orginalQuery) || {}) }
+  })
+  params[2].watch.push(params[2].query)
 
   let immediate = true
   if (params[2].immediate === false) {
@@ -72,8 +72,10 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
 
   // add query params directly in keys
   const keys = computed(() => {
-    const key = params[2].query ? JSON.stringify(unref(params[2].query)) : ''
-    return key ? `${unref(params[0])}::${key}` : (unref(params[0]) as string)
+    const query = JSON.stringify(unref(params[2].query))
+    const k = `${unref(params[0])}::${query}`
+    console.log(k)
+    return k
   })
 
   const { status, data, ...res } = useAsyncData<ResDataT, unknown, DataT>(

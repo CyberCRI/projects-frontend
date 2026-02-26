@@ -3155,9 +3155,9 @@
     "publications": "Trükised",
     "similars": "Sarnased rühmad",
     "presentation": "Sissejuhatus",
-    "location": "Aadress",
     "subgroups": "Alarühmad",
-    "projects-locations": "Projektide kaart"
+    "projects-locations": "Kaart",
+    "location": "Aadress | Aadressid"
   },
   "gallery": {
     "title": "galeriis",

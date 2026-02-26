@@ -1,5 +1,8 @@
 <template>
-  <BaseGroupTab :title="$t(GroupModuleTitle.projects_locations)" :count="countElement">
+  <BaseGroupTab
+    :title="$t(GroupModuleTitle.projects_locations, countElement)"
+    :count="countElement"
+  >
     <GroupLocationBase :group="group" />
   </BaseGroupTab>
 </template>

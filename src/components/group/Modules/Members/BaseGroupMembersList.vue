@@ -6,6 +6,7 @@
       :member="member"
       :class="{
         'focus-leader': focusLeader && member.is_leader,
+        'focus-member': focusLeader && !member.is_leader,
       }"
       :role-label="member.is_leader ? undefined : ''"
       @click="openProfile"
@@ -71,5 +72,15 @@ const closeProfile = () => (userIdDrawer.value = null)
 <style lang="scss">
 .focus-leader {
   grid-column: span 2;
+}
+
+.focus-member * {
+  height: unset !important;
+  border: none !important;
+
+  .picture-user {
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+  }
 }
 </style>
