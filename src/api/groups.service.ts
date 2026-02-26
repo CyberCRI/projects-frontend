@@ -22,30 +22,24 @@ export async function getHierarchyGroups(organizationCode: string, config = {}) 
   )
 }
 
-export async function getPeopleGroupsHierarchy(org_code, params) {
-  return await useAPI(`organization/${org_code}/people-groups-hierarchy/`, {
-    ..._adaptParamsToGetQuery(params),
-  })
-}
-
-export async function getGroups(org_id) {
-  return await useAPI(`organization/${org_id}/people-group/`, {})
-}
-
 // ALL GROUPS
-
-export async function getPeopleGroups(org_code, params) {
-  return await useAPI(`organization/${org_code}/people-group/`, {
-    ..._adaptParamsToGetQuery(params),
-  })
+export async function getPeopleGroups(organizationCode, config) {
+  return await useAPI<PaginationResult<PeopleGroupModel>>(
+    `organization/${organizationCode}/people-group/`,
+    {
+      ..._adaptParamsToGetQuery(config),
+    }
+  )
 }
 
-export async function postGroup(org: string, groupData: PostGroupData) {
-  return await useAPI(`organization/${org}/people-group/`, { body: groupData, method: 'POST' })
+export async function postGroup(organizationCode: string, groupData: PostGroupData) {
+  return await useAPI(`organization/${organizationCode}/people-group/`, {
+    body: groupData,
+    method: 'POST',
+  })
 }
 
 // GROUP
-
 export async function addParentGroup(
   orgId: string,
   groupId: number,

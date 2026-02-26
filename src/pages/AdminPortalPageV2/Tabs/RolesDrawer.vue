@@ -31,7 +31,7 @@
 <script>
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
-import { getGroups } from '@/api/groups.service'
+import { getPeopleGroups } from '@/api/groups.service'
 import { addOrgMember, removeOrgMember } from '@/api/organizations.service'
 import ToolTip from '@/components/base/ToolTip.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
@@ -87,7 +87,7 @@ export default {
     }
 
     if (this.selectedUser) {
-      const result = await getGroups(this.organizationsStore.current.id)
+      const result = await getPeopleGroups(this.organizationsStore.current.id)
 
       const groups = [...result.results]
 
