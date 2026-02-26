@@ -55,7 +55,7 @@ const props = withDefaults(
     hideEmpty?: boolean
     disable?: boolean
   }>(),
-  { showNumber: true, hideEmpty: false, disable: false }
+  { showNumber: true, hideEmpty: true, disable: false }
 )
 
 const { canNext, canPrev } = props.pagination
