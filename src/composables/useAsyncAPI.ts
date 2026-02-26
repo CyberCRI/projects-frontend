@@ -70,8 +70,14 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
     return params[2].watch.map((v) => unref(v)).filter((v) => isNil(v)).length === 0
   })
 
+  // add query params directly in keys
+  const keys = computed(() => {
+    const key = params[2].query ? JSON.stringify(unref(params[2].query)) : ''
+    return key ? `${unref(params[0])}::${key}` : (unref(params[0]) as string)
+  })
+
   const { status, data, ...res } = useAsyncData<ResDataT, unknown, DataT>(
-    params[0],
+    keys,
     ({}) => {
       if (!checkArgs.value) {
         return null

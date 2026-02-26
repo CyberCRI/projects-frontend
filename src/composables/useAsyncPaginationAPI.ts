@@ -60,13 +60,8 @@ export default function useAsyncPaginationAPI<DataT, Result = undefined>(
   const paginationData = ref<PaginationResult>()
   const pagination = usePagination(paginationData, params[2]?.paginationConfig)
 
-  // add paginations in query
-  const key = computed(
-    () => `${unref(params[0])}::${pagination.current.value}::${pagination.limit.value}`
-  )
-
   const rest = useAsyncAPI(
-    key,
+    params[0],
     ({ config }) => {
       return params[1]({
         config: {
