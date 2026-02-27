@@ -176,6 +176,10 @@ const closeProfile = () => (leaderIdDrawer.value = null)
 .group-info-container {
   display: grid;
   grid-template-columns: 240px 1fr;
+
+  @media screen and (max-width: $min-tablet) {
+    grid-template-columns: unset;
+  }
 }
 
 .group-infos {
@@ -183,6 +187,7 @@ const closeProfile = () => (leaderIdDrawer.value = null)
   gap: 0.3rem;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .group-title {
