@@ -1,11 +1,12 @@
 <template>
   <BaseGroupPreview
     id="similars"
+    ref="similars"
     :title="$t(GroupModuleTitle.similars)"
     :total="group.modules.similars"
   >
     <template #header>
-      <SeeMoreArrow is="button" class="see-more-btn reset-btn header" @click="onClick" />
+      <SeeMoreArrow is="button" class="see-more-btn reset-btn" @click="onClick" />
     </template>
     <template #content>
       <FetchLoader :status="status" only-error skeleton>
@@ -14,6 +15,7 @@
             <GroupCard
               v-for="groupSimilar in groups"
               :key="groupSimilar.id"
+              class="group-similars-card"
               :group="groupSimilar"
               :mode="mode"
             />
@@ -22,7 +24,6 @@
       </FetchLoader>
     </template>
     <template #footer>
-      <SeeMoreArrow is="button" class="see-more-btn reset-btn footer" @click="onClick" />
       <GroupSimilarDrawer :group="showMore ? group : null" @close="onClose" />
     </template>
   </BaseGroupPreview>
@@ -51,19 +52,30 @@ const { status, data: groups } = getGroupSimilar(organizationCode, groupId, {
   paginationConfig: {
     limit: props.limit,
   },
+  query: {
+    // no need group modules for preview subgroups
+    modules: 'none',
+  },
   default: () => factoryPagination(groupSkeleton, limitSkeletons.value),
 })
 
-const mode = ref<'card' | 'list'>('card')
+const mode = ref<'card' | 'list'>('list')
 
 const showMore = ref(false)
 const onClick = () => (showMore.value = true)
 const onClose = () => (showMore.value = false)
 
+const container = useTemplateRef('similars')
 onMediaChange(
   '(min-width: 1200px)',
   (matches) => {
-    mode.value = matches ? 'card' : 'list'
+    const el = container.value.$el as HTMLElement
+    console.log(el)
+    if (matches && el.parentElement.childElementCount !== 1) {
+      mode.value = 'card'
+    } else {
+      mode.value = 'list'
+    }
   },
   { immediate: true }
 )
@@ -72,30 +84,20 @@ onMediaChange(
 <style lang="scss" scoped>
 .group-similars {
   .group-similars-list {
-    padding: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
   }
-}
-
-.see-more-btn.footer {
-  display: none;
-}
-
-.see-more-btn.header {
-  display: block;
 }
 
 @media screen and (min-width: $min-desktop) {
-  .see-more-btn.footer {
-    display: block;
-  }
-
-  .see-more-btn.header {
-    display: none;
+  #similars:not(:only-child) {
+    .see-more-btn {
+      padding: 0 !important;
+    }
   }
 }
 </style>
@@ -110,6 +112,16 @@ onMediaChange(
         width: 100%;
       }
     }
+  }
+}
+
+.group-similars-card {
+  border: none !important;
+  height: auto !important;
+
+  .cropped-image {
+    width: 4rem !important;
+    height: 4rem !important;
   }
 }
 </style>

@@ -1,6 +1,5 @@
 import {
   Pagination,
-  PaginationQuery,
   PaginationResult,
   paginationConfig,
   usePagination,
@@ -10,14 +9,7 @@ import { omit } from 'es-toolkit'
 import type { AsyncConfig } from './useAsyncAPI'
 import useAsyncAPI from './useAsyncAPI'
 
-type AsyncPaginationHandler = {
-  ctx?: Parameters<Parameters<typeof useAsyncAPI>['1']>[0]
-  config: {
-    query: PaginationQuery & {
-      [key: string]: any
-    }
-  }
-}
+type AsyncPaginationHandler = Parameters<Parameters<typeof useAsyncAPI>['1']>[0]
 
 type AsyncPaginationConfig<ResDataT, DataT extends PaginationResult, Result> = Omit<
   AsyncConfig<ResDataT, DataT, Result>,
@@ -60,32 +52,23 @@ export default function useAsyncPaginationAPI<DataT, Result = undefined>(
   const paginationData = ref<PaginationResult>()
   const pagination = usePagination(paginationData, params[2]?.paginationConfig)
 
-  // add paginations in query
-  const key = computed(
-    () => `${unref(params[0])}::${pagination.current.value}::${pagination.limit.value}`
-  )
-
-  const rest = useAsyncAPI(
-    key,
-    ({ config }) => {
-      return params[1]({
-        config: {
-          query: {
-            ...config.query,
-            ...pagination.query(),
-          },
-        },
-      })
-    },
-    {
-      ...((omit(params[2] ?? {}, ['transform', 'translate']) ?? {}) as Omit<
-        AsyncConfig<PaginationResult<DataT>, PaginationResult<DataT>, Result>,
-        'translate'
-      >),
-      watch: [...(params[2]?.watch || []), pagination.current, pagination.limit],
-      deep: false,
+  // add pagination query around query computed
+  const query = computed(() => {
+    const q = unref(params[2]?.query || {})
+    return {
+      ...q,
+      ...pagination.query(),
     }
-  )
+  })
+
+  const rest = useAsyncAPI(params[0], params[1], {
+    ...((omit(params[2] ?? {}, ['transform', 'translate']) ?? {}) as Omit<
+      AsyncConfig<PaginationResult<DataT>, PaginationResult<DataT>, Result>,
+      'translate'
+    >),
+    query,
+    deep: false,
+  })
 
   const data = rest.data
   watch(data, () => (paginationData.value = rest.data.value))

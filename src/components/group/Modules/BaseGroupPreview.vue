@@ -1,11 +1,11 @@
 <template>
-  <div class="group shadowed-box">
+  <div class="group shadowed-box2">
     <div class="group-header">
       <div class="title-container">
         <IconImage v-if="icon" :name="icon" class="icon" />
         <h2 class="title">
           {{ title }}
-          <span v-if="!isNil(total)">( {{ total }} )</span>
+          <span v-if="!isNil(total)">({{ total }})</span>
         </h2>
       </div>
       <slot v-if="!loading" name="header">
@@ -63,6 +63,7 @@ withDefaults(
   justify-content: space-between;
   align-items: center;
   text-transform: uppercase;
+  flex-wrap: wrap;
 }
 
 .group-container {

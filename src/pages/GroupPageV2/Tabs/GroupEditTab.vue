@@ -14,6 +14,7 @@ import useToasterStore from '@/stores/useToaster'
 import usePeopleGroupsStore from '@/stores/usePeopleGroups'
 import useUsersStore from '@/stores/useUsers'
 import { useLpiHead2 } from '@/composables/useLpiHead'
+import { AsyncDataRequestStatus } from 'nuxt/app'
 
 const props = defineProps({
   groupId: {
@@ -125,12 +126,16 @@ const cancel = () => {
   }
 }
 
-const { setProjectsData, updateGroupProjects } = useGroupProjectsUpdate(
-  orgCode,
-  props.groupId,
-  form
-)
-const { setMembersData, updateGroupMembers } = useGroupMembersUpdate(orgCode, props.groupId, form)
+// TODO need to rework all this :D
+let setProjectsData, updateGroupProjects, setMembersData, updateGroupMembers
+if (!props.isReducedMode) {
+  const projectsObj = useGroupProjectsUpdate(orgCode, props.groupId, form)
+  setProjectsData = projectsObj.setProjectsData
+  updateGroupProjects = projectsObj.updateGroupProjects
+  const membersObj = useGroupMembersUpdate(orgCode, props.groupId, form)
+  setMembersData = membersObj.setMembersData
+  updateGroupMembers = membersObj.updateGroupMembers
+}
 
 const updateHeader = async (groupId) => {
   // check if header has changed
@@ -240,11 +245,12 @@ const updateGroup = async () => {
     // save header
     await updateHeader(props.groupId)
 
-    // save members
-    await updateGroupMembers()
-
-    //save featured projects
-    await updateGroupProjects()
+    if (!props.isReducedMode) {
+      // save members
+      await updateGroupMembers()
+      //save featured projects
+      await updateGroupProjects()
+    }
 
     await refreshNuxtData(`${organizationCode}::group::${groupData.value.id}`)
 
@@ -282,7 +288,8 @@ const submit = async () => {
   }
 }
 
-onMounted(async () => {
+const status = ref<AsyncDataRequestStatus>('pending')
+onBeforeMount(async () => {
   stopEditWatcher()
   if (!props.groupId) {
     peopleGroupsStore.currentId = null
@@ -330,8 +337,12 @@ onMounted(async () => {
       form.value.header_image = _groupData.header_image
       form.value.imageSizes = pictureApiToImageSizes(_groupData.header_image)
 
-      await setMembersData()
-      await setProjectsData()
+      if (!props.isReducedMode) {
+        // save members
+        await setMembersData()
+        //save featured projects
+        await setProjectsData()
+      }
     } catch (error) {
       console.log(error)
       redirectTo404()
@@ -339,6 +350,7 @@ onMounted(async () => {
     }
     startEditWatcher()
   }
+  status.value = 'success'
 })
 
 useLpiHead2({
@@ -349,15 +361,17 @@ useLpiHead2({
   <div class="create-group">
     <div class="group-form">
       <!-- do not remove key or group hierarchy will be uncorrectly loaded on meta portal (PROJ-1032) -->
-      <GroupForm
-        :key="groupData?.id"
-        ref="groupForm"
-        v-model="form"
-        :validation="v$"
-        :is-add-mode="!groupId"
-        :is-reduced-mode="isReducedMode"
-        @close="$emit('close')"
-      />
+      <FetchLoader :status="status">
+        <GroupForm
+          :key="props.groupId"
+          ref="groupForm"
+          v-model="form"
+          :validation="v$"
+          :is-add-mode="!groupId"
+          :is-reduced-mode="isReducedMode"
+          @close="$emit('close')"
+        />
+      </FetchLoader>
 
       <LpiSnackbar
         v-if="v$.$anyDirty && formIsInvalid"

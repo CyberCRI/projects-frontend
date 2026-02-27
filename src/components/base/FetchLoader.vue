@@ -19,6 +19,7 @@
 </template>
 
 <script setup lang="ts">
+import { isNil } from 'es-toolkit'
 import { AsyncDataRequestStatus, NuxtError, NuxtLinkProps } from 'nuxt/app'
 
 /*
@@ -37,7 +38,7 @@ const props = withDefaults(
     // stauts from fetchOptions
     status: AsyncDataRequestStatus | AsyncDataRequestStatus[]
     label?: string
-    error?: NuxtError
+    error?: NuxtError | null | (NuxtError | null)[]
     error404?: boolean | NuxtLinkProps['to']
     withData?: boolean
     onlyError?: boolean
@@ -106,12 +107,16 @@ const router = useRouter()
 watch(
   () => [props.error, props.error404, isError.value],
   () => {
-    if (isError.value) {
-      if (props.error?.statusCode === 404 && props.error404) {
-        const to = props.error404 === true ? { name: 'page404' } : props.error404
-        router.push(to)
-      }
+    if (!isError.value || !props.error || props.error404 === false) {
+      return
     }
+    const errors = Array.isArray(props.error) ? props.error : [props.error]
+    // check if error is 404
+    if (!errors.filter((r) => !isNil(r)).find((r) => r.statusCode === 404)) {
+      return
+    }
+    const to = props.error404 === true ? { name: 'page404' } : props.error404
+    router.push(to)
   }
 )
 </script>
@@ -130,6 +135,7 @@ watch(
   align-items: center;
   flex-direction: column;
   width: 100%;
+  padding: 0.5rem;
 }
 
 .error {

@@ -1,6 +1,5 @@
 <template>
   <BasicCard
-    :group="group"
     :to-link="toLink"
     :data-test="`group-card-${group.name}`"
     :mode="mode"
@@ -8,11 +7,15 @@
     @click="toGroupPage"
   >
     <template #actions-right>
-      <IconImage v-if="group.email" class="icon" name="EmailOutline" @click="mailTo" />
-      <IconImage v-if="showAddButton" class="icon" name="Plus" @click="$emit('add')" />
+      <IconImage
+        v-if="showAddButton"
+        class="icon skeletons-background"
+        name="Plus"
+        @click="$emit('add')"
+      />
       <IconImage
         v-if="showCloseButton"
-        class="icon"
+        class="icon skeletons-background"
         name="CloseCircle"
         @click="$emit('unselect', group)"
       />
@@ -34,7 +37,7 @@
       <div class="card-type skeletons-text">
         {{ translatedName }}
       </div>
-      <p class="skeletons-text" v-html="translatedShortDescription" />
+      <p class="skeletons-text card-description" v-html="translatedShortDescription" />
     </div>
 
     <template v-if="modules.subgroups" #footer>
@@ -43,7 +46,7 @@
           name: 'Groups',
           params: { groupId: group.id },
         }"
-        class="subgroups-link"
+        class="subgroups-link skeletons-background"
       >
         {{ $t('group.see-subgroups', modules.subgroups) }}
         <IconImage class="arrow" name="ArrowRight" />
@@ -90,7 +93,9 @@ const showCloseButton = computed(() => props.hasCloseIcon)
 const toLink = computed(() => {
   // a to-link attribute make the basic card a NuxtLink
   // witch we dont want when just selecting project
-  return showAddButton.value ? null : { name: 'Group', params: { groupId: props.group.id } }
+  return showAddButton.value || !props.group.id
+    ? null
+    : { name: 'Group', params: { groupId: props.group.id } }
 })
 
 const modules = computed(() => props.group.modules ?? ({} as TranslatedPeopleGroupModel['modules']))
@@ -108,7 +113,6 @@ const lineClamp = computed(() => {
   return defaultLineClamp
 })
 
-const mailTo = () => (document.location.href = `mailto:${props.group.email}`)
 const toGroupPage = () => {
   // this is a quick and dirty fix to make whole card clickable for selection
   if (showAddButton.value) {
@@ -140,9 +144,14 @@ const toGroupPage = () => {
 }
 
 .card-type {
-  font-weight: 700;
-  font-size: $font-size-m;
+  font-weight: 500;
+  font-size: $font-size-s;
   color: $almost-black;
+}
+
+.card-description {
+  font-weight: 300;
+  font-size: calc(var(--font-base-scale, 1) * 0.875rem);
 }
 
 .subgroups-link {

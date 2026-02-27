@@ -1,7 +1,7 @@
 <template>
   <BaseGroupPreview
     id="projects_locations"
-    :title="$t(GroupModuleTitle.projects_locations)"
+    :title="$t(GroupModuleTitle.projects_locations, group.modules.projects_locations)"
     :total="group.modules.projects_locations"
     :icon="GroupModuleIcon.projects_locations"
   >

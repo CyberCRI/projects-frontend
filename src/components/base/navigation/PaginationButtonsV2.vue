@@ -55,7 +55,7 @@ const props = withDefaults(
     hideEmpty?: boolean
     disable?: boolean
   }>(),
-  { showNumber: true, hideEmpty: false, disable: false }
+  { showNumber: true, hideEmpty: true, disable: false }
 )
 
 const { canNext, canPrev } = props.pagination
@@ -94,6 +94,7 @@ const setPage = (value) => {
 .pagination {
   display: flex;
   align-items: center;
+  justify-content: center;
   transition: opacity 0.2s;
 
   &.disable {

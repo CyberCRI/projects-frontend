@@ -18,17 +18,21 @@
       />
 
       <div class="project-info">
-        <h3 class="skeletons-text text-ellipsis">{{ project.$t.title }}</h3>
-        <pre class="skeletons-text text-ellipsis">{{ project.$t.purpose }}</pre>
-        <TagsList
-          :tags="tags"
-          :to="{
-            name: 'ProjectSearch',
-            query: {
-              section: 'projects',
-            },
-          }"
-        />
+        <div class="project-texts">
+          <h3 class="skeletons-text text-ellipsis">{{ project.$t.title }}</h3>
+          <pre class="skeletons-text text-ellipsis">{{ project.$t.purpose }}</pre>
+        </div>
+        <div class="project-tags">
+          <TagsList
+            :tags="tags"
+            :to="{
+              name: 'ProjectSearch',
+              query: {
+                section: 'projects',
+              },
+            }"
+          />
+        </div>
       </div>
     </NuxtLink>
     <div v-if="extra" class="project-extra">
@@ -75,6 +79,8 @@ const lastUpdated = computed(() => {
   display: grid;
   grid-template-columns: 1fr 87px;
   column-gap: 1rem;
+  position: relative;
+  z-index: 2;
 }
 
 .project-link {
@@ -94,10 +100,13 @@ const lastUpdated = computed(() => {
 }
 
 .project-info {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
   gap: 0.2rem;
-  overflow: hidden;
+
+  .project-texts {
+    overflow: hidden;
+  }
 }
 
 .project-extra {

@@ -85,12 +85,12 @@ const modulesArray = computed(() => {
   padding: 0.4rem 0.8rem;
 
   svg {
-    width: 32px;
+    width: 25px;
     fill: $primary;
   }
 }
 
 .group-recap-title {
-  font-weight: bold;
+  font-weight: 400;
 }
 </style>

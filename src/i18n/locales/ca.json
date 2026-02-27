@@ -3155,9 +3155,9 @@
     "publications": "Publicacions",
     "similars": "Grups similars",
     "presentation": "Introducció",
-    "location": "Adreça",
     "subgroups": "Subgrups",
-    "projects-locations": "Mapa de projectes"
+    "projects-locations": "Mapa",
+    "location": "Adreces d' adreces"
   },
   "gallery": {
     "title": "Galeria",

@@ -1,71 +1,48 @@
 <script setup lang="ts">
 import { getHierarchyGroups } from '@/api/v2/group.service'
 import { useLpiHead2 } from '@/composables/useLpiHead'
+import { PeopleGroupModulesKeys } from '@/models/invitation.model'
+import { factoriesSkeleton } from '@/skeletons/base.skeletons'
+import { groupSkeleton } from '@/skeletons/group.skeletons'
 
-const router = useRouter()
 const props = withDefaults(defineProps<{ groupId?: string }>(), { groupId: '' })
 const organizationCode = useOrganizationCode()
 
 const { searchFromQuery } = useSearch('groups')
 const { t } = useNuxtI18n()
 
-const { data, isLoading } = getHierarchyGroups(organizationCode)
-const rootId = computed(() => data.value?.id)
-// const isLoading = true
-const groupsIndex = computed(() => {
-  const groups = data.value
-  const index = {}
-  const iterate = (subgroups, hierarchy) => {
-    subgroups.forEach((group) => {
-      const route = {
-        name: 'Groups',
-        params: {},
-      }
-      if (hierarchy.length !== 0) {
-        route.params = {
-          groupId: group.id,
-        }
-      }
-      index[group.id] = {
-        ...group,
-        hierarchy: [...hierarchy],
-        route,
-        children: group.children?.map((g) => g.id) || [],
-      }
-      // use group id in hierachy an rehydrate when needed
-      // to avoid self reference hell
-      if (group.children && group.children.length) iterate(group.children, [...hierarchy, group.id])
-    })
-  }
-
-  iterate(groups ? [groups] : [], [])
-
-  return index
-})
-
-const currentGroup = computed(() => {
-  if (!groupsIndex.value) return null
-  if (!props.groupId) return groupsIndex.value[rootId.value]
-  return groupsIndex.value[props.groupId]
-})
-
-const childGroup = computed(() => {
-  return (currentGroup.value?.children || [])
-    .map((gid) => groupsIndex.value[gid])
-    .sort((a, b) => {
-      if (a.name.toLowerCase() < b.name.toLowerCase()) return -1
-      if (a.name.toLowerCase() > b.name.toLowerCase()) return 1
-
-      return 0
-    })
+const {
+  data: currentGroup,
+  isLoading,
+  status,
+  error,
+} = getHierarchyGroups(organizationCode, {
+  query: {
+    modules: ['members', 'subgroups'] satisfies PeopleGroupModulesKeys[],
+    depth: 1,
+    parent: props.groupId ? props.groupId : undefined,
+  },
+  // @ts-expect-error children need "id"
+  default: () => groupSkeleton({ children: factoriesSkeleton(groupSkeleton, 10) }),
 })
 
 const hierarchy = computed(() => {
-  return (currentGroup.value?.hierarchy || []).map((groupId) => groupsIndex.value[groupId])
+  if (!currentGroup.value?.hierarchy) {
+    return []
+  }
+  return currentGroup.value.hierarchy.map((group, idx) => {
+    return {
+      name: group.name,
+      route: {
+        name: 'Groups',
+        // if firt element (groupRoot) not redirect with id
+        params: idx !== 0 ? { groupId: group.id } : null,
+      },
+    }
+  })
 })
 
 const hasSearch = computed(() => !!searchFromQuery.value.search)
-
 const fixedSearch = computed(() => {
   return {
     ...searchFromQuery.value,
@@ -77,14 +54,6 @@ const isNavigating = ref(false)
 onBeforeRouteLeave((to, from, next) => {
   isNavigating.value = true
   next()
-})
-
-watchEffect(() => {
-  if (!currentGroup.value && groupsIndex.value && props.groupId) {
-    router.push({
-      name: 'Groups',
-    })
-  }
 })
 
 const showGroups = () => navigateTo({ query: {} })
@@ -129,18 +98,25 @@ useLpiHead2({
         </div>
 
         <div class="groups-list">
-          <CardList
-            :desktop-columns-number="6"
-            :is-loading="isLoading"
-            :limit="12"
-            :items="childGroup"
-            class="list-container"
-            switchable-display
+          <FetchLoader
+            :status="status"
+            :error="error"
+            :error404="{ name: 'Groups' }"
+            only-error
+            skeleton
           >
-            <template #default="cardListSlotProps">
-              <GroupCard :group="cardListSlotProps.item" :mode="cardListSlotProps.mode" />
-            </template>
-          </CardList>
+            <CardList
+              :desktop-columns-number="6"
+              :limit="12"
+              :items="currentGroup.children"
+              class="list-container"
+              switchable-display
+            >
+              <template #default="cardListSlotProps">
+                <GroupCard :group="cardListSlotProps.item" :mode="cardListSlotProps.mode" />
+              </template>
+            </CardList>
+          </FetchLoader>
         </div>
       </div>
     </template>

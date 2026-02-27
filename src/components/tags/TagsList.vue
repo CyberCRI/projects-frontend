@@ -35,10 +35,10 @@
           <BadgeItem v-if="tag.name" :key="prefix + tag.name" :label="tag.name" size="small" />
         </a>
       </template>
-      <span
-        class="tag-elt-show-more"
+      <button
+        class="tag-elt-show-more reset-btn"
         :class="{ hidden: !hasMoreTags }"
-        @click="showExtraTags = !showExtraTags"
+        @click.prevent="showExtraTags = !showExtraTags"
       >
         <BadgeItem
           class="tag-elt tag-elt-show-more"
@@ -48,7 +48,7 @@
           size="small"
           :is-open-tab="showExtraTags"
         />
-      </span>
+      </button>
     </div>
     <div v-if="showExtraTags" class="extra-tags" :class="{ 'straight-corner': straightCorner }">
       <NuxtLink
@@ -126,6 +126,7 @@ export default {
   },
   data() {
     return {
+      observer: null,
       moreTags: [],
       moreInfoTags: [],
       displayedTags: [],
@@ -243,13 +244,15 @@ export default {
   async mounted() {
     this.layoutTags()
     document.addEventListener('click', this.extraTagClickOutside)
-    window.addEventListener('resize', this.onResizeLayoutTagsBis)
+    this.observer = new ResizeObserver(this.onResizeLayoutTagsBis)
+    this.observer.observe(this.$el)
   },
 
   unmounted() {
     document.removeEventListener('click', this.extraTagClickOutside)
 
-    window.removeEventListener('resize', this.onResizeLayoutTagsBis)
+    this.observer.unobserve(this.$el)
+    this.observer.disconnect()
   },
 
   methods: {

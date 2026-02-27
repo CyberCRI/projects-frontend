@@ -1,15 +1,15 @@
 <template>
   <div v-if="!isLoading" class="breadcrumbs">
-    <NuxtLink to="/" class="home-icon">
+    <NuxtLink to="/" class="home-icon skeletons-text">
       <IconImage name="Home" />
     </NuxtLink>
-    <span v-for="(breadcrumb, index) in breadcrumbs" :key="index" class="item">
+    <span v-for="(breadcrumb, index) in breadcrumbs" :key="index" class="item skeletons-text">
       <NuxtLink :to="breadcrumb.route" class="item-link">{{ breadcrumb.name }}</NuxtLink>
       <span v-if="index !== breadcrumbs.length - 1" class="item-icon">
         <IconImage name="ChevronRight" />
       </span>
     </span>
-    <span v-if="groupName" class="item">
+    <span v-if="groupName" class="item skeletons-text">
       <span class="item-icon">
         <IconImage name="ChevronRight" />
       </span>

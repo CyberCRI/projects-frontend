@@ -119,35 +119,42 @@ const deleteImage = () => {
 }
 
 const imagesStatusUploading = ref<Map<string, AsyncDataRequestStatus>>(null)
-const createImage = (form: ImageGalleryForm) => {
+const createImage = async (form: ImageGalleryForm) => {
   loading.value = true
   imagesStatusUploading.value = new Map()
+  // set 'pending' status for all images
+  form.files.map((el) => imagesStatusUploading.value.set(el.url, 'pending'))
   openModals('status')
 
-  Promise.all(
-    form.files.map((el) => {
-      const body = new FormData()
-      body.append('file', el.file)
+  // sort by file size
+  const sortedFiles = form.files.toSorted((a, b) => a.file.size - b.file.size)
 
-      imagesStatusUploading.value.set(el.url, 'pending')
-      return postGroupGallery(organizationCode, groupId.value, body)
-        .then(() => {
-          imagesStatusUploading.value.set(el.url, 'success')
-        })
-        .catch((err) => {
-          imagesStatusUploading.value.set(el.url, 'error')
-          throw err
-        })
-    })
-  )
-    .then(() => {
-      toaster.pushSuccess(t('gallery.success-create'))
-      // refetch new datas
-      refreshNuxtData(`${organizationCode}::group::${groupId.value}`)
-      refresh()
-    })
-    .catch(() => toaster.pushError(t('gallery.error-create')))
-    .finally(() => (loading.value = false))
+  for (const element of sortedFiles) {
+    const body = new FormData()
+    body.append('file', element.file)
+
+    await postGroupGallery(organizationCode, groupId.value, body)
+      .then(() => {
+        imagesStatusUploading.value.set(element.url, 'success')
+      })
+      .catch(() => {
+        imagesStatusUploading.value.set(element.url, 'error')
+      })
+  }
+
+  const values = Array.from(imagesStatusUploading.value.values())
+  if (values.includes('error')) {
+    toaster.pushError(t('gallery.error-create'))
+  } else {
+    toaster.pushSuccess(t('gallery.success-create'))
+  }
+  // if one or more images are uploaded, refresh
+  if (values.includes('success')) {
+    // refetch new datas
+    refreshNuxtData(`${organizationCode}::group::${groupId.value}`)
+    refresh()
+  }
+  loading.value = false
 }
 
 const closeForm = () => {

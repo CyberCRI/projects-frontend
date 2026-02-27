@@ -21,7 +21,6 @@
       <BaseGroupMembersList
         v-if="group.modules.members"
         :group="group"
-        class="subgroup-members"
         :with-pagination="withPagination"
         :limit="limitMembers"
         focus-leader
@@ -75,14 +74,5 @@ const onMouseout = () => {
     justify-content: space-between;
     align-items: center;
   }
-}
-
-.subgroup-members {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  width: calc(100% - 2rem);
-  gap: 1rem;
-  padding: 0 1rem;
-  min-height: pxToRem(85px);
 }
 </style>

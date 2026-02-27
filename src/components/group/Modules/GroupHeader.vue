@@ -1,5 +1,5 @@
 <template>
-  <BaseGroupPreview class="group-header-info" :loading="isLoading" title="">
+  <BaseGroupPreview class="group-header-info shadowed-box" :loading="isLoading" title="">
     <template #header>
       <div class="group-visibility">
         <span class="icon">
@@ -21,7 +21,7 @@
           />
         </div>
         <!-- infos -->
-        <div class="group-infos list-divider">
+        <div class="group-infos">
           <h1 class="group-title skeleton-block">
             {{ group.$t.name }}
           </h1>
@@ -176,6 +176,10 @@ const closeProfile = () => (leaderIdDrawer.value = null)
 .group-info-container {
   display: grid;
   grid-template-columns: 240px 1fr;
+
+  @media screen and (max-width: $min-tablet) {
+    grid-template-columns: unset;
+  }
 }
 
 .group-infos {
@@ -183,6 +187,7 @@ const closeProfile = () => (leaderIdDrawer.value = null)
   gap: 0.3rem;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .group-title {
@@ -212,7 +217,6 @@ const closeProfile = () => (leaderIdDrawer.value = null)
 .group-info-extras {
   padding: 1rem;
   border-radius: 5px;
-  border: 1px solid $primary;
   height: auto;
   margin-top: 1rem;
   display: grid;
@@ -290,7 +294,7 @@ const closeProfile = () => (leaderIdDrawer.value = null)
   display: flex;
   justify-content: start;
   flex-wrap: wrap;
-  gap: 0.2rem;
+  gap: 1rem;
 
   .basic-card .content {
     padding-top: 0 !important;
@@ -298,7 +302,6 @@ const closeProfile = () => (leaderIdDrawer.value = null)
   }
 
   > * {
-    width: 100%;
     height: unset !important;
     border: none !important;
 

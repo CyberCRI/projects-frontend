@@ -2,7 +2,7 @@
   <!-- add new modules Here -->
   <div class="group-modules-list" data-test="group-modules">
     <GroupHeader :group="group" :is-loading="isLoading" />
-    <GroupRecapPreview :group="group" is-link />
+    <GroupRecapPreview :group="group" :modules="modulesRecap" is-link />
     <div class="group-infos">
       <GroupDescriptionPreview v-if="group.$t.description" :group="group" />
       <GroupSimilarsPreview v-if="group.modules.similars" :group="group" :limit="2" />
@@ -36,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import { PeopleGroupModulesKeys, TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import GroupSubPreview from '@/components/group/Modules/GroupSub/GroupSubPreview.vue'
 import GroupRecapPreview from '@/components/group/Modules/Extras/GroupRecapPreview.vue'
 import GroupDescriptionPreview from '@/components/group/Modules/Extras/GroupDescriptionPreview.vue'
@@ -46,11 +46,17 @@ import GroupProjectsPreview from '@/components/group/Modules/Projects/GroupProje
 import GroupDocumentsPreview from '@/components/group/Modules/Documents/GroupDocumentsPreview.vue'
 import GroupHeader from '@/components/group/Modules/GroupHeader.vue'
 import GroupGalleryPreview from '@/components/group/Modules/Gallery/GroupGalleryPreview.vue'
+import { difference } from 'es-toolkit'
 
-defineProps<{
+const props = defineProps<{
   group: TranslatedPeopleGroupModel
   isLoading: boolean
 }>()
+
+// for recap we ignore similars
+const IGNORED_KEYS: PeopleGroupModulesKeys[] = ['similars']
+const GROUPS_KEYS = Object.keys(props.group.modules) as PeopleGroupModulesKeys[]
+const modulesRecap = difference(GROUPS_KEYS, IGNORED_KEYS)
 </script>
 
 <style lang="scss" scoped>
