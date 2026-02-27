@@ -12,14 +12,12 @@
     </template>
     <template #content>
       <div class="group-info-container">
-        <div class="group-image">
-          <CroppedApiImage
-            :alt="`${group.$t.name} image`"
-            :picture-data="group.header_image"
-            picture-size="medium"
-            :default-picture="DEFAULT_GROUP_PATATOID"
-          />
-        </div>
+        <CroppedApiImage
+          :alt="`${group.$t.name} image`"
+          class="group-image"
+          :picture-data="group.header_image"
+          :default-picture="DEFAULT_GROUP_PATATOID"
+        />
         <!-- infos -->
         <div class="group-infos">
           <h1 class="group-title skeleton-block">
@@ -179,6 +177,7 @@ const closeProfile = () => (leaderIdDrawer.value = null)
 
   @media screen and (max-width: $min-tablet) {
     grid-template-columns: unset;
+    grid-template-rows: 240px 1fr;
   }
 }
 
@@ -195,9 +194,10 @@ const closeProfile = () => (leaderIdDrawer.value = null)
 }
 
 .group-image {
-  display: flex;
-  justify-content: center;
-  align-items: start;
+  border-radius: 100%;
+  aspect-ratio: 1;
+  margin: auto;
+  height: 100%;
 }
 
 .group-visibility {
