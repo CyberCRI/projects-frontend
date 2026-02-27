@@ -46,6 +46,7 @@ import GroupProjectsPreview from '@/components/group/Modules/Projects/GroupProje
 import GroupDocumentsPreview from '@/components/group/Modules/Documents/GroupDocumentsPreview.vue'
 import GroupHeader from '@/components/group/Modules/GroupHeader.vue'
 import GroupGalleryPreview from '@/components/group/Modules/Gallery/GroupGalleryPreview.vue'
+import { difference } from 'es-toolkit'
 
 const props = defineProps<{
   group: TranslatedPeopleGroupModel
@@ -53,10 +54,9 @@ const props = defineProps<{
 }>()
 
 // for recap we ignore similars
-const IGNORED_RECAP: PeopleGroupModulesKeys[] = ['similars']
-const modulesRecap = Object.keys(props.group.modules).filter(
-  (name: PeopleGroupModulesKeys) => !IGNORED_RECAP.includes(name)
-)
+const IGNORED_KEYS: PeopleGroupModulesKeys[] = ['similars']
+const GROUPS_KEYS = Object.keys(props.group.modules) as PeopleGroupModulesKeys[]
+const modulesRecap = difference(GROUPS_KEYS, IGNORED_KEYS)
 </script>
 
 <style lang="scss" scoped>

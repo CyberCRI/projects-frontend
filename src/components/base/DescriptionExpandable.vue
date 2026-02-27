@@ -24,6 +24,7 @@
 
 <script setup lang="ts">
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
+import { onResizeElement } from '@/composables/onResize'
 
 const props = defineProps<{
   description: string
@@ -33,20 +34,16 @@ const props = defineProps<{
 const showLess = ref(true)
 const isLimited = ref(true)
 const contentRef = useTemplateRef('content')
-
 const actualHeight = ref(0)
+const minHeight = computed(() => Math.min(props.heightLimit, actualHeight.value))
+const toggleDescription = () => (showLess.value = !showLess.value)
+
 const checkLimited = () => {
   const rect = contentRef.value.$el.getBoundingClientRect()
   actualHeight.value = rect.height
   isLimited.value = rect.height > props.heightLimit
 }
-
-watch(() => props.description, checkLimited)
-onResize(checkLimited, { immediate: true })
-
-const toggleDescription = () => (showLess.value = !showLess.value)
-
-const minHeight = computed(() => Math.min(props.heightLimit, actualHeight.value))
+onResizeElement(checkLimited, contentRef, { immediate: true })
 </script>
 
 <style lang="scss" scoped>

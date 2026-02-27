@@ -1,3 +1,5 @@
+import { isNil } from 'es-toolkit'
+
 type Options = {
   immediate?: boolean
 }
@@ -66,5 +68,60 @@ export const onMediaChange = (
     if (import.meta.client) {
       eventer.removeEventListener('change', proxyCallback)
     }
+  })
+}
+
+type ResizeElement = Ref<any> | Ref<any>[]
+/**
+ * mutation observer when a html(s) change size
+ *
+ * @function
+ * @name onResizeElement
+ * @kind variable
+ * @param {() => void} callback
+ * @param {ResizeElement} element
+ * @param {Options} options?
+ * @returns {void}
+ * @exports
+ */
+export const onResizeElement = (
+  callback: () => void,
+  element: ResizeElement,
+  options: Options = {}
+) => {
+  const observer = new ResizeObserver(callback)
+
+  // iter functions to return all elements (html/template ref)
+  const iterElements = function* () {
+    const els = Array.isArray(element) ? element : [element]
+    for (const el of els) {
+      const val = unref(el)
+      // val can be null / undefined
+      if (!isNil(val)) {
+        const htmlElement = val.$el || val
+        yield htmlElement
+      }
+    }
+  }
+
+  watch(
+    () => Array.from(iterElements()),
+    () => callback()
+  )
+
+  onMounted(() => {
+    iterElements().forEach((el) => {
+      observer.observe(el)
+    })
+    if (options.immediate) {
+      callback()
+    }
+  })
+
+  onUnmounted(() => {
+    iterElements().forEach((el) => {
+      observer.unobserve(el)
+    })
+    observer.disconnect()
   })
 }
