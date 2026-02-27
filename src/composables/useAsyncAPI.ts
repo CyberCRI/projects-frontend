@@ -73,9 +73,7 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
   // add query params directly in keys
   const keys = computed(() => {
     const query = JSON.stringify(unref(params[2].query))
-    const k = `${unref(params[0])}::${query}`
-    console.log(k)
-    return k
+    return `${unref(params[0])}::${query}`
   })
 
   const { status, data, ...res } = useAsyncData<ResDataT, unknown, DataT>(
