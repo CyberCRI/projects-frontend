@@ -197,7 +197,13 @@ const closeProfile = () => (leaderIdDrawer.value = null)
   border-radius: 100%;
   aspect-ratio: 1;
   margin: auto;
-  height: 100%;
+  width: 100%;
+  height: auto;
+
+  @media screen and (max-width: $min-tablet) {
+    width: auto;
+    height: 100%;
+  }
 }
 
 .group-visibility {
