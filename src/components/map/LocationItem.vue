@@ -1,5 +1,5 @@
 <template>
-  <div class="location-list-item">
+  <div class="location-list-item skeletons-background">
     <div class="location-title">
       <LocationType v-if="showLocationType" :location-type="location.type" />
       <h4>{{ title }}</h4>

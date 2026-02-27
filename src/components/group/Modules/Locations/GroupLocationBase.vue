@@ -3,6 +3,7 @@
     <MapRecap ref="map" :locations="locations" expand :editable="isEdit" @expand="opened = true">
       <template #tooltip="{ location }">
         <ProjectLocationTooltip
+          v-if="location.project"
           :location="location as TranslatedLocation"
           :project="location.project"
         />
@@ -33,6 +34,8 @@ import MapRecap from '@/components/map/MapRecap.vue'
 import ProjectLocationTooltip from '@/components/project/map/ProjectLocationTooltip.vue'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import { TranslatedLocation } from '@/models/location.model'
+import { factoriesSkeleton } from '@/skeletons/base.skeletons'
+import { locationSkeleton } from '@/skeletons/location.skeleton'
 
 const props = withDefaults(
   defineProps<{
@@ -55,6 +58,6 @@ const mapRef = useTemplateRef('map')
 const onFocus = (location) => mapRef.value?.map?.flyTo(location)
 
 const { status, data: locations } = getGroupProjectsLocation(organizationCode, groupId, {
-  default: () => [],
+  default: () => factoriesSkeleton(locationSkeleton, props.group.modules.projects_locations),
 })
 </script>

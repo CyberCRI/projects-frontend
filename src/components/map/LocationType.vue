@@ -1,7 +1,10 @@
 <template>
   <div class="location-header" :class="[locationType]" :title="typeLabel">
-    <IconImage :name="pointerIcon" :class="['location-icon', locationType]" />
-    <h2 v-if="label" class="location-title">
+    <IconImage
+      :name="pointerIcon"
+      :class="['location-icon', 'skeletons-background', locationType]"
+    />
+    <h2 v-if="label" class="location-title skeletons-text">
       {{ typeLabel }}
     </h2>
   </div>

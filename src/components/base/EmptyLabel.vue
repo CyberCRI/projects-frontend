@@ -1,5 +1,5 @@
 <template>
-  <div class="empty">
+  <div class="empty skeletons-text">
     {{ labelEmpty }}
   </div>
 </template>
