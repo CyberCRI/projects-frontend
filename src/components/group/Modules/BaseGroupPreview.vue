@@ -55,7 +55,7 @@ withDefaults(
   grid-template-rows: auto 1fr auto;
   background-color: white;
   border-radius: 0.5rem;
-  padding: 1.5rem;
+  padding: 1rem;
 }
 
 .group-header {

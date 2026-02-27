@@ -186,7 +186,6 @@ const closeProfile = () => (leaderIdDrawer.value = null)
   gap: 0.3rem;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 .group-title {
@@ -300,7 +299,7 @@ const closeProfile = () => (leaderIdDrawer.value = null)
   display: flex;
   justify-content: start;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 0.5rem;
 
   .basic-card .content {
     padding-top: 0 !important;
