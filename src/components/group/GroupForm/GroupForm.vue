@@ -162,7 +162,7 @@
     </template>
     <!-- Parent group -->
     <div class="parent-group">
-      <ParentGroupSection v-model="form.parentGroup" :groups="groups" />
+      <ParentGroupSection v-model="form.parentGroup" :organization-code="organizationCode" />
       <empty-label v-if="!form.parentGroup" :label="$t('empty')" />
     </div>
 
@@ -228,7 +228,6 @@
 <script>
 import {
   deleteGroup,
-  getHierarchyGroups,
   patchGroupLocation,
   postGroupLocation,
   removeGroupLocation,
@@ -338,7 +337,6 @@ export default {
 
       descriptionIsOpened: false,
       showRemoveQuit: false,
-      groups: [],
       locationEdit: null,
     }
   },
@@ -355,6 +353,12 @@ export default {
     shortDescriptionPlaceholder() {
       return this.$t('group.form.short-description-placeholder')
     },
+
+    organizationCode() {
+      return this.modelValue.organization
+        ? this.modelValue.organization
+        : this.organizationsStore.current.code
+    },
   },
 
   watch: {
@@ -369,9 +373,7 @@ export default {
     },
   },
 
-  async mounted() {
-    // lopad groups tree
-    await this.loadGroups()
+  mounted() {
     this.form = {
       ...this.form,
       ...this.modelValue,
@@ -380,18 +382,6 @@ export default {
   },
 
   methods: {
-    async loadGroups() {
-      this.loading = true
-      // use group's org code if availabe
-      // to allow edition of groups on the meta portal (PROJ-1032)
-      const orgCode = this.modelValue.organization
-        ? this.modelValue.organization
-        : this.organizationsStore.current.code
-      this.groups = (await getHierarchyGroups(orgCode)).children
-
-      this.loading = false
-    },
-
     openRemoveOrQuit() {
       this.showRemoveQuit = true
     },

@@ -22,7 +22,7 @@
       :drawer-title="t('group.form.add-parent-group')"
       :subtitle="t('admin.groups.subtitle-edit-child')"
       :is-opened="stateModal"
-      :groups="groups"
+      :groups="children"
       :initial-group="model"
       :rooted="true"
       @close="closeModal()"
@@ -32,20 +32,19 @@
 </template>
 
 <script setup lang="ts">
+import { getHierarchyGroups } from '@/api/v2/group.service'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 
-withDefaults(
-  defineProps<{
-    groups?: TranslatedPeopleGroupModel[]
-  }>(),
-  {
-    groups: () => [],
-  }
-)
+const props = defineProps<{
+  organizationCode: string
+}>()
 const model = defineModel<TranslatedPeopleGroupModel | null>()
 
 const { t } = useNuxtI18n()
 const { closeModal, openModal, stateModal } = useModal()
+
+const { data: group } = getHierarchyGroups(props.organizationCode)
+const children = computed(() => group.value.children)
 
 const confirmGroup = (group) => {
   model.value = group

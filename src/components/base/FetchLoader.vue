@@ -135,6 +135,7 @@ watch(
   align-items: center;
   flex-direction: column;
   width: 100%;
+  padding: 0.5rem;
 }
 
 .error {
