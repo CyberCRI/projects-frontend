@@ -41,7 +41,7 @@ describe('useAsyncAPI composable', () => {
       async ({ config }) => {
         return `data-${config.query.page}`
       },
-      { query }
+      { watch: [query], query }
     )
 
     await flushPromises()
