@@ -7,15 +7,12 @@
     :see-more="{ name: 'groupMembers', params: { groupId: group.id } }"
   >
     <template #content>
-      <div class="group-members">
-        <BaseGroupMembersList
-          :group="group"
-          :is-loading="isLoading"
-          class="contents"
-          :with-pagination="false"
-          focus-leader
-        />
-      </div>
+      <BaseGroupMembersList
+        :group="group"
+        :is-loading="isLoading"
+        :with-pagination="false"
+        focus-leader
+      />
     </template>
   </BaseGroupPreview>
 </template>
@@ -30,11 +27,3 @@ defineProps<{
   isLoading: boolean
 }>()
 </script>
-
-<style lang="scss" scoped>
-.group-members {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.5rem;
-}
-</style>

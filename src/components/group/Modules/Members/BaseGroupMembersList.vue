@@ -1,16 +1,18 @@
 <template>
   <FetchLoader :status="status" only-error skeleton>
-    <GroupMemberItem
-      v-for="member in data"
-      :key="member.id"
-      :member="member"
-      :class="{
-        'focus-leader': focusLeader && member.is_leader,
-        'focus-member': focusLeader && !member.is_leader,
-      }"
-      :role-label="member.is_leader ? undefined : ''"
-      @click="openProfile"
-    />
+    <div class="group-members-list">
+      <GroupMemberItem
+        v-for="member in data"
+        :key="member.id"
+        :member="member"
+        :class="{
+          'focus-leader': focusLeader && member.is_leader,
+          'focus-member': focusLeader && !member.is_leader,
+        }"
+        :role-label="member.is_leader ? undefined : ''"
+        @click="openProfile"
+      />
+    </div>
     <PaginationButtonsV2
       v-if="withPagination"
       hide-empty
@@ -64,8 +66,16 @@ const closeProfile = () => (userIdDrawer.value = null)
 
 <style lang="scss" scoped>
 .pagination-span {
-  grid-column: span 2;
-  margin: auto;
+  margin-top: 1rem;
+}
+
+.group-members-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: calc(100% - 2rem);
+  gap: 0.5rem;
+  padding: 0 0.5rem;
+  min-height: pxToRem(85px);
 }
 </style>
 

@@ -94,6 +94,7 @@ const setPage = (value) => {
 .pagination {
   display: flex;
   align-items: center;
+  justify-content: center;
   transition: opacity 0.2s;
 
   &.disable {
