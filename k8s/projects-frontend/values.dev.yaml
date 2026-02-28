@@ -5,6 +5,7 @@ config:
     NUXT_PUBLIC_APP_ENVIRONMENT: dev
     NUXT_APP_GOTENBERG_SERVER_URL: 'http://projects-gotenberg'
     NUXT_PUBLIC_APP_GOTENBERG_ENABLED: 'true'
+    NUXT_APP_LANGCHAIN_PROMPT: ''
 
 domain: k8s.lp-i.dev
 
