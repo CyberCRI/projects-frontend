@@ -12,14 +12,12 @@
     </template>
     <template #content>
       <div class="group-info-container">
-        <div class="group-image">
-          <CroppedApiImage
-            :alt="`${group.$t.name} image`"
-            :picture-data="group.header_image"
-            picture-size="medium"
-            :default-picture="DEFAULT_GROUP_PATATOID"
-          />
-        </div>
+        <CroppedApiImage
+          :alt="`${group.$t.name} image`"
+          class="group-image"
+          :picture-data="group.header_image"
+          :default-picture="DEFAULT_GROUP_PATATOID"
+        />
         <!-- infos -->
         <div class="group-infos">
           <h1 class="group-title skeleton-block">
@@ -179,6 +177,7 @@ const closeProfile = () => (leaderIdDrawer.value = null)
 
   @media screen and (max-width: $min-tablet) {
     grid-template-columns: unset;
+    grid-template-rows: 240px 1fr;
   }
 }
 
@@ -187,7 +186,6 @@ const closeProfile = () => (leaderIdDrawer.value = null)
   gap: 0.3rem;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 .group-title {
@@ -195,9 +193,16 @@ const closeProfile = () => (leaderIdDrawer.value = null)
 }
 
 .group-image {
-  display: flex;
-  justify-content: center;
-  align-items: start;
+  border-radius: 100%;
+  aspect-ratio: 1;
+  margin: auto;
+  width: 100%;
+  height: auto;
+
+  @media screen and (max-width: $min-tablet) {
+    width: auto;
+    height: 100%;
+  }
 }
 
 .group-visibility {
@@ -294,7 +299,7 @@ const closeProfile = () => (leaderIdDrawer.value = null)
   display: flex;
   justify-content: start;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 0.5rem;
 
   .basic-card .content {
     padding-top: 0 !important;
