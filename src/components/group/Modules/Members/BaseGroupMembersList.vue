@@ -84,13 +84,8 @@ const closeProfile = () => (userIdDrawer.value = null)
   grid-column: span 2;
 }
 
-.focus-member * {
-  height: unset !important;
-  border: none !important;
-
-  .picture-user {
-    width: 2.5rem !important;
-    height: 2.5rem !important;
-  }
+.focus-member .picture-user {
+  width: 2.5rem !important;
+  height: 2.5rem !important;
 }
 </style>
