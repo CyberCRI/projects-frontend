@@ -1,4 +1,5 @@
 import useLoadingFromStatus from '@/composables/useLoadingFromStatus'
+import { withQuery } from '@/functs/query'
 import { isNil } from 'es-toolkit'
 
 type AsyncHandler = {
@@ -12,8 +13,13 @@ export type AsyncConfig<ResDataT, DataT, Result> = Parameters<
   typeof useAsyncData<ResDataT, unknown, DataT>
 >['2'] & {
   translate?: (data: DataT) => Result
+  // query params
   query?: object
+  // d'ont run fetch if any of args/params are null/undefined
   checkArgs?: boolean
+  // force fixed key (no add query params in key)
+  // like "group::55::members" (no pagination query like 'offset' / 'limit') are added
+  keyFixed?: boolean
 }
 
 export type AsyncParameters<ResDataT, DataT, Result> = [
@@ -71,13 +77,21 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
   })
 
   // add query params directly in keys
-  const keys = computed(() => {
-    const query = JSON.stringify(unref(params[2].query))
-    return `${unref(params[0])}::${query}`
+  // like "organization::CRI::group::55::members" (if query is empty)
+  // or "organization::CRI::group::55::members::limit=3::offset=10"
+  const key = computed(() => {
+    let parentKey = unref(params[0]).toString()
+    if (params[2].keyFixed) {
+      return parentKey
+    }
+    withQuery(unref(params[2].query)).forEach(([key, value]) => {
+      parentKey = `${parentKey}::${key}=${value}`
+    })
+    return parentKey
   })
 
   const { status, data, ...res } = useAsyncData<ResDataT, unknown, DataT>(
-    keys,
+    key,
     ({}) => {
       if (!checkArgs.value) {
         return null

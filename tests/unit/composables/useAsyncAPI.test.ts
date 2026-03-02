@@ -60,7 +60,6 @@ describe('useAsyncAPI composable', () => {
     const { data } = useAsyncAPI(
       'watch with multiple undefined',
       async ({ config }) => {
-        console.log('test3')
         return `data-${config.query.page}`
       },
       { query, watch: [groupId] }
