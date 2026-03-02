@@ -43,7 +43,7 @@
           @follow="emit('refresh')"
           @unfollow="emit('refresh')"
         />
-        <time class="skeletons-text" :datetime="project.updated_at">
+        <time class="project-date skeletons-text" :datetime="project.updated_at">
           {{ lastUpdated }}
         </time>
       </slot>
@@ -110,14 +110,17 @@ const lastUpdated = computed(() => {
 }
 
 .project-extra {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-end;
-}
+  display: grid;
+  grid-template-rows: 1fr auto;
+  place-items: baseline end;
 
-.icon {
-  width: 30px;
+  .project-date {
+    align-self: flex-end;
+  }
+
+  .icon {
+    width: pxToRem(30px);
+  }
 }
 
 .project-info-purpose {
