@@ -22,8 +22,6 @@ const { t } = useNuxtI18n()
 
 const { isLoading, data } = getLocations(organizationCode)
 
-watch(data, () => console.log(data))
-
 const isEmpty = computed(() => data.value.groups.length + data.value.projects.length === 0)
 
 onBeforeUnmount(() => {

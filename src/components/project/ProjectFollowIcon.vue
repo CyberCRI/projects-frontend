@@ -1,12 +1,18 @@
 <template>
   <IconImage
-    v-if="!isFollowing"
+    v-if="!isFollowing && usersStore.isConnected"
     class="icon"
     name="BookmarkLine"
     tabindex="1"
     @click="actionFollow"
   />
-  <IconImage v-else class="icon" name="BookmarkFill" tabindex="1" @click="actionFollow" />
+  <IconImage
+    v-else-if="usersStore.isConnected"
+    class="icon"
+    name="BookmarkFill"
+    tabindex="1"
+    @click="actionFollow"
+  />
 </template>
 
 <script setup lang="ts">
