@@ -1,16 +1,10 @@
 <template>
-  <div class="cropped-image" :class="{ contain }">
-    <img
-      :alt="alt"
-      :src="src"
-      :style="imageStyles"
-      @load="$emit('load', $event)"
-      @error="$emit('error', $event)"
-    />
+  <div class="cropped-image" :class="{ contain, loading: loadStatus }">
+    <img :alt="alt" :src="src" :style="imageStyles" @load="onLoad" @error="onError" />
   </div>
 </template>
 <script setup lang="ts">
-import { ImageSizes } from '@/functs/imageSizesUtils'
+import { ImageSizes, IMAGES_SIZES_DEFAULTS } from '@/functs/imageSizesUtils'
 import { StyleValue } from 'vue'
 
 const props = withDefaults(
@@ -37,24 +31,33 @@ const emit = defineEmits<{
 }>()
 
 const imageStyles = computed<StyleValue>(() => {
-  if (props.imageSizes) {
-    return {
-      width: props.ratio >= props.imageSizes.naturalRatio ? '100%' : 'auto',
-      height: props.ratio < props.imageSizes.naturalRatio ? '100%' : 'auto',
-      objectFit: 'unset',
-      objectPosition: 'unset',
-      transform: `translateZ(0)  scale(${props.imageSizes.scaleX}, ${props.imageSizes.scaleY}) translate(${props.imageSizes.left}%, ${props.imageSizes.top}%)`,
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      'transform-origin': 'top left',
-    }
-  } else {
-    return {
-      transform: `translateZ(0) translate(0,0) scale(1,1)`,
-    }
+  // create "fake" image size to use the same imageStyle for every pictures
+  const imageSizes = props.imageSizes || IMAGES_SIZES_DEFAULTS
+  return {
+    width: props.ratio >= imageSizes.naturalRatio ? '100%' : 'auto',
+    height: props.ratio < imageSizes.naturalRatio ? '100%' : 'auto',
+    objectFit: 'unset',
+    objectPosition: 'unset',
+    transform: `translateZ(0)  scale(${imageSizes.scaleX}, ${imageSizes.scaleY}) translate(${imageSizes.left}%, ${imageSizes.top}%)`,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    'transform-origin': 'top left',
   }
 })
+
+// this create a skeleton on every image during load
+const loadStatus = ref(true)
+watch(
+  () => props.src,
+  () => (loadStatus.value = true)
+)
+const onLoad = (event) => {
+  loadStatus.value = false
+  emit('load', event)
+}
+
+const onError = (event) => emit('error', event)
 
 onMounted(() => {
   if (!props.src) {
@@ -64,6 +67,8 @@ onMounted(() => {
 })
 </script>
 <style lang="scss" scoped>
+@import '@/design/scss/skeletons';
+
 .cropped-image {
   // higher specificity to override BasicCard styles
   overflow: hidden;
@@ -86,6 +91,10 @@ onMounted(() => {
     img {
       object-fit: contain;
     }
+  }
+
+  &.loading {
+    @extend %skeleton-background-block;
   }
 }
 </style>
