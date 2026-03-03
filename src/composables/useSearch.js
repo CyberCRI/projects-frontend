@@ -39,7 +39,7 @@ export default function useSearch(forcedSection = null) {
       categories: isProject,
       tags: isProject || isGroups,
       members: false,
-      sdgs: isProject || isPeople,
+      sdgs: true,
       languages: isProject,
       skills: isPeople,
       page: true,
