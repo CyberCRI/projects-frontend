@@ -16,13 +16,13 @@ const cleanIdentifier = (identifier: Identifier): Identifier => {
  * sanitize harvester url to "correct" url
  *
  * @function
- * @name publicationHarvesterToUrl
+ * @name documentHarvesterToUrl
  * @kind variable
  * @param {Identifier} identifier
  * @returns {String}
  * @exports
  */
-export const publicationHarvesterToUrl = (identifier: Identifier): string | null => {
+export const documentHarvesterToUrl = (identifier: Identifier): string | null => {
   const newIdentifier = cleanIdentifier(identifier)
   if (newIdentifier.value.startsWith('http')) {
     return newIdentifier.value
