@@ -6,7 +6,13 @@
         <LinkButton btn-icon="Linkedin" @click="linkedinShare" />
       </div>
     </template>
-    <ExternalLabelButton class="space-button" :label="$t('group.share')" btn-icon="Share" />
+    <ExternalLabelButton
+      class="space-button"
+      :label="$t('group.share')"
+      btn-icon="Share"
+      vertical-layout
+      label-on-hover
+    />
   </ToolTip>
 </template>
 <script setup lang="ts">
