@@ -74,19 +74,3 @@ export const sanitizeResearcherDocumentAnalyticsYears = (
 
   return info
 }
-
-const NOT_ALPHA_NUMERIC_REGEX = /[^a-zA-Z0-9_-]/gi
-const TRIM_DASH_REGEX = /^-*|-*$/gi
-/**
- * sanitize translate relators/documenttype key for translate
- *
- * @function
- * @name sanitizeTranslateKeys
- * @kind variable
- * @param {string} k
- * @returns {string}
- * @exports
- */
-export const sanitizeTranslateKeys = (k: string): string => {
-  return k.replaceAll(NOT_ALPHA_NUMERIC_REGEX, '-').replaceAll(TRIM_DASH_REGEX, '')
-}

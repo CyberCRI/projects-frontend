@@ -46,10 +46,7 @@
         >
           <span>{{ count }}</span>
           <span>
-            {{
-              (name && t(`researcher.document_types.${sanitizeTranslateKeys(name)}`)) ??
-              t('common.other')
-            }}
+            {{ (name && t(`researcher.document_types.${name}`)) ?? t('common.other') }}
           </span>
         </component>
       </div>
@@ -58,6 +55,7 @@
           v-for="[role, count] in documentsRoleInfos"
           :key="role"
           class="doc-roles"
+          :title="t(`researcher.relators.${role}`)"
           @click="toggleQuery('roles', role)"
         >
           <BadgeItem
@@ -66,7 +64,7 @@
               selected: query.roles === role,
               preview: preview,
             }"
-            :label="`${t(`researcher.relators.${sanitizeTranslateKeys(role)}`)} ${count}`"
+            :label="`${t(`researcher.relators.${role}`)} ${count}`"
           />
         </button>
       </div>
@@ -110,10 +108,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  sanitizeTranslateKeys,
-  sanitizeResearcherDocumentAnalyticsYears,
-} from '@/api/sanitizes/researcher'
+import { sanitizeResearcherDocumentAnalyticsYears } from '@/api/sanitizes/researcher'
 import PaginationButtonsV2 from '@/components/base/navigation/PaginationButtonsV2.vue'
 import ResearcherDocument from '@/components/people/Researcher/ResearcherDocument.vue'
 import ResearcherDocumentSimilars from '@/components/people/Researcher/ResearcherDocumentSimilars.vue'
