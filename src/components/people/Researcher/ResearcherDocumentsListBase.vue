@@ -1,5 +1,5 @@
 <template>
-  <div v-if="documents?.length" class="profile-documents-container">
+  <div class="profile-documents-container">
     <div class="profile-info-container" :class="{ preview: preview }">
       <div class="doc-year-container">
         <h5>
@@ -85,26 +85,28 @@
         </button>
       </div>
     </div>
-    <div class="documents-list">
-      <ResearcherDocument
-        v-for="doc in documents"
-        :key="doc.id"
-        :document="doc"
-        :doc-type="docType"
-        :preview="preview"
-        @similar="documentSelected = doc"
-      />
+    <template v-if="documents?.length">
+      <div class="documents-list">
+        <ResearcherDocument
+          v-for="doc in documents"
+          :key="doc.id"
+          :document="doc"
+          :doc-type="docType"
+          :preview="preview"
+          @similar="documentSelected = doc"
+        />
+      </div>
+      <PaginationButtonsV2 v-if="props.preview === false" class="m-auto" :pagination="pagination" />
+    </template>
+    <div v-else class="documents-empty">
+      {{ t(`profile.${docType}-empty`) }}
     </div>
-    <PaginationButtonsV2 v-if="props.preview === false" class="m-auto" :pagination="pagination" />
+    <ResearcherDocumentSimilars
+      :document="documentSelected"
+      :doc-type="docType"
+      @close="documentSelected = null"
+    />
   </div>
-  <div v-else class="documents-empty">
-    {{ t(`profile.${docType}-empty`) }}
-  </div>
-  <ResearcherDocumentSimilars
-    :document="documentSelected"
-    :doc-type="docType"
-    @close="documentSelected = null"
-  />
 </template>
 
 <script setup lang="ts">
@@ -119,6 +121,7 @@ import {
   ResearcherDocumentAnalytics,
   TranslatedDocument,
 } from '@/interfaces/researcher'
+import { isNil } from 'es-toolkit'
 
 const props = withDefaults(
   defineProps<{
@@ -179,8 +182,29 @@ const sortInfos = (
   return dataEntries
 }
 
-const documentTypeInfos = computed(() => sortInfos(props.documentsAnalytics?.document_types))
-const documentsRoleInfos = computed(() => sortInfos(props.documentsAnalytics?.roles))
+// fix when no role/document_type are set in current analytics
+const pushQueryIfNotExist = (
+  arr: [name: string, count: number][],
+  name?: string
+): [name: string, count: number][] => {
+  if (isNil(name)) {
+    return arr
+  }
+  if (arr.find(([valueName]) => valueName === name)) {
+    return arr
+  }
+  return [...arr, [name, 0]]
+}
+
+const documentTypeInfos = computed(() => {
+  return pushQueryIfNotExist(
+    sortInfos(props.documentsAnalytics?.document_types),
+    query.document_type
+  )
+})
+const documentsRoleInfos = computed(() => {
+  return pushQueryIfNotExist(sortInfos(props.documentsAnalytics?.roles), query.roles)
+})
 </script>
 
 <style lang="scss" scoped>
