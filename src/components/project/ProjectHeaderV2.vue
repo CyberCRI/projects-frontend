@@ -1,5 +1,6 @@
 <template>
   <div :class="{ loading }" class="project-header-ctn">
+    <ProjectStatus class="project-status" :project="project" :loading="loading" />
     <div class="img-block">
       <ProjectHeaderImage class="img-ctn" :project="project" :loading="loading" />
     </div>
@@ -27,11 +28,14 @@
 </template>
 
 <script>
+import ProjectStatus from '@/components/project/ProjectStatus.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useUsersStore from '@/stores/useUsers.ts'
 
 export default {
   name: 'ProjectHeaderV2',
+
+  components: { ProjectStatus },
 
   inject: ['projectLayoutGoToTab'],
   props: {
@@ -142,6 +146,20 @@ export default {
     .visibility-ctn {
       order: 5;
     }
+  }
+}
+
+.project-status {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 0.5rem;
+
+  @media screen and (max-width: $min-tablet) {
+    position: relative;
+    margin: -0.5rem 0;
+    width: fit-content;
+    align-self: flex-end;
   }
 }
 </style>
