@@ -65,6 +65,15 @@
               }"
             />
           </div>
+
+          <div v-if="user.researcher" class="sdg-ctn">
+            <IdentifierLink
+              v-for="identifier in user.researcher.identifiers"
+              :key="identifier.value"
+              :identifier="identifier"
+              type="researcher"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -72,6 +81,7 @@
 </template>
 
 <script setup>
+import IdentifierLink from '@/components/people/Researcher/IdentifierLink.vue'
 import SdgList from '@/components/sdgs/SdgList.vue'
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 import { capitalize } from '@/functs/string'

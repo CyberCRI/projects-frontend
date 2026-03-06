@@ -2,7 +2,7 @@
   <article class="profile-documents">
     <span class="icon-container skeletons-text">
       <PushPinSvg />
-      {{ t(`researcher.document_types.${sanitizeTranslateKeys(document.document_type)}`) }}
+      {{ t(`researcher.document_types.${document.document_type}`) }}
     </span>
     <h2 class="skeletons-text">{{ document.$t.title }}</h2>
     <div class="skeletons-text">
@@ -15,16 +15,6 @@
         >
           <strong>{{ author.display_name }}</strong>
         </NuxtLink>
-        <!-- else , ceate a link to the harvester (hal,idref..ect) -->
-        <a
-          v-else-if="researcherHarvesterToUrl(author)"
-          :href="researcherHarvesterToUrl(author)"
-          rel="noreferer,noopener"
-          target="_blank"
-          class="profile-document-contributor"
-        >
-          {{ author.display_name }}
-        </a>
         <span v-else class="profile-document-contributor">
           {{ author.display_name }}
         </span>
@@ -47,17 +37,12 @@
       }}
     </span>
     <div class="doc-sources-container">
-      <a
+      <IdentifierLink
         v-for="identifier in document.identifiers"
         :key="identifier.id"
-        :href="documentTypeHarverToUrl(docType, identifier)"
-        :title="`${t('common.link-to')} ${identifier.harvester}`"
-        target="_blank"
-        rel="referer,noopener"
-        class="doc-sources skeletons-background"
-      >
-        <IconHarvester :harvester="identifier.harvester" height="1.3rem" />
-      </a>
+        :identifier="identifier"
+        type="document"
+      />
     </div>
     <SeeMoreArrow
       is="button"
@@ -71,11 +56,10 @@
 </template>
 
 <script setup lang="ts">
-import { documentTypeHarverToUrl, researcherHarvesterToUrl } from '@/functs/researcher'
 import { TranslatedDocument } from '@/interfaces/researcher'
 import PushPinSvg from '@/assets/svg/pushpin.svg'
-import { sanitizeTranslateKeys } from '@/api/sanitizes/researcher'
 import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
+import IdentifierLink from '@/components/people/Researcher/IdentifierLink.vue'
 
 const { t, locale } = useNuxtI18n()
 const emit = defineEmits(['similar'])
@@ -143,19 +127,6 @@ span.profile-document-contributor {
   flex-wrap: wrap;
   gap: 0.2rem;
   margin-top: 0.5rem;
-}
-
-.doc-sources {
-  border: 1px gray;
-  border-radius: 30px;
-  padding: 0.2rem 0.4rem;
-  transition: all 0.2s;
-  background-color: $primary-light;
-  transform: translateZ(0);
-
-  &:hover {
-    transform: translateZ(0) scale(102%);
-  }
 }
 
 .no-padding {

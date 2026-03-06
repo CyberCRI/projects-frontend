@@ -102,6 +102,15 @@
         </div>
 
         <SocialNetworks :user="user" />
+
+        <div v-if="user.researcher">
+          <IdentifierLink
+            v-for="identifier in user.researcher.identifiers"
+            :key="identifier.value"
+            :identifier="identifier"
+            type="researcher"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -117,6 +126,7 @@ import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 import SdgList from '@/components/sdgs/SdgList.vue'
+import IdentifierLink from '@/components/people/Researcher/IdentifierLink.vue'
 
 defineOptions({ name: 'ProfileHeader' })
 

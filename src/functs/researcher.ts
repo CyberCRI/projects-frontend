@@ -1,47 +1,64 @@
-import type { Identifier, Researcher } from '@/interfaces/researcher'
+import type { HarvesterType, Identifier } from '@/interfaces/researcher'
 
-const cleanHarvesterValue = (identifier: Identifier): Identifier => {
-  const newIdentifer = { ...identifier }
+const cleanIdentifier = (identifier: Identifier): Identifier => {
+  const newIdentifier = { ...identifier }
+  newIdentifier.harvester = newIdentifier.harvester.toLocaleLowerCase() as HarvesterType
   // some value starts with http or start with harvester name like
   // hal-http://hal.com....
   // so we remove the first harvest-
-  newIdentifer.value = newIdentifer.value.replace(`${newIdentifer.harvester}-`, '')
-  return newIdentifer
+  if (newIdentifier.value.startsWith(`${newIdentifier.harvester}-`)) {
+    newIdentifier.value = newIdentifier.value.replace(`${newIdentifier.harvester}-`, '')
+  }
+  return newIdentifier
 }
 
 /**
  * sanitize harvester url to "correct" url
  *
  * @function
- * @name publicationHarvesterToUrl
+ * @name documentHarvesterToUrl
  * @kind variable
  * @param {Identifier} identifier
  * @returns {String}
  * @exports
  */
-export const publicationHarvesterToUrl = (identifier: Identifier): string => {
-  const iden = cleanHarvesterValue(identifier)
-  if (iden.value.startsWith('http')) {
-    return iden.value
+export const documentHarvesterToUrl = (identifier: Identifier): string | null => {
+  const newIdentifier = cleanIdentifier(identifier)
+  if (newIdentifier.value.startsWith('http')) {
+    return newIdentifier.value
   }
+  const value = encodeURIComponent(newIdentifier.value)
 
-  // esapce uri chars
-  const value = encodeURIComponent(iden.value)
-  switch (identifier.harvester) {
+  switch (newIdentifier.harvester) {
+    case 'irstea':
+      return `https://www.iamm.ciheam.org/ress_doc/opac_css/index.php?lvl=notice_display&id=${value}`
+    case 'pmid':
+      return `https://pubmed.ncbi.nlm.nih.gov/${value}/`
+    case 'pmcid':
+      return `https://pmc.ncbi.nlm.nih.gov/articles/${value}/`
+    case 'biorxiv':
+      // TODO check slash
+      return `https://www.biorxiv.org/content/${value}`
+    case 'arxiv':
+      return `https://arxiv.org/abs/${value}`
+    case 'viaf':
+      return `https://viaf.org/fr/viaf/${value}`
+    case 'googlescholar':
+      return `https://scholar.google.com/citations?view_op=view_citation&citation_for_view=${value}`
+    case 'scopus':
+      return `https://www.scopus.com/authid/detail.uri?authorId=${value}`
     case 'hal':
       return `https://hal.science/${value}`
     case 'scanr':
       return `https://scanr.enseignementsup-recherche.gouv.fr/publications/${value}`
-    case 'idref': {
-      // TODO(remi): check with crisalid why we need to add "0"
-      const idref = value.padStart(9, '0')
-      return `https://www.idref.fr/${idref}`
-    }
-    case 'doi': {
+    case 'idref':
+      return `https://www.idref.fr/${value}`
+    case 'doi':
       return `https://doi.org/${value}`
-    }
+    case 'uri':
+      return identifier.value
     default:
-      return value
+      return null
   }
 }
 
@@ -55,50 +72,31 @@ export const publicationHarvesterToUrl = (identifier: Identifier): string => {
  * @returns {string}
  * @exports
  */
-export const researcherHarvesterToUrl = (author: Researcher): string => {
-  const urls = author.identifiers.map((identifier) => {
-    const iden = cleanHarvesterValue(identifier)
-    if (iden.value.startsWith('http')) {
-      return iden.value
-    }
-    // esapce uri chars
-    const value = encodeURIComponent(iden.value)
-    switch (identifier.harvester) {
-      case 'hal':
-        return `https://hal.science/${value}`
-      case 'scanr':
-        return `https://scanr.enseignementsup-recherche.gouv.fr/author/${value}`
-      case 'orcid':
-        return `https://orcid.org/${value}`
-      case 'idref': {
-        // TODO(remi): check with crisalid why we need to add "0"
-        const idref = value.padStart(9, '0')
-        return `https://www.idref.fr/${idref}`
-      }
-    }
-  })
-  // TODO(remi): need priority ?
-  // remove undefined/null
-  return urls.filter((v) => v)[0]
-}
+export const researcherHarvesterToUrl = (identifier: Identifier): string | null => {
+  const newIdentifier = cleanIdentifier(identifier)
+  if (newIdentifier.value.startsWith('http')) {
+    return newIdentifier.value
+  }
+  const value = encodeURIComponent(newIdentifier.value)
 
-/**
- * identifier to docTypeUrl
- *
- * @function
- * @name documentTypeHarverToUrl
- * @kind variable
- * @param {String} docType
- * @param {Identifier} identifier
- * @returns {string}
- * @exports
- */
-export const documentTypeHarverToUrl = (docType: string, identifier: Identifier) => {
-  switch (docType) {
-    case 'publications':
-    case 'conferences':
-      return publicationHarvesterToUrl(identifier)
+  switch (newIdentifier.harvester) {
+    case 'viaf':
+      return `https://viaf.org/fr/viaf/${value}`
+    case 'googlescholar':
+      return `https://scholar.google.com/citations?user=${value}`
+    case 'scopus':
+      return `https://www.scopus.com/authid/detail.uri?authorId=${value}`
+    case 'hal':
+      return `https://hal.science/${value}`
+    case 'idhals':
+      return `https://hal.science/search/index/q/*/authIdHal_s/${value}`
+    case 'scanr':
+      return `https://scanr.enseignementsup-recherche.gouv.fr/author/${value}`
+    case 'orcid':
+      return `https://orcid.org/${value}`
+    case 'idref':
+      return `https://www.idref.fr/${value}`
     default:
-      throw new Error(`docType ${docType} is not already enabled`)
+      return null
   }
 }
