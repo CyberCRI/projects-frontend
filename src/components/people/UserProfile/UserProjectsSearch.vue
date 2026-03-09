@@ -104,7 +104,7 @@ export default {
       this.initProjectLoading()
       let response
       if (specificPageIndex) {
-        response = (await useAPI(specificPageIndex, {})).data
+        response = await useAPI(specificPageIndex)
       } else if (this.follow) {
         response = await getUserFollows(
           {
@@ -147,6 +147,7 @@ export default {
     },
 
     updatePagination(response) {
+      console.log(response)
       this.pagination.currentPage = response.current_page
       const maxResults = response.max_results || 12
       this.pagination.total = response.total_page || Math.ceil(response.count / maxResults)

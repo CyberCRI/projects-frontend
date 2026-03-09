@@ -80,7 +80,7 @@ const localGetNotifications = async () => {
 const loadNextPage = async () => {
   if (nextPage.value) {
     isLoadingMore.value = true
-    const result = (await useAPI(nextPage.value, {})).data
+    const result = await useAPI(nextPage.value, {})
     notifications.value.push(...result.results)
     nextPage.value = result.next
     isLoadingMore.value = false
