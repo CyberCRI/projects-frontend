@@ -147,7 +147,6 @@ export default {
     },
 
     updatePagination(response) {
-      console.log(response)
       this.pagination.currentPage = response.current_page
       const maxResults = response.max_results || 12
       this.pagination.total = response.total_page || Math.ceil(response.count / maxResults)
