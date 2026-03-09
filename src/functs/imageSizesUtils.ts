@@ -37,6 +37,14 @@ export function pictureApiToImageSizes(pictureApiData: ImageSizesFromApi | null)
     : null
 }
 
+export const IMAGES_SIZES_DEFAULTS: ImageSizes = Object.freeze({
+  naturalRatio: 1,
+  scaleX: 1,
+  scaleY: 1,
+  left: 0,
+  top: 0,
+})
+
 export function imageSizesToPictureApi(imagesSizes: ImageSizes): ImageSizesFromApi {
   return imagesSizes
     ? {

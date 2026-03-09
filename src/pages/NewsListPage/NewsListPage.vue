@@ -76,7 +76,7 @@ const doDeleteNews = async () => {
 
 const onClickPagination = async (requestedPage) => {
   loading.value = true
-  newsRequest.value = (await useAPI(requestedPage, {})).data
+  newsRequest.value = await useAPI(requestedPage, {})
   loading.value = false
   const el = document.querySelector('.page-title')
   if (el) el.scrollIntoView({ behavior: 'smooth' })

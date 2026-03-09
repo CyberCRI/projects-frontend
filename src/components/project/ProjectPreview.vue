@@ -101,7 +101,7 @@ const lastUpdated = computed(() => {
 
 .project-info {
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 1fr auto;
   gap: 0.2rem;
 
   .project-texts {

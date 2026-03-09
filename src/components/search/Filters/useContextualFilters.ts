@@ -70,10 +70,7 @@ export default function useContextualFilters({
               return t(`sdg.${sdg.id}.title`)
             }) || [],
         dataTest: 'contextual-filter-sdgs',
-        condition:
-          (selectedSection.value === PROJECT_SECTION_KEY ||
-            selectedSection.value === PEOPLE_SECTION_KEY) &&
-          !filterBlackList.value.includes('sdgs'),
+        condition: !filterBlackList.value.includes('sdgs'),
         // drawer config part
         title: 'sdg',
         componentSummary: SdgsFilter,

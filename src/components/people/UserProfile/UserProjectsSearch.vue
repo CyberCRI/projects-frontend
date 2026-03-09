@@ -104,7 +104,7 @@ export default {
       this.initProjectLoading()
       let response
       if (specificPageIndex) {
-        response = (await useAPI(specificPageIndex, {})).data
+        response = await useAPI(specificPageIndex)
       } else if (this.follow) {
         response = await getUserFollows(
           {
