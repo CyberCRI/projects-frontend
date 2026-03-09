@@ -63,7 +63,7 @@
       is="button"
       v-if="similar && document.similars > 0"
       :data-test="`see-more-${document.id}`"
-      class="no-padding"
+      class="no-padding reset-btn"
       :label="`${document.similars} ${t(`profile.${docType}-similars`)}`"
       @click="emit('similar', document)"
     />
