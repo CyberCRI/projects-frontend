@@ -44,7 +44,8 @@ export default function useProjectToPdf() {
     mainDoc.add(await addPageLinkedProjectsFactory(project, linkedProjects || []))
 
     // FINALIZE AND DOWNLOAD PDF
-    const projectUrl = `${organisation.website_url}/projects/${project.id}/`
+    const isPublic = project.publication_status === 'public'
+    const projectUrl = isPublic ? `${organisation.website_url}/projects/${project.id}/` : null
     const pdfContent = mainDoc.getContent()
     await fetchPdf(
       pdfContent,
