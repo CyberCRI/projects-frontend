@@ -4,7 +4,6 @@
     class="see-more-arrow skeletons-background see-more"
     :to="to"
     :href="to ? undefined : '#'"
-    @click="emit('click')"
   >
     <span class="label-ctn">{{ label ? label : $t('common.see-more') }}</span>
     <span class="arrow-ctn"><IconImage name="ArrowRight" class="arrow" /></span>
@@ -24,8 +23,6 @@ const props = withDefaults(
     is: null,
   }
 )
-
-const emit = defineEmits(['click'])
 
 const is = computed(() => {
   if (props.is) {
