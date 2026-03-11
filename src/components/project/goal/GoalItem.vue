@@ -3,7 +3,7 @@
     <div class="goal" :class="{ 'shadow-box': hasDescription }" @click="toggleDescription">
       <div class="content">
         <div class="left" :class="goal.status">
-          {{ $t(`status.${goal.status}`) }}
+          {{ goal.status == 'na' ? '&nbsp;' : $t(`status.${goal.status}`) }}
         </div>
 
         <div class="right">

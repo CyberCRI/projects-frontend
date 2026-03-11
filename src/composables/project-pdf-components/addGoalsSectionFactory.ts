@@ -30,9 +30,11 @@ export default async function addGoalsSectionFactory(goals: any[]) {
             position: relative;
             background: #FFF;
             transform: scale3d(1, 1, 1);
+            border-radius: var(--border-radius);
+            outline: 1px solid #666;
           }
 
-         
+
           .goal .content {
             display: flex;
           }
@@ -49,7 +51,7 @@ export default async function addGoalsSectionFactory(goals: any[]) {
             border-top-right-radius: var(--border-radius);
             border-bottom-right-radius: var(--border-radius);
             min-height: calc(8 * .7rem);
-            border: var(--border-width) solid #000;
+            border: var(--border-width) solid #f0fffb;
           }
 
           .goal.complete .left{
@@ -72,7 +74,7 @@ export default async function addGoalsSectionFactory(goals: any[]) {
             width: 20rem;
             flex-grow: 1;
 
-            border: var(--border-width) solid #000;
+            border: var(--border-width) solid #f0fffb;
             border-left: 0 none;
             border-radius: 0 var(--border-radius) var(--border-radius) 0;
           }
@@ -122,7 +124,7 @@ export default async function addGoalsSectionFactory(goals: any[]) {
             <div class="goal shadow-box  ${goal.status}"">
               <div class="content">
                 <div class="left ${goal.status}">
-                  ${t(`status.${goal.status}`)}
+                  ${goal.status == 'na' ? '&nbsp;' : t(`status.${goal.status}`)}
                 </div>
                 <div class="right">
                   <div class="main-content">

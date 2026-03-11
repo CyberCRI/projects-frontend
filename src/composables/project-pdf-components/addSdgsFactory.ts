@@ -24,7 +24,7 @@ export default async function addSdgsFactory(projectSdgs: (string | ArrayBuffer)
     if (sdgImages.length > 0) {
       this.styles.add(/* CSS */ `
           .sdg-recap {
-            --sdg-size: 2cm;
+            --sdg-size: 1.4cm;
             display: flex;
             align-items: center;
             justify-content: space-between;
