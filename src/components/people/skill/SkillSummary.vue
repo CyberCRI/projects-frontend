@@ -82,7 +82,7 @@ export default {
 
   methods: {
     goToSkillTab() {
-      this.selectTab(4)
+      this.selectTab('skills')
     },
   },
 }

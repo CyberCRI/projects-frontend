@@ -6,7 +6,7 @@ import useUsersStore from '@/stores/useUsers'
 
 export const defaultOptions = () => {
   let _localStorage = null
-  if (import.meta.client) _localStorage = window.localStorage
+  if (import.meta.client) _localStorage = window?.localStorage
   const localStorage = _localStorage
   const runtimeConfig = useRuntimeConfig()
   const usersStore = useUsersStore()
