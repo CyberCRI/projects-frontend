@@ -3,7 +3,8 @@
 import { UserModel } from '@/models/user.model'
 
 // group have a members_count attribute, user don't
-export const isNotGroup = (groupOrUser) => groupOrUser.members_count === undefined
+export const isNotGroup = (groupOrUser) =>
+  groupOrUser.members_count === undefined && !unref(groupOrUser?.modules)?.members
 
 export const isGroup = (groupOrUser) => !isNotGroup(groupOrUser)
 
