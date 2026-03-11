@@ -57,15 +57,24 @@ export default async function addPageOneFactory(project: any, goals: any[]) {
       .render() // ProjectHeaderContent
       .render() // ProjectHeader
 
-    if (sortedGoals?.length || project.sdgs?.length) {
+    if (project.sdgs?.length) {
+      firstPage
+        .addContainer(PageTitle)
+        .add(function (this: PageTitle) {
+          this.content.push(t('sdg.title'))
+        })
+        .render()
+      firstPage.add(addSdgs)
+    }
+
+    if (sortedGoals?.length) {
       firstPage
         .addContainer(PageTitle)
         .add(function (this: PageTitle) {
           this.content.push(t('goal.goals'))
         })
         .render()
-      if (project.sdgs?.length) firstPage.add(addSdgs)
-      if (sortedGoals?.length) firstPage.add(addGoalsSection)
+      firstPage.add(addGoalsSection)
     }
     firstPage
       .render() // Page
