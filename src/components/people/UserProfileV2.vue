@@ -607,13 +607,19 @@ export default {
     //     this.payload[selectedEditor].savedContent = htmlContent
     // },
 
-    selectTab(index) {
+    selectTab(indexOrKey) {
       // this.current = index
       // if (this.routerView) {
       //   this.$router.push(this.tabs[this.current].view)
       // }
 
       // this.closeTabList()
+
+      let index = indexOrKey
+      if (typeof indexOrKey === 'string') {
+        index = this.profileTabs.findIndex((tab) => tab?.key === indexOrKey)
+        if (index === -1) index = 0
+      }
       this.$router.push(this.profileTabs[index].view)
     },
 
