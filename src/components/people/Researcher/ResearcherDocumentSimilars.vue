@@ -2,7 +2,7 @@
   <BaseDrawer
     :is-opened="!!document"
     data-test="add-default-skills-drawer"
-    :title="`${t(`profile.${docType}-similars`)} (${count})`"
+    :title="`${t(`profile.${docType}-similars`)} (${countElement})`"
     class="medium"
     @close="emit('close')"
   >
@@ -15,9 +15,6 @@
           :doc-type="docType"
           :similar="false"
         />
-      </div>
-      <div class="documents-paginations">
-        <PaginationButtonsV2 :pagination="pagination" />
       </div>
     </FetchLoader>
     <template #footer>
@@ -48,6 +45,7 @@ const props = defineProps<{
 
 const organizationCode = useOrganizationCode()
 const documentId = computed(() => props.document?.id)
+const countElement = computed(() => pagination.count.value || props.document?.similars || 0)
 const LIMIT = 10
 const {
   status,
@@ -57,9 +55,8 @@ const {
   paginationConfig: {
     limit: LIMIT,
   },
-  default: () => factoryPagination(researchDocumentSkeleton, LIMIT),
+  default: () => factoryPagination(researchDocumentSkeleton, Math.min(countElement.value, LIMIT)),
 })
-const { count } = pagination
 </script>
 
 <style lang="scss">
