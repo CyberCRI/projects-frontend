@@ -141,6 +141,7 @@ export default defineNuxtConfig({
     appLangchainPrompt: '',
     appVectorDbUrl: '',
     appVectorEmbeddingModel: '',
+    appVectorEmbeddingDimensions: '',
     public: {
       appVersion: '',
       appApiOrgCode: '',

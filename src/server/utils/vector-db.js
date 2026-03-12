@@ -1,17 +1,21 @@
 import { PGVectorStore } from '@langchain/community/vectorstores/pgvector'
 import { OpenAIEmbeddings } from '@langchain/openai' // Or any other embedding model
 // import { Client } from 'pg'
+import { parse } from 'pg-connection-string'
 
-const runtimeConfig = useRuntimeConfig()
-
-export default useVectorStore = async () => {
+export default async () => {
+  const runtimeConfig = useRuntimeConfig()
   // 1. Configure the database connection
   const connectionString = runtimeConfig.appVectorDbUrl
   const modelName = runtimeConfig.appVectorEmbeddingModel
+  const vectorDimensions = runtimeConfig.appVectorEmbeddingDimensions
+    ? parseInt(runtimeConfig.appVectorEmbeddingDimensions)
+    : null
+  const apiKey = runtimeConfig.appOpenaiApiKey
 
   let vectorStore = null
   try {
-    if (!connectionString || !modelName) {
+    if (!connectionString || !modelName || !vectorDimensions || !apiKey) {
       throw new Error('Missing required configuration for vector store.')
     }
 
@@ -21,17 +25,32 @@ export default useVectorStore = async () => {
 
     const embeddings = new OpenAIEmbeddings({
       modelName,
+      apiKey,
     })
 
+    const config = {
+      postgresConnectionOptions: parse(connectionString),
+      dimensions: vectorDimensions,
+      tableName: 'testlangchain',
+      columns: {
+        idColumnName: 'id',
+        vectorColumnName: 'vector',
+        contentColumnName: 'content',
+        metadataColumnName: 'metadata',
+      },
+      // supported distance strategies: cosine (default), innerProduct, or euclidean
+      distanceStrategy: 'cosine', // as DistanceStrategy,
+    }
+    console.log('XXXXXXXXX', config.dimensions)
     // 3. Initialize the VectorStore - skip if not needed
-    vectorStore = await PGVectorStore.initialize({
+    vectorStore = await PGVectorStore.initialize(
       embeddings,
-      connectionString,
+      config
       // Optional: Specify a custom table name if you don't want the default 'langchain_pg_embedding'
       // tableName: "my_custom_table",
       // Optional: Use JSONB for metadata (default is usually JSONB in newer versions)
       // useJsonb: true,
-    })
+    )
 
     console.log('Database connection established and tables initialized.')
 

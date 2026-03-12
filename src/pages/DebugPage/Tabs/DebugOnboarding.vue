@@ -19,6 +19,22 @@
       :disabled="!usersStore.userFromApi || resetingTerms"
       @click="resetTermsSigned"
     />
+    <hr />
+
+    <form
+      target="_blank"
+      action="/api/vector-store/ingest"
+      method="POST"
+      enctype="multipart/form-data"
+    >
+      <label for="title">Title</label>
+      <input id="title" type="text" name="title" required />
+
+      <label for="file">File</label>
+      <input id="file" type="file" name="file" required />
+
+      <button type="submit">Upload</button>
+    </form>
   </div>
 </template>
 <script>
