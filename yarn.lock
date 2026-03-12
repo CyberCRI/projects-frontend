@@ -1281,12 +1281,12 @@
   resolved "https://registry.yarnpkg.com/@kwsites/promise-deferred/-/promise-deferred-1.1.1.tgz#8ace5259254426ccef57f3175bc64ed7095ed919"
   integrity sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==
 
-"@langchain/classic@1.0.22":
-  version "1.0.22"
-  resolved "https://registry.yarnpkg.com/@langchain/classic/-/classic-1.0.22.tgz#fa79102549d152c88090f46633db9636874a75cc"
-  integrity sha512-XJd5nbxM6UXYkDJc98Zo/9NkPFWy3g/XunBe8hnTOyaazxvA+5+gdJyDKVrcRfaGJskql0V5h/3XQ2f9WFzEuw==
+"@langchain/classic@1.0.23":
+  version "1.0.23"
+  resolved "https://registry.yarnpkg.com/@langchain/classic/-/classic-1.0.23.tgz#9578052a115a94e89341fa3fe80427461f011fcf"
+  integrity sha512-bqL1hUE6eG9Yvyiocg8jJ8NR7Vm+zVhB1wRr9od+dbyFVC3+utrY7m1zm6PortVx1wcdd9UPRu3elEa1sdQA8A==
   dependencies:
-    "@langchain/openai" "1.2.12"
+    "@langchain/openai" "1.2.13"
     "@langchain/textsplitters" "1.0.1"
     handlebars "^4.7.8"
     js-yaml "^4.1.1"
@@ -1298,13 +1298,13 @@
   optionalDependencies:
     langsmith ">=0.4.0 <1.0.0"
 
-"@langchain/community@^1.1.22":
-  version "1.1.22"
-  resolved "https://registry.yarnpkg.com/@langchain/community/-/community-1.1.22.tgz#940e125e6a173579b1248cabc76506241cb8d095"
-  integrity sha512-scpLZx8zxTpNPHe1zC0lYYoBwF385RUByKqNzgTRKWsqs0ipnF9cjiN0uEnxcZJP5j5OE+uIcwOZe1sDxWGkWw==
+"@langchain/community@^1.1.23":
+  version "1.1.23"
+  resolved "https://registry.yarnpkg.com/@langchain/community/-/community-1.1.23.tgz#5e58dc39c9edd38d8cb462e37fc6f9d8874f7ef3"
+  integrity sha512-b4Kpau7wd6wYQEz2Sl38wA3COJiEKMAvI5PksaXGWI151vbYMNWSGVh7HPVhyIotd20NEXQAc5KdifTqV48jPQ==
   dependencies:
-    "@langchain/classic" "1.0.22"
-    "@langchain/openai" "1.2.12"
+    "@langchain/classic" "1.0.23"
+    "@langchain/openai" "1.2.13"
     binary-extensions "^2.2.0"
     flat "^5.0.2"
     js-yaml "^4.1.1"
@@ -1313,10 +1313,10 @@
     uuid "^10.0.0"
     zod "^3.25.76 || ^4"
 
-"@langchain/core@^1.1.31":
-  version "1.1.31"
-  resolved "https://registry.yarnpkg.com/@langchain/core/-/core-1.1.31.tgz#81882c7be8dfe138015da67b93aa73c6ab0f6962"
-  integrity sha512-FxsgIUONjKaRpjx59sISgmb0OMCbAetPGyhzjGa2kX0y1f8LZ5xm9VB2db7W9HYWyLvzRWcMA51Uu4OSTJmtZQ==
+"@langchain/core@^1.1.32":
+  version "1.1.32"
+  resolved "https://registry.yarnpkg.com/@langchain/core/-/core-1.1.32.tgz#a9baf37e5cb40e8b877160d5d03ef3bf6e8e250d"
+  integrity sha512-ZZNiER5tceFXqZOghfrxNHzM60gcQL5XK/8Ow5+o4OuKHrP1p/RUQBDM9Y1nddi/VmKQj+ncaXXM5KovXTEGGQ==
   dependencies:
     "@cfworker/json-schema" "^4.0.2"
     "@standard-schema/spec" "^1.1.0"
@@ -1356,13 +1356,13 @@
     "@standard-schema/spec" "1.1.0"
     uuid "^10.0.0"
 
-"@langchain/openai@1.2.12":
-  version "1.2.12"
-  resolved "https://registry.yarnpkg.com/@langchain/openai/-/openai-1.2.12.tgz#6147acbc3e92c363e99b7ba3e812bb055aea1d51"
-  integrity sha512-Im6PPNujrfkZk4vpc9JAjbeERg+RbNtWRe3KSFOP7aNGa/yZ+XD69lxXwbsZGaZkbiUN/hwe9RYeisUfThb5wg==
+"@langchain/openai@1.2.13":
+  version "1.2.13"
+  resolved "https://registry.yarnpkg.com/@langchain/openai/-/openai-1.2.13.tgz#ce3f1dd08b93458d43a414128caeb70be4b2a462"
+  integrity sha512-zyspKSBnyxICxZyGYMxsSkCUJR09Uj1omMGBrUsvpSu9j+zIbfNg4+NQTIRmnzULoKB+keaioOdLGHxOQru3+w==
   dependencies:
     js-tiktoken "^1.0.12"
-    openai "^6.24.0"
+    openai "^6.27.0"
     zod "^3.25.76 || ^4"
 
 "@langchain/openai@^1.2.3":
@@ -1374,7 +1374,7 @@
     openai "^6.16.0"
     zod "^3.25.76 || ^4"
 
-"@langchain/textsplitters@1.0.1":
+"@langchain/textsplitters@1.0.1", "@langchain/textsplitters@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@langchain/textsplitters/-/textsplitters-1.0.1.tgz#292f9c93239178c248b3338acf7b68aa47aa9830"
   integrity sha512-rheJlB01iVtrOUzttscutRgLybPH9qR79EyzBEbf1u97ljWyuxQfCwIWK+SjoQTM9O8M7GGLLRBSYE26Jmcoww==
@@ -7067,6 +7067,11 @@ ini@^1.3.4, ini@^1.3.5:
   resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.8.tgz#a29da425b48806f34767a4efce397269af28432c"
   integrity sha512-JV/yugV2uzW5iMRSiZAyDtQd+nxtUnjeLt0acNdw98kKLrvuRVyB80tsREOE7yvGVgalhZ6RNXCmEHkUKBKxew==
 
+install@^0.13.0:
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/install/-/install-0.13.0.tgz#6af6e9da9dd0987de2ab420f78e60d9c17260776"
+  integrity sha512-zDml/jzr2PKU9I8J/xyZBQn8rPCAY//UOYNmR01XwNwyfhEWObo2SWfSl1+0tm1u6PhxLwDnfsT/6jB7OUxqFA==
+
 invariant@^2.2.2:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
@@ -8398,6 +8403,11 @@ node-addon-api@^7.0.0:
   resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-7.1.1.tgz#1aba6693b0f255258a049d621329329322aad558"
   integrity sha512-5m3bsyrjFWE1xf7nz7YXdN4udnVtXK6/Yfgn5qnahL6bCkf2yKt4k3nuTKAtT4r3IG8JNR2ncsIMdZuAzJjHQQ==
 
+node-ensure@^0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/node-ensure/-/node-ensure-0.0.0.tgz#ecae764150de99861ec5c810fd5d096b183932a7"
+  integrity sha512-DRI60hzo2oKN1ma0ckc6nQWlHU69RH6xN0sjQTjMpChPfTYvKZdcQFfdYK2RWbJcKyUizSIy/l8OTGxMAM1QDw==
+
 node-fetch-native@^1.6.4, node-fetch-native@^1.6.5, node-fetch-native@^1.6.6, node-fetch-native@^1.6.7:
   version "1.6.7"
   resolved "https://registry.yarnpkg.com/node-fetch-native/-/node-fetch-native-1.6.7.tgz#9d09ca63066cc48423211ed4caf5d70075d76a71"
@@ -8724,7 +8734,7 @@ openai@^6.16.0:
   resolved "https://registry.yarnpkg.com/openai/-/openai-6.16.0.tgz#53661d9f6307dc7523e89637ff7c6ccd0be16c67"
   integrity sha512-fZ1uBqjFUjXzbGc35fFtYKEOxd20kd9fDpFeqWtsOZWiubY8CZ1NAlXHW3iathaFvqmNtCWMIsosCuyeI7Joxg==
 
-openai@^6.24.0:
+openai@^6.27.0:
   version "6.27.0"
   resolved "https://registry.yarnpkg.com/openai/-/openai-6.27.0.tgz#eabaea9ce6904a8b2e6b2ac0a9d69b527d95ecf6"
   integrity sha512-osTKySlrdYrLYTt0zjhY8yp0JUBmWDCN+Q+QxsV4xMQnnoVFpylgKGgxwN8sSdTNw0G4y+WUXs4eCMWpyDNWZQ==
@@ -9134,6 +9144,13 @@ pathval@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/pathval/-/pathval-2.0.1.tgz#8855c5a2899af072d6ac05d11e46045ad0dc605d"
   integrity sha512-//nshmD55c46FuFw26xV/xFAaB5HF9Xdap7HJBBnrKdAd6/GxDBaNA1870O79+9ueg61cZLSVc+OaFlfmObYVQ==
+
+pdf-parse@^1:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/pdf-parse/-/pdf-parse-1.1.4.tgz#97bca6f46758130dafb1fdd9df905efd07581f4a"
+  integrity sha512-XRIRcLgk6ZnUbsHsYXExMw+krrPE81hJ6FQPLdBNhhBefqIQKXu/WeTgNBGSwPrfU0v+UCEwn7AoAUOsVKHFvQ==
+  dependencies:
+    node-ensure "^0.0.0"
 
 perfect-debounce@^1.0.0:
   version "1.0.0"

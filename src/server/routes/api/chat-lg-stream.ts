@@ -4,6 +4,9 @@ import { createAgent } from 'langchain'
 import { MemorySaver } from '@langchain/langgraph'
 import { SystemMessage, HumanMessage } from '@langchain/core/messages'
 import { v4 as uuidv4 } from 'uuid'
+import getVectorStore from '@/server/utils/vector-db.js'
+import { tool } from '@langchain/core/tools'
+
 const runtimeConfig = useRuntimeConfig()
 const {
   // appOpenaiApiPromptId,
@@ -102,6 +105,36 @@ export default defineLazyEventHandler(() => {
         vector_store_ids: [appOpenaiApiVectorStoreId],
       })
     }
+
+    const vectorStore = await getVectorStore()
+    if (vectorStore) {
+      const retriever = vectorStore.asRetriever({ k: 5 }) // Top 4 similar docs
+
+      // Create tool from retriever
+      const retrieverTool = tool(
+        async (query) => {
+          const docs = await retriever.invoke(query)
+          return docs.map((doc: Document) => doc.pageContent).join('\n\n')
+        },
+        {
+          name: 'pgvector_search',
+          // description: 'Search for information in the document database. Use this tool when you need to answer questions about the uploaded content.',
+          description: 'use this tool to answer about neuroscience project',
+          schema: {
+            type: 'object',
+            properties: {
+              query: {
+                type: 'string',
+                description: 'Search query',
+              },
+            },
+            required: ['query'],
+          },
+        }
+      )
+      tools.push(retrieverTool)
+    }
+
     const model = appOpenaiApiKey
       ? new ChatOpenAI({
           apiKey: appOpenaiApiKey,
