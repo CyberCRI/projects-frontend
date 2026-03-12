@@ -56,7 +56,7 @@ const {
     limit: LIMIT,
   },
   default: () =>
-    factoryPagination(researchDocumentSkeleton, Math.min(props.document?.similars ?? LIMIT)),
+    factoryPagination(researchDocumentSkeleton, Math.min(props.document?.similars ?? 0, LIMIT)),
 })
 const countElement = computed(() => pagination.count.value || props.document?.similars || 0)
 
