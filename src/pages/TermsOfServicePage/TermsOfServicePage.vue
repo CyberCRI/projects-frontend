@@ -26,7 +26,7 @@ try {
 <template>
   <div class="page-section-narrow legal-page terms-of-service page-top">
     <h1 class="page-title">{{ $t('tos.title') }}</h1>
-    <section v-if="organizationsStore?.hasTerms">
+    <section v-if="organizationsStore?.hasTerms" class="tos-content">
       <TipTapOutput :content="organizationsStore?.termsContentTranslated" />
     </section>
     <DefaultTermsOfService v-else />
