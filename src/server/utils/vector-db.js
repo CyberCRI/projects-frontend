@@ -11,7 +11,7 @@ export default async () => {
   const vectorDimensions = runtimeConfig.appVectorEmbeddingDimensions
     ? parseInt(runtimeConfig.appVectorEmbeddingDimensions)
     : null
-  const apiKey = runtimeConfig.appOpenaiApiKey
+  const apiKey = runtimeConfig.appVectorEmbeddingApiKey
 
   let vectorStore = null
   try {
@@ -41,7 +41,7 @@ export default async () => {
       // supported distance strategies: cosine (default), innerProduct, or euclidean
       distanceStrategy: 'cosine', // as DistanceStrategy,
     }
-    console.log('XXXXXXXXX', config.dimensions)
+
     // 3. Initialize the VectorStore - skip if not needed
     vectorStore = await PGVectorStore.initialize(
       embeddings,
