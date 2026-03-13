@@ -43,7 +43,11 @@ const model = defineModel<TranslatedPeopleGroupModel | null>()
 const { t } = useNuxtI18n()
 const { closeModal, openModal, stateModal } = useModal()
 
-const { data: group } = getHierarchyGroups(props.organizationCode)
+const { data: group } = getHierarchyGroups(props.organizationCode, {
+  query: {
+    modules: 'none',
+  },
+})
 const children = computed(() => group.value.children)
 
 const confirmGroup = (group) => {

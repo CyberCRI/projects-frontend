@@ -6,6 +6,7 @@ import { AttachmentFileModel, TranslatedAttachmentFile } from '@/models/attachme
 import { AttachmentLinkModel, TranslatedAttachmentLink } from '@/models/attachment-link.model'
 import { TranslatedDocument } from '@/interfaces/researcher'
 import { TranslatedLocation } from '@/models/location.model'
+import { TranslatedNews } from '@/models/news.model'
 
 // type can be computed or object
 type RefOrRaw<DataT> = ComputedRef<DataT> | Ref<DataT> | DataT
@@ -256,8 +257,8 @@ export default function useAutoTranslate() {
 
   // -----------
   // news
-  const translateOneNews = (news) => translateEntity(news, ['title', 'content'])
-  const translateNews = (news) => translateEntities(news, translateOneNews)
+  const translateOneNews = (news) => translateEntity<TranslatedNews>(news, ['title', 'content'])
+  const translateNews = (news) => translateEntities<TranslatedNews>(news, translateOneNews)
 
   // -----------
   // instructions

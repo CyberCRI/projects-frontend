@@ -1,6 +1,8 @@
 import { Translated } from '@/interfaces/translated'
 import BaseModel from '@/models/base.model'
 import { ImageModel } from '@/models/image.model'
+import { PeopleGroupModel } from '@/models/invitation.model'
+import { OrganizationModel } from '@/models/organization.model'
 
 /**
  * @name NewsModel
@@ -11,7 +13,13 @@ export interface NewsModel extends BaseModel {
   title: string
   content: string
   images: NewsImageModel[]
-  header_image: ImageModel
+  header_image?: ImageModel
+  publication_date: string
+  people_groups: PeopleGroupModel[]
+  created_at: string
+  updated_at: string
+  organization: OrganizationModel
+  visible_by_all: boolean
 }
 
 export type TranslatedNews = Translated<NewsModel, 'title' | 'content'>
@@ -55,3 +63,9 @@ export type NewsHeaderOutput = {
   width: number
   created_at: Date
 }
+
+export type QueryFilterNews = Partial<{
+  ordering: 'publication_date' | '-publication_date'
+  created_at: string
+  updated_at: string
+}>

@@ -13,6 +13,7 @@ import { ProjectModel } from '@/models/project.model'
 import { PeopleGroupModel } from '@/models/invitation.model'
 import { ImageModel } from '@/models/image.model'
 import { BaseLocationModel, LocationModel } from '@/models/location.model'
+import { NewsModel } from '@/models/news.model'
 
 // HIERARCHY
 export async function getHierarchyGroups(organizationCode: string, config = {}) {
@@ -265,4 +266,14 @@ export function postGroupGallery(
     body,
     method: 'POST',
   })
+}
+
+export function getGroupNews(organizationCode: string, groupId: number, config = {}) {
+  return useAPI<PaginationResult<NewsModel>>(
+    `organization/${organizationCode}/people-group/${groupId}/news/`,
+    {
+      ...config,
+      method: 'GET',
+    }
+  )
 }

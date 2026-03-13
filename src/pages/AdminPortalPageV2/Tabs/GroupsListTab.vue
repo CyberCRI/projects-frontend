@@ -77,7 +77,11 @@ export default {
   methods: {
     async loadGroups() {
       this.loading = true
-      this.groups = (await getHierarchyGroups(this.organizationsStore.current.code)).children
+      this.groups = (
+        await getHierarchyGroups(this.organizationsStore.current.code, {
+          query: { modules: 'none' },
+        })
+      ).children
 
       this.loading = false
     },

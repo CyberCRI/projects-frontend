@@ -155,7 +155,10 @@ export default {
       this.isLoading = true
       try {
         await getHierarchyGroups(this.organizationsStore.current.code, {
-          organizations: this.organizationsStore.current.code,
+          query: {
+            organizations: this.organizationsStore.current.code,
+            modules: 'none',
+          },
         }).then((peopleGroupsHierarchy) => {
           this.peopleGroupsTree = this.setGroupHierarchy(peopleGroupsHierarchy.children)
         })

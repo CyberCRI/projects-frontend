@@ -36,6 +36,7 @@ export interface PeopleGroupModel {
     subgroups: number
     gallery: number
     projects_locations: number
+    news: number
   }
 }
 
@@ -61,6 +62,7 @@ export const GroupModuleIcon: { [key in PeopleGroupModulesKeys]: IconImageChoice
   subgroups: 'nodeTree',
   projects_locations: 'Map',
   gallery: 'Gallery',
+  news: 'NewsLine',
 }
 
 export const GroupModuleTitle: { [key in PeopleGroupModulesKeys]: string } = {
@@ -72,6 +74,7 @@ export const GroupModuleTitle: { [key in PeopleGroupModulesKeys]: string } = {
   subgroups: 'group.subgroups',
   projects_locations: 'group.projects-locations',
   gallery: 'gallery.pictures',
+  news: 'group.news',
 }
 
 export interface ProfilePictureVariationsModel {
