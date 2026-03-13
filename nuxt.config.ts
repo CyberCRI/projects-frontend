@@ -140,8 +140,10 @@ export default defineNuxtConfig({
     appGotenbergServerUrl: '',
     appLangchainPrompt: '',
     appVectorDbUrl: '',
+    appVectorEmbeddingApiKey: '',
     appVectorEmbeddingModel: '',
     appVectorEmbeddingDimensions: '',
+    appVectorToolPrompt: '',
     public: {
       appVersion: '',
       appApiOrgCode: '',
