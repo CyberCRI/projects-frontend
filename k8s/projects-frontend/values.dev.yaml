@@ -1,11 +1,16 @@
 config:
   nonSensitive:
     NUXT_PUBLIC_APP_KEYCLOAK_URL: https://keycloak.k8s.lp-i.dev
-    NUXT_PUBLIC_APP_VERSION: "{{ .Values.application.revision }}"
+    NUXT_PUBLIC_APP_VERSION: '{{ .Values.application.revision }}'
     NUXT_PUBLIC_APP_ENVIRONMENT: dev
     NUXT_APP_GOTENBERG_SERVER_URL: 'http://projects-gotenberg'
     NUXT_PUBLIC_APP_GOTENBERG_ENABLED: 'true'
     NUXT_APP_LANGCHAIN_PROMPT: ''
+    NUXT_APP_VECTOR_DB_URL: ''
+    NUXT_APP_VECTOR_EMBEDDING_API_KEY: ''
+    NUXT_APP_VECTOR_EMBEDDING_MODEL: ''
+    NUXT_APP_VECTOR_EMBEDDING_DIMENSIONS: ''
+    NUXT_APP_VECTOR_TOOL_PROMPT: ''
 
 domain: k8s.lp-i.dev
 

@@ -1,9 +1,13 @@
 // import OpenAI from 'openai'
 import { ChatOpenAI } from '@langchain/openai'
-import { createAgent } from 'langchain'
+import { createAgent, createMiddleware } from 'langchain'
 import { MemorySaver } from '@langchain/langgraph'
-import { SystemMessage, HumanMessage } from '@langchain/core/messages'
+import { SystemMessage, HumanMessage, AIMessage } from '@langchain/core/messages'
 import { v4 as uuidv4 } from 'uuid'
+import getVectorStore from '@/server/utils/vector-db.js'
+import { tool } from '@langchain/core/tools'
+import { createRetrieverTool } from '@langchain/classic/tools/retriever'
+
 const runtimeConfig = useRuntimeConfig()
 const {
   // appOpenaiApiPromptId,
@@ -14,6 +18,7 @@ const {
   appMcpServerTrace,
   appSorbobotApiTrace,
   appLangchainPrompt,
+  appVectorToolPrompt,
 } = runtimeConfig
 const { appChatbotEnabled } = runtimeConfig.public
 
@@ -96,17 +101,71 @@ export default defineLazyEventHandler(() => {
       })
     }
 
-    if (appOpenaiApiVectorStoreId) {
-      tools.push({
-        type: 'file_search',
-        vector_store_ids: [appOpenaiApiVectorStoreId],
+    // if (appOpenaiApiVectorStoreId) {
+    //   tools.push({
+    //     // name: 'openai_vectorstore',
+    //     type: 'file_search',
+    //     vector_store_ids: [appOpenaiApiVectorStoreId],
+    //   })
+    // }
+
+    const vectorStore = await getVectorStore()
+    if (vectorStore) {
+      console.log(`Configure vector tool with prompt "${appVectorToolPrompt}"`)
+      const retriever = vectorStore.asRetriever({ k: 5 }) // Top 4 similar docs
+      // Create tool from retriever
+      // const retrieverTool = tool(
+      //   async (query) => {
+      //     console.log(query)
+      //     const docs = await retriever.invoke(query)
+      //     return docs.map((doc: Document) => doc.pageContent).join('\n\n')
+      //   },
+      //   {
+      //     name: 'pgvector_search',
+      //     type: 'file_search',
+      //     // description: 'Search for information in the document database. Use this tool when you need to answer questions about the uploaded content.',
+      //     description: appVectorToolPrompt,
+      //     schema: {
+      //       type: 'object',
+      //       properties: {
+      //         query: {
+      //           type: 'string',
+      //           description: 'Search query',
+      //         },
+      //       },
+      //       required: ['query'],
+      //     },
+      //     require_approval: 'never',
+      //   }
+      // )
+      const retrieverTool = createRetrieverTool(retriever, {
+        name: 'pgvector_tool',
+        description: appVectorToolPrompt,
       })
+      tools.push(retrieverTool)
     }
+
+    const toolMonitoringMiddleware = createMiddleware({
+      name: 'ToolMonitoringMiddleware',
+      wrapToolCall: (request, handler) => {
+        console.log(`Executing tool: ${request.toolCall.name}`)
+        console.log(`Arguments: ${JSON.stringify(request.toolCall.args)}`)
+        try {
+          const result = handler(request)
+          console.log('Tool completed successfully')
+          return result
+        } catch (e) {
+          console.log(`Tool failed: ${e}`)
+          throw e
+        }
+      },
+    })
+
     const model = appOpenaiApiKey
       ? new ChatOpenAI({
           apiKey: appOpenaiApiKey,
           model: 'gpt-4o-mini',
-          temperature: 0,
+          temperature: 0.2,
         })
       : null
 
@@ -118,14 +177,15 @@ export default defineLazyEventHandler(() => {
         content: [
           {
             type: 'text',
-            content: appLangchainPrompt,
+            text: appLangchainPrompt,
           },
         ],
       }),
+      middleware: [toolMonitoringMiddleware] as any,
     })
 
     traceMcp(
-      `Starting chat stream for conversation ${conversationId} with ${messages.length} messages`
+      `Starting chat stream for conversation ${conversationId} with ${tools.map((t) => `"${t.name}"`).join(', ')}  tools and ${messages.length} messages`
     )
 
     tokenMap.set(conversationId, {
@@ -169,7 +229,14 @@ export default defineLazyEventHandler(() => {
   */
     // TODO: fix typescript mess with agent.stream return type
     for await (const [token, metadata] of (await agent.stream(
-      { messages: messages.map((msg) => new HumanMessage(msg.text)) } as any,
+      // { messages: messages.map((msg) => new HumanMessage(msg.text)) } as any,
+      {
+        messages: messages.map((msg) =>
+          msg.role === 'ai' || msg.role === 'assistant'
+            ? new AIMessage(msg.text)
+            : new HumanMessage(msg.text)
+        ),
+      } as any,
       { ...config, streamMode: 'messages' }
       // ,{ options: { stream: true }, previous_response_id: conversationId,}
     )) as AsyncIterableIterator<
