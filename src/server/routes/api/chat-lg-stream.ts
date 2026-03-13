@@ -5,7 +5,7 @@ import { MemorySaver } from '@langchain/langgraph'
 import { SystemMessage, HumanMessage, AIMessage } from '@langchain/core/messages'
 import { v4 as uuidv4 } from 'uuid'
 import getVectorStore from '@/server/utils/vector-db.js'
-import { tool } from '@langchain/core/tools'
+// import { tool } from '@langchain/core/tools'
 import { createRetrieverTool } from '@langchain/classic/tools/retriever'
 
 const runtimeConfig = useRuntimeConfig()
@@ -13,7 +13,7 @@ const {
   // appOpenaiApiPromptId,
   // appOpenaiApiPromptVersion,
   appOpenaiApiKey,
-  appOpenaiApiVectorStoreId,
+  // appOpenaiApiVectorStoreId,
   appMcpServerUrl,
   appMcpServerTrace,
   appSorbobotApiTrace,
