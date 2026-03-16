@@ -27,20 +27,13 @@ export default async function checkVectorDbRights(event) {
     })
   }
 
-  console.log(tokenHeader)
-
   const jwt = parseJwt(tokenHeader)
-
-  console.log(jwt)
 
   const kcId = jwt.sub
 
   const runtimeConfig = useRuntimeConfig()
   const baseUrl = runtimeConfig.public.appApiUrl + runtimeConfig.public.appApiDefaultVersion + '/'
   const user = await $fetch(`${baseUrl}/user/${kcId}/`, { headers: { Authorization: tokenHeader } })
-
-  console.log(user)
-  console.log(user.is_superuser)
 
   if (!user.is_superuser) {
     throw createError({
