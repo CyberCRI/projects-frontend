@@ -111,8 +111,14 @@ export default defineLazyEventHandler(() => {
 
     const vectorStore = await getVectorStore()
     if (vectorStore) {
+      const { appApiOrgCode } = useRuntimeConfig().public
       console.log(`Configure vector tool with prompt "${appVectorToolPrompt}"`)
-      const retriever = vectorStore.asRetriever({ k: 5 }) // Top 4 similar docs
+      const retriever = vectorStore.asRetriever({
+        k: 5,
+        filter: {
+          orgCode: appApiOrgCode,
+        },
+      }) // Top 4 similar docs
       // Create tool from retriever
       // const retrieverTool = tool(
       //   async (query) => {
@@ -147,12 +153,14 @@ export default defineLazyEventHandler(() => {
 
     const toolMonitoringMiddleware = createMiddleware({
       name: 'ToolMonitoringMiddleware',
-      wrapToolCall: (request, handler) => {
+      wrapToolCall: async (request, handler) => {
         console.log(`Executing tool: ${request.toolCall.name}`)
         console.log(`Arguments: ${JSON.stringify(request.toolCall.args)}`)
         try {
-          const result = handler(request)
-          console.log('Tool completed successfully')
+          const result = await handler(request)
+          console.log(
+            `Tool completed successfully: "${result.content.substring(0, 100)}${result.content.length > 100 ? ' (...)' : ''}"`
+          )
           return result
         } catch (e) {
           console.log(`Tool failed: ${e}`)
