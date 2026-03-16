@@ -1,6 +1,6 @@
 <template>
   <FetchLoader :status="status" only-error skeleton>
-    <NewsListItem v-for="news in data" :key="news.title" :news="news" />
+    <NewsItem v-for="news in data" :key="news.title" :news="news" />
     <PaginationButtonsV2 v-if="withPagination" :pagination="pagination" />
   </FetchLoader>
 </template>
@@ -8,6 +8,7 @@
 <script setup lang="ts">
 import { getGroupNews } from '@/api/v2/group.service'
 import FetchLoader from '@/components/base/FetchLoader.vue'
+import NewsItem from '@/components/news/NewsListItem/NewsItem.vue'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import { QueryFilterNews } from '@/models/news.model'
 import { factoriesSkeleton, maxSkeleton } from '@/skeletons/base.skeletons'

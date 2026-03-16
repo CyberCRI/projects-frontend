@@ -48,8 +48,10 @@ import { getGroup } from '@/api/v2/group.service'
 import { useLpiHead2 } from '@/composables/useLpiHead'
 import { GroupModuleIcon, GroupModuleTitle } from '@/models/invitation.model'
 import { groupSkeleton } from '@/skeletons/group.skeletons'
+import usePeopleGroupsStore from '@/stores/usePeopleGroups'
 
 const uniqueId = 'group-nav-panel'
+const peopleGroupsStore = usePeopleGroupsStore()
 const { canEditGroup } = usePermissions()
 const { isNavCollapsed, toggleNavPanel, collapseIfUnderBreakpoint } =
   useToggleableNavPanel(uniqueId)
@@ -59,6 +61,9 @@ const router = useRouter()
 const route = useRoute()
 const { t } = useNuxtI18n()
 const groupId = computed(() => parseInt(route.params.groupId.toString(), 10))
+watch(groupId, (newValue) => {
+  peopleGroupsStore.currentId = newValue
+})
 
 const { data: group, isLoading, status, error } = getGroup(organizationCode, groupId)
 
