@@ -15,7 +15,7 @@
       class="no-border"
       :btn-icon="showLess ? 'ChevronDown' : 'ChevronUp'"
       :label="showLess ? $t('group.see-more') : $t('group.see-less')"
-      @click="toggleDescription"
+      @click.prevent="toggleDescription"
     >
       {{ showLess ? $t('group.see-more') : $t('group.see-less') }}
     </LpiButton>
