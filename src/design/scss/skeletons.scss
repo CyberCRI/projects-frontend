@@ -69,15 +69,6 @@
     @extend %skeleton-text-block;
   }
 
-  .skeletons-image:is(img),
-  .skeletons-image img,
-  .skeletons-image:is(svg),
-  .skeletons-image svg {
-    @extend %skeleton-background-block;
-
-    content: url('');
-  }
-
   .skeletons-background {
     @extend %skeleton-background-block;
   }

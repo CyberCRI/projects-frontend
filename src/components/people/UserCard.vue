@@ -12,7 +12,7 @@
     </template>
     <CroppedApiImage
       :alt="`${user.given_name} ${user.family_name} image`"
-      class="picture picture-user skeletons-image"
+      class="picture picture-user skeletons-background"
       :picture-data="user.profile_picture"
       picture-size="medium"
       :default-picture="DEFAULT_USER_PATATOID"
