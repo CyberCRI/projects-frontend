@@ -237,7 +237,8 @@ export default {
         this.profileDrawer.user_id = user.id
         this.profileDrawer.isOpened = true
       } else {
-        this.$router.push({ name: 'Group', params: { groupId: user.id } })
+        // TODO why user.id for group ????
+        this.$router.push({ name: 'Group', params: { groupIdOrSlug: user.id } })
       }
     },
 

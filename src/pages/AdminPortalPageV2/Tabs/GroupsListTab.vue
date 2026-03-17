@@ -105,7 +105,7 @@ export default {
     editGroup(group) {
       this.$router.push({
         name: 'adminEditGroup',
-        params: { groupId: group.slug || group.id },
+        params: { groupIdOrSlug: group.slug || group.id },
       })
     },
 

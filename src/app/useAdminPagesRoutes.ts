@@ -112,10 +112,10 @@ export default function useAdminPagesRoutes() {
             },
             // maybe we'll need this later
             {
-              path: 'edit/:groupId',
+              path: 'edit/:groupIdOrSlug',
               name: 'adminEditGroup',
               props: (route) => ({
-                groupId: route.params.groupId,
+                groupIdOrSlug: route.params.groupIdOrSlug,
                 postCancelRouteFactory: () => ({ name: 'groupsList' }),
                 postCreateRouteFactory: () => ({ name: 'groupsList' }),
                 postUpdateRouteFactory: () => ({ name: 'groupsList' }),

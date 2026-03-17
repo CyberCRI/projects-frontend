@@ -5,7 +5,7 @@
     :total="group.modules[documentType]"
     :see-more="{
       name: routeName,
-      params: { groupId: group.id },
+      params: { groupIdOrSlug: group.slug || group.id },
     }"
     icon="Article"
   >

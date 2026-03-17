@@ -7,7 +7,7 @@ import { peopleGroupFactory } from '../../../factories/group.factory'
 const group = peopleGroupFactory.generate()
 mockNuxtImport('useRoute', () => () => ({
   params: {
-    groupId: group.id,
+    groupIdOrSlug: group.slug || group.id,
   },
 }))
 

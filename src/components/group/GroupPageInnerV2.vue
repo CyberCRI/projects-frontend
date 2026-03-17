@@ -60,7 +60,7 @@ import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
   name: 'GroupPageInnerV2',
   props: {
-    groupId: {
+    groupIdOrSlug: {
       type: String,
       required: true,
     },
@@ -133,7 +133,7 @@ export default {
         root,
         ...(this.groupData?.hierarchy || []).map((group) => ({
           name: group.name,
-          route: { name: 'Group', params: { groupId: group.slug || group.id } },
+          route: { name: 'Group', params: { groupIdOrSlug: group.slug || group.id } },
         })),
       ]
     },
@@ -147,8 +147,8 @@ export default {
           key: 'group-snapshot',
           dataTest: 'group-snapshot',
           label: this.$t('group.snapshot'),
-          view: `/group/${this.$route.params.groupId}/snapshot`,
-          altView: `/group/${this.$route.params.groupId}/snapshot/edit`,
+          view: `/group/${this.$route.params.groupIdOrSlug}/snapshot`,
+          altView: `/group/${this.$route.params.groupIdOrSlug}/snapshot/edit`,
           props: {
             description: this.groupDescription,
             projectsInitialRequest: this.projectsInitialRequest,
@@ -170,8 +170,8 @@ export default {
           key: 'group-members',
           dataTest: 'group-members',
           label: this.$t('group.members'),
-          view: `/group/${this.$route.params.groupId}/members`,
-          altView: `/group/${this.$route.params.groupId}/members/edit`,
+          view: `/group/${this.$route.params.groupIdOrSlug}/members`,
+          altView: `/group/${this.$route.params.groupIdOrSlug}/members/edit`,
           props: {
             membersInitialRequest: this.membersInitialRequest,
             isMembersLoading: this.isMembersLoading,
@@ -183,8 +183,8 @@ export default {
           key: 'group-projects',
           dataTest: 'group-projects',
           label: this.$t('group.projects'),
-          view: `/group/${this.$route.params.groupId}/projects`,
-          altView: `/group/${this.$route.params.groupId}/projects/edit`,
+          view: `/group/${this.$route.params.groupIdOrSlug}/projects`,
+          altView: `/group/${this.$route.params.groupIdOrSlug}/projects/edit`,
           props: {
             projectsInitialRequest: this.projectsInitialRequest,
             isProjectsLoading: this.isProjectsLoading,
@@ -205,8 +205,8 @@ export default {
           key: 'group-snapshot-edit',
           dataTest: 'group-snapshot-edit',
           label: this.$t('group.snapshot'),
-          view: `/group/${this.$route.params.groupId}/snapshot/edit`,
-          altView: `/group/${this.$route.params.groupId}/snapshot`,
+          view: `/group/${this.$route.params.groupIdOrSlug}/snapshot/edit`,
+          altView: `/group/${this.$route.params.groupIdOrSlug}/snapshot`,
           props: {
             isInEditingMode: true,
             description: this.groupDescription,
@@ -230,8 +230,8 @@ export default {
           key: 'groups-members-edit',
           dataTest: 'groups-members-edit',
           label: this.$t('group.members'),
-          view: `/group/${this.$route.params.groupId}/members/edit`,
-          altView: `/group/${this.$route.params.groupId}/members`,
+          view: `/group/${this.$route.params.groupIdOrSlug}/members/edit`,
+          altView: `/group/${this.$route.params.groupIdOrSlug}/members`,
           props: {
             isInEditingMode: true,
             groupData: this.groupData,
@@ -244,10 +244,10 @@ export default {
           key: 'group-projects-edit',
           dataTest: 'group-projects-edit',
           label: this.$t('group.projects'),
-          view: `/group/${this.$route.params.groupId}/projects/edit`,
-          altView: `/group/${this.$route.params.groupId}/projects`,
+          view: `/group/${this.$route.params.groupIdOrSlug}/projects/edit`,
+          altView: `/group/${this.$route.params.groupIdOrSlug}/projects`,
           props: {
-            groupId: this.groupId,
+            groupIdOrSlug: this.groupIdOrSlug,
             isInEditingMode: true,
             groupData: this.groupData,
             onReloadGroupProjects: this.loadGroupProjects,
@@ -287,7 +287,7 @@ export default {
     },
   },
   watch: {
-    groupId: {
+    groupIdOrSlug: {
       handler: function (neo, old) {
         if (neo && neo != old) {
           this.load()
@@ -325,7 +325,7 @@ export default {
       this.isProjectsLoading = true
       this.isMembersLoading = true
 
-      this.peopleGroupsStore.currentId = this.groupId
+      this.peopleGroupsStore.currentId = this.groupIdOrSlug
       try {
         await Promise.all([this.loadGroup(), this.loadGroupMembers(), this.loadGroupProjects()])
       } catch {
@@ -340,11 +340,11 @@ export default {
         this.isLoading = true
         this.rawGroupData = await getGroup(
           this.currentOrganizationCode,
-          this.groupId,
+          this.groupIdOrSlug,
           /*no error*/ true
         )
 
-        // we can't use "this.groupId" because it might be a slug and not an id....
+        // we can't use "this.groupIdOrSlug" because it might be a slug and not an id....
         this.peopleGroupsStore.currentId = this.groupData.id
       } catch {
         this.$router.replace({
@@ -360,7 +360,7 @@ export default {
       try {
         const groupMemberData = await getGroupMember(
           this.currentOrganizationCode,
-          this.groupId,
+          this.groupIdOrSlug,
           /*no error*/ true
         )
         this.membersInitialRequest = groupMemberData
@@ -374,7 +374,7 @@ export default {
       try {
         const groupProjectData = await getGroupProject(
           this.currentOrganizationCode,
-          this.groupId,
+          this.groupIdOrSlug,
           /*no error*/ true
         )
         this.projectsInitialRequest = groupProjectData

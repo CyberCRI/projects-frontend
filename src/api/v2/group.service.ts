@@ -12,14 +12,14 @@ import useAsyncAPI from '@/composables/useAsyncAPI'
 import useAsyncPaginationAPI from '@/composables/useAsyncPaginationAPI'
 import { onlyRefs } from '@/functs/onlyRefs'
 import { RefOrRaw } from '@/interfaces/utils'
-import { GroupModel } from '@/models/group.model'
+import { PeopleGroupIdOrSlug } from '@/models/invitation.model'
 import { OrganizationModel } from '@/models/organization.model'
 
 const DEFAULT_CONFIG = {}
 
 export const getGroup = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
-  groupId: RefOrRaw<GroupModel['id']>,
+  groupId: RefOrRaw<PeopleGroupIdOrSlug>,
   config = {}
 ) => {
   const { translateGroup } = useAutoTranslate()
@@ -57,7 +57,7 @@ export const getHierarchyGroups = (
 
 export const getGroupProject = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
-  groupId: RefOrRaw<GroupModel['id']>,
+  groupId: RefOrRaw<PeopleGroupIdOrSlug>,
   config = {}
 ) => {
   const { translateProjects } = useAutoTranslate()
@@ -80,7 +80,7 @@ export const getGroupProject = (
 
 export const getGroupMember = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
-  groupId: RefOrRaw<GroupModel['id']>,
+  groupId: RefOrRaw<PeopleGroupIdOrSlug>,
   config = {}
 ) => {
   const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::members`)
@@ -101,7 +101,7 @@ export const getGroupMember = (
 
 export const getGroupSimilar = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
-  groupId: RefOrRaw<GroupModel['id']>,
+  groupId: RefOrRaw<PeopleGroupIdOrSlug>,
   config = {}
 ) => {
   const { translateGroups } = useAutoTranslate()
@@ -124,7 +124,7 @@ export const getGroupSimilar = (
 
 export const getSubGroup = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
-  groupId: RefOrRaw<GroupModel['id']>,
+  groupId: RefOrRaw<PeopleGroupIdOrSlug>,
   config = {}
 ) => {
   const { translateGroups } = useAutoTranslate()
@@ -147,7 +147,7 @@ export const getSubGroup = (
 
 export const getGroupProjectsLocation = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
-  groupId: RefOrRaw<GroupModel['id']>,
+  groupId: RefOrRaw<PeopleGroupIdOrSlug>,
   config = {}
 ) => {
   const { translateProjectLocations } = useAutoTranslate()
@@ -170,7 +170,7 @@ export const getGroupProjectsLocation = (
 
 export const getGroupGallery = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
-  groupId: RefOrRaw<GroupModel['id']>,
+  groupId: RefOrRaw<PeopleGroupIdOrSlug>,
   config = {}
 ) => {
   const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::gallery`)

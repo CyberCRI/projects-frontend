@@ -33,7 +33,7 @@
                 :to="{
                   name: 'Group',
                   params: {
-                    groupId: group.id,
+                    groupIdOrSlug: group.slug || group.id,
                   },
                 }"
                 class="group-anim"
