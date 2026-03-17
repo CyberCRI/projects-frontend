@@ -1,13 +1,23 @@
 <template>
   <FetchLoader :status="status" only-error skeleton>
     <div class="default-container">
-      <LpiButton v-if="editable" btn-icon="Plus" :label="$t('group.form.add')" class="edit-btn" />
+      <LpiButton
+        v-if="editable"
+        btn-icon="Plus"
+        :label="$t('group.form.add')"
+        class="edit-btn skeletons-background"
+        @click="onCreate"
+      />
       <div class="list-divider">
         <NewsItem
           v-for="news in data"
           :key="news.title"
           :news="news"
           :editable="editable"
+          :to="{
+            name: 'NewsPage',
+            params: { slugOrId: news.id },
+          }"
           @edit="onEditNews"
           @delete="onDeleteNews"
         />
@@ -16,8 +26,8 @@
         :is-opened="stateModals.edit"
         :news="selectedNews"
         :selected-group="false"
-        @confirm="onConfirmEditNews"
         @close="onCancel"
+        @news-edited="onAfterEdit"
       />
 
       <ConfirmModal
@@ -35,6 +45,7 @@
 </template>
 
 <script setup lang="ts">
+import { deleteNews } from '@/api/news.service'
 import { getGroupNews } from '@/api/v2/group.service'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
@@ -58,9 +69,11 @@ const props = withDefaults(
   }
 )
 
-const selectedNews = ref()
-const { stateModals, openModals, closeModals } = useModals({ delete: false, edit: false })
+const { t } = useNuxtI18n()
 
+const selectedNews = ref<any>()
+const { stateModals, openModals, closeModals } = useModals({ delete: false, edit: false })
+const toaster = useToaster()
 const organizationCode = useOrganizationCode()
 const groupId = computed(() => props.group?.id)
 
@@ -68,7 +81,7 @@ const { query } = useQuery<QueryFilterNews>({})
 
 const limitSkeletons = computed(() => maxSkeleton(props.group?.modules?.news, props.limit))
 
-const { status, data, pagination } = getGroupNews(organizationCode, groupId, {
+const { status, data, pagination, refresh } = getGroupNews(organizationCode, groupId, {
   query,
   paginationConfig: {
     limit: props.limit,
@@ -80,18 +93,33 @@ const onEditNews = (news: TranslatedNews) => {
   selectedNews.value = news
   openModals('edit')
 }
+const onCreate = () => {
+  selectedNews.value = {
+    people_groups: [props.group.id],
+  }
+  openModals('edit')
+}
+
 const onDeleteNews = (news: TranslatedNews) => {
   selectedNews.value = news
   openModals('delete')
 }
-const onConfirmEditNews = () => {
-  selectedNews.value = null
-  onCancel()
-}
 const onConfirmDeleteNews = () => {
-  selectedNews.value = null
+  deleteNews(organizationCode, selectedNews.value.id)
+    .then(() => {
+      toaster.pushSuccess(t('news.delete.success'))
+      onAfterEdit()
+    })
+    .catch(() => toaster.pushError(t('news.delete.error')))
+    .finally(() => onCancel())
+}
+
+const onAfterEdit = () => {
+  refreshNuxtData(`${organizationCode}::group::${groupId.value}`)
+  refresh()
   onCancel()
 }
+
 const onCancel = () => {
   selectedNews.value = null
   closeModals('edit', 'delete')

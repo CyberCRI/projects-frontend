@@ -74,7 +74,7 @@ export default {
         if (news)
           this.form = {
             ...news,
-            publication_date: new Date(news.publication_date),
+            publication_date: news.publication_date ? new Date(news.publication_date) : null,
             header_image: news.header_image || null,
             imageSizes: pictureApiToImageSizes(news.header_image),
             people_groups: news.people_groups.reduce

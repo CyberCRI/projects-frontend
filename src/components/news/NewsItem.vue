@@ -1,6 +1,6 @@
 <template>
-  <component :is="is" :to="to" :class="{ 'pointer-events-none': isLink, 'shadow-box': !isLink }">
-    <div class="card-container">
+  <component :is="is" :to="to" :class="{ 'pointer-events-none': !isLink }">
+    <div class="card-container" :class="{ 'shadow-box': isLink }">
       <CroppedApiImage
         :picture-data="news.header_image"
         class="card-image skeletons-background"
@@ -11,11 +11,13 @@
           <LpiButton
             btn-icon="Pen"
             :aria-label="$t('common.edit')"
+            class="skeletons-background"
             @click.stop="emit('edit', news)"
           />
           <LpiButton
             btn-icon="Close"
             :aria-label="$t('common.delete')"
+            class="skeletons-background"
             @click.stop="emit('delete', news)"
           />
         </div>
@@ -59,7 +61,7 @@ const publicationDate = computed(() => {
   })
 })
 
-const isLink = computed(() => !props.editable || props.to)
+const isLink = computed(() => !props.editable && props.to)
 
 const is = computed(() => (isLink ? resolveComponent('NuxtLink') : 'div'))
 </script>
