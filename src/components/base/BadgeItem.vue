@@ -4,11 +4,7 @@
     class="badge skeletons-background"
   >
     <span v-if="iconName" class="icon-container">
-      <IconImage
-        :class="{ 'icon-small': size === 'small' }"
-        :name="iconName"
-        class="icon skeletons-image"
-      />
+      <IconImage :class="{ 'icon-small': size === 'small' }" :name="iconName" class="icon" />
     </span>
 
     <span :class="size" class="label">{{ label }}</span>

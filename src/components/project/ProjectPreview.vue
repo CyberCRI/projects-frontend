@@ -13,7 +13,7 @@
         :alt="`${project.$t.title} image`"
         :picture-data="project.header_image"
         picture-size="small"
-        class="skeletons-image"
+        class="skeletons-background"
         :default-picture="DEFAULT_PROJECT_PATATOID"
       />
 
@@ -38,7 +38,7 @@
     <div v-if="extra" class="project-extra">
       <slot name="action">
         <ProjectFollowIcon
-          class="icon skeletons-image"
+          class="icon skeletons-background"
           :project="project"
           @follow="emit('refresh')"
           @unfollow="emit('refresh')"

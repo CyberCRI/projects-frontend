@@ -342,6 +342,10 @@ $profile-documents: 1rem;
   gap: 1rem;
   align-items: baseline;
   font-weight: bold;
+
+  @media screen and (width <=pxToRem(1000px)) {
+    justify-content: center;
+  }
 }
 
 .doc-numbers-container {
