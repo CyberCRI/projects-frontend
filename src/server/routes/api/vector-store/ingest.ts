@@ -8,7 +8,7 @@ export default defineLazyEventHandler(() => {
     await checkVectorDbRights(event)
 
     const { appApiOrgCode } = useRuntimeConfig().public
-    const vectorStore = await getVectorStore()
+    const { vectorStore } = await getVectorStore()
     // return 404 if not configured
     if (!vectorStore) {
       setResponseStatus(event, 404)

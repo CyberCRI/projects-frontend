@@ -19,8 +19,6 @@
       :disabled="!usersStore.userFromApi || resetingTerms"
       @click="resetTermsSigned"
     />
-    <hr />
-    <VectorStoreIngestionForm />
   </div>
 </template>
 <script>
