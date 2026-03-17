@@ -2,6 +2,7 @@ import { PGVectorStore } from '@langchain/community/vectorstores/pgvector'
 import { OpenAIEmbeddings } from '@langchain/openai' // Or any other embedding model
 // import { Client } from 'pg'
 import { parse } from 'pg-connection-string'
+import pg from 'pg'
 
 export default async () => {
   const runtimeConfig = useRuntimeConfig()
@@ -12,10 +13,12 @@ export default async () => {
     ? parseInt(runtimeConfig.appVectorEmbeddingDimensions)
     : null
   const apiKey = runtimeConfig.appVectorEmbeddingApiKey
+  const vectorTableName = runtimeConfig.appVectorTableName
 
   let vectorStore = null
+  let pool = null
   try {
-    if (!connectionString || !modelName || !vectorDimensions || !apiKey) {
+    if (!connectionString || !modelName || !vectorDimensions || !apiKey || !vectorTableName) {
       throw new Error('Missing required configuration for vector store.')
     }
 
@@ -28,10 +31,12 @@ export default async () => {
       apiKey,
     })
 
+    pool = new pg.Pool(parse(connectionString))
+
     const config = {
-      postgresConnectionOptions: parse(connectionString),
+      pool,
       dimensions: vectorDimensions,
-      tableName: 'testlangchain',
+      tableName: vectorTableName,
       columns: {
         idColumnName: 'id',
         vectorColumnName: 'vector',
@@ -64,5 +69,5 @@ export default async () => {
     // Handle the error as needed, e.g., fallback to an in-memory store or disable vector features
   }
 
-  return vectorStore
+  return { pool, vectorStore }
 }
