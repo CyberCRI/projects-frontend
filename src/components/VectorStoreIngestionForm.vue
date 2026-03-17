@@ -2,6 +2,11 @@
 import useUsersStore from '@/stores/useUsers'
 import useToasterStore from '@/stores/useToaster'
 
+const { t } = useNuxtI18n()
+
+const props = defineProps({ isOpened: { type: Boolean, required: true } })
+const emit = defineEmits(['close'])
+
 const toaster = useToasterStore()
 const usersStore = useUsersStore()
 
@@ -14,7 +19,12 @@ const onFileChange = (e) => {
   file.value = files[0]
 }
 
+const isAsyncing = ref(false)
+
+const close = () => emit('close')
+
 const submit = async () => {
+  isAsyncing.value = true
   const fd = new FormData()
   fd.append('title', title.value)
   fd.append('file', file.value, file.value.name)
@@ -33,23 +43,28 @@ const submit = async () => {
     else toaster.pushError(`${response.status} - ${response.statusText}`)
   } catch (e) {
     toaster.pushError(e.toString())
+  } finally {
+    isAsyncing.value = false
+    close()
   }
 }
 </script>
 <template>
-  <form
-    class="form"
-    action="/api/vector-store/ingest"
-    method="POST"
-    enctype="multipart/form-data"
-    @submit.prevent="submit"
+  <BaseDrawer
+    data-test="vector-store-add-document-drawer"
+    :confirm-action-name="t('common.confirm')"
+    :confirm-action-disabled="!title || !file"
+    :is-opened="isOpened"
+    :title="t('vector-store.add-document')"
+    class="medium"
+    @close="close"
+    @confirm="submit"
   >
-    <label for="title">Title</label>
-    <input id="title" type="text" v-model="title" required />
-
-    <label for="file">File</label>
-    <input id="file" type="file" name="file" required @change="onFileChange" />
-
-    <button type="submit">Upload</button>
-  </form>
+    <div class="form-section">
+      <TextInput v-model.trim="title" :label="$t('vector-store.title-field')" />
+    </div>
+    <div class="form-section">
+      <input id="file" type="file" name="file" required @change="onFileChange" />
+    </div>
+  </BaseDrawer>
 </template>

@@ -109,7 +109,7 @@ export default defineLazyEventHandler(() => {
     //   })
     // }
 
-    const vectorStore = await getVectorStore()
+    const { vectorStore } = await getVectorStore()
     if (vectorStore) {
       const { appApiOrgCode } = useRuntimeConfig().public
       console.log(`Configure vector tool with prompt "${appVectorToolPrompt}"`)
