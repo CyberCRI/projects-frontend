@@ -7,6 +7,8 @@
       'reversed-order': reversedOrder,
     }"
     :disabled="disabled"
+    :ariaLabel="ariaLabel"
+    :title="ariaLabel"
     type="button"
     rel="noopener"
     class="lpi-button shadow-box"
@@ -26,6 +28,7 @@ const props = withDefaults(
     disabled?: boolean
     reversedOrder?: boolean
     noTextTransform?: boolean
+    ariaLabel?: string
   }>(),
   {
     label: null,
@@ -34,6 +37,7 @@ const props = withDefaults(
     disabled: false,
     reversedOrder: false,
     noTextTransform: false,
+    ariaLabel: '',
   }
 )
 

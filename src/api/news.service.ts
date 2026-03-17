@@ -1,6 +1,7 @@
 // import type { APIResponseList } from '@/api/types'
 import type {
   /*NewsModel, */ NewsInput /*, NewsOutput, NewsHeaderOutput*/,
+  NewsModel,
 } from '@/models/news.model'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import useAPI from '@/composables/useAPI'
@@ -10,20 +11,26 @@ export async function getAllNews(orgCode: string, params: any) {
   return await useAPI(`organization/${orgCode}/news/`, { ...adaptedParams }) //.data.value
 }
 
-export async function getNews(orgCode: string, idOrSlug: number | string, noError = false) {
-  return await useAPI(`organization/${orgCode}/news/${idOrSlug}/`, { noError }) //.data.value
+export async function getNews(orgCode: string, idOrSlug: number | string, config = {}) {
+  return await useAPI<NewsModel>(`organization/${orgCode}/news/${idOrSlug}/`, config)
 }
 
 export async function createNews(orgCode: string, body: NewsInput) {
-  return await useAPI(`organization/${orgCode}/news/`, { body, method: 'POST' }) //.data.value
+  return await useAPI<NewsModel>(`organization/${orgCode}/news/`, { body, method: 'POST' }) //.data.value
 }
 
 export async function putNews(orgCode: string, idOrSlug: number | string, body: NewsInput) {
-  return await useAPI(`organization/${orgCode}/news/${idOrSlug}/`, { body, method: 'PUT' }) //.data.value
+  return await useAPI<NewsModel>(`organization/${orgCode}/news/${idOrSlug}/`, {
+    body,
+    method: 'PUT',
+  }) //.data.value
 }
 
 export async function patchNews(orgCode: string, idOrSlug: number | string, body: NewsInput) {
-  return await useAPI(`organization/${orgCode}/news/${idOrSlug}/`, { body, method: 'PATCH' })
+  return await useAPI<NewsModel>(`organization/${orgCode}/news/${idOrSlug}/`, {
+    body,
+    method: 'PATCH',
+  })
   //.data.value
 }
 

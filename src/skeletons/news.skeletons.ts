@@ -1,6 +1,7 @@
 import { NewsModel } from '@/models/news.model'
 
 export const newsSkeleton = (def?: Partial<NewsModel>): Omit<NewsModel, 'id'> => ({
+  id: -1,
   title: 'title',
   content: 'Ipsum nostrud officia dolor esse exercitation mollit',
   images: [],

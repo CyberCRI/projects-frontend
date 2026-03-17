@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
   content: string
   // max line to show
   line: number

@@ -3,9 +3,9 @@
     id="news"
     :title="$t('group.news')"
     :total="group.modules.news"
-    icon="Briefcase"
+    :icon="GroupModuleIcon.news"
     :see-more="{
-      name: 'groupProjects',
+      name: 'groupNews',
       params: { groupId: group.id },
     }"
   >
@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import { GroupModuleIcon, TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
 import BaseGroupNewsList from '@/components/group/Modules/News/BaseGroupNewsList.vue'
 

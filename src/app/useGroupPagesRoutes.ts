@@ -53,6 +53,17 @@ export default function useGroupPagesRoutes() {
           name: 'subGroups',
           component: () => import('../pages/GroupPageV2/Tabs/SubGroups/SubGroupsTab.vue'),
         },
+        {
+          path: 'news',
+          name: 'groupNews',
+          component: () => import('../pages/GroupPageV2/Tabs/News/GroupNewsTab.vue'),
+        },
+        {
+          path: 'news/edit',
+          name: 'groupNewsEdit',
+          component: () => import('../pages/GroupPageV2/Tabs/News/GroupNewsTab.vue'),
+        },
+
         // retro compat
         {
           path: 'Edit',

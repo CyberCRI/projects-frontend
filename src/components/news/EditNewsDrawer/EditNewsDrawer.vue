@@ -9,7 +9,13 @@
     @confirm="saveNews"
     @close="cancel"
   >
-    <NewsForm ref="newsForm" v-model="form" class="news-form" @invalid="invalid = $event" />
+    <NewsForm
+      ref="newsForm"
+      v-model="form"
+      class="news-form"
+      :selected-group="selectedGroup"
+      @invalid="invalid = $event"
+    />
   </BaseDrawer>
 </template>
 <script>
@@ -37,6 +43,10 @@ export default {
     isOpened: {
       type: Boolean,
       required: true,
+    },
+    selectedGroup: {
+      type: Boolean,
+      default: true,
     },
   },
 

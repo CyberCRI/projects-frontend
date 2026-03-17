@@ -49,6 +49,7 @@
   color: transparent !important;
   fill: transparent !important;
   filter: drop-shadow(2px 2px 2px $skeleton-0) blur(2px);
+  user-select: none;
 
   * {
     opacity: 0;
@@ -64,6 +65,7 @@
   --primary-dark: #{$lighter-gray};
 
   pointer-events: none;
+  user-select: none;
 
   .skeletons-text {
     @extend %skeleton-text-block;

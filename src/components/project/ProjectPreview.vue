@@ -13,7 +13,7 @@
         :alt="`${project.$t.title} image`"
         :picture-data="project.header_image"
         picture-size="small"
-        class="skeletons-image"
+        class="skeletons-background"
         :default-picture="DEFAULT_PROJECT_PATATOID"
       />
 

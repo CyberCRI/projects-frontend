@@ -268,8 +268,8 @@ export function postGroupGallery(
   })
 }
 
-export function getGroupNews(organizationCode: string, groupId: number, config = {}) {
-  return useAPI<PaginationResult<NewsModel>>(
+export async function getGroupNews(organizationCode: string, groupId: number, config = {}) {
+  return await useAPI<PaginationResult<NewsModel>>(
     `organization/${organizationCode}/people-group/${groupId}/news/`,
     {
       ...config,

@@ -23,7 +23,7 @@
 
     <CroppedApiImage
       :alt="`${group.name} image`"
-      class="picture picture-group skeletons-image"
+      class="picture picture-group skeletons-background"
       :picture-data="group.header_image"
       picture-size="medium"
       :default-picture="DEFAULT_USER_PATATOID"

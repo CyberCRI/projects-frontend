@@ -61,7 +61,8 @@
 
       <FieldErrors :errors="v$.modelValue.content.$errors" />
     </div>
-    <div class="form-section">
+
+    <div v-if="selectedGroup" class="form-section">
       <label>{{ $t('news.form.groups.label') }}</label>
       <p class="notice">
         {{ $t('news.form.groups.notice') }}
@@ -124,6 +125,10 @@ export default {
     modelValue: {
       type: Object,
       required: true,
+    },
+    selectedGroup: {
+      type: Boolean,
+      default: true,
     },
   },
 

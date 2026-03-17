@@ -7,7 +7,7 @@
       name: routeName,
       params: { groupId: group.id },
     }"
-    icon="Article"
+    :icon="GroupModuleIcon[documentType]"
   >
     <template #content>
       <GroupResearcherDocumentsList
@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import GroupResearcherDocumentsList from '@/components/people/Researcher/GroupResearcherDocumentsList.vue'
 import { DocumentType } from '@/interfaces/researcher'
-import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import { GroupModuleIcon, TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
 
 const props = defineProps<{
