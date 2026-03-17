@@ -2,14 +2,13 @@ import { RefOrRaw } from '@/interfaces/utils'
 
 /**
  * filter only ref/computed vars
- * @function
- * @name onlyRef
+ *
+ * @constant
+ * @name onlyRefs
  * @kind variable
- * @param {string | globalThis.Ref<any} values_0
- * @param {any} any> | globalThis.ComputedRef<any>
- * @returns {[Ref | ComputedRef]}
+ * @type {<T extends string | number>(values: RefOrRaw<T>[]) => [Ref | ComputedRef]}
  * @exports
  */
-export const onlyRefs = (values: (RefOrRaw<string> | RefOrRaw<number>)[]): [Ref | ComputedRef] => {
+export const onlyRefs = <T extends string | number>(values: RefOrRaw<T>[]): [Ref | ComputedRef] => {
   return values.filter((v) => isRef(v) || isReactive(v)) as [Ref | ComputedRef]
 }

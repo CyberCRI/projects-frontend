@@ -10,8 +10,7 @@ import useAsyncPaginationAPI from '@/composables/useAsyncPaginationAPI'
 import { onlyRefs } from '@/functs/onlyRefs'
 import { Document, DocumentType, Researcher } from '@/interfaces/researcher'
 import { RefOrRaw } from '@/interfaces/utils'
-import { GroupModel } from '@/models/group.model'
-import { PeopleGroupModel } from '@/models/invitation.model'
+import { PeopleGroupIdOrSlug } from '@/models/invitation.model'
 import { OrganizationModel } from '@/models/organization.model'
 
 const DEFAULT_CONFIG = {}
@@ -44,7 +43,7 @@ export const getOwnResearchDocument = (
 
 export const getGroupResearchDocument = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
-  groupId: RefOrRaw<PeopleGroupModel['id']>,
+  groupId: RefOrRaw<PeopleGroupIdOrSlug>,
   documenType: DocumentType,
   config = {}
 ) => {
@@ -98,7 +97,7 @@ export const getOwnResearchDocumentAnalytics = (
 
 export const getGroupResearchDocumentAnalytics = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
-  groupId: RefOrRaw<GroupModel['id']>,
+  groupId: RefOrRaw<PeopleGroupIdOrSlug>,
   documenType: DocumentType,
   config = {}
 ) => {

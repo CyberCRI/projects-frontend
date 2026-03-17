@@ -4,7 +4,7 @@ import {
   Researcher,
   ResearcherDocumentAnalytics,
 } from '@/interfaces/researcher'
-import { PeopleGroupModel } from '@/models/invitation.model'
+import { PeopleGroupIdOrSlug } from '@/models/invitation.model'
 
 export async function getOwnResearchDocument(
   organisationCode: string,
@@ -20,7 +20,7 @@ export async function getOwnResearchDocument(
 
 export async function getGroupResearchDocument(
   organisationCode: string,
-  groupId: PeopleGroupModel['id'],
+  groupId: PeopleGroupIdOrSlug,
   documentType: DocumentType,
   config = {}
 ) {
@@ -44,7 +44,7 @@ export async function getOwnResearchDocumentAnalytics(
 
 export async function getGroupResearchDocumentAnalytics(
   organisationCode: string,
-  groupId: PeopleGroupModel['id'],
+  groupId: PeopleGroupIdOrSlug,
   documentType: DocumentType,
   config = {}
 ) {

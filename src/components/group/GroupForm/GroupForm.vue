@@ -193,7 +193,7 @@
       <FieldErrors :errors="validation.form.publication_status.$errors" />
     </div>
 
-    <div v-if="$route.params.groupId" class="delete-group">
+    <div v-if="$route.params.groupIdOrSlug" class="delete-group">
       <label>
         <span class="section-title">{{ $t('group.form.delete') }}</span>
         <LpiButton
@@ -398,7 +398,7 @@ export default {
     async removeGroup() {
       this.loading = true
       let organization = this.organizationsStore.current.code
-      await deleteGroup(organization, this.$route.params.groupId)
+      await deleteGroup(organization, this.$route.params.groupIdOrSlug)
       this.loading = false
       this.$router.push({
         name: 'HomeRoot',
@@ -409,7 +409,7 @@ export default {
       if (location.id) {
         await removeGroupLocation(
           this.organizationsStore.current.code,
-          this.$route.params.groupId,
+          this.$route.params.groupIdOrSlug,
           location.id
         )
         this.form.locations = this.form.locations.filter((el) => el.id !== location.id)
@@ -419,7 +419,7 @@ export default {
       this.closeModals('LocationDrawer', 'LocationForm')
     },
     async submitLocations(location) {
-      const groupId = this.$route.params.groupId
+      const groupId = this.$route.params.groupIdOrSlug
       let locationElement = location
 
       if (groupId) {
@@ -427,14 +427,14 @@ export default {
           this.form.locations = this.form.locations.filter((el) => el.id !== location.id)
           locationElement = await patchGroupLocation(
             this.organizationsStore.current.code,
-            this.$route.params.groupId,
+            this.$route.params.groupIdOrSlug,
             location.id,
             location
           )
         } else {
           locationElement = await postGroupLocation(
             this.organizationsStore.current.code,
-            this.$route.params.groupId,
+            this.$route.params.groupIdOrSlug,
             location
           )
         }

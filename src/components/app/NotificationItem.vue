@@ -61,7 +61,7 @@
               :to="{
                 name: 'groupSnapshot',
                 params: {
-                  groupId:
+                  groupIdOrSlug:
                     notification.invitation?.people_group?.slug ||
                     notification.invitation?.people_group?.id,
                 },
@@ -78,7 +78,7 @@
               :to="{
                 name: 'Group',
                 params: {
-                  groupId: notification.context.group.slug || notification.context.group.id,
+                  groupIdOrSlug: notification.context.group.slug || notification.context.group.id,
                 },
               }"
             >

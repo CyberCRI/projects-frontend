@@ -1,7 +1,7 @@
 export default function useGroupPagesRoutes() {
   return [
     {
-      path: '/group/:groupId',
+      path: '/group/:groupIdOrSlug',
       name: 'Group',
       redirect: { name: 'groupSnapshot' },
       component: () => import('../pages/GroupPageV2/GroupPage.vue'),
@@ -65,7 +65,7 @@ export default function useGroupPagesRoutes() {
           name: 'groupSnapshotEdit',
           props: (route) => ({
             isReducedMode: true,
-            groupId: route.params.groupId,
+            groupIdOrSlug: route.params.groupIdOrSlug,
           }),
           component: () => import('../pages/GroupPageV2/Tabs/GroupEditTab.vue'),
         },

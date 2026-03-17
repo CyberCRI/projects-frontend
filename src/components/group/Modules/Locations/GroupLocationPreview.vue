@@ -10,7 +10,7 @@
         class="see-more-btn reset-btn"
         :to="{
           name: 'groupLocations',
-          params: { groupId: group.id },
+          params: { groupIdOrSlug: group.slug || group.id },
         }"
       />
     </template>

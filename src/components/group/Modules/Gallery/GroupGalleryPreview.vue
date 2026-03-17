@@ -9,7 +9,7 @@
       <SeeMoreArrow
         :to="{
           name: 'groupGallery',
-          params: { groupId: group.id },
+          params: { groupIdOrSlug: group.slug || group.id },
         }"
       />
     </template>

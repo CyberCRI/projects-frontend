@@ -7,7 +7,7 @@
       <NuxtLink
         :to="{
           name: 'Group',
-          params: { groupId: group.id },
+          params: { groupIdOrSlug: group.slug || group.id },
         }"
         class="subgroup-header border-primary skeletons-text"
         @mouseover.prevent="onMouseover"
