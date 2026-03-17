@@ -199,13 +199,13 @@ const openEditModal = (location) => {
   form.value = location
   showForm.value = true
 }
+
 const openAddModal = (newLocation) =>
   openEditModal({
     title: newLocation.title ?? '',
     description: newLocation.description ?? '',
     lat: newLocation.lat,
     lng: newLocation.lng,
-    type: 'address',
   })
 // method for event on leaftlet
 const clickOnMap = (event) => openAddModal({ lat: event.latlng.lat, lng: event.latlng.lng })

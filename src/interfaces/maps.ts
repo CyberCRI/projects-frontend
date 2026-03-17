@@ -3,7 +3,9 @@ import {
   AnyLocation,
   BaseLocationModel,
   LocationModel,
+  NewsLocation,
   TranslatedLocation,
+  TranslatedNewsLocation,
 } from '@/models/location.model'
 
 export type Geocoding = BaseLocationModel & {
@@ -19,9 +21,11 @@ export type MapPointerOption = {
 export type Locations = {
   groups: PeopleGroupModel[]
   projects: LocationModel[]
+  news: NewsLocation[]
 }
 
 export type TranslatedLocations = {
   groups: GeneralLocationPeopleGroup[]
   projects: TranslatedLocation[]
+  news: TranslatedNewsLocation[]
 }

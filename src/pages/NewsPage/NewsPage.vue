@@ -2,6 +2,7 @@
 import { getNews, getAllNews, deleteNews } from '@/api/news.service'
 import useToasterStore from '@/stores/useToaster'
 import useOrganizationsStore from '@/stores/useOrganizations'
+import LocationNewsTooltip from '@/components/news/map/LocationNewsTooltip.vue'
 
 const props = defineProps({
   slugOrId: {
@@ -168,6 +169,14 @@ try {
       <SkeletonComponent class="skeleton-block" height="16px" tag="p" />
     </div>
     <TipTapOutput v-else-if="news" class="news-content" :content="news?.$t?.content" />
+  </div>
+
+  <div v-if="news.location" class="page-section-narrow">
+    <MapRecap :locations="[news.location]">
+      <template #tooltip="{ location }">
+        <LocationNewsTooltip :location="location" :news="news" />
+      </template>
+    </MapRecap>
   </div>
 
   <div class="other-news page-section-narrow">

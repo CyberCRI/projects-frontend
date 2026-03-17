@@ -55,6 +55,10 @@
       border-color: $location-address;
     }
 
+    &.news {
+      border-color: $location-news;
+    }
+
     &__dot {
       width: 20px;
       height: 20px;
@@ -72,6 +76,10 @@
 
       &.address {
         background: $location-address;
+      }
+
+      &.news {
+        background: $location-news;
       }
     }
 
@@ -141,6 +149,10 @@
 
       &.address {
         background: $location-address;
+      }
+
+      &.news {
+        background: $location-news;
       }
     }
   }
@@ -291,6 +303,10 @@
 
       &.address svg {
         background-color: $location-address;
+      }
+
+      &.news svg {
+        background-color: $location-news;
       }
 
       &:last-child {

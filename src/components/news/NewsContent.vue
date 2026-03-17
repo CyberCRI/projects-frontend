@@ -21,7 +21,7 @@
       <TipTapOutput class="news-content" :content="news.$t.content" />
     </div>
 
-    <MapRecap />
+    <MapRecap v-if="news?.location" :locations="[news.location]" />
   </div>
 </template>
 <script setup lang="ts">

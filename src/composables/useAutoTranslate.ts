@@ -5,7 +5,7 @@ import { TranslatedProject } from '@/models/project.model'
 import { AttachmentFileModel, TranslatedAttachmentFile } from '@/models/attachment-file.model'
 import { AttachmentLinkModel, TranslatedAttachmentLink } from '@/models/attachment-link.model'
 import { TranslatedDocument } from '@/interfaces/researcher'
-import { TranslatedLocation } from '@/models/location.model'
+import { TranslatedLocation, TranslatedNewsLocation } from '@/models/location.model'
 import { TranslatedNews } from '@/models/news.model'
 
 // type can be computed or object
@@ -257,8 +257,26 @@ export default function useAutoTranslate() {
 
   // -----------
   // news
-  const translateOneNews = (news) => translateEntity<TranslatedNews>(news, ['title', 'content'])
+  const translateOneNews = (news) =>
+    computed(() => {
+      const newsRaw = unref(news)
+      return {
+        ...unref(translateEntity<TranslatedNews>(newsRaw, ['title', 'content'])),
+        location: newsRaw?.location ? unref(translateLocation(newsRaw.location)) : null,
+      }
+    })
   const translateNews = (news) => translateEntities<TranslatedNews>(news, translateOneNews)
+
+  const translateOneNewsLocation = (location) =>
+    computed<TranslatedNewsLocation>(() => {
+      const locationRaw = unref(location)
+      return {
+        ...unref(translateLocation(locationRaw)),
+        news: unref(translateEntity<TranslatedNews>(locationRaw.news, ['title', 'content'])),
+      }
+    })
+  const translateNewsLocations = (news) =>
+    translateEntities<TranslatedNewsLocation>(news, translateOneNewsLocation)
 
   // -----------
   // instructions
@@ -356,6 +374,8 @@ export default function useAutoTranslate() {
     // news
     translateOneNews,
     translateNews,
+    translateOneNewsLocation,
+    translateNewsLocations,
 
     // evnts
     translateEvent,

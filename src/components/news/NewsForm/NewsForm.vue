@@ -66,15 +66,15 @@
         editable
         :focus="false"
         @edit="openModals('LocationForm')"
-        @delete="updateForm({ location: null })"
+        @delete="updateLocation(null)"
       />
       <LocationForm
         v-if="stateModals.LocationForm"
         v-model="model.location"
         :location-types="LOCATION_TYPES"
         @close="closeModals('LocationForm')"
-        @submit="updateForm({ location: $event })"
-        @delete="updateForm({ location: null })"
+        @submit="closeModals('LocationForm')"
+        @delete="updateLocation(null)"
       />
       <LocationDrawer
         :is-opened="stateModals.LocationDrawer"
@@ -82,8 +82,8 @@
         editable
         :location-types="LOCATION_TYPES"
         @close="closeModals('LocationDrawer')"
-        @submit="updateForm({ location: $event })"
-        @delete="updateForm({ location: null })"
+        @submit="updateLocation($event)"
+        @delete="updateLocation(null)"
       />
     </div>
 
@@ -169,7 +169,7 @@ const emit = defineEmits<{
 
 const organizationsStore = useOrganizationsStore()
 const defaultPictures = usePatatoids()
-const { t } = useNuxtI18n()
+const { t, d } = useNuxtI18n()
 
 const rules = computed(() => {
   return {
@@ -186,6 +186,9 @@ const rules = computed(() => {
 })
 
 const v$ = useVuelidate(rules, model)
+defineExpose({
+  v$,
+})
 
 const updateForm = throttle((data) => {
   // short throttling is mandatory here
@@ -202,7 +205,7 @@ const updateForm = throttle((data) => {
 const showDatePicker = ref(false)
 
 const displayedDate = computed(() => {
-  return model.value.publication_date ? $d(new Date(model.value.publication_date)) : ''
+  return model.value.publication_date ? d(new Date(model.value.publication_date)) : ''
 })
 const organization = computed(() => organizationsStore.current)
 
@@ -224,6 +227,11 @@ const saveOrganizationImage = (file) => {
 const onDateSelected = (modelData) => {
   updateForm({ publication_date: modelData })
   showDatePicker.value = false
+}
+
+const updateLocation = (location) => {
+  updateForm({ location })
+  closeModals('LocationDrawer', 'LocationForm')
 }
 </script>
 

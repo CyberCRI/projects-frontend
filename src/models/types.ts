@@ -10,4 +10,4 @@ export type ProjectMemberRoleType = 'owners' | 'members' | 'reviewers'
 
 export type StatusType = 'na' | 'ongoing' | 'complete' | 'cancel'
 
-export type LocationType = 'team' | 'impact' | 'address'
+export type LocationType = 'team' | 'impact' | 'address' | 'news'

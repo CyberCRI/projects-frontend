@@ -2487,6 +2487,7 @@
     "groups-label": "Groups:"
   },
   "news": {
+    "view": "See news",
     "create": {
       "title": "Create a news"
     },
