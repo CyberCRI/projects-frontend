@@ -12,13 +12,13 @@
             btn-icon="Pen"
             :aria-label="$t('common.edit')"
             class="skeletons-background"
-            @click.stop="emit('edit', news)"
+            @click.prevent="emit('edit', news)"
           />
           <LpiButton
             btn-icon="Close"
             :aria-label="$t('common.delete')"
             class="skeletons-background"
-            @click.stop="emit('delete', news)"
+            @click.prevent="emit('delete', news)"
           />
         </div>
 

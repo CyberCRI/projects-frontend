@@ -2,6 +2,7 @@ import { Translated } from '@/interfaces/translated'
 import BaseModel from '@/models/base.model'
 import { ImageModel } from '@/models/image.model'
 import { PeopleGroupModel } from '@/models/invitation.model'
+import { BaseLocationModel } from '@/models/location.model'
 import { OrganizationModel } from '@/models/organization.model'
 
 /**
@@ -20,6 +21,7 @@ export interface NewsModel extends BaseModel {
   updated_at: string
   organization: OrganizationModel
   visible_by_all: boolean
+  location: BaseLocationModel
 }
 
 export type TranslatedNews = Translated<NewsModel, 'title' | 'content'>
