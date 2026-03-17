@@ -169,7 +169,7 @@ const routes = ({
   },
 
   {
-    path: '/groups/:groupId?',
+    path: '/groups/:groupIdOrSlug?',
     name: 'Groups',
     component: () => import('../pages/GroupsPage/GroupsPage.vue'),
     props: true,
