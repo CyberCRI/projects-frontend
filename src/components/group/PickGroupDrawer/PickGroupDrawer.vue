@@ -5,24 +5,27 @@
     class="small"
     :confirm-action-name="t('common.save')"
     :confirm-action-disabled="!rooted && selectedGroup === null"
+    :asyncing="status !== 'success'"
     @close="emit('close')"
     @confirm="emit('confirm', selectedGroup)"
   >
-    <PickGroup
-      :subtitle="subtitle"
-      :groups="groups"
-      :initial-group="initialGroup"
-      :forbidden-ids="forbiddenIds"
-      :rooted="rooted"
-      @select-group="selectGroup"
-    />
+    <FetchLoader :status="status">
+      <PickGroup
+        :subtitle="subtitle"
+        :groups="groups"
+        :initial-group="initialGroup"
+        :forbidden-ids="forbiddenIds"
+        :rooted="rooted"
+        @select-group="selectGroup"
+      />
+    </FetchLoader>
   </BaseDrawer>
 </template>
 <script setup>
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import FetchLoader from '@/components/base/FetchLoader.vue'
 import PickGroup from '@/components/group/PickGroup/PickGroup.vue'
 
-defineOptions({ name: 'PickGroupDrawer' })
 const props = defineProps({
   drawerTitle: {
     // title of the drawer
@@ -58,6 +61,10 @@ const props = defineProps({
     // allow to show and pick a (null) root group
     type: Boolean,
     default: false,
+  },
+  status: {
+    type: String,
+    default: 'success',
   },
 })
 

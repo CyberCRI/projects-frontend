@@ -162,7 +162,11 @@ export default {
 
   methods: {
     async loadGroups() {
-      this.allGroups = (await getHierarchyGroups(this.organizationsStore.current.code)).children
+      this.allGroups = (
+        await getHierarchyGroups(this.organizationsStore.current.code, {
+          query: { modules: 'none' },
+        })
+      ).children
     },
     onToggleGroup(group) {
       const groups = {
