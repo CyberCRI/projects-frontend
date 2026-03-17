@@ -15,7 +15,7 @@ describe('GroupProjectsTab', () => {
   const orgaCode = useOrganizationCode()
 
   it('Render', async () => {
-    registerEndpoint(`organization/${orgaCode}/people-group/${group.id}/`, () => group)
+    registerEndpoint(`organization/${orgaCode}/people-group/${group.slug}/`, () => group)
     const wrapper = lpiMount(GroupPage, {
       props: {
         group,
@@ -27,7 +27,7 @@ describe('GroupProjectsTab', () => {
   })
 
   it('Error fetch', async () => {
-    registerEndpoint(`organization/${orgaCode}/people-group/${group.id}/`, () => {
+    registerEndpoint(`organization/${orgaCode}/people-group/${group.slug}/`, () => {
       throw createError({ status: 500 })
     })
     const wrapper = lpiMount(GroupPage, {
