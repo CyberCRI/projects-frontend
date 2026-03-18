@@ -28,7 +28,7 @@ export default defineLazyEventHandler(() => {
         FROM ${vectorTableName} v
         WHERE v.metadata->>'orgCode' = $1
         AND v.metadata->>'title' = $2
-        ORDER BY v.metadata->'loc'->>'pageNumber' ASC, v.metadata->'loc'->'lines'->>'from' ASC
+        ORDER BY v.metadata->'loc'->'pageNumber' ASC, v.metadata->'loc'->'lines'->'from' ASC
       `,
         [appApiOrgCode, title]
       )
