@@ -125,8 +125,7 @@ import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import { LocationType } from '@/models/types'
 import { isNil } from 'es-toolkit'
-import { EventModel } from '@/models/event.model'
-import { Optional } from '@/interfaces/utils'
+import { EventForm } from '@/models/event.model'
 import { defaultForm } from '@/form/event'
 
 withDefaults(
@@ -138,7 +137,7 @@ withDefaults(
   }
 )
 const { t, d, locale } = useNuxtI18n()
-const model = defineModel<Optional<EventModel, 'id'>>({ default: defaultForm() })
+const model = defineModel<EventForm>({ default: defaultForm() })
 const emit = defineEmits<{
   invalid: [boolean]
 }>()

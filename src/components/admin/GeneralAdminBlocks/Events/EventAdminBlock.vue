@@ -40,7 +40,7 @@
 import { getAllEvents, deleteEvent } from '@/api/event.service'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import { defaultForm } from '@/components/event/EventForm/EventForm.vue'
+import { defaultForm } from '@/components/instruction/InstructionForm/InstructionForm.vue'
 export default {
   name: 'EventAdminBlock',
 

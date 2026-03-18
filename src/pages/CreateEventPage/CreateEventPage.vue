@@ -31,7 +31,6 @@
 <script setup lang="ts">
 import { createEvent } from '@/api/event.service'
 import useToasterStore from '@/stores/useToaster'
-import { getOrganizationByCode } from '@/api/organizations.service'
 import { defaultForm } from '@/form/event'
 
 const toaster = useToasterStore()
@@ -60,8 +59,8 @@ const saveEvent = async () => {
     const formData = {
       organization_code: organizationCode,
       ...form.value,
-      start_date: form.value.start_date,
-      end_date: form.value.end_date,
+      start_date: form.value.start_date.toISOString(),
+      end_date: (form.value.end_date || form.value.start_date).toISOString(),
       people_groups: Object.entries(form.value.people_groups)
         .filter(([, value]) => value)
         .map(([id]) => id),
@@ -77,20 +76,9 @@ const saveEvent = async () => {
   }
 }
 
-try {
-  const runtimeConfig = useRuntimeConfig()
-  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
-  useLpiHead(
-    useRequestURL().toString(),
-    computed(() => t('event.create.title')),
-    organization?.dashboard_subtitle,
-    image,
-    dimensions
-  )
-} catch (err) {
-  console.log(err)
-}
+useLpiHead2({
+  title: computed(() => t('event.create.title')),
+})
 </script>
 
 <style lang="scss" scoped>

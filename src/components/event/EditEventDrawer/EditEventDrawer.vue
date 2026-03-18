@@ -3,7 +3,7 @@
     :confirm-action-name="$t('common.save')"
     :confirm-action-disabled="invalid"
     :is-opened="isOpened"
-    :title="form.id ? $t('event.drawer.edit') : $t('event.drawer.create')"
+    :title="event?.id ? $t('event.drawer.edit') : $t('event.drawer.create')"
     class="small"
     :asyncing="asyncing"
     @close="closeDrawer"
@@ -12,121 +12,92 @@
     <EventForm v-if="form" ref="eventForm" v-model="form" @invalid="invalid = $event" />
   </BaseDrawer>
 </template>
-<script>
+
+<script setup lang="ts">
 import { createEvent, putEvent } from '@/api/event.service'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import EventForm, { defaultForm } from '@/components/event/EventForm/EventForm.vue'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-export default {
-  name: 'EditEventDrawer',
+import EventForm from '@/components/event/EventForm/EventForm.vue'
+import useToasterStore from '@/stores/useToaster'
+import { defaultForm } from '@/form/event'
+import { EventModel } from '@/models/event.model'
 
-  components: {
-    EventForm,
-    BaseDrawer,
-  },
+const props = withDefaults(
+  defineProps<{
+    isOpened?: boolean
+    event?: EventModel
+  }>(),
+  { isOpened: false, event: null }
+)
 
-  props: {
-    isOpened: {
-      type: Boolean,
-      default: false,
-    },
+const emit = defineEmits<{
+  close: []
+  'event-edited': [EventModel]
+}>()
+const { t } = useNuxtI18n()
+const toaster = useToasterStore()
+const organizationCode = useOrganizationCode()
 
-    event: {
-      type: [Object, null],
-      default: null,
-    },
-  },
+const form = ref(defaultForm())
+const asyncing = ref(false)
+const invalid = ref(false)
 
-  emits: ['close', 'event-edited'],
-  setup() {
-    const toaster = useToasterStore()
-    const organizationsStore = useOrganizationsStore()
-    return {
-      toaster,
-      organizationsStore,
+watch(
+  () => props.event,
+  (event) => {
+    if (event) {
+      form.value = {
+        ...event,
+        start_date: event.start_date ? new Date(event.start_date) : null,
+        end_date: event.end_date ? new Date(event.end_date) : null,
+        // build group "object" from array if it is an array
+        people_groups: event.people_groups.reduce
+          ? event.people_groups.reduce((acc, groupId) => {
+              acc[groupId] = true
+              return acc
+            }, {})
+          : event.people_groups,
+      }
+    } else {
+      form.value = defaultForm()
     }
   },
+  { immediate: true }
+)
 
-  data() {
-    return {
-      form: defaultForm(),
-      asyncing: false,
-      invalid: false,
+const eventForm = useTemplateRef('eventForm')
+const saveEvent = async () => {
+  const isValid = await eventForm.value.v$.$validate()
+  if (!isValid) {
+    return
+  }
+
+  asyncing.value = true
+
+  try {
+    const formData = {
+      ...form.value,
+      start_date: form.value.start_date.toISOString(),
+      end_date: (form.value.end_date || form.value.start_date).toISOString(),
+      people_groups: Object.entries(form.value.people_groups)
+        .filter(([, value]) => value)
+        .map(([id]) => id),
     }
-  },
+    let savedEvent: EventModel
+    if (props.event?.id) {
+      savedEvent = await putEvent(organizationCode, props.event.id, formData)
+    } else {
+      savedEvent = await createEvent(organizationCode, formData)
+    }
+    toaster.pushSuccess(t('event.save.success'))
 
-  watch: {
-    event: {
-      handler(event) {
-        if (event) {
-          this.form = {
-            ...event,
-            start_date: (event.start_date && new Date(event.start_date)) || '',
-            end_date: (event.end_date && new Date(event.end_date)) || '',
-            // build group "object" from array if it is an array
-            people_groups: event.people_groups.reduce
-              ? event.people_groups.reduce((acc, groupId) => {
-                  acc[groupId] = true
-                  return acc
-                }, {})
-              : event.people_groups,
-          }
-        } else {
-          this.form = defaultForm()
-        }
-      },
-      immediate: true,
-    },
-  },
-
-  methods: {
-    async saveEvent() {
-      const isValid = await this.$refs.eventForm.v$.$validate()
-      if (!isValid) {
-        return
-      }
-
-      this.asyncing = true
-
-      try {
-        const formData = {
-          ...this.form,
-          start_date: this.form.start_date.toISOString(),
-          end_date: (this.form.end_date || this.form.start_date).toISOString(),
-          people_groups: Object.entries(this.form.people_groups)
-            .filter(([, value]) => value)
-            .map(([id]) => id),
-        }
-        let savedEvent
-        if (this.event?.id) {
-          savedEvent = await putEvent(
-            this.organizationsStore.current?.code,
-            this.event.id,
-            formData
-          )
-        } else {
-          savedEvent = await createEvent(this.organizationsStore.current?.code, formData)
-        }
-        this.toaster.pushSuccess(this.$t('event.save.success'))
-
-        this.$emit('event-edited', savedEvent)
-      } catch (err) {
-        this.toaster.pushError(`${this.$t('event.save.error')} (${err})`)
-        console.error(err)
-      } finally {
-        this.asyncing = false
-        this.closeDrawer()
-      }
-    },
-    closeDrawer() {
-      this.$emit('close')
-    },
-  },
+    emit('event-edited', savedEvent)
+  } catch (err) {
+    toaster.pushError(`${t('event.save.error')} (${err})`)
+    console.error(err)
+  } finally {
+    asyncing.value = false
+    closeDrawer()
+  }
 }
+const closeDrawer = () => emit('close')
 </script>
-<style lang="scss" scoped>
-.page-title {
-  margin-bottom: pxToRem(60px);
-}
-</style>

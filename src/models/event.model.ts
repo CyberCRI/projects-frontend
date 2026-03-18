@@ -10,19 +10,23 @@ export interface EventModel extends BaseModel {
   id: number
   title: string
   content: string
-  start_date: Date | string
-  end_date: Date | string
-  created_at?: Date | string
-  updated_at?: Date | string
+  start_date: string
+  end_date: string
+  created_at?: string
+  updated_at?: string
   visible_by_all: boolean
   location: BaseLocationModel | null
   people_groups: string[]
 }
 
-export type EventOutput = BaseModel & Required<EventModel>
+export type EventInput = Required<Omit<EventModel, 'id' | 'created_at' | 'updated_at'>>
 
-export type EventInput = Required<Omit<EventModel, 'id' | 'created_at' | 'updated_at'>> & {
-  organization_code: string
+export type EventForm = Omit<EventInput, 'people_groups' | 'start_date' | 'end_date'> & {
+  start_date: Date
+  end_date?: Date | null
+  people_groups: {
+    [key: number]: boolean
+  }
 }
 
 export type TranslatedEventModel = Translated<EventModel, 'title' | 'content'> & {
