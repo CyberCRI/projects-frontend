@@ -7,7 +7,7 @@
     :see-more="{
       name: 'subGroups',
       params: {
-        groupId: group.id,
+        groupIdOrSlug: group.slug || group.id,
       },
     }"
   >

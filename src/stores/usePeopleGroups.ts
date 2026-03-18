@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 
 export interface PeopleGroupsState {
-  currentId: number | null
+  currentId: number | string | null
 }
 
 const usePeopleGroupsStore = defineStore('peopleGroups', {

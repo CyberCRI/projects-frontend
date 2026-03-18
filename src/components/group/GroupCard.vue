@@ -44,7 +44,7 @@
       <NuxtLink
         :to="{
           name: 'Groups',
-          params: { groupId: group.id },
+          params: { groupIdOrSlug: group.slug || group.id },
         }"
         class="subgroups-link skeletons-background"
       >
@@ -95,7 +95,7 @@ const toLink = computed(() => {
   // witch we dont want when just selecting project
   return showAddButton.value || !props.group.id
     ? null
-    : { name: 'Group', params: { groupId: props.group.id } }
+    : { name: 'Group', params: { groupIdOrSlug: props.group.slug || props.group.id } }
 })
 
 const modules = computed(() => props.group.modules ?? ({} as TranslatedPeopleGroupModel['modules']))

@@ -17,7 +17,7 @@ import { useLpiHead2 } from '@/composables/useLpiHead'
 import { AsyncDataRequestStatus } from 'nuxt/app'
 
 const props = defineProps({
-  groupId: {
+  groupIdOrSlug: {
     type: [Number, null],
     required: true,
   },
@@ -101,7 +101,7 @@ const rules = computed(() => ({
 const v$ = useValidate(rules, { form })
 
 const formIsInvalid = computed(() => v$.value.$invalid)
-const isEdit = computed(() => !!props.groupId)
+const isEdit = computed(() => !!props.groupIdOrSlug)
 // use group's org code if availabe
 // to allow edition of groups on the meta portal (PROJ-1032)
 const orgCode = computed(() => groupData.value?.organization ?? organizationCode)
@@ -113,11 +113,11 @@ const redirectTo404 = () => {
   })
 }
 const cancel = () => {
-  if (props.groupId) {
+  if (props.groupIdOrSlug) {
     router.push(
       props.postCancelRouteFactory
-        ? props.postCancelRouteFactory(props.groupId)
-        : { name: 'Group', params: { groupId: props.groupId } }
+        ? props.postCancelRouteFactory(props.groupIdOrSlug)
+        : { name: 'Group', params: { groupIdOrSlug: props.groupIdOrSlug } }
     )
   } else {
     router.push(
@@ -129,10 +129,10 @@ const cancel = () => {
 // TODO need to rework all this :D
 let setProjectsData, updateGroupProjects, setMembersData, updateGroupMembers
 if (!props.isReducedMode) {
-  const projectsObj = useGroupProjectsUpdate(orgCode, props.groupId, form)
+  const projectsObj = useGroupProjectsUpdate(orgCode, props.groupIdOrSlug, form)
   setProjectsData = projectsObj.setProjectsData
   updateGroupProjects = projectsObj.updateGroupProjects
-  const membersObj = useGroupMembersUpdate(orgCode, props.groupId, form)
+  const membersObj = useGroupMembersUpdate(orgCode, props.groupIdOrSlug, form)
   setMembersData = membersObj.setMembersData
   updateGroupMembers = membersObj.updateGroupMembers
 }
@@ -222,7 +222,7 @@ const createGroup = async () => {
     router.push(
       props.postCreateRouteFactory
         ? props.postCreateRouteFactory(newGroupId)
-        : { name: 'Group', params: { groupId: newGroupId } }
+        : { name: 'Group', params: { groupIdOrSlug: newGroupId } }
     )
   } catch (error) {
     toaster.pushError(`${t('toasts.group-create.error')} (${error})`)
@@ -237,13 +237,13 @@ const updateGroup = async () => {
   try {
     const payload = buildPayload()
     // @ts-expect-error 2339
-    payload.id = props.groupId
+    payload.id = props.groupIdOrSlug
     payload.type = form.value.type
 
-    await patchGroup(orgCode.value, props.groupId, payload)
+    await patchGroup(orgCode.value, props.groupIdOrSlug, payload)
 
     // save header
-    await updateHeader(props.groupId)
+    await updateHeader(props.groupIdOrSlug)
 
     if (!props.isReducedMode) {
       // save members
@@ -264,8 +264,8 @@ const updateGroup = async () => {
 
     router.push(
       props.postUpdateRouteFactory
-        ? props.postUpdateRouteFactory(props.groupId)
-        : { name: 'Group', params: { groupId: props.groupId } }
+        ? props.postUpdateRouteFactory(props.groupIdOrSlug)
+        : { name: 'Group', params: { groupIdOrSlug: props.groupIdOrSlug } }
     )
   } catch (error) {
     toaster.pushError(`${t('toasts.group-edit.error')} (${error})`)
@@ -291,7 +291,7 @@ const submit = async () => {
 const status = ref<AsyncDataRequestStatus>('pending')
 onBeforeMount(async () => {
   stopEditWatcher()
-  if (!props.groupId) {
+  if (!props.groupIdOrSlug) {
     peopleGroupsStore.currentId = null
     // check right to create (if no grouip id passed) or edit (if group id passed)
     // and 404 if not allowed
@@ -303,13 +303,13 @@ onBeforeMount(async () => {
     // load data
     // general data
     try {
-      const _groupData = await getGroup(orgCode.value, props.groupId)
+      const _groupData = await getGroup(orgCode.value, props.groupIdOrSlug)
       // now we can get the real id (not slug)
       peopleGroupsStore.currentId = _groupData.id
       if (!canEditGroup.value) {
         router.push({
           name: 'Group',
-          params: { groupId: props.groupId },
+          params: { groupIdOrSlug: props.groupIdOrSlug },
         })
         return
       }
@@ -363,11 +363,11 @@ useLpiHead2({
       <!-- do not remove key or group hierarchy will be uncorrectly loaded on meta portal (PROJ-1032) -->
       <FetchLoader :status="status">
         <GroupForm
-          :key="props.groupId"
+          :key="groupIdOrSlug"
           ref="groupForm"
           v-model="form"
           :validation="v$"
-          :is-add-mode="!groupId"
+          :is-add-mode="!groupIdOrSlug"
           :is-reduced-mode="isReducedMode"
           @close="$emit('close')"
         />

@@ -5,7 +5,7 @@ import { PeopleGroupModulesKeys } from '@/models/invitation.model'
 import { factoriesSkeleton } from '@/skeletons/base.skeletons'
 import { groupSkeleton } from '@/skeletons/group.skeletons'
 
-const props = withDefaults(defineProps<{ groupId?: string }>(), { groupId: '' })
+const props = withDefaults(defineProps<{ groupIdOrSlug?: string }>(), { groupIdOrSlug: '' })
 const organizationCode = useOrganizationCode()
 
 const { searchFromQuery } = useSearch('groups')
@@ -20,7 +20,7 @@ const {
   query: {
     modules: ['members', 'subgroups'] satisfies PeopleGroupModulesKeys[],
     depth: 1,
-    parent: props.groupId ? props.groupId : undefined,
+    parent: props.groupIdOrSlug || undefined,
   },
   // @ts-expect-error children need "id"
   default: () => groupSkeleton({ children: factoriesSkeleton(groupSkeleton, 10) }),
@@ -36,7 +36,7 @@ const hierarchy = computed(() => {
       route: {
         name: 'Groups',
         // if firt element (groupRoot) not redirect with id
-        params: idx !== 0 ? { groupId: group.id } : null,
+        params: idx !== 0 ? { groupIdOrSlug: group.slug || group.id } : null,
       },
     }
   })
@@ -68,7 +68,7 @@ useLpiHead2({
       {{ $t('common.groups') }}
     </h1>
 
-    <div v-if="!groupId" class="search-input-container">
+    <div v-if="!groupIdOrSlug" class="search-input-container">
       <SearchBlock :limit="30" section="groups" :freeze-search="isNavigating" />
     </div>
     <div v-if="hasSearch" class="page-section-wide">

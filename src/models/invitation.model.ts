@@ -41,6 +41,8 @@ export interface PeopleGroupModel {
   }
 }
 
+export type PeopleGroupIdOrSlug = PeopleGroupModel['id'] | PeopleGroupModel['slug']
+
 export type PeopleGroupModulesKeys = keyof PeopleGroupModel['modules']
 
 export type TranslatedPeopleGroupModel = Omit<

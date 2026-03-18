@@ -38,7 +38,7 @@
     <div v-if="extra" class="project-extra">
       <slot name="action">
         <ProjectFollowIcon
-          class="icon skeletons-image"
+          class="icon skeletons-background"
           :project="project"
           @follow="emit('refresh')"
           @unfollow="emit('refresh')"

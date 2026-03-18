@@ -34,7 +34,7 @@
       :initial-group="initialGroup"
       :forbidden-ids="forbiddenIds"
       :rooted="groupToBeEdited"
-      :asyncing="groupDrawerAsyncing"
+      :status="status"
       @close="closeDrawer"
       @confirm="confirmGroup"
     />
@@ -58,6 +58,7 @@ export default {
 
   data() {
     return {
+      status: 'pending',
       groups: [],
       loading: true,
       modalTitle: '',
@@ -77,6 +78,8 @@ export default {
   methods: {
     async loadGroups() {
       this.loading = true
+      this.status = 'pending'
+
       this.groups = (
         await getHierarchyGroups(this.organizationsStore.current.code, {
           query: { modules: 'none' },
@@ -84,6 +87,7 @@ export default {
       ).children
 
       this.loading = false
+      this.status = 'success'
     },
     // keeping this (move child) for future needs
     // addGroup(group) {
@@ -109,7 +113,7 @@ export default {
     editGroup(group) {
       this.$router.push({
         name: 'adminEditGroup',
-        params: { groupId: group.slug || group.id },
+        params: { groupIdOrSlug: group.slug || group.id },
       })
     },
 

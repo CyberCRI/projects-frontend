@@ -6,7 +6,7 @@
     :icon="GroupModuleIcon.featured_projects"
     :see-more="{
       name: 'groupProjects',
-      params: { groupId: group.id },
+      params: { groupIdOrSlug: group.slug || group.id },
     }"
   >
     <template #content>

@@ -2,7 +2,7 @@
   <CardLocationTooltip
     :location="location"
     :label="$t('group.view')"
-    :to="{ name: 'Group', params: { groupId: group.id } }"
+    :to="{ name: 'Group', params: { groupIdOrSlug: group.slug || group.id } }"
     :image="group.header_image"
     :default-picture="DEFAULT_GROUP_PATATOID"
     :title="group.$t.name"

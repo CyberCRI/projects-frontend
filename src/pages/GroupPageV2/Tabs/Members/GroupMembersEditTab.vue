@@ -39,7 +39,7 @@ const { startEditWatcher, stopEditWatcher } = useEditWatcher(form)
 const redirect = (numberMembers) => {
   router.push({
     name: numberMembers ? 'groupMembers' : 'groupSnapshot',
-    params: { groupId: props.group.id },
+    params: { groupIdOrSlug: props.group.slug || props.group.id },
   })
 }
 

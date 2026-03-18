@@ -10,7 +10,7 @@ import type {
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import useAPI from '@/composables/useAPI'
 import { ProjectModel } from '@/models/project.model'
-import { PeopleGroupModel } from '@/models/invitation.model'
+import { PeopleGroupIdOrSlug, PeopleGroupModel } from '@/models/invitation.model'
 import { ImageModel } from '@/models/image.model'
 import { BaseLocationModel, LocationModel } from '@/models/location.model'
 import { NewsModel } from '@/models/news.model'
@@ -43,13 +43,13 @@ export async function postGroup(organizationCode: string, groupData: PostGroupDa
 // GROUP
 export async function addParentGroup(
   orgId: string,
-  groupId: number,
+  groupId: PeopleGroupIdOrSlug,
   body: AddParentGroupModelInput
 ) {
   return await useAPI(`organization/${orgId}/people-group/${groupId}/`, { body, method: 'PATCH' })
 }
 
-export function getGroup(organizationCode: string, groupId: number, config = {}) {
+export function getGroup(organizationCode: string, groupId: PeopleGroupIdOrSlug, config = {}) {
   return useAPI<PeopleGroupModel>(
     `organization/${organizationCode}/people-group/${groupId}/`,
     config
@@ -75,7 +75,11 @@ export async function deleteGroup(organizationCode: string, groupName: string) {
 
 // GROUP MEMBERS
 
-export async function getGroupMember(organizationCode: string, groupId: number, config = {}) {
+export async function getGroupMember(
+  organizationCode: string,
+  groupId: PeopleGroupIdOrSlug,
+  config = {}
+) {
   return await useAPI<PaginationResult<GroupMember>>(
     `organization/${organizationCode}/people-group/${groupId}/member/`,
     config
@@ -84,7 +88,7 @@ export async function getGroupMember(organizationCode: string, groupId: number, 
 
 export async function postGroupMembers(
   organizationCode: string,
-  groupId: number,
+  groupId: PeopleGroupIdOrSlug,
   membersData: AddGroupMembers
 ) {
   return await useAPI(`organization/${organizationCode}/people-group/${groupId}/member/add/`, {
@@ -95,7 +99,7 @@ export async function postGroupMembers(
 
 export async function removeGroupMember(
   organizationCode: string,
-  groupId: number,
+  groupId: PeopleGroupIdOrSlug,
   membersData: RemoveGroupMember
 ) {
   return await useAPI(`organization/${organizationCode}/people-group/${groupId}/member/remove/`, {
@@ -106,7 +110,11 @@ export async function removeGroupMember(
 
 // GROUP PROJECTS
 
-export async function getGroupProject(organizationCode: string, groupId: number, config = {}) {
+export async function getGroupProject(
+  organizationCode: string,
+  groupId: PeopleGroupIdOrSlug,
+  config = {}
+) {
   return await useAPI<PaginationResult<ProjectModel>>(
     `organization/${organizationCode}/people-group/${groupId}/project/`,
     config
@@ -151,14 +159,22 @@ export async function patchGroupHeader(org: string, group_id: number, headerData
   })
 }
 
-export async function getGroupSimilar(organizationCode: string, groupId: number, config = {}) {
+export async function getGroupSimilar(
+  organizationCode: string,
+  groupId: PeopleGroupIdOrSlug,
+  config = {}
+) {
   return await useAPI<PaginationResult<PeopleGroupModel>>(
     `organization/${organizationCode}/people-group/${groupId}/similars/`,
     config
   )
 }
 
-export async function getSubGroup(organizationCode: string, groupId: number, config = {}) {
+export async function getSubGroup(
+  organizationCode: string,
+  groupId: PeopleGroupIdOrSlug,
+  config = {}
+) {
   return await useAPI<PaginationResult<PeopleGroupModel>>(
     `organization/${organizationCode}/people-group/${groupId}/subgroups/`,
     config
@@ -167,7 +183,7 @@ export async function getSubGroup(organizationCode: string, groupId: number, con
 
 export async function getGroupProjectsLocation(
   organizationCode: string,
-  groupId: number,
+  groupId: PeopleGroupIdOrSlug,
   config = {}
 ) {
   return await useAPI<PaginationResult<LocationModel>>(
@@ -176,7 +192,11 @@ export async function getGroupProjectsLocation(
   )
 }
 
-export async function getGroupLocation(organizationCode: string, groupId: number, config = {}) {
+export async function getGroupLocation(
+  organizationCode: string,
+  groupId: PeopleGroupIdOrSlug,
+  config = {}
+) {
   return await useAPI<PaginationResult<LocationModel>>(
     `organization/${organizationCode}/people-group/${groupId}/locations/`,
     config
@@ -185,7 +205,7 @@ export async function getGroupLocation(organizationCode: string, groupId: number
 
 export async function removeGroupLocation(
   organizationCode: string,
-  groupId: number,
+  groupId: PeopleGroupIdOrSlug,
   locationId: number,
   config = {}
 ) {
@@ -200,7 +220,7 @@ export async function removeGroupLocation(
 
 export async function patchGroupLocation(
   organizationCode: string,
-  groupId: number,
+  groupId: PeopleGroupIdOrSlug,
   locationId: number,
   payload: Partial<BaseLocationModel>,
   config = {}
@@ -217,7 +237,7 @@ export async function patchGroupLocation(
 
 export async function postGroupLocation(
   organizationCode: string,
-  groupId: number,
+  groupId: PeopleGroupIdOrSlug,
   payload: BaseLocationModel,
   config = {}
 ) {
@@ -231,7 +251,11 @@ export async function postGroupLocation(
   )
 }
 
-export function getGroupGallery(organizationCode: string, groupId: number, config = {}) {
+export function getGroupGallery(
+  organizationCode: string,
+  groupId: PeopleGroupIdOrSlug,
+  config = {}
+) {
   return useAPI<PaginationResult<ImageModel>>(
     `organization/${organizationCode}/people-group/${groupId}/gallery/`,
     {
@@ -242,7 +266,7 @@ export function getGroupGallery(organizationCode: string, groupId: number, confi
 
 export function deleteGroupGallery(
   organizationCode: string,
-  groupId: number,
+  groupId: PeopleGroupIdOrSlug,
   imageId: number,
   config = {}
 ) {
@@ -257,7 +281,7 @@ export function deleteGroupGallery(
 
 export function postGroupGallery(
   organizationCode: string,
-  groupId: number,
+  groupId: PeopleGroupIdOrSlug,
   body: FormData,
   config = {}
 ) {
@@ -268,7 +292,11 @@ export function postGroupGallery(
   })
 }
 
-export async function getGroupNews(organizationCode: string, groupId: number, config = {}) {
+export async function getGroupNews(
+  organizationCode: string,
+  groupId: PeopleGroupIdOrSlug,
+  config = {}
+) {
   return await useAPI<PaginationResult<NewsModel>>(
     `organization/${organizationCode}/people-group/${groupId}/news/`,
     {

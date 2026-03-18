@@ -1,6 +1,6 @@
 <template>
   <div
-    :key="groupId"
+    :key="groupIdOrSlug"
     class="group-layout"
     :class="{
       'can-edit-group': canEditGroup,
@@ -65,12 +65,10 @@ const organizationCode = useOrganizationCode()
 const router = useRouter()
 const route = useRoute()
 const { t } = useNuxtI18n()
-const groupId = computed(() => parseInt(route.params.groupId.toString(), 10))
-watch(groupId, (newValue) => {
-  peopleGroupsStore.currentId = newValue
-})
+const groupIdOrSlug = computed(() => route.params.groupIdOrSlug.toString())
+watch(groupIdOrSlug, (newValue) => (peopleGroupsStore.currentId = newValue))
 
-const { data: group, isLoading, status, error } = getGroup(organizationCode, groupId)
+const { data: group, isLoading, status, error } = getGroup(organizationCode, groupIdOrSlug)
 
 const groupLoading = computed(() => isLoading.value && !group.value?.id)
 
@@ -92,7 +90,7 @@ const groupHierarchy = computed(() => {
     root,
     ...(group.value?.hierarchy || []).map((group) => ({
       name: group.name,
-      route: { name: 'Group', params: { groupId: group.id } },
+      route: { name: 'Group', params: { groupIdOrSlug: group.slug || group.id } },
     })),
   ]
 })
@@ -113,12 +111,8 @@ const groupTabsDisplay = computed(() => {
       key: 'group-snapshot',
       dataTest: 'group-snapshot',
       label: t('group.snapshot'),
-      view: `/group/${route.params.groupId}/snapshot`,
-      altView: `/group/${route.params.groupId}/snapshot/edit`,
-      props: {
-        group: group.value,
-        isLoading: groupLoading.value,
-      },
+      view: `/group/${route.params.groupIdOrSlug}/snapshot`,
+      altView: `/group/${route.params.groupIdOrSlug}/snapshot/edit`,
       condition: true,
       noTitle: true,
       icon: 'Home',
@@ -128,12 +122,8 @@ const groupTabsDisplay = computed(() => {
       key: 'group-members',
       dataTest: 'group-members',
       label: t(GroupModuleTitle.members),
-      view: `/group/${route.params.groupId}/members`,
-      altView: `/group/${route.params.groupId}/members/edit`,
-      props: {
-        group: group.value,
-        isLoading: groupLoading.value,
-      },
+      view: `/group/${route.params.groupIdOrSlug}/members`,
+      altView: `/group/${route.params.groupIdOrSlug}/members/edit`,
       condition: groupModules.value.members,
       icon: GroupModuleIcon.members,
     },
@@ -142,12 +132,8 @@ const groupTabsDisplay = computed(() => {
       key: 'group-projects',
       dataTest: 'group-projects',
       label: t(GroupModuleTitle.featured_projects),
-      view: `/group/${route.params.groupId}/projects`,
-      altView: `/group/${route.params.groupId}/projects/edit`,
-      props: {
-        group: group.value,
-        isLoading: groupLoading.value,
-      },
+      view: `/group/${route.params.groupIdOrSlug}/projects`,
+      altView: `/group/${route.params.groupIdOrSlug}/projects/edit`,
       condition: groupModules.value.featured_projects,
       icon: GroupModuleIcon.featured_projects,
     },
@@ -156,12 +142,8 @@ const groupTabsDisplay = computed(() => {
       key: 'subgroup',
       dataTest: 'subgroup',
       label: t(GroupModuleTitle.subgroups, groupModules.value.subgroups),
-      view: `/group/${route.params.groupId}/subgroups`,
+      view: `/group/${route.params.groupIdOrSlug}/subgroups`,
       altView: '',
-      props: {
-        group: group.value,
-        isLoading: groupLoading.value,
-      },
       condition: groupModules.value.subgroups,
       icon: GroupModuleIcon.subgroups,
     },
@@ -170,12 +152,10 @@ const groupTabsDisplay = computed(() => {
       key: 'group-publications',
       dataTest: 'group-publications',
       label: t(GroupModuleTitle.publications),
-      view: `/group/${route.params.groupId}/publications`,
-      altView: `/group/${route.params.groupId}/publications/edit`,
+      view: `/group/${route.params.groupIdOrSlug}/publications`,
+      altView: `/group/${route.params.groupIdOrSlug}/publications/edit`,
       props: {
         documentType: 'publications',
-        group: group.value,
-        isLoading: groupLoading.value,
       },
       condition: groupModules.value.publications,
       icon: GroupModuleIcon.publications,
@@ -185,8 +165,8 @@ const groupTabsDisplay = computed(() => {
       key: 'group-conferences',
       dataTest: 'group-conferences',
       label: t(GroupModuleTitle.conferences),
-      view: `/group/${route.params.groupId}/conferences`,
-      altView: `/group/${route.params.groupId}/conferences/edit`,
+      view: `/group/${route.params.groupIdOrSlug}/conferences`,
+      altView: `/group/${route.params.groupIdOrSlug}/conferences/edit`,
       props: {
         documentType: 'conferences',
       },
@@ -208,8 +188,8 @@ const groupTabsDisplay = computed(() => {
       key: 'group-locations',
       dataTest: 'group-locations',
       label: t(GroupModuleTitle.projects_locations, groupModules.value.projects_locations),
-      view: `/group/${route.params.groupId}/locations`,
-      altView: `/group/${route.params.groupId}/locations/edit`,
+      view: `/group/${route.params.groupIdOrSlug}/locations`,
+      altView: `/group/${route.params.groupIdOrSlug}/locations/edit`,
       condition: groupModules.value.projects_locations,
       icon: GroupModuleIcon.projects_locations,
     },
@@ -218,8 +198,8 @@ const groupTabsDisplay = computed(() => {
       key: 'group-gallery',
       dataTest: 'group-gallery',
       label: t(GroupModuleTitle.gallery, groupModules.value.gallery),
-      view: `/group/${route.params.groupId}/gallery`,
-      altView: `/group/${route.params.groupId}/gallery/edit`,
+      view: `/group/${route.params.groupIdOrSlug}/gallery`,
+      altView: `/group/${route.params.groupIdOrSlug}/gallery/edit`,
       condition: groupModules.value.gallery,
       icon: GroupModuleIcon.gallery,
     },
@@ -233,8 +213,8 @@ const groupTabsEdit = computed(() => {
       key: 'group-snapshot-edit',
       dataTest: 'group-snapshot-edit',
       label: t('group.snapshot'),
-      view: `/group/${route.params.groupId}/snapshot/edit`,
-      altView: `/group/${route.params.groupId}/snapshot`,
+      view: `/group/${route.params.groupIdOrSlug}/snapshot/edit`,
+      altView: `/group/${route.params.groupIdOrSlug}/snapshot`,
       props: {
         isInEditingMode: true,
       },
@@ -247,8 +227,8 @@ const groupTabsEdit = computed(() => {
       key: 'groups-members-edit',
       dataTest: 'groups-members-edit',
       label: t('group.members'),
-      view: `/group/${route.params.groupId}/members/edit`,
-      altView: `/group/${route.params.groupId}/members`,
+      view: `/group/${route.params.groupIdOrSlug}/members/edit`,
+      altView: `/group/${route.params.groupIdOrSlug}/members`,
       props: {
         isInEditingMode: true,
       },
@@ -260,8 +240,8 @@ const groupTabsEdit = computed(() => {
       key: 'group-projects-edit',
       dataTest: 'group-projects-edit',
       label: t('group.projects'),
-      view: `/group/${route.params.groupId}/projects/edit`,
-      altView: `/group/${route.params.groupId}/projects`,
+      view: `/group/${route.params.groupIdOrSlug}/projects/edit`,
+      altView: `/group/${route.params.groupIdOrSlug}/projects`,
       props: {
         isInEditingMode: true,
       },
@@ -273,8 +253,8 @@ const groupTabsEdit = computed(() => {
       key: 'group-publications-edit',
       dataTest: 'group-publications-edit',
       label: t('group.publications'),
-      view: `/group/${route.params.groupId}/publications/edit`,
-      altView: `/group/${route.params.groupId}/publications`,
+      view: `/group/${route.params.groupIdOrSlug}/publications/edit`,
+      altView: `/group/${route.params.groupIdOrSlug}/publications`,
       props: {
         documentType: 'publications',
         isInEditingMode: true,
@@ -287,8 +267,8 @@ const groupTabsEdit = computed(() => {
       key: 'group-conferences-edit',
       dataTest: 'group-conferences-edit',
       label: t('group.conferences'),
-      view: `/group/${route.params.groupId}/conferences/edit`,
-      altView: `/group/${route.params.groupId}/conferences`,
+      view: `/group/${route.params.groupIdOrSlug}/conferences/edit`,
+      altView: `/group/${route.params.groupIdOrSlug}/conferences`,
       props: {
         documentType: 'conferences',
         isInEditingMode: true,
@@ -315,8 +295,8 @@ const groupTabsEdit = computed(() => {
       key: 'group-gallery-edit',
       dataTest: 'group-gallery-edit',
       label: t(GroupModuleTitle.gallery),
-      view: `/group/${route.params.groupId}/gallery/edit`,
-      altView: `/group/${route.params.groupId}/gallery`,
+      view: `/group/${route.params.groupIdOrSlug}/gallery/edit`,
+      altView: `/group/${route.params.groupIdOrSlug}/gallery`,
       props: {
         isInEditingMode: true,
       },
@@ -371,15 +351,5 @@ if (import.meta.client) {
 .group-layout,
 .group-edit-layout {
   margin-top: pxToRem(48px);
-}
-
-.recommandations {
-  margin-top: $space-2xl;
-}
-
-.group-content {
-  //   background-color: #f0f3f5;
-  //   padding: 1rem;
-  //   border-radius: 0.5rem;
 }
 </style>
