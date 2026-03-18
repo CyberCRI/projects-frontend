@@ -220,7 +220,8 @@
       "requests": "Peticions",
       "groups": "Grups",
       "settings": "Arranjament",
-      "terms": "ToS"
+      "terms": "ToS",
+      "vector-store": "Vector store"
     },
     "page-title": "Administrador",
     "portal": {
@@ -3175,5 +3176,20 @@
       "Presentation": "Presentació",
       "UNKNOWN": "Desconegut"
     }
+  },
+  "vector-store": {
+    "confirm-deletion": "Confirmar supressió",
+    "confirm-deletion-of": "Voleu realment suprimir \"{title}\"?",
+    "document-deleted": "Document suprimit.",
+    "add-document": "Afegir un document",
+    "chunks": "fragments",
+    "no-document-yet": "Encara no hi ha cap document",
+    "title-exists": "El títol ja existeix",
+    "add-document": "Afegir un document",
+    "edit-document": "Editar un document",
+    "title-field": "Títol",
+    "file-field": "Fitxer",
+    "document-added": "Document afegit.",
+    "document-updated": "Document actualitzat."
   }
 }

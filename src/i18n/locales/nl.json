@@ -220,7 +220,8 @@
       "requests": "Verzoeken",
       "groups": "Groepen",
       "settings": "Instellingen",
-      "terms": "TOS"
+      "terms": "TOS",
+      "vector-store": "Vector store"
     },
     "page-title": "Beheerder",
     "portal": {
@@ -3175,5 +3176,20 @@
       "Presentation": "Presentatie",
       "UNKNOWN": "Onbekend"
     }
+  },
+  "vector-store": {
+    "confirm-deletion": "Verwijdering bevestigen",
+    "confirm-deletion-of": "Wilt u \"{title}\" echt verwijderen?",
+    "document-deleted": "Document verwijderd.",
+    "add-document": "Een document toevoegen",
+    "chunks": "fragmenten",
+    "no-document-yet": "Nog geen document",
+    "title-exists": "Titel bestaat al",
+    "add-document": "Een document toevoegen",
+    "edit-document": "Een document bewerken",
+    "title-field": "Titel",
+    "file-field": "Bestand",
+    "document-added": "Document toegevoegd.",
+    "document-updated": "Document bijgewerkt."
   }
 }
