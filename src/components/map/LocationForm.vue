@@ -86,6 +86,10 @@ const locationTypeOptions = computed(() => {
       value: 'news',
       label: t('location.news'),
     },
+    {
+      value: 'event',
+      label: t('location.event'),
+    },
   ]
   if (props.locationTypes) {
     return arr.filter(({ value }) => props.locationTypes.includes(value))

@@ -26,12 +26,16 @@
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 import { onResizeElement } from '@/composables/onResize'
 
-const props = defineProps<{
-  description: string
-  heightLimit: number
-}>()
+const props = withDefaults(
+  defineProps<{
+    description: string
+    heightLimit: number
+    opened?: boolean
+  }>(),
+  { opened: false }
+)
 
-const showLess = ref(true)
+const showLess = ref(!props.opened)
 const isLimited = ref(true)
 const contentRef = useTemplateRef('content')
 const actualHeight = ref(0)

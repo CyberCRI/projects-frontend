@@ -12,5 +12,6 @@ export const newsSkeleton = (def?: Partial<NewsModel>): Omit<NewsModel, 'id'> =>
   updated_at: '2020-01-01',
   organization: null,
   visible_by_all: true,
+  location: null,
   ...(def || {}),
 })

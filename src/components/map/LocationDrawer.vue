@@ -121,9 +121,10 @@
       </div>
     </BaseDrawer>
 
-    <LocationForm
+    <LocationFormtoString
       v-if="editable && showForm"
       v-model="form"
+      to-string
       :location-types="locationTypes"
       @close="closeModal"
       @submit="onSubmit"
@@ -148,7 +149,6 @@ import { AnyTranslatedLocation, LocationForm as LocationFormType } from '@/model
 import LocationTooltip from '@/components/map/LocationTooltip.vue'
 import { Geocoding } from '@/interfaces/maps'
 import { useSuggestLocations } from '@/api/geocoding.service'
-import LocationForm from '@/components/map/LocationForm.vue'
 import { LocationType } from '@/models/types'
 import MarkerSuggestion from '@/components/map/MarkerSuggestion.vue'
 

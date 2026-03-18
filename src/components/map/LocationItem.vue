@@ -27,11 +27,11 @@
 <script setup lang="ts">
 import LocationType from '@/components/map/LocationType.vue'
 import { cropIfTooLong } from '@/functs/string'
-import { TranslatedLocation } from '@/models/location.model'
+import { AnyTranslatedLocation } from '@/models/location.model'
 
 const props = withDefaults(
   defineProps<{
-    location: TranslatedLocation
+    location: AnyTranslatedLocation
     editable?: boolean
     focus?: boolean
     showLocationType?: boolean
@@ -45,9 +45,9 @@ const props = withDefaults(
 )
 
 defineEmits<{
-  focus: [TranslatedLocation]
-  delete: [TranslatedLocation]
-  edit: [TranslatedLocation]
+  focus: [AnyTranslatedLocation]
+  delete: [AnyTranslatedLocation]
+  edit: [AnyTranslatedLocation]
 }>()
 
 // need to safe guard with translated title (if we are in edit/create mode)

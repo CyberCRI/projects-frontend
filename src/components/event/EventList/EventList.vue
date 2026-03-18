@@ -6,7 +6,7 @@
       class="monthly-section"
     >
       <h3 class="month-title">
-        {{ $t(`event.calendar.month.${getMonthFromDate(yearMonth)}.long`) }}
+        {{ getMonthFromDate(yearMonth) }}
       </h3>
       <div class="events-wrapper">
         <EventItem
@@ -32,76 +32,60 @@
     :title="$t('event.delete.title')"
     :asyncing="isDeletingEvent"
     @cancel="eventToDelete = null"
-    @confirm="deleteEvent"
+    @confirm="onDeleteEvent"
   />
 </template>
-<script>
+
+<script setup lang="ts">
 import EditEventDrawer from '@/components/event/EditEventDrawer/EditEventDrawer.vue'
 import EventItem from './EventItem.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { deleteEvent } from '@/api/event.service'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useToasterStore from '@/stores/useToaster'
+import { TranslatedEventModel } from '@/models/event.model'
 
-export default {
-  name: 'EventList',
-
-  components: {
-    EditEventDrawer,
-    EventItem,
-    ConfirmModal,
-  },
-
-  props: {
-    eventsByMonth: {
-      type: Object,
-      default: () => ({}),
-    },
-  },
-
-  emits: ['reload-events'],
-  setup() {
-    const toaster = useToasterStore()
-    const organizationsStore = useOrganizationsStore()
-    return {
-      toaster,
-      organizationsStore,
+withDefaults(
+  defineProps<{
+    eventsByMonth?: {
+      [key: string]: TranslatedEventModel[]
     }
-  },
+  }>(),
+  { eventsByMonth: () => ({}) }
+)
 
-  data() {
-    return {
-      editedEvent: null,
-      eventToDelete: null,
-      isDeletingEvent: false,
-    }
-  },
+const emit = defineEmits<{
+  'reload-events': []
+}>()
 
-  methods: {
-    async deleteEvent() {
-      // TODO: delete event
-      console.log('delete event', this.eventToDelete)
-      this.isDeletingEvent = true
-      try {
-        await deleteEvent(this.organizationsStore.current?.code, this.eventToDelete.id)
-        this.toaster.pushSuccess(this.$t('event.delete.success'))
+const { t, locale } = useNuxtI18n()
 
-        this.$emit('reload-events')
-      } catch (err) {
-        this.toaster.pushError(`${this.$t('event.delete.error')} (${err})`)
-        console.error(err)
-      } finally {
-        this.eventToDelete = null
-        this.isDeletingEvent = false
-      }
-    },
+const toaster = useToasterStore()
+const organizationCode = useOrganizationCode()
+const editedEvent = ref(null)
+const eventToDelete = ref(null)
+const isDeletingEvent = ref(false)
 
-    getMonthFromDate(yearMonth) {
-      return yearMonth.split('-')[1]
-    },
-  },
+const onDeleteEvent = async () => {
+  isDeletingEvent.value = true
+  try {
+    await deleteEvent(organizationCode, eventToDelete.value.id)
+    toaster.pushSuccess(t('event.delete.success'))
+
+    emit('reload-events')
+  } catch (err) {
+    toaster.pushError(`${t('event.delete.error')} (${err})`)
+    console.error(err)
+  } finally {
+    eventToDelete.value = null
+    isDeletingEvent.value = false
+  }
+}
+
+const getMonthFromDate = (yearMonth) => {
+  return new Date(yearMonth).toLocaleDateString(locale.value, { month: 'long' })
 }
 </script>
+
 <style lang="scss" scoped>
 .event-list {
   margin-bottom: 2rem;

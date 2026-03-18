@@ -11,8 +11,12 @@ export const getLocations = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   config = {}
 ) => {
-  const { translatePeopleGroupLocations, translateProjectLocations, translateNewsLocations } =
-    useAutoTranslate()
+  const {
+    translatePeopleGroupLocations,
+    translateProjectLocations,
+    translateNewsLocations,
+    translateEventsLocations,
+  } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::locations`)
 
   const translateAllModel = (data: ComputedRef<Locations>) => {
@@ -21,6 +25,7 @@ export const getLocations = (
         groups: unref(translatePeopleGroupLocations(data.value?.groups)),
         projects: unref(translateProjectLocations(data.value?.projects)),
         news: unref(translateNewsLocations(data.value?.news)),
+        event: unref(translateEventsLocations(data.value?.event)),
       }
     })
   }

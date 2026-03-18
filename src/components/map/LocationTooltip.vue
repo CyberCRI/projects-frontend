@@ -65,6 +65,10 @@ const closePopUp = inject('closePopUp')
     border-color: $location-news;
   }
 
+  &.event {
+    border-color: $location-event;
+  }
+
   > * {
     padding: 0 1rem;
   }

@@ -81,7 +81,7 @@ export default {
       const todayAtZero = new Date()
       todayAtZero.setHours(0, 0, 0, 0)
       const request = await getAllEvents(this.organizationsStore.current?.code, {
-        ordering: 'event_date',
+        ordering: 'start_date',
         from_date: todayAtZero.toISOString(),
         limit: 4,
       })

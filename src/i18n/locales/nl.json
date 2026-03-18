@@ -577,7 +577,8 @@
     "create": "Aanmaken",
     "order-asc": "oudste tot nieuwste",
     "order-desc": "nieuwste naar oudste",
-    "close": "sluiten"
+    "close": "sluiten",
+    "to": "Aan"
   },
   "complete-profile": {
     "bio": {
@@ -978,7 +979,8 @@
     "map": "Geolocatie",
     "add-location": "Plaats toevoegen",
     "add-location-point": "Plaatspunt toevoegen",
-    "default-title": "Locatie"
+    "default-title": "Locatie",
+    "news": "Nieuws"
   },
   "map": {
     "page-title": "Kaart",
@@ -2534,7 +2536,8 @@
     },
     "drawer": {
       "title": "Nieuws bewerken"
-    }
+    },
+    "view": "Zie nieuws"
   },
   "instructions": {
     "create": {
@@ -2803,7 +2806,8 @@
     "presentation": "Inleiding",
     "subgroups": "Subgroepen",
     "projects-locations": "Kaart",
-    "location": "Adres"
+    "location": "Adres",
+    "event": "Gebeurtenissen"
   },
   "gallery": {
     "title": "Galerij",

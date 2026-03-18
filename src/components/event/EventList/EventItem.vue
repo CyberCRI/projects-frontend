@@ -4,26 +4,23 @@
       <IconImage name="Calendar" class="icon" />
       <div class="day-month">
         <div class="day">
-          {{ getDayFromDate(event.event_date) }}
+          {{ start_date.getDay() }}
         </div>
         <div class="month">
-          {{ $t(`event.calendar.month.${getMonthFromDate(event.event_date)}.short`) }}
+          {{ start_date.toLocaleDateString(locale, { month: 'long' }) }}
         </div>
       </div>
     </div>
     <div class="texts">
       <h4 class="event-name">
-        {{ event?.$t?.title }}
+        {{ event.$t.title }}
       </h4>
       <div class="event-information">
-        <HtmlLimiter
-          v-if="isLimitedDescription"
-          :html="event?.$t?.content"
-          :striped-tags="['table']"
-          @computed="layoutComputed"
-          @computing="computeLayout"
+        <DescriptionExpandable
+          :description="event.$t.content"
+          :height-limit="400"
+          :opened="!isLimitedDescription"
         />
-        <div v-else class="event-information" v-html="event?.$t?.content" />
       </div>
     </div>
     <ContextActionMenu
@@ -36,72 +33,42 @@
     />
   </div>
 </template>
-<script>
+
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
 import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
-export default {
-  name: 'EventItem',
+import { TranslatedEventModel } from '@/models/event.model'
+import DescriptionExpandable from '@/components/base/DescriptionExpandable.vue'
 
-  components: {
-    IconImage,
-    ContextActionMenu,
-  },
+const props = withDefaults(
+  defineProps<{
+    event: TranslatedEventModel
+    isLimitedDescription?: boolean
+  }>(),
+  { isLimitedDescription: false }
+)
 
-  props: {
-    event: {
-      type: Object,
-      default: () => ({}),
-    },
-    isLimitedDescription: {
-      type: Boolean,
-      default: false,
-    },
-  },
+const emit = defineEmits<{
+  'delete-event': [TranslatedEventModel]
+  'edit-event': [TranslatedEventModel]
+}>()
+const { canEditEvent, canDeleteEvent } = usePermissions()
 
-  emits: ['delete-event', 'edit-event'],
+const { locale } = useNuxtI18n()
 
-  setup() {
-    const { canEditEvent, canDeleteEvent } = usePermissions()
-    return { canEditEvent, canDeleteEvent }
-  },
+const isNew = computed(() => {
+  return Date.now() - new Date(props.event.created_at).getTime() < 7 * 24 * 60 * 60 * 1000
+})
 
-  data() {
-    return {
-      style: {},
-      textsStyle: {},
-    }
-  },
+const start_date = computed(() => new Date(props.event.start_date))
+// const end_date = computed(() => new Date(props.event.end_date ?? props.event.start_date))
 
-  computed: {
-    isNew() {
-      return Date.now() - new Date(this.event.created_at).getTime() < 7 * 24 * 60 * 60 * 1000
-    },
-  },
+const deleteEvent = (event) => {
+  emit('delete-event', event)
+}
 
-  methods: {
-    computeLayout() {
-      this.style = {}
-      this.textsStyle = {}
-    },
-    layoutComputed(event) {
-      this.style = { height: event.height + 'px' }
-      this.textsStyle = { height: 'auto' }
-    },
-    getMonthFromDate(yearMonth) {
-      return yearMonth.split('-')[1]
-    },
-    getDayFromDate(date) {
-      return date.split('T')[0].split('-')[2]
-    },
-
-    deleteEvent(event) {
-      this.$emit('delete-event', event)
-    },
-
-    editEvent(event) {
-      this.$emit('edit-event', event)
-    },
-  },
+const editEvent = (event) => {
+  emit('edit-event', event)
 }
 </script>
 <style lang="scss" scoped>

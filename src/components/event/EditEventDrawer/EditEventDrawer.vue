@@ -62,7 +62,8 @@ export default {
         if (event) {
           this.form = {
             ...event,
-            event_date: (event.event_date && new Date(event.event_date)) || '',
+            start_date: (event.start_date && new Date(event.start_date)) || '',
+            end_date: (event.end_date && new Date(event.end_date)) || '',
             // build group "object" from array if it is an array
             people_groups: event.people_groups.reduce
               ? event.people_groups.reduce((acc, groupId) => {
@@ -91,7 +92,8 @@ export default {
       try {
         const formData = {
           ...this.form,
-          event_date: this.form.event_date.toISOString(),
+          start_date: this.form.start_date.toISOString(),
+          end_date: (this.form.end_date || this.form.start_date).toISOString(),
           people_groups: Object.entries(this.form.people_groups)
             .filter(([, value]) => value)
             .map(([id]) => id),

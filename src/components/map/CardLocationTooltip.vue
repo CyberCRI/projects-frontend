@@ -9,6 +9,7 @@
     />
     <div class="card-tooltip-content" :class="[location.type]">
       <CroppedApiImage
+        v-if="haveImage"
         :picture-data="image"
         :default-picture="defaultPicture"
         class="card-tooltip__image"
@@ -40,14 +41,15 @@ const props = withDefaults(
     to: any
     title: string
     description?: string
-    image: Image
-    defaultPicture: string
+    image?: Image
+    defaultPicture?: string
   }>(),
-  { description: '' }
+  { description: '', image: null, defaultPicture: null }
 )
 
 const title = computed(() => cropIfTooLong(props.title, 45))
 const description = computed(() => cropIfTooLong(props.description, 85))
+const haveImage = computed(() => props.image && props.defaultPicture)
 </script>
 
 <style lang="scss" scoped>
@@ -76,6 +78,10 @@ const description = computed(() => cropIfTooLong(props.description, 85))
 
   &.team {
     background-color: color-mix(in srgb, $location-team, transparent 90%);
+  }
+
+  &.event {
+    background-color: color-mix(in srgb, $location-event, transparent 90%);
   }
 
   .card-title {

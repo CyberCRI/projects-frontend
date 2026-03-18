@@ -11,5 +11,7 @@ export const IconMapLocationType = (locationType: LocationType): IconImageChoice
       return 'Home'
     case 'news':
       return 'NewsLine'
+    case 'event':
+      return 'Calendar'
   }
 }

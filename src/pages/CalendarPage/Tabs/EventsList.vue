@@ -17,17 +17,14 @@ const eventsByMonth = computed(() => {
     .slice(0)
     ?.sort((a, b) => {
       const mul = props.isFuture ? -1 : 1
-      return mul * (new Date(b.event_date) - new Date(a.event_date))
+      return mul * (new Date(b.end_date) - new Date(a.start_date))
     })
     .reduce((acc, event) => {
       // keep the year in key !
-      const key = event.event_date.split('-').slice(0, 2).join('-')
-      if (!acc[key]) {
-        acc[key] = []
-      }
-
+      const date = new Date(event.start_date)
+      const key = `${date.getFullYear()}-${date.getMonth().toFixed(2)}`
+      acc[key] ??= []
       acc[key].push(event)
-
       return acc
     }, {})
 })
@@ -44,11 +41,11 @@ const fetchEvents = async () => {
   todayZeroHour.setHours(0, 0, 0, 0)
   const options = props.isFuture
     ? {
-        ordering: 'event_date',
+        ordering: 'start_date',
         from_date: todayZeroHour.toISOString(),
       }
     : {
-        ordering: '-event_date',
+        ordering: '-end_date',
         to_date: todayZeroHour.toISOString(),
       }
   _eventsFromAPi.value = (await getAllEvents(organizationsStore.current?.code, options)).results

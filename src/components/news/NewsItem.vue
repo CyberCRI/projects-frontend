@@ -1,6 +1,6 @@
 <template>
   <component :is="is" :to="to" :class="{ 'pointer-events-none': !isLink }">
-    <div class="card-container" :class="{ 'shadow-box': isLink }">
+    <div class="card-container" :class="{ 'scale-hover': isLink }">
       <CroppedApiImage
         :picture-data="news.header_image"
         class="card-image skeletons-background"
@@ -58,6 +58,7 @@ const publicationDate = computed(() => {
   return new Date(date).toLocaleDateString(locale.value, {
     year: 'numeric',
     month: 'long',
+    day: 'numeric',
   })
 })
 

@@ -28,19 +28,19 @@
 
     <div class="form-section">
       <label>{{ $t('news.form.publication_date.label') }}</label>
-      <button type="button" class="date-btn" @click="showDatePicker = true">
+      <button type="button" class="date-btn" @click="toggleModals('DatePicker')">
         <IconImage class="icon" name="Calendar" />
         {{ $t('invitation.create.field.validity.pick-date') }}
       </button>
 
       <span v-if="model.publication_date" class="date-preview">{{ displayedDate }}</span>
       <VueDatePicker
-        v-if="showDatePicker"
-        :on-click-outside="() => (showDatePicker = false)"
-        :inline="true"
-        :auto-apply="true"
+        v-if="stateModals.DatePicker"
+        inline
+        :locale="locale"
         :model-value="model.publication_date"
         :enable-time-picker="false"
+        :on-click-outside="() => console.log('outside')"
         @update:model-value="onDateSelected"
       />
 
@@ -158,9 +158,10 @@ withDefaults(
 )
 
 const model = defineModel({ default: defaultForm() })
-const { stateModals, openModals, closeModals } = useModals({
+const { stateModals, openModals, closeModals, toggleModals } = useModals({
   LocationForm: false,
   LocationDrawer: false,
+  DatePicker: false,
 })
 
 const emit = defineEmits<{
@@ -169,7 +170,7 @@ const emit = defineEmits<{
 
 const organizationsStore = useOrganizationsStore()
 const defaultPictures = usePatatoids()
-const { t, d } = useNuxtI18n()
+const { t, locale } = useNuxtI18n()
 
 const rules = computed(() => {
   return {
@@ -202,10 +203,15 @@ const updateForm = throttle((data) => {
   }
 }, 16)
 
-const showDatePicker = ref(false)
-
 const displayedDate = computed(() => {
-  return model.value.publication_date ? d(new Date(model.value.publication_date)) : ''
+  if (!model.value.publication_date) {
+    return ''
+  }
+  return new Date(model.value.publication_date).toLocaleDateString(locale.value, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
 })
 const organization = computed(() => organizationsStore.current)
 
@@ -226,7 +232,7 @@ const saveOrganizationImage = (file) => {
 }
 const onDateSelected = (modelData) => {
   updateForm({ publication_date: modelData })
-  showDatePicker.value = false
+  closeModals('DatePicker')
 }
 
 const updateLocation = (location) => {

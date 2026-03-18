@@ -31,6 +31,16 @@
           >
             <LocationNewsTooltip :location="location" :news="location.news" />
           </MapPointer>
+
+          <MapPointer
+            v-for="location in locations.event"
+            :key="location.id"
+            :location="location"
+            @mounted="slotProps.addPointer"
+            @unmounted="slotProps.removePointer"
+          >
+            <LocationEventTooltip :location="location" :news="location.event" />
+          </MapPointer>
         </template>
       </BaseMap>
     </client-only>
@@ -38,6 +48,7 @@
 </template>
 
 <script setup lang="ts">
+import LocationEventTooltip from '@/components/event/map/LocationEventTooltip.vue'
 import GroupLocationToolTip from '@/components/group/Map/GroupLocationToolTip.vue'
 import BaseMap from '@/components/map/BaseMap.vue'
 import MapPointer from '@/components/map/MapPointer.vue'

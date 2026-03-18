@@ -577,7 +577,8 @@
     "create": "Loo",
     "order-asc": "vanim kuni uusim",
     "order-desc": "uusim",
-    "close": "lähedal"
+    "close": "lähedal",
+    "to": "To"
   },
   "complete-profile": {
     "bio": {
@@ -978,7 +979,8 @@
     "map": "Geolokatsioon",
     "add-location": "Lisa asukoht",
     "add-location-point": "Asukohapunkti lisamine",
-    "default-title": "Asukoht"
+    "default-title": "Asukoht",
+    "news": "Uudised"
   },
   "map": {
     "page-title": "Kaart",
@@ -2534,7 +2536,8 @@
     },
     "drawer": {
       "title": "Muuda uudiseid"
-    }
+    },
+    "view": "Vaata uudiseid"
   },
   "instructions": {
     "create": {
@@ -2803,7 +2806,8 @@
     "presentation": "Sissejuhatus",
     "subgroups": "Alarühmad",
     "projects-locations": "Kaart",
-    "location": "Aadress | Aadressid"
+    "location": "Aadress | Aadressid",
+    "event": "Sündmus | Sündmused"
   },
   "gallery": {
     "title": "galeriis",

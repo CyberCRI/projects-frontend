@@ -2,8 +2,10 @@ import { GeneralLocationPeopleGroup, PeopleGroupModel } from '@/models/invitatio
 import {
   AnyLocation,
   BaseLocationModel,
+  EventLocation,
   LocationModel,
   NewsLocation,
+  TranslatedEventLocation,
   TranslatedLocation,
   TranslatedNewsLocation,
 } from '@/models/location.model'
@@ -22,10 +24,12 @@ export type Locations = {
   groups: PeopleGroupModel[]
   projects: LocationModel[]
   news: NewsLocation[]
+  event: EventLocation[]
 }
 
 export type TranslatedLocations = {
   groups: GeneralLocationPeopleGroup[]
   projects: TranslatedLocation[]
   news: TranslatedNewsLocation[]
+  event: TranslatedEventLocation[]
 }

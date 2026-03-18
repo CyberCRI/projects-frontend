@@ -1,8 +1,38 @@
+<template>
+  <div class="page-section-narrow page-top">
+    <h1 class="page-title">
+      {{ $t('event.create.title') }}
+    </h1>
+    <ClientOnly>
+      <EventForm ref="eventForm" v-model="form" @invalid="invalid = $event" />
+    </ClientOnly>
+    <div class="form-actions">
+      <LpiButton
+        :disabled="asyncing"
+        :label="$t('common.cancel')"
+        secondary
+        class="footer__left-button"
+        data-test="close-button"
+        @click="cancel"
+      />
+
+      <LpiButton
+        :disabled="invalid || asyncing"
+        :label="$t('common.confirm')"
+        :btn-icon="asyncing ? 'LoaderSimple' : null"
+        class="footer__right-button"
+        data-test="confirm-button"
+        @click="saveEvent"
+      />
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
-import { defaultForm } from '@/components/event/EventForm/EventForm.vue'
 import { createEvent } from '@/api/event.service'
 import useToasterStore from '@/stores/useToaster'
 import { getOrganizationByCode } from '@/api/organizations.service'
+import { defaultForm } from '@/form/event'
 
 const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()
@@ -30,7 +60,8 @@ const saveEvent = async () => {
     const formData = {
       organization_code: organizationCode,
       ...form.value,
-      event_date: form.value.event_date,
+      start_date: form.value.start_date,
+      end_date: form.value.end_date,
       people_groups: Object.entries(form.value.people_groups)
         .filter(([, value]) => value)
         .map(([id]) => id),
@@ -61,35 +92,7 @@ try {
   console.log(err)
 }
 </script>
-<template>
-  <div class="page-section-narrow page-top">
-    <h1 class="page-title">
-      {{ $t('event.create.title') }}
-    </h1>
-    <ClientOnly>
-      <EventForm ref="eventForm" v-model="form" @invalid="invalid = $event" />
-    </ClientOnly>
-    <div class="form-actions">
-      <LpiButton
-        :disabled="asyncing"
-        :label="$t('common.cancel')"
-        secondary
-        class="footer__left-button"
-        data-test="close-button"
-        @click="cancel"
-      />
 
-      <LpiButton
-        :disabled="invalid || asyncing"
-        :label="$t('common.confirm')"
-        :btn-icon="asyncing ? 'LoaderSimple' : null"
-        class="footer__right-button"
-        data-test="confirm-button"
-        @click="saveEvent"
-      />
-    </div>
-  </div>
-</template>
 <style lang="scss" scoped>
 .page-title {
   margin-bottom: pxToRem(60px);

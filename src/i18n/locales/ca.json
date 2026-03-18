@@ -577,7 +577,8 @@
     "create": "Crea",
     "order-asc": "Més antiga al més nou",
     "order-desc": "nova a la més antiga",
-    "close": "tanca"
+    "close": "tanca",
+    "to": "A"
   },
   "complete-profile": {
     "bio": {
@@ -978,7 +979,8 @@
     "map": "Geolocalització",
     "add-location": "Afegeix una ubicació",
     "add-location-point": "Afegeix un punt d' emplaçament",
-    "default-title": "Localització"
+    "default-title": "Localització",
+    "news": "Notícies"
   },
   "map": {
     "page-title": "Mapa",
@@ -2534,7 +2536,8 @@
     },
     "drawer": {
       "title": "Edita notícies"
-    }
+    },
+    "view": "Veure notícies"
   },
   "instructions": {
     "create": {
@@ -2803,7 +2806,8 @@
     "presentation": "Introducció",
     "subgroups": "Subgrups",
     "projects-locations": "Mapa",
-    "location": "Adreces d' adreces"
+    "location": "Adreces d' adreces",
+    "event": "Esdeveniments de l' esdeveniment"
   },
   "gallery": {
     "title": "Galeria",

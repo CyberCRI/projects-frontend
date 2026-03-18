@@ -59,6 +59,10 @@
       border-color: $location-news;
     }
 
+    &.event {
+      border-color: $location-event;
+    }
+
     &__dot {
       width: 20px;
       height: 20px;
@@ -80,6 +84,10 @@
 
       &.news {
         background: $location-news;
+      }
+
+      &.event {
+        background: $location-event;
       }
     }
 
@@ -153,6 +161,10 @@
 
       &.news {
         background: $location-news;
+      }
+
+      &.event {
+        background: $location-event;
       }
     }
   }
@@ -307,6 +319,10 @@
 
       &.news svg {
         background-color: $location-news;
+      }
+
+      &.event svg {
+        background-color: $location-event;
       }
 
       &:last-child {

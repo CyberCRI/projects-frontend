@@ -1,5 +1,6 @@
 import { Translated } from '@/interfaces/translated'
 import BaseModel from '@/models/base.model'
+import { EventModel, TranslatedEventModel } from '@/models/event.model'
 import { NewsModel, TranslatedNews } from '@/models/news.model'
 import { ProjectModel, TranslatedProject } from '@/models/project.model'
 import { LocationType } from '@/models/types'
@@ -21,6 +22,14 @@ export interface NewsLocation extends BaseLocationModel {
 
 export interface TranslatedNewsLocation extends BaseTranslatedLocationModel {
   news: TranslatedNews
+}
+
+export interface EventLocation extends BaseLocationModel {
+  event: EventModel
+}
+
+export interface TranslatedEventLocation extends BaseTranslatedLocationModel {
+  event: TranslatedEventModel
 }
 
 export interface LocationModel extends BaseLocationModel {
@@ -48,4 +57,7 @@ export type ProjectLocationForm = LocationForm & {
 }
 
 export type AnyLocation = BaseLocationModel & { [key: string]: any }
-export type AnyTranslatedLocation = BaseTranslatedLocationModel & { [key: string]: any }
+export type AnyTranslatedLocation = Omit<BaseTranslatedLocationModel, '$t'> & {
+  $t?: BaseTranslatedLocationModel['$t']
+  [key: string]: any
+}

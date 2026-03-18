@@ -577,7 +577,8 @@
     "disconnect": "Disconnect",
     "confirm-close": "Are you sure you want to close the editor ? Any changes you made will not be saved.",
     "ok": "Ok",
-    "file-too-big": "File is too big (max: {maxSize}Mb)"
+    "file-too-big": "File is too big (max: {maxSize}Mb)",
+    "to": "to"
   },
   "complete-profile": {
     "bio": {
@@ -970,6 +971,7 @@
     "impact": "Impact",
     "team": "Team",
     "address": "Address",
+    "news": "News",
     "focus-on-map": "focus on the map",
     "expand-map": "Enlarge map",
     "edit-location-point": "Edit location point",
@@ -3040,7 +3042,8 @@
     "see-subgroups": "See {count} subgroups",
     "share": "Share",
     "the-team": "Team ({users}4)",
-    "news": "Announced",
+    "news": "News | News",
+    "event": "Event | Events",
     "more": "More",
     "less": "Less",
     "see-more": "See more",

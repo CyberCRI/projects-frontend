@@ -37,6 +37,7 @@ export interface PeopleGroupModel {
     gallery: number
     projects_locations: number
     news: number
+    event: number
   }
 }
 
@@ -63,6 +64,7 @@ export const GroupModuleIcon: { [key in PeopleGroupModulesKeys]: IconImageChoice
   projects_locations: 'Map',
   gallery: 'Gallery',
   news: 'NewsLine',
+  event: 'Article',
 }
 
 export const GroupModuleTitle: { [key in PeopleGroupModulesKeys]: string } = {
@@ -75,6 +77,7 @@ export const GroupModuleTitle: { [key in PeopleGroupModulesKeys]: string } = {
   projects_locations: 'group.projects-locations',
   gallery: 'gallery.pictures',
   news: 'group.news',
+  event: 'group.event',
 }
 
 export interface ProfilePictureVariationsModel {

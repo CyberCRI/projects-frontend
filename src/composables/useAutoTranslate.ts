@@ -5,7 +5,11 @@ import { TranslatedProject } from '@/models/project.model'
 import { AttachmentFileModel, TranslatedAttachmentFile } from '@/models/attachment-file.model'
 import { AttachmentLinkModel, TranslatedAttachmentLink } from '@/models/attachment-link.model'
 import { TranslatedDocument } from '@/interfaces/researcher'
-import { TranslatedLocation, TranslatedNewsLocation } from '@/models/location.model'
+import {
+  TranslatedEventLocation,
+  TranslatedLocation,
+  TranslatedNewsLocation,
+} from '@/models/location.model'
 import { TranslatedNews } from '@/models/news.model'
 
 // type can be computed or object
@@ -272,7 +276,7 @@ export default function useAutoTranslate() {
       const locationRaw = unref(location)
       return {
         ...unref(translateLocation(locationRaw)),
-        news: unref(translateEntity<TranslatedNews>(locationRaw.news, ['title', 'content'])),
+        news: unref(translateOneNews(locationRaw.news)),
       }
     })
   const translateNewsLocations = (news) =>
@@ -288,6 +292,17 @@ export default function useAutoTranslate() {
   // events
   const translateEvent = (event) => translateEntity(event, ['title', 'content'])
   const translateEvents = (events) => translateEntities(events, translateEvent)
+
+  const translateEventsLocation = (location) =>
+    computed<TranslatedEventLocation>(() => {
+      const locationRaw = unref(location)
+      return {
+        ...unref(translateLocation(locationRaw)),
+        event: unref(translateEvent(locationRaw.event)),
+      }
+    })
+  const translateEventsLocations = (locations) =>
+    translateEntities<TranslatedEventLocation>(locations, translateEventsLocation)
 
   // -----------
   // Newsfeed
@@ -380,6 +395,8 @@ export default function useAutoTranslate() {
     // evnts
     translateEvent,
     translateEvents,
+    translateEventsLocation,
+    translateEventsLocations,
 
     // instructions
     translateInstruction,

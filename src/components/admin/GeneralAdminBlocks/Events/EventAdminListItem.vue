@@ -4,10 +4,10 @@
       <IconImage name="Calendar" class="icon" />
       <div class="day-month">
         <div class="day">
-          {{ getDayFromDate(event.event_date) }}
+          {{ getDayFromDate(event.start_date) }}
         </div>
         <div class="month">
-          {{ $t(`event.calendar.month.${getMonthFromDate(event.event_date)}.short`) }}
+          {{ $t(`event.calendar.month.${getMonthFromDate(event.start_date)}.short`) }}
         </div>
       </div>
     </div>

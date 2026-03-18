@@ -124,6 +124,8 @@ try {
     <div class="news-header">
       <div class="news-img-ctn">
         <SkeletonComponent v-if="loading" width="100%" height="100%" />
+
+        <!-- <IconImage name="NewsLine" class="picture ppp" /> -->
         <CroppedApiImage
           v-else-if="news"
           :alt="`${news.title} image`"
@@ -256,6 +258,20 @@ try {
 .page-title {
   font-size: $font-size-3xl;
   text-align: left;
+}
+
+.news-img-ctn {
+  display: flex;
+}
+
+.ppp {
+  background-color: #fc0;
+  border-radius: 999px;
+  width: 50%;
+  padding: 2rem;
+  height: auto;
+  color: white;
+  margin: auto;
 }
 
 .other-news {
