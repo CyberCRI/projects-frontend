@@ -5,7 +5,7 @@ import useToasterStore from '@/stores/useToaster'
 const { t } = useNuxtI18n()
 
 const props = defineProps({ isOpened: { type: Boolean, required: true } })
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close', 'document-added'])
 
 const toaster = useToasterStore()
 const usersStore = useUsersStore()
@@ -39,8 +39,12 @@ const submit = async () => {
       method: 'POST',
       headers,
     })
-    if (response.ok) toaster.pushSuccess('Vector store updated')
-    else toaster.pushError(`${response.status} - ${response.statusText}`)
+    if (response.ok) {
+      toaster.pushSuccess('Vector store updated')
+      emit('document-added')
+    } else {
+      toaster.pushError(`${response.status} - ${response.statusText}`)
+    }
   } catch (e) {
     toaster.pushError(e.toString())
   } finally {
