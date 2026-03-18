@@ -158,8 +158,9 @@ export default defineLazyEventHandler(() => {
         console.log(`Arguments: ${JSON.stringify(request.toolCall.args)}`)
         try {
           const result = await handler(request)
+          const content: string = (result as { content: string }).content
           console.log(
-            `Tool completed successfully: "${result.content.substring(0, 100)}${result.content.length > 100 ? ' (...)' : ''}"`
+            `Tool completed successfully: "${content.substring(0, 100)}${content.length > 100 ? ' (...)' : ''}"`
           )
           return result
         } catch (e) {

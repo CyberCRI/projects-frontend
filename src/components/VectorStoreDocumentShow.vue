@@ -4,7 +4,7 @@ import useUsersStore from '@/stores/useUsers'
 const usersStore = useUsersStore()
 
 const props = defineProps({ documentTitle: { type: String, required: true } })
-const emit = defineEmits(['close0'])
+const emit = defineEmits(['close'])
 
 const isAsyncing = ref(false)
 const chunkList = ref([])
@@ -12,6 +12,8 @@ const chunkList = ref([])
 let headers = {}
 const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
 if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
+
+const close = () => emit('close')
 
 const query = new URLSearchParams()
 query.set('title', props.documentTitle)
@@ -39,7 +41,7 @@ try {
     @confirm="close"
   >
     <ul>
-      <div class="chunk" v-for="(chunk, i) in chunkList" :key="i">
+      <div v-for="(chunk, i) in chunkList" :key="i" class="chunk">
         <h4 class="chunk-header">
           Chunk {{ i + 1 }}/{{ chunkList.length }} - Page {{ chunk.metadata.loc.pageNumber }}, Line
           {{ chunk.metadata.loc.lines.from }}-{{ chunk.metadata.loc.lines.to }}
@@ -56,9 +58,11 @@ try {
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
+
 .chunk ~ .chunk {
   border-top: 1px solid $light-gray;
 }
+
 .chunk-header {
   text-align: center;
   color: $light-gray;

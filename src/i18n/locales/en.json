@@ -227,7 +227,8 @@
       "requests": "Requests",
       "groups": "Groups",
       "settings": "Settings",
-      "terms": "ToS"
+      "terms": "ToS",
+      "vector-store": "Vector store"
     },
     "page-title": "Admin",
     "portal": {
@@ -3144,5 +3145,20 @@
     "error-delete": "An error occurred by deleting the image.",
     "success-create": "Photo created.",
     "error-create": "An error occurred created image."
+  },
+  "vector-store": {
+    "confirm-deletion": "Confirm deletion",
+    "confirm-deletion-of": "Do you really want to delete \"{title}\"?",
+    "document-deleted": "Document deleted.",
+    "add-document": "Add a document",
+    "chunks": "chunks",
+    "no-document-yet": "No document yet",
+    "title-exists": "Title already exists",
+    "add-document": "Add a document",
+    "edit-document": "Edit a document",
+    "title-field": "Title",
+    "file-field": "File",
+    "document-added": "Document added.",
+    "document-updated": "Document edited."
   }
 }

@@ -220,7 +220,8 @@
       "requests": "Solicitudes",
       "groups": "Grupos",
       "settings": "Ajustes",
-      "terms": "ToS"
+      "terms": "ToS",
+      "vector-store": "Vector store"
     },
     "page-title": "Admin",
     "portal": {
@@ -3144,5 +3145,21 @@
       "Presentation": "Presentación",
       "UNKNOWN": "Desconocida"
     }
+  },
+
+  "vector-store": {
+    "confirm-deletion": "Confirmar eliminación",
+    "confirm-deletion-of": "¿Realmente desea eliminar \"{title}\"?",
+    "document-deleted": "Documento eliminado.",
+    "add-document": "Agregar un documento",
+    "chunks": "fragmentos",
+    "no-document-yet": "Aún no hay documentos",
+    "title-exists": "El título ya existe",
+    "add-document": "Agregar un documento",
+    "edit-document": "Editar un documento",
+    "title-field": "Título",
+    "file-field": "Archivo",
+    "document-added": "Documento agregado.",
+    "document-updated": "Documento actualizado."
   }
 }

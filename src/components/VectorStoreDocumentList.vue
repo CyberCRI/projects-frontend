@@ -41,16 +41,16 @@ refresh()
   </p>
   <ul v-else>
     <li
-      class="document"
       v-for="document in documentList"
       :key="document.title + '-' + document.chunks"
+      class="document"
     >
       <div class="icon">
         <IconImage name="Article" />
       </div>
       <div class="title">
         {{ document.title }}
-        <span class="chunk-count">({{ document.chunks }} chunks)</span>
+        <span class="chunk-count">({{ document.chunks }} {{ $t('vector-store.chunks') }})</span>
       </div>
       <div class="actions">
         <ContextActionButton
@@ -85,20 +85,28 @@ refresh()
   justify-content: stretch;
   align-items: center;
 }
+
+.document ~ .document {
+  margin-top: 1rem;
+}
+
 .icon,
 .actions {
   flex-grow: 0;
   flex-shrink: 0;
 }
+
 .title {
   flex-grow: 1;
   font-size: 1.2rem;
   color: $primary-dark;
 }
+
 .chunk-count {
   font-weight: normal;
   color: $light-gray;
 }
+
 .icon svg {
   width: 2rem;
   fill: $light-gray;

@@ -220,7 +220,8 @@
       "requests": "Taotlused",
       "groups": "Grupid",
       "settings": "Seadistused",
-      "terms": "Tos"
+      "terms": "Tos",
+      "vector-store": "Vector store"
     },
     "page-title": "Admin",
     "portal": {
@@ -3144,5 +3145,20 @@
       "Presentation": "Esitlus",
       "UNKNOWN": "Tundmatu"
     }
+  },
+  "vector-store": {
+    "confirm-deletion": "Kinnita kustutamine",
+    "confirm-deletion-of": "Kas soovite tõesti \"{title}\" kustutada?",
+    "document-deleted": "Dokument kustutatud.",
+    "add-document": "Lisa dokument",
+    "chunks": "fragmendid",
+    "no-document-yet": "Veel ühtegi dokumenti",
+    "title-exists": "Pealkiri eksisteerib juba",
+    "add-document": "Lisa dokument",
+    "edit-document": "Muuda dokumenti",
+    "title-field": "Pealkiri",
+    "file-field": "Fail",
+    "document-added": "Dokument lisatud.",
+    "document-updated": "Dokument uuendatud."
   }
 }
