@@ -1,37 +1,122 @@
 <script setup>
 import useUsersStore from '@/stores/useUsers'
 
-const emit = defineEmits(['show-document'])
+const emit = defineEmits(['show-document', 'delete-document', 'edit-document'])
 
 const usersStore = useUsersStore()
 
 const isAsyncing = ref(false)
 const documentList = ref([])
 
-let headers = {}
-const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
-if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
+const refresh = async () => {
+  isAsyncing.value = true
+  let headers = {}
+  const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
+  if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
 
-try {
-  const response = await fetch(`/api/vector-store/list`, {
-    headers,
-  })
-  const data = await response.json()
-  console.log(data)
-  documentList.value = data
-} catch (e) {
-  console.log(e.toString())
-} finally {
-  isAsyncing.value = false
-  close()
+  try {
+    const response = await fetch(`/api/vector-store/list`, {
+      headers,
+    })
+    const data = await response.json()
+    console.log(data)
+    documentList.value = data
+  } catch (e) {
+    console.log(e.toString())
+  } finally {
+    isAsyncing.value = false
+    close()
+  }
 }
+defineExpose({ refresh })
+
+refresh()
 </script>
 <template>
-  <ul>
-    <li v-for="document in documentList" :key="document.title + '-' + document.chunks">
-      <a href="#" @click.prevent="emit('show-document', document.title)">
-        {{ document.title }} ({{ document.chunks }} chunks)
-      </a>
+  <div v-if="isAsyncing" class="loader">
+    <LoaderSimple />
+  </div>
+  <p v-else-if="!documentList.length" class="no-document">
+    {{ $t('vector-store.no-document-yet') }}
+  </p>
+  <ul v-else>
+    <li
+      class="document"
+      v-for="document in documentList"
+      :key="document.title + '-' + document.chunks"
+    >
+      <div class="icon">
+        <IconImage name="Article" />
+      </div>
+      <div class="title">
+        {{ document.title }}
+        <span class="chunk-count">({{ document.chunks }} chunks)</span>
+      </div>
+      <div class="actions">
+        <ContextActionButton
+          action-icon="Eye"
+          secondary
+          no-border
+          @click.prevent="emit('show-document', document.title)"
+        />
+        <ContextActionButton
+          action-icon="Pen"
+          secondary
+          no-border
+          @click.prevent="emit('edit-document', document.title)"
+        />
+        <ContextActionButton
+          action-icon="TrashCanOutline"
+          secondary
+          no-border
+          @click.prevent="emit('delete-document', document.title)"
+        />
+      </div>
     </li>
   </ul>
 </template>
+<style lang="scss" scoped>
+.document {
+  display: flex;
+  gap: 1rem;
+  padding: 0.6rem;
+  border: 1px solid $primary;
+  border-radius: 0.6rem;
+  justify-content: stretch;
+  align-items: center;
+}
+.icon,
+.actions {
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+.title {
+  flex-grow: 1;
+  font-size: 1.2rem;
+  color: $primary-dark;
+}
+.chunk-count {
+  font-weight: normal;
+  color: $light-gray;
+}
+.icon svg {
+  width: 2rem;
+  fill: $light-gray;
+}
+
+.actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.no-document {
+  text-align: center;
+  font-style: italic;
+}
+</style>
