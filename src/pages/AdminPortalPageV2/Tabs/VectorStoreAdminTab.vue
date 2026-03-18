@@ -4,15 +4,17 @@ import useToasterStore from '@/stores/useToaster'
 
 const toaster = useToasterStore()
 const usersStore = useUsersStore()
-const { t } = useNuxtI18n()
 
 const showDocumentTitle = ref('')
 const addDocumentIsOpen = ref(false)
 const documentToDelete = ref('')
+const documentToEdit = ref('')
 
 const docList = ref(null)
 const refreshDocumentList = () => docList.value?.refresh()
+
 const isAsyncing = ref(false)
+
 const deleteDocument = async () => {
   isAsyncing.value = true
   let headers = {}
@@ -57,6 +59,7 @@ const deleteDocument = async () => {
       ref="docList"
       @show-document="showDocumentTitle = $event"
       @delete-document="documentToDelete = $event"
+      @edit-document="documentToEdit = $event"
     />
 
     <VectorStoreDocumentShow
@@ -70,10 +73,17 @@ const deleteDocument = async () => {
       @close="addDocumentIsOpen = false"
       @document-added="refreshDocumentList"
     />
+    <VectorStoreIngestionForm
+      :is-opened="!!documentToEdit"
+      :title="documentToEdit"
+      is-edit
+      @close="documentToEdit = ''"
+      @document-updated="documentToEdit = ''"
+    />
     <ConfirmModal
       v-if="documentToDelete"
       :asyncing="isAsyncing"
-      :title="$t('vector-store.confirm-deletion')"
+      :document-title="$t('vector-store.confirm-deletion')"
       :content="$t('vector-store.confirm-deletion-of', { title: documentToDelete })"
       @confirm="deleteDocument"
       @cancel="documentToDelete = ''"

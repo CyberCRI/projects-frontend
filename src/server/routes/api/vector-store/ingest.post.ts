@@ -48,10 +48,8 @@ export default defineLazyEventHandler(() => {
 
     await vectorStore.delete({
       filter: {
-        metadata: {
-          title: extraMetadata.title,
-          orgCode: extraMetadata.orgCode,
-        },
+        title: extraMetadata.title,
+        orgCode: extraMetadata.orgCode,
       },
     })
 
