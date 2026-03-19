@@ -417,6 +417,18 @@ const routes = ({
     ],
   },
   {
+    path: '/event/:eventId',
+    name: 'EventPage',
+    component: () => import('../pages/EventPage/EventPage.vue'),
+    props: (route) => ({
+      eventId: route.params.eventId,
+    }),
+    meta: {
+      resetScroll: true,
+    },
+  },
+
+  {
     path: '/create-news',
     name: 'CreateNewsPage',
     component: () => import('../pages/CreateNewsPage/CreateNewsPage.vue'),

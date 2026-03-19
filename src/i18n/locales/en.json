@@ -2389,6 +2389,7 @@
     }
   },
   "event": {
+    "view": "See event",
     "no-event": "No event yet.",
     "calendar": {
       "title": "Calendar",

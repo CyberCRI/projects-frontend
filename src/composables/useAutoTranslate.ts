@@ -11,6 +11,7 @@ import {
   TranslatedNewsLocation,
 } from '@/models/location.model'
 import { TranslatedNews } from '@/models/news.model'
+import { TranslatedEventModel } from '@/models/event.model'
 
 // type can be computed or object
 type RefOrRaw<DataT> = ComputedRef<DataT> | Ref<DataT> | DataT
@@ -290,7 +291,14 @@ export default function useAutoTranslate() {
 
   // -----------
   // events
-  const translateEvent = (event) => translateEntity(event, ['title', 'content'])
+  const translateEvent = (event) =>
+    computed<TranslatedEventModel>(() => {
+      const locationRaw = unref(event)
+      return {
+        ...unref(translateEntity(event, ['title', 'content'])),
+        location: unref(translateLocation(locationRaw.location)),
+      }
+    })
   const translateEvents = (events) => translateEntities(events, translateEvent)
 
   const translateEventsLocation = (location) =>

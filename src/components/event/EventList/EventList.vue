@@ -13,8 +13,9 @@
           v-for="event in events"
           :key="event.id"
           :event="event"
-          @edit-event="editedEvent = event"
-          @delete-event="eventToDelete = event"
+          editable
+          @edit="editedEvent = event"
+          @delete="eventToDelete = event"
         />
       </div>
     </div>
@@ -23,7 +24,7 @@
     :is-opened="!!editedEvent"
     :event="editedEvent"
     @close="editedEvent = null"
-    @event-edited="$emit('reload-events')"
+    @edited="$emit('reload-events')"
   />
 
   <ConfirmModal

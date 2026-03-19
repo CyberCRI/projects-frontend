@@ -21,6 +21,7 @@
       :is-loading="isLoading"
     />
     <GroupNewsPreview v-if="group.modules.news" :group="group" :is-loading="isLoading" />
+    <GroupEventPreview v-if="group.modules.event" :group="group" :is-loading="isLoading" />
     <GroupDocumentsPreview
       v-if="group.modules.publications"
       document-type="publications"
@@ -49,6 +50,7 @@ import GroupHeader from '@/components/group/Modules/GroupHeader.vue'
 import GroupGalleryPreview from '@/components/group/Modules/Gallery/GroupGalleryPreview.vue'
 import { difference } from 'es-toolkit'
 import GroupNewsPreview from '@/components/group/Modules/News/GroupNewsPreview.vue'
+import GroupEventPreview from '@/components/group/Modules/Event/GroupEventPreview.vue'
 
 const props = defineProps<{
   group: TranslatedPeopleGroupModel

@@ -2488,7 +2488,8 @@
       }
     },
     "group-label": "Grup:",
-    "groups-label": "Grups:"
+    "groups-label": "Grups:",
+    "view": "Mireu esdeveniments"
   },
   "news": {
     "create": {

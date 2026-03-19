@@ -2488,7 +2488,8 @@
       }
     },
     "group-label": "Gruppe:",
-    "groups-label": "Gruppen:"
+    "groups-label": "Gruppen:",
+    "view": "Siehe Veranstaltung"
   },
   "news": {
     "create": {

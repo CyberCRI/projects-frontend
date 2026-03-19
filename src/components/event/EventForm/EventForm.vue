@@ -19,6 +19,7 @@
         ref="tiptapEditor"
         :model-value="model.content"
         class="input-field content-editor no-max-height"
+        mode="full"
         @update:model-value="updateForm({ content: $event })"
       />
     </div>
@@ -43,11 +44,13 @@
         </template>
       </span>
 
+      <!-- disable our/minutes if not  -->
       <VueDatePicker
         v-if="stateModals.DatePicker"
         range
         inline
         :model-value="datePickerValue"
+        :min-date="new Date()"
         :locale="locale"
         :on-click-outside="() => closeModals('DatePicker')"
         @update:model-value="onDateSelected"

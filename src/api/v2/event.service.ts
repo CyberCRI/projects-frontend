@@ -1,4 +1,4 @@
-import { getNews as fetchNews, getAllNews as fetchAllNews } from '@/api/news.service'
+import { getEvent as fetchEvent, getAllEvents as fetchAllEvents } from '@/api/event.service'
 import { onlyRefs } from '@/functs/onlyRefs'
 import { RefOrRaw } from '@/interfaces/utils'
 import { NewsModel } from '@/models/news.model'
@@ -6,14 +6,17 @@ import { OrganizationModel } from '@/models/organization.model'
 
 const DEFAULT_CONFIG = {}
 
-export const getAllNews = (organizationCode: RefOrRaw<OrganizationModel['code']>, config = {}) => {
+export const getAllEvents = (
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
+  config = {}
+) => {
   const { translateEvents } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::event::all`)
 
   return useAsyncPaginationAPI(
     key,
     ({ config }) =>
-      fetchAllNews(unref(organizationCode), {
+      fetchAllEvents(unref(organizationCode), {
         ...DEFAULT_CONFIG,
         ...config,
       }),
@@ -25,24 +28,24 @@ export const getAllNews = (organizationCode: RefOrRaw<OrganizationModel['code']>
   )
 }
 
-export const getNews = (
+export const getEvent = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
-  newsId: RefOrRaw<NewsModel['id']>,
+  eventId: RefOrRaw<NewsModel['id']>,
   config = {}
 ) => {
-  const { translateOneNews } = useAutoTranslate()
-  const key = computed(() => `${unref(organizationCode)}::news::${newsId}`)
+  const { translateEvent } = useAutoTranslate()
+  const key = computed(() => `${unref(organizationCode)}::news::${eventId}`)
 
   return useAsyncAPI(
     key,
     ({ config }) =>
-      fetchNews(unref(organizationCode), unref(newsId), {
+      fetchEvent(unref(organizationCode), unref(eventId), {
         ...DEFAULT_CONFIG,
         ...config,
       }),
     {
-      translate: (data) => translateOneNews(data),
-      watch: onlyRefs([organizationCode, newsId]),
+      translate: (data) => translateEvent(data),
+      watch: onlyRefs([organizationCode, eventId]),
       ...config,
     }
   )

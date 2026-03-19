@@ -1,29 +1,39 @@
 <template>
-  <AdminBlock :block-title="blockTitle" :is-loading="isLoading">
+  <AdminBlock :block-title="blockTitle">
     <template #actions />
     <template #default>
-      <EventAdminListItem
-        v-for="event in events"
-        :key="event.id"
-        :event="event"
-        @edit-event="editedEvent = event"
-        @delete-event="eventToDelete = event"
-      />
-      <EditEventDrawer
-        :is-opened="!!editedEvent"
-        :event="editedEvent"
-        @close="editedEvent = null"
-        @event-edited="loadEvents"
-      />
+      <FetchLoader :status="status">
+        <EventItem
+          v-for="event in events"
+          :key="event.id"
+          :event="event"
+          editable
+          :to="{
+            name: 'EventPage',
+            params: { eventId: event.id },
+          }"
+          hide-see-more-button
+          hide-groups
+          @edit="editedEvent = event"
+          @delete="eventToDelete = event"
+        />
+        <PaginationButtonsV2 :pagination="pagination" />
+        <EditEventDrawer
+          :is-opened="!!editedEvent"
+          :event="editedEvent"
+          @close="editedEvent = null"
+          @edited="() => refresh()"
+        />
 
-      <ConfirmModal
-        v-if="eventToDelete"
-        :content="$t('event.delete.message')"
-        :title="$t('event.delete.title')"
-        :asyncing="isDeletingEvent"
-        @cancel="eventToDelete = null"
-        @confirm="deleteEvent"
-      />
+        <ConfirmModal
+          v-if="eventToDelete"
+          :content="$t('event.delete.message')"
+          :title="$t('event.delete.title')"
+          :asyncing="isDeletingEvent"
+          @cancel="eventToDelete = null"
+          @confirm="onDeleteEvent"
+        />
+      </FetchLoader>
     </template>
 
     <template #footer>
@@ -36,81 +46,63 @@
     </template>
   </AdminBlock>
 </template>
-<script>
-import { getAllEvents, deleteEvent } from '@/api/event.service'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+
+<script setup lang="ts">
+import { deleteEvent } from '@/api/event.service'
+import useToasterStore from '@/stores/useToaster'
 import { defaultForm } from '@/components/instruction/InstructionForm/InstructionForm.vue'
-export default {
-  name: 'EventAdminBlock',
+import EventItem from '@/components/event/EventList/EventItem.vue'
+import { getAllEvents } from '@/api/v2/event.service'
 
-  setup() {
-    const toaster = useToasterStore()
-    const organizationsStore = useOrganizationsStore()
-    return {
-      toaster,
-      organizationsStore,
-    }
+const toaster = useToasterStore()
+const organizationCode = useOrganizationCode()
+
+const { t } = useNuxtI18n()
+
+const editedEvent = ref(null)
+const eventToDelete = ref(null)
+const isDeletingEvent = ref(false)
+
+const todayAtZero = new Date()
+todayAtZero.setHours(0, 0, 0, 0)
+const query = {
+  ordering: 'start_date',
+  from_date: todayAtZero.toISOString(),
+}
+
+const {
+  status,
+  data: events,
+  pagination,
+  refresh,
+  isLoading,
+} = getAllEvents(organizationCode, {
+  query,
+  paginationConfig: {
+    limit: 4,
   },
+})
 
-  data() {
-    return {
-      events: [],
-      eventsCount: 0,
-      isLoading: true,
-      editedEvent: null,
-      eventToDelete: null,
-      isDeletingEvent: false,
-    }
-  },
+const blockTitle = computed(() => {
+  let extra = isLoading.value ? '' : ` (${pagination.count.value})`
+  return t('admin.portal.events') + extra
+})
 
-  computed: {
-    blockTitle() {
-      let extra = this.isLoading ? '' : ` (${this.eventsCount})`
-      return this.$t('admin.portal.events') + extra
-    },
-  },
+const addEvent = () => (editedEvent.value = defaultForm())
 
-  async mounted() {
-    await this.loadEvents()
-  },
+const onDeleteEvent = async () => {
+  isDeletingEvent.value = true
+  try {
+    await deleteEvent(organizationCode, eventToDelete.value.id)
+    toaster.pushSuccess(t('event.delete.success'))
 
-  methods: {
-    async loadEvents() {
-      this.isLoading = true
-      const todayAtZero = new Date()
-      todayAtZero.setHours(0, 0, 0, 0)
-      const request = await getAllEvents(this.organizationsStore.current?.code, {
-        ordering: 'start_date',
-        from_date: todayAtZero.toISOString(),
-        limit: 4,
-      })
-      this.events = request.results
-      this.eventsCount = request.count
-      this.isLoading = false
-    },
-
-    addEvent() {
-      this.editedEvent = defaultForm()
-    },
-
-    async deleteEvent() {
-      // TODO: delete event
-      console.log('delete event', this.eventToDelete)
-      this.isDeletingEvent = true
-      try {
-        await deleteEvent(this.organizationsStore.current?.code, this.eventToDelete.id)
-        this.toaster.pushSuccess(this.$t('event.delete.success'))
-
-        this.loadEvents()
-      } catch (err) {
-        this.toaster.pushError(`${this.$t('event.delete.error')} (${err})`)
-        console.error(err)
-      } finally {
-        this.eventToDelete = null
-        this.isDeletingEvent = false
-      }
-    },
-  },
+    refresh()
+  } catch (err) {
+    toaster.pushError(`${t('event.delete.error')} (${err})`)
+    console.error(err)
+  } finally {
+    eventToDelete.value = null
+    isDeletingEvent.value = false
+  }
 }
 </script>

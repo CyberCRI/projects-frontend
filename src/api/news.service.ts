@@ -1,14 +1,8 @@
-// import type { APIResponseList } from '@/api/types'
-import type {
-  /*NewsModel, */ NewsInput /*, NewsOutput, NewsHeaderOutput*/,
-  NewsModel,
-} from '@/models/news.model'
-import { _adaptParamsToGetQuery } from '@/api/utils.service'
+import type { NewsInput, NewsModel } from '@/models/news.model'
 import useAPI from '@/composables/useAPI'
 
-export async function getAllNews(orgCode: string, params: any) {
-  const adaptedParams = params ? _adaptParamsToGetQuery(params) : {}
-  return await useAPI(`organization/${orgCode}/news/`, { ...adaptedParams }) //.data.value
+export async function getAllNews(orgCode: string, config = {}) {
+  return await useAPI<PaginationResult<NewsModel>>(`organization/${orgCode}/news/`, config)
 }
 
 export async function getNews(orgCode: string, idOrSlug: number | string, config = {}) {

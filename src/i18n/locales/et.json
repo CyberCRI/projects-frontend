@@ -2488,7 +2488,8 @@
       }
     },
     "group-label": "Grupp:",
-    "groups-label": "Rühmad:"
+    "groups-label": "Rühmad:",
+    "view": "Vaata sündmust"
   },
   "news": {
     "create": {

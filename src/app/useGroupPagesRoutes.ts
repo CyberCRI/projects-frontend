@@ -59,9 +59,9 @@ export default function useGroupPagesRoutes() {
           component: () => import('../pages/GroupPageV2/Tabs/News/GroupNewsTab.vue'),
         },
         {
-          path: 'news/edit',
-          name: 'groupNewsEdit',
-          component: () => import('../pages/GroupPageV2/Tabs/News/GroupNewsTab.vue'),
+          path: 'event',
+          name: 'groupEvent',
+          component: () => import('../pages/GroupPageV2/Tabs/Event/GroupEventTab.vue'),
         },
 
         // retro compat
@@ -94,6 +94,16 @@ export default function useGroupPagesRoutes() {
           path: 'gallery/edit',
           name: 'groupGalleryEdit',
           component: () => import('../pages/GroupPageV2/Tabs/Gallery/GroupGalleryTab.vue'),
+        },
+        {
+          path: 'news/edit',
+          name: 'groupNewsEdit',
+          component: () => import('../pages/GroupPageV2/Tabs/News/GroupNewsTab.vue'),
+        },
+        {
+          path: 'event/edit',
+          name: 'groupEventEdit',
+          component: () => import('../pages/GroupPageV2/Tabs/Event/GroupEventTab.vue'),
         },
       ],
       props: true,

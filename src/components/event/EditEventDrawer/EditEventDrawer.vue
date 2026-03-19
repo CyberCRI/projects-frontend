@@ -4,12 +4,18 @@
     :confirm-action-disabled="invalid"
     :is-opened="isOpened"
     :title="event?.id ? $t('event.drawer.edit') : $t('event.drawer.create')"
-    class="small"
+    class="medium"
     :asyncing="asyncing"
     @close="closeDrawer"
     @confirm="saveEvent"
   >
-    <EventForm v-if="form" ref="eventForm" v-model="form" @invalid="invalid = $event" />
+    <EventForm
+      v-if="form"
+      ref="eventForm"
+      v-model="form"
+      :selected-group="selectedGroup"
+      @invalid="invalid = $event"
+    />
   </BaseDrawer>
 </template>
 
@@ -25,13 +31,14 @@ const props = withDefaults(
   defineProps<{
     isOpened?: boolean
     event?: EventModel
+    selectedGroup?: boolean
   }>(),
-  { isOpened: false, event: null }
+  { isOpened: false, event: null, selectedGroup: true }
 )
 
 const emit = defineEmits<{
   close: []
-  'event-edited': [EventModel]
+  edited: [EventModel]
 }>()
 const { t } = useNuxtI18n()
 const toaster = useToasterStore()
@@ -90,7 +97,7 @@ const saveEvent = async () => {
     }
     toaster.pushSuccess(t('event.save.success'))
 
-    emit('event-edited', savedEvent)
+    emit('edited', savedEvent)
   } catch (err) {
     toaster.pushError(`${t('event.save.error')} (${err})`)
     console.error(err)

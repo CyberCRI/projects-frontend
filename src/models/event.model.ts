@@ -32,3 +32,9 @@ export type EventForm = Omit<EventInput, 'people_groups' | 'start_date' | 'end_d
 export type TranslatedEventModel = Translated<EventModel, 'title' | 'content'> & {
   location: BaseTranslatedLocationModel
 }
+
+export type QueryFilterEvent = Partial<{
+  ordering: 'start_date' | '-start_date' | 'end_date' | '-end_date'
+  from_date: string
+  to_date: string
+}>

@@ -1,13 +1,15 @@
 <template>
-  <AdminBlock :block-title="blockTitle" :is-loading="isLoading">
+  <AdminBlock :block-title="blockTitle">
     <template #default>
-      <NewsAdminListItem
-        v-for="news in allNews"
-        :key="news.id"
-        :news="news"
-        @edit-news="editedNews = news"
-        @delete-news="newsToDelete = news"
-      />
+      <FetchLoader :status="status">
+        <NewsListItem
+          v-for="news in allNews"
+          :key="news.id"
+          :news="news"
+          @edit-news="editedNews = news"
+          @delete-news="newsToDelete = news"
+        />
+      </FetchLoader>
     </template>
 
     <template #footer>
@@ -24,7 +26,7 @@
     :is-opened="!!editedNews"
     :news="editedNews"
     @close="editedNews = null"
-    @news-edited="loadNews"
+    @news-edited="refresh"
   />
 
   <ConfirmModal
@@ -33,80 +35,66 @@
     :title="$t('news.delete.title')"
     :asyncing="isDeletingNews"
     @cancel="newsToDelete = null"
-    @confirm="deleteNews"
+    @confirm="onDeleteNews"
   />
 </template>
-<script>
-import { defaultForm } from '@/components/news/NewsForm/NewsForm.vue'
-import { getAllNews, deleteNews } from '@/api/news.service.ts'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
-export default {
-  name: 'NewsAdminBlock',
+<script setup lang="ts">
+import { deleteNews } from '@/api/news.service'
+import useToasterStore from '@/stores/useToaster'
+import { defaultForm } from '@/components/instruction/InstructionForm/InstructionForm.vue'
+import { getAllNews } from '@/api/v2/news.service'
+import NewsListItem from '@/components/news/NewsListItem/NewsListItem.vue'
 
-  setup() {
-    const toaster = useToasterStore()
-    const organizationsStore = useOrganizationsStore()
-    return {
-      toaster,
-      organizationsStore,
-    }
+const toaster = useToasterStore()
+const organizationCode = useOrganizationCode()
+
+const { t } = useNuxtI18n()
+
+const editedNews = ref(null)
+const newsToDelete = ref(null)
+const isDeletingNews = ref(false)
+
+const todayAtZero = new Date()
+todayAtZero.setHours(0, 0, 0, 0)
+const query = {
+  ordering: 'start_date',
+  from_date: todayAtZero.toISOString(),
+}
+
+const {
+  status,
+  data: allNews,
+  pagination,
+  refresh,
+  isLoading,
+} = getAllNews(organizationCode, {
+  query,
+  paginationConfig: {
+    limit: 4,
   },
+})
 
-  data() {
-    return {
-      allNews: [],
-      newsCount: 0,
-      isLoading: true,
-      editedNews: null,
-      newsToDelete: null,
-      isDeletingNews: false,
-    }
-  },
+const blockTitle = computed(() => {
+  let extra = isLoading.value ? '' : ` (${pagination.count.value})`
+  return t('admin.portal.newss') + extra
+})
 
-  computed: {
-    blockTitle() {
-      let extra = this.isLoading ? '' : ` (${this.newsCount})`
-      return this.$t('admin.portal.news') + extra
-    },
-  },
+const addNews = () => (editedNews.value = defaultForm())
 
-  async mounted() {
-    await this.loadNews()
-  },
+const onDeleteNews = async () => {
+  isDeletingNews.value = true
+  try {
+    await deleteNews(organizationCode, newsToDelete.value.id)
+    toaster.pushSuccess(t('news.delete.success'))
 
-  methods: {
-    async loadNews() {
-      this.isLoading = true
-      const request = await getAllNews(this.organizationsStore.current?.code, {
-        ordering: '-publication_date',
-        limit: 4,
-      })
-      this.allNews = request.results
-      this.newsCount = request.count
-      this.isLoading = false
-    },
-
-    addNews() {
-      this.editedNews = defaultForm()
-    },
-
-    async deleteNews() {
-      this.isDeletingNews = true
-      try {
-        await deleteNews(this.organizationsStore.current?.code, this.newsToDelete.id)
-        this.toaster.pushSuccess(this.$t('news.delete.success'))
-
-        this.loadNews()
-      } catch (err) {
-        this.toaster.pushError(`${this.$t('news.delete.error')} (${err})`)
-        console.error(err)
-      } finally {
-        this.newsToDelete = null
-        this.isDeletingNews = false
-      }
-    },
-  },
+    refresh()
+  } catch (err) {
+    toaster.pushError(`${t('news.delete.error')} (${err})`)
+    console.error(err)
+  } finally {
+    newsToDelete.value = null
+    isDeletingNews.value = false
+  }
 }
 </script>

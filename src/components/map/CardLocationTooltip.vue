@@ -8,20 +8,22 @@
       :to="to"
     />
     <div class="card-tooltip-content" :class="[location.type]">
-      <CroppedApiImage
-        v-if="haveImage"
-        :picture-data="image"
-        :default-picture="defaultPicture"
-        class="card-tooltip__image"
-      />
-      <div>
-        <h3 class="card-title" :title="props.title">
-          {{ title }}
-        </h3>
-        <p class="card-purpose" :title="props.description">
-          {{ description }}
-        </p>
-      </div>
+      <slot>
+        <CroppedApiImage
+          v-if="haveImage"
+          :picture-data="image"
+          :default-picture="defaultPicture"
+          class="card-tooltip__image"
+        />
+        <div>
+          <h3 class="card-title" :title="props.title">
+            {{ title }}
+          </h3>
+          <p class="card-purpose" :title="props.description">
+            {{ description }}
+          </p>
+        </div>
+      </slot>
     </div>
   </LocationTooltip>
 </template>

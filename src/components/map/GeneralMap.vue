@@ -39,7 +39,7 @@
             @mounted="slotProps.addPointer"
             @unmounted="slotProps.removePointer"
           >
-            <LocationEventTooltip :location="location" :news="location.event" />
+            <LocationEventTooltip :location="location" :event="location.event" />
           </MapPointer>
         </template>
       </BaseMap>

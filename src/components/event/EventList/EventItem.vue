@@ -1,8 +1,13 @@
 <template>
-  <div class="event" :class="{ editable: canEditEvent || canDeleteEvent }">
-    <BadgeItem v-if="isNew" :label="$t('common.new')" colors="salmon" class="badge-new" />
+  <component
+    :is="is"
+    :to="to"
+    class="event"
+    :class="{ editable: canEditEvent || canDeleteEvent, 'scale-hover': !!to }"
+  >
+    <!-- <BadgeItem v-if="isNew" label="" colors="salmon" class="badge-new" /> -->
 
-    <time class="date" :datetime="start_date.toISOString()">
+    <time class="date" :datetime="start_date.toISOString()" :class="{ 'is-new': isNew }">
       <span class="month-day">
         {{ start_date.toLocaleDateString(locale, { month: 'long', day: '2-digit' }) }}
       </span>
@@ -20,6 +25,8 @@
           class="expandable-left"
           :description="event.$t.content"
           :height-limit="100"
+          :opened="showMore"
+          :hide-see-more="hideSeeMoreButton"
         />
       </div>
 
@@ -27,7 +34,7 @@
         <button class="reset-btn btn-location scale-hover" @click.prevent="openModals('location')">
           <IconImage class="icon-small" name="MapMarker" />
           <span>
-            {{ event.location?.$t?.title ?? $t('location.address') }}
+            {{ event.location?.$t?.title || $t('location.address') }}
           </span>
         </button>
         <LocationDrawer
@@ -38,24 +45,71 @@
       </template>
 
       <!-- for date range -->
-      <div>
+      <div class="date-info">
         <IconImage class="icon-small" name="Calendar" />
-        <span>
+        <span class="date-range">
           {{ displayDateRange }}
         </span>
       </div>
 
-      <temlate v-if="event.people_groups.length">
+      <temlate v-if="event.people_groups2?.length && !hideGroups">
         <span class="news-groups">
           {{ $t('event.form.people_groups.label', event.people_groups2) }}:
         </span>
         <ContentExpandable
           class="expandable-left"
+          :opened="showMore"
+          :hide-see-more="hideSeeMoreButton"
           :height-limit="30"
           :see-more-label="$t('group.see-more')"
           :see-less-label="$t('group.see-less')"
         >
           <ul class="news-groups-list">
+            <li v-for="group in event.people_groups2" :key="group.slug">
+              <NuxtLink
+                :to="{ name: 'Group', params: { groupIdOrSlug: group.slug || group.id } }"
+                class="scale-hover inline-block"
+              >
+                <IconImage class="icon-small" name="LinkRotated" />
+                {{ group.name }}
+              </NuxtLink>
+            </li>
+            <li v-for="group in event.people_groups2" :key="group.slug">
+              <NuxtLink
+                :to="{ name: 'Group', params: { groupIdOrSlug: group.slug || group.id } }"
+                class="scale-hover inline-block"
+              >
+                <IconImage class="icon-small" name="LinkRotated" />
+                {{ group.name }}
+              </NuxtLink>
+            </li>
+            <li v-for="group in event.people_groups2" :key="group.slug">
+              <NuxtLink
+                :to="{ name: 'Group', params: { groupIdOrSlug: group.slug || group.id } }"
+                class="scale-hover inline-block"
+              >
+                <IconImage class="icon-small" name="LinkRotated" />
+                {{ group.name }}
+              </NuxtLink>
+            </li>
+            <li v-for="group in event.people_groups2" :key="group.slug">
+              <NuxtLink
+                :to="{ name: 'Group', params: { groupIdOrSlug: group.slug || group.id } }"
+                class="scale-hover inline-block"
+              >
+                <IconImage class="icon-small" name="LinkRotated" />
+                {{ group.name }}
+              </NuxtLink>
+            </li>
+            <li v-for="group in event.people_groups2" :key="group.slug">
+              <NuxtLink
+                :to="{ name: 'Group', params: { groupIdOrSlug: group.slug || group.id } }"
+                class="scale-hover inline-block"
+              >
+                <IconImage class="icon-small" name="LinkRotated" />
+                {{ group.name }}
+              </NuxtLink>
+            </li>
             <li v-for="group in event.people_groups2" :key="group.slug">
               <NuxtLink
                 :to="{ name: 'Group', params: { groupIdOrSlug: group.slug || group.id } }"
@@ -71,14 +125,14 @@
     </div>
 
     <ContextActionMenu
-      v-if="canEditEvent || canDeleteEvent"
+      v-if="editable && (canEditEvent || canDeleteEvent)"
       class="event-controls"
       :can-edit="canEditEvent"
       :can-delete="canDeleteEvent"
       @edit="editEvent(event)"
       @delete="deleteEvent(event)"
     />
-  </div>
+  </component>
 </template>
 
 <script setup lang="ts">
@@ -87,13 +141,21 @@ import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
 import { TranslatedEventModel } from '@/models/event.model'
 import ContentExpandable from '@/components/base/ContentExpandable.vue'
 
-const props = defineProps<{
-  event: TranslatedEventModel
-}>()
+const props = withDefaults(
+  defineProps<{
+    event: TranslatedEventModel
+    editable?: boolean
+    hideGroups?: boolean
+    hideSeeMoreButton?: boolean
+    showMore?: boolean
+    to?: any
+  }>(),
+  { editable: false, hideGroups: false, showMore: false, hideSeeMoreButton: false, to: null }
+)
 
 const emit = defineEmits<{
-  'delete-event': [TranslatedEventModel]
-  'edit-event': [TranslatedEventModel]
+  delete: [TranslatedEventModel]
+  edit: [TranslatedEventModel]
 }>()
 const { canEditEvent, canDeleteEvent } = usePermissions()
 
@@ -101,11 +163,18 @@ const { locale } = useNuxtI18n()
 const { stateModals, openModals, closeModals } = useModals({ location: false })
 
 const isNew = computed(() => {
-  return Date.now() - new Date(props.event.created_at).getTime() < 7 * 24 * 60 * 60 * 1000
+  return Date.now() - new Date(props.event.created_at).getTime() < 3600 * 24 * 2
 })
 
 const start_date = computed(() => new Date(props.event.start_date))
 const end_date = computed(() => new Date(props.event.end_date ?? props.event.start_date))
+
+const is = computed(() => {
+  if (props.to) {
+    return resolveComponent('NuxtLink')
+  }
+  return 'div'
+})
 
 const displayDateRange = computed(() => {
   const formater = new Intl.DateTimeFormat(locale.value, {
@@ -119,8 +188,8 @@ const displayDateRange = computed(() => {
   return formater.formatRange(start_date.value, end_date.value)
 })
 
-const deleteEvent = (event) => emit('delete-event', event)
-const editEvent = (event) => emit('edit-event', event)
+const deleteEvent = (event) => emit('delete', event)
+const editEvent = (event) => emit('edit', event)
 </script>
 <style lang="scss" scoped>
 .event {
@@ -145,7 +214,7 @@ const editEvent = (event) => emit('edit-event', event)
     background-color: #ebedee;
     align-items: center;
     justify-content: center;
-    padding: 1rem;
+    padding: 0.5rem;
     color: black;
     border-radius: $border-radius-m;
     height: fit-content;
@@ -159,6 +228,27 @@ const editEvent = (event) => emit('edit-event', event)
       opacity: 0.7;
     }
   }
+}
+
+.is-new::after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: -0.25rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 1rem;
+  background-color: $salmon;
+}
+
+.date-info {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+.date-range {
+  align-self: center;
 }
 
 .icon-small {

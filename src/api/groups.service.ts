@@ -14,6 +14,7 @@ import { PeopleGroupIdOrSlug, PeopleGroupModel } from '@/models/invitation.model
 import { ImageModel } from '@/models/image.model'
 import { BaseLocationModel, LocationModel } from '@/models/location.model'
 import { NewsModel } from '@/models/news.model'
+import { EventModel } from '@/models/event.model'
 
 // HIERARCHY
 export async function getHierarchyGroups(organizationCode: string, config = {}) {
@@ -299,6 +300,20 @@ export async function getGroupNews(
 ) {
   return await useAPI<PaginationResult<NewsModel>>(
     `organization/${organizationCode}/people-group/${groupId}/news/`,
+    {
+      ...config,
+      method: 'GET',
+    }
+  )
+}
+
+export async function getGroupEvent(
+  organizationCode: string,
+  groupId: PeopleGroupIdOrSlug,
+  config = {}
+) {
+  return await useAPI<PaginationResult<EventModel>>(
+    `organization/${organizationCode}/people-group/${groupId}/event/`,
     {
       ...config,
       method: 'GET',
