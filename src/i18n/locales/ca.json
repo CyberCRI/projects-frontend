@@ -578,7 +578,8 @@
     "order-asc": "Més antiga al més nou",
     "order-desc": "nova a la més antiga",
     "close": "tanca",
-    "to": "A"
+    "to": "A",
+    "new": "nova"
   },
   "complete-profile": {
     "bio": {
@@ -980,7 +981,8 @@
     "add-location": "Afegeix una ubicació",
     "add-location-point": "Afegeix un punt d' emplaçament",
     "default-title": "Localització",
-    "news": "Notícies"
+    "news": "Notícies",
+    "event": "Esdeveniment"
   },
   "map": {
     "page-title": "Mapa",

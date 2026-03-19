@@ -1,28 +1,75 @@
 <template>
-  <div class="event" :class="{ editable: canEditEvent || canDeleteEvent, 'is-new': isNew }">
-    <div class="date">
-      <IconImage name="Calendar" class="icon" />
-      <div class="day-month">
-        <div class="day">
-          {{ start_date.getDay() }}
-        </div>
-        <div class="month">
-          {{ start_date.toLocaleDateString(locale, { month: 'long' }) }}
-        </div>
-      </div>
-    </div>
-    <div class="texts">
-      <h4 class="event-name">
+  <div class="event" :class="{ editable: canEditEvent || canDeleteEvent }">
+    <BadgeItem v-if="isNew" :label="$t('common.new')" colors="salmon" class="badge-new" />
+
+    <time class="date" :datetime="start_date.toISOString()">
+      <span class="month-day">
+        {{ start_date.toLocaleDateString(locale, { month: 'long', day: '2-digit' }) }}
+      </span>
+      <span class="year">
+        {{ start_date.getFullYear() }}
+      </span>
+    </time>
+
+    <div class="info">
+      <h4 class="title">
         {{ event.$t.title }}
       </h4>
       <div class="event-information">
-        <DescriptionExpandable
+        <ContentExpandable
+          class="expandable-left"
           :description="event.$t.content"
-          :height-limit="400"
-          :opened="!isLimitedDescription"
+          :height-limit="100"
         />
       </div>
+
+      <template v-if="event.location">
+        <button class="reset-btn btn-location scale-hover" @click.prevent="openModals('location')">
+          <IconImage class="icon-small" name="MapMarker" />
+          <span>
+            {{ event.location?.$t?.title ?? $t('location.address') }}
+          </span>
+        </button>
+        <LocationDrawer
+          :is-opened="stateModals.location"
+          :locations="[event.location]"
+          @close="closeModals('location')"
+        />
+      </template>
+
+      <!-- for date range -->
+      <div>
+        <IconImage class="icon-small" name="Calendar" />
+        <span>
+          {{ displayDateRange }}
+        </span>
+      </div>
+
+      <temlate v-if="event.people_groups.length">
+        <span class="news-groups">
+          {{ $t('event.form.people_groups.label', event.people_groups2) }}:
+        </span>
+        <ContentExpandable
+          class="expandable-left"
+          :height-limit="30"
+          :see-more-label="$t('group.see-more')"
+          :see-less-label="$t('group.see-less')"
+        >
+          <ul class="news-groups-list">
+            <li v-for="group in event.people_groups2" :key="group.slug">
+              <NuxtLink
+                :to="{ name: 'Group', params: { groupIdOrSlug: group.slug || group.id } }"
+                class="scale-hover inline-block"
+              >
+                <IconImage class="icon-small" name="LinkRotated" />
+                {{ group.name }}
+              </NuxtLink>
+            </li>
+          </ul>
+        </ContentExpandable>
+      </temlate>
     </div>
+
     <ContextActionMenu
       v-if="canEditEvent || canDeleteEvent"
       class="event-controls"
@@ -38,15 +85,11 @@
 import IconImage from '@/components/base/media/IconImage.vue'
 import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
 import { TranslatedEventModel } from '@/models/event.model'
-import DescriptionExpandable from '@/components/base/DescriptionExpandable.vue'
+import ContentExpandable from '@/components/base/ContentExpandable.vue'
 
-const props = withDefaults(
-  defineProps<{
-    event: TranslatedEventModel
-    isLimitedDescription?: boolean
-  }>(),
-  { isLimitedDescription: false }
-)
+const props = defineProps<{
+  event: TranslatedEventModel
+}>()
 
 const emit = defineEmits<{
   'delete-event': [TranslatedEventModel]
@@ -55,32 +98,36 @@ const emit = defineEmits<{
 const { canEditEvent, canDeleteEvent } = usePermissions()
 
 const { locale } = useNuxtI18n()
+const { stateModals, openModals, closeModals } = useModals({ location: false })
 
 const isNew = computed(() => {
   return Date.now() - new Date(props.event.created_at).getTime() < 7 * 24 * 60 * 60 * 1000
 })
 
 const start_date = computed(() => new Date(props.event.start_date))
-// const end_date = computed(() => new Date(props.event.end_date ?? props.event.start_date))
+const end_date = computed(() => new Date(props.event.end_date ?? props.event.start_date))
 
-const deleteEvent = (event) => {
-  emit('delete-event', event)
-}
+const displayDateRange = computed(() => {
+  const formater = new Intl.DateTimeFormat(locale.value, {
+    dateStyle: 'full',
+    timeStyle: 'short',
+  })
+  // not range date, format only start_date
+  if (end_date.value === start_date.value) {
+    return formater.format(start_date.value)
+  }
+  return formater.formatRange(start_date.value, end_date.value)
+})
 
-const editEvent = (event) => {
-  emit('edit-event', event)
-}
+const deleteEvent = (event) => emit('delete-event', event)
+const editEvent = (event) => emit('edit-event', event)
 </script>
 <style lang="scss" scoped>
 .event {
-  display: flex;
-  flex-wrap: nowrap;
+  display: grid;
+  grid-template-columns: auto 4fr;
   gap: $space-l;
-  align-items: stretch;
-  justify-content: stretch;
   position: relative;
-  padding: $space-m;
-  border-radius: $border-radius-m;
 
   &.editable {
     padding-right: 1.4em;
@@ -93,81 +140,62 @@ const editEvent = (event) => {
   }
 
   .date {
-    align-self: flex-start;
-    flex-shrink: 0;
     display: flex;
-    flex-wrap: nowrap;
-    gap: $space-2xs;
-    justify-content: flex-start;
+    flex-direction: column;
+    background-color: #ebedee;
     align-items: center;
-    position: relative;
+    justify-content: center;
+    padding: 1rem;
+    color: black;
+    border-radius: $border-radius-m;
+    height: fit-content;
 
-    .icon {
-      width: $layout-size-3xl;
-      fill: $primary-dark;
+    .month-day {
+      font-size: larger;
+      font-weight: 500;
     }
 
-    .day-month {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      width: 1.4rem;
-      color: $primary-dark;
-      font-weight: 900;
-
-      .day {
-        font-size: $font-size-m;
-      }
-
-      .month {
-        font-size: $font-size-xs;
-      }
+    .year {
+      opacity: 0.7;
     }
   }
+}
 
-  .texts {
-    flex-grow: 1;
-    color: $primary-dark;
-    display: flex;
-    flex-flow: column nowrap;
+.icon-small {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0.4rem;
+  fill: var(--primary);
+  width: pxToRem(24px);
+  height: pxToRem(24px);
+}
 
-    .event-name {
-      font-size: $font-size-m;
-      font-weight: 400;
-      margin-bottom: $space-2xs;
-      line-height: $line-height-tight;
-    }
+.btn-location {
+  cursor: pointer;
+}
 
-    .event-information {
-      font-size: $font-size-xs;
-      position: relative;
-      flex-grow: 1;
-      display: flex;
-      flex-flow: column;
-    }
+.badge-new {
+  position: absolute;
+  color: white;
+  margin: -0.5rem;
+}
 
-    .event-groups {
-      font-size: $font-size-xs;
-      margin-top: $space-2xs;
-    }
-  }
+.news-groups {
+  font-weight: bold;
+}
 
-  &.is-new {
-    .event-name {
-      font-weight: 900;
-    }
+.news-groups-list {
+  margin-left: 2rem;
+}
+</style>
 
-    .date::after {
-      content: '';
-      display: inline-block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 0.8rem;
-      height: 0.8rem;
-      border-radius: 0.8rem;
-      background-color: $salmon;
-    }
+<style lang="scss">
+.expandable-left {
+  display: flex;
+  flex-direction: column;
+
+  > button {
+    align-self: flex-end;
   }
 }
 </style>

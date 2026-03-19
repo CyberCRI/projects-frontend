@@ -49,9 +49,9 @@
 
     <div class="form-section">
       <!-- locations -->
-      <div class="news-location">
+      <div v-if="!model.location" class="news-location">
         <label>
-          {{ $t('news.location') }}
+          {{ $t('location.default-title') }}
         </label>
         <LpiButton
           class="add-btn"

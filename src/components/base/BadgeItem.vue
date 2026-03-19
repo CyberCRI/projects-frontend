@@ -27,7 +27,7 @@ withDefaults(
       | 'primary-light'
       | 'primary-dark'
       | 'green'
-      | 'orange'
+      | 'salmon'
       | 'ok'
       | 'warning'
       | 'disabled'

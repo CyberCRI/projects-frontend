@@ -578,7 +578,8 @@
     "order-asc": "Älter als neuster",
     "order-desc": "neuste bis älteste",
     "close": "Nähe",
-    "to": "Zu"
+    "to": "Zu",
+    "new": "neue"
   },
   "complete-profile": {
     "bio": {
@@ -980,7 +981,8 @@
     "impact": "Auswirkungen",
     "team": "Team",
     "address": "Anschrift",
-    "news": "Nachrichten"
+    "news": "Nachrichten",
+    "event": "Veranstaltung"
   },
   "map": {
     "empty": "Nichts hier noch... Die Mitarbeiter haben noch keine Projekte lokalisiert.",

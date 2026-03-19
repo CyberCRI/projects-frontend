@@ -578,7 +578,8 @@
     "order-asc": "vanim kuni uusim",
     "order-desc": "uusim",
     "close": "lähedal",
-    "to": "To"
+    "to": "To",
+    "new": "uus"
   },
   "complete-profile": {
     "bio": {
@@ -980,7 +981,8 @@
     "add-location": "Lisa asukoht",
     "add-location-point": "Asukohapunkti lisamine",
     "default-title": "Asukoht",
-    "news": "Uudised"
+    "news": "Uudised",
+    "event": "Sündmus"
   },
   "map": {
     "page-title": "Kaart",

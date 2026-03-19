@@ -578,7 +578,8 @@
     "order-asc": "plus ancien à plus récent",
     "order-desc": "Plus récent à plus ancien",
     "close": "fermer",
-    "to": "au"
+    "to": "au",
+    "new": "nouveaux"
   },
   "complete-profile": {
     "bio": {
@@ -1081,7 +1082,8 @@
     "add-location": "Ajouter un emplacement",
     "add-location-point": "Ajouter un point d'emplacement",
     "default-title": "Lieu",
-    "news": "Nouvelles"
+    "news": "Nouvelles",
+    "event": "Événement"
   },
   "map": {
     "empty": "Rien ici pour l’instant… Les contributeurs n’ont pas encore localisé des points.",

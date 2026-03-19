@@ -8,7 +8,7 @@
       <h3 class="month-title">
         {{ getMonthFromDate(yearMonth) }}
       </h3>
-      <div class="events-wrapper">
+      <div class="events-wrapper list-divider">
         <EventItem
           v-for="event in events"
           :key="event.id"

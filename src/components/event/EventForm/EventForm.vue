@@ -58,9 +58,9 @@
 
     <div class="form-section">
       <!-- locations -->
-      <div class="event-location">
+      <div v-if="!model.location" class="event-location">
         <label>
-          {{ $t('event.location') }}
+          {{ $t('location.default-title') }}
         </label>
         <LpiButton
           class="add-btn"
@@ -160,7 +160,10 @@ const rules = computed(() => ({
 }))
 
 const datePickerValue = computed(() => {
-  return [new Date(model.value.start_date) || null, new Date(model.value.end_date) || null]
+  return [
+    model.value.start_date ? new Date(model.value.start_date) : new Date(),
+    model.value.end_date ? new Date(model.value.end_date) : null,
+  ]
 })
 
 const displayedDate = computed(() => {
@@ -206,13 +209,6 @@ const updateLocation = (location) => {
 }
 </script>
 <style lang="scss" scoped>
-.loader-ctn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 5rem 0;
-}
-
 .date-btn {
   padding: $space-s;
   background-color: $white;
