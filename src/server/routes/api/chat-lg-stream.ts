@@ -2,7 +2,7 @@
 import { ChatOpenAI } from '@langchain/openai'
 import { createAgent, createMiddleware } from 'langchain'
 import { MemorySaver } from '@langchain/langgraph'
-import { SystemMessage, HumanMessage, AIMessage } from '@langchain/core/messages'
+import { SystemMessage, HumanMessage, AIMessage, BaseMessageChunk } from '@langchain/core/messages'
 import { v4 as uuidv4 } from 'uuid'
 import getVectorStore from '@/server/utils/vector-db.js'
 // import { tool } from '@langchain/core/tools'
@@ -154,8 +154,8 @@ export default defineLazyEventHandler(() => {
     const toolMonitoringMiddleware = createMiddleware({
       name: 'ToolMonitoringMiddleware',
       wrapToolCall: async (request, handler) => {
-        console.log(`Executing tool: ${request.toolCall.name}`)
-        console.log(`Arguments: ${JSON.stringify(request.toolCall.args)}`)
+        // console.log(`Executing tool: ${request.toolCall.name}`)
+        // console.log(`Arguments: ${JSON.stringify(request.toolCall.args)}`)
         try {
           const result = await handler(request)
           const content: string = (result as { content: string }).content
@@ -170,11 +170,25 @@ export default defineLazyEventHandler(() => {
       },
     })
 
+    // const loggingMiddleware = createMiddleware({
+    //   name: 'LoggingMiddleware',
+    //   beforeModel: (state) => {
+    //     console.log(`About to call model with ${state.messages.length} messages`)
+    //     console.log(JSON.stringify(state.messages, null, 2))
+    //     return
+    //   },
+    //   afterModel: (state) => {
+    //     const lastMessage = state.messages[state.messages.length - 1]
+    //     console.log(`Model returned: ${lastMessage.content}`)
+    //     return
+    //   },
+    // })
+
     const model = appOpenaiApiKey
       ? new ChatOpenAI({
           apiKey: appOpenaiApiKey,
           model: 'gpt-4o-mini',
-          temperature: 0.2,
+          temperature: 0.7,
         })
       : null
 
@@ -190,7 +204,7 @@ export default defineLazyEventHandler(() => {
           },
         ],
       }),
-      middleware: [toolMonitoringMiddleware] as any,
+      middleware: [toolMonitoringMiddleware /* , loggingMiddleware*/] as any,
     })
 
     traceMcp(
@@ -248,20 +262,32 @@ export default defineLazyEventHandler(() => {
       } as any,
       { ...config, streamMode: 'messages' }
       // ,{ options: { stream: true }, previous_response_id: conversationId,}
-    )) as AsyncIterableIterator<
-      [
-        {
-          contentBlocks?: Array<{ type: string; index: number; text: string }>
-        },
-        { status: string; langgraph_node?: any },
-      ]
-    >) {
+    )) as AsyncIterableIterator<[BaseMessageChunk, { status: string; langgraph_node?: any }]>) {
       // TODO: handle tools and reaoning chunks
       // console.log('chunk from lg node', metadata.langgraph_node)
+      // console.log('-----------------------------')
+      // console.log('--METADATA chunk from lg node\n', JSON.stringify(metadata, null, 2))
+      // console.log('-----------------------------')
+      // console.log('--TOKEN chunk from lg node\n', JSON.stringify(token, null, 2))
+      // console.log('-----------------------------')
+
+      // console.log(
+      //   '-----> TOKEN ID\n',
+      //   token.constructor.name,
+      //   (token.lc_id && token.lc_id.join && token.lc_id.join(', ')) || token.lc_id
+      // )
+      // console.log('-----> META NODE STEP\n', metadata.langgraph_node, metadata.langgraph_step)
+
+      // console.log('---->', token.contentBlocks.map((b) => b.type).join(', '))
+
+      // prevent writing tool message to front
+      if (token.lc_id[token.lc_id.length - 1] != 'AIMessageChunk') continue
+
       const content = token.contentBlocks || []
       // sort in ascending index order and join texts (is it really necessary ?)
-      const ordered_content = content.sort((a, b) => a.index - b.index)
-      const text = ordered_content
+      // const ordered_content = content.sort((a: int, b: int) => a.index - b.index)
+      // const text = ordered_content
+      const text = content
         .filter((part) => part.type == 'text')
         .map((part) => part.text)
         .join('')
