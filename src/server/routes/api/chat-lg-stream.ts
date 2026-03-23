@@ -1,5 +1,6 @@
 // import OpenAI from 'openai'
 import { ChatOpenAI } from '@langchain/openai'
+import { initChatModel } from 'langchain/chat_models/universal'
 import { createAgent, createMiddleware } from 'langchain'
 import { MemorySaver } from '@langchain/langgraph'
 import { SystemMessage, HumanMessage, AIMessage, BaseMessageChunk } from '@langchain/core/messages'
@@ -12,7 +13,9 @@ const runtimeConfig = useRuntimeConfig()
 const {
   // appOpenaiApiPromptId,
   // appOpenaiApiPromptVersion,
-  appOpenaiApiKey,
+  appLangchainModelName,
+  appLangchainModelApiKey,
+  appLangchainTemperature,
   // appOpenaiApiVectorStoreId,
   appMcpServerUrl,
   appMcpServerTrace,
@@ -39,10 +42,17 @@ export const traceSorbobot = (...args) => {
 }
 
 export default defineLazyEventHandler(() => {
-  console.log('appChatbotEnabled:', appChatbotEnabled, 'openaiApiKey:', !!appOpenaiApiKey)
+  console.log(
+    'appChatbotEnabled:',
+    appChatbotEnabled,
+    'openaiApiKey:',
+    !!appLangchainModelApiKey,
+    'appLangchainModelModelName',
+    !!appLangchainModelName
+  )
   return defineEventHandler(async (event) => {
     // return 404 if not configured
-    if (!appOpenaiApiKey || !appChatbotEnabled) {
+    if (!appLangchainModelApiKey || !appLangchainModelName || !appChatbotEnabled) {
       setResponseStatus(event, 404)
       return
     }
@@ -75,10 +85,6 @@ export default defineLazyEventHandler(() => {
 
     const messages = body.messages || []
 
-    // TODO handle conversation on our side
-    // const openai = new OpenAI({
-    //   apiKey: appOpenaiApiKey,
-    // })
     let conversationId = body.conversationId || null
     if (!conversationId) {
       // if no conversationId, we start a new conversation
@@ -184,13 +190,10 @@ export default defineLazyEventHandler(() => {
     //   },
     // })
 
-    const model = appOpenaiApiKey
-      ? new ChatOpenAI({
-          apiKey: appOpenaiApiKey,
-          model: 'gpt-4o-mini',
-          temperature: 0.7,
-        })
-      : null
+    const model = initChatModel(appLangchainModelName, {
+      temperature: parseFloat(appLangchainTemperature) || 0.7,
+      apiKey: appLangchainModelApiKey,
+    })
 
     const agent = createAgent({
       model,
