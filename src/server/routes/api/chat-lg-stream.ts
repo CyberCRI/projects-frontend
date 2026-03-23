@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid'
 import getVectorStore from '@/server/utils/vector-db.js'
 // import { tool } from '@langchain/core/tools'
 import { createRetrieverTool } from '@langchain/classic/tools/retriever'
+import { MultiServerMCPClient } from '@langchain/mcp-adapters'
 
 const runtimeConfig = useRuntimeConfig()
 const {
@@ -96,15 +97,24 @@ export default defineLazyEventHandler(() => {
 
     if (appMcpServerUrl) {
       traceMcp('Adding MCP tool with server URL:', appMcpServerUrl)
-      tools.push({
-        type: 'mcp',
-        server_label: 'projects-local-mcp',
-        server_description:
-          'A MCP to fetch information about projects, people and groups on this Projects platform.',
-        server_url: appMcpServerUrl,
-        require_approval: 'never',
-        authorization: conversationId,
+      // tools.push({
+      //   type: 'mcp',
+      //   server_label: 'projects-local-mcp',
+      //   server_description:
+      //     'A MCP to fetch information about projects, people and groups on this Projects platform.',
+      //   server_url: appMcpServerUrl,
+      //   require_approval: 'never',
+      //   authorization: conversationId,
+      // })
+
+      const client = new MultiServerMCPClient({
+        mcp: {
+          transport: 'http', // HTTP-based remote server
+          url: appMcpServerUrl,
+        },
       })
+
+      tools.push(...(await client.getTools()))
     }
 
     // if (appOpenaiApiVectorStoreId) {
