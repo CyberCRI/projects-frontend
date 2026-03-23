@@ -2,13 +2,16 @@
   <AdminBlock :block-title="blockTitle">
     <template #default>
       <FetchLoader :status="status">
-        <NewsItem
-          v-for="news in allNews"
-          :key="news.id"
-          :news="news"
-          @edit="editedNews = news"
-          @delete="newsToDelete = news"
-        />
+        <div class="list-divider list-container">
+          <NewsItem
+            v-for="news in allNews"
+            :key="news.id"
+            :news="news"
+            editable
+            @edit="onEdit"
+            @delete="onDelete"
+          />
+        </div>
       </FetchLoader>
     </template>
 
@@ -23,38 +26,46 @@
   </AdminBlock>
 
   <EditNewsDrawer
-    :is-opened="!!editedNews"
-    :news="editedNews"
-    @close="editedNews = null"
+    :is-opened="stateModals.edit"
+    :news="selectedNews"
+    @close="onCancel"
     @news-edited="refresh"
   />
 
   <ConfirmModal
-    v-if="newsToDelete"
-    :content="$t('news.delete.message')"
+    v-if="stateModals.delete"
     :title="$t('news.delete.title')"
     :asyncing="isDeletingNews"
-    @cancel="newsToDelete = null"
+    @cancel="onCancel"
     @confirm="onDeleteNews"
-  />
+  >
+    <NewsItem is="div" :news="selectedNews" />
+  </ConfirmModal>
 </template>
 
 <script setup lang="ts">
+import { useModals } from '@/composables/useModal'
 import { deleteNews } from '@/api/news.service'
 import useToasterStore from '@/stores/useToaster'
 import { defaultForm } from '@/components/instruction/InstructionForm/InstructionForm.vue'
 import { getAllNews } from '@/api/v2/news.service'
 import { QueryFilterNews } from '@/models/news.model'
 import NewsItem from '@/components/news/NewsItem.vue'
+import FetchLoader from '@/components/base/FetchLoader.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import LinkButton from '@/components/base/button/LinkButton.vue'
+import AdminBlock from '@/components/admin/GeneralAdminBlocks/AdminBlock.vue'
 
 const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()
 
 const { t } = useNuxtI18n()
 
-const editedNews = ref(null)
-const newsToDelete = ref(null)
+const { stateModals, openModals, closeModals } = useModals({ edit: false, delete: false })
 const isDeletingNews = ref(false)
+const selectedNews = ref()
 
 const todayAtZero = new Date()
 todayAtZero.setHours(0, 0, 0, 0)
@@ -79,15 +90,27 @@ const {
 
 const blockTitle = computed(() => {
   let extra = isLoading.value ? '' : ` (${pagination.count.value})`
-  return t('admin.portal.newss') + extra
+  return t('admin.portal.news') + extra
 })
 
-const addNews = () => (editedNews.value = defaultForm())
+const addNews = () => {
+  selectedNews.value = defaultForm()
+  openModals('edit')
+}
+
+const onEdit = (news) => {
+  selectedNews.value = news
+  openModals('edit')
+}
+const onDelete = (news) => {
+  selectedNews.value = news
+  openModals('delete')
+}
 
 const onDeleteNews = async () => {
   isDeletingNews.value = true
   try {
-    await deleteNews(organizationCode, newsToDelete.value.id)
+    await deleteNews(organizationCode, selectedNews.value.id)
     toaster.pushSuccess(t('news.delete.success'))
 
     refresh()
@@ -95,8 +118,13 @@ const onDeleteNews = async () => {
     toaster.pushError(`${t('news.delete.error')} (${err})`)
     console.error(err)
   } finally {
-    newsToDelete.value = null
     isDeletingNews.value = false
+    onCancel()
   }
+}
+
+const onCancel = () => {
+  selectedNews.value = null
+  closeModals('delete', 'edit')
 }
 </script>

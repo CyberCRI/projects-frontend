@@ -10,7 +10,6 @@
             :event="event"
             editable
             hide-see-more-button
-            hide-groups
             @location="onLocation"
             @edit="onEdit"
             @delete="onDelete"
@@ -59,6 +58,14 @@ import useToasterStore from '@/stores/useToaster'
 import { defaultForm } from '@/components/instruction/InstructionForm/InstructionForm.vue'
 import EventItem from '@/components/event/EventList/EventItem.vue'
 import { getAllEvents } from '@/api/v2/event.service'
+import AdminBlock from '@/components/admin/GeneralAdminBlocks/AdminBlock.vue'
+import FetchLoader from '@/components/base/FetchLoader.vue'
+import PaginationButtonsV2 from '@/components/base/navigation/PaginationButtonsV2.vue'
+import LocationDrawer from '@/components/map/LocationDrawer.vue'
+import EditEventDrawer from '@/components/event/EditEventDrawer/EditEventDrawer.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import LinkButton from '@/components/base/button/LinkButton.vue'
 
 const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()

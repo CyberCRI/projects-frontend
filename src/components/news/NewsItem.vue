@@ -1,6 +1,6 @@
 <template>
-  <NuxtLink :to="{ name: 'NewsPage', params: { slugOrId: news.id } }">
-    <div class="card-container scale-hover">
+  <component :is="isComponent" :to="{ name: 'NewsPage', params: { slugOrId: news.id } }">
+    <div class="card-container" :class="{ 'scale-hover': !props.is }">
       <CroppedApiImage
         :picture-data="news.header_image"
         class="card-image skeletons-background"
@@ -9,6 +9,7 @@
       <div class="card-content">
         <ContextActionMenuInline
           v-if="editable"
+          class="news-item-editable"
           :can-delete="canDeleteNews"
           :can-edit="canEditNews"
           @edit="emit('edit', news)"
@@ -25,7 +26,7 @@
         </time>
       </div>
     </div>
-  </NuxtLink>
+  </component>
 </template>
 <script setup lang="ts">
 import ContextActionMenuInline from '@/components/base/button/ContextActionMenuInline.vue'
@@ -34,9 +35,13 @@ import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import { DEFAULT_NEWS_PATATOID } from '@/composables/usePatatoids'
 import { TranslatedNews } from '@/models/news.model'
 
-const props = withDefaults(defineProps<{ news: TranslatedNews; editable?: boolean }>(), {
-  editable: false,
-})
+const props = withDefaults(
+  defineProps<{ news: TranslatedNews; editable?: boolean; is?: string }>(),
+  {
+    editable: false,
+    is: null,
+  }
+)
 
 const { canEditNews, canDeleteNews } = usePermissions()
 
@@ -46,6 +51,8 @@ const emit = defineEmits<{
   delete: [TranslatedNews]
   edit: [TranslatedNews]
 }>()
+
+const isComponent = computed(() => props.is ?? resolveComponent('NuxtLink'))
 
 const publicationDate = computed(() => {
   const date = props.news.publication_date

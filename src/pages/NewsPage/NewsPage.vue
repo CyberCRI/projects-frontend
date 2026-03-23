@@ -70,21 +70,29 @@
 <script setup lang="ts">
 import LocationNewsTooltip from '@/components/news/map/LocationNewsTooltip.vue'
 import { getNews } from '@/api/v2/news.service'
-import { EventModel } from '@/models/event.model'
 import { newsSkeleton } from '@/skeletons/news.skeletons'
 import { deleteNews } from '@/api/news.service'
 import NewsItem from '@/components/news/NewsItem.vue'
+import useToasterStore from '@/stores/useToaster'
+import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import { NewsModel } from '@/models/news.model'
+import { html2Text } from '@/functs/string'
+import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
+import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
 
 const props = defineProps<{
-  slugOrId: EventModel['id']
+  slugOrId: string
 }>()
+
+const toaster = useToasterStore()
 
 const { canEditNews, canDeleteNews } = usePermissions()
 
 const { locale, t } = useNuxtI18n()
 
 const organizationCode = useOrganizationCode()
-const newsId = computed(() => props.slugOrId)
+const newsId = computed<NewsModel['id']>(() => parseInt(props.slugOrId, 10))
 const {
   status,
   data: news,
@@ -106,8 +114,6 @@ const publicationDate = computed(() =>
   new Date(news.value.publication_date).toLocaleDateString(locale.value, { dateStyle: 'full' })
 )
 
-const toaster = useToaster()
-
 const { stateModals, openModals, closeModals } = useModals({ edit: false, delete: false })
 
 const onConfirmDelete = async () => {
@@ -126,6 +132,11 @@ const onConfirmDelete = async () => {
 }
 
 const onCancel = () => closeModals('delete', 'edit')
+
+useLpiHead2({
+  title: computed(() => news.value?.$t.title),
+  description: computed(() => html2Text(news.value?.$t.content)),
+})
 </script>
 
 <style lang="scss" scoped>

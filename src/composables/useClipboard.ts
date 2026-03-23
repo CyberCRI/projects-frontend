@@ -1,5 +1,7 @@
+import useToasterStore from '@/stores/useToaster'
+
 export const useClipBoard = () => {
-  const toaster = useToaster()
+  const toaster = useToasterStore()
   const { t } = useNuxtI18n()
 
   const copy = (text: string) => {

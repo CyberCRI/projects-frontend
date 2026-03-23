@@ -277,7 +277,7 @@ export default function useAutoTranslate() {
       const locationRaw = unref(location)
       return {
         ...unref(translateLocation(locationRaw)),
-        news: unref(translateOneNews(locationRaw.news)),
+        news: locationRaw.news ? unref(translateOneNews(locationRaw.news)) : locationRaw.news,
       }
     })
   const translateNewsLocations = (news) =>
@@ -309,7 +309,7 @@ export default function useAutoTranslate() {
       const locationRaw = unref(location)
       return {
         ...unref(translateLocation(locationRaw)),
-        event: unref(translateEvent(locationRaw.event)),
+        event: locationRaw.event ? unref(translateEvent(locationRaw.event)) : locationRaw.event,
       }
     })
   const translateEventsLocations = (locations) =>

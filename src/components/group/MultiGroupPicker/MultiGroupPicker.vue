@@ -243,4 +243,10 @@ export default {
 .group-filter {
   width: 100%;
 }
+
+.loader-ctn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>

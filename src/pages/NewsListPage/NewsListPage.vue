@@ -45,7 +45,7 @@
       @cancel="closeModals('delete')"
       @confirm="onConfirmDelete"
     >
-      <NewsItem :news="selectedNews" />
+      <NewsItem is="div" :news="selectedNews" />
     </ConfirmModal>
   </div>
 </template>
@@ -54,6 +54,9 @@
 import { deleteNews } from '@/api/news.service'
 import { getAllNews } from '@/api/v2/news.service'
 import FetchLoader from '@/components/base/FetchLoader.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import PaginationButtonsV2 from '@/components/base/navigation/PaginationButtonsV2.vue'
+import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
 import NewsItem from '@/components/news/NewsItem.vue'
 import { QueryFilterNews } from '@/models/news.model'
 import { factoryPagination } from '@/skeletons/base.skeletons'
@@ -68,7 +71,7 @@ const { canEditNews, canDeleteNews, canCreateNews } = usePermissions()
 const editable = computed(() => canEditNews.value || canDeleteNews.value)
 const selectedNews = ref()
 
-const query = useQuery<QueryFilterNews>({
+const { query } = useQuery<QueryFilterNews>({
   ordering: '-publication_date',
 })
 const LIMIT = 10
@@ -136,30 +139,7 @@ useLpiHead2({
   margin-left: auto;
 }
 
-.loader-ctn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 5rem 0;
-}
-
-.news-list {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  margin-bottom: 4rem;
-
-  &.with-pagination {
-    margin-bottom: 0;
-  }
-}
-
-.pagination-container {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: $space-xl;
-  margin-bottom: 4rem;
+.news-list-page {
+  margin-bottom: 1rem;
 }
 </style>

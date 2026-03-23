@@ -15,7 +15,6 @@
           :event="event"
           :editable="editable"
           :hide-see-more-button="preview"
-          hide-groups
           @location="onLocation"
           @edit="onEditNews"
           @delete="onDeleteNews"
@@ -59,6 +58,7 @@ import { QueryFilterEvent, TranslatedEventModel } from '@/models/event.model'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import { eventSkeleton } from '@/skeletons/event.skeletons'
+import useToasterStore from '@/stores/useToaster'
 
 const props = withDefaults(
   defineProps<{
@@ -84,7 +84,7 @@ const { stateModals, openModals, closeModals } = useModals({
   edit: false,
   location: false,
 })
-const toaster = useToaster()
+const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()
 const groupId = computed(() => props.group?.id)
 

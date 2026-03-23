@@ -12,13 +12,7 @@
     class="event"
     :class="{ editable: editable && (canEditEvent || canDeleteEvent), 'scale-hover': !props.is }"
   >
-    <!-- <BadgeItem v-if="isNew" label="" colors="salmon" class="badge-new" /> -->
-
-    <time
-      class="date skeletons-background"
-      :datetime="displayDate.toISOString()"
-      :class="{ 'is-new': isNew }"
-    >
+    <time class="date skeletons-background" :datetime="displayDate.toISOString()">
       <template v-if="!isCurrent">
         <span class="month-day">
           {{ displayDate.toLocaleDateString(locale, { month: 'long', day: '2-digit' }) }}
@@ -29,6 +23,9 @@
       </template>
       <span v-else>
         {{ $t('common.now') }}
+      </span>
+      <span>
+        <BadgeItem v-if="isCurrent" :label="$t('status.running')" colors="salmon" />
       </span>
     </time>
 
@@ -71,77 +68,6 @@
         </component>
         <MapRecap v-if="locationPreview" :locations="[event.location]" />
       </template>
-
-      <temlate v-if="event.people_groups2?.length && !hideGroups">
-        <span class="news-groups skeletons-text">
-          {{ $t('event.form.people_groups.label', event.people_groups2) }}:
-        </span>
-        <ContentExpandable
-          class="expandable-left skeletons-background"
-          :opened="showMore"
-          :hide-see-more="hideSeeMoreButton"
-          :height-limit="30"
-          :see-more-label="$t('group.see-more')"
-          :see-less-label="$t('group.see-less')"
-        >
-          <ul class="news-groups-list">
-            <li v-for="group in event.people_groups2" :key="group.slug">
-              <NuxtLink
-                :to="{ name: 'Group', params: { groupIdOrSlug: group.slug || group.id } }"
-                class="scale-hover inline-block"
-              >
-                <IconImage class="icon-small" name="LinkRotated" />
-                {{ group.name }}
-              </NuxtLink>
-            </li>
-            <li v-for="group in event.people_groups2" :key="group.slug">
-              <NuxtLink
-                :to="{ name: 'Group', params: { groupIdOrSlug: group.slug || group.id } }"
-                class="scale-hover inline-block"
-              >
-                <IconImage class="icon-small" name="LinkRotated" />
-                {{ group.name }}
-              </NuxtLink>
-            </li>
-            <li v-for="group in event.people_groups2" :key="group.slug">
-              <NuxtLink
-                :to="{ name: 'Group', params: { groupIdOrSlug: group.slug || group.id } }"
-                class="scale-hover inline-block"
-              >
-                <IconImage class="icon-small" name="LinkRotated" />
-                {{ group.name }}
-              </NuxtLink>
-            </li>
-            <li v-for="group in event.people_groups2" :key="group.slug">
-              <NuxtLink
-                :to="{ name: 'Group', params: { groupIdOrSlug: group.slug || group.id } }"
-                class="scale-hover inline-block"
-              >
-                <IconImage class="icon-small" name="LinkRotated" />
-                {{ group.name }}
-              </NuxtLink>
-            </li>
-            <li v-for="group in event.people_groups2" :key="group.slug">
-              <NuxtLink
-                :to="{ name: 'Group', params: { groupIdOrSlug: group.slug || group.id } }"
-                class="scale-hover inline-block"
-              >
-                <IconImage class="icon-small" name="LinkRotated" />
-                {{ group.name }}
-              </NuxtLink>
-            </li>
-            <li v-for="group in event.people_groups2" :key="group.slug">
-              <NuxtLink
-                :to="{ name: 'Group', params: { groupIdOrSlug: group.slug || group.id } }"
-                class="scale-hover inline-block"
-              >
-                <IconImage class="icon-small" name="LinkRotated" />
-                {{ group.name }}
-              </NuxtLink>
-            </li>
-          </ul>
-        </ContentExpandable>
-      </temlate>
     </div>
 
     <ContextActionMenuInline
@@ -166,7 +92,6 @@ const props = withDefaults(
   defineProps<{
     event: TranslatedEventModel
     editable?: boolean
-    hideGroups?: boolean
     hideSeeMoreButton?: boolean
     showMore?: boolean
     locationPreview?: boolean
@@ -175,7 +100,6 @@ const props = withDefaults(
   }>(),
   {
     editable: false,
-    hideGroups: false,
     showMore: false,
     hideSeeMoreButton: false,
     locationPreview: false,
@@ -192,10 +116,6 @@ const emit = defineEmits<{
 const { canEditEvent, canDeleteEvent } = usePermissions()
 
 const { locale } = useNuxtI18n()
-
-const isNew = computed(() => {
-  return Date.now() - new Date(props.event.created_at).getTime() < 3600 * 24 * 2
-})
 
 const isComponent = computed(() => {
   if (props.is) {
@@ -270,19 +190,6 @@ const locationEvent = (event) => emit('location', event)
       opacity: 0.7;
     }
   }
-}
-
-.is-new::after {
-  content: '';
-  display: inline-block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  margin: -0.25rem;
-  width: 1.2rem;
-  height: 1.2rem;
-  border-radius: 1rem;
-  background-color: $salmon;
 }
 
 .date-info {

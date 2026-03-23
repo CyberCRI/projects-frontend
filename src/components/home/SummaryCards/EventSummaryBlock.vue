@@ -7,7 +7,6 @@
         :event="event"
         :cols="events.length > 2 ? 'three-col' : 'two-col'"
         hide-see-more-button
-        hide-groups
         @location="onLocation"
         @edit="onEdit"
         @delete="onDelete"

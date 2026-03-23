@@ -37,12 +37,11 @@
 import { deleteEvent } from '@/api/event.service'
 import { getEvent } from '@/api/v2/event.service'
 import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
+import { html2Text } from '@/functs/string'
 import { eventSkeleton } from '@/skeletons/event.skeletons'
 import useToasterStore from '@/stores/useToaster'
 
-const props = defineProps<{
-  eventId: number
-}>()
+const props = defineProps<{ eventId: number }>()
 
 const breadcrumbs = computed(() => [
   {
@@ -107,6 +106,11 @@ const onCancel = () => {
   selectedEvent.value = null
   closeModals('edit', 'delete', 'location')
 }
+
+useLpiHead2({
+  title: computed(() => event.value?.$t.title),
+  description: computed(() => html2Text(event.value?.$t.content)),
+})
 </script>
 
 <style scoped>

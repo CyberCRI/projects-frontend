@@ -1,14 +1,6 @@
 <template>
   <FetchLoader :status="status" skeleton only-error>
-    <MapRecap ref="map" :locations="locations" expand :editable="isEdit" @expand="opened = true">
-      <!-- <template #tooltip="{ location }">
-        <ProjectLocationTooltip
-          v-if="location.project"
-          :location="location as TranslatedLocation"
-          :project="location.project"
-        />
-      </template> -->
-    </MapRecap>
+    <MapRecap ref="map" :locations="locations" expand :editable="isEdit" @expand="opened = true" />
     <LocationDrawer
       :is-opened="opened"
       :editable="isEdit"
