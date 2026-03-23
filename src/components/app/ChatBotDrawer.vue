@@ -3,6 +3,7 @@ import 'deep-chat'
 import analytics from '@/analytics'
 import useUsersStore from '@/stores/useUsers.ts'
 import { shuffle } from 'es-toolkit'
+import sdgJson from '@/data/sdgs.json'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -41,6 +42,57 @@ const connectOptions = {
 const usersStore = useUsersStore()
 const accessToken = usersStore.accessToken
 
+const userContext = computed(() => {
+  const user = usersStore.userFromApi
+  if (!user) return ''
+  // TODO: groups and projects
+  return `
+  # Use the following information about the user to taylor your response toward the user interests
+  - Name: ${user.family_name} ${user.given_name}
+  - Pronouns: ${user.pronouns}
+  - Job: ${user.job}
+  - Active since: ${user.created_at}
+  - Birthdate: ${user.birthdate}
+  - Short description: ${user.short_description}
+  - Description: ${user.description}
+  - SDGs of interest: ${user.sdgs
+    .map((sid) => sdgJson[sid - 1])
+    .filter((s) => !!s)
+    .map((s) => s.title + ' - ' + s.description)
+    .join('; ')}
+  - Skills:  ${user.skills
+    .filter((s) => !!s && s.type === 'skill')
+    .map((s) => s.tag?.title + ' - ' + s.tag?.description + ' (Level ' + s.level + ')')
+    .join('; ')}
+  - Hobbies:  ${user.skills
+    .filter((s) => !!s && s.type === 'hobby')
+    .map((s) => s.tag?.title + ' - ' + s.tag?.description + ' (Level ' + s.level + ')')
+    .join('; ')}
+  `
+})
+
+const pageContext = ref('')
+watch(
+  () => props.isOpened,
+  () =>
+    (pageContext.value = `
+    # Here is the content of the current page, use it as a context for your responses:
+    ${document.querySelector('.main-view')?.textContent || ''}
+    `),
+  { immediate: true }
+)
+
+const contextMessage = computed(() => [
+  {
+    role: 'ai',
+    text: userContext.value,
+  },
+  {
+    role: 'ai',
+    text: pageContext.value,
+  },
+])
+
 if (accessToken) {
   connectOptions.headers = {
     authorization: `Bearer ${accessToken}`,
@@ -74,6 +126,13 @@ const addToConversation = (...args) => {
 
 const conversationStarted = ref(false)
 const requestInterceptor = (requestDetails) => {
+  console.log(requestDetails)
+
+  if (!conversationStarted.value) {
+    console.log(contextMessage.value)
+    requestDetails.body.messages = [...contextMessage.value, ...requestDetails.body.messages]
+  }
+
   conversationStarted.value = true
   addToConversation(...requestDetails.body.messages)
   // requestDetails.body.messages = conversation.value
@@ -128,7 +187,7 @@ const spinnerMD = `![](data:image/svg+xml;base64,${btoa(spinner)}) `
 // to handle 'meta' messages get replaced by next message
 let replacedByNext = false
 const responseInterceptor = (response) => {
-  console.log('ChatBotDrawer responseInterceptor', response)
+  //console.log('ChatBotDrawer responseInterceptor', response)
   if (response.role === 'meta') {
     let text = spinnerMD + t(`chatbot.${response.text}`)
     if (response.is_done) {
