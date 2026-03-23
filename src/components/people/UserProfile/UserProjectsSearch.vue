@@ -119,6 +119,7 @@ export default {
     },
 
     updateProjectList(response) {
+      if (!response) return
       this.updatePagination(response)
       // Set new projects and end loading
       const maxResults = response.max_results || this.limit
