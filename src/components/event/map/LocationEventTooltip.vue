@@ -26,6 +26,7 @@ const description = computed(() => html2Text(props.event.$t.content))
 .hide-extra-description {
   // same columns
   grid-template-columns: 1fr !important;
+
   .description-limited-transparancy {
     display: none !important;
   }

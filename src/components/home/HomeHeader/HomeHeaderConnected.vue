@@ -30,7 +30,7 @@
           v-if="displayableEvents.length"
           :events="displayableEvents"
           :inlined="numberOfSummaryBlock < 2"
-          @reload-events="loadEvents"
+          @reload="loadEvents"
         />
         <InstructionSummaryBlock
           v-if="displayableInstructions.length"

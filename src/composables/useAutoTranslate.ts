@@ -296,10 +296,13 @@ export default function useAutoTranslate() {
       const locationRaw = unref(event)
       return {
         ...unref(translateEntity(event, ['title', 'content'])),
-        location: unref(translateLocation(locationRaw.location)),
+        location: locationRaw.location
+          ? unref(translateLocation(locationRaw.location))
+          : locationRaw.location,
       }
     })
-  const translateEvents = (events) => translateEntities(events, translateEvent)
+  const translateEvents = (events) =>
+    translateEntities<TranslatedEventModel>(events, translateEvent)
 
   const translateEventsLocation = (location) =>
     computed<TranslatedEventLocation>(() => {

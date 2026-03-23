@@ -1,5 +1,5 @@
 <template>
-  <div ref="map" class="map">
+  <div v-click-outside="closePopUp" ref="map" class="map">
     <div class="hidden">
       <slot
         v-if="mapInstance"

@@ -50,7 +50,6 @@
         range
         inline
         :model-value="datePickerValue"
-        :min-date="new Date()"
         :locale="locale"
         :on-click-outside="() => closeModals('DatePicker')"
         @update:model-value="onDateSelected"

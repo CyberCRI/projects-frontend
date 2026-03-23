@@ -1,7 +1,7 @@
 <template>
   <div class="event-page page-section-medium page-top">
     <FetchLoader :status="status" :error="error" error404 skeleton>
-      <EventItem :event="event" :show-more="true" hide-see-more-button />
+      <EventItem :event="event" :show-more="true" hide-see-more-button location-preview />
     </FetchLoader>
   </div>
 </template>

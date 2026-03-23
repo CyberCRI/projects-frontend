@@ -5,7 +5,7 @@
       :key="yearMonth"
       class="monthly-section"
     >
-      <h3 class="month-title">
+      <h3 class="month-title skeletons-text">
         {{ getMonthFromDate(yearMonth) }}
       </h3>
       <div class="events-wrapper list-divider">
@@ -24,7 +24,7 @@
     :is-opened="!!editedEvent"
     :event="editedEvent"
     @close="editedEvent = null"
-    @edited="$emit('reload-events')"
+    @edited="$emit('reload')"
   />
 
   <ConfirmModal
@@ -55,7 +55,7 @@ withDefaults(
 )
 
 const emit = defineEmits<{
-  'reload-events': []
+  reload: []
 }>()
 
 const { t, locale } = useNuxtI18n()
@@ -72,7 +72,7 @@ const onDeleteEvent = async () => {
     await deleteEvent(organizationCode, eventToDelete.value.id)
     toaster.pushSuccess(t('event.delete.success'))
 
-    emit('reload-events')
+    emit('reload')
   } catch (err) {
     toaster.pushError(`${t('event.delete.error')} (${err})`)
     console.error(err)
@@ -96,7 +96,7 @@ const getMonthFromDate = (yearMonth) => {
   margin-bottom: $space-l;
   margin-top: $space-xl;
   text-transform: uppercase;
-  color: $almost-black;
+  color: var(--almost-black);
   text-align: center;
 }
 
@@ -105,7 +105,7 @@ const getMonthFromDate = (yearMonth) => {
   flex-flow: column nowrap;
   gap: $space-l;
   padding: $space-m;
-  border: $border-width-s solid $lighter-gray;
+  border: $border-width-s solid var(--lighter-gray);
   border-radius: $border-radius-m;
 }
 </style>

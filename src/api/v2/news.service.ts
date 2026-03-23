@@ -7,7 +7,7 @@ import { OrganizationModel } from '@/models/organization.model'
 const DEFAULT_CONFIG = {}
 
 export const getAllNews = (organizationCode: RefOrRaw<OrganizationModel['code']>, config = {}) => {
-  const { translateEvents } = useAutoTranslate()
+  const { translateNews } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::event::all`)
 
   return useAsyncPaginationAPI(
@@ -18,7 +18,7 @@ export const getAllNews = (organizationCode: RefOrRaw<OrganizationModel['code']>
         ...config,
       }),
     {
-      translate: (data) => translateEvents(data),
+      translate: (data) => translateNews(data),
       watch: onlyRefs([organizationCode]),
       ...config,
     }

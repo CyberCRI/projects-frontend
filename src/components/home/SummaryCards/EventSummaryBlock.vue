@@ -20,7 +20,7 @@
         :is-opened="!!editedEvent"
         :event="editedEvent"
         @close="editedEvent = null"
-        @edited="$emit('reload-events')"
+        @edited="$emit('reload')"
       />
 
       <ConfirmModal
@@ -66,7 +66,7 @@ withDefaults(
 )
 
 const emit = defineEmits<{
-  'reload-events': []
+  reload: []
 }>()
 
 const toaster = useToasterStore()
@@ -82,7 +82,7 @@ const onDeleteEvent = async () => {
     await deleteEvent(organizationCode, eventToDelete.value.id)
     toaster.pushSuccess(t('event.delete.success'))
 
-    emit('reload-events')
+    emit('reload')
   } catch (err) {
     toaster.pushError(`${t('event.delete.error')} (${err})`)
     console.error(err)

@@ -7,7 +7,11 @@
   >
     <!-- <BadgeItem v-if="isNew" label="" colors="salmon" class="badge-new" /> -->
 
-    <time class="date" :datetime="start_date.toISOString()" :class="{ 'is-new': isNew }">
+    <time
+      class="date skeletons-background"
+      :datetime="start_date.toISOString()"
+      :class="{ 'is-new': isNew }"
+    >
       <span class="month-day">
         {{ start_date.toLocaleDateString(locale, { month: 'long', day: '2-digit' }) }}
       </span>
@@ -17,10 +21,10 @@
     </time>
 
     <div class="info">
-      <h4 class="title">
+      <h4 class="title skeletons-text">
         {{ event.$t.title }}
       </h4>
-      <div class="event-information">
+      <div class="event-information skeletons-text">
         <ContentExpandable
           class="expandable-left"
           :description="event.$t.content"
@@ -30,34 +34,40 @@
         />
       </div>
 
-      <template v-if="event.location">
-        <button class="reset-btn btn-location scale-hover" @click.prevent="openModals('location')">
-          <IconImage class="icon-small" name="MapMarker" />
-          <span>
-            {{ event.location?.$t?.title || $t('location.address') }}
-          </span>
-        </button>
-        <LocationDrawer
-          :is-opened="stateModals.location"
-          :locations="[event.location]"
-          @close="closeModals('location')"
-        />
-      </template>
-
       <!-- for date range -->
-      <div class="date-info">
+      <div class="date-info skeletons-background">
         <IconImage class="icon-small" name="Calendar" />
         <span class="date-range">
           {{ displayDateRange }}
         </span>
       </div>
 
+      <template v-if="event.location">
+        <comonent
+          :is="locationPreview ? 'div' : 'button'"
+          class="reset-btn btn-location scale-hover skeletons-background"
+          @click.prevent="openModals('location')"
+        >
+          <IconImage class="icon-small" name="MapMarker" />
+          <span>
+            {{ event.location?.$t?.title || $t('location.address') }}
+          </span>
+        </comonent>
+        <MapRecap v-if="locationPreview" :locations="[event.location]" />
+        <LocationDrawer
+          v-else
+          :is-opened="stateModals.location"
+          :locations="[event.location]"
+          @close="closeModals('location')"
+        />
+      </template>
+
       <temlate v-if="event.people_groups2?.length && !hideGroups">
-        <span class="news-groups">
+        <span class="news-groups skeletons-text">
           {{ $t('event.form.people_groups.label', event.people_groups2) }}:
         </span>
         <ContentExpandable
-          class="expandable-left"
+          class="expandable-left skeletons-background"
           :opened="showMore"
           :hide-see-more="hideSeeMoreButton"
           :height-limit="30"
@@ -126,7 +136,7 @@
 
     <ContextActionMenu
       v-if="editable && (canEditEvent || canDeleteEvent)"
-      class="event-controls"
+      class="event-controls skeletons-background"
       :can-edit="canEditEvent"
       :can-delete="canDeleteEvent"
       @edit="editEvent(event)"
@@ -140,6 +150,7 @@ import IconImage from '@/components/base/media/IconImage.vue'
 import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
 import { TranslatedEventModel } from '@/models/event.model'
 import ContentExpandable from '@/components/base/ContentExpandable.vue'
+import MapRecap from '@/components/map/MapRecap.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -149,8 +160,16 @@ const props = withDefaults(
     hideSeeMoreButton?: boolean
     showMore?: boolean
     to?: any
+    locationPreview?: boolean
   }>(),
-  { editable: false, hideGroups: false, showMore: false, hideSeeMoreButton: false, to: null }
+  {
+    editable: false,
+    hideGroups: false,
+    showMore: false,
+    hideSeeMoreButton: false,
+    to: null,
+    locationPreview: false,
+  }
 )
 
 const emit = defineEmits<{
@@ -247,6 +266,7 @@ const editEvent = (event) => emit('edit', event)
   display: grid;
   grid-template-columns: auto 1fr;
 }
+
 .date-range {
   align-self: center;
 }
