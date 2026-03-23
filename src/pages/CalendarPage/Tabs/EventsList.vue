@@ -1,6 +1,11 @@
 <template>
   <FetchLoader :status="status" only-error skeleton>
-    <EventList v-if="data.length" :events-by-month="eventsGrouped" @reload="refresh" />
+    <EventList
+      v-if="data.length"
+      :events-by-month="eventsGrouped"
+      :reverse-date="!props.isFuture"
+      @reload="refresh"
+    />
     <EmptyLabel v-else class="no-event" :label="$t('event.no-event')" />
     <PaginationButtonsV2 :pagination="pagination" />
   </FetchLoader>
@@ -16,7 +21,7 @@ import { groupBy } from 'es-toolkit'
 
 const props = withDefaults(
   defineProps<{
-    isFuture: boolean
+    isFuture?: boolean
   }>(),
   {
     isFuture: false,

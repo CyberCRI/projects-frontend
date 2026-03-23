@@ -1,22 +1,34 @@
 <template>
   <component
-    :is="is"
-    :to="to"
+    :is="isComponent"
+    :to="
+      event.id
+        ? {
+            name: 'EventPage',
+            params: { eventId: event.id },
+          }
+        : null
+    "
     class="event"
-    :class="{ editable: canEditEvent || canDeleteEvent, 'scale-hover': !!to }"
+    :class="{ editable: editable && (canEditEvent || canDeleteEvent), 'scale-hover': !props.is }"
   >
     <!-- <BadgeItem v-if="isNew" label="" colors="salmon" class="badge-new" /> -->
 
     <time
       class="date skeletons-background"
-      :datetime="start_date.toISOString()"
+      :datetime="displayDate.toISOString()"
       :class="{ 'is-new': isNew }"
     >
-      <span class="month-day">
-        {{ start_date.toLocaleDateString(locale, { month: 'long', day: '2-digit' }) }}
-      </span>
-      <span class="year">
-        {{ start_date.getFullYear() }}
+      <template v-if="!isCurrent">
+        <span class="month-day">
+          {{ displayDate.toLocaleDateString(locale, { month: 'long', day: '2-digit' }) }}
+        </span>
+        <span class="year">
+          {{ displayDate.getFullYear() }}
+        </span>
+      </template>
+      <span v-else>
+        {{ $t('common.now') }}
       </span>
     </time>
 
@@ -43,23 +55,21 @@
       </div>
 
       <template v-if="event.location">
-        <comonent
-          :is="locationPreview ? 'div' : 'button'"
-          class="reset-btn btn-location scale-hover skeletons-background"
-          @click.prevent="openModals('location')"
+        <component
+          :is="!locationPreview ? 'button' : 'div'"
+          class="reset-btn btn-location skeletons-background"
+          :class="{
+            'scale-hover': !locationPreview,
+            'pointer-events-none': locationPreview,
+          }"
+          @click.prevent="locationEvent(event)"
         >
           <IconImage class="icon-small" name="MapMarker" />
           <span>
             {{ event.location?.$t?.title || $t('location.address') }}
           </span>
-        </comonent>
+        </component>
         <MapRecap v-if="locationPreview" :locations="[event.location]" />
-        <LocationDrawer
-          v-else
-          :is-opened="stateModals.location"
-          :locations="[event.location]"
-          @close="closeModals('location')"
-        />
       </template>
 
       <temlate v-if="event.people_groups2?.length && !hideGroups">
@@ -134,11 +144,11 @@
       </temlate>
     </div>
 
-    <ContextActionMenu
-      v-if="editable && (canEditEvent || canDeleteEvent)"
-      class="event-controls skeletons-background"
-      :can-edit="canEditEvent"
+    <ContextActionMenuInline
+      v-if="editable"
+      class="event-controls"
       :can-delete="canDeleteEvent"
+      :can-edit="canEditEvent"
       @edit="editEvent(event)"
       @delete="deleteEvent(event)"
     />
@@ -147,10 +157,10 @@
 
 <script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
-import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
 import { TranslatedEventModel } from '@/models/event.model'
 import ContentExpandable from '@/components/base/ContentExpandable.vue'
 import MapRecap from '@/components/map/MapRecap.vue'
+import ContextActionMenuInline from '@/components/base/button/ContextActionMenuInline.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -159,40 +169,51 @@ const props = withDefaults(
     hideGroups?: boolean
     hideSeeMoreButton?: boolean
     showMore?: boolean
-    to?: any
     locationPreview?: boolean
+    reverseDate?: boolean
+    is?: string
   }>(),
   {
     editable: false,
     hideGroups: false,
     showMore: false,
     hideSeeMoreButton: false,
-    to: null,
     locationPreview: false,
+    reverseDate: false,
+    is: null,
   }
 )
 
 const emit = defineEmits<{
   delete: [TranslatedEventModel]
   edit: [TranslatedEventModel]
+  location: [TranslatedEventModel]
 }>()
 const { canEditEvent, canDeleteEvent } = usePermissions()
 
 const { locale } = useNuxtI18n()
-const { stateModals, openModals, closeModals } = useModals({ location: false })
 
 const isNew = computed(() => {
   return Date.now() - new Date(props.event.created_at).getTime() < 3600 * 24 * 2
 })
 
+const isComponent = computed(() => {
+  if (props.is) {
+    return props.is
+  }
+  return resolveComponent('NuxtLink')
+})
+
+const displayDate = computed(
+  () => new Date(props.reverseDate ? props.event.end_date : props.event.start_date)
+)
+
 const start_date = computed(() => new Date(props.event.start_date))
 const end_date = computed(() => new Date(props.event.end_date ?? props.event.start_date))
 
-const is = computed(() => {
-  if (props.to) {
-    return resolveComponent('NuxtLink')
-  }
-  return 'div'
+const isCurrent = computed(() => {
+  const now = new Date()
+  return start_date.value <= now && now <= end_date.value
 })
 
 const displayDateRange = computed(() => {
@@ -209,6 +230,7 @@ const displayDateRange = computed(() => {
 
 const deleteEvent = (event) => emit('delete', event)
 const editEvent = (event) => emit('edit', event)
+const locationEvent = (event) => emit('location', event)
 </script>
 <style lang="scss" scoped>
 .event {
@@ -225,6 +247,7 @@ const editEvent = (event) => emit('edit', event)
     position: absolute;
     right: 0;
     top: 0;
+    margin: -1rem;
   }
 
   .date {
@@ -282,6 +305,7 @@ const editEvent = (event) => emit('edit', event)
 
 .btn-location {
   cursor: pointer;
+  display: block;
 }
 
 .badge-new {

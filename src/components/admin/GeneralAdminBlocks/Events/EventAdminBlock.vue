@@ -3,36 +3,42 @@
     <template #actions />
     <template #default>
       <FetchLoader :status="status">
-        <EventItem
-          v-for="event in events"
-          :key="event.id"
-          :event="event"
-          editable
-          :to="{
-            name: 'EventPage',
-            params: { eventId: event.id },
-          }"
-          hide-see-more-button
-          hide-groups
-          @edit="editedEvent = event"
-          @delete="eventToDelete = event"
-        />
+        <div class="list-divider list-container">
+          <EventItem
+            v-for="event in events"
+            :key="event.id"
+            :event="event"
+            editable
+            hide-see-more-button
+            hide-groups
+            @location="onLocation"
+            @edit="onEdit"
+            @delete="onDelete"
+          />
+        </div>
         <PaginationButtonsV2 :pagination="pagination" />
+        <LocationDrawer
+          :is-opened="stateModals.location"
+          :locations="selectedEvent?.location ? [selectedEvent.location] : []"
+          @close="onCancel"
+        />
+
         <EditEventDrawer
-          :is-opened="!!editedEvent"
-          :event="editedEvent"
-          @close="editedEvent = null"
+          :is-opened="stateModals.edit"
+          :event="selectedEvent"
+          @close="onCancel"
           @edited="() => refresh()"
         />
 
         <ConfirmModal
-          v-if="eventToDelete"
-          :content="$t('event.delete.message')"
+          v-if="stateModals.delete"
           :title="$t('event.delete.title')"
-          :asyncing="isDeletingEvent"
-          @cancel="eventToDelete = null"
+          :asyncing="asyncingDelete"
+          @cancel="onCancel"
           @confirm="onDeleteEvent"
-        />
+        >
+          <EventItem is="div" :event="selectedEvent" />
+        </ConfirmModal>
       </FetchLoader>
     </template>
 
@@ -59,9 +65,13 @@ const organizationCode = useOrganizationCode()
 
 const { t } = useNuxtI18n()
 
-const editedEvent = ref(null)
-const eventToDelete = ref(null)
-const isDeletingEvent = ref(false)
+const selectedEvent = ref(null)
+const asyncingDelete = ref(false)
+const { stateModals, closeModals, openModals } = useModals({
+  location: false,
+  edit: false,
+  delete: false,
+})
 
 const todayAtZero = new Date()
 todayAtZero.setHours(0, 0, 0, 0)
@@ -88,12 +98,27 @@ const blockTitle = computed(() => {
   return t('admin.portal.events') + extra
 })
 
-const addEvent = () => (editedEvent.value = defaultForm())
+const addEvent = () => {
+  selectedEvent.value = defaultForm()
+  openModals('edit')
+}
+const onDelete = (event) => {
+  selectedEvent.value = event
+  openModals('delete')
+}
+const onEdit = (event) => {
+  selectedEvent.value = event
+  openModals('edit')
+}
+const onLocation = (event) => {
+  selectedEvent.value = event
+  openModals('location')
+}
 
 const onDeleteEvent = async () => {
-  isDeletingEvent.value = true
+  asyncingDelete.value = true
   try {
-    await deleteEvent(organizationCode, eventToDelete.value.id)
+    await deleteEvent(organizationCode, selectedEvent.value.id)
     toaster.pushSuccess(t('event.delete.success'))
 
     refresh()
@@ -101,8 +126,13 @@ const onDeleteEvent = async () => {
     toaster.pushError(`${t('event.delete.error')} (${err})`)
     console.error(err)
   } finally {
-    eventToDelete.value = null
-    isDeletingEvent.value = false
+    asyncingDelete.value = false
+    onCancel()
   }
+}
+
+const onCancel = () => {
+  selectedEvent.value = null
+  closeModals('edit', 'delete', 'location')
 }
 </script>

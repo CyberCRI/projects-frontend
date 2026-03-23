@@ -579,7 +579,8 @@
     "ok": "Ok",
     "file-too-big": "File is too big (max: {maxSize}Mb)",
     "to": "to",
-    "new": "new"
+    "new": "new",
+    "now": "Today"
   },
   "complete-profile": {
     "bio": {

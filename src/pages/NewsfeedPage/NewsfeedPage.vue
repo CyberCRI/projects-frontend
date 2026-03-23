@@ -81,7 +81,7 @@ try {
     <div class="newsfeed-container">
       <div class="newsfeed-select-container" />
       <div v-if="isLoading">
-        <NewsListSkeleton :limit="15" />
+        <span skeleton :limit="15" />
       </div>
       <div v-else-if="newsfeed.length" class="news-container">
         <NewsFeed :newsfeed="newsfeed" @reload-newsfeed="loadNewsfeed" />

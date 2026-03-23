@@ -450,7 +450,9 @@ const routes = ({
     path: '/news/:slugOrId',
     name: 'NewsPage',
     component: () => import('../pages/NewsPage/NewsPage.vue'),
-    props: true,
+    props: (route) => ({
+      slugOrId: route.params.slugOrId,
+    }),
     meta: {
       resetScroll: true,
     },

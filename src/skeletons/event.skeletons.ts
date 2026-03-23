@@ -5,7 +5,7 @@ export const eventSkeleton = (def?: Partial<EventModel>): Omit<EventModel, 'id'>
   title: 'title',
   content: 'Ipsum nostrud officia dolor esse exercitation mollit',
   start_date: '2020-01-01',
-  end_date: '2020-01-01',
+  end_date: '2020-01-02',
   people_groups: [],
   created_at: '2020-01-01',
   updated_at: '2020-01-01',

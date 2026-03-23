@@ -6,7 +6,7 @@
     :title="event.$t.title"
     :description="description"
   >
-    <EventItem hide-see-more-button :event="event" class="hide-extra-description" />
+    <EventItem is="div" hide-see-more-button :event="event" class="hide-extra-description" />
   </CardLocationTooltip>
 </template>
 
