@@ -159,7 +159,7 @@ $slide-duration: 400ms;
   transform: translateX(0);
 
   .drawer__main {
-    padding: $space-l $space-l $space-xl $space-l;
+    padding: 0 $space-l $space-xl;
     overflow: auto;
     overflow-x: hidden;
     flex-grow: 1;

@@ -4,33 +4,30 @@
       <EventItem
         v-for="event in events"
         :key="event.id"
-        :to="{
-          name: 'EventPage',
-          params: { eventId: event.id },
-        }"
         :event="event"
         :cols="events.length > 2 ? 'three-col' : 'two-col'"
         hide-see-more-button
         hide-groups
-        @edit="editedEvent = event"
-        @delete="eventToDelete = event"
+        @edit="onEdit"
+        @delete="onDelete"
       />
 
       <EditEventDrawer
-        :is-opened="!!editedEvent"
-        :event="editedEvent"
-        @close="editedEvent = null"
+        :is-opened="stateModals.edit"
+        :event="selectedEvent"
+        @close="onCancel"
         @edited="$emit('reload')"
       />
 
       <ConfirmModal
-        v-if="eventToDelete"
-        :content="$t('event.delete.message')"
+        v-if="stateModals.delete"
         :title="$t('event.delete.title')"
         :asyncing="isDeletingEvent"
-        @cancel="eventToDelete = null"
+        @cancel="onCancel"
         @confirm="onDeleteEvent"
-      />
+      >
+        <EventItem is="div" :event="selectedEvent" location-preview />
+      </ConfirmModal>
     </template>
 
     <template #action>
@@ -69,17 +66,31 @@ const emit = defineEmits<{
   reload: []
 }>()
 
+const { stateModals, closeModals, openModals } = useModals({
+  location: false,
+  edit: false,
+  delete: false,
+})
+
+const selectedEvent = ref()
+const onDelete = (event) => {
+  selectedEvent.value = event
+  openModals('delete')
+}
+const onEdit = (event) => {
+  selectedEvent.value = event
+  openModals('edit')
+}
+
 const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()
 const { t } = useNuxtI18n()
-const eventToDelete = ref(null)
 const isDeletingEvent = ref(false)
-const editedEvent = ref(null)
 
 const onDeleteEvent = async () => {
   isDeletingEvent.value = true
   try {
-    await deleteEvent(organizationCode, eventToDelete.value.id)
+    await deleteEvent(organizationCode, selectedEvent.value.id)
     toaster.pushSuccess(t('event.delete.success'))
 
     emit('reload')
@@ -87,11 +98,17 @@ const onDeleteEvent = async () => {
     toaster.pushError(`${t('event.delete.error')} (${err})`)
     console.error(err)
   } finally {
-    eventToDelete.value = null
     isDeletingEvent.value = false
+    onCancel()
   }
 }
+
+const onCancel = () => {
+  selectedEvent.value = null
+  closeModals('edit', 'delete', 'location')
+}
 </script>
+
 <style lang="scss" scoped>
 .event {
   padding: 0;

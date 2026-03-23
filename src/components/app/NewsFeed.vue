@@ -10,12 +10,12 @@
       class="newsfeed-project"
       :project="item.project"
     />
-    <NewsListItem
+    <NewsItem
       v-else-if="item.type == 'news'"
       class="newsfeed-news"
       :news="item.news"
-      @edit-news="editedNews = item.news"
-      @delete-news="newsToDelete = item.news"
+      @edit="editedNews = item.news"
+      @delete="newsToDelete = item.news"
     />
   </div>
   <EditNewsDrawer
@@ -39,10 +39,10 @@ import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import NewsfeedAnnouncementsItem from '@/components/home/HomeNewsfeed/NewsfeedAnnouncementsItem.vue'
 import NewsfeedProjectItem from '@/components/home/HomeNewsfeed/NewsfeedProjectItem.vue'
-import NewsListItem from '@/components/news/NewsListItem/NewsListItem.vue'
 import { deleteNews } from '@/api/news.service'
 import useToasterStore from '@/stores/useToaster'
 import { NewsfeedModel } from '@/models/newsfeed.model'
+import NewsItem from '@/components/news/NewsItem.vue'
 
 defineProps<{ newsfeed: NewsfeedModel[] }>()
 

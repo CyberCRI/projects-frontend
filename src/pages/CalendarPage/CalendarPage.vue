@@ -19,7 +19,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const { canCreateEvent } = usePermissions()
 const { t } = useNuxtI18n()
 const router = useRouter()

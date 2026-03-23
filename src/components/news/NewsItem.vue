@@ -1,27 +1,19 @@
 <template>
-  <component :is="is" :to="to" :class="{ 'pointer-events-none': !isLink }">
-    <div class="card-container" :class="{ 'scale-hover': isLink }">
+  <NuxtLink :to="{ name: 'NewsPage', params: { slugOrId: news.id } }">
+    <div class="card-container scale-hover">
       <CroppedApiImage
         :picture-data="news.header_image"
         class="card-image skeletons-background"
         :default-picture="DEFAULT_NEWS_PATATOID"
       />
       <div class="card-content">
-        <div v-if="editable" class="news-item-editable">
-          <LpiButton
-            btn-icon="Pen"
-            :aria-label="$t('common.edit')"
-            class="skeletons-background"
-            @click.prevent="emit('edit', news)"
-          />
-          <LpiButton
-            btn-icon="Close"
-            :aria-label="$t('common.delete')"
-            class="skeletons-background"
-            @click.prevent="emit('delete', news)"
-          />
-        </div>
-
+        <ContextActionMenuInline
+          v-if="editable"
+          :can-delete="canDeleteNews"
+          :can-edit="canEditNews"
+          @edit="emit('edit', news)"
+          @delete="emit('delete', news)"
+        />
         <h3 class="skeletons-text">
           {{ news.$t.title }}
         </h3>
@@ -33,18 +25,20 @@
         </time>
       </div>
     </div>
-  </component>
+  </NuxtLink>
 </template>
 <script setup lang="ts">
+import ContextActionMenuInline from '@/components/base/button/ContextActionMenuInline.vue'
 import DescriptionCropped from '@/components/base/DescriptionCropped.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import { DEFAULT_NEWS_PATATOID } from '@/composables/usePatatoids'
 import { TranslatedNews } from '@/models/news.model'
 
-const props = withDefaults(defineProps<{ news: TranslatedNews; to?: any; editable?: boolean }>(), {
+const props = withDefaults(defineProps<{ news: TranslatedNews; editable?: boolean }>(), {
   editable: false,
-  to: null,
 })
+
+const { canEditNews, canDeleteNews } = usePermissions()
 
 const { locale } = useNuxtI18n()
 
@@ -61,10 +55,6 @@ const publicationDate = computed(() => {
     day: 'numeric',
   })
 })
-
-const isLink = computed(() => !props.editable && props.to)
-
-const is = computed(() => (isLink ? resolveComponent('NuxtLink') : 'div'))
 </script>
 
 <style lang="scss" scoped>

@@ -1,6 +1,6 @@
 <template>
   <FetchLoader :status="status" only-error skeleton>
-    <div class="default-container">
+    <div class="list-container">
       <LpiButton
         v-if="editable"
         btn-icon="Plus"
@@ -14,10 +14,6 @@
           :key="news.title"
           :news="news"
           :editable="editable"
-          :to="{
-            name: 'NewsPage',
-            params: { slugOrId: news.id },
-          }"
           @edit="onEditNews"
           @delete="onDeleteNews"
         />

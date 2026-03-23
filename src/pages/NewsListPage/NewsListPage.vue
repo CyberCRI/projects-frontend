@@ -1,117 +1,3 @@
-<script setup lang="ts">
-import { getAllNews, deleteNews } from '@/api/news.service'
-import useAPI from '@/composables/useAPI'
-import useToasterStore from '@/stores/useToaster'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import { getOrganizationByCode } from '@/api/organizations.service'
-
-const { translateNews } = useAutoTranslate()
-const toaster = useToasterStore()
-const organizationsStore = useOrganizationsStore()
-const { canEditNews, canDeleteNews, canCreateNews } = usePermissions()
-const router = useRouter()
-const { t } = useNuxtI18n()
-
-const loading = ref(false)
-const editedNews = ref(null)
-const newsToDelete = ref(null)
-const isDeletingNews = ref(false)
-const pagination = useState(() => ({
-  currentPage: 1,
-  total: 1,
-  previous: undefined,
-  next: undefined,
-  first: undefined,
-  last: undefined,
-}))
-const newsRequest = ref(null)
-const maxNewsPerPage = ref(12)
-
-const _allNews = computed(() => {
-  return newsRequest.value?.results || []
-})
-
-const allNews = translateNews(_allNews)
-
-watch(
-  () => [newsRequest],
-  (response) => {
-    updatePagination(response)
-  },
-  { deep: true }
-)
-
-const createNews = () => {
-  router.push({ name: 'CreateNewsPage' })
-}
-
-const loadNews = async () => {
-  const dateLimit =
-    canEditNews.value || canDeleteNews.value ? {} : { to_date: new Date().toISOString() }
-
-  loading.value = true
-  newsRequest.value = await getAllNews(organizationsStore.current?.code, {
-    ordering: '-publication_date',
-    limit: maxNewsPerPage.value,
-    ...dateLimit,
-  })
-  loading.value = false
-}
-
-const doDeleteNews = async () => {
-  isDeletingNews.value = true
-  try {
-    await deleteNews(organizationsStore.current?.code, newsToDelete.value.id)
-    toaster.pushSuccess(t('news.delete.success'))
-
-    loadNews()
-  } catch (err) {
-    toaster.pushError(`${t('news.delete.error')} (${err})`)
-    console.error(err)
-  } finally {
-    newsToDelete.value = null
-    isDeletingNews.value = false
-  }
-}
-
-const onClickPagination = async (requestedPage) => {
-  loading.value = true
-  newsRequest.value = await useAPI(requestedPage, {})
-  loading.value = false
-  const el = document.querySelector('.page-title')
-  if (el) el.scrollIntoView({ behavior: 'smooth' })
-}
-
-const updatePagination = (response) => {
-  pagination.value.currentPage = response.current_page
-  pagination.value.total = response.total_page
-  pagination.value.previous = response.previous
-  pagination.value.next = response.next
-  pagination.value.first = response.first
-  pagination.value.last = response.last
-}
-
-onMounted(() => {
-  loadNews()
-})
-
-try {
-  const runtimeConfig = useRuntimeConfig()
-  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
-
-  useLpiHead(
-    useRequestURL().toString(),
-    computed(() => t('news.list.title')),
-    organization?.dashboard_subtitle,
-    image,
-    dimensions
-  )
-} catch (err) {
-  // DGAF
-  console.log(err)
-}
-</script>
 <template>
   <div class="news-list-page page-section-medium page-top">
     <h1 class="page-title">
@@ -126,48 +12,116 @@ try {
         data-test="create-news-button"
         btn-icon="Plus"
         class="create-news-button"
-        @click="createNews"
+        :to="{
+          name: 'CreateNewsPage',
+        }"
       />
     </div>
-    <div v-if="loading" class="news-list" :class="{ 'with-pagination': pagination.total > 1 }">
-      <NewsListItemSkeleton />
-      <NewsListItemSkeleton />
-    </div>
-    <div v-else class="news-list" :class="{ 'with-pagination': pagination.total > 1 }">
-      <NewsListItem
-        v-for="news in allNews"
-        :key="news.id"
-        :news="news"
-        @edit-news="editedNews = news"
-        @delete-news="newsToDelete = news"
-      />
-    </div>
-    <div v-if="pagination.total > 1" class="pagination-container">
-      <PaginationButtons
-        :current="pagination.currentPage"
-        :pagination="pagination"
-        :total="pagination.total"
-        @update-pagination="onClickPagination"
-      />
-    </div>
+    <FetchLoader :status="status" only-error skeleton>
+      <div class="list-container list-divider">
+        <NewsItem
+          v-for="news in allNews"
+          :key="news.title"
+          :news="news"
+          :editable="editable"
+          @edit="onEdit"
+          @delete="onDelete"
+        />
+      </div>
+      <PaginationButtonsV2 :pagination="pagination" />
+    </FetchLoader>
+
+    <EditNewsDrawer
+      :is-opened="stateModals.edit"
+      :news="selectedNews"
+      @news-edited="refresh"
+      @close="onCancel"
+    />
+
+    <ConfirmModal
+      v-if="stateModals.delete"
+      :title="$t('news.delete.title')"
+      :asyncing="asyncingDelete"
+      @cancel="closeModals('delete')"
+      @confirm="onConfirmDelete"
+    >
+      <NewsItem :news="selectedNews" />
+    </ConfirmModal>
   </div>
-
-  <EditNewsDrawer
-    :is-opened="!!editedNews"
-    :news="editedNews"
-    @news-edited="loadNews"
-    @close="editedNews = null"
-  />
-
-  <ConfirmModal
-    v-if="newsToDelete"
-    :content="$t('news.delete.message')"
-    :title="$t('news.delete.title')"
-    :asyncing="isDeletingNews"
-    @cancel="newsToDelete = null"
-    @confirm="doDeleteNews"
-  />
 </template>
+
+<script setup lang="ts">
+import { deleteNews } from '@/api/news.service'
+import { getAllNews } from '@/api/v2/news.service'
+import FetchLoader from '@/components/base/FetchLoader.vue'
+import NewsItem from '@/components/news/NewsItem.vue'
+import { QueryFilterNews } from '@/models/news.model'
+import { factoryPagination } from '@/skeletons/base.skeletons'
+import { newsSkeleton } from '@/skeletons/news.skeletons'
+import useToasterStore from '@/stores/useToaster'
+
+const organizationCode = useOrganizationCode()
+const asyncingDelete = ref(false)
+const toaster = useToasterStore()
+const { t } = useNuxtI18n()
+const { canEditNews, canDeleteNews, canCreateNews } = usePermissions()
+const editable = computed(() => canEditNews.value || canDeleteNews.value)
+const selectedNews = ref()
+
+const query = useQuery<QueryFilterNews>({
+  ordering: '-publication_date',
+})
+const LIMIT = 10
+const {
+  status,
+  data: allNews,
+  pagination,
+  refresh,
+} = getAllNews(organizationCode, {
+  query,
+  paginationConfig: {
+    limit: LIMIT,
+  },
+  default: () => factoryPagination(newsSkeleton, LIMIT),
+})
+
+const { stateModals, openModals, closeModals } = useModals({ edit: false, delete: false })
+
+const onEdit = (news) => {
+  selectedNews.value = news
+  openModals('edit')
+}
+
+const onDelete = (news) => {
+  selectedNews.value = news
+  openModals('delete')
+}
+
+const onConfirmDelete = async () => {
+  asyncingDelete.value = true
+  try {
+    await deleteNews(organizationCode, selectedNews.value.id)
+    toaster.pushSuccess(t('news.delete.success'))
+    refresh()
+  } catch (err) {
+    toaster.pushError(`${t('news.delete.error')} (${err})`)
+    console.error(err)
+  } finally {
+    asyncingDelete.value = false
+    onCancel()
+  }
+}
+
+const onCancel = () => {
+  selectedNews.value = null
+  closeModals('delete', 'edit')
+}
+
+useLpiHead2({
+  title: computed(() => t('news.list.title')),
+})
+</script>
+
 <style lang="scss" scoped>
 .page-title {
   margin-bottom: $space-2xl;
@@ -175,6 +129,7 @@ try {
 
 .create-news-button-ctn {
   margin: 2rem 0;
+  display: flex;
 }
 
 .create-news-button {

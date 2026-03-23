@@ -70,6 +70,5 @@ export type NewsHeaderOutput = {
 
 export type QueryFilterNews = Partial<{
   ordering: 'publication_date' | '-publication_date'
-  created_at: string
-  updated_at: string
+  from_date: string
 }>

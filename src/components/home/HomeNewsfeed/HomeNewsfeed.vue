@@ -1,5 +1,5 @@
 <template>
-  <NewsListSkeleton v-if="isLoading" :limit="5" />
+  <span v-if="isLoading" skeleton :limit="5" />
   <div v-else-if="transltedNewsFeed?.length">
     <div class="home-news-container">
       <NewsFeed :newsfeed="transltedNewsFeed" @reload-newsfeed="loadNewsfeed" />
@@ -16,7 +16,6 @@
 <script setup lang="ts">
 import NewsFeed from '@/components/app/NewsFeed.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import NewsListSkeleton from '@/components/news/NewsListSkeleton.vue'
 import { getNewsfeed } from '@/api/newsfeed.service'
 
 const props = withDefaults(defineProps<{ limit?: number }>(), { limit: 6 })

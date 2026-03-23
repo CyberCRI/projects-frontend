@@ -1,6 +1,6 @@
 <template>
   <FetchLoader :status="status" only-error skeleton>
-    <div class="default-container">
+    <div class="list-container">
       <LpiButton
         v-if="editable"
         btn-icon="Plus"
@@ -16,14 +16,17 @@
           :editable="editable"
           :hide-see-more-button="preview"
           hide-groups
-          :to="{
-            name: 'EventPage',
-            params: { eventId: event.id },
-          }"
+          @location="onLocation"
           @edit="onEditNews"
           @delete="onDeleteNews"
         />
       </div>
+
+      <LocationDrawer
+        :is-opened="stateModals.location"
+        :locations="selectedEvent?.location ? [selectedEvent.location] : []"
+        @close="closeModals('location')"
+      />
 
       <ConfirmModal
         v-if="stateModals.delete"
@@ -31,7 +34,7 @@
         @confirm="onConfirmDeleteNews"
         @cancel="onCancel"
       >
-        <EventItem v-if="selectedEvent" :event="selectedEvent" />
+        <EventItem is="div" :event="selectedEvent" location-preview />
       </ConfirmModal>
 
       <PaginationButtonsV2 v-if="withPagination" :pagination="pagination" />
@@ -76,7 +79,11 @@ const props = withDefaults(
 const { t } = useNuxtI18n()
 
 const selectedEvent = ref<any>()
-const { stateModals, openModals, closeModals } = useModals({ delete: false, edit: false })
+const { stateModals, openModals, closeModals } = useModals({
+  delete: false,
+  edit: false,
+  location: false,
+})
 const toaster = useToaster()
 const organizationCode = useOrganizationCode()
 const groupId = computed(() => props.group?.id)
@@ -126,7 +133,12 @@ const onAfterEdit = () => {
 
 const onCancel = () => {
   selectedEvent.value = null
-  closeModals('edit', 'delete')
+  closeModals('edit', 'delete', 'location')
+}
+
+const onLocation = (event) => {
+  selectedEvent.value = event
+  openModals('location')
 }
 </script>
 

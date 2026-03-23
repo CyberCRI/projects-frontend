@@ -2,12 +2,12 @@
   <AdminBlock :block-title="blockTitle">
     <template #default>
       <FetchLoader :status="status">
-        <NewsListItem
+        <NewsItem
           v-for="news in allNews"
           :key="news.id"
           :news="news"
-          @edit-news="editedNews = news"
-          @delete-news="newsToDelete = news"
+          @edit="editedNews = news"
+          @delete="newsToDelete = news"
         />
       </FetchLoader>
     </template>
@@ -44,7 +44,8 @@ import { deleteNews } from '@/api/news.service'
 import useToasterStore from '@/stores/useToaster'
 import { defaultForm } from '@/components/instruction/InstructionForm/InstructionForm.vue'
 import { getAllNews } from '@/api/v2/news.service'
-import NewsListItem from '@/components/news/NewsListItem/NewsListItem.vue'
+import { QueryFilterNews } from '@/models/news.model'
+import NewsItem from '@/components/news/NewsItem.vue'
 
 const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()
@@ -57,10 +58,11 @@ const isDeletingNews = ref(false)
 
 const todayAtZero = new Date()
 todayAtZero.setHours(0, 0, 0, 0)
-const query = {
-  ordering: 'start_date',
+
+const { query } = useQuery<QueryFilterNews>({
+  ordering: 'publication_date',
   from_date: todayAtZero.toISOString(),
-}
+})
 
 const {
   status,
