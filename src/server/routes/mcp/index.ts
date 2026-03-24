@@ -20,7 +20,8 @@ export default defineEventHandler(async (event) => {
 
   const conversationId = getRequestHeader(event, 'Authorization') || ''
   if (conversationId) {
-    traceMcp('MCP request with conversationId header')
+    traceMcp('MCP request with conversationId header', conversationId)
+    traceMcp('MCP tocken map', tokenMap.size)
     const tokenEntry = tokenMap.get(conversationId)
     if (tokenEntry) {
       traceMcp('MCP found token for conversationId', tokenEntry.token.substring(0, 6) + '...')
