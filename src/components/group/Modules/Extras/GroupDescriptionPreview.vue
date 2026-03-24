@@ -1,7 +1,7 @@
 <template>
   <BaseGroupPreview :title="$t('group.presentation')" icon="Article">
     <template #content>
-      <DescriptionExpandable
+      <ContentExpandable
         :description="group.$t.description"
         :height-limit="400"
         class="description-content"

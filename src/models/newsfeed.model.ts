@@ -1,15 +1,23 @@
-import { TranslatedAnnouncement } from './announcement.model'
+import { Project } from '@playwright/test'
+import { AnnouncementModel, TranslatedAnnouncement } from './announcement.model'
 import { TranslatedProject } from './project.model'
+import { NewsModel, TranslatedNews } from '@/models/news.model'
 
 /**
  * @name NewsfeedModel
  * @description Newsfeed models
  */
 
-export interface NewsfeedModel {
+export type NewsfeedModel = {
   id: number
   type: 'project' | 'announcement' | 'news'
+  project?: Project
+  news?: NewsModel
+  announcement?: AnnouncementModel
+}
+
+export type TranslatedNewsfeed = Pick<NewsfeedModel, 'id' | 'type'> & {
   project?: TranslatedProject
-  news?: any // TODO: Define news model
+  news?: TranslatedNews
   announcement?: TranslatedAnnouncement
 }

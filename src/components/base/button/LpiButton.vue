@@ -1,5 +1,6 @@
 <template>
-  <button
+  <component
+    :is="is"
     :class="{
       secondary,
       disabled,
@@ -7,12 +8,15 @@
       'reversed-order': reversedOrder,
     }"
     :disabled="disabled"
+    :aria-label="ariaLabel"
+    :title="ariaLabel"
     type="button"
     rel="noopener"
     class="lpi-button shadow-box"
+    :to="to"
   >
     <ButtonContent :label="label" :btn-icon="btnIcon" :no-text-transform="noTextTransform" />
-  </button>
+  </component>
 </template>
 
 <script setup lang="ts">
@@ -26,6 +30,8 @@ const props = withDefaults(
     disabled?: boolean
     reversedOrder?: boolean
     noTextTransform?: boolean
+    ariaLabel?: string
+    to?: any
   }>(),
   {
     label: null,
@@ -34,10 +40,14 @@ const props = withDefaults(
     disabled: false,
     reversedOrder: false,
     noTextTransform: false,
+    ariaLabel: '',
+    to: null,
   }
 )
 
 const iconOnly = computed(() => (!props.label || !props.label.length) && props.btnIcon)
+
+const is = computed(() => (props.to ? resolveComponent('NuxtLink') : 'button'))
 </script>
 
 <style lang="scss" scoped>

@@ -6,18 +6,22 @@
         limited: isLimited && showLess,
       }"
     >
-      <TipTapOutput ref="content" class="description" :content="description" />
+      <div ref="content">
+        <slot>
+          <TipTapOutput class="description" :content="description" />
+        </slot>
+      </div>
       <div class="description-limited-transparancy" />
     </div>
     <LpiButton
-      v-if="isLimited"
+      v-if="isLimited && !hideSeeMore"
       secondary
       class="no-border"
       :btn-icon="showLess ? 'ChevronDown' : 'ChevronUp'"
-      :label="showLess ? $t('group.see-more') : $t('group.see-less')"
-      @click="toggleDescription"
+      :label="showLess ? label.more : label.less"
+      @click.prevent="toggleDescription"
     >
-      {{ showLess ? $t('group.see-more') : $t('group.see-less') }}
+      {{ showLess ? label.more : label.less }}
     </LpiButton>
   </div>
 </template>
@@ -26,10 +30,17 @@
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 import { onResizeElement } from '@/composables/onResize'
 
-const props = defineProps<{
-  description: string
-  heightLimit: number
-}>()
+const props = withDefaults(
+  defineProps<{
+    description?: string
+    heightLimit: number
+    opened?: boolean
+    seeMoreLabel?: string
+    seeLessLabel?: string
+    hideSeeMore?: boolean
+  }>(),
+  { opened: null, description: null, seeMoreLabel: null, seeLessLabel: null, hideSeeMore: false }
+)
 
 const showLess = ref(true)
 const isLimited = ref(true)
@@ -38,12 +49,29 @@ const actualHeight = ref(0)
 const minHeight = computed(() => Math.min(props.heightLimit, actualHeight.value))
 const toggleDescription = () => (showLess.value = !showLess.value)
 
+watch(
+  () => props.opened,
+  (val) => {
+    if (typeof val === 'boolean') {
+      showLess.value = !val
+    }
+  },
+  { immediate: true }
+)
+
 const checkLimited = () => {
-  const rect = contentRef.value.$el.getBoundingClientRect()
+  const rect = contentRef.value.getBoundingClientRect()
   actualHeight.value = rect.height
   isLimited.value = rect.height > props.heightLimit
 }
 onResizeElement(checkLimited, contentRef, { immediate: true })
+
+const label = computed(() => {
+  return {
+    less: props.seeLessLabel || $t('common.see-less'),
+    more: props.seeMoreLabel || $t('common.see-more'),
+  }
+})
 </script>
 
 <style lang="scss" scoped>

@@ -8,19 +8,22 @@
       :to="to"
     />
     <div class="card-tooltip-content" :class="[location.type]">
-      <CroppedApiImage
-        :picture-data="image"
-        :default-picture="defaultPicture"
-        class="card-tooltip__image"
-      />
-      <div>
-        <h3 class="card-title" :title="props.title">
-          {{ title }}
-        </h3>
-        <p class="card-purpose" :title="props.description">
-          {{ description }}
-        </p>
-      </div>
+      <slot>
+        <CroppedApiImage
+          v-if="haveImage"
+          :picture-data="image"
+          :default-picture="defaultPicture"
+          class="card-tooltip__image"
+        />
+        <div>
+          <h3 class="card-title" :title="props.title">
+            {{ title }}
+          </h3>
+          <p class="card-purpose" :title="props.description">
+            {{ description }}
+          </p>
+        </div>
+      </slot>
     </div>
   </LocationTooltip>
 </template>
@@ -40,14 +43,15 @@ const props = withDefaults(
     to: any
     title: string
     description?: string
-    image: Image
-    defaultPicture: string
+    image?: Image
+    defaultPicture?: string
   }>(),
-  { description: '' }
+  { description: '', image: null, defaultPicture: null }
 )
 
 const title = computed(() => cropIfTooLong(props.title, 45))
 const description = computed(() => cropIfTooLong(props.description, 85))
+const haveImage = computed(() => props.image && props.defaultPicture)
 </script>
 
 <style lang="scss" scoped>
@@ -70,8 +74,16 @@ const description = computed(() => cropIfTooLong(props.description, 85))
     background-color: color-mix(in srgb, $location-address, transparent 90%);
   }
 
+  &.news {
+    background-color: color-mix(in srgb, $location-news, transparent 90%);
+  }
+
   &.team {
     background-color: color-mix(in srgb, $location-team, transparent 90%);
+  }
+
+  &.event {
+    background-color: color-mix(in srgb, $location-event, transparent 90%);
   }
 
   .card-title {

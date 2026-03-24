@@ -1,29 +1,31 @@
-<script setup>
-import { throttle } from 'es-toolkit'
+<template>
+  <component :is="tag" ref="container" class="line-clamped" :class="{ overflowing: isOverflowing }">
+    <slot />
+  </component>
+</template>
 
-const props = defineProps({
-  tag: {
-    type: String,
-    default: 'div',
-  },
-  lineNumber: {
-    type: Number,
-    default: 1,
-  },
-})
-const emit = defineEmits(['overflow-state'])
+<script setup lang="ts">
+const props = withDefaults(
+  defineProps<{
+    tag?: string
+    lineNumber?: number
+  }>(),
+  {
+    tag: 'div',
+    lineNumber: 1,
+  }
+)
+const emit = defineEmits<{
+  overflowState: [boolean]
+}>()
 
-const style = computed(() => ({
-  '--line-clamp': props.lineNumber,
-}))
-
-const containerRef = ref(null)
-
+const containerRef = useTemplateRef<HTMLElement>('container')
 const isOverflowing = ref(false)
 
-function checkOverflowing() {
+const checkOverflowing = () => {
   const element = containerRef.value
-  if (!element) return false
+  if (!element) return
+
   const { width, height } = element.getBoundingClientRect()
   const styles = getComputedStyle(element)
   const lineHeight = parseFloat(styles.lineHeight)
@@ -37,65 +39,22 @@ function checkOverflowing() {
   }
 
   const isOverflowingWidth = element.scrollWidth > Math.ceil(width)
-
   isOverflowing.value = isOverflowingHeight || isOverflowingWidth
 }
 
-const throttledCheckOverflowing = throttle(checkOverflowing, 1000 / 30)
-
 watch(
   () => props.lineNumber,
-  () => {
-    checkOverflowing()
-  }
+  () => checkOverflowing()
 )
 
-watch(
-  () => isOverflowing.value,
-  (neo, old) => {
-    if (neo !== old) emit('overflow-state', neo)
-  },
-  { immediate: true }
-)
-
-const resizeObserver = ResizeObserver
-  ? new ResizeObserver(() => {
-      throttledCheckOverflowing()
-    })
-  : null
-
-onMounted(() => {
-  checkOverflowing()
-  if (containerRef.value && resizeObserver) {
-    resizeObserver.observe(containerRef.value)
-  }
-  window.addEventListener('resize', throttledCheckOverflowing)
-})
-
-onBeforeUnmount(() => {
-  resizeObserver.disconnect()
-  window.removeEventListener('resize', throttledCheckOverflowing)
-})
-
-onUpdated(() => {
-  checkOverflowing()
-})
+watchEffect(() => emit('overflowState', isOverflowing.value))
+onResizeElement(checkOverflowing, containerRef)
 </script>
-<template>
-  <component
-    :is="tag"
-    ref="containerRef"
-    class="line-clamped"
-    :style="style"
-    :class="{ overflowing: isOverflowing }"
-  >
-    <slot />
-  </component>
-</template>
+
 <style>
 .line-clamped {
   display: -webkit-box;
-  -webkit-line-clamp: var(--line-clamp);
+  -webkit-line-clamp: v-bind('lineNumber');
   -webkit-box-orient: vertical;
   overflow: hidden;
 }

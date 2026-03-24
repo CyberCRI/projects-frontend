@@ -1,5 +1,5 @@
 <template>
-  <component :is="is" :to="to" class="summary-action">
+  <component :is="is" :to="to" class="summary-action skeletons-background">
     <IconImage class="icon" :name="actionIcon" />
     <span class="label">{{ capitalize(actionLabel) }}</span>
   </component>

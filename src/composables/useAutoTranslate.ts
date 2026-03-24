@@ -5,7 +5,15 @@ import { TranslatedProject } from '@/models/project.model'
 import { AttachmentFileModel, TranslatedAttachmentFile } from '@/models/attachment-file.model'
 import { AttachmentLinkModel, TranslatedAttachmentLink } from '@/models/attachment-link.model'
 import { TranslatedDocument } from '@/interfaces/researcher'
-import { TranslatedLocation } from '@/models/location.model'
+import {
+  TranslatedEventLocation,
+  TranslatedLocation,
+  TranslatedNewsLocation,
+} from '@/models/location.model'
+import { TranslatedNews } from '@/models/news.model'
+import { TranslatedEventModel } from '@/models/event.model'
+import { TranslatedNewsfeed } from '@/models/newsfeed.model'
+import { TranslatedAnnouncement } from '@/models/announcement.model'
 
 // type can be computed or object
 type RefOrRaw<DataT> = ComputedRef<DataT> | Ref<DataT> | DataT
@@ -105,10 +113,10 @@ export default function useAutoTranslate() {
       return {
         ...unref(translateEntity(announcement, ['title', 'description'])),
         project: unref(translateProject(announcement.project)),
-      }
+      } as TranslatedAnnouncement
     })
   const translateAnnouncements = (announcements) =>
-    translateEntities(announcements, translateAnnouncement)
+    translateEntities<TranslatedAnnouncement>(announcements, translateAnnouncement)
 
   const translateReview = (review) => translateEntity(review, ['title', 'description'])
   const translateReviews = (reviews) => translateEntities(reviews, translateReview)
@@ -256,8 +264,26 @@ export default function useAutoTranslate() {
 
   // -----------
   // news
-  const translateOneNews = (news) => translateEntity(news, ['title', 'content'])
-  const translateNews = (news) => translateEntities(news, translateOneNews)
+  const translateOneNews = (news) =>
+    computed(() => {
+      const newsRaw = unref(news)
+      return {
+        ...unref(translateEntity<TranslatedNews>(newsRaw, ['title', 'content'])),
+        location: newsRaw?.location ? unref(translateLocation(newsRaw.location)) : null,
+      }
+    })
+  const translateNews = (news) => translateEntities<TranslatedNews>(news, translateOneNews)
+
+  const translateOneNewsLocation = (location) =>
+    computed<TranslatedNewsLocation>(() => {
+      const locationRaw = unref(location)
+      return {
+        ...unref(translateLocation(locationRaw)),
+        news: locationRaw.news ? unref(translateOneNews(locationRaw.news)) : locationRaw.news,
+      }
+    })
+  const translateNewsLocations = (news) =>
+    translateEntities<TranslatedNewsLocation>(news, translateOneNewsLocation)
 
   // -----------
   // instructions
@@ -267,8 +293,29 @@ export default function useAutoTranslate() {
 
   // -----------
   // events
-  const translateEvent = (event) => translateEntity(event, ['title', 'content'])
-  const translateEvents = (events) => translateEntities(events, translateEvent)
+  const translateEvent = (event) =>
+    computed<TranslatedEventModel>(() => {
+      const locationRaw = unref(event)
+      return {
+        ...unref(translateEntity(event, ['title', 'content'])),
+        location: locationRaw.location
+          ? unref(translateLocation(locationRaw.location))
+          : locationRaw.location,
+      }
+    })
+  const translateEvents = (events) =>
+    translateEntities<TranslatedEventModel>(events, translateEvent)
+
+  const translateEventsLocation = (location) =>
+    computed<TranslatedEventLocation>(() => {
+      const locationRaw = unref(location)
+      return {
+        ...unref(translateLocation(locationRaw)),
+        event: locationRaw.event ? unref(translateEvent(locationRaw.event)) : locationRaw.event,
+      }
+    })
+  const translateEventsLocations = (locations) =>
+    translateEntities<TranslatedEventLocation>(locations, translateEventsLocation)
 
   // -----------
   // Newsfeed
@@ -277,10 +324,12 @@ export default function useAutoTranslate() {
       const _items = unref(items)
       return _items?.map((item) => ({
         ...item,
-        project: unref(translateProject(item.project)),
-        news: unref(translateOneNews(item.news)),
-        announcement: unref(translateAnnouncement(item.announcement)),
-      }))
+        project: item.project ? unref(translateProject(item.project)) : item.project,
+        news: item.news ? unref(translateOneNews(item.news)) : item.news,
+        announcement: item.announcement
+          ? unref(translateAnnouncement(item.announcement))
+          : item.announcement,
+      })) as TranslatedNewsfeed[]
     })
 
   // -----------
@@ -355,10 +404,14 @@ export default function useAutoTranslate() {
     // news
     translateOneNews,
     translateNews,
+    translateOneNewsLocation,
+    translateNewsLocations,
 
     // evnts
     translateEvent,
     translateEvents,
+    translateEventsLocation,
+    translateEventsLocations,
 
     // instructions
     translateInstruction,

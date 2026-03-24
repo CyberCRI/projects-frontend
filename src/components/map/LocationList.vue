@@ -29,12 +29,12 @@
 <script setup lang="ts">
 import LocationItem from '@/components/map/LocationItem.vue'
 import LocationType from '@/components/map/LocationType.vue'
-import { TranslatedLocation } from '@/models/location.model'
+import { AnyTranslatedLocation } from '@/models/location.model'
 import { groupBy } from 'es-toolkit'
 
 const props = withDefaults(
   defineProps<{
-    locations: TranslatedLocation[]
+    locations: AnyTranslatedLocation[]
     editable?: boolean
     focus?: boolean
   }>(),

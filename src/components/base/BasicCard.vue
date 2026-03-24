@@ -1,5 +1,5 @@
 <template>
-  <div class="basic-card" :class="{ 'shadow-box': !isInactive, [mode]: true }" tabindex="1">
+  <div class="basic-card" :class="{ 'scale-hover': !isInactive, [mode]: true }" tabindex="1">
     <div class="action-left-wrapper">
       <slot name="actions-left" />
     </div>

@@ -1,46 +1,71 @@
-// import type { APIResponseList } from '@/api/types'
-import type {
-  /*NewsModel, */ NewsInput /*, NewsOutput, NewsHeaderOutput*/,
-} from '@/models/news.model'
-import { _adaptParamsToGetQuery } from '@/api/utils.service'
+import type { NewsInput, NewsModel } from '@/models/news.model'
 import useAPI from '@/composables/useAPI'
+import { OrganizationModel } from '@/models/organization.model'
 
-export async function getAllNews(orgCode: string, params: any) {
-  const adaptedParams = params ? _adaptParamsToGetQuery(params) : {}
-  return await useAPI(`organization/${orgCode}/news/`, { ...adaptedParams }) //.data.value
+export async function getAllNews(organizationCode: OrganizationModel['code'], config = {}) {
+  return await useAPI<PaginationResult<NewsModel>>(`organization/${organizationCode}/news/`, config)
 }
 
-export async function getNews(orgCode: string, idOrSlug: number | string, noError = false) {
-  return await useAPI(`organization/${orgCode}/news/${idOrSlug}/`, { noError }) //.data.value
+export async function getNews(
+  organizationCode: OrganizationModel['code'],
+  newsId: NewsModel['id'],
+  config = {}
+) {
+  return await useAPI<NewsModel>(`organization/${organizationCode}/news/${newsId}/`, config)
 }
 
-export async function createNews(orgCode: string, body: NewsInput) {
-  return await useAPI(`organization/${orgCode}/news/`, { body, method: 'POST' }) //.data.value
+export async function createNews(organizationCode: OrganizationModel['code'], body: NewsInput) {
+  return await useAPI<NewsModel>(`organization/${organizationCode}/news/`, { body, method: 'POST' })
 }
 
-export async function putNews(orgCode: string, idOrSlug: number | string, body: NewsInput) {
-  return await useAPI(`organization/${orgCode}/news/${idOrSlug}/`, { body, method: 'PUT' }) //.data.value
-}
-
-export async function patchNews(orgCode: string, idOrSlug: number | string, body: NewsInput) {
-  return await useAPI(`organization/${orgCode}/news/${idOrSlug}/`, { body, method: 'PATCH' })
-  //.data.value
-}
-
-export async function deleteNews(orgCode: string, idOrSlug: number | string) {
-  return await useAPI(`organization/${orgCode}/news/${idOrSlug}/`, { method: 'DELETE' }) // .value.data
-}
-
-export async function postNewsHeader(orgCode: string, idOrSlug: number | string, body) {
-  return await useAPI(`organization/${orgCode}/news/${idOrSlug}/header/`, {
+export async function putNews(
+  organizationCode: OrganizationModel['code'],
+  newsId: NewsModel['id'],
+  body: NewsInput
+) {
+  return await useAPI<NewsModel>(`organization/${organizationCode}/news/${newsId}/`, {
     body,
-    method: 'POST',
-  }) //.data.value
+    method: 'PUT',
+  })
 }
 
-export async function patchNewsHeader(orgCode: string, idOrSlug: number | string, image_id, body) {
-  return await useAPI(`organization/${orgCode}/news/${idOrSlug}/header/${image_id}/`, {
+export async function patchNews(
+  organizationCode: OrganizationModel['code'],
+  newsId: NewsModel['id'],
+  body: NewsInput
+) {
+  return await useAPI<NewsModel>(`organization/${organizationCode}/news/${newsId}/`, {
     body,
     method: 'PATCH',
-  }) //.data.value
+  })
+}
+
+export async function deleteNews(
+  organizationCode: OrganizationModel['code'],
+  newsId: NewsModel['id']
+) {
+  return await useAPI(`organization/${organizationCode}/news/${newsId}/`, { method: 'DELETE' })
+}
+
+export async function postNewsHeader(
+  organizationCode: OrganizationModel['code'],
+  newsId: NewsModel['id'],
+  body
+) {
+  return await useAPI(`organization/${organizationCode}/news/${newsId}/header/`, {
+    body,
+    method: 'POST',
+  })
+}
+
+export async function patchNewsHeader(
+  organizationCode: OrganizationModel['code'],
+  newsId: NewsModel['id'],
+  image_id,
+  body
+) {
+  return await useAPI(`organization/${organizationCode}/news/${newsId}/header/${image_id}/`, {
+    body,
+    method: 'PATCH',
+  })
 }

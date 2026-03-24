@@ -28,7 +28,7 @@ const icon = computed(() => {
     return content
   }
   if (import.meta.dev) {
-    throw new Error(`icon ${props.name} not exists`)
+    throw new Error(`icon '${props.name}' not exists`)
   }
   return ''
 })

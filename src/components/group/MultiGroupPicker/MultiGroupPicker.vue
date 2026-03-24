@@ -164,7 +164,9 @@ export default {
     async loadGroups() {
       this.allGroups = (
         await getHierarchyGroups(this.organizationsStore.current.code, {
-          query: { modules: 'none' },
+          query: {
+            modules: 'none',
+          },
         })
       ).children
     },
@@ -240,5 +242,11 @@ export default {
 
 .group-filter {
   width: 100%;
+}
+
+.loader-ctn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

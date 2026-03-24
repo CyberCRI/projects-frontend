@@ -6,18 +6,18 @@
     <div class="project-img-container">
       <CroppedApiImage
         :alt="`${project?.title} image`"
-        class="project-img"
+        class="project-img skeletons-background"
         :ratio="1 / 1"
         :picture-data="project?.header_image"
         picture-size="medium"
         :default-picture="DEFAULT_PROJECT_PATATOID"
       />
     </div>
-    <h3 class="project-title">
+    <h3 class="project-title skeletons-text">
       {{ capitalize(project?.$t?.title) }}
     </h3>
     <div class="project-description">
-      <p class="clamped">
+      <p class="clamped skeletons-text">
         {{ purpose }}
       </p>
     </div>
@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { capitalize, cropIfTooLong } from '@/functs/string'
+import { capitalize, cropIfTooLong, html2Text } from '@/functs/string'
 
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
@@ -43,7 +43,7 @@ const props = withDefaults(
 )
 
 const purpose = computed(() => {
-  const sanitized = props.project?.$t?.purpose.replace(/<[^>]+>/g, ' ') || ''
+  const sanitized = html2Text(props.project?.$t?.purpose || '')
   return cropIfTooLong(sanitized, 255)
 })
 </script>
@@ -53,7 +53,7 @@ $dimension: 120px;
 
 .home-project-item {
   display: grid;
-  border: $border-width-s solid $lighter-gray;
+  border: $border-width-s solid var(--lighter-gray);
   border-radius: $border-radius-s;
   padding: $space-l;
   min-height: $dimension;
@@ -89,7 +89,7 @@ $dimension: 120px;
       height: inherit;
       width: inherit;
       border-radius: $border-radius-s;
-      border: 1px solid $lighter-gray;
+      border: 1px solid var(--lighter-gray);
     }
   }
 }

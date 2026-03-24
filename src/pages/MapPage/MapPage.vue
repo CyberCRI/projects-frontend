@@ -22,7 +22,9 @@ const { t } = useNuxtI18n()
 
 const { isLoading, data } = getLocations(organizationCode)
 
-const isEmpty = computed(() => data.value.groups.length + data.value.projects.length === 0)
+const isEmpty = computed(
+  () => Object.values(data.value).reduce((acc, el) => acc + el.length, 0) === 0
+)
 
 onBeforeUnmount(() => {
   document.body.classList.remove('map-no-scroll')

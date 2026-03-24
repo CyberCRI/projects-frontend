@@ -30,7 +30,7 @@
           v-if="displayableEvents.length"
           :events="displayableEvents"
           :inlined="numberOfSummaryBlock < 2"
-          @reload-events="loadEvents"
+          @reload="loadEvents"
         />
         <InstructionSummaryBlock
           v-if="displayableInstructions.length"
@@ -173,7 +173,7 @@ export default {
       todayAtZero.setHours(0, 0, 0, 0)
       this._events = (
         await getAllEvents(this.organizationsStore.current?.code, {
-          ordering: 'event_date',
+          ordering: 'start_date',
           from_date: todayAtZero.toISOString(),
           limit: this.summaryMaxEvents,
         })

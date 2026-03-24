@@ -89,17 +89,27 @@ const locationTypeOptions = computed(() => {
   return arr
 })
 
+const defaultLocationType = computed<LocationType>(() => {
+  if (props.locationTypes.includes('address')) {
+    return 'address'
+  }
+  return props.locationTypes.at(0)
+})
+
 const model = defineModel<LocationForm>()
 
 const { form, isValid, errors } = useLocationForm({ model })
 
 // safe guard for not locationsType exists
-watch(locationTypeOptions, () => {
-  const values = locationTypeOptions.value.map(({ value }) => value)
-  if (form.value.type && !values.includes(form.value.type)) {
-    form.value.type = values[0]
-  }
-})
+watch(
+  () => form.value.type,
+  () => {
+    if (!form.value.type || !props.locationTypes.includes(form.value.type)) {
+      form.value.type = defaultLocationType.value
+    }
+  },
+  { immediate: true }
+)
 
 const isExist = computed(() => !!form.value.id)
 </script>
