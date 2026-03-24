@@ -2715,7 +2715,10 @@
     "fetching_tools": "Obtenció d'eines...",
     "fetching_data": "Obtenció de dades...",
     "reasoning": "Pensant...",
-    "restart": "Reinicia la conversa"
+    "restart": "Reinicia la conversa",
+    "before-we-start": "Abans de començar, voldríeu:",
+    "allow-profile": "Permeteu-me veure el vostre perfil - perquè pugui adaptar millor les meves respostes",
+    "allow-current-page": "Permeteu-me veure la pàgina en què esteu - perquè tingui una millor comprensió del context"
   },
   "tos": {
     "evolved": "Els nostres Termes i Condicions s'han actualitzat, si us plau, reviseu-los i aproveu-los.",

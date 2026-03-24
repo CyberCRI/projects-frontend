@@ -2715,7 +2715,10 @@
     "fetching_tools": "Abrufwerkzeuge...",
     "fetching_data": "Daten werden abgerufen...",
     "reasoning": "Denken...",
-    "restart": "Konversation neu starten"
+    "restart": "Konversation neu starten",
+    "before-we-start": "Bevor wir beginnen, würden Sie:",
+    "allow-profile": "Erlauben Sie mir, Ihr Profil zu sehen - damit ich meine Antworten besser anpassen kann",
+    "allow-current-page": "Erlauben Sie mir, die Seite zu sehen, auf der Sie sich befinden - damit ich den Kontext besser verstehe"
   },
   "tos": {
     "evolved": "Unsere Nutzungsbedingungen wurden aktualisiert, bitte nehmen Sie sich einen Moment Zeit, um sie zu überprüfen und zu akzeptieren.",

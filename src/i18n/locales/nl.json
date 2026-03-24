@@ -2715,7 +2715,10 @@
     "fetching_tools": "Hulpmiddelen ophalen...",
     "fetching_data": "Gegevens ophalen...",
     "reasoning": "Bezig met nadenken...",
-    "restart": "Gesprek opnieuw starten"
+    "restart": "Gesprek opnieuw starten",
+    "before-we-start": "Voordat we beginnen, zou u:",
+    "allow-profile": "Sta mij toe om uw profiel te zien - zodat ik mijn antwoorden beter kan aanpassen",
+    "allow-current-page": "Sta mij toe om de pagina te zien waarop u zich bevindt - zodat ik een beter begrip heb van de context"
   },
   "tos": {
     "evolved": "Onze servicevoorwaarden zijn bijgewerkt, neem even de tijd om ze te bekijken en goed te keuren.",
