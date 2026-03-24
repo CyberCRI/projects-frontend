@@ -1,17 +1,16 @@
 <script setup lang="ts">
-const runtimeConfig = useRuntimeConfig()
+const SRC = usePublicURL(`/empties/emptyBox.svg`)
 </script>
+
 <template>
   <div class="card-list__empty">
     <p class="card-list__empty--text">
       {{ $t('project.nothing') }}
     </p>
-    <img
-      :src="`${runtimeConfig.public.appPublicBinariesPrefix}/empties/emptyBox.svg`"
-      alt="Nothing here"
-    />
+    <img :src="SRC" alt="Nothing here" />
   </div>
 </template>
+
 <style lang="scss" scoped>
 .card-list__empty {
   display: flex;

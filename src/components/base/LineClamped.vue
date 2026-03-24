@@ -42,10 +42,7 @@ const checkOverflowing = () => {
   isOverflowing.value = isOverflowingHeight || isOverflowingWidth
 }
 
-watch(
-  () => props.lineNumber,
-  () => checkOverflowing()
-)
+watch(() => props.lineNumber, checkOverflowing)
 
 watchEffect(() => emit('overflowState', isOverflowing.value))
 onResizeElement(checkOverflowing, containerRef)

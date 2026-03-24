@@ -2,7 +2,6 @@
 import { getAllInstructions, deleteInstruction } from '@/api/instruction.service'
 import useToasterStore from '@/stores/useToaster'
 import useOrganizationsStore from '@/stores/useOrganizations'
-import { getOrganizationByCode } from '@/api/organizations.service'
 
 const { translateInstructions } = useAutoTranslate()
 const toaster = useToasterStore()
@@ -58,21 +57,9 @@ onMounted(() => {
   loadInstructions()
 })
 
-try {
-  const runtimeConfig = useRuntimeConfig()
-  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
-  useLpiHead(
-    useRequestURL().toString(),
-    computed(() => t('instructions.list.title')),
-    organization?.dashboard_subtitle,
-    image,
-    dimensions
-  )
-} catch (err) {
-  // DGAF
-  console.log(err)
-}
+useLpiHead2({
+  title: computed(() => t('instructions.list.title')),
+})
 </script>
 
 <template>

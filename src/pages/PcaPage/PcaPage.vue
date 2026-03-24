@@ -1,20 +1,7 @@
 <script setup lang="ts">
-import { getOrganizationByCode } from '@/api/organizations.service'
-
-try {
-  const runtimeConfig = useRuntimeConfig()
-  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
-  useLpiHead(
-    useRequestURL().toString(),
-    "Plan de Continuité d'Activité",
-    organization?.dashboard_subtitle,
-    image,
-    dimensions
-  )
-} catch (err) {
-  console.log(err)
-}
+useLpiHead2({
+  title: "Plan de Continuité d'Activité",
+})
 </script>
 <template>
   <div class="page-section-narrow legal-page pca page-top">

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { getOrganizationByCode } from '@/api/organizations.service'
-
 const { onboardingTrap } = useOnboardingStatus()
 const { t } = useNuxtI18n()
 
@@ -62,20 +60,9 @@ onMounted(async () => {
   onboardingTrap('take_tour', false)
 })
 
-try {
-  const runtimeConfig = useRuntimeConfig()
-  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
-  useLpiHead(
-    useRequestURL().toString(),
-    computed(() => t('faq.portal')),
-    organization?.dashboard_subtitle,
-    image,
-    dimensions
-  )
-} catch (err) {
-  console.log(err)
-}
+useLpiHead2({
+  title: computed(() => t('faq.portal')),
+})
 </script>
 <template>
   <div :class="{ loading: isLoading }" class="page-section-extra-wide help-layout page-top">

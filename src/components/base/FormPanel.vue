@@ -30,39 +30,32 @@
   </div>
 </template>
 
-<script setup>
-defineOptions({ name: 'FormPanel' })
+<script setup lang="ts">
+import { StyleValue } from 'vue'
 
 const { t } = useNuxtI18n()
 
-defineProps({
-  confirmActionName: {
-    type: String,
-    default: null,
-  },
+withDefaults(
+  defineProps<{
+    confirmActionName?: string
+    noFooter?: boolean
+    customStyle?: StyleValue
+    confirmActionDisabled?: boolean
+    asyncing?: boolean
+  }>(),
+  {
+    confirmActionName: null,
+    noFooter: false,
+    customStyle: () => ({}),
+    confirmActionDisabled: false,
+    asyncing: false,
+  }
+)
 
-  noFooter: {
-    type: Boolean,
-    default: false,
-  },
-
-  customStyle: {
-    type: Object,
-    default: () => {},
-  },
-
-  confirmActionDisabled: {
-    type: Boolean,
-    default: false,
-  },
-
-  asyncing: {
-    type: Boolean,
-    deafault: false,
-  },
-})
-
-const emit = defineEmits(['close', 'confirm'])
+const emit = defineEmits<{
+  close: []
+  confirm: []
+}>()
 
 const close = () => emit('close')
 const confirm = () => emit('confirm')

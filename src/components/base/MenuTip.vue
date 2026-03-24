@@ -1,19 +1,19 @@
 <template>
-  <div class="menu-tip" :class="{ 'is-open': isOpen }" @click.prevent.stop="open">
+  <div class="menu-tip" :class="{ 'is-open': stateModal }" @click.prevent.stop="openModal">
     <slot class="trigger" />
     <transition name="scale">
       <div
-        v-show="isOpen"
-        v-click-outside="close"
+        v-show="stateModal"
+        v-click-outside="closeModal"
         class="menu-content"
-        :class="{ 'shadowed-box': isOpen, 'is-open': isOpen }"
+        :class="{ 'shadowed-box': stateModal, 'is-open': stateModal }"
       >
         <ContextActionButton
           action-icon="Close"
           class="close-icon"
           secondary
           no-border
-          @click.prevent.stop="close"
+          @click.prevent.stop="closeModal"
         />
         <div class="content-wrapper" @click.capture="closeAfterClick">
           <slot name="custom-content" />
@@ -26,13 +26,8 @@
 <script setup lang="ts">
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 
-const openedMenuTip = ref(null)
-const uniqueId = (Math.random() + 1).toString(36).substring(7)
-const isOpen = computed(() => openedMenuTip.value === uniqueId)
-
-const open = () => (openedMenuTip.value = uniqueId)
-const close = () => (openedMenuTip.value = null)
-const closeAfterClick = () => nextTick(() => close())
+const { stateModal, openModal, closeModal } = useModal()
+const closeAfterClick = () => nextTick(() => closeModal())
 </script>
 
 <style lang="scss" scoped>

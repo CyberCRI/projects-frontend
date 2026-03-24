@@ -1,11 +1,11 @@
 <template>
   <div class="empty skeletons-text">
-    {{ labelEmpty }}
+    {{ label || $t('common.empty') }}
   </div>
 </template>
 
 <script setup lang="ts">
-const props = withDefaults(
+withDefaults(
   defineProps<{
     label?: string
   }>(),
@@ -13,15 +13,6 @@ const props = withDefaults(
     label: null,
   }
 )
-
-const { t } = useNuxtI18n()
-
-const labelEmpty = computed(() => {
-  if (props.label) {
-    return props.label
-  }
-  return t('common.empty')
-})
 </script>
 
 <style scoped>

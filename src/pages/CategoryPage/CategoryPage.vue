@@ -1,6 +1,6 @@
-<script setup>
-import useProjectCategories from '@/stores/useProjectCategories.ts'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
+<script setup lang="ts">
+import useProjectCategories from '@/stores/useProjectCategories'
+import { pictureApiToImageSizes } from '@/functs/imageSizesUtils'
 import { onResize } from '@/composables/onResize'
 
 const props = defineProps({
@@ -21,12 +21,10 @@ if (!projectCategoriesStore.all || !projectCategoriesStore.all.length) {
 }
 
 const category = computed(() => {
+  const slugOrId = route.params.slugOrId.toString()
   if (props.slugOrId) {
     if (import.meta.client) window.scrollTo(0, 0)
-    return (
-      projectCategoriesStore.allBySlugs[route.params.slugOrId] ||
-      projectCategoriesStore.allByIds[route.params.slugOrId]
-    )
+    return projectCategoriesStore.allBySlugs[slugOrId] || projectCategoriesStore.allByIds[slugOrId]
   }
 
   return null
@@ -90,14 +88,11 @@ onResize(
   { immediate: true }
 )
 
-const { image, dimensions } = useImageAndDimension(category.value?.background_image, 'medium')
-useLpiHead(
-  useRequestURL().toString(),
-  category.value?.name,
-  category.value?.description,
-  image,
-  dimensions
-)
+useLpiHead2({
+  title: computed(() => category.value?.name),
+  description: computed(() => category.value?.description),
+  image: category.value?.background_image,
+})
 </script>
 <template>
   <div v-if="category" id="type" :key="category.id" class="category-layout">

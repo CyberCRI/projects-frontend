@@ -14,10 +14,8 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
-
-defineOptions({ name: 'SocialNetworks' })
 
 defineProps({
   user: {

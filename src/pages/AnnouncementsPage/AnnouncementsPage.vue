@@ -1,7 +1,6 @@
-<script setup>
+<script setup lang="ts">
 import { getAnnouncements } from '@/api/announcements.service'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import { getOrganizationByCode } from '@/api/organizations.service'
+import useOrganizationsStore from '@/stores/useOrganizations'
 
 const organizationsStore = useOrganizationsStore()
 const { t } = useNuxtI18n()
@@ -20,12 +19,19 @@ const doGetAnnouncements = async () => {
       organizations: [organization.value.code],
       ordering: '-updated_at',
     })
-    announcements.value = results.filter(
-      (announcement) =>
-        announcement.project.publication_status !== 'private' &&
-        (!announcement.deadline ||
-          new Date(announcement.deadline) >= new Date().setHours(0, 0, 0, 0))
-    )
+    announcements.value = results.filter((announcement) => {
+      if (announcement.project.publication_status === 'private') {
+        return false
+      }
+      if (!announcement.deadline) {
+        return true
+      }
+      const deadline = new Date(announcement.deadline)
+      const now = new Date()
+      now.setHours(0, 0, 0, 0)
+
+      return deadline >= now
+    })
   } catch (err) {
     console.error(err)
   } finally {
@@ -35,22 +41,9 @@ const doGetAnnouncements = async () => {
 
 onMounted(doGetAnnouncements)
 
-try {
-  const runtimeConfig = useRuntimeConfig()
-  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
-
-  useLpiHead(
-    useRequestURL().toString(),
-    computed(() => t('home.announcements')),
-    organization?.dashboard_subtitle,
-    image,
-    dimensions
-  )
-} catch (err) {
-  // DGAF
-  console.log(err)
-}
+useLpiHead2({
+  title: computed(() => t('home.announcements')),
+})
 </script>
 <template>
   <div class="announcements-page page-section-medium page-top">
