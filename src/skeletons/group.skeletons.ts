@@ -24,7 +24,7 @@ export const groupSkeleton = (def?: Partial<PeopleGroupModel>): Omit<PeopleGroup
     conferences: 0,
     similars: 0,
     subgroups: 0,
-    projects_locations: 0,
+    locations: 0,
     gallery: 0,
     news: 0,
     event: 0,

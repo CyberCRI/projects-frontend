@@ -15,11 +15,7 @@
       :group="group"
       :is-loading="isLoading"
     />
-    <GroupLocationPreview
-      v-if="group.modules.projects_locations"
-      :group="group"
-      :is-loading="isLoading"
-    />
+    <GroupLocationPreview v-if="group.modules.locations" :group="group" :is-loading="isLoading" />
     <GroupNewsPreview v-if="group.modules.news" :group="group" :is-loading="isLoading" />
     <GroupEventPreview v-if="group.modules.event" :group="group" :is-loading="isLoading" />
     <GroupDocumentsPreview

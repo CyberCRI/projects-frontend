@@ -182,13 +182,13 @@ export async function getSubGroup(
   )
 }
 
-export async function getGroupProjectsLocation(
+export async function getGroupAllLocations(
   organizationCode: string,
   groupId: PeopleGroupIdOrSlug,
   config = {}
 ) {
   return await useAPI<PaginationResult<LocationModel>>(
-    `organization/${organizationCode}/people-group/${groupId}/projects-locations/`,
+    `organization/${organizationCode}/people-group/${groupId}/all-locations/`,
     config
   )
 }

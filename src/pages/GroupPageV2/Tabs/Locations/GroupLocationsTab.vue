@@ -1,8 +1,5 @@
 <template>
-  <BaseGroupTab
-    :title="$t(GroupModuleTitle.projects_locations, countElement)"
-    :count="countElement"
-  >
+  <BaseGroupTab :title="$t(GroupModuleTitle.locations, countElement)" :count="countElement">
     <GroupLocationBase :group="group" />
   </BaseGroupTab>
 </template>
@@ -16,5 +13,5 @@ const props = defineProps<{
   group: TranslatedPeopleGroupModel
 }>()
 
-const countElement = computed<number>(() => props.group.modules?.projects_locations)
+const countElement = computed<number>(() => props.group.modules?.locations)
 </script>

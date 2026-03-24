@@ -6,7 +6,7 @@ import {
   getGroupSimilar as fetchGetGroupSimilar,
   getSubGroup as fetchGetSubGroup,
   getGroupGallery as fetchGroupGallery,
-  getGroupProjectsLocation as fetchGroupProjectsLocation,
+  getGroupAllLocations as fetchGroupAllLocations,
   getGroupNews as fetchGroupNews,
   getGroupEvent as fetchGroupEvent,
 } from '@/api/groups.service'
@@ -147,7 +147,7 @@ export const getSubGroup = (
   )
 }
 
-export const getGroupProjectsLocation = (
+export const getGroupAllLocations = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   groupId: RefOrRaw<PeopleGroupIdOrSlug>,
   config = {}
@@ -158,7 +158,7 @@ export const getGroupProjectsLocation = (
   return useAsyncAPI(
     key,
     ({ config }) =>
-      fetchGroupProjectsLocation(unref(organizationCode), unref(groupId), {
+      fetchGroupAllLocations(unref(organizationCode), unref(groupId), {
         ...DEFAULT_CONFIG,
         ...config,
       }),
