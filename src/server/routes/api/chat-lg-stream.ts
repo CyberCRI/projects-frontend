@@ -1,5 +1,5 @@
 // import OpenAI from 'openai'
-import { ChatOpenAI } from '@langchain/openai'
+// import { ChatOpenAI } from '@langchain/openai'
 import { initChatModel } from 'langchain/chat_models/universal'
 import { createAgent, createMiddleware } from 'langchain'
 import { MemorySaver } from '@langchain/langgraph'
@@ -21,7 +21,7 @@ const {
   appLangchainTemperature,
   // appOpenaiApiVectorStoreId,
   appMcpServerUrl,
-  appMcpServerTrace,
+  // appMcpServerTrace,
   appSorbobotApiTrace,
   appLangchainPrompt,
   appVectorToolPrompt,
@@ -216,7 +216,7 @@ export default defineLazyEventHandler(() => {
       },
     })
 
-    const model = initChatModel(appLangchainModelName, {
+    const model = await initChatModel(appLangchainModelName, {
       temperature: parseFloat(appLangchainTemperature) || 0.7,
       apiKey: appLangchainModelApiKey,
     })
