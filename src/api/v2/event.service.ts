@@ -1,7 +1,7 @@
 import { getEvent as fetchEvent, getAllEvents as fetchAllEvents } from '@/api/event.service'
 import { onlyRefs } from '@/functs/onlyRefs'
 import { RefOrRaw } from '@/interfaces/utils'
-import { NewsModel } from '@/models/news.model'
+import { EventModel } from '@/models/event.model'
 import { OrganizationModel } from '@/models/organization.model'
 
 const DEFAULT_CONFIG = {}
@@ -30,11 +30,11 @@ export const getAllEvents = (
 
 export const getEvent = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
-  eventId: RefOrRaw<NewsModel['id']>,
+  eventId: RefOrRaw<EventModel['id']>,
   config = {}
 ) => {
   const { translateEvent } = useAutoTranslate()
-  const key = computed(() => `${unref(organizationCode)}::event::${eventId}`)
+  const key = computed(() => `${unref(organizationCode)}::event::${unref(eventId)}`)
 
   return useAsyncAPI(
     key,

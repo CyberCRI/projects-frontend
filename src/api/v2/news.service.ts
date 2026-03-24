@@ -31,7 +31,7 @@ export const getNews = (
   config = {}
 ) => {
   const { translateOneNews } = useAutoTranslate()
-  const key = computed(() => `${unref(organizationCode)}::news::${newsId}`)
+  const key = computed(() => `${unref(organizationCode)}::news::${unref(newsId)}`)
 
   return useAsyncAPI(
     key,
