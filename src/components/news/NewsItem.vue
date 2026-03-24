@@ -2,7 +2,7 @@
   <component
     :is="isComponent"
     :to="{ name: 'NewsPage', params: { slugOrId: news.id } }"
-    class="news-list-item shadow-box"
+    class="news-item shadow-box"
   >
     <div class="news-title-ctn mobile">
       <h3 class="news-title skeletons-text">
@@ -82,7 +82,7 @@ const textsStyle = ref({})
 const content = computed(() => html2Text(props.news.$t.content))
 </script>
 <style scoped lang="scss">
-.news-list-item {
+.news-item {
   --news-dimension: 8rem;
   --picture-ratio: calc(4 / 3);
 
