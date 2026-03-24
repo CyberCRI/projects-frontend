@@ -10,6 +10,8 @@ import getVectorStore from '@/server/utils/vector-db.js'
 import { createRetrieverTool } from '@langchain/classic/tools/retriever'
 import { MultiServerMCPClient } from '@langchain/mcp-adapters'
 
+import { tokenMap, traceMcp } from '@/server/routes/api/chat-stream'
+
 const runtimeConfig = useRuntimeConfig()
 const {
   // appOpenaiApiPromptId,
@@ -26,15 +28,18 @@ const {
 } = runtimeConfig
 const { appChatbotEnabled } = runtimeConfig.public
 
+// TODO use own token map instead cgat-stream one when refactoed
 // Map conversationId to token and date for authed api requests in MCP
-export const tokenMap = new Map<string, { date: Date; token: string }>()
+// export const tokenMap = new Map<string, { date: Date; token: string }>()
+
 export const checkpointer = new MemorySaver()
 
-export const traceMcp = (...args) => {
-  if (appMcpServerTrace) {
-    console.log('[MCP TRACE]', ...args)
-  }
-}
+// TODO use own tarceMcp map instead cgat-stream one when refactoed
+// export const traceMcp = (...args) => {
+//   if (appMcpServerTrace) {
+//     console.log('[MCP TRACE]', ...args)
+//   }
+// }
 
 export const traceSorbobot = (...args) => {
   if (appSorbobotApiTrace) {
@@ -93,6 +98,12 @@ export default defineLazyEventHandler(() => {
       console.log('Starting new conversation with id:', conversationId)
     }
 
+    traceMcp('set token map ', conversationId)
+    tokenMap.set(conversationId, {
+      date: new Date(),
+      token: ('' + tokenHeader).replace('Bearer ', ''),
+    })
+
     const tools = []
 
     if (appMcpServerUrl) {
@@ -111,10 +122,15 @@ export default defineLazyEventHandler(() => {
         mcp: {
           transport: 'http', // HTTP-based remote server
           url: appMcpServerUrl,
+          headers: {
+            Authorization: `${conversationId}`,
+          },
         },
       })
 
-      tools.push(...(await client.getTools()))
+      const mcpTools = await client.getTools()
+      traceMcp('mcp tool', JSON.stringify(mcpTools, null, 2))
+      tools.unshift(...mcpTools)
     }
 
     // if (appOpenaiApiVectorStoreId) {
@@ -170,8 +186,8 @@ export default defineLazyEventHandler(() => {
     const toolMonitoringMiddleware = createMiddleware({
       name: 'ToolMonitoringMiddleware',
       wrapToolCall: async (request, handler) => {
-        // console.log(`Executing tool: ${request.toolCall.name}`)
-        // console.log(`Arguments: ${JSON.stringify(request.toolCall.args)}`)
+        console.log(`Executing tool: ${request.toolCall.name}`)
+        console.log(`Arguments: ${JSON.stringify(request.toolCall.args)}`)
         try {
           const result = await handler(request)
           const content: string = (result as { content: string }).content
@@ -186,19 +202,19 @@ export default defineLazyEventHandler(() => {
       },
     })
 
-    // const loggingMiddleware = createMiddleware({
-    //   name: 'LoggingMiddleware',
-    //   beforeModel: (state) => {
-    //     console.log(`About to call model with ${state.messages.length} messages`)
-    //     console.log(JSON.stringify(state.messages, null, 2))
-    //     return
-    //   },
-    //   afterModel: (state) => {
-    //     const lastMessage = state.messages[state.messages.length - 1]
-    //     console.log(`Model returned: ${lastMessage.content}`)
-    //     return
-    //   },
-    // })
+    const loggingMiddleware = createMiddleware({
+      name: 'LoggingMiddleware',
+      beforeModel: (state) => {
+        console.log(`About to call model with ${state.messages.length} messages`)
+        console.log(JSON.stringify(state.messages, null, 2))
+        return
+      },
+      afterModel: (state) => {
+        const lastMessage = state.messages[state.messages.length - 1]
+        console.log(`Model returned: ${lastMessage.content}`)
+        return
+      },
+    })
 
     const model = initChatModel(appLangchainModelName, {
       temperature: parseFloat(appLangchainTemperature) || 0.7,
@@ -217,17 +233,13 @@ export default defineLazyEventHandler(() => {
           },
         ],
       }),
-      middleware: [toolMonitoringMiddleware /* , loggingMiddleware*/] as any,
+      middleware: [toolMonitoringMiddleware, loggingMiddleware] as any,
     })
 
     traceMcp(
       `Starting chat stream for conversation ${conversationId} with ${tools.map((t) => `"${t.name}"`).join(', ')}  tools and ${messages.length} messages`
     )
 
-    tokenMap.set(conversationId, {
-      date: new Date(),
-      token: ('' + tokenHeader).replace('Bearer ', ''),
-    })
     const config = {
       configurable: { thread_id: conversationId },
     }

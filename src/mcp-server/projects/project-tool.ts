@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import N from './zod-schema-utils'
-import { mcpFetch, API_BASE_URL } from './base'
+import { mcpFetch, API_BASE_URL, orgCode } from './base'
 import {
   USER_PREVIEW_OUTPUT_SCHEMA,
   mapUserPreview,
@@ -273,10 +273,15 @@ export default (server) => {
         const queryResult: any = await mcpFetch(
           // TODO: use org code from config
           `${API_BASE_URL}project/${idOrSlug}/similar/`,
-          {},
+          {
+            query: {
+              organizations: orgCode,
+            },
+          },
           extras
         )
-        results = queryResult.results.map((p: any) => mapProjectPreview(p))
+        console.log('queryResult', queryResult)
+        results = queryResult.map((p: any) => mapProjectPreview(p))
       } catch (error) {
         console.error('Error fetching project similar projects:', error)
       }
