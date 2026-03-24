@@ -1,12 +1,38 @@
 <template>
-  <component :is="isComponent" :to="{ name: 'NewsPage', params: { slugOrId: news.id } }">
-    <div class="card-container" :class="{ 'scale-hover': !props.is }">
-      <CroppedApiImage
-        :picture-data="news.header_image"
-        class="card-image skeletons-background"
-        :default-picture="DEFAULT_NEWS_PATATOID"
+  <component
+    :is="isComponent"
+    :to="{ name: 'NewsPage', params: { slugOrId: news.id } }"
+    class="news-list-item shadow-box"
+  >
+    <div class="news-title-ctn mobile">
+      <h3 class="news-title skeletons-text">
+        {{ news.title }}
+      </h3>
+      <ContextActionMenuInline
+        v-if="editable"
+        class="news-item-editable"
+        :can-delete="canDeleteNews"
+        :can-edit="canEditNews"
+        @edit="emit('edit', news)"
+        @delete="emit('delete', news)"
       />
-      <div class="card-content">
+    </div>
+    <div class="news-img-ctn">
+      <CroppedApiImage
+        :alt="`${news?.$t?.title} image`"
+        class="picture skeletons-background"
+        :ratio="4 / 3"
+        :picture-data="news?.header_image"
+        picture-size="small"
+        default-picture="/patatoids-project/Patatoid-1.png"
+      />
+    </div>
+    <div class="news-texts" :style="textsStyle">
+      <div class="news-title-ctn desktop">
+        <h3 class="news-title skeletons-text">
+          {{ news?.$t?.title }}
+        </h3>
+
         <ContextActionMenuInline
           v-if="editable"
           class="news-item-editable"
@@ -15,25 +41,24 @@
           @edit="emit('edit', news)"
           @delete="emit('delete', news)"
         />
-        <h3 class="skeletons-text">
-          {{ news.$t.title }}
-        </h3>
-
-        <DescriptionCropped class="skeletons-text" :content="news.$t.content" :line="2" />
-
-        <time class="skeletons-text" :datetime="news.publication_date">
-          {{ publicationDate }}
-        </time>
+      </div>
+      <div class="skeletons-background" :style="style">
+        <LineClamped is="p" :line-number="2">
+          {{ content }}
+        </LineClamped>
+      </div>
+      <div class="read-more-ctn">
+        <SummaryAction class="read-button" :action-label="t('news.list.read-more')" />
       </div>
     </div>
   </component>
 </template>
 <script setup lang="ts">
-import ContextActionMenuInline from '@/components/base/button/ContextActionMenuInline.vue'
-import DescriptionCropped from '@/components/base/DescriptionCropped.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import { DEFAULT_NEWS_PATATOID } from '@/composables/usePatatoids'
+import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
 import { TranslatedNews } from '@/models/news.model'
+import ContextActionMenuInline from '@/components/base/button/ContextActionMenuInline.vue'
+import { html2Text } from '@/functs/string'
 
 const props = withDefaults(
   defineProps<{ news: TranslatedNews; editable?: boolean; is?: string }>(),
@@ -42,11 +67,6 @@ const props = withDefaults(
     is: null,
   }
 )
-
-const { canEditNews, canDeleteNews } = usePermissions()
-
-const { locale } = useNuxtI18n()
-
 const emit = defineEmits<{
   delete: [TranslatedNews]
   edit: [TranslatedNews]
@@ -54,46 +74,93 @@ const emit = defineEmits<{
 
 const isComponent = computed(() => props.is ?? resolveComponent('NuxtLink'))
 
-const publicationDate = computed(() => {
-  const date = props.news.publication_date
-  return new Date(date).toLocaleDateString(locale.value, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
-})
-</script>
+const { t } = useNuxtI18n()
+const { canEditNews, canDeleteNews } = usePermissions()
+const style = ref({})
+const textsStyle = ref({})
 
-<style lang="scss" scoped>
-.card-container {
-  display: grid;
-  grid-template-columns: 80px 1fr;
-  gap: 0.5rem;
-  border-radius: $border-radius-l;
+const content = computed(() => html2Text(props.news.$t.content))
+</script>
+<style scoped lang="scss">
+.news-list-item {
+  --news-dimension: 8rem;
+  --picture-ratio: calc(4 / 3);
+
+  display: flex;
+  align-items: stretch;
+  gap: $space-l;
+  overflow: hidden;
+  padding: $space-s;
+  border: $border-width-s solid $lighter-gray;
+  border-radius: $border-radius-s;
+  flex-direction: column;
+
+  @media screen and (min-width: $min-tablet) {
+    flex-direction: row;
+    height: var(--news-dimension);
+  }
 }
 
-.card-content {
-  position: relative;
+.news-img-ctn {
+  flex-shrink: 0;
+  aspect-ratio: calc(4 / 3);
+  width: 100%;
+
+  @media screen and (min-width: $min-tablet) {
+    flex-basis: calc(var(--news-dimension) * var(--picture-ratio, 1));
+    width: auto;
+  }
+}
+
+.news-texts {
   display: grid;
   grid-template-rows: auto 1fr auto;
   gap: 0.5rem;
-}
-
-.card-image {
-  border-radius: $border-radius-l;
-  aspect-ratio: 1;
   width: 100%;
-  height: auto;
+
+  @media screen and (max-width: $min-tablet) {
+    height: 12rem;
+  }
 }
 
-.news-item-editable {
-  position: absolute;
-  pointer-events: all;
-  top: 0;
-  right: 0;
-  margin: -5px;
+.news-title-ctn {
   display: flex;
-  justify-content: center;
-  gap: 0.5rem;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.news-title {
+  font-size: $font-size-xl;
+  line-height: $line-height-tight;
+}
+
+@media screen and (min-width: $min-tablet) {
+  .mobile {
+    display: none;
+  }
+}
+
+@media screen and (max-width: $min-tablet) {
+  .desktop {
+    display: none;
+  }
+}
+
+.read-more-ctn {
+  flex-shrink: 0;
+  padding-top: 1rem;
+
+  .read-button {
+    width: min-content;
+    padding-left: 0;
+  }
+}
+
+.cropped-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: $border-radius-s;
 }
 </style>

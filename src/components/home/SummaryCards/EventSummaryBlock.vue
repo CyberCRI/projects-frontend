@@ -5,7 +5,7 @@
         v-for="event in events"
         :key="event.id"
         :event="event"
-        :cols="events.length > 2 ? 'three-col' : 'two-col'"
+        class="events-rows"
         hide-see-more-button
         @location="onLocation"
         @edit="onEdit"
@@ -124,5 +124,10 @@ const onCancel = () => {
 .event {
   padding: 0;
   flex-grow: 1;
+}
+
+.events-rows {
+  grid-template-columns: unset !important;
+  grid-template-rows: auto auto !important;
 }
 </style>

@@ -12,6 +12,8 @@ import {
 } from '@/models/location.model'
 import { TranslatedNews } from '@/models/news.model'
 import { TranslatedEventModel } from '@/models/event.model'
+import { TranslatedNewsfeed } from '@/models/newsfeed.model'
+import { TranslatedAnnouncement } from '@/models/announcement.model'
 
 // type can be computed or object
 type RefOrRaw<DataT> = ComputedRef<DataT> | Ref<DataT> | DataT
@@ -111,10 +113,10 @@ export default function useAutoTranslate() {
       return {
         ...unref(translateEntity(announcement, ['title', 'description'])),
         project: unref(translateProject(announcement.project)),
-      }
+      } as TranslatedAnnouncement
     })
   const translateAnnouncements = (announcements) =>
-    translateEntities(announcements, translateAnnouncement)
+    translateEntities<TranslatedAnnouncement>(announcements, translateAnnouncement)
 
   const translateReview = (review) => translateEntity(review, ['title', 'description'])
   const translateReviews = (reviews) => translateEntities(reviews, translateReview)
@@ -322,10 +324,12 @@ export default function useAutoTranslate() {
       const _items = unref(items)
       return _items?.map((item) => ({
         ...item,
-        project: unref(translateProject(item.project)),
-        news: unref(translateOneNews(item.news)),
-        announcement: unref(translateAnnouncement(item.announcement)),
-      }))
+        project: item.project ? unref(translateProject(item.project)) : item.project,
+        news: item.news ? unref(translateOneNews(item.news)) : item.news,
+        announcement: item.announcement
+          ? unref(translateAnnouncement(item.announcement))
+          : item.announcement,
+      })) as TranslatedNewsfeed[]
     })
 
   // -----------

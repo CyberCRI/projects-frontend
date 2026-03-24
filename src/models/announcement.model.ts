@@ -6,12 +6,13 @@ export interface AnnouncementModel extends BaseModel {
   id: number
   description: string
   title: string
-  type: string
+  type: 'na' | 'participant' | 'job' | 'traineeship'
   project: ProjectModel
-  status: string
-  deadline: Date
+  status: 'open' | 'closed'
+  deadline: string
   is_remunerated: boolean
-  updated_at: Date
+  updated_at: string
+  create_at: string
 }
 
 export type TranslatedAnnouncement = Omit<

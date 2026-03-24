@@ -35,6 +35,9 @@ export const capitalize = (text: string | undefined | null): string => {
  * @exports
  */
 export const html2Text = (text: string): string => {
+  if (!import.meta.client) {
+    return ''
+  }
   const span = document.createElement('span')
   span.innerHTML = text || ''
   return span.innerText

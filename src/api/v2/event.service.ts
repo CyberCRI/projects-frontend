@@ -34,7 +34,7 @@ export const getEvent = (
   config = {}
 ) => {
   const { translateEvent } = useAutoTranslate()
-  const key = computed(() => `${unref(organizationCode)}::news::${eventId}`)
+  const key = computed(() => `${unref(organizationCode)}::event::${eventId}`)
 
   return useAsyncAPI(
     key,

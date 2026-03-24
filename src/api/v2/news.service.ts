@@ -8,7 +8,7 @@ const DEFAULT_CONFIG = {}
 
 export const getAllNews = (organizationCode: RefOrRaw<OrganizationModel['code']>, config = {}) => {
   const { translateNews } = useAutoTranslate()
-  const key = computed(() => `${unref(organizationCode)}::event::all`)
+  const key = computed(() => `${unref(organizationCode)}::news::all`)
 
   return useAsyncPaginationAPI(
     key,
