@@ -9,7 +9,13 @@
     @confirm="saveNews"
     @close="cancel"
   >
-    <NewsForm ref="newsForm" v-model="form" class="news-form" @invalid="invalid = $event" />
+    <NewsForm
+      ref="newsForm"
+      v-model="form"
+      class="news-form"
+      :selected-group="selectedGroup"
+      @invalid="invalid = $event"
+    />
   </BaseDrawer>
 </template>
 <script>
@@ -38,6 +44,10 @@ export default {
       type: Boolean,
       required: true,
     },
+    selectedGroup: {
+      type: Boolean,
+      default: true,
+    },
   },
 
   emits: ['close', 'news-edited'],
@@ -64,7 +74,7 @@ export default {
         if (news)
           this.form = {
             ...news,
-            publication_date: new Date(news.publication_date),
+            publication_date: news.publication_date ? new Date(news.publication_date) : null,
             header_image: news.header_image || null,
             imageSizes: pictureApiToImageSizes(news.header_image),
             people_groups: news.people_groups.reduce

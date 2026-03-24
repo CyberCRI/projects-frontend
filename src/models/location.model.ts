@@ -39,4 +39,7 @@ export type ProjectLocationForm = LocationForm & {
 }
 
 export type AnyLocation = BaseLocationModel & { [key: string]: any }
-export type AnyTranslatedLocation = BaseTranslatedLocationModel & { [key: string]: any }
+export type AnyTranslatedLocation = Omit<BaseTranslatedLocationModel, '$t'> & {
+  $t?: BaseTranslatedLocationModel['$t']
+  [key: string]: any
+}

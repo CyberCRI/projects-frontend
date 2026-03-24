@@ -1,66 +1,3 @@
-<script setup lang="ts">
-import { defaultForm } from '@/components/event/EventForm/EventForm.vue'
-import { createEvent } from '@/api/event.service'
-import useToasterStore from '@/stores/useToaster'
-import { getOrganizationByCode } from '@/api/organizations.service'
-
-const toaster = useToasterStore()
-const organizationCode = useOrganizationCode()
-const router = useRouter()
-const { t } = useNuxtI18n()
-
-const asyncing = ref(false)
-const form = ref(defaultForm())
-const invalid = ref(false)
-const eventForm = useTemplateRef('eventForm')
-
-const cancel = () => {
-  form.value = defaultForm()
-  router.push({ name: 'FutureEvents' })
-}
-
-const saveEvent = async () => {
-  const isValid = await eventForm.value?.v$.$validate()
-  if (!isValid) {
-    return
-  }
-
-  try {
-    asyncing.value = true
-    const formData = {
-      organization_code: organizationCode,
-      ...form.value,
-      event_date: form.value.event_date,
-      people_groups: Object.entries(form.value.people_groups)
-        .filter(([, value]) => value)
-        .map(([id]) => id),
-    }
-    await createEvent(organizationCode, formData)
-    toaster.pushSuccess(t('event.save.success'))
-  } catch (err) {
-    toaster.pushError(`${t('event.save.error')} (${err})`)
-    console.error(err)
-  } finally {
-    asyncing.value = false
-    router.push({ name: 'FutureEvents' })
-  }
-}
-
-try {
-  const runtimeConfig = useRuntimeConfig()
-  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
-  useLpiHead(
-    useRequestURL().toString(),
-    computed(() => t('event.create.title')),
-    organization?.dashboard_subtitle,
-    image,
-    dimensions
-  )
-} catch (err) {
-  console.log(err)
-}
-</script>
 <template>
   <div class="page-section-narrow page-top">
     <h1 class="page-title">
@@ -90,6 +27,59 @@ try {
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { createEvent } from '@/api/event.service'
+import useToasterStore from '@/stores/useToaster'
+import { defaultForm } from '@/form/event'
+
+const toaster = useToasterStore()
+const organizationCode = useOrganizationCode()
+const router = useRouter()
+const { t } = useNuxtI18n()
+
+const asyncing = ref(false)
+const form = ref(defaultForm())
+const invalid = ref(false)
+const eventForm = useTemplateRef('eventForm')
+
+const cancel = () => {
+  form.value = defaultForm()
+  router.push({ name: 'FutureEvents' })
+}
+
+const saveEvent = async () => {
+  const isValid = await eventForm.value?.v$.$validate()
+  if (!isValid) {
+    return
+  }
+
+  try {
+    asyncing.value = true
+    const formData = {
+      organization_code: organizationCode,
+      ...form.value,
+      event_date: form.value.event_date.toISOString(),
+      people_groups: Object.entries(form.value.people_groups)
+        .filter(([, value]) => value)
+        .map(([id]) => id),
+    }
+    await createEvent(organizationCode, formData)
+    toaster.pushSuccess(t('event.save.success'))
+  } catch (err) {
+    toaster.pushError(`${t('event.save.error')} (${err})`)
+    console.error(err)
+  } finally {
+    asyncing.value = false
+    router.push({ name: 'FutureEvents' })
+  }
+}
+
+useLpiHead2({
+  title: computed(() => t('event.create.title')),
+})
+</script>
+
 <style lang="scss" scoped>
 .page-title {
   margin-bottom: pxToRem(60px);
