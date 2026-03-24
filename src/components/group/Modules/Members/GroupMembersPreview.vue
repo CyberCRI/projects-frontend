@@ -3,7 +3,7 @@
     id="members"
     :title="$t('group.members')"
     :total="group.modules.members"
-    icon="Users"
+    :icon="GroupModuleIcon.members"
     :see-more="{ name: 'groupMembers', params: { groupIdOrSlug: group.slug || group.id } }"
   >
     <template #content>
@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import { GroupModuleIcon, TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
 import BaseGroupMembersList from '@/components/group/Modules/Members/BaseGroupMembersList.vue'
 

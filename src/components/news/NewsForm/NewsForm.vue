@@ -5,8 +5,8 @@
       <ImageEditor
         picture-alt="news image"
         :contain="true"
-        :image-sizes="modelValue.imageSizes"
-        :picture="modelValue.header_image"
+        :image-sizes="model.imageSizes"
+        :picture="model.header_image"
         :default-picture="defaultPictures"
         :picture-ratio="4 / 3"
         @update:image-sizes="updateForm({ imageSizes: $event })"
@@ -16,52 +16,54 @@
 
     <div class="form-section">
       <TextInput
-        :model-value="modelValue.title"
+        :model-value="model.title"
         :label="$t('news.form.title.label')"
         :placeholder="$t('news.form.title.placeholder')"
         class="input-field"
         @update:model-value="updateForm({ title: $event })"
-        @blur="v$.modelValue.title.$validate"
+        @blur="v$.title.$validate"
       />
-      <FieldErrors :errors="v$.modelValue.title.$errors" />
+      <FieldErrors :errors="v$.title.$errors" />
     </div>
 
     <div class="form-section">
       <label>{{ $t('news.form.publication_date.label') }}</label>
-      <button type="button" class="date-btn" @click="showDatePicker = true">
+      <button type="button" class="date-btn" @click="toggleModals('DatePicker')">
         <IconImage class="icon" name="Calendar" />
         {{ $t('invitation.create.field.validity.pick-date') }}
       </button>
 
-      <span v-if="modelValue.publication_date" class="date-preview">{{ displayedDate }}</span>
+      <span v-if="model.publication_date" class="date-preview">{{ displayedDate }}</span>
       <VueDatePicker
-        v-if="showDatePicker"
-        :on-click-outside="() => (showDatePicker = false)"
-        :inline="true"
-        :auto-apply="true"
-        :model-value="modelValue.publication_date"
+        v-if="stateModals.DatePicker"
+        inline
+        :locale="locale"
+        :model-value="model.publication_date"
         :enable-time-picker="false"
+        :min-date="new Date()"
+        :on-click-outside="() => console.log('outside')"
         @update:model-value="onDateSelected"
       />
 
-      <FieldErrors :errors="v$.modelValue.publication_date.$errors" />
+      <FieldErrors :errors="v$.publication_date.$errors" />
     </div>
 
     <div class="form-section">
       <label>{{ $t('news.form.content.label') }}</label>
       <TipTapEditor
         ref="tiptapEditor"
-        :model-value="modelValue.content"
+        :model-value="model.content"
         :save-image-callback="saveOrganizationImage"
         class="input-field content-editor no-max-height"
         mode="full"
         @update:model-value="updateForm({ content: $event })"
-        @blur="v$.modelValue.content.$validate"
+        @blur="v$.content.$validate"
       />
 
-      <FieldErrors :errors="v$.modelValue.content.$errors" />
+      <FieldErrors :errors="v$.content.$errors" />
     </div>
-    <div class="form-section">
+
+    <div v-if="selectedGroup" class="form-section">
       <label>{{ $t('news.form.groups.label') }}</label>
       <p class="notice">
         {{ $t('news.form.groups.notice') }}
@@ -69,8 +71,8 @@
 
       <MultiGroupPicker
         has-public-field
-        :is-public="modelValue.visible_by_all"
-        :model-value="modelValue.people_groups"
+        :is-public="model.visible_by_all"
+        :model-value="model.people_groups"
         @update:is-public="updateForm({ visible_by_all: $event })"
         @update:model-value="updateForm({ people_groups: $event })"
       />
@@ -78,7 +80,19 @@
   </form>
 </template>
 
-<script>
+<script lang="ts">
+export const defaultForm = () => ({
+  header_image: null,
+  imageSizes: null,
+  title: '',
+  content: '<p></p>',
+  publication_date: new Date().toISOString(),
+  people_groups: {},
+  visible_by_all: true,
+})
+</script>
+
+<script setup lang="ts">
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import useVuelidate from '@vuelidate/core'
@@ -90,120 +104,91 @@ import IconImage from '@/components/base/media/IconImage.vue'
 import MultiGroupPicker from '@/components/group/MultiGroupPicker/MultiGroupPicker.vue'
 import { throttle } from 'es-toolkit'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
-import { postOrganizationImage } from '@/api/organizations.service.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import { useRuntimeConfig } from '#imports'
+import { postOrganizationImage } from '@/api/organizations.service'
+import useOrganizationsStore from '@/stores/useOrganizations'
 import { usePatatoids } from '@/composables/usePatatoids'
 
-export function defaultForm() {
+withDefaults(
+  defineProps<{
+    selectedGroup?: boolean
+  }>(),
+  { selectedGroup: true }
+)
+
+const model = defineModel({ default: defaultForm() })
+const { stateModals, closeModals, toggleModals } = useModals({
+  DatePicker: false,
+})
+
+const emit = defineEmits<{
+  invalid: [boolean]
+}>()
+
+const organizationsStore = useOrganizationsStore()
+const defaultPictures = usePatatoids()
+const { t, locale } = useNuxtI18n()
+
+const rules = computed(() => {
   return {
-    header_image: null,
-    imageSizes: null,
-    title: '',
-    content: '<p></p>',
-    publication_date: new Date().toISOString(),
-    people_groups: {},
-    visible_by_all: true,
+    title: {
+      required: helpers.withMessage(t('news.form.title.required'), required),
+    },
+    content: {
+      required: helpers.withMessage(t('news.form.content.required'), required),
+    },
+    publication_date: {
+      required: helpers.withMessage(t('news.form.publication_date.required'), required),
+    },
   }
+})
+
+const v$ = useVuelidate(rules, model)
+defineExpose({
+  v$,
+})
+
+const updateForm = throttle((data) => {
+  // short throttling is mandatory here
+  // because ImageEditor is emitting two event on image change (one for the image and one for the image sizes)
+  // and without a delay model dont have time to be updated in the second event
+  // resulting in lost of the first event data (eg the picture)
+  // TODO: find a cleaner way to fix the issue (maybe rewrite ImageEditor to emit only one event with all the data needed)
+  model.value = {
+    ...model.value,
+    ...data,
+  }
+}, 16)
+
+const displayedDate = computed(() => {
+  if (!model.value.publication_date) {
+    return ''
+  }
+  return new Date(model.value.publication_date).toLocaleDateString(locale.value, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+})
+const organization = computed(() => organizationsStore.current)
+
+watch(
+  () => v$.value.$invalid,
+  (isInvalid) => {
+    emit('invalid', isInvalid)
+  }
+)
+
+const saveOrganizationImage = (file) => {
+  const formData = new FormData()
+  formData.append('file', file, file.name)
+  return postOrganizationImage({
+    orgCode: organization.value.code,
+    body: formData,
+  })
 }
-
-export default {
-  name: 'NewsForm',
-
-  components: {
-    TextInput,
-    TipTapEditor,
-    ImageEditor,
-    VueDatePicker,
-    IconImage,
-    MultiGroupPicker,
-    FieldErrors,
-  },
-
-  props: {
-    modelValue: {
-      type: Object,
-      required: true,
-    },
-  },
-
-  emits: ['update:modelValue', 'invalid'],
-
-  setup() {
-    const organizationsStore = useOrganizationsStore()
-    const runtimeConfig = useRuntimeConfig()
-    const defaultPictures = usePatatoids()
-    return {
-      organizationsStore,
-      runtimeConfig,
-      defaultPictures,
-    }
-  },
-
-  data() {
-    const updateForm = throttle((data) => {
-      // short throttling is mandatory here
-      // because ImageEditor is emitting two event on image change (one for the image and one for the image sizes)
-      // and without a delay model dont have time to be updated in the second event
-      // resulting in lost of the first event data (eg the picture)
-      // TODO: find a cleaner way to fix the issue (maybe rewrite ImageEditor to emit only one event with all the data needed)
-      this.$emit('update:modelValue', { ...this.modelValue, ...data })
-    }, 16)
-
-    return {
-      v$: useVuelidate(),
-      showDatePicker: false,
-      updateForm,
-    }
-  },
-
-  validations() {
-    return {
-      modelValue: {
-        title: {
-          required: helpers.withMessage(this.$t('news.form.title.required'), required),
-        },
-        content: {
-          required: helpers.withMessage(this.$t('news.form.content.required'), required),
-        },
-        publication_date: {
-          required: helpers.withMessage(this.$t('news.form.publication_date.required'), required),
-        },
-      },
-    }
-  },
-
-  computed: {
-    displayedDate() {
-      return this.modelValue.publication_date
-        ? this.$d(new Date(this.modelValue.publication_date))
-        : ''
-    },
-    organization() {
-      return this.organizationsStore.current
-    },
-  },
-
-  watch: {
-    'v$.$invalid'(isInvalid) {
-      this.$emit('invalid', isInvalid)
-    },
-  },
-
-  methods: {
-    saveOrganizationImage(file) {
-      const formData = new FormData()
-      formData.append('file', file, file.name)
-      return postOrganizationImage({
-        orgCode: this.organization.code,
-        body: formData,
-      })
-    },
-    onDateSelected(modelData) {
-      this.updateForm({ publication_date: modelData })
-      this.showDatePicker = false
-    },
-  },
+const onDateSelected = (modelData) => {
+  updateForm({ publication_date: modelData })
+  closeModals('DatePicker')
 }
 </script>
 

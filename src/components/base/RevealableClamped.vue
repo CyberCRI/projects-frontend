@@ -1,9 +1,9 @@
 <template>
   <div class="revealable-clamped">
     <LineClamped
+      :is="is"
       v-if="textContent"
       class="text-limited"
-      :tag="tag"
       :line-number="lineNumber"
       :style="styleLimited"
       @overflow-state="isClamped = $event"
@@ -12,49 +12,42 @@
     </LineClamped>
     <IconImage v-if="isClamped" class="icon" name="ChevronDown" @click="showFull = !showFull" />
     <div v-if="isClamped && showFull" class="revealable-full">
-      <component :is="tag" :style="styleFull" class="text-full">
+      <component :is="is" :style="styleFull" class="text-full">
         {{ textContent }}
       </component>
       <IconImage class="icon icon-open" name="ChevronUp" @click="showFull = !showFull" />
     </div>
   </div>
 </template>
-<script setup>
-defineProps({
-  textContent: {
-    type: String,
-    required: true,
-  },
-  lineNumber: {
-    type: Number,
-    required: false,
-    default: 1,
-  },
-  tag: {
-    type: String,
-    required: false,
-    default: 'div',
-  },
-  styleLimited: {
-    type: Object,
-    required: false,
-    default: () => ({}),
-  },
+<script setup lang="ts">
+import { CSSProperties } from 'vue'
 
-  styleFull: {
-    type: Object,
-    required: false,
-    default: () => ({}),
-  },
-})
-
+withDefaults(
+  defineProps<{
+    textContent: string
+    lineNumber?: number
+    is?: string
+    styleLimited?: CSSProperties
+    styleFull?: CSSProperties
+  }>(),
+  {
+    lineNumber: 1,
+    is: 'div',
+    styleLimited: () => ({}),
+    styleFull: () => ({}),
+  }
+)
 const showFull = ref(false)
 const isClamped = ref(false)
 </script>
+
 <style scoped lang="scss">
 .revealable-clamped {
-  position: relative;
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  position: relative;
 }
 
 .revealable-full {
@@ -72,18 +65,6 @@ const isClamped = ref(false)
   z-index: 1;
   min-height: calc(100% + #{$pad});
   min-width: calc(100% + #{$pad});
-}
-
-.revealable-clamped {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  position: relative;
-}
-
-.full-purpose {
-  font-weight: 400;
-  font-size: $font-size-m;
 }
 
 .icon {

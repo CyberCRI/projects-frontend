@@ -89,6 +89,9 @@ export const onResizeElement = (
   element: ResizeElement,
   options: Options = {}
 ) => {
+  if (!import.meta.client) {
+    return
+  }
   const observer = new ResizeObserver(callback)
 
   // iter functions to return all elements (html/template ref)

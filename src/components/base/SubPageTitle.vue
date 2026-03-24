@@ -14,8 +14,10 @@ withDefaults(
   <h2 v-if="currentTab && !currentTab.noTitle" class="sub-page-title">
     <!--span v-if="currentTab.icon" class="icon"><IconImage :name="currentTab.icon" /></span-->
     <span v-if="titlePrefix" class="title-prefix">{{ titlePrefix }}</span>
-    <span v-if="titlePrefix" class="separator">-</span>
-    <span class="specific-title">{{ currentTab.label }}</span>
+    <template v-if="currentTab.label">
+      <span v-if="titlePrefix" class="separator">-</span>
+      <span class="specific-title">{{ currentTab.label }}</span>
+    </template>
   </h2>
 </template>
 <style lang="scss" scoped>

@@ -1,119 +1,128 @@
 <template>
-  <div class="event" :class="{ editable: canEditEvent || canDeleteEvent, 'is-new': isNew }">
-    <div class="date">
-      <IconImage name="Calendar" class="icon" />
-      <div class="day-month">
-        <div class="day">
-          {{ getDayFromDate(event.event_date) }}
-        </div>
-        <div class="month">
-          {{ $t(`event.calendar.month.${getMonthFromDate(event.event_date)}.short`) }}
-        </div>
-      </div>
-    </div>
-    <div class="texts">
-      <h4 class="event-name">
-        {{ event?.$t?.title }}
+  <component
+    :is="isComponent"
+    :to="
+      event.id
+        ? {
+            name: 'EventPage',
+            params: { eventId: event.id },
+          }
+        : null
+    "
+    class="event"
+    :class="{ editable: editable && (canEditEvent || canDeleteEvent), 'scale-hover': !props.is }"
+  >
+    <time class="date skeletons-background" :datetime="eventDate.toISOString()">
+      <template v-if="!isCurrent">
+        <span class="month-day">
+          {{ eventDate.toLocaleDateString(locale, { month: 'long', day: '2-digit' }) }}
+        </span>
+        <span class="year">
+          {{ eventDate.getFullYear() }}
+        </span>
+      </template>
+      <span v-else>
+        {{ $t('common.now') }}
+      </span>
+      <span>
+        <BadgeItem v-if="isCurrent" :label="$t('status.running')" colors="salmon" />
+      </span>
+    </time>
+
+    <div class="info">
+      <h4 class="title skeletons-text">
+        {{ event.$t.title }}
       </h4>
-      <div class="event-information">
-        <HtmlLimiter
-          v-if="isLimitedDescription"
-          :html="event?.$t?.content"
-          :striped-tags="['table']"
-          @computed="layoutComputed"
-          @computing="computeLayout"
+      <div class="event-information skeletons-text">
+        <ContentExpandable
+          class="expandable-left"
+          :description="event.$t.content"
+          :height-limit="100"
+          :opened="showMore"
+          :hide-see-more="hideSeeMoreButton"
         />
-        <div v-else class="event-information" v-html="event?.$t?.content" />
+      </div>
+
+      <div class="date-info skeletons-background">
+        <IconImage class="icon-small" name="Calendar" />
+        <span class="date-display">
+          {{ displayDate }}
+        </span>
       </div>
     </div>
-    <ContextActionMenu
-      v-if="canEditEvent || canDeleteEvent"
+
+    <ContextActionMenuInline
+      v-if="editable"
       class="event-controls"
-      :can-edit="canEditEvent"
       :can-delete="canDeleteEvent"
+      :can-edit="canEditEvent"
       @edit="editEvent(event)"
       @delete="deleteEvent(event)"
     />
-  </div>
+  </component>
 </template>
-<script>
+
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
-import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
-export default {
-  name: 'EventItem',
+import { TranslatedEventModel } from '@/models/event.model'
+import ContentExpandable from '@/components/base/ContentExpandable.vue'
+import ContextActionMenuInline from '@/components/base/button/ContextActionMenuInline.vue'
 
-  components: {
-    IconImage,
-    ContextActionMenu,
-  },
+const props = withDefaults(
+  defineProps<{
+    event: TranslatedEventModel
+    editable?: boolean
+    hideSeeMoreButton?: boolean
+    showMore?: boolean
+    is?: string
+  }>(),
+  {
+    editable: false,
+    showMore: false,
+    hideSeeMoreButton: false,
+    is: null,
+  }
+)
 
-  props: {
-    event: {
-      type: Object,
-      default: () => ({}),
-    },
-    isLimitedDescription: {
-      type: Boolean,
-      default: false,
-    },
-  },
+const emit = defineEmits<{
+  delete: [TranslatedEventModel]
+  edit: [TranslatedEventModel]
+}>()
+const { canEditEvent, canDeleteEvent } = usePermissions()
 
-  emits: ['delete-event', 'edit-event'],
+const { locale } = useNuxtI18n()
 
-  setup() {
-    const { canEditEvent, canDeleteEvent } = usePermissions()
-    return { canEditEvent, canDeleteEvent }
-  },
+const isComponent = computed(() => {
+  if (props.is) {
+    return props.is
+  }
+  return resolveComponent('NuxtLink')
+})
 
-  data() {
-    return {
-      style: {},
-      textsStyle: {},
-    }
-  },
+const eventDate = computed(() => new Date(props.event.event_date))
 
-  computed: {
-    isNew() {
-      return Date.now() - new Date(this.event.created_at).getTime() < 7 * 24 * 60 * 60 * 1000
-    },
-  },
+const isCurrent = computed(() => {
+  const now = new Date()
+  return eventDate.value <= now && now <= eventDate.value
+})
 
-  methods: {
-    computeLayout() {
-      this.style = {}
-      this.textsStyle = {}
-    },
-    layoutComputed(event) {
-      this.style = { height: event.height + 'px' }
-      this.textsStyle = { height: 'auto' }
-    },
-    getMonthFromDate(yearMonth) {
-      return yearMonth.split('-')[1]
-    },
-    getDayFromDate(date) {
-      return date.split('T')[0].split('-')[2]
-    },
+const displayDate = computed(() => {
+  const formater = new Intl.DateTimeFormat(locale.value, {
+    dateStyle: 'full',
+    timeStyle: 'short',
+  })
+  return formater.format(eventDate.value)
+})
 
-    deleteEvent(event) {
-      this.$emit('delete-event', event)
-    },
-
-    editEvent(event) {
-      this.$emit('edit-event', event)
-    },
-  },
-}
+const deleteEvent = (event) => emit('delete', event)
+const editEvent = (event) => emit('edit', event)
 </script>
 <style lang="scss" scoped>
 .event {
-  display: flex;
-  flex-wrap: nowrap;
+  display: grid;
+  grid-template-columns: auto 4fr;
   gap: $space-l;
-  align-items: stretch;
-  justify-content: stretch;
   position: relative;
-  padding: $space-m;
-  border-radius: $border-radius-m;
 
   &.editable {
     padding-right: 1.4em;
@@ -123,84 +132,71 @@ export default {
     position: absolute;
     right: 0;
     top: 0;
+    margin: -1rem;
   }
 
   .date {
-    align-self: flex-start;
-    flex-shrink: 0;
     display: flex;
-    flex-wrap: nowrap;
-    gap: $space-2xs;
-    justify-content: flex-start;
+    flex-direction: column;
+    background-color: #ebedee;
     align-items: center;
-    position: relative;
+    justify-content: center;
+    padding: 0.5rem;
+    color: black;
+    border-radius: $border-radius-m;
+    height: fit-content;
 
-    .icon {
-      width: $layout-size-3xl;
-      fill: $primary-dark;
+    .month-day {
+      font-size: larger;
+      font-weight: 500;
     }
 
-    .day-month {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      width: 1.4rem;
-      color: $primary-dark;
-      font-weight: 900;
-
-      .day {
-        font-size: $font-size-m;
-      }
-
-      .month {
-        font-size: $font-size-xs;
-      }
+    .year {
+      opacity: 0.7;
     }
   }
+}
 
-  .texts {
-    flex-grow: 1;
-    color: $primary-dark;
-    display: flex;
-    flex-flow: column nowrap;
+.date-info {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
 
-    .event-name {
-      font-size: $font-size-m;
-      font-weight: 400;
-      margin-bottom: $space-2xs;
-      line-height: $line-height-tight;
-    }
+.date-display {
+  align-self: center;
+}
 
-    .event-information {
-      font-size: $font-size-xs;
-      position: relative;
-      flex-grow: 1;
-      display: flex;
-      flex-flow: column;
-    }
+.icon-small {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0.4rem;
+  fill: var(--primary);
+  width: pxToRem(24px);
+  height: pxToRem(24px);
+}
 
-    .event-groups {
-      font-size: $font-size-xs;
-      margin-top: $space-2xs;
-    }
-  }
+.badge-new {
+  position: absolute;
+  color: white;
+  margin: -0.5rem;
+}
 
-  &.is-new {
-    .event-name {
-      font-weight: 900;
-    }
+.news-groups {
+  font-weight: bold;
+}
 
-    .date::after {
-      content: '';
-      display: inline-block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 0.8rem;
-      height: 0.8rem;
-      border-radius: 0.8rem;
-      background-color: $salmon;
-    }
+.news-groups-list {
+  margin-left: 2rem;
+}
+</style>
+
+<style lang="scss">
+.expandable-left {
+  display: flex;
+  flex-direction: column;
+
+  > button {
+    align-self: flex-end;
   }
 }
 </style>

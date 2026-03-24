@@ -5,27 +5,35 @@
         v-for="event in events"
         :key="event.id"
         :event="event"
-        :cols="events.length > 2 ? 'three-col' : 'two-col'"
-        is-limited-description
-        @edit-event="editedEvent = event"
-        @delete-event="eventToDelete = event"
+        class="events-rows"
+        hide-see-more-button
+        @location="onLocation"
+        @edit="onEdit"
+        @delete="onDelete"
+      />
+
+      <LocationDrawer
+        :is-opened="stateModals.location"
+        :locations="selectedEvent?.location ? [selectedEvent.location] : []"
+        @close="onCancel"
       />
 
       <EditEventDrawer
-        :is-opened="!!editedEvent"
-        :event="editedEvent"
-        @close="editedEvent = null"
-        @event-edited="$emit('reload-events')"
+        :is-opened="stateModals.edit"
+        :event="selectedEvent"
+        @close="onCancel"
+        @edited="$emit('reload')"
       />
 
       <ConfirmModal
-        v-if="eventToDelete"
-        :content="$t('event.delete.message')"
+        v-if="stateModals.delete"
         :title="$t('event.delete.title')"
         :asyncing="isDeletingEvent"
-        @cancel="eventToDelete = null"
-        @confirm="deleteEvent"
-      />
+        @cancel="onCancel"
+        @confirm="onDeleteEvent"
+      >
+        <EventItem is="div" :event="selectedEvent" location-preview />
+      </ConfirmModal>
     </template>
 
     <template #action>
@@ -38,71 +46,88 @@
   </BaseListSummaryBlock>
 </template>
 
-<script>
+<script setup lang="ts">
 import EventItem from '@/components/event/EventList/EventItem.vue'
 import BaseListSummaryBlock from '@/components/home/SummaryCards/BaseListSummaryBlock.vue'
 import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
 import EditEventDrawer from '@/components/event/EditEventDrawer/EditEventDrawer.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { deleteEvent } from '@/api/event.service'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-export default {
-  name: 'EventSummaryBlock',
+import useToasterStore from '@/stores/useToaster'
+import { TranslatedEventModel } from '@/models/event.model'
+import useOrganizationCode from '@/composables/useOrganizationCode'
 
-  components: { EventItem, BaseListSummaryBlock, SummaryAction, EditEventDrawer, ConfirmModal },
+withDefaults(
+  defineProps<{
+    events?: TranslatedEventModel[]
+    inlined?: boolean
+  }>(),
+  {
+    events: () => [],
+    inlined: false,
+  }
+)
 
-  props: {
-    events: {
-      type: Array,
-      default: () => [],
-    },
-    inlined: {
-      type: Boolean,
-      default: false,
-    },
-  },
+const emit = defineEmits<{
+  reload: []
+}>()
 
-  emits: ['reload-events'],
-  setup() {
-    const toaster = useToasterStore()
-    const organizationsStore = useOrganizationsStore()
-    return {
-      toaster,
-      organizationsStore,
-    }
-  },
+const { stateModals, closeModals, openModals } = useModals({
+  location: false,
+  edit: false,
+  delete: false,
+})
 
-  data() {
-    return {
-      editedEvent: null,
-      eventToDelete: null,
-      isDeletingEvent: false,
-    }
-  },
+const selectedEvent = ref()
+const onDelete = (event) => {
+  selectedEvent.value = event
+  openModals('delete')
+}
+const onEdit = (event) => {
+  selectedEvent.value = event
+  openModals('edit')
+}
 
-  methods: {
-    async deleteEvent() {
-      this.isDeletingEvent = true
-      try {
-        await deleteEvent(this.organizationsStore.current?.code, this.eventToDelete.id)
-        this.toaster.pushSuccess(this.$t('event.delete.success'))
+const onLocation = (event) => {
+  selectedEvent.value = event
+  openModals('location')
+}
 
-        this.$emit('reload-events')
-      } catch (err) {
-        this.toaster.pushError(`${this.$t('event.delete.error')} (${err})`)
-        console.error(err)
-      } finally {
-        this.eventToDelete = null
-        this.isDeletingEvent = false
-      }
-    },
-  },
+const toaster = useToasterStore()
+const organizationCode = useOrganizationCode()
+const { t } = useNuxtI18n()
+const isDeletingEvent = ref(false)
+
+const onDeleteEvent = async () => {
+  isDeletingEvent.value = true
+  try {
+    await deleteEvent(organizationCode, selectedEvent.value.id)
+    toaster.pushSuccess(t('event.delete.success'))
+
+    emit('reload')
+  } catch (err) {
+    toaster.pushError(`${t('event.delete.error')} (${err})`)
+    console.error(err)
+  } finally {
+    isDeletingEvent.value = false
+    onCancel()
+  }
+}
+
+const onCancel = () => {
+  selectedEvent.value = null
+  closeModals('edit', 'delete', 'location')
 }
 </script>
+
 <style lang="scss" scoped>
 .event {
   padding: 0;
   flex-grow: 1;
+}
+
+.events-rows {
+  grid-template-columns: unset !important;
+  grid-template-rows: auto auto !important;
 }
 </style>

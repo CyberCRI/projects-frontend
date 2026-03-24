@@ -1,14 +1,6 @@
 <template>
   <FetchLoader :status="status" skeleton only-error>
-    <MapRecap ref="map" :locations="locations" expand :editable="isEdit" @expand="opened = true">
-      <template #tooltip="{ location }">
-        <ProjectLocationTooltip
-          v-if="location.project"
-          :location="location as TranslatedLocation"
-          :project="location.project"
-        />
-      </template>
-    </MapRecap>
+    <MapRecap ref="map" :locations="locations" expand :editable="isEdit" @expand="opened = true" />
     <LocationDrawer
       :is-opened="opened"
       :editable="isEdit"
@@ -31,9 +23,7 @@ import { getGroupProjectsLocation } from '@/api/v2/group.service'
 import LocationDrawer from '@/components/map/LocationDrawer.vue'
 import LocationList from '@/components/map/LocationList.vue'
 import MapRecap from '@/components/map/MapRecap.vue'
-import ProjectLocationTooltip from '@/components/project/map/ProjectLocationTooltip.vue'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import { TranslatedLocation } from '@/models/location.model'
 import { factoriesSkeleton } from '@/skeletons/base.skeletons'
 import { locationSkeleton } from '@/skeletons/location.skeleton'
 

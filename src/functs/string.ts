@@ -23,3 +23,22 @@ export const capitalize = (text: string | undefined | null): string => {
   }
   return esCapitalize(text)
 }
+
+/**
+ * convert html string based to text string (without html tags)
+ *
+ * @function
+ * @name html2Text
+ * @kind variable
+ * @param {string} text
+ * @returns {string}
+ * @exports
+ */
+export const html2Text = (text: string): string => {
+  if (!import.meta.client) {
+    return ''
+  }
+  const span = document.createElement('span')
+  span.innerHTML = text || ''
+  return span.innerText
+}

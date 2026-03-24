@@ -1,42 +1,37 @@
 <template>
-  <SkeletonComponent v-if="loading" class="skeleton-block" height="24px" />
+  <SkeletonComponent v-if="loading" class="skeleton-block" height="24px" tag="h4" />
   <RevealableClamped
+    is="h4"
     v-else
     class="purpose-block"
     :text-content="capitalizedPurpose"
-    tag="h4"
     :line-number="3"
-    :style-limited="styleLimited"
-    :style-full="styleFull"
+    :style-limited="STYLE_LIMITED"
+    :style-full="STYLE_FULL"
   />
 </template>
-<script setup>
+<script setup lang="ts">
 import { capitalize } from '@/functs/string'
+import { TranslatedProject } from '@/models/project.model'
 
-const props = defineProps({
-  project: {
-    type: Object,
-    required: true,
-  },
-  loading: {
-    type: Boolean,
-    required: true,
-  },
-})
+const props = defineProps<{
+  project: TranslatedProject
+  loading: boolean
+}>()
 
 const capitalizedPurpose = computed(() => {
   const purpose = props.project?.$t?.purpose
   return capitalize(purpose)
 })
 
-const styleLimited = ref({
+const STYLE_LIMITED = Object.freeze({
   fontWeight: 400,
   fontSize: '16px',
   lineHeight: 1.1,
   width: '100%',
 })
 
-const styleFull = ref({
+const STYLE_FULL = Object.freeze({
   fontWeight: 400,
   fontSize: '16px',
   lineHeight: 1.1,

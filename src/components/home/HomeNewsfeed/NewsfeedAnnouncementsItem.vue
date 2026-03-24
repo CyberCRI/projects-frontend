@@ -10,27 +10,32 @@
     <div class="announcement-img-container">
       <CroppedApiImage
         :alt="`${announcement?.project?.$t?.title} image`"
-        class="project-img"
+        class="project-img skeletons-background"
         :ratio="1 / 1"
         :picture-data="announcement?.project?.header_image"
         picture-size="medium"
         :default-picture="DEFAULT_PROJECT_PATATOID"
       />
-      <div :style="announcementStyle" class="announcement-overlay" />
+      <div :style="announcementStyle" class="announcement-overlay skeletons-opacity" />
     </div>
-    <h3 class="announcement-title">
+    <h3 class="announcement-title skeletons-text">
       {{ capitalize(announcement?.$t?.title) }}
     </h3>
     <div class="announcement-infos">
-      <span class="date-ctn">
+      <span class="date-ctn skeletons-text">
         {{ $d(new Date(announcement?.updated_at)) }}
       </span>
-      <span v-if="announcement?.type && announcement.type !== 'na'" class="dot">&#9679;</span>
-      <span v-if="announcement?.type && announcement.type !== 'na'" class="announcement-type">
+      <span v-if="announcement?.type && announcement.type !== 'na'" class="dot skeletons-text">
+        &#9679;
+      </span>
+      <span
+        v-if="announcement?.type && announcement.type !== 'na'"
+        class="announcement-type skeletons-text"
+      >
         {{ $t(`recruit.${announcement?.type}`) }}
       </span>
     </div>
-    <div class="announcement-description">
+    <div class="announcement-description skeletons-text">
       <HtmlLimiter :html="description" />
     </div>
 

@@ -148,7 +148,6 @@ import { AnyTranslatedLocation, LocationForm as LocationFormType } from '@/model
 import LocationTooltip from '@/components/map/LocationTooltip.vue'
 import { Geocoding } from '@/interfaces/maps'
 import { useSuggestLocations } from '@/api/geocoding.service'
-import LocationForm from '@/components/map/LocationForm.vue'
 import { LocationType } from '@/models/types'
 import MarkerSuggestion from '@/components/map/MarkerSuggestion.vue'
 
@@ -199,13 +198,13 @@ const openEditModal = (location) => {
   form.value = location
   showForm.value = true
 }
+
 const openAddModal = (newLocation) =>
   openEditModal({
     title: newLocation.title ?? '',
     description: newLocation.description ?? '',
     lat: newLocation.lat,
     lng: newLocation.lng,
-    type: 'address',
   })
 // method for event on leaftlet
 const clickOnMap = (event) => openAddModal({ lat: event.latlng.lat, lng: event.latlng.lng })

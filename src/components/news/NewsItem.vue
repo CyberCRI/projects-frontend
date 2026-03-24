@@ -1,25 +1,26 @@
 <template>
-  <NuxtLink
+  <component
+    :is="isComponent"
     :to="{ name: 'NewsPage', params: { slugOrId: news.id } }"
-    class="news-list-item shadow-box"
+    class="news-item shadow-box"
   >
     <div class="news-title-ctn mobile">
-      <h3 class="news-title">
+      <h3 class="news-title skeletons-text">
         {{ news.title }}
       </h3>
-      <ContextActionMenu
-        v-if="canEditNews || canDeleteNews"
-        class="news-actions"
-        :can-edit="canEditNews"
+      <ContextActionMenuInline
+        v-if="editable"
+        class="news-item-editable"
         :can-delete="canDeleteNews"
-        @edit="emit('edit-news', news)"
-        @delete="emit('delete-news', news)"
+        :can-edit="canEditNews"
+        @edit="emit('edit', news)"
+        @delete="emit('delete', news)"
       />
     </div>
     <div class="news-img-ctn">
       <CroppedApiImage
         :alt="`${news?.$t?.title} image`"
-        class="picture"
+        class="picture skeletons-background"
         :ratio="4 / 3"
         :picture-data="news?.header_image"
         picture-size="small"
@@ -28,74 +29,68 @@
     </div>
     <div class="news-texts" :style="textsStyle">
       <div class="news-title-ctn desktop">
-        <h3 class="news-title">
+        <h3 class="news-title skeletons-text">
           {{ news?.$t?.title }}
         </h3>
 
-        <ContextActionMenu
-          v-if="canEditNews || canDeleteNews"
-          class="news-actions"
-          :can-edit="canEditNews"
+        <ContextActionMenuInline
+          v-if="editable"
+          class="news-item-editable"
           :can-delete="canDeleteNews"
-          @edit="emit('edit-news', news)"
-          @delete="emit('delete-news', news)"
+          :can-edit="canEditNews"
+          @edit="emit('edit', news)"
+          @delete="emit('delete', news)"
         />
       </div>
-      <div class="news-excerpt" :style="style">
-        <HtmlLimiter
-          :html="news?.$t?.content"
-          :striped-tags="['table']"
-          class="description-content"
-          @computed="layoutComputed"
-          @computing="computeLayout"
-        />
+      <div class="skeletons-background" :style="style">
+        <LineClamped is="p" :line-number="2">
+          {{ content }}
+        </LineClamped>
       </div>
       <div class="read-more-ctn">
         <SummaryAction class="read-button" :action-label="t('news.list.read-more')" />
       </div>
     </div>
-  </NuxtLink>
+  </component>
 </template>
 <script setup lang="ts">
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
 import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
-import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
 import { TranslatedNews } from '@/models/news.model'
+import ContextActionMenuInline from '@/components/base/button/ContextActionMenuInline.vue'
+import { html2Text } from '@/functs/string'
 
-defineOptions({ name: 'NewsListItem' })
-
-defineProps<{ news: TranslatedNews }>()
-
+const props = withDefaults(
+  defineProps<{ news: TranslatedNews; editable?: boolean; is?: string }>(),
+  {
+    editable: false,
+    is: null,
+  }
+)
 const emit = defineEmits<{
-  'delete-news': [TranslatedNews]
-  'edit-news': [TranslatedNews]
+  delete: [TranslatedNews]
+  edit: [TranslatedNews]
 }>()
+
+const isComponent = computed(() => props.is ?? resolveComponent('NuxtLink'))
 
 const { t } = useNuxtI18n()
 const { canEditNews, canDeleteNews } = usePermissions()
 const style = ref({})
 const textsStyle = ref({})
 
-const computeLayout = () => {
-  style.value = {}
-  textsStyle.value = {}
-}
-const layoutComputed = (event) => {
-  style.value = { height: event.height + 'px' }
-  textsStyle.value = { height: 'auto' }
-}
+const content = computed(() => html2Text(props.news.$t.content))
 </script>
 <style scoped lang="scss">
-.news-list-item {
-  --news-dimension: 13rem;
+.news-item {
+  --news-dimension: 8rem;
   --picture-ratio: calc(4 / 3);
 
   display: flex;
   align-items: stretch;
   gap: $space-l;
   overflow: hidden;
-  padding: $space-l;
+  padding: $space-s;
   border: $border-width-s solid $lighter-gray;
   border-radius: $border-radius-s;
   flex-direction: column;
@@ -118,11 +113,10 @@ const layoutComputed = (event) => {
 }
 
 .news-texts {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 1rem;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 0.5rem;
+  width: 100%;
 
   @media screen and (max-width: $min-tablet) {
     height: 12rem;
@@ -150,33 +144,6 @@ const layoutComputed = (event) => {
 @media screen and (max-width: $min-tablet) {
   .desktop {
     display: none;
-  }
-}
-
-.news-excerpt {
-  position: relative;
-  flex-grow: 1;
-  display: flex;
-  flex-flow: column;
-
-  h1 {
-    font-size: $font-size-2xl;
-    font-weight: 700;
-  }
-
-  h2 {
-    font-size: $font-size-xl;
-    font-weight: 500;
-  }
-
-  h3 {
-    font-size: $font-size-l;
-    font-weight: 500;
-  }
-
-  h4 {
-    font-size: $font-size-m;
-    font-weight: 500;
   }
 }
 

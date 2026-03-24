@@ -1,4 +1,4 @@
-import NewsFeed from '@/components/app/NewsFeed.vue'
+import Newsfeed from '@/components/app/NewsFeed.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 import { beforeEach, describe, expect, it } from 'vitest'
@@ -29,14 +29,14 @@ describe('Newsfeed', () => {
     const projectCategories = useProjectCategoriesStore(pinia)
     projectCategories._all = ProjectCategoryOutputFactory.generateMany(2)
   })
-  it('should render NewsFeed', async () => {
-    let wrapper = lpiShallowMount(NewsFeed, { props: { newsfeed: [] }, router, i18n })
+  it('should render Newsfeed', async () => {
+    let wrapper = lpiShallowMount(Newsfeed, { props: { newsfeed: [] }, router, i18n })
     await flushPromises()
     expect(wrapper.exists()).toBeTruthy()
   })
 
   it('should display projects', async () => {
-    let wrapper = lpiShallowMount(NewsFeed, {
+    let wrapper = lpiShallowMount(Newsfeed, {
       props: {
         newsfeed: [
           { id: 1, type: 'project', project: ProjectOutputFactory.generate() },
@@ -51,7 +51,7 @@ describe('Newsfeed', () => {
   })
 
   it('should display announcements', async () => {
-    let wrapper = lpiShallowMount(NewsFeed, {
+    let wrapper = lpiShallowMount(Newsfeed, {
       props: {
         newsfeed: [
           { id: 1, type: 'announcement', announcement: AnnouncementFactory.generate() },
@@ -66,7 +66,7 @@ describe('Newsfeed', () => {
   })
 
   it('should display news', async () => {
-    let wrapper = lpiShallowMount(NewsFeed, {
+    let wrapper = lpiShallowMount(Newsfeed, {
       props: {
         newsfeed: [
           { id: 1, type: 'news', news: { id: 1 } }, /// TODO: news factory
@@ -77,11 +77,11 @@ describe('Newsfeed', () => {
       i18n,
     })
     await flushPromises()
-    expect(wrapper.findAll('news-list-item-stub')).toHaveLength(2)
+    expect(wrapper.findAll('news-item-stub')).toHaveLength(2)
   })
 
   it('should display mix of news, announcements and projects', async () => {
-    let wrapper = lpiShallowMount(NewsFeed, {
+    let wrapper = lpiShallowMount(Newsfeed, {
       props: {
         newsfeed: [
           { id: 1, type: 'news', news: { id: 1 } }, /// TODO: news factory
@@ -93,7 +93,7 @@ describe('Newsfeed', () => {
       i18n,
     })
     await flushPromises()
-    expect(wrapper.findAll('news-list-item-stub')).toHaveLength(1)
+    expect(wrapper.findAll('news-item-stub')).toHaveLength(1)
     expect(wrapper.findAll('newsfeed-announcements-item-stub')).toHaveLength(1)
     expect(wrapper.findAll('newsfeed-project-item-stub')).toHaveLength(1)
   })

@@ -1,13 +1,18 @@
 <template>
-  <AdminBlock :block-title="blockTitle" :is-loading="isLoading">
+  <AdminBlock :block-title="blockTitle">
     <template #default>
-      <NewsAdminListItem
-        v-for="news in allNews"
-        :key="news.id"
-        :news="news"
-        @edit-news="editedNews = news"
-        @delete-news="newsToDelete = news"
-      />
+      <FetchLoader :status="status">
+        <div class="list-divider list-container">
+          <NewsItem
+            v-for="news in allNews"
+            :key="news.id"
+            :news="news"
+            editable
+            @edit="onEdit"
+            @delete="onDelete"
+          />
+        </div>
+      </FetchLoader>
     </template>
 
     <template #footer>
@@ -21,92 +26,105 @@
   </AdminBlock>
 
   <EditNewsDrawer
-    :is-opened="!!editedNews"
-    :news="editedNews"
-    @close="editedNews = null"
-    @news-edited="loadNews"
+    :is-opened="stateModals.edit"
+    :news="selectedNews"
+    @close="onCancel"
+    @news-edited="refresh"
   />
 
   <ConfirmModal
-    v-if="newsToDelete"
-    :content="$t('news.delete.message')"
+    v-if="stateModals.delete"
     :title="$t('news.delete.title')"
     :asyncing="isDeletingNews"
-    @cancel="newsToDelete = null"
-    @confirm="deleteNews"
-  />
+    @cancel="onCancel"
+    @confirm="onDeleteNews"
+  >
+    <NewsItem is="div" :news="selectedNews" />
+  </ConfirmModal>
 </template>
-<script>
-import { defaultForm } from '@/components/news/NewsForm/NewsForm.vue'
-import { getAllNews, deleteNews } from '@/api/news.service.ts'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
-export default {
-  name: 'NewsAdminBlock',
+<script setup lang="ts">
+import { useModals } from '@/composables/useModal'
+import { deleteNews } from '@/api/news.service'
+import useToasterStore from '@/stores/useToaster'
+import { defaultForm } from '@/components/instruction/InstructionForm/InstructionForm.vue'
+import { getAllNews } from '@/api/v2/news.service'
+import { QueryFilterNews } from '@/models/news.model'
+import NewsItem from '@/components/news/NewsItem.vue'
+import FetchLoader from '@/components/base/FetchLoader.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import LinkButton from '@/components/base/button/LinkButton.vue'
+import AdminBlock from '@/components/admin/GeneralAdminBlocks/AdminBlock.vue'
 
-  setup() {
-    const toaster = useToasterStore()
-    const organizationsStore = useOrganizationsStore()
-    return {
-      toaster,
-      organizationsStore,
-    }
+const toaster = useToasterStore()
+const organizationCode = useOrganizationCode()
+
+const { t } = useNuxtI18n()
+
+const { stateModals, openModals, closeModals } = useModals({ edit: false, delete: false })
+const isDeletingNews = ref(false)
+const selectedNews = ref()
+
+const todayAtZero = new Date()
+todayAtZero.setHours(0, 0, 0, 0)
+
+const { query } = useQuery<QueryFilterNews>({
+  ordering: 'publication_date',
+  from_date: todayAtZero.toISOString(),
+})
+
+const {
+  status,
+  data: allNews,
+  pagination,
+  refresh,
+  isLoading,
+} = getAllNews(organizationCode, {
+  query,
+  paginationConfig: {
+    limit: 4,
   },
+})
 
-  data() {
-    return {
-      allNews: [],
-      newsCount: 0,
-      isLoading: true,
-      editedNews: null,
-      newsToDelete: null,
-      isDeletingNews: false,
-    }
-  },
+const blockTitle = computed(() => {
+  let extra = isLoading.value ? '' : ` (${pagination.count.value})`
+  return t('admin.portal.news') + extra
+})
 
-  computed: {
-    blockTitle() {
-      let extra = this.isLoading ? '' : ` (${this.newsCount})`
-      return this.$t('admin.portal.news') + extra
-    },
-  },
+const addNews = () => {
+  selectedNews.value = defaultForm()
+  openModals('edit')
+}
 
-  async mounted() {
-    await this.loadNews()
-  },
+const onEdit = (news) => {
+  selectedNews.value = news
+  openModals('edit')
+}
+const onDelete = (news) => {
+  selectedNews.value = news
+  openModals('delete')
+}
 
-  methods: {
-    async loadNews() {
-      this.isLoading = true
-      const request = await getAllNews(this.organizationsStore.current?.code, {
-        ordering: '-publication_date',
-        limit: 4,
-      })
-      this.allNews = request.results
-      this.newsCount = request.count
-      this.isLoading = false
-    },
+const onDeleteNews = async () => {
+  isDeletingNews.value = true
+  try {
+    await deleteNews(organizationCode, selectedNews.value.id)
+    toaster.pushSuccess(t('news.delete.success'))
 
-    addNews() {
-      this.editedNews = defaultForm()
-    },
+    refresh()
+  } catch (err) {
+    toaster.pushError(`${t('news.delete.error')} (${err})`)
+    console.error(err)
+  } finally {
+    isDeletingNews.value = false
+    onCancel()
+  }
+}
 
-    async deleteNews() {
-      this.isDeletingNews = true
-      try {
-        await deleteNews(this.organizationsStore.current?.code, this.newsToDelete.id)
-        this.toaster.pushSuccess(this.$t('news.delete.success'))
-
-        this.loadNews()
-      } catch (err) {
-        this.toaster.pushError(`${this.$t('news.delete.error')} (${err})`)
-        console.error(err)
-      } finally {
-        this.newsToDelete = null
-        this.isDeletingNews = false
-      }
-    },
-  },
+const onCancel = () => {
+  selectedNews.value = null
+  closeModals('delete', 'edit')
 }
 </script>

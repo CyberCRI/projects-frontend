@@ -3,7 +3,7 @@
     :user="member"
     :role="roleLabel"
     :mode="mode"
-    class="cursor-pointer shadow-drop border-primary"
+    class="cursor-pointer border-primary"
     @click="click"
   >
     <template #actions>

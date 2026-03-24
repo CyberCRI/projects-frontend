@@ -1,48 +1,33 @@
 <template>
-  <NewsListSkeleton v-if="isLoading" :limit="5" />
-  <div v-else-if="transltedNewsFeed?.length">
-    <div class="home-news-container">
-      <NewsFeed :newsfeed="transltedNewsFeed" @reload-newsfeed="loadNewsfeed" />
+  <FetchLoader :status="status" only-error skeleton>
+    <div v-if="newsFeed.length">
+      <div class="home-news-container">
+        <NewsFeed :newsfeed="newsFeed" />
+      </div>
+      <div class="see-all">
+        <LpiButton :to="{ name: 'Newsfeed' }" :label="$t('feed.see-all')" :secondary="false" />
+      </div>
     </div>
-    <div v-if="hasMoreNews" class="see-all">
-      <LpiButton :label="$t('feed.see-all')" :secondary="false" @click="seeAll" />
-    </div>
-  </div>
-  <div v-else>
-    <EmptyNewsFeed />
-  </div>
+    <EmptyLabel v-else :label="$t('feed.empty')" />
+  </FetchLoader>
 </template>
 
 <script setup lang="ts">
+import { getNewsfeed } from '@/api/v2/newsfeed.service'
 import NewsFeed from '@/components/app/NewsFeed.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import NewsListSkeleton from '@/components/news/NewsListSkeleton.vue'
-import { getNewsfeed } from '@/api/newsfeed.service'
+import FetchLoader from '@/components/base/FetchLoader.vue'
+import { factoryPagination } from '@/skeletons/base.skeletons'
+import { newsFeedSkeleton } from '@/skeletons/newsfeed.skeletons'
 
 const props = withDefaults(defineProps<{ limit?: number }>(), { limit: 6 })
 const organizationCode = useOrganizationCode()
-const { translateNewsfeed } = useAutoTranslate()
-const isLoading = ref(true)
-const newsfeed = ref([])
-const transltedNewsFeed = translateNewsfeed(newsfeed)
 
-const hasMoreNews = ref(false)
-
-const router = useRouter()
-
-const loadNewsfeed = async () => {
-  isLoading.value = true
-  newsfeed.value = (
-    await getNewsfeed(organizationCode, {
-      limit: props.limit,
-    })
-  ).results
-  isLoading.value = false
-}
-const seeAll = () => router.push({ name: 'Newsfeed' })
-
-onMounted(async () => {
-  await loadNewsfeed()
+const { status, data: newsFeed } = getNewsfeed(organizationCode, {
+  paginationConfig: {
+    limit: props.limit,
+  },
+  default: () => factoryPagination(newsFeedSkeleton, props.limit),
 })
 </script>
 

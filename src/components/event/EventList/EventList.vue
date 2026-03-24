@@ -5,103 +5,102 @@
       :key="yearMonth"
       class="monthly-section"
     >
-      <h3 class="month-title">
-        {{ $t(`event.calendar.month.${getMonthFromDate(yearMonth)}.long`) }}
+      <h3 class="month-title skeletons-text">
+        {{ getMonthFromDate(yearMonth) }}
       </h3>
-      <div class="events-wrapper">
+      <div class="events-wrapper list-divider">
         <EventItem
           v-for="event in events"
           :key="event.id"
           :event="event"
-          @edit-event="editedEvent = event"
-          @delete-event="eventToDelete = event"
+          editable
+          @edit="onEdit"
+          @delete="onDelete"
         />
       </div>
     </div>
   </div>
+
   <EditEventDrawer
-    :is-opened="!!editedEvent"
-    :event="editedEvent"
-    @close="editedEvent = null"
-    @event-edited="$emit('reload-events')"
+    :is-opened="stateModals.edit"
+    :event="selectedEvent"
+    @close="onCancel"
+    @edited="$emit('reload')"
   />
 
   <ConfirmModal
-    v-if="eventToDelete"
-    :content="$t('event.delete.message')"
+    v-if="stateModals.delete"
     :title="$t('event.delete.title')"
     :asyncing="isDeletingEvent"
-    @cancel="eventToDelete = null"
-    @confirm="deleteEvent"
-  />
+    @cancel="onCancel"
+    @confirm="onDeleteEvent"
+  >
+    <EventItem is="div" :event="selectedEvent" />
+  </ConfirmModal>
 </template>
-<script>
+
+<script setup lang="ts">
 import EditEventDrawer from '@/components/event/EditEventDrawer/EditEventDrawer.vue'
 import EventItem from './EventItem.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { deleteEvent } from '@/api/event.service'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useToasterStore from '@/stores/useToaster'
+import { TranslatedEventModel } from '@/models/event.model'
 
-export default {
-  name: 'EventList',
+defineProps<{
+  eventsByMonth: Record<string, TranslatedEventModel[]>
+}>()
 
-  components: {
-    EditEventDrawer,
-    EventItem,
-    ConfirmModal,
-  },
+const emit = defineEmits<{
+  reload: []
+}>()
 
-  props: {
-    eventsByMonth: {
-      type: Object,
-      default: () => ({}),
-    },
-  },
+const { t, locale } = useNuxtI18n()
 
-  emits: ['reload-events'],
-  setup() {
-    const toaster = useToasterStore()
-    const organizationsStore = useOrganizationsStore()
-    return {
-      toaster,
-      organizationsStore,
-    }
-  },
+const selectedEvent = ref()
+const isDeletingEvent = ref()
+const toaster = useToasterStore()
+const organizationCode = useOrganizationCode()
+const { stateModals, closeModals, openModals } = useModals({
+  edit: false,
+  delete: false,
+})
 
-  data() {
-    return {
-      editedEvent: null,
-      eventToDelete: null,
-      isDeletingEvent: false,
-    }
-  },
+const onDelete = (event) => {
+  selectedEvent.value = event
+  openModals('delete')
+}
+const onEdit = (event) => {
+  selectedEvent.value = event
+  openModals('edit')
+}
 
-  methods: {
-    async deleteEvent() {
-      // TODO: delete event
-      console.log('delete event', this.eventToDelete)
-      this.isDeletingEvent = true
-      try {
-        await deleteEvent(this.organizationsStore.current?.code, this.eventToDelete.id)
-        this.toaster.pushSuccess(this.$t('event.delete.success'))
+const onDeleteEvent = async () => {
+  isDeletingEvent.value = true
+  try {
+    await deleteEvent(organizationCode, selectedEvent.value.id)
+    toaster.pushSuccess(t('event.delete.success'))
 
-        this.$emit('reload-events')
-      } catch (err) {
-        this.toaster.pushError(`${this.$t('event.delete.error')} (${err})`)
-        console.error(err)
-      } finally {
-        this.eventToDelete = null
-        this.isDeletingEvent = false
-      }
-    },
+    emit('reload')
+  } catch (err) {
+    toaster.pushError(`${t('event.delete.error')} (${err})`)
+    console.error(err)
+  } finally {
+    isDeletingEvent.value = false
+    onCancel()
+  }
+}
 
-    getMonthFromDate(yearMonth) {
-      return yearMonth.split('-')[1]
-    },
-  },
+const getMonthFromDate = (yearMonth) => {
+  return new Date(yearMonth).toLocaleDateString(locale.value, { month: 'long' })
+}
+
+const onCancel = () => {
+  selectedEvent.value = null
+  closeModals('edit', 'delete')
 }
 </script>
+
 <style lang="scss" scoped>
 .event-list {
   margin-bottom: 2rem;
@@ -111,7 +110,7 @@ export default {
   margin-bottom: $space-l;
   margin-top: $space-xl;
   text-transform: uppercase;
-  color: $almost-black;
+  color: var(--almost-black);
   text-align: center;
 }
 
@@ -120,7 +119,7 @@ export default {
   flex-flow: column nowrap;
   gap: $space-l;
   padding: $space-m;
-  border: $border-width-s solid $lighter-gray;
+  border: $border-width-s solid var(--lighter-gray);
   border-radius: $border-radius-m;
 }
 </style>

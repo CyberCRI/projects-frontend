@@ -1,29 +1,38 @@
 <template>
-  <AdminBlock :block-title="blockTitle" :is-loading="isLoading">
+  <AdminBlock :block-title="blockTitle">
     <template #actions />
     <template #default>
-      <EventAdminListItem
-        v-for="event in events"
-        :key="event.id"
-        :event="event"
-        @edit-event="editedEvent = event"
-        @delete-event="eventToDelete = event"
-      />
-      <EditEventDrawer
-        :is-opened="!!editedEvent"
-        :event="editedEvent"
-        @close="editedEvent = null"
-        @event-edited="loadEvents"
-      />
+      <FetchLoader :status="status">
+        <div class="list-divider list-container">
+          <EventItem
+            v-for="event in events"
+            :key="event.id"
+            :event="event"
+            editable
+            hide-see-more-button
+            @edit="onEdit"
+            @delete="onDelete"
+          />
+        </div>
+        <PaginationButtonsV2 :pagination="pagination" />
 
-      <ConfirmModal
-        v-if="eventToDelete"
-        :content="$t('event.delete.message')"
-        :title="$t('event.delete.title')"
-        :asyncing="isDeletingEvent"
-        @cancel="eventToDelete = null"
-        @confirm="deleteEvent"
-      />
+        <EditEventDrawer
+          :is-opened="stateModals.edit"
+          :event="selectedEvent"
+          @close="onCancel"
+          @edited="() => refresh()"
+        />
+
+        <ConfirmModal
+          v-if="stateModals.delete"
+          :title="$t('event.delete.title')"
+          :asyncing="asyncingDelete"
+          @cancel="onCancel"
+          @confirm="onDeleteEvent"
+        >
+          <EventItem is="div" :event="selectedEvent" />
+        </ConfirmModal>
+      </FetchLoader>
     </template>
 
     <template #footer>
@@ -36,81 +45,89 @@
     </template>
   </AdminBlock>
 </template>
-<script>
-import { getAllEvents, deleteEvent } from '@/api/event.service'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import { defaultForm } from '@/components/event/EventForm/EventForm.vue'
-export default {
-  name: 'EventAdminBlock',
 
-  setup() {
-    const toaster = useToasterStore()
-    const organizationsStore = useOrganizationsStore()
-    return {
-      toaster,
-      organizationsStore,
-    }
+<script setup lang="ts">
+import { deleteEvent } from '@/api/event.service'
+import useToasterStore from '@/stores/useToaster'
+import { defaultForm } from '@/components/instruction/InstructionForm/InstructionForm.vue'
+import EventItem from '@/components/event/EventList/EventItem.vue'
+import { getAllEvents } from '@/api/v2/event.service'
+import AdminBlock from '@/components/admin/GeneralAdminBlocks/AdminBlock.vue'
+import FetchLoader from '@/components/base/FetchLoader.vue'
+import PaginationButtonsV2 from '@/components/base/navigation/PaginationButtonsV2.vue'
+import EditEventDrawer from '@/components/event/EditEventDrawer/EditEventDrawer.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import LinkButton from '@/components/base/button/LinkButton.vue'
+
+const toaster = useToasterStore()
+const organizationCode = useOrganizationCode()
+
+const { t } = useNuxtI18n()
+
+const selectedEvent = ref(null)
+const asyncingDelete = ref(false)
+const { stateModals, closeModals, openModals } = useModals({
+  edit: false,
+  delete: false,
+})
+
+const todayAtZero = new Date()
+todayAtZero.setHours(0, 0, 0, 0)
+const query = {
+  ordering: 'event_date',
+  from_date: todayAtZero.toISOString(),
+}
+
+const {
+  status,
+  data: events,
+  pagination,
+  refresh,
+  isLoading,
+} = getAllEvents(organizationCode, {
+  query,
+  paginationConfig: {
+    limit: 4,
   },
+})
 
-  data() {
-    return {
-      events: [],
-      eventsCount: 0,
-      isLoading: true,
-      editedEvent: null,
-      eventToDelete: null,
-      isDeletingEvent: false,
-    }
-  },
+const blockTitle = computed(() => {
+  let extra = isLoading.value ? '' : ` (${pagination.count.value})`
+  return t('admin.portal.events') + extra
+})
 
-  computed: {
-    blockTitle() {
-      let extra = this.isLoading ? '' : ` (${this.eventsCount})`
-      return this.$t('admin.portal.events') + extra
-    },
-  },
+const addEvent = () => {
+  selectedEvent.value = defaultForm()
+  openModals('edit')
+}
+const onDelete = (event) => {
+  selectedEvent.value = event
+  openModals('delete')
+}
+const onEdit = (event) => {
+  selectedEvent.value = event
+  openModals('edit')
+}
 
-  async mounted() {
-    await this.loadEvents()
-  },
+const onDeleteEvent = async () => {
+  asyncingDelete.value = true
+  try {
+    await deleteEvent(organizationCode, selectedEvent.value.id)
+    toaster.pushSuccess(t('event.delete.success'))
 
-  methods: {
-    async loadEvents() {
-      this.isLoading = true
-      const todayAtZero = new Date()
-      todayAtZero.setHours(0, 0, 0, 0)
-      const request = await getAllEvents(this.organizationsStore.current?.code, {
-        ordering: 'event_date',
-        from_date: todayAtZero.toISOString(),
-        limit: 4,
-      })
-      this.events = request.results
-      this.eventsCount = request.count
-      this.isLoading = false
-    },
+    refresh()
+  } catch (err) {
+    toaster.pushError(`${t('event.delete.error')} (${err})`)
+    console.error(err)
+  } finally {
+    asyncingDelete.value = false
+    onCancel()
+  }
+}
 
-    addEvent() {
-      this.editedEvent = defaultForm()
-    },
-
-    async deleteEvent() {
-      // TODO: delete event
-      console.log('delete event', this.eventToDelete)
-      this.isDeletingEvent = true
-      try {
-        await deleteEvent(this.organizationsStore.current?.code, this.eventToDelete.id)
-        this.toaster.pushSuccess(this.$t('event.delete.success'))
-
-        this.loadEvents()
-      } catch (err) {
-        this.toaster.pushError(`${this.$t('event.delete.error')} (${err})`)
-        console.error(err)
-      } finally {
-        this.eventToDelete = null
-        this.isDeletingEvent = false
-      }
-    },
-  },
+const onCancel = () => {
+  selectedEvent.value = null
+  closeModals('edit', 'delete')
 }
 </script>

@@ -3,7 +3,7 @@
     id="featured_projects"
     :title="$t('group.projects')"
     :total="group.modules.featured_projects"
-    icon="Briefcase"
+    :icon="GroupModuleIcon.featured_projects"
     :see-more="{
       name: 'groupProjects',
       params: { groupIdOrSlug: group.slug || group.id },
@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import { GroupModuleIcon, TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
 import BaseGroupProjectsList from '@/components/group/Modules/Projects/BaseGroupProjectsList.vue'
 
