@@ -75,7 +75,7 @@ const { stateModals, closeModals, openModals } = useModals({
 const todayAtZero = new Date()
 todayAtZero.setHours(0, 0, 0, 0)
 const query = {
-  ordering: 'start_date',
+  ordering: 'event_date',
   from_date: todayAtZero.toISOString(),
 }
 

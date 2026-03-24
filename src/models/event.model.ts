@@ -1,6 +1,6 @@
 import { Translated } from '@/interfaces/translated'
 import BaseModel from '@/models/base.model'
-import { BaseLocationModel, BaseTranslatedLocationModel } from '@/models/location.model'
+import { BaseTranslatedLocationModel } from '@/models/location.model'
 
 /**
  * @name NewsModel
@@ -14,7 +14,6 @@ export interface EventModel extends BaseModel {
   created_at?: string
   updated_at?: string
   visible_by_all: boolean
-  location: BaseLocationModel | null
   people_groups: string[]
 }
 

@@ -13,7 +13,6 @@
           v-for="event in events"
           :key="event.id"
           :event="event"
-          :reverse-date="reverseDate"
           editable
           @edit="onEdit"
           @delete="onDelete"
@@ -48,15 +47,9 @@ import { deleteEvent } from '@/api/event.service'
 import useToasterStore from '@/stores/useToaster'
 import { TranslatedEventModel } from '@/models/event.model'
 
-withDefaults(
-  defineProps<{
-    eventsByMonth: Record<string, TranslatedEventModel[]>
-    reverseDate?: boolean
-  }>(),
-  {
-    reverseDate: false,
-  }
-)
+defineProps<{
+  eventsByMonth: Record<string, TranslatedEventModel[]>
+}>()
 
 const emit = defineEmits<{
   reload: []

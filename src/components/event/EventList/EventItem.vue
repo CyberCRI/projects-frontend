@@ -74,14 +74,12 @@ const props = withDefaults(
     editable?: boolean
     hideSeeMoreButton?: boolean
     showMore?: boolean
-    reverseDate?: boolean
     is?: string
   }>(),
   {
     editable: false,
     showMore: false,
     hideSeeMoreButton: false,
-    reverseDate: false,
     is: null,
   }
 )

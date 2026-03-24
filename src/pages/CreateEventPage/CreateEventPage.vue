@@ -59,7 +59,7 @@ const saveEvent = async () => {
     const formData = {
       organization_code: organizationCode,
       ...form.value,
-      event_date: form.value.event_date.toISOString(),
+      event_date: new Date(form.value.event_date).toISOString(),
       people_groups: Object.entries(form.value.people_groups)
         .filter(([, value]) => value)
         .map(([id]) => id),

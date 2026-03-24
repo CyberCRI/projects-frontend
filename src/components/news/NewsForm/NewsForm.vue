@@ -116,7 +116,7 @@ withDefaults(
 )
 
 const model = defineModel({ default: defaultForm() })
-const { stateModals, openModals, closeModals, toggleModals } = useModals({
+const { stateModals, closeModals, toggleModals } = useModals({
   DatePicker: false,
 })
 

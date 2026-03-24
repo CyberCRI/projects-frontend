@@ -76,7 +76,6 @@ import { helpers, required } from '@vuelidate/validators'
 import MultiGroupPicker from '@/components/group/MultiGroupPicker/MultiGroupPicker.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import { isNil } from 'es-toolkit'
 import { EventForm } from '@/models/event.model'
 import { defaultForm } from '@/form/event'
 
@@ -94,7 +93,7 @@ const emit = defineEmits<{
   invalid: [boolean]
 }>()
 
-const { stateModals, openModals, closeModals, toggleModals } = useModals({
+const { stateModals, closeModals, toggleModals } = useModals({
   DatePicker: false,
 })
 
