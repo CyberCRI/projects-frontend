@@ -457,9 +457,9 @@ const resetChat = () => {
             <label>
               <input
                 type="checkbox"
-                @click="updateAllowProfile"
                 :checked="allowProfile"
                 style="accent-color: #1d727c"
+                @click="updateAllowProfile"
               />
               {{ $t('chatbot.allow-profile') }}
             </label>
@@ -468,9 +468,9 @@ const resetChat = () => {
             <label>
               <input
                 type="checkbox"
-                @click="updateAllowCurrentPage"
                 :checked="allowCurrentPage"
                 style="accent-color: #1d727c"
+                @click="updateAllowCurrentPage"
               />
               {{ $t('chatbot.allow-current-page') }}
             </label>
