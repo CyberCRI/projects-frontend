@@ -4,6 +4,7 @@ import useToasterStore from '@/stores/useToaster'
 
 const toaster = useToasterStore()
 const usersStore = useUsersStore()
+const { t } = useNuxtI18n()
 
 const showDocumentTitle = ref('')
 const addDocumentIsOpen = ref(false)
@@ -33,7 +34,7 @@ const deleteDocument = async () => {
     console.log(data)
     if (response.ok) {
       refreshDocumentList()
-      toaster.pushSuccess($t('vector-store.document-deleted', { title: documentToDelete.value }))
+      toaster.pushSuccess(t('vector-store.document-deleted', { title: documentToDelete.value }))
     } else {
       toaster.pushError(`${response.status} - ${response.statusText}`)
     }
