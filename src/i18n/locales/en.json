@@ -577,7 +577,10 @@
     "disconnect": "Disconnect",
     "confirm-close": "Are you sure you want to close the editor ? Any changes you made will not be saved.",
     "ok": "Ok",
-    "file-too-big": "File is too big (max: {maxSize}Mb)"
+    "file-too-big": "File is too big (max: {maxSize}Mb)",
+    "to": "to",
+    "new": "new",
+    "now": "Today"
   },
   "complete-profile": {
     "bio": {
@@ -970,6 +973,8 @@
     "impact": "Impact",
     "team": "Team",
     "address": "Address",
+    "news": "News",
+    "event": "Event",
     "focus-on-map": "focus on the map",
     "expand-map": "Enlarge map",
     "edit-location-point": "Edit location point",
@@ -2385,6 +2390,7 @@
     }
   },
   "event": {
+    "view": "See event",
     "no-event": "No event yet.",
     "calendar": {
       "title": "Calendar",
@@ -2487,6 +2493,7 @@
     "groups-label": "Groups:"
   },
   "news": {
+    "view": "See news",
     "create": {
       "title": "Create a news"
     },
@@ -3039,11 +3046,12 @@
     "see-subgroups": "See {count} subgroups",
     "share": "Share",
     "the-team": "Team ({users}4)",
-    "news": "Announced",
+    "news": "News | News",
+    "event": "Event | Events",
     "more": "More",
     "less": "Less",
-    "see-more": "See more",
-    "see-less": "See less",
+    "see-more": "See more Groups",
+    "see-less": "See less Groups",
     "snapshot": "Executive summary",
     "members": "Members",
     "projects": "Projects",
@@ -3128,7 +3136,7 @@
     "similars": "Similar groups",
     "presentation": "Introduction",
     "subgroups": "Sub-groups",
-    "projects-locations": "Map",
+    "locations": "Map",
     "location": "Address | Addresses"
   },
   "gallery": {

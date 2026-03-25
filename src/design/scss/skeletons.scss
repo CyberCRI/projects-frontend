@@ -64,8 +64,8 @@
   --primary-light: #{$lighter-gray};
   --primary-dark: #{$lighter-gray};
 
-  pointer-events: none;
-  user-select: none;
+  // pointer-events: none;
+  // user-select: none;
 
   .skeletons-text {
     @extend %skeleton-text-block;

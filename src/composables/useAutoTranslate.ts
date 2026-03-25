@@ -5,7 +5,11 @@ import { TranslatedProject } from '@/models/project.model'
 import { AttachmentFileModel, TranslatedAttachmentFile } from '@/models/attachment-file.model'
 import { AttachmentLinkModel, TranslatedAttachmentLink } from '@/models/attachment-link.model'
 import { TranslatedDocument } from '@/interfaces/researcher'
-import { TranslatedLocation } from '@/models/location.model'
+import {
+  TranslatedEventLocation,
+  TranslatedLocation,
+  TranslatedNewsLocation,
+} from '@/models/location.model'
 import { TranslatedNews } from '@/models/news.model'
 import { TranslatedEventModel } from '@/models/event.model'
 import { TranslatedNewsfeed } from '@/models/newsfeed.model'
@@ -270,6 +274,17 @@ export default function useAutoTranslate() {
     })
   const translateNews = (news) => translateEntities<TranslatedNews>(news, translateOneNews)
 
+  const translateOneNewsLocation = (location) =>
+    computed<TranslatedNewsLocation>(() => {
+      const locationRaw = unref(location)
+      return {
+        ...unref(translateLocation(locationRaw)),
+        news: locationRaw.news ? unref(translateOneNews(locationRaw.news)) : locationRaw.news,
+      }
+    })
+  const translateNewsLocations = (news) =>
+    translateEntities<TranslatedNewsLocation>(news, translateOneNewsLocation)
+
   // -----------
   // instructions
   const translateInstruction = (instruction) => translateEntity(instruction, ['title', 'content'])
@@ -290,6 +305,17 @@ export default function useAutoTranslate() {
     })
   const translateEvents = (events) =>
     translateEntities<TranslatedEventModel>(events, translateEvent)
+
+  const translateEventsLocation = (location) =>
+    computed<TranslatedEventLocation>(() => {
+      const locationRaw = unref(location)
+      return {
+        ...unref(translateLocation(locationRaw)),
+        event: locationRaw.event ? unref(translateEvent(locationRaw.event)) : locationRaw.event,
+      }
+    })
+  const translateEventsLocations = (locations) =>
+    translateEntities<TranslatedEventLocation>(locations, translateEventsLocation)
 
   // -----------
   // Newsfeed
@@ -378,10 +404,14 @@ export default function useAutoTranslate() {
     // news
     translateOneNews,
     translateNews,
+    translateOneNewsLocation,
+    translateNewsLocations,
 
     // evnts
     translateEvent,
     translateEvents,
+    translateEventsLocation,
+    translateEventsLocations,
 
     // instructions
     translateInstruction,

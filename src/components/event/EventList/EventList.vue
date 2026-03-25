@@ -13,13 +13,20 @@
           v-for="event in events"
           :key="event.id"
           :event="event"
+          :reverse-date="reverseDate"
           editable
+          @location="onLocation"
           @edit="onEdit"
           @delete="onDelete"
         />
       </div>
     </div>
   </div>
+  <LocationDrawer
+    :is-opened="stateModals.location"
+    :locations="selectedEvent?.location ? [selectedEvent.location] : []"
+    @close="closeModals('location')"
+  />
 
   <EditEventDrawer
     :is-opened="stateModals.edit"
@@ -35,7 +42,7 @@
     @cancel="onCancel"
     @confirm="onDeleteEvent"
   >
-    <EventItem is="div" :event="selectedEvent" />
+    <EventItem is="div" :event="selectedEvent" location-preview />
   </ConfirmModal>
 </template>
 
@@ -47,9 +54,15 @@ import { deleteEvent } from '@/api/event.service'
 import useToasterStore from '@/stores/useToaster'
 import { TranslatedEventModel } from '@/models/event.model'
 
-defineProps<{
-  eventsByMonth: Record<string, TranslatedEventModel[]>
-}>()
+withDefaults(
+  defineProps<{
+    eventsByMonth: Record<string, TranslatedEventModel[]>
+    reverseDate?: boolean
+  }>(),
+  {
+    reverseDate: false,
+  }
+)
 
 const emit = defineEmits<{
   reload: []
@@ -62,6 +75,7 @@ const isDeletingEvent = ref()
 const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()
 const { stateModals, closeModals, openModals } = useModals({
+  location: false,
   edit: false,
   delete: false,
 })
@@ -73,6 +87,10 @@ const onDelete = (event) => {
 const onEdit = (event) => {
   selectedEvent.value = event
   openModals('edit')
+}
+const onLocation = (event) => {
+  selectedEvent.value = event
+  openModals('location')
 }
 
 const onDeleteEvent = async () => {
@@ -97,7 +115,7 @@ const getMonthFromDate = (yearMonth) => {
 
 const onCancel = () => {
   selectedEvent.value = null
-  closeModals('edit', 'delete')
+  closeModals('edit', 'delete', 'location')
 }
 </script>
 

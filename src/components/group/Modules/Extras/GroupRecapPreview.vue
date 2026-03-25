@@ -43,25 +43,30 @@ const { t } = useNuxtI18n()
 const is = computed(() => (props.isLink ? 'button' : 'div'))
 
 const modulesArray = computed(() => {
-  return (
-    Object.entries(props.group.modules)
-      // remove modules with 0 elements
-      .filter(([name, count]) => {
-        return (
-          count > 0 &&
-          (props.modules === null || props.modules.includes(name as PeopleGroupModulesKeys))
-        )
-      })
-      .map(([name, count]) => {
-        const obj = {
-          key: name,
-          name: props.noTitle ? '' : t(GroupModuleTitle[name], count),
-          count,
-          icon: GroupModuleIcon[name],
-        }
-        return obj
-      })
-  )
+  try {
+    return (
+      Object.entries(props.group.modules)
+        // remove modules with 0 elements
+        .filter(([name, count]) => {
+          return (
+            count > 0 &&
+            (props.modules === null || props.modules.includes(name as PeopleGroupModulesKeys))
+          )
+        })
+        .map(([name, count]) => {
+          const obj = {
+            key: name,
+            name: props.noTitle ? '' : t(GroupModuleTitle[name], count),
+            count,
+            icon: GroupModuleIcon[name],
+          }
+          return obj
+        })
+    )
+  } catch (e) {
+    console.error(e)
+  }
+  return []
 })
 </script>
 

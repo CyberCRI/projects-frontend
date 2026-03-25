@@ -577,7 +577,9 @@
     "create": "Crea",
     "order-asc": "Més antiga al més nou",
     "order-desc": "nova a la més antiga",
-    "close": "tanca"
+    "close": "tanca",
+    "to": "A",
+    "new": "nova"
   },
   "complete-profile": {
     "bio": {
@@ -978,7 +980,9 @@
     "map": "Geolocalització",
     "add-location": "Afegeix una ubicació",
     "add-location-point": "Afegeix un punt d' emplaçament",
-    "default-title": "Localització"
+    "default-title": "Localització",
+    "news": "Notícies",
+    "event": "Esdeveniment"
   },
   "map": {
     "page-title": "Mapa",
@@ -2484,7 +2488,8 @@
       }
     },
     "group-label": "Grup:",
-    "groups-label": "Grups:"
+    "groups-label": "Grups:",
+    "view": "Mireu esdeveniments"
   },
   "news": {
     "create": {
@@ -2534,7 +2539,8 @@
     },
     "drawer": {
       "title": "Edita notícies"
-    }
+    },
+    "view": "Veure notícies"
   },
   "instructions": {
     "create": {
@@ -2802,8 +2808,9 @@
     "similars": "Grups similars",
     "presentation": "Introducció",
     "subgroups": "Subgrups",
-    "projects-locations": "Mapa",
-    "location": "Adreces d' adreces"
+    "locations": "Mapa",
+    "location": "Adreces d' adreces",
+    "event": "Esdeveniments de l' esdeveniment"
   },
   "gallery": {
     "title": "Galeria",

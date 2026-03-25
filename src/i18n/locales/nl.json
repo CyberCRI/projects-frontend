@@ -577,7 +577,9 @@
     "create": "Aanmaken",
     "order-asc": "oudste tot nieuwste",
     "order-desc": "nieuwste naar oudste",
-    "close": "sluiten"
+    "close": "sluiten",
+    "to": "Aan",
+    "new": "nieuw"
   },
   "complete-profile": {
     "bio": {
@@ -978,7 +980,9 @@
     "map": "Geolocatie",
     "add-location": "Plaats toevoegen",
     "add-location-point": "Plaatspunt toevoegen",
-    "default-title": "Locatie"
+    "default-title": "Locatie",
+    "news": "Nieuws",
+    "event": "Gebeurtenis"
   },
   "map": {
     "page-title": "Kaart",
@@ -2484,7 +2488,8 @@
       }
     },
     "group-label": "Groep:",
-    "groups-label": "Groepen:"
+    "groups-label": "Groepen:",
+    "view": "Zie gebeurtenis"
   },
   "news": {
     "create": {
@@ -2534,7 +2539,8 @@
     },
     "drawer": {
       "title": "Nieuws bewerken"
-    }
+    },
+    "view": "Zie nieuws"
   },
   "instructions": {
     "create": {
@@ -2802,8 +2808,9 @@
     "similars": "Soortgelijke groepen",
     "presentation": "Inleiding",
     "subgroups": "Subgroepen",
-    "projects-locations": "Kaart",
-    "location": "Adres"
+    "locations": "Kaart",
+    "location": "Adres",
+    "event": "Gebeurtenissen"
   },
   "gallery": {
     "title": "Galerij",

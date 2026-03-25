@@ -12,13 +12,13 @@
     class="event"
     :class="{ editable: editable && (canEditEvent || canDeleteEvent), 'scale-hover': !props.is }"
   >
-    <time class="date skeletons-background" :datetime="eventDate.toISOString()">
+    <time class="date skeletons-background" :datetime="displayDate.toISOString()">
       <template v-if="!isCurrent">
         <span class="month-day">
-          {{ eventDate.toLocaleDateString(locale, { month: 'long', day: '2-digit' }) }}
+          {{ displayDate.toLocaleDateString(locale, { month: 'long', day: '2-digit' }) }}
         </span>
         <span class="year">
-          {{ eventDate.getFullYear() }}
+          {{ displayDate.getFullYear() }}
         </span>
       </template>
       <span v-else>
@@ -43,12 +43,31 @@
         />
       </div>
 
+      <!-- for date range -->
       <div class="date-info skeletons-background">
         <IconImage class="icon-small" name="Calendar" />
-        <span class="date-display">
-          {{ displayDate }}
+        <span class="date-range">
+          {{ displayDateRange }}
         </span>
       </div>
+
+      <template v-if="event.location">
+        <component
+          :is="!locationPreview ? 'button' : 'div'"
+          class="reset-btn btn-location skeletons-background"
+          :class="{
+            'scale-hover': !locationPreview,
+            'pointer-events-none': locationPreview,
+          }"
+          @click.prevent="locationEvent(event)"
+        >
+          <IconImage class="icon-small" name="MapMarker" />
+          <span>
+            {{ event.location?.$t?.title || $t('location.address') }}
+          </span>
+        </component>
+        <MapRecap v-if="locationPreview" :locations="[event.location]" />
+      </template>
     </div>
 
     <ContextActionMenuInline
@@ -66,6 +85,7 @@
 import IconImage from '@/components/base/media/IconImage.vue'
 import { TranslatedEventModel } from '@/models/event.model'
 import ContentExpandable from '@/components/base/ContentExpandable.vue'
+import MapRecap from '@/components/map/MapRecap.vue'
 import ContextActionMenuInline from '@/components/base/button/ContextActionMenuInline.vue'
 
 const props = withDefaults(
@@ -74,12 +94,16 @@ const props = withDefaults(
     editable?: boolean
     hideSeeMoreButton?: boolean
     showMore?: boolean
+    locationPreview?: boolean
+    reverseDate?: boolean
     is?: string
   }>(),
   {
     editable: false,
     showMore: false,
     hideSeeMoreButton: false,
+    locationPreview: false,
+    reverseDate: false,
     is: null,
   }
 )
@@ -87,6 +111,7 @@ const props = withDefaults(
 const emit = defineEmits<{
   delete: [TranslatedEventModel]
   edit: [TranslatedEventModel]
+  location: [TranslatedEventModel]
 }>()
 const { canEditEvent, canDeleteEvent } = usePermissions()
 
@@ -99,23 +124,33 @@ const isComponent = computed(() => {
   return resolveComponent('NuxtLink')
 })
 
-const eventDate = computed(() => new Date(props.event.event_date))
+const displayDate = computed(
+  () => new Date(props.reverseDate ? props.event.end_date : props.event.start_date)
+)
+
+const start_date = computed(() => new Date(props.event.start_date))
+const end_date = computed(() => new Date(props.event.end_date ?? props.event.start_date))
 
 const isCurrent = computed(() => {
   const now = new Date()
-  return eventDate.value <= now && now <= eventDate.value
+  return start_date.value <= now && now <= end_date.value
 })
 
-const displayDate = computed(() => {
+const displayDateRange = computed(() => {
   const formater = new Intl.DateTimeFormat(locale.value, {
     dateStyle: 'full',
     timeStyle: 'short',
   })
-  return formater.format(eventDate.value)
+  // not range date, format only start_date
+  if (end_date.value === start_date.value) {
+    return formater.format(start_date.value)
+  }
+  return formater.formatRange(start_date.value, end_date.value)
 })
 
 const deleteEvent = (event) => emit('delete', event)
 const editEvent = (event) => emit('edit', event)
+const locationEvent = (event) => emit('location', event)
 </script>
 <style lang="scss" scoped>
 .event {
@@ -162,7 +197,7 @@ const editEvent = (event) => emit('edit', event)
   grid-template-columns: auto 1fr;
 }
 
-.date-display {
+.date-range {
   align-self: center;
 }
 
@@ -173,6 +208,11 @@ const editEvent = (event) => emit('edit', event)
   fill: var(--primary);
   width: pxToRem(24px);
   height: pxToRem(24px);
+}
+
+.btn-location {
+  cursor: pointer;
+  display: block;
 }
 
 .badge-new {

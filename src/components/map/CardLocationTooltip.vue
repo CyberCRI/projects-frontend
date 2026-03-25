@@ -74,8 +74,16 @@ const haveImage = computed(() => props.image && props.defaultPicture)
     background-color: color-mix(in srgb, $location-address, transparent 90%);
   }
 
+  &.news {
+    background-color: color-mix(in srgb, $location-news, transparent 90%);
+  }
+
   &.team {
     background-color: color-mix(in srgb, $location-team, transparent 90%);
+  }
+
+  &.event {
+    background-color: color-mix(in srgb, $location-event, transparent 90%);
   }
 
   .card-title {

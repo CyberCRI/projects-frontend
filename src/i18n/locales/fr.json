@@ -511,6 +511,7 @@
     "delete-description": "Etes-vous sûr de vouloir supprimer définitivement votre commentaire ? Cette action sera irréversible."
   },
   "common": {
+    "now": "aujourd'hui",
     "activate": "Activer",
     "activated": "Activé",
     "add": "Ajouter",
@@ -577,7 +578,9 @@
     "create": "Créer",
     "order-asc": "plus ancien à plus récent",
     "order-desc": "Plus récent à plus ancien",
-    "close": "fermer"
+    "close": "fermer",
+    "to": "au",
+    "new": "nouveaux"
   },
   "complete-profile": {
     "bio": {
@@ -923,7 +926,6 @@
     "see-subgroups": "Voir {count} sous-groupe | Voir {count} sous-groupes",
     "share": "Partager",
     "the-team": "L'équipe ({users})",
-    "news": "Annnonces",
     "more": "Plus",
     "less": "Moins",
     "see-more": "Voir plus",
@@ -1013,7 +1015,9 @@
     "presentation": "Présentation",
     "location": "Adresse | Adresses",
     "subgroups": "Sous-groupes",
-    "projects-locations": "Carte | Lieux"
+    "locations": "Carte | Lieux",
+    "news": "Actualité | Actualités",
+    "event": "Évènement | Évènements"
   },
   "header": {
     "private": "Privée: visible uniquement par les membres de l’équipe",
@@ -1078,7 +1082,9 @@
     "map": "Géolocalisation",
     "add-location": "Ajouter un emplacement",
     "add-location-point": "Ajouter un point d'emplacement",
-    "default-title": "Lieu"
+    "default-title": "Lieu",
+    "news": "Actualité | Actualités",
+    "event": "Événement"
   },
   "map": {
     "empty": "Rien ici pour l’instant… Les contributeurs n’ont pas encore localisé des points.",
@@ -2584,7 +2590,8 @@
       }
     },
     "group-label": "Groupe :",
-    "groups-label": "Groupes :"
+    "groups-label": "Groupes :",
+    "view": "Voir l'événement"
   },
   "news": {
     "create": {
@@ -2634,7 +2641,8 @@
     },
     "drawer": {
       "title": "Éditer une actualité"
-    }
+    },
+    "view": "Voir la nouvelle"
   },
   "instructions": {
     "create": {

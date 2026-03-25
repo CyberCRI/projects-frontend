@@ -28,6 +28,10 @@ const typeLabel = computed(() => {
       return t('location.team')
     case 'address':
       return t('location.address')
+    case 'news':
+      return t('location.news')
+    case 'event':
+      return t('location.event')
   }
 })
 
@@ -56,6 +60,14 @@ const pointerIcon = computed(() => IconMapLocationType(props.locationType))
 
     &.address {
       background-color: $location-address;
+    }
+
+    &.news {
+      background-color: $location-news;
+    }
+
+    &.event {
+      background-color: $location-event;
     }
   }
 

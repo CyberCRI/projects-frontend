@@ -6,7 +6,9 @@ import {
   getGroupSimilar as fetchGetGroupSimilar,
   getSubGroup as fetchGetSubGroup,
   getGroupGallery as fetchGroupGallery,
-  getGroupProjectsLocation as fetchGroupProjectsLocation,
+  getGroupAllLocations as fetchGroupAllLocations,
+  getGroupNews as fetchGroupNews,
+  getGroupEvent as fetchGroupEvent,
 } from '@/api/groups.service'
 import useAsyncAPI from '@/composables/useAsyncAPI'
 import useAsyncPaginationAPI from '@/composables/useAsyncPaginationAPI'
@@ -145,7 +147,7 @@ export const getSubGroup = (
   )
 }
 
-export const getGroupProjectsLocation = (
+export const getGroupAllLocations = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   groupId: RefOrRaw<PeopleGroupIdOrSlug>,
   config = {}
@@ -156,7 +158,7 @@ export const getGroupProjectsLocation = (
   return useAsyncAPI(
     key,
     ({ config }) =>
-      fetchGroupProjectsLocation(unref(organizationCode), unref(groupId), {
+      fetchGroupAllLocations(unref(organizationCode), unref(groupId), {
         ...DEFAULT_CONFIG,
         ...config,
       }),
@@ -185,6 +187,56 @@ export const getGroupGallery = (
     },
     {
       watch: onlyRefs([organizationCode, groupId]),
+      ...config,
+    }
+  )
+}
+
+export const getGroupNews = (
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
+  groupId: RefOrRaw<PeopleGroupIdOrSlug>,
+  config = {}
+) => {
+  const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::news`)
+
+  const { translateNews } = useAutoTranslate()
+
+  return useAsyncPaginationAPI(
+    key,
+    async ({ config }) => {
+      return fetchGroupNews(unref(organizationCode), unref(groupId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      })
+    },
+    {
+      watch: onlyRefs([organizationCode, groupId]),
+      translate: translateNews,
+      ...config,
+    }
+  )
+}
+
+export const getGroupEvent = (
+  organizationCode: RefOrRaw<OrganizationModel['code']>,
+  groupId: RefOrRaw<PeopleGroupIdOrSlug>,
+  config = {}
+) => {
+  const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::event`)
+
+  const { translateEvents } = useAutoTranslate()
+
+  return useAsyncPaginationAPI(
+    key,
+    async ({ config }) => {
+      return fetchGroupEvent(unref(organizationCode), unref(groupId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      })
+    },
+    {
+      watch: onlyRefs([organizationCode, groupId]),
+      translate: translateEvents,
       ...config,
     }
   )

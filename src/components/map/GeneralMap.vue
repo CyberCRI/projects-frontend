@@ -21,6 +21,26 @@
           >
             <ProjectLocationTooltip :location="location" :project="location.project" />
           </MapPointer>
+
+          <MapPointer
+            v-for="location in locations.news"
+            :key="location.id"
+            :location="location"
+            @mounted="slotProps.addPointer"
+            @unmounted="slotProps.removePointer"
+          >
+            <LocationNewsTooltip :location="location" :news="location.news" />
+          </MapPointer>
+
+          <MapPointer
+            v-for="location in locations.event"
+            :key="location.id"
+            :location="location"
+            @mounted="slotProps.addPointer"
+            @unmounted="slotProps.removePointer"
+          >
+            <LocationEventTooltip :location="location" :event="location.event" />
+          </MapPointer>
         </template>
       </BaseMap>
     </client-only>
@@ -28,9 +48,11 @@
 </template>
 
 <script setup lang="ts">
+import LocationEventTooltip from '@/components/event/map/LocationEventTooltip.vue'
 import GroupLocationToolTip from '@/components/group/Map/GroupLocationToolTip.vue'
 import BaseMap from '@/components/map/BaseMap.vue'
 import MapPointer from '@/components/map/MapPointer.vue'
+import LocationNewsTooltip from '@/components/news/map/LocationNewsTooltip.vue'
 import ProjectLocationTooltip from '@/components/project/map/ProjectLocationTooltip.vue'
 import { TranslatedLocations } from '@/interfaces/maps'
 
