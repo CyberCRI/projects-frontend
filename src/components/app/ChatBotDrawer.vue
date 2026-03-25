@@ -43,9 +43,8 @@ const usersStore = useUsersStore()
 const accessToken = usersStore.accessToken
 
 const allowProfile = ref(!!localStorage?.getItem('lpi-chatbot-allow-profile'))
-const updateAllowProfile = (e) => {
+const updateAllowProfile = () => {
   allowProfile.value = !allowProfile.value
-  e.originalTarget.checked = allowProfile.value
   localStorage?.setItem('lpi-chatbot-allow-profile', allowProfile.value ? 'true' : '')
 }
 
@@ -79,8 +78,7 @@ const userContext = computed(() => {
 })
 
 const allowCurrentPage = ref(!!localStorage?.getItem('lpi-chatbot-allow-current-page'))
-const updateAllowCurrentPage = (e) => {
-  allowCurrentPage.value = !allowCurrentPage.value
+const updateAllowCurrentPage = () => {
   e.originalTarget.checked = allowCurrentPage.value
   localStorage?.setItem('lpi-chatbot-allow-current-page', allowCurrentPage.value ? 'true' : '')
 }
