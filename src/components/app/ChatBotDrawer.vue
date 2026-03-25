@@ -79,7 +79,7 @@ const userContext = computed(() => {
 
 const allowCurrentPage = ref(!!localStorage?.getItem('lpi-chatbot-allow-current-page'))
 const updateAllowCurrentPage = () => {
-  e.originalTarget.checked = allowCurrentPage.value
+  allowCurrentPage.value = !allowCurrentPage.value
   localStorage?.setItem('lpi-chatbot-allow-current-page', allowCurrentPage.value ? 'true' : '')
 }
 
