@@ -57,12 +57,20 @@ const submit = async () => {
       const response = await fetch(`/api/vector-store/get?${query.toString()}`, {
         headers,
       })
-      const existing = await response.json()
-      if (existing.length) {
-        titleExists.value = true
-        toaster.pushError(t('vector-store.title-exists'))
-        isAsyncing.value = false
-        return
+      // Only attempt to parse JSON when the response is OK; handle 404/empty-body separately.
+      if (response.status === 404) {
+        // No existing document with this title; continue to ingestion.
+      } else if (response.ok) {
+        const existing = await response.json()
+        if (Array.isArray(existing) && existing.length) {
+          titleExists.value = true
+          toaster.pushError(t('vector-store.title-exists'))
+          isAsyncing.value = false
+          return
+        }
+      } else {
+        // Non-OK, non-404 response; log it and continue without blocking ingestion.
+        console.log(`Unexpected response when checking title existence: ${response.status} ${response.statusText}`)
       }
     } catch (err) {
       console.log(err)
