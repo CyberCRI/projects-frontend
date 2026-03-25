@@ -11,8 +11,10 @@ export default defineLazyEventHandler(() => {
     const { vectorStore } = await getVectorStore()
     // return 404 if not configured
     if (!vectorStore) {
-      setResponseStatus(event, 404)
-      return
+      throw createError({
+        statusCode: 404,
+        message: 'Vector store is not configured',
+      })
     }
 
     const formData = await readFormData(event)
