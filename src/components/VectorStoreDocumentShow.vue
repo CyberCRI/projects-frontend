@@ -36,7 +36,6 @@ const load = async () => {
       )
     }
     const data = await response.json()
-    console.log(data)
     chunkList.value = data
   } catch (e) {
     console.log(e.toString())
