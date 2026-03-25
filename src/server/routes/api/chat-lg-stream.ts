@@ -35,7 +35,7 @@ const { appChatbotEnabled } = runtimeConfig.public
 
 export const checkpointer = new MemorySaver()
 
-// TODO use own tarceMcp map instead cgat-stream one when refactoed
+// TODO use own traceMcp map instead cgat-stream one when refactoed
 // export const traceMcp = (...args) => {
 //   if (appMcpServerTrace) {
 //     console.log('[MCP TRACE]', ...args)
