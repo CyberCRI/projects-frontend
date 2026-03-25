@@ -89,7 +89,6 @@
     "deep-chat": "^2.3.0",
     "es-toolkit": "^1.40.0",
     "highlight.js": "^11",
-    "install": "^0.13.0",
     "langchain": "^1.2.14",
     "leaflet": "^1",
     "leaflet.markercluster": "^1.5.3",
