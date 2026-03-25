@@ -131,7 +131,7 @@ export default defineNuxtConfig({
     appGeocodingApiKey: '',
     appOpenaiApiKey: '',
     appOpenaiApiPromptId: '',
-    appOpeyanaiApiPromptVersion: '',
+    appOpenaiApiPromptVersion: '',
     appOpenaiApiVectorStoreId: '',
     appMcpServerUrl: '',
     appSorbobotApiToken: '',
