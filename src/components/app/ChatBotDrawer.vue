@@ -111,7 +111,6 @@ watch(
   },
   { immediate: true }
 )
-console.log(pageContext.value)
 const contextMessage = computed(() => [
   {
     role: 'ai',
