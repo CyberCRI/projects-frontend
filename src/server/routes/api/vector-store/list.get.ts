@@ -1,5 +1,6 @@
 import getVectorStore from '@/server/utils/vector-db.js'
 import checkVectorDbRights from '@/server/utils/check-vector-db-rights.js'
+const format = require('pg-format')
 
 export default defineLazyEventHandler(() => {
   return defineEventHandler(async (event) => {
@@ -18,15 +19,16 @@ export default defineLazyEventHandler(() => {
     const client = await pool.connect()
 
     try {
-      const result = await client.query(
+      const sql = format(
         `
-        SELECT distinct(v.metadata->>'title') as title, count(*) as chunks
-        FROM ${vectorTableName} v
-        WHERE v.metadata->>'orgCode' = $1
-        GROUP BY v.metadata->>'title'
-      `,
-        [appApiOrgCode]
+      SELECT distinct(v.metadata->>'title') as title, count(*) as chunks
+      FROM %I v
+      WHERE v.metadata->>'orgCode' = $1
+      GROUP BY v.metadata->>'title'
+    `,
+        vectorTableName
       )
+      const result = await client.query(sql, [appApiOrgCode])
 
       const docs = result.rows
       docs.forEach((doc) => {
