@@ -34,7 +34,6 @@ export default defineLazyEventHandler(() => {
       const result = await client.query(sql, [appApiOrgCode, title])
 
       const docs = result.rows
-      console.log('docs', docs.length)
       // docs.forEach((doc) => {
       //   console.log(doc.title, doc.chunks)
       // })
