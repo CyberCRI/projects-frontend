@@ -22,6 +22,7 @@ const {
   // appOpenaiApiVectorStoreId,
   appMcpServerUrl,
   // appMcpServerTrace,
+  appLangchainTrace,
   appSorbobotApiTrace,
   appLangchainPrompt,
   appVectorToolPrompt,
@@ -41,6 +42,12 @@ export const checkpointer = new MemorySaver()
 //   }
 // }
 
+export const traceLangchain = (...args) => {
+  if (appLangchainTrace) {
+    console.log('[LangChain TRACE]', ...args)
+  }
+}
+
 export const traceSorbobot = (...args) => {
   if (appSorbobotApiTrace) {
     console.log('[Sorbobot TRACE]', ...args)
@@ -48,7 +55,7 @@ export const traceSorbobot = (...args) => {
 }
 
 export default defineLazyEventHandler(() => {
-  console.log(
+  traceLangchain(
     'appChatbotEnabled:',
     appChatbotEnabled,
     'openaiApiKey:',
@@ -95,7 +102,7 @@ export default defineLazyEventHandler(() => {
     if (!conversationId) {
       // if no conversationId, we start a new conversation
       conversationId = uuidv4()
-      console.log('Starting new conversation with id:', conversationId)
+      traceLangchain('Starting new conversation with id:', conversationId)
     }
 
     traceMcp('set token map ', conversationId)
@@ -144,7 +151,7 @@ export default defineLazyEventHandler(() => {
     const { vectorStore } = await getVectorStore()
     if (vectorStore) {
       const { appApiOrgCode } = useRuntimeConfig().public
-      console.log(`Configure vector tool with prompt "${appVectorToolPrompt}"`)
+      traceLangchain(`Configure vector tool with prompt "${appVectorToolPrompt}"`)
       const retriever = vectorStore.asRetriever({
         k: 5,
         filter: {
@@ -186,17 +193,17 @@ export default defineLazyEventHandler(() => {
     const toolMonitoringMiddleware = createMiddleware({
       name: 'ToolMonitoringMiddleware',
       wrapToolCall: async (request, handler) => {
-        console.log(`Executing tool: ${request.toolCall.name}`)
-        console.log(`Arguments: ${JSON.stringify(request.toolCall.args)}`)
+        traceLangchain(`Executing tool: ${request.toolCall.name}`)
+        traceLangchain(`Arguments: ${JSON.stringify(request.toolCall.args)}`)
         try {
           const result = await handler(request)
           const content: string = (result as { content: string }).content
-          console.log(
+          traceLangchain(
             `Tool completed successfully: "${content.substring(0, 100)}${content.length > 100 ? ' (...)' : ''}"`
           )
           return result
         } catch (e) {
-          console.log(`Tool failed: ${e}`)
+          traceLangchain(`Tool failed: ${e}`)
           throw e
         }
       },
@@ -205,13 +212,13 @@ export default defineLazyEventHandler(() => {
     const loggingMiddleware = createMiddleware({
       name: 'LoggingMiddleware',
       beforeModel: (state) => {
-        console.log(`About to call model with ${state.messages.length} messages`)
-        console.log(JSON.stringify(state.messages, null, 2))
+        traceLangchain(`About to call model with ${state.messages.length} messages`)
+        traceLangchain(JSON.stringify(state.messages, null, 2))
         return
       },
       afterModel: (state) => {
         const lastMessage = state.messages[state.messages.length - 1]
-        console.log(`Model returned: ${lastMessage.content}`)
+        traceLangchain(`Model returned: ${lastMessage.content}`)
         return
       },
     })
