@@ -223,8 +223,11 @@ export default defineLazyEventHandler(() => {
       },
     })
 
+    const parsedTemperature = parseFloat(appLangchainTemperature)
+    const temperature = Number.isNaN(parsedTemperature) ? 0.7 : parsedTemperature
+
     const model = await initChatModel(appLangchainModelName, {
-      temperature: parseFloat(appLangchainTemperature) || 0.7,
+      temperature,
       apiKey: appLangchainModelApiKey,
     })
 
