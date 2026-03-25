@@ -27,15 +27,34 @@ export default async function checkVectorDbRights(event) {
     })
   }
 
-  const jwt = parseJwt(tokenHeader)
+  let kcId = null
+  try {
+    const jwt = parseJwt(tokenHeader)
+    kcId = jwt.sub
+  } catch {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'bad_request',
+      message: 'Malformed token.',
+    })
+  }
 
-  const kcId = jwt.sub
+  let user = null
+  try {
+    const runtimeConfig = useRuntimeConfig()
+    const baseUrl = runtimeConfig.public.appApiUrl + runtimeConfig.public.appApiDefaultVersion + '/'
+    user = await $fetch(`${baseUrl}/user/${kcId}/`, {
+      headers: { Authorization: tokenHeader },
+    })
+  } catch (e) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'server_error',
+      message: 'Could not retrieve user: ' + e.toString(),
+    })
+  }
 
-  const runtimeConfig = useRuntimeConfig()
-  const baseUrl = runtimeConfig.public.appApiUrl + runtimeConfig.public.appApiDefaultVersion + '/'
-  const user = await $fetch(`${baseUrl}/user/${kcId}/`, { headers: { Authorization: tokenHeader } })
-
-  if (!user.is_superuser) {
+  if (!user?.is_superuser) {
     throw createError({
       statusCode: 403,
       statusMessage: 'Forbidden',
