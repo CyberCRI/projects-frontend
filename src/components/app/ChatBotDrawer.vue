@@ -100,7 +100,7 @@ watch(
     const pageMeta = route.matched
       .filter((r) => !!r.meta.chatBotContext)
       .map((r) => r.meta.chatBotContext(route))
-      .join('/n')
+      .join('\n')
 
     if (pageMeta)
       res += `# here are some meta information about the current page
