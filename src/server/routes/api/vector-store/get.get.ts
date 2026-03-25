@@ -21,7 +21,6 @@ export default defineLazyEventHandler(() => {
 
     const client = await pool.connect()
 
-    console.log('title', title)
     try {
       const sql = format(
         `
