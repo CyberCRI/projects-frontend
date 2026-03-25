@@ -46,7 +46,7 @@ load()
     @cancel="close"
     @confirm="close"
   >
-    <div class="loader" v-if="isAsyncing">
+    <div v-if="isAsyncing" class="loader">
       <LoaderSimple />
     </div>
     <ul v-else>
@@ -78,6 +78,7 @@ load()
   font-style: italic;
   font-weight: normal;
 }
+
 .loader {
   display: flex;
   justify-content: center;
