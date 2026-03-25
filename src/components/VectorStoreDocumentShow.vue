@@ -24,6 +24,17 @@ const load = async () => {
     const response = await fetch(`/api/vector-store/get?${query.toString()}`, {
       headers,
     })
+    if (!response.ok) {
+      let errorText = ''
+      try {
+        errorText = await response.text()
+      } catch {
+        // ignore text parsing errors
+      }
+      throw new Error(
+        errorText || `Request to /api/vector-store/get failed with status ${response.status}`
+      )
+    }
     const data = await response.json()
     console.log(data)
     chunkList.value = data
