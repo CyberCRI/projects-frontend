@@ -44,7 +44,6 @@ const refresh = async () => {
       return
     }
 
-    console.log(data)
     documentList.value = Array.isArray(data) ? data : []
   } catch (e) {
     console.log(e.toString())
