@@ -1,20 +1,7 @@
 <script setup>
-import { getOrganizationByCode } from '@/api/organizations.service'
-
-try {
-  const runtimeConfig = useRuntimeConfig()
-  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
-  useLpiHead(
-    useRequestURL().toString(),
-    "Plan de Sécurité des Systèmes d'Information",
-    organization?.dashboard_subtitle,
-    image,
-    dimensions
-  )
-} catch (err) {
-  console.log(err)
-}
+useLpiHead2({
+  title: "Plan de Sécurité des Systèmes d'Information",
+})
 </script>
 <template>
   <div class="page-section-narrow legal-page pssi page-top">

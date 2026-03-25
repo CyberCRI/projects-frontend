@@ -1,6 +1,5 @@
 <script setup>
 import { getProjectsRecommendationsForUser } from '@/api/recommendations.service'
-import { getOrganizationByCode } from '@/api/organizations.service'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 const organizationsStore = useOrganizationsStore()
@@ -40,21 +39,11 @@ const { translateProjects } = useAutoTranslate()
 const _results = computed(() => projectRecommendationsRequest.value?.results)
 const results = translateProjects(_results)
 
-try {
-  const runtimeConfig = useRuntimeConfig()
-  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
-  useLpiHead(
-    useRequestURL().toString(),
-    computed(() => t('recommendations.projects.title')),
-    organization?.dashboard_subtitle,
-    image,
-    dimensions
-  )
-} catch (err) {
-  console.log(err)
-}
+useLpiHead2({
+  title: computed(() => t('recommendations.projects.title')),
+})
 </script>
+
 <template>
   <div class="page-section-wide page-top recommendation-page">
     <h1 class="page-title">

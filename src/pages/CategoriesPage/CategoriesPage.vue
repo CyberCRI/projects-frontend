@@ -1,6 +1,5 @@
 <script setup>
 import useProjectCategories from '@/stores/useProjectCategories.ts'
-import { getOrganizationByCode } from '@/api/organizations.service'
 
 const { isAdmin, canCreateProject } = usePermissions()
 const projectCategoriesStore = useProjectCategories()
@@ -49,21 +48,9 @@ const showCategories = () => {
   navigateTo({ query: {} })
 }
 
-try {
-  const runtimeConfig = useRuntimeConfig()
-  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
-  useLpiHead(
-    useRequestURL().toString(),
-    computed(() => t('projects')),
-    organization?.dashboard_subtitle,
-    image,
-    dimensions
-  )
-} catch (err) {
-  // DGAF
-  console.log(err)
-}
+useLpiHead2({
+  title: computed(() => t('projects')),
+})
 </script>
 
 <template>

@@ -1,11 +1,10 @@
-<script setup>
+<script setup lang="ts">
 import useValidate from '@vuelidate/core'
 import { helpers, required, email } from '@vuelidate/validators'
-import { postAccessRequest } from '@/api/organizations.service.ts'
+import { postAccessRequest } from '@/api/organizations.service'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import { getOrganizationByCode } from '@/api/organizations.service'
+import useToasterStore from '@/stores/useToaster'
+import useOrganizationsStore from '@/stores/useOrganizations'
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
 const router = useRouter()
@@ -18,23 +17,22 @@ const form = ref({
   message: '',
 })
 const rules = computed(() => ({
-  form: {
-    email: {
-      required: helpers.withMessage(t('request-access.email.is-required'), required),
-      email: helpers.withMessage(t('request-access.email.is-invalid'), email),
-    },
-    given_name: {
-      required: helpers.withMessage(t('request-access.given_name.is-required'), required),
-    },
-    family_name: {
-      required: helpers.withMessage(t('request-access.family_name.is-required'), required),
-    },
-    job: {
-      required: helpers.withMessage(t('request-access.profile-title.is-required'), required),
-    },
+  email: {
+    required: helpers.withMessage(t('request-access.email.is-required'), required),
+    email: helpers.withMessage(t('request-access.email.is-invalid'), email),
+  },
+  given_name: {
+    required: helpers.withMessage(t('request-access.given_name.is-required'), required),
+  },
+  family_name: {
+    required: helpers.withMessage(t('request-access.family_name.is-required'), required),
+  },
+  job: {
+    required: helpers.withMessage(t('request-access.profile-title.is-required'), required),
   },
 }))
-const v$ = useValidate(rules, { form })
+const v$ = useValidate(rules, form)
+
 const formIsInvalid = computed(() => {
   return v$.value.form.$invalid
 })
@@ -84,20 +82,10 @@ function login() {
 function closeDrawer() {
   showContactUsDrawer.value = false
 }
-try {
-  const runtimeConfig = useRuntimeConfig()
-  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
-  useLpiHead(
-    useRequestURL().toString(),
-    computed(() => t('request-access.title')),
-    organization?.dashboard_subtitle,
-    image,
-    dimensions
-  )
-} catch (err) {
-  console.log(err)
-}
+
+useLpiHead2({
+  title: computed(() => t('request-access.title')),
+})
 </script>
 <template>
   <SignUpWrapper

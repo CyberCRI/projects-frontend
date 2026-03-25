@@ -87,7 +87,7 @@ export function imageSizesFormData(formData: FormData, imageSizes: ImageSizes): 
 // temporary pseudo duplicate (only key prefix change)
 // to accomodate API change for post user
 // while patch keep old behavior
-export function imageSizesFormDataPost(formData: FormData, imageSizes: ImageSizes): void {
+export function imageSizesFormDataPost(formData: FormData, imageSizes: ImageSizes = null): void {
   const keyMap = {
     scaleX: 'profile_picture_scale_x',
     scaleY: 'profile_picture_scale_y',

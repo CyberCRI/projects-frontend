@@ -1,6 +1,4 @@
 <script setup>
-import { getOrganizationByCode } from '@/api/organizations.service'
-
 const { searchFromQuery } = useSearch(null)
 
 const { onboardingTrap } = useOnboardingStatus()
@@ -16,21 +14,9 @@ onBeforeRouteLeave((to, from, next) => {
   next()
 })
 
-try {
-  const runtimeConfig = useRuntimeConfig()
-  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
-  useLpiHead(
-    useRequestURL().toString(),
-    computed(() => t('browse.page-title')),
-    organization?.dashboard_subtitle,
-    image,
-    dimensions
-  )
-} catch (err) {
-  // DGAF
-  console.log(err)
-}
+useLpiHead2({
+  title: computed(() => t('browse.page-title')),
+})
 </script>
 
 <template>
