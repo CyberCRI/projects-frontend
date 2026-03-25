@@ -76,7 +76,7 @@ const deleteDocument = async () => {
     />
     <VectorStoreIngestionForm
       :is-opened="!!documentToEdit"
-      :title="documentToEdit"
+      :document-title="documentToEdit"
       is-edit
       @close="documentToEdit = ''"
       @document-updated="documentToEdit = ''"
