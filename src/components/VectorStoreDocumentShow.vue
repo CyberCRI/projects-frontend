@@ -18,29 +18,38 @@ const close = () => emit('close')
 const query = new URLSearchParams()
 query.set('title', props.documentTitle)
 
-try {
-  const response = await fetch(`/api/vector-store/get?${query.toString()}`, {
-    headers,
-  })
-  const data = await response.json()
-  console.log(data)
-  chunkList.value = data
-} catch (e) {
-  console.log(e.toString())
-} finally {
-  isAsyncing.value = false
-  close()
+const load = async () => {
+  try {
+    isAsyncing.value = true
+    const response = await fetch(`/api/vector-store/get?${query.toString()}`, {
+      headers,
+    })
+    const data = await response.json()
+    console.log(data)
+    chunkList.value = data
+  } catch (e) {
+    console.log(e.toString())
+    close()
+  } finally {
+    isAsyncing.value = false
+  }
 }
+// no await so we dont block ui
+load()
 </script>
 <template>
   <ConfirmModal
     :title="documentTitle"
+    :asyncing="isAsyncing"
     no-second-button
     cancel-button-label="common.close"
     @cancel="close"
     @confirm="close"
   >
-    <ul>
+    <div class="loader" v-if="isAsyncing">
+      <LoaderSimple />
+    </div>
+    <ul v-else>
       <div v-for="(chunk, i) in chunkList" :key="i" class="chunk">
         <h4 class="chunk-header">
           Chunk {{ i + 1 }}/{{ chunkList.length }} - Page {{ chunk.metadata.loc.pageNumber }}, Line
@@ -68,5 +77,10 @@ try {
   color: $light-gray;
   font-style: italic;
   font-weight: normal;
+}
+.loader {
+  display: flex;
+  justify-content: center;
+  padding-top: 3rem;
 }
 </style>

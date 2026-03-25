@@ -84,7 +84,7 @@ const deleteDocument = async () => {
     <ConfirmModal
       v-if="documentToDelete"
       :asyncing="isAsyncing"
-      :document-title="$t('vector-store.confirm-deletion')"
+      :title="$t('vector-store.confirm-deletion')"
       :content="$t('vector-store.confirm-deletion-of', { title: documentToDelete })"
       @confirm="deleteDocument"
       @cancel="documentToDelete = ''"
