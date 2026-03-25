@@ -3189,7 +3189,6 @@
     "chunks": "segments",
     "no-document-yet": "Aucun document pour le moment",
     "title-exists": "Le titre existe déjà",
-    "add-document": "Ajouter un document",
     "edit-document": "Modifier un document",
     "title-field": "Titre",
     "file-field": "Fichier",
