@@ -3185,7 +3185,6 @@
     "confirm-deletion": "Confirm deletion",
     "confirm-deletion-of": "Do you really want to delete \"{title}\"?",
     "document-deleted": "Document deleted.",
-    "add-document": "Add a document",
     "chunks": "chunks",
     "no-document-yet": "No document yet",
     "title-exists": "Title already exists",
