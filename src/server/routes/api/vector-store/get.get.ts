@@ -1,6 +1,6 @@
 import getVectorStore from '@/server/utils/vector-db.js'
 import checkVectorDbRights from '@/server/utils/check-vector-db-rights.js'
-const format = require('pg-format')
+import format from 'pg-format'
 
 export default defineLazyEventHandler(() => {
   return defineEventHandler(async (event) => {
