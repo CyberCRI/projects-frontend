@@ -14,7 +14,9 @@ export default defineLazyEventHandler(() => {
     // return 404 if not configured
     if (!pool || !vectorTableName) {
       setResponseStatus(event, 404)
-      return
+      return {
+        error: 'Vector store is not configured',
+      }
     }
 
     const client = await pool.connect()
