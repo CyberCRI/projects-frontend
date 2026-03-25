@@ -8,14 +8,14 @@ export default defineLazyEventHandler(() => {
     // return 404 if not configured
     if (!vectorStore) {
       setResponseStatus(event, 404)
-      return
+      return { status: 'not_found' }
     }
 
     await checkVectorDbRights(event)
     const title = getQuery(event)?.title as string
     if (!title) {
       setResponseStatus(event, 400)
-      return
+      return { status: 'bad_request' }
     }
 
     await vectorStore.delete({
