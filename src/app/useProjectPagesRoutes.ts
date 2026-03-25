@@ -8,7 +8,7 @@ export default function useProjectPagesRoutes() {
       component: () => import('../pages/ProjectPageV2/ProjectPage.vue'),
       meta: {
         chatBotContext: (route) => `
-          This page describe a project whose slug or id is ${route.params.slugOrId}. This is the slugOrId parameter awaited by tools who use projects
+          This page describes a project whose slug or id is ${route.params.slugOrId}. This is the slugOrId route parameter expected by tools that use projects.
         `,
       },
       // dont reset scroll here it is done in the component as it handle complex scroll behavior for tabs
