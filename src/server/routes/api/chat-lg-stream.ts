@@ -29,7 +29,7 @@ const {
 } = runtimeConfig
 const { appChatbotEnabled } = runtimeConfig.public
 
-// TODO use own token map instead cgat-stream one when refactoed
+// TODO use own token map instead chat-stream one when refactoed
 // Map conversationId to token and date for authed api requests in MCP
 // export const tokenMap = new Map<string, { date: Date; token: string }>()
 
