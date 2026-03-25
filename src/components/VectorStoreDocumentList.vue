@@ -20,7 +20,9 @@ const refresh = async () => {
     })
 
     if (!response.ok) {
-      console.error(`Failed to fetch vector store documents: ${response.status} ${response.statusText}`)
+      console.error(
+        `Failed to fetch vector store documents: ${response.status} ${response.statusText}`
+      )
       documentList.value = []
       return
     }
@@ -48,7 +50,6 @@ const refresh = async () => {
     console.log(e.toString())
   } finally {
     isAsyncing.value = false
-    close()
   }
 }
 defineExpose({ refresh })

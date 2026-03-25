@@ -70,7 +70,9 @@ const submit = async () => {
         }
       } else {
         // Non-OK, non-404 response; log it and continue without blocking ingestion.
-        console.log(`Unexpected response when checking title existence: ${response.status} ${response.statusText}`)
+        console.log(
+          `Unexpected response when checking title existence: ${response.status} ${response.statusText}`
+        )
       }
     } catch (err) {
       console.log(err)
