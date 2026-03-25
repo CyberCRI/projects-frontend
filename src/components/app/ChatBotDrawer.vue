@@ -54,7 +54,7 @@ const userContext = computed(() => {
   if (!user || !allowProfile.value) return ''
   // TODO: groups and projects
   return `
-  # Use the following information about the user to taylor your response toward the user interests
+  # Use the following information about the user to tailor your response toward the user interests
   - Name: ${user.family_name} ${user.given_name}
   - Pronouns: ${user.pronouns}
   - Job: ${user.job}
