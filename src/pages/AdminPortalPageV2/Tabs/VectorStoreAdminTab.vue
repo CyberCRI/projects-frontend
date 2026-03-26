@@ -30,8 +30,8 @@ const deleteDocument = async () => {
       headers,
       method: 'DELETE',
     })
-    const data = await response.json()
     if (response.ok) {
+      await response.json()
       refreshDocumentList()
       toaster.pushSuccess(t('vector-store.document-deleted', { title: documentToDelete.value }))
     } else {
