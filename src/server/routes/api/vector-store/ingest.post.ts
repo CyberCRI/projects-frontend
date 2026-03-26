@@ -57,6 +57,11 @@ export default defineLazyEventHandler(() => {
 
     await vectorStore.addDocuments(chunks)
 
-    return { status: 'ok', chunks }
+    return {
+      status: 'ok',
+      chunkCount: chunks.length,
+      title: extraMetadata.title,
+      orgCode: extraMetadata.orgCode,
+    }
   })
 })
