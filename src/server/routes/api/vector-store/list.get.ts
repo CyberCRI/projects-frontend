@@ -12,8 +12,10 @@ export default defineLazyEventHandler(() => {
     const vectorTableName = runtimeConfig.appVectorTableName
     // return 404 if not configured
     if (!pool || !vectorTableName) {
-      setResponseStatus(event, 404)
-      return
+      throw createError({
+        statusCode: 404,
+        message: 'Vector store is not configured',
+      })
     }
 
     const client = await pool.connect()
@@ -29,12 +31,7 @@ export default defineLazyEventHandler(() => {
         vectorTableName
       )
       const result = await client.query(sql, [appApiOrgCode])
-
       const docs = result.rows
-      docs.forEach((doc) => {
-        console.log(doc.title, doc.chunks)
-      })
-
       return docs
     } finally {
       client.release()

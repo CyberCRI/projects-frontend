@@ -31,8 +31,6 @@ export default defineLazyEventHandler(() => {
       })
     }
 
-    // const arrayBuffer = await file.arrayBuffer()
-    // const buffer = Buffer.from(arrayBuffer)
     const loader = new PDFLoader(file)
 
     const fileDocs = await loader.load()

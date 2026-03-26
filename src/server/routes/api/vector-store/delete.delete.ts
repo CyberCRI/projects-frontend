@@ -7,8 +7,10 @@ export default defineLazyEventHandler(() => {
     const { vectorStore } = await getVectorStore()
     // return 404 if not configured
     if (!vectorStore) {
-      setResponseStatus(event, 404)
-      return { status: 'not_found' }
+      throw createError({
+        statusCode: 404,
+        message: 'Vector store is not configured',
+      })
     }
 
     await checkVectorDbRights(event)
