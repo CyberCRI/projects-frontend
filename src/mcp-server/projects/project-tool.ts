@@ -268,7 +268,7 @@ export default (server) => {
       },
     },
     async ({ idOrSlug }, extras) => {
-      let results = {}
+      let results = []
       try {
         const queryResult: any = await mcpFetch(
           // TODO: use org code from config
