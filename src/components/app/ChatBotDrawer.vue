@@ -114,10 +114,12 @@ watch(
       res += `# here are some meta information about the current page
       ${pageMeta}
     `
-    res += `# Here is the content of the current page, use it as a context for your responses:
+    if (import.meta.client) {
+      res += `# Here is the content of the current page, use it as a context for your responses:
       ${document.querySelector('.main-view')?.textContent || ''}
       `
-    pageContextData.value = res
+      pageContextData.value = res
+    }
   },
   { immediate: true }
 )
