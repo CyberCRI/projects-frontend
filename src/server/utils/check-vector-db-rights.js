@@ -48,8 +48,8 @@ export default async function checkVectorDbRights(event) {
     })
   } catch (e) {
     throw createError({
-      statusCode: 500,
-      statusMessage: 'server_error',
+      statusCode: 401,
+      statusMessage: 'no_user',
       message: 'Could not retrieve user: ' + e.toString(),
     })
   }
