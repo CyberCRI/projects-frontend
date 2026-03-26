@@ -1,10 +1,4 @@
-import { GeneralLocationPeopleGroup, PeopleGroupModel } from '@/models/invitation.model'
-import {
-  AnyLocation,
-  BaseLocationModel,
-  LocationModel,
-  TranslatedLocation,
-} from '@/models/location.model'
+import { AnyLocation, BaseLocationModel } from '@/models/location.model'
 
 export type Geocoding = BaseLocationModel & {
   label?: string
@@ -16,12 +10,7 @@ export type MapPointerOption = {
   tooltip?: HTMLElement
 }
 
-export type Locations = {
-  groups: PeopleGroupModel[]
-  projects: LocationModel[]
-}
-
-export type TranslatedLocations = {
-  groups: GeneralLocationPeopleGroup[]
-  projects: TranslatedLocation[]
+export type LocationGeneral = Pick<BaseLocationModel, 'lat' | 'lng' | 'id' | 'type'> & {
+  content_id: string
+  content_type: 'projects' | 'groups'
 }

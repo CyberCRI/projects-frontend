@@ -45,7 +45,7 @@ const emit = defineEmits<{
 const markerRef = useTemplateRef('marker')
 const tooltipRef = useTemplateRef('tooltip')
 
-onMounted(() => {
+onMounted(async () => {
   emit('mounted', {
     location: props.location,
     markerContent: markerRef.value,

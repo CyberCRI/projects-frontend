@@ -4,22 +4,13 @@
       <BaseMap ref="map" :config="CONFIG" use-cluster>
         <template #default="slotProps">
           <MapPointer
-            v-for="location in locations.groups"
+            v-for="location in locations"
             :key="location.id"
             :location="location"
             @mounted="slotProps.addPointer"
             @unmounted="slotProps.removePointer"
           >
-            <GroupLocationToolTip :location="location" :group="location.people_group" />
-          </MapPointer>
-          <MapPointer
-            v-for="location in locations.projects"
-            :key="location.id"
-            :location="location"
-            @mounted="slotProps.addPointer"
-            @unmounted="slotProps.removePointer"
-          >
-            <ProjectLocationTooltip :location="location" :project="location.project" />
+            <!-- <LocationTooltipDynamic :location="location" /> -->
           </MapPointer>
         </template>
       </BaseMap>
@@ -28,15 +19,14 @@
 </template>
 
 <script setup lang="ts">
-import GroupLocationToolTip from '@/components/group/Map/GroupLocationToolTip.vue'
 import BaseMap from '@/components/map/BaseMap.vue'
+import LocationTooltipDynamic from '@/components/map/LocationTooltipDynamic.vue'
 import MapPointer from '@/components/map/MapPointer.vue'
-import ProjectLocationTooltip from '@/components/project/map/ProjectLocationTooltip.vue'
-import { TranslatedLocations } from '@/interfaces/maps'
+import { LocationGeneral } from '@/interfaces/maps'
 
 const props = withDefaults(
   defineProps<{
-    locations: TranslatedLocations
+    locations: LocationGeneral[]
     loading?: boolean
   }>(),
   { loading: true }

@@ -62,6 +62,7 @@ const CONFIG: L.MapOptions = {
   ],
   maxBoundsViscosity: 1,
   worldCopyJump: true,
+  preferCanvas: true,
   ...props.config,
 }
 const ICON_SIZE: L.PointTuple = [80, 69]
