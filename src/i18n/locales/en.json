@@ -2719,7 +2719,7 @@
     "restart": "Restart conversation",
     "before-we-start": "Before we start, would you:",
     "allow-profile": "Allow me to see your profile - so I can better tailor my responses",
-    "allow-current-page": "Allow me to see the page your are on - so I have a better sense of the context"
+    "allow-current-page": "Allow me to see the page you are on - so I have a better sense of the context"
   },
   "researcher": {
     "relators": {
