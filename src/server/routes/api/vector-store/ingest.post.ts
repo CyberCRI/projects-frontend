@@ -20,7 +20,9 @@ export default defineLazyEventHandler(() => {
     const formData = await readFormData(event)
 
     const file = formData.get('file') as File
-    const title = formData.get('title') as string
+
+    const rawTitle = formData.get('title')
+    const title = typeof rawTitle === 'string' ? rawTitle.trim() : ''
 
     if (!file || !title) {
       throw createError({

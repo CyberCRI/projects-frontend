@@ -12,7 +12,10 @@ export default defineLazyEventHandler(() => {
     }
 
     await checkVectorDbRights(event)
-    const title = getQuery(event)?.title as string
+
+    const rawTitle = getQuery(event)?.title
+    const title = typeof rawTitle === 'string' ? rawTitle.trim() : ''
+
     if (!title) {
       setResponseStatus(event, 400)
       return { status: 'bad_request' }
