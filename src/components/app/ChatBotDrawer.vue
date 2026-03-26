@@ -42,10 +42,15 @@ const connectOptions = {
 const usersStore = useUsersStore()
 const accessToken = usersStore.accessToken
 
-const allowProfile = ref(!!localStorage?.getItem('lpi-chatbot-allow-profile'))
+const allowProfile = ref(false)
+if (import.meta.client) {
+  allowProfile.value = !!localStorage?.getItem('lpi-chatbot-allow-profile')
+}
 const updateAllowProfile = () => {
   allowProfile.value = !allowProfile.value
-  localStorage?.setItem('lpi-chatbot-allow-profile', allowProfile.value ? 'true' : '')
+  if (import.meta.client) {
+    localStorage?.setItem('lpi-chatbot-allow-profile', allowProfile.value ? 'true' : '')
+  }
 }
 
 const userContext = computed(() => {
@@ -77,10 +82,15 @@ const userContext = computed(() => {
   `
 })
 
-const allowCurrentPage = ref(!!localStorage?.getItem('lpi-chatbot-allow-current-page'))
+const allowCurrentPage = ref(false)
+if (import.meta.client) {
+  allowCurrentPage.value = !!localStorage?.getItem('lpi-chatbot-allow-current-page')
+}
 const updateAllowCurrentPage = () => {
   allowCurrentPage.value = !allowCurrentPage.value
-  localStorage?.setItem('lpi-chatbot-allow-current-page', allowCurrentPage.value ? 'true' : '')
+  if (import.meta.client) {
+    localStorage?.setItem('lpi-chatbot-allow-current-page', allowCurrentPage.value ? 'true' : '')
+  }
 }
 
 const route = useRoute()
