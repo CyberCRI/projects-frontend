@@ -8,7 +8,6 @@ import useUsersStore from '@/stores/useUsers'
 
 import analytics from '@/analytics'
 import { createProject, createProjectHeader } from '@/api/projects.service'
-import { getOrganizationByCode } from '@/api/organizations.service'
 
 defineEmits(['close'])
 
@@ -149,20 +148,9 @@ const submit = async () => {
   }
 }
 
-try {
-  const runtimeConfig = useRuntimeConfig()
-  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
-  useLpiHead(
-    useRequestURL().toString(),
-    computed(() => t('project.create.title')),
-    organization?.dashboard_subtitle,
-    image,
-    dimensions
-  )
-} catch (err) {
-  console.log(err)
-}
+useLpiHead2({
+  title: computed(() => t('project.create.title')),
+})
 </script>
 
 <template>

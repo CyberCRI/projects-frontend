@@ -1,21 +1,7 @@
 <script setup lang="ts">
-import { getOrganizationByCode } from '@/api/organizations.service'
-
-try {
-  const runtimeConfig = useRuntimeConfig()
-  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
-  useLpiHead(
-    useRequestURL().toString(),
-    'Mentions légales',
-    organization?.dashboard_subtitle,
-    image,
-    dimensions
-  )
-} catch (err) {
-  console.log(err)
-}
-// TODO(remi): i18n legal notices
+useLpiHead2({
+  title: 'Mentions légales',
+})
 </script>
 <template>
   <div class="page-section-narrow legal-page legal-notices page-top">

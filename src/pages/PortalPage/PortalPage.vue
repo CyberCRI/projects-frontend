@@ -1,7 +1,5 @@
 <script setup>
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import { getOrganizationByCode } from '@/api/organizations.service'
-
 const organizationsStore = useOrganizationsStore()
 const { t } = useNuxtI18n()
 
@@ -11,22 +9,10 @@ const organisations = computed(() =>
   organizationsStore.all.filter((org) => org.is_logo_visible_on_parent_dashboard)
 )
 
-try {
-  const runtimeConfig = useRuntimeConfig()
-  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
-
-  useLpiHead(
-    useRequestURL().toString(),
-    computed(() => t('home.communities')),
-    computed(() => t('portal.sub-title')),
-    image,
-    dimensions
-  )
-} catch (err) {
-  // DGAF
-  console.log(err)
-}
+useLpiHead2({
+  title: computed(() => t('home.communities')),
+  description: computed(() => t('portal.sub-title')),
+})
 </script>
 <template>
   <div class="page-section-extra-wide portal-layout page-top">

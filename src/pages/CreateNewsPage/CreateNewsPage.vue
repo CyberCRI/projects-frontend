@@ -1,10 +1,9 @@
-<script setup>
+<script setup lang="ts">
 import { defaultForm } from '@/components/news/NewsForm/NewsForm.vue'
-import { createNews, postNewsHeader } from '@/api/news.service.ts'
-import { imageSizesFormData } from '@/functs/imageSizesUtils.ts'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import { getOrganizationByCode } from '@/api/organizations.service'
+import { createNews, postNewsHeader } from '@/api/news.service'
+import { imageSizesFormData } from '@/functs/imageSizesUtils'
+import useToasterStore from '@/stores/useToaster'
+import useOrganizationsStore from '@/stores/useOrganizations'
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
@@ -37,6 +36,7 @@ const saveNews = async () => {
         .filter(([, value]) => value)
         .map(([id]) => id),
     }
+    // @ts-expect-error payload is not well formated for news
     const savedNews = await createNews(organizationsStore.current?.code, payload)
 
     if (form.value.header_image instanceof File) {
@@ -59,20 +59,9 @@ const saveNews = async () => {
   }
 }
 
-try {
-  const runtimeConfig = useRuntimeConfig()
-  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
-  useLpiHead(
-    useRequestURL().toString(),
-    computed(() => t('news.create.title')),
-    organization?.dashboard_subtitle,
-    image,
-    dimensions
-  )
-} catch (err) {
-  console.log(err)
-}
+useLpiHead2({
+  title: computed(() => t('news.create.title')),
+})
 </script>
 <template>
   <div class="create-news-page page-section-narrow">

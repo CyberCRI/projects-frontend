@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import NotificationsSettingsTab from './Tabs/NotificationsSettingsTab.vue'
-import { getOrganizationByCode } from '@/api/organizations.service'
 
 const { t } = useNuxtI18n()
 
@@ -12,20 +11,9 @@ const tabs = computed(() => [
   },
 ])
 
-try {
-  const runtimeConfig = useRuntimeConfig()
-  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
-  useLpiHead(
-    useRequestURL().toString(),
-    computed(() => t('notifications.title')),
-    organization?.dashboard_subtitle,
-    image,
-    dimensions
-  )
-} catch (err) {
-  console.log(err)
-}
+useLpiHead2({
+  title: computed(() => t('notifications.title')),
+})
 </script>
 
 <template>

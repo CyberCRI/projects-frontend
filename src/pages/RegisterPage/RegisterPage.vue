@@ -1,15 +1,14 @@
-<script setup>
+<script setup lang="ts">
 import useVuelidate from '@vuelidate/core'
 import { helpers, required, email } from '@vuelidate/validators'
-import { postUserWithInvitation } from '@/api/people.service.ts'
-import { imageSizesFormDataPost } from '@/functs/imageSizesUtils.ts'
-import utils from '@/functs/functions.ts'
+import { postUserWithInvitation } from '@/api/people.service'
+import { imageSizesFormDataPost } from '@/functs/imageSizesUtils'
+import utils from '@/functs/functions'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import { getInvitation } from '@/api/invitations.service'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useToasterStore from '@/stores/useToaster'
+import useOrganizationsStore from '@/stores/useOrganizations'
 import { useRuntimeConfig } from '#imports'
-import { getOrganizationByCode } from '@/api/organizations.service'
 
 const props = defineProps({
   token: {
@@ -29,7 +28,9 @@ const form = ref({
   family_name: '',
   password: '',
   profile_picture: '',
+  acceptedTOS: false,
 })
+
 const asyncing = ref(false)
 const confirm = ref(false)
 const currentPatatoidIndex = ref(1)
@@ -39,30 +40,28 @@ const contactEmail = ref('')
 const verifyingLink = ref(true)
 
 const rules = {
-  form: {
-    acceptedTOS: {
-      checked: helpers.withMessage(
-        () => t('register.tos-is-required'),
-        (value) => value === true
-      ),
-    },
-    email: {
-      required: helpers.withMessage(() => t('register.email.is-required'), required),
-      email: helpers.withMessage(() => t('register.email.is-invalid'), email),
-    },
-    given_name: {
-      required: helpers.withMessage(() => t('register.given_name.is-required'), required),
-    },
-    family_name: {
-      required: helpers.withMessage(() => t('register.family_name.is-required'), required),
-    },
-    password: {
-      required: helpers.withMessage(() => t('register.password.is-required'), required),
-    },
+  acceptedTOS: {
+    checked: helpers.withMessage(
+      () => t('register.tos-is-required'),
+      (value) => value === true
+    ),
+  },
+  email: {
+    required: helpers.withMessage(() => t('register.email.is-required'), required),
+    email: helpers.withMessage(() => t('register.email.is-invalid'), email),
+  },
+  given_name: {
+    required: helpers.withMessage(() => t('register.given_name.is-required'), required),
+  },
+  family_name: {
+    required: helpers.withMessage(() => t('register.family_name.is-required'), required),
+  },
+  password: {
+    required: helpers.withMessage(() => t('register.password.is-required'), required),
   },
 }
 
-const v$ = useVuelidate(rules, { form })
+const v$ = useVuelidate(rules, form)
 
 const backgroundImageUrl = computed(() => {
   return `${runtimeConfig.public.appPublicBinariesPrefix}/page404/page-404.png`
@@ -78,7 +77,7 @@ const validateIfInvalid = () => {
 const validateToken = async () => {
   try {
     const apiToken = await getInvitation(organizationsStore.current.code, props.token)
-    const expirationDate = Date.parse(apiToken.expire_at)
+    const expirationDate = new Date(apiToken.expire_at)
     if (expirationDate > new Date()) {
       return true
     }
@@ -94,17 +93,12 @@ const register = async () => {
   }
   asyncing.value = true
   try {
-    form.value.profile_picture = await utils.getPatatoidFile(currentPatatoidIndex.value)
-
     const formData = new FormData()
     imageSizesFormDataPost(formData)
 
-    if (form.value.profile_picture instanceof File) {
-      formData.append(
-        'profile_picture_file',
-        form.value['profile_picture'],
-        form.value['profile_picture'].name
-      )
+    const profileImage = await utils.getPatatoidFile(currentPatatoidIndex.value)
+    if (profileImage instanceof File) {
+      formData.append('profile_picture_file', profileImage, profileImage.name)
     }
 
     ;['given_name', 'family_name', 'password', 'email'].forEach((key) => {
@@ -141,20 +135,9 @@ onMounted(async () => {
   contactEmail.value = organizationsStore.current?.contact_email
 })
 
-try {
-  const runtimeConfig = useRuntimeConfig()
-  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
-  useLpiHead(
-    useRequestURL().toString(),
-    computed(() => t('register.title')),
-    organization?.dashboard_subtitle,
-    image,
-    dimensions
-  )
-} catch (err) {
-  console.log(err)
-}
+useLpiHead2({
+  title: computed(() => t('register.title')),
+})
 </script>
 <template>
   <div v-if="verifyingLink" class="loader">

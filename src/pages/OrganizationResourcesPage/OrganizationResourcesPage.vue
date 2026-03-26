@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { getOrganizationByCode } from '@/api/organizations.service'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import { deleteOrganizationFile, getOrganizationFiles } from '@/api/organization-files.service'
 import useToasterStore from '@/stores/useToaster'
@@ -73,20 +72,9 @@ const openDrawer = (resource = null) => {
   isDrawerOpen.value = true
 }
 
-try {
-  const runtimeConfig = useRuntimeConfig()
-  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
-  useLpiHead(
-    useRequestURL().toString(),
-    t('home.documents'),
-    organization?.dashboard_subtitle,
-    image,
-    dimensions
-  )
-} catch (err) {
-  console.log(err)
-}
+useLpiHead2({
+  title: t('home.documents'),
+})
 </script>
 
 <template>

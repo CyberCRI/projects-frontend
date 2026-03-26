@@ -3,7 +3,6 @@ import { defaultForm } from '@/components/instruction/InstructionForm/Instructio
 import { createInstruction } from '@/api/instruction.service'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import { getOrganizationByCode } from '@/api/organizations.service'
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
@@ -47,20 +46,9 @@ const saveInstruction = async () => {
   }
 }
 
-try {
-  const runtimeConfig = useRuntimeConfig()
-  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
-  useLpiHead(
-    useRequestURL().toString(),
-    computed(() => t('instructions.create.title')),
-    organization?.dashboard_subtitle,
-    image,
-    dimensions
-  )
-} catch (err) {
-  console.log(err)
-}
+useLpiHead2({
+  title: computed(() => t('instructions.create.title')),
+})
 </script>
 <template>
   <div class="create-instruction-page page-section-narrow">

@@ -1,20 +1,7 @@
-<script setup>
-import { getOrganizationByCode } from '@/api/organizations.service'
-
-try {
-  const runtimeConfig = useRuntimeConfig()
-  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
-  useLpiHead(
-    useRequestURL().toString(),
-    'Accessibilité',
-    organization?.dashboard_subtitle,
-    image,
-    dimensions
-  )
-} catch (err) {
-  console.log(err)
-}
+<script setup lang="ts">
+useLpiHead2({
+  title: 'Accessibilité',
+})
 </script>
 <template>
   <div class="page-section-narrow legal-page accessibility page-top">

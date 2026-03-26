@@ -1,5 +1,4 @@
 <script setup>
-import { getOrganizationByCode } from '@/api/organizations.service'
 import useOrganizations from '@/stores/useOrganizations'
 const { t } = useI18n()
 const organizationsStore = useOrganizations()
@@ -8,20 +7,10 @@ const termsDateStr = computed(() =>
     ? new Date(organizationsStore.termsUpdatedAt).toLocaleString()
     : ''
 )
-try {
-  const runtimeConfig = useRuntimeConfig()
-  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
-  useLpiHead(
-    useRequestURL().toString(),
-    computed(() => t('tos.title')),
-    organization?.dashboard_subtitle,
-    image,
-    dimensions
-  )
-} catch (err) {
-  console.log(err)
-}
+
+useLpiHead2({
+  title: computed(() => t('tos.title')),
+})
 </script>
 <template>
   <div class="page-section-narrow legal-page terms-of-service page-top">
