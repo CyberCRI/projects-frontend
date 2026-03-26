@@ -23,7 +23,7 @@ const title = ref('')
 const titleExists = ref(false)
 
 watch(
-  () => [props.isOpened],
+  () => props.isOpened,
   (neo) => {
     if (neo) {
       file.value = null

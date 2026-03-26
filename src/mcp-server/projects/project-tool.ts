@@ -280,7 +280,6 @@ export default (server) => {
           },
           extras
         )
-        console.log('queryResult', queryResult)
         results = queryResult.map((p: any) => mapProjectPreview(p))
       } catch (error) {
         console.error('Error fetching project similar projects:', error)
