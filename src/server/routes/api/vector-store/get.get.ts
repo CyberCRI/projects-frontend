@@ -5,8 +5,15 @@ import format from 'pg-format'
 export default defineLazyEventHandler(() => {
   return defineEventHandler(async (event) => {
     await checkVectorDbRights(event)
-    const title = getQuery(event)?.title as string
+    const rawTitle = getQuery(event)?.title
+    const title = typeof rawTitle === 'string' ? rawTitle.trim() : ''
 
+    if (!title) {
+      setResponseStatus(event, 400)
+      return {
+        error: 'Missing required "title" query parameter',
+      }
+    }
     const { appApiOrgCode } = useRuntimeConfig().public
     const { pool } = await getVectorStore()
     const runtimeConfig = useRuntimeConfig()
