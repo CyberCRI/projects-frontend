@@ -45,28 +45,37 @@ const locationToMarker = async (locations: AnyTranslatedLocation[]) => {
   return markers
 }
 
-watch(
-  [locationLayerGrouped, query],
-  () => {
-    const cluster = toRaw(props.map.cluster)
-    const map = toRaw(props.map.map)
-    const layers = toRaw(locationLayerGrouped.value) as { [key in LocationType]: L.Marker[] }
+const onChange = () => {
+  const cluster = toRaw(props.map.cluster)
+  const map = toRaw(props.map.map)
+  const layers = toRaw(locationLayerGrouped.value) as { [key in LocationType]: L.Marker[] }
 
-    Object.entries(layers).forEach(([LocationType, markers]) => {
-      // if enabled in query
-      if (query[LocationType]) {
-        cluster.addLayers(markers)
+  const bounds = map.getBounds()
+  const toRemove = []
+  const toAdd = []
+
+  Object.entries(layers).forEach(([LocationType, markers]) => {
+    // else remove all layers
+    markers.forEach((marker) => {
+      if (!query[LocationType] || !bounds.contains(marker.getLatLng())) {
+        toRemove.push(marker)
       } else {
-        // else remove all layers
-        cluster.removeLayers(markers)
+        // if enabled in query
+        toAdd.push(marker)
       }
     })
+  })
+  cluster.removeLayers(toRemove)
+  cluster.addLayers(toAdd)
+  console.log(`total: ${toRemove.length}`)
+}
 
-    cluster.refreshClusters()
-    map.invalidateSize()
-  },
-  { immediate: true }
-)
+onMounted(() => {
+  const map = toRaw(props.map.map)
+  map.on('move', onChange)
+})
+
+watch([locationLayerGrouped, query], onChange, { immediate: true })
 
 watch(
   () => props.locations,
