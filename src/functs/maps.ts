@@ -9,5 +9,7 @@ export const IconMapLocationType = (locationType: LocationType): IconImageChoice
       return 'Users'
     case 'address':
       return 'Home'
+    default:
+      return 'Alert'
   }
 }

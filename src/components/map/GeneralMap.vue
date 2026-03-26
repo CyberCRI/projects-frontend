@@ -3,15 +3,16 @@
     <client-only>
       <BaseMap ref="map" :config="CONFIG" use-cluster>
         <template #default="slotProps">
-          <MapPointer
+          <MultiLocation :map="slotProps" :locations="locations" />
+          <!-- <MapPointer
             v-for="location in locations"
-            :key="location.id"
+            :key="location.id" mapInstance
             :location="location"
             @mounted="slotProps.addPointer"
             @unmounted="slotProps.removePointer"
           >
-            <!-- <LocationTooltipDynamic :location="location" /> -->
-          </MapPointer>
+            <LocationTooltipDynamic :location="location" /> -->
+          <!-- </MapPointer> -->
         </template>
       </BaseMap>
     </client-only>
@@ -22,6 +23,7 @@
 import BaseMap from '@/components/map/BaseMap.vue'
 import LocationTooltipDynamic from '@/components/map/LocationTooltipDynamic.vue'
 import MapPointer from '@/components/map/MapPointer.vue'
+import MultiLocation from '@/components/map/MultiLocation.vue'
 import { LocationGeneral } from '@/interfaces/maps'
 
 const props = withDefaults(
@@ -38,12 +40,12 @@ const CONFIG = {
   minZoom: 0,
 }
 
-const mapRef = useTemplateRef('map')
-watchEffect(() => {
-  if (!props.loading && mapRef.value) {
-    mapRef.value.centerMap()
-  }
-})
+// const mapRef = useTemplateRef('map')
+// watchEffect(() => {
+//   if (!props.loading && mapRef.value) {
+//     mapRef.value.centerMap()
+//   }
+// })
 </script>
 
 <style lang="scss" scoped>

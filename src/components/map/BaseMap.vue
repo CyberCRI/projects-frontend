@@ -6,6 +6,7 @@
         :add-pointer="addPointer"
         :remove-pointer="removePointer"
         :map="mapInstance"
+        :cluster="markerClusterInstance"
       />
     </div>
   </div>
@@ -20,6 +21,7 @@ import { Geocoding, MapPointerOption } from '@/interfaces/maps'
 import { IconMapLocationType } from '@/functs/maps'
 import { ICONS } from '@/functs/IconImage'
 import { LocationType } from '@/models/types'
+import { throttle } from 'es-toolkit'
 
 const props = withDefaults(
   defineProps<{
@@ -41,7 +43,6 @@ const emit = defineEmits<{
     },
   ]
   click: [any]
-  'map-moved': []
 }>()
 
 const mapInstance = shallowRef<L.Map>(null)
@@ -61,8 +62,8 @@ const CONFIG: L.MapOptions = {
     [84, 195],
   ],
   maxBoundsViscosity: 1,
-  worldCopyJump: true,
-  preferCanvas: true,
+  // worldCopyJump: true,
+  // preferCanvas: true,
   ...props.config,
 }
 const ICON_SIZE: L.PointTuple = [80, 69]
@@ -74,9 +75,9 @@ const createClusterIcons = (cluster) => {
   const counterLocationType: { [key in LocationType]?: number } = {}
 
   markers.forEach((m) => {
-    const className = m.getIcon().options.className
-    counterLocationType[className] ??= 0
-    counterLocationType[className] += 1
+    const locationType = m.getIcon().options.location.type
+    counterLocationType[locationType] ??= 0
+    counterLocationType[locationType] += 1
   })
 
   const clusterMarker = document.createElement('div')
@@ -104,20 +105,20 @@ const createClusterIcons = (cluster) => {
   })
 }
 
+const bounds = computed(() => {
+  return Array.from(markers.value).map(([, m]) => [m.getLatLng().lat, m.getLatLng().lng])
+})
+
 const centerMap = () => {
   nextTick(() => {
+    // Make sure to "unproxy" the map before using it with Leaflet
     const map = toRaw(mapInstance.value)
     if (!map) {
       return // fix error if quiting the map before it's loaded
     }
 
-    const bounds = []
-    markers.value.forEach((m) => {
-      bounds.push([m.getLatLng().lat, m.getLatLng().lng])
-    })
-    // Make sure to "unproxy" the map before using it with Leaflet
-    if (bounds.length) {
-      map.fitBounds(bounds, { maxZoom: 5 })
+    if (bounds.value.length) {
+      map.fitBounds(bounds.value, { maxZoom: 5 })
     }
   })
 }
@@ -146,6 +147,7 @@ const addPointer = async (
   { markerContent, location, tooltip }: MapPointerOption,
   eventHandlers: any = null
 ) => {
+  return
   const icon = L.divIcon({
     html: markerContent,
     className: location.type,
@@ -181,13 +183,13 @@ const addPointer = async (
 
   if (cluster) {
     cluster.addLayer(marker)
-    cluster.refreshClusters()
   } else {
     map.addLayer(marker)
   }
 }
 
 const removePointer = (location: AnyLocation) => {
+  return
   const marker = markers.value.get(location.id) as L.Marker
 
   const map = toRaw(mapInstance.value)
@@ -214,6 +216,10 @@ const removePointer = (location: AnyLocation) => {
 onBeforeMount(() => fixLeaflet())
 onMounted(() => {
   const map = L.map(mapRef.value, CONFIG)
+  L.tileLayer(MAP_URL, {
+    attribution:
+      '<a href="https://carto.com/basemaps/">Basemaps</a> | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
+  }).addTo(map)
 
   if (props.useCluster) {
     const markerCluster = L.markerClusterGroup({
@@ -226,19 +232,10 @@ onMounted(() => {
     markerClusterInstance.value = markerCluster
   }
 
-  map.on('contextmenu', (e) => {
-    // @ts-expect-error needed thats ?
-    emit('contextmenu', e)
-  })
+  // click on maps to select points
   map.on('click', (e) => emit('click', e))
-  L.tileLayer(MAP_URL, {
-    attribution:
-      '<a href="https://carto.com/basemaps/">Basemaps</a> | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
-  }).addTo(map)
 
-  map.on('move', () => emit('map-moved'))
-
-  nextTick(() => centerMap())
+  centerMap()
   mapInstance.value = map
 })
 </script>

@@ -3,7 +3,7 @@
     <div class="map-inner-ctn">
       <div class="map">
         <ClientOnly>
-          <BaseMap ref="summary-map" :config="CONFIG" use-cluster @map-moved="$emit('map-moved')">
+          <BaseMap ref="summary-map" :config="CONFIG" use-cluster>
             <template #default="slotProps">
               <template v-if="slotProps.map">
                 <MapPointer
@@ -58,7 +58,6 @@ const props = withDefaults(
 )
 
 defineEmits<{
-  'map-moved': []
   expand: []
   edit: [AnyTranslatedLocation]
 }>()
