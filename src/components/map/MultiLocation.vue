@@ -1,21 +1,15 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="TLocation extends AnyTranslatedLocation">
 import * as L from 'leaflet'
 
-import type { MapPointerOption } from '@/interfaces/maps'
 import type { AnyTranslatedLocation } from '@/models/location.model'
 import type { LocationType } from '@/models/types'
-import { groupBy, pick } from 'es-toolkit'
+import { groupBy } from 'es-toolkit'
 import { renderToString } from '@vue/test-utils'
 import MarkerIcon from '@/components/map/MarkerIcon.vue'
 import LocationTypeComponent from '@/components/map/LocationType.vue'
 
 const props = defineProps<{
-  map: {
-    addPointer: (conf: MapPointerOption, eventHandler: any) => void
-    map: L.Map
-    cluster: L.MarkerClusterGroup
-  }
-  locations: AnyTranslatedLocation[]
+  locations: TLocation[]
 }>()
 
 const { query, toggleQuery } = useQuery({
@@ -25,6 +19,9 @@ const { query, toggleQuery } = useQuery({
 })
 
 const locationLayerGrouped = ref<{ [key in LocationType]?: L.Marker[] }>({})
+
+const mapCluster = inject<Ref<L.MarkerClusterGroup>>('cluster')
+const addLayers = inject<Ref<L.MarkerClusterGroup['addLayers']>>('addLayers')
 
 const locationToMarker = async (locations: AnyTranslatedLocation[]) => {
   const markers: L.Marker[] = []
@@ -45,55 +42,25 @@ const locationToMarker = async (locations: AnyTranslatedLocation[]) => {
   return markers
 }
 
-const onChange = () => {
-  const cluster = toRaw(props.map.cluster)
-  const map = toRaw(props.map.map)
-  const layers = toRaw(locationLayerGrouped.value) as { [key in LocationType]: L.Marker[] }
-
-  const bounds = map.getBounds()
-  const toRemove = []
-  const toAdd = []
-
-  Object.entries(layers).forEach(([LocationType, markers]) => {
-    // else remove all layers
-    markers.forEach((marker) => {
-      if (!query[LocationType] || !bounds.contains(marker.getLatLng())) {
-        toRemove.push(marker)
-      } else {
-        // if enabled in query
-        toAdd.push(marker)
-      }
-    })
-  })
-  cluster.removeLayers(toRemove)
-  cluster.addLayers(toAdd)
-  console.log(`total: ${toRemove.length}`)
-}
-
-onMounted(() => {
-  const map = toRaw(props.map.map)
-  map.on('move', onChange)
-})
-
-watch([locationLayerGrouped, query], onChange, { immediate: true })
-
-watch(
-  () => props.locations,
-  async () => {
-    const locations = props.locations
-    if (!locations) {
-      return
-    }
-
-    const locationGrouped = groupBy(props.locations, (item) => item.type)
-    const loc: typeof locationLayerGrouped.value = {}
-
-    for (const [locationType, locations] of Object.entries(locationGrouped)) {
-      loc[locationType] = await locationToMarker(locations)
-    }
-    locationLayerGrouped.value = loc
+watchEffect(async () => {
+  const locations = props.locations
+  if (!locations) {
+    return
   }
-)
+
+  const layers = Layers
+
+  addLayers.value()
+
+  // group by locationType (team/impact/address ...ect) (grouped for filters)
+  const locationGrouped = groupBy(props.locations, (item) => item.type)
+  const loc: typeof locationLayerGrouped.value = {}
+
+  for (const [locationType, locations] of Object.entries(locationGrouped)) {
+    loc[locationType] = await locationToMarker(locations)
+  }
+  locationLayerGrouped.value = loc
+})
 
 const enabledFilters = computed(() => {
   const layers = toRaw(locationLayerGrouped.value)
@@ -110,47 +77,58 @@ const pointsCount = computed(() => {
 </script>
 
 <template>
-  <div v-if="enabledFilters.length" class="actions">
-    <h2>Menu</h2>
-    <form class="list-actions">
-      <LocationTypeComponent
-        v-for="key in enabledFilters"
-        :key="key"
-        class="scale-hover"
-        :class="{ disabled: !query[key] }"
-        :location-type="key"
-        @click="toggleQuery(key, true)"
-      />
+  <Teleport to="body">
+    <div v-if="enabledFilters.length" class="actions">
+      <h2>Menu</h2>
 
-      <EmptyLabel v-if="pointsCount" :label="pointsCount.toString()" />
-    </form>
-  </div>
+      <form class="list-actions">
+        <LocationTypeComponent
+          v-for="key in enabledFilters"
+          :key="key"
+          class="scale-hover"
+          :class="{ disabled: !query[key] }"
+          :location-type="key"
+          @click="toggleQuery(key, true)"
+        />
+
+        <EmptyLabel v-if="pointsCount" :label="pointsCount.toString()" />
+      </form>
+    </div>
+  </Teleport>
 </template>
 
 <style lang="scss" scoped>
-.actions {
-  position: absolute;
+.btn-filter {
   background-color: white;
-  margin: 1rem;
-  border-radius: 1rem;
-  top: 0;
-  right: 0;
-  padding: 1rem;
-  z-index: 999999;
+  border-radius: 100%;
+  padding: 0.5rem;
+  transition: all 0.2s;
 
-  h2 {
-    text-align: center;
-    padding-bottom: 1rem;
+  cursor: pointer;
+
+  svg {
+    width: 1.5rem;
+    color: black;
+    fill: black;
   }
 
-  .list-actions {
-    display: flex;
-    gap: 0.5rem;
-    flex-direction: column;
-  }
-
-  .disabled {
-    opacity: 0.5;
+  &:hover {
+    transform: scale(1.05);
   }
 }
+
+// h2 {
+//   text-align: center;
+//   padding-bottom: 1rem;
+// }
+
+// .list-actions {
+//   display: flex;
+//   gap: 0.5rem;
+//   flex-direction: column;
+// }
+
+// .disabled {
+//   opacity: 0.5;
+// }
 </style>

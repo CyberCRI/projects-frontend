@@ -1,14 +1,17 @@
 <template>
-  <div ref="map" v-click-outside="closePopUp" class="map">
-    <div class="hidden">
-      <slot
-        v-if="mapInstance"
-        :add-pointer="addPointer"
-        :remove-pointer="removePointer"
-        :map="mapInstance"
-        :cluster="markerClusterInstance"
-      />
+  <div class="contents">
+    <div ref="map" v-click-outside="closePopUp" class="map">
+      <div class="hidden">
+        <slot
+          v-if="mapInstance"
+          :add-pointer="addPointer"
+          :remove-pointer="removePointer"
+          :map="mapInstance"
+          :cluster="markerClusterInstance"
+        />
+      </div>
     </div>
+    <slot name="controls" />
   </div>
 </template>
 
@@ -21,7 +24,6 @@ import { Geocoding, MapPointerOption } from '@/interfaces/maps'
 import { IconMapLocationType } from '@/functs/maps'
 import { ICONS } from '@/functs/IconImage'
 import { LocationType } from '@/models/types'
-import { throttle } from 'es-toolkit'
 
 const props = withDefaults(
   defineProps<{
@@ -55,19 +57,17 @@ const MAP_URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{
 const CONFIG: L.MapOptions = {
   center: [0, 0],
   zoom: 2,
-  maxZoom: 18,
+  maxZoom: 20,
   minZoom: 2,
   maxBounds: [
     [-90, -175],
     [84, 195],
   ],
   maxBoundsViscosity: 1,
-  // worldCopyJump: true,
   preferCanvas: true,
+  zoomControl: false,
   ...props.config,
 }
-const ICON_SIZE: L.PointTuple = [80, 69]
-const ICON_ANCHOR: L.PointTuple = ICON_SIZE ? [ICON_SIZE[0] / 2, ICON_SIZE[1]] : null
 
 const createClusterIcons = (cluster) => {
   const markers = cluster.getAllChildMarkers()
@@ -97,7 +97,6 @@ const createClusterIcons = (cluster) => {
 
   const clusterMarkerString = `${clusterMarker.outerHTML}<div class="line" />`
 
-  // const sizeClass = (cluster.getChildCount() + '').length
   return L.divIcon({
     html: clusterMarkerString,
     className: 'cluster-parent',
@@ -123,95 +122,39 @@ const centerMap = () => {
   })
 }
 
-// this is called by other components
-const flyTo = (coordinates, zoom = 8) => {
-  const map = toRaw(mapInstance.value)
-  map?.flyTo([coordinates.lat, coordinates.lng], zoom)
-}
+const layers = ref<L.Layer[]>([])
+const addLayers = (layersToAdd: L.Layer[]) => (layers.value = layersToAdd)
+const filters = ref<((layers: L.Layer[]) => L.Layer[])[]>([])
+const refreshLayers = () => {
+  const cluster = toRaw(markerClusterInstance.value)
 
-const closePopUp = () => {
-  const map = toRaw(mapInstance.value)
-  map.closePopup()
-}
+  // get all layers actualy loaded
+  const toRemove = cluster.getLayers()
+  let toAdd = layers.value
 
-defineExpose({
-  flyTo,
-  centerMap,
-  closePopUp,
-  map: mapInstance,
-})
-
-provide('closePopUp', closePopUp)
-
-const addPointer = async (
-  { markerContent, location, tooltip }: MapPointerOption,
-  eventHandlers: any = null
-) => {
-  return
-  const icon = L.divIcon({
-    html: markerContent,
-    className: location.type,
-    iconSize: ICON_SIZE,
-    iconAnchor: ICON_ANCHOR,
+  filters.value.forEach((funcFilters) => {
+    toAdd = funcFilters(toAdd)
   })
 
-  const map = toRaw(mapInstance.value)
-  const cluster = toRaw(markerClusterInstance.value)
-
-  const marker = L.marker([location.lat, location.lng], { icon })
-  if (tooltip) {
-    // fix right click not triggering edit location
-    // in project map edition
-    tooltip.addEventListener('contextmenu', (e) => {
-      e.stopPropagation()
-      e.preventDefault()
-      emit('contextmenu', {
-        isEdit: true,
-        location,
-        latlng: [location.lat, location.lng],
-      })
-    })
-    marker.bindPopup(tooltip)
-  }
-  if (eventHandlers) {
-    for (const [enventName, eventHandler] of Object.entries(eventHandlers)) {
-      marker.on(enventName, eventHandler as any)
-    }
-  }
-
-  markers.value.set(location.id, marker)
-
-  if (cluster) {
-    cluster.addLayer(marker)
-  } else {
-    map.addLayer(marker)
-  }
+  // all layers not included in toAdd, need to be removed
+  cluster.removeLayers(Array.from(toRemove).filter((el) => !toAdd.includes(el)))
+  cluster.addLayers(toAdd)
 }
+watch([filters, layers], refreshLayers)
 
-const removePointer = (location: AnyLocation) => {
-  return
-  const marker = markers.value.get(location.id) as L.Marker
+const EXPOSE = Object.freeze({
+  cluster: markerClusterInstance,
+  map: mapInstance,
+  centerMap,
+  addLayers,
+  refreshLayers,
+})
 
-  const map = toRaw(mapInstance.value)
-  const cluster = toRaw(markerClusterInstance.value)
-
-  if (!map || !marker) {
-    return
-  }
-
-  if (cluster) {
-    cluster.removeLayer(marker)
-  } else {
-    map.removeLayer(marker)
-  }
-
-  markers.value.delete(location.id)
-  if (cluster) {
-    cluster.refreshClusters()
-  }
-  // force readraw
-  map.invalidateSize()
-}
+defineExpose(EXPOSE)
+// provide for subchild all exposed method
+Object.entries(EXPOSE).forEach(([key, value]) => {
+  provide(key, value)
+})
 
 onBeforeMount(() => fixLeaflet())
 onMounted(() => {
@@ -235,8 +178,8 @@ onMounted(() => {
   // click on maps to select points
   map.on('click', (e) => emit('click', e))
 
-  centerMap()
   mapInstance.value = map
+  centerMap()
 })
 </script>
 

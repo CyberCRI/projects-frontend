@@ -22,8 +22,6 @@ const { t } = useNuxtI18n()
 
 const { isLoading, data } = getLocations(organizationCode)
 
-watchEffect(() => console.log(data.value, data.value?.length))
-
 const isEmpty = computed(() => (data.value?.length ?? 0) === 0)
 
 onBeforeUnmount(() => {
@@ -68,11 +66,6 @@ useLpiHead2({
     svg {
       margin: 0 auto $space-m;
     }
-  }
-
-  .leaflet-top {
-    // override leaflet value
-    margin-top: pxToRem(40px);
   }
 
   .empty-map {

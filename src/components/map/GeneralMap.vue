@@ -1,18 +1,16 @@
 <template>
   <div class="leaflet-map" :class="{ loading }">
     <client-only>
-      <BaseMap ref="map" :config="CONFIG" use-cluster>
+      <BaseMap ref="map" use-cluster>
         <template #default="slotProps">
           <MultiLocation :map="slotProps" :locations="locations" />
-          <!-- <MapPointer
-            v-for="location in locations"
-            :key="location.id" mapInstance
-            :location="location"
-            @mounted="slotProps.addPointer"
-            @unmounted="slotProps.removePointer"
-          >
-            <LocationTooltipDynamic :location="location" /> -->
-          <!-- </MapPointer> -->
+        </template>
+        <template #controls>
+          <ContainerMapControl>
+            <MapControlZoom />
+            <!-- <MapControlLocationType /> -->
+            <slot name="actions" />
+          </ContainerMapControl>
         </template>
       </BaseMap>
     </client-only>
@@ -21,31 +19,19 @@
 
 <script setup lang="ts">
 import BaseMap from '@/components/map/BaseMap.vue'
-import LocationTooltipDynamic from '@/components/map/LocationTooltipDynamic.vue'
-import MapPointer from '@/components/map/MapPointer.vue'
+import ContainerMapControl from '@/components/map/Control/ContainerMapControl.vue'
+import MapControlLocationType from '@/components/map/Control/MapControlLocationType.vue'
+import MapControlZoom from '@/components/map/Control/MapControlZoom.vue'
 import MultiLocation from '@/components/map/MultiLocation.vue'
 import { LocationGeneral } from '@/interfaces/maps'
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
     locations: LocationGeneral[]
     loading?: boolean
   }>(),
   { loading: true }
 )
-
-const CONFIG = {
-  zoom: 1,
-  maxZoom: 17,
-  minZoom: 0,
-}
-
-// const mapRef = useTemplateRef('map')
-// watchEffect(() => {
-//   if (!props.loading && mapRef.value) {
-//     mapRef.value.centerMap()
-//   }
-// })
 </script>
 
 <style lang="scss" scoped>
