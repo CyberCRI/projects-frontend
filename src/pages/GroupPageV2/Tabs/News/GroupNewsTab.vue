@@ -19,5 +19,5 @@ const props = withDefaults(
   }
 )
 
-const countElement = computed<number>(() => props.group.modules?.news)
+const countElement = computed<number>(() => props.group.modules?.news || 0)
 </script>

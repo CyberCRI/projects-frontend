@@ -16,8 +16,8 @@
           :editable="editable"
           :hide-see-more-button="preview"
           @location="onLocation"
-          @edit="onEditNews"
-          @delete="onDeleteNews"
+          @edit="onEditEvent"
+          @delete="onDeleteEvent"
         />
       </div>
 
@@ -30,7 +30,7 @@
       <ConfirmModal
         v-if="stateModals.delete"
         :title="$t('event.delete.message')"
-        @confirm="onConfirmDeleteNews"
+        @confirm="onConfirmDeleteEvent"
         @cancel="onCancel"
       >
         <EventItem is="div" :event="selectedEvent" location-preview />
@@ -100,7 +100,7 @@ const { status, data, pagination, refresh } = getGroupEvent(organizationCode, gr
   default: () => factoryPagination(eventSkeleton, limitSkeletons.value),
 })
 
-const onEditNews = (event: TranslatedEventModel) => {
+const onEditEvent = (event: TranslatedEventModel) => {
   selectedEvent.value = event
   openModals('edit')
 }
@@ -111,11 +111,11 @@ const onCreate = () => {
   openModals('edit')
 }
 
-const onDeleteNews = (event: TranslatedEventModel) => {
+const onDeleteEvent = (event: TranslatedEventModel) => {
   selectedEvent.value = event
   openModals('delete')
 }
-const onConfirmDeleteNews = () => {
+const onConfirmDeleteEvent = () => {
   deleteEvent(organizationCode, selectedEvent.value.id)
     .then(() => {
       toaster.pushSuccess(t('event.delete.success'))
