@@ -577,7 +577,9 @@
     "create": "Erstellung",
     "order-asc": "Älter als neuster",
     "order-desc": "neuste bis älteste",
-    "close": "Nähe"
+    "close": "Nähe",
+    "to": "Zu",
+    "new": "neue"
   },
   "complete-profile": {
     "bio": {
@@ -978,7 +980,9 @@
     "default-title": "Standort",
     "impact": "Auswirkungen",
     "team": "Team",
-    "address": "Anschrift"
+    "address": "Anschrift",
+    "news": "Nachrichten",
+    "event": "Veranstaltung"
   },
   "map": {
     "empty": "Nichts hier noch... Die Mitarbeiter haben noch keine Projekte lokalisiert.",
@@ -2484,7 +2488,8 @@
       }
     },
     "group-label": "Gruppe:",
-    "groups-label": "Gruppen:"
+    "groups-label": "Gruppen:",
+    "view": "Siehe Veranstaltung"
   },
   "news": {
     "create": {
@@ -2534,7 +2539,8 @@
     },
     "drawer": {
       "title": "Nachrichten bearbeiten"
-    }
+    },
+    "view": "Siehe Nachrichten"
   },
   "instructions": {
     "create": {
@@ -2802,8 +2808,9 @@
     "similars": "Ähnliche Gruppen",
     "presentation": "Einleitung",
     "subgroups": "Untergruppen",
-    "projects-locations": "Landkarte",
-    "location": "Adresse | Adressen"
+    "locations": "Landkarte",
+    "location": "Adresse | Adressen",
+    "event": "Veranstaltungen"
   },
   "gallery": {
     "title": "Galerie",

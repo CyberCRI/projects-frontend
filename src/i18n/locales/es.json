@@ -577,7 +577,9 @@
     "create": "Crear",
     "order-asc": "más antiguo a más reciente",
     "order-desc": "más reciente a la más antigua",
-    "close": "cerca"
+    "close": "cerca",
+    "to": "A",
+    "new": "nuevo"
   },
   "complete-profile": {
     "bio": {
@@ -978,7 +980,9 @@
     "map": "Geolocalización",
     "add-location": "Agregar un lugar",
     "add-location-point": "Agregar un punto de ubicación",
-    "default-title": "Ubicación"
+    "default-title": "Ubicación",
+    "news": "Noticias",
+    "event": "Evento"
   },
   "map": {
     "page-title": "Mapa",
@@ -2484,7 +2488,8 @@
       }
     },
     "group-label": "Grupo:",
-    "groups-label": "Grupos:"
+    "groups-label": "Grupos:",
+    "view": "Ver evento"
   },
   "news": {
     "create": {
@@ -2534,7 +2539,8 @@
     },
     "drawer": {
       "title": "Edición de noticias"
-    }
+    },
+    "view": "Ver noticias"
   },
   "instructions": {
     "create": {
@@ -2802,8 +2808,9 @@
     "similars": "Grupos similares",
     "presentation": "Introducción",
     "subgroups": "Subgrupos",
-    "projects-locations": "Mapa",
-    "location": "Discursos sobre la vida"
+    "locations": "Mapa",
+    "location": "Discursos sobre la vida",
+    "event": "Evento para eventos en la actualidad"
   },
   "gallery": {
     "title": "Galería",

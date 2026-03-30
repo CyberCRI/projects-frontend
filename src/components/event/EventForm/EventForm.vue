@@ -30,15 +30,24 @@
         {{ $t('invitation.create.field.validity.pick-date') }}
       </button>
 
-      <span v-if="model.event_date" class="date-preview">
-        <time class="date-preview-start" :datetime="d(model.event_date)">
-          {{ displayedDate }}
+      <span v-if="model.start_date || model.end_date" class="date-preview">
+        <time class="date-preview-start" :datetime="d(model.start_date)">
+          {{ displayedDate[0] }}
         </time>
+        <template v-if="displayedDate[1]">
+          <span class="date-separator">
+            {{ '-' }}
+          </span>
+          <time class="date-preview-end" :datetime="d(model.end_date)">
+            {{ displayedDate[1] }}
+          </time>
+        </template>
       </span>
 
       <!-- disable our/minutes if not  -->
       <VueDatePicker
         v-if="stateModals.DatePicker"
+        range
         inline
         :model-value="datePickerValue"
         :locale="locale"
@@ -46,7 +55,47 @@
         @update:model-value="onDateSelected"
       />
 
-      <FieldErrors :errors="v$.event_date.$errors" />
+      <FieldErrors :errors="v$.start_date.$errors" />
+    </div>
+
+    <div class="form-section">
+      <!-- locations -->
+      <div v-if="!model.location" class="event-location">
+        <label>
+          {{ $t('location.default-title') }}
+        </label>
+        <LpiButton
+          class="add-btn"
+          :btn-icon="model.location ? 'Pen' : 'Plus'"
+          data-test="add-location"
+          :label="$t(model.location ? 'group.form.edit' : 'group.form.add')"
+          @click="openModals('LocationDrawer')"
+        />
+      </div>
+      <LocationList
+        :locations="model.location ? [model.location] : []"
+        editable
+        :focus="false"
+        @edit="openModals('LocationForm')"
+        @delete="updateLocation(null)"
+      />
+      <LocationForm
+        v-if="stateModals.LocationForm"
+        v-model="model.location"
+        :location-types="LOCATION_TYPES"
+        @close="closeModals('LocationForm')"
+        @submit="closeModals('LocationForm')"
+        @delete="updateLocation(null)"
+      />
+      <LocationDrawer
+        :is-opened="stateModals.LocationDrawer"
+        :locations="model.location ? [model.location] : []"
+        editable
+        :location-types="LOCATION_TYPES"
+        @close="closeModals('LocationDrawer')"
+        @submit="updateLocation($event)"
+        @delete="updateLocation(null)"
+      />
     </div>
 
     <div v-if="selectedGroup" class="form-section">
@@ -76,6 +125,8 @@ import { helpers, required } from '@vuelidate/validators'
 import MultiGroupPicker from '@/components/group/MultiGroupPicker/MultiGroupPicker.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
+import { LocationType } from '@/models/types'
+import { isNil } from 'es-toolkit'
 import { EventForm } from '@/models/event.model'
 import { defaultForm } from '@/form/event'
 
@@ -93,31 +144,42 @@ const emit = defineEmits<{
   invalid: [boolean]
 }>()
 
-const { stateModals, closeModals, toggleModals } = useModals({
+const { stateModals, openModals, closeModals, toggleModals } = useModals({
+  LocationForm: false,
+  LocationDrawer: false,
   DatePicker: false,
 })
+
+const LOCATION_TYPES: LocationType[] = ['event']
 
 const rules = computed(() => ({
   title: {
     required: helpers.withMessage(t('event.form.title.required'), required),
   },
-  event_date: {
+  start_date: {
     required: helpers.withMessage(t('event.form.event_date.required'), required),
   },
 }))
 
-const datePickerValue = computed(() =>
-  model.value.event_date ? new Date(model.value.event_date) : new Date()
-)
+const datePickerValue = computed(() => {
+  return [
+    model.value.start_date ? new Date(model.value.start_date) : new Date(),
+    model.value.end_date ? new Date(model.value.end_date) : null,
+  ]
+})
 
 const displayedDate = computed(() => {
-  return new Date(datePickerValue.value).toLocaleDateString(locale.value, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-  })
+  return datePickerValue.value
+    .filter((v) => !isNil(v))
+    .map((date) => {
+      return new Date(date).toLocaleDateString(locale.value, {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      })
+    })
 })
 
 const v$ = useVuelidate(rules, model)
@@ -133,7 +195,7 @@ watch(
 )
 
 const onDateSelected = (modelData) => {
-  updateForm({ event_date: modelData[0], end_date: modelData[1] })
+  updateForm({ start_date: modelData[0], end_date: modelData[1] })
   closeModals('DatePicker')
 }
 
@@ -142,6 +204,10 @@ const updateForm = (data) => {
     ...model.value,
     ...data,
   }
+}
+const updateLocation = (location) => {
+  updateForm({ location })
+  closeModals('LocationDrawer', 'LocationForm')
 }
 </script>
 <style lang="scss" scoped>
@@ -196,5 +262,11 @@ label,
     opacity: 0.8;
     letter-spacing: -0.04rem;
   }
+}
+
+.event-location {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

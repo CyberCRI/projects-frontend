@@ -7,7 +7,8 @@ const EVENT_OUTPUT_SCHEMA = N.object({
   slug: N.string().describe('The slug of the event'),
   title: N.string().describe('The title of the event'),
   content: N.string().describe('The content of the event'),
-  event_date: N.string().describe('The date of the event'),
+  start_date: N.string().describe('The start date of the event'),
+  end_date: N.string().describe('The end date of the event'),
   item_type: N.literal('event').describe('The type of the item, always event'),
 })
 
@@ -16,7 +17,8 @@ const mapEvent = (e: any) => ({
   slug: e.slug,
   title: e.title,
   content: e.content,
-  event_date: e.event_date,
+  start_date: e.start_date,
+  end_date: e.end_date,
   item_type: 'event',
 })
 
@@ -35,7 +37,7 @@ export default (server) => {
       const todayZeroHour = new Date()
       todayZeroHour.setHours(0, 0, 0, 0)
       const params = {
-        ordering: 'event_date',
+        ordering: 'start_date',
         from_date: todayZeroHour.toISOString(),
       }
       let results = {}
@@ -73,7 +75,7 @@ export default (server) => {
       const todayZeroHour = new Date()
       todayZeroHour.setHours(0, 0, 0, 0)
       const params = {
-        ordering: '-event_date',
+        ordering: '-start_date',
         to_date: todayZeroHour.toISOString(),
       }
       let results = {}

@@ -49,6 +49,46 @@
     </div>
 
     <div class="form-section">
+      <!-- locations -->
+      <div v-if="!model.location" class="news-location">
+        <label>
+          {{ $t('location.default-title') }}
+        </label>
+        <LpiButton
+          class="add-btn"
+          :btn-icon="model.location ? 'Pen' : 'Plus'"
+          data-test="add-location"
+          :label="$t(model.location ? 'group.form.edit' : 'group.form.add')"
+          @click="openModals('LocationDrawer')"
+        />
+      </div>
+      <LocationList
+        :locations="model.location ? [model.location] : []"
+        editable
+        :focus="false"
+        @edit="openModals('LocationForm')"
+        @delete="updateLocation(null)"
+      />
+      <LocationForm
+        v-if="stateModals.LocationForm"
+        v-model="model.location"
+        :location-types="LOCATION_TYPES"
+        @close="closeModals('LocationForm')"
+        @submit="closeModals('LocationForm')"
+        @delete="updateLocation(null)"
+      />
+      <LocationDrawer
+        :is-opened="stateModals.LocationDrawer"
+        :locations="model.location ? [model.location] : []"
+        editable
+        :location-types="LOCATION_TYPES"
+        @close="closeModals('LocationDrawer')"
+        @submit="updateLocation($event)"
+        @delete="updateLocation(null)"
+      />
+    </div>
+
+    <div class="form-section">
       <label>{{ $t('news.form.content.label') }}</label>
       <TipTapEditor
         ref="tiptapEditor"
@@ -89,6 +129,7 @@ export const defaultForm = () => ({
   publication_date: new Date().toISOString(),
   people_groups: {},
   visible_by_all: true,
+  location: null,
 })
 </script>
 
@@ -107,7 +148,9 @@ import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { postOrganizationImage } from '@/api/organizations.service'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import { usePatatoids } from '@/composables/usePatatoids'
+import { LocationType } from '@/models/types'
 
+const LOCATION_TYPES: LocationType[] = ['news']
 withDefaults(
   defineProps<{
     selectedGroup?: boolean
@@ -116,7 +159,9 @@ withDefaults(
 )
 
 const model = defineModel({ default: defaultForm() })
-const { stateModals, closeModals, toggleModals } = useModals({
+const { stateModals, openModals, closeModals, toggleModals } = useModals({
+  LocationForm: false,
+  LocationDrawer: false,
   DatePicker: false,
 })
 
@@ -190,6 +235,11 @@ const onDateSelected = (modelData) => {
   updateForm({ publication_date: modelData })
   closeModals('DatePicker')
 }
+
+const updateLocation = (location) => {
+  updateForm({ location })
+  closeModals('LocationDrawer', 'LocationForm')
+}
 </script>
 
 <style lang="scss" scoped>
@@ -259,5 +309,11 @@ label,
     width: $layout-size-2xl;
     fill: $primary-dark;
   }
+}
+
+.news-location {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>
