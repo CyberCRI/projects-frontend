@@ -2,13 +2,7 @@
   <div class="contents">
     <div ref="map" v-click-outside="closePopUp" class="map">
       <div class="hidden">
-        <slot
-          v-if="mapInstance"
-          :add-pointer="addPointer"
-          :remove-pointer="removePointer"
-          :map="mapInstance"
-          :cluster="markerClusterInstance"
-        />
+        <slot v-if="mapInstance" />
       </div>
     </div>
     <slot name="controls" />
@@ -20,7 +14,7 @@ import * as L from 'leaflet'
 import fixLeaflet from '@/app/fixLeaflet'
 import 'leaflet.markercluster'
 import { AnyLocation, TranslatedLocation } from '@/models/location.model'
-import { Geocoding, MapPointerOption } from '@/interfaces/maps'
+import { Geocoding } from '@/interfaces/maps'
 import { IconMapLocationType } from '@/functs/maps'
 import { ICONS } from '@/functs/IconImage'
 import { LocationType } from '@/models/types'
@@ -75,7 +69,7 @@ const createClusterIcons = (cluster) => {
   const counterLocationType: { [key in LocationType]?: number } = {}
 
   markers.forEach((m) => {
-    const locationType = m.getIcon().options.location.type
+    const locationType = m.options.location.type
     counterLocationType[locationType] ??= 0
     counterLocationType[locationType] += 1
   })
@@ -104,7 +98,7 @@ const createClusterIcons = (cluster) => {
   })
 }
 
-const bounds = computed(() => {
+const bounds = computed<L.LatLngBoundsLiteral>(() => {
   return Array.from(markers.value).map(([, m]) => [m.getLatLng().lat, m.getLatLng().lng])
 })
 
@@ -122,32 +116,29 @@ const centerMap = () => {
   })
 }
 
-const layers = ref<L.Layer[]>([])
-const addLayers = (layersToAdd: L.Layer[]) => (layers.value = layersToAdd)
-const filters = ref<((layers: L.Layer[]) => L.Layer[])[]>([])
-const refreshLayers = () => {
+const closePopUp = () => {
+  const map = toRaw(mapInstance.value)
+  map?.closePopup()
+}
+
+const addLayers = (layers: L.Layer[]) => {
   const cluster = toRaw(markerClusterInstance.value)
 
   // get all layers actualy loaded
   const toRemove = cluster.getLayers()
-  let toAdd = layers.value
-
-  filters.value.forEach((funcFilters) => {
-    toAdd = funcFilters(toAdd)
-  })
+  let toAdd = layers
 
   // all layers not included in toAdd, need to be removed
   cluster.removeLayers(Array.from(toRemove).filter((el) => !toAdd.includes(el)))
   cluster.addLayers(toAdd)
 }
-watch([filters, layers], refreshLayers)
 
 const EXPOSE = Object.freeze({
   cluster: markerClusterInstance,
   map: mapInstance,
   centerMap,
+  closePopUp,
   addLayers,
-  refreshLayers,
 })
 
 defineExpose(EXPOSE)

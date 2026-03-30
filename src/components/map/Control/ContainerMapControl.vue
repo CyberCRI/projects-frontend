@@ -11,5 +11,9 @@
   right: 0;
   padding: 1rem;
   z-index: 999999;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  align-items: end;
 }
 </style>

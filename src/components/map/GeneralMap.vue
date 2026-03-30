@@ -2,13 +2,17 @@
   <div class="leaflet-map" :class="{ loading }">
     <client-only>
       <BaseMap ref="map" use-cluster>
-        <template #default="slotProps">
-          <MultiLocation :map="slotProps" :locations="locations" />
+        <template #default="mapProps">
+          <MultiLocation :locations="locationsFilter" />
         </template>
         <template #controls>
           <ContainerMapControl>
             <MapControlZoom />
-            <!-- <MapControlLocationType /> -->
+            <MapControlLocationType
+              ref="locationType"
+              :locations="locations"
+              @update="onUpdate('locationType', $event)"
+            />
             <slot name="actions" />
           </ContainerMapControl>
         </template>
@@ -24,14 +28,46 @@ import MapControlLocationType from '@/components/map/Control/MapControlLocationT
 import MapControlZoom from '@/components/map/Control/MapControlZoom.vue'
 import MultiLocation from '@/components/map/MultiLocation.vue'
 import { LocationGeneral } from '@/interfaces/maps'
+import { LocationType } from '@/models/types'
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     locations: LocationGeneral[]
     loading?: boolean
   }>(),
   { loading: true }
 )
+
+const filters = ref<{
+  locationType: { [key: LocationType]: boolean }
+}>({
+  locationType: {
+    team: true,
+    address: true,
+    impact: true,
+  },
+})
+
+const onUpdate = (name, query) => {
+  filters.value[name] = query
+}
+
+const locationsFilter = computed(() => {
+  let locations = props.locations
+  if (!locations) {
+    return []
+  }
+
+  locations = locations.filter((location) => {
+    return !!filters.value.locationType[location.type]
+  })
+
+  // locations = locations.filter((location) => {
+  //   return location.content_type == 'people_group'
+  // })
+
+  return locations
+})
 </script>
 
 <style lang="scss" scoped>

@@ -1,10 +1,12 @@
 import type {
   AddLinkedProjectInput,
   AddManyLinkedProjectInput,
+  ProjectModel,
   // LinkedProject,
   // ProjectHeaderOutput,
   // ProjectOutput,
   ProjectPatchInput,
+  ProjectSlugOrId,
 } from '@/models/project.model'
 import type { SearchParams } from '@/api/types'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
@@ -73,10 +75,8 @@ export async function deleteLinkedProject({ id, project_id }: { id: number; proj
   return await useAPI(`project/${project_id}/linked-project/${id}/`, { method: 'DELETE' })
 }
 
-export async function getProject(slugOrId: string, noError: boolean = false) {
-  return await useAPI(`project/${slugOrId}/`, {
-    noError: noError,
-  }) //.data.value
+export async function getProject(projectId: ProjectSlugOrId, config = {}) {
+  return await useAPI<ProjectModel>(`project/${projectId}/`, config)
 }
 
 export async function getAllRecommendedProjects(params: SearchParams) {

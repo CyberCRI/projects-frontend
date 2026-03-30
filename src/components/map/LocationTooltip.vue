@@ -45,6 +45,7 @@ const closePopUp = inject('closePopUp')
   display: grid;
   grid-template-rows: auto 1fr;
   gap: 0.2rem;
+  background-color: var(--white);
   transition: opacity 0.15s ease-in-out;
   border: $border-width-l solid;
   border-radius: $border-radius-m;

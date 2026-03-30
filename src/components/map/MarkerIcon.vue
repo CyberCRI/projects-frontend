@@ -1,25 +1,21 @@
 <script setup lang="ts">
-import { AnyLocation } from '@/models/location.model'
+import type { LocationType } from '@/models/types'
 
-const props = withDefaults(defineProps<{ location: AnyLocation; editable?: boolean }>(), {
+withDefaults(defineProps<{ locationType: LocationType; editable?: boolean }>(), {
   editable: false,
 })
 
 const emit = defineEmits<{
-  edit: [AnyLocation | null]
+  edit: []
 }>()
 </script>
 
 <template>
   <div class="map-pointer">
-    <div :class="['badge', location.type]">
-      <LocationType :location-type="location.type" />
+    <div :class="['badge', locationType]">
+      <LocationType :location-type="locationType" />
       <div v-if="editable" class="actions">
-        <ContextActionButton
-          action-icon="Pen"
-          class="edit-btn small"
-          @click.stop="emit('edit', location)"
-        />
+        <ContextActionButton action-icon="Pen" class="edit-btn small" @click.stop="emit('edit')" />
       </div>
     </div>
     <div class="line" />

@@ -12,5 +12,5 @@ export type MapPointerOption = {
 
 export type LocationGeneral = Pick<BaseLocationModel, 'lat' | 'lng' | 'id' | 'type'> & {
   content_id: string
-  content_type: 'projects' | 'groups'
+  content_type: 'project' | 'people_group'
 }

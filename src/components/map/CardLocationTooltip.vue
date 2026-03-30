@@ -2,7 +2,7 @@
   <LocationTooltip :location="location">
     <LinkButton
       :label="label"
-      class="card-tooltip-button"
+      class="card-tooltip-button skeletons-background"
       btn-icon="ArrowRight"
       :title="label"
       :to="to"
@@ -13,13 +13,13 @@
           v-if="haveImage"
           :picture-data="image"
           :default-picture="defaultPicture"
-          class="card-tooltip__image"
+          class="card-tooltip__image skeletons-background"
         />
         <div>
-          <h3 class="card-title" :title="props.title">
+          <h3 class="card-title skeletons-text" :title="props.title">
             {{ title }}
           </h3>
-          <p class="card-purpose" :title="props.description">
+          <p class="card-purpose skeletons-text" :title="props.description">
             {{ description }}
           </p>
         </div>
@@ -51,7 +51,7 @@ const props = withDefaults(
 
 const title = computed(() => cropIfTooLong(props.title, 45))
 const description = computed(() => cropIfTooLong(props.description, 85))
-const haveImage = computed(() => props.image && props.defaultPicture)
+const haveImage = computed(() => props.image || props.defaultPicture)
 </script>
 
 <style lang="scss" scoped>

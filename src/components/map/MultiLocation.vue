@@ -1,134 +1,94 @@
 <script setup lang="ts" generic="TLocation extends AnyTranslatedLocation">
 import * as L from 'leaflet'
 
-import type { AnyTranslatedLocation } from '@/models/location.model'
-import type { LocationType } from '@/models/types'
-import { groupBy } from 'es-toolkit'
-import { renderToString } from '@vue/test-utils'
+import type { AnyLocation, AnyTranslatedLocation } from '@/models/location.model'
 import MarkerIcon from '@/components/map/MarkerIcon.vue'
-import LocationTypeComponent from '@/components/map/LocationType.vue'
+import { LocationType } from '@/models/types'
+import LazyLocationTooltip from '@/components/map/LazyLocationTooltip.vue'
 
 const props = defineProps<{
   locations: TLocation[]
 }>()
 
-const { query, toggleQuery } = useQuery({
-  address: true,
-  impact: true,
-  team: true,
-})
+const addLayers = inject<(l: L.Layer[]) => void>('addLayers')
 
-const locationLayerGrouped = ref<{ [key in LocationType]?: L.Marker[] }>({})
+const locationActive = ref(null)
 
-const mapCluster = inject<Ref<L.MarkerClusterGroup>>('cluster')
-const addLayers = inject<Ref<L.MarkerClusterGroup['addLayers']>>('addLayers')
+const markerAddress = useTemplateRef('markerAddress')
+const markerImpact = useTemplateRef('markerImpact')
+const markerTeam = useTemplateRef('markerTeam')
+const markerPopup = useTemplateRef('markerPopup')
 
-const locationToMarker = async (locations: AnyTranslatedLocation[]) => {
-  const markers: L.Marker[] = []
-  const svg = await renderToString(MarkerIcon, { props: { location: locations[0] } })
-
-  for (const location of locations) {
-    const options = {
-      icon: L.divIcon({
-        className: `${location.type}`,
-        html: svg,
-        // @ts-expect-error ignore set
-        location,
-      }),
-    }
-    const marker = L.marker([location.lng, location.lat], options).bindPopup(`${location.title}`)
-    markers.push(marker)
+const markerToRef = (locationType: LocationType) => {
+  switch (locationType) {
+    case 'address':
+      return markerAddress.value.innerHTML
+    case 'impact':
+      return markerImpact.value.innerHTML
+    case 'team':
+      return markerTeam.value.innerHTML
   }
-  return markers
+}
+
+const locationToMarker = async (location: AnyLocation) => {
+  const svg = markerToRef(location.type)
+  const popup = markerPopup.value
+  const options = {
+    icon: L.divIcon({
+      className: `${location.type}`,
+      html: svg,
+    }),
+    location,
+  }
+  const marker = L.marker([location.lng, location.lat], options).bindPopup(popup, { location })
+  return marker
 }
 
 watchEffect(async () => {
   const locations = props.locations
-  if (!locations) {
+  if (!locations || !addLayers || !import.meta.client) {
     return
   }
 
-  const layers = Layers
-
-  addLayers.value()
-
-  // group by locationType (team/impact/address ...ect) (grouped for filters)
-  const locationGrouped = groupBy(props.locations, (item) => item.type)
-  const loc: typeof locationLayerGrouped.value = {}
-
-  for (const [locationType, locations] of Object.entries(locationGrouped)) {
-    loc[locationType] = await locationToMarker(locations)
+  const markers = []
+  for (const location of locations) {
+    markers.push(await locationToMarker(location))
   }
-  locationLayerGrouped.value = loc
+
+  addLayers(markers)
 })
 
-const enabledFilters = computed(() => {
-  const layers = toRaw(locationLayerGrouped.value)
-  return Object.keys(layers) as LocationType[]
-})
+const map = inject<Ref<L.Map>>('map')
+watchEffect(() => {
+  const mapRaw = toRaw(map.value)
 
-const pointsCount = computed(() => {
-  const layers = toRaw(locationLayerGrouped.value)
+  mapRaw.on('popupopen', (ev) => {
+    locationActive.value = ev.popup.options.location
+    console.log('popupopen', ev, ev.popup.options.location)
+  })
 
-  return Object.entries(layers)
-    .filter(([locationType]) => query[locationType])
-    .reduce((acc, [, markers]) => acc + markers.length, 0)
+  mapRaw.on('popupclose', (ev) => {
+    locationActive.value = null
+    console.log('popupclose', ev, ev.popup.options.location)
+  })
 })
 </script>
 
 <template>
-  <Teleport to="body">
-    <div v-if="enabledFilters.length" class="actions">
-      <h2>Menu</h2>
-
-      <form class="list-actions">
-        <LocationTypeComponent
-          v-for="key in enabledFilters"
-          :key="key"
-          class="scale-hover"
-          :class="{ disabled: !query[key] }"
-          :location-type="key"
-          @click="toggleQuery(key, true)"
-        />
-
-        <EmptyLabel v-if="pointsCount" :label="pointsCount.toString()" />
-      </form>
+  <div class="hidden">
+    <div>
+      <div ref="markerAddress"><MarkerIcon location-type="address" /></div>
+      <div ref="markerImpact"><MarkerIcon location-type="impact" /></div>
+      <div ref="markerTeam"><MarkerIcon location-type="team" /></div>
     </div>
-  </Teleport>
+    <div ref="markerPopup">
+      <LazyLocationTooltip v-if="locationActive" :location="locationActive" />
+    </div>
+  </div>
 </template>
 
-<style lang="scss" scoped>
-.btn-filter {
-  background-color: white;
-  border-radius: 100%;
-  padding: 0.5rem;
-  transition: all 0.2s;
-
-  cursor: pointer;
-
-  svg {
-    width: 1.5rem;
-    color: black;
-    fill: black;
-  }
-
-  &:hover {
-    transform: scale(1.05);
-  }
+<style lang="css" scoped>
+.hidden {
+  display: none;
 }
-
-// h2 {
-//   text-align: center;
-//   padding-bottom: 1rem;
-// }
-
-// .list-actions {
-//   display: flex;
-//   gap: 0.5rem;
-//   flex-direction: column;
-// }
-
-// .disabled {
-//   opacity: 0.5;
-// }
 </style>

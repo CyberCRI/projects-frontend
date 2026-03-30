@@ -1,8 +1,15 @@
-<script setup lang="ts">
-import * as L from 'leaflet'
-
+<script setup lang="ts" generic="T extends AnyTranslatedLocation">
 import type { LocationType } from '@/models/types'
 import LocationTypeComponent from '@/components/map/LocationType.vue'
+import { groupBy } from 'es-toolkit'
+import IconImage from '@/components/base/media/IconImage.vue'
+import { AnyTranslatedLocation } from '@/models/location.model'
+
+const { stateModal, toggleModal } = useModal()
+
+const props = defineProps<{
+  locations: T[]
+}>()
 
 const { query, toggleQuery } = useQuery({
   address: true,
@@ -10,27 +17,35 @@ const { query, toggleQuery } = useQuery({
   team: true,
 })
 
-const locationLayerGrouped = ref<{ [key in LocationType]?: L.Marker[] }>({})
+const emit = defineEmits<{
+  update: [typeof query]
+}>()
 
-const enabledFilters = computed(() => {
-  const layers = toRaw(locationLayerGrouped.value)
-  return Object.keys(layers) as LocationType[]
-})
+const locationLayerGrouped = computed(() => groupBy(props.locations, (item) => item.type))
+
+const enabledFilters = computed(() => Object.keys(locationLayerGrouped.value) as LocationType[])
 
 const pointsCount = computed(() => {
   const layers = toRaw(locationLayerGrouped.value)
 
   return Object.entries(layers)
     .filter(([locationType]) => query[locationType])
-    .reduce((acc, [, markers]) => acc + markers.length, 0)
+    .reduce((acc, [, location]) => acc + location.type, 0)
 })
+
+watchEffect(() => emit('update', toRaw(query)))
 </script>
 
 <template>
-  <div class="actions">
-    <h2>Menu</h2>
+  <div class="locationtype-container">
+    <div class="menu-header" :class="{ opened: stateModal }">
+      <h2 v-show="stateModal">Menu</h2>
+      <button :aria-label="$t('common.filter')" @click.stop="toggleModal">
+        <IconImage name="Filter" />
+      </button>
+    </div>
 
-    <form class="list-actions">
+    <form v-if="stateModal" class="list-container">
       <LocationTypeComponent
         v-for="key in enabledFilters"
         :key="key"
@@ -46,6 +61,38 @@ const pointsCount = computed(() => {
 </template>
 
 <style lang="scss" scoped>
+.menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 0.5rem;
+  width: 100%;
+  svg {
+    width: 1.5rem;
+    fill: rgba(0, 0, 0, 0.5);
+  }
+
+  &:hover svg,
+  &.opened svg {
+    fill: rgba(0, 0, 0, 1);
+  }
+}
+
+.locationtype-container {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 0.5rem;
+  flex-direction: column;
+  border-radius: 0.5rem;
+  background-color: white;
+  padding: 0.25rem;
+  $shadow-hover-def-1: 0 5px 10px rgb(0 0 0 / 12%);
+  $shadow-hover-def-2: 0 4px 8px rgb(0 0 0 / 6%);
+  box-shadow: $shadow-hover-def-1, $shadow-hover-def-2;
+  overflow: hidden;
+}
+
 .btn-filter {
   background-color: white;
   border-radius: 100%;
@@ -63,5 +110,21 @@ const pointsCount = computed(() => {
   &:hover {
     transform: scale(1.05);
   }
+}
+
+h2 {
+  text-align: center;
+  width: 100%;
+}
+
+.list-actions {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  flex-direction: column;
+}
+
+.disabled {
+  opacity: 0.5;
 }
 </style>

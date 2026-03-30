@@ -67,7 +67,7 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
 
   let immediate = true
   if (params[2].immediate === false) {
-    immediate = true
+    immediate = false
   } else {
     params[2].immediate = false
   }
@@ -110,9 +110,9 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
   )
   const isLoading = useLoadingFromStatus(status)
 
-  // @ts-expect-error 2345 todo check why
   const dataWrapped = params[2]?.translate
-    ? params[2]?.translate(data)
+    ? // @ts-expect-error 2345 todo check why
+      params[2]?.translate(data)
     : computed(() => unref(data))
 
   const results = {
