@@ -33,7 +33,7 @@
       <h4 class="title skeletons-text">
         {{ event.$t.title }}
       </h4>
-      <div class="event-information skeletons-text">
+      <div v-if="haveContent" class="event-information skeletons-text">
         <ContentExpandable
           class="expandable-left"
           :description="event.$t.content"
@@ -44,7 +44,7 @@
       </div>
 
       <!-- for date range -->
-      <div class="date-info skeletons-background">
+      <div class="element-info skeletons-background">
         <IconImage class="icon-small" name="Calendar" />
         <span class="date-range">
           {{ displayDateRange }}
@@ -54,7 +54,7 @@
       <template v-if="event.location">
         <component
           :is="!locationPreview ? 'button' : 'div'"
-          class="reset-btn btn-location skeletons-background"
+          class="reset-btn element-info btn-location skeletons-background"
           :class="{
             'scale-hover': !locationPreview,
             'pointer-events-none': locationPreview,
@@ -62,7 +62,7 @@
           @click.prevent="locationEvent(event)"
         >
           <IconImage class="icon-small" name="MapMarker" />
-          <span>
+          <span class="text-ellipsis text-location">
             {{ event.location?.$t?.title || $t('location.address') }}
           </span>
         </component>
@@ -87,6 +87,7 @@ import { TranslatedEventModel } from '@/models/event.model'
 import ContentExpandable from '@/components/base/ContentExpandable.vue'
 import MapRecap from '@/components/map/MapRecap.vue'
 import ContextActionMenuInline from '@/components/base/button/ContextActionMenuInline.vue'
+import { html2Text } from '@/functs/string'
 
 const props = withDefaults(
   defineProps<{
@@ -123,6 +124,8 @@ const isComponent = computed(() => {
   }
   return resolveComponent('NuxtLink')
 })
+
+const haveContent = computed(() => html2Text(props.event.$t.content).length !== 0)
 
 const displayDate = computed(
   () => new Date(props.reverseDate ? props.event.end_date : props.event.start_date)
@@ -192,7 +195,7 @@ const locationEvent = (event) => emit('location', event)
   }
 }
 
-.date-info {
+.element-info {
   display: grid;
   grid-template-columns: auto 1fr;
 }
@@ -212,7 +215,11 @@ const locationEvent = (event) => emit('location', event)
 
 .btn-location {
   cursor: pointer;
-  display: block;
+}
+
+.text-location {
+  white-space: nowrap;
+  margin: auto;
 }
 
 .badge-new {

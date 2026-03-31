@@ -5,7 +5,7 @@
         v-for="event in events"
         :key="event.id"
         :event="event"
-        class="events-rows"
+        class="events-summary-item"
         hide-see-more-button
         @location="onLocation"
         @edit="onEdit"
@@ -125,9 +125,16 @@ const onCancel = () => {
   padding: 0;
   flex-grow: 1;
 }
+</style>
 
-.events-rows {
+<style lang="scss">
+.events-summary-item {
   grid-template-columns: unset !important;
-  grid-template-rows: auto auto !important;
+  grid-template-rows: auto !important;
+  gap: 0;
+
+  .date {
+    display: none !important;
+  }
 }
 </style>
