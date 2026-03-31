@@ -30,7 +30,7 @@
         {{ $t('invitation.create.field.validity.pick-date') }}
       </button>
 
-      <DisplayDate :date="[model.start_date, model.end_date]" />
+      <DisplayDate class="display-date" :date="[model.start_date, model.end_date]" />
 
       <!-- disable our/minutes if not  -->
       <DatePickerModal
@@ -88,6 +88,14 @@
       />
     </div>
 
+    <div class="form-section">
+      <label>{{ $t('event.form.visibility.label') }}</label>
+      <p class="notice">
+        {{ $t('event.form.visibility.notice') }}
+      </p>
+      <LpiCheckbox v-model="model.visible_by_all" :label="$t('event.form.visibility.public')" />
+    </div>
+
     <div v-if="selectedGroup" class="form-section">
       <label>{{ $t('event.form.people_groups.label') }}</label>
       <p class="notice">
@@ -95,10 +103,7 @@
       </p>
 
       <MultiGroupPicker
-        has-public-field
-        :is-public="model.visible_by_all"
         :model-value="model.people_groups"
-        @update:is-public="updateForm({ visible_by_all: $event })"
         @update:model-value="updateForm({ people_groups: $event })"
       />
     </div>
@@ -228,6 +233,10 @@ label {
   font-weight: 700;
   color: $black;
   display: block;
+}
+
+.display-date {
+  margin-left: 1rem;
 }
 
 label,

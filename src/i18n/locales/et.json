@@ -581,7 +581,7 @@
     "to": "To",
     "new": "uus",
     "now": "Täna",
-    "add-time": "sihtaja lisamine"
+    "add-time": "tundide/ minutite lisamine"
   },
   "complete-profile": {
     "bio": {
@@ -2487,6 +2487,11 @@
         "filter": "Filtrirühmad",
         "all": "Kõik rühmad",
         "public": "Avalik"
+      },
+      "visibility": {
+        "label": "Nähtavus",
+        "notice": "Kõik kasutajad näevad teie sündmust.",
+        "public": "Avalik"
       }
     },
     "group-label": "Grupp:",
@@ -2529,6 +2534,11 @@
         "notice": "Vali grupp (grupid), mis seda uudist näeb",
         "select-all": "Valige kõik",
         "filter": "Filtrirühmad"
+      },
+      "visibility": {
+        "label": "Nähtavus",
+        "notice": "Kõik kasutajad näevad teie sündmust.",
+        "public": "Avalik"
       }
     },
     "list": {

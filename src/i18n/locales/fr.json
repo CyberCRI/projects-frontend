@@ -581,7 +581,7 @@
     "close": "fermer",
     "to": "au",
     "new": "nouveaux",
-    "add-time": "ajouter un temps cible"
+    "add-time": "ajouter heures/minutes"
   },
   "complete-profile": {
     "bio": {
@@ -2588,6 +2588,11 @@
         "filter": "Filtrer les groupes",
         "all": "Tous les groupes",
         "public": "Public"
+      },
+      "visibility": {
+        "label": "Visibilité",
+        "notice": "Tous les utilisateurs peuvent voir votre événement.",
+        "public": "Public"
       }
     },
     "group-label": "Groupe :",
@@ -2630,6 +2635,11 @@
         "notice": "Sélectionnez le(s) groupe(s) qui verront cette actualité",
         "select-all": "Tout sélectionner",
         "filter": "Filtrer les groupes"
+      },
+      "visibility": {
+        "label": "Visibilité",
+        "notice": "Tous les utilisateurs peuvent voir votre événement.",
+        "public": "Public"
       }
     },
     "list": {

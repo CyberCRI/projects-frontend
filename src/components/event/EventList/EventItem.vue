@@ -46,19 +46,7 @@
       <!-- for date range -->
       <div class="element-info skeletons-background">
         <IconImage class="icon-small" name="Calendar" />
-        <span class="date-range">
-          <time class="date-preview-start" :datetime="d(start_date)">
-            {{ displayDateRange[0] }}
-          </time>
-          <template v-if="haveEndDate">
-            <span class="date-separator">
-              {{ ' - ' }}
-            </span>
-            <time class="date-preview-end" :datetime="d(end_date)">
-              {{ displayDateRange[1] }}
-            </time>
-          </template>
-        </span>
+        <DisplayDate :date="[event.end_date, event.start_date]" />
       </div>
 
       <template v-if="event.location">
@@ -99,7 +87,8 @@ import MapRecap from '@/components/map/MapRecap.vue'
 import ContextActionMenuInline from '@/components/base/button/ContextActionMenuInline.vue'
 import { html2Text } from '@/functs/string'
 import { sanitizeDate } from '@/form/event'
-import { formatDate, nowDate } from '@/functs/date'
+import { nowDate } from '@/functs/date'
+import DisplayDate from '@/components/base/DisplayDate.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -128,7 +117,7 @@ const emit = defineEmits<{
 }>()
 const { canEditEvent, canDeleteEvent } = usePermissions()
 
-const { locale, d } = useNuxtI18n()
+const { locale } = useNuxtI18n()
 
 const isComponent = computed(() => {
   if (props.is) {
@@ -151,14 +140,6 @@ const end_date = computed(() =>
 const isCurrent = computed(() => {
   const now = nowDate()
   return start_date.value <= now && now <= end_date.value
-})
-
-const displayDateRange = computed(() => {
-  return [formatDate(start_date.value, locale.value), formatDate(end_date.value, locale.value)]
-})
-
-const haveEndDate = computed(() => {
-  return end_date.value && end_date.value.toString() !== start_date.value.toString()
 })
 
 const deleteEvent = (event) => emit('delete', event)
@@ -208,10 +189,6 @@ const locationEvent = (event) => emit('location', event)
 .element-info {
   display: grid;
   grid-template-columns: auto 1fr;
-}
-
-.date-range {
-  align-self: center;
 }
 
 .icon-small {

@@ -33,7 +33,7 @@
         {{ $t('invitation.create.field.validity.pick-date') }}
       </button>
 
-      <DisplayDate :date="model.publication_date" />
+      <DisplayDate class="display-date" :date="model.publication_date" />
 
       <DatePickerModal
         v-if="stateModals.DatePicker"
@@ -100,6 +100,14 @@
       <FieldErrors :errors="v$.content.$errors" />
     </div>
 
+    <div class="form-section">
+      <label>{{ $t('news.form.visibility.label') }}</label>
+      <p class="notice">
+        {{ $t('news.form.visibility.notice') }}
+      </p>
+      <LpiCheckbox v-model="model.visible_by_all" :label="$t('news.form.visibility.public')" />
+    </div>
+
     <div v-if="selectedGroup" class="form-section">
       <label>{{ $t('news.form.groups.label') }}</label>
       <p class="notice">
@@ -107,10 +115,7 @@
       </p>
 
       <MultiGroupPicker
-        has-public-field
-        :is-public="model.visible_by_all"
         :model-value="model.people_groups"
-        @update:is-public="updateForm({ visible_by_all: $event })"
         @update:model-value="updateForm({ people_groups: $event })"
       />
     </div>
@@ -146,6 +151,7 @@ import { usePatatoids } from '@/composables/usePatatoids'
 import { LocationType } from '@/models/types'
 import DisplayDate from '@/components/base/DisplayDate.vue'
 import DatePickerModal from '@/components/base/modal/DatePickerModal.vue'
+import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
 
 const LOCATION_TYPES: LocationType[] = ['news']
 withDefaults(
@@ -260,6 +266,10 @@ label {
   font-weight: bold;
   color: $black;
   display: block;
+}
+
+.display-date {
+  margin-left: 1rem;
 }
 
 label,

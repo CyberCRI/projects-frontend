@@ -581,7 +581,7 @@
     "to": "Zu",
     "new": "neue",
     "now": "Heute",
-    "add-time": "eine Zielzeit hinzufügen"
+    "add-time": "Stunden/Minute hinzufügen"
   },
   "complete-profile": {
     "bio": {
@@ -2487,6 +2487,11 @@
         "filter": "Filtergruppen",
         "all": "Alle Gruppen",
         "public": "Öffentliche"
+      },
+      "visibility": {
+        "label": "Sichtbarkeit",
+        "notice": "Alle Benutzer können Ihre Veranstaltung sehen.",
+        "public": "Öffentliche"
       }
     },
     "group-label": "Gruppe:",
@@ -2529,6 +2534,11 @@
         "notice": "Wählen Sie die Gruppe(n), die diese Nachrichten sehen wird",
         "select-all": "Alles auswählen",
         "filter": "Filtergruppen"
+      },
+      "visibility": {
+        "label": "Sichtbarkeit",
+        "notice": "Alle Benutzer können Ihre Veranstaltung sehen.",
+        "public": "Öffentliche"
       }
     },
     "list": {

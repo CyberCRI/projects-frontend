@@ -4,6 +4,7 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import DisplayDate from '@/components/base/DisplayDate.vue'
 import VueDatePicker from '@vuepic/vue-datepicker'
+import { isNil } from 'es-toolkit'
 
 const props = defineProps<{
   modelValue: any
@@ -121,7 +122,7 @@ const onClock = () => {
               showNow: false,
               showPreview: false,
             }"
-            :multi-calendars="!!attrs.range ? { static: false } : undefined"
+            :multi-calendars="!isNil(attrs.range) ? { static: false } : undefined"
             @internal-model-change="onInternalValueUpdate"
             @time-picker-open="onTimePickerOpen"
           >
@@ -142,7 +143,7 @@ const onClock = () => {
           </VueDatePicker>
         </div>
         <LpiButton
-          v-if="attrs.enableTimePicker"
+          v-if="attrs.enableTimePicker !== false"
           :label="timeView ? $t('common.close') : $t('common.add-time')"
           btn-icon="Clock"
           @click="onClock"

@@ -47,12 +47,9 @@ const haveEndDate = computed(() => {
 <style lang="scss" scoped>
 .date-preview {
   align-self: center;
-  margin-left: $space-l;
-  display: inline-flex;
+  display: inline-block;
   gap: 1rem;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.2rem;
+  font-size: 1rem;
 
   .date-separator {
     padding-left: 0.06rem;

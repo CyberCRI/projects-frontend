@@ -581,7 +581,7 @@
     "to": "A",
     "new": "nuevo",
     "now": "Hoy",
-    "add-time": "añadir un tiempo de destino"
+    "add-time": "añadir horas/minutos"
   },
   "complete-profile": {
     "bio": {
@@ -2487,6 +2487,11 @@
         "filter": "Grupos de filtro",
         "all": "Todos los grupos",
         "public": "Público"
+      },
+      "visibility": {
+        "label": "Visibilidad",
+        "notice": "Todos los usuarios pueden ver su evento.",
+        "public": "Público"
       }
     },
     "group-label": "Grupo:",
@@ -2529,6 +2534,11 @@
         "notice": "Seleccione el grupo(s) que verá esta noticia",
         "select-all": "Seleccione todo",
         "filter": "Grupos de filtro"
+      },
+      "visibility": {
+        "label": "Visibilidad",
+        "notice": "Todos los usuarios pueden ver su evento.",
+        "public": "Público"
       }
     },
     "list": {

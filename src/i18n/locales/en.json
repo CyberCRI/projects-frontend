@@ -522,7 +522,6 @@
     "add": "Add",
     "added-on-the": "Added on",
     "back": "back",
-    "add-time": "add a target time",
     "close": "close",
     "cancel": "Cancel",
     "chose-date": "Chose date",
@@ -581,7 +580,8 @@
     "file-too-big": "File is too big (max: {maxSize}Mb)",
     "to": "to",
     "new": "new",
-    "now": "Today"
+    "now": "Today",
+    "add-time": "add hours/minutes"
   },
   "complete-profile": {
     "bio": {
@@ -2481,6 +2481,11 @@
         "placeholder": "Select date",
         "required": "The date is required"
       },
+      "visibility": {
+        "label": "Visibility",
+        "notice": "All users can see your event.",
+        "public": "Public"
+      },
       "people_groups": {
         "label": "Targeted group(s)",
         "notice": "Select the group(s) that will see this event",
@@ -2524,6 +2529,11 @@
       "publication_date": {
         "label": "Publication date *",
         "required": "The publication date is required"
+      },
+      "visibility": {
+        "label": "Visibility",
+        "notice": "All users can see your event.",
+        "public": "Public"
       },
       "groups": {
         "label": "Targeted group(s)",
