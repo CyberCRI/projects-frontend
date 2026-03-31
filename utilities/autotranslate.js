@@ -28,19 +28,22 @@ fs.readdirSync(directoryPath).map((file) => {
 // method to check all differance keys (nested key separate from dot)
 const diffLocal = (obj1, obj2) => {
   let missing = new Set()
+  let missingMany = new Set()
   let empty = new Set()
   const diffRecusr = (key, o1, o2) => {
-    const [subMissing, subEmpty] = diffLocal(o1, o2)
+    const [subMissing, missingMany, subEmpty] = diffLocal(o1, o2)
     return [
       new Set([...subMissing].map((k) => `${key}.${k}`)),
+      new Set([...missingMany].map((k) => `${key}.${k}`)),
       new Set([...subEmpty].map((k) => `${key}.${k}`)),
     ]
   }
 
   Object.keys(obj1).forEach((key) => {
     if (typeof obj1[key] === 'object') {
-      const [subMissing, subEmpty] = diffRecusr(key, obj1[key], obj2[key] ?? {})
+      const [subMissing, subMissingMany, subEmpty] = diffRecusr(key, obj1[key], obj2[key] ?? {})
       missing = new Set([...missing, ...subMissing])
+      missingMany = new Set([...missingMany, ...subMissingMany])
       empty = new Set([...empty, ...subEmpty])
     } else if (!['object', 'number', 'string'].includes(typeof obj1[key])) {
       console.error(typeof obj1[key])
@@ -57,12 +60,13 @@ const diffLocal = (obj1, obj2) => {
       const obj2Counter = obj2[key].toString().split('|')
       // regenerate key to multiple values like "event | events | empty"
       if (obj1Counter.length > obj2Counter.length) {
+        missingMany.add(key)
         missing.add(key)
       }
     }
   })
 
-  return [missing, empty]
+  return [missing, missingMany, empty]
 }
 
 // pass the content, and a key like `profile.user.publications`
@@ -87,6 +91,7 @@ const getKeyValue = (content, key) => {
     }
 */
 const missing = {}
+const many = {}
 const empty = {}
 // check and set diff
 const setDiff = (local, diff) => {
@@ -97,6 +102,15 @@ const setDiff = (local, diff) => {
     missing[local.code] = new Set()
   }
   missing[local.code] = new Set([...missing[local.code], ...diff])
+}
+const setDiffMany = (local, diff) => {
+  if (!diff.size) {
+    return
+  }
+  if (!many[local.code]) {
+    many[local.code] = new Set()
+  }
+  many[local.code] = new Set([...many[local.code], ...diff])
 }
 const setEmpty = (local, diff) => {
   if (!diff.size) {
@@ -114,10 +128,14 @@ const LOCAL_ARRAY = [...Object.values(ALL_LOCALES)]
 LOCAL_ARRAY.forEach((local, index) => {
   LOCAL_ARRAY.slice(index).forEach((sublocal) => {
     // generate diff from both directions from 'en' => 'fr' and 'fr' => 'en'
-    const [diffActual, emptyActual] = diffLocal(local.content, sublocal.content)
-    const [diffSubActual, emptySubActual] = diffLocal(sublocal.content, local.content)
+    const [diffActual, diffMany, emptyActual] = diffLocal(local.content, sublocal.content)
+    const [diffSubActual, diffSubMany, emptySubActual] = diffLocal(sublocal.content, local.content)
     setDiff(sublocal, diffActual)
     setDiff(local, diffSubActual)
+
+    setDiffMany(sublocal, diffMany)
+    setDiffMany(local, diffSubMany)
+
     setEmpty(sublocal, emptyActual)
     setEmpty(local, emptySubActual)
   })
@@ -178,6 +196,14 @@ if (Object.keys(empty).length !== 0) {
   console.log('Empty keys: ')
   Object.keys(empty).forEach((k) => (empty[k] = { empty: [...empty[k]] }))
   console.table(empty)
+}
+
+if (Object.keys(many).length !== 0) {
+  // only to show results
+  // const toShow =
+  console.log('Many diff keys: ')
+  Object.keys(many).forEach((k) => (many[k] = { key: [...many[k]] }))
+  console.table(many)
 }
 
 // no need to translate

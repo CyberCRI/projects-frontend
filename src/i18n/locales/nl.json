@@ -982,7 +982,7 @@
     "add-location": "Plaats toevoegen",
     "add-location-point": "Plaatspunt toevoegen",
     "default-title": "Locatie",
-    "news": "Nieuws",
+    "news": "Nieuws | Nieuws",
     "event": "Gebeurtenis"
   },
   "map": {
@@ -1689,7 +1689,7 @@
     "cannot-upload-image": "Kan afbeelding voorlopig niet uploaden",
     "link-address": "Linkadres",
     "resources": "Middelen",
-    "web": "Link naar webbronnen | links naar webbronnen",
+    "web": "Link naar webbron | links naar webbronnen",
     "web-link": "Weblink | weblink | weblinks"
   },
   "result_box": {
@@ -2717,7 +2717,7 @@
     "contact": "Contactpersoon",
     "edit-group": "Groep bewerken",
     "see-more-people-button": "Zie {users} extra personen",
-    "see-subgroups": "Zie {count} subgroepen",
+    "see-subgroups": "Zie {count} subgroep | Zie {count} subgroepen",
     "share": "Delen",
     "the-team": "Team ({users}4)",
     "more": "Meer",
@@ -2808,7 +2808,7 @@
     "similars": "Soortgelijke groepen",
     "presentation": "Inleiding",
     "subgroups": "Subgroepen",
-    "locations": "Kaart",
+    "locations": "Kaart | Kaarten",
     "location": "Adres | Adressaten",
     "news": "Nieuws | Nieuws",
     "event": "Gebeurtenis | Gebeurtenissen"
@@ -2819,7 +2819,7 @@
     "delete": "Afbeelding verwijderen.",
     "add": "Afbeeldingen toevoegen",
     "empty": "Geen foto's.",
-    "pictures": "Afbeeldingen",
+    "pictures": "Afbeelding | Afbeeldingen",
     "add-picture": "Selecteer een of meer foto's om te versturen.",
     "confirm-delete": "Wilt u deze afbeelding verwijderen?",
     "success-delete": "Afbeelding verwijderd.",

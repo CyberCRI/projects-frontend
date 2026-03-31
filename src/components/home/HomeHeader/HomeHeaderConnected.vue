@@ -173,9 +173,11 @@ export default {
       todayAtZero.setHours(0, 0, 0, 0)
       this._events = (
         await getAllEvents(this.organizationsStore.current?.code, {
-          ordering: 'start_date',
-          from_date: todayAtZero.toISOString(),
-          limit: this.summaryMaxEvents,
+          query: {
+            ordering: 'start_date',
+            from_date: todayAtZero.toISOString(),
+            limit: this.summaryMaxEvents,
+          },
         })
       ).results
     },

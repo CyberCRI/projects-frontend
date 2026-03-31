@@ -973,7 +973,7 @@
     "impact": "Impact",
     "team": "Team",
     "address": "Address",
-    "news": "News",
+    "news": "News | News",
     "event": "Event",
     "focus-on-map": "focus on the map",
     "expand-map": "Enlarge map",
@@ -1689,7 +1689,7 @@
     "cannot-upload-image": "Cannot upload image for now",
     "link-address": "Link address",
     "resources": "Resources",
-    "web": "Link to web resources | links to web resources",
+    "web": "Link to web resource | links to web resources",
     "web-link": "Web link | web link | web links"
   },
   "result_box": {
@@ -3043,7 +3043,7 @@
     "contact": "Contact",
     "edit-group": "Edit Group",
     "see-more-people-button": "See {users} additional persons",
-    "see-subgroups": "See {count} subgroups",
+    "see-subgroups": "See {count} subgroup | See {count} subgroups",
     "share": "Share",
     "the-team": "Team ({users}4)",
     "news": "News | News",
@@ -3136,7 +3136,7 @@
     "similars": "Similar groups",
     "presentation": "Introduction",
     "subgroups": "Sub-groups",
-    "locations": "Map",
+    "locations": "Map | Maps",
     "location": "Address | Addresses"
   },
   "gallery": {
@@ -3145,7 +3145,7 @@
     "delete": "Delete image.",
     "add": "Add Images",
     "empty": "No photos.",
-    "pictures": "Images",
+    "pictures": "Image | Images",
     "add-picture": "Please select one or more photos to send.",
     "confirm-delete": "Do you really want to delete this image?",
     "success-delete": "Image deleted.",

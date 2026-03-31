@@ -982,7 +982,7 @@
     "add-location": "Agregar un lugar",
     "add-location-point": "Agregar un punto de ubicación",
     "default-title": "Ubicación",
-    "news": "Noticias",
+    "news": "Noticias | Noticias",
     "event": "Evento"
   },
   "map": {
@@ -1689,7 +1689,7 @@
     "cannot-upload-image": "No puedo subir la imagen por ahora",
     "link-address": "Dirección de enlace",
     "resources": "Recursos",
-    "web": "Enlace a los recursos web | enlaces a recursos web",
+    "web": "Enlace al recurso web | enlaces a recursos web",
     "web-link": "Enlace web | web | web links"
   },
   "result_box": {
@@ -2717,7 +2717,7 @@
     "contact": "Contacto",
     "edit-group": "Edit Group",
     "see-more-people-button": "Véase {users} personas adicionales",
-    "see-subgroups": "Véase {count} subgrupos",
+    "see-subgroups": "Véase el subgrupo {count} | Véase {count} subgrupos",
     "share": "Compartir",
     "the-team": "Equipo ({users}4)",
     "more": "Más",
@@ -2808,7 +2808,7 @@
     "similars": "Grupos similares",
     "presentation": "Introducción",
     "subgroups": "Subgrupos",
-    "locations": "Mapa",
+    "locations": "Mapa | Mapas",
     "location": "Dirección | Addresses",
     "news": "Noticias | Noticias",
     "event": "Evento | Eventos"
@@ -2819,7 +2819,7 @@
     "delete": "Borrar la imagen.",
     "add": "Agregar imágenes",
     "empty": "No hay fotos.",
-    "pictures": "Imágenes",
+    "pictures": "Imagen | Imágenes",
     "add-picture": "Por favor, seleccione una o más fotos para enviar.",
     "confirm-delete": "¿De verdad quieres borrar esta imagen?",
     "success-delete": "Imagen eliminada.",

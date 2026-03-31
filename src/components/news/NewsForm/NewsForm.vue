@@ -40,8 +40,7 @@
         :locale="locale"
         :model-value="model.publication_date"
         :enable-time-picker="false"
-        :min-date="new Date()"
-        :on-click-outside="() => console.log('outside')"
+        :on-click-outside="() => closeModals('DatePicker')"
         @update:model-value="onDateSelected"
       />
 

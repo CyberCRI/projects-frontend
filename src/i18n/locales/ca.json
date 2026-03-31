@@ -982,7 +982,7 @@
     "add-location": "Afegeix una ubicació",
     "add-location-point": "Afegeix un punt d' emplaçament",
     "default-title": "Localització",
-    "news": "Notícies",
+    "news": "Notícies | Notícies",
     "event": "Esdeveniment"
   },
   "map": {
@@ -1689,7 +1689,7 @@
     "cannot-upload-image": "No es pot pujar la imatge per ara",
     "link-address": "Adreça de l' enllaç",
     "resources": "Recursos",
-    "web": "Enllaç als recursos web | Enllaços als recursos web",
+    "web": "Enllaç al recurs web | Enllaços als recursos web",
     "web-link": "Enllaç web | Enllaç web | Enllaços web"
   },
   "result_box": {
@@ -2717,7 +2717,7 @@
     "contact": "Contacte",
     "edit-group": "Edita el grup",
     "see-more-people-button": "Vegeu {users} persones addicionals",
-    "see-subgroups": "Mireu els subgrups {count}",
+    "see-subgroups": "Mireu el subgrup {count} | Mireu els subgrups {count}",
     "share": "Comparteix",
     "the-team": "Equip ({users}4)",
     "more": "Més",
@@ -2808,7 +2808,7 @@
     "similars": "Grups similars",
     "presentation": "Introducció",
     "subgroups": "Subgrups",
-    "locations": "Mapa",
+    "locations": "Mapa | Mapes",
     "location": "Adreça | Adreces",
     "news": "Notícies | Notícies",
     "event": "Esdeveniment | Esdeveniments"
@@ -2819,7 +2819,7 @@
     "delete": "Esborra la imatge.",
     "add": "Afegeix imatges",
     "empty": "Sense fotos.",
-    "pictures": "Imatges",
+    "pictures": "Imatge | Imatges",
     "add-picture": "Seleccioneu una o més fotos a enviar.",
     "confirm-delete": "Esteu segur que voleu esborrar aquesta imatge?",
     "success-delete": "Imatge esborrada.",

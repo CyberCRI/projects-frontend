@@ -982,7 +982,7 @@
     "add-location": "Lisa asukoht",
     "add-location-point": "Asukohapunkti lisamine",
     "default-title": "Asukoht",
-    "news": "Uudised",
+    "news": "Uudised | Uudised",
     "event": "Sündmus"
   },
   "map": {
@@ -1689,7 +1689,7 @@
     "cannot-upload-image": "Pildi üleslaadimine nurjus",
     "link-address": "Linki aadress",
     "resources": "Ressursse",
-    "web": "Link veebiressurssidele | lingid veebiressurssidele",
+    "web": "Link veebiressursile | lingid veebiressurssidele",
     "web-link": "Veebilink | veebilink | veebilingid"
   },
   "result_box": {
@@ -2717,7 +2717,7 @@
     "contact": "Kontakt",
     "edit-group": "Redigeerimisgrupp",
     "see-more-people-button": "Vt {users} täiendavad isikud",
-    "see-subgroups": "Vt alarühmad {count}",
+    "see-subgroups": "Vt alagrupp {count} | Vt alarühmad {count}",
     "share": "Jaga",
     "the-team": "Meeskond ({users}4)",
     "more": "Rohkem",
@@ -2808,7 +2808,7 @@
     "similars": "Sarnased rühmad",
     "presentation": "Sissejuhatus",
     "subgroups": "Alarühmad",
-    "locations": "Kaart",
+    "locations": "Kaart | Kaardid",
     "location": "Aadress | Aadressid",
     "news": "Uudised | Uudised",
     "event": "Sündmus | Sündmused"
@@ -2819,7 +2819,7 @@
     "delete": "Kustuta pilt.",
     "add": "Lisa pildid",
     "empty": "Ei mingeid fotosid.",
-    "pictures": "Pildid",
+    "pictures": "Pilt | Pildid",
     "add-picture": "Palun valige üks või mitu fotot, mida saata.",
     "confirm-delete": "Kas tõesti kustutada see pilt?",
     "success-delete": "Pilt kustutatud.",
