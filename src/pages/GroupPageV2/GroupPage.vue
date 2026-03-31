@@ -66,11 +66,13 @@ const router = useRouter()
 const route = useRoute()
 const { t } = useNuxtI18n()
 const groupIdOrSlug = computed(() => route.params.groupIdOrSlug.toString())
-watch(groupIdOrSlug, (newValue) => (peopleGroupsStore.currentId = newValue))
 
 const { data: group, isLoading, status, error } = getGroup(organizationCode, groupIdOrSlug)
 
 const groupLoading = computed(() => isLoading.value && !group.value?.id)
+
+// TODO rework this permissions
+watch(group, (newValue) => (peopleGroupsStore.currentId = newValue.id), { immediate: true })
 
 watchEffect(() => {
   useLpiHead2({
