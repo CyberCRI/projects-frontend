@@ -579,7 +579,8 @@
     "order-desc": "nova a la més antiga",
     "close": "tanca",
     "to": "A",
-    "new": "nova"
+    "new": "nova",
+    "now": "Avui"
   },
   "complete-profile": {
     "bio": {
@@ -822,7 +823,7 @@
     "add-image": "Afegeix una imatge",
     "add-video": "Afegeix un vídeo",
     "add-video-hint": "Afegeix un vídeo introduint el seu URL de Youtube o vimeo.",
-    "attachment": "Document adjuntat, documents adjuntats",
+    "attachment": "Document adjuntat | documents adjuntats",
     "upload": "Puja"
   },
   "form": {
@@ -1529,7 +1530,7 @@
     },
     "apply-succes": "Aplicació enviadaComment",
     "announcement-create": "Crea una declaració",
-    "announcements": "Anuncis d' anunci",
+    "announcements": "declaració | anunciacions",
     "at-coordinates": "en coordenades",
     "categories": "Categories dels projectes",
     "community": "Els projectes de la Comunitat",
@@ -1548,7 +1549,7 @@
     "edit-location-point": "Edita el punt de localització",
     "edit-map": "Edita geolocalització",
     "edit-review": "Edita la revisió",
-    "files": "Fitxers de projecte del projecte del projecte del projecte del Project",
+    "files": "Fitxer del projecte | fitxer de projecte | Fitxers de projecte",
     "follow": "Segueix",
     "followed": "Seguit",
     "form": {
@@ -1585,7 +1586,7 @@
     "impact": "Impacte",
     "language": "Idioma del projecte",
     "life-status": "Estat de la vida del projecte",
-    "linked": "Projectes enllaçats per al projecte  LinkedName",
+    "linked": "Projecte enllaçat | Projectes enllaçats",
     "linked-project": "Projecte enllaçat",
     "linked-project-confirm-delete": "Esteu segur d' eliminar aquest projecte enllaçat?",
     "linked-projects": "Projectes enllaçats",
@@ -1598,7 +1599,7 @@
     "public": "projectes públics",
     "quit": "Surt del projecte",
     "random-image": "Imatge aleatòria",
-    "resource": "Recurs de recursos de resource",
+    "resource": "Recurs | Recursos",
     "review": "Revisió",
     "reviews": "Revisió",
     "review-confirm-delete": "Esteu segur d' esborrar aquesta revisió?",
@@ -1608,7 +1609,7 @@
     "remove-user-title": "Elimina usuari",
     "remove-user": "Esborra",
     "show-n-projects": "Mostra els projectes {count}",
-    "suggested": "Projectes similars a projectes similar al projecte",
+    "suggested": "Projecte similar | projectes similars",
     "suggested-hint": "Projectes que poden interessar-vos",
     "summary": "Resum",
     "settings": "Arranjament",
@@ -1640,7 +1641,7 @@
     "about-you": "Explica'ns el que et motiva.",
     "add-announcement": "Afegeix una declaració",
     "announcement": "Anunci",
-    "announcements": "No s'anuncia l'any {count} anunciava que s'anunciava el 1321544",
+    "announcements": "Sense declaració | 12154654 anunciat | 12154654 anuncis",
     "apply": "Aplica",
     "creation-date": "Creat el",
     "delete-announcement-message": "Voleu eliminar aquesta declaració?",
@@ -1688,8 +1689,8 @@
     "cannot-upload-image": "No es pot pujar la imatge per ara",
     "link-address": "Adreça de l' enllaç",
     "resources": "Recursos",
-    "web": "Enllaç als recursos web Tidy és un enllaç als recursos web",
-    "web-link": "Enllaços web de l'enllaç web  web del web del web web web web del web web web web web web  linkName"
+    "web": "Enllaç als recursos web | Enllaços als recursos web",
+    "web-link": "Enllaç web | Enllaç web | Enllaços web"
   },
   "result_box": {
     "people": "gent",
@@ -2719,7 +2720,6 @@
     "see-subgroups": "Mireu els subgrups {count}",
     "share": "Comparteix",
     "the-team": "Equip ({users}4)",
-    "news": "Anunci",
     "more": "Més",
     "less": "Menys",
     "see-more": "Veure més",
@@ -2809,8 +2809,9 @@
     "presentation": "Introducció",
     "subgroups": "Subgrups",
     "locations": "Mapa",
-    "location": "Adreces d' adreces",
-    "event": "Esdeveniments de l' esdeveniment"
+    "location": "Adreça | Adreces",
+    "news": "Notícies | Notícies",
+    "event": "Esdeveniment | Esdeveniments"
   },
   "gallery": {
     "title": "Galeria",

@@ -579,7 +579,8 @@
     "order-desc": "neuste bis älteste",
     "close": "Nähe",
     "to": "Zu",
-    "new": "neue"
+    "new": "neue",
+    "now": "Heute"
   },
   "complete-profile": {
     "bio": {
@@ -1529,7 +1530,7 @@
     },
     "apply-succes": "Antrag gesendet",
     "announcement-create": "Ankündigung erstellen",
-    "announcements": "Ankündigungen",
+    "announcements": "Ankündigung | Ankündigungen",
     "at-coordinates": "bei Koordinaten",
     "categories": "Projektkategorien",
     "community": "Projekte der Gemeinschaft",
@@ -1608,7 +1609,7 @@
     "remove-user-title": "Löschen des Benutzers",
     "remove-user": "Löschen",
     "show-n-projects": "{count} Projekte anzeigen",
-    "suggested": "ähnliche Projekte",
+    "suggested": "Ähnliches Projekt | ähnliche Projekte",
     "suggested-hint": "Projekte, die Sie interessieren könnten",
     "summary": "Zusammenfassung",
     "settings": "Einstellungen",
@@ -1688,7 +1689,7 @@
     "cannot-upload-image": "Bild jetzt nicht hochladen",
     "link-address": "Linkadresse",
     "resources": "Ressourcen",
-    "web": "Link zu Webressourcen | Links zu Web-Ressourcen",
+    "web": "Link zu Web-Ressourcen | Links zu Webressourcen",
     "web-link": "Weblink | web link | web links"
   },
   "result_box": {
@@ -2719,7 +2720,6 @@
     "see-subgroups": "Siehe {count} Untergruppen",
     "share": "Anteil",
     "the-team": "Team ({users}4)",
-    "news": "Ankündigung",
     "more": "Mehr",
     "less": "Weniger",
     "see-more": "Mehr erfahren",
@@ -2810,7 +2810,8 @@
     "subgroups": "Untergruppen",
     "locations": "Landkarte",
     "location": "Adresse | Adressen",
-    "event": "Veranstaltungen"
+    "news": "Nachrichten | Nachrichten",
+    "event": "Veranstaltung | Veranstaltungen"
   },
   "gallery": {
     "title": "Galerie",

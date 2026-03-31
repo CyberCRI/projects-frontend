@@ -66,7 +66,7 @@ export const GroupModuleIcon: { [key in PeopleGroupModulesKeys]: IconImageChoice
   locations: 'Map',
   gallery: 'Gallery',
   news: 'NewsLine',
-  event: 'Article',
+  event: 'Calendar',
 }
 
 export const GroupModuleTitle: { [key in PeopleGroupModulesKeys]: string } = {

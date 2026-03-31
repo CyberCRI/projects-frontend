@@ -1,7 +1,7 @@
 <template>
   <BaseGroupPreview
     :id="documentType"
-    :title="$t(`group.${documentType}`)"
+    :title="$t(GroupModuleTitle[documentType], group.modules[documentType])"
     :total="group.modules[documentType]"
     :see-more="{
       name: routeName,
@@ -23,7 +23,11 @@
 <script setup lang="ts">
 import GroupResearcherDocumentsList from '@/components/people/Researcher/GroupResearcherDocumentsList.vue'
 import { DocumentType } from '@/interfaces/researcher'
-import { GroupModuleIcon, TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import {
+  GroupModuleIcon,
+  GroupModuleTitle,
+  TranslatedPeopleGroupModel,
+} from '@/models/invitation.model'
 import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
 
 const props = defineProps<{

@@ -579,7 +579,8 @@
     "order-desc": "uusim",
     "close": "lähedal",
     "to": "To",
-    "new": "uus"
+    "new": "uus",
+    "now": "Täna"
   },
   "complete-profile": {
     "bio": {
@@ -2719,7 +2720,6 @@
     "see-subgroups": "Vt alarühmad {count}",
     "share": "Jaga",
     "the-team": "Meeskond ({users}4)",
-    "news": "Kuulutatud",
     "more": "Rohkem",
     "less": "Vähem",
     "see-more": "Näe rohkem",
@@ -2810,6 +2810,7 @@
     "subgroups": "Alarühmad",
     "locations": "Kaart",
     "location": "Aadress | Aadressid",
+    "news": "Uudised | Uudised",
     "event": "Sündmus | Sündmused"
   },
   "gallery": {

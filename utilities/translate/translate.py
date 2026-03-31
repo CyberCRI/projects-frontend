@@ -53,6 +53,22 @@ def translate(info):
     return result
 
 
+def translate_keys(info):
+    final_results = {}
+    for subvalue in info["value"].split("|"):
+        cpy_info = info.copy()
+        cpy_info["value"] = subvalue
+
+        results = translate(cpy_info)
+        for to_code, value in results.items():
+            if to_code in final_results:
+                final_results[to_code] += f" | {value}"
+            else:
+                final_results[to_code] = value
+
+    return final_results
+
+
 if __name__ == "__main__":
     json_from = " ".join(sys.argv[1:])
     totranslate = json.loads(json_from)
@@ -69,7 +85,7 @@ if __name__ == "__main__":
     for k, info in totranslate.items():
         # remove ingore from-> to lang
         info["to"] = list(set(info["to"]) - ignored[info["from"]])
-        results[k] = translate(info)
+        results[k] = translate_keys(info)
 
     for i in list(ignored):
         ignored[i] = list(ignored[i])

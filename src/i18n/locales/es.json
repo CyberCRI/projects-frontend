@@ -579,7 +579,8 @@
     "order-desc": "más reciente a la más antigua",
     "close": "cerca",
     "to": "A",
-    "new": "nuevo"
+    "new": "nuevo",
+    "now": "Hoy"
   },
   "complete-profile": {
     "bio": {
@@ -822,7 +823,7 @@
     "add-image": "añadir una imagen",
     "add-video": "añadir un vídeo",
     "add-video-hint": "Añadir un vídeo entrando en su URL de youtube o vimeo.",
-    "attachment": "documento adjunto",
+    "attachment": "Documento adjunto | Documentos adjuntos",
     "upload": "Subir"
   },
   "form": {
@@ -1529,7 +1530,7 @@
     },
     "apply-succes": "Solicitud enviada",
     "announcement-create": "Crear anuncio",
-    "announcements": "anuncio Silencioso",
+    "announcements": "anuncio | anuncios",
     "at-coordinates": "en las coordenadas",
     "categories": "Categorías de proyectos",
     "community": "Proyectos comunitarios",
@@ -1548,7 +1549,7 @@
     "edit-location-point": "Editar punto de ubicación",
     "edit-map": "Editar geolocalización",
     "edit-review": "Revisión",
-    "files": "archivo del proyecto Silencio archivo del proyecto",
+    "files": "Project file | archivo de proyecto | archivos de proyecto",
     "follow": "Seguir",
     "followed": "Seguido",
     "form": {
@@ -1585,7 +1586,7 @@
     "impact": "impacto",
     "language": "idioma del proyecto",
     "life-status": "Situación de vida del proyecto",
-    "linked": "Proyectos vinculados al proyecto",
+    "linked": "Proyecto vinculado | Proyectos vinculados",
     "linked-project": "Proyecto vinculado",
     "linked-project-confirm-delete": "¿Está seguro de borrar este proyecto vinculado?",
     "linked-projects": "Proyectos vinculados",
@@ -1598,7 +1599,7 @@
     "public": "Proyectos públicos",
     "quit": "El proyecto",
     "random-image": "Imagen aleatoria",
-    "resource": "Recursos necesarios",
+    "resource": "Recursos | Recursos",
     "review": "examen",
     "reviews": "Reseñas",
     "review-confirm-delete": "¿Estás seguro de borrar esta reseña?",
@@ -1608,7 +1609,7 @@
     "remove-user-title": "Eliminar el usuario",
     "remove-user": "Suprimir",
     "show-n-projects": "Mostrar los {count} proyectos",
-    "suggested": "proyectos similares tención proyectos similares",
+    "suggested": "Proyecto similar | proyectos similares",
     "suggested-hint": "Proyectos que podrían interesarte",
     "summary": "Resumen",
     "settings": "Ajustes",
@@ -1640,7 +1641,7 @@
     "about-you": "Cuéntanos sobre ti mismo y lo que te motiva",
     "add-announcement": "añadir un anuncio",
     "announcement": "anuncio",
-    "announcements": "no anuncio Silencio {count} anuncio Silencio {count} anuncios",
+    "announcements": "No hay anuncio | Anuncio {count} | {count} anuncios",
     "apply": "aplicación",
     "creation-date": "creado",
     "delete-announcement-message": "¿Quieres borrar este anuncio?",
@@ -1688,8 +1689,8 @@
     "cannot-upload-image": "No puedo subir la imagen por ahora",
     "link-address": "Dirección de enlace",
     "resources": "Recursos",
-    "web": "enlace con los recursos web",
-    "web-link": "web link ¦ Enlaces web"
+    "web": "Enlace a los recursos web | enlaces a recursos web",
+    "web-link": "Enlace web | web | web links"
   },
   "result_box": {
     "people": "gente",
@@ -2719,7 +2720,6 @@
     "see-subgroups": "Véase {count} subgrupos",
     "share": "Compartir",
     "the-team": "Equipo ({users}4)",
-    "news": "Anuncio",
     "more": "Más",
     "less": "Menos",
     "see-more": "Ver más",
@@ -2809,8 +2809,9 @@
     "presentation": "Introducción",
     "subgroups": "Subgrupos",
     "locations": "Mapa",
-    "location": "Discursos sobre la vida",
-    "event": "Evento para eventos en la actualidad"
+    "location": "Dirección | Addresses",
+    "news": "Noticias | Noticias",
+    "event": "Evento | Eventos"
   },
   "gallery": {
     "title": "Galería",

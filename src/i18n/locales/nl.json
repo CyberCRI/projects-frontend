@@ -579,7 +579,8 @@
     "order-desc": "nieuwste naar oudste",
     "close": "sluiten",
     "to": "Aan",
-    "new": "nieuw"
+    "new": "nieuw",
+    "now": "Vandaag"
   },
   "complete-profile": {
     "bio": {
@@ -822,7 +823,7 @@
     "add-image": "Een afbeelding toevoegen",
     "add-video": "Video toevoegen",
     "add-video-hint": "Voeg een video toe door zijn youtube of vimeo URL in te voeren.",
-    "attachment": "Bijgevoegde documenten",
+    "attachment": "Bijgevoegd document | bijgevoegde documenten",
     "upload": "Uploaden"
   },
   "form": {
@@ -1529,7 +1530,7 @@
     },
     "apply-succes": "Aanvraag verzonden",
     "announcement-create": "Aanmaken",
-    "announcements": "aankondigingen",
+    "announcements": "aankondiging | aankondigingen",
     "at-coordinates": "op coördinaten",
     "categories": "Projectencategorieën",
     "community": "Communautaire projecten",
@@ -1548,7 +1549,7 @@
     "edit-location-point": "Locatiepunt bewerken",
     "edit-map": "Geolocatie bewerken",
     "edit-review": "Beoordeling bewerken",
-    "files": "Projectbestand projectbestand projectbestanden",
+    "files": "Projectbestand | projectbestand | projectbestanden",
     "follow": "Volgen",
     "followed": "Gevolgd",
     "form": {
@@ -1585,7 +1586,7 @@
     "impact": "Effect",
     "language": "Projecttaal",
     "life-status": "Levensstatus van het project",
-    "linked": "Gekoppeld project ",
+    "linked": "Gekoppeld project | Gekoppelde projecten",
     "linked-project": "Gekoppeld project",
     "linked-project-confirm-delete": "Weet u zeker dat u dit gekoppelde project wilt verwijderen?",
     "linked-projects": "Gekoppelde projecten",
@@ -1598,7 +1599,7 @@
     "public": "Openbare projecten",
     "quit": "Project afsluiten",
     "random-image": "Willekeurige afbeelding",
-    "resource": "Middelen",
+    "resource": "Hulpbron | Middelen",
     "review": "Evaluatie",
     "reviews": "Evaluaties",
     "review-confirm-delete": "Weet u zeker dat u deze beoordeling wilt verwijderen?",
@@ -1608,7 +1609,7 @@
     "remove-user-title": "Gebruiker verwijderen",
     "remove-user": "Verwijderen",
     "show-n-projects": "De {count} projecten tonen",
-    "suggested": "Soortgelijke projecten",
+    "suggested": "Soortgelijk project | soortgelijke projecten",
     "suggested-hint": "Projecten die u wellicht interesseren",
     "summary": "Samenvatting",
     "settings": "Instellingen",
@@ -1640,7 +1641,7 @@
     "about-you": "Vertel ons over jezelf en wat je motiveert.",
     "add-announcement": "Een aankondiging toevoegen",
     "announcement": "Mededeling",
-    "announcements": "Geen aankondiging {count} aankondiging {count} aankondigingen",
+    "announcements": "Geen aankondiging | {count} aankondiging | {count} aankondigingen",
     "apply": "Toepassen",
     "creation-date": "Aangemaakt op",
     "delete-announcement-message": "Wilt u deze aankondiging verwijderen?",
@@ -1688,8 +1689,8 @@
     "cannot-upload-image": "Kan afbeelding voorlopig niet uploaden",
     "link-address": "Linkadres",
     "resources": "Middelen",
-    "web": "Link naar web resources ",
-    "web-link": "Weblink Weblink Weblink"
+    "web": "Link naar webbronnen | links naar webbronnen",
+    "web-link": "Weblink | weblink | weblinks"
   },
   "result_box": {
     "people": "mensen",
@@ -2719,7 +2720,6 @@
     "see-subgroups": "Zie {count} subgroepen",
     "share": "Delen",
     "the-team": "Team ({users}4)",
-    "news": "Aangekondigd",
     "more": "Meer",
     "less": "Minder",
     "see-more": "Zie meer",
@@ -2809,8 +2809,9 @@
     "presentation": "Inleiding",
     "subgroups": "Subgroepen",
     "locations": "Kaart",
-    "location": "Adres",
-    "event": "Gebeurtenissen"
+    "location": "Adres | Adressaten",
+    "news": "Nieuws | Nieuws",
+    "event": "Gebeurtenis | Gebeurtenissen"
   },
   "gallery": {
     "title": "Galerij",

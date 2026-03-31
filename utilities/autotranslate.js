@@ -52,6 +52,13 @@ const diffLocal = (obj1, obj2) => {
       obj2[key].trim() === ''
     ) {
       empty.add(key)
+    } else {
+      const obj1Counter = obj1[key].toString().split('|')
+      const obj2Counter = obj2[key].toString().split('|')
+      // regenerate key to multiple values like "event | events | empty"
+      if (obj1Counter.length > obj2Counter.length) {
+        missing.add(key)
+      }
     }
   })
 
@@ -191,7 +198,7 @@ const output = spawnSync(`${import.meta.dirname}/translate/run.sh`, [
 ])
 
 if (output.status) {
-  console.log(output)
+  console.error(output.stderr.toString())
   exit(1)
 }
 const translated = JSON.parse(output.stdout)

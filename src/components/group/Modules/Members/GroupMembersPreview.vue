@@ -1,7 +1,7 @@
 <template>
   <BaseGroupPreview
     id="members"
-    :title="$t('group.members')"
+    :title="$t(GroupModuleTitle.members, group.modules.members)"
     :total="group.modules.members"
     :icon="GroupModuleIcon.members"
     :see-more="{ name: 'groupMembers', params: { groupIdOrSlug: group.slug || group.id } }"
@@ -18,7 +18,11 @@
 </template>
 
 <script setup lang="ts">
-import { GroupModuleIcon, TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import {
+  GroupModuleIcon,
+  GroupModuleTitle,
+  TranslatedPeopleGroupModel,
+} from '@/models/invitation.model'
 import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
 import BaseGroupMembersList from '@/components/group/Modules/Members/BaseGroupMembersList.vue'
 
