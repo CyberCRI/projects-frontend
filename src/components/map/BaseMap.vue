@@ -123,6 +123,7 @@ const closePopUp = () => {
 
 const addLayers = (layers: L.Layer[]) => {
   const cluster = toRaw(markerClusterInstance.value)
+  const map = toRaw(mapInstance.value)
 
   // get all layers actualy loaded
   const toRemove = cluster.getLayers()
@@ -131,6 +132,8 @@ const addLayers = (layers: L.Layer[]) => {
   // all layers not included in toAdd, need to be removed
   cluster.removeLayers(Array.from(toRemove).filter((el) => !toAdd.includes(el)))
   cluster.addLayers(toAdd)
+  cluster.refreshClusters()
+  map.invalidateSize()
 }
 
 const EXPOSE = Object.freeze({

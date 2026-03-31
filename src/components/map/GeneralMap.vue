@@ -10,7 +10,7 @@
             <MapControlZoom />
             <MapControlLocationType
               ref="locationType"
-              :locations="locations"
+              :locations="locations ?? []"
               @update="onUpdate('locationType', $event)"
             />
             <slot name="actions" />

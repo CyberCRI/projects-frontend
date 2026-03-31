@@ -10,6 +10,8 @@ const props = defineProps<{
   locations: TLocation[]
 }>()
 
+const { locale } = useNuxtI18n()
+
 const addLayers = inject<(l: L.Layer[]) => void>('addLayers')
 
 const locationActive = ref(null)
@@ -46,6 +48,8 @@ const locationToMarker = async (location: AnyLocation) => {
 
 watchEffect(async () => {
   const locations = props.locations
+  // only to trigger locale change to trigger update marker
+  void locale.value
   if (!locations || !addLayers || !import.meta.client) {
     return
   }
@@ -61,15 +65,11 @@ watchEffect(async () => {
 const map = inject<Ref<L.Map>>('map')
 watchEffect(() => {
   const mapRaw = toRaw(map.value)
-
   mapRaw.on('popupopen', (ev) => {
     locationActive.value = ev.popup.options.location
-    console.log('popupopen', ev, ev.popup.options.location)
   })
-
-  mapRaw.on('popupclose', (ev) => {
+  mapRaw.on('popupclose', () => {
     locationActive.value = null
-    console.log('popupclose', ev, ev.popup.options.location)
   })
 })
 </script>

@@ -37,7 +37,7 @@ watchEffect(() => emit('update', toRaw(query)))
 </script>
 
 <template>
-  <div class="locationtype-container">
+  <div v-if="enabledFilters.length" class="locationtype-container">
     <div class="menu-header" :class="{ opened: stateModal }">
       <h2 v-show="stateModal">Menu</h2>
       <button :aria-label="$t('common.filter')" @click.stop="toggleModal">
@@ -117,11 +117,8 @@ h2 {
   width: 100%;
 }
 
-.list-actions {
-  display: flex;
-  gap: 0.5rem;
-  padding: 0.5rem;
-  flex-direction: column;
+.list-container {
+  padding: 1rem;
 }
 
 .disabled {

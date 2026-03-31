@@ -49,14 +49,17 @@ const data = computed(() => {
   }
 })
 
-watchEffect(() => {
-  switch (props.location.content_type) {
-    case 'people_group':
-      return refreshGroup()
-    case 'project':
-      return refreshProject()
+watch(
+  () => [props.location.content_type, props.location.content_id],
+  () => {
+    switch (props.location.content_type) {
+      case 'people_group':
+        return refreshGroup()
+      case 'project':
+        return refreshProject()
+    }
   }
-})
+)
 </script>
 
 <template>
@@ -79,6 +82,10 @@ watchEffect(() => {
 <style lang="scss" scoped>
 .location-popup {
   width: pxToRem(300px);
-  margin: -63px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  // 25px is the size of "line" in map (a 5px too)
+  transform: translate(calc(-50% + 25px), calc(-100% + 5px));
 }
 </style>

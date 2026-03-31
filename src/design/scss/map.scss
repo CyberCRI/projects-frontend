@@ -24,9 +24,11 @@
 
 // MAP POINTER
 .map-pointer {
+  --height-line: 35px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: calc(((var(--height-line) * 2) - 12px) * -1);
 
   .badge {
     background: $white;
@@ -85,7 +87,7 @@
 
   .line {
     width: 3px;
-    height: 35px;
+    height: var(--height-line);
     background: $primary-dark;
     position: relative;
 
@@ -241,6 +243,7 @@
 
 // CLUSTER
 .cluster-parent {
+  --height-line: 25px;
   border-radius: 22px;
 
   .cluster-container {
@@ -250,7 +253,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    margin-top: -69px;
+    margin-top: calc(((var(--height-line) * 2) - 12px) * -1);
+
     width: 100%;
     background-color: white;
     border-radius: 22px;
@@ -301,7 +305,7 @@
 
   .line {
     width: 3px;
-    height: 35px;
+    height: var(--height-line);
     background: $primary-dark;
     position: relative;
 
