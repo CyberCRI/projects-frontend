@@ -64,6 +64,7 @@ import { searchProjects } from '@/api/search.service'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useUsersStore from '@/stores/useUsers.ts'
+import { nowDate } from '@/functs/date'
 export default {
   name: 'HomeHeaderConnected',
 
@@ -169,13 +170,11 @@ export default {
     },
 
     async loadEvents() {
-      const todayAtZero = new Date()
-      todayAtZero.setHours(0, 0, 0, 0)
       this._events = (
         await getAllEvents(this.organizationsStore.current?.code, {
           query: {
             ordering: 'start_date',
-            from_date: todayAtZero.toISOString(),
+            from_date: nowDate().toISOString(),
             limit: this.summaryMaxEvents,
           },
         })

@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import N from './zod-schema-utils'
 import { mcpFetch, API_BASE_URL, orgCode } from './base'
+import { nowDate } from '@/functs/date'
 
 const EVENT_OUTPUT_SCHEMA = N.object({
   id: N.number().describe('The ID of the event'),
@@ -34,8 +35,7 @@ export default (server) => {
     },
     async (_input, extras) => {
       // today date at midnight
-      const todayZeroHour = new Date()
-      todayZeroHour.setHours(0, 0, 0, 0)
+      const todayZeroHour = nowDate()
       const params = {
         ordering: 'start_date',
         from_date: todayZeroHour.toISOString(),
@@ -72,8 +72,7 @@ export default (server) => {
     },
     async (_input, extras) => {
       // today date at midnight
-      const todayZeroHour = new Date()
-      todayZeroHour.setHours(0, 0, 0, 0)
+      const todayZeroHour = nowDate()
       const params = {
         ordering: '-start_date',
         to_date: todayZeroHour.toISOString(),

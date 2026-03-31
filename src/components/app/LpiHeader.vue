@@ -199,6 +199,7 @@ import ContactDrawer from '@/components/app/ContactDrawer.vue'
 import useProjectCategories from '@/stores/useProjectCategories.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useUsersStore from '@/stores/useUsers.ts'
+import { nowDate } from '@/functs/date'
 
 export default {
   name: 'LpiHeader',
@@ -579,7 +580,7 @@ export default {
           announcements.results?.filter(
             (announcement) =>
               (announcement.project.publication_status !== 'private' && !announcement.deadline) ||
-              new Date(announcement.deadline) >= new Date().setHours(0, 0, 0, 0)
+              new Date(announcement.deadline) >= nowDate()
           ) || []
       } catch (err) {
         console.error(err)

@@ -47,7 +47,17 @@
       <div class="element-info skeletons-background">
         <IconImage class="icon-small" name="Calendar" />
         <span class="date-range">
-          {{ displayDateRange }}
+          <time class="date-preview-start" :datetime="d(start_date)">
+            {{ displayDateRange[0] }}
+          </time>
+          <template v-if="haveEndDate">
+            <span class="date-separator">
+              {{ ' - ' }}
+            </span>
+            <time class="date-preview-end" :datetime="d(end_date)">
+              {{ displayDateRange[1] }}
+            </time>
+          </template>
         </span>
       </div>
 
@@ -88,6 +98,8 @@ import ContentExpandable from '@/components/base/ContentExpandable.vue'
 import MapRecap from '@/components/map/MapRecap.vue'
 import ContextActionMenuInline from '@/components/base/button/ContextActionMenuInline.vue'
 import { html2Text } from '@/functs/string'
+import { sanitizeDate } from '@/form/event'
+import { formatDate, nowDate } from '@/functs/date'
 
 const props = withDefaults(
   defineProps<{
@@ -116,7 +128,7 @@ const emit = defineEmits<{
 }>()
 const { canEditEvent, canDeleteEvent } = usePermissions()
 
-const { locale } = useNuxtI18n()
+const { locale, d } = useNuxtI18n()
 
 const isComponent = computed(() => {
   if (props.is) {
@@ -131,24 +143,22 @@ const displayDate = computed(
   () => new Date(props.reverseDate ? props.event.end_date : props.event.start_date)
 )
 
-const start_date = computed(() => new Date(props.event.start_date))
-const end_date = computed(() => new Date(props.event.end_date ?? props.event.start_date))
+const start_date = computed(() => sanitizeDate(new Date(props.event.start_date)))
+const end_date = computed(() =>
+  sanitizeDate(new Date(props.event.end_date ?? props.event.start_date))
+)
 
 const isCurrent = computed(() => {
-  const now = new Date()
+  const now = nowDate()
   return start_date.value <= now && now <= end_date.value
 })
 
 const displayDateRange = computed(() => {
-  const formater = new Intl.DateTimeFormat(locale.value, {
-    dateStyle: 'full',
-    timeStyle: 'short',
-  })
-  // not range date, format only start_date
-  if (end_date.value === start_date.value) {
-    return formater.format(start_date.value)
-  }
-  return formater.formatRange(start_date.value, end_date.value)
+  return [formatDate(start_date.value, locale.value), formatDate(end_date.value, locale.value)]
+})
+
+const haveEndDate = computed(() => {
+  return end_date.value && end_date.value.toString() !== start_date.value.toString()
 })
 
 const deleteEvent = (event) => emit('delete', event)

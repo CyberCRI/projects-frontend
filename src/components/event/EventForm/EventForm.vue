@@ -32,14 +32,14 @@
 
       <span v-if="model.start_date || model.end_date" class="date-preview">
         <time class="date-preview-start" :datetime="d(model.start_date)">
-          {{ displayedDate[0] }}
+          {{ displayDateRange[0] }}
         </time>
-        <template v-if="displayedDate[1]">
+        <template v-if="haveEndDate">
           <span class="date-separator">
             {{ '-' }}
           </span>
           <time class="date-preview-end" :datetime="d(model.end_date)">
-            {{ displayedDate[1] }}
+            {{ displayDateRange[1] }}
           </time>
         </template>
       </span>
@@ -49,9 +49,12 @@
         v-if="stateModals.DatePicker"
         range
         inline
+        :minutes-increment="15"
+        :minutes-grid-increment="15"
+        :time-config="{ timePickerInline: true }"
+        :start-time="{ hours: 0, minutes: 0 }"
         :model-value="datePickerValue"
         :locale="locale"
-        :on-click-outside="() => closeModals('DatePicker')"
         @update:model-value="onDateSelected"
       />
 
@@ -128,7 +131,8 @@ import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import { LocationType } from '@/models/types'
 import { isNil } from 'es-toolkit'
 import { EventForm } from '@/models/event.model'
-import { defaultForm } from '@/form/event'
+import { defaultForm, sanitizeDate } from '@/form/event'
+import { formatDate, nowDate } from '@/functs/date'
 
 withDefaults(
   defineProps<{
@@ -162,24 +166,22 @@ const rules = computed(() => ({
 }))
 
 const datePickerValue = computed(() => {
-  return [
-    model.value.start_date ? new Date(model.value.start_date) : new Date(),
-    model.value.end_date ? new Date(model.value.end_date) : null,
-  ]
+  const start = model.value.start_date ? new Date(model.value.start_date) : nowDate()
+  const end = model.value.end_date ? new Date(model.value.end_date) : start
+  return [start, end].map((date) => sanitizeDate(date))
 })
 
-const displayedDate = computed(() => {
+const displayDateRange = computed(() => {
   return datePickerValue.value
     .filter((v) => !isNil(v))
-    .map((date) => {
-      return new Date(date).toLocaleDateString(locale.value, {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-      })
-    })
+    .map((date) => formatDate(date, locale.value))
+})
+
+const haveEndDate = computed(() => {
+  return (
+    datePickerValue.value[1] &&
+    datePickerValue.value[1].toString() !== datePickerValue.value[0].toString()
+  )
 })
 
 const v$ = useVuelidate(rules, model)
@@ -231,6 +233,15 @@ const updateLocation = (location) => {
 
 .form-section + .form-section {
   margin-top: $space-xl;
+}
+.form-section {
+  position: relative;
+}
+.datepicker-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999;
 }
 
 label {

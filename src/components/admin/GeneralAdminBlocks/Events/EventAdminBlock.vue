@@ -66,6 +66,7 @@ import EditEventDrawer from '@/components/event/EditEventDrawer/EditEventDrawer.
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
+import { nowDate } from '@/functs/date'
 
 const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()
@@ -80,11 +81,9 @@ const { stateModals, closeModals, openModals } = useModals({
   delete: false,
 })
 
-const todayAtZero = new Date()
-todayAtZero.setHours(0, 0, 0, 0)
 const query = {
   ordering: 'start_date',
-  from_date: todayAtZero.toISOString(),
+  from_date: nowDate().toISOString(),
 }
 
 const {

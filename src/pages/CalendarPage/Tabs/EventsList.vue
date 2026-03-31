@@ -14,6 +14,7 @@
 <script setup lang="ts">
 import { getAllEvents } from '@/api/v2/event.service'
 import EventList from '@/components/event/EventList/EventList.vue'
+import { nowDate } from '@/functs/date'
 import { QueryFilterEvent } from '@/models/event.model'
 import { factoryPagination } from '@/skeletons/base.skeletons'
 import { eventSkeleton } from '@/skeletons/event.skeletons'
@@ -29,8 +30,7 @@ const props = withDefaults(
 )
 
 const LIMIT_SKELETON = 10
-const now = new Date()
-now.setHours(0, 0, 0, 0)
+const now = nowDate()
 
 const organizationCode = useOrganizationCode()
 const { query } = useQuery<QueryFilterEvent>({
