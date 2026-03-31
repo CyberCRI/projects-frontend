@@ -580,7 +580,8 @@
     "close": "lähedal",
     "to": "To",
     "new": "uus",
-    "now": "Täna"
+    "now": "Täna",
+    "add-time": "sihtaja lisamine"
   },
   "complete-profile": {
     "bio": {

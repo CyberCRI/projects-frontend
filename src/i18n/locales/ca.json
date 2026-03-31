@@ -580,7 +580,8 @@
     "close": "tanca",
     "to": "A",
     "new": "nova",
-    "now": "Avui"
+    "now": "Avui",
+    "add-time": "afegeix una hora de destí"
   },
   "complete-profile": {
     "bio": {

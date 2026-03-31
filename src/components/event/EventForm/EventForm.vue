@@ -30,32 +30,19 @@
         {{ $t('invitation.create.field.validity.pick-date') }}
       </button>
 
-      <span v-if="model.start_date || model.end_date" class="date-preview">
-        <time class="date-preview-start" :datetime="d(model.start_date)">
-          {{ displayDateRange[0] }}
-        </time>
-        <template v-if="haveEndDate">
-          <span class="date-separator">
-            {{ '-' }}
-          </span>
-          <time class="date-preview-end" :datetime="d(model.end_date)">
-            {{ displayDateRange[1] }}
-          </time>
-        </template>
-      </span>
+      <DisplayDate :date="[model.start_date, model.end_date]" />
 
       <!-- disable our/minutes if not  -->
-      <VueDatePicker
+      <DatePickerModal
         v-if="stateModals.DatePicker"
         range
-        inline
         :minutes-increment="15"
         :minutes-grid-increment="15"
         :time-config="{ timePickerInline: true }"
         :start-time="{ hours: 0, minutes: 0 }"
         :model-value="datePickerValue"
-        :locale="locale"
         @update:model-value="onDateSelected"
+        @close="closeModals('DatePicker')"
       />
 
       <FieldErrors :errors="v$.start_date.$errors" />
@@ -120,7 +107,6 @@
 
 <script setup lang="ts">
 import TextInput from '@/components/base/form/TextInput.vue'
-import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import IconImage from '@/components/base/media/IconImage.vue'
 import useVuelidate from '@vuelidate/core'
@@ -129,10 +115,11 @@ import MultiGroupPicker from '@/components/group/MultiGroupPicker/MultiGroupPick
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import { LocationType } from '@/models/types'
-import { isNil } from 'es-toolkit'
 import { EventForm } from '@/models/event.model'
 import { defaultForm, sanitizeDate } from '@/form/event'
-import { formatDate, nowDate } from '@/functs/date'
+import { nowDate } from '@/functs/date'
+import DatePickerModal from '@/components/base/modal/DatePickerModal.vue'
+import DisplayDate from '@/components/base/DisplayDate.vue'
 
 withDefaults(
   defineProps<{
@@ -142,7 +129,7 @@ withDefaults(
     selectedGroup: true,
   }
 )
-const { t, d, locale } = useNuxtI18n()
+const { t } = useNuxtI18n()
 const model = defineModel<EventForm>({ default: defaultForm() })
 const emit = defineEmits<{
   invalid: [boolean]
@@ -171,19 +158,6 @@ const datePickerValue = computed(() => {
   return [start, end].map((date) => sanitizeDate(date))
 })
 
-const displayDateRange = computed(() => {
-  return datePickerValue.value
-    .filter((v) => !isNil(v))
-    .map((date) => formatDate(date, locale.value))
-})
-
-const haveEndDate = computed(() => {
-  return (
-    datePickerValue.value[1] &&
-    datePickerValue.value[1].toString() !== datePickerValue.value[0].toString()
-  )
-})
-
 const v$ = useVuelidate(rules, model)
 defineExpose({
   v$,
@@ -197,7 +171,10 @@ watch(
 )
 
 const onDateSelected = (modelData) => {
-  updateForm({ start_date: modelData[0], end_date: modelData[1] })
+  updateForm({
+    start_date: sanitizeDate(modelData[0]),
+    end_date: sanitizeDate(modelData[1] || modelData[0]),
+  })
   closeModals('DatePicker')
 }
 
@@ -234,9 +211,11 @@ const updateLocation = (location) => {
 .form-section + .form-section {
   margin-top: $space-xl;
 }
+
 .form-section {
   position: relative;
 }
+
 .datepicker-container {
   position: absolute;
   top: 0;
@@ -254,25 +233,6 @@ label {
 label,
 .notice {
   margin-bottom: $space-l !important;
-}
-
-.date-preview {
-  margin-left: $space-l;
-  display: inline-flex;
-  gap: 1rem;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.2rem;
-
-  .date-separator {
-    padding-left: 0.06rem;
-  }
-
-  time {
-    font-style: italic;
-    opacity: 0.8;
-    letter-spacing: -0.04rem;
-  }
 }
 
 .event-location {

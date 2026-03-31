@@ -580,7 +580,8 @@
     "close": "sluiten",
     "to": "Aan",
     "new": "nieuw",
-    "now": "Vandaag"
+    "now": "Vandaag",
+    "add-time": "een doeltijd toevoegen"
   },
   "complete-profile": {
     "bio": {

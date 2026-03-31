@@ -580,7 +580,8 @@
     "order-desc": "Plus récent à plus ancien",
     "close": "fermer",
     "to": "au",
-    "new": "nouveaux"
+    "new": "nouveaux",
+    "add-time": "ajouter un temps cible"
   },
   "complete-profile": {
     "bio": {

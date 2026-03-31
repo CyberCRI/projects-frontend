@@ -33,14 +33,12 @@
         {{ $t('invitation.create.field.validity.pick-date') }}
       </button>
 
-      <span v-if="model.publication_date" class="date-preview">{{ displayedDate }}</span>
-      <VueDatePicker
+      <DisplayDate :date="model.publication_date" />
+
+      <DatePickerModal
         v-if="stateModals.DatePicker"
-        inline
-        :locale="locale"
         :model-value="model.publication_date"
         :enable-time-picker="false"
-        :on-click-outside="() => closeModals('DatePicker')"
         @update:model-value="onDateSelected"
       />
 
@@ -138,8 +136,6 @@ import TextInput from '@/components/base/form/TextInput.vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
-import VueDatePicker from '@vuepic/vue-datepicker'
-import '@vuepic/vue-datepicker/dist/main.css'
 import IconImage from '@/components/base/media/IconImage.vue'
 import MultiGroupPicker from '@/components/group/MultiGroupPicker/MultiGroupPicker.vue'
 import { throttle } from 'es-toolkit'
@@ -148,6 +144,8 @@ import { postOrganizationImage } from '@/api/organizations.service'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import { usePatatoids } from '@/composables/usePatatoids'
 import { LocationType } from '@/models/types'
+import DisplayDate from '@/components/base/DisplayDate.vue'
+import DatePickerModal from '@/components/base/modal/DatePickerModal.vue'
 
 const LOCATION_TYPES: LocationType[] = ['news']
 withDefaults(
@@ -170,7 +168,7 @@ const emit = defineEmits<{
 
 const organizationsStore = useOrganizationsStore()
 const defaultPictures = usePatatoids()
-const { t, locale } = useNuxtI18n()
+const { t } = useNuxtI18n()
 
 const rules = computed(() => {
   return {
@@ -203,16 +201,6 @@ const updateForm = throttle((data) => {
   }
 }, 16)
 
-const displayedDate = computed(() => {
-  if (!model.value.publication_date) {
-    return ''
-  }
-  return new Date(model.value.publication_date).toLocaleDateString(locale.value, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
-})
 const organization = computed(() => organizationsStore.current)
 
 watch(
@@ -250,13 +238,6 @@ const updateLocation = (location) => {
 .content-editor {
   flex-grow: 1;
   min-height: pxToRem(300px);
-}
-
-.date-preview {
-  margin-left: $space-l;
-  display: inline-block;
-  font-size: 1.2rem;
-  font-weight: 700;
 }
 
 .img-ctn {

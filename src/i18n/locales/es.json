@@ -580,7 +580,8 @@
     "close": "cerca",
     "to": "A",
     "new": "nuevo",
-    "now": "Hoy"
+    "now": "Hoy",
+    "add-time": "añadir un tiempo de destino"
   },
   "complete-profile": {
     "bio": {
