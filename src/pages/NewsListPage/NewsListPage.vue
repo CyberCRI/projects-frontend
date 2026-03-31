@@ -18,7 +18,7 @@
       />
     </div>
     <FetchLoader :status="status" only-error skeleton>
-      <div class="list-container list-divider">
+      <div class="list-container">
         <NewsItem
           v-for="news in allNews"
           :key="news.title"
