@@ -517,7 +517,7 @@
     "added-on-the": "agregado",
     "back": "atrás",
     "cancel": "Cancelar",
-    "chose-date": "Fecha de selección",
+    "chose-date": "Escoge una fecha | Escoge una fecha(s)",
     "confirm": "Confirmación",
     "continue": "Continuar",
     "confirm-delete": "¿Seguro que quieres borrar esto?",
@@ -581,7 +581,14 @@
     "to": "A",
     "new": "nuevo",
     "now": "Hoy",
-    "add-time": "añadir horas/minutos"
+    "add-time": "añadir horas/minutos",
+    "start-time": "Hora de inicio",
+    "reset-time": "Tiempo de restauración",
+    "back-calendar": "Volver al calendario",
+    "end-time": "Tiempo final",
+    "no-date": "No hay fecha",
+    "date": "Fecha",
+    "clear-date": "Fecha clara"
   },
   "complete-profile": {
     "bio": {
@@ -2482,7 +2489,6 @@
       },
       "people_groups": {
         "label": "Grupos destinatarios",
-        "notice": "Seleccione el grupo(s) que verá este evento",
         "select-all": "Seleccione todo",
         "filter": "Grupos de filtro",
         "all": "Todos los grupos",
@@ -2531,9 +2537,9 @@
       },
       "groups": {
         "label": "Grupos destinatarios",
-        "notice": "Seleccione el grupo(s) que verá esta noticia",
         "select-all": "Seleccione todo",
-        "filter": "Grupos de filtro"
+        "filter": "Grupos de filtro",
+        "notice": "Seleccione la página de grupo donde se mostrará la noticia"
       },
       "visibility": {
         "label": "Visibilidad",
@@ -2584,9 +2590,9 @@
       },
       "groups": {
         "label": "Grupos destinatarios",
-        "notice": "Seleccione el grupo(s) que verá esta instrucción",
         "select-all": "Seleccione todo",
-        "filter": "Grupos de filtro"
+        "filter": "Grupos de filtro",
+        "notice": "Seleccione la página de grupo donde se mostrará la instrucción"
       },
       "notify": {
         "label": "Notificación",
@@ -2595,6 +2601,11 @@
       },
       "image": {
         "label": "Imagen"
+      },
+      "visibility": {
+        "label": "Visibilidad",
+        "notice": "Todos los usuarios pueden ver su instrucción.",
+        "public": "Público"
       }
     },
     "list": {

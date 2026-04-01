@@ -517,7 +517,7 @@
     "added-on-the": "Lisatud",
     "back": "tagasi",
     "cancel": "Tühistage",
-    "chose-date": "Valitud kuupäev",
+    "chose-date": "Valisin kohtingu | Kuupäeva( te) valimine",
     "confirm": "Kinnita",
     "continue": "Jätkata",
     "confirm-delete": "Oled kindel, et soovid selle kustutada?",
@@ -581,7 +581,14 @@
     "to": "To",
     "new": "uus",
     "now": "Täna",
-    "add-time": "tundide/ minutite lisamine"
+    "add-time": "tundide/ minutite lisamine",
+    "start-time": "Algusaeg",
+    "reset-time": "Lähteaeg",
+    "back-calendar": "Tagasi kalendrisse",
+    "end-time": "Lõpuaeg",
+    "no-date": "Kohtingut pole",
+    "date": "Kuupäev",
+    "clear-date": "Puhasta kuupäev"
   },
   "complete-profile": {
     "bio": {
@@ -2482,7 +2489,6 @@
       },
       "people_groups": {
         "label": "Sihtrühm(ad)",
-        "notice": "Vali grupp (grupid), mis seda sündmust näeb",
         "select-all": "Valige kõik",
         "filter": "Filtrirühmad",
         "all": "Kõik rühmad",
@@ -2531,9 +2537,9 @@
       },
       "groups": {
         "label": "Sihtrühm(ad)",
-        "notice": "Vali grupp (grupid), mis seda uudist näeb",
         "select-all": "Valige kõik",
-        "filter": "Filtrirühmad"
+        "filter": "Filtrirühmad",
+        "notice": "Vali grupilehekülg, kus uudiseid näidatakse"
       },
       "visibility": {
         "label": "Nähtavus",
@@ -2584,9 +2590,9 @@
       },
       "groups": {
         "label": "Sihtrühm(ad)",
-        "notice": "Valige grupp (grupid), mis näeb seda juhendit",
         "select-all": "Valige kõik",
-        "filter": "Filtrirühmad"
+        "filter": "Filtrirühmad",
+        "notice": "Vali grupilehekülg, kus näidatakse juhiseid"
       },
       "notify": {
         "label": "Teatamine",
@@ -2595,6 +2601,11 @@
       },
       "image": {
         "label": "Pilt"
+      },
+      "visibility": {
+        "label": "Nähtavus",
+        "notice": "Kõik kasutajad näevad teie juhiseid.",
+        "public": "Avalik"
       }
     },
     "list": {

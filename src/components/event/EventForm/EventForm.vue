@@ -23,30 +23,15 @@
         @update:model-value="updateForm({ content: $event })"
       />
     </div>
-    <div class="form-section">
-      <label>{{ $t('event.form.event_date.label') }}</label>
-      <button type="button" class="date-btn" @click="toggleModals('DatePicker')">
-        <IconImage class="icon" name="Calendar" />
-        {{ $t('invitation.create.field.validity.pick-date') }}
-      </button>
 
-      <DisplayDate class="display-date" :date="[model.start_date, model.end_date]" />
-
-      <!-- disable our/minutes if not  -->
-      <DatePickerModal
-        v-if="stateModals.DatePicker"
-        range
-        :minutes-increment="15"
-        :minutes-grid-increment="15"
-        :time-config="{ timePickerInline: true }"
-        :start-time="{ hours: 0, minutes: 0 }"
-        :model-value="datePickerValue"
-        @update:model-value="onDateSelected"
-        @close="closeModals('DatePicker')"
-      />
-
-      <FieldErrors :errors="v$.start_date.$errors" />
-    </div>
+    <DateField
+      :label="$t('event.form.event_date.label')"
+      range
+      time-picker
+      :model-value="datePickerValue"
+      :errors="v$.start_date.$errors"
+      @update:model-value="onDateSelected"
+    />
 
     <div class="form-section">
       <!-- locations -->
@@ -90,10 +75,7 @@
 
     <div class="form-section">
       <label>{{ $t('event.form.visibility.label') }}</label>
-      <p class="notice">
-        {{ $t('event.form.visibility.notice') }}
-      </p>
-      <LpiCheckbox v-model="model.visible_by_all" :label="$t('event.form.visibility.public')" />
+      <LpiCheckbox v-model="model.visible_by_all" :label="$t('event.form.visibility.notice')" />
     </div>
 
     <div v-if="selectedGroup" class="form-section">
@@ -112,8 +94,6 @@
 
 <script setup lang="ts">
 import TextInput from '@/components/base/form/TextInput.vue'
-import '@vuepic/vue-datepicker/dist/main.css'
-import IconImage from '@/components/base/media/IconImage.vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import MultiGroupPicker from '@/components/group/MultiGroupPicker/MultiGroupPicker.vue'
@@ -121,10 +101,8 @@ import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import { LocationType } from '@/models/types'
 import { EventForm } from '@/models/event.model'
-import { defaultForm, sanitizeDate } from '@/form/event'
-import { nowDate } from '@/functs/date'
-import DatePickerModal from '@/components/base/modal/DatePickerModal.vue'
-import DisplayDate from '@/components/base/DisplayDate.vue'
+import { defaultForm } from '@/form/event'
+import DateField from '@/components/base/form/DateField.vue'
 
 withDefaults(
   defineProps<{
@@ -140,10 +118,9 @@ const emit = defineEmits<{
   invalid: [boolean]
 }>()
 
-const { stateModals, openModals, closeModals, toggleModals } = useModals({
+const { stateModals, openModals, closeModals } = useModals({
   LocationForm: false,
   LocationDrawer: false,
-  DatePicker: false,
 })
 
 const LOCATION_TYPES: LocationType[] = ['event']
@@ -158,9 +135,9 @@ const rules = computed(() => ({
 }))
 
 const datePickerValue = computed(() => {
-  const start = model.value.start_date ? new Date(model.value.start_date) : nowDate()
-  const end = model.value.end_date ? new Date(model.value.end_date) : start
-  return [start, end].map((date) => sanitizeDate(date))
+  const start = model.value.start_date ? new Date(model.value.start_date) : null
+  const end = model.value.end_date ? new Date(model.value.end_date) : null
+  return [start, end].filter((v) => !!v)
 })
 
 const v$ = useVuelidate(rules, model)
@@ -177,10 +154,9 @@ watch(
 
 const onDateSelected = (modelData) => {
   updateForm({
-    start_date: sanitizeDate(modelData[0]),
-    end_date: sanitizeDate(modelData[1] || modelData[0]),
+    start_date: modelData[0],
+    end_date: modelData[1] || modelData[0],
   })
-  closeModals('DatePicker')
 }
 
 const updateForm = (data) => {
@@ -195,24 +171,6 @@ const updateLocation = (location) => {
 }
 </script>
 <style lang="scss" scoped>
-.date-btn {
-  padding: $space-s;
-  background-color: $white;
-  border: $border-width-s solid $primary-dark;
-  border-radius: $border-radius-s;
-  vertical-align: middle;
-  display: inline-flex;
-  align-items: center;
-  gap: $space-m;
-  color: $primary-dark;
-  font-weight: 700;
-
-  .icon {
-    width: $layout-size-2xl;
-    fill: $primary-dark;
-  }
-}
-
 .form-section + .form-section {
   margin-top: $space-xl;
 }
@@ -221,22 +179,11 @@ const updateLocation = (location) => {
   position: relative;
 }
 
-.datepicker-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 999;
-}
-
 label {
   font-size: $font-size-s;
   font-weight: 700;
   color: $black;
   display: block;
-}
-
-.display-date {
-  margin-left: 1rem;
 }
 
 label,

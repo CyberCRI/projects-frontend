@@ -26,24 +26,11 @@
       <FieldErrors :errors="v$.title.$errors" />
     </div>
 
-    <div class="form-section">
-      <label>{{ $t('news.form.publication_date.label') }}</label>
-      <button type="button" class="date-btn" @click="toggleModals('DatePicker')">
-        <IconImage class="icon" name="Calendar" />
-        {{ $t('invitation.create.field.validity.pick-date') }}
-      </button>
-
-      <DisplayDate class="display-date" :date="model.publication_date" />
-
-      <DatePickerModal
-        v-if="stateModals.DatePicker"
-        :model-value="model.publication_date"
-        :enable-time-picker="false"
-        @update:model-value="onDateSelected"
-      />
-
-      <FieldErrors :errors="v$.publication_date.$errors" />
-    </div>
+    <DateField
+      v-model="model.publication_date"
+      :label="$t('news.form.publication_date.label')"
+      :errors="v$.publication_date.$errors"
+    />
 
     <div class="form-section">
       <!-- locations -->
@@ -102,10 +89,7 @@
 
     <div class="form-section">
       <label>{{ $t('news.form.visibility.label') }}</label>
-      <p class="notice">
-        {{ $t('news.form.visibility.notice') }}
-      </p>
-      <LpiCheckbox v-model="model.visible_by_all" :label="$t('news.form.visibility.public')" />
+      <LpiCheckbox v-model="model.visible_by_all" :label="$t('news.form.visibility.notice')" />
     </div>
 
     <div v-if="selectedGroup" class="form-section">
@@ -141,7 +125,6 @@ import TextInput from '@/components/base/form/TextInput.vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
-import IconImage from '@/components/base/media/IconImage.vue'
 import MultiGroupPicker from '@/components/group/MultiGroupPicker/MultiGroupPicker.vue'
 import { throttle } from 'es-toolkit'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
@@ -149,9 +132,8 @@ import { postOrganizationImage } from '@/api/organizations.service'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import { usePatatoids } from '@/composables/usePatatoids'
 import { LocationType } from '@/models/types'
-import DisplayDate from '@/components/base/DisplayDate.vue'
-import DatePickerModal from '@/components/base/modal/DatePickerModal.vue'
 import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
+import DateField from '@/components/base/form/DateField.vue'
 
 const LOCATION_TYPES: LocationType[] = ['news']
 withDefaults(
@@ -162,7 +144,7 @@ withDefaults(
 )
 
 const model = defineModel({ default: defaultForm() })
-const { stateModals, openModals, closeModals, toggleModals } = useModals({
+const { stateModals, openModals, closeModals } = useModals({
   LocationForm: false,
   LocationDrawer: false,
   DatePicker: false,
@@ -224,10 +206,6 @@ const saveOrganizationImage = (file) => {
     body: formData,
   })
 }
-const onDateSelected = (modelData) => {
-  updateForm({ publication_date: modelData })
-  closeModals('DatePicker')
-}
 
 const updateLocation = (location) => {
   updateForm({ location })
@@ -281,24 +259,6 @@ label,
 :deep(.input-ctn),
 :deep(.input-field) {
   margin: 0;
-}
-
-.date-btn {
-  padding: $space-s;
-  background-color: $white;
-  border: $border-width-s solid $primary-dark;
-  border-radius: $border-radius-s;
-  vertical-align: middle;
-  display: inline-flex;
-  align-items: center;
-  gap: $space-m;
-  color: $primary-dark;
-  font-weight: 700;
-
-  .icon {
-    width: $layout-size-2xl;
-    fill: $primary-dark;
-  }
 }
 
 .news-location {

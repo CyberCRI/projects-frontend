@@ -28,18 +28,7 @@
         <FieldErrors :errors="v$.form.description.$errors" />
       </div>
 
-      <SwitchInput
-        v-model="deadlineVisible"
-        class="deadline-switch"
-        :label="`${$t('common.set-deadline')}:`"
-      />
-
-      <VueDatePicker
-        v-if="deadlineVisible"
-        v-model="form.deadline_at"
-        class="goal-deadline"
-        position="top"
-      />
+      <DateField v-model="form.deadline_at" :label="$t('common.set-deadline')" />
 
       <div class="status-ctn">
         <span class="goal-label">{{ $t('goal.status-title') }}:</span>
@@ -62,15 +51,10 @@
 </template>
 
 <script>
-import VueDatePicker from '@vuepic/vue-datepicker'
-
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import SwitchInput from '@/components/base/form/SwitchInput.vue'
 import GroupButton from '@/components/base/button/GroupButton.vue'
-
-import utils from '@/functs/functions.ts'
 
 import useVuelidate from '@vuelidate/core'
 import { required, helpers } from '@vuelidate/validators'
@@ -80,6 +64,8 @@ import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { createGoal, patchGoal } from '@/api/goals.service'
 import analytics from '@/analytics'
 import useToasterStore from '@/stores/useToaster.ts'
+import DateField from '@/components/base/form/DateField.vue'
+import { fullYearDateFormat } from '@/functs/date'
 
 export default {
   name: 'GoalDrawer',
@@ -89,10 +75,9 @@ export default {
     BaseDrawer,
     TextInput,
     TipTapEditor,
-    SwitchInput,
     GroupButton,
     FieldErrors,
-    VueDatePicker,
+    DateField,
   },
 
   props: {
@@ -125,10 +110,8 @@ export default {
       form: {
         title: '',
         description: '<p></p>',
-        deadline_at: new Date(),
         status: 'na',
       },
-      deadlineVisible: false,
       showConfirmModal: false,
       asyncing: false,
     }
@@ -189,10 +172,6 @@ export default {
   },
 
   watch: {
-    deadlineVisible: function (val) {
-      if (!val) this.form.deadline_at = null
-    },
-
     isOpened: {
       handler: function () {
         if (this.editedGoal?.id) this.fillForm()
@@ -209,17 +188,15 @@ export default {
       this.form.description = this.editedGoal.description
       this.form.deadline_at = this.editedGoal.deadline_at
       this.form.status = this.editedGoal.status
-      this.deadlineVisible = !!this.editedGoal.deadline_at
     },
 
     resetForm() {
       this.form = {
         title: this.project.template?.$t?.goal_title || '',
         description: this.project.template?.$t?.goal_description || '<p></p>',
-        deadline_at: new Date(),
+        deadline_at: null,
         status: 'na',
       }
-      this.deadlineVisible = false
     },
 
     async submit() {
@@ -231,9 +208,7 @@ export default {
           ...this.form,
           project_id: this.project.id,
           description: this.form.description,
-          deadline_at: this.form.deadline_at
-            ? utils.fullYearDateFormat(this.form.deadline_at)
-            : null,
+          deadline_at: this.form.deadline_at ? fullYearDateFormat(this.form.deadline_at) : null,
         }
         if (this.form.id) {
           // Update goal

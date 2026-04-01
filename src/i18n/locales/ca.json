@@ -517,7 +517,7 @@
     "added-on-the": "Afegit a",
     "back": "darrere",
     "cancel": "Cancel· la",
-    "chose-date": "Data seleccionada",
+    "chose-date": "Escolliu una data | Va escollir una data(s)",
     "confirm": "Confirmeu",
     "continue": "Continua",
     "confirm-delete": "Esteu segur que voleu esborrar això?",
@@ -581,7 +581,14 @@
     "to": "A",
     "new": "nova",
     "now": "Avui",
-    "add-time": "afegeix hores/ minuts"
+    "add-time": "afegeix hores/ minuts",
+    "start-time": "Hora d' inici",
+    "reset-time": "Reinicia el temps",
+    "back-calendar": "Torna al calendari",
+    "end-time": "Hora final",
+    "no-date": "Sense data",
+    "date": "Data",
+    "clear-date": "Neteja la data"
   },
   "complete-profile": {
     "bio": {
@@ -2482,7 +2489,6 @@
       },
       "people_groups": {
         "label": "Grup objectiu(s)",
-        "notice": "Seleccioneu el grup(s) que veurà aquest esdeveniment",
         "select-all": "Selecciona- ho tot",
         "filter": "Grups de filtre",
         "all": "Tots els grups",
@@ -2531,9 +2537,9 @@
       },
       "groups": {
         "label": "Grup objectiu(s)",
-        "notice": "Seleccioneu el grup(s) que veurà aquesta notícia",
         "select-all": "Selecciona- ho tot",
-        "filter": "Grups de filtre"
+        "filter": "Grups de filtre",
+        "notice": "Seleccioneu la pàgina de grup a on es mostraran les notícies"
       },
       "visibility": {
         "label": "Visibilitat",
@@ -2584,9 +2590,9 @@
       },
       "groups": {
         "label": "Grup objectiu(s)",
-        "notice": "Seleccioneu el grup(s) que veurà aquesta instrucció",
         "select-all": "Selecciona- ho tot",
-        "filter": "Grups de filtre"
+        "filter": "Grups de filtre",
+        "notice": "Seleccioneu la pàgina de grup on es mostrarà l' instrucció"
       },
       "notify": {
         "label": "Notificació",
@@ -2595,6 +2601,11 @@
       },
       "image": {
         "label": "Imatge"
+      },
+      "visibility": {
+        "label": "Visibilitat",
+        "notice": "Tots els usuaris poden veure les seves instruccions.",
+        "public": "Públic"
       }
     },
     "list": {

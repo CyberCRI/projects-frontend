@@ -518,7 +518,7 @@
     "added-on-the": "Ajouté le",
     "back": "retour",
     "cancel": "Annuler",
-    "chose-date": "Choisir date",
+    "chose-date": "Choisir une date | Choisir une date(s)",
     "confirm": "Confirmer",
     "continue": "Continuer",
     "confirm-delete": "Êtes vous sûr de vouloir supprimer ceci ?",
@@ -581,7 +581,14 @@
     "close": "fermer",
     "to": "au",
     "new": "nouveaux",
-    "add-time": "ajouter heures/minutes"
+    "add-time": "ajouter heures/minutes",
+    "start-time": "Heure de début",
+    "reset-time": "Heure de réinitialisation",
+    "back-calendar": "Retour à l'agenda",
+    "end-time": "Heure de fin",
+    "no-date": "Pas de date",
+    "date": "Date",
+    "clear-date": "Effacer la date"
   },
   "complete-profile": {
     "bio": {
@@ -2583,7 +2590,6 @@
       },
       "people_groups": {
         "label": "Groupe(s) cible(s)",
-        "notice": "Sélectionnez le(s) groupe(s) qui verront cet événement",
         "select-all": "Tout sélectionner",
         "filter": "Filtrer les groupes",
         "all": "Tous les groupes",
@@ -2632,9 +2638,9 @@
       },
       "groups": {
         "label": "Groupe(s) cible(s)",
-        "notice": "Sélectionnez le(s) groupe(s) qui verront cette actualité",
         "select-all": "Tout sélectionner",
-        "filter": "Filtrer les groupes"
+        "filter": "Filtrer les groupes",
+        "notice": "Sélectionnez la page de groupe où les nouvelles seront affichées"
       },
       "visibility": {
         "label": "Visibilité",
@@ -2688,14 +2694,19 @@
       },
       "groups": {
         "label": "Groupe(s) cible(s)",
-        "notice": "Sélectionnez le(s) groupe(s) qui verront cette instruction",
         "select-all": "Tout sélectionner",
-        "filter": "Filtrer les groupes"
+        "filter": "Filtrer les groupes",
+        "notice": "Sélectionnez la page de groupe où l'instruction sera affichée"
       },
       "notify": {
         "label": "Notification",
         "notice": "Si sélectionné, tout le monde sera notifié de la nouvelle instruction",
         "button": "Envoyer une notification"
+      },
+      "visibility": {
+        "label": "Visibilité",
+        "notice": "Tous les utilisateurs peuvent voir vos instructions.",
+        "public": "Public"
       }
     },
     "list": {

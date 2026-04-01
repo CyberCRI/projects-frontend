@@ -10,20 +10,3 @@ export const defaultForm = (): EventForm => ({
   visible_by_all: true,
   location: null,
 })
-
-/**
- * safe convert date with not grid incrementation minutes ( modulo 15 )
- *
- * @function
- * @name sanitizeDate
- * @kind variable
- * @param {Date} date
- * @returns {Date}
- * @exports
- */
-export const sanitizeDate = (date: Date) => {
-  const minutes = Math.floor(date.getMinutes() / 15) * 15
-  date.setHours(date.getHours(), minutes, 0, 0)
-
-  return date
-}

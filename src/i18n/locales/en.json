@@ -524,7 +524,11 @@
     "back": "back",
     "close": "close",
     "cancel": "Cancel",
-    "chose-date": "Chose date",
+    "chose-date": "Chose a date | Chose a date(s)",
+    "start-time": "Start time",
+    "reset-time": "Reset time",
+    "back-calendar": "Back to calendar",
+    "end-time": "End time",
     "confirm": "Confirm",
     "continue": "Continue",
     "confirm-delete": "Are you sure you want to delete this?",
@@ -581,7 +585,10 @@
     "to": "to",
     "new": "new",
     "now": "Today",
-    "add-time": "add hours/minutes"
+    "add-time": "Add time",
+    "no-date": "No date",
+    "date": "Date",
+    "clear-date": "Clear Date"
   },
   "complete-profile": {
     "bio": {
@@ -2488,7 +2495,6 @@
       },
       "people_groups": {
         "label": "Targeted group(s)",
-        "notice": "Select the group(s) that will see this event",
         "select-all": "Select all",
         "filter": "Filter groups",
         "all": "All groups",
@@ -2537,7 +2543,7 @@
       },
       "groups": {
         "label": "Targeted group(s)",
-        "notice": "Select the group(s) that will see this news",
+        "notice": "Select the groupe page where the news will be displayed",
         "select-all": "Select all",
         "filter": "Filter groups"
       }
@@ -2584,9 +2590,14 @@
       },
       "groups": {
         "label": "Targeted group(s)",
-        "notice": "Select the group(s) that will see this instruction",
+        "notice": "Select the groupe page where the instruction will be displayed",
         "select-all": "Select all",
         "filter": "Filter groups"
+      },
+      "visibility": {
+        "label": "Visibility",
+        "notice": "All users can see your instruction.",
+        "public": "Public"
       },
       "notify": {
         "label": "Notification",

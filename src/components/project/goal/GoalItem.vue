@@ -1,6 +1,6 @@
 <template>
   <div class="goal-ctn">
-    <div class="goal" :class="{ 'shadow-box': hasDescription }" @click="toggleDescription">
+    <div class="goal" :class="{ 'shadow-box': hasDescription }" @click="toggleModal">
       <div class="content">
         <div class="left" :class="goal.status">
           {{ goal.status == 'na' ? '&nbsp;' : $t(`status.${goal.status}`) }}
@@ -9,7 +9,7 @@
         <div class="right">
           <div class="main-content">
             <p class="goal-title">
-              {{ goal?.$t?.title }}
+              {{ goal.$t.title }}
             </p>
 
             <p v-if="deadlineVisible" class="goal-deadline" :class="goal.status">
@@ -17,13 +17,13 @@
             </p>
 
             <span v-if="hasDescription" class="chevron-icon">
-              <IconImage v-if="descriptionVisible" name="ChevronUp" />
+              <IconImage v-if="stateModal" name="ChevronUp" />
               <IconImage v-else name="ChevronDown" />
             </span>
           </div>
 
-          <div v-show="descriptionVisible" class="goal-description-wrapper">
-            <TipTapOutput class="goal-description-content" :content="goal?.$t?.description" />
+          <div v-show="stateModal" class="goal-description-wrapper">
+            <TipTapOutput class="goal-description-content" :content="goal.$t.description" />
           </div>
         </div>
       </div>
@@ -42,74 +42,51 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
+import { formatDate } from '@/functs/date'
 
-export default {
-  name: 'GoalItem',
+// mixins: ['permissions'],
 
-  components: { ContextActionButton, IconImage, TipTapOutput },
+const props = withDefaults(
+  defineProps<{
+    goal: any
+    canEditGoal?: boolean
+    canDeleteGoal?: boolean
+  }>(),
+  {
+    canEditGoal: false,
+    canDeleteGoal: false,
+  }
+)
 
-  mixins: ['permissions'],
+const { t, locale } = useNuxtI18n()
 
-  props: {
-    goal: {
-      type: Object,
-      default: () => {},
-    },
+const emit = defineEmits<{
+  'edit-goal': [any]
+  'delete-goal': [any]
+}>()
 
-    canEditGoal: {
-      type: Boolean,
-      default: false,
-    },
+const { stateModal, toggleModal } = useModal()
 
-    canDeleteGoal: {
-      type: Boolean,
-      default: false,
-    },
-  },
+const deadlineVisible = computed(() => {
+  return props.goal.deadline_at && props.goal.status !== 'na' && props.goal.status !== 'cancel'
+})
 
-  emits: ['edit-goal', 'delete-goal'],
-  data() {
-    return {
-      descriptionVisible: false,
-    }
-  },
+const deadlineFormatted = computed(() => {
+  return `${
+    props.goal.status === 'complete' ? t('goal.completed-on-the') : t('goal.planned-for-the')
+  } ${formatDate(new Date(props.goal.deadline_at), locale.value)}`
+})
 
-  computed: {
-    deadlineVisible() {
-      return this.goal.deadline_at && this.goal.status !== 'na' && this.goal.status !== 'cancel'
-    },
+const hasDescription = computed(() => {
+  return props.goal.description && props.goal.description != '<p></p>'
+})
 
-    deadlineFormatted() {
-      return `${
-        this.goal.status === 'complete'
-          ? this.$t('goal.completed-on-the')
-          : this.$t('goal.planned-for-the')
-      } ${this.$d(new Date(this.goal.deadline_at))}`
-    },
-
-    hasDescription() {
-      return this.goal.description && this.goal.description != '<p></p>'
-    },
-  },
-
-  methods: {
-    editGoal() {
-      this.$emit('edit-goal', this.goal)
-    },
-
-    deleteGoal() {
-      this.$emit('delete-goal', this.goal)
-    },
-
-    toggleDescription() {
-      this.descriptionVisible = !this.descriptionVisible
-    },
-  },
-}
+const editGoal = () => emit('edit-goal', props.goal)
+const deleteGoal = () => emit('delete-goal', props.goal)
 </script>
 
 <style lang="scss" scoped>

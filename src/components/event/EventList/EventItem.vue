@@ -86,8 +86,7 @@ import ContentExpandable from '@/components/base/ContentExpandable.vue'
 import MapRecap from '@/components/map/MapRecap.vue'
 import ContextActionMenuInline from '@/components/base/button/ContextActionMenuInline.vue'
 import { html2Text } from '@/functs/string'
-import { sanitizeDate } from '@/form/event'
-import { nowDate } from '@/functs/date'
+import { nowDate, sanitizeDate } from '@/functs/date'
 import DisplayDate from '@/components/base/DisplayDate.vue'
 
 const props = withDefaults(

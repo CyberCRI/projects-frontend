@@ -13,27 +13,6 @@
     </div>
 
     <div class="form-section">
-      <label>{{ $t('instructions.form.publication_date.label') }}</label>
-      <button type="button" class="date-btn" @click="showDatePicker = true">
-        <IconImage class="icon" name="Calendar" />
-        {{ $t('invitation.create.field.validity.pick-date') }}
-      </button>
-
-      <span v-if="modelValue.publication_date" class="date-preview">{{ displayedDate }}</span>
-      <VueDatePicker
-        v-if="showDatePicker"
-        :on-click-outside="() => (showDatePicker = false)"
-        :inline="true"
-        :auto-apply="true"
-        :model-value="modelValue.publication_date"
-        :enable-time-picker="false"
-        @update:model-value="onDateSelected"
-      />
-
-      <FieldErrors :errors="v$.modelValue.publication_date.$errors" />
-    </div>
-
-    <div class="form-section">
       <label>{{ $t('instructions.form.content.label') }}</label>
       <TipTapEditor
         ref="tiptapEditor"
@@ -47,20 +26,14 @@
 
       <FieldErrors :errors="v$.modelValue.content.$errors" />
     </div>
-    <div class="form-section">
-      <label>{{ $t('instructions.form.groups.label') }}</label>
-      <p class="notice">
-        {{ $t('instructions.form.groups.notice') }}
-      </p>
 
-      <MultiGroupPicker
-        has-public-field
-        :is-public="modelValue.visible_by_all"
-        :model-value="modelValue.people_groups"
-        @update:is-public="updateForm({ visible_by_all: $event })"
-        @update:model-value="updateForm({ people_groups: $event })"
-      />
-    </div>
+    <DateField
+      :model-value="modelValue.publication_date"
+      :label="$t('instructions.form.publication_date.label')"
+      :errors="v$.modelValue.publication_date.$errors"
+      @update:model-value="onDateSelected"
+    />
+
     <div class="form-section">
       <label>{{ $t('instructions.form.notify.label') }}</label>
       <p class="notice">
@@ -75,6 +48,27 @@
         {{ $t('instructions.form.notify.button') }}
       </button>
     </div>
+
+    <div class="form-section">
+      <label>{{ $t('instructions.form.visibility.label') }}</label>
+      <LpiCheckbox
+        :model-value="modelValue.visible_by_all"
+        :label="$t('instructions.form.visibility.notice')"
+        @update:is-public="updateForm({ visible_by_all: $event })"
+      />
+    </div>
+
+    <div class="form-section">
+      <label>{{ $t('instructions.form.groups.label') }}</label>
+      <p class="notice">
+        {{ $t('instructions.form.groups.notice') }}
+      </p>
+
+      <MultiGroupPicker
+        :model-value="modelValue.people_groups"
+        @update:model-value="updateForm({ people_groups: $event })"
+      />
+    </div>
   </form>
 </template>
 
@@ -83,13 +77,12 @@ import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
-import VueDatePicker from '@vuepic/vue-datepicker'
-import '@vuepic/vue-datepicker/dist/main.css'
 import IconImage from '@/components/base/media/IconImage.vue'
 import MultiGroupPicker from '@/components/group/MultiGroupPicker/MultiGroupPicker.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { postOrganizationImage } from '@/api/organizations.service.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import DateField from '@/components/base/form/DateField.vue'
 
 export function defaultForm() {
   return {
@@ -108,10 +101,10 @@ export default {
   components: {
     TextInput,
     TipTapEditor,
-    VueDatePicker,
     IconImage,
     MultiGroupPicker,
     FieldErrors,
+    DateField,
   },
   props: {
     modelValue: {
@@ -131,16 +124,10 @@ export default {
   data() {
     return {
       v$: useVuelidate(),
-      showDatePicker: false,
     }
   },
 
   computed: {
-    displayedDate() {
-      return this.modelValue.publication_date
-        ? this.$d(new Date(this.modelValue.publication_date))
-        : ''
-    },
     organization() {
       return this.organizationsStore.current
     },
@@ -181,7 +168,6 @@ export default {
     },
     onDateSelected(modelData) {
       this.updateForm({ publication_date: modelData })
-      this.showDatePicker = false
     },
 
     updateForm(data) {

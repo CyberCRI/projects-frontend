@@ -517,7 +517,7 @@
     "added-on-the": "Toegevoegd op",
     "back": "terug",
     "cancel": "Annuleren",
-    "chose-date": "Verkozen datum",
+    "chose-date": "Kies een datum | Een datum kiezen",
     "confirm": "Bevestigen",
     "continue": "Doorgaan",
     "confirm-delete": "Weet u zeker dat u dit wilt verwijderen?",
@@ -581,7 +581,14 @@
     "to": "Aan",
     "new": "nieuw",
     "now": "Vandaag",
-    "add-time": "uren/minuten toevoegen"
+    "add-time": "uren/minuten toevoegen",
+    "start-time": "Begintijd",
+    "reset-time": "Tijd resetten",
+    "back-calendar": "Terug naar agenda",
+    "end-time": "Eindtijd",
+    "no-date": "Geen datum",
+    "date": "Datum",
+    "clear-date": "Datum wissen"
   },
   "complete-profile": {
     "bio": {
@@ -2482,7 +2489,6 @@
       },
       "people_groups": {
         "label": "Gerichte groep(s)",
-        "notice": "Selecteer de groep(s) die deze gebeurtenis zal zien",
         "select-all": "Alles selecteren",
         "filter": "Filtergroepen",
         "all": "Alle groepen",
@@ -2531,9 +2537,9 @@
       },
       "groups": {
         "label": "Gerichte groep(s)",
-        "notice": "Selecteer de groep(s) die dit nieuws zal zien",
         "select-all": "Alles selecteren",
-        "filter": "Filtergroepen"
+        "filter": "Filtergroepen",
+        "notice": "Selecteer de groepspagina waar het nieuws zal worden weergegeven"
       },
       "visibility": {
         "label": "Zichtbaarheid",
@@ -2584,9 +2590,9 @@
       },
       "groups": {
         "label": "Gerichte groep(s)",
-        "notice": "Selecteer de groep(s) die deze instructie zal zien",
         "select-all": "Alles selecteren",
-        "filter": "Filtergroepen"
+        "filter": "Filtergroepen",
+        "notice": "Selecteer de groepspagina waar de instructie getoond zal worden"
       },
       "notify": {
         "label": "Kennisgeving",
@@ -2595,6 +2601,11 @@
       },
       "image": {
         "label": "Afbeelding"
+      },
+      "visibility": {
+        "label": "Zichtbaarheid",
+        "notice": "Alle gebruikers kunnen uw instructies zien.",
+        "public": "Openbaar"
       }
     },
     "list": {

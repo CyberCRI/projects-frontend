@@ -517,7 +517,7 @@
     "added-on-the": "zugefügt",
     "back": "zurück",
     "cancel": "Abbrechen",
-    "chose-date": "Chose Datum",
+    "chose-date": "Ein Datum | Datum(e)",
     "confirm": "Bestätigen",
     "continue": "Weiter",
     "confirm-delete": "Sind Sie sicher, dass Sie das löschen möchten?",
@@ -581,7 +581,14 @@
     "to": "Zu",
     "new": "neue",
     "now": "Heute",
-    "add-time": "Stunden/Minute hinzufügen"
+    "add-time": "Stunden/Minute hinzufügen",
+    "start-time": "Startzeit",
+    "reset-time": "Zurück zur Übersicht",
+    "back-calendar": "Zurück zum Kalender",
+    "end-time": "Endzeit",
+    "no-date": "Kein Datum",
+    "date": "Datum",
+    "clear-date": "Datum"
   },
   "complete-profile": {
     "bio": {
@@ -2482,7 +2489,6 @@
       },
       "people_groups": {
         "label": "Zielgruppe(n)",
-        "notice": "Wählen Sie die Gruppe(n), die dieses Ereignis sehen wird",
         "select-all": "Alles auswählen",
         "filter": "Filtergruppen",
         "all": "Alle Gruppen",
@@ -2531,9 +2537,9 @@
       },
       "groups": {
         "label": "Zielgruppe(n)",
-        "notice": "Wählen Sie die Gruppe(n), die diese Nachrichten sehen wird",
         "select-all": "Alles auswählen",
-        "filter": "Filtergruppen"
+        "filter": "Filtergruppen",
+        "notice": "Wählen Sie die Gruppenseite, auf der die Nachrichten angezeigt werden"
       },
       "visibility": {
         "label": "Sichtbarkeit",
@@ -2584,9 +2590,9 @@
       },
       "groups": {
         "label": "Zielgruppe(n)",
-        "notice": "Wählen Sie die Gruppe(n), die diese Anleitung sehen wird",
         "select-all": "Alles auswählen",
-        "filter": "Filtergruppen"
+        "filter": "Filtergruppen",
+        "notice": "Wählen Sie die Gruppenseite, auf der der Befehl angezeigt wird"
       },
       "notify": {
         "label": "Notifizierung",
@@ -2595,6 +2601,11 @@
       },
       "image": {
         "label": "Bild"
+      },
+      "visibility": {
+        "label": "Sichtbarkeit",
+        "notice": "Alle Benutzer können Ihre Anleitung sehen.",
+        "public": "Öffentliche"
       }
     },
     "list": {
