@@ -32,11 +32,11 @@ onErrorCaptured((err) => {
 
 const emit = defineEmits(['close'])
 
-const IS_STREAMED = ref(true)
-
+const IS_STREAMED = ref(!useRuntimeConfig().public.appChatbotWithoutStream)
+const CHAT_ENDPOINT = ref(useRuntimeConfig().public.appChatbotBackend || '/api/chat-lg-stream')
 const connectOptions = {
   // url: IS_STREAMED.value ? '/api/chat-stream' : '/api/chat',
-  url: '/api/chat-lg-stream',
+  url: CHAT_ENDPOINT.value,
   stream: IS_STREAMED.value,
 }
 const usersStore = useUsersStore()
@@ -125,11 +125,11 @@ watch(
 )
 const contextMessage = computed(() => [
   {
-    role: 'ai',
+    role: 'assistant',
     text: userContext.value,
   },
   {
-    role: 'ai',
+    role: 'assistant',
     text: pageContext.value,
   },
 ])

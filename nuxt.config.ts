@@ -178,6 +178,8 @@ export default defineNuxtConfig({
       allLocales: ALL_LOCALES.map((l) => l.code),
       appGeocodingApiUrl: '',
       appChatbotEnabled: 0,
+      appChatbotWithoutStream: 0,
+      appChatbotBackend: '',
       appChatbotExemples: '',
       appSorbobotApiUrl: '',
       appGotenbergEnabled: '',
