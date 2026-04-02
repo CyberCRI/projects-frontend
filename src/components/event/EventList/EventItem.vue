@@ -33,10 +33,10 @@
       <h4 class="title skeletons-text">
         {{ event.$t.title }}
       </h4>
-      <div class="event-information skeletons-text">
+      <div v-if="haveContent" class="event-information skeletons-text">
         <ContentExpandable
           class="expandable-left"
-          :description="event.$t.content"
+          :description="contentText ? content : event.$t.content"
           :height-limit="100"
           :opened="showMore"
           :hide-see-more="hideSeeMoreButton"
@@ -44,17 +44,15 @@
       </div>
 
       <!-- for date range -->
-      <div class="date-info skeletons-background">
+      <div class="element-info skeletons-background">
         <IconImage class="icon-small" name="Calendar" />
-        <span class="date-range">
-          {{ displayDateRange }}
-        </span>
+        <DisplayDate :date="[event.start_date, event.end_date]" />
       </div>
 
       <template v-if="event.location">
         <component
           :is="!locationPreview ? 'button' : 'div'"
-          class="reset-btn btn-location skeletons-background"
+          class="reset-btn element-info btn-location skeletons-background"
           :class="{
             'scale-hover': !locationPreview,
             'pointer-events-none': locationPreview,
@@ -62,8 +60,8 @@
           @click.prevent="locationEvent(event)"
         >
           <IconImage class="icon-small" name="MapMarker" />
-          <span>
-            {{ event.location?.$t?.title || $t('location.address') }}
+          <span class="text-ellipsis text-location">
+            {{ event.location.$t?.title || $t('location.address') }}
           </span>
         </component>
         <MapRecap v-if="locationPreview" :locations="[event.location]" />
@@ -87,6 +85,9 @@ import { TranslatedEventModel } from '@/models/event.model'
 import ContentExpandable from '@/components/base/ContentExpandable.vue'
 import MapRecap from '@/components/map/MapRecap.vue'
 import ContextActionMenuInline from '@/components/base/button/ContextActionMenuInline.vue'
+import { html2Text } from '@/functs/string'
+import { nowDate, sanitizeDate } from '@/functs/date'
+import DisplayDate from '@/components/base/DisplayDate.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -96,6 +97,7 @@ const props = withDefaults(
     showMore?: boolean
     locationPreview?: boolean
     reverseDate?: boolean
+    contentText?: boolean
     is?: string
   }>(),
   {
@@ -104,6 +106,7 @@ const props = withDefaults(
     hideSeeMoreButton: false,
     locationPreview: false,
     reverseDate: false,
+    contentText: false,
     is: null,
   }
 )
@@ -124,28 +127,19 @@ const isComponent = computed(() => {
   return resolveComponent('NuxtLink')
 })
 
-const displayDate = computed(
-  () => new Date(props.reverseDate ? props.event.end_date : props.event.start_date)
+const content = computed(() => html2Text(props.event.$t.content))
+const haveContent = computed(() => content.value.length !== 0)
+
+const start_date = computed(() => sanitizeDate(new Date(props.event.start_date)))
+const end_date = computed(() =>
+  sanitizeDate(new Date(props.event.end_date ?? props.event.start_date))
 )
 
-const start_date = computed(() => new Date(props.event.start_date))
-const end_date = computed(() => new Date(props.event.end_date ?? props.event.start_date))
+const displayDate = computed(() => (props.reverseDate ? end_date.value : start_date.value))
 
 const isCurrent = computed(() => {
-  const now = new Date()
+  const now = nowDate()
   return start_date.value <= now && now <= end_date.value
-})
-
-const displayDateRange = computed(() => {
-  const formater = new Intl.DateTimeFormat(locale.value, {
-    dateStyle: 'full',
-    timeStyle: 'short',
-  })
-  // not range date, format only start_date
-  if (end_date.value === start_date.value) {
-    return formater.format(start_date.value)
-  }
-  return formater.formatRange(start_date.value, end_date.value)
 })
 
 const deleteEvent = (event) => emit('delete', event)
@@ -192,13 +186,9 @@ const locationEvent = (event) => emit('location', event)
   }
 }
 
-.date-info {
+.element-info {
   display: grid;
   grid-template-columns: auto 1fr;
-}
-
-.date-range {
-  align-self: center;
 }
 
 .icon-small {
@@ -212,7 +202,11 @@ const locationEvent = (event) => emit('location', event)
 
 .btn-location {
   cursor: pointer;
-  display: block;
+}
+
+.text-location {
+  white-space: nowrap;
+  margin: auto;
 }
 
 .badge-new {

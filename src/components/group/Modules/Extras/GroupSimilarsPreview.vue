@@ -2,7 +2,7 @@
   <BaseGroupPreview
     id="similars"
     ref="similars"
-    :title="$t(GroupModuleTitle.similars)"
+    :title="$t(GroupModuleTitle.similars, group.modules.similars)"
     :total="group.modules.similars"
   >
     <template #header>

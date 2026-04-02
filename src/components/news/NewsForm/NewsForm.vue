@@ -26,27 +26,11 @@
       <FieldErrors :errors="v$.title.$errors" />
     </div>
 
-    <div class="form-section">
-      <label>{{ $t('news.form.publication_date.label') }}</label>
-      <button type="button" class="date-btn" @click="toggleModals('DatePicker')">
-        <IconImage class="icon" name="Calendar" />
-        {{ $t('invitation.create.field.validity.pick-date') }}
-      </button>
-
-      <span v-if="model.publication_date" class="date-preview">{{ displayedDate }}</span>
-      <VueDatePicker
-        v-if="stateModals.DatePicker"
-        inline
-        :locale="locale"
-        :model-value="model.publication_date"
-        :enable-time-picker="false"
-        :min-date="new Date()"
-        :on-click-outside="() => console.log('outside')"
-        @update:model-value="onDateSelected"
-      />
-
-      <FieldErrors :errors="v$.publication_date.$errors" />
-    </div>
+    <DateField
+      v-model="model.publication_date"
+      :label="$t('news.form.publication_date.label')"
+      :errors="v$.publication_date.$errors"
+    />
 
     <div class="form-section">
       <!-- locations -->
@@ -103,6 +87,11 @@
       <FieldErrors :errors="v$.content.$errors" />
     </div>
 
+    <div class="form-section">
+      <label>{{ $t('news.form.visibility.label') }}</label>
+      <LpiCheckbox v-model="model.visible_by_all" :label="$t('news.form.visibility.notice')" />
+    </div>
+
     <div v-if="selectedGroup" class="form-section">
       <label>{{ $t('news.form.groups.label') }}</label>
       <p class="notice">
@@ -110,28 +99,12 @@
       </p>
 
       <MultiGroupPicker
-        has-public-field
-        :is-public="model.visible_by_all"
         :model-value="model.people_groups"
-        @update:is-public="updateForm({ visible_by_all: $event })"
         @update:model-value="updateForm({ people_groups: $event })"
       />
     </div>
   </form>
 </template>
-
-<script lang="ts">
-export const defaultForm = () => ({
-  header_image: null,
-  imageSizes: null,
-  title: '',
-  content: '<p></p>',
-  publication_date: new Date().toISOString(),
-  people_groups: {},
-  visible_by_all: true,
-  location: null,
-})
-</script>
 
 <script setup lang="ts">
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
@@ -139,9 +112,6 @@ import TextInput from '@/components/base/form/TextInput.vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
-import VueDatePicker from '@vuepic/vue-datepicker'
-import '@vuepic/vue-datepicker/dist/main.css'
-import IconImage from '@/components/base/media/IconImage.vue'
 import MultiGroupPicker from '@/components/group/MultiGroupPicker/MultiGroupPicker.vue'
 import { throttle } from 'es-toolkit'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
@@ -149,6 +119,10 @@ import { postOrganizationImage } from '@/api/organizations.service'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import { usePatatoids } from '@/composables/usePatatoids'
 import { LocationType } from '@/models/types'
+import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
+import DateField from '@/components/base/form/DateField.vue'
+import { NewsForm } from '@/models/news.model'
+import { defaultForm } from '@/form/news'
 
 const LOCATION_TYPES: LocationType[] = ['news']
 withDefaults(
@@ -158,8 +132,8 @@ withDefaults(
   { selectedGroup: true }
 )
 
-const model = defineModel({ default: defaultForm() })
-const { stateModals, openModals, closeModals, toggleModals } = useModals({
+const model = defineModel<NewsForm>({ default: defaultForm() })
+const { stateModals, openModals, closeModals } = useModals({
   LocationForm: false,
   LocationDrawer: false,
   DatePicker: false,
@@ -171,7 +145,7 @@ const emit = defineEmits<{
 
 const organizationsStore = useOrganizationsStore()
 const defaultPictures = usePatatoids()
-const { t, locale } = useNuxtI18n()
+const { t } = useNuxtI18n()
 
 const rules = computed(() => {
   return {
@@ -202,18 +176,13 @@ const updateForm = throttle((data) => {
     ...model.value,
     ...data,
   }
+
+  // trigger only "field" changed validations validations
+  Object.keys(data).forEach((key) => {
+    v$.value[key]?.$touch()
+  })
 }, 16)
 
-const displayedDate = computed(() => {
-  if (!model.value.publication_date) {
-    return ''
-  }
-  return new Date(model.value.publication_date).toLocaleDateString(locale.value, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
-})
 const organization = computed(() => organizationsStore.current)
 
 watch(
@@ -231,10 +200,6 @@ const saveOrganizationImage = (file) => {
     body: formData,
   })
 }
-const onDateSelected = (modelData) => {
-  updateForm({ publication_date: modelData })
-  closeModals('DatePicker')
-}
 
 const updateLocation = (location) => {
   updateForm({ location })
@@ -251,13 +216,6 @@ const updateLocation = (location) => {
 .content-editor {
   flex-grow: 1;
   min-height: pxToRem(300px);
-}
-
-.date-preview {
-  margin-left: $space-l;
-  display: inline-block;
-  font-size: 1.2rem;
-  font-weight: 700;
 }
 
 .img-ctn {
@@ -282,6 +240,10 @@ label {
   display: block;
 }
 
+.display-date {
+  margin-left: 1rem;
+}
+
 label,
 .notice {
   margin-bottom: $space-l !important;
@@ -291,24 +253,6 @@ label,
 :deep(.input-ctn),
 :deep(.input-field) {
   margin: 0;
-}
-
-.date-btn {
-  padding: $space-s;
-  background-color: $white;
-  border: $border-width-s solid $primary-dark;
-  border-radius: $border-radius-s;
-  vertical-align: middle;
-  display: inline-flex;
-  align-items: center;
-  gap: $space-m;
-  color: $primary-dark;
-  font-weight: 700;
-
-  .icon {
-    width: $layout-size-2xl;
-    fill: $primary-dark;
-  }
 }
 
 .news-location {

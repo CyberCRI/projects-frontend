@@ -1,7 +1,7 @@
 <template>
   <BaseGroupPreview
     id="news"
-    :title="$t('group.news')"
+    :title="$t(GroupModuleTitle.news, group.modules.news)"
     :total="group.modules.news"
     :icon="GroupModuleIcon.news"
     :see-more="{
@@ -16,7 +16,11 @@
 </template>
 
 <script setup lang="ts">
-import { GroupModuleIcon, TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import {
+  GroupModuleIcon,
+  GroupModuleTitle,
+  TranslatedPeopleGroupModel,
+} from '@/models/invitation.model'
 import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
 import BaseGroupNewsList from '@/components/group/Modules/News/BaseGroupNewsList.vue'
 

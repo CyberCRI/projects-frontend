@@ -524,7 +524,10 @@
     "back": "back",
     "close": "close",
     "cancel": "Cancel",
-    "chose-date": "Chose date",
+    "start-time": "Start time",
+    "reset-time": "Reset time",
+    "back-calendar": "Back to calendar",
+    "end-time": "End time",
     "confirm": "Confirm",
     "continue": "Continue",
     "confirm-delete": "Are you sure you want to delete this?",
@@ -580,7 +583,12 @@
     "file-too-big": "File is too big (max: {maxSize}Mb)",
     "to": "to",
     "new": "new",
-    "now": "Today"
+    "now": "Today",
+    "add-time": "Add time",
+    "no-date": "No date",
+    "date": "Date",
+    "clear-date": "Clear Date",
+    "chose-date": "Select Date | Select the date(s)"
   },
   "complete-profile": {
     "bio": {
@@ -973,7 +981,7 @@
     "impact": "Impact",
     "team": "Team",
     "address": "Address",
-    "news": "News",
+    "news": "News | News",
     "event": "Event",
     "focus-on-map": "focus on the map",
     "expand-map": "Enlarge map",
@@ -1689,7 +1697,7 @@
     "cannot-upload-image": "Cannot upload image for now",
     "link-address": "Link address",
     "resources": "Resources",
-    "web": "Link to web resources | links to web resources",
+    "web": "Link to web resource | links to web resources",
     "web-link": "Web link | web link | web links"
   },
   "result_box": {
@@ -2478,11 +2486,17 @@
       "event_date": {
         "label": "Event date *",
         "placeholder": "Select date",
-        "required": "The date is required"
+        "required": "The date is required",
+        "before-end": "The start date must be before the end date.",
+        "before-start": "The end date must be after the start date."
+      },
+      "visibility": {
+        "label": "Visibility",
+        "notice": "All users can see your event.",
+        "public": "Public"
       },
       "people_groups": {
         "label": "Targeted group(s)",
-        "notice": "Select the group(s) that will see this event",
         "select-all": "Select all",
         "filter": "Filter groups",
         "all": "All groups",
@@ -2524,9 +2538,14 @@
         "label": "Publication date *",
         "required": "The publication date is required"
       },
+      "visibility": {
+        "label": "Visibility",
+        "notice": "All users can see your event.",
+        "public": "Public"
+      },
       "groups": {
         "label": "Targeted group(s)",
-        "notice": "Select the group(s) that will see this news",
+        "notice": "Select the groupe page where the news will be displayed",
         "select-all": "Select all",
         "filter": "Filter groups"
       }
@@ -2573,9 +2592,14 @@
       },
       "groups": {
         "label": "Targeted group(s)",
-        "notice": "Select the group(s) that will see this instruction",
+        "notice": "Select the groupe page where the instruction will be displayed",
         "select-all": "Select all",
         "filter": "Filter groups"
+      },
+      "visibility": {
+        "label": "Visibility",
+        "notice": "All users can see your instruction.",
+        "public": "Public"
       },
       "notify": {
         "label": "Notification",
@@ -3043,7 +3067,7 @@
     "contact": "Contact",
     "edit-group": "Edit Group",
     "see-more-people-button": "See {users} additional persons",
-    "see-subgroups": "See {count} subgroups",
+    "see-subgroups": "See {count} subgroup | See {count} subgroups",
     "share": "Share",
     "the-team": "Team ({users}4)",
     "news": "News | News",
@@ -3136,7 +3160,7 @@
     "similars": "Similar groups",
     "presentation": "Introduction",
     "subgroups": "Sub-groups",
-    "locations": "Map",
+    "locations": "Map | Maps",
     "location": "Address | Addresses"
   },
   "gallery": {
@@ -3145,7 +3169,7 @@
     "delete": "Delete image.",
     "add": "Add Images",
     "empty": "No photos.",
-    "pictures": "Images",
+    "pictures": "Image | Images",
     "add-picture": "Please select one or more photos to send.",
     "confirm-delete": "Do you really want to delete this image?",
     "success-delete": "Image deleted.",

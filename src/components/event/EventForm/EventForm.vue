@@ -23,40 +23,15 @@
         @update:model-value="updateForm({ content: $event })"
       />
     </div>
-    <div class="form-section">
-      <label>{{ $t('event.form.event_date.label') }}</label>
-      <button type="button" class="date-btn" @click="toggleModals('DatePicker')">
-        <IconImage class="icon" name="Calendar" />
-        {{ $t('invitation.create.field.validity.pick-date') }}
-      </button>
 
-      <span v-if="model.start_date || model.end_date" class="date-preview">
-        <time class="date-preview-start" :datetime="d(model.start_date)">
-          {{ displayedDate[0] }}
-        </time>
-        <template v-if="displayedDate[1]">
-          <span class="date-separator">
-            {{ '-' }}
-          </span>
-          <time class="date-preview-end" :datetime="d(model.end_date)">
-            {{ displayedDate[1] }}
-          </time>
-        </template>
-      </span>
-
-      <!-- disable our/minutes if not  -->
-      <VueDatePicker
-        v-if="stateModals.DatePicker"
-        range
-        inline
-        :model-value="datePickerValue"
-        :locale="locale"
-        :on-click-outside="() => closeModals('DatePicker')"
-        @update:model-value="onDateSelected"
-      />
-
-      <FieldErrors :errors="v$.start_date.$errors" />
-    </div>
+    <DateField
+      :label="$t('event.form.event_date.label')"
+      range
+      time-picker
+      :model-value="datePickerValue"
+      :errors="[...v$.start_date.$errors, ...v$.end_date.$errors]"
+      @update:model-value="onDateSelected"
+    />
 
     <div class="form-section">
       <!-- locations -->
@@ -98,6 +73,11 @@
       />
     </div>
 
+    <div class="form-section">
+      <label>{{ $t('event.form.visibility.label') }}</label>
+      <LpiCheckbox v-model="model.visible_by_all" :label="$t('event.form.visibility.notice')" />
+    </div>
+
     <div v-if="selectedGroup" class="form-section">
       <label>{{ $t('event.form.people_groups.label') }}</label>
       <p class="notice">
@@ -105,10 +85,7 @@
       </p>
 
       <MultiGroupPicker
-        has-public-field
-        :is-public="model.visible_by_all"
         :model-value="model.people_groups"
-        @update:is-public="updateForm({ visible_by_all: $event })"
         @update:model-value="updateForm({ people_groups: $event })"
       />
     </div>
@@ -117,18 +94,15 @@
 
 <script setup lang="ts">
 import TextInput from '@/components/base/form/TextInput.vue'
-import VueDatePicker from '@vuepic/vue-datepicker'
-import '@vuepic/vue-datepicker/dist/main.css'
-import IconImage from '@/components/base/media/IconImage.vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import MultiGroupPicker from '@/components/group/MultiGroupPicker/MultiGroupPicker.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import { LocationType } from '@/models/types'
-import { isNil } from 'es-toolkit'
 import { EventForm } from '@/models/event.model'
 import { defaultForm } from '@/form/event'
+import DateField from '@/components/base/form/DateField.vue'
 
 withDefaults(
   defineProps<{
@@ -138,16 +112,15 @@ withDefaults(
     selectedGroup: true,
   }
 )
-const { t, d, locale } = useNuxtI18n()
+const { t } = useNuxtI18n()
 const model = defineModel<EventForm>({ default: defaultForm() })
 const emit = defineEmits<{
   invalid: [boolean]
 }>()
 
-const { stateModals, openModals, closeModals, toggleModals } = useModals({
+const { stateModals, openModals, closeModals } = useModals({
   LocationForm: false,
   LocationDrawer: false,
-  DatePicker: false,
 })
 
 const LOCATION_TYPES: LocationType[] = ['event']
@@ -158,28 +131,34 @@ const rules = computed(() => ({
   },
   start_date: {
     required: helpers.withMessage(t('event.form.event_date.required'), required),
+    maxValue: helpers.withMessage(
+      t('event.form.event_date.before-end'),
+      (value: string | Date, { end_date }) => {
+        if (!end_date) {
+          return true
+        }
+        return new Date(value) <= new Date(end_date)
+      }
+    ),
+  },
+  end_date: {
+    minValue: helpers.withMessage(
+      t('event.form.event_date.before-start'),
+      (value: string | Date, { start_date }) => {
+        // no validate
+        if (!value) {
+          return true
+        }
+        return new Date(value) >= new Date(start_date)
+      }
+    ),
   },
 }))
 
 const datePickerValue = computed(() => {
-  return [
-    model.value.start_date ? new Date(model.value.start_date) : new Date(),
-    model.value.end_date ? new Date(model.value.end_date) : null,
-  ]
-})
-
-const displayedDate = computed(() => {
-  return datePickerValue.value
-    .filter((v) => !isNil(v))
-    .map((date) => {
-      return new Date(date).toLocaleDateString(locale.value, {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-      })
-    })
+  const start = model.value.start_date ? new Date(model.value.start_date) : null
+  const end = model.value.end_date ? new Date(model.value.end_date) : null
+  return [start, end].filter((v) => !!v)
 })
 
 const v$ = useVuelidate(rules, model)
@@ -195,8 +174,10 @@ watch(
 )
 
 const onDateSelected = (modelData) => {
-  updateForm({ start_date: modelData[0], end_date: modelData[1] })
-  closeModals('DatePicker')
+  updateForm({
+    start_date: modelData[0],
+    end_date: modelData[1] || modelData[0],
+  })
 }
 
 const updateForm = (data) => {
@@ -204,6 +185,10 @@ const updateForm = (data) => {
     ...model.value,
     ...data,
   }
+  // trigger only "field" changed validations validations
+  Object.keys(data).forEach((key) => {
+    v$.value[key]?.$touch()
+  })
 }
 const updateLocation = (location) => {
   updateForm({ location })
@@ -211,26 +196,12 @@ const updateLocation = (location) => {
 }
 </script>
 <style lang="scss" scoped>
-.date-btn {
-  padding: $space-s;
-  background-color: $white;
-  border: $border-width-s solid $primary-dark;
-  border-radius: $border-radius-s;
-  vertical-align: middle;
-  display: inline-flex;
-  align-items: center;
-  gap: $space-m;
-  color: $primary-dark;
-  font-weight: 700;
-
-  .icon {
-    width: $layout-size-2xl;
-    fill: $primary-dark;
-  }
-}
-
 .form-section + .form-section {
   margin-top: $space-xl;
+}
+
+.form-section {
+  position: relative;
 }
 
 label {
@@ -243,25 +214,6 @@ label {
 label,
 .notice {
   margin-bottom: $space-l !important;
-}
-
-.date-preview {
-  margin-left: $space-l;
-  display: inline-flex;
-  gap: 1rem;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.2rem;
-
-  .date-separator {
-    padding-left: 0.06rem;
-  }
-
-  time {
-    font-style: italic;
-    opacity: 0.8;
-    letter-spacing: -0.04rem;
-  }
 }
 
 .event-location {

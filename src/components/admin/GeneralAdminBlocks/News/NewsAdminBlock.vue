@@ -57,6 +57,7 @@ import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import AdminBlock from '@/components/admin/GeneralAdminBlocks/AdminBlock.vue'
+import { nowDate } from '@/functs/date'
 
 const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()
@@ -67,12 +68,9 @@ const { stateModals, openModals, closeModals } = useModals({ edit: false, delete
 const isDeletingNews = ref(false)
 const selectedNews = ref()
 
-const todayAtZero = new Date()
-todayAtZero.setHours(0, 0, 0, 0)
-
 const { query } = useQuery<QueryFilterNews>({
   ordering: 'publication_date',
-  from_date: todayAtZero.toISOString(),
+  from_date: nowDate().toISOString(),
 })
 
 const {

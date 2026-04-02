@@ -13,10 +13,10 @@
     </div>
 
     <div class="title">
-      {{ announcement?.$t?.title }}
+      {{ announcement.$t.title }}
     </div>
 
-    <div class="description" v-html="announcement?.$t?.description" />
+    <div class="description" v-html="announcement.$t.description" />
 
     <div v-if="canEditAndDelete" class="action-buttons">
       <ContextActionButton
@@ -44,66 +44,55 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import utils from '@/functs/functions.ts'
+import { formatDate } from '@/functs/date'
+import { TranslatedAnnouncement } from '@/models/announcement.model'
 
-export default {
-  name: 'AnnouncementItem',
+const props = withDefaults(
+  defineProps<{
+    announcement: TranslatedAnnouncement
+    showApplyAction?: boolean
+    isInEditingMode?: boolean
+  }>(),
+  {
+    showApplyAction: false,
+    isInEditingMode: false,
+  }
+)
 
-  components: {
-    LpiButton,
-    ContextActionButton,
-  },
+defineEmits<{
+  'update-announcement': []
+  'open-confirm-modal': []
+  apply: [TranslatedAnnouncement]
+}>()
 
-  props: {
-    announcement: {
-      type: Object,
-      default: () => {},
-    },
-    showApplyAction: {
-      type: Boolean,
-      default: false,
-    },
+const { locale, t } = useNuxtI18n()
 
-    isInEditingMode: {
-      type: Boolean,
-      default: false,
-    },
-  },
+const { canEditProject } = usePermissions()
 
-  emits: ['update-announcement', 'open-confirm-modal', 'apply'],
+const canEditAndDelete = computed(() => {
+  return canEditProject.value && props.isInEditingMode
+})
 
-  setup() {
-    const { canEditProject } = usePermissions()
-    return {
-      canEditProject,
-    }
-  },
+const createdDateLabel = computed(() => {
+  const date = formatDate(new Date(props.announcement.created_at), locale.value)
+  return `${t('common.added-on-the')} ${date}`
+})
 
-  computed: {
-    canEditAndDelete() {
-      return this.canEditProject && this.isInEditingMode
-    },
+const deadlineLabel = computed(() => {
+  const date = formatDate(new Date(props.announcement.deadline), locale.value)
+  return `${t('recruit.valid-until-the')} ${date}`
+})
 
-    createdDateLabel() {
-      return `${this.$t('common.added-on-the')} ${utils.toHDate(this.announcement.created_at)}`
-    },
-
-    deadlineLabel() {
-      return `${this.$t('recruit.valid-until-the')} ${utils.toHDate(this.announcement.deadline)}`
-    },
-
-    outdated() {
-      if (!this.announcement.deadline) return false
-      const endDate = new Date(this.announcement.deadline)
-      // deadline is inclusive, so we set the time to the end of the day
-      endDate.setHours(23, 59, 59, 999)
-      return endDate < new Date()
-    },
-  },
-}
+const outdated = computed(() => {
+  if (!props.announcement.deadline) return false
+  const endDate = new Date(props.announcement.deadline)
+  // deadline is inclusive, so we set the time to the end of the day
+  endDate.setHours(23, 59, 59, 999)
+  return endDate < new Date()
+})
 </script>
 
 <style lang="scss" scoped>

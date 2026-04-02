@@ -12,7 +12,7 @@ export interface AnnouncementModel extends BaseModel {
   deadline: string
   is_remunerated: boolean
   updated_at: string
-  create_at: string
+  created_at: string
 }
 
 export type TranslatedAnnouncement = Omit<

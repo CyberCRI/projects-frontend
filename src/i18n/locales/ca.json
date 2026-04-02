@@ -517,7 +517,6 @@
     "added-on-the": "Afegit a",
     "back": "darrere",
     "cancel": "Cancel· la",
-    "chose-date": "Data seleccionada",
     "confirm": "Confirmeu",
     "continue": "Continua",
     "confirm-delete": "Esteu segur que voleu esborrar això?",
@@ -579,7 +578,16 @@
     "order-desc": "nova a la més antiga",
     "close": "tanca",
     "to": "A",
-    "new": "nova"
+    "new": "nova",
+    "now": "Avui",
+    "add-time": "afegeix hores/ minuts",
+    "start-time": "Hora d' inici",
+    "reset-time": "Reinicia el temps",
+    "back-calendar": "Torna al calendari",
+    "end-time": "Hora final",
+    "no-date": "Sense data",
+    "date": "Data",
+    "clear-date": "Neteja la data"
   },
   "complete-profile": {
     "bio": {
@@ -822,7 +830,7 @@
     "add-image": "Afegeix una imatge",
     "add-video": "Afegeix un vídeo",
     "add-video-hint": "Afegeix un vídeo introduint el seu URL de Youtube o vimeo.",
-    "attachment": "Document adjuntat, documents adjuntats",
+    "attachment": "Document adjuntat | documents adjuntats",
     "upload": "Puja"
   },
   "form": {
@@ -981,7 +989,7 @@
     "add-location": "Afegeix una ubicació",
     "add-location-point": "Afegeix un punt d' emplaçament",
     "default-title": "Localització",
-    "news": "Notícies",
+    "news": "Notícies | Notícies",
     "event": "Esdeveniment"
   },
   "map": {
@@ -1529,7 +1537,7 @@
     },
     "apply-succes": "Aplicació enviadaComment",
     "announcement-create": "Crea una declaració",
-    "announcements": "Anuncis d' anunci",
+    "announcements": "declaració | anunciacions",
     "at-coordinates": "en coordenades",
     "categories": "Categories dels projectes",
     "community": "Els projectes de la Comunitat",
@@ -1548,7 +1556,7 @@
     "edit-location-point": "Edita el punt de localització",
     "edit-map": "Edita geolocalització",
     "edit-review": "Edita la revisió",
-    "files": "Fitxers de projecte del projecte del projecte del projecte del Project",
+    "files": "Fitxer del projecte | fitxer de projecte | Fitxers de projecte",
     "follow": "Segueix",
     "followed": "Seguit",
     "form": {
@@ -1585,7 +1593,7 @@
     "impact": "Impacte",
     "language": "Idioma del projecte",
     "life-status": "Estat de la vida del projecte",
-    "linked": "Projectes enllaçats per al projecte  LinkedName",
+    "linked": "Projecte enllaçat | Projectes enllaçats",
     "linked-project": "Projecte enllaçat",
     "linked-project-confirm-delete": "Esteu segur d' eliminar aquest projecte enllaçat?",
     "linked-projects": "Projectes enllaçats",
@@ -1598,7 +1606,7 @@
     "public": "projectes públics",
     "quit": "Surt del projecte",
     "random-image": "Imatge aleatòria",
-    "resource": "Recurs de recursos de resource",
+    "resource": "Recurs | Recursos",
     "review": "Revisió",
     "reviews": "Revisió",
     "review-confirm-delete": "Esteu segur d' esborrar aquesta revisió?",
@@ -1608,7 +1616,7 @@
     "remove-user-title": "Elimina usuari",
     "remove-user": "Esborra",
     "show-n-projects": "Mostra els projectes {count}",
-    "suggested": "Projectes similars a projectes similar al projecte",
+    "suggested": "Projecte similar | projectes similars",
     "suggested-hint": "Projectes que poden interessar-vos",
     "summary": "Resum",
     "settings": "Arranjament",
@@ -1640,7 +1648,7 @@
     "about-you": "Explica'ns el que et motiva.",
     "add-announcement": "Afegeix una declaració",
     "announcement": "Anunci",
-    "announcements": "No s'anuncia l'any {count} anunciava que s'anunciava el 1321544",
+    "announcements": "Sense declaració | 12154654 anunciat | 12154654 anuncis",
     "apply": "Aplica",
     "creation-date": "Creat el",
     "delete-announcement-message": "Voleu eliminar aquesta declaració?",
@@ -1688,8 +1696,8 @@
     "cannot-upload-image": "No es pot pujar la imatge per ara",
     "link-address": "Adreça de l' enllaç",
     "resources": "Recursos",
-    "web": "Enllaç als recursos web Tidy és un enllaç als recursos web",
-    "web-link": "Enllaços web de l'enllaç web  web del web del web web web web del web web web web web web  linkName"
+    "web": "Enllaç al recurs web | Enllaços als recursos web",
+    "web-link": "Enllaç web | Enllaç web | Enllaços web"
   },
   "result_box": {
     "people": "gent",
@@ -2476,14 +2484,20 @@
       "event_date": {
         "label": "Data de l' esdeveniment *",
         "placeholder": "Seleccioneu la data",
-        "required": "Es requereix la data"
+        "required": "Es requereix la data",
+        "before-end": "La data d' inici ha de ser abans de la data final.",
+        "before-start": "La data final ha d' estar després de la data d' inici."
       },
       "people_groups": {
         "label": "Grup objectiu(s)",
-        "notice": "Seleccioneu el grup(s) que veurà aquest esdeveniment",
         "select-all": "Selecciona- ho tot",
         "filter": "Grups de filtre",
         "all": "Tots els grups",
+        "public": "Públic"
+      },
+      "visibility": {
+        "label": "Visibilitat",
+        "notice": "Tots els usuaris poden veure el teu esdeveniment.",
         "public": "Públic"
       }
     },
@@ -2524,9 +2538,14 @@
       },
       "groups": {
         "label": "Grup objectiu(s)",
-        "notice": "Seleccioneu el grup(s) que veurà aquesta notícia",
         "select-all": "Selecciona- ho tot",
-        "filter": "Grups de filtre"
+        "filter": "Grups de filtre",
+        "notice": "Seleccioneu la pàgina de grup a on es mostraran les notícies"
+      },
+      "visibility": {
+        "label": "Visibilitat",
+        "notice": "Tots els usuaris poden veure el teu esdeveniment.",
+        "public": "Públic"
       }
     },
     "list": {
@@ -2572,9 +2591,9 @@
       },
       "groups": {
         "label": "Grup objectiu(s)",
-        "notice": "Seleccioneu el grup(s) que veurà aquesta instrucció",
         "select-all": "Selecciona- ho tot",
-        "filter": "Grups de filtre"
+        "filter": "Grups de filtre",
+        "notice": "Seleccioneu la pàgina de grup on es mostrarà l' instrucció"
       },
       "notify": {
         "label": "Notificació",
@@ -2583,6 +2602,11 @@
       },
       "image": {
         "label": "Imatge"
+      },
+      "visibility": {
+        "label": "Visibilitat",
+        "notice": "Tots els usuaris poden veure les seves instruccions.",
+        "public": "Públic"
       }
     },
     "list": {
@@ -2716,10 +2740,9 @@
     "contact": "Contacte",
     "edit-group": "Edita el grup",
     "see-more-people-button": "Vegeu {users} persones addicionals",
-    "see-subgroups": "Mireu els subgrups {count}",
+    "see-subgroups": "Mireu el subgrup {count} | Mireu els subgrups {count}",
     "share": "Comparteix",
     "the-team": "Equip ({users}4)",
-    "news": "Anunci",
     "more": "Més",
     "less": "Menys",
     "see-more": "Veure més",
@@ -2808,9 +2831,10 @@
     "similars": "Grups similars",
     "presentation": "Introducció",
     "subgroups": "Subgrups",
-    "locations": "Mapa",
-    "location": "Adreces d' adreces",
-    "event": "Esdeveniments de l' esdeveniment"
+    "locations": "Mapa | Mapes",
+    "location": "Adreça | Adreces",
+    "news": "Notícies | Notícies",
+    "event": "Esdeveniment | Esdeveniments"
   },
   "gallery": {
     "title": "Galeria",
@@ -2818,7 +2842,7 @@
     "delete": "Esborra la imatge.",
     "add": "Afegeix imatges",
     "empty": "Sense fotos.",
-    "pictures": "Imatges",
+    "pictures": "Imatge | Imatges",
     "add-picture": "Seleccioneu una o més fotos a enviar.",
     "confirm-delete": "Esteu segur que voleu esborrar aquesta imatge?",
     "success-delete": "Imatge esborrada.",

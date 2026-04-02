@@ -36,19 +36,8 @@
 
           <FieldErrors :errors="v$.form.description.$errors" />
         </div>
-        <div class="form-section">
-          <SwitchInput
-            v-model="hasDeadline"
-            :label="`${$t('common.deadline')}:`"
-            class="vertical black-label"
-          />
-          <VueDatePicker
-            v-if="hasDeadline"
-            v-model="form.deadline"
-            class="datepicker"
-            position="top"
-          />
-        </div>
+
+        <DateField v-model="form.deadline" :label="$t('common.deadline')" />
       </div>
     </BaseDrawer>
 
@@ -63,14 +52,11 @@
 </template>
 
 <script>
-import VueDatePicker from '@vuepic/vue-datepicker'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import GroupButton from '@/components/base/button/GroupButton.vue'
-import SwitchInput from '@/components/base/form/SwitchInput.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 
-import utils from '@/functs/functions.ts'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
@@ -80,6 +66,8 @@ import { postAnnouncement, patchAnnouncement } from '@/api/announcements.service
 import analytics from '@/analytics'
 
 import useToasterStore from '@/stores/useToaster.ts'
+import DateField from '@/components/base/form/DateField.vue'
+import { fullYearDateFormat } from '@/functs/date'
 
 export default {
   name: 'AnnouncementDrawer',
@@ -88,11 +76,10 @@ export default {
     ConfirmModal,
     BaseDrawer,
     GroupButton,
-    SwitchInput,
     TextInput,
     TipTapEditor,
     FieldErrors,
-    VueDatePicker,
+    DateField,
   },
 
   props: {
@@ -129,13 +116,11 @@ export default {
   data() {
     return {
       v$: useVuelidate(),
-      hasDeadline: false,
       confirmModalIsOpen: false,
       form: {
         title: '',
         description: '<p></p>',
-        deadline: new Date(),
-        type: 'na',
+        deadline: null,
       },
       asyncing: false,
     }
@@ -193,7 +178,6 @@ export default {
     isOpened: {
       handler: function () {
         if (this.isAddMode) {
-          this.hasDeadline = false
           this.form = {
             title: '',
             description: '<p></p>',
@@ -204,7 +188,6 @@ export default {
           this.form = {
             ...this.announcement,
           }
-          this.hasDeadline = !!this.announcement.deadline
         }
       },
       immediate: true,
@@ -219,9 +202,7 @@ export default {
         this.asyncing = true
         const body = {
           ...this.form,
-          deadline: this.hasDeadline
-            ? utils.fullYearDateFormat(new Date(this.form.deadline))
-            : null,
+          deadline: this.form.deadline ? fullYearDateFormat(this.form.deadline) : null,
           description: this.form.description,
           project_id: this.project.id,
         }
@@ -319,9 +300,5 @@ export default {
   margin-bottom: $space-m;
   color: $black;
   margin-right: 1rem;
-}
-
-.datepicker {
-  margin-top: $space-m;
 }
 </style>

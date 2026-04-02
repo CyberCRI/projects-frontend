@@ -517,7 +517,6 @@
     "added-on-the": "Lisatud",
     "back": "tagasi",
     "cancel": "Tühistage",
-    "chose-date": "Valitud kuupäev",
     "confirm": "Kinnita",
     "continue": "Jätkata",
     "confirm-delete": "Oled kindel, et soovid selle kustutada?",
@@ -579,7 +578,16 @@
     "order-desc": "uusim",
     "close": "lähedal",
     "to": "To",
-    "new": "uus"
+    "new": "uus",
+    "now": "Täna",
+    "add-time": "tundide/ minutite lisamine",
+    "start-time": "Algusaeg",
+    "reset-time": "Lähteaeg",
+    "back-calendar": "Tagasi kalendrisse",
+    "end-time": "Lõpuaeg",
+    "no-date": "Kohtingut pole",
+    "date": "Kuupäev",
+    "clear-date": "Puhasta kuupäev"
   },
   "complete-profile": {
     "bio": {
@@ -981,7 +989,7 @@
     "add-location": "Lisa asukoht",
     "add-location-point": "Asukohapunkti lisamine",
     "default-title": "Asukoht",
-    "news": "Uudised",
+    "news": "Uudised | Uudised",
     "event": "Sündmus"
   },
   "map": {
@@ -1688,7 +1696,7 @@
     "cannot-upload-image": "Pildi üleslaadimine nurjus",
     "link-address": "Linki aadress",
     "resources": "Ressursse",
-    "web": "Link veebiressurssidele | lingid veebiressurssidele",
+    "web": "Link veebiressursile | lingid veebiressurssidele",
     "web-link": "Veebilink | veebilink | veebilingid"
   },
   "result_box": {
@@ -2476,14 +2484,20 @@
       "event_date": {
         "label": "Sündmuse kuupäev *",
         "placeholder": "Vali kuupäev",
-        "required": "Kuupäev on nõutav"
+        "required": "Kuupäev on nõutav",
+        "before-end": "Alguskuupäev peab olema enne lõppkuupäeva.",
+        "before-start": "Lõppkuupäev peab olema pärast alguskuupäeva."
       },
       "people_groups": {
         "label": "Sihtrühm(ad)",
-        "notice": "Vali grupp (grupid), mis seda sündmust näeb",
         "select-all": "Valige kõik",
         "filter": "Filtrirühmad",
         "all": "Kõik rühmad",
+        "public": "Avalik"
+      },
+      "visibility": {
+        "label": "Nähtavus",
+        "notice": "Kõik kasutajad näevad teie sündmust.",
         "public": "Avalik"
       }
     },
@@ -2524,9 +2538,14 @@
       },
       "groups": {
         "label": "Sihtrühm(ad)",
-        "notice": "Vali grupp (grupid), mis seda uudist näeb",
         "select-all": "Valige kõik",
-        "filter": "Filtrirühmad"
+        "filter": "Filtrirühmad",
+        "notice": "Vali grupilehekülg, kus uudiseid näidatakse"
+      },
+      "visibility": {
+        "label": "Nähtavus",
+        "notice": "Kõik kasutajad näevad teie sündmust.",
+        "public": "Avalik"
       }
     },
     "list": {
@@ -2572,9 +2591,9 @@
       },
       "groups": {
         "label": "Sihtrühm(ad)",
-        "notice": "Valige grupp (grupid), mis näeb seda juhendit",
         "select-all": "Valige kõik",
-        "filter": "Filtrirühmad"
+        "filter": "Filtrirühmad",
+        "notice": "Vali grupilehekülg, kus näidatakse juhiseid"
       },
       "notify": {
         "label": "Teatamine",
@@ -2583,6 +2602,11 @@
       },
       "image": {
         "label": "Pilt"
+      },
+      "visibility": {
+        "label": "Nähtavus",
+        "notice": "Kõik kasutajad näevad teie juhiseid.",
+        "public": "Avalik"
       }
     },
     "list": {
@@ -2716,10 +2740,9 @@
     "contact": "Kontakt",
     "edit-group": "Redigeerimisgrupp",
     "see-more-people-button": "Vt {users} täiendavad isikud",
-    "see-subgroups": "Vt alarühmad {count}",
+    "see-subgroups": "Vt alagrupp {count} | Vt alarühmad {count}",
     "share": "Jaga",
     "the-team": "Meeskond ({users}4)",
-    "news": "Kuulutatud",
     "more": "Rohkem",
     "less": "Vähem",
     "see-more": "Näe rohkem",
@@ -2808,8 +2831,9 @@
     "similars": "Sarnased rühmad",
     "presentation": "Sissejuhatus",
     "subgroups": "Alarühmad",
-    "locations": "Kaart",
+    "locations": "Kaart | Kaardid",
     "location": "Aadress | Aadressid",
+    "news": "Uudised | Uudised",
     "event": "Sündmus | Sündmused"
   },
   "gallery": {
@@ -2818,7 +2842,7 @@
     "delete": "Kustuta pilt.",
     "add": "Lisa pildid",
     "empty": "Ei mingeid fotosid.",
-    "pictures": "Pildid",
+    "pictures": "Pilt | Pildid",
     "add-picture": "Palun valige üks või mitu fotot, mida saata.",
     "confirm-delete": "Kas tõesti kustutada see pilt?",
     "success-delete": "Pilt kustutatud.",

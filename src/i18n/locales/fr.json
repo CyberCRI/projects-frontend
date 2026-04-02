@@ -518,7 +518,7 @@
     "added-on-the": "Ajouté le",
     "back": "retour",
     "cancel": "Annuler",
-    "chose-date": "Choisir date",
+    "chose-date": "Choisir une date | Choisir la/les date(s)",
     "confirm": "Confirmer",
     "continue": "Continuer",
     "confirm-delete": "Êtes vous sûr de vouloir supprimer ceci ?",
@@ -580,7 +580,15 @@
     "order-desc": "Plus récent à plus ancien",
     "close": "fermer",
     "to": "au",
-    "new": "nouveaux"
+    "new": "nouveaux",
+    "add-time": "ajouter heures/minutes",
+    "start-time": "Heure de début",
+    "reset-time": "Remise a zéro",
+    "back-calendar": "Retour à l'agenda",
+    "end-time": "Heure de fin",
+    "no-date": "Pas de date",
+    "date": "Date",
+    "clear-date": "Effacer la date"
   },
   "complete-profile": {
     "bio": {
@@ -1790,8 +1798,8 @@
     "cannot-upload-image": "Impossible de sauveagrder l'image pour l'instant",
     "link-address": "Url du lien",
     "resources": "Ressources",
-    "web": "Lien aux ressources web | lien aux ressources web | liens aux ressources web",
-    "web-link": "Lien web | liens web"
+    "web": "Lien aux ressources web | lien aux ressources web",
+    "web-link": "Lien Web | lien Web | Liens Web"
   },
   "result_box": {
     "people": "personnes",
@@ -2578,14 +2586,20 @@
       "event_date": {
         "label": "Date de l'événement *",
         "placeholder": "Sélectionnez la date",
-        "required": "La date est requise"
+        "required": "La date est requise",
+        "before-end": "La date de début doit être antérieure à la date de fin.",
+        "before-start": "La date de fin doit être postérieure à la date de début."
       },
       "people_groups": {
         "label": "Groupe(s) cible(s)",
-        "notice": "Sélectionnez le(s) groupe(s) qui verront cet événement",
         "select-all": "Tout sélectionner",
         "filter": "Filtrer les groupes",
         "all": "Tous les groupes",
+        "public": "Public"
+      },
+      "visibility": {
+        "label": "Visibilité",
+        "notice": "Tous les utilisateurs peuvent voir votre événement.",
         "public": "Public"
       }
     },
@@ -2626,9 +2640,14 @@
       },
       "groups": {
         "label": "Groupe(s) cible(s)",
-        "notice": "Sélectionnez le(s) groupe(s) qui verront cette actualité",
         "select-all": "Tout sélectionner",
-        "filter": "Filtrer les groupes"
+        "filter": "Filtrer les groupes",
+        "notice": "Sélectionnez la page de groupe où les nouvelles seront affichées"
+      },
+      "visibility": {
+        "label": "Visibilité",
+        "notice": "Tous les utilisateurs peuvent voir votre événement.",
+        "public": "Public"
       }
     },
     "list": {
@@ -2677,14 +2696,19 @@
       },
       "groups": {
         "label": "Groupe(s) cible(s)",
-        "notice": "Sélectionnez le(s) groupe(s) qui verront cette instruction",
         "select-all": "Tout sélectionner",
-        "filter": "Filtrer les groupes"
+        "filter": "Filtrer les groupes",
+        "notice": "Sélectionnez la page de groupe où l'instruction sera affichée"
       },
       "notify": {
         "label": "Notification",
         "notice": "Si sélectionné, tout le monde sera notifié de la nouvelle instruction",
         "button": "Envoyer une notification"
+      },
+      "visibility": {
+        "label": "Visibilité",
+        "notice": "Tous les utilisateurs peuvent voir vos instructions.",
+        "public": "Public"
       }
     },
     "list": {
