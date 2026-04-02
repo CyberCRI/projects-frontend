@@ -19,7 +19,7 @@
     </div>
     <div class="news-img-ctn">
       <CroppedApiImage
-        :alt="`${news?.$t?.title} image`"
+        :alt="`${news.$t.title} image`"
         class="picture skeletons-background"
         :ratio="4 / 3"
         :picture-data="news?.header_image"
@@ -30,7 +30,7 @@
     <div class="news-texts" :style="textsStyle">
       <div class="news-title-ctn desktop">
         <h3 class="news-title skeletons-text">
-          {{ news?.$t?.title }}
+          {{ news.$t.title }}
         </h3>
 
         <ContextActionMenuInline

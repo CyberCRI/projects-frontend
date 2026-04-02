@@ -46,7 +46,7 @@
       <!-- for date range -->
       <div class="element-info skeletons-background">
         <IconImage class="icon-small" name="Calendar" />
-        <DisplayDate :date="[event.end_date, event.start_date]" />
+        <DisplayDate :date="[event.start_date, event.end_date]" />
       </div>
 
       <template v-if="event.location">
@@ -61,7 +61,7 @@
         >
           <IconImage class="icon-small" name="MapMarker" />
           <span class="text-ellipsis text-location">
-            {{ event.location?.$t?.title || $t('location.address') }}
+            {{ event.location.$t?.title || $t('location.address') }}
           </span>
         </component>
         <MapRecap v-if="locationPreview" :locations="[event.location]" />
@@ -130,14 +130,12 @@ const isComponent = computed(() => {
 const content = computed(() => html2Text(props.event.$t.content))
 const haveContent = computed(() => content.value.length !== 0)
 
-const displayDate = computed(
-  () => new Date(props.reverseDate ? props.event.end_date : props.event.start_date)
-)
-
 const start_date = computed(() => sanitizeDate(new Date(props.event.start_date)))
 const end_date = computed(() =>
   sanitizeDate(new Date(props.event.end_date ?? props.event.start_date))
 )
+
+const displayDate = computed(() => (props.reverseDate ? end_date.value : start_date.value))
 
 const isCurrent = computed(() => {
   const now = nowDate()
