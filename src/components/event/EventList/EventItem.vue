@@ -34,7 +34,11 @@
         {{ event.$t.title }}
       </h4>
       <div v-if="haveContent" class="event-information skeletons-text">
+        <LineClamped v-if="contentText" :line-number="3">
+          {{ contentText ? content : event.$t.content }}
+        </LineClamped>
         <ContentExpandable
+          v-else
           class="expandable-left"
           :description="contentText ? content : event.$t.content"
           :height-limit="100"
@@ -87,6 +91,7 @@ import ContextActionMenuInline from '@/components/base/button/ContextActionMenuI
 import { html2Text } from '@/functs/string'
 import { nowDate, sanitizeDate } from '@/functs/date'
 import DisplayDate from '@/components/base/DisplayDate.vue'
+import LineClamped from '@/components/base/LineClamped.vue'
 
 const props = withDefaults(
   defineProps<{
