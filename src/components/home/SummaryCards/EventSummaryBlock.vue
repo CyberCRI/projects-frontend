@@ -7,6 +7,7 @@
         :event="event"
         class="events-summary-item"
         hide-see-more-button
+        content-text
         @location="onLocation"
         @edit="onEdit"
         @delete="onDelete"

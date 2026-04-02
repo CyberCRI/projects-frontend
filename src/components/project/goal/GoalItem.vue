@@ -48,8 +48,6 @@ import IconImage from '@/components/base/media/IconImage.vue'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 import { formatDate } from '@/functs/date'
 
-// mixins: ['permissions'],
-
 const props = withDefaults(
   defineProps<{
     goal: any

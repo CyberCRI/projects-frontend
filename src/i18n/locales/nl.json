@@ -2485,7 +2485,9 @@
       "event_date": {
         "label": "Datum van de gebeurtenis",
         "placeholder": "Datum selecteren",
-        "required": "De datum is vereist"
+        "required": "De datum is vereist",
+        "before-end": "De startdatum moet vóór de einddatum zijn.",
+        "before-start": "De einddatum moet na de startdatum zijn."
       },
       "people_groups": {
         "label": "Gerichte groep(s)",

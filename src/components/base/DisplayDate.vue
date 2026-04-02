@@ -12,7 +12,7 @@ const props = withDefaults(
   }
 )
 
-const { d, locale } = useNuxtI18n()
+const { locale } = useNuxtI18n()
 
 const dateToArray = computed(() => {
   if (Array.isArray(props.date)) {
@@ -80,14 +80,14 @@ const haveEndDate = computed(() => {
 
 <template>
   <span class="date-preview">
-    <time v-if="startDate" class="date-preview-start" :datetime="d(startDate)">
+    <time v-if="startDate" class="date-preview-start" :datetime="displayStartDate">
       {{ displayStartDate }}
     </time>
     <template v-if="haveEndDate">
       <span class="date-separator">
         {{ ' - ' }}
       </span>
-      <time class="date-preview-end" :datetime="d(endDate)">
+      <time class="date-preview-end" :datetime="displayEndDate">
         {{ displayEndDate }}
       </time>
     </template>

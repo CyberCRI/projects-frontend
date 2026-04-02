@@ -2485,7 +2485,9 @@
       "event_date": {
         "label": "Data de l' esdeveniment *",
         "placeholder": "Seleccioneu la data",
-        "required": "Es requereix la data"
+        "required": "Es requereix la data",
+        "before-end": "La data d' inici ha de ser abans de la data final.",
+        "before-start": "La data final ha d' estar després de la data d' inici."
       },
       "people_groups": {
         "label": "Grup objectiu(s)",

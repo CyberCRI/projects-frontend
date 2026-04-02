@@ -106,19 +106,6 @@
   </form>
 </template>
 
-<script lang="ts">
-export const defaultForm = () => ({
-  header_image: null,
-  imageSizes: null,
-  title: '',
-  content: '<p></p>',
-  publication_date: new Date().toISOString(),
-  people_groups: {},
-  visible_by_all: true,
-  location: null,
-})
-</script>
-
 <script setup lang="ts">
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
@@ -134,6 +121,8 @@ import { usePatatoids } from '@/composables/usePatatoids'
 import { LocationType } from '@/models/types'
 import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
 import DateField from '@/components/base/form/DateField.vue'
+import { NewsForm } from '@/models/news.model'
+import { defaultForm } from '@/form/news'
 
 const LOCATION_TYPES: LocationType[] = ['news']
 withDefaults(
@@ -143,7 +132,7 @@ withDefaults(
   { selectedGroup: true }
 )
 
-const model = defineModel({ default: defaultForm() })
+const model = defineModel<NewsForm>({ default: defaultForm() })
 const { stateModals, openModals, closeModals } = useModals({
   LocationForm: false,
   LocationDrawer: false,
@@ -187,6 +176,11 @@ const updateForm = throttle((data) => {
     ...model.value,
     ...data,
   }
+
+  // trigger only "field" changed validations validations
+  Object.keys(data).forEach((key) => {
+    v$.value[key]?.$touch()
+  })
 }, 16)
 
 const organization = computed(() => organizationsStore.current)

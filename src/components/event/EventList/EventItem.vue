@@ -36,7 +36,7 @@
       <div v-if="haveContent" class="event-information skeletons-text">
         <ContentExpandable
           class="expandable-left"
-          :description="event.$t.content"
+          :description="contentText ? content : event.$t.content"
           :height-limit="100"
           :opened="showMore"
           :hide-see-more="hideSeeMoreButton"
@@ -97,6 +97,7 @@ const props = withDefaults(
     showMore?: boolean
     locationPreview?: boolean
     reverseDate?: boolean
+    contentText?: boolean
     is?: string
   }>(),
   {
@@ -105,6 +106,7 @@ const props = withDefaults(
     hideSeeMoreButton: false,
     locationPreview: false,
     reverseDate: false,
+    contentText: false,
     is: null,
   }
 )
@@ -125,7 +127,8 @@ const isComponent = computed(() => {
   return resolveComponent('NuxtLink')
 })
 
-const haveContent = computed(() => html2Text(props.event.$t.content).length !== 0)
+const content = computed(() => html2Text(props.event.$t.content))
+const haveContent = computed(() => content.value.length !== 0)
 
 const displayDate = computed(
   () => new Date(props.reverseDate ? props.event.end_date : props.event.start_date)

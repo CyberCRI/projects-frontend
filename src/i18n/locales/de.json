@@ -2485,7 +2485,9 @@
       "event_date": {
         "label": "Veranstaltungsdatum *",
         "placeholder": "Wählen Sie Datum",
-        "required": "Das Datum ist erforderlich"
+        "required": "Das Datum ist erforderlich",
+        "before-end": "Das Startdatum muss vor dem Enddatum liegen.",
+        "before-start": "Das Enddatum muss nach dem Startdatum erfolgen."
       },
       "people_groups": {
         "label": "Zielgruppe(n)",

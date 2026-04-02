@@ -23,7 +23,7 @@ export type EventInput = Required<Omit<EventModel, 'id' | 'created_at' | 'update
 
 export type EventForm = Omit<EventInput, 'people_groups' | 'start_date' | 'end_date'> & {
   start_date: Date
-  end_date?: Date | null
+  end_date: Date
   people_groups: {
     [key: number]: boolean
   }

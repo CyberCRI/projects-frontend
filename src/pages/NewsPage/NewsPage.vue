@@ -39,7 +39,7 @@
         </div>
       </div>
 
-      <TipTapOutput :content="news.$t.content" />
+      <TipTapOutput class="description-content" :content="news.$t.content" />
 
       <MapRecap v-if="news.location" class="map" :locations="[news.location]">
         <template #tooltip="{ location }">
@@ -80,6 +80,7 @@ import { NewsModel } from '@/models/news.model'
 import { html2Text } from '@/functs/string'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
+import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 
 const props = defineProps<{
   slugOrId: string

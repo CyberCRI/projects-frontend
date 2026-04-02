@@ -20,6 +20,14 @@ const LOCALES = {
 const { locale } = useNuxtI18n()
 // get datefns from locale value
 const localeDateFn = computed(() => LOCALES[locale.value] ?? LOCALES.en)
+// check if locale if 24 hours or am/pm (for timepicker)
+const is24 = computed(() => {
+  return ['h24', 'h23'].includes(
+    Intl.DateTimeFormat(locale.value, {
+      hour: 'numeric',
+    }).resolvedOptions().hourCycle
+  )
+})
 
 // change style for week days in calendar
 const SATURDAY = 5
@@ -90,7 +98,8 @@ const asTimeSelected = computed(() => {
 
 // final confirm, change parent v-model
 const onSubmit = () => {
-  const modelRaw = toRaw(localeModel.value)
+  // clone model to avoid problemes same reference
+  const modelRaw = structuredClone(toRaw(localeModel.value))
   model.value = props.range ? modelRaw : modelRaw[0]
   emit('close')
 }
@@ -249,6 +258,7 @@ const resetTime = () => {
                   :time-config="{
                     minutesGridIncrement: 15,
                     minutesIncrement: 15,
+                    is24,
                   }"
                   :locale="localeDateFn"
                   :ui="UI"
@@ -271,6 +281,7 @@ const resetTime = () => {
                   :time-config="{
                     minutesGridIncrement: 15,
                     minutesIncrement: 15,
+                    is24,
                   }"
                   :locale="localeDateFn"
                   :ui="UI"

@@ -29,7 +29,7 @@
       range
       time-picker
       :model-value="datePickerValue"
-      :errors="v$.start_date.$errors"
+      :errors="[...v$.start_date.$errors, ...v$.end_date.$errors]"
       @update:model-value="onDateSelected"
     />
 
@@ -131,6 +131,27 @@ const rules = computed(() => ({
   },
   start_date: {
     required: helpers.withMessage(t('event.form.event_date.required'), required),
+    maxValue: helpers.withMessage(
+      t('event.form.event_date.before-end'),
+      (value: string | Date, { end_date }) => {
+        if (!end_date) {
+          return true
+        }
+        return new Date(value) <= new Date(end_date)
+      }
+    ),
+  },
+  end_date: {
+    minValue: helpers.withMessage(
+      t('event.form.event_date.before-start'),
+      (value: string | Date, { start_date }) => {
+        // no validate
+        if (!value) {
+          return true
+        }
+        return new Date(value) >= new Date(start_date)
+      }
+    ),
   },
 }))
 
@@ -164,6 +185,10 @@ const updateForm = (data) => {
     ...model.value,
     ...data,
   }
+  // trigger only "field" changed validations validations
+  Object.keys(data).forEach((key) => {
+    v$.value[key]?.$touch()
+  })
 }
 const updateLocation = (location) => {
   updateForm({ location })

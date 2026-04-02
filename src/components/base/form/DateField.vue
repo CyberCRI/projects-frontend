@@ -60,7 +60,7 @@ const dateExist = computed(() => {
       v-model="model"
       :range="range"
       :time-picker="timePicker"
-      @close="closeModal"
+      @close="nextTick(closeModal)"
     />
 
     <FieldErrors :errors="errors" />

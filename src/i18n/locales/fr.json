@@ -583,7 +583,7 @@
     "new": "nouveaux",
     "add-time": "ajouter heures/minutes",
     "start-time": "Heure de début",
-    "reset-time": "Heure de réinitialisation",
+    "reset-time": "Remise a zéro",
     "back-calendar": "Retour à l'agenda",
     "end-time": "Heure de fin",
     "no-date": "Pas de date",
@@ -2586,7 +2586,9 @@
       "event_date": {
         "label": "Date de l'événement *",
         "placeholder": "Sélectionnez la date",
-        "required": "La date est requise"
+        "required": "La date est requise",
+        "before-end": "La date de début doit être antérieure à la date de fin.",
+        "before-start": "La date de fin doit être postérieure à la date de début."
       },
       "people_groups": {
         "label": "Groupe(s) cible(s)",

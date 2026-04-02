@@ -2485,7 +2485,9 @@
       "event_date": {
         "label": "Sündmuse kuupäev *",
         "placeholder": "Vali kuupäev",
-        "required": "Kuupäev on nõutav"
+        "required": "Kuupäev on nõutav",
+        "before-end": "Alguskuupäev peab olema enne lõppkuupäeva.",
+        "before-start": "Lõppkuupäev peab olema pärast alguskuupäeva."
       },
       "people_groups": {
         "label": "Sihtrühm(ad)",
