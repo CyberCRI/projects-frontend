@@ -2499,6 +2499,7 @@
         "label": "Targeted group(s)",
         "select-all": "Select all",
         "filter": "Filter groups",
+        "notice": "Select the groupe page where the event will be displayed",
         "all": "All groups",
         "public": "Public"
       }

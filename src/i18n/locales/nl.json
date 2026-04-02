@@ -587,7 +587,8 @@
     "end-time": "Eindtijd",
     "no-date": "Geen datum",
     "date": "Datum",
-    "clear-date": "Datum wissen"
+    "clear-date": "Datum wissen",
+    "chose-date": "Datum selecteren | Selecteer de datum(s)"
   },
   "complete-profile": {
     "bio": {
@@ -2493,7 +2494,8 @@
         "select-all": "Alles selecteren",
         "filter": "Filtergroepen",
         "all": "Alle groepen",
-        "public": "Openbaar"
+        "public": "Openbaar",
+        "notice": "Selecteer de groepspagina waar de gebeurtenis getoond zal worden"
       },
       "visibility": {
         "label": "Zichtbaarheid",

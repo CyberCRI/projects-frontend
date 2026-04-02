@@ -2595,7 +2595,8 @@
         "select-all": "Tout sélectionner",
         "filter": "Filtrer les groupes",
         "all": "Tous les groupes",
-        "public": "Public"
+        "public": "Public",
+        "notice": "Sélectionnez la page de groupe où l'événement sera affiché"
       },
       "visibility": {
         "label": "Visibilité",

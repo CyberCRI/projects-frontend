@@ -587,7 +587,8 @@
     "end-time": "Tiempo final",
     "no-date": "No hay fecha",
     "date": "Fecha",
-    "clear-date": "Fecha clara"
+    "clear-date": "Fecha clara",
+    "chose-date": "Seleccionar fecha | Seleccione la fecha(s)"
   },
   "complete-profile": {
     "bio": {
@@ -2493,7 +2494,8 @@
         "select-all": "Seleccione todo",
         "filter": "Grupos de filtro",
         "all": "Todos los grupos",
-        "public": "Público"
+        "public": "Público",
+        "notice": "Seleccione la página de grupo donde se mostrará el evento"
       },
       "visibility": {
         "label": "Visibilidad",
