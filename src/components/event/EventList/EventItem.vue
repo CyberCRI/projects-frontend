@@ -13,7 +13,7 @@
     :class="{ editable: editable && (canEditEvent || canDeleteEvent), 'scale-hover': !props.is }"
   >
     <time class="date skeletons-background" :datetime="displayDate.toISOString()">
-      <template v-if="!isCurrent">
+      <template v-if="!isToday">
         <span class="month-day">
           {{ displayDate.toLocaleDateString(locale, { month: 'long', day: '2-digit' }) }}
         </span>
@@ -25,7 +25,7 @@
         {{ $t('common.now') }}
       </span>
       <span>
-        <BadgeItem v-if="isCurrent" :label="$t('status.running')" colors="salmon" />
+        <BadgeItem v-if="isRunning" :label="$t('status.running')" colors="salmon" />
       </span>
     </time>
 
@@ -89,9 +89,10 @@ import ContentExpandable from '@/components/base/ContentExpandable.vue'
 import MapRecap from '@/components/map/MapRecap.vue'
 import ContextActionMenuInline from '@/components/base/button/ContextActionMenuInline.vue'
 import { html2Text } from '@/functs/string'
-import { nowDate, sanitizeDate } from '@/functs/date'
+import { dateWithoutHours, nowDate, sanitizeDate } from '@/functs/date'
 import DisplayDate from '@/components/base/DisplayDate.vue'
 import LineClamped from '@/components/base/LineClamped.vue'
+import { useIntervalNow } from '@/composables/useDate'
 
 const props = withDefaults(
   defineProps<{
@@ -124,6 +125,8 @@ const { canEditEvent, canDeleteEvent } = usePermissions()
 
 const { locale } = useNuxtI18n()
 
+const now = useIntervalNow('minute')
+
 const isComponent = computed(() => {
   if (props.is) {
     return props.is
@@ -141,9 +144,13 @@ const end_date = computed(() =>
 
 const displayDate = computed(() => (props.reverseDate ? end_date.value : start_date.value))
 
-const isCurrent = computed(() => {
-  const now = nowDate()
-  return start_date.value <= now && now <= end_date.value
+const isToday = computed(() => {
+  const date = nowDate()
+  return dateWithoutHours(start_date.value) <= date && date <= dateWithoutHours(end_date.value)
+})
+
+const isRunning = computed(() => {
+  return start_date.value <= now.value && now.value <= end_date.value
 })
 
 const deleteEvent = (event) => emit('delete', event)
