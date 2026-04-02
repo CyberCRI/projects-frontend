@@ -220,7 +220,8 @@
       "requests": "Anträge",
       "groups": "Gruppen",
       "settings": "Einstellungen",
-      "terms": "ToS"
+      "terms": "ToS",
+      "vector-store": "Vector store"
     },
     "page-title": "Admin",
     "portal": {
@@ -2714,7 +2715,10 @@
     "fetching_tools": "Abrufwerkzeuge...",
     "fetching_data": "Daten werden abgerufen...",
     "reasoning": "Denken...",
-    "restart": "Konversation neu starten"
+    "restart": "Konversation neu starten",
+    "before-we-start": "Bevor wir beginnen, würden Sie:",
+    "allow-profile": "Erlauben Sie mir, Ihr Profil zu sehen - damit ich meine Antworten besser anpassen kann",
+    "allow-current-page": "Erlauben Sie mir, die Seite zu sehen, auf der Sie sich befinden - damit ich den Kontext besser verstehe"
   },
   "tos": {
     "evolved": "Unsere Nutzungsbedingungen wurden aktualisiert, bitte nehmen Sie sich einen Moment Zeit, um sie zu überprüfen und zu akzeptieren.",
@@ -3175,5 +3179,19 @@
       "Presentation": "Präsentation",
       "UNKNOWN": "Unbekannt"
     }
+  },
+  "vector-store": {
+    "confirm-deletion": "Löschung bestätigen",
+    "confirm-deletion-of": "Möchten Sie \"{title}\" wirklich löschen?",
+    "document-deleted": "Dokument gelöscht.",
+    "chunks": "Fragmente",
+    "no-document-yet": "Noch kein Dokument",
+    "title-exists": "Titel existiert bereits",
+    "add-document": "Ein Dokument hinzufügen",
+    "edit-document": "Ein Dokument bearbeiten",
+    "title-field": "Titel",
+    "file-field": "Datei",
+    "document-added": "Dokument hinzugefügt.",
+    "document-updated": "Dokument bearbeitet."
   }
 }

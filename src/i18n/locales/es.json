@@ -220,7 +220,8 @@
       "requests": "Solicitudes",
       "groups": "Grupos",
       "settings": "Ajustes",
-      "terms": "ToS"
+      "terms": "ToS",
+      "vector-store": "Vector store"
     },
     "page-title": "Admin",
     "portal": {
@@ -2714,7 +2715,10 @@
     "fetching_tools": "Obteniendo herramientas...",
     "fetching_data": "Obteniendo datos...",
     "reasoning": "Pensando...",
-    "restart": "Reiniciar conversación"
+    "restart": "Reiniciar conversación",
+    "before-we-start": "Antes de comenzar, ¿le gustaría:",
+    "allow-profile": "Permítame ver su perfil - para que pueda adaptar mejor mis respuestas",
+    "allow-current-page": "Permítame ver la página en la que está - para tener una mejor comprensión del contexto"
   },
   "tos": {
     "evolved": "Nuestros Términos y Condiciones han sido actualizados, por favor tómese un momento para revisarlos y aprobarlos.",
@@ -3175,5 +3179,20 @@
       "Presentation": "Presentación",
       "UNKNOWN": "Desconocida"
     }
+  },
+
+  "vector-store": {
+    "confirm-deletion": "Confirmar eliminación",
+    "confirm-deletion-of": "¿Realmente desea eliminar \"{title}\"?",
+    "document-deleted": "Documento eliminado.",
+    "chunks": "fragmentos",
+    "no-document-yet": "Aún no hay documentos",
+    "title-exists": "El título ya existe",
+    "add-document": "Agregar un documento",
+    "edit-document": "Editar un documento",
+    "title-field": "Título",
+    "file-field": "Archivo",
+    "document-added": "Documento agregado.",
+    "document-updated": "Documento actualizado."
   }
 }

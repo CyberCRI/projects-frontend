@@ -1,0 +1,9 @@
+[
+  {
+    "label": "Attach to Nuxt",
+    "adapter": "JavaScript",
+    "request": "attach",
+    "port": 9229,
+    "sourceMaps": true
+  }
+]

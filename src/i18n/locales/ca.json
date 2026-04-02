@@ -220,7 +220,8 @@
       "requests": "Peticions",
       "groups": "Grups",
       "settings": "Arranjament",
-      "terms": "ToS"
+      "terms": "ToS",
+      "vector-store": "Vector store"
     },
     "page-title": "Administrador",
     "portal": {
@@ -2714,7 +2715,10 @@
     "fetching_tools": "Obtenció d'eines...",
     "fetching_data": "Obtenció de dades...",
     "reasoning": "Pensant...",
-    "restart": "Reinicia la conversa"
+    "restart": "Reinicia la conversa",
+    "before-we-start": "Abans de començar, voldríeu:",
+    "allow-profile": "Permeteu-me veure el vostre perfil - perquè pugui adaptar millor les meves respostes",
+    "allow-current-page": "Permeteu-me veure la pàgina en què esteu - perquè tingui una millor comprensió del context"
   },
   "tos": {
     "evolved": "Els nostres Termes i Condicions s'han actualitzat, si us plau, reviseu-los i aproveu-los.",
@@ -3175,5 +3179,19 @@
       "Presentation": "Presentació",
       "UNKNOWN": "Desconegut"
     }
+  },
+  "vector-store": {
+    "confirm-deletion": "Confirmar supressió",
+    "confirm-deletion-of": "Voleu realment suprimir \"{title}\"?",
+    "document-deleted": "Document suprimit.",
+    "add-document": "Afegir un document",
+    "chunks": "fragments",
+    "no-document-yet": "Encara no hi ha cap document",
+    "title-exists": "El títol ja existeix",
+    "edit-document": "Editar un document",
+    "title-field": "Títol",
+    "file-field": "Fitxer",
+    "document-added": "Document afegit.",
+    "document-updated": "Document actualitzat."
   }
 }

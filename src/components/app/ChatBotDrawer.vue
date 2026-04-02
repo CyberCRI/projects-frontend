@@ -3,6 +3,7 @@ import 'deep-chat'
 import analytics from '@/analytics'
 import useUsersStore from '@/stores/useUsers.ts'
 import { shuffle } from 'es-toolkit'
+import sdgJson from '@/data/sdgs.json'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -31,14 +32,107 @@ onErrorCaptured((err) => {
 
 const emit = defineEmits(['close'])
 
-const IS_STREAMED = ref(true)
-
+const IS_STREAMED = ref(!useRuntimeConfig().public.appChatbotWithoutStream)
+const CHAT_ENDPOINT = ref(useRuntimeConfig().public.appChatbotBackend || '/api/chat-lg-stream')
 const connectOptions = {
-  url: IS_STREAMED.value ? '/api/chat-stream' : '/api/chat',
+  // url: IS_STREAMED.value ? '/api/chat-stream' : '/api/chat',
+  url: CHAT_ENDPOINT.value,
   stream: IS_STREAMED.value,
 }
 const usersStore = useUsersStore()
 const accessToken = usersStore.accessToken
+
+const allowProfile = ref(false)
+if (import.meta.client) {
+  allowProfile.value = !!localStorage?.getItem('lpi-chatbot-allow-profile')
+}
+const updateAllowProfile = () => {
+  allowProfile.value = !allowProfile.value
+  if (import.meta.client) {
+    localStorage?.setItem('lpi-chatbot-allow-profile', allowProfile.value ? 'true' : '')
+  }
+}
+
+const userContext = computed(() => {
+  const user = usersStore.userFromApi
+  if (!user || !allowProfile.value) return ''
+  // TODO: groups and projects
+  return `
+  # Use the following information about the user to tailor your response toward the user interests
+  - Name: ${user.family_name} ${user.given_name}
+  - Pronouns: ${user.pronouns}
+  - Job: ${user.job}
+  - Active since: ${user.created_at}
+  - Birthdate: ${user.birthdate}
+  - Short description: ${user.short_description}
+  - Description: ${user.description}
+  - SDGs of interest: ${user.sdgs
+    .map((sid) => sdgJson[sid - 1])
+    .filter((s) => !!s)
+    .map((s) => s.title + ' - ' + s.description)
+    .join('; ')}
+  - Skills:  ${user.skills
+    .filter((s) => !!s && s.type === 'skill')
+    .map((s) => s.tag?.title + ' - ' + s.tag?.description + ' (Level ' + s.level + ')')
+    .join('; ')}
+  - Hobbies:  ${user.skills
+    .filter((s) => !!s && s.type === 'hobby')
+    .map((s) => s.tag?.title + ' - ' + s.tag?.description + ' (Level ' + s.level + ')')
+    .join('; ')}
+  `
+})
+
+const allowCurrentPage = ref(false)
+if (import.meta.client) {
+  allowCurrentPage.value = !!localStorage?.getItem('lpi-chatbot-allow-current-page')
+}
+const updateAllowCurrentPage = () => {
+  allowCurrentPage.value = !allowCurrentPage.value
+  if (import.meta.client) {
+    localStorage?.setItem('lpi-chatbot-allow-current-page', allowCurrentPage.value ? 'true' : '')
+  }
+}
+
+const route = useRoute()
+const pageContextData = ref('')
+const pageContext = computed(() => {
+  // keep this out the if so it is registred for reactivity
+  const pageData = pageContextData.value
+  if (allowCurrentPage.value) return pageData
+  else return ''
+})
+watch(
+  () => [props.isOpened, route],
+  () => {
+    let res = ''
+    const pageMeta = route.matched
+      .filter((r) => !!r.meta.chatBotContext)
+      .map((r) => r.meta.chatBotContext(route))
+      .join('\n')
+
+    if (pageMeta)
+      res += `# here are some meta information about the current page
+      ${pageMeta}
+    `
+    if (import.meta.client) {
+      res += `# Here is the content of the current page, use it as a context for your responses:
+      ${document.querySelector('.main-view')?.textContent || ''}
+      `
+      pageContextData.value = res
+    }
+  },
+  { immediate: true }
+)
+const contextMessage = computed(() => [
+  {
+    role: 'assistant',
+    text: userContext.value,
+  },
+  {
+    role: 'assistant',
+    text: pageContext.value,
+  },
+])
 
 if (accessToken) {
   connectOptions.headers = {
@@ -73,6 +167,10 @@ const addToConversation = (...args) => {
 
 const conversationStarted = ref(false)
 const requestInterceptor = (requestDetails) => {
+  if (!conversationStarted.value) {
+    requestDetails.body.messages = [...contextMessage.value, ...requestDetails.body.messages]
+  }
+
   conversationStarted.value = true
   addToConversation(...requestDetails.body.messages)
   // requestDetails.body.messages = conversation.value
@@ -127,6 +225,7 @@ const spinnerMD = `![](data:image/svg+xml;base64,${btoa(spinner)}) `
 // to handle 'meta' messages get replaced by next message
 let replacedByNext = false
 const responseInterceptor = (response) => {
+  //console.log('ChatBotDrawer responseInterceptor', response)
   if (response.role === 'meta') {
     let text = spinnerMD + t(`chatbot.${response.text}`)
     if (response.is_done) {
@@ -145,9 +244,10 @@ const responseInterceptor = (response) => {
       role: 'assistant',
       text: IS_STREAMED.value ? response.done_text : response.text,
     })
-    conversationId.value = response.conversationId
     analytics.chatbot.receive(response)
   }
+  // console.log('Updated conversation', response.conversationId)
+  conversationId.value = response.conversationId
   const overwrite = replacedByNext
   // no way to know when a true message begin, so just assume next is not overwrite
   replacedByNext = false
@@ -357,34 +457,55 @@ const resetChat = () => {
         }
       "
     >
-      <div
-        style="
-          margin: 1rem;
-          padding: 1rem;
-          background-color: #f3f3f3;
-          border-radius: 10px;
-          display: none;
-        "
-      >
-        <p>
-          {{ $t('chatbot.intro-message') }}
-        </p>
-        <menu v-if="suggestButtons?.length" class="prompt-suggestions" style="padding-left: 0">
-          <li
-            v-for="button in suggestButtons"
-            :key="button"
-            style="list-style-type: none; margin: 0"
-          >
-            <a class="prompt-suggestion" href="#" @click.prevent="onSuggestButtonClick(button)">
-              <IconImage
-                class="icon"
-                name="ChatBubble"
-                style="width: 1.6em; height: 1em; vertical-align: middle; fill: #666"
+      <div style="display: none">
+        <div style="margin: 1rem; padding: 1rem; background-color: #f3f3f3; border-radius: 10px">
+          <p>
+            {{ $t('chatbot.before-we-start') }}
+          </p>
+          <p>
+            <label>
+              <input
+                type="checkbox"
+                :checked="allowProfile"
+                style="accent-color: #1d727c"
+                @click="updateAllowProfile"
               />
-              {{ button }}
-            </a>
-          </li>
-        </menu>
+              {{ $t('chatbot.allow-profile') }}
+            </label>
+          </p>
+          <p>
+            <label>
+              <input
+                type="checkbox"
+                :checked="allowCurrentPage"
+                style="accent-color: #1d727c"
+                @click="updateAllowCurrentPage"
+              />
+              {{ $t('chatbot.allow-current-page') }}
+            </label>
+          </p>
+        </div>
+        <div style="margin: 1rem; padding: 1rem; background-color: #f3f3f3; border-radius: 10px">
+          <p>
+            {{ $t('chatbot.intro-message') }}
+          </p>
+          <menu v-if="suggestButtons?.length" class="prompt-suggestions" style="padding-left: 0">
+            <li
+              v-for="button in suggestButtons"
+              :key="button"
+              style="list-style-type: none; margin: 0"
+            >
+              <a class="prompt-suggestion" href="#" @click.prevent="onSuggestButtonClick(button)">
+                <IconImage
+                  class="icon"
+                  name="ChatBubble"
+                  style="width: 1.6em; height: 1em; vertical-align: middle; fill: #666"
+                />
+                {{ button }}
+              </a>
+            </li>
+          </menu>
+        </div>
       </div>
     </deep-chat>
     <div class="action-bar">

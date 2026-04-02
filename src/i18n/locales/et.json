@@ -220,7 +220,8 @@
       "requests": "Taotlused",
       "groups": "Grupid",
       "settings": "Seadistused",
-      "terms": "Tos"
+      "terms": "Tos",
+      "vector-store": "Vector store"
     },
     "page-title": "Admin",
     "portal": {
@@ -2714,7 +2715,10 @@
     "fetching_tools": "Tööriistade hankimine...",
     "fetching_data": "Andmete hankimine...",
     "reasoning": "Mõtlemine...",
-    "restart": "Vestluse taaskäivitamine"
+    "restart": "Vestluse taaskäivitamine",
+    "before-we-start": "Enne alustamist, kas sooviksite:",
+    "allow-profile": "Lubage mul näha teie profiili - et saaksin oma vastuseid paremini kohandada",
+    "allow-current-page": "Lubage mul näha lehte, kus viibite - et mõistaksin konteksti paremini"
   },
   "tos": {
     "evolved": "Meie teenusetingimusi on uuendatud, palun vaadake need üle ja kinnitage.",
@@ -3175,5 +3179,19 @@
       "Presentation": "Esitlus",
       "UNKNOWN": "Tundmatu"
     }
+  },
+  "vector-store": {
+    "confirm-deletion": "Kinnita kustutamine",
+    "confirm-deletion-of": "Kas soovite tõesti \"{title}\" kustutada?",
+    "document-deleted": "Dokument kustutatud.",
+    "chunks": "fragmendid",
+    "no-document-yet": "Veel ühtegi dokumenti",
+    "title-exists": "Pealkiri eksisteerib juba",
+    "add-document": "Lisa dokument",
+    "edit-document": "Muuda dokumenti",
+    "title-field": "Pealkiri",
+    "file-field": "Fail",
+    "document-added": "Dokument lisatud.",
+    "document-updated": "Dokument uuendatud."
   }
 }

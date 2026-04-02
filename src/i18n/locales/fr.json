@@ -227,7 +227,8 @@
       "requests": "Demandes",
       "groups": "Groupes",
       "settings": "Paramètres",
-      "terms": "CGU"
+      "terms": "CGU",
+      "vector-store": "Vector store"
     },
     "page-title": "Admin",
     "portal": {
@@ -2816,7 +2817,10 @@
     "fetching_tools": "Récupération des outils...",
     "fetching_data": "Récupération des données...",
     "reasoning": "Réflexion en cours...",
-    "restart": "Redémarrer la conversation"
+    "restart": "Redémarrer la conversation",
+    "before-we-start": "Avant de commencer, voudriez-vous :",
+    "allow-profile": "Me permettre de voir votre profil - afin que je puisse mieux adapter mes réponses",
+    "allow-current-page": "Me permettre de voir la page sur laquelle vous êtes - afin que j'aie une meilleure compréhension du contexte"
   },
   "tos": {
     "evolved": "Nos conditions générales d'utilisation ont été mises à jour, veuillez prendre un moment pour les examiner et les approuver.",
@@ -3176,5 +3180,19 @@
       "Presentation": "Présentation",
       "UNKNOWN": "Inconnu"
     }
+  },
+  "vector-store": {
+    "confirm-deletion": "Confirmer la suppression",
+    "confirm-deletion-of": "Voulez-vous vraiment supprimer « {title} » ?",
+    "document-deleted": "Document supprimé.",
+    "add-document": "Ajouter un document",
+    "chunks": "segments",
+    "no-document-yet": "Aucun document pour le moment",
+    "title-exists": "Le titre existe déjà",
+    "edit-document": "Modifier un document",
+    "title-field": "Titre",
+    "file-field": "Fichier",
+    "document-added": "Document ajouté.",
+    "document-updated": "Document modifié."
   }
 }
