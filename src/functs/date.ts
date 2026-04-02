@@ -41,7 +41,7 @@ export const formatTime = (date: Date, locale: string, config = {}): string => {
   date = new Date(date)
   return date.toLocaleTimeString(locale, {
     hour: 'numeric',
-    minute: 'numeric',
+    minute: date.getMinutes() ? 'numeric' : undefined,
     ...config,
   })
 }

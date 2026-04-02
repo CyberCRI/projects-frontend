@@ -47,7 +47,6 @@ const options = computed(() => {
   if (props.time) {
     return {
       hour: 'numeric',
-      minute: 'numeric',
     }
   }
   return {
