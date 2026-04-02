@@ -34,13 +34,13 @@
         {{ event.$t.title }}
       </h4>
       <div v-if="haveContent" class="event-information skeletons-text">
-        <LineClamped v-if="contentText" :line-number="3">
-          {{ contentText ? content : event.$t.content }}
+        <LineClamped v-if="contentText" :line-number="contentLineNumber">
+          {{ content }}
         </LineClamped>
         <ContentExpandable
           v-else
           class="expandable-left"
-          :description="contentText ? content : event.$t.content"
+          :description="event.$t.content"
           :height-limit="100"
           :opened="showMore"
           :hide-see-more="hideSeeMoreButton"
@@ -103,6 +103,7 @@ const props = withDefaults(
     locationPreview?: boolean
     reverseDate?: boolean
     contentText?: boolean
+    contentLineNumber?: number
     is?: string
   }>(),
   {
@@ -112,6 +113,7 @@ const props = withDefaults(
     locationPreview: false,
     reverseDate: false,
     contentText: false,
+    contentLineNumber: 3,
     is: null,
   }
 )
@@ -145,7 +147,7 @@ const end_date = computed(() =>
 const displayDate = computed(() => (props.reverseDate ? end_date.value : start_date.value))
 
 const isToday = computed(() => {
-  const date = nowDate()
+  const date = dateWithoutHours(now.value)
   return dateWithoutHours(start_date.value) <= date && date <= dateWithoutHours(end_date.value)
 })
 
