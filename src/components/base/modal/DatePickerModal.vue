@@ -5,22 +5,17 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import DisplayDate from '@/components/base/DisplayDate.vue'
 import { dateWithoutHours, mergeTime, sanitizeDate } from '@/functs/date'
 import { InternalModelValue, VueDatePicker } from '@vuepic/vue-datepicker'
-import { enUS, fr, ca, de, es, et, nl } from 'date-fns/locale'
+import * as LocalesDateFns from 'date-fns/locale'
 import { LpiDate } from '@/interfaces/utils'
 
-// mapping datefn locale for datepicker (calendar are correct name/type from locale)
-const LOCALES = {
-  ca,
-  de,
-  en: enUS,
-  es,
-  et,
-  fr,
-  nl,
-}
 const { locale } = useNuxtI18n()
 // get datefns from locale value
-const localeDateFn = computed(() => LOCALES[locale.value] ?? LOCALES.en)
+const localeDateFn = computed(() => {
+  // find locale from code, else return 'en'
+  return (
+    Object.values(LocalesDateFns).find((loc) => loc.code === locale.value) ?? LocalesDateFns.enUS
+  )
+})
 // check if locale if 24 hours or am/pm (for timepicker)
 const is24 = computed(() => {
   return ['h24', 'h23'].includes(
