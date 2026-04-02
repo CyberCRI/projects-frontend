@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import EmptyLabel from '@/components/base/EmptyLabel.vue'
 import { dateWithoutHours, formatDateTime, formatTime } from '@/functs/date'
+import { LpiDate } from '@/interfaces/utils'
 
 const props = withDefaults(
   defineProps<{
-    date: string | Date | Date[] | string[] | null
+    date: LpiDate
     time?: boolean | 'auto'
   }>(),
   {

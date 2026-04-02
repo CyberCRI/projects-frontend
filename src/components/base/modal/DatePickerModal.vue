@@ -6,6 +6,7 @@ import DisplayDate from '@/components/base/DisplayDate.vue'
 import { dateWithoutHours, mergeTime, sanitizeDate } from '@/functs/date'
 import { InternalModelValue, VueDatePicker } from '@vuepic/vue-datepicker'
 import { enUS, fr, ca, de, es, et, nl } from 'date-fns/locale'
+import { LpiDate } from '@/interfaces/utils'
 
 // mapping datefn locale for datepicker (calendar are correct name/type from locale)
 const LOCALES = {
@@ -58,7 +59,7 @@ const props = withDefaults(
 const emit = defineEmits(['close'])
 
 // model defined from v-model in prent
-const model = defineModel<string | Date | string[] | Date[]>()
+const model = defineModel<LpiDate>()
 
 // locale model to not change parent model during select date/time
 const localeModel = ref()
