@@ -70,7 +70,6 @@
 
     <ContextActionMenuInline
       v-if="editable"
-      class="event-controls"
       :can-delete="canDeleteEvent"
       :can-edit="canEditEvent"
       @edit="editEvent(event)"
@@ -149,19 +148,12 @@ const locationEvent = (event) => emit('location', event)
 <style lang="scss" scoped>
 .event {
   display: grid;
-  grid-template-columns: auto 4fr;
+  grid-template-columns: auto 4fr auto;
   gap: $space-l;
   position: relative;
 
   &.editable {
     padding-right: 1.4em;
-  }
-
-  .event-controls {
-    position: absolute;
-    right: 0;
-    top: 0;
-    margin: -1rem;
   }
 
   .date {
