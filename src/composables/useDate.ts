@@ -16,17 +16,34 @@ const INTERVAL = Object.freeze({
  */
 export const useIntervalNow = (interval: keyof typeof INTERVAL) => {
   const now = ref<Date>(new Date())
-  let intervalResult
+  let intervalResult, timeoutResult
 
   const intervalTime = INTERVAL[interval]
 
+  const getInitialWaitTime = (): number => {
+    const subNow = new Date()
+    switch (interval) {
+      case 'hour':
+        return (3600 - subNow.getMinutes() * 60 - subNow.getSeconds()) * 1_000
+      case 'minute':
+        return (60 - subNow.getSeconds()) * 1_000
+      case 'second':
+        return 1_000 - subNow.getMilliseconds()
+    }
+  }
+
   onMounted(() => {
-    intervalResult = setInterval(() => {
+    const padding = getInitialWaitTime()
+    timeoutResult = setTimeout(() => {
       now.value = new Date()
-    }, intervalTime)
+      intervalResult = setInterval(() => {
+        now.value = new Date()
+      }, intervalTime + 1_000)
+    }, padding)
   })
 
   onUnmounted(() => {
+    clearTimeout(timeoutResult)
     clearInterval(intervalResult)
   })
 
