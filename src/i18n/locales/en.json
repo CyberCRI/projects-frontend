@@ -524,7 +524,6 @@
     "back": "back",
     "close": "close",
     "cancel": "Cancel",
-    "chose-date": "Chose a date | Chose a date(s)",
     "start-time": "Start time",
     "reset-time": "Reset time",
     "back-calendar": "Back to calendar",
@@ -588,7 +587,8 @@
     "add-time": "Add time",
     "no-date": "No date",
     "date": "Date",
-    "clear-date": "Clear Date"
+    "clear-date": "Clear Date",
+    "chose-date": "Select Date | Select the date(s)"
   },
   "complete-profile": {
     "bio": {
