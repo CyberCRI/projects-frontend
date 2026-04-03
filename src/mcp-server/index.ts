@@ -14,38 +14,42 @@ import registerSearchTool from './projects/search-tool'
 // TODO pagination of search results
 // TODO output schemas
 
-// Create an MCP server
-const server = new McpServer({
-  name: 'demo-server',
-  version: '1.0.0',
-})
+function createMCPServer() {
+  // Create an MCP server
+  const server = new McpServer({
+    name: 'demo-server',
+    version: '1.0.0',
+  })
 
-// console.log(
-//   'Sorbobot config',
-//   'sorbobotApiUrl',
-//   !!sorbobotApiUrl,
-//   'sorbobotApiToken',
-//   !!sorbobotApiToken
-// )
+  // console.log(
+  //   'Sorbobot config',
+  //   'sorbobotApiUrl',
+  //   !!sorbobotApiUrl,
+  //   'sorbobotApiToken',
+  //   !!sorbobotApiToken
+  // )
 
-if (sorbobotIsEnabled) {
-  registerSorbobotTool(server)
+  if (sorbobotIsEnabled) {
+    registerSorbobotTool(server)
+  }
+
+  registerSearchTool(server)
+
+  registerSdgTool(server)
+
+  registerProjectTool(server)
+
+  registerPeopleTool(server)
+
+  registerOrganizationTool(server)
+
+  registerNewsTool(server)
+
+  registerInstructionTool(server)
+
+  registerEventTool(server)
+
+  return server
 }
 
-registerSearchTool(server)
-
-registerSdgTool(server)
-
-registerProjectTool(server)
-
-registerPeopleTool(server)
-
-registerOrganizationTool(server)
-
-registerNewsTool(server)
-
-registerInstructionTool(server)
-
-registerEventTool(server)
-
-export default server
+export default createMCPServer
