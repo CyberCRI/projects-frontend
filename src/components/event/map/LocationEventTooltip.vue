@@ -10,14 +10,14 @@
   </CardLocationTooltip>
 </template>
 
-<script setup lang="ts">
-import { TranslatedEventLocation } from '@/models/location.model'
+<script setup lang="ts" generic="T extends AnyTranslatedLocation">
+import { AnyTranslatedLocation } from '@/models/location.model'
 import CardLocationTooltip from '@/components/map/CardLocationTooltip.vue'
 import { html2Text } from '@/functs/string'
 import { TranslatedEventModel } from '@/models/event.model'
 import EventItem from '@/components/event/EventList/EventItem.vue'
 
-const props = defineProps<{ location: TranslatedEventLocation; event: TranslatedEventModel }>()
+const props = defineProps<{ location: T; event: TranslatedEventModel }>()
 
 const description = computed(() => html2Text(props.event.$t.content))
 </script>

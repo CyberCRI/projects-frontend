@@ -29,7 +29,8 @@ export const getGroup = (
 
   return useAsyncAPI(
     key,
-    () => fetchGetGroup(unref(organizationCode), unref(groupId), { ...DEFAULT_CONFIG }),
+    ({ config }) =>
+      fetchGetGroup(unref(organizationCode), unref(groupId), { ...DEFAULT_CONFIG, ...config }),
     {
       translate: translateGroup,
       watch: onlyRefs([organizationCode, groupId]),

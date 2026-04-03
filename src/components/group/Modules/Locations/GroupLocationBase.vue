@@ -1,28 +1,27 @@
 <template>
   <FetchLoader :status="status" skeleton only-error>
-    <MapRecap ref="map" :locations="locations" expand :editable="isEdit" @expand="opened = true" />
+    <GeneralMap ref="map" class="map-recap" :locations="locations" :loading="false" use-cluster>
+      <template #controls-top>
+        <MapControlExpand @expand="openModal" />
+      </template>
+    </GeneralMap>
+
     <LocationDrawer
-      :is-opened="opened"
-      :editable="isEdit"
+      :is-opened="stateModal"
       :locations="locations"
       :use-cluster="true"
-      @close="opened = false"
+      @close="closeModal"
     />
-    <LocationList
-      v-if="!props.preview"
-      focus
-      :editable="isEdit"
-      :locations="locations"
-      @focus="onFocus"
-    />
+    <LocationList v-if="!props.preview" focus :locations="locations" @focus="onFocus" />
   </FetchLoader>
 </template>
 
 <script setup lang="ts">
 import { getGroupAllLocations } from '@/api/v2/group.service'
+import MapControlExpand from '@/components/map/Control/MapControlExpand.vue'
+import GeneralMap from '@/components/map/GeneralMap.vue'
 import LocationDrawer from '@/components/map/LocationDrawer.vue'
 import LocationList from '@/components/map/LocationList.vue'
-import MapRecap from '@/components/map/MapRecap.vue'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import { factoriesSkeleton } from '@/skeletons/base.skeletons'
 import { locationSkeleton } from '@/skeletons/location.skeleton'
@@ -30,22 +29,19 @@ import { locationSkeleton } from '@/skeletons/location.skeleton'
 const props = withDefaults(
   defineProps<{
     group: TranslatedPeopleGroupModel
-    editable?: boolean
     preview?: boolean
   }>(),
   {
-    editable: false,
     preview: false,
   }
 )
 
-const isEdit = computed(() => props.editable && !props.preview)
-const opened = ref(false)
+const { stateModal, openModal, closeModal } = useModal()
 const organizationCode = useOrganizationCode()
 const groupId = computed(() => props.group.id)
 
 const mapRef = useTemplateRef('map')
-const onFocus = (location) => mapRef.value?.map?.flyTo(location)
+const onFocus = (location) => mapRef.value.map.flyTo(location, 10)
 
 const { status, data: locations } = getGroupAllLocations(organizationCode, groupId, {
   default: () => factoriesSkeleton(locationSkeleton, props.group.modules.locations),

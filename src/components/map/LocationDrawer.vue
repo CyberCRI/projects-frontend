@@ -81,40 +81,13 @@
         <div class="map-inner-ctn">
           <div class="map">
             <client-only>
-              <LazyBaseMap
+              <GeneralMap
                 ref="map"
+                :locations="locations"
                 :use-cluster="useCluster"
                 @click="formMode === 'click' ? clickOnMap($event) : null"
-              >
-                <template #default="slotProps">
-                  <template v-if="slotProps.map && !suggestedLocations">
-                    <MapPointer
-                      v-for="location in locations"
-                      :key="location.id"
-                      :editable="editable"
-                      :location="location"
-                      @edit="openEditModal"
-                      @mounted="slotProps.addPointer"
-                      @unmounted="slotProps.removePointer"
-                    >
-                      <LocationTooltip :location="location" />
-                    </MapPointer>
-                  </template>
-                  <template v-if="slotProps.map && suggestedLocations">
-                    <MapPointer
-                      v-for="location in suggestedLocations"
-                      :key="location.id"
-                      :location="location"
-                      @mounted="slotProps.addPointer"
-                      @unmounted="slotProps.removePointer"
-                    >
-                      <template #marker>
-                        <MarkerSuggestion :location="location" @click="openAddModal(location)" />
-                      </template>
-                    </MapPointer>
-                  </template>
-                </template>
-              </LazyBaseMap>
+                @edit="openEditModal"
+              />
             </client-only>
           </div>
         </div>
@@ -143,14 +116,12 @@
 
 <script setup lang="ts">
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import MapPointer from '@/components/map/MapPointer.vue'
 import useToasterStore from '@/stores/useToaster'
 import { AnyTranslatedLocation, LocationForm as LocationFormType } from '@/models/location.model'
-import LocationTooltip from '@/components/map/LocationTooltip.vue'
 import { Geocoding } from '@/interfaces/maps'
 import { useSuggestLocations } from '@/api/geocoding.service'
 import { LocationType } from '@/models/types'
-import MarkerSuggestion from '@/components/map/MarkerSuggestion.vue'
+import GeneralMap from '@/components/map/GeneralMap.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -187,10 +158,6 @@ const showForm = ref(false)
 
 const mapRef = useTemplateRef('map')
 const centerMap = () => mapRef.value?.centerMap()
-
-defineExpose({
-  centerMap,
-})
 
 const formMode = ref<'click' | 'form'>()
 const form = ref(null)

@@ -1,33 +1,18 @@
 <script setup lang="ts">
-const map = inject('map')
-
-const zoomIn = () => {
-  const mapRaw = toRaw((map as Ref<L.Map>).value)
-  mapRaw.zoomIn()
-}
-const zoomOut = () => {
-  const mapRaw = toRaw((map as Ref<L.Map>).value)
-  mapRaw.zoomOut()
-}
+const emit = defineEmits(['expand'])
+const onExpand = () => emit('expand')
 </script>
 
 <template>
-  <div class="zoom-container">
-    <button class="btn-zoom top" :aria-label="$t('common.zoom-in')" @click.prevent.stop="zoomIn">
-      <IconImage name="Plus" />
-    </button>
-    <button
-      class="btn-zoom bottom"
-      :aria-label="$t('common.zoom-out')"
-      @click.prevent.stop="zoomOut"
-    >
-      <IconImage name="Minus" />
+  <div class="expand-container">
+    <button class="btn-expand" :aria-label="$t('common.expand-in')" @click.prevent.stop="onExpand">
+      <IconImage name="Expand" />
     </button>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.zoom-container {
+.expand-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,7 +26,7 @@ const zoomOut = () => {
   overflow: hidden;
 }
 
-.btn-zoom {
+.btn-expand {
   background-color: white;
   padding: 0.2rem;
   transition: all 0.2s;

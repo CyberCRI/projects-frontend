@@ -64,7 +64,6 @@ const haveImage = computed(() => props.image || props.defaultPicture)
   padding: 1.5rem $space-s;
   background-color: $primary-lighter;
   display: flex;
-  justify-content: space-between;
 
   &.impact {
     background-color: color-mix(in srgb, $location-impact, transparent 90%);

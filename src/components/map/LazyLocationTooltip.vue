@@ -1,9 +1,18 @@
 <script setup lang="ts">
+import { getEvent } from '@/api/v2/event.service'
 import { getGroup } from '@/api/v2/group.service'
+import { getNews } from '@/api/v2/news.service'
 import { getProject } from '@/api/v2/projects.service'
+import LocationTooltip from '@/components/map/LocationTooltip.vue'
 import ProjectLocationTooltip from '@/components/project/map/ProjectLocationTooltip.vue'
 import { LocationGeneral } from '@/interfaces/maps'
+import { TranslatedEventModel } from '@/models/event.model'
+import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import { TranslatedNews } from '@/models/news.model'
+import { TranslatedProject } from '@/models/project.model'
+import { eventSkeleton } from '@/skeletons/event.skeletons'
 import { groupSkeleton } from '@/skeletons/group.skeletons'
+import { newsSkeleton } from '@/skeletons/news.skeletons'
 import { projectSkeleton } from '@/skeletons/project.skeletons'
 
 const props = defineProps<{
@@ -19,6 +28,10 @@ const {
   refresh: refreshGroup,
 } = getGroup(organizationCode, contentId, {
   default: () => groupSkeleton(),
+  query: {
+    modules: 'none',
+    serializer: 'superlight',
+  },
   immediate: false,
 })
 
@@ -28,6 +41,34 @@ const {
   refresh: refreshProject,
 } = getProject(organizationCode, contentId, {
   default: () => projectSkeleton(),
+  query: {
+    info_details: 'summary',
+    serializer: 'superlight',
+  },
+  immediate: false,
+})
+
+const {
+  status: statusNews,
+  data: news,
+  refresh: refreshNews,
+} = getNews(organizationCode, contentId, {
+  default: () => newsSkeleton(),
+  query: {
+    serializer: 'light',
+  },
+  immediate: false,
+})
+
+const {
+  status: statusEvent,
+  data: event,
+  refresh: refreshEvent,
+} = getEvent(organizationCode, contentId, {
+  default: () => eventSkeleton(),
+  query: {
+    serializer: 'light',
+  },
   immediate: false,
 })
 
@@ -37,6 +78,12 @@ const status = computed(() => {
       return statusGroup.value
     case 'project':
       return statusProject.value
+    case 'news':
+      return statusNews.value
+    case 'event':
+      return statusEvent.value
+    default:
+      return 'success'
   }
 })
 
@@ -46,19 +93,35 @@ const data = computed(() => {
       return group.value
     case 'project':
       return project.value
+    case 'news':
+      return news.value
+    case 'event':
+      return event.value
+    default:
+      return
   }
 })
 
 watch(
   () => [props.location.content_type, props.location.content_id],
   () => {
+    console.log('watcher', props.location)
     switch (props.location.content_type) {
       case 'people_group':
         return refreshGroup()
       case 'project':
         return refreshProject()
+      case 'news':
+        console.log('refreshNews')
+        return refreshNews()
+      case 'event':
+        console.log('refreshEvent')
+        return refreshEvent()
+      default:
+        return
     }
-  }
+  },
+  { immediate: true }
 )
 </script>
 
@@ -68,24 +131,24 @@ watch(
       <GroupLocationToolTip
         v-if="location.content_type === 'people_group'"
         :location="location"
-        :group="data"
+        :group="data as TranslatedPeopleGroupModel"
       />
       <ProjectLocationTooltip
         v-else-if="location.content_type === 'project'"
         :location="location"
-        :project="data"
+        :project="data as TranslatedProject"
       />
+      <LocationEventTooltip
+        v-else-if="location.content_type === 'event'"
+        :location="location"
+        :event="data as TranslatedEventModel"
+      />
+      <LocationNewsTooltip
+        v-else-if="location.content_type === 'news'"
+        :location="location"
+        :news="data as TranslatedNews"
+      />
+      <LocationTooltip v-else :location="location" />
     </FetchLoader>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.location-popup {
-  width: pxToRem(300px);
-  position: absolute;
-  top: 0;
-  left: 0;
-  // 25px is the size of "line" in map (a 5px too)
-  transform: translate(calc(-50% + 25px), calc(-100% + 5px));
-}
-</style>

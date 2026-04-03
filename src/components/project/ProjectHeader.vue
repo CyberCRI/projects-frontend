@@ -927,10 +927,6 @@ export default {
           height: 37px;
           box-sizing: border-box;
 
-          &.cursor-pointer {
-            cursor: pointer;
-          }
-
           .quantity {
             background: $primary;
             color: $white;

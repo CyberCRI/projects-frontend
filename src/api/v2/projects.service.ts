@@ -15,9 +15,13 @@ export const getProject = (
   const { translateProject } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::project::${unref(projectId)}`)
 
-  return useAsyncAPI(key, () => fetchProject(unref(projectId), { ...DEFAULT_CONFIG }), {
-    translate: translateProject,
-    watch: onlyRefs([organizationCode, projectId]),
-    ...config,
-  })
+  return useAsyncAPI(
+    key,
+    ({ config }) => fetchProject(unref(projectId), { ...DEFAULT_CONFIG, ...config }),
+    {
+      translate: translateProject,
+      watch: onlyRefs([organizationCode, projectId]),
+      ...config,
+    }
+  )
 }

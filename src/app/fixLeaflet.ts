@@ -13,5 +13,6 @@ export default function fixLeaflet() {
     iconUrl: 'leaflet/dist/images/marker-icon.png',
     shadowUrl: 'leaflet/dist/images/marker-shadow.png',
   })
+
   fixLeaflet.done = true
 }

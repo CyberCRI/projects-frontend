@@ -11,10 +11,12 @@ const props = defineProps<{
   locations: T[]
 }>()
 
-const { query, toggleQuery } = useQuery({
+const { query, toggleQuery } = useQuery<Record<LocationType, boolean>>({
   address: true,
   impact: true,
   team: true,
+  news: true,
+  event: true,
 })
 
 const emit = defineEmits<{
@@ -49,7 +51,7 @@ watchEffect(() => emit('update', toRaw(query)))
       <LocationTypeComponent
         v-for="key in enabledFilters"
         :key="key"
-        class="scale-hover"
+        class="scale-hover cursor-pointer"
         :class="{ disabled: !query[key] }"
         :location-type="key"
         @click="toggleQuery(key, true)"
@@ -67,14 +69,15 @@ watchEffect(() => emit('update', toRaw(query)))
   justify-content: end;
   gap: 0.5rem;
   width: 100%;
+
   svg {
     width: 1.5rem;
-    fill: rgba(0, 0, 0, 0.5);
+    fill: rgb(0 0 0 / 50%);
   }
 
   &:hover svg,
   &.opened svg {
-    fill: rgba(0, 0, 0, 1);
+    fill: rgb(0 0 0 / 100%);
   }
 }
 
@@ -87,8 +90,10 @@ watchEffect(() => emit('update', toRaw(query)))
   border-radius: 0.5rem;
   background-color: white;
   padding: 0.25rem;
+
   $shadow-hover-def-1: 0 5px 10px rgb(0 0 0 / 12%);
   $shadow-hover-def-2: 0 4px 8px rgb(0 0 0 / 6%);
+
   box-shadow: $shadow-hover-def-1, $shadow-hover-def-2;
   overflow: hidden;
 }
@@ -98,7 +103,6 @@ watchEffect(() => emit('update', toRaw(query)))
   border-radius: 100%;
   padding: 0.5rem;
   transition: all 0.2s;
-
   cursor: pointer;
 
   svg {

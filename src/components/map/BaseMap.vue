@@ -5,7 +5,7 @@
         <slot v-if="mapInstance" />
       </div>
     </div>
-    <slot name="controls" />
+    <slot v-if="mapInstance" name="controls" />
   </div>
 </template>
 
@@ -18,6 +18,7 @@ import { Geocoding } from '@/interfaces/maps'
 import { IconMapLocationType } from '@/functs/maps'
 import { ICONS } from '@/functs/IconImage'
 import { LocationType } from '@/models/types'
+import { UnwrapRef } from 'vue'
 
 const props = withDefaults(
   defineProps<{
@@ -41,7 +42,7 @@ const emit = defineEmits<{
   click: [any]
 }>()
 
-const mapInstance = shallowRef<L.Map>(null)
+const mapInstance = ref<L.Map>(null)
 const markerClusterInstance = ref<L.MarkerClusterGroup>(null)
 const mapRef = useTemplateRef('map')
 const markers = ref(new Map<TranslatedLocation['id'] | Geocoding['id'], L.Marker>())
@@ -136,15 +137,16 @@ const addLayers = (layers: L.Layer[]) => {
   map.invalidateSize()
 }
 
-const EXPOSE = Object.freeze({
+const EXPOSE = {
   cluster: markerClusterInstance,
   map: mapInstance,
   centerMap,
   closePopUp,
   addLayers,
-})
+}
+export type ExposeMap = UnwrapRef<typeof EXPOSE>
 
-defineExpose(EXPOSE)
+defineExpose<typeof EXPOSE>(EXPOSE)
 // provide for subchild all exposed method
 Object.entries(EXPOSE).forEach(([key, value]) => {
   provide(key, value)
@@ -180,6 +182,11 @@ onMounted(() => {
 <style lang="scss">
 // do NOT scope this style, it will break the map
 @import '@/design/scss/map';
+
+.leaflet-map,
+.leaflet-container {
+  min-height: 100%;
+}
 </style>
 
 <style lang="scss" scoped>
