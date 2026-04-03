@@ -588,7 +588,8 @@
     "end-time": "Endzeit",
     "no-date": "Kein Datum",
     "date": "Datum",
-    "clear-date": "Datum"
+    "clear-date": "Datum",
+    "chose-date": "Wählen Sie Datum | Wählen Sie das Datum(en)"
   },
   "complete-profile": {
     "bio": {
@@ -2494,7 +2495,8 @@
         "select-all": "Alles auswählen",
         "filter": "Filtergruppen",
         "all": "Alle Gruppen",
-        "public": "Öffentliche"
+        "public": "Öffentliche",
+        "notice": "Wählen Sie die Gruppenseite, auf der das Ereignis angezeigt wird"
       },
       "visibility": {
         "label": "Sichtbarkeit",

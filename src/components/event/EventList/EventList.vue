@@ -1,25 +1,21 @@
 <template>
   <div class="event-list">
-    <div
-      v-for="[yearMonth, events] in Object.entries(eventsByMonth)"
-      :key="yearMonth"
-      class="monthly-section"
-    >
+    <div v-for="[yearMonth, events] in Object.entries(eventsByMonth)" :key="yearMonth">
       <h3 class="month-title skeletons-text">
         {{ getMonthFromDate(yearMonth) }}
       </h3>
-      <div class="events-wrapper list-divider">
-        <EventItem
-          v-for="event in events"
-          :key="event.id"
-          :event="event"
-          :reverse-date="reverseDate"
-          editable
-          @location="onLocation"
-          @edit="onEdit"
-          @delete="onDelete"
-        />
-      </div>
+      <ul class="events-wrapper list-divider">
+        <li v-for="event in events" :key="event.id">
+          <EventItem
+            :event="event"
+            :reverse-date="reverseDate"
+            editable
+            @location="onLocation"
+            @edit="onEdit"
+            @delete="onDelete"
+          />
+        </li>
+      </ul>
     </div>
   </div>
   <LocationDrawer
@@ -139,5 +135,6 @@ const onCancel = () => {
   padding: $space-m;
   border: $border-width-s solid var(--lighter-gray);
   border-radius: $border-radius-m;
+  margin-top: 1rem;
 }
 </style>

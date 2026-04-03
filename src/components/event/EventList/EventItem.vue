@@ -13,7 +13,7 @@
     :class="{ editable: editable && (canEditEvent || canDeleteEvent), 'scale-hover': !props.is }"
   >
     <time class="date skeletons-background" :datetime="displayDate.toISOString()">
-      <template v-if="!isCurrent">
+      <template v-if="!isToday">
         <span class="month-day">
           {{ displayDate.toLocaleDateString(locale, { month: 'long', day: '2-digit' }) }}
         </span>
@@ -25,7 +25,7 @@
         {{ $t('common.now') }}
       </span>
       <span>
-        <BadgeItem v-if="isCurrent" :label="$t('status.running')" colors="salmon" />
+        <BadgeItem v-if="isRunning" :label="$t('status.running')" colors="salmon" />
       </span>
     </time>
 
@@ -34,9 +34,13 @@
         {{ event.$t.title }}
       </h4>
       <div v-if="haveContent" class="event-information skeletons-text">
+        <LineClamped v-if="contentText" :line-number="contentLineNumber">
+          {{ content }}
+        </LineClamped>
         <ContentExpandable
+          v-else
           class="expandable-left"
-          :description="contentText ? content : event.$t.content"
+          :description="event.$t.content"
           :height-limit="100"
           :opened="showMore"
           :hide-see-more="hideSeeMoreButton"
@@ -70,7 +74,6 @@
 
     <ContextActionMenuInline
       v-if="editable"
-      class="event-controls"
       :can-delete="canDeleteEvent"
       :can-edit="canEditEvent"
       @edit="editEvent(event)"
@@ -86,8 +89,10 @@ import ContentExpandable from '@/components/base/ContentExpandable.vue'
 import MapRecap from '@/components/map/MapRecap.vue'
 import ContextActionMenuInline from '@/components/base/button/ContextActionMenuInline.vue'
 import { html2Text } from '@/functs/string'
-import { nowDate, sanitizeDate } from '@/functs/date'
+import { dateWithoutHours, sanitizeDate } from '@/functs/date'
 import DisplayDate from '@/components/base/DisplayDate.vue'
+import LineClamped from '@/components/base/LineClamped.vue'
+import { useIntervalNow } from '@/composables/useDate'
 
 const props = withDefaults(
   defineProps<{
@@ -98,6 +103,7 @@ const props = withDefaults(
     locationPreview?: boolean
     reverseDate?: boolean
     contentText?: boolean
+    contentLineNumber?: number
     is?: string
   }>(),
   {
@@ -107,6 +113,7 @@ const props = withDefaults(
     locationPreview: false,
     reverseDate: false,
     contentText: false,
+    contentLineNumber: 3,
     is: null,
   }
 )
@@ -119,6 +126,8 @@ const emit = defineEmits<{
 const { canEditEvent, canDeleteEvent } = usePermissions()
 
 const { locale } = useNuxtI18n()
+
+const now = useIntervalNow('minute')
 
 const isComponent = computed(() => {
   if (props.is) {
@@ -137,9 +146,13 @@ const end_date = computed(() =>
 
 const displayDate = computed(() => (props.reverseDate ? end_date.value : start_date.value))
 
-const isCurrent = computed(() => {
-  const now = nowDate()
-  return start_date.value <= now && now <= end_date.value
+const isToday = computed(() => {
+  const date = dateWithoutHours(now.value)
+  return dateWithoutHours(start_date.value) <= date && date <= dateWithoutHours(end_date.value)
+})
+
+const isRunning = computed(() => {
+  return start_date.value <= now.value && now.value <= end_date.value
 })
 
 const deleteEvent = (event) => emit('delete', event)
@@ -149,19 +162,12 @@ const locationEvent = (event) => emit('location', event)
 <style lang="scss" scoped>
 .event {
   display: grid;
-  grid-template-columns: auto 4fr;
+  grid-template-columns: auto 4fr auto;
   gap: $space-l;
   position: relative;
 
   &.editable {
     padding-right: 1.4em;
-  }
-
-  .event-controls {
-    position: absolute;
-    right: 0;
-    top: 0;
-    margin: -1rem;
   }
 
   .date {

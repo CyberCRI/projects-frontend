@@ -20,10 +20,10 @@ async function fetchFromPhoton(address, locale, runtimeConfig) {
 
       return {
         id: idx,
-        title: `${feature.properties.name || ''} ${feature.properties.country || ''}`,
+        title: '',
         lat,
         lng,
-        description: '',
+        description: `${feature.properties.name || ''} ${feature.properties.country || ''}`,
         type: 'address',
       } satisfies Geocoding
     })
