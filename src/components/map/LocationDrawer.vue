@@ -124,6 +124,7 @@
     <LocationForm
       v-if="editable && showForm"
       v-model="form"
+      to-string
       :location-types="locationTypes"
       @close="closeModal"
       @submit="onSubmit"

@@ -8,7 +8,7 @@ export const AnnouncementFactory = createFactory<AnnouncementOutput>((faker) => 
   ...BaseFactory.generate(),
   id: faker.datatype.number(),
   updated_at: faker.datatype.datetime().toISOString(),
-  create_at: faker.datatype.datetime().toISOString(),
+  created_at: faker.datatype.datetime().toISOString(),
   description: faker.lorem.paragraph(),
   title: faker.datatype.string(),
   type: shuffle(['na', 'participant', 'job', 'traineeship'] as AnnouncementOutput['type'][])[0],

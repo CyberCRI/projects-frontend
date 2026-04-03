@@ -119,6 +119,8 @@ import utils from '@/functs/functions.ts'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import { NuxtLink } from '#components'
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
+import { getTimePassed } from '@/functs/date'
+
 export default {
   name: 'NotificationItem',
 
@@ -164,7 +166,7 @@ export default {
       return (givenName.toLowerCase() + ' ' + familyName.toLowerCase()).trim()
     },
     timePassed() {
-      return utils.getTimePassed(new Date(this.notification.created))
+      return getTimePassed(new Date(this.notification.created))
     },
 
     context() {

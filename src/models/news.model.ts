@@ -1,7 +1,9 @@
+import { ImageSizes } from '@/functs/imageSizesUtils'
 import { Translated } from '@/interfaces/translated'
 import BaseModel from '@/models/base.model'
 import { ImageModel } from '@/models/image.model'
 import { PeopleGroupModel } from '@/models/invitation.model'
+import { BaseLocationModel, BaseTranslatedLocationModel } from '@/models/location.model'
 import { OrganizationModel } from '@/models/organization.model'
 
 /**
@@ -20,9 +22,12 @@ export interface NewsModel extends BaseModel {
   updated_at: string
   organization: OrganizationModel
   visible_by_all: boolean
+  location: BaseLocationModel
 }
 
-export type TranslatedNews = Omit<Translated<NewsModel, 'title' | 'content'>, 'location'>
+export type TranslatedNews = Omit<Translated<NewsModel, 'title' | 'content'>, 'location'> & {
+  location: BaseTranslatedLocationModel
+}
 
 export interface NewsImageModel {
   file: string
@@ -35,8 +40,16 @@ export type NewsOutput = BaseModel &
     images?: Array<NewsImageModel>
   }
 
-export type NewsInput = Required<NewsModel> & {
-  organization_code: string
+export type NewsInput = Required<
+  Omit<NewsModel, 'id' | 'created_at' | 'updated_at' | 'organization' | 'images'>
+>
+
+export type NewsForm = Omit<NewsInput, 'people_groups'> & {
+  organization_code?: string
+  imageSizes?: ImageSizes
+  people_groups: {
+    [key: number]: boolean
+  }
 }
 
 export interface HeaderImage {

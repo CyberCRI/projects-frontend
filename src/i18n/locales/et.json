@@ -220,7 +220,8 @@
       "requests": "Taotlused",
       "groups": "Grupid",
       "settings": "Seadistused",
-      "terms": "Tos"
+      "terms": "Tos",
+      "vector-store": "Vector store"
     },
     "page-title": "Admin",
     "portal": {
@@ -517,7 +518,6 @@
     "added-on-the": "Lisatud",
     "back": "tagasi",
     "cancel": "Tühistage",
-    "chose-date": "Valitud kuupäev",
     "confirm": "Kinnita",
     "continue": "Jätkata",
     "confirm-delete": "Oled kindel, et soovid selle kustutada?",
@@ -577,7 +577,18 @@
     "create": "Loo",
     "order-asc": "vanim kuni uusim",
     "order-desc": "uusim",
-    "close": "lähedal"
+    "close": "lähedal",
+    "to": "To",
+    "new": "uus",
+    "now": "Täna",
+    "add-time": "tundide/ minutite lisamine",
+    "start-time": "Algusaeg",
+    "reset-time": "Lähteaeg",
+    "back-calendar": "Tagasi kalendrisse",
+    "end-time": "Lõpuaeg",
+    "no-date": "Kohtingut pole",
+    "date": "Kuupäev",
+    "clear-date": "Puhasta kuupäev"
   },
   "complete-profile": {
     "bio": {
@@ -978,7 +989,9 @@
     "map": "Geolokatsioon",
     "add-location": "Lisa asukoht",
     "add-location-point": "Asukohapunkti lisamine",
-    "default-title": "Asukoht"
+    "default-title": "Asukoht",
+    "news": "Uudised | Uudised",
+    "event": "Sündmus"
   },
   "map": {
     "page-title": "Kaart",
@@ -1684,7 +1697,7 @@
     "cannot-upload-image": "Pildi üleslaadimine nurjus",
     "link-address": "Linki aadress",
     "resources": "Ressursse",
-    "web": "Link veebiressurssidele | lingid veebiressurssidele",
+    "web": "Link veebiressursile | lingid veebiressurssidele",
     "web-link": "Veebilink | veebilink | veebilingid"
   },
   "result_box": {
@@ -2472,19 +2485,26 @@
       "event_date": {
         "label": "Sündmuse kuupäev *",
         "placeholder": "Vali kuupäev",
-        "required": "Kuupäev on nõutav"
+        "required": "Kuupäev on nõutav",
+        "before-end": "Alguskuupäev peab olema enne lõppkuupäeva.",
+        "before-start": "Lõppkuupäev peab olema pärast alguskuupäeva."
       },
       "people_groups": {
         "label": "Sihtrühm(ad)",
-        "notice": "Vali grupp (grupid), mis seda sündmust näeb",
         "select-all": "Valige kõik",
         "filter": "Filtrirühmad",
         "all": "Kõik rühmad",
         "public": "Avalik"
+      },
+      "visibility": {
+        "label": "Nähtavus",
+        "notice": "Kõik kasutajad näevad teie sündmust.",
+        "public": "Avalik"
       }
     },
     "group-label": "Grupp:",
-    "groups-label": "Rühmad:"
+    "groups-label": "Rühmad:",
+    "view": "Vaata sündmust"
   },
   "news": {
     "create": {
@@ -2519,9 +2539,14 @@
       },
       "groups": {
         "label": "Sihtrühm(ad)",
-        "notice": "Vali grupp (grupid), mis seda uudist näeb",
         "select-all": "Valige kõik",
-        "filter": "Filtrirühmad"
+        "filter": "Filtrirühmad",
+        "notice": "Vali grupilehekülg, kus uudiseid näidatakse"
+      },
+      "visibility": {
+        "label": "Nähtavus",
+        "notice": "Kõik kasutajad näevad teie sündmust.",
+        "public": "Avalik"
       }
     },
     "list": {
@@ -2534,7 +2559,8 @@
     },
     "drawer": {
       "title": "Muuda uudiseid"
-    }
+    },
+    "view": "Vaata uudiseid"
   },
   "instructions": {
     "create": {
@@ -2566,9 +2592,9 @@
       },
       "groups": {
         "label": "Sihtrühm(ad)",
-        "notice": "Valige grupp (grupid), mis näeb seda juhendit",
         "select-all": "Valige kõik",
-        "filter": "Filtrirühmad"
+        "filter": "Filtrirühmad",
+        "notice": "Vali grupilehekülg, kus näidatakse juhiseid"
       },
       "notify": {
         "label": "Teatamine",
@@ -2577,6 +2603,11 @@
       },
       "image": {
         "label": "Pilt"
+      },
+      "visibility": {
+        "label": "Nähtavus",
+        "notice": "Kõik kasutajad näevad teie juhiseid.",
+        "public": "Avalik"
       }
     },
     "list": {
@@ -2684,7 +2715,10 @@
     "fetching_tools": "Tööriistade hankimine...",
     "fetching_data": "Andmete hankimine...",
     "reasoning": "Mõtlemine...",
-    "restart": "Vestluse taaskäivitamine"
+    "restart": "Vestluse taaskäivitamine",
+    "before-we-start": "Enne alustamist, kas sooviksite:",
+    "allow-profile": "Lubage mul näha teie profiili - et saaksin oma vastuseid paremini kohandada",
+    "allow-current-page": "Lubage mul näha lehte, kus viibite - et mõistaksin konteksti paremini"
   },
   "tos": {
     "evolved": "Meie teenusetingimusi on uuendatud, palun vaadake need üle ja kinnitage.",
@@ -2710,10 +2744,9 @@
     "contact": "Kontakt",
     "edit-group": "Redigeerimisgrupp",
     "see-more-people-button": "Vt {users} täiendavad isikud",
-    "see-subgroups": "Vt alarühmad {count}",
+    "see-subgroups": "Vt alagrupp {count} | Vt alarühmad {count}",
     "share": "Jaga",
     "the-team": "Meeskond ({users}4)",
-    "news": "Kuulutatud",
     "more": "Rohkem",
     "less": "Vähem",
     "see-more": "Näe rohkem",
@@ -2802,8 +2835,10 @@
     "similars": "Sarnased rühmad",
     "presentation": "Sissejuhatus",
     "subgroups": "Alarühmad",
-    "projects-locations": "Kaart",
-    "location": "Aadress | Aadressid"
+    "locations": "Kaart | Kaardid",
+    "location": "Aadress | Aadressid",
+    "news": "Uudised | Uudised",
+    "event": "Sündmus | Sündmused"
   },
   "gallery": {
     "title": "galeriis",
@@ -2811,7 +2846,7 @@
     "delete": "Kustuta pilt.",
     "add": "Lisa pildid",
     "empty": "Ei mingeid fotosid.",
-    "pictures": "Pildid",
+    "pictures": "Pilt | Pildid",
     "add-picture": "Palun valige üks või mitu fotot, mida saata.",
     "confirm-delete": "Kas tõesti kustutada see pilt?",
     "success-delete": "Pilt kustutatud.",
@@ -3144,5 +3179,19 @@
       "Presentation": "Esitlus",
       "UNKNOWN": "Tundmatu"
     }
+  },
+  "vector-store": {
+    "confirm-deletion": "Kinnita kustutamine",
+    "confirm-deletion-of": "Kas soovite tõesti \"{title}\" kustutada?",
+    "document-deleted": "Dokument kustutatud.",
+    "chunks": "fragmendid",
+    "no-document-yet": "Veel ühtegi dokumenti",
+    "title-exists": "Pealkiri eksisteerib juba",
+    "add-document": "Lisa dokument",
+    "edit-document": "Muuda dokumenti",
+    "title-field": "Pealkiri",
+    "file-field": "Fail",
+    "document-added": "Dokument lisatud.",
+    "document-updated": "Dokument uuendatud."
   }
 }

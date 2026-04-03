@@ -23,30 +23,59 @@
         @update:model-value="updateForm({ content: $event })"
       />
     </div>
+
+    <DateField
+      :label="$t('event.form.event_date.label')"
+      range
+      time-picker
+      :model-value="datePickerValue"
+      :errors="[...v$.start_date.$errors, ...v$.end_date.$errors]"
+      @update:model-value="onDateSelected"
+    />
+
     <div class="form-section">
-      <label>{{ $t('event.form.event_date.label') }}</label>
-      <button type="button" class="date-btn" @click="toggleModals('DatePicker')">
-        <IconImage class="icon" name="Calendar" />
-        {{ $t('invitation.create.field.validity.pick-date') }}
-      </button>
-
-      <span v-if="model.event_date" class="date-preview">
-        <time class="date-preview-start" :datetime="d(model.event_date)">
-          {{ displayedDate }}
-        </time>
-      </span>
-
-      <!-- disable our/minutes if not  -->
-      <VueDatePicker
-        v-if="stateModals.DatePicker"
-        inline
-        :model-value="datePickerValue"
-        :locale="locale"
-        :on-click-outside="() => closeModals('DatePicker')"
-        @update:model-value="onDateSelected"
+      <!-- locations -->
+      <div v-if="!model.location" class="event-location">
+        <label>
+          {{ $t('location.default-title') }}
+        </label>
+        <LpiButton
+          class="add-btn"
+          :btn-icon="model.location ? 'Pen' : 'Plus'"
+          data-test="add-location"
+          :label="$t(model.location ? 'group.form.edit' : 'group.form.add')"
+          @click="openModals('LocationDrawer')"
+        />
+      </div>
+      <LocationList
+        :locations="model.location ? [model.location] : []"
+        editable
+        :focus="false"
+        @edit="openModals('LocationForm')"
+        @delete="updateLocation(null)"
       />
+      <LocationForm
+        v-if="stateModals.LocationForm"
+        v-model="model.location"
+        :location-types="LOCATION_TYPES"
+        @close="closeModals('LocationForm')"
+        @submit="closeModals('LocationForm')"
+        @delete="updateLocation(null)"
+      />
+      <LocationDrawer
+        :is-opened="stateModals.LocationDrawer"
+        :locations="model.location ? [model.location] : []"
+        editable
+        :location-types="LOCATION_TYPES"
+        @close="closeModals('LocationDrawer')"
+        @submit="updateLocation($event)"
+        @delete="updateLocation(null)"
+      />
+    </div>
 
-      <FieldErrors :errors="v$.event_date.$errors" />
+    <div class="form-section">
+      <label>{{ $t('event.form.visibility.label') }}</label>
+      <LpiCheckbox v-model="model.visible_by_all" :label="$t('event.form.visibility.notice')" />
     </div>
 
     <div v-if="selectedGroup" class="form-section">
@@ -56,10 +85,7 @@
       </p>
 
       <MultiGroupPicker
-        has-public-field
-        :is-public="model.visible_by_all"
         :model-value="model.people_groups"
-        @update:is-public="updateForm({ visible_by_all: $event })"
         @update:model-value="updateForm({ people_groups: $event })"
       />
     </div>
@@ -68,16 +94,15 @@
 
 <script setup lang="ts">
 import TextInput from '@/components/base/form/TextInput.vue'
-import VueDatePicker from '@vuepic/vue-datepicker'
-import '@vuepic/vue-datepicker/dist/main.css'
-import IconImage from '@/components/base/media/IconImage.vue'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import MultiGroupPicker from '@/components/group/MultiGroupPicker/MultiGroupPicker.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
+import { LocationType } from '@/models/types'
 import { EventForm } from '@/models/event.model'
 import { defaultForm } from '@/form/event'
+import DateField from '@/components/base/form/DateField.vue'
 
 withDefaults(
   defineProps<{
@@ -87,37 +112,53 @@ withDefaults(
     selectedGroup: true,
   }
 )
-const { t, d, locale } = useNuxtI18n()
+const { t } = useNuxtI18n()
 const model = defineModel<EventForm>({ default: defaultForm() })
 const emit = defineEmits<{
   invalid: [boolean]
 }>()
 
-const { stateModals, closeModals, toggleModals } = useModals({
-  DatePicker: false,
+const { stateModals, openModals, closeModals } = useModals({
+  LocationForm: false,
+  LocationDrawer: false,
 })
+
+const LOCATION_TYPES: LocationType[] = ['event']
 
 const rules = computed(() => ({
   title: {
     required: helpers.withMessage(t('event.form.title.required'), required),
   },
-  event_date: {
+  start_date: {
     required: helpers.withMessage(t('event.form.event_date.required'), required),
+    maxValue: helpers.withMessage(
+      t('event.form.event_date.before-end'),
+      (value: string | Date, { end_date }) => {
+        if (!end_date) {
+          return true
+        }
+        return new Date(value) <= new Date(end_date)
+      }
+    ),
+  },
+  end_date: {
+    minValue: helpers.withMessage(
+      t('event.form.event_date.before-start'),
+      (value: string | Date, { start_date }) => {
+        // no validate
+        if (!value) {
+          return true
+        }
+        return new Date(value) >= new Date(start_date)
+      }
+    ),
   },
 }))
 
-const datePickerValue = computed(() =>
-  model.value.event_date ? new Date(model.value.event_date) : new Date()
-)
-
-const displayedDate = computed(() => {
-  return new Date(datePickerValue.value).toLocaleDateString(locale.value, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-  })
+const datePickerValue = computed(() => {
+  const start = model.value.start_date ? new Date(model.value.start_date) : null
+  const end = model.value.end_date ? new Date(model.value.end_date) : null
+  return [start, end].filter((v) => !!v)
 })
 
 const v$ = useVuelidate(rules, model)
@@ -133,8 +174,10 @@ watch(
 )
 
 const onDateSelected = (modelData) => {
-  updateForm({ event_date: modelData[0], end_date: modelData[1] })
-  closeModals('DatePicker')
+  updateForm({
+    start_date: modelData[0],
+    end_date: modelData[1] || modelData[0],
+  })
 }
 
 const updateForm = (data) => {
@@ -142,29 +185,23 @@ const updateForm = (data) => {
     ...model.value,
     ...data,
   }
+  // trigger only "field" changed validations validations
+  Object.keys(data).forEach((key) => {
+    v$.value[key]?.$touch()
+  })
+}
+const updateLocation = (location) => {
+  updateForm({ location })
+  closeModals('LocationDrawer', 'LocationForm')
 }
 </script>
 <style lang="scss" scoped>
-.date-btn {
-  padding: $space-s;
-  background-color: $white;
-  border: $border-width-s solid $primary-dark;
-  border-radius: $border-radius-s;
-  vertical-align: middle;
-  display: inline-flex;
-  align-items: center;
-  gap: $space-m;
-  color: $primary-dark;
-  font-weight: 700;
-
-  .icon {
-    width: $layout-size-2xl;
-    fill: $primary-dark;
-  }
-}
-
 .form-section + .form-section {
   margin-top: $space-xl;
+}
+
+.form-section {
+  position: relative;
 }
 
 label {
@@ -179,22 +216,9 @@ label,
   margin-bottom: $space-l !important;
 }
 
-.date-preview {
-  margin-left: $space-l;
-  display: inline-flex;
-  gap: 1rem;
-  justify-content: center;
+.event-location {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  font-size: 1.2rem;
-
-  .date-separator {
-    padding-left: 0.06rem;
-  }
-
-  time {
-    font-style: italic;
-    opacity: 0.8;
-    letter-spacing: -0.04rem;
-  }
 }
 </style>

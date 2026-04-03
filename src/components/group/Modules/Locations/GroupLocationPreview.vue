@@ -1,9 +1,9 @@
 <template>
   <BaseGroupPreview
-    id="projects_locations"
-    :title="$t(GroupModuleTitle.projects_locations, group.modules.projects_locations)"
-    :total="group.modules.projects_locations"
-    :icon="GroupModuleIcon.projects_locations"
+    id="locations"
+    :title="$t(GroupModuleTitle.locations, group.modules.locations)"
+    :total="group.modules.locations"
+    :icon="GroupModuleIcon.locations"
   >
     <template #header>
       <SeeMoreArrow

@@ -10,11 +10,17 @@
             :event="event"
             editable
             hide-see-more-button
+            @location="onLocation"
             @edit="onEdit"
             @delete="onDelete"
           />
         </div>
         <PaginationButtonsV2 :pagination="pagination" />
+        <LocationDrawer
+          :is-opened="stateModals.location"
+          :locations="selectedEvent?.location ? [selectedEvent.location] : []"
+          @close="onCancel"
+        />
 
         <EditEventDrawer
           :is-opened="stateModals.edit"
@@ -55,10 +61,12 @@ import { getAllEvents } from '@/api/v2/event.service'
 import AdminBlock from '@/components/admin/GeneralAdminBlocks/AdminBlock.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import PaginationButtonsV2 from '@/components/base/navigation/PaginationButtonsV2.vue'
+import LocationDrawer from '@/components/map/LocationDrawer.vue'
 import EditEventDrawer from '@/components/event/EditEventDrawer/EditEventDrawer.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
+import { nowDate } from '@/functs/date'
 
 const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()
@@ -68,15 +76,14 @@ const { t } = useNuxtI18n()
 const selectedEvent = ref(null)
 const asyncingDelete = ref(false)
 const { stateModals, closeModals, openModals } = useModals({
+  location: false,
   edit: false,
   delete: false,
 })
 
-const todayAtZero = new Date()
-todayAtZero.setHours(0, 0, 0, 0)
 const query = {
-  ordering: 'event_date',
-  from_date: todayAtZero.toISOString(),
+  ordering: 'start_date',
+  from_date: nowDate().toISOString(),
 }
 
 const {
@@ -109,6 +116,10 @@ const onEdit = (event) => {
   selectedEvent.value = event
   openModals('edit')
 }
+const onLocation = (event) => {
+  selectedEvent.value = event
+  openModals('location')
+}
 
 const onDeleteEvent = async () => {
   asyncingDelete.value = true
@@ -128,6 +139,6 @@ const onDeleteEvent = async () => {
 
 const onCancel = () => {
   selectedEvent.value = null
-  closeModals('edit', 'delete')
+  closeModals('edit', 'delete', 'location')
 }
 </script>

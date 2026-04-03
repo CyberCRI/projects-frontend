@@ -31,10 +31,15 @@
               @toggle-editing="toggleEditing"
             />
           </template>
-          <template v-if="currentTab" #content>
+          <template #content>
             <div class="group-content">
-              <SubPageTitle :title-prefix="group.$t?.name" :current-tab="currentTab" />
-              <NuxtPage v-bind="currentTab.props" />
+              <SubPageTitle :title-prefix="group.$t?.name" :current-tab="currentTab ?? {}" />
+              <NuxtPage
+                v-bind="{
+                  ...defaultProps,
+                  ...(currentTab?.props ?? {}),
+                }"
+              />
             </div>
           </template>
         </NavPanelLayout>
@@ -48,8 +53,10 @@ import { getGroup } from '@/api/v2/group.service'
 import { useLpiHead2 } from '@/composables/useLpiHead'
 import { GroupModuleIcon, GroupModuleTitle } from '@/models/invitation.model'
 import { groupSkeleton } from '@/skeletons/group.skeletons'
+import usePeopleGroupsStore from '@/stores/usePeopleGroups'
 
 const uniqueId = 'group-nav-panel'
+const peopleGroupsStore = usePeopleGroupsStore()
 const { canEditGroup } = usePermissions()
 const { isNavCollapsed, toggleNavPanel, collapseIfUnderBreakpoint } =
   useToggleableNavPanel(uniqueId)
@@ -63,6 +70,9 @@ const groupIdOrSlug = computed(() => route.params.groupIdOrSlug.toString())
 const { data: group, isLoading, status, error } = getGroup(organizationCode, groupIdOrSlug)
 
 const groupLoading = computed(() => isLoading.value && !group.value?.id)
+
+// TODO rework this permissions
+watch(group, (newValue) => (peopleGroupsStore.currentId = newValue.id), { immediate: true })
 
 watchEffect(() => {
   useLpiHead2({
@@ -89,6 +99,13 @@ const groupHierarchy = computed(() => {
 
 const groupModules = computed(() => group.value?.modules ?? groupSkeleton()['modules'])
 
+const defaultProps = computed(() => {
+  return {
+    group: group.value,
+    isLoading: groupLoading.value,
+  }
+})
+
 const groupTabsDisplay = computed(() => {
   return [
     {
@@ -98,10 +115,6 @@ const groupTabsDisplay = computed(() => {
       label: t('group.snapshot'),
       view: `/group/${route.params.groupIdOrSlug}/snapshot`,
       altView: `/group/${route.params.groupIdOrSlug}/snapshot/edit`,
-      props: {
-        group: group.value,
-        isLoading: groupLoading.value,
-      },
       condition: true,
       noTitle: true,
       icon: 'Home',
@@ -110,13 +123,9 @@ const groupTabsDisplay = computed(() => {
       isEditing: false,
       key: 'group-members',
       dataTest: 'group-members',
-      label: t(GroupModuleTitle.members),
+      label: t(GroupModuleTitle.members, groupModules.value.members),
       view: `/group/${route.params.groupIdOrSlug}/members`,
       altView: `/group/${route.params.groupIdOrSlug}/members/edit`,
-      props: {
-        group: group.value,
-        isLoading: groupLoading.value,
-      },
       condition: groupModules.value.members,
       icon: GroupModuleIcon.members,
     },
@@ -124,13 +133,9 @@ const groupTabsDisplay = computed(() => {
       isEditing: false,
       key: 'group-projects',
       dataTest: 'group-projects',
-      label: t(GroupModuleTitle.featured_projects),
+      label: t(GroupModuleTitle.featured_projects, groupModules.value.featured_projects),
       view: `/group/${route.params.groupIdOrSlug}/projects`,
       altView: `/group/${route.params.groupIdOrSlug}/projects/edit`,
-      props: {
-        group: group.value,
-        isLoading: groupLoading.value,
-      },
       condition: groupModules.value.featured_projects,
       icon: GroupModuleIcon.featured_projects,
     },
@@ -141,10 +146,6 @@ const groupTabsDisplay = computed(() => {
       label: t(GroupModuleTitle.subgroups, groupModules.value.subgroups),
       view: `/group/${route.params.groupIdOrSlug}/subgroups`,
       altView: '',
-      props: {
-        group: group.value,
-        isLoading: groupLoading.value,
-      },
       condition: groupModules.value.subgroups,
       icon: GroupModuleIcon.subgroups,
     },
@@ -152,13 +153,11 @@ const groupTabsDisplay = computed(() => {
       isEditing: false,
       key: 'group-publications',
       dataTest: 'group-publications',
-      label: t(GroupModuleTitle.publications),
+      label: t(GroupModuleTitle.publications, GroupModuleTitle.publications),
       view: `/group/${route.params.groupIdOrSlug}/publications`,
       altView: `/group/${route.params.groupIdOrSlug}/publications/edit`,
       props: {
         documentType: 'publications',
-        group: group.value,
-        isLoading: groupLoading.value,
       },
       condition: groupModules.value.publications,
       icon: GroupModuleIcon.publications,
@@ -167,30 +166,44 @@ const groupTabsDisplay = computed(() => {
       isEditing: false,
       key: 'group-conferences',
       dataTest: 'group-conferences',
-      label: t(GroupModuleTitle.conferences),
+      label: t(GroupModuleTitle.conferences, groupModules.value.conferences),
       view: `/group/${route.params.groupIdOrSlug}/conferences`,
       altView: `/group/${route.params.groupIdOrSlug}/conferences/edit`,
       props: {
         documentType: 'conferences',
-        group: group.value,
-        isLoading: groupLoading.value,
       },
       condition: groupModules.value.conferences,
       icon: GroupModuleIcon.conferences,
     },
     {
       isEditing: false,
+      key: 'group-news',
+      dataTest: 'group-news',
+      label: t(GroupModuleTitle.news, groupModules.value.news),
+      view: `/group/${route.params.groupIdOrSlug}/news`,
+      altView: `/group/${route.params.groupIdOrSlug}/news/edit`,
+      condition: groupModules.value.news,
+      icon: GroupModuleIcon.news,
+    },
+    {
+      isEditing: false,
+      key: 'group-event',
+      dataTest: 'group-event',
+      label: t(GroupModuleTitle.event, groupModules.value.event),
+      view: `/group/${route.params.groupIdOrSlug}/event`,
+      altView: `/group/${route.params.groupIdOrSlug}/event/edit`,
+      condition: groupModules.value.event,
+      icon: GroupModuleIcon.event,
+    },
+    {
+      isEditing: false,
       key: 'group-locations',
       dataTest: 'group-locations',
-      label: t(GroupModuleTitle.projects_locations, groupModules.value.projects_locations),
+      label: t(GroupModuleTitle.locations, groupModules.value.locations),
       view: `/group/${route.params.groupIdOrSlug}/locations`,
       altView: `/group/${route.params.groupIdOrSlug}/locations/edit`,
-      props: {
-        group: group.value,
-        isLoading: groupLoading.value,
-      },
-      condition: groupModules.value.projects_locations,
-      icon: GroupModuleIcon.projects_locations,
+      condition: groupModules.value.locations,
+      icon: GroupModuleIcon.locations,
     },
     {
       isEditing: false,
@@ -199,10 +212,6 @@ const groupTabsDisplay = computed(() => {
       label: t(GroupModuleTitle.gallery, groupModules.value.gallery),
       view: `/group/${route.params.groupIdOrSlug}/gallery`,
       altView: `/group/${route.params.groupIdOrSlug}/gallery/edit`,
-      props: {
-        group: group.value,
-        isLoading: groupLoading.value,
-      },
       condition: groupModules.value.gallery,
       icon: GroupModuleIcon.gallery,
     },
@@ -220,8 +229,6 @@ const groupTabsEdit = computed(() => {
       altView: `/group/${route.params.groupIdOrSlug}/snapshot`,
       props: {
         isInEditingMode: true,
-        group: group.value,
-        isLoading: groupLoading.value,
       },
       condition: true,
       noTitle: true,
@@ -231,13 +238,11 @@ const groupTabsEdit = computed(() => {
       isEditing: true,
       key: 'groups-members-edit',
       dataTest: 'groups-members-edit',
-      label: t('group.members'),
+      label: t(GroupModuleTitle.members, groupModules.value.members),
       view: `/group/${route.params.groupIdOrSlug}/members/edit`,
       altView: `/group/${route.params.groupIdOrSlug}/members`,
       props: {
         isInEditingMode: true,
-        group: group.value,
-        isLoading: groupLoading.value,
       },
       condition: true,
       icon: 'Pen',
@@ -246,13 +251,11 @@ const groupTabsEdit = computed(() => {
       isEditing: true,
       key: 'group-projects-edit',
       dataTest: 'group-projects-edit',
-      label: t('group.projects'),
+      label: t(GroupModuleTitle.featured_projects, groupModules.value.featured_projects),
       view: `/group/${route.params.groupIdOrSlug}/projects/edit`,
       altView: `/group/${route.params.groupIdOrSlug}/projects`,
       props: {
         isInEditingMode: true,
-        group: group.value,
-        isLoading: groupLoading.value,
       },
       condition: true,
       icon: 'Pen',
@@ -261,14 +264,12 @@ const groupTabsEdit = computed(() => {
       isEditing: true,
       key: 'group-publications-edit',
       dataTest: 'group-publications-edit',
-      label: t('group.publications'),
+      label: t(GroupModuleTitle.publications, groupModules.value.publications),
       view: `/group/${route.params.groupIdOrSlug}/publications/edit`,
       altView: `/group/${route.params.groupIdOrSlug}/publications`,
       props: {
         documentType: 'publications',
         isInEditingMode: true,
-        group: group.value,
-        isLoading: groupLoading.value,
       },
       condition: false,
       icon: 'Pen',
@@ -277,29 +278,51 @@ const groupTabsEdit = computed(() => {
       isEditing: true,
       key: 'group-conferences-edit',
       dataTest: 'group-conferences-edit',
-      label: t('group.conferences'),
+      label: t(GroupModuleTitle.conferences, groupModules.value.conferences),
       view: `/group/${route.params.groupIdOrSlug}/conferences/edit`,
       altView: `/group/${route.params.groupIdOrSlug}/conferences`,
       props: {
         documentType: 'conferences',
         isInEditingMode: true,
-        group: group.value,
-        isLoading: groupLoading.value,
       },
       condition: false,
       icon: 'Pen',
     },
     {
       isEditing: true,
+      key: 'group-news-edit',
+      dataTest: 'group-news-edit',
+      label: t(GroupModuleTitle.news, groupModules.value.news),
+      view: `/group/${route.params.groupIdOrSlug}/news/edit`,
+      altView: `/group/${route.params.groupIdOrSlug}/news`,
+      props: {
+        isInEditingMode: true,
+      },
+      condition: true,
+      icon: 'Pen',
+    },
+    {
+      isEditing: true,
+      key: 'group-event-edit',
+      dataTest: 'group-event-edit',
+      label: t(GroupModuleTitle.event, groupModules.value.event),
+      view: `/group/${route.params.groupIdOrSlug}/event/edit`,
+      altView: `/group/${route.params.groupIdOrSlug}/event`,
+      props: {
+        isInEditingMode: true,
+      },
+      condition: true,
+      icon: 'Pen',
+    },
+    {
+      isEditing: true,
       key: 'group-gallery-edit',
       dataTest: 'group-gallery-edit',
-      label: t(GroupModuleTitle.gallery),
+      label: t(GroupModuleTitle.gallery, groupModules.value.gallery),
       view: `/group/${route.params.groupIdOrSlug}/gallery/edit`,
       altView: `/group/${route.params.groupIdOrSlug}/gallery`,
       props: {
         isInEditingMode: true,
-        group: group.value,
-        isLoading: groupLoading.value,
       },
       condition: true,
       icon: 'Pen',
@@ -352,15 +375,5 @@ if (import.meta.client) {
 .group-layout,
 .group-edit-layout {
   margin-top: pxToRem(48px);
-}
-
-.recommandations {
-  margin-top: $space-2xl;
-}
-
-.group-content {
-  //   background-color: #f0f3f5;
-  //   padding: 1rem;
-  //   border-radius: 0.5rem;
 }
 </style>

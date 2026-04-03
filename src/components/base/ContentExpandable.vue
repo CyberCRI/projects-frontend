@@ -83,7 +83,7 @@ const label = computed(() => {
   overflow: hidden;
   position: relative;
   transition: height 0.2s;
-  height: calc(v-bind('actualHeight') * 1px + 1rem);
+  height: calc(v-bind('actualHeight') * 1px);
 
   .description-limited-transparancy {
     display: none;

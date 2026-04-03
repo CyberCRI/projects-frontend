@@ -53,20 +53,17 @@
             </button>
           </div>
           <div>
-            <VueDatePicker
-              v-show="showDatePicker"
-              :on-click-outside="() => (showDatePicker = false)"
-              :inline="true"
-              :auto-apply="true"
+            <DatePickerModal
+              v-if="showDatePicker"
               :model-value="form.expire_at"
-              :enable-time-picker="false"
               @update:model-value="onDateSelected"
+              @close="closeDatePicker"
             />
           </div>
 
           <div v-if="form.expire_at" class="selected-validity">
             <span>{{ $t('invitation.create.field.validity.valid-until') }}</span>
-            <strong>{{ displayDate }}</strong>
+            <DisplayDate :date="form.expire_at" :time="false" />
           </div>
         </div>
         <div class="form-section">
@@ -138,14 +135,14 @@ import { postInvitation } from '@/api/invitations.service.ts'
 import TextInput from '@/components/base/form/TextInput.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
-import VueDatePicker from '@vuepic/vue-datepicker'
-import '@vuepic/vue-datepicker/dist/main.css'
 import useValidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import GroupSelectDrawer from '@/components/group/GroupSelectDrawer/GroupSelectDrawer.vue'
 import GroupCard from '@/components/group/GroupCard.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import DatePickerModal from '@/components/base/modal/DatePickerModal.vue'
+import DisplayDate from '@/components/base/DisplayDate.vue'
 
 export default {
   name: 'LinkCreateTab',
@@ -153,10 +150,11 @@ export default {
     IconImage,
     LpiButton,
     TextInput,
-    VueDatePicker,
+    DatePickerModal,
     GroupSelectDrawer,
     GroupCard,
     LinkButton,
+    DisplayDate,
   },
   setup() {
     const toaster = useToasterStore()
@@ -203,12 +201,6 @@ export default {
     formNotEmpty() {
       return !!this.form.expire_at && !!this.form.people_group_id
     },
-    displayDate() {
-      if (this.form.expire_at) {
-        return this.$d(this.form.expire_at)
-      }
-      return ''
-    },
   },
   methods: {
     cancel() {
@@ -232,6 +224,10 @@ export default {
       this.showGroupSelectDrawer = true
     },
 
+    closeDatePicker() {
+      this.showDatePicker = false
+    },
+
     onGroupSelected(group) {
       this.selectedGroup = group
       this.form.people_group_id = group.id
@@ -251,7 +247,6 @@ export default {
     onDateSelected(modelData) {
       this.form.expire_at = modelData
       this.fixDateTime()
-      this.showDatePicker = false
     },
 
     fixDateTime() {

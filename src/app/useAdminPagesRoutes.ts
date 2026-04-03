@@ -130,6 +130,12 @@ export default function useAdminPagesRoutes() {
           component: () => import('../pages/AdminPortalPageV2/Tabs/TermsAdminTab.vue'),
           meta: { checkAccessRequestEnabled: true },
         },
+        {
+          path: 'vector-store',
+          name: 'VectorStoreAdminTab',
+          component: () => import('../pages/AdminPortalPageV2/Tabs/VectorStoreAdminTab.vue'),
+          meta: { checkAccessRequestEnabled: true },
+        },
       ],
       meta: {
         resetScroll: true,

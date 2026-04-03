@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { getAnnouncements } from '@/api/announcements.service'
+import { nowDate } from '@/functs/date'
 import useOrganizationsStore from '@/stores/useOrganizations'
 
 const organizationsStore = useOrganizationsStore()
@@ -27,10 +28,7 @@ const doGetAnnouncements = async () => {
         return true
       }
       const deadline = new Date(announcement.deadline)
-      const now = new Date()
-      now.setHours(0, 0, 0, 0)
-
-      return deadline >= now
+      return deadline >= nowDate()
     })
   } catch (err) {
     console.error(err)

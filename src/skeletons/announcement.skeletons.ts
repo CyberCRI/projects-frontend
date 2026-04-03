@@ -14,6 +14,6 @@ export const announcementSkeleton = (
   deadline: '2020-05-01',
   is_remunerated: false,
   updated_at: '2020-05-01',
-  create_at: '2020-05-01',
+  created_at: '2020-05-01',
   ...(def || {}),
 })

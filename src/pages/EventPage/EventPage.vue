@@ -7,6 +7,7 @@
         :event="event"
         :show-more="true"
         hide-see-more-button
+        location-preview
         editable
         @edit="onEdit"
         @delete="onDelete"
@@ -26,7 +27,7 @@
         @cancel="onCancel"
         @confirm="onDeleteEvent"
       >
-        <EventItem is="div" :event="selectedEvent" />
+        <EventItem is="div" :event="selectedEvent" location-preview />
       </ConfirmModal>
     </FetchLoader>
   </div>
@@ -68,6 +69,7 @@ const {
 })
 
 const { stateModals, closeModals, openModals } = useModals({
+  location: false,
   edit: false,
   delete: false,
 })
@@ -102,7 +104,7 @@ const onDeleteEvent = async () => {
 
 const onCancel = () => {
   selectedEvent.value = null
-  closeModals('edit', 'delete')
+  closeModals('edit', 'delete', 'location')
 }
 
 useLpiHead2({

@@ -57,6 +57,14 @@
       border-color: $location-address;
     }
 
+    &.news {
+      border-color: $location-news;
+    }
+
+    &.event {
+      border-color: $location-event;
+    }
+
     &__dot {
       width: 20px;
       height: 20px;
@@ -74,6 +82,14 @@
 
       &.address {
         background: $location-address;
+      }
+
+      &.news {
+        background: $location-news;
+      }
+
+      &.event {
+        background: $location-event;
       }
     }
 
@@ -143,6 +159,14 @@
 
       &.address {
         background: $location-address;
+      }
+
+      &.news {
+        background: $location-news;
+      }
+
+      &.event {
+        background: $location-event;
       }
     }
   }
@@ -295,6 +319,14 @@
 
       &.address svg {
         background-color: $location-address;
+      }
+
+      &.news svg {
+        background-color: $location-news;
+      }
+
+      &.event svg {
+        background-color: $location-event;
       }
 
       &:last-child {

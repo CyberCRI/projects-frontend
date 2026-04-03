@@ -79,13 +79,12 @@
 
       <FieldErrors :errors="v$.editorBlogEntry.$errors" />
     </div>
-    <VueDatePicker v-model="selectedDate" class="input-field" position="top" />
+
+    <DateField v-model="selectedDate" :label="$t('common.date')" />
   </BaseDrawer>
 </template>
 
 <script>
-import VueDatePicker from '@vuepic/vue-datepicker'
-
 import TipTapCollaborativeEditor from '@/components/base/form/TextEditor/TipTapCollaborativeEditor.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
@@ -100,6 +99,7 @@ import analytics from '@/analytics'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useUsersStore from '@/stores/useUsers.ts'
+import DateField from '@/components/base/form/DateField.vue'
 
 export default {
   name: 'BlogDrawer',
@@ -111,7 +111,7 @@ export default {
     BaseDrawer,
     ConfirmModal,
     FieldErrors,
-    VueDatePicker,
+    DateField,
   },
 
   inject: {

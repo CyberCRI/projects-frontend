@@ -176,7 +176,7 @@ onBeforeUnmount(() => {
 
 .modal-content {
   position: relative;
-  padding: 40px;
+  padding: 20px;
   flex-grow: 1;
   overflow-y: scroll;
   max-height: 80vh;
@@ -187,7 +187,7 @@ onBeforeUnmount(() => {
 .modal-footer {
   display: flex;
   place-content: space-between center;
-  padding: $space-xl;
+  padding: $space-l;
 
   button {
     cursor: pointer;

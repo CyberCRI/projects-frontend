@@ -1,7 +1,9 @@
 <script setup>
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
-const organizationsStore = useOrganizationsStore()
 import { getOrganizationByCode } from '@/api/organizations.service'
+
+const organizationsStore = useOrganizationsStore()
+const { isSuperAdmin } = usePermissions()
 
 const { t } = useNuxtI18n()
 const tabs = computed(() => {
@@ -13,6 +15,20 @@ const tabs = computed(() => {
           view: { name: 'RequestsAdminTab' },
           props: {},
           icon: 'Article',
+          condition: true,
+        },
+      ]
+    : []
+
+  // TODO: also check is vector-store is enabled
+  const vectorStoreTab = isSuperAdmin.value
+    ? [
+        {
+          key: 'admin-vector-store',
+          label: t('admin.tabs.vector-store'),
+          view: { name: 'VectorStoreAdminTab' },
+          props: {},
+          icon: 'Article', // TODO: use a bulb or db icon
           condition: true,
         },
       ]
@@ -105,6 +121,7 @@ const tabs = computed(() => {
       icon: 'Scales',
       condition: true,
     },
+    ...vectorStoreTab,
   ].map((entry) => ({ ...entry, dataTest: entry.key }))
 })
 

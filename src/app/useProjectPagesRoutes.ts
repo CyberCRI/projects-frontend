@@ -6,6 +6,11 @@ export default function useProjectPagesRoutes() {
       name: 'pageProject',
       redirect: { name: 'projectSummary' },
       component: () => import('../pages/ProjectPageV2/ProjectPage.vue'),
+      meta: {
+        chatBotContext: (route) => `
+          This page describes a project whose slug or id is ${route.params.slugOrId}. This is the slugOrId route parameter expected by tools that use projects.
+        `,
+      },
       // dont reset scroll here it is done in the component as it handle complex scroll behavior for tabs
       children: [
         {

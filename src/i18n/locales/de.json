@@ -220,7 +220,8 @@
       "requests": "Anträge",
       "groups": "Gruppen",
       "settings": "Einstellungen",
-      "terms": "ToS"
+      "terms": "ToS",
+      "vector-store": "Vector store"
     },
     "page-title": "Admin",
     "portal": {
@@ -517,7 +518,6 @@
     "added-on-the": "zugefügt",
     "back": "zurück",
     "cancel": "Abbrechen",
-    "chose-date": "Chose Datum",
     "confirm": "Bestätigen",
     "continue": "Weiter",
     "confirm-delete": "Sind Sie sicher, dass Sie das löschen möchten?",
@@ -577,7 +577,18 @@
     "create": "Erstellung",
     "order-asc": "Älter als neuster",
     "order-desc": "neuste bis älteste",
-    "close": "Nähe"
+    "close": "Nähe",
+    "to": "Zu",
+    "new": "neue",
+    "now": "Heute",
+    "add-time": "Stunden/Minute hinzufügen",
+    "start-time": "Startzeit",
+    "reset-time": "Zurück zur Übersicht",
+    "back-calendar": "Zurück zum Kalender",
+    "end-time": "Endzeit",
+    "no-date": "Kein Datum",
+    "date": "Datum",
+    "clear-date": "Datum"
   },
   "complete-profile": {
     "bio": {
@@ -978,7 +989,9 @@
     "default-title": "Standort",
     "impact": "Auswirkungen",
     "team": "Team",
-    "address": "Anschrift"
+    "address": "Anschrift",
+    "news": "Nachrichten | Nachrichten",
+    "event": "Veranstaltung"
   },
   "map": {
     "empty": "Nichts hier noch... Die Mitarbeiter haben noch keine Projekte lokalisiert.",
@@ -1525,7 +1538,7 @@
     },
     "apply-succes": "Antrag gesendet",
     "announcement-create": "Ankündigung erstellen",
-    "announcements": "Ankündigungen",
+    "announcements": "Ankündigung | Ankündigungen",
     "at-coordinates": "bei Koordinaten",
     "categories": "Projektkategorien",
     "community": "Projekte der Gemeinschaft",
@@ -1604,7 +1617,7 @@
     "remove-user-title": "Löschen des Benutzers",
     "remove-user": "Löschen",
     "show-n-projects": "{count} Projekte anzeigen",
-    "suggested": "ähnliche Projekte",
+    "suggested": "Ähnliches Projekt | ähnliche Projekte",
     "suggested-hint": "Projekte, die Sie interessieren könnten",
     "summary": "Zusammenfassung",
     "settings": "Einstellungen",
@@ -1684,7 +1697,7 @@
     "cannot-upload-image": "Bild jetzt nicht hochladen",
     "link-address": "Linkadresse",
     "resources": "Ressourcen",
-    "web": "Link zu Webressourcen | Links zu Web-Ressourcen",
+    "web": "Link zur Webressource | Links zu Webressourcen",
     "web-link": "Weblink | web link | web links"
   },
   "result_box": {
@@ -2472,19 +2485,26 @@
       "event_date": {
         "label": "Veranstaltungsdatum *",
         "placeholder": "Wählen Sie Datum",
-        "required": "Das Datum ist erforderlich"
+        "required": "Das Datum ist erforderlich",
+        "before-end": "Das Startdatum muss vor dem Enddatum liegen.",
+        "before-start": "Das Enddatum muss nach dem Startdatum erfolgen."
       },
       "people_groups": {
         "label": "Zielgruppe(n)",
-        "notice": "Wählen Sie die Gruppe(n), die dieses Ereignis sehen wird",
         "select-all": "Alles auswählen",
         "filter": "Filtergruppen",
         "all": "Alle Gruppen",
         "public": "Öffentliche"
+      },
+      "visibility": {
+        "label": "Sichtbarkeit",
+        "notice": "Alle Benutzer können Ihre Veranstaltung sehen.",
+        "public": "Öffentliche"
       }
     },
     "group-label": "Gruppe:",
-    "groups-label": "Gruppen:"
+    "groups-label": "Gruppen:",
+    "view": "Siehe Veranstaltung"
   },
   "news": {
     "create": {
@@ -2519,9 +2539,14 @@
       },
       "groups": {
         "label": "Zielgruppe(n)",
-        "notice": "Wählen Sie die Gruppe(n), die diese Nachrichten sehen wird",
         "select-all": "Alles auswählen",
-        "filter": "Filtergruppen"
+        "filter": "Filtergruppen",
+        "notice": "Wählen Sie die Gruppenseite, auf der die Nachrichten angezeigt werden"
+      },
+      "visibility": {
+        "label": "Sichtbarkeit",
+        "notice": "Alle Benutzer können Ihre Veranstaltung sehen.",
+        "public": "Öffentliche"
       }
     },
     "list": {
@@ -2534,7 +2559,8 @@
     },
     "drawer": {
       "title": "Nachrichten bearbeiten"
-    }
+    },
+    "view": "Siehe Nachrichten"
   },
   "instructions": {
     "create": {
@@ -2566,9 +2592,9 @@
       },
       "groups": {
         "label": "Zielgruppe(n)",
-        "notice": "Wählen Sie die Gruppe(n), die diese Anleitung sehen wird",
         "select-all": "Alles auswählen",
-        "filter": "Filtergruppen"
+        "filter": "Filtergruppen",
+        "notice": "Wählen Sie die Gruppenseite, auf der der Befehl angezeigt wird"
       },
       "notify": {
         "label": "Notifizierung",
@@ -2577,6 +2603,11 @@
       },
       "image": {
         "label": "Bild"
+      },
+      "visibility": {
+        "label": "Sichtbarkeit",
+        "notice": "Alle Benutzer können Ihre Anleitung sehen.",
+        "public": "Öffentliche"
       }
     },
     "list": {
@@ -2684,7 +2715,10 @@
     "fetching_tools": "Abrufwerkzeuge...",
     "fetching_data": "Daten werden abgerufen...",
     "reasoning": "Denken...",
-    "restart": "Konversation neu starten"
+    "restart": "Konversation neu starten",
+    "before-we-start": "Bevor wir beginnen, würden Sie:",
+    "allow-profile": "Erlauben Sie mir, Ihr Profil zu sehen - damit ich meine Antworten besser anpassen kann",
+    "allow-current-page": "Erlauben Sie mir, die Seite zu sehen, auf der Sie sich befinden - damit ich den Kontext besser verstehe"
   },
   "tos": {
     "evolved": "Unsere Nutzungsbedingungen wurden aktualisiert, bitte nehmen Sie sich einen Moment Zeit, um sie zu überprüfen und zu akzeptieren.",
@@ -2710,10 +2744,9 @@
     "contact": "Kontakt",
     "edit-group": "Gruppe bearbeiten",
     "see-more-people-button": "Siehe {users} zusätzliche Personen",
-    "see-subgroups": "Siehe {count} Untergruppen",
+    "see-subgroups": "Siehe Untergruppe {count} | Siehe {count} Untergruppen",
     "share": "Anteil",
     "the-team": "Team ({users}4)",
-    "news": "Ankündigung",
     "more": "Mehr",
     "less": "Weniger",
     "see-more": "Mehr erfahren",
@@ -2802,8 +2835,10 @@
     "similars": "Ähnliche Gruppen",
     "presentation": "Einleitung",
     "subgroups": "Untergruppen",
-    "projects-locations": "Landkarte",
-    "location": "Adresse | Adressen"
+    "locations": "Landkarte | Karten",
+    "location": "Adresse | Adressen",
+    "news": "Nachrichten | Nachrichten",
+    "event": "Veranstaltung | Veranstaltungen"
   },
   "gallery": {
     "title": "Galerie",
@@ -2811,7 +2846,7 @@
     "delete": "Bild löschen.",
     "add": "Bilder hinzufügen",
     "empty": "Keine Fotos.",
-    "pictures": "Bilder",
+    "pictures": "Bild | Bilder",
     "add-picture": "Bitte wählen Sie ein oder mehrere Fotos, um zu senden.",
     "confirm-delete": "Möchten Sie dieses Bild wirklich löschen?",
     "success-delete": "Bild gelöscht.",
@@ -3144,5 +3179,19 @@
       "Presentation": "Präsentation",
       "UNKNOWN": "Unbekannt"
     }
+  },
+  "vector-store": {
+    "confirm-deletion": "Löschung bestätigen",
+    "confirm-deletion-of": "Möchten Sie \"{title}\" wirklich löschen?",
+    "document-deleted": "Dokument gelöscht.",
+    "chunks": "Fragmente",
+    "no-document-yet": "Noch kein Dokument",
+    "title-exists": "Titel existiert bereits",
+    "add-document": "Ein Dokument hinzufügen",
+    "edit-document": "Ein Dokument bearbeiten",
+    "title-field": "Titel",
+    "file-field": "Datei",
+    "document-added": "Dokument hinzugefügt.",
+    "document-updated": "Dokument bearbeitet."
   }
 }

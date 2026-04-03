@@ -54,7 +54,8 @@ watch(
     if (event) {
       form.value = {
         ...event,
-        event_date: event.event_date ? new Date(event.event_date).toISOString() : null,
+        start_date: event.start_date ? new Date(event.start_date) : null,
+        end_date: event.end_date ? new Date(event.end_date) : null,
         // build group "object" from array if it is an array
         people_groups: event.people_groups.reduce
           ? event.people_groups.reduce((acc, groupId) => {
@@ -82,7 +83,8 @@ const saveEvent = async () => {
   try {
     const formData = {
       ...form.value,
-      event_date: form.value.event_date,
+      start_date: form.value.start_date.toISOString(),
+      end_date: (form.value.end_date || form.value.start_date).toISOString(),
       people_groups: Object.entries(form.value.people_groups)
         .filter(([, value]) => value)
         .map(([id]) => id),

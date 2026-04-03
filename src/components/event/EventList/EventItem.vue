@@ -12,13 +12,13 @@
     class="event"
     :class="{ editable: editable && (canEditEvent || canDeleteEvent), 'scale-hover': !props.is }"
   >
-    <time class="date skeletons-background" :datetime="eventDate.toISOString()">
+    <time class="date skeletons-background" :datetime="displayDate.toISOString()">
       <template v-if="!isCurrent">
         <span class="month-day">
-          {{ eventDate.toLocaleDateString(locale, { month: 'long', day: '2-digit' }) }}
+          {{ displayDate.toLocaleDateString(locale, { month: 'long', day: '2-digit' }) }}
         </span>
         <span class="year">
-          {{ eventDate.getFullYear() }}
+          {{ displayDate.getFullYear() }}
         </span>
       </template>
       <span v-else>
@@ -33,22 +33,39 @@
       <h4 class="title skeletons-text">
         {{ event.$t.title }}
       </h4>
-      <div class="event-information skeletons-text">
+      <div v-if="haveContent" class="event-information skeletons-text">
         <ContentExpandable
           class="expandable-left"
-          :description="event.$t.content"
+          :description="contentText ? content : event.$t.content"
           :height-limit="100"
           :opened="showMore"
           :hide-see-more="hideSeeMoreButton"
         />
       </div>
 
-      <div class="date-info skeletons-background">
+      <!-- for date range -->
+      <div class="element-info skeletons-background">
         <IconImage class="icon-small" name="Calendar" />
-        <span class="date-display">
-          {{ displayDate }}
-        </span>
+        <DisplayDate :date="[event.start_date, event.end_date]" />
       </div>
+
+      <template v-if="event.location">
+        <component
+          :is="!locationPreview ? 'button' : 'div'"
+          class="reset-btn element-info btn-location skeletons-background"
+          :class="{
+            'scale-hover': !locationPreview,
+            'pointer-events-none': locationPreview,
+          }"
+          @click.prevent="locationEvent(event)"
+        >
+          <IconImage class="icon-small" name="MapMarker" />
+          <span class="text-ellipsis text-location">
+            {{ event.location.$t?.title || $t('location.address') }}
+          </span>
+        </component>
+        <MapRecap v-if="locationPreview" :locations="[event.location]" />
+      </template>
     </div>
 
     <ContextActionMenuInline
@@ -66,7 +83,11 @@
 import IconImage from '@/components/base/media/IconImage.vue'
 import { TranslatedEventModel } from '@/models/event.model'
 import ContentExpandable from '@/components/base/ContentExpandable.vue'
+import MapRecap from '@/components/map/MapRecap.vue'
 import ContextActionMenuInline from '@/components/base/button/ContextActionMenuInline.vue'
+import { html2Text } from '@/functs/string'
+import { nowDate, sanitizeDate } from '@/functs/date'
+import DisplayDate from '@/components/base/DisplayDate.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -74,12 +95,18 @@ const props = withDefaults(
     editable?: boolean
     hideSeeMoreButton?: boolean
     showMore?: boolean
+    locationPreview?: boolean
+    reverseDate?: boolean
+    contentText?: boolean
     is?: string
   }>(),
   {
     editable: false,
     showMore: false,
     hideSeeMoreButton: false,
+    locationPreview: false,
+    reverseDate: false,
+    contentText: false,
     is: null,
   }
 )
@@ -87,6 +114,7 @@ const props = withDefaults(
 const emit = defineEmits<{
   delete: [TranslatedEventModel]
   edit: [TranslatedEventModel]
+  location: [TranslatedEventModel]
 }>()
 const { canEditEvent, canDeleteEvent } = usePermissions()
 
@@ -99,23 +127,24 @@ const isComponent = computed(() => {
   return resolveComponent('NuxtLink')
 })
 
-const eventDate = computed(() => new Date(props.event.event_date))
+const content = computed(() => html2Text(props.event.$t.content))
+const haveContent = computed(() => content.value.length !== 0)
+
+const start_date = computed(() => sanitizeDate(new Date(props.event.start_date)))
+const end_date = computed(() =>
+  sanitizeDate(new Date(props.event.end_date ?? props.event.start_date))
+)
+
+const displayDate = computed(() => (props.reverseDate ? end_date.value : start_date.value))
 
 const isCurrent = computed(() => {
-  const now = new Date()
-  return eventDate.value <= now && now <= eventDate.value
-})
-
-const displayDate = computed(() => {
-  const formater = new Intl.DateTimeFormat(locale.value, {
-    dateStyle: 'full',
-    timeStyle: 'short',
-  })
-  return formater.format(eventDate.value)
+  const now = nowDate()
+  return start_date.value <= now && now <= end_date.value
 })
 
 const deleteEvent = (event) => emit('delete', event)
 const editEvent = (event) => emit('edit', event)
+const locationEvent = (event) => emit('location', event)
 </script>
 <style lang="scss" scoped>
 .event {
@@ -157,13 +186,9 @@ const editEvent = (event) => emit('edit', event)
   }
 }
 
-.date-info {
+.element-info {
   display: grid;
   grid-template-columns: auto 1fr;
-}
-
-.date-display {
-  align-self: center;
 }
 
 .icon-small {
@@ -173,6 +198,15 @@ const editEvent = (event) => emit('edit', event)
   fill: var(--primary);
   width: pxToRem(24px);
   height: pxToRem(24px);
+}
+
+.btn-location {
+  cursor: pointer;
+}
+
+.text-location {
+  white-space: nowrap;
+  margin: auto;
 }
 
 .badge-new {
