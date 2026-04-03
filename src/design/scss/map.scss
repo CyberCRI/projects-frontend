@@ -20,6 +20,10 @@
   .leaflet-popup-tip-container {
     display: none;
   }
+
+  .leaflet-popup-content p {
+    margin: 0;
+  }
 }
 
 // MAP POINTER

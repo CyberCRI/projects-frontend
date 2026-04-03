@@ -82,7 +82,7 @@ const closePopUp = inject('closePopUp')
   }
 
   > *:first-child {
-    padding: 1rem;
+    padding: 0.5rem;
   }
 }
 
@@ -100,7 +100,7 @@ const closePopUp = inject('closePopUp')
 
 .location-tooltip-info {
   h3 {
-    font-size: large;
+    font-size: medium;
   }
 }
 </style>

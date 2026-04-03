@@ -121,7 +121,7 @@
     "y-prosemirror": "^1.2.11",
     "y-protocols": "^1.0.6",
     "yjs": "^13.6.23",
-    "zod": "^3"
+    "zod": "^4"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",

@@ -588,7 +588,8 @@
     "end-time": "Hora final",
     "no-date": "Sense data",
     "date": "Data",
-    "clear-date": "Neteja la data"
+    "clear-date": "Neteja la data",
+    "chose-date": "Seleccioneu la data | Seleccioneu la data(s)"
   },
   "complete-profile": {
     "bio": {
@@ -2494,7 +2495,8 @@
         "select-all": "Selecciona- ho tot",
         "filter": "Grups de filtre",
         "all": "Tots els grups",
-        "public": "Públic"
+        "public": "Públic",
+        "notice": "Seleccioneu la pàgina de grup a on es mostrarà l' esdeveniment"
       },
       "visibility": {
         "label": "Visibilitat",

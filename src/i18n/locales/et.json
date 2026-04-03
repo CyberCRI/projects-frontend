@@ -588,7 +588,8 @@
     "end-time": "Lõpuaeg",
     "no-date": "Kohtingut pole",
     "date": "Kuupäev",
-    "clear-date": "Puhasta kuupäev"
+    "clear-date": "Puhasta kuupäev",
+    "chose-date": "Vali kuupäev | Kuupäevade valimine"
   },
   "complete-profile": {
     "bio": {
@@ -2494,7 +2495,8 @@
         "select-all": "Valige kõik",
         "filter": "Filtrirühmad",
         "all": "Kõik rühmad",
-        "public": "Avalik"
+        "public": "Avalik",
+        "notice": "Vali grupilehekülg, kus sündmust näidatakse"
       },
       "visibility": {
         "label": "Nähtavus",
