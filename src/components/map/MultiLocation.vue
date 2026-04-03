@@ -14,6 +14,7 @@ const props = defineProps<{
 const { locale } = useNuxtI18n()
 
 const addLayers = inject<(l: L.Layer[]) => void>('addLayers')
+const getLayers = inject<() => L.Layer[]>('getLayers')
 
 const locationActive = ref(null)
 
@@ -64,9 +65,16 @@ watchEffect(async () => {
     return
   }
 
+  // create a mapping to cache/get exists same layer
+  const layers = new Map()
+  for (const layer of getLayers()) {
+    // @ts-expect-error location in options
+    layers.set(layer.options.location, layer)
+  }
+
   const markers = []
   for (const location of locations) {
-    markers.push(await locationToMarker(location))
+    markers.push(layers.get(location) || (await locationToMarker(location)))
   }
 
   addLayers(markers)

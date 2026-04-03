@@ -105,17 +105,14 @@ const data = computed(() => {
 watch(
   () => [props.location.content_type, props.location.content_id],
   () => {
-    console.log('watcher', props.location)
     switch (props.location.content_type) {
       case 'people_group':
         return refreshGroup()
       case 'project':
         return refreshProject()
       case 'news':
-        console.log('refreshNews')
         return refreshNews()
       case 'event':
-        console.log('refreshEvent')
         return refreshEvent()
       default:
         return

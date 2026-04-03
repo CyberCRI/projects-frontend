@@ -78,7 +78,7 @@ const closePopUp = inject('closePopUp')
   }
 
   > * {
-    padding: 0 1rem;
+    padding: 0.5rem 1rem;
   }
 
   > *:first-child {

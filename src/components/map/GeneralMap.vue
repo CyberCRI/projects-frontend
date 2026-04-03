@@ -72,7 +72,6 @@ const locationsFilter = computed(() => {
   })
 
   // TODO add more filters
-
   return locations
 })
 </script>

@@ -122,16 +122,26 @@ const closePopUp = () => {
   map?.closePopup()
 }
 
+const removeLayers = (layers: L.Layer[]) => {
+  const cluster = toRaw(markerClusterInstance.value)
+  cluster.removeLayers(layers)
+}
+
+const getLayers = () => {
+  const cluster = toRaw(markerClusterInstance.value)
+  return cluster.getLayers()
+}
+
 const addLayers = (layers: L.Layer[]) => {
   const cluster = toRaw(markerClusterInstance.value)
   const map = toRaw(mapInstance.value)
 
   // get all layers actualy loaded
-  const toRemove = cluster.getLayers()
+  const toRemove = getLayers()
   let toAdd = layers
 
   // all layers not included in toAdd, need to be removed
-  cluster.removeLayers(Array.from(toRemove).filter((el) => !toAdd.includes(el)))
+  removeLayers(Array.from(toRemove).filter((el) => !toAdd.includes(el)))
   cluster.addLayers(toAdd)
   cluster.refreshClusters()
   map.invalidateSize()
@@ -143,6 +153,8 @@ const EXPOSE = {
   centerMap,
   closePopUp,
   addLayers,
+  removeLayers,
+  getLayers,
 }
 export type ExposeMap = UnwrapRef<typeof EXPOSE>
 
