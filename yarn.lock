@@ -3243,14 +3243,15 @@
   resolved "https://registry.yarnpkg.com/@types/unist/-/unist-3.0.3.tgz#acaab0f919ce69cce629c2d4ed2eb4adc1b6c20c"
   integrity sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==
 
-"@types/web-bluetooth@^0.0.21":
-  version "0.0.21"
-  resolved "https://registry.yarnpkg.com/@types/web-bluetooth/-/web-bluetooth-0.0.21.tgz#525433c784aed9b457aaa0ee3d92aeb71f346b63"
-  integrity sha512-oIQLCGWtcFZy2JW77j9k8nHzAOpqMHLQejDA48XXMWH6tjCQHz5RCFz1bzsmROyL6PUm+LLnUiI4BCn221inxA==
 "@types/uuid@^10.0.0":
   version "10.0.0"
   resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-10.0.0.tgz#e9c07fe50da0f53dc24970cca94d619ff03f6f6d"
   integrity sha512-7gqG38EyHgyP1S+7+xomFtL+ZNHcKv6DwNaCZmJmo1vgMugyF3TCnXVg4t1uk89mLNwnLtnY3TpOpCOyp1/xHQ==
+
+"@types/web-bluetooth@^0.0.21":
+  version "0.0.21"
+  resolved "https://registry.yarnpkg.com/@types/web-bluetooth/-/web-bluetooth-0.0.21.tgz#525433c784aed9b457aaa0ee3d92aeb71f346b63"
+  integrity sha512-oIQLCGWtcFZy2JW77j9k8nHzAOpqMHLQejDA48XXMWH6tjCQHz5RCFz1bzsmROyL6PUm+LLnUiI4BCn221inxA==
 
 "@typescript-eslint/eslint-plugin@8.46.0", "@typescript-eslint/eslint-plugin@^8.46.0":
   version "8.46.0"
@@ -12715,12 +12716,12 @@ zod-to-json-schema@^3.25.1:
   resolved "https://registry.yarnpkg.com/zod-to-json-schema/-/zod-to-json-schema-3.25.1.tgz#7f24962101a439ddade2bf1aeab3c3bfec7d84ba"
   integrity sha512-pM/SU9d3YAggzi6MtR4h7ruuQlqKtad8e9S0fmxcMi+ueAK5Korys/aWcV9LIIHTVbj01NdzxcnXSN+O74ZIVA==
 
-zod@^3, zod@^3.23.8:
+zod@^3.23.8:
   version "3.25.76"
   resolved "https://registry.yarnpkg.com/zod/-/zod-3.25.76.tgz#26841c3f6fd22a6a2760e7ccb719179768471e34"
   integrity sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==
 
-"zod@^3.25 || ^4.0", "zod@^3.25.0 || ^4.0.0", "zod@^3.25.76 || ^4":
+"zod@^3.25 || ^4.0", "zod@^3.25.0 || ^4.0.0", "zod@^3.25.76 || ^4", zod@^4:
   version "4.3.6"
   resolved "https://registry.yarnpkg.com/zod/-/zod-4.3.6.tgz#89c56e0aa7d2b05107d894412227087885ab112a"
   integrity sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==
