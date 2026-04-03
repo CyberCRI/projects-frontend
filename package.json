@@ -51,7 +51,7 @@
     "@langchain/openai": "^1.2.3",
     "@langchain/textsplitters": "^1.0.1",
     "@mdi/font": "^6",
-    "@modelcontextprotocol/sdk": "^1.20.2",
+    "@modelcontextprotocol/sdk": "^1.29",
     "@nuxt/test-utils": "^3.19.2",
     "@nuxtjs/i18n": "^10.1.0",
     "@panva/oauth4webapi": "^1.0.4",
