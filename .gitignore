@@ -61,3 +61,7 @@ charts/
 .cache
 dist
 .env.nuxt
+
+# Prisma generated clients (regenerated via postinstall)
+prisma-chatbot-db/generated/
+prisma-chatbot-db/migrations/

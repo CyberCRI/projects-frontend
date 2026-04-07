@@ -451,6 +451,17 @@ const routes = ({
       requiresAuth: true,
     },
   },
+
+  {
+    path: '/chatbots/:chatId',
+    name: 'ChatbotPage',
+    component: () => import('../pages/Chatbot/ChatbotPage.vue'),
+    props: true,
+    meta: {
+      resetScroll: true,
+      requiresAuth: true,
+    },
+  },
 ]
 
 export default {

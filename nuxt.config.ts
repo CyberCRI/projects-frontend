@@ -143,6 +143,7 @@ export default defineNuxtConfig({
     appVectorEmbeddingModel: '',
     appVectorEmbeddingDimensions: '',
     appVectorToolPrompt: '',
+    appChatbotPromptDb: '',
     public: {
       appVersion: '',
       appApiOrgCode: '',
