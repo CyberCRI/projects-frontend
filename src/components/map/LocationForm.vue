@@ -98,7 +98,7 @@ const locationTypeOptions = computed(() => {
 })
 
 const defaultLocationType = computed<LocationType>(() => {
-  if (props.locationTypes.includes('address')) {
+  if (!props.locationTypes || props.locationTypes.includes('address')) {
     return 'address'
   }
   return props.locationTypes.at(0)
