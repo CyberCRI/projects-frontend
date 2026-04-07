@@ -4,12 +4,24 @@
       ref="map"
       class="map-recap"
       :locations="locations"
+      :editable="editable"
       :loading="false"
       @expand="openModal"
     />
 
-    <LocationDrawer :is-opened="stateModal" :locations="locations" @close="closeModal" />
-    <LocationList v-if="!props.preview" focus :locations="locations" @focus="onFocus" />
+    <LocationDrawer
+      :is-opened="stateModal"
+      :locations="locations"
+      :editable="editable"
+      @close="closeModal"
+    />
+    <LocationList
+      v-if="!props.preview"
+      focus
+      :locations="locations"
+      :editable="editable"
+      @focus="onFocus"
+    />
   </FetchLoader>
 </template>
 
@@ -26,9 +38,11 @@ const props = withDefaults(
   defineProps<{
     group: TranslatedPeopleGroupModel
     preview?: boolean
+    editable?: boolean
   }>(),
   {
     preview: false,
+    editable: false,
   }
 )
 
@@ -37,7 +51,7 @@ const organizationCode = useOrganizationCode()
 const groupId = computed(() => props.group.id)
 
 const mapRef = useTemplateRef('map')
-const onFocus = (location) => mapRef.value.map.flyTo(location, 10)
+const onFocus = (location) => mapRef.value.map.flyTo(location, 10, { duration: 1.5 })
 
 const { status, data: locations } = getGroupAllLocations(organizationCode, groupId, {
   default: () => factoriesSkeleton(locationSkeleton, props.group.modules.locations),

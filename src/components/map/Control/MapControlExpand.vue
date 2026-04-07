@@ -5,7 +5,7 @@ const onExpand = () => emit('expand')
 
 <template>
   <div class="expand-container">
-    <button class="btn-expand" :aria-label="$t('common.expand-in')" @click.prevent.stop="onExpand">
+    <button class="btn-expand" :aria-label="$t('location.expand')" @click.prevent.stop="onExpand">
       <IconImage name="Expand" />
     </button>
   </div>

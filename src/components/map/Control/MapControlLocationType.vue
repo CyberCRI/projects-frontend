@@ -5,7 +5,7 @@ import { groupBy } from 'es-toolkit'
 import IconImage from '@/components/base/media/IconImage.vue'
 import { AnyTranslatedLocation } from '@/models/location.model'
 
-const { stateModal, toggleModal } = useModal()
+const { stateModal, toggleModal, closeModal } = useModal()
 
 const props = defineProps<{
   locations: T[]
@@ -23,17 +23,13 @@ const emit = defineEmits<{
   update: [typeof query]
 }>()
 
+defineExpose({
+  close: closeModal,
+})
+
 const locationLayerGrouped = computed(() => groupBy(props.locations, (item) => item.type))
 
 const enabledFilters = computed(() => Object.keys(locationLayerGrouped.value) as LocationType[])
-
-const pointsCount = computed(() => {
-  const layers = toRaw(locationLayerGrouped.value)
-
-  return Object.entries(layers)
-    .filter(([locationType]) => query[locationType])
-    .reduce((acc, [, location]) => acc + location.type, 0)
-})
 
 watchEffect(() => emit('update', toRaw(query)))
 </script>
@@ -56,8 +52,6 @@ watchEffect(() => emit('update', toRaw(query)))
         :location-type="key"
         @click="toggleQuery(key, true)"
       />
-
-      <EmptyLabel v-if="pointsCount" :label="pointsCount.toString()" />
     </form>
   </div>
 </template>

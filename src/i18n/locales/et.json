@@ -589,7 +589,8 @@
     "no-date": "Kohtingut pole",
     "date": "Kuupäev",
     "clear-date": "Puhasta kuupäev",
-    "chose-date": "Vali kuupäev | Kuupäevade valimine"
+    "chose-date": "Vali kuupäev | Kuupäevade valimine",
+    "filter": "filter | filtrid"
   },
   "complete-profile": {
     "bio": {
@@ -980,7 +981,7 @@
   "location": {
     "loading": "Laadimiskohad",
     "focus-on-map": "keskendu kaardile",
-    "expand-map": "Suurenda kaart",
+    "expand": "Suurenda kaart",
     "edit-location-point": "Muuda asukohapunkti",
     "location-type-label": "Asukoha liik",
     "impact": "Mõju",
@@ -992,7 +993,9 @@
     "add-location-point": "Asukohapunkti lisamine",
     "default-title": "Asukoht",
     "news": "Uudised | Uudised",
-    "event": "Sündmus"
+    "event": "Sündmus",
+    "zoom-in": "suumida",
+    "zoom-out": "suumida"
   },
   "map": {
     "page-title": "Kaart",

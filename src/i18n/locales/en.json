@@ -589,7 +589,8 @@
     "no-date": "No date",
     "date": "Date",
     "clear-date": "Clear Date",
-    "chose-date": "Select Date | Select the date(s)"
+    "chose-date": "Select Date | Select the date(s)",
+    "filter": "filter | filters"
   },
   "complete-profile": {
     "bio": {
@@ -985,14 +986,16 @@
     "news": "News | News",
     "event": "Event",
     "focus-on-map": "focus on the map",
-    "expand-map": "Enlarge map",
+    "expand": "Enlarge map",
     "edit-location-point": "Edit location point",
     "location-type-label": "Location type",
     "edit-map": "Edit geolocation",
     "map": "Geolocation",
     "add-location": "Add a location",
     "add-location-point": "Add a location point",
-    "default-title": "Location"
+    "default-title": "Location",
+    "zoom-in": "zoom in",
+    "zoom-out": "zoom out"
   },
   "map": {
     "empty": "Nothing here yet... Contributors did not localize any points yet.",

@@ -79,11 +79,18 @@
 
       <GeneralMap
         class="full-screen-map-ctn"
-        :locations="locations"
+        :editable="editable"
         :control-expand="false"
+        :locations="suggestedLocations ? suggestedLocations : locations"
         @click="formMode === 'click' ? clickOnMap($event) : null"
         @edit="openEditModal"
-      />
+      >
+        <template v-if="!!suggestedLocations" #marker>
+          <!-- <ClientOnly>
+            <MarkerLocationsSuggestion :locations="suggestedLocations" />
+          </ClientOnly> -->
+        </template>
+      </GeneralMap>
     </BaseDrawer>
 
     <LocationForm
@@ -113,6 +120,7 @@ import { AnyTranslatedLocation, LocationForm as LocationFormType } from '@/model
 import { Geocoding } from '@/interfaces/maps'
 import { useSuggestLocations } from '@/api/geocoding.service'
 import { LocationType } from '@/models/types'
+import GeneralMap from '@/components/map/GeneralMap.vue'
 
 const props = withDefaults(
   defineProps<{

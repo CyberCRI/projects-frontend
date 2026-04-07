@@ -56,26 +56,7 @@ const closePopUp = inject('closePopUp')
   transition: opacity 0.15s ease-in-out;
   border: $border-width-l solid;
   border-radius: $border-radius-m;
-
-  &.impact {
-    border-color: $location-impact;
-  }
-
-  &.team {
-    border-color: $location-team;
-  }
-
-  &.address {
-    border-color: $location-address;
-  }
-
-  &.news {
-    border-color: $location-news;
-  }
-
-  &.event {
-    border-color: $location-event;
-  }
+  border-color: var(--location-color);
 
   > * {
     padding: 0.5rem 1rem;

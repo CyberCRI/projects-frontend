@@ -91,6 +91,7 @@ watchEffect(async () => {
   }
 
   addLayers(markers)
+  console.log(locations)
   nextTick(() => firstCenterMap())
 })
 
@@ -117,7 +118,7 @@ watchEffect(() => {
   <div class="hidden">
     <div>
       <div ref="markerAddress">
-        <MarkerIcon location-type="address" :editable="editable" />
+        <MarkerIcon location-type="address" :editable="editable"></MarkerIcon>
       </div>
       <div ref="markerImpact">
         <MarkerIcon location-type="impact" :editable="editable" />

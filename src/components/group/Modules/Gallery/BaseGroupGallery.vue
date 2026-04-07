@@ -118,7 +118,7 @@ const deleteImage = () => {
     })
 }
 
-const imagesStatusUploading = ref<GeneralMap<string, AsyncDataRequestStatus>>(null)
+const imagesStatusUploading = ref<Map<string, AsyncDataRequestStatus>>(null)
 const createImage = async (form: ImageGalleryForm) => {
   loading.value = true
   imagesStatusUploading.value = new Map()

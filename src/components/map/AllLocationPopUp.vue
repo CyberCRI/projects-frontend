@@ -23,13 +23,14 @@ const props = defineProps<{
 }>()
 
 const organizationCode = useOrganizationCode()
-const contentId = computed(() => props.location.content_id)
+const contentIdString = computed(() => props.location.content_id)
+const contentIdInt = computed(() => parseInt(contentIdString.value, 10))
 
 const {
   status: statusGroup,
   data: group,
   refresh: refreshGroup,
-} = getGroup(organizationCode, contentId, {
+} = getGroup(organizationCode, contentIdString, {
   default: () => groupSkeleton(),
   query: {
     modules: 'none',
@@ -42,7 +43,7 @@ const {
   status: statusProject,
   data: project,
   refresh: refreshProject,
-} = getProject(organizationCode, contentId, {
+} = getProject(organizationCode, contentIdString, {
   default: () => projectSkeleton(),
   query: {
     info_details: 'summary',
@@ -55,7 +56,7 @@ const {
   status: statusNews,
   data: news,
   refresh: refreshNews,
-} = getNews(organizationCode, contentId, {
+} = getNews(organizationCode, contentIdInt, {
   default: () => newsSkeleton(),
   query: {
     serializer: 'light',
@@ -67,7 +68,7 @@ const {
   status: statusEvent,
   data: event,
   refresh: refreshEvent,
-} = getEvent(organizationCode, contentId, {
+} = getEvent(organizationCode, contentIdInt, {
   default: () => eventSkeleton(),
   query: {
     serializer: 'light',

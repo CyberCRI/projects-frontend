@@ -13,11 +13,8 @@
 import * as L from 'leaflet'
 import fixLeaflet from '@/app/fixLeaflet'
 import 'leaflet.markercluster'
-import { AnyLocation, TranslatedLocation } from '@/models/location.model'
-import { Geocoding } from '@/interfaces/maps'
-import { IconMapLocationType } from '@/functs/maps'
-import { ICONS } from '@/functs/IconImage'
-import { LocationType } from '@/models/types'
+import { AnyLocation } from '@/models/location.model'
+import { createClusterIcons } from '@/functs/maps'
 import { UnwrapRef } from 'vue'
 
 const props = withDefaults(
@@ -43,8 +40,6 @@ const emit = defineEmits<{
 const mapInstance = ref<L.Map>(null)
 const markerClusterInstance = ref<L.MarkerClusterGroup>(null)
 const mapRef = useTemplateRef('map')
-const markers = ref(new Map<TranslatedLocation['id'] | Geocoding['id'], L.Marker>())
-const { t } = useNuxtI18n()
 
 const MAP_URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
 const CONFIG: L.MapOptions = {
@@ -58,55 +53,19 @@ const CONFIG: L.MapOptions = {
   ...props.config,
 }
 
-const createClusterIcons = (cluster) => {
-  const markers = cluster.getAllChildMarkers()
-
-  const counterLocationType: { [key in LocationType]?: number } = {}
-
-  markers.forEach((m) => {
-    const locationType = m.options.location.type
-    counterLocationType[locationType] ??= 0
-    counterLocationType[locationType] += 1
-  })
-
-  const clusterMarker = document.createElement('div')
-  clusterMarker.className = 'cluster-container shadowed-box'
-
-  Object.entries(counterLocationType).forEach(([LocationType, count]) => {
-    const container = document.createElement('div')
-    container.className = `cluster-element ${LocationType}`
-    container.title = t(`location.${LocationType}`)
-    const icon = ICONS[IconMapLocationType(LocationType as LocationType)]
-    container.innerHTML = `
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="location-icon">${icon}</svg>
-      <span>${count}</span>
-    `
-    clusterMarker.appendChild(container)
-  })
-
-  const clusterMarkerString = `${clusterMarker.outerHTML}<div class="line" />`
-
-  return L.divIcon({
-    html: clusterMarkerString,
-    className: 'cluster-parent',
-    iconSize: null,
-  })
-}
-
-const bounds = computed<L.LatLngBoundsLiteral>(() => {
-  return Array.from(markers.value).map(([, m]) => [m.getLatLng().lat, m.getLatLng().lng])
-})
-
-const centerMap = () => {
+const centerMap = (options?: L.FitBoundsOptions) => {
   nextTick(() => {
     // Make sure to "unproxy" the map before using it with Leaflet
     const map = toRaw(mapInstance.value)
-    if (!map) {
-      return // fix error if quiting the map before it's loaded
+    const cluster = toRaw(markerClusterInstance.value)
+    if (!map || !cluster) {
+      return
     }
 
-    if (bounds.value.length) {
-      map.fitBounds(bounds.value, { maxZoom: 5 })
+    // default bounds if not layers exists
+    const bounds = cluster.getBounds()
+    if (bounds.isValid()) {
+      map.fitBounds(bounds, { maxZoom: 10, ...options, padding: [10, 10] })
     }
   })
 }
@@ -116,9 +75,19 @@ const closePopUp = () => {
   map?.closePopup()
 }
 
+const refreshMap = () => {
+  const cluster = toRaw(markerClusterInstance.value)
+  const map = toRaw(mapInstance.value)
+
+  cluster.refreshClusters()
+  map.invalidateSize()
+  centerMap()
+}
+
 const removeLayers = (layers: L.Layer[]) => {
   const cluster = toRaw(markerClusterInstance.value)
   cluster.removeLayers(layers)
+  refreshMap()
 }
 
 const getLayers = () => {
@@ -128,7 +97,6 @@ const getLayers = () => {
 
 const addLayers = (layers: L.Layer[]) => {
   const cluster = toRaw(markerClusterInstance.value)
-  const map = toRaw(mapInstance.value)
 
   // get all layers actualy loaded
   const toRemove = getLayers()
@@ -137,8 +105,7 @@ const addLayers = (layers: L.Layer[]) => {
   // all layers not included in toAdd, need to be removed
   removeLayers(Array.from(toRemove).filter((el) => !toAdd.includes(el)))
   cluster.addLayers(toAdd)
-  cluster.refreshClusters()
-  map.invalidateSize()
+  refreshMap()
 }
 
 const EXPOSE = {
@@ -149,6 +116,7 @@ const EXPOSE = {
   addLayers,
   removeLayers,
   getLayers,
+  refreshMap,
 }
 export type ExposeMap = UnwrapRef<typeof EXPOSE>
 

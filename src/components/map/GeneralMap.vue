@@ -1,19 +1,21 @@
 <template>
   <div class="leaflet-map skeletons-background" :class="{ loading }">
     <client-only>
-      <BaseMap ref="map" @click="$emit('click', $event)">
-        <MarkerLocations
-          :editable="editable"
-          :locations="locationsFilter"
-          @edit="emit('edit', $event)"
-        />
+      <BaseMap ref="map" @click="onMapClick">
+        <slot name="marker">
+          <MarkerLocations
+            :editable="editable"
+            :locations="locationsFilter"
+            @edit="emit('edit', $event)"
+          />
+        </slot>
         <template #controls>
           <ContainerMapControl v-if="controls">
             <slot name="controls-top" />
-            <MapControlExpand v-if="controlExpand" @expand="$emit('expand')" />
+            <MapControlExpand v-if="controlExpand && !editable" @expand="$emit('expand')" />
             <MapControlZoom v-if="controlZoom" />
             <MapControlLocationType
-              v-if="controlFilter"
+              v-if="controlFilter && !editable"
               ref="locationType"
               :locations="locations ?? []"
               @update="onUpdate('locationType', $event)"
@@ -81,6 +83,12 @@ const onUpdate = (name, query) => {
   filters.value[name] = query
 }
 
+const locationTypeRef = useTemplateRef('locationType')
+const onMapClick = (event) => {
+  emit('click', event)
+  locationTypeRef.value?.close()
+}
+
 const locationsFilter = computed(() => {
   let locations = props.locations
   if (!locations) {
@@ -92,7 +100,7 @@ const locationsFilter = computed(() => {
     return !!filters.value.locationType[location.type]
   })
 
-  // TODO add more filters
+  // TODO add more filters (event current running, search bar ...ect)
   return locations
 })
 </script>
