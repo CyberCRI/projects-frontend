@@ -4,9 +4,15 @@
       <BaseMap ref="map" @click="onMapClick">
         <slot name="marker">
           <MarkerLocations
+            v-if="!markerDynamic"
             :editable="editable"
             :locations="locationsFilter"
             @edit="emit('edit', $event)"
+          />
+          <MarkerLocationsSuggestion
+            v-else
+            :locations="locationsFilter"
+            @click="emit('edit', $event)"
           />
         </slot>
         <template #controls>
@@ -28,14 +34,15 @@
   </div>
 </template>
 
-<script setup lang="ts" generic="T extends AnyTranslatedLocation">
+<script setup lang="ts" generic="T extends AnyLocation">
 import BaseMap, { ExposeMap } from '@/components/map/BaseMap.vue'
 import ContainerMapControl from '@/components/map/Control/ContainerMapControl.vue'
 import MapControlExpand from '@/components/map/Control/MapControlExpand.vue'
 import MapControlLocationType from '@/components/map/Control/MapControlLocationType.vue'
 import MapControlZoom from '@/components/map/Control/MapControlZoom.vue'
 import MarkerLocations from '@/components/map/MarkerLocations.vue'
-import { AnyTranslatedLocation } from '@/models/location.model'
+import MarkerLocationsSuggestion from '@/components/map/MarkerLocationsSuggestion.vue'
+import { AnyLocation } from '@/models/location.model'
 import { LocationType } from '@/models/types'
 
 const props = withDefaults(
@@ -47,6 +54,7 @@ const props = withDefaults(
     controlZoom?: boolean
     controlFilter?: boolean
     editable?: boolean
+    markerDynamic?: boolean
   }>(),
   {
     loading: false,
@@ -55,13 +63,14 @@ const props = withDefaults(
     controlExpand: true,
     controlZoom: true,
     controlFilter: true,
+    markerDynamic: false,
   }
 )
 
 const emit = defineEmits<{
   edit: [T]
   expand: []
-  click: [Pick<T, 'lat' | 'lng'>]
+  click: [Partial<T>]
 }>()
 
 const filters = ref<{

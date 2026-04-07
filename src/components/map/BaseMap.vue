@@ -75,14 +75,15 @@ const closePopUp = () => {
   map?.closePopup()
 }
 
-const refreshMap = () => {
-  const cluster = toRaw(markerClusterInstance.value)
-  const map = toRaw(mapInstance.value)
+const refreshMap = () =>
+  nextTick(() => {
+    const cluster = toRaw(markerClusterInstance.value)
+    const map = toRaw(mapInstance.value)
 
-  cluster.refreshClusters()
-  map.invalidateSize()
-  centerMap()
-}
+    cluster.refreshClusters()
+    map.invalidateSize()
+    centerMap()
+  })
 
 const removeLayers = (layers: L.Layer[]) => {
   const cluster = toRaw(markerClusterInstance.value)

@@ -17,6 +17,7 @@ const emit = defineEmits<{
       <div v-if="editable" class="actions">
         <ContextActionButton action-icon="Pen" class="edit-btn small" @click.stop="emit('edit')" />
       </div>
+      <slot />
     </div>
     <div class="marker-line" />
   </div>
@@ -36,8 +37,8 @@ const emit = defineEmits<{
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: $space-m $space-m $space-m $space-2xs;
-    height: 34px;
+    padding: 0.25rem;
+    min-height: 34px;
     box-sizing: border-box;
     border: $border-width-m solid $primary-dark;
     border-radius: $border-radius-l;

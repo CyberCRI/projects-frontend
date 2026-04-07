@@ -82,15 +82,10 @@
         :editable="editable"
         :control-expand="false"
         :locations="suggestedLocations ? suggestedLocations : locations"
+        :marker-dynamic="!!suggestedLocations"
         @click="formMode === 'click' ? clickOnMap($event) : null"
         @edit="openEditModal"
-      >
-        <template v-if="!!suggestedLocations" #marker>
-          <!-- <ClientOnly>
-            <MarkerLocationsSuggestion :locations="suggestedLocations" />
-          </ClientOnly> -->
-        </template>
-      </GeneralMap>
+      />
     </BaseDrawer>
 
     <LocationForm
