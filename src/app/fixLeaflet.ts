@@ -7,6 +7,7 @@ export default function fixLeaflet() {
     return
   }
 
+  // @ts-expect-error ignore error leaflet
   delete Icon.Default.prototype._getIconUrl
   Icon.Default.mergeOptions({
     iconRetinaUrl: 'leaflet/dist/images/marker-icon-2x.png',
@@ -14,5 +15,6 @@ export default function fixLeaflet() {
     shadowUrl: 'leaflet/dist/images/marker-shadow.png',
   })
 
+  // @ts-expect-error ignore set in functions to avoid re-fix during multi render
   fixLeaflet.done = true
 }

@@ -14,8 +14,8 @@ import * as L from 'leaflet'
 import fixLeaflet from '@/app/fixLeaflet'
 import 'leaflet.markercluster'
 import { AnyLocation } from '@/models/location.model'
-import { createClusterIcons } from '@/functs/maps'
 import { UnwrapRef } from 'vue'
+import { createClusterIcons } from '@/functs/leaflet'
 
 const props = withDefaults(
   defineProps<{

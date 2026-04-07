@@ -57,6 +57,7 @@ export default defineConfig([
     },
 
     rules: {
+      '@typescript-eslint/ban-ts-comment': 'warn',
       'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
       'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
       'vue/no-v-html': 'off',

@@ -63,6 +63,9 @@ onMounted(() => {
   .badge {
     flex-direction: column;
     width: 200px;
+    padding: 0.25rem !important;
+    min-height: 34px !important;
+    height: unset !important;
   }
 }
 </style>

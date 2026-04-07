@@ -1,7 +1,6 @@
 import type {
   AddLinkedProjectInput,
   AddManyLinkedProjectInput,
-  ProjectModel,
   // LinkedProject,
   // ProjectHeaderOutput,
   // ProjectOutput,
@@ -76,7 +75,7 @@ export async function deleteLinkedProject({ id, project_id }: { id: number; proj
 }
 
 export async function getProject(projectId: ProjectSlugOrId, config = {}) {
-  return await useAPI<ProjectModel>(`project/${projectId}/`, config)
+  return await useAPI(`project/${projectId}/`, config)
 }
 
 export async function getAllRecommendedProjects(params: SearchParams) {

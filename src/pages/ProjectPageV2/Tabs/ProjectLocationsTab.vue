@@ -29,6 +29,7 @@
     <LocationForm
       v-if="formVisible"
       v-model="form"
+      :location-types="LOCATIONS_TYPES"
       @close="onCloseForm()"
       @submit="onSubmit(form)"
       @delete="onDelete(form)"
@@ -53,7 +54,9 @@ import { TranslatedProject } from '@/models/project.model'
 import LocationList from '@/components/map/LocationList.vue'
 import LocationForm from '@/components/map/LocationForm.vue'
 import GeneralMap from '@/components/map/GeneralMap.vue'
+import { LocationType } from '@/models/types'
 
+const LOCATIONS_TYPES: LocationType[] = ['address', 'team', 'impact']
 const projectLayoutToggleAddModal: any = inject('projectLayoutToggleAddModal')
 
 const props = withDefaults(
@@ -78,7 +81,7 @@ const locationToDelete = ref<TranslatedLocation>(null)
 const asyncing = ref(false)
 
 const mapRef = useTemplateRef('map')
-const centerMap = () => mapRef.value?.map?.centerMap()
+const centerMap = () => mapRef.value?.centerMap()
 const onFocus = (location) => mapRef.value?.map?.flyTo(location)
 
 const editable = computed(() => props.isInEditingMode && canEditProject.value)

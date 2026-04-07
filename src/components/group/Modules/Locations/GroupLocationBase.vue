@@ -10,6 +10,7 @@
     />
 
     <LocationDrawer
+      :location-types="['address']"
       :is-opened="stateModal"
       :locations="locations"
       :editable="editable"

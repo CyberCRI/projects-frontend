@@ -78,6 +78,7 @@
       </div>
 
       <GeneralMap
+        ref="map"
         class="full-screen-map-ctn"
         :editable="editable"
         :control-expand="false"
@@ -151,6 +152,7 @@ const showForm = ref(false)
 
 const mapRef = useTemplateRef('map')
 const centerMap = () => mapRef.value?.centerMap()
+defineExpose({ centerMap })
 
 const formMode = ref<'click' | 'form'>()
 const form = ref(null)

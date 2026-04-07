@@ -134,6 +134,7 @@
       <LocationForm
         v-if="stateModals.LocationForm"
         v-model="locationEdit"
+        :location-types="['address']"
         @close="closeModals('LocationForm')"
         @submit="submitLocations(locationEdit)"
         @delete="removeLocations(locationEdit)"

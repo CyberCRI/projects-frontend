@@ -86,7 +86,13 @@ const filters = ref<{
 })
 
 // re-expose mapref
-defineExpose<ExposeMap>(useTemplateRef('map'))
+const mapRef = useTemplateRef('map')
+const centerMap = () => mapRef.value.centerMap()
+const map = computed(() => toRaw(mapRef.value.map))
+defineExpose<{ map: ComputedRef<ExposeMap['map']>; centerMap: ExposeMap['centerMap'] }>({
+  centerMap,
+  map,
+})
 
 const onUpdate = (name, query) => {
   filters.value[name] = query
