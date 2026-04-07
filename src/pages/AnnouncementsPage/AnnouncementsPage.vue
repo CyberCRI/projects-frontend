@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { getAnnouncements } from '@/api/announcements.service'
-import { nowDate } from '@/functs/date'
+import { fullYearDateFormat, nowDate } from '@/functs/date'
 import useOrganizationsStore from '@/stores/useOrganizations'
 
 const organizationsStore = useOrganizationsStore()
@@ -19,17 +19,9 @@ const doGetAnnouncements = async () => {
     const { results } = await getAnnouncements({
       organizations: [organization.value.code],
       ordering: '-updated_at',
+      from_date: fullYearDateFormat(nowDate()),
     })
-    announcements.value = results.filter((announcement) => {
-      if (announcement.project.publication_status === 'private') {
-        return false
-      }
-      if (!announcement.deadline) {
-        return true
-      }
-      const deadline = new Date(announcement.deadline)
-      return deadline >= nowDate()
-    })
+    announcements.value = results
   } catch (err) {
     console.error(err)
   } finally {
