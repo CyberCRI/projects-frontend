@@ -32,6 +32,11 @@ export default function useAdminPagesRoutes() {
         path: 'mcps',
         name: 'McpsAdminTab',
         component: () => import('../pages/AdminPortalPageV2/Tabs/McpsAdminTab.vue'),
+      },
+      {
+        path: 'memories',
+        name: 'MemoriesAdminTab',
+        component: () => import('../pages/AdminPortalPageV2/Tabs/AgentMemoryAdminTab.vue'),
       }
     )
   }

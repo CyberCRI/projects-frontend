@@ -146,3 +146,14 @@ model AgentDocument {
 
   @@id([vectorStoreKey, documentTitle, agentId])
 }
+
+model AgentSkillContent {
+  skillId           Int
+  skillVersion      Int
+  agentId           Int
+
+  skillContent      SkillContent @relation(fields: [skillId, skillVersion], references:[skillId, version])
+  agent             Agent @relation(fields: [agentId], references:[id])
+
+  @@id([skillId, skillVersion, agentId])
+}

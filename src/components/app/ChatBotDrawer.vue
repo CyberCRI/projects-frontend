@@ -80,6 +80,17 @@ watch(
   () => props.isOpened,
   () => chatbotUi.value?.resetChat()
 )
+
+// const contextMessages = computed(() => [
+//   {
+//     role: 'assistant',
+//     text: userContext.value,
+//   },
+//   {
+//     role: 'assistant',
+//     text: pageContext.value,
+//   },
+// ])
 </script>
 
 <template>

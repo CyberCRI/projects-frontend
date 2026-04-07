@@ -1,22 +1,17 @@
-import {
-  tool,
-  createAgent,
-  createMiddleware,
-  // contextEditingMiddleware,
-  // ClearToolUsesEdit,
-  // summarizationMiddleware,
-} from 'langchain'
+import { tool, createAgent, createMiddleware } from 'langchain'
+import useCheckpointerDb from '@/server/utils/checkpointer-db'
 import { SystemMessage, HumanMessage, AIMessage } from '@langchain/core/messages'
 import { createRetrieverTool } from '@langchain/classic/tools/retriever'
 import { tokenMap, traceMcp } from '@/server/routes/api/chat-stream'
 import checkAdminRights from '@/server/utils/check-admin-rights.js'
 import type { BaseMessageChunk } from '@langchain/core/messages'
 import { initChatModel } from 'langchain/chat_models/universal'
+import * as z from 'zod'
 import { MultiServerMCPClient } from '@langchain/mcp-adapters'
 import getVectorStore from '@/server/utils/vector-db.js'
-import { MemorySaver } from '@langchain/langgraph'
+import { ChatOpenAI } from '@langchain/openai'
 import { v4 as uuidv4 } from 'uuid'
-import * as z from 'zod'
+import { StateSchema, ReducedValue, MemorySaver } from '@langchain/langgraph'
 
 // TODO: fix import issue (useNuxtRuntime in dependncies)
 // import { PROJECTS_DEFAULT_VECTOR_STORE_KEY } from '@/composables/useVectorStore'
@@ -37,14 +32,27 @@ const { appApiOrgCode, appChatbotEnabled } = runtimeConfig.public
 // Map conversationId to token and date for authed api requests in MCP
 // export const tokenMap = new Map<string, { date: Date; token: string }>()
 
-export const checkpointer = new MemorySaver()
-
 // TODO use own traceMcp map instead cgat-stream one when refactoed
 // export const traceMcp = (...args) => {
 //   if (appMcpServerTrace) {
 //     console.log('[MCP TRACE]', ...args)
 //   }
 // }
+
+export const safeStringify = (obj: unknown) => {
+  const seen = new WeakSet()
+  return JSON.stringify(
+    obj,
+    (_, value) => {
+      if (typeof value === 'object' && value !== null) {
+        if (seen.has(value)) return '[Circular]'
+        seen.add(value)
+      }
+      return value
+    },
+    2
+  )
+}
 
 export const traceLangchain = (...args) => {
   if (appLangchainTrace) {
@@ -58,6 +66,26 @@ export const traceSorbobot = (...args) => {
   }
 }
 
+// const StateAnnotation = Annotation.Root({
+//   ...MessagesAnnotation.spec,
+//   agent_id: Annotation<string>(),
+//   keycloak_id: Annotation<string>(),
+//   people_id: Annotation<string>(),
+//   organization_code: Annotation<string>(),
+// })
+
+const AgentState = new StateSchema({
+  agent_id: z.number(),
+  keycloak_id: z.string(),
+  people_id: z.string(),
+  organization_code: z.string(),
+  // count: z.number().default(0),
+  history: new ReducedValue(
+    z.array(z.string()).default(() => []),
+    { inputSchema: z.string(), reducer: (c, n) => [...c, n] }
+  ),
+})
+
 export default defineLazyEventHandler(() => {
   traceLangchain(
     'appChatbotEnabled:',
@@ -68,12 +96,23 @@ export default defineLazyEventHandler(() => {
     !!appLangchainModelName
   )
   return defineEventHandler(async (event) => {
+    const { checkpointer } = await useCheckpointerDb()
     // return 404 if not configured
     if (!appLangchainModelApiKey || !appChatbotEnabled) {
       throw createError({
         statusCode: 404,
         message: 'Chat is not configured',
       })
+    }
+
+    /* -------- Check user ------------ */
+
+    const user = await getUser(event)
+    if (!user) {
+      setResponseStatus(event, 401)
+      return {
+        error: 'Unauthorized',
+      }
     }
 
     /* --------- Fetch Agent  --------- */
@@ -313,11 +352,32 @@ export default defineLazyEventHandler(() => {
       },
     })
 
+    function findCircular(obj: any, path = '', seen = new WeakSet()): void {
+      if (obj && typeof obj === 'object') {
+        if (seen.has(obj)) {
+          console.error('[DEBUG] Circular reference at:', path)
+          return
+        }
+        seen.add(obj)
+        for (const key of Object.keys(obj)) {
+          findCircular(obj[key], `${path}.${key}`, seen)
+        }
+      }
+    }
+    const debugCircularRef = createMiddleware({
+      name: 'DebugCircularRef',
+      beforeMoel: (state) => {
+        conole.log('[DEBUG] check circular ref')
+        findCircular(state)
+        return
+      },
+    })
+
     const loggingMiddleware = createMiddleware({
       name: 'LoggingMiddleware',
       beforeModel: (state) => {
         traceLangchain(`About to call model with ${state.messages.length} messages`)
-        traceLangchain(JSON.stringify(state.messages, null, 2))
+        traceLangchain(safeStringify(state.messages))
         return
       },
       afterModel: (state) => {
@@ -332,10 +392,23 @@ export default defineLazyEventHandler(() => {
     const parsedTemperature = parseFloat(appLangchainTemperature)
     const temperature = Number.isNaN(parsedTemperature) ? 0.7 : parsedTemperature
 
-    const model = await initChatModel(appLangchainModelName, {
-      temperature,
-      apiKey: appLangchainModelApiKey,
-    })
+    let model
+
+    // fix circular ref bug in state
+    // see https://github.com/langchain-ai/langchainjs/issues/9572
+    if (/^openai:/.test(appLangchainModelName)) {
+      model = new ChatOpenAI({
+        model: appLangchainModelName.replace(/^openai:/, ''),
+        temperature,
+        apiKey: appLangchainModelApiKey,
+      })
+    } else {
+      // fallback for non openai models and keep for when circular ref bug is resolved
+      model = await initChatModel(appLangchainModelName, {
+        temperature,
+        apiKey: appLangchainModelApiKey,
+      })
+    }
 
     /* --------- Agent setup  --------- */
 
@@ -351,9 +424,11 @@ export default defineLazyEventHandler(() => {
           },
         ],
       }),
+      stateSchema: AgentState,
       middleware: [
         toolMonitoringMiddleware,
         loggingMiddleware,
+        debugCircularRef,
         // contextEditingMiddleware({
         //   // TODO: make configurable in agent data{
         //   edits: [
@@ -378,8 +453,23 @@ export default defineLazyEventHandler(() => {
       `Starting chat stream for conversation ${conversationId} with ${tools.map((t) => `"${t.name}"`).join(', ')}  tools and ${messages.length} messages`
     )
 
+    // console.log('[MEATAFA]', {
+    //   agent_id: agentData.id,
+    //   keycloak_id: user.keycloak_id,
+    //   people_id: user.people_id,
+    //   organization_code: appApiOrgCode,
+    // })
     const config = {
-      configurable: { thread_id: conversationId },
+      configurable: {
+        thread_id: conversationId,
+      },
+    }
+
+    const customMetadata = {
+      agent_id: agentData.id,
+      keycloak_id: user.keycloak_id,
+      people_id: user.people_id,
+      organization_code: appApiOrgCode,
     }
 
     // TODO: fix typescript mess with agent.stream return type
@@ -391,6 +481,7 @@ export default defineLazyEventHandler(() => {
               ? new AIMessage(msg.text)
               : new HumanMessage(msg.text)
           ),
+          ...customMetadata,
         } as any,
         { ...config, streamMode: 'messages' }
       )) as AsyncIterableIterator<[BaseMessageChunk, { status: string; langgraph_node?: any }]>) {

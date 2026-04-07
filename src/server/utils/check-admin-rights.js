@@ -83,19 +83,27 @@ export function isAdmin(user, orgId) {
   return (user.roles || []).some((role) => role === `organization:#${orgId}:admins`)
 }
 
-export default async function checkAdminRights(event) {
+export async function getUser(event) {
+  let user
   const tokenHeader = getRequestHeader(event, 'authorization') || ''
-  if (!tokenHeader) {
+  if (tokenHeader) {
+    const org = await getOrg(tokenHeader)
+    const orgId = org?.id
+    const kcId = getKeycloakIdFromToken(tokenHeader)
+    user = await getUserByKeycloakId(kcId, tokenHeader)
+  }
+  return user
+}
+
+export default async function checkAdminRights(event) {
+  const user = await getUser(event)
+  if (!user) {
     throw createError({
       statusCode: 401,
       statusMessage: 'Unauthorized',
       message: 'You must authenticate to access this resource.',
     })
   }
-  const org = await getOrg(tokenHeader)
-  const orgId = org?.id
-  const kcId = getKeycloakIdFromToken(tokenHeader)
-  const user = await getUserByKeycloakId(kcId, tokenHeader)
   if (!isSuperAdmin(user) && !isAdmin(user, orgId)) {
     throw createError({
       statusCode: 403,
