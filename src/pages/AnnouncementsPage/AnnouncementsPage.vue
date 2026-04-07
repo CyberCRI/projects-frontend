@@ -38,7 +38,6 @@ useLpiHead2({
 <template>
   <div class="announcements-page page-section-medium page-top">
     <h1 class="page-title">
-      value
       {{ $t('home.announcements') }}
     </h1>
 
