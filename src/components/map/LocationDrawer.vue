@@ -77,21 +77,13 @@
         </div>
       </div>
 
-      <div class="full-screen-map-ctn location-map-ctn">
-        <div class="map-inner-ctn">
-          <div class="map">
-            <client-only>
-              <GeneralMap
-                ref="map"
-                :locations="locations"
-                :use-cluster="useCluster"
-                @click="formMode === 'click' ? clickOnMap($event) : null"
-                @edit="openEditModal"
-              />
-            </client-only>
-          </div>
-        </div>
-      </div>
+      <GeneralMap
+        class="full-screen-map-ctn"
+        :locations="locations"
+        :control-expand="false"
+        @click="formMode === 'click' ? clickOnMap($event) : null"
+        @edit="openEditModal"
+      />
     </BaseDrawer>
 
     <LocationForm
@@ -121,7 +113,6 @@ import { AnyTranslatedLocation, LocationForm as LocationFormType } from '@/model
 import { Geocoding } from '@/interfaces/maps'
 import { useSuggestLocations } from '@/api/geocoding.service'
 import { LocationType } from '@/models/types'
-import GeneralMap from '@/components/map/GeneralMap.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -129,7 +120,6 @@ const props = withDefaults(
     locations?: AnyTranslatedLocation[]
     editable?: boolean
     locationTypes?: LocationType[]
-    useCluster?: boolean
   }>(),
   {
     isOpened: false,
@@ -175,7 +165,10 @@ const openAddModal = (newLocation) =>
     lng: newLocation.lng,
   })
 // method for event on leaftlet
-const clickOnMap = (event) => openAddModal({ lat: event.latlng.lat, lng: event.latlng.lng })
+const clickOnMap = (event) => {
+  console.log('event', event)
+  openAddModal({ lat: event.latlng.lat, lng: event.latlng.lng })
+}
 
 const closeModal = () => {
   formMode.value = null
@@ -254,10 +247,6 @@ const onSubmit = () => {
       height: 100%;
     }
   }
-
-  &.full-screen-map-ctn {
-    height: 100%;
-  }
 }
 
 :deep(.leaflet-div-icon) {
@@ -286,5 +275,11 @@ const onSubmit = () => {
   align-items: center;
   gap: 1rem;
   margin-bottom: 1rem;
+}
+</style>
+
+<style lang="scss" scoped>
+.full-screen-map-ctn {
+  height: 100%;
 }
 </style>

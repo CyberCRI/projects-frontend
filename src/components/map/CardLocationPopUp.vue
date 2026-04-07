@@ -1,5 +1,5 @@
 <template>
-  <LocationTooltip :location="location">
+  <LocationPopUp :location="location">
     <LinkButton
       :label="label"
       class="card-tooltip-button skeletons-background"
@@ -25,16 +25,16 @@
         </div>
       </slot>
     </div>
-  </LocationTooltip>
+  </LocationPopUp>
 </template>
 
 <script setup lang="ts">
 import { cropIfTooLong } from '@/functs/string'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import { AnyTranslatedLocation } from '@/models/location.model'
-import LocationTooltip from '@/components/map/LocationTooltip.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import { Image } from '@/models/image.model'
+import LocationPopUp from '@/components/map/LocationPopUp.vue'
 
 const props = withDefaults(
   defineProps<{

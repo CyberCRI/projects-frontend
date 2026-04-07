@@ -14,7 +14,7 @@
     <template #body>
       <div class="location-map-ctn">
         <!-- form not have it, so ignore typescript -->
-        <MapRecap :locations="[form as any]" :expand="false" />
+        <GeneralMap :locations="[form as any]" :controls="false" />
       </div>
 
       <div class="location-type-ctn">
@@ -53,7 +53,6 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import { LocationForm } from '@/models/location.model'
 import { useLocationForm } from '@/form/location'
 import { LocationType } from '@/models/types'
-import MapRecap from '@/components/map/MapRecap.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -98,7 +97,7 @@ const locationTypeOptions = computed(() => {
 })
 
 const defaultLocationType = computed<LocationType>(() => {
-  if (props.locationTypes.includes('address')) {
+  if (!props.locationTypes || props.locationTypes.includes('address')) {
     return 'address'
   }
   return props.locationTypes.at(0)

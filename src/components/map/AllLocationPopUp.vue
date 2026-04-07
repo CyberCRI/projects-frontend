@@ -3,8 +3,11 @@ import { getEvent } from '@/api/v2/event.service'
 import { getGroup } from '@/api/v2/group.service'
 import { getNews } from '@/api/v2/news.service'
 import { getProject } from '@/api/v2/projects.service'
-import LocationTooltip from '@/components/map/LocationTooltip.vue'
-import ProjectLocationTooltip from '@/components/project/map/ProjectLocationTooltip.vue'
+import LocationEventPopUp from '@/components/event/map/LocationEventPopUp.vue'
+import GroupLocationPopUp from '@/components/group/Map/GroupLocationPopUp.vue'
+import LocationPopUp from '@/components/map/LocationPopUp.vue'
+import LocationNewsPopUp from '@/components/news/map/LocationNewsPopUp.vue'
+import ProjectLocationPopUp from '@/components/project/map/ProjectLocationPopUp.vue'
 import { LocationGeneral } from '@/interfaces/maps'
 import { TranslatedEventModel } from '@/models/event.model'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
@@ -125,27 +128,27 @@ watch(
 <template>
   <div class="location-popup">
     <FetchLoader :status="status" only-error skeleton>
-      <GroupLocationToolTip
+      <GroupLocationPopUp
         v-if="location.content_type === 'people_group'"
         :location="location"
         :group="data as TranslatedPeopleGroupModel"
       />
-      <ProjectLocationTooltip
+      <ProjectLocationPopUp
         v-else-if="location.content_type === 'project'"
         :location="location"
         :project="data as TranslatedProject"
       />
-      <LocationEventTooltip
+      <LocationEventPopUp
         v-else-if="location.content_type === 'event'"
         :location="location"
         :event="data as TranslatedEventModel"
       />
-      <LocationNewsTooltip
+      <LocationNewsPopUp
         v-else-if="location.content_type === 'news'"
         :location="location"
         :news="data as TranslatedNews"
       />
-      <LocationTooltip v-else :location="location" />
+      <LocationPopUp v-else :location="location" />
     </FetchLoader>
   </div>
 </template>

@@ -10,12 +10,11 @@
     </div>
 
     <div class="main-ctn">
-      <LazyMapRecap
+      <GeneralMap
         ref="map"
-        class="unboxed"
-        expand
-        :editable="editable"
+        class="map-recap"
         :locations="locations"
+        :editable="editable"
         @edit="onEditForm($event)"
         @expand="projectLayoutToggleAddModal('location')"
       />
@@ -53,6 +52,7 @@ import { TranslatedLocation } from '@/models/location.model'
 import { TranslatedProject } from '@/models/project.model'
 import LocationList from '@/components/map/LocationList.vue'
 import LocationForm from '@/components/map/LocationForm.vue'
+import GeneralMap from '@/components/map/GeneralMap.vue'
 
 const projectLayoutToggleAddModal: any = inject('projectLayoutToggleAddModal')
 

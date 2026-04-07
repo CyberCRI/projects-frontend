@@ -4,8 +4,8 @@ import * as L from 'leaflet'
 import type { AnyLocation, AnyTranslatedLocation } from '@/models/location.model'
 import MarkerIcon from '@/components/map/MarkerIcon.vue'
 import { LocationType } from '@/models/types'
-import LazyLocationTooltip from '@/components/map/LazyLocationTooltip.vue'
 import { LocationGeneral } from '@/interfaces/maps'
+import AllLocationPopUp from '@/components/map/AllLocationPopUp.vue'
 
 const props = defineProps<{
   locations: TLocation[]
@@ -84,7 +84,7 @@ const map = inject<Ref<L.Map>>('map')
 watchEffect(() => {
   const mapRaw = toRaw(map.value)
   mapRaw.on('popupopen', (ev) => {
-    // @ts-expect-error location no exists in generalMaps
+    // @ts-expect-error location no exists in Maps
     const loca = ev.popup.options.location as LocationGeneral
     mapRaw.flyTo({ lat: loca.lat, lng: loca.lng }, Math.max(mapRaw.getZoom(), 5))
 
@@ -106,7 +106,7 @@ watchEffect(() => {
       <div ref="markerEvent"><MarkerIcon location-type="event" /></div>
     </div>
     <div ref="markerPopup">
-      <LazyLocationTooltip v-if="locationActive" :location="locationActive" />
+      <AllLocationPopUp v-if="locationActive" :location="locationActive" />
     </div>
   </div>
 </template>

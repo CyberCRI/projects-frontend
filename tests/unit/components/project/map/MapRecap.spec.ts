@@ -1,5 +1,5 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import MapRecap from '@/components/map/MapRecap.vue'
+import GeneralMapRecap from '@/components/map/MapRecap.vue'
 import pinia from '@/stores'
 import useProjectsStore from '@/stores/useProjects'
 import { ProjectOutputFactory } from '@/../tests/factories/project.factory'

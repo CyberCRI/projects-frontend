@@ -192,12 +192,6 @@ const submit = () => {
 }
 </style>
 
-<style>
-.gallery-map-ctn .map-recap {
-  height: 250px;
-}
-</style>
-
 <style lang="scss">
 .gallery-image-editor {
   display: flex;

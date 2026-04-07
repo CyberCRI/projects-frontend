@@ -1,5 +1,5 @@
 <template>
-  <div class="contents">
+  <div class="map-container">
     <div ref="map" v-click-outside="closePopUp" class="map">
       <div class="hidden">
         <slot v-if="mapInstance" />
@@ -23,11 +23,9 @@ import { UnwrapRef } from 'vue'
 const props = withDefaults(
   defineProps<{
     config?: Partial<L.MapOptions>
-    useCluster?: boolean
   }>(),
   {
     config: () => ({}),
-    useCluster: false,
   }
 )
 
@@ -53,11 +51,7 @@ const CONFIG: L.MapOptions = {
   center: [0, 0],
   zoom: 2,
   maxZoom: 20,
-  minZoom: 2,
-  maxBounds: [
-    [-90, -175],
-    [84, 195],
-  ],
+  minZoom: 1,
   maxBoundsViscosity: 1,
   preferCanvas: true,
   zoomControl: false,
@@ -172,16 +166,14 @@ onMounted(() => {
       '<a href="https://carto.com/basemaps/">Basemaps</a> | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
   }).addTo(map)
 
-  if (props.useCluster) {
-    const markerCluster = L.markerClusterGroup({
-      removeOutsideVisibleBounds: true,
-      chunkedLoading: true,
-      iconCreateFunction: createClusterIcons,
-    })
+  const markerCluster = L.markerClusterGroup({
+    removeOutsideVisibleBounds: true,
+    chunkedLoading: true,
+    iconCreateFunction: createClusterIcons,
+  })
 
-    map.addLayer(markerCluster)
-    markerClusterInstance.value = markerCluster
-  }
+  map.addLayer(markerCluster)
+  markerClusterInstance.value = markerCluster
 
   // click on maps to select points
   map.on('click', (e) => emit('click', e))
@@ -195,7 +187,6 @@ onMounted(() => {
 // do NOT scope this style, it will break the map
 @import '@/design/scss/map';
 
-.leaflet-map,
 .leaflet-container {
   min-height: 100%;
 }
@@ -205,5 +196,12 @@ onMounted(() => {
 .map {
   height: 100%;
   background-color: #cee2ea;
+  border-radius: $border-radius-l;
+  position: relative;
+}
+
+.map-container {
+  position: relative;
+  height: 100%;
 }
 </style>

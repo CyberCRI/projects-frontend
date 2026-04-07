@@ -1,24 +1,20 @@
 <template>
   <FetchLoader :status="status" skeleton only-error>
-    <GeneralMap ref="map" class="map-recap" :locations="locations" :loading="false" use-cluster>
-      <template #controls-top>
-        <MapControlExpand @expand="openModal" />
-      </template>
-    </GeneralMap>
-
-    <LocationDrawer
-      :is-opened="stateModal"
+    <GeneralMap
+      ref="map"
+      class="map-recap"
       :locations="locations"
-      :use-cluster="true"
-      @close="closeModal"
+      :loading="false"
+      @expand="openModal"
     />
+
+    <LocationDrawer :is-opened="stateModal" :locations="locations" @close="closeModal" />
     <LocationList v-if="!props.preview" focus :locations="locations" @focus="onFocus" />
   </FetchLoader>
 </template>
 
 <script setup lang="ts">
 import { getGroupAllLocations } from '@/api/v2/group.service'
-import MapControlExpand from '@/components/map/Control/MapControlExpand.vue'
 import GeneralMap from '@/components/map/GeneralMap.vue'
 import LocationDrawer from '@/components/map/LocationDrawer.vue'
 import LocationList from '@/components/map/LocationList.vue'

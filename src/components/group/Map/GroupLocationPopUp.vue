@@ -1,5 +1,5 @@
 <template>
-  <CardLocationTooltip
+  <CardLocationPopUp
     :location="location"
     :label="$t('group.view')"
     :to="{ name: 'Group', params: { groupIdOrSlug: group.slug || group.id } }"
@@ -14,7 +14,7 @@
 import { AnyTranslatedLocation } from '@/models/location.model'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import { DEFAULT_GROUP_PATATOID } from '@/composables/usePatatoids'
-import CardLocationTooltip from '@/components/map/CardLocationTooltip.vue'
+import CardLocationPopUp from '@/components/map/CardLocationPopUp.vue'
 
 defineProps<{ location: T; group: TranslatedPeopleGroupModel }>()
 </script>

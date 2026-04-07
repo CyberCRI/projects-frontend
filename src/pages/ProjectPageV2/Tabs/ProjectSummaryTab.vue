@@ -29,10 +29,9 @@
       />
 
       <!-- locations -->
-      <LazyMapRecap
+      <GeneralMap
         v-if="locations.length"
         class="unboxed"
-        expand
         :editable="false"
         :locations="locations"
         @expand="projectLayoutToggleAddModal('location')"
@@ -113,7 +112,7 @@ import { isNotGroup } from '@/functs/users'
 export default {
   name: 'ProjectSummaryTab',
 
-  components: [ProjectMemberSection],
+  components: [ProjectMemberSection, Map],
 
   inject: {
     projectLayoutToggleAddModal: {

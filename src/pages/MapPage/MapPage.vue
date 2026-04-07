@@ -5,7 +5,7 @@
         <LoaderComplex :label="$t('location.loading')" />
       </div>
     </Transition>
-    <GeneralMap :locations="data" :loading="isLoading" />
+    <GeneralMap :locations="data" :loading="isLoading" :control-expand="false" />
     <div v-if="!isLoading && isEmpty" class="empty-map">
       {{ $t('map.empty') }}
     </div>
