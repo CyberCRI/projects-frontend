@@ -1,5 +1,5 @@
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js'
-import mcpServer from '@/mcp-server'
+import createMCPServer from '@/mcp-server'
 import { tokenMap, traceMcp } from '@/server/routes/api/chat-stream'
 export default defineEventHandler(async (event) => {
   const { req, res } = event.node
@@ -31,6 +31,8 @@ export default defineEventHandler(async (event) => {
     }
   }
 
+  const mcpServer = createMCPServer()
+
   //   res.on('close', () => {
   //     transport.close()
   //   })
@@ -41,6 +43,7 @@ export default defineEventHandler(async (event) => {
   res.on('close', () => {
     traceMcp('MCP connection closed, closing transport')
     transport.close()
+    mcpServer.close()
   })
 
   //   eventStream.onClosed(() => {
