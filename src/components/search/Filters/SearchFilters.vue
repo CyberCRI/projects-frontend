@@ -111,7 +111,10 @@ async function hydrateFilters() {
   const newTags = newTagsId.length ? (await getAllTagsById(newTagsId)).results : []
   filters.tags = [...cachedTags, ...newTags]
 
-  filters.sdgs = rawFilters.sdgs || []
+  // filter and remove duplicate sdg value and convert it to number
+  filters.sdgs = [
+    ...new Set((rawFilters.sdgs || []).map((val) => parseInt(val, 10)).filter((v) => v)),
+  ]
 
   filters.languages = rawFilters.languages || []
 

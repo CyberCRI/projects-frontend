@@ -66,7 +66,7 @@ export default function useContextualFilters({
         names: filterBlackList.value.includes('sdgs')
           ? []
           : selectedFilters.value?.sdgs?.map((sdg) => {
-              if (typeof sdg === 'string') return t(`sdg.${sdg}.title`)
+              if (typeof sdg === 'number') return t(`sdg.${sdg}.title`)
               return t(`sdg.${sdg.id}.title`)
             }) || [],
         dataTest: 'contextual-filter-sdgs',
