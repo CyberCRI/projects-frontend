@@ -75,10 +75,6 @@ export default {
     searchLimit() {
       return this.search?.limit || 12
     },
-
-    organisation() {
-      return this.organizationsStore.current
-    },
   },
 
   watch: {
@@ -149,7 +145,7 @@ export default {
         // assume mode === 'global'
         response = await searchAll(query, {
           limit: 30,
-          organizations: this.organisation.code,
+          ...filters,
         })
       }
       // update with the ltest request result

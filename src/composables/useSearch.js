@@ -34,10 +34,11 @@ export default function useSearch(forcedSection = null) {
     const isProject = selectedSection.value === 'projects'
     const isGroups = selectedSection.value === 'groups'
     const isPeople = selectedSection.value === 'people'
+    const isAll = selectedSection.value === ALL_SECTION_KEY
     const map = {
       search: true,
       categories: isProject,
-      tags: isProject || isGroups,
+      tags: isProject || isGroups || isAll,
       members: false,
       sdgs: true,
       languages: isProject,
