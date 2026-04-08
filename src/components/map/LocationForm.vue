@@ -112,7 +112,7 @@ const { form, isValid, errors } = useLocationForm({ model })
 watch(
   () => form.value.type,
   () => {
-    if (!form.value.type || !props.locationTypes.includes(form.value.type)) {
+    if (!form.value.type || !props.locationTypes?.includes(form.value.type)) {
       form.value.type = defaultLocationType.value
     }
   },
