@@ -18,9 +18,9 @@ export default defineLazyEventHandler(() => {
       where: {
         id: id,
       },
-      include: { promptContent: true },
+      // include: { promptContent: true },
     })
-    console.log(agent)
+    // console.log(agent)
     return agent
   })
 })

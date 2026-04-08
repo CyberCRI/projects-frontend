@@ -12,6 +12,8 @@ const props = defineProps({
   endpoint: { type: String, required: true },
 })
 
+const emit = defineEmits(['close', 'start-conversation'])
+
 const IS_STREAMED = ref(!useRuntimeConfig().public.appChatbotWithoutStream)
 const CHAT_ENDPOINT = ref(props.endpoint)
 const connectOptions = {
@@ -166,6 +168,7 @@ watch(
     if (neo != old) {
       // conversation was reset
       suggestButtons.value = setExemples()
+      emit('start-conversation')
     }
   }
 )
