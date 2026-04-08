@@ -30,6 +30,7 @@
     <LocationForm
       v-if="formVisible"
       v-model="form"
+      :location-types="LOCATION_TYPES"
       @close="onCloseForm()"
       @submit="onSubmit(form)"
       @delete="onDelete(form)"
@@ -53,6 +54,7 @@ import { TranslatedLocation } from '@/models/location.model'
 import { TranslatedProject } from '@/models/project.model'
 import LocationList from '@/components/map/LocationList.vue'
 import LocationForm from '@/components/map/LocationForm.vue'
+import { LocationType } from '@/models/types'
 
 const projectLayoutToggleAddModal: any = inject('projectLayoutToggleAddModal')
 
@@ -67,6 +69,7 @@ const props = withDefaults(
     isInEditingMode: false,
   }
 )
+const LOCATION_TYPES: LocationType[] = ['address', 'team', 'impact']
 const form = ref()
 
 const emit = defineEmits(['reload'])

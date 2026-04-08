@@ -134,6 +134,7 @@
       <LocationForm
         v-if="stateModals.LocationForm"
         v-model="locationEdit"
+        :location-types="LOCATION_TYPES"
         @close="closeModals('LocationForm')"
         @submit="submitLocations(locationEdit)"
         @delete="removeLocations(locationEdit)"
@@ -142,7 +143,7 @@
         :is-opened="stateModals.LocationDrawer"
         :locations="form.locations"
         editable
-        :location-types="['address']"
+        :location-types="LOCATION_TYPES"
         @close="closeModals('LocationDrawer')"
         @submit="submitLocations"
         @delete="removeLocations"
@@ -295,6 +296,7 @@ export default {
 
   data() {
     return {
+      LOCATION_TYPES: ['address'],
       openSdg: false,
       openTags: false,
       loading: false,
