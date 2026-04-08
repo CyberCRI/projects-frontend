@@ -4,7 +4,7 @@ const onExpand = () => emit('expand')
 </script>
 
 <template>
-  <div class="expand-container">
+  <div data-test="map-control-expand" class="expand-container">
     <button class="btn-expand" :aria-label="$t('location.expand')" @click.prevent.stop="onExpand">
       <IconImage name="Expand" />
     </button>

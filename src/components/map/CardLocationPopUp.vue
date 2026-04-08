@@ -13,7 +13,7 @@
           v-if="haveImage"
           :picture-data="image"
           :default-picture="defaultPicture"
-          class="card-tooltip__image skeletons-background"
+          class="card-tooltip-content-image skeletons-background"
         />
         <div>
           <h3 class="card-title skeletons-text" :title="props.title">
@@ -60,10 +60,24 @@ const haveImage = computed(() => props.image || props.defaultPicture)
 }
 
 .card-tooltip-content {
-  flex-basis: 60%;
-  padding: 1.5rem $space-s;
+  flex-basis: 100%;
   display: flex;
+  padding: 1.5rem $space-s;
   background-color: color-mix(in srgb, var(--location-color), transparent 90%);
+
+  &-image,
+  &-image img {
+    width: pxToRem(72px);
+    flex-basis: pxToRem(72px);
+    flex-shrink: 0;
+    height: pxToRem(72px);
+    background-position: center center;
+    background-size: cover;
+    border-radius: $border-radius-xs;
+    object-fit: cover;
+    object-position: 50% 50%;
+    margin-right: $space-m;
+  }
 
   .card-title {
     font-size: $font-size-m;

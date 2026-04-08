@@ -11,7 +11,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <div class="map-pointer">
+  <div :data-test="`marker-icon-${locationType}`" class="map-pointer">
     <div :class="['badge', locationType]">
       <LocationType :location-type="locationType" />
       <div v-if="editable" class="actions">

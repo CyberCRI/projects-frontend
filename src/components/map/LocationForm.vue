@@ -1,4 +1,6 @@
 <template>
+  {{ JSON.stringify({ isValid, errors }) }}
+
   <DialogModal
     :confirm-button-label="isExist ? $t('common.edit') : $t('common.add')"
     :cancel-button-label="$t('common.cancel')"

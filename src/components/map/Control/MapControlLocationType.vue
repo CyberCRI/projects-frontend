@@ -35,7 +35,11 @@ watchEffect(() => emit('update', toRaw(query)))
 </script>
 
 <template>
-  <div v-if="enabledFilters.length" class="locationtype-container">
+  <div
+    v-if="enabledFilters.length"
+    data-test="map-control-location-type"
+    class="locationtype-container"
+  >
     <div class="menu-header" :class="{ opened: stateModal }">
       <h2 v-show="stateModal">Menu</h2>
       <button :aria-label="$t('common.filter')" @click.stop="toggleModal">

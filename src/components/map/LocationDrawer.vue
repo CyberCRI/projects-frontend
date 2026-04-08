@@ -171,7 +171,6 @@ const openAddModal = (newLocation) =>
   })
 // method for event on leaftlet
 const clickOnMap = (event) => {
-  console.log('event', event)
   openAddModal({ lat: event.latlng.lat, lng: event.latlng.lng })
 }
 

@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="T extends AnyLocation">
-import { MarkerSugestion } from '@/components/map/MarkerLocationsSuggestion.vue'
-import { AnyLocation } from '@/models/location.model'
+import type { MarkerDynamicInfo } from '@/components/map/MarkerLocationsDynamic.vue'
+import type { AnyLocation } from '@/models/location.model'
 
 const props = withDefaults(
   defineProps<{
@@ -14,7 +14,7 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   click: [T]
-  mounted: [T, MarkerSugestion]
+  mounted: [T, MarkerDynamicInfo]
   unmounted: [T]
 }>()
 

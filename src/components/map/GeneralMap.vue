@@ -9,7 +9,7 @@
             :locations="locationsFilter"
             @edit="emit('edit', $event)"
           />
-          <MarkerLocationsSuggestion
+          <MarkerLocationsDynamic
             v-else
             :locations="locationsFilter"
             @click="emit('edit', $event)"
@@ -41,7 +41,7 @@ import MapControlExpand from '@/components/map/Control/MapControlExpand.vue'
 import MapControlLocationType from '@/components/map/Control/MapControlLocationType.vue'
 import MapControlZoom from '@/components/map/Control/MapControlZoom.vue'
 import MarkerLocations from '@/components/map/MarkerLocations.vue'
-import MarkerLocationsSuggestion from '@/components/map/MarkerLocationsSuggestion.vue'
+import MarkerLocationsDynamic from '@/components/map/MarkerLocationsDynamic.vue'
 import { AnyLocation } from '@/models/location.model'
 import { LocationType } from '@/models/types'
 

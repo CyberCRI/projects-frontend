@@ -1,5 +1,5 @@
 <template>
-  <div id="mapControl" class="container-map-control">
+  <div id="mapControl" data-test="map-control" class="container-map-control">
     <slot />
   </div>
 </template>

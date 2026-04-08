@@ -12,11 +12,17 @@ const zoomOut = () => {
 </script>
 
 <template>
-  <div class="zoom-container">
-    <button class="btn-zoom top" :aria-label="$t('location.zoom-in')" @click.prevent.stop="zoomIn">
+  <div data-test="map-control-zoom" class="zoom-container">
+    <button
+      data-test="map-control-zoom-in"
+      class="btn-zoom top"
+      :aria-label="$t('location.zoom-in')"
+      @click.prevent.stop="zoomIn"
+    >
       <IconImage name="Plus" />
     </button>
     <button
+      data-test="map-control-zoom-out"
       class="btn-zoom bottom"
       :aria-label="$t('location.zoom-out')"
       @click.prevent.stop="zoomOut"

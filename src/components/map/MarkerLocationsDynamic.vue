@@ -3,9 +3,9 @@ import * as L from 'leaflet'
 
 import type { AnyLocation } from '@/models/location.model'
 import { throttle } from 'es-toolkit'
-import MarkerSuggestion from '@/components/map/MarkerSuggestion.vue'
+import MarkerDynamic from '@/components/map/MarkerDynamic.vue'
 
-export type MarkerSugestion = {
+export type MarkerDynamicInfo = {
   marker: HTMLElement
 }
 
@@ -21,7 +21,7 @@ const centerMap = inject<() => void>('centerMap')
 const addLayers = inject<(l: L.Layer[]) => void>('addLayers')
 const getLayers = inject<() => L.Layer[]>('getLayers')
 
-const locationToMarker = (location: AnyLocation, info: MarkerSugestion) => {
+const locationToMarker = (location: AnyLocation, info: MarkerDynamicInfo) => {
   const options = {
     icon: L.divIcon({
       className: `${location.type}`,
@@ -39,19 +39,18 @@ const firstCenterMap = () => {
   }
 }
 
-const markerSuggestion = ref(new Map())
-const add = (location: TLocation, info: MarkerSugestion) => {
-  markerSuggestion.value.set(location, info)
+const markers = ref(new Map())
+const add = (location: TLocation, info: MarkerDynamicInfo) => {
+  markers.value.set(location, info)
 }
 
 const remove = (location: TLocation) => {
-  markerSuggestion.value.delete(location)
+  markers.value.delete(location)
 }
 
 watchEffect(
   throttle(async () => {
-    console.log('throttle')
-    const locations = markerSuggestion.value
+    const locations = markers.value
     // only to trigger locale change to trigger update marker
     void locale.value
     if (!locations || !addLayers || !import.meta.client) {
@@ -65,12 +64,12 @@ watchEffect(
       layers.set(layer.options.location, layer)
     }
 
-    const markers = []
+    const newMarkers = []
     for (const [location, info] of locations) {
-      markers.push(layers.get(location) || locationToMarker(location, info))
+      newMarkers.push(layers.get(location) || locationToMarker(location, info))
     }
 
-    addLayers(markers)
+    addLayers(newMarkers)
     nextTick(() => firstCenterMap())
   }, 300)
 )
@@ -78,7 +77,7 @@ watchEffect(
 
 <template>
   <div class="hidden">
-    <MarkerSuggestion
+    <MarkerDynamic
       v-for="location in locations"
       :key="JSON.stringify(location)"
       :location="location"
