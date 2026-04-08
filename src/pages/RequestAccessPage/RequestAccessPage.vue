@@ -5,10 +5,12 @@ import { postAccessRequest } from '@/api/organizations.service'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import useToasterStore from '@/stores/useToaster'
 import useOrganizationsStore from '@/stores/useOrganizations'
+
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
 const router = useRouter()
 const { t } = useNuxtI18n()
+
 const form = ref({
   email: '',
   given_name: '',
@@ -16,6 +18,7 @@ const form = ref({
   job: '',
   message: '',
 })
+
 const rules = computed(() => ({
   email: {
     required: helpers.withMessage(t('request-access.email.is-required'), required),
@@ -31,21 +34,24 @@ const rules = computed(() => ({
     required: helpers.withMessage(t('request-access.profile-title.is-required'), required),
   },
 }))
+
 const v$ = useValidate(rules, form)
 
-const formIsInvalid = computed(() => {
-  return v$.value.form.$invalid
-})
+const formIsInvalid = computed(() => v$.value.$invalid)
+
 const asyncing = ref(false)
 const confirm = ref(false)
+
 const showContactUsDrawer = ref(false)
 const contactEmail = ref('')
+
 onMounted(async () => {
   contactEmail.value = organizationsStore.current?.contact_email
 })
+
 async function requestAccess() {
-  await v$.value.form.$validate()
-  if (v$.value.form.$error) {
+  await v$.value.$validate()
+  if (v$.value.$error) {
     return
   }
   asyncing.value = true
@@ -107,9 +113,9 @@ useLpiHead2({
             :label="$t('request-access.given_name.label')"
             :placeholder="$t('request-access.given_name.placeholder')"
             data-test="first-name"
-            @blur="v$.form.given_name.$validate"
+            @blur="v$.given_name.$validate"
           />
-          <FieldErrors :errors="v$.form.given_name.$errors" />
+          <FieldErrors :errors="v$.given_name.$errors" />
         </div>
         <div class="form-group">
           <TextInput
@@ -117,9 +123,9 @@ useLpiHead2({
             :label="$t('request-access.family_name.label')"
             :placeholder="$t('request-access.family_name.placeholder')"
             data-test="last-name"
-            @blur="v$.form.family_name.$validate"
+            @blur="v$.family_name.$validate"
           />
-          <FieldErrors :errors="v$.form.family_name.$errors" />
+          <FieldErrors :errors="v$.family_name.$errors" />
         </div>
         <div class="form-group">
           <TextInput
@@ -128,9 +134,9 @@ useLpiHead2({
             input-type="email"
             :placeholder="$t('request-access.email.placeholder')"
             data-test="email"
-            @blur="v$.form.email.$validate"
+            @blur="v$.email.$validate"
           />
-          <FieldErrors :errors="v$.form.email.$errors" />
+          <FieldErrors :errors="v$.email.$errors" />
         </div>
         <div class="form-group">
           <TextInput
@@ -138,9 +144,9 @@ useLpiHead2({
             :label="$t('request-access.profile-title.label')"
             :placeholder="$t('request-access.profile-title.placeholder')"
             data-test="title"
-            @blur="v$.form.job.$validate"
+            @blur="v$.job.$validate"
           />
-          <FieldErrors :errors="v$.form.job.$errors" />
+          <FieldErrors :errors="v$.job.$errors" />
         </div>
         <div class="form-group">
           <TextInput
