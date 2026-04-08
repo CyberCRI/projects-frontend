@@ -1,5 +1,6 @@
 import { initChatModel } from 'langchain/chat_models/universal'
-import { createAgent, createMiddleware } from 'langchain'
+import { tool, createAgent, createMiddleware } from 'langchain'
+import * as z from 'zod'
 import { MemorySaver } from '@langchain/langgraph'
 import { SystemMessage, HumanMessage, AIMessage, BaseMessageChunk } from '@langchain/core/messages'
 import { v4 as uuidv4 } from 'uuid'
@@ -82,7 +83,7 @@ export default defineLazyEventHandler(() => {
       where: {
         id: id,
       },
-      include: { promptContent: true },
+      include: { promptContent: true, skillContents: { include: { skill: true } }, mcps: true },
     })
 
     if (!agentData) {
@@ -138,23 +139,79 @@ export default defineLazyEventHandler(() => {
 
     const tools = []
 
-    if (appMcpServerUrl) {
+    if (agentData.mcps.length) {
       traceMcp('Adding MCP tool with server URL:', appMcpServerUrl)
-      const client = new MultiServerMCPClient({
-        mcp: {
-          transport: 'http', // HTTP-based remote server
-          url: appMcpServerUrl,
-          headers: {
-            Authorization: `${conversationId}`,
-          },
-        },
+
+      const mcpConfigs = {}
+      agentData.mcps.forEach((mcp) => {
+        const aConfig = {
+          transport: mcp.transport,
+        }
+        if (mcp.transport == 'stdio') {
+          aConfig['command'] = mcp.command
+          aConfig['args'] = mcp.args
+        } else {
+          aConfig['url'] = mcp.url
+          // TODO: auth
+        }
+
+        const slug = mcp.title.replace(/\s+/gim, '_')
+
+        mcpConfigs[slug] = aConfig
       })
 
+      const client = new MultiServerMCPClient(mcpConfigs)
+
+      // TODO: add middlkewrae to select tools
       const mcpTools = await client.getTools()
       traceMcp('mcp tool', JSON.stringify(mcpTools, null, 2))
       tools.unshift(...mcpTools)
     }
 
+    let skillSystemPromptExtra = ''
+    if (agentData.skillContents.length) {
+      console.log(`Found ${agentData.skillContents.length} skills`)
+      const skillMap = {}
+      agentData.skillContents.forEach((skillContent) => {
+        const skillTitle = skillContent.skill.title
+        const skillSlug = skillTitle.replace(/\s+/gim, '_')
+        skillMap[skillSlug] = {
+          description: skillContent.skill.description,
+          content: skillContent.content,
+        }
+      })
+
+      skillSystemPromptExtra = `
+        You have access to ${agentData.skillContents.length} skills:
+        ${Object.keys(skillMap).join(', ')}.
+        Use load_skill tool to access them.`
+
+      const loadSkill = tool(
+        async ({ skillName }) => {
+          console.log(`Fetching skil ${skillName}`)
+          // Load skill content from file/database
+          return skillMap[skillName]?.content || ''
+        },
+        {
+          name: 'load_skill',
+          description: `Load a specialized skill.
+
+      Available skills:
+      ${Object.entries(skillMap)
+        .map(([key, val]) => '- ' + key + ': ' + val.description)
+        .join('\n')}
+
+      Returns the skill's prompt and context.`,
+          schema: z.object({
+            skillName: z.string().describe('Name of skill to load'),
+          }),
+        }
+      )
+
+      tools.unshift(loadSkill)
+    }
+
+    // TODO: set vector store iu agent ?
     const { vectorStore } = await getVectorStore()
     if (vectorStore) {
       const { appApiOrgCode } = useRuntimeConfig().public
@@ -222,7 +279,7 @@ export default defineLazyEventHandler(() => {
         content: [
           {
             type: 'text',
-            text: agentData.promptContent.content,
+            text: agentData.promptContent.content + skillSystemPromptExtra,
           },
         ],
       }),

@@ -40,14 +40,70 @@ model PromptContent {
 }
 
 
+
+model Skill {
+  id                Int @id @default(autoincrement())
+  title             String
+  description       String
+  orgCode           String
+
+  skillContents    SkillContent[]
+
+  @@unique([title, orgCode])
+  @@index([title, orgCode])
+}
+
+
+model SkillContent {
+  id                Int @id @default(autoincrement())
+  version           Int
+  content           String
+
+  skillId           Int
+  skill             Skill @relation(fields: [skillId], references: [id])
+
+  agents            Agent[]
+
+  @@unique([skillId, version])
+  @@index([skillId, version])
+}
+
+enum TransportType {
+	sse
+	stdio
+	http
+}
+
+model Mcp {
+  id                 Int @id @default(autoincrement())
+  orgCode            String
+  title              String
+  description        String
+  transport          TransportType
+  url                String
+  command            String
+  args               String
+
+  agents              Agent[]
+
+  @@unique([title, orgCode])
+}
+
 model Agent {
   id                Int @id @default(autoincrement())
   title             String
+  description       String @default("")
   orgCode           String
 
   promptId          Int
   promptVersion     Int
   promptContent     PromptContent @relation(fields: [promptId, promptVersion], references: [promptId, version])
+
+  useProjectsMcp    Boolean @default(false)
+  mcps              Mcp[]
+  skillContents     SkillContent[]
+
+  useProfileData    Boolean @default(false)
 
   useLatestPromptVersion Boolean @default(true)
 
