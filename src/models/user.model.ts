@@ -21,8 +21,8 @@ export interface UserModel {
   profile_picture?: object
   permissions: string[]
   description?: string
-  short_description: string
-  job: string
+  short_description?: string
+  job?: string
   people_groups?: object[] // TODO: define this type
   skills?: UserSkillModel[]
   notifications?: number

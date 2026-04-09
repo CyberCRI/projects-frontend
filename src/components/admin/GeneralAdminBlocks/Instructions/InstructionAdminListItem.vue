@@ -8,53 +8,37 @@
       @delete="$emit('delete-instruction', instruction)"
     />
 
-    <p class="clamped">
+    <LineClamped tag="p" :line-number="3">
       {{ instructionText }}
-    </p>
+    </LineClamped>
   </div>
 </template>
-<script>
+
+<script setup lang="ts">
 import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
+import { cropIfTooLong, html2Text } from '@/functs/string'
+import { InstructionModel } from '@/models/instruction.model'
 
-export default {
-  name: 'InstructionAdminListItem',
+const props = defineProps<{
+  instruction: InstructionModel
+}>()
 
-  components: {
-    ContextActionMenu,
-  },
+defineEmits<{
+  'delete-instruction': [InstructionModel]
+  'edit-instruction': [InstructionModel]
+}>()
 
-  props: {
-    instruction: {
-      type: Object,
-      default: () => ({}),
-    },
-  },
+const { canEditInstruction, canDeleteInstruction } = usePermissions()
 
-  emits: ['delete-instruction', 'edit-instruction'],
-
-  setup() {
-    const { canEditInstruction, canDeleteInstruction } = usePermissions()
-    return { canEditInstruction, canDeleteInstruction }
-  },
-
-  computed: {
-    instructionText() {
-      return this.instruction.content.replace(/<[^>]+>/g, ' ').substring(0, 255)
-    },
-  },
-}
+const instructionText = computed(() => {
+  return cropIfTooLong(html2Text(props.instruction.content), 255)
+})
 </script>
+
 <style lang="scss" scoped>
 .instruction-excerpt-wrapper {
   position: relative;
   padding-right: 1.4rem;
-}
-
-.clamped {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
 .instruction-actions {

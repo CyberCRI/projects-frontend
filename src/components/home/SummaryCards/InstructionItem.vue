@@ -25,46 +25,29 @@
     </div>
   </div>
 </template>
-<script>
+
+<script setup lang="ts">
 import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
 import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
+import { TranslatedInstruction } from '@/models/instruction.model'
 
-export default {
-  name: 'InstructionItem',
+defineProps<{
+  instruction: TranslatedInstruction
+}>()
 
-  components: {
-    HtmlLimiter,
-    ContextActionMenu,
-  },
+defineEmits<{
+  'delete-instruction': [TranslatedInstruction]
+  'edit-instruction': [TranslatedInstruction]
+}>()
 
-  props: {
-    instruction: {
-      type: Object,
-      required: true,
-    },
-  },
+const { canEditInstruction, canDeleteInstruction } = usePermissions()
+const style = ref({})
 
-  emits: ['delete-instruction', 'edit-instruction'],
-
-  setup() {
-    const { canEditInstruction, canDeleteInstruction } = usePermissions()
-    return { canEditInstruction, canDeleteInstruction }
-  },
-
-  data() {
-    return {
-      style: {},
-    }
-  },
-
-  methods: {
-    computeLayout() {
-      this.style = {}
-    },
-    layoutComputed(event) {
-      this.style = { height: event.height + 'px' }
-    },
-  },
+const computeLayout = () => {
+  style.value = {}
+}
+const layoutComputed = (event) => {
+  style.value = { height: event.height + 'px' }
 }
 </script>
 <style scoped lang="scss">
@@ -119,16 +102,6 @@ export default {
 
   * {
     color: $primary-dark !important;
-  }
-}
-
-.read-more-ctn {
-  flex-shrink: 0;
-  padding: 1rem 0;
-
-  .read-button {
-    width: min-content;
-    padding-left: 0;
   }
 }
 </style>

@@ -19,54 +19,30 @@
   </label>
 </template>
 
-<script>
-export default {
-  name: 'RadioButton',
+<script setup lang="ts">
+const props = withDefaults(
+  defineProps<{
+    label: string
+    radioGroup?: string
+    value?: any
+    disabled?: boolean
+    asButton?: boolean
+  }>(),
+  {
+    radioGroup: null,
+    value: true,
+    asButton: false,
+  }
+)
 
-  props: {
-    label: {
-      type: String,
-      required: true,
-    },
+const model = defineModel<any>()
 
-    radioGroup: {
-      type: String,
-      default: null,
-    },
+const isChecked = computed(() => {
+  return model.value === props.value
+})
 
-    modelValue: {
-      type: [Boolean, Object, String, Number],
-      default: false,
-    },
-
-    value: {
-      type: [Boolean, String, Number],
-      default: true,
-    },
-
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-
-    asButton: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  emits: ['update:modelValue'],
-
-  computed: {
-    isChecked() {
-      return this.modelValue === this.value
-    },
-  },
-  methods: {
-    toggle() {
-      this.$emit('update:modelValue', this.value)
-    },
-  },
+const toggle = () => {
+  model.value = props.value
 }
 </script>
 
@@ -129,11 +105,6 @@ input[type='radio']:checked::before {
   transform: translateZ(0) scale(1);
 }
 
-// TODO check with designer if we keep this outline on focus
-// input[type='radio']:focus {
-//     outline: max(2px, 0.15em) solid currentColor;
-//     outline-offset: max(2px, 0.15em);
-// }
 input[type='radio']:disabled {
   border: $border-width-s solid $mid-gray;
   color: $mid-gray;

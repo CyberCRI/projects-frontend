@@ -8,29 +8,20 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'SwitchInput',
+<script setup lang="ts">
+withDefaults(
+  defineProps<{
+    label?: string
+  }>(),
+  {
+    label: null,
+  }
+)
 
-  props: {
-    label: {
-      type: String,
-      default: null,
-    },
+const model = defineModel<boolean>()
 
-    modelValue: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  emits: ['update:modelValue'],
-
-  methods: {
-    toggleValue() {
-      this.$emit('update:modelValue', !this.modelValue)
-    },
-  },
+const toggleValue = () => {
+  model.value = !model.value
 }
 </script>
 

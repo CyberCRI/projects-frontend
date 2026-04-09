@@ -34,7 +34,6 @@ export default function useAdminPagesRoutes() {
         {
           path: 'faq',
           name: 'faq',
-          // component: () => import('../pages/AdminPortalPageV2/Tabs/HelpAdminTab.vue'),
           redirect: { name: 'general' },
         },
         {

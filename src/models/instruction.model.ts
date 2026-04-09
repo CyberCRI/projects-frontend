@@ -1,3 +1,4 @@
+import { Translated } from '@/interfaces/translated'
 import BaseModel from '@/models/base.model'
 
 /**
@@ -18,3 +19,5 @@ export type InstructionOutput = BaseModel & Required<InstructionModel>
 export type InstructionInput = Required<InstructionModel> & {
   organization_code: string
 }
+
+export type TranslatedInstruction = Translated<InstructionModel, 'title' | 'content'>

@@ -2,7 +2,11 @@
   <div class="profile-edit-projects">
     <!-- member -->
     <div class="form-group">
-      <UserProjectsSearch :limit="projectsLimit" :member-roles="['owners', 'members']" :user="user">
+      <UserProjectsSearch
+        :limit="PROJECTS_LIMIT"
+        :member-roles="['owners', 'members']"
+        :user="user"
+      >
         <template
           #default="{ items: projects, isLoading, totalCount, pagination, paginationAction }"
         >
@@ -13,8 +17,8 @@
           <div class="project-list-wrapper">
             <UserProjectList
               :empty-label="$t('me.no-project-participate')"
-              :limit="projectsLimit"
-              :number-column="projectColumns"
+              :limit="PROJECTS_LIMIT"
+              :number-column="PROJECTS_COLUMNS"
               :projects="projects"
               :projects-loading="isLoading"
               :pagination="pagination"
@@ -28,7 +32,7 @@
     <hr class="separator" />
     <!-- follow -->
     <div class="form-group">
-      <UserProjectsSearch :key="followedProjectsKey" :limit="projectsLimit" follow :user="user">
+      <UserProjectsSearch :key="followedProjectsKey" :limit="PROJECTS_LIMIT" follow :user="user">
         <template
           #default="{ items: projects, isLoading, totalCount, pagination, paginationAction }"
         >
@@ -46,8 +50,8 @@
           <div class="project-list-wrapper">
             <UserProjectList
               :empty-label="$t('me.no-follow')"
-              :limit="projectsLimit"
-              :number-column="projectColumns"
+              :limit="PROJECTS_LIMIT"
+              :number-column="PROJECTS_COLUMNS"
               :projects="projects"
               :projects-loading="isLoading"
               :pagination="pagination"
@@ -61,7 +65,7 @@
     <hr class="separator" />
     <!-- review -->
     <div class="form-group">
-      <UserProjectsSearch :limit="projectsLimit" :member-roles="['reviewers']" :user="user">
+      <UserProjectsSearch :limit="PROJECTS_LIMIT" :member-roles="['reviewers']" :user="user">
         <template
           #default="{ items: projects, isLoading, totalCount, pagination, paginationAction }"
         >
@@ -72,8 +76,8 @@
           <div class="project-list-wrapper">
             <UserProjectList
               :empty-label="$t('me.no-project-reviewing')"
-              :limit="projectsLimit"
-              :number-column="projectColumns"
+              :limit="PROJECTS_LIMIT"
+              :number-column="PROJECTS_COLUMNS"
               :projects="projects"
               :projects-loading="isLoading"
               :pagination="pagination"
@@ -118,50 +122,41 @@
     @close="closeFollowProjectDrawer"
   />
 </template>
-<script>
-import useUsersStore from '@/stores/useUsers.ts'
-import useProjectCategories from '@/stores/useProjectCategories.ts'
-export default {
-  name: 'ProfileProjectsEditTab',
-  props: {
-    user: {
-      type: Object,
-      required: true,
-    },
-  },
-  emits: ['profile-edited'],
-  setup() {
-    const usersStore = useUsersStore()
-    const projectCategoriesStore = useProjectCategories()
-    return {
-      usersStore,
-      projectCategoriesStore,
-    }
-  },
-  data() {
-    return {
-      showFollowProjectDrawer: false,
-      projectsLimit: 12,
-      projectColumns: 4,
-      followedProjectsKey: 1,
-    }
-  },
-  computed: {
-    followedCategories() {
-      return (this.usersStore.followedCategories || [])
-        .map((f) => this.projectCategoriesStore.allByIds[f.category.id])
-        .filter((c) => !!c)
-    },
-  },
-  methods: {
-    closeFollowProjectDrawer() {
-      this.showFollowProjectDrawer = false
-      // this will trigger followed projects reload
-      this.followedProjectsKey++
-    },
-  },
+
+<script setup lang="ts">
+import useUsersStore from '@/stores/useUsers'
+import useProjectCategories from '@/stores/useProjectCategories'
+import { UserModel } from '@/models/user.model'
+
+const PROJECTS_LIMIT = 12
+const PROJECTS_COLUMNS = 4
+
+defineProps<{
+  user: UserModel
+}>()
+
+defineEmits<{
+  'profile-edited': []
+}>()
+
+const usersStore = useUsersStore()
+const projectCategoriesStore = useProjectCategories()
+const showFollowProjectDrawer = ref(false)
+const followedProjectsKey = ref(1)
+
+const followedCategories = computed(() => {
+  return (usersStore.followedCategories || [])
+    .map((f) => projectCategoriesStore.allByIds[f.category.id])
+    .filter((c) => !!c)
+})
+
+const closeFollowProjectDrawer = () => {
+  showFollowProjectDrawer.value = false
+  // this will trigger followed projects reload
+  followedProjectsKey.value++
 }
 </script>
+
 <style scoped lang="scss">
 @import './profile-form';
 
