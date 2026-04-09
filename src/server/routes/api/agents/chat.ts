@@ -139,10 +139,21 @@ export default defineLazyEventHandler(() => {
 
     const tools = []
 
-    if (agentData.mcps.length) {
-      traceMcp('Adding MCP tool with server URL:', appMcpServerUrl)
-
+    if (agentData.useProjectsMcp || agentData.mcps.length) {
       const mcpConfigs = {}
+
+      if (agentData.useProjectsMcp) {
+        traceMcp('Adding projects MCP')
+        mcpConfigs['projects-mcp'] = {
+          // TODO use stdio or diect tool instead a mcp
+          transport: 'http', // HTTP-based remote server
+          url: appMcpServerUrl,
+          headers: {
+            Authorization: `${conversationId}`,
+          },
+        }
+      }
+
       agentData.mcps.forEach((mcp) => {
         const aConfig = {
           transport: mcp.transport,
@@ -150,8 +161,10 @@ export default defineLazyEventHandler(() => {
         if (mcp.transport == 'stdio') {
           aConfig['command'] = mcp.command
           aConfig['args'] = mcp.args
+          traceMcp('Adding MCP tool with command:', mcp.command, mcp.args)
         } else {
           aConfig['url'] = mcp.url
+          traceMcp('Adding MCP tool with server URL:', mcp.url)
           // TODO: auth
         }
 
