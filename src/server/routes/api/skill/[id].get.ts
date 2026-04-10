@@ -1,6 +1,7 @@
 export default defineLazyEventHandler(() => {
+  const { appApiOrgCode } = useRuntimeConfig().public
   return defineEventHandler(async (event) => {
-    const _id = getQuery(event)?.id
+    const _id = getRouterParam(event, 'id')
     if (!_id) {
       setResponseStatus(event, 400)
       return {
@@ -14,13 +15,21 @@ export default defineLazyEventHandler(() => {
         error: 'Wrong type for "id" query parameter',
       }
     }
-    const agent = await chatbotPrisma.agent.findUnique({
+    const skill = await chatbotPrisma.skill.findUnique({
       where: {
         id: id,
+        orgCode: appApiOrgCode,
       },
-      // include: { promptContent: true },
+      include: { skillContents: true },
     })
-    // console.log(agent)
-    return agent
+
+    // console.log(skill)
+    if (!skill) {
+      setResponseStatus(event, 400)
+      return {
+        error: 'Not found',
+      }
+    }
+    return skill
   })
 })
