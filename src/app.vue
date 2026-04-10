@@ -82,7 +82,7 @@ const toggleReportBugModal = () => {
 const onFocus = () => {
   const accessToken = localStorage.getItem('ACCESS_TOKEN')
 
-  const _logout = () => {
+  const originalLogout = () => {
     usersStore.resetUser()
     // navigate to /dashboard
     if (!route || route.name !== 'Home') {
@@ -92,11 +92,11 @@ const onFocus = () => {
   if (usersStoreToken.value && accessToken) {
     // logged in, verify token is still fresh
     if (checkExpiredToken()) {
-      _logout()
+      originalLogout()
     }
   } else if (usersStoreToken.value && !accessToken) {
     // logged out in another tab
-    _logout()
+    originalLogout()
   } else if (!usersStoreToken.value && accessToken) {
     // logged in in another tab
     keycloak.refreshTokenLoop.start()

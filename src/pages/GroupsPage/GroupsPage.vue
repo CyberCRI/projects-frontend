@@ -105,13 +105,7 @@ useLpiHead2({
             only-error
             skeleton
           >
-            <CardList
-              :desktop-columns-number="6"
-              :limit="12"
-              :items="currentGroup.children"
-              class="list-container"
-              switchable-display
-            >
+            <CardList :limit="12" :items="currentGroup.children" switchable-display>
               <template #default="cardListSlotProps">
                 <GroupCard :group="cardListSlotProps.item" :mode="cardListSlotProps.mode" />
               </template>

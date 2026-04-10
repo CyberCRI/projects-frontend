@@ -110,9 +110,9 @@ export default {
         route: { name: 'People' },
       },
     ])
-    const _user = ref(null)
+    const originalUser = ref(null)
     const { translateUserFull } = useAutoTranslate()
-    const user = translateUserFull(_user)
+    const user = translateUserFull(originalUser)
     const isLoading = ref(true)
     return {
       usersStore,
@@ -121,7 +121,7 @@ export default {
       toggleNavPanel,
       onNavigated,
       breadCrumbs,
-      _user,
+      originalUser,
       user,
       isLoading,
       onboardingTrap,
@@ -626,10 +626,10 @@ export default {
     async loadUser() {
       if (!this.userId || this.userId === this.usersStore.id) {
         // get the connected user
-        this._user = await this.usersStore.getUser(this.usersStore.id, true)
+        this.originalUser = await this.usersStore.getUser(this.usersStore.id, true)
       } else {
         // get another user
-        this._user = await getUser(this.userId, true)
+        this.originalUser = await getUser(this.userId, true)
       }
     },
   },

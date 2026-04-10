@@ -26,7 +26,7 @@ export default {
             because other throttle will act globally (ie one throttle for all instances)
             and so create a mess when we have multiple instances of the component in the same page
         */
-    const _computeColumnCount = () => {
+    const computeColumnCount = () => {
       const childWidth = this.$refs.grid?.children[0]?.getBoundingClientRect()?.width
       if (childWidth) {
         this.childWidth = childWidth
@@ -34,7 +34,7 @@ export default {
     }
     return {
       childWidth: 200, // dummy non zero value
-      computeColumnCount: throttle(_computeColumnCount, 50),
+      computeColumnCount: throttle(computeColumnCount, 50),
     }
   },
 

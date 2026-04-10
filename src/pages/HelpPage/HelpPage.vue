@@ -7,8 +7,8 @@ const customTab = ref(null)
 const faq = ref(null)
 
 const hasFaq = computed(() => {
-  let _faq = faq.value
-  return _faq && _faq.title && _faq.content && _faq.content !== '<p></p>'
+  let faqValue = faq.value
+  return faqValue && faqValue.title && faqValue.content && faqValue.content !== '<p></p>'
 })
 
 provide('helpPageHasFaq', hasFaq)

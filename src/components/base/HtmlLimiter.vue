@@ -7,7 +7,7 @@
 import { debounce } from 'es-toolkit'
 import fixEditorContent from '@/functs/editorUtils.ts'
 
-const _timer = 0 // set this to some thing like 1000 for visual debugging
+const TIMER = 0 // set this to some thing like 1000 for visual debugging
 
 /*
 USAGE: this component must be placed in a flex container
@@ -75,7 +75,7 @@ export default {
 
   methods: {
     async unblock() {
-      return new Promise((resolve) => setTimeout(resolve, _timer))
+      return new Promise((resolve) => setTimeout(resolve, TIMER))
     },
 
     filterTags(root) {

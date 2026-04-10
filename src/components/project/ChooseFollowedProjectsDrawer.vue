@@ -2,7 +2,6 @@
   <BaseDrawer
     :is-opened="isOpened"
     :title="$t('profile.edit.projects.followed.drawer-title')"
-    :asyncing="asyncing"
     @close="close"
     @confirm="close"
   >
@@ -22,11 +21,9 @@
         <SearchResults :search="query" mode="projects">
           <template #default="SearchResultsSlotProps">
             <CardList
-              :desktop-columns-number="6"
               :is-loading="SearchResultsSlotProps.isLoading"
               :limit="SearchResultsSlotProps.limit"
               :items="SearchResultsSlotProps.items"
-              class="list-container"
             >
               <template #default="projectListSlotProps">
                 <ProjectCard
@@ -52,74 +49,57 @@
   </BaseDrawer>
 </template>
 
-<script>
+<script setup lang="ts">
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import SearchInput from '@/components/base/form/SearchInput.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
 import CardList from '@/components/base/CardList.vue'
 import SearchResults from '@/components/project/SearchResults.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
-export default {
-  name: 'ChooseFollowedProjectsDrawer',
+const props = withDefaults(
+  defineProps<{
+    isOpened?: boolean
+    targetUserId?: string | number
+  }>(),
+  {
+    isOpened: false,
+    targetUserId: null,
+  }
+)
 
-  components: { BaseDrawer, ProjectCard, CardList, SearchResults, SearchInput, LpiButton },
+const emit = defineEmits<{
+  close: []
+}>()
 
-  props: {
-    isOpened: {
-      type: Boolean,
-      default: false,
-    },
-    targetUserId: {
-      type: [Number, String, null],
-      default: null,
-    },
-  },
+const organizationCode = useOrganizationCode()
 
-  emits: ['close'],
+const search = ref('')
 
-  setup() {
-    const organizationsStore = useOrganizationsStore()
-    return { organizationsStore }
-  },
+const query = computed(() => {
+  return {
+    search: search.value,
+    categories: [],
+    tags: [],
+    members: [],
+    sdgs: [],
+    languages: [],
+    organizations: [organizationCode],
+    ordering: '-updated_at',
+    limit: 30,
+    page: 1,
+    section: 'projects',
+  }
+})
 
-  data() {
-    return {
-      search: '',
-    }
-  },
+watch(
+  () => props.isOpened,
+  () => {
+    search.value = ''
+  }
+)
 
-  computed: {
-    query() {
-      return {
-        search: this.search,
-        categories: [],
-        tags: [],
-        members: [],
-        sdgs: [],
-        languages: [],
-        organizations: [this.organizationsStore.current.code],
-        ordering: '-updated_at',
-        limit: 30,
-        page: 1,
-        section: 'projects',
-      }
-    },
-  },
-
-  watch: {
-    isOpened: function () {
-      this.search = ''
-    },
-  },
-
-  methods: {
-    close() {
-      this.$emit('close')
-    },
-  },
-}
+const close = () => emit('close')
 </script>
 
 <style lang="scss" scoped>

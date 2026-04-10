@@ -279,7 +279,7 @@ export default function useAutoTranslate() {
       const locationRaw = unref(location)
       return {
         ...unref(translateLocation(locationRaw)),
-        news: locationRaw.news ? unref(translateOneNews(locationRaw.news)) : locationRaw.news,
+        news: locationRaw?.news ? unref(translateOneNews(locationRaw.news)) : null,
       }
     })
   const translateNewsLocations = (news) =>
@@ -298,9 +298,7 @@ export default function useAutoTranslate() {
       const locationRaw = unref(event)
       return {
         ...unref(translateEntity(event, ['title', 'content'])),
-        location: locationRaw.location
-          ? unref(translateLocation(locationRaw.location))
-          : locationRaw.location,
+        location: locationRaw?.location ? unref(translateLocation(locationRaw.location)) : null,
       }
     })
   const translateEvents = (events) =>
@@ -311,7 +309,7 @@ export default function useAutoTranslate() {
       const locationRaw = unref(location)
       return {
         ...unref(translateLocation(locationRaw)),
-        event: locationRaw.event ? unref(translateEvent(locationRaw.event)) : locationRaw.event,
+        event: locationRaw?.event ? unref(translateEvent(locationRaw.event)) : null,
       }
     })
   const translateEventsLocations = (locations) =>
