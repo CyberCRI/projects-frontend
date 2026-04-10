@@ -106,7 +106,6 @@ useLpiHead2({
             skeleton
           >
             <CardList
-              :desktop-columns-number="6"
               :limit="12"
               :items="currentGroup.children"
               class="list-container"

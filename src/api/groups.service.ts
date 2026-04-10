@@ -187,7 +187,7 @@ export async function getGroupAllLocations(
   groupId: PeopleGroupIdOrSlug,
   config = {}
 ) {
-  return await useAPI<PaginationResult<LocationModel>>(
+  return await useAPI<LocationModel[]>(
     `organization/${organizationCode}/people-group/${groupId}/all-locations/`,
     config
   )

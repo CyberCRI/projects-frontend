@@ -50,13 +50,7 @@ useLpiHead2({
       {{ $t('recommendations.projects.title') }}
     </h1>
 
-    <CardList
-      :desktop-columns-number="6"
-      :is-loading="isLoading"
-      :limit="limit"
-      :items="results"
-      class="list-container"
-    >
+    <CardList :is-loading="isLoading" :limit="limit" :items="results" class="list-container">
       <template #default="projectListSlotProps">
         <ProjectCard :project="projectListSlotProps.item" />
       </template>

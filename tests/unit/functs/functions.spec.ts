@@ -101,10 +101,7 @@ describe('Function projectCanBeEdited', () => {
   test("that project can be edited if user is one of project's owners and project is not locked", () => {
     const user = UserFactory.generate()
     const project = ProjectOutputFactory.generate()
-    project.team.members[0].group = 'owners'
-    project.team.members[0].user = {
-      id: 1,
-    }
+    project.team.owners[0] = UserFactory.generate({ id: 1 })
     project.is_locked = false
 
     usersStore.user = user // getters are writable only in tests

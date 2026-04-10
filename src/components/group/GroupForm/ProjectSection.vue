@@ -53,19 +53,11 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import ProjectPreview from '@/components/project/ProjectPreview.vue'
+import { TranslatedProject } from '@/models/project.model'
 
-defineOptions({ name: 'ProjectSection' })
-
-const props = defineProps({
-  modelValue: {
-    type: Array,
-    default: () => [],
-  },
-})
-
-const emit = defineEmits(['update:model-value'])
+const model = defineModel<TranslatedProject[]>()
 
 const drawerIsOpen = ref(false)
 const showFullList = ref(false)
@@ -75,7 +67,7 @@ const { stateModal, closeModal, openModal } = useModal()
 const { t } = useNuxtI18n()
 
 const shortList = computed(() => {
-  return props.modelValue.slice(0, 8)
+  return model.value.slice(0, 8)
 })
 const seeMoreLabel = computed(() => {
   return showFullList.value ? 'common.see-less' : 'common.see-more'
@@ -87,15 +79,15 @@ const modalConfirmRemoveProject = (project) => {
   openModal()
 }
 
-const onProjectsPicked = (projects) => {
-  emit('update:model-value', [...projects])
+const onProjectsPicked = (projects: TranslatedProject[]) => {
+  model.value = [...projects]
   drawerIsOpen.value = false
   closeModal()
 }
 
 const onRemoveProject = () => {
-  const projects = props.modelValue.filter((p) => p.id !== removeProject.value.id)
-  emit('update:model-value', [...projects])
+  const projects = model.value.filter((p) => p.id !== removeProject.value.id)
+  model.value = projects
   removeProject.value = null
   closeModal()
 }

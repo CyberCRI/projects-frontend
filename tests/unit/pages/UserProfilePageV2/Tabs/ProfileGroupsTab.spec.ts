@@ -1,13 +1,43 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
 import ProfileGroupsTab from '@/pages/UserProfilePageV2/Tabs/ProfileGroupsTab.vue'
+import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
+import { UserFactory } from '@/../tests/factories/user.factory'
+import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
+import { flushPromises } from '@vue/test-utils'
 
-import { describe, expect, it } from 'vitest'
+import { getGroup } from '@/api/groups.service'
 
-describe('ProfileGroupsTab.vue', () => {
-  it('should render component', async () => {
-    const props = {}
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { Mock } from 'vitest'
 
-    const wrapper = lpiMount(ProfileGroupsTab, { props })
-    expect(wrapper.exists()).toBe(true)
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
+vi.mock('@/api/groups.service', () => ({
+  getGroup: vi.fn().mockResolvedValue({ results: {} }),
+}))
+
+const i18n = {
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: loadLocaleMessages(),
+}
+
+const buildParams = (user) => ({
+  i18n,
+  props: {
+    user,
+  },
+})
+
+describe('ProfileGroupsTab', () => {
+  beforeEach(() => {
+    const organizationsStore = useOrganizationsStore(pinia)
+    organizationsStore._current = { id: 'TEST' } as unknown as OrganizationOutput
+  })
+
+  it('should render ProfileGroupsTab component', () => {
+    let wrapper = lpiShallowMount(ProfileGroupsTab, buildParams(UserFactory.generate()))
+
+    expect(wrapper.exists()).toBeTruthy()
   })
 })

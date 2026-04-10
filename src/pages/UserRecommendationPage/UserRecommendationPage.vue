@@ -46,7 +46,6 @@ useLpiHead2({
     </h1>
 
     <CardList
-      :desktop-columns-number="6"
       :is-loading="isLoading"
       :limit="limit"
       :items="usersRecommendationsRequest?.results"

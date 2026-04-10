@@ -12,6 +12,7 @@ export interface UserModel {
     firstname: string
     lastname: string
   }
+  pronouns?: string
   slug: string
   email: string
   roles: string[]

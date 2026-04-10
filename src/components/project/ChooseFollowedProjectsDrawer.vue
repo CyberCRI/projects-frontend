@@ -22,7 +22,6 @@
         <SearchResults :search="query" mode="projects">
           <template #default="SearchResultsSlotProps">
             <CardList
-              :desktop-columns-number="6"
               :is-loading="SearchResultsSlotProps.isLoading"
               :limit="SearchResultsSlotProps.limit"
               :items="SearchResultsSlotProps.items"

@@ -1,17 +1,16 @@
 import BaseModel from '@/models/base.model'
 import { ProjectMemberRoleType } from '@/models/types'
+import { UserModel } from '@/models/user.model'
 
 /**
+ * Member of a project
+ *
+ * @typedef
  * @name ProjectMemberModel
- * @description Member of a project
+ * @kind variable
+ * @exports
  */
-export interface ProjectMemberModel extends BaseModel {
-  project: string
-  user: {
-    id: number
-  }
-  group: ProjectMemberRoleType
-}
+export type ProjectMemberModel = UserModel
 
 export interface ProjectTeamModel extends BaseModel {
   reviewers: ProjectMemberModel[]
@@ -51,4 +50,4 @@ export type ProjectTeamOutput = {
   people_groups: ProjectMemberPeopleGroupOutput[]
 }
 
-export type ProjectMemberOutput = Required<ProjectMemberModel>
+export type ProjectMemberOutput = ProjectMemberModel

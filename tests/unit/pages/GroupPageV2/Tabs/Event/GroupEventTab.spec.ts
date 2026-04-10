@@ -1,13 +1,19 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
 import GroupEventTab from '@/pages/GroupPageV2/Tabs/Event/GroupEventTab.vue'
+import { flushPromises } from '@vue/test-utils'
 
 import { describe, expect, it } from 'vitest'
+import { peopleGroupFactory } from '../../../../../factories/group.factory'
 
 describe('GroupEventTab.vue', () => {
   it('should render component', async () => {
-    const props = {}
+    const group = peopleGroupFactory.generate()
+    const props = {
+      group,
+    }
 
-    const wrapper = lpiMount(GroupEventTab, { props })
+    const wrapper = await lpiMount(GroupEventTab, { props })
+    await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })
 })

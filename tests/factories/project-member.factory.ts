@@ -9,15 +9,10 @@ import {
   ProjectMemberPeopleGroupOutput,
   ProjectTeamModel,
 } from '@/models/project-member.model'
+import { UserFactory } from './user.factory'
 
 export const ProjectMemberFactory = createFactory<ProjectMemberModel>((faker) => ({
-  ...BaseFactory.generate(),
-  project: faker.datatype.string(),
-  user: {
-    id: faker.datatype.number(),
-    profile_picture: { variations: {} },
-  },
-  group: 'members',
+  ...UserFactory.generate(),
 }))
 
 export const ProjectTeamOutputFactory = createFactory<ProjectTeamModel>((faker) => ({

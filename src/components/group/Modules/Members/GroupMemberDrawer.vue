@@ -20,10 +20,13 @@
 <script setup lang="ts">
 import { TranslatedGroupMember } from '@/models/group.model'
 
-defineProps<{
-  isOpened: boolean
-  memberId: TranslatedGroupMember['id']
-}>()
+withDefaults(
+  defineProps<{
+    isOpened: boolean
+    memberId?: TranslatedGroupMember['id']
+  }>(),
+  { memberId: null }
+)
 
 defineEmits<{
   close: []

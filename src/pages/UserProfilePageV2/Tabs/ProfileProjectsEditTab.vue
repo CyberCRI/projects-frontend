@@ -160,20 +160,6 @@ const closeFollowProjectDrawer = () => {
 <style scoped lang="scss">
 @import './profile-form';
 
-.project-list-header {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  margin: $space-2xl 0 $space-l 0;
-
-  .title {
-    font-size: $font-size-l;
-    font-weight: 700;
-    color: $primary-dark;
-    margin: 0;
-  }
-}
-
 .category-list-wrapper {
   display: flex;
   gap: 1rem;

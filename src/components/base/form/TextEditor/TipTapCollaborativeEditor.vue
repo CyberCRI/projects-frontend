@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import TipTapEditorContainer from '@/components/base/form/TextEditor/TipTapEditorContainer.vue'
 import TipTapEditorContent from '@/components/base/form/TextEditor/TipTapEditorContent.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
@@ -7,7 +7,7 @@ import TipTapCollaborativeReconnectionStatus from '@/components/base/form/TextEd
 import TipTapCollaborativeConnectingStatus from '@/components/base/form/TextEditor/TipTapCollaborativeConnectingStatus.vue'
 
 import { Editor } from '@tiptap/vue-3'
-import { ClearHistoryWS } from './tiptap-extensions/ClearHistoryWS.ts'
+import { ClearHistoryWS } from './tiptap-extensions/ClearHistoryWS'
 
 import TipTapModals from '@/components/base/form/TextEditor/TipTapModals.vue'
 
@@ -19,17 +19,20 @@ import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
 
 import {
   emitsDefinitions,
-  propsDefinitions,
+  PropsDefault,
+  PropsDefinitions,
   useTipTap,
-} from '@/components/base/form/TextEditor/useTipTap.js'
+} from '@/components/base/form/TextEditor/useTipTap'
 import { ref, watchEffect, computed, onMounted, onBeforeUnmount, toRaw } from 'vue'
 
 import { useRuntimeConfig } from '#imports'
-const runtimeConfig = useRuntimeConfig()
 
-import useUsersStore from '@/stores/useUsers.ts'
+import useUsersStore from '@/stores/useUsers'
+import useToasterStore from '@/stores/useToaster'
+import { randomInt } from 'es-toolkit'
+
+const runtimeConfig = useRuntimeConfig()
 const { t } = useNuxtI18n()
-import useToasterStore from '@/stores/useToaster.ts'
 
 // grace period before freezing the editor on socket deconnection (in milliseconds)
 // server heartbeat is 30s and is checked every tenth of this interval
@@ -42,31 +45,26 @@ const emit = defineEmits([
   'falled-back-to-solo-edit',
 ])
 
-const props = defineProps({
-  ...propsDefinitions,
-  room: {
-    type: String,
-    required: true,
-  },
-  color: {
-    type: String,
+const props = withDefaults(
+  defineProps<
+    PropsDefinitions & {
+      room: string
+      color?: string
+      providerParams?: any
+    }
+  >(),
+  {
+    ...PropsDefault,
     // choose a random color for every user
-    default: () => {
-      function randomIntInRange(fromInclusive, toInclusive) {
-        return Math.floor(Math.random() * (toInclusive - fromInclusive + 1) + fromInclusive)
-      }
-      const hue = randomIntInRange(0, 360) // any tint
-      const saturation = randomIntInRange(50, 100) // not too grey
-      const lightness = randomIntInRange(20, 60) // neither too dark nor too light
+    color: () => {
+      const hue = randomInt(0, 360) // any tint
+      const saturation = randomInt(50, 100) // not too grey
+      const lightness = randomInt(20, 60) // neither too dark nor too light
       return `hsl(${hue}deg ${saturation}% ${lightness}%)`
     },
-  },
-
-  providerParams: {
-    type: Object,
-    default: () => {},
-  },
-})
+    providerParams: null,
+  }
+)
 
 const toaster = useToasterStore()
 
@@ -130,21 +128,24 @@ function getCollaborativeExtensions() {
   const exts = getExtensions({ disableHistory: true })
 
   exts.push(
+    // @ts-expect-error ignore error (TODO)
     Collaboration.configure({
       document: toRaw(provider.value.document),
     })
   )
   exts.push(
+    // @ts-expect-error ignore error (TODO)
     CollaborationCursor.configure({
       provider: toRaw(provider.value),
       user: {
-        name: user.value.given_name + ' ' + user.value.family_name,
+        name: `${user.value.given_name} ${user.value.family_name}`,
         color: props.color,
         pid: user.value.id,
         profile_picture: user.value.profile_picture,
       },
     })
   )
+  // @ts-expect-error ignore error (TODO)
   exts.push(ClearHistoryWS.configure({}))
 
   return exts
@@ -188,7 +189,6 @@ function initCollaborativeEditor() {
   }, cnxTimeout.value)
 
   provider.value = new HocuspocusProvider({
-    appId: 'Foo000',
     url: sockerserver,
     name: props.room,
     token: accessToken.value,
@@ -223,7 +223,7 @@ function initCollaborativeEditor() {
           100 // content is not synchronously updated
         )
       }
-      synced.value = event
+      synced.value = !!event
     },
   })
 

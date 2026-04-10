@@ -9,43 +9,34 @@ import TableRow from '@tiptap/extension-table-row'
 import TableHeader from '@tiptap/extension-table-header'
 import TextStyle from '@tiptap/extension-text-style'
 
-import CustomTableCell from './tiptap-extensions/CustomTableCell.ts'
-import ExternalVideo from './tiptap-extensions/ExternalVideo.ts'
+import CustomTableCell from './tiptap-extensions/CustomTableCell.js'
+import ExternalVideo from './tiptap-extensions/ExternalVideo.js'
 
-import LpiCodeBlock from './tiptap-extensions/LpiCodeBlock.ts'
-import CustomImage from './tiptap-extensions/CustomImage.ts'
+import LpiCodeBlock from './tiptap-extensions/LpiCodeBlock.js'
+import CustomImage from './tiptap-extensions/CustomImage.js'
 
-import Gapcursor from '@tiptap/extension-gapcursor'
-
-import lowlight from '@/functs/lowlight.ts'
+import lowlight from '@/functs/lowlight'
 
 import { ref } from 'vue'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useToasterStore from '@/stores/useToaster'
+import useOrganizationsStore from '@/stores/useOrganizations'
 
 export const emitsDefinitions = ['saved', 'image', 'blur', 'update:modelValue']
 
-export const propsDefinitions = {
-  modelValue: { type: String, required: true },
-  mode: {
-    // mode supports 4 values 'none' | 'simple' | 'medium' | 'full'
-    type: String,
-    default: 'simple',
-  },
-  saveIconVisible: {
-    type: Boolean,
-    default: false,
-  },
+export type PropsDefinitions = {
+  modelValue: string
+  mode?: 'none' | 'simple' | 'medium' | 'full'
+  saveIconVisible?: boolean
+  // function must take a file argument and return a promise resolving to an {url, width, height} object
+  saveImageCallback?: (image) => void
+  disableSave?: boolean
+}
 
-  saveImageCallback: {
-    // function must take a file argument and return a promise resolving to an {url, width, height} object
-    type: [Function, null],
-    required: false,
-  },
-  disableSave: {
-    type: Boolean,
-    default: false,
-  },
+export const PropsDefault: Partial<PropsDefinitions> = {
+  mode: 'simple',
+  saveIconVisible: false,
+  saveImageCallback: null,
+  disableSave: false,
 }
 
 export function useTipTap({ props, emit, t }) {
@@ -126,10 +117,11 @@ export function useTipTap({ props, emit, t }) {
     }
   }
 
-  function getExtensions(options) {
-    let exts = [
+  function getExtensions(options: { disableHistory: any } = { disableHistory: false }) {
+    const history = options?.disableHistory || false
+    return [
       // Collaborative (socket) use its own history
-      StarterKit.configure({ history: !options?.disableHistory, codeBlock: false }), // TODO: was !this.socket
+      StarterKit.configure({ history, codeBlock: false }), // TODO: was !this.socket
       Link.configure({
         openOnClick: false,
       }),
@@ -151,13 +143,10 @@ export function useTipTap({ props, emit, t }) {
       TableHeader,
       CustomTableCell,
       CustomImage,
-      Gapcursor,
       LpiCodeBlock.configure({
         lowlight,
       }),
     ]
-
-    return exts
   }
 
   function getContent() {
