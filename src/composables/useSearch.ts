@@ -1,7 +1,7 @@
 import { computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import { ALL_SECTION_KEY } from '@/components/search/Filters/useSectionFilters.ts'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import { ALL_SECTION_KEY } from '@/components/search/Filters/useSectionFilters'
+
 export default function useSearch(forcedSection = null) {
   const MAX_RESULTS = 30
 
@@ -63,7 +63,7 @@ export default function useSearch(forcedSection = null) {
   }
 
   const searchFromQuery = computed(() => {
-    const res = {}
+    const res: Record<string, any> = {}
 
     for (const [key, isValid] of Object.entries(validQueryParams.value)) {
       const defaultValue = key === 'page' ? '1' : ''
@@ -102,7 +102,7 @@ export default function useSearch(forcedSection = null) {
 
   function updatdeSelectedFilters(rawFilters) {
     const filters = adaptFilers(rawFilters)
-    const query = { ...route.query } // destructure to break reactivity
+    const query: Record<string, any> = { ...route.query } // destructure to break reactivity
     for (const [key, isValid] of Object.entries(validQueryParams.value)) {
       if (!isValid) {
         delete query[key]

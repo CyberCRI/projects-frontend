@@ -47,6 +47,7 @@ function buildOptions(options: any = {}) {
 
   return {
     options: {
+      ...options,
       props,
       global: {
         plugins,

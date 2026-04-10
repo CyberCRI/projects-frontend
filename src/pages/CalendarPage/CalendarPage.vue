@@ -11,7 +11,7 @@
         data-test="create-event-button"
         btn-icon="Plus"
         class="create-event-button"
-        @click="createEvent"
+        :to="{ name: 'CreateEvent' }"
       />
     </div>
 
@@ -22,7 +22,6 @@
 <script setup lang="ts">
 const { canCreateEvent } = usePermissions()
 const { t } = useNuxtI18n()
-const router = useRouter()
 const tabs = computed(() => {
   return [
     {
@@ -37,8 +36,6 @@ const tabs = computed(() => {
     },
   ]
 })
-
-const createEvent = () => router.push({ name: 'CreateEvent' })
 
 useLpiHead2({
   title: computed(() => t('event.calendar.title')),

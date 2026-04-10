@@ -144,9 +144,9 @@ export const useLpiHead2 = async (options: OptionsHead) => {
   const store = useOrganizationsStore()
   try {
     const organization = await store.getOrFetchOrganization()
-    const url = options.url ?? useRequestURL().toString()
-    const title = options.title ?? organization?.$t.name ?? ''
-    const description = options.description ?? organization?.$t.description ?? ''
+    const url = options.url || useRequestURL()?.toString() || ''
+    const title = options.title || organization?.$t.name || ''
+    const description = options.description || organization?.$t.description || ''
 
     let [image, dimensions] = [null, null]
     if (typeof options.image === 'object') {
