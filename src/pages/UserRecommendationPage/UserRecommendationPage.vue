@@ -45,13 +45,7 @@ useLpiHead2({
       {{ $t('recommendations.connect-to') }}
     </h1>
 
-    <CardList
-      :desktop-columns-number="6"
-      :is-loading="isLoading"
-      :limit="limit"
-      :items="usersRecommendationsRequest?.results"
-      class="list-container"
-    >
+    <CardList :is-loading="isLoading" :limit="limit" :items="usersRecommendationsRequest?.results">
       <template #default="peoplesListSlotProps">
         <UserCard
           :user="peoplesListSlotProps.item"

@@ -1,13 +1,13 @@
 <template>
   <div class="sdg-ctn">
     <component :is="is" v-for="sdg in sdgsArray" :key="sdg.id" :to="sdg.to">
-      <img :alt="sdg.alt" :src="sdg.src" class="sdg-img" />
+      <SdgIcon :sdg-id="sdg.id" class="sdg-img" logo="short" />
     </component>
   </div>
 </template>
 
 <script setup lang="ts">
-import { usePublicURL } from '@/composables/usePublic'
+import SdgIcon from '@/components/search/Filters/SdgIcon.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -39,13 +39,9 @@ const sdgsArray = computed(() => {
         }
       : null
 
-    const src = usePublicURL(`/sdgs/logo/SDG-${sdgId}.svg`)
     return {
       id: sdgId,
       to,
-      // TODO(remi): convert sdgId alt text to i18n name sdg ?
-      alt: `sdg number ${sdgId}`,
-      src,
     }
   })
 })

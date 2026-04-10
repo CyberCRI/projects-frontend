@@ -49,12 +49,12 @@ export async function logIn(page: Page, user: User) {
   await delay(1000) // wait for modals to appear
 
   // handle onboarding modals
-  const onboardingModal = page.locator('[data-test="welcome-modal"]')
-  if (await onboardingModal.isVisible()) {
+  const WelcomModal = page.locator('[data-test="welcome-modal"]')
+  if (await WelcomModal.isVisible()) {
     logger.info('Welcome modal is visible, skiping it')
-    const closeBtn = onboardingModal.locator('[data-test="close-button"]')
+    const closeBtn = WelcomModal.locator('[data-test="close-button"]')
     await closeBtn.click()
-    await expect(onboardingModal).not.toBeVisible()
+    await expect(WelcomModal).not.toBeVisible()
     logger.info('Welcome modal skipped')
   }
 

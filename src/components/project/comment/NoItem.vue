@@ -6,17 +6,15 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'NoItem',
-
-  props: {
-    message: {
-      type: String,
-      default: '',
-    },
-  },
-}
+<script setup lang="ts">
+withDefaults(
+  defineProps<{
+    message?: string
+  }>(),
+  {
+    message: '',
+  }
+)
 </script>
 
 <style lang="scss" scoped>

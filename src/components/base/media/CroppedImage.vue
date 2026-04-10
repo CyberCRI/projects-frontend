@@ -14,6 +14,7 @@ const props = withDefaults(
     alt?: string
     contain?: boolean
     ratio?: number
+    loadingColor?: string
   }>(),
   {
     imageSizes: null,
@@ -22,6 +23,7 @@ const props = withDefaults(
     contain: false,
     // crop area aspect ratio
     ratio: 1,
+    loadingColor: null,
   }
 )
 
@@ -96,6 +98,8 @@ onMounted(() => {
   }
 
   &.loading {
+    --skeleton-100: v-bind('loadingColor');
+
     @extend %skeleton-background-block;
   }
 }

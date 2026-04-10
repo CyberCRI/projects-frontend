@@ -10,8 +10,8 @@ const { canCreateInstruction, canEditInstruction, canDeleteInstruction } = usePe
 const router = useRouter()
 const { t } = useNuxtI18n()
 
-const _allInstructions = useState(() => [])
-const allInstructions = translateInstructions(_allInstructions)
+const orgininalAllInstructions = useState(() => [])
+const allInstructions = translateInstructions(orgininalAllInstructions)
 
 const loading = ref(false)
 const editedInstruction = ref(null)
@@ -28,7 +28,7 @@ const loadInstructions = async () => {
       ? {}
       : { to_date: new Date().toISOString() }
   loading.value = true
-  _allInstructions.value = (
+  orgininalAllInstructions.value = (
     await getAllInstructions(organizationsStore.current?.code, {
       ordering: '-publication_date',
       ...dateLimit,

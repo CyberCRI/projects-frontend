@@ -94,76 +94,50 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import UserProjectsSearch from '@/components/people/UserProfile/UserProjectsSearch.vue'
 import UserProjectList from '@/components/people/UserProfile/UserProjectList.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import useUsersStore from '@/stores/useUsers.ts'
-import useProjectCategories from '@/stores/useProjectCategories.ts'
+import useUsersStore from '@/stores/useUsers'
+import useProjectCategories from '@/stores/useProjectCategories'
+import { TranslatedUserModel } from '@/models/user.model'
 
-export default {
-  name: 'ProfileProjectTab',
+const props = defineProps<{
+  user: TranslatedUserModel
+}>()
 
-  components: { UserProjectsSearch, UserProjectList, LpiButton },
+const { t } = useNuxtI18n()
 
-  props: {
-    user: {
-      type: Object,
-      required: true,
-    },
-  },
+const usersStore = useUsersStore()
+const { canCreateProject } = usePermissions()
+const projectCategoriesStore = useProjectCategories()
 
-  setup() {
-    const usersStore = useUsersStore()
-    const { canCreateProject } = usePermissions()
-    const projectCategoriesStore = useProjectCategories()
-    return {
-      usersStore,
-      canCreateProject,
-      projectCategoriesStore,
-    }
-  },
-  computed: {
-    followedCategories() {
-      return (this.usersStore.followedCategories || [])
-        .map((f) => this.projectCategoriesStore.allByIds[f.category.id])
-        .filter((c) => !!c)
-    },
+const followedCategories = computed(() => {
+  return (usersStore.followedCategories || [])
+    .map((f) => projectCategoriesStore.allByIds[f.category.id])
+    .filter((c) => !!c)
+})
 
-    isMyProfileAndCanCreateProject() {
-      const loggedAsID = this.usersStore.id
-      return loggedAsID && this.user.id === loggedAsID && this.canCreateProject
-    },
+const isMyProfileAndCanCreateProject = computed(() => {
+  const loggedAsID = usersStore.id
+  return loggedAsID && props.user.id === loggedAsID && canCreateProject.value
+})
 
-    isCurrentUser() {
-      return this.usersStore.id === this.user.id
-    },
+const isCurrentUser = computed(() => {
+  return usersStore.id === props.user.id
+})
 
-    noFollowLabel() {
-      return this.isCurrentUser ? this.$t('me.no-follow') : this.$t('you.no-follow')
-    },
+const noFollowLabel = computed(() => {
+  return isCurrentUser.value ? t('me.no-follow') : t('you.no-follow')
+})
 
-    noReviewLabel() {
-      return this.isCurrentUser
-        ? this.$t('me.no-project-reviewing')
-        : this.$t('you.no-project-reviewing')
-    },
+const noReviewLabel = computed(() => {
+  return isCurrentUser.value ? t('me.no-project-reviewing') : t('you.no-project-reviewing')
+})
 
-    noParticipate() {
-      return this.isCurrentUser
-        ? this.$t('me.no-project-participate')
-        : this.$t('you.no-project-participate')
-    },
-  },
-
-  mounted() {
-    this.setFollowedProject()
-  },
-
-  methods: {
-    setFollowedProject() {},
-  },
-}
+const noParticipate = computed(() => {
+  return isCurrentUser.value ? t('me.no-project-participate') : t('you.no-project-participate')
+})
 </script>
 
 <style lang="scss" scoped>

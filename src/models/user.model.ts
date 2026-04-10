@@ -4,6 +4,7 @@
  */
 import { ResearcherLight } from '@/interfaces/researcher'
 import { TagModel } from './tag.model'
+import { Translated } from '@/interfaces/translated'
 
 export interface UserModel {
   id: number
@@ -20,6 +21,8 @@ export interface UserModel {
   profile_picture?: object
   permissions: string[]
   description?: string
+  short_description?: string
+  job?: string
   people_groups?: object[] // TODO: define this type
   skills?: UserSkillModel[]
   notifications?: number
@@ -112,3 +115,5 @@ export interface UserSkillModel {
   can_mentor: boolean
   needs_mentor: boolean
 }
+
+export type TranslatedUserModel = Translated<UserModel, 'description' | 'short_description' | 'job'>

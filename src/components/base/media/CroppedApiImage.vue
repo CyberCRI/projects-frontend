@@ -43,16 +43,12 @@ const emit = defineEmits<{
 const imageLoaded = ref(false)
 const imageError = ref(false)
 
-const _src = computed(() => {
-  return props.pictureData?.variations?.[props.pictureSize]
-})
-
 const src = computed(() => {
   const defaultPicture = usePublicURL(props.defaultPicture)
   if (imageError.value) {
     return defaultPicture
   }
-  return _src.value || defaultPicture
+  return props.pictureData?.variations?.[props.pictureSize] || defaultPicture
 })
 
 const imageSizes = computed(() => {

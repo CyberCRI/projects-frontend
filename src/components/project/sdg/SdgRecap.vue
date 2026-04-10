@@ -1,17 +1,9 @@
 <template>
   <div class="sdg-recap">
     <div>
-      <div
-        :style="`background-image: url('${runtimeConfig.public.appPublicBinariesPrefix}/sdgs/logo.png')`"
-        class="sdg-logo"
-      />
-
+      <CroppedImage :src="sdgLogoInfo" class="sdg-logo" />
       <TransitionGroup tag="div" name="sdg" class="current-list">
-        <div
-          v-for="sdg in sdgs"
-          :key="sdg"
-          :style="`background-image: url('${runtimeConfig.public.appPublicBinariesPrefix}/sdgs/${lang}/${sdg}.svg')`"
-        />
+        <SdgIcon v-for="sdg in sdgs" :key="sdg" :sdg-id="sdg" />
       </TransitionGroup>
     </div>
 
@@ -25,49 +17,29 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import LpiButton from '@/components/base/button/LpiButton.vue'
+import SdgIcon from '@/components/search/Filters/SdgIcon.vue'
 
-export default {
-  name: 'SdgRecap',
+const projectLayoutToggleAddModal = inject<(string) => void>('projectLayoutToggleAddModal')
 
-  components: { LpiButton },
+withDefaults(
+  defineProps<{
+    sdgs?: (string | number)[]
+    isInEditingMode?: boolean
+  }>(),
+  {
+    sdgs: () => [],
+    isInEditingMode: false,
+  }
+)
 
-  inject: ['projectLayoutToggleAddModal'],
-  props: {
-    sdgs: {
-      type: Array,
-      default: () => [],
-    },
+const { canEditProject } = usePermissions()
 
-    isInEditingMode: {
-      type: Boolean,
-      default: false,
-    },
-  },
+const sdgLogoInfo = usePublicURL('/sdgs/logo.png')
 
-  setup() {
-    const { locale } = useNuxtI18n()
-    const runtimeConfig = useRuntimeConfig()
-    const { canEditProject } = usePermissions()
-    return {
-      locale,
-      runtimeConfig,
-      canEditProject,
-    }
-  },
-
-  computed: {
-    lang() {
-      return this.locale
-    },
-  },
-
-  methods: {
-    showSdgModal() {
-      this.projectLayoutToggleAddModal('sdg')
-    },
-  },
+const showSdgModal = () => {
+  projectLayoutToggleAddModal('sdg')
 }
 </script>
 

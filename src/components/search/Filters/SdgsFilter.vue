@@ -31,6 +31,7 @@ const toggleSdg = (sdgId) => {
   grid-template-columns: 1fr 1fr;
   gap: pxToRem(16px);
   justify-items: center;
+  margin-top: 1rem;
 }
 
 @media screen and (min-width: $max-mobile) {

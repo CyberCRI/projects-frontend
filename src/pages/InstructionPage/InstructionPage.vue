@@ -20,8 +20,8 @@ const organizationsStore = useOrganizationsStore()
 const router = useRouter()
 const route = useRoute()
 
-const _instruction = useState(() => null)
-const instruction = translateInstruction(_instruction)
+const originalInstruction = useState(() => null)
+const instruction = translateInstruction(originalInstruction)
 const loading = ref(false)
 const editedInstruction = ref(null)
 const instructionToDelete = ref(null)
@@ -44,7 +44,10 @@ const loadInstruction = async () => {
   loading.value = true
   // TODO: Fetch instuction
   try {
-    _instruction.value = await getInstruction(organizationsStore.current?.code, props.slugOrId)
+    originalInstruction.value = await getInstruction(
+      organizationsStore.current?.code,
+      props.slugOrId
+    )
 
     loading.value = false
   } catch (err) {

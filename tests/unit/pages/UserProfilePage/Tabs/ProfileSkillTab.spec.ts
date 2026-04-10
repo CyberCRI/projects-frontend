@@ -1,5 +1,5 @@
 import ProfileSkillTab from '@/pages/UserProfilePageV2/Tabs/ProfileSkillTab.vue'
-import { lpiShallowMount, lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMount } from '@/../tests/helpers/LpiMount'
 import { UserFactory } from '@/../tests/factories/user.factory'
 import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 import pinia from '@/stores'
@@ -9,6 +9,11 @@ import { OrganizationOutput, OrganizationPatchInput } from '@/models/organizatio
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
+import EmptyLabel from '@/components/base/EmptyLabel.vue'
+import { PaginationsFactory } from '../../../../factories/paginations.factory'
+import { registerEndpoint } from '@nuxt/test-utils/runtime'
+import flushPromises from 'flush-promises'
+import UserSkillsFull from '@/components/people/skill/UserSkillsFull.vue'
 
 const i18n = {
   locale: 'en',
@@ -34,77 +39,84 @@ describe('ProfileSkillTab', () => {
     usersStore.permissions = {}
     usersStore.getUser = vi.fn()
     const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore._current = { id: 'TEST' } as unknown as OrganizationOutput
-  })
-  afterEach(() => {
-    // usersStore.$reset()
+    organizationsStore._current = { id: 'TEST', code: 'TEST' } as unknown as OrganizationOutput
+
+    registerEndpoint(`organization/${organizationsStore._current.code}/mentoring`, () => {
+      return PaginationsFactory.generate()
+    })
   })
 
-  it('should render ProfileSkillTab component', () => {
-    let wrapper = lpiShallowMount(ProfileSkillTab, buildParams(UserFactory.generate()))
+  it('should render ProfileSkillTab component', async () => {
+    let wrapper = lpiMount(ProfileSkillTab, buildParams(UserFactory.generate()))
+    await flushPromises()
 
     expect(wrapper.exists()).toBeTruthy()
   })
 
-  it('should see that current user is the logged one', () => {
+  it('should see that current user is the logged one', async () => {
     const id = '123'
     const user: any = UserFactory.generate()
     user.id = id
 
     usersStore.id = id
-    let wrapper = lpiShallowMount(ProfileSkillTab, buildParams(user))
+    let wrapper = lpiMount(ProfileSkillTab, buildParams(user))
+    await flushPromises()
     let vm: any = wrapper.vm
     expect(vm.isCurrentUser).toBeTruthy()
   })
 
-  it('should see that current user is not the logged one', () => {
+  it('should see that current user is not the logged one', async () => {
     const user: any = UserFactory.generate()
     user.id = '123'
 
     usersStore.id = '456'
 
-    let wrapper = lpiShallowMount(ProfileSkillTab, buildParams(user))
+    let wrapper = lpiMount(ProfileSkillTab, buildParams(user))
+    await flushPromises()
     let vm: any = wrapper.vm
     expect(vm.isCurrentUser).toBeFalsy()
   })
 
-  it('should display a message if no kill and no hobby', () => {
+  it('should display a message if no kill and no hobby', async () => {
     const user: any = UserFactory.generate()
     user.id = '123'
 
     usersStore.id = '456'
 
-    let wrapper = lpiShallowMount(ProfileSkillTab, buildParams(user))
+    let wrapper = lpiMount(ProfileSkillTab, buildParams(user))
+    await flushPromises()
     let vm: any = wrapper.vm
-    expect(wrapper.find('.empty-field').exists()).toBe(true)
-    expect(wrapper.findAll('user-skills-full-stub').length).toBe(0)
+    expect(wrapper.findComponent(EmptyLabel).exists()).toBe(true)
+    expect(wrapper.findAllComponents(UserSkillsFull).length).toBe(0)
   })
 
-  it('should display one list if user has skill but no hobby', () => {
+  it('should display one list if user has skill but no hobby', async () => {
     const user: any = UserFactory.generate()
     user.id = '123'
     user.skills = [{ id: '123', type: 'skill', tag: aTag }]
     usersStore.id = '456'
 
-    let wrapper = lpiShallowMount(ProfileSkillTab, buildParams(user))
+    let wrapper = lpiMount(ProfileSkillTab, buildParams(user))
+    await flushPromises()
     let vm: any = wrapper.vm
-    expect(wrapper.find('.empty-field').exists()).toBe(false)
-    expect(wrapper.findAll('user-skills-full-stub').length).toBe(1)
+    expect(wrapper.findComponent(EmptyLabel).exists()).toBe(false)
+    expect(wrapper.findAllComponents(UserSkillsFull).length).toBe(1)
   })
 
-  it('should display one list if user has hobbies but no skills', () => {
+  it('should display one list if user has hobbies but no skills', async () => {
     const user: any = UserFactory.generate()
     user.id = '123'
     user.skills = [{ id: '123', type: 'hobby', tag: aTag }]
     usersStore.id = '456'
 
-    let wrapper = lpiShallowMount(ProfileSkillTab, buildParams(user))
+    let wrapper = lpiMount(ProfileSkillTab, buildParams(user))
+    await flushPromises()
     let vm: any = wrapper.vm
-    expect(wrapper.find('.empty-field').exists()).toBe(false)
-    expect(wrapper.findAll('user-skills-full-stub').length).toBe(1)
+    expect(wrapper.findComponent(EmptyLabel).exists()).toBe(false)
+    expect(wrapper.findAllComponents(UserSkillsFull).length).toBe(1)
   })
 
-  it('should display two lists if user has hobbies and skills', () => {
+  it('should display two lists if user has hobbies and skills', async () => {
     const user: any = UserFactory.generate()
     user.id = '123'
     user.skills = [
@@ -113,10 +125,11 @@ describe('ProfileSkillTab', () => {
     ]
     usersStore.id = '456'
 
-    let wrapper = lpiShallowMount(ProfileSkillTab, buildParams(user))
+    let wrapper = lpiMount(ProfileSkillTab, buildParams(user))
+    await flushPromises()
     let vm: any = wrapper.vm
-    expect(wrapper.find('.empty-field').exists()).toBe(false)
-    expect(wrapper.findAll('user-skills-full-stub').length).toBe(2)
+    expect(wrapper.findComponent(EmptyLabel).exists()).toBe(false)
+    expect(wrapper.findAllComponents(UserSkillsFull).length).toBe(2)
   })
 
   it('should display a tip if list are displayed', async () => {
@@ -129,6 +142,7 @@ describe('ProfileSkillTab', () => {
     usersStore.id = '456'
 
     let wrapper = lpiMount(ProfileSkillTab, buildParams(user))
+    await flushPromises()
     await wrapper.vm.$nextTick()
     expect(wrapper.find('[data-test="skill-levels-help-button"]').exists()).toBe(true)
   })

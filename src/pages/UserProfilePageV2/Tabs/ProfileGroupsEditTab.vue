@@ -8,7 +8,6 @@
         <ListPaginator :limit="listLimit" :list="user?.people_groups || []">
           <template #default="groupListSlotProps">
             <CardList
-              :desktop-columns-number="4"
               :limit="listLimit"
               :items="groupListSlotProps.items"
               :is-loading="groupListSlotProps.isLoading"
@@ -22,7 +21,7 @@
                 />
               </template>
               <template #empty>
-                <div class="empty-ctn" :class="gridLayout">
+                <div class="empty-ctn">
                   <EmptyCard class="empty-card" :label="t('me.no-group')" />
                 </div>
               </template>
@@ -44,21 +43,17 @@
     </div>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 import CardList from '@/components/base/CardList.vue'
 import GroupCard from '@/components/group/GroupCard.vue'
 import EmptyCard from '@/components/people/UserProfile/EmptyCard.vue'
 import ListPaginator from '@/components/base/navigation/ListPaginator.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
+import { TranslatedUserModel } from '@/models/user.model'
 
-defineOptions({ name: 'ProfileGroupsEditTab' })
-
-defineProps({
-  user: {
-    type: Object,
-    required: true,
-  },
-})
+defineProps<{
+  user: TranslatedUserModel
+}>()
 
 const { t } = useNuxtI18n()
 const orgStore = useOrganizations()

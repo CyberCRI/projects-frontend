@@ -36,8 +36,7 @@ onMounted(async () => {
 })
 
 const { translateProjects } = useAutoTranslate()
-const _results = computed(() => projectRecommendationsRequest.value?.results)
-const results = translateProjects(_results)
+const results = translateProjects(computed(() => projectRecommendationsRequest.value?.results))
 
 useLpiHead2({
   title: computed(() => t('recommendations.projects.title')),
@@ -50,13 +49,7 @@ useLpiHead2({
       {{ $t('recommendations.projects.title') }}
     </h1>
 
-    <CardList
-      :desktop-columns-number="6"
-      :is-loading="isLoading"
-      :limit="limit"
-      :items="results"
-      class="list-container"
-    >
+    <CardList :is-loading="isLoading" :limit="limit" :items="results">
       <template #default="projectListSlotProps">
         <ProjectCard :project="projectListSlotProps.item" />
       </template>

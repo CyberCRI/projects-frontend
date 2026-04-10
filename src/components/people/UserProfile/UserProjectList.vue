@@ -1,11 +1,6 @@
 <template>
   <div>
-    <CardList
-      :desktop-columns-number="numberColumn"
-      :is-loading="projectsLoading"
-      :limit="limit"
-      :items="projects"
-    >
+    <CardList :is-loading="projectsLoading" :limit="limit" :items="projects">
       <template #default="projectListSlotProps">
         <ProjectCard
           v-if="projectListSlotProps.item"

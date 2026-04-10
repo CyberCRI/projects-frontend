@@ -36,7 +36,6 @@ onBeforeUnmount(() => {
 })
 
 // expose
-// editor needs to be accessed by parent (see HelpAdminTab.vue)
 defineExpose({
   editor,
   resetContent,

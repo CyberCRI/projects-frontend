@@ -41,7 +41,7 @@ import { html2Text } from '@/functs/string'
 import { eventSkeleton } from '@/skeletons/event.skeletons'
 import useToasterStore from '@/stores/useToaster'
 
-const props = defineProps<{ eventId: number }>()
+const props = defineProps<{ eventId: number | string }>()
 
 const breadcrumbs = computed(() => [
   {
@@ -57,7 +57,7 @@ const router = useRouter()
 const toaster = useToasterStore()
 const { t } = useNuxtI18n()
 
-const eventId = computed(() => props.eventId)
+const eventId = computed(() => parseInt(props.eventId.toString(), 10))
 const organizationCode = useOrganizationCode()
 const {
   status,
