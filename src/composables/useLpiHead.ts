@@ -141,8 +141,8 @@ type OptionsHead = {
 export const useLpiHead2 = async (options: OptionsHead) => {
   // TODO(remi): remove try/catch
 
-  const store = useOrganizationsStore()
   try {
+    const store = useOrganizationsStore()
     const organization = await store.getOrFetchOrganization()
     const url = options.url || useRequestURL()?.toString() || ''
     const title = options.title || organization?.$t.name || ''

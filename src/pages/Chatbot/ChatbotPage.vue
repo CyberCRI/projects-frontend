@@ -1,12 +1,20 @@
 <script setup>
 import useLoadingFromStatus from '@/composables/useLoadingFromStatus'
 const props = defineProps({ chatId: String })
-const CHAT_ENDPOINT = computed(() => '/api/agents/chat?id=' + props.chatId)
+const CHAT_ENDPOINT = computed(() => '/api/agent/chat?id=' + props.chatId)
 
 // type Params = Parameters<typeof useFetch>
-const options = { query: { id: props.chatId } }
-const url = '/api/agents/get'
+const options = {}
+const url = `/api/agent/${props.chatId}`
 const { data: agent, status, error, clear } = await useFetch(url, options)
+
+watch(
+  () => error.value,
+  (error) => {
+    console.log(error)
+  }
+)
+
 const loading = useLoadingFromStatus(status)
 
 const hasUserContext = ref(agent.value.useProfileData)
