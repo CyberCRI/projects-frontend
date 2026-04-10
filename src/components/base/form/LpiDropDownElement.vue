@@ -8,8 +8,8 @@
         :category="child"
         :selected="selected"
       >
-        <template #default="{ option: child_, selected: _selected }">
-          <slot name="default" :option="child_" :selected="_selected" />
+        <template #default="{ option: subOption, selected: subSelected }">
+          <slot name="default" :option="subOption" :selected="subSelected" />
         </template>
       </LpiProjectDropDownElement>
     </ul>

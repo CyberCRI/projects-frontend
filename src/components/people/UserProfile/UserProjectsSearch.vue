@@ -57,7 +57,7 @@ export default {
       projectListId: funct.newSID(true),
       items: [],
       isLoading: true,
-      loadProjects: debounce(this._loadProjects, 40, { leading: false, trailing: true }),
+      loadProjects: debounce(this.fetchProjects, 40, { leading: false, trailing: true }),
       totalCount: 0,
       pagination: {
         currentPage: 1,
@@ -100,7 +100,7 @@ export default {
       this.$emit('loading', true)
     },
 
-    async _loadProjects(specificPageIndex = null) {
+    async fetchProjects(specificPageIndex = null) {
       this.initProjectLoading()
       let response
       if (specificPageIndex) {

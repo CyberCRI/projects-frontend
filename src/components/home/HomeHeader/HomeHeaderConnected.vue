@@ -80,13 +80,13 @@ export default {
     const usersStore = useUsersStore()
     const { translateProjects, translateEvents, translateInstructions } = useAutoTranslate()
 
-    const _events = ref([])
-    const _projects = ref([])
-    const _instructions = ref([])
+    const originalEvents = ref([])
+    const originalProject = ref([])
+    const originalInstructions = ref([])
 
-    const events = translateEvents(_events)
-    const projects = translateProjects(_projects)
-    const instructions = translateInstructions(_instructions)
+    const events = translateEvents(originalEvents)
+    const projects = translateProjects(originalProject)
+    const instructions = translateInstructions(originalInstructions)
 
     const summaryMaxEvents = ref(3)
     const summaryMaxProjects = ref(3)
@@ -97,9 +97,9 @@ export default {
     return {
       organizationsStore,
       usersStore,
-      _projects,
-      _events,
-      _instructions,
+      originalProject,
+      originalEvents,
+      originalInstructions,
       projects,
       events,
       instructions,
@@ -166,11 +166,11 @@ export default {
         organizations: this.organizationsStore.current.code,
       }
       const response = await searchProjects('', filters)
-      this._projects = response.results.map((result) => result.project)
+      this.originalProject = response.results.map((result) => result.project)
     },
 
     async loadEvents() {
-      this._events = (
+      this.originalEvents = (
         await getAllEvents(this.organizationsStore.current?.code, {
           query: {
             ordering: 'start_date',
@@ -182,7 +182,7 @@ export default {
     },
 
     async loadInstructions() {
-      this._instructions = (
+      this.originalInstructions = (
         await getAllInstructions(this.organizationsStore.current?.code, {
           ordering: '-publication_date',
           to_date: new Date().toISOString(),

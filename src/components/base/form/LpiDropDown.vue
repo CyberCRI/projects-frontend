@@ -14,11 +14,11 @@
               :option="option"
               :selected="option.id === selectedOption?.id"
             >
-              <template #default="{ option: _option, selected: _selected }">
+              <template #default="{ option: subOption, selected: subSelected }">
                 <slot
                   name="default"
-                  :selected="_selected"
-                  :option="_option"
+                  :selected="subSelected"
+                  :option="subOption"
                   @click.prevent="close"
                 />
               </template>

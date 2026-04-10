@@ -10,7 +10,6 @@
         :is-loading="SearchResultsSlotProps.isLoading"
         :limit="SearchResultsSlotProps.limit"
         :items="SearchResultsSlotProps.items"
-        class="list-container"
         switchable-display
       >
         <template #default="projectListSlotProps">
