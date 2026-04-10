@@ -82,7 +82,6 @@
 <script>
 import useUsersStore from '@/stores/useUsers.ts'
 import { getMentorshipDetails, respondMentorship } from '@/api/mentorship.service.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useSkillTexts from '@/composables/useSkillTexts.js'
 export default {
   name: 'MentorshipRespondPage',
@@ -96,9 +95,9 @@ export default {
 
   setup() {
     const usersStore = useUsersStore()
-    const organizationsStore = useOrganizationsStore()
+    const organizationsCode = useOrganizationCode()
     const skillTexts = useSkillTexts()
-    return { usersStore, organizationsStore, skillTexts }
+    return { usersStore, organizationsCode, skillTexts }
   },
 
   data() {
@@ -150,10 +149,7 @@ export default {
 
     try {
       // TODO: Call API to get the mentorship request
-      this.mentorship = await getMentorshipDetails(
-        this.organizationsStore.current?.code,
-        this.token
-      )
+      this.mentorship = await getMentorshipDetails(this.organizationsCode, this.token)
       this.responseWasSent = !!this.mentorship.status
       this.isLoading = false
     } catch (error) {
@@ -172,7 +168,7 @@ export default {
       }
       try {
         // TODO: Call API to save the response
-        await respondMentorship(this.organizationsStore.current?.code, this.mentorship.id, payload)
+        await respondMentorship(this.organizationsCode, this.mentorship.id, payload)
         this.responseWasSent = true
       } catch (error) {
         console.error(error)

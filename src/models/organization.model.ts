@@ -41,6 +41,7 @@ export interface OrganizationModel extends BaseModel {
   dashboard_title: string
   dashboard_subtitle: string
   language: LanguageType
+  languages: LanguageType[]
   logo_image: LogoImage
   main_org_logo_visibility: boolean
   is_logo_visible_on_parent_dashboard: boolean

@@ -45,7 +45,7 @@ export default defineVitestConfig({
               appMetaPortalUrl: '',
               appWssHost: 'http://localhost:8080/',
               appEnvironment: '',
-              appDoc: '',
+              appDoc: 'http://localhost:8080/',
               appI18nFallbackLocale: '',
               appI18nLocale: 'en',
               appShowDebug: 0,

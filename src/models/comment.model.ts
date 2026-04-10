@@ -5,6 +5,7 @@ import BaseModel from '@/models/base.model'
  * @description Comment of a project
  * */
 export interface CommentModel extends BaseModel {
+  id: number
   content: string
   author: {
     email: string

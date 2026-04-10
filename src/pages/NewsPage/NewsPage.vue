@@ -83,7 +83,7 @@ import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 
 const props = defineProps<{
-  slugOrId: string
+  slugOrId: string | number
 }>()
 
 const toaster = useToasterStore()
@@ -93,7 +93,7 @@ const { canEditNews, canDeleteNews } = usePermissions()
 const { locale, t } = useNuxtI18n()
 
 const organizationCode = useOrganizationCode()
-const newsId = computed<NewsModel['id']>(() => parseInt(props.slugOrId, 10))
+const newsId = computed<NewsModel['id']>(() => parseInt(props.slugOrId.toString(), 10))
 const {
   status,
   data: news,

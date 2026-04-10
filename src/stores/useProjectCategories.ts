@@ -89,6 +89,7 @@ const useProjectCategoriesStore = defineStore('projectCategories', () => {
           // Except in "TheAdvancedProjectOptions" where we need all project categories from every org
           //commit('SET_PROJECT_CATEGORIES', response.results)
           _all.value = response.results
+          // @ts-expect-error idk
           resolve(response)
         })
         .catch((error) => {

@@ -5,6 +5,7 @@ import BaseFactory from './base.factory'
 
 export const CommentFactory = createFactory<CommentOutput>((faker) => ({
   ...BaseFactory.generate(),
+  id: faker.datatype.number(),
   author: {
     email: faker.datatype.string(),
     family_name: faker.datatype.string(),

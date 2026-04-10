@@ -34,7 +34,7 @@ export const ProjectFactory = createFactory<ProjectModel>((faker) => ({
   publication_status: 'public',
   life_status: 'running',
   reviews: ReviewFactory.generateMany(2),
-  organizations: OrganizationOutputFactory.generate(),
+  organizations: OrganizationOutputFactory.generateMany(1),
   tags: TagFactory.generateMany(2),
   links: AttachmentLinkFactory.generateMany(2),
   files: AttachmentFileFactory.generateMany(2),

@@ -11,9 +11,9 @@ const toaster = useToasterStore()
 const { isAdmin } = usePermissions()
 
 const organizationsStore = useOrganizationsStore()
+const organizationCode = useOrganizationCode()
 
 const organization = computed(() => organizationsStore?.current)
-const orgCode = computed(() => organization.value?.code)
 
 const confirmModalVisible = ref(false)
 const currentResource = ref(null)
@@ -26,7 +26,7 @@ const isEditionEnabled = computed(() => isAdmin.value)
 const getFileResources = async () => {
   try {
     asyncing.value = true
-    const response = await getOrganizationFiles(orgCode.value)
+    const response = await getOrganizationFiles(organizationCode)
     fileResources.value = response.results
   } catch (err) {
     console.error(err)
@@ -45,7 +45,7 @@ const openModal = (resource) => {
 const deleteResource = async (resource) => {
   asyncing.value = true
   try {
-    await deleteOrganizationFile(orgCode.value, resource.id)
+    await deleteOrganizationFile(organizationCode, resource.id)
 
     // TODO: use org event
     // analytics.attachmentFile.removeAttachment({

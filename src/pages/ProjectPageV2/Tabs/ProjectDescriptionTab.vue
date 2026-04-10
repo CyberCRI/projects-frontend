@@ -39,115 +39,69 @@
       <TipTapOutput v-else class="description-content" :content="description" />
     </div>
 
-    <DescriptionDrawer
-      :is-opened="editDescriptionModalActive"
-      :project="updatedProject"
-      @close="close"
-    />
+    <DescriptionDrawer :is-opened="editDescriptionModalActive" :project="project" @close="close" />
   </div>
 </template>
 
-<script>
-import useProjectsStore from '@/stores/useProjects.ts'
-export default {
-  name: 'ProjectDescriptionTab',
+<script setup lang="ts">
+import { TranslatedProject } from '@/models/project.model'
 
-  props: {
-    project: {
-      type: Object,
-      default: () => {},
-    },
-  },
+const props = defineProps<{
+  project: TranslatedProject
+}>()
 
-  setup() {
-    const projectsStore = useProjectsStore()
-    useScrollToTab()
-    const { canEditProject } = usePermissions()
-    return {
-      projectsStore,
-      canEditProject,
-    }
-  },
+useScrollToTab()
+const { canEditProject } = usePermissions()
 
-  data() {
-    const { getTranslatableField } = useAutoTranslate()
-    return {
-      editDescriptionModalActive: false,
-      hasSummary: false,
-      // TODO: temp fix for encoding bug, to be removed soon
-      description: computed(() =>
-        unref(getTranslatableField(this.projectsStore.project, 'description'))?.replaceAll(
-          /\xa0»/g,
-          '"'
-        )
-      ),
-      // description: getTranslatableField(this.projectsStore.project, 'description')
-    }
-  },
+const editDescriptionModalActive = ref(false)
+const hasSummary = ref(false)
 
-  computed: {
-    updatedProject() {
-      return this.projectsStore.project
-    },
+// TODO: temp fix for encoding bug, to be removed soon
+const description = computed(() => {
+  return (props.project.$t?.description || props.project.description || '').replaceAll(
+    /\xa0»/g,
+    '"'
+  )
+})
 
-    showDescriptionPlaceHolder() {
-      return this.project.description.length === 0 || this.project.description === '<p></p>'
-    },
-    // showEditButton() {
-    //   return this.canEditProject && !this.showDescriptionPlaceHolder
-    // },
-  },
+const showDescriptionPlaceHolder = computed(() => {
+  return props.project.description.length === 0 || props.project.description === '<p></p>'
+})
 
-  watch: {
-    description: {
-      handler(neo, old) {
-        if (neo !== old) {
-          this.$nextTick(() => {
-            this.$refs.summaryBlock?.loadSummary()
-          })
-        }
-      },
-    },
-    //   showEditButton: {
-    //     handler: function (neo, old) {
-    //       if (neo != old) {
-    //         // give time to render content
-    //         this.$nextTick(() => {
-    //           this.computeAnchorOffset()
-    //         })
-    //       }
-    //     },
-    //     immediate: true,
-    //   },
-  },
+const summaryBlock = useTemplateRef('summaryBlock')
+watch(description, (neo, old) => {
+  if (neo !== old) {
+    nextTick(() => {
+      summaryBlock.value?.loadSummary()
+    })
+  }
+})
 
-  methods: {
-    close() {
-      this.editDescriptionModalActive = !this.editDescriptionModalActive
-    },
-    scrollToSection(targetId) {
-      const target = document.getElementById(`anchor-${targetId}`)
-      let offset = 20
-      const header = document.querySelector('.header__container')
-      if (header) {
-        offset += header.getBoundingClientRect().height
-      }
+const close = () => {
+  editDescriptionModalActive.value = !editDescriptionModalActive.value
+}
 
-      const stickyHead = document.querySelector('.page-sticky-head')
-      if (stickyHead) {
-        offset += stickyHead.getBoundingClientRect().height
-      }
-      if (target) {
-        const bbox = target.getBoundingClientRect()
-        const top = bbox.top
-        window.scroll({
-          left: 0,
-          top: window.scrollY + top - offset,
-          behavior: 'smooth',
-        })
-      }
-    },
-  },
+const scrollToSection = (targetId) => {
+  const target = document.getElementById(`anchor-${targetId}`)
+  let offset = 20
+  const header = document.querySelector('.header__container')
+  if (header) {
+    offset += header.getBoundingClientRect().height
+  }
+
+  const stickyHead = document.querySelector('.page-sticky-head')
+  if (stickyHead) {
+    offset += stickyHead.getBoundingClientRect().height
+  }
+  if (target) {
+    const bbox = target.getBoundingClientRect()
+    const top = bbox.top
+    window.scroll({
+      left: 0,
+      top: window.scrollY + top - offset,
+      behavior: 'smooth',
+    })
+  }
 }
 </script>
 

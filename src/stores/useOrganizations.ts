@@ -5,8 +5,11 @@ import {
   patchOrganization,
 } from '@/api/organizations.service'
 
-import type { APIResponseList } from '@/api/types'
-import type { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
+import type {
+  OrganizationModel,
+  OrganizationOutput,
+  OrganizationPatchInput,
+} from '@/models/organization.model'
 
 import analytics from '@/analytics'
 
@@ -63,7 +66,7 @@ const useOrganizationsStore = defineStore('organizations', () => {
   const termsContentTranslated = getTranslatableField(tos, 'displayed_content', termsContent)
   const hasTerms = computed((): boolean => !!(termsId.value && termsContent.value))
 
-  async function getCurrentOrganization(code: string): Promise<OrganizationOutput> {
+  async function getCurrentOrganization(code: string): Promise<OrganizationModel> {
     try {
       // foo
       const organization = await getOrganizationByCode(code)
@@ -87,7 +90,7 @@ const useOrganizationsStore = defineStore('organizations', () => {
     return current.value
   }
 
-  async function getAllOrganizations(): Promise<APIResponseList<OrganizationOutput>> {
+  async function getAllOrganizations() {
     try {
       const response = await getOrganizations()
       _all.value = response.results

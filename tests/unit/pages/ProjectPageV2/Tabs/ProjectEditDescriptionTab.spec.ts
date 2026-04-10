@@ -3,10 +3,18 @@ import ProjectEditDescriptionTab from '@/pages/ProjectPageV2/Tabs/ProjectEditDes
 
 import { describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
+import { ProjectFactory } from '../../../../factories/project.factory'
+import { UserFactory } from '../../../../factories/user.factory'
+import useUsersStore from '@/stores/useUsers'
 
 describe('ProjectEditDescriptionTab.vue', () => {
   it('should render component', async () => {
-    const props = {}
+    const project = ProjectFactory.generate()
+    const props = { project }
+
+    const user = UserFactory.generate()
+    const userStore = useUsersStore()
+    userStore.userFromToken = userStore.userFromApi = user
 
     const wrapper = await lpiMount(ProjectEditDescriptionTab, { props })
     await flushPromises()

@@ -3,12 +3,22 @@ import GroupsPage from '@/pages/GroupsPage/GroupsPage.vue'
 
 import { describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
+import { registerEndpoint } from '@nuxt/test-utils/runtime'
+import { MockRouter } from '../../../helpers/router'
 
 describe('GroupsPage.vue', () => {
   it('should render component', async () => {
     const props = {}
 
-    const wrapper = await lpiMount(GroupsPage, { props })
+    const organizationCode = useOrganizationCode()
+    registerEndpoint(`organization/${organizationCode}/people-groups-hierarchy/`, () => {
+      return {
+        id: 1,
+        children: [],
+      }
+    })
+
+    const wrapper = await lpiMount(GroupsPage, { props, router: MockRouter() })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

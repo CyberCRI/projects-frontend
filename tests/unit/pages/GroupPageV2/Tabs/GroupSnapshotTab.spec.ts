@@ -29,8 +29,6 @@ describe('GroupSnapshotTab', () => {
     ]
     group.$t.description = ''
 
-    console.log(group)
-
     const wrapper = lpiShallowMount(GroupSnapshotTab, {
       props: {
         group,
