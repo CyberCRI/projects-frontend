@@ -69,6 +69,26 @@ const deleteEntity = async () => {
       @confirm="entityToShow = null"
     />
 
+    <AgentAdminShow
+      v-if="entityToShow"
+      :agent="entityToShow"
+      @close="entityToShow = null"
+      @confirm="entityToShow = null"
+    />
+
+    <AgentAdminForm
+      :is-opened="addEntityIsOpen"
+      @close="addEntityIsOpen = false"
+      @entity-added="refreshEntityList"
+    />
+    <AgentAdminForm
+      :is-opened="!!entityToEdit"
+      :agentToEdit="entityToEdit"
+      is-edit
+      @close="entityToEdit = null"
+      @entity-updated="entityToEdit = null"
+    />
+
     <ConfirmModal
       v-if="entityToDelete"
       :asyncing="isAsyncing"

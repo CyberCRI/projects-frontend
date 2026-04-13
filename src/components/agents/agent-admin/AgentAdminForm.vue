@@ -16,28 +16,69 @@ const emit = defineEmits(['close', 'document-added', 'document-updated'])
 
 const toaster = useToasterStore()
 const usersStore = useUsersStore()
+const defaultForm = () => ({
+  title: '',
+  description: '',
+  promptId: 0,
+  promptVersion: 0,
+  useLatestPromptVersion: true,
+  useProfileData: false,
+})
 
-const file = ref(null)
-const title = ref('')
+const form = ref(defaultForm())
 
 const titleExists = ref(false)
 
+const prompts = ref([])
+
+const fetchPrompts = async () => {
+  let headers = {}
+  const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
+  if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
+
+  const response = await fetch(`/api/prompt/`, {
+    headers,
+  })
+  if (!response.ok) {
+    let errorText = ''
+    try {
+      errorText = await response.text()
+    } catch {
+      // ignore text parsing errors
+    }
+    throw new Error(
+      errorText || `Request to /api/agent/${props.agent.id} failed with status ${response.status}`
+    )
+  }
+  const prompts = await response.json()
+  return prompts
+}
+
+const promptOptions = computed(
+  () => prompts.value?.map((p) => ({ value: p.id, label: p.title })) || []
+)
+
+const selectedPrompt = computed(() => prompts.value.find((p) => p.id == form.value.promptId))
+
+const promptVersions = computed(() => selectedPrompt.value?.promptContents || [])
+const versionOptions = computed(() =>
+  promptVersions.value?.map((v) => ({ value: v.id, label: v.version }))
+)
+
 watch(
   () => props.isOpened,
-  (neo) => {
-    if (neo) {
-      file.value = null
-      title.value = props.isEdit ? props.documentTitle : ''
-      titleExists.value = false
+  async (neo) => {
+    isAsyncing.value = true
+    try {
+      prompts.value = await fetchPrompts()
+      form.value = defaultForm()
+    } catch (e) {
+      console.error(e)
+    } finally {
+      isAsyncing.value = false
     }
   }
 )
-
-const onFileChange = (e) => {
-  let files = e.target.files || e.dataTransfer.files
-  if (!files.length) return
-  file.value = files[0]
-}
 
 const isAsyncing = ref(false)
 
@@ -50,53 +91,8 @@ const submit = async () => {
   const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
   if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
 
-  if (!props.isEdit) {
-    try {
-      const query = new URLSearchParams()
-      query.set('title', title.value)
-      const response = await fetch(`/api/vector-store/get?${query.toString()}`, {
-        headers,
-      })
-      // Only attempt to parse JSON when the response is OK; handle 404/empty-body separately.
-      if (response.status === 404) {
-        // No existing document with this title; continue to ingestion.
-      } else if (response.ok) {
-        const existing = await response.json()
-        if (Array.isArray(existing) && existing.length) {
-          titleExists.value = true
-          toaster.pushError(t('vector-store.title-exists'))
-          isAsyncing.value = false
-          return
-        }
-      } else {
-        // Non-OK, non-404 response; log it and continue without blocking ingestion.
-        console.log(
-          `Unexpected response when checking title existence: ${response.status} ${response.statusText}`
-        )
-      }
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  const fd = new FormData()
-  fd.append('title', title.value)
-  fd.append('file', file.value, file.value.name)
-
   try {
-    const response = await fetch(`/api/vector-store/ingest`, {
-      body: fd,
-      method: 'POST',
-      headers,
-    })
-    if (response.ok) {
-      toaster.pushSuccess(
-        t(props.isEdit ? 'vector-store.document-updated' : 'vector-store.document-added')
-      )
-      emit(props.isEdit ? 'document-updated' : 'document-added')
-    } else {
-      toaster.pushError(`${response.status} - ${response.statusText}`)
-    }
+    console.log('submit')
   } catch (e) {
     toaster.pushError(e.toString())
   } finally {
@@ -108,33 +104,82 @@ const submit = async () => {
 <template>
   <BaseDrawer
     data-test="vector-store-add-document-drawer"
-    :confirm-action-name="t('common.confirm')"
-    :confirm-action-disabled="!title || !file"
+    :confirm-action-name="$t('common.confirm')"
+    :confirm-action-disabled="!form.title"
     :is-opened="isOpened"
-    :title="t(props.isEdit ? 'vector-store.edit-document' : 'vector-store.add-document')"
+    :title="$t(props.isEdit ? 'agents.edit-agent' : 'agents.create-agent')"
     class="medium"
     :asyncing="isAsyncing"
     @close="close"
     @confirm="submit"
   >
     <div class="form-section">
+      <!--
+      title             String
+      description       String @default("")
+      orgCode           String
+
+      promptId          Int
+      promptVersion     Int
+      promptContent     PromptContent @relation(fields: [promptId, promptVersion], references: [promptId, version])
+
+      useProjectsMcp    Boolean @default(false)
+      mcps              Mcp[]
+      skillContents     SkillContent[]
+
+      useProfileData    Boolean @default(false)
+
+      useLatestPromptVersion Boolean @default(true)
+
+      -->
       <TextInput
-        v-model.trim="title"
-        :label="$t('vector-store.title-field')"
+        v-model.trim="form.title"
+        :label="$t('agents.title')"
         :disabled="isEdit"
         @change="titleExists = false"
       />
-      <p v-if="titleExists" class="error">{{ $t('vector-store.title-exists') }}</p>
+      <p v-if="titleExists" class="error">{{ $t('agents.title-exists') }}</p>
     </div>
     <div class="form-section">
-      <label>{{ $t('vector-store.file-field') }}</label>
-      <br />
-      <input id="file" type="file" name="file" required @change="onFileChange" />
+      <TextInput
+        v-model.trim="form.description"
+        type="textarea"
+        :label="$t('agents.description')"
+        @change="titleExists = false"
+      />
+    </div>
+    <div class="form-section">
+      <LpiSelect
+        :options="promptOptions"
+        v-model="form.promptId"
+        :placeholder="$t('agents.prompt-placeholder')"
+      />
+    </div>
+    <div class="form-section" v-if="form.promptId">
+      <lpiCheckbox
+        :label="$t('agents.use-latest-prompt-version')"
+        v-model="form.useLatestPromptVersion"
+      />
+      <LpiSelect
+        v-if="!form.useLatestPromptVersion"
+        :options="versionOptions"
+        v-model="form.promptVersion"
+        :placeholder="$t('agents.prompt-version-placeholder')"
+      />
+    </div>
+    <div class="form-section">
+      <lpiCheckbox :label="$t('agents.use-project-mcp')" v-model="form.useProjectsMcp" />
+    </div>
+    <div class="form-section">
+      <lpiCheckbox :label="$t('agents.use-profile-data')" v-model="form.useProfileData" />
     </div>
   </BaseDrawer>
 </template>
 <style lang="scss" scoped>
 .error {
   color: $salmon;
+}
+.form-section ~ .form-section {
+  margin-top: 1rem;
 }
 </style>
