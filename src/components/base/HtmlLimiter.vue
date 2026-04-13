@@ -66,10 +66,12 @@ export default {
 
   async mounted() {
     this.compute()
+    if (!import.meta.client) return
     window.addEventListener('resize', this.debouncedCompute)
   },
 
   unmounted() {
+    if (!import.meta.client) return
     window.removeEventListener('resize', this.debouncedCompute)
   },
 

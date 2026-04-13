@@ -83,8 +83,8 @@ export default {
     },
 
     picture: {
-      type: [Object, File, null],
-      required: true,
+      type: [Object, File],
+      default: null,
     },
     defaultPicture: {
       type: [String, Array],

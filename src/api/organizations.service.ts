@@ -50,7 +50,7 @@ export async function postOrganisationLogo({
   body,
 }: {
   code: string
-  body: ImageOrganizationInput
+  body: ImageOrganizationInput | FormData
 }) {
   return await useAPI(`organization/${code}/logo/`, { body, method: 'POST' }) //.data.value
 }

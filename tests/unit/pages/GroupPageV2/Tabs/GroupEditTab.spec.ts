@@ -1,4 +1,4 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import GroupEditTab from '@/pages/GroupPageV2/Tabs/GroupEditTab.vue'
 
 import { describe, expect, it } from 'vitest'
@@ -11,7 +11,7 @@ describe('GroupEditTab.vue', () => {
     const orgganizationCode = useOrganizationCode()
     group.organization.code = orgganizationCode
 
-    const wrapper = lpiMount(GroupEditTab, { props })
+    const wrapper = await lpiMountSuspended(GroupEditTab, { props })
     expect(wrapper.exists()).toBe(true)
   })
 })

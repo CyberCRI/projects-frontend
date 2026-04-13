@@ -512,6 +512,7 @@
     "delete-description": "Are you sure you want to permanently delete your comments? This action will be irreversible."
   },
   "common": {
+    "empty": "Nothing here...",
     "select": "select",
     "year": "year",
     "link-to": "link to",

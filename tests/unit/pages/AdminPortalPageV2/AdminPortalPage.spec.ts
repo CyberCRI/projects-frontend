@@ -1,4 +1,4 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import AdminPortalPage from '@/pages/AdminPortalPageV2/AdminPortalPage.vue'
 
 import { describe, expect, it } from 'vitest'
@@ -8,7 +8,7 @@ describe('AdminPortalPage.vue', () => {
   it('should render component', async () => {
     const props = {}
 
-    const wrapper = await lpiMount(AdminPortalPage, { props })
+    const wrapper = await lpiMountSuspended(AdminPortalPage, { props })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

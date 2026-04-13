@@ -10,6 +10,8 @@ export const PeopleFactory = createFactory<PeopleModel>((faker) => ({
   people_groups: [],
   notifications: 0,
   privacy_settings: {},
+  email_verified: faker.datatype.boolean(),
+  current_org_role: '',
   skills: [],
   id: faker.datatype.number(),
   language: faker.datatype.string(),

@@ -22,17 +22,7 @@ export const OrganizationFactory = createFactory<OrganizationModel>((faker) => (
   dashboard_subtitle: faker.lorem.sentence(),
   language: 'fr',
   languages: ['fr', 'en'],
-  logo_image: {
-    name: faker.datatype.string(),
-    url: faker.image.image(),
-    variations: {
-      full: faker.image.image(),
-      large: faker.image.image(),
-      medium: faker.image.image(),
-      original: faker.image.image(),
-      small: faker.image.image(),
-    },
-  },
+  logo_image: ImageFactory.generate(),
   main_org_logo_visibility: faker.datatype.boolean(),
   is_logo_visible_on_parent_dashboard: faker.datatype.boolean(),
   name: faker.datatype.string(),

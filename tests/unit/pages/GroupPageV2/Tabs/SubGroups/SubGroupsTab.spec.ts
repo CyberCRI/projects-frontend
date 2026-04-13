@@ -1,4 +1,4 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import SubGroupsTab from '@/pages/GroupPageV2/Tabs/SubGroups/SubGroupsTab.vue'
 
 import { describe, expect, it } from 'vitest'
@@ -13,7 +13,7 @@ describe('SubGroupsTab.vue', () => {
       group,
     }
 
-    const wrapper = await lpiMount(SubGroupsTab, { props, router: MockRouter() })
+    const wrapper = await lpiMountSuspended(SubGroupsTab, { props, router: MockRouter() })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

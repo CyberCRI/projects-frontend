@@ -1,5 +1,5 @@
 // TODO mock category endpoints
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import CreateProjectPage from '@/pages/CreateProjectPage/CreateProjectPage.vue'
 
 import { describe, expect, it } from 'vitest'
@@ -19,7 +19,7 @@ describe('CreateProjectPage.vue', () => {
       })
     })
 
-    const wrapper = await lpiMount(CreateProjectPage, { props })
+    const wrapper = await lpiMountSuspended(CreateProjectPage, { props })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

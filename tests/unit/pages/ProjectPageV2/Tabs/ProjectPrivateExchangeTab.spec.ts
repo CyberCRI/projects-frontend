@@ -1,4 +1,4 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import ProjectPrivateExchangeTab from '@/pages/ProjectPageV2/Tabs/ProjectPrivateExchangeTab.vue'
 
 import { describe, expect, it } from 'vitest'
@@ -13,7 +13,7 @@ describe('ProjectPrivateExchangeTab.vue', () => {
     const team = ProjectTeamOutputFactory.generate()
     const props = { project, projectMessages, team }
 
-    const wrapper = await lpiMount(ProjectPrivateExchangeTab, { props })
+    const wrapper = await lpiMountSuspended(ProjectPrivateExchangeTab, { props })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

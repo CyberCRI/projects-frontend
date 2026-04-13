@@ -122,11 +122,13 @@ export default {
   },
 
   mounted() {
+    if (!import.meta.client) return
     this.$nextTick(this.setSliderStyle)
 
     window.addEventListener('resize', this.onResize)
   },
   unmounted() {
+    if (!import.meta.client) return
     window.removeEventListener('resize', this.onResize)
   },
 

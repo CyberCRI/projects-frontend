@@ -1,4 +1,4 @@
-import { lpiMount, lpiMountSuspended } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import PortalPage from '@/pages/PortalPage/PortalPage.vue'
 
 import { describe, expect, it } from 'vitest'

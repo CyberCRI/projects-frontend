@@ -9,11 +9,14 @@
     <span class="arrow-ctn"><IconImage name="ArrowRight" class="arrow" /></span>
   </component>
 </template>
+
 <script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
+import { RouteLocationRaw } from 'vue-router'
+
 const props = withDefaults(
   defineProps<{
-    to?: string | object
+    to?: RouteLocationRaw
     label?: string
     is?: string
   }>(),
@@ -25,6 +28,7 @@ const props = withDefaults(
 )
 
 const is = computed(() => {
+  console.error(props.is, props.to)
   if (props.is) {
     return props.is
   }
@@ -32,6 +36,7 @@ const is = computed(() => {
   return 'a'
 })
 </script>
+
 <style lang="scss" scoped>
 $icon-size: pxToRem(18px);
 

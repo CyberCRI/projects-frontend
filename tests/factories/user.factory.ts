@@ -24,18 +24,36 @@ export const UserFactory = createFactory<UserModel>((faker) => ({
   people_groups: [], // TODO: generate this
   skills: [], // TODO: generate this
   profile_picture: {
+    id: faker.datatype.number(),
+    name: faker.lorem.sentence(),
+    file: faker.image.imageUrl(),
+    url: faker.image.imageUrl(),
     scale_x: faker.datatype.number(),
     scale_y: faker.datatype.number(),
     left: faker.datatype.number(),
     top: faker.datatype.number(),
     natural_ratio: faker.datatype.number(),
-    variations: { medium: 'string.jpeg' },
+    variations: {
+      full: faker.image.imageUrl(),
+      large: faker.image.imageUrl(),
+      medium: faker.image.imageUrl(),
+      original: faker.image.imageUrl(),
+      small: faker.image.imageUrl(),
+    },
   },
   researcher: null,
   slug: '',
   resources: {
     files: faker.datatype.number(),
     links: faker.datatype.number(),
+  },
+  privacy_settings: {
+    email: 'org',
+    mobile_phone: 'org',
+    profile_picture: 'org',
+    publication_status: 'org',
+    skills: 'org',
+    socials: 'org',
   },
 }))
 

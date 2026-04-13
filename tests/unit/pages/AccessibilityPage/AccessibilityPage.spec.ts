@@ -1,4 +1,4 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import AccessibilityPage from '@/pages/AccessibilityPage/AccessibilityPage.vue'
 import { flushPromises } from '@vue/test-utils'
 
@@ -8,7 +8,7 @@ describe('AccessibilityPage.vue', () => {
   it('should render component', async () => {
     const props = {}
 
-    const wrapper = await lpiMount(AccessibilityPage, { props })
+    const wrapper = await lpiMountSuspended(AccessibilityPage, { props })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

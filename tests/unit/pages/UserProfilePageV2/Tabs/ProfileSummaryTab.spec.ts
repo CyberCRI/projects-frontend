@@ -1,5 +1,5 @@
 import ProfileSummaryTab from '@/pages/UserProfilePageV2/Tabs/ProfileSummaryTab.vue'
-import { lpiMount, lpiShallowMount } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended, lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import { UserFactory } from '@/../tests/factories/user.factory'
 import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 import { flushPromises } from '@vue/test-utils'
@@ -96,7 +96,7 @@ describe('ProfileSummaryTab', () => {
   it('shouldnt display resources', async () => {
     const user = UserFactory.generate()
     user.resources.files = user.resources.links = 0
-    const wrapper = lpiMount(ProfileSummaryTab, buildParams(user))
+    const wrapper = await lpiMountSuspended(ProfileSummaryTab, buildParams(user))
 
     await flushPromises()
     expect(wrapper.find('.resources-recap').exists()).toBe(false)
@@ -105,7 +105,7 @@ describe('ProfileSummaryTab', () => {
   it('should display resources', async () => {
     const user = UserFactory.generate()
     user.resources.files = user.resources.links = 5
-    const wrapper = lpiMount(ProfileSummaryTab, buildParams(user))
+    const wrapper = await lpiMountSuspended(ProfileSummaryTab, buildParams(user))
 
     await flushPromises()
     expect(wrapper.find('.resources-recap').exists()).toBe(true)

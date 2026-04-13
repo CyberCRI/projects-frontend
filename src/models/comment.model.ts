@@ -14,7 +14,8 @@ export interface CommentModel extends BaseModel {
     id: number
     people_id: string
   }
-  deleted_at: Date
+  deleted_at: string
+  updated_at: string
 }
 
 export type CommentInputModel = Required<CommentModel> & {

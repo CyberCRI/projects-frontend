@@ -1,14 +1,27 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import LinkCreateTab from '@/pages/AdminPortalPageV2/Tabs/LinkCreateTab.vue'
 
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+
+import pinia from '@/stores'
+import useOrganizationsStore from '@/stores/useOrganizations'
+
+import type { OrganizationOutput } from '@/models/organization.model'
 import { flushPromises } from '@vue/test-utils'
+import { MockRouter } from '../../../../helpers/router'
 
 describe('LinkCreateTab.vue', () => {
-  it('should render component', async () => {
-    const props = {}
+  beforeEach(() => {
+    const organizationsStore = useOrganizationsStore(pinia)
+    organizationsStore._current = { code: 'FOOBAR' } as unknown as OrganizationOutput
+  })
 
-    const wrapper = await lpiMount(LinkCreateTab, { props })
+  it('should mount the component', async () => {
+    const props = {}
+    const wrapper = await lpiMountSuspended(LinkCreateTab, {
+      props,
+      router: MockRouter(),
+    })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

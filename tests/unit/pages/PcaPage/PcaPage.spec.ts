@@ -1,4 +1,4 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import PcaPage from '@/pages/PcaPage/PcaPage.vue'
 
 import { describe, expect, it } from 'vitest'
@@ -8,7 +8,7 @@ describe('PcaPage.vue', () => {
   it('should render component', async () => {
     const props = {}
 
-    const wrapper = await lpiMount(PcaPage, { props })
+    const wrapper = await lpiMountSuspended(PcaPage, { props })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

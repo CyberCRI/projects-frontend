@@ -9,6 +9,8 @@ import type {
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useAPI from '@/composables/useAPI'
+import { OrganizationModel } from '@/models/organization.model'
+import { PeopleModel } from '@/models/people.model'
 
 // New user service using projects API
 export async function getUser(id: string, noError: boolean = false) {
@@ -47,12 +49,17 @@ export async function searchPeopleProject({ search, org_id, params }) {
   //.data.value
 }
 
-export async function searchPeopleAdmin({ search, org_id, params }) {
-  const adaptedParams = params ? _adaptParamsToGetQuery(params) : {}
+export async function searchPeopleAdmin(organizationId: OrganizationModel['id'], config) {
+  // TODO change backend with prefix organization code in url not in query
+  const newConfig = {
+    ...config,
+    query: {
+      ...(config.query ?? {}),
+      current_org_pk: organizationId,
+    },
+  }
 
-  return await useAPI(`user/admin-list/?search=${search}&current_org_pk=${org_id}`, {
-    ...adaptedParams,
-  }) //.data.value
+  return await useAPI<PaginationResult<PeopleModel>>('user/admin-list/', newConfig)
 }
 
 export async function searchPeopleByExactMail(email: string, params: object) {

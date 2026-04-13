@@ -1,4 +1,4 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import GroupNewsTab from '@/pages/GroupPageV2/Tabs/News/GroupNewsTab.vue'
 import { flushPromises } from '@vue/test-utils'
 
@@ -22,7 +22,7 @@ describe('GroupNewsTab.vue', () => {
 
     const props = { group }
 
-    const wrapper = await lpiMount(GroupNewsTab, { props, router: MockRouter() })
+    const wrapper = await lpiMountSuspended(GroupNewsTab, { props, router: MockRouter() })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

@@ -1,4 +1,4 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import CreateInstructionPage from '@/pages/CreateInstructionPage/CreateInstructionPage.vue'
 
 import { describe, expect, it } from 'vitest'
@@ -17,7 +17,7 @@ describe('CreateInstructionPage.vue', () => {
       }
     })
 
-    const wrapper = await lpiMount(CreateInstructionPage, { props })
+    const wrapper = await lpiMountSuspended(CreateInstructionPage, { props })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

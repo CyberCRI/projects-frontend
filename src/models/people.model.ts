@@ -1,4 +1,5 @@
 import { Translated } from '@/interfaces/translated'
+import { PeopleGroupModel } from '@/models/invitation.model'
 
 /**
  * @name PeopleModel
@@ -9,13 +10,15 @@ export interface PeopleModel {
   roles?: Array<string>
   permissions?: Array<string>
   is_superuser?: boolean
-  people_groups: Array<object>
+  current_org_role: string
+  people_groups: PeopleGroupModel[]
   notifications?: number
   privacy_settings?: object
   skills: Array<object>
   id: number
   language: string
   email: string
+  email_verified: boolean
   given_name: string
   family_name: string
   birthday?: any
@@ -34,6 +37,7 @@ export interface PeopleModel {
   skype?: string
   landline_phone?: string
   twitter?: string
+  created_at?: string
 }
 
 export type TranslatedPeopleModel = Translated<

@@ -15,7 +15,7 @@
   </LayoutTab>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { capitalize } from '@/functs/string'
 import useNuxtI18n from '@/composables/useNuxtI18n'
 import LayoutTab from '@/components/admin/LayoutTab.vue'
@@ -24,13 +24,11 @@ import { useTemplateForm } from '@/form/template'
 import TemplateForm from '@/components/templates/TemplateForm.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 
-defineOptions({ name: 'TemplatesEditTab' })
-
 const { t } = useNuxtI18n()
 const route = useRoute()
 const router = useRouter()
 const organizationCode = useOrganizationCode()
-const templateId = route.params.id
+const templateId = route.params.id.toString()
 const { data: template, status } = getTemplate(organizationCode, templateId)
 const { form, errors, isValid, cleanedData } = useTemplateForm()
 

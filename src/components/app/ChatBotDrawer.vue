@@ -283,6 +283,7 @@ watch(
 )
 
 function placeCaretAtEnd(el) {
+  if (!import.meta.client) return
   // https://stackoverflow.com/questions/4233265/contenteditable-set-caret-at-the-end-of-the-text-cross-browser
   el.focus()
   if (typeof window.getSelection != 'undefined' && typeof document.createRange != 'undefined') {

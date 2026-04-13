@@ -1,4 +1,4 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import NewsPage from '@/pages/NewsPage/NewsPage.vue'
 
 import { describe, expect, it } from 'vitest'
@@ -16,7 +16,7 @@ describe('NewsPage.vue', () => {
       return news
     })
 
-    const wrapper = await lpiMount(NewsPage, { props })
+    const wrapper = await lpiMountSuspended(NewsPage, { props })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

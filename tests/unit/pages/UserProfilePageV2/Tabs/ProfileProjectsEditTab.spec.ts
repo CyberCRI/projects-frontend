@@ -1,4 +1,4 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import ProfileProjectsEditTab from '@/pages/UserProfilePageV2/Tabs/ProfileProjectsEditTab.vue'
 import { flushPromises } from '@vue/test-utils'
 
@@ -10,7 +10,7 @@ describe('ProfileProjectsEditTab.vue', () => {
     const user = UserFactory.generate()
     const props = { user }
 
-    const wrapper = await lpiMount(ProfileProjectsEditTab, { props })
+    const wrapper = await lpiMountSuspended(ProfileProjectsEditTab, { props })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

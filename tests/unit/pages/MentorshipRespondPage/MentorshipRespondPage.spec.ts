@@ -1,4 +1,4 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import MentorshipRespondPage from '@/pages/MentorshipRespondPage/MentorshipRespondPage.vue'
 
 import { describe, expect, it, vi } from 'vitest'
@@ -8,7 +8,7 @@ describe('MentorshipRespondPage.vue', () => {
   it('should render component', async () => {
     const props = { token: 'token' }
 
-    const wrapper = await lpiMount(MentorshipRespondPage, {
+    const wrapper = await lpiMountSuspended(MentorshipRespondPage, {
       props,
       global: {
         mocks: {

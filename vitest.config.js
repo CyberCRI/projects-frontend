@@ -31,7 +31,7 @@ export default defineVitestConfig({
               appCaptchaKey: '',
               appMixpanelApiUrl: '',
               appMixpanelProjectToken: '',
-              appPublicBinariesPrefix: '',
+              appPublicBinariesPrefix: 'http://localhost:8080',
               appMaxSizeFile: 5_000_000,
               appProfileExempleResearcherSlugOrId: '',
               appProfileExempleProfessionalSlugOrId: '',

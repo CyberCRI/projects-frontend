@@ -3,13 +3,6 @@ import useProjectCategories from '@/stores/useProjectCategories'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils'
 import { onResize } from '@/composables/onResize'
 
-const props = defineProps({
-  slugOrId: {
-    type: [String, Number],
-    required: true,
-  },
-})
-
 const { t } = useNuxtI18n()
 const route = useRoute()
 const { canCreateProject } = usePermissions()
@@ -22,7 +15,7 @@ if (!projectCategoriesStore.all || !projectCategoriesStore.all.length) {
 
 const category = computed(() => {
   const slugOrId = route.params.slugOrId.toString()
-  if (props.slugOrId) {
+  if (slugOrId) {
     if (import.meta.client) window.scrollTo(0, 0)
     return projectCategoriesStore.allBySlugs[slugOrId] || projectCategoriesStore.allByIds[slugOrId]
   }
@@ -88,10 +81,12 @@ onResize(
   { immediate: true }
 )
 
-useLpiHead2({
-  title: computed(() => category.value?.name),
-  description: computed(() => category.value?.description),
-  image: category.value?.background_image,
+watchEffect(() => {
+  useLpiHead2({
+    title: category.value?.name,
+    description: category.value?.description,
+    image: category.value?.background_image,
+  })
 })
 </script>
 <template>

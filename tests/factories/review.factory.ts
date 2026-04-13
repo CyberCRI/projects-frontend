@@ -14,6 +14,7 @@ export const ReviewFactory = createFactory<ReviewModel>((faker) => ({
     given_name: faker.datatype.string(),
     family_name: faker.datatype.string(),
   },
+  created_at: faker.datatype.datetime().toISOString(),
 }))
 
 export const ReviewInputFactory = createFactory<ReviewModelInput>((faker) => ({

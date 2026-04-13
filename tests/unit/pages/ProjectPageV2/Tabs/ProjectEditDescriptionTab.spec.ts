@@ -1,4 +1,4 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import ProjectEditDescriptionTab from '@/pages/ProjectPageV2/Tabs/ProjectEditDescriptionTab.vue'
 
 import { describe, expect, it } from 'vitest'
@@ -16,7 +16,7 @@ describe('ProjectEditDescriptionTab.vue', () => {
     const userStore = useUsersStore()
     userStore.userFromToken = userStore.userFromApi = user
 
-    const wrapper = await lpiMount(ProjectEditDescriptionTab, { props })
+    const wrapper = await lpiMountSuspended(ProjectEditDescriptionTab, { props })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

@@ -1,4 +1,4 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import ProjectSettingsTab from '@/pages/ProjectPageV2/Tabs/ProjectSettingsTab.vue'
 
 import { describe, expect, it } from 'vitest'
@@ -17,7 +17,7 @@ describe('ProjectSettingsTab.vue', () => {
       return PaginationsFactory.generate({ results: OrganizationFactory.generateMany(10) })
     })
 
-    const wrapper = await lpiMount(ProjectSettingsTab, { props })
+    const wrapper = await lpiMountSuspended(ProjectSettingsTab, { props })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

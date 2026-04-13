@@ -10,12 +10,9 @@ import useToasterStore from '@/stores/useToaster'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import { useRuntimeConfig } from '#imports'
 
-const props = defineProps({
-  token: {
-    type: String,
-    required: true,
-  },
-})
+const props = defineProps<{
+  token: string
+}>()
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()

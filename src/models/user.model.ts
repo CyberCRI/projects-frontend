@@ -5,6 +5,18 @@
 import { ResearcherLight } from '@/interfaces/researcher'
 import { TagModel } from './tag.model'
 import { Translated } from '@/interfaces/translated'
+import { ImageModel } from '@/models/image.model'
+
+export type PrivacyValue = 'hide' | 'org' | 'pub'
+
+export type PrivacySettings = {
+  publication_status: PrivacyValue
+  profile_picture: PrivacyValue
+  skills: PrivacyValue
+  mobile_phone: PrivacyValue
+  email: PrivacyValue
+  socials: PrivacyValue
+}
 
 export interface UserModel {
   id: number
@@ -19,7 +31,7 @@ export interface UserModel {
   orgs: string[]
   given_name: string
   family_name: string
-  profile_picture?: object
+  profile_picture?: ImageModel
   permissions: string[]
   description?: string
   short_description?: string
@@ -35,6 +47,7 @@ export interface UserModel {
   signed_terms_and_conditions?: {
     [key: string]: { version: number | null; date: string | null }
   } | null
+  privacy_settings?: PrivacySettings
 }
 
 export interface UserFromJWTModel {
@@ -87,8 +100,6 @@ export interface UserPatchModel {
     [key: string]: { version: number | null; date: string | null }
   } | null
 }
-
-export type PrivacyValue = 'hide' | 'org' | 'pub'
 
 export interface UserPrivacyPatchModel {
   profile_picture?: PrivacyValue

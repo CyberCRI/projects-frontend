@@ -1,4 +1,4 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import CookiesPage from '@/pages/CookiesPage/CookiesPage.vue'
 
 import { describe, expect, it } from 'vitest'
@@ -8,7 +8,7 @@ describe('CookiesPage.vue', () => {
   it('should render component', async () => {
     const props = {}
 
-    const wrapper = await lpiMount(CookiesPage, { props })
+    const wrapper = await lpiMountSuspended(CookiesPage, { props })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

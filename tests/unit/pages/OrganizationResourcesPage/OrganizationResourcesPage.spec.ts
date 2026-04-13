@@ -1,5 +1,5 @@
 // TODO rework this tests
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import OrganizationResourcesPage from '@/pages/OrganizationResourcesPage/OrganizationResourcesPage.vue'
 
 import { describe, expect, it } from 'vitest'
@@ -20,7 +20,7 @@ describe('OrganizationResourcesPage.vue', () => {
       })
     })
 
-    const wrapper = await lpiMount(OrganizationResourcesPage, { props })
+    const wrapper = await lpiMountSuspended(OrganizationResourcesPage, { props })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

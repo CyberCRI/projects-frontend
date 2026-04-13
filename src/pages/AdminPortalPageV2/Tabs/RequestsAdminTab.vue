@@ -10,7 +10,7 @@
           <tr>
             <th v-for="(filter, index) in filters" :key="index">
               <span class="button">
-                {{ $t(filter.label) }}
+                {{ filter.label }}
               </span>
             </th>
             <th>
@@ -147,7 +147,12 @@ export default {
       isLoading: false,
       request: {},
       showPendingOnly: false,
-      filters: [
+    }
+  },
+
+  computed: {
+    filters() {
+      return [
         {
           label: this.$t('admin.requests.table.last-name'),
           isActive: false,
@@ -178,11 +183,8 @@ export default {
           filter: 'message',
           order: '',
         },
-      ],
-    }
-  },
-
-  computed: {
+      ]
+    },
     organization() {
       return this.organizationsStore.current
     },

@@ -19,6 +19,7 @@
 <script setup lang="ts">
 import { IconImageChoice } from '@/functs/IconImage'
 import IconImage from '@/components/base/media/IconImage.vue'
+import { RouteLocationRaw } from 'vue-router'
 
 const props = withDefaults(
   defineProps<{
@@ -27,7 +28,7 @@ const props = withDefaults(
     routes?: any[]
     roundedIcon?: boolean
     dataTest?: string
-    to?: string | object
+    to?: RouteLocationRaw
   }>(),
   {
     label: null,

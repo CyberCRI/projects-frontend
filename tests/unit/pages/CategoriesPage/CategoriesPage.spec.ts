@@ -1,5 +1,5 @@
 import CategoriesPage from '@/pages/CategoriesPage/CategoriesPage.vue'
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
+import { lpiShallowMount, lpiShallowMountSuspended } from '@/../tests/helpers/LpiMount'
 import MockComponent from '@/../tests/helpers/MockComponent.vue'
 import { beforeEach, describe, expect, it } from 'vitest'
 
@@ -12,6 +12,7 @@ import useUsersStore from '@/stores/useUsers'
 import useProjectCategoriesStore from '@/stores/useProjectCategories'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
+import { flushPromises } from '@vue/test-utils'
 
 const i18n = {
   locale: 'en',
@@ -31,8 +32,9 @@ describe('CategoriesPage', () => {
     const projectCategories = useProjectCategoriesStore(pinia)
     projectCategories._all = ProjectCategoryOutputFactory.generateMany(8)
   })
-  it('should render CategoriesPage', () => {
-    let wrapper = lpiShallowMount(CategoriesPage, { router, i18n })
+  it('should render CategoriesPage', async () => {
+    const wrapper = await lpiShallowMountSuspended(CategoriesPage, { router, i18n })
+    await flushPromises()
 
     expect(wrapper.exists()).toBeTruthy()
   })

@@ -1,6 +1,6 @@
 import { createFactory } from 'faker-create-factory'
 
-import { CommentInputModel, CommentOutput } from '@/models/comment.model'
+import { CommentInputModel, CommentModel, CommentOutput } from '@/models/comment.model'
 import BaseFactory from './base.factory'
 
 export const CommentFactory = createFactory<CommentOutput>((faker) => ({
@@ -15,7 +15,8 @@ export const CommentFactory = createFactory<CommentOutput>((faker) => ({
   },
   content: faker.datatype.string(),
   replies: [],
-  deleted_at: faker.datatype.datetime(),
+  deleted_at: faker.datatype.datetime().toISOString(),
+  updated_at: faker.datatype.datetime().toISOString(),
 }))
 
 export const CommentInputFactory = createFactory<CommentInputModel>((faker) => ({

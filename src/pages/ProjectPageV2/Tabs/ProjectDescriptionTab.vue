@@ -82,6 +82,7 @@ const close = () => {
 }
 
 const scrollToSection = (targetId) => {
+  if (!import.meta.client) return
   const target = document.getElementById(`anchor-${targetId}`)
   let offset = 20
   const header = document.querySelector('.header__container')

@@ -1,4 +1,4 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import GroupsTab from '@/pages/AdminPortalPageV2/Tabs/GroupsTab.vue'
 
 import { describe, expect, it } from 'vitest'
@@ -9,7 +9,7 @@ describe('GroupsTab.vue', () => {
   it('should render component', async () => {
     const props = {}
 
-    const wrapper = await lpiMount(GroupsTab, { props, router: MockRouter() })
+    const wrapper = await lpiMountSuspended(GroupsTab, { props, router: MockRouter() })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

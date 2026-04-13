@@ -201,10 +201,12 @@ export default {
     },
   },
   mounted() {
+    if (!import.meta.client) return
     window.addEventListener('resize', this.layoutTabs)
   },
 
   unmounted() {
+    if (!import.meta.client) return
     window.removeEventListener('resize', this.layoutTabs)
   },
 

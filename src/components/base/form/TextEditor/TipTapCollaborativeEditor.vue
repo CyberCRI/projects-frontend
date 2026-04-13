@@ -330,11 +330,13 @@ watchEffect(
 
 // lifecycle
 onMounted(() => {
+  if (!import.meta.client) return
   appendTranslationsStyle()
   initCollaborativeEditor()
 })
 
 onBeforeUnmount(() => {
+  if (!import.meta.client) return
   destroyCollaborativeEditor()
   window.removeEventListener('offline', setOffline)
   window.removeEventListener('online', setOnline)

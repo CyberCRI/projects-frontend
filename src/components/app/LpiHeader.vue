@@ -521,6 +521,7 @@ export default {
 
   methods: {
     onScroll() {
+      if (!import.meta.client) return
       this.scrolled = window.scrollY > 10
     },
 

@@ -124,7 +124,7 @@ export default useLpiHead
 type OptionsHead = {
   url?: RefOrRaw<string>
   title?: RefOrRaw<string>
-  image?: Image
+  image?: Image | string
   description?: RefOrRaw<string>
 }
 
@@ -153,6 +153,8 @@ export const useLpiHead2 = async (options: OptionsHead) => {
       const tmp = useImageAndDimension(options.image, 'medium')
       image = tmp.image
       dimensions = tmp.dimensions
+    } else if (typeof options.image === 'string') {
+      image = options.image
     } else {
       const tmp = useImageAndDimension(organization?.banner_image, 'medium')
       image = tmp.image

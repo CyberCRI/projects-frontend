@@ -1,4 +1,4 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import TermsAdminTab from '@/pages/AdminPortalPageV2/Tabs/TermsAdminTab.vue'
 
 import { describe, expect, it } from 'vitest'
@@ -8,7 +8,7 @@ describe('TermsAdminTab.vue', () => {
   it('should render component', async () => {
     const props = {}
 
-    const wrapper = await lpiMount(TermsAdminTab, { props })
+    const wrapper = await lpiMountSuspended(TermsAdminTab, { props })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

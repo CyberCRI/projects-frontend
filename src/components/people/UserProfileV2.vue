@@ -185,7 +185,7 @@ export default {
       //       name: 'ProfileEditOtherUser',
       //       params: { userId: this.user?.slug || this.userId },
       //     }
-      return this.currentTab.altView
+      return this.currentTab?.altView
     },
 
     profileTabs() {

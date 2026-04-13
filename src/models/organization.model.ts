@@ -6,23 +6,6 @@ import { TagModel } from './tag.model'
 import { Translated } from '@/interfaces/translated'
 import { ImageModel } from '@/models/image.model'
 
-/**
- * @name OrganizationModel
- * @description Organization
- */
-
-interface LogoImage {
-  name: string
-  url: string
-  variations: {
-    full: string
-    large: string
-    medium: string
-    original: string
-    small: string
-  }
-}
-
 export interface TermsAndConditions {
   id: number
   version: number
@@ -42,7 +25,7 @@ export interface OrganizationModel extends BaseModel {
   dashboard_subtitle: string
   language: LanguageType
   languages: LanguageType[]
-  logo_image: LogoImage
+  logo_image: ImageModel
   main_org_logo_visibility: boolean
   is_logo_visible_on_parent_dashboard: boolean
   name: string

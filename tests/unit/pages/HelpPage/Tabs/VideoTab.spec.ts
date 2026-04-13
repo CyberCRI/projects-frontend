@@ -1,4 +1,4 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import VideoTab from '@/pages/HelpPage/Tabs/VideoTab.vue'
 
 import { describe, expect, it } from 'vitest'
@@ -8,7 +8,7 @@ describe('VideoTab.vue', () => {
   it('should render component', async () => {
     const props = {}
 
-    const wrapper = await lpiMount(VideoTab, { props })
+    const wrapper = await lpiMountSuspended(VideoTab, { props })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

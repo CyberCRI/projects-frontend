@@ -1,4 +1,4 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import ProfileSkillsEditTab from '@/pages/UserProfilePageV2/Tabs/ProfileSkillsEditTab.vue'
 
 import { describe, expect, it } from 'vitest'
@@ -25,7 +25,7 @@ describe('ProfileSkillsEditTab.vue', () => {
       })
     })
 
-    const wrapper = await lpiMount(ProfileSkillsEditTab, { props })
+    const wrapper = await lpiMountSuspended(ProfileSkillsEditTab, { props })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

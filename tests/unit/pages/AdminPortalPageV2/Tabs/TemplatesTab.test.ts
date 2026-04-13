@@ -1,4 +1,4 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import TemplatesTab from '@/pages/AdminPortalPageV2/Tabs/TemplatesTab.vue'
 import { describe, expect, it, vi } from 'vitest'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
@@ -8,7 +8,7 @@ describe('TemplatesTab.vue', () => {
     registerEndpoint(`organization/CRI/template`, () => {
       throw createError({ statusCode: 500 })
     })
-    const wrapper = await lpiMount(TemplatesTab)
+    const wrapper = await lpiMountSuspended(TemplatesTab)
     expect(wrapper.find('.error')).toBeTruthy()
   })
   it('BackendResult', async () => {
@@ -24,7 +24,7 @@ describe('TemplatesTab.vue', () => {
         status: 'success',
       }),
     }))
-    const wrapper = await lpiMount(TemplatesTab)
+    const wrapper = await lpiMountSuspended(TemplatesTab)
     expect(wrapper.findAll('li').length).toEqual(2)
   })
   it('DeleteTemplate', async () => {
@@ -42,7 +42,7 @@ describe('TemplatesTab.vue', () => {
       deleteTemplate: vi.fn(),
     }))
 
-    const wrapper = await lpiMount(TemplatesTab)
+    const wrapper = await lpiMountSuspended(TemplatesTab)
     await expect(wrapper.findAll('[data-test^=template-modal-delete]').length).toEqual(0)
     await wrapper.find(`[data-test=template-list-2] [data-test=action-delete]`).trigger('click')
     await expect(wrapper.findAll('[data-test^=template-modal-delete]').length).toEqual(1)
@@ -60,11 +60,11 @@ describe('TemplatesTab.vue', () => {
         status: 'success',
       }),
     }))
-    const wrapper = await lpiMount(TemplatesTab)
+    const wrapper = await lpiMountSuspended(TemplatesTab)
     await wrapper.find(`[data-test=template-list-2] [data-test=action-edit]`).trigger('click')
   })
   it('umount', async () => {
-    const wrapper = await lpiMount(TemplatesTab)
+    const wrapper = await lpiMountSuspended(TemplatesTab)
     await wrapper.unmount()
   })
 })

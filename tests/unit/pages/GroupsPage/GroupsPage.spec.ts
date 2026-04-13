@@ -1,4 +1,4 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import GroupsPage from '@/pages/GroupsPage/GroupsPage.vue'
 
 import { describe, expect, it } from 'vitest'
@@ -18,7 +18,7 @@ describe('GroupsPage.vue', () => {
       }
     })
 
-    const wrapper = await lpiMount(GroupsPage, { props, router: MockRouter() })
+    const wrapper = await lpiMountSuspended(GroupsPage, { props, router: MockRouter() })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

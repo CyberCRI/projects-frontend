@@ -1,4 +1,4 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import GroupEventTab from '@/pages/GroupPageV2/Tabs/Event/GroupEventTab.vue'
 import { flushPromises } from '@vue/test-utils'
 
@@ -12,7 +12,7 @@ describe('GroupEventTab.vue', () => {
       group,
     }
 
-    const wrapper = await lpiMount(GroupEventTab, { props })
+    const wrapper = await lpiMountSuspended(GroupEventTab, { props })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

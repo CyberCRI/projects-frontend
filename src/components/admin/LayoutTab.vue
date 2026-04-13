@@ -15,19 +15,17 @@
   </div>
 </template>
 
-<script setup>
-defineOptions({ name: 'LayoutTab' })
-
-defineProps({
-  notice: {
-    type: String,
-    default: null,
-  },
-  title: {
-    type: String,
-    required: true,
-  },
-})
+<script setup lang="ts">
+withDefaults(
+  defineProps<{
+    notice?: string
+    title?: string
+  }>(),
+  {
+    notice: null,
+    title: null,
+  }
+)
 </script>
 
 <style lang="scss" scoped>

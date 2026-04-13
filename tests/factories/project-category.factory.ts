@@ -10,7 +10,7 @@ import TagFactory from './tag.factory'
 import { OrganizationOutputFactory } from './organization.factory'
 import TemplateFactory from './template.factory'
 
-const ProjectCategoryFactory = createFactory<ProjectCategoryOutput>((faker) => ({
+export const ProjectCategoryFactory = createFactory<ProjectCategoryOutput>((faker) => ({
   ...BaseFactory.generate(),
   id: faker.datatype.number(),
   slug: faker.datatype.string(),

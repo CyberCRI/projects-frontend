@@ -58,11 +58,13 @@ export default {
   },
 
   mounted() {
+    if (!import.meta.client) return
     this.computeColumnCount()
     window.addEventListener('resize', this.computeColumnCount)
   },
 
   beforeUnmount() {
+    if (!import.meta.client) return
     window.removeEventListener('resize', this.computeColumnCount)
   },
 }

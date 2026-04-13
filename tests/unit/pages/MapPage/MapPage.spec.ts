@@ -1,4 +1,4 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import { Locations } from '@/interfaces/maps'
 import MapPage from '@/pages/MapPage/MapPage.vue'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
@@ -20,7 +20,7 @@ describe('MapPage.vue', () => {
 
     const props = {}
 
-    const wrapper = await lpiMount(MapPage, { props })
+    const wrapper = await lpiMountSuspended(MapPage, { props })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

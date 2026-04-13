@@ -1,5 +1,5 @@
 import GroupMembersTab from '@/pages/GroupPageV2/Tabs/Members/GroupMembersTab.vue'
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 
 import { describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
@@ -25,10 +25,9 @@ describe('GroupProjectsTab', () => {
       })
     })
 
-    const wrapper = lpiMount(GroupMembersTab, {
+    const wrapper = await lpiMountSuspended(GroupMembersTab, {
       props: {
         group,
-        isLoading: false,
       },
     })
 
@@ -43,10 +42,9 @@ describe('GroupProjectsTab', () => {
       throw createError({ statusCode: 500 })
     })
 
-    const wrapper = lpiMount(GroupMembersTab, {
+    const wrapper = await lpiMountSuspended(GroupMembersTab, {
       props: {
         group,
-        isLoading: false,
       },
     })
 

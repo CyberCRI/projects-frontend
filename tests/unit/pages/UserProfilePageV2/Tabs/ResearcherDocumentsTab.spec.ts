@@ -1,4 +1,4 @@
-import { lpiMount, lpiMountSuspended } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import ResearcherDocumentsTab from '@/pages/UserProfilePageV2/Tabs/ResearcherDocumentsTab.vue'
 
 import { describe, expect, it } from 'vitest'

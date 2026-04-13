@@ -21,6 +21,7 @@
 
 <script setup lang="ts">
 import { IconImageChoice } from '@/functs/IconImage'
+import { RouteLocationRaw } from 'vue-router'
 
 const props = withDefaults(
   defineProps<{
@@ -31,7 +32,7 @@ const props = withDefaults(
     reversedOrder?: boolean
     noTextTransform?: boolean
     ariaLabel?: string
-    to?: any
+    to?: RouteLocationRaw
   }>(),
   {
     label: null,

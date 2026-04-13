@@ -1,4 +1,4 @@
-import { lpiMount, lpiMountSuspended } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import GroupLocationsTab from '@/pages/GroupPageV2/Tabs/Locations/GroupLocationsTab.vue'
 import { flushPromises } from '@vue/test-utils'
 
