@@ -1,7 +1,7 @@
 <template>
   <div class="visibility-ctn">
     <SkeletonComponent v-if="loading" class="skeleton-block" height="24px" />
-    <div v-if="!loading && project && project.publication_status" class="visibility">
+    <div v-else-if="project && project.publication_status" class="visibility">
       <InfoSentence
         :data="visibility"
         :no-centered="true"
@@ -14,19 +14,19 @@
     </div>
   </div>
 </template>
-<script setup>
-const props = defineProps({
-  project: {
-    type: Object,
-    default: () => ({}),
-  },
-  loading: {
-    type: Boolean,
-    default: true,
-  },
-})
 
-function visibilityIcon() {
+<script setup lang="ts">
+import { ProjectModel } from '@/models/project.model'
+
+const props = withDefaults(
+  defineProps<{
+    project?: ProjectModel
+    loading?: boolean
+  }>(),
+  { project: null, loading: true }
+)
+
+const visibilityIcon = () => {
   const map = {
     public: 'Eye',
     private: 'EyeSlash',
@@ -36,13 +36,13 @@ function visibilityIcon() {
 }
 
 const visibility = computed(() => {
-  let ret = ''
-  if (props.project.publication_status) {
-    let icon = visibilityIcon()
-    let title = 'header.' + props.project.publication_status
-    ret = { icon, title }
+  if (!props.project || !props.project.publication_status) {
+    return { icon: 'EyeSlash', title: '' }
   }
-  return ret
+  return {
+    icon: visibilityIcon(),
+    title: `header.${props.project.publication_status}`,
+  }
 })
 </script>
 <style lang="scss" scoped>

@@ -20,19 +20,17 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import TagsList from '@/components/tags/TagsList.vue'
+import { ProjectModel } from '@/models/project.model'
 
-defineProps({
-  project: {
-    type: Object,
-    required: true,
-  },
-  loading: {
-    type: Boolean,
-    required: true,
-  },
-})
+withDefaults(
+  defineProps<{
+    project?: ProjectModel
+    loading?: boolean
+  }>(),
+  { project: null, loading: true }
+)
 </script>
 
 <style scoped lang="scss">

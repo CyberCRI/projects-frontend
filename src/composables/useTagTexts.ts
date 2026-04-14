@@ -1,11 +1,13 @@
+import { TagModel } from '@/models/tag.model'
+
 export default function useTagTexts() {
   const { locale } = useNuxtI18n()
 
-  const title = (tag) => {
+  const title = (tag: TagModel): string => {
     return tag[`title_${locale.value}`] || tag.title
   }
 
-  const description = (tag) => {
+  const description = (tag: TagModel): string => {
     return tag[`description_${locale.value}`] || tag.description
   }
 

@@ -11,24 +11,14 @@
   </Drawer>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Drawer from '@/components/base/BaseDrawer.vue'
 import FilterEditor from '@/components/base/form/FilterEditor.vue'
 
-defineOptions({ name: 'FilterDrawer' })
+defineProps<{ options: any[]; title: string }>()
 
-defineProps({
-  options: {
-    type: Array,
-    required: true,
-  },
-  title: {
-    type: String,
-    required: true,
-  },
-})
-const open = defineModel('open', { required: true, type: Boolean })
-const modelValue = defineModel('modelValue', { required: true, type: Array })
+const open = defineModel<boolean>('open', { required: true })
+const modelValue = defineModel<any[]>('modelValue', { required: true })
 const emit = defineEmits(['update:modelValue', 'update:open'])
 
 const values = ref([])

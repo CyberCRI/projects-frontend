@@ -80,29 +80,26 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import IdentifierLink from '@/components/people/Researcher/IdentifierLink.vue'
 import SdgList from '@/components/sdgs/SdgList.vue'
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 import { capitalize } from '@/functs/string'
+import { TranslatedUserModel } from '@/models/user.model'
 
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-defineOptions({ name: 'ProfileHeaderV2' })
+const organizationCode = useOrganizationCode()
 
-const props = defineProps({
-  user: {
-    type: Object,
-    default: () => {},
-  },
-})
-
-const organizationsStore = useOrganizationsStore()
+const props = withDefaults(
+  defineProps<{
+    user?: TranslatedUserModel
+  }>(),
+  { user: null }
+)
 
 const displayableGroups = computed(() => {
   return props.user?.people_groups
-    ? props.user.people_groups.filter(
-        (group) => group.organization === organizationsStore.current?.code
-      )
+    ? // @ts-expect-error peopleGroup is "light" in userModel
+      props.user.people_groups.filter((group) => group.organization === organizationCode)
     : []
 })
 </script>

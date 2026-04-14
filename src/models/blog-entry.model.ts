@@ -1,3 +1,4 @@
+import { Translated } from '@/interfaces/translated'
 import BaseModel from '@/models/base.model'
 
 /**
@@ -8,7 +9,11 @@ export interface BlogEntryModel extends BaseModel {
   id: number
   title: string
   content: string
+  created_at: string
+  updated_at: string
 }
+
+export type TranslatedBlogEntry = Translated<BlogEntryModel, 'title' | 'content'>
 
 export type BlogEntryOutput = Required<BlogEntryModel>
 

@@ -1,9 +1,5 @@
 <template>
   <div class="description-recap">
-    <!--h4 class="description-label">
-      {{ $t('form.description') }}
-    </h4-->
-
     <div :style="style" class="description-content-ctn">
       <HtmlLimiter
         :html="description"
@@ -26,36 +22,19 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
 import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
 
-export default {
-  name: 'DescriptionRecap',
+defineProps<{ description: string }>()
 
-  components: { SeeMoreArrow, HtmlLimiter },
+const style = ref({})
 
-  props: {
-    description: {
-      type: String,
-      required: true,
-    },
-  },
-
-  data() {
-    return {
-      style: {},
-    }
-  },
-
-  methods: {
-    computeLayout() {
-      this.style = {}
-    },
-    layoutComputed(event) {
-      this.style = { height: event.height + 'px' }
-    },
-  },
+const computeLayout = () => {
+  style.value = {}
+}
+const layoutComputed = (event) => {
+  style.value = { height: event.height + 'px' }
 }
 </script>
 

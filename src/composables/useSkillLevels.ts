@@ -2,6 +2,7 @@ import { computed } from 'vue'
 
 export default function useSkillLevels() {
   const { t } = useNuxtI18n()
+
   const skillLevels = computed(() =>
     // CAUTION : this must be ordered from lowest to highest (see clampLevel())
     [
@@ -24,7 +25,7 @@ export default function useSkillLevels() {
     ]
   )
 
-  function clampLevel(level) {
+  const clampLevel = (level) => {
     const levels = skillLevels.value
     const min = levels[0].value
     const max = levels[levels.length - 1].value

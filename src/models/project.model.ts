@@ -56,7 +56,7 @@ export type TranslatedProject = Translated<ProjectModel, 'title' | 'description'
 export type ProjectCreateInput = Required<ProjectModel> & {
   project_categories_ids: number
   tags?: number[]
-  sdgs_ids?: number[]
+  sdgs?: number[]
 }
 
 export type ProjectPutInput = Required<ProjectCreateInput>

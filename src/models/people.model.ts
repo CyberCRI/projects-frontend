@@ -1,5 +1,5 @@
 import { Translated } from '@/interfaces/translated'
-import { PeopleGroupModel } from '@/models/invitation.model'
+import { PeopleGroupModel, TranslatedPeopleGroupModel } from '@/models/invitation.model'
 
 /**
  * @name PeopleModel
@@ -29,7 +29,7 @@ export interface PeopleModel {
   job: string // Job title
   mobile_phone?: string
   personnal_email: string
-  sdgs: Array<number>
+  sdgs: number[]
   facebook?: string
   linkedin?: string
   medium?: string
@@ -43,7 +43,9 @@ export interface PeopleModel {
 export type TranslatedPeopleModel = Translated<
   PeopleModel,
   'description' | 'short_description' | 'job'
->
+> & {
+  people_groups: TranslatedPeopleGroupModel
+}
 
 export interface UserPostData {
   email: string

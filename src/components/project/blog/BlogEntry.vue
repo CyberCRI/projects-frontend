@@ -46,55 +46,35 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
+import { TranslatedBlogEntry } from '@/models/blog-entry.model'
 
-export default {
-  name: 'BlogEntry',
+const props = withDefaults(
+  defineProps<{
+    blogEntry: TranslatedBlogEntry
+    isLastBlogEntry?: boolean
+    isExpanded?: boolean
+    canEdit?: boolean
+    canDelete?: boolean
+  }>(),
+  {
+    isLastBlogEntry: false,
+    isExpanded: false,
+    canEdit: false,
+    canDelete: false,
+  }
+)
 
-  components: {
-    IconImage,
-    ContextActionButton,
-    TipTapOutput,
-  },
+const emit = defineEmits<{
+  'edit-clicked': []
+  'delete-clicked': []
+  'toggle-expand': [TranslatedBlogEntry]
+}>()
 
-  props: {
-    blogEntry: {
-      type: Object,
-      required: true,
-    },
-
-    isLastBlogEntry: {
-      type: Boolean,
-      default: false,
-    },
-
-    isExpanded: {
-      type: Boolean,
-      default: false,
-    },
-
-    canEdit: {
-      type: Boolean,
-      default: false,
-    },
-
-    canDelete: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  emits: ['edit-clicked', 'delete-clicked', 'toggle-expand'],
-
-  methods: {
-    toggleExpand() {
-      this.$emit('toggle-expand', this.blogEntry)
-    },
-  },
-}
+const toggleExpand = () => emit('toggle-expand', props.blogEntry)
 </script>
 
 <style lang="scss" scoped>

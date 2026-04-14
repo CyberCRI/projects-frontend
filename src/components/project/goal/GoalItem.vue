@@ -47,10 +47,11 @@ import ContextActionButton from '@/components/base/button/ContextActionButton.vu
 import IconImage from '@/components/base/media/IconImage.vue'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 import { formatDate } from '@/functs/date'
+import { TranslatedGoal } from '@/models/goal.model'
 
 const props = withDefaults(
   defineProps<{
-    goal: any
+    goal: TranslatedGoal
     canEditGoal?: boolean
     canDeleteGoal?: boolean
   }>(),

@@ -1,6 +1,5 @@
 import { GeneralLocationPeopleGroup, TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import { TranslatedOrganizationModel } from '@/models/organization.model'
-import { TranslatedPeopleModel } from '@/models/people.model'
 import { TranslatedProject } from '@/models/project.model'
 import { AttachmentFileModel, TranslatedAttachmentFile } from '@/models/attachment-file.model'
 import { AttachmentLinkModel, TranslatedAttachmentLink } from '@/models/attachment-link.model'
@@ -14,6 +13,7 @@ import { TranslatedNews } from '@/models/news.model'
 import { TranslatedEventModel } from '@/models/event.model'
 import { TranslatedNewsfeed } from '@/models/newsfeed.model'
 import { TranslatedAnnouncement } from '@/models/announcement.model'
+import { TranslatedUserModel } from '@/models/user.model'
 
 // type can be computed or object
 type RefOrRaw<DataT> = ComputedRef<DataT> | Ref<DataT> | DataT
@@ -176,9 +176,9 @@ export default function useAutoTranslate() {
 
   // --------------------
   // People
-  const translateUser = <Model = TranslatedPeopleModel>(user) =>
+  const translateUser = <Model = TranslatedUserModel>(user) =>
     translateEntity<Model>(user, ['description', 'short_description', 'job'])
-  const translateUsers = <Model = TranslatedPeopleModel>(users) =>
+  const translateUsers = <Model = TranslatedUserModel>(users) =>
     translateEntities<Model>(users, translateUser)
 
   const translateTeam = (team) =>

@@ -1,7 +1,7 @@
 <template>
   <div class="similar-projects">
     <h3 class="group-section-title">
-      {{ t('project.suggested', 2) }}
+      {{ t('project.suggested', similarProjects.length) }}
     </h3>
     <p class="hint">{{ t('project.suggested-hint') }}</p>
 
@@ -14,15 +14,17 @@
   </div>
 </template>
 
-<script setup>
-defineOptions({ name: 'SimilarProjectsV2' })
+<script setup lang="ts">
+import { TranslatedProject } from '@/models/project.model'
 
-const props = defineProps({
-  similarProjects: {
-    type: Array,
-    default: () => [],
-  },
-})
+const props = withDefaults(
+  defineProps<{
+    similarProjects?: TranslatedProject[]
+  }>(),
+  {
+    similarProjects: () => [],
+  }
+)
 
 const { t } = useNuxtI18n()
 

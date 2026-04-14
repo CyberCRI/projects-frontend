@@ -44,19 +44,13 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { capitalize } from '@/functs/string'
 import IconImage from '@/components/base/media/IconImage.vue'
 import { useRuntimeConfig } from '#imports'
+import { TranslatedAnnouncement } from '@/models/announcement.model'
 
-defineOptions({ name: 'AnnouncementCard' })
-
-const props = defineProps({
-  announcement: {
-    type: Object,
-    required: true,
-  },
-})
+const props = defineProps<{ announcement: TranslatedAnnouncement }>()
 
 const emit = defineEmits(['know-more-clicked'])
 

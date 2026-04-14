@@ -1,6 +1,6 @@
 import BaseModel from '@/models/base.model'
 import { ProjectMemberRoleType } from '@/models/types'
-import { UserModel } from '@/models/user.model'
+import { TranslatedUserModel, UserModel } from '@/models/user.model'
 
 /**
  * Member of a project
@@ -10,7 +10,11 @@ import { UserModel } from '@/models/user.model'
  * @kind variable
  * @exports
  */
-export type ProjectMemberModel = UserModel
+export type ProjectMemberModel = UserModel & {
+  role: ProjectMemberRoleType
+}
+
+export type TranslatedPojectMember = TranslatedUserModel & Pick<ProjectMemberModel, 'role'>
 
 export interface ProjectTeamModel extends BaseModel {
   reviewers: ProjectMemberModel[]

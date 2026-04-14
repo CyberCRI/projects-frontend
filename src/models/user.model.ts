@@ -6,6 +6,7 @@ import { ResearcherLight } from '@/interfaces/researcher'
 import { TagModel } from './tag.model'
 import { Translated } from '@/interfaces/translated'
 import { ImageModel } from '@/models/image.model'
+import { PeopleGroupModel, TranslatedPeopleGroupModel } from '@/models/invitation.model'
 
 export type PrivacyValue = 'hide' | 'org' | 'pub'
 
@@ -36,7 +37,7 @@ export interface UserModel {
   description?: string
   short_description?: string
   job?: string
-  people_groups?: object[] // TODO: define this type
+  people_groups?: PeopleGroupModel[] // TODO: define this type
   skills?: UserSkillModel[]
   notifications?: number
   researcher?: ResearcherLight
@@ -48,6 +49,7 @@ export interface UserModel {
     [key: string]: { version: number | null; date: string | null }
   } | null
   privacy_settings?: PrivacySettings
+  sdgs?: number[]
 }
 
 export interface UserFromJWTModel {
@@ -128,4 +130,9 @@ export interface UserSkillModel {
   needs_mentor: boolean
 }
 
-export type TranslatedUserModel = Translated<UserModel, 'description' | 'short_description' | 'job'>
+export type TranslatedUserModel = Translated<
+  Omit<UserModel, 'people_groups'>,
+  'description' | 'short_description' | 'job'
+> & {
+  people_groups: TranslatedPeopleGroupModel[]
+}

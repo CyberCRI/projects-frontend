@@ -112,7 +112,7 @@ import { AttachmentFileModel } from '@/models/attachment-file.model'
 import { AttachmentLinkModel } from '@/models/attachment-link.model'
 import { BlogEntryModel } from '@/models/blog-entry.model'
 import { CommentModel } from '@/models/comment.model'
-import { GoalModel } from '@/models/goal.model'
+import { TranslatedGoal } from '@/models/goal.model'
 import { LocationModel } from '@/models/location.model'
 import { TranslatedProject } from '@/models/project.model'
 import { UserModel } from '@/models/user.model'
@@ -130,7 +130,7 @@ const props = withDefaults(
 
     reviews?: any[]
     linkedProjects?: TranslatedProject[]
-    goals?: GoalModel[]
+    goals?: TranslatedGoal[]
     sdgs?: number[]
     team?: {
       owners: UserModel[]

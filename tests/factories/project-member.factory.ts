@@ -13,6 +13,7 @@ import { UserFactory } from './user.factory'
 
 export const ProjectMemberFactory = createFactory<ProjectMemberModel>((faker) => ({
   ...UserFactory.generate(),
+  role: 'leaders',
 }))
 
 export const ProjectTeamOutputFactory = createFactory<ProjectTeamModel>((faker) => ({

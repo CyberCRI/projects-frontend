@@ -9,6 +9,7 @@ import type { Mock } from 'vitest'
 import pinia from '@/stores'
 import useUsersStore from '@/stores/useUsers'
 import useOrganizationsStore from '@/stores/useOrganizations'
+import { ProjectMemberModel } from '@/models/project-member.model'
 // vi.mock('@/router/index', () => ({
 //   default: {
 //     push: vi.fn(),
@@ -101,7 +102,10 @@ describe('Function projectCanBeEdited', () => {
   test("that project can be edited if user is one of project's owners and project is not locked", () => {
     const user = UserFactory.generate()
     const project = ProjectOutputFactory.generate()
-    project.team.owners[0] = UserFactory.generate({ id: 1 })
+    project.team.owners[0] = {
+      ...UserFactory.generate({ id: 1 }),
+      role: 'leaders',
+    } as ProjectMemberModel
     project.is_locked = false
 
     usersStore.user = user // getters are writable only in tests

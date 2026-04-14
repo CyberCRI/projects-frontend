@@ -6,7 +6,23 @@ export type ProjectPublicationStatusType = 'public' | 'private' | 'org'
 
 export type ProjectStatusType = 'running' | 'completed' | 'canceled' | 'toreview'
 
-export type ProjectMemberRoleType = 'owners' | 'members' | 'reviewers'
+export type GroupDataRole =
+  | 'superadmins'
+  | 'default'
+  | 'reviewers'
+  | 'owners'
+  | 'reviewer_groups'
+  | 'owner_groups'
+  | 'member_groups'
+  | 'leaders'
+  | 'managers'
+  | 'members'
+  | 'admins'
+  | 'facilitators'
+  | 'users'
+  | 'viewers'
+
+export type ProjectMemberRoleType = GroupDataRole
 
 export type StatusType = 'na' | 'ongoing' | 'complete' | 'cancel'
 
