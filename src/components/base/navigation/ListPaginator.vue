@@ -8,72 +8,61 @@
     :is-loading="isLoading"
   />
 </template>
-<script>
-export default {
-  name: 'ListPaginator',
 
-  props: {
-    limit: {
-      type: Number,
-      default: 12,
-    },
-    list: {
-      type: Array,
-      default: () => [],
-    },
-  },
+<script setup lang="ts">
+const props = withDefaults(
+  defineProps<{
+    limit?: number
+    list?: any[]
+  }>(),
+  {
+    limit: 12,
+    list: () => [],
+  }
+)
 
-  data() {
-    return {
-      currentPage: 1,
-      isLoading: false,
-    }
-  },
+const currentPage = ref(1)
+const isLoading = ref(false)
 
-  computed: {
-    totalPage() {
-      return Math.ceil(this.list.length / this.limit)
-    },
+const totalPage = computed(() => {
+  return Math.ceil(props.list.length / props.limit)
+})
 
-    items() {
-      const start = (this.currentPage - 1) * this.limit
-      const end = start + this.limit
-      return this.list.slice(start, end)
-    },
+const items = computed(() => {
+  const start = (currentPage.value - 1) * props.limit
+  const end = start + props.limit
+  return props.list.slice(start, end)
+})
 
-    previous() {
-      return this.currentPage > 1 ? this.currentPage - 1 : null
-    },
+const previous = computed(() => {
+  return currentPage.value > 1 ? currentPage.value - 1 : null
+})
 
-    next() {
-      return this.currentPage < this.totalPage ? this.currentPage + 1 : null
-    },
+const next = computed(() => {
+  return currentPage.value < totalPage.value ? currentPage.value + 1 : null
+})
 
-    last() {
-      return this.totalPage
-    },
+const last = computed(() => {
+  return totalPage.value
+})
 
-    pagination() {
-      return {
-        currentPage: this.currentPage,
-        total: this.totalPage,
-        previous: this.previous,
-        next: this.next,
-        first: 1,
-        last: this.last,
-      }
-    },
-  },
+const pagination = computed(() => {
+  return {
+    currentPage: currentPage.value,
+    total: totalPage.value,
+    previous: previous.value,
+    next: next.value,
+    first: 1,
+    last: last.value,
+  }
+})
 
-  methods: {
-    async onClickPagination(page) {
-      // simulate async operation
-      // for ux coherence
-      this.isLoading = true
-      await new Promise((resolve) => setTimeout(resolve, 200))
-      this.currentPage = page
-      this.isLoading = false
-    },
-  },
+const onClickPagination = async (page) => {
+  // simulate async operation
+  // for ux coherence
+  isLoading.value = true
+  await new Promise((resolve) => setTimeout(resolve, 200))
+  currentPage.value = page
+  isLoading.value = false
 }
 </script>

@@ -68,6 +68,7 @@ import analytics from '@/analytics'
 import useToasterStore from '@/stores/useToaster.ts'
 import DateField from '@/components/base/form/DateField.vue'
 import { fullYearDateFormat } from '@/functs/date'
+import { textIsEmpty } from '@/functs/string'
 
 export default {
   name: 'AnnouncementDrawer',
@@ -170,7 +171,7 @@ export default {
     descriptionChanged() {
       return this.announcement
         ? this.announcement.description !== this.form.description
-        : this.form.description !== '<p></p>'
+        : !textIsEmpty(this.form.description)
     },
   },
 

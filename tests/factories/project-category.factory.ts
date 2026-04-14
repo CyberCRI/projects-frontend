@@ -37,7 +37,7 @@ export const ProjectCategoryFactory = createFactory<ProjectCategoryOutput>((fake
   },
   description: faker.lorem.sentences(),
   foreground_color: faker.internet.color(), // Text color
-  is_reviewable: faker.datatype.string(),
+  is_reviewable: faker.datatype.boolean(),
   name: faker.name.title(),
   order_index: faker.datatype.number(),
   template: TemplateFactory.generate(),

@@ -28,7 +28,6 @@ const props = withDefaults(
 )
 
 const is = computed(() => {
-  console.error(props.is, props.to)
   if (props.is) {
     return props.is
   }

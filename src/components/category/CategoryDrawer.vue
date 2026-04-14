@@ -258,28 +258,7 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import useOrganizationCode from '@/composables/useOrganizationCode.ts'
 import { getTemplates } from '@/api/templates.service.ts'
 import FilterDrawer from '@/components/base/FilterDrawer.vue'
-
-defineOptions({ name: 'CategoryDrawer' })
-
-const defaultForm = () => {
-  return {
-    name: '',
-    description: '<p></p>',
-    background_color: '#81A617',
-    foreground_color: '#FFFFFF',
-    background_image: {
-      variations: {
-        small: undefined,
-      },
-    },
-    is_reviewable: true,
-    only_reviewer_can_publish: false,
-    organization_code: null,
-    children: [],
-    order_index: 0,
-    templates: [],
-  }
-}
+import { defaultForm } from '@/form/category'
 
 const props = defineProps({
   editedCategory: {

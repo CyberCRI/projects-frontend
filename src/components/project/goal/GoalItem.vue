@@ -48,6 +48,7 @@ import IconImage from '@/components/base/media/IconImage.vue'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 import { formatDate } from '@/functs/date'
 import { TranslatedGoal } from '@/models/goal.model'
+import { textIsEmpty } from '@/functs/string'
 
 const props = withDefaults(
   defineProps<{
@@ -80,9 +81,7 @@ const deadlineFormatted = computed(() => {
   } ${formatDate(new Date(props.goal.deadline_at), locale.value)}`
 })
 
-const hasDescription = computed(() => {
-  return props.goal.description && props.goal.description != '<p></p>'
-})
+const hasDescription = computed(() => !textIsEmpty(props.goal.description))
 
 const editGoal = () => emit('edit-goal', props.goal)
 const deleteGoal = () => emit('delete-goal', props.goal)

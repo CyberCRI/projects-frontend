@@ -109,6 +109,7 @@
       <div class="one-column">
         <div class="column">
           <div class="sdg-grid">
+            <!-- TODO Sdg componenets -->
             <label v-for="sdg in sdgs" :key="sdg.id" class="sdg">
               <input v-model="sdg.selected" type="checkbox" class="sdg-checkbox" />
               <span
@@ -172,13 +173,12 @@
   </template>
 </template>
 <script>
-import allSdgs from '@/data/sdgs.json'
 import { getUser, patchUser, patchUserPicture, postUserPicture } from '@/api/people.service.ts'
 import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils.ts'
 import { isEqual } from 'es-toolkit'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
-import { VALID_NAME_REGEX } from '@/functs/constants.ts'
+import { SDGS, VALID_NAME_REGEX } from '@/functs/constants.ts'
 import useToasterStore from '@/stores/useToaster.ts'
 import useUsersStore from '@/stores/useUsers.ts'
 import { useRuntimeConfig } from '#imports'
@@ -209,7 +209,7 @@ export default {
     return {
       v$: useVuelidate(),
       user: null,
-      sdgs: allSdgs.map((sdg) => ({ ...sdg, selected: false })),
+      sdgs: SDGS.map((sdg) => ({ ...sdg, selected: false })),
 
       form: {
         picture: null,

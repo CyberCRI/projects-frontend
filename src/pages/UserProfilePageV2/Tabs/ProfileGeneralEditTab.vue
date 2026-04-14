@@ -118,7 +118,7 @@
         :picture-alt="`${form.last_name} image`"
         :contain="true"
         :round-picture="true"
-        :default-picture="`${runtimeConfig.public.appPublicBinariesPrefix}/patatoids-project/Patatoid-1.png`"
+        :default-picture="DEFAULT_USER_PATATOID"
       />
     </div>
 

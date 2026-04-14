@@ -3,7 +3,6 @@ import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import useUsersStore from '@/stores/useUsers'
 import { I18nT } from 'vue-i18n'
 
-const runtimeConfig = useRuntimeConfig()
 const usersStore = useUsersStore()
 const { t } = useNuxtI18n()
 
@@ -23,9 +22,7 @@ const illustrationSrc = computed(() => {
   return isConnected.value ? '/page404/page-404.png' : '/page404/not-connected-page-404.png'
 })
 
-const imageFullUrl = computed(() => {
-  return runtimeConfig.public.appPublicBinariesPrefix + illustrationSrc.value
-})
+const imageFullUrl = computed(() => usePublicURL(illustrationSrc.value))
 
 const illustrationText = computed(() => {
   return isConnected.value

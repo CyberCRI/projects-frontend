@@ -66,6 +66,7 @@ import analytics from '@/analytics'
 import useToasterStore from '@/stores/useToaster.ts'
 import DateField from '@/components/base/form/DateField.vue'
 import { fullYearDateFormat } from '@/functs/date'
+import { textIsEmpty } from '@/functs/string'
 
 export default {
   name: 'GoalDrawer',
@@ -164,10 +165,13 @@ export default {
     },
 
     isEdited() {
-      return this.editedGoal
-        ? this.editedGoal.description != this.form.description ||
-            this.editedGoal.title != this.form.title
-        : this.form.description != '<p></p>' || this.form.title != ''
+      if (this.editedGoal) {
+        return (
+          this.editedGoal.description != this.form.description ||
+          this.editedGoal.title != this.form.title
+        )
+      }
+      return !textIsEmpty(this.form.title) || !textIsEmpty(this.form.description)
     },
   },
 

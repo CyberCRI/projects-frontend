@@ -14,6 +14,7 @@ import type {
 import analytics from '@/analytics'
 
 import useAutoTranslate from '@/composables/useAutoTranslate'
+import functions from '@/functs/functions'
 
 export interface OrganizationsState {
   _all: OrganizationOutput[]
@@ -31,9 +32,7 @@ const useOrganizationsStore = defineStore('organizations', () => {
 
   const isAutoTranslate = computed(() => !!current.value?.auto_translate_content)
 
-  const isDefault = computed((): boolean => {
-    return current.value?.code === 'DEFAULT'
-  })
+  const isDefault = computed((): boolean => functions.isDefaultPortal(current.value?.code))
 
   const languages = computed((): string[] => {
     return current.value?.languages || []

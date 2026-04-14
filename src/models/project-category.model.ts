@@ -16,7 +16,7 @@ export interface ProjectCategoryModel extends BaseModel {
   background_image: ImageModel
   description: string
   foreground_color: string // Text color
-  is_reviewable: string
+  is_reviewable: boolean
   name: string
   order_index: number
   children: ProjectCategoryOutput[] | number[]

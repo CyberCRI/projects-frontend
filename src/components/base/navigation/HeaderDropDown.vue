@@ -1,5 +1,5 @@
 <template>
-  <div v-click-outside="close" :class="{ 'is-open': open }" class="header-drop-down">
+  <div ref="dropDown" v-click-outside="close" :class="{ 'is-open': open }" class="header-drop-down">
     <button class="drop-down-toggle" :data-test="dataTest" @click="toggle">
       <slot :open="open">
         <slot name="badge" />
@@ -31,7 +31,7 @@
           <ul v-else>
             <li v-for="(item, index) in menuItems" :key="index" class="drop-down-menu-item">
               <Component
-                :is="item.to ? 'NuxtLink' : item.action ? 'button' : 'p'"
+                :is="getComponent(item)"
                 class="drop-down-menu-item-content"
                 :to="item.to"
                 :data-test="item.dataTest"
@@ -67,107 +67,95 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-import { NuxtLink } from '#components'
+import { IconImageChoice } from '@/functs/IconImage'
+import { StyleValue } from 'vue'
+import { RouteLocationRaw } from 'vue-router'
 
-export default {
-  name: 'HeaderDropDown',
+type MenuItem = {
+  to?: RouteLocationRaw
+  dataTest?: string
+  leftIcon?: IconImageChoice
+  rightIcon?: IconImageChoice
+  label: string
+  action?: boolean
+  subSection: { src: string; label: string }[]
+}
 
-  components: {
-    LpiLoader,
-    IconImage,
-    NuxtLink,
-  },
+withDefaults(
+  defineProps<{
+    label?: string
+    icon?: IconImageChoice
+    roundedIcon?: boolean
+    menuItems?: MenuItem[]
+    hasSeparator?: boolean
+    customStyle?: StyleValue
+    isLoading?: boolean
+    dataTest?: string
+  }>(),
+  {
+    label: null,
+    icon: null,
+    roundedIcon: false,
+    menuItems: () => [],
+    hasSeparator: false,
+    customStyle: null,
+    isLoading: false,
+    dataTest: 'user-dropdown-menu',
+  }
+)
 
-  props: {
-    label: {
-      type: String,
-      default: null,
-    },
+const open = ref(false)
+const roundCorner = ref(false)
+const clampCorner = ref(false)
+const displaySubMenu = ref(false)
 
-    icon: {
-      type: String,
-      default: null,
-    },
+const dropDownRef = useTemplateRef('dropDown')
 
-    roundedIcon: {
-      type: Boolean,
-      default: false,
-    },
+const getComponent = (item: MenuItem) => {
+  if (item.to) {
+    return resolveComponent('NuxtLink')
+  }
+  if (item.action) {
+    return 'button'
+  }
+  return 'p'
+}
 
-    menuItems: {
-      type: Array,
-      default: () => [],
-    },
-
-    hasSeparator: {
-      type: Boolean,
-      default: false,
-    },
-
-    customStyle: {
-      type: Object,
-      default: () => {},
-    },
-
-    isLoading: {
-      type: Boolean,
-      default: false,
-    },
-    dataTest: {
-      type: String,
-      default: 'user-dropdown-menu',
-    },
-  },
-
-  data() {
-    return {
-      open: false,
-      roundCorner: false,
-      clampCorner: false,
-      displaySubMenu: false,
-    }
-  },
-
-  watch: {
-    open(neo) {
-      if (neo) {
-        this.$nextTick(() => {
-          const menu = this.$el.querySelector('.drop-down-menu')
-          if (menu) {
-            const menuBbox = menu.getBoundingClientRect()
-            const wrapperBbox = this.$el.getBoundingClientRect()
-            // round corner if drop down is wider than wrapper plus border radius
-            this.roundCorner = menuBbox.width > wrapperBbox.width + 6 /* $border-radius-s: 6px;*/
-            // clamp corner if drop down is wider than wrapper but not enough to have round corner
-            this.clampCorner = menuBbox.width > wrapperBbox.width && !this.roundCorner
-          }
-        })
+watch(open, (neo) => {
+  if (neo) {
+    nextTick(() => {
+      const menu = dropDownRef.value.querySelector('.drop-down-menu')
+      if (menu) {
+        const menuBbox = menu.getBoundingClientRect()
+        const wrapperBbox = dropDownRef.value.getBoundingClientRect()
+        // round corner if drop down is wider than wrapper plus border radius
+        roundCorner.value = menuBbox.width > wrapperBbox.width + 6 /* $border-radius-s: 6px;*/
+        // clamp corner if drop down is wider than wrapper but not enough to have round corner
+        clampCorner.value = menuBbox.width > wrapperBbox.width && !roundCorner.value
       }
-    },
-  },
+    })
+  }
+})
 
-  methods: {
-    toggle() {
-      this.open = !this.open
-      // reset clampCorner so it doesnt interfere with size calculation in watcher
-      this.clampCorner = false
-    },
+const toggle = () => {
+  open.value = !open.value
+  // reset clampCorner so it doesnt interfere with size calculation in watcher
+  clampCorner.value = false
+}
 
-    close() {
-      this.open = false
-    },
+const close = () => {
+  open.value = false
+}
 
-    menuAction(item) {
-      if (item.action) item.action()
+const menuAction = (item) => {
+  if (item.action) item.action()
 
-      if (item.hasSubSection) this.displaySubMenu = !this.displaySubMenu
+  if (item.hasSubSection) displaySubMenu.value = !displaySubMenu.value
 
-      if (!item.hasSubSection) this.close()
-    },
-  },
+  if (!item.hasSubSection) close()
 }
 </script>
 

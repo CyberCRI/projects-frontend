@@ -3,7 +3,7 @@ import 'deep-chat'
 import analytics from '@/analytics'
 import useUsersStore from '@/stores/useUsers.ts'
 import { shuffle } from 'es-toolkit'
-import sdgJson from '@/data/sdgs.json'
+import { SDGS } from '@/functs/constants'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -67,7 +67,7 @@ const userContext = computed(() => {
   - Short description: ${user.short_description}
   - Description: ${user.description}
   - SDGs of interest: ${user.sdgs
-    .map((sid) => sdgJson[sid - 1])
+    .map((sid) => SDGS[sid - 1])
     .filter((s) => !!s)
     .map((s) => s.title + ' - ' + s.description)
     .join('; ')}

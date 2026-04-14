@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { textIsEmpty } from '@/functs/string'
+
 const { onboardingTrap } = useOnboardingStatus()
 const { t } = useNuxtI18n()
 
@@ -7,8 +9,8 @@ const customTab = ref(null)
 const faq = ref(null)
 
 const hasFaq = computed(() => {
-  let faqValue = faq.value
-  return faqValue && faqValue.title && faqValue.content && faqValue.content !== '<p></p>'
+  const faqValue = faq.value
+  return faqValue && !textIsEmpty(faqValue.title) && !textIsEmpty(faqValue.content)
 })
 
 provide('helpPageHasFaq', hasFaq)

@@ -60,6 +60,7 @@ import { postReview, patchReview } from '@/api/reviews.service'
 import useToasterStore from '@/stores/useToaster.ts'
 import useProjectsStore from '@/stores/useProjects.ts'
 import useUsersStore from '@/stores/useUsers.ts'
+import { textIsEmpty } from '@/functs/string'
 export default {
   name: 'ReviewDrawer',
 
@@ -162,10 +163,15 @@ export default {
 
   computed: {
     isEdited() {
-      return this.rdata?.id
-        ? this.rdata.title != this.newReview.data.title ||
-            this.rdata.description != this.newReview.data.description
-        : this.newReview.data.title != '' || this.newReview.data.description != '<p></p>'
+      if (this.rdata?.id) {
+        return (
+          this.rdata.title != this.newReview.data.title ||
+          this.rdata.description != this.newReview.data.description
+        )
+      }
+      return (
+        !textIsEmpty(this.newReview.data.title) || !textIsEmpty(this.newReview.data.description)
+      )
     },
   },
 

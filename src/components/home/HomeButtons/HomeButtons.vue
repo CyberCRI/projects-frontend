@@ -30,7 +30,6 @@
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import useOrganizationsStore from '@/stores/useOrganizations'
 
-defineOptions({ name: 'HomeButtons' })
 const organizationsStore = useOrganizationsStore()
 const organization = computed(() => organizationsStore.current)
 

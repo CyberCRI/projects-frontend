@@ -7,8 +7,7 @@ import {
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils'
 
 export default async function addProjectPhotoFactory(project: any) {
-  const runtimeConfig = useRuntimeConfig()
-  const defaultProjectPicture = `${runtimeConfig.public.appPublicBinariesPrefix}/placeholders/header_placeholder.png`
+  const defaultProjectPicture = usePublicURL(`/placeholders/header_placeholder.png`)
   const projectPhoto = project.header_image?.variations?.medium || defaultProjectPicture
   const projectPhotoDataUrl = await fetchImageAsDataUrl(proxyImageUrl(projectPhoto))
 

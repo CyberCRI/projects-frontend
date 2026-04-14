@@ -44,6 +44,7 @@
 </template>
 
 <script setup lang="ts">
+import { textIsEmpty } from '@/functs/string'
 import { TranslatedProject } from '@/models/project.model'
 
 const props = defineProps<{
@@ -64,9 +65,7 @@ const description = computed(() => {
   )
 })
 
-const showDescriptionPlaceHolder = computed(() => {
-  return props.project.description.length === 0 || props.project.description === '<p></p>'
-})
+const showDescriptionPlaceHolder = computed(() => textIsEmpty(props.project.description))
 
 const summaryBlock = useTemplateRef('summaryBlock')
 watch(description, (neo, old) => {

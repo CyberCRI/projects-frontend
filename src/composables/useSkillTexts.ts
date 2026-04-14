@@ -1,4 +1,4 @@
-import useTagTexts from '@/composables/useTagTexts.js'
+import useTagTexts from '@/composables/useTagTexts'
 import { UserSkillModel } from '@/models/user.model'
 
 export default function useSkillTexts() {

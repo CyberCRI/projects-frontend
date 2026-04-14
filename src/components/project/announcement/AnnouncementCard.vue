@@ -47,20 +47,17 @@
 <script setup lang="ts">
 import { capitalize } from '@/functs/string'
 import IconImage from '@/components/base/media/IconImage.vue'
-import { useRuntimeConfig } from '#imports'
 import { TranslatedAnnouncement } from '@/models/announcement.model'
+import { usePatatoid } from '@/composables/usePatatoids'
 
 const props = defineProps<{ announcement: TranslatedAnnouncement }>()
 
 const emit = defineEmits(['know-more-clicked'])
 
 const { t } = useNuxtI18n()
-const runtimeConfig = useRuntimeConfig()
 
 const projectImage = computed(() => {
-  return `url(${props.announcement.project?.header_image?.variations?.small}), url(${
-    runtimeConfig.public.appPublicBinariesPrefix
-  }/patatoids-project/Patatoid-1.png)`
+  return `url(${props.announcement.project?.header_image?.variations?.small}), url(${usePatatoid(1)})`
 })
 </script>
 

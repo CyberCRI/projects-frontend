@@ -16,6 +16,7 @@
 </template>
 
 <script setup lang="ts">
+import { IconImageChoice } from '@/functs/IconImage'
 import { ProjectModel } from '@/models/project.model'
 
 const props = withDefaults(
@@ -27,15 +28,15 @@ const props = withDefaults(
 )
 
 const visibilityIcon = () => {
-  const map = {
+  const map: Record<string, IconImageChoice> = {
     public: 'Eye',
     private: 'EyeSlash',
     org: 'PeopleGroup',
   }
-  return map[props.project.publication_status] || ''
+  return map[props.project.publication_status] || map.private
 }
 
-const visibility = computed(() => {
+const visibility = computed<{ icon: IconImageChoice; title: string }>(() => {
   if (!props.project || !props.project.publication_status) {
     return { icon: 'EyeSlash', title: '' }
   }

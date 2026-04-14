@@ -14,25 +14,19 @@
   </div>
 </template>
 
-<script setup>
-defineOptions({ name: 'BaseListSummaryBlock' })
-
-const props = defineProps({
-  title: {
-    type: String,
-    default: '',
-  },
-
-  items: {
-    type: Array,
-    default: () => [],
-  },
-
-  inlined: {
-    type: Boolean,
-    default: false,
-  },
-})
+<script setup lang="ts">
+const props = withDefaults(
+  defineProps<{
+    title?: string
+    items?: any[]
+    inlined?: boolean
+  }>(),
+  {
+    title: '',
+    items: () => [],
+    inlined: false,
+  }
+)
 
 const nbCols = computed(() => props.items.length)
 const nbColsText = computed(() => {

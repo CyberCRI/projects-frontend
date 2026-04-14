@@ -35,7 +35,7 @@ module.exports = {
         description: 'A reviewable category',
         background_color: '#FFFFFF',
         foreground_color: '#000000',
-        is_reviewable: 'true',
+        is_reviewable: true,
         order_index: 1,
         template: null,
       },

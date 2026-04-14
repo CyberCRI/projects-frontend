@@ -98,7 +98,7 @@ import LpiSelect from '@/components/base/form/LpiSelect.vue'
 import useTagSearch from '@/composables/useTagSearch.js'
 import SuggestedTags from '@/components/search/FilterTags/SuggestedTags.vue'
 import SkillEditor from '@/components/people/skill/SkillEditor.vue'
-import useSkillTexts from '@/composables/useSkillTexts.js'
+import useSkillTexts from '@/composables/useSkillTexts.ts'
 import MentorshipForm from '@/components/people/skill/MentorshipForm.vue'
 
 function defaultMentorship() {

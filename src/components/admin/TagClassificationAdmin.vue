@@ -12,7 +12,7 @@ import EditTagModal from '@/components/admin/EditTagModal.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import useToasterStore from '@/stores/useToaster'
 
-import useTagTexts from '@/composables/useTagTexts.js'
+import useTagTexts from '@/composables/useTagTexts'
 
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 

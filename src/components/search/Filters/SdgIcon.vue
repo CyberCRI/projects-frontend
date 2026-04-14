@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
-import allSdgs from '@/data/sdgs.json'
+import { SDGS } from '@/functs/constants'
 
 const props = withDefaults(
   defineProps<{
@@ -44,7 +44,7 @@ const imageUrl = computed(() => {
 })
 
 // find backgroundColor from sdg (during loading image , the background is color from sdg)
-const sdgInfo = computed(() => allSdgs.find((el) => el.id.toString() === props.sdgId.toString()))
+const sdgInfo = computed(() => SDGS.find((el) => el.id.toString() === props.sdgId.toString()))
 
 const alt = computed(() => {
   return t(`sdg.${props.sdgId}.title`) || sdgInfo.value?.title

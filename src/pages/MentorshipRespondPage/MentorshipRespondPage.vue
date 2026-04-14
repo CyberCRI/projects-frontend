@@ -82,7 +82,7 @@
 <script>
 import useUsersStore from '@/stores/useUsers.ts'
 import { getMentorshipDetails, respondMentorship } from '@/api/mentorship.service.ts'
-import useSkillTexts from '@/composables/useSkillTexts.js'
+import useSkillTexts from '@/composables/useSkillTexts.ts'
 export default {
   name: 'MentorshipRespondPage',
 

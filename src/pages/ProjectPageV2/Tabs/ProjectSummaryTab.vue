@@ -107,6 +107,7 @@
 
 <script setup lang="ts">
 import ProjectMemberSection from '@/components/group/ProjectMemberSection/ProjectMemberSection.vue'
+import { textIsEmpty } from '@/functs/string'
 import { isNotGroup } from '@/functs/users'
 import { AttachmentFileModel } from '@/models/attachment-file.model'
 import { AttachmentLinkModel } from '@/models/attachment-link.model'
@@ -215,9 +216,7 @@ const mergedTeam = computed(() => {
   ]
 })
 
-const showDescriptionPlaceHolder = computed(() => {
-  return props.project.description.length === 0 || props.project.description === '<p></p>'
-})
+const showDescriptionPlaceHolder = computed(() => textIsEmpty(props.project.description))
 
 const openProfileDrawer = async (user) => {
   if (isNotGroup(user)) {

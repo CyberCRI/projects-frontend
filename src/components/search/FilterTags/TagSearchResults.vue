@@ -24,7 +24,7 @@
 <script>
 import TagResult from '@/components/search/FilterTags/TagResult.vue'
 import useUsersStore from '@/stores/useUsers.ts'
-import useTagTexts from '@/composables/useTagTexts.js'
+import useTagTexts from '@/composables/useTagTexts.ts'
 
 export default {
   name: 'TagSearchResults',

@@ -32,90 +32,74 @@
     :title="$t('instructions.delete.title')"
     :asyncing="isDeletingInstruction"
     @cancel="instructionToDelete = null"
-    @confirm="deleteInstruction"
+    @confirm="localDeleteInstruction"
   />
 </template>
-<script>
+
+<script setup lang="ts">
 import { defaultForm } from '@/components/instruction/InstructionForm/InstructionForm.vue'
 import { getAllInstructions, deleteInstruction } from '@/api/instruction.service'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useToasterStore from '@/stores/useToaster'
 
-export default {
-  name: 'InstructionAdminBlock',
+const toaster = useToasterStore()
+const instructions = ref([])
+const instructionsCount = ref(0)
+const isLoading = ref(true)
+const editedInstruction = ref(null)
+const instructionToDelete = ref(null)
+const isDeletingInstruction = ref(false)
+const { t } = useNuxtI18n()
+const organizationCode = useOrganizationCode()
+const router = useRouter()
 
-  setup() {
-    const toaster = useToasterStore()
-    const organizationsStore = useOrganizationsStore()
-    return {
-      toaster,
-      organizationsStore,
-    }
-  },
+const blockTitle = computed(() => {
+  const extra = isLoading.value ? '' : ` (${instructionsCount.value})`
+  return t('admin.portal.instructions') + extra
+})
 
-  data() {
-    return {
-      instructions: [],
-      instructionsCount: 0,
-      isLoading: true,
-      editedInstruction: null,
-      instructionToDelete: null,
-    }
-  },
+const diplayableInstructions = computed(() => {
+  return instructions.value.slice(0, 1)
+})
 
-  computed: {
-    blockTitle() {
-      let extra = this.isLoading ? '' : ` (${this.instructionsCount})`
-      return this.$t('admin.portal.instructions') + extra
-    },
-
-    diplayableInstructions() {
-      return this.instructions.slice(0, 1)
-    },
-  },
-
-  async mounted() {
-    await this.loadInstructions()
-  },
-
-  methods: {
-    async loadInstructions() {
-      this.isLoading = true
-      const request = await getAllInstructions(this.organizationsStore.current?.code, {
-        ordering: '-publication_date',
-        limit: 1,
-      })
-      this.instructions = request.results
-      this.instructionsCount = request.count
-      this.isLoading = false
-    },
-
-    addInstruction() {
-      this.editedInstruction = defaultForm()
-    },
-
-    onEditInstruction(instruction) {
-      this.editedInstruction = instruction
-    },
-
-    onDeleteInstruction(instruction) {
-      this.instructionToDelete = instruction
-    },
-
-    async deleteInstruction() {
-      this.isDeletingInstruction = true
-      try {
-        await deleteInstruction(this.organizationsStore.current?.code, this.instructionToDelete.id)
-        this.toaster.pushSuccess(this.$t('instructions.delete.success'))
-      } catch (err) {
-        this.toaster.pushError(`${this.$t('instructions.delete.error')} (${err})`)
-        console.error(err)
-      } finally {
-        this.instructionToDelete = null
-        this.isDeletingInstruction = false
-        this.$router.push({ name: 'InstructionListPage' })
-      }
-    },
-  },
+const loadInstructions = async () => {
+  isLoading.value = true
+  const request = await getAllInstructions(organizationCode, {
+    ordering: '-publication_date',
+    limit: 1,
+  })
+  instructions.value = request.results
+  instructionsCount.value = request.count
+  isLoading.value = false
 }
+
+const addInstruction = () => {
+  editedInstruction.value = defaultForm()
+}
+
+const onEditInstruction = (instruction) => {
+  editedInstruction.value = instruction
+}
+
+const onDeleteInstruction = (instruction) => {
+  instructionToDelete.value = instruction
+}
+
+const localDeleteInstruction = async () => {
+  isDeletingInstruction.value = true
+  try {
+    await deleteInstruction(organizationCode, instructionToDelete.value.id)
+    toaster.pushSuccess(t('instructions.delete.success'))
+  } catch (err) {
+    toaster.pushError(`${t('instructions.delete.error')} (${err})`)
+    console.error(err)
+  } finally {
+    instructionToDelete.value = null
+    isDeletingInstruction.value = false
+    router.push({ name: 'InstructionListPage' })
+  }
+}
+
+onMounted(async () => {
+  await loadInstructions()
+})
 </script>

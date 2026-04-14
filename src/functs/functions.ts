@@ -1,5 +1,5 @@
-import useAPI from '@/composables/useAPI'
-import { useRuntimeConfig } from '#imports'
+import { OrganizationModel } from '@/models/organization.model'
+import { DEFAULT_ORGANIZATION_CODE } from '@/functs/constants'
 export default {
   isValidMail(email) {
     // big bad regex to check mail string
@@ -52,29 +52,8 @@ export default {
     return id
   },
 
-  async getPatatoidFile(patatoidNumber): Promise<File> {
-    const runtimeConfig = useRuntimeConfig()
-    try {
-      const urlFile = `${
-        runtimeConfig.public.appPublicBinariesPrefix
-      }/patatoids-project/Patatoid-${patatoidNumber}.png`
-      const fileName = `patatoid-${patatoidNumber}.png`
-      const result: any = await useAPI(urlFile, { responseType: 'blob' }) // TODO nuxt check this
-      return new File([result], fileName)
-    } catch {
-      // In case it cannot find an image return first one
-      const urlFile = `${
-        runtimeConfig.public.appPublicBinariesPrefix
-      }/patatoids-project/Patatoid-1.png`
-      const fileName = 'Patatoid-1.png'
-      const result: any = await useAPI(urlFile, { responseType: 'blob' }) // TODO nuxt check this
-      return new File([result], fileName)
-    }
-  },
-
-  isDefaultPortal(): boolean {
-    const runtimeConfig = useRuntimeConfig()
-    return runtimeConfig.public.appApiOrgCode === 'DEFAULT'
+  isDefaultPortal(organizationCode?: OrganizationModel['code']): boolean {
+    return (organizationCode ?? useOrganizationCode()) === DEFAULT_ORGANIZATION_CODE
   },
 
   setTokenForWS(token) {

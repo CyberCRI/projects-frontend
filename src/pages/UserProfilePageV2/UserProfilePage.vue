@@ -16,6 +16,9 @@ const router = useRouter()
 const route = useRoute()
 
 watchEffect(async () => {
+  if (!props.userId) {
+    return
+  }
   const user = await getUser(props.userId.toString(), true)
   useLpiHead2({
     title: `${user.given_name} ${user.family_name}`,

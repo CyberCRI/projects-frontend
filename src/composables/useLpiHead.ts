@@ -56,13 +56,13 @@ const useLpiHead = (url, _title, _description, image, dimensions = null) => {
     })
   }
 
-  let favicon = `${runtimeConfig.public.appPublicBinariesPrefix}/favicon.ico`
+  let favicon = usePublicURL('/favicon.ico')
   const customFavicon = (runtimeConfig.public.appFavicon || '') as string
   if (customFavicon) {
     if (customFavicon.match(/^https?:\//)) {
       favicon = customFavicon
     } else {
-      favicon = `${runtimeConfig.public.appPublicBinariesPrefix}/${customFavicon}`
+      favicon = usePublicURL(customFavicon)
     }
   }
   const setHead = () =>
@@ -94,8 +94,7 @@ const useLpiHead = (url, _title, _description, image, dimensions = null) => {
 
         {
           property: 'og:url',
-          content:
-            url || `${runtimeConfig.public.appPublicBinariesPrefix}/social/meta_background_og.png`,
+          content: url || usePublicURL('/social/meta_background_og.png'),
         },
 
         ...ogImage,

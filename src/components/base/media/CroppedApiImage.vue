@@ -20,7 +20,7 @@ defineOptions({ name: 'CroppedApiImage' })
 const props = withDefaults(
   defineProps<{
     pictureData?: ImageModel
-    pictureSize?: 'small' | 'medium' | 'large'
+    pictureSize?: keyof ImageModel['variations']
     defaultPicture: string
     alt?: string
     contain?: boolean

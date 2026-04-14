@@ -24,6 +24,9 @@ export type GroupDataRole =
 
 export type ProjectMemberRoleType = GroupDataRole
 
+export type TagType = 'Wikipedia' | 'ESCO' | 'Custom'
+export type SecondaryTagType = 'skill' | 'occupation' | 'tag'
+
 export type StatusType = 'na' | 'ongoing' | 'complete' | 'cancel'
 
 export type LocationType = 'team' | 'impact' | 'address' | 'news' | 'event'

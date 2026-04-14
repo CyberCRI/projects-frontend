@@ -20,15 +20,15 @@
   </div>
 </template>
 <script setup lang="ts">
-import { CSSProperties } from 'vue'
+import { StyleValue } from 'vue'
 
 withDefaults(
   defineProps<{
     textContent: string
     lineNumber?: number
     is?: string
-    styleLimited?: CSSProperties
-    styleFull?: CSSProperties
+    styleLimited?: StyleValue
+    styleFull?: StyleValue
   }>(),
   {
     lineNumber: 1,
