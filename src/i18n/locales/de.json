@@ -283,7 +283,9 @@
       "news": "Nachrichten",
       "featured-projects": "Empfohlene Projekte",
       "templates": {
-        "add": "Vorlage hinzufügen"
+        "add": "Vorlage hinzufügen",
+        "delete-templates": "Vorlagen löschen",
+        "delete-templates-description": "Sind Sie sicher, dass Sie '{templateName}' Vorlage löschen möchten?"
       }
     },
     "form": {
@@ -1116,7 +1118,8 @@
     "underline": "unterstrichen",
     "undo": "Und",
     "video": "Video",
-    "save": "Sparen ohne Ausstieg"
+    "save": "Sparen ohne Ausstieg",
+    "server-offline": "Server ist offline."
   },
   "homeCarousel": {
     "tab1": {
@@ -2019,7 +2022,8 @@
     "title-comment": "Anmerkung",
     "no-templates-set": "Kein Template-Set.",
     "placeholder-purpose": "Ziel des Projekts",
-    "placeholder-title": "Titel Vor Ort"
+    "placeholder-title": "Titel Vor Ort",
+    "edit-category": "Kategorie bearbeiten."
   },
   "tips": {
     "background-color": "Diese Farbe wird hinter dem Text angezeigt.",

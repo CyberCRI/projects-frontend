@@ -283,7 +283,9 @@
       "news": "Notícies",
       "featured-projects": "Projectes de característiques",
       "templates": {
-        "add": "Afegeix una plantilla"
+        "add": "Afegeix una plantilla",
+        "delete-templates": "Esborra plantilles",
+        "delete-templates-description": "Esteu segur que voleu esborrar la plantilla '{templateName}'?"
       }
     },
     "form": {
@@ -1116,7 +1118,8 @@
     "underline": "subratllada",
     "undo": "Desfés",
     "video": "Vídeo",
-    "save": "Desa sense sortir"
+    "save": "Desa sense sortir",
+    "server-offline": "El servidor està fora de línia."
   },
   "homeCarousel": {
     "tab1": {
@@ -2019,7 +2022,8 @@
     "title-comment": "Comentari",
     "no-templates-set": "No s' ha establert cap plantilla.",
     "placeholder-purpose": "propòsit del projecte",
-    "placeholder-title": "Títol en ordre"
+    "placeholder-title": "Títol en ordre",
+    "edit-category": "Edita la categoria."
   },
   "tips": {
     "background-color": "Aquest color es mostrarà darrera del text.",
