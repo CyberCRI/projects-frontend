@@ -4,7 +4,6 @@ import { LogLevel, Logger } from '../logger'
 
 import {
   logIn,
-  logOut,
   destroyProject,
   createProject,
   addDescription,

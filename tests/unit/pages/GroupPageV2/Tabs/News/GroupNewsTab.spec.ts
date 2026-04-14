@@ -4,7 +4,6 @@ import { flushPromises } from '@vue/test-utils'
 
 import { describe, expect, it } from 'vitest'
 import { peopleGroupFactory } from '../../../../../factories/group.factory'
-import { MockRouter } from '../../../../../helpers/router'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import { PaginationsFactory } from '../../../../../factories/paginations.factory'
 import { NewsFactory } from '../../../../../factories/news.factory'
@@ -22,7 +21,7 @@ describe('GroupNewsTab.vue', () => {
 
     const props = { group }
 
-    const wrapper = await lpiMountSuspended(GroupNewsTab, { props, router: MockRouter() })
+    const wrapper = await lpiMountSuspended(GroupNewsTab, { props })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

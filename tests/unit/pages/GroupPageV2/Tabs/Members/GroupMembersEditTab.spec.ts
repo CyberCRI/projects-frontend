@@ -5,7 +5,6 @@ import { describe, expect, it } from 'vitest'
 import { groupTranslatedFactory } from '../../../../../factories/group.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import { PaginationsFactory } from '../../../../../factories/paginations.factory'
-import { ProjectFactory } from '../../../../../factories/project.factory'
 import GroupMemberFactory from '../../../../../factories/group-member.factory'
 import flushPromises from 'flush-promises'
 

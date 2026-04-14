@@ -1,17 +1,9 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
 import SkillsEditDrawer from '@/components/people/skill/SkillsEditDrawer.vue'
 
-import english from '@/i18n/locales/en.json'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
-import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
-
-import flushPromises from 'flush-promises'
-import {
-  getAllOrgClassifications,
-  getOrgClassificationTags,
-} from '@/api/tag-classification.service'
-import { postUserSkill } from '@/api/people.service'
+import { OrganizationOutput } from '@/models/organization.model'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -47,13 +39,6 @@ vi.mock('@/api/tag-classification.service', () => ({
   }),
 }))
 
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
 describe('SkillsEditDrawer.vue', () => {
   let wrapper
 
@@ -80,7 +65,6 @@ describe('SkillsEditDrawer.vue', () => {
         user: { id: 1, skills: [] },
         searchAllMode: true,
       },
-      i18n,
     })
   })
 

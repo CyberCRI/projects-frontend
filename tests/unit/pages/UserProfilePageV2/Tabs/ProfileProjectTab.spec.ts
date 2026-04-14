@@ -1,13 +1,9 @@
 import ProfileProjectTab from '@/pages/UserProfilePageV2/Tabs/ProfileProjectTab.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import { UserFactory } from '@/../tests/factories/user.factory'
-import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 import { flushPromises } from '@vue/test-utils'
 
-import { getUserFollows } from '@/api/follows.service'
-
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useUsersStore from '@/stores/useUsers'
@@ -15,24 +11,11 @@ import useUsersStore from '@/stores/useUsers'
 import usePeopleGroupsStore from '@/stores/usePeopleGroups'
 import useProjectsStore from '@/stores/useProjects'
 
-import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
+import { OrganizationOutput } from '@/models/organization.model'
 
 vi.mock('@/api/follows.service', () => ({
   getUserFollows: vi.fn().mockResolvedValue({ results: [] }),
 }))
-
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: loadLocaleMessages(),
-}
-
-const buildParams = (user) => ({
-  i18n,
-  props: {
-    user,
-  },
-})
 
 describe('ProfileProjectTab', () => {
   let usersStore
@@ -48,19 +31,16 @@ describe('ProfileProjectTab', () => {
     usePeopleGroupsStore(pinia)
     useProjectsStore(pinia)
   })
-  afterEach(() => {
-    // usersStore.$reset()
-  })
 
   it('should render ProfileProjectTab component', () => {
-    let wrapper = lpiShallowMount(ProfileProjectTab, buildParams(UserFactory.generate()))
+    const wrapper = lpiShallowMount(ProfileProjectTab, { props: { user: UserFactory.generate() } })
 
     expect(wrapper.exists()).toBeTruthy()
   })
 
   it('should display 3 project lists', async () => {
     const user = UserFactory.generate()
-    let wrapper = lpiShallowMount(ProfileProjectTab, buildParams(user))
+    const wrapper = lpiShallowMount(ProfileProjectTab, { props: { user } })
 
     await flushPromises()
     expect(wrapper.findAll('user-projects-search-stub').length).toBe(3)
@@ -68,7 +48,7 @@ describe('ProfileProjectTab', () => {
 
   it('should not display a create project button if not on self profile', async () => {
     const user = UserFactory.generate()
-    let wrapper = lpiShallowMount(ProfileProjectTab, buildParams(user))
+    const wrapper = lpiShallowMount(ProfileProjectTab, { props: { user } })
 
     await flushPromises()
     expect(wrapper.find('.create-project').exists()).toBe(false)
@@ -80,7 +60,7 @@ describe('ProfileProjectTab', () => {
     user.id = id
 
     usersStore.id = id
-    let wrapper = lpiShallowMount(ProfileProjectTab, buildParams(user))
+    const wrapper = lpiShallowMount(ProfileProjectTab, { props: { user } })
 
     await flushPromises()
     expect(wrapper.find('.create-project').exists()).toBe(true)

@@ -1,7 +1,6 @@
 import NewHomePage from '@/pages/NewHomePage/NewHomePage.vue'
 import { lpiShallowMountSuspended } from '@/../tests/helpers/LpiMount'
-import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
-import { beforeEach, afterEach, vi, describe, expect, it } from 'vitest'
+import { beforeEach, vi, describe, expect, it } from 'vitest'
 import flushPromises from 'flush-promises'
 
 import { ProjectCategoryOutputFactory } from '@/../tests/factories/project-category.factory'
@@ -10,13 +9,7 @@ import pinia from '@/stores'
 import useUsersStore from '@/stores/useUsers'
 import useProjectCategoriesStore from '@/stores/useProjectCategories'
 import useOrganizationsStore from '@/stores/useOrganizations'
-import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
-
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: loadLocaleMessages(),
-}
+import { OrganizationOutput } from '@/models/organization.model'
 
 function connectedStore(usersStore) {
   usersStore.id = 123
@@ -39,20 +32,15 @@ describe('NewHomePage', () => {
     projectCategories._all = ProjectCategoryOutputFactory.generateMany(2)
   })
 
-  afterEach(() => {
-    // usersStore.$reset()
-  })
-
   it('should render NewHomePage', async () => {
-    let wrapper = await lpiShallowMountSuspended(NewHomePage, { router, i18n })
+    const wrapper = await lpiShallowMountSuspended(NewHomePage, { router })
 
     expect(wrapper.exists()).toBeTruthy()
   })
 
   it('should contain site header as non connected user', async () => {
-    let wrapper = await lpiShallowMountSuspended(NewHomePage, {
+    const wrapper = await lpiShallowMountSuspended(NewHomePage, {
       router,
-      i18n,
     })
     // org header should be visible
     expect(wrapper.find('home-header-anonymous-stub').exists()).toBe(true)
@@ -72,7 +60,7 @@ describe('NewHomePage', () => {
 
   it('should contain user header as a connected user', async () => {
     connectedStore(usersStore)
-    let wrapper = await lpiShallowMountSuspended(NewHomePage, { router, i18n })
+    const wrapper = await lpiShallowMountSuspended(NewHomePage, { router })
     // TODO mock loadEvent and loadInstructions
     await flushPromises() // wait for data to be "loaded"
     // org header should not be visible

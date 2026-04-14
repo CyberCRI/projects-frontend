@@ -1,31 +1,17 @@
 import ProfileSkillTab from '@/pages/UserProfilePageV2/Tabs/ProfileSkillTab.vue'
 import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import { UserFactory } from '@/../tests/factories/user.factory'
-import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useUsersStore from '@/stores/useUsers'
 import { OrganizationOutput } from '@/models/organization.model'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import EmptyLabel from '@/components/base/EmptyLabel.vue'
 import { PaginationsFactory } from '../../../../factories/paginations.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import flushPromises from 'flush-promises'
 import UserSkillsFull from '@/components/people/skill/UserSkillsFull.vue'
-
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: loadLocaleMessages(),
-}
-
-const buildParams = (user) => ({
-  i18n,
-  props: {
-    user,
-  },
-})
 
 const aTag = { title: '123', description: 'abc' }
 
@@ -46,7 +32,9 @@ describe('ProfileSkillTab', () => {
   })
 
   it('should render ProfileSkillTab component', async () => {
-    let wrapper = await lpiMountSuspended(ProfileSkillTab, buildParams(UserFactory.generate()))
+    const wrapper = await lpiMountSuspended(ProfileSkillTab, {
+      props: { user: UserFactory.generate() },
+    })
     await flushPromises()
 
     expect(wrapper.exists()).toBeTruthy()
@@ -58,9 +46,9 @@ describe('ProfileSkillTab', () => {
     user.id = id
 
     usersStore.id = id
-    let wrapper = await lpiMountSuspended(ProfileSkillTab, buildParams(user))
+    const wrapper = await lpiMountSuspended(ProfileSkillTab, { props: { user } })
     await flushPromises()
-    let vm: any = wrapper.vm
+    const vm: any = wrapper.vm
     expect(vm.isCurrentUser).toBeTruthy()
   })
 
@@ -70,9 +58,9 @@ describe('ProfileSkillTab', () => {
 
     usersStore.id = '456'
 
-    let wrapper = await lpiMountSuspended(ProfileSkillTab, buildParams(user))
+    const wrapper = await lpiMountSuspended(ProfileSkillTab, { props: { user } })
     await flushPromises()
-    let vm: any = wrapper.vm
+    const vm: any = wrapper.vm
     expect(vm.isCurrentUser).toBeFalsy()
   })
 
@@ -82,9 +70,8 @@ describe('ProfileSkillTab', () => {
 
     usersStore.id = '456'
 
-    let wrapper = await lpiMountSuspended(ProfileSkillTab, buildParams(user))
+    const wrapper = await lpiMountSuspended(ProfileSkillTab, { props: { user } })
     await flushPromises()
-    let vm: any = wrapper.vm
     expect(wrapper.findComponent(EmptyLabel).exists()).toBe(true)
     expect(wrapper.findAllComponents(UserSkillsFull).length).toBe(0)
   })
@@ -95,9 +82,8 @@ describe('ProfileSkillTab', () => {
     user.skills = [{ id: '123', type: 'skill', tag: aTag }]
     usersStore.id = '456'
 
-    let wrapper = await lpiMountSuspended(ProfileSkillTab, buildParams(user))
+    const wrapper = await lpiMountSuspended(ProfileSkillTab, { props: { user } })
     await flushPromises()
-    let vm: any = wrapper.vm
     expect(wrapper.findComponent(EmptyLabel).exists()).toBe(false)
     expect(wrapper.findAllComponents(UserSkillsFull).length).toBe(1)
   })
@@ -108,9 +94,8 @@ describe('ProfileSkillTab', () => {
     user.skills = [{ id: '123', type: 'hobby', tag: aTag }]
     usersStore.id = '456'
 
-    let wrapper = await lpiMountSuspended(ProfileSkillTab, buildParams(user))
+    const wrapper = await lpiMountSuspended(ProfileSkillTab, { props: { user } })
     await flushPromises()
-    let vm: any = wrapper.vm
     expect(wrapper.findComponent(EmptyLabel).exists()).toBe(false)
     expect(wrapper.findAllComponents(UserSkillsFull).length).toBe(1)
   })
@@ -124,9 +109,8 @@ describe('ProfileSkillTab', () => {
     ]
     usersStore.id = '456'
 
-    let wrapper = await lpiMountSuspended(ProfileSkillTab, buildParams(user))
+    const wrapper = await lpiMountSuspended(ProfileSkillTab, { props: { user } })
     await flushPromises()
-    let vm: any = wrapper.vm
     expect(wrapper.findComponent(EmptyLabel).exists()).toBe(false)
     expect(wrapper.findAllComponents(UserSkillsFull).length).toBe(2)
   })
@@ -140,7 +124,7 @@ describe('ProfileSkillTab', () => {
     ]
     usersStore.id = '456'
 
-    let wrapper = await lpiMountSuspended(ProfileSkillTab, buildParams(user))
+    const wrapper = await lpiMountSuspended(ProfileSkillTab, { props: { user } })
     await flushPromises()
     await wrapper.vm.$nextTick()
     expect(wrapper.find('[data-test="skill-levels-help-button"]').exists()).toBe(true)

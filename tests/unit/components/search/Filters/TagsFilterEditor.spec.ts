@@ -1,21 +1,16 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
-import english from '@/i18n/locales/en.json'
 import waitForExpect from 'wait-for-expect'
 import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
 
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 
-import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
+import { OrganizationOutput } from '@/models/organization.model'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import flushPromises from 'flush-promises'
 
-import {
-  getAllOrgClassifications,
-  getOrgClassificationTags,
-} from '@/api/tag-classification.service'
+import { getOrgClassificationTags } from '@/api/tag-classification.service'
 
 vi.mock('@/api/tag-classification.service', () => ({
   getOrgClassificationTags: vi
@@ -45,14 +40,6 @@ vi.mock('@/api/tag-classification.service', () => ({
   }),
 }))
 
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
-
 describe('TagsFilterEditor', () => {
   let wrapper
   let defaultParams
@@ -75,7 +62,6 @@ describe('TagsFilterEditor', () => {
     } as unknown as OrganizationOutput
     defaultParams = {
       props: {},
-      i18n,
     }
   })
 
@@ -140,7 +126,6 @@ describe('TagsFilterEditor', () => {
         hideOrganizationTags: true,
       },
     })
-    const vm: any = wrapper.vm
 
     const select = wrapper.findComponent('[data-test="classification-picker"]')
     expect(select.exists()).toBeFalsy()
@@ -234,7 +219,6 @@ describe('TagsFilterEditor', () => {
         blockedTags: [{ id: 1 }, { id: 2 }],
       },
     })
-    const vm: any = wrapper.vm
     await flushPromises()
     // should display search results
     const resultsComp = wrapper.findComponent('[data-test="suggested-tags"]')

@@ -1,10 +1,7 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
-import { flushPromises } from '@vue/test-utils'
-import { MODEL_PROVIDER_CONFIG } from 'langchain/chat_models/universal'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 describe('LpiCheckbox', () => {
   let wrapper
   let defaultParams

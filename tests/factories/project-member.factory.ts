@@ -11,12 +11,12 @@ import {
 } from '@/models/project-member.model'
 import { UserFactory } from './user.factory'
 
-export const ProjectMemberFactory = createFactory<ProjectMemberModel>((faker) => ({
+export const ProjectMemberFactory = createFactory<ProjectMemberModel>(() => ({
   ...UserFactory.generate(),
   role: 'leaders',
 }))
 
-export const ProjectTeamOutputFactory = createFactory<ProjectTeamModel>((faker) => ({
+export const ProjectTeamOutputFactory = createFactory<ProjectTeamModel>(() => ({
   ...BaseFactory.generate(),
   reviewers: ProjectMemberFactory.generateMany(2),
   members: ProjectMemberFactory.generateMany(2),

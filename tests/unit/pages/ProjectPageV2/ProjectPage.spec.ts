@@ -5,7 +5,6 @@ import { describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
 import { UserFactory } from '../../../factories/user.factory'
 import { mockNuxtImport, registerEndpoint } from '@nuxt/test-utils/runtime'
-import { MockRouter } from '../../../helpers/router'
 import { ProjectOutputFactory } from '../../../factories/project.factory'
 import { PaginationsFactory } from '../../../factories/paginations.factory'
 import { AttachmentFileFactory } from '../../../factories/attachment-file.factory'
@@ -64,7 +63,6 @@ describe('ProjectPage.vue', () => {
 
     const wrapper = await lpiMountSuspended(ProjectPage, {
       props,
-      mock: MockRouter(),
       stubs: { NuxtPage: ProjectSummaryTab, NuxtLink: true },
     })
     await flushPromises()

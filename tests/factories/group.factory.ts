@@ -14,7 +14,7 @@ export const groupFactory = createFactory<GroupModel>((faker) => ({
   users: [],
 }))
 
-export const groupInputFactory = createFactory<GroupModelInput>((faker) => ({
+export const groupInputFactory = createFactory<GroupModelInput>(() => ({
   user_ids: [],
 }))
 

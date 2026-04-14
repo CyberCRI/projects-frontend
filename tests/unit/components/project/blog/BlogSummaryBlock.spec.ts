@@ -1,30 +1,15 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
-import english from '@/i18n/locales/en.json'
 import BlogSummaryBlock from '@/components/project/blog/BlogSummaryBlock.vue'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
-
-const factory = (props?) => {
-  return lpiMount(BlogSummaryBlock, {
-    props: {
-      summaryTextContainer: '.description',
-      ...props,
-    },
-    i18n,
-  })
-}
+import { describe, expect, it } from 'vitest'
 
 describe('SummaryBlock.vue', () => {
   it('should render component', () => {
-    const wrapper = factory()
+    const wrapper = lpiMount(BlogSummaryBlock, {
+      props: {
+        summaryTextContainer: '.description',
+      },
+    })
     expect(wrapper.exists()).toBe(true)
   })
 })

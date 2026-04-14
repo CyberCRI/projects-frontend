@@ -1,16 +1,15 @@
 import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import LinkListTab from '@/pages/AdminPortalPageV2/Tabs/LinksListTab.vue'
-import english from '@/i18n/locales/en.json'
 import * as invitationSrv from '@/api/invitations.service'
 import flushPromises from 'flush-promises'
 
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 
-import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { OrganizationOutput } from '@/models/organization.model'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
-import { MockRouter } from '../../../../helpers/router'
+
 vi.mock('@/api/invitations.service.ts', () => {
   return {
     getInvitations: vi.fn(() => ({ results: [] })),
@@ -19,30 +18,13 @@ vi.mock('@/api/invitations.service.ts', () => {
   }
 })
 
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
-
-const factory = (props?) => {
-  return lpiMountSuspended(LinkListTab, {
-    props,
-    i18n,
-    router: MockRouter(),
-  })
-}
-
 describe('LinkListTab.vue', () => {
   beforeEach(() => {
     const organizationsStore = useOrganizationsStore(pinia)
     organizationsStore._current = { code: 'FOOBAR' } as unknown as OrganizationOutput
   })
   it('should mount the component', async () => {
-    const wrapper = await factory({})
-    const vm: any = wrapper.vm
+    const wrapper = await lpiMountSuspended(LinkListTab)
     expect(wrapper.exists()).toBeTruthy()
     expect(invitationSrv.getInvitations).toHaveBeenCalled()
   })
@@ -76,8 +58,7 @@ describe('LinkListTab.vue', () => {
         },
       ],
     })
-    const wrapper = await factory({})
-    const vm: any = wrapper.vm
+    const wrapper = await lpiMountSuspended(LinkListTab)
     await flushPromises()
     const lines = wrapper.findAll('tbody tr')
     expect(lines.length).toBe(3)

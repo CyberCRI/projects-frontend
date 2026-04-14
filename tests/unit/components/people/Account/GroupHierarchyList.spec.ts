@@ -1,15 +1,6 @@
 import GroupHierarchyList from '@/components/people/Account/GroupHierarchyList.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import english from '@/i18n/locales/en.json'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
-
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
+import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('GroupHierarchyList', () => {
   let wrapper
@@ -21,7 +12,6 @@ describe('GroupHierarchyList', () => {
         isAddMode: true,
         selectedGroups: {},
       },
-      i18n,
     }
   })
 

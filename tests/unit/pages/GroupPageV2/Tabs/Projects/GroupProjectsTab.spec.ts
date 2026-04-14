@@ -1,6 +1,5 @@
 import GroupProjectsTab from '@/pages/GroupPageV2/Tabs/Projects/GroupProjectsTab.vue'
 import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 
 import { describe, expect, it } from 'vitest'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'

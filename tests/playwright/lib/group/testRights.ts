@@ -1,7 +1,5 @@
 import { Page, expect } from '@playwright/test'
 import { LogLevel, Logger } from '../../logger'
-import { User } from '../interfaces'
-import { delay } from '../index'
 import { ensureNavPanelIOpened } from '../utils/nav-panel'
 const logger = new Logger(LogLevel.Debug)
 
@@ -33,7 +31,7 @@ export async function testRights(
     const switcherDT = await switcher.getAttribute('data-test')
     // if switch toggle to show, we are in edit mode
     isEditMode = switcherDT === 'show-group'
-  } catch (error) {
+  } catch {
     console.error('No mode switcher found, assume display mode')
   }
   console.log('is in edit mode ?', isEditMode)

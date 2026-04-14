@@ -1,8 +1,7 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import BaseModal from '@/components/base/modal/BaseModal.vue'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 describe('BaseModal', () => {
   let wrapper
   let defaultParams

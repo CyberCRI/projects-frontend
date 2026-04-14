@@ -1,18 +1,9 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import english from '@/i18n/locales/en.json'
 import OnboardingScreens from '@/components/onboarding/OnboardingScreens/OnboardingScreens.vue'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import pinia from '@/stores'
 import useUsersStore from '@/stores/useUsers'
-
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
 
 describe('OnboardingScreens', () => {
   let wrapper
@@ -26,9 +17,7 @@ describe('OnboardingScreens', () => {
       permissions: {},
       getUser: vi.fn(),
     } as any)
-    defaultParams = {
-      i18n,
-    }
+    defaultParams = {}
   })
 
   it('should render OnboardingScreens component', () => {

@@ -7,7 +7,6 @@ import { groupTranslatedFactory } from '../../../../../factories/group.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import { PaginationsFactory } from '../../../../../factories/paginations.factory'
 import { ProjectFactory } from '../../../../../factories/project.factory'
-import GroupMemberFactory from '../../../../../factories/group-member.factory'
 
 describe('GroupProjectsEditTab.vue', () => {
   it('should render component', async () => {

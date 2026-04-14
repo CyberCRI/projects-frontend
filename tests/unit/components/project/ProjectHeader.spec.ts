@@ -1,30 +1,19 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import english from '@/i18n/locales/en.json'
 import ProjectHeader from '@/components/project/ProjectHeaderV2.vue'
-import { ProjectFactory, ProjectOutputFactory } from '@/../tests/factories/project.factory'
-import MockComponent from '@/../tests/helpers/MockComponent.vue'
+import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
 
 import pinia from '@/stores'
 import useUsersStore from '@/stores/useUsers'
 import useOrganizationsStore from '@/stores/useOrganizations'
-import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
+import { OrganizationOutput } from '@/models/organization.model'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
-import usePermissions from '@/composables/usePermissions'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+
 vi.mock('@/composables/usePermissions', () => ({
   default: () => ({
     canEditProject: computed(() => true),
   }),
 }))
-
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
 
 describe('ProjectHeader.vue', () => {
   beforeEach(() => {
@@ -44,14 +33,6 @@ describe('ProjectHeader.vue', () => {
       props: {
         project: ProjectOutputFactory.generate(),
       },
-      i18n,
-      router: [
-        { path: '/', component: MockComponent },
-        { path: '/blank', component: MockComponent, name: 'blank' },
-        { path: '/blank', component: MockComponent, name: 'HomeRoot' },
-        { path: '/blank', component: MockComponent, name: 'Category' },
-        { path: '/blank', component: MockComponent, name: 'Categories' },
-      ],
       provide: {
         projectLayoutGoToTab: vi.fn(),
         projectLayoutToggleAddModal: vi.fn(),

@@ -1,19 +1,14 @@
 import { lpiShallowMountExtra } from '@/../tests/helpers/LpiMount'
-import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 import App from '@/app.vue'
 
-import MockComponent from '@/../tests/helpers/MockComponent.vue'
 import { checkExpiredToken } from '@/api/auth/keycloakUtils'
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 import type { Mock } from 'vitest'
 // issue with webcrypto, so mock so offending import
-import { yUndoPluginKey } from 'y-prosemirror'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useUsersStore from '@/stores/useUsers'
-import type { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
-
-import { refreshAccessToken } from '@/api/auth/auth.service'
+import type { OrganizationOutput } from '@/models/organization.model'
 
 vi.mock('y-prosemirror', () => ({
   default: {},
@@ -42,30 +37,6 @@ vi.mock('@/api/auth/auth.service', () => {
   }
 })
 
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: loadLocaleMessages(),
-}
-
-// function mockLocalStorage() {
-//     let store = {}
-//     return {
-//         getItem: function (key) {
-//             return store[key]
-//         },
-//         setItem: function (key, value) {
-//             store[key] = value
-//         },
-//         clear: function () {
-//             store = {}
-//         },
-//         removeItem: function (key) {
-//             delete store[key]
-//         },
-//     }
-// }
-
 const localStorageSetItem = vi.spyOn(Storage.prototype, 'setItem')
 const localStorageGetItem = vi.spyOn(Storage.prototype, 'getItem')
 const localStorageRemoveItem = vi.spyOn(Storage.prototype, 'removeItem')
@@ -77,29 +48,11 @@ describe('On tab focus', () => {
     organizationsStore._current = { code: '123' } as OrganizationOutput
     usersStore = useUsersStore(pinia)
   })
-  //const localStorageMock = mockLocalStorage()
 
-  // Object.defineProperty(window, 'localStorage', {
-  //     value: localStorageMock,
-  //     configurable: true,
-  //     writable: true,
-  // })
   Object.defineProperty(window, 'socket', { value: { connected: false }, configurable: true })
-
-  const $t = (v) => v
 
   function _mount() {
     return lpiShallowMountExtra(App, {
-      i18n,
-      props: {},
-      router: [
-        {
-          path: '/',
-          component: MockComponent,
-          name: 'Home',
-        },
-        { path: '/blank', component: MockComponent, name: 'blank' },
-      ],
       stubs: { NuxtLink: true, NuxtPage: true },
     })
   }
@@ -112,7 +65,6 @@ describe('On tab focus', () => {
       localStorageRemoveItem.mockClear()
     })
     vi.clearAllMocks()
-    // usersStore.$reset()
   })
 
   test('logout if token has expired', () => {

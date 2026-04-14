@@ -2,7 +2,6 @@ import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import SubGroupsTab from '@/pages/GroupPageV2/Tabs/SubGroups/SubGroupsTab.vue'
 
 import { describe, expect, it } from 'vitest'
-import { MockRouter } from '../../../../../helpers/router'
 import { flushPromises } from '@vue/test-utils'
 import { peopleGroupFactory } from '../../../../../factories/group.factory'
 
@@ -13,7 +12,7 @@ describe('SubGroupsTab.vue', () => {
       group,
     }
 
-    const wrapper = await lpiMountSuspended(SubGroupsTab, { props, router: MockRouter() })
+    const wrapper = await lpiMountSuspended(SubGroupsTab, { props })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

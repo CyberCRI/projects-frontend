@@ -5,7 +5,6 @@ import { flushPromises } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { groupTranslatedFactory } from '../../../../../factories/group.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
-import { PaginationsFactory } from '../../../../../factories/paginations.factory'
 import LocationFactory from '../../../../../factories/location.factory'
 
 describe('GroupLocationsTab.vue', () => {

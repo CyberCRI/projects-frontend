@@ -1,13 +1,12 @@
 import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import CategoryPage from '@/pages/CategoryPage/CategoryPage.vue'
 
 import { describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
-import { MockRouter } from '../../../helpers/router'
 import { ProjectCategoryFactory } from '../../../factories/project-category.factory'
 import { mockNuxtImport, registerEndpoint } from '@nuxt/test-utils/runtime'
 import { PaginationsFactory } from '../../../factories/paginations.factory'
 import OrganizationTagFactory from '../../../factories/tag.factory'
+import CategoryPage from '@/pages/CategoryPage/CategoryPage.vue'
 
 const category = ProjectCategoryFactory.generate()
 
@@ -25,7 +24,7 @@ describe('CategoryPage.vue', () => {
       })
     })
 
-    const wrapper = await lpiMountSuspended(CategoryPage, { router: MockRouter() })
+    const wrapper = await lpiMountSuspended(CategoryPage)
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

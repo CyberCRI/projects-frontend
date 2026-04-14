@@ -1,15 +1,6 @@
 import AccountFormTitleBlock from '@/components/people/Account/AccountFormTitleBlock.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import english from '@/i18n/locales/en.json'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
-
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
+import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('AccountFormTitleBlock', () => {
   let wrapper
@@ -20,7 +11,6 @@ describe('AccountFormTitleBlock', () => {
       props: {
         isAddMode: true,
       },
-      i18n,
     }
   })
 

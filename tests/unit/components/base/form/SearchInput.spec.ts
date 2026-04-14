@@ -1,27 +1,16 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
 import SearchInput from '@/components/base/form/SearchInput.vue'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
-const factory = (props?) => {
-  return lpiMount(SearchInput, {
-    props: {
-      ...props,
-    },
-    directives: {
-      'click-outside': vi.fn(),
-    },
-  })
-}
+import { describe, expect, it } from 'vitest'
 
 describe('SearchInput.vue', () => {
   it('renders component', () => {
-    const wrapper = factory()
+    const wrapper = lpiMount(SearchInput)
     expect(wrapper.exists()).toBe(true)
   })
 
   it('emits enter event', () => {
-    const wrapper = factory()
+    const wrapper = lpiMount(SearchInput)
     const vm: any = wrapper.vm
 
     vm.onEnter()
@@ -29,7 +18,7 @@ describe('SearchInput.vue', () => {
   })
 
   it('deletes input value', () => {
-    const wrapper = factory()
+    const wrapper = lpiMount(SearchInput)
     const vm: any = wrapper.vm
 
     vm.deleteValue()
@@ -37,7 +26,7 @@ describe('SearchInput.vue', () => {
   })
 
   it('emits input event', async () => {
-    const wrapper = factory()
+    const wrapper = lpiMount(SearchInput)
 
     wrapper.find('input').setValue('test')
     await wrapper.vm.$nextTick()

@@ -1,17 +1,7 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
-import english from '@/i18n/locales/en.json'
 import TagsFilterSummary from '@/components/search/Filters/TagsFilterSummary.vue'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
-
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
+import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('TagsFilterSummary', () => {
   let wrapper
@@ -20,7 +10,6 @@ describe('TagsFilterSummary', () => {
   beforeEach(() => {
     defaultParams = {
       props: { modelValue: [] },
-      i18n,
     }
   })
 

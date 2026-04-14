@@ -1,35 +1,17 @@
 import ProfileSummaryTab from '@/pages/UserProfilePageV2/Tabs/ProfileSummaryTab.vue'
 import { lpiMountSuspended, lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import { UserFactory } from '@/../tests/factories/user.factory'
-import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 import { flushPromises } from '@vue/test-utils'
 
-import { getUserFollows } from '@/api/follows.service'
-
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useUsersStore from '@/stores/useUsers'
-import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
-import { exceptionFromError } from '@sentry/vue'
+import { OrganizationOutput } from '@/models/organization.model'
 vi.mock('@/api/follows.service', () => ({
   getUserFollows: vi.fn().mockResolvedValue({ results: [] }),
 }))
-
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: loadLocaleMessages(),
-}
-
-const buildParams = (user) => ({
-  i18n,
-  props: {
-    user,
-  },
-})
 
 describe('ProfileSummaryTab', () => {
   let usersStore
@@ -43,12 +25,9 @@ describe('ProfileSummaryTab', () => {
     organizationsStore._current = { id: 'TEST' } as unknown as OrganizationOutput
   })
 
-  afterEach(() => {
-    // usersStore.$reset()
-  })
   it('should render ProfileSummaryTab component', () => {
     const user = UserFactory.generate()
-    let wrapper = lpiShallowMount(ProfileSummaryTab, buildParams(user))
+    const wrapper = lpiShallowMount(ProfileSummaryTab, { props: { user } })
 
     expect(wrapper.exists()).toBeTruthy()
   })
@@ -59,8 +38,8 @@ describe('ProfileSummaryTab', () => {
     user.id = id
 
     usersStore.id = id
-    let wrapper = lpiShallowMount(ProfileSummaryTab, buildParams(user))
-    let vm: any = wrapper.vm
+    const wrapper = lpiShallowMount(ProfileSummaryTab, { props: { user } })
+    const vm: any = wrapper.vm
     expect(vm.isCurrentUser).toBeTruthy()
   })
 
@@ -70,15 +49,15 @@ describe('ProfileSummaryTab', () => {
 
     usersStore.id = '456'
 
-    let wrapper = lpiShallowMount(ProfileSummaryTab, buildParams(user))
-    let vm: any = wrapper.vm
+    const wrapper = lpiShallowMount(ProfileSummaryTab, { props: { user } })
+    const vm: any = wrapper.vm
     expect(vm.isCurrentUser).toBeFalsy()
   })
 
   it('shouldnt display a message if user has no bio set', async () => {
     const user = UserFactory.generate()
     user.description = null
-    let wrapper = lpiShallowMount(ProfileSummaryTab, buildParams(user))
+    const wrapper = lpiShallowMount(ProfileSummaryTab, { props: { user } })
 
     await flushPromises()
     expect(wrapper.find('user-descriptions-stub').exists()).toBe(false)
@@ -86,7 +65,7 @@ describe('ProfileSummaryTab', () => {
 
   it('should display bio if user has one', async () => {
     const user = UserFactory.generate()
-    let wrapper = lpiShallowMount(ProfileSummaryTab, buildParams(user))
+    const wrapper = lpiShallowMount(ProfileSummaryTab, { props: { user } })
 
     await flushPromises()
     expect(wrapper.find('user-descriptions-stub').exists()).toBe(true)
@@ -96,7 +75,7 @@ describe('ProfileSummaryTab', () => {
   it('shouldnt display resources', async () => {
     const user = UserFactory.generate()
     user.resources.files = user.resources.links = 0
-    const wrapper = await lpiMountSuspended(ProfileSummaryTab, buildParams(user))
+    const wrapper = await lpiMountSuspended(ProfileSummaryTab, { props: { user } })
 
     await flushPromises()
     expect(wrapper.find('.resources-recap').exists()).toBe(false)
@@ -105,7 +84,7 @@ describe('ProfileSummaryTab', () => {
   it('should display resources', async () => {
     const user = UserFactory.generate()
     user.resources.files = user.resources.links = 5
-    const wrapper = await lpiMountSuspended(ProfileSummaryTab, buildParams(user))
+    const wrapper = await lpiMountSuspended(ProfileSummaryTab, { props: { user } })
 
     await flushPromises()
     expect(wrapper.find('.resources-recap').exists()).toBe(true)

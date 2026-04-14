@@ -1,27 +1,13 @@
 import ProfileBioTab from '@/pages/UserProfilePageV2/Tabs/ProfileBioTab.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import { UserFactory } from '@/../tests/factories/user.factory'
-import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 import { flushPromises } from '@vue/test-utils'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useUsersStore from '@/stores/useUsers'
-import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
+import { OrganizationOutput } from '@/models/organization.model'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: loadLocaleMessages(),
-}
-
-const buildParams = (user) => ({
-  i18n,
-  props: {
-    user,
-  },
-})
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 describe('ProfileBioTab', () => {
   let usersStore
@@ -34,11 +20,8 @@ describe('ProfileBioTab', () => {
     const organizationsStore = useOrganizationsStore(pinia)
     organizationsStore._current = { id: 'TEST' } as unknown as OrganizationOutput
   })
-  afterEach(() => {
-    // usersStore.$reset()
-  })
   it('should render ProfileBioTab component', () => {
-    let wrapper = lpiShallowMount(ProfileBioTab, buildParams(UserFactory.generate()))
+    const wrapper = lpiShallowMount(ProfileBioTab, { props: { user: UserFactory.generate() } })
 
     expect(wrapper.exists()).toBeTruthy()
   })
@@ -49,8 +32,8 @@ describe('ProfileBioTab', () => {
     user.id = id
 
     usersStore.id = id
-    let wrapper = lpiShallowMount(ProfileBioTab, buildParams(user))
-    let vm: any = wrapper.vm
+    const wrapper = lpiShallowMount(ProfileBioTab, { props: { user } })
+    const vm: any = wrapper.vm
     expect(vm.isCurrentUser).toBeTruthy()
   })
 
@@ -60,15 +43,15 @@ describe('ProfileBioTab', () => {
 
     usersStore.id = '456'
 
-    let wrapper = lpiShallowMount(ProfileBioTab, buildParams(user))
-    let vm: any = wrapper.vm
+    const wrapper = lpiShallowMount(ProfileBioTab, { props: { user } })
+    const vm: any = wrapper.vm
     expect(vm.isCurrentUser).toBeFalsy()
   })
 
   it('should display a message if user has no bio set', async () => {
     const user = UserFactory.generate()
     user.description = null
-    let wrapper = lpiShallowMount(ProfileBioTab, buildParams(user))
+    const wrapper = lpiShallowMount(ProfileBioTab, { props: { user } })
 
     await flushPromises()
     expect(wrapper.find('user-descriptions-stub').exists()).toBe(false)
@@ -77,7 +60,7 @@ describe('ProfileBioTab', () => {
 
   it('should display bio if user has one', async () => {
     const user = UserFactory.generate()
-    let wrapper = lpiShallowMount(ProfileBioTab, buildParams(user))
+    const wrapper = lpiShallowMount(ProfileBioTab, { props: { user } })
 
     await flushPromises()
     expect(wrapper.find('user-descriptions-stub').exists()).toBe(true)

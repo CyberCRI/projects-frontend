@@ -1,16 +1,7 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import english from '@/i18n/locales/en.json'
 import StatCard from '@/components/stats/StatCard.vue'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
+import { describe, expect, it } from 'vitest'
 
 describe('StatCard.vue', () => {
   it('should render component', () => {
@@ -18,7 +9,6 @@ describe('StatCard.vue', () => {
       props: {
         title: 'title',
       },
-      i18n,
     })
     expect(wrapper.exists()).toBe(true)
   })

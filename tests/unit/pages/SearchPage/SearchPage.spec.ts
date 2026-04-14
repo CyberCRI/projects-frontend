@@ -1,19 +1,10 @@
 import SearchPage from '@/pages/SearchPage/SearchPage.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import english from '@/i18n/locales/en.json'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { UserFactory } from '@/../tests/factories/user.factory'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
-import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
-
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
+import { OrganizationOutput } from '@/models/organization.model'
 
 const route = {
   query: {
@@ -33,8 +24,6 @@ describe('BrowseLayout', () => {
         isAddMode: true,
         selectedUser: UserFactory.generate(),
       },
-      i18n,
-      router: [],
       global: {
         mocks: {
           $route: route,

@@ -1,21 +1,10 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
-import VueI18n from 'vue-i18n'
-import english from '@/i18n/locales/en.json'
 import BlogEntry from '@/components/project/blog/BlogEntry.vue'
 import { BlogEntryFactory } from '@/../tests/factories/blog-entry.factory'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 import useAutoTranslate from '@/composables/useAutoTranslate'
-
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
 
 describe('BlogEntry.vue', () => {
   it('should render component', () => {
@@ -25,7 +14,6 @@ describe('BlogEntry.vue', () => {
       props: {
         blogEntry: blog.value,
       },
-      i18n,
     })
     expect(wrapper.exists()).toBe(true)
   })
@@ -37,7 +25,6 @@ describe('BlogEntry.vue', () => {
       props: {
         blogEntry: blog.value,
       },
-      i18n,
     })
     const vm: any = wrapper.vm
 

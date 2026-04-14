@@ -4,12 +4,12 @@ import { createFactory } from 'faker-create-factory'
 
 export const EventFactory = createFactory<EventModel>((faker) => ({
   ...BaseFactory.generate(),
-  id: 1,
-  title: 'title',
-  content: 'content',
-  start_date: new Date().toISOString(),
-  end_date: new Date().toISOString(),
+  id: faker.datatype.number(),
+  title: faker.lorem.text(),
+  content: faker.lorem.paragraphs(),
+  start_date: faker.datatype.datetime().toISOString(),
+  end_date: faker.datatype.datetime().toISOString(),
   location: null,
-  visible_by_all: true,
+  visible_by_all: faker.datatype.boolean(),
   people_groups: [],
 }))

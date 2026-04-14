@@ -1,16 +1,7 @@
-import english from '@/i18n/locales/en.json'
 import { lpiShallowMount, lpiMount } from '@/../tests/helpers/LpiMount'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
+import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('BaseDrawer', () => {
   let wrapper
@@ -23,7 +14,6 @@ describe('BaseDrawer', () => {
         title: 'Rechercher',
         confirmActionName: 'Rechercher',
       },
-      i18n,
     }
   })
 

@@ -3,7 +3,6 @@ import HelpPage from '@/pages/HelpPage/HelpPage.vue'
 
 import { describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
-import { MockRouter } from '../../../helpers/router'
 
 describe('HelpPage.vue', () => {
   it('should render component', async () => {
@@ -11,7 +10,6 @@ describe('HelpPage.vue', () => {
 
     const wrapper = await lpiMountSuspended(HelpPage, {
       props,
-      router: MockRouter(),
       global: {
         mocks: {
           $route: { path: '', matched: [] },

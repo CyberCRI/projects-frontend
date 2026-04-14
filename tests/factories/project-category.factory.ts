@@ -63,9 +63,7 @@ export const ProjectCategoryCreateInputFactory = createFactory<ProjectCategoryCr
   })
 )
 
-export const ProjectCategoryPatchInputFactory = createFactory<ProjectCategoryPatchInput>(
-  (faker) => ({
-    ...ProjectCategoryFactory.generate(),
-    tags: TagFactory.generateMany(2).map((tag) => <number>tag.id),
-  })
-)
+export const ProjectCategoryPatchInputFactory = createFactory<ProjectCategoryPatchInput>(() => ({
+  ...ProjectCategoryFactory.generate(),
+  tags: TagFactory.generateMany(2).map((tag) => tag.id),
+}))

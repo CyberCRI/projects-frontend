@@ -1,9 +1,8 @@
 import { setActivePinia, createPinia } from 'pinia'
 
-import useToasterStore, { Toast, ToastType } from '@/stores/useToaster'
+import useToasterStore, { ToastType } from '@/stores/useToaster'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 vi.mock('@/api/notifications.service')
 
 describe('Toaster Store', () => {

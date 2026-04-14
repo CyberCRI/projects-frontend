@@ -1,53 +1,33 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
 import MapPointer from '@/components/map/MapPointer.vue'
-import english from '@/i18n/locales/en.json'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
-
-const project = {
-  id: '123abc',
-  title: 'We Learn lots of things',
-  description: 'This is a description',
-  header_image: {
-    id: 'xzonixz',
-    name: 'image',
-    url: 'https://upload.wikimedia.org/wikipedia/commons/e/e7/Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg',
-  },
-  slug: 'we-learn',
-}
-
-const factory = (props?) => {
-  return lpiMount(MapPointer, {
-    props: {
-      ...props,
-    },
-    i18n,
-  })
-}
+import { describe, expect, it } from 'vitest'
+import { ProjectFactory } from '../../../factories/project.factory'
+import LocationFactory from '../../../factories/location.factory'
 
 describe('MapPointer.vue', () => {
+  const project = ProjectFactory.generate()
+
   it('should render component', () => {
-    const wrapper = factory({ project, isExpanded: false, location: { type: 'impact' } })
+    const wrapper = lpiMount(MapPointer, {
+      props: { project, isExpanded: false, location: LocationFactory.generate({ type: 'impact' }) },
+    })
     expect(wrapper.exists()).toBe(true)
   })
 
   it('should display impact badge', () => {
-    const wrapper = factory({ project, isExpanded: false, location: { type: 'impact' } })
+    const wrapper = lpiMount(MapPointer, {
+      props: { project, isExpanded: false, location: LocationFactory.generate({ type: 'impact' }) },
+    })
     const badgeLabel = wrapper.find('.badge .impact')
 
     expect(badgeLabel.text()).toBe('Impact')
   })
 
   it('should display team badge', () => {
-    const wrapper = factory({ project, isExpanded: false, location: { type: 'team' } })
+    const wrapper = lpiMount(MapPointer, {
+      props: { project, isExpanded: false, location: LocationFactory.generate({ type: 'team' }) },
+    })
     const badgeLabel = wrapper.find('.badge .team')
 
     expect(badgeLabel.text()).toBe('Team')

@@ -5,6 +5,7 @@ import { clickOutside, disableFocus } from '@/directives'
 import pinia from './test-pinia'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import english from '@/i18n/locales/en.json'
+import { MockRouter } from './router'
 
 const defaultI18nOptions = () => {
   return {
@@ -21,20 +22,13 @@ function buildOptions(options: any = {}) {
 
   plugins.push(pinia)
 
-  let i18n
-  // if (options.i18n) {
-  i18n = createI18n({ legacy: false, ...(options?.i18n || defaultI18nOptions()) })
+  const i18n = createI18n({ legacy: false, ...(options?.i18n || defaultI18nOptions()) })
   plugins.push(i18n)
-  // }
 
-  let router
-  if (options.router) {
-    router = createRouter({
-      history: createWebHistory(),
-      routes: options.router,
-    })
-    plugins.push(router)
-  }
+  const router = createRouter({
+    history: createWebHistory(),
+    routes: options.router || MockRouter(),
+  })
 
   const props = options.props || {}
 

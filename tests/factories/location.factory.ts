@@ -29,11 +29,9 @@ export const BaseTranslatedLocationModelFactory = createFactory<BaseTranslatedLo
     },
   })
 )
-export const BaseTranslatedLocationFactory = createFactory<BaseTranslatedLocationModel>(
-  (faker) => ({
-    ...BaseTranslatedLocationModelFactory.generate(),
-    project: null,
-  })
-)
+export const BaseTranslatedLocationFactory = createFactory<BaseTranslatedLocationModel>(() => ({
+  ...BaseTranslatedLocationModelFactory.generate(),
+  project: null,
+}))
 
 export default LocationFactory

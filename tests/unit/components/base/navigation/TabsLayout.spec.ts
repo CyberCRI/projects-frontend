@@ -2,11 +2,8 @@ import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
 import { defineAsyncComponent } from 'vue'
 import MockComponent from '@/../tests/helpers/MockComponent.vue'
-import VueI18n from 'vue-i18n'
-import english from '@/i18n/locales/en.json'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import useAPI from '@/composables/useAPI'
+import { describe, expect, it, vi } from 'vitest'
 
 // fix unhnadled rejection due to invalid url
 vi.mock('@/composables/useAPI', () => {
@@ -20,14 +17,6 @@ const mockRouter = {
 
 const mockRoute = {
   path: '/test1',
-}
-
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
 }
 
 const factory = (props?) => {
@@ -53,7 +42,6 @@ const factory = (props?) => {
       ],
       ...props,
     },
-    i18n,
     global: {
       mocks: {
         $router: mockRouter,
