@@ -589,7 +589,8 @@
     "no-date": "Geen datum",
     "date": "Datum",
     "clear-date": "Datum wissen",
-    "chose-date": "Datum selecteren | Selecteer de datum(s)"
+    "chose-date": "Datum selecteren | Selecteer de datum(s)",
+    "empty": "Niets hier..."
   },
   "complete-profile": {
     "bio": {

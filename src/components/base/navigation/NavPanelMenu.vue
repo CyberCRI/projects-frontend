@@ -106,7 +106,7 @@ const isCurrentTab = (entry: MenyEntry) => {
     entryName = entry.view.name
   }
 
-  if (props.currentTab) {
+  if (!props.currentTab) {
     return false
   }
 

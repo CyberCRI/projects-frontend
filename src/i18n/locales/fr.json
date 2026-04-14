@@ -589,7 +589,8 @@
     "end-time": "Heure de fin",
     "no-date": "Pas de date",
     "date": "Date",
-    "clear-date": "Effacer la date"
+    "clear-date": "Effacer la date",
+    "empty": "Rien ici..."
   },
   "complete-profile": {
     "bio": {

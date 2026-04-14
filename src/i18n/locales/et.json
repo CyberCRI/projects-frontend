@@ -589,7 +589,8 @@
     "no-date": "Kohtingut pole",
     "date": "Kuupäev",
     "clear-date": "Puhasta kuupäev",
-    "chose-date": "Vali kuupäev | Kuupäevade valimine"
+    "chose-date": "Vali kuupäev | Kuupäevade valimine",
+    "empty": "Siin pole midagi..."
   },
   "complete-profile": {
     "bio": {

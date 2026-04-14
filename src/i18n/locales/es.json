@@ -589,7 +589,8 @@
     "no-date": "No hay fecha",
     "date": "Fecha",
     "clear-date": "Fecha clara",
-    "chose-date": "Seleccionar fecha | Seleccione la fecha(s)"
+    "chose-date": "Seleccionar fecha | Seleccione la fecha(s)",
+    "empty": "Nada aquí..."
   },
   "complete-profile": {
     "bio": {
@@ -3182,7 +3183,6 @@
       "UNKNOWN": "Desconocida"
     }
   },
-
   "vector-store": {
     "confirm-deletion": "Confirmar eliminación",
     "confirm-deletion-of": "¿Realmente desea eliminar \"{title}\"?",

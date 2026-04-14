@@ -589,7 +589,8 @@
     "no-date": "Sense data",
     "date": "Data",
     "clear-date": "Neteja la data",
-    "chose-date": "Seleccioneu la data | Seleccioneu la data(s)"
+    "chose-date": "Seleccioneu la data | Seleccioneu la data(s)",
+    "empty": "Aquí no hi ha res..."
   },
   "complete-profile": {
     "bio": {

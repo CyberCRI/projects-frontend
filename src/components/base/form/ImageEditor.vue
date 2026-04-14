@@ -144,9 +144,9 @@ export default {
   },
 
   async mounted() {
-    const urlArray = Array.isArray(this.defaultPicture)
-      ? this.defaultPicture
-      : [this.defaultPicture]
+    const urlArray = (
+      Array.isArray(this.defaultPicture) ? this.defaultPicture : [this.defaultPicture]
+    ).map((url) => usePublicURL(url))
 
     this.defaultPictureFiles = await Promise.all(urlArray.map(this.getFilesFromUrl))
 

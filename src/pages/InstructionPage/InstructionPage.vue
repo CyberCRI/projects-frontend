@@ -3,13 +3,11 @@ import { getInstruction, deleteInstruction } from '@/api/instruction.service'
 import useToasterStore from '@/stores/useToaster'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import { getOrganizationByCode } from '@/api/organizations.service'
+import { InstructionId } from '@/models/instruction.model'
 
-const props = defineProps({
-  slugOrId: {
-    type: String,
-    required: true,
-  },
-})
+const props = defineProps<{
+  slugOrId: InstructionId
+}>()
 
 const { translateInstruction } = useAutoTranslate()
 
