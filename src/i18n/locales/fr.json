@@ -592,7 +592,8 @@
     "no-date": "Pas de date",
     "date": "Date",
     "clear-date": "Effacer la date",
-    "empty": "Rien ici..."
+    "empty": "Rien ici...",
+    "file": "fichier | fichiers"
   },
   "complete-profile": {
     "bio": {

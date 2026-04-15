@@ -514,6 +514,7 @@
     "delete-description": "Are you sure you want to permanently delete your comments? This action will be irreversible."
   },
   "common": {
+    "file": "file | files",
     "empty": "Nothing here...",
     "select": "select",
     "year": "year",

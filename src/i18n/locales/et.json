@@ -592,7 +592,8 @@
     "date": "Kuupäev",
     "clear-date": "Puhasta kuupäev",
     "chose-date": "Vali kuupäev | Kuupäevade valimine",
-    "empty": "Siin pole midagi..."
+    "empty": "Siin pole midagi...",
+    "file": "faili | failid"
   },
   "complete-profile": {
     "bio": {

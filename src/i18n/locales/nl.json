@@ -592,7 +592,8 @@
     "date": "Datum",
     "clear-date": "Datum wissen",
     "chose-date": "Datum selecteren | Selecteer de datum(s)",
-    "empty": "Niets hier..."
+    "empty": "Niets hier...",
+    "file": "bestand | bestanden"
   },
   "complete-profile": {
     "bio": {

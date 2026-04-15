@@ -592,7 +592,8 @@
     "date": "Data",
     "clear-date": "Neteja la data",
     "chose-date": "Seleccioneu la data | Seleccioneu la data(s)",
-    "empty": "Aquí no hi ha res..."
+    "empty": "Aquí no hi ha res...",
+    "file": "fitxer | fitxers"
   },
   "complete-profile": {
     "bio": {
