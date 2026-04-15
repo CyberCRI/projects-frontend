@@ -46,8 +46,6 @@ import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import { UserModel } from '@/models/user.model'
 
-defineOptions({ name: 'ExistingAccountChecker' })
-
 const emits = defineEmits<{
   cancel: []
   'check-done': [value: UserModel | { email: string }]

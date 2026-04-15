@@ -4,22 +4,21 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import GroupMemberFactory from '@/../tests/factories/group-member.factory'
 
 describe('GroupMemberItem.vue', () => {
-  let wrapper
   let defaultParams
 
   beforeEach(() => {
     defaultParams = {
       props: {
-        user: GroupMemberFactory.generate(),
+        member: GroupMemberFactory.generate(),
       },
     }
   })
   it('should render GroupMemberItem component', () => {
-    wrapper = lpiMount(GroupMemberItem, defaultParams)
+    const wrapper = lpiMount(GroupMemberItem, defaultParams)
     expect(wrapper.exists()).toBe(true)
   })
   it('should emit user-click event when clicking close', async () => {
-    wrapper = lpiMount(GroupMemberItem, defaultParams)
+    const wrapper = lpiMount(GroupMemberItem, defaultParams)
     const closeButton = wrapper.find('.card-inner')
 
     expect(closeButton.exists()).toBeTruthy()

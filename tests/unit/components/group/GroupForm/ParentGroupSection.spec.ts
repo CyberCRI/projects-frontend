@@ -1,52 +1,46 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import { lpiMount, lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import ParentGroupSection from '@/components/group/GroupForm/ParentGroupSection.vue'
+import { registerEndpoint } from '@nuxt/test-utils/runtime'
+import { flushPromises } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('ParentGroupSection.vue', () => {
-  let wrapper
   let defaultParams
 
   beforeEach(() => {
+    const organizationCode = useOrganizationCode()
+    const groups = {
+      id: 123,
+      name: '123',
+      children: [],
+      header_image: { variations: {} },
+    }
     defaultParams = {
       props: {
+        organizationCode,
         modelValue: {
           id: 123,
           name: '123',
           children: [],
           header_image: { variations: {} },
         },
-
-        groups: [
-          {
-            id: 123,
-            name: '123',
-            children: [],
-            header_image: { variations: {} },
-          },
-          ,
-          {
-            id: 2,
-            name: '2',
-            children: [],
-            header_image: { variations: {} },
-          },
-          ,
-          {
-            id: 3,
-            name: '3',
-            children: [],
-            header_image: { variations: {} },
-          },
-        ],
       },
     }
+
+    registerEndpoint(`organization/${organizationCode}/people-groups-hierarchy/`, () => {
+      return groups
+    })
   })
-  it('should render ParentGroupSection component', () => {
-    wrapper = lpiMount(ParentGroupSection, defaultParams)
+
+  it('should render ParentGroupSection component', async () => {
+    const wrapper = await lpiMountSuspended(ParentGroupSection, defaultParams)
+    await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })
-  it('should emit the update:modelValue', () => {
-    wrapper = lpiMount(ParentGroupSection, defaultParams)
+
+  it('should emit the update:modelValue', async () => {
+    const wrapper = await lpiMountSuspended(ParentGroupSection, defaultParams)
+    await flushPromises()
     const vm: any = wrapper.vm
 
     vm.confirmGroup()

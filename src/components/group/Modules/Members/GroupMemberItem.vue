@@ -19,8 +19,6 @@ import { isAnonymousUser } from '@/functs/users'
 
 import UserCard from '@/components/people/UserCard.vue'
 
-defineOptions({ name: 'GroupMemberItem' })
-
 const props = withDefaults(
   defineProps<{
     member: any

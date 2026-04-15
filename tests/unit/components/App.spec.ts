@@ -1,4 +1,4 @@
-import { lpiShallowMountExtra } from '@/../tests/helpers/LpiMount'
+import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import App from '@/app.vue'
 
 import { checkExpiredToken } from '@/api/auth/keycloakUtils'
@@ -40,10 +40,18 @@ describe('On tab focus', () => {
     organizationsStore._current = { code: '123' } as OrganizationOutput
   })
 
-  function _mount() {
-    return lpiShallowMountExtra(App, {
+  const localeMount = () => {
+    const wrapper = lpiShallowMount(App, {
       stubs: { NuxtLink: true, NuxtPage: true },
     })
+
+    return {
+      wrapper,
+      // @ts-expect-error ignore vm typing
+      router: wrapper.vm.router as Router,
+      // @ts-expect-error ignore vm typing
+      usersStore: wrapper.vm.usersStore as useUsersStore,
+    }
   }
 
   afterEach(() => {
@@ -52,15 +60,12 @@ describe('On tab focus', () => {
   })
 
   it('logout if token has expired', async () => {
-    const { wrapper } = _mount()
-    // @ts-expect-error ignore vm router
-    const router = wrapper.vm.router as Router
-    // @ts-expect-error vm store
-    const usersStore = wrapper.vm.usersStore as useUsersStore
+    const { wrapper, router, usersStore } = localeMount()
 
     vi.spyOn(router, 'push')
     ;(checkExpiredToken as Mock).mockImplementation(() => true)
 
+    // token in both
     usersStore.accessToken = 'access'
     localStorage.setItem('ACCESS_TOKEN', 'eyJhbGciOiJSUz')
     window.dispatchEvent(new Event('focus'))
@@ -76,20 +81,16 @@ describe('On tab focus', () => {
   })
 
   it('logout if logged in but has no more user token', async () => {
-    const { wrapper } = _mount()
-    // @ts-expect-error ignore vm router
-    const router = wrapper.vm.router as Router
-    // @ts-expect-error vm store
-    const usersStore = wrapper.vm.usersStore as useUsersStore
+    const { wrapper, router, usersStore } = localeMount()
     vi.spyOn(router, 'push')
 
+    // token in store
     usersStore.accessToken = 'test1'
-
     localStorage.setItem('ACCESS_TOKEN', '')
 
     window.dispatchEvent(new Event('focus'))
-
     await flushPromises()
+
     expect(usersStore.resetUser).toHaveBeenCalled()
 
     expect(router.push).toHaveBeenCalledWith({ name: 'Home' })
@@ -98,13 +99,11 @@ describe('On tab focus', () => {
   })
 
   it('do not logout if not logged in', async () => {
-    const { wrapper } = _mount()
-    // @ts-expect-error ignore vm router
-    const router = wrapper.vm.router as Router
-    // @ts-expect-error vm store
-    const usersStore = wrapper.vm.usersStore as useUsersStore
+    const { wrapper, router, usersStore } = localeMount()
+
     vi.spyOn(router, 'push')
 
+    // not token in store and no in local storage
     usersStore.accessToken = null
     localStorage.setItem('ACCESS_TOKEN', '')
 
@@ -112,7 +111,6 @@ describe('On tab focus', () => {
     await flushPromises()
 
     expect(usersStore.resetUser).not.toHaveBeenCalled()
-
     expect(router.push).not.toHaveBeenCalled()
 
     wrapper.unmount()

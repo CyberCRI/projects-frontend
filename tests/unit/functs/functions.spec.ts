@@ -1,7 +1,7 @@
 // @vitest-environment nuxt
 import funct from '@/functs/functions'
 import FunctionImporter from './FunctionImporter.vue'
-import { lpiMountExtra } from '@/../tests/helpers/LpiMount'
+import { lpiMount } from '@/../tests/helpers/LpiMount'
 import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
 import { UserFactory } from '@/../tests/factories/user.factory'
 import { test, beforeEach, describe, expect, it } from 'vitest'
@@ -9,13 +9,6 @@ import pinia from '@/stores'
 import useUsersStore from '@/stores/useUsers'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import { ProjectMemberModel } from '@/models/project-member.model'
-// vi.mock('@/router/index', () => ({
-//   default: {
-//     push: vi.fn(),
-//   },
-// }))
-
-// TODO make those test useful....
 
 describe('Function getOrgsFromRoles', () => {
   it('should return empty array', () => {
@@ -50,7 +43,7 @@ describe('Function projectCanBeEdited', () => {
   test('that project cannot be edited if there is no user', () => {
     usersStore.user = null // getters are writable only in tests
 
-    lpiMountExtra(FunctionImporter)
+    lpiMount(FunctionImporter)
 
     expect(usersStore.user).toBe(null)
   })
@@ -59,7 +52,7 @@ describe('Function projectCanBeEdited', () => {
     const user = UserFactory.generate()
     usersStore.user = user // getters are writable only in tests
 
-    lpiMountExtra(FunctionImporter)
+    lpiMount(FunctionImporter)
 
     expect(usersStore.user).toBe(user)
   })
@@ -72,7 +65,7 @@ describe('Function projectCanBeEdited', () => {
     organizationsStore._current = { code: 'CRI' } // getters are writable only in tests
     usersStore.user = user // getters are writable only in tests
 
-    lpiMountExtra(FunctionImporter)
+    lpiMount(FunctionImporter)
 
     expect(usersStore.user).toBe(user)
   })
@@ -83,7 +76,7 @@ describe('Function projectCanBeEdited', () => {
     usersStore.user = user // getters are writable only in tests
     usersStore.id = user.id // getters are writable only in tests
 
-    lpiMountExtra(FunctionImporter)
+    lpiMount(FunctionImporter)
     expect(usersStore.user).toBe(user)
   })
 
@@ -98,7 +91,7 @@ describe('Function projectCanBeEdited', () => {
 
     usersStore.user = user // getters are writable only in tests
     usersStore.id = user.id // getters are writable only in tests
-    lpiMountExtra(FunctionImporter)
+    lpiMount(FunctionImporter)
 
     expect(usersStore.user).toBe(user)
   })
@@ -108,7 +101,7 @@ describe('Function projectCanBeEdited', () => {
 
     usersStore.user = user // getters are writable only in tests
     usersStore.id = user.id // getters are writable only in tests
-    lpiMountExtra(FunctionImporter)
+    lpiMount(FunctionImporter)
     expect(usersStore.user).toBe(user)
   })
 
@@ -116,7 +109,7 @@ describe('Function projectCanBeEdited', () => {
     const user = UserFactory.generate()
     usersStore.user = user // getters are writable only in tests
     usersStore.id = user.id // getters are writable only in tests
-    lpiMountExtra(FunctionImporter)
+    lpiMount(FunctionImporter)
     expect(usersStore.user).toBe(user)
   })
 })

@@ -6,25 +6,19 @@ import MockComponent from '@/../tests/helpers/MockComponent.vue'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import { OrganizationOutput } from '@/models/organization.model'
+import { TranslatedProjectFactory } from '../../../../factories/project.factory'
 
-const router = [{ name: 'Home', path: '/', component: MockComponent }]
 describe('UserProjectList.vue', () => {
-  let wrapper
-  let defaultParams
-
   beforeEach(() => {
     const organizationsStore = useOrganizationsStore(pinia)
     organizationsStore._current = { code: 'FOOBAR' } as unknown as OrganizationOutput
-    defaultParams = {
-      props: {
-        user: PeopleFactory.generate(),
-      },
-      router,
-    }
   })
 
   it('should render UserProjectList component', () => {
-    wrapper = lpiShallowMount(UserProjectList, defaultParams)
+    const props = {
+      projects: TranslatedProjectFactory.generateMany(10),
+    }
+    const wrapper = lpiShallowMount(UserProjectList, { props })
     expect(wrapper.exists()).toBe(true)
   })
 })
