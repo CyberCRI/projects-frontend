@@ -6,9 +6,7 @@ import { flushPromises } from '@vue/test-utils'
 
 describe('CookiesPage.vue', () => {
   it('should render component', async () => {
-    const props = {}
-
-    const wrapper = await lpiMountSuspended(CookiesPage, { props })
+    const wrapper = await lpiMountSuspended(CookiesPage)
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

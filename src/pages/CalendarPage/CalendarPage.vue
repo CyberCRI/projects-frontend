@@ -22,20 +22,18 @@
 <script setup lang="ts">
 const { canCreateEvent } = usePermissions()
 const { t } = useNuxtI18n()
-const tabs = computed(() => {
-  return [
-    {
-      key: 'future-events',
-      label: t('event.calendar.future'),
-      view: { name: 'FutureEvents' },
-    },
-    {
-      key: 'past-events',
-      label: t('event.calendar.past'),
-      view: { name: 'PastEvents' },
-    },
-  ]
-})
+const tabs = computed(() => [
+  {
+    key: 'future-events',
+    label: t('event.calendar.future'),
+    view: { name: 'FutureEvents' },
+  },
+  {
+    key: 'past-events',
+    label: t('event.calendar.past'),
+    view: { name: 'PastEvents' },
+  },
+])
 
 useLpiHead2({
   title: computed(() => t('event.calendar.title')),

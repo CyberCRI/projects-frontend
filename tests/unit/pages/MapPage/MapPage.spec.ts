@@ -18,9 +18,7 @@ describe('MapPage.vue', () => {
       } satisfies Locations
     })
 
-    const props = {}
-
-    const wrapper = await lpiMountSuspended(MapPage, { props })
+    const wrapper = await lpiMountSuspended(MapPage)
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

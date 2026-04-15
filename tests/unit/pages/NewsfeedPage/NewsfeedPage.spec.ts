@@ -8,8 +8,6 @@ import { PaginationsFactory } from '../../../factories/paginations.factory'
 
 describe('NewsfeedPage.vue', () => {
   it('should render component', async () => {
-    const props = {}
-
     const organizationCode = useOrganizationCode()
     registerEndpoint(`organization/${organizationCode}/newsfeed/`, () => {
       return PaginationsFactory.generate({
@@ -17,7 +15,7 @@ describe('NewsfeedPage.vue', () => {
       })
     })
 
-    const wrapper = await lpiMountSuspended(NewsfeedPage, { props })
+    const wrapper = await lpiMountSuspended(NewsfeedPage)
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

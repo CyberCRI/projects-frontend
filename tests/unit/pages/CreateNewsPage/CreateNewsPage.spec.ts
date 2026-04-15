@@ -7,8 +7,6 @@ import { registerEndpoint } from '@nuxt/test-utils/runtime'
 
 describe('CreateNewsPage.vue', () => {
   it('should render component', async () => {
-    const props = {}
-
     const organizationCode = useOrganizationCode()
     registerEndpoint(`organization/${organizationCode}/people-groups-hierarchy/`, () => {
       return {
@@ -17,7 +15,7 @@ describe('CreateNewsPage.vue', () => {
       }
     })
 
-    const wrapper = await lpiMountSuspended(CreateNewsPage, { props })
+    const wrapper = await lpiMountSuspended(CreateNewsPage)
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

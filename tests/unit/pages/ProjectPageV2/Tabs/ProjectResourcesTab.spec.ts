@@ -6,10 +6,7 @@ import { flushPromises } from '@vue/test-utils'
 
 describe('ProjectResourcesTab.vue', () => {
   it('should render component', async () => {
-    const props = {}
-
     const wrapper = await lpiMountSuspended(ProjectResourcesTab, {
-      props,
       provide: {
         projectLayoutToggleAddModal: vi.fn(),
       },

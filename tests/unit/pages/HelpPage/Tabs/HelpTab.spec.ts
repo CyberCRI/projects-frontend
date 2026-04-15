@@ -6,9 +6,7 @@ import { flushPromises } from '@vue/test-utils'
 
 describe('HelpTab.vue', () => {
   it('should render component', async () => {
-    const props = {}
-
-    const wrapper = await lpiMountSuspended(HelpTab, { props })
+    const wrapper = await lpiMountSuspended(HelpTab)
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

@@ -14,11 +14,10 @@ mockNuxtImport('useRoute', () => () => ({
 describe('TemplatesEditTab.vue', () => {
   it('should render component', async () => {
     const organizationCode = useOrganizationCode()
-    const props = {}
 
     registerEndpoint(`organization/${organizationCode}/template/${template.id}/`, () => template)
 
-    const wrapper = await lpiMountSuspended(TemplatesEditTab, { props })
+    const wrapper = await lpiMountSuspended(TemplatesEditTab)
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

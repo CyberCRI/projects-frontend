@@ -6,9 +6,7 @@ import { flushPromises } from '@vue/test-utils'
 
 describe('AdminPortalPage.vue', () => {
   it('should render component', async () => {
-    const props = {}
-
-    const wrapper = await lpiMountSuspended(AdminPortalPage, { props })
+    const wrapper = await lpiMountSuspended(AdminPortalPage)
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

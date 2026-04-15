@@ -5,8 +5,7 @@ import { describe, expect, it } from 'vitest'
 
 describe('RequestAccessPage.vue', () => {
   it('should render component', async () => {
-    const props = {}
-    const wrapper = await lpiMountSuspended(RequestAccessPage, { props })
+    const wrapper = await lpiMountSuspended(RequestAccessPage)
     expect(wrapper.exists()).toBe(true)
   })
 })

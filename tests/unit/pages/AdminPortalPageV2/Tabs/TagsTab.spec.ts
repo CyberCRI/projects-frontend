@@ -6,9 +6,7 @@ import { flushPromises } from '@vue/test-utils'
 
 describe('TagsTab.vue', () => {
   it('should render component', async () => {
-    const props = {}
-
-    const wrapper = await lpiShallowMount(TagsTab, { props })
+    const wrapper = await lpiShallowMount(TagsTab)
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

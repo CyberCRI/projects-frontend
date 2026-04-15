@@ -6,9 +6,7 @@ import { flushPromises } from '@vue/test-utils'
 
 describe('NotificationsSettingsTab.vue', () => {
   it('should render component', async () => {
-    const props = {}
-
-    const wrapper = await lpiMountSuspended(NotificationsSettingsTab, { props })
+    const wrapper = await lpiMountSuspended(NotificationsSettingsTab)
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

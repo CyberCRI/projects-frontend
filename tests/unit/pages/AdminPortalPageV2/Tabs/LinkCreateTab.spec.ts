@@ -16,10 +16,7 @@ describe('LinkCreateTab.vue', () => {
   })
 
   it('should mount the component', async () => {
-    const props = {}
-    const wrapper = await lpiMountSuspended(LinkCreateTab, {
-      props,
-    })
+    const wrapper = await lpiMountSuspended(LinkCreateTab)
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

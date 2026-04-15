@@ -6,9 +6,7 @@ import { describe, expect, it } from 'vitest'
 
 describe('AccessibilityPage.vue', () => {
   it('should render component', async () => {
-    const props = {}
-
-    const wrapper = await lpiMountSuspended(AccessibilityPage, { props })
+    const wrapper = await lpiMountSuspended(AccessibilityPage)
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

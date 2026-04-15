@@ -9,7 +9,6 @@ import { EventFactory } from '../../../../factories/event.factory'
 
 describe('EventsList.vue', () => {
   it('should render component', async () => {
-    const props = {}
     const organizationCode = useOrganizationCode()
 
     registerEndpoint(`organization/${organizationCode}/event/`, () => {
@@ -18,7 +17,7 @@ describe('EventsList.vue', () => {
       })
     })
 
-    const wrapper = await lpiMountSuspended(EventsList, { props })
+    const wrapper = await lpiMountSuspended(EventsList)
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

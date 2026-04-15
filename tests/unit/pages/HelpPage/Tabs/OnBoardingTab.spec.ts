@@ -6,9 +6,7 @@ import { flushPromises } from '@vue/test-utils'
 
 describe('OnBoardingTab.vue', () => {
   it('should render component', async () => {
-    const props = {}
-
-    const wrapper = await lpiMountSuspended(OnBoardingTab, { props })
+    const wrapper = await lpiMountSuspended(OnBoardingTab)
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

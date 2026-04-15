@@ -6,15 +6,8 @@ import { flushPromises } from '@vue/test-utils'
 
 describe('HelpPage.vue', () => {
   it('should render component', async () => {
-    const props = {}
-
     const wrapper = await lpiMountSuspended(HelpPage, {
-      props,
-      global: {
-        mocks: {
-          $route: { path: '', matched: [] },
-        },
-      },
+      route: '/help',
     })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)

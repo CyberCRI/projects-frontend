@@ -10,8 +10,6 @@ import OrganizationTagFactory from '../../../factories/tag.factory'
 
 describe('CreateProjectPage.vue', () => {
   it('should render component', async () => {
-    const props = {}
-
     const organizationCode = useOrganizationCode()
     registerEndpoint(`organization/${organizationCode}/category/`, () => {
       return PaginationsFactory.generate({
@@ -19,7 +17,7 @@ describe('CreateProjectPage.vue', () => {
       })
     })
 
-    const wrapper = await lpiMountSuspended(CreateProjectPage, { props })
+    const wrapper = await lpiMountSuspended(CreateProjectPage)
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

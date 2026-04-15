@@ -31,10 +31,7 @@ describe('GroupPage.vue', () => {
       })
     })
 
-    const props = {}
-
     const wrapper = await lpiMountSuspended(GroupPage, {
-      props,
       // mock the nxtPage to groupSnapshot (probleme with nuxt resolve path/page)
       stubs: { NuxtPage: GroupSnapshotTab },
     })

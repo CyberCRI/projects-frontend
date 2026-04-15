@@ -6,9 +6,7 @@ import { flushPromises } from '@vue/test-utils'
 
 describe('VectorStoreAdminTab.vue', () => {
   it('should render component', async () => {
-    const props = {}
-
-    const wrapper = await lpiMountSuspended(VectorStoreAdminTab, { props })
+    const wrapper = await lpiMountSuspended(VectorStoreAdminTab)
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

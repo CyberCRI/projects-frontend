@@ -28,7 +28,6 @@ mockNuxtImport('useRoute', () => () => ({
 describe('ProjectPage.vue', () => {
   it('should render component', async () => {
     const user = UserFactory.generate()
-    const props = {}
 
     registerEndpoint(`user/${user.id}/`, () => user)
     registerEndpoint(`project/${project.id}/file/`, () =>
@@ -62,7 +61,6 @@ describe('ProjectPage.vue', () => {
     registerEndpoint(`project/${project.id}/`, () => project)
 
     const wrapper = await lpiMountSuspended(ProjectPage, {
-      props,
       stubs: { NuxtPage: ProjectSummaryTab, NuxtLink: true },
     })
     await flushPromises()

@@ -6,9 +6,7 @@ import { flushPromises } from '@vue/test-utils'
 
 describe('RequestsAdminTab.vue', () => {
   it('should render component', async () => {
-    const props = {}
-
-    const wrapper = await lpiMountSuspended(RequestsAdminTab, { props })
+    const wrapper = await lpiMountSuspended(RequestsAdminTab)
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

@@ -17,6 +17,7 @@
       <DescriptionRecap
         v-else-if="project?.$t?.description"
         class="unboxed"
+        :project="project"
         :description="project.$t.description"
       />
 

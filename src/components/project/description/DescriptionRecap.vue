@@ -16,7 +16,7 @@
       :to="{
         name: 'projectDescription',
         hash: '#tab',
-        params: { slugOrId: $route.params.slugOrId },
+        params: { slugOrId: project.slug || project.id },
       }"
     />
   </div>
@@ -25,8 +25,9 @@
 <script setup lang="ts">
 import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
 import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
+import { TranslatedProject } from '@/models/project.model'
 
-defineProps<{ description: string }>()
+defineProps<{ project: TranslatedProject; description: string }>()
 
 const style = ref({})
 

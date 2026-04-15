@@ -6,9 +6,7 @@ import { flushPromises } from '@vue/test-utils'
 
 describe('GroupsListTab.vue', () => {
   it('should render component', async () => {
-    const props = {}
-
-    const wrapper = await lpiMountSuspended(GroupsListTab, { props })
+    const wrapper = await lpiMountSuspended(GroupsListTab)
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

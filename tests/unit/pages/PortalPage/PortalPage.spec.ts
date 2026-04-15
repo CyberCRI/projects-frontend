@@ -9,13 +9,11 @@ import { PaginationsFactory } from '../../../factories/paginations.factory'
 
 describe('PortalPage.vue', () => {
   it('should render component', async () => {
-    const props = {}
-
     registerEndpoint(`organization/`, () => {
       return PaginationsFactory.generate({ results: OrganizationFactory.generateMany(10) })
     })
 
-    const wrapper = await lpiMountSuspended(PortalPage, { props })
+    const wrapper = await lpiMountSuspended(PortalPage)
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

@@ -6,9 +6,7 @@ import { flushPromises } from '@vue/test-utils'
 
 describe('VideoTab.vue', () => {
   it('should render component', async () => {
-    const props = {}
-
-    const wrapper = await lpiMountSuspended(VideoTab, { props })
+    const wrapper = await lpiMountSuspended(VideoTab)
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

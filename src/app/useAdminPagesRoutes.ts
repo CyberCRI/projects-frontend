@@ -90,7 +90,6 @@ export default function useAdminPagesRoutes() {
           path: 'groups',
           name: 'groups',
           redirect: { name: 'groupsList' },
-          component: () => import('../pages/AdminPortalPageV2/Tabs/GroupsTab.vue'),
           children: [
             {
               path: 'list',

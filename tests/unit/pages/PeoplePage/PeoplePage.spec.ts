@@ -6,9 +6,7 @@ import { flushPromises } from '@vue/test-utils'
 
 describe('PeoplePage.vue', () => {
   it('should render component', async () => {
-    const props = {}
-
-    const wrapper = await lpiMountSuspended(PeoplePage, { props })
+    const wrapper = await lpiMountSuspended(PeoplePage)
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

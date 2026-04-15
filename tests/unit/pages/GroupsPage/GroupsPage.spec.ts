@@ -8,6 +8,7 @@ import { registerEndpoint } from '@nuxt/test-utils/runtime'
 describe('GroupsPage.vue', () => {
   it('should render component', async () => {
     const organizationCode = useOrganizationCode()
+
     registerEndpoint(`organization/${organizationCode}/people-groups-hierarchy/`, () => {
       return {
         id: 1,
@@ -15,7 +16,7 @@ describe('GroupsPage.vue', () => {
       }
     })
 
-    const wrapper = await lpiMountSuspended(GroupsPage)
+    const wrapper = await lpiMountSuspended(GroupsPage, { route: '/groups/' })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

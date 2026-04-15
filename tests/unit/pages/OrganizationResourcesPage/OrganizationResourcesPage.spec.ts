@@ -10,8 +10,6 @@ import { AttachmentFileFactory } from '../../../factories/attachment-file.factor
 
 describe('OrganizationResourcesPage.vue', () => {
   it('should render component', async () => {
-    const props = {}
-
     const organizationCode = useOrganizationCode()
     registerEndpoint(`organization/${organizationCode}/file/`, () => {
       return PaginationsFactory.generate({
@@ -19,7 +17,7 @@ describe('OrganizationResourcesPage.vue', () => {
       })
     })
 
-    const wrapper = await lpiMountSuspended(OrganizationResourcesPage, { props })
+    const wrapper = await lpiMountSuspended(OrganizationResourcesPage)
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })
