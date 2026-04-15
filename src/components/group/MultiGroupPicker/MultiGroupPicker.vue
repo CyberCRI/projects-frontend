@@ -168,7 +168,6 @@ export default {
           },
         })
       ).children
-      console.log(this.allGroups)
     },
     onToggleGroup(group) {
       const groups = {

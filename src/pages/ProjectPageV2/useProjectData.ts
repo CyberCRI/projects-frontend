@@ -406,7 +406,6 @@ export default function useProjectData() {
           project: project.value,
           team: team.value,
           onReloadTeam: () => {
-            console.log('reload tabs')
             reloadTeam()
           },
         },
@@ -607,7 +606,6 @@ export default function useProjectData() {
           team: team.value,
           isInEditingMode: true,
           onReloadTeam: () => {
-            console.log('reload tabs')
             reloadTeam()
           },
         },

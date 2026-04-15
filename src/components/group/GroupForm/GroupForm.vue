@@ -368,7 +368,6 @@ export default {
       deep: true,
       handler: function () {
         if (this.formIsSetup) {
-          // console.log('from handler')
           this.$emit('update:modelValue', this.form)
         }
       },
@@ -447,7 +446,6 @@ export default {
 
     onLocationEdit(location) {
       this.locationEdit = location
-      console.log(location)
       this.openModals('LocationForm')
     },
   },

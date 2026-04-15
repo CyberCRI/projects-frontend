@@ -141,7 +141,6 @@ export default {
     },
 
     onClickPagination(requestedPage) {
-      console.log('pagination clicked', requestedPage)
       // this.pagination.currentPage = requestedPage
       this.loadProjects(requestedPage)
       this.$el.scrollIntoView({ behavior: 'smooth' })
