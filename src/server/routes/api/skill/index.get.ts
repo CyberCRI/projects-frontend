@@ -1,13 +1,14 @@
 export default defineLazyEventHandler(() => {
   const { appApiOrgCode } = useRuntimeConfig().public
   return defineEventHandler(async (event) => {
-    const skill = await chatbotPrisma.agent.findMany({
+    const skill = await chatbotPrisma.skill.findMany({
       where: {
         orgCode: appApiOrgCode,
       },
-      include: { skillContents: true },
+      include: { skillContents: { orderBy: { version: 'desc' } } },
+      orderBy: { title: 'asc' },
     })
-    // console.log(skill)
+    // console.log(agent)
     return skill
   })
 })

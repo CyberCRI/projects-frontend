@@ -9,20 +9,26 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
-  documentTitle: { type: String, default: '' },
-  isEdit: { type: Boolean, default: false },
+  agent: { type: [Object, null], reuired: true },
 })
-const emit = defineEmits(['close', 'document-added', 'document-updated'])
+const emit = defineEmits(['close', 'entity-created', 'entity-updated'])
 
+const isEdit = computed(() => !!props.agent)
 const toaster = useToasterStore()
 const usersStore = useUsersStore()
-const defaultForm = () => ({
-  title: '',
-  description: '',
-  promptId: 0,
-  promptVersion: 0,
-  useLatestPromptVersion: true,
-  useProfileData: false,
+const defaultForm = (agent = null) => ({
+  title: agent?.title ?? '',
+  description: agent?.description ?? '',
+  promptId: agent?.promptId ?? 0,
+  promptVersion: agent?.promptVersion ?? 0,
+  skillContents:
+    agent?.skillsContents?.map((s) => ({
+      skillId,
+      skillVersion,
+      useLatestSkillVersion, // TODO
+    })) ?? [],
+  useLatestPromptVersion: agent?.useLatestPromptVersion ?? true,
+  useProfileData: agent?.useProfileData ?? false,
 })
 
 const form = ref(defaultForm())
@@ -30,6 +36,8 @@ const form = ref(defaultForm())
 const titleExists = ref(false)
 
 const prompts = ref([])
+const skills = ref([])
+const skillOptions = ref([])
 
 const fetchPrompts = async () => {
   let headers = {}
@@ -60,9 +68,43 @@ const promptOptions = computed(
 
 const selectedPrompt = computed(() => prompts.value.find((p) => p.id == form.value.promptId))
 
-const promptVersions = computed(() => selectedPrompt.value?.promptContents || [])
+const fetchSkills = async () => {
+  let headers = {}
+  const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
+  if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
+
+  const skills = await $fetch(`/api/skill/`, {
+    headers,
+  })
+  // if (!response.ok) {
+  //   let errorText = ''
+  //   try {
+  //     errorText = await response.text()
+  //   } catch {
+  //     // ignore text parsing errors
+  //   }
+  //   throw new Error(
+  //     errorText || `Request to /api/agent/${props.agent.id} failed with status ${response.status}`
+  //   )
+  // }
+  return skills
+}
+
+watch(
+  () => [selectedPrompt.value, form.value.useLatestPromptVersion],
+  () => {
+    nextTick(() => (form.value.promptVersion = latestPromptVersion.value))
+  }
+)
+
+const promptVersions = computed(() =>
+  (selectedPrompt.value?.promptContents || []).toSorted((a, b) => b.version - a.version)
+)
+const latestPromptVersion = computed(() =>
+  promptVersions.value?.length ? promptVersions.value[0].version : 0
+)
 const versionOptions = computed(() =>
-  promptVersions.value?.map((v) => ({ value: v.id, label: v.version }))
+  promptVersions.value?.map((v) => ({ value: v.version, label: v.version }))
 )
 
 watch(
@@ -71,7 +113,29 @@ watch(
     isAsyncing.value = true
     try {
       prompts.value = await fetchPrompts()
-      form.value = defaultForm()
+      skills.value = await fetchSkills()
+      skillOptions.value = skills.value.map((skill) => {
+        let opt = {
+          useSkill: false,
+          useLatestSkillVersion: true,
+          skillVersion: 0,
+        }
+        if (props.agent?.skillContents) {
+          const original = props.agent?.skillContents.find((s) => s.skillId == skill.id)
+          if (original) {
+            opt = {
+              useSkill: true,
+              useLatestSkillVersion: original.useLatestSkillVersion,
+              skillVersion: original.skillVersion,
+            }
+          }
+        }
+        return {
+          skill: skill,
+          model: opt,
+        }
+      })
+      form.value = defaultForm(props.agent)
     } catch (e) {
       console.error(e)
     } finally {
@@ -91,10 +155,40 @@ const submit = async () => {
   const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
   if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
 
+  if (form.value.useLatestPromptVersion) form.value.promptVersion = latestPromptVersion.value
+
+  form.value.skillContents = skillOptions.value
+    .filter((o) => o.model.useSkill)
+    .map((o) => ({
+      skillId: o.skill.id,
+      skillVersion: o.model.skillVersion,
+      // useLatestSkillVersion: o.useLatestSkillVersion,
+    }))
+
   try {
-    console.log('submit')
+    console.log('save', isEdit.value)
+    if (isEdit.value) {
+      const { data } = await $fetch(`/api/agent/${props.agent.id}`, {
+        method: 'put',
+        body: form.value,
+      })
+    } else {
+      const { data } = await $fetch('/api/agent/', { method: 'post', body: form.value })
+    }
+    // if (!response.ok) {
+    //   let errorText = ''
+    //   try {
+    //     errorText = await response.text()
+    //   } finally {
+    //     throw new Error(errorText || `Post to /api/agent/ failed with status ${response.status}`)
+    //   }
+    // }
+    toaster.pushSuccess(t(isEdit.value ? 'agent.update-sucess' : 'agent.create-success'))
+    emit(isEdit.value ? 'entity-updated' : 'entity-created')
   } catch (e) {
-    toaster.pushError(e.toString())
+    toaster.pushError(
+      t(isEdit.value ? 'agent.update-error' : 'agent.create-error') + ' ' + e.toString()
+    )
   } finally {
     isAsyncing.value = false
     close()
@@ -107,7 +201,7 @@ const submit = async () => {
     :confirm-action-name="$t('common.confirm')"
     :confirm-action-disabled="!form.title"
     :is-opened="isOpened"
-    :title="$t(props.isEdit ? 'agents.edit-agent' : 'agents.create-agent')"
+    :title="$t(isEdit.value ? 'agents.edit-agent' : 'agents.create-agent')"
     class="medium"
     :asyncing="isAsyncing"
     @close="close"
@@ -143,12 +237,13 @@ const submit = async () => {
     <div class="form-section">
       <TextInput
         v-model.trim="form.description"
-        type="textarea"
+        input-type="textarea"
         :label="$t('agents.description')"
         @change="titleExists = false"
       />
     </div>
     <div class="form-section">
+      <h4>{{ $t('agents.prompt-section') }}</h4>
       <LpiSelect
         :options="promptOptions"
         v-model="form.promptId"
@@ -160,6 +255,9 @@ const submit = async () => {
         :label="$t('agents.use-latest-prompt-version')"
         v-model="form.useLatestPromptVersion"
       />
+    </div>
+    <div class="form-section" v-if="form.promptId && !form.useLatestPromptVersion">
+      <span>{{ $t('agent.use-prompt-version') }}</span>
       <LpiSelect
         v-if="!form.useLatestPromptVersion"
         :options="versionOptions"
@@ -172,6 +270,16 @@ const submit = async () => {
     </div>
     <div class="form-section">
       <lpiCheckbox :label="$t('agents.use-profile-data')" v-model="form.useProfileData" />
+    </div>
+    <div class="form-section">
+      <h4>{{ $t('agents.skills-section') }}</h4>
+      <AgentSkillPicker
+        v-for="opt in skillOptions"
+        :key="opt.skill.id"
+        :skill="opt.skill"
+        ,
+        v-model="opt.model"
+      />
     </div>
   </BaseDrawer>
 </template>

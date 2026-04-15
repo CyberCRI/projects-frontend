@@ -26,7 +26,6 @@ model Prompt {
 
 
 model PromptContent {
-  id                Int @id @default(autoincrement())
   version           Int
   content           String
 
@@ -35,7 +34,7 @@ model PromptContent {
 
   agents            Agent[]
 
-  @@unique([promptId, version])
+  @@id([promptId, version])
   @@index([promptId, version])
 }
 
@@ -55,16 +54,15 @@ model Skill {
 
 
 model SkillContent {
-  id                Int @id @default(autoincrement())
   version           Int
   content           String
 
   skillId           Int
   skill             Skill @relation(fields: [skillId], references: [id])
 
-  agents            Agent[]
+  agents            AgentSkillContent[]
 
-  @@unique([skillId, version])
+  @@id([skillId, version])
   @@index([skillId, version])
 }
 
@@ -101,7 +99,7 @@ model Agent {
 
   useProjectsMcp    Boolean @default(false)
   mcps              Mcp[]
-  skillContents     SkillContent[]
+  skillContents     AgentSkillContent[]
 
   useProfileData    Boolean @default(false)
 
@@ -109,4 +107,15 @@ model Agent {
 
   @@unique([title, orgCode])
   @@index([title, orgCode])
+}
+
+model AgentSkillContent {
+  skillId           Int
+  skillVersion      Int
+  agentId           Int
+
+  skillContent      SkillContent @relation(fields: [skillId, skillVersion], references:[skillId, version])
+  agent             Agent @relation(fields: [agentId], references:[id])
+
+  @@id([skillId, skillVersion, agentId])
 }

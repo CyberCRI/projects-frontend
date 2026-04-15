@@ -11,7 +11,7 @@ const entityToShow = ref(null)
 const entityToDelete = ref(null)
 const entityToEdit = ref(null)
 
-const entityList = ref(null)
+const entityList = useTemplateRef('entityList')
 const refreshEntityList = () => entityList.value?.refresh()
 
 const isAsyncing = ref(false)
@@ -44,6 +44,16 @@ const deleteEntity = async () => {
   //   isAsyncing.value = false
   // }
 }
+
+const onEntityUpdated = () => {
+  entityToEdit.value = null
+  refreshEntityList()
+}
+
+const onCloseAdminForm = () => {
+  entityToEdit.value = null
+  addEntityIsOpen.value = false
+}
 </script>
 <template>
   <div class="vector-store-admin-tab">
@@ -69,31 +79,19 @@ const deleteEntity = async () => {
       @confirm="entityToShow = null"
     />
 
-    <AgentAdminShow
-      v-if="entityToShow"
-      :agent="entityToShow"
-      @close="entityToShow = null"
-      @confirm="entityToShow = null"
-    />
-
     <AgentAdminForm
-      :is-opened="addEntityIsOpen"
-      @close="addEntityIsOpen = false"
-      @entity-added="refreshEntityList"
-    />
-    <AgentAdminForm
-      :is-opened="!!entityToEdit"
-      :agentToEdit="entityToEdit"
-      is-edit
-      @close="entityToEdit = null"
-      @entity-updated="entityToEdit = null"
+      :is-opened="addEntityIsOpen || !!entityToEdit"
+      :agent="entityToEdit"
+      @close="onCloseAdminForm"
+      @entity-created="onEntityUpdated"
+      @entity-updated="onEntityUpdated"
     />
 
     <ConfirmModal
       v-if="entityToDelete"
       :asyncing="isAsyncing"
-      :title="$t('vector-store.confirm-deletion')"
-      :content="$t('vector-store.confirm-deletion-of', { title: entityToDelete.title })"
+      :title="$t('agents.confirm-deletion')"
+      :content="$t('agents.confirm-deletion-of', { title: entityToDelete.title })"
       @confirm="deleteEntity"
       @cancel="entityToDelete = null"
     />

@@ -5,7 +5,8 @@ export default defineLazyEventHandler(() => {
       where: {
         orgCode: appApiOrgCode,
       },
-      include: { promptContents: true },
+      include: { promptContents: { orderBy: { version: 'desc' } } },
+      orderBy: { title: 'asc' },
     })
     // console.log(agent)
     return prompt

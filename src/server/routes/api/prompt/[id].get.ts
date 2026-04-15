@@ -20,7 +20,7 @@ export default defineLazyEventHandler(() => {
         id: id,
         orgCode: appApiOrgCode,
       },
-      include: { promptContents: true },
+      include: { promptContents: { orderBy: { version: 'desc' } } },
     })
 
     // console.log(agent)
