@@ -25,9 +25,9 @@ describe('ResearcherDocumentsTab.vue', () => {
         return {
           document_types: {
             JournalArticle: 100,
-            Editorial: 10,
-            Lecture: 45,
-            Map: 10,
+            ConferenceAbstract: 10,
+            ScholarlyPublication: 45,
+            Book: 10,
           },
           years: [
             { year: 2025, total: 10 },
@@ -36,9 +36,9 @@ describe('ResearcherDocumentsTab.vue', () => {
             { year: 2022, total: 130 },
           ],
           roles: {
-            'thesis-advisor': 12,
-            transcriber: 19,
-            translator: 10,
+            trc: 12,
+            trl: 19,
+            tyg: 10,
           },
         }
       }

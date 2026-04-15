@@ -21,6 +21,7 @@
 <script setup lang="ts">
 import SectionHeader from '@/components/base/SectionHeader.vue'
 import ResourceCount from '@/components/project/resource/ResourceCount.vue'
+import { RouteLocationRaw } from 'vue-router'
 
 const router = useRouter()
 
@@ -28,8 +29,8 @@ const props = withDefaults(
   defineProps<{
     files?: number
     links?: number
-    target: any
-    redirect: any
+    target: RouteLocationRaw
+    redirect: RouteLocationRaw
   }>(),
   { links: 0, files: 0 }
 )

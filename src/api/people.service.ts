@@ -64,7 +64,7 @@ export async function searchPeopleAdmin(organizationId: OrganizationModel['id'],
 
 export async function searchPeopleByExactMail(email: string, params: object) {
   const adaptedParams = params ? _adaptParamsToGetQuery(params) : {}
-  return await useAPI(`user/get-by-email/${email}/`, { ...adaptedParams, noError: true }) //.data.value
+  return await useAPI(`user/get-by-email/${email}/`, { ...adaptedParams })
 }
 
 export async function patchUser(id: string | number, body: UserPatchModel) {

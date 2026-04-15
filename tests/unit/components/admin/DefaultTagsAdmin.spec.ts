@@ -31,6 +31,12 @@ vi.mock('@/api/tag-classification.service', () => ({
   }),
   getAllOrgClassifications: vi.fn().mockResolvedValue({
     count: 3,
+    current_page: 1,
+    total_page: 1,
+    previous: null,
+    next: null,
+    first: null,
+    last: null,
     results: [
       {
         id: 123,
