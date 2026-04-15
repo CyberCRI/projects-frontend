@@ -20,10 +20,10 @@ export default defineLazyEventHandler(() => {
         id: id,
         orgCode: appApiOrgCode,
       },
-      include: { skillContents: true },
+      include: { skillContents: { orderBy: { version: 'desc' } } },
     })
 
-    // console.log(skill)
+    // console.log(agent)
     if (!skill) {
       setResponseStatus(event, 400)
       return {

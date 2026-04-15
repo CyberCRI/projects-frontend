@@ -6,12 +6,12 @@ const toaster = useToasterStore()
 const usersStore = useUsersStore()
 const { t } = useNuxtI18n()
 
-const showEntityTitle = ref('')
 const addEntityIsOpen = ref(false)
-const entityToDelete = ref('')
-const entityToEdit = ref('')
+const entityToShow = ref(null)
+const entityToDelete = ref(null)
+const entityToEdit = ref(null)
 
-const entityList = ref(null)
+const entityList = useTemplateRef('entityList')
 const refreshEntityList = () => entityList.value?.refresh()
 
 const isAsyncing = ref(false)
@@ -44,6 +44,16 @@ const deleteEntity = async () => {
   //   isAsyncing.value = false
   // }
 }
+
+const onEntityUpdated = () => {
+  entityToEdit.value = null
+  refreshEntityList()
+}
+
+const onCloseAdminForm = () => {
+  entityToEdit.value = null
+  addEntityIsOpen.value = false
+}
 </script>
 <template>
   <div class="vector-store-admin-tab">
@@ -55,13 +65,35 @@ const deleteEntity = async () => {
       />
     </div>
 
+    <SkillAdminList
+      ref="entityList"
+      @show-entity="entityToShow = $event"
+      @delete-entity="entityToDelete = $event"
+      @edit-entity="entityToEdit = $event"
+    />
+
+    <SkillAdminShow
+      v-if="entityToShow"
+      :skill="entityToShow"
+      @close="entityToShow = null"
+      @confirm="entityToShow = null"
+    />
+
+    <SkillAdminForm
+      :is-opened="addEntityIsOpen || !!entityToEdit"
+      :skill="entityToEdit"
+      @close="onCloseAdminForm"
+      @entity-created="onEntityUpdated"
+      @entity-updated="onEntityUpdated"
+    />
+
     <ConfirmModal
       v-if="entityToDelete"
       :asyncing="isAsyncing"
-      :title="$t('vector-store.confirm-deletion')"
-      :content="$t('vector-store.confirm-deletion-of', { title: entityToDelete })"
+      :title="$t('skills.confirm-deletion')"
+      :content="$t('skills.confirm-deletion-of', { title: entityToDelete.title })"
       @confirm="deleteEntity"
-      @cancel="entityToDelete = ''"
+      @cancel="entityToDelete = null"
     />
   </div>
 </template>

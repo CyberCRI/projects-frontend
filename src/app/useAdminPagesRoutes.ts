@@ -148,9 +148,9 @@ export default function useAdminPagesRoutes() {
         },
 
         {
-          path: 'skills',
-          name: 'SkillsAdminTab',
-          component: () => import('../pages/AdminPortalPageV2/Tabs/SkillsAdminTab.vue'),
+          path: 'agent-skills',
+          name: 'AgentSkillsAdminTab',
+          component: () => import('../pages/AdminPortalPageV2/Tabs/AgentSkillsAdminTab.vue'),
           meta: { checkAccessRequestEnabled: true },
         },
 

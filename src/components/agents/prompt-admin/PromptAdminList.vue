@@ -1,5 +1,5 @@
 <script setup>
-const fetchAgents = async () => await $fetch('/api/agent')
+const fetchPrompts = async () => $fetch('/api/prompt')
 const entityList = useTemplateRef('entityList')
 const refresh = () => entityList.value?.refresh()
 defineExpose({ refresh })
@@ -9,13 +9,10 @@ defineExpose({ refresh })
     ref="entityList"
     entity-icon="Article"
     no-entity-label="Nope"
-    :fetchEntities="fetchAgents"
+    :fetchEntities="fetchPrompts"
   >
-    <template #default="{ entity: agent }">
-      <div>{{ agent.title }}</div>
-      <div class="prompt">
-        {{ agent.promptContent.prompt.title }} v{{ agent.promptContent.version }}
-      </div>
+    <template #default="{ entity: prompt }">
+      {{ prompt.title }} ({{ prompt.promptContents?.length }} versions)
     </template>
   </EntityAdminList>
 </template>
@@ -23,9 +20,5 @@ defineExpose({ refresh })
 .title {
   font-size: 1.2rem;
   color: $primary-dark;
-}
-.prompt {
-  color: #666;
-  font-size: 0.8em;
 }
 </style>

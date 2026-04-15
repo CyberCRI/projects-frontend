@@ -2,15 +2,15 @@
 import useUsersStore from '@/stores/useUsers'
 const usersStore = useUsersStore()
 
-const props = defineProps({ agent: { type: [Object, null], required: true } })
+const props = defineProps({ prompt: { type: [Object, null], required: true } })
 const emit = defineEmits(['close'])
 
 let headers = {}
 const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
 if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
 
-const fetchAgent = async () => {
-  const response = await fetch(`/api/agent/${props.agent.id}`, {
+const fetchPrompt = async () => {
+  const response = await fetch(`/api/prompt/${props.prompt.id}`, {
     headers,
   })
   if (!response.ok) {
@@ -21,15 +21,15 @@ const fetchAgent = async () => {
       // ignore text parsing errors
     }
     throw new Error(
-      errorText || `Request to /api/agent/${props.agent.id} failed with status ${response.status}`
+      errorText || `Request to /api/prompt/${props.prompt.id} failed with status ${response.status}`
     )
   }
-  const agentData = await response.json()
-  return agentData
+  const promptData = await response.json()
+  return promptData
 }
 </script>
 <template>
-  <EntityAdminShow :fetch-entity="fetchAgent" :entity-title="agent.title" @close="emit('close')">
+  <EntityAdminShow :fetch-entity="fetchPrompt" :entity-title="prompt.title" @close="emit('close')">
     <template #default="{ entity }">
       <pre>
       {{ JSON.stringify(entity, null, 2) }}
@@ -39,22 +39,6 @@ const fetchAgent = async () => {
   </EntityAdminShow>
 </template>
 <style lang="scss" scoped>
-.chunk {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-
-.chunk ~ .chunk {
-  border-top: 1px solid $light-gray;
-}
-
-.chunk-header {
-  text-align: center;
-  color: $light-gray;
-  font-style: italic;
-  font-weight: normal;
-}
-
 .loader {
   display: flex;
   justify-content: center;

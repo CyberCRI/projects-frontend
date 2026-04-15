@@ -15,26 +15,31 @@ export default defineLazyEventHandler(() => {
         error: 'Wrong type for "id" query parameter',
       }
     }
-    const agent = await chatbotPrisma.agent.findUnique({
+    const body = await readBody(event)
+
+    const lastContent = await chatbotPrisma.promptContent.findFirst({
+      where: {
+        promptId: id,
+      },
+      orderBy: {
+        version: 'desc',
+      },
+    })
+
+    const version = lastContent.version + 1
+
+    const prompt = await chatbotPrisma.prompt.update({
       where: {
         id: id,
         orgCode: appApiOrgCode,
       },
-      include: {
-        promptContent: {
-          include: { prompt: true },
-          skillContents: { include: { skillContent: { include: { skill: true } } } },
+      data: {
+        promptContents: {
+          create: [{ content: body.content, version }],
         },
       },
     })
 
-    // console.log(agent)
-    if (!agent) {
-      setResponseStatus(event, 400)
-      return {
-        error: 'Not found',
-      }
-    }
-    return agent
+    return prompt
   })
 })
