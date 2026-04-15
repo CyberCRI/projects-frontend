@@ -19,7 +19,6 @@
 */
 import SvgWarning from '@/assets/svg/warning.svg'
 
-defineOptions({ name: 'ResearcherEditDocumentsTab' })
 const { t } = useNuxtI18n()
 
 const props = defineProps<{ docType: string }>()

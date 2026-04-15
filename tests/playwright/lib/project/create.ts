@@ -22,7 +22,7 @@ export async function createProject(page, projectName, projId) {
     categorySelector.locator('.toggle-btn').click()
     await categorySelector.locator('[data-test*=project-form]').first().click()
     logger.info('Category selected')
-  } catch (e) {
+  } catch {
     logger.info('Organization has no category.')
   }
 

@@ -4,49 +4,41 @@
       :title="$t('project.linked', linkedProjects.length)"
       :button-label="$t('project.show-n-projects', linkedProjects.length)"
       class="section-header"
-      :has-button="linkedProjects.length > 6"
+      :has-button="linkedProjects.length > LIMIT"
       @redirect-button-clicked="goToLinkedProjectsView"
     />
 
-    <LinkedProjects :linked-projects="linkedProjects.slice(0, 6)" />
+    <LinkedProjects :linked-projects="linkedProjectsSliced" />
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import SectionHeader from '@/components/base/SectionHeader.vue'
 import LinkedProjects from '@/components/project/linked-project/LinkedProjects.vue'
-import useProjectsStore from '@/stores/useProjects.ts'
-export default {
-  name: 'LinkedProjectsRecap',
+import useProjectsStore from '@/stores/useProjects'
 
-  components: {
-    SectionHeader,
-    LinkedProjects,
-  },
+const LIMIT = 6
 
-  props: {
-    linkedProjects: {
-      type: Array,
-      default: () => [],
-    },
-  },
-  setup() {
-    const projectsStore = useProjectsStore()
-    return {
-      projectsStore,
-    }
-  },
+const props = withDefaults(
+  defineProps<{
+    linkedProjects?: any[]
+  }>(),
+  {
+    linkedProjects: () => [],
+  }
+)
+const router = useRouter()
+const projectsStore = useProjectsStore()
 
-  methods: {
-    goToLinkedProjectsView() {
-      this.$router.push({
-        name: 'projectLinkedProjects',
-        params: { slugOrId: this.projectsStore.currentProjectSlug },
-        hash: '#tab',
-      })
-    },
-  },
+const goToLinkedProjectsView = () => {
+  router.push({
+    name: 'projectLinkedProjects',
+    params: { slugOrId: projectsStore.currentProjectSlug },
+    hash: '#tab',
+  })
 }
+
+const linkedProjectsSliced = computed(() => props.linkedProjects.slice(0, LIMIT))
 </script>
 
 <style lang="scss" scoped>

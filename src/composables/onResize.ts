@@ -49,7 +49,11 @@ export const onMediaChange = (
   callback: (matche: boolean) => void,
   options: Options = {}
 ) => {
-  const eventer = window?.matchMedia(media)
+  if (!import.meta.client) {
+    return
+  }
+
+  const eventer = window.matchMedia(media)
 
   const proxyCallback = () => {
     callback(!!eventer.matches)

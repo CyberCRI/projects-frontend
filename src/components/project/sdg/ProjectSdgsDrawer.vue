@@ -8,86 +8,75 @@
   />
 </template>
 
-<script>
+<script setup lang="ts">
 import { patchProject } from '@/api/projects.service'
 import analytics from '@/analytics'
-import useToasterStore from '@/stores/useToaster.ts'
+import useToasterStore from '@/stores/useToaster'
 import SdgsDrawer from '@/components/sdgs/SdgsDrawer.vue'
+import { ProjectModel } from '@/models/project.model'
 
-export default {
-  name: 'ProjectSdgsDrawer',
+const props = withDefaults(
+  defineProps<{
+    project?: ProjectModel
+    isOpened?: boolean
+    sdgs?: number[]
+  }>(),
+  {
+    project: null,
+    isOpened: false,
+    sdgs: () => [],
+  }
+)
 
-  components: { SdgsDrawer },
+const emit = defineEmits<{
+  'reload-sdgs': []
+  close: []
+}>()
 
-  props: {
-    project: {
-      type: Object,
-      default: () => ({}),
-    },
-    isOpened: {
-      type: Boolean,
-      default: false,
-    },
-    sdgs: {
-      type: Array,
-      default: () => [],
-    },
-  },
+const toaster = useToasterStore()
 
-  emits: ['close', 'reload-sdgs'],
-  setup() {
-    const toaster = useToasterStore()
-    return {
-      toaster,
+const asyncing = ref(false)
+const selection = ref<number[]>([])
+
+const { t } = useNuxtI18n()
+
+watch(
+  () => props.isOpened,
+  () => {
+    if (props.isOpened) {
+      selection.value = [...props.sdgs]
     }
-  },
+  }
+)
 
-  data() {
-    return {
-      asyncing: false,
-      selection: [...this.sdgs],
-    }
-  },
+const saveSdgs = async () => {
+  asyncing.value = true
+  const sdgs = selection.value
+  try {
+    await patchProject(props.project.id, { sdgs })
 
-  watch: {
-    isOpened(isOpened) {
-      if (isOpened) {
-        this.selection = [...this.sdgs]
-      }
-    },
-  },
+    analytics.goal.updateSDG(
+      props.project.id,
+      sdgs.map((sdg) => ({
+        id: sdg,
+        title: t(`sdg.${sdg}.title`),
+      }))
+    )
 
-  methods: {
-    async saveSdgs() {
-      this.asyncing = true
-      const sdgs = this.selection
-      try {
-        await patchProject(this.project.id, { sdgs })
+    emit('reload-sdgs')
 
-        analytics.goal.updateSDG(
-          this.project.id,
-          sdgs.map((sdg) => ({
-            id: sdg,
-            title: this.$t(`sdg.${sdg}.title`),
-          }))
-        )
+    toaster.pushSuccess(t('toasts.sdgs-update.success'))
+  } catch (error) {
+    toaster.pushError(`${t('toasts.sdgs-update.error')} (${error})`)
+    console.error(error)
+  } finally {
+    emit('close')
+    asyncing.value = false
+  }
+}
 
-        this.$emit('reload-sdgs')
-
-        this.toaster.pushSuccess(this.$t('toasts.sdgs-update.success'))
-      } catch (error) {
-        this.toaster.pushError(`${this.$t('toasts.sdgs-update.error')} (${error})`)
-        console.error(error)
-      } finally {
-        this.$emit('close')
-        this.asyncing = false
-      }
-    },
-
-    close() {
-      if (this.asyncing) return
-      this.$emit('close')
-    },
-  },
+const close = () => {
+  if (asyncing.value) return
+  emit('close')
 }
 </script>

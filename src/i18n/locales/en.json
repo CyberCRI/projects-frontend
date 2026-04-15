@@ -285,7 +285,9 @@
         "tips-background-image": "It is not required if you would rather simply display a color.  Minimum width: 1024px, Minimum height: 400px."
       },
       "templates": {
-        "add": "Add a template"
+        "add": "Add a template",
+        "delete-templates": "Delete templates",
+        "delete-templates-description": "Are you sure you want to delete '{templateName}' template ?"
       },
       "chat": "Chat platform (Connected view)",
       "events": "Events",
@@ -512,6 +514,8 @@
     "delete-description": "Are you sure you want to permanently delete your comments? This action will be irreversible."
   },
   "common": {
+    "file": "file | files",
+    "empty": "Nothing here...",
     "select": "select",
     "year": "year",
     "link-to": "link to",
@@ -1094,6 +1098,7 @@
     "remove_link": "Remove Link",
     "server-connected": "Server is connected.",
     "server-connecting": "Server is connecting...",
+    "server-offline": "Server is offline.",
     "server-disconnected": "Server is disconnected.",
     "server-unconnectable": {
       "status": "Unable to connect to the collaborative server.",
@@ -1988,6 +1993,7 @@
     "team": "Team"
   },
   "template": {
+    "edit-category": "Edit category.",
     "edit-tags": "Edit tags",
     "blog-content": "Template for blog content",
     "blog-title": "Template for blog title",

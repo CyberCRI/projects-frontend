@@ -35,12 +35,13 @@ import { AnyTranslatedLocation } from '@/models/location.model'
 import LocationTooltip from '@/components/map/LocationTooltip.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import { Image } from '@/models/image.model'
+import { RouteLocationRaw } from 'vue-router'
 
 const props = withDefaults(
   defineProps<{
     location: AnyTranslatedLocation
     label: string
-    to: any
+    to: RouteLocationRaw
     title: string
     description?: string
     image?: Image

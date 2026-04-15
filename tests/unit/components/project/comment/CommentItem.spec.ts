@@ -1,25 +1,14 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import CommentItem from '@/components/project/comment/CommentItem.vue'
-import english from '@/i18n/locales/en.json'
 import { CommentFactory } from '@/../tests/factories/comment.factory'
 
 import pinia from '@/stores'
 import useUsersStore from '@/stores/useUsers'
 import useOrganizationsStore from '@/stores/useOrganizations'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 // issue with webcrypto, so mock so offending import
-import { yUndoPluginKey } from 'y-prosemirror'
 vi.mock('y-prosemirror', () => ({ default: {} }))
-
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
 
 describe('CommentItem', () => {
   let wrapper
@@ -41,11 +30,7 @@ describe('CommentItem', () => {
       props: {
         comment: { ...CommentFactory.generate(), author: { id: 123 } },
       },
-      i18n,
     }
-  })
-  afterEach(() => {
-    // usersStore.$reset()
   })
 
   it('should render CommentItem component', () => {

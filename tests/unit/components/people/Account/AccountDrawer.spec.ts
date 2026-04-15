@@ -20,6 +20,11 @@ describe('AccountDrawer', () => {
   })
 
   it('AddMode', async () => {
+    const email = 'test@protonmail.com'
+    registerEndpoint(`user/get-by-email/${email}/`, () => {
+      throw createError({ statusCode: 404 })
+    })
+
     const wrapper = await lpiMount(AccountDrawer, { props: defaultProps })
     expect(wrapper.findComponent(ExistingAccountChecker).exists()).toBe(true)
     expect(wrapper.findComponent(AccountLayout).exists()).toBe(false)
@@ -87,6 +92,10 @@ describe('AccountDrawer', () => {
     const organization = OrganizationOutputFactory.generate()
     registerEndpoint(`user/${props.selectedUser.id}/`, () => props.selectedUser)
     registerEndpoint(`organization/`, () => ({ results: [organization] }))
+    const email = props.selectedUser.email
+    registerEndpoint(`user/get-by-email/${email}/`, () => {
+      throw createError({ statusCode: 404 })
+    })
 
     const wrapper = await lpiMount(AccountDrawer, {
       props,

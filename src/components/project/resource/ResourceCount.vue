@@ -19,13 +19,12 @@
 
 <script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
-
-defineOptions({ name: 'ResourceCount' })
+import { RouteLocationRaw } from 'vue-router'
 
 withDefaults(
   defineProps<{
     count: number
-    target: string
+    target: RouteLocationRaw
     isFile?: boolean
   }>(),
   { isFile: true }

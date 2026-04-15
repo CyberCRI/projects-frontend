@@ -1,3 +1,4 @@
+import { Translated } from '@/interfaces/translated'
 import BaseModel from '@/models/base.model'
 import { StatusType } from '@/models/types'
 
@@ -12,6 +13,8 @@ export interface GoalModel extends BaseModel {
   deadline_at: Date
   status: StatusType
 }
+
+export type TranslatedGoal = Translated<GoalModel, 'title' | 'description'>
 
 export type GoalInput = Required<GoalModel> & {
   project_id: string

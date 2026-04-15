@@ -1,4 +1,5 @@
 import BaseModel from '@/models/base.model'
+import { SecondaryTagType, TagType } from '@/models/types'
 
 /**
  * @name TagModel
@@ -10,8 +11,8 @@ export interface TagModel extends BaseModel {
   title_en: string
   title_fr: string
   organization?: string
-  type?: string
-  secondary_type?: string
+  type?: TagType
+  secondary_type?: SecondaryTagType
   description: string
   description_en: string
   description_fr: string

@@ -25,65 +25,47 @@
       :title="$t('common.delete')"
       :content="$t('project.review-confirm-delete')"
       @cancel="toDelete = null"
-      @confirm="deleteReview"
+      @confirm="onDeleteReview"
     />
   </div>
 </template>
-<script>
+
+<script setup lang="ts">
 import ReviewDrawer from '@/components/project/review/ReviewDrawer.vue'
 import SectionHeader from '@/components/base/SectionHeader.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import ReviewItem from '@/components/project/review/ReviewItem.vue'
 import { deleteReview } from '@/api/reviews.service'
-import useToasterStore from '@/stores/useToaster.ts'
-export default {
-  name: 'ReviewRecap',
+import useToasterStore from '@/stores/useToaster'
+import { TranslatedProject } from '@/models/project.model'
+import { ReviewModel } from '@/models/review.model'
 
-  components: {
-    ReviewDrawer,
-    SectionHeader,
-    ConfirmModal,
-    ReviewItem,
-  },
+const props = defineProps<{
+  project: TranslatedProject
+  reviews: ReviewModel[]
+}>()
 
-  props: {
-    project: {
-      type: Object,
-      default: () => {},
-    },
+const emit = defineEmits<{
+  'reload-reviews': []
+  'reload-project': []
+}>()
 
-    reviews: {
-      type: Array,
-      default: () => [],
-    },
-  },
+const { t } = useNuxtI18n()
 
-  emits: ['reload-reviews', 'reload-project'],
-  setup() {
-    const toaster = useToasterStore()
-    return {
-      toaster,
-    }
-  },
-  data() {
-    return {
-      editReview: null,
-      toDelete: null,
-    }
-  },
-  methods: {
-    async deleteReview() {
-      try {
-        await deleteReview({ project_id: this.project.id, id: this.toDelete.id })
-        this.$emit('reload-reviews')
-        this.toaster.pushSuccess(this.$t('toasts.review-delete.success'))
-      } catch (error) {
-        this.toaster.pushError(`${this.$t('toasts.review-delete.error')} (${error})`)
-        console.error(error)
-      } finally {
-        this.toDelete = null
-      }
-    },
-  },
+const toaster = useToasterStore()
+const editReview = ref(null)
+const toDelete = ref(null)
+
+const onDeleteReview = async () => {
+  try {
+    await deleteReview({ project_id: props.project.id, id: toDelete.value.id })
+    emit('reload-reviews')
+    toaster.pushSuccess(t('toasts.review-delete.success'))
+  } catch (error) {
+    toaster.pushError(`${t('toasts.review-delete.error')} (${error})`)
+    console.error(error)
+  } finally {
+    toDelete.value = null
+  }
 }
 </script>

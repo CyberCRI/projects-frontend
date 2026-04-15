@@ -31,64 +31,43 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
+import { IconImageChoice } from '@/functs/IconImage'
 
-export default {
-  name: 'ResourceCard',
+const props = withDefaults(
+  defineProps<{
+    title: string
+    subtitle?: string
+    resource?: any
+    canEdit?: boolean
+    canDelete?: boolean
+    horizontalReverse?: boolean
+    icon?: IconImageChoice
+  }>(),
+  {
+    subtitle: '',
+    resource: null,
+    canEdit: false,
+    canDelete: false,
+    horizontalReverse: false,
+    icon: null,
+  }
+)
 
-  components: { IconImage, ContextActionButton },
+defineEmits<{
+  'delete-clicked': []
+  'edit-clicked': []
+}>()
 
-  props: {
-    title: {
-      type: String,
-      required: true,
-    },
-
-    subtitle: {
-      type: String,
-      default: '',
-    },
-
-    resource: {
-      type: Object,
-      default: () => {},
-    },
-
-    canEdit: {
-      type: Boolean,
-      default: false,
-    },
-
-    canDelete: {
-      type: Boolean,
-      default: false,
-    },
-
-    horizontalReverse: {
-      type: Boolean,
-      default: false,
-    },
-
-    icon: {
-      type: String,
-      default: null,
-    },
-  },
-
-  emits: ['delete-clicked', 'edit-clicked'],
-
-  methods: {
-    openResource() {
-      if (['file', 'image'].includes(this.resource.attachment_type)) {
-        window.open(this.resource.file, '_blank')
-      } else {
-        //'link', 'video'...
-        window.open(this.resource.site_url, '_blank')
-      }
-    },
-  },
+const openResource = () => {
+  if (['file', 'image'].includes(props.resource.attachment_type)) {
+    window.open(props.resource.file, '_blank')
+  } else {
+    //'link', 'video'...
+    window.open(props.resource.site_url, '_blank')
+  }
 }
 </script>
 

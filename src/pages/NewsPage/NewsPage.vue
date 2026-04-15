@@ -10,7 +10,7 @@
               :ratio="4 / 3"
               :picture-data="news.header_image"
               picture-size="medium"
-              default-picture="/patatoids-project/Patatoid-1.png"
+              :default-picture="DEFAULT_NEWS_PATATOID"
             />
           </div>
           <div class="header-texts">
@@ -81,9 +81,10 @@ import { html2Text } from '@/functs/string'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
+import { DEFAULT_NEWS_PATATOID } from '@/composables/usePatatoids'
 
 const props = defineProps<{
-  slugOrId: string
+  slugOrId: string | number
 }>()
 
 const toaster = useToasterStore()
@@ -93,7 +94,7 @@ const { canEditNews, canDeleteNews } = usePermissions()
 const { locale, t } = useNuxtI18n()
 
 const organizationCode = useOrganizationCode()
-const newsId = computed<NewsModel['id']>(() => parseInt(props.slugOrId, 10))
+const newsId = computed<NewsModel['id']>(() => parseInt(props.slugOrId.toString(), 10))
 const {
   status,
   data: news,

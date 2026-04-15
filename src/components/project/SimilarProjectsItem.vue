@@ -4,19 +4,19 @@
     :to="{
       name: 'projectSummary',
       params: {
-        slugOrId: project?.slug,
+        slugOrId: project.slug,
       },
     }"
   >
     <CroppedApiImage
-      v-if="project?.header_image"
-      :alt="`${project?.$t?.title} image`"
+      v-if="project.header_image"
+      :alt="`${project.$t.title} image`"
       :picture-data="project.header_image"
       picture-size="small"
       :default-picture="DEFAULT_PROJECT_PATATOID"
     />
 
-    <p>{{ project?.$t?.title }}</p>
+    <p>{{ project.$t.title }}</p>
   </NuxtLink>
 </template>
 
@@ -26,7 +26,7 @@ import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
 import { TranslatedProject } from '@/models/project.model'
 
 defineProps<{
-  project?: TranslatedProject
+  project: TranslatedProject
 }>()
 </script>
 

@@ -51,9 +51,7 @@ import ListPaginator from '@/components/base/navigation/ListPaginator.vue'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 import { TranslatedUserModel } from '@/models/user.model'
 
-defineProps<{
-  user: TranslatedUserModel
-}>()
+defineProps<{ user: TranslatedUserModel }>()
 
 const { t } = useNuxtI18n()
 const orgStore = useOrganizations()

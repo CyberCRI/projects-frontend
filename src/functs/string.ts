@@ -1,4 +1,4 @@
-import { capitalize as esCapitalize } from 'es-toolkit'
+import { capitalize as esCapitalize, isNil } from 'es-toolkit'
 /**
  * crop text if is too long
  *
@@ -41,4 +41,21 @@ export const html2Text = (text: string): string => {
   const span = document.createElement('span')
   span.innerHTML = text || ''
   return span.innerText
+}
+
+/**
+ * check if text is empty (from html context like "<p></p>")
+ *
+ * @function
+ * @name textIsEmpty
+ * @kind variable
+ * @param {string} text
+ * @returns {boolean}
+ * @exports
+ */
+export const textIsEmpty = (text: string | null): boolean => {
+  if (isNil(text)) {
+    return true
+  }
+  return html2Text(text).trim() === ''
 }

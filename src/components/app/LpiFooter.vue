@@ -48,10 +48,7 @@
               <span>
                 {{ $t('footer.sourceText') }}
               </span>
-              <img
-                :src="`${runtimeConfig.public.appPublicBinariesPrefix}/source.png`"
-                alt="CC BY-NC-SA 4.0"
-              />
+              <img :src="FOOTER_SRC" alt="CC BY-NC-SA 4.0" />
             </a>
           </li>
         </ul>
@@ -173,6 +170,9 @@ import OnboardingScreens from '@/components/onboarding/OnboardingScreens/Onboard
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useUsersStore from '@/stores/useUsers'
 import { useRuntimeConfig } from '#imports'
+import utils from '@/functs/functions'
+
+const FOOTER_SRC = usePublicURL('/source.png')
 
 const organizationsStore = useOrganizationsStore()
 const usersStore = useUsersStore()
@@ -184,7 +184,7 @@ const showContactUsDrawer = ref(false)
 const canOpen = computed(() => locale.value === 'fr')
 const showDirectoryLink = computed(() => {
   const organization = organizationsStore.current
-  if (organization && organization.code === 'DEFAULT') {
+  if (organization && utils.isDefaultPortal(organization.code)) {
     return false
   }
   return true

@@ -1,13 +1,11 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
-import { isEscoClassification } from '@/functs/ClassificationUtils.ts'
+import { isEscoClassification } from '@/functs/ClassificationUtils'
+import { TagModel } from '@/models/tag.model'
 
-defineProps({
-  classification: {
-    type: Object,
-    required: true,
-  },
-})
+defineProps<{
+  classification: TagModel
+}>()
 
 const { locale } = useNuxtI18n()
 

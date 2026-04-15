@@ -40,7 +40,6 @@ export default function useAdminPagesRoutes() {
           path: 'templates',
           name: 'templates',
           redirect: { name: 'templatesList' },
-          component: () => import('../pages/AdminPortalPageV2/Tabs/EmptyTab.vue'),
           children: [
             {
               path: 'list',
@@ -68,7 +67,6 @@ export default function useAdminPagesRoutes() {
           path: 'links',
           name: 'links',
           redirect: { name: 'linksList' },
-          component: () => import('../pages/AdminPortalPageV2/Tabs/EmptyTab.vue'),
           children: [
             {
               path: 'list',
@@ -92,7 +90,6 @@ export default function useAdminPagesRoutes() {
           path: 'groups',
           name: 'groups',
           redirect: { name: 'groupsList' },
-          component: () => import('../pages/AdminPortalPageV2/Tabs/GroupsTab.vue'),
           children: [
             {
               path: 'list',

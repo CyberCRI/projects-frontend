@@ -9,7 +9,7 @@
     </div>
 
     <div class="goal-title">
-      {{ goal?.$t?.title }}
+      {{ goal.$t.title }}
     </div>
 
     <div v-if="goal.deadline_at" class="deadline">
@@ -18,23 +18,16 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'GoalSummaryItem',
+<script setup lang="ts">
+import { TranslatedGoal } from '@/models/goal.model'
 
-  props: {
-    goal: {
-      type: Object,
-      required: true,
-    },
-  },
+const props = defineProps<{
+  goal: TranslatedGoal
+}>()
 
-  computed: {
-    statusIconVisible() {
-      return this.goal.status && this.goal.status !== 'na' && this.goal.status !== 'cancel'
-    },
-  },
-}
+const statusIconVisible = computed(() => {
+  return props.goal.status && props.goal.status !== 'na' && props.goal.status !== 'cancel'
+})
 </script>
 
 <style lang="scss" scoped>

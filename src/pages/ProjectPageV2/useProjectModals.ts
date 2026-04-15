@@ -16,6 +16,7 @@ export default function useProjectModals() {
     },
     teamMember: {
       visible: false,
+      editedItem: null,
     },
     bug: {
       visible: false,

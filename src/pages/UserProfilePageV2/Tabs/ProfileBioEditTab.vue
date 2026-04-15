@@ -55,6 +55,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import { patchUser } from '@/api/people.service.ts'
 import useToasterStore from '@/stores/useToaster.ts'

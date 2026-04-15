@@ -5,9 +5,8 @@
 </template>
 
 <script>
-import { CHART_COLORS } from '@/functs/constants.ts'
+import { CHART_COLORS, SDGS } from '@/functs/constants.ts'
 import LpiBarChart from './Generic/LpiBarChart.vue'
-import allSdgs from '@/data/sdgs.json'
 
 export default {
   name: 'SdgChart',
@@ -55,7 +54,7 @@ export default {
     populateDataChart() {
       const sdgsLabels = []
       const sdgsColors = []
-      allSdgs.forEach((sdg, i) => {
+      SDGS.forEach((sdg, i) => {
         sdgsLabels.push(this.$t(`sdg.${sdg.id}.title`))
         sdgsColors.push(CHART_COLORS[i % CHART_COLORS.length])
       })

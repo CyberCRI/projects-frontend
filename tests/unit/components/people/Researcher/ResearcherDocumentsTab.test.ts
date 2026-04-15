@@ -1,4 +1,3 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
 import { beforeAll, describe, expect, it } from 'vitest'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import ResearcherDocumentsTab from '@/pages/UserProfilePageV2/Tabs/ResearcherDocumentsTab.vue'
@@ -6,7 +5,8 @@ import { UserFactory } from '../../../../factories/user.factory'
 import { delay } from 'es-toolkit'
 import { DocumentFactory, ResearcherFactory } from '../../../../factories/researcher.factory'
 import { PaginationsFactory } from '../../../../factories/paginations.factory'
-import flushPromises from 'flush-promises'
+import { flushPromises } from '@vue/test-utils'
+import { lpiMountSuspended } from '../../../../helpers/LpiMount'
 
 describe('ResearcherDocumentsTab.vue', () => {
   let defaultProps
@@ -20,8 +20,8 @@ describe('ResearcherDocumentsTab.vue', () => {
   })
 
   it('undefined researcher', async () => {
-    defaultProps.researcher = null
-    const wrapper = await lpiMount(ResearcherDocumentsTab, { props: defaultProps })
+    defaultProps.user.researcher = null
+    const wrapper = await lpiMountSuspended(ResearcherDocumentsTab, { props: defaultProps })
     expect(wrapper.find('.document-tab-empty').exists()).toBeTruthy()
   })
 
@@ -32,7 +32,7 @@ describe('ResearcherDocumentsTab.vue', () => {
         publications: 0,
       },
     }
-    const wrapper = await lpiMount(ResearcherDocumentsTab, { props: defaultProps })
+    const wrapper = await lpiMountSuspended(ResearcherDocumentsTab, { props: defaultProps })
     expect(wrapper.find('.document-tab-empty').exists()).toBeTruthy()
   })
 
@@ -50,10 +50,16 @@ describe('ResearcherDocumentsTab.vue', () => {
         throw createError({ statusCode: 500 })
       }
     )
+    registerEndpoint(
+      `crisalid/organization/${orgaCode}/researcher/${defaultProps.user.researcher.id}/publications/analytics/`,
+      () => {
+        throw createError({ statusCode: 500 })
+      }
+    )
 
-    const wrapper = await lpiMount(ResearcherDocumentsTab, { props: defaultProps })
+    const wrapper = await lpiMountSuspended(ResearcherDocumentsTab, { props: defaultProps })
     expect(wrapper.find('.skeletons').exists()).toBeTruthy()
-    await delay(100)
+    await flushPromises()
     expect(wrapper.find('.skeletons').exists()).toBeFalsy()
     expect(wrapper.find('.error').exists()).toBeTruthy()
   })
@@ -71,9 +77,9 @@ describe('ResearcherDocumentsTab.vue', () => {
         return {
           document_types: {
             JournalArticle: 100,
-            Editorial: 10,
-            Lecture: 45,
-            Map: 10,
+            ConferenceAbstract: 10,
+            ScholarlyPublication: 45,
+            Book: 10,
           },
           years: [
             { year: 2025, total: 10 },
@@ -82,9 +88,9 @@ describe('ResearcherDocumentsTab.vue', () => {
             { year: 2022, total: 130 },
           ],
           roles: {
-            'thesis-advisor': 12,
-            transcriber: 19,
-            translator: 10,
+            trc: 12,
+            trl: 19,
+            tyg: 10,
           },
         }
       }
@@ -120,9 +126,9 @@ describe('ResearcherDocumentsTab.vue', () => {
       }
     )
 
-    const wrapper = await lpiMount(ResearcherDocumentsTab, { props: defaultProps })
+    const wrapper = await lpiMountSuspended(ResearcherDocumentsTab, { props: defaultProps })
     expect(wrapper.find('.skeletons').exists()).toBeTruthy()
-    await delay(100)
+    await flushPromises()
     expect(wrapper.find('.skeletons').exists()).toBeFalsy()
 
     expect(wrapper.find('.documents-list').element.childElementCount).toEqual(2)
@@ -132,7 +138,7 @@ describe('ResearcherDocumentsTab.vue', () => {
     wrapper
       .find(`[data-test="see-more-${docWithSimilars.id}"]`)
       .element.dispatchEvent(new Event('click'))
-    await delay(100)
+    await flushPromises()
     await flushPromises()
     expect(wrapper.find('.documents-list-similars').element.childElementCount).toEqual(2)
   })

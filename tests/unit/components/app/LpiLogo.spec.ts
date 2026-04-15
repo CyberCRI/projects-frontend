@@ -1,28 +1,10 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import english from '@/i18n/locales/en.json'
 import LpiLogo from '@/components/app/LpiLogo.vue'
-import { beforeEach, describe, expect, it } from 'vitest'
-
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
+import { describe, expect, it } from 'vitest'
 
 describe('LpiFooter', () => {
-  let wrapper
-  let defaultParams
-
-  beforeEach(() => {
-    defaultParams = {
-      i18n,
-    }
-  })
-
   it('should render LpiLogo component', () => {
-    wrapper = lpiShallowMount(LpiLogo, defaultParams)
+    const wrapper = lpiShallowMount(LpiLogo)
 
     expect(wrapper.exists()).toBeTruthy()
   })

@@ -3,23 +3,18 @@ import useVuelidate from '@vuelidate/core'
 import { helpers, required, email } from '@vuelidate/validators'
 import { postUserWithInvitation } from '@/api/people.service'
 import { imageSizesFormDataPost } from '@/functs/imageSizesUtils'
-import utils from '@/functs/functions'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import { getInvitation } from '@/api/invitations.service'
 import useToasterStore from '@/stores/useToaster'
 import useOrganizationsStore from '@/stores/useOrganizations'
-import { useRuntimeConfig } from '#imports'
+import { getPatatoidFile } from '@/composables/usePatatoids'
 
-const props = defineProps({
-  token: {
-    type: String,
-    required: true,
-  },
-})
+const props = defineProps<{
+  token: string
+}>()
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
-const runtimeConfig = useRuntimeConfig()
 const { t, locale } = useNuxtI18n()
 
 const form = ref({
@@ -63,9 +58,7 @@ const rules = {
 
 const v$ = useVuelidate(rules, form)
 
-const backgroundImageUrl = computed(() => {
-  return `${runtimeConfig.public.appPublicBinariesPrefix}/page404/page-404.png`
-})
+const backgroundImageUrl = computed(() => usePublicURL('/page404/page-404.png'))
 
 const validateIfInvalid = () => {
   // force form error display even if save button is disabled
@@ -96,7 +89,7 @@ const register = async () => {
     const formData = new FormData()
     imageSizesFormDataPost(formData)
 
-    const profileImage = await utils.getPatatoidFile(currentPatatoidIndex.value)
+    const profileImage = await getPatatoidFile(currentPatatoidIndex.value)
     if (profileImage instanceof File) {
       formData.append('profile_picture_file', profileImage, profileImage.name)
     }

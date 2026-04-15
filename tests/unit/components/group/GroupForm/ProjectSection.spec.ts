@@ -1,16 +1,7 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
-import english from '@/i18n/locales/en.json'
 import ProjectSection from '@/components/group/GroupForm/ProjectSection.vue'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { TranslatedProjectFactory } from '@/../tests/factories/project.factory'
-
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
 
 const projects = TranslatedProjectFactory.generateMany(2).map((project) => ({ ...project }))
 
@@ -20,7 +11,6 @@ describe('ProjectSection.vue', () => {
 
   beforeEach(() => {
     defaultParams = {
-      i18n,
       props: {
         modelValue: projects,
       },

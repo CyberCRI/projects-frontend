@@ -1,53 +1,31 @@
-<script setup>
-import { getUser } from '@/api/people.service.ts'
+<script setup lang="ts">
+import { getUser } from '@/api/people.service'
 
-import { getOrganizationByCode } from '@/api/organizations.service'
-const props = defineProps({
-  userId: {
-    type: [String, Number],
-    default: null,
-  },
-  isEditing: {
-    type: Boolean,
-    default: false,
-  },
-})
+const props = withDefaults(
+  defineProps<{
+    userId?: string | number
+    isEditing?: boolean
+  }>(),
+  {
+    userId: null,
+    isEditing: false,
+  }
+)
 
 const router = useRouter()
 const route = useRoute()
-const { t } = useNuxtI18n()
 
-// onBeforeRouteUpdate(useGuardFromPendingEdit)
-// onBeforeRouteLeave(useGuardFromPendingEdit)
-// useGuardFromPendingEdit()
-
-try {
-  if (props.userId) {
-    const user = await getUser(props.userId, true)
-    const { image, dimensions } = useImageAndDimension(user.profile_picture, 'medium')
-    useLpiHead(
-      useRequestURL().toString(),
-      `${user.given_name} ${user.family_name}`,
-      user.short_description,
-      image,
-      dimensions
-    )
-  } else {
-    const runtimeConfig = useRuntimeConfig()
-    const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-    const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
-    useLpiHead(
-      useRequestURL().toString(),
-      computed(() => t('me.page-title')),
-      organization?.dashboard_subtitle,
-      image,
-      dimensions
-    )
+watchEffect(async () => {
+  if (!props.userId) {
+    return
   }
-} catch (err) {
-  // DGAF
-  console.log(err)
-}
+  const user = await getUser(props.userId.toString(), true)
+  useLpiHead2({
+    title: `${user.given_name} ${user.family_name}`,
+    description: user.short_description,
+    image: user.profile_picture,
+  })
+})
 
 function display404() {
   router.replace({

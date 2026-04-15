@@ -2,23 +2,12 @@ import { lpiMount } from '@/../tests/helpers/LpiMount'
 import CategoryCard from '@/components/category/CategoryCard.vue'
 
 import { describe, expect, it } from 'vitest'
-const category = {
-  background_color: '#00DBA7',
-  foreground_color: 'white',
-  name: 'LPI Projects',
-}
-
-const factory = (propsData?) => {
-  return lpiMount(CategoryCard, {
-    props: {
-      ...propsData,
-    },
-  })
-}
+import { ProjectCategoryFactory } from '../../../factories/project-category.factory'
 
 describe('CategoryCard.vue', () => {
   it('should render component', () => {
-    const wrapper = factory({ category })
+    const category = ProjectCategoryFactory.generate()
+    const wrapper = lpiMount(CategoryCard, { props: { category } })
     expect(wrapper.exists()).toBe(true)
   })
 })

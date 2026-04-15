@@ -4,7 +4,7 @@ import useOrganizations from '@/stores/useOrganizations'
 import useToasterStore from '@/stores/useToaster.ts'
 
 const NULL_CONTENT = '<p></p>'
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 const toaster = useToasterStore()
 const organizationsStore = useOrganizations()
 

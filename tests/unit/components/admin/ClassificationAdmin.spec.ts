@@ -1,21 +1,13 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
-import english from '@/i18n/locales/en.json'
-import waitForExpect from 'wait-for-expect'
 import ClassificationAdmin from '@/components/admin/ClassificationAdmin.vue'
 
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 
-import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
+import { OrganizationOutput } from '@/models/organization.model'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
-import flushPromises from 'flush-promises'
-
-import {
-  getAllOrgClassifications,
-  getOrgClassificationTags,
-} from '@/api/tag-classification.service'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { flushPromises } from '@vue/test-utils'
 
 vi.mock('@/api/tag-classification.service', () => ({
   getOrgClassificationTags: vi
@@ -49,14 +41,6 @@ vi.mock('@/api/tag-classification.service', () => ({
   }),
 }))
 
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
-
 describe('ClassificationAdmin', () => {
   let wrapper
   let defaultParams
@@ -81,7 +65,6 @@ describe('ClassificationAdmin', () => {
     } as unknown as OrganizationOutput
     defaultParams = {
       props: {},
-      i18n,
     }
   })
 
@@ -94,7 +77,6 @@ describe('ClassificationAdmin', () => {
   it('should display activate state for project', async () => {
     wrapper = lpiMount(ClassificationAdmin, { ...defaultParams, props: { type: 'projects' } })
 
-    const vm: any = wrapper.vm
     await flushPromises()
     const switchComp = wrapper.findAllComponents('[data-test="classification-switch-for-projects"]')
 
@@ -113,7 +95,6 @@ describe('ClassificationAdmin', () => {
   it('should display activate state for skills', async () => {
     wrapper = lpiMount(ClassificationAdmin, { ...defaultParams, props: { type: 'skills' } })
 
-    const vm: any = wrapper.vm
     await flushPromises()
     const switchComp = wrapper.findAllComponents('[data-test="classification-switch-for-skills"]')
 
@@ -134,7 +115,7 @@ describe('ClassificationAdmin', () => {
 
     const vm: any = wrapper.vm
     await flushPromises()
-    let switchComp = wrapper.findComponent('[data-test="classification-switch-for-skills"]')
+    const switchComp = wrapper.findComponent('[data-test="classification-switch-for-skills"]')
 
     expect(switchComp.vm.modelValue).toBe(false)
 
@@ -188,7 +169,7 @@ describe('ClassificationAdmin', () => {
     const vm: any = wrapper.vm
     await flushPromises()
     const editButtons = wrapper.findAllComponents('[data-test="edit-classification-button"]')
-    let editDrawer = wrapper.findComponent('[data-test="edit-classification-drawer"]')
+    const editDrawer = wrapper.findComponent('[data-test="edit-classification-drawer"]')
 
     expect(editButtons.length).toBe(3)
     expect(editDrawer.vm.isOpen).toBeFalsy()
@@ -206,7 +187,7 @@ describe('ClassificationAdmin', () => {
     const vm: any = wrapper.vm
     await flushPromises()
     const editButtons = wrapper.findAllComponents('[data-test="edit-classification-button"]')
-    let editDrawer = wrapper.findComponent('[data-test="edit-classification-drawer"]')
+    const editDrawer = wrapper.findComponent('[data-test="edit-classification-drawer"]')
 
     expect(editButtons.length).toBe(3)
     expect(editDrawer.vm.isOpen).toBeFalsy()

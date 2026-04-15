@@ -25,9 +25,7 @@ withDefaults(
     isOpened: boolean
     memberId?: TranslatedGroupMember['id']
   }>(),
-  {
-    memberId: null,
-  }
+  { memberId: null }
 )
 
 defineEmits<{

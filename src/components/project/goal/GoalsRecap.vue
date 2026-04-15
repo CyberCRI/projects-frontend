@@ -20,18 +20,15 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import GoalSummaryItem from '@/components/project/goal/GoalSummaryItem.vue'
 import SectionHeader from '@/components/base/SectionHeader.vue'
+import { TranslatedGoal } from '@/models/goal.model'
 
-defineOptions({ name: 'GoalsRecap' })
 defineEmits(['access-goals-view'])
-const props = defineProps({
-  goals: {
-    type: Array,
-    required: true,
-  },
-})
+const props = defineProps<{
+  goals: TranslatedGoal[]
+}>()
 
 const router = useRouter()
 const route = useRoute()

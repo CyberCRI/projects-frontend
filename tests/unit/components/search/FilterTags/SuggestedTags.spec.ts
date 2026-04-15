@@ -1,26 +1,14 @@
 import { lpiShallowMount, lpiMount } from '@/../tests/helpers/LpiMount'
-import english from '@/i18n/locales/en.json'
 import SuggestedTags from '@/components/search/FilterTags/SuggestedTags.vue'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
-import { id } from 'date-fns/locale'
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
+import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('SuggestedTags', () => {
   let wrapper
   let defaultParams
 
   beforeEach(() => {
-    defaultParams = {
-      i18n,
-    }
+    defaultParams = {}
   })
 
   it('should render SuggestedTags component', () => {

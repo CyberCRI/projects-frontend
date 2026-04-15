@@ -290,7 +290,9 @@
       "news": "Actualités",
       "featured-projects": "Projets à la une",
       "templates": {
-        "add": "Ajouter un modèle"
+        "add": "Ajouter un modèle",
+        "delete-templates": "Supprimer les modèles",
+        "delete-templates-description": "Voulez-vous vraiment supprimer le modèle '{templateName}' ?"
       }
     },
     "form": {
@@ -589,7 +591,9 @@
     "end-time": "Heure de fin",
     "no-date": "Pas de date",
     "date": "Date",
-    "clear-date": "Effacer la date"
+    "clear-date": "Effacer la date",
+    "empty": "Rien ici...",
+    "file": "fichier | fichiers"
   },
   "complete-profile": {
     "bio": {
@@ -1216,7 +1220,8 @@
     "underline": "souligné",
     "undo": "Annuler",
     "video": "Vidéo",
-    "save": "Enregistrer sans quitter"
+    "save": "Enregistrer sans quitter",
+    "server-offline": "Le serveur est hors ligne."
   },
   "homeCarousel": {
     "tab1": {
@@ -2119,7 +2124,8 @@
     "title-comment": "Commentaire",
     "no-templates-set": "Pas de template.",
     "placeholder-purpose": "Objet du projet",
-    "placeholder-title": "Titre Sur place"
+    "placeholder-title": "Titre Sur place",
+    "edit-category": "Modifier la catégorie."
   },
   "tips": {
     "background-color": "Cette couleur sera affichée derrière le texte.",

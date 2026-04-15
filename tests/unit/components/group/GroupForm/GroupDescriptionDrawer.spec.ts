@@ -1,41 +1,24 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
-import english from '@/i18n/locales/en.json'
 import GroupDescriptionDrawer from '@/components/group/GroupForm/GroupDescriptionDrawer.vue'
-import { beforeEach, describe, expect, it } from 'vitest'
-
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
+import { describe, expect, it } from 'vitest'
 
 describe('GroupDescriptionDrawer.vue', () => {
-  let wrapper
-  let defaultParams
-
-  beforeEach(() => {
-    defaultParams = {
-      i18n,
-    }
-  })
-  ;(it('should render GroupDescriptionDrawer component', () => {
-    wrapper = lpiMount(GroupDescriptionDrawer, defaultParams)
+  it('should render GroupDescriptionDrawer component', () => {
+    const wrapper = lpiMount(GroupDescriptionDrawer)
     expect(wrapper.exists()).toBe(true)
-  }),
-    it('should emit the close event', () => {
-      wrapper = lpiMount(GroupDescriptionDrawer, defaultParams)
-      const vm: any = wrapper.vm
+  })
+  it('should emit the close event', () => {
+    const wrapper = lpiMount(GroupDescriptionDrawer)
+    const vm: any = wrapper.vm
 
-      vm.closeDrawer()
-      expect(wrapper.emitted('close')).toBeTruthy()
-    }),
-    it('should emit the update-description event', () => {
-      wrapper = lpiMount(GroupDescriptionDrawer, defaultParams)
-      const vm: any = wrapper.vm
+    vm.closeDrawer()
+    expect(wrapper.emitted('close')).toBeTruthy()
+  })
+  it('should emit the update-description event', () => {
+    const wrapper = lpiMount(GroupDescriptionDrawer)
+    const vm: any = wrapper.vm
 
-      vm.saveDescription()
-      expect(wrapper.emitted('update-description')).toBeTruthy()
-    }))
+    vm.saveDescription()
+    expect(wrapper.emitted('update-description')).toBeTruthy()
+  })
 })

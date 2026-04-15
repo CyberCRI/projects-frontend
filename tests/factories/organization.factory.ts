@@ -11,7 +11,7 @@ import OrganizationDirectoryFactory from './organization-directory.factory'
 import TagFactory from './tag.factory'
 import { ImageFactory } from './image.factory'
 
-const OrganizationFactory = createFactory<OrganizationModel>((faker) => ({
+export const OrganizationFactory = createFactory<OrganizationModel>((faker) => ({
   ...BaseFactory.generate(),
   id: faker.datatype.number(),
   background_color: faker.datatype.string(),
@@ -21,17 +21,8 @@ const OrganizationFactory = createFactory<OrganizationModel>((faker) => ({
   dashboard_title: faker.lorem.sentence(),
   dashboard_subtitle: faker.lorem.sentence(),
   language: 'fr',
-  logo_image: {
-    name: faker.datatype.string(),
-    url: faker.image.image(),
-    variations: {
-      full: faker.image.image(),
-      large: faker.image.image(),
-      medium: faker.image.image(),
-      original: faker.image.image(),
-      small: faker.image.image(),
-    },
-  },
+  languages: ['fr', 'en'],
+  logo_image: ImageFactory.generate(),
   main_org_logo_visibility: faker.datatype.boolean(),
   is_logo_visible_on_parent_dashboard: faker.datatype.boolean(),
   name: faker.datatype.string(),
@@ -39,6 +30,7 @@ const OrganizationFactory = createFactory<OrganizationModel>((faker) => ({
   faq: FaqFactory.generate(),
   tags: TagFactory.generateMany(2),
   children: [],
+  default_skills_tags: [],
   enabled_projects_tag_classifications: [], // TODO: define this type
   enabled_skills_tag_classifications: [], // TODO: define this type
   terms_and_conditions: null,

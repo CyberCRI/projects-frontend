@@ -2,14 +2,8 @@ import { lpiMount } from '@/../tests/helpers/LpiMount'
 import WelcomedModal from '@/components/onboarding/WelcomeModal/WelcomeModal.vue'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
-import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: loadLocaleMessages(),
-}
 
 describe('WelcomedModal.vue', () => {
   let wrapper
@@ -18,9 +12,7 @@ describe('WelcomedModal.vue', () => {
   beforeEach(() => {
     const organizationsStore = useOrganizationsStore(pinia)
     organizationsStore._current = OrganizationOutputFactory.generate()
-    defaultParams = {
-      i18n,
-    }
+    defaultParams = {}
   })
 
   it('should render WelcomedModal component', () => {

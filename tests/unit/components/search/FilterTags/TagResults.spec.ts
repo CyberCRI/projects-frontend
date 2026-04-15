@@ -1,24 +1,14 @@
 import { lpiShallowMount, lpiMount } from '@/../tests/helpers/LpiMount'
-import english from '@/i18n/locales/en.json'
 import TagResults from '@/components/search/FilterTags/TagResults.vue'
 import { flushPromises } from '@vue/test-utils'
 
 import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest'
-import useAPI from '@/composables/useAPI'
 
 vi.mock('@/api/api.config', function () {
   return {
     useAPI: vi.fn().mockResolvedValue({ data: { results: [] } }), // TODO nuxt check this
   }
 })
-
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
 
 const mockSearch = vi
   .spyOn((TagResults as any).methods, 'launchSearch')
@@ -38,9 +28,7 @@ describe('TagResults', () => {
   let defaultParams
 
   beforeEach(() => {
-    defaultParams = {
-      i18n,
-    }
+    defaultParams = {}
   })
 
   it('should render TagResults component', async () => {

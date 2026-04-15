@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
-import { ref } from 'vue'
+
 const props = withDefaults(
   defineProps<{
     label: string
@@ -13,17 +13,18 @@ const props = withDefaults(
   }
 )
 
-const isOpen = ref(props.isInitialyOpen)
+const { stateModal, toggleModal } = useModal(props.isInitialyOpen)
 </script>
+
 <template>
-  <div class="category-field" :class="{ 'is-toggleable': isToggleable, 'is-open': isOpen }">
-    <h4 class="field-label" @click.stop="isOpen = !isOpen">
+  <div class="category-field" :class="{ 'is-toggleable': isToggleable, 'is-open': stateModal }">
+    <h4 class="field-label" @click.stop="toggleModal">
       <span class="text">{{ label }}</span>
       <span v-if="isToggleable" class="toggle">
-        <IconImage :name="isOpen ? 'ChevronUp' : 'ChevronDown'" />
+        <IconImage :name="stateModal ? 'ChevronUp' : 'ChevronDown'" />
       </span>
     </h4>
-    <div v-show="!isToggleable || isOpen" class="field-content">
+    <div v-show="!isToggleable || stateModal" class="field-content">
       <slot />
     </div>
   </div>

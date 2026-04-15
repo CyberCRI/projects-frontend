@@ -1,8 +1,7 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import SwitchInput from '@/components/base/form/SwitchInput.vue'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
+import { describe, expect, it } from 'vitest'
 describe('SwitchInput.vue', () => {
   it('should render component', () => {
     const wrapper = lpiShallowMount(SwitchInput, {})

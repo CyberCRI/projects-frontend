@@ -53,6 +53,7 @@ import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useProjectsStore from '@/stores/useProjects.ts'
 import useUsersStore from '@/stores/useUsers.ts'
+import { textIsEmpty } from '@/functs/string'
 
 export default {
   name: 'ProjectEditDescriptionTab',
@@ -106,7 +107,7 @@ export default {
 
   computed: {
     descriptionIsNotEmpty() {
-      return this.project.description !== '<p></p>' && this.project.description !== ''
+      return !textIsEmpty(this.project.description)
     },
 
     projectSlug() {

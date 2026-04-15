@@ -192,6 +192,7 @@ import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useProjectsStore from '@/stores/useProjects.ts'
 import useUsersStore from '@/stores/useUsers.ts'
 import { deleteProject /*, duplicateProject*/ } from '@/api/projects.service'
+import { DEFAULT_ORGANIZATION_CODE } from '@/functs/constants'
 export default {
   name: 'ProjectSettingsTab',
 
@@ -324,7 +325,7 @@ export default {
           value: 'org',
           label: this.$t('common.org'),
           iconName: 'PeopleGroup',
-          condition: !organizationCodes.includes('DEFAULT'),
+          condition: !organizationCodes.includes(DEFAULT_ORGANIZATION_CODE),
         },
       ].filter((status) => status.condition)
     },

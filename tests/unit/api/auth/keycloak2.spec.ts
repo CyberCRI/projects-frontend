@@ -6,11 +6,10 @@ import type { Mock } from 'vitest'
 
 import pinia from '@/stores'
 import useUsersStore from '@/stores/useUsers'
-import useToasterStore from '@/stores/useToaster'
 import { flushPromises } from '@vue/test-utils'
 
 vi.mock('@/api/auth/keycloakUtils')
-let keycloak = useKeycloak()
+const keycloak = useKeycloak()
 
 vi.spyOn(keycloakUtils, 'getRefreshTokenInterval').mockReturnValue(10)
 
@@ -21,9 +20,6 @@ const localStorageGetItem = vi.spyOn(Storage.prototype, 'getItem')
 const localStorageRemoveItem = vi.spyOn(Storage.prototype, 'removeItem')
 
 describe.skip('Keycloak | codeVerifier', () => {
-  beforeEach(() => {
-    const usersStore = useUsersStore(pinia)
-  })
   afterEach(() => {
     localStorage.clear()
     localStorageSetItem.mockClear()
@@ -47,10 +43,6 @@ describe.skip('Keycloak | codeVerifier', () => {
 })
 
 describe.skip('Keycloak | appSecret', () => {
-  beforeEach(() => {
-    const usersStore = useUsersStore(pinia)
-  })
-
   afterEach(() => {
     localStorage.clear()
     localStorageSetItem.mockClear()
@@ -79,9 +71,6 @@ describe.skip('Keycloak | refreshTokenLoop', () => {
   let usersStore
   beforeEach(() => {
     usersStore = useUsersStore(pinia)
-  })
-  afterEach(() => {
-    // usersStore.$reset()
   })
   vi.spyOn(globalThis, 'setTimeout').mockImplementation(
     vi.fn(() => {

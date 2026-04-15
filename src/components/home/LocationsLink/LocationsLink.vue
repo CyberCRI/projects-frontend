@@ -9,12 +9,13 @@ const locationButtonHover = ref(false)
       :label="$t('home.check-locations')"
       secondary
       class="white-bg"
-      @click="$router.push({ name: 'map' })"
+      :to="{ name: 'map' }"
       @mouseover="locationButtonHover = true"
       @mouseout="locationButtonHover = false"
     />
   </div>
 </template>
+
 <style lang="scss" scoped>
 .locations-link {
   margin-top: $space-l;

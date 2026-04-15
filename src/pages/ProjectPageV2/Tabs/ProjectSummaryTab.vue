@@ -17,6 +17,7 @@
       <DescriptionRecap
         v-else-if="project?.$t?.description"
         class="unboxed"
+        :project="project"
         :description="project.$t.description"
       />
 
@@ -70,7 +71,6 @@
         :linked-projects="linkedProjects"
       />
 
-      <!-- reviews -->
       <ReviewRecap
         v-if="project && project.publication_status"
         class="unboxed"
@@ -106,147 +106,132 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import ProjectMemberSection from '@/components/group/ProjectMemberSection/ProjectMemberSection.vue'
+import { textIsEmpty } from '@/functs/string'
 import { isNotGroup } from '@/functs/users'
+import { AttachmentFileModel } from '@/models/attachment-file.model'
+import { AttachmentLinkModel } from '@/models/attachment-link.model'
+import { BlogEntryModel } from '@/models/blog-entry.model'
+import { CommentModel } from '@/models/comment.model'
+import { TranslatedGoal } from '@/models/goal.model'
+import { LocationModel } from '@/models/location.model'
+import { TranslatedProject } from '@/models/project.model'
+import { UserModel } from '@/models/user.model'
 
-export default {
-  name: 'ProjectSummaryTab',
+const projectLayoutToggleAddModal = inject<(name: string) => void>('projectLayoutToggleAddModal')
 
-  components: [ProjectMemberSection],
+const props = withDefaults(
+  defineProps<{
+    project?: TranslatedProject
+    comments?: CommentModel[]
+    locations?: LocationModel[]
+    fileResources?: AttachmentFileModel[]
+    linkResources?: AttachmentLinkModel[]
+    blogEntries?: BlogEntryModel[]
 
-  inject: {
-    projectLayoutToggleAddModal: {
-      from: 'projectLayoutToggleAddModal',
-    },
-  },
-
-  props: {
-    project: {
-      type: Object,
-      default: () => {},
-    },
-
-    comments: {
-      type: Array,
-      default: () => [],
-    },
-
-    locations: {
-      type: Array,
-      default: () => [],
-    },
-    fileResources: {
-      type: Array,
-      default: () => [],
-    },
-    linkResources: {
-      type: Array,
-      default: () => [],
-    },
-    blogEntries: {
-      type: Array,
-      default: () => [],
-    },
-    team: {
-      type: Object,
-      default: () => ({ owners: [], members: [], reviewers: [] }),
-    },
-    reviews: {
-      type: Array,
-      default: () => [],
-    },
-    linkedProjects: {
-      type: Array,
-      default: () => [],
-    },
-    goals: {
-      type: Array,
-      default: () => [],
-    },
-    sdgs: {
-      type: Array,
-      default: () => [],
-    },
-  },
-
-  emits: ['reload-reviews', 'reload-project'],
-
-  setup() {
-    useScrollToTab()
-    const { canEditProject } = usePermissions()
-    const { translateUser, translateGroup } = useAutoTranslate()
-    return { canEditProject, translateUser, translateGroup }
-  },
-
-  data() {
-    return {
-      editDescriptionModalActive: false,
-      profileDrawer: {
-        isOpened: false,
-        user_id: null,
-      },
+    reviews?: any[]
+    linkedProjects?: TranslatedProject[]
+    goals?: TranslatedGoal[]
+    sdgs?: number[]
+    team?: {
+      owners: UserModel[]
+      members: UserModel[]
+      reviewers: UserModel[]
+      owner_groups: UserModel[]
+      reviewer_groups: UserModel[]
+      member_groups: UserModel[]
     }
-  },
+  }>(),
+  {
+    project: null,
+    comments: () => [],
+    locations: () => [],
+    fileResources: () => [],
+    linkResources: () => [],
+    blogEntries: () => [],
+    reviews: () => [],
+    linkedProjects: () => [],
+    goals: () => [],
+    team: () => ({
+      owners: [],
+      members: [],
+      reviewers: [],
+      owner_groups: [],
+      reviewer_groups: [],
+      member_groups: [],
+    }),
+    sdgs: () => [],
+  }
+)
 
-  computed: {
-    filteredGoals() {
-      return (
-        this.goals?.filter(
-          (goal) => goal.status && (goal.status === 'complete' || goal.status === 'ongoing')
-        ) || []
-      )
-    },
+defineEmits<{
+  'reload-reviews': []
+  'reload-project': []
+}>()
 
-    mergedTeam() {
-      return [
-        ...(this.team.owners || []).map((o) => ({
-          ...unref(this.translateUser(o)),
-          role: 'owners',
-        })),
-        ...(this.team.reviewers || []).map((o) => ({
-          ...unref(this.translateUser(o)),
-          role: 'reviewers',
-        })),
-        ...(this.team.members || []).map((o) => ({
-          ...unref(this.translateUser(o)),
-          role: 'members',
-        })),
-        ...(this.team.owner_groups || []).map((o) => ({
-          ...unref(this.translateGroup(o)),
-          role: 'owner_groups',
-        })),
-        ...(this.team.reviewer_groups || []).map((o) => ({
-          ...unref(this.translateGroup(o)),
-          role: 'reviewer_groups',
-        })),
-        ...(this.team.member_groups || []).map((o) => ({
-          ...unref(this.translateGroup(o)),
-          role: 'member_groups',
-        })),
-      ]
-    },
+const router = useRouter()
 
-    showDescriptionPlaceHolder() {
-      return this.project.description.length === 0 || this.project.description === '<p></p>'
-    },
-  },
-  methods: {
-    async openProfileDrawer(user) {
-      if (isNotGroup(user)) {
-        this.profileDrawer.user_id = user.id
-        this.profileDrawer.isOpened = true
-      } else {
-        // TODO why user.id for group ????
-        this.$router.push({ name: 'Group', params: { groupIdOrSlug: user.id } })
-      }
-    },
+useScrollToTab()
+const { canEditProject } = usePermissions()
+const { translateUser, translateGroup } = useAutoTranslate()
+const profileDrawer = ref({
+  isOpened: false,
+  user_id: null,
+})
 
-    closeProfileDrawer() {
-      this.profileDrawer.isOpened = false
-      this.profileDrawer.user_id = null
-    },
-  },
+const filteredGoals = computed(() => {
+  return (
+    props.goals?.filter(
+      (goal) => goal.status && (goal.status === 'complete' || goal.status === 'ongoing')
+    ) || []
+  )
+})
+
+const mergedTeam = computed(() => {
+  return [
+    ...(props.team.owners || []).map((o) => ({
+      ...unref(translateUser(o)),
+      role: 'owners',
+    })),
+    ...(props.team.reviewers || []).map((o) => ({
+      ...unref(translateUser(o)),
+      role: 'reviewers',
+    })),
+    ...(props.team.members || []).map((o) => ({
+      ...unref(translateUser(o)),
+      role: 'members',
+    })),
+    ...(props.team.owner_groups || []).map((o) => ({
+      ...unref(translateGroup(o)),
+      role: 'owner_groups',
+    })),
+    ...(props.team.reviewer_groups || []).map((o) => ({
+      ...unref(translateGroup(o)),
+      role: 'reviewer_groups',
+    })),
+    ...(props.team.member_groups || []).map((o) => ({
+      ...unref(translateGroup(o)),
+      role: 'member_groups',
+    })),
+  ]
+})
+
+const showDescriptionPlaceHolder = computed(() => textIsEmpty(props.project.description))
+
+const openProfileDrawer = async (user) => {
+  if (isNotGroup(user)) {
+    profileDrawer.value.user_id = user.id
+    profileDrawer.value.isOpened = true
+  } else {
+    // TODO why user.id for group ????
+    router.push({ name: 'Group', params: { groupIdOrSlug: user.id } })
+  }
+}
+
+const closeProfileDrawer = () => {
+  profileDrawer.value.isOpened = false
+  profileDrawer.value.user_id = null
 }
 </script>
 

@@ -7,11 +7,12 @@
 
 <script setup lang="ts">
 import { IconImageChoice } from '@/functs/IconImage'
+import { RouteLocationRaw } from 'vue-router'
 
 const props = withDefaults(
   defineProps<{
     label?: string
-    to?: string | object
+    to?: RouteLocationRaw
     btnIcon?: IconImageChoice | 'LoaderSimple'
     noTextTransform?: boolean
   }>(),

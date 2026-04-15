@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
 import useUsersStore from '@/stores/useUsers'
-import useSkillTexts from '@/composables/useSkillTexts.js'
+import useSkillTexts from '@/composables/useSkillTexts'
 import { TranslatedUserModel } from '@/models/user.model'
 import { getUserMentorship } from '@/api/v2/mentoring.service'
 

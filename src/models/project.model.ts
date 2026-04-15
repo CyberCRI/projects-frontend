@@ -10,7 +10,7 @@ import { AttachmentFileOutput } from '@/models/attachment-file.model'
 import { ImageModel, ImageOutput } from '@/models/image.model'
 import { CommentOutput } from '@/models/comment.model'
 import { BlogEntryOutput } from '@/models/blog-entry.model'
-import { OrganizationOutput } from '@/models/organization.model'
+import { OrganizationModel, OrganizationOutput } from '@/models/organization.model'
 import { ReviewModel } from '@/models/review.model'
 import { AnnouncementModel, AnnouncementOutput } from '@/models/announcement.model'
 import { FollowOutput } from '@/models/follow.model'
@@ -30,6 +30,7 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
   is_locked: boolean
   is_shareable: boolean
   purpose: string
+  organizations: OrganizationModel[]
   language: LanguageType
   locations: LocationOutput[]
   publication_status: ProjectPublicationStatusType
@@ -55,7 +56,7 @@ export type TranslatedProject = Translated<ProjectModel, 'title' | 'description'
 export type ProjectCreateInput = Required<ProjectModel> & {
   project_categories_ids: number
   tags?: number[]
-  sdgs_ids?: number[]
+  sdgs?: number[]
 }
 
 export type ProjectPutInput = Required<ProjectCreateInput>

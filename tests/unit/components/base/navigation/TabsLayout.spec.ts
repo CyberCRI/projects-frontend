@@ -2,11 +2,9 @@ import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
 import { defineAsyncComponent } from 'vue'
 import MockComponent from '@/../tests/helpers/MockComponent.vue'
-import VueI18n from 'vue-i18n'
-import english from '@/i18n/locales/en.json'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import useAPI from '@/composables/useAPI'
+import { describe, expect, it, vi } from 'vitest'
+import { mockNuxtImport } from '@nuxt/test-utils/runtime'
 
 // fix unhnadled rejection due to invalid url
 vi.mock('@/composables/useAPI', () => {
@@ -14,21 +12,15 @@ vi.mock('@/composables/useAPI', () => {
     default: vi.fn().mockResolvedValue({ data: { results: [] } }), // TODO nuxt check this
   }
 })
+
 const mockRouter = {
   push: vi.fn(),
 }
-
 const mockRoute = {
   path: '/test1',
 }
-
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
+mockNuxtImport('useRouter', () => () => mockRouter)
+mockNuxtImport('useRoute', () => () => mockRoute)
 
 const factory = (props?) => {
   return lpiShallowMount(TabsLayout, {
@@ -53,7 +45,6 @@ const factory = (props?) => {
       ],
       ...props,
     },
-    i18n,
     global: {
       mocks: {
         $router: mockRouter,

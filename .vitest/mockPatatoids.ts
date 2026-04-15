@@ -1,4 +1,4 @@
-import { DEFAULT_PATATOID } from '../src/composables/usePatatoids.ts'
+import { usePatatoids } from '../src/composables/usePatatoids.ts'
 import { beforeAll } from 'vitest'
 
 beforeAll(async () => {
@@ -7,7 +7,7 @@ beforeAll(async () => {
   if (isNuxtTestEnv) {
     const { registerEndpoint } = await import('@nuxt/test-utils/runtime')
     // mock result fetch blob for patatoid (no error during rendering in tests)
-    DEFAULT_PATATOID.forEach((path) => {
+    usePatatoids().forEach((path) => {
       registerEndpoint(path, () => [])
     })
   }

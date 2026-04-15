@@ -70,7 +70,6 @@ onMediaChange(
   '(min-width: 1200px)',
   (matches) => {
     const el = container.value.$el as HTMLElement
-    console.log(el)
     if (matches && el.parentElement.childElementCount !== 1) {
       mode.value = 'card'
     } else {

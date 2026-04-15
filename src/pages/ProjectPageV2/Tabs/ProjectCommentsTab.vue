@@ -27,41 +27,30 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import CommentItem from '@/components/project/comment/CommentItem.vue'
 import NoItem from '@/components/project/comment/NoItem.vue'
 import MakeComment from '@/components/project/comment/MakeComment.vue'
+import { TranslatedProject } from '@/models/project.model'
+import { CommentModel } from '@/models/comment.model'
 
-export default {
-  name: 'ProjectCommentsTab',
+defineProps<{
+  project: TranslatedProject
+  comments: CommentModel[]
+}>()
 
-  components: { CommentItem, NoItem, MakeComment },
+const projectLayoutToggleAddModal = inject<(string, CommentModel) => void>(
+  'projectLayoutToggleAddModal'
+)
 
-  inject: ['projectLayoutToggleAddModal'],
+defineEmits<{
+  'reload-comments': []
+}>()
 
-  props: {
-    project: {
-      type: Object,
-      default: () => {},
-    },
-    comments: {
-      type: Array,
-      default: () => [],
-    },
-  },
+useScrollToTab()
 
-  emits: ['reload-comments'],
-
-  setup() {
-    useScrollToTab()
-    return {}
-  },
-
-  methods: {
-    openCommentModal(comment) {
-      this.projectLayoutToggleAddModal('comment', comment)
-    },
-  },
+const openCommentModal = (comment) => {
+  projectLayoutToggleAddModal('comment', comment)
 }
 </script>
 

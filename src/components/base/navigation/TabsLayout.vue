@@ -1,5 +1,5 @@
 <template>
-  <div class="tabs">
+  <div ref="container" class="tabs">
     <div
       v-click-outside="() => (showTabList = false)"
       :class="{ 'align-left': alignLeft, 'align-right': alignRight, border }"
@@ -54,7 +54,7 @@
             </div>
             <LinkButton
               v-if="isMobile"
-              :label="showMoreButtonLabel"
+              :label="t('common.see-more')"
               class="more-btn"
               btn-icon="DotsHorizontal"
               data-test="extra-tabs-button-mobile"
@@ -66,7 +66,7 @@
       <div class="btn-ctn">
         <LinkButton
           v-if="!layouting && !isMobile && seeMoreTabs.length > 0"
-          :label="showMoreButtonLabel"
+          :label="t('common.see-more')"
           class="more-btn"
           btn-icon="DotsHorizontal"
           data-test="extra-tabs-button"
@@ -100,215 +100,162 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
-import useViewportWidth from '@/composables/useViewportWidth.ts'
+import useViewportWidth from '@/composables/useViewportWidth'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import { debounce } from 'es-toolkit'
 
-export default {
-  name: 'TabsLayout',
+const props = withDefaults(
+  defineProps<{
+    tabs: any[]
+    alignLeft?: boolean
+    alignRight?: boolean
+    border?: boolean
+    routerView?: boolean
+  }>(),
+  {
+    alignLeft: false,
+    alignRight: false,
+    border: true,
+    routerView: false,
+  }
+)
 
-  components: { LinkButton, IconImage },
+defineEmits<{
+  close: []
+}>()
+const { isMobile } = useViewportWidth()
+const { t } = useNuxtI18n()
+const router = useRouter()
+const route = useRoute()
 
-  provide() {
-    return {
-      tabsLayoutSelectTab: this.selectTab,
-    }
-  },
+const current = ref(0)
+const showTabList = ref(false)
+const displayedTabs = ref([])
+const seeMoreTabs = ref([])
+const layouting = ref(false)
 
-  props: {
-    tabs: {
-      type: Array,
-      required: true,
-    },
+const currentViewIndex = computed(() => {
+  return props.tabs.findIndex((tab) =>
+    tab.view?.name
+      ? route.matched.some((r) => r.name === tab.view.name)
+      : route.path.indexOf(tab.view) === 0
+  )
+})
 
-    alignLeft: {
-      type: Boolean,
-      default: false,
-    },
+const currentTab = computed(() => {
+  return props.tabs[props.routerView ? currentViewIndex.value : current.value] || {}
+})
 
-    alignRight: {
-      type: Boolean,
-      default: false,
-    },
+const noTopLeftRadius = computed(() => {
+  return current.value === 0 && !props.alignRight
+})
 
-    border: {
-      type: Boolean,
-      default: true,
-    },
+const noTopRightRadius = computed(() => {
+  return current.value === props.tabs.length - 1 && !props.alignLeft
+})
 
-    routerView: {
-      type: Boolean,
-      default: false,
-    },
-  },
+const usedTab = computed(() => {
+  return isMobile.value ? props.tabs : seeMoreTabs.value
+})
 
-  emits: ['close'],
+const containerRef = useTemplateRef('container')
+const layoutTabs = debounce(
+  // debounced to not hammer the browser on each resize
+  async () => {
+    if (!import.meta.client) return
 
-  setup() {
-    const { isMobile } = useViewportWidth()
-    return { isMobile }
-  },
+    /* for each tab, we check if it fit in the wrapper
+     * if it doesn't, we hide it and add it to the more tabs
+     */
+    const tabsNode = containerRef.value?.querySelector('.tabs-slider')
+    if (!tabsNode) return
 
-  data() {
-    return {
-      current: 0,
-      firstVisibleTabIndex: null,
-      lastVisibleTabIndex: null,
-      showTabList: false,
-      displayedTabs: [],
-      seeMoreTabs: [],
-      layouting: false,
-    }
-  },
+    // reset the arrays
+    displayedTabs.value.splice(0)
+    seeMoreTabs.value.splice(0)
 
-  computed: {
-    currentTab() {
-      return this.tabs[this.routerView ? this.currentViewIndex : this.current] || []
-    },
-
-    currentViewIndex() {
-      return this.tabs.findIndex((tab) =>
-        tab.view?.name
-          ? this.$route.matched.some((r) => r.name === tab.view?.name)
-          : this.$route.path.indexOf(tab.view) === 0
-      )
-    },
-
-    noTopLeftRadius() {
-      return this.current === 0 && !this.alignRight
-    },
-
-    noTopRightRadius() {
-      return this.current === this.tabs.length - 1 && !this.alignLeft
-    },
-
-    showMoreButtonLabel() {
-      return `${this.$t('common.see-more')}`
-    },
-
-    usedTab() {
-      return this.isMobile ? this.tabs : this.seeMoreTabs
-    },
-  },
-
-  watch: {
-    tabs: {
-      handler: 'layoutTabs',
-      deep: true,
-      immediate: true,
-    },
-  },
-  mounted() {
-    window.addEventListener('resize', this.layoutTabs)
-  },
-
-  unmounted() {
-    window.removeEventListener('resize', this.layoutTabs)
-  },
-
-  methods: {
-    layoutTabs: debounce(
-      // debounced to not hammer the browser on each resize
-      async function () {
-        // dirty fix for unit test async error (code is executed after dom was suppressed)
-        try {
-          if (!document) return
-        } catch {
-          return
+    // for code factorization
+    const iterate = async (tabs, displayed, otherTab) => {
+      const wrapperRight = tabsNode.getBoundingClientRect()?.right
+      let skipOthers = false
+      for (let i = 0; i < tabs.length; i++) {
+        // add the tag to the displayed tags to compute its size
+        displayed.push(tabs[i])
+        await nextTick()
+        // get the last badge and check if it fits
+        const tabsHtmlElement = containerRef.value.querySelectorAll('.tab')
+        if (skipOthers) {
+          displayed.pop()
+          otherTab.push({ ...tabs[i], index: i })
+        } else if (tabsHtmlElement.length) {
+          const lastTab = tabsHtmlElement[tabsHtmlElement.length - 1]
+          const lastTabRight = lastTab.getBoundingClientRect().right
+          if (lastTabRight > wrapperRight) {
+            // if it doesn't, we hide it and add it to the more tags
+            displayed.pop()
+            otherTab.push({ ...tabs[i], index: i })
+            // remember we started to skip tabs
+            // so next are also removed even if they fit
+            // and we keep tab order
+            skipOthers = true
+          }
         }
-
-        /* for each tab, we check if it fit in the wrapper
-         * if it doesn't, we hide it and add it to the more tabs
-         */
-        const tabsNode = this.$el.querySelector('.tabs-slider')
-
-        if (tabsNode) {
-          // reset the arrays
-          this.displayedTabs.splice(0)
-          this.seeMoreTabs.splice(0)
-
-          // for code factorization
-          const iterate = async (tabs, displayed, otherTab) => {
-            const wrapperRight = tabsNode.getBoundingClientRect()?.right
-            let skipOthers = false
-            for (let i = 0; i < tabs.length; i++) {
-              // add the tag to the displayed tags to compute its size
-              displayed.push(tabs[i])
-              await this.$nextTick()
-              // get the last badge and check if it fits
-              const tabsHtmlElement = this.$el.querySelectorAll('.tab')
-              if (skipOthers) {
-                displayed.pop()
-                otherTab.push({ ...tabs[i], index: i })
-              } else if (tabsHtmlElement.length) {
-                const lastTab = tabsHtmlElement[tabsHtmlElement.length - 1]
-                const lastTabRight = lastTab.getBoundingClientRect().right
-                if (lastTabRight > wrapperRight) {
-                  // if it doesn't, we hide it and add it to the more tags
-                  displayed.pop()
-                  otherTab.push({ ...tabs[i], index: i })
-                  // remember we started to skip tabs
-                  // so next are also removed even if they fit
-                  // and we keep tab order
-                  skipOthers = true
-                }
-              }
-            }
-          }
-
-          const postIterate = async (tabs, displayed, otherTab) => {
-            const wrapperRight = tabsNode.getBoundingClientRect()?.right
-            // iterate in reverse order until all remaining tabs fit
-            for (let i = displayed.length - 1; i > 0; i--) {
-              await this.$nextTick()
-              // get the last badge and check if it fits
-              const tabsHtmlElement = this.$el.querySelectorAll('.tab')
-              if (tabsHtmlElement.length) {
-                const lastTab = tabsHtmlElement[tabsHtmlElement.length - 1]
-                const lastTabRight = lastTab.getBoundingClientRect().right
-                if (lastTabRight > wrapperRight) {
-                  // if it doesn't, we hide it and add it to the more tags
-                  displayed.pop()
-                  otherTab.unshift({ ...tabs[i], index: i })
-                } else {
-                  break // at this point all remaining tabs fit
-                }
-              }
-            }
-          }
-
-          // do the actual job
-          this.layouting = true
-          await this.$nextTick()
-          await iterate(this.tabs, this.displayedTabs, this.seeMoreTabs)
-          this.layouting = false
-          if (this.seeMoreTabs.length) {
-            // now available space might be shorter with the see more button displayed so re-iterate
-            await this.$nextTick()
-            await postIterate(this.tabs, this.displayedTabs, this.seeMoreTabs)
-          }
-        } // end of if (tabs.length)
-      },
-      42,
-      { leading: false, trailing: true }
-    ),
-
-    selectTab(index) {
-      this.current = index
-      if (this.routerView) {
-        this.$router.push(this.tabs[this.current].view)
       }
+    }
 
-      this.closeTabList()
-    },
+    const postIterate = async (tabs, displayed, otherTab) => {
+      const wrapperRight = tabsNode.getBoundingClientRect()?.right
+      // iterate in reverse order until all remaining tabs fit
+      for (let i = displayed.length - 1; i > 0; i--) {
+        await nextTick()
+        // get the last badge and check if it fits
+        const tabsHtmlElement = containerRef.value.querySelectorAll('.tab')
+        if (tabsHtmlElement.length) {
+          const lastTab = tabsHtmlElement[tabsHtmlElement.length - 1]
+          const lastTabRight = lastTab.getBoundingClientRect().right
+          if (lastTabRight > wrapperRight) {
+            // if it doesn't, we hide it and add it to the more tags
+            displayed.pop()
+            otherTab.unshift({ ...tabs[i], index: i })
+          } else {
+            break // at this point all remaining tabs fit
+          }
+        }
+      }
+    }
 
-    closeTabList() {
-      this.showTabList = false
-    },
+    // do the actual job
+    layouting.value = true
+    await nextTick()
+    await iterate(props.tabs, displayedTabs.value, seeMoreTabs.value)
+    layouting.value = false
+    if (seeMoreTabs.value.length) {
+      // now available space might be shorter with the see more button displayed so re-iterate
+      await nextTick()
+      await postIterate(props.tabs, displayedTabs.value, seeMoreTabs.value)
+    }
   },
+  42
+)
+
+const closeTabList = () => {
+  showTabList.value = false
 }
+
+const selectTab = (index) => {
+  current.value = index
+  if (props.routerView) {
+    router.push(props.tabs[current.value].view)
+  }
+
+  closeTabList()
+}
+
+watch(() => props.tabs, layoutTabs, { deep: true, immediate: true })
+onResize(layoutTabs)
+provide('tabsLayoutSelectTab', selectTab)
 </script>
 
 <style lang="scss" scoped>

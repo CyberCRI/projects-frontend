@@ -18,12 +18,12 @@ export async function patchOrganization(
   }) //.data.value
 }
 
-export async function getOrganizationByCode(code: string) {
-  return await useAPI(`organization/${code}/`, {}) //.data.value
+export async function getOrganizationByCode(code: string, config = {}) {
+  return await useAPI<OrganizationModel>(`organization/${code}/`, config)
 }
 
-export async function getOrganizations() {
-  return await useAPI(`organization/`, {}) //.data.value
+export async function getOrganizations(config = {}) {
+  return await useAPI<PaginationResult<OrganizationModel>>(`organization/`, config)
 }
 
 export async function postOrganisationBanner({
@@ -50,7 +50,7 @@ export async function postOrganisationLogo({
   body,
 }: {
   code: string
-  body: ImageOrganizationInput
+  body: ImageOrganizationInput | FormData
 }) {
   return await useAPI(`organization/${code}/logo/`, { body, method: 'POST' }) //.data.value
 }

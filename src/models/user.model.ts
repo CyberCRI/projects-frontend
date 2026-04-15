@@ -5,6 +5,19 @@
 import { ResearcherLight } from '@/interfaces/researcher'
 import { TagModel } from './tag.model'
 import { Translated } from '@/interfaces/translated'
+import { ImageModel } from '@/models/image.model'
+import { PeopleGroupModel, TranslatedPeopleGroupModel } from '@/models/invitation.model'
+
+export type PrivacyValue = 'hide' | 'org' | 'pub'
+
+export type PrivacySettings = {
+  publication_status: PrivacyValue
+  profile_picture: PrivacyValue
+  skills: PrivacyValue
+  mobile_phone: PrivacyValue
+  email: PrivacyValue
+  socials: PrivacyValue
+}
 
 export interface UserModel {
   id: number
@@ -12,18 +25,19 @@ export interface UserModel {
     firstname: string
     lastname: string
   }
+  pronouns?: string
   slug: string
   email: string
   roles: string[]
   orgs: string[]
   given_name: string
   family_name: string
-  profile_picture?: object
+  profile_picture?: ImageModel
   permissions: string[]
   description?: string
   short_description?: string
   job?: string
-  people_groups?: object[] // TODO: define this type
+  people_groups?: PeopleGroupModel[] // TODO: define this type
   skills?: UserSkillModel[]
   notifications?: number
   researcher?: ResearcherLight
@@ -34,6 +48,8 @@ export interface UserModel {
   signed_terms_and_conditions?: {
     [key: string]: { version: number | null; date: string | null }
   } | null
+  privacy_settings?: PrivacySettings
+  sdgs?: number[]
 }
 
 export interface UserFromJWTModel {
@@ -87,8 +103,6 @@ export interface UserPatchModel {
   } | null
 }
 
-export type PrivacyValue = 'hide' | 'org' | 'pub'
-
 export interface UserPrivacyPatchModel {
   profile_picture?: PrivacyValue
   profile?: PrivacyValue
@@ -116,4 +130,9 @@ export interface UserSkillModel {
   needs_mentor: boolean
 }
 
-export type TranslatedUserModel = Translated<UserModel, 'description' | 'short_description' | 'job'>
+export type TranslatedUserModel = Translated<
+  Omit<UserModel, 'people_groups'>,
+  'description' | 'short_description' | 'job'
+> & {
+  people_groups: TranslatedPeopleGroupModel[]
+}

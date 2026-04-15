@@ -1,23 +1,13 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
-import english from '@/i18n/locales/en.json'
-import waitForExpect from 'wait-for-expect'
 import DefaultTagsAdmin from '@/components/admin/DefaultTagsAdmin.vue'
 
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 
-import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
+import { OrganizationOutput } from '@/models/organization.model'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
-import flushPromises from 'flush-promises'
-
-import {
-  getAllOrgClassifications,
-  getOrgClassificationTags,
-} from '@/api/tag-classification.service'
-
-import { debounce, throttle, capitalize } from 'es-toolkit'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { flushPromises } from '@vue/test-utils'
 
 vi.mock('es-toolkit', () => ({
   debounce: vi.fn((fn) => fn),
@@ -41,6 +31,12 @@ vi.mock('@/api/tag-classification.service', () => ({
   }),
   getAllOrgClassifications: vi.fn().mockResolvedValue({
     count: 3,
+    current_page: 1,
+    total_page: 1,
+    previous: null,
+    next: null,
+    first: null,
+    last: null,
     results: [
       {
         id: 123,
@@ -67,22 +63,6 @@ vi.mock('@/api/tag-classification.service', () => ({
   }),
 }))
 
-const classification = {
-  id: 123,
-  slug: 'for-project',
-  type: 'Custom',
-  is_enabled_for_projects: true,
-  is_enabled_for_skills: false,
-}
-
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
-
 describe('DefaultTagsAdmin', () => {
   let wrapper
   let defaultParams
@@ -107,7 +87,6 @@ describe('DefaultTagsAdmin', () => {
     } as unknown as OrganizationOutput
     defaultParams = {
       props: {},
-      i18n,
     }
   })
 

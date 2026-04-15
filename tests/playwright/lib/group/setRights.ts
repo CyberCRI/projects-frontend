@@ -1,5 +1,4 @@
 import { Page } from '@playwright/test'
-import { delay } from '../index'
 import { LogLevel, Logger } from '../../logger'
 import { usersDict as users } from '../../variables'
 

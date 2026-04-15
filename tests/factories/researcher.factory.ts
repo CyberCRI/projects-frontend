@@ -30,7 +30,7 @@ export const DocumentFactory = createFactory<Document>((faker) => ({
   id: faker.datatype.number(),
   title: faker.lorem.slug(10),
   description: faker.lorem.text(10),
-  document_type: 'journalArticle',
+  document_type: 'JournalArticle',
   contributors: [ResearcherFactory.generate({ user: null }), ResearcherFactory.generate()],
   identifiers: CHOICES.map((harvester) => IdentifierFactory.generate({ harvester })),
   publication_date: faker.date.past(),

@@ -10,17 +10,9 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import DefaultTagsAdmin from '@/components/admin/DefaultTagsAdmin.vue'
 import ClassificationAdmin from '@/components/admin/ClassificationAdmin.vue'
-export default {
-  name: 'TagsTab',
-
-  components: {
-    ClassificationAdmin,
-    DefaultTagsAdmin,
-  },
-}
 </script>
 
 <style lang="scss" scoped>

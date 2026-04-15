@@ -1,8 +1,7 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 describe('LpiButton', () => {
   let wrapper
   let defaultParams

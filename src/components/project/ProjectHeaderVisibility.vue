@@ -1,7 +1,7 @@
 <template>
   <div class="visibility-ctn">
     <SkeletonComponent v-if="loading" class="skeleton-block" height="24px" />
-    <div v-if="!loading && project && project.publication_status" class="visibility">
+    <div v-else-if="project && project.publication_status" class="visibility">
       <InfoSentence
         :data="visibility"
         :no-centered="true"
@@ -14,35 +14,36 @@
     </div>
   </div>
 </template>
-<script setup>
-const props = defineProps({
-  project: {
-    type: Object,
-    default: () => ({}),
-  },
-  loading: {
-    type: Boolean,
-    default: true,
-  },
-})
 
-function visibilityIcon() {
-  const map = {
+<script setup lang="ts">
+import { IconImageChoice } from '@/functs/IconImage'
+import { ProjectModel } from '@/models/project.model'
+
+const props = withDefaults(
+  defineProps<{
+    project?: ProjectModel
+    loading?: boolean
+  }>(),
+  { project: null, loading: true }
+)
+
+const visibilityIcon = () => {
+  const map: Record<string, IconImageChoice> = {
     public: 'Eye',
     private: 'EyeSlash',
     org: 'PeopleGroup',
   }
-  return map[props.project.publication_status] || ''
+  return map[props.project.publication_status] || map.private
 }
 
-const visibility = computed(() => {
-  let ret = ''
-  if (props.project.publication_status) {
-    let icon = visibilityIcon()
-    let title = 'header.' + props.project.publication_status
-    ret = { icon, title }
+const visibility = computed<{ icon: IconImageChoice; title: string }>(() => {
+  if (!props.project || !props.project.publication_status) {
+    return { icon: 'EyeSlash', title: '' }
   }
-  return ret
+  return {
+    icon: visibilityIcon(),
+    title: `header.${props.project.publication_status}`,
+  }
 })
 </script>
 <style lang="scss" scoped>

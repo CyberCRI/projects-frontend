@@ -31,6 +31,7 @@ import { helpers, maxLength, minLength, required } from '@vuelidate/validators'
 import useToasterStore from '@/stores/useToaster.ts'
 import useProjectsStore from '@/stores/useProjects.ts'
 import { imageSizesFormData } from '@/functs/imageSizesUtils.ts'
+
 export default {
   name: 'ProjectEditGeneralInfos',
 
@@ -54,62 +55,60 @@ export default {
       tags: [],
     })
     const { startEditWatcher, stopEditWatcher } = useEditWatcher(form)
+
+    const { t } = useNuxtI18n()
+
+    const rules = computed(() => {
+      /* Custom 'secret' rule: 3 spaces */
+      const rules =
+        form.value.purpose === '   '
+          ? {
+              minLengthValue: helpers.withMessage(
+                t('project.form.purpose-errors.min'),
+                minLength(3)
+              ),
+              maxLengthValue: helpers.withMessage(
+                t('project.form.purpose-errors.max'),
+                maxLength(180)
+              ),
+            }
+          : {
+              required: helpers.withMessage(t('project.form.purpose-errors.required'), required),
+              minLengthValue: helpers.withMessage(
+                t('project.form.purpose-errors.min'),
+                minLength(3)
+              ),
+              maxLengthValue: helpers.withMessage(
+                t('project.form.purpose-errors.max'),
+                maxLength(180)
+              ),
+            }
+      return {
+        form: {
+          title: {
+            required: helpers.withMessage(t('project.form.title-errors.required'), required),
+            maxLengthValue: helpers.withMessage(t('project.form.title-errors.max'), maxLength(120)),
+          },
+          purpose: rules,
+        },
+      }
+    })
+
+    const v$ = useValidate(rules, form)
+
     return {
       toaster,
       projectsStore,
       form,
       startEditWatcher,
       stopEditWatcher,
+      v$,
     }
   },
 
   data() {
     return {
-      v$: useValidate(),
-
       isSaving: false,
-    }
-  },
-
-  validations() {
-    /* Custom 'secret' rule: 3 spaces */
-    const rules =
-      this.form.purpose === '   '
-        ? {
-            minLengthValue: helpers.withMessage(
-              this.$t('project.form.purpose-errors.min'),
-              minLength(3)
-            ),
-            maxLengthValue: helpers.withMessage(
-              this.$t('project.form.purpose-errors.max'),
-              maxLength(180)
-            ),
-          }
-        : {
-            required: helpers.withMessage(
-              this.$t('project.form.purpose-errors.required'),
-              required
-            ),
-            minLengthValue: helpers.withMessage(
-              this.$t('project.form.purpose-errors.min'),
-              minLength(3)
-            ),
-            maxLengthValue: helpers.withMessage(
-              this.$t('project.form.purpose-errors.max'),
-              maxLength(180)
-            ),
-          }
-    return {
-      form: {
-        title: {
-          required: helpers.withMessage(this.$t('project.form.title-errors.required'), required),
-          maxLengthValue: helpers.withMessage(
-            this.$t('project.form.title-errors.max'),
-            maxLength(120)
-          ),
-        },
-        purpose: rules,
-      },
     }
   },
 

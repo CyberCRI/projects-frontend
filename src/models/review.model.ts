@@ -14,6 +14,7 @@ export interface ReviewModel extends BaseModel {
     given_name: string
     family_name: string
   }
+  created_at: string
 }
 
 export type ReviewModelInput = Required<ReviewModel> & {

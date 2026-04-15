@@ -1,12 +1,12 @@
-<script setup>
-import utils from '@/functs/functions.ts'
-import useProjectData from './useProjectData.ts'
-import useProjectSocket from './useProjectSocket.ts'
-import useProjectModals from './useProjectModals.ts'
-import useProjectNav from './useProjectNav.ts'
+<script setup lang="ts">
+import utils from '@/functs/functions'
+import useProjectData from './useProjectData'
+import useProjectSocket from './useProjectSocket'
+import useProjectModals from './useProjectModals'
+import useProjectNav from './useProjectNav'
 import { getProject } from '@/api/projects.service'
-import useToasterStore from '@/stores/useToaster.ts'
-import useGlobalsStore from '@/stores/useGlobals.ts'
+import useToasterStore from '@/stores/useToaster'
+import useGlobalsStore from '@/stores/useGlobals'
 
 const route = useRoute()
 const router = useRouter()
@@ -44,7 +44,7 @@ const {
   linkResources,
   goals,
   team,
-  blogEntries,
+  // blogEntries,
   mergedTeam,
   projectTabs,
   currentTab,
@@ -65,7 +65,7 @@ const {
   getProjectLocations,
   toggleEditing,
   duplicateProject,
-} = useProjectData({ toggleAddModal })
+} = useProjectData()
 
 const { canEditProject } = usePermissions()
 
@@ -133,7 +133,7 @@ const setLpiHead = (_projectData) => {
 if (import.meta.server) {
   try {
     // project might need access right
-    const projectData = await getProject(route.params.slugOrId, true)
+    const projectData = await getProject(route.params.slugOrId.toString(), true)
     setLpiHead(projectData)
   } catch (err) {
     // DGAF
@@ -148,7 +148,7 @@ onMounted(async () => {
     try {
       loading.value = true
       await setProject(route.params.slugOrId)
-      connectToSocket(project.id)
+      connectToSocket()
       loading.value = false
       utils.resetScroll()
     } catch (err) {
@@ -172,7 +172,7 @@ onBeforeRouteUpdate((to, from, next) => {
 if (import.meta.client) {
   watchEffect(() => {
     if (route.hash == '#tab') {
-      nextTick(() => window?.scrollTo({ top: 0, behavior: 'smooth' }))
+      // nextTick(() => window?.scrollTo({ top: 0, behavior: 'smooth' }))
     }
   })
 }
@@ -190,7 +190,7 @@ const getAsPDF = async () => {
     project: project.value,
     team: team.value,
     goals: goals.value,
-    blogEntries: blogEntries.value,
+    // blogEntries: blogEntries.value,
     fileResources: fileResources.value,
     linkResources: linkResources.value,
     linkedProjects: linkedProjects.value,

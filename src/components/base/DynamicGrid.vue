@@ -3,69 +3,65 @@
     <slot />
   </div>
 </template>
-<script>
+
+<script setup lang="ts">
 import { throttle } from 'es-toolkit'
-export default {
-  name: 'DynamicGrid',
+import { StyleValue } from 'vue'
 
-  props: {
-    minGap: {
-      type: Number,
-      default: 0,
-    },
+const props = withDefaults(
+  defineProps<{
+    minGap?: number
+    mode?: 'list' | 'card'
+  }>(),
+  {
+    minGap: 0,
+    mode: 'card',
+  }
+)
 
-    mode: {
-      type: String,
-      default: 'card', // list or card
-    },
-  },
+const gridRef = useTemplateRef('grid')
 
-  data() {
-    /*
-            we need one instance of the function per instance of the component
-            because other throttle will act globally (ie one throttle for all instances)
-            and so create a mess when we have multiple instances of the component in the same page
-        */
-    const computeColumnCount = () => {
-      const childWidth = this.$refs.grid?.children[0]?.getBoundingClientRect()?.width
-      if (childWidth) {
-        this.childWidth = childWidth
-      }
-    }
+// dummy non zero value
+const childWidth = ref(200)
+/*
+  we need one instance of the function per instance of the component
+  because other throttle will act globally (ie one throttle for all instances)
+  and so create a mess when we have multiple instances of the component in the same page
+*/
+const computeColumnCount = throttle(() => {
+  const width = gridRef.value?.children[0]?.getBoundingClientRect()?.width
+  if (width) {
+    childWidth.value = width
+  }
+}, 50)
+
+const gridStyle = computed<StyleValue>(() => {
+  if (props.mode === 'card') {
     return {
-      childWidth: 200, // dummy non zero value
-      computeColumnCount: throttle(computeColumnCount, 50),
+      'grid-template-columns': `repeat(auto-fill, ${childWidth.value}px)`,
+      gap: `${props.minGap}px`,
     }
-  },
+  }
+  return {}
+})
 
-  computed: {
-    gridStyle() {
-      return this.mode === 'card'
-        ? {
-            'grid-template-columns': `repeat(auto-fill, ${this.childWidth}px)`,
-            gap: `${this.minGap}px`,
-          }
-        : {}
-    },
-  },
+watch(
+  () => props.mode,
+  () => {
+    nextTick(computeColumnCount)
+  }
+)
 
-  watch: {
-    mode: function (newMode, oldMode) {
-      if (newMode !== oldMode) {
-        this.$nextTick(this.computeColumnCount)
-      }
-    },
-  },
+onMounted(() => {
+  if (!import.meta.client) return
+  computeColumnCount()
+  window.addEventListener('resize', computeColumnCount)
+})
 
-  mounted() {
-    this.computeColumnCount()
-    window.addEventListener('resize', this.computeColumnCount)
-  },
-
-  beforeUnmount() {
-    window.removeEventListener('resize', this.computeColumnCount)
-  },
-}
+onBeforeMount(() => {
+  if (!import.meta.client) return
+  window.removeEventListener('resize', computeColumnCount)
+})
 </script>
 <style lang="scss" scoped>
 .dynamic-grid.card {

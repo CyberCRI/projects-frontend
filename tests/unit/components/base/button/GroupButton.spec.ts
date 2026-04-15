@@ -1,8 +1,7 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import GroupButton from '@/components/base/button/GroupButton.vue'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 const stubs = {
   IconImage: true,
 }

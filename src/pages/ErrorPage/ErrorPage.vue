@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import useUsersStore from '@/stores/useUsers'
+import { I18nT } from 'vue-i18n'
 
-const runtimeConfig = useRuntimeConfig()
 const usersStore = useUsersStore()
 const { t } = useNuxtI18n()
 
@@ -22,9 +22,7 @@ const illustrationSrc = computed(() => {
   return isConnected.value ? '/page404/page-404.png' : '/page404/not-connected-page-404.png'
 })
 
-const imageFullUrl = computed(() => {
-  return runtimeConfig.public.appPublicBinariesPrefix + illustrationSrc.value
-})
+const imageFullUrl = computed(() => usePublicURL(illustrationSrc.value))
 
 const illustrationText = computed(() => {
   return isConnected.value
@@ -36,7 +34,13 @@ const login = () => {
   goToKeycloakLoginPage()
 }
 
-useLpiHead(useRequestURL().toString(), title.value, title.value, imageFullUrl.value)
+watchEffect(() => {
+  useLpiHead2({
+    title: title.value,
+    description: title.value,
+    image: imageFullUrl.value,
+  })
+})
 </script>
 <template>
   <div class="page404">
@@ -45,17 +49,17 @@ useLpiHead(useRequestURL().toString(), title.value, title.value, imageFullUrl.va
         <h1 class="title">
           {{ title }}
         </h1>
-        <i18n-t :keypath="searchDescriptionPath" class="notice" tag="p">
+        <I18nT :keypath="searchDescriptionPath" class="notice" tag="p">
           <NuxtLink v-if="isConnected" :to="{ name: 'Search' }">
             {{ $t('page404.search-again') }}
           </NuxtLink>
           <a v-else href="" @click="login">{{ $t('page404.not-connected.login') }}</a>
-        </i18n-t>
-        <i18n-t class="notice" keypath="page404.contact" tag="p">
+        </I18nT>
+        <I18nT class="notice" keypath="page404.contact" tag="p">
           <a :href="`mailto:${$t('page404.contact-mail')}`">
             {{ $t('page404.contact-mail') }}
           </a>
-        </i18n-t>
+        </I18nT>
         <LpiButton v-if="!isConnected" :label="$t('common.login')" @click="login" />
         <div class="illustration">
           <img :src="imageFullUrl" />

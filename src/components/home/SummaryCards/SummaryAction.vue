@@ -8,12 +8,13 @@
 import { capitalize } from '@/functs/string'
 import IconImage from '@/components/base/media/IconImage.vue'
 import { IconImageChoice } from '@/functs/IconImage'
+import { RouteLocationRaw } from 'vue-router'
 
 const props = withDefaults(
   defineProps<{
     actionIcon?: IconImageChoice
     actionLabel?: string
-    to?: string | object
+    to?: RouteLocationRaw
   }>(),
   {
     actionIcon: 'ArrowRight',

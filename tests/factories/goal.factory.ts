@@ -1,6 +1,6 @@
 import { createFactory } from 'faker-create-factory'
 
-import { GoalInput, GoalModel } from '@/models/goal.model'
+import { GoalInput, GoalModel, TranslatedGoal } from '@/models/goal.model'
 import BaseFactory from './base.factory'
 
 export const GoalFactory = createFactory<GoalModel>((faker) => ({
@@ -10,6 +10,14 @@ export const GoalFactory = createFactory<GoalModel>((faker) => ({
   description: faker.lorem.sentence(),
   deadline_at: new Date(),
   status: 'ongoing',
+}))
+
+export const TranslatedGoalFactory = createFactory<TranslatedGoal>((faker) => ({
+  ...GoalFactory.generate(),
+  $t: {
+    title: faker.datatype.string(),
+    description: faker.lorem.sentence(),
+  },
 }))
 
 export const GoalInputFactory = createFactory<GoalInput>((faker) => ({

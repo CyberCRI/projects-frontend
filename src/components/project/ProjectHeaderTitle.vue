@@ -19,10 +19,7 @@ const props = defineProps<{
   loading: boolean
 }>()
 
-const capitalizedTitle = computed(() => {
-  const title = props.project?.$t?.title
-  return capitalize(title)
-})
+const capitalizedTitle = computed(() => capitalize(props.project?.$t?.title))
 
 const STYLE_LIMITED = Object.freeze({
   fontWeight: 700,

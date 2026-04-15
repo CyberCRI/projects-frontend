@@ -1,20 +1,11 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import english from '@/i18n/locales/en.json'
 import StatsByTab from '@/pages/StatsPage/Tabs/StatsByTab.vue'
 import waitForExpect from 'wait-for-expect'
 import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
 
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 vi.mock('@/api/stats.service', () => {
   const stats = {
@@ -271,7 +262,6 @@ describe('StatsByTab.vue', () => {
       props: {
         filter: '',
       },
-      i18n,
     }
   })
   it('should render component', () => {

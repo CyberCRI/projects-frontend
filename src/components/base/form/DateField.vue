@@ -47,7 +47,7 @@ const dateExist = computed(() => {
       :class="{
         'no-date': !dateExist,
       }"
-      :aria-label="$t('common.date-clear')"
+      :aria-label="$t('common.clear-date')"
       @click="clearDate"
     >
       <IconImage class="icon" name="Close" />

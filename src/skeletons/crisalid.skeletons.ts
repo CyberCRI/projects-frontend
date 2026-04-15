@@ -6,9 +6,9 @@ export const documentAnalyticsSkeleton = (
   def?: Partial<ResearcherDocumentAnalytics>
 ): ResearcherDocumentAnalytics => ({
   document_types: {
-    Book: randomInt(10),
-    Grant: randomInt(10),
-    Note: randomInt(10),
+    JournalArticle: randomInt(10),
+    Preface: randomInt(10),
+    ConferenceArticle: randomInt(10),
   },
   years: [
     { year: 2020, total: randomInt(10) },
@@ -20,9 +20,9 @@ export const documentAnalyticsSkeleton = (
     { year: 2026, total: randomInt(10) },
   ],
   roles: {
-    actor: randomInt(10),
-    client: randomInt(10),
-    funder: randomInt(10),
+    aut: randomInt(10),
+    cns: randomInt(10),
+    dte: randomInt(10),
   },
   ...(def || {}),
 })

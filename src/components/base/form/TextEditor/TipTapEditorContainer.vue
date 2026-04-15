@@ -1,8 +1,15 @@
-<script setup>
-const props = defineProps({
-  mode: { type: String, required: true },
-  editor: { type: Object, required: true },
-})
+<script setup lang="ts">
+import { Editor } from '@tiptap/vue-3'
+
+const props = withDefaults(
+  defineProps<{
+    mode: string
+    editor?: Editor
+  }>(),
+  {
+    editor: null,
+  }
+)
 
 // methods
 function focusEditor() {

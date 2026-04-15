@@ -3,7 +3,7 @@ import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import useKeycloak from '@/api/auth/keycloak'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
-import { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
+import { OrganizationOutput } from '@/models/organization.model'
 
 vi.mock('@/api/auth/keycloak', () => {
   const kc = {

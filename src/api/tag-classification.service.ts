@@ -3,7 +3,9 @@ import type { APIParams /*, APIResponseList*/ } from '@/api/types'
 import type { TagModel } from '@/models/tag.model'
 
 export async function getAllOrgClassifications(orgCode: string, params: APIParams) {
-  return await useAPI(`organization/${orgCode}/tag-classification/`, { params }) //.data.value
+  return await useAPI<PaginationResult<TagModel>>(`organization/${orgCode}/tag-classification/`, {
+    params,
+  })
 }
 
 export async function getOrgClassification(

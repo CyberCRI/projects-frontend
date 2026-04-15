@@ -1,11 +1,14 @@
 // import type { APIResponseList } from '@/api/types'
 
-import type { AttachmentFileInput } from '@/models/attachment-file.model'
+import type { AttachmentFileInput, AttachmentFileModel } from '@/models/attachment-file.model'
 
 import useAPI from '@/composables/useAPI'
 
-export async function getOrganizationFiles(orgCode: string) {
-  return await useAPI(`organization/${orgCode}/file/`, {}) //.data.value
+export async function getOrganizationFiles(organizationCode: string, config = {}) {
+  return await useAPI<PaginationResult<AttachmentFileModel>>(
+    `organization/${organizationCode}/file/`,
+    config
+  )
 }
 
 export async function getOrganizationFile(orgCode: string, body: AttachmentFileInput) {

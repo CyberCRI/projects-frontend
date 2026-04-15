@@ -9,8 +9,6 @@ import BaseGroupMembersList from '@/components/group/Modules/Members/BaseGroupMe
 import { GroupModuleTitle, TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupTab from '@/pages/GroupPageV2/Tabs/BaseGroupTab.vue'
 
-defineOptions({ name: 'GroupMembersTab' })
-
 const props = defineProps<{
   group: TranslatedPeopleGroupModel
 }>()

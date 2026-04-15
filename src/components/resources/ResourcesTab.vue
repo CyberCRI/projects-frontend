@@ -14,7 +14,7 @@
       v-if="fileResources.length"
       :has-button="false"
       :quantity="fileResources.length"
-      :title="$t('files', fileResources.length)"
+      :title="$t('common.file', fileResources.length)"
     />
 
     <div v-if="fileResources.length" class="resource-ctn">
