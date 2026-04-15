@@ -5,14 +5,21 @@ import {
   Router,
   RouteRecordRaw,
 } from 'vue-router'
-import { createI18n, I18nOptions } from 'vue-i18n'
 import { ComponentMountingOptions, mount, shallowMount } from '@vue/test-utils'
 import { clickOutside, disableFocus } from '@/directives'
-import pinia from './test-pinia'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
+import routerOptions from '@/app/router.options'
+import { createI18n, I18nOptions } from 'vue-i18n'
+import { createTestingPinia } from '@pinia/testing'
+
+// create globaly i18n
 import english from '@/i18n/locales/en.json'
 import french from '@/i18n/locales/fr.json'
-import routerOptions from '@/app/router.options'
+
+type OptionsMount<T> = ComponentMountingOptions<T> & {
+  route?: RouteLocationRaw
+  router?: RouteRecordRaw[]
+}
 
 // @ts-expect-error ignore other languages
 const DEFAULT_I18N_OPTIONS = {
@@ -24,11 +31,9 @@ const DEFAULT_I18N_OPTIONS = {
   },
 } as I18nOptions
 
-type OptionsMount<T> = ComponentMountingOptions<T> & {
-  route?: RouteLocationRaw
-  i18n?: I18nOptions
-  router?: RouteRecordRaw[]
-}
+const i18n = createI18n({ legacy: false, globalInjection: true, ...DEFAULT_I18N_OPTIONS })
+
+const pinia = createTestingPinia({ stubActions: false })
 
 /**
  * build options for mount utils (auto create router/locale)
@@ -36,20 +41,10 @@ type OptionsMount<T> = ComponentMountingOptions<T> & {
  * @constant
  * @name buildOptions
  * @kind variable
- * @type {<T>(options?: OptionsMount<T>) => { options: ComponentMountingOptions<T>; plugins: { i18n: I18nOptions; router: Router; }; }}
+ * @type {<T>(options?: OptionsMount<T>) => ComponentMountingOptions<T>}
  */
-const buildOptions = <T>(
-  options: OptionsMount<T> = {}
-): {
-  options: ComponentMountingOptions<T>
-  plugins: { i18n: I18nOptions; router: Router }
-} => {
+const buildOptions = <T>(options: OptionsMount<T> = {}): ComponentMountingOptions<T> => {
   const plugins = []
-
-  plugins.push(pinia)
-
-  const i18n = createI18n({ legacy: false, ...(options?.i18n || DEFAULT_I18N_OPTIONS) })
-  plugins.push(i18n)
 
   const router = createRouter({
     history: createWebHistory(),
@@ -58,6 +53,9 @@ const buildOptions = <T>(
   if (options.route) {
     router.push(options.route)
   }
+
+  plugins.push(i18n)
+  plugins.push(pinia)
 
   const props = (options.props || {}) as ComponentMountingOptions<T>['props']
 
@@ -69,38 +67,31 @@ const buildOptions = <T>(
   const directives = { 'click-outside': clickOutside, 'disable-focus': disableFocus }
 
   return {
-    options: {
-      ...options,
-      props,
-      global: {
-        plugins,
-        mixins,
-        directives,
-        stubs,
-        provide,
-        ...options.global,
-      },
-    },
-    plugins: {
-      // @ts-expect-error ignore other languages
-      i18n,
-      router,
+    ...options,
+    props,
+    global: {
+      plugins,
+      mixins,
+      directives,
+      stubs,
+      provide,
+      ...options.global,
     },
   }
 }
 
-export function lpiMount<T>(component, options: OptionsMount<T> = {}) {
-  return mount(component, buildOptions<T>(options).options)
+export const lpiMount = <T>(component, options: OptionsMount<T> = {}) => {
+  return mount(component, buildOptions<T>(options))
 }
 
-export function lpiShallowMount<T>(component, options: OptionsMount<T> = {}) {
-  return shallowMount(component, buildOptions<T>(options).options)
+export const lpiShallowMount = <T>(component, options: OptionsMount<T> = {}) => {
+  return shallowMount(component, buildOptions<T>(options))
 }
 
-export function lpiMountSuspended<T>(component, options: OptionsMount<T> = {}) {
-  return mountSuspended(component, buildOptions<T>(options).options)
+export const lpiMountSuspended = <T>(component, options: OptionsMount<T> = {}) => {
+  return mountSuspended(component, buildOptions<T>(options))
 }
 
-export function lpiShallowMountSuspended<T>(component, options: OptionsMount<T> = {}) {
-  return mountSuspended(component, { ...buildOptions<T>(options).options, shallow: true })
+export const lpiShallowMountSuspended = <T>(component, options: OptionsMount<T> = {}) => {
+  return mountSuspended(component, { ...buildOptions<T>(options), shallow: true })
 }

@@ -5,7 +5,7 @@ import useUsersStore from '@/stores/useUsers.ts'
 import { shuffle } from 'es-toolkit'
 import { SDGS } from '@/functs/constants'
 
-const { t } = useI18n()
+const { t } = useNuxtI18n()
 const router = useRouter()
 const props = defineProps({
   isOpened: { type: Boolean, default: false },
