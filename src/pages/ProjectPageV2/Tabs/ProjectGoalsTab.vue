@@ -8,7 +8,7 @@
         :label="$t('goal.add')"
         class="add-goal-btn"
         btn-icon="Plus"
-        @click="projectLayoutToggleAddModal('goal')"
+        @click="showModalGoal('goal')"
       />
     </div>
 
@@ -18,22 +18,22 @@
       :goal="goal"
       :can-edit-goal="isEditionEnabled"
       :can-delete-goal="isEditionEnabled"
-      @edit-goal="editGoal"
-      @delete-goal="toggleDeleteConfirmModal"
+      @edit-goal="showModalGoal('goal', goal)"
+      @delete-goal="localeDeleteGoal"
     />
 
     <ConfirmModal
-      v-if="confirmDeleteVisible"
+      v-if="stateModal"
       :title="$t('goal.delete')"
       :content="$t('common.destroy-confirm')"
       :asyncing="asyncing"
-      @cancel="toggleDeleteConfirmModal"
-      @confirm="doDeleteGoal"
+      @cancel="localeCloseGoal"
+      @confirm="onDeleteGoal"
     />
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import SdgRecap from '@/components/project/sdg/SdgRecap.vue'
 import GoalItem from '@/components/project/goal/GoalItem.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
@@ -41,112 +41,90 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 
 import { deleteGoal } from '@/api/goals.service'
 import analytics from '@/analytics'
-import useToasterStore from '@/stores/useToaster.ts'
+import useToasterStore from '@/stores/useToaster'
+import { TranslatedProject } from '@/models/project.model'
+import { TranslatedGoal } from '@/models/goal.model'
 
-export default {
-  name: 'ProjectGoalsTab',
+const showModalGoal = inject<(key: string, goal?: TranslatedGoal) => void>(
+  'projectLayoutToggleAddModal'
+)
 
-  components: { SdgRecap, GoalItem, ConfirmModal, LpiButton },
+const props = withDefaults(
+  defineProps<{
+    project: TranslatedProject
+    goals?: TranslatedGoal[]
+    sdgs?: number[]
+    isInEditingMode?: boolean
+  }>(),
+  {
+    sdgs: () => [],
+    goals: () => [],
+    isInEditingMode: false,
+  }
+)
 
-  inject: ['projectLayoutToggleAddModal'],
+const emit = defineEmits<{ 'reload-goals': [] }>()
+const { t } = useNuxtI18n()
+const toaster = useToasterStore()
 
-  props: {
-    project: {
-      type: Object,
-      default: () => ({}),
-    },
+const selectedGoal = ref<TranslatedGoal>()
+const { stateModal, closeModal, openModal } = useModal()
 
-    goals: {
-      type: Array,
-      default: () => [],
-    },
+const localeDeleteGoal = (goal: TranslatedGoal) => {
+  selectedGoal.value = goal
+  openModal()
+}
 
-    sdgs: {
-      type: Array,
-      default: () => [],
-    },
+const localeCloseGoal = () => {
+  selectedGoal.value = null
+  closeModal()
+}
 
-    isInEditingMode: {
-      type: Boolean,
-      default: false,
-    },
-  },
+useScrollToTab()
 
-  emits: ['reload-goals'],
+const { canEditProject } = usePermissions()
+const asyncing = ref(false)
 
-  setup() {
-    const toaster = useToasterStore()
-    useScrollToTab()
-    const { canEditProject } = usePermissions()
-    return {
-      toaster,
-      canEditProject,
+const isEditionEnabled = computed(() => canEditProject.value && props.isInEditingMode)
+
+const sortedGoals = computed(() => {
+  return props.goals.toSorted((a, b) => {
+    if (!a.deadline_at && !b.deadline_at) {
+      return a.title < b.title ? -1 : 1
+    } else if (!a.deadline_at) {
+      return -1
+    } else if (!b.deadline_at) {
+      return 1
+    } else {
+      return a.deadline_at < b.deadline_at ? -1 : 1
     }
-  },
+  })
+})
 
-  data() {
-    return {
-      confirmDeleteVisible: false,
-      goalToBeDeleted: null,
-      asyncing: false,
-    }
-  },
+const onDeleteGoal = async () => {
+  asyncing.value = true
+  try {
+    await deleteGoal({
+      id: selectedGoal.value.id,
+      project_id: props.project.id,
+    })
 
-  computed: {
-    isEditionEnabled() {
-      return this.canEditProject && this.isInEditingMode
-    },
-    sortedGoals() {
-      return [...this.goals].sort((a, b) => {
-        if (!a.deadline_at && !b.deadline_at) {
-          return a.title < b.title ? -1 : 1
-        } else if (!a.deadline_at) {
-          return -1
-        } else if (!b.deadline_at) {
-          return 1
-        } else {
-          return a.deadline_at < b.deadline_at ? -1 : 1
-        }
-      })
-    },
-  },
+    emit('reload-goals')
 
-  methods: {
-    editGoal(goal) {
-      this.projectLayoutToggleAddModal('goal', goal)
-    },
-
-    async doDeleteGoal() {
-      this.asyncing = true
-      try {
-        await deleteGoal({
-          id: this.goalToBeDeleted.id,
-          project_id: this.project.id,
-        })
-
-        this.$emit('reload-goals')
-
-        analytics.goal.removeGoalProject({
-          project: {
-            id: this.project.id,
-          },
-          goal: this.goalToBeDeleted,
-        })
-        this.toaster.pushSuccess(this.$t('toasts.goal-delete.success'))
-      } catch (error) {
-        this.toaster.pushError(`${this.$t('toasts.goal-delete.error')} (${error})`)
-        console.error(error)
-      } finally {
-        this.asyncing = false
-        this.toggleDeleteConfirmModal()
-      }
-    },
-
-    toggleDeleteConfirmModal(goal) {
-      this.confirmDeleteVisible = !this.confirmDeleteVisible
-      if (this.confirmDeleteVisible) this.goalToBeDeleted = goal
-    },
-  },
+    analytics.goal.removeGoalProject({
+      project: {
+        id: props.project.id,
+      },
+      goal: selectedGoal.value,
+    })
+    toaster.pushSuccess(t('toasts.goal-delete.success'))
+  } catch (error) {
+    toaster.pushError(`${t('toasts.goal-delete.error')} (${error})`)
+    console.error(error)
+  } finally {
+    asyncing.value = false
+    localeCloseGoal()
+  }
 }
 </script>
 

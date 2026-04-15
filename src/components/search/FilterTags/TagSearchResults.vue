@@ -21,60 +21,40 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import TagResult from '@/components/search/FilterTags/TagResult.vue'
-import useUsersStore from '@/stores/useUsers.ts'
-import useTagTexts from '@/composables/useTagTexts.ts'
+import useTagTexts from '@/composables/useTagTexts'
 
-export default {
-  name: 'TagSearchResults',
+const props = withDefaults(
+  defineProps<{
+    tagResults?: any[]
+    inModal?: boolean
+    inline?: boolean
+    existingTags?: number[]
+  }>(),
+  {
+    tagResults: () => [],
+    inModal: false,
+    inline: false,
+    existingTags: () => [],
+  }
+)
 
-  components: { TagResult },
-  props: {
-    tagResults: {
-      // array of tag objects
-      type: Array,
-      default: () => [],
-    },
-    inModal: {
-      type: Boolean,
-      default: false,
-    },
-    inline: {
-      type: Boolean,
-      default: false,
-    },
-    existingTags: {
-      // array of tag ids
-      type: Array,
-      default: () => [],
-    },
-  },
+const emit = defineEmits<{
+  'result-clicked': [any]
+}>()
 
-  emits: ['result-clicked'],
-  setup() {
-    const usersStore = useUsersStore()
-    const tagTexts = useTagTexts()
-    return {
-      usersStore,
-      tagTexts,
-    }
-  },
+const tagTexts = useTagTexts()
 
-  computed: {
-    filteredTagResults() {
-      return this.tagResults.map((tag) => ({
-        ...tag,
-        disabled: this.existingTags.includes(tag.id),
-      }))
-    },
-  },
+const filteredTagResults = computed(() => {
+  return props.tagResults.map((tag) => ({
+    ...tag,
+    disabled: props.existingTags.includes(tag.id),
+  }))
+})
 
-  methods: {
-    tagClicked(tag) {
-      if (!tag.disabled) this.$emit('result-clicked', tag)
-    },
-  },
+const tagClicked = (tag) => {
+  if (!tag.disabled) emit('result-clicked', tag)
 }
 </script>
 

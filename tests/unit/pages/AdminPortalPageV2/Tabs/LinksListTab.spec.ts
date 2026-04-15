@@ -1,7 +1,7 @@
 import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
 import LinkListTab from '@/pages/AdminPortalPageV2/Tabs/LinksListTab.vue'
 import * as invitationSrv from '@/api/invitations.service'
-import flushPromises from 'flush-promises'
+import { flushPromises } from '@vue/test-utils'
 
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'

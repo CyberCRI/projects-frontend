@@ -2,17 +2,14 @@ import { lpiShallowMountExtra } from '@/../tests/helpers/LpiMount'
 import App from '@/app.vue'
 
 import { checkExpiredToken } from '@/api/auth/keycloakUtils'
-import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
 // issue with webcrypto, so mock so offending import
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
-import useUsersStore from '@/stores/useUsers'
 import type { OrganizationOutput } from '@/models/organization.model'
-
-vi.mock('y-prosemirror', () => ({
-  default: {},
-}))
+import { flushPromises } from '@vue/test-utils'
+import { Router } from 'vue-router'
 
 vi.mock('@/api/auth/keycloakUtils', () => {
   return {
@@ -37,19 +34,11 @@ vi.mock('@/api/auth/auth.service', () => {
   }
 })
 
-const localStorageSetItem = vi.spyOn(Storage.prototype, 'setItem')
-const localStorageGetItem = vi.spyOn(Storage.prototype, 'getItem')
-const localStorageRemoveItem = vi.spyOn(Storage.prototype, 'removeItem')
-
 describe('On tab focus', () => {
-  let usersStore
   beforeEach(() => {
     const organizationsStore = useOrganizationsStore(pinia)
     organizationsStore._current = { code: '123' } as OrganizationOutput
-    usersStore = useUsersStore(pinia)
   })
-
-  Object.defineProperty(window, 'socket', { value: { connected: false }, configurable: true })
 
   function _mount() {
     return lpiShallowMountExtra(App, {
@@ -58,43 +47,49 @@ describe('On tab focus', () => {
   }
 
   afterEach(() => {
-    afterEach(() => {
-      localStorage.clear()
-      localStorageSetItem.mockClear()
-      localStorageGetItem.mockClear()
-      localStorageRemoveItem.mockClear()
-    })
+    localStorage.clear()
     vi.clearAllMocks()
   })
 
-  test('logout if token has expired', () => {
-    usersStore.accessToken = 'acces_token' // pretend user is logged in
+  it('logout if token has expired', async () => {
+    const { wrapper } = _mount()
+    // @ts-expect-error ignore vm router
+    const router = wrapper.vm.router as Router
+    // @ts-expect-error vm store
+    const usersStore = wrapper.vm.usersStore as useUsersStore
 
-    const { wrapper, router } = _mount()
     vi.spyOn(router, 'push')
     ;(checkExpiredToken as Mock).mockImplementation(() => true)
 
-    window.localStorage.setItem('ACCESS_TOKEN', 'eyJhbGciOiJSUz')
+    usersStore.accessToken = 'access'
+    localStorage.setItem('ACCESS_TOKEN', 'eyJhbGciOiJSUz')
     window.dispatchEvent(new Event('focus'))
 
     expect(checkExpiredToken).toHaveBeenCalled()
     expect(usersStore.resetUser).toHaveBeenCalled()
 
+    await flushPromises()
+
     expect(router.push).toHaveBeenCalledWith({ name: 'Home' })
 
     wrapper.unmount()
   })
 
-  test('logout if logged in but has no more user token', () => {
-    const { wrapper, router } = _mount()
+  it('logout if logged in but has no more user token', async () => {
+    const { wrapper } = _mount()
+    // @ts-expect-error ignore vm router
+    const router = wrapper.vm.router as Router
+    // @ts-expect-error vm store
+    const usersStore = wrapper.vm.usersStore as useUsersStore
     vi.spyOn(router, 'push')
 
-    usersStore.accessToken = 'acces_token' // pretend user is logged in
+    usersStore.accessToken = 'test1'
 
-    window.localStorage.setItem('ACCESS_TOKEN', null)
+    localStorage.setItem('ACCESS_TOKEN', '')
 
     window.dispatchEvent(new Event('focus'))
 
+    await flushPromises()
     expect(usersStore.resetUser).toHaveBeenCalled()
 
     expect(router.push).toHaveBeenCalledWith({ name: 'Home' })
@@ -102,13 +97,19 @@ describe('On tab focus', () => {
     wrapper.unmount()
   })
 
-  test('do not logout if not logged in', () => {
-    const { wrapper, router } = _mount()
+  it('do not logout if not logged in', async () => {
+    const { wrapper } = _mount()
+    // @ts-expect-error ignore vm router
+    const router = wrapper.vm.router as Router
+    // @ts-expect-error vm store
+    const usersStore = wrapper.vm.usersStore as useUsersStore
     vi.spyOn(router, 'push')
 
-    window.localStorage.setItem('ACCESS_TOKEN', null)
+    usersStore.accessToken = null
+    localStorage.setItem('ACCESS_TOKEN', '')
 
     window.dispatchEvent(new Event('focus'))
+    await flushPromises()
 
     expect(usersStore.resetUser).not.toHaveBeenCalled()
 

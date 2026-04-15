@@ -33,17 +33,16 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import LpiFooter from '@/components/app/LpiFooter.vue'
 import AppToastList from '@/components/app/AppToastList.vue'
 import LpiHeader from '@/components/app/LpiHeader.vue'
-import { checkExpiredToken } from '@/api/auth/keycloakUtils.ts'
-import useUsersStore from '@/stores/useUsers.ts'
-import useKeycloak from '@/api/auth/keycloak.ts'
+import { checkExpiredToken } from '@/api/auth/keycloakUtils'
+import useUsersStore from '@/stores/useUsers'
+import useKeycloak from '@/api/auth/keycloak'
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import useGlobalsStore from '@/stores/useGlobals.ts'
-import { fixTiptapTableHeight } from '@/functs/editorUtils.ts'
+import useGlobalsStore from '@/stores/useGlobals'
+import { fixTiptapTableHeight } from '@/functs/editorUtils'
 useRuntimeHook('app:error', (error) => {
   console.log('app:error', error)
 })
@@ -57,10 +56,6 @@ const reportBugModalActive = ref(false)
 const isLoading = false
 
 const globalsStore = useGlobalsStore()
-
-const usersStoreToken = computed(() => {
-  return usersStore.accessToken
-})
 
 const currentRouteName = computed(() => {
   // Fix buefy class overwrite css since we renamed concepts->tags
@@ -81,6 +76,7 @@ const toggleReportBugModal = () => {
 
 const onFocus = () => {
   const accessToken = localStorage.getItem('ACCESS_TOKEN')
+  const storeAccessToken = usersStore.accessToken
 
   const originalLogout = () => {
     usersStore.resetUser()
@@ -89,27 +85,23 @@ const onFocus = () => {
       router.push({ name: 'Home' })
     }
   }
-  if (usersStoreToken.value && accessToken) {
+  if (storeAccessToken && accessToken) {
     // logged in, verify token is still fresh
     if (checkExpiredToken()) {
       originalLogout()
     }
-  } else if (usersStoreToken.value && !accessToken) {
+  } else if (storeAccessToken && !accessToken) {
     // logged out in another tab
     originalLogout()
-  } else if (!usersStoreToken.value && accessToken) {
+  } else if (!storeAccessToken && accessToken) {
     // logged in in another tab
     keycloak.refreshTokenLoop.start()
   }
 }
 
+onResize(fixTiptapTableHeight)
+
 onMounted(() => {
-  if (window?.socket?.connected) {
-    socket.disconnect()
-  }
-
-  window.addEventListener('resize', fixTiptapTableHeight)
-
   // handle multiple tabs browsing for auth
   window.addEventListener('focus', onFocus)
 
@@ -139,7 +131,6 @@ onMounted(() => {
 onBeforeUnmount(() => {
   // this.$refs.scrollview.removeEventListener('scroll', this.setDarkTopbar)
   window.removeEventListener('focus', onFocus)
-  window.removeEventListener('resize', fixTiptapTableHeight)
   if (window?.lpiSharedWorker) {
     window?.lpiSharedWorker.port.close()
   }

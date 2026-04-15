@@ -6,7 +6,7 @@ import { groupTranslatedFactory } from '../../../../../factories/group.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import { PaginationsFactory } from '../../../../../factories/paginations.factory'
 import GroupMemberFactory from '../../../../../factories/group-member.factory'
-import flushPromises from 'flush-promises'
+import { flushPromises } from '@vue/test-utils'
 
 describe('GroupMembersEditTab.vue', () => {
   it('should render component', async () => {

@@ -1,7 +1,7 @@
 import Newsfeed from '@/components/app/NewsFeed.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import { beforeEach, describe, expect, it } from 'vitest'
-import flushPromises from 'flush-promises'
+import { flushPromises } from '@vue/test-utils'
 import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
 import { AnnouncementFactory } from '@/../tests/factories/announcement.factory'
 import { ProjectCategoryOutputFactory } from '@/../tests/factories/project-category.factory'

@@ -3,7 +3,7 @@ import LanguageFilter from '@/components/search/Filters/LanguageFilter.vue'
 
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
-import flushPromises from 'flush-promises'
+import { flushPromises } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('LanguageFilter.vue', () => {

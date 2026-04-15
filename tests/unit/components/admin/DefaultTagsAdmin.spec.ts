@@ -7,7 +7,7 @@ import useOrganizationsStore from '@/stores/useOrganizations'
 import { OrganizationOutput } from '@/models/organization.model'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import flushPromises from 'flush-promises'
+import { flushPromises } from '@vue/test-utils'
 
 vi.mock('es-toolkit', () => ({
   debounce: vi.fn((fn) => fn),

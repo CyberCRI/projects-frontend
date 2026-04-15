@@ -4,6 +4,7 @@ import { defineAsyncComponent } from 'vue'
 import MockComponent from '@/../tests/helpers/MockComponent.vue'
 
 import { describe, expect, it, vi } from 'vitest'
+import { mockNuxtImport } from '@nuxt/test-utils/runtime'
 
 // fix unhnadled rejection due to invalid url
 vi.mock('@/composables/useAPI', () => {
@@ -11,13 +12,15 @@ vi.mock('@/composables/useAPI', () => {
     default: vi.fn().mockResolvedValue({ data: { results: [] } }), // TODO nuxt check this
   }
 })
+
 const mockRouter = {
   push: vi.fn(),
 }
-
 const mockRoute = {
   path: '/test1',
 }
+mockNuxtImport('useRouter', () => () => mockRouter)
+mockNuxtImport('useRoute', () => () => mockRoute)
 
 const factory = (props?) => {
   return lpiShallowMount(TabsLayout, {

@@ -6,7 +6,7 @@ import { UserFactory } from '../../../../factories/user.factory'
 import { delay } from 'es-toolkit'
 import { DocumentFactory, ResearcherFactory } from '../../../../factories/researcher.factory'
 import { PaginationsFactory } from '../../../../factories/paginations.factory'
-import flushPromises from 'flush-promises'
+import { flushPromises } from '@vue/test-utils'
 
 describe('ResearcherDocumentsTab.vue', () => {
   let defaultProps

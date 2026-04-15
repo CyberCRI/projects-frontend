@@ -16,8 +16,6 @@ if (import.meta.client) {
   // bug fix for leaflet's marker
   // TODO: check if it is still needed
   // if (import.meta.client) fixLeaflet()
-
-  window['socket'] = { connected: false }
 }
 
 export default async function main(): Promise<void> {

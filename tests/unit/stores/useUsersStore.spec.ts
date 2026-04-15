@@ -7,7 +7,7 @@ import { setActivePinia, createPinia } from 'pinia'
 import useUsersStore from '@/stores/useUsers'
 import waitForExpect from 'wait-for-expect'
 
-import flushPromises from 'flush-promises'
+import { flushPromises } from '@vue/test-utils'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'

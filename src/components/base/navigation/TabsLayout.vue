@@ -247,7 +247,6 @@ const closeTabList = () => {
 const selectTab = (index) => {
   current.value = index
   if (props.routerView) {
-    console.log('redirect', props.tabs[current.value].view)
     router.push(props.tabs[current.value].view)
   }
 

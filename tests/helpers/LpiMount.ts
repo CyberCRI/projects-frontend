@@ -108,7 +108,7 @@ export function lpiShallowMountSuspended<T>(component, options: OptionsMount<T> 
 export function lpiMountExtra<T>(component, options: OptionsMount<T> = {}) {
   const newOptions = buildOptions<T>(options)
   return {
-    wrapper: mount(component, newOptions),
+    wrapper: mount(component, newOptions.options),
     ...newOptions.plugins,
   }
 }
@@ -116,7 +116,7 @@ export function lpiMountExtra<T>(component, options: OptionsMount<T> = {}) {
 export function lpiShallowMountExtra<T>(component, options: OptionsMount<T> = {}) {
   const newOptions = buildOptions<T>(options)
   return {
-    wrapper: shallowMount(component, newOptions),
+    wrapper: shallowMount(component, newOptions.options),
     ...newOptions.plugins,
   }
 }

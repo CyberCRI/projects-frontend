@@ -10,7 +10,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import EmptyLabel from '@/components/base/EmptyLabel.vue'
 import { PaginationsFactory } from '../../../../factories/paginations.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
-import flushPromises from 'flush-promises'
+import { flushPromises } from '@vue/test-utils'
 import UserSkillsFull from '@/components/people/skill/UserSkillsFull.vue'
 
 const aTag = { title: '123', description: 'abc' }

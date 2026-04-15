@@ -8,7 +8,7 @@ import useOrganizationsStore from '@/stores/useOrganizations'
 import { OrganizationOutput } from '@/models/organization.model'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import flushPromises from 'flush-promises'
+import { flushPromises } from '@vue/test-utils'
 
 import { getOrgClassificationTags } from '@/api/tag-classification.service'
 
