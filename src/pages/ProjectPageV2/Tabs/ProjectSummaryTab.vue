@@ -30,10 +30,9 @@
       />
 
       <!-- locations -->
-      <LazyMapRecap
+      <GeneralMap
         v-if="locations.length"
         class="unboxed"
-        expand
         :editable="false"
         :locations="locations"
         @expand="projectLayoutToggleAddModal('location')"
@@ -108,6 +107,7 @@
 
 <script setup lang="ts">
 import ProjectMemberSection from '@/components/group/ProjectMemberSection/ProjectMemberSection.vue'
+import GeneralMap from '@/components/map/GeneralMap.vue'
 import { textIsEmpty } from '@/functs/string'
 import { isNotGroup } from '@/functs/users'
 import { AttachmentFileModel } from '@/models/attachment-file.model'

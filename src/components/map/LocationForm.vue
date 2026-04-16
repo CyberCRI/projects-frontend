@@ -1,4 +1,6 @@
 <template>
+  {{ JSON.stringify({ isValid, errors }) }}
+
   <DialogModal
     :confirm-button-label="isExist ? $t('common.edit') : $t('common.add')"
     :cancel-button-label="$t('common.cancel')"
@@ -14,7 +16,7 @@
     <template #body>
       <div class="location-map-ctn">
         <!-- form not have it, so ignore typescript -->
-        <MapRecap :locations="[form as any]" :expand="false" />
+        <GeneralMap :locations="[form as any]" :controls="false" />
       </div>
 
       <div class="location-type-ctn">
@@ -53,7 +55,6 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import { LocationForm } from '@/models/location.model'
 import { useLocationForm } from '@/form/location'
 import { LocationType } from '@/models/types'
-import MapRecap from '@/components/map/MapRecap.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -112,7 +113,10 @@ const { form, isValid, errors } = useLocationForm({ model })
 watch(
   () => form.value.type,
   () => {
-    if (!form.value.type || !props.locationTypes?.includes(form.value.type)) {
+    if (
+      !form.value.type ||
+      (props.locationTypes && !props.locationTypes.includes(form.value.type))
+    ) {
       form.value.type = defaultLocationType.value
     }
   },

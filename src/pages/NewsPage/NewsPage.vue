@@ -41,11 +41,7 @@
 
       <TipTapOutput class="description-content" :content="news.$t.content" />
 
-      <MapRecap v-if="news.location" class="map" :locations="[news.location]">
-        <template #tooltip="{ location }">
-          <LocationNewsTooltip :location="location" :news="news" />
-        </template>
-      </MapRecap>
+      <GeneralMap v-if="news.location" class="map" :locations="[news.location]" />
     </div>
 
     <EditNewsDrawer
@@ -68,7 +64,6 @@
 </template>
 
 <script setup lang="ts">
-import LocationNewsTooltip from '@/components/news/map/LocationNewsTooltip.vue'
 import { getNews } from '@/api/v2/news.service'
 import { newsSkeleton } from '@/skeletons/news.skeletons'
 import { deleteNews } from '@/api/news.service'

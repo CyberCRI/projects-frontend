@@ -1,6 +1,6 @@
 import type { LocationModel, ProjectLocationForm } from '@/models/location.model'
 import useAPI from '@/composables/useAPI'
-import { Locations } from '@/interfaces/maps'
+import { LocationGeneral } from '@/interfaces/maps'
 
 export async function getProjectLocations(projectId: number) {
   return await useAPI<LocationModel[]>(`project/${projectId}/location/`)
@@ -11,7 +11,7 @@ export async function getProjectLocation(projectId: string, locationId: number) 
 }
 
 export async function getLocations(organizationCode: string, config = {}) {
-  return await useAPI<Locations>(`organization/${organizationCode}/location/`, config)
+  return await useAPI<LocationGeneral[]>(`organization/${organizationCode}/location/`, config)
 }
 
 export async function postLocations(projectId: string, body: ProjectLocationForm) {

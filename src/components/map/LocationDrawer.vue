@@ -77,48 +77,16 @@
         </div>
       </div>
 
-      <div class="full-screen-map-ctn location-map-ctn">
-        <div class="map-inner-ctn">
-          <div class="map">
-            <client-only>
-              <LazyBaseMap
-                ref="map"
-                :use-cluster="useCluster"
-                @click="formMode === 'click' ? clickOnMap($event) : null"
-              >
-                <template #default="slotProps">
-                  <template v-if="slotProps.map && !suggestedLocations">
-                    <MapPointer
-                      v-for="location in locations"
-                      :key="location.id"
-                      :editable="editable"
-                      :location="location"
-                      @edit="openEditModal"
-                      @mounted="slotProps.addPointer"
-                      @unmounted="slotProps.removePointer"
-                    >
-                      <LocationTooltip :location="location" />
-                    </MapPointer>
-                  </template>
-                  <template v-if="slotProps.map && suggestedLocations">
-                    <MapPointer
-                      v-for="location in suggestedLocations"
-                      :key="location.id"
-                      :location="location"
-                      @mounted="slotProps.addPointer"
-                      @unmounted="slotProps.removePointer"
-                    >
-                      <template #marker>
-                        <MarkerSuggestion :location="location" @click="openAddModal(location)" />
-                      </template>
-                    </MapPointer>
-                  </template>
-                </template>
-              </LazyBaseMap>
-            </client-only>
-          </div>
-        </div>
-      </div>
+      <GeneralMap
+        ref="map"
+        class="full-screen-map-ctn"
+        :editable="editable"
+        :control-expand="false"
+        :locations="suggestedLocations ? suggestedLocations : locations"
+        :marker-dynamic="!!suggestedLocations"
+        @click="formMode === 'click' ? clickOnMap($event) : null"
+        @edit="openEditModal"
+      />
     </BaseDrawer>
 
     <LocationForm
@@ -143,14 +111,12 @@
 
 <script setup lang="ts">
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import MapPointer from '@/components/map/MapPointer.vue'
 import useToasterStore from '@/stores/useToaster'
 import { AnyTranslatedLocation, LocationForm as LocationFormType } from '@/models/location.model'
-import LocationTooltip from '@/components/map/LocationTooltip.vue'
 import { Geocoding } from '@/interfaces/maps'
 import { useSuggestLocations } from '@/api/geocoding.service'
 import { LocationType } from '@/models/types'
-import MarkerSuggestion from '@/components/map/MarkerSuggestion.vue'
+import GeneralMap from '@/components/map/GeneralMap.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -158,7 +124,6 @@ const props = withDefaults(
     locations?: AnyTranslatedLocation[]
     editable?: boolean
     locationTypes?: LocationType[]
-    useCluster?: boolean
   }>(),
   {
     isOpened: false,
@@ -187,10 +152,7 @@ const showForm = ref(false)
 
 const mapRef = useTemplateRef('map')
 const centerMap = () => mapRef.value?.centerMap()
-
-defineExpose({
-  centerMap,
-})
+defineExpose({ centerMap })
 
 const formMode = ref<'click' | 'form'>()
 const form = ref(null)
@@ -208,7 +170,9 @@ const openAddModal = (newLocation) =>
     lng: newLocation.lng,
   })
 // method for event on leaftlet
-const clickOnMap = (event) => openAddModal({ lat: event.latlng.lat, lng: event.latlng.lng })
+const clickOnMap = (event) => {
+  openAddModal({ lat: event.latlng.lat, lng: event.latlng.lng })
+}
 
 const closeModal = () => {
   formMode.value = null
@@ -287,10 +251,6 @@ const onSubmit = () => {
       height: 100%;
     }
   }
-
-  &.full-screen-map-ctn {
-    height: 100%;
-  }
 }
 
 :deep(.leaflet-div-icon) {
@@ -319,5 +279,11 @@ const onSubmit = () => {
   align-items: center;
   gap: 1rem;
   margin-bottom: 1rem;
+}
+</style>
+
+<style lang="scss" scoped>
+.full-screen-map-ctn {
+  height: 100%;
 }
 </style>

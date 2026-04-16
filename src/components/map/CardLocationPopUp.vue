@@ -1,8 +1,8 @@
 <template>
-  <LocationTooltip :location="location">
+  <LocationPopUp :location="location">
     <LinkButton
       :label="label"
-      class="card-tooltip-button"
+      class="card-tooltip-button skeletons-background"
       btn-icon="ArrowRight"
       :title="label"
       :to="to"
@@ -13,28 +13,28 @@
           v-if="haveImage"
           :picture-data="image"
           :default-picture="defaultPicture"
-          class="card-tooltip__image"
+          class="card-tooltip-content-image skeletons-background"
         />
         <div>
-          <h3 class="card-title" :title="props.title">
+          <h3 class="card-title skeletons-text" :title="props.title">
             {{ title }}
           </h3>
-          <p class="card-purpose" :title="props.description">
+          <p class="card-purpose skeletons-text" :title="props.description">
             {{ description }}
           </p>
         </div>
       </slot>
     </div>
-  </LocationTooltip>
+  </LocationPopUp>
 </template>
 
 <script setup lang="ts">
 import { cropIfTooLong } from '@/functs/string'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import { AnyTranslatedLocation } from '@/models/location.model'
-import LocationTooltip from '@/components/map/LocationTooltip.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import { Image } from '@/models/image.model'
+import LocationPopUp from '@/components/map/LocationPopUp.vue'
 import { RouteLocationRaw } from 'vue-router'
 
 const props = withDefaults(
@@ -52,7 +52,7 @@ const props = withDefaults(
 
 const title = computed(() => cropIfTooLong(props.title, 45))
 const description = computed(() => cropIfTooLong(props.description, 85))
-const haveImage = computed(() => props.image && props.defaultPicture)
+const haveImage = computed(() => props.image || props.defaultPicture)
 </script>
 
 <style lang="scss" scoped>
@@ -61,30 +61,23 @@ const haveImage = computed(() => props.image && props.defaultPicture)
 }
 
 .card-tooltip-content {
-  flex-basis: 60%;
-  padding: 1.5rem $space-s;
-  background-color: $primary-lighter;
+  flex-basis: 100%;
   display: flex;
-  justify-content: space-between;
+  padding: 1.5rem $space-s;
+  background-color: color-mix(in srgb, var(--location-color), transparent 90%);
 
-  &.impact {
-    background-color: color-mix(in srgb, $location-impact, transparent 90%);
-  }
-
-  &.address {
-    background-color: color-mix(in srgb, $location-address, transparent 90%);
-  }
-
-  &.news {
-    background-color: color-mix(in srgb, $location-news, transparent 90%);
-  }
-
-  &.team {
-    background-color: color-mix(in srgb, $location-team, transparent 90%);
-  }
-
-  &.event {
-    background-color: color-mix(in srgb, $location-event, transparent 90%);
+  &-image,
+  &-image img {
+    width: pxToRem(72px);
+    flex-basis: pxToRem(72px);
+    flex-shrink: 0;
+    height: pxToRem(72px);
+    background-position: center center;
+    background-size: cover;
+    border-radius: $border-radius-xs;
+    object-fit: cover;
+    object-position: 50% 50%;
+    margin-right: $space-m;
   }
 
   .card-title {

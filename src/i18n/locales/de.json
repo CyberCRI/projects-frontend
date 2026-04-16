@@ -592,6 +592,7 @@
     "date": "Datum",
     "clear-date": "Datum",
     "chose-date": "Wählen Sie Datum | Wählen Sie das Datum(en)",
+    "filter": "Filter | Filter",
     "empty": "Nichts hier...",
     "file": "Datei | Dateien"
   },
@@ -984,7 +985,7 @@
   "location": {
     "loading": "Ladestellen",
     "focus-on-map": "Fokus auf der Karte",
-    "expand-map": "Karte vergrößern",
+    "expand": "Karte vergrößern",
     "edit-location-point": "Standortpunkt bearbeiten",
     "location-type-label": "Standort",
     "edit-map": "Geolokation bearbeiten",
@@ -996,7 +997,9 @@
     "team": "Team",
     "address": "Anschrift",
     "news": "Nachrichten | Nachrichten",
-    "event": "Veranstaltung"
+    "event": "Veranstaltung",
+    "zoom-in": "zoom in",
+    "zoom-out": "zoom out"
   },
   "map": {
     "empty": "Nichts hier noch... Die Mitarbeiter haben noch keine Projekte lokalisiert.",

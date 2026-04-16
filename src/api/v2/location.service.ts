@@ -1,7 +1,7 @@
 import { getLocations as fetchGetLocations } from '@/api/locations.services'
 import useAsyncAPI from '@/composables/useAsyncAPI'
 import { onlyRefs } from '@/functs/onlyRefs'
-import { Locations } from '@/interfaces/maps'
+import { TranslatedLocationGeneral } from '@/interfaces/maps'
 import { RefOrRaw } from '@/interfaces/utils'
 import { OrganizationModel } from '@/models/organization.model'
 
@@ -11,28 +11,16 @@ export const getLocations = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   config = {}
 ) => {
-  const {
-    translatePeopleGroupLocations,
-    translateProjectLocations,
-    translateNewsLocations,
-    translateEventsLocations,
-  } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::locations`)
+  const { translateLocations } = useAutoTranslate()
 
-  const translateAllModel = (data: ComputedRef<Locations>) => {
-    return computed(() => {
-      return {
-        groups: unref(translatePeopleGroupLocations(data.value?.groups)),
-        projects: unref(translateProjectLocations(data.value?.projects)),
-        news: unref(translateNewsLocations(data.value?.news)),
-        event: unref(translateEventsLocations(data.value?.event)),
-      }
-    })
-  }
-
-  return useAsyncAPI(key, () => fetchGetLocations(unref(organizationCode), { ...DEFAULT_CONFIG }), {
-    translate: translateAllModel,
-    watch: onlyRefs([organizationCode]),
-    ...config,
-  })
+  return useAsyncAPI(
+    key,
+    ({ config }) => fetchGetLocations(unref(organizationCode), { ...DEFAULT_CONFIG, ...config }),
+    {
+      watch: onlyRefs([organizationCode]),
+      translate: (data) => translateLocations<TranslatedLocationGeneral>(data),
+      ...config,
+    }
+  )
 }

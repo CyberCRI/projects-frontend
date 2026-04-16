@@ -592,6 +592,7 @@
     "no-date": "Pas de date",
     "date": "Date",
     "clear-date": "Effacer la date",
+    "filter": "filtre | filtres",
     "empty": "Rien ici...",
     "file": "fichier | fichiers"
   },
@@ -1085,7 +1086,7 @@
   "location": {
     "loading": "Chargement des lieux en cours",
     "focus-on-map": "mettre l'accent sur la carte",
-    "expand-map": "Agrandir la carte",
+    "expand": "Agrandir la carte",
     "edit-location-point": "Modifier le point d'emplacement",
     "location-type-label": "Type de localisation",
     "impact": "Impact",
@@ -1097,7 +1098,9 @@
     "add-location-point": "Ajouter un point d'emplacement",
     "default-title": "Lieu",
     "news": "Actualité | Actualités",
-    "event": "Événement"
+    "event": "Événement",
+    "zoom-in": "zoom vers",
+    "zoom-out": "zoom arrière"
   },
   "map": {
     "empty": "Rien ici pour l’instant… Les contributeurs n’ont pas encore localisé des points.",

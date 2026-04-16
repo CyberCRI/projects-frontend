@@ -51,6 +51,8 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
   updated_at: string
 }
 
+export type ProjectSlugOrId = ProjectModel['id'] | ProjectModel['slug']
+
 export type TranslatedProject = Translated<ProjectModel, 'title' | 'description' | 'purpose'>
 
 export type ProjectCreateInput = Required<ProjectModel> & {

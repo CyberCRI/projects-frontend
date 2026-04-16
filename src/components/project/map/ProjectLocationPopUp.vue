@@ -1,5 +1,5 @@
 <template>
-  <CardLocationTooltip
+  <CardLocationPopUp
     :location="location"
     :label="$t('project.view')"
     :to="{ name: 'pageProject', params: { slugOrId: project.slug || project.id } }"
@@ -10,11 +10,11 @@
   />
 </template>
 
-<script setup lang="ts">
-import { TranslatedLocation } from '@/models/location.model'
+<script setup lang="ts" generic="T extends AnyTranslatedLocation">
+import { AnyTranslatedLocation } from '@/models/location.model'
 import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
-import CardLocationTooltip from '@/components/map/CardLocationTooltip.vue'
 import { TranslatedProject } from '@/models/project.model'
+import CardLocationPopUp from '@/components/map/CardLocationPopUp.vue'
 
-defineProps<{ location: TranslatedLocation; project: TranslatedProject }>()
+defineProps<{ location: T; project: TranslatedProject }>()
 </script>

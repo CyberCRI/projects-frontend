@@ -1,6 +1,6 @@
 <template>
   <BaseGroupTab :title="$t(GroupModuleTitle.locations, countElement)" :count="countElement">
-    <GroupLocationBase :group="group" />
+    <GroupLocationBase :group="group" :editable="editable" />
   </BaseGroupTab>
 </template>
 
@@ -9,9 +9,13 @@ import GroupLocationBase from '@/components/group/Modules/Locations/GroupLocatio
 import { GroupModuleTitle, TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupTab from '@/pages/GroupPageV2/Tabs/BaseGroupTab.vue'
 
-const props = defineProps<{
-  group: TranslatedPeopleGroupModel
-}>()
+const props = withDefaults(
+  defineProps<{
+    group: TranslatedPeopleGroupModel
+    editable?: boolean
+  }>(),
+  { editable: false }
+)
 
 const countElement = computed<number>(() => props.group.modules?.locations)
 </script>
