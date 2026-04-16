@@ -2,8 +2,6 @@
   <div></div>
 </template>
 
-<script>
-export default {
-  name: 'MockComponent',
-}
+<script setup lang="ts">
+// this files is only for tests
 </script>

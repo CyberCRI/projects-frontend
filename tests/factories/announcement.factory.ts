@@ -1,6 +1,10 @@
 import { createFactory } from 'faker-create-factory'
-import { ProjectFactory } from './project.factory'
-import { AnnouncementInput, AnnouncementOutput } from '@/models/announcement.model'
+import { ProjectFactory, TranslatedProjectFactory } from './project.factory'
+import {
+  AnnouncementInput,
+  AnnouncementOutput,
+  TranslatedAnnouncement,
+} from '@/models/announcement.model'
 import BaseFactory from './base.factory'
 import { shuffle } from 'es-toolkit'
 
@@ -22,3 +26,17 @@ export const AnnouncementInputFactory = createFactory<AnnouncementInput>((faker)
   ...AnnouncementFactory.generate(),
   project_id: faker.datatype.string(),
 }))
+
+export const TranslatedAnnouncementFactory = createFactory<TranslatedAnnouncement>(() => {
+  const ann = AnnouncementFactory.generate()
+
+  return {
+    ...ann,
+    project: TranslatedProjectFactory.generate(),
+    $t: {
+      title: ann.title,
+      description: ann.description,
+      project: TranslatedProjectFactory.generate(),
+    },
+  }
+})

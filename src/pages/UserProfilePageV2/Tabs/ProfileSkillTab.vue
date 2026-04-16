@@ -1,167 +1,95 @@
 <template>
   <div class="skill-tab">
-    <!--div class="header">
-      <LpiButton
-        v-if="isCurrentUser || canEditUser"
-        class="edit-btn"
-        btn-icon="Pen"
-        :label="$t('common.edit')"
-        data-test="edit-skills"
-        @click="$router.push(editProfileSkillLink)"
-      />
-    </div-->
-    <template v-if="allSkills?.length">
-      <section v-if="skills?.length" class="section">
-        <UserSkillsFull
-          :full-list="true"
-          :skills="skills"
-          :title="$t('me.skills')"
-          :user-mentorship="userMentorship"
-          :is-self="isCurrentUser"
-          :mentorship-is-loading="mentorshipIsLoading"
-          @reload-mentorship="getUserMentorship"
-        />
-      </section>
-      <section v-if="hobbies?.length" class="section">
-        <UserSkillsFull
-          :full-list="true"
-          :skills="hobbies"
-          :title="$t('me.hobbies')"
-          :user-mentorship="userMentorship"
-          :is-self="isCurrentUser"
-          :mentorship-is-loading="mentorshipIsLoading"
-          @reload-mentorship="getUserMentorship"
-        />
-      </section>
-    </template>
-    <p v-else class="empty-field">
-      {{ noSkillLabel }}
-    </p>
+    <FetchLoader :status="status">
+      <template v-if="allSkills.length">
+        <section v-if="skills.length" class="section">
+          <UserSkillsFull
+            :full-list="true"
+            :skills="skills"
+            :title="$t('me.skills')"
+            :user-mentorship="userMentorship"
+            :is-self="isCurrentUser"
+            orship-is-loading="mentorshipIsLoading.value"
+            @reload-mentorship="refresh"
+          />
+        </section>
+        <section v-if="hobbies.length" class="section">
+          <UserSkillsFull
+            :full-list="true"
+            :skills="hobbies"
+            :title="$t('me.hobbies')"
+            :user-mentorship="userMentorship"
+            :is-self="isCurrentUser"
+            orship-is-loading="mentorshipIsLoading.value"
+            @reload-mentorship="refresh"
+          />
+        </section>
+      </template>
+      <EmptyLabel v-else :labe="noSkillLabel" />
+    </FetchLoader>
   </div>
 </template>
 
-<script>
-import useUsersStore from '@/stores/useUsers.ts'
-import useSkillTexts from '@/composables/useSkillTexts.js'
-import { getUserMentorship } from '@/api/mentorship.service.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+<script setup lang="ts">
+import useUsersStore from '@/stores/useUsers'
+import useSkillTexts from '@/composables/useSkillTexts'
+import { TranslatedUserModel } from '@/models/user.model'
+import { getUserMentorship } from '@/api/v2/mentoring.service'
 
-export default {
-  name: 'ProfileSkillTab',
+const props = defineProps<{
+  user: TranslatedUserModel
+}>()
 
-  props: {
-    user: {
-      type: Object,
-      required: true,
-    },
-  },
+const organizationCode = useOrganizationCode()
 
-  setup() {
-    const usersStore = useUsersStore()
-    const skillTexts = useSkillTexts()
-    const organizationsStore = useOrganizationsStore()
-    const { canEditUser } = usePermissions()
-    return {
-      usersStore,
-      skillTexts,
-      organizationsStore,
-      canEditUser,
+const { t } = useNuxtI18n()
+const usersStore = useUsersStore()
+const skillTexts = useSkillTexts()
+
+const { refresh, status, data } = getUserMentorship(organizationCode, {
+  default: () => [],
+  immediate: false,
+})
+
+watch(
+  () => usersStore.isConnected,
+  () => refresh()
+)
+
+const userMentorship = computed(() => {
+  return (data.value || []).reduce((acc, mentorship) => {
+    const skillId = mentorship.skill?.id
+    const mentorId = mentorship.mentor?.id
+    const mentoreeId = mentorship.mentoree?.id
+    if (mentorId == props.user.id) {
+      acc[skillId] = 'mentoree'
     }
-  },
-
-  data() {
-    return {
-      // mentorship of the logged user
-      userMentorship: {},
-      mentorshipIsLoading: false,
+    if (mentoreeId == props.user.id) {
+      acc[skillId] = 'mentor'
     }
-  },
+    return acc
+  }, {})
+})
 
-  computed: {
-    // editProfileSkillLink() {
-    //   return {
-    //     name: 'ProfileEditSkills' + (this.isCurrentUser ? '' : 'Other'),
-    //     params: this.isCurrentUser ? {} : { userId: this.user.slug || this.user.id },
-    //   }
-    // },
+const allSkills = computed(() => props.user.skills || [])
 
-    allSkills() {
-      return this.user.skills || []
-    },
+const skills = computed(() => {
+  return allSkills.value.filter((s) => s.type == 'skill').sort(skillTexts.compareTitles)
+})
 
-    skills() {
-      return (this.allSkills || [])
-        .filter((s) => s.type == 'skill')
-        .sort(this.skillTexts.compareTitles)
-    },
+const hobbies = computed(() => {
+  return allSkills.value.filter((s) => s.type == 'hobby').sort(skillTexts.compareTitles)
+})
 
-    hobbies() {
-      return (this.allSkills || [])
-        .filter((s) => s.type == 'hobby')
-        .sort(this.skillTexts.compareTitles)
-    },
+const isCurrentUser = computed(() => usersStore.id === props.user.id)
 
-    isCurrentUser() {
-      return this.usersStore.id === this.user.id
-    },
-
-    noSkillLabel() {
-      return this.isCurrentUser ? this.$t('me.no-skill') : this.$t('you.no-skill')
-    },
-  },
-
-  async mounted() {
-    if (this.usersStore.isConnected) this.getUserMentorship()
-  },
-  methods: {
-    async getUserMentorship() {
-      this.mentorshipIsLoading = true
-      try {
-        const apiData = (await getUserMentorship(this.organizationsStore.current?.code)).results
-
-        this.userMentorship = apiData.reduce((acc, mentorship) => {
-          const skillId = mentorship.skill?.id
-          const mentorId = mentorship.mentor?.id
-          const mentoreeId = mentorship.mentoree?.id
-          if (mentorId == this.user.id) {
-            acc[skillId] = 'mentoree'
-          }
-          if (mentoreeId == this.user.id) {
-            acc[skillId] = 'mentor'
-          }
-
-          return acc
-        }, {})
-      } catch (error) {
-        console.error(error)
-      } finally {
-        this.mentorshipIsLoading = false
-      }
-    },
-  },
-}
+const noSkillLabel = computed(() => {
+  return isCurrentUser.value ? t('me.no-skill') : t('you.no-skill')
+})
 </script>
 
 <style lang="scss" scoped>
-.title {
-  font-size: $font-size-m;
-  font-weight: 700;
-  color: $primary-dark;
-}
-
-.empty-field {
-  padding-top: $space-l;
-  color: $mid-gray;
-  font-weight: 700;
-}
-
 .section + .section {
   margin-top: $space-xl;
 }
-
-// .header {
-//   display: flex;
-//   justify-content: flex-end;
-//   align-items: center;
-// }
 </style>

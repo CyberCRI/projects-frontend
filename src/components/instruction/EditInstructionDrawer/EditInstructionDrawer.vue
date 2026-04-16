@@ -17,112 +17,91 @@
     />
   </BaseDrawer>
 </template>
-<script>
+
+<script setup lang="ts">
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import InstructionForm from '@/components/instruction/InstructionForm/InstructionForm.vue'
 import { createInstruction, putInstruction } from '@/api/instruction.service'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-export default {
-  name: 'EditInstructionDrawer',
+import useToasterStore from '@/stores/useToaster'
+import { InstructionModel } from '@/models/instruction.model'
 
-  components: {
-    BaseDrawer,
-    InstructionForm,
-  },
+const props = withDefaults(
+  defineProps<{
+    instruction?: InstructionModel
+    isOpened: boolean
+  }>(),
+  {
+    instruction: null,
+  }
+)
 
-  props: {
-    instruction: {
-      type: [Object, null],
-      required: true,
-    },
-    isOpened: {
-      type: Boolean,
-      required: true,
-    },
-  },
+const emit = defineEmits<{
+  close: []
+  'instruction-edited': [InstructionModel]
+}>()
 
-  emits: ['close', 'instruction-edited'],
-  setup() {
-    const toaster = useToasterStore()
-    const organizationsStore = useOrganizationsStore()
-    return {
-      toaster,
-      organizationsStore,
-    }
-  },
+const toaster = useToasterStore()
+const organizationCode = useOrganizationCode()
 
-  data() {
-    return {
-      form: null,
-      asyncing: false,
-      invalid: false,
-    }
-  },
+const { t } = useNuxtI18n()
 
-  watch: {
-    instruction: {
-      handler(instruction) {
-        if (instruction)
-          this.form = {
-            ...instruction,
-            publication_date: new Date(instruction.publication_date),
-            // only reduce to array if not already an object
-            people_groups: instruction.people_groups.reduce
-              ? instruction.people_groups.reduce((acc, group) => {
-                  acc[group.id] = true
-                  return acc
-                }, {})
-              : instruction.people_groups,
-          }
-      },
-      immediate: true,
-    },
-  },
+const form = ref(null)
+const asyncing = ref(false)
+const invalid = ref(false)
 
-  methods: {
-    cancel() {
-      this.$emit('close')
-    },
-    async saveInstruction() {
-      const isValid = await this.$refs.instructionForm.v$.$validate()
-      if (!isValid) {
-        return
+watch(
+  () => props.instruction,
+  (instruction) => {
+    if (instruction)
+      form.value = {
+        ...instruction,
+        publication_date: new Date(instruction.publication_date),
+        // only reduce to array if not already an object
+        people_groups: instruction.people_groups.reduce
+          ? instruction.people_groups.reduce((acc, group) => {
+              acc[group.id] = true
+              return acc
+            }, {})
+          : instruction.people_groups,
       }
-      this.asyncing = true
-
-      try {
-        const formData = {
-          ...this.form,
-          publication_date: this.form.publication_date.toISOString(),
-          people_groups_ids: Object.entries(this.form.people_groups)
-            .filter(([, value]) => value)
-            .map(([id]) => id),
-        }
-        let savedInstruction
-        if (this.instruction?.id) {
-          savedInstruction = await putInstruction(
-            this.organizationsStore.current?.code,
-            this.instruction?.id,
-            formData
-          )
-        } else {
-          savedInstruction = await createInstruction(
-            this.organizationsStore.current?.code,
-            formData
-          )
-        }
-        this.toaster.pushSuccess(this.$t('instructions.save.success'))
-
-        this.$emit('instruction-edited', savedInstruction)
-      } catch (err) {
-        this.toaster.pushError(`${this.$t('instructions.save.error')} (${err})`)
-        console.error(err)
-      } finally {
-        this.asyncing = false
-        this.$emit('close')
-      }
-    },
   },
+  { immediate: true }
+)
+
+const cancel = () => emit('close')
+
+const instructionFormRef = useTemplateRef('instructionForm')
+
+const saveInstruction = async () => {
+  const isValid = await instructionFormRef.value.v$.$validate()
+  if (!isValid) {
+    return
+  }
+  asyncing.value = true
+
+  try {
+    const formData = {
+      ...form.value,
+      publication_date: form.value.publication_date.toISOString(),
+      people_groups_ids: Object.entries(form.value.people_groups)
+        .filter(([, value]) => value)
+        .map(([id]) => id),
+    }
+    let savedInstruction: InstructionModel
+    if (props.instruction?.id) {
+      savedInstruction = await putInstruction(organizationCode, props.instruction.id, formData)
+    } else {
+      savedInstruction = await createInstruction(organizationCode, formData)
+    }
+    toaster.pushSuccess(t('instructions.save.success'))
+
+    emit('instruction-edited', savedInstruction)
+  } catch (err) {
+    toaster.pushError(`${t('instructions.save.error')} (${err})`)
+    console.error(err)
+  } finally {
+    asyncing.value = false
+    emit('close')
+  }
 }
 </script>

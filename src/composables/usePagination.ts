@@ -57,6 +57,7 @@ export type Pagination = {
   canPrev: Ref<boolean>
   canNext: Ref<boolean>
   query: () => PaginationQuery
+  setLimit: (num: number) => void
 }
 
 /**
@@ -124,6 +125,10 @@ export const usePagination = (
     }
   }
 
+  const setLimit = (num: number) => {
+    limit.value = num
+  }
+
   return {
     current,
     limit,
@@ -138,5 +143,6 @@ export const usePagination = (
     first,
     last,
     query,
+    setLimit,
   }
 }

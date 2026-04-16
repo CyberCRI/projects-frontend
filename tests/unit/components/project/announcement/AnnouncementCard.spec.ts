@@ -1,17 +1,8 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
-import english from '@/i18n/locales/en.json'
 import AnnouncementCard from '@/components/project/announcement/AnnouncementCard.vue'
 import { ProjectFactory } from '@/../tests/factories/project.factory'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
+import { describe, expect, it } from 'vitest'
 
 describe('AnnouncementCard.vue', () => {
   it('should render component', () => {
@@ -29,7 +20,6 @@ describe('AnnouncementCard.vue', () => {
           project: ProjectFactory.generate(),
         },
       },
-      i18n,
     })
     expect(wrapper.exists()).toBe(true)
   })

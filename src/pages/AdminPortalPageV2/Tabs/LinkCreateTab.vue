@@ -135,8 +135,6 @@ import { postInvitation } from '@/api/invitations.service.ts'
 import TextInput from '@/components/base/form/TextInput.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
-import useValidate from '@vuelidate/core'
-import { helpers, required } from '@vuelidate/validators'
 import GroupSelectDrawer from '@/components/group/GroupSelectDrawer/GroupSelectDrawer.vue'
 import GroupCard from '@/components/group/GroupCard.vue'
 import useToasterStore from '@/stores/useToaster.ts'
@@ -173,7 +171,6 @@ export default {
         description: '', // non mandatory but still can't be null for api
         expire_at: null,
       },
-      v$: useValidate(),
       isSaving: false,
       validityType: null,
       showDatePicker: false,
@@ -182,21 +179,6 @@ export default {
     }
   },
 
-  validations() {
-    return {
-      form: {
-        expire_at: {
-          required: helpers.withMessage(
-            this.$t('invitation.create.field.validity.error'),
-            required
-          ),
-        },
-        people_group_id: {
-          required: helpers.withMessage(this.$t('invitation.create.field.group.error'), required),
-        },
-      },
-    }
-  },
   computed: {
     formNotEmpty() {
       return !!this.form.expire_at && !!this.form.people_group_id

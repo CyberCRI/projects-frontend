@@ -128,10 +128,12 @@ const organizationCode = useOrganizationCode()
 const groupId = computed(() => props.group.id)
 
 const { data: members, status } = getGroupMember(organizationCode, groupId, {
-  query: { limit: 5 },
   default: () => factoryPagination(() => memberSkeleton({ is_leader: true }), 1),
+  paginationConfig: {
+    limit: 5,
+  },
 })
-const leaders = computed(() => members.value?.filter((item) => item.is_leader))
+const leaders = computed(() => members.value?.filter((item) => item.is_leader) ?? [])
 
 const groupVisibilityLabel = computed(() => {
   if (props.group.publication_status === 'public') {

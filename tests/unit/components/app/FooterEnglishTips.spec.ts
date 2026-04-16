@@ -1,28 +1,11 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import english from '@/i18n/locales/en.json'
 import FooterEnglishTips from '@/components/app/FooterEnglishTips.vue'
 
-import { beforeEach, describe, expect, it } from 'vitest'
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
+import { describe, expect, it } from 'vitest'
 
 describe('FooterEnglishTips', () => {
-  let wrapper
-  let defaultParams
-
-  beforeEach(() => {
-    defaultParams = {
-      i18n,
-    }
-  })
-
   it('should render FooterEnglishTips component', () => {
-    wrapper = lpiShallowMount(FooterEnglishTips, defaultParams)
+    const wrapper = lpiShallowMount(FooterEnglishTips)
 
     expect(wrapper.exists()).toBeTruthy()
   })

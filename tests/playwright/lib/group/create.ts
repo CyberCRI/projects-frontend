@@ -1,5 +1,4 @@
 import { Page } from '@playwright/test'
-import { delay } from '../index'
 import { LogLevel, Logger } from '../../logger'
 
 const logger = new Logger(LogLevel.Debug)
@@ -9,7 +8,7 @@ export async function createGroup(page: Page, GroupName: string) {
   await page.locator('[data-test="dropdown-user-account"]').click()
   await page.locator('[data-test="admin"]').click()
 
-  let groupsTab = await page.locator('[data-test="admin-groups"]')
+  const groupsTab = await page.locator('[data-test="admin-groups"]')
   // button might be hidden in extra tabs dropdown
   const groupsTabCount = await groupsTab.count()
   console.log('groupsTab count', groupsTabCount)

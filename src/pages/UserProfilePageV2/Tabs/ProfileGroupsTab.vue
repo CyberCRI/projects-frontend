@@ -8,7 +8,6 @@
       <ListPaginator class="paginator" :limit="listLimit" :list="user?.people_groups || []">
         <template #default="groupListSlotProps">
           <CardList
-            :desktop-columns-number="6"
             :limit="listLimit"
             :items="groupListSlotProps.items || []"
             :is-loading="groupListSlotProps.isLoading"

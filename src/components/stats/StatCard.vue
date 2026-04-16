@@ -9,15 +9,8 @@
   </div>
 </template>
 
-<script setup>
-defineOptions({ name: 'StatCard' })
-
-defineProps({
-  title: {
-    type: String,
-    default: '',
-  },
-})
+<script setup lang="ts">
+withDefaults(defineProps<{ title?: string }>(), { title: '' })
 </script>
 
 <style lang="scss" scoped>

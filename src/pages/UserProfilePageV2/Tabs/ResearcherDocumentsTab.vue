@@ -18,8 +18,6 @@ import OwnResearcherDocumentsList from '@/components/people/Researcher/OwnResear
 import { DocumentType } from '@/interfaces/researcher'
 import { UserModel } from '@/models/user.model'
 
-defineOptions({ name: 'ResearcherDocumentsTab' })
-
 const { t } = useNuxtI18n()
 
 const props = defineProps<{ docType: DocumentType; user: UserModel }>()

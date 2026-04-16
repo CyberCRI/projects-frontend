@@ -283,7 +283,9 @@
       "news": "Uudised",
       "featured-projects": "Omanäolised projektid",
       "templates": {
-        "add": "Malli lisamine"
+        "add": "Malli lisamine",
+        "delete-templates": "Mallide kustutamine",
+        "delete-templates-description": "Kas tõesti kustutada mall '{templateName}'?"
       }
     },
     "form": {
@@ -590,7 +592,9 @@
     "date": "Kuupäev",
     "clear-date": "Puhasta kuupäev",
     "chose-date": "Vali kuupäev | Kuupäevade valimine",
-    "filter": "filter | filtrid"
+    "filter": "filter | filtrid",
+    "empty": "Siin pole midagi...",
+    "file": "faili | failid"
   },
   "complete-profile": {
     "bio": {
@@ -1118,7 +1122,8 @@
     "underline": "alla",
     "undo": "Võta tagasi",
     "video": "Video",
-    "save": "Salvestamine väljumata"
+    "save": "Salvestamine väljumata",
+    "server-offline": "Server on välja lülitatud."
   },
   "homeCarousel": {
     "tab1": {
@@ -2021,7 +2026,8 @@
     "title-comment": "Kommentaar",
     "no-templates-set": "Malli pole määratud.",
     "project-purpose": "Projekti eesmärgi vorm",
-    "project-title": "Projekti nimetuse vorm"
+    "project-title": "Projekti nimetuse vorm",
+    "edit-category": "Kategooria muutmine."
   },
   "tips": {
     "background-color": "Seda värvi näidatakse teksti taga.",

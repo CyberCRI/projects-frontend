@@ -19,48 +19,33 @@
   </DynamicGrid>
 </template>
 
-<script>
+<script setup lang="ts">
 import AnnouncementCard from '@/components/project/announcement/AnnouncementCard.vue'
 import DynamicGrid from '@/components/base/DynamicGrid.vue'
-export default {
-  name: 'AnnouncementCardList',
+import { TranslatedAnnouncement } from '@/models/announcement.model'
 
-  components: {
-    AnnouncementCard,
-    DynamicGrid,
-  },
+const router = useRouter()
 
-  props: {
-    announcements: {
-      type: Array,
-      required: true,
-    },
+const props = withDefaults(
+  defineProps<{
+    announcements: TranslatedAnnouncement[]
+    isMoreToggled?: boolean
+  }>(),
+  {
+    isMoreToggled: false,
+  }
+)
 
-    isMoreToggled: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  data() {
-    return {
-      showSnackbar: false,
-    }
-  },
+const showedAnnouncements = computed(() => {
+  return props.isMoreToggled ? props.announcements : props.announcements.slice(0, 6)
+})
 
-  computed: {
-    showedAnnouncements() {
-      return this.isMoreToggled ? this.announcements : this.announcements.slice(0, 6)
-    },
-  },
-  methods: {
-    linkToAnnouncement(announcement) {
-      this.$router.push({
-        name: 'projectAnnouncements',
-        params: { slugOrId: announcement.project.slug },
-        hash: '#tab',
-      })
-    },
-  },
+const linkToAnnouncement = (announcement) => {
+  router.push({
+    name: 'projectAnnouncements',
+    params: { slugOrId: announcement.project.slug },
+    hash: '#tab',
+  })
 }
 </script>
 

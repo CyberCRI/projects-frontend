@@ -4,16 +4,7 @@ import { ProjectCategoryOutputFactory } from '@/../tests/factories/project-categ
 
 import pinia from '@/stores'
 import useProjectCategoriesStore from '@/stores/useProjectCategories'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
-
-const factory = (props?) => {
-  return lpiMount(CategoriesFilterSummary, {
-    props: {
-      ...props,
-    },
-  })
-}
+import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('CategoriesFilterEditor.vue', () => {
   beforeEach(() => {
@@ -21,20 +12,23 @@ describe('CategoriesFilterEditor.vue', () => {
     projectCategories._all = ProjectCategoryOutputFactory.generateMany(8)
   })
   it('should render component', () => {
-    const wrapper = factory({ modelValue: [] })
+    const wrapper = lpiMount(CategoriesFilterSummary, { props: { modelValue: [] } })
     expect(wrapper.exists()).toBe(true)
   })
 
   it('should display category buttons', () => {
-    const wrapper = factory({ modelValue: ProjectCategoryOutputFactory.generateMany(8) })
+    const wrapper = lpiMount(CategoriesFilterSummary, {
+      props: { modelValue: ProjectCategoryOutputFactory.generateMany(8) },
+    })
     const buttonContainers = wrapper.findAll('.filter-value')
 
     expect(buttonContainers.length).toBe(8)
   })
 
   it('should emit event update is triggered', async () => {
-    const wrapper = factory({ modelValue: ProjectCategoryOutputFactory.generateMany(8) })
-    const vm: any = wrapper.vm
+    const wrapper = lpiMount(CategoriesFilterSummary, {
+      props: { modelValue: ProjectCategoryOutputFactory.generateMany(8) },
+    })
 
     const buttonContainer = wrapper.find('.filter-value')
     buttonContainer.trigger('click')

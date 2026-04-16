@@ -1,12 +1,7 @@
 <template>
   <IconList />
 </template>
-<script>
+
+<script setup lang="ts">
 import IconList from '@/components/dev/IconList/IconList.vue'
-
-export default {
-  name: 'DebugIcons',
-
-  components: { IconList },
-}
 </script>

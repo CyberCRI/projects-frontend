@@ -16,45 +16,31 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import LinkedProjects from '@/components/project/linked-project/LinkedProjects.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
+import { TranslatedProject } from '@/models/project.model'
 
-export default {
-  name: 'ProjectLinkedProjectsTab',
+const projectLayoutToggleAddModal = inject<(string) => void>('projectLayoutToggleAddModal')
 
-  components: {
-    LinkedProjects,
-    LpiButton,
-  },
+withDefaults(
+  defineProps<{
+    project: TranslatedProject
+    linkedProjects?: TranslatedProject[]
+    isInEditingMode?: boolean
+  }>(),
+  {
+    linkedProjects: () => [],
+    isInEditingMode: false,
+  }
+)
 
-  inject: ['projectLayoutToggleAddModal'],
+defineEmits<{
+  'reload-linked-projects': []
+}>()
 
-  props: {
-    project: {
-      type: Object,
-      default: () => ({}),
-    },
-
-    linkedProjects: {
-      type: Array,
-      default: () => [],
-    },
-
-    isInEditingMode: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  emits: ['reload-linked-projects'],
-
-  setup() {
-    useScrollToTab()
-    const { canEditProject } = usePermissions()
-    return { canEditProject }
-  },
-}
+useScrollToTab()
+const { canEditProject } = usePermissions()
 </script>
 
 <style lang="scss" scoped>

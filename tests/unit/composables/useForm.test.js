@@ -109,7 +109,7 @@ describe('useForm', () => {
       name: 'jaques',
     })
 
-    const onClean = (data) => {
+    const onClean = () => {
       return {
         name: 'newName',
       }

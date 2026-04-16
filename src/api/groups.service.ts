@@ -18,7 +18,7 @@ import { EventModel } from '@/models/event.model'
 
 // HIERARCHY
 export async function getHierarchyGroups(organizationCode: string, config = {}) {
-  return await useAPI<PaginationResult<HierarchyGroupModel>>(
+  return await useAPI<HierarchyGroupModel>(
     `organization/${organizationCode}/people-groups-hierarchy/`,
     config
   )
@@ -187,7 +187,7 @@ export async function getGroupAllLocations(
   groupId: PeopleGroupIdOrSlug,
   config = {}
 ) {
-  return await useAPI<PaginationResult<LocationModel>>(
+  return await useAPI<LocationModel[]>(
     `organization/${organizationCode}/people-group/${groupId}/all-locations/`,
     config
   )

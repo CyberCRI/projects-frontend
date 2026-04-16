@@ -1,29 +1,10 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
 import LanguageFilter from '@/components/search/Filters/LanguageFilter.vue'
-import english from '@/i18n/locales/en.json'
 
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
-import flushPromises from 'flush-promises'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
-
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
-
-const factory = (props?) => {
-  return lpiMount(LanguageFilter, {
-    props: {
-      ...props,
-    },
-    i18n,
-  })
-}
+import { flushPromises } from '@vue/test-utils'
+import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('LanguageFilter.vue', () => {
   beforeEach(() => {
@@ -31,19 +12,19 @@ describe('LanguageFilter.vue', () => {
     organizationsStore._current = { code: 'TEST', languages: ['en', 'fr'] } as any
   })
   it('should render component', () => {
-    const wrapper = factory({ modelValue: [] })
+    const wrapper = lpiMount(LanguageFilter, { props: { modelValue: [] } })
     expect(wrapper.exists()).toBe(true)
   })
 
   it('should display english and french buttons', () => {
-    const wrapper = factory({ modelValue: [] })
+    const wrapper = lpiMount(LanguageFilter, { props: { modelValue: [] } })
     const buttonContainers = wrapper.findAll('.lpi-checkbox')
 
     expect(buttonContainers.length).toBe(2)
   })
 
   it('should emit event update is triggered', async () => {
-    const wrapper = factory({ modelValue: [] })
+    const wrapper = lpiMount(LanguageFilter, { props: { modelValue: [] } })
     const buttonContainer = wrapper.find('[type=checkbox]')
     ;(buttonContainer as any).setChecked()
     await flushPromises()

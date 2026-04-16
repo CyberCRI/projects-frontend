@@ -6,6 +6,7 @@ import type {
 } from '@/models/project-category.model'
 // import type { ProjectCategoryBackgroundOutput } from '@/models/project-category.model'
 import useAPI from '@/composables/useAPI'
+import { TagModel } from '@/models/tag.model'
 
 export async function createProjectCategory(
   organizationCode: string,
@@ -48,7 +49,7 @@ export async function getProjectCategory(organizationCode: string, id: number) {
 }
 
 export async function getAllProjectCategories(organizationCode: string) {
-  return await useAPI(`organization/${organizationCode}/category/`)
+  return await useAPI<PaginationResult<TagModel>>(`organization/${organizationCode}/category/`)
 }
 
 export async function getRootProjectCategory(organizationCode: string) {

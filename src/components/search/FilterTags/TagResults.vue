@@ -100,10 +100,10 @@ export default {
 
   computed: {
     pagination() {
-      if (!this.request) return { total: 0, current: 1 }
+      if (!this.request) return { total: 0, currentPage: 1 }
       return {
-        currentPage: this.request.current_page,
-        total: this.request.total_page,
+        currentPage: this.request.current_page ?? 0,
+        total: this.request.total_page ?? 0,
         previous: this.request.previous,
         next: this.request.next,
         first: this.request.first,

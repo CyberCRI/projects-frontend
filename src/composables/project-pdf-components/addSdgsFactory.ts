@@ -2,20 +2,13 @@ import { Container } from '@/composables/pdf-helpers/doc-builder'
 import { fetchImageAsDataUrl, proxyImageUrl } from '@/composables/pdf-helpers/usePdfHelpers'
 
 export default async function addSdgsFactory(projectSdgs: (string | ArrayBuffer)[]) {
-  const runtimeConfig = useRuntimeConfig()
   const { locale } = useNuxtI18n()
-  const sdgLogoDataUrl = await fetchImageAsDataUrl(
-    proxyImageUrl(`${runtimeConfig.public.appPublicBinariesPrefix}/sdgs/logo.png`)
-  )
+  const sdgLogoDataUrl = await fetchImageAsDataUrl(proxyImageUrl(usePublicURL(`/sdgs/logo.png`)))
   let sdgImages = []
   if (projectSdgs && projectSdgs.length > 0) {
     sdgImages = await Promise.all(
       (projectSdgs || []).map((sdg) =>
-        fetchImageAsDataUrl(
-          proxyImageUrl(
-            `${runtimeConfig.public.appPublicBinariesPrefix}/sdgs/${locale.value}/${sdg}.svg`
-          )
-        )
+        fetchImageAsDataUrl(proxyImageUrl(usePublicURL(`/sdgs/${locale.value}/${sdg}.svg`)))
       )
     )
   }

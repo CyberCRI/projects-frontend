@@ -11,17 +11,17 @@
     />
   </div>
 </template>
-<script setup>
-/*const props = */ defineProps({
-  project: {
-    type: Object,
-    required: true,
-  },
-  loading: {
-    type: Boolean,
-    required: true,
-  },
-})
+
+<script setup lang="ts">
+import { ProjectModel } from '@/models/project.model'
+
+withDefaults(
+  defineProps<{
+    project?: ProjectModel
+    loading?: boolean
+  }>(),
+  { project: null, loading: true }
+)
 </script>
 <style scoped lang="scss">
 .project-header-image-ctn {

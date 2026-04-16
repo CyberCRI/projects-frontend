@@ -1,8 +1,7 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import BasicCard from '@/components/base/BasicCard.vue'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 describe('BasicCard', () => {
   it('should render BasicCard component', () => {

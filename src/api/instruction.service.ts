@@ -1,45 +1,65 @@
-// import type { APIResponseList } from '@/api/types'
-import type {
-  // InstructionModel,
-  InstructionInput,
-  // InstructionOutput,
-} from '@/models/instruction.model'
-import { _adaptParamsToGetQuery } from '@/api/utils.service'
+import type { InstructionId, InstructionInput, InstructionModel } from '@/models/instruction.model'
 import useAPI from '@/composables/useAPI'
+import { OrganizationModel } from '@/models/organization.model'
 
-export async function getAllInstructions(orgCode: string, params: any) {
-  const adaptedParams = params ? _adaptParamsToGetQuery(params) : {}
-  return await useAPI(`organization/${orgCode}/instruction/`, { ...adaptedParams }) //.data.value
+export async function getAllInstructions(organizationCode: OrganizationModel['code'], config = {}) {
+  return await useAPI<PaginationResult<InstructionModel>>(
+    `organization/${organizationCode}/instruction/`,
+    config
+  )
 }
 
-export async function getInstruction(orgCode: string, idOrSlug: number | string, noError = false) {
-  return await useAPI(`organization/${orgCode}/instruction/${idOrSlug}/`, { noError }) //.data.value
+export async function getInstruction(
+  organizationCode: OrganizationModel['code'],
+  idOrSlug: InstructionId,
+  config = {}
+) {
+  return await useAPI<InstructionModel>(
+    `organization/${organizationCode}/instruction/${idOrSlug}/`,
+    config
+  )
 }
 
-export async function createInstruction(orgCode: string, body: InstructionInput) {
-  return await useAPI(`organization/${orgCode}/instruction/`, { body, method: 'POST' }) // .data.value
+export async function createInstruction(
+  organizationCode: OrganizationModel['code'],
+  body: InstructionInput
+) {
+  return await useAPI<InstructionModel>(`organization/${organizationCode}/instruction/`, {
+    body,
+    method: 'POST',
+  })
 }
 
 export async function putInstruction(
-  orgCode: string,
-  idOrSlug: number | string,
+  organizationCode: OrganizationModel['code'],
+  idOrSlug: InstructionId,
   body: InstructionInput
 ) {
-  return await useAPI(`organization/${orgCode}/instruction/${idOrSlug}/`, { body, method: 'PUT' }) //.data.value
+  return await useAPI<InstructionModel>(
+    `organization/${organizationCode}/instruction/${idOrSlug}/`,
+    { body, method: 'PUT' }
+  )
 }
 
 export async function patchInstruction(
-  orgCode: string,
-  idOrSlug: number | string,
+  organizationCode: OrganizationModel['code'],
+  idOrSlug: InstructionId,
   body: InstructionInput
 ) {
-  return await useAPI(`organization/${orgCode}/instruction/${idOrSlug}/`, {
-    body,
-    method: 'PATCH',
-  }) //.data.value
+  return await useAPI<InstructionModel>(
+    `organization/${organizationCode}/instruction/${idOrSlug}/`,
+    {
+      body,
+      method: 'PATCH',
+    }
+  )
 }
 
-export async function deleteInstruction(orgCode: string, idOrSlug: number | string) {
-  return await useAPI(`organization/${orgCode}/instruction/${idOrSlug}/`, { method: 'DELETE' })
-  //.data.value
+export async function deleteInstruction(
+  organizationCode: OrganizationModel['code'],
+  idOrSlug: InstructionId
+) {
+  return await useAPI(`organization/${organizationCode}/instruction/${idOrSlug}/`, {
+    method: 'DELETE',
+  })
 }

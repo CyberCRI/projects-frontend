@@ -107,7 +107,6 @@ export default {
       expandedEntry: null,
       confirmModalVisible: false,
       currentBlogEntry: null,
-      sockerserver: this.runtimeConfig.public.appWssHost,
       provider: null,
       asyncing: false,
     }
@@ -151,6 +150,7 @@ export default {
     },
     expandedEntry(neo, old) {
       if (neo && neo != old) {
+        if (!import.meta.client) return
         this.$nextTick(() => {
           const target = document.getElementById(`entry-${neo}`)
 

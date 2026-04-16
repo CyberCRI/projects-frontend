@@ -303,9 +303,9 @@ onBeforeMount(async () => {
     // load data
     // general data
     try {
-      const _groupData = await getGroup(orgCode.value, props.groupIdOrSlug)
+      const originalGroupData = await getGroup(orgCode.value, props.groupIdOrSlug)
       // now we can get the real id (not slug)
-      peopleGroupsStore.currentId = _groupData.id
+      peopleGroupsStore.currentId = originalGroupData.id
       if (!canEditGroup.value) {
         router.push({
           name: 'Group',
@@ -314,28 +314,28 @@ onBeforeMount(async () => {
         return
       }
 
-      groupData.value = _groupData
-      form.value.name = _groupData.name
-      form.value.description = _groupData.description
-      form.value.short_description = _groupData.short_description
-      form.value.email = _groupData.email
-      form.value.locations = _groupData.locations
+      groupData.value = originalGroupData
+      form.value.name = originalGroupData.name
+      form.value.description = originalGroupData.description
+      form.value.short_description = originalGroupData.short_description
+      form.value.email = originalGroupData.email
+      form.value.locations = originalGroupData.locations
 
-      form.value.sdgs = [..._groupData.sdgs]
-      form.value.tags = structuredClone(_groupData.tags)
+      form.value.sdgs = [...originalGroupData.sdgs]
+      form.value.tags = structuredClone(originalGroupData.tags)
       // first group in hierarchy is always org group
       // witch is not diplayed and considered null parent for the form and api purpose
       // parent group is always the last group in hierarchy
-      form.value.parentGroup = _groupData.hierarchy?.length
-        ? _groupData.hierarchy[_groupData.hierarchy.length - 1]
+      form.value.parentGroup = originalGroupData.hierarchy?.length
+        ? originalGroupData.hierarchy[originalGroupData.hierarchy.length - 1]
         : null
       // @ts-expect-error 2322
-      form.value.organization = _groupData.organization
-      form.value.type = _groupData.type
-      form.value.publication_status = _groupData.publication_status
+      form.value.organization = originalGroupData.organization
+      form.value.type = originalGroupData.type
+      form.value.publication_status = originalGroupData.publication_status
       // header image
-      form.value.header_image = _groupData.header_image
-      form.value.imageSizes = pictureApiToImageSizes(_groupData.header_image)
+      form.value.header_image = originalGroupData.header_image
+      form.value.imageSizes = pictureApiToImageSizes(originalGroupData.header_image)
 
       if (!props.isReducedMode) {
         // save members

@@ -7,21 +7,10 @@ import { setActivePinia, createPinia } from 'pinia'
 import useUsersStore from '@/stores/useUsers'
 import waitForExpect from 'wait-for-expect'
 
-import flushPromises from 'flush-promises'
+import { flushPromises } from '@vue/test-utils'
 
-// export default function resetStore({ store }) {
-//   const initialState = cloneDeep(store.$state)
-//   store.$reset = () => store.$patch(cloneDeep(initialState))
-// }
-// pinia.use(resetStore)
-
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
-// vi.mock('@/router/index', () => ({
-//   default: {
-//     push: vi.fn(),
-//   },
-// }))
 
 vi.mock('@/api/people.service')
 vi.mock('@/api/auth/auth.service')
@@ -34,9 +23,6 @@ describe('Store module | users | init', () => {
     pinia = createPinia()
     setActivePinia(pinia)
     localStorage.clear()
-  })
-  afterEach(() => {
-    // usersStore.$reset()
   })
   const access_token =
     'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ4dEVDUnNWai1HT3EzcXY3bVVJTDdfQUNjQ2JHZ3NwQ2FsaE55WndKbzM4In0.eyJleHAiOjE2NDYzNTM5NDUsImlhdCI6MTY0NjMxNzk0OCwiYXV0aF90aW1lIjoxNjQ2MzE3OTQ1LCJqdGkiOiI5ZTdiNmJkYS1hNzY4LTQ3MTAtOGE1NS1lMDA5ZDU0NjA2NDciLCJpc3MiOiJodHRwczovL2lkLmxlYXJuaW5nLXBsYW5ldC5vcmcvYXV0aC9yZWFsbXMvbHAiLCJzdWIiOiI0MDA1ZGRmNy0xNzIxLTQ0MGUtYWYyYS00ZGFmZTFmNDI4YzAiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJwcm9qZWN0cy1mcm9udGVuZC1kZXYiLCJzZXNzaW9uX3N0YXRlIjoiZWQxZDQyMDctZTY2MC00MGNiLWExMzUtYWZkNjdjMjYzMWNkIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL3Byb2ZpbGUucHJvamVjdHMuZGV2LmxwLWkuZGV2IiwiaHR0cDovL2xvY2FsaG9zdDo4MDgwIiwiaHR0cDovLzEyNy4wLjAuMTo4MDgwIiwiaHR0cHM6Ly9wcm9qZWN0cy5kZXYuY3JpLXBhcmlzLm9yZyIsImh0dHBzOi8vMTI3LjAuMC4xOjgwODAiLCJodHRwczovL2xvY2FsaG9zdDo4MDgwIl0sInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJzaWQiOiJlZDFkNDIwNy1lNjYwLTQwY2ItYTEzNS1hZmQ2N2MyNjMxY2QiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Imp1bGllbiBkcm91bGV6IiwiZ3JvdXBzIjpbIi9wcm9qZWN0cy9hZG1pbmlzdHJhdG9ycyJdLCJwaWQiOiI1YTc5MGYxZS0wNGFlLTQ0ZTktOTkxOC03YWE2YjQ3ZTllNTQiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJqdWxpZW4uZHJvdWxlekBjcmktcGFyaXMub3JnIiwiZ2l2ZW5fbmFtZSI6Imp1bGllbiIsImZhbWlseV9uYW1lIjoiZHJvdWxleiIsInVzZXIiOnsiaWQiOiI1YTc5MGYxZS0wNGFlLTQ0ZTktOTkxOC03YWE2YjQ3ZTllNTQifSwiZW1haWwiOiJqdWxpZW4uZHJvdWxlekBmcmVlLmZyIn0.MQivUAcfBX-SpXvT6dAXKOOouv169ukjJcXdsFDk_XaAROvHjkoEKIaG0xMcKLDVlS6sYl4Wfdm0YV0Xpe3cCaU-OZDCES7A_Zw9icGsYIYNJLAz-ncVF09Ao3AfA_4OuSQv9lpByOh-F4TekVlVWdTbrdFcn1Y4p6UTl6w6yhcXWeFOd9db2_M0vjc9s8fffpTZIWZM-CkQBvW9wO0bQd1wBKXFfARHHsXQ6B1FNE67UWHztEJepvPdXNC0CLdzFGg-K7hDeNMrCm75ymosy44N3u_DZq1qEjnt0Ext5VJyE4RbITOdN4mxM3CAZFTeNzNb56GgkyHEgLpovWastw'
@@ -64,9 +50,7 @@ describe('Store module | users | init', () => {
     const oldAccessToken = localStorage.getItem('ACCESS_TOKEN')
     const olRefreshToken = localStorage.getItem('REFRESH_TOKEN')
     setTokens()
-    // usersStore.$reset()
-    //usersStore = useUsersStore(pinia)
-    let usersStore = useUsersStore(pinia)
+    const usersStore = useUsersStore(pinia)
     expect(usersStore.accessToken).toBe(null)
     localStorage.setItem('ACCESS_TOKEN', oldAccessToken)
     localStorage.setItem('REFRESH_TOKEN', olRefreshToken)
@@ -78,9 +62,7 @@ describe('Store module | users | init', () => {
     const oldAccessToken = localStorage.getItem('ACCESS_TOKEN')
     const olRefreshToken = localStorage.getItem('REFRESH_TOKEN')
     setTokens()
-    // usersStore.$reset()
-    // usersStore = useUsersStore(pinia)
-    let usersStore = useUsersStore(pinia)
+    const usersStore = useUsersStore(pinia)
     expect(usersStore.accessToken).toBe(access_token)
     localStorage.setItem('ACCESS_TOKEN', oldAccessToken)
     localStorage.setItem('REFRESH_TOKEN', olRefreshToken)
@@ -90,8 +72,7 @@ describe('Store module | users | init', () => {
     const oldAccessToken = window.localStorage.getItem('ACCESS_TOKEN')
     const olRefreshToken = window.localStorage.getItem('REFRESH_TOKEN')
     unsetTokens()
-    // usersStore.$reset()
-    let usersStore = useUsersStore(pinia)
+    const usersStore = useUsersStore(pinia)
     expect(usersStore.accessToken).toBe(null)
     window.localStorage.setItem('ACCESS_TOKEN', oldAccessToken)
     window.localStorage.setItem('REFRESH_TOKEN', olRefreshToken)
@@ -104,9 +85,6 @@ describe('Store module | users | getters', () => {
     pinia = createPinia()
     setActivePinia(pinia)
     localStorage.clear()
-  })
-  afterEach(() => {
-    // usersStore.$reset()
   })
   const stateWithSessionToken = {
     refreshToken:
@@ -279,7 +257,7 @@ describe('Store module | users | getters', () => {
   }
 
   it('isConnected', () => {
-    let usersStore = useUsersStore(pinia)
+    const usersStore = useUsersStore(pinia)
     usersStore.$patch(stateWithSessionToken as any)
     expect(usersStore.isConnected).toBe(true)
 
@@ -288,7 +266,7 @@ describe('Store module | users | getters', () => {
   })
 
   it('user', () => {
-    let usersStore = useUsersStore(pinia)
+    const usersStore = useUsersStore(pinia)
     usersStore.$patch(stateWithSessionToken as any)
     expect(usersStore.user).toEqual({
       name: {
@@ -327,14 +305,14 @@ describe('Store module | users | getters', () => {
       access_token: stateWithUserWithSpecialCharacter.accessToken,
       parsedToken: userFromJWT,
     })
-    let usersStore = useUsersStore(pinia)
+    const usersStore = useUsersStore(pinia)
     usersStore.$patch(stateWithUserWithSpecialCharacter as any)
     expect(usersStore.user.name.firstname).toBe('hénri')
     spy.mockReset()
   })
 
   it('refreshToken', () => {
-    let usersStore = useUsersStore(pinia)
+    const usersStore = useUsersStore(pinia)
     usersStore.$patch(stateWithSessionToken as any)
     expect(usersStore.refreshToken).toBe(stateWithSessionToken.refreshToken)
   })
@@ -347,12 +325,9 @@ describe('Store module | users | actions', () => {
     setActivePinia(pinia)
     localStorage.clear()
   })
-  afterEach(() => {
-    // usersStore.$reset()
-  })
 
   it('logOut', async () => {
-    let usersStore = useUsersStore(pinia)
+    const usersStore = useUsersStore(pinia)
     const logoutFromKeycloakMock = auth.logoutFromKeycloak as Mock
     vi.spyOn(usersStore, 'resetUser')
 
@@ -401,7 +376,7 @@ describe('Store module | users | actions', () => {
       email: 'test.auto.cri@yopmail.com',
     }
 
-    let usersStore = useUsersStore(pinia)
+    const usersStore = useUsersStore(pinia)
     vi.spyOn(usersStore, 'logIn')
 
     await usersStore.logIn({
@@ -425,7 +400,6 @@ describe('Store module | users | actions', () => {
   })
 
   it('refreshToken', async () => {
-    const pid = '4e134c1a-bd53-436d-ad11-02982b19cd9c'
     const keycloakID = 'e55f9554-e1b2-487e-8d88-ec18c99a388a'
     const refresh_token =
       'eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI0NWUwOTFkNi00YzQxLTQwZWItYTI3ZC1kOGM2ODQ4OGM3YjEifQ.eyJleHAiOjE2NDY4NDE5MDUsImlhdCI6MTY0Njg0MDEwNSwianRpIjoiNjVhYmZlZTItYjAxYi00NzhiLTlkZDAtYjUwNGU3NjlmMjRhIiwiaXNzIjoiaHR0cHM6Ly9pZC5sZWFybmluZy1wbGFuZXQub3JnL2F1dGgvcmVhbG1zL2xwIiwiYXVkIjoiaHR0cHM6Ly9pZC5sZWFybmluZy1wbGFuZXQub3JnL2F1dGgvcmVhbG1zL2xwIiwic3ViIjoiZTU1Zjk1NTQtZTFiMi00ODdlLThkODgtZWMxOGM5OWEzODhhIiwidHlwIjoiUmVmcmVzaCIsImF6cCI6InByb2plY3RzLWZyb250ZW5kLWRldiIsInNlc3Npb25fc3RhdGUiOiJlOGM5M2ZhYS0yZjNkLTRjMDUtYjUxNy01YmNhMDYwMDA4YjUiLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwic2lkIjoiZThjOTNmYWEtMmYzZC00YzA1LWI1MTctNWJjYTA2MDAwOGI1In0.wQvwBxUtTpGRO6nlgaYgtd2SiHSqQqp4HbqgoeYzTaE'
@@ -474,7 +448,7 @@ describe('Store module | users | actions', () => {
       parsedToken: parsedToken,
       id_token: id_token,
     })
-    let usersStore = useUsersStore(pinia)
+    const usersStore = useUsersStore(pinia)
     vi.spyOn(usersStore, 'setUser')
     await usersStore.doRefreshToken()
     waitForExpect(() =>
@@ -498,12 +472,9 @@ describe('Store module | users | mutations', () => {
     setActivePinia(pinia)
     localStorage.clear()
   })
-  afterEach(() => {
-    // usersStore.$reset()
-  })
   it('resetUser', () => {
     // TODO set an intial state ?
-    let usersStore = useUsersStore(pinia)
+    const usersStore = useUsersStore(pinia)
     usersStore.resetUser()
 
     const desiredState = {
@@ -519,7 +490,7 @@ describe('Store module | users | mutations', () => {
       notificationsCount: 0,
       notificationsSettings: null,
     }
-    for (let key of Object.keys(desiredState)) {
+    for (const key of Object.keys(desiredState)) {
       expect(desiredState[key]).toEqual(usersStore[key])
     }
   })
@@ -535,7 +506,7 @@ describe('Store module | users | mutations', () => {
       },
       userFromApi: null,
     }
-    let usersStore = useUsersStore(pinia)
+    const usersStore = useUsersStore(pinia)
     usersStore.setUser(payload)
 
     const desiredState = {
@@ -548,7 +519,7 @@ describe('Store module | users | mutations', () => {
       },
     }
 
-    for (let key of Object.keys(desiredState)) {
+    for (const key of Object.keys(desiredState)) {
       expect(desiredState[key]).toEqual(usersStore[key])
     }
   })

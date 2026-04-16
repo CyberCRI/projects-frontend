@@ -3,16 +3,9 @@ import DescriptionDrawer from '@/components/project/description/DescriptionDrawe
 import { beforeEach, vi, describe, expect, it } from 'vitest'
 import { ProjectFactory, ProjectOutputFactory } from '@/../tests/factories/project.factory'
 import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
-import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useProjectsStore from '@/stores/useProjects'
-
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: loadLocaleMessages(),
-}
 
 describe('DescriptionDrawer.vue', () => {
   let wrapper
@@ -29,7 +22,6 @@ describe('DescriptionDrawer.vue', () => {
     const organizationsStore = useOrganizationsStore(pinia)
     organizationsStore._current = OrganizationOutputFactory.generate()
     defaultParams = {
-      i18n,
       props: {
         project: {
           ...ProjectFactory.generate(),

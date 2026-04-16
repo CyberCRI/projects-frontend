@@ -2,7 +2,7 @@
   <NuxtLink
     class="category-card shadow-box"
     :style="{ width: IMAGE_WIDTH }"
-    :to="{ name: 'Category', params: { slugOrId: category?.slug || category?.id } }"
+    :to="{ name: 'Category', params: { slugOrId: category.slug || category.id } }"
   >
     <CategoryCardImage
       :background-color="category.background_color"
@@ -16,11 +16,20 @@
     <div class="title-description-ctn">
       <div class="title-ctn">
         <h3 class="title">
-          {{ capitalize(category?.$t?.name) }}
+          {{
+            // @ts-expect-error TS2339 (translate category or not transalted ?)
+            capitalize(category.$t?.name ?? category.name)
+          }}
         </h3>
         <CategoryFollowButton :category-id="category.id" @click.stop.prevent="" />
       </div>
-      <p class="description" v-html="category?.$t?.description" />
+      <p
+        class="description"
+        v-html="
+          //@ts-expect-error TS2339 (translate category or not transalted ?)
+          category.$t?.description ?? category.name
+        "
+      />
     </div>
   </NuxtLink>
 </template>
@@ -30,9 +39,10 @@ import { capitalize } from '@/functs/string'
 
 import CategoryCardImage from '@/components/category/CategoryCardImage.vue'
 import { pictureApiToImageSizes } from '@/functs/imageSizesUtils'
-import { TranslatedProjectCategory } from '@/models/project-category.model'
+import { ProjectCategoryModel, TranslatedProjectCategory } from '@/models/project-category.model'
 
-const props = defineProps<{ category: TranslatedProjectCategory }>()
+// TODO: many components use this withtout translated Category
+const props = defineProps<{ category: ProjectCategoryModel | TranslatedProjectCategory }>()
 
 const IMAGE_WIDTH = '288px'
 const IMAGE_HEIGHT = '76px'

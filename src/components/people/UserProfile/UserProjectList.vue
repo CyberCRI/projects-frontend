@@ -1,11 +1,6 @@
 <template>
   <div>
-    <CardList
-      :desktop-columns-number="numberColumn"
-      :is-loading="projectsLoading"
-      :limit="limit"
-      :items="projects"
-    >
+    <CardList :is-loading="projectsLoading" :limit="limit" :items="projects">
       <template #default="projectListSlotProps">
         <ProjectCard
           v-if="projectListSlotProps.item"
@@ -31,45 +26,30 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import CardList from '@/components/base/CardList.vue'
 import ProjectCard from '@/components/project/ProjectCard.vue'
 import EmptyCard from './EmptyCard.vue'
-import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
+import { TranslatedProject } from '@/models/project.model'
 
-defineOptions({ name: 'UserProjectList' })
-
-const props = defineProps({
-  projects: {
+const props = withDefaults(
+  defineProps<{
     // use this to pass project list (without making a request here)
-    type: [Array, Boolean],
-    required: true,
-  },
-
-  projectsLoading: {
-    type: Boolean,
-    default: false,
-  },
-
-  emptyLabel: {
-    type: String,
-    default: null,
-  },
-
-  numberColumn: {
-    type: Number,
-    default: 4,
-  },
-
-  limit: {
-    type: Number,
-    default: 12,
-  },
-  pagination: {
-    type: [Object, null],
-    default: null,
-  },
-})
+    projects: TranslatedProject[]
+    projectsLoading?: boolean
+    emptyLabel?: string
+    numberColumn?: number
+    limit?: number
+    pagination?: any
+  }>(),
+  {
+    projectsLoading: false,
+    emptyLabel: null,
+    numberColumn: 4,
+    limit: 12,
+    pagination: null,
+  }
+)
 
 const emit = defineEmits(['card-update', 'pagination-changed'])
 const gridLayout = computed(() => `desktop-col--${props.numberColumn}`)

@@ -1,8 +1,7 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import ToolTip from '@/components/base/ToolTip.vue'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 describe('ToolTip', () => {
   let wrapper
   let defaultParams

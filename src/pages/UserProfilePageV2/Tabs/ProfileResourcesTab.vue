@@ -46,8 +46,6 @@ import ResourceDrawer from '@/components/resources/ResourceDrawer.vue'
 import ResourcesTab from '@/components/resources/ResourcesTab.vue'
 import { UserModel } from '@/models/user.model'
 
-defineOptions({ name: 'ProfileResourcesTab' })
-
 const props = defineProps<{ user: UserModel; isInEditingMode: boolean }>()
 const { canEditUser } = usePermissions()
 const { translateFiles, translateLinks } = useAutoTranslate()

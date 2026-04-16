@@ -1,23 +1,15 @@
-import { lpiShallowMountExtra } from '@/../tests/helpers/LpiMount'
-import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
+import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import App from '@/app.vue'
 
-import MockComponent from '@/../tests/helpers/MockComponent.vue'
 import { checkExpiredToken } from '@/api/auth/keycloakUtils'
-import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
 // issue with webcrypto, so mock so offending import
-import { yUndoPluginKey } from 'y-prosemirror'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
-import useUsersStore from '@/stores/useUsers'
-import type { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
-
-import { refreshAccessToken } from '@/api/auth/auth.service'
-
-vi.mock('y-prosemirror', () => ({
-  default: {},
-}))
+import type { OrganizationOutput } from '@/models/organization.model'
+import { flushPromises } from '@vue/test-utils'
+import { Router } from 'vue-router'
 
 vi.mock('@/api/auth/keycloakUtils', () => {
   return {
@@ -42,106 +34,62 @@ vi.mock('@/api/auth/auth.service', () => {
   }
 })
 
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: loadLocaleMessages(),
-}
-
-// function mockLocalStorage() {
-//     let store = {}
-//     return {
-//         getItem: function (key) {
-//             return store[key]
-//         },
-//         setItem: function (key, value) {
-//             store[key] = value
-//         },
-//         clear: function () {
-//             store = {}
-//         },
-//         removeItem: function (key) {
-//             delete store[key]
-//         },
-//     }
-// }
-
-const localStorageSetItem = vi.spyOn(Storage.prototype, 'setItem')
-const localStorageGetItem = vi.spyOn(Storage.prototype, 'getItem')
-const localStorageRemoveItem = vi.spyOn(Storage.prototype, 'removeItem')
-
 describe('On tab focus', () => {
-  let usersStore
   beforeEach(() => {
     const organizationsStore = useOrganizationsStore(pinia)
     organizationsStore._current = { code: '123' } as OrganizationOutput
-    usersStore = useUsersStore(pinia)
   })
-  //const localStorageMock = mockLocalStorage()
 
-  // Object.defineProperty(window, 'localStorage', {
-  //     value: localStorageMock,
-  //     configurable: true,
-  //     writable: true,
-  // })
-  Object.defineProperty(window, 'socket', { value: { connected: false }, configurable: true })
-
-  const $t = (v) => v
-
-  function _mount() {
-    return lpiShallowMountExtra(App, {
-      i18n,
-      props: {},
-      router: [
-        {
-          path: '/',
-          component: MockComponent,
-          name: 'Home',
-        },
-        { path: '/blank', component: MockComponent, name: 'blank' },
-      ],
+  const localeMount = () => {
+    const wrapper = lpiShallowMount(App, {
       stubs: { NuxtLink: true, NuxtPage: true },
     })
+
+    return {
+      wrapper,
+      // @ts-expect-error ignore vm typing
+      router: wrapper.vm.router as Router,
+      // @ts-expect-error ignore vm typing
+      usersStore: wrapper.vm.usersStore as useUsersStore,
+    }
   }
 
   afterEach(() => {
-    afterEach(() => {
-      localStorage.clear()
-      localStorageSetItem.mockClear()
-      localStorageGetItem.mockClear()
-      localStorageRemoveItem.mockClear()
-    })
+    localStorage.clear()
     vi.clearAllMocks()
-    // usersStore.$reset()
   })
 
-  test('logout if token has expired', () => {
-    usersStore.accessToken = 'acces_token' // pretend user is logged in
+  it('logout if token has expired', async () => {
+    const { wrapper, router, usersStore } = localeMount()
 
-    const { wrapper, router } = _mount()
     vi.spyOn(router, 'push')
     ;(checkExpiredToken as Mock).mockImplementation(() => true)
 
-    window.localStorage.setItem('ACCESS_TOKEN', 'eyJhbGciOiJSUz')
+    // token in both
+    usersStore.accessToken = 'access'
+    localStorage.setItem('ACCESS_TOKEN', 'eyJhbGciOiJSUz')
     window.dispatchEvent(new Event('focus'))
 
     expect(checkExpiredToken).toHaveBeenCalled()
     expect(usersStore.resetUser).toHaveBeenCalled()
 
+    await flushPromises()
+
     expect(router.push).toHaveBeenCalledWith({ name: 'Home' })
 
     wrapper.unmount()
   })
 
-  test('logout if logged in but has no more user token', () => {
-    const { wrapper, router } = _mount()
+  it('logout if logged in but has no more user token', async () => {
+    const { wrapper, router, usersStore } = localeMount()
     vi.spyOn(router, 'push')
 
-    usersStore.accessToken = 'acces_token' // pretend user is logged in
-
-    window.localStorage.setItem('ACCESS_TOKEN', null)
+    // token in store
+    usersStore.accessToken = 'test1'
+    localStorage.setItem('ACCESS_TOKEN', '')
 
     window.dispatchEvent(new Event('focus'))
+    await flushPromises()
 
     expect(usersStore.resetUser).toHaveBeenCalled()
 
@@ -150,16 +98,19 @@ describe('On tab focus', () => {
     wrapper.unmount()
   })
 
-  test('do not logout if not logged in', () => {
-    const { wrapper, router } = _mount()
+  it('do not logout if not logged in', async () => {
+    const { wrapper, router, usersStore } = localeMount()
+
     vi.spyOn(router, 'push')
 
-    window.localStorage.setItem('ACCESS_TOKEN', null)
+    // not token in store and no in local storage
+    usersStore.accessToken = null
+    localStorage.setItem('ACCESS_TOKEN', '')
 
     window.dispatchEvent(new Event('focus'))
+    await flushPromises()
 
     expect(usersStore.resetUser).not.toHaveBeenCalled()
-
     expect(router.push).not.toHaveBeenCalled()
 
     wrapper.unmount()

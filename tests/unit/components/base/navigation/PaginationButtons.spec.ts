@@ -1,8 +1,7 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
 import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
+import { describe, expect, it } from 'vitest'
 const factory = (props?) => {
   return lpiMount(PaginationButtons, {
     props: {

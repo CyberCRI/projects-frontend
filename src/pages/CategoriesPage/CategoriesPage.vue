@@ -35,7 +35,6 @@ const fixedSearch = computed(() => {
 
 const isNavigating = ref(false)
 onBeforeRouteLeave((to, from, next) => {
-  console.log('beh')
   isNavigating.value = true
   if (hasSearch.value) {
     forceSearch.value = true

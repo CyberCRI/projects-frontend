@@ -8,8 +8,8 @@ export const BlogEntryFactory = createFactory<BlogEntryOutput>((faker) => ({
   id: faker.datatype.number(),
   title: faker.lorem.word(),
   content: faker.lorem.sentence(),
-  updated_at: faker.datatype.datetime(),
-  created_at: faker.datatype.datetime(),
+  updated_at: faker.datatype.datetime().toISOString(),
+  created_at: faker.datatype.datetime().toISOString(),
 }))
 
 export const BlogEntryInputFactory = createFactory<BlogEntryInput>((faker) => ({

@@ -283,7 +283,9 @@
       "news": "Nieuws",
       "featured-projects": "Aanbevolen projecten",
       "templates": {
-        "add": "Een sjabloon toevoegen"
+        "add": "Een sjabloon toevoegen",
+        "delete-templates": "Sjablonen verwijderen",
+        "delete-templates-description": "Weet u zeker dat u '{templateName}' sjabloon wilt verwijderen?"
       }
     },
     "form": {
@@ -590,7 +592,9 @@
     "date": "Datum",
     "clear-date": "Datum wissen",
     "chose-date": "Datum selecteren | Selecteer de datum(s)",
-    "filter": "filter | filters"
+    "filter": "filter | filters",
+    "empty": "Niets hier...",
+    "file": "bestand | bestanden"
   },
   "complete-profile": {
     "bio": {
@@ -1118,7 +1122,8 @@
     "underline": "benadrukken",
     "undo": "Ongedaan maken",
     "video": "Video",
-    "save": "Opslaan zonder afsluiten"
+    "save": "Opslaan zonder afsluiten",
+    "server-offline": "Server is offline."
   },
   "homeCarousel": {
     "tab1": {
@@ -2021,7 +2026,8 @@
     "title-comment": "Opmerking",
     "no-templates-set": "Geen sjabloon ingesteld.",
     "placeholder-purpose": "Doel van het project",
-    "placeholder-title": "Titel ter plaatse"
+    "placeholder-title": "Titel ter plaatse",
+    "edit-category": "Categorie bewerken."
   },
   "tips": {
     "background-color": "Deze kleur wordt achter de tekst weergegeven.",

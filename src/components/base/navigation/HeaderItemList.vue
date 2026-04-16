@@ -32,8 +32,18 @@
 import AccordionItem from '@/components/base/AccordionItem.vue'
 import BadgeItem from '@/components/base/BadgeItem.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
+import { IconImageChoice } from '@/functs/IconImage'
+import { RouteLocationRaw } from 'vue-router'
 
-const props = defineProps<{ item: any }>()
+type Item = {
+  leftIcon?: IconImageChoice
+  label: string
+  badge?: string
+  to?: RouteLocationRaw
+  action?: () => void
+  childItems?: Item[]
+}
+const props = defineProps<{ item: Item }>()
 
 const emit = defineEmits<{ close: [] }>()
 const isActive = ref(false)

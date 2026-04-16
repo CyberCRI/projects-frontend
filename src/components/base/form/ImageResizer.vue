@@ -59,10 +59,12 @@ export default {
   },
 
   mounted() {
+    if (!import.meta.client) return
     window.addEventListener('resize', this.reinit)
   },
 
   unmounted() {
+    if (!import.meta.client) return
     window.removeEventListener('resize', this.reinit)
   },
 

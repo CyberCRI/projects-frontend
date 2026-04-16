@@ -2,54 +2,19 @@
   <div class="filter-search-input-ctn">
     <input
       ref="search-input"
-      v-model="model"
-      :placeholder="placeholder"
+      v-bind="attrs"
       class="search-input"
       type="text"
       data-test="search-input"
-      @keyup.enter="onEnter"
+      @keyup.enter="$emit('enter')"
     />
   </div>
 </template>
 
-<script>
-export default {
-  name: 'FilterSearchInput',
+<script setup lang="ts">
+const attrs = useAttrs()
 
-  props: {
-    modelValue: {
-      type: String,
-      default: '',
-    },
-
-    placeholder: {
-      type: String,
-      default: '',
-    },
-  },
-
-  emits: ['update:modelValue', 'enter'],
-
-  data() {
-    return {
-      model: this.modelValue,
-    }
-  },
-  watch: {
-    modelValue(value) {
-      this.model = value
-    },
-    model(value) {
-      this.$emit('update:modelValue', value)
-    },
-  },
-
-  methods: {
-    onEnter() {
-      this.$emit('enter')
-    },
-  },
-}
+defineEmits<{ enter: [] }>()
 </script>
 
 <style lang="scss" scoped>

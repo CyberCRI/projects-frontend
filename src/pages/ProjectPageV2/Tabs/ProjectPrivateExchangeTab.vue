@@ -32,74 +32,64 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import CommentItem from '@/components/project/comment/CommentItem.vue'
 import NoItem from '@/components/project/comment/NoItem.vue'
 import MakeComment from '@/components/project/comment/MakeComment.vue'
-import useUsersStore from '@/stores/useUsers.ts'
+import useUsersStore from '@/stores/useUsers'
+import { TranslatedProject } from '@/models/project.model'
+import { ProjectTeamModel } from '@/models/project-member.model'
 
-export default {
-  name: 'ProjectPrivateExchangeTab',
+const props = withDefaults(
+  defineProps<{
+    project?: TranslatedProject
+    projectMessages?: any[]
+    team?: ProjectTeamModel
+  }>(),
+  {
+    project: null,
+    projectMessages: () => [],
+    team: null,
+  }
+)
 
-  components: { CommentItem, NoItem, MakeComment },
+defineEmits<{
+  'reload-project-messages': []
+}>()
 
-  props: {
-    project: {
-      type: Object,
-      default: () => {},
-    },
-    projectMessages: {
-      type: Array,
-      default: () => [],
-    },
-    team: {
-      type: Object,
-      default: () => {},
-    },
-  },
+const router = useRouter()
+const route = useRoute()
+const usersStore = useUsersStore()
+const { isAdmin } = usePermissions()
 
-  emits: ['reload-project-messages'],
+useScrollToTab()
 
-  setup() {
-    const usersStore = useUsersStore()
-    useScrollToTab()
-    const { isAdmin } = usePermissions()
-    return {
-      usersStore,
-      isAdmin,
-    }
-  },
+const isMemberOrAdmin = computed(() => {
+  const members = [...props.team.members, ...props.team.owners, ...props.team.reviewers]
+  return isAdmin.value || members.find((user) => usersStore.id === user.id)
+})
 
-  computed: {
-    isMemberOrAdmin() {
-      const members = [...this.team.members, ...this.team.owners, ...this.team.reviewers]
-      return this.isAdmin || members.find((user) => this.usersStore.id === user.id)
-    },
-  },
-
-  watch: {
-    project: {
-      handler: function (neo) {
-        if (neo && !this.isMemberOrAdmin) {
-          this.$router.replace({
-            name: 'pageProject',
-            params: { slugOrId: this.project.slug || this.project.id },
-          })
-        }
-      },
-      immediate: true,
-    },
-  },
-
-  mounted() {
-    if (!this.project) {
-      this.$router.replace({
+watch(
+  () => props.project,
+  (neo) => {
+    if (neo && !isMemberOrAdmin.value) {
+      router.replace({
         name: 'pageProject',
-        params: { slugOrId: this.$route.params.slugOrId },
+        params: { slugOrId: props.project.slug || props.project.id },
       })
     }
   },
-}
+  { immediate: true }
+)
+
+onMounted(() => {
+  if (!props.project) {
+    router.replace({
+      name: 'pageProject',
+      params: { slugOrId: route.params.slugOrId },
+    })
+  }
+})
 </script>
 
 <style lang="scss" scoped>

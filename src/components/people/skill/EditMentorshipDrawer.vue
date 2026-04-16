@@ -1,6 +1,6 @@
 <script setup>
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import useSkillTexts from '@/composables/useSkillTexts.js'
+import useSkillTexts from '@/composables/useSkillTexts.ts'
 import { ref, watchEffect } from 'vue'
 import MentorshipForm from '@/components/people/skill/MentorshipForm.vue'
 

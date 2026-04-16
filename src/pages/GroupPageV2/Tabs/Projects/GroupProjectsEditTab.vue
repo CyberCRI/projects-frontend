@@ -16,11 +16,12 @@
 <script setup lang="ts">
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 
+const props = defineProps<{ group: TranslatedPeopleGroupModel }>()
+
 // use group's org code if availabe
 // to allow edition of groups on the meta portal (PROJ-1032)
 const originalOrganizationCode = useOrganizationCode()
 const organizationCode = computed(() => props.group.organization?.code || originalOrganizationCode)
-const props = defineProps<{ group: TranslatedPeopleGroupModel }>()
 const router = useRouter()
 
 const form = ref({

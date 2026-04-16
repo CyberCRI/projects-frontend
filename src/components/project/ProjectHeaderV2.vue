@@ -27,60 +27,26 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import ProjectStatus from '@/components/project/ProjectStatus.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import useUsersStore from '@/stores/useUsers.ts'
+import { TranslatedProject } from '@/models/project.model'
 
-export default {
-  name: 'ProjectHeaderV2',
+const props = withDefaults(
+  defineProps<{
+    project?: TranslatedProject
+    sdgs?: number[]
+    loading?: boolean
+  }>(),
+  {
+    project: null,
+    sdgs: () => [],
+    loading: true,
+  }
+)
 
-  components: { ProjectStatus },
-
-  inject: ['projectLayoutGoToTab'],
-  props: {
-    project: {
-      type: Object,
-      default: () => ({}),
-    },
-
-    sdgs: {
-      type: Array,
-      default: () => [],
-    },
-
-    loading: {
-      type: Boolean,
-      default: true,
-    },
-  },
-
-  emits: ['show-project-announcements', 'update-follow'],
-  setup() {
-    const organizationsStore = useOrganizationsStore()
-    const usersStore = useUsersStore()
-    const runtimeConfig = useRuntimeConfig()
-    return {
-      organizationsStore,
-      usersStore,
-      runtimeConfig,
-    }
-  },
-
-  computed: {
-    showPurposeWithEmptyContent() {
-      return this.project && this.project.purpose !== '   ' && this.project.purpose.length !== 0
-    },
-  },
-
-  mounted() {
-    window.addEventListener('click', this.onClick)
-  },
-
-  unmounted() {
-    window.removeEventListener('click', this.onClick)
-  },
-}
+const showPurposeWithEmptyContent = computed(() => {
+  return props.project && props.project.purpose.trim()
+})
 </script>
 
 <style lang="scss" scoped>

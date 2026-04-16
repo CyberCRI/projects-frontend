@@ -9,17 +9,9 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import DefaultSkillsAdmin from '@/components/admin/DefaultSkillsAdmin.vue'
 import ClassificationAdmin from '@/components/admin/ClassificationAdmin.vue'
-export default {
-  name: 'SkillsTab',
-
-  components: {
-    DefaultSkillsAdmin,
-    ClassificationAdmin,
-  },
-}
 </script>
 
 <style lang="scss" scoped>

@@ -1,15 +1,8 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import UserCard from '@/components/people/UserCard.vue'
 import { UserFactory } from '@/../tests/factories/user.factory'
-import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: loadLocaleMessages(),
-}
+import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('UserCard', () => {
   let wrapper
@@ -17,7 +10,6 @@ describe('UserCard', () => {
 
   beforeEach(() => {
     defaultParams = {
-      i18n,
       props: {
         user: UserFactory.generate(),
       },

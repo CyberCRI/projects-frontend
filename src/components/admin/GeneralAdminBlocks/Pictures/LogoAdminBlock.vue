@@ -11,56 +11,41 @@
     />
   </AdminBlock>
 </template>
-<script>
+
+<script setup lang="ts">
 import { postOrganisationLogo } from '@/api/organizations.service'
 import AdminBlock from '../AdminBlock.vue'
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { pictureApiToImageSizes } from '@/functs/imageSizesUtils'
+import useToasterStore from '@/stores/useToaster'
+import useOrganizationsStore from '@/stores/useOrganizations'
 
-export default {
-  name: 'LogoAdminBlock',
+const toaster = useToasterStore()
+const organizationsStore = useOrganizationsStore()
+const organizationCode = useOrganizationCode()
+const { t } = useNuxtI18n()
 
-  components: {
-    AdminBlock,
-    ImageEditor,
-  },
-  setup() {
-    const toaster = useToasterStore()
-    const organizationsStore = useOrganizationsStore()
-    return {
-      toaster,
-      organizationsStore,
-    }
-  },
+const organization = computed(() => {
+  return organizationsStore.current
+})
+const logoImageSizes = computed(() => {
+  return pictureApiToImageSizes(organization.value?.logo_image)
+})
 
-  computed: {
-    organization() {
-      return this.organizationsStore.current
-    },
-    logoImageSizes() {
-      return pictureApiToImageSizes(this.organization?.logo_image)
-    },
-  },
+const setLogo = async (file) => {
+  try {
+    const formData = new FormData()
+    formData.append('file', file, file.name)
 
-  methods: {
-    async setLogo(file) {
-      try {
-        const formData = new FormData()
-        formData.append('file', file, file.name)
+    await postOrganisationLogo({ code: organizationCode, body: formData })
 
-        await postOrganisationLogo({ code: this.organization.code, body: formData })
+    toaster.pushSuccess(t('admin.portal.general.logo-edit.success'))
 
-        this.toaster.pushSuccess(this.$t('admin.portal.general.logo-edit.success'))
+    await organizationsStore.getCurrentOrganization(organizationCode)
+  } catch (error) {
+    console.error(error)
 
-        await this.organizationsStore.getCurrentOrganization(this.organization.code)
-      } catch (error) {
-        console.error(error)
-
-        this.toaster.pushError(this.$t('admin.portal.general.logo-edit.error'))
-      }
-    },
-  },
+    toaster.pushError(t('admin.portal.general.logo-edit.error'))
+  }
 }
 </script>

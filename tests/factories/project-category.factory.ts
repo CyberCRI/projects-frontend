@@ -10,7 +10,7 @@ import TagFactory from './tag.factory'
 import { OrganizationOutputFactory } from './organization.factory'
 import TemplateFactory from './template.factory'
 
-const ProjectCategoryFactory = createFactory<ProjectCategoryOutput>((faker) => ({
+export const ProjectCategoryFactory = createFactory<ProjectCategoryOutput>((faker) => ({
   ...BaseFactory.generate(),
   id: faker.datatype.number(),
   slug: faker.datatype.string(),
@@ -37,7 +37,7 @@ const ProjectCategoryFactory = createFactory<ProjectCategoryOutput>((faker) => (
   },
   description: faker.lorem.sentences(),
   foreground_color: faker.internet.color(), // Text color
-  is_reviewable: faker.datatype.string(),
+  is_reviewable: faker.datatype.boolean(),
   name: faker.name.title(),
   order_index: faker.datatype.number(),
   template: TemplateFactory.generate(),
@@ -63,9 +63,7 @@ export const ProjectCategoryCreateInputFactory = createFactory<ProjectCategoryCr
   })
 )
 
-export const ProjectCategoryPatchInputFactory = createFactory<ProjectCategoryPatchInput>(
-  (faker) => ({
-    ...ProjectCategoryFactory.generate(),
-    tags: TagFactory.generateMany(2).map((tag) => <number>tag.id),
-  })
-)
+export const ProjectCategoryPatchInputFactory = createFactory<ProjectCategoryPatchInput>(() => ({
+  ...ProjectCategoryFactory.generate(),
+  tags: TagFactory.generateMany(2).map((tag) => tag.id),
+}))

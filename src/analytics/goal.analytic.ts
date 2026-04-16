@@ -1,6 +1,5 @@
 import analytics from '@/analytics'
 import { GoalModel } from '@/models/goal.model'
-import { SdgOutput } from '@/models/sdg.model'
 
 export interface GoalAnalytic {
   project: {
@@ -39,7 +38,7 @@ export default {
    * @param project_id
    * @param sdgs
    */
-  updateSDG(project_id: string, sdgs: Array<SdgOutput>): void {
+  updateSDG(project_id: string, sdgs: { id: number; title: string }[]): void {
     analytics.track('update_SDG', {
       project: {
         id: project_id,

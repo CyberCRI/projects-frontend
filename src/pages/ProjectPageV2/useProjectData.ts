@@ -220,7 +220,7 @@ export default function useProjectData() {
 
   // used to register a call back (setHeader in ProjectPage)
   // so we dont rely on a watcher (that occasionaly enter infinite loop)
-  const postFecthProjectHook: Ref<((project: any) => Promise<void>) | null> = ref(null)
+  const postFecthProjectHook: Ref<((project: any) => Promise<void> | void) | null> = ref(null)
 
   const reloadProject = async () => {
     const res = await projectsStore.getProject(project.value.id)
@@ -406,7 +406,6 @@ export default function useProjectData() {
           project: project.value,
           team: team.value,
           onReloadTeam: () => {
-            console.log('reload tabs')
             reloadTeam()
           },
         },
@@ -607,7 +606,6 @@ export default function useProjectData() {
           team: team.value,
           isInEditingMode: true,
           onReloadTeam: () => {
-            console.log('reload tabs')
             reloadTeam()
           },
         },

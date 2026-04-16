@@ -14,45 +14,22 @@
   </button>
 </template>
 
-<script>
+<script setup lang="ts">
 import remixiconUrl from 'remixicon/fonts/remixicon.symbol.svg?url'
 
-export default {
-  name: 'MenuItem',
-
-  props: {
-    icon: {
-      type: String,
-      required: true,
-    },
-
-    title: {
-      type: String,
-      required: true,
-    },
-
-    action: {
-      type: Function,
-      required: true,
-    },
-
-    isActive: {
-      type: Function,
-      default: null,
-    },
-
-    isDisabled: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  data() {
-    return {
-      remixiconUrl,
-    }
-  },
-}
+withDefaults(
+  defineProps<{
+    icon: string
+    title: string
+    action: () => void
+    isActive?: () => void
+    isDisabled?: boolean
+  }>(),
+  {
+    isActive: null,
+    isDisabled: false,
+  }
+)
 </script>
 
 <style lang="scss" scoped>

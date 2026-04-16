@@ -283,7 +283,9 @@
       "news": "Noticias",
       "featured-projects": "Proyectos destacados",
       "templates": {
-        "add": "Añadir una plantilla"
+        "add": "Añadir una plantilla",
+        "delete-templates": "Eliminar plantillas",
+        "delete-templates-description": "¿Estás seguro de que quieres eliminar la plantilla '{templateName}' ?"
       }
     },
     "form": {
@@ -590,7 +592,9 @@
     "date": "Fecha",
     "clear-date": "Fecha clara",
     "chose-date": "Seleccionar fecha | Seleccione la fecha(s)",
-    "filter": "filtro | filtros"
+    "filter": "filtro | filtros",
+    "empty": "Nada aquí...",
+    "file": "archivo | archivos"
   },
   "complete-profile": {
     "bio": {
@@ -1118,7 +1122,8 @@
     "underline": "Subsidio",
     "undo": "Undo",
     "video": "Video",
-    "save": "Guardar sin salir"
+    "save": "Guardar sin salir",
+    "server-offline": "El servidor está fuera de línea."
   },
   "homeCarousel": {
     "tab1": {
@@ -2021,7 +2026,8 @@
     "title-comment": "Comentario",
     "no-templates-set": "Sin plantilla.",
     "placeholder-purpose": "Finalidad del proyecto",
-    "placeholder-title": "Título In situ"
+    "placeholder-title": "Título In situ",
+    "edit-category": "Edición de categoría."
   },
   "tips": {
     "background-color": "Este color se mostrará detrás del texto.",

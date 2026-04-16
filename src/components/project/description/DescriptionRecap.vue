@@ -1,9 +1,5 @@
 <template>
   <div class="description-recap">
-    <!--h4 class="description-label">
-      {{ $t('form.description') }}
-    </h4-->
-
     <div :style="style" class="description-content-ctn">
       <HtmlLimiter
         :html="description"
@@ -20,42 +16,26 @@
       :to="{
         name: 'projectDescription',
         hash: '#tab',
-        params: { slugOrId: $route.params.slugOrId },
+        params: { slugOrId: project.slug || project.id },
       }"
     />
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
 import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
+import { TranslatedProject } from '@/models/project.model'
 
-export default {
-  name: 'DescriptionRecap',
+defineProps<{ project: TranslatedProject; description: string }>()
 
-  components: { SeeMoreArrow, HtmlLimiter },
+const style = ref({})
 
-  props: {
-    description: {
-      type: String,
-      required: true,
-    },
-  },
-
-  data() {
-    return {
-      style: {},
-    }
-  },
-
-  methods: {
-    computeLayout() {
-      this.style = {}
-    },
-    layoutComputed(event) {
-      this.style = { height: event.height + 'px' }
-    },
-  },
+const computeLayout = () => {
+  style.value = {}
+}
+const layoutComputed = (event) => {
+  style.value = { height: event.height + 'px' }
 }
 </script>
 

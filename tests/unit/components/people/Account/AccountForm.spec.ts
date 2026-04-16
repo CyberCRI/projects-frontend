@@ -1,19 +1,10 @@
 import AccountForm from '@/components/people/Account/AccountForm.vue'
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import english from '@/i18n/locales/en.json'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { UserFactory } from '@/../tests/factories/user.factory'
 import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
-
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
 
 describe('AccountForm', () => {
   let wrapper
@@ -27,7 +18,6 @@ describe('AccountForm', () => {
         isAddMode: true,
         selectedUser: UserFactory.generate(),
       },
-      i18n,
     }
   })
 

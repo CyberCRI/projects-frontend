@@ -48,10 +48,13 @@ import { difference } from 'es-toolkit'
 import GroupNewsPreview from '@/components/group/Modules/News/GroupNewsPreview.vue'
 import GroupEventPreview from '@/components/group/Modules/Event/GroupEventPreview.vue'
 
-const props = defineProps<{
-  group: TranslatedPeopleGroupModel
-  isLoading: boolean
-}>()
+const props = withDefaults(
+  defineProps<{
+    group: TranslatedPeopleGroupModel
+    isLoading?: boolean
+  }>(),
+  { isLoading: false }
+)
 
 // for recap we ignore similars
 const IGNORED_KEYS: PeopleGroupModulesKeys[] = ['similars']

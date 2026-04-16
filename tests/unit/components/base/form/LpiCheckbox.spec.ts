@@ -1,8 +1,7 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 describe('LpiCheckbox', () => {
   let wrapper
   let defaultParams
@@ -11,7 +10,7 @@ describe('LpiCheckbox', () => {
     defaultParams = {
       props: {
         label: 'checkbox',
-        checkedValue: false,
+        modelValue: false,
       },
     }
   })
@@ -40,16 +39,17 @@ describe('LpiCheckbox', () => {
     expect(input.exists()).toBeTruthy()
   })
 
-  it('should emit input event', () => {
-    wrapper = lpiShallowMount(LpiCheckbox, defaultParams)
-    const event = {
-      target: {
-        value: !defaultParams.props.checkedValue,
+  it('should emit input event', async () => {
+    wrapper = lpiShallowMount(LpiCheckbox, {
+      props: {
+        ...defaultParams.props,
+        modelValue: false,
+        'onUpdate:modelValue': (e) => wrapper?.setProps({ modelValue: e }),
       },
-    }
+    })
 
-    wrapper.vm.toggle(event)
+    await wrapper.find('input').setValue(true)
 
-    expect(wrapper.emitted('update:modelValue', true)).toBeTruthy()
+    expect(wrapper.props('modelValue')).toBe(true)
   })
 })

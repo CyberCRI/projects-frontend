@@ -1,14 +1,14 @@
-<script setup>
+<script setup lang="ts">
 import TipTapEditorContainer from '@/components/base/form/TextEditor/TipTapEditorContainer.vue'
 import TipTapEditorContent from '@/components/base/form/TextEditor/TipTapEditorContent.vue'
 import TipTapModals from '@/components/base/form/TextEditor/TipTapModals.vue'
-import { onMounted, onBeforeUnmount } from 'vue'
-
 import {
   emitsDefinitions,
-  propsDefinitions,
+  PropsDefault,
+  PropsDefinitions,
   useTipTap,
-} from '@/components/base/form/TextEditor/useTipTap.js'
+} from '@/components/base/form/TextEditor/useTipTap'
+import { onMounted, onBeforeUnmount } from 'vue'
 
 const { t } = useNuxtI18n()
 
@@ -16,7 +16,7 @@ const { t } = useNuxtI18n()
 const emit = defineEmits(emitsDefinitions)
 
 // props
-const props = defineProps(propsDefinitions)
+const props = withDefaults(defineProps<PropsDefinitions>(), PropsDefault)
 
 const { editor, onDrop, resetContent, appendTranslationsStyle, initEditor, destroyEditor } =
   useTipTap({
@@ -36,7 +36,6 @@ onBeforeUnmount(() => {
 })
 
 // expose
-// editor needs to be accessed by parent (see HelpAdminTab.vue)
 defineExpose({
   editor,
   resetContent,

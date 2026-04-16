@@ -6,28 +6,16 @@ import { describe, expect, it } from 'vitest'
 import waitForExpect from 'wait-for-expect'
 import { nextTick } from 'vue'
 import useToasterStore from '@/stores/useToaster'
-import english from '@/i18n/locales/en.json'
-
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
 
 describe('AppToastList', () => {
-  let wrapper
-  let defaultParams = { i18n }
-
   it('should render AppToastList component', () => {
-    wrapper = lpiShallowMount(AppToastList, defaultParams)
+    const wrapper = lpiShallowMount(AppToastList)
 
     expect(wrapper.exists()).toBeTruthy()
   })
 
   it('should auto close after a delay', async () => {
-    wrapper = lpiMount(AppToastList, defaultParams)
+    const wrapper = lpiMount(AppToastList)
     const toaster = useToasterStore()
     toaster.toastList.push({
       isOpened: true,

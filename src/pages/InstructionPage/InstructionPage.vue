@@ -3,13 +3,11 @@ import { getInstruction, deleteInstruction } from '@/api/instruction.service'
 import useToasterStore from '@/stores/useToaster'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import { getOrganizationByCode } from '@/api/organizations.service'
+import { InstructionId } from '@/models/instruction.model'
 
-const props = defineProps({
-  slugOrId: {
-    type: String,
-    required: true,
-  },
-})
+const props = defineProps<{
+  slugOrId: InstructionId
+}>()
 
 const { translateInstruction } = useAutoTranslate()
 
@@ -20,8 +18,8 @@ const organizationsStore = useOrganizationsStore()
 const router = useRouter()
 const route = useRoute()
 
-const _instruction = useState(() => null)
-const instruction = translateInstruction(_instruction)
+const originalInstruction = useState(() => null)
+const instruction = translateInstruction(originalInstruction)
 const loading = ref(false)
 const editedInstruction = ref(null)
 const instructionToDelete = ref(null)
@@ -44,7 +42,10 @@ const loadInstruction = async () => {
   loading.value = true
   // TODO: Fetch instuction
   try {
-    _instruction.value = await getInstruction(organizationsStore.current?.code, props.slugOrId)
+    originalInstruction.value = await getInstruction(
+      organizationsStore.current?.code,
+      props.slugOrId
+    )
 
     loading.value = false
   } catch (err) {

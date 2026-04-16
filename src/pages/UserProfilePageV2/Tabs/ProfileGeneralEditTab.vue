@@ -118,7 +118,7 @@
         :picture-alt="`${form.last_name} image`"
         :contain="true"
         :round-picture="true"
-        :default-picture="`${runtimeConfig.public.appPublicBinariesPrefix}/patatoids-project/Patatoid-1.png`"
+        :default-picture="DEFAULT_USER_PATATOID"
       />
     </div>
 
@@ -276,6 +276,60 @@ export default {
     const runtimeConfig = useRuntimeConfig()
     const form = ref(defaultForm())
     const { startEditWatcher, stopEditWatcher } = useEditWatcher(form)
+
+    const { t } = useNuxtI18n()
+
+    const rules = computed(() => {
+      return {
+        form: {
+          first_name: {
+            required: helpers.withMessage(
+              t('profile.edit.general.first-name.is-required'),
+              required
+            ),
+            alphanum: helpers.withMessage(
+              t('profile.edit.general.no-special-characters'),
+              helpers.regex(VALID_NAME_REGEX)
+            ),
+          },
+          last_name: {
+            required: helpers.withMessage(
+              t('profile.edit.general.last-name.is-required'),
+              required
+            ),
+            alphanum: helpers.withMessage(
+              t('profile.edit.general.no-special-characters'),
+              helpers.regex(VALID_NAME_REGEX)
+            ),
+          },
+          professional_email: {
+            required: helpers.withMessage(
+              t('profile.edit.general.professional-email.is-required'),
+              required
+            ),
+            email: helpers.withMessage(
+              t('profile.edit.general.professional-email.is-email'),
+              email
+            ),
+          },
+          title: {
+            required: helpers.withMessage(t('profile.edit.general.title.is-required'), required),
+          },
+          personal_webpage: {
+            url: helpers.withMessage(t('profile.edit.general.personal-webpage.is-url'), url),
+          },
+          linkedin: {
+            url: helpers.withMessage(t('profile.edit.general.linkedin.is-url'), url),
+          },
+          // twitter: {
+          //   url: helpers.withMessage(t('profile.edit.general.twitter.is-url'), url),
+          // },
+        },
+      }
+    })
+
+    const v$ = useVuelidate(rules, form)
+
     return {
       toaster,
       usersStore,
@@ -283,6 +337,7 @@ export default {
       startEditWatcher,
       stopEditWatcher,
       form,
+      v$,
     }
   },
   data() {
@@ -291,60 +346,6 @@ export default {
       tagsSelection: [],
       showSdgsDrawer: false,
       sdgsSelection: [],
-      v$: useVuelidate(),
-      // showCancelConfirmModal: false,
-    }
-  },
-
-  validations() {
-    return {
-      form: {
-        first_name: {
-          required: helpers.withMessage(
-            this.$t('profile.edit.general.first-name.is-required'),
-            required
-          ),
-          alphanum: helpers.withMessage(
-            this.$t('profile.edit.general.no-special-characters'),
-            helpers.regex(VALID_NAME_REGEX)
-          ),
-        },
-        last_name: {
-          required: helpers.withMessage(
-            this.$t('profile.edit.general.last-name.is-required'),
-            required
-          ),
-          alphanum: helpers.withMessage(
-            this.$t('profile.edit.general.no-special-characters'),
-            helpers.regex(VALID_NAME_REGEX)
-          ),
-        },
-        professional_email: {
-          required: helpers.withMessage(
-            this.$t('profile.edit.general.professional-email.is-required'),
-            required
-          ),
-          email: helpers.withMessage(
-            this.$t('profile.edit.general.professional-email.is-email'),
-            email
-          ),
-        },
-        title: {
-          required: helpers.withMessage(
-            this.$t('profile.edit.general.title.is-required'),
-            required
-          ),
-        },
-        personal_webpage: {
-          url: helpers.withMessage(this.$t('profile.edit.general.personal-webpage.is-url'), url),
-        },
-        linkedin: {
-          url: helpers.withMessage(this.$t('profile.edit.general.linkedin.is-url'), url),
-        },
-        // twitter: {
-        //   url: helpers.withMessage(this.$t('profile.edit.general.twitter.is-url'), url),
-        // },
-      },
     }
   },
 
@@ -368,19 +369,6 @@ export default {
   },
 
   methods: {
-    // cancel() {
-    //   if (this.hasFormChanged) {
-    //     this.showCancelConfirmModal = true
-    //   } else {
-    //     this.resetAndLeaveEditPage()
-    //   }
-    // },
-
-    // resetAndLeaveEditPage() {
-    //   this.resetForm()
-    //   this.redirectToProfile()
-    // },
-
     async save() {
       this.asyncing = true
       const isValid = await this.v$.$validate()

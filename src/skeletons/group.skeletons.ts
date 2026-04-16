@@ -45,6 +45,8 @@ export const memberSkeleton = (def?: Partial<GroupMember>): Omit<GroupMember, 'i
   family_name: 'family_name',
   permissions: [],
   description: 'description',
+  short_description: 'short_description',
+  job: 'job',
   resources: {
     files: 0,
     links: 0,

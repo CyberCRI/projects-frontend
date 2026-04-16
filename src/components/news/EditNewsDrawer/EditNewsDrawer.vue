@@ -38,7 +38,7 @@ export default {
   props: {
     news: {
       type: [Object, null],
-      required: true,
+      default: null,
     },
     isOpened: {
       type: Boolean,

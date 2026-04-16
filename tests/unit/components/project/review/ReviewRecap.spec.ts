@@ -1,5 +1,4 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
-import english from '@/i18n/locales/en.json'
 import ReviewRecap from '@/components/project/review/ReviewRecap.vue'
 import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
 import pinia from '@/stores'
@@ -7,11 +6,9 @@ import useUsersStore from '@/stores/useUsers'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useProjectsStore from '@/stores/useProjects'
 import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { useAutoTranslate } from '#imports'
 // issue with webcrypto, so mock so offending import
-import { yUndoPluginKey } from 'y-prosemirror'
 vi.mock('y-prosemirror', () => ({ default: {} }))
 
 const { translateProject, translateReviews } = useAutoTranslate()
@@ -53,18 +50,9 @@ const reviews = translateReviews([
   },
 ]).value
 
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
-
 function setUpComponent(props) {
   return lpiMount(ReviewRecap, {
     props,
-    i18n,
   })
 }
 
@@ -83,9 +71,6 @@ describe('ReviewRecap.vue', () => {
 
     usersStore = useUsersStore(pinia)
     usersStore.accessToken = 123
-  })
-  afterEach(() => {
-    // usersStore.$reset()
   })
   it('should render component', () => {
     usersStore.permissions = {}

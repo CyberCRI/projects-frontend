@@ -12,8 +12,8 @@ const OrganizationTagFactory = createFactory<TagOutput>((faker) => ({
   description: faker.name.title(),
   description_fr: faker.name.title(),
   description_en: faker.name.title(),
-  type: faker.name.title(),
-  secondary_type: faker.name.title(),
+  type: faker.random.arrayElement(['Wikipedia', 'Custom', 'ESCO']),
+  secondary_type: faker.random.arrayElement(['skill', 'occupation', 'tag']),
   organization: faker.datatype.string(),
 }))
 

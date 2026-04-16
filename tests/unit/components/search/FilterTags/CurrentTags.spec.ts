@@ -1,16 +1,7 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import english from '@/i18n/locales/en.json'
 import CurrentTags from '@/components/search/FilterTags/CurrentTags.vue'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
+import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('CurrentTags', () => {
   let wrapper
@@ -21,7 +12,6 @@ describe('CurrentTags', () => {
       props: {
         label: 'CurrentTags',
       },
-      i18n,
     }
   })
 

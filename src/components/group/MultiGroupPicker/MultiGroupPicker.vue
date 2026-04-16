@@ -55,7 +55,6 @@ import MultiGroupPickerElement from './MultiGroupPickerElement.vue'
 import { getHierarchyGroups } from '@/api/groups.service.ts'
 import FilterValue from '@/components/search/Filters/FilterValue.vue'
 import FilterSearchInput from '@/components/search/Filters/FilterSearchInput.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
 export default {
   name: 'MultiGroupPicker',
 
@@ -84,9 +83,9 @@ export default {
   emits: ['update:modelValue', 'update:isPublic'],
 
   setup() {
-    const organizationsStore = useOrganizationsStore()
+    const organizationCode = useOrganizationCode()
     return {
-      organizationsStore,
+      organizationCode,
     }
   },
 
@@ -163,7 +162,7 @@ export default {
   methods: {
     async loadGroups() {
       this.allGroups = (
-        await getHierarchyGroups(this.organizationsStore.current.code, {
+        await getHierarchyGroups(this.organizationCode, {
           query: {
             modules: 'none',
           },

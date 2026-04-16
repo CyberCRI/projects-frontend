@@ -47,16 +47,16 @@ export default {
     const organizationsStore = useOrganizationsStore()
     const usersStore = useUsersStore()
     const { translateProjects, translateUsers } = useAutoTranslate()
-    const _projectRecommendations = ref([])
-    const _userRecommendations = ref([])
-    const projectRecommendations = translateProjects(_projectRecommendations)
-    const userRecommendations = translateUsers(_userRecommendations)
+    const originalProjectRecommendations = ref([])
+    const originalUserRecommendations = ref([])
+    const projectRecommendations = translateProjects(originalProjectRecommendations)
+    const userRecommendations = translateUsers(originalUserRecommendations)
     const isLoading = ref(true)
     return {
       organizationsStore,
       usersStore,
-      _projectRecommendations,
-      _userRecommendations,
+      originalProjectRecommendations,
+      originalUserRecommendations,
       projectRecommendations,
       userRecommendations,
       isLoading,
@@ -87,13 +87,13 @@ export default {
       { count: 4, pool: 25 }
     )
 
-    this._projectRecommendations = [
+    this.originalProjectRecommendations = [
       ...featuredrojects.map((p) => ({ ...p, isFeatured: true })),
       ...projectRecommendations.map((p) => ({ ...p, isFeatured: false })),
     ].slice(0, 4)
 
     if (this.loggedIn) {
-      this._userRecommendations = await getRandomUsersRecommendationsForUser({
+      this.originalUserRecommendations = await getRandomUsersRecommendationsForUser({
         organization: this.organization.code,
         params: { count: 3, pool: 25 },
       })

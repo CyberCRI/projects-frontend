@@ -5,21 +5,19 @@
     :data-test="`project-form-${category.id}`"
     @click="emit('choose-category', category)"
   >
-    <span class="label">{{ capitalize(category.name) }}</span>
+    <span class="label">{{ capitalize(category.$t.name) }}</span>
   </button>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { capitalize } from '@/functs/string'
+import { TranslatedProjectCategory } from '@/models/project-category.model'
 
 defineOptions({ name: 'ProjectCategoriesDropdownElementButton' })
 
-defineProps({
-  category: {
-    type: Object,
-    required: true,
-  },
-})
+defineProps<{
+  category: TranslatedProjectCategory
+}>()
 
 const emit = defineEmits(['choose-category'])
 </script>

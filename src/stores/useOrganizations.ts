@@ -5,12 +5,16 @@ import {
   patchOrganization,
 } from '@/api/organizations.service'
 
-import type { APIResponseList } from '@/api/types'
-import type { OrganizationOutput, OrganizationPatchInput } from '@/models/organization.model'
+import type {
+  OrganizationModel,
+  OrganizationOutput,
+  OrganizationPatchInput,
+} from '@/models/organization.model'
 
 import analytics from '@/analytics'
 
 import useAutoTranslate from '@/composables/useAutoTranslate'
+import functions from '@/functs/functions'
 
 export interface OrganizationsState {
   _all: OrganizationOutput[]
@@ -28,9 +32,7 @@ const useOrganizationsStore = defineStore('organizations', () => {
 
   const isAutoTranslate = computed(() => !!current.value?.auto_translate_content)
 
-  const isDefault = computed((): boolean => {
-    return current.value?.code === 'DEFAULT'
-  })
+  const isDefault = computed((): boolean => functions.isDefaultPortal(current.value?.code))
 
   const languages = computed((): string[] => {
     return current.value?.languages || []
@@ -63,7 +65,7 @@ const useOrganizationsStore = defineStore('organizations', () => {
   const termsContentTranslated = getTranslatableField(tos, 'displayed_content', termsContent)
   const hasTerms = computed((): boolean => !!(termsId.value && termsContent.value))
 
-  async function getCurrentOrganization(code: string): Promise<OrganizationOutput> {
+  async function getCurrentOrganization(code: string): Promise<OrganizationModel> {
     try {
       // foo
       const organization = await getOrganizationByCode(code)
@@ -87,7 +89,7 @@ const useOrganizationsStore = defineStore('organizations', () => {
     return current.value
   }
 
-  async function getAllOrganizations(): Promise<APIResponseList<OrganizationOutput>> {
+  async function getAllOrganizations() {
     try {
       const response = await getOrganizations()
       _all.value = response.results

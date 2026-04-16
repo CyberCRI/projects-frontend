@@ -16,7 +16,7 @@
 
 <script>
 import FilterValue from '@/components/search/Filters/FilterValue.vue'
-import useTagTexts from '@/composables/useTagTexts.js'
+import useTagTexts from '@/composables/useTagTexts.ts'
 
 export default {
   name: 'CurrentTags',

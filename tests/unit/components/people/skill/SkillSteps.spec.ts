@@ -1,14 +1,7 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import SkillSteps from '@/components/people/skill/SkillSteps.vue'
 
-import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: loadLocaleMessages(),
-}
+import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('SkillSteps', () => {
   let wrapper
@@ -16,7 +9,6 @@ describe('SkillSteps', () => {
 
   beforeEach(() => {
     defaultParams = {
-      i18n,
       props: {
         steps: 3,
         activeStep: 1,

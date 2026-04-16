@@ -1,21 +1,11 @@
 import { lpiShallowMount, lpiMount } from '@/../tests/helpers/LpiMount'
-import english from '@/i18n/locales/en.json'
 import GoalDrawer from '@/components/project/goal/GoalDrawer.vue'
 import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
 import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useProjectsStore from '@/stores/useProjects'
-
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
 
 describe('GoalDrawer.vue', () => {
   let wrapper
@@ -31,9 +21,7 @@ describe('GoalDrawer.vue', () => {
     }
     const organizationsStore = useOrganizationsStore(pinia)
     organizationsStore._current = OrganizationOutputFactory.generate()
-    defaultParams = {
-      i18n,
-    }
+    defaultParams = {}
   })
   it('should render component', () => {
     const wrapper = lpiShallowMount(GoalDrawer, defaultParams)

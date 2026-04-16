@@ -7,7 +7,7 @@
     <FetchLoader :status="status" only-error skeleton>
       <div class="newsfeed-container">
         <div v-if="newsfeed.length" class="news-container">
-          <NewsFeed :newsfeed="newsfeed" @reload-newsfeed="refresh" />
+          <NewsFeed :newsfeed="newsfeed" />
         </div>
         <EmptyLabel v-else :label="$t('feed.empty')" />
         <PaginationButtonsV2 :pagination="pagination" />
@@ -30,7 +30,6 @@ const {
   status,
   data: newsfeed,
   pagination,
-  refresh,
 } = getNewsfeed(organizationCode, {
   paginationConfig: {
     limit: LIMIT,

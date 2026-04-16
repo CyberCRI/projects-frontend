@@ -10,6 +10,7 @@ export default function useTagSearch({
   hideOrganizationTags,
   classificationType,
 } = {}) {
+  const organizationCode = useOrganizationCode()
   const organizationsStore = useOrganizationsStore()
   const allOrgClassifications = ref([])
   const isLoadingOrgClassifications = ref(false)
@@ -17,7 +18,7 @@ export default function useTagSearch({
   const fetchAllClassifications = async (noLoading) => {
     if (!noLoading) isLoadingOrgClassifications.value = true
     try {
-      const res = await getAllOrgClassifications(organizationsStore.current.code)
+      const res = await getAllOrgClassifications(organizationCode)
       allOrgClassifications.value = res.results
     } catch (e) {
       console.error(e)
@@ -111,7 +112,7 @@ export default function useTagSearch({
       suggestedTagsAreLoading.value = true
 
       const classificationReq = await getOrgClassificationTags(
-        organizationsStore.current.code,
+        organizationCode,
         selectedClassificationId.value,
         // temp hackish fix until we have count in the org data
         { search: '' }

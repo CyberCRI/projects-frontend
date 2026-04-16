@@ -20,7 +20,7 @@ import TagFactory from './tag.factory'
 
 export const ProjectFactory = createFactory<ProjectModel>((faker) => ({
   ...BaseFactory.generate(),
-  id: faker.datatype.string(),
+  id: faker.lorem.slug(),
   category_id: faker.datatype.number(),
   categories: ProjectCategoryOutputFactory.generateMany(2),
   title: faker.lorem.sentence(),
@@ -34,7 +34,7 @@ export const ProjectFactory = createFactory<ProjectModel>((faker) => ({
   publication_status: 'public',
   life_status: 'running',
   reviews: ReviewFactory.generateMany(2),
-  organizations: OrganizationOutputFactory.generate(),
+  organizations: OrganizationOutputFactory.generateMany(1),
   tags: TagFactory.generateMany(2),
   links: AttachmentLinkFactory.generateMany(2),
   files: AttachmentFileFactory.generateMany(2),
@@ -46,7 +46,7 @@ export const ProjectFactory = createFactory<ProjectModel>((faker) => ({
   announcements: [],
   blog_entries: BlogEntryFactory.generateMany(2),
   goals: GoalFactory.generateMany(2),
-  slug: faker.lorem.word(),
+  slug: faker.lorem.slug(),
   updated_at: faker.date.past().toString(),
 }))
 

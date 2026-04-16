@@ -1,25 +1,15 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
-import english from '@/i18n/locales/en.json'
 import GoalSummaryItem from '@/components/project/goal/GoalSummaryItem.vue'
-import { GoalFactory } from '@/../tests/factories/goal.factory'
+import { TranslatedGoalFactory } from '@/../tests/factories/goal.factory'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
+import { describe, expect, it } from 'vitest'
 
 describe('GoalSummaryItem.vue', () => {
   it('should render component', () => {
     const wrapper = lpiMount(GoalSummaryItem, {
       props: {
-        goal: GoalFactory.generate(),
+        goal: TranslatedGoalFactory.generate(),
       },
-      i18n,
     })
     expect(wrapper.exists()).toBe(true)
   })
@@ -27,9 +17,8 @@ describe('GoalSummaryItem.vue', () => {
   it('should have status icon visible', () => {
     const wrapper = lpiMount(GoalSummaryItem, {
       props: {
-        goal: { ...GoalFactory.generate(), status: 'complete' },
+        goal: TranslatedGoalFactory.generate({ status: 'complete' }),
       },
-      i18n,
     })
     expect(wrapper.exists()).toBe(true)
   })
@@ -37,9 +26,8 @@ describe('GoalSummaryItem.vue', () => {
   it('should not have status icon visible', () => {
     const wrapper = lpiMount(GoalSummaryItem, {
       props: {
-        goal: { ...GoalFactory.generate(), status: 'na' },
+        goal: TranslatedGoalFactory.generate({ status: 'na' }),
       },
-      i18n,
     })
     expect(wrapper.exists()).toBe(true)
   })

@@ -1,42 +1,18 @@
-import { lpiMount, lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import english from '@/i18n/locales/en.json'
+import { lpiMount } from '@/../tests/helpers/LpiMount'
 import TakeTourModal from '@/components/onboarding/WelcomeModal/TakeTourModal.vue'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
-import MockComponent from '@/../tests/helpers/MockComponent.vue'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
 
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
-
 describe('TakeTourModal.vue', () => {
-  let wrapper
-  let defaultParams
-
   beforeEach(() => {
     const organizationsStore = useOrganizationsStore(pinia)
     organizationsStore._current = OrganizationOutputFactory.generate()
-    defaultParams = {
-      i18n,
-      router: [
-        {
-          path: '/',
-          component: MockComponent,
-          name: 'Home',
-        },
-        { path: '/tutorials', name: 'HelpVideoTab', component: MockComponent },
-      ],
-    }
   })
 
   it('should render TakeTourModal component', () => {
-    wrapper = lpiMount(TakeTourModal, defaultParams)
+    const wrapper = lpiMount(TakeTourModal)
     expect(wrapper.exists()).toBe(true)
   })
 })

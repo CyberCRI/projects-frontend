@@ -8,11 +8,11 @@ import type {
 import useAPI from '@/composables/useAPI'
 
 export async function getAttachmentFiles(id: string) {
-  return await useAPI(`project/${id}/file/`, {}) //.data.value
+  return await useAPI<PaginationResult<AttachmentFileModel>>(`project/${id}/file/`, {}) //.data.value
 }
 
 export async function getAttachmentFile(body: AttachmentFileInput) {
-  return await useAPI(`project/${body.project_id}/file/${body.file}`, {}) //.data.value
+  return await useAPI<AttachmentFileModel>(`project/${body.project_id}/file/${body.file}`, {}) //.data.value
 }
 
 export async function postAttachmentFiles(body: AttachmentFileInput) {
@@ -23,7 +23,7 @@ export async function postAttachmentFiles(body: AttachmentFileInput) {
 
   fd.append('file', body.file, body.file.name)
   fd.append('mime', body.file.type || 'file')
-  return await useAPI(`project/${body.project_id}/file/`, {
+  return await useAPI<AttachmentFileModel>(`project/${body.project_id}/file/`, {
     body: fd,
     method: 'POST',
   }) //.data.value
@@ -35,7 +35,7 @@ export async function patchAttachmentFile(body: AttachmentFileInput) {
   fd.append('title', body.title)
   fd.append('project_id', body.project_id)
 
-  return await useAPI(`project/${body.project_id}/file/${body.id}/`, {
+  return await useAPI<AttachmentFileModel>(`project/${body.project_id}/file/${body.id}/`, {
     // headers,
     body: fd,
     method: 'PATCH',

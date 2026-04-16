@@ -5,6 +5,7 @@
     </template>
     <TransitionGroup v-else name="sdg" class="sdg-list" tag="div">
       <SdgList
+        key="sdg"
         :sdgs="sdgs || []"
         :to="{
           name: 'ProjectSearch',
@@ -16,18 +17,14 @@
     </TransitionGroup>
   </div>
 </template>
-<script setup>
-defineProps({
-  sdgs: {
-    type: Object,
-    required: true,
-  },
-  loading: {
-    type: Boolean,
-    required: true,
-  },
-})
+
+<script setup lang="ts">
+defineProps<{
+  sdgs: number[]
+  loading: boolean
+}>()
 </script>
+
 <style scoped lang="scss">
 $sdg-size: pxToRem(38px);
 

@@ -72,7 +72,6 @@ export default {
           acc['#' + org.id] = org // the # is prefixed to org id in role code
           return acc
         }, {})
-        console.log(orgIndex)
         this.orgRoles =
           user?.roles
             .filter((role) => role.match(/^organization:[^:]+:[^:]+$/))

@@ -1,7 +1,7 @@
 <template>
-  <div v-if="user" class="profile-summary">
+  <div class="profile-summary">
     <!-- Profile Header -->
-    <ProfileHeaderV2 v-if="user && !isLoading" class="profile-header" :user="user" />
+    <ProfileHeaderV2 class="profile-header" :user="user" />
 
     <div v-if="user.description">
       <!-- User descriptions -->
@@ -13,7 +13,8 @@
     </div>
     <div class="lists">
       <!-- publications -->
-      <UserProjectsSearch v-if="documentsCount.publications" :limit="documentsLimit" :user="user">
+
+      <UserProjectsSearch v-if="documentsCount.publications" :limit="DOCUMENTS_LIMIT" :user="user">
         <template #default>
           <div class="project-list-header">
             <h4 class="title">
@@ -21,7 +22,7 @@
               <span>({{ documentsCount.publications }})</span>
             </h4>
             <SeeMoreArrow
-              v-if="documentsCount.publications > documentsLimit"
+              v-if="documentsCount.publications > DOCUMENTS_LIMIT"
               data-test="see-more"
               :to="{ name: 'ResearcherPublicationsOther', params: { userId: user.id } }"
             />
@@ -29,12 +30,13 @@
           <OwnResearcherDocumentsList
             doc-type="publications"
             preview
-            :limit="documentsLimit"
+            :limit="DOCUMENTS_LIMIT"
             :user="user"
           />
         </template>
       </UserProjectsSearch>
-      <UserProjectsSearch v-if="documentsCount.conferences" :limit="documentsLimit" :user="user">
+
+      <UserProjectsSearch v-if="documentsCount.conferences" :limit="DOCUMENTS_LIMIT" :user="user">
         <template #default>
           <div class="project-list-header">
             <h4 class="title">
@@ -42,7 +44,7 @@
               <span>({{ documentsCount.conferences }})</span>
             </h4>
             <SeeMoreArrow
-              v-if="documentsCount.conferences > documentsLimit"
+              v-if="documentsCount.conferences > DOCUMENTS_LIMIT"
               data-test="see-more"
               :to="{ name: 'ResearcherConferencesOther', params: { userId: user.id } }"
             />
@@ -50,81 +52,87 @@
           <OwnResearcherDocumentsList
             doc-type="conferences"
             preview
-            :limit="documentsLimit"
+            :limit="DOCUMENTS_LIMIT"
             :user="user"
           />
         </template>
       </UserProjectsSearch>
 
       <!-- user projects (Owners, Members) -->
-      <UserProjectsSearch :limit="listLimit" :member-roles="['owners', 'members']" :user="user">
-        <template v-if="totalCount" #default="{ items: projects, isLoading, totalCount }">
-          <div class="project-list-header">
-            <h4 class="title">
-              {{ $t('me.projects-participate') }}
-              <span>({{ totalCount }})</span>
-            </h4>
-            <SeeMoreArrow
-              v-if="totalCount > listLimit"
-              data-test="see-more"
-              @click.prevent="goToProfileProjects"
+      <UserProjectsSearch :limit="LIST_LIMIT" :member-roles="['owners', 'members']" :user="user">
+        <template #default="{ items: projects, isLoading, totalCount }">
+          <template v-if="totalCount">
+            <div class="project-list-header">
+              <h4 class="title">
+                {{ $t('me.projects-participate') }}
+                <span>({{ totalCount }})</span>
+              </h4>
+              <SeeMoreArrow
+                v-if="totalCount > LIST_LIMIT"
+                data-test="see-more"
+                @click.prevent="goToProfileProjects"
+              />
+            </div>
+            <UserProjectList
+              :empty-label="noParticipate"
+              :limit="LIST_LIMIT"
+              :number-column="LIST_LIMIT"
+              :projects="projects"
+              :projects-loading="isLoading"
+              class="project-list"
             />
-          </div>
-          <UserProjectList
-            :empty-label="noParticipate"
-            :limit="listLimit"
-            :number-column="listLimit"
-            :projects="projects"
-            :projects-loading="isLoading"
-            class="project-list"
-          />
+          </template>
         </template>
       </UserProjectsSearch>
       <!-- user projects (Reviewers) -->
-      <UserProjectsSearch member-roles="['reviewers']" :user="user">
-        <template v-if="totalCount" #default="{ items: projects, isLoading, totalCount }">
-          <div class="project-list-header">
-            <h4 class="title">
-              {{ $t('me.projects-reviewing') }}
-              <span>({{ totalCount }})</span>
-            </h4>
-            <SeeMoreArrow
-              v-if="totalCount > listLimit"
-              data-test="see-more"
-              @click.prevent="goToProfileProjects"
+      <UserProjectsSearch :member-roles="['reviewers']" :user="user">
+        <template #default="{ items: projects, isLoading, totalCount }">
+          <template v-if="totalCount">
+            <div class="project-list-header">
+              <h4 class="title">
+                {{ $t('me.projects-reviewing') }}
+                <span>({{ totalCount }})</span>
+              </h4>
+              <SeeMoreArrow
+                v-if="totalCount > LIST_LIMIT"
+                data-test="see-more"
+                @click.prevent="goToProfileProjects"
+              />
+            </div>
+            <UserProjectList
+              :empty-label="noReviewLabel"
+              :limit="LIST_LIMIT"
+              :number-column="LIST_LIMIT"
+              :projects="projects"
+              :projects-loading="isLoading"
+              class="project-list"
             />
-          </div>
-          <UserProjectList
-            :empty-label="noReviewLabel"
-            :limit="listLimit"
-            :number-column="listLimit"
-            :projects="projects"
-            :projects-loading="isLoading"
-            class="project-list"
-          />
+          </template>
         </template>
       </UserProjectsSearch>
       <!-- user projects (Followed) -->
-      <UserProjectsSearch :limit="listLimit" follow :user="user">
-        <template v-if="totalCount" #default="{ items: projects, isLoading, totalCount }">
-          <div class="project-list-header">
-            <h4 class="title">
-              {{ $t('me.follow') }}
-              <span>({{ totalCount }})</span>
-            </h4>
-            <SeeMoreArrow
-              v-if="totalCount > listLimit"
-              data-test="see-more"
-              @click.prevent="goToProfileProjects"
+      <UserProjectsSearch :limit="LIST_LIMIT" follow :user="user">
+        <template #default="{ items: projects, isLoading, totalCount }">
+          <template v-if="totalCount">
+            <div class="project-list-header">
+              <h4 class="title">
+                {{ $t('me.follow') }}
+                <span>({{ totalCount }})</span>
+              </h4>
+              <SeeMoreArrow
+                v-if="totalCount > LIST_LIMIT"
+                data-test="see-more"
+                @click.prevent="goToProfileProjects"
+              />
+            </div>
+            <UserProjectList
+              :empty-label="noFollowLabel"
+              :number-column="LIST_LIMIT"
+              :projects="projects"
+              :projects-loading="isLoading"
+              class="project-list"
             />
-          </div>
-          <UserProjectList
-            :empty-label="noFollowLabel"
-            :number-column="listLimit"
-            :projects="projects"
-            :projects-loading="isLoading"
-            class="project-list"
-          />
+          </template>
         </template>
       </UserProjectsSearch>
       <!-- user resources -->
@@ -153,89 +161,53 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import UserProjectsSearch from '@/components/people/UserProfile/UserProjectsSearch.vue'
 import UserProjectList from '@/components/people/UserProfile/UserProjectList.vue'
 import UserDescriptions from '@/components/people/UserDescriptions.vue'
 import SkillSummary from '@/components/people/skill/SkillSummary.vue'
-import useUsersStore from '@/stores/useUsers.ts'
+import useUsersStore from '@/stores/useUsers'
 import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
 import OwnResearcherDocumentsList from '@/components/people/Researcher/OwnResearcherDocumentsList.vue'
+import { TranslatedUserModel } from '@/models/user.model'
 
-export default {
-  name: 'ProfileSummaryTab',
+const selectTab = inject<(number) => void>('tabsLayoutSelectTab', () => {})
 
-  components: {
-    UserProjectsSearch,
-    UserProjectList,
-    UserDescriptions,
-    SkillSummary,
-    SeeMoreArrow,
-    OwnResearcherDocumentsList,
-  },
+const props = defineProps<{
+  user: TranslatedUserModel
+}>()
+const { t } = useNuxtI18n()
 
-  inject: {
-    selectTab: {
-      from: 'tabsLayoutSelectTab',
-      default: () => {},
-    },
-  },
+const usersStore = useUsersStore()
 
-  props: {
-    user: {
-      type: Object,
-      required: true,
-    },
-  },
+const LIST_LIMIT = 6
+const DOCUMENTS_LIMIT = 3
 
-  setup() {
-    const usersStore = useUsersStore()
-    return {
-      usersStore,
+const resourcesCount = computed(() => {
+  return props.user.resources.files + props.user.resources.links
+})
+const documentsCount = computed(
+  () =>
+    props.user.researcher?.documents ?? {
+      publications: 0,
+      conferences: 0,
     }
-  },
+)
+const isCurrentUser = computed(() => usersStore.id === props.user.id)
 
-  data() {
-    return {
-      listLimit: 6,
-      documentsLimit: 3,
-    }
-  },
+const noFollowLabel = computed(() => {
+  return isCurrentUser.value ? t('me.no-follow') : t('you.no-follow')
+})
 
-  computed: {
-    resourcesCount() {
-      return this.user.resources.files + this.user.resources.links
-    },
-    documentsCount() {
-      return this.user.researcher?.documents ?? {}
-    },
-    isCurrentUser() {
-      return this.usersStore.id === this.user.id
-    },
+const noReviewLabel = computed(() => {
+  return isCurrentUser.value ? t('me.no-project-reviewing') : t('you.no-project-reviewing')
+})
 
-    noFollowLabel() {
-      return this.isCurrentUser ? this.$t('me.no-follow') : this.$t('you.no-follow')
-    },
+const noParticipate = computed(() => {
+  return isCurrentUser.value ? t('me.no-project-participate') : t('you.no-project-participate')
+})
 
-    noReviewLabel() {
-      return this.isCurrentUser
-        ? this.$t('me.no-project-reviewing')
-        : this.$t('you.no-project-reviewing')
-    },
-
-    noParticipate() {
-      return this.isCurrentUser
-        ? this.$t('me.no-project-participate')
-        : this.$t('you.no-project-participate')
-    },
-  },
-
-  methods: {
-    goToProfileProjects() {
-      this.selectTab(2)
-    },
-  },
-}
+const goToProfileProjects = () => selectTab(2)
 </script>
 
 <style lang="scss" scoped>

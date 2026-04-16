@@ -1,39 +1,23 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
 import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-import { loadLocaleMessages } from '@/../tests/helpers/loadLocaleMessages'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: loadLocaleMessages(),
-}
-
-const factory = (propsData?) => {
-  return lpiMount(LpiLoader, {
-    props: {
-      ...propsData,
-    },
-    i18n,
-  })
-}
+import { describe, expect, it } from 'vitest'
 
 describe('LpiLoader.vue', () => {
   it('should render component', () => {
-    const wrapper = factory({ type: 'simple' })
+    const wrapper = lpiMount(LpiLoader, { props: { type: 'simple' } })
     expect(wrapper.exists()).toBe(true)
   })
 
   it('should display simple loader', () => {
-    const wrapper = factory({ type: 'simple' })
+    const wrapper = lpiMount(LpiLoader, { props: { type: 'simple' } })
     const type = wrapper.find('.loader-simple')
 
     expect(type.exists()).toBeTruthy()
   })
 
   it('should display complex loader', () => {
-    const wrapper = factory({ type: 'complex' })
+    const wrapper = lpiMount(LpiLoader, { props: { type: 'complex' } })
     const type = wrapper.find('.loader-complex')
 
     expect(type.exists()).toBeTruthy()

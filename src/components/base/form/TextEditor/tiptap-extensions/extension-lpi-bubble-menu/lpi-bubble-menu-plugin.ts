@@ -187,7 +187,8 @@ export class LpiBubbleMenuView {
       clearTimeout(this.updateDebounceTimer)
     }
 
-    this.updateDebounceTimer = window.setTimeout(() => {
+    // @ts-expect-error ignore timeout
+    this.updateDebounceTimer = setTimeout(() => {
       this.updateHandler(view, selectionChanged, docChanged, oldState)
     }, this.updateDelay)
   }

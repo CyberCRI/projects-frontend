@@ -1,30 +1,54 @@
 <template>
   <div
-    :class="{ 'sdg--unselected': !selected }"
-    :style="{
-      'background-image': `url(${runtimeConfig.public.appPublicBinariesPrefix}/sdgs/${locale}/${sdgId}.svg)`,
-    }"
+    :class="{ 'sdg--unselected': !selected, [props.logo]: true }"
     class="sdg"
     :data-test="`sdg-${sdgId}`"
     @click="toggle"
   >
+    <CroppedImage
+      :alt="alt"
+      :src="imageUrl"
+      :loading-color="sdgInfo?.background_color"
+      class="img"
+    />
     <IconImage v-if="selected" class="check-icon" name="Check" />
   </div>
 </template>
 
 <script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
+import { SDGS } from '@/functs/constants'
 
-const props = defineProps<{
-  sdgId: number | string
-  selected: boolean
-}>()
+const props = withDefaults(
+  defineProps<{
+    sdgId: number | string
+    logo?: 'full' | 'short'
+    selected?: boolean
+  }>(),
+  { selected: false, logo: 'full' }
+)
+
+const { t } = useNuxtI18n()
 
 const emit = defineEmits<{
   toggled: [typeof props.sdgId]
 }>()
 const { locale } = useNuxtI18n()
-const runtimeConfig = useRuntimeConfig()
+
+const imageUrl = computed(() => {
+  if (props.logo === 'full') {
+    return usePublicURL(`/sdgs/${locale.value}/${props.sdgId}.svg`)
+  } else {
+    return usePublicURL(`/sdgs/logo/SDG-${props.sdgId}.svg`)
+  }
+})
+
+// find backgroundColor from sdg (during loading image , the background is color from sdg)
+const sdgInfo = computed(() => SDGS.find((el) => el.id.toString() === props.sdgId.toString()))
+
+const alt = computed(() => {
+  return t(`sdg.${props.sdgId}.title`) || sdgInfo.value?.title
+})
 
 const toggle = () => emit('toggled', props.sdgId)
 </script>
@@ -46,6 +70,18 @@ const toggle = () => emit('toggled', props.sdgId)
   cursor: pointer;
   box-shadow: 0 0 0 $border-width-l $primary-dark;
   position: relative;
+
+  &.short {
+    border-radius: $border-radius-l;
+  }
+
+  .img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 
   &--unselected {
     box-shadow: none;

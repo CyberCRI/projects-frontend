@@ -20,36 +20,24 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 
-export default {
-  name: 'ProjectTeamEditor',
+withDefaults(
+  defineProps<{
+    canBeRemoved?: boolean
+    canBeEdited?: boolean
+  }>(),
+  {
+    canBeRemoved: false,
+    canBeEdited: false,
+  }
+)
 
-  components: {
-    ContextActionButton,
-  },
-
-  props: {
-    canBeRemoved: {
-      type: Boolean,
-      default: false,
-    },
-
-    canBeEdited: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  emits: ['remove-user', 'edit-user'],
-
-  data() {
-    return {}
-  },
-
-  methods: {},
-}
+defineEmits<{
+  'remove-user': []
+  'edit-user': []
+}>()
 </script>
 
 <style lang="scss" scoped>

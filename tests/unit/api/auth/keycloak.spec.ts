@@ -3,15 +3,13 @@ import useKeycloak from '@/api/auth/keycloak'
 import * as authService from '@/api/auth/auth.service'
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
 
 import pinia from '@/stores'
 import useUsersStore from '@/stores/useUsers'
 import useToasterStore from '@/stores/useToaster'
-import { flushPromises } from '@vue/test-utils'
 
 vi.mock('@/api/auth/keycloakUtils')
-let keycloak = useKeycloak()
+const keycloak = useKeycloak()
 
 vi.mock('@/api/auth/auth.serice')
 
@@ -24,9 +22,6 @@ const localStorageGetItem = vi.spyOn(Storage.prototype, 'getItem')
 const localStorageRemoveItem = vi.spyOn(Storage.prototype, 'removeItem')
 
 describe('Keycloak | codeChallenge', () => {
-  beforeEach(() => {
-    const usersStore = useUsersStore(pinia)
-  })
   afterEach(() => {
     localStorage.clear()
     localStorageSetItem.mockClear()
@@ -45,9 +40,6 @@ describe('Keycloak | loginIfValidState', () => {
   beforeEach(() => {
     usersStore = useUsersStore(pinia)
     useToasterStore(pinia)
-  })
-  afterEach(() => {
-    // usersStore.$reset()
   })
   it('loginIfValidState', async () => {
     globalThis.window = Object.create(window)

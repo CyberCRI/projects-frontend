@@ -29,8 +29,6 @@ import { AsyncDataRequestStatus, NuxtError, NuxtLinkProps } from 'nuxt/app'
   or show default slot content
 */
 
-defineOptions({ name: 'FetchLoader' })
-
 const { t } = useNuxtI18n()
 
 const props = withDefaults(

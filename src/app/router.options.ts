@@ -27,15 +27,6 @@ const routes = ({
       resetScroll: true,
     },
   },
-  // TODO: Remove or recreate ?
-  // {
-  //     path: '/discover',
-  //     name: 'Discover',
-  //     component: () => import( '../views/DiscoverPage.vue'),
-  //     meta: {
-  //         resetScroll: true,
-  //     },
-  // },
   {
     path: '/documents',
     name: 'DocumentsPage',
@@ -92,23 +83,6 @@ const routes = ({
     redirect: { name: 'ProfileSummary' },
   },
 
-  // Keeping this route for debug purpose
-  // TODO: remove when no longer needed
-  // {
-  //     path: '/complete-profile',
-  //     name: 'CompleteProfilePage',
-  //     component: () =>
-  //         import(
-  //              '../components/people/CompleteProfileDrawer/CompleteProfileDrawer.vue'
-  //         ),
-  //     props: {
-  //         isOpened: true,
-  //     },
-  //     meta: {
-  //         resetScroll: true,
-  //         requiresAuth: true,
-  //     },
-  // },
   ...profilePagesRoutes,
   {
     path: '/mentorship/respond/:token',

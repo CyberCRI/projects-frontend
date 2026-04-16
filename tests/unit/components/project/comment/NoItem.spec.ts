@@ -1,30 +1,11 @@
 import { lpiMount } from '@/../tests/helpers/LpiMount'
 import NoItem from '@/components/project/comment/NoItem.vue'
-import english from '@/i18n/locales/en.json'
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
-
-// Mount function
-const factory = (props?) => {
-  return lpiMount(NoItem, {
-    props: {
-      ...props,
-    },
-    i18n,
-  })
-}
+import { describe, expect, it } from 'vitest'
 
 describe('NoItem.vue', () => {
   it('should render and initialize the component with the default value', () => {
-    const wrapper = factory()
+    const wrapper = lpiMount(NoItem)
     const vm: any = wrapper.vm
 
     expect(wrapper.exists()).toBe(true)
@@ -32,8 +13,10 @@ describe('NoItem.vue', () => {
   })
 
   it('should apply the settings passed by props', () => {
-    const wrapper = factory({
-      message: 'blog.no-entry',
+    const wrapper = lpiMount(NoItem, {
+      props: {
+        message: 'blog.no-entry',
+      },
     })
     const vm: any = wrapper.vm
 

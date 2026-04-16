@@ -1,372 +1,270 @@
 <template>
   <div class="role-tab">
-    <div class="create-wrapper">
-      <LinkButton
-        :label="$t('account.title-create-add')"
-        btn-icon="Plus"
-        class="create-account"
-        @click="createAccountDrawer(null)"
-      />
-    </div>
-    <div class="controls-wrapper">
-      <div class="search-input-container">
-        <SearchInput
-          v-model="searchFilter"
-          :full="true"
-          :placeholder="$t('browse.placeholder')"
-          class="search-input"
-          @enter="searchUser"
-          @delete-query="deleteQuery"
+    <FetchLoader :status="status" :with-data="!!data" skeleton>
+      <div class="create-wrapper">
+        <LinkButton
+          :label="$t('account.title-create-add')"
+          btn-icon="Plus"
+          class="create-account"
+          @click="openModal()"
         />
-        <LpiButton :label="$t('browse.page-title')" :secondary="false" @click="searchUser" />
+      </div>
+      <div class="controls-wrapper">
+        <div class="search-input-container">
+          <SearchInput
+            v-model="search"
+            :full="true"
+            :placeholder="$t('browse.placeholder')"
+            class="search-input"
+            @enter="onSearch"
+            @delete-query="onClearSearch"
+          />
+          <LpiButton :label="$t('browse.page-title')" :secondary="false" @click="onSearch" />
+        </div>
+
+        <div class="num-results-label">
+          <label>{{ $t('browse.result-per-page') }}</label>
+          <LpiSelect
+            :model-value="pagination.limit.value"
+            class="small"
+            :options="LIMIT_OPTIONS"
+            @update:model-value="(l) => pagination.setLimit(l)"
+          />
+        </div>
       </div>
 
-      <div class="num-results-label">
-        <label>{{ $t('browse.result-per-page') }}</label>
-        <LpiSelect v-model="numResults" class="small" :options="numResultOptions" />
-      </div>
-    </div>
-
-    <LpiLoader v-if="isLoading" class="loader" type="simple" />
-
-    <div v-if="filteredUsers.length && !isLoading" class="user-list">
-      <table>
-        <tbody>
-          <tr>
-            <th />
-            <th v-for="(filter, index) in filters" :key="index">
-              <button
-                class="button"
-                :class="{ unsortable: filter.unsortable }"
-                @click="sortBy(filter)"
-              >
-                {{ $t(filter.label) }}
-                <IconImage
-                  v-if="!filter.unsortable"
-                  :name="filter.order === '-' ? 'MenuDown' : 'MenuUp'"
-                  class="icon"
-                  :style="{ opacity: filter.isActive ? 1 : 0.33 }"
-                />
-              </button>
-            </th>
-            <th />
-          </tr>
-          <template v-for="(user, index) in filteredUsers" :key="index">
-            <tr class="user-row" :class="{ 'is-opened': openedLine.has(user.id) }">
-              <td>
-                <a
-                  href="#"
-                  @click="
-                    openedLine.has(user.id) ? openedLine.delete(user.id) : openedLine.add(user.id)
-                  "
+      <div class="user-list">
+        <table>
+          <tbody>
+            <tr>
+              <th />
+              <th v-for="(row, index) in rows" :key="index">
+                <button
+                  class="button skeletons-text"
+                  :class="{ unsortable: row.unsortable }"
+                  @click="orderBy(row)"
                 >
+                  {{ row.label }}
                   <IconImage
-                    :name="openedLine.has(user.id) ? 'MenuUp' : 'MenuDown'"
-                    class="toggle-user-icon"
+                    v-if="!row.unsortable"
+                    :name="query.ordering !== row.filter ? 'MenuDown' : 'MenuUp'"
+                    class="icon"
+                    :style="{ opacity: row.isActive ? 1 : 0.33 }"
                   />
-                </a>
-              </td>
-              <td>
-                <div class="user-mail">
-                  {{ user.email }}
-                </div>
-              </td>
-              <td>
-                {{ capitalize(user.family_name) }}
-                {{ capitalize(user.given_name) }}
-              </td>
-              <!-- <td>{{ capitalize(user.given_name) }}</td> -->
-              <!-- <td>{{ capitalize(user.job) }}</td> -->
-              <!-- <td class="has-more">
-              {{ user.current_org_role ? $t(`groups.roles.${user.current_org_role}`) : '-' }}
-            </td> -->
-              <!-- <td class="has-more">
-              <span class="first-item">
-                <template v-if="user.people_groups?.length">
-                  <span v-if="user.people_groups[0].length > 28" :title="user.people_groups[0]">
-                    {{ user.people_groups[0].substring(0, 25) + '...' }}
-                  </span>
-                  <span v-else>{{ user.people_groups[0] }}</span>
-                </template>
-                <template v-else>-</template>
-              </span>
-              <ToolTip arrow class="color-tip" :hover="true" :interactive="false">
-                <span v-if="user.people_groups?.length > 1" class="more-items">
-                  + {{ user.people_groups.length - 1 }}
-                </span>
-
-                <template #custom-content>
-                  <div class="tooltip-div">
-                    {{ user.people_groups.slice(1).join(', ') }}
+                </button>
+              </th>
+              <th />
+            </tr>
+            <template v-for="(user, index) in data" :key="index">
+              <tr class="user-row" :class="{ 'is-opened': openedLine.has(user.id) }">
+                <td>
+                  <button
+                    class="skeletons-text"
+                    @click="
+                      openedLine.has(user.id) ? openedLine.delete(user.id) : openedLine.add(user.id)
+                    "
+                  >
+                    <IconImage
+                      :name="openedLine.has(user.id) ? 'MenuUp' : 'MenuDown'"
+                      class="toggle-user-icon"
+                    />
+                  </button>
+                </td>
+                <td>
+                  <div class="user-mail skeletons-text">
+                    {{ user.email }}
                   </div>
-                </template>
-              </ToolTip>
-            </td> -->
-              <td>
-                {{ user.created_at ? $d(new Date(user.created_at)) : '-' }}
-              </td>
-              <td>
-                {{
-                  user.email_verified
-                    ? $t('admin.accounts.table.activation-yes')
-                    : $t('admin.accounts.table.activation-no')
-                }}
-              </td>
-              <td>
-                <LinkButton btn-icon="Pen" @click="createAccountDrawer(user)" />
-              </td>
-            </tr>
-            <tr v-if="openedLine.has(user.id)" class="user-details-row">
-              <td />
-              <td :colspan="filters.length">
-                <div class="user-details-wrapper">
-                  <dl class="user-details">
-                    <dt>{{ $t('admin.accounts.table.title') }}</dt>
-                    <dd>{{ user.job }}</dd>
-                  </dl>
-                  <dl class="user-details">
-                    <dt>{{ $t('admin.accounts.table.roles') }}</dt>
-                    <dd v-if="user.current_org_role">
-                      {{ $t(`groups.roles.${user.current_org_role}`) }}
-                    </dd>
-                    <dd v-else>-</dd>
-                  </dl>
-                  <dl class="user-details">
-                    <dt>{{ $t('admin.accounts.table.groups') }}</dt>
-                    <dd>
-                      <ul>
-                        <li v-for="(g, i) in user.people_groups" :key="i">{{ g }}</li>
-                      </ul>
-                    </dd>
-                  </dl>
-                </div>
-              </td>
-              <td />
-            </tr>
-          </template>
-        </tbody>
-      </table>
-      <div v-if="!isLoading && pagination.total > 1" class="pagination-container">
-        <PaginationButtons
-          :current="pagination.currentPage"
-          :pagination="pagination"
-          :total="pagination.total"
-          @update-pagination="onClickPagination"
-        />
+                </td>
+                <td>
+                  <span class="skeletons-text">
+                    {{ capitalize(user.family_name) }}
+                    {{ capitalize(user.given_name) }}
+                  </span>
+                </td>
+                <td>
+                  <span class="skeletons-text">
+                    {{ user.created_at ? $d(new Date(user.created_at)) : '-' }}
+                  </span>
+                </td>
+                <td>
+                  <IconImage
+                    :name="user.email_verified ? 'Check' : 'Close'"
+                    class="skeletons-background email"
+                    :class="{
+                      verified: user.email_verified,
+                    }"
+                  />
+                </td>
+                <td>
+                  <LinkButton
+                    class="skeletons-text"
+                    btn-icon="Pen"
+                    @click="createAccountDrawer(user)"
+                  />
+                </td>
+              </tr>
+              <tr v-if="openedLine.has(user.id)" class="user-details-row">
+                <td />
+                <td :colspan="rows.length">
+                  <div class="user-details-wrapper">
+                    <dl class="user-details">
+                      <dt>{{ $t('admin.accounts.table.title') }}</dt>
+                      <dd>{{ user.job }}</dd>
+                    </dl>
+                    <dl class="user-details">
+                      <dt>{{ $t('admin.accounts.table.roles') }}</dt>
+                      <dd v-if="user.current_org_role">
+                        {{ $t(`groups.roles.${user.current_org_role}`) }}
+                      </dd>
+                      <dd v-else>-</dd>
+                    </dl>
+                    <dl class="user-details">
+                      <dt>{{ $t('admin.accounts.table.groups') }}</dt>
+                      <dd>
+                        <ul>
+                          <li v-for="group in user.people_groups || []" :key="group.id">
+                            {{ group.name }}
+                          </li>
+                        </ul>
+                      </dd>
+                    </dl>
+                  </div>
+                </td>
+                <td />
+              </tr>
+            </template>
+            <!-- when no results found -->
+            <template v-if="data.length === 0">
+              <tr>
+                <td colspan="5">
+                  <EmptyLabel />
+                </td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+        <PaginationButtonsV2 :pagination="pagination" />
       </div>
-    </div>
 
-    <AccountDrawer
-      v-if="isOpenAccountDrawer"
-      :is-opened="isOpenAccountDrawer"
-      :selected-user="selectedUser"
-      @close="closeAccountDrawer"
-    />
+      <AccountDrawer
+        v-if="stateModal"
+        :is-opened="stateModal"
+        :selected-user="selectedUser"
+        @close="closeAccountDrawer"
+      />
+    </FetchLoader>
   </div>
 </template>
 
-<script>
-import { debounce } from 'es-toolkit'
+<script setup lang="ts">
+import { searchPeopleAdmin } from '@/api/v2/people.service'
+import FetchLoader from '@/components/base/FetchLoader.vue'
 import { capitalize } from '@/functs/string'
-import { searchPeopleAdmin } from '@/api/people.service'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-export default {
-  name: 'AccountsTab',
+import { Ordering } from '@/interfaces/query'
+import { factoriesSkeleton } from '@/skeletons/base.skeletons'
+import { peopleSkeleton } from '@/skeletons/people.skeletons'
+import useOrganizationsStore from '@/stores/useOrganizations'
 
-  setup() {
-    const organizationsStore = useOrganizationsStore()
-    return {
-      organizationsStore,
-      capitalize,
-    }
+const organizationsStore = useOrganizationsStore()
+
+const { t } = useNuxtI18n()
+
+const openedLine = ref(new Set())
+
+const selectedUser = ref(null)
+const { stateModal, openModal, closeModal } = useModal()
+
+const rows = computed(() => [
+  {
+    label: t('form.email'),
+    isActive: false,
+    filter: 'email',
+    order: '',
+    unsortable: true,
   },
-  data() {
-    return {
-      openedLine: new Set(),
-      isOpenEditRoleDrawer: false,
-      isOpenAccountDrawer: false,
-      isLoading: false,
-      searchFilter: '',
-      selectedUser: null,
-      selectedRole: {},
-      request: {},
-      filters: [
-        {
-          label: this.$t('form.email'),
-          isActive: false,
-          filter: 'email',
-          order: '',
-          unsortable: false,
-        },
-        {
-          label: this.$t('admin.accounts.table.last-name'),
-          isActive: false,
-          filter: 'family_name',
-          order: '',
-          unsortable: false,
-        },
-        // {
-        //   label: this.$t('admin.accounts.table.first-name'),
-        //   isActive: false,
-        //   filter: 'given_name',
-        //   order: '',
-        //   unsortable: false,
-        // },
-        // {
-        //   label: this.$t('admin.accounts.table.title'),
-        //   isActive: false,
-        //   filter: 'job',
-        //   order: '',
-        //   unsortable: false,
-        // },
-        // {
-        //   label: this.$t('admin.accounts.table.roles'),
-        //   isActive: false,
-        //   filter: 'current_org_role',
-        //   order: '',
-        //   unsortable: false,
-        // },
-        // {
-        //   label: this.$t('admin.accounts.table.groups'),
-        //   isActive: false,
-        //   filter: 'people_groups',
-        //   order: '',
-        //   unsortable: true,
-        // },
-        {
-          label: this.$t('admin.accounts.table.inscription'),
-          isActive: false,
-          filter: 'created_at',
-          order: '',
-          unsortable: false,
-        },
-        {
-          label: this.$t('admin.accounts.table.activation'),
-          isActive: false,
-          filter: 'email_verified',
-          order: '',
-          unsortable: false,
-        },
-      ],
-      numResults: '25',
-      numResultOptions: [
-        { value: '25', label: '25' },
-        { value: '50', label: '50' },
-        { value: '100', label: '100' },
-      ],
-    }
+  {
+    label: t('admin.accounts.table.last-name'),
+    isActive: false,
+    filter: 'family_name',
+    order: '',
+    unsortable: false,
   },
-
-  computed: {
-    organization() {
-      return this.organizationsStore.current
-    },
-
-    filteredUsers() {
-      return this.request && this.request.results
-        ? this.request.results.map((u) => ({
-            ...u,
-            people_groups: (u.people_groups || [])
-              .map((g) => g.name)
-              .filter((n) => !!n)
-              .sort(),
-          }))
-        : []
-    },
-
-    pagination() {
-      if (!this.request) return { total: 0 }
-      return {
-        currentPage: this.request.current_page,
-        total: this.request.total_page,
-        previous: this.request.previous,
-        next: this.request.next,
-        first: this.request.first,
-        last: this.request.last,
-      }
-    },
+  {
+    label: t('admin.accounts.table.inscription'),
+    isActive: false,
+    filter: 'created_at',
+    order: '',
+    unsortable: false,
   },
-
-  watch: {
-    numResults(neo, old) {
-      if (neo && neo !== old) {
-        localStorage?.setItem('admin-accounts-num-results', neo)
-        this.searchUser()
-      }
-    },
+  {
+    label: t('admin.accounts.table.activation'),
+    isActive: false,
+    filter: 'email_verified',
+    order: '',
+    unsortable: false,
   },
+])
 
-  mounted() {
-    const numResults = localStorage?.getItem('admin-accounts-num-results') || '25'
-    if (numResults) this.numResults = numResults
-    this.searchUser()
+const LIMIT_OPTIONS = [
+  { value: 25, label: '25' },
+  { value: 50, label: '50' },
+  { value: 100, label: '100' },
+]
+const LIMIT = LIMIT_OPTIONS[0].value
+
+type OrderAdmin = 'family_name' | 'created_at' | 'email_verified'
+type QuerySearchAdmin = {
+  current_org_role: string
+  search: string
+  ordering: Ordering<OrderAdmin>
+}
+
+const search = ref('')
+const { query, setQuery } = useQuery<QuerySearchAdmin>({
+  current_org_role: 'admins,facilitators,users,viewers',
+  ordering: '-created_at',
+  search: search.value,
+})
+
+// TODO change to organizationCode
+// TODO add translate for user/group
+const organizationId = computed(() => organizationsStore.current.id)
+const { status, data, refresh, pagination } = searchPeopleAdmin(organizationId, {
+  query,
+  default: () => factoriesSkeleton(peopleSkeleton, LIMIT),
+  paginationConfig: {
+    limit: LIMIT,
   },
+})
 
-  methods: {
-    async onClickPagination(requestedPage) {
-      this.isLoading = true
-      this.request = await useAPI(requestedPage, {})
-      this.isLoading = false
-      const el = document.querySelector('.role-tab .search-input-container')
-      if (el) el.scrollIntoView({ behavior: 'smooth' })
-    },
+const orderBy = (row) => {
+  if (row.unsortable) return
 
-    searchUser: debounce(async function () {
-      this.isLoading = true
+  const nameFilter = row.filter as OrderAdmin
 
-      const activeFilter = this.filters.find((filter) => filter.isActive)
-      const params = activeFilter ? { ordering: activeFilter.order + activeFilter.filter } : {}
-      params.current_org_role = 'admins,facilitators,users,viewers'
-      params.limit = this.numResults
-      this.request = await searchPeopleAdmin({
-        search: this.searchFilter,
-        org_id: this.organization.id,
-        params,
-      })
+  // if ordering is already set , revese it with '-' prefix
+  if (query.ordering === nameFilter) {
+    setQuery('ordering', `-${nameFilter}`)
+  } else {
+    setQuery('ordering', nameFilter)
+  }
+}
 
-      this.isLoading = false
-    }, 500),
+const onSearch = () => setQuery('search', search.value)
+const onClearSearch = () => {
+  search.value = ''
+  setQuery('search', '')
+}
 
-    deleteQuery() {
-      this.searchFilter = ''
-      this.filteredUsers = []
-    },
+const createAccountDrawer = (user) => {
+  selectedUser.value = user
+  openModal()
+}
 
-    async sortBy(filter) {
-      if (filter.unsortable) return
-      if (!filter.isActive) {
-        this.filters.forEach((filter) => {
-          filter.isActive = false
-          filter.order = ''
-        })
-        filter.isActive = !filter.isActive
-        filter.order = ''
-      } else {
-        if (filter.order === '') filter.order = '-'
-        else if (filter.order === '-') filter.order = ''
-      }
-      this.isLoading = true
-      this.request = await searchPeopleAdmin({
-        search: this.searchFilter,
-        org_id: this.organization.id,
-        params: {
-          ordering: filter.order + filter.filter,
-        },
-      })
-      this.isLoading = false
-    },
-
-    createAccountDrawer(user) {
-      if (user) this.selectedUser = user
-      this.isOpenAccountDrawer = true
-    },
-
-    closeAccountDrawer() {
-      this.isOpenAccountDrawer = false
-      this.selectedUser = null
-      this.searchUser()
-    },
-  },
+const closeAccountDrawer = () => {
+  selectedUser.value = null
+  closeModal()
+  refresh()
 }
 </script>
 
@@ -410,6 +308,9 @@ export default {
     margin-top: $space-xl;
     width: 100%;
     overflow-x: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 
   .loader {
@@ -556,6 +457,20 @@ table {
   ul {
     list-style-type: square;
     list-style-position: inside;
+  }
+}
+
+.email {
+  margin: auto;
+  width: 2rem;
+  height: 2rem;
+
+  &:not(.verified) {
+    fill: var(--red);
+  }
+
+  &.verified {
+    fill: var(--primary-dark);
   }
 }
 </style>

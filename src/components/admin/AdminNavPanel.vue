@@ -5,13 +5,13 @@
 </template>
 
 <script setup lang="ts">
-defineProps({
-  groupTabs: { type: Array, required: true },
-  currentTab: {
-    type: Object,
-    default: () => {},
-  },
-})
+withDefaults(
+  defineProps<{
+    groupTabs: any[]
+    currentTab?: any
+  }>(),
+  { currentTab: null }
+)
 
 const emit = defineEmits<{ navigated: [] }>()
 const navigated = () => emit('navigated')

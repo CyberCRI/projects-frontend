@@ -25,14 +25,18 @@
   </BaseDrawer>
 </template>
 
-<script setup>
-defineOptions({ name: 'GoalOrSdgsDrawer' })
+<script setup lang="ts">
+withDefaults(
+  defineProps<{
+    isOpened?: boolean
+  }>(),
+  { isOpened: false }
+)
 
-defineProps({
-  isOpened: { type: Boolean, default: false },
-})
-
-const emit = defineEmits(['choice-made', 'close'])
+const emit = defineEmits<{
+  'choice-made': ['sdg' | 'goal']
+  close: []
+}>()
 
 const close = () => emit('close')
 </script>

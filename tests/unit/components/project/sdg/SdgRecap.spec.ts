@@ -1,28 +1,9 @@
 import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
 import SdgRecap from '@/components/project/sdg/SdgRecap.vue'
-import english from '@/i18n/locales/en.json'
 import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
 import pinia from '@/stores'
 import useOrganizationsStore from '@/stores/useOrganizations'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
-const i18n = {
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: {
-    en: english,
-  },
-}
-
-const factory = (propsData?) => {
-  return lpiShallowMount(SdgRecap, {
-    props: {
-      ...propsData,
-    },
-    i18n,
-    provide: { projectLayoutToggleAddModal: vi.fn() },
-  })
-}
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 describe('SdgRecap.vue', () => {
   beforeEach(() => {
@@ -30,7 +11,9 @@ describe('SdgRecap.vue', () => {
     organizationsStore._current = OrganizationOutputFactory.generate()
   })
   it('should render component', () => {
-    const wrapper = factory()
+    const wrapper = lpiShallowMount(SdgRecap, {
+      provide: { projectLayoutToggleAddModal: vi.fn() },
+    })
     expect(wrapper.exists()).toBe(true)
   })
 })

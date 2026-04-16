@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import { IconImageChoice } from '@/functs/IconImage'
 import useToasterStore from '@/stores/useToaster'
 
 const toaster = useToasterStore()
 const { t } = useNuxtI18n()
+
 const snackbars = computed(() => {
   return (toaster.toastList || []).map((toast) => {
-    const iconMap = {
+    const iconMap: Record<string, IconImageChoice> = {
       error: 'Cancel',
       warning: 'AlertOutline',
       info: 'Check',

@@ -1,97 +1,100 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import { createI18n } from 'vue-i18n'
-import { mount, shallowMount } from '@vue/test-utils'
+import { createRouter, createWebHistory, RouteLocationRaw, RouteRecordRaw } from 'vue-router'
+import { ComponentMountingOptions, mount, shallowMount } from '@vue/test-utils'
 import { clickOutside, disableFocus } from '@/directives'
-import pinia from './test-pinia'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
-import english from '@/i18n/locales/en.json'
+import routerOptions from '@/app/router.options'
+import { createI18n, I18nOptions } from 'vue-i18n'
+import { createTestingPinia } from '@pinia/testing'
+// @ts-expect-error ignore import nuxt
+import { NuxtLink } from '#components'
 
-const defaultI18nOptions = () => {
-  return {
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages: {
-      en: english,
-    },
-  }
+// create globaly i18n
+import english from '@/i18n/locales/en.json'
+import french from '@/i18n/locales/fr.json'
+import MockComponent from './MockComponent.vue'
+
+type OptionsMount<T> = ComponentMountingOptions<T> & {
+  route?: RouteLocationRaw
+  router?: RouteRecordRaw[]
 }
 
-function buildOptions(options: any = {}) {
+// @ts-expect-error ignore other languages
+const DEFAULT_I18N_OPTIONS = {
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: {
+    en: english,
+    fr: french,
+  },
+} as I18nOptions
+
+const i18n = createI18n({ legacy: false, globalInjection: true, ...DEFAULT_I18N_OPTIONS })
+
+const pinia = createTestingPinia({ stubActions: false })
+
+/**
+ * build options for mount utils (auto create router/locale)
+ *
+ * @constant
+ * @name buildOptions
+ * @kind variable
+ * @type {<T>(options?: OptionsMount<T>) => ComponentMountingOptions<T>}
+ */
+const buildOptions = <T>(options: OptionsMount<T> = {}): ComponentMountingOptions<T> => {
   const plugins = []
 
-  plugins.push(pinia)
-
-  let i18n
-  // if (options.i18n) {
-  i18n = createI18n({ legacy: false, ...(options?.i18n || defaultI18nOptions()) })
-  plugins.push(i18n)
-  // }
-
-  let router
-  if (options.router) {
-    router = createRouter({
-      history: createWebHistory(),
-      routes: options.router,
-    })
-    plugins.push(router)
+  const router = createRouter({
+    history: createWebHistory(),
+    routes: options.router || routerOptions.routes(),
+  })
+  if (options.route) {
+    router.push(options.route)
   }
 
-  const props = options.props || {}
+  plugins.push(i18n)
+  plugins.push(pinia)
 
-  const mixins = options.mixins || []
+  const props = (options.props || {}) as ComponentMountingOptions<T>['props']
 
-  const stubs = options.stubs || {}
-  const provide = options.provide || {}
+  const mixins = (options.mixins || []) as ComponentMountingOptions<T>['global']['mixins']
+
+  const stubs = (options.stubs || {}) as ComponentMountingOptions<T>['global']['stubs']
+  const provide = (options.provide || {}) as ComponentMountingOptions<T>['global']['provide']
 
   const directives = { 'click-outside': clickOutside, 'disable-focus': disableFocus }
 
   return {
-    options: {
-      props,
-      global: {
-        plugins,
-        mixins,
-        directives,
-        stubs,
-        provide,
-        ...options.global,
+    ...options,
+    props,
+    global: {
+      plugins,
+      mixins,
+      directives,
+      stubs,
+      provide,
+      // pre-import nuxtlink for correct resolve
+      // and ignore RouterLink
+      components: {
+        RouterLink: MockComponent,
+        NuxtLink,
       },
-    },
-    plugins: {
-      i18n,
-      router,
+      ...options.global,
     },
   }
 }
 
-export function lpiMount(component, options: any = {}) {
-  return mount(component, buildOptions(options).options)
+export const lpiMount = <T>(component, options: OptionsMount<T> = {}) => {
+  return mount(component, buildOptions<T>(options))
 }
 
-export function lpiShallowMount(component, options: any = {}) {
-  return shallowMount(component, buildOptions(options).options)
+export const lpiShallowMount = <T>(component, options: OptionsMount<T> = {}) => {
+  return shallowMount(component, buildOptions<T>(options))
 }
 
-export function lpiMountSuspended(component, options: any = {}) {
-  return mountSuspended(component, buildOptions(options).options)
+export const lpiMountSuspended = <T>(component, options: OptionsMount<T> = {}) => {
+  return mountSuspended(component, buildOptions<T>(options))
 }
 
-export function lpiShallowMountSuspended(component, options: any = {}) {
-  return mountSuspended(component, { ...buildOptions(options).options, shallow: true })
-}
-
-export function lpiMountExtra(component, options: any = {}) {
-  const _options = buildOptions(options)
-  return {
-    wrapper: mount(component, _options.options),
-    ..._options.plugins,
-  }
-}
-
-export function lpiShallowMountExtra(component, options: any = {}) {
-  const _options = buildOptions(options)
-  return {
-    wrapper: shallowMount(component, _options.options),
-    ..._options.plugins,
-  }
+export const lpiShallowMountSuspended = <T>(component, options: OptionsMount<T> = {}) => {
+  return mountSuspended(component, { ...buildOptions<T>(options), shallow: true })
 }

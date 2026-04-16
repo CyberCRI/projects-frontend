@@ -1,7 +1,7 @@
 <template>
   <div class="sdg-filter-container">
     <SdgIcon
-      v-for="sdg in allSdgs"
+      v-for="sdg in SDGS"
       :key="sdg.id"
       :sdg-id="sdg.id"
       :selected="model.includes(sdg.id)"
@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import SdgIcon from '@/components/search/Filters/SdgIcon.vue'
-import allSdgs from '@/data/sdgs.json'
+import { SDGS } from '@/functs/constants'
 
 const model = defineModel<number[]>()
 
@@ -31,6 +31,7 @@ const toggleSdg = (sdgId) => {
   grid-template-columns: 1fr 1fr;
   gap: pxToRem(16px);
   justify-items: center;
+  margin-top: 1rem;
 }
 
 @media screen and (min-width: $max-mobile) {

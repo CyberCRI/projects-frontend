@@ -5,6 +5,7 @@ import BaseModel from '@/models/base.model'
  * @description Comment of a project
  * */
 export interface CommentModel extends BaseModel {
+  id: number
   content: string
   author: {
     email: string
@@ -13,7 +14,8 @@ export interface CommentModel extends BaseModel {
     id: number
     people_id: string
   }
-  deleted_at: Date
+  deleted_at: string
+  updated_at: string
 }
 
 export type CommentInputModel = Required<CommentModel> & {

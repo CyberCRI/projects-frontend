@@ -7,7 +7,7 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import useToasterStore from '@/stores/useToaster.ts'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import useTagTexts from '@/composables/useTagTexts.js'
+import useTagTexts from '@/composables/useTagTexts.ts'
 
 const { t } = useNuxtI18n()
 

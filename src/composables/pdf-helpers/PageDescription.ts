@@ -2,6 +2,7 @@ import { Doc, Page } from '@/composables/pdf-helpers/doc-builder'
 import PageTitle from '@/composables/project-pdf-components/PageTitle'
 import { convertImages } from '@/composables/pdf-helpers/usePdfHelpers'
 import { tiptapContentStyles } from '@/composables/project-pdf-components/common-styles'
+import { textIsEmpty } from '@/functs/string'
 
 export default async function addPageDescriptionFactory(project: any) {
   const { t } = useNuxtI18n()
@@ -10,7 +11,9 @@ export default async function addPageDescriptionFactory(project: any) {
   fixedDescription = fixedDescription.replaceAll(/<video.*?>.*?<\/video>/g, '')
 
   return function addPageDescription(this: Doc) {
-    if (!fixedDescription?.length || fixedDescription == '<p></p>') return
+    if (textIsEmpty(fixedDescription)) {
+      return
+    }
     this.addContainer(Page)
       .addContainer(PageTitle)
       .add(function (this: PageTitle) {

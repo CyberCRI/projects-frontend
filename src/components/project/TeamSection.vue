@@ -36,107 +36,92 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import TeamDrawer from '@/components/people/ProjectTeamDrawer/TeamDrawer.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import TeamCardInline from '@/components/people/TeamCard/TeamCardInline.vue'
 import useUsersStore from '@/stores/useUsers'
 import { TEAMS_ROLE_I18N } from '@/interfaces/user'
+import { ProjectCategoryModel } from '@/models/project-category.model'
+import { ProjectMemberRoleType } from '@/models/types'
+import { GroupMember } from '@/models/group.model'
 
-export default {
-  name: 'TeamSection',
+withDefaults(
+  defineProps<{
+    selectedCategory?: ProjectCategoryModel
+    unfocusable?: boolean
+  }>(),
+  {
+    selectedCategory: null,
+    unfocusable: false,
+  }
+)
 
-  components: {
-    TeamCardInline,
-    TeamDrawer,
-    IconImage,
-  },
+const { t } = useNuxtI18n()
 
-  props: {
-    selectedCategory: {
-      type: Object,
-      default: () => {},
-    },
-    unfocusable: {
-      type: Boolean,
-      default: false,
-    },
-  },
+type ProjectMembers = { user: GroupMember; role: ProjectMemberRoleType }[]
 
-  emits: ['update-team'],
-  setup() {
-    const usersStore = useUsersStore()
-    return {
-      usersStore,
+const emit = defineEmits<{
+  'update-team': [ProjectMembers]
+}>()
+
+const usersStore = useUsersStore()
+const projectUsers = ref<ProjectMembers>([])
+const teamModalVisible = ref(false)
+
+const currentUser = computed(() => {
+  return usersStore.userFromApi
+})
+
+const adaptedCurrentUser = computed(() => {
+  /* Only selecting what we need for the card */
+  return {
+    id: currentUser.value.id,
+    family_name: currentUser.value.family_name,
+    given_name: currentUser.value.given_name,
+    job: currentUser.value.job,
+    people_id: currentUser.value.people_id,
+    profile_picture: currentUser.value.profile_picture,
+    role: 'owners',
+  }
+})
+
+watch(
+  adaptedCurrentUser,
+  (neo) => {
+    if (neo) {
+      // current user is automatically added as owner
+      addUser(adaptedCurrentUser.value)
     }
   },
+  { immediate: true }
+)
 
-  data() {
-    return {
-      projectUsers: [],
-      teamModalVisible: false,
-    }
-  },
-  computed: {
-    currentUser() {
-      return this.usersStore.userFromApi
-    },
+const addUser = (newUser) => {
+  // don't duplicate users
+  if (projectUsers.value.find(({ user }) => user.id === newUser.id)) {
+    return
+  }
+  projectUsers.value.push({
+    user: newUser,
+    role: newUser.role,
+  })
+  emit('update-team', projectUsers.value)
+}
+const addPayloadUsers = (payload) => {
+  payload.forEach((user) => addUser(user))
+}
 
-    adaptedCurrentUser() {
-      /* Only selecting what we need for the card */
-      return {
-        id: this.currentUser.id,
-        family_name: this.currentUser.family_name,
-        given_name: this.currentUser.given_name,
-        job: this.currentUser.job,
-        people_id: this.currentUser.people_id,
-        profile_picture: this.currentUser.profile_picture,
-        role: 'owners',
-      }
-    },
-  },
-
-  watch: {
-    adaptedCurrentUser: {
-      handler: function (neo) {
-        if (neo) {
-          // current user is automatically added as owner
-          this.addUser(this.adaptedCurrentUser)
-        }
-      },
-      immediate: true,
-    },
-  },
-
-  methods: {
-    addUser(newUser) {
-      // don't duplicate users
-      if (this.projectUsers.find(({ user }) => user.id === newUser.id)) {
-        return
-      }
-      this.projectUsers.push({
-        user: newUser,
-        role: newUser.role,
-      })
-      this.$emit('update-team', this.projectUsers)
-    },
-    addPayloadUsers(payload) {
-      payload.forEach((user) => this.addUser(user))
-    },
-
-    removeUser(user) {
-      const userIndexToDelete = this.projectUsers.findIndex((projectUser) => {
-        return projectUser.user.id === user.user.id
-      })
-      this.projectUsers.splice(userIndexToDelete, 1)
-      this.$emit('update-team', this.projectUsers)
-    },
-
-    roleLabel(role) {
-      const key = TEAMS_ROLE_I18N[role]
-      return role ? this.$t(key) : null
-    },
-  },
+const removeUser = (user) => {
+  const userIndexToDelete = projectUsers.value.findIndex((projectUser) => {
+    return projectUser.user.id === user.user.id
+  })
+  projectUsers.value.splice(userIndexToDelete, 1)
+  emit('update-team', projectUsers.value)
+}
+const roleLabel = (role) => {
+  const key = TEAMS_ROLE_I18N[role]
+  return role ? t(key) : null
 }
 </script>
 

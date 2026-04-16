@@ -34,19 +34,18 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { isNotGroup, isGroup } from '@/functs/users'
 
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
+import { TranslatedPojectMember } from '@/models/project-member.model'
 
-defineOptions({ name: 'ProjectMemberItem' })
-
-const props = defineProps({
-  user: {
-    type: Object,
-    default: () => {},
-  },
-})
+const props = withDefaults(
+  defineProps<{
+    user?: TranslatedPojectMember
+  }>(),
+  { user: null }
+)
 const { t } = useNuxtI18n()
 const emit = defineEmits(['user-click'])
 

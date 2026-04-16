@@ -9,17 +9,12 @@
         flow: flow,
         inline: inline,
         black: black,
-        cloud: cloud,
+        cloud: data.cloud,
       },
     ]"
   >
     <div class="first-part">
-      <img
-        v-if="cloud"
-        class="icon"
-        :class="size"
-        :src="`${runtimeConfig.public.appPublicBinariesPrefix}/${data.icon}`"
-      />
+      <img v-if="data.cloud" class="icon" :class="size" :src="iconSrc" />
       <IconImage v-else class="icon" :name="data.icon" />
       <div class="text">
         <div v-if="data.info1" class="no-badge">
@@ -74,64 +69,56 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+// TODO need to change this whole things (wtf components)
 import IconImage from '@/components/base/media/IconImage.vue'
 import TagsList from '@/components/tags/TagsList.vue'
+import { IconImageChoice } from '@/functs/IconImage'
+import { TagModel } from '@/models/tag.model'
 
-export default {
-  name: 'InfoSentence',
+type Data = {
+  number?: number
+  icon?: IconImageChoice
+  cloud?: boolean
+  preTitle?: string
+  internal?: boolean
 
-  components: {
-    TagsList,
-    IconImage,
-  },
+  info?: TagModel[]
+  info1?: string
+  info2?: string
+  info3?: string
 
-  props: {
-    data: {
-      type: Object,
-      default: () => {},
-    },
-    count: {
-      type: Number,
-      default: 0,
-    },
-    allBold: {
-      type: Boolean,
-      default: false,
-    },
-    allPlain: {
-      type: Boolean,
-      default: false,
-    },
-    flow: {
-      type: Boolean,
-      default: false,
-    },
-    inline: {
-      type: Boolean,
-      default: false,
-    },
-    black: {
-      type: Boolean,
-      default: false,
-    },
-    size: {
-      type: String,
-      default: null,
-    },
-  },
-  setup() {
-    const runtimeConfig = useRuntimeConfig()
-    return {
-      runtimeConfig,
-    }
-  },
-  computed: {
-    cloud() {
-      return this.data.cloud || false
-    },
-  },
+  title?: string
+  title2?: string
+  title3?: string
+
+  badge?: string
 }
+
+const props = withDefaults(
+  defineProps<{
+    data?: Data
+    count?: number
+    allBold?: boolean
+    allPlain?: boolean
+    flow?: boolean
+    inline?: boolean
+    black?: boolean
+    size?: string
+  }>(),
+  {
+    data: null,
+    count: 0,
+    allBold: false,
+    allPlain: false,
+    flow: false,
+    inline: false,
+    black: false,
+    size: null,
+  }
+)
+
+const iconSrc = computed(() => usePublicURL(props.data.icon || ''))
 </script>
 
 <style lang="scss" scoped>
