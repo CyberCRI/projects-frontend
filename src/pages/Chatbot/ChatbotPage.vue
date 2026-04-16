@@ -1,11 +1,11 @@
 <script setup>
 import useLoadingFromStatus from '@/composables/useLoadingFromStatus'
-const props = defineProps({ chatId: String })
-const CHAT_ENDPOINT = computed(() => '/api/agent/chat?id=' + props.chatId)
+const props = defineProps({ agentId: String })
+const CHAT_ENDPOINT = computed(() => '/api/agent/chat?id=' + props.agentId)
 
 // type Params = Parameters<typeof useFetch>
 const options = {}
-const url = `/api/agent/${props.chatId}`
+const url = `/api/agent/${props.agentId}`
 const { data: agent, status, error, clear } = await useFetch(url, options)
 
 watch(
@@ -31,7 +31,7 @@ const {
 <template>
   <div class="page-section page-section-narrow page-top">
     <div>
-      <h1 class="page-title">Chat #{{ chatId }} - {{ agent?.title }}</h1>
+      <h1 class="page-title">{{ agent?.title }}</h1>
       <p>{{ agent.description }}</p>
     </div>
     <ChatbotOptions :has-user-context="hasUserContext" />

@@ -10,21 +10,21 @@ const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKE
 if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
 
 const fetchAgent = async () => {
-  const response = await fetch(`/api/agent/${props.agent.id}`, {
+  const agentData = await $fetch(`/api/agent/${props.agent.id}`, {
     headers,
   })
-  if (!response.ok) {
-    let errorText = ''
-    try {
-      errorText = await response.text()
-    } catch {
-      // ignore text parsing errors
-    }
-    throw new Error(
-      errorText || `Request to /api/agent/${props.agent.id} failed with status ${response.status}`
-    )
-  }
-  const agentData = await response.json()
+  // if (!response.ok) {
+  //   let errorText = ''
+  //   try {
+  //     errorText = await response.text()
+  //   } catch {
+  //     // ignore text parsing errors
+  //   }
+  //   throw new Error(
+  //     errorText || `Request to /api/agent/${props.agent.id} failed with status ${response.status}`
+  //   )
+  // }
+  // const agentData = await response.json()
   return agentData
 }
 </script>

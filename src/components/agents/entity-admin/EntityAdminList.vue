@@ -5,9 +5,11 @@ const props = defineProps({
   fetchEntities: { type: Function, required: true },
   noEntityLabel: { type: String, required: true },
   entityIcon: { type: String, required: true },
+  deletableCheck: { type: Function, default: () => null },
+  isLinkable: { type: Boolean, default: false },
 })
 
-const emit = defineEmits(['show-entity', 'delete-entity', 'edit-entity'])
+const emit = defineEmits(['goto-entity', 'show-entity', 'delete-entity', 'edit-entity'])
 
 const usersStore = useUsersStore()
 
@@ -50,6 +52,13 @@ refresh()
       </div>
       <div class="actions">
         <ContextActionButton
+          v-if="isLinkable"
+          action-icon="ArrowUpRightFromSquare"
+          secondary
+          no-border
+          @click.prevent="emit('goto-entity', entity)"
+        />
+        <ContextActionButton
           action-icon="Eye"
           secondary
           no-border
@@ -65,6 +74,7 @@ refresh()
           action-icon="TrashCanOutline"
           secondary
           no-border
+          :disabled="props.deletableCheck(entity)"
           @click.prevent="emit('delete-entity', entity)"
         />
       </div>

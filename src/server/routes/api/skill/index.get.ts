@@ -5,7 +5,7 @@ export default defineLazyEventHandler(() => {
       where: {
         orgCode: appApiOrgCode,
       },
-      include: { skillContents: { orderBy: { version: 'desc' } } },
+      include: { skillContents: { include: { agents: true }, orderBy: { version: 'desc' } } },
       orderBy: { title: 'asc' },
     })
     // console.log(agent)
