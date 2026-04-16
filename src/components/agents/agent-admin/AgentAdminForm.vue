@@ -20,6 +20,8 @@ const defaultForm = (agent = null) => ({
   title: agent?.title ?? '',
   description: agent?.description ?? '',
   isEnabled: agent?.isEnabled ?? false,
+  modelName: agent?.modelName ?? '',
+  modelTemperature: agent?.modelTemperature ?? '',
   promptId: agent?.promptId ?? 0,
   promptVersion: agent?.promptVersion ?? 0,
   skillContents:
@@ -111,12 +113,28 @@ const versionOptions = computed(() =>
   promptVersions.value?.map((v) => ({ value: v.version, label: v.version }))
 )
 
+const { fetchAll: fetchDocuments } = useVectorStore()
+const documents = ref([])
+const documentOptions = ref([])
+
 watch(
   () => props.isOpened,
   async (neo) => {
     isAsyncing.value = true
     try {
       prompts.value = await fetchPrompts()
+      documents.value = await fetchDocuments()
+      documentOptions.value = documents.value.map((document) => {
+        const opt = {
+          useDoc: false,
+        }
+        // TODO: set from agent
+
+        return {
+          document: document,
+          model: opt,
+        }
+      })
       skills.value = await fetchSkills()
       skillOptions.value = skills.value.map((skill) => {
         let opt = {
@@ -249,6 +267,14 @@ const submit = async () => {
         @change="titleExists = false"
       />
     </div>
+
+    <h4 class="form-section-title">{{ $t('agents.model-section') }}</h4>
+    <div class="form-section">
+      <TextInput v-model.trim="form.modelName" :label="$t('agents.model-name')" />
+    </div>
+    <div class="form-section">
+      <TextInput v-model.trim="form.modelTemperature" :label="$t('agents.model-temperature')" />
+    </div>
     <div class="form-section">
       <h4 class="form-section-title">{{ $t('agents.prompt-section') }}</h4>
       <LpiSelect
@@ -283,6 +309,15 @@ const submit = async () => {
     <div class="form-section">
       <lpiCheckbox :label="$t('agents.use-profile-data')" v-model="form.useProfileData" />
     </div>
+    <h4 class="form-section-title">{{ $t('agents.docs-section') }}</h4>
+    <div class="form-section agent-documents-section">
+      <AgentDocumentPicker
+        v-for="opt in documentOptions"
+        :key="opt.document.id"
+        :document="opt.document"
+        v-model="opt.model"
+      />
+    </div>
     <h4 class="form-section-title">{{ $t('agents.skills-section') }}</h4>
     <div class="form-section agent-skills-section">
       <AgentSkillPicker
@@ -313,7 +348,8 @@ const submit = async () => {
 .prompt-version-section {
   margin-left: 2rem;
 }
-.agent-skills-section {
+.agent-skills-section,
+.agent-documents-section {
   display: flex;
   flex-flow: column nowrap;
   gap: 1rem;
