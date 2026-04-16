@@ -93,6 +93,9 @@ model Agent {
   description       String @default("")
   orgCode           String
 
+  modelName         String @default("")
+  modelTemperature  String @default("0.7")
+
   isEnabled         Boolean @default(false)
 
   promptId          Int
