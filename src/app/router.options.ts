@@ -453,8 +453,8 @@ const routes = ({
   },
 
   {
-    path: '/chatbots/:chatId',
-    name: 'ChatbotPage',
+    path: '/agents/:agentId',
+    name: 'AgentPage',
     component: () => import('../pages/Chatbot/ChatbotPage.vue'),
     props: true,
     meta: {

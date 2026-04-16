@@ -3,16 +3,29 @@ const fetchPrompts = async () => $fetch('/api/prompt')
 const entityList = useTemplateRef('entityList')
 const refresh = () => entityList.value?.refresh()
 defineExpose({ refresh })
+
+const cannotDeletePrompt = (p) => {
+  console.log('cannot', p)
+  return p.promptContents.some((pc) => pc.agents.length)
+}
+const countAgents = (p) => p.promptContents.reduce((acc, pc) => acc + pc.agents.length, 0)
 </script>
 <template>
   <EntityAdminList
     ref="entityList"
     entity-icon="Article"
     no-entity-label="Nope"
+    :deletable-check="cannotDeletePrompt"
     :fetchEntities="fetchPrompts"
   >
     <template #default="{ entity: prompt }">
-      {{ prompt.title }} ({{ prompt.promptContents?.length }} versions)
+      <div class="title">{{ prompt.title }}</div>
+      <div>
+        <span>{{ prompt.promptContents?.length }} versions</span>
+        -
+        <span v-if="cannotDeletePrompt(prompt)">Used by {{ countAgents(prompt) }} agents</span>
+        <span v-else>Not used yet</span>
+      </div>
     </template>
   </EntityAdminList>
 </template>

@@ -3,13 +3,17 @@ const fetchAgents = async () => await $fetch('/api/agent')
 const entityList = useTemplateRef('entityList')
 const refresh = () => entityList.value?.refresh()
 defineExpose({ refresh })
+const router = useRouter()
+const gotoAgent = (agent) => router.push({ name: 'AgentPage', params: { agentId: agent.id } })
 </script>
 <template>
   <EntityAdminList
     ref="entityList"
+    is-linkable
     entity-icon="Article"
     no-entity-label="Nope"
     :fetchEntities="fetchAgents"
+    @goto-entity="gotoAgent"
   >
     <template #default="{ entity: agent }">
       <div class="title">
