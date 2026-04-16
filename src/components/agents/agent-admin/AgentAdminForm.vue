@@ -19,13 +19,14 @@ const usersStore = useUsersStore()
 const defaultForm = (agent = null) => ({
   title: agent?.title ?? '',
   description: agent?.description ?? '',
+  isEnabled: agent?.isEnabled ?? false,
   promptId: agent?.promptId ?? 0,
   promptVersion: agent?.promptVersion ?? 0,
   skillContents:
     agent?.skillsContents?.map((s) => ({
       skillId,
       skillVersion,
-      useLatestSkillVersion, // TODO
+      useLatestSkillVersion,
     })) ?? [],
   useLatestPromptVersion: agent?.useLatestPromptVersion ?? true,
   useProfileData: agent?.useProfileData ?? false,
@@ -87,7 +88,10 @@ const fetchSkills = async () => {
   //     errorText || `Request to /api/agent/${props.agent.id} failed with status ${response.status}`
   //   )
   // }
-  return skills
+  return skills.map((s) => ({
+    ...s,
+    skillContents: s.skillContents.sort((a, b) => b.version - a.version),
+  }))
 }
 
 watch(
@@ -235,6 +239,9 @@ const submit = async () => {
       <p v-if="titleExists" class="error">{{ $t('agents.title-exists') }}</p>
     </div>
     <div class="form-section">
+      <lpiCheckbox :label="$t('agents.is-enabled')" v-model="form.isEnabled" />
+    </div>
+    <div class="form-section">
       <TextInput
         v-model.trim="form.description"
         input-type="textarea"
@@ -243,7 +250,7 @@ const submit = async () => {
       />
     </div>
     <div class="form-section">
-      <h4>{{ $t('agents.prompt-section') }}</h4>
+      <h4 class="form-section-title">{{ $t('agents.prompt-section') }}</h4>
       <LpiSelect
         :options="promptOptions"
         v-model="form.promptId"
@@ -256,8 +263,11 @@ const submit = async () => {
         v-model="form.useLatestPromptVersion"
       />
     </div>
-    <div class="form-section" v-if="form.promptId && !form.useLatestPromptVersion">
-      <span>{{ $t('agent.use-prompt-version') }}</span>
+    <div
+      class="form-section prompt-version-section"
+      v-if="form.promptId && !form.useLatestPromptVersion"
+    >
+      <span class="select-label">{{ $t('agent.use-prompt-version') }}</span>
       <LpiSelect
         v-if="!form.useLatestPromptVersion"
         :options="versionOptions"
@@ -265,14 +275,16 @@ const submit = async () => {
         :placeholder="$t('agents.prompt-version-placeholder')"
       />
     </div>
+
+    <h4 class="form-section-title">{{ $t('agents.tools-section') }}</h4>
     <div class="form-section">
       <lpiCheckbox :label="$t('agents.use-project-mcp')" v-model="form.useProjectsMcp" />
     </div>
     <div class="form-section">
       <lpiCheckbox :label="$t('agents.use-profile-data')" v-model="form.useProfileData" />
     </div>
-    <div class="form-section">
-      <h4>{{ $t('agents.skills-section') }}</h4>
+    <h4 class="form-section-title">{{ $t('agents.skills-section') }}</h4>
+    <div class="form-section agent-skills-section">
       <AgentSkillPicker
         v-for="opt in skillOptions"
         :key="opt.skill.id"
@@ -289,5 +301,21 @@ const submit = async () => {
 }
 .form-section ~ .form-section {
   margin-top: 1rem;
+}
+.form-section-title {
+  color: $primary-dark;
+  font-size: 1.3em;
+  padding-block: 1rem;
+}
+.select-label {
+  margin-right: 1rem;
+}
+.prompt-version-section {
+  margin-left: 2rem;
+}
+.agent-skills-section {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1rem;
 }
 </style>

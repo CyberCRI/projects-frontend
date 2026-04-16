@@ -93,6 +93,8 @@ model Agent {
   description       String @default("")
   orgCode           String
 
+  isEnabled         Boolean @default(false)
+
   promptId          Int
   promptVersion     Int
   promptContent     PromptContent @relation(fields: [promptId, promptVersion], references: [promptId, version])
@@ -110,12 +112,14 @@ model Agent {
 }
 
 model AgentSkillContent {
-  skillId           Int
-  skillVersion      Int
-  agentId           Int
+  skillId               Int
+  skillVersion          Int
+  agentId               Int
 
-  skillContent      SkillContent @relation(fields: [skillId, skillVersion], references:[skillId, version])
-  agent             Agent @relation(fields: [agentId], references:[id])
+  useLatestSkillVersion Boolean @default(true)
+
+  skillContent          SkillContent @relation(fields: [skillId, skillVersion], references:[skillId, version])
+  agent                 Agent @relation(fields: [agentId], references:[id])
 
   @@id([skillId, skillVersion, agentId])
 }

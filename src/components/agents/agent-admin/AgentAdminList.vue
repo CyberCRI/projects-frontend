@@ -12,7 +12,10 @@ defineExpose({ refresh })
     :fetchEntities="fetchAgents"
   >
     <template #default="{ entity: agent }">
-      <div>{{ agent.title }}</div>
+      <div class="title">
+        <span class="enabled-mark">{{ agent.isEnabled ? '✅' : '❌' }}</span>
+        {{ agent.title }}
+      </div>
       <div class="prompt">
         {{ agent.promptContent.prompt.title }} v{{ agent.promptContent.version }}
       </div>
@@ -27,5 +30,8 @@ defineExpose({ refresh })
 .prompt {
   color: #666;
   font-size: 0.8em;
+}
+.enabled-mark {
+  font-size: 0.8rem;
 }
 </style>

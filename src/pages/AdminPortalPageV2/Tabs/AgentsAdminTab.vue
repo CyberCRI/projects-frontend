@@ -60,7 +60,7 @@ const onCloseAdminForm = () => {
     <div class="actions">
       <LpiButton
         btn-icon="Plus"
-        :label="$t('vector-store.add-document')"
+        :label="$t('agents.create-agent')"
         @click="addEntityIsOpen = true"
       />
     </div>
@@ -97,3 +97,10 @@ const onCloseAdminForm = () => {
     />
   </div>
 </template>
+<style lang="scss" scoped>
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 2rem;
+}
+</style>
