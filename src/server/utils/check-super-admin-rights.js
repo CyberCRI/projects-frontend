@@ -17,16 +17,7 @@ export function parseJwt(token) {
   return JSON.parse(jsonPayload)
 }
 
-export default async function checkVectorDbRights(event) {
-  const tokenHeader = getRequestHeader(event, 'authorization') || ''
-  if (!tokenHeader) {
-    throw createError({
-      statusCode: 401,
-      statusMessage: 'Unauthorized',
-      message: 'You must authenticate to access this resource.',
-    })
-  }
-
+export async function getKeycloakIdFromToken(tokenHeader) {
   let kcId = null
   try {
     const jwt = parseJwt(tokenHeader)
@@ -39,6 +30,10 @@ export default async function checkVectorDbRights(event) {
     })
   }
 
+  return kcId
+}
+
+export async function getUserByKeycloakId(kcId, tokenHeader) {
   let user = null
   try {
     const runtimeConfig = useRuntimeConfig()
@@ -54,7 +49,27 @@ export default async function checkVectorDbRights(event) {
     })
   }
 
-  if (!user?.is_superuser) {
+  return user
+}
+
+export async function isSuperAdmin(event) {
+  return !!user?.is_superuser
+}
+
+export default async function checkSuperAdminRights(event) {
+  const tokenHeader = getRequestHeader(event, 'authorization') || ''
+  if (!tokenHeader) {
+    throw createError({
+      statusCode: 401,
+      statusMessage: 'Unauthorized',
+      message: 'You must authenticate to access this resource.',
+    })
+  }
+
+  const kcId = getKeycloakIdFromToken(tokenHeader)
+  const user = getUserByKeycloakId(kcId, tokenHeader)
+
+  if (!isSuperAdmin(user)) {
     throw createError({
       statusCode: 403,
       statusMessage: 'Forbidden',

@@ -58,9 +58,10 @@ const submit = async () => {
       const { data } = await $fetch(`/api/skill/${props.skill.id}`, {
         method: 'put',
         body: form.value,
+        headers,
       })
     } else {
-      const { data } = await $fetch('/api/skill/', { method: 'post', body: form.value })
+      const { data } = await $fetch('/api/skill/', { method: 'post', body: form.value, headers })
     }
     // if (!response.ok) {
     //   let errorText = ''

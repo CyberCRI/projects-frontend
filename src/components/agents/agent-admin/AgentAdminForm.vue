@@ -3,7 +3,16 @@ import useUsersStore from '@/stores/useUsers'
 import useToasterStore from '@/stores/useToaster'
 
 const { t } = useNuxtI18n()
-
+const modelStrings = ref([
+  'openai:gpt-4o-mini',
+  'openai:gpt-4o',
+  'openai:gpt-5-nano',
+  'openai:gpt-5-mini',
+  'openai:gpt-5',
+  'openai:gpt-5.4-nano',
+  'openai:gpt-5.4-mini',
+  'openai:gpt-5.4',
+])
 const props = defineProps({
   isOpened: {
     type: Boolean,
@@ -214,9 +223,10 @@ const submit = async () => {
       const { data } = await $fetch(`/api/agent/${props.agent.id}`, {
         method: 'put',
         body: form.value,
+        headers,
       })
     } else {
-      const { data } = await $fetch('/api/agent/', { method: 'post', body: form.value })
+      const { data } = await $fetch('/api/agent/', { method: 'post', body: form.value, headers })
     }
     // if (!response.ok) {
     //   let errorText = ''
@@ -291,7 +301,19 @@ const submit = async () => {
 
     <h4 class="form-section-title">{{ $t('agents.model-section') }}</h4>
     <div class="form-section">
-      <TextInput v-model.trim="form.modelName" :label="$t('agents.model-name')" />
+      <datalist id="modelStrings">
+        <option
+          v-for="modelString in modelStrings"
+          :key="modelString"
+          :value="modelString"
+          :label="modelString"
+        />
+      </datalist>
+      <TextInput
+        v-model.trim="form.modelName"
+        :label="$t('agents.model-name')"
+        suggestionListId="modelStrings"
+      />
     </div>
     <div class="form-section">
       <TextInput v-model.trim="form.modelTemperature" :label="$t('agents.model-temperature')" />

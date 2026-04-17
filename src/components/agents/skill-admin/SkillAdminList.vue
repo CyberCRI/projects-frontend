@@ -1,5 +1,10 @@
 <script setup>
-const fetchSkills = async () => $fetch('/api/skill')
+import useUsersStore from '@/stores/useUsers'
+const usersStore = useUsersStore()
+let headers = {}
+const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
+if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
+const fetchSkills = async () => $fetch('/api/skill', { headers })
 const entityList = useTemplateRef('entityList')
 const refresh = () => entityList.value?.refresh()
 defineExpose({ refresh })
