@@ -1,5 +1,10 @@
 <script setup>
-const fetchPrompts = async () => $fetch('/api/prompt')
+import useUsersStore from '@/stores/useUsers'
+const usersStore = useUsersStore()
+let headers = {}
+const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
+if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
+const fetchPrompts = async () => $fetch('/api/prompt', { headers })
 const entityList = useTemplateRef('entityList')
 const refresh = () => entityList.value?.refresh()
 defineExpose({ refresh })

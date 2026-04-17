@@ -57,9 +57,10 @@ const submit = async () => {
       const { data } = await $fetch(`/api/prompt/${props.prompt.id}`, {
         method: 'put',
         body: form.value,
+        headers,
       })
     } else {
-      const { data } = await $fetch('/api/prompt/', { method: 'post', body: form.value })
+      const { data } = await $fetch('/api/prompt/', { method: 'post', body: form.value, headers })
     }
     // if (!response.ok) {
     //   let errorText = ''

@@ -1,12 +1,12 @@
 import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters'
 import { PDFLoader } from '@langchain/community/document_loaders/fs/pdf'
 
-import checkVectorDbRights from '~/server/utils/check-vector-db-rights'
+import checkSuperAdminRights from '~/server/utils/check-super-admin-rights.js'
 import getVectorStore from '~/server/utils/vector-db'
 
 export default defineLazyEventHandler(() => {
   return defineEventHandler(async (event) => {
-    await checkVectorDbRights(event)
+    await checkSuperAdminRights(event)
 
     const { appApiOrgCode } = useRuntimeConfig().public
     const { vectorStore } = await getVectorStore()

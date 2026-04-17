@@ -29,6 +29,7 @@
         :disabled="disabled"
         :data-test="dataTest"
         :maxlength="maxLength"
+        :list="suggestionListId"
         @change="$emit('change', $event)"
         @keydown.enter="$emit('enter')"
         @focus="$emit('focus', $event)"
@@ -69,6 +70,7 @@ const props = withDefaults(
     maxLength?: number
     rows?: number
     errors?: ErrorObject[]
+    suggestionListId?: string
   }>(),
   {
     autofocus: false,

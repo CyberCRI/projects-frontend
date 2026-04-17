@@ -17,33 +17,28 @@ const refreshEntityList = () => entityList.value?.refresh()
 const isAsyncing = ref(false)
 
 const deleteEntity = async () => {
+  if (!entityToDelete.value) return
   isAsyncing.value = true
-  // let headers = {}
-  // const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
-  // if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
-  // const query = new URLSearchParams()
-  // query.set('title', documentToDelete.value)
-
-  // try {
-  // const response = await fetch(`/api/vector-store/delete?${query.toString()}`, {
-  //   headers,
-  //   method: 'DELETE',
-  // })
-  // if (response.ok) {
-  //   await response.json()
-  //   refreshDocumentList()
-  //   toaster.pushSuccess(t('vector-store.document-deleted', { title: documentToDelete.value }))
-  // } else {
-  //   toaster.pushError(`${response.status} - ${response.statusText}`)
-  // }
-  // } catch (e) {
-  // console.log(e.toString())
-  // toaster.pushError(e.toString())
-  // } finally {
-  //   documentToDelete.value = ''
-  //   isAsyncing.value = false
-  // }
+  let headers = {}
+  const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
+  if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
+  try {
+    const response = await $fetch(`/api/prompt/${entityToDelete.value.id}`, {
+      headers,
+      method: 'DELETE',
+    })
+    console.log('delete', response)
+    refreshEntityList()
+    toaster.pushSuccess(t('prompt.deleted'))
+  } catch (e) {
+    console.log(e.toString())
+    toaster.pushError(e.toString())
+  } finally {
+    entityToDelete.value = ''
+    isAsyncing.value = false
+  }
 }
+
 const onEntityUpdated = () => {
   entityToEdit.value = null
   refreshEntityList()

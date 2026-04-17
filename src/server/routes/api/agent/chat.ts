@@ -7,9 +7,12 @@ import { v4 as uuidv4 } from 'uuid'
 import getVectorStore from '@/server/utils/vector-db.js'
 import { createRetrieverTool } from '@langchain/classic/tools/retriever'
 import { MultiServerMCPClient } from '@langchain/mcp-adapters'
-
+import checkSuperAdminRights from '@/server/utils/check-super-admin-rights.js'
 import { tokenMap, traceMcp } from '@/server/routes/api/chat-stream'
 
+// TODO: fix import issue (useNuxtRuntime in dependncies)
+// import { PROJECTS_DEFAULT_VECTOR_STORE_KEY } from '@/composables/useVectorStore'
+const PROJECTS_DEFAULT_VECTOR_STORE_KEY = 'ProjectsDefaultVectorStoreKey'
 const runtimeConfig = useRuntimeConfig()
 const {
   appLangchainModelName,
@@ -20,7 +23,7 @@ const {
   appSorbobotApiTrace,
   appVectorToolPrompt,
 } = runtimeConfig
-const { appChatbotEnabled } = runtimeConfig.public
+const { appApiOrgCode, appChatbotEnabled } = runtimeConfig.public
 
 // TODO use own token map instead chat-stream one when refactoed
 // Map conversationId to token and date for authed api requests in MCP
@@ -65,6 +68,8 @@ export default defineLazyEventHandler(() => {
       })
     }
 
+    /* --------- Fetch Agent  --------- */
+
     const _id = getQuery(event)?.id
     if (!_id) {
       setResponseStatus(event, 400)
@@ -82,8 +87,16 @@ export default defineLazyEventHandler(() => {
     const agentData = await chatbotPrisma.agent.findUnique({
       where: {
         id: id,
+        orgCode: appApiOrgCode,
       },
-      include: { promptContent: true, skillContents: { include: { skill: true } }, mcps: true },
+      include: {
+        promptContent: {
+          include: { prompt: true },
+        },
+        skillContents: { include: { skillContent: { include: { skill: true } } } },
+        documents: true,
+        mcps: true,
+      },
     })
 
     if (!agentData) {
@@ -101,6 +114,8 @@ export default defineLazyEventHandler(() => {
       }
     }
 
+    /* --------- AuthN  --------- */
+
     const tokenHeader = getRequestHeader(event, 'authorization') || ''
     if (tokenHeader) {
       traceMcp('chat-stream: got Authorization header provided')
@@ -112,10 +127,20 @@ export default defineLazyEventHandler(() => {
       })
     }
 
+    // check admin priviledge for preview
+    if (!agentData.isEnabled) {
+      traceMcp('chat-stream: agent is diabled, checking rights to preview')
+      await checkSuperAdminRights(event)
+    }
+
+    /* --------- Response headers  --------- */
+
     setResponseHeader(event, 'Content-Type', 'text/event-stream')
     setResponseHeader(event, 'Cache-Control', 'no-cache')
     setResponseHeader(event, 'Connection', 'keep-alive')
     setResponseStatus(event, 200)
+
+    /* --------- Conversation & TokenMap  --------- */
 
     const body = await readBody<{
       messages: Array<{ role: string; text: string }>
@@ -136,6 +161,8 @@ export default defineLazyEventHandler(() => {
       date: new Date(),
       token: ('' + tokenHeader).replace('Bearer ', ''),
     })
+
+    /* --------- MCPs  --------- */
 
     const tools = []
 
@@ -181,11 +208,14 @@ export default defineLazyEventHandler(() => {
       tools.unshift(...mcpTools)
     }
 
+    /* --------- Skills  --------- */
+
     let skillSystemPromptExtra = ''
     if (agentData.skillContents.length) {
       console.log(`Found ${agentData.skillContents.length} skills`)
       const skillMap = {}
-      agentData.skillContents.forEach((skillContent) => {
+      agentData.skillContents.forEach((agentSkillContent) => {
+        const skillContent = agentSkillContent.skillContent
         const skillTitle = skillContent.skill.title
         const skillSlug = skillTitle.replace(/\s+/gim, '_')
         skillMap[skillSlug] = {
@@ -224,15 +254,22 @@ export default defineLazyEventHandler(() => {
       tools.unshift(loadSkill)
     }
 
+    /* --------- Vector Stores  --------- */
+
     // TODO: set vector store iu agent ?
     const { vectorStore } = await getVectorStore()
     if (vectorStore) {
-      const { appApiOrgCode } = useRuntimeConfig().public
       traceLangchain(`Configure vector tool with prompt "${appVectorToolPrompt}"`)
+
+      const agentDocuments = (agentData.documents || [])
+        .filter((d) => d.vectorStoreKey === PROJECTS_DEFAULT_VECTOR_STORE_KEY)
+        .map((d) => d.documentTitle)
+
       const retriever = vectorStore.asRetriever({
         k: 5,
         filter: {
           orgCode: appApiOrgCode,
+          title: { $in: agentDocuments },
         },
       })
 
@@ -242,6 +279,8 @@ export default defineLazyEventHandler(() => {
       })
       tools.push(retrieverTool)
     }
+
+    /* --------- Loggers  --------- */
 
     const toolMonitoringMiddleware = createMiddleware({
       name: 'ToolMonitoringMiddleware',
@@ -276,6 +315,8 @@ export default defineLazyEventHandler(() => {
       },
     })
 
+    /* --------- LLM settings  --------- */
+
     const parsedTemperature = parseFloat(appLangchainTemperature)
     const temperature = Number.isNaN(parsedTemperature) ? 0.7 : parsedTemperature
 
@@ -283,6 +324,8 @@ export default defineLazyEventHandler(() => {
       temperature,
       apiKey: appLangchainModelApiKey,
     })
+
+    /* --------- Agent setup  --------- */
 
     const agent = createAgent({
       model,
@@ -298,6 +341,8 @@ export default defineLazyEventHandler(() => {
       }),
       middleware: [toolMonitoringMiddleware, loggingMiddleware] as any,
     })
+
+    /* --------- Start coversation  --------- */
 
     traceMcp(
       `Starting chat stream for conversation ${conversationId} with ${tools.map((t) => `"${t.name}"`).join(', ')}  tools and ${messages.length} messages`
