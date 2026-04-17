@@ -208,7 +208,7 @@ export default {
       if (this.hasAddIcon) this.$emit('add')
       else if (this.hasCloseIcon) this.$emit('unselect', this.project)
       else if (this.followOnClick) {
-        this.$refs.follow.actionFollow()
+        this.$refs.follow.toggleFollow()
       } else this.$emit('navigated-away')
     },
   },

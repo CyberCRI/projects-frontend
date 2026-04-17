@@ -30,6 +30,7 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
   is_locked: boolean
   is_shareable: boolean
   purpose: string
+  categories: ProjectCategoryOutput[]
   organizations: OrganizationModel[]
   language: LanguageType
   locations: LocationOutput[]
@@ -49,9 +50,24 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
   goals: GoalOutput[]
   slug: string
   updated_at: string
+  modules: {
+    members: number
+    groups: number
+    linked_projects: number
+    similars: number
+    locations: number
+    comments: number
+    goals: number
+    blogs: number
+    files: number
+    links: number
+    announcements: number
+  }
 }
 
 export type TranslatedProject = Translated<ProjectModel, 'title' | 'description' | 'purpose'>
+
+export type ProjectSlugOrId = ProjectModel['id'] | ProjectModel['slug']
 
 export type ProjectCreateInput = Required<ProjectModel> & {
   project_categories_ids: number

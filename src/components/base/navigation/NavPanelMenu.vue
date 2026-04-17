@@ -7,33 +7,26 @@
       class="navpanel-menu-entry"
       :class="{ active: isCurrentTab(entry) }"
     >
-      <template v-if="entry.condition">
-        <span
-          v-if="entry.isNotLink"
-          class="navpanel-menu-link"
-          :data-test="entry.dataTest"
-          @click="onMenuEntryClicked(entry)"
-        >
-          <IconImage class="icon" :name="entry.icon || 'Article'" />
+      <component
+        :is="entry.isNotLink ? 'span' : NuxtLink"
+        v-if="entry.condition"
+        class="navpanel-menu-link"
+        :data-test="entry.dataTest"
+        :to="entry.view"
+        @click="onMenuEntryClicked(entry)"
+      >
+        <IconImage class="icon skeletons-background" :name="entry.icon || 'Article'" />
 
+        <span class="skeletons-text">
           {{ entry.label }}
-
-          <IconImage v-if="entry.actionIcon" class="icon action-icon" :name="entry.actionIcon" />
         </span>
-        <NuxtLink
-          v-else
-          class="navpanel-menu-link"
-          :data-test="entry.dataTest"
-          :to="entry.view"
-          @click="onMenuEntryClicked(entry)"
-        >
-          <IconImage class="icon" :name="entry.icon || 'Article'" />
 
-          {{ entry.label }}
-
-          <IconImage v-if="entry.actionIcon" class="icon action-icon" :name="entry.actionIcon" />
-        </NuxtLink>
-      </template>
+        <IconImage
+          v-if="entry.actionIcon"
+          class="icon action-icon skeletons-background"
+          :name="entry.actionIcon"
+        />
+      </component>
     </li>
   </menu>
 </template>
@@ -41,6 +34,7 @@
 <script setup lang="ts">
 import { IconImageChoice } from '@/functs/IconImage'
 import useGlobals from '@/stores/useGlobals'
+import { NuxtLink } from '#components'
 
 type MenyEntry = {
   condition: boolean

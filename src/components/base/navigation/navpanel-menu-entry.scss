@@ -4,7 +4,7 @@
 
   &:hover,
   &.active {
-    background-color: $primary-light;
+    background-color: var(--primary-light);
   }
 
   .navpanel-menu-link {
@@ -12,14 +12,14 @@
     gap: 1rem;
     align-items: center;
     padding: 0.4rem;
-    color: $primary-dark;
+    color: var(--primary-dark);
     cursor: pointer;
 
     .icon {
       display: inline-block;
       width: 1em;
       height: 1em;
-      fill: $primary-dark;
+      fill: var(--primary-dark);
     }
 
     .action-icon {

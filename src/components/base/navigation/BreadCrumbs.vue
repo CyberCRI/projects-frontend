@@ -24,9 +24,11 @@ import IconImage from '@/components/base/media/IconImage.vue'
 import BreadCrumbsSkeleton from '@/components/base/navigation/BreadCrumbsSkeleton.vue'
 import { RouteLocationRaw } from 'vue-router'
 
+export type BreadCrumbItem = { route: RouteLocationRaw; name: string }
+
 withDefaults(
   defineProps<{
-    breadcrumbs: { route: RouteLocationRaw; name: string }[]
+    breadcrumbs: BreadCrumbItem[]
     groupName?: string
     isLoading?: boolean
   }>(),
