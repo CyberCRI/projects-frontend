@@ -2,6 +2,7 @@
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import useUsersStore from '@/stores/useUsers'
 import { I18nT } from 'vue-i18n'
+import { usePublicURL } from '@/composables/usePublic'
 
 const usersStore = useUsersStore()
 const { t } = useNuxtI18n()
