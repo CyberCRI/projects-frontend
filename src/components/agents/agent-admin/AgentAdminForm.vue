@@ -25,10 +25,15 @@ const defaultForm = (agent = null) => ({
   promptId: agent?.promptId ?? 0,
   promptVersion: agent?.promptVersion ?? 0,
   skillContents:
-    agent?.skillsContents?.map((s) => ({
+    agent?.skillsContents?.map(({ skillId, skillVersion, useLatestSkillVersion }) => ({
       skillId,
       skillVersion,
       useLatestSkillVersion,
+    })) ?? [],
+  documents:
+    agent?.documents?.map(({ documentTitle, vectorStoreKey }) => ({
+      documentTitle,
+      vectorStoreKey,
     })) ?? [],
   useLatestPromptVersion: agent?.useLatestPromptVersion ?? true,
   useProfileData: agent?.useProfileData ?? false,
@@ -125,13 +130,22 @@ watch(
       prompts.value = await fetchPrompts()
       documents.value = await fetchDocuments()
       documentOptions.value = documents.value.map((document) => {
-        const opt = {
-          useDoc: false,
+        let opt = {
+          useDocument: false,
         }
-        // TODO: set from agent
+        if (props.agent?.documents) {
+          const original = props.agent?.documents.find(
+            (d) => d.documentTitle == document.title && d.vectorStoreKey == document.vectorStoreKey
+          )
+          if (original) {
+            opt = {
+              useDocument: true,
+            }
+          }
+        }
 
         return {
-          document: document,
+          document,
           model: opt,
         }
       })
@@ -184,7 +198,14 @@ const submit = async () => {
     .map((o) => ({
       skillId: o.skill.id,
       skillVersion: o.model.skillVersion,
-      // useLatestSkillVersion: o.useLatestSkillVersion,
+      useLatestSkillVersion: o.useLatestSkillVersion,
+    }))
+
+  form.value.documents = documentOptions.value
+    .filter((o) => o.model.useDocument)
+    .map((o) => ({
+      documentTitle: o.document.title,
+      vectorStoreKey: o.document.vectorStoreKey,
     }))
 
   try {
@@ -304,16 +325,20 @@ const submit = async () => {
 
     <h4 class="form-section-title">{{ $t('agents.tools-section') }}</h4>
     <div class="form-section">
-      <lpiCheckbox :label="$t('agents.use-project-mcp')" v-model="form.useProjectsMcp" />
+      <div class="agent-tool-picker">
+        <lpiCheckbox :label="$t('agents.use-project-mcp')" v-model="form.useProjectsMcp" />
+      </div>
     </div>
     <div class="form-section">
-      <lpiCheckbox :label="$t('agents.use-profile-data')" v-model="form.useProfileData" />
+      <div class="agent-tool-picker">
+        <lpiCheckbox :label="$t('agents.use-profile-data')" v-model="form.useProfileData" />
+      </div>
     </div>
     <h4 class="form-section-title">{{ $t('agents.docs-section') }}</h4>
     <div class="form-section agent-documents-section">
       <AgentDocumentPicker
         v-for="opt in documentOptions"
-        :key="opt.document.id"
+        :key="opt.document.vectorStoreKey + '-' + opt.document.id"
         :document="opt.document"
         v-model="opt.model"
       />
@@ -353,5 +378,11 @@ const submit = async () => {
   display: flex;
   flex-flow: column nowrap;
   gap: 1rem;
+}
+
+.agent-tool-picker {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.4rem;
 }
 </style>

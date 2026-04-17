@@ -20,6 +20,9 @@ export default defineLazyEventHandler(() => {
     const skillContents = body.skillContents || []
     delete body.skillContents
 
+    const documents = body.documents || []
+    delete body.documents
+
     const agent = await chatbotPrisma.agent.update({
       where: {
         id: id,
@@ -30,6 +33,10 @@ export default defineLazyEventHandler(() => {
         skillContents: {
           deleteMany: { agentId: id }, // wipe existing join rows
           create: skillContents,
+        },
+        documents: {
+          deleteMany: { agentId: id }, // wipe existing join rows
+          create: documents,
         },
       },
     })

@@ -1,5 +1,7 @@
 import useUsersStore from '@/stores/useUsers'
 
+export const PROJECTS_DEFAULT_VECTOR_STORE_KEY = 'ProjectsDefaultVectorStoreKey'
+
 export default function useVecorStore() {
   const usersStore = useUsersStore()
   const fetchAll = async () => {
@@ -36,10 +38,13 @@ export default function useVecorStore() {
       return
     }
 
-    return Array.isArray(data) ? data : []
+    return Array.isArray(data)
+      ? data.map((d) => ({ ...d, vectorStoreKey: PROJECTS_DEFAULT_VECTOR_STORE_KEY }))
+      : []
   }
 
   return {
     fetchAll,
+    projectsDefaultVectorStore: PROJECTS_DEFAULT_VECTOR_STORE_KEY,
   }
 }
