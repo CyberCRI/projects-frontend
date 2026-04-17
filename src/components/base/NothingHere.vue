@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { usePublicURL } from '@/composables/usePublic'
+
 const SRC = usePublicURL(`/empties/emptyBox.svg`)
 </script>
 

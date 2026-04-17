@@ -8,6 +8,7 @@ import { getInvitation } from '@/api/invitations.service'
 import useToasterStore from '@/stores/useToaster'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import { getPatatoidFile } from '@/composables/usePatatoids'
+import { usePublicURL } from '@/composables/usePublic'
 
 const props = defineProps<{
   token: string

@@ -1,7 +1,6 @@
 import { usePublicURL } from '@/composables/usePublic'
 
 const urlPatatoid = (index: string | number) => `/patatoids-project/Patatoid-${index}.png`
-
 const DEFAULT_USER_PATATOID = urlPatatoid(0)
 const DEFAULT_GROUP_PATATOID = urlPatatoid(1)
 const DEFAULT_PROJECT_PATATOID = urlPatatoid(2)

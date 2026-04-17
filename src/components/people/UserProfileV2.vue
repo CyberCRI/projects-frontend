@@ -558,7 +558,7 @@ export default {
     },
 
     currentTab() {
-      return this.allProfileTabs.find((tab) => this.$route.name === tab.view.name)
+      return this.allProfileTabs.find((tab) => this.$route.name === tab.view?.name)
     },
 
     isEditing() {
