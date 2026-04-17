@@ -103,7 +103,7 @@ const isCurrentTab = (entry: MenyEntry) => {
   if (typeof entry.view === 'string') {
     entryName = entry.view
   } else {
-    entryName = entry.view.name
+    entryName = entry.view?.name
   }
 
   if (!props.currentTab) {
@@ -114,7 +114,7 @@ const isCurrentTab = (entry: MenyEntry) => {
   if (typeof props.currentTab.view === 'string') {
     currentTabName = props.currentTab.view
   } else {
-    currentTabName = props.currentTab.view.name
+    currentTabName = props.currentTab.view?.name
   }
 
   return entryName === currentTabName

@@ -171,6 +171,7 @@ import useOrganizationsStore from '@/stores/useOrganizations'
 import useUsersStore from '@/stores/useUsers'
 import { useRuntimeConfig } from '#imports'
 import utils from '@/functs/functions'
+import { usePublicURL } from '@/composables/usePublic'
 
 const FOOTER_SRC = usePublicURL('/source.png')
 
