@@ -8,6 +8,7 @@ export default defineLazyEventHandler(() => {
       include: {
         promptContent: { include: { prompt: true } },
         skillContents: { include: { skillContent: { include: { skill: true } } } },
+        documents: true,
         mcps: true,
       },
       orderBy: { title: 'asc' },

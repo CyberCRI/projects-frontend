@@ -104,7 +104,10 @@ model Agent {
 
   useProjectsMcp    Boolean @default(false)
   mcps              Mcp[]
+
   skillContents     AgentSkillContent[]
+
+  documents         AgentDocument[]
 
   useProfileData    Boolean @default(false)
 
@@ -125,4 +128,16 @@ model AgentSkillContent {
   agent                 Agent @relation(fields: [agentId], references:[id])
 
   @@id([skillId, skillVersion, agentId])
+}
+
+
+
+model AgentDocument {
+  vectorStoreKey        String
+  documentTitle         String
+  agentId               Int
+
+  agent                 Agent @relation(fields: [agentId], references:[id])
+
+  @@id([vectorStoreKey, documentTitle, agentId])
 }

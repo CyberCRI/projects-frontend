@@ -25,6 +25,8 @@ export default defineLazyEventHandler(() => {
           include: { prompt: true },
         },
         skillContents: { include: { skillContent: { include: { skill: true } } } },
+        document: true,
+        mcps: true,
       },
     })
 

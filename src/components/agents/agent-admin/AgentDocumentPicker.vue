@@ -5,7 +5,7 @@ const model = defineModel()
 <template>
   <div class="agent-document-picker">
     <div class="form-section skill-title">
-      <lpiCheckbox :label="document.title" v-model="model.useDocuemnt" />
+      <lpiCheckbox :label="document.title" v-model="model.useDocument" />
     </div>
   </div>
 </template>
