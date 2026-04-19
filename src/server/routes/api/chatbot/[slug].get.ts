@@ -1,4 +1,4 @@
-import checkSuperAdminRights from '@/server/utils/check-super-admin-rights.js'
+// import checkSuperAdminRights from '@/server/utils/check-super-admin-rights.js'
 
 export default defineLazyEventHandler(() => {
   const { appApiOrgCode } = useRuntimeConfig().public

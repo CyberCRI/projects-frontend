@@ -3,7 +3,7 @@ const props = defineProps({ skill: { type: Object, required: true } })
 
 const emit = defineEmits(['update:modelValue'])
 
-const model = defineModel()
+const model = defineModel({ type: Object, required: true })
 
 const skillVersions = computed(() =>
   (props.skill.skillContents || []).toSorted((a, b) => b.value.version - a.value.version)
@@ -24,22 +24,22 @@ const onChange = () => {
 <template>
   <div class="agent-skill-picker">
     <div class="form-section skill-title">
-      <lpiCheckbox :label="skill.title" v-model="model.useSkill" @change="onChange" />
+      <lpiCheckbox v-model="model.useSkill" :label="skill.title" @change="onChange" />
     </div>
     <div class="skill-version-picker">
-      <div class="form-section" v-if="model.useSkill">
+      <div v-if="model.useSkill" class="form-section">
         <lpiCheckbox
-          :label="$t('agents.use-latest-skill-version')"
           v-model="model.useLatestSkillVersion"
+          :label="$t('agents.use-latest-skill-version')"
           @change="onChange"
         />
       </div>
-      <div class="form-section" v-if="model.useSkill && !model.useLatestSkillVersion">
+      <div v-if="model.useSkill && !model.useLatestSkillVersion" class="form-section">
         <span class="select-label">{{ $t('agents.use-skill-version') }}</span>
         <LpiSelect
           v-if="!model.useLatestSkillVersion"
-          :options="versionOptions"
           v-model="model.skillVersion"
+          :options="versionOptions"
           :placeholder="$t('agents.skill-version-placeholder')"
         />
       </div>
@@ -52,6 +52,7 @@ const onChange = () => {
   border-radius: 4px;
   padding: 0.4rem;
 }
+
 .skill-version-picker {
   margin-top: 1rem;
   display: flex;
@@ -59,9 +60,11 @@ const onChange = () => {
   gap: 1rem;
   margin-left: 2rem;
 }
+
 .skill-title :deep(label) {
   font-weight: bold;
 }
+
 .select-label {
   margin-right: 1rem;
 }

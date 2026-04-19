@@ -21,7 +21,7 @@ const countAgents = (p) => p.promptContents.reduce((acc, pc) => acc + pc.agents.
     entity-icon="Article"
     :no-entity-label="$t('prompts.empty-list')"
     :deletable-check="cannotDeletePrompt"
-    :fetchEntities="fetchPrompts"
+    :fetch-entities="fetchPrompts"
   >
     <template #default="{ entity: prompt }">
       <div class="title">{{ prompt.title }}</div>

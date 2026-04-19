@@ -29,7 +29,7 @@ const titleExists = ref(false)
 
 watch(
   () => props.isOpened,
-  async (neo) => {
+  async () => {
     isAsyncing.value = true
     try {
       form.value = defaultForm(props.prompt)
@@ -54,22 +54,15 @@ const submit = async () => {
 
   try {
     if (isEdit.value) {
-      const { data } = await $fetch(`/api/prompt/${props.prompt.id}`, {
+      await $fetch(`/api/prompt/${props.prompt.id}`, {
         method: 'put',
         body: form.value,
         headers,
       })
     } else {
-      const { data } = await $fetch('/api/prompt/', { method: 'post', body: form.value, headers })
+      await $fetch('/api/prompt/', { method: 'post', body: form.value, headers })
     }
-    // if (!response.ok) {
-    //   let errorText = ''
-    //   try {
-    //     errorText = await response.text()
-    //   } finally {
-    //     throw new Error(errorText || `Post to /api/prompt/ failed with status ${response.status}`)
-    //   }
-    // }
+
     toaster.pushSuccess(t(isEdit.value ? 'prompts.edit-success' : 'prompts.create-success'))
     emit(isEdit.value ? 'entity-updated' : 'entity-created')
   } catch (e) {
@@ -117,6 +110,7 @@ const submit = async () => {
 .error {
   color: $salmon;
 }
+
 .form-section ~ .form-section {
   margin-top: 1rem;
 }

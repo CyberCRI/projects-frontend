@@ -3,7 +3,7 @@ import checkSuperAdminRights from '@/server/utils/check-super-admin-rights.js'
 export default defineLazyEventHandler(() => {
   const { appApiOrgCode } = useRuntimeConfig().public
   return defineEventHandler(async (event) => {
-    // await checkSuperAdminRights(event)
+    await checkSuperAdminRights(event)
     const _id = getRouterParam(event, 'id')
     if (!_id) {
       setResponseStatus(event, 400)
@@ -19,21 +19,21 @@ export default defineLazyEventHandler(() => {
       }
     }
     try {
-      const agentSkillContents = await chatbotPrisma.agentSkillContent.deleteMany({
+      await chatbotPrisma.agentSkillContent.deleteMany({
         where: {
           agentId: id,
         },
       })
-    } catch (e) {
+    } catch {
       // nada
     }
     try {
-      const agentDocuments = await chatbotPrisma.agentDocument.deleteMany({
+      await chatbotPrisma.agentDocument.deleteMany({
         where: {
           agentId: id,
         },
       })
-    } catch (e) {
+    } catch {
       // nada
     }
     const agent = await chatbotPrisma.agent.delete({

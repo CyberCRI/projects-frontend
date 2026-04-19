@@ -133,7 +133,7 @@ const documentOptions = ref([])
 
 watch(
   () => props.isOpened,
-  async (neo) => {
+  async () => {
     isAsyncing.value = true
     try {
       prompts.value = await fetchPrompts()
@@ -226,22 +226,15 @@ const submit = async () => {
   try {
     console.log('save', isEdit.value)
     if (isEdit.value) {
-      const { data } = await $fetch(`/api/agent/${props.agent.id}`, {
+      await $fetch(`/api/agent/${props.agent.id}`, {
         method: 'put',
         body: form.value,
         headers,
       })
     } else {
-      const { data } = await $fetch('/api/agent/', { method: 'post', body: form.value, headers })
+      await $fetch('/api/agent/', { method: 'post', body: form.value, headers })
     }
-    // if (!response.ok) {
-    //   let errorText = ''
-    //   try {
-    //     errorText = await response.text()
-    //   } finally {
-    //     throw new Error(errorText || `Post to /api/agent/ failed with status ${response.status}`)
-    //   }
-    // }
+
     toaster.pushSuccess(t(isEdit.value ? 'agents.edit-success' : 'agents.create-success'))
     emit(isEdit.value ? 'entity-updated' : 'entity-created')
   } catch (e) {
@@ -276,7 +269,7 @@ const submit = async () => {
       <p v-if="titleExists" class="error">{{ $t('agents.title-exists') }}</p>
     </div>
     <div class="form-section">
-      <lpiCheckbox :label="$t('agents.is-enabled')" v-model="form.isEnabled" />
+      <lpiCheckbox v-model="form.isEnabled" :label="$t('agents.is-enabled')" />
     </div>
     <label>{{ $t('agents.description') }}</label>
     <div class="form-section">
@@ -300,7 +293,7 @@ const submit = async () => {
       <TextInput
         v-model.trim="form.modelName"
         :label="$t('agents.model-name')"
-        suggestionListId="modelStrings"
+        suggestion-list-id="modelStrings"
       />
     </div>
     <div class="form-section">
@@ -309,26 +302,26 @@ const submit = async () => {
     <div class="form-section">
       <h4 class="form-section-title">{{ $t('agents.prompt-section') }}</h4>
       <LpiSelect
-        :options="promptOptions"
         v-model="form.promptId"
+        :options="promptOptions"
         :placeholder="$t('agents.prompt-placeholder')"
       />
     </div>
-    <div class="form-section" v-if="form.promptId">
+    <div v-if="form.promptId" class="form-section">
       <lpiCheckbox
-        :label="$t('agents.use-latest-prompt-version')"
         v-model="form.useLatestPromptVersion"
+        :label="$t('agents.use-latest-prompt-version')"
       />
     </div>
     <div
-      class="form-section prompt-version-section"
       v-if="form.promptId && !form.useLatestPromptVersion"
+      class="form-section prompt-version-section"
     >
       <span class="select-label">{{ $t('agents.use-prompt-version') }}</span>
       <LpiSelect
         v-if="!form.useLatestPromptVersion"
-        :options="versionOptions"
         v-model="form.promptVersion"
+        :options="versionOptions"
         :placeholder="$t('agents.prompt-version-placeholder')"
       />
     </div>
@@ -336,12 +329,12 @@ const submit = async () => {
     <h4 class="form-section-title">{{ $t('agents.tools-section') }}</h4>
     <div class="form-section">
       <div class="agent-tool-picker">
-        <lpiCheckbox :label="$t('agents.use-project-mcp')" v-model="form.useProjectsMcp" />
+        <lpiCheckbox v-model="form.useProjectsMcp" :label="$t('agents.use-project-mcp')" />
       </div>
     </div>
     <div class="form-section">
       <div class="agent-tool-picker">
-        <lpiCheckbox :label="$t('agents.use-profile-data')" v-model="form.useProfileData" />
+        <lpiCheckbox v-model="form.useProfileData" :label="$t('agents.use-profile-data')" />
       </div>
     </div>
     <h4 class="form-section-title">{{ $t('agents.docs-section') }}</h4>
@@ -349,8 +342,8 @@ const submit = async () => {
       <AgentDocumentPicker
         v-for="opt in documentOptions"
         :key="opt.document.vectorStoreKey + '-' + opt.document.id"
-        :document="opt.document"
         v-model="opt.model"
+        :document="opt.document"
       />
     </div>
     <h4 class="form-section-title">{{ $t('agents.skills-section') }}</h4>
@@ -358,9 +351,9 @@ const submit = async () => {
       <AgentSkillPicker
         v-for="opt in skillOptions"
         :key="opt.skill.id"
+        v-model="opt.model"
         :skill="opt.skill"
         ,
-        v-model="opt.model"
       />
     </div>
   </BaseDrawer>
@@ -369,20 +362,25 @@ const submit = async () => {
 .error {
   color: $salmon;
 }
+
 .form-section ~ .form-section {
   margin-top: 1rem;
 }
+
 .form-section-title {
   color: $primary-dark;
   font-size: 1.3em;
   padding-block: 1rem;
 }
+
 .select-label {
   margin-right: 1rem;
 }
+
 .prompt-version-section {
   margin-left: 2rem;
 }
+
 .agent-skills-section,
 .agent-documents-section {
   display: flex;

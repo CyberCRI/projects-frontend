@@ -17,7 +17,7 @@ const countAgents = (s) => s.skillContents.reduce((acc, sc) => acc + sc.agents?.
     entity-icon="Article"
     :no-entity-label="$t('agent-skills.empty-list')"
     :deletable-check="cannotDeleteSkill"
-    :fetchEntities="fetchSkills"
+    :fetch-entities="fetchSkills"
   >
     <template #default="{ entity: skill }">
       <div class="title">{{ skill.title }}</div>

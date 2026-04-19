@@ -77,7 +77,7 @@ export default defineLazyEventHandler(() => {
         error: 'Missing required "id" query parameter',
       }
     }
-    const id = parseInt(_id)
+    const id = parseInt(_id as string)
     if (isNaN(id)) {
       setResponseStatus(event, 400)
       return {
@@ -241,7 +241,7 @@ export default defineLazyEventHandler(() => {
 
       Available skills:
       ${Object.entries(skillMap)
-        .map(([key, val]) => '- ' + key + ': ' + val.description)
+        .map(([key, val]) => '- ' + key + ': ' + (val as any).description)
         .join('\n')}
 
       Returns the skill's prompt and context.`,

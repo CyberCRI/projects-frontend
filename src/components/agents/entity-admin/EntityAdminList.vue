@@ -1,6 +1,4 @@
 <script setup>
-import useUsersStore from '@/stores/useUsers'
-
 const props = defineProps({
   fetchEntities: { type: Function, required: true },
   noEntityLabel: { type: String, required: true },
@@ -11,17 +9,11 @@ const props = defineProps({
 
 const emit = defineEmits(['goto-entity', 'show-entity', 'delete-entity', 'edit-entity'])
 
-const usersStore = useUsersStore()
-
 const isAsyncing = ref(false)
 const entityList = ref([])
 
 const refresh = async () => {
   isAsyncing.value = true
-  let headers = {}
-  const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
-  if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
-
   try {
     entityList.value = await props.fetchEntities()
     console.log('entityList', entityList.value)

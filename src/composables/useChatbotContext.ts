@@ -10,7 +10,7 @@ export default function useChatbotContext({ hasUserContext, hasPageContext }) {
 
   const allowProfile = computed(() => unref(hasUserContext) && _allowProfile.value)
   if (import.meta.client) {
-    allowProfile.value = !!localStorage?.getItem('lpi-chatbot-allow-profile')
+    _allowProfile.value = !!localStorage?.getItem('lpi-chatbot-allow-profile')
   }
   const updateAllowProfile = () => {
     _allowProfile.value = !_allowProfile.value
@@ -50,7 +50,7 @@ export default function useChatbotContext({ hasUserContext, hasPageContext }) {
 
   const allowCurrentPage = computed(() => unref(hasPageContext) && _allowCurrentPage.value)
   if (import.meta.client) {
-    allowCurrentPage.value = !!localStorage?.getItem('lpi-chatbot-allow-current-page')
+    _allowCurrentPage.value = !!localStorage?.getItem('lpi-chatbot-allow-current-page')
   }
   const updateAllowCurrentPage = () => {
     _allowCurrentPage.value = !_allowCurrentPage.value
@@ -72,7 +72,7 @@ export default function useChatbotContext({ hasUserContext, hasPageContext }) {
     let res = ''
     const pageMeta = route.matched
       .filter((r) => !!r.meta.chatBotContext)
-      .map((r) => r.meta.chatBotContext(route))
+      .map((r) => (r.meta.chatBotContext as (r: any) => string)(route))
       .join('\n')
 
     if (pageMeta)
