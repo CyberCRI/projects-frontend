@@ -1,18 +1,6 @@
 <script setup>
-import useUsersStore from '@/stores/useUsers'
-import useToasterStore from '@/stores/useToaster'
-
-const toaster = useToasterStore()
-const usersStore = useUsersStore()
-const { t } = useNuxtI18n()
-
-const showEntityTitle = ref('')
 const addEntityIsOpen = ref(false)
 const entityToDelete = ref('')
-const entityToEdit = ref('')
-
-const entityList = ref(null)
-const refreshEntityList = () => entityList.value?.refresh()
 
 const isAsyncing = ref(false)
 

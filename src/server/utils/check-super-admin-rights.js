@@ -52,7 +52,7 @@ export async function getUserByKeycloakId(kcId, tokenHeader) {
   return user
 }
 
-export async function isSuperAdmin(event) {
+export async function isSuperAdmin(user) {
   return !!user?.is_superuser
 }
 

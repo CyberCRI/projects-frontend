@@ -3,7 +3,6 @@ import 'deep-chat'
 import analytics from '@/analytics'
 import useUsersStore from '@/stores/useUsers.ts'
 import { shuffle } from 'es-toolkit'
-import sdgJson from '@/data/sdgs.json'
 
 const { t } = useI18n()
 const router = useRouter()

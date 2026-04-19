@@ -3,14 +3,8 @@ const props = defineProps({
   hasUserContext: { type: Boolean, default: false },
   hasPageContext: { type: Boolean, default: false },
 })
-const {
-  allowProfile,
-  updateAllowProfile,
-  allowCurrentPage,
-  updateAllowCurrentPage,
-  computePageContext,
-  contextMessages,
-} = useChatbotContext(props)
+const { allowProfile, updateAllowProfile, allowCurrentPage, updateAllowCurrentPage } =
+  useChatbotContext(props)
 </script>
 <template>
   <div

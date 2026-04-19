@@ -4,13 +4,8 @@ const props = defineProps({
   isOpened: { type: Boolean, required: true },
   isEdit: { type: Boolean, default: false },
   isAsyncing: { type: Boolean, default: false },
-  isValid: { type: Boolean, required: true },
-  saveEntity: { type: Function, required: true },
 })
 const emit = defineEmits(['close', 'entity-added', 'entity-updated'])
-
-const toaster = useToasterStore()
-const titleExists = ref(false)
 
 const isSaving = ref(false)
 

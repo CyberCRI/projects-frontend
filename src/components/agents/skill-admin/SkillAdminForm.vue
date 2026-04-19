@@ -30,7 +30,7 @@ const titleExists = ref(false)
 
 watch(
   () => props.isOpened,
-  async (neo) => {
+  async () => {
     isAsyncing.value = true
     try {
       form.value = defaultForm(props.skill)
@@ -55,22 +55,15 @@ const submit = async () => {
 
   try {
     if (isEdit.value) {
-      const { data } = await $fetch(`/api/skill/${props.skill.id}`, {
+      await $fetch(`/api/skill/${props.skill.id}`, {
         method: 'put',
         body: form.value,
         headers,
       })
     } else {
-      const { data } = await $fetch('/api/skill/', { method: 'post', body: form.value, headers })
+      await $fetch('/api/skill/', { method: 'post', body: form.value, headers })
     }
-    // if (!response.ok) {
-    //   let errorText = ''
-    //   try {
-    //     errorText = await response.text()
-    //   } finally {
-    //     throw new Error(errorText || `Post to /api/prompt/ failed with status ${response.status}`)
-    //   }
-    // }
+
     toaster.pushSuccess(
       t(isEdit.value ? 'agent-skills.edit-success' : 'agent-skills.create-success')
     )
@@ -128,6 +121,7 @@ const submit = async () => {
 .error {
   color: $salmon;
 }
+
 .form-section ~ .form-section {
   margin-top: 1rem;
 }

@@ -1,11 +1,8 @@
 <script setup>
 import 'deep-chat'
 import analytics from '@/analytics'
-import useUsersStore from '@/stores/useUsers.ts'
 import { shuffle } from 'es-toolkit'
 
-const { t } = useNuxtI18n()
-const router = useRouter()
 const props = defineProps({
   isOpened: { type: Boolean, default: false },
 })
@@ -29,21 +26,17 @@ onErrorCaptured((err) => {
   return false
 })
 
-const emit = defineEmits(['close'])
+defineEmits(['close'])
 
 const CHAT_ENDPOINT = ref(useRuntimeConfig().public.appChatbotBackend || '/api/chat-lg-stream')
 
 const hasUserContext = ref(true)
 const hasPageContext = ref(true)
 
-const {
-  allowProfile,
-  updateAllowProfile,
-  allowCurrentPage,
-  updateAllowCurrentPage,
-  computePageContext,
-  contextMessages,
-} = useChatbotContext({ hasUserContext, hasPageContext })
+const { computePageContext, contextMessages } = useChatbotContext({
+  hasUserContext,
+  hasPageContext,
+})
 
 const route = useRoute()
 watch(() => [props.isOpened, route], computePageContext, { immediate: true })
@@ -71,7 +64,7 @@ const startConversation = () => {
     no-footer
     @close="$emit('close')"
   >
-    <Chatbot
+    <ChatbotUi
       :endpoint="CHAT_ENDPOINT"
       :context-messages="contextMessages"
       @start-conversation="startConversation"
@@ -100,6 +93,6 @@ const startConversation = () => {
           </li>
         </menu>
       </div>
-    </Chatbot>
+    </ChatbotUi>
   </BaseDrawer>
 </template>

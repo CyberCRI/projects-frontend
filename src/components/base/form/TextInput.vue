@@ -124,6 +124,7 @@ export default {
     },
     suggestionListId: {
       type: String,
+      default: '',
     },
   },
 

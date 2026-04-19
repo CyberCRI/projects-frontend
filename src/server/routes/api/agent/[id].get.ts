@@ -3,7 +3,7 @@ import checkSuperAdminRights from '@/server/utils/check-super-admin-rights.js'
 export default defineLazyEventHandler(() => {
   const { appApiOrgCode } = useRuntimeConfig().public
   return defineEventHandler(async (event) => {
-    // await checkSuperAdminRights(event)
+    await checkSuperAdminRights(event)
     const _id = getRouterParam(event, 'id')
     if (!_id) {
       setResponseStatus(event, 400)

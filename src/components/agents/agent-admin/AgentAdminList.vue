@@ -17,7 +17,7 @@ const gotoAgent = (agent) => router.push({ name: 'AgentPage', params: { agentSlu
     is-linkable
     entity-icon="Article"
     :no-entity-label="$t('agents.empty-list')"
-    :fetchEntities="fetchAgents"
+    :fetch-entities="fetchAgents"
     @goto-entity="gotoAgent"
   >
     <template #default="{ entity: agent }">
@@ -36,10 +36,12 @@ const gotoAgent = (agent) => router.push({ name: 'AgentPage', params: { agentSlu
   font-size: 1.2rem;
   color: $primary-dark;
 }
+
 .prompt {
   color: #666;
   font-size: 0.8em;
 }
+
 .enabled-mark {
   font-size: 0.8rem;
 }

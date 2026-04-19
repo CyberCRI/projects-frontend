@@ -1,11 +1,11 @@
 <script setup>
-const props = defineProps({ document: { type: Object, required: true } })
-const model = defineModel()
+defineProps({ document: { type: Object, required: true } })
+const model = defineModel({ type: Object, required: true })
 </script>
 <template>
   <div class="agent-document-picker">
     <div class="form-section skill-title">
-      <lpiCheckbox :label="document.title" v-model="model.useDocument" />
+      <lpiCheckbox v-model="model.useDocument" :label="document.title" />
     </div>
   </div>
 </template>

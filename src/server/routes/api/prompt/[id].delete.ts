@@ -20,12 +20,12 @@ export default defineLazyEventHandler(() => {
     }
 
     try {
-      const promptContents = await chatbotPrisma.promptContent.deleteMany({
+      await chatbotPrisma.promptContent.deleteMany({
         where: {
           promptId: id,
         },
       })
-    } catch (e) {
+    } catch {
       // nada
     }
 
