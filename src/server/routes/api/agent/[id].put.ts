@@ -1,4 +1,5 @@
 import checkSuperAdminRights from '@/server/utils/check-super-admin-rights.js'
+import slugify from '@sindresorhus/slugify'
 
 export default defineLazyEventHandler(() => {
   const { appApiOrgCode } = useRuntimeConfig().public
@@ -19,6 +20,9 @@ export default defineLazyEventHandler(() => {
       }
     }
     const body = await readBody(event)
+
+    const slug = slugify(body.title)
+    body.slug = slug
 
     const skillContents = body.skillContents || []
     delete body.skillContents

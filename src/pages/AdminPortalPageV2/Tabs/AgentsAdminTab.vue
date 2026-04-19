@@ -29,10 +29,10 @@ const deleteEntity = async () => {
     })
     console.log('delete', response)
     refreshEntityList()
-    toaster.pushSuccess(t('agent.deleted'))
+    toaster.pushSuccess(t('agents.deleted'))
   } catch (e) {
     console.log(e.toString())
-    toaster.pushError(e.toString())
+    toaster.pushError(t('agents.delete-error'))
   } finally {
     entityToDelete.value = ''
     isAsyncing.value = false

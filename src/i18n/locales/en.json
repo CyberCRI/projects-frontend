@@ -3168,7 +3168,12 @@
     "edit-success": "Prompt edited successfuly",
     "edit-error": "Error updting prompt",
     "title": "Title",
-    "content": "Content"
+    "content": "Content",
+    "confirm-deletion": "Confirm deletion of prompt",
+    "confirm-deletion-of": "Do you really want to delete the prompt '{title}'?",
+    "deleted": "Prompt deleted",
+    "delete-error": "Error deleting the prompt",
+    "empty-list": "No prompt yet."
   },
   "agent-skills": {
     "create-skill": "Create agent skill",
@@ -3179,7 +3184,12 @@
     "edit-error": "Error updting agent skill",
     "title": "Title",
     "description": "Description",
-    "content": "Content"
+    "content": "Content",
+    "confirm-deletion": "Confirm deletion of agent skill",
+    "confirm-deletion-of": "Do you really want to delete the agent skill '{title}'?",
+    "deleted": "Agent skill deleted",
+    "delete-error": "Error deleting the agent skill",
+    "empty-list": "No agent skill yet."
   },
 
   "agents": {
@@ -3206,6 +3216,11 @@
     "use-latest-skill-version": "Use latest skill version",
     "use-skill-version": "Use skill version :",
     "choose-skill-version": "Choose skill version",
-    "preview-mode": "Preview mode"
+    "preview-mode": "Preview mode",
+    "confirm-deletion": "Confirm deletion of agent",
+    "confirm-deletion-of": "Do you really want to delete the agent '{title}'?",
+    "deleted": "Agent deleted",
+    "delete-error": "Error deleting the agent",
+    "empty-list": "No agent yet."
   }
 }

@@ -9,14 +9,14 @@ const entityList = useTemplateRef('entityList')
 const refresh = () => entityList.value?.refresh()
 defineExpose({ refresh })
 const router = useRouter()
-const gotoAgent = (agent) => router.push({ name: 'AgentPage', params: { agentId: agent.id } })
+const gotoAgent = (agent) => router.push({ name: 'AgentPage', params: { agentSlug: agent.slug } })
 </script>
 <template>
   <EntityAdminList
     ref="entityList"
     is-linkable
     entity-icon="Article"
-    no-entity-label="Nope"
+    :no-entity-label="$t('agents.empty-list')"
     :fetchEntities="fetchAgents"
     @goto-entity="gotoAgent"
   >

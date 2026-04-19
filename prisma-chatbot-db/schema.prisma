@@ -90,6 +90,7 @@ model Mcp {
 model Agent {
   id                Int @id @default(autoincrement())
   title             String
+  slug              String
   description       String @default("")
   orgCode           String
 
@@ -114,7 +115,9 @@ model Agent {
   useLatestPromptVersion Boolean @default(true)
 
   @@unique([title, orgCode])
+  @@unique([slug, orgCode])
   @@index([title, orgCode])
+  @@index([slug, orgCode])
 }
 
 model AgentSkillContent {

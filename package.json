@@ -60,6 +60,7 @@
     "@prisma/adapter-pg": "^7.6.0",
     "@prisma/client": "^7.6.0",
     "@sentry/vue": "^8.20.0",
+    "@sindresorhus/slugify": "^3.0.0",
     "@tiptap/core": "^2.11.3",
     "@tiptap/extension-code-block": "^2.7.0",
     "@tiptap/extension-code-block-lowlight": "^2.11.3",

@@ -3156,14 +3156,19 @@
     "document-updated": "Document modifié."
   },
   "prompts": {
-    "create-prompt": "Créer un prompt",
-    "create-success": "Prompt créé avec succès",
-    "create-error": "Erreur lors de la création du prompt",
-    "edit-prompt": "Modifier le prompt",
-    "edit-success": "Prompt modifié avec succès",
-    "edit-error": "Erreur lors de la mise à jour du prompt",
+    "create-prompt": "Créer une invite",
+    "create-success": "Invite créée avec succès",
+    "create-error": "Erreur lors de la création de l'invite",
+    "edit-prompt": "Modifier l'invite",
+    "edit-success": "Invite modifiée avec succès",
+    "edit-error": "Erreur lors de la mise à jour de l'invite",
     "title": "Titre",
-    "content": "Contenu"
+    "content": "Contenu",
+    "confirm-deletion": "Confirmer la suppression de l'invite",
+    "confirm-deletion-of": "Voulez-vous vraiment supprimer l'invite '{title}' ?",
+    "deleted": "Invite supprimée",
+    "delete-error": "Erreur lors de la suppression de l'invite",
+    "empty-list": "Aucune invite pour le moment."
   },
   "agent-skills": {
     "create-skill": "Créer une compétence d'agent",
@@ -3174,7 +3179,12 @@
     "edit-error": "Erreur lors de la mise à jour de la compétence d'agent",
     "title": "Titre",
     "description": "Description",
-    "content": "Contenu"
+    "content": "Contenu",
+    "confirm-deletion": "Confirmer la suppression de la compétence d'agent",
+    "confirm-deletion-of": "Voulez-vous vraiment supprimer la compétence d'agent '{title}' ?",
+    "deleted": "Compétence d'agent supprimée",
+    "delete-error": "Erreur lors de la suppression de la compétence d'agent",
+    "empty-list": "Aucune compétence d'agent pour le moment."
   },
   "agents": {
     "create-agent": "Créer un agent",
@@ -3189,17 +3199,22 @@
     "model-section": "Modèle",
     "model-name": "Nom du modèle",
     "model-temperature": "Température du modèle",
-    "prompt-section": "prompt",
-    "prompt-placeholder": "Choisir un prompt",
-    "use-latest-prompt-version": "Utiliser la dernière version du prompt",
-    "use-prompt-version": "Utiliser la version du prompt : ",
-    "prompt-version-placeholder": "Choisir la version du prompt",
+    "prompt-section": "invite",
+    "prompt-placeholder": "Choisir une invite",
+    "use-latest-prompt-version": "Utiliser la dernière version de l'invite",
+    "use-prompt-version": "Utiliser la version de l'invite : ",
+    "prompt-version-placeholder": "Choisir la version de l'invite",
     "tools-section": "Outils",
     "docs-section": "Documents",
     "skills-section": "Compétences",
     "use-latest-skill-version": "Utiliser la dernière version de la compétence",
     "use-skill-version": "Utiliser la version de la compétence :",
     "choose-skill-version": "Choisir la version de la compétence",
-    "preview-mode": "Mode prévisualisation"
+    "preview-mode": "Mode aperçu",
+    "confirm-deletion": "Confirmer la suppression de l'agent",
+    "confirm-deletion-of": "Voulez-vous vraiment supprimer l'agent '{title}' ?",
+    "deleted": "Agent supprimé",
+    "delete-error": "Erreur lors de la suppression de l'agent",
+    "empty-list": "Aucun agent pour le moment."
   }
 }

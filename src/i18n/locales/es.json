@@ -3153,14 +3153,19 @@
     "document-updated": "Documento actualizado."
   },
   "prompts": {
-    "create-prompt": "Crear prompt",
-    "create-success": "Prompt creado correctamente",
-    "create-error": "Error al crear el prompt",
-    "edit-prompt": "Editar prompt",
-    "edit-success": "Prompt editado correctamente",
-    "edit-error": "Error al actualizar el prompt",
+    "create-prompt": "Crear indicación",
+    "create-success": "Indicación creada correctamente",
+    "create-error": "Error al crear la indicación",
+    "edit-prompt": "Editar indicación",
+    "edit-success": "Indicación editada correctamente",
+    "edit-error": "Error al actualizar la indicación",
     "title": "Título",
-    "content": "Contenido"
+    "content": "Contenido",
+    "confirm-deletion": "Confirmar eliminación de la indicación",
+    "confirm-deletion-of": "¿Realmente quieres eliminar la indicación '{title}'?",
+    "deleted": "Indicación eliminada",
+    "delete-error": "Error al eliminar la indicación",
+    "empty-list": "Aún no hay ninguna indicación."
   },
   "agent-skills": {
     "create-skill": "Crear habilidad de agente",
@@ -3171,7 +3176,12 @@
     "edit-error": "Error al actualizar la habilidad de agente",
     "title": "Título",
     "description": "Descripción",
-    "content": "Contenido"
+    "content": "Contenido",
+    "confirm-deletion": "Confirmar eliminación de la habilidad de agente",
+    "confirm-deletion-of": "¿Realmente quieres eliminar la habilidad de agente '{title}'?",
+    "deleted": "Habilidad de agente eliminada",
+    "delete-error": "Error al eliminar la habilidad de agente",
+    "empty-list": "Aún no hay ninguna habilidad de agente."
   },
   "agents": {
     "create-agent": "Crear agente",
@@ -3182,21 +3192,26 @@
     "edit-error": "Error al actualizar el agente",
     "title": "Título",
     "description": "Descripción",
-    "is-enabled": "Habilitado",
+    "is-enabled": "Activado",
     "model-section": "Modelo",
     "model-name": "Nombre del modelo",
     "model-temperature": "Temperatura del modelo",
-    "prompt-section": "Prompt",
-    "prompt-placeholder": "Elegir un prompt",
-    "use-latest-prompt-version": "Usar la última versión del prompt",
-    "use-prompt-version": "Usar la versión del prompt: ",
-    "prompt-version-placeholder": "Elegir la versión del prompt",
+    "prompt-section": "indicación",
+    "prompt-placeholder": "Elige una indicación",
+    "use-latest-prompt-version": "Usar la versión más reciente de la indicación",
+    "use-prompt-version": "Usar versión de la indicación: ",
+    "prompt-version-placeholder": "Elige la versión de la indicación",
     "tools-section": "Herramientas",
     "docs-section": "Documentos",
     "skills-section": "Habilidades",
-    "use-latest-skill-version": "Usar la última versión de la habilidad",
-    "use-skill-version": "Usar la versión de la habilidad:",
-    "choose-skill-version": "Elegir la versión de la habilidad",
-    "preview-mode": "Modo de vista previa"
+    "use-latest-skill-version": "Usar la versión más reciente de la habilidad",
+    "use-skill-version": "Usar versión de la habilidad:",
+    "choose-skill-version": "Elige la versión de la habilidad",
+    "preview-mode": "Modo de vista previa",
+    "confirm-deletion": "Confirmar eliminación del agente",
+    "confirm-deletion-of": "¿Realmente quieres eliminar el agente '{title}'?",
+    "deleted": "Agente eliminado",
+    "delete-error": "Error al eliminar el agente",
+    "empty-list": "Aún no hay ningún agente."
   }
 }

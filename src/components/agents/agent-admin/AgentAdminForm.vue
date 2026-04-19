@@ -236,11 +236,11 @@ const submit = async () => {
     //     throw new Error(errorText || `Post to /api/agent/ failed with status ${response.status}`)
     //   }
     // }
-    toaster.pushSuccess(t(isEdit.value ? 'agents.update-success' : 'agents.create-success'))
+    toaster.pushSuccess(t(isEdit.value ? 'agents.edit-success' : 'agents.create-success'))
     emit(isEdit.value ? 'entity-updated' : 'entity-created')
   } catch (e) {
     toaster.pushError(
-      t(isEdit.value ? 'agents.update-error' : 'agents.create-error') + ' ' + e.toString()
+      t(isEdit.value ? 'agents.edit-error' : 'agents.create-error') + ' ' + e.toString()
     )
   } finally {
     isAsyncing.value = false
