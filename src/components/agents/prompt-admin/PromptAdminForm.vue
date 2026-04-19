@@ -70,7 +70,7 @@ const submit = async () => {
     //     throw new Error(errorText || `Post to /api/prompt/ failed with status ${response.status}`)
     //   }
     // }
-    toaster.pushSuccess(t(isEdit.value ? 'prompts.update-sucess' : 'prompts.create-success'))
+    toaster.pushSuccess(t(isEdit.value ? 'prompts.update-success' : 'prompts.create-success'))
     emit(isEdit.value ? 'entity-updated' : 'entity-created')
   } catch (e) {
     toaster.pushError(
@@ -88,31 +88,13 @@ const submit = async () => {
     :confirm-action-name="$t('common.confirm')"
     :confirm-action-disabled="!form.title"
     :is-opened="isOpened"
-    :title="$t(isEdit.value ? 'prompts.edit-agent' : 'prompts.create-agent')"
+    :title="$t(isEdit ? 'prompts.edit-prompt' : 'prompts.create-prompt')"
     class="medium"
     :asyncing="isAsyncing"
     @close="close"
     @confirm="submit"
   >
     <div class="form-section">
-      <!--
-      title             String
-      description       String @default("")
-      orgCode           String
-
-      promptId          Int
-      promptVersion     Int
-      promptContent     PromptContent @relation(fields: [promptId, promptVersion], references: [promptId, version])
-
-      useProjectsMcp    Boolean @default(false)
-      mcps              Mcp[]
-      skillContents     SkillContent[]
-
-      useProfileData    Boolean @default(false)
-
-      useLatestPromptVersion Boolean @default(true)
-
-      -->
       <TextInput
         v-model.trim="form.title"
         :label="$t('prompts.title')"

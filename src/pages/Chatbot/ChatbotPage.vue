@@ -46,7 +46,7 @@ const {
         {{ $t('agents.preview-mode') }}
         <IconImage name="AlertOutline" />
       </h2>
-      <p>{{ agent.description }}</p>
+      <TipTapOutput class="description" :content="agent.description" />
     </div>
     <ChatbotOptions :has-user-context="hasUserContext" />
     <ClientOnly>
@@ -65,5 +65,8 @@ const {
     fill: currentColor;
     width: 1em;
   }
+}
+.description {
+  margin-block: 2rem;
 }
 </style>

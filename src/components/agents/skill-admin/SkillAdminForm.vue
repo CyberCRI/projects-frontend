@@ -71,11 +71,15 @@ const submit = async () => {
     //     throw new Error(errorText || `Post to /api/prompt/ failed with status ${response.status}`)
     //   }
     // }
-    toaster.pushSuccess(t(isEdit.value ? 'skills.update-sucess' : 'skills.create-success'))
+    toaster.pushSuccess(
+      t(isEdit.value ? 'agent-skills.update-success' : 'agent-skills.create-success')
+    )
     emit(isEdit.value ? 'entity-updated' : 'entity-created')
   } catch (e) {
     toaster.pushError(
-      t(isEdit.value ? 'skills.update-error' : 'skills.create-error') + ' ' + e.toString()
+      t(isEdit.value ? 'agent-skills.update-error' : 'agent-skills.create-error') +
+        ' ' +
+        e.toString()
     )
   } finally {
     isAsyncing.value = false
@@ -89,44 +93,26 @@ const submit = async () => {
     :confirm-action-name="$t('common.confirm')"
     :confirm-action-disabled="!form.title"
     :is-opened="isOpened"
-    :title="$t(isEdit.value ? 'skills.edit-agent' : 'skills.create-agent')"
+    :title="$t(isEdit ? 'agent-skills.edit-skill' : 'agent-skills.create-skill')"
     class="medium"
     :asyncing="isAsyncing"
     @close="close"
     @confirm="submit"
   >
     <div class="form-section">
-      <!--
-      title             String
-      description       String @default("")
-      orgCode           String
-
-      promptId          Int
-      promptVersion     Int
-      promptContent     PromptContent @relation(fields: [promptId, promptVersion], references: [promptId, version])
-
-      useProjectsMcp    Boolean @default(false)
-      mcps              Mcp[]
-      skillContents     SkillContent[]
-
-      useProfileData    Boolean @default(false)
-
-      useLatestPromptVersion Boolean @default(true)
-
-      -->
       <TextInput
         v-model.trim="form.title"
-        :label="$t('skills.title')"
+        :label="$t('agent-skills.title')"
         :disabled="isEdit"
         @change="titleExists = false"
       />
-      <p v-if="titleExists" class="error">{{ $t('skills.title-exists') }}</p>
+      <p v-if="titleExists" class="error">{{ $t('agent-skills.title-exists') }}</p>
     </div>
     <div class="form-section">
       <TextInput
         v-model.trim="form.description"
         input-type="textarea"
-        :label="$t('skills.description')"
+        :label="$t('agent-skills.description')"
         @change="titleExists = false"
       />
     </div>
@@ -134,7 +120,7 @@ const submit = async () => {
       <TextInput
         v-model.trim="form.content"
         input-type="textarea"
-        :label="$t('skills.content')"
+        :label="$t('agent-skills.content')"
         @change="titleExists = false"
       />
     </div>

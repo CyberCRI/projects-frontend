@@ -54,7 +54,7 @@ const onCloseAdminForm = () => {
     <div class="actions">
       <LpiButton
         btn-icon="Plus"
-        :label="$t('agent-skills.create-agent-skill')"
+        :label="$t('agent-skills.create-skill')"
         @click="addEntityIsOpen = true"
       />
     </div>
