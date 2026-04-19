@@ -221,7 +221,10 @@
       "groups": "Grupos",
       "settings": "Ajustes",
       "terms": "ToS",
-      "vector-store": "Vector store"
+      "vector-store": "Vector store",
+      "prompts": "Prompts",
+      "agent-skills": "Habilidades del agente",
+      "agents": "Agentes"
     },
     "page-title": "Admin",
     "portal": {
@@ -3148,5 +3151,52 @@
     "file-field": "Archivo",
     "document-added": "Documento agregado.",
     "document-updated": "Documento actualizado."
+  },
+  "prompts": {
+    "create-prompt": "Crear prompt",
+    "create-success": "Prompt creado correctamente",
+    "create-error": "Error al crear el prompt",
+    "edit-prompt": "Editar prompt",
+    "edit-success": "Prompt editado correctamente",
+    "edit-error": "Error al actualizar el prompt",
+    "title": "Título",
+    "content": "Contenido"
+  },
+  "agent-skills": {
+    "create-skill": "Crear habilidad de agente",
+    "create-success": "Habilidad de agente creada correctamente",
+    "create-error": "Error al crear la habilidad de agente",
+    "edit-skill": "Editar habilidad de agente",
+    "edit-success": "Habilidad de agente editada correctamente",
+    "edit-error": "Error al actualizar la habilidad de agente",
+    "title": "Título",
+    "description": "Descripción",
+    "content": "Contenido"
+  },
+  "agents": {
+    "create-agent": "Crear agente",
+    "create-success": "Agente creado correctamente",
+    "create-error": "Error al crear el agente",
+    "edit-agent": "Editar agente",
+    "edit-success": "Agente editado correctamente",
+    "edit-error": "Error al actualizar el agente",
+    "title": "Título",
+    "description": "Descripción",
+    "is-enabled": "Habilitado",
+    "model-section": "Modelo",
+    "model-name": "Nombre del modelo",
+    "model-temperature": "Temperatura del modelo",
+    "prompt-section": "Prompt",
+    "prompt-placeholder": "Elegir un prompt",
+    "use-latest-prompt-version": "Usar la última versión del prompt",
+    "use-prompt-version": "Usar la versión del prompt: ",
+    "prompt-version-placeholder": "Elegir la versión del prompt",
+    "tools-section": "Herramientas",
+    "docs-section": "Documentos",
+    "skills-section": "Habilidades",
+    "use-latest-skill-version": "Usar la última versión de la habilidad",
+    "use-skill-version": "Usar la versión de la habilidad:",
+    "choose-skill-version": "Elegir la versión de la habilidad",
+    "preview-mode": "Modo de vista previa"
   }
 }

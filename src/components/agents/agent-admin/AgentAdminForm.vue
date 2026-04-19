@@ -236,11 +236,11 @@ const submit = async () => {
     //     throw new Error(errorText || `Post to /api/agent/ failed with status ${response.status}`)
     //   }
     // }
-    toaster.pushSuccess(t(isEdit.value ? 'agent.update-sucess' : 'agent.create-success'))
+    toaster.pushSuccess(t(isEdit.value ? 'agents.update-success' : 'agents.create-success'))
     emit(isEdit.value ? 'entity-updated' : 'entity-created')
   } catch (e) {
     toaster.pushError(
-      t(isEdit.value ? 'agent.update-error' : 'agent.create-error') + ' ' + e.toString()
+      t(isEdit.value ? 'agents.update-error' : 'agents.create-error') + ' ' + e.toString()
     )
   } finally {
     isAsyncing.value = false
@@ -254,31 +254,13 @@ const submit = async () => {
     :confirm-action-name="$t('common.confirm')"
     :confirm-action-disabled="!form.title"
     :is-opened="isOpened"
-    :title="$t(isEdit.value ? 'agents.edit-agent' : 'agents.create-agent')"
+    :title="$t(isEdit ? 'agents.edit-agent' : 'agents.create-agent')"
     class="medium"
     :asyncing="isAsyncing"
     @close="close"
     @confirm="submit"
   >
     <div class="form-section">
-      <!--
-      title             String
-      description       String @default("")
-      orgCode           String
-
-      promptId          Int
-      promptVersion     Int
-      promptContent     PromptContent @relation(fields: [promptId, promptVersion], references: [promptId, version])
-
-      useProjectsMcp    Boolean @default(false)
-      mcps              Mcp[]
-      skillContents     SkillContent[]
-
-      useProfileData    Boolean @default(false)
-
-      useLatestPromptVersion Boolean @default(true)
-
-      -->
       <TextInput
         v-model.trim="form.title"
         :label="$t('agents.title')"
@@ -290,12 +272,12 @@ const submit = async () => {
     <div class="form-section">
       <lpiCheckbox :label="$t('agents.is-enabled')" v-model="form.isEnabled" />
     </div>
+    <label>{{ $t('agents.description') }}</label>
     <div class="form-section">
-      <TextInput
-        v-model.trim="form.description"
-        input-type="textarea"
-        :label="$t('agents.description')"
-        @change="titleExists = false"
+      <TipTapEditor
+        ref="tiptapEditor"
+        v-model="form.description"
+        class="input-field content-editor"
       />
     </div>
 
@@ -336,7 +318,7 @@ const submit = async () => {
       class="form-section prompt-version-section"
       v-if="form.promptId && !form.useLatestPromptVersion"
     >
-      <span class="select-label">{{ $t('agent.use-prompt-version') }}</span>
+      <span class="select-label">{{ $t('agents.use-prompt-version') }}</span>
       <LpiSelect
         v-if="!form.useLatestPromptVersion"
         :options="versionOptions"

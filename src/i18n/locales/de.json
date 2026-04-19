@@ -221,7 +221,10 @@
       "groups": "Gruppen",
       "settings": "Einstellungen",
       "terms": "ToS",
-      "vector-store": "Vector store"
+      "vector-store": "Vector store",
+      "prompts": "Anweisungen",
+      "agent-skills": "Agentenfähigkeiten",
+      "agents": "Agenten"
     },
     "page-title": "Admin",
     "portal": {
@@ -3148,5 +3151,52 @@
     "file-field": "Datei",
     "document-added": "Dokument hinzugefügt.",
     "document-updated": "Dokument bearbeitet."
+  },
+  "prompts": {
+    "create-prompt": "Prompt erstellen",
+    "create-success": "Prompt erfolgreich erstellt",
+    "create-error": "Fehler beim Erstellen des Prompts",
+    "edit-prompt": "Prompt bearbeiten",
+    "edit-success": "Prompt erfolgreich bearbeitet",
+    "edit-error": "Fehler beim Aktualisieren des Prompts",
+    "title": "Titel",
+    "content": "Inhalt"
+  },
+  "agent-skills": {
+    "create-skill": "Agent-Fähigkeit erstellen",
+    "create-success": "Agent-Fähigkeit erfolgreich erstellt",
+    "create-error": "Fehler beim Erstellen der Agent-Fähigkeit",
+    "edit-skill": "Agent-Fähigkeit bearbeiten",
+    "edit-success": "Agent-Fähigkeit erfolgreich bearbeitet",
+    "edit-error": "Fehler beim Aktualisieren der Agent-Fähigkeit",
+    "title": "Titel",
+    "description": "Beschreibung",
+    "content": "Inhalt"
+  },
+  "agents": {
+    "create-agent": "Agent erstellen",
+    "create-success": "Agent erfolgreich erstellt",
+    "create-error": "Fehler beim Erstellen des Agents",
+    "edit-agent": "Agent bearbeiten",
+    "edit-success": "Agent erfolgreich bearbeitet",
+    "edit-error": "Fehler beim Aktualisieren des Agents",
+    "title": "Titel",
+    "description": "Beschreibung",
+    "is-enabled": "Aktiviert",
+    "model-section": "Modell",
+    "model-name": "Modellname",
+    "model-temperature": "Modelltemperatur",
+    "prompt-section": "Prompt",
+    "prompt-placeholder": "Prompt auswählen",
+    "use-latest-prompt-version": "Neueste Prompt-Version verwenden",
+    "use-prompt-version": "Prompt-Version verwenden: ",
+    "prompt-version-placeholder": "Prompt-Version auswählen",
+    "tools-section": "Werkzeuge",
+    "docs-section": "Dokumente",
+    "skills-section": "Fähigkeiten",
+    "use-latest-skill-version": "Neueste Fähigkeitsversion verwenden",
+    "use-skill-version": "Fähigkeitsversion verwenden:",
+    "choose-skill-version": "Fähigkeitsversion auswählen",
+    "preview-mode": "Vorschau-Modus"
   }
 }

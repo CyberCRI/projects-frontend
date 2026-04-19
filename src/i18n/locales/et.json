@@ -221,7 +221,10 @@
       "groups": "Grupid",
       "settings": "Seadistused",
       "terms": "Tos",
-      "vector-store": "Vector store"
+      "vector-store": "Vector store",
+      "prompts": "Soovid",
+      "agent-skills": "Agendi oskused",
+      "agents": "Agendid"
     },
     "page-title": "Admin",
     "portal": {
@@ -3148,5 +3151,52 @@
     "file-field": "Fail",
     "document-added": "Dokument lisatud.",
     "document-updated": "Dokument uuendatud."
+  },
+  "prompts": {
+    "create-prompt": "Loo käsk",
+    "create-success": "Käsk loodud edukalt",
+    "create-error": "Viga käsu loomisel",
+    "edit-prompt": "Muuda käsku",
+    "edit-success": "Käsk muudetud edukalt",
+    "edit-error": "Viga käsu uuendamisel",
+    "title": "Pealkiri",
+    "content": "Sisu"
+  },
+  "agent-skills": {
+    "create-skill": "Loo agendi oskus",
+    "create-success": "Agendi oskus loodud edukalt",
+    "create-error": "Viga agendi oskuse loomisel",
+    "edit-skill": "Muuda agendi oskust",
+    "edit-success": "Agendi oskus muudetud edukalt",
+    "edit-error": "Viga agendi oskuse uuendamisel",
+    "title": "Pealkiri",
+    "description": "Kirjeldus",
+    "content": "Sisu"
+  },
+  "agents": {
+    "create-agent": "Loo agent",
+    "create-success": "Agent loodud edukalt",
+    "create-error": "Viga agendi loomisel",
+    "edit-agent": "Muuda agenti",
+    "edit-success": "Agent muudetud edukalt",
+    "edit-error": "Viga agendi uuendamisel",
+    "title": "Pealkiri",
+    "description": "Kirjeldus",
+    "is-enabled": "Lubatud",
+    "model-section": "Mudel",
+    "model-name": "Mudeli nimi",
+    "model-temperature": "Mudeli temperatuur",
+    "prompt-section": "käsk",
+    "prompt-placeholder": "Vali käsk",
+    "use-latest-prompt-version": "Kasuta uusimat käsku",
+    "use-prompt-version": "Kasuta käsku versioon: ",
+    "prompt-version-placeholder": "Vali käsu versioon",
+    "tools-section": "Tööriistad",
+    "docs-section": "Dokumendid",
+    "skills-section": "Oskused",
+    "use-latest-skill-version": "Kasuta uusimat oskuse versiooni",
+    "use-skill-version": "Kasuta oskuse versiooni:",
+    "choose-skill-version": "Vali oskuse versioon",
+    "preview-mode": "Eelvaate režiim"
   }
 }

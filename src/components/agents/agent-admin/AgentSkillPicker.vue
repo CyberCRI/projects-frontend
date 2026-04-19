@@ -35,7 +35,7 @@ const onChange = () => {
         />
       </div>
       <div class="form-section" v-if="model.useSkill && !model.useLatestSkillVersion">
-        <span class="select-label">{{ $t('agent.use-skill-version') }}</span>
+        <span class="select-label">{{ $t('agents.use-skill-version') }}</span>
         <LpiSelect
           v-if="!model.useLatestSkillVersion"
           :options="versionOptions"

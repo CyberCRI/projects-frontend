@@ -221,7 +221,10 @@
       "groups": "Grups",
       "settings": "Arranjament",
       "terms": "ToS",
-      "vector-store": "Vector store"
+      "vector-store": "Vector store",
+      "prompts": "Sol·licituds",
+      "agent-skills": "Habilitats de l'agent",
+      "agents": "Agents"
     },
     "page-title": "Administrador",
     "portal": {
@@ -3148,5 +3151,52 @@
     "file-field": "Fitxer",
     "document-added": "Document afegit.",
     "document-updated": "Document actualitzat."
+  },
+  "prompts": {
+    "create-prompt": "Crear prompt",
+    "create-success": "Prompt creat correctament",
+    "create-error": "Error en crear el prompt",
+    "edit-prompt": "Editar prompt",
+    "edit-success": "Prompt editat correctament",
+    "edit-error": "Error en actualitzar el prompt",
+    "title": "Títol",
+    "content": "Contingut"
+  },
+  "agent-skills": {
+    "create-skill": "Crear habilitat d'agent",
+    "create-success": "Habilitat d'agent creada correctament",
+    "create-error": "Error en crear l'habilitat d'agent",
+    "edit-skill": "Editar habilitat d'agent",
+    "edit-success": "Habilitat d'agent editada correctament",
+    "edit-error": "Error en actualitzar l'habilitat d'agent",
+    "title": "Títol",
+    "description": "Descripció",
+    "content": "Contingut"
+  },
+  "agents": {
+    "create-agent": "Crear agent",
+    "create-success": "Agent creat correctament",
+    "create-error": "Error en crear l'agent",
+    "edit-agent": "Editar agent",
+    "edit-success": "Agent editat correctament",
+    "edit-error": "Error en actualitzar l'agent",
+    "title": "Títol",
+    "description": "Descripció",
+    "is-enabled": "Habilitat",
+    "model-section": "Model",
+    "model-name": "Nom del model",
+    "model-temperature": "Temperatura del model",
+    "prompt-section": "prompt",
+    "prompt-placeholder": "Tria un prompt",
+    "use-latest-prompt-version": "Utilitza la darrera versió del prompt",
+    "use-prompt-version": "Utilitza la versió del prompt: ",
+    "prompt-version-placeholder": "Tria la versió del prompt",
+    "tools-section": "Eines",
+    "docs-section": "Documents",
+    "skills-section": "Habilitats",
+    "use-latest-skill-version": "Utilitza la darrera versió de l'habilitat",
+    "use-skill-version": "Utilitza la versió de l'habilitat:",
+    "choose-skill-version": "Tria la versió de l'habilitat",
+    "preview-mode": "Mode de previsualització"
   }
 }

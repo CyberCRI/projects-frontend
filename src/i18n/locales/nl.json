@@ -221,7 +221,10 @@
       "groups": "Groepen",
       "settings": "Instellingen",
       "terms": "TOS",
-      "vector-store": "Vector store"
+      "vector-store": "Vector store",
+      "prompts": "Opdrachten",
+      "agent-skills": "Vaardigheden van de agent",
+      "agents": "Agenten"
     },
     "page-title": "Beheerder",
     "portal": {
@@ -3148,5 +3151,52 @@
     "file-field": "Bestand",
     "document-added": "Document toegevoegd.",
     "document-updated": "Document bijgewerkt."
+  },
+  "prompts": {
+    "create-prompt": "Prompt maken",
+    "create-success": "Prompt succesvol gemaakt",
+    "create-error": "Fout bij het maken van de prompt",
+    "edit-prompt": "Prompt bewerken",
+    "edit-success": "Prompt succesvol bewerkt",
+    "edit-error": "Fout bij het updaten van de prompt",
+    "title": "Titel",
+    "content": "Inhoud"
+  },
+  "agent-skills": {
+    "create-skill": "Agentvaardigheid maken",
+    "create-success": "Agentvaardigheid succesvol gemaakt",
+    "create-error": "Fout bij het maken van de agentvaardigheid",
+    "edit-skill": "Agentvaardigheid bewerken",
+    "edit-success": "Agentvaardigheid succesvol bewerkt",
+    "edit-error": "Fout bij het updaten van de agentvaardigheid",
+    "title": "Titel",
+    "description": "Beschrijving",
+    "content": "Inhoud"
+  },
+  "agents": {
+    "create-agent": "Agent maken",
+    "create-success": "Agent succesvol gemaakt",
+    "create-error": "Fout bij het maken van de agent",
+    "edit-agent": "Agent bewerken",
+    "edit-success": "Agent succesvol bewerkt",
+    "edit-error": "Fout bij het updaten van de agent",
+    "title": "Titel",
+    "description": "Beschrijving",
+    "is-enabled": "Ingeschakeld",
+    "model-section": "Model",
+    "model-name": "Modelnaam",
+    "model-temperature": "Modeltemperatuur",
+    "prompt-section": "prompt",
+    "prompt-placeholder": "Kies een prompt",
+    "use-latest-prompt-version": "Gebruik de nieuwste promptversie",
+    "use-prompt-version": "Gebruik promptversie: ",
+    "prompt-version-placeholder": "Kies promptversie",
+    "tools-section": "Hulpmiddelen",
+    "docs-section": "Documenten",
+    "skills-section": "Vaardigheden",
+    "use-latest-skill-version": "Gebruik de nieuwste vaardigheidsversie",
+    "use-skill-version": "Gebruik vaardigheidsversie:",
+    "choose-skill-version": "Kies vaardigheidsversie",
+    "preview-mode": "Voorvertoningsmodus"
   }
 }

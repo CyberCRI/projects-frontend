@@ -228,7 +228,10 @@
       "groups": "Groups",
       "settings": "Settings",
       "terms": "ToS",
-      "vector-store": "Vector store"
+      "vector-store": "Vector store",
+      "prompts": "Prompts",
+      "agent-skills": "Agent skills",
+      "agents": "Agents"
     },
     "page-title": "Admin",
     "portal": {
@@ -3156,5 +3159,53 @@
     "file-field": "File",
     "document-added": "Document added.",
     "document-updated": "Document edited."
+  },
+  "prompts": {
+    "create-prompt": "Create prompt",
+    "create-success": "Prompt created successfuly",
+    "create-error": "Error creating prompt",
+    "edit-prompt": "Edit prompt",
+    "edit-success": "Prompt edited successfuly",
+    "edit-error": "Error updting prompt",
+    "title": "Title",
+    "content": "Content"
+  },
+  "agent-skills": {
+    "create-skill": "Create agent skill",
+    "create-success": "Agent skill created successfuly",
+    "create-error": "Error creating agent skill",
+    "edit-skill": "Edit agent skill",
+    "edit-success": "Agent skill edited successfuly",
+    "edit-error": "Error updting agent skill",
+    "title": "Title",
+    "description": "Description",
+    "content": "Content"
+  },
+
+  "agents": {
+    "create-agent": "Create agent",
+    "create-success": "Agent created successfuly",
+    "create-error": "Error creating agent",
+    "edit-agent": "Edit agent",
+    "edit-success": "Agent edited successfuly",
+    "edit-error": "Error updting agent",
+    "title": "Title",
+    "description": "Description",
+    "is-enabled": "Enabled",
+    "model-section": "Model",
+    "model-name": "Model name",
+    "model-temperature": "Model temperature",
+    "prompt-section": "prompt",
+    "prompt-placeholder": "Choose a prompt",
+    "use-latest-prompt-version": "Use latest prompt version",
+    "use-prompt-version": "Use prompt version: ",
+    "prompt-version-placeholder": "Choose prompt version",
+    "tools-section": "Tools",
+    "docs-section": "Documents",
+    "skills-section": "Skills",
+    "use-latest-skill-version": "Use latest skill version",
+    "use-skill-version": "Use skill version :",
+    "choose-skill-version": "Choose skill version",
+    "preview-mode": "Preview mode"
   }
 }

@@ -228,7 +228,10 @@
       "groups": "Groupes",
       "settings": "Paramètres",
       "terms": "CGU",
-      "vector-store": "Vector store"
+      "vector-store": "Vector store",
+      "prompts": "Invites",
+      "agent-skills": "Compétences de l'agent",
+      "agents": "Agents"
     },
     "page-title": "Admin",
     "portal": {
@@ -3151,5 +3154,52 @@
     "file-field": "Fichier",
     "document-added": "Document ajouté.",
     "document-updated": "Document modifié."
+  },
+  "prompts": {
+    "create-prompt": "Créer un prompt",
+    "create-success": "Prompt créé avec succès",
+    "create-error": "Erreur lors de la création du prompt",
+    "edit-prompt": "Modifier le prompt",
+    "edit-success": "Prompt modifié avec succès",
+    "edit-error": "Erreur lors de la mise à jour du prompt",
+    "title": "Titre",
+    "content": "Contenu"
+  },
+  "agent-skills": {
+    "create-skill": "Créer une compétence d'agent",
+    "create-success": "Compétence d'agent créée avec succès",
+    "create-error": "Erreur lors de la création de la compétence d'agent",
+    "edit-skill": "Modifier la compétence d'agent",
+    "edit-success": "Compétence d'agent modifiée avec succès",
+    "edit-error": "Erreur lors de la mise à jour de la compétence d'agent",
+    "title": "Titre",
+    "description": "Description",
+    "content": "Contenu"
+  },
+  "agents": {
+    "create-agent": "Créer un agent",
+    "create-success": "Agent créé avec succès",
+    "create-error": "Erreur lors de la création de l'agent",
+    "edit-agent": "Modifier l'agent",
+    "edit-success": "Agent modifié avec succès",
+    "edit-error": "Erreur lors de la mise à jour de l'agent",
+    "title": "Titre",
+    "description": "Description",
+    "is-enabled": "Activé",
+    "model-section": "Modèle",
+    "model-name": "Nom du modèle",
+    "model-temperature": "Température du modèle",
+    "prompt-section": "prompt",
+    "prompt-placeholder": "Choisir un prompt",
+    "use-latest-prompt-version": "Utiliser la dernière version du prompt",
+    "use-prompt-version": "Utiliser la version du prompt : ",
+    "prompt-version-placeholder": "Choisir la version du prompt",
+    "tools-section": "Outils",
+    "docs-section": "Documents",
+    "skills-section": "Compétences",
+    "use-latest-skill-version": "Utiliser la dernière version de la compétence",
+    "use-skill-version": "Utiliser la version de la compétence :",
+    "choose-skill-version": "Choisir la version de la compétence",
+    "preview-mode": "Mode prévisualisation"
   }
 }
