@@ -72,14 +72,12 @@ const submit = async () => {
     //   }
     // }
     toaster.pushSuccess(
-      t(isEdit.value ? 'agent-skills.update-success' : 'agent-skills.create-success')
+      t(isEdit.value ? 'agent-skills.edit-success' : 'agent-skills.create-success')
     )
     emit(isEdit.value ? 'entity-updated' : 'entity-created')
   } catch (e) {
     toaster.pushError(
-      t(isEdit.value ? 'agent-skills.update-error' : 'agent-skills.create-error') +
-        ' ' +
-        e.toString()
+      t(isEdit.value ? 'agent-skills.edit-error' : 'agent-skills.create-error') + ' ' + e.toString()
     )
   } finally {
     isAsyncing.value = false

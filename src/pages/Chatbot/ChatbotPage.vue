@@ -2,8 +2,7 @@
 import useLoadingFromStatus from '@/composables/useLoadingFromStatus'
 import useUsersStore from '@/stores/useUsers'
 
-const props = defineProps({ agentId: String })
-const CHAT_ENDPOINT = computed(() => '/api/agent/chat?id=' + props.agentId)
+const props = defineProps({ agentSlug: String })
 
 // type Params = Parameters<typeof useFetch>
 const usersStore = useUsersStore()
@@ -12,8 +11,9 @@ const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKE
 if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
 const options = { headers }
 
-const url = `/api/agent/${props.agentId}`
+const url = `/api/chatbot/${props.agentSlug}`
 const { data: agent, status, error, clear } = await useFetch(url, options)
+const CHAT_ENDPOINT = computed(() => '/api/chatbot/chat?id=' + agent.value?.id)
 
 watch(
   () => error.value,

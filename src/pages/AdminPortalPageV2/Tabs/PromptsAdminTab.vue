@@ -29,10 +29,10 @@ const deleteEntity = async () => {
     })
     console.log('delete', response)
     refreshEntityList()
-    toaster.pushSuccess(t('prompt.deleted'))
+    toaster.pushSuccess(t('prompts.deleted'))
   } catch (e) {
     console.log(e.toString())
-    toaster.pushError(e.toString())
+    toaster.pushError(t('prompts.delete-error'))
   } finally {
     entityToDelete.value = ''
     isAsyncing.value = false
@@ -84,8 +84,8 @@ const onCloseAdminForm = () => {
     <ConfirmModal
       v-if="entityToDelete"
       :asyncing="isAsyncing"
-      :title="$t('prompt.confirm-deletion')"
-      :content="$t('prompt.confirm-deletion-of', { title: entityToDelete.title })"
+      :title="$t('prompts.confirm-deletion')"
+      :content="$t('prompts.confirm-deletion-of', { title: entityToDelete.title })"
       @confirm="deleteEntity"
       @cancel="entityToDelete = null"
     />

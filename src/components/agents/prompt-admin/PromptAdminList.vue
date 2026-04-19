@@ -19,7 +19,7 @@ const countAgents = (p) => p.promptContents.reduce((acc, pc) => acc + pc.agents.
   <EntityAdminList
     ref="entityList"
     entity-icon="Article"
-    no-entity-label="Nope"
+    :no-entity-label="$t('prompts.empty-list')"
     :deletable-check="cannotDeletePrompt"
     :fetchEntities="fetchPrompts"
   >

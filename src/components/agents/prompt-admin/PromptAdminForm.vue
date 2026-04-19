@@ -70,11 +70,11 @@ const submit = async () => {
     //     throw new Error(errorText || `Post to /api/prompt/ failed with status ${response.status}`)
     //   }
     // }
-    toaster.pushSuccess(t(isEdit.value ? 'prompts.update-success' : 'prompts.create-success'))
+    toaster.pushSuccess(t(isEdit.value ? 'prompts.edit-success' : 'prompts.create-success'))
     emit(isEdit.value ? 'entity-updated' : 'entity-created')
   } catch (e) {
     toaster.pushError(
-      t(isEdit.value ? 'prompts.update-error' : 'prompts.create-error') + ' ' + e.toString()
+      t(isEdit.value ? 'prompts.edit-error' : 'prompts.create-error') + ' ' + e.toString()
     )
   } finally {
     isAsyncing.value = false
