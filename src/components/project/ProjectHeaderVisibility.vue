@@ -1,31 +1,27 @@
 <template>
   <div class="visibility-ctn">
-    <SkeletonComponent v-if="loading" class="skeleton-block" height="24px" />
-    <div v-else-if="project && project.publication_status" class="visibility">
-      <InfoSentence
-        :data="visibility"
-        :no-centered="true"
-        :all-plain="true"
-        :black="true"
-        size="medium"
-        button-size="mbutton"
-        :inline="true"
-      />
-    </div>
+    <InfoSentence
+      v-if="project.publication_status"
+      :class="visibility"
+      :data="visibility"
+      :no-centered="true"
+      :all-plain="true"
+      :black="true"
+      size="medium"
+      button-size="mbutton"
+      :inline="true"
+      :title="title"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import { IconImageChoice } from '@/functs/IconImage'
-import { ProjectModel } from '@/models/project.model'
+import { TranslatedProject } from '@/models/project.model'
 
-const props = withDefaults(
-  defineProps<{
-    project?: ProjectModel
-    loading?: boolean
-  }>(),
-  { project: null, loading: true }
-)
+const props = defineProps<{
+  project: TranslatedProject
+}>()
 
 const visibilityIcon = () => {
   const map: Record<string, IconImageChoice> = {

@@ -40,7 +40,7 @@
         label-on-hover
         :to="{
           name: 'ProjectAnnouncement',
-          params: { slugOrid: project.slug || project.id },
+          params: { slugOrId: project.slug || project.id },
         }"
       />
       <ExternalLabelButton
@@ -51,7 +51,7 @@
         label-on-hover
         :to="{
           name: 'projectComments',
-          params: { slugOrid: project.slug || project.id },
+          params: { slugOrId: project.slug || project.id },
         }"
       />
       <!-- <template v-if="appGotenbergEnabled && usersStore.isConnected">
@@ -117,7 +117,6 @@
 
 <script setup lang="ts">
 import { TranslatedProject } from '@/models/project.model'
-import ProjectFollowIcon from '@/components/project/ProjectFollowIcon.vue'
 import { useProjectFollow } from '@/pages/ProjectPageV2/useProject'
 import useUsersStore from '@/stores/useUsers'
 

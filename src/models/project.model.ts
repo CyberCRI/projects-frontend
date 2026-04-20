@@ -17,6 +17,7 @@ import { FollowOutput } from '@/models/follow.model'
 import { TemplateModel } from '@/models/template.model'
 import { TagModel, TagOutput } from '@/models/tag.model'
 import { Translated } from '@/interfaces/translated'
+import { IconImageChoice } from '@/functs/IconImage'
 
 /**
  * @name ProjectModel
@@ -38,6 +39,7 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
   life_status: ProjectStatusType
   reviews: ReviewModel[]
   tags: TagModel[]
+  sdgs: number[]
   is_followed: {
     is_followed: boolean
     follow_id: number
@@ -59,10 +61,43 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
     comments: number
     goals: number
     blogs: number
-    files: number
-    links: number
     announcements: number
+    links: number
+    files: number
+    reviews: number
   }
+}
+
+export type ProjectModulesKeys = keyof ProjectModel['modules']
+
+export const ProjectModuleIcon: { [key in ProjectModulesKeys]: IconImageChoice } = {
+  announcements: 'BullhornOutline',
+  blogs: 'Progress5',
+  goals: 'TimerLine',
+  members: 'Users',
+  similars: 'PeopleGroup',
+  locations: 'Map',
+  links: 'LinkRotated',
+  files: 'Globe',
+  linked_projects: 'LinkRotated',
+  comments: 'ChatBubble',
+  groups: 'Briefcase',
+  reviews: 'Alert',
+}
+
+export const ProjectModuleTitle: { [key in ProjectModulesKeys]: string } = {
+  announcements: 'home.announcements',
+  blogs: 'blog.title',
+  goals: 'goal.goals',
+  members: 'team.team',
+  similars: 'project.similars',
+  locations: 'project.add-to-project.location',
+  files: 'project.files',
+  links: 'project.links',
+  linked_projects: 'project.linked-projects',
+  comments: 'comment.comments',
+  groups: 'project,groups',
+  reviews: 'project.reviews',
 }
 
 export type TranslatedProject = Translated<ProjectModel, 'title' | 'description' | 'purpose'>

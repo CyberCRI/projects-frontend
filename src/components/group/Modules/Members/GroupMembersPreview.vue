@@ -23,7 +23,7 @@ import {
   GroupModuleTitle,
   TranslatedPeopleGroupModel,
 } from '@/models/invitation.model'
-import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
+import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
 import BaseGroupMembersList from '@/components/group/Modules/Members/BaseGroupMembersList.vue'
 
 defineProps<{

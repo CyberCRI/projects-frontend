@@ -21,17 +21,14 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import DescriptionDrawer from '@/components/project/description/DescriptionDrawer.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
+import { TranslatedProject } from '@/models/project.model'
 
-defineOptions({ name: 'DescriptionPlaceholder' })
-defineProps({
-  project: {
-    type: Object,
-    required: true,
-  },
-})
+defineProps<{
+  project: TranslatedProject
+}>()
 
 const editDescriptionModalActive = ref(false)
 const close = () => (editDescriptionModalActive.value = !editDescriptionModalActive.value)

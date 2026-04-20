@@ -1,27 +1,14 @@
 <template>
   <div class="project-summary">
     <div class="main-ctn">
-      <LazyProjectHeaderV2
-        :project="project"
-        :sdgs="sdgs"
-        :loading="!project"
-        class="project-header v2"
-      />
+      <ProjectHeaderV2 :project="project" class="project-header v2" />
 
-      <!-- description -->
-      <DescriptionPlaceholder
-        v-if="canEditProject && showDescriptionPlaceHolder"
-        class="unboxed"
-        :project="project"
-      />
-      <DescriptionRecap
-        v-else-if="project?.$t?.description"
-        class="unboxed"
-        :project="project"
-        :description="project.$t.description"
-      />
+      <ProjectDescriptionPreview :project="project" />
 
-      <!-- team -->
+      <ProjectMembersPreview :project="project" />
+
+      <!--
+
       <ProjectMemberSection
         v-if="mergedTeam?.length"
         class="unboxed"
@@ -29,7 +16,6 @@
         @user-click="openProfileDrawer"
       />
 
-      <!-- locations -->
       <LazyMapRecap
         v-if="locations.length"
         class="unboxed"
@@ -39,10 +25,8 @@
         @expand="projectLayoutToggleAddModal('location')"
       />
 
-      <!-- goals -->
       <GoalsRecap v-if="filteredGoals.length" class="unboxed" :goals="filteredGoals" />
 
-      <!-- blog -->
       <PublicationRecap
         v-if="blogEntries.length"
         class="unboxed"
@@ -50,7 +34,6 @@
         :publications="blogEntries"
       />
 
-      <!-- resources -->
       <ResourcesRecap
         v-if="linkResources?.length || fileResources?.length"
         class="unboxed"
@@ -64,7 +47,6 @@
         }"
       />
 
-      <!-- linked projects -->
       <LinkedProjectsRecap
         v-if="linkedProjects?.length"
         class="unboxed"
@@ -80,7 +62,6 @@
         @reload-project="$emit('reload-project')"
       />
 
-      <!-- comments -->
       <PublicationRecap
         v-if="comments.length"
         class="unboxed"
@@ -102,137 +83,70 @@
         :user-id="profileDrawer.user_id"
         is-preview
       />
-    </BaseDrawer>
+    </BaseDrawer> -->
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import ProjectMemberSection from '@/components/group/ProjectMemberSection/ProjectMemberSection.vue'
+import ProjectMembersPreview from '@/components/project/modules/Members/ProjectMembersPreview.vue'
+import ProjectDescriptionPreview from '@/components/project/modules/ProjectDescriptionPreview.vue'
 import { textIsEmpty } from '@/functs/string'
-import { isNotGroup } from '@/functs/users'
-import { AttachmentFileModel } from '@/models/attachment-file.model'
-import { AttachmentLinkModel } from '@/models/attachment-link.model'
-import { BlogEntryModel } from '@/models/blog-entry.model'
-import { CommentModel } from '@/models/comment.model'
-import { TranslatedGoal } from '@/models/goal.model'
-import { LocationModel } from '@/models/location.model'
 import { TranslatedProject } from '@/models/project.model'
-import { UserModel } from '@/models/user.model'
 
-const projectLayoutToggleAddModal = inject<(name: string) => void>('projectLayoutToggleAddModal')
-
-const props = withDefaults(
-  defineProps<{
-    project?: TranslatedProject
-    comments?: CommentModel[]
-    locations?: LocationModel[]
-    fileResources?: AttachmentFileModel[]
-    linkResources?: AttachmentLinkModel[]
-    blogEntries?: BlogEntryModel[]
-
-    reviews?: any[]
-    linkedProjects?: TranslatedProject[]
-    goals?: TranslatedGoal[]
-    sdgs?: number[]
-    team?: {
-      owners: UserModel[]
-      members: UserModel[]
-      reviewers: UserModel[]
-      owner_groups: UserModel[]
-      reviewer_groups: UserModel[]
-      member_groups: UserModel[]
-    }
-  }>(),
-  {
-    project: null,
-    comments: () => [],
-    locations: () => [],
-    fileResources: () => [],
-    linkResources: () => [],
-    blogEntries: () => [],
-    reviews: () => [],
-    linkedProjects: () => [],
-    goals: () => [],
-    team: () => ({
-      owners: [],
-      members: [],
-      reviewers: [],
-      owner_groups: [],
-      reviewer_groups: [],
-      member_groups: [],
-    }),
-    sdgs: () => [],
-  }
-)
-
-defineEmits<{
-  'reload-reviews': []
-  'reload-project': []
+const props = defineProps<{
+  project: TranslatedProject
 }>()
 
-const router = useRouter()
+// const router = useRouter()
 
-useScrollToTab()
 const { canEditProject } = usePermissions()
-const { translateUser, translateGroup } = useAutoTranslate()
-const profileDrawer = ref({
-  isOpened: false,
-  user_id: null,
-})
 
-const filteredGoals = computed(() => {
-  return (
-    props.goals?.filter(
-      (goal) => goal.status && (goal.status === 'complete' || goal.status === 'ongoing')
-    ) || []
-  )
-})
+const descripitonEmpty = computed(() => textIsEmpty(props.project.$t.description))
+// useScrollToTab()
+// const { translateUser, translateGroup } = useAutoTranslate()
+// const profileDrawer = ref({
+//   isOpened: false,
+//   user_id: null,
+// })
 
-const mergedTeam = computed(() => {
-  return [
-    ...(props.team.owners || []).map((o) => ({
-      ...unref(translateUser(o)),
-      role: 'owners',
-    })),
-    ...(props.team.reviewers || []).map((o) => ({
-      ...unref(translateUser(o)),
-      role: 'reviewers',
-    })),
-    ...(props.team.members || []).map((o) => ({
-      ...unref(translateUser(o)),
-      role: 'members',
-    })),
-    ...(props.team.owner_groups || []).map((o) => ({
-      ...unref(translateGroup(o)),
-      role: 'owner_groups',
-    })),
-    ...(props.team.reviewer_groups || []).map((o) => ({
-      ...unref(translateGroup(o)),
-      role: 'reviewer_groups',
-    })),
-    ...(props.team.member_groups || []).map((o) => ({
-      ...unref(translateGroup(o)),
-      role: 'member_groups',
-    })),
-  ]
-})
+// const filteredGoals = computed(() => {
+//   return (
+//     props.goals?.filter(
+//       (goal) => goal.status && (goal.status === 'complete' || goal.status === 'ongoing')
+//     ) || []
+//   )
+// })
 
-const showDescriptionPlaceHolder = computed(() => textIsEmpty(props.project.description))
-
-const openProfileDrawer = async (user) => {
-  if (isNotGroup(user)) {
-    profileDrawer.value.user_id = user.id
-    profileDrawer.value.isOpened = true
-  } else {
-    // TODO why user.id for group ????
-    router.push({ name: 'Group', params: { groupIdOrSlug: user.id } })
-  }
-}
-
-const closeProfileDrawer = () => {
-  profileDrawer.value.isOpened = false
-  profileDrawer.value.user_id = null
-}
+// const mergedTeam = computed(() => {
+//   return [
+//     ...(props.team.owners || []).map((o) => ({
+//       ...unref(translateUser(o)),
+//       role: 'owners',
+//     })),
+//     ...(props.team.reviewers || []).map((o) => ({
+//       ...unref(translateUser(o)),
+//       role: 'reviewers',
+//     })),
+//     ...(props.team.members || []).map((o) => ({
+//       ...unref(translateUser(o)),
+//       role: 'members',
+//     })),
+//     ...(props.team.owner_groups || []).map((o) => ({
+//       ...unref(translateGroup(o)),
+//       role: 'owner_groups',
+//     })),
+//     ...(props.team.reviewer_groups || []).map((o) => ({
+//       ...unref(translateGroup(o)),
+//       role: 'reviewer_groups',
+//     })),
+//     ...(props.team.member_groups || []).map((o) => ({
+//       ...unref(translateGroup(o)),
+//       role: 'member_groups',
+//     })),
+//   ]
+// })
+// }
 </script>
 
 <style lang="scss" scoped>

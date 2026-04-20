@@ -20,7 +20,7 @@
         />
         <!-- infos -->
         <div class="group-infos">
-          <h1 class="group-title skeleton-block">
+          <h1 class="group-title">
             {{ group.$t.name }}
           </h1>
           <p
@@ -103,7 +103,7 @@
 <script setup lang="ts">
 import { DEFAULT_GROUP_PATATOID } from '@/composables/usePatatoids'
 import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
+import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
 import SdgList from '@/components/sdgs/SdgList.vue'
 import TagsList from '@/components/tags/TagsList.vue'
 import LocationDrawer from '@/components/map/LocationDrawer.vue'

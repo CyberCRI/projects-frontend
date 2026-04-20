@@ -3,6 +3,7 @@
     :class="{ 'sdg--unselected': !selected, [props.logo]: true }"
     class="sdg"
     :data-test="`sdg-${sdgId}`"
+    :title="alt"
     @click="toggle"
   >
     <CroppedImage

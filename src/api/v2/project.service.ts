@@ -30,3 +30,27 @@ export const getProject = (
     }
   )
 }
+
+export const getProjectMembers = (
+  organization: RefOrRaw<OrganizationModel['code']>,
+  projectSlugOrId: RefOrRaw<ProjectSlugOrId>,
+  config = {}
+) => {
+  const key = computed(() => `${unref(organization)}::project::${unref(projectSlugOrId)}::members`)
+
+  const { translateUsers } = useAutoTranslate()
+
+  return useAsyncPaginationAPI(
+    key,
+    ({ config }) =>
+      fetchProject(unref(projectSlugOrId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
+    {
+      translate: translateUsers,
+      watch: onlyRefs([organization, projectSlugOrId]),
+      ...config,
+    }
+  )
+}

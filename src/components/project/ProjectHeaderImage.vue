@@ -1,10 +1,8 @@
 <template>
   <div class="project-header-image-ctn">
-    <SkeletonComponent v-if="loading" height="100%" width="100%" />
-
     <CroppedApiImage
-      v-if="!loading && project?.header_image?.variations"
       :picture-data="project.header_image"
+      class="skeletons-background"
       picture-size="medium"
       default-picture="/placeholders/header_placeholder.png"
       :alt="`${project.title} image`"
@@ -13,15 +11,11 @@
 </template>
 
 <script setup lang="ts">
-import { ProjectModel } from '@/models/project.model'
+import { TranslatedProject } from '@/models/project.model'
 
-withDefaults(
-  defineProps<{
-    project?: ProjectModel
-    loading?: boolean
-  }>(),
-  { project: null, loading: true }
-)
+defineProps<{
+  project: TranslatedProject
+}>()
 </script>
 <style scoped lang="scss">
 .project-header-image-ctn {

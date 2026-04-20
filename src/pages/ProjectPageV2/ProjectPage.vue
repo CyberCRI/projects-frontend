@@ -106,9 +106,9 @@ provide('projectLayoutProjectPatched', () => {})
 
 const editable = computed(() => isEditing.value && canEditProject.value)
 
-const defaultProps = computed(() => ({
-  editable,
-  project,
+const propsTab = computed(() => ({
+  editable: editable.value,
+  project: project.value,
 }))
 </script>
 
@@ -143,12 +143,7 @@ const defaultProps = computed(() => ({
         </template>
         <template #content>
           <SubPageTitle :title-prefix="project.$t.title" :current-tab="currentTab" />
-          <!-- <NuxtPage
-            v-bind="{
-              ...defaultProps,
-              ...(currentTab?.props ?? {}),
-            }"
-          /> -->
+          <NuxtPage v-if="currentTab" v-bind="propsTab" />
         </template>
       </NavPanelLayout>
     </FetchLoader>

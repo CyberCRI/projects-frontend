@@ -1,12 +1,9 @@
 <template>
-  <div v-show="sdgs?.length" class="sdg-ctn">
-    <template v-if="loading">
-      <SkeletonComponent border-radius="50%" height="30px" width="30px" />
-    </template>
-    <TransitionGroup v-else name="sdg" class="sdg-list" tag="div">
+  <div v-show="project.sdgs.length" class="sdg-ctn">
+    <TransitionGroup name="sdg" class="sdg-list" tag="div">
       <SdgList
         key="sdg"
-        :sdgs="sdgs || []"
+        :sdgs="project.sdgs || []"
         :to="{
           name: 'ProjectSearch',
           query: {
@@ -19,9 +16,10 @@
 </template>
 
 <script setup lang="ts">
+import { TranslatedProject } from '@/models/project.model'
+
 defineProps<{
-  sdgs: number[]
-  loading: boolean
+  project: TranslatedProject
 }>()
 </script>
 
