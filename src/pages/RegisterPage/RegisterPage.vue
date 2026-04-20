@@ -40,28 +40,30 @@ const contactEmail = ref('')
 const verifyingLink = ref(true)
 
 const rules = {
-  acceptedTOS: {
-    checked: helpers.withMessage(
-      () => t('register.tos-is-required'),
-      (value) => value === true
-    ),
-  },
-  email: {
-    required: helpers.withMessage(() => t('register.email.is-required'), required),
-    email: helpers.withMessage(() => t('register.email.is-invalid'), email),
-  },
-  given_name: {
-    required: helpers.withMessage(() => t('register.given_name.is-required'), required),
-  },
-  family_name: {
-    required: helpers.withMessage(() => t('register.family_name.is-required'), required),
-  },
-  password: {
-    required: helpers.withMessage(() => t('register.password.is-required'), required),
+  form: {
+    acceptedTOS: {
+      checked: helpers.withMessage(
+        () => t('register.tos-is-required'),
+        (value) => value === true
+      ),
+    },
+    email: {
+      required: helpers.withMessage(() => t('register.email.is-required'), required),
+      email: helpers.withMessage(() => t('register.email.is-invalid'), email),
+    },
+    given_name: {
+      required: helpers.withMessage(() => t('register.given_name.is-required'), required),
+    },
+    family_name: {
+      required: helpers.withMessage(() => t('register.family_name.is-required'), required),
+    },
+    password: {
+      required: helpers.withMessage(() => t('register.password.is-required'), required),
+    },
   },
 }
 
-const v$ = useVuelidate(rules, form)
+const v$ = useVuelidate(rules, { form })
 
 const backgroundImageUrl = computed(() => {
   return `${runtimeConfig.public.appPublicBinariesPrefix}/page404/page-404.png`
@@ -96,9 +98,13 @@ const register = async () => {
     const formData = new FormData()
     imageSizesFormDataPost(formData)
 
-    const profileImage = await utils.getPatatoidFile(currentPatatoidIndex.value)
-    if (profileImage instanceof File) {
-      formData.append('profile_picture_file', profileImage, profileImage.name)
+    try {
+      const profileImage = await utils.getPatatoidFile(currentPatatoidIndex.value)
+      if (profileImage instanceof File) {
+        formData.append('profile_picture_file', profileImage, profileImage.name)
+      }
+    } catch (e) {
+      console.error('couldnt load patatoid', e)
     }
 
     ;['given_name', 'family_name', 'password', 'email'].forEach((key) => {
