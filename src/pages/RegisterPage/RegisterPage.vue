@@ -63,7 +63,11 @@ const rules = {
   },
 }
 
-const v$ = useVuelidate(rules, { form })
+type Model = {
+  form: typeof form
+}
+
+const v$ = useVuelidate<Model>(rules, { form })
 
 const backgroundImageUrl = computed(() => {
   return `${runtimeConfig.public.appPublicBinariesPrefix}/page404/page-404.png`
