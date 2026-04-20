@@ -6,6 +6,11 @@ const props = defineProps({ agentSlug: { type: String, required: true } })
 
 // type Params = Parameters<typeof useFetch>
 const usersStore = useUsersStore()
+
+if (!useRuntimeConfig().public.appHasChatbotPromptDb) {
+  usePage404()
+}
+
 let headers = {}
 const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
 if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }

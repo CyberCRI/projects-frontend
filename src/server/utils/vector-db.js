@@ -16,9 +16,17 @@ export default async () => {
     : null
   const apiKey = runtimeConfig.appVectorEmbeddingApiKey
   const vectorTableName = runtimeConfig.appVectorTableName
+  const hasVectorDb = runtimeConfig.public.appHasVectorDb
 
   try {
-    if (!connectionString || !modelName || !vectorDimensions || !apiKey || !vectorTableName) {
+    if (
+      !connectionString ||
+      !modelName ||
+      !vectorDimensions ||
+      !apiKey ||
+      !vectorTableName ||
+      !hasVectorDb
+    ) {
       throw new Error('Missing required configuration for vector store.')
     }
 
