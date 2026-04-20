@@ -2,6 +2,10 @@
 const addEntityIsOpen = ref(false)
 const entityToDelete = ref('')
 
+if (!useRuntimeConfig().public.appHasChatbotPromptDb) {
+  usePage404()
+}
+
 const isAsyncing = ref(false)
 
 const deleteEntity = async () => {

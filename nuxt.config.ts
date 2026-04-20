@@ -176,6 +176,8 @@ export default defineNuxtConfig({
       appChatbotExemples: '',
       appSorbobotApiUrl: '',
       appGotenbergEnabled: '',
+      appHasVectorDb: 0,
+      appHasChatbotPromptDb: 0,
     },
   },
   i18n: {
