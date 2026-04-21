@@ -5,26 +5,26 @@ describe('useQuery', () => {
   it('method', async () => {
     const { setQuery, toggleQuery, removeQuery, query } = useQuery()
 
-    expect(query).toEqual({})
+    expect(query.value).toEqual({})
     setQuery('role', 'author')
-    expect(query).toEqual({ role: 'author' })
+    expect(query.value).toEqual({ role: 'author' })
     setQuery('role', 'thesis')
-    expect(query).toEqual({ role: 'thesis' })
+    expect(query.value).toEqual({ role: 'thesis' })
 
     removeQuery('role')
-    expect(query).toEqual({})
+    expect(query.value).toEqual({})
 
     // remove not exists keys
     removeQuery('notexists')
-    expect(query).toEqual({})
+    expect(query.value).toEqual({})
 
     // remove not exists keys
-    expect(query).toEqual({})
+    expect(query.value).toEqual({})
     toggleQuery('role', 'author')
-    expect(query).toEqual({ role: 'author' })
+    expect(query.value).toEqual({ role: 'author' })
     toggleQuery('role', 'thesis')
-    expect(query).toEqual({ role: 'thesis' })
+    expect(query.value).toEqual({ role: 'thesis' })
     toggleQuery('role', 'thesis')
-    expect(query).toEqual({})
+    expect(query.value).toEqual({})
   })
 })
