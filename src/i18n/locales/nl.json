@@ -2402,7 +2402,7 @@
     }
   },
   "event": {
-    "no-event": "Nog geen evenement.",
+    "empty": "Nog geen evenement.",
     "calendar": {
       "title": "Agenda",
       "future": "Huidige/toekomstige gebeurtenissen",

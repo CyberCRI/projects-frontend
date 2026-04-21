@@ -28,6 +28,7 @@
           @delete="onDelete"
         />
       </div>
+      <EmptyLabel v-if="allNews.length === 0" :label="$t('news.empty')" />
       <PaginationButtonsV2 :pagination="pagination" />
     </FetchLoader>
 

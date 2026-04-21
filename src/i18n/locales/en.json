@@ -2404,9 +2404,12 @@
       "title": "Recommended persons"
     }
   },
+  "announcements": {
+    "empty": "No announcement yet."
+  },
   "event": {
     "view": "See event",
-    "no-event": "No event yet.",
+    "empty": "No event yet.",
     "calendar": {
       "title": "Calendar",
       "future": "Current/future events",
@@ -2465,6 +2468,7 @@
     "groups-label": "Groups:"
   },
   "news": {
+    "empty": "No news yet.",
     "view": "See news",
     "create": {
       "title": "Create a news"
@@ -2575,7 +2579,8 @@
     },
     "drawer": {
       "title": "Edit instruction"
-    }
+    },
+    "empty": "No instruction yet."
   },
   "chat": {
     "drawer": {

@@ -2402,7 +2402,7 @@
     }
   },
   "event": {
-    "no-event": "Encara no hi ha esdeveniment.",
+    "empty": "Encara no hi ha esdeveniment.",
     "calendar": {
       "title": "Calendari",
       "future": "Esdeveniments actuals/fusió",

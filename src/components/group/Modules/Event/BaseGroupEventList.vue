@@ -21,7 +21,7 @@
           @edit="onEditEvent"
           @delete="onDeleteEvent"
         />
-        <EmptyLabel v-if="!data.length" :label="$t('event.no-event')" />
+        <EmptyLabel v-if="!data.length" :label="$t('event.empty')" />
       </div>
 
       <LocationDrawer

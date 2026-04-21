@@ -71,7 +71,7 @@ watchEffect(() => {
 
 <template>
   <FetchLoader :status="status" only-error skeleton :error="error" error404>
-    <div class="instruction-list-page page-section-medium">
+    <div class="instruction-list-page page-section-wide">
       <div class="instruction-header">
         <BreadCrumbs :breadcrumbs="breadcrumbs" />
         <div
@@ -100,10 +100,10 @@ watchEffect(() => {
         </p>
       </div>
     </div>
-    <div class="page-section-narrow">
-      <TipTapOutput class="instruction-content skeletons-text" :content="instruction.$t.content" />
-    </div>
+
+    <TipTapOutput class="instruction-content skeletons-text" :content="instruction.$t.content" />
   </FetchLoader>
+
   <EditInstructionDrawer
     :is-opened="!!editedInstruction"
     :instruction="editedInstruction"

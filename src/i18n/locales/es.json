@@ -2402,7 +2402,7 @@
     }
   },
   "event": {
-    "no-event": "Todavía no hay evento.",
+    "empty": "Todavía no hay evento.",
     "calendar": {
       "title": "Calendario",
       "future": "Eventos actuales/futuro",
