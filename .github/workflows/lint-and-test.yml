@@ -30,6 +30,8 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Install the dependencies
         run: yarn install --frozen-lockfile
+      - name: Generate Prisma client
+        run: yarn prisma-chatbot-db:generate
       - name: Check that prettier has been run on all files
         run: yarn format:check
       - name: Run the linter
