@@ -64,4 +64,3 @@ dist
 
 # Prisma generated clients (regenerated via postinstall)
 prisma-chatbot-db/generated/
-prisma-chatbot-db/migrations/
