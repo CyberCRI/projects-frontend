@@ -291,9 +291,9 @@
         "delete-templates": "Supprimer les modèles",
         "delete-templates-description": "Voulez-vous vraiment supprimer le modèle '{templateName}' ?"
       },
-      "events": "Dernières manifestations mises à jour",
-      "instructions": "Dernière mise à jour des instructions",
-      "news": "Dernière mise à jour"
+      "events": "Derniers événements (mis à jour)",
+      "instructions": "Dernières instructions (mises à jour)",
+      "news": "Actualités récentes (mises à jour)"
     },
     "form": {
       "admin-info": {

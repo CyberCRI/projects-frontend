@@ -283,10 +283,7 @@
         "add": "Vorlage hinzufügen",
         "delete-templates": "Vorlagen löschen",
         "delete-templates-description": "Sind Sie sicher, dass Sie '{templateName}' Vorlage löschen möchten?"
-      },
-      "events": "Letzte Ereignisse aktualisiert",
-      "instructions": "Letzte Anweisungen aktualisiert",
-      "news": "Letzte Nachrichten aktualisiert"
+      }
     },
     "form": {
       "admin-info": {

@@ -290,10 +290,10 @@
         "delete-templates-description": "Are you sure you want to delete '{templateName}' template ?"
       },
       "chat": "Chat platform (Connected view)",
-      "events": "Last Events updated",
-      "instructions": "Last instructions updated",
-      "news": "Last News updated",
-      "featured-projects": "Featured projects"
+      "featured-projects": "Featured projects",
+      "events": "Latest events (updated)",
+      "instructions": "Latest instructions (updates)",
+      "news": "Recent news (updates)"
     },
     "form": {
       "admin-info": {

@@ -283,10 +283,7 @@
         "add": "Afegeix una plantilla",
         "delete-templates": "Esborra plantilles",
         "delete-templates-description": "Esteu segur que voleu esborrar la plantilla '{templateName}'?"
-      },
-      "events": "Últims esdeveniments actualitzats",
-      "instructions": "S' han actualitzat les últimes instruccions",
-      "news": "S' han actualitzat les últimes notícies"
+      }
     },
     "form": {
       "admin-info": {

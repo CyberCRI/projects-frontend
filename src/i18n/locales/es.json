@@ -283,10 +283,7 @@
         "add": "Añadir una plantilla",
         "delete-templates": "Eliminar plantillas",
         "delete-templates-description": "¿Estás seguro de que quieres eliminar la plantilla '{templateName}' ?"
-      },
-      "events": "Últimos eventos actualizados",
-      "instructions": "Últimas instrucciones actualizadas",
-      "news": "Últimas noticias actualizadas"
+      }
     },
     "form": {
       "admin-info": {

@@ -283,10 +283,7 @@
         "add": "Malli lisamine",
         "delete-templates": "Mallide kustutamine",
         "delete-templates-description": "Kas tõesti kustutada mall '{templateName}'?"
-      },
-      "events": "Viimased sündmused uuendatud",
-      "instructions": "Viimati uuendatud",
-      "news": "Viimased uudised uuendatud"
+      }
     },
     "form": {
       "admin-info": {

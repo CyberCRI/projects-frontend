@@ -283,10 +283,7 @@
         "add": "Een sjabloon toevoegen",
         "delete-templates": "Sjablonen verwijderen",
         "delete-templates-description": "Weet u zeker dat u '{templateName}' sjabloon wilt verwijderen?"
-      },
-      "events": "Laatste gebeurtenissen bijgewerkt",
-      "instructions": "Laatste instructies bijgewerkt",
-      "news": "Laatste nieuws bijgewerkt"
+      }
     },
     "form": {
       "admin-info": {
