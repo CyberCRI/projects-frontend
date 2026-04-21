@@ -12,10 +12,12 @@ FROM base AS builder
 WORKDIR /app
 COPY --link package.json yarn.lock ./
 
+
 RUN yarn install --pure-lockfile --non-interactive
 
 COPY . .
 
+RUN yarn prisma-chatbot-db:generate
 RUN NODE_ENV=production yarn build
 
 FROM base
