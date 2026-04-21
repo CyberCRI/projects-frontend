@@ -193,6 +193,13 @@ export default defineNuxtConfig({
 
   nitro: {
     minify: import.meta.dev,
+    // TODO: remove this
+    serverAssets: [
+      {
+        baseName: 'prisma-chatbot-db',
+        dir: './prisma-chatbot-db',
+      },
+    ],
   },
 
   app: {
