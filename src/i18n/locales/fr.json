@@ -2506,7 +2506,7 @@
     }
   },
   "event": {
-    "no-event": "Pas d'évènement pour le moment.",
+    "empty": "Pas d'évènement pour le moment.",
     "calendar": {
       "title": "Calendrier",
       "future": "Évènements en cours/à venir",

@@ -2402,7 +2402,7 @@
     }
   },
   "event": {
-    "no-event": "Sündmust veel pole.",
+    "empty": "Sündmust veel pole.",
     "calendar": {
       "title": "Kalender",
       "future": "Praegused/tulevased sündmused",

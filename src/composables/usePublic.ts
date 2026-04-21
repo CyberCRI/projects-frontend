@@ -10,9 +10,15 @@
  */
 export const usePublicURL = (url: string) => {
   const runtimeConfig = useRuntimeConfig()
+  const prefix = runtimeConfig.public.appPublicBinariesPrefix
+
+  // fix already url prefixed by public binaries
+  if (url.startsWith(prefix)) {
+    return url
+  }
   // fix if url is not started with slash
   if (!url.startsWith('/')) {
     url = `/${url}`
   }
-  return `${runtimeConfig.public.appPublicBinariesPrefix}${url}`
+  return `${prefix}${url}`
 }

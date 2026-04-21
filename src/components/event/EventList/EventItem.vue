@@ -30,9 +30,9 @@
     </time>
 
     <div class="info">
-      <h4 class="title skeletons-text">
+      <h3 class="title skeletons-text">
         {{ event.$t.title }}
-      </h4>
+      </h3>
       <div v-if="haveContent" class="event-information skeletons-text">
         <LineClamped v-if="contentText" :line-number="contentLineNumber">
           {{ content }}
@@ -204,6 +204,10 @@ const locationEvent = (event) => emit('location', event)
   fill: var(--primary);
   width: pxToRem(24px);
   height: pxToRem(24px);
+}
+
+.title {
+  font-size: 1.5rem;
 }
 
 .btn-location {

@@ -121,7 +121,7 @@ const onCancel = () => {
 }
 
 .month-title {
-  margin: $space-xl auto;
+  margin: $space-m auto;
   text-transform: uppercase;
   color: var(--almost-black);
   text-align: center;

@@ -44,6 +44,11 @@ useLpiHead2({
     <AnnouncementCardListSkeleton v-if="isLoading" />
 
     <AnnouncementCardList v-else :announcements="announcements" :is-more-toggled="true" />
+
+    <EmptyLabel
+      v-if="!isLoading && announcements.length === 0"
+      :label="$t('announcements.empty')"
+    />
   </div>
 </template>
 <style lang="scss" scoped>

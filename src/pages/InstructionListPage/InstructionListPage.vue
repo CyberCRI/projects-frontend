@@ -69,20 +69,18 @@ useLpiHead2({
       {{ $t('instructions.list.title') }}
     </h1>
 
-    <div class="create-instruction-button-ctn">
-      <LpiButton
-        v-if="canCreateInstruction"
-        :disabled="isLoading"
-        primary
-        :label="$t('instructions.list.create')"
-        data-test="create-instruction-button"
-        btn-icon="Plus"
-        class="create-instruction-button"
-        :to="{
-          name: 'CreateInstructionPage',
-        }"
-      />
-    </div>
+    <LpiButton
+      v-if="canCreateInstruction"
+      :disabled="isLoading"
+      primary
+      :label="$t('instructions.list.create')"
+      data-test="create-instruction-button"
+      btn-icon="Plus"
+      class="create-instruction-button"
+      :to="{
+        name: 'CreateInstructionPage',
+      }"
+    />
     <div class="instruction-list">
       <FetchLoader :status="status" only-error skeleton>
         <InstructionListItem
@@ -92,6 +90,7 @@ useLpiHead2({
           @edit-instruction="editedInstruction = instruction"
           @delete-instruction="instructionToDelete = instruction"
         />
+        <EmptyLabel v-if="instructions.length === 0" :label="$t('instructions.empty')" />
         <PaginationButtonsV2 :pagination="pagination" />
       </FetchLoader>
     </div>
@@ -116,21 +115,11 @@ useLpiHead2({
   margin-bottom: $space-2xl;
 }
 
-.create-instruction-button-ctn {
-  margin: 2rem 0;
-}
-
 .create-instruction-button {
-  margin-left: auto;
+  align-self: flex-end;
 }
 
-.loader-ctn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 5rem 0;
-}
-
+.instruction-list-page,
 .instruction-list {
   display: flex;
   flex-direction: column;
