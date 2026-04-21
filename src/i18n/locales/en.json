@@ -290,10 +290,10 @@
         "delete-templates-description": "Are you sure you want to delete '{templateName}' template ?"
       },
       "chat": "Chat platform (Connected view)",
-      "events": "Events",
-      "instructions": "Instructions",
-      "news": "News",
-      "featured-projects": "Featured projects"
+      "featured-projects": "Featured projects",
+      "events": "Latest events (updated)",
+      "instructions": "Latest instructions (updates)",
+      "news": "Recent news (updates)"
     },
     "form": {
       "admin-info": {
@@ -2409,58 +2409,8 @@
     "no-event": "No event yet.",
     "calendar": {
       "title": "Calendar",
-      "future": "Future",
-      "past": "Past",
-      "month": {
-        "10": {
-          "short": "Oct",
-          "long": "October"
-        },
-        "11": {
-          "short": "Nov",
-          "long": "November"
-        },
-        "12": {
-          "short": "Dec",
-          "long": "December"
-        },
-        "01": {
-          "short": "Jan",
-          "long": "January"
-        },
-        "02": {
-          "short": "Feb",
-          "long": "February"
-        },
-        "03": {
-          "short": "Mar",
-          "long": "March"
-        },
-        "04": {
-          "short": "Apr",
-          "long": "April"
-        },
-        "05": {
-          "short": "May",
-          "long": "May"
-        },
-        "06": {
-          "short": "Jun",
-          "long": "June"
-        },
-        "07": {
-          "short": "Jul",
-          "long": "July"
-        },
-        "08": {
-          "short": "Aug",
-          "long": "August"
-        },
-        "09": {
-          "short": "Sep",
-          "long": "September"
-        }
-      }
+      "future": "Current/future events",
+      "past": "Events completed"
     },
     "create": {
       "title": "Add a calendar event",

@@ -1,55 +1,34 @@
 <template>
-  <div class="page-section-narrow page-top">
+  <div class="page-section-narrow page-top list-container">
     <h1 class="page-title">
       {{ $t('event.calendar.title') }}
     </h1>
-    <div class="create-event-button-ctn">
-      <LpiButton
-        v-if="canCreateEvent"
-        primary
-        :label="$t('event.create.button')"
-        data-test="create-event-button"
-        btn-icon="Plus"
-        class="create-event-button"
-        :to="{ name: 'CreateEvent' }"
-      />
-    </div>
+    <LpiButton
+      v-if="canCreateEvent"
+      primary
+      :label="$t('event.create.button')"
+      data-test="create-event-button"
+      btn-icon="Plus"
+      class="create-event-button"
+      :to="{ name: 'CreateEvent' }"
+    />
 
-    <TabsLayout :tabs="tabs" :border="false" align-left router-view />
+    <EventsList />
   </div>
 </template>
 
 <script setup lang="ts">
+import EventsList from '@/pages/CalendarPage/Tabs/EventsList.vue'
+
 const { canCreateEvent } = usePermissions()
 const { t } = useNuxtI18n()
-const tabs = computed(() => [
-  {
-    key: 'future-events',
-    label: t('event.calendar.future'),
-    view: { name: 'FutureEvents' },
-  },
-  {
-    key: 'past-events',
-    label: t('event.calendar.past'),
-    view: { name: 'PastEvents' },
-  },
-])
-
 useLpiHead2({
   title: computed(() => t('event.calendar.title')),
 })
 </script>
 
 <style lang="scss" scoped>
-.page-title {
-  margin-bottom: pxToRem(60px);
-}
-
-.create-event-button-ctn {
-  margin: 2rem 0;
-}
-
 .create-event-button {
-  margin-left: auto;
+  align-self: flex-end;
 }
 </style>

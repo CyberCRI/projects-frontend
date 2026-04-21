@@ -4,6 +4,17 @@ import { merge } from 'es-toolkit'
 import { useRuntimeConfig } from '#imports'
 import useUsersStore from '@/stores/useUsers'
 
+type OFetchOrgiginalOptions = Parameters<typeof $fetch>['1']
+
+export type UseApiOptions<
+  Query extends OFetchOrgiginalOptions['query'] = OFetchOrgiginalOptions['query'],
+  Body extends OFetchOrgiginalOptions['body'] = OFetchOrgiginalOptions['body'],
+> = OFetchOrgiginalOptions & {
+  query?: Query
+  body?: Body
+  noError?: boolean
+}
+
 export const defaultOptions = () => {
   let _localStorage = null
   if (import.meta.client) _localStorage = window?.localStorage
@@ -90,7 +101,10 @@ export const defaultOptions = () => {
   }
 }
 
-const useAPI = <T>(url: string, options?: any) => {
+const useAPI = <T, Query = unknown, Body = unknown>(
+  url: string,
+  options?: UseApiOptions<Query, Body>
+) => {
   const _options = merge(defaultOptions(), options || {})
   return $fetch<T>(url, _options)
 }

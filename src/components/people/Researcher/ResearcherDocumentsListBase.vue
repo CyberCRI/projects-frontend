@@ -117,7 +117,9 @@ import ResearcherDocumentSimilars from '@/components/people/Researcher/Researche
 import { Pagination as PaginationType } from '@/composables/usePagination'
 import { useQuery } from '@/composables/useQuery'
 import {
+  DocumentCrisalidType,
   QueryFilterDocument,
+  Relators,
   ResearcherDocumentAnalytics,
   TranslatedDocument,
 } from '@/interfaces/researcher'
@@ -183,10 +185,10 @@ const sortInfos = (
 }
 
 // fix when no role/document_type are set in current analytics
-const pushQueryIfNotExist = (
-  arr: [name: string, count: number][],
-  name?: string
-): [name: string, count: number][] => {
+const pushQueryIfNotExist = <T = string,>(
+  arr: [name: T, count: number][],
+  name?: T
+): [name: T, count: number][] => {
   if (isNil(name)) {
     return arr
   }
@@ -199,11 +201,14 @@ const pushQueryIfNotExist = (
 const documentTypeInfos = computed(() => {
   return pushQueryIfNotExist(
     sortInfos(props.documentsAnalytics?.document_types),
-    query.document_type
-  )
+    query.value.document_type
+  ) as [DocumentCrisalidType, number][]
 })
 const documentsRoleInfos = computed(() => {
-  return pushQueryIfNotExist(sortInfos(props.documentsAnalytics?.roles), query.roles)
+  return pushQueryIfNotExist(sortInfos(props.documentsAnalytics?.roles), query.value.roles) as [
+    Relators,
+    number,
+  ][]
 })
 </script>
 

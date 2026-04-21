@@ -572,8 +572,4 @@ const templateNavigate = (template) => {
   justify-content: space-between;
   margin-bottom: 1rem;
 }
-
-.pointer {
-  cursor: pointer;
-}
 </style>

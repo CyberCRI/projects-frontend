@@ -278,9 +278,6 @@
         "tips-background-image": "Het is niet vereist als u liever gewoon een kleur weergeven. Minimale breedte: 1024px, Minimale hoogte: 400px."
       },
       "chat": "Chatplatform (Verbonden weergave)",
-      "events": "Gebeurtenissen",
-      "instructions": "Instructies",
-      "news": "Nieuws",
       "featured-projects": "Aanbevolen projecten",
       "templates": {
         "add": "Een sjabloon toevoegen",
@@ -2408,58 +2405,8 @@
     "no-event": "Nog geen evenement.",
     "calendar": {
       "title": "Agenda",
-      "future": "Toekomst",
-      "past": "Verleden",
-      "month": {
-        "10": {
-          "short": "okt",
-          "long": "oktober"
-        },
-        "11": {
-          "short": "Nov",
-          "long": "November"
-        },
-        "12": {
-          "short": "Dec",
-          "long": "December"
-        },
-        "01": {
-          "short": "Jan",
-          "long": "Januari"
-        },
-        "02": {
-          "short": "Feb",
-          "long": "Februari"
-        },
-        "03": {
-          "short": "Mar",
-          "long": "Maart"
-        },
-        "04": {
-          "short": "apr",
-          "long": "april"
-        },
-        "05": {
-          "short": "Mei",
-          "long": "Mei"
-        },
-        "06": {
-          "short": "Juni",
-          "long": "Juni"
-        },
-        "07": {
-          "short": "jul",
-          "long": "Juli"
-        },
-        "08": {
-          "short": "Aug",
-          "long": "Augustus"
-        },
-        "09": {
-          "short": "sep",
-          "long": "September"
-        }
-      }
+      "future": "Huidige/toekomstige gebeurtenissen",
+      "past": "Gebeurtenissen voltooid"
     },
     "create": {
       "title": "Agendanotitie toevoegen",

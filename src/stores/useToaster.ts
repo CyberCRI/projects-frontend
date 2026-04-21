@@ -4,9 +4,14 @@ export type ToastType = 'error' | 'warning' | 'info' | 'success'
 
 export interface Toast {
   message: string
-  isOpened: boolean
+  isOpened?: boolean
   type: ToastType
   translate?: boolean
+}
+
+type ToastConfig = Toast & {
+  remaining: boolean
+  duration: number
 }
 
 export interface ToastState {
@@ -21,22 +26,36 @@ const useToasterStore = defineStore('toaster', {
   }),
 
   actions: {
-    _pushToast({
-      message,
-      type,
-      remaining,
-      duration,
-      translate,
-    }: {
-      message: string
-      type: ToastType
-      remaining: boolean
-      duration: number
-      translate?: boolean
-    }): void {
-      this.toastList.push({ message, type, isOpened: true, translate: !!translate })
+    _findIndexToast({ message, type }: ToastConfig) {
+      return this.toastList.findIndex((item) => item.message === message && item.type === type)
+    },
+    deleteToast(toastIndex: number): void {
+      this.toastList.splice(toastIndex, 1)
+    },
+
+    _deleteToastFromToast(toast: Pick<Toast, 'message' | 'type'>) {
+      const findedIndex = this.toastList.findIndex(
+        (item) => item.message === toast.message && item.type === toast.type
+      )
+      if (findedIndex !== -1) {
+        this.deleteToast(findedIndex)
+      }
+    },
+
+    _pushToast({ message, type, remaining, duration, translate }: ToastConfig) {
+      this._deleteToastFromToast({ message, type })
+
+      this.toastList.push({
+        message,
+        type,
+        isOpened: true,
+        translate: !!translate,
+      })
       if (!remaining) {
-        setTimeout(() => this.deleteToast(0), duration || DEFAULT_TOAST_DURATION)
+        setTimeout(
+          () => this._deleteToastFromToast({ message, type }),
+          duration || DEFAULT_TOAST_DURATION
+        )
       }
     },
 
@@ -103,10 +122,6 @@ const useToasterStore = defineStore('toaster', {
         ...(options || {}),
       }
       this._pushToast({ message, type: 'success', ..._options })
-    },
-
-    deleteToast(toastIndex: number): void {
-      this.toastList.splice(toastIndex, 1)
     },
   },
 })

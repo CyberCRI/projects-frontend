@@ -4,21 +4,21 @@
     :to="{ name: 'InstructionPage', params: { slugOrId: instruction.id } }"
   >
     <div class="instruction-title-ctn">
-      <h3 class="instruction-title">
-        {{ instruction?.$t?.title }}
+      <h3 class="instruction-title skeletons-text">
+        {{ instruction.$t.title }}
       </h3>
       <ContextActionMenu
         v-if="canEditInstruction || canDeleteInstruction"
-        class="instruction-actions"
+        class="instruction-actions skeletons-background"
         :can-edit="canEditInstruction"
         :can-delete="canDeleteInstruction"
         @edit="emit('edit-instruction', instruction)"
         @delete="emit('delete-instruction', instruction)"
       />
     </div>
-    <div class="instruction-excerpt" :style="style">
+    <div class="instruction-excerpt skeletons-text" :style="style">
       <HtmlLimiter
-        :html="instruction?.$t?.content"
+        :html="instruction.$t.content"
         :striped-tags="['table']"
         class="description-content"
         @computed="layoutComputed"
@@ -26,7 +26,10 @@
       />
     </div>
     <div class="read-more-ctn">
-      <SummaryAction class="read-button" :action-label="t('instructions.list.read-more')" />
+      <SummaryAction
+        class="read-button skeletons-text"
+        :action-label="t('instructions.list.read-more')"
+      />
     </div>
   </NuxtLink>
 </template>
@@ -34,15 +37,14 @@
 import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
 import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
 import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
+import { TranslatedInstruction } from '@/models/instruction.model'
 
-defineOptions({ name: 'InstructionListItem' })
-
-defineProps<{ instruction: any }>()
+defineProps<{ instruction: TranslatedInstruction }>()
 
 const { t } = useNuxtI18n()
 const emit = defineEmits<{
-  'delete-instruction': [any]
-  'edit-instruction': [any]
+  'delete-instruction': [TranslatedInstruction]
+  'edit-instruction': [TranslatedInstruction]
 }>()
 
 const { canEditInstruction, canDeleteInstruction } = usePermissions()

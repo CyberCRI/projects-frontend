@@ -14,6 +14,7 @@ import { TranslatedEventModel } from '@/models/event.model'
 import { TranslatedNewsfeed } from '@/models/newsfeed.model'
 import { TranslatedAnnouncement } from '@/models/announcement.model'
 import { TranslatedUserModel } from '@/models/user.model'
+import { TranslatedInstruction } from '@/models/instruction.model'
 
 // type can be computed or object
 type RefOrRaw<DataT> = ComputedRef<DataT> | Ref<DataT> | DataT
@@ -287,9 +288,10 @@ export default function useAutoTranslate() {
 
   // -----------
   // instructions
-  const translateInstruction = (instruction) => translateEntity(instruction, ['title', 'content'])
+  const translateInstruction = (instruction) =>
+    translateEntity<TranslatedInstruction>(instruction, ['title', 'content'])
   const translateInstructions = (instructions) =>
-    translateEntities(instructions, translateInstruction)
+    translateEntities<TranslatedInstruction>(instructions, translateInstruction)
 
   // -----------
   // events

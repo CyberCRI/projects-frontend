@@ -121,11 +121,11 @@ const onCancel = () => {
 }
 
 .month-title {
-  margin-bottom: $space-l;
-  margin-top: $space-xl;
+  margin: $space-xl auto;
   text-transform: uppercase;
   color: var(--almost-black);
   text-align: center;
+  width: fit-content;
 }
 
 .events-wrapper {

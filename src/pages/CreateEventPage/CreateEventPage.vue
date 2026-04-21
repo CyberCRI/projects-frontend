@@ -45,7 +45,7 @@ const eventForm = useTemplateRef('eventForm')
 
 const cancel = () => {
   form.value = defaultForm()
-  router.push({ name: 'FutureEvents' })
+  router.push({ name: 'CalendarPage' })
 }
 
 const saveEvent = async () => {
@@ -72,7 +72,7 @@ const saveEvent = async () => {
     console.error(err)
   } finally {
     asyncing.value = false
-    router.push({ name: 'FutureEvents' })
+    router.push({ name: 'CalendarPage' })
   }
 }
 

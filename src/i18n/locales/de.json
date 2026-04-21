@@ -278,9 +278,6 @@
         "tips-background-image": "Es ist nicht erforderlich, wenn Sie lieber einfach eine Farbe anzeigen würden. Mindestbreite: 1024px, Mindesthöhe: 400px."
       },
       "chat": "Chat-Plattform (Connected view)",
-      "events": "Veranstaltungen",
-      "instructions": "Anweisungen",
-      "news": "Nachrichten",
       "featured-projects": "Empfohlene Projekte",
       "templates": {
         "add": "Vorlage hinzufügen",
@@ -2408,58 +2405,8 @@
     "no-event": "Noch keine Veranstaltung.",
     "calendar": {
       "title": "Kalender",
-      "future": "Zukunft",
-      "past": "Vergangenheit",
-      "month": {
-        "10": {
-          "short": "Ok",
-          "long": "Oktober"
-        },
-        "11": {
-          "short": "Nov.",
-          "long": "November"
-        },
-        "12": {
-          "short": "Deko",
-          "long": "Dezember"
-        },
-        "01": {
-          "short": "Jan",
-          "long": "Januar"
-        },
-        "02": {
-          "short": "Feb",
-          "long": "Februar"
-        },
-        "03": {
-          "short": "Marsch",
-          "long": "März"
-        },
-        "04": {
-          "short": "Apr.",
-          "long": "April"
-        },
-        "05": {
-          "short": "Mai",
-          "long": "Mai"
-        },
-        "06": {
-          "short": "Juni",
-          "long": "Juni"
-        },
-        "07": {
-          "short": "Juli",
-          "long": "Juli"
-        },
-        "08": {
-          "short": "Aug",
-          "long": "August"
-        },
-        "09": {
-          "short": "Sept.",
-          "long": "September"
-        }
-      }
+      "future": "Aktuelle und zukünftige Ereignisse",
+      "past": "Veranstaltungen abgeschlossen"
     },
     "create": {
       "title": "Kalenderveranstaltung hinzufügen",

@@ -1,13 +1,15 @@
 <template>
-  <AdminBlock :block-title="blockTitle" :is-loading="isLoading">
+  <AdminBlock :block-title="blockTitle">
     <template #default>
-      <InstructionAdminListItem
-        v-for="instruction in diplayableInstructions"
-        :key="instruction.id"
-        :instruction="instruction"
-        @edit-instruction="onEditInstruction"
-        @delete-instruction="onDeleteInstruction"
-      />
+      <FetchLoader :status="status">
+        <InstructionAdminListItem
+          v-for="instruction in instructions"
+          :key="instruction.id"
+          :instruction="instruction"
+          @edit-instruction="onEditInstruction"
+          @delete-instruction="onDeleteInstruction"
+        />
+      </FetchLoader>
     </template>
 
     <template #footer>
@@ -23,7 +25,7 @@
     :is-opened="!!editedInstruction"
     :instruction="editedInstruction"
     @close="editedInstruction = null"
-    @instruction-edited="loadInstructions"
+    @instruction-edited="() => refresh()"
   />
 
   <ConfirmModal
@@ -38,13 +40,11 @@
 
 <script setup lang="ts">
 import { defaultForm } from '@/components/instruction/InstructionForm/InstructionForm.vue'
-import { getAllInstructions, deleteInstruction } from '@/api/instruction.service'
+import { deleteInstruction } from '@/api/instruction.service'
 import useToasterStore from '@/stores/useToaster'
+import { getAllInstructions } from '@/api/v2/instruction.service'
 
 const toaster = useToasterStore()
-const instructions = ref([])
-const instructionsCount = ref(0)
-const isLoading = ref(true)
 const editedInstruction = ref(null)
 const instructionToDelete = ref(null)
 const isDeletingInstruction = ref(false)
@@ -52,25 +52,24 @@ const { t } = useNuxtI18n()
 const organizationCode = useOrganizationCode()
 const router = useRouter()
 
+const {
+  status,
+  data: instructions,
+  isLoading,
+  refresh,
+} = getAllInstructions(organizationCode, {
+  query: {
+    ordering: '-updated_at',
+  },
+  paginationConfig: {
+    limit: 3,
+  },
+})
+
 const blockTitle = computed(() => {
-  const extra = isLoading.value ? '' : ` (${instructionsCount.value})`
+  const extra = isLoading.value ? '' : ` (${instructions.value.length})`
   return t('admin.portal.instructions') + extra
 })
-
-const diplayableInstructions = computed(() => {
-  return instructions.value.slice(0, 1)
-})
-
-const loadInstructions = async () => {
-  isLoading.value = true
-  const request = await getAllInstructions(organizationCode, {
-    ordering: '-publication_date',
-    limit: 1,
-  })
-  instructions.value = request.results
-  instructionsCount.value = request.count
-  isLoading.value = false
-}
 
 const addInstruction = () => {
   editedInstruction.value = defaultForm()
@@ -98,8 +97,4 @@ const localDeleteInstruction = async () => {
     router.push({ name: 'InstructionListPage' })
   }
 }
-
-onMounted(async () => {
-  await loadInstructions()
-})
 </script>
