@@ -4,7 +4,7 @@
  * @function
  * @name dateWithoutHours
  * @kind variable
- * @param {any} date
+ * @param {string | Date} date
  * @returns {Date}
  * @exports
  */
@@ -32,12 +32,12 @@ export const nowDate = (): Date => {
  * @function
  * @name formatTime
  * @kind variable
- * @param {Date} date
+ * @param {string | Date} date
  * @param {string} locale
  * @returns {string}
  * @exports
  */
-export const formatTime = (date: Date, locale: string, config = {}): string => {
+export const formatTime = (date: string | Date, locale: string, config = {}): string => {
   date = new Date(date)
   return date.toLocaleTimeString(locale, {
     hour: 'numeric',
@@ -52,12 +52,12 @@ export const formatTime = (date: Date, locale: string, config = {}): string => {
  * @function
  * @name formatDateTime
  * @kind variable
- * @param {Date} date
+ * @param {Date | string} date
  * @param {string} locale
  * @returns {string}
  * @exports
  */
-export const formatDateTime = (date: Date, locale: string, config = {}): string => {
+export const formatDateTime = (date: Date | string, locale: string, config = {}): string => {
   date = new Date(date)
   return date.toLocaleDateString(locale, {
     year: 'numeric',
@@ -75,12 +75,12 @@ export const formatDateTime = (date: Date, locale: string, config = {}): string 
  * @function
  * @name formatDate
  * @kind variable
- * @param {Date} date
+ * @param {string | Date} date
  * @param {string} locale
  * @returns {string}
  * @exports
  */
-export const formatDate = (date: Date, locale: string, config = {}): string => {
+export const formatDate = (date: Date | string, locale: string, config = {}): string => {
   return formatDateTime(date, locale, {
     hour: undefined,
     minute: undefined,
@@ -124,6 +124,25 @@ export const mergeTime = (date: Date | string, dateTime: Date | string): Date =>
   date.setHours(dateTime.getHours(), dateTime.getMinutes(), 0, 0)
 
   return date
+}
+
+/**
+ * return date string format
+ *
+ * @function
+ * @name fullYearDateFormat
+ * @kind variable
+ * @param {string | Date} date
+ * @returns {string}
+ * @exports
+ */
+export const YearMonthDateFormat = (date: Date | string): string => {
+  const today = new Date(date)
+
+  const year = today.getFullYear()
+  const month = (today.getMonth() + 1).toString().padStart(2, '0')
+
+  return [year, month].join('-')
 }
 
 /**

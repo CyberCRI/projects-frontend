@@ -361,34 +361,9 @@ const routes = ({
     path: '/calendar',
     name: 'CalendarPage',
     component: () => import('../pages/CalendarPage/CalendarPage.vue'),
-    redirect: { name: 'FutureEvents' },
     meta: {
       resetScroll: true,
     },
-    children: [
-      {
-        path: 'future',
-        name: 'FutureEvents',
-        component: () => import('../pages/CalendarPage/Tabs/EventsList.vue'),
-        props: {
-          isFuture: true,
-        },
-        meta: {
-          resetScroll: true,
-        },
-      },
-      {
-        path: 'past',
-        name: 'PastEvents',
-        component: () => import('../pages/CalendarPage/Tabs/EventsList.vue'),
-        props: {
-          isFuture: false,
-        },
-        meta: {
-          resetScroll: true,
-        },
-      },
-    ],
   },
   {
     path: '/event/:eventId',

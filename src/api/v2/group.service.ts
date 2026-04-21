@@ -10,6 +10,7 @@ import {
   getGroupNews as fetchGroupNews,
   getGroupEvent as fetchGroupEvent,
 } from '@/api/groups.service'
+import { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
 import useAsyncAPI from '@/composables/useAsyncAPI'
 import useAsyncPaginationAPI from '@/composables/useAsyncPaginationAPI'
 import { onlyRefs } from '@/functs/onlyRefs'
@@ -19,10 +20,13 @@ import { OrganizationModel } from '@/models/organization.model'
 
 const DEFAULT_CONFIG = {}
 
+type Config = UseAsyncApiConfig
+type ConfigPagination = UseAsyncPaginationApiConfig
+
 export const getGroup = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   groupId: RefOrRaw<PeopleGroupIdOrSlug>,
-  config = {}
+  config: Config = {}
 ) => {
   const { translateGroup } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}`)
@@ -40,7 +44,7 @@ export const getGroup = (
 
 export const getHierarchyGroups = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
-  config = {}
+  config: Config = {}
 ) => {
   const { translateGroup } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::hierarchy-groups`)
@@ -60,7 +64,7 @@ export const getHierarchyGroups = (
 export const getGroupProject = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   groupId: RefOrRaw<PeopleGroupIdOrSlug>,
-  config = {}
+  config: ConfigPagination = {}
 ) => {
   const { translateProjects } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::projects`)
@@ -83,7 +87,7 @@ export const getGroupProject = (
 export const getGroupMember = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   groupId: RefOrRaw<PeopleGroupIdOrSlug>,
-  config = {}
+  config: ConfigPagination = {}
 ) => {
   const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::members`)
 
@@ -104,7 +108,7 @@ export const getGroupMember = (
 export const getGroupSimilar = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   groupId: RefOrRaw<PeopleGroupIdOrSlug>,
-  config = {}
+  config: ConfigPagination = {}
 ) => {
   const { translateGroups } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::similars`)
@@ -127,7 +131,7 @@ export const getGroupSimilar = (
 export const getSubGroup = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   groupId: RefOrRaw<PeopleGroupIdOrSlug>,
-  config = {}
+  config: ConfigPagination = {}
 ) => {
   const { translateGroups } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::subgroup`)
@@ -150,7 +154,7 @@ export const getSubGroup = (
 export const getGroupAllLocations = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   groupId: RefOrRaw<PeopleGroupIdOrSlug>,
-  config = {}
+  config: Config = {}
 ) => {
   const { translateProjectLocations } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::locations`)
@@ -173,7 +177,7 @@ export const getGroupAllLocations = (
 export const getGroupGallery = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   groupId: RefOrRaw<PeopleGroupIdOrSlug>,
-  config = {}
+  config: ConfigPagination = {}
 ) => {
   const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::gallery`)
 
@@ -195,7 +199,7 @@ export const getGroupGallery = (
 export const getGroupNews = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   groupId: RefOrRaw<PeopleGroupIdOrSlug>,
-  config = {}
+  config: ConfigPagination = {}
 ) => {
   const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::news`)
 
@@ -220,7 +224,7 @@ export const getGroupNews = (
 export const getGroupEvent = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   groupId: RefOrRaw<PeopleGroupIdOrSlug>,
-  config = {}
+  config: ConfigPagination = {}
 ) => {
   const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::event`)
 

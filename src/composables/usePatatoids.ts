@@ -1,17 +1,18 @@
 import { usePublicURL } from '@/composables/usePublic'
+import { range } from 'es-toolkit'
 
 const urlPatatoid = (index: string | number) => {
   if (parseInt(index.toString(), 10) <= 0) {
     console.error(`can't get patatoids index less than zero: index=${index}`)
-    index = '1'
+    index = 1
   }
   return `/patatoids-project/Patatoid-${index}.png`
 }
-const DEFAULT_USER_PATATOID = urlPatatoid(0)
-const DEFAULT_GROUP_PATATOID = urlPatatoid(1)
-const DEFAULT_PROJECT_PATATOID = urlPatatoid(2)
-const DEFAULT_IMAGE_PATATOID = urlPatatoid(3)
-const DEFAULT_NEWS_PATATOID = urlPatatoid(4)
+const DEFAULT_USER_PATATOID = urlPatatoid(1)
+const DEFAULT_GROUP_PATATOID = urlPatatoid(2)
+const DEFAULT_PROJECT_PATATOID = urlPatatoid(3)
+const DEFAULT_IMAGE_PATATOID = urlPatatoid(4)
+const DEFAULT_NEWS_PATATOID = urlPatatoid(5)
 
 /**
  * Description
@@ -35,8 +36,8 @@ const usePatatoid = (index: string | number) => {
  * @param {number} number?
  * @returns {string[]}
  */
-const usePatatoids = (number: number = 6) => {
-  return Array.from(Array(number).keys()).map((index) => usePatatoid(index))
+const usePatatoids = (number: number = 7) => {
+  return range(1, number).map((index) => usePatatoid(index))
 }
 
 /**

@@ -1,8 +1,18 @@
-import type { InstructionId, InstructionInput, InstructionModel } from '@/models/instruction.model'
-import useAPI from '@/composables/useAPI'
+import type {
+  InstructionId,
+  InstructionInput,
+  InstructionModel,
+  QueryFilterInstruction,
+} from '@/models/instruction.model'
+import useAPI, { UseApiOptions } from '@/composables/useAPI'
 import { OrganizationModel } from '@/models/organization.model'
 
-export async function getAllInstructions(organizationCode: OrganizationModel['code'], config = {}) {
+type ConfigEvent = UseApiOptions<QueryFilterInstruction>
+
+export async function getAllInstructions(
+  organizationCode: OrganizationModel['code'],
+  config?: ConfigEvent
+) {
   return await useAPI<PaginationResult<InstructionModel>>(
     `organization/${organizationCode}/instruction/`,
     config
@@ -12,7 +22,7 @@ export async function getAllInstructions(organizationCode: OrganizationModel['co
 export async function getInstruction(
   organizationCode: OrganizationModel['code'],
   idOrSlug: InstructionId,
-  config = {}
+  config?: ConfigEvent
 ) {
   return await useAPI<InstructionModel>(
     `organization/${organizationCode}/instruction/${idOrSlug}/`,
@@ -59,7 +69,7 @@ export async function deleteInstruction(
   organizationCode: OrganizationModel['code'],
   idOrSlug: InstructionId
 ) {
-  return await useAPI(`organization/${organizationCode}/instruction/${idOrSlug}/`, {
+  return await useAPI<undefined>(`organization/${organizationCode}/instruction/${idOrSlug}/`, {
     method: 'DELETE',
   })
 }

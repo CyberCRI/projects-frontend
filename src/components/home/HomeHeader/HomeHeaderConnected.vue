@@ -65,6 +65,7 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import useUsersStore from '@/stores/useUsers.ts'
 import { nowDate } from '@/functs/date'
+
 export default {
   name: 'HomeHeaderConnected',
 
@@ -170,24 +171,26 @@ export default {
     },
 
     async loadEvents() {
+      const query = {
+        ordering: 'start_date',
+        from_date: nowDate().toISOString(),
+        limit: this.summaryMaxEvents,
+      }
       this.originalEvents = (
         await getAllEvents(this.organizationsStore.current?.code, {
-          query: {
-            ordering: 'start_date',
-            from_date: nowDate().toISOString(),
-            limit: this.summaryMaxEvents,
-          },
+          query,
         })
       ).results
     },
 
     async loadInstructions() {
+      const query = {
+        ordering: '-publication_date',
+        to_date: nowDate().toISOString(),
+        limit: 1,
+      }
       this.originalInstructions = (
-        await getAllInstructions(this.organizationsStore.current?.code, {
-          ordering: '-publication_date',
-          to_date: new Date().toISOString(),
-          limit: 1,
-        })
+        await getAllInstructions(this.organizationsStore.current?.code, { query })
       ).results
     },
   },

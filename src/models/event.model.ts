@@ -1,3 +1,4 @@
+import { Ordering } from '@/interfaces/query'
 import { Translated } from '@/interfaces/translated'
 import BaseModel from '@/models/base.model'
 import { BaseLocationModel, BaseTranslatedLocationModel } from '@/models/location.model'
@@ -19,6 +20,8 @@ export interface EventModel extends BaseModel {
   people_groups: string[]
 }
 
+export type EventIdOrSlug = EventModel['id']
+
 export type EventInput = Required<Omit<EventModel, 'id' | 'created_at' | 'updated_at'>>
 
 export type EventForm = Omit<EventInput, 'people_groups' | 'start_date' | 'end_date'> & {
@@ -34,7 +37,8 @@ export type TranslatedEventModel = Translated<EventModel, 'title' | 'content'> &
 }
 
 export type QueryFilterEvent = Partial<{
-  ordering: 'start_date' | '-start_date' | 'end_date' | '-end_date'
+  ordering: Ordering<'start_date' | 'end_date' | 'updated_at' | 'created_at'>
   from_date: string
   to_date: string
-}>
+}> &
+  Partial<PaginationQuery>

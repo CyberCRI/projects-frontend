@@ -1,3 +1,4 @@
+import { UseApiOptions } from '@/composables/useAPI'
 import useLoadingFromStatus from '@/composables/useLoadingFromStatus'
 import { withQuery } from '@/functs/query'
 import { isNil } from 'es-toolkit'
@@ -14,7 +15,7 @@ export type AsyncConfig<ResDataT, DataT, Result> = Parameters<
 >['2'] & {
   translate?: (data: DataT) => Result
   // query params
-  query?: object
+  query?: UseApiOptions['query']
   // d'ont run fetch if any of args/params are null/undefined
   checkArgs?: boolean
   // force fixed key (no add query params in key)

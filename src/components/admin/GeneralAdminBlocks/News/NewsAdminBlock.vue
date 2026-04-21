@@ -69,7 +69,7 @@ const isDeletingNews = ref(false)
 const selectedNews = ref()
 
 const { query } = useQuery<QueryFilterNews>({
-  ordering: 'publication_date',
+  ordering: '-updated_at',
   from_date: nowDate().toISOString(),
 })
 
@@ -82,7 +82,7 @@ const {
 } = getAllNews(organizationCode, {
   query,
   paginationConfig: {
-    limit: 4,
+    limit: 3,
   },
 })
 
