@@ -37,7 +37,8 @@
     "vue-i18n-extract": "vue-i18n-extract report --vueFiles './src/**/*.?(js|vue)' --languageFiles './src/i18n/locales/*.?(json|yml|yaml|js)'",
     "list-icons": "node ./utilities/list-icons.js",
     "autotranslate": "node ./utilities/autotranslate.js",
-    "delete-keys": "node ./utilities/delete-keys.js"
+    "delete-keys": "node ./utilities/delete-keys.js",
+    "prisma-chatbot-db:generate": "prisma --config ./prisma-chatbot-db/prisma-config.ts generate"
   },
   "dependencies": {
     "@ckpack/vue-color": "^1.5.0",
