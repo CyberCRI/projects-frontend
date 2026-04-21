@@ -1,9 +1,11 @@
 <template>
   <FetchLoader :status="status" only-error skeleton>
+    <EventFilter v-model="query" />
+
     <EventList
       v-if="data.length"
       :events-by-month="eventsGrouped"
-      :reverse-date="!props.isFuture"
+      :reverse-date="!isFuture"
       @reload="refresh"
     />
     <EmptyLabel v-else class="no-event" :label="$t('event.no-event')" />
@@ -13,31 +15,22 @@
 
 <script setup lang="ts">
 import { getAllEvents } from '@/api/v2/event.service'
+import EventFilter from '@/components/event/EventFilter.vue'
 import EventList from '@/components/event/EventList/EventList.vue'
-import { nowDate } from '@/functs/date'
+import { YearMonthDateFormat } from '@/functs/date'
 import { QueryFilterEvent } from '@/models/event.model'
 import { factoryPagination } from '@/skeletons/base.skeletons'
 import { eventSkeleton } from '@/skeletons/event.skeletons'
 import { groupBy } from 'es-toolkit'
 
-const props = withDefaults(
-  defineProps<{
-    isFuture?: boolean
-  }>(),
-  {
-    isFuture: false,
-  }
-)
-
 const LIMIT_SKELETON = 10
-const now = nowDate()
-
 const organizationCode = useOrganizationCode()
-const { query } = useQuery<QueryFilterEvent>({
-  ordering: props.isFuture ? 'start_date' : '-end_date',
-  from_date: props.isFuture ? now.toISOString() : null,
-  to_date: props.isFuture ? null : now.toISOString(),
+const query = ref<QueryFilterEvent>({
+  ordering: 'start_date',
 })
+
+const isFuture = computed(() => query.value.ordering === 'start_date')
+
 const { status, data, refresh, pagination } = getAllEvents(organizationCode, {
   query,
   paginationConfig: {
@@ -48,11 +41,11 @@ const { status, data, refresh, pagination } = getAllEvents(organizationCode, {
 
 const eventsGrouped = computed(() => {
   return groupBy(data.value, (event) => {
-    const date = new Date(event.start_date)
+    const date = new Date(isFuture.value ? event.start_date : event.end_date)
     // reset day/hours to get only year and month
     date.setDate(1)
     date.setHours(0, 0, 0, 0)
-    return date.toString()
+    return YearMonthDateFormat(date)
   })
 })
 </script>

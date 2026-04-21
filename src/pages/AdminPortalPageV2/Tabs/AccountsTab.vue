@@ -243,7 +243,7 @@ const orderBy = (row) => {
   const nameFilter = row.filter as OrderAdmin
 
   // if ordering is already set , revese it with '-' prefix
-  if (query.ordering === nameFilter) {
+  if (query.value.ordering === nameFilter) {
     setQuery('ordering', `-${nameFilter}`)
   } else {
     setQuery('ordering', nameFilter)

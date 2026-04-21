@@ -278,15 +278,15 @@
         "tips-background-image": "No és necessari si voleu simplement mostrar un color. Amplada mínima: 1024px, alçada mínima: 400px."
       },
       "chat": "Plataforma de xat (veure la vista connectada)",
-      "events": "Esdeveniments",
-      "instructions": "Instruccions",
-      "news": "Notícies",
       "featured-projects": "Projectes de característiques",
       "templates": {
         "add": "Afegeix una plantilla",
         "delete-templates": "Esborra plantilles",
         "delete-templates-description": "Esteu segur que voleu esborrar la plantilla '{templateName}'?"
-      }
+      },
+      "events": "Últims esdeveniments actualitzats",
+      "instructions": "S' han actualitzat les últimes instruccions",
+      "news": "S' han actualitzat les últimes notícies"
     },
     "form": {
       "admin-info": {
@@ -2408,58 +2408,8 @@
     "no-event": "Encara no hi ha esdeveniment.",
     "calendar": {
       "title": "Calendari",
-      "future": "Futur",
-      "past": "Passat",
-      "month": {
-        "10": {
-          "short": "Oct",
-          "long": "Octubre"
-        },
-        "11": {
-          "short": "Nov",
-          "long": "novembre"
-        },
-        "12": {
-          "short": "Des",
-          "long": "desembre"
-        },
-        "01": {
-          "short": "Mare?",
-          "long": "gener"
-        },
-        "02": {
-          "short": "FebMarch",
-          "long": "febrer"
-        },
-        "03": {
-          "short": "mar",
-          "long": "Març"
-        },
-        "04": {
-          "short": "AbrMay short",
-          "long": "abril"
-        },
-        "05": {
-          "short": "maig",
-          "long": "maig"
-        },
-        "06": {
-          "short": "JunJuly",
-          "long": "juny"
-        },
-        "07": {
-          "short": "JulAugust",
-          "long": "juliol"
-        },
-        "08": {
-          "short": "AgoSeptember",
-          "long": "agost"
-        },
-        "09": {
-          "short": "set",
-          "long": "setembre"
-        }
-      }
+      "future": "Esdeveniments actuals/fusió",
+      "past": "Els esdeveniments han finalitzat"
     },
     "create": {
       "title": "Afegeix un esdeveniment de calendari",

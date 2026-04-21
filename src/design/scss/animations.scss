@@ -40,7 +40,8 @@
   transform: translate3d(-100%, 0, 0);
 }
 
-.toast-enter-active {
+.toast-enter-active,
+.toast-leave-to {
   opacity: 0;
   transform: translateY(-100%);
 }
@@ -52,10 +53,10 @@
 
 .toast-leave {
   opacity: 1;
-  transition: all 0.7s ease-out;
 }
 
-.toast-leave-to {
-  opacity: 0;
-  transform: translateY(-100%);
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.toast-leave-active {
+  position: absolute;
 }

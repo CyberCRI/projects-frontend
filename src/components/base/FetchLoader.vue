@@ -102,6 +102,7 @@ watch(inLoading, (newValue, oldValue) => {
 
 // if error are set and error 404 is set to true, redirect to page 404
 const router = useRouter()
+const route = useRoute()
 watch(
   () => [props.error, props.error404, isError.value],
   () => {
@@ -113,7 +114,15 @@ watch(
     if (!errors.filter((r) => !isNil(r)).find((r) => r.statusCode === 404)) {
       return
     }
-    const to = props.error404 === true ? { name: 'page404' } : props.error404
+    const to =
+      props.error404 === true
+        ? {
+            name: 'page404',
+            params: {
+              pathMatch: route.path.substring(1).split('/'),
+            },
+          }
+        : props.error404
     router.push(to)
   }
 )

@@ -1,14 +1,18 @@
 import { getEvent as fetchEvent, getAllEvents as fetchAllEvents } from '@/api/event.service'
+import { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
 import { onlyRefs } from '@/functs/onlyRefs'
 import { RefOrRaw } from '@/interfaces/utils'
-import { EventModel } from '@/models/event.model'
+import { EventModel, QueryFilterEvent } from '@/models/event.model'
 import { OrganizationModel } from '@/models/organization.model'
 
 const DEFAULT_CONFIG = {}
 
+type Config = UseAsyncApiConfig<QueryFilterEvent>
+type ConfigPagination = UseAsyncPaginationApiConfig<QueryFilterEvent>
+
 export const getAllEvents = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
-  config = {}
+  config: ConfigPagination = {}
 ) => {
   const { translateEvents } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::event::all`)
@@ -31,7 +35,7 @@ export const getAllEvents = (
 export const getEvent = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   eventId: RefOrRaw<EventModel['id']>,
-  config = {}
+  config: Config = {}
 ) => {
   const { translateEvent } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::event::${unref(eventId)}`)

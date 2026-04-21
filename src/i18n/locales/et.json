@@ -278,15 +278,15 @@
         "tips-background-image": "See ei ole vajalik, kui soovite lihtsalt värvi kuvada. Miinimumlaius: 1024px, minimaalne kõrgus: 400px."
       },
       "chat": "Vestlusplatvorm (Ühendatud vaade)",
-      "events": "Sündmused",
-      "instructions": "Juhendid",
-      "news": "Uudised",
       "featured-projects": "Omanäolised projektid",
       "templates": {
         "add": "Malli lisamine",
         "delete-templates": "Mallide kustutamine",
         "delete-templates-description": "Kas tõesti kustutada mall '{templateName}'?"
-      }
+      },
+      "events": "Viimased sündmused uuendatud",
+      "instructions": "Viimati uuendatud",
+      "news": "Viimased uudised uuendatud"
     },
     "form": {
       "admin-info": {
@@ -2408,58 +2408,8 @@
     "no-event": "Sündmust veel pole.",
     "calendar": {
       "title": "Kalender",
-      "future": "Tuleviku sündmused",
-      "past": "Toimunud sündmused",
-      "month": {
-        "10": {
-          "short": "Oktoober",
-          "long": "Oktoober"
-        },
-        "11": {
-          "short": "Nov",
-          "long": "november"
-        },
-        "12": {
-          "short": "Dec",
-          "long": "detsember"
-        },
-        "01": {
-          "short": "Jan",
-          "long": "jaanuar"
-        },
-        "02": {
-          "short": "Veebruar",
-          "long": "veebruar"
-        },
-        "03": {
-          "short": "Mar",
-          "long": "märts"
-        },
-        "04": {
-          "short": "Apr",
-          "long": "Aprill"
-        },
-        "05": {
-          "short": "May",
-          "long": "May"
-        },
-        "06": {
-          "short": "Jun",
-          "long": "Juuni"
-        },
-        "07": {
-          "short": "Jul",
-          "long": "juuli"
-        },
-        "08": {
-          "short": "Aug",
-          "long": "August"
-        },
-        "09": {
-          "short": "Sep",
-          "long": "september"
-        }
-      }
+      "future": "Praegused/tulevased sündmused",
+      "past": "Sündmused lõpetatud"
     },
     "create": {
       "title": "Lisa kalendrisündmus",

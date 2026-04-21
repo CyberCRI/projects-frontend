@@ -278,15 +278,15 @@
         "tips-background-image": "No es necesario si prefiere simplemente mostrar un color. Ancho mínimo: 1024px, Altura mínima: 400px."
       },
       "chat": "Plataforma de chat (Vista deseada)",
-      "events": "Eventos",
-      "instructions": "Instrucciones",
-      "news": "Noticias",
       "featured-projects": "Proyectos destacados",
       "templates": {
         "add": "Añadir una plantilla",
         "delete-templates": "Eliminar plantillas",
         "delete-templates-description": "¿Estás seguro de que quieres eliminar la plantilla '{templateName}' ?"
-      }
+      },
+      "events": "Últimos eventos actualizados",
+      "instructions": "Últimas instrucciones actualizadas",
+      "news": "Últimas noticias actualizadas"
     },
     "form": {
       "admin-info": {
@@ -2408,58 +2408,8 @@
     "no-event": "Todavía no hay evento.",
     "calendar": {
       "title": "Calendario",
-      "future": "Futuro",
-      "past": "Pasado",
-      "month": {
-        "10": {
-          "short": "Oct",
-          "long": "Octubre"
-        },
-        "11": {
-          "short": "Nov",
-          "long": "Noviembre"
-        },
-        "12": {
-          "short": "Dec",
-          "long": "Diciembre"
-        },
-        "01": {
-          "short": "Jan",
-          "long": "Enero"
-        },
-        "02": {
-          "short": "Feb",
-          "long": "Febrero"
-        },
-        "03": {
-          "short": "Mar",
-          "long": "Marzo"
-        },
-        "04": {
-          "short": "Apr",
-          "long": "Abril"
-        },
-        "05": {
-          "short": "Mayo",
-          "long": "Mayo"
-        },
-        "06": {
-          "short": "Jun",
-          "long": "Junio"
-        },
-        "07": {
-          "short": "Jul",
-          "long": "Julio"
-        },
-        "08": {
-          "short": "Aug",
-          "long": "Agosto"
-        },
-        "09": {
-          "short": "Sep",
-          "long": "Septiembre"
-        }
-      }
+      "future": "Eventos actuales/futuro",
+      "past": "Eventos terminados"
     },
     "create": {
       "title": "Agregar un evento de calendario",

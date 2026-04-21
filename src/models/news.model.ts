@@ -1,4 +1,5 @@
 import { ImageSizes } from '@/functs/imageSizesUtils'
+import { Ordering } from '@/interfaces/query'
 import { Translated } from '@/interfaces/translated'
 import BaseModel from '@/models/base.model'
 import { ImageModel } from '@/models/image.model'
@@ -78,6 +79,8 @@ export type NewsHeaderOutput = {
 }
 
 export type QueryFilterNews = Partial<{
-  ordering: 'publication_date' | '-publication_date'
+  ordering: Ordering<'created_at' | 'updated_at' | 'publication_date'>
   from_date: string
-}>
+  to_date: string
+}> &
+  Partial<PaginationQuery>

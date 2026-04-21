@@ -1,15 +1,20 @@
-import type { NewsInput, NewsModel } from '@/models/news.model'
-import useAPI from '@/composables/useAPI'
+import type { NewsInput, NewsModel, QueryFilterNews } from '@/models/news.model'
+import useAPI, { UseApiOptions } from '@/composables/useAPI'
 import { OrganizationModel } from '@/models/organization.model'
 
-export async function getAllNews(organizationCode: OrganizationModel['code'], config = {}) {
+type ConfigNews = UseApiOptions<QueryFilterNews>
+
+export async function getAllNews(
+  organizationCode: OrganizationModel['code'],
+  config: ConfigNews = {}
+) {
   return await useAPI<PaginationResult<NewsModel>>(`organization/${organizationCode}/news/`, config)
 }
 
 export async function getNews(
   organizationCode: OrganizationModel['code'],
   newsId: NewsModel['id'],
-  config = {}
+  config: ConfigNews = {}
 ) {
   return await useAPI<NewsModel>(`organization/${organizationCode}/news/${newsId}/`, config)
 }
