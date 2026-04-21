@@ -16,9 +16,7 @@ describe('CalendarPage.vue', () => {
       })
     })
 
-    const wrapper = await lpiMountSuspended(CalendarPage, {
-      route: { name: 'FutureEvents' },
-    })
+    const wrapper = await lpiMountSuspended(CalendarPage)
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })
