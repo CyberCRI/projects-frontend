@@ -32,6 +32,22 @@ class CustomPGVectorStore extends PGVectorStore {
     // await this.pool.query(vectorQuery);
     await this.pool.query(tableQuery)
   }
+
+  static async initialize(
+    embeddings /* : EmbeddingsInterface*/,
+    config /*: PGVectorStoreArgs & { dimensions?: number }*/
+  ) /*: Promise<PGVectorStore>  */ {
+    const { dimensions, ...rest } = config
+    const postgresqlVectorStore = new CustomPGVectorStore(embeddings, rest)
+
+    await postgresqlVectorStore._initializeClient()
+    await postgresqlVectorStore.ensureTableInDatabase(dimensions)
+    if (postgresqlVectorStore.collectionTableName) {
+      await postgresqlVectorStore.ensureCollectionTableInDatabase()
+    }
+
+    return postgresqlVectorStore
+  }
 }
 
 let vectorStore = null
@@ -86,7 +102,7 @@ export default async () => {
       }
 
       if (extensionSchemaName) {
-        config[extensionSchemaName] = extensionSchemaName
+        config.extensionSchemaName = extensionSchemaName
       }
 
       vectorStore = await CustomPGVectorStore.initialize(
