@@ -26,6 +26,7 @@ COPY --from=builder /app/.output /app/.output
 COPY devops-toolbox/scripts/secrets-entrypoint.sh ./secrets-entrypoint.sh
 
 
+RUN yarn global add prisma
 COPY --from=builder /app/prisma-chatbot-db/schema.prisma ./prisma-chatbot-db/schema.prisma
 COPY --from=builder /app/prisma-chatbot-db/migrations ./prisma-chatbot-db/migrations
 
