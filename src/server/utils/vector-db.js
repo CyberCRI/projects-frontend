@@ -4,6 +4,33 @@ import { OpenAIEmbeddings } from '@langchain/openai' // Or any other embedding m
 import { parse } from 'pg-connection-string'
 import pg from 'pg'
 
+// attempt to fix azure postgres complaining about vector extension
+// TODO: put commaented code behing a env variable for easy toggle
+class CustomPGVectorStore extends PGVectorStore {
+  async ensureTableInDatabase(dimensions /*?: number*/) /* : Promise<void> */ {
+    if (this.skipInitializationCheck) {
+      return
+    }
+    // const vectorQuery =
+    //   this.extensionSchemaName == null
+    //     ? "CREATE EXTENSION IF NOT EXISTS vector;"
+    //     : `CREATE EXTENSION IF NOT EXISTS vector WITH SCHEMA "${this.extensionSchemaName}";`;
+    const extensionName =
+      this.extensionSchemaName == null ? 'vector' : `"${this.extensionSchemaName}"."vector"`
+    const vectorColumnType = dimensions ? `${extensionName}(${dimensions})` : extensionName
+    const tableQuery = `
+        CREATE TABLE IF NOT EXISTS ${this.computedTableName} (
+          "${this.idColumnName}" uuid NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
+          "${this.contentColumnName}" text,
+          "${this.metadataColumnName}" jsonb,
+          "${this.vectorColumnName}" ${vectorColumnType}
+        );
+      `
+    // await this.pool.query(vectorQuery);
+    await this.pool.query(tableQuery)
+  }
+}
+
 let vectorStore = null
 let pool = null
 
@@ -59,7 +86,7 @@ export default async () => {
         config[extensionSchemaName] = extensionSchemaName
       }
 
-      vectorStore = await PGVectorStore.initialize(
+      vectorStore = await CustomPGVectorStore.initialize(
         embeddings,
         config
         // Optional: Specify a custom table name if you don't want the default 'langchain_pg_embedding'
