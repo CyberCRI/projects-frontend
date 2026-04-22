@@ -7,37 +7,30 @@
       <h3 class="instruction-title skeletons-text">
         {{ instruction.$t.title }}
       </h3>
-      <ContextActionMenu
-        v-if="canEditInstruction || canDeleteInstruction"
-        class="instruction-actions skeletons-background"
-        :can-edit="canEditInstruction"
-        :can-delete="canDeleteInstruction"
-        @edit="emit('edit-instruction', instruction)"
-        @delete="emit('delete-instruction', instruction)"
-      />
     </div>
-    <div class="instruction-excerpt skeletons-text" :style="style">
-      <HtmlLimiter
-        :html="instruction.$t.content"
-        :striped-tags="['table']"
-        class="description-content"
-        @computed="layoutComputed"
-        @computing="computeLayout"
-      />
-    </div>
+
+    <ContentExpandable :description="instruction.$t.content" :height-limit="100" hide-see-more />
+
     <div class="read-more-ctn">
       <SummaryAction
         class="read-button skeletons-text"
         :action-label="t('instructions.list.read-more')"
       />
     </div>
+
+    <ContextActionMenuInline
+      class="context-action"
+      :can-delete="canDeleteInstruction"
+      :can-edit="canEditInstruction"
+      @edit="emit('edit-instruction', instruction)"
+      @delete="emit('delete-instruction', instruction)"
+    />
   </NuxtLink>
 </template>
 <script setup lang="ts">
-import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
 import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
-import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
 import { TranslatedInstruction } from '@/models/instruction.model'
+import ContextActionMenuInline from '@/components/base/button/ContextActionMenuInline.vue'
 
 defineProps<{ instruction: TranslatedInstruction }>()
 
@@ -48,15 +41,8 @@ const emit = defineEmits<{
 }>()
 
 const { canEditInstruction, canDeleteInstruction } = usePermissions()
-
-const style = ref({})
-const computeLayout = () => {
-  style.value = {}
-}
-const layoutComputed = (event) => {
-  style.value = { height: event.height + 'px' }
-}
 </script>
+
 <style scoped lang="scss">
 .instruction-list-item {
   --instruction-dimension: 13rem;
@@ -80,6 +66,13 @@ const layoutComputed = (event) => {
 
 .instruction-title {
   font-size: $font-size-xl;
+}
+
+.context-action {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0.5rem;
 }
 
 .instruction-excerpt {
