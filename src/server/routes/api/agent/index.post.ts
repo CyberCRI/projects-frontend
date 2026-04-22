@@ -7,7 +7,7 @@ export default defineLazyEventHandler(() => {
     await checkSuperAdminRights(event)
     const body = await readBody(event)
 
-    const slug = slugify('body.title')
+    const slug = slugify(body.title)
     body.slug = slug
 
     if (!body.skillContents?.length) delete body.skillContents

@@ -139,6 +139,7 @@ export default defineNuxtConfig({
     appLangchainTemperature: '',
     appVectorDbUrl: '',
     appVectorEmbeddingApiKey: '',
+    appVectorExtensionSchema: '',
     appVectorTableName: '',
     appVectorEmbeddingModel: '',
     appVectorEmbeddingDimensions: '',

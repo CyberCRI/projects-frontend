@@ -17,6 +17,7 @@ export default async () => {
   const apiKey = runtimeConfig.appVectorEmbeddingApiKey
   const vectorTableName = runtimeConfig.appVectorTableName
   const hasVectorDb = runtimeConfig.public.appHasVectorDb
+  const extensionSchemaName = runtimeConfig.appVectorExtensionSchema
 
   try {
     if (
@@ -52,6 +53,10 @@ export default async () => {
         },
         // supported distance strategies: cosine (default), innerProduct, or euclidean
         distanceStrategy: 'cosine', // as DistanceStrategy,
+      }
+
+      if (extensionSchemaName) {
+        config[extensionSchemaName] = extensionSchemaName
       }
 
       vectorStore = await PGVectorStore.initialize(
