@@ -3,37 +3,19 @@
     <div class="main-ctn">
       <ProjectHeaderV2 :project="project" class="project-header v2" />
 
-      <ProjectDescriptionPreview :project="project" />
+      <ProjectDescriptionPreview v-if="!descripitonEmpty" :project="project" />
 
       <ProjectMembersPreview :project="project" />
 
+      <ProjectLocationsPreview :project="project" />
+
+      <ProjectGoalsPreview :project="project" />
+
+      <ProjectBlogEntriesPreview :project="project" />
+
+      <ProjectLinkedProjectsPreview :project="project" />
+
       <!--
-
-      <ProjectMemberSection
-        v-if="mergedTeam?.length"
-        class="unboxed"
-        :members="mergedTeam"
-        @user-click="openProfileDrawer"
-      />
-
-      <LazyMapRecap
-        v-if="locations.length"
-        class="unboxed"
-        expand
-        :editable="false"
-        :locations="locations"
-        @expand="projectLayoutToggleAddModal('location')"
-      />
-
-      <GoalsRecap v-if="filteredGoals.length" class="unboxed" :goals="filteredGoals" />
-
-      <PublicationRecap
-        v-if="blogEntries.length"
-        class="unboxed"
-        :is-blog="true"
-        :publications="blogEntries"
-      />
-
       <ResourcesRecap
         v-if="linkResources?.length || fileResources?.length"
         class="unboxed"
@@ -89,6 +71,10 @@
 </template>
 
 <script setup lang="ts">
+import ProjectBlogEntriesPreview from '@/components/project/modules/BlogEntries/ProjectBlogEntriesPreview.vue'
+import ProjectGoalsPreview from '@/components/project/modules/Goals/ProjectGoalsPreview.vue'
+import ProjectLinkedProjectsPreview from '@/components/project/modules/LinkedProjects/ProjectLinkedProjectsPreview.vue'
+import ProjectLocationsPreview from '@/components/project/modules/Locations/ProjectLocationsPreview.vue'
 import ProjectMembersPreview from '@/components/project/modules/Members/ProjectMembersPreview.vue'
 import ProjectDescriptionPreview from '@/components/project/modules/ProjectDescriptionPreview.vue'
 import { textIsEmpty } from '@/functs/string'
@@ -99,8 +85,6 @@ const props = defineProps<{
 }>()
 
 // const router = useRouter()
-
-const { canEditProject } = usePermissions()
 
 const descripitonEmpty = computed(() => textIsEmpty(props.project.$t.description))
 // useScrollToTab()

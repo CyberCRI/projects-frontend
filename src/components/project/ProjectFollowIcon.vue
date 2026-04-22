@@ -20,13 +20,9 @@ import { TranslatedProject } from '@/models/project.model'
 import useUsersStore from '@/stores/useUsers'
 import { useProjectFollow } from '@/pages/ProjectPageV2/useProject'
 
-const props = withDefaults(
-  defineProps<{
-    project: TranslatedProject
-    targetUserId?: number
-  }>(),
-  { targetUserId: null }
-)
+const props = defineProps<{
+  project: TranslatedProject
+}>()
 
 const usersStore = useUsersStore()
 const emit = defineEmits<{

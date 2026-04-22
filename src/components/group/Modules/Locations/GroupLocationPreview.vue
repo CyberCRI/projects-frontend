@@ -4,16 +4,11 @@
     :title="$t(GroupModuleTitle.locations, group.modules.locations)"
     :total="group.modules.locations"
     :icon="GroupModuleIcon.locations"
+    :see-more="{
+      name: 'groupLocations',
+      params: { groupIdOrSlug: group.slug || group.id },
+    }"
   >
-    <template #header>
-      <SeeMoreArrow
-        class="see-more-btn reset-btn"
-        :to="{
-          name: 'groupLocations',
-          params: { groupIdOrSlug: group.slug || group.id },
-        }"
-      />
-    </template>
     <template #content>
       <GroupLocationBase :group="group" preview />
     </template>

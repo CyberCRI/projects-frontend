@@ -1,3 +1,4 @@
+import { Ordering } from '@/interfaces/query'
 import { Translated } from '@/interfaces/translated'
 import BaseModel from '@/models/base.model'
 
@@ -14,6 +15,10 @@ export interface BlogEntryModel extends BaseModel {
 }
 
 export type TranslatedBlogEntry = Translated<BlogEntryModel, 'title' | 'content'>
+
+export type QueryFilterBlogEntry = {
+  ordering: Ordering<'created_at' | 'updated_at'>
+} & paginationConfig
 
 export type BlogEntryOutput = Required<BlogEntryModel>
 

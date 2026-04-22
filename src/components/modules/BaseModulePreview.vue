@@ -35,12 +35,13 @@
 import IconImage from '@/components/base/media/IconImage.vue'
 import { IconImageChoice } from '@/functs/IconImage'
 import { isNil } from 'es-toolkit'
+import { RouteLocationRaw } from 'vue-router'
 
 withDefaults(
   defineProps<{
     title: string
     total?: number
-    seeMore?: any
+    seeMore?: RouteLocationRaw
     loading?: boolean
     icon?: IconImageChoice
     seeMorePosition?: 'bottom' | 'top'

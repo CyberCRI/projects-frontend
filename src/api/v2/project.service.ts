@@ -1,4 +1,10 @@
-import { getProject as fetchProject } from '@/api/projects.service'
+import { getProjectLocations as fetchProjectLocations } from '@/api/locations.services'
+import {
+  getProject as fetchProject,
+  getLinkedProject as fetchLinkedProject,
+  getProjectMembers as fetchProjectMembers,
+} from '@/api/projects.service'
+import { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
 import { onlyRefs } from '@/functs/onlyRefs'
 import { RefOrRaw } from '@/interfaces/utils'
 import { OrganizationModel } from '@/models/organization.model'
@@ -6,11 +12,14 @@ import { ProjectSlugOrId } from '@/models/project.model'
 
 const DEFAULT_CONFIG = {}
 
+type Config = UseAsyncApiConfig
+type ConfigPagination = UseAsyncPaginationApiConfig
+
 // TODO change backend with prefix organization code in url
 export const getProject = (
   organization: RefOrRaw<OrganizationModel['code']>,
   projectSlugOrId: RefOrRaw<ProjectSlugOrId>,
-  config = {}
+  config: Config = {}
 ) => {
   const key = computed(() => `${unref(organization)}::project::${unref(projectSlugOrId)}`)
 
@@ -31,10 +40,37 @@ export const getProject = (
   )
 }
 
+// TODO change backend with prefix organization code in url
+export const getLinkedProject = (
+  organization: RefOrRaw<OrganizationModel['code']>,
+  projectSlugOrId: RefOrRaw<ProjectSlugOrId>,
+  config: ConfigPagination = {}
+) => {
+  const key = computed(
+    () => `${unref(organization)}::project::${unref(projectSlugOrId)}::linked::all`
+  )
+
+  const { translatedProjectLinkeds } = useAutoTranslate()
+
+  return useAsyncPaginationAPI(
+    key,
+    ({ config }) =>
+      fetchLinkedProject(unref(projectSlugOrId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
+    {
+      translate: translatedProjectLinkeds,
+      watch: onlyRefs([organization, projectSlugOrId]),
+      ...config,
+    }
+  )
+}
+
 export const getProjectMembers = (
   organization: RefOrRaw<OrganizationModel['code']>,
   projectSlugOrId: RefOrRaw<ProjectSlugOrId>,
-  config = {}
+  config: ConfigPagination = {}
 ) => {
   const key = computed(() => `${unref(organization)}::project::${unref(projectSlugOrId)}::members`)
 
@@ -43,12 +79,36 @@ export const getProjectMembers = (
   return useAsyncPaginationAPI(
     key,
     ({ config }) =>
-      fetchProject(unref(projectSlugOrId), {
+      fetchProjectMembers(unref(projectSlugOrId), {
         ...DEFAULT_CONFIG,
         ...config,
       }),
     {
       translate: translateUsers,
+      watch: onlyRefs([organization, projectSlugOrId]),
+      ...config,
+    }
+  )
+}
+
+export const getProjectLocations = (
+  organization: RefOrRaw<OrganizationModel['code']>,
+  projectSlugOrId: RefOrRaw<ProjectSlugOrId>,
+  config: ConfigPagination = {}
+) => {
+  const key = computed(() => `${unref(organization)}::project::${unref(projectSlugOrId)}::members`)
+
+  const { translateLocations } = useAutoTranslate()
+
+  return useAsyncAPI(
+    key,
+    ({ config }) =>
+      fetchProjectLocations(unref(projectSlugOrId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
+    {
+      translate: translateLocations,
       watch: onlyRefs([organization, projectSlugOrId]),
       ...config,
     }

@@ -10,7 +10,7 @@ export interface GoalModel extends BaseModel {
   id: number
   title: string
   description: string
-  deadline_at: Date
+  deadline_at: string
   status: StatusType
 }
 

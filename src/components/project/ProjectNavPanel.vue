@@ -153,7 +153,7 @@ const { isFollowing, toggleFollow } = useProjectFollow(computed(() => props.proj
 
 const sharedUrl = useRequestURL()
 
-const onActionTriggered = (menuEntry) => {
+const onActionTriggered = () => {
   // if (menuEntry.addModal === 'duplicate') {
   //   emit('duplicate-project')
   // } else {

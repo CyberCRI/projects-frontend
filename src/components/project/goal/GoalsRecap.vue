@@ -1,61 +1,63 @@
 <template>
-  <div class="goals-recap">
-    <SectionHeader
-      :button-label="$t('common.see-more')"
-      :quantity="goals.length"
-      :title="$t('goal.goals')"
-      class="section-header"
-      @redirect-button-clicked="goToGoalPage"
-    />
-
-    <div v-if="goals.length" class="goals-ctn">
+  <FetchLoader :status="status" only-error skeleton>
+    <div class="goals-recap">
       <GoalSummaryItem
         v-for="(goal, index) in sortedGoals"
         :key="index"
         :goal="goal"
         class="goal"
-        @click="$emit('access-goals-view')"
       />
+      <EmptyLabel v-if="sortedGoals.length === 0" />
     </div>
-  </div>
+    <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
+  </FetchLoader>
 </template>
 
 <script setup lang="ts">
+import { getAllGoals } from '@/api/v2/goals.service'
+import FetchLoader from '@/components/base/FetchLoader.vue'
 import GoalSummaryItem from '@/components/project/goal/GoalSummaryItem.vue'
-import SectionHeader from '@/components/base/SectionHeader.vue'
-import { TranslatedGoal } from '@/models/goal.model'
+import { TranslatedProject } from '@/models/project.model'
+import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
+import { goalSkeletons } from '@/skeletons/goals.skeletons'
 
-defineEmits(['access-goals-view'])
-const props = defineProps<{
-  goals: TranslatedGoal[]
-}>()
+const props = withDefaults(
+  defineProps<{
+    project: TranslatedProject
+    limit?: number
+    preview?: boolean
+  }>(),
+  { limit: null, preview: false }
+)
 
-const router = useRouter()
-const route = useRoute()
+const limitSkeletons = computed(() => maxSkeleton(props.project.modules.goals, props.limit))
 
-const sortedGoals = computed(() => {
-  return [...props.goals]
-    .sort((a, b) => {
-      if (!a.deadline_at && !b.deadline_at) {
-        return a.title < b.title ? -1 : 1
-      } else if (!a.deadline_at) {
-        return -1
-      } else if (!b.deadline_at) {
-        return 1
-      } else {
-        return a.deadline_at < b.deadline_at ? -1 : 1
-      }
-    })
-    .slice(0, 5) // Limit to 5 goals for display
+const organizationCode = useOrganizationCode()
+const projectId = computed(() => props.project.id)
+const {
+  status,
+  data: goals,
+  pagination,
+} = getAllGoals(organizationCode, projectId, {
+  paginationConfig: {
+    limit: props.limit,
+  },
+  default: () => factoryPagination(goalSkeletons, limitSkeletons.value),
 })
 
-const goToGoalPage = () => {
-  router.push({
-    name: 'projectGoals',
-    params: { slugOrId: route.params.slugOrId },
-    hash: '#tab',
+const sortedGoals = computed(() => {
+  return goals.value.toSorted((a, b) => {
+    if (!a.deadline_at && !b.deadline_at) {
+      return a.title < b.title ? -1 : 1
+    } else if (!a.deadline_at) {
+      return -1
+    } else if (!b.deadline_at) {
+      return 1
+    } else {
+      return a.deadline_at < b.deadline_at ? -1 : 1
+    }
   })
-}
+})
 </script>
 
 <style lang="scss" scoped>

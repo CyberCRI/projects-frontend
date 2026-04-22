@@ -1,20 +1,23 @@
-import type { LocationModel, ProjectLocationForm } from '@/models/location.model'
+import type { LocationId, LocationModel, ProjectLocationForm } from '@/models/location.model'
 import useAPI from '@/composables/useAPI'
 import { Locations } from '@/interfaces/maps'
+import { ProjectSlugOrId } from '@/models/project.model'
 
-export async function getProjectLocations(projectId: number) {
-  return await useAPI<LocationModel[]>(`project/${projectId}/location/`)
+type Config = UseApiOptions
+
+export async function getProjectLocations(projectId: ProjectSlugOrId, config: Config = {}) {
+  return await useAPI<LocationModel[]>(`project/${projectId}/location/`, config)
 }
 
-export async function getProjectLocation(projectId: string, locationId: number) {
-  return await useAPI<LocationModel>(`project/${projectId}/location/${locationId}/`)
+export async function getProjectLocation(
+  projectId: ProjectSlugOrId,
+  locationId: LocationId,
+  config: Config = {}
+) {
+  return await useAPI<LocationModel>(`project/${projectId}/location/${locationId}/`, config)
 }
 
-export async function getLocations(organizationCode: string, config = {}) {
-  return await useAPI<Locations>(`organization/${organizationCode}/location/`, config)
-}
-
-export async function postLocations(projectId: string, body: ProjectLocationForm) {
+export async function postLocations(projectId: ProjectSlugOrId, body: ProjectLocationForm) {
   return await useAPI<LocationModel>(`project/${projectId}/location/`, {
     body,
     method: 'POST',
@@ -22,8 +25,8 @@ export async function postLocations(projectId: string, body: ProjectLocationForm
 }
 
 export async function patchLocation(
-  projectId: string,
-  locationId: number,
+  projectId: ProjectSlugOrId,
+  locationId: LocationId,
   body: ProjectLocationForm
 ) {
   return await useAPI<LocationModel>(`project/${projectId}/location/${locationId}/`, {
@@ -32,8 +35,12 @@ export async function patchLocation(
   })
 }
 
-export async function deleteLocation(projectId: string, locationId: number) {
-  return await useAPI<LocationModel>(`project/${projectId}/location/${locationId}/`, {
+export async function deleteLocation(projectId: ProjectSlugOrId, locationId: LocationId) {
+  return await useAPI<void>(`project/${projectId}/location/${locationId}/`, {
     method: 'DELETE',
   })
+}
+
+export async function getLocations(organizationCode: string, config: Config = {}) {
+  return await useAPI<Locations>(`organization/${organizationCode}/location/`, config)
 }

@@ -33,7 +33,7 @@ useLpiHead2({
         :style="{
           backgroundColor: organisation.background_color,
         }"
-        :title="organisation?.$t?.name"
+        :title="organisation.$t.name"
       >
         <div
           class="portal-image"

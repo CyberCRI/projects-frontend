@@ -1,9 +1,12 @@
-import type { GoalInput /*, GoalOutput*/ } from '@/models/goal.model'
+import type { GoalInput /*, GoalOutput*/, GoalModel } from '@/models/goal.model'
 // import type { APIResponseList } from '@/api/types'
 import useAPI from '@/composables/useAPI'
+import { ProjectSlugOrId } from '@/models/project.model'
 
-export async function getAllGoals(id) {
-  return await useAPI(`project/${id}/goal/`, {}) //.data.value
+type ConfigGoal = UseApiOptions
+
+export async function getAllGoals(projectId: ProjectSlugOrId, config: ConfigGoal = {}) {
+  return await useAPI<PaginationResult<GoalModel>>(`project/${projectId}/goal/`, config)
 }
 
 export async function createGoal({ goal, project_id }: { goal: GoalInput; project_id: string }) {

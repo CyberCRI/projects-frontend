@@ -116,7 +116,13 @@ export type ProjectPatchInput = Partial<ProjectCreateInput>
 
 export type LinkedProject = {
   id: number
-  project: ProjectOutput
+  project: ProjectModel
+  target?: ProjectModel
+}
+
+export type TranslatedLinkedProject = LinkedProject & {
+  project: TranslatedProject
+  target?: TranslatedProject
 }
 
 export type LinkedProjectRef = {

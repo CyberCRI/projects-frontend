@@ -7,7 +7,15 @@ defineProps<{ project: TranslatedProject }>()
 </script>
 
 <template>
-  <BaseModulePreview :title="$t(ProjectModuleTitle.members)" :icon="ProjectModuleIcon.members">
+  <BaseModulePreview
+    :title="$t(ProjectModuleTitle.members)"
+    :icon="ProjectModuleIcon.members"
+    :total="project.modules.members"
+    :see-more="{
+      name: 'projectTeam',
+      params: { slugOrid: project.slug || project.id },
+    }"
+  >
     <template #content>
       <BaseProjectMembersList :project="project" />
     </template>

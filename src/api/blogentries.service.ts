@@ -1,9 +1,16 @@
 // import type { APIResponseList } from '@/api/types'
-import type { BlogEntryInput /*, BlogEntryOutput*/ } from '@/models/blog-entry.model'
+import type {
+  BlogEntryInput /*, BlogEntryOutput*/,
+  BlogEntryModel,
+  QueryFilterBlogEntry,
+} from '@/models/blog-entry.model'
 import useAPI from '@/composables/useAPI'
+import { ProjectSlugOrId } from '@/models/project.model'
 
-export async function getBlogEntries(id) {
-  return await useAPI(`project/${id}/blog-entry/`, {}) //.data.value
+type ConfigBlogEntries = UseApiOptions<QueryFilterBlogEntry>
+
+export async function getBlogEntries(projectId: ProjectSlugOrId, config: ConfigBlogEntries = {}) {
+  return await useAPI<PaginationResult<BlogEntryModel>>(`project/${projectId}/blog-entry/`, config)
 }
 
 export async function getBlogEntry(body: BlogEntryInput) {

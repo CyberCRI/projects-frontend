@@ -29,108 +29,84 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import ProjectCard from '@/components/project/ProjectCard.vue'
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import DynamicGrid from '@/components/base/DynamicGrid.vue'
 import analytics from '@/analytics'
 import { deleteLinkedProject } from '@/api/projects.service'
-import useToasterStore from '@/stores/useToaster.ts'
-export default {
-  name: 'LinkedProjects',
+import useToasterStore from '@/stores/useToaster'
+import { TranslatedLinkedProject, TranslatedProject } from '@/models/project.model'
 
-  components: {
-    ProjectCard,
-    ContextActionButton,
-    ConfirmModal,
-    DynamicGrid,
-  },
+const props = withDefaults(
+  defineProps<{
+    project: TranslatedProject
+    linkedProjects: TranslatedLinkedProject[]
+    editable?: boolean
+  }>(),
+  {
+    editable: false,
+  }
+)
 
-  inject: ['projectLayoutToggleAddModal'],
+const emit = defineEmits<{
+  'reload-linked-projects': []
+}>()
 
-  props: {
-    project: {
-      type: Object,
-      default: () => ({}),
-    },
-    linkedProjects: {
-      type: Array,
-      default: () => [],
-    },
+const { t } = useNuxtI18n()
 
-    isEditable: {
-      type: Boolean,
-      default: false,
-    },
-  },
+const toaster = useToasterStore()
+const { canEditProject } = usePermissions()
 
-  emits: ['reload-linked-projects'],
-  setup() {
-    const toaster = useToasterStore()
-    const { canEditProject } = usePermissions()
-    return {
-      toaster,
-      canEditProject,
-    }
-  },
+const confirmModalVisible = ref(false)
+const projectToBeDeleted = ref(null)
+const isDeleting = ref(false)
 
-  data() {
-    return {
-      confirmModalVisible: false,
-      projectToBeDeleted: null,
-      isDeleting: false,
-    }
-  },
+const canEditAndDelete = computed(() => {
+  return props.editable && canEditProject.value
+})
 
-  computed: {
-    canEditAndDelete() {
-      return this.isEditable && this.canEditProject
-    },
+const linkedProjectsReordered = computed(() => {
+  return props.linkedProjects
+  // return props.linkedProjects.reduce((acc, curr) => {
+  //   return curr.reason === 'other' || curr.reason === 'autre' || curr.reason === ''
+  //     ? [...acc, curr]
+  //     : [curr, ...acc]
+  // }, [])
+})
 
-    linkedProjectsReordered() {
-      return this.linkedProjects.reduce((acc, curr) => {
-        return curr.reason === 'other' || curr.reason === 'autre' || curr.reason === ''
-          ? [...acc, curr]
-          : [curr, ...acc]
-      }, [])
-    },
-  },
+const confirmDelete = (linkedProject) => {
+  projectToBeDeleted.value = linkedProject
+  confirmModalVisible.value = true
+}
 
-  methods: {
-    confirmDelete(linkedProject) {
-      this.projectToBeDeleted = linkedProject
-      this.confirmModalVisible = true
-    },
+const doDeleteLinkedProject = async () => {
+  isDeleting.value = true
+  try {
+    await deleteLinkedProject({
+      project_id: props.project.id,
+      id: projectToBeDeleted.value.id,
+    })
 
-    async doDeleteLinkedProject() {
-      this.isDeleting = true
-      try {
-        await deleteLinkedProject({
-          project_id: this.project.id,
-          id: this.projectToBeDeleted.id,
-        })
+    emit('reload-linked-projects')
 
-        this.$emit('reload-linked-projects')
+    analytics.linkedProject.removeLinkedProject({
+      project: {
+        id: props.project.id,
+      },
+      linkedProject: projectToBeDeleted.value,
+    })
 
-        analytics.linkedProject.removeLinkedProject({
-          project: {
-            id: this.project.id,
-          },
-          linkedProject: this.projectToBeDeleted,
-        })
-
-        this.toaster.pushSuccess(this.$t('toasts.linked-project-delete.success'))
-      } catch (error) {
-        this.toaster.pushError(`${this.$t('toasts.linked-project-delete.error')} (${error})`)
-        console.error(error)
-      } finally {
-        this.confirmModalVisible = false
-        this.projectToBeDeleted = null
-        this.isDeleting = false
-      }
-    },
-  },
+    toaster.pushSuccess(t('toasts.linked-project-delete.success'))
+  } catch (error) {
+    toaster.pushError(`${t('toasts.linked-project-delete.error')} (${error})`)
+    console.error(error)
+  } finally {
+    confirmModalVisible.value = false
+    projectToBeDeleted.value = null
+    isDeleting.value = false
+  }
 }
 </script>
 

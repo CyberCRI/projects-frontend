@@ -13,6 +13,9 @@ import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import useAPI from '@/composables/useAPI'
 
 import { imageSizesFormData } from '@/functs/imageSizesUtils'
+import { ProjectMemberModel } from '@/models/project-member.model'
+
+type Config = UseApiOptions
 
 export async function createProject(project) {
   const result: any = await useAPI(`project/`, { body: project, method: 'POST' }) //.data.value
@@ -48,6 +51,13 @@ export async function duplicateProject(id: string) {
   return await useAPI(`project/${id}/duplicate/`, { method: 'POST' }) //.data.value
 }
 
+export async function getLinkedProject(projectId: ProjectSlugOrId, config: Config = {}) {
+  return await useAPI<PaginationResult<ProjectModel>>(
+    `project/${projectId}/linked-project/`,
+    config
+  )
+}
+
 export async function addLinkedProject({
   id,
   body,
@@ -77,6 +87,13 @@ export async function deleteLinkedProject({ id, project_id }: { id: number; proj
 
 export async function getProject(projectSlugOrId: ProjectSlugOrId, config = {}) {
   return await useAPI<ProjectModel>(`project/${projectSlugOrId}/`, config)
+}
+
+export async function getProjectMembers(projectSlugOrId: ProjectSlugOrId, config = {}) {
+  return await useAPI<PaginationResult<ProjectMemberModel>>(
+    `project/${projectSlugOrId}/members/`,
+    config
+  )
 }
 
 export async function getAllRecommendedProjects(params: SearchParams) {

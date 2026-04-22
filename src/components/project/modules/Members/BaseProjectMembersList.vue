@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { getProjectMembers } from '@/api/v2/project.service'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { TranslatedProject } from '@/models/project.model'
 

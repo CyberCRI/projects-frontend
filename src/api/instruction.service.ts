@@ -69,7 +69,7 @@ export async function deleteInstruction(
   organizationCode: OrganizationModel['code'],
   idOrSlug: InstructionId
 ) {
-  return await useAPI<undefined>(`organization/${organizationCode}/instruction/${idOrSlug}/`, {
+  return await useAPI<void>(`organization/${organizationCode}/instruction/${idOrSlug}/`, {
     method: 'DELETE',
   })
 }

@@ -1,6 +1,6 @@
 import { GeneralLocationPeopleGroup, TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import { TranslatedOrganizationModel } from '@/models/organization.model'
-import { TranslatedProject } from '@/models/project.model'
+import { TranslatedLinkedProject, TranslatedProject } from '@/models/project.model'
 import { AttachmentFileModel, TranslatedAttachmentFile } from '@/models/attachment-file.model'
 import { AttachmentLinkModel, TranslatedAttachmentLink } from '@/models/attachment-link.model'
 import { TranslatedDocument } from '@/interfaces/researcher'
@@ -15,6 +15,8 @@ import { TranslatedNewsfeed } from '@/models/newsfeed.model'
 import { TranslatedAnnouncement } from '@/models/announcement.model'
 import { TranslatedUserModel } from '@/models/user.model'
 import { TranslatedInstruction } from '@/models/instruction.model'
+import { TranslatedGoal } from '@/models/goal.model'
+import { TranslatedBlogEntry } from '@/models/blog-entry.model'
 
 // type can be computed or object
 type RefOrRaw<DataT> = ComputedRef<DataT> | Ref<DataT> | DataT
@@ -101,6 +103,18 @@ export default function useAutoTranslate() {
   const translateProjects = (projects) =>
     translateEntities<TranslatedProject>(projects, translateProject)
 
+  const translatedProjectLinked = (linkedProject) =>
+    computed<TranslatedLinkedProject>(() => {
+      const raw = unref(linkedProject)
+      return {
+        ...raw,
+        project: raw.project ? translateProject(raw.project) : null,
+        target: raw.target ? translateProject(raw.target) : null,
+      }
+    })
+  const translatedProjectLinkeds = (linkedProjects) =>
+    translateEntities<TranslatedLinkedProject>(linkedProjects, translatedProjectLinked)
+
   const translateComment = (comment) => {
     const _comment = unref(comment)
     if (_comment) _comment.replies = translateEntities(_comment.replies, translateComment)
@@ -132,11 +146,13 @@ export default function useAutoTranslate() {
   const translateFiles = (files: RefOrRaw<AttachmentFileModel[]>) =>
     translateEntities<TranslatedAttachmentFile>(files, translateFile)
 
-  const translateBlogEntry = (blogEntry) => translateEntity(blogEntry, ['title', 'content'])
-  const translateBlogEntries = (blogEntries) => translateEntities(blogEntries, translateBlogEntry)
+  const translateBlogEntry = (blogEntry) =>
+    translateEntity<TranslatedBlogEntry>(blogEntry, ['title', 'content'])
+  const translateBlogEntries = (blogEntries) =>
+    translateEntities<TranslatedBlogEntry>(blogEntries, translateBlogEntry)
 
-  const translateGoal = (goal) => translateEntity(goal, ['title', 'description'])
-  const translateGoals = (goals) => translateEntities(goals, translateGoal)
+  const translateGoal = (goal) => translateEntity<TranslatedGoal>(goal, ['title', 'description'])
+  const translateGoals = (goals) => translateEntities<TranslatedGoal>(goals, translateGoal)
 
   const translateLocation = (location) =>
     translateEntity<TranslatedLocation>(location, ['title', 'description'])
@@ -382,6 +398,9 @@ export default function useAutoTranslate() {
 
     translateProjectLocation,
     translateProjectLocations,
+
+    translatedProjectLinked,
+    translatedProjectLinkeds,
 
     // people
     translateUser,
