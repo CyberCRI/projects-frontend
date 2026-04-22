@@ -17,7 +17,7 @@ export function parseJwt(token) {
   return JSON.parse(jsonPayload)
 }
 
-export async function getKeycloakIdFromToken(tokenHeader) {
+export function getKeycloakIdFromToken(tokenHeader) {
   let kcId = null
   try {
     const jwt = parseJwt(tokenHeader)
@@ -67,7 +67,7 @@ export default async function checkSuperAdminRights(event) {
   }
 
   const kcId = getKeycloakIdFromToken(tokenHeader)
-  const user = getUserByKeycloakId(kcId, tokenHeader)
+  const user = await getUserByKeycloakId(kcId, tokenHeader)
 
   if (!isSuperAdmin(user)) {
     throw createError({
