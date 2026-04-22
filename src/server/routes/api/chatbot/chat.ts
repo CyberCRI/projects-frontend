@@ -61,7 +61,7 @@ export default defineLazyEventHandler(() => {
   )
   return defineEventHandler(async (event) => {
     // return 404 if not configured
-    if (!appLangchainModelApiKey || !appLangchainModelName || !appChatbotEnabled) {
+    if (!appLangchainModelApiKey || !appChatbotEnabled) {
       throw createError({
         statusCode: 404,
         message: 'Chat is not configured',
