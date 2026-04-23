@@ -20,29 +20,24 @@ const form = ref({
 })
 
 const rules = computed(() => ({
-  form: {
-    email: {
-      required: helpers.withMessage(t('request-access.email.is-required'), required),
-      email: helpers.withMessage(t('request-access.email.is-invalid'), email),
-    },
-    given_name: {
-      required: helpers.withMessage(t('request-access.given_name.is-required'), required),
-    },
-    family_name: {
-      required: helpers.withMessage(t('request-access.family_name.is-required'), required),
-    },
-    job: {
-      required: helpers.withMessage(t('request-access.profile-title.is-required'), required),
-    },
+  email: {
+    required: helpers.withMessage(t('request-access.email.is-required'), required),
+    email: helpers.withMessage(t('request-access.email.is-invalid'), email),
+  },
+  given_name: {
+    required: helpers.withMessage(t('request-access.given_name.is-required'), required),
+  },
+  family_name: {
+    required: helpers.withMessage(t('request-access.family_name.is-required'), required),
+  },
+  job: {
+    required: helpers.withMessage(t('request-access.profile-title.is-required'), required),
   },
 }))
 
-type Model = {
-  form: typeof form
-}
-const v$ = useValidate<Model>(rules, { form })
+const v$ = useValidate(rules, form)
 
-const formIsInvalid = computed(() => v$.value.form.$invalid)
+const formIsInvalid = computed(() => v$.value.$invalid)
 
 const asyncing = ref(false)
 const confirm = ref(false)
@@ -55,8 +50,8 @@ onMounted(async () => {
 })
 
 async function requestAccess() {
-  await v$.value.form.$validate()
-  if (v$.value.form.$error) {
+  await v$.value.$validate()
+  if (v$.value.$error) {
     return
   }
   asyncing.value = true
@@ -118,9 +113,9 @@ useLpiHead2({
             :label="$t('request-access.given_name.label')"
             :placeholder="$t('request-access.given_name.placeholder')"
             data-test="first-name"
-            @blur="v$.form.given_name.$validate"
+            @blur="v$.given_name.$validate"
           />
-          <FieldErrors :errors="v$.form.given_name.$errors" />
+          <FieldErrors :errors="v$.given_name.$errors" />
         </div>
         <div class="form-group">
           <TextInput
@@ -128,9 +123,9 @@ useLpiHead2({
             :label="$t('request-access.family_name.label')"
             :placeholder="$t('request-access.family_name.placeholder')"
             data-test="last-name"
-            @blur="v$.form.family_name.$validate"
+            @blur="v$.family_name.$validate"
           />
-          <FieldErrors :errors="v$.form.family_name.$errors" />
+          <FieldErrors :errors="v$.family_name.$errors" />
         </div>
         <div class="form-group">
           <TextInput
@@ -139,9 +134,9 @@ useLpiHead2({
             input-type="email"
             :placeholder="$t('request-access.email.placeholder')"
             data-test="email"
-            @blur="v$.form.email.$validate"
+            @blur="v$.email.$validate"
           />
-          <FieldErrors :errors="v$.form.email.$errors" />
+          <FieldErrors :errors="v$.email.$errors" />
         </div>
         <div class="form-group">
           <TextInput
@@ -149,9 +144,9 @@ useLpiHead2({
             :label="$t('request-access.profile-title.label')"
             :placeholder="$t('request-access.profile-title.placeholder')"
             data-test="title"
-            @blur="v$.form.job.$validate"
+            @blur="v$.job.$validate"
           />
-          <FieldErrors :errors="v$.form.job.$errors" />
+          <FieldErrors :errors="v$.job.$errors" />
         </div>
         <div class="form-group">
           <TextInput
