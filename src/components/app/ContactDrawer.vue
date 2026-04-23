@@ -71,14 +71,7 @@ import { contactUs } from '@/api/report.service'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import useToasterStore from '@/stores/useToaster'
 import useOrganizationsStore from '@/stores/useOrganizations'
-
-const defaultForm = () => {
-  return {
-    subject: '',
-    email: '',
-    content: '',
-  }
-}
+import { defaultForm } from '@/form/contact'
 
 const props = defineProps<{ isOpened: boolean }>()
 const emit = defineEmits<{ close: [] }>()
@@ -110,8 +103,8 @@ const orgCode = computed(() => organizationsStore?.current?.code)
 watch(
   () => props.isOpened,
   () => {
-    v$.value.$reset()
     form.value = defaultForm()
+    v$.value.$reset()
   }
 )
 

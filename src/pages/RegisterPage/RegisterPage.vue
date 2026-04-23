@@ -58,16 +58,12 @@ const rules = computed(() => ({
   },
 }))
 
-const v$ = useVuelidate(rules, form)
+const v$ = useVuelidate(rules, form, {
+  // ContactDrawer have form/vuelidate, so no scope all child
+  $scope: false,
+})
 
 const backgroundImageUrl = computed(() => usePublicURL('/page404/page-404.png'))
-
-const validateIfInvalid = () => {
-  // force form error display even if save button is disabled
-  if (v$.value.$invalid) {
-    v$.value.$validate()
-  }
-}
 
 const validateToken = async () => {
   try {
@@ -82,8 +78,8 @@ const validateToken = async () => {
   return false
 }
 const register = async () => {
-  v$.value.$validate()
-  if (v$.value.$error) {
+  const isValid = await v$.value.$validate()
+  if (!isValid) {
     return
   }
   asyncing.value = true
@@ -230,7 +226,7 @@ useLpiHead2({
               <FieldErrors :errors="v$.acceptedTOS.$errors" />
             </div>
             <div class="action">
-              <div @click="validateIfInvalid">
+              <div>
                 <LpiButton
                   :disabled="v$.$invalid || asyncing"
                   :label="$t('common.confirm')"

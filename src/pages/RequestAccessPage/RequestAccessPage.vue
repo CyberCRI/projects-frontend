@@ -35,9 +35,10 @@ const rules = computed(() => ({
   },
 }))
 
-const v$ = useValidate(rules, form)
-
-const formIsInvalid = computed(() => v$.value.$invalid)
+const v$ = useValidate(rules, form, {
+  // ContactDrawer have form/vuelidate, so no scope all child
+  $scope: false,
+})
 
 const asyncing = ref(false)
 const confirm = ref(false)
@@ -169,7 +170,7 @@ useLpiHead2({
             @click="cancel"
           />
           <LpiButton
-            :disabled="formIsInvalid || asyncing"
+            :disabled="v$.$invalid || asyncing"
             :label="$t('common.confirm')"
             :btn-icon="asyncing ? 'LoaderSimple' : null"
             class="register-btn"

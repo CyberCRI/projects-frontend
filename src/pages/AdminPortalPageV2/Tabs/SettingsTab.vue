@@ -75,19 +75,19 @@ onMounted(() => {
 })
 const rules = computed(() => ({
   name: {
-    required: helpers.withMessage(t('admin.admin-info.name.required'), required),
-    maxLength: helpers.withMessage(t('admin.admin-info.name.max-length'), maxLength(32)),
+    required: helpers.withMessage(t('admin.form.admin-info.name.required'), required),
+    maxLength: helpers.withMessage(t('admin.form.admin-info.name.max-length'), maxLength(32)),
   },
   contact_email: {
-    required: helpers.withMessage(t('admin.admin-info.contact-email.required'), required),
-    email: helpers.withMessage(t('admin.admin-info.contact-email.email'), email),
+    required: helpers.withMessage(t('admin.form.admin-info.contact-email.required'), required),
+    email: helpers.withMessage(t('admin.form.admin-info.contact-email.email'), email),
   },
   language: {
-    required: helpers.withMessage(t('admin.admin-info.language.required'), required),
+    required: helpers.withMessage(t('admin.from.admin-info.language.required'), required),
   },
   background_color: {
     required: helpers.withMessage(
-      t('admin.admin-info.background-color.required-if'),
+      t('admin.form.admin-info.background-color.required-if'),
       requiredIf(form.value.is_logo_visible_on_parent_dashboard)
     ),
   },

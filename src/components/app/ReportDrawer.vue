@@ -120,7 +120,7 @@ const rules = computed(() => ({
   },
 }))
 const form = ref(defaultForm())
-const v$ = useValidate(rules.value, form)
+const v$ = useValidate(rules, form)
 const isLoading = ref(false)
 
 const orgCode = useOrganizationCode()
