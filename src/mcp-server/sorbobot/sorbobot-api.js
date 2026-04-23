@@ -1,3 +1,4 @@
+import { traceSorbobot } from '@/server/routes/api/chat-stream'
 export async function initSession(api_url, api_token) {
   // start session
   const startResp = await fetch(`${api_url}/api/sorbobot/session/start`, {
@@ -21,22 +22,39 @@ export async function initSession(api_url, api_token) {
 }
 
 export async function makeQuery(api_url, api_token, sessionId, queryPrompt) {
-  const queryResp = await fetch(`${api_url}/api/sorbobot/query`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'User-Agent': 'LpiProject-SorboBot/1.0',
-      Accept: 'application/json',
-      'api-key': api_token,
-    },
-    body: JSON.stringify({
-      session_id: sessionId,
-      prompt: queryPrompt,
-      search_results: null,
-    }),
+  const url = `${api_url}/api/sorbobot/query`
+  const headers = {
+    'Content-Type': 'application/json',
+    'User-Agent': 'LpiProject-SorboBot/1.0',
+    Accept: 'application/json',
+    'api-key': api_token,
+  }
+  const body = JSON.stringify({
+    session_id: sessionId,
+    prompt: queryPrompt,
+    search_results: null,
   })
 
-  const queryJson = await queryResp.json()
+  traceSorbobot('Sorbobot query:')
+  traceSorbobot(url)
+  traceSorbobot(body)
+
+  let queryJson = {}
+  try {
+    const queryResp = await fetch(url, {
+      method: 'POST',
+      headers: headers,
+      body: body,
+    })
+    queryJson = await queryResp.json()
+  } catch (error) {
+    console.error('Error during Sorbobot query:', error)
+    throw error
+  }
+
+  traceSorbobot('Sorbobot response:')
+  traceSorbobot(JSON.stringify(queryJson, null, 2))
+
   const { authors, search_results } = queryJson.data
 
   const authorsArrays = Object.entries(authors)
