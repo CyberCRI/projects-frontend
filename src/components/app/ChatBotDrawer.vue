@@ -101,28 +101,7 @@ const pageContext = computed(() => {
   if (allowCurrentPage.value) return pageData
   else return ''
 })
-watch(
-  () => [props.isOpened, route],
-  () => {
-    let res = ''
-    const pageMeta = route.matched
-      .filter((r) => !!r.meta.chatBotContext)
-      .map((r) => r.meta.chatBotContext(route))
-      .join('\n')
 
-    if (pageMeta)
-      res += `# here are some meta information about the current page
-      ${pageMeta}
-    `
-    if (import.meta.client) {
-      res += `# Here is the content of the current page, use it as a context for your responses:
-      ${document.querySelector('.main-view')?.textContent || ''}
-      `
-      pageContextData.value = res
-    }
-  },
-  { immediate: true }
-)
 const contextMessage = computed(() => [
   {
     role: 'assistant',
@@ -309,24 +288,6 @@ const onSuggestButtonClick = (buttonText) => {
   }
 }
 
-watch(
-  () => chatBox.value,
-  (neo, old) => {
-    if (neo && !old) {
-      neo.requestInterceptor = requestInterceptor
-      neo.responseInterceptor = responseInterceptor
-      neo.htmlWrappers = htmlWrappers.value
-    }
-    history.value = JSON.parse(JSON.stringify(conversation.value))
-  }
-)
-
-watchEffect(() => {
-  if (chatBox.value) {
-    chatBox.value.setPlaceholderText(placeholderText.value)
-  }
-})
-
 const textInputOptions = computed(() => ({
   placeholder: { text: placeholderText.value },
   styles: {
@@ -417,6 +378,50 @@ const resetChat = () => {
   conversationId.value = null
   history.value = []
 }
+
+watch(
+  () => chatBox.value,
+  (neo, old) => {
+    if (neo && !old) {
+      neo.requestInterceptor = requestInterceptor
+      neo.responseInterceptor = responseInterceptor
+      neo.htmlWrappers = htmlWrappers.value
+    }
+    history.value = JSON.parse(JSON.stringify(conversation.value))
+  }
+)
+
+watchEffect(() => {
+  if (chatBox.value) {
+    chatBox.value.setPlaceholderText(placeholderText.value)
+  }
+})
+
+watch(
+  () => [props.isOpened, route],
+  () => {
+    // reset chat
+    resetChat()
+    // set page context
+    let res = ''
+    const pageMeta = route.matched
+      .filter((r) => !!r.meta.chatBotContext)
+      .map((r) => r.meta.chatBotContext(route))
+      .join('\n')
+
+    if (pageMeta)
+      res += `# here are some meta information about the current page
+      ${pageMeta}
+    `
+    if (import.meta.client) {
+      res += `# Here is the content of the current page, use it as a context for your responses:
+      ${document.querySelector('.main-view')?.textContent || ''}
+      `
+      pageContextData.value = res
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <template>
