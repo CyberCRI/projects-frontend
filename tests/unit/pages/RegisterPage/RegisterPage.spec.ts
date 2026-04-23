@@ -21,7 +21,6 @@ describe('RegisterPage.vue', () => {
 
     const wrapper = await lpiMountSuspended(RegisterPage, { props })
     await flushPromises()
-    console.log(wrapper.html())
     expect(wrapper.exists()).toBe(true)
   })
 })

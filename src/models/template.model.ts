@@ -3,6 +3,7 @@ import BaseModel from '@/models/base.model'
 import { ImageModel } from '@/models/image.model'
 import { OrganizationModel } from '@/models/organization.model'
 import { ProjectCategoryModel } from '@/models/project-category.model'
+import { TagModel } from '@/models/tag.model'
 import { Language } from '@/models/types'
 
 /**
@@ -17,11 +18,10 @@ export interface TemplateModel extends BaseModel {
   images: ImageModel[]
   organization: OrganizationModel
   categories: ProjectCategoryModel[]
-
+  project_tags: TagModel[]
   project_title: string
   project_description: string
   project_purpose: string
-  project_tags: string
   blogentry_title: string
   blogentry_content: string
   goal_title: string

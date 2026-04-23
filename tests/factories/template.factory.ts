@@ -20,7 +20,7 @@ export const TemplateFactory = createFactory<TemplateModel>((faker) => ({
   project_title: faker.lorem.paragraph(),
   project_description: faker.lorem.paragraph(),
   project_purpose: faker.lorem.paragraph(),
-  project_tags: faker.lorem.paragraph(),
+  project_tags: [],
   blogentry_title: faker.lorem.paragraph(),
   blogentry_content: faker.lorem.paragraph(),
   goal_title: faker.lorem.paragraph(),
