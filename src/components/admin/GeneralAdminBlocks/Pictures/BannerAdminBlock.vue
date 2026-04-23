@@ -6,87 +6,70 @@
       :image-sizes="bannerImageSizes"
       :picture="organization.banner_image"
       :picture-ratio="1 / 1"
+      :default-picture="DEFAULT_IMAGE_PATATOID"
       dont-resize-on-change
       @update:image-sizes="resizeBanner($event)"
       @update:picture="setBanner($event)"
     />
   </AdminBlock>
 </template>
-<script>
+
+<script setup lang="ts">
+import { DEFAULT_IMAGE_PATATOID } from '@/composables/usePatatoids'
 import { postOrganisationBanner, patchOrganisationBanner } from '@/api/organizations.service'
 import AdminBlock from '../AdminBlock.vue'
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
-import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils.ts'
+import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils'
 import { isEqual } from 'es-toolkit'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useToasterStore from '@/stores/useToaster'
+import useOrganizationsStore from '@/stores/useOrganizations'
 
-export default {
-  name: 'BannerAdminBlock',
+const { t } = useNuxtI18n()
+const toaster = useToasterStore()
+const organizationsStore = useOrganizationsStore()
 
-  components: {
-    AdminBlock,
-    ImageEditor,
-  },
-  setup() {
-    const toaster = useToasterStore()
-    const organizationsStore = useOrganizationsStore()
-    return {
-      toaster,
-      organizationsStore,
+const organizationCode = useOrganizationCode()
+const organization = computed(() => organizationsStore.current)
+const bannerImageSizes = computed(() => pictureApiToImageSizes(organization.value?.banner_image))
+
+const setBanner = async (file) => {
+  try {
+    const formData = new FormData()
+    formData.append('file', file, file.name)
+
+    await postOrganisationBanner({ code: organizationCode, body: formData })
+
+    toaster.pushSuccess(t('admin.portal.general.banner-edit.success'))
+
+    await organizationsStore.getCurrentOrganization(organizationCode)
+  } catch (error) {
+    console.error(error)
+
+    toaster.pushError(t('admin.portal.general.banner-edit.error'))
+  }
+}
+
+const resizeBanner = async (imageSizes) => {
+  if (!imageSizes) return
+  if (!isEqual(imageSizes, pictureApiToImageSizes(organization.value.banner_image))) {
+    const formData = new FormData()
+    imageSizesFormData(formData, imageSizes)
+    try {
+      if (organization.value.banner_image?.id) {
+        await patchOrganisationBanner(
+          organizationCode,
+          organization.value.banner_image.id,
+          formData
+        )
+      }
+      toaster.pushSuccess(t('admin.portal.general.banner-edit.success'))
+
+      await organizationsStore.getCurrentOrganization(organizationCode)
+    } catch (error) {
+      console.error(error)
+
+      toaster.pushError(t('admin.portal.general.banner-edit.error'))
     }
-  },
-
-  computed: {
-    organization() {
-      return this.organizationsStore.current
-    },
-    bannerImageSizes() {
-      return pictureApiToImageSizes(this.organization?.banner_image)
-    },
-  },
-
-  methods: {
-    async setBanner(file) {
-      try {
-        const formData = new FormData()
-        formData.append('file', file, file.name)
-
-        await postOrganisationBanner({ code: this.organization.code, body: formData })
-
-        this.toaster.pushSuccess(this.$t('admin.portal.general.banner-edit.success'))
-
-        await this.organizationsStore.getCurrentOrganization(this.organization.code)
-      } catch (error) {
-        console.error(error)
-
-        this.toaster.pushError(this.$t('admin.portal.general.banner-edit.error'))
-      }
-    },
-
-    async resizeBanner(imageSizes) {
-      if (!imageSizes) return
-      if (!isEqual(imageSizes, pictureApiToImageSizes(this.organization.banner_image))) {
-        const formData = new FormData()
-        imageSizesFormData(formData, imageSizes)
-        try {
-          if (this.organization.banner_image?.id) {
-            await patchOrganisationBanner(
-              this.organization.code,
-              this.organization.banner_image.id,
-              formData
-            )
-          }
-          this.toaster.pushSuccess(this.$t('admin.portal.general.banner-edit.success'))
-
-          await this.organizationsStore.getCurrentOrganization(this.organization.code)
-        } catch (error) {
-          console.error(error)
-
-          this.toaster.pushError(this.$t('admin.portal.general.banner-edit.error'))
-        }
-      }
-    },
-  },
+  }
 }
 </script>

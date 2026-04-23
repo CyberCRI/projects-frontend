@@ -6,6 +6,7 @@
       :image-sizes="logoImageSizes"
       :picture="organization.logo_image"
       :picture-ratio="1 / 1"
+      :default-picture="DEFAULT_IMAGE_PATATOID"
       no-resize
       @update:picture="setLogo($event)"
     />
@@ -13,6 +14,7 @@
 </template>
 
 <script setup lang="ts">
+import { DEFAULT_IMAGE_PATATOID } from '@/composables/usePatatoids'
 import { postOrganisationLogo } from '@/api/organizations.service'
 import AdminBlock from '../AdminBlock.vue'
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
