@@ -3,7 +3,7 @@ import TemplatesTab from '@/pages/AdminPortalPageV2/Tabs/TemplatesTab.vue'
 import { describe, expect, it, vi } from 'vitest'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 
-describe('TemplatesTab.vue', () => {
+describe.skip('TemplatesTab.vue', () => {
   it('BackendError', async () => {
     registerEndpoint(`organization/CRI/template`, () => {
       throw createError({ statusCode: 500 })

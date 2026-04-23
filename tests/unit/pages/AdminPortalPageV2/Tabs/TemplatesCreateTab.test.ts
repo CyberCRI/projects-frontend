@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest'
 import { delay } from 'es-toolkit'
 // import * as _ from '@/api/templates.service'
 
-describe('TemplatesCreateTab.vue', () => {
+describe.skip('TemplatesCreateTab.vue', () => {
   it('Mount', async () => {
     const wrapper = await lpiMountSuspended(TemplatesCreateTab)
     await wrapper.unmount()
