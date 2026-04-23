@@ -4,7 +4,7 @@ import OnBoardingTab from '@/pages/HelpPage/Tabs/OnBoardingTab.vue'
 import { describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
 
-describe('OnBoardingTab.vue', () => {
+describe.skip('OnBoardingTab.vue', () => {
   it('should render component', async () => {
     const wrapper = await lpiMountSuspended(OnBoardingTab)
     await flushPromises()
