@@ -138,6 +138,7 @@ export default defineLazyEventHandler(() => {
     setResponseHeader(event, 'Content-Type', 'text/event-stream')
     setResponseHeader(event, 'Cache-Control', 'no-cache')
     setResponseHeader(event, 'Connection', 'keep-alive')
+    setResponseHeader(event, 'X-Accel-Buffering', 'no')
     setResponseStatus(event, 200)
 
     /* --------- Conversation & TokenMap  --------- */
@@ -205,6 +206,9 @@ export default defineLazyEventHandler(() => {
       // TODO: add middlkewrae to select tools
       const mcpTools = await client.getTools()
       traceMcp('mcp tool', JSON.stringify(mcpTools, null, 2))
+      event.node.res.on('close', () => {
+        client.close().catch(() => {})
+      })
       tools.unshift(...mcpTools)
     }
 
@@ -353,36 +357,43 @@ export default defineLazyEventHandler(() => {
     }
 
     // TODO: fix typescript mess with agent.stream return type
-    for await (const [token, metadata] of (await agent.stream(
-      {
-        messages: messages.map((msg) =>
-          msg.role === 'ai' || msg.role === 'assistant'
-            ? new AIMessage(msg.text)
-            : new HumanMessage(msg.text)
-        ),
-      } as any,
-      { ...config, streamMode: 'messages' }
-    )) as AsyncIterableIterator<[BaseMessageChunk, { status: string; langgraph_node?: any }]>) {
-      // prevent writing tool message to front
-      if (token.lc_id[token.lc_id.length - 1] != 'AIMessageChunk') continue
+    try {
+      for await (const [token, metadata] of (await agent.stream(
+        {
+          messages: messages.map((msg) =>
+            msg.role === 'ai' || msg.role === 'assistant'
+              ? new AIMessage(msg.text)
+              : new HumanMessage(msg.text)
+          ),
+        } as any,
+        { ...config, streamMode: 'messages' }
+      )) as AsyncIterableIterator<[BaseMessageChunk, { status: string; langgraph_node?: any }]>) {
+        // prevent writing tool message to front
+        if (token.lc_id[token.lc_id.length - 1] != 'AIMessageChunk') continue
 
-      const content = token.contentBlocks || []
-      const text = content
-        .filter((part) => part.type == 'text')
-        .map((part) => part.text)
-        .join('')
-      const is_done = metadata.status === 'completed'
-      const role = 'ai'
-      event.node.res.write(
-        `data: ${JSON.stringify({
-          text,
-          role,
-          is_done,
-          conversationId,
-        })}\n\n`
-      )
+        const content = token.contentBlocks || []
+        const text = content
+          .filter((part) => part.type == 'text')
+          .map((part) => part.text)
+          .join('')
+        const is_done = metadata.status === 'completed'
+        const role = 'ai'
+        event.node.res.write(
+          `data: ${JSON.stringify({
+            text,
+            role,
+            is_done,
+            conversationId,
+          })}\n\n`
+        )
+        if (typeof (event.node.res as any).flush === 'function') {
+          ;(event.node.res as any).flush()
+        }
+      }
+    } catch (err) {
+      traceLangchain('Stream error:', err)
+    } finally {
+      event.node.res.end()
     }
-
-    event.node.res.end()
   })
 })

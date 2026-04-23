@@ -56,13 +56,14 @@ const addToConversation = (...args) => {
 
 const conversationStarted = ref(false)
 const requestInterceptor = (requestDetails) => {
-  if (!conversationStarted.value) {
-    requestDetails.body.messages = [...props.contextMessages, ...requestDetails.body.messages]
-  }
+  const allMessages = conversationStarted.value
+    ? requestDetails.body.messages
+    : [...props.contextMessages, ...requestDetails.body.messages]
 
   conversationStarted.value = true
-  addToConversation(...requestDetails.body.messages)
-  // requestDetails.body.messages = conversation.value
+  addToConversation(...allMessages)
+  // Server maintains full history via LangGraph checkpointer — only send the new message
+  requestDetails.body.messages = [allMessages[allMessages.length - 1]]
   requestDetails.body.conversationId = conversationId.value
   analytics.chatbot.send(requestDetails.body)
   return requestDetails
