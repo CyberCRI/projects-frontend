@@ -14,12 +14,17 @@ export interface InstructionModel extends BaseModel {
   publication_date: Date | string
   people_groups: PeopleGroupModel[]
   has_to_be_notified: boolean
+  visible_by_all: boolean
 }
 
 // can be id or id in string
 export type InstructionId = InstructionModel['id'] | string
 
-export type InstructionOutput = BaseModel & Required<InstructionModel>
+export type InstructionOutput = Required<InstructionModel>
+export type InstructionForm = Omit<InstructionModel, 'id' | 'people_groups'> & {
+  id?: number
+  people_groups: any
+}
 
 export type InstructionInput = Required<InstructionModel> & {
   organization_code: string

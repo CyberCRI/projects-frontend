@@ -1,12 +1,21 @@
+import BaseModel from '@/models/base.model'
 import { OrganizationModel } from '@/models/organization.model'
 import { SkillModel } from '@/models/skill.model'
 import { UserModel } from '@/models/user.model'
 
-export type Mentoring = {
+export interface Mentoring extends BaseModel {
+  id: number
   organization: OrganizationModel
   mentor: UserModel
   mentoree: UserModel
   skill: SkillModel
-  create_by: UserModel
   status: 'pending' | 'accepted' | 'rejected'
+  create_by: UserModel | null
+  created_at: string
+}
+
+export type MentoringContactForm = {
+  title: string
+  reply_to: string
+  content: string
 }

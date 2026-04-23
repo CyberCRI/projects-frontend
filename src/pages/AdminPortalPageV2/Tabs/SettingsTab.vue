@@ -1,9 +1,9 @@
-<script setup>
+<script setup lang="ts">
 import { Sketch } from '@ckpack/vue-color'
 import { useVuelidate } from '@vuelidate/core'
 import { required, requiredIf, maxLength, email, helpers } from '@vuelidate/validators'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useToasterStore from '@/stores/useToaster'
+import useOrganizationsStore from '@/stores/useOrganizations'
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
 const { t } = useNuxtI18n()
@@ -13,8 +13,20 @@ const form = ref({
   contact_email: '',
   language: '',
   logo_image: {
+    url: undefined,
+    file: undefined,
+    name: undefined,
+    scale_x: undefined,
+    scale_y: undefined,
+    left: undefined,
+    top: undefined,
+    natural_ratio: undefined,
     variations: {
+      large: undefined,
       small: undefined,
+      full: undefined,
+      original: undefined,
+      medium: undefined,
     },
   },
   name: '',
@@ -61,29 +73,27 @@ onMounted(() => {
   if (!form.value.background_color) form.value.background_color = '#FFFFFF'
   startEditWatcher()
 })
-const rules = {
-  form: {
-    name: {
-      required: helpers.withMessage(t('admin.form.admin-info.name.required'), required),
-      maxLength: helpers.withMessage(t('admin.form.admin-info.name.max-length'), maxLength(32)),
-    },
-    contact_email: {
-      required: helpers.withMessage(t('admin.form.admin-info.contact-email.required'), required),
-      email: helpers.withMessage(t('admin.form.admin-info.contact-email.email'), email),
-    },
-    language: {
-      required: helpers.withMessage(t('admin.form.admin-info.language.required'), required),
-    },
-    background_color: {
-      required: helpers.withMessage(
-        t('admin.form.admin-info.background-color.required-if'),
-        requiredIf(form.value.is_logo_visible_on_parent_dashboard)
-      ),
-    },
+const rules = computed(() => ({
+  name: {
+    required: helpers.withMessage(t('admin.admin-info.name.required'), required),
+    maxLength: helpers.withMessage(t('admin.admin-info.name.max-length'), maxLength(32)),
   },
-}
+  contact_email: {
+    required: helpers.withMessage(t('admin.admin-info.contact-email.required'), required),
+    email: helpers.withMessage(t('admin.admin-info.contact-email.email'), email),
+  },
+  language: {
+    required: helpers.withMessage(t('admin.admin-info.language.required'), required),
+  },
+  background_color: {
+    required: helpers.withMessage(
+      t('admin.admin-info.background-color.required-if'),
+      requiredIf(form.value.is_logo_visible_on_parent_dashboard)
+    ),
+  },
+}))
 
-const v$ = useVuelidate(rules, { form })
+const v$ = useVuelidate(rules, form)
 
 const saveData = async () => {
   isLoading.value = true
@@ -121,26 +131,26 @@ const saveData = async () => {
         <div class="block-container">
           <AdminBlock :block-title="$t('form.organization-name')">
             <span class="description">{{ $t('tips.organization-name') }}</span>
-            <TextInput v-model="form.name" class="text-input" @blur="v$.form.name.$touch" />
-            <FieldErrors :errors="v$.form.name.$errors" />
+            <TextInput v-model="form.name" class="text-input" @blur="v$.name.$touch" />
+            <FieldErrors :errors="v$.name.$errors" />
           </AdminBlock>
           <AdminBlock :block-title="$t('tips.organization-email')">
             <span class="description">{{}}</span>
             <TextInput
               v-model="form.contact_email"
               class="text-input"
-              @blur="v$.form.contact_email.$touch"
+              @blur="v$.contact_email.$touch"
             />
-            <FieldErrors :errors="v$.form.contact_email.$errors" />
+            <FieldErrors :errors="v$.contact_email.$errors" />
           </AdminBlock>
           <AdminBlock :block-title="$t('form.language')">
             <span class="description">{{ $t('tips.organization-language') }}</span>
             <LpiSelect
               v-model="form.language"
               :options="languageOptions"
-              @blur="v$.form.language.$touch"
+              @blur="v$.language.$touch"
             />
-            <FieldErrors :errors="v$.form.language.$errors" />
+            <FieldErrors :errors="v$.language.$errors" />
           </AdminBlock>
           <AdminBlock :block-title="$t('admin.portal.general.portal-referencing')">
             <span class="description">{{ $t('tips.organization-visibility') }}</span>
@@ -149,7 +159,7 @@ const saveData = async () => {
               :options="visibilityOptions"
               has-icon
             />
-            <FieldErrors :errors="v$.form.background_color.$errors" />
+            <FieldErrors :errors="v$.background_color.$errors" />
 
             <div v-if="form.is_logo_visible_on_parent_dashboard" class="color-ctn">
               <span class="description">

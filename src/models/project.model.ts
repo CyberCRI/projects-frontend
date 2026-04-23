@@ -14,7 +14,7 @@ import { OrganizationModel, OrganizationOutput } from '@/models/organization.mod
 import { ReviewModel } from '@/models/review.model'
 import { AnnouncementModel, AnnouncementOutput } from '@/models/announcement.model'
 import { FollowOutput } from '@/models/follow.model'
-import { TemplateModel } from '@/models/template.model'
+import { TemplateModel, TranslatedTemplate } from '@/models/template.model'
 import { TagModel, TagOutput } from '@/models/tag.model'
 import { Translated } from '@/interfaces/translated'
 
@@ -49,9 +49,15 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
   goals: GoalOutput[]
   slug: string
   updated_at: string
+  template?: TemplateModel
 }
 
-export type TranslatedProject = Translated<ProjectModel, 'title' | 'description' | 'purpose'>
+export type TranslatedProject = Translated<
+  Omit<ProjectModel, 'template'>,
+  'title' | 'description' | 'purpose'
+> & {
+  template?: TranslatedTemplate
+}
 
 export type ProjectCreateInput = Required<ProjectModel> & {
   project_categories_ids: number

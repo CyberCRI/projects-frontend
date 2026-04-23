@@ -104,10 +104,7 @@ const sortedGoals = computed(() => {
 const onDeleteGoal = async () => {
   asyncing.value = true
   try {
-    await deleteGoal({
-      id: selectedGoal.value.id,
-      project_id: props.project.id,
-    })
+    await deleteGoal(props.project.id, selectedGoal.value.id)
 
     emit('reload-goals')
 

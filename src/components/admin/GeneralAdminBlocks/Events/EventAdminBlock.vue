@@ -55,7 +55,6 @@
 <script setup lang="ts">
 import { deleteEvent } from '@/api/event.service'
 import useToasterStore from '@/stores/useToaster'
-import { defaultForm } from '@/components/instruction/InstructionForm/InstructionForm.vue'
 import EventItem from '@/components/event/EventList/EventItem.vue'
 import { getAllEvents } from '@/api/v2/event.service'
 import AdminBlock from '@/components/admin/GeneralAdminBlocks/AdminBlock.vue'
@@ -66,6 +65,7 @@ import EditEventDrawer from '@/components/event/EditEventDrawer/EditEventDrawer.
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
+import { defaultForm } from '@/form/event'
 
 const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()

@@ -7,5 +7,6 @@ export const instructionSkeleton = (def?: Partial<InstructionModel>): Instructio
   publication_date: new Date().toISOString(),
   has_to_be_notified: false,
   people_groups: [],
+  visible_by_all: false,
   ...(def || {}),
 })

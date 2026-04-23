@@ -7,9 +7,9 @@
         :placeholder="$t('instructions.form.title.placeholder')"
         class="input-field"
         @update:model-value="updateForm({ title: $event })"
-        @blur="v$.modelValue.title.$validate"
+        @blur="v$.title.$validate"
       />
-      <FieldErrors :errors="v$.modelValue.title.$errors" />
+      <FieldErrors :errors="v$.title.$errors" />
     </div>
 
     <div class="form-section">
@@ -21,16 +21,16 @@
         class="input-field content-editor no-max-height"
         mode="full"
         @update:model-value="updateForm({ content: $event })"
-        @blur="v$.modelValue.content.$validate"
+        @blur="v$.content.$validate"
       />
 
-      <FieldErrors :errors="v$.modelValue.content.$errors" />
+      <FieldErrors :errors="v$.content.$errors" />
     </div>
 
     <DateField
       :model-value="modelValue.publication_date"
       :label="$t('instructions.form.publication_date.label')"
-      :errors="v$.modelValue.publication_date.$errors"
+      :errors="v$.publication_date.$errors"
       @update:model-value="onDateSelected"
     />
 
@@ -72,7 +72,7 @@
   </form>
 </template>
 
-<script>
+<script setup lang="ts">
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import useVuelidate from '@vuelidate/core'
@@ -80,103 +80,61 @@ import { helpers, required } from '@vuelidate/validators'
 import IconImage from '@/components/base/media/IconImage.vue'
 import MultiGroupPicker from '@/components/group/MultiGroupPicker/MultiGroupPicker.vue'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
-import { postOrganizationImage } from '@/api/organizations.service.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { postOrganizationImage } from '@/api/organizations.service'
 import DateField from '@/components/base/form/DateField.vue'
+import { InstructionForm } from '@/models/instruction.model'
 
-export function defaultForm() {
-  return {
-    title: '',
-    content: '<p></p>',
-    publication_date: new Date().toISOString(),
-    has_to_be_notified: false,
-    people_groups: {},
-    visible_by_all: true,
+const model = defineModel<InstructionForm>()
+
+const emit = defineEmits<{
+  invalid: [boolean]
+}>()
+const { t } = useNuxtI18n()
+const organizationCode = useOrganizationCode()
+
+const rules = computed(() => ({
+  title: {
+    required: helpers.withMessage(t('instructions.form.title.required'), required),
+  },
+  content: {
+    required: helpers.withMessage(t('instructions.form.content.required'), required),
+  },
+  publication_date: {
+    required: helpers.withMessage(t('instructions.form.publication_date.required'), required),
+  },
+}))
+
+const v$ = useVuelidate(rules, model)
+defineExpose({ v$ })
+
+watch(
+  () => v$.value.$invalid,
+  (isInvalid) => {
+    emit('invalid', isInvalid)
+  }
+)
+
+const updateForm = (data) => {
+  model.value = {
+    ...model.value,
+    ...data,
   }
 }
 
-export default {
-  name: 'InstructionForm',
+const saveOrganizationImage = (file) => {
+  const formData = new FormData()
+  formData.append('file', file, file.name)
+  return postOrganizationImage({
+    orgCode: organizationCode,
+    body: formData,
+  })
+}
+const onDateSelected = (modelData) => {
+  updateForm({ publication_date: modelData })
+}
 
-  components: {
-    TextInput,
-    TipTapEditor,
-    IconImage,
-    MultiGroupPicker,
-    FieldErrors,
-    DateField,
-  },
-  props: {
-    modelValue: {
-      type: Object,
-      required: true,
-    },
-  },
-
-  emits: ['update:modelValue', 'invalid'],
-  setup() {
-    const organizationsStore = useOrganizationsStore()
-    return {
-      organizationsStore,
-    }
-  },
-
-  data() {
-    return {
-      v$: useVuelidate(),
-    }
-  },
-
-  computed: {
-    organization() {
-      return this.organizationsStore.current
-    },
-  },
-
-  watch: {
-    'v$.$invalid'(isInvalid) {
-      this.$emit('invalid', isInvalid)
-    },
-  },
-  validations() {
-    return {
-      modelValue: {
-        title: {
-          required: helpers.withMessage(this.$t('instructions.form.title.required'), required),
-        },
-        content: {
-          required: helpers.withMessage(this.$t('instructions.form.content.required'), required),
-        },
-        publication_date: {
-          required: helpers.withMessage(
-            this.$t('instructions.form.publication_date.required'),
-            required
-          ),
-        },
-      },
-    }
-  },
-
-  methods: {
-    saveOrganizationImage(file) {
-      const formData = new FormData()
-      formData.append('file', file, file.name)
-      return postOrganizationImage({
-        orgCode: this.organization.code,
-        body: formData,
-      })
-    },
-    onDateSelected(modelData) {
-      this.updateForm({ publication_date: modelData })
-    },
-
-    updateForm(data) {
-      this.$emit('update:modelValue', { ...this.modelValue, ...data })
-    },
-    toggleNotify() {
-      this.updateForm({ has_to_be_notified: !this.modelValue.has_to_be_notified })
-    },
-  },
+const toggleNotify = () => {
+  updateForm({ has_to_be_notified: !model.value.has_to_be_notified })
 }
 </script>
 

@@ -55,6 +55,7 @@ export const TranslatedProjectFactory = createFactory<TranslatedProject>(() => {
 
   return {
     ...project,
+    template: null,
     $t: {
       title: project.title,
       description: project.description,
