@@ -2,9 +2,9 @@
   <BaseModal modal-data-test="welcome-modal" @close="completeLater">
     <template #content>
       <div class="portal-logo-ctn" :style="{ 'background-image': `url(${organizationLogo})` }" />
-      <i18n-t keypath="welcome-modal.title" tag="h2" class="welcome-title" scope="global">
+      <I18nT keypath="welcome-modal.title" tag="h2" class="welcome-title" scope="global">
         <span>{{ organizationTitle }}</span>
-      </i18n-t>
+      </I18nT>
       <p class="notice">
         {{ $t('welcome-modal.success') }}
       </p>
@@ -44,6 +44,7 @@
 import BaseModal from '@/components/base/modal/BaseModal.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import useOrganizationsStore from '@/stores/useOrganizations'
+import { I18nT } from 'vue-i18n'
 
 const emit = defineEmits<{
   close: []

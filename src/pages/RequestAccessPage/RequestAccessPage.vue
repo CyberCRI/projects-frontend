@@ -5,6 +5,7 @@ import { postAccessRequest } from '@/api/organizations.service'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import useToasterStore from '@/stores/useToaster'
 import useOrganizationsStore from '@/stores/useOrganizations'
+import { I18nT } from 'vue-i18n'
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
@@ -100,9 +101,9 @@ useLpiHead2({
   >
     <transition name="fade" mode="out-in">
       <div v-if="confirm" class="confirm-message">
-        <i18n-t keypath="request-access.confirmation" tag="p">
+        <I18nT keypath="request-access.confirmation" tag="p">
           <strong>{{ form.email }}</strong>
-        </i18n-t>
+        </I18nT>
       </div>
       <div v-else class="form">
         <p class="notice">

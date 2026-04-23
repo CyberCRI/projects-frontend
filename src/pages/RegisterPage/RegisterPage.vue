@@ -9,6 +9,7 @@ import useToasterStore from '@/stores/useToaster'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import { getPatatoidFile } from '@/composables/usePatatoids'
 import { usePublicURL } from '@/composables/usePublic'
+import { I18nT } from 'vue-i18n'
 
 const props = defineProps<{
   token: string
@@ -158,9 +159,9 @@ useLpiHead2({
       <SignUpWrapper :sign-up-title="confirm ? $t('register.title-confirm') : $t('register.title')">
         <transition name="fade" mode="out-in">
           <div v-if="confirm" class="confirm-message">
-            <i18n-t keypath="register.confirmation" tag="p">
+            <I18nT keypath="register.confirmation" tag="p">
               <strong>{{ form.email }}</strong>
-            </i18n-t>
+            </I18nT>
           </div>
           <div v-else class="form">
             <div class="form-group">
@@ -209,7 +210,7 @@ useLpiHead2({
             <div class="form-group">
               <div class="tos-wrapper">
                 <LpiCheckbox v-model="form.acceptedTOS" label="" data-test="accepted-tos" />
-                <i18n-t keypath="register.tos" tag="p" class="tos">
+                <I18nT keypath="register.tos" tag="p" class="tos">
                   <template #term>
                     <NuxtLink to="/terms-of-service" class="link" target="_blank">
                       {{ $t('register.term') }}
@@ -221,7 +222,7 @@ useLpiHead2({
                       {{ $t('register.privacy') }}
                     </NuxtLink>
                   </template>
-                </i18n-t>
+                </I18nT>
               </div>
               <FieldErrors :errors="v$.acceptedTOS.$errors" />
             </div>

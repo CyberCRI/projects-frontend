@@ -22,7 +22,7 @@
         :default-picture="DEFAULT_USER_PATATOID"
       />
       <div class="container">
-        <i18n-t :keypath="`notifications.type.${notification.type}`" tag="p">
+        <I18nT :keypath="`notifications.type.${notification.type}`" tag="p">
           <template #sender>
             <strong v-if="senderName">
               {{ senderName }}
@@ -106,7 +106,7 @@
               {{ notification?.context?.requests_count }}
             </strong>
           </template>
-        </i18n-t>
+        </I18nT>
         <span class="date">{{ timePassed }}</span>
       </div>
     </component>
@@ -120,11 +120,12 @@ import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import { NuxtLink } from '#components'
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 import { getTimePassed } from '@/functs/date'
+import { I18nT } from 'vue-i18n'
 
 export default {
   name: 'NotificationItem',
 
-  components: { IconImage, CroppedApiImage, NuxtLink },
+  components: { IconImage, CroppedApiImage, NuxtLink, I18nT },
 
   props: {
     notification: {
