@@ -98,6 +98,7 @@
     "leaflet": "^1",
     "leaflet.markercluster": "^1.5.3",
     "lowlight": "^3.3.0",
+    "mammoth": "^1.12.0",
     "mixpanel-browser": "^2.48.1",
     "nuxt": "^3.19.3",
     "nuxt-svgo": "4.2.6",
