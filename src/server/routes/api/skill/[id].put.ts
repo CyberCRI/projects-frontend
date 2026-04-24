@@ -43,6 +43,17 @@ export default defineLazyEventHandler(() => {
       },
     })
 
+    // update agent using latest skiil version
+    await chatbotPrisma.agentSkillContent.updateMany({
+      where: {
+        skillId: id,
+        useLatestSkillVersion: true,
+      },
+      data: {
+        skillVersion: version,
+      },
+    })
+
     return skill
   })
 })

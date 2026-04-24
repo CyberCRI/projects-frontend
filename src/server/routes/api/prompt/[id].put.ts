@@ -43,6 +43,17 @@ export default defineLazyEventHandler(() => {
       },
     })
 
+    // update agents that use latest prompt version
+    await chatbotPrisma.agent.updateMany({
+      where: {
+        promptId: id,
+        useLatestPromptVersion: true,
+      },
+      data: {
+        promptVersion: version,
+      },
+    })
+
     return prompt
   })
 })
