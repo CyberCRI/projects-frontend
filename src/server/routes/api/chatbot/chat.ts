@@ -1,5 +1,12 @@
 import { initChatModel } from 'langchain/chat_models/universal'
-import { tool, createAgent, createMiddleware } from 'langchain'
+import {
+  tool,
+  createAgent,
+  createMiddleware,
+  contextEditingMiddleware,
+  // ClearToolUsesEdit,
+  // summarizationMiddleware,
+} from 'langchain'
 import * as z from 'zod'
 import { MemorySaver } from '@langchain/langgraph'
 import { SystemMessage, HumanMessage, AIMessage, BaseMessageChunk } from '@langchain/core/messages'
@@ -343,7 +350,25 @@ export default defineLazyEventHandler(() => {
           },
         ],
       }),
-      middleware: [toolMonitoringMiddleware, loggingMiddleware] as any,
+      middleware: [
+        toolMonitoringMiddleware,
+        loggingMiddleware,
+        // contextEditingMiddleware({
+        //   // TODO: make configurable in agent data{
+        //   edits: [
+        //     new ClearToolUsesEdit({
+        //       triggerTokens: 1000, // 10_000, // 1 ingle-spaced page ~= 3500 chars
+        //       keep: 3, // keep at least n tool call
+        //     }),
+        //   ],
+        // }),
+        // summarizationMiddleware({
+        //   // TODO: make configurable in agent data
+        //   model, // TODO: make model independent from agent  model
+        //   trigger: { tokens: 1600 }, // 16_000 }, // 1 ingle-spaced page ~= 3500 chars
+        //   keep: { messages: 4 }, // 42 },
+        // }),
+      ] as any,
     })
 
     /* --------- Start coversation  --------- */
