@@ -16,6 +16,8 @@ const DEFAULT_CONFIG = {}
 type Config = UseAsyncApiConfig
 type ConfigPagination = UseAsyncPaginationApiConfig
 
+type ConfigPaginationMembers = UseAsyncPaginationApiConfig<QueryFilterProjectMembers>
+
 // TODO change backend with prefix organization code in url
 export const getProject = (
   organization: RefOrRaw<OrganizationModel['code']>,
@@ -71,7 +73,7 @@ export const getLinkedProject = (
 export const getProjectMembers = (
   organization: RefOrRaw<OrganizationModel['code']>,
   projectSlugOrId: RefOrRaw<ProjectSlugOrId>,
-  config: ConfigPagination = {}
+  config: ConfigPaginationMembers = {}
 ) => {
   const key = computed(() => `${unref(organization)}::project::${unref(projectSlugOrId)}::members`)
 

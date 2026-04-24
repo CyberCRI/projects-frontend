@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import BaseModulePreview from '@/components/modules/BaseModulePreview.vue'
-import GoalsRecap from '@/components/project/goal/GoalsRecap.vue'
+import BaseProjectComments from '@/components/project/modules/Comments/BaseProjectComments.vue'
 import { ProjectModuleIcon, ProjectModuleTitle, TranslatedProject } from '@/models/project.model'
 
 defineProps<{ project: TranslatedProject }>()
@@ -8,16 +8,16 @@ defineProps<{ project: TranslatedProject }>()
 
 <template>
   <BaseModulePreview
-    :title="$t(ProjectModuleTitle.goals)"
-    :icon="ProjectModuleIcon.goals"
-    :total="project.modules.goals"
+    :title="$t(ProjectModuleTitle.private_exchange)"
+    :icon="ProjectModuleIcon.private_exchange"
+    :total="project.modules.private_exchange"
     :see-more="{
-      name: 'projectGoals',
+      name: 'projectPrivateExchange',
       params: { slugOrid: project.slug || project.id },
     }"
   >
     <template #content>
-      <GoalsRecap :project="project" preview />
+      <BaseProjectComments :project="project" preview />
     </template>
   </BaseModulePreview>
 </template>

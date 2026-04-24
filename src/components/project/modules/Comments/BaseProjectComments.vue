@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { getProjectComments } from '@/api/v2/comments.service'
 import FetchLoader from '@/components/base/FetchLoader.vue'
+import CommentItem from '@/components/project/comment/CommentItem.vue'
 import { TranslatedProject } from '@/models/project.model'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import { projectCommentSkeleton } from '@/skeletons/comments.skeletons'
@@ -21,7 +22,11 @@ const {
   status,
   data: comments,
   pagination,
+  refresh,
 } = getProjectComments(organizationCode, projectId, {
+  query: {
+    ordering: '-created_at',
+  },
   paginationConfig: {
     limit: props.limit,
   },
@@ -32,7 +37,13 @@ const {
 <template>
   <FetchLoader :status="status" only-error skeleton>
     <div>
-      <CommentItem v-for="comment in comments" :key="comment.id" :comment="comment" />
+      <MakeComment v-if="!preview" :project="project" @comment-posted="refresh" />
+      <CommentItem
+        v-for="comment in comments"
+        :key="comment.id"
+        :project="project"
+        :comment="comment"
+      />
       <EmptyLabel v-if="comments.length === 0" />
     </div>
     <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />

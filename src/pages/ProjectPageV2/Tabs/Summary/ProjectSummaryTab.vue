@@ -21,6 +21,8 @@
 
       <ProjectCommentsPreview :project="project" />
 
+      <ProjectPrivateExchangePreview :project="project" />
+
       <!--
     </div>
     <BaseDrawer
@@ -49,6 +51,7 @@ import ProjectGoalsPreview from '@/components/project/modules/Goals/ProjectGoals
 import ProjectLinkedProjectsPreview from '@/components/project/modules/LinkedProjects/ProjectLinkedProjectsPreview.vue'
 import ProjectLocationsPreview from '@/components/project/modules/Locations/ProjectLocationsPreview.vue'
 import ProjectMembersPreview from '@/components/project/modules/Members/ProjectMembersPreview.vue'
+import ProjectPrivateExchangePreview from '@/components/project/modules/PrivateExchange/ProjectPrivateExchangePreview.vue'
 import ProjectDescriptionPreview from '@/components/project/modules/ProjectDescriptionPreview.vue'
 import ProjectResourcesPreview from '@/components/project/modules/Resources/ProjectResourcesPreview.vue'
 import ProjectReviewPreview from '@/components/project/review/ProjectReviewPreview.vue'

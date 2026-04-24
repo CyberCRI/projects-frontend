@@ -59,7 +59,7 @@ const { isMobile } = useViewportWidth()
           <BreadCrumbs :breadcrumbs="breadcrumbs" />
         </div>
         <div class="content-panel-outer">
-          <div class="content-panel-inner skeletons-background">
+          <div class="content-panel-inner">
             <slot name="content" />
           </div>
         </div>

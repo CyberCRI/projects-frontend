@@ -1,3 +1,4 @@
+import { Ordering } from '@/interfaces/query'
 import BaseModel from '@/models/base.model'
 import { ProjectMemberRoleType } from '@/models/types'
 import { TranslatedUserModel, UserModel } from '@/models/user.model'
@@ -55,3 +56,8 @@ export type ProjectTeamOutput = {
 }
 
 export type ProjectMemberOutput = ProjectMemberModel
+
+export type QueryFilterProjectMembers = Partial<{
+  ordering: Ordering<'role'>
+  role: ProjectMemberRoleType
+}>

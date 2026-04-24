@@ -3,14 +3,22 @@ import { getProjectMembers } from '@/api/v2/project.service'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { TranslatedProject } from '@/models/project.model'
 
-const props = withDefaults(defineProps<{ project: TranslatedProject; limit?: number }>(), {
-  limit: null,
-})
+const props = withDefaults(
+  defineProps<{ project: TranslatedProject; limit?: number; preview?: false }>(),
+  {
+    limit: null,
+    preview: false,
+  }
+)
 
 const projectId = computed(() => props.project.id)
 const organizationCode = useOrganizationCode()
 
-const { status, data: members } = getProjectMembers(organizationCode, projectId, {
+const {
+  status,
+  data: members,
+  pagination,
+} = getProjectMembers(organizationCode, projectId, {
   paginationConfig: {
     limit: props.limit,
   },
@@ -26,6 +34,7 @@ const { status, data: members } = getProjectMembers(organizationCode, projectId,
         :user="member"
         class="project-member shadow-drop"
       />
+      <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
       <!-- @user-click="emit('user-click', $event)" -->
     </div>
   </FetchLoader>

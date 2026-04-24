@@ -13,9 +13,10 @@ import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import useAPI from '@/composables/useAPI'
 
 import { imageSizesFormData } from '@/functs/imageSizesUtils'
-import { ProjectMemberModel } from '@/models/project-member.model'
+import { ProjectMemberModel, QueryFilterProjectMembers } from '@/models/project-member.model'
 
 type Config = UseApiOptions
+type ConfigMembers = UseApiOptions<QueryFilterProjectMembers>
 
 export async function createProject(project) {
   const result: any = await useAPI(`project/`, { body: project, method: 'POST' }) //.data.value
@@ -89,7 +90,10 @@ export async function getProject(projectSlugOrId: ProjectSlugOrId, config = {}) 
   return await useAPI<ProjectModel>(`project/${projectSlugOrId}/`, config)
 }
 
-export async function getProjectMembers(projectSlugOrId: ProjectSlugOrId, config = {}) {
+export async function getProjectMembers(
+  projectSlugOrId: ProjectSlugOrId,
+  config: ConfigMembers = {}
+) {
   return await useAPI<PaginationResult<ProjectMemberModel>>(
     `project/${projectSlugOrId}/members/`,
     config
