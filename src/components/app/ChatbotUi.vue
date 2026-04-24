@@ -57,13 +57,14 @@ const addToConversation = (...args) => {
 const conversationStarted = ref(false)
 const requestInterceptor = (requestDetails) => {
   const allMessages = conversationStarted.value
-    ? requestDetails.body.messages
-    : [...props.contextMessages, ...requestDetails.body.messages]
+    ? // Server maintains full history via LangGraph checkpointer — only send the new message
+      [requestDetails.body.messages[requestDetails.body.messages.length - 1]]
+    : // but initial request has also context messages
+      [...props.contextMessages, ...requestDetails.body.messages]
 
   conversationStarted.value = true
   addToConversation(...allMessages)
-  // Server maintains full history via LangGraph checkpointer — only send the new message
-  requestDetails.body.messages = [allMessages[allMessages.length - 1]]
+  requestDetails.body.messages = allMessages
   requestDetails.body.conversationId = conversationId.value
   analytics.chatbot.send(requestDetails.body)
   return requestDetails
@@ -162,17 +163,6 @@ const setExemples = () => shuffle(chatExemples).slice(0, 3)
 
 const suggestButtons = ref(setExemples())
 
-watch(
-  () => conversationStarted.value,
-  (neo, old) => {
-    if (neo != old) {
-      // conversation was reset
-      suggestButtons.value = setExemples()
-      emit('start-conversation')
-    }
-  }
-)
-
 function placeCaretAtEnd(el) {
   // https://stackoverflow.com/questions/4233265/contenteditable-set-caret-at-the-end-of-the-text-cross-browser
   el.focus()
@@ -198,24 +188,6 @@ const onSuggestButtonClick = (buttonText) => {
     placeCaretAtEnd(inputBox)
   }
 }
-
-watch(
-  () => chatBox.value,
-  (neo, old) => {
-    if (neo && !old) {
-      neo.requestInterceptor = requestInterceptor
-      neo.responseInterceptor = responseInterceptor
-      neo.htmlWrappers = htmlWrappers.value
-    }
-    history.value = JSON.parse(JSON.stringify(conversation.value))
-  }
-)
-
-watchEffect(() => {
-  if (chatBox.value) {
-    chatBox.value.setPlaceholderText(placeholderText.value)
-  }
-})
 
 const textInputOptions = computed(() => ({
   placeholder: { text: placeholderText.value },
@@ -307,6 +279,37 @@ const resetChat = () => {
   conversationId.value = null
   history.value = []
 }
+
+defineExpose({ resetChat })
+
+watch(
+  () => conversationStarted.value,
+  (neo, old) => {
+    if (neo != old) {
+      // conversation was reset
+      suggestButtons.value = setExemples()
+      emit('start-conversation')
+    }
+  }
+)
+
+watch(
+  () => chatBox.value,
+  (neo, old) => {
+    if (neo && !old) {
+      neo.requestInterceptor = requestInterceptor
+      neo.responseInterceptor = responseInterceptor
+      neo.htmlWrappers = htmlWrappers.value
+    }
+    history.value = JSON.parse(JSON.stringify(conversation.value))
+  }
+)
+
+watchEffect(() => {
+  if (chatBox.value) {
+    chatBox.value.setPlaceholderText(placeholderText.value)
+  }
+})
 </script>
 
 <template>
