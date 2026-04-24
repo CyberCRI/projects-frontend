@@ -4,7 +4,7 @@
       <div class="comment-picture">
         <CroppedApiImage
           :alt="`${comment.author.given_name} ${comment.author.family_name} image`"
-          class="image"
+          class="image skeletons-background"
           :picture-data="comment.author.profile_picture"
           picture-size="medium"
           :default-picture="DEFAULT_USER_PATATOID"
@@ -13,11 +13,11 @@
       <div class="comment-body">
         <div class="comment-meta">
           <div class="authorship">
-            <span class="author">
+            <span class="author skeletons-text">
               {{ comment.author.given_name }} {{ comment.author.family_name }}
             </span>
-            <span class="separator">&bull;</span>
-            <span class="date">
+            <span class="separator skeletons-text">&bull;</span>
+            <span class="date skeletons-text">
               <span v-if="showEditDate">
                 {{ $d(new Date(comment.updated_at)) }}
               </span>
@@ -28,7 +28,7 @@
           </div>
         </div>
 
-        <div v-if="editing" class="comment-body">
+        <div v-if="editing" class="comment-body skeletons-background">
           <MakeComment
             :project="project"
             :original-comment="comment"
@@ -40,11 +40,11 @@
             @project-message-edited="$emit('project-message-posted', $event)"
           />
         </div>
-        <TipTapOutput v-else class="comment-content" :content="comment?.$t?.content" />
+        <TipTapOutput v-else class="comment-content skeletons-text" :content="comment.$t.content" />
 
         <div class="comment-footer">
           <div v-if="isConnected" class="actions">
-            <div class="reply-action">
+            <div class="reply-action skeletons-background">
               <ExternalLabelButton
                 v-if="!isReply"
                 :label="$t('common.reply')"
@@ -54,7 +54,7 @@
               />
             </div>
 
-            <div v-if="canEdit" class="author-action">
+            <div v-if="canEdit" class="author-action skeleton-background">
               <ExternalLabelButton
                 v-if="canEdit"
                 :label="$t('common.edit')"
@@ -77,20 +77,20 @@
     </div>
 
     <div v-else :class="{ 'is-reply': isReply }" class="comment deleted">
-      <div class="comment-picture">
+      <div class="comment-picture skeletons-text">
         <span class="image" />
       </div>
       <div class="comment-body">
         <div class="placeholder">
-          <IconImage name="Alert" />
-          <span>
+          <IconImage name="Alert" class="skeletons-background" />
+          <span class="skeletons-text">
             {{ isPrivate ? $t('comment.private-exchange.deleted') : $t('comment.deleted') }}
             {{ $d(new Date(comment.deleted_at)) }}
           </span>
         </div>
       </div>
     </div>
-    <div v-if="replying" class="comment-reply-ctn">
+    <div v-if="replying" class="comment-reply-ctn skeletons-text">
       <MakeComment
         :project="project"
         :replied-comment="comment"
@@ -129,12 +129,12 @@
       :title="isPrivate ? $t('comment.private-exchange.delete-title') : $t('comment.delete-title')"
       :asyncing="isDeleting"
       @cancel="openConfirmModal"
-      @confirm="deleteComment"
+      @confirm="onDeleteComment"
     />
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import IconImage from '@/components/base/media/IconImage.vue'
 import ExternalLabelButton from '@/components/base/button/ExternalLabelButton.vue'
 import MakeComment from '@/components/project/comment/MakeComment.vue'
@@ -143,155 +143,117 @@ import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import { deleteComment } from '@/api/comments.service'
 import { deleteProjectMessage } from '@/api/project-messages.service'
 import analytics from '@/analytics'
-import useToasterStore from '@/stores/useToaster.ts'
-import useUsersStore from '@/stores/useUsers.ts'
+import useToasterStore from '@/stores/useToaster'
+import useUsersStore from '@/stores/useUsers'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
+import { TranslatedProject } from '@/models/project.model'
+import { TranslatedComment } from '@/models/comment.model'
 
-export default {
-  name: 'CommentItem',
+const props = withDefaults(
+  defineProps<{
+    project: TranslatedProject
+    comment: TranslatedComment
+    isReply?: boolean
+    isPrivate?: boolean
+    repliedComment?: TranslatedComment
+  }>(),
+  {
+    isReply: false,
+    isPrivate: false,
+    repliedComment: null,
+  }
+)
 
-  components: {
-    ConfirmModal,
-    IconImage,
-    ExternalLabelButton,
-    MakeComment,
-    CroppedApiImage,
-    TipTapOutput,
-  },
+const { t } = useNuxtI18n()
 
-  props: {
-    project: {
-      type: Object,
-      default: () => {},
-    },
-    comment: {
-      type: Object,
-      default: () => {},
-    },
+const emit = defineEmits<{
+  'comment-posted': []
+  'project-message-posted': []
+  'comment-edited': []
+  'project-message-edited': []
+  'comment-deleted': [TranslatedComment]
+  'project-message-deleted': [TranslatedComment]
+}>()
+const toaster = useToasterStore()
+const usersStore = useUsersStore()
+const { isAdmin } = usePermissions()
 
-    repliedComment: {
-      type: Object,
-      default: () => {},
-    },
+const replying = ref(false)
+const editing = ref(false)
+const confirmDeleteComment = ref(false)
+const isDeleting = ref(false)
 
-    isReply: {
-      type: Boolean,
-      default: false,
-    },
+const currentUserId = computed(() => {
+  return usersStore.id || null
+})
 
-    isPrivate: {
-      type: Boolean,
-      default: false,
-    },
-  },
+const canEdit = computed(() => {
+  return props.comment.author.id === currentUserId.value || isAdmin.value
+})
 
-  emits: [
-    'comment-posted',
-    'project-message-posted',
-    'comment-edited',
-    'project-message-edited',
-    'comment-deleted',
-    'project-message-deleted',
-  ],
-  setup() {
-    const toaster = useToasterStore()
-    const usersStore = useUsersStore()
-    const { isAdmin } = usePermissions()
-    return {
-      toaster,
-      usersStore,
-      isAdmin,
-      DEFAULT_USER_PATATOID,
+const isConnected = computed(() => usersStore.isConnected)
+
+const showEditDate = computed(() => {
+  return (
+    new Date(props.comment.updated_at).toLocaleString() !==
+    new Date(props.comment.created_at).toLocaleString()
+  )
+})
+
+const toggleEdit = () => {
+  editing.value = !editing.value
+}
+
+const toggleReply = () => {
+  replying.value = !replying.value
+}
+
+const openConfirmModal = () => {
+  confirmDeleteComment.value = !confirmDeleteComment.value
+}
+
+const onDeleteComment = async () => {
+  isDeleting.value = true
+  if (props.isPrivate) {
+    try {
+      await deleteProjectMessage(props.project.id, props.comment.id)
+
+      analytics.projectMessage.deleteProjectMessage({
+        project: {
+          id: props.project.id,
+        },
+        projectMessage: props.comment,
+      })
+      toaster.pushSuccess(t('toasts.project-message-delete.success') /* TODO */)
+      emit('project-message-deleted', props.comment)
+    } catch (error) {
+      toaster.pushError(`${t('toasts.comment-delete.error')} (${error})` /* TODO */)
+      console.error(error)
+    } finally {
+      confirmDeleteComment.value = false
+      isDeleting.value = false
     }
-  },
+  } else {
+    try {
+      await deleteComment(props.project.id, props.comment.id)
+      analytics.comment.deleteComment({
+        project: {
+          id: props.project.id,
+        },
+        comment: props.comment,
+      })
+      toaster.pushSuccess(t('toasts.comment-delete.success'))
 
-  data() {
-    return {
-      replying: false,
-      editing: false,
-      confirmDeleteComment: false,
-      isDeleting: false,
+      emit('comment-deleted', props.comment)
+    } catch (error) {
+      toaster.pushError(`${t('toasts.comment-delete.error')} (${error})`)
+      console.error(error)
+    } finally {
+      confirmDeleteComment.value = false
+      isDeleting.value = false
     }
-  },
-
-  computed: {
-    canEdit() {
-      return this.comment.author.id === this.currentUserId || this.isAdmin
-    },
-
-    currentUserId() {
-      return this.usersStore.id || null
-    },
-
-    isConnected() {
-      return this.usersStore.isConnected
-    },
-
-    showEditDate() {
-      return (
-        new Date(this.comment.updated_at).toLocaleString() !==
-        new Date(this.comment.created_at).toLocaleString()
-      )
-    },
-  },
-
-  methods: {
-    toggleEdit() {
-      this.editing = !this.editing
-    },
-
-    toggleReply() {
-      this.replying = !this.replying
-    },
-
-    openConfirmModal() {
-      this.confirmDeleteComment = !this.confirmDeleteComment
-    },
-
-    async deleteComment() {
-      this.isDeleting = true
-      if (this.isPrivate) {
-        try {
-          await deleteProjectMessage(this.project.id, this.comment.id)
-
-          analytics.projectMessage.deleteProjectMessage({
-            project: {
-              id: this.project.id,
-            },
-            projectMessage: this.comment,
-          })
-          this.toaster.pushSuccess(this.$t('toasts.project-message-delete.success') /* TODO */)
-          this.$emit('project-message-deleted', this.comment)
-        } catch (error) {
-          this.toaster.pushError(`${this.$t('toasts.comment-delete.error')} (${error})` /* TODO */)
-          console.error(error)
-        } finally {
-          this.confirmDeleteComment = false
-          this.isDeleting = false
-        }
-      } else {
-        try {
-          await deleteComment(this.project.id, this.comment.id)
-          analytics.comment.deleteComment({
-            project: {
-              id: this.project.id,
-            },
-            comment: this.comment,
-          })
-          this.toaster.pushSuccess(this.$t('toasts.comment-delete.success'))
-
-          this.$emit('comment-deleted', this.comment)
-        } catch (error) {
-          this.toaster.pushError(`${this.$t('toasts.comment-delete.error')} (${error})`)
-          console.error(error)
-        } finally {
-          this.confirmDeleteComment = false
-          this.isDeleting = false
-        }
-      }
-    },
-  },
+  }
 }
 </script>
 

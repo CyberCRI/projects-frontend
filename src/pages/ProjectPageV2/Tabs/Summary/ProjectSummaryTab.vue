@@ -15,41 +15,13 @@
 
       <ProjectLinkedProjectsPreview :project="project" />
 
+      <ProjectResourcesPreview :project="project" />
+
+      <ProjectReviewPreview v-if="project.publication_status || true" :project="project" />
+
+      <ProjectCommentsPreview :project="project" />
+
       <!--
-      <ResourcesRecap
-        v-if="linkResources?.length || fileResources?.length"
-        class="unboxed"
-        :files="fileResources.length"
-        :links="linkResources.length"
-        :target="`/projects/${$route.params.slugOrId}/resources`"
-        :redirect="{
-          name: 'projectResources',
-          params: { slugOrId: $route.params.slugOrId },
-          hash: '#tab',
-        }"
-      />
-
-      <LinkedProjectsRecap
-        v-if="linkedProjects?.length"
-        class="unboxed"
-        :linked-projects="linkedProjects"
-      />
-
-      <ReviewRecap
-        v-if="project && project.publication_status"
-        class="unboxed"
-        :project="project"
-        :reviews="reviews"
-        @reload-reviews="$emit('reload-reviews')"
-        @reload-project="$emit('reload-project')"
-      />
-
-      <PublicationRecap
-        v-if="comments.length"
-        class="unboxed"
-        :is-blog="false"
-        :publications="comments"
-      />
     </div>
     <BaseDrawer
       no-footer
@@ -72,11 +44,14 @@
 
 <script setup lang="ts">
 import ProjectBlogEntriesPreview from '@/components/project/modules/BlogEntries/ProjectBlogEntriesPreview.vue'
+import ProjectCommentsPreview from '@/components/project/modules/Comments/ProjectCommentsPreview.vue'
 import ProjectGoalsPreview from '@/components/project/modules/Goals/ProjectGoalsPreview.vue'
 import ProjectLinkedProjectsPreview from '@/components/project/modules/LinkedProjects/ProjectLinkedProjectsPreview.vue'
 import ProjectLocationsPreview from '@/components/project/modules/Locations/ProjectLocationsPreview.vue'
 import ProjectMembersPreview from '@/components/project/modules/Members/ProjectMembersPreview.vue'
 import ProjectDescriptionPreview from '@/components/project/modules/ProjectDescriptionPreview.vue'
+import ProjectResourcesPreview from '@/components/project/modules/Resources/ProjectResourcesPreview.vue'
+import ProjectReviewPreview from '@/components/project/review/ProjectReviewPreview.vue'
 import { textIsEmpty } from '@/functs/string'
 import { TranslatedProject } from '@/models/project.model'
 

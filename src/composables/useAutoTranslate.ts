@@ -17,6 +17,7 @@ import { TranslatedUserModel } from '@/models/user.model'
 import { TranslatedInstruction } from '@/models/instruction.model'
 import { TranslatedGoal } from '@/models/goal.model'
 import { TranslatedBlogEntry } from '@/models/blog-entry.model'
+import { TranslatedComment } from '@/models/comment.model'
 
 // type can be computed or object
 type RefOrRaw<DataT> = ComputedRef<DataT> | Ref<DataT> | DataT
@@ -76,7 +77,7 @@ export default function useAutoTranslate() {
       return res
     })
 
-  const translateEntity = <DataT = any>(entity, fields) =>
+  const translateEntity = <DataT = any>(entity, fields: string[]) =>
     computed<DataT>(() => ({
       ...unref(entity || {}),
       $t: unref(getTranslatableFields(entity, fields)),
@@ -117,10 +118,12 @@ export default function useAutoTranslate() {
 
   const translateComment = (comment) => {
     const _comment = unref(comment)
-    if (_comment) _comment.replies = translateEntities(_comment.replies, translateComment)
+    if (_comment)
+      _comment.replies = translateEntities<TranslatedComment>(_comment.replies, translateComment)
     return translateEntity(_comment, ['content'])
   }
-  const translateComments = (comments) => translateEntities(comments, translateComment)
+  const translateComments = (comments) =>
+    translateEntities<TranslatedComment>(comments, translateComment)
 
   const translateAnnouncement = (announcement) =>
     computed(() => {

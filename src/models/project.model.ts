@@ -77,7 +77,7 @@ export const ProjectModuleIcon: { [key in ProjectModulesKeys]: IconImageChoice }
   members: 'Users',
   similars: 'PeopleGroup',
   locations: 'Map',
-  links: 'LinkRotated',
+  links: 'Paperclip',
   files: 'Globe',
   linked_projects: 'LinkRotated',
   comments: 'ChatBubble',

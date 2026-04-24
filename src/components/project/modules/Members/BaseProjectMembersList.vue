@@ -11,7 +11,7 @@ const projectId = computed(() => props.project.id)
 const organizationCode = useOrganizationCode()
 
 const { status, data: members } = getProjectMembers(organizationCode, projectId, {
-  prginationConfig: {
+  paginationConfig: {
     limit: props.limit,
   },
 })

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import BaseModulePreview from '@/components/modules/BaseModulePreview.vue'
-import BaseProjectComments from '@/components/project/modules/Comments/BaseProjectComments.vue'
+import BaseProjectReview from '@/components/project/review/BaseProjectReview.vue'
 import { ProjectModuleIcon, ProjectModuleTitle, TranslatedProject } from '@/models/project.model'
 
 defineProps<{ project: TranslatedProject }>()
@@ -8,16 +8,17 @@ defineProps<{ project: TranslatedProject }>()
 
 <template>
   <BaseModulePreview
-    :title="$t(ProjectModuleTitle.comments)"
-    :icon="ProjectModuleIcon.comments"
-    :total="project.modules.comments"
+    :title="$t(ProjectModuleTitle.reviews)"
+    :icon="ProjectModuleIcon.reviews"
+    :total="project.modules.reviews"
     :see-more="{
-      name: 'projectComments',
+      // TODO
+      name: 'projectResources',
       params: { slugOrid: project.slug || project.id },
     }"
   >
     <template #content>
-      <BaseProjectComments :project="project" preview />
+      <BaseProjectReview :project="project" />
     </template>
   </BaseModulePreview>
 </template>

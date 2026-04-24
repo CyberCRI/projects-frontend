@@ -1,4 +1,7 @@
+import { Ordering } from '@/interfaces/query'
+import { Translated } from '@/interfaces/translated'
 import BaseModel from '@/models/base.model'
+import { ImageModel } from '@/models/image.model'
 
 /**
  * @name CommentModel
@@ -12,11 +15,15 @@ export interface CommentModel extends BaseModel {
     family_name: string
     given_name: string
     id: number
-    people_id: string
+    people_id: number
   }
+  images: ImageModel[]
+  created_at: string
   deleted_at: string
   updated_at: string
 }
+
+export type TranslatedComment = Translated<CommentModel, 'content'>
 
 export type CommentInputModel = Required<CommentModel> & {
   author_id: number // user_id
@@ -28,3 +35,8 @@ export type CommentInputModel = Required<CommentModel> & {
 export type CommentOutput = Required<CommentModel> & {
   replies: Array<CommentModel>
 }
+
+export type QueryFilterComments = Partial<{
+  ordering: Ordering<'updated_at' | 'created_at'>
+}> &
+  PaginationResult

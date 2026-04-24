@@ -8,6 +8,7 @@ import { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '@/api/v2/base.se
 import { onlyRefs } from '@/functs/onlyRefs'
 import { RefOrRaw } from '@/interfaces/utils'
 import { OrganizationModel } from '@/models/organization.model'
+import { TranslatedPojectMember } from '@/models/project-member.model'
 import { ProjectSlugOrId } from '@/models/project.model'
 
 const DEFAULT_CONFIG = {}
@@ -84,7 +85,7 @@ export const getProjectMembers = (
         ...config,
       }),
     {
-      translate: translateUsers,
+      translate: (data) => translateUsers<TranslatedPojectMember>(data),
       watch: onlyRefs([organization, projectSlugOrId]),
       ...config,
     }

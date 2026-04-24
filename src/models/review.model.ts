@@ -1,3 +1,4 @@
+import { Ordering } from '@/interfaces/query'
 import BaseModel from '@/models/base.model'
 
 /**
@@ -15,9 +16,17 @@ export interface ReviewModel extends BaseModel {
     family_name: string
   }
   created_at: string
+  updated_at: string
 }
 
 export type ReviewModelInput = Required<ReviewModel> & {
   reviewer_id: string
   project_id: string
 }
+
+export type QueryFilterReviews = Partial<{
+  project: number
+  reviewer: number
+  ordering: Ordering<'created_at' | 'updated_at'>
+}> &
+  PaginationQuery
