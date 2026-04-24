@@ -131,10 +131,11 @@ const { fetchAll: fetchDocuments } = useVectorStore()
 const documents = ref([])
 const documentOptions = ref([])
 
+const isLoading = ref(false)
 watch(
   () => props.isOpened,
   async () => {
-    isAsyncing.value = true
+    isLoading.value = true
     try {
       prompts.value = await fetchPrompts()
       documents.value = await fetchDocuments()
@@ -184,7 +185,7 @@ watch(
     } catch (e) {
       console.error(e)
     } finally {
-      isAsyncing.value = false
+      isLoading.value = false
     }
   }
 )
@@ -249,107 +250,112 @@ const submit = async () => {
     :is-opened="isOpened"
     :title="$t(isEdit ? 'agents.edit-agent' : 'agents.create-agent')"
     class="medium"
-    :asyncing="isAsyncing"
+    :asyncing="isAsyncing || isLoading"
     @close="close"
     @confirm="submit"
   >
-    <div class="form-section">
-      <TextInput
-        v-model.trim="form.title"
-        :label="$t('agents.title')"
-        :disabled="isEdit"
-        @change="titleExists = false"
-      />
-      <p v-if="titleExists" class="error">{{ $t('agents.title-exists') }}</p>
+    <div class="loader" v-if="isLoading">
+      <LoaderSimple />
     </div>
-    <div class="form-section">
-      <lpiCheckbox v-model="form.isEnabled" :label="$t('agents.is-enabled')" />
-    </div>
-    <label>{{ $t('agents.description') }}</label>
-    <div class="form-section">
-      <TipTapEditor
-        ref="tiptapEditor"
-        v-model="form.description"
-        class="input-field content-editor"
-      />
-    </div>
-
-    <h4 class="form-section-title">{{ $t('agents.model-section') }}</h4>
-    <div class="form-section">
-      <datalist id="modelStrings">
-        <option
-          v-for="modelString in modelStrings"
-          :key="modelString"
-          :value="modelString"
-          :label="modelString"
+    <template v-else>
+      <div class="form-section">
+        <TextInput
+          v-model.trim="form.title"
+          :label="$t('agents.title')"
+          :disabled="isEdit"
+          @change="titleExists = false"
         />
-      </datalist>
-      <TextInput
-        v-model.trim="form.modelName"
-        :label="$t('agents.model-name')"
-        suggestion-list-id="modelStrings"
-      />
-    </div>
-    <div class="form-section">
-      <TextInput v-model.trim="form.modelTemperature" :label="$t('agents.model-temperature')" />
-    </div>
-    <div class="form-section">
-      <h4 class="form-section-title">{{ $t('agents.prompt-section') }}</h4>
-      <LpiSelect
-        v-model="form.promptId"
-        :options="promptOptions"
-        :placeholder="$t('agents.prompt-placeholder')"
-      />
-    </div>
-    <div v-if="form.promptId" class="form-section">
-      <lpiCheckbox
-        v-model="form.useLatestPromptVersion"
-        :label="$t('agents.use-latest-prompt-version')"
-      />
-    </div>
-    <div
-      v-if="form.promptId && !form.useLatestPromptVersion"
-      class="form-section prompt-version-section"
-    >
-      <span class="select-label">{{ $t('agents.use-prompt-version') }}</span>
-      <LpiSelect
-        v-if="!form.useLatestPromptVersion"
-        v-model="form.promptVersion"
-        :options="versionOptions"
-        :placeholder="$t('agents.prompt-version-placeholder')"
-      />
-    </div>
+        <p v-if="titleExists" class="error">{{ $t('agents.title-exists') }}</p>
+      </div>
+      <div class="form-section">
+        <lpiCheckbox v-model="form.isEnabled" :label="$t('agents.is-enabled')" />
+      </div>
+      <label>{{ $t('agents.description') }}</label>
+      <div class="form-section">
+        <TipTapEditor
+          ref="tiptapEditor"
+          v-model="form.description"
+          class="input-field content-editor"
+        />
+      </div>
 
-    <h4 class="form-section-title">{{ $t('agents.tools-section') }}</h4>
-    <div class="form-section">
-      <div class="agent-tool-picker">
-        <lpiCheckbox v-model="form.useProjectsMcp" :label="$t('agents.use-project-mcp')" />
+      <h4 class="form-section-title">{{ $t('agents.model-section') }}</h4>
+      <div class="form-section">
+        <datalist id="modelStrings">
+          <option
+            v-for="modelString in modelStrings"
+            :key="modelString"
+            :value="modelString"
+            :label="modelString"
+          />
+        </datalist>
+        <TextInput
+          v-model.trim="form.modelName"
+          :label="$t('agents.model-name')"
+          suggestion-list-id="modelStrings"
+        />
       </div>
-    </div>
-    <div class="form-section">
-      <div class="agent-tool-picker">
-        <lpiCheckbox v-model="form.useProfileData" :label="$t('agents.use-profile-data')" />
+      <div class="form-section">
+        <TextInput v-model.trim="form.modelTemperature" :label="$t('agents.model-temperature')" />
       </div>
-    </div>
-    <h4 class="form-section-title">{{ $t('agents.docs-section') }}</h4>
-    <div class="form-section agent-documents-section">
-      <AgentDocumentPicker
-        v-for="opt in documentOptions"
-        :key="opt.document.vectorStoreKey + '-' + opt.document.id"
-        v-model="opt.model"
-        :document="opt.document"
-      />
-    </div>
-    <h4 class="form-section-title">{{ $t('agents.skills-section') }}</h4>
-    <div class="form-section agent-skills-section">
-      <AgentSkillPicker
-        v-for="opt in skillOptions"
-        :key="opt.skill.id"
-        v-model="opt.model"
-        :skill="opt.skill"
-        ,
-      />
-    </div>
+      <div class="form-section">
+        <h4 class="form-section-title">{{ $t('agents.prompt-section') }}</h4>
+        <LpiSelect
+          v-model="form.promptId"
+          :options="promptOptions"
+          :placeholder="$t('agents.prompt-placeholder')"
+        />
+      </div>
+      <div v-if="form.promptId" class="form-section">
+        <lpiCheckbox
+          v-model="form.useLatestPromptVersion"
+          :label="$t('agents.use-latest-prompt-version')"
+        />
+      </div>
+      <div
+        v-if="form.promptId && !form.useLatestPromptVersion"
+        class="form-section prompt-version-section"
+      >
+        <span class="select-label">{{ $t('agents.use-prompt-version') }}</span>
+        <LpiSelect
+          v-if="!form.useLatestPromptVersion"
+          v-model="form.promptVersion"
+          :options="versionOptions"
+          :placeholder="$t('agents.prompt-version-placeholder')"
+        />
+      </div>
+
+      <h4 class="form-section-title">{{ $t('agents.tools-section') }}</h4>
+      <div class="form-section">
+        <div class="agent-tool-picker">
+          <lpiCheckbox v-model="form.useProjectsMcp" :label="$t('agents.use-project-mcp')" />
+        </div>
+      </div>
+      <div class="form-section">
+        <div class="agent-tool-picker">
+          <lpiCheckbox v-model="form.useProfileData" :label="$t('agents.use-profile-data')" />
+        </div>
+      </div>
+      <h4 class="form-section-title">{{ $t('agents.docs-section') }}</h4>
+      <div class="form-section agent-documents-section">
+        <AgentDocumentPicker
+          v-for="opt in documentOptions"
+          :key="opt.document.vectorStoreKey + '-' + opt.document.id"
+          v-model="opt.model"
+          :document="opt.document"
+        />
+      </div>
+      <h4 class="form-section-title">{{ $t('agents.skills-section') }}</h4>
+      <div class="form-section agent-skills-section">
+        <AgentSkillPicker
+          v-for="opt in skillOptions"
+          :key="opt.skill.id"
+          v-model="opt.model"
+          :skill="opt.skill"
+          ,
+        />
+      </div>
+    </template>
   </BaseDrawer>
 </template>
 <style lang="scss" scoped>
@@ -386,5 +392,9 @@ const submit = async () => {
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 0.4rem;
+}
+.loader {
+  margin-top: 3rem;
+  margin-inline: auto;
 }
 </style>
