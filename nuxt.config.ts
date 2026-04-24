@@ -139,10 +139,12 @@ export default defineNuxtConfig({
     appLangchainTemperature: '',
     appVectorDbUrl: '',
     appVectorEmbeddingApiKey: '',
+    appVectorExtensionSchema: '',
     appVectorTableName: '',
     appVectorEmbeddingModel: '',
     appVectorEmbeddingDimensions: '',
     appVectorToolPrompt: '',
+    appChatbotPromptDb: '',
     public: {
       appVersion: '',
       appApiOrgCode: '',
@@ -177,6 +179,8 @@ export default defineNuxtConfig({
       appChatbotExemples: '',
       appSorbobotApiUrl: '',
       appGotenbergEnabled: '',
+      appHasVectorDb: 0,
+      appHasChatbotPromptDb: 0,
     },
   },
   i18n: {

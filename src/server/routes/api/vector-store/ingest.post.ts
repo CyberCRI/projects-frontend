@@ -1,11 +1,14 @@
 import getVectorStore from '@/server/utils/vector-db.js'
 import { PDFLoader } from '@langchain/community/document_loaders/fs/pdf'
+import { TextLoader } from '@langchain/classic/document_loaders/fs/text'
+import { DocxLoader } from '@langchain/community/document_loaders/fs/docx'
 import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters'
-import checkVectorDbRights from '@/server/utils/check-vector-db-rights.js'
+import checkSuperAdminRights from '@/server/utils/check-super-admin-rights.js'
+import path from 'path'
 
 export default defineLazyEventHandler(() => {
   return defineEventHandler(async (event) => {
-    await checkVectorDbRights(event)
+    await checkSuperAdminRights(event)
 
     const { appApiOrgCode } = useRuntimeConfig().public
     const { vectorStore } = await getVectorStore()
@@ -31,7 +34,33 @@ export default defineLazyEventHandler(() => {
       })
     }
 
-    const loader = new PDFLoader(file)
+    // console.log('INGEST', file)
+
+    const mimetype = file.type
+
+    // console.log('INGEST', mimetype)
+
+    const extension = path.extname(file.name)
+
+    // console.log('INGEST', extension)
+
+    let loader
+
+    if (extension == '.txt' || mimetype == 'text/plain') {
+      loader = new TextLoader(file)
+    } else if (extension == '.pdf' || mimetype == 'application/pdf') {
+      loader = new PDFLoader(file)
+    } else if (
+      extension == '.docx' ||
+      mimetype == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    ) {
+      loader = new DocxLoader(file)
+    } else {
+      throw createError({
+        statusCode: 400,
+        message: 'Unsupported filetype: must be txt, pdf or docx',
+      })
+    }
 
     const fileDocs = await loader.load()
     const extraMetadata = {

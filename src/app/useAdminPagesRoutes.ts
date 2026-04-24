@@ -1,4 +1,45 @@
 export default function useAdminPagesRoutes() {
+  const vectorStoreRoutes = []
+  const agentRoutes = []
+  if (useRuntimeConfig().public.appHasVectorDb) {
+    vectorStoreRoutes.push({
+      path: 'vector-store',
+      name: 'VectorStoreAdminTab',
+      component: () => import('../pages/AdminPortalPageV2/Tabs/VectorStoreAdminTab.vue'),
+      meta: { checkAccessRequestEnabled: true },
+    })
+  }
+  if (useRuntimeConfig().public.appHasChatbotPromptDb) {
+    agentRoutes.push(
+      {
+        path: 'agents',
+        name: 'AgentsAdminTab',
+        component: () => import('../pages/AdminPortalPageV2/Tabs/AgentsAdminTab.vue'),
+        meta: { checkAccessRequestEnabled: true },
+      },
+
+      {
+        path: 'prompts',
+        name: 'PromptsAdminTab',
+        component: () => import('../pages/AdminPortalPageV2/Tabs/PromptsAdminTab.vue'),
+        meta: { checkAccessRequestEnabled: true },
+      },
+
+      {
+        path: 'agent-skills',
+        name: 'AgentSkillsAdminTab',
+        component: () => import('../pages/AdminPortalPageV2/Tabs/AgentSkillsAdminTab.vue'),
+        meta: { checkAccessRequestEnabled: true },
+      },
+
+      {
+        path: 'mcps',
+        name: 'McpsAdminTab',
+        component: () => import('../pages/AdminPortalPageV2/Tabs/McpsAdminTab.vue'),
+        meta: { checkAccessRequestEnabled: true },
+      }
+    )
+  }
   return [
     {
       path: '/admin',
@@ -126,13 +167,10 @@ export default function useAdminPagesRoutes() {
           component: () => import('../pages/AdminPortalPageV2/Tabs/TermsAdminTab.vue'),
           meta: { checkAccessRequestEnabled: true },
         },
-        {
-          path: 'vector-store',
-          name: 'VectorStoreAdminTab',
-          component: () => import('../pages/AdminPortalPageV2/Tabs/VectorStoreAdminTab.vue'),
-          meta: { checkAccessRequestEnabled: true },
-        },
+        ...vectorStoreRoutes,
+        ...agentRoutes,
       ],
+
       meta: {
         resetScroll: true,
         requiresAuth: true,

@@ -29,6 +29,7 @@
         :disabled="disabled"
         :data-test="dataTest"
         :maxlength="maxLength"
+        :list="suggestionListId"
         @change="$emit('change', $event)"
         @keydown.enter="$emit('enter')"
         @focus="$emit('focus', $event)"
@@ -120,6 +121,10 @@ export default {
     errors: {
       type: Array,
       default: () => [],
+    },
+    suggestionListId: {
+      type: String,
+      default: '',
     },
   },
 

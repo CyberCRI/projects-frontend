@@ -31,6 +31,30 @@ const tabs = computed(() => {
           icon: 'Article', // TODO: use a bulb or db icon
           condition: true,
         },
+        {
+          key: 'admin-prompts',
+          label: t('admin.tabs.prompts'),
+          view: { name: 'PromptsAdminTab' },
+          props: {},
+          icon: 'Article', // TODO: use a bulb or db icon
+          condition: true,
+        },
+        {
+          key: 'admin-agent-skills',
+          label: t('admin.tabs.agent-skills'),
+          view: { name: 'AgentSkillsAdminTab' },
+          props: {},
+          icon: 'Article', // TODO: use a bulb or db icon
+          condition: true,
+        },
+        {
+          key: 'admin-agents',
+          label: t('admin.tabs.agents'),
+          view: { name: 'AgentsAdminTab' },
+          props: {},
+          icon: 'Article', // TODO: use a bulb or db icon
+          condition: true,
+        },
       ]
     : []
 

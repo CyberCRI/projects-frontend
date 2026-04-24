@@ -12,16 +12,25 @@ FROM base AS builder
 WORKDIR /app
 COPY --link package.json yarn.lock ./
 
+
 RUN yarn install --pure-lockfile --non-interactive
 
 COPY . .
 
+RUN yarn prisma-chatbot-db:generate
 RUN NODE_ENV=production yarn build
 
 FROM base
 
 COPY --from=builder /app/.output /app/.output
 COPY devops-toolbox/scripts/secrets-entrypoint.sh ./secrets-entrypoint.sh
+
+RUN yarn init -y
+RUN yarn add prisma
+RUN yarn add dotenv
+COPY --from=builder /app/prisma-chatbot-db/prisma-config.ts ./prisma-chatbot-db/prisma-config.ts
+COPY --from=builder /app/prisma-chatbot-db/schema.prisma ./prisma-chatbot-db/schema.prisma
+COPY --from=builder /app/prisma-chatbot-db/migrations ./prisma-chatbot-db/migrations
 
 EXPOSE ${PORT}
 

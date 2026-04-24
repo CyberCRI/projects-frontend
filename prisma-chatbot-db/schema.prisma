@@ -1,0 +1,146 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../prisma-chatbot-db/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+model Prompt {
+  id                Int @id @default(autoincrement())
+  title             String
+  orgCode           String
+
+  promptContents    PromptContent[]
+
+  @@unique([title, orgCode])
+  @@index([title, orgCode])
+}
+
+
+model PromptContent {
+  version           Int
+  content           String
+
+  promptId          Int
+  prompt            Prompt @relation(fields: [promptId], references: [id])
+
+  agents            Agent[]
+
+  @@id([promptId, version])
+  @@index([promptId, version])
+}
+
+
+
+model Skill {
+  id                Int @id @default(autoincrement())
+  title             String
+  description       String
+  orgCode           String
+
+  skillContents    SkillContent[]
+
+  @@unique([title, orgCode])
+  @@index([title, orgCode])
+}
+
+
+model SkillContent {
+  version           Int
+  content           String
+
+  skillId           Int
+  skill             Skill @relation(fields: [skillId], references: [id])
+
+  agents            AgentSkillContent[]
+
+  @@id([skillId, version])
+  @@index([skillId, version])
+}
+
+enum TransportType {
+	sse
+	stdio
+	http
+}
+
+model Mcp {
+  id                 Int @id @default(autoincrement())
+  orgCode            String
+  title              String
+  description        String
+  transport          TransportType
+  url                String
+  command            String
+  args               String
+
+  agents              Agent[]
+
+  @@unique([title, orgCode])
+}
+
+model Agent {
+  id                Int @id @default(autoincrement())
+  title             String
+  slug              String
+  description       String @default("")
+  orgCode           String
+
+  modelName         String @default("")
+  modelTemperature  String @default("0.7")
+
+  isEnabled         Boolean @default(false)
+
+  promptId          Int
+  promptVersion     Int
+  promptContent     PromptContent @relation(fields: [promptId, promptVersion], references: [promptId, version])
+
+  useProjectsMcp    Boolean @default(false)
+  mcps              Mcp[]
+
+  skillContents     AgentSkillContent[]
+
+  documents         AgentDocument[]
+
+  useProfileData    Boolean @default(false)
+
+  useLatestPromptVersion Boolean @default(true)
+
+  @@unique([title, orgCode])
+  @@unique([slug, orgCode])
+  @@index([title, orgCode])
+  @@index([slug, orgCode])
+}
+
+model AgentSkillContent {
+  skillId               Int
+  skillVersion          Int
+  agentId               Int
+
+  useLatestSkillVersion Boolean @default(true)
+
+  skillContent          SkillContent @relation(fields: [skillId, skillVersion], references:[skillId, version])
+  agent                 Agent @relation(fields: [agentId], references:[id])
+
+  @@id([skillId, skillVersion, agentId])
+}
+
+
+
+model AgentDocument {
+  vectorStoreKey        String
+  documentTitle         String
+  agentId               Int
+
+  agent                 Agent @relation(fields: [agentId], references:[id])
+
+  @@id([vectorStoreKey, documentTitle, agentId])
+}

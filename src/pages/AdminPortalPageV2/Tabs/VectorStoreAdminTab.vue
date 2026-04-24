@@ -2,6 +2,10 @@
 import useUsersStore from '@/stores/useUsers'
 import useToasterStore from '@/stores/useToaster'
 
+if (!useRuntimeConfig().public.appHasVectorDb) {
+  usePage404()
+}
+
 const toaster = useToasterStore()
 const usersStore = useUsersStore()
 const { t } = useNuxtI18n()

@@ -37,7 +37,8 @@
     "vue-i18n-extract": "vue-i18n-extract report --vueFiles './src/**/*.?(js|vue)' --languageFiles './src/i18n/locales/*.?(json|yml|yaml|js)'",
     "list-icons": "node ./utilities/list-icons.js",
     "autotranslate": "node ./utilities/autotranslate.js",
-    "delete-keys": "node ./utilities/delete-keys.js"
+    "delete-keys": "node ./utilities/delete-keys.js",
+    "prisma-chatbot-db:generate": "prisma --config ./prisma-chatbot-db/prisma-config.ts generate"
   },
   "dependencies": {
     "@ckpack/vue-color": "^1.5.0",
@@ -57,7 +58,10 @@
     "@nuxtjs/i18n": "^10.1.0",
     "@panva/oauth4webapi": "^1.0.4",
     "@pinia/nuxt": "^0.11.2",
+    "@prisma/adapter-pg": "^7.6.0",
+    "@prisma/client": "^7.6.0",
     "@sentry/vue": "^8.20.0",
+    "@sindresorhus/slugify": "^3.0.0",
     "@tiptap/core": "^2.11.3",
     "@tiptap/extension-code-block": "^2.7.0",
     "@tiptap/extension-code-block-lowlight": "^2.11.3",
@@ -94,6 +98,7 @@
     "leaflet": "^1",
     "leaflet.markercluster": "^1.5.3",
     "lowlight": "^3.3.0",
+    "mammoth": "^1.12.0",
     "mixpanel-browser": "^2.48.1",
     "nuxt": "^3.19.3",
     "nuxt-svgo": "4.2.6",
@@ -163,6 +168,7 @@
     "postcss": "^8.4.31",
     "postcss-html": "^1.5.0",
     "prettier": "^3",
+    "prisma": "^7.6.0",
     "sass": "=1.71.0",
     "stylelint": "^16.6.1",
     "stylelint-config-recommended-vue": "=1.5.0",
