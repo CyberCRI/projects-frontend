@@ -11,6 +11,8 @@ if (!useRuntimeConfig().public.appHasChatbotPromptDb) {
   usePage404()
 }
 
+const chatbotUi = useTemplateRef('chatbotUi')
+
 let headers = {}
 const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
 if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
@@ -19,6 +21,9 @@ const options = { headers }
 const url = `/api/chatbot/${props.agentSlug}`
 const { data: agent, error } = await useFetch(url, options)
 const CHAT_ENDPOINT = computed(() => '/api/chatbot/chat?id=' + agent.value?.id)
+onBeforeUnmount(() => {
+  chatbotUi.value?.resetChat()
+})
 
 watch(
   () => error.value,
@@ -48,7 +53,7 @@ const { contextMessages } = useChatbotContext({ hasUserContext, hasPageContext }
     </div>
     <ChatbotOptions :has-user-context="hasUserContext" />
     <ClientOnly>
-      <ChatbotUi :endpoint="CHAT_ENDPOINT" :context-messages="contextMessages" />
+      <ChatbotUi ref="chatbotUi" :endpoint="CHAT_ENDPOINT" :context-messages="contextMessages" />
     </ClientOnly>
   </div>
 </template>

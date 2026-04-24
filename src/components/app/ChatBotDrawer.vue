@@ -30,6 +30,8 @@ defineEmits(['close'])
 
 const CHAT_ENDPOINT = ref(useRuntimeConfig().public.appChatbotBackend || '/api/chat-lg-stream')
 
+const chatbotUi = useTemplateRef('chatbotUi')
+
 const hasUserContext = ref(true)
 const hasPageContext = ref(true)
 
@@ -54,6 +56,11 @@ const startConversation = () => {
   // conversation was reset
   suggestButtons.value = setExemples()
 }
+
+watch(
+  () => props.isOpened,
+  () => chatbotUi.value?.resetChat()
+)
 </script>
 
 <template>
@@ -65,6 +72,7 @@ const startConversation = () => {
     @close="$emit('close')"
   >
     <ChatbotUi
+      ref="chatbotUi"
       :endpoint="CHAT_ENDPOINT"
       :context-messages="contextMessages"
       @start-conversation="startConversation"
