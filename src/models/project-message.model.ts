@@ -1,3 +1,5 @@
+import { Ordering } from '@/interfaces/query'
+import { Translated } from '@/interfaces/translated'
 import BaseModel from '@/models/base.model'
 
 /**
@@ -5,6 +7,7 @@ import BaseModel from '@/models/base.model'
  * @description Comment of a project
  * */
 export interface ProjectMessageModel extends BaseModel {
+  id: number
   content: string
   author: {
     email: string
@@ -13,8 +16,12 @@ export interface ProjectMessageModel extends BaseModel {
     id: number
     people_id: string
   }
-  deleted_at: Date
+  created_at: string
+  deleted_at: string
+  updated_at: string
 }
+
+export type TranslatedProjectMessage = Translated<ProjectMessageModel, 'content'>
 
 export type ProjectMessageInputModel = Required<ProjectMessageModel> & {
   author_id: number // user_id
@@ -26,3 +33,9 @@ export type ProjectMessageInputModel = Required<ProjectMessageModel> & {
 export type ProjectMessageOutput = Required<ProjectMessageModel> & {
   replies: Array<ProjectMessageModel>
 }
+
+export type QueryFilterProjectMessage = Partial<
+  {
+    ordering: Ordering<'created_at' | 'updated_at'>
+  } & PaginationQuery
+>

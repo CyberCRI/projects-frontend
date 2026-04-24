@@ -36,7 +36,8 @@ export type CommentOutput = Required<CommentModel> & {
   replies: Array<CommentModel>
 }
 
-export type QueryFilterComments = Partial<{
-  ordering: Ordering<'updated_at' | 'created_at'>
-}> &
-  PaginationResult
+export type QueryFilterComments = Partial<
+  {
+    ordering: Ordering<'updated_at' | 'created_at'>
+  } & PaginationResult
+>

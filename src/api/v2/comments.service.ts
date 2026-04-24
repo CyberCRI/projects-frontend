@@ -1,4 +1,5 @@
 import { getComments } from '@/api/comments.service'
+import { getProjectMessages } from '@/api/project-messages.service'
 import { UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
 import { onlyRefs } from '@/functs/onlyRefs'
 import { RefOrRaw } from '@/interfaces/utils'
@@ -31,6 +32,33 @@ export const getProjectComments = (
       }),
     {
       translate: translateComments,
+      watch: onlyRefs([organization]),
+      ...config,
+    }
+  )
+}
+
+// TODO change backend with prefix organization code in url not in query
+export const getProjectMessage = (
+  organization: RefOrRaw<OrganizationModel['code']>,
+  projectSlugOrId: RefOrRaw<ProjectSlugOrId>,
+  config: ConfigPagination = {}
+) => {
+  const { translateProjectMessages } = useAutoTranslate()
+  const key = computed(
+    () => `organization::${unref(organization)}::project::${unref(projectSlugOrId)}::messages::all`
+  )
+
+  return useAsyncPaginationAPI(
+    key,
+    ({ config }) =>
+      // TODO add organizations
+      getProjectMessages(unref(projectSlugOrId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
+    {
+      translate: translateProjectMessages,
       watch: onlyRefs([organization]),
       ...config,
     }

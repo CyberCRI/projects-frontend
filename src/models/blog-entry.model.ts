@@ -16,9 +16,11 @@ export interface BlogEntryModel extends BaseModel {
 
 export type TranslatedBlogEntry = Translated<BlogEntryModel, 'title' | 'content'>
 
-export type QueryFilterBlogEntry = {
-  ordering: Ordering<'created_at' | 'updated_at'>
-} & paginationConfig
+export type QueryFilterBlogEntry = Partial<
+  {
+    ordering: Ordering<'created_at' | 'updated_at'>
+  } & paginationConfig
+>
 
 export type BlogEntryOutput = Required<BlogEntryModel>
 

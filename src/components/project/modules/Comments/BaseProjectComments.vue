@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getProjectComments } from '@/api/v2/comments.service'
+import { getProjectComments, getProjectMessage } from '@/api/v2/comments.service'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import CommentItem from '@/components/project/comment/CommentItem.vue'
 import { TranslatedProject } from '@/models/project.model'
@@ -7,10 +7,16 @@ import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import { projectCommentSkeleton } from '@/skeletons/comments.skeletons'
 
 const props = withDefaults(
-  defineProps<{ project: TranslatedProject; preview?: boolean; limit?: number }>(),
+  defineProps<{
+    project: TranslatedProject
+    preview?: boolean
+    limit?: number
+    isPrivate?: boolean
+  }>(),
   {
     preview: false,
     limit: null,
+    isPrivate: false,
   }
 )
 
@@ -18,12 +24,13 @@ const limitSkeletons = computed(() => maxSkeleton(props.project.modules.comments
 
 const organizationCode = useOrganizationCode()
 const projectId = computed(() => props.project.id)
+
 const {
   status,
   data: comments,
   pagination,
   refresh,
-} = getProjectComments(organizationCode, projectId, {
+} = (props.isPrivate ? getProjectMessage : getProjectComments)(organizationCode, projectId, {
   query: {
     ordering: '-created_at',
   },
@@ -43,6 +50,7 @@ const {
         :key="comment.id"
         :project="project"
         :comment="comment"
+        :is-private="isPrivate"
       />
       <EmptyLabel v-if="comments.length === 0" />
     </div>

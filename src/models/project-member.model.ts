@@ -57,7 +57,9 @@ export type ProjectTeamOutput = {
 
 export type ProjectMemberOutput = ProjectMemberModel
 
-export type QueryFilterProjectMembers = Partial<{
-  ordering: Ordering<'role'>
-  role: ProjectMemberRoleType
-}>
+export type QueryFilterProjectMembers = Partial<
+  {
+    ordering: Ordering<'role'>
+    role: ProjectMemberRoleType
+  } & PaginationQuery
+>

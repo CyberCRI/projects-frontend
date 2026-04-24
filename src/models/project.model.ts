@@ -65,7 +65,7 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
     links: number
     files: number
     reviews: number
-    private_exchange: number
+    messages: number
   }
 }
 
@@ -84,7 +84,7 @@ export const ProjectModuleIcon: { [key in ProjectModulesKeys]: IconImageChoice }
   comments: 'ChatBubble',
   groups: 'Briefcase',
   reviews: 'Alert',
-  private_exchange: 'ChatBubble',
+  messages: 'ChatBubble',
 }
 
 export const ProjectModuleTitle: { [key in ProjectModulesKeys]: string } = {
@@ -100,7 +100,7 @@ export const ProjectModuleTitle: { [key in ProjectModulesKeys]: string } = {
   comments: 'comment.comments',
   groups: 'project,groups',
   reviews: 'project.reviews',
-  private_exchange: 'project.private-exchange',
+  messages: 'project.private-exchange',
 }
 
 export type TranslatedProject = Translated<ProjectModel, 'title' | 'description' | 'purpose'>

@@ -24,9 +24,10 @@ export type ReviewModelInput = Required<ReviewModel> & {
   project_id: string
 }
 
-export type QueryFilterReviews = Partial<{
-  project: number
-  reviewer: number
-  ordering: Ordering<'created_at' | 'updated_at'>
-}> &
-  PaginationQuery
+export type QueryFilterReviews = Partial<
+  {
+    project: number
+    reviewer: number
+    ordering: Ordering<'created_at' | 'updated_at'>
+  } & PaginationQuery
+>

@@ -8,16 +8,16 @@ defineProps<{ project: TranslatedProject }>()
 
 <template>
   <BaseModulePreview
-    :title="$t(ProjectModuleTitle.private_exchange)"
-    :icon="ProjectModuleIcon.private_exchange"
-    :total="project.modules.private_exchange"
+    :title="$t(ProjectModuleTitle.messages)"
+    :icon="ProjectModuleIcon.messages"
+    :total="project.modules.messages"
     :see-more="{
       name: 'projectPrivateExchange',
       params: { slugOrid: project.slug || project.id },
     }"
   >
     <template #content>
-      <BaseProjectComments :project="project" preview />
+      <BaseProjectComments :project="project" preview is-private />
     </template>
   </BaseModulePreview>
 </template>

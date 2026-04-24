@@ -149,14 +149,15 @@ import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 import { TranslatedProject } from '@/models/project.model'
 import { TranslatedComment } from '@/models/comment.model'
+import { TranslatedProjectMessage } from '@/models/project-message.model'
 
 const props = withDefaults(
   defineProps<{
     project: TranslatedProject
-    comment: TranslatedComment
+    comment: TranslatedComment | TranslatedProjectMessage
     isReply?: boolean
     isPrivate?: boolean
-    repliedComment?: TranslatedComment
+    repliedComment?: TranslatedComment | TranslatedProjectMessage
   }>(),
   {
     isReply: false,
@@ -168,12 +169,12 @@ const props = withDefaults(
 const { t } = useNuxtI18n()
 
 const emit = defineEmits<{
-  'comment-posted': []
-  'project-message-posted': []
-  'comment-edited': []
-  'project-message-edited': []
-  'comment-deleted': [TranslatedComment]
-  'project-message-deleted': [TranslatedComment]
+  'comment-posted': [TranslatedComment | TranslatedProjectMessage]
+  'project-message-posted': [TranslatedComment | TranslatedProjectMessage]
+  'comment-edited': [TranslatedComment | TranslatedProjectMessage]
+  'project-message-edited': [TranslatedComment | TranslatedProjectMessage]
+  'comment-deleted': [TranslatedComment | TranslatedProjectMessage]
+  'project-message-deleted': [TranslatedComment | TranslatedProjectMessage]
 }>()
 const toaster = useToasterStore()
 const usersStore = useUsersStore()

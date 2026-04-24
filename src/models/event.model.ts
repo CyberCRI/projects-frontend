@@ -36,9 +36,10 @@ export type TranslatedEventModel = Translated<EventModel, 'title' | 'content'> &
   location: BaseTranslatedLocationModel
 }
 
-export type QueryFilterEvent = Partial<{
-  ordering: Ordering<'start_date' | 'end_date' | 'updated_at' | 'created_at'>
-  from_date: string
-  to_date: string
-}> &
-  Partial<PaginationQuery>
+export type QueryFilterEvent = Partial<
+  {
+    ordering: Ordering<'start_date' | 'end_date' | 'updated_at' | 'created_at'>
+    from_date: string
+    to_date: string
+  } & PaginationQuery
+>

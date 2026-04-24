@@ -27,9 +27,10 @@ export type InstructionInput = Required<InstructionModel> & {
 
 export type TranslatedInstruction = Translated<InstructionModel, 'title' | 'content'>
 
-export type QueryFilterInstruction = Partial<{
-  ordering: Ordering<'publication_date' | 'updated_at' | 'created_at'>
-  from_date: string
-  to_date: string
-}> &
-  Partial<PaginationQuery>
+export type QueryFilterInstruction = Partial<
+  {
+    ordering: Ordering<'publication_date' | 'updated_at' | 'created_at'>
+    from_date: string
+    to_date: string
+  } & PaginationQuery
+>

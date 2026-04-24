@@ -18,6 +18,7 @@ import { TranslatedInstruction } from '@/models/instruction.model'
 import { TranslatedGoal } from '@/models/goal.model'
 import { TranslatedBlogEntry } from '@/models/blog-entry.model'
 import { TranslatedComment } from '@/models/comment.model'
+import { ProjectMessageModel, TranslatedProjectMessage } from '@/models/project-message.model'
 
 // type can be computed or object
 type RefOrRaw<DataT> = ComputedRef<DataT> | Ref<DataT> | DataT
@@ -190,9 +191,10 @@ export default function useAutoTranslate() {
   const translatePeopleGroupLocations = (Locations) =>
     translateEntities<GeneralLocationPeopleGroup>(Locations, translatePeopleGroupLocation)
 
-  const translateProjectMessage = (message) => translateEntity(message, ['content'])
-  const translateProjectMessages = (messages) =>
-    translateEntities(messages, translateProjectMessage)
+  const translateProjectMessage = (message: ProjectMessageModel) =>
+    translateEntity<TranslatedProjectMessage>(message, ['content'])
+  const translateProjectMessages = (messages: ProjectMessageModel[]) =>
+    translateEntities<TranslatedProjectMessage>(messages, translateProjectMessage)
 
   // --------------------
   // People
