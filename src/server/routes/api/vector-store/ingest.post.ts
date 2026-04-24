@@ -34,15 +34,15 @@ export default defineLazyEventHandler(() => {
       })
     }
 
-    console.log('INGEST', file)
+    // console.log('INGEST', file)
 
     const mimetype = file.type
 
-    console.log('INGEST', mimetype)
+    // console.log('INGEST', mimetype)
 
     const extension = path.extname(file.name)
 
-    console.log('INGEST', extension)
+    // console.log('INGEST', extension)
 
     let loader
 
