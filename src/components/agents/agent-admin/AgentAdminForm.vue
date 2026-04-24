@@ -208,7 +208,7 @@ const submit = async () => {
     .map((o) => ({
       skillId: o.skill.id,
       skillVersion: o.model.skillVersion,
-      useLatestSkillVersion: o.useLatestSkillVersion,
+      useLatestSkillVersion: o.model.useLatestSkillVersion,
     }))
 
   form.value.documents = documentOptions.value
