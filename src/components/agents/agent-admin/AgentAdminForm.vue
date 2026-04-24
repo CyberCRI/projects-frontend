@@ -254,7 +254,7 @@ const submit = async () => {
     @close="close"
     @confirm="submit"
   >
-    <div class="loader" v-if="isLoading">
+    <div v-if="isLoading" class="loader">
       <LoaderSimple />
     </div>
     <template v-else>
@@ -393,6 +393,7 @@ const submit = async () => {
   border-radius: 4px;
   padding: 0.4rem;
 }
+
 .loader {
   margin-top: 3rem;
   margin-inline: auto;

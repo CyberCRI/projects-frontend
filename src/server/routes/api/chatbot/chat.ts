@@ -3,7 +3,7 @@ import {
   tool,
   createAgent,
   createMiddleware,
-  contextEditingMiddleware,
+  // contextEditingMiddleware,
   // ClearToolUsesEdit,
   // summarizationMiddleware,
 } from 'langchain'
