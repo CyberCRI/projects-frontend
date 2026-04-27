@@ -1,4 +1,4 @@
-import { ProjectModel } from '@/models/project.model'
+import { LinkedProject, ProjectModel } from '@/models/project.model'
 import { TagModel } from '@/models/tag.model'
 import { factoriesSkeleton } from '@/skeletons/base.skeletons'
 import { randomInt } from 'es-toolkit'
@@ -14,7 +14,7 @@ export const tagSkeleton = (def?: Partial<ProjectModel>): Omit<TagModel, 'id'> =
   ...(def || {}),
 })
 
-export const projectSkeleton = (def?: Partial<ProjectModel>): Omit<ProjectModel, 'id'> => ({
+export const projectSkeleton = (def?: Partial<ProjectModel>): ProjectModel => ({
   title: 'title',
   description: 'Elit veniam consectetur sunt officia.',
   header_image: null,
@@ -23,6 +23,7 @@ export const projectSkeleton = (def?: Partial<ProjectModel>): Omit<ProjectModel,
   purpose: 'Elit veniam consectetur sunt officia.',
   language: 'fr',
   locations: [],
+  categories: [],
   publication_status: 'public',
   life_status: 'completed',
   reviews: [],
@@ -56,5 +57,11 @@ export const projectSkeleton = (def?: Partial<ProjectModel>): Omit<ProjectModel,
     reviews: 0,
     messages: 0,
   },
+  ...(def || {}),
+})
+
+export const projectLinkedSkeleton = (def?: Partial<LinkedProject>): LinkedProject => ({
+  id: -1,
+  project: projectSkeleton(),
   ...(def || {}),
 })

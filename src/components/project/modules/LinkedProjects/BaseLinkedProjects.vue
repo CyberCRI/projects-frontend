@@ -4,7 +4,7 @@ import FetchLoader from '@/components/base/FetchLoader.vue'
 import LinkedProjects from '@/components/project/linked-project/LinkedProjects.vue'
 import { TranslatedProject } from '@/models/project.model'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
-import { projectSkeleton } from '@/skeletons/project.skeletons'
+import { projectLinkedSkeleton } from '@/skeletons/project.skeletons'
 
 const props = withDefaults(
   defineProps<{ project: TranslatedProject; preview?: boolean; limit?: number }>(),
@@ -22,20 +22,20 @@ const organizationCode = useOrganizationCode()
 const projectId = computed(() => props.project.id)
 const {
   status,
-  data: projects,
+  data: linkedProjects,
   pagination,
 } = getLinkedProject(organizationCode, projectId, {
   paginationConfig: {
     limit: props.limit,
   },
-  default: () => factoryPagination(projectSkeleton, limitSkeletons.value),
+  default: () => factoryPagination(projectLinkedSkeleton, limitSkeletons.value),
 })
 </script>
 
 <template>
   <FetchLoader :status="status" only-error skeleton>
     <div class="list-container">
-      <LinkedProjects :project="project" :linked-projects="projects" />
+      <LinkedProjects :project="project" :linked-projects="linkedProjects" />
     </div>
     <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
   </FetchLoader>

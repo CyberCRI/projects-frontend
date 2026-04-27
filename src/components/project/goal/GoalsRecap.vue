@@ -1,6 +1,6 @@
 <template>
   <FetchLoader :status="status" only-error skeleton>
-    <div class="goals-recap">
+    <div class="list-container">
       <GoalSummaryItem
         v-for="(goal, index) in sortedGoals"
         :key="index"
@@ -59,22 +59,3 @@ const sortedGoals = computed(() => {
   })
 })
 </script>
-
-<style lang="scss" scoped>
-.goals-recap {
-  border: $border-width-s solid $primary;
-  border-radius: $border-radius-l;
-  padding: $space-l;
-  background: $primary-lighter;
-}
-
-.goals-recap .goal:not(:first-child) {
-  margin-top: pxToRem(12px);
-}
-</style>
-
-<style lang="scss">
-.goals-recap .section-header .s-button {
-  text-transform: uppercase;
-}
-</style>

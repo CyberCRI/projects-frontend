@@ -2,16 +2,16 @@
   <div class="blog-entry" :class="{ 'shadow-box': !isExpanded }">
     <div class="blog-entry-header">
       <div class="header-main">
-        <div class="entry-title">
+        <div class="entry-title skeletons-text">
           {{ blogEntry.$t.title }}
         </div>
 
-        <div class="date">
+        <div class="date skeletons-text">
           {{ $d(new Date(blogEntry.created_at)) }}
         </div>
       </div>
 
-      <div class="expand-button" @click="toggleExpand">
+      <div class="expand-button skeletons-background" @click="toggleExpand">
         <span>{{ isExpanded ? $t('common.shrink') : $t('common.read') }}</span>
 
         <IconImage v-if="isExpanded" name="ChevronUp" />
@@ -19,16 +19,20 @@
       </div>
     </div>
 
-    <div v-if="isExpanded && isLastBlogEntry" class="last-publication-flag">
+    <div v-if="isExpanded && isLastBlogEntry" class="last-publication-flag skeletons-text">
       {{ $t('blog.last-publication') }}
     </div>
 
-    <TipTapOutput v-if="isExpanded" class="entry-body" :content="blogEntry.$t.content" />
+    <TipTapOutput
+      v-if="isExpanded"
+      class="entry-body skeletons-text"
+      :content="blogEntry.$t.content"
+    />
 
     <div
       v-if="canEdit || canDelete"
       :class="{ 'button-ctn--expanded': isExpanded }"
-      class="button-ctn"
+      class="button-ctn skeletons-background"
     >
       <ContextActionButton
         v-if="canEdit"
@@ -80,14 +84,14 @@ const toggleExpand = () => emit('toggle-expand', props.blogEntry)
 <style lang="scss" scoped>
 .blog-entry {
   border-radius: $border-radius-l;
-  border: $border-width-s solid $primary;
+  border: $border-width-s solid var(--primary);
   box-sizing: border-box;
-  background: $white;
+  background: var(--white);
   position: relative;
 
   .blog-entry-header {
     display: flex;
-    color: $primary-dark;
+    color: var(--primary-dark);
 
     .header-main {
       display: flex;
@@ -108,7 +112,7 @@ const toggleExpand = () => emit('toggle-expand', props.blogEntry)
     }
 
     .expand-button {
-      border-left: $border-width-s solid $primary;
+      border-left: $border-width-s solid var(--primary);
       display: flex;
       align-items: center;
       padding: 0 $space-l;
@@ -121,15 +125,15 @@ const toggleExpand = () => emit('toggle-expand', props.blogEntry)
 
       svg {
         height: 18px;
-        fill: $primary-dark;
+        fill: var(--primary-dark);
       }
     }
   }
 
   .last-publication-flag {
-    border-top: $border-width-s solid $primary;
+    border-top: $border-width-s solid var(--primary);
     background: $primary-light;
-    color: $primary-dark;
+    color: var(--primary-dark);
     text-transform: uppercase;
     display: flex;
     align-items: center;
@@ -140,7 +144,7 @@ const toggleExpand = () => emit('toggle-expand', props.blogEntry)
   }
 
   .entry-body {
-    border-top: $border-width-s solid $primary;
+    border-top: $border-width-s solid var(--primary);
     padding: $space-m $space-l;
 
     &::after {
@@ -165,7 +169,7 @@ const toggleExpand = () => emit('toggle-expand', props.blogEntry)
     svg {
       width: 12px;
       height: 12px;
-      fill: $primary-dark;
+      fill: var(--primary-dark);
     }
   }
 }

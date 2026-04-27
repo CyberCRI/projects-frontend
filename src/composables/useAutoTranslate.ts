@@ -110,8 +110,8 @@ export default function useAutoTranslate() {
       const raw = unref(linkedProject)
       return {
         ...raw,
-        project: raw.project ? translateProject(raw.project) : null,
-        target: raw.target ? translateProject(raw.target) : null,
+        project: raw.project ? unref(translateProject(raw.project)) : null,
+        target: raw.target ? unref(translateProject(raw.target)) : null,
       }
     })
   const translatedProjectLinkeds = (linkedProjects) =>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { getProjectAnnouncements } from '@/api/v2/announcements.service'
 import FetchLoader from '@/components/base/FetchLoader.vue'
+import AnnouncementCard from '@/components/project/announcement/AnnouncementCard.vue'
 import { TranslatedProject } from '@/models/project.model'
 import { announcementSkeleton } from '@/skeletons/announcement.skeletons'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
@@ -39,10 +40,24 @@ const {
 
 <template>
   <FetchLoader :status="status" only-error skeleton>
-    <div>
-      <AnnouncementCardList :announcements="announcements" />
-      <EmptyLabel v-if="announcements.length === 0" />
+    <div class="announcement-list">
+      <AnnouncementCard
+        v-for="announcement in announcements"
+        :key="announcement.id"
+        :project="project"
+        :announcement="announcement"
+      />
     </div>
+    <EmptyLabel v-if="announcements.length === 0" />
     <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
   </FetchLoader>
 </template>
+
+<style lang="scss" scoped>
+.announcement-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+</style>

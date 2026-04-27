@@ -7,7 +7,7 @@
     @click="toProject"
   >
     <template #actions-left>
-      <IconImage class="icon passive" :name="visibilityIcon" />
+      <IconImage class="icon passive skeletons-background" :name="visibilityIcon" />
     </template>
 
     <template #actions-right>
@@ -19,16 +19,21 @@
         @follow="$emit('card-update')"
         @unfollow="$emit('card-update')"
       />
-      <IconImage v-if="showAddButton" class="icon" name="Plus" @click="$emit('add')" />
+      <IconImage
+        v-if="showAddButton"
+        class="icon skeletons-background"
+        name="Plus"
+        @click="$emit('add')"
+      />
       <IconImage
         v-if="showCloseButton"
-        class="icon"
+        class="icon skeletons-background"
         name="CloseCircle"
         @click="$emit('unselect', project)"
       />
       <IconImage
         v-if="customIcon"
-        class="icon"
+        class="icon skeletons-background"
         :name="customIcon"
         @click="$emit('custom-icon-click', project)"
       />
@@ -38,21 +43,24 @@
       picture-size="medium"
       :default-picture="DEFAULT_PROJECT_PATATOID"
       :alt="`${translatedTitle} image`"
-      class="picture picture-project"
+      class="picture picture-project skeletons-background"
     />
     <div
       :class="{ 'has-description': translatedPurpose && translatedPurpose.length }"
       class="text text-limit"
     >
       <div ref="type" class="card-type">
-        <div v-if="project.categories && project.categories.length" class="category-name">
+        <div
+          v-if="project.categories && project.categories.length"
+          class="category-name skeletons-text"
+        >
           {{ project.categories[0].name }}
         </div>
       </div>
-      <div class="card-title">
+      <div class="card-title skeletons-text">
         {{ translatedTitle }}
       </div>
-      <div :style="{ '-webkit-line-clamp': purposeClamp }" class="card-description">
+      <div :style="{ '-webkit-line-clamp': purposeClamp }" class="card-description skeletons-text">
         {{ translatedPurpose }}
       </div>
     </div>

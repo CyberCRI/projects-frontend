@@ -9,7 +9,6 @@ export const announcementSkeleton = (
   description: 'Ipsum nostrud officia dolor esse exercitation mollit',
   type: 'na',
   status: 'open',
-  // @ts-expect-error ignore id
   project: projectSkeleton(),
   deadline: '2020-05-01',
   is_remunerated: false,

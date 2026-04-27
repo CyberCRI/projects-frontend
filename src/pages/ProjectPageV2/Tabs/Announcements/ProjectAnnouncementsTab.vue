@@ -1,155 +1,21 @@
 <template>
-  <div class="project-announcement narrow-content">
-    <div v-if="canEditProject && isInEditingMode" class="add-announcement">
-      <LpiButton
-        :label="$t('project.announcement-create')"
-        class="add-announcement-btn"
-        @click="projectLayoutToggleAddModal('announcement')"
-      />
-    </div>
-
-    <AnnouncementItem
-      v-for="announcement in sortedAnnouncements"
-      :key="announcement.id"
-      :announcement="announcement"
-      :is-in-editing-mode="isInEditingMode"
-      class="announcement"
-      :show-apply-action="true"
-      @update-announcement="updateAnnouncement(announcement)"
-      @open-confirm-modal="openConfirmDeleteModal(announcement)"
-      @apply="appliedAnnouncement = $event"
-    />
-
-    <ConfirmModal
-      v-if="confirmDeleteModalVisible"
-      :content="$t('recruit.delete-announcement-message')"
-      :title="$t('common.delete')"
-      :asyncing="isDeleting"
-      @cancel="confirmDeleteModalVisible = false"
-      @confirm="deleteAnnouncement"
-    />
-
-    <ReplyAnnouncementDrawer
-      :announcement="appliedAnnouncement"
-      :is-opened="!!appliedAnnouncement"
-      @close="appliedAnnouncement = null"
-      @submit="appliedAnnouncement = null"
-    />
-  </div>
+  <BaseModuleTab :title="$t(ProjectModuleTitle.announcements, countElement)" :count="countElement">
+    <BaseProjectAnnouncements :project="project" :editable="editable" />
+  </BaseModuleTab>
 </template>
 
-<script>
-import AnnouncementItem from '@/components/project/announcement/AnnouncementItem.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import ReplyAnnouncementDrawer from '@/components/project/announcement/ReplyAnnouncementDrawer.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import { deleteAnnouncement } from '@/api/announcements.service'
-import analytics from '@/analytics'
-import useToasterStore from '@/stores/useToaster.ts'
-export default {
-  name: 'ProjectAnnouncementsTab',
+<script setup lang="ts">
+import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
+import BaseProjectAnnouncements from '@/components/project/modules/Announcements/BaseProjectAnnouncements.vue'
+import { ProjectModuleTitle, TranslatedProject } from '@/models/project.model'
 
-  components: {
-    AnnouncementItem,
-    ConfirmModal,
-    ReplyAnnouncementDrawer,
-    LpiButton,
-  },
+const props = withDefaults(
+  defineProps<{
+    project: TranslatedProject
+    editable?: boolean
+  }>(),
+  { editable: false }
+)
 
-  inject: ['projectLayoutToggleAddModal'],
-
-  props: {
-    project: {
-      type: Object,
-      default: () => ({}),
-    },
-    announcements: {
-      type: Array,
-      default: () => [],
-    },
-
-    isInEditingMode: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  emits: ['reload-announcements'],
-  setup() {
-    const toaster = useToasterStore()
-    useScrollToTab()
-    const { canEditProject } = usePermissions()
-    return {
-      toaster,
-      canEditProject,
-    }
-  },
-
-  data() {
-    return {
-      confirmDeleteModalVisible: false,
-      appliedAnnouncement: null,
-      isDeleting: false,
-      announcementToBeDeleted: null,
-    }
-  },
-
-  computed: {
-    sortedAnnouncements() {
-      return [...this.announcements].sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-    },
-  },
-
-  methods: {
-    async deleteAnnouncement() {
-      try {
-        this.isDeleting = true
-        await deleteAnnouncement(this.announcementToBeDeleted)
-
-        analytics.announcement.removeAnnouncement({
-          project: {
-            id: this.project.id,
-          },
-          announcement: this.announcementToBeDeleted,
-        })
-
-        this.toaster.pushSuccess(this.$t('toasts.announcement-delete.success'))
-
-        this.$emit('reload-announcements')
-      } catch (error) {
-        this.toaster.pushError(`${this.$t('toasts.announcement-delete.error')} (${error})`)
-        console.error(error)
-      } finally {
-        this.isDeleting = false
-        this.confirmDeleteModalVisible = false
-        this.announcementToBeDeleted = null
-      }
-    },
-
-    updateAnnouncement(announcement) {
-      this.projectLayoutToggleAddModal('announcement', announcement)
-    },
-
-    openConfirmDeleteModal(announcement) {
-      this.announcementToBeDeleted = announcement
-      this.confirmDeleteModalVisible = true
-    },
-  },
-}
+const countElement = computed<number>(() => props.project.modules?.announcements)
 </script>
-
-<style lang="scss" scoped>
-.project-announcement {
-  .announcement {
-    &:not(.first-of-type) {
-      margin-top: $space-l;
-    }
-  }
-}
-
-.add-announcement {
-  display: flex;
-  justify-content: flex-end;
-  padding: $space-l 0;
-}
-</style>

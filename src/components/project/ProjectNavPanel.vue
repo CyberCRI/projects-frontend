@@ -39,7 +39,7 @@
         :nb-button="project.modules.announcements"
         label-on-hover
         :to="{
-          name: 'ProjectAnnouncement',
+          name: 'projectAnnouncements',
           params: { slugOrId: project.slug || project.id },
         }"
       />

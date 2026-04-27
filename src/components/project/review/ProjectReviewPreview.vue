@@ -14,7 +14,7 @@ defineProps<{ project: TranslatedProject }>()
     :see-more="{
       // TODO
       name: 'projectResources',
-      params: { slugOrid: project.slug || project.id },
+      params: { slugOrId: project.slug || project.id },
     }"
   >
     <template #content>

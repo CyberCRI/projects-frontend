@@ -5,25 +5,28 @@
 
       <ProjectDescriptionPreview v-if="!descripitonEmpty" :project="project" />
 
-      <ProjectMembersPreview :project="project" />
+      <ProjectMembersPreview v-if="project.modules.members" :project="project" />
 
-      <ProjectLocationsPreview :project="project" />
+      <ProjectLocationsPreview v-if="project.modules.locations" :project="project" />
 
-      <ProjectGoalsPreview :project="project" />
+      <ProjectGoalsPreview v-if="project.modules.goals" :project="project" />
 
-      <ProjectBlogEntriesPreview :project="project" />
+      <ProjectBlogEntriesPreview v-if="project.modules.blogs" :project="project" />
 
-      <ProjectLinkedProjectsPreview :project="project" />
+      <ProjectLinkedProjectsPreview v-if="project.modules.linked_projects" :project="project" />
 
-      <ProjectResourcesPreview :project="project" />
+      <ProjectResourcesPreview
+        v-if="project.modules.links || project.modules.files"
+        :project="project"
+      />
 
-      <ProjectReviewPreview v-if="project.publication_status || true" :project="project" />
+      <ProjectReviewPreview v-if="project.modules.reviews" :project="project" />
 
-      <ProjectAnnouncementsPreview :project="project" />
+      <ProjectAnnouncementsPreview v-if="project.modules.announcements" :project="project" />
 
-      <ProjectCommentsPreview :project="project" />
+      <ProjectCommentsPreview v-if="project.modules.comments" :project="project" />
 
-      <ProjectPrivateExchangePreview :project="project" />
+      <ProjectPrivateExchangePreview v-if="project.modules.messages" :project="project" />
 
       <!--
     </div>

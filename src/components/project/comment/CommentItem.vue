@@ -283,7 +283,7 @@ $comment-pic-size: pxToRem(72px);
     width: 100%;
     flex-grow: 1;
     padding-bottom: $space-l;
-    border-bottom: $border-width-s solid $primary;
+    border-bottom: $border-width-s solid var(--primary);
 
     .comment-meta {
       display: flex;
@@ -292,7 +292,7 @@ $comment-pic-size: pxToRem(72px);
 
       .authorship {
         flex-grow: 1;
-        color: $primary-dark;
+        color: var(--primary-dark);
         font-weight: 700;
         font-size: $font-size-m;
 

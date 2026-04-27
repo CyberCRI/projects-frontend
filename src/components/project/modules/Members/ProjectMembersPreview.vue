@@ -13,7 +13,7 @@ defineProps<{ project: TranslatedProject }>()
     :total="project.modules.members"
     :see-more="{
       name: 'projectTeam',
-      params: { slugOrid: project.slug || project.id },
+      params: { slugOrId: project.slug || project.id },
     }"
   >
     <template #content>

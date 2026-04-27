@@ -1,14 +1,14 @@
 <template>
   <IconImage
     v-if="!isFollowing && usersStore.isConnected"
-    class="icon"
+    class="icon skeletons-background"
     name="BookmarkLine"
     tabindex="1"
     @click="actionFollow"
   />
   <IconImage
     v-else-if="usersStore.isConnected"
-    class="icon"
+    class="icon skeletons-background"
     name="BookmarkFill"
     tabindex="1"
     @click="actionFollow"

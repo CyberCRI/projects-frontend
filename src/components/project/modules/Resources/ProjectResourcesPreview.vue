@@ -6,7 +6,7 @@ const props = defineProps<{ project: TranslatedProject }>()
 
 const target = computed(() => ({
   name: 'projectResources',
-  params: { slugOrid: props.project.slug || props.project.id },
+  params: { slugOrId: props.project.slug || props.project.id },
 }))
 </script>
 

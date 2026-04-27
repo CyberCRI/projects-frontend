@@ -1,4 +1,5 @@
 import { ReviewModel } from '@/models/review.model'
+import { userSkeleton } from '@/skeletons/user.skeletons'
 
 export const projectReviewsSkeleton = (def?: Partial<ReviewModel>): ReviewModel => ({
   id: -1,
@@ -7,11 +8,6 @@ export const projectReviewsSkeleton = (def?: Partial<ReviewModel>): ReviewModel 
   description:
     'Velit id fugiat sint occaecat ad laborum reprehenderit eu minim ut Lorem pariatur nulla voluptate.',
   title: 'Velit id fugiat sint occaecat',
-  reviewer: {
-    email: 'email@email.fr',
-    family_name: 'jean',
-    given_name: 'bonbeur',
-    id: -1,
-  },
+  reviewer: userSkeleton(),
   ...(def ?? {}),
 })

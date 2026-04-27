@@ -38,11 +38,11 @@ import ReviewItem from '@/components/project/review/ReviewItem.vue'
 import { deleteReview } from '@/api/reviews.service'
 import useToasterStore from '@/stores/useToaster'
 import { TranslatedProject } from '@/models/project.model'
-import { ReviewModel } from '@/models/review.model'
+import { TranslatedReview } from '@/models/review.model'
 
 const props = defineProps<{
   project: TranslatedProject
-  reviews: ReviewModel[]
+  reviews: TranslatedReview[]
 }>()
 
 const emit = defineEmits<{

@@ -1,52 +1,24 @@
 <template>
-  <div class="project-linked-projects">
-    <div v-if="canEditProject && isInEditingMode" class="add-linked-project">
-      <LpiButton
-        :label="$t('project.add-linked-project')"
-        class="add-linked-project-btn"
-        @click="projectLayoutToggleAddModal('linkedProject')"
-      />
-    </div>
-    <LinkedProjects
-      :is-editable="isInEditingMode"
-      :project="project"
-      :linked-projects="linkedProjects"
-      @reload-linked-projects="$emit('reload-linked-projects')"
-    />
-  </div>
+  <BaseModuleTab
+    :title="$t(ProjectModuleTitle.linked_projects, countElement)"
+    :count="countElement"
+  >
+    <BaseLinkedProjects :project="project" :editable="editable" />
+  </BaseModuleTab>
 </template>
 
 <script setup lang="ts">
-import LinkedProjects from '@/components/project/linked-project/LinkedProjects.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import { TranslatedLinkedProject, TranslatedProject } from '@/models/project.model'
+import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
+import BaseLinkedProjects from '@/components/project/modules/LinkedProjects/BaseLinkedProjects.vue'
+import { ProjectModuleTitle, TranslatedProject } from '@/models/project.model'
 
-const projectLayoutToggleAddModal = inject<(string) => void>('projectLayoutToggleAddModal')
-
-withDefaults(
+const props = withDefaults(
   defineProps<{
     project: TranslatedProject
-    linkedProjects?: TranslatedLinkedProject[]
-    isInEditingMode?: boolean
+    editable?: boolean
   }>(),
-  {
-    linkedProjects: () => [],
-    isInEditingMode: false,
-  }
+  { editable: false }
 )
 
-defineEmits<{
-  'reload-linked-projects': []
-}>()
-
-useScrollToTab()
-const { canEditProject } = usePermissions()
+const countElement = computed<number>(() => props.project.modules?.linked_projects)
 </script>
-
-<style lang="scss" scoped>
-.add-linked-project {
-  display: flex;
-  justify-content: flex-end;
-  padding: $space-l 0;
-}
-</style>
