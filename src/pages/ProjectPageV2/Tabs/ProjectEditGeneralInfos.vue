@@ -84,13 +84,11 @@ export default {
               ),
             }
       return {
-        form: {
-          title: {
-            required: helpers.withMessage(t('project.form.title-errors.required'), required),
-            maxLengthValue: helpers.withMessage(t('project.form.title-errors.max'), maxLength(120)),
-          },
-          purpose: rules,
+        title: {
+          required: helpers.withMessage(t('project.form.title-errors.required'), required),
+          maxLengthValue: helpers.withMessage(t('project.form.title-errors.max'), maxLength(120)),
         },
+        purpose: rules,
       }
     })
 
