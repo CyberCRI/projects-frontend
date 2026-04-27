@@ -54,7 +54,7 @@
               />
             </div>
 
-            <div v-if="canEdit" class="author-action skeleton-background">
+            <div v-if="canEdit" class="author-action skeletons-background">
               <ExternalLabelButton
                 v-if="canEdit"
                 :label="$t('common.edit')"
