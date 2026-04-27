@@ -7,6 +7,7 @@
       @delete-review="toDelete = $event"
       @edit-review="editReview = $event"
     />
+    <EmptyLabel v-if="reviews.length === 0" />
   </FetchLoader>
   <ReviewDrawer
     v-if="!preview"

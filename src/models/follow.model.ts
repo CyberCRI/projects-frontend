@@ -6,6 +6,7 @@ import { ProjectModel } from '@/models/project.model'
  * @description User who follow a project
  */
 export interface FollowModel extends BaseModel {
+  id: number
   follower: {
     id: number
     email: string
@@ -42,7 +43,6 @@ export type FollowOutput = Required<FollowModel> & {
 }
 
 export type FollowManyOutput = Required<FollowOutput> & {
-  id: number
   project: {
     id: string
   }

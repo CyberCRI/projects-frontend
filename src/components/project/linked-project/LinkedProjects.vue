@@ -17,6 +17,7 @@
         </div>
       </div>
     </DynamicGrid>
+    <EmptyLabel v-if="linkedProjectsReordered.length === 0" />
 
     <ConfirmModal
       v-if="confirmModalVisible"

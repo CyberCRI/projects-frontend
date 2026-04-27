@@ -1,7 +1,7 @@
 <template>
   <RevealableClamped
     is="h1"
-    class="title-block"
+    class="title-block skeletons-text"
     :text-content="capitalizedTitle"
     :line-number="2"
     :style-limited="STYLE_LIMITED"

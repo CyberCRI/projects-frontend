@@ -19,14 +19,14 @@
 <script setup lang="ts">
 import LinkedProjects from '@/components/project/linked-project/LinkedProjects.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import { TranslatedProject } from '@/models/project.model'
+import { TranslatedLinkedProject, TranslatedProject } from '@/models/project.model'
 
 const projectLayoutToggleAddModal = inject<(string) => void>('projectLayoutToggleAddModal')
 
 withDefaults(
   defineProps<{
     project: TranslatedProject
-    linkedProjects?: TranslatedProject[]
+    linkedProjects?: TranslatedLinkedProject[]
     isInEditingMode?: boolean
   }>(),
   {

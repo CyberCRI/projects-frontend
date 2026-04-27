@@ -3,7 +3,6 @@ import { LanguageType, ProjectPublicationStatusType, ProjectStatusType } from '@
 import { ProjectTeamOutput } from '@/models/project-member.model'
 import { ProjectCategoryOutput } from '@/models/project-category.model'
 import { LocationOutput } from '@/models/location.model'
-import { SdgOutput } from '@/models/sdg.model'
 import { GoalOutput } from '@/models/goal.model'
 import { AttachmentLinkOutput } from '@/models/attachment-link.model'
 import { AttachmentFileOutput } from '@/models/attachment-file.model'
@@ -52,6 +51,8 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
   goals: GoalOutput[]
   slug: string
   updated_at: string
+  created_at: string
+  views?: number
   modules: {
     members: number
     groups: number
@@ -151,7 +152,7 @@ export type ProjectOutput = Required<ProjectModel> & {
   categories: ProjectCategoryOutput[]
   geolocation_coordinates: LocationOutput
   tags: TagOutput[]
-  sdgs: SdgOutput[]
+  sdgs: number[]
   goals: GoalOutput[]
   links: AttachmentLinkOutput[]
   files: AttachmentFileOutput[]

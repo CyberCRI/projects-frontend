@@ -1,6 +1,7 @@
 import { Ordering } from '@/interfaces/query'
 import { Translated } from '@/interfaces/translated'
 import BaseModel from '@/models/base.model'
+import { UserModel } from '@/models/user.model'
 
 /**
  * @name CommentModel
@@ -9,19 +10,19 @@ import BaseModel from '@/models/base.model'
 export interface ProjectMessageModel extends BaseModel {
   id: number
   content: string
-  author: {
-    email: string
-    family_name: string
-    given_name: string
-    id: number
-    people_id: string
-  }
+  author: UserModel
   created_at: string
   deleted_at: string
   updated_at: string
+  replies: ProjectMessageModel[]
 }
 
-export type TranslatedProjectMessage = Translated<ProjectMessageModel, 'content'>
+export type TranslatedProjectMessage = Translated<
+  Omit<ProjectMessageModel, 'replies'>,
+  'content'
+> & {
+  replies: TranslatedProjectMessage[]
+}
 
 export type ProjectMessageInputModel = Required<ProjectMessageModel> & {
   author_id: number // user_id

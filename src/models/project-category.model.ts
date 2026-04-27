@@ -1,5 +1,5 @@
 import BaseModel from '@/models/base.model'
-import { OrganizationOutput } from '@/models/organization.model'
+import { OrganizationModel } from '@/models/organization.model'
 import { TemplateOutput } from '@/models/template.model'
 import { TagOutput } from '@/models/tag.model'
 import { ImageModel } from '@/models/image.model'
@@ -42,7 +42,7 @@ export type ProjectCategoryPatchInput = Partial<ProjectCategoryModel> & {
 export type ProjectCategoryOutput = BaseModel &
   Required<ProjectCategoryModel> & {
     template: TemplateOutput
-    organization: OrganizationOutput
+    organization: OrganizationModel['code']
     tags: TagOutput[]
   }
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getProjectComments, getProjectMessage } from '@/api/v2/comments.service'
+import { getProjectComments, getProjectMessages } from '@/api/v2/comments.service'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import CommentItem from '@/components/project/comment/CommentItem.vue'
 import { TranslatedProject } from '@/models/project.model'
@@ -30,7 +30,7 @@ const {
   data: comments,
   pagination,
   refresh,
-} = (props.isPrivate ? getProjectMessage : getProjectComments)(organizationCode, projectId, {
+} = (props.isPrivate ? getProjectMessages : getProjectComments)(organizationCode, projectId, {
   query: {
     ordering: '-created_at',
   },

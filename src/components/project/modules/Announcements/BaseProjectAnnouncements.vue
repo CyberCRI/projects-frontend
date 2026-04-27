@@ -1,42 +1,47 @@
 <script setup lang="ts">
-import { getBlogEntries } from '@/api/v2/blogentries.service'
+import { getProjectAnnouncements } from '@/api/v2/announcements.service'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { TranslatedProject } from '@/models/project.model'
+import { announcementSkeleton } from '@/skeletons/announcement.skeletons'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
-import { blogentriesSkeletons } from '@/skeletons/blogentries.skeletons'
 
 const props = withDefaults(
-  defineProps<{ project: TranslatedProject; preview?: boolean; limit?: number }>(),
+  defineProps<{
+    project: TranslatedProject
+    preview?: boolean
+    limit?: number
+  }>(),
   {
     preview: false,
     limit: null,
   }
 )
 
-const limitSkeletons = computed(() => maxSkeleton(props.project.modules.blogs, props.limit))
+const limitSkeletons = computed(() => maxSkeleton(props.project.modules.announcements, props.limit))
 
 const organizationCode = useOrganizationCode()
 const projectId = computed(() => props.project.id)
+
 const {
   status,
-  data: blogs,
+  data: announcements,
   pagination,
-} = getBlogEntries(organizationCode, projectId, {
+} = getProjectAnnouncements(organizationCode, projectId, {
   query: {
     ordering: '-created_at',
   },
   paginationConfig: {
     limit: props.limit,
   },
-  default: () => factoryPagination(blogentriesSkeletons, limitSkeletons.value),
+  default: () => factoryPagination(announcementSkeleton, limitSkeletons.value),
 })
 </script>
 
 <template>
   <FetchLoader :status="status" only-error skeleton>
-    <div class="list-container">
-      <BlogEntry v-for="blog in blogs" :key="blog.id" :blog-entry="blog" />
-      <EmptyLabel v-if="blogs.length === 0" />
+    <div>
+      <AnnouncementCardList :announcements="announcements" />
+      <EmptyLabel v-if="announcements.length === 0" />
     </div>
     <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
   </FetchLoader>

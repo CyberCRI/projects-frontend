@@ -242,7 +242,7 @@ const onDeleteComment = async () => {
         project: {
           id: props.project.id,
         },
-        comment: props.comment,
+        comment: props.comment as TranslatedComment,
       })
       toaster.pushSuccess(t('toasts.comment-delete.success'))
 

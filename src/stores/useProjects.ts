@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia'
-import { ProjectOutput, ProjectPatchInput, TranslatedProject } from '@/models/project.model'
+import { ProjectModel, ProjectOutput, ProjectPatchInput } from '@/models/project.model'
 import { getProject, patchProject, lockUnlockProject } from '@/api/projects.service'
 
 export interface ProjectState {
-  project: ProjectOutput | TranslatedProject
+  project: ProjectOutput | ProjectModel
 }
 
 const useProjectsStore = defineStore('projects', {
@@ -32,7 +32,7 @@ const useProjectsStore = defineStore('projects', {
       return result
     },
 
-    async getProject(slugOrId: string): Promise<ProjectOutput> {
+    async getProject(slugOrId: string): Promise<ProjectModel> {
       try {
         const result = await getProject(slugOrId, true)
         this.project = result

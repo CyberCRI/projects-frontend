@@ -1,5 +1,5 @@
 <template>
-  <div class="cropped-image" :class="{ contain, loading: loadStatus }">
+  <div class="cropped-image skeletons-background" :class="{ contain, loading: loadStatus }">
     <img :alt="alt" :src="src" :style="imageStyles" @load="onLoad" @error="onError" />
   </div>
 </template>
@@ -79,6 +79,8 @@ onMounted(() => {
   position: relative;
   width: 100%;
   height: 100%;
+
+  --skeleton-100: v-bind('loadingColor');
 
   img {
     width: 100%;

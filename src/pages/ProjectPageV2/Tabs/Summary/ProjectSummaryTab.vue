@@ -19,6 +19,8 @@
 
       <ProjectReviewPreview v-if="project.publication_status || true" :project="project" />
 
+      <ProjectAnnouncementsPreview :project="project" />
+
       <ProjectCommentsPreview :project="project" />
 
       <ProjectPrivateExchangePreview :project="project" />
@@ -45,6 +47,7 @@
 </template>
 
 <script setup lang="ts">
+import ProjectAnnouncementsPreview from '@/components/project/modules/Announcements/ProjectAnnouncementsPreview.vue'
 import ProjectBlogEntriesPreview from '@/components/project/modules/BlogEntries/ProjectBlogEntriesPreview.vue'
 import ProjectCommentsPreview from '@/components/project/modules/Comments/ProjectCommentsPreview.vue'
 import ProjectGoalsPreview from '@/components/project/modules/Goals/ProjectGoalsPreview.vue'

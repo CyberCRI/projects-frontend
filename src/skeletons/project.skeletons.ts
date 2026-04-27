@@ -54,7 +54,7 @@ export const projectSkeleton = (def?: Partial<ProjectModel>): Omit<ProjectModel,
     files: 0,
     announcements: 0,
     reviews: 0,
-    private_exchange: 0,
+    messages: 0,
   },
   ...(def || {}),
 })

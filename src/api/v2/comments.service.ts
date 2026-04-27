@@ -1,5 +1,5 @@
 import { getComments } from '@/api/comments.service'
-import { getProjectMessages } from '@/api/project-messages.service'
+import { getProjectMessages as fetchgProjectMessages } from '@/api/project-messages.service'
 import { UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
 import { onlyRefs } from '@/functs/onlyRefs'
 import { RefOrRaw } from '@/interfaces/utils'
@@ -39,7 +39,7 @@ export const getProjectComments = (
 }
 
 // TODO change backend with prefix organization code in url not in query
-export const getProjectMessage = (
+export const getProjectMessages = (
   organization: RefOrRaw<OrganizationModel['code']>,
   projectSlugOrId: RefOrRaw<ProjectSlugOrId>,
   config: ConfigPagination = {}
@@ -53,7 +53,7 @@ export const getProjectMessage = (
     key,
     ({ config }) =>
       // TODO add organizations
-      getProjectMessages(unref(projectSlugOrId), {
+      fetchgProjectMessages(unref(projectSlugOrId), {
         ...DEFAULT_CONFIG,
         ...config,
       }),

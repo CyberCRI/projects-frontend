@@ -18,7 +18,7 @@ import { TranslatedInstruction } from '@/models/instruction.model'
 import { TranslatedGoal } from '@/models/goal.model'
 import { TranslatedBlogEntry } from '@/models/blog-entry.model'
 import { TranslatedComment } from '@/models/comment.model'
-import { ProjectMessageModel, TranslatedProjectMessage } from '@/models/project-message.model'
+import { TranslatedProjectMessage } from '@/models/project-message.model'
 
 // type can be computed or object
 type RefOrRaw<DataT> = ComputedRef<DataT> | Ref<DataT> | DataT
@@ -117,12 +117,15 @@ export default function useAutoTranslate() {
   const translatedProjectLinkeds = (linkedProjects) =>
     translateEntities<TranslatedLinkedProject>(linkedProjects, translatedProjectLinked)
 
-  const translateComment = (comment) => {
-    const _comment = unref(comment)
-    if (_comment)
-      _comment.replies = translateEntities<TranslatedComment>(_comment.replies, translateComment)
-    return translateEntity(_comment, ['content'])
-  }
+  const translateComment = (comment) =>
+    computed<TranslatedComment>(() => {
+      const raw = unref(comment)
+      return {
+        ...unref(translateEntity<TranslatedComment>(comment, ['content'])),
+        replies: raw.replies ? unref(translateComments(raw.replies)) : null,
+      }
+    })
+
   const translateComments = (comments) =>
     translateEntities<TranslatedComment>(comments, translateComment)
 
@@ -191,9 +194,15 @@ export default function useAutoTranslate() {
   const translatePeopleGroupLocations = (Locations) =>
     translateEntities<GeneralLocationPeopleGroup>(Locations, translatePeopleGroupLocation)
 
-  const translateProjectMessage = (message: ProjectMessageModel) =>
-    translateEntity<TranslatedProjectMessage>(message, ['content'])
-  const translateProjectMessages = (messages: ProjectMessageModel[]) =>
+  const translateProjectMessage = (message) =>
+    computed(() => {
+      const raw = unref(message)
+      return {
+        ...unref(translateEntity<TranslatedProjectMessage>(message, ['content'])),
+        replies: raw.replies ? unref(translateProjectMessages(raw.replies)) : null,
+      }
+    })
+  const translateProjectMessages = (messages) =>
     translateEntities<TranslatedProjectMessage>(messages, translateProjectMessage)
 
   // --------------------

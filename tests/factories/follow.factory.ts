@@ -5,6 +5,7 @@ import { BaseFactory } from './base.factory'
 
 export const FollowFactory = createFactory<FollowModel>((faker) => ({
   ...BaseFactory.generate(),
+  id: faker.datatype.number(),
   follower: {
     id: faker.datatype.number(),
     email: faker.datatype.string(),

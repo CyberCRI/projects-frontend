@@ -5,7 +5,6 @@ import { mountSuspended } from '@nuxt/test-utils/runtime'
 import routerOptions from '@/app/router.options'
 import { createI18n, I18nOptions } from 'vue-i18n'
 import { createTestingPinia } from '@pinia/testing'
-// @ts-expect-error ignore import nuxt
 import { NuxtLink } from '#components'
 
 // create globaly i18n

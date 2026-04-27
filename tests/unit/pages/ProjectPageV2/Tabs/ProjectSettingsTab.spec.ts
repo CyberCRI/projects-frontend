@@ -1,5 +1,4 @@
 import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import ProjectSettingsTab from '@/pages/ProjectPageV2/Tabs/ProjectSettingsTab.vue'
 
 import { describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
@@ -7,6 +6,7 @@ import { TranslatedProjectFactory } from '../../../../factories/project.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import { PaginationsFactory } from '../../../../factories/paginations.factory'
 import { OrganizationFactory } from '../../../../factories/organization.factory'
+import ProjectSettingsTab from '@/pages/ProjectPageV2/Tabs/Settings/ProjectSettingsTab.vue'
 
 describe('ProjectSettingsTab.vue', () => {
   it('should render component', async () => {

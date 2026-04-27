@@ -14,7 +14,7 @@ import { GoalFactory } from '../../../factories/goal.factory'
 import BlogEntryFactory from '../../../factories/blog-entry.factory'
 import { AnnouncementFactory } from '../../../factories/announcement.factory'
 import { CommentFactory } from '../../../factories/comment.factory'
-import ProjectSummaryTab from '@/pages/ProjectPageV2/Tabs/ProjectSummaryTab.vue'
+import ProjectSummaryTab from '@/pages/ProjectPageV2/Tabs/Summary/ProjectSummaryTab.vue'
 
 const project = ProjectOutputFactory.generate()
 

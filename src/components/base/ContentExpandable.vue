@@ -8,7 +8,7 @@
     >
       <div ref="content">
         <slot>
-          <TipTapOutput class="description tiptap-output" :content="description" />
+          <TipTapOutput class="description tiptap-output skeletons-text" :content="description" />
         </slot>
       </div>
       <div class="description-limited-transparancy" />

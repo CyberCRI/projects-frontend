@@ -1,5 +1,5 @@
 <template>
-  <div class="visibility-ctn">
+  <div class="visibility-ctn skeletons-background">
     <InfoSentence
       v-if="project.publication_status"
       :class="visibility"
@@ -10,7 +10,6 @@
       size="medium"
       button-size="mbutton"
       :inline="true"
-      :title="title"
     />
   </div>
 </template>

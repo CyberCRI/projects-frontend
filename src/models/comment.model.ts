@@ -2,6 +2,7 @@ import { Ordering } from '@/interfaces/query'
 import { Translated } from '@/interfaces/translated'
 import BaseModel from '@/models/base.model'
 import { ImageModel } from '@/models/image.model'
+import { UserModel } from '@/models/user.model'
 
 /**
  * @name CommentModel
@@ -10,20 +11,17 @@ import { ImageModel } from '@/models/image.model'
 export interface CommentModel extends BaseModel {
   id: number
   content: string
-  author: {
-    email: string
-    family_name: string
-    given_name: string
-    id: number
-    people_id: number
-  }
+  author: UserModel
   images: ImageModel[]
   created_at: string
   deleted_at: string
   updated_at: string
+  replies: CommentModel[]
 }
 
-export type TranslatedComment = Translated<CommentModel, 'content'>
+export type TranslatedComment = Translated<Omit<CommentModel, 'replies'>, 'content'> & {
+  replies: TranslatedComment[]
+}
 
 export type CommentInputModel = Required<CommentModel> & {
   author_id: number // user_id

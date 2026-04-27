@@ -6,7 +6,8 @@
     "verbatimModuleSyntax": false,
     "paths": {
       "@/*": ["./src/*"],
-      "#imports": ["./.nuxt/imports.d.ts"]
+      "#imports": ["./.nuxt/imports.d.ts"],
+      "#components": ["./.nuxt/components.d.ts"]
     }
   }
 }

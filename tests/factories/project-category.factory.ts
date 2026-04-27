@@ -41,7 +41,7 @@ export const ProjectCategoryFactory = createFactory<ProjectCategoryOutput>((fake
   name: faker.name.title(),
   order_index: faker.datatype.number(),
   template: TemplateFactory.generate(),
-  organization: OrganizationOutputFactory.generate(),
+  organization: OrganizationOutputFactory.generate().code,
   tags: TagFactory.generateMany(2),
   children: [],
   hierarchy: [],
@@ -51,7 +51,7 @@ export const ProjectCategoryFactory = createFactory<ProjectCategoryOutput>((fake
 export const ProjectCategoryOutputFactory = createFactory<ProjectCategoryOutput>(() => ({
   ...ProjectCategoryFactory.generate(),
   template: TemplateFactory.generate(),
-  organization: OrganizationOutputFactory.generate(),
+  organization: OrganizationOutputFactory.generate().code,
   tags: TagFactory.generateMany(2),
 }))
 

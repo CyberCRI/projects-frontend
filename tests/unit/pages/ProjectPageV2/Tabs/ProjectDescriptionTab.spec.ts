@@ -1,9 +1,9 @@
 import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import ProjectDescriptionTab from '@/pages/ProjectPageV2/Tabs/ProjectDescriptionTab.vue'
 
 import { describe, expect, it, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
 import { TranslatedProjectFactory } from '../../../../factories/project.factory'
+import ProjectDescriptionTab from '@/pages/ProjectPageV2/Tabs/Description/ProjectDescriptionTab.vue'
 
 describe('ProjectDescriptionTab.vue', () => {
   it('should render component', async () => {

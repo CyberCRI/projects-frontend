@@ -1,7 +1,7 @@
 <template>
   <RevealableClamped
     is="h4"
-    class="purpose-block"
+    class="purpose-block skeletons-text"
     :text-content="capitalizedPurpose"
     :line-number="3"
     :style-limited="STYLE_LIMITED"
