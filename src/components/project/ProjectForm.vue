@@ -54,7 +54,7 @@
         :unfocusable="otherFieldDisabled"
         space-below-label="large-space"
         data-test="title-input"
-        @blur="validation.form.title.$touch"
+        @blur="validation.title.$touch"
       >
         <label>
           {{
@@ -62,7 +62,7 @@
           }}
         </label>
       </TextInput>
-      <FieldErrors :errors="validation.form.title.$errors" />
+      <FieldErrors :errors="validation.title.$errors" />
     </FieldDisabler>
 
     <!-- Purpose -->
@@ -81,11 +81,11 @@
         :unfocusable="otherFieldDisabled"
         data-test="purpose-input"
         space-below-label="large-space"
-        @blur="validation.form.purpose.$touch"
+        @blur="validation.purpose.$touch"
       >
         <label>{{ $t('project.form.purpose-label') + ' *' }}</label>
       </TextInput>
-      <FieldErrors :errors="validation.form.purpose.$errors" />
+      <FieldErrors :errors="validation.purpose.$errors" />
     </FieldDisabler>
 
     <!-- Team -->
