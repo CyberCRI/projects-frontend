@@ -1,8 +1,8 @@
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
 import { ProjectCategoryFactory } from '~~/tests/factories/project-category.factory'
-import { mockNuxtImport, registerEndpoint } from '@nuxt/test-utils/runtime'
 import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
+import { mockNuxtImport, registerEndpoint } from '@nuxt/test-utils/runtime'
 import OrganizationTagFactory from '~~/tests/factories/tag.factory'
 import CategoryPage from '~/pages/CategoryPage/CategoryPage.vue'
 import { flushPromises } from '@vue/test-utils'

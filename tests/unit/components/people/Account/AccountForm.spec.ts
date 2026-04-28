@@ -1,10 +1,10 @@
+import { OrganizationOutputFactory } from '~~/tests/factories/organization.factory'
 import AccountForm from '~/components/people/Account/AccountForm.vue'
+import { UserFactory } from '~~/tests/factories/user.factory'
+import useOrganizationsStore from '~/stores/useOrganizations'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { UserFactory } from '~~/tests/factories/user.factory'
-import { OrganizationOutputFactory } from '~~/tests/factories/organization.factory'
 import pinia from '~/stores'
-import useOrganizationsStore from '~/stores/useOrganizations'
 
 describe('AccountForm', () => {
   let wrapper

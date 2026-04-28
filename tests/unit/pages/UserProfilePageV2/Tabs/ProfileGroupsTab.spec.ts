@@ -1,12 +1,12 @@
 import ProfileGroupsTab from '~/pages/UserProfilePageV2/Tabs/ProfileGroupsTab.vue'
-import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import { UserFactory } from '~~/tests/factories/user.factory'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import pinia from '~/stores'
-import useOrganizationsStore from '~/stores/useOrganizations'
 import { OrganizationOutput } from '~/models/organization.model'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import pinia from '~/stores'
 vi.mock('~/api/groups.service', () => ({
   getGroup: vi.fn().mockResolvedValue({ results: {} }),
 }))

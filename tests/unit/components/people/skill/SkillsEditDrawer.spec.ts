@@ -1,9 +1,9 @@
-import { lpiMount } from '~~/tests/helpers/LpiMount'
 import SkillsEditDrawer from '~/components/people/skill/SkillsEditDrawer.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
 
-import pinia from '~/stores'
-import useOrganizationsStore from '~/stores/useOrganizations'
 import { OrganizationOutput } from '~/models/organization.model'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import pinia from '~/stores'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 

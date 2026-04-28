@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest'
 import { useQuery } from '~/composables/useQuery'
+import { describe, it, expect } from 'vitest'
 
 describe('useQuery', () => {
   it('method', async () => {

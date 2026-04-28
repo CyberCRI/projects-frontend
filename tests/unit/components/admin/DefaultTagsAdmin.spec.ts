@@ -1,8 +1,8 @@
-import { lpiMount } from '~~/tests/helpers/LpiMount'
 import DefaultTagsAdmin from '~/components/admin/DefaultTagsAdmin.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
 
-import pinia from '~/stores'
 import useOrganizationsStore from '~/stores/useOrganizations'
+import pinia from '~/stores'
 
 import { OrganizationOutput } from '~/models/organization.model'
 

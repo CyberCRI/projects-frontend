@@ -1,11 +1,11 @@
-import * as auth from '~/api/auth/auth.service'
 import { removeApiCookie } from '~/api/auth/cookie.service'
-import analytics from '~/analytics'
-import funct from '~/functs/functions'
 import * as keycloakUtils from '~/api/auth/keycloakUtils'
 import { setActivePinia, createPinia } from 'pinia'
+import * as auth from '~/api/auth/auth.service'
 import useUsersStore from '~/stores/useUsers'
 import waitForExpect from 'wait-for-expect'
+import funct from '~/functs/functions'
+import analytics from '~/analytics'
 
 import { flushPromises } from '@vue/test-utils'
 

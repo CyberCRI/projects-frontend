@@ -1,6 +1,6 @@
-import { lpiMount } from '~~/tests/helpers/LpiMount'
 import SearchOptionDropDown from '~/components/search/SearchOptionDropDown/SearchOptionDropDown.vue'
 import { ALL_SECTION_KEY } from '~/components/search/Filters/useSectionFilters'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
 
 import { beforeEach, describe, expect, it } from 'vitest'
 

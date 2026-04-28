@@ -1,7 +1,7 @@
-import { lpiMount } from '~~/tests/helpers/LpiMount'
 import GroupMemberItem from '~/components/group/Modules/Members/GroupMemberItem.vue'
-import { beforeEach, describe, expect, it } from 'vitest'
 import GroupMemberFactory from '~~/tests/factories/group-member.factory'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
 
 describe('GroupMemberItem.vue', () => {
   let defaultParams

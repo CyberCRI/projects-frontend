@@ -1,14 +1,14 @@
 // @vitest-environment nuxt
-import funct from '~/functs/functions'
+import { ProjectOutputFactory } from '~~/tests/factories/project.factory'
+import { ProjectMemberModel } from '~/models/project-member.model'
+import { test, beforeEach, describe, expect, it } from 'vitest'
+import { UserFactory } from '~~/tests/factories/user.factory'
+import useOrganizationsStore from '~/stores/useOrganizations'
 import FunctionImporter from './FunctionImporter.vue'
 import { lpiMount } from '~~/tests/helpers/LpiMount'
-import { ProjectOutputFactory } from '~~/tests/factories/project.factory'
-import { UserFactory } from '~~/tests/factories/user.factory'
-import { test, beforeEach, describe, expect, it } from 'vitest'
-import pinia from '~/stores'
 import useUsersStore from '~/stores/useUsers'
-import useOrganizationsStore from '~/stores/useOrganizations'
-import { ProjectMemberModel } from '~/models/project-member.model'
+import funct from '~/functs/functions'
+import pinia from '~/stores'
 
 describe('Function getOrgsFromRoles', () => {
   it('should return empty array', () => {

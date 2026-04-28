@@ -1,10 +1,10 @@
-import { lpiMount } from '~~/tests/helpers/LpiMount'
 import LanguageFilter from '~/components/search/Filters/LanguageFilter.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
 
-import pinia from '~/stores'
 import useOrganizationsStore from '~/stores/useOrganizations'
-import { flushPromises } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
+import { flushPromises } from '@vue/test-utils'
+import pinia from '~/stores'
 
 describe('LanguageFilter.vue', () => {
   beforeEach(() => {

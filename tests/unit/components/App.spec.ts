@@ -1,15 +1,15 @@
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import App from '~/app.vue'
 
-import { checkExpiredToken } from '~/api/auth/keycloakUtils'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { OrganizationOutput } from '~/models/organization.model'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import { checkExpiredToken } from '~/api/auth/keycloakUtils'
+import { flushPromises } from '@vue/test-utils'
+import { Router } from 'vue-router'
 import type { Mock } from 'vitest'
 // issue with webcrypto, so mock so offending import
 import pinia from '~/stores'
-import useOrganizationsStore from '~/stores/useOrganizations'
-import type { OrganizationOutput } from '~/models/organization.model'
-import { flushPromises } from '@vue/test-utils'
-import { Router } from 'vue-router'
 
 vi.mock('~/api/auth/keycloakUtils', () => {
   return {

@@ -1,12 +1,12 @@
 import * as keycloakUtils from '~/api/auth/keycloakUtils'
-import useKeycloak from '~/api/auth/keycloak'
 import * as authService from '~/api/auth/auth.service'
+import useKeycloak from '~/api/auth/keycloak'
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import pinia from '~/stores'
-import useUsersStore from '~/stores/useUsers'
 import useToasterStore from '~/stores/useToaster'
+import useUsersStore from '~/stores/useUsers'
+import pinia from '~/stores'
 
 vi.mock('~/api/auth/keycloakUtils')
 const keycloak = useKeycloak()

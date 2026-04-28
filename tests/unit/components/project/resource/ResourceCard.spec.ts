@@ -1,5 +1,5 @@
-import { lpiMount } from '~~/tests/helpers/LpiMount'
 import ResourceCard from '~/components/resources/ResourceCard.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
 
 import { describe, expect, it } from 'vitest'
 

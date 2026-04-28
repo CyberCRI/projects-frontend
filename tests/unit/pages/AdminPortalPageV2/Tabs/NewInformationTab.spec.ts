@@ -1,8 +1,8 @@
-import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import NewInformationTab from '~/pages/AdminPortalPageV2/Tabs/NewInformationTab.vue'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
-import { describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
+import { describe, expect, it } from 'vitest'
 
 describe('NewInformationTab.vue', () => {
   it('should render component', async () => {

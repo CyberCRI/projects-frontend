@@ -5,11 +5,11 @@ import {
   OrganizationOutput,
   OrganizationPatchInput,
 } from '~/models/organization.model'
-import BaseFactory from './base.factory'
-import FaqFactory from './faq.factory'
 import OrganizationDirectoryFactory from './organization-directory.factory'
-import TagFactory from './tag.factory'
 import { ImageFactory } from './image.factory'
+import BaseFactory from './base.factory'
+import TagFactory from './tag.factory'
+import FaqFactory from './faq.factory'
 
 export const OrganizationFactory = createFactory<OrganizationModel>((faker) => ({
   ...BaseFactory.generate(),

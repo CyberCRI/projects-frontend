@@ -1,11 +1,11 @@
-import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
-import StatsByTab from '~/pages/StatsPage/Tabs/StatsByTab.vue'
-import waitForExpect from 'wait-for-expect'
 import { OrganizationOutputFactory } from '~~/tests/factories/organization.factory'
+import StatsByTab from '~/pages/StatsPage/Tabs/StatsByTab.vue'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import waitForExpect from 'wait-for-expect'
 
-import pinia from '~/stores'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
+import pinia from '~/stores'
 
 vi.mock('~/api/stats.service', () => {
   const stats = {

@@ -1,11 +1,11 @@
-import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
-import ProjectHeader from '~/components/project/ProjectHeaderV2.vue'
 import { ProjectOutputFactory } from '~~/tests/factories/project.factory'
+import ProjectHeader from '~/components/project/ProjectHeaderV2.vue'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
-import pinia from '~/stores'
-import useUsersStore from '~/stores/useUsers'
-import useOrganizationsStore from '~/stores/useOrganizations'
 import { OrganizationOutput } from '~/models/organization.model'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useUsersStore from '~/stores/useUsers'
+import pinia from '~/stores'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 

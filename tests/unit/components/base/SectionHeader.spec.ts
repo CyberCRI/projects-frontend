@@ -1,5 +1,5 @@
-import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import SectionHeader from '~/components/base/SectionHeader.vue'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
 import { describe, expect, it } from 'vitest'
 describe('SectionHeader.vue', () => {

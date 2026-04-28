@@ -5,10 +5,10 @@ import {
   ProjectCategoryOutput,
   ProjectCategoryPatchInput,
 } from '~/models/project-category.model'
-import BaseFactory from './base.factory'
-import TagFactory from './tag.factory'
 import { OrganizationOutputFactory } from './organization.factory'
 import TemplateFactory from './template.factory'
+import BaseFactory from './base.factory'
+import TagFactory from './tag.factory'
 
 export const ProjectCategoryFactory = createFactory<ProjectCategoryOutput>((faker) => ({
   ...BaseFactory.generate(),

@@ -1,6 +1,6 @@
-import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import LinkedProjectsRecap from '~/components/project/linked-project/LinkedProjectsRecap.vue'
 import { ProjectFactory } from '~~/tests/factories/project.factory'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
 import { describe, expect, it } from 'vitest'
 

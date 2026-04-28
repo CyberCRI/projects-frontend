@@ -1,9 +1,9 @@
+import TagsFilterEditor from '~/components/search/Filters/TagsFilterEditor.vue'
 import { lpiMount } from '~~/tests/helpers/LpiMount'
 import waitForExpect from 'wait-for-expect'
-import TagsFilterEditor from '~/components/search/Filters/TagsFilterEditor.vue'
 
-import pinia from '~/stores'
 import useOrganizationsStore from '~/stores/useOrganizations'
+import pinia from '~/stores'
 
 import { OrganizationOutput } from '~/models/organization.model'
 

@@ -1,13 +1,13 @@
-import { lpiMount } from '~~/tests/helpers/LpiMount'
-import ReviewRecap from '~/components/project/review/ReviewRecap.vue'
 import { OrganizationOutputFactory } from '~~/tests/factories/organization.factory'
-import pinia from '~/stores'
-import useUsersStore from '~/stores/useUsers'
-import useOrganizationsStore from '~/stores/useOrganizations'
-import useProjectsStore from '~/stores/useProjects'
 import { ProjectOutputFactory } from '~~/tests/factories/project.factory'
+import ReviewRecap from '~/components/project/review/ReviewRecap.vue'
+import useOrganizationsStore from '~/stores/useOrganizations'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
+import useProjectsStore from '~/stores/useProjects'
+import useUsersStore from '~/stores/useUsers'
 import { useAutoTranslate } from '#imports'
+import pinia from '~/stores'
 // issue with webcrypto, so mock so offending import
 vi.mock('y-prosemirror', () => ({ default: {} }))
 

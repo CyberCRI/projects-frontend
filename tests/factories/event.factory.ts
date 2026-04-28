@@ -1,6 +1,6 @@
+import { createFactory } from 'faker-create-factory'
 import { EventModel } from '~/models/event.model'
 import BaseFactory from './base.factory'
-import { createFactory } from 'faker-create-factory'
 
 export const EventFactory = createFactory<EventModel>((faker) => ({
   ...BaseFactory.generate(),

@@ -1,5 +1,5 @@
-import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import RequestAccessPage from '~/pages/RequestAccessPage/RequestAccessPage.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
 import { describe, expect, it } from 'vitest'
 

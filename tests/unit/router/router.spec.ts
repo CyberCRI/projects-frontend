@@ -1,6 +1,6 @@
 // import router from '~/router'
-import analytics from '~/analytics'
 import waitForExpect from 'wait-for-expect'
+import analytics from '~/analytics'
 
 import { describe, expect, it, vi } from 'vitest'
 

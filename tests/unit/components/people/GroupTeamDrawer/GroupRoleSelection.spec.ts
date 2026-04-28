@@ -1,7 +1,7 @@
-import { lpiMount, lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import GroupRoleSelection from '~/components/people/GroupTeamDrawer/GroupRoleSelection.vue'
-import { beforeEach, describe, expect, it } from 'vitest'
 import ProjectMemberFactory from '~~/tests/factories/project-member.factory'
+import { lpiMount, lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import { beforeEach, describe, expect, it } from 'vitest'
 
 const members = ProjectMemberFactory.generateMany(2)
 

@@ -1,5 +1,5 @@
-import { lpiMount } from '~~/tests/helpers/LpiMount'
 import NoItem from '~/components/project/comment/NoItem.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
 
 import { describe, expect, it } from 'vitest'
 

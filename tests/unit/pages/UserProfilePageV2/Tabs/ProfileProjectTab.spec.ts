@@ -1,12 +1,12 @@
 import ProfileProjectTab from '~/pages/UserProfilePageV2/Tabs/ProfileProjectTab.vue'
-import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import { UserFactory } from '~~/tests/factories/user.factory'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import { flushPromises } from '@vue/test-utils'
 
-import { beforeEach, describe, expect, it, vi } from 'vitest'
-import pinia from '~/stores'
 import useOrganizationsStore from '~/stores/useOrganizations'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import useUsersStore from '~/stores/useUsers'
+import pinia from '~/stores'
 
 import usePeopleGroupsStore from '~/stores/usePeopleGroups'
 import useProjectsStore from '~/stores/useProjects'

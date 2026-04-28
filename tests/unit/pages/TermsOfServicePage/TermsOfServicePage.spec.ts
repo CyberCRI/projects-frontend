@@ -1,5 +1,5 @@
-import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import TermsOfServicePage from '~/pages/TermsOfServicePage/TermsOfServicePage.vue'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
 import { describe, expect, it } from 'vitest'
 describe('TermsOfServicePage.vue', () => {

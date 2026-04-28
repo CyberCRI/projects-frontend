@@ -1,11 +1,11 @@
 import ProfileBioTab from '~/pages/UserProfilePageV2/Tabs/ProfileBioTab.vue'
-import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
-import { UserFactory } from '~~/tests/factories/user.factory'
-import { flushPromises } from '@vue/test-utils'
-import pinia from '~/stores'
-import useOrganizationsStore from '~/stores/useOrganizations'
-import useUsersStore from '~/stores/useUsers'
 import { OrganizationOutput } from '~/models/organization.model'
+import { UserFactory } from '~~/tests/factories/user.factory'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import { flushPromises } from '@vue/test-utils'
+import useUsersStore from '~/stores/useUsers'
+import pinia from '~/stores'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 

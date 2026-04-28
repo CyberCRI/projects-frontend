@@ -1,6 +1,6 @@
-import { lpiMount } from '~~/tests/helpers/LpiMount'
-import BlogEntry from '~/components/project/blog/BlogEntry.vue'
 import { BlogEntryFactory } from '~~/tests/factories/blog-entry.factory'
+import BlogEntry from '~/components/project/blog/BlogEntry.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
 
 import { describe, expect, it } from 'vitest'
 

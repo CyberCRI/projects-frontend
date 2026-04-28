@@ -1,7 +1,7 @@
+import { OrganizationOutputFactory } from './organization.factory'
+import { createFactory } from 'faker-create-factory'
 import { NewsModel } from '~/models/news.model'
 import BaseFactory from './base.factory'
-import { createFactory } from 'faker-create-factory'
-import { OrganizationOutputFactory } from './organization.factory'
 
 export const NewsFactory = createFactory<NewsModel>((faker) => ({
   ...BaseFactory.generate(),

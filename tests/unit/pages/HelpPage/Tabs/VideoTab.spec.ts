@@ -1,8 +1,8 @@
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import VideoTab from '~/pages/HelpPage/Tabs/VideoTab.vue'
 
-import { describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
+import { describe, expect, it } from 'vitest'
 
 describe('VideoTab.vue', () => {
   it('should render component', async () => {

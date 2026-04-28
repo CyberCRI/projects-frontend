@@ -1,6 +1,6 @@
-import { lpiMount } from '~~/tests/helpers/LpiMount'
 import AnnouncementCard from '~/components/project/announcement/AnnouncementCard.vue'
 import { ProjectFactory } from '~~/tests/factories/project.factory'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
 
 import { describe, expect, it } from 'vitest'
 

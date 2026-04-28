@@ -5,10 +5,10 @@ import { flushPromises } from '@vue/test-utils'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import pinia from '~/stores'
+import { OrganizationOutput } from '~/models/organization.model'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useUsersStore from '~/stores/useUsers'
-import { OrganizationOutput } from '~/models/organization.model'
+import pinia from '~/stores'
 vi.mock('~/api/follows.service', () => ({
   getUserFollows: vi.fn().mockResolvedValue({ results: [] }),
 }))

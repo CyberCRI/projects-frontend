@@ -1,7 +1,7 @@
-import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import TemplatesTab from '~/pages/AdminPortalPageV2/Tabs/TemplatesTab.vue'
-import { describe, expect, it, vi } from 'vitest'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
+import { describe, expect, it, vi } from 'vitest'
 
 describe('TemplatesTab.vue', () => {
   it('BackendError', async () => {

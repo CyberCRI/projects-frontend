@@ -1,8 +1,8 @@
-import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import CompleteProfileStep1 from '~/components/people/CompleteProfileDrawer/CompleteProfileStep1.vue'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
-import pinia from '~/stores'
 import useUsersStore from '~/stores/useUsers'
+import pinia from '~/stores'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
