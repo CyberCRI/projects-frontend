@@ -31,14 +31,14 @@
 </template>
 
 <script setup lang="ts">
-import ProjectCard from '@/components/project/ProjectCard.vue'
+import type { TranslatedLinkedProject, TranslatedProject } from '@/models/project.model'
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import DynamicGrid from '@/components/base/DynamicGrid.vue'
-import analytics from '@/analytics'
+import ProjectCard from '@/components/project/ProjectCard.vue'
 import { deleteLinkedProject } from '@/api/projects.service'
+import DynamicGrid from '@/components/base/DynamicGrid.vue'
 import useToasterStore from '@/stores/useToaster'
-import { TranslatedLinkedProject, TranslatedProject } from '@/models/project.model'
+import analytics from '@/analytics'
 
 const props = withDefaults(
   defineProps<{

@@ -1,12 +1,15 @@
 <script setup lang="ts">
+import type { InternalModelValue } from '@vuepic/vue-datepicker'
+import { VueDatePicker } from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import DisplayDate from '@/components/base/DisplayDate.vue'
-import { dateWithoutHours, mergeTime, sanitizeDate } from '@/functs/date'
-import { InternalModelValue, VueDatePicker } from '@vuepic/vue-datepicker'
+import type { LpiDate } from '~/interfaces/utils'
+
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import DisplayDate from '~/components/base/DisplayDate.vue'
+
+import { dateWithoutHours, mergeTime, sanitizeDate } from '~/functs/date'
 import * as LocalesDateFns from 'date-fns/locale'
-import { LpiDate } from '@/interfaces/utils'
 
 const { locale } = useNuxtI18n()
 // get datefns from locale value

@@ -1,10 +1,10 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
+import ProjectCommentsTab from '~/pages/ProjectPageV2/Tabs/Comments/ProjectCommentsTab.vue'
+import { ProjectFactory } from '~~/tests/factories/project.factory'
+import { CommentFactory } from '~~/tests/factories/comment.factory'
 import { describe, expect, it, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
-import { ProjectFactory } from '../../../../factories/project.factory'
-import { CommentFactory } from '../../../../factories/comment.factory'
-import ProjectCommentsTab from '@/pages/ProjectPageV2/Tabs/Comments/ProjectCommentsTab.vue'
 
 describe('ProjectCommentsTab.vue', () => {
   it('should render component', async () => {

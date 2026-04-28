@@ -14,10 +14,10 @@
   </div>
 </template>
 <script setup>
-import { capitalize } from '@/functs/string'
+import SkillSteps from '~/components/people/skill/SkillSteps.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
 
-import SkillSteps from '@/components/people/skill/SkillSteps.vue'
-import IconImage from '@/components/base/media/IconImage.vue'
+import { capitalize } from '~/functs/string'
 
 defineOptions({ name: 'SkillItem' })
 defineProps({

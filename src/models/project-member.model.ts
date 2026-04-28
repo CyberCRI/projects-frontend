@@ -1,7 +1,7 @@
-import { Ordering } from '@/interfaces/query'
-import BaseModel from '@/models/base.model'
-import { ProjectMemberRoleType } from '@/models/types'
-import { TranslatedUserModel, UserModel } from '@/models/user.model'
+import type { TranslatedUserModel, UserModel } from '@/models/user.model'
+import type { ProjectMemberRoleType } from '@/models/types'
+import type { Ordering } from '@/interfaces/query'
+import type BaseModel from '@/models/base.model'
 
 /**
  * Member of a project

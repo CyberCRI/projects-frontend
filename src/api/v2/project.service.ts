@@ -1,15 +1,18 @@
-import { getProjectLocations as fetchProjectLocations } from '@/api/locations.services'
 import {
   getProject as fetchProject,
   getLinkedProject as fetchLinkedProject,
   getProjectMembers as fetchProjectMembers,
 } from '@/api/projects.service'
-import { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
+import type {
+  QueryFilterProjectMembers,
+  TranslatedPojectMember,
+} from '@/models/project-member.model'
+import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
+import { getProjectLocations as fetchProjectLocations } from '@/api/locations.services'
+import type { OrganizationModel } from '@/models/organization.model'
+import type { ProjectSlugOrId } from '@/models/project.model'
+import type { RefOrRaw } from '@/interfaces/utils'
 import { onlyRefs } from '@/functs/onlyRefs'
-import { RefOrRaw } from '@/interfaces/utils'
-import { OrganizationModel } from '@/models/organization.model'
-import { QueryFilterProjectMembers, TranslatedPojectMember } from '@/models/project-member.model'
-import { ProjectSlugOrId } from '@/models/project.model'
 
 const DEFAULT_CONFIG = {}
 

@@ -12,8 +12,8 @@
 </template>
 
 <script setup lang="ts">
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import SdgsFilter from '@/components/search/Filters/SdgsFilter.vue'
+import SdgsFilter from '~/components/search/Filters/SdgsFilter.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 const props = withDefaults(
   defineProps<{

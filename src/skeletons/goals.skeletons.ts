@@ -1,4 +1,4 @@
-import { GoalModel } from '@/models/goal.model'
+import type { GoalModel } from '@/models/goal.model'
 
 export const goalSkeletons = (def?: Partial<GoalModel>): Omit<GoalModel, 'id'> => ({
   title: 'title',

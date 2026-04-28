@@ -14,12 +14,12 @@
 </template>
 
 <script setup lang="ts">
-import { getAllGoals } from '@/api/v2/goals.service'
-import FetchLoader from '@/components/base/FetchLoader.vue'
 import GoalSummaryItem from '@/components/project/goal/GoalSummaryItem.vue'
-import { TranslatedProject } from '@/models/project.model'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
+import type { TranslatedProject } from '@/models/project.model'
+import FetchLoader from '@/components/base/FetchLoader.vue'
 import { goalSkeletons } from '@/skeletons/goals.skeletons'
+import { getAllGoals } from '@/api/v2/goals.service'
 
 const props = withDefaults(
   defineProps<{

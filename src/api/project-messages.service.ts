@@ -3,8 +3,8 @@ import type {
   ProjectMessageModel,
   QueryFilterProjectMessage,
 } from '@/models/project-message.model'
+import type { ProjectSlugOrId } from '@/models/project.model'
 import useAPI from '@/composables/useAPI'
-import { ProjectSlugOrId } from '@/models/project.model'
 
 type Config = UseApiOptions<QueryFilterProjectMessage>
 
@@ -56,7 +56,7 @@ export async function deleteProjectMessage(
   projectMessageId: ProjectMessageModel['id'],
   config: Config = {}
 ) {
-  return await useAPI<void>(`project/${projectId}/project-message/${projectMessageId}/`, {
+  return await useAPI<undefined>(`project/${projectId}/project-message/${projectMessageId}/`, {
     method: 'DELETE',
     ...config,
   })

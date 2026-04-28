@@ -1,7 +1,7 @@
 import type { LocationId, LocationModel, ProjectLocationForm } from '@/models/location.model'
+import type { ProjectSlugOrId } from '@/models/project.model'
+import type { Locations } from '@/interfaces/maps'
 import useAPI from '@/composables/useAPI'
-import { Locations } from '@/interfaces/maps'
-import { ProjectSlugOrId } from '@/models/project.model'
 
 type Config = UseApiOptions
 
@@ -36,7 +36,7 @@ export async function patchLocation(
 }
 
 export async function deleteLocation(projectId: ProjectSlugOrId, locationId: LocationId) {
-  return await useAPI<void>(`project/${projectId}/location/${locationId}/`, {
+  return await useAPI<undefined>(`project/${projectId}/location/${locationId}/`, {
     method: 'DELETE',
   })
 }

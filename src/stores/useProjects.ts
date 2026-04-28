@@ -1,6 +1,7 @@
+import { getProject, lockUnlockProject, patchProject } from '~/api/projects.service'
+
+import type { ProjectModel, ProjectOutput, ProjectPatchInput } from '@/models/project.model'
 import { defineStore } from 'pinia'
-import { ProjectModel, ProjectOutput, ProjectPatchInput } from '@/models/project.model'
-import { getProject, patchProject, lockUnlockProject } from '@/api/projects.service'
 
 export interface ProjectState {
   project: ProjectOutput | ProjectModel

@@ -27,9 +27,11 @@
 </template>
 
 <script setup lang="ts">
-import LocationItem from '@/components/map/LocationItem.vue'
-import LocationType from '@/components/map/LocationType.vue'
-import { AnyTranslatedLocation } from '@/models/location.model'
+import type { AnyTranslatedLocation } from '~/models/location.model'
+
+import LocationType from '~/components/map/LocationType.vue'
+import LocationItem from '~/components/map/LocationItem.vue'
+
 import { groupBy } from 'es-toolkit'
 
 const props = withDefaults(

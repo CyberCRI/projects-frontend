@@ -19,8 +19,8 @@
 </template>
 
 <script setup lang="ts">
+import type { TranslatedGoal } from '@/models/goal.model'
 import { formatDate } from '@/functs/date'
-import { TranslatedGoal } from '@/models/goal.model'
 
 const props = defineProps<{
   goal: TranslatedGoal

@@ -1,7 +1,7 @@
+import { ReviewModel, ReviewModelInput } from '~/models/review.model'
 import { createFactory } from 'faker-create-factory'
-import { ReviewModel, ReviewModelInput } from '@/models/review.model'
-import BaseFactory from './base.factory'
 import { UserFactory } from './user.factory'
+import BaseFactory from './base.factory'
 
 export const ReviewFactory = createFactory<ReviewModel>((faker) => ({
   ...BaseFactory.generate(),

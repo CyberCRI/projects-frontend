@@ -1,7 +1,7 @@
-import type { User } from '../interfaces'
-import { LogLevel, Logger } from '../../logger'
+import { LogLevel, Logger } from '~~/tests/playwright/logger'
+import { delay } from '~~/tests/playwright/lib/tools'
 import { Page, expect } from '@playwright/test'
-import { delay } from '../tools'
+import { User } from '@sentry/vue'
 
 const logger = new Logger(LogLevel.Debug)
 

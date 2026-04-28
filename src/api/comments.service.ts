@@ -1,6 +1,6 @@
 import type { CommentInputModel, CommentModel, QueryFilterComments } from '@/models/comment.model'
+import type { ProjectSlugOrId } from '@/models/project.model'
 import useAPI from '@/composables/useAPI'
-import { ProjectSlugOrId } from '@/models/project.model'
 
 type Config = UseApiOptions<QueryFilterComments>
 
@@ -46,7 +46,7 @@ export async function deleteComment(
   commentId: CommentModel['id'],
   config: Config = {}
 ) {
-  return await useAPI<void>(`project/${projectId}/comment/${commentId}/`, {
+  return await useAPI<undefined>(`project/${projectId}/comment/${commentId}/`, {
     ...config,
     method: 'DELETE',
   })

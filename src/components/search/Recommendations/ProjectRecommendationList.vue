@@ -11,9 +11,9 @@
 </template>
 
 <script setup lang="ts">
-import BaseRecommendationList from '@/components/search/Recommendations/BaseRecommendationList.vue'
 import ProjectRecommendationItem from '@/components/search/Recommendations/ProjectRecommendationItem.vue'
-import { TranslatedProject } from '@/models/project.model'
+import BaseRecommendationList from '@/components/search/Recommendations/BaseRecommendationList.vue'
+import type { TranslatedProject } from '@/models/project.model'
 
 defineProps<{
   projects: TranslatedProject[]

@@ -23,8 +23,8 @@
 
 <script setup lang="ts">
 import DescriptionDrawer from '@/components/project/description/DescriptionDrawer.vue'
+import type { TranslatedProject } from '@/models/project.model'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import { TranslatedProject } from '@/models/project.model'
 
 defineProps<{
   project: TranslatedProject

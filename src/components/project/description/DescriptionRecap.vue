@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import ContentExpandable from '@/components/base/ContentExpandable.vue'
-import { TranslatedProject } from '@/models/project.model'
+import type { TranslatedProject } from '@/models/project.model'
 
 defineProps<{ project: TranslatedProject }>()
 </script>

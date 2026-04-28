@@ -1,6 +1,8 @@
-import type { NewsInput, NewsModel, QueryFilterNews } from '@/models/news.model'
-import useAPI, { UseApiOptions } from '@/composables/useAPI'
-import { OrganizationModel } from '@/models/organization.model'
+import type { NewsInput, NewsModel, QueryFilterNews } from '~/models/news.model'
+import type { OrganizationModel } from '~/models/organization.model'
+
+import type { UseApiOptions } from '~/composables/useAPI'
+import useAPI from '~/composables/useAPI'
 
 type ConfigNews = UseApiOptions<QueryFilterNews>
 

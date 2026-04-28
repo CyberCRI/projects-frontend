@@ -1,4 +1,4 @@
-import { CommentModel } from '@/models/comment.model'
+import type { CommentModel } from '@/models/comment.model'
 import { userSkeleton } from '@/skeletons/user.skeletons'
 
 export const projectCommentSkeleton = (def?: Partial<CommentModel>): CommentModel => ({

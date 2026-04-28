@@ -1,6 +1,6 @@
 import type { QueryFilterReviews, ReviewModel, ReviewModelInput } from '@/models/review.model'
+import type { ProjectSlugOrId } from '@/models/project.model'
 import useAPI from '@/composables/useAPI'
-import { ProjectSlugOrId } from '@/models/project.model'
 
 type Config = UseApiOptions<QueryFilterReviews>
 
@@ -23,5 +23,5 @@ export async function patchReview(review: ReviewModelInput) {
 }
 
 export async function deleteReview({ project_id, id }) {
-  return await useAPI<void>(`project/${project_id}/review/${id}/`, { method: 'DELETE' })
+  return await useAPI<undefined>(`project/${project_id}/review/${id}/`, { method: 'DELETE' })
 }

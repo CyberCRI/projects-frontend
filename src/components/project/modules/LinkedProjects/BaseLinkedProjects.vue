@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { getLinkedProject } from '@/api/v2/project.service'
-import FetchLoader from '@/components/base/FetchLoader.vue'
 import LinkedProjects from '@/components/project/linked-project/LinkedProjects.vue'
-import { TranslatedProject } from '@/models/project.model'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import { projectLinkedSkeleton } from '@/skeletons/project.skeletons'
+import type { TranslatedProject } from '@/models/project.model'
+import FetchLoader from '@/components/base/FetchLoader.vue'
+import { getLinkedProject } from '@/api/v2/project.service'
 
 const props = withDefaults(
   defineProps<{ project: TranslatedProject; preview?: boolean; limit?: number }>(),

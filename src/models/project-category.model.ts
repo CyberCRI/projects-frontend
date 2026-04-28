@@ -1,9 +1,9 @@
-import BaseModel from '@/models/base.model'
-import { OrganizationModel } from '@/models/organization.model'
-import { TemplateOutput } from '@/models/template.model'
-import { TagOutput } from '@/models/tag.model'
-import { ImageModel } from '@/models/image.model'
-import { Translated } from '@/interfaces/translated'
+import type { OrganizationModel } from '@/models/organization.model'
+import type { TemplateOutput } from '@/models/template.model'
+import type { Translated } from '@/interfaces/translated'
+import type { ImageModel } from '@/models/image.model'
+import type { TagOutput } from '@/models/tag.model'
+import type BaseModel from '@/models/base.model'
 
 /**
  * @name ProjectCategoryModel

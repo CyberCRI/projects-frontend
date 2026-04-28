@@ -116,8 +116,8 @@
 </template>
 
 <script setup lang="ts">
-import { TranslatedProject } from '@/models/project.model'
 import { useProjectFollow } from '@/pages/ProjectPageV2/useProject'
+import type { TranslatedProject } from '@/models/project.model'
 import useUsersStore from '@/stores/useUsers'
 
 const props = withDefaults(
@@ -165,7 +165,7 @@ const switchView = () => emit('toggle-editing', !props.isEditing)
 </script>
 
 <style lang="scss" scoped>
-@import '@/components/base/navigation/navpanel-menu-entry';
+@import '~/components/base/navigation/navpanel-menu-entry';
 
 .edit-btn-ctn {
   padding-bottom: 1rem;

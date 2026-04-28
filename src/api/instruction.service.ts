@@ -3,9 +3,11 @@ import type {
   InstructionInput,
   InstructionModel,
   QueryFilterInstruction,
-} from '@/models/instruction.model'
-import useAPI, { UseApiOptions } from '@/composables/useAPI'
-import { OrganizationModel } from '@/models/organization.model'
+} from '~/models/instruction.model'
+import type { OrganizationModel } from '~/models/organization.model'
+
+import type { UseApiOptions } from '~/composables/useAPI'
+import useAPI from '~/composables/useAPI'
 
 type ConfigEvent = UseApiOptions<QueryFilterInstruction>
 
@@ -69,7 +71,7 @@ export async function deleteInstruction(
   organizationCode: OrganizationModel['code'],
   idOrSlug: InstructionId
 ) {
-  return await useAPI<void>(`organization/${organizationCode}/instruction/${idOrSlug}/`, {
+  return await useAPI<undefined>(`organization/${organizationCode}/instruction/${idOrSlug}/`, {
     method: 'DELETE',
   })
 }

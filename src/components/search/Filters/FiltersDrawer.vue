@@ -43,10 +43,11 @@
 </template>
 
 <script>
-import Drawer from '@/components/base/BaseDrawer.vue'
-import IconImage from '@/components/base/media/IconImage.vue'
-import FilterWrapper from '@/components/search/Filters/FilterWrapper.vue'
-import { ALL_FILTERS_MODE } from '@/components/search/Filters/useContextualFilters.ts'
+import { ALL_FILTERS_MODE } from '~/components/search/Filters/useContextualFilters.ts'
+import FilterWrapper from '~/components/search/Filters/FilterWrapper.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+import Drawer from '~/components/base/BaseDrawer.vue'
+
 export default {
   name: 'FiltersDrawer',
 

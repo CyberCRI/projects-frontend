@@ -1,8 +1,9 @@
-import useProjectsStore from '@/stores/useProjects'
-import useUsersStore from '@/stores/useUsers'
 import { HocuspocusProvider } from '@hocuspocus/provider'
-import useToasterStore from '@/stores/useToaster'
-import useOrganizationsStore from '@/stores/useOrganizations'
+
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useProjectsStore from '~/stores/useProjects'
+import useToasterStore from '~/stores/useToaster'
+import useUsersStore from '~/stores/useUsers'
 
 export default function useProjectSocket({ project, reloadProject, getBlogEntries }) {
   const runtimeConfig = useRuntimeConfig()

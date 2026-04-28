@@ -46,21 +46,24 @@
 </template>
 
 <script>
-import TextInput from '@/components/base/form/TextInput.vue'
-import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import SwitchInput from '@/components/base/form/SwitchInput.vue'
-
-import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import useVuelidate from '@vuelidate/core'
 
-import { postReview, patchReview } from '@/api/reviews.service'
-import useToasterStore from '@/stores/useToaster.ts'
-import useProjectsStore from '@/stores/useProjects.ts'
-import useUsersStore from '@/stores/useUsers.ts'
-import { textIsEmpty } from '@/functs/string'
+import { patchReview, postReview } from '~/api/reviews.service'
+
+import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import SwitchInput from '~/components/base/form/SwitchInput.vue'
+import FieldErrors from '~/components/base/form/FieldErrors.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+
+import useProjectsStore from '~/stores/useProjects.ts'
+import useToasterStore from '~/stores/useToaster.ts'
+import useUsersStore from '~/stores/useUsers.ts'
+
+import { textIsEmpty } from '~/functs/string'
+
 export default {
   name: 'ReviewDrawer',
 
@@ -261,7 +264,7 @@ export default {
     },
 
     async updateReview() {
-      let body = {
+      const body = {
         description: this.newReview.data.description,
         title: this.newReview.data.title,
         project_id: this.project.id,

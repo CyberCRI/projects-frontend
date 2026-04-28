@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
+import type { TranslatedProject } from '@/models/project.model'
 import { getProjectMembers } from '@/api/v2/project.service'
 import FetchLoader from '@/components/base/FetchLoader.vue'
-import { TranslatedProject } from '@/models/project.model'
-import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import { userSkeleton } from '@/skeletons/user.skeletons'
 
 const props = withDefaults(

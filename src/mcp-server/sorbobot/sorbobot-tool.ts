@@ -1,7 +1,7 @@
+import SorbobotAPI from '~/mcp-server/sorbobot/sorbobot-api.js'
+import { traceSorbobot } from '~/server/routes/api/chat-stream'
+import { API_BASE_URL, mcpFetch } from '../projects/base'
 import { z } from 'zod'
-import SorbobotAPI from '@/mcp-server/sorbobot/sorbobot-api.js'
-import { traceSorbobot } from '@/server/routes/api/chat-stream'
-import { mcpFetch, API_BASE_URL } from '../projects/base'
 
 const runtimeConfig = useRuntimeConfig()
 const sorbobotApiUrl = runtimeConfig.public.appSorbobotApiUrl

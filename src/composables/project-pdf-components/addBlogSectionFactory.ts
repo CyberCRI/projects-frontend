@@ -1,4 +1,4 @@
-import { Container } from '@/composables/pdf-helpers/doc-builder'
+import type { Container } from '~/composables/pdf-helpers/doc-builder'
 
 export default async function addBlogSectionFactory(blogEntries: any[], MAX_BLOG_ENTRIES) {
   const { d } = useNuxtI18n()
@@ -29,7 +29,7 @@ export default async function addBlogSectionFactory(blogEntries: any[], MAX_BLOG
           }
           .blog-entry .blog-entry-header .header-main {
             display: flex;
-            flex-flow: column nowrap; 
+            flex-flow: column nowrap;
             justify-content: flex-start;
             justify-content: space-between;
             padding: 0.3cm 0.5cm;
@@ -53,7 +53,7 @@ export default async function addBlogSectionFactory(blogEntries: any[], MAX_BLOG
             display: block;
             clear: both;
           }
-          
+
           `)
 
       const blogList = blogEntries

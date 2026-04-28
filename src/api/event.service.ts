@@ -1,6 +1,8 @@
-import type { EventIdOrSlug, EventInput, EventModel, QueryFilterEvent } from '@/models/event.model'
-import useAPI, { UseApiOptions } from '@/composables/useAPI'
-import { OrganizationModel } from '@/models/organization.model'
+import type { EventIdOrSlug, EventInput, EventModel, QueryFilterEvent } from '~/models/event.model'
+import type { OrganizationModel } from '~/models/organization.model'
+
+import type { UseApiOptions } from '~/composables/useAPI'
+import useAPI from '~/composables/useAPI'
 
 type ConfigEvent = UseApiOptions<QueryFilterEvent>
 
@@ -55,7 +57,7 @@ export async function deleteEvent(
   organizationCode: OrganizationModel['code'],
   idOrSlug: EventIdOrSlug
 ) {
-  return await useAPI<void>(`organization/${organizationCode}/event/${idOrSlug}/`, {
+  return await useAPI<undefined>(`organization/${organizationCode}/event/${idOrSlug}/`, {
     method: 'DELETE',
   })
 }

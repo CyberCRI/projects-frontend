@@ -1,5 +1,6 @@
-import analytics from '@/analytics'
-import { AttachmentFileModel } from '@/models/attachment-file.model'
+import type { AttachmentFileModel } from '~/models/attachment-file.model'
+
+import analytics from '~/analytics'
 
 export interface AttachmentAnalytic {
   project: {

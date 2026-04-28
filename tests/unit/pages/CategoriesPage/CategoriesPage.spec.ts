@@ -1,15 +1,15 @@
-import CategoriesPage from '@/pages/CategoriesPage/CategoriesPage.vue'
-import { lpiShallowMountSuspended } from '@/../tests/helpers/LpiMount'
-import MockComponent from '@/../tests/helpers/MockComponent.vue'
+import CategoriesPage from '~/pages/CategoriesPage/CategoriesPage.vue'
+import { lpiShallowMountSuspended } from '~~/tests/helpers/LpiMount'
+import MockComponent from '~~/tests/helpers/MockComponent.vue'
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { ProjectCategoryOutputFactory } from '@/../tests/factories/project-category.factory'
+import { ProjectCategoryOutputFactory } from '~~/tests/factories/project-category.factory'
 
-import pinia from '@/stores'
+import pinia from '~/stores'
 
-import useProjectCategoriesStore from '@/stores/useProjectCategories'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import { OrganizationOutput } from '@/models/organization.model'
+import useProjectCategoriesStore from '~/stores/useProjectCategories'
+import { OrganizationOutput } from '~/models/organization.model'
+import useOrganizationsStore from '~/stores/useOrganizations'
 import { flushPromises } from '@vue/test-utils'
 
 const router = [{ name: 'Home', path: '/', component: MockComponent }]

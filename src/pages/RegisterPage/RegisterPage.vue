@@ -1,14 +1,18 @@
 <script setup lang="ts">
+import { email, helpers, required } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
-import { helpers, required, email } from '@vuelidate/validators'
-import { postUserWithInvitation } from '@/api/people.service'
-import { imageSizesFormDataPost } from '@/functs/imageSizesUtils'
-import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
-import { getInvitation } from '@/api/invitations.service'
-import useToasterStore from '@/stores/useToaster'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import { getPatatoidFile } from '@/composables/usePatatoids'
-import { usePublicURL } from '@/composables/usePublic'
+
+import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
+import { postUserWithInvitation } from '~/api/people.service'
+import { getInvitation } from '~/api/invitations.service'
+
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useToasterStore from '~/stores/useToaster'
+
+import { getPatatoidFile } from '~/composables/usePatatoids'
+import { usePublicURL } from '~/composables/usePublic'
+
+import { imageSizesFormDataPost } from '~/functs/imageSizesUtils'
 
 const props = defineProps<{
   token: string

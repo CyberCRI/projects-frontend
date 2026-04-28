@@ -29,8 +29,8 @@
 </template>
 
 <script setup lang="ts">
-import LpiButton from '@/components/base/button/LpiButton.vue'
 import SectionHeader from '@/components/base/SectionHeader.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
 import useViewportWidth from '@/composables/useViewportWidth'
 
 const props = defineProps<{ members: any }>()

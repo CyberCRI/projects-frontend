@@ -11,8 +11,9 @@
 </template>
 
 <script setup lang="ts">
-import SdgIcon from '@/components/search/Filters/SdgIcon.vue'
-import { SDGS } from '@/functs/constants'
+import SdgIcon from '~/components/search/Filters/SdgIcon.vue'
+
+import { SDGS } from '~/functs/constants'
 
 const model = defineModel<number[]>()
 

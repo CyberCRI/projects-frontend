@@ -32,10 +32,11 @@
 </template>
 
 <script setup lang="ts">
-import IconImage from '@/components/base/media/IconImage.vue'
-import { IconImageChoice } from '@/functs/IconImage'
+import IconImage from '~/components/base/media/IconImage.vue'
+
+import type { IconImageChoice } from '~/functs/IconImage'
+import type { RouteLocationRaw } from 'vue-router'
 import { isNil } from 'es-toolkit'
-import { RouteLocationRaw } from 'vue-router'
 
 withDefaults(
   defineProps<{

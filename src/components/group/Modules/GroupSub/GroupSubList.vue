@@ -14,12 +14,15 @@
 </template>
 
 <script setup lang="ts">
-import { getSubGroup } from '@/api/v2/group.service'
-import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import { maxSkeleton, factoryPagination } from '@/skeletons/base.skeletons'
-import { groupSkeleton } from '@/skeletons/group.skeletons'
-import GroupSubTeamItem from '@/components/group/Modules/GroupSub/GroupSubTeamItem.vue'
-import PaginationButtonsV2 from '@/components/base/navigation/PaginationButtonsV2.vue'
+import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+
+import { getSubGroup } from '~/api/v2/group.service'
+
+import GroupSubTeamItem from '~/components/group/Modules/GroupSub/GroupSubTeamItem.vue'
+import PaginationButtonsV2 from '~/components/base/navigation/PaginationButtonsV2.vue'
+
+import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
+import { groupSkeleton } from '~/skeletons/group.skeletons'
 
 const props = withDefaults(
   defineProps<{

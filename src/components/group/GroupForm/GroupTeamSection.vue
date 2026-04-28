@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import useUsersStore from '@/stores/useUsers'
+import useUsersStore from '~/stores/useUsers'
 
 export default {
   name: 'GroupTeamSection',

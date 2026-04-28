@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import BaseModulePreview from '@/components/modules/BaseModulePreview.vue'
 import BaseProjectReview from '@/components/project/review/BaseProjectReview.vue'
-import { ProjectModuleIcon, ProjectModuleTitle, TranslatedProject } from '@/models/project.model'
+import { ProjectModuleIcon, ProjectModuleTitle } from '@/models/project.model'
+import type { TranslatedProject } from '@/models/project.model'
 
 defineProps<{ project: TranslatedProject }>()
 </script>

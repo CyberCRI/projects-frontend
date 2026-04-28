@@ -46,17 +46,20 @@
 </template>
 
 <script>
-import Drawer from '@/components/base/BaseDrawer.vue'
-import TipTapCollaborativeEditor from '@/components/base/form/TextEditor/TipTapCollaborativeEditor.vue'
-import { postProjectImage } from '@/api/projects.service'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import analytics from '@/analytics'
+import { postProjectImage } from '~/api/projects.service'
+
+import TipTapCollaborativeEditor from '~/components/base/form/TextEditor/TipTapCollaborativeEditor.vue'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import Drawer from '~/components/base/BaseDrawer.vue'
+
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useProjectsStore from '~/stores/useProjects.ts'
+import useToasterStore from '~/stores/useToaster.ts'
+import useUsersStore from '~/stores/useUsers.ts'
+
+import { textIsEmpty } from '~/functs/string'
+import analytics from '~/analytics'
 import retry from 'async-retry'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import useProjectsStore from '@/stores/useProjects.ts'
-import useUsersStore from '@/stores/useUsers.ts'
-import { textIsEmpty } from '@/functs/string'
 
 export default {
   name: 'DescriptionDrawer',
@@ -242,7 +245,7 @@ export default {
     },
 
     closeDrawer() {
-      let customEditor = this.$refs.tiptapEditor
+      const customEditor = this.$refs.tiptapEditor
 
       // If the editor does not exist, we should be able to close the modal.
       if (!customEditor?.editor) {

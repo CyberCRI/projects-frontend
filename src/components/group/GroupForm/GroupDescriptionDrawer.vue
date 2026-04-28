@@ -30,10 +30,11 @@
 </template>
 
 <script>
-import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import useVuelidate from '@vuelidate/core'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+
+import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 export default {
   name: 'GroupDescriptionDrawer',

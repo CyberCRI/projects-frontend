@@ -1,16 +1,16 @@
 import { createRouter, createWebHistory, RouteLocationRaw, RouteRecordRaw } from 'vue-router'
 import { ComponentMountingOptions, mount, shallowMount } from '@vue/test-utils'
-import { clickOutside, disableFocus } from '@/directives'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
-import routerOptions from '@/app/router.options'
-import { createI18n, I18nOptions } from 'vue-i18n'
+import { clickOutside, disableFocus } from '~/directives'
 import { createTestingPinia } from '@pinia/testing'
+import { createI18n, I18nOptions } from 'vue-i18n'
+import routerOptions from '~/app/router.options'
 import { NuxtLink } from '#components'
 
 // create globaly i18n
-import english from '@/i18n/locales/en.json'
-import french from '@/i18n/locales/fr.json'
 import MockComponent from './MockComponent.vue'
+import english from '~/i18n/locales/en.json'
+import french from '~/i18n/locales/fr.json'
 
 type OptionsMount<T> = ComponentMountingOptions<T> & {
   route?: RouteLocationRaw

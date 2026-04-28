@@ -16,9 +16,9 @@
 </template>
 
 <script setup lang="ts">
-import { TranslatedProject } from '@/models/project.model'
-import useUsersStore from '@/stores/useUsers'
 import { useProjectFollow } from '@/pages/ProjectPageV2/useProject'
+import type { TranslatedProject } from '@/models/project.model'
+import useUsersStore from '@/stores/useUsers'
 
 const props = defineProps<{
   project: TranslatedProject

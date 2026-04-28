@@ -1,4 +1,4 @@
-import { usePatatoids } from '@/composables/usePatatoids'
+import { usePatatoids } from '~/composables/usePatatoids'
 import { describe, it, expect } from 'vitest'
 
 describe('usePatatoids', () => {

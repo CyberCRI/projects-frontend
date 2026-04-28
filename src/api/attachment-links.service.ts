@@ -1,25 +1,20 @@
-// import type { APIResponseList } from '@/api/types'
+import type { AttachmentLinkInput, AttachmentLinkModel } from '~/models/attachment-link.model'
 
-import type {
-  AttachmentLinkInput /*, AttachmentLinkOutput*/,
-  AttachmentLinkModel,
-} from '@/models/attachment-link.model'
-
-import useAPI from '@/composables/useAPI'
+import useAPI from '~/composables/useAPI'
 
 export async function getAttachmentLinks(id: string) {
-  return await useAPI<PaginationResult<AttachmentLinkModel>>(`project/${id}/link/`, {}) //.data.value
+  return await useAPI<PaginationResult<AttachmentLinkModel>>(`project/${id}/link/`, {})
 }
 
 export async function getAttachmentLink(body: AttachmentLinkInput) {
-  return await useAPI<AttachmentLinkModel>(`project/${body.project_id}/link/${body.link_id}/`, {}) //.data.value
+  return await useAPI<AttachmentLinkModel>(`project/${body.project_id}/link/${body.link_id}/`, {})
 }
 
 export async function postAttachmentLinks(body: AttachmentLinkInput) {
   return await useAPI<AttachmentLinkModel>(`project/${body.project_id}/link/`, {
     body,
     method: 'POST',
-  }) //.data.value
+  })
 }
 
 export async function patchAttachmentLink(body: AttachmentLinkInput) {
@@ -27,7 +22,6 @@ export async function patchAttachmentLink(body: AttachmentLinkInput) {
     body,
     method: 'PATCH',
   })
-  //.data.value
 }
 
 export async function deleteAttachmentLink({ id, projectId }) {

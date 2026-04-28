@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
+import SeeMoreArrow from '~/components/base/button/SeeMoreArrow.vue'
 
 withDefaults(
   defineProps<{

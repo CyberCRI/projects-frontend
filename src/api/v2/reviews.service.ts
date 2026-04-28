@@ -1,10 +1,10 @@
+import type { UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
+import type { OrganizationModel } from '@/models/organization.model'
 import { getReviews as fetchReviews } from '@/api/reviews.service'
-import { UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
+import type { QueryFilterReviews } from '@/models/review.model'
+import type { ProjectSlugOrId } from '@/models/project.model'
+import type { RefOrRaw } from '@/interfaces/utils'
 import { onlyRefs } from '@/functs/onlyRefs'
-import { RefOrRaw } from '@/interfaces/utils'
-import { OrganizationModel } from '@/models/organization.model'
-import { ProjectSlugOrId } from '@/models/project.model'
-import { QueryFilterReviews } from '@/models/review.model'
 
 const DEFAULT_CONFIG = {}
 

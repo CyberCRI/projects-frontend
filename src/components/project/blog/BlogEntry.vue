@@ -51,10 +51,11 @@
 </template>
 
 <script setup lang="ts">
-import IconImage from '@/components/base/media/IconImage.vue'
-import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
-import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
-import { TranslatedBlogEntry } from '@/models/blog-entry.model'
+import type { TranslatedBlogEntry } from '~/models/blog-entry.model'
+
+import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
+import TipTapOutput from '~/components/base/form/TextEditor/TipTapOutput.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
 
 const props = withDefaults(
   defineProps<{

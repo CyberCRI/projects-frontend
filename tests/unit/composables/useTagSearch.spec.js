@@ -1,10 +1,10 @@
+import { getAllOrgClassifications } from '~/api/tag-classification.service'
+import useOrganizationsStore from '~/stores/useOrganizations'
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import useTagSearch from '@/composables/useTagSearch.js'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import { getAllOrgClassifications } from '@/api/tag-classification.service'
+import useTagSearch from '~/composables/useTagSearch.js'
 
-vi.mock('@/stores/useOrganizations')
-vi.mock('@/api/tag-classification.service', () => ({
+vi.mock('~/stores/useOrganizations')
+vi.mock('~/api/tag-classification.service', () => ({
   getAllOrgClassifications: vi
     .fn()
     .mockResolvedValue({ count: 1, results: [{ id: 1, title: 'test' }] }),

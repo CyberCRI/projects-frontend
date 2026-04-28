@@ -1,6 +1,5 @@
 <script setup>
 import { EditorContent } from '@tiptap/vue-3'
-import { computed } from 'vue'
 
 // props
 const props = defineProps({

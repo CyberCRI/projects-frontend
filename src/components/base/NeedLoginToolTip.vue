@@ -12,10 +12,12 @@
   </ToolTip>
 </template>
 <script setup lang="ts">
-import ToolTip from '@/components/base/ToolTip.vue'
-import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import useUsersStore from '@/stores/useUsers'
+import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
+
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import ToolTip from '~/components/base/ToolTip.vue'
+
+import useUsersStore from '~/stores/useUsers'
 
 const usersStore = useUsersStore()
 const logInUser = () => goToKeycloakLoginPage()

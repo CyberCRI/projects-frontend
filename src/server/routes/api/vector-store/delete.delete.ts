@@ -1,5 +1,5 @@
-import getVectorStore from '@/server/utils/vector-db.js'
-import checkVectorDbRights from '@/server/utils/check-vector-db-rights.js'
+import checkVectorDbRights from '~/server/utils/check-vector-db-rights'
+import getVectorStore from '~/server/utils/vector-db'
 
 export default defineLazyEventHandler(() => {
   return defineEventHandler(async (event) => {

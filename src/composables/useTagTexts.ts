@@ -1,4 +1,4 @@
-import { TagModel } from '@/models/tag.model'
+import type { TagModel } from '~/models/tag.model'
 
 export default function useTagTexts() {
   const { locale } = useNuxtI18n()

@@ -1,7 +1,7 @@
-import { Ordering } from '@/interfaces/query'
-import { Translated } from '@/interfaces/translated'
-import BaseModel from '@/models/base.model'
-import { UserModel } from '@/models/user.model'
+import type { Translated } from '@/interfaces/translated'
+import type { UserModel } from '@/models/user.model'
+import type { Ordering } from '@/interfaces/query'
+import type BaseModel from '@/models/base.model'
 
 /**
  * @name ReviewModel

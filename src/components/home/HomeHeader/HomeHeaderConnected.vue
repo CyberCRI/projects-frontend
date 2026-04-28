@@ -54,17 +54,20 @@
   </div>
 </template>
 <script>
-import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-import ProjectSummaryBlock from '@/components/home/SummaryCards/ProjectSummaryBlock.vue'
-import EventSummaryBlock from '@/components/home/SummaryCards/EventSummaryBlock.vue'
-import InstructionSummaryBlock from '@/components/home/SummaryCards/InstructionSummaryBlock.vue'
-import { getAllEvents } from '@/api/event.service'
-import { getAllInstructions } from '@/api/instruction.service'
-import { searchProjects } from '@/api/search.service'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import useUsersStore from '@/stores/useUsers.ts'
-import { nowDate } from '@/functs/date'
+import { getAllInstructions } from '~/api/instruction.service'
+import { searchProjects } from '~/api/search.service'
+import { getAllEvents } from '~/api/event.service'
+
+import InstructionSummaryBlock from '~/components/home/SummaryCards/InstructionSummaryBlock.vue'
+import ProjectSummaryBlock from '~/components/home/SummaryCards/ProjectSummaryBlock.vue'
+import EventSummaryBlock from '~/components/home/SummaryCards/EventSummaryBlock.vue'
+import LpiLoader from '~/components/base/loader/LpiLoader.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useUsersStore from '~/stores/useUsers.ts'
+
+import { nowDate } from '~/functs/date'
 
 export default {
   name: 'HomeHeaderConnected',

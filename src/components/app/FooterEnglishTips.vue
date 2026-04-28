@@ -13,7 +13,7 @@
   </ToolTip>
 </template>
 <script setup lang="ts">
-import ToolTip from '@/components/base/ToolTip.vue'
+import ToolTip from '~/components/base/ToolTip.vue'
 
 withDefaults(defineProps<{ itemTitle?: string }>(), { itemTitle: 'page' })
 </script>

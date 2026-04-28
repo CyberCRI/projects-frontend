@@ -1,5 +1,5 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import GroupButton from '@/components/base/button/GroupButton.vue'
+import GroupButton from '~/components/base/button/GroupButton.vue'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
 import { beforeEach, describe, expect, it } from 'vitest'
 const stubs = {

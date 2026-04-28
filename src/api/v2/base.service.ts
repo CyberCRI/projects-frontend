@@ -1,4 +1,4 @@
-import { RefOrRaw } from '@/interfaces/utils'
+import type { RefOrRaw } from '~/interfaces/utils'
 
 type useAsyncConfig = Parameters<typeof useAsyncAPI<any, any, any>>['2']
 type useAsyncPaginationConfig = Parameters<typeof useAsyncPaginationAPI>['2']

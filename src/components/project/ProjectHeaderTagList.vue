@@ -15,8 +15,8 @@
 </template>
 
 <script setup lang="ts">
+import type { TranslatedProject } from '@/models/project.model'
 import TagsList from '@/components/tags/TagsList.vue'
-import { TranslatedProject } from '@/models/project.model'
 
 defineProps<{
   project: TranslatedProject

@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
 
 const props = defineProps<{ group: TranslatedPeopleGroupModel }>()
 

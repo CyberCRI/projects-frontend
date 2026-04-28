@@ -1,9 +1,12 @@
-import { getNews as fetchNews, getAllNews as fetchAllNews } from '@/api/news.service'
-import { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
-import { onlyRefs } from '@/functs/onlyRefs'
-import { RefOrRaw } from '@/interfaces/utils'
-import { NewsModel, QueryFilterNews } from '@/models/news.model'
-import { OrganizationModel } from '@/models/organization.model'
+import type { NewsModel, QueryFilterNews } from '~/models/news.model'
+import type { OrganizationModel } from '~/models/organization.model'
+
+import type { RefOrRaw } from '~/interfaces/utils'
+
+import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
+import { getAllNews as fetchAllNews, getNews as fetchNews } from '~/api/news.service'
+
+import { onlyRefs } from '~/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}
 

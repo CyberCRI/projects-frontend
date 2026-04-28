@@ -1,14 +1,14 @@
-import { UseAsyncApiConfig } from '@/api/v2/base.service'
-import { onlyRefs } from '@/functs/onlyRefs'
-import { RefOrRaw } from '@/interfaces/utils'
-import { OrganizationModel } from '@/models/organization.model'
 import {
   getProjectsRecommendationsForUser as fetchProjectsRecommendationsForUser,
   getRandomProjectsRecommendationsForUser as fetchRandomProjectsRecommendationsForUser,
   getUsersRecommendationsForUser as fetchUsersRecommendationsForUser,
   getRandomUsersRecommendationsForUser as fetchRandomUsersRecommendationsForUser,
-  QueryFilterRecomendation,
 } from '@/api/recommendations.service'
+import type { QueryFilterRecomendation } from '@/api/recommendations.service'
+import type { OrganizationModel } from '@/models/organization.model'
+import type { UseAsyncApiConfig } from '@/api/v2/base.service'
+import type { RefOrRaw } from '@/interfaces/utils'
+import { onlyRefs } from '@/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}
 

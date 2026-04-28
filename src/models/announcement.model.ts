@@ -1,8 +1,8 @@
-import { Ordering } from '@/interfaces/query'
-import { Translated } from '@/interfaces/translated'
-import BaseModel from '@/models/base.model'
-import { OrganizationModel } from '@/models/organization.model'
-import { ProjectModel, TranslatedProject } from '@/models/project.model'
+import type { ProjectModel, TranslatedProject } from '@/models/project.model'
+import type { OrganizationModel } from '@/models/organization.model'
+import type { Translated } from '@/interfaces/translated'
+import type { Ordering } from '@/interfaces/query'
+import type BaseModel from '@/models/base.model'
 
 export interface AnnouncementModel extends BaseModel {
   id: number

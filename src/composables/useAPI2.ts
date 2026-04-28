@@ -1,6 +1,7 @@
+import useLoadingFromStatus from '~/composables/useLoadingFromStatus'
+import { defaultOptions } from '~/composables/useAPI'
+
 import { merge } from 'es-toolkit'
-import { defaultOptions } from '@/composables/useAPI'
-import useLoadingFromStatus from '@/composables/useLoadingFromStatus'
 
 type Params = Parameters<typeof useFetch>
 

@@ -8,9 +8,10 @@
 </template>
 
 <script setup lang="ts">
-import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
 import BaseLinkedProjects from '@/components/project/modules/LinkedProjects/BaseLinkedProjects.vue'
-import { ProjectModuleTitle, TranslatedProject } from '@/models/project.model'
+import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
+import type { TranslatedProject } from '@/models/project.model'
+import { ProjectModuleTitle } from '@/models/project.model'
 
 const props = withDefaults(
   defineProps<{

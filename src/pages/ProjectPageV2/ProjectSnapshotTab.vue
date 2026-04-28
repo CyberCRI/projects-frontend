@@ -33,19 +33,19 @@
 </template>
 
 <script setup lang="ts">
+import ProjectPrivateExchangePreview from '@/components/project/modules/PrivateExchange/ProjectPrivateExchangePreview.vue'
+import ProjectLinkedProjectsPreview from '@/components/project/modules/LinkedProjects/ProjectLinkedProjectsPreview.vue'
 import ProjectAnnouncementsPreview from '@/components/project/modules/Announcements/ProjectAnnouncementsPreview.vue'
 import ProjectBlogEntriesPreview from '@/components/project/modules/BlogEntries/ProjectBlogEntriesPreview.vue'
-import ProjectCommentsPreview from '@/components/project/modules/Comments/ProjectCommentsPreview.vue'
-import ProjectGoalsPreview from '@/components/project/modules/Goals/ProjectGoalsPreview.vue'
-import ProjectLinkedProjectsPreview from '@/components/project/modules/LinkedProjects/ProjectLinkedProjectsPreview.vue'
-import ProjectLocationsPreview from '@/components/project/modules/Locations/ProjectLocationsPreview.vue'
-import ProjectMembersPreview from '@/components/project/modules/Members/ProjectMembersPreview.vue'
-import ProjectPrivateExchangePreview from '@/components/project/modules/PrivateExchange/ProjectPrivateExchangePreview.vue'
-import ProjectDescriptionPreview from '@/components/project/modules/ProjectDescriptionPreview.vue'
 import ProjectResourcesPreview from '@/components/project/modules/Resources/ProjectResourcesPreview.vue'
+import ProjectLocationsPreview from '@/components/project/modules/Locations/ProjectLocationsPreview.vue'
+import ProjectCommentsPreview from '@/components/project/modules/Comments/ProjectCommentsPreview.vue'
+import ProjectMembersPreview from '@/components/project/modules/Members/ProjectMembersPreview.vue'
+import ProjectDescriptionPreview from '@/components/project/modules/ProjectDescriptionPreview.vue'
+import ProjectGoalsPreview from '@/components/project/modules/Goals/ProjectGoalsPreview.vue'
 import ProjectReviewPreview from '@/components/project/review/ProjectReviewPreview.vue'
+import type { TranslatedProject } from '@/models/project.model'
 import { textIsEmpty } from '@/functs/string'
-import { TranslatedProject } from '@/models/project.model'
 
 const props = defineProps<{
   project: TranslatedProject

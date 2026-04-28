@@ -1,9 +1,11 @@
 <script setup>
-import { Sketch } from '@ckpack/vue-color'
+import { email, helpers, maxLength, required, requiredIf } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
-import { required, requiredIf, maxLength, email, helpers } from '@vuelidate/validators'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { Sketch } from '@ckpack/vue-color'
+
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useToasterStore from '~/stores/useToaster.ts'
+
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
 const { t } = useNuxtI18n()

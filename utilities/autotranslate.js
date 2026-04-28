@@ -1,7 +1,7 @@
-import path from 'node:path'
-import fs from 'node:fs'
 import { spawnSync } from 'node:child_process'
 import { exit } from 'node:process'
+import path from 'node:path'
+import fs from 'node:fs'
 
 // dir for all locales
 const directoryPath = path.join(path.dirname(import.meta.dirname), '/src/i18n/locales')

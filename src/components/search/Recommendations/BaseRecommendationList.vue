@@ -12,7 +12,7 @@
 
 <script setup lang="ts" generic="T extends any[]">
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import { RouteLocationRaw } from 'vue-router'
+import type { RouteLocationRaw } from 'vue-router'
 
 withDefaults(
   defineProps<{

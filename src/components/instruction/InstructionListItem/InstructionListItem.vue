@@ -28,9 +28,10 @@
   </NuxtLink>
 </template>
 <script setup lang="ts">
-import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
-import { TranslatedInstruction } from '@/models/instruction.model'
-import ContextActionMenuInline from '@/components/base/button/ContextActionMenuInline.vue'
+import type { TranslatedInstruction } from '~/models/instruction.model'
+
+import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
+import SummaryAction from '~/components/home/SummaryCards/SummaryAction.vue'
 
 defineProps<{ instruction: TranslatedInstruction }>()
 

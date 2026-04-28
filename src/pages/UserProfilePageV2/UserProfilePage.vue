@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getUser } from '@/api/people.service'
+import { getUser } from '~/api/people.service'
 
 const props = withDefaults(
   defineProps<{

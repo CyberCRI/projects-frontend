@@ -1,13 +1,13 @@
 <script setup lang="ts">
+import {
+  PropsDefault,
+  emitsDefinitions,
+  useTipTap,
+} from '~/components/base/form/TextEditor/useTipTap'
 import TipTapEditorContainer from '@/components/base/form/TextEditor/TipTapEditorContainer.vue'
 import TipTapEditorContent from '@/components/base/form/TextEditor/TipTapEditorContent.vue'
-import {
-  emitsDefinitions,
-  PropsDefault,
-  PropsDefinitions,
-  useTipTap,
-} from '@/components/base/form/TextEditor/useTipTap'
-import { onMounted, onBeforeUnmount } from 'vue'
+import type { PropsDefinitions } from '~/components/base/form/TextEditor/useTipTap'
+import TipTapModals from '~/components/base/form/TextEditor/TipTapModals.vue'
 
 const { t } = useNuxtI18n()
 

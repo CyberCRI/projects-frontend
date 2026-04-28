@@ -28,16 +28,16 @@
 </template>
 
 <script setup lang="ts">
+import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import ReviewDrawer from '@/components/project/review/ReviewDrawer.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import { projectReviewsSkeleton } from '@/skeletons/reviews.skeletons'
 import ReviewItem from '@/components/project/review/ReviewItem.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import type { TranslatedProject } from '@/models/project.model'
+import { getProjectReviews } from '@/api/v2/reviews.service'
+import FetchLoader from '@/components/base/FetchLoader.vue'
 import { deleteReview } from '@/api/reviews.service'
 import useToasterStore from '@/stores/useToaster'
-import { TranslatedProject } from '@/models/project.model'
-import FetchLoader from '@/components/base/FetchLoader.vue'
-import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
-import { getProjectReviews } from '@/api/v2/reviews.service'
-import { projectReviewsSkeleton } from '@/skeletons/reviews.skeletons'
 
 const props = withDefaults(
   defineProps<{

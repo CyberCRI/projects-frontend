@@ -16,13 +16,10 @@
 </template>
 
 <script setup lang="ts">
-import {
-  GroupModuleIcon,
-  GroupModuleTitle,
-  TranslatedPeopleGroupModel,
-} from '@/models/invitation.model'
-import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
 import BaseGroupProjectsList from '@/components/group/Modules/Projects/BaseGroupProjectsList.vue'
+import { GroupModuleIcon, GroupModuleTitle } from '@/models/invitation.model'
+import type { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
 
 defineProps<{
   group: TranslatedPeopleGroupModel

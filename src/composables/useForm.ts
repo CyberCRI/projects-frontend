@@ -32,7 +32,7 @@ const useForm = <T, CleanResult = T>(
   options: OptionsForm<T, CleanResult> = { onClean }
 ): UseFormResult<T, CleanResult> => {
   const def = {
-    ...(options.default ?? {}),
+    ...options.default,
     ...unref(options.model?.value ?? {}),
   } as T
 

@@ -3,11 +3,11 @@ import type {
   /* OrganizationOutput,*/ OrganizationModel,
   OrganizationPatchInput,
 } from '@/models/organization.model'
-import type { /*ImageOrganizationOutput,*/ ImageOrganizationInput } from '@/models/image.model'
 import type { /*GroupModel,*/ GroupModelInput, RemoveGroupModelInput } from '@/models/group.model'
+import type { /*ImageOrganizationOutput,*/ ImageOrganizationInput } from '@/models/image.model'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
+import type { ProjectModel } from '@/models/project.model'
 import useAPI from '@/composables/useAPI'
-import { ProjectModel } from '@/models/project.model'
 
 export async function patchOrganization(
   code: string,
@@ -125,7 +125,7 @@ export async function removeFeaturedProject(
   body: FeaturedProjectBody,
   config: ConfigFeaturedProject = {}
 ) {
-  return await useAPI<void>(`organization/${organizationCode}/featured-project/remove/`, {
+  return await useAPI<undefined>(`organization/${organizationCode}/featured-project/remove/`, {
     method: 'POST',
     body,
     ...config,

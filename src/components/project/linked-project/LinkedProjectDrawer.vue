@@ -44,13 +44,16 @@
 </template>
 
 <script>
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import { addLinkedProject, patchLinkedProject } from '~/api/projects.service'
+
+import ProjectCard from '~/components/project/ProjectCard.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+
+import useProjectsStore from '~/stores/useProjects.ts'
+import useToasterStore from '~/stores/useToaster.ts'
+
 import LinkedProjectSelection from './LinkedProjectSelection.vue'
-import ProjectCard from '@/components/project/ProjectCard.vue'
-import analytics from '@/analytics'
-import { addLinkedProject, patchLinkedProject } from '@/api/projects.service'
-import useToasterStore from '@/stores/useToaster.ts'
-import useProjectsStore from '@/stores/useProjects.ts'
+import analytics from '~/analytics'
 
 export default {
   name: 'LinkedProjectDrawer',
@@ -153,7 +156,7 @@ export default {
       this.asyncing = true
       try {
         const projectId = this.project.id
-        let addedLinkedProjects = this.listProjects.map((addedProject) => {
+        const addedLinkedProjects = this.listProjects.map((addedProject) => {
           return {
             project_id: addedProject.id,
             target_id: projectId,
@@ -162,7 +165,7 @@ export default {
         const addedLinkedProjectsIdSet = new Set(
           addedLinkedProjects.map((addedLinkedProject) => addedLinkedProject.project_id)
         )
-        let body = { projects: addedLinkedProjects }
+        const body = { projects: addedLinkedProjects }
         const result = await addLinkedProject({ id: projectId, body })
         result['linked_projects']
           ?.filter((linked_project) => addedLinkedProjectsIdSet.has(linked_project.project.id))
@@ -236,7 +239,7 @@ export default {
       this.listProjects.splice(0)
     },
     unselectProject(project) {
-      let index = this.listProjects.indexOf(project)
+      const index = this.listProjects.indexOf(project)
       if (index > -1) {
         this.listProjects.splice(index, 1)
       }

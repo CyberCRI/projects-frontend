@@ -1,6 +1,6 @@
 <script setup>
-import useUsersStore from '@/stores/useUsers'
-import useToasterStore from '@/stores/useToaster'
+import useToasterStore from '~/stores/useToaster'
+import useUsersStore from '~/stores/useUsers'
 
 const { t } = useNuxtI18n()
 
@@ -34,7 +34,7 @@ watch(
 )
 
 const onFileChange = (e) => {
-  let files = e.target.files || e.dataTransfer.files
+  const files = e.target.files || e.dataTransfer.files
   if (!files.length) return
   file.value = files[0]
 }

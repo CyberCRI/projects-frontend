@@ -157,13 +157,17 @@
 </template>
 
 <script setup lang="ts">
-import { searchPeopleAdmin } from '@/api/v2/people.service'
-import FetchLoader from '@/components/base/FetchLoader.vue'
-import { capitalize } from '@/functs/string'
-import { Ordering } from '@/interfaces/query'
-import { factoriesSkeleton } from '@/skeletons/base.skeletons'
-import { peopleSkeleton } from '@/skeletons/people.skeletons'
-import useOrganizationsStore from '@/stores/useOrganizations'
+import type { Ordering } from '~/interfaces/query'
+
+import { searchPeopleAdmin } from '~/api/v2/people.service'
+
+import FetchLoader from '~/components/base/FetchLoader.vue'
+
+import useOrganizationsStore from '~/stores/useOrganizations'
+
+import { factoriesSkeleton } from '~/skeletons/base.skeletons'
+import { peopleSkeleton } from '~/skeletons/people.skeletons'
+import { capitalize } from '~/functs/string'
 
 const organizationsStore = useOrganizationsStore()
 

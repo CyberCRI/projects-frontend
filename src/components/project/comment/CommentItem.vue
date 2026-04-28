@@ -135,21 +135,21 @@
 </template>
 
 <script setup lang="ts">
-import IconImage from '@/components/base/media/IconImage.vue'
 import ExternalLabelButton from '@/components/base/button/ExternalLabelButton.vue'
-import MakeComment from '@/components/project/comment/MakeComment.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import type { TranslatedProjectMessage } from '@/models/project-message.model'
+import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import { deleteComment } from '@/api/comments.service'
+import MakeComment from '@/components/project/comment/MakeComment.vue'
 import { deleteProjectMessage } from '@/api/project-messages.service'
-import analytics from '@/analytics'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
+import type { TranslatedProject } from '@/models/project.model'
+import type { TranslatedComment } from '@/models/comment.model'
+import IconImage from '@/components/base/media/IconImage.vue'
+import { deleteComment } from '@/api/comments.service'
 import useToasterStore from '@/stores/useToaster'
 import useUsersStore from '@/stores/useUsers'
-import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
-import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
-import { TranslatedProject } from '@/models/project.model'
-import { TranslatedComment } from '@/models/comment.model'
-import { TranslatedProjectMessage } from '@/models/project-message.model'
+import analytics from '@/analytics'
 
 const props = withDefaults(
   defineProps<{

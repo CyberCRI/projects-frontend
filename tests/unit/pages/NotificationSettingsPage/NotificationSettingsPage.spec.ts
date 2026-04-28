@@ -1,8 +1,8 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import NotificationSettingsPage from '@/pages/NotificationSettingsPage/NotificationSettingsPage.vue'
+import NotificationSettingsPage from '~/pages/NotificationSettingsPage/NotificationSettingsPage.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
-import { describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
+import { describe, expect, it } from 'vitest'
 
 describe('NotificationSettingsPage.vue', () => {
   it('should render component', async () => {

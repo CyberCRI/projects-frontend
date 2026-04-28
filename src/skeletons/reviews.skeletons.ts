@@ -1,5 +1,5 @@
-import { ReviewModel } from '@/models/review.model'
 import { userSkeleton } from '@/skeletons/user.skeletons'
+import type { ReviewModel } from '@/models/review.model'
 
 export const projectReviewsSkeleton = (def?: Partial<ReviewModel>): ReviewModel => ({
   id: -1,

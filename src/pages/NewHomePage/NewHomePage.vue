@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import RecommendationBlock from '@/components/search/Recommendations/RecommendationBlock.vue'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useUsersStore from '@/stores/useUsers'
-import RecommendationBlock from '@/components/search/Recommendations/RecommendationBlock.vue'
 const organizationsStore = useOrganizationsStore()
 const usersStore = useUsersStore()
 const router = useRouter()

@@ -1,6 +1,6 @@
 import { createFactory } from 'faker-create-factory'
 
-import { TagOutput } from '@/models/tag.model'
+import { TagOutput } from '~/models/tag.model'
 import BaseFactory from './base.factory'
 
 const OrganizationTagFactory = createFactory<TagOutput>((faker) => ({

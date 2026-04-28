@@ -1,24 +1,27 @@
-import { GeneralLocationPeopleGroup, TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import { TranslatedOrganizationModel } from '@/models/organization.model'
-import { TranslatedLinkedProject, TranslatedProject } from '@/models/project.model'
-import { AttachmentFileModel, TranslatedAttachmentFile } from '@/models/attachment-file.model'
-import { AttachmentLinkModel, TranslatedAttachmentLink } from '@/models/attachment-link.model'
-import { TranslatedDocument } from '@/interfaces/researcher'
-import {
+import type {
   TranslatedEventLocation,
   TranslatedLocation,
   TranslatedNewsLocation,
 } from '@/models/location.model'
-import { TranslatedNews } from '@/models/news.model'
-import { TranslatedEventModel } from '@/models/event.model'
-import { TranslatedNewsfeed } from '@/models/newsfeed.model'
-import { TranslatedAnnouncement } from '@/models/announcement.model'
-import { TranslatedUserModel } from '@/models/user.model'
-import { TranslatedInstruction } from '@/models/instruction.model'
-import { TranslatedGoal } from '@/models/goal.model'
-import { TranslatedBlogEntry } from '@/models/blog-entry.model'
-import { TranslatedComment } from '@/models/comment.model'
-import { TranslatedProjectMessage } from '@/models/project-message.model'
+import type {
+  GeneralLocationPeopleGroup,
+  TranslatedPeopleGroupModel,
+} from '@/models/invitation.model'
+import type { AttachmentLinkModel, TranslatedAttachmentLink } from '@/models/attachment-link.model'
+import type { AttachmentFileModel, TranslatedAttachmentFile } from '@/models/attachment-file.model'
+import type { TranslatedLinkedProject, TranslatedProject } from '@/models/project.model'
+import type { TranslatedProjectMessage } from '@/models/project-message.model'
+import type { TranslatedOrganizationModel } from '@/models/organization.model'
+import type { TranslatedAnnouncement } from '@/models/announcement.model'
+import type { TranslatedInstruction } from '@/models/instruction.model'
+import type { TranslatedBlogEntry } from '@/models/blog-entry.model'
+import type { TranslatedNewsfeed } from '@/models/newsfeed.model'
+import type { TranslatedDocument } from '@/interfaces/researcher'
+import type { TranslatedEventModel } from '@/models/event.model'
+import type { TranslatedComment } from '@/models/comment.model'
+import type { TranslatedUserModel } from '@/models/user.model'
+import type { TranslatedNews } from '@/models/news.model'
+import type { TranslatedGoal } from '@/models/goal.model'
 
 // type can be computed or object
 type RefOrRaw<DataT> = ComputedRef<DataT> | Ref<DataT> | DataT

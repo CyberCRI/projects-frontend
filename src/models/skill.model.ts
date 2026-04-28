@@ -1,4 +1,4 @@
-import { TagModel } from './tag.model'
+import type { TagModel } from './tag.model'
 
 export interface SkillModel {
   id: number

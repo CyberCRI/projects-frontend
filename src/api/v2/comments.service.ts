@@ -1,11 +1,11 @@
-import { getComments } from '@/api/comments.service'
 import { getProjectMessages as fetchgProjectMessages } from '@/api/project-messages.service'
-import { UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
+import type { UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
+import type { OrganizationModel } from '@/models/organization.model'
+import type { QueryFilterComments } from '@/models/comment.model'
+import type { ProjectSlugOrId } from '@/models/project.model'
+import { getComments } from '@/api/comments.service'
+import type { RefOrRaw } from '@/interfaces/utils'
 import { onlyRefs } from '@/functs/onlyRefs'
-import { RefOrRaw } from '@/interfaces/utils'
-import { QueryFilterComments } from '@/models/comment.model'
-import { OrganizationModel } from '@/models/organization.model'
-import { ProjectSlugOrId } from '@/models/project.model'
 
 const DEFAULT_CONFIG = {}
 

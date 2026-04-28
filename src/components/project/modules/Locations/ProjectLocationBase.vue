@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import ProjectLocationDrawer from '@/components/project/map/ProjectLocationDrawer.vue'
+import { locationSkeleton } from '@/skeletons/location.skeleton'
+import type { TranslatedProject } from '@/models/project.model'
+import { factoriesSkeleton } from '@/skeletons/base.skeletons'
 import { getProjectLocations } from '@/api/v2/project.service'
 import LocationList from '@/components/map/LocationList.vue'
 import MapRecap from '@/components/map/MapRecap.vue'
-import ProjectLocationDrawer from '@/components/project/map/ProjectLocationDrawer.vue'
-import { TranslatedProject } from '@/models/project.model'
-import { factoriesSkeleton } from '@/skeletons/base.skeletons'
-import { locationSkeleton } from '@/skeletons/location.skeleton'
 
 const props = withDefaults(
   defineProps<{

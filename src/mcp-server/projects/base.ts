@@ -1,4 +1,4 @@
-import { tokenMap, traceMcp } from '@/server/routes/api/chat-stream'
+import { tokenMap, traceMcp } from '~/server/routes/api/chat-stream'
 
 const runtimeConfig = useRuntimeConfig()
 

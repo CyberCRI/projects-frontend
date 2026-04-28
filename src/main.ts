@@ -1,13 +1,11 @@
-// import fixLeaflet from '@/app/fixLeaflet'
-import quickLogin from '@/app/quickLogin'
-
-//import initApp from '@/app/initApp'
-//import initAnalytics from '@/app/initAnalytics'
-import initUser from '@/app/initUser'
+import { useNuxtApp, useRuntimeConfig } from '#imports'
 import initOrganization from './app/initOrganization'
-import initSentry from '@/app/initSentry'
-import { useRuntimeConfig, useNuxtApp } from '#imports'
-import analytics from '@/analytics'
+import quickLogin from '~/app/quickLogin'
+import initSentry from '~/app/initSentry'
+//import initApp from '~/app/initApp'
+//import initAnalytics from '~/app/initAnalytics'
+import initUser from '~/app/initUser'
+import analytics from '~/analytics'
 
 if (import.meta.client) {
   // quick redirect to keycloak login if url says so

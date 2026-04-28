@@ -1,10 +1,10 @@
-import { lpiShallowMount, lpiMount } from '@/../tests/helpers/LpiMount'
-import TagResults from '@/components/search/FilterTags/TagResults.vue'
+import TagResults from '~/components/search/FilterTags/TagResults.vue'
+import { lpiShallowMount, lpiMount } from '~~/tests/helpers/LpiMount'
 import { flushPromises } from '@vue/test-utils'
 
 import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('@/api/api.config', function () {
+vi.mock('~/api/api.config', function () {
   return {
     useAPI: vi.fn().mockResolvedValue({ data: { results: [] } }), // TODO nuxt check this
   }

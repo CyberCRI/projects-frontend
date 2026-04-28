@@ -1,7 +1,7 @@
+import type { OrganizationModel } from '@/models/organization.model'
+import type { ProjectModel } from '@/models/project.model'
+import type { UserModel } from '@/models/user.model'
 import useAPI from '@/composables/useAPI'
-import { OrganizationModel } from '@/models/organization.model'
-import { ProjectModel } from '@/models/project.model'
-import { UserModel } from '@/models/user.model'
 
 export type QueryFilterRecomendation = Partial<{
   count: number

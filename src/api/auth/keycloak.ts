@@ -1,13 +1,16 @@
 import * as oauth from '@panva/oauth4webapi'
+
 import {
   cleanLocalStorage,
   createRandomString,
   getRefreshTokenInterval,
-} from '@/api/auth/keycloakUtils'
-import useUsersStore from '@/stores/useUsers'
-import { useRuntimeConfig, useNuxtApp } from '#imports'
-import useToasterStore from '@/stores/useToaster'
-import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
+} from '~/api/auth/keycloakUtils'
+import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
+
+import useToasterStore from '~/stores/useToaster'
+import useUsersStore from '~/stores/useUsers'
+
+import { useNuxtApp, useRuntimeConfig } from '#imports'
 
 export type AuthResult = {
   access_token: string

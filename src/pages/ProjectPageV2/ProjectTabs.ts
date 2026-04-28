@@ -1,10 +1,5 @@
-import {
-  ProjectModel,
-  ProjectModuleIcon,
-  ProjectModuleTitle,
-  ProjectSlugOrId,
-  TranslatedProject,
-} from '@/models/project.model'
+import type { ProjectModel, ProjectSlugOrId, TranslatedProject } from '@/models/project.model'
+import { ProjectModuleIcon, ProjectModuleTitle } from '@/models/project.model'
 import { projectSkeleton } from '@/skeletons/project.skeletons'
 
 export const useProjectTabs = (

@@ -1,4 +1,4 @@
-import { UserModel } from '@/models/user.model'
+import type { UserModel } from '@/models/user.model'
 
 export const userSkeleton = (def?: Partial<UserModel>): UserModel => ({
   id: -1,

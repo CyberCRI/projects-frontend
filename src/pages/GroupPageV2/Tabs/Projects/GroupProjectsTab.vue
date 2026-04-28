@@ -8,7 +8,8 @@
 import BaseGroupProjectsList from '@/components/group/Modules/Projects/BaseGroupProjectsList.vue'
 import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
 
-import { GroupModuleTitle, TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import type { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import { GroupModuleTitle } from '@/models/invitation.model'
 
 const props = defineProps<{
   group: TranslatedPeopleGroupModel

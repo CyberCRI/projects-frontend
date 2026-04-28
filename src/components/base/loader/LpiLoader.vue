@@ -6,8 +6,8 @@
 </template>
 
 <script setup lang="ts">
-import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import LoaderComplex from '@/components/base/loader/LoaderComplex.vue'
+import LoaderComplex from '~/components/base/loader/LoaderComplex.vue'
+import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 
 defineProps<{
   type: 'simple' | 'complex'

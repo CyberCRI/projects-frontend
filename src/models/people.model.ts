@@ -1,5 +1,6 @@
-import { Translated } from '@/interfaces/translated'
-import { PeopleGroupModel, TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import type { PeopleGroupModel, TranslatedPeopleGroupModel } from '~/models/invitation.model'
+
+import type { Translated } from '~/interfaces/translated'
 
 /**
  * @name PeopleModel

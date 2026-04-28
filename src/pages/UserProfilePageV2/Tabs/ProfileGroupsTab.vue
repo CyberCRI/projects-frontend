@@ -46,12 +46,13 @@
 </template>
 
 <script setup>
-import CardList from '@/components/base/CardList.vue'
-import GroupCard from '@/components/group/GroupCard.vue'
-import EmptyCard from '@/components/people/UserProfile/EmptyCard.vue'
-import ListPaginator from '@/components/base/navigation/ListPaginator.vue'
-import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import useUsersStore from '@/stores/useUsers.ts'
+import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
+import ListPaginator from '~/components/base/navigation/ListPaginator.vue'
+import EmptyCard from '~/components/people/UserProfile/EmptyCard.vue'
+import GroupCard from '~/components/group/GroupCard.vue'
+import CardList from '~/components/base/CardList.vue'
+
+import useUsersStore from '~/stores/useUsers.ts'
 
 defineOptions({ name: 'ProfileGroupsTab' })
 const props = defineProps({

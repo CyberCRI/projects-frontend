@@ -52,16 +52,20 @@
 </template>
 
 <script>
+import { getAllProjects } from '~/api/projects.service'
+import { searchProjects } from '~/api/search.service'
+
+import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
+import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
+import SearchInput from '~/components/base/form/SearchInput.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import ProjectCard from '~/components/project/ProjectCard.vue'
+
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
+
+import useAPI from '~/composables/useAPI.ts'
+
 import { debounce } from 'es-toolkit'
-import { getAllProjects } from '@/api/projects.service'
-import { searchProjects } from '@/api/search.service'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import ProjectCard from '@/components/project/ProjectCard.vue'
-import SearchInput from '@/components/base/form/SearchInput.vue'
-import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import useAPI from '@/composables/useAPI.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
 
 export default {
   name: 'PickProjectSelection',
@@ -137,8 +141,6 @@ export default {
       if (val.length >= 3) this.launchSearch()
       if (this.queryString === '') this.request = {}
     },
-  },
-  watch: {
     request() {
       this.results = (this.request?.results ?? []).map((result) =>
         result.project ? result.project : result

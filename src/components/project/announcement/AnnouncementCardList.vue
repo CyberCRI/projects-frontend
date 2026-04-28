@@ -20,9 +20,10 @@
 </template>
 
 <script setup lang="ts">
-import AnnouncementCard from '@/components/project/announcement/AnnouncementCard.vue'
-import DynamicGrid from '@/components/base/DynamicGrid.vue'
-import { TranslatedAnnouncement } from '@/models/announcement.model'
+import type { TranslatedAnnouncement } from '~/models/announcement.model'
+
+import AnnouncementCard from '~/components/project/announcement/AnnouncementCard.vue'
+import DynamicGrid from '~/components/base/DynamicGrid.vue'
 
 const router = useRouter()
 

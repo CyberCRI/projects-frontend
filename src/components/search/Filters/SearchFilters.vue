@@ -1,16 +1,13 @@
 <script setup>
-import { getProjectCategory } from '@/api/project-categories.service'
-import { getAllTagsById } from '@/api/tag-classification.service'
-
-import FilterButton from '@/components/search/Filters/FilterButton.vue'
-import FiltersDrawer from '@/components/search/Filters/FiltersDrawer.vue'
+import { getProjectCategory } from '~/api/project-categories.service'
+import { getAllTagsById } from '~/api/tag-classification.service'
 
 import useContextualFilters, {
   ALL_FILTERS_MODE,
   ALL_SECTION_KEY,
-} from '@/components/search/Filters/useContextualFilters.ts'
-
-import { ref, onMounted, toRef, watch, reactive } from 'vue'
+} from '~/components/search/Filters/useContextualFilters.ts'
+import FiltersDrawer from '~/components/search/Filters/FiltersDrawer.vue'
+import FilterButton from '~/components/search/Filters/FilterButton.vue'
 
 function defaultFilters() {
   return {
@@ -66,7 +63,7 @@ function openDrawer(drawer) {
   isRightDrawerOpened.value = true
 }
 
-function updateFiltersFromDrawer(/*filter,*/ event) {
+function updateFiltersFromDrawer(event) {
   selectedFilters.value = { ...event }
   emit('update:selectedFilters', selectedFilters.value)
 }

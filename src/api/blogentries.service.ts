@@ -4,8 +4,8 @@ import type {
   BlogEntryModel,
   QueryFilterBlogEntry,
 } from '@/models/blog-entry.model'
+import type { ProjectSlugOrId } from '@/models/project.model'
 import useAPI from '@/composables/useAPI'
-import { ProjectSlugOrId } from '@/models/project.model'
 
 type ConfigBlogEntries = UseApiOptions<QueryFilterBlogEntry>
 
@@ -21,7 +21,7 @@ export async function postBlogEntry(blogEntry: BlogEntryInput) {
   return await useAPI(`project/${blogEntry.project_id}/blog-entry/`, {
     body: blogEntry,
     method: 'POST',
-  }) //.data.value
+  })
 }
 
 export async function patchBlogEntry({
@@ -32,7 +32,6 @@ export async function patchBlogEntry({
   body: BlogEntryInput
 }) {
   return await useAPI(`project/${project_id}/blog-entry/${body.id}/`, { body, method: 'PATCH' })
-  //.data.value
 }
 
 export async function deleteBlogEntry({ project_id, id }: { project_id: string; id: number }) {
@@ -41,5 +40,5 @@ export async function deleteBlogEntry({ project_id, id }: { project_id: string; 
 
 export async function postBlogEntryImage({ body, project_id, blog_entry_id = null }) {
   const query = blog_entry_id ? { blog_entry_id } : {}
-  return await useAPI(`project/${project_id}/blog-entry-image/`, { body, method: 'POST', query }) //.data.value
+  return await useAPI(`project/${project_id}/blog-entry-image/`, { body, method: 'POST', query })
 }

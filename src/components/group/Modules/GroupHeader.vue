@@ -101,18 +101,18 @@
 </template>
 
 <script setup lang="ts">
-import { DEFAULT_GROUP_PATATOID } from '@/composables/usePatatoids'
-import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
-import SdgList from '@/components/sdgs/SdgList.vue'
-import TagsList from '@/components/tags/TagsList.vue'
-import LocationDrawer from '@/components/map/LocationDrawer.vue'
-import { getGroupMember } from '@/api/v2/group.service'
-import GroupMemberItem from '@/components/group/Modules/Members/GroupMemberItem.vue'
-import FetchLoader from '@/components/base/FetchLoader.vue'
-import { memberSkeleton } from '@/skeletons/group.skeletons'
-import { factoryPagination } from '@/skeletons/base.skeletons'
 import GroupMemberDrawer from '@/components/group/Modules/Members/GroupMemberDrawer.vue'
+import GroupMemberItem from '@/components/group/Modules/Members/GroupMemberItem.vue'
+import type { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
+import { DEFAULT_GROUP_PATATOID } from '@/composables/usePatatoids'
+import LocationDrawer from '@/components/map/LocationDrawer.vue'
+import { factoryPagination } from '@/skeletons/base.skeletons'
+import { memberSkeleton } from '@/skeletons/group.skeletons'
+import FetchLoader from '@/components/base/FetchLoader.vue'
+import { getGroupMember } from '@/api/v2/group.service'
+import TagsList from '@/components/tags/TagsList.vue'
+import SdgList from '@/components/sdgs/SdgList.vue'
 
 const props = withDefaults(
   defineProps<{

@@ -1,6 +1,7 @@
 <script setup>
-import { getProjectsRecommendationsForUser } from '@/api/recommendations.service'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { getProjectsRecommendationsForUser } from '~/api/recommendations.service'
+
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
 
 const organizationsStore = useOrganizationsStore()
 const { t } = useNuxtI18n()

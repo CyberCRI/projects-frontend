@@ -1,20 +1,20 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import ProjectPage from '@/pages/ProjectPageV2/ProjectPage.vue'
+import ProjectPage from '~/pages/ProjectPageV2/ProjectPage.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
-import { describe, expect, it } from 'vitest'
-import { flushPromises } from '@vue/test-utils'
-import { UserFactory } from '../../../factories/user.factory'
+import { AttachmentLinkFactory } from '~~/tests/factories/attachment-link.factory'
+import { AttachmentFileFactory } from '~~/tests/factories/attachment-file.factory'
+import ProjectSnapshotTab from '~/pages/ProjectPageV2/ProjectSnapshotTab.vue'
+import { AnnouncementFactory } from '~~/tests/factories/announcement.factory'
+import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
 import { mockNuxtImport, registerEndpoint } from '@nuxt/test-utils/runtime'
-import { ProjectOutputFactory } from '../../../factories/project.factory'
-import { PaginationsFactory } from '../../../factories/paginations.factory'
-import { AttachmentFileFactory } from '../../../factories/attachment-file.factory'
-import { AttachmentLinkFactory } from '../../../factories/attachment-link.factory'
-import { ReviewFactory } from '../../../factories/review.factory'
-import { GoalFactory } from '../../../factories/goal.factory'
-import BlogEntryFactory from '../../../factories/blog-entry.factory'
-import { AnnouncementFactory } from '../../../factories/announcement.factory'
-import { CommentFactory } from '../../../factories/comment.factory'
-import ProjectSummaryTab from '@/pages/ProjectPageV2/Tabs/Summary/ProjectSummaryTab.vue'
+import { ProjectOutputFactory } from '~~/tests/factories/project.factory'
+import BlogEntryFactory from '~~/tests/factories/blog-entry.factory'
+import { CommentFactory } from '~~/tests/factories/comment.factory'
+import { ReviewFactory } from '~~/tests/factories/review.factory'
+import { UserFactory } from '~~/tests/factories/user.factory'
+import { GoalFactory } from '~~/tests/factories/goal.factory'
+import { flushPromises } from '@vue/test-utils'
+import { describe, expect, it } from 'vitest'
 
 const project = ProjectOutputFactory.generate()
 
@@ -61,7 +61,7 @@ describe('ProjectPage.vue', () => {
     registerEndpoint(`project/${project.id}/`, () => project)
 
     const wrapper = await lpiMountSuspended(ProjectPage, {
-      stubs: { NuxtPage: ProjectSummaryTab, NuxtLink: true },
+      stubs: { NuxtPage: ProjectSnapshotTab, NuxtLink: true },
     })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)

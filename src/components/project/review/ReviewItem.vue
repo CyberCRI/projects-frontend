@@ -42,10 +42,10 @@
 </template>
 
 <script setup lang="ts">
-import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
+import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
-import { TranslatedReview } from '@/models/review.model'
+import type { TranslatedReview } from '@/models/review.model'
 
 withDefaults(defineProps<{ review: TranslatedReview; editable?: boolean }>(), { editable: false })
 

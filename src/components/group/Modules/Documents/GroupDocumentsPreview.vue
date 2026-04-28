@@ -22,13 +22,10 @@
 
 <script setup lang="ts">
 import GroupResearcherDocumentsList from '@/components/people/Researcher/GroupResearcherDocumentsList.vue'
-import { DocumentType } from '@/interfaces/researcher'
-import {
-  GroupModuleIcon,
-  GroupModuleTitle,
-  TranslatedPeopleGroupModel,
-} from '@/models/invitation.model'
+import { GroupModuleIcon, GroupModuleTitle } from '@/models/invitation.model'
+import type { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
+import type { DocumentType } from '@/interfaces/researcher'
 
 const props = defineProps<{
   documentType: DocumentType
@@ -36,10 +33,13 @@ const props = defineProps<{
 }>()
 
 const routeName = computed(() => {
-  if (props.documentType === 'conferences') {
-    return 'groupConferences'
-  } else if (props.documentType === 'publications') {
-    return 'groupPublications'
+  switch (props.documentType) {
+    case 'conferences':
+      return 'groupConferences'
+    case 'publications':
+      return 'groupPublications'
+    default:
+      throw new Error(`invalid documenttype ${props.documentType}`)
   }
 })
 

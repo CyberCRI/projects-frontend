@@ -71,7 +71,7 @@ const useToasterStore = defineStore('toaster', {
         remaining: false,
         duration: DEFAULT_TOAST_DURATION,
         translate: false,
-        ...(options || {}),
+        ...options,
       }
       this._pushToast({ message, type: 'warning', ..._options })
     },
@@ -87,7 +87,7 @@ const useToasterStore = defineStore('toaster', {
         remaining: false,
         duration: DEFAULT_TOAST_DURATION,
         translate: false,
-        ...(options || {}),
+        ...options,
       }
       this._pushToast({ message, type: 'error', ..._options })
     },
@@ -103,7 +103,7 @@ const useToasterStore = defineStore('toaster', {
         remaining: false,
         duration: DEFAULT_TOAST_DURATION,
         translate: false,
-        ...(options || {}),
+        ...options,
       }
       this._pushToast({ message, type: 'info', ..._options })
     },
@@ -119,7 +119,7 @@ const useToasterStore = defineStore('toaster', {
         remaining: false,
         duration: DEFAULT_TOAST_DURATION,
         translate: false,
-        ...(options || {}),
+        ...options,
       }
       this._pushToast({ message, type: 'success', ..._options })
     },

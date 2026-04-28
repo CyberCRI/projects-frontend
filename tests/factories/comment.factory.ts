@@ -1,8 +1,8 @@
 import { createFactory } from 'faker-create-factory'
 
-import { CommentInputModel, CommentOutput } from '@/models/comment.model'
-import BaseFactory from './base.factory'
+import { CommentInputModel, CommentOutput } from '~/models/comment.model'
 import { UserFactory } from './user.factory'
+import BaseFactory from './base.factory'
 
 export const CommentFactory = createFactory<CommentOutput>((faker) => ({
   ...BaseFactory.generate(),

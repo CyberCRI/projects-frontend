@@ -9,9 +9,9 @@
 </template>
 
 <script setup lang="ts">
-import BaseRecommendationList from '@/components/search/Recommendations/BaseRecommendationList.vue'
 import UserRecommendationItem from '@/components/search/Recommendations/UserRecommendationItem.vue'
-import { TranslatedUserModel } from '@/models/user.model'
+import BaseRecommendationList from '@/components/search/Recommendations/BaseRecommendationList.vue'
+import type { TranslatedUserModel } from '@/models/user.model'
 
 defineProps<{
   users: TranslatedUserModel[]

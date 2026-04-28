@@ -30,7 +30,7 @@
 <script setup lang="ts" generic="">
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
-import { TranslatedProject } from '@/models/project.model'
+import type { TranslatedProject } from '@/models/project.model'
 
 type TranslatedProjectRecomended = TranslatedProject & {
   isFeatured?: boolean

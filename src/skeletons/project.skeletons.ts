@@ -1,6 +1,6 @@
-import { LinkedProject, ProjectModel } from '@/models/project.model'
-import { TagModel } from '@/models/tag.model'
-import { factoriesSkeleton } from '@/skeletons/base.skeletons'
+import type { LinkedProject, ProjectModel } from '@/models/project.model'
+import type { factoriesSkeleton } from '@/skeletons/base.skeletons'
+import type { TagModel } from '@/models/tag.model'
 import { randomInt } from 'es-toolkit'
 
 export const tagSkeleton = (def?: Partial<ProjectModel>): Omit<TagModel, 'id'> => ({
@@ -11,7 +11,7 @@ export const tagSkeleton = (def?: Partial<ProjectModel>): Omit<TagModel, 'id'> =
   description_en: 'Anim cupidatat nulla deserunt aliqua magna enim occaecat quis cupidatat Lorem.',
   description_fr:
     'Velit id fugiat sint occaecat ad laborum reprehenderit eu minim ut Lorem pariatur nulla voluptate.',
-  ...(def || {}),
+  ...def,
 })
 
 export const projectSkeleton = (def?: Partial<ProjectModel>): ProjectModel => ({

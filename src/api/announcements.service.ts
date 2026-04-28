@@ -5,8 +5,8 @@ import type {
   QueryFilterAnnouncement,
 } from '@/models/announcement.model'
 
+import type { ProjectSlugOrId } from '@/models/project.model'
 import useAPI from '@/composables/useAPI'
-import { ProjectSlugOrId } from '@/models/project.model'
 
 type Config = UseApiOptions<QueryFilterAnnouncement>
 
@@ -38,7 +38,7 @@ export async function patchAnnouncement(body: AnnouncementInput, config: Config 
 }
 
 export async function deleteAnnouncement(body, config: Config = {}) {
-  return await useAPI<void>(`project/${body.project.id}/announcement/${body.id}/`, {
+  return await useAPI<undefined>(`project/${body.project.id}/announcement/${body.id}/`, {
     method: 'DELETE',
     ...config,
   })

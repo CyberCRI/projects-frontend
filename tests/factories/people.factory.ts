@@ -1,6 +1,6 @@
 import { createFactory } from 'faker-create-factory'
 
-import { PeopleModel } from '@/models/people.model'
+import { PeopleModel } from '~/models/people.model'
 
 export const PeopleFactory = createFactory<PeopleModel>((faker) => ({
   slug: faker.datatype.string(),

@@ -1,7 +1,7 @@
-import { BreadCrumbItem } from '@/components/base/navigation/BreadCrumbs.vue'
-import followUtils from '@/functs/followUtils'
-import { ProjectModel, TranslatedProject } from '@/models/project.model'
+import type { BreadCrumbItem } from '@/components/base/navigation/BreadCrumbs.vue'
+import type { ProjectModel, TranslatedProject } from '@/models/project.model'
 import useOrganizationsStore from '@/stores/useOrganizations'
+import followUtils from '@/functs/followUtils'
 import useUsersStore from '@/stores/useUsers'
 
 type AnyProject = ProjectModel | TranslatedProject

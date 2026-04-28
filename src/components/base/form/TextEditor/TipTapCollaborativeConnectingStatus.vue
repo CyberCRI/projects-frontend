@@ -1,7 +1,6 @@
 <script setup>
-import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import { ref } from 'vue'
+import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
 
 const { t } = useNuxtI18n()
 

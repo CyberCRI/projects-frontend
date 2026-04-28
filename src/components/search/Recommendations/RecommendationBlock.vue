@@ -21,18 +21,18 @@
 </template>
 
 <script setup lang="ts">
-import UserRecommendationList from '@/components/search/Recommendations/UserRecommendationList.vue'
-import ProjectRecommendationList from '@/components/search/Recommendations/ProjectRecommendationList.vue'
-import useUsersStore from '@/stores/useUsers'
-import { getFeaturedProjects } from '@/api/v2/organizations.service'
 import {
   getRandomProjectsRecommendationsForUser,
   getRandomUsersRecommendationsForUser,
 } from '@/api/v2/recommendations.service'
-import FetchLoader from '@/components/base/FetchLoader.vue'
+import ProjectRecommendationList from '@/components/search/Recommendations/ProjectRecommendationList.vue'
+import UserRecommendationList from '@/components/search/Recommendations/UserRecommendationList.vue'
 import { factoriesSkeleton, factoryPagination } from '@/skeletons/base.skeletons'
+import { getFeaturedProjects } from '@/api/v2/organizations.service'
 import { projectSkeleton } from '@/skeletons/project.skeletons'
+import FetchLoader from '@/components/base/FetchLoader.vue'
 import { userSkeleton } from '@/skeletons/user.skeletons'
+import useUsersStore from '@/stores/useUsers'
 
 const usersStore = useUsersStore()
 const loggedIn = computed(() => usersStore.isConnected)

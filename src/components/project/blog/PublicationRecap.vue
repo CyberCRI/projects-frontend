@@ -28,9 +28,9 @@
 </template>
 
 <script setup lang="ts">
-import SectionHeader from '@/components/base/SectionHeader.vue'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
-import { TranslatedProject } from '@/models/project.model'
+import SectionHeader from '@/components/base/SectionHeader.vue'
+import type { TranslatedProject } from '@/models/project.model'
 
 const router = useRouter()
 

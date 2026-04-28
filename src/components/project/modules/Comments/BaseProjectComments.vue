@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { getProjectComments, getProjectMessages } from '@/api/v2/comments.service'
-import FetchLoader from '@/components/base/FetchLoader.vue'
-import CommentItem from '@/components/project/comment/CommentItem.vue'
-import { TranslatedProject } from '@/models/project.model'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import { projectCommentSkeleton } from '@/skeletons/comments.skeletons'
+import CommentItem from '@/components/project/comment/CommentItem.vue'
+import type FetchLoader from '@/components/base/FetchLoader.vue'
+import type { TranslatedProject } from '@/models/project.model'
 
 const props = withDefaults(
   defineProps<{

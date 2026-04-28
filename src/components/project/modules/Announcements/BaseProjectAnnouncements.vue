@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { getProjectAnnouncements } from '@/api/v2/announcements.service'
-import FetchLoader from '@/components/base/FetchLoader.vue'
 import AnnouncementCard from '@/components/project/announcement/AnnouncementCard.vue'
-import { TranslatedProject } from '@/models/project.model'
-import { announcementSkeleton } from '@/skeletons/announcement.skeletons'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
+import { announcementSkeleton } from '@/skeletons/announcement.skeletons'
+import { getProjectAnnouncements } from '@/api/v2/announcements.service'
+import type { TranslatedProject } from '@/models/project.model'
+import FetchLoader from '@/components/base/FetchLoader.vue'
 
 const props = withDefaults(
   defineProps<{

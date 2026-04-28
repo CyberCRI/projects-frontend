@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import CurrentTags from '@/components/search/FilterTags/CurrentTags.vue'
+import CurrentTags from '~/components/search/FilterTags/CurrentTags.vue'
 
 export default {
   name: 'TagsFilterSummary',

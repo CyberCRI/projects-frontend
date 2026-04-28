@@ -1,9 +1,9 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
+import ProjectLocationsTab from '~/pages/ProjectPageV2/Tabs/Locations/ProjectLocationsTab.vue'
+import { ProjectFactory } from '~~/tests/factories/project.factory'
 import { describe, expect, it, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
-import { ProjectFactory } from '../../../../factories/project.factory'
-import ProjectLocationsTab from '@/pages/ProjectPageV2/Tabs/Locations/ProjectLocationsTab.vue'
 
 describe('ProjectLocationsTab.vue', () => {
   it('should render component', async () => {

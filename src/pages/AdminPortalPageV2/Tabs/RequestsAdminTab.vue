@@ -102,25 +102,25 @@
 </template>
 
 <script>
-import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-
-import { debounce } from 'es-toolkit'
-import { capitalize } from '@/functs/string'
-import IconImage from '@/components/base/media/IconImage.vue'
-
-import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import useAPI from '@/composables/useAPI.ts'
-
-import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
-
 import {
-  getAccessRequests,
   acceptAccessRequest,
   declineAccessRequest,
-} from '@/api/organizations.service.ts'
-import ToolTip from '@/components/base/ToolTip.vue'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+  getAccessRequests,
+} from '~/api/organizations.service.ts'
+
+import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
+import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
+import LpiLoader from '~/components/base/loader/LpiLoader.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+import ToolTip from '~/components/base/ToolTip.vue'
+
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useToasterStore from '~/stores/useToaster.ts'
+
+import useAPI from '~/composables/useAPI.ts'
+
+import { capitalize } from '~/functs/string'
+import { debounce } from 'es-toolkit'
 
 export default {
   name: 'RequestsAdminTab',

@@ -9,8 +9,9 @@
   />
 </template>
 <script setup lang="ts">
-import { capitalize } from '@/functs/string'
-import { TranslatedProject } from '@/models/project.model'
+import type { TranslatedProject } from '~/models/project.model'
+
+import { capitalize } from '~/functs/string'
 
 const props = defineProps<{
   project: TranslatedProject
