@@ -94,9 +94,11 @@ const fetchTagStats = async () => {
     organizationsStore.current.code,
     props.classification.id,
     {
-      search: '',
-      order_by: 'title',
-      limit: 1,
+      query: {
+        search: '',
+        order_by: 'title',
+        limit: 1,
+      },
     }
   )
   tagCount.value = data.count
@@ -108,7 +110,9 @@ const getTags = debounce(async function () {
     const apiReq = await getOrgClassificationTags(
       organizationsStore.current.code,
       props.classification.id,
-      { search: search.value, ordering: 'title', limit: props.pageLimit }
+      {
+        query: { search: search.value, ordering: 'title', limit: props.pageLimit },
+      }
     )
     request.value = apiReq
   } catch (e) {

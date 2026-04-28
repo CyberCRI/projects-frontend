@@ -1,8 +1,9 @@
-<script setup>
+<script setup lang="ts">
 useLpiHead2({
   title: "Plan de Sécurité des Systèmes d'Information",
 })
 </script>
+
 <template>
   <div class="page-section-narrow legal-page pssi page-top">
     <h1

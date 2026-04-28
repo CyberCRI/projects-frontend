@@ -4,15 +4,16 @@ import {
   getUsersRecommendationsForUser as fetchUsersRecommendationsForUser,
   getRandomUsersRecommendationsForUser as fetchRandomUsersRecommendationsForUser,
 } from '@/api/recommendations.service'
+import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
 import type { QueryFilterRecomendation } from '@/api/recommendations.service'
 import type { OrganizationModel } from '@/models/organization.model'
-import type { UseAsyncApiConfig } from '@/api/v2/base.service'
 import type { RefOrRaw } from '@/interfaces/utils'
 import { onlyRefs } from '@/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}
 
-type ConfigPagination = UseAsyncApiConfig<QueryFilterRecomendation>
+type Config = UseAsyncApiConfig<QueryFilterRecomendation>
+type ConfigPagination = UseAsyncPaginationApiConfig<PaginationQuery>
 
 export const getProjectsRecommendationsForUser = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
@@ -21,7 +22,7 @@ export const getProjectsRecommendationsForUser = (
   const { translateProjects } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::user-recomendations-projects`)
 
-  return useAsyncAPI(
+  return useAsyncPaginationAPI(
     key,
     ({ config }) =>
       fetchProjectsRecommendationsForUser(unref(organizationCode), {
@@ -29,7 +30,7 @@ export const getProjectsRecommendationsForUser = (
         ...config,
       }),
     {
-      translate: translateProjects,
+      translate: (data) => translateProjects(data),
       watch: onlyRefs([organizationCode]),
       ...config,
     }
@@ -38,7 +39,7 @@ export const getProjectsRecommendationsForUser = (
 
 export const getRandomProjectsRecommendationsForUser = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
-  config: ConfigPagination = {}
+  config: Config = {}
 ) => {
   const { translateProjects } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::user-recomendations-projects-random`)
@@ -65,7 +66,7 @@ export const getUsersRecommendationsForUser = (
   const { translateUsers } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::user-recomendations-users`)
 
-  return useAsyncAPI(
+  return useAsyncPaginationAPI(
     key,
     ({ config }) =>
       fetchUsersRecommendationsForUser(unref(organizationCode), {
@@ -73,7 +74,7 @@ export const getUsersRecommendationsForUser = (
         ...config,
       }),
     {
-      translate: translateUsers,
+      translate: (data) => translateUsers(data),
       watch: onlyRefs([organizationCode]),
       ...config,
     }
@@ -82,7 +83,7 @@ export const getUsersRecommendationsForUser = (
 
 export const getRandomUsersRecommendationsForUser = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
-  config: ConfigPagination = {}
+  config: Config = {}
 ) => {
   const { translateUsers } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::user-recomendations-users-random`)

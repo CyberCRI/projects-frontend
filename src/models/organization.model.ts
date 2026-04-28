@@ -6,6 +6,7 @@ import type BaseModel from '~/models/base.model'
 
 import type { Translated } from '~/interfaces/translated'
 
+import type { SkillModel } from '~/models/skill.model'
 import type { TagModel } from './tag.model'
 
 export interface TermsAndConditions {
@@ -14,7 +15,7 @@ export interface TermsAndConditions {
   content: string
   displayed_version: number
   displayed_content: string
-  displayed_updated_at: number
+  displayed_updated_at: string
 }
 
 export interface OrganizationModel extends BaseModel {
@@ -56,6 +57,8 @@ export type OrganizationOutput = BaseModel &
     children: string[]
     access_request_enabled?: boolean
     languages?: string[]
+    default_skills_tags?: SkillModel[]
+    default_projects_tags?: TagModel[]
   }
 
 export type TranslatedOrganizationModel = Translated<

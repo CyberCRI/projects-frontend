@@ -9,13 +9,14 @@ export type QueryFilterRecomendation = Partial<{
 }>
 
 type Config = UseApiOptions<QueryFilterRecomendation>
+type ConfigPagination = UseApiOptions<PaginationQuery>
 
 // projects
 export async function getProjectsRecommendationsForUser(
   organizationCode: OrganizationModel['code'],
-  config: Config = {}
+  config: ConfigPagination = {}
 ) {
-  return await useAPI<ProjectModel[]>(
+  return await useAPI<PaginationResult<ProjectModel>>(
     `organization/${organizationCode}/recommended-project/user/`,
     config
   )
@@ -34,9 +35,9 @@ export async function getRandomProjectsRecommendationsForUser(
 // users
 export async function getUsersRecommendationsForUser(
   organizationCode: OrganizationModel['code'],
-  config: Config = {}
+  config: ConfigPagination = {}
 ) {
-  return await useAPI<UserModel[]>(
+  return await useAPI<PaginationResult<UserModel>>(
     `organization/${organizationCode}/recommended-user/user/`,
     config
   )

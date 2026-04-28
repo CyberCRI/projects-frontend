@@ -17,7 +17,7 @@ export async function initSession(api_url, api_token) {
     console.error('Failed to start session')
     return
   }
-  return sessionId
+  return sessionId as number
 }
 
 export async function makeQuery(api_url, api_token, sessionId, queryPrompt) {
@@ -63,6 +63,10 @@ export async function closeSession(api_url, api_token, sessionId) {
 }
 
 export default class SorbobotAPI {
+  apiToken: string
+  apiUrl: string
+  sessionId: null | number
+
   constructor(apiToken, apiUrl) {
     this.apiToken = apiToken
     this.apiUrl = apiUrl

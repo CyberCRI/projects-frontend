@@ -1,5 +1,5 @@
-<script setup>
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
+<script setup lang="ts">
+import useOrganizationsStore from '~/stores/useOrganizations'
 
 const organizationsStore = useOrganizationsStore()
 const { t } = useNuxtI18n()
@@ -15,6 +15,7 @@ useLpiHead2({
   description: computed(() => t('portal.sub-title')),
 })
 </script>
+
 <template>
   <div class="page-section-extra-wide portal-layout page-top">
     <h1 class="page-title">
@@ -46,6 +47,7 @@ useLpiHead2({
     </div>
   </div>
 </template>
+
 <style scoped lang="scss">
 .portal-layout {
   display: flex;
