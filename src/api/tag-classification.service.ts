@@ -1,6 +1,8 @@
-import useAPI from '@/composables/useAPI'
-import type { APIParams /*, APIResponseList*/ } from '@/api/types'
-import type { TagModel } from '@/models/tag.model'
+import type { TagModel } from '~/models/tag.model'
+
+import type { APIParams } from '~/api/types'
+
+import useAPI from '~/composables/useAPI'
 
 export async function getAllOrgClassifications(orgCode: string, params: APIParams) {
   return await useAPI<PaginationResult<TagModel>>(`organization/${orgCode}/tag-classification/`, {
@@ -15,7 +17,7 @@ export async function getOrgClassification(
 ) {
   return await useAPI(`organization/${orgCode}/tag-classification/${classificationId}/`, {
     params,
-  }) //.data.value
+  })
 }
 
 export async function postOrgClassification(
@@ -25,7 +27,7 @@ export async function postOrgClassification(
   return await useAPI(`organization/${orgCode}/tag-classification/`, {
     body: classification,
     method: 'POST',
-  }) //.data.value
+  })
 }
 
 export async function putOrgClassification(
@@ -36,7 +38,7 @@ export async function putOrgClassification(
   return await useAPI(`organization/${orgCode}/tag-classification/${classificationId}/`, {
     body: classification,
     method: 'PUT',
-  }) //.data.value
+  })
 }
 
 export async function patchOrgClassification(
@@ -47,13 +49,13 @@ export async function patchOrgClassification(
   return await useAPI(`organization/${orgCode}/tag-classification/${classificationId}/`, {
     body: classification,
     method: 'PATCH',
-  }) //.data.value
+  })
 }
 
 export async function deleteOrgClassification(orgCode: string, classificationId: number) {
   return await useAPI(`organization/${orgCode}/tag-classification/${classificationId}/`, {
     method: 'DELETE',
-  }) //.data.value
+  })
 }
 
 export async function getOrgClassificationTags(
@@ -74,11 +76,11 @@ export async function getOrgClassificationAutocomplete(
   return await useAPI(
     `/organization/${orgCode}/tag-classification/${classificationId}/tag/autocomplete/`,
     { params }
-  ) //.data.value
+  )
 }
 
 export async function getOrgTag(orgCode: string, tagId: number, params: APIParams) {
-  return await useAPI(`organization/${orgCode}/tag/${tagId}/`, { params }) //.data.value
+  return await useAPI(`organization/${orgCode}/tag/${tagId}/`, { params })
 }
 
 export async function getTags(ids: number[], params?: APIParams) {
@@ -87,7 +89,7 @@ export async function getTags(ids: number[], params?: APIParams) {
       ...params,
       ids: ids.join(','),
     } as any,
-  }) //.data.value
+  })
 }
 
 export async function getAllTagsById(ids: number[], params?: APIParams) {
@@ -100,7 +102,7 @@ export async function getAllTagsById(ids: number[], params?: APIParams) {
         async (id) =>
           await useAPI(`tag/${id}/`, {
             params,
-          }) //.data.value
+          })
       )
     ),
   }
@@ -115,7 +117,7 @@ export async function putClassificationTag(
   return await useAPI(
     `/organization/${orgCode}/tag-classification/${classificationId}/tag/${tagtId}/`,
     { body: tag, method: 'PUT' }
-  ) //.data.value
+  )
 }
 
 export async function patchClassificationTag(
@@ -127,7 +129,7 @@ export async function patchClassificationTag(
   return await useAPI(
     `/organization/${orgCode}/tag-classification/${classificationId}/tag/${tagtId}/`,
     { body: tag, method: 'PATCH' }
-  ) //.data.value
+  )
 }
 
 export async function deleteClassificationTag(
@@ -138,7 +140,7 @@ export async function deleteClassificationTag(
   return await useAPI(
     `/organization/${orgCode}/tag-classification/${classificationId}/tag/${tagtId}/`,
     { method: 'DELETE' }
-  ) //.data.value
+  )
 }
 
 export async function postClassificationTag(
@@ -149,5 +151,5 @@ export async function postClassificationTag(
   return await useAPI(`organization/${orgCode}/tag-classification/${classificationId}/tag/`, {
     body: tag,
     method: 'POST',
-  }) //.data.value
+  })
 }

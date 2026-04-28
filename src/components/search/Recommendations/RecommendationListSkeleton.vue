@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import ProjectRecommendationItemSkeleton from '@/components/search/Recommendations/ProjectRecommendationItemSkeleton.vue'
-import UserRecommendationItemSkeleton from '@/components/search/Recommendations/UserRecommendationItemSkeleton.vue'
+import ProjectRecommendationItemSkeleton from '~/components/search/Recommendations/ProjectRecommendationItemSkeleton.vue'
+import UserRecommendationItemSkeleton from '~/components/search/Recommendations/UserRecommendationItemSkeleton.vue'
 
 export default {
   name: 'RecommendationListSkeleton',

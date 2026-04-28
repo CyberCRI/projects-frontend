@@ -1,6 +1,4 @@
 <script setup>
-import { defineAsyncComponent } from 'vue'
-
 const { t } = useNuxtI18n()
 const tabs = computed(() =>
   import.meta.client

@@ -1,17 +1,17 @@
-import ProfileSkillTab from '@/pages/UserProfilePageV2/Tabs/ProfileSkillTab.vue'
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import { UserFactory } from '@/../tests/factories/user.factory'
-import pinia from '@/stores'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import useUsersStore from '@/stores/useUsers'
-import { OrganizationOutput } from '@/models/organization.model'
+import ProfileSkillTab from '~/pages/UserProfilePageV2/Tabs/ProfileSkillTab.vue'
+import { OrganizationOutput } from '~/models/organization.model'
+import { UserFactory } from '~~/tests/factories/user.factory'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useUsersStore from '~/stores/useUsers'
+import pinia from '~/stores'
 
+import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
+import UserSkillsFull from '~/components/people/skill/UserSkillsFull.vue'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import EmptyLabel from '@/components/base/EmptyLabel.vue'
-import { PaginationsFactory } from '../../../../factories/paginations.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
+import EmptyLabel from '~/components/base/EmptyLabel.vue'
 import { flushPromises } from '@vue/test-utils'
-import UserSkillsFull from '@/components/people/skill/UserSkillsFull.vue'
 
 const aTag = { title: '123', description: 'abc' }
 

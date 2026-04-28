@@ -1,4 +1,4 @@
-import { delay } from '../index'
+import { delay } from '~~/tests/playwright/lib/index'
 import { expect } from '@playwright/test'
 export async function destroyProject(page) {
   await delay(1000) // give times skeleton to kick in

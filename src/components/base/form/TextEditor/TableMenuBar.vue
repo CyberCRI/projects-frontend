@@ -15,10 +15,12 @@
 </template>
 
 <script>
-import LpiBubbleMenu from '@/components/base/form/TextEditor/LpiBubbleMenu/LpiBubbleMenu.ts'
-import MenuItem from './MenuItem.vue'
 import { posToDOMRect } from '@tiptap/core'
+
+import LpiBubbleMenu from '~/components/base/form/TextEditor/LpiBubbleMenu/LpiBubbleMenu.ts'
+
 import ContextualToolMenu from './ContexttualToolMenu.vue'
+import MenuItem from './MenuItem.vue'
 
 export default {
   name: 'TableMenuBar',
@@ -37,10 +39,10 @@ export default {
   },
 
   data() {
-    let items = this.computeMenu()
-    let tippyOptions = {
+    const items = this.computeMenu()
+    const tippyOptions = {
       getReferenceClientRect: () => {
-        let selection = this.editor.view.state.selection
+        const selection = this.editor.view.state.selection
 
         // selection range
         const from = Math.min(...selection.ranges.map((range) => range.$from.pos))

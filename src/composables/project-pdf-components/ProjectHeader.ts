@@ -1,4 +1,4 @@
-import { Container } from '@/composables/pdf-helpers/doc-builder'
+import { Container } from '~/composables/pdf-helpers/doc-builder'
 
 export default class ProjectHeader extends Container {
   constructor(parent: Container) {
@@ -10,7 +10,7 @@ export default class ProjectHeader extends Container {
             align-items: flex-start;
             gap: .6cm;
             margin-bottom: 1cm;
-          }   
+          }
           `)
   }
 

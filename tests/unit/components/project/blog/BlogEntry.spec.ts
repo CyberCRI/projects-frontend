@@ -1,10 +1,10 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import BlogEntry from '@/components/project/blog/BlogEntry.vue'
-import { BlogEntryFactory } from '@/../tests/factories/blog-entry.factory'
+import { BlogEntryFactory } from '~~/tests/factories/blog-entry.factory'
+import BlogEntry from '~/components/project/blog/BlogEntry.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
 
 import { describe, expect, it } from 'vitest'
 
-import useAutoTranslate from '@/composables/useAutoTranslate'
+import useAutoTranslate from '~/composables/useAutoTranslate'
 
 describe('BlogEntry.vue', () => {
   it('should render component', () => {

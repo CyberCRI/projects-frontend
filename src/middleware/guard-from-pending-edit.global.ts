@@ -1,4 +1,4 @@
-import useGlobalsStore from '@/stores/useGlobals'
+import useGlobalsStore from '~/stores/useGlobals'
 
 export default defineNuxtRouteMiddleware(async function useGuardFromPendingEdit(/*to, from*/) {
   const globalsStore = useGlobalsStore()

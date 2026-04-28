@@ -1,6 +1,5 @@
 // https://github.com/nuxt-modules/i18n/discussions/3027#discussioncomment-10384714
-
-import { useI18n } from 'vue-i18n'
+import type { useI18n } from 'vue-i18n'
 
 type i18N = ReturnType<typeof useI18n>
 /**

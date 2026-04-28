@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import { capitalize } from '@/functs/string'
+import { capitalize } from '~/functs/string'
 
 defineOptions({
   name: 'LpiDropDownElementButton',

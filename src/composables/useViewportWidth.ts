@@ -1,4 +1,4 @@
-import { onMediaChange } from '@/composables/onResize'
+import { onMediaChange } from '~/composables/onResize'
 
 export default function useViewportWidth() {
   const isMobile = ref(false)

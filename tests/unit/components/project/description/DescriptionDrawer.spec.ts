@@ -1,11 +1,11 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import DescriptionDrawer from '@/components/project/description/DescriptionDrawer.vue'
+import { ProjectFactory, ProjectOutputFactory } from '~~/tests/factories/project.factory'
+import DescriptionDrawer from '~/components/project/description/DescriptionDrawer.vue'
+import { OrganizationOutputFactory } from '~~/tests/factories/organization.factory'
+import useOrganizationsStore from '~/stores/useOrganizations'
 import { beforeEach, vi, describe, expect, it } from 'vitest'
-import { ProjectFactory, ProjectOutputFactory } from '@/../tests/factories/project.factory'
-import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
-import pinia from '@/stores'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import useProjectsStore from '@/stores/useProjects'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import useProjectsStore from '~/stores/useProjects'
+import pinia from '~/stores'
 
 describe('DescriptionDrawer.vue', () => {
   let wrapper

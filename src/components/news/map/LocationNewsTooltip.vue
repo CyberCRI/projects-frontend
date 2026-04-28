@@ -11,11 +11,14 @@
 </template>
 
 <script setup lang="ts">
-import { AnyTranslatedLocation } from '@/models/location.model'
-import { DEFAULT_NEWS_PATATOID } from '@/composables/usePatatoids'
-import CardLocationTooltip from '@/components/map/CardLocationTooltip.vue'
-import { TranslatedNews } from '@/models/news.model'
-import { html2Text } from '@/functs/string'
+import type { AnyTranslatedLocation } from '~/models/location.model'
+import type { TranslatedNews } from '~/models/news.model'
+
+import CardLocationTooltip from '~/components/map/CardLocationTooltip.vue'
+
+import { DEFAULT_NEWS_PATATOID } from '~/composables/usePatatoids'
+
+import { html2Text } from '~/functs/string'
 
 const props = defineProps<{ location: AnyTranslatedLocation; news: TranslatedNews }>()
 

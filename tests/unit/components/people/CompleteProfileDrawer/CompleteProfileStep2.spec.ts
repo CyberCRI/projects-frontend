@@ -1,8 +1,8 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import CompleteProfileStep2 from '@/components/people/CompleteProfileDrawer/CompleteProfileStep2.vue'
+import CompleteProfileStep2 from '~/components/people/CompleteProfileDrawer/CompleteProfileStep2.vue'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import pinia from '@/stores'
-import useUsersStore from '@/stores/useUsers'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import useUsersStore from '~/stores/useUsers'
+import pinia from '~/stores'
 
 describe('CompleteProfileStep1.vue', () => {
   let wrapper

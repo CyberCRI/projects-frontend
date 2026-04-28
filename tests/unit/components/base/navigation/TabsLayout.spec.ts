@@ -1,13 +1,13 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
-import { defineAsyncComponent } from 'vue'
-import MockComponent from '@/../tests/helpers/MockComponent.vue'
+import TabsLayout from '~/components/base/navigation/TabsLayout.vue'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
-import { describe, expect, it, vi } from 'vitest'
+import MockComponent from '~~/tests/helpers/MockComponent.vue'
+
 import { mockNuxtImport } from '@nuxt/test-utils/runtime'
+import { describe, expect, it, vi } from 'vitest'
 
 // fix unhnadled rejection due to invalid url
-vi.mock('@/composables/useAPI', () => {
+vi.mock('~/composables/useAPI', () => {
   return {
     default: vi.fn().mockResolvedValue({ data: { results: [] } }), // TODO nuxt check this
   }
@@ -34,12 +34,12 @@ const factory = (props?) => {
       tabs: [
         {
           label: 'Tab 1',
-          component: defineAsyncComponent(() => import('@/components/base/button/LpiButton.vue')),
+          component: defineAsyncComponent(() => import('~/components/base/button/LpiButton.vue')),
           props: [{ label: 'LpiButton' }],
         },
         {
           label: 'Tab 2',
-          component: defineAsyncComponent(() => import('@/components/base/LpiSnackbar.vue')),
+          component: defineAsyncComponent(() => import('~/components/base/LpiSnackbar.vue')),
           props: [{ text: 'success message', type: 'success' }],
         },
       ],

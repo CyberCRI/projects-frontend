@@ -18,9 +18,10 @@
 </template>
 
 <script setup lang="ts">
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import SdgIcon from '@/components/search/Filters/SdgIcon.vue'
-import { usePublicURL } from '@/composables/usePublic'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import SdgIcon from '~/components/search/Filters/SdgIcon.vue'
+
+import { usePublicURL } from '~/composables/usePublic'
 
 const projectLayoutToggleAddModal = inject<(string) => void>('projectLayoutToggleAddModal')
 

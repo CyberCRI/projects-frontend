@@ -1,5 +1,6 @@
-import { Document, Identifier, ResearcherDocumentAnalytics } from '@/interfaces/researcher'
-import { factoriesSkeleton } from '@/skeletons/base.skeletons'
+import type { Document, Identifier, ResearcherDocumentAnalytics } from '~/interfaces/researcher'
+
+import { factoriesSkeleton } from '~/skeletons/base.skeletons'
 import { randomInt } from 'es-toolkit'
 
 export const documentAnalyticsSkeleton = (
@@ -24,13 +25,13 @@ export const documentAnalyticsSkeleton = (
     cns: randomInt(10),
     dte: randomInt(10),
   },
-  ...(def || {}),
+  ...def,
 })
 
 export const identifierSkeleton = (def?: Partial<Identifier>): Omit<Identifier, 'id'> => ({
   value: 'lorem',
   harvester: 'hal',
-  ...(def || {}),
+  ...def,
 })
 
 export const researchDocumentSkeleton = (def?: Partial<Document>): Omit<Document, 'id'> => ({
@@ -42,5 +43,5 @@ export const researchDocumentSkeleton = (def?: Partial<Document>): Omit<Document
   identifiers: factoriesSkeleton(identifierSkeleton, randomInt(5)),
   publication_date: null,
   similars: 0,
-  ...(def || {}),
+  ...def,
 })

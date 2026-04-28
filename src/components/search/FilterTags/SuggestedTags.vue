@@ -17,9 +17,10 @@
 </template>
 
 <script>
-import FilterValue from '@/components/search/Filters/FilterValue.vue'
-import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import useTagTexts from '@/composables/useTagTexts.ts'
+import FilterValue from '~/components/search/Filters/FilterValue.vue'
+import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
+
+import useTagTexts from '~/composables/useTagTexts.ts'
 
 export default {
   name: 'SuggestedTags',

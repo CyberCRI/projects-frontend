@@ -81,11 +81,14 @@
 </template>
 
 <script setup lang="ts">
-import IdentifierLink from '@/components/people/Researcher/IdentifierLink.vue'
-import SdgList from '@/components/sdgs/SdgList.vue'
-import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
-import { capitalize } from '@/functs/string'
-import { TranslatedUserModel } from '@/models/user.model'
+import type { TranslatedUserModel } from '~/models/user.model'
+
+import IdentifierLink from '~/components/people/Researcher/IdentifierLink.vue'
+import SdgList from '~/components/sdgs/SdgList.vue'
+
+import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
+
+import { capitalize } from '~/functs/string'
 
 const organizationCode = useOrganizationCode()
 

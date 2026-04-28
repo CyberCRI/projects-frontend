@@ -16,9 +16,11 @@
 </template>
 
 <script setup lang="ts">
-import { TranslatedProject } from '@/models/project.model'
-import followUtils from '@/functs/followUtils'
-import useUsersStore from '@/stores/useUsers'
+import type { TranslatedProject } from '~/models/project.model'
+
+import useUsersStore from '~/stores/useUsers'
+
+import followUtils from '~/functs/followUtils'
 
 const props = withDefaults(
   defineProps<{

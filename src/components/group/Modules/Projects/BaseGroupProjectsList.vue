@@ -9,11 +9,14 @@
 </template>
 
 <script setup lang="ts">
-import { getGroupProject } from '@/api/v2/group.service'
-import ProjectPreview from '@/components/project/ProjectPreview.vue'
-import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
-import { projectSkeleton } from '@/skeletons/project.skeletons'
+import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+
+import { getGroupProject } from '~/api/v2/group.service'
+
+import ProjectPreview from '~/components/project/ProjectPreview.vue'
+
+import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
+import { projectSkeleton } from '~/skeletons/project.skeletons'
 
 const props = withDefaults(
   defineProps<{

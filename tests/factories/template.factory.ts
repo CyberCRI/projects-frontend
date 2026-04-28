@@ -1,6 +1,6 @@
 import { createFactory } from 'faker-create-factory'
 
-import { TemplateCreateInput, TemplateModel } from '@/models/template.model'
+import { TemplateCreateInput, TemplateModel } from '~/models/template.model'
 import { ImageFactory } from './image.factory'
 import BaseFactory from './base.factory'
 

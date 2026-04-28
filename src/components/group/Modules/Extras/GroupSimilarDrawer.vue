@@ -21,13 +21,16 @@
 </template>
 
 <script setup lang="ts">
-import { getGroupSimilar } from '@/api/v2/group.service'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import FetchLoader from '@/components/base/FetchLoader.vue'
-import PaginationButtonsV2 from '@/components/base/navigation/PaginationButtonsV2.vue'
-import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import { factoryPagination } from '@/skeletons/base.skeletons'
-import { groupSkeleton } from '@/skeletons/group.skeletons'
+import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+
+import { getGroupSimilar } from '~/api/v2/group.service'
+
+import PaginationButtonsV2 from '~/components/base/navigation/PaginationButtonsV2.vue'
+import FetchLoader from '~/components/base/FetchLoader.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+
+import { factoryPagination } from '~/skeletons/base.skeletons'
+import { groupSkeleton } from '~/skeletons/group.skeletons'
 
 const { t } = useNuxtI18n()
 const emit = defineEmits(['close'])

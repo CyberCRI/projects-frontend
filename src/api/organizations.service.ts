@@ -1,12 +1,10 @@
-// import type { APIResponseList } from '@/api/types'
-import type {
-  /* OrganizationOutput,*/ OrganizationModel,
-  OrganizationPatchInput,
-} from '@/models/organization.model'
-import type { /*ImageOrganizationOutput,*/ ImageOrganizationInput } from '@/models/image.model'
-import type { /*GroupModel,*/ GroupModelInput, RemoveGroupModelInput } from '@/models/group.model'
-import { _adaptParamsToGetQuery } from '@/api/utils.service'
-import useAPI from '@/composables/useAPI'
+import type { OrganizationModel, OrganizationPatchInput } from '~/models/organization.model'
+import type { GroupModelInput, RemoveGroupModelInput } from '~/models/group.model'
+import type { ImageOrganizationInput } from '~/models/image.model'
+
+import { _adaptParamsToGetQuery } from '~/api/utils.service'
+
+import useAPI from '~/composables/useAPI'
 
 export async function patchOrganization(
   code: string,
@@ -15,7 +13,7 @@ export async function patchOrganization(
   return await useAPI(`organization/${code}/`, {
     body: organization,
     method: 'PATCH',
-  }) //.data.value
+  })
 }
 
 export async function getOrganizationByCode(code: string, config = {}) {
@@ -33,7 +31,7 @@ export async function postOrganisationBanner({
   code: string
   body: ImageOrganizationInput
 }) {
-  return await useAPI(`organization/${code}/banner/`, { body, method: 'POST' }) //.data.value
+  return await useAPI(`organization/${code}/banner/`, { body, method: 'POST' })
 }
 
 export async function patchOrganisationBanner(
@@ -42,7 +40,6 @@ export async function patchOrganisationBanner(
   body: ImageOrganizationInput
 ) {
   return await useAPI(`organization/${code}/banner/${banner_id}/`, { body, method: 'PATCH' })
-  //.data.value
 }
 
 export async function postOrganisationLogo({
@@ -52,11 +49,11 @@ export async function postOrganisationLogo({
   code: string
   body: ImageOrganizationInput | FormData
 }) {
-  return await useAPI(`organization/${code}/logo/`, { body, method: 'POST' }) //.data.value
+  return await useAPI(`organization/${code}/logo/`, { body, method: 'POST' })
 }
 
 export async function addOrgMember({ org_id, body }: { org_id: number; body: GroupModelInput[] }) {
-  return await useAPI(`organization/${org_id}/member/add/`, { body, method: 'POST' }) //.data.value
+  return await useAPI(`organization/${org_id}/member/add/`, { body, method: 'POST' })
 }
 
 export async function removeOrgMember({
@@ -70,48 +67,48 @@ export async function removeOrgMember({
 }
 
 export async function postAccessRequest(org_code, body) {
-  return await useAPI(`organization/${org_code}/access-request/`, { body, method: 'POST' }) //.data.value
+  return await useAPI(`organization/${org_code}/access-request/`, { body, method: 'POST' })
 }
 
 export async function getAccessRequests(org_code, params) {
   return await useAPI(`organization/${org_code}/access-request/`, {
     ..._adaptParamsToGetQuery(params),
-  }) //.data.value
+  })
 }
 
 export async function declineAccessRequest(org_code, params) {
   return await useAPI(`organization/${org_code}/access-request/decline/`, {
     body: params,
     method: 'POST',
-  }) //.data.value
+  })
 }
 
 export async function acceptAccessRequest(org_code, params) {
   return await useAPI(`organization/${org_code}/access-request/accept/`, {
     body: params,
     method: 'POST',
-  }) //.data.value
+  })
 }
 
 export async function getFeaturedProjects(org_code, params) {
   return await useAPI(`organization/${org_code}/featured-project/`, {
     ..._adaptParamsToGetQuery(params),
-  }) //.data.value
+  })
 }
 
 export async function addFeaturedProject(org_code, body) {
-  return await useAPI(`organization/${org_code}/featured-project/add/`, { body, method: 'POST' }) //.data.value
+  return await useAPI(`organization/${org_code}/featured-project/add/`, { body, method: 'POST' })
 }
 
 export async function removeFeaturedProject(org_code, body) {
   return await useAPI(`organization/${org_code}/featured-project/remove/`, {
     body,
     method: 'POST',
-  }) //.data.value
+  })
 }
 
 export async function postOrganizationImage({ orgCode, body }) {
-  return await useAPI(`organization/${orgCode}/image/`, { body, method: 'POST' }) //.data.value
+  return await useAPI(`organization/${orgCode}/image/`, { body, method: 'POST' })
 }
 
 export async function patchTermsAndConditions(organization: OrganizationModel, content: string) {
@@ -121,5 +118,5 @@ export async function patchTermsAndConditions(organization: OrganizationModel, c
       body: { content },
       method: 'PATCH',
     }
-  ) //.data.value
+  )
 }

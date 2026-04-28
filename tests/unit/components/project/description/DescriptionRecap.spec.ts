@@ -1,8 +1,8 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import DescriptionRecap from '@/components/project/description/DescriptionRecap.vue'
+import DescriptionRecap from '~/components/project/description/DescriptionRecap.vue'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
+import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import { describe, expect, it } from 'vitest'
-import { TranslatedProjectFactory } from '../../../../factories/project.factory'
 
 describe('DescriptionRecap.vue', () => {
   it('should render component', () => {

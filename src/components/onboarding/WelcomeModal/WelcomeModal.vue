@@ -41,9 +41,10 @@
   </BaseModal>
 </template>
 <script setup lang="ts">
-import BaseModal from '@/components/base/modal/BaseModal.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import useOrganizationsStore from '@/stores/useOrganizations'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import BaseModal from '~/components/base/modal/BaseModal.vue'
+
+import useOrganizationsStore from '~/stores/useOrganizations'
 
 const emit = defineEmits<{
   close: []

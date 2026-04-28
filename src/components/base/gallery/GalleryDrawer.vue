@@ -47,13 +47,16 @@
 </template>
 
 <script setup lang="ts">
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import GalleryItem from '@/components/base/gallery/GalleryItem.vue'
-import { DEFAULT_IMAGE_PATATOID } from '@/composables/usePatatoids'
-import { urlToImageModel } from '@/functs/imageSizesUtils'
-import { ImageModel } from '@/models/image.model'
-import { AsyncDataRequestStatus } from 'nuxt/app'
-import { usePublicURL } from '@/composables/usePublic'
+import type { ImageModel } from '~/models/image.model'
+
+import GalleryItem from '~/components/base/gallery/GalleryItem.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+
+import { DEFAULT_IMAGE_PATATOID } from '~/composables/usePatatoids'
+import { usePublicURL } from '~/composables/usePublic'
+
+import { urlToImageModel } from '~/functs/imageSizesUtils'
+import type { AsyncDataRequestStatus } from 'nuxt/app'
 
 const props = withDefaults(
   defineProps<{

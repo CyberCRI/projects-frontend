@@ -1,10 +1,10 @@
-import { lpiMount, lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import ProfileCompletedModal from '@/components/onboarding/WelcomeModal/ProfileCompletedModal.vue'
+import ProfileCompletedModal from '~/components/onboarding/WelcomeModal/ProfileCompletedModal.vue'
+import { OrganizationOutputFactory } from '~~/tests/factories/organization.factory'
+import { lpiMount, lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
 
-import pinia from '@/stores'
-import useOrganizationsStore from '@/stores/useOrganizations'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import pinia from '~/stores'
 
 describe('ProfileCompletedModal.vue', () => {
   let wrapper

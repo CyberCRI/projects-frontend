@@ -55,7 +55,7 @@
   </ul>
 </template>
 <script setup>
-import IconImage from '@/components/base/media/IconImage.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
 
 defineOptions({ name: 'GroupsElement' })
 

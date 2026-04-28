@@ -22,9 +22,11 @@
 </template>
 
 <script setup lang="ts">
-import LocationType from '@/components/map/LocationType.vue'
-import { MapPointerOption } from '@/interfaces/maps'
-import { AnyLocation } from '@/models/location.model'
+import type { AnyLocation } from '~/models/location.model'
+
+import type { MapPointerOption } from '~/interfaces/maps'
+
+import LocationType from '~/components/map/LocationType.vue'
 
 const props = withDefaults(
   defineProps<{

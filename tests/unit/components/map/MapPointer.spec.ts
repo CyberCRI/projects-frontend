@@ -1,9 +1,9 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import MapPointer from '@/components/map/MapPointer.vue'
+import MapPointer from '~/components/map/MapPointer.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
 
+import { ProjectFactory } from '~~/tests/factories/project.factory'
+import LocationFactory from '~~/tests/factories/location.factory'
 import { describe, expect, it } from 'vitest'
-import { ProjectFactory } from '../../../factories/project.factory'
-import LocationFactory from '../../../factories/location.factory'
 
 describe('MapPointer.vue', () => {
   const project = ProjectFactory.generate()

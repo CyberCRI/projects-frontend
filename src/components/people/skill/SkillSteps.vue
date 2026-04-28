@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import useSkillLevels from '@/composables/useSkillLevels.ts'
+import useSkillLevels from '~/composables/useSkillLevels.ts'
 
 defineOptions({ name: 'SkillSteps' })
 

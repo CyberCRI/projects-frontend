@@ -1,4 +1,4 @@
-import BaseModel from '@/models/base.model'
+import type BaseModel from '~/models/base.model'
 
 /**
  * @name ReviewModel

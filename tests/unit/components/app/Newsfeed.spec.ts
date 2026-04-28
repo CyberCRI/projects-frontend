@@ -1,14 +1,14 @@
-import Newsfeed from '@/components/app/NewsFeed.vue'
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
+import { ProjectCategoryOutputFactory } from '~~/tests/factories/project-category.factory'
+import { AnnouncementFactory } from '~~/tests/factories/announcement.factory'
+import { ProjectOutputFactory } from '~~/tests/factories/project.factory'
+import useProjectCategoriesStore from '~/stores/useProjectCategories'
+import { OrganizationOutput } from '~/models/organization.model'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import { beforeEach, describe, expect, it } from 'vitest'
+import Newsfeed from '~/components/app/NewsFeed.vue'
 import { flushPromises } from '@vue/test-utils'
-import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
-import { AnnouncementFactory } from '@/../tests/factories/announcement.factory'
-import { ProjectCategoryOutputFactory } from '@/../tests/factories/project-category.factory'
-import pinia from '@/stores'
-import useProjectCategoriesStore from '@/stores/useProjectCategories'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import { OrganizationOutput } from '@/models/organization.model'
+import pinia from '~/stores'
 
 describe('Newsfeed', () => {
   beforeEach(() => {

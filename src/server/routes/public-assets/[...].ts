@@ -1,4 +1,4 @@
-import { usePublicURL } from '@/composables/usePublic'
+import { usePublicURL } from '~/composables/usePublic'
 
 // https://www.youtube.com/watch?v=J4E5uYz5AY8
 export default defineEventHandler(async (event) => {

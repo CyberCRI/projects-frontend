@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { throttle } from 'es-toolkit'
-import { StyleValue } from 'vue'
+import type { StyleValue } from 'vue'
 
 const props = withDefaults(
   defineProps<{

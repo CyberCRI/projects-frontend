@@ -22,8 +22,8 @@
 </template>
 
 <script setup>
-import DescriptionDrawer from '@/components/project/description/DescriptionDrawer.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
+import DescriptionDrawer from '~/components/project/description/DescriptionDrawer.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
 
 defineOptions({ name: 'DescriptionPlaceholder' })
 defineProps({

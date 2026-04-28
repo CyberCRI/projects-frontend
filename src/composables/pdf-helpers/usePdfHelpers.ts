@@ -1,5 +1,5 @@
-import usePdfFooter from '@/composables/pdf-helpers/usePdfFooter'
-import usePdfHeader from '@/composables/pdf-helpers/usePdfHeader'
+import usePdfHeader from '~/composables/pdf-helpers/usePdfHeader'
+import usePdfFooter from '~/composables/pdf-helpers/usePdfFooter'
 
 export async function croppedImageData({ ratio, imgDataUrl, imageSizes }) {
   return await new Promise((resolve) => {
@@ -92,13 +92,14 @@ export async function convertImages(html) {
   const imageTags = html.match(/<img [^>]*src="[^"]*"[^>]*>/gm) || []
   const dataUrls = await Promise.all(
     imageTags.map((tag) => {
-      return new Promise(async (resolve) => {
+      return new Promise((resolve) => {
         const srcMatch = tag.match(/src="([^"]*)"/)
         if (srcMatch && srcMatch[1]) {
           const src = srcMatch[1]
           if (!src.startsWith('data:')) {
-            const base64data = await fetchImageAsDataUrl(src)
-            resolve([tag, base64data])
+            fetchImageAsDataUrl(src).then((base64data) => {
+              resolve([tag, base64data])
+            })
           } else {
             resolve([tag, src.substring('data:'.length)]) // already a data URL
           }

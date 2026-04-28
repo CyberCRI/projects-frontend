@@ -63,14 +63,17 @@
 </template>
 
 <script setup lang="ts">
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import TextInput from '@/components/base/form/TextInput.vue'
-import useValidate from '@vuelidate/core'
 import { email, helpers, required } from '@vuelidate/validators'
-import { contactUs } from '@/api/report.service'
-import FieldErrors from '@/components/base/form/FieldErrors.vue'
-import useToasterStore from '@/stores/useToaster'
-import useOrganizationsStore from '@/stores/useOrganizations'
+import useValidate from '@vuelidate/core'
+
+import { contactUs } from '~/api/report.service'
+
+import FieldErrors from '~/components/base/form/FieldErrors.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useToasterStore from '~/stores/useToaster'
 
 const defaultForm = () => {
   return {

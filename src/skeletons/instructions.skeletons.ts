@@ -1,4 +1,4 @@
-import { InstructionModel } from '@/models/instruction.model'
+import type { InstructionModel } from '~/models/instruction.model'
 
 export const instructionSkeleton = (def?: Partial<InstructionModel>): InstructionModel => ({
   id: -1,
@@ -7,5 +7,5 @@ export const instructionSkeleton = (def?: Partial<InstructionModel>): Instructio
   publication_date: new Date().toISOString(),
   has_to_be_notified: false,
   people_groups: [],
-  ...(def || {}),
+  ...def,
 })

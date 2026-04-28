@@ -54,8 +54,9 @@
 </template>
 
 <script setup lang="ts">
-import ProjectPreview from '@/components/project/ProjectPreview.vue'
-import { TranslatedProject } from '@/models/project.model'
+import type { TranslatedProject } from '~/models/project.model'
+
+import ProjectPreview from '~/components/project/ProjectPreview.vue'
 
 const model = defineModel<TranslatedProject[]>()
 

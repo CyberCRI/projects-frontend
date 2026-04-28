@@ -1,5 +1,7 @@
-import { required, minLength } from '@vuelidate/validators'
-import useForm from '@/composables/useForm'
+import { minLength, required } from '@vuelidate/validators'
+
+import useForm from '~/composables/useForm'
+
 import { clone } from 'es-toolkit'
 
 const DEFAULT_FORM = {

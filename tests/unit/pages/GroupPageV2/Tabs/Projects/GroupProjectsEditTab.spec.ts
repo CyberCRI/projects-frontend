@@ -1,12 +1,12 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import GroupProjectsEditTab from '@/pages/GroupPageV2/Tabs/Projects/GroupProjectsEditTab.vue'
+import GroupProjectsEditTab from '~/pages/GroupPageV2/Tabs/Projects/GroupProjectsEditTab.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import { flushPromises } from '@vue/test-utils'
 
-import { describe, expect, it } from 'vitest'
-import { groupTranslatedFactory } from '../../../../../factories/group.factory'
+import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
+import { groupTranslatedFactory } from '~~/tests/factories/group.factory'
+import { ProjectFactory } from '~~/tests/factories/project.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
-import { PaginationsFactory } from '../../../../../factories/paginations.factory'
-import { ProjectFactory } from '../../../../../factories/project.factory'
+import { describe, expect, it } from 'vitest'
 
 describe('GroupProjectsEditTab.vue', () => {
   it('should render component', async () => {

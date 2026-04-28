@@ -1,8 +1,7 @@
 <script setup>
-import IconImage from '@/components/base/media/IconImage.vue'
-import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-import useSectionFilters from '@/components/search/Filters/useSectionFilters.ts'
-import { ref } from 'vue'
+import useSectionFilters from '~/components/search/Filters/useSectionFilters.ts'
+import LpiLoader from '~/components/base/loader/LpiLoader.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
 
 const selectedSection = defineModel('selectedSection', {
   type: String,

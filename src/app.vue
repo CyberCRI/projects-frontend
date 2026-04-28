@@ -1,5 +1,5 @@
 <template>
-  <div id="APP" :class="[/*themeclass,*/ currentRouteName, { 'has-open-drawer': isLoading }]">
+  <div id="APP" :class="[currentRouteName, { 'has-open-drawer': isLoading }]">
     <Transition appear name="background-appear">
       <div v-if="globalsStore.uiIsLocked" class="loader-backdrop">
         <LoaderSimple />
@@ -34,15 +34,18 @@
 </template>
 
 <script setup lang="ts">
-import LpiFooter from '@/components/app/LpiFooter.vue'
-import AppToastList from '@/components/app/AppToastList.vue'
-import LpiHeader from '@/components/app/LpiHeader.vue'
-import { checkExpiredToken } from '@/api/auth/keycloakUtils'
-import useUsersStore from '@/stores/useUsers'
-import useKeycloak from '@/api/auth/keycloak'
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
-import useGlobalsStore from '@/stores/useGlobals'
-import { fixTiptapTableHeight } from '@/functs/editorUtils'
+import { checkExpiredToken } from '~/api/auth/keycloakUtils'
+import useKeycloak from '~/api/auth/keycloak'
+
+import AppToastList from '~/components/app/AppToastList.vue'
+import LpiHeader from '~/components/app/LpiHeader.vue'
+import LpiFooter from '~/components/app/LpiFooter.vue'
+
+import useGlobalsStore from '~/stores/useGlobals'
+import useUsersStore from '~/stores/useUsers'
+
+import { fixTiptapTableHeight } from '~/functs/editorUtils'
+
 useRuntimeHook('app:error', (error) => {
   console.log('app:error', error)
 })
@@ -118,10 +121,11 @@ onMounted(() => {
     window.lpiSharedWorker.port.onmessage = (e) => {
       const { type, payload } = e.data
       switch (type) {
-        case 'TOS_ACCEPTED':
+        case 'TOS_ACCEPTED': {
           const user = usersStore.userFromApi
           if (user) user.signed_terms_and_conditions = payload
           break
+        }
       }
       window.lpiSharedWorker.port.start()
     }
@@ -137,7 +141,7 @@ onBeforeUnmount(() => {
 })
 </script>
 <style lang="scss">
-@import '@/design/scss/main';
+@import '~/design/scss/main';
 
 #APP {
   display: flex;

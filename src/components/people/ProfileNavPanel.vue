@@ -124,7 +124,7 @@ const hasNoContact = computed(() => {
 })
 
 const socialName = (url) => {
-  let socialArr = url.split('/')
+  const socialArr = url.split('/')
   // if url end with a "/" last item is empty
   if (socialArr.length > 0 && socialArr[socialArr.length - 1])
     return socialArr[socialArr.length - 1]

@@ -1,10 +1,10 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import ProjectPrivateExchangeTab from '@/pages/ProjectPageV2/Tabs/ProjectPrivateExchangeTab.vue'
+import ProjectPrivateExchangeTab from '~/pages/ProjectPageV2/Tabs/ProjectPrivateExchangeTab.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
-import { describe, expect, it } from 'vitest'
+import { ProjectTeamOutputFactory } from '~~/tests/factories/project-member.factory'
+import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import { flushPromises } from '@vue/test-utils'
-import { TranslatedProjectFactory } from '../../../../factories/project.factory'
-import { ProjectTeamOutputFactory } from '../../../../factories/project-member.factory'
+import { describe, expect, it } from 'vitest'
 
 describe('ProjectPrivateExchangeTab.vue', () => {
   it('should render component', async () => {

@@ -1,4 +1,4 @@
-import { LogLevel, Logger } from '../../logger'
+import { LogLevel, Logger } from '~~/tests/playwright/logger'
 
 const logger = new Logger(LogLevel.Debug)
 

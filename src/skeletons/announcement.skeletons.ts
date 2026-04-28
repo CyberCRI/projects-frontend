@@ -1,5 +1,6 @@
-import { AnnouncementModel } from '@/models/announcement.model'
-import { projectSkeleton } from '@/skeletons/project.skeletons'
+import type { AnnouncementModel } from '~/models/announcement.model'
+
+import { projectSkeleton } from '~/skeletons/project.skeletons'
 
 export const announcementSkeleton = (
   def?: Partial<AnnouncementModel>
@@ -15,5 +16,5 @@ export const announcementSkeleton = (
   is_remunerated: false,
   updated_at: '2020-05-01',
   created_at: '2020-05-01',
-  ...(def || {}),
+  ...def,
 })

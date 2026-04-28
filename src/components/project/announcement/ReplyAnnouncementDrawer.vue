@@ -66,14 +66,18 @@
   </BaseDrawer>
 </template>
 <script>
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import TextInput from '@/components/base/form/TextInput.vue'
-import { applyAnnouncement } from '@/api/announcements.service.ts'
+import { email, helpers, required } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
-import { helpers, required, email } from '@vuelidate/validators'
-import FieldErrors from '@/components/base/form/FieldErrors.vue'
-import useToasterStore from '@/stores/useToaster.ts'
+
+import { applyAnnouncement } from '~/api/announcements.service.ts'
+
+import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
+import FieldErrors from '~/components/base/form/FieldErrors.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+
+import useToasterStore from '~/stores/useToaster.ts'
+
 import { useRuntimeConfig } from '#imports'
 
 export default {
@@ -207,7 +211,7 @@ export default {
       const captchaCB = (resp) => {
         this.captchatoken = resp
       }
-      let script = document.createElement('script')
+      const script = document.createElement('script')
       script.setAttribute('async', '')
       script.setAttribute('defer', '')
       script.id = 'recaptchaScript'

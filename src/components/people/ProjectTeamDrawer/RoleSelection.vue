@@ -92,12 +92,13 @@
 </template>
 
 <script>
-import { isNotGroup, isGroup } from '@/functs/users'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+import ToolTip from '~/components/base/ToolTip.vue'
 
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import IconImage from '@/components/base/media/IconImage.vue'
-import ToolTip from '@/components/base/ToolTip.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
+
+import { isGroup, isNotGroup } from '~/functs/users'
 
 export default {
   name: 'RoleSelection',
@@ -153,7 +154,7 @@ export default {
       // if it is a project edition, use current  project categories, else (project creation) use  selected category
       const categories = this.selectedCategories || []
       // keep only categroies from current organization
-      let orgCategories = categories.filter(
+      const orgCategories = categories.filter(
         (cat) => !!cat && this.organizationsStore.current.code === cat.organization
       )
 

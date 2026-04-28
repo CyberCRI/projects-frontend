@@ -1,5 +1,5 @@
-import BaseModel from '@/models/base.model'
-import { ProjectModel } from '@/models/project.model'
+import type { ProjectModel } from '~/models/project.model'
+import type BaseModel from '~/models/base.model'
 
 /**
  * @name FollowModel

@@ -26,8 +26,8 @@
 </template>
 
 <script setup lang="ts">
-import ProjectListSkeleton from '@/components/project/ProjectListSkeleton.vue'
-import DynamicGrid from '@/components/base/DynamicGrid.vue'
+import ProjectListSkeleton from '~/components/project/ProjectListSkeleton.vue'
+import DynamicGrid from '~/components/base/DynamicGrid.vue'
 
 const props = withDefaults(
   defineProps<{

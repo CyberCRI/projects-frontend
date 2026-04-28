@@ -1,5 +1,5 @@
-import hljs from 'highlight.js'
 import { throttle } from 'es-toolkit'
+import hljs from 'highlight.js'
 
 export function fixTables(contentNode) {
   const tables = contentNode?.querySelectorAll('table')

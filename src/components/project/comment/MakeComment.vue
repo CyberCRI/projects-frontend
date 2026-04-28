@@ -38,21 +38,23 @@
 </template>
 
 <script>
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
-// import utils from '@/functs/functions.ts'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import analytics from '@/analytics'
-import { patchComment, postComment, postCommentImage } from '@/api/comments.service'
-import useToasterStore from '@/stores/useToaster.ts'
-import useUsersStore from '@/stores/useUsers.ts'
-
 import {
   patchProjectMessage,
   postProjectMessage,
   postProjectMessageImage,
-} from '@/api/project-messages.service'
+} from '~/api/project-messages.service'
+import { patchComment, postComment, postCommentImage } from '~/api/comments.service'
+import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
+
+import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
+
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+
+import useToasterStore from '~/stores/useToaster.ts'
+import useUsersStore from '~/stores/useUsers.ts'
+
+import analytics from '~/analytics'
 
 export default {
   name: 'MakeComment',

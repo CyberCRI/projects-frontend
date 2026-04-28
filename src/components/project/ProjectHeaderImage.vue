@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { ProjectModel } from '@/models/project.model'
+import type { ProjectModel } from '~/models/project.model'
 
 withDefaults(
   defineProps<{

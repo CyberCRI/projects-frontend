@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { computed } from 'vue'
-import useAsyncPaginationAPI from '@/composables/useAsyncPaginationAPI'
+
+import useAsyncPaginationAPI from '~/composables/useAsyncPaginationAPI'
 import { flushPromises } from '@vue/test-utils'
 
 // all other tests is on "useAsyncAPI"

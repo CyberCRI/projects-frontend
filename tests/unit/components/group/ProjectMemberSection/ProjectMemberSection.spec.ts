@@ -1,7 +1,7 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import ProjectMemberSection from '@/components/group/ProjectMemberSection/ProjectMemberSection.vue'
+import ProjectMemberSection from '~/components/group/ProjectMemberSection/ProjectMemberSection.vue'
+import { GroupMemberFactory } from '~~/tests/factories/group-member.factory'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { GroupMemberFactory } from '@/../tests/factories/group-member.factory'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
 
 describe('ProjectMemberSection.vue', () => {
   let wrapper

@@ -1,8 +1,8 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import CookiesPage from '@/pages/CookiesPage/CookiesPage.vue'
+import CookiesPage from '~/pages/CookiesPage/CookiesPage.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
-import { describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
+import { describe, expect, it } from 'vitest'
 
 describe('CookiesPage.vue', () => {
   it('should render component', async () => {

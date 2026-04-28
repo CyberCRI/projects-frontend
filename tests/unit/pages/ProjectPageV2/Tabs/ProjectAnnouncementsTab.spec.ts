@@ -1,10 +1,10 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import ProjectAnnouncementsTab from '@/pages/ProjectPageV2/Tabs/ProjectAnnouncementsTab.vue'
+import ProjectAnnouncementsTab from '~/pages/ProjectPageV2/Tabs/ProjectAnnouncementsTab.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
+import { TranslatedAnnouncementFactory } from '~~/tests/factories/announcement.factory'
+import { ProjectFactory } from '~~/tests/factories/project.factory'
 import { describe, expect, it, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
-import { ProjectFactory } from '../../../../factories/project.factory'
-import { TranslatedAnnouncementFactory } from '../../../../factories/announcement.factory'
 
 describe('ProjectAnnouncementsTab.vue', () => {
   it('should render component', async () => {

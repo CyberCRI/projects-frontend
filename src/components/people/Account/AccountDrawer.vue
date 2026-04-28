@@ -16,13 +16,14 @@
   </BaseDrawer>
 </template>
 <script setup lang="ts">
-import { nextTick } from 'vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import AccountLayout from '@/components/people/Account/AccountLayout.vue'
-import ExistingAccountChecker from '@/components/people/Account/ExistingAccountChecker.vue'
+import type { UserModel } from '~/models/user.model'
 
-import useToasterStore from '@/stores/useToaster'
-import { UserModel } from '@/models/user.model'
+import ExistingAccountChecker from '~/components/people/Account/ExistingAccountChecker.vue'
+import AccountLayout from '~/components/people/Account/AccountLayout.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+
+import useToasterStore from '~/stores/useToaster'
+
 defineOptions({ name: 'AccountDrawer' })
 
 const props = withDefaults(

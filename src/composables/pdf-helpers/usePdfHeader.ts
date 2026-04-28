@@ -1,6 +1,7 @@
-import { Doc } from '@/composables/pdf-helpers/doc-builder'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import { fetchImageAsDataUrl, proxyImageUrl } from '@/composables/pdf-helpers/usePdfHelpers'
+import useOrganizationsStore from '~/stores/useOrganizations'
+
+import { fetchImageAsDataUrl, proxyImageUrl } from '~/composables/pdf-helpers/usePdfHelpers'
+import { Doc } from '~/composables/pdf-helpers/doc-builder'
 
 export default async function usePdfHeader() {
   const organizationsStore = useOrganizationsStore()
@@ -40,7 +41,7 @@ export default async function usePdfHeader() {
               color: #1d727c;
               font-weight: bold;
             }
-    
+
             header {
               width: 100%;
               padding: 0.2cm;

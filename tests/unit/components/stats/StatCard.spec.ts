@@ -1,5 +1,5 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import StatCard from '@/components/stats/StatCard.vue'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import StatCard from '~/components/stats/StatCard.vue'
 
 import { describe, expect, it } from 'vitest'
 

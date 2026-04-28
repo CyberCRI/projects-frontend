@@ -1,7 +1,6 @@
-import { Page } from '@playwright/test'
-import { LogLevel, Logger } from '../../logger'
+import { LogLevel, Logger } from '~~/tests/playwright/logger'
 import { expect } from '@playwright/test'
-// import { delay } from '../index'
+import { Page } from '@playwright/test'
 
 const logger = new Logger(LogLevel.Debug)
 

@@ -83,16 +83,19 @@
 </template>
 
 <script setup lang="ts">
-import IconImage from '@/components/base/media/IconImage.vue'
-import { TranslatedEventModel } from '@/models/event.model'
-import ContentExpandable from '@/components/base/ContentExpandable.vue'
-import MapRecap from '@/components/map/MapRecap.vue'
-import ContextActionMenuInline from '@/components/base/button/ContextActionMenuInline.vue'
-import { html2Text } from '@/functs/string'
-import { dateWithoutHours, sanitizeDate } from '@/functs/date'
-import DisplayDate from '@/components/base/DisplayDate.vue'
-import LineClamped from '@/components/base/LineClamped.vue'
-import { useIntervalNow } from '@/composables/useDate'
+import type { TranslatedEventModel } from '~/models/event.model'
+
+import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
+import ContentExpandable from '~/components/base/ContentExpandable.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+import LineClamped from '~/components/base/LineClamped.vue'
+import DisplayDate from '~/components/base/DisplayDate.vue'
+import MapRecap from '~/components/map/MapRecap.vue'
+
+import { useIntervalNow } from '~/composables/useDate'
+
+import { dateWithoutHours, sanitizeDate } from '~/functs/date'
+import { html2Text } from '~/functs/string'
 
 const props = withDefaults(
   defineProps<{

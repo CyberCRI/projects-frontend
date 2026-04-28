@@ -12,14 +12,16 @@
 </template>
 
 <script setup lang="ts">
-import * as L from 'leaflet'
-import fixLeaflet from '@/app/fixLeaflet'
+import type { AnyLocation, TranslatedLocation } from '~/models/location.model'
+import type { LocationType } from '~/models/types'
+
+import type { Geocoding, MapPointerOption } from '~/interfaces/maps'
+
+import { IconMapLocationType } from '~/functs/maps'
+import { ICONS } from '~/functs/IconImage'
+import fixLeaflet from '~/app/fixLeaflet'
 import 'leaflet.markercluster'
-import { AnyLocation, TranslatedLocation } from '@/models/location.model'
-import { Geocoding, MapPointerOption } from '@/interfaces/maps'
-import { IconMapLocationType } from '@/functs/maps'
-import { ICONS } from '@/functs/IconImage'
-import { LocationType } from '@/models/types'
+import * as L from 'leaflet'
 
 const props = withDefaults(
   defineProps<{
@@ -244,7 +246,7 @@ onMounted(() => {
 
 <style lang="scss">
 // do NOT scope this style, it will break the map
-@import '@/design/scss/map';
+@import '~/design/scss/map';
 </style>
 
 <style lang="scss" scoped>

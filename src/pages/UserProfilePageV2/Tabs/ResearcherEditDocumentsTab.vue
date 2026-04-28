@@ -17,7 +17,7 @@
     documents editions not form projects
     need to add iframe to show sovisuplus
 */
-import SvgWarning from '@/assets/svg/warning.svg'
+import SvgWarning from '~/assets/svg/warning.svg'
 
 const { t } = useNuxtI18n()
 

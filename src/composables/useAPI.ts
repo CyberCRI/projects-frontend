@@ -1,8 +1,9 @@
-import useToasterStore from '@/stores/useToaster'
-// import useProjectsStore from '@/stores/useProjects'
-import { merge } from 'es-toolkit'
+import useToasterStore from '~/stores/useToaster'
+import useUsersStore from '~/stores/useUsers'
+
 import { useRuntimeConfig } from '#imports'
-import useUsersStore from '@/stores/useUsers'
+
+import { merge } from 'es-toolkit'
 
 type OFetchOrgiginalOptions = Parameters<typeof $fetch>['1']
 
