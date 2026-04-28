@@ -1,24 +1,24 @@
 <template>
-  <li v-if="recommendation" class="recommendation-item">
+  <li class="recommendation-item">
     <NuxtLink
       class="recommendation"
-      :to="{ name: 'ProfileOtherUser', params: { userId: recommendation.slug } }"
+      :to="{ name: 'ProfileOtherUser', params: { userId: user.slug } }"
     >
       <CroppedApiImage
         ref="userImg"
-        :alt="`${recommendation.slug} image`"
-        class="img-container"
-        :picture-data="recommendation?.profile_picture"
+        :alt="`${user.slug} image`"
+        class="img-container skeletons-background"
+        :picture-data="user.profile_picture"
         picture-size="small"
         :default-picture="DEFAULT_USER_PATATOID"
       />
       <div class="text-container">
-        <span class="name">
-          {{ capitalize(recommendation.given_name) }}
-          {{ capitalize(recommendation.family_name) }}
+        <span class="name skeletons-text">
+          {{ capitalize(user.given_name) }}
+          {{ capitalize(user.family_name) }}
         </span>
-        <span v-if="recommendation.job" class="job">
-          {{ capitalize(recommendation?.$t?.job) }}
+        <span v-if="user.job" class="job skeletons-text">
+          {{ capitalize(user.$t.job) }}
         </span>
         <div class="skills">
           <BadgeItem
@@ -27,7 +27,7 @@
             :label="skillTexts.title(skill)"
             size="small"
             colors="primary-light"
-            class="skill-badge"
+            class="skill-badge skeletons-background"
           />
 
           <ToolTip v-if="hasMoreTags" hover interactive :is-text-content="false" secondary>
@@ -39,7 +39,7 @@
                   :label="skillTexts.title(skill)"
                   size="small"
                   colors="primary-light"
-                  class="skill-badge"
+                  class="skill-badge skeletons-background"
                 />
               </div>
             </template>
@@ -48,7 +48,7 @@
                 :label="`+${moreSkills.length}`"
                 size="small"
                 colors="primary-dark"
-                class="skill-badge"
+                class="skill-badge skeletons-background"
               />
             </span>
           </ToolTip>
@@ -58,70 +58,33 @@
   </li>
 </template>
 
-<script>
+<script setup lang="ts">
 import { capitalize } from '@/functs/string'
 
 import BadgeItem from '@/components/base/BadgeItem.vue'
 import ToolTip from '@/components/base/ToolTip.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
-import useSkillTexts from '@/composables/useSkillTexts.ts'
+import useSkillTexts from '@/composables/useSkillTexts'
+import { TranslatedUserModel } from '@/models/user.model'
 
-export default {
-  name: 'UserRecommendationItem',
+const props = defineProps<{
+  user: TranslatedUserModel
+}>()
 
-  components: { CroppedApiImage, BadgeItem, ToolTip },
+defineEmits<{
+  'go-to-user': []
+}>()
 
-  props: {
-    recommendation: {
-      type: Object,
-      required: true,
-    },
-  },
+const skillTexts = useSkillTexts()
+const SKILLS_LIMITS = 3
 
-  emits: ['go-to-user'],
-
-  setup() {
-    const skillTexts = useSkillTexts()
-    return {
-      skillTexts,
-      DEFAULT_USER_PATATOID,
-      capitalize,
-    }
-  },
-
-  data() {
-    return {
-      skillsLimit: 3,
-    }
-  },
-
-  computed: {
-    skills() {
-      return (this.recommendation.skills || []).filter((s) => s.type == 'skill')
-    },
-
-    displayedSkills() {
-      if (this.skills.length > this.skillsLimit) {
-        return this.skills.slice(0, this.skillsLimit)
-      } else {
-        return this.skills
-      }
-    },
-
-    moreSkills() {
-      if (this.skills.length > this.skillsLimit) {
-        return this.skills.slice(this.skillsLimit)
-      } else {
-        return []
-      }
-    },
-
-    hasMoreTags() {
-      return this.moreSkills.length > 0
-    },
-  },
-}
+const skills = computed(() => {
+  return (props.user.skills || []).filter((s) => s.type == 'skill')
+})
+const displayedSkills = computed(() => skills.value.slice(0, SKILLS_LIMITS))
+const moreSkills = computed(() => skills.value.slice(SKILLS_LIMITS))
+const hasMoreTags = computed(() => moreSkills.value.length > 0)
 </script>
 
 <style lang="scss" scoped>

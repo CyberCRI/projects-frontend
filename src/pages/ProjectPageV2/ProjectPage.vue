@@ -85,7 +85,7 @@ const actionMenu = computed(() =>
 
 //     const projectCopy = await duplicateProject()
 //     router.push({
-//       name: 'projectSummary',
+//       name: 'ProjectSnapshot',
 //       params: { slugOrId: projectCopy.slug },
 //     })
 

@@ -1,51 +1,34 @@
 <template>
   <div class="project-summary">
-    <div class="main-ctn">
-      <ProjectHeaderV2 :project="project" class="project-header v2" />
+    <ProjectHeaderV2 :project="project" class="project-header v2" />
 
-      <ProjectDescriptionPreview v-if="!descripitonEmpty" :project="project" />
+    <ProjectDescriptionPreview v-if="!descripitonEmpty" :project="project" />
 
-      <ProjectMembersPreview v-if="project.modules.members" :project="project" />
+    <ProjectMembersPreview v-if="project.modules.members" :project="project" />
 
-      <ProjectLocationsPreview v-if="project.modules.locations" :project="project" />
+    <ProjectLocationsPreview v-if="project.modules.locations" :project="project" />
 
-      <ProjectGoalsPreview v-if="project.modules.goals" :project="project" />
+    <ProjectGoalsPreview v-if="project.modules.goals" :project="project" />
 
-      <ProjectBlogEntriesPreview v-if="project.modules.blogs" :project="project" />
+    <ProjectBlogEntriesPreview v-if="project.modules.blogs" :project="project" />
 
-      <ProjectLinkedProjectsPreview v-if="project.modules.linked_projects" :project="project" />
+    <ProjectLinkedProjectsPreview v-if="project.modules.linked_projects" :project="project" />
 
-      <ProjectResourcesPreview
-        v-if="project.modules.links || project.modules.files"
-        :project="project"
-      />
+    <ProjectResourcesPreview
+      v-if="project.modules.links || project.modules.files"
+      :project="project"
+    />
 
-      <ProjectReviewPreview v-if="project.modules.reviews" :project="project" />
+    <ProjectReviewPreview v-if="project.modules.reviews" :project="project" />
 
-      <ProjectAnnouncementsPreview v-if="project.modules.announcements" :project="project" />
+    <ProjectAnnouncementsPreview v-if="project.modules.announcements" :project="project" />
 
-      <ProjectCommentsPreview v-if="project.modules.comments" :project="project" />
+    <ProjectCommentsPreview v-if="project.modules.comments" :project="project" />
 
-      <ProjectPrivateExchangePreview v-if="project.modules.messages" :project="project" />
-
-      <!--
-    </div>
-    <BaseDrawer
-      no-footer
-      :is-opened="profileDrawer.isOpened"
-      :title="$t('profile.drawer_title')"
-      @close="closeProfileDrawer"
-      @confirm="closeProfileDrawer"
-    >
-      <UserProfileV2
-        v-if="profileDrawer.isOpened"
-        ref="profile-user"
-        :can-edit="false"
-        :user-id="profileDrawer.user_id"
-        is-preview
-      />
-    </BaseDrawer> -->
-    </div>
+    <ProjectPrivateExchangePreview
+      v-if="project.modules.messages && isMemberOrAdmin"
+      :project="project"
+    />
   </div>
 </template>
 
@@ -69,6 +52,8 @@ const props = defineProps<{
 }>()
 
 // const router = useRouter()
+
+const isMemberOrAdmin = computed(() => false)
 
 const descripitonEmpty = computed(() => textIsEmpty(props.project.$t.description))
 // useScrollToTab()
@@ -119,25 +104,8 @@ const descripitonEmpty = computed(() => textIsEmpty(props.project.$t.description
 
 <style lang="scss" scoped>
 .project-summary {
-  .main-ctn {
-    display: flex;
-    flex-flow: column;
-    gap: 1rem;
-  }
-
-  .similar-projects {
-    margin-top: 80px;
-  }
-}
-
-.unboxed {
-  border: 0 none !important;
-  border-radius: 0 !important;
-  padding: $space-l 0 !important;
-  background: transparent !important;
-}
-
-:deep(.unboxed .section-header) {
-  justify-content: space-between !important;
+  display: flex;
+  flex-flow: column;
+  gap: 1rem;
 }
 </style>

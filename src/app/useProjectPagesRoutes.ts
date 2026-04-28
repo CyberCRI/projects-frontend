@@ -4,7 +4,7 @@ export default function useProjectPagesRoutes() {
       // For retro compatibility with old URLS, both slugs and ids can be used
       path: '/projects/:slugOrId',
       name: 'pageProject',
-      redirect: { name: 'projectSummary' },
+      redirect: { name: 'ProjectSnapshot' },
       component: () => import('../pages/ProjectPageV2/ProjectPage.vue'),
       meta: {
         chatBotContext: (route) => `
@@ -15,8 +15,8 @@ export default function useProjectPagesRoutes() {
       children: [
         {
           path: 'summary',
-          name: 'projectSummary',
-          component: () => import('../pages/ProjectPageV2/Tabs/Summary/ProjectSummaryTab.vue'),
+          name: 'ProjectSnapshot',
+          component: () => import('../pages/ProjectPageV2/ProjectSnapshotTab.vue'),
         },
         {
           path: 'des', // back compatibility with old routes
@@ -84,7 +84,7 @@ export default function useProjectPagesRoutes() {
           path: 'project-settings',
           name: 'ProjectSettings',
           // component: () => import('../pages/ProjectPageV2/Tabs/ProjectSettingsTab.vue'),
-          redirect: { name: 'projectSummary' },
+          redirect: { name: 'ProjectSnapshot' },
         },
 
         {
@@ -97,9 +97,8 @@ export default function useProjectPagesRoutes() {
 
         {
           path: 'summary/edit',
-          name: 'projectSummaryEdit',
-          component: () =>
-            import('../pages/ProjectPageV2/Tabs/Summary/ProjectEditGeneralInfos.vue'),
+          name: 'projectEdit',
+          component: () => import('../pages/ProjectPageV2/Tabs/Team/ProjectEditTab.vue'),
           meta: {
             requiresAuth: true,
           },

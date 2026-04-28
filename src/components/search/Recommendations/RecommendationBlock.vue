@@ -1,106 +1,99 @@
 <template>
-  <div
-    v-if="isLoading || projectRecommendations?.length || userRecommendations?.length"
-    class="recommandations"
-  >
-    <div class="recommendation-wrapper">
-      <span class="recommendation-title">{{ $t('recommendations.title') }}</span>
-      <div v-if="isLoading" class="recommendation-inner">
-        <RecommendationListSkeleton />
-        <RecommendationListSkeleton v-if="loggedIn" :user-recommendation="true" />
-      </div>
-      <div
-        v-else-if="projectRecommendations?.length || userRecommendations?.length"
-        class="recommendation-inner"
-      >
-        <ProjectRecommendationList
-          v-if="projectRecommendations?.length"
-          :recommendations="projectRecommendations"
-          data-test="project-recommendations"
-        />
-        <UserRecommendationList
-          v-if="loggedIn && userRecommendations?.length"
-          :recommendations="userRecommendations"
-          data-test="user-recommendations"
-        />
+  <FetchLoader :status="status" only-error skeleton>
+    <div class="recommandations">
+      <div class="recommendation-wrapper">
+        <span class="recommendation-title">{{ $t('recommendations.title') }}</span>
+        <div class="recommendation-inner">
+          <ProjectRecommendationList
+            v-if="allProjects.length"
+            :projects="allProjects"
+            data-test="project-recommendations"
+          />
+          <UserRecommendationList
+            v-if="loggedIn && recomendedUsers.length"
+            :users="recomendedUsers"
+            data-test="user-recommendations"
+          />
+        </div>
       </div>
     </div>
-  </div>
+  </FetchLoader>
 </template>
 
-<script>
+<script setup lang="ts">
 import UserRecommendationList from '@/components/search/Recommendations/UserRecommendationList.vue'
 import ProjectRecommendationList from '@/components/search/Recommendations/ProjectRecommendationList.vue'
+import useUsersStore from '@/stores/useUsers'
+import { getFeaturedProjects } from '@/api/v2/organizations.service'
 import {
   getRandomProjectsRecommendationsForUser,
   getRandomUsersRecommendationsForUser,
-} from '@/api/recommendations.service'
-import { getFeaturedProjects } from '@/api/organizations.service'
-import RecommendationListSkeleton from '@/components/search/Recommendations/RecommendationListSkeleton.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import useUsersStore from '@/stores/useUsers.ts'
-export default {
-  name: 'RecommendationBlock',
+} from '@/api/v2/recommendations.service'
+import FetchLoader from '@/components/base/FetchLoader.vue'
+import { factoriesSkeleton, factoryPagination } from '@/skeletons/base.skeletons'
+import { projectSkeleton } from '@/skeletons/project.skeletons'
+import { userSkeleton } from '@/skeletons/user.skeletons'
 
-  components: { UserRecommendationList, ProjectRecommendationList, RecommendationListSkeleton },
-  setup() {
-    const organizationsStore = useOrganizationsStore()
-    const usersStore = useUsersStore()
-    const { translateProjects, translateUsers } = useAutoTranslate()
-    const originalProjectRecommendations = ref([])
-    const originalUserRecommendations = ref([])
-    const projectRecommendations = translateProjects(originalProjectRecommendations)
-    const userRecommendations = translateUsers(originalUserRecommendations)
-    const isLoading = ref(true)
-    return {
-      organizationsStore,
-      usersStore,
-      originalProjectRecommendations,
-      originalUserRecommendations,
-      projectRecommendations,
-      userRecommendations,
-      isLoading,
-    }
-  },
+const usersStore = useUsersStore()
+const loggedIn = computed(() => usersStore.isConnected)
 
-  computed: {
-    organization() {
-      return this.organizationsStore.current
+const organizationCode = useOrganizationCode()
+
+const LIMIT_PROJECT = 4
+
+const { status: statusFeaturedProjects, data: featuredProjects } = getFeaturedProjects(
+  organizationCode,
+  {
+    default: () => factoryPagination(projectSkeleton, LIMIT_PROJECT),
+  }
+)
+
+const { status: statusRecomendationsProjects, data: recomendedProject } =
+  getRandomProjectsRecommendationsForUser(organizationCode, {
+    query: {
+      count: LIMIT_PROJECT,
+      pool: 25,
     },
+    default: () => factoriesSkeleton(projectSkeleton, LIMIT_PROJECT),
+  })
 
-    loggedIn() {
-      return this.usersStore.isConnected
-    },
+const allProjects = computed(() => {
+  console.log(featuredProjects.value, recomendedProject.value)
+  return [
+    ...featuredProjects.value.map((project) => ({ ...project, isFeatured: true })),
+    ...recomendedProject.value.map((project) => ({ ...project, isFeatured: false })),
+  ]
+})
+
+const LIMIT_USER = 3
+
+const {
+  status: statusRecomendationsUsers,
+  data: recomendedUsers,
+  refresh: refreshRecomendedUsers,
+} = getRandomUsersRecommendationsForUser(organizationCode, {
+  query: {
+    count: LIMIT_USER,
+    pool: 25,
   },
+  default: () => factoriesSkeleton(userSkeleton, LIMIT_USER),
+  // only fetch recomended users when is logged
+  immediate: loggedIn.value,
+})
 
-  async mounted() {
-    let featuredrojects = []
-    try {
-      featuredrojects = (await getFeaturedProjects(this.organization.code)).results || []
-    } catch (err) {
-      console.log(err)
-      featuredrojects = []
-    }
+watchEffect(() => {
+  if (loggedIn.value) {
+    refreshRecomendedUsers()
+  }
+})
 
-    const projectRecommendations = await getRandomProjectsRecommendationsForUser(
-      this.organization.code,
-      { count: 4, pool: 25 }
-    )
-
-    this.originalProjectRecommendations = [
-      ...featuredrojects.map((p) => ({ ...p, isFeatured: true })),
-      ...projectRecommendations.map((p) => ({ ...p, isFeatured: false })),
-    ].slice(0, 4)
-
-    if (this.loggedIn) {
-      this.originalUserRecommendations = await getRandomUsersRecommendationsForUser({
-        organization: this.organization.code,
-        params: { count: 3, pool: 25 },
-      })
-    }
-    this.isLoading = false
-  },
-}
+const status = computed(() => {
+  const st = [statusFeaturedProjects.value, statusRecomendationsProjects.value]
+  if (loggedIn.value) {
+    st.push(statusRecomendationsUsers.value)
+  }
+  return st
+})
 </script>
 
 <style lang="scss" scoped>

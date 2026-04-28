@@ -1,39 +1,21 @@
 <template>
   <BaseRecommendationList
-    :recommendations="recommendations"
+    :recomendations="users"
     :more-label="$t('recommendations.more-profiles')"
-    @goto-more-recommendations="goToMoreRecommendations"
+    :to="{ name: 'UserRecommendationPage' }"
   >
-    <UserRecommendationItem
-      v-for="(recommendation, index) in recommendations"
-      :key="index"
-      :recommendation="recommendation"
-    />
+    <UserRecommendationItem v-for="user in users" :key="user.id" :user="user" />
   </BaseRecommendationList>
 </template>
 
-<script>
+<script setup lang="ts">
 import BaseRecommendationList from '@/components/search/Recommendations/BaseRecommendationList.vue'
 import UserRecommendationItem from '@/components/search/Recommendations/UserRecommendationItem.vue'
+import { TranslatedUserModel } from '@/models/user.model'
 
-export default {
-  name: 'UserRecommendationList',
-
-  components: { BaseRecommendationList, UserRecommendationItem },
-
-  props: {
-    recommendations: {
-      type: Array,
-      default: () => [],
-    },
-  },
-
-  methods: {
-    goToMoreRecommendations() {
-      this.$router.push({ name: 'UserRecommendationPage' })
-    },
-  },
-}
+defineProps<{
+  users: TranslatedUserModel[]
+}>()
 </script>
 <style lang="scss" scoped>
 .notice {

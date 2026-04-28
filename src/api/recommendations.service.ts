@@ -1,37 +1,53 @@
-import type { APIParams, SearchParams } from '@/api/types'
-// import type { ProjectOutput } from '@/models/project.model'
-import { _adaptParamsToGetQuery } from '@/api/utils.service'
-// import type { UserModel } from '@/models/user.model'
 import useAPI from '@/composables/useAPI'
+import { OrganizationModel } from '@/models/organization.model'
+import { ProjectModel } from '@/models/project.model'
+import { UserModel } from '@/models/user.model'
 
-export interface RecommendationsParams {
-  organization?: string // code
-  params?: APIParams
-}
+export type QueryFilterRecomendation = Partial<{
+  count: number
+  pool: number
+}>
 
-export async function getProjectsRecommendationsForUser(orgCode: string, params: any) {
-  return await useAPI(`organization/${orgCode}/recommended-project/user/`, {
-    ..._adaptParamsToGetQuery(params),
-  }) //.data.value
+type Config = UseApiOptions<QueryFilterRecomendation>
+
+// projects
+export async function getProjectsRecommendationsForUser(
+  organizationCode: OrganizationModel['code'],
+  config: Config = {}
+) {
+  return await useAPI<ProjectModel[]>(
+    `organization/${organizationCode}/recommended-project/user/`,
+    config
+  )
 }
 
 export async function getRandomProjectsRecommendationsForUser(
-  orgCode: string,
-  params: SearchParams
+  organizationCode: OrganizationModel['code'],
+  config: Config = {}
 ) {
-  return await useAPI(`organization/${orgCode}/recommended-project/user/random/`, {
-    ..._adaptParamsToGetQuery(params),
-  }) //.data.value
+  return await useAPI<ProjectModel[]>(
+    `organization/${organizationCode}/recommended-project/user/random/`,
+    config
+  )
 }
 
-export async function getUsersRecommendationsForUser(orgCode: string, params: any) {
-  return await useAPI(`organization/${orgCode}/recommended-user/user/`, {
-    ..._adaptParamsToGetQuery(params),
-  }) //.data.value
+// users
+export async function getUsersRecommendationsForUser(
+  organizationCode: OrganizationModel['code'],
+  config: Config = {}
+) {
+  return await useAPI<UserModel[]>(
+    `organization/${organizationCode}/recommended-user/user/`,
+    config
+  )
 }
 
-export async function getRandomUsersRecommendationsForUser(body) {
-  return await useAPI(`organization/${body.organization}/recommended-user/user/random/`, {
-    ..._adaptParamsToGetQuery(body.params),
-  }) //.data.value
+export async function getRandomUsersRecommendationsForUser(
+  organizationCode: OrganizationModel['code'],
+  config: Config = {}
+) {
+  return await useAPI<UserModel[]>(
+    `organization/${organizationCode}/recommended-user/user/random/`,
+    config
+  )
 }

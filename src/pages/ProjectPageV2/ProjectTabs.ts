@@ -23,6 +23,8 @@ export const useProjectTabs = (
     }
   })
 
+  const isMemberOrAdmin = computed(() => false)
+
   const TabsDisplay = computed(() => {
     return [
       {
@@ -132,7 +134,7 @@ export const useProjectTabs = (
         label: t('comment.private-exchange.tab'),
         view: `/projects/${projectId.value}/private-exchange`,
         altView: `/projects/${projectId.value}/private-exchange/edit`,
-        condition: true, // isMemberOrAdmin.value,
+        condition: isMemberOrAdmin.value,
         dataTest: 'project-private-exchange',
         icon: 'EmailOutline',
       },
@@ -256,8 +258,7 @@ export const useProjectTabs = (
         label: t('comment.private-exchange.tab'),
         view: `/projects/${projectId.value}/private-exchange/edit`,
         altView: `/projects/${projectId.value}/private-exchange`,
-        condition: true,
-        // condition: isMemberOrAdmin.value,
+        condition: isMemberOrAdmin.value,
         dataTest: 'project-private-exchange',
         icon: 'EmailOutline',
       },

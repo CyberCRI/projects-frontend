@@ -474,7 +474,7 @@ export default {
     //     })
 
     //     this.$router.push({
-    //       name: 'projectSummary',
+    //       name: 'ProjectSnapshot',
     //       params: { slugOrId: projectCopy.slug },
     //     })
 

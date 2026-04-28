@@ -33,7 +33,7 @@ import useProjectsStore from '@/stores/useProjects.ts'
 import { imageSizesFormData } from '@/functs/imageSizesUtils.ts'
 
 export default {
-  name: 'ProjectEditGeneralInfos',
+  name: 'ProjectEditTab',
 
   emits: ['close', 'project-edited'],
   setup() {

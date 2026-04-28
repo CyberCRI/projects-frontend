@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import TipTapEditorContainer from '@/components/base/form/TextEditor/TipTapEditorContainer.vue'
 import TipTapEditorContent from '@/components/base/form/TextEditor/TipTapEditorContent.vue'
-import TipTapModals from '@/components/base/form/TextEditor/TipTapModals.vue'
 import {
   emitsDefinitions,
   PropsDefault,

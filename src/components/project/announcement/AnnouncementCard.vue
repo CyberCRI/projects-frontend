@@ -27,6 +27,7 @@
       <div
         class="announcement-project horizontal-padding top-padding bottom-padding skeletons-background"
       >
+        <!-- TODO change background-image to ImageResize components -->
         <div
           :style="{
             'background-image': projectImage,

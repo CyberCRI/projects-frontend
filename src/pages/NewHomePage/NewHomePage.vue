@@ -1,19 +1,15 @@
 <script setup lang="ts">
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useUsersStore from '@/stores/useUsers'
+import RecommendationBlock from '@/components/search/Recommendations/RecommendationBlock.vue'
 const organizationsStore = useOrganizationsStore()
 const usersStore = useUsersStore()
 const router = useRouter()
 
 const { canCreateProject } = usePermissions()
 
-const organization = computed(() => {
-  return organizationsStore.current
-})
-
-const loggedIn = computed(() => {
-  return usersStore.isConnected
-})
+const organization = computed(() => organizationsStore.current)
+const loggedIn = computed(() => usersStore.isConnected)
 
 const showOnbordingTodos = computed(() => {
   if (!loggedIn.value) return false
