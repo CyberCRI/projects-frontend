@@ -58,7 +58,9 @@ describe('auth.service', () => {
 
   it('goToKeycloakLoginPage', async () => {
     delete window.location
-    window.location = {} as any
+    window.location = {
+      pathname: '',
+    } as any
     const setHrefSpy = vi.fn()
     Object.defineProperty(window.location, 'href', {
       set: setHrefSpy,

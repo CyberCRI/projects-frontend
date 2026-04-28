@@ -14,7 +14,6 @@ import useToasterStore from '~/stores/useToaster'
 
 import useTagTexts from '~/composables/useTagTexts'
 import useAPI from '~/composables/useAPI'
-
 import { debounce } from 'es-toolkit'
 
 const { t } = useNuxtI18n()

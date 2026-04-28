@@ -47,7 +47,7 @@ import { patchComment, postComment, postCommentImage } from '~/api/comments.serv
 import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
 
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
-// import utils from '~/functs/functions.ts'
+
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 

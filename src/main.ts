@@ -1,4 +1,3 @@
-// import fixLeaflet from '~/app/fixLeaflet'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
 import initOrganization from './app/initOrganization'
 import quickLogin from '~/app/quickLogin'

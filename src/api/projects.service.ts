@@ -15,7 +15,7 @@ import useAPI from '~/composables/useAPI'
 import { imageSizesFormData } from '~/functs/imageSizesUtils'
 
 export async function createProject(project) {
-  const result: any = await useAPI(`project/`, { body: project, method: 'POST' }) //.data.value
+  const result: any = await useAPI(`project/`, { body: project, method: 'POST' })
   return result
 }
 
@@ -36,16 +36,15 @@ export async function createProjectHeader(projectId, project) {
 }
 
 export async function patchProject(id: string, project: ProjectPatchInput | FormData) {
-  return await useAPI(`project/${id}/`, { body: project, method: 'PATCH' /*, ...extraHeaders*/ })
-  //.data.value
+  return await useAPI(`project/${id}/`, { body: project, method: 'PATCH' })
 }
 
 export async function deleteProject(id: string) {
-  return await useAPI(`project/${id}/`, { method: 'DELETE' }) //.data.value
+  return await useAPI(`project/${id}/`, { method: 'DELETE' })
 }
 
 export async function duplicateProject(id: string) {
-  return await useAPI(`project/${id}/duplicate/`, { method: 'POST' }) //.data.value
+  return await useAPI(`project/${id}/duplicate/`, { method: 'POST' })
 }
 
 export async function addLinkedProject({
@@ -55,7 +54,7 @@ export async function addLinkedProject({
   id: string
   body: AddManyLinkedProjectInput
 }) {
-  return await useAPI(`project/${id}/linked-project/add-many/`, { body, method: 'POST' }) //.data.value
+  return await useAPI(`project/${id}/linked-project/add-many/`, { body, method: 'POST' })
 }
 
 export async function patchLinkedProject({
@@ -68,7 +67,6 @@ export async function patchLinkedProject({
   body: AddLinkedProjectInput
 }) {
   return await useAPI(`project/${target_id}/linked-project/${id}/`, { body, method: 'PATCH' })
-  //.data.value
 }
 
 export async function deleteLinkedProject({ id, project_id }: { id: number; project_id: string }) {
@@ -78,39 +76,39 @@ export async function deleteLinkedProject({ id, project_id }: { id: number; proj
 export async function getProject(slugOrId: string, noError: boolean = false) {
   return await useAPI(`project/${slugOrId}/`, {
     noError: noError,
-  }) //.data.value
+  })
 }
 
 export async function getAllRecommendedProjects(params: SearchParams) {
-  return await useAPI(`project/misc/top/`, { ..._adaptParamsToGetQuery(params) }) //.data.value
+  return await useAPI(`project/misc/top/`, { ..._adaptParamsToGetQuery(params) })
 }
 
 export async function getAllRandomProjects(params: SearchParams) {
-  return await useAPI(`project/misc/random/`, { ..._adaptParamsToGetQuery(params) }) //.data.value
+  return await useAPI(`project/misc/random/`, { ..._adaptParamsToGetQuery(params) })
 }
 
 export async function getAllProjects(params: SearchParams) {
-  return await useAPI(`project/`, { ..._adaptParamsToGetQuery(params) }) //.data.value
+  return await useAPI(`project/`, { ..._adaptParamsToGetQuery(params) })
 }
 
 export async function postProjectImage({ project_id, body }) {
-  return await useAPI(`project/${project_id}/image/`, { body, method: 'POST' }) //.data.value
+  return await useAPI(`project/${project_id}/image/`, { body, method: 'POST' })
 }
 
 export async function postProjectHeader({ project_id, body }) {
   return await useAPI(`project/${project_id}/header/`, {
     body,
     method: 'POST',
-  }) //.data.value
+  })
 }
 
 export async function patchProjectHeader({ project_id, image_id, body }) {
   return await useAPI(`project/${project_id}/header/${image_id}/`, {
     body,
     method: 'PATCH',
-  }) //.data.value
+  })
 }
 
 export async function lockUnlockProject({ project_id, context }) {
-  return await useAPI(`project/${project_id}/${context}/`, { method: 'POST' }) //.data.value
+  return await useAPI(`project/${project_id}/${context}/`, { method: 'POST' })
 }

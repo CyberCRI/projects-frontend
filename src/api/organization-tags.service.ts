@@ -1,6 +1,6 @@
-import type { TagCreateInput /*, TagOutput*/ } from '~/models/tag.model'
+import type { TagCreateInput } from '~/models/tag.model'
 
-import type { APIParams /*, APIResponseList*/ } from '~/api/types'
+import type { APIParams } from '~/api/types'
 
 import useAPI from '~/composables/useAPI'
 
@@ -14,11 +14,11 @@ export async function createOrgTag(tag: TagCreateInput) {
   return await useAPI(`tag/`, {
     body: tag,
     method: 'POST',
-  }) //.data.value
+  })
 }
 
 export async function getAllOrgTags(params: TagParams) {
-  return await useAPI(`tag/`, { params }) //.data.value
+  return await useAPI(`tag/`, { params })
 }
 
 export async function deleteOrgTag(tagId: number) {
@@ -28,5 +28,5 @@ export async function deleteOrgTag(tagId: number) {
 }
 
 export async function getOrgTag(id: number) {
-  return await useAPI(`tag/${id}/`, {}) //.data.value
+  return await useAPI(`tag/${id}/`, {})
 }

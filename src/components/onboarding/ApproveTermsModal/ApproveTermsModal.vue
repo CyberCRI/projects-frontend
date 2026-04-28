@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// import { getOrganizationByCode } from '~/api/organizations.service'
 import { patchUser } from '~/api/people.service'
 
 import useOrganizations from '~/stores/useOrganizations'

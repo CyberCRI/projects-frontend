@@ -6,5 +6,5 @@ export async function getStats(status = 'all', org: string) {
     params: {
       publication_status: status,
     },
-  }) //.data.value
+  })
 }

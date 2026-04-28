@@ -2,7 +2,6 @@ import TemplatesCreateTab from '~/pages/AdminPortalPageV2/Tabs/TemplatesCreateTa
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import { describe, expect, it } from 'vitest'
 import { delay } from 'es-toolkit'
-// import * as _ from '~/api/templates.service'
 
 describe('TemplatesCreateTab.vue', () => {
   it('Mount', async () => {

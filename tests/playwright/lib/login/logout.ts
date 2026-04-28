@@ -1,7 +1,6 @@
 import { LogLevel, Logger } from '~~/tests/playwright/logger'
 import { expect } from '@playwright/test'
 import { Page } from '@playwright/test'
-// import { delay } from '~~/tests/playwright/lib/index'
 
 const logger = new Logger(LogLevel.Debug)
 

@@ -50,7 +50,6 @@ export default withNuxt([
       '@typescript-eslint/ban-ts-comment': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-dynamic-delete': 'off',
-      // 'vue/no-undef-properties': 'error',
       'vue/attribute-hyphenation': ['error', 'always', { ignoreTags: ['deep-chat'] }],
     },
   },

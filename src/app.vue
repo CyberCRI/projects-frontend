@@ -1,5 +1,5 @@
 <template>
-  <div id="APP" :class="[/*themeclass,*/ currentRouteName, { 'has-open-drawer': isLoading }]">
+  <div id="APP" :class="[currentRouteName, { 'has-open-drawer': isLoading }]">
     <Transition appear name="background-appear">
       <div v-if="globalsStore.uiIsLocked" class="loader-backdrop">
         <LoaderSimple />

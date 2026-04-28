@@ -2,7 +2,7 @@ import useOrganizationsStore from '~/stores/useOrganizations'
 
 import addPageLinkedProjectsFactory from '~/composables/project-pdf-components/addPageLinkedProjects'
 // TODO: blog are disabled for now (as per client request) keep code for later use
-// import addPageBlogFactory from './project-pdf-components/PageBlog'
+
 import addPageResourceFactory from '~/composables/project-pdf-components/PageResource'
 import addPageDescriptionFactory from '~/composables/pdf-helpers/PageDescription'
 import addPageTeamFactory from '~/composables/project-pdf-components/PageTeam'

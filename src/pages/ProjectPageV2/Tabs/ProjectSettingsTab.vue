@@ -185,8 +185,8 @@
 </template>
 
 <script>
-import { deleteProject /*, duplicateProject*/ } from '~/api/projects.service'
 import { deleteProjectMembersSelf } from '~/api/project-members.service'
+import { deleteProject } from '~/api/projects.service'
 
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
 import useProjectsStore from '~/stores/useProjects.ts'

@@ -1,14 +1,12 @@
-// import type { ProjectCategoryBackgroundOutput } from '~/models/project-category.model'
 import type {
   ProjectCategoryCreateInput,
-  // ProjectCategoryOutput,
   ProjectCategoryPatchInput,
   ProjectCategoryPutInput,
 } from '~/models/project-category.model'
-import type { TagModel } from '~/models/tag.model'
 
 import useAPI from '~/composables/useAPI'
 
+import type { TagModel } from '~/models/tag.model'
 export async function createProjectCategory(
   organizationCode: string,
   category: ProjectCategoryCreateInput | FormData
@@ -27,7 +25,7 @@ export async function putProjectCategory(
   return await useAPI(`organization/${organizationCode}/category/${id}/`, {
     body: category,
     method: 'PATCH',
-  }) //.data.value
+  })
 }
 
 export async function patchProjectCategory(
@@ -38,11 +36,11 @@ export async function patchProjectCategory(
   return await useAPI(`organization/${organizationCode}/category/${id}/`, {
     body: category,
     method: 'PATCH',
-  }) //.data.value
+  })
 }
 
 export async function deleteProjectCategory(organizationCode: string, id: number) {
-  return await useAPI(`organization/${organizationCode}/category/${id}/`, { method: 'DELETE' }) //.data.value
+  return await useAPI(`organization/${organizationCode}/category/${id}/`, { method: 'DELETE' })
 }
 
 export async function getProjectCategory(organizationCode: string, id: number) {
@@ -58,14 +56,14 @@ export async function getRootProjectCategory(organizationCode: string) {
 }
 
 export async function getProjectCategoriesHierarchy(organizationCode: string, rootId: number) {
-  return await useAPI(`organization/${organizationCode}/category/${rootId}/hierarchy/`) //.data.value
+  return await useAPI(`organization/${organizationCode}/category/${rootId}/hierarchy/`)
 }
 
 export async function postProjectCategoryBackground(organizationCode: string, { id, body }) {
   return await useAPI(`organization/${organizationCode}/category/${id}/background/`, {
     body,
     method: 'POST',
-  }) //.data.value
+  })
 }
 
 export async function patchProjectCategoryBackground(
@@ -75,7 +73,7 @@ export async function patchProjectCategoryBackground(
   return await useAPI(`organization/${organizationCode}/category/${id}/background/${imageId}/`, {
     body,
     method: 'PATCH',
-  }) //.data.value
+  })
 }
 
 export async function deleteProjectCategoryBackground(
@@ -89,11 +87,11 @@ export async function deleteProjectCategoryBackground(
 }
 
 export async function getProjectCategoriesFollow(userId: number) {
-  return await useAPI(`user/${userId}/category-follow/`) //.data.value
+  return await useAPI(`user/${userId}/category-follow/`)
 }
 
 export async function postProjectCategoryFollow(userId: number, category_id: number) {
-  return await useAPI(`user/${userId}/category-follow/`, { body: { category_id }, method: 'POST' }) //.data.value
+  return await useAPI(`user/${userId}/category-follow/`, { body: { category_id }, method: 'POST' })
 }
 
 export async function deleteProjectCategoryFollow(userId: number, category_follow_id: number) {

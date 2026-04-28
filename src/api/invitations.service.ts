@@ -1,22 +1,20 @@
-// import type { APIRespons1eList } from '~/api/types'
-import type { /* InvitationModel,*/ InvitationModelInput } from '~/models/invitation.model'
+import type { InvitationModelInput } from '~/models/invitation.model'
 
 import useAPI from '~/composables/useAPI'
 
 export async function getInvitation(organization: string, uuid: string) {
-  return await useAPI(`organization/${organization}/invitation/${uuid}/`, {}) //.data.value
+  return await useAPI(`organization/${organization}/invitation/${uuid}/`, {})
 }
 export async function getInvitations(organization: string) {
-  return await useAPI(`organization/${organization}/invitation/`, {}) //.data.value
+  return await useAPI(`organization/${organization}/invitation/`, {})
 }
 export async function postInvitation(organization: string, formData: InvitationModelInput) {
   return await useAPI(`organization/${organization}/invitation/`, {
     body: formData,
     method: 'POST',
-  }) //.data.value
+  })
 }
 
 export async function deleteInvitation(organization: string, id: number) {
   return await useAPI(`organization/${organization}/invitation/${id}/`, { method: 'DELETE' })
-  //.data.value
 }

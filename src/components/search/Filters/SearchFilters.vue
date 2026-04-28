@@ -63,7 +63,7 @@ function openDrawer(drawer) {
   isRightDrawerOpened.value = true
 }
 
-function updateFiltersFromDrawer(/*filter,*/ event) {
+function updateFiltersFromDrawer(event) {
   selectedFilters.value = { ...event }
   emit('update:selectedFilters', selectedFilters.value)
 }

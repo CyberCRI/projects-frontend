@@ -109,7 +109,6 @@ import { deleteUserSkill, patchUserSkill } from '~/api/people.service.ts'
 
 import useToasterStore from '~/stores/useToaster.ts'
 
-// import useUsersStore from '~/stores/useUsers.ts'
 export default {
   name: 'ProfileSkillsEditTab',
 
@@ -127,7 +126,7 @@ export default {
     const toaster = useToasterStore()
     // const usersStore = useUsersStore()
     const { skillLevels, clampLevel } = useSkillLevels()
-    return { skillTexts, toaster, /*usersStore,*/ skillLevels, clampLevel }
+    return { skillTexts, toaster, skillLevels, clampLevel }
   },
   data() {
     return {

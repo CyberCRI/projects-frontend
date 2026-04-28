@@ -1,4 +1,3 @@
-// import router from '~/router'
 import waitForExpect from 'wait-for-expect'
 import analytics from '~/analytics'
 

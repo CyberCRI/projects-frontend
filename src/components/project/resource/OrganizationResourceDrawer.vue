@@ -58,7 +58,6 @@
 import { helpers, required } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
 
-// import analytics from '~/analytics'
 import { patchOrganizationFile, postOrganizationFiles } from '~/api/organization-files.service'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
