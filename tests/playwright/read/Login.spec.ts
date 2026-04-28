@@ -1,7 +1,7 @@
+import { LogLevel, Logger } from '~~/tests/playwright/logger'
+import { logIn, logOut } from '~~/tests/playwright/lib'
+import { users } from '~~/tests/playwright/variables'
 import { test } from '@playwright/test'
-import { users } from '../variables'
-import { logIn, logOut } from '../lib'
-import { LogLevel, Logger } from '../logger'
 
 const logger = new Logger(LogLevel.Debug)
 

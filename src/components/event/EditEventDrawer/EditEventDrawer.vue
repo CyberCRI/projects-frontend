@@ -20,12 +20,16 @@
 </template>
 
 <script setup lang="ts">
+import type { EventModel } from '~/models/event.model'
+
 import { createEvent, putEvent } from '~/api/event.service'
-import BaseDrawer from '~/components/base/BaseDrawer.vue'
+
 import EventForm from '~/components/event/EventForm/EventForm.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+
 import useToasterStore from '~/stores/useToaster'
+
 import { defaultForm } from '~/form/event'
-import { EventModel } from '~/models/event.model'
 
 const props = withDefaults(
   defineProps<{

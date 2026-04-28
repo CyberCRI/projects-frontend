@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { AnyLocation } from '~/models/location.model'
+import type { AnyLocation } from '~/models/location.model'
 
 defineProps<{
   location: AnyLocation

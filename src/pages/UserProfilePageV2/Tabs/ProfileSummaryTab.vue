@@ -162,14 +162,16 @@
 </template>
 
 <script setup lang="ts">
+import type { TranslatedUserModel } from '~/models/user.model'
+
+import OwnResearcherDocumentsList from '~/components/people/Researcher/OwnResearcherDocumentsList.vue'
 import UserProjectsSearch from '~/components/people/UserProfile/UserProjectsSearch.vue'
 import UserProjectList from '~/components/people/UserProfile/UserProjectList.vue'
 import UserDescriptions from '~/components/people/UserDescriptions.vue'
 import SkillSummary from '~/components/people/skill/SkillSummary.vue'
-import useUsersStore from '~/stores/useUsers'
 import SeeMoreArrow from '~/components/base/button/SeeMoreArrow.vue'
-import OwnResearcherDocumentsList from '~/components/people/Researcher/OwnResearcherDocumentsList.vue'
-import { TranslatedUserModel } from '~/models/user.model'
+
+import useUsersStore from '~/stores/useUsers'
 
 const selectTab = inject<(number) => void>('tabsLayoutSelectTab', () => {})
 

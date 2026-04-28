@@ -5,8 +5,11 @@
 </template>
 
 <script setup lang="ts">
+import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import { GroupModuleTitle } from '~/models/invitation.model'
+
 import BaseGroupMembersList from '~/components/group/Modules/Members/BaseGroupMembersList.vue'
-import { GroupModuleTitle, TranslatedPeopleGroupModel } from '~/models/invitation.model'
+
 import BaseGroupTab from '~/pages/GroupPageV2/Tabs/BaseGroupTab.vue'
 
 const props = defineProps<{

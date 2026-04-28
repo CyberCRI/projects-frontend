@@ -1,12 +1,12 @@
 import GroupProjectsTab from '~/pages/GroupPageV2/Tabs/Projects/GroupProjectsTab.vue'
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
-import { describe, expect, it } from 'vitest'
-import { registerEndpoint } from '@nuxt/test-utils/runtime'
+import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
+import { groupTranslatedFactory } from '~~/tests/factories/group.factory'
 import ProjectPreview from '~/components/project/ProjectPreview.vue'
-import { groupTranslatedFactory } from '../../../../../factories/group.factory'
-import { PaginationsFactory } from '../../../../../factories/paginations.factory'
-import { ProjectFactory } from '../../../../../factories/project.factory'
+import { ProjectFactory } from '~~/tests/factories/project.factory'
+import { registerEndpoint } from '@nuxt/test-utils/runtime'
+import { describe, expect, it } from 'vitest'
 
 describe('GroupProjectsTab', () => {
   const orgaCode = useOrganizationCode()

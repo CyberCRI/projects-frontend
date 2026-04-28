@@ -1,4 +1,4 @@
-import { Container } from '~/composables/pdf-helpers/doc-builder'
+import type { Container } from '~/composables/pdf-helpers/doc-builder'
 
 export default async function addBlogSectionFactory(blogEntries: any[], MAX_BLOG_ENTRIES) {
   const { d } = useNuxtI18n()

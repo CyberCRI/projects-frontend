@@ -52,17 +52,21 @@
 </template>
 
 <script setup lang="ts">
-import { deleteNews } from '~/api/news.service'
+import type { QueryFilterNews } from '~/models/news.model'
+
 import { getAllNews } from '~/api/v2/news.service'
-import FetchLoader from '~/components/base/FetchLoader.vue'
-import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import { deleteNews } from '~/api/news.service'
+
 import PaginationButtonsV2 from '~/components/base/navigation/PaginationButtonsV2.vue'
 import EditNewsDrawer from '~/components/news/EditNewsDrawer/EditNewsDrawer.vue'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import FetchLoader from '~/components/base/FetchLoader.vue'
 import NewsItem from '~/components/news/NewsItem.vue'
-import { QueryFilterNews } from '~/models/news.model'
+
+import useToasterStore from '~/stores/useToaster'
+
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import { newsSkeleton } from '~/skeletons/news.skeletons'
-import useToasterStore from '~/stores/useToaster'
 
 const organizationCode = useOrganizationCode()
 const asyncingDelete = ref(false)

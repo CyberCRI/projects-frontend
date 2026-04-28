@@ -29,22 +29,24 @@
 </template>
 
 <script setup lang="ts">
+import type { UserModel } from '~/models/user.model'
+
 import {
-  patchUserAttachmentFile,
-  postUserAttachmentFile,
-  deleteUserAttachmentFile,
-  getUserAttachmentFile,
-} from '~/api/attachment-files.service'
-import {
-  patchUserAttachmentLink,
-  postUserAttachmentLink,
   deleteUserAttachmentLink,
   getUserAttachmentLink,
+  patchUserAttachmentLink,
+  postUserAttachmentLink,
 } from '~/api/attachment-links.service'
-import FetchLoader from '~/components/base/FetchLoader.vue'
+import {
+  deleteUserAttachmentFile,
+  getUserAttachmentFile,
+  patchUserAttachmentFile,
+  postUserAttachmentFile,
+} from '~/api/attachment-files.service'
+
 import ResourceDrawer from '~/components/resources/ResourceDrawer.vue'
 import ResourcesTab from '~/components/resources/ResourcesTab.vue'
-import { UserModel } from '~/models/user.model'
+import FetchLoader from '~/components/base/FetchLoader.vue'
 
 const props = defineProps<{ user: UserModel; isInEditingMode: boolean }>()
 const { canEditUser } = usePermissions()

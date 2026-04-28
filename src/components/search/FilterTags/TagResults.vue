@@ -27,16 +27,17 @@
 </template>
 
 <script>
-import { debounce } from 'es-toolkit'
-
 import { getOrgClassificationTags } from '~/api/tag-classification.service'
 
-import TagSearchResults from './TagSearchResults.vue'
+import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
+
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
 
 import useAPI from '~/composables/useAPI.ts'
-import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
+
+import TagSearchResults from './TagSearchResults.vue'
+import { debounce } from 'es-toolkit'
 
 export default {
   name: 'TagResults',

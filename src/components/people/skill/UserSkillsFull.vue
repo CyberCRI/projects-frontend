@@ -36,8 +36,8 @@
 </template>
 
 <script setup>
-import SkillItemFull from '~/components/people/skill/SkillItemFull.vue'
 import SkillLevelTip from '~/components/people/skill/SkillLevelTip.vue'
+import SkillItemFull from '~/components/people/skill/SkillItemFull.vue'
 import LinkButton from '~/components/base/button/LinkButton.vue'
 
 defineOptions({ name: 'UserSkillsFull' })

@@ -5,9 +5,10 @@
 </template>
 
 <script>
+import useTagTexts from '~/composables/useTagTexts.ts'
+
 import { CHART_COLORS } from '~/functs/constants.ts'
 import LpiBarChart from './Generic/LpiBarChart.vue'
-import useTagTexts from '~/composables/useTagTexts.ts'
 
 export default {
   name: 'TagChart',

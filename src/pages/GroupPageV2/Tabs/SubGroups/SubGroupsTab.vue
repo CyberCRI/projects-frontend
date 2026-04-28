@@ -10,12 +10,11 @@
 </template>
 
 <script setup lang="ts">
-import {
-  GroupModuleIcon,
-  GroupModuleTitle,
-  TranslatedPeopleGroupModel,
-} from '~/models/invitation.model'
+import { GroupModuleIcon, GroupModuleTitle } from '~/models/invitation.model'
+import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+
 import GroupSubList from '~/components/group/Modules/GroupSub/GroupSubList.vue'
+
 import BaseGroupTab from '~/pages/GroupPageV2/Tabs/BaseGroupTab.vue'
 
 defineProps<{ group: TranslatedPeopleGroupModel }>()

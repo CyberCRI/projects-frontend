@@ -35,11 +35,15 @@
 </template>
 
 <script setup lang="ts">
-import { capitalize } from '~/functs/string'
+import type {
+  ProjectCategoryModel,
+  TranslatedProjectCategory,
+} from '~/models/project-category.model'
 
 import CategoryCardImage from '~/components/category/CategoryCardImage.vue'
+
 import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
-import { ProjectCategoryModel, TranslatedProjectCategory } from '~/models/project-category.model'
+import { capitalize } from '~/functs/string'
 
 // TODO: many components use this withtout translated Category
 const props = defineProps<{ category: ProjectCategoryModel | TranslatedProjectCategory }>()

@@ -28,8 +28,9 @@
 </template>
 
 <script setup lang="ts">
+import type { TranslatedProject } from '~/models/project.model'
+
 import ProjectStatus from '~/components/project/ProjectStatus.vue'
-import { TranslatedProject } from '~/models/project.model'
 
 const props = withDefaults(
   defineProps<{

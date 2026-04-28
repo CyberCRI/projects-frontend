@@ -1,5 +1,6 @@
+import type { UserSkillModel } from '~/models/user.model'
+
 import useTagTexts from '~/composables/useTagTexts'
-import { UserSkillModel } from '~/models/user.model'
 
 export default function useSkillTexts() {
   const tagTexts = useTagTexts()

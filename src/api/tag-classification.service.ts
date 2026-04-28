@@ -1,6 +1,8 @@
-import useAPI from '~/composables/useAPI'
-import type { APIParams /*, APIResponseList*/ } from '~/api/types'
 import type { TagModel } from '~/models/tag.model'
+
+import type { APIParams /*, APIResponseList*/ } from '~/api/types'
+
+import useAPI from '~/composables/useAPI'
 
 export async function getAllOrgClassifications(orgCode: string, params: APIParams) {
   return await useAPI<PaginationResult<TagModel>>(`organization/${orgCode}/tag-classification/`, {

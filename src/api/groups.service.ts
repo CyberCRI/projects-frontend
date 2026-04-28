@@ -1,20 +1,22 @@
 import type {
-  PostGroupData,
   AddGroupMembers,
-  RemoveGroupMember,
-  PostGroupProjects,
   AddParentGroupModelInput,
   GroupMember,
   HierarchyGroupModel,
+  PostGroupData,
+  PostGroupProjects,
+  RemoveGroupMember,
 } from '~/models/group.model'
+import type { PeopleGroupIdOrSlug, PeopleGroupModel } from '~/models/invitation.model'
+import type { BaseLocationModel, LocationModel } from '~/models/location.model'
+import type { ProjectModel } from '~/models/project.model'
+import type { ImageModel } from '~/models/image.model'
+import type { EventModel } from '~/models/event.model'
+import type { NewsModel } from '~/models/news.model'
+
 import { _adaptParamsToGetQuery } from '~/api/utils.service'
+
 import useAPI from '~/composables/useAPI'
-import { ProjectModel } from '~/models/project.model'
-import { PeopleGroupIdOrSlug, PeopleGroupModel } from '~/models/invitation.model'
-import { ImageModel } from '~/models/image.model'
-import { BaseLocationModel, LocationModel } from '~/models/location.model'
-import { NewsModel } from '~/models/news.model'
-import { EventModel } from '~/models/event.model'
 
 // HIERARCHY
 export async function getHierarchyGroups(organizationCode: string, config = {}) {

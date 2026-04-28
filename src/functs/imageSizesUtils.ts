@@ -1,4 +1,4 @@
-import { ImageModel } from '~/models/image.model'
+import type { ImageModel } from '~/models/image.model'
 
 export type ImageSizes = {
   scaleX: number

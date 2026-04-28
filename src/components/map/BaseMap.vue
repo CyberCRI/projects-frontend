@@ -12,14 +12,16 @@
 </template>
 
 <script setup lang="ts">
-import * as L from 'leaflet'
-import fixLeaflet from '~/app/fixLeaflet'
-import 'leaflet.markercluster'
-import { AnyLocation, TranslatedLocation } from '~/models/location.model'
-import { Geocoding, MapPointerOption } from '~/interfaces/maps'
+import type { AnyLocation, TranslatedLocation } from '~/models/location.model'
+import type { LocationType } from '~/models/types'
+
+import type { Geocoding, MapPointerOption } from '~/interfaces/maps'
+
 import { IconMapLocationType } from '~/functs/maps'
 import { ICONS } from '~/functs/IconImage'
-import { LocationType } from '~/models/types'
+import fixLeaflet from '~/app/fixLeaflet'
+import 'leaflet.markercluster'
+import * as L from 'leaflet'
 
 const props = withDefaults(
   defineProps<{

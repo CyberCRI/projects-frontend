@@ -1,5 +1,6 @@
-import { Translated } from '~/interfaces/translated'
-import BaseModel from '~/models/base.model'
+import type BaseModel from '~/models/base.model'
+
+import type { Translated } from '~/interfaces/translated'
 
 /**
  * @name BlogEntryModel

@@ -1,4 +1,4 @@
-import { ProjectMemberOutput } from '~/models/project-member.model'
+import type { ProjectMemberOutput } from '~/models/project-member.model'
 
 export interface PeopleGroupOutput {
   id: number

@@ -1,9 +1,9 @@
-import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import ProfileGeneralEditTab from '~/pages/UserProfilePageV2/Tabs/ProfileGeneralEditTab.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
-import { describe, expect, it } from 'vitest'
+import { UserFactory } from '~~/tests/factories/user.factory'
 import { flushPromises } from '@vue/test-utils'
-import { UserFactory } from '../../../../factories/user.factory'
+import { describe, expect, it } from 'vitest'
 
 describe('ProfileGeneralEditTab.vue', () => {
   it('should render component', async () => {

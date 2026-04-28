@@ -1,9 +1,10 @@
-import { Translated } from '~/interfaces/translated'
-import BaseModel from '~/models/base.model'
-import { EventModel, TranslatedEventModel } from '~/models/event.model'
-import { NewsModel, TranslatedNews } from '~/models/news.model'
-import { ProjectModel, TranslatedProject } from '~/models/project.model'
-import { LocationType } from '~/models/types'
+import type { ProjectModel, TranslatedProject } from '~/models/project.model'
+import type { EventModel, TranslatedEventModel } from '~/models/event.model'
+import type { NewsModel, TranslatedNews } from '~/models/news.model'
+import type { LocationType } from '~/models/types'
+import type BaseModel from '~/models/base.model'
+
+import type { Translated } from '~/interfaces/translated'
 
 export interface BaseLocationModel extends BaseModel {
   id: number

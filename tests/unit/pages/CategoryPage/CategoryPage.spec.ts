@@ -1,12 +1,12 @@
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
-import { describe, expect, it } from 'vitest'
-import { flushPromises } from '@vue/test-utils'
-import { ProjectCategoryFactory } from '../../../factories/project-category.factory'
+import { ProjectCategoryFactory } from '~~/tests/factories/project-category.factory'
 import { mockNuxtImport, registerEndpoint } from '@nuxt/test-utils/runtime'
-import { PaginationsFactory } from '../../../factories/paginations.factory'
-import OrganizationTagFactory from '../../../factories/tag.factory'
+import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
+import OrganizationTagFactory from '~~/tests/factories/tag.factory'
 import CategoryPage from '~/pages/CategoryPage/CategoryPage.vue'
+import { flushPromises } from '@vue/test-utils'
+import { describe, expect, it } from 'vitest'
 
 const category = ProjectCategoryFactory.generate()
 

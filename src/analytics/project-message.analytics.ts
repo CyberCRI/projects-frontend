@@ -1,5 +1,6 @@
+import type { ProjectMessageModel } from '~/models/project-message.model'
+
 import analytics from '~/analytics/index'
-import { ProjectMessageModel } from '~/models/project-message.model'
 
 export interface ProjectMessageAnalytic {
   project: {

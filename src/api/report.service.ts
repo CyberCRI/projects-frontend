@@ -1,4 +1,5 @@
-import type { ReportCreateModel, ContactModel } from '~/models/report.model'
+import type { ContactModel, ReportCreateModel } from '~/models/report.model'
+
 import useAPI from '~/composables/useAPI'
 
 export async function reportBug(orgCode: string, formData: ReportCreateModel) {

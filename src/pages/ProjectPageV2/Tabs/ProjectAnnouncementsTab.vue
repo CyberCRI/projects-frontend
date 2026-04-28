@@ -39,13 +39,17 @@
 </template>
 
 <script>
+import { deleteAnnouncement } from '~/api/announcements.service'
+
+import ReplyAnnouncementDrawer from '~/components/project/announcement/ReplyAnnouncementDrawer.vue'
 import AnnouncementItem from '~/components/project/announcement/AnnouncementItem.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
-import ReplyAnnouncementDrawer from '~/components/project/announcement/ReplyAnnouncementDrawer.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
-import { deleteAnnouncement } from '~/api/announcements.service'
-import analytics from '~/analytics'
+
 import useToasterStore from '~/stores/useToaster.ts'
+
+import analytics from '~/analytics'
+
 export default {
   name: 'ProjectAnnouncementsTab',
 

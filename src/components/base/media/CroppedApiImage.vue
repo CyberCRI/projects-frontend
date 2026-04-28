@@ -10,10 +10,13 @@
   />
 </template>
 <script setup lang="ts">
+import type { ImageModel } from '~/models/image.model'
+
 import CroppedImage from '~/components/base/media/CroppedImage.vue'
+
 import { usePublicURL } from '~/composables/usePublic'
+
 import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
-import { ImageModel } from '~/models/image.model'
 
 defineOptions({ name: 'CroppedApiImage' })
 

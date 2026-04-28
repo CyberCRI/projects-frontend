@@ -1,7 +1,9 @@
-import { Extension } from '@tiptap/core'
-import { UndoManager } from 'yjs'
-import { yUndoPluginKey } from 'y-prosemirror'
 import type { RawCommands } from '@tiptap/core'
+import { Extension } from '@tiptap/core'
+
+import { yUndoPluginKey } from 'y-prosemirror'
+import type { UndoManager } from 'yjs'
+
 declare module '@tiptap/core' {
   // interface Commands<ReturnType> {
   //     clearhistory: {

@@ -18,10 +18,12 @@
 
 <script>
 import LpiBubbleMenu from '~/components/base/form/TextEditor/LpiBubbleMenu/LpiBubbleMenu.ts'
-import MenuItem from './MenuItem.vue'
-import menuBarTippyOptions from './menuBarTippyOptions.js'
+
 import ContextualToolMenu from './ContexttualToolMenu.vue'
+import menuBarTippyOptions from './menuBarTippyOptions.js'
 import TextButtonMenuItem from './TextButtonMenuItem.vue'
+import MenuItem from './MenuItem.vue'
+
 export default {
   name: 'VideoMenuBar',
 
@@ -40,7 +42,7 @@ export default {
   },
 
   data() {
-    let labeled_items = [
+    const labeled_items = [
       {
         label: 'Small',
         title: '25% width',
@@ -71,7 +73,7 @@ export default {
       },
     ]
 
-    let items = [
+    const items = [
       {
         icon: 'close-circle-line',
         title: 'multieditor.delete_video',

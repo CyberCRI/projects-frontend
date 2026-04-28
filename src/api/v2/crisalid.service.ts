@@ -1,18 +1,22 @@
+import type { OrganizationModel } from '~/models/organization.model'
+import type { PeopleGroupIdOrSlug } from '~/models/invitation.model'
+
+import type { Document, DocumentType, Researcher } from '~/interfaces/researcher'
+import type { RefOrRaw } from '~/interfaces/utils'
+
 import {
-  getOwnResearchDocument as fetchOwnResearchDocument,
   getGroupResearchDocument as fetchGroupResearchDocument,
-  getResearchDocumentSimilars as fetchResearchDocumentSimilars,
-  getOwnResearchDocumentAnalytics as fetchOwnResearchDocumentAnalytics,
   getGroupResearchDocumentAnalytics as fetchGroupResearchDocumentAnalytics,
+  getOwnResearchDocument as fetchOwnResearchDocument,
+  getOwnResearchDocumentAnalytics as fetchOwnResearchDocumentAnalytics,
+  getResearchDocumentSimilars as fetchResearchDocumentSimilars,
 } from '~/api/crisalid.service'
-import { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
-import useAsyncAPI from '~/composables/useAsyncAPI'
+import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
+
 import useAsyncPaginationAPI from '~/composables/useAsyncPaginationAPI'
+import useAsyncAPI from '~/composables/useAsyncAPI'
+
 import { onlyRefs } from '~/functs/onlyRefs'
-import { Document, DocumentType, Researcher } from '~/interfaces/researcher'
-import { RefOrRaw } from '~/interfaces/utils'
-import { PeopleGroupIdOrSlug } from '~/models/invitation.model'
-import { OrganizationModel } from '~/models/organization.model'
 
 const DEFAULT_CONFIG = {}
 

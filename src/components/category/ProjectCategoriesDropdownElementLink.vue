@@ -8,8 +8,9 @@
 </template>
 
 <script setup lang="ts">
+import type { TranslatedProjectCategory } from '~/models/project-category.model'
+
 import { capitalize } from '~/functs/string'
-import { TranslatedProjectCategory } from '~/models/project-category.model'
 
 defineProps<{
   category: TranslatedProjectCategory

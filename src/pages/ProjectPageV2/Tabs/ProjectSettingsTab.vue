@@ -185,14 +185,17 @@
 </template>
 
 <script>
-import analytics from '~/analytics'
+import { deleteProject /*, duplicateProject*/ } from '~/api/projects.service'
 import { deleteProjectMembersSelf } from '~/api/project-members.service'
-import useToasterStore from '~/stores/useToaster.ts'
+
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
 import useProjectsStore from '~/stores/useProjects.ts'
+import useToasterStore from '~/stores/useToaster.ts'
 import useUsersStore from '~/stores/useUsers.ts'
-import { deleteProject /*, duplicateProject*/ } from '~/api/projects.service'
+
 import { DEFAULT_ORGANIZATION_CODE } from '~/functs/constants'
+import analytics from '~/analytics'
+
 export default {
   name: 'ProjectSettingsTab',
 

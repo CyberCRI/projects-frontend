@@ -6,8 +6,8 @@
 </template>
 
 <script setup lang="ts">
-import { IconImageChoice } from '~/functs/IconImage'
-import { RouteLocationRaw } from 'vue-router'
+import type { IconImageChoice } from '~/functs/IconImage'
+import type { RouteLocationRaw } from 'vue-router'
 
 const props = withDefaults(
   defineProps<{

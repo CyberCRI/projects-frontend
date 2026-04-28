@@ -59,13 +59,14 @@
 </template>
 
 <script>
-import { capitalize } from '~/functs/string'
-
+import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 import BadgeItem from '~/components/base/BadgeItem.vue'
 import ToolTip from '~/components/base/ToolTip.vue'
-import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
+
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
 import useSkillTexts from '~/composables/useSkillTexts.ts'
+
+import { capitalize } from '~/functs/string'
 
 export default {
   name: 'UserRecommendationItem',

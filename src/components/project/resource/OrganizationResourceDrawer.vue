@@ -55,12 +55,15 @@
   </div>
 </template>
 <script>
-import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
+import useVuelidate from '@vuelidate/core'
+
 // import analytics from '~/analytics'
-import { postOrganizationFiles, patchOrganizationFile } from '~/api/organization-files.service'
-import useToasterStore from '~/stores/useToaster.ts'
+import { patchOrganizationFile, postOrganizationFiles } from '~/api/organization-files.service'
+
 import useOrganizationsStore from '~/stores/useOrganizations'
+import useToasterStore from '~/stores/useToaster.ts'
+
 export default {
   name: 'OrganizationResourceDrawer',
 

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useUsersStore from '~/stores/useUsers'
+
 const organizationsStore = useOrganizationsStore()
 const usersStore = useUsersStore()
 const router = useRouter()

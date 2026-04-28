@@ -124,9 +124,10 @@
 </template>
 
 <script setup lang="ts">
-import useUsersStore from '~/stores/useUsers'
+import type { UserModel } from '~/models/user.model'
+
 import useProjectCategories from '~/stores/useProjectCategories'
-import { UserModel } from '~/models/user.model'
+import useUsersStore from '~/stores/useUsers'
 
 const PROJECTS_LIMIT = 12
 const PROJECTS_COLUMNS = 4

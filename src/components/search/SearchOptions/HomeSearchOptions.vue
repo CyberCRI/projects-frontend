@@ -23,10 +23,10 @@
 </template>
 
 <script>
-import SearchInput from '~/components/base/form/SearchInput.vue'
 import SearchOptionDropDown from '~/components/search/SearchOptionDropDown/SearchOptionDropDown.vue'
-import LpiButton from '~/components/base/button/LpiButton.vue'
 import { ALL_SECTION_KEY } from '~/components/search/Filters/useSectionFilters.ts'
+import SearchInput from '~/components/base/form/SearchInput.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
 
 export default {
   name: 'HomeSearchOptions',

@@ -39,8 +39,9 @@
 </template>
 
 <script setup lang="ts">
-import { IconImageChoice } from '~/functs/IconImage'
 import useGlobals from '~/stores/useGlobals'
+
+import type { IconImageChoice } from '~/functs/IconImage'
 
 type MenyEntry = {
   condition: boolean

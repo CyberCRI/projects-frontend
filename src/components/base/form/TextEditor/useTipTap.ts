@@ -1,25 +1,22 @@
-import { Editor } from '@tiptap/vue-3'
-import StarterKit from '@tiptap/starter-kit'
-import Link from '@tiptap/extension-link'
-import Color from '@tiptap/extension-color'
-import Underline from '@tiptap/extension-underline'
-import TextAlign from '@tiptap/extension-text-align'
-import Table from '@tiptap/extension-table'
-import TableRow from '@tiptap/extension-table-row'
 import TableHeader from '@tiptap/extension-table-header'
 import TextStyle from '@tiptap/extension-text-style'
+import TextAlign from '@tiptap/extension-text-align'
+import Underline from '@tiptap/extension-underline'
+import TableRow from '@tiptap/extension-table-row'
+import StarterKit from '@tiptap/starter-kit'
+import Table from '@tiptap/extension-table'
+import Color from '@tiptap/extension-color'
+import Link from '@tiptap/extension-link'
+import { Editor } from '@tiptap/vue-3'
+
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useToasterStore from '~/stores/useToaster'
 
 import CustomTableCell from './tiptap-extensions/CustomTableCell.js'
 import ExternalVideo from './tiptap-extensions/ExternalVideo.js'
-
 import LpiCodeBlock from './tiptap-extensions/LpiCodeBlock.js'
 import CustomImage from './tiptap-extensions/CustomImage.js'
-
 import lowlight from '~/functs/lowlight'
-
-import { ref } from 'vue'
-import useToasterStore from '~/stores/useToaster'
-import useOrganizationsStore from '~/stores/useOrganizations'
 
 export const emitsDefinitions = ['saved', 'image', 'blur', 'update:modelValue']
 

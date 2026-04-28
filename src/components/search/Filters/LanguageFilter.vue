@@ -12,6 +12,7 @@
 
 <script setup lang="ts">
 import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
+
 import useOrganizationsStore from '~/stores/useOrganizations'
 
 const props = defineProps<{

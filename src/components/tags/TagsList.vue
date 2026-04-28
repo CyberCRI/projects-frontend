@@ -85,8 +85,9 @@
   </div>
 </template>
 <script>
-import { debounce } from 'es-toolkit'
 import BadgeItem from '~/components/base/BadgeItem.vue'
+
+import { debounce } from 'es-toolkit'
 
 export default {
   name: 'TagsList',
@@ -336,7 +337,7 @@ export default {
       return {
         ...this.to,
         query: {
-          ...(this.to.query ?? {}),
+          ...this.to.query,
           [queryField]: queryValue,
         },
       }

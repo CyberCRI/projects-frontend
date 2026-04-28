@@ -42,9 +42,11 @@
 </template>
 
 <script>
-import { getHierarchyGroups, addParentGroup } from '~/api/groups.service.ts'
-import useToasterStore from '~/stores/useToaster.ts'
+import { addParentGroup, getHierarchyGroups } from '~/api/groups.service.ts'
+
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useToasterStore from '~/stores/useToaster.ts'
+
 export default {
   name: 'GroupsListTab',
   setup() {

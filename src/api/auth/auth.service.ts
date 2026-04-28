@@ -1,8 +1,12 @@
-import useAPI from '~/composables/useAPI'
 import * as oauth from '@panva/oauth4webapi'
+
 import useKeycloak from '~/api/auth/keycloak'
-import useProjectsStore from '~/stores/useProjects'
+
 import useOrganizationsStore from '~/stores/useOrganizations'
+import useProjectsStore from '~/stores/useProjects'
+
+import useAPI from '~/composables/useAPI'
+
 import { useRuntimeConfig } from '#imports'
 
 // TODO fix this in uxt sever side (windows is undefined)
@@ -40,7 +44,7 @@ export async function goToKeycloakLoginPage(): Promise<void> {
   )
 
   let fromUrl = window.location.href
-  if (window.location.pathname === '/login' || /^\/register\//.test(window.location.pathname)) {
+  if (window.location.pathname === '/login' || window.location.pathname.startsWith('/register/')) {
     fromUrl = window.location.origin
   }
 

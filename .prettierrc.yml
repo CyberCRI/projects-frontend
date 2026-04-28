@@ -4,3 +4,21 @@ tabWidth: 2
 semi: false
 singleQuote: true
 htmlWhitespaceSensitivity: 'ignore'
+# importOrderSeparation: true
+# importOrderSortSpecifiers: true
+# importOrderGroupNamespaceSpecifiers: true
+# importOrder:
+#   - "<BUILTIN_MODULES>"
+#   - "<THIRD_PARTY_MODULES>"
+#   - "@(.*)$"
+#   - "~/models/(.*)$"
+#   - "~/interfaces/(.*)$"
+#   - "~/api/(.*)$"
+#   - "~/components/(.*)$"
+#   - "~/stores/(.*)$"
+#   - "~/composables/(.*)$"
+#   - "^(.*)$"
+#   - "^[./]"
+
+plugins:
+  - 'prettier-plugin-sort-imports'

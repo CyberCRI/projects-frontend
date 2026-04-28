@@ -4,8 +4,8 @@
   </div>
 </template>
 <script>
-import { debounce } from 'es-toolkit'
 import fixEditorContent from '~/functs/editorUtils.ts'
+import { debounce } from 'es-toolkit'
 
 const TIMER = 0 // set this to some thing like 1000 for visual debugging
 
@@ -83,7 +83,7 @@ export default {
     filterTags(root) {
       // recursively remove unwanted tags
       if (root.nodeType == Node.ELEMENT_NODE) {
-        for (let tag of this.stripedTags) {
+        for (const tag of this.stripedTags) {
           if (root.tagName.toLowerCase() == tag.toLowerCase()) {
             root.remove()
             return
@@ -160,7 +160,7 @@ export default {
           const children = this.$refs.inner.childNodes
           const lastNode = children.length ? children[children.length - 1] : this.$refs.inner
           // tags that dont support text child
-          let tagsWithoutTextChild = [
+          const tagsWithoutTextChild = [
             'area',
             'base',
             'br',
@@ -218,14 +218,14 @@ export default {
           ['td', 'th'].includes(root.tagName.toLowerCase())
         ) {
           let removeRow = true
-          for (const other of [...root.parentElement.children]) {
+          for (const other of root.parentElement.children) {
             if (other.childNodes.length != 0) {
               removeRow = false
               break
             }
           }
           if (removeRow) {
-            for (const other of [...root.parentElement.children]) {
+            for (const other of root.parentElement.children) {
               other.remove()
               rootRemoved = true
             }

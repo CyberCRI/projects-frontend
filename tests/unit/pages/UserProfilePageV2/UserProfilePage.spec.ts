@@ -1,10 +1,10 @@
-import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import UserProfilePage from '~/pages/UserProfilePageV2/UserProfilePage.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
-import { describe, expect, it } from 'vitest'
-import { flushPromises } from '@vue/test-utils'
-import { UserFactory } from '../../../factories/user.factory'
+import { UserFactory } from '~~/tests/factories/user.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
+import { flushPromises } from '@vue/test-utils'
+import { describe, expect, it } from 'vitest'
 
 describe('UserProfilePage.vue', () => {
   it('should render component', async () => {

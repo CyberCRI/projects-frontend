@@ -1,12 +1,13 @@
+// import type { APIResponseList } from '~/api/types'
 import type {
-  AnnouncementInput,
   // AnnouncementOutput,
   AnnouncementApplyInput,
+  AnnouncementInput,
 } from '~/models/announcement.model'
-// import type { APIResponseList } from '~/api/types'
-import utils from '~/functs/functions'
 
 import useAPI from '~/composables/useAPI'
+
+import utils from '~/functs/functions'
 
 export async function getAnnouncements(params) {
   return await useAPI(`announcement/`, { ...utils.adaptParam(params) }) //.data.value

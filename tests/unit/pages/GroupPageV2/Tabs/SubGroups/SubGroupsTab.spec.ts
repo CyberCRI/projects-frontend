@@ -1,9 +1,9 @@
-import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import SubGroupsTab from '~/pages/GroupPageV2/Tabs/SubGroups/SubGroupsTab.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
-import { describe, expect, it } from 'vitest'
+import { peopleGroupFactory } from '~~/tests/factories/group.factory'
 import { flushPromises } from '@vue/test-utils'
-import { peopleGroupFactory } from '../../../../../factories/group.factory'
+import { describe, expect, it } from 'vitest'
 
 describe('SubGroupsTab.vue', () => {
   it('should render component', async () => {

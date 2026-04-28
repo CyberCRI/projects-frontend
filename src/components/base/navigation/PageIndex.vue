@@ -6,7 +6,7 @@
     </div>
 
     <div v-show="open" class="body custom-scrollbar">
-      <slot :close-summary="close"></slot>
+      <slot :close-summary="close" />
     </div>
   </div>
 </template>

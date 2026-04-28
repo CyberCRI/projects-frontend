@@ -39,10 +39,12 @@
 </template>
 
 <script setup lang="ts">
-import { defaultForm } from '~/components/instruction/InstructionForm/InstructionForm.vue'
-import { deleteInstruction } from '~/api/instruction.service'
-import useToasterStore from '~/stores/useToaster'
 import { getAllInstructions } from '~/api/v2/instruction.service'
+import { deleteInstruction } from '~/api/instruction.service'
+
+import { defaultForm } from '~/components/instruction/InstructionForm/InstructionForm.vue'
+
+import useToasterStore from '~/stores/useToaster'
 
 const toaster = useToasterStore()
 const editedInstruction = ref(null)

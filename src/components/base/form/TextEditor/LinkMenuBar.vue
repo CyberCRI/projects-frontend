@@ -17,8 +17,9 @@
 
 <script>
 import LpiBubbleMenu from '~/components/base/form/TextEditor/LpiBubbleMenu/LpiBubbleMenu.ts'
-import MenuItem from './MenuItem.vue'
+
 import ContextualToolMenu from './ContexttualToolMenu.vue'
+import MenuItem from './MenuItem.vue'
 
 export default {
   name: 'LinkMenuBar',
@@ -41,7 +42,7 @@ export default {
   },
 
   data() {
-    let items = [
+    const items = [
       {
         icon: 'external-link-line',
         title: 'multieditor.external_link',

@@ -104,9 +104,10 @@
   </div>
 </template>
 <script>
-import { getInvitations, deleteInvitation } from '~/api/invitations.service.ts'
-import useToasterStore from '~/stores/useToaster.ts'
+import { deleteInvitation, getInvitations } from '~/api/invitations.service.ts'
+
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useToasterStore from '~/stores/useToaster.ts'
 
 export default {
   name: 'LinksListTab',
@@ -140,7 +141,7 @@ export default {
     },
 
     async copyLink(token) {
-      let link =
+      const link =
         window.location.origin +
         this.$router.resolve({
           name: 'Register',
@@ -162,7 +163,7 @@ export default {
       this.linkToDelete = null
     },
     async onDeleteLinkConfirmed() {
-      let linkId = this.linkToDelete
+      const linkId = this.linkToDelete
       this.hideConfirmModal()
 
       try {

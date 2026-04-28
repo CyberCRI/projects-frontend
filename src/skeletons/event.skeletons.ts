@@ -1,4 +1,4 @@
-import { EventModel } from '~/models/event.model'
+import type { EventModel } from '~/models/event.model'
 
 export const eventSkeleton = (def?: Partial<EventModel>): Omit<EventModel, 'id'> => ({
   id: -1,
@@ -11,5 +11,5 @@ export const eventSkeleton = (def?: Partial<EventModel>): Omit<EventModel, 'id'>
   updated_at: '2020-01-01',
   visible_by_all: true,
   location: null,
-  ...(def || {}),
+  ...def,
 })

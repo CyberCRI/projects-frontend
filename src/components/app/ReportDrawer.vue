@@ -77,12 +77,15 @@
 </template>
 
 <script setup lang="ts">
-import BaseDrawer from '~/components/base/BaseDrawer.vue'
-import { reportBug, reportAbuse } from '~/api/report.service'
-import TextInput from '~/components/base/form/TextInput.vue'
+import { email, helpers, required, url } from '@vuelidate/validators'
 import useValidate from '@vuelidate/core'
-import { helpers, url, required, email } from '@vuelidate/validators'
+
+import { reportAbuse, reportBug } from '~/api/report.service'
+
 import FieldErrors from '~/components/base/form/FieldErrors.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+
 import useToasterStore from '~/stores/useToaster'
 
 const defaultForm = () => {

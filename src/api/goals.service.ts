@@ -1,5 +1,6 @@
-import type { GoalInput /*, GoalOutput*/ } from '~/models/goal.model'
 // import type { APIResponseList } from '~/api/types'
+import type { GoalInput /*, GoalOutput*/ } from '~/models/goal.model'
+
 import useAPI from '~/composables/useAPI'
 
 export async function getAllGoals(id) {

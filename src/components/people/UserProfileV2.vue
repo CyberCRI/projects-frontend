@@ -51,7 +51,9 @@
 
 <script>
 import { getUser } from '~/api/people.service.ts'
+
 import useUsersStore from '~/stores/useUsers.ts'
+
 import ProfileSummaryTab from '~/pages/UserProfilePageV2/Tabs/ProfileSummaryTab.vue'
 
 export default {

@@ -41,11 +41,11 @@
 </template>
 
 <script>
-import ProjectCard from '~/components/project/ProjectCard.vue'
-import CardList from '~/components/base/CardList.vue'
 import SearchResults from '~/components/project/SearchResults.vue'
+import ProjectCard from '~/components/project/ProjectCard.vue'
 import GroupCard from '~/components/group/GroupCard.vue'
 import UserCard from '~/components/people/UserCard.vue'
+import CardList from '~/components/base/CardList.vue'
 
 export default {
   name: 'GlobalSearchTab',

@@ -1,5 +1,6 @@
 <script setup>
 import { patchTermsAndConditions } from '~/api/organizations.service'
+
 import useOrganizations from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster.ts'
 
@@ -28,7 +29,7 @@ const termsDateStr = computed(() =>
 const isAsyncing = ref(false)
 
 const saveTerms = async () => {
-  if (!currentOrganization) return
+  if (!currentOrganization.value) return
   isAsyncing.value = true
   try {
     await patchTermsAndConditions(currentOrganization.value, termsContent.value)

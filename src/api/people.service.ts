@@ -1,16 +1,19 @@
 // import type { APIResponseList } from '~/api/types'
 // import type { PeopleModel } from '~/models/people.model'
 import type {
+  UserModel,
   UserPatchModel,
   UserPrivacyPatchModel,
   UserSkillModel,
-  UserModel,
 } from '~/models/user.model'
+import type { OrganizationModel } from '~/models/organization.model'
+import type { PeopleModel } from '~/models/people.model'
+
 import { _adaptParamsToGetQuery } from '~/api/utils.service'
+
 import useOrganizationsStore from '~/stores/useOrganizations'
+
 import useAPI from '~/composables/useAPI'
-import { OrganizationModel } from '~/models/organization.model'
-import { PeopleModel } from '~/models/people.model'
 
 // New user service using projects API
 export async function getUser(id: string, noError: boolean = false) {
@@ -54,7 +57,7 @@ export async function searchPeopleAdmin(organizationId: OrganizationModel['id'],
   const newConfig = {
     ...config,
     query: {
-      ...(config.query ?? {}),
+      ...config.query,
       current_org_pk: organizationId,
     },
   }

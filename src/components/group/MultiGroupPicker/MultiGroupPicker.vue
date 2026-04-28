@@ -49,12 +49,15 @@
   </template>
 </template>
 <script>
-import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
-import { throttle } from 'es-toolkit'
-import MultiGroupPickerElement from './MultiGroupPickerElement.vue'
 import { getHierarchyGroups } from '~/api/groups.service.ts'
-import FilterValue from '~/components/search/Filters/FilterValue.vue'
+
 import FilterSearchInput from '~/components/search/Filters/FilterSearchInput.vue'
+import FilterValue from '~/components/search/Filters/FilterValue.vue'
+import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
+
+import MultiGroupPickerElement from './MultiGroupPickerElement.vue'
+import { throttle } from 'es-toolkit'
+
 export default {
   name: 'MultiGroupPicker',
 
@@ -93,8 +96,8 @@ export default {
     const markAllGroups = throttle(async () => {
       // dont directly modify allGroup
       // because it will cause a lot of re-render
-      let groups = JSON.parse(JSON.stringify(this.allGroups))
-      for (let group of groups) {
+      const groups = JSON.parse(JSON.stringify(this.allGroups))
+      for (const group of groups) {
         await this.markGroup(group)
       }
       this.allGroups = groups
@@ -183,7 +186,7 @@ export default {
         const groups = {
           ...this.modelValue,
         }
-        for (let key of Object.keys(groups)) {
+        for (const key of Object.keys(groups)) {
           groups[key] = false
         }
 
@@ -197,7 +200,7 @@ export default {
         const groups = {
           ...this.modelValue,
         }
-        for (let key of Object.keys(groups)) {
+        for (const key of Object.keys(groups)) {
           groups[key] = false
         }
 
@@ -220,7 +223,7 @@ export default {
 
     async markGroup(group) {
       let show = false
-      for (let child of group.children) {
+      for (const child of group.children) {
         const childrenMarked = await this.markGroup(child)
         show = show || childrenMarked
       }

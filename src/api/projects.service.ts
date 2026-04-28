@@ -6,8 +6,10 @@ import type {
   // ProjectOutput,
   ProjectPatchInput,
 } from '~/models/project.model'
-import type { SearchParams } from '~/api/types'
+
 import { _adaptParamsToGetQuery } from '~/api/utils.service'
+import type { SearchParams } from '~/api/types'
+
 import useAPI from '~/composables/useAPI'
 
 import { imageSizesFormData } from '~/functs/imageSizesUtils'

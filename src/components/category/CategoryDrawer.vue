@@ -240,25 +240,29 @@
 </template>
 
 <script setup>
-import Drawer from '~/components/base/BaseDrawer.vue'
-import TextInput from '~/components/base/form/TextInput.vue'
-import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
-import ImageInput from '~/components/base/form/ImageInput.vue'
-import CategoryCardImage from '~/components/category/CategoryCardImage.vue'
 import { Sketch as SketchPicker } from '@ckpack/vue-color'
-import CategoryField from '~/components/category/CategoryField.vue'
-import RadioButton from '~/components/base/form/RadioButton.vue'
-import IconImage from '~/components/base/media/IconImage.vue'
-import { Sortable } from 'sortablejs-vue3'
-import LinkButton from '~/components/base/button/LinkButton.vue'
-import { LazyImageResizer } from '#components'
-import BaseModal from '~/components/base/modal/BaseModal.vue'
-import { pictureApiToImageSizes } from '~/functs/imageSizesUtils.ts'
-import LpiButton from '~/components/base/button/LpiButton.vue'
-import useOrganizationCode from '~/composables/useOrganizationCode.ts'
+
 import { getTemplates } from '~/api/templates.service.ts'
+
+import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
+import CategoryCardImage from '~/components/category/CategoryCardImage.vue'
+import CategoryField from '~/components/category/CategoryField.vue'
+import LinkButton from '~/components/base/button/LinkButton.vue'
+import RadioButton from '~/components/base/form/RadioButton.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import ImageInput from '~/components/base/form/ImageInput.vue'
+import BaseModal from '~/components/base/modal/BaseModal.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
 import FilterDrawer from '~/components/base/FilterDrawer.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+import Drawer from '~/components/base/BaseDrawer.vue'
+
+import useOrganizationCode from '~/composables/useOrganizationCode.ts'
+
+import { pictureApiToImageSizes } from '~/functs/imageSizesUtils.ts'
+import { LazyImageResizer } from '#components'
 import { defaultForm } from '~/form/category'
+import { Sortable } from 'sortablejs-vue3'
 
 const props = defineProps({
   editedCategory: {
@@ -282,7 +286,7 @@ const { data: allTemplates, status } = getTemplates(organizationCode)
 
 const category = ref({
   ...defaultForm(),
-  ...(props.editedCategory ?? {}),
+  ...props.editedCategory,
   parent: props.parentCategory,
   organization_code: organizationCode,
 })

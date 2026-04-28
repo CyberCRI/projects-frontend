@@ -1,4 +1,4 @@
-import { ProjectCategoryModel } from '~/models/project-category.model'
+import type { ProjectCategoryModel } from '~/models/project-category.model'
 
 export const defaultForm = (): Partial<ProjectCategoryModel> => {
   return {

@@ -52,17 +52,21 @@
 </template>
 
 <script setup lang="ts">
-import { deleteEvent } from '~/api/event.service'
+import type { QueryFilterEvent, TranslatedEventModel } from '~/models/event.model'
+import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+
 import { getGroupEvent } from '~/api/v2/group.service'
-import FetchLoader from '~/components/base/FetchLoader.vue'
+import { deleteEvent } from '~/api/event.service'
+
 import EditEventDrawer from '~/components/event/EditEventDrawer/EditEventDrawer.vue'
-import EventFilter from '~/components/event/EventFilter.vue'
 import EventItem from '~/components/event/EventList/EventItem.vue'
-import { QueryFilterEvent, TranslatedEventModel } from '~/models/event.model'
-import { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import EventFilter from '~/components/event/EventFilter.vue'
+import FetchLoader from '~/components/base/FetchLoader.vue'
+
+import useToasterStore from '~/stores/useToaster'
+
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import { eventSkeleton } from '~/skeletons/event.skeletons'
-import useToasterStore from '~/stores/useToaster'
 
 const props = withDefaults(
   defineProps<{

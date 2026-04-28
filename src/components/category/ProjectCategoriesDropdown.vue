@@ -30,8 +30,9 @@
 </template>
 
 <script setup lang="ts">
-import IconImage from '~/components/base/media/IconImage.vue'
 import ProjectCategoriesDropdownElement from '~/components/category/ProjectCategoriesDropdownElement.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+
 import useProjectCategories from '~/stores/useProjectCategories'
 
 defineProps<{ dropdownLabel: string }>()

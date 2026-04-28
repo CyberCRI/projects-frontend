@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { nowDate } from '~/functs/date'
-import { QueryFilterEvent } from '~/models/event.model'
+import type { QueryFilterEvent } from '~/models/event.model'
+
 import { useQuery } from '~/composables/useQuery'
+
+import { nowDate } from '~/functs/date'
 
 const { t } = useNuxtI18n()
 

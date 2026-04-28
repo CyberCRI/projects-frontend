@@ -1,4 +1,4 @@
-import { BaseLocationModel } from '~/models/location.model'
+import type { BaseLocationModel } from '~/models/location.model'
 
 export const locationSkeleton = (
   def?: Partial<BaseLocationModel>
@@ -8,5 +8,5 @@ export const locationSkeleton = (
   type: 'address',
   title: 'title',
   description: 'Ipsum nostrud officia dolor esse exercitation mollit',
-  ...(def || {}),
+  ...def,
 })

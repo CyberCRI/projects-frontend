@@ -1,12 +1,15 @@
 import type { ProjectCategoryOutput } from '~/models/project-category.model'
-import useOrganizationCode from '~/composables/useOrganizationCode'
+
 import {
   getAllProjectCategories as apiGetAllProjectCategories,
   getRootProjectCategory as apiGetRootProjectCategory,
 } from '~/api/project-categories.service'
 import type { APIResponseList } from '~/api/types'
-import { defineStore } from 'pinia'
+
+import useOrganizationCode from '~/composables/useOrganizationCode'
 import useAutoTranslate from '~/composables/useAutoTranslate'
+
+import { defineStore } from 'pinia'
 
 export interface ProjectCategoriesState {
   all: ProjectCategoryOutput[]

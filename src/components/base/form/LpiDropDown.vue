@@ -31,10 +31,10 @@
 </template>
 
 <script setup>
-import { capitalize } from '~/functs/string'
-
-import IconImage from '~/components/base/media/IconImage.vue'
 import LpiDropdDownElement from '~/components/base/form/LpiDropDownElement.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+
+import { capitalize } from '~/functs/string'
 
 defineOptions({
   name: 'LpiDropDown',

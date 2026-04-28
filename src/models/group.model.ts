@@ -1,4 +1,4 @@
-import { UserFromJWTModel, UserModel } from '~/models/user.model'
+import type { UserFromJWTModel, UserModel } from '~/models/user.model'
 
 /**
  * @name GroupModel

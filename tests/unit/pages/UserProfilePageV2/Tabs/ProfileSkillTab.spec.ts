@@ -1,17 +1,17 @@
 import ProfileSkillTab from '~/pages/UserProfilePageV2/Tabs/ProfileSkillTab.vue'
-import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
+import { OrganizationOutput } from '~/models/organization.model'
 import { UserFactory } from '~~/tests/factories/user.factory'
-import pinia from '~/stores'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useUsersStore from '~/stores/useUsers'
-import { OrganizationOutput } from '~/models/organization.model'
+import pinia from '~/stores'
 
-import { beforeEach, describe, expect, it, vi } from 'vitest'
-import EmptyLabel from '~/components/base/EmptyLabel.vue'
-import { PaginationsFactory } from '../../../../factories/paginations.factory'
-import { registerEndpoint } from '@nuxt/test-utils/runtime'
-import { flushPromises } from '@vue/test-utils'
+import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
 import UserSkillsFull from '~/components/people/skill/UserSkillsFull.vue'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { registerEndpoint } from '@nuxt/test-utils/runtime'
+import EmptyLabel from '~/components/base/EmptyLabel.vue'
+import { flushPromises } from '@vue/test-utils'
 
 const aTag = { title: '123', description: 'abc' }
 

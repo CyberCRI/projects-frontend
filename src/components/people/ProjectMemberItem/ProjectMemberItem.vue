@@ -35,10 +35,11 @@
 </template>
 
 <script setup lang="ts">
-import { isNotGroup, isGroup } from '~/functs/users'
+import type { TranslatedPojectMember } from '~/models/project-member.model'
 
 import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
-import { TranslatedPojectMember } from '~/models/project-member.model'
+
+import { isGroup, isNotGroup } from '~/functs/users'
 
 const props = withDefaults(
   defineProps<{

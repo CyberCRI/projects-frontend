@@ -14,9 +14,10 @@
   </div>
 </template>
 <script setup lang="ts">
+import type { TranslatedNewsfeed } from '~/models/newsfeed.model'
+
 import NewsfeedAnnouncementsItem from '~/components/home/HomeNewsfeed/NewsfeedAnnouncementsItem.vue'
 import NewsfeedProjectItem from '~/components/home/HomeNewsfeed/NewsfeedProjectItem.vue'
-import { TranslatedNewsfeed } from '~/models/newsfeed.model'
 import NewsItem from '~/components/news/NewsItem.vue'
 
 defineProps<{ newsfeed: TranslatedNewsfeed[] }>()

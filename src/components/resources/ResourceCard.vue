@@ -34,7 +34,8 @@
 <script setup lang="ts">
 import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
-import { IconImageChoice } from '~/functs/IconImage'
+
+import type { IconImageChoice } from '~/functs/IconImage'
 
 const props = withDefaults(
   defineProps<{

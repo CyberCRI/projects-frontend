@@ -33,10 +33,12 @@
   />
 </template>
 <script>
-import AdminBlock from '../AdminBlock.vue'
-import LinkButton from '~/components/base/button/LinkButton.vue'
 import OrgWordingDrawer from '~/components/admin/GeneralAdminBlocks/Wording/OrgWordingDrawer.vue'
+import LinkButton from '~/components/base/button/LinkButton.vue'
+
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
+
+import AdminBlock from '../AdminBlock.vue'
 
 export default {
   name: 'WordingAdminBlock',

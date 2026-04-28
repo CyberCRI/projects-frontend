@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import { deleteInstruction } from '~/api/instruction.service'
-import useToasterStore from '~/stores/useToaster'
-import { QueryFilterInstruction } from '~/models/instruction.model'
-import { nowDate } from '~/functs/date'
+import type { QueryFilterInstruction } from '~/models/instruction.model'
+
 import { getAllInstructions } from '~/api/v2/instruction.service'
+import { deleteInstruction } from '~/api/instruction.service'
+
 import FetchLoader from '~/components/base/FetchLoader.vue'
-import { factoryPagination } from '~/skeletons/base.skeletons'
+
+import useToasterStore from '~/stores/useToaster'
+
 import { instructionSkeleton } from '~/skeletons/instructions.skeletons'
+import { factoryPagination } from '~/skeletons/base.skeletons'
+import { nowDate } from '~/functs/date'
 
 const toaster = useToasterStore()
 const { canCreateInstruction, canEditInstruction, canDeleteInstruction } = usePermissions()

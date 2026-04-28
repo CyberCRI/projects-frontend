@@ -1,9 +1,12 @@
-import { getEvent as fetchEvent, getAllEvents as fetchAllEvents } from '~/api/event.service'
-import { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
+import type { EventModel, QueryFilterEvent } from '~/models/event.model'
+import type { OrganizationModel } from '~/models/organization.model'
+
+import type { RefOrRaw } from '~/interfaces/utils'
+
+import { getAllEvents as fetchAllEvents, getEvent as fetchEvent } from '~/api/event.service'
+import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
+
 import { onlyRefs } from '~/functs/onlyRefs'
-import { RefOrRaw } from '~/interfaces/utils'
-import { EventModel, QueryFilterEvent } from '~/models/event.model'
-import { OrganizationModel } from '~/models/organization.model'
 
 const DEFAULT_CONFIG = {}
 

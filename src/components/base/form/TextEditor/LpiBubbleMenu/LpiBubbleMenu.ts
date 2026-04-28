@@ -1,8 +1,5 @@
-import {
-  LpiBubbleMenuPlugin,
-  LpiBubbleMenuPluginProps,
-} from '~/components/base/form/TextEditor/tiptap-extensions/extension-lpi-bubble-menu'
-import { defineComponent, h, onBeforeUnmount, onMounted, PropType, ref } from 'vue'
+import type { LpiBubbleMenuPluginProps } from '~/components/base/form/TextEditor/tiptap-extensions/extension-lpi-bubble-menu'
+import { LpiBubbleMenuPlugin } from '~/components/base/form/TextEditor/tiptap-extensions/extension-lpi-bubble-menu'
 
 /**
  * This is a copy of ueberdosis/tiptap's BubbleMenu component (based on v2.0.3)

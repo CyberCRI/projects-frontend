@@ -27,7 +27,9 @@
 <script>
 import DialogModal from '~/components/base/modal/DialogModal.vue'
 import ImageInput from '~/components/base/form/ImageInput.vue'
+
 import useToasterStore from '~/stores/useToaster.ts'
+
 import { useRuntimeConfig } from '#imports'
 
 export default {

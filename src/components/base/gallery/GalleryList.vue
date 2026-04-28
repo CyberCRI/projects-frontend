@@ -17,8 +17,9 @@
 </template>
 
 <script setup lang="ts">
+import type { ImageModel } from '~/models/image.model'
+
 import GalleryItem from '~/components/base/gallery/GalleryItem.vue'
-import { ImageModel } from '~/models/image.model'
 
 withDefaults(
   defineProps<{

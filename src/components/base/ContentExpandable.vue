@@ -28,6 +28,7 @@
 
 <script setup lang="ts">
 import TipTapOutput from '~/components/base/form/TextEditor/TipTapOutput.vue'
+
 import { onResizeElement } from '~/composables/onResize'
 
 const props = withDefaults(

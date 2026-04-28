@@ -8,6 +8,7 @@
 <script>
 import AnnouncementCardSkeleton from '~/components/project/announcement/AnnouncementCardSkeleton.vue'
 import DynamicGrid from '~/components/base/DynamicGrid.vue'
+
 export default {
   name: 'AnnouncementCardListSkeleton',
 

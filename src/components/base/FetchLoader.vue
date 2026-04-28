@@ -19,8 +19,8 @@
 </template>
 
 <script setup lang="ts">
+import type { AsyncDataRequestStatus, NuxtError, NuxtLinkProps } from 'nuxt/app'
 import { isNil } from 'es-toolkit'
-import { AsyncDataRequestStatus, NuxtError, NuxtLinkProps } from 'nuxt/app'
 
 /*
   componets wrappers aroud usefetch status result

@@ -96,16 +96,17 @@
 </template>
 
 <script setup>
-import { capitalize } from '~/functs/string'
-
-import SkillSteps from '~/components/people/skill/SkillSteps.vue'
-import IconImage from '~/components/base/media/IconImage.vue'
-import useSkillTexts from '~/composables/useSkillTexts.ts'
-import LpiButton from '~/components/base/button/LpiButton.vue'
 import MentorshipContactDrawer from '~/components/people/skill/MentorshipContactDrawer.vue'
-import ToolTip from '~/components/base/ToolTip.vue'
 import NeedLoginToolTip from '~/components/base/NeedLoginToolTip.vue'
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
+import SkillSteps from '~/components/people/skill/SkillSteps.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+import ToolTip from '~/components/base/ToolTip.vue'
+
+import useSkillTexts from '~/composables/useSkillTexts.ts'
+
+import { capitalize } from '~/functs/string'
 
 defineOptions({ name: 'SkillItemFull' })
 

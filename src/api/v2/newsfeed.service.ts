@@ -1,8 +1,11 @@
+import type { OrganizationModel } from '~/models/organization.model'
+
+import type { RefOrRaw } from '~/interfaces/utils'
+
+import type { UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
 import { getNewsfeed as fetchNewsfeed } from '~/api/newsfeed.service'
-import { UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
+
 import { onlyRefs } from '~/functs/onlyRefs'
-import { RefOrRaw } from '~/interfaces/utils'
-import { OrganizationModel } from '~/models/organization.model'
 
 const DEFAULT_CONFIG = {}
 

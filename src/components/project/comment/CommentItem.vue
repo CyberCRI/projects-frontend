@@ -135,18 +135,22 @@
 </template>
 
 <script>
-import IconImage from '~/components/base/media/IconImage.vue'
+import { deleteProjectMessage } from '~/api/project-messages.service'
+import { deleteComment } from '~/api/comments.service'
+
 import ExternalLabelButton from '~/components/base/button/ExternalLabelButton.vue'
+import TipTapOutput from '~/components/base/form/TextEditor/TipTapOutput.vue'
+import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 import MakeComment from '~/components/project/comment/MakeComment.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
-import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
-import { deleteComment } from '~/api/comments.service'
-import { deleteProjectMessage } from '~/api/project-messages.service'
-import analytics from '~/analytics'
+import IconImage from '~/components/base/media/IconImage.vue'
+
 import useToasterStore from '~/stores/useToaster.ts'
 import useUsersStore from '~/stores/useUsers.ts'
-import TipTapOutput from '~/components/base/form/TextEditor/TipTapOutput.vue'
+
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
+
+import analytics from '~/analytics'
 
 export default {
   name: 'CommentItem',

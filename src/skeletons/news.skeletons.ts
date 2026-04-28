@@ -1,4 +1,4 @@
-import { NewsModel } from '~/models/news.model'
+import type { NewsModel } from '~/models/news.model'
 
 export const newsSkeleton = (def?: Partial<NewsModel>): Omit<NewsModel, 'id'> => ({
   id: -1,
@@ -13,5 +13,5 @@ export const newsSkeleton = (def?: Partial<NewsModel>): Omit<NewsModel, 'id'> =>
   organization: null,
   visible_by_all: true,
   location: null,
-  ...(def || {}),
+  ...def,
 })

@@ -25,11 +25,14 @@
 </template>
 
 <script>
-import { postProjectHeader, patchProjectHeader } from '~/api/projects.service'
-import useValidate from '@vuelidate/core'
 import { helpers, maxLength, minLength, required } from '@vuelidate/validators'
-import useToasterStore from '~/stores/useToaster.ts'
+import useValidate from '@vuelidate/core'
+
+import { patchProjectHeader, postProjectHeader } from '~/api/projects.service'
+
 import useProjectsStore from '~/stores/useProjects.ts'
+import useToasterStore from '~/stores/useToaster.ts'
+
 import { imageSizesFormData } from '~/functs/imageSizesUtils.ts'
 
 export default {

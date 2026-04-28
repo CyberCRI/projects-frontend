@@ -1,5 +1,6 @@
-import { ImageSizesFromApi } from '~/functs/imageSizesUtils'
-import BaseModel from '~/models/base.model'
+import type BaseModel from '~/models/base.model'
+
+import type { ImageSizesFromApi } from '~/functs/imageSizesUtils'
 
 /**
  * @name ImageModel

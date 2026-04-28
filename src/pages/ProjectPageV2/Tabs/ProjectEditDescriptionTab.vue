@@ -47,13 +47,15 @@
 
 <script>
 import { postProjectImage } from '~/api/projects.service'
-import analytics from '~/analytics'
-import retry from 'async-retry'
-import useToasterStore from '~/stores/useToaster.ts'
+
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
 import useProjectsStore from '~/stores/useProjects.ts'
+import useToasterStore from '~/stores/useToaster.ts'
 import useUsersStore from '~/stores/useUsers.ts'
+
 import { textIsEmpty } from '~/functs/string'
+import analytics from '~/analytics'
+import retry from 'async-retry'
 
 export default {
   name: 'ProjectEditDescriptionTab',
@@ -236,7 +238,7 @@ export default {
     },
 
     closeDrawer() {
-      let customEditor = this.$refs.tiptapEditor
+      const customEditor = this.$refs.tiptapEditor
 
       // If the editor does not exist, we should be able to close the modal.
       if (!customEditor?.editor) {

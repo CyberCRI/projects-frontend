@@ -29,12 +29,15 @@
 </template>
 
 <script setup lang="ts">
+import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+
 import { getGroupMember } from '~/api/v2/group.service'
-import PaginationButtonsV2 from '~/components/base/navigation/PaginationButtonsV2.vue'
+
 import GroupMemberDrawer from '~/components/group/Modules/Members/GroupMemberDrawer.vue'
+import PaginationButtonsV2 from '~/components/base/navigation/PaginationButtonsV2.vue'
 import GroupMemberItem from '~/components/group/Modules/Members/GroupMemberItem.vue'
-import { TranslatedPeopleGroupModel } from '~/models/invitation.model'
-import { maxSkeleton, factoryPagination } from '~/skeletons/base.skeletons'
+
+import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import { memberSkeleton } from '~/skeletons/group.skeletons'
 
 const props = withDefaults(

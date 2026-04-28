@@ -33,8 +33,9 @@
 </template>
 
 <script setup lang="ts">
+import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+
 import { getHierarchyGroups } from '~/api/v2/group.service'
-import { TranslatedPeopleGroupModel } from '~/models/invitation.model'
 
 const props = defineProps<{
   organizationCode: string

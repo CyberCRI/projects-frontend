@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import useProjectCategories from '~/stores/useProjectCategories'
-import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
+
 import { onResize } from '~/composables/onResize'
+
+import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 
 const { t } = useNuxtI18n()
 const route = useRoute()
@@ -28,7 +30,7 @@ const imageSizes = computed(() => {
   return (bgImage && pictureApiToImageSizes(bgImage)) || null
 })
 const sortedChildren = computed(() => {
-  return [...category.value?.children]?.sort((a, b) => a.order_index - b.order_index) || []
+  return [...(category.value?.children || [])]?.sort((a, b) => a.order_index - b.order_index) || []
 })
 
 const imageSource = computed(() => {

@@ -1,6 +1,6 @@
+import { LogLevel, Logger } from '~~/tests/playwright/logger'
+import { User } from '~~/tests/playwright/lib/interfaces'
 import { expect } from '@playwright/test'
-import type { User } from '../interfaces'
-import { LogLevel, Logger } from '../../logger'
 
 const logger = new Logger(LogLevel.Debug)
 

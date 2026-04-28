@@ -1,10 +1,10 @@
-import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import ProjectEditDescriptionTab from '~/pages/ProjectPageV2/Tabs/ProjectEditDescriptionTab.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
+import { ProjectFactory } from '~~/tests/factories/project.factory'
+import { UserFactory } from '~~/tests/factories/user.factory'
 import { describe, expect, it, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
-import { ProjectFactory } from '../../../../factories/project.factory'
-import { UserFactory } from '../../../../factories/user.factory'
 import useUsersStore from '~/stores/useUsers'
 
 describe('ProjectEditDescriptionTab.vue', () => {

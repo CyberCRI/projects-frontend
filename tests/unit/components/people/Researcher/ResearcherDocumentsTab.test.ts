@@ -1,12 +1,11 @@
-import { beforeAll, describe, expect, it } from 'vitest'
-import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import ResearcherDocumentsTab from '~/pages/UserProfilePageV2/Tabs/ResearcherDocumentsTab.vue'
-import { UserFactory } from '../../../../factories/user.factory'
-import { delay } from 'es-toolkit'
-import { DocumentFactory, ResearcherFactory } from '../../../../factories/researcher.factory'
-import { PaginationsFactory } from '../../../../factories/paginations.factory'
+import { DocumentFactory, ResearcherFactory } from '~~/tests/factories/researcher.factory'
+import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
+import { UserFactory } from '~~/tests/factories/user.factory'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
+import { registerEndpoint } from '@nuxt/test-utils/runtime'
+import { beforeAll, describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
-import { lpiMountSuspended } from '../../../../helpers/LpiMount'
 
 describe('ResearcherDocumentsTab.vue', () => {
   let defaultProps

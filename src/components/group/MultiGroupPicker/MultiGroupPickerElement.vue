@@ -41,8 +41,8 @@
   </li>
 </template>
 <script setup>
-import IconImage from '~/components/base/media/IconImage.vue'
 import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
 
 defineOptions({ name: 'MultiGroupPickerElement' })
 

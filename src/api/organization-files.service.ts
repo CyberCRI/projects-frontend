@@ -1,5 +1,4 @@
 // import type { APIResponseList } from '~/api/types'
-
 import type { AttachmentFileInput, AttachmentFileModel } from '~/models/attachment-file.model'
 
 import useAPI from '~/composables/useAPI'

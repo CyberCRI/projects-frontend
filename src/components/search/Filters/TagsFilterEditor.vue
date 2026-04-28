@@ -68,13 +68,15 @@
 </template>
 
 <script>
+import ClassificationDescription from '~/components/admin/ClassificationDescription.vue'
 import FilterSearchInput from '~/components/search/Filters/FilterSearchInput.vue'
-import CurrentTags from '~/components/search/FilterTags/CurrentTags.vue'
 import SuggestedTags from '~/components/search/FilterTags/SuggestedTags.vue'
+import CurrentTags from '~/components/search/FilterTags/CurrentTags.vue'
 import TagResults from '~/components/search/FilterTags/TagResults.vue'
 import LpiSelect from '~/components/base/form/LpiSelect.vue'
+
 import useTagSearch from '~/composables/useTagSearch.js'
-import ClassificationDescription from '~/components/admin/ClassificationDescription.vue'
+
 export default {
   name: 'TagsFilterEditor',
 

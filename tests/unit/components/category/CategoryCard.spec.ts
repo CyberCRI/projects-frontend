@@ -1,8 +1,8 @@
-import { lpiMount } from '~~/tests/helpers/LpiMount'
 import CategoryCard from '~/components/category/CategoryCard.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
 
+import { ProjectCategoryFactory } from '~~/tests/factories/project-category.factory'
 import { describe, expect, it } from 'vitest'
-import { ProjectCategoryFactory } from '../../../factories/project-category.factory'
 
 describe('CategoryCard.vue', () => {
   it('should render component', () => {

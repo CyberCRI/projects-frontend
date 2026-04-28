@@ -28,6 +28,7 @@
 
 <script setup lang="ts">
 import LpiButton from '~/components/base/button/LpiButton.vue'
+
 import useOrganizationsStore from '~/stores/useOrganizations'
 
 const organizationsStore = useOrganizationsStore()

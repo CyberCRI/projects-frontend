@@ -1,34 +1,29 @@
 <script setup lang="ts">
-import TipTapEditorContainer from '~/components/base/form/TextEditor/TipTapEditorContainer.vue'
-import TipTapEditorContent from '~/components/base/form/TextEditor/TipTapEditorContent.vue'
-import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
-import TipTapCollaborativeConnectedStatus from '~/components/base/form/TextEditor/TipTapCollaborativeConnectedStatus.vue'
+import CollaborationCursor from '@tiptap/extension-collaboration-cursor'
+import Collaboration from '@tiptap/extension-collaboration'
+import { HocuspocusProvider } from '@hocuspocus/provider'
+import { Editor } from '@tiptap/vue-3'
+
 import TipTapCollaborativeReconnectionStatus from '~/components/base/form/TextEditor/TipTapCollaborativeReconnectionStatus.vue'
 import TipTapCollaborativeConnectingStatus from '~/components/base/form/TextEditor/TipTapCollaborativeConnectingStatus.vue'
-
-import { Editor } from '@tiptap/vue-3'
-import { ClearHistoryWS } from './tiptap-extensions/ClearHistoryWS'
-
-import TipTapModals from '~/components/base/form/TextEditor/TipTapModals.vue'
-
-import Collaboration from '@tiptap/extension-collaboration'
-import CollaborationCursor from '@tiptap/extension-collaboration-cursor'
-import { HocuspocusProvider } from '@hocuspocus/provider'
-
-import LpiSnackbar from '~/components/base/LpiSnackbar.vue'
-
+import TipTapCollaborativeConnectedStatus from '~/components/base/form/TextEditor/TipTapCollaborativeConnectedStatus.vue'
 import {
-  emitsDefinitions,
   PropsDefault,
-  PropsDefinitions,
+  emitsDefinitions,
   useTipTap,
 } from '~/components/base/form/TextEditor/useTipTap'
-import { ref, watchEffect, computed, onMounted, onBeforeUnmount, toRaw } from 'vue'
+import TipTapEditorContainer from '~/components/base/form/TextEditor/TipTapEditorContainer.vue'
+import TipTapEditorContent from '~/components/base/form/TextEditor/TipTapEditorContent.vue'
+import type { PropsDefinitions } from '~/components/base/form/TextEditor/useTipTap'
+import TipTapModals from '~/components/base/form/TextEditor/TipTapModals.vue'
+import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
+import LpiSnackbar from '~/components/base/LpiSnackbar.vue'
 
-import { useRuntimeConfig } from '#imports'
-
-import useUsersStore from '~/stores/useUsers'
 import useToasterStore from '~/stores/useToaster'
+import useUsersStore from '~/stores/useUsers'
+
+import { ClearHistoryWS } from './tiptap-extensions/ClearHistoryWS'
+import { useRuntimeConfig } from '#imports'
 import { randomInt } from 'es-toolkit'
 
 const runtimeConfig = useRuntimeConfig()

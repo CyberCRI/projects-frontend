@@ -1,9 +1,11 @@
 <script setup lang="ts">
 // import { getOrganizationByCode } from '~/api/organizations.service'
-import useOrganizations from '~/stores/useOrganizations'
-import useUsersStore from '~/stores/useUsers'
-import useToasterStore from '~/stores/useToaster'
 import { patchUser } from '~/api/people.service'
+
+import useOrganizations from '~/stores/useOrganizations'
+import useToasterStore from '~/stores/useToaster'
+import useUsersStore from '~/stores/useUsers'
+
 const organizationsStore = useOrganizations()
 const usersStore = useUsersStore()
 const toaster = useToasterStore()

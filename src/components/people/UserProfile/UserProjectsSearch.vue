@@ -12,12 +12,15 @@
 </template>
 
 <script>
-import { debounce } from 'es-toolkit'
-import funct from '~/functs/functions.ts'
 import { getAllProjects } from '~/api/projects.service'
 import { getUserFollows } from '~/api/follows.service'
-import useAPI from '~/composables/useAPI.ts'
+
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
+
+import useAPI from '~/composables/useAPI.ts'
+
+import funct from '~/functs/functions.ts'
+import { debounce } from 'es-toolkit'
 
 export default {
   name: 'UserProjectsSearch',
@@ -128,7 +131,7 @@ export default {
 
       this.totalCount = response.count
       if (this.follow) {
-        let results = response.results?.map((follow) => follow.project) || []
+        const results = response.results?.map((follow) => follow.project) || []
         this.items.push(...results.slice(0, maxResults))
       } else {
         this.items.push(...(response.results?.slice(0, maxResults) || []))

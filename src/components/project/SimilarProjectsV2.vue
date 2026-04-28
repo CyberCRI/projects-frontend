@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { TranslatedProject } from '~/models/project.model'
+import type { TranslatedProject } from '~/models/project.model'
 
 const props = withDefaults(
   defineProps<{

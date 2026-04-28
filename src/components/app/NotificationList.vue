@@ -36,12 +36,15 @@
 </template>
 
 <script setup lang="ts">
-import LpiLoader from '~/components/base/loader/LpiLoader.vue'
-import NotificationItem from '~/components/app/NotificationItem.vue'
-import BaseDrawer from '~/components/base/BaseDrawer.vue'
 import { getNotifications } from '~/api/notifications.service'
-import useUsersStore from '~/stores/useUsers'
+
+import NotificationItem from '~/components/app/NotificationItem.vue'
 import LpiButton from '~/components//base/button/LpiButton.vue'
+import LpiLoader from '~/components/base/loader/LpiLoader.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+
+import useUsersStore from '~/stores/useUsers'
+
 import useAPI from '~/composables/useAPI'
 
 const props = withDefaults(defineProps<{ isOpened?: boolean }>(), { isOpened: false })

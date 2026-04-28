@@ -19,13 +19,15 @@
   </BaseDrawer>
 </template>
 <script>
-import BaseDrawer from '~/components/base/BaseDrawer.vue'
+import { createNews, patchNews, patchNewsHeader, postNewsHeader } from '~/api/news.service.ts'
+
 import NewsForm from '~/components/news/NewsForm/NewsForm.vue'
-import { pictureApiToImageSizes } from '~/functs/imageSizesUtils.ts'
-import { createNews, postNewsHeader, patchNews, patchNewsHeader } from '~/api/news.service.ts'
-import { imageSizesFormData } from '~/functs/imageSizesUtils.ts'
-import useToasterStore from '~/stores/useToaster.ts'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useToasterStore from '~/stores/useToaster.ts'
+
+import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils.ts'
 
 export default {
   name: 'EditNewsDrawer',
@@ -109,7 +111,7 @@ export default {
             .filter(([, value]) => value)
             .map(([id]) => id),
         }
-        let payloadNews = { ...payload }
+        const payloadNews = { ...payload }
         delete payloadNews.imageSizes
         delete payloadNews.header_image
         let savedNews

@@ -1,5 +1,4 @@
 // import type { APIResponseList } from '~/api/types'
-
 import type {
   AttachmentLinkInput /*, AttachmentLinkOutput*/,
   AttachmentLinkModel,

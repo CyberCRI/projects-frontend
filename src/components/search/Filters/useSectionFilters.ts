@@ -1,5 +1,3 @@
-import { computed } from 'vue'
-
 export const ALL_SECTION_KEY = 'all'
 export const PROJECT_SECTION_KEY = 'projects'
 export const GROUP_SECTION_KEY = 'groups'

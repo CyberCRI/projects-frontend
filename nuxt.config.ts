@@ -1,7 +1,6 @@
-import { alias } from './alias'
-import fs from 'node:fs'
-import path from 'node:path'
 import * as dotenv from 'dotenv'
+import path from 'node:path'
+import fs from 'node:fs'
 
 // Determine the environment file
 const customEnvFile = process.env.ENV_FILE ? `.env.${process.env.ENV_FILE}` : '.env'
@@ -51,7 +50,7 @@ export default defineNuxtConfig({
     },
   },
   srcDir: 'src/',
-  modules: ['@pinia/nuxt', '@nuxtjs/i18n', '@nuxt/test-utils/module', 'nuxt-svgo'],
+  modules: ['@pinia/nuxt', '@nuxtjs/i18n', '@nuxt/test-utils/module', 'nuxt-svgo', '@nuxt/eslint'],
   // disable caching
   routeRules: {
     '/**': {
@@ -88,7 +87,6 @@ export default defineNuxtConfig({
   },
   vite: {
     resolve: {
-      alias,
       extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json'],
     },
     css: {

@@ -33,8 +33,9 @@
 </template>
 
 <script setup lang="ts">
-import LpiButton from '~/components/base/button/LpiButton.vue'
 import LinkButton from '~/components/base/button/LinkButton.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+
 import { useUniqueId } from '~/composables/useUniqueId'
 
 const props = withDefaults(

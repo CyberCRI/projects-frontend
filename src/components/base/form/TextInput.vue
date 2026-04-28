@@ -51,6 +51,7 @@
 <script>
 import FieldErrors from '~/components/base/form/FieldErrors.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
+
 export default {
   name: 'TextInput',
 

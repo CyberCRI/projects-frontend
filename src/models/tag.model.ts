@@ -1,5 +1,5 @@
-import BaseModel from '~/models/base.model'
-import { SecondaryTagType, TagType } from '~/models/types'
+import type { SecondaryTagType, TagType } from '~/models/types'
+import type BaseModel from '~/models/base.model'
 
 /**
  * @name TagModel

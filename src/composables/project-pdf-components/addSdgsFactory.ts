@@ -1,5 +1,5 @@
-import { Container } from '~/composables/pdf-helpers/doc-builder'
 import { fetchImageAsDataUrl, proxyImageUrl } from '~/composables/pdf-helpers/usePdfHelpers'
+import type { Container } from '~/composables/pdf-helpers/doc-builder'
 import { usePublicURL } from '~/composables/usePublic'
 
 export default async function addSdgsFactory(projectSdgs: (string | ArrayBuffer)[]) {

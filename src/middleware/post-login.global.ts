@@ -1,4 +1,5 @@
 import useKeycloak from '~/api/auth/keycloak'
+
 import useUsersStore from '~/stores/useUsers'
 
 export default defineNuxtRouteMiddleware(async function postLogin(to) {

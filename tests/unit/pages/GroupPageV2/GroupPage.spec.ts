@@ -1,13 +1,13 @@
-import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import { mockNuxtImport, registerEndpoint } from '@nuxt/test-utils/runtime'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
-import { describe, expect, it } from 'vitest'
-import { peopleGroupFactory } from '../../../factories/group.factory'
+import GroupSnapshotTab from '~/pages/GroupPageV2/Tabs/GroupSnapshotTab.vue'
+import ProjectMemberFactory from '~~/tests/factories/project-member.factory'
+import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
+import { peopleGroupFactory } from '~~/tests/factories/group.factory'
 import GroupPage from '~/pages/GroupPageV2/GroupPage.vue'
 import { flushPromises } from '@vue/test-utils'
-import GroupSnapshotTab from '~/pages/GroupPageV2/Tabs/GroupSnapshotTab.vue'
-import { PaginationsFactory } from '../../../factories/paginations.factory'
-import ProjectMemberFactory from '../../../factories/project-member.factory'
+import { describe, expect, it } from 'vitest'
 
 const group = peopleGroupFactory.generate()
 

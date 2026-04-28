@@ -47,22 +47,28 @@
 </template>
 
 <script setup lang="ts">
+import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+
+import type { ImageGalleryForm } from '~/interfaces/gallery'
+
 import { deleteGroupGallery, postGroupGallery } from '~/api/groups.service'
 import { getGroupGallery } from '~/api/v2/group.service'
-import EmptyLabel from '~/components/base/EmptyLabel.vue'
-import FetchLoader from '~/components/base/FetchLoader.vue'
+
+import PaginationButtonsV2 from '~/components/base/navigation/PaginationButtonsV2.vue'
 import GalleryDeleteModal from '~/components/base/gallery/GalleryDeleteModal.vue'
 import GalleryDrawer from '~/components/base/gallery/GalleryDrawer.vue'
-import GalleryForm from '~/components/base/gallery/GalleryForm.vue'
 import GalleryList from '~/components/base/gallery/GalleryList.vue'
-import PaginationButtonsV2 from '~/components/base/navigation/PaginationButtonsV2.vue'
+import GalleryForm from '~/components/base/gallery/GalleryForm.vue'
+import FetchLoader from '~/components/base/FetchLoader.vue'
+import EmptyLabel from '~/components/base/EmptyLabel.vue'
+
+import useToasterStore from '~/stores/useToaster'
+
 import { useModals } from '~/composables/useModal'
-import { ImageGalleryForm } from '~/interfaces/gallery'
-import { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import { imageGallerySkeleton } from '~/skeletons/gallery.skeletons'
-import useToasterStore from '~/stores/useToaster'
-import { AsyncDataRequestStatus } from 'nuxt/app'
+import type { AsyncDataRequestStatus } from 'nuxt/app'
 
 const props = withDefaults(
   defineProps<{

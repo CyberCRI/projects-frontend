@@ -114,10 +114,11 @@
   </div>
 </template>
 <script>
-import GroupButton from '~/components/base/button/GroupButton.vue'
+import { getUser, patchUserPrivacy } from '~/api/people.service.ts'
+
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
-import { patchUserPrivacy } from '~/api/people.service.ts'
-import { getUser } from '~/api/people.service.ts'
+import GroupButton from '~/components/base/button/GroupButton.vue'
+
 import useToasterStore from '~/stores/useToaster.ts'
 import useUsersStore from '~/stores/useUsers.ts'
 
@@ -270,7 +271,7 @@ export default {
       const mapping = dataMapping()
       const apiData = {}
 
-      for (let key in mapping) {
+      for (const key in mapping) {
         const targets = mapping[key]
         const value = this.form[key]
         targets.forEach((target) => {
@@ -286,7 +287,7 @@ export default {
 
       const mapping = dataMapping()
       const res = defaultForm()
-      for (let key in mapping) {
+      for (const key in mapping) {
         const targets = mapping[key]
         const ranks = targets
           .map((apiSetting) => apiSettings[apiSetting])

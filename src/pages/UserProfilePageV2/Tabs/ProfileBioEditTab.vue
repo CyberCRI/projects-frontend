@@ -58,6 +58,7 @@
 
 <script>
 import { patchUser } from '~/api/people.service.ts'
+
 import useToasterStore from '~/stores/useToaster.ts'
 import useUsersStore from '~/stores/useUsers.ts'
 

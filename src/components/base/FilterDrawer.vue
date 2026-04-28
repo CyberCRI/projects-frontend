@@ -12,8 +12,8 @@
 </template>
 
 <script setup lang="ts">
-import Drawer from '~/components/base/BaseDrawer.vue'
 import FilterEditor from '~/components/base/form/FilterEditor.vue'
+import Drawer from '~/components/base/BaseDrawer.vue'
 
 defineProps<{ options: any[]; title: string }>()
 

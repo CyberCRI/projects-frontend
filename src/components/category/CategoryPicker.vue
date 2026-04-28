@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import type { ProjectCategoryModel } from '~/models/project-category.model'
+
 import IconImage from '~/components/base/media/IconImage.vue'
-import { ProjectCategoryModel } from '~/models/project-category.model'
-import { ref, computed, watchEffect } from 'vue'
 
 const emit = defineEmits<{
   'pick-category': [ProjectCategoryModel]

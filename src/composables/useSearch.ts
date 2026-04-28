@@ -1,6 +1,6 @@
-import { computed } from 'vue'
-import useOrganizationsStore from '~/stores/useOrganizations'
 import { ALL_SECTION_KEY } from '~/components/search/Filters/useSectionFilters'
+
+import useOrganizationsStore from '~/stores/useOrganizations'
 
 export default function useSearch(forcedSection = null) {
   const MAX_RESULTS = 30

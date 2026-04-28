@@ -86,20 +86,22 @@
   </BaseDrawer>
 </template>
 <script>
-import BaseDrawer from '~/components/base/BaseDrawer.vue'
-import IconImage from '~/components/base/media/IconImage.vue'
-import SearchInput from '~/components/base/form/SearchInput.vue'
-import TagResults from '~/components/search/FilterTags/TagResults.vue'
-import { toRaw } from 'vue'
 import { postUserSkill } from '~/api/people.service.ts'
-import SkillLevelTip from '~/components/people/skill/SkillLevelTip.vue'
-import useToasterStore from '~/stores/useToaster.ts'
-import LpiSelect from '~/components/base/form/LpiSelect.vue'
-import useTagSearch from '~/composables/useTagSearch.js'
+
 import SuggestedTags from '~/components/search/FilterTags/SuggestedTags.vue'
-import SkillEditor from '~/components/people/skill/SkillEditor.vue'
-import useSkillTexts from '~/composables/useSkillTexts.ts'
 import MentorshipForm from '~/components/people/skill/MentorshipForm.vue'
+import SkillLevelTip from '~/components/people/skill/SkillLevelTip.vue'
+import TagResults from '~/components/search/FilterTags/TagResults.vue'
+import SkillEditor from '~/components/people/skill/SkillEditor.vue'
+import SearchInput from '~/components/base/form/SearchInput.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+import LpiSelect from '~/components/base/form/LpiSelect.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+
+import useToasterStore from '~/stores/useToaster.ts'
+
+import useSkillTexts from '~/composables/useSkillTexts.ts'
+import useTagSearch from '~/composables/useTagSearch.js'
 
 function defaultMentorship() {
   return {

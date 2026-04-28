@@ -1,5 +1,5 @@
-import BaseModel from '~/models/base.model'
-import { LanguageType } from '~/models/types'
+import type { LanguageType } from '~/models/types'
+import type BaseModel from '~/models/base.model'
 
 /**
  * @name OrganizationDirectoryModel

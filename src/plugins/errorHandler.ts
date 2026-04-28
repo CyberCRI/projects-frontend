@@ -1,6 +1,6 @@
-import { defineNuxtPlugin } from '#imports'
-
 import useToasterStore from '~/stores/useToaster'
+
+import { defineNuxtPlugin } from '#imports'
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.config.errorHandler = (err: any, vm, info) => {

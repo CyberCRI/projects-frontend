@@ -38,11 +38,12 @@
 </template>
 
 <script setup lang="ts">
+import type { AnyTranslatedLocation } from '~/models/location.model'
+
 import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
+import LocationTooltip from '~/components/map/LocationTooltip.vue'
 import MapPointer from '~/components/map/MapPointer.vue'
 import BaseMap from '~/components/map/BaseMap.vue'
-import { AnyTranslatedLocation } from '~/models/location.model'
-import LocationTooltip from '~/components/map/LocationTooltip.vue'
 
 const props = withDefaults(
   defineProps<{

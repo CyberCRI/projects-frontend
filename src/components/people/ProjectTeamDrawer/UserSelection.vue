@@ -48,18 +48,21 @@
 </template>
 
 <script>
-import { debounce } from 'es-toolkit'
-import SearchInput from '~/components/base/form/SearchInput.vue'
-import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 import { searchGroupsAlgolia } from '~/api/search.service.ts'
-import LinkButton from '~/components/base/button/LinkButton.vue'
-import { isNotGroup } from '~/functs/users'
+import { searchPeopleProject } from '~/api/people.service'
 
-import TabsLayout from '~/components/base/navigation/TabsLayout.vue'
 import TeamResultList from '~/components/people/ProjectTeamDrawer/TeamResultList.vue'
 import UserCardInline from '~/components/people/TeamCard/UserCardInline.vue'
-import { searchPeopleProject } from '~/api/people.service'
+import TabsLayout from '~/components/base/navigation/TabsLayout.vue'
+import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
+import LinkButton from '~/components/base/button/LinkButton.vue'
+import SearchInput from '~/components/base/form/SearchInput.vue'
+
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
+
+import { isNotGroup } from '~/functs/users'
+import { debounce } from 'es-toolkit'
+
 export default {
   name: 'UserSelection',
 

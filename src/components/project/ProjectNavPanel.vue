@@ -111,6 +111,7 @@
 
 <script>
 import useUsersStore from '~/stores/useUsers.ts'
+
 import followUtils from '~/functs/followUtils.ts'
 
 export default {

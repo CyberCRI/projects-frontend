@@ -1,7 +1,7 @@
-import { z } from 'zod'
-import N from './zod-schema-utils'
-import { mcpFetch, API_BASE_URL, orgCode } from './base'
+import { API_BASE_URL, mcpFetch, orgCode } from './base'
 import { nowDate } from '~/functs/date'
+import N from './zod-schema-utils'
+import { z } from 'zod'
 
 const EVENT_OUTPUT_SCHEMA = N.object({
   id: N.number().describe('The ID of the event'),

@@ -37,14 +37,17 @@
 </template>
 
 <script setup lang="ts">
-import TeamDrawer from '~/components/people/ProjectTeamDrawer/TeamDrawer.vue'
-import IconImage from '~/components/base/media/IconImage.vue'
-import TeamCardInline from '~/components/people/TeamCard/TeamCardInline.vue'
-import useUsersStore from '~/stores/useUsers'
+import type { ProjectCategoryModel } from '~/models/project-category.model'
+import type { ProjectMemberRoleType } from '~/models/types'
+import type { GroupMember } from '~/models/group.model'
+
 import { TEAMS_ROLE_I18N } from '~/interfaces/user'
-import { ProjectCategoryModel } from '~/models/project-category.model'
-import { ProjectMemberRoleType } from '~/models/types'
-import { GroupMember } from '~/models/group.model'
+
+import TeamDrawer from '~/components/people/ProjectTeamDrawer/TeamDrawer.vue'
+import TeamCardInline from '~/components/people/TeamCard/TeamCardInline.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+
+import useUsersStore from '~/stores/useUsers'
 
 withDefaults(
   defineProps<{

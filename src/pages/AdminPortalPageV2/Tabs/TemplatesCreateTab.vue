@@ -14,12 +14,15 @@
 </template>
 
 <script setup>
-import { capitalize } from '~/functs/string'
-import useNuxtI18n from '~/composables/useNuxtI18n'
-import LayoutTab from '~/components/admin/LayoutTab.vue'
 import { postTemplate, postTemplateImage } from '~/api/templates.service'
-import { useTemplateForm } from '~/form/template'
+
 import TemplateForm from '~/components/templates/TemplateForm.vue'
+import LayoutTab from '~/components/admin/LayoutTab.vue'
+
+import useNuxtI18n from '~/composables/useNuxtI18n'
+
+import { useTemplateForm } from '~/form/template'
+import { capitalize } from '~/functs/string'
 
 defineOptions({ name: 'TemplatesCreateTab' })
 

@@ -1,3 +1,4 @@
+// import type { APIResponseList } from '~/api/types'
 import type {
   AddManyFollowedProject,
   FollowInput,
@@ -5,7 +6,7 @@ import type {
   // FollowOutput,
   // FollowOutputList,
 } from '~/models/follow.model'
-// import type { APIResponseList } from '~/api/types'
+
 import useAPI from '~/composables/useAPI'
 
 export async function getProjectFollows(body: FollowInput) {

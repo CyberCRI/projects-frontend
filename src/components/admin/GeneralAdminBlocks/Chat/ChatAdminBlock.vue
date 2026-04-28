@@ -28,10 +28,13 @@
   />
 </template>
 <script>
-import AdminBlock from '../AdminBlock.vue'
-import LinkButton from '~/components/base/button/LinkButton.vue'
 import EditChatDrawer from '~/components/admin/GeneralAdminBlocks/Chat/EditChatDrawer.vue'
+import LinkButton from '~/components/base/button/LinkButton.vue'
+
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
+
+import AdminBlock from '../AdminBlock.vue'
+
 export default {
   name: 'ChatAdminBlock',
 

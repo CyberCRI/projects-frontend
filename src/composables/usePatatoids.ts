@@ -1,4 +1,5 @@
 import { usePublicURL } from '~/composables/usePublic'
+
 import { range } from 'es-toolkit'
 
 const urlPatatoid = (index: string | number) => {

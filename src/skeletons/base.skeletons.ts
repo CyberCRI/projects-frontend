@@ -1,4 +1,5 @@
-import { DEFAULT_PAGINATION_LIMIT, PaginationResult } from '~/composables/usePagination'
+import { DEFAULT_PAGINATION_LIMIT } from '~/composables/usePagination'
+import type { PaginationResult } from '~/composables/usePagination'
 
 export const maxSkeleton = (elementCount: number, limit: number | null): number => {
   const sanLimit = limit ?? DEFAULT_PAGINATION_LIMIT

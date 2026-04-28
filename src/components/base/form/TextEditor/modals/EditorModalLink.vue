@@ -42,9 +42,10 @@
 
 <script>
 import DialogModal from '~/components/base/modal/DialogModal.vue'
-import TextInput from '~/components/base/form/TextInput.vue'
-import funct from '~/functs/functions.ts'
 import LpiButton from '~/components/base/button/LpiButton.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+
+import funct from '~/functs/functions.ts'
 
 export default {
   name: 'EditorModalLink',

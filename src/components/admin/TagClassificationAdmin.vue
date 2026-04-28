@@ -1,20 +1,21 @@
 <script setup lang="ts">
-import { ref, watch, computed, nextTick } from 'vue'
-import { debounce } from 'es-toolkit'
-import { getOrgClassificationTags, deleteClassificationTag } from '~/api/tag-classification.service'
-import useOrganizationsStore from '~/stores/useOrganizations'
-import FilterSearchInput from '~/components/search/Filters/FilterSearchInput.vue'
+import { deleteClassificationTag, getOrgClassificationTags } from '~/api/tag-classification.service'
+
 import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
-import useAPI from '~/composables/useAPI'
+import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
+import FilterSearchInput from '~/components/search/Filters/FilterSearchInput.vue'
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import EditTagModal from '~/components/admin/EditTagModal.vue'
-import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+
+import useOrganizationsStore from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'
 
 import useTagTexts from '~/composables/useTagTexts'
+import useAPI from '~/composables/useAPI'
 
-import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
+import { debounce } from 'es-toolkit'
 
 const { t } = useNuxtI18n()
 

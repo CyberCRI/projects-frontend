@@ -1,9 +1,10 @@
 // Full API reference: https://developer.mixpanel.com/docs/javascript-full-api-reference
-import Mixpanel, { RequestOptions } from 'mixpanel-browser'
-import { useRuntimeConfig } from '#imports'
-
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useUsersStore from '~/stores/useUsers'
+
+import type { RequestOptions } from 'mixpanel-browser'
+import { useRuntimeConfig } from '#imports'
+import Mixpanel from 'mixpanel-browser'
 
 export const mixpanel = Mixpanel
 

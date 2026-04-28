@@ -1,20 +1,24 @@
 <script setup lang="ts">
+import { email, helpers, maxLength, required } from '@vuelidate/validators'
+import useValidate from '@vuelidate/core'
+
 import {
-  postGroup,
-  postGroupHeader,
-  patchGroupHeader,
   getGroup,
   patchGroup,
+  patchGroupHeader,
+  postGroup,
+  postGroupHeader,
 } from '~/api/groups.service'
-import useValidate from '@vuelidate/core'
-import { required, maxLength, helpers, email } from '@vuelidate/validators'
-import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils'
-import { isEqual } from 'es-toolkit'
-import useToasterStore from '~/stores/useToaster'
+
 import usePeopleGroupsStore from '~/stores/usePeopleGroups'
+import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'
+
 import { useLpiHead2 } from '~/composables/useLpiHead'
-import { AsyncDataRequestStatus } from 'nuxt/app'
+
+import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils'
+import type { AsyncDataRequestStatus } from 'nuxt/app'
+import { isEqual } from 'es-toolkit'
 
 const props = defineProps({
   groupIdOrSlug: {

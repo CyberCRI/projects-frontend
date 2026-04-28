@@ -1,7 +1,6 @@
 import useGlobalsStore from '~/stores/useGlobals'
-import { isEqual } from 'es-toolkit'
 
-import { toRaw, isRef, isReactive, isProxy } from 'vue'
+import { isEqual } from 'es-toolkit'
 
 export function deepToRaw<T extends Record<string, any>>(sourceObj: T): T {
   const objectIterator = (input: any): any => {

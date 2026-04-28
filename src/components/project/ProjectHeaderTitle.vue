@@ -11,8 +11,9 @@
   />
 </template>
 <script setup lang="ts">
+import type { TranslatedProject } from '~/models/project.model'
+
 import { capitalize } from '~/functs/string'
-import { TranslatedProject } from '~/models/project.model'
 
 const props = defineProps<{
   project: TranslatedProject

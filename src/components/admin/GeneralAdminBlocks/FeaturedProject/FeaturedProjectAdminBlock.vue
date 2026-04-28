@@ -33,12 +33,13 @@
 </template>
 <script>
 import {
-  getFeaturedProjects,
   addFeaturedProject,
+  getFeaturedProjects,
   removeFeaturedProject,
 } from '~/api/organizations.service'
-import useToasterStore from '~/stores/useToaster.ts'
+
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useToasterStore from '~/stores/useToaster.ts'
 
 export default {
   name: 'FeaturedProjectAdminBlock',
@@ -64,7 +65,7 @@ export default {
 
   computed: {
     blockTitle() {
-      let extra = this.isLoading
+      const extra = this.isLoading
         ? ''
         : ` (${this.featuredProjects.length} ${this.$t('common.of')} ${this.maxProjects})`
       return this.$t('admin.portal.featured-projects') + extra

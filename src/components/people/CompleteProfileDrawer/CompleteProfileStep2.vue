@@ -10,11 +10,14 @@
 </template>
 
 <script setup>
-import ProfileEditBlock from '~/components/people/CompleteProfileDrawer/ProfileEditBlock.vue'
-import ProfileSkillsEditTab from '~/pages/UserProfilePageV2/Tabs/ProfileSkillsEditTab.vue'
 import { getUser } from '~/api/people.service.ts'
+
+import ProfileEditBlock from '~/components/people/CompleteProfileDrawer/ProfileEditBlock.vue'
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
+
 import useUsersStore from '~/stores/useUsers.ts'
+
+import ProfileSkillsEditTab from '~/pages/UserProfilePageV2/Tabs/ProfileSkillsEditTab.vue'
 
 defineOptions({ name: 'CompleteProfileStep2' })
 const emit = defineEmits(['saving', 'loading'])

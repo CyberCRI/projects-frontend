@@ -142,13 +142,14 @@
 </template>
 
 <script setup>
-import { capitalize } from '~/functs/string'
-import useNuxtI18n from '~/composables/useNuxtI18n'
-
-import TextInput from '~/components/base/form/TextInput.vue'
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
+
+import useNuxtI18n from '~/composables/useNuxtI18n'
+
+import { capitalize } from '~/functs/string'
 
 defineOptions({ name: 'TemplateForm' })
 defineProps({

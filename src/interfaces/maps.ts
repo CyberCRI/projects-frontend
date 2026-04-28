@@ -1,5 +1,4 @@
-import { GeneralLocationPeopleGroup, PeopleGroupModel } from '~/models/invitation.model'
-import {
+import type {
   AnyLocation,
   BaseLocationModel,
   EventLocation,
@@ -9,6 +8,7 @@ import {
   TranslatedLocation,
   TranslatedNewsLocation,
 } from '~/models/location.model'
+import type { GeneralLocationPeopleGroup, PeopleGroupModel } from '~/models/invitation.model'
 
 export type Geocoding = BaseLocationModel & {
   label?: string

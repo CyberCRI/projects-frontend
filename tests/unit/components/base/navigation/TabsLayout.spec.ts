@@ -1,10 +1,10 @@
-import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import TabsLayout from '~/components/base/navigation/TabsLayout.vue'
-import { defineAsyncComponent } from 'vue'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+
 import MockComponent from '~~/tests/helpers/MockComponent.vue'
 
-import { describe, expect, it, vi } from 'vitest'
 import { mockNuxtImport } from '@nuxt/test-utils/runtime'
+import { describe, expect, it, vi } from 'vitest'
 
 // fix unhnadled rejection due to invalid url
 vi.mock('~/composables/useAPI', () => {

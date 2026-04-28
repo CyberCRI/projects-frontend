@@ -1,12 +1,12 @@
-import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import GroupNewsTab from '~/pages/GroupPageV2/Tabs/News/GroupNewsTab.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import { flushPromises } from '@vue/test-utils'
 
-import { describe, expect, it } from 'vitest'
-import { peopleGroupFactory } from '../../../../../factories/group.factory'
+import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
+import { peopleGroupFactory } from '~~/tests/factories/group.factory'
+import { NewsFactory } from '~~/tests/factories/news.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
-import { PaginationsFactory } from '../../../../../factories/paginations.factory'
-import { NewsFactory } from '../../../../../factories/news.factory'
+import { describe, expect, it } from 'vitest'
 
 describe('GroupNewsTab.vue', () => {
   it('should render component', async () => {

@@ -23,6 +23,7 @@
 
 <script setup lang="ts">
 import TagResult from '~/components/search/FilterTags/TagResult.vue'
+
 import useTagTexts from '~/composables/useTagTexts'
 
 const props = withDefaults(

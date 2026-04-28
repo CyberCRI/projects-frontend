@@ -1,5 +1,6 @@
 <script setup>
 import { getProjectsRecommendationsForUser } from '~/api/recommendations.service'
+
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
 
 const organizationsStore = useOrganizationsStore()

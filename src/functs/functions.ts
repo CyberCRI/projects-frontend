@@ -1,5 +1,7 @@
-import { OrganizationModel } from '~/models/organization.model'
+import type { OrganizationModel } from '~/models/organization.model'
+
 import { DEFAULT_ORGANIZATION_CODE } from '~/functs/constants'
+
 export default {
   isValidMail(email) {
     // big bad regex to check mail string

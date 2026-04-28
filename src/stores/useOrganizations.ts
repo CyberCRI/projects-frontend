@@ -1,20 +1,20 @@
-import { defineStore } from 'pinia'
-import {
-  getOrganizationByCode,
-  getOrganizations,
-  patchOrganization,
-} from '~/api/organizations.service'
-
 import type {
   OrganizationModel,
   OrganizationOutput,
   OrganizationPatchInput,
 } from '~/models/organization.model'
 
-import analytics from '~/analytics'
+import {
+  getOrganizationByCode,
+  getOrganizations,
+  patchOrganization,
+} from '~/api/organizations.service'
 
 import useAutoTranslate from '~/composables/useAutoTranslate'
+
 import functions from '~/functs/functions'
+import analytics from '~/analytics'
+import { defineStore } from 'pinia'
 
 export interface OrganizationsState {
   _all: OrganizationOutput[]

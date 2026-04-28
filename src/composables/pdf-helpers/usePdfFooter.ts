@@ -1,7 +1,7 @@
+import { lpiLogo } from '~/composables/project-pdf-components/common-styles'
 import { Doc } from '~/composables/pdf-helpers/doc-builder'
 
 import QRCode from 'qrcode'
-import { lpiLogo } from '~/composables/project-pdf-components/common-styles'
 
 export default async function usePdfFooter(url?: string, title?: string) {
   const { t } = useNuxtI18n()

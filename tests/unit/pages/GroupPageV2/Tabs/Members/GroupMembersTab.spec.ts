@@ -1,13 +1,13 @@
 import GroupMembersTab from '~/pages/GroupPageV2/Tabs/Members/GroupMembersTab.vue'
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
-import { describe, expect, it } from 'vitest'
-import { flushPromises } from '@vue/test-utils'
+import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
+import { groupTranslatedFactory } from '~~/tests/factories/group.factory'
+import GroupMemberFactory from '~~/tests/factories/group-member.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import UserCard from '~/components/people/UserCard.vue'
-import GroupMemberFactory from '../../../../../factories/group-member.factory'
-import { PaginationsFactory } from '../../../../../factories/paginations.factory'
-import { groupTranslatedFactory } from '../../../../../factories/group.factory'
+import { flushPromises } from '@vue/test-utils'
+import { describe, expect, it } from 'vitest'
 
 describe('GroupProjectsTab', () => {
   const orgaCode = useOrganizationCode()

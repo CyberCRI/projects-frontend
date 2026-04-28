@@ -1,19 +1,19 @@
-import type { AuthResult } from '~/api/auth/keycloak'
-import { getProjectCategoriesFollow } from '~/api/project-categories.service'
+import type { NotificationsSettings, UserModel } from '~/models/user.model'
 
 import {
-  logoutFromKeycloak,
-  refreshAccessToken,
   getNotifications as apiGetNotifications,
   patchNotifications as apiPatchNotifications,
+  logoutFromKeycloak,
+  refreshAccessToken,
 } from '~/api/auth/auth.service'
-import { getUser as _getUser } from '~/api/people.service'
-import analytics from '~/analytics'
-import funct from '~/functs/functions'
-import { NotificationsSettings, UserModel } from '~/models/user.model'
+import { getProjectCategoriesFollow } from '~/api/project-categories.service'
 import { checkExpiredToken } from '~/api/auth/keycloakUtils'
 import { removeApiCookie } from '~/api/auth/cookie.service'
+import { getUser as _getUser } from '~/api/people.service'
+import type { AuthResult } from '~/api/auth/keycloak'
 
+import funct from '~/functs/functions'
+import analytics from '~/analytics'
 import { defineStore } from 'pinia'
 
 // fix undefined localStorage on sever

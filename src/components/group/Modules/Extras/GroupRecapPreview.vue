@@ -20,13 +20,10 @@
 </template>
 
 <script setup lang="ts">
+import type { PeopleGroupModulesKeys, TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import { GroupModuleIcon, GroupModuleTitle } from '~/models/invitation.model'
+
 import { scrollToHash } from '~/composables/useScrollToTab'
-import {
-  GroupModuleIcon,
-  GroupModuleTitle,
-  PeopleGroupModulesKeys,
-  TranslatedPeopleGroupModel,
-} from '~/models/invitation.model'
 
 const props = withDefaults(
   defineProps<{

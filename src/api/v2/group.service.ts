@@ -1,22 +1,26 @@
+import type { OrganizationModel } from '~/models/organization.model'
+import type { PeopleGroupIdOrSlug } from '~/models/invitation.model'
+
+import type { RefOrRaw } from '~/interfaces/utils'
+
 import {
   getGroup as fetchGetGroup,
-  getGroupProject as fetchGetGroupProject,
-  getHierarchyGroups as fetchGetHierarchyGroups,
   getGroupMember as fetchGetGroupMember,
+  getGroupProject as fetchGetGroupProject,
   getGroupSimilar as fetchGetGroupSimilar,
+  getHierarchyGroups as fetchGetHierarchyGroups,
   getSubGroup as fetchGetSubGroup,
-  getGroupGallery as fetchGroupGallery,
   getGroupAllLocations as fetchGroupAllLocations,
-  getGroupNews as fetchGroupNews,
   getGroupEvent as fetchGroupEvent,
+  getGroupGallery as fetchGroupGallery,
+  getGroupNews as fetchGroupNews,
 } from '~/api/groups.service'
-import { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
-import useAsyncAPI from '~/composables/useAsyncAPI'
+import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
+
 import useAsyncPaginationAPI from '~/composables/useAsyncPaginationAPI'
+import useAsyncAPI from '~/composables/useAsyncAPI'
+
 import { onlyRefs } from '~/functs/onlyRefs'
-import { RefOrRaw } from '~/interfaces/utils'
-import { PeopleGroupIdOrSlug } from '~/models/invitation.model'
-import { OrganizationModel } from '~/models/organization.model'
 
 const DEFAULT_CONFIG = {}
 

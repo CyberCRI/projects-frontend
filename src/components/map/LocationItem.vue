@@ -25,9 +25,11 @@
 </template>
 
 <script setup lang="ts">
+import type { AnyTranslatedLocation } from '~/models/location.model'
+
 import LocationType from '~/components/map/LocationType.vue'
+
 import { cropIfTooLong } from '~/functs/string'
-import { AnyTranslatedLocation } from '~/models/location.model'
 
 const props = withDefaults(
   defineProps<{

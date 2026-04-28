@@ -1,4 +1,5 @@
 import { capitalize as esCapitalize, isNil } from 'es-toolkit'
+
 /**
  * crop text if is too long
  *

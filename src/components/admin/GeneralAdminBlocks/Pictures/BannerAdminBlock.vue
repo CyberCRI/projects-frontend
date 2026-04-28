@@ -13,13 +13,16 @@
   </AdminBlock>
 </template>
 <script>
-import { postOrganisationBanner, patchOrganisationBanner } from '~/api/organizations.service'
-import AdminBlock from '../AdminBlock.vue'
+import { patchOrganisationBanner, postOrganisationBanner } from '~/api/organizations.service'
+
 import ImageEditor from '~/components/base/form/ImageEditor.vue'
-import { pictureApiToImageSizes, imageSizesFormData } from '~/functs/imageSizesUtils.ts'
-import { isEqual } from 'es-toolkit'
-import useToasterStore from '~/stores/useToaster.ts'
+
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useToasterStore from '~/stores/useToaster.ts'
+
+import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils.ts'
+import AdminBlock from '../AdminBlock.vue'
+import { isEqual } from 'es-toolkit'
 
 export default {
   name: 'BannerAdminBlock',

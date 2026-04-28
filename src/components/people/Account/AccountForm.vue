@@ -124,36 +124,41 @@
 </template>
 
 <script>
-import LpiButton from '~/components/base/button/LpiButton.vue'
-import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
-import RadioButton from '~/components/base/form/RadioButton.vue'
-import TextInput from '~/components/base/form/TextInput.vue'
+import { email, helpers, required } from '@vuelidate/validators'
 import useValidate from '@vuelidate/core'
-import { helpers, required, email } from '@vuelidate/validators'
+
+import {
+  deleteUser,
+  patchUser,
+  patchUserPicture,
+  postUser,
+  postUserPicture,
+} from '~/api/people.service'
+import { resetUserPassword } from '~/api/people.service.ts'
+import { getOrgUnits } from '~/api/google.service'
+
+import AccountGroupsForm from '~/components/people/Account/AccountGroupsForm.vue'
+import OtherOrgUserCard from '~/components/people/Account/OtherOrgUserCard.vue'
+import AccountSection from '~/components/people/Account/AccountSection.vue'
+import AccountInfos from '~/components/people/Account/AccountInfos.vue'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import RadioButton from '~/components/base/form/RadioButton.vue'
+import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
+import FieldErrors from '~/components/base/form/FieldErrors.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+import LpiSelect from '~/components/base/form/LpiSelect.vue'
+
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useToasterStore from '~/stores/useToaster.ts'
+
 import {
   imageSizesFormData,
   imageSizesFormDataPost,
   pictureApiToImageSizes,
 } from '~/functs/imageSizesUtils.ts'
-import {
-  postUser,
-  patchUser,
-  deleteUser,
-  postUserPicture,
-  patchUserPicture,
-} from '~/api/people.service'
-import { resetUserPassword } from '~/api/people.service.ts'
-import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
-import OtherOrgUserCard from '~/components/people/Account/OtherOrgUserCard.vue'
-import AccountGroupsForm from '~/components/people/Account/AccountGroupsForm.vue'
-import AccountInfos from '~/components/people/Account/AccountInfos.vue'
-import AccountSection from '~/components/people/Account/AccountSection.vue'
-import FieldErrors from '~/components/base/form/FieldErrors.vue'
 import { VALID_NAME_REGEX } from '~/functs/constants.ts'
-import LpiSelect from '~/components/base/form/LpiSelect.vue'
-import { getOrgUnits } from '~/api/google.service'
-import useToasterStore from '~/stores/useToaster.ts'
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
+
 export default {
   name: 'AccountForm',
 

@@ -1,12 +1,13 @@
+// import type { ProjectCategoryBackgroundOutput } from '~/models/project-category.model'
 import type {
   ProjectCategoryCreateInput,
   // ProjectCategoryOutput,
   ProjectCategoryPatchInput,
   ProjectCategoryPutInput,
 } from '~/models/project-category.model'
-// import type { ProjectCategoryBackgroundOutput } from '~/models/project-category.model'
+import type { TagModel } from '~/models/tag.model'
+
 import useAPI from '~/composables/useAPI'
-import { TagModel } from '~/models/tag.model'
 
 export async function createProjectCategory(
   organizationCode: string,

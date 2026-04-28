@@ -40,13 +40,14 @@
 </template>
 
 <script setup>
-import useNuxtI18n from '~/composables/useNuxtI18n'
+import { deleteTemplate, getTemplates } from '~/api/templates.service'
 
-import AdminList from '~/components/admin/AdminListItem.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
-import LayoutTab from '~/components/admin/LayoutTab.vue'
+import AdminList from '~/components/admin/AdminListItem.vue'
 import FetchLoader from '~/components/base/FetchLoader.vue'
-import { getTemplates, deleteTemplate } from '~/api/templates.service'
+import LayoutTab from '~/components/admin/LayoutTab.vue'
+
+import useNuxtI18n from '~/composables/useNuxtI18n'
 
 defineOptions({ name: 'TemplatesTab' })
 

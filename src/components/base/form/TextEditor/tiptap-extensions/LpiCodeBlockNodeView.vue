@@ -32,14 +32,15 @@ spellcheck="false"
 </template>
 
 <script>
-import { defineComponent } from 'vue'
-import { nodeViewProps, NodeViewWrapper, NodeViewContent } from '@tiptap/vue-3'
+import { NodeViewContent, NodeViewWrapper, nodeViewProps } from '@tiptap/vue-3'
+
 import {
-  DEFAULT_THEME,
   DEFAULT_TAB,
+  DEFAULT_THEME,
 } from '~/components/base/form/TextEditor/tiptap-extensions/LpiCodeBlock.ts'
-import lowlight from '~/functs/lowlight.ts'
+
 import remixiconUrl from 'remixicon/fonts/remixicon.symbol.svg?url'
+import lowlight from '~/functs/lowlight.ts'
 
 export default defineComponent({
   name: 'LpiCodeBlockNodeView',

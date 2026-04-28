@@ -45,10 +45,13 @@
 </template>
 
 <script setup lang="ts">
-import { capitalize } from '~/functs/string'
+import type { TranslatedAnnouncement } from '~/models/announcement.model'
+
 import IconImage from '~/components/base/media/IconImage.vue'
-import { TranslatedAnnouncement } from '~/models/announcement.model'
+
 import { usePatatoid } from '~/composables/usePatatoids'
+
+import { capitalize } from '~/functs/string'
 
 const props = defineProps<{ announcement: TranslatedAnnouncement }>()
 

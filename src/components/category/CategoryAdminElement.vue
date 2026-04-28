@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import IconImage from '~/components/base/media/IconImage.vue'
-import ContextActionMenu from '~/components/base/button/ContextActionMenu.vue'
+import type { ProjectCategoryModel } from '~/models/project-category.model'
+
 import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
-import { ref, computed, watch } from 'vue'
+import ContextActionMenu from '~/components/base/button/ContextActionMenu.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+
 import { Sortable } from 'sortablejs-vue3'
-import { ProjectCategoryModel } from '~/models/project-category.model'
 
 const emit = defineEmits([
   'edit-category',
@@ -51,7 +52,7 @@ const dragOptions = computed(() => {
 })
 
 function onDragStart(event) {
-  let dragged = event.target.closest('[data-category-id]')
+  const dragged = event.target.closest('[data-category-id]')
   if (dragged && dragged.dataset.categoryId == props.category.id) {
     showChild.value = false
   }

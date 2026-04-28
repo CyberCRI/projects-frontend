@@ -1,6 +1,8 @@
 import type { LocationModel, ProjectLocationForm } from '~/models/location.model'
+
+import type { Locations } from '~/interfaces/maps'
+
 import useAPI from '~/composables/useAPI'
-import { Locations } from '~/interfaces/maps'
 
 export async function getProjectLocations(projectId: number) {
   return await useAPI<LocationModel[]>(`project/${projectId}/location/`)

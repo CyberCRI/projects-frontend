@@ -54,12 +54,15 @@
   </component>
 </template>
 <script setup lang="ts">
-import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
-import SummaryAction from '~/components/home/SummaryCards/SummaryAction.vue'
-import { TranslatedNews } from '~/models/news.model'
+import type { TranslatedNews } from '~/models/news.model'
+
 import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
-import { html2Text } from '~/functs/string'
+import SummaryAction from '~/components/home/SummaryCards/SummaryAction.vue'
+import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
+
 import { DEFAULT_NEWS_PATATOID } from '~/composables/usePatatoids'
+
+import { html2Text } from '~/functs/string'
 
 const props = withDefaults(
   defineProps<{ news: TranslatedNews; editable?: boolean; is?: string }>(),

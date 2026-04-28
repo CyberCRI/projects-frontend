@@ -1,8 +1,8 @@
-import { Doc, Page } from '~/composables/pdf-helpers/doc-builder'
-import PageTitle from '~/composables/project-pdf-components/PageTitle'
-
-import addTeamSectionFactory from '~/composables/project-pdf-components/addTeamSectionFactory'
 import addGroupSectionFactory from '~/composables/project-pdf-components/addGroupSectionFactory'
+import addTeamSectionFactory from '~/composables/project-pdf-components/addTeamSectionFactory'
+import PageTitle from '~/composables/project-pdf-components/PageTitle'
+import type { Doc } from '~/composables/pdf-helpers/doc-builder'
+import { Page } from '~/composables/pdf-helpers/doc-builder'
 
 export default async function addPageTeamFactory(team: any) {
   const { t } = useNuxtI18n()

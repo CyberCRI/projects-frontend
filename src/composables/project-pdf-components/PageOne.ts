@@ -1,12 +1,13 @@
-import { Doc, Page } from '~/composables/pdf-helpers/doc-builder'
-import PageTitle from '~/composables/project-pdf-components/PageTitle'
-import ProjectHeader from '~/composables/project-pdf-components/ProjectHeader'
-import ProjectHeaderContent from '~/composables/project-pdf-components/ProjectHeaderContent'
 import addProjectPhotoFactory from '~/composables/project-pdf-components/addProjectPhotoFactory'
-import addPurposeFactory from '~/composables/project-pdf-components/addPurposeFactory'
-import addTagsFactory from '~/composables/project-pdf-components/addTagFactory'
 import addGoalsSectionFactory from '~/composables/project-pdf-components/addGoalsSectionFactory'
+import ProjectHeaderContent from '~/composables/project-pdf-components/ProjectHeaderContent'
+import addPurposeFactory from '~/composables/project-pdf-components/addPurposeFactory'
 import addSdgsFactory from '~/composables/project-pdf-components/addSdgsFactory'
+import addTagsFactory from '~/composables/project-pdf-components/addTagFactory'
+import ProjectHeader from '~/composables/project-pdf-components/ProjectHeader'
+import PageTitle from '~/composables/project-pdf-components/PageTitle'
+import type { Doc } from '~/composables/pdf-helpers/doc-builder'
+import { Page } from '~/composables/pdf-helpers/doc-builder'
 
 export default async function addPageOneFactory(project: any, goals: any[]) {
   const { locale, t } = useNuxtI18n()

@@ -1,11 +1,12 @@
-import { Container } from '~/composables/pdf-helpers/doc-builder'
 import {
   croppedImageData,
   fetchImageAsDataUrl,
   proxyImageUrl,
 } from '~/composables/pdf-helpers/usePdfHelpers'
-import { usePatatoids } from '~/composables/usePatatoids'
 import { cardListStyles } from '~/composables/project-pdf-components/common-styles'
+import type { Container } from '~/composables/pdf-helpers/doc-builder'
+import { usePatatoids } from '~/composables/usePatatoids'
+
 import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 
 export default async function addGroupSectionFactory(title: string, group: any[]) {

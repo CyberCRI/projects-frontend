@@ -30,10 +30,13 @@
   </div>
 </template>
 <script>
+import { searchGroupsAlgolia } from '~/api/search.service.ts'
+
 import GroupsElementRadio from '~/components/group/GroupsElement/GroupsElementRadio.vue'
 import SearchInput from '~/components/base/form/SearchInput.vue'
-import { searchGroupsAlgolia } from '~/api/search.service.ts'
+
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
+
 export default {
   name: 'PickGroup',
   components: {
@@ -102,9 +105,9 @@ export default {
         this.listGroupsIds = neo.map((group) => group.id)
 
         for (const id of this.listGroupsIds) {
-          let found = false
+          const found = false
           let parents = []
-          let ret = this.searchParents(id, this.groups, parents, found)
+          const ret = this.searchParents(id, this.groups, parents, found)
           parents = ret[0]
           if (this.parents.length > 0) {
             this.parents = [...new Set(this.parents.concat(parents))]
@@ -120,9 +123,9 @@ export default {
     initialGroup: {
       handler: function (neo) {
         if (neo) {
-          let found = false
+          const found = false
           let parents = []
-          let ret = this.searchParents(neo.id, this.groups, parents, found)
+          const ret = this.searchParents(neo.id, this.groups, parents, found)
           parents = ret[0]
           if (this.parents.length > 0) {
             this.parents = [...new Set(this.parents.concat(parents))]
@@ -147,8 +150,9 @@ export default {
           limit: 12,
           organizations: this.organizationsStore.current.code,
         }
-        let listGroups = (await searchGroupsAlgolia(encodeURIComponent(this.queryString), filters))
-          .results
+        const listGroups = (
+          await searchGroupsAlgolia(encodeURIComponent(this.queryString), filters)
+        ).results
 
         this.listGroups = listGroups ? listGroups.map((result) => result.people_group) : []
         this.isLoading = false
@@ -167,7 +171,7 @@ export default {
           return [parents, found]
         } else if (group.children && group.children.length > 0) {
           parents.push(group.id)
-          let ret = this.searchParents(id, group.children, parents, found)
+          const ret = this.searchParents(id, group.children, parents, found)
           parents = ret[0]
           found = ret[1]
           if (found) {

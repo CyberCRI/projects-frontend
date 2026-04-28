@@ -105,8 +105,10 @@
 </template>
 
 <script>
-import { patchUserSkill, deleteUserSkill } from '~/api/people.service.ts'
+import { deleteUserSkill, patchUserSkill } from '~/api/people.service.ts'
+
 import useToasterStore from '~/stores/useToaster.ts'
+
 // import useUsersStore from '~/stores/useUsers.ts'
 export default {
   name: 'ProfileSkillsEditTab',

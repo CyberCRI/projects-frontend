@@ -1,6 +1,7 @@
-import utils from '~/functs/functions'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useUsersStore from '~/stores/useUsers'
+
+import utils from '~/functs/functions'
 
 const isAdmin = () => {
   const usersStore = useUsersStore()

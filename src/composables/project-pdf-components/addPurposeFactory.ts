@@ -1,4 +1,4 @@
-import { Container } from '~/composables/pdf-helpers/doc-builder'
+import type { Container } from '~/composables/pdf-helpers/doc-builder'
 
 export default function addPurposeFactory(project) {
   return function addPurpose(this: Container) {

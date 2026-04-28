@@ -3,10 +3,12 @@
 </template>
 
 <script setup lang="ts">
+import type { TranslatedProject } from '~/models/project.model'
+import type { ProjectStatusType } from '~/models/types'
+
 import BadgeItem from '~/components/base/BadgeItem.vue'
-import { IconImageChoice } from '~/functs/IconImage'
-import { TranslatedProject } from '~/models/project.model'
-import { ProjectStatusType } from '~/models/types'
+
+import type { IconImageChoice } from '~/functs/IconImage'
 
 const STATUS_ICONS: Record<ProjectStatusType, IconImageChoice> = {
   canceled: 'Close',

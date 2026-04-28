@@ -11,8 +11,9 @@
 </template>
 
 <script setup lang="ts">
+import type { LocationType } from '~/models/types'
+
 import { IconMapLocationType } from '~/functs/maps'
-import { LocationType } from '~/models/types'
 
 const props = withDefaults(defineProps<{ locationType: LocationType; label?: boolean }>(), {
   label: true,
@@ -32,6 +33,8 @@ const typeLabel = computed(() => {
       return t('location.news')
     case 'event':
       return t('location.event')
+    default:
+      return ''
   }
 })
 

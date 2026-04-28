@@ -56,8 +56,9 @@
 
 <script setup lang="ts">
 import LpiButton from '~/components/base/button/LpiButton.vue'
+import type { StyleValue } from 'vue'
+
 import { capitalize } from '~/functs/string'
-import { StyleValue } from 'vue'
 
 const props = withDefaults(
   defineProps<{

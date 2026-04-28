@@ -1,5 +1,5 @@
-import { lpiMount } from '~~/tests/helpers/LpiMount'
 import TagsFilterSummary from '~/components/search/Filters/TagsFilterSummary.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
 
 import { beforeEach, describe, expect, it } from 'vitest'
 
@@ -22,13 +22,17 @@ describe('TagsFilterSummary', () => {
   it('goes back to add mode', async () => {
     wrapper = lpiMount(TagsFilterSummary, {
       ...defaultParams,
-      ...{
-        props: {
-          modelValue: [
-            { title: 'Test', id: 1 },
-            { title: 'Test', id: 2 },
-          ],
-        },
+      props: {
+        modelValue: [
+          {
+            title: 'Test',
+            id: 1,
+          },
+          {
+            title: 'Test',
+            id: 2,
+          },
+        ],
       },
     })
     const vm: any = wrapper.vm
@@ -41,13 +45,17 @@ describe('TagsFilterSummary', () => {
   it('should emit input event when removing a tag', async () => {
     wrapper = lpiMount(TagsFilterSummary, {
       ...defaultParams,
-      ...{
-        props: {
-          modelValue: [
-            { title: 'Test', id: 1 },
-            { title: 'Test', id: 2 },
-          ],
-        },
+      props: {
+        modelValue: [
+          {
+            title: 'Test',
+            id: 1,
+          },
+          {
+            title: 'Test',
+            id: 2,
+          },
+        ],
       },
     })
     const vm: any = wrapper.vm

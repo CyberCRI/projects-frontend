@@ -33,12 +33,14 @@
 </template>
 
 <script setup lang="ts">
+import type { ProjectTeamModel } from '~/models/project-member.model'
+import type { TranslatedProject } from '~/models/project.model'
+
+import MakeComment from '~/components/project/comment/MakeComment.vue'
 import CommentItem from '~/components/project/comment/CommentItem.vue'
 import NoItem from '~/components/project/comment/NoItem.vue'
-import MakeComment from '~/components/project/comment/MakeComment.vue'
+
 import useUsersStore from '~/stores/useUsers'
-import { TranslatedProject } from '~/models/project.model'
-import { ProjectTeamModel } from '~/models/project-member.model'
 
 const props = withDefaults(
   defineProps<{

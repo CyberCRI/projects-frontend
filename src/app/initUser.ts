@@ -1,5 +1,6 @@
-import useKeycloak from '~/api/auth/keycloak'
 import { checkExpiredToken } from '~/api/auth/keycloakUtils'
+import useKeycloak from '~/api/auth/keycloak'
+
 import useUsersStore from '~/stores/useUsers'
 
 export default async function initUser() {

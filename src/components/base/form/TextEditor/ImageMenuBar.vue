@@ -13,9 +13,11 @@
 
 <script>
 import LpiBubbleMenu from '~/components/base/form/TextEditor/LpiBubbleMenu/LpiBubbleMenu.ts'
-import menuBarTippyOptions from './menuBarTippyOptions.js'
+
 import ContextualToolMenu from './ContexttualToolMenu.vue'
+import menuBarTippyOptions from './menuBarTippyOptions.js'
 import TextButtonMenuItem from './TextButtonMenuItem.vue'
+
 export default {
   name: 'ImageMenuBar',
 
@@ -33,7 +35,7 @@ export default {
   },
 
   data() {
-    let items = [
+    const items = [
       {
         label: this.$t('multieditor.image.small'),
         title: this.$t('multieditor.image.25_width'),
