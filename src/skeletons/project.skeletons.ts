@@ -1,5 +1,5 @@
 import type { LinkedProject, ProjectModel } from '@/models/project.model'
-import type { factoriesSkeleton } from '@/skeletons/base.skeletons'
+import { factoriesSkeleton } from '@/skeletons/base.skeletons'
 import type { TagModel } from '@/models/tag.model'
 import { randomInt } from 'es-toolkit'
 
