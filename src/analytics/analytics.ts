@@ -2,8 +2,8 @@
 import Mixpanel, { RequestOptions } from 'mixpanel-browser'
 import { useRuntimeConfig } from '#imports'
 
-import useOrganizationsStore from '@/stores/useOrganizations'
-import useUsersStore from '@/stores/useUsers'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useUsersStore from '~/stores/useUsers'
 
 export const mixpanel = Mixpanel
 

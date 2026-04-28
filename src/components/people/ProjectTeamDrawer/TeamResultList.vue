@@ -23,11 +23,11 @@
   </div>
 </template>
 <script>
-import UserCardInline from '@/components/people/TeamCard/UserCardInline.vue'
-import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import useAPI from '@/composables/useAPI.ts'
-import { isNotGroup, isGroup } from '@/functs/users'
+import UserCardInline from '~/components/people/TeamCard/UserCardInline.vue'
+import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
+import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
+import useAPI from '~/composables/useAPI.ts'
+import { isNotGroup, isGroup } from '~/functs/users'
 
 export default {
   name: 'TeamResultList',

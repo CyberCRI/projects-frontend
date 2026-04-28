@@ -29,14 +29,14 @@
 <script>
 import { debounce } from 'es-toolkit'
 
-import { getOrgClassificationTags } from '@/api/tag-classification.service'
+import { getOrgClassificationTags } from '~/api/tag-classification.service'
 
 import TagSearchResults from './TagSearchResults.vue'
-import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
 
-import useAPI from '@/composables/useAPI.ts'
-import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
+import useAPI from '~/composables/useAPI.ts'
+import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
 
 export default {
   name: 'TagResults',

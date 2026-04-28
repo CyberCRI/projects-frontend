@@ -1,5 +1,5 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import ProjectPage from '@/pages/ProjectPageV2/ProjectPage.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
+import ProjectPage from '~/pages/ProjectPageV2/ProjectPage.vue'
 
 import { describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
@@ -14,7 +14,7 @@ import { GoalFactory } from '../../../factories/goal.factory'
 import BlogEntryFactory from '../../../factories/blog-entry.factory'
 import { AnnouncementFactory } from '../../../factories/announcement.factory'
 import { CommentFactory } from '../../../factories/comment.factory'
-import ProjectSummaryTab from '@/pages/ProjectPageV2/Tabs/ProjectSummaryTab.vue'
+import ProjectSummaryTab from '~/pages/ProjectPageV2/Tabs/ProjectSummaryTab.vue'
 
 const project = ProjectOutputFactory.generate()
 

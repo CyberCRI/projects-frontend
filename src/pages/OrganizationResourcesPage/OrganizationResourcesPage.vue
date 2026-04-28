@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import useOrganizationsStore from '@/stores/useOrganizations'
-import { deleteOrganizationFile, getOrganizationFiles } from '@/api/organization-files.service'
-import useToasterStore from '@/stores/useToaster'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import { deleteOrganizationFile, getOrganizationFiles } from '~/api/organization-files.service'
+import useToasterStore from '~/stores/useToaster'
 
 const { t } = useNuxtI18n()
 

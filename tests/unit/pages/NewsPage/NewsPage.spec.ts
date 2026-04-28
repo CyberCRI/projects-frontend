@@ -1,5 +1,5 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import NewsPage from '@/pages/NewsPage/NewsPage.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
+import NewsPage from '~/pages/NewsPage/NewsPage.vue'
 
 import { describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'

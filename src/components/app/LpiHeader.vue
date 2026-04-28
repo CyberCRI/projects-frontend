@@ -183,23 +183,23 @@
 </template>
 
 <script>
-import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
-import { patchUser } from '@/api/people.service.ts'
-import { getAnnouncements } from '@/api/announcements.service'
+import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
+import { patchUser } from '~/api/people.service.ts'
+import { getAnnouncements } from '~/api/announcements.service'
 
-import LinkButton from '@/components/base/button/LinkButton.vue'
-import HeaderLink from '@/components/base/navigation/HeaderLink.vue'
-import HeaderDropDown from '@/components/base/navigation/HeaderDropDown.vue'
-import NotificationIcon from '@/components/app/NotificationIcon.vue'
-import NotificationList from '@/components/app/NotificationList.vue'
-import BadgeItem from '@/components/base/BadgeItem.vue'
-import IconImage from '@/components/base/media/IconImage.vue'
-import HeaderItemList from '@/components/base/navigation/HeaderItemList.vue'
-import ContactDrawer from '@/components/app/ContactDrawer.vue'
-import useProjectCategories from '@/stores/useProjectCategories.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import useUsersStore from '@/stores/useUsers.ts'
-import { nowDate } from '@/functs/date'
+import LinkButton from '~/components/base/button/LinkButton.vue'
+import HeaderLink from '~/components/base/navigation/HeaderLink.vue'
+import HeaderDropDown from '~/components/base/navigation/HeaderDropDown.vue'
+import NotificationIcon from '~/components/app/NotificationIcon.vue'
+import NotificationList from '~/components/app/NotificationList.vue'
+import BadgeItem from '~/components/base/BadgeItem.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+import HeaderItemList from '~/components/base/navigation/HeaderItemList.vue'
+import ContactDrawer from '~/components/app/ContactDrawer.vue'
+import useProjectCategories from '~/stores/useProjectCategories.ts'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useUsersStore from '~/stores/useUsers.ts'
+import { nowDate } from '~/functs/date'
 
 export default {
   name: 'LpiHeader',

@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import utils from '@/functs/functions'
+import utils from '~/functs/functions'
 import useProjectData from './useProjectData'
 import useProjectSocket from './useProjectSocket'
 import useProjectModals from './useProjectModals'
 import useProjectNav from './useProjectNav'
-import { getProject } from '@/api/projects.service'
-import useToasterStore from '@/stores/useToaster'
-import useGlobalsStore from '@/stores/useGlobals'
+import { getProject } from '~/api/projects.service'
+import useToasterStore from '~/stores/useToaster'
+import useGlobalsStore from '~/stores/useGlobals'
 
 const route = useRoute()
 const router = useRouter()

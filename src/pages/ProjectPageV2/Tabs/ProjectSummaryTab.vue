@@ -107,17 +107,17 @@
 </template>
 
 <script setup lang="ts">
-import ProjectMemberSection from '@/components/group/ProjectMemberSection/ProjectMemberSection.vue'
-import { textIsEmpty } from '@/functs/string'
-import { isNotGroup } from '@/functs/users'
-import { AttachmentFileModel } from '@/models/attachment-file.model'
-import { AttachmentLinkModel } from '@/models/attachment-link.model'
-import { BlogEntryModel } from '@/models/blog-entry.model'
-import { CommentModel } from '@/models/comment.model'
-import { TranslatedGoal } from '@/models/goal.model'
-import { LocationModel } from '@/models/location.model'
-import { TranslatedProject } from '@/models/project.model'
-import { UserModel } from '@/models/user.model'
+import ProjectMemberSection from '~/components/group/ProjectMemberSection/ProjectMemberSection.vue'
+import { textIsEmpty } from '~/functs/string'
+import { isNotGroup } from '~/functs/users'
+import { AttachmentFileModel } from '~/models/attachment-file.model'
+import { AttachmentLinkModel } from '~/models/attachment-link.model'
+import { BlogEntryModel } from '~/models/blog-entry.model'
+import { CommentModel } from '~/models/comment.model'
+import { TranslatedGoal } from '~/models/goal.model'
+import { LocationModel } from '~/models/location.model'
+import { TranslatedProject } from '~/models/project.model'
+import { UserModel } from '~/models/user.model'
 
 const projectLayoutToggleAddModal = inject<(name: string) => void>('projectLayoutToggleAddModal')
 

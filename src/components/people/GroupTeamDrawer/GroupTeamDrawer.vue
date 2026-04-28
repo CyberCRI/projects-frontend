@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
 import GroupUserSelection from './GroupUserSelection.vue'
 import GroupRoleSelection from './GroupRoleSelection.vue'
 

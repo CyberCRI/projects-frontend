@@ -67,12 +67,12 @@
   </div>
 </template>
 <script>
-import OnboardingTodo from '@/components/onboarding/OnboardingTodoBlock/OnboardingTodo.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import LinkButton from '@/components/base/button/LinkButton.vue'
-import IconImage from '@/components/base/media/IconImage.vue'
-import { patchUser } from '@/api/people.service.ts'
-import useUsersStore from '@/stores/useUsers.ts'
+import OnboardingTodo from '~/components/onboarding/OnboardingTodoBlock/OnboardingTodo.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import LinkButton from '~/components/base/button/LinkButton.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+import { patchUser } from '~/api/people.service.ts'
+import useUsersStore from '~/stores/useUsers.ts'
 
 export default {
   name: 'OnboardingTodoBlock',

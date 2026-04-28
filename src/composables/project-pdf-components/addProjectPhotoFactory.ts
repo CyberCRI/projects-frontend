@@ -1,11 +1,11 @@
-import { Container } from '@/composables/pdf-helpers/doc-builder'
+import { Container } from '~/composables/pdf-helpers/doc-builder'
 import {
   croppedImageData,
   fetchImageAsDataUrl,
   proxyImageUrl,
-} from '@/composables/pdf-helpers/usePdfHelpers'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils'
-import { usePublicURL } from '@/composables/usePublic'
+} from '~/composables/pdf-helpers/usePdfHelpers'
+import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
+import { usePublicURL } from '~/composables/usePublic'
 
 export default async function addProjectPhotoFactory(project: any) {
   const defaultProjectPicture = usePublicURL(`/placeholders/header_placeholder.png`)

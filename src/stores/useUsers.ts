@@ -1,18 +1,18 @@
-import type { AuthResult } from '@/api/auth/keycloak'
-import { getProjectCategoriesFollow } from '@/api/project-categories.service'
+import type { AuthResult } from '~/api/auth/keycloak'
+import { getProjectCategoriesFollow } from '~/api/project-categories.service'
 
 import {
   logoutFromKeycloak,
   refreshAccessToken,
   getNotifications as apiGetNotifications,
   patchNotifications as apiPatchNotifications,
-} from '@/api/auth/auth.service'
-import { getUser as _getUser } from '@/api/people.service'
-import analytics from '@/analytics'
-import funct from '@/functs/functions'
-import { NotificationsSettings, UserModel } from '@/models/user.model'
-import { checkExpiredToken } from '@/api/auth/keycloakUtils'
-import { removeApiCookie } from '@/api/auth/cookie.service'
+} from '~/api/auth/auth.service'
+import { getUser as _getUser } from '~/api/people.service'
+import analytics from '~/analytics'
+import funct from '~/functs/functions'
+import { NotificationsSettings, UserModel } from '~/models/user.model'
+import { checkExpiredToken } from '~/api/auth/keycloakUtils'
+import { removeApiCookie } from '~/api/auth/cookie.service'
 
 import { defineStore } from 'pinia'
 

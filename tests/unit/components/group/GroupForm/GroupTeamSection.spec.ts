@@ -1,5 +1,5 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import GroupTeamSection from '@/components/group/GroupForm/GroupTeamSection.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
+import GroupTeamSection from '~/components/group/GroupForm/GroupTeamSection.vue'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('GroupTeamSection.vue', () => {

@@ -9,11 +9,11 @@
 </template>
 
 <script setup lang="ts">
-import { patchProject } from '@/api/projects.service'
-import analytics from '@/analytics'
-import useToasterStore from '@/stores/useToaster'
-import SdgsDrawer from '@/components/sdgs/SdgsDrawer.vue'
-import { ProjectModel } from '@/models/project.model'
+import { patchProject } from '~/api/projects.service'
+import analytics from '~/analytics'
+import useToasterStore from '~/stores/useToaster'
+import SdgsDrawer from '~/components/sdgs/SdgsDrawer.vue'
+import { ProjectModel } from '~/models/project.model'
 
 const props = withDefaults(
   defineProps<{

@@ -9,14 +9,14 @@ import {
   getGroupAllLocations as fetchGroupAllLocations,
   getGroupNews as fetchGroupNews,
   getGroupEvent as fetchGroupEvent,
-} from '@/api/groups.service'
-import { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
-import useAsyncAPI from '@/composables/useAsyncAPI'
-import useAsyncPaginationAPI from '@/composables/useAsyncPaginationAPI'
-import { onlyRefs } from '@/functs/onlyRefs'
-import { RefOrRaw } from '@/interfaces/utils'
-import { PeopleGroupIdOrSlug } from '@/models/invitation.model'
-import { OrganizationModel } from '@/models/organization.model'
+} from '~/api/groups.service'
+import { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
+import useAsyncAPI from '~/composables/useAsyncAPI'
+import useAsyncPaginationAPI from '~/composables/useAsyncPaginationAPI'
+import { onlyRefs } from '~/functs/onlyRefs'
+import { RefOrRaw } from '~/interfaces/utils'
+import { PeopleGroupIdOrSlug } from '~/models/invitation.model'
+import { OrganizationModel } from '~/models/organization.model'
 
 const DEFAULT_CONFIG = {}
 

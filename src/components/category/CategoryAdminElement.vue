@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import IconImage from '@/components/base/media/IconImage.vue'
-import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
-import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+import ContextActionMenu from '~/components/base/button/ContextActionMenu.vue'
+import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
 import { ref, computed, watch } from 'vue'
 import { Sortable } from 'sortablejs-vue3'
-import { ProjectCategoryModel } from '@/models/project-category.model'
+import { ProjectCategoryModel } from '~/models/project-category.model'
 
 const emit = defineEmits([
   'edit-category',

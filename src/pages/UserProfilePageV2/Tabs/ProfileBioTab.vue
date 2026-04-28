@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import useUsersStore from '@/stores/useUsers.ts'
+import useUsersStore from '~/stores/useUsers.ts'
 
 defineOptions({ name: 'ProfileBioTab' })
 

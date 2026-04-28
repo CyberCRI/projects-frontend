@@ -232,16 +232,16 @@ import {
   patchGroupLocation,
   postGroupLocation,
   removeGroupLocation,
-} from '@/api/groups.service.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+} from '~/api/groups.service.ts'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
 import { useRuntimeConfig } from '#imports'
-import { usePatatoids } from '@/composables/usePatatoids'
-import SdgsDrawer from '@/components/sdgs/SdgsDrawer.vue'
-import SdgList from '@/components/sdgs/SdgList.vue'
-import TagsDrawer from '@/components/tags/TagsDrawer.vue'
-import TagsFilterSummary from '@/components/search/Filters/TagsFilterSummary.vue'
-import LocationDrawer from '@/components/map/LocationDrawer.vue'
-import LocationList from '@/components/map/LocationList.vue'
+import { usePatatoids } from '~/composables/usePatatoids'
+import SdgsDrawer from '~/components/sdgs/SdgsDrawer.vue'
+import SdgList from '~/components/sdgs/SdgList.vue'
+import TagsDrawer from '~/components/tags/TagsDrawer.vue'
+import TagsFilterSummary from '~/components/search/Filters/TagsFilterSummary.vue'
+import LocationDrawer from '~/components/map/LocationDrawer.vue'
+import LocationList from '~/components/map/LocationList.vue'
 
 export default {
   name: 'GroupForm',

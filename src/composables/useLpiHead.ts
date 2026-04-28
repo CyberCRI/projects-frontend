@@ -1,8 +1,8 @@
-import useNuxtI18n from '@/composables/useNuxtI18n'
-import { RefOrRaw } from '@/interfaces/utils'
-import { Image } from '@/models/image.model'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import { usePublicURL } from '@/composables/usePublic'
+import useNuxtI18n from '~/composables/useNuxtI18n'
+import { RefOrRaw } from '~/interfaces/utils'
+import { Image } from '~/models/image.model'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import { usePublicURL } from '~/composables/usePublic'
 
 const useLpiHead = (url, _title, _description, image, dimensions = null) => {
   const runtimeConfig = useRuntimeConfig()

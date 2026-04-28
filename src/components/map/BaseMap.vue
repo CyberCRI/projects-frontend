@@ -13,13 +13,13 @@
 
 <script setup lang="ts">
 import * as L from 'leaflet'
-import fixLeaflet from '@/app/fixLeaflet'
+import fixLeaflet from '~/app/fixLeaflet'
 import 'leaflet.markercluster'
-import { AnyLocation, TranslatedLocation } from '@/models/location.model'
-import { Geocoding, MapPointerOption } from '@/interfaces/maps'
-import { IconMapLocationType } from '@/functs/maps'
-import { ICONS } from '@/functs/IconImage'
-import { LocationType } from '@/models/types'
+import { AnyLocation, TranslatedLocation } from '~/models/location.model'
+import { Geocoding, MapPointerOption } from '~/interfaces/maps'
+import { IconMapLocationType } from '~/functs/maps'
+import { ICONS } from '~/functs/IconImage'
+import { LocationType } from '~/models/types'
 
 const props = withDefaults(
   defineProps<{
@@ -244,7 +244,7 @@ onMounted(() => {
 
 <style lang="scss">
 // do NOT scope this style, it will break the map
-@import '@/design/scss/map';
+@import '~/design/scss/map';
 </style>
 
 <style lang="scss" scoped>

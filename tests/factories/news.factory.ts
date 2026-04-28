@@ -1,4 +1,4 @@
-import { NewsModel } from '@/models/news.model'
+import { NewsModel } from '~/models/news.model'
 import BaseFactory from './base.factory'
 import { createFactory } from 'faker-create-factory'
 import { OrganizationOutputFactory } from './organization.factory'

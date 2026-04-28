@@ -1,5 +1,5 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import NotificationsSettingsTab from '@/pages/NotificationSettingsPage/Tabs/NotificationsSettingsTab.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
+import NotificationsSettingsTab from '~/pages/NotificationSettingsPage/Tabs/NotificationsSettingsTab.vue'
 
 import { describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'

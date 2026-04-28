@@ -1,4 +1,4 @@
-import { Container } from '@/composables/pdf-helpers/doc-builder'
+import { Container } from '~/composables/pdf-helpers/doc-builder'
 
 export default async function addGoalsSectionFactory(goals: any[]) {
   const { t, d } = useNuxtI18n()

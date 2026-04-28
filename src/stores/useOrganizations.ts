@@ -3,18 +3,18 @@ import {
   getOrganizationByCode,
   getOrganizations,
   patchOrganization,
-} from '@/api/organizations.service'
+} from '~/api/organizations.service'
 
 import type {
   OrganizationModel,
   OrganizationOutput,
   OrganizationPatchInput,
-} from '@/models/organization.model'
+} from '~/models/organization.model'
 
-import analytics from '@/analytics'
+import analytics from '~/analytics'
 
-import useAutoTranslate from '@/composables/useAutoTranslate'
-import functions from '@/functs/functions'
+import useAutoTranslate from '~/composables/useAutoTranslate'
+import functions from '~/functs/functions'
 
 export interface OrganizationsState {
   _all: OrganizationOutput[]

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { isEscoClassification } from '@/functs/ClassificationUtils'
-import { TagModel } from '@/models/tag.model'
+import { isEscoClassification } from '~/functs/ClassificationUtils'
+import { TagModel } from '~/models/tag.model'
 
 defineProps<{
   classification: TagModel

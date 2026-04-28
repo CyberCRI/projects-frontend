@@ -1,6 +1,6 @@
-// import type { APIResponseList } from '@/api/types'
-import type { /*ReviewModel,*/ ReviewModelInput } from '@/models/review.model'
-import useAPI from '@/composables/useAPI'
+// import type { APIResponseList } from '~/api/types'
+import type { /*ReviewModel,*/ ReviewModelInput } from '~/models/review.model'
+import useAPI from '~/composables/useAPI'
 
 export async function getReviews(projectId: string) {
   return await useAPI(`project/${projectId}/review/`, {}) //.data.value

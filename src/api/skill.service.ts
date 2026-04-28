@@ -1,4 +1,4 @@
-import useAPI from '@/composables/useAPI'
+import useAPI from '~/composables/useAPI'
 
 export async function getSkill(id) {
   return await useAPI(`skill/${id}/`, {}) //.data.value

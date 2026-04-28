@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { TranslatedGroupMember } from '@/models/group.model'
+import { TranslatedGroupMember } from '~/models/group.model'
 
 withDefaults(
   defineProps<{

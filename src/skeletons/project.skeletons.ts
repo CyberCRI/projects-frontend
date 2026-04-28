@@ -1,6 +1,6 @@
-import { ProjectModel } from '@/models/project.model'
-import { TagModel } from '@/models/tag.model'
-import { factoriesSkeleton } from '@/skeletons/base.skeletons'
+import { ProjectModel } from '~/models/project.model'
+import { TagModel } from '~/models/tag.model'
+import { factoriesSkeleton } from '~/skeletons/base.skeletons'
 import { randomInt } from 'es-toolkit'
 
 export const tagSkeleton = (def?: Partial<ProjectModel>): Omit<TagModel, 'id'> => ({

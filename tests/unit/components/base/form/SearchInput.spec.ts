@@ -1,5 +1,5 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import SearchInput from '@/components/base/form/SearchInput.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
+import SearchInput from '~/components/base/form/SearchInput.vue'
 
 import { describe, expect, it } from 'vitest'
 

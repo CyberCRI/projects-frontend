@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import EventsList from '@/pages/CalendarPage/Tabs/EventsList.vue'
+import EventsList from '~/pages/CalendarPage/Tabs/EventsList.vue'
 
 const { canCreateEvent } = usePermissions()
 const { t } = useNuxtI18n()

@@ -14,9 +14,9 @@ import {
   GroupModuleIcon,
   GroupModuleTitle,
   TranslatedPeopleGroupModel,
-} from '@/models/invitation.model'
-import GroupSubList from '@/components/group/Modules/GroupSub/GroupSubList.vue'
-import BaseGroupTab from '@/pages/GroupPageV2/Tabs/BaseGroupTab.vue'
+} from '~/models/invitation.model'
+import GroupSubList from '~/components/group/Modules/GroupSub/GroupSubList.vue'
+import BaseGroupTab from '~/pages/GroupPageV2/Tabs/BaseGroupTab.vue'
 
 defineProps<{ group: TranslatedPeopleGroupModel }>()
 </script>

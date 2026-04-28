@@ -1,17 +1,17 @@
-import * as keycloakUtils from '@/api/auth/keycloakUtils'
-import useKeycloak from '@/api/auth/keycloak'
-import * as authService from '@/api/auth/auth.service'
+import * as keycloakUtils from '~/api/auth/keycloakUtils'
+import useKeycloak from '~/api/auth/keycloak'
+import * as authService from '~/api/auth/auth.service'
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import pinia from '@/stores'
-import useUsersStore from '@/stores/useUsers'
-import useToasterStore from '@/stores/useToaster'
+import pinia from '~/stores'
+import useUsersStore from '~/stores/useUsers'
+import useToasterStore from '~/stores/useToaster'
 
-vi.mock('@/api/auth/keycloakUtils')
+vi.mock('~/api/auth/keycloakUtils')
 const keycloak = useKeycloak()
 
-vi.mock('@/api/auth/auth.serice')
+vi.mock('~/api/auth/auth.serice')
 
 vi.spyOn(keycloakUtils, 'getRefreshTokenInterval').mockReturnValue(10)
 

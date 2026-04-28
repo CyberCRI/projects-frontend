@@ -114,12 +114,12 @@
   </div>
 </template>
 <script>
-import GroupButton from '@/components/base/button/GroupButton.vue'
-import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import { patchUserPrivacy } from '@/api/people.service.ts'
-import { getUser } from '@/api/people.service.ts'
-import useToasterStore from '@/stores/useToaster.ts'
-import useUsersStore from '@/stores/useUsers.ts'
+import GroupButton from '~/components/base/button/GroupButton.vue'
+import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
+import { patchUserPrivacy } from '~/api/people.service.ts'
+import { getUser } from '~/api/people.service.ts'
+import useToasterStore from '~/stores/useToaster.ts'
+import useUsersStore from '~/stores/useUsers.ts'
 
 function defaultForm() {
   return {

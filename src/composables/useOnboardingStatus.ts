@@ -1,5 +1,5 @@
-import { patchUser } from '@/api/people.service'
-import useUsersStore from '@/stores/useUsers'
+import { patchUser } from '~/api/people.service'
+import useUsersStore from '~/stores/useUsers'
 
 type OnboardingKey =
   | 'show_welcome'

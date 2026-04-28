@@ -130,17 +130,17 @@
   </div>
 </template>
 <script>
-import IconImage from '@/components/base/media/IconImage.vue'
-import { postInvitation } from '@/api/invitations.service.ts'
-import TextInput from '@/components/base/form/TextInput.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import LinkButton from '@/components/base/button/LinkButton.vue'
-import GroupSelectDrawer from '@/components/group/GroupSelectDrawer/GroupSelectDrawer.vue'
-import GroupCard from '@/components/group/GroupCard.vue'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import DatePickerModal from '@/components/base/modal/DatePickerModal.vue'
-import DisplayDate from '@/components/base/DisplayDate.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+import { postInvitation } from '~/api/invitations.service.ts'
+import TextInput from '~/components/base/form/TextInput.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import LinkButton from '~/components/base/button/LinkButton.vue'
+import GroupSelectDrawer from '~/components/group/GroupSelectDrawer/GroupSelectDrawer.vue'
+import GroupCard from '~/components/group/GroupCard.vue'
+import useToasterStore from '~/stores/useToaster.ts'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import DatePickerModal from '~/components/base/modal/DatePickerModal.vue'
+import DisplayDate from '~/components/base/DisplayDate.vue'
 
 export default {
   name: 'LinkCreateTab',

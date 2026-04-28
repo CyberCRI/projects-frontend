@@ -3,7 +3,7 @@ import {
   PaginationResult,
   paginationConfig,
   usePagination,
-} from '@/composables/usePagination'
+} from '~/composables/usePagination'
 import { omit } from 'es-toolkit'
 
 import type { AsyncConfig } from './useAsyncAPI'

@@ -1,7 +1,7 @@
 <script setup>
-import { getUsersRecommendationsForUser } from '@/api/recommendations.service'
-import useAPI from '@/composables/useAPI.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { getUsersRecommendationsForUser } from '~/api/recommendations.service'
+import useAPI from '~/composables/useAPI.ts'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
 
 const organizationsStore = useOrganizationsStore()
 const { t } = useNuxtI18n()

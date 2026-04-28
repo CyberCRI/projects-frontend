@@ -201,9 +201,9 @@
 </template>
 
 <script>
-import { deleteProjectMembers } from '@/api/project-members.service'
-import analytics from '@/analytics'
-import useToasterStore from '@/stores/useToaster.ts'
+import { deleteProjectMembers } from '~/api/project-members.service'
+import analytics from '~/analytics'
+import useToasterStore from '~/stores/useToaster.ts'
 export default {
   name: 'ProjectTeamTab',
 

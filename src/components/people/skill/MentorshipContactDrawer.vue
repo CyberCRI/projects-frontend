@@ -58,15 +58,15 @@
   </BaseDrawer>
 </template>
 <script>
-import useToasterStore from '@/stores/useToaster.ts'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import TextInput from '@/components/base/form/TextInput.vue'
+import useToasterStore from '~/stores/useToaster.ts'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
 import useValidate from '@vuelidate/core'
 import { email, helpers, required } from '@vuelidate/validators'
-import FieldErrors from '@/components/base/form/FieldErrors.vue'
-import { askMentorship, offerMentorship } from '@/api/mentorship.service.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import useUsersStore from '@/stores/useUsers.ts'
+import FieldErrors from '~/components/base/form/FieldErrors.vue'
+import { askMentorship, offerMentorship } from '~/api/mentorship.service.ts'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useUsersStore from '~/stores/useUsers.ts'
 export function defaultForm() {
   return {
     title: '',

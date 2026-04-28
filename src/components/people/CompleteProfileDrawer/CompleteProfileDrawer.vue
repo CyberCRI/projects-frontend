@@ -65,11 +65,11 @@
 </template>
 <script setup lang="ts">
 import { toRaw } from 'vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import CompleteProfileStep1 from '@/components/people/CompleteProfileDrawer/CompleteProfileStep1.vue'
-import CompleteProfileStep2 from '@/components/people/CompleteProfileDrawer/CompleteProfileStep2.vue'
-import LpiLoader from '@/components/base/loader/LpiLoader.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import CompleteProfileStep1 from '~/components/people/CompleteProfileDrawer/CompleteProfileStep1.vue'
+import CompleteProfileStep2 from '~/components/people/CompleteProfileDrawer/CompleteProfileStep2.vue'
+import LpiLoader from '~/components/base/loader/LpiLoader.vue'
 import { useRuntimeConfig } from '#imports'
 
 const props = withDefaults(

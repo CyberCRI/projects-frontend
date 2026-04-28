@@ -1,7 +1,7 @@
-import getVectorStore from '@/server/utils/vector-db.js'
+import getVectorStore from '~/server/utils/vector-db.js'
 import { PDFLoader } from '@langchain/community/document_loaders/fs/pdf'
 import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters'
-import checkVectorDbRights from '@/server/utils/check-vector-db-rights.js'
+import checkVectorDbRights from '~/server/utils/check-vector-db-rights.js'
 
 export default defineLazyEventHandler(() => {
   return defineEventHandler(async (event) => {

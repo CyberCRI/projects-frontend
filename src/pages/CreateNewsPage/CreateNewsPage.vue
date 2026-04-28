@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { createNews, postNewsHeader } from '@/api/news.service'
-import { imageSizesFormData } from '@/functs/imageSizesUtils'
-import useToasterStore from '@/stores/useToaster'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import { defaultForm } from '@/form/news'
+import { createNews, postNewsHeader } from '~/api/news.service'
+import { imageSizesFormData } from '~/functs/imageSizesUtils'
+import useToasterStore from '~/stores/useToaster'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import { defaultForm } from '~/form/news'
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()

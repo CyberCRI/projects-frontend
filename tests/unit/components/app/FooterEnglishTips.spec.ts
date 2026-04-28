@@ -1,5 +1,5 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import FooterEnglishTips from '@/components/app/FooterEnglishTips.vue'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import FooterEnglishTips from '~/components/app/FooterEnglishTips.vue'
 
 import { describe, expect, it } from 'vitest'
 

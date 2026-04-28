@@ -52,23 +52,23 @@
 </template>
 
 <script>
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import GroupButton from '@/components/base/button/GroupButton.vue'
-import TextInput from '@/components/base/form/TextInput.vue'
-import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+import GroupButton from '~/components/base/button/GroupButton.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
 
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import FieldErrors from '~/components/base/form/FieldErrors.vue'
 
-import { postAnnouncement, patchAnnouncement } from '@/api/announcements.service'
-import analytics from '@/analytics'
+import { postAnnouncement, patchAnnouncement } from '~/api/announcements.service'
+import analytics from '~/analytics'
 
-import useToasterStore from '@/stores/useToaster.ts'
-import DateField from '@/components/base/form/DateField.vue'
-import { fullYearDateFormat } from '@/functs/date'
-import { textIsEmpty } from '@/functs/string'
+import useToasterStore from '~/stores/useToaster.ts'
+import DateField from '~/components/base/form/DateField.vue'
+import { fullYearDateFormat } from '~/functs/date'
+import { textIsEmpty } from '~/functs/string'
 
 export default {
   name: 'AnnouncementDrawer',

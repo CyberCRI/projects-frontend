@@ -1,5 +1,5 @@
-import { IconImageChoice } from '@/functs/IconImage'
-import { LocationType } from '@/models/types'
+import { IconImageChoice } from '~/functs/IconImage'
+import { LocationType } from '~/models/types'
 
 export const IconMapLocationType = (locationType: LocationType): IconImageChoice => {
   switch (locationType) {

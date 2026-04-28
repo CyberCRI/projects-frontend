@@ -41,10 +41,10 @@
 </template>
 
 <script>
-import DialogModal from '@/components/base/modal/DialogModal.vue'
-import TextInput from '@/components/base/form/TextInput.vue'
-import funct from '@/functs/functions.ts'
-import LpiButton from '@/components/base/button/LpiButton.vue'
+import DialogModal from '~/components/base/modal/DialogModal.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+import funct from '~/functs/functions.ts'
+import LpiButton from '~/components/base/button/LpiButton.vue'
 
 export default {
   name: 'EditorModalLink',

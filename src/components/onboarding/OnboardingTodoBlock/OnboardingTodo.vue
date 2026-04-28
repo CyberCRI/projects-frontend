@@ -8,8 +8,8 @@
   </button>
 </template>
 <script setup lang="ts">
-import IconImage from '@/components/base/media/IconImage.vue'
-import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 
 withDefaults(
   defineProps<{

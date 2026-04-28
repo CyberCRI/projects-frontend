@@ -1,10 +1,10 @@
-import BaseModel from '@/models/base.model'
-import { FaqModel } from '@/models/faq.model'
-import { LanguageType } from '@/models/types'
-import { OrganizationDirectoryModel } from '@/models/organization-directory.model'
+import BaseModel from '~/models/base.model'
+import { FaqModel } from '~/models/faq.model'
+import { LanguageType } from '~/models/types'
+import { OrganizationDirectoryModel } from '~/models/organization-directory.model'
 import { TagModel } from './tag.model'
-import { Translated } from '@/interfaces/translated'
-import { ImageModel } from '@/models/image.model'
+import { Translated } from '~/interfaces/translated'
+import { ImageModel } from '~/models/image.model'
 
 export interface TermsAndConditions {
   id: number

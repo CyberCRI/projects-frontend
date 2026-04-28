@@ -29,9 +29,9 @@
 </template>
 
 <script setup lang="ts">
-import { createEvent } from '@/api/event.service'
-import useToasterStore from '@/stores/useToaster'
-import { defaultForm } from '@/form/event'
+import { createEvent } from '~/api/event.service'
+import useToasterStore from '~/stores/useToaster'
+import { defaultForm } from '~/form/event'
 
 const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()

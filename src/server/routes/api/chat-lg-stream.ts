@@ -3,11 +3,11 @@ import { createAgent, createMiddleware } from 'langchain'
 import { MemorySaver } from '@langchain/langgraph'
 import { SystemMessage, HumanMessage, AIMessage, BaseMessageChunk } from '@langchain/core/messages'
 import { v4 as uuidv4 } from 'uuid'
-import getVectorStore from '@/server/utils/vector-db.js'
+import getVectorStore from '~/server/utils/vector-db.js'
 import { createRetrieverTool } from '@langchain/classic/tools/retriever'
 import { MultiServerMCPClient } from '@langchain/mcp-adapters'
 
-import { tokenMap, traceMcp } from '@/server/routes/api/chat-stream'
+import { tokenMap, traceMcp } from '~/server/routes/api/chat-stream'
 
 const runtimeConfig = useRuntimeConfig()
 const {

@@ -5,7 +5,7 @@ import {
   ImageInput,
   ImageOrganizationInput,
   ImageTemplateInput,
-} from '@/models/image.model'
+} from '~/models/image.model'
 
 import BaseFactory from './base.factory'
 

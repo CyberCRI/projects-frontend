@@ -19,11 +19,11 @@
 </template>
 
 <script setup lang="ts">
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import InstructionForm from '@/components/instruction/InstructionForm/InstructionForm.vue'
-import { createInstruction, putInstruction } from '@/api/instruction.service'
-import useToasterStore from '@/stores/useToaster'
-import { InstructionModel } from '@/models/instruction.model'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+import InstructionForm from '~/components/instruction/InstructionForm/InstructionForm.vue'
+import { createInstruction, putInstruction } from '~/api/instruction.service'
+import useToasterStore from '~/stores/useToaster'
+import { InstructionModel } from '~/models/instruction.model'
 
 const props = withDefaults(
   defineProps<{

@@ -1,7 +1,7 @@
-import { Doc, Page } from '@/composables/pdf-helpers/doc-builder'
-import PageTitle from '@/composables/project-pdf-components/PageTitle'
+import { Doc, Page } from '~/composables/pdf-helpers/doc-builder'
+import PageTitle from '~/composables/project-pdf-components/PageTitle'
 
-import addResourceSectionFactory from '@/composables/project-pdf-components/addResourceSectionFactory'
+import addResourceSectionFactory from '~/composables/project-pdf-components/addResourceSectionFactory'
 
 export default async function addPageResourceFactory(
   project: any,

@@ -23,10 +23,10 @@
 </template>
 
 <script setup lang="ts">
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import LocationType from '@/components/map/LocationType.vue'
-import { cropIfTooLong } from '@/functs/string'
-import { AnyLocation } from '@/models/location.model'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import LocationType from '~/components/map/LocationType.vue'
+import { cropIfTooLong } from '~/functs/string'
+import { AnyLocation } from '~/models/location.model'
 
 const props = defineProps<{ location: AnyLocation }>()
 

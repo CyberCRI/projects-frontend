@@ -1,5 +1,5 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import MapPointer from '@/components/map/MapPointer.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
+import MapPointer from '~/components/map/MapPointer.vue'
 
 import { describe, expect, it } from 'vitest'
 import { ProjectFactory } from '../../../factories/project.factory'

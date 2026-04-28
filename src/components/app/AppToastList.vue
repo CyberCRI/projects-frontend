@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { IconImageChoice } from '@/functs/IconImage'
-import useToasterStore from '@/stores/useToaster'
+import { IconImageChoice } from '~/functs/IconImage'
+import useToasterStore from '~/stores/useToaster'
 
 const toaster = useToasterStore()
 const { t } = useNuxtI18n()

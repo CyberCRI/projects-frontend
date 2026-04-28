@@ -10,8 +10,8 @@
 </template>
 
 <script setup lang="ts">
-import { capitalize } from '@/functs/string'
-import { TranslatedProjectCategory } from '@/models/project-category.model'
+import { capitalize } from '~/functs/string'
+import { TranslatedProjectCategory } from '~/models/project-category.model'
 
 defineOptions({ name: 'ProjectCategoriesDropdownElementButton' })
 

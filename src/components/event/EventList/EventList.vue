@@ -43,12 +43,12 @@
 </template>
 
 <script setup lang="ts">
-import EditEventDrawer from '@/components/event/EditEventDrawer/EditEventDrawer.vue'
+import EditEventDrawer from '~/components/event/EditEventDrawer/EditEventDrawer.vue'
 import EventItem from './EventItem.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import { deleteEvent } from '@/api/event.service'
-import useToasterStore from '@/stores/useToaster'
-import { TranslatedEventModel } from '@/models/event.model'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import { deleteEvent } from '~/api/event.service'
+import useToasterStore from '~/stores/useToaster'
+import { TranslatedEventModel } from '~/models/event.model'
 
 withDefaults(
   defineProps<{

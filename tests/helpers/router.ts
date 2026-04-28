@@ -1,4 +1,4 @@
-import routerOptions from '@/app/router.options'
+import routerOptions from '~/app/router.options'
 import { RouteRecordRaw } from 'vue-router'
 import MockComponent from './MockComponent.vue'
 

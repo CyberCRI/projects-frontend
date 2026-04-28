@@ -1,6 +1,6 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import ProjectCard from '@/components/project/ProjectCard.vue'
-import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import ProjectCard from '~/components/project/ProjectCard.vue'
+import { ProjectOutputFactory } from '~~/tests/factories/project.factory'
 
 import { beforeEach, describe, expect, it } from 'vitest'
 

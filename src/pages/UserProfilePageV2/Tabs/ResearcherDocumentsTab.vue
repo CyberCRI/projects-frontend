@@ -14,9 +14,9 @@
 </template>
 
 <script setup lang="ts">
-import OwnResearcherDocumentsList from '@/components/people/Researcher/OwnResearcherDocumentsList.vue'
-import { DocumentType } from '@/interfaces/researcher'
-import { UserModel } from '@/models/user.model'
+import OwnResearcherDocumentsList from '~/components/people/Researcher/OwnResearcherDocumentsList.vue'
+import { DocumentType } from '~/interfaces/researcher'
+import { UserModel } from '~/models/user.model'
 
 const { t } = useNuxtI18n()
 

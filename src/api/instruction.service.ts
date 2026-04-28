@@ -3,9 +3,9 @@ import type {
   InstructionInput,
   InstructionModel,
   QueryFilterInstruction,
-} from '@/models/instruction.model'
-import useAPI, { UseApiOptions } from '@/composables/useAPI'
-import { OrganizationModel } from '@/models/organization.model'
+} from '~/models/instruction.model'
+import useAPI, { UseApiOptions } from '~/composables/useAPI'
+import { OrganizationModel } from '~/models/organization.model'
 
 type ConfigEvent = UseApiOptions<QueryFilterInstruction>
 

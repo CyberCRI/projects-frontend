@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
-import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
+import HtmlLimiter from '~/components/base/HtmlLimiter.vue'
+import SeeMoreArrow from '~/components/base/button/SeeMoreArrow.vue'
 export default {
   name: 'UserDescriptions',
   components: {

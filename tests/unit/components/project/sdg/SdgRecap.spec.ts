@@ -1,8 +1,8 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import SdgRecap from '@/components/project/sdg/SdgRecap.vue'
-import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
-import pinia from '@/stores'
-import useOrganizationsStore from '@/stores/useOrganizations'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import SdgRecap from '~/components/project/sdg/SdgRecap.vue'
+import { OrganizationOutputFactory } from '~~/tests/factories/organization.factory'
+import pinia from '~/stores'
+import useOrganizationsStore from '~/stores/useOrganizations'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 describe('SdgRecap.vue', () => {

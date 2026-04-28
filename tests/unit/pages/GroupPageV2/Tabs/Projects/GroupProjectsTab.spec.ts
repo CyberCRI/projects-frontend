@@ -1,9 +1,9 @@
-import GroupProjectsTab from '@/pages/GroupPageV2/Tabs/Projects/GroupProjectsTab.vue'
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
+import GroupProjectsTab from '~/pages/GroupPageV2/Tabs/Projects/GroupProjectsTab.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
 import { describe, expect, it } from 'vitest'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
-import ProjectPreview from '@/components/project/ProjectPreview.vue'
+import ProjectPreview from '~/components/project/ProjectPreview.vue'
 import { groupTranslatedFactory } from '../../../../../factories/group.factory'
 import { PaginationsFactory } from '../../../../../factories/paginations.factory'
 import { ProjectFactory } from '../../../../../factories/project.factory'

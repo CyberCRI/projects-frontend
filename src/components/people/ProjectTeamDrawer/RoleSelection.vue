@@ -92,12 +92,12 @@
 </template>
 
 <script>
-import { isNotGroup, isGroup } from '@/functs/users'
+import { isNotGroup, isGroup } from '~/functs/users'
 
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import IconImage from '@/components/base/media/IconImage.vue'
-import ToolTip from '@/components/base/ToolTip.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+import ToolTip from '~/components/base/ToolTip.vue'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
 
 export default {
   name: 'RoleSelection',

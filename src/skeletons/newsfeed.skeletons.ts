@@ -1,7 +1,7 @@
-import { NewsfeedModel } from '@/models/newsfeed.model'
-import { announcementSkeleton } from '@/skeletons/announcement.skeletons'
-import { newsSkeleton } from '@/skeletons/news.skeletons'
-import { projectSkeleton } from '@/skeletons/project.skeletons'
+import { NewsfeedModel } from '~/models/newsfeed.model'
+import { announcementSkeleton } from '~/skeletons/announcement.skeletons'
+import { newsSkeleton } from '~/skeletons/news.skeletons'
+import { projectSkeleton } from '~/skeletons/project.skeletons'
 import { shuffle } from 'es-toolkit'
 
 export const newsFeedSkeleton = (def?: Partial<NewsfeedModel>): Omit<NewsfeedModel, 'id'> => {

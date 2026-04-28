@@ -35,11 +35,11 @@
   </BaseDrawer>
 </template>
 <script>
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import TextInput from '@/components/base/form/TextInput.vue'
-import { patchOrganization } from '@/api/organizations.service.ts'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+import { patchOrganization } from '~/api/organizations.service.ts'
+import useToasterStore from '~/stores/useToaster.ts'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
 export default {
   name: 'EditChatDrawer',
 

@@ -1,4 +1,4 @@
-import { cropIfTooLong, html2Text, textIsEmpty } from '@/functs/string'
+import { cropIfTooLong, html2Text, textIsEmpty } from '~/functs/string'
 import { describe, expect, it } from 'vitest'
 
 describe('string.ts', () => {

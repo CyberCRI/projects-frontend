@@ -1,10 +1,10 @@
-import SearchPage from '@/pages/SearchPage/SearchPage.vue'
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
+import SearchPage from '~/pages/SearchPage/SearchPage.vue'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { UserFactory } from '@/../tests/factories/user.factory'
-import pinia from '@/stores'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import { OrganizationOutput } from '@/models/organization.model'
+import { UserFactory } from '~~/tests/factories/user.factory'
+import pinia from '~/stores'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import { OrganizationOutput } from '~/models/organization.model'
 
 const route = {
   query: {

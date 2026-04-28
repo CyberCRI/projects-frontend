@@ -5,15 +5,15 @@ import {
   patchGroupHeader,
   getGroup,
   patchGroup,
-} from '@/api/groups.service'
+} from '~/api/groups.service'
 import useValidate from '@vuelidate/core'
 import { required, maxLength, helpers, email } from '@vuelidate/validators'
-import { imageSizesFormData, pictureApiToImageSizes } from '@/functs/imageSizesUtils'
+import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 import { isEqual } from 'es-toolkit'
-import useToasterStore from '@/stores/useToaster'
-import usePeopleGroupsStore from '@/stores/usePeopleGroups'
-import useUsersStore from '@/stores/useUsers'
-import { useLpiHead2 } from '@/composables/useLpiHead'
+import useToasterStore from '~/stores/useToaster'
+import usePeopleGroupsStore from '~/stores/usePeopleGroups'
+import useUsersStore from '~/stores/useUsers'
+import { useLpiHead2 } from '~/composables/useLpiHead'
 import { AsyncDataRequestStatus } from 'nuxt/app'
 
 const props = defineProps({

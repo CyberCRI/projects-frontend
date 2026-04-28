@@ -1,7 +1,7 @@
-import { Doc, Page } from '@/composables/pdf-helpers/doc-builder'
-import PageTitle from '@/composables/project-pdf-components/PageTitle'
+import { Doc, Page } from '~/composables/pdf-helpers/doc-builder'
+import PageTitle from '~/composables/project-pdf-components/PageTitle'
 
-import addLinkedProjectSectionFactory from '@/composables/project-pdf-components/addLinkedProjectSectionFactory'
+import addLinkedProjectSectionFactory from '~/composables/project-pdf-components/addLinkedProjectSectionFactory'
 
 export default async function addPageLinkedProjectsFactory(project: any, linkedProjects: any[]) {
   const { t } = useNuxtI18n()

@@ -1,15 +1,15 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import ClassificationAdmin from '@/components/admin/ClassificationAdmin.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
+import ClassificationAdmin from '~/components/admin/ClassificationAdmin.vue'
 
-import pinia from '@/stores'
-import useOrganizationsStore from '@/stores/useOrganizations'
+import pinia from '~/stores'
+import useOrganizationsStore from '~/stores/useOrganizations'
 
-import { OrganizationOutput } from '@/models/organization.model'
+import { OrganizationOutput } from '~/models/organization.model'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
 
-vi.mock('@/api/tag-classification.service', () => ({
+vi.mock('~/api/tag-classification.service', () => ({
   getOrgClassificationTags: vi
     .fn()
     .mockResolvedValue({ data: { count: 3, results: [{ id: 1 }, { id: 2 }, { id: 3 }] } }),

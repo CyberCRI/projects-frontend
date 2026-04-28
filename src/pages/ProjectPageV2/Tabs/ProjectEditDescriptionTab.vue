@@ -46,14 +46,14 @@
 </template>
 
 <script>
-import { postProjectImage } from '@/api/projects.service'
-import analytics from '@/analytics'
+import { postProjectImage } from '~/api/projects.service'
+import analytics from '~/analytics'
 import retry from 'async-retry'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import useProjectsStore from '@/stores/useProjects.ts'
-import useUsersStore from '@/stores/useUsers.ts'
-import { textIsEmpty } from '@/functs/string'
+import useToasterStore from '~/stores/useToaster.ts'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useProjectsStore from '~/stores/useProjects.ts'
+import useUsersStore from '~/stores/useUsers.ts'
+import { textIsEmpty } from '~/functs/string'
 
 export default {
   name: 'ProjectEditDescriptionTab',

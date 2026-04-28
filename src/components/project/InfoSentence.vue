@@ -71,11 +71,11 @@
 
 <script setup lang="ts">
 // TODO need to change this whole things (wtf components)
-import IconImage from '@/components/base/media/IconImage.vue'
-import TagsList from '@/components/tags/TagsList.vue'
-import { IconImageChoice } from '@/functs/IconImage'
-import { TagModel } from '@/models/tag.model'
-import { usePublicURL } from '@/composables/usePublic'
+import IconImage from '~/components/base/media/IconImage.vue'
+import TagsList from '~/components/tags/TagsList.vue'
+import { IconImageChoice } from '~/functs/IconImage'
+import { TagModel } from '~/models/tag.model'
+import { usePublicURL } from '~/composables/usePublic'
 
 type Data = {
   number?: number

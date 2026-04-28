@@ -1,6 +1,6 @@
-import { Translated } from '@/interfaces/translated'
-import BaseModel from '@/models/base.model'
-import { StatusType } from '@/models/types'
+import { Translated } from '~/interfaces/translated'
+import BaseModel from '~/models/base.model'
+import { StatusType } from '~/models/types'
 
 /**
  * @name GoalModel

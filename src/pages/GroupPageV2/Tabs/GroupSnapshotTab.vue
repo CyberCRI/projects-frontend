@@ -34,19 +34,19 @@
 </template>
 
 <script setup lang="ts">
-import { PeopleGroupModulesKeys, TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import GroupSubPreview from '@/components/group/Modules/GroupSub/GroupSubPreview.vue'
-import GroupRecapPreview from '@/components/group/Modules/Extras/GroupRecapPreview.vue'
-import GroupDescriptionPreview from '@/components/group/Modules/Extras/GroupDescriptionPreview.vue'
-import GroupSimilarsPreview from '@/components/group/Modules/Extras/GroupSimilarsPreview.vue'
-import GroupMembersPreview from '@/components/group/Modules/Members/GroupMembersPreview.vue'
-import GroupProjectsPreview from '@/components/group/Modules/Projects/GroupProjectsPreview.vue'
-import GroupDocumentsPreview from '@/components/group/Modules/Documents/GroupDocumentsPreview.vue'
-import GroupHeader from '@/components/group/Modules/GroupHeader.vue'
-import GroupGalleryPreview from '@/components/group/Modules/Gallery/GroupGalleryPreview.vue'
+import { PeopleGroupModulesKeys, TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import GroupSubPreview from '~/components/group/Modules/GroupSub/GroupSubPreview.vue'
+import GroupRecapPreview from '~/components/group/Modules/Extras/GroupRecapPreview.vue'
+import GroupDescriptionPreview from '~/components/group/Modules/Extras/GroupDescriptionPreview.vue'
+import GroupSimilarsPreview from '~/components/group/Modules/Extras/GroupSimilarsPreview.vue'
+import GroupMembersPreview from '~/components/group/Modules/Members/GroupMembersPreview.vue'
+import GroupProjectsPreview from '~/components/group/Modules/Projects/GroupProjectsPreview.vue'
+import GroupDocumentsPreview from '~/components/group/Modules/Documents/GroupDocumentsPreview.vue'
+import GroupHeader from '~/components/group/Modules/GroupHeader.vue'
+import GroupGalleryPreview from '~/components/group/Modules/Gallery/GroupGalleryPreview.vue'
 import { difference } from 'es-toolkit'
-import GroupNewsPreview from '@/components/group/Modules/News/GroupNewsPreview.vue'
-import GroupEventPreview from '@/components/group/Modules/Event/GroupEventPreview.vue'
+import GroupNewsPreview from '~/components/group/Modules/News/GroupNewsPreview.vue'
+import GroupEventPreview from '~/components/group/Modules/Event/GroupEventPreview.vue'
 
 const props = withDefaults(
   defineProps<{

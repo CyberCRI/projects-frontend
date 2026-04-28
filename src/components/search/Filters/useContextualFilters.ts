@@ -3,17 +3,17 @@ import { computed, watch } from 'vue'
 import useSectionFilters, {
   PROJECT_SECTION_KEY,
   PEOPLE_SECTION_KEY,
-} from '@/components/search/Filters/useSectionFilters'
+} from '~/components/search/Filters/useSectionFilters'
 
-import SdgsFilter from '@/components/search/Filters/SdgsFilter.vue'
-import LanguageFilter from '@/components/search/Filters/LanguageFilter.vue'
-import TagsFilterSummary from '@/components/search/Filters/TagsFilterSummary.vue'
-import SkillsFilterSummary from '@/components/search/Filters/SkillsFilterSummary.vue'
-import SkillsFilterEditor from '@/components/search/Filters/SkillsFilterEditor.vue'
-import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
-import CategoriesFilterSummary from '@/components/search/Filters/CategoriesFilterSummary.vue'
-import CategoriesFilterEditor from '@/components/search/Filters/CategoriesFilterEditor.vue'
-import useProjectCategories from '@/stores/useProjectCategories'
+import SdgsFilter from '~/components/search/Filters/SdgsFilter.vue'
+import LanguageFilter from '~/components/search/Filters/LanguageFilter.vue'
+import TagsFilterSummary from '~/components/search/Filters/TagsFilterSummary.vue'
+import SkillsFilterSummary from '~/components/search/Filters/SkillsFilterSummary.vue'
+import SkillsFilterEditor from '~/components/search/Filters/SkillsFilterEditor.vue'
+import TagsFilterEditor from '~/components/search/Filters/TagsFilterEditor.vue'
+import CategoriesFilterSummary from '~/components/search/Filters/CategoriesFilterSummary.vue'
+import CategoriesFilterEditor from '~/components/search/Filters/CategoriesFilterEditor.vue'
+import useProjectCategories from '~/stores/useProjectCategories'
 
 export const ALL_FILTERS_MODE = 'all-filters'
 
@@ -22,7 +22,7 @@ export {
   PEOPLE_SECTION_KEY,
   GROUP_SECTION_KEY,
   ALL_SECTION_KEY,
-} from '@/components/search/Filters/useSectionFilters'
+} from '~/components/search/Filters/useSectionFilters'
 
 export default function useContextualFilters({
   selectedSection,

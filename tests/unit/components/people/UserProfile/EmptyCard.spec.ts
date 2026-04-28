@@ -1,5 +1,5 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import EmptyCard from '@/components/people/UserProfile/EmptyCard.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
+import EmptyCard from '~/components/people/UserProfile/EmptyCard.vue'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('EmptyCard.vue', () => {

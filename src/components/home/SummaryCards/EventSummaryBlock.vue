@@ -48,15 +48,15 @@
 </template>
 
 <script setup lang="ts">
-import EventItem from '@/components/event/EventList/EventItem.vue'
-import BaseListSummaryBlock from '@/components/home/SummaryCards/BaseListSummaryBlock.vue'
-import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
-import EditEventDrawer from '@/components/event/EditEventDrawer/EditEventDrawer.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import { deleteEvent } from '@/api/event.service'
-import useToasterStore from '@/stores/useToaster'
-import { TranslatedEventModel } from '@/models/event.model'
-import useOrganizationCode from '@/composables/useOrganizationCode'
+import EventItem from '~/components/event/EventList/EventItem.vue'
+import BaseListSummaryBlock from '~/components/home/SummaryCards/BaseListSummaryBlock.vue'
+import SummaryAction from '~/components/home/SummaryCards/SummaryAction.vue'
+import EditEventDrawer from '~/components/event/EditEventDrawer/EditEventDrawer.vue'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import { deleteEvent } from '~/api/event.service'
+import useToasterStore from '~/stores/useToaster'
+import { TranslatedEventModel } from '~/models/event.model'
+import useOrganizationCode from '~/composables/useOrganizationCode'
 
 withDefaults(
   defineProps<{

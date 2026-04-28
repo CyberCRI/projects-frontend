@@ -86,25 +86,25 @@
 </template>
 
 <script>
-import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
-import CategoryAdminElement from '@/components/category/CategoryAdminElement.vue'
-import LinkButton from '@/components/base/button/LinkButton.vue'
-import CategoryDrawer from '@/components/category/CategoryDrawer.vue'
+import LpiSnackbar from '~/components/base/LpiSnackbar.vue'
+import CategoryAdminElement from '~/components/category/CategoryAdminElement.vue'
+import LinkButton from '~/components/base/button/LinkButton.vue'
+import CategoryDrawer from '~/components/category/CategoryDrawer.vue'
 import {
   postProjectCategoryBackground,
   patchProjectCategoryBackground,
   deleteProjectCategory,
-} from '@/api/project-categories.service'
-import { imageSizesFormData } from '@/functs/imageSizesUtils.ts'
-import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
+} from '~/api/project-categories.service'
+import { imageSizesFormData } from '~/functs/imageSizesUtils.ts'
+import LpiLoader from '~/components/base/loader/LpiLoader.vue'
+import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 import { toRaw } from 'vue'
 import { Sortable } from 'sortablejs-vue3'
-import { createProjectCategory, patchProjectCategory } from '@/api/project-categories.service'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import useToasterStore from '@/stores/useToaster.ts'
-import useProjectCategories from '@/stores/useProjectCategories.ts'
-import useOrganizationCode from '@/composables/useOrganizationCode.ts'
+import { createProjectCategory, patchProjectCategory } from '~/api/project-categories.service'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import useToasterStore from '~/stores/useToaster.ts'
+import useProjectCategories from '~/stores/useProjectCategories.ts'
+import useOrganizationCode from '~/composables/useOrganizationCode.ts'
 
 export default {
   name: 'CategoriesTab',

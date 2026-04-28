@@ -1,5 +1,5 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import GroupGalleryTab from '@/pages/GroupPageV2/Tabs/Gallery/GroupGalleryTab.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
+import GroupGalleryTab from '~/pages/GroupPageV2/Tabs/Gallery/GroupGalleryTab.vue'
 import { flushPromises } from '@vue/test-utils'
 
 import { describe, expect, it } from 'vitest'

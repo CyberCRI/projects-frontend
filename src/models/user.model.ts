@@ -2,11 +2,11 @@
  * @name UserModel
  * @description user data set on the project app
  */
-import { ResearcherLight } from '@/interfaces/researcher'
+import { ResearcherLight } from '~/interfaces/researcher'
 import { TagModel } from './tag.model'
-import { Translated } from '@/interfaces/translated'
-import { ImageModel } from '@/models/image.model'
-import { PeopleGroupModel, TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import { Translated } from '~/interfaces/translated'
+import { ImageModel } from '~/models/image.model'
+import { PeopleGroupModel, TranslatedPeopleGroupModel } from '~/models/invitation.model'
 
 export type PrivacyValue = 'hide' | 'org' | 'pub'
 

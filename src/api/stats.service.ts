@@ -1,4 +1,4 @@
-import useAPI from '@/composables/useAPI'
+import useAPI from '~/composables/useAPI'
 
 export async function getStats(status = 'all', org: string) {
   // waiting for https://github.com/CyberCRI/projects-api-Reloaded/issues/241

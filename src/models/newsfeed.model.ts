@@ -1,7 +1,7 @@
 import { Project } from '@playwright/test'
 import { AnnouncementModel, TranslatedAnnouncement } from './announcement.model'
 import { TranslatedProject } from './project.model'
-import { NewsModel, TranslatedNews } from '@/models/news.model'
+import { NewsModel, TranslatedNews } from '~/models/news.model'
 
 /**
  * @name NewsfeedModel

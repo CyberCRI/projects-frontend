@@ -34,17 +34,17 @@ import {
   postUserAttachmentFile,
   deleteUserAttachmentFile,
   getUserAttachmentFile,
-} from '@/api/attachment-files.service'
+} from '~/api/attachment-files.service'
 import {
   patchUserAttachmentLink,
   postUserAttachmentLink,
   deleteUserAttachmentLink,
   getUserAttachmentLink,
-} from '@/api/attachment-links.service'
-import FetchLoader from '@/components/base/FetchLoader.vue'
-import ResourceDrawer from '@/components/resources/ResourceDrawer.vue'
-import ResourcesTab from '@/components/resources/ResourcesTab.vue'
-import { UserModel } from '@/models/user.model'
+} from '~/api/attachment-links.service'
+import FetchLoader from '~/components/base/FetchLoader.vue'
+import ResourceDrawer from '~/components/resources/ResourceDrawer.vue'
+import ResourcesTab from '~/components/resources/ResourcesTab.vue'
+import { UserModel } from '~/models/user.model'
 
 const props = defineProps<{ user: UserModel; isInEditingMode: boolean }>()
 const { canEditUser } = usePermissions()

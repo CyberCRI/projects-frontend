@@ -1,17 +1,17 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import SkillsEditDrawer from '@/components/people/skill/SkillsEditDrawer.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
+import SkillsEditDrawer from '~/components/people/skill/SkillsEditDrawer.vue'
 
-import pinia from '@/stores'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import { OrganizationOutput } from '@/models/organization.model'
+import pinia from '~/stores'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import { OrganizationOutput } from '~/models/organization.model'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('@/api/people.service.ts', () => ({
+vi.mock('~/api/people.service.ts', () => ({
   postUserSkill: vi.fn().mockResolvedValue({}),
 }))
 
-vi.mock('@/api/tag-classification.service', () => ({
+vi.mock('~/api/tag-classification.service', () => ({
   getOrgClassificationTags: vi
     .fn()
     .mockResolvedValue({ results: [{ id: 1 }, { id: 2 }, { id: 3 }] }),

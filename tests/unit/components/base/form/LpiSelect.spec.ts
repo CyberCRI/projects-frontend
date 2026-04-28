@@ -1,5 +1,5 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import LpiSelect from '@/components/base/form/LpiSelect.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
+import LpiSelect from '~/components/base/form/LpiSelect.vue'
 
 import { describe, expect, it } from 'vitest'
 const props = {

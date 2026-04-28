@@ -1,4 +1,4 @@
-import { withQuery } from '@/functs/query'
+import { withQuery } from '~/functs/query'
 import { describe, expect, it } from 'vitest'
 describe('withQuery', () => {
   it('empty query', () => {

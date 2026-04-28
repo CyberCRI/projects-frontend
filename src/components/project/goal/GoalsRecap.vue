@@ -21,9 +21,9 @@
 </template>
 
 <script setup lang="ts">
-import GoalSummaryItem from '@/components/project/goal/GoalSummaryItem.vue'
-import SectionHeader from '@/components/base/SectionHeader.vue'
-import { TranslatedGoal } from '@/models/goal.model'
+import GoalSummaryItem from '~/components/project/goal/GoalSummaryItem.vue'
+import SectionHeader from '~/components/base/SectionHeader.vue'
+import { TranslatedGoal } from '~/models/goal.model'
 
 defineEmits(['access-goals-view'])
 const props = defineProps<{

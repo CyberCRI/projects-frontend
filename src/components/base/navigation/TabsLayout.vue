@@ -101,9 +101,9 @@
 </template>
 
 <script setup lang="ts">
-import IconImage from '@/components/base/media/IconImage.vue'
-import useViewportWidth from '@/composables/useViewportWidth'
-import LinkButton from '@/components/base/button/LinkButton.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+import useViewportWidth from '~/composables/useViewportWidth'
+import LinkButton from '~/components/base/button/LinkButton.vue'
 import { debounce } from 'es-toolkit'
 
 const props = withDefaults(

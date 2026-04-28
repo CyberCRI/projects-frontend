@@ -30,10 +30,10 @@
   </div>
 </template>
 <script>
-import GroupsElementRadio from '@/components/group/GroupsElement/GroupsElementRadio.vue'
-import SearchInput from '@/components/base/form/SearchInput.vue'
-import { searchGroupsAlgolia } from '@/api/search.service.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import GroupsElementRadio from '~/components/group/GroupsElement/GroupsElementRadio.vue'
+import SearchInput from '~/components/base/form/SearchInput.vue'
+import { searchGroupsAlgolia } from '~/api/search.service.ts'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
 export default {
   name: 'PickGroup',
   components: {

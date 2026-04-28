@@ -1,6 +1,6 @@
-import { Ordering } from '@/interfaces/query'
-import { Translated } from '@/interfaces/translated'
-import { UserModel } from '@/models/user.model'
+import { Ordering } from '~/interfaces/query'
+import { Translated } from '~/interfaces/translated'
+import { UserModel } from '~/models/user.model'
 
 export type Relators =
   | 'abr'

@@ -1,6 +1,6 @@
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js'
-import createMCPServer from '@/mcp-server'
-import { tokenMap, traceMcp } from '@/server/routes/api/chat-stream'
+import createMCPServer from '~/mcp-server'
+import { tokenMap, traceMcp } from '~/server/routes/api/chat-stream'
 export default defineEventHandler(async (event) => {
   const { req, res } = event.node
 

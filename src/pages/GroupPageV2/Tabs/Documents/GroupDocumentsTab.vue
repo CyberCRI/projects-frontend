@@ -5,11 +5,11 @@
 </template>
 
 <script setup lang="ts">
-import GroupResearcherDocumentsList from '@/components/people/Researcher/GroupResearcherDocumentsList.vue'
-import { DocumentType } from '@/interfaces/researcher'
+import GroupResearcherDocumentsList from '~/components/people/Researcher/GroupResearcherDocumentsList.vue'
+import { DocumentType } from '~/interfaces/researcher'
 
-import { GroupModuleTitle, TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import BaseGroupTab from '@/pages/GroupPageV2/Tabs/BaseGroupTab.vue'
+import { GroupModuleTitle, TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import BaseGroupTab from '~/pages/GroupPageV2/Tabs/BaseGroupTab.vue'
 
 const props = defineProps<{
   documentType: DocumentType

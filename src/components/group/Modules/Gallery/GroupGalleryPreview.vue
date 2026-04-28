@@ -24,9 +24,9 @@ import {
   GroupModuleIcon,
   GroupModuleTitle,
   TranslatedPeopleGroupModel,
-} from '@/models/invitation.model'
-import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
-import BaseGroupGallery from '@/components/group/Modules/Gallery/BaseGroupGallery.vue'
+} from '~/models/invitation.model'
+import BaseGroupPreview from '~/components/group/Modules/BaseGroupPreview.vue'
+import BaseGroupGallery from '~/components/group/Modules/Gallery/BaseGroupGallery.vue'
 
 defineProps<{ group: TranslatedPeopleGroupModel }>()
 </script>

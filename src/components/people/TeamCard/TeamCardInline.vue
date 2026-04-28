@@ -9,11 +9,11 @@
 </template>
 
 <script setup lang="ts">
-import IconImage from '@/components/base/media/IconImage.vue'
-import useUsersStore from '@/stores/useUsers'
-import GroupMemberItem from '@/components/group/Modules/Members/GroupMemberItem.vue'
-import { GroupMember } from '@/models/group.model'
-import { IconImageChoice } from '@/functs/IconImage'
+import IconImage from '~/components/base/media/IconImage.vue'
+import useUsersStore from '~/stores/useUsers'
+import GroupMemberItem from '~/components/group/Modules/Members/GroupMemberItem.vue'
+import { GroupMember } from '~/models/group.model'
+import { IconImageChoice } from '~/functs/IconImage'
 
 const props = withDefaults(
   defineProps<{

@@ -27,13 +27,13 @@
 </template>
 
 <script setup lang="ts">
-import { getResearchDocumentSimilars } from '@/api/v2/crisalid.service'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import FetchLoader from '@/components/base/FetchLoader.vue'
-import PaginationButtonsV2 from '@/components/base/navigation/PaginationButtonsV2.vue'
-import { TranslatedDocument } from '@/interfaces/researcher'
-import { factoryPagination } from '@/skeletons/base.skeletons'
-import { researchDocumentSkeleton } from '@/skeletons/crisalid.skeletons'
+import { getResearchDocumentSimilars } from '~/api/v2/crisalid.service'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+import FetchLoader from '~/components/base/FetchLoader.vue'
+import PaginationButtonsV2 from '~/components/base/navigation/PaginationButtonsV2.vue'
+import { TranslatedDocument } from '~/interfaces/researcher'
+import { factoryPagination } from '~/skeletons/base.skeletons'
+import { researchDocumentSkeleton } from '~/skeletons/crisalid.skeletons'
 
 defineOptions({ name: 'ResearcherDocumentSimilars' })
 

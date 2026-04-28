@@ -1,5 +1,5 @@
-import { AnnouncementModel } from '@/models/announcement.model'
-import { projectSkeleton } from '@/skeletons/project.skeletons'
+import { AnnouncementModel } from '~/models/announcement.model'
+import { projectSkeleton } from '~/skeletons/project.skeletons'
 
 export const announcementSkeleton = (
   def?: Partial<AnnouncementModel>

@@ -13,11 +13,11 @@
 
 <script>
 import { debounce } from 'es-toolkit'
-import funct from '@/functs/functions.ts'
-import { getAllProjects } from '@/api/projects.service'
-import { getUserFollows } from '@/api/follows.service'
-import useAPI from '@/composables/useAPI.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import funct from '~/functs/functions.ts'
+import { getAllProjects } from '~/api/projects.service'
+import { getUserFollows } from '~/api/follows.service'
+import useAPI from '~/composables/useAPI.ts'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
 
 export default {
   name: 'UserProjectsSearch',

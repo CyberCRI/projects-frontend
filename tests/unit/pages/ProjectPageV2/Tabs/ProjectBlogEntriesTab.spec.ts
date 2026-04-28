@@ -1,5 +1,5 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import ProjectBlogEntriesTab from '@/pages/ProjectPageV2/Tabs/ProjectBlogEntriesTab.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
+import ProjectBlogEntriesTab from '~/pages/ProjectPageV2/Tabs/ProjectBlogEntriesTab.vue'
 
 import { describe, expect, it, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'

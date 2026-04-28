@@ -1,8 +1,8 @@
-import { Doc, Page } from '@/composables/pdf-helpers/doc-builder'
-import PageTitle from '@/composables/project-pdf-components/PageTitle'
-import { convertImages } from '@/composables/pdf-helpers/usePdfHelpers'
-import { tiptapContentStyles } from '@/composables/project-pdf-components/common-styles'
-import { textIsEmpty } from '@/functs/string'
+import { Doc, Page } from '~/composables/pdf-helpers/doc-builder'
+import PageTitle from '~/composables/project-pdf-components/PageTitle'
+import { convertImages } from '~/composables/pdf-helpers/usePdfHelpers'
+import { tiptapContentStyles } from '~/composables/project-pdf-components/common-styles'
+import { textIsEmpty } from '~/functs/string'
 
 export default async function addPageDescriptionFactory(project: any) {
   const { t } = useNuxtI18n()

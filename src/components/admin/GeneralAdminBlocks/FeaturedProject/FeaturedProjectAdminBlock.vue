@@ -36,9 +36,9 @@ import {
   getFeaturedProjects,
   addFeaturedProject,
   removeFeaturedProject,
-} from '@/api/organizations.service'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+} from '~/api/organizations.service'
+import useToasterStore from '~/stores/useToaster.ts'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
 
 export default {
   name: 'FeaturedProjectAdminBlock',

@@ -104,9 +104,9 @@
   </div>
 </template>
 <script>
-import { getInvitations, deleteInvitation } from '@/api/invitations.service.ts'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { getInvitations, deleteInvitation } from '~/api/invitations.service.ts'
+import useToasterStore from '~/stores/useToaster.ts'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
 
 export default {
   name: 'LinksListTab',

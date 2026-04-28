@@ -1,6 +1,6 @@
 // TODO rework this tests
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import OrganizationResourcesPage from '@/pages/OrganizationResourcesPage/OrganizationResourcesPage.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
+import OrganizationResourcesPage from '~/pages/OrganizationResourcesPage/OrganizationResourcesPage.vue'
 
 import { describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'

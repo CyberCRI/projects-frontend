@@ -1,5 +1,5 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import ProfileEditBlock from '@/components/people/CompleteProfileDrawer/ProfileEditBlock.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
+import ProfileEditBlock from '~/components/people/CompleteProfileDrawer/ProfileEditBlock.vue'
 
 import { beforeEach, describe, expect, it } from 'vitest'
 

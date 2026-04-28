@@ -1,14 +1,14 @@
-// import router from '@/router'
-import analytics from '@/analytics'
+// import router from '~/router'
+import analytics from '~/analytics'
 import waitForExpect from 'wait-for-expect'
 
 import { describe, expect, it, vi } from 'vitest'
 
-vi.mock('@/analytics')
+vi.mock('~/analytics')
 
 vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
 
-vi.mock('@/router/routes', () => ({
+vi.mock('~/router/routes', () => ({
   default: [
     // not used anymore, maybe later ? see routes.ts
     // {
@@ -30,7 +30,7 @@ vi.mock('@/router/routes', () => ({
   ],
 }))
 
-vi.unmock('@/router/index')
+vi.unmock('~/router/index')
 
 analytics.page.viewed = vi.fn(() => {})
 

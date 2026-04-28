@@ -20,8 +20,8 @@
 </template>
 
 <script lang="ts" setup>
-import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
+import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
+import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
 
 defineOptions({ name: 'UserPresenceCard' })
 withDefaults(

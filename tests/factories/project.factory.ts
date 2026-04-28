@@ -1,6 +1,6 @@
 import { createFactory } from 'faker-create-factory'
 
-import { ProjectModel, ProjectOutput, TranslatedProject } from '@/models/project.model'
+import { ProjectModel, ProjectOutput, TranslatedProject } from '~/models/project.model'
 import { BaseFactory } from './base.factory'
 import { ProjectCategoryOutputFactory } from './project-category.factory'
 import { ProjectTeamOutputFactory } from './project-member.factory'

@@ -1,7 +1,7 @@
-import useAPI from '@/composables/useAPI'
-import useAPI2 from '@/composables/useAPI2'
-import { OrganizationModel } from '@/models/organization.model'
-import { TemplateModel } from '@/models/template.model'
+import useAPI from '~/composables/useAPI'
+import useAPI2 from '~/composables/useAPI2'
+import { OrganizationModel } from '~/models/organization.model'
+import { TemplateModel } from '~/models/template.model'
 
 export function getTemplates(organizationCode: OrganizationModel['code']) {
   return useAPI2<PaginationResult<TemplateModel>>(`organization/${organizationCode}/template/`)

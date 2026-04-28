@@ -1,6 +1,6 @@
-import type { APIParams /*, APIResponseList*/ } from '@/api/types'
-// import type { NotificationModel } from '@/models/notifications.model'
-import useAPI from '@/composables/useAPI'
+import type { APIParams /*, APIResponseList*/ } from '~/api/types'
+// import type { NotificationModel } from '~/models/notifications.model'
+import useAPI from '~/composables/useAPI'
 import { useRuntimeConfig } from '#imports'
 
 export async function getNotifications(params: APIParams, orgCode: string | null = null) {

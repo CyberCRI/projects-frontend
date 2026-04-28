@@ -52,10 +52,10 @@
 </template>
 
 <script setup lang="ts">
-import ProjectFollowIcon from '@/components/project/ProjectFollowIcon.vue'
-import TagsList from '@/components/tags/TagsList.vue'
-import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
-import { TranslatedProject } from '@/models/project.model'
+import ProjectFollowIcon from '~/components/project/ProjectFollowIcon.vue'
+import TagsList from '~/components/tags/TagsList.vue'
+import { DEFAULT_PROJECT_PATATOID } from '~/composables/usePatatoids'
+import { TranslatedProject } from '~/models/project.model'
 
 const props = withDefaults(
   defineProps<{

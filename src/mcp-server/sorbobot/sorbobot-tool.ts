@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import SorbobotAPI from '@/mcp-server/sorbobot/sorbobot-api.js'
-import { traceSorbobot } from '@/server/routes/api/chat-stream'
+import SorbobotAPI from '~/mcp-server/sorbobot/sorbobot-api.js'
+import { traceSorbobot } from '~/server/routes/api/chat-stream'
 import { mcpFetch, API_BASE_URL } from '../projects/base'
 
 const runtimeConfig = useRuntimeConfig()

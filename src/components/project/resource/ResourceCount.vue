@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import IconImage from '@/components/base/media/IconImage.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
 import { RouteLocationRaw } from 'vue-router'
 
 withDefaults(

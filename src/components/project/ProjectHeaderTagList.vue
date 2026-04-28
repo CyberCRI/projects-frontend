@@ -21,8 +21,8 @@
 </template>
 
 <script setup lang="ts">
-import TagsList from '@/components/tags/TagsList.vue'
-import { ProjectModel } from '@/models/project.model'
+import TagsList from '~/components/tags/TagsList.vue'
+import { ProjectModel } from '~/models/project.model'
 
 withDefaults(
   defineProps<{

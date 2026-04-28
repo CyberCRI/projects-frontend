@@ -46,17 +46,17 @@
 </template>
 
 <script>
-import Drawer from '@/components/base/BaseDrawer.vue'
-import TipTapCollaborativeEditor from '@/components/base/form/TextEditor/TipTapCollaborativeEditor.vue'
-import { postProjectImage } from '@/api/projects.service'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import analytics from '@/analytics'
+import Drawer from '~/components/base/BaseDrawer.vue'
+import TipTapCollaborativeEditor from '~/components/base/form/TextEditor/TipTapCollaborativeEditor.vue'
+import { postProjectImage } from '~/api/projects.service'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import analytics from '~/analytics'
 import retry from 'async-retry'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import useProjectsStore from '@/stores/useProjects.ts'
-import useUsersStore from '@/stores/useUsers.ts'
-import { textIsEmpty } from '@/functs/string'
+import useToasterStore from '~/stores/useToaster.ts'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useProjectsStore from '~/stores/useProjects.ts'
+import useUsersStore from '~/stores/useUsers.ts'
+import { textIsEmpty } from '~/functs/string'
 
 export default {
   name: 'DescriptionDrawer',

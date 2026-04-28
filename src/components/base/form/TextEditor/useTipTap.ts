@@ -15,11 +15,11 @@ import ExternalVideo from './tiptap-extensions/ExternalVideo.js'
 import LpiCodeBlock from './tiptap-extensions/LpiCodeBlock.js'
 import CustomImage from './tiptap-extensions/CustomImage.js'
 
-import lowlight from '@/functs/lowlight'
+import lowlight from '~/functs/lowlight'
 
 import { ref } from 'vue'
-import useToasterStore from '@/stores/useToaster'
-import useOrganizationsStore from '@/stores/useOrganizations'
+import useToasterStore from '~/stores/useToaster'
+import useOrganizationsStore from '~/stores/useOrganizations'
 
 export const emitsDefinitions = ['saved', 'image', 'blur', 'update:modelValue']
 

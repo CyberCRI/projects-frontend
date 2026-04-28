@@ -1,6 +1,6 @@
 import { createFactory } from 'faker-create-factory'
 
-import { BlogEntryOutput, BlogEntryInput } from '@/models/blog-entry.model'
+import { BlogEntryOutput, BlogEntryInput } from '~/models/blog-entry.model'
 import BaseFactory from './base.factory'
 
 export const BlogEntryFactory = createFactory<BlogEntryOutput>((faker) => ({

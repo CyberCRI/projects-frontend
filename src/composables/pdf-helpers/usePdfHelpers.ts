@@ -1,5 +1,5 @@
-import usePdfFooter from '@/composables/pdf-helpers/usePdfFooter'
-import usePdfHeader from '@/composables/pdf-helpers/usePdfHeader'
+import usePdfFooter from '~/composables/pdf-helpers/usePdfFooter'
+import usePdfHeader from '~/composables/pdf-helpers/usePdfHeader'
 
 export async function croppedImageData({ ratio, imgDataUrl, imageSizes }) {
   return await new Promise((resolve) => {

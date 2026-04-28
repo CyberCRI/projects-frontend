@@ -1,6 +1,6 @@
-import { Translated } from '@/interfaces/translated'
-import BaseModel from '@/models/base.model'
-import { AttachmentType } from '@/models/types'
+import { Translated } from '~/interfaces/translated'
+import BaseModel from '~/models/base.model'
+import { AttachmentType } from '~/models/types'
 
 /**
  * @name AttachmentFileModel

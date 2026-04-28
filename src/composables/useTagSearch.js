@@ -1,9 +1,9 @@
 import { computed, watch, ref } from 'vue'
-import useOrganizationsStore from '@/stores/useOrganizations'
+import useOrganizationsStore from '~/stores/useOrganizations'
 import {
   getAllOrgClassifications,
   getOrgClassificationTags,
-} from '@/api/tag-classification.service'
+} from '~/api/tag-classification.service'
 export default function useTagSearch({
   useSkills,
   useProjects,

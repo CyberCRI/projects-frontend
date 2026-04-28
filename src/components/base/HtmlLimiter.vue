@@ -5,7 +5,7 @@
 </template>
 <script>
 import { debounce } from 'es-toolkit'
-import fixEditorContent from '@/functs/editorUtils.ts'
+import fixEditorContent from '~/functs/editorUtils.ts'
 
 const TIMER = 0 // set this to some thing like 1000 for visual debugging
 

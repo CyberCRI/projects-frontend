@@ -30,13 +30,13 @@
 </template>
 
 <script>
-import ProjectCard from '@/components/project/ProjectCard.vue'
-import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import DynamicGrid from '@/components/base/DynamicGrid.vue'
-import analytics from '@/analytics'
-import { deleteLinkedProject } from '@/api/projects.service'
-import useToasterStore from '@/stores/useToaster.ts'
+import ProjectCard from '~/components/project/ProjectCard.vue'
+import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import DynamicGrid from '~/components/base/DynamicGrid.vue'
+import analytics from '~/analytics'
+import { deleteLinkedProject } from '~/api/projects.service'
+import useToasterStore from '~/stores/useToaster.ts'
 export default {
   name: 'LinkedProjects',
 

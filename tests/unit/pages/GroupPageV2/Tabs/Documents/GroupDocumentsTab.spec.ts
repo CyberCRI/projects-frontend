@@ -1,14 +1,14 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import GroupDocumentsTab from '@/pages/GroupPageV2/Tabs/Documents/GroupDocumentsTab.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
+import GroupDocumentsTab from '~/pages/GroupPageV2/Tabs/Documents/GroupDocumentsTab.vue'
 import { flushPromises } from '@vue/test-utils'
 
 import { describe, expect, it } from 'vitest'
 import { TranslatedProjectFactory } from '../../../../../factories/project.factory'
-import { DocumentType, ResearcherDocumentAnalytics } from '@/interfaces/researcher'
+import { DocumentType, ResearcherDocumentAnalytics } from '~/interfaces/researcher'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import { PaginationsFactory } from '../../../../../factories/paginations.factory'
 import { DocumentFactory } from '../../../../../factories/researcher.factory'
-import { documentAnalyticsSkeleton } from '@/skeletons/crisalid.skeletons'
+import { documentAnalyticsSkeleton } from '~/skeletons/crisalid.skeletons'
 
 describe('GroupDocumentsTab.vue', () => {
   it('should render component', async () => {

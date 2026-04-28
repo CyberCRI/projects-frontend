@@ -15,9 +15,9 @@
 </template>
 
 <script setup lang="ts">
-import { isAnonymousUser } from '@/functs/users'
+import { isAnonymousUser } from '~/functs/users'
 
-import UserCard from '@/components/people/UserCard.vue'
+import UserCard from '~/components/people/UserCard.vue'
 
 const props = withDefaults(
   defineProps<{

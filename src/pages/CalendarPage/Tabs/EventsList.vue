@@ -14,13 +14,13 @@
 </template>
 
 <script setup lang="ts">
-import { getAllEvents } from '@/api/v2/event.service'
-import EventFilter from '@/components/event/EventFilter.vue'
-import EventList from '@/components/event/EventList/EventList.vue'
-import { YearMonthDateFormat } from '@/functs/date'
-import { QueryFilterEvent } from '@/models/event.model'
-import { factoryPagination } from '@/skeletons/base.skeletons'
-import { eventSkeleton } from '@/skeletons/event.skeletons'
+import { getAllEvents } from '~/api/v2/event.service'
+import EventFilter from '~/components/event/EventFilter.vue'
+import EventList from '~/components/event/EventList/EventList.vue'
+import { YearMonthDateFormat } from '~/functs/date'
+import { QueryFilterEvent } from '~/models/event.model'
+import { factoryPagination } from '~/skeletons/base.skeletons'
+import { eventSkeleton } from '~/skeletons/event.skeletons'
 import { groupBy } from 'es-toolkit'
 
 const LIMIT_SKELETON = 10

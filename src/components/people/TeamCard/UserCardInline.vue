@@ -43,12 +43,12 @@
 </template>
 
 <script setup>
-import { capitalize } from '@/functs/string'
-import { isNotGroup } from '@/functs/users'
+import { capitalize } from '~/functs/string'
+import { isNotGroup } from '~/functs/users'
 
-import IconImage from '@/components/base/media/IconImage.vue'
-import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
+import IconImage from '~/components/base/media/IconImage.vue'
+import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
+import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
 
 defineOptions({ name: 'UserCardInline' })
 const { t } = useNuxtI18n()

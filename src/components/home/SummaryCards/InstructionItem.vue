@@ -27,9 +27,9 @@
 </template>
 
 <script setup lang="ts">
-import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
-import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
-import { TranslatedInstruction } from '@/models/instruction.model'
+import HtmlLimiter from '~/components/base/HtmlLimiter.vue'
+import ContextActionMenu from '~/components/base/button/ContextActionMenu.vue'
+import { TranslatedInstruction } from '~/models/instruction.model'
 
 defineProps<{
   instruction: TranslatedInstruction

@@ -3,10 +3,10 @@ import type {
   // ProjectCategoryOutput,
   ProjectCategoryPatchInput,
   ProjectCategoryPutInput,
-} from '@/models/project-category.model'
-// import type { ProjectCategoryBackgroundOutput } from '@/models/project-category.model'
-import useAPI from '@/composables/useAPI'
-import { TagModel } from '@/models/tag.model'
+} from '~/models/project-category.model'
+// import type { ProjectCategoryBackgroundOutput } from '~/models/project-category.model'
+import useAPI from '~/composables/useAPI'
+import { TagModel } from '~/models/tag.model'
 
 export async function createProjectCategory(
   organizationCode: string,

@@ -1,9 +1,9 @@
 <script setup>
 import 'deep-chat'
-import analytics from '@/analytics'
-import useUsersStore from '@/stores/useUsers.ts'
+import analytics from '~/analytics'
+import useUsersStore from '~/stores/useUsers.ts'
 import { shuffle } from 'es-toolkit'
-import { SDGS } from '@/functs/constants'
+import { SDGS } from '~/functs/constants'
 
 const { t } = useNuxtI18n()
 const router = useRouter()

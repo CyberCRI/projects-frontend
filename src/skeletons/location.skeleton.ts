@@ -1,4 +1,4 @@
-import { BaseLocationModel } from '@/models/location.model'
+import { BaseLocationModel } from '~/models/location.model'
 
 export const locationSkeleton = (
   def?: Partial<BaseLocationModel>

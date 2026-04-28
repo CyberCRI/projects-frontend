@@ -20,7 +20,7 @@
   </div>
 </template>
 <script>
-import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
+import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 export default {
   name: 'AdminBlock',
 

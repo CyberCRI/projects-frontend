@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { getHierarchyGroups } from '@/api/v2/group.service'
-import { useLpiHead2 } from '@/composables/useLpiHead'
-import { PeopleGroupModulesKeys } from '@/models/invitation.model'
-import { factoriesSkeleton } from '@/skeletons/base.skeletons'
-import { groupSkeleton } from '@/skeletons/group.skeletons'
+import { getHierarchyGroups } from '~/api/v2/group.service'
+import { useLpiHead2 } from '~/composables/useLpiHead'
+import { PeopleGroupModulesKeys } from '~/models/invitation.model'
+import { factoriesSkeleton } from '~/skeletons/base.skeletons'
+import { groupSkeleton } from '~/skeletons/group.skeletons'
 
 const props = withDefaults(defineProps<{ groupIdOrSlug?: string }>(), { groupIdOrSlug: '' })
 const organizationCode = useOrganizationCode()

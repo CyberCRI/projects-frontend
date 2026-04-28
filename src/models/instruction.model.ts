@@ -1,7 +1,7 @@
-import { Ordering } from '@/interfaces/query'
-import { Translated } from '@/interfaces/translated'
-import BaseModel from '@/models/base.model'
-import { PeopleGroupModel } from '@/models/invitation.model'
+import { Ordering } from '~/interfaces/query'
+import { Translated } from '~/interfaces/translated'
+import BaseModel from '~/models/base.model'
+import { PeopleGroupModel } from '~/models/invitation.model'
 
 /**
  * @name NewsModel

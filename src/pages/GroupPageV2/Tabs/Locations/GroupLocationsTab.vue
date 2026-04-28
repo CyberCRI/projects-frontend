@@ -5,9 +5,9 @@
 </template>
 
 <script setup lang="ts">
-import GroupLocationBase from '@/components/group/Modules/Locations/GroupLocationBase.vue'
-import { GroupModuleTitle, TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import BaseGroupTab from '@/pages/GroupPageV2/Tabs/BaseGroupTab.vue'
+import GroupLocationBase from '~/components/group/Modules/Locations/GroupLocationBase.vue'
+import { GroupModuleTitle, TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import BaseGroupTab from '~/pages/GroupPageV2/Tabs/BaseGroupTab.vue'
 
 const props = defineProps<{
   group: TranslatedPeopleGroupModel

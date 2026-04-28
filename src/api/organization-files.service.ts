@@ -1,8 +1,8 @@
-// import type { APIResponseList } from '@/api/types'
+// import type { APIResponseList } from '~/api/types'
 
-import type { AttachmentFileInput, AttachmentFileModel } from '@/models/attachment-file.model'
+import type { AttachmentFileInput, AttachmentFileModel } from '~/models/attachment-file.model'
 
-import useAPI from '@/composables/useAPI'
+import useAPI from '~/composables/useAPI'
 
 export async function getOrganizationFiles(organizationCode: string, config = {}) {
   return await useAPI<PaginationResult<AttachmentFileModel>>(

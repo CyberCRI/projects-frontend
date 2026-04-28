@@ -4,7 +4,7 @@ import {
   AnnouncementInput,
   AnnouncementOutput,
   TranslatedAnnouncement,
-} from '@/models/announcement.model'
+} from '~/models/announcement.model'
 import BaseFactory from './base.factory'
 import { shuffle } from 'es-toolkit'
 

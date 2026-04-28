@@ -27,10 +27,10 @@
 </template>
 
 <script setup lang="ts">
-import CardList from '@/components/base/CardList.vue'
-import ProjectCard from '@/components/project/ProjectCard.vue'
+import CardList from '~/components/base/CardList.vue'
+import ProjectCard from '~/components/project/ProjectCard.vue'
 import EmptyCard from './EmptyCard.vue'
-import { TranslatedProject } from '@/models/project.model'
+import { TranslatedProject } from '~/models/project.model'
 
 const props = withDefaults(
   defineProps<{

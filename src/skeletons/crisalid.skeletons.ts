@@ -1,5 +1,5 @@
-import { Document, Identifier, ResearcherDocumentAnalytics } from '@/interfaces/researcher'
-import { factoriesSkeleton } from '@/skeletons/base.skeletons'
+import { Document, Identifier, ResearcherDocumentAnalytics } from '~/interfaces/researcher'
+import { factoriesSkeleton } from '~/skeletons/base.skeletons'
 import { randomInt } from 'es-toolkit'
 
 export const documentAnalyticsSkeleton = (

@@ -44,13 +44,13 @@
 </template>
 
 <script>
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
 import LinkedProjectSelection from './LinkedProjectSelection.vue'
-import ProjectCard from '@/components/project/ProjectCard.vue'
-import analytics from '@/analytics'
-import { addLinkedProject, patchLinkedProject } from '@/api/projects.service'
-import useToasterStore from '@/stores/useToaster.ts'
-import useProjectsStore from '@/stores/useProjects.ts'
+import ProjectCard from '~/components/project/ProjectCard.vue'
+import analytics from '~/analytics'
+import { addLinkedProject, patchLinkedProject } from '~/api/projects.service'
+import useToasterStore from '~/stores/useToaster.ts'
+import useProjectsStore from '~/stores/useProjects.ts'
 
 export default {
   name: 'LinkedProjectDrawer',

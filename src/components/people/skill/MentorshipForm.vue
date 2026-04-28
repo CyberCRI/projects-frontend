@@ -1,6 +1,6 @@
 <script setup>
-import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
-import TextInput from '@/components/base/form/TextInput.vue'
+import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
 import { watchEffect } from 'vue'
 
 const model = defineModel({ type: Object, required: true })

@@ -1,7 +1,7 @@
 import { required, maxLength } from '@vuelidate/validators'
-import useForm from '@/composables/useForm'
+import useForm from '~/composables/useForm'
 import { clone } from 'es-toolkit'
-import { LocationForm } from '@/models/location.model'
+import { LocationForm } from '~/models/location.model'
 
 const DEFAULT_FORM: LocationForm = {
   lat: null,

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import useUsersStore from '@/stores/useUsers'
-import followUtils from '@/functs/followUtils'
+import useUsersStore from '~/stores/useUsers'
+import followUtils from '~/functs/followUtils'
 const { t } = useNuxtI18n()
 const props = defineProps({
   categoryId: {

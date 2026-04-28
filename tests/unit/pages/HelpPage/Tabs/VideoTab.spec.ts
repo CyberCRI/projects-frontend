@@ -1,5 +1,5 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import VideoTab from '@/pages/HelpPage/Tabs/VideoTab.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
+import VideoTab from '~/pages/HelpPage/Tabs/VideoTab.vue'
 
 import { describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'

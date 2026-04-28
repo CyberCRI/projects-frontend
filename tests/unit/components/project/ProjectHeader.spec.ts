@@ -1,15 +1,15 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import ProjectHeader from '@/components/project/ProjectHeaderV2.vue'
-import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import ProjectHeader from '~/components/project/ProjectHeaderV2.vue'
+import { ProjectOutputFactory } from '~~/tests/factories/project.factory'
 
-import pinia from '@/stores'
-import useUsersStore from '@/stores/useUsers'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import { OrganizationOutput } from '@/models/organization.model'
+import pinia from '~/stores'
+import useUsersStore from '~/stores/useUsers'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import { OrganizationOutput } from '~/models/organization.model'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('@/composables/usePermissions', () => ({
+vi.mock('~/composables/usePermissions', () => ({
   default: () => ({
     canEditProject: computed(() => true),
   }),

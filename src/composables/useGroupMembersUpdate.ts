@@ -1,4 +1,4 @@
-import { getGroupMember, postGroupMembers, removeGroupMember } from '@/api/groups.service'
+import { getGroupMember, postGroupMembers, removeGroupMember } from '~/api/groups.service'
 
 export default function useGroupMembersUpdate(orgCode, groupId, form) {
   const groupMemberData = ref(null)

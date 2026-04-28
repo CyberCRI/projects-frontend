@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { IconImageChoice, ICONS } from '@/functs/IconImage'
+import { IconImageChoice, ICONS } from '~/functs/IconImage'
 const props = defineProps<{
   name: IconImageChoice
 }>()

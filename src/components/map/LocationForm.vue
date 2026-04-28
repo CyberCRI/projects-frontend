@@ -46,14 +46,14 @@
 </template>
 
 <script setup lang="ts">
-import DialogModal from '@/components/base/modal/DialogModal.vue'
-import TextInput from '@/components/base/form/TextInput.vue'
-import GroupButton from '@/components/base/button/GroupButton.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import { LocationForm } from '@/models/location.model'
-import { useLocationForm } from '@/form/location'
-import { LocationType } from '@/models/types'
-import MapRecap from '@/components/map/MapRecap.vue'
+import DialogModal from '~/components/base/modal/DialogModal.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+import GroupButton from '~/components/base/button/GroupButton.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import { LocationForm } from '~/models/location.model'
+import { useLocationForm } from '~/form/location'
+import { LocationType } from '~/models/types'
+import MapRecap from '~/components/map/MapRecap.vue'
 
 const props = withDefaults(
   defineProps<{

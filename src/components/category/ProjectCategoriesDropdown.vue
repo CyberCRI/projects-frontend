@@ -30,9 +30,9 @@
 </template>
 
 <script setup lang="ts">
-import IconImage from '@/components/base/media/IconImage.vue'
-import ProjectCategoriesDropdownElement from '@/components/category/ProjectCategoriesDropdownElement.vue'
-import useProjectCategories from '@/stores/useProjectCategories'
+import IconImage from '~/components/base/media/IconImage.vue'
+import ProjectCategoriesDropdownElement from '~/components/category/ProjectCategoriesDropdownElement.vue'
+import useProjectCategories from '~/stores/useProjectCategories'
 
 defineProps<{ dropdownLabel: string }>()
 defineEmits<{ close: [] }>()

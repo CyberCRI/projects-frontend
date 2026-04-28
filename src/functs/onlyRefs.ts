@@ -1,4 +1,4 @@
-import { RefOrRaw } from '@/interfaces/utils'
+import { RefOrRaw } from '~/interfaces/utils'
 
 /**
  * filter only ref/computed vars

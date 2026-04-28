@@ -1,6 +1,6 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import GoalSummaryItem from '@/components/project/goal/GoalSummaryItem.vue'
-import { TranslatedGoalFactory } from '@/../tests/factories/goal.factory'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
+import GoalSummaryItem from '~/components/project/goal/GoalSummaryItem.vue'
+import { TranslatedGoalFactory } from '~~/tests/factories/goal.factory'
 
 import { describe, expect, it } from 'vitest'
 

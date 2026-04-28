@@ -60,12 +60,12 @@
 </template>
 
 <script>
-import BasicCard from '@/components/base/BasicCard.vue'
-import IconImage from '@/components/base/media/IconImage.vue'
-import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import useUsersStore from '@/stores/useUsers.ts'
-import ProjectFollowIcon from '@/components/project/ProjectFollowIcon.vue'
-import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
+import BasicCard from '~/components/base/BasicCard.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
+import useUsersStore from '~/stores/useUsers.ts'
+import ProjectFollowIcon from '~/components/project/ProjectFollowIcon.vue'
+import { DEFAULT_PROJECT_PATATOID } from '~/composables/usePatatoids'
 
 export default {
   name: 'ProjectCard',

@@ -11,7 +11,7 @@
   </aside>
 </template>
 <script setup lang="ts">
-import { onResize } from '@/composables/onResize'
+import { onResize } from '~/composables/onResize'
 import { throttle } from 'es-toolkit'
 
 defineProps<{ pageTitle: string }>()

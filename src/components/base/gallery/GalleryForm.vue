@@ -61,13 +61,13 @@
 </template>
 
 <script setup lang="ts">
-import DialogModal from '@/components/base/modal/DialogModal.vue'
-import { useGalleryImageForm } from '@/form/gallery'
-import GalleryList from '@/components/base/gallery/GalleryList.vue'
-import { ImageGalleryForm } from '@/interfaces/gallery'
-import EmptyLabel from '@/components/base/EmptyLabel.vue'
-import { urlToImageModel } from '@/functs/imageSizesUtils'
-import GalleryItem from '@/components/base/gallery/GalleryItem.vue'
+import DialogModal from '~/components/base/modal/DialogModal.vue'
+import { useGalleryImageForm } from '~/form/gallery'
+import GalleryList from '~/components/base/gallery/GalleryList.vue'
+import { ImageGalleryForm } from '~/interfaces/gallery'
+import EmptyLabel from '~/components/base/EmptyLabel.vue'
+import { urlToImageModel } from '~/functs/imageSizesUtils'
+import GalleryItem from '~/components/base/gallery/GalleryItem.vue'
 import { AsyncDataRequestStatus } from 'nuxt/app'
 
 const props = withDefaults(

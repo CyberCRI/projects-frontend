@@ -1,4 +1,4 @@
-import { EventForm } from '@/models/event.model'
+import { EventForm } from '~/models/event.model'
 
 export const defaultForm = (): EventForm => ({
   title: '',

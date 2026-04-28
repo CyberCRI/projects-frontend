@@ -11,8 +11,8 @@
 </template>
 
 <script setup lang="ts">
-import { IconMapLocationType } from '@/functs/maps'
-import { LocationType } from '@/models/types'
+import { IconMapLocationType } from '~/functs/maps'
+import { LocationType } from '~/models/types'
 
 const props = withDefaults(defineProps<{ locationType: LocationType; label?: boolean }>(), {
   label: true,

@@ -11,8 +11,8 @@
 </template>
 
 <script setup lang="ts">
-import { IconImageChoice } from '@/functs/IconImage'
-import IconImage from '@/components/base/media/IconImage.vue'
+import { IconImageChoice } from '~/functs/IconImage'
+import IconImage from '~/components/base/media/IconImage.vue'
 
 withDefaults(
   defineProps<{

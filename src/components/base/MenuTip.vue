@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
+import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
 
 const { stateModal, openModal, closeModal } = useModal()
 const closeAfterClick = () => nextTick(() => closeModal())

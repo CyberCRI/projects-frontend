@@ -34,15 +34,15 @@
 </template>
 
 <script setup lang="ts">
-import LpiFooter from '@/components/app/LpiFooter.vue'
-import AppToastList from '@/components/app/AppToastList.vue'
-import LpiHeader from '@/components/app/LpiHeader.vue'
-import { checkExpiredToken } from '@/api/auth/keycloakUtils'
-import useUsersStore from '@/stores/useUsers'
-import useKeycloak from '@/api/auth/keycloak'
+import LpiFooter from '~/components/app/LpiFooter.vue'
+import AppToastList from '~/components/app/AppToastList.vue'
+import LpiHeader from '~/components/app/LpiHeader.vue'
+import { checkExpiredToken } from '~/api/auth/keycloakUtils'
+import useUsersStore from '~/stores/useUsers'
+import useKeycloak from '~/api/auth/keycloak'
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
-import useGlobalsStore from '@/stores/useGlobals'
-import { fixTiptapTableHeight } from '@/functs/editorUtils'
+import useGlobalsStore from '~/stores/useGlobals'
+import { fixTiptapTableHeight } from '~/functs/editorUtils'
 useRuntimeHook('app:error', (error) => {
   console.log('app:error', error)
 })
@@ -137,7 +137,7 @@ onBeforeUnmount(() => {
 })
 </script>
 <style lang="scss">
-@import '@/design/scss/main';
+@import '~/design/scss/main';
 
 #APP {
   display: flex;

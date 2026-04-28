@@ -42,12 +42,12 @@
 </template>
 
 <script>
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import PickProjectSelection from '@/components/project/PickProjectSelection.vue'
-import ProjectCard from '@/components/project/ProjectCard.vue'
-import LinkButton from '@/components/base/button/LinkButton.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+import PickProjectSelection from '~/components/project/PickProjectSelection.vue'
+import ProjectCard from '~/components/project/ProjectCard.vue'
+import LinkButton from '~/components/base/button/LinkButton.vue'
 import { toRaw } from 'vue'
-import useToasterStore from '@/stores/useToaster.ts'
+import useToasterStore from '~/stores/useToaster.ts'
 
 export default {
   name: 'PickProjectsDrawer',

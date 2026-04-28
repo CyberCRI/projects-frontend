@@ -67,14 +67,14 @@
 </template>
 
 <script>
-import SectionHeader from '@/components/base/SectionHeader.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import ResourceCard from '@/components/resources/ResourceCard.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import analytics from '@/analytics'
-import { deleteAttachmentFile } from '@/api/attachment-files.service'
-import { deleteAttachmentLink } from '@/api/attachment-links.service'
-import useToasterStore from '@/stores/useToaster.ts'
+import SectionHeader from '~/components/base/SectionHeader.vue'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import ResourceCard from '~/components/resources/ResourceCard.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import analytics from '~/analytics'
+import { deleteAttachmentFile } from '~/api/attachment-files.service'
+import { deleteAttachmentLink } from '~/api/attachment-links.service'
+import useToasterStore from '~/stores/useToaster.ts'
 export default {
   name: 'ProjectResourcesTab',
 

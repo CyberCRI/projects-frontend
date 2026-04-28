@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import SdgIcon from '@/components/search/Filters/SdgIcon.vue'
+import SdgIcon from '~/components/search/Filters/SdgIcon.vue'
 import { RouteLocationNamedRaw } from 'vue-router'
 
 const props = withDefaults(

@@ -15,12 +15,12 @@
 </template>
 
 <script>
-import { searchAll, searchProjects, searchGroupsAlgolia, searchUser } from '@/api/search.service'
-import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import useAPI from '@/composables/useAPI.ts'
-import { searchEquals } from '@/functs/search.ts'
+import { searchAll, searchProjects, searchGroupsAlgolia, searchUser } from '~/api/search.service'
+import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
+import useAPI from '~/composables/useAPI.ts'
+import { searchEquals } from '~/functs/search.ts'
 import { toRaw } from 'vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
 import { debounce } from 'es-toolkit'
 
 export default {

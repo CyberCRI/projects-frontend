@@ -1,9 +1,9 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import WelcomedModal from '@/components/onboarding/WelcomeModal/WelcomeModal.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
+import WelcomedModal from '~/components/onboarding/WelcomeModal/WelcomeModal.vue'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
-import pinia from '@/stores'
-import useOrganizationsStore from '@/stores/useOrganizations'
+import { OrganizationOutputFactory } from '~~/tests/factories/organization.factory'
+import pinia from '~/stores'
+import useOrganizationsStore from '~/stores/useOrganizations'
 
 describe('WelcomedModal.vue', () => {
   let wrapper

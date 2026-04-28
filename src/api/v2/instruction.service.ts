@@ -1,12 +1,12 @@
 import {
   getAllInstructions as fetchAllInstructions,
   getInstruction as fetchInstruction,
-} from '@/api/instruction.service'
-import { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
-import { onlyRefs } from '@/functs/onlyRefs'
-import { RefOrRaw } from '@/interfaces/utils'
-import { InstructionId, QueryFilterInstruction } from '@/models/instruction.model'
-import { OrganizationModel } from '@/models/organization.model'
+} from '~/api/instruction.service'
+import { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
+import { onlyRefs } from '~/functs/onlyRefs'
+import { RefOrRaw } from '~/interfaces/utils'
+import { InstructionId, QueryFilterInstruction } from '~/models/instruction.model'
+import { OrganizationModel } from '~/models/organization.model'
 
 const DEFAULT_CONFIG = {}
 

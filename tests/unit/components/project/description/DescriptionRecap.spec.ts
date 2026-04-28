@@ -1,5 +1,5 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import DescriptionRecap from '@/components/project/description/DescriptionRecap.vue'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import DescriptionRecap from '~/components/project/description/DescriptionRecap.vue'
 
 import { describe, expect, it } from 'vitest'
 import { TranslatedProjectFactory } from '../../../../factories/project.factory'

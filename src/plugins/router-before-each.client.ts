@@ -1,8 +1,8 @@
-import isAdmin from '@/functs/isAdmin'
-import isAdminOrFacilitator from '@/functs/isAdminOrFacilitator'
-import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
-import utils from '@/functs/functions'
-import useUsersStore from '@/stores/useUsers'
+import isAdmin from '~/functs/isAdmin'
+import isAdminOrFacilitator from '~/functs/isAdminOrFacilitator'
+import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
+import utils from '~/functs/functions'
+import useUsersStore from '~/stores/useUsers'
 
 export default defineNuxtPlugin(async () => {
   useRouter().beforeEach((to, from, next) => {

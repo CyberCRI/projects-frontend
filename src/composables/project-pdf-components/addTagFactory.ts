@@ -1,4 +1,4 @@
-import { Container } from '@/composables/pdf-helpers/doc-builder'
+import { Container } from '~/composables/pdf-helpers/doc-builder'
 
 export default function addTagsFactory(project, locale) {
   const tagTitle = (tag) => tag[`title_${locale.value}`] || tag.title

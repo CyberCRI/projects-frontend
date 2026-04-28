@@ -1,11 +1,11 @@
-import { ImageSizes } from '@/functs/imageSizesUtils'
-import { Ordering } from '@/interfaces/query'
-import { Translated } from '@/interfaces/translated'
-import BaseModel from '@/models/base.model'
-import { ImageModel } from '@/models/image.model'
-import { PeopleGroupModel } from '@/models/invitation.model'
-import { BaseLocationModel, BaseTranslatedLocationModel } from '@/models/location.model'
-import { OrganizationModel } from '@/models/organization.model'
+import { ImageSizes } from '~/functs/imageSizesUtils'
+import { Ordering } from '~/interfaces/query'
+import { Translated } from '~/interfaces/translated'
+import BaseModel from '~/models/base.model'
+import { ImageModel } from '~/models/image.model'
+import { PeopleGroupModel } from '~/models/invitation.model'
+import { BaseLocationModel, BaseTranslatedLocationModel } from '~/models/location.model'
+import { OrganizationModel } from '~/models/organization.model'
 
 /**
  * @name NewsModel

@@ -12,9 +12,9 @@
   </span>
 </template>
 <script setup lang="ts">
-import IconImage from '@/components/base/media/IconImage.vue'
-import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import { IconImageChoice } from '@/functs/IconImage'
+import IconImage from '~/components/base/media/IconImage.vue'
+import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
+import { IconImageChoice } from '~/functs/IconImage'
 
 withDefaults(
   defineProps<{

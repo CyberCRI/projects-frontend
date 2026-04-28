@@ -16,9 +16,9 @@
 </template>
 
 <script setup lang="ts">
-import IconImage from '@/components/base/media/IconImage.vue'
-import { SDGS } from '@/functs/constants'
-import { usePublicURL } from '@/composables/usePublic'
+import IconImage from '~/components/base/media/IconImage.vue'
+import { SDGS } from '~/functs/constants'
+import { usePublicURL } from '~/composables/usePublic'
 
 const props = withDefaults(
   defineProps<{

@@ -1,11 +1,11 @@
-// import type { APIResponseList } from '@/api/types'
+// import type { APIResponseList } from '~/api/types'
 
 import type {
   AttachmentFileInput /*, AttachmentFileOutput*/,
   AttachmentFileModel,
-} from '@/models/attachment-file.model'
+} from '~/models/attachment-file.model'
 
-import useAPI from '@/composables/useAPI'
+import useAPI from '~/composables/useAPI'
 
 export async function getAttachmentFiles(id: string) {
   return await useAPI<PaginationResult<AttachmentFileModel>>(`project/${id}/file/`, {}) //.data.value

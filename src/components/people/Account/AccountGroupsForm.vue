@@ -75,13 +75,13 @@
   </template>
 </template>
 <script>
-import GroupHierarchyList from '@/components/people/Account/GroupHierarchyList.vue'
-import FilterValue from '@/components/search/Filters/FilterValue.vue'
-import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
-import { getHierarchyGroups } from '@/api/groups.service'
-import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import AccountSection from '@/components/people/Account/AccountSection.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import GroupHierarchyList from '~/components/people/Account/GroupHierarchyList.vue'
+import FilterValue from '~/components/search/Filters/FilterValue.vue'
+import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
+import { getHierarchyGroups } from '~/api/groups.service'
+import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
+import AccountSection from '~/components/people/Account/AccountSection.vue'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
 export default {
   name: 'AccountGroupsForm',
 

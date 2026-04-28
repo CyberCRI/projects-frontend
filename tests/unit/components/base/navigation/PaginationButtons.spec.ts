@@ -1,5 +1,5 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
+import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
 
 import { describe, expect, it } from 'vitest'
 const factory = (props?) => {

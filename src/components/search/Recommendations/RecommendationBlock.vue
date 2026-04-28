@@ -29,16 +29,16 @@
 </template>
 
 <script>
-import UserRecommendationList from '@/components/search/Recommendations/UserRecommendationList.vue'
-import ProjectRecommendationList from '@/components/search/Recommendations/ProjectRecommendationList.vue'
+import UserRecommendationList from '~/components/search/Recommendations/UserRecommendationList.vue'
+import ProjectRecommendationList from '~/components/search/Recommendations/ProjectRecommendationList.vue'
 import {
   getRandomProjectsRecommendationsForUser,
   getRandomUsersRecommendationsForUser,
-} from '@/api/recommendations.service'
-import { getFeaturedProjects } from '@/api/organizations.service'
-import RecommendationListSkeleton from '@/components/search/Recommendations/RecommendationListSkeleton.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import useUsersStore from '@/stores/useUsers.ts'
+} from '~/api/recommendations.service'
+import { getFeaturedProjects } from '~/api/organizations.service'
+import RecommendationListSkeleton from '~/components/search/Recommendations/RecommendationListSkeleton.vue'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useUsersStore from '~/stores/useUsers.ts'
 export default {
   name: 'RecommendationBlock',
 

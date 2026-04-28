@@ -1,10 +1,10 @@
-import utils from '@/functs/functions'
+import utils from '~/functs/functions'
 
 // import { mapState } from 'pinia'
-import usePeopleGroupsStore from '@/stores/usePeopleGroups'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import useProjectsStore from '@/stores/useProjects'
-import useUsersStore from '@/stores/useUsers'
+import usePeopleGroupsStore from '~/stores/usePeopleGroups'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useProjectsStore from '~/stores/useProjects'
+import useUsersStore from '~/stores/useUsers'
 import { computed } from 'vue'
 export default function usePermissions() {
   // const { currentPeopleGroupIdForPermissions.value } = mapState(usePeopleGroupsStore, {

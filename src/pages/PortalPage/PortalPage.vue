@@ -1,5 +1,5 @@
 <script setup>
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
 const organizationsStore = useOrganizationsStore()
 const { t } = useNuxtI18n()
 

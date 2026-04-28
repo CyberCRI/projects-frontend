@@ -1,5 +1,5 @@
 <script setup>
-import useProjectCategories from '@/stores/useProjectCategories.ts'
+import useProjectCategories from '~/stores/useProjectCategories.ts'
 
 const { isAdmin, canCreateProject } = usePermissions()
 const projectCategoriesStore = useProjectCategories()

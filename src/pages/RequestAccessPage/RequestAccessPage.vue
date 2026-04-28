@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import useValidate from '@vuelidate/core'
 import { helpers, required, email } from '@vuelidate/validators'
-import { postAccessRequest } from '@/api/organizations.service'
-import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
-import useToasterStore from '@/stores/useToaster'
-import useOrganizationsStore from '@/stores/useOrganizations'
+import { postAccessRequest } from '~/api/organizations.service'
+import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
+import useToasterStore from '~/stores/useToaster'
+import useOrganizationsStore from '~/stores/useOrganizations'
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()

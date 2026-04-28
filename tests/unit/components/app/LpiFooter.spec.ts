@@ -1,10 +1,10 @@
-import { lpiShallowMount, lpiMount } from '@/../tests/helpers/LpiMount'
-import LpiFooter from '@/components/app/LpiFooter.vue'
-import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
+import { lpiShallowMount, lpiMount } from '~~/tests/helpers/LpiMount'
+import LpiFooter from '~/components/app/LpiFooter.vue'
+import { OrganizationOutputFactory } from '~~/tests/factories/organization.factory'
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import pinia from '@/stores'
-import useOrganizationsStore from '@/stores/useOrganizations'
+import pinia from '~/stores'
+import useOrganizationsStore from '~/stores/useOrganizations'
 
 describe('LpiFooter', () => {
   beforeEach(() => {

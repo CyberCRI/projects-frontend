@@ -44,20 +44,20 @@
 </template>
 
 <script setup lang="ts">
-import { useModals } from '@/composables/useModal'
-import { deleteNews } from '@/api/news.service'
-import useToasterStore from '@/stores/useToaster'
-import { defaultForm } from '@/components/instruction/InstructionForm/InstructionForm.vue'
-import { getAllNews } from '@/api/v2/news.service'
-import { QueryFilterNews } from '@/models/news.model'
-import NewsItem from '@/components/news/NewsItem.vue'
-import FetchLoader from '@/components/base/FetchLoader.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import LinkButton from '@/components/base/button/LinkButton.vue'
-import AdminBlock from '@/components/admin/GeneralAdminBlocks/AdminBlock.vue'
-import { nowDate } from '@/functs/date'
+import { useModals } from '~/composables/useModal'
+import { deleteNews } from '~/api/news.service'
+import useToasterStore from '~/stores/useToaster'
+import { defaultForm } from '~/components/instruction/InstructionForm/InstructionForm.vue'
+import { getAllNews } from '~/api/v2/news.service'
+import { QueryFilterNews } from '~/models/news.model'
+import NewsItem from '~/components/news/NewsItem.vue'
+import FetchLoader from '~/components/base/FetchLoader.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import EditNewsDrawer from '~/components/news/EditNewsDrawer/EditNewsDrawer.vue'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import LinkButton from '~/components/base/button/LinkButton.vue'
+import AdminBlock from '~/components/admin/GeneralAdminBlocks/AdminBlock.vue'
+import { nowDate } from '~/functs/date'
 
 const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()

@@ -34,16 +34,16 @@
 </template>
 
 <script setup lang="ts">
-import SdgRecap from '@/components/project/sdg/SdgRecap.vue'
-import GoalItem from '@/components/project/goal/GoalItem.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
+import SdgRecap from '~/components/project/sdg/SdgRecap.vue'
+import GoalItem from '~/components/project/goal/GoalItem.vue'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
 
-import { deleteGoal } from '@/api/goals.service'
-import analytics from '@/analytics'
-import useToasterStore from '@/stores/useToaster'
-import { TranslatedProject } from '@/models/project.model'
-import { TranslatedGoal } from '@/models/goal.model'
+import { deleteGoal } from '~/api/goals.service'
+import analytics from '~/analytics'
+import useToasterStore from '~/stores/useToaster'
+import { TranslatedProject } from '~/models/project.model'
+import { TranslatedGoal } from '~/models/goal.model'
 
 const showModalGoal = inject<(key: string, goal?: TranslatedGoal) => void>(
   'projectLayoutToggleAddModal'

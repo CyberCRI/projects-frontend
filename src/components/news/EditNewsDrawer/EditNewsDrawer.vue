@@ -19,13 +19,13 @@
   </BaseDrawer>
 </template>
 <script>
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import NewsForm from '@/components/news/NewsForm/NewsForm.vue'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils.ts'
-import { createNews, postNewsHeader, patchNews, patchNewsHeader } from '@/api/news.service.ts'
-import { imageSizesFormData } from '@/functs/imageSizesUtils.ts'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+import NewsForm from '~/components/news/NewsForm/NewsForm.vue'
+import { pictureApiToImageSizes } from '~/functs/imageSizesUtils.ts'
+import { createNews, postNewsHeader, patchNews, patchNewsHeader } from '~/api/news.service.ts'
+import { imageSizesFormData } from '~/functs/imageSizesUtils.ts'
+import useToasterStore from '~/stores/useToaster.ts'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
 
 export default {
   name: 'EditNewsDrawer',

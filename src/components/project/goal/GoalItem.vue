@@ -43,12 +43,12 @@
 </template>
 
 <script setup lang="ts">
-import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
-import IconImage from '@/components/base/media/IconImage.vue'
-import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
-import { formatDate } from '@/functs/date'
-import { TranslatedGoal } from '@/models/goal.model'
-import { textIsEmpty } from '@/functs/string'
+import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+import TipTapOutput from '~/components/base/form/TextEditor/TipTapOutput.vue'
+import { formatDate } from '~/functs/date'
+import { TranslatedGoal } from '~/models/goal.model'
+import { textIsEmpty } from '~/functs/string'
 
 const props = withDefaults(
   defineProps<{

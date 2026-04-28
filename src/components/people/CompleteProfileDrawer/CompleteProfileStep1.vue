@@ -173,16 +173,16 @@
   </template>
 </template>
 <script>
-import { getUser, patchUser, patchUserPicture, postUserPicture } from '@/api/people.service.ts'
-import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils.ts'
+import { getUser, patchUser, patchUserPicture, postUserPicture } from '~/api/people.service.ts'
+import { pictureApiToImageSizes, imageSizesFormData } from '~/functs/imageSizesUtils.ts'
 import { isEqual } from 'es-toolkit'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
-import { SDGS, VALID_NAME_REGEX } from '@/functs/constants.ts'
-import useToasterStore from '@/stores/useToaster.ts'
-import useUsersStore from '@/stores/useUsers.ts'
+import { SDGS, VALID_NAME_REGEX } from '~/functs/constants.ts'
+import useToasterStore from '~/stores/useToaster.ts'
+import useUsersStore from '~/stores/useUsers.ts'
 import { useRuntimeConfig } from '#imports'
-import { usePatatoids } from '@/composables/usePatatoids'
+import { usePatatoids } from '~/composables/usePatatoids'
 export default {
   name: 'CompleteProfileStep1',
 

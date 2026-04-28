@@ -56,9 +56,9 @@
 </template>
 
 <script setup lang="ts">
-import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
-import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
-import useNuxtI18n from '@/composables/useNuxtI18n'
+import ContextActionMenu from '~/components/base/button/ContextActionMenu.vue'
+import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
+import useNuxtI18n from '~/composables/useNuxtI18n'
 
 defineOptions({
   name: 'AdminListItem',

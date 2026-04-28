@@ -1,7 +1,7 @@
-import { Ordering } from '@/interfaces/query'
-import { Translated } from '@/interfaces/translated'
-import BaseModel from '@/models/base.model'
-import { BaseLocationModel, BaseTranslatedLocationModel } from '@/models/location.model'
+import { Ordering } from '~/interfaces/query'
+import { Translated } from '~/interfaces/translated'
+import BaseModel from '~/models/base.model'
+import { BaseLocationModel, BaseTranslatedLocationModel } from '~/models/location.model'
 
 /**
  * @name NewsModel

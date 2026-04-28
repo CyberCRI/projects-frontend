@@ -13,23 +13,23 @@
 </template>
 
 <script setup lang="ts">
-import halIcon from '@/assets/svg/hal.svg'
-import doiIcon from '@/assets/svg/doi.svg'
-import idrefIcon from '@/assets/svg/idref.svg'
-import scopusIcon from '@/assets/svg/scopus.svg'
-import orcidIcon from '@/assets/svg/orcid.svg'
-import openalexIcon from '@/assets/svg/openalex.svg'
-import scanrIcon from '@/assets/svg/scanr.svg'
-import irsteaIcon from '@/assets/svg/irstea.svg'
-import pmidIcon from '@/assets/svg/pmid.svg'
-import biorxivIcon from '@/assets/svg/biorxiv.svg'
-import arxivIcon from '@/assets/svg/arxiv.svg'
-import viafIcon from '@/assets/svg/viaf.svg'
-import googlescholarIcon from '@/assets/svg/googlescholar.svg'
+import halIcon from '~/assets/svg/hal.svg'
+import doiIcon from '~/assets/svg/doi.svg'
+import idrefIcon from '~/assets/svg/idref.svg'
+import scopusIcon from '~/assets/svg/scopus.svg'
+import orcidIcon from '~/assets/svg/orcid.svg'
+import openalexIcon from '~/assets/svg/openalex.svg'
+import scanrIcon from '~/assets/svg/scanr.svg'
+import irsteaIcon from '~/assets/svg/irstea.svg'
+import pmidIcon from '~/assets/svg/pmid.svg'
+import biorxivIcon from '~/assets/svg/biorxiv.svg'
+import arxivIcon from '~/assets/svg/arxiv.svg'
+import viafIcon from '~/assets/svg/viaf.svg'
+import googlescholarIcon from '~/assets/svg/googlescholar.svg'
 
-import { Identifier } from '@/interfaces/researcher'
-import { HarvesterType } from '@/interfaces/researcher'
-import { documentHarvesterToUrl, researcherHarvesterToUrl } from '@/functs/researcher'
+import { Identifier } from '~/interfaces/researcher'
+import { HarvesterType } from '~/interfaces/researcher'
+import { documentHarvesterToUrl, researcherHarvesterToUrl } from '~/functs/researcher'
 
 const ICONS: Partial<Record<HarvesterType, string>> = {
   hal: halIcon,

@@ -1,6 +1,6 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import CardList from '@/components/base/CardList.vue'
-import { ProjectFactory } from '@/../tests/factories/project.factory'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
+import CardList from '~/components/base/CardList.vue'
+import { ProjectFactory } from '~~/tests/factories/project.factory'
 
 import { describe, expect, it } from 'vitest'
 

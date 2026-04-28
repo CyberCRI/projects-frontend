@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { TranslatedGoal } from '@/models/goal.model'
+import { TranslatedGoal } from '~/models/goal.model'
 
 const props = defineProps<{
   goal: TranslatedGoal

@@ -41,16 +41,16 @@
 </template>
 
 <script setup lang="ts">
-import { deleteNews } from '@/api/news.service'
-import { getGroupNews } from '@/api/v2/group.service'
-import FetchLoader from '@/components/base/FetchLoader.vue'
-import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
-import NewsItem from '@/components/news/NewsItem.vue'
-import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import { QueryFilterNews, TranslatedNews } from '@/models/news.model'
-import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
-import { newsSkeleton } from '@/skeletons/news.skeletons'
-import useToasterStore from '@/stores/useToaster'
+import { deleteNews } from '~/api/news.service'
+import { getGroupNews } from '~/api/v2/group.service'
+import FetchLoader from '~/components/base/FetchLoader.vue'
+import EditNewsDrawer from '~/components/news/EditNewsDrawer/EditNewsDrawer.vue'
+import NewsItem from '~/components/news/NewsItem.vue'
+import { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import { QueryFilterNews, TranslatedNews } from '~/models/news.model'
+import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
+import { newsSkeleton } from '~/skeletons/news.skeletons'
+import useToasterStore from '~/stores/useToaster'
 
 const props = withDefaults(
   defineProps<{

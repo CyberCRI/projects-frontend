@@ -20,8 +20,8 @@
 </template>
 
 <script setup lang="ts">
-import IconImage from '@/components/base/media/IconImage.vue'
-import BreadCrumbsSkeleton from '@/components/base/navigation/BreadCrumbsSkeleton.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+import BreadCrumbsSkeleton from '~/components/base/navigation/BreadCrumbsSkeleton.vue'
 import { RouteLocationRaw } from 'vue-router'
 
 withDefaults(

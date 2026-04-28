@@ -37,8 +37,8 @@ import { nodeViewProps, NodeViewWrapper, NodeViewContent } from '@tiptap/vue-3'
 import {
   DEFAULT_THEME,
   DEFAULT_TAB,
-} from '@/components/base/form/TextEditor/tiptap-extensions/LpiCodeBlock.ts'
-import lowlight from '@/functs/lowlight.ts'
+} from '~/components/base/form/TextEditor/tiptap-extensions/LpiCodeBlock.ts'
+import lowlight from '~/functs/lowlight.ts'
 import remixiconUrl from 'remixicon/fonts/remixicon.symbol.svg?url'
 
 export default defineComponent({

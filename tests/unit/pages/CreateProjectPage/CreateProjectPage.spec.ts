@@ -1,6 +1,6 @@
 // TODO mock category endpoints
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import CreateProjectPage from '@/pages/CreateProjectPage/CreateProjectPage.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
+import CreateProjectPage from '~/pages/CreateProjectPage/CreateProjectPage.vue'
 
 import { describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'

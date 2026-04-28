@@ -19,11 +19,11 @@
 </template>
 
 <script setup lang="ts">
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import { DEFAULT_IMAGE_PATATOID } from '@/composables/usePatatoids'
-import { ImageModel } from '@/models/image.model'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import { DEFAULT_IMAGE_PATATOID } from '~/composables/usePatatoids'
+import { ImageModel } from '~/models/image.model'
 import { StyleValue } from 'vue'
-import { usePublicURL } from '@/composables/usePublic'
+import { usePublicURL } from '~/composables/usePublic'
 
 const props = withDefaults(
   defineProps<{

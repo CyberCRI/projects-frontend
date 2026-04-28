@@ -46,21 +46,21 @@
 </template>
 
 <script>
-import TextInput from '@/components/base/form/TextInput.vue'
-import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import SwitchInput from '@/components/base/form/SwitchInput.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+import SwitchInput from '~/components/base/form/SwitchInput.vue'
 
 import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import FieldErrors from '~/components/base/form/FieldErrors.vue'
 
-import { postReview, patchReview } from '@/api/reviews.service'
-import useToasterStore from '@/stores/useToaster.ts'
-import useProjectsStore from '@/stores/useProjects.ts'
-import useUsersStore from '@/stores/useUsers.ts'
-import { textIsEmpty } from '@/functs/string'
+import { postReview, patchReview } from '~/api/reviews.service'
+import useToasterStore from '~/stores/useToaster.ts'
+import useProjectsStore from '~/stores/useProjects.ts'
+import useUsersStore from '~/stores/useUsers.ts'
+import { textIsEmpty } from '~/functs/string'
 export default {
   name: 'ReviewDrawer',
 

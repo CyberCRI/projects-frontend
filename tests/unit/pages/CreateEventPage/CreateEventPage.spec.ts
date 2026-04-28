@@ -1,5 +1,5 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import CreateEventPage from '@/pages/CreateEventPage/CreateEventPage.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
+import CreateEventPage from '~/pages/CreateEventPage/CreateEventPage.vue'
 
 import { describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'

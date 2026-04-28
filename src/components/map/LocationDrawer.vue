@@ -142,15 +142,15 @@
 </template>
 
 <script setup lang="ts">
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import MapPointer from '@/components/map/MapPointer.vue'
-import useToasterStore from '@/stores/useToaster'
-import { AnyTranslatedLocation, LocationForm as LocationFormType } from '@/models/location.model'
-import LocationTooltip from '@/components/map/LocationTooltip.vue'
-import { Geocoding } from '@/interfaces/maps'
-import { useSuggestLocations } from '@/api/geocoding.service'
-import { LocationType } from '@/models/types'
-import MarkerSuggestion from '@/components/map/MarkerSuggestion.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+import MapPointer from '~/components/map/MapPointer.vue'
+import useToasterStore from '~/stores/useToaster'
+import { AnyTranslatedLocation, LocationForm as LocationFormType } from '~/models/location.model'
+import LocationTooltip from '~/components/map/LocationTooltip.vue'
+import { Geocoding } from '~/interfaces/maps'
+import { useSuggestLocations } from '~/api/geocoding.service'
+import { LocationType } from '~/models/types'
+import MarkerSuggestion from '~/components/map/MarkerSuggestion.vue'
 
 const props = withDefaults(
   defineProps<{

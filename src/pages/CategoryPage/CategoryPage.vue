@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import useProjectCategories from '@/stores/useProjectCategories'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils'
-import { onResize } from '@/composables/onResize'
+import useProjectCategories from '~/stores/useProjectCategories'
+import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
+import { onResize } from '~/composables/onResize'
 
 const { t } = useNuxtI18n()
 const route = useRoute()

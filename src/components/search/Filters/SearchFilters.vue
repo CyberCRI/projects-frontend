@@ -1,14 +1,14 @@
 <script setup>
-import { getProjectCategory } from '@/api/project-categories.service'
-import { getAllTagsById } from '@/api/tag-classification.service'
+import { getProjectCategory } from '~/api/project-categories.service'
+import { getAllTagsById } from '~/api/tag-classification.service'
 
-import FilterButton from '@/components/search/Filters/FilterButton.vue'
-import FiltersDrawer from '@/components/search/Filters/FiltersDrawer.vue'
+import FilterButton from '~/components/search/Filters/FilterButton.vue'
+import FiltersDrawer from '~/components/search/Filters/FiltersDrawer.vue'
 
 import useContextualFilters, {
   ALL_FILTERS_MODE,
   ALL_SECTION_KEY,
-} from '@/components/search/Filters/useContextualFilters.ts'
+} from '~/components/search/Filters/useContextualFilters.ts'
 
 import { ref, onMounted, toRef, watch, reactive } from 'vue'
 

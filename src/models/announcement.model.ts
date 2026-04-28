@@ -1,6 +1,6 @@
-import { Translated } from '@/interfaces/translated'
-import BaseModel from '@/models/base.model'
-import { ProjectModel, TranslatedProject } from '@/models/project.model'
+import { Translated } from '~/interfaces/translated'
+import BaseModel from '~/models/base.model'
+import { ProjectModel, TranslatedProject } from '~/models/project.model'
 
 export interface AnnouncementModel extends BaseModel {
   id: number

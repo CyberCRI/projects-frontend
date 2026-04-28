@@ -1,9 +1,9 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import TakeTourModal from '@/components/onboarding/WelcomeModal/TakeTourModal.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
+import TakeTourModal from '~/components/onboarding/WelcomeModal/TakeTourModal.vue'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
-import pinia from '@/stores'
-import useOrganizationsStore from '@/stores/useOrganizations'
+import { OrganizationOutputFactory } from '~~/tests/factories/organization.factory'
+import pinia from '~/stores'
+import useOrganizationsStore from '~/stores/useOrganizations'
 
 describe('TakeTourModal.vue', () => {
   beforeEach(() => {

@@ -45,8 +45,8 @@
 </template>
 
 <script setup lang="ts">
-import IconImage from '@/components/base/media/IconImage.vue'
-import { Pagination as PaginationType } from '@/composables/usePagination'
+import IconImage from '~/components/base/media/IconImage.vue'
+import { Pagination as PaginationType } from '~/composables/usePagination'
 
 const props = withDefaults(
   defineProps<{

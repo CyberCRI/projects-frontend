@@ -1,5 +1,5 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import ProfileBioEditTab from '@/pages/UserProfilePageV2/Tabs/ProfileBioEditTab.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
+import ProfileBioEditTab from '~/pages/UserProfilePageV2/Tabs/ProfileBioEditTab.vue'
 
 import { describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'

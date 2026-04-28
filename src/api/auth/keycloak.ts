@@ -3,11 +3,11 @@ import {
   cleanLocalStorage,
   createRandomString,
   getRefreshTokenInterval,
-} from '@/api/auth/keycloakUtils'
-import useUsersStore from '@/stores/useUsers'
+} from '~/api/auth/keycloakUtils'
+import useUsersStore from '~/stores/useUsers'
 import { useRuntimeConfig, useNuxtApp } from '#imports'
-import useToasterStore from '@/stores/useToaster'
-import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
+import useToasterStore from '~/stores/useToaster'
+import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
 
 export type AuthResult = {
   access_token: string

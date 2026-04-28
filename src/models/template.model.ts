@@ -1,5 +1,5 @@
-import BaseModel from '@/models/base.model'
-import { ImageModel } from '@/models/image.model'
+import BaseModel from '~/models/base.model'
+import { ImageModel } from '~/models/image.model'
 
 /**
  * @name TemplateModel

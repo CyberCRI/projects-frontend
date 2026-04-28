@@ -4,15 +4,15 @@ import {
   getResearchDocumentSimilars as fetchResearchDocumentSimilars,
   getOwnResearchDocumentAnalytics as fetchOwnResearchDocumentAnalytics,
   getGroupResearchDocumentAnalytics as fetchGroupResearchDocumentAnalytics,
-} from '@/api/crisalid.service'
-import { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
-import useAsyncAPI from '@/composables/useAsyncAPI'
-import useAsyncPaginationAPI from '@/composables/useAsyncPaginationAPI'
-import { onlyRefs } from '@/functs/onlyRefs'
-import { Document, DocumentType, Researcher } from '@/interfaces/researcher'
-import { RefOrRaw } from '@/interfaces/utils'
-import { PeopleGroupIdOrSlug } from '@/models/invitation.model'
-import { OrganizationModel } from '@/models/organization.model'
+} from '~/api/crisalid.service'
+import { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
+import useAsyncAPI from '~/composables/useAsyncAPI'
+import useAsyncPaginationAPI from '~/composables/useAsyncPaginationAPI'
+import { onlyRefs } from '~/functs/onlyRefs'
+import { Document, DocumentType, Researcher } from '~/interfaces/researcher'
+import { RefOrRaw } from '~/interfaces/utils'
+import { PeopleGroupIdOrSlug } from '~/models/invitation.model'
+import { OrganizationModel } from '~/models/organization.model'
 
 const DEFAULT_CONFIG = {}
 

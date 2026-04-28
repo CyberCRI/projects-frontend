@@ -1,9 +1,9 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import CategoriesFilterSummary from '@/components/search/Filters/CategoriesFilterSummary.vue'
-import { ProjectCategoryOutputFactory } from '@/../tests/factories/project-category.factory'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
+import CategoriesFilterSummary from '~/components/search/Filters/CategoriesFilterSummary.vue'
+import { ProjectCategoryOutputFactory } from '~~/tests/factories/project-category.factory'
 
-import pinia from '@/stores'
-import useProjectCategoriesStore from '@/stores/useProjectCategories'
+import pinia from '~/stores'
+import useProjectCategoriesStore from '~/stores/useProjectCategories'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('CategoriesFilterEditor.vue', () => {

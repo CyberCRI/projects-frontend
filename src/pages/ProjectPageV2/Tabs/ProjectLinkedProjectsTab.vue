@@ -17,9 +17,9 @@
 </template>
 
 <script setup lang="ts">
-import LinkedProjects from '@/components/project/linked-project/LinkedProjects.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import { TranslatedProject } from '@/models/project.model'
+import LinkedProjects from '~/components/project/linked-project/LinkedProjects.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import { TranslatedProject } from '~/models/project.model'
 
 const projectLayoutToggleAddModal = inject<(string) => void>('projectLayoutToggleAddModal')
 

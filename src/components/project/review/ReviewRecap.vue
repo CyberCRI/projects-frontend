@@ -31,14 +31,14 @@
 </template>
 
 <script setup lang="ts">
-import ReviewDrawer from '@/components/project/review/ReviewDrawer.vue'
-import SectionHeader from '@/components/base/SectionHeader.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import ReviewItem from '@/components/project/review/ReviewItem.vue'
-import { deleteReview } from '@/api/reviews.service'
-import useToasterStore from '@/stores/useToaster'
-import { TranslatedProject } from '@/models/project.model'
-import { ReviewModel } from '@/models/review.model'
+import ReviewDrawer from '~/components/project/review/ReviewDrawer.vue'
+import SectionHeader from '~/components/base/SectionHeader.vue'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import ReviewItem from '~/components/project/review/ReviewItem.vue'
+import { deleteReview } from '~/api/reviews.service'
+import useToasterStore from '~/stores/useToaster'
+import { TranslatedProject } from '~/models/project.model'
+import { ReviewModel } from '~/models/review.model'
 
 const props = defineProps<{
   project: TranslatedProject

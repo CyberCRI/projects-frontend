@@ -32,8 +32,8 @@
 </template>
 
 <script setup lang="ts">
-import IconImage from '@/components/base/media/IconImage.vue'
-import { IconImageChoice } from '@/functs/IconImage'
+import IconImage from '~/components/base/media/IconImage.vue'
+import { IconImageChoice } from '~/functs/IconImage'
 import { isNil } from 'es-toolkit'
 
 withDefaults(

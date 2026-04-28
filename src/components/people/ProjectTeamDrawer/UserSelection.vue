@@ -49,17 +49,17 @@
 
 <script>
 import { debounce } from 'es-toolkit'
-import SearchInput from '@/components/base/form/SearchInput.vue'
-import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import { searchGroupsAlgolia } from '@/api/search.service.ts'
-import LinkButton from '@/components/base/button/LinkButton.vue'
-import { isNotGroup } from '@/functs/users'
+import SearchInput from '~/components/base/form/SearchInput.vue'
+import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
+import { searchGroupsAlgolia } from '~/api/search.service.ts'
+import LinkButton from '~/components/base/button/LinkButton.vue'
+import { isNotGroup } from '~/functs/users'
 
-import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
-import TeamResultList from '@/components/people/ProjectTeamDrawer/TeamResultList.vue'
-import UserCardInline from '@/components/people/TeamCard/UserCardInline.vue'
-import { searchPeopleProject } from '@/api/people.service'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import TabsLayout from '~/components/base/navigation/TabsLayout.vue'
+import TeamResultList from '~/components/people/ProjectTeamDrawer/TeamResultList.vue'
+import UserCardInline from '~/components/people/TeamCard/UserCardInline.vue'
+import { searchPeopleProject } from '~/api/people.service'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
 export default {
   name: 'UserSelection',
 

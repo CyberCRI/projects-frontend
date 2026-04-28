@@ -1,16 +1,16 @@
-// import type { APIResponseList } from '@/api/types'
-// import type { PeopleModel } from '@/models/people.model'
+// import type { APIResponseList } from '~/api/types'
+// import type { PeopleModel } from '~/models/people.model'
 import type {
   UserPatchModel,
   UserPrivacyPatchModel,
   UserSkillModel,
   UserModel,
-} from '@/models/user.model'
-import { _adaptParamsToGetQuery } from '@/api/utils.service'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import useAPI from '@/composables/useAPI'
-import { OrganizationModel } from '@/models/organization.model'
-import { PeopleModel } from '@/models/people.model'
+} from '~/models/user.model'
+import { _adaptParamsToGetQuery } from '~/api/utils.service'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useAPI from '~/composables/useAPI'
+import { OrganizationModel } from '~/models/organization.model'
+import { PeopleModel } from '~/models/people.model'
 
 // New user service using projects API
 export async function getUser(id: string, noError: boolean = false) {

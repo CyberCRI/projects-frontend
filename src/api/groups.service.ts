@@ -6,15 +6,15 @@ import type {
   AddParentGroupModelInput,
   GroupMember,
   HierarchyGroupModel,
-} from '@/models/group.model'
-import { _adaptParamsToGetQuery } from '@/api/utils.service'
-import useAPI from '@/composables/useAPI'
-import { ProjectModel } from '@/models/project.model'
-import { PeopleGroupIdOrSlug, PeopleGroupModel } from '@/models/invitation.model'
-import { ImageModel } from '@/models/image.model'
-import { BaseLocationModel, LocationModel } from '@/models/location.model'
-import { NewsModel } from '@/models/news.model'
-import { EventModel } from '@/models/event.model'
+} from '~/models/group.model'
+import { _adaptParamsToGetQuery } from '~/api/utils.service'
+import useAPI from '~/composables/useAPI'
+import { ProjectModel } from '~/models/project.model'
+import { PeopleGroupIdOrSlug, PeopleGroupModel } from '~/models/invitation.model'
+import { ImageModel } from '~/models/image.model'
+import { BaseLocationModel, LocationModel } from '~/models/location.model'
+import { NewsModel } from '~/models/news.model'
+import { EventModel } from '~/models/event.model'
 
 // HIERARCHY
 export async function getHierarchyGroups(organizationCode: string, config = {}) {

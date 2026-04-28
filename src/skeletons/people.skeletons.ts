@@ -1,4 +1,4 @@
-import { PeopleModel } from '@/models/people.model'
+import { PeopleModel } from '~/models/people.model'
 
 export const peopleSkeleton = (def?: Partial<PeopleModel>): Omit<PeopleModel, 'id'> => ({
   slug: 'slug',

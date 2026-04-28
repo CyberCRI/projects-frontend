@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { deleteInstruction } from '@/api/instruction.service'
-import useToasterStore from '@/stores/useToaster'
-import { InstructionId } from '@/models/instruction.model'
-import { formatDate } from '@/functs/date'
-import { getInstruction } from '@/api/v2/instruction.service'
-import FetchLoader from '@/components/base/FetchLoader.vue'
-import { html2Text } from '@/functs/string'
-import { instructionSkeleton } from '@/skeletons/instructions.skeletons'
+import { deleteInstruction } from '~/api/instruction.service'
+import useToasterStore from '~/stores/useToaster'
+import { InstructionId } from '~/models/instruction.model'
+import { formatDate } from '~/functs/date'
+import { getInstruction } from '~/api/v2/instruction.service'
+import FetchLoader from '~/components/base/FetchLoader.vue'
+import { html2Text } from '~/functs/string'
+import { instructionSkeleton } from '~/skeletons/instructions.skeletons'
 
 const props = defineProps<{
   slugOrId: InstructionId

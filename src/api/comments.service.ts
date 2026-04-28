@@ -1,6 +1,6 @@
-import type { CommentInputModel /*, CommentOutput*/ } from '@/models/comment.model'
-// import type { APIResponseList } from '@/api/types'
-import useAPI from '@/composables/useAPI'
+import type { CommentInputModel /*, CommentOutput*/ } from '~/models/comment.model'
+// import type { APIResponseList } from '~/api/types'
+import useAPI from '~/composables/useAPI'
 
 export async function getComments(project_id: string) {
   return await useAPI(`project/${project_id}/comment/`, {}) //.data.value

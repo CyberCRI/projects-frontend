@@ -16,13 +16,13 @@
 </template>
 
 <script setup lang="ts">
-import { capitalize } from '@/functs/string'
-import useNuxtI18n from '@/composables/useNuxtI18n'
-import LayoutTab from '@/components/admin/LayoutTab.vue'
-import { getTemplate, patchTemplate, postTemplateImage } from '@/api/templates.service'
-import { useTemplateForm } from '@/form/template'
-import TemplateForm from '@/components/templates/TemplateForm.vue'
-import FetchLoader from '@/components/base/FetchLoader.vue'
+import { capitalize } from '~/functs/string'
+import useNuxtI18n from '~/composables/useNuxtI18n'
+import LayoutTab from '~/components/admin/LayoutTab.vue'
+import { getTemplate, patchTemplate, postTemplateImage } from '~/api/templates.service'
+import { useTemplateForm } from '~/form/template'
+import TemplateForm from '~/components/templates/TemplateForm.vue'
+import FetchLoader from '~/components/base/FetchLoader.vue'
 
 const { t } = useNuxtI18n()
 const route = useRoute()

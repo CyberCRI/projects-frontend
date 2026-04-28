@@ -1,6 +1,6 @@
 <script setup>
-import useUsersStore from '@/stores/useUsers'
-import useToasterStore from '@/stores/useToaster'
+import useUsersStore from '~/stores/useUsers'
+import useToasterStore from '~/stores/useToaster'
 
 const { t } = useNuxtI18n()
 

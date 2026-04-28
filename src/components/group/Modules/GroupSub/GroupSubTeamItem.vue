@@ -30,9 +30,9 @@
 </template>
 
 <script setup lang="ts">
-import GroupRecapPreview from '@/components/group/Modules/Extras/GroupRecapPreview.vue'
-import BaseGroupMembersList from '@/components/group/Modules/Members/BaseGroupMembersList.vue'
-import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import GroupRecapPreview from '~/components/group/Modules/Extras/GroupRecapPreview.vue'
+import BaseGroupMembersList from '~/components/group/Modules/Members/BaseGroupMembersList.vue'
+import { TranslatedPeopleGroupModel } from '~/models/invitation.model'
 
 withDefaults(
   defineProps<{

@@ -1,5 +1,5 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import DialogModal from '@/components/base/modal/DialogModal.vue'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import DialogModal from '~/components/base/modal/DialogModal.vue'
 
 import { beforeEach, describe, expect, it } from 'vitest'
 describe('DialogModal', () => {

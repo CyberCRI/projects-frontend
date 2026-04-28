@@ -1,12 +1,12 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import IconImage from '@/components/base/media/IconImage.vue'
-import useSkillTexts from '@/composables/useSkillTexts.ts'
-import useSkillLevels from '@/composables/useSkillLevels.ts'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import EditMentorshipDrawer from '@/components/people/skill/EditMentorshipDrawer.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import ToolTip from '@/components/base/ToolTip.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+import useSkillTexts from '~/composables/useSkillTexts.ts'
+import useSkillLevels from '~/composables/useSkillLevels.ts'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import EditMentorshipDrawer from '~/components/people/skill/EditMentorshipDrawer.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import ToolTip from '~/components/base/ToolTip.vue'
 const props = defineProps({
   skill: { type: Object, required: true },
   type: { type: String, required: true }, // "skills" or "hobbies"

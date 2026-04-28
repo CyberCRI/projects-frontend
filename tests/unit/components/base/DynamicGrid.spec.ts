@@ -1,5 +1,5 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import DynamicGrid from '@/components/base/DynamicGrid.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
+import DynamicGrid from '~/components/base/DynamicGrid.vue'
 
 import { describe, expect, it } from 'vitest'
 

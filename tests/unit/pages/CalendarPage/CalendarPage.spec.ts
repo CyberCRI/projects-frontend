@@ -1,5 +1,5 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import CalendarPage from '@/pages/CalendarPage/CalendarPage.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
+import CalendarPage from '~/pages/CalendarPage/CalendarPage.vue'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 
 import { describe, expect, it } from 'vitest'

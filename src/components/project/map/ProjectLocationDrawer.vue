@@ -10,12 +10,12 @@
 </template>
 
 <script setup lang="ts">
-import analytics from '@/analytics'
-import { postLocations, patchLocation, deleteLocation } from '@/api/locations.services'
-import LocationDrawer from '@/components/map/LocationDrawer.vue'
-import { TranslatedLocation } from '@/models/location.model'
-import { TranslatedProject } from '@/models/project.model'
-import useToasterStore from '@/stores/useToaster'
+import analytics from '~/analytics'
+import { postLocations, patchLocation, deleteLocation } from '~/api/locations.services'
+import LocationDrawer from '~/components/map/LocationDrawer.vue'
+import { TranslatedLocation } from '~/models/location.model'
+import { TranslatedProject } from '~/models/project.model'
+import useToasterStore from '~/stores/useToaster'
 
 const props = withDefaults(
   defineProps<{

@@ -5,9 +5,9 @@
   </component>
 </template>
 <script setup lang="ts">
-import { capitalize } from '@/functs/string'
-import IconImage from '@/components/base/media/IconImage.vue'
-import { IconImageChoice } from '@/functs/IconImage'
+import { capitalize } from '~/functs/string'
+import IconImage from '~/components/base/media/IconImage.vue'
+import { IconImageChoice } from '~/functs/IconImage'
 import { RouteLocationRaw } from 'vue-router'
 
 const props = withDefaults(

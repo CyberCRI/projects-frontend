@@ -1,7 +1,7 @@
 <script setup>
-import { patchTermsAndConditions } from '@/api/organizations.service'
-import useOrganizations from '@/stores/useOrganizations'
-import useToasterStore from '@/stores/useToaster.ts'
+import { patchTermsAndConditions } from '~/api/organizations.service'
+import useOrganizations from '~/stores/useOrganizations'
+import useToasterStore from '~/stores/useToaster.ts'
 
 const NULL_CONTENT = '<p></p>'
 const { t } = useNuxtI18n()

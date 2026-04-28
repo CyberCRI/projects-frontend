@@ -1,5 +1,5 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import ProfileResourcesTab from '@/pages/UserProfilePageV2/Tabs/ProfileResourcesTab.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
+import ProfileResourcesTab from '~/pages/UserProfilePageV2/Tabs/ProfileResourcesTab.vue'
 
 import { describe, expect, it } from 'vitest'
 import { UserFactory } from '../../../../factories/user.factory'

@@ -11,10 +11,10 @@
 </template>
 
 <script setup lang="ts">
-import { TranslatedLocation } from '@/models/location.model'
-import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
-import CardLocationTooltip from '@/components/map/CardLocationTooltip.vue'
-import { TranslatedProject } from '@/models/project.model'
+import { TranslatedLocation } from '~/models/location.model'
+import { DEFAULT_PROJECT_PATATOID } from '~/composables/usePatatoids'
+import CardLocationTooltip from '~/components/map/CardLocationTooltip.vue'
+import { TranslatedProject } from '~/models/project.model'
 
 defineProps<{ location: TranslatedLocation; project: TranslatedProject }>()
 </script>

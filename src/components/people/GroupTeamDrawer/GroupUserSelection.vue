@@ -63,15 +63,15 @@
 
 <script>
 import { debounce } from 'es-toolkit'
-import SearchInput from '@/components/base/form/SearchInput.vue'
-import UserCardInline from '@/components/people/TeamCard/UserCardInline.vue'
-import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import LinkButton from '@/components/base/button/LinkButton.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import useAPI from '@/composables/useAPI.ts'
-import { searchPeopleProject } from '@/api/people.service'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import SearchInput from '~/components/base/form/SearchInput.vue'
+import UserCardInline from '~/components/people/TeamCard/UserCardInline.vue'
+import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
+import LinkButton from '~/components/base/button/LinkButton.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
+import useAPI from '~/composables/useAPI.ts'
+import { searchPeopleProject } from '~/api/people.service'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
 
 export default {
   name: 'GroupUserSelection',

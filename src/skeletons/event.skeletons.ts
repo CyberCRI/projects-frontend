@@ -1,4 +1,4 @@
-import { EventModel } from '@/models/event.model'
+import { EventModel } from '~/models/event.model'
 
 export const eventSkeleton = (def?: Partial<EventModel>): Omit<EventModel, 'id'> => ({
   id: -1,

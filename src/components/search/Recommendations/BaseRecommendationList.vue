@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import LpiButton from '@/components/base/button/LpiButton.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
 
 export default {
   name: 'BaseRecommendationList',

@@ -1,12 +1,12 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import LinkCreateTab from '@/pages/AdminPortalPageV2/Tabs/LinkCreateTab.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
+import LinkCreateTab from '~/pages/AdminPortalPageV2/Tabs/LinkCreateTab.vue'
 
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import pinia from '@/stores'
-import useOrganizationsStore from '@/stores/useOrganizations'
+import pinia from '~/stores'
+import useOrganizationsStore from '~/stores/useOrganizations'
 
-import type { OrganizationOutput } from '@/models/organization.model'
+import type { OrganizationOutput } from '~/models/organization.model'
 import { flushPromises } from '@vue/test-utils'
 
 describe('LinkCreateTab.vue', () => {

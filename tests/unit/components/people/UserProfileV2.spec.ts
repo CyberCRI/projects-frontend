@@ -1,16 +1,16 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import UserProfileV2 from '@/components/people/UserProfileV2.vue'
-import { UserFactory } from '@/../tests/factories/user.factory'
-import { getUser } from '@/api/people.service'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import UserProfileV2 from '~/components/people/UserProfileV2.vue'
+import { UserFactory } from '~~/tests/factories/user.factory'
+import { getUser } from '~/api/people.service'
 import { flushPromises } from '@vue/test-utils'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import pinia from '@/stores'
-import useUsersStore from '@/stores/useUsers'
-import useOrganizationsStore from '@/stores/useOrganizations'
+import pinia from '~/stores'
+import useUsersStore from '~/stores/useUsers'
+import useOrganizationsStore from '~/stores/useOrganizations'
 
-vi.mock('@/api/people.service.ts', () => ({
+vi.mock('~/api/people.service.ts', () => ({
   getUser: vi.fn(() => Promise.resolve({ id: 12, permissions: [] })),
 }))
 

@@ -1,8 +1,8 @@
-import { searchPeopleAdmin as fetchSearchPeopleAdmin } from '@/api/people.service'
-import { UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
-import { onlyRefs } from '@/functs/onlyRefs'
-import { RefOrRaw } from '@/interfaces/utils'
-import { OrganizationModel } from '@/models/organization.model'
+import { searchPeopleAdmin as fetchSearchPeopleAdmin } from '~/api/people.service'
+import { UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
+import { onlyRefs } from '~/functs/onlyRefs'
+import { RefOrRaw } from '~/interfaces/utils'
+import { OrganizationModel } from '~/models/organization.model'
 
 const DEFAULT_CONFIG = {}
 

@@ -1,5 +1,5 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import CategoryCard from '@/components/category/CategoryCard.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
+import CategoryCard from '~/components/category/CategoryCard.vue'
 
 import { describe, expect, it } from 'vitest'
 import { ProjectCategoryFactory } from '../../../factories/project-category.factory'

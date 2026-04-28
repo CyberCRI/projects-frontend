@@ -1,6 +1,6 @@
-import BaseModel from '@/models/base.model'
-import { ProjectMemberRoleType } from '@/models/types'
-import { TranslatedUserModel, UserModel } from '@/models/user.model'
+import BaseModel from '~/models/base.model'
+import { ProjectMemberRoleType } from '~/models/types'
+import { TranslatedUserModel, UserModel } from '~/models/user.model'
 
 /**
  * Member of a project

@@ -39,8 +39,8 @@
 </template>
 
 <script setup lang="ts">
-import { IconImageChoice } from '@/functs/IconImage'
-import useGlobals from '@/stores/useGlobals'
+import { IconImageChoice } from '~/functs/IconImage'
+import useGlobals from '~/stores/useGlobals'
 
 type MenyEntry = {
   condition: boolean
@@ -122,7 +122,7 @@ const isCurrentTab = (entry: MenyEntry) => {
 </script>
 
 <style scoped lang="scss">
-@import '@/components/base/navigation/navpanel-menu-entry';
+@import '~/components/base/navigation/navpanel-menu-entry';
 
 menu {
   display: flex;

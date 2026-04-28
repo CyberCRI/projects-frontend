@@ -37,8 +37,8 @@
   </ToolTip>
 </template>
 <script>
-import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
-import ToolTip from '@/components/base/ToolTip.vue'
+import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
+import ToolTip from '~/components/base/ToolTip.vue'
 
 export default {
   name: 'FilterButton',

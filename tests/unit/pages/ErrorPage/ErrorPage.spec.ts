@@ -1,5 +1,5 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import ErrorPage from '@/pages/ErrorPage/ErrorPage.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
+import ErrorPage from '~/pages/ErrorPage/ErrorPage.vue'
 
 import { describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'

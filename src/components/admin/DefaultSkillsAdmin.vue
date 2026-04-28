@@ -1,13 +1,13 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
-import FilterValue from '@/components/search/Filters/FilterValue.vue'
-import SkillsFilterEditor from '@/components/search/Filters/SkillsFilterEditor.vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import useTagTexts from '@/composables/useTagTexts.ts'
+import FilterValue from '~/components/search/Filters/FilterValue.vue'
+import SkillsFilterEditor from '~/components/search/Filters/SkillsFilterEditor.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import useToasterStore from '~/stores/useToaster.ts'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useTagTexts from '~/composables/useTagTexts.ts'
 
 const { t } = useNuxtI18n()
 

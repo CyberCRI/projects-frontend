@@ -1,15 +1,15 @@
 <script setup>
-import BaseModal from '@/components/base/modal/BaseModal.vue'
+import BaseModal from '~/components/base/modal/BaseModal.vue'
 import { ref, watchEffect, computed, nextTick } from 'vue'
-import TextInput from '@/components/base/form/TextInput.vue'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import { postClassificationTag, putClassificationTag } from '@/api/tag-classification.service'
+import TextInput from '~/components/base/form/TextInput.vue'
+import useToasterStore from '~/stores/useToaster.ts'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import { postClassificationTag, putClassificationTag } from '~/api/tag-classification.service'
 
-import CharCounter from '@/components/base/form/CharCounter.vue'
+import CharCounter from '~/components/base/form/CharCounter.vue'
 import useValidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
-import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import FieldErrors from '~/components/base/form/FieldErrors.vue'
 import LpiButton from '../base/button/LpiButton.vue'
 
 const { t } = useNuxtI18n()

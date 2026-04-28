@@ -51,11 +51,11 @@
   </AccountSection>
 </template>
 <script setup lang="ts">
-import ImageEditor from '@/components/base/form/ImageEditor.vue'
-import TextInput from '@/components/base/form/TextInput.vue'
-import AccountSection from '@/components/people/Account/AccountSection.vue'
-import FieldErrors from '@/components/base/form/FieldErrors.vue'
-import { usePatatoids } from '@/composables/usePatatoids'
+import ImageEditor from '~/components/base/form/ImageEditor.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+import AccountSection from '~/components/people/Account/AccountSection.vue'
+import FieldErrors from '~/components/base/form/FieldErrors.vue'
+import { usePatatoids } from '~/composables/usePatatoids'
 defineOptions({ name: 'AccountInfos' })
 
 const props = defineProps<{

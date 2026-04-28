@@ -30,12 +30,12 @@
 </template>
 
 <script>
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
 import UserSelection from './UserSelection.vue'
 import RoleSelection from './RoleSelection.vue'
-import { addProjectMembers } from '@/api/project-members.service'
-import analytics from '@/analytics'
-import useToasterStore from '@/stores/useToaster.ts'
+import { addProjectMembers } from '~/api/project-members.service'
+import analytics from '~/analytics'
+import useToasterStore from '~/stores/useToaster.ts'
 
 export default {
   name: 'TeamDrawer',

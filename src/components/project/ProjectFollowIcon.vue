@@ -16,9 +16,9 @@
 </template>
 
 <script setup lang="ts">
-import { TranslatedProject } from '@/models/project.model'
-import followUtils from '@/functs/followUtils'
-import useUsersStore from '@/stores/useUsers'
+import { TranslatedProject } from '~/models/project.model'
+import followUtils from '~/functs/followUtils'
+import useUsersStore from '~/stores/useUsers'
 
 const props = withDefaults(
   defineProps<{

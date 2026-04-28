@@ -1,6 +1,6 @@
-import { UseApiOptions } from '@/composables/useAPI'
-import useLoadingFromStatus from '@/composables/useLoadingFromStatus'
-import { withQuery } from '@/functs/query'
+import { UseApiOptions } from '~/composables/useAPI'
+import useLoadingFromStatus from '~/composables/useLoadingFromStatus'
+import { withQuery } from '~/functs/query'
 import { isNil } from 'es-toolkit'
 
 type AsyncHandler = {

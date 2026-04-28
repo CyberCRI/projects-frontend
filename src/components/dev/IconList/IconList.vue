@@ -15,9 +15,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import { IconImageChoice, ICONS } from '@/functs/IconImage'
-import IconImage from '@/components/base/media/IconImage.vue'
-import useToasterStore from '@/stores/useToaster'
+import { IconImageChoice, ICONS } from '~/functs/IconImage'
+import IconImage from '~/components/base/media/IconImage.vue'
+import useToasterStore from '~/stores/useToaster'
 
 const toaster = useToasterStore()
 const search = ref('')

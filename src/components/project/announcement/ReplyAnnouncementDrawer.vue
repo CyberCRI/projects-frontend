@@ -66,14 +66,14 @@
   </BaseDrawer>
 </template>
 <script>
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import TextInput from '@/components/base/form/TextInput.vue'
-import { applyAnnouncement } from '@/api/announcements.service.ts'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+import { applyAnnouncement } from '~/api/announcements.service.ts'
 import useVuelidate from '@vuelidate/core'
 import { helpers, required, email } from '@vuelidate/validators'
-import FieldErrors from '@/components/base/form/FieldErrors.vue'
-import useToasterStore from '@/stores/useToaster.ts'
+import FieldErrors from '~/components/base/form/FieldErrors.vue'
+import useToasterStore from '~/stores/useToaster.ts'
 import { useRuntimeConfig } from '#imports'
 
 export default {

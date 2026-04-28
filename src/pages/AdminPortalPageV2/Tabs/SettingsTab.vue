@@ -2,8 +2,8 @@
 import { Sketch } from '@ckpack/vue-color'
 import { useVuelidate } from '@vuelidate/core'
 import { required, requiredIf, maxLength, email, helpers } from '@vuelidate/validators'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import useToasterStore from '~/stores/useToaster.ts'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
 const { t } = useNuxtI18n()

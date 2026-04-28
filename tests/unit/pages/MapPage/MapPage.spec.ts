@@ -1,6 +1,6 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import { Locations } from '@/interfaces/maps'
-import MapPage from '@/pages/MapPage/MapPage.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
+import { Locations } from '~/interfaces/maps'
+import MapPage from '~/pages/MapPage/MapPage.vue'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import { flushPromises } from '@vue/test-utils'
 

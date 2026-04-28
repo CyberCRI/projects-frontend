@@ -1,6 +1,6 @@
 import { beforeAll, describe, expect, it } from 'vitest'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
-import ResearcherDocumentsTab from '@/pages/UserProfilePageV2/Tabs/ResearcherDocumentsTab.vue'
+import ResearcherDocumentsTab from '~/pages/UserProfilePageV2/Tabs/ResearcherDocumentsTab.vue'
 import { UserFactory } from '../../../../factories/user.factory'
 import { delay } from 'es-toolkit'
 import { DocumentFactory, ResearcherFactory } from '../../../../factories/researcher.factory'

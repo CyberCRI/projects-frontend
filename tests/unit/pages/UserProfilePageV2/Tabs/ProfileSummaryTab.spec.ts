@@ -1,15 +1,15 @@
-import ProfileSummaryTab from '@/pages/UserProfilePageV2/Tabs/ProfileSummaryTab.vue'
-import { lpiMountSuspended, lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import { UserFactory } from '@/../tests/factories/user.factory'
+import ProfileSummaryTab from '~/pages/UserProfilePageV2/Tabs/ProfileSummaryTab.vue'
+import { lpiMountSuspended, lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import { UserFactory } from '~~/tests/factories/user.factory'
 import { flushPromises } from '@vue/test-utils'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import pinia from '@/stores'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import useUsersStore from '@/stores/useUsers'
-import { OrganizationOutput } from '@/models/organization.model'
-vi.mock('@/api/follows.service', () => ({
+import pinia from '~/stores'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useUsersStore from '~/stores/useUsers'
+import { OrganizationOutput } from '~/models/organization.model'
+vi.mock('~/api/follows.service', () => ({
   getUserFollows: vi.fn().mockResolvedValue({ results: [] }),
 }))
 

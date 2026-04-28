@@ -1,11 +1,11 @@
-import { lpiShallowMount, lpiMount } from '@/../tests/helpers/LpiMount'
-import GoalDrawer from '@/components/project/goal/GoalDrawer.vue'
-import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
-import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
+import { lpiShallowMount, lpiMount } from '~~/tests/helpers/LpiMount'
+import GoalDrawer from '~/components/project/goal/GoalDrawer.vue'
+import { ProjectOutputFactory } from '~~/tests/factories/project.factory'
+import { OrganizationOutputFactory } from '~~/tests/factories/organization.factory'
 import { beforeEach, describe, expect, it } from 'vitest'
-import pinia from '@/stores'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import useProjectsStore from '@/stores/useProjects'
+import pinia from '~/stores'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useProjectsStore from '~/stores/useProjects'
 
 describe('GoalDrawer.vue', () => {
   let wrapper

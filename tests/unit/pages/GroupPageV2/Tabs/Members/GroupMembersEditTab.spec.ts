@@ -1,5 +1,5 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import GroupMembersEditTab from '@/pages/GroupPageV2/Tabs/Members/GroupMembersEditTab.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
+import GroupMembersEditTab from '~/pages/GroupPageV2/Tabs/Members/GroupMembersEditTab.vue'
 
 import { describe, expect, it } from 'vitest'
 import { groupTranslatedFactory } from '../../../../../factories/group.factory'

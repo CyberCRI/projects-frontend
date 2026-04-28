@@ -34,12 +34,12 @@
 </template>
 
 <script>
-import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import TextInput from '@/components/base/form/TextInput.vue'
-import { patchOrganization, postOrganizationImage } from '@/api/organizations.service.ts'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+import { patchOrganization, postOrganizationImage } from '~/api/organizations.service.ts'
+import useToasterStore from '~/stores/useToaster.ts'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
 export default {
   name: 'OrgWordingDrawer',
 

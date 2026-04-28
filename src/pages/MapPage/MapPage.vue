@@ -13,9 +13,9 @@
 </template>
 
 <script setup lang="ts">
-import { getLocations } from '@/api/v2/location.service'
-import GeneralMap from '@/components/map/GeneralMap.vue'
-import { useLpiHead2 } from '@/composables/useLpiHead'
+import { getLocations } from '~/api/v2/location.service'
+import GeneralMap from '~/components/map/GeneralMap.vue'
+import { useLpiHead2 } from '~/composables/useLpiHead'
 
 const organizationCode = useOrganizationCode()
 const { t } = useNuxtI18n()

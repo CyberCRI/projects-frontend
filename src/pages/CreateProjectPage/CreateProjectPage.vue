@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import useValidate from '@vuelidate/core'
 import { required, minLength, maxLength, helpers } from '@vuelidate/validators'
-import useToasterStore from '@/stores/useToaster'
-import useProjectCategories from '@/stores/useProjectCategories'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import useUsersStore from '@/stores/useUsers'
+import useToasterStore from '~/stores/useToaster'
+import useProjectCategories from '~/stores/useProjectCategories'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useUsersStore from '~/stores/useUsers'
 
-import analytics from '@/analytics'
-import { createProject, createProjectHeader } from '@/api/projects.service'
+import analytics from '~/analytics'
+import { createProject, createProjectHeader } from '~/api/projects.service'
 
 defineEmits(['close'])
 

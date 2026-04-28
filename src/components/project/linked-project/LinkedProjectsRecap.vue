@@ -13,9 +13,9 @@
 </template>
 
 <script setup lang="ts">
-import SectionHeader from '@/components/base/SectionHeader.vue'
-import LinkedProjects from '@/components/project/linked-project/LinkedProjects.vue'
-import useProjectsStore from '@/stores/useProjects'
+import SectionHeader from '~/components/base/SectionHeader.vue'
+import LinkedProjects from '~/components/project/linked-project/LinkedProjects.vue'
+import useProjectsStore from '~/stores/useProjects'
 
 const LIMIT = 6
 

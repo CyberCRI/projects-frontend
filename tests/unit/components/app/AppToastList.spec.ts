@@ -1,11 +1,11 @@
-import { lpiShallowMount, lpiMount } from '@/../tests/helpers/LpiMount'
-import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
-import AppToastList from '@/components/app/AppToastList.vue'
+import { lpiShallowMount, lpiMount } from '~~/tests/helpers/LpiMount'
+import LpiSnackbar from '~/components/base/LpiSnackbar.vue'
+import AppToastList from '~/components/app/AppToastList.vue'
 
 import { describe, expect, it } from 'vitest'
 import waitForExpect from 'wait-for-expect'
 import { nextTick } from 'vue'
-import useToasterStore from '@/stores/useToaster'
+import useToasterStore from '~/stores/useToaster'
 
 describe('AppToastList', () => {
   it('should render AppToastList component', () => {

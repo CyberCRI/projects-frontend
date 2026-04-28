@@ -30,15 +30,15 @@
 </template>
 
 <script setup lang="ts">
-import { getGroupSimilar } from '@/api/v2/group.service'
-import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
-import GroupCard from '@/components/group/GroupCard.vue'
-import { GroupModuleTitle, TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import BaseGroupPreview from '@/components/group/Modules/BaseGroupPreview.vue'
-import { maxSkeleton, factoryPagination } from '@/skeletons/base.skeletons'
-import { groupSkeleton } from '@/skeletons/group.skeletons'
-import GroupSimilarDrawer from '@/components/group/Modules/Extras/GroupSimilarDrawer.vue'
-import { onMediaChange } from '@/composables/onResize'
+import { getGroupSimilar } from '~/api/v2/group.service'
+import SeeMoreArrow from '~/components/base/button/SeeMoreArrow.vue'
+import GroupCard from '~/components/group/GroupCard.vue'
+import { GroupModuleTitle, TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import BaseGroupPreview from '~/components/group/Modules/BaseGroupPreview.vue'
+import { maxSkeleton, factoryPagination } from '~/skeletons/base.skeletons'
+import { groupSkeleton } from '~/skeletons/group.skeletons'
+import GroupSimilarDrawer from '~/components/group/Modules/Extras/GroupSimilarDrawer.vue'
+import { onMediaChange } from '~/composables/onResize'
 
 const props = withDefaults(defineProps<{ group: TranslatedPeopleGroupModel; limit?: number }>(), {
   limit: null,

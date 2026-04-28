@@ -1,5 +1,5 @@
-import { lpiShallowMount, lpiMount } from '@/../tests/helpers/LpiMount'
-import TagSearchResults from '@/components/search/FilterTags/TagSearchResults.vue'
+import { lpiShallowMount, lpiMount } from '~~/tests/helpers/LpiMount'
+import TagSearchResults from '~/components/search/FilterTags/TagSearchResults.vue'
 
 import { beforeEach, describe, expect, it } from 'vitest'
 

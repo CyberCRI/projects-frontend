@@ -1,5 +1,5 @@
-import { PaginationResult } from '@/composables/usePagination'
-import type { Document, ResearcherDocumentAnalytics } from '@/interfaces/researcher.ts'
+import { PaginationResult } from '~/composables/usePagination'
+import type { Document, ResearcherDocumentAnalytics } from '~/interfaces/researcher.ts'
 
 /**
  * sanitize results from publication

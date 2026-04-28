@@ -29,10 +29,10 @@
 </template>
 
 <script setup lang="ts">
-import AccordionItem from '@/components/base/AccordionItem.vue'
-import BadgeItem from '@/components/base/BadgeItem.vue'
-import IconImage from '@/components/base/media/IconImage.vue'
-import { IconImageChoice } from '@/functs/IconImage'
+import AccordionItem from '~/components/base/AccordionItem.vue'
+import BadgeItem from '~/components/base/BadgeItem.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+import { IconImageChoice } from '~/functs/IconImage'
 import { RouteLocationRaw } from 'vue-router'
 
 type Item = {

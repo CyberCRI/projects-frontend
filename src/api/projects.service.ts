@@ -5,12 +5,12 @@ import type {
   // ProjectHeaderOutput,
   // ProjectOutput,
   ProjectPatchInput,
-} from '@/models/project.model'
-import type { SearchParams } from '@/api/types'
-import { _adaptParamsToGetQuery } from '@/api/utils.service'
-import useAPI from '@/composables/useAPI'
+} from '~/models/project.model'
+import type { SearchParams } from '~/api/types'
+import { _adaptParamsToGetQuery } from '~/api/utils.service'
+import useAPI from '~/composables/useAPI'
 
-import { imageSizesFormData } from '@/functs/imageSizesUtils'
+import { imageSizesFormData } from '~/functs/imageSizesUtils'
 
 export async function createProject(project) {
   const result: any = await useAPI(`project/`, { body: project, method: 'POST' }) //.data.value

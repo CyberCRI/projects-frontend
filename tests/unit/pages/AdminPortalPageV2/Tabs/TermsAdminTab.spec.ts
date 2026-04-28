@@ -1,5 +1,5 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import TermsAdminTab from '@/pages/AdminPortalPageV2/Tabs/TermsAdminTab.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
+import TermsAdminTab from '~/pages/AdminPortalPageV2/Tabs/TermsAdminTab.vue'
 
 import { describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'

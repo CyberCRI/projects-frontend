@@ -49,11 +49,11 @@
 </template>
 
 <script setup lang="ts">
-import { getGroup } from '@/api/v2/group.service'
-import { useLpiHead2 } from '@/composables/useLpiHead'
-import { GroupModuleIcon, GroupModuleTitle } from '@/models/invitation.model'
-import { groupSkeleton } from '@/skeletons/group.skeletons'
-import usePeopleGroupsStore from '@/stores/usePeopleGroups'
+import { getGroup } from '~/api/v2/group.service'
+import { useLpiHead2 } from '~/composables/useLpiHead'
+import { GroupModuleIcon, GroupModuleTitle } from '~/models/invitation.model'
+import { groupSkeleton } from '~/skeletons/group.skeletons'
+import usePeopleGroupsStore from '~/stores/usePeopleGroups'
 
 const uniqueId = 'group-nav-panel'
 const peopleGroupsStore = usePeopleGroupsStore()

@@ -1,4 +1,4 @@
-import useGlobalsStore from '@/stores/useGlobals'
+import useGlobalsStore from '~/stores/useGlobals'
 import { isEqual } from 'es-toolkit'
 
 import { toRaw, isRef, isReactive, isProxy } from 'vue'

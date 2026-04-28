@@ -4,7 +4,7 @@ import {
   OrganizationModel,
   OrganizationOutput,
   OrganizationPatchInput,
-} from '@/models/organization.model'
+} from '~/models/organization.model'
 import BaseFactory from './base.factory'
 import FaqFactory from './faq.factory'
 import OrganizationDirectoryFactory from './organization-directory.factory'

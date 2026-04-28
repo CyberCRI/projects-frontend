@@ -1,9 +1,9 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import OnboardingScreens from '@/components/onboarding/OnboardingScreens/OnboardingScreens.vue'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import OnboardingScreens from '~/components/onboarding/OnboardingScreens/OnboardingScreens.vue'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import pinia from '@/stores'
-import useUsersStore from '@/stores/useUsers'
+import pinia from '~/stores'
+import useUsersStore from '~/stores/useUsers'
 
 describe('OnboardingScreens', () => {
   let wrapper

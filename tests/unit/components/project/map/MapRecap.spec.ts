@@ -1,8 +1,8 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import MapRecap from '@/components/map/MapRecap.vue'
-import pinia from '@/stores'
-import useProjectsStore from '@/stores/useProjects'
-import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import MapRecap from '~/components/map/MapRecap.vue'
+import pinia from '~/stores'
+import useProjectsStore from '~/stores/useProjects'
+import { ProjectOutputFactory } from '~~/tests/factories/project.factory'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 describe('MapRecap.vue', () => {

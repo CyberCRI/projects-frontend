@@ -29,9 +29,9 @@
 </template>
 
 <script setup>
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import SectionHeader from '@/components/base/SectionHeader.vue'
-import useViewportWidth from '@/composables/useViewportWidth.ts'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import SectionHeader from '~/components/base/SectionHeader.vue'
+import useViewportWidth from '~/composables/useViewportWidth.ts'
 
 defineOptions({ name: 'ProjectMemberSection' })
 

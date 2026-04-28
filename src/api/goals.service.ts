@@ -1,6 +1,6 @@
-import type { GoalInput /*, GoalOutput*/ } from '@/models/goal.model'
-// import type { APIResponseList } from '@/api/types'
-import useAPI from '@/composables/useAPI'
+import type { GoalInput /*, GoalOutput*/ } from '~/models/goal.model'
+// import type { APIResponseList } from '~/api/types'
+import useAPI from '~/composables/useAPI'
 
 export async function getAllGoals(id) {
   return await useAPI(`project/${id}/goal/`, {}) //.data.value

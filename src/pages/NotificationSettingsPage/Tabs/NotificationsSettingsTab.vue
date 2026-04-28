@@ -21,9 +21,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import GroupButton from '@/components/base/button/GroupButton.vue'
-import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-import useUsersStore from '@/stores/useUsers'
+import GroupButton from '~/components/base/button/GroupButton.vue'
+import LpiLoader from '~/components/base/loader/LpiLoader.vue'
+import useUsersStore from '~/stores/useUsers'
 
 const usersStore = useUsersStore()
 const form = ref({

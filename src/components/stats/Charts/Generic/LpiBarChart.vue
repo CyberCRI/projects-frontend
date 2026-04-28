@@ -6,7 +6,7 @@
 import { BarChart, useBarChart } from 'vue-chart-3'
 import { Chart, registerables } from 'chart.js'
 import { debounce } from 'es-toolkit'
-import { onResize } from '@/composables/onResize'
+import { onResize } from '~/composables/onResize'
 
 Chart.register(...registerables)
 defineOptions({ name: 'LpiBarChart' })

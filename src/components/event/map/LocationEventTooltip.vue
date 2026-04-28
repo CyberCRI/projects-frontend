@@ -11,11 +11,11 @@
 </template>
 
 <script setup lang="ts">
-import { TranslatedEventLocation } from '@/models/location.model'
-import CardLocationTooltip from '@/components/map/CardLocationTooltip.vue'
-import { html2Text } from '@/functs/string'
-import { TranslatedEventModel } from '@/models/event.model'
-import EventItem from '@/components/event/EventList/EventItem.vue'
+import { TranslatedEventLocation } from '~/models/location.model'
+import CardLocationTooltip from '~/components/map/CardLocationTooltip.vue'
+import { html2Text } from '~/functs/string'
+import { TranslatedEventModel } from '~/models/event.model'
+import EventItem from '~/components/event/EventList/EventItem.vue'
 
 const props = defineProps<{ location: TranslatedEventLocation; event: TranslatedEventModel }>()
 

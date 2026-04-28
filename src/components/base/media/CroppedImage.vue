@@ -4,7 +4,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ImageSizes, IMAGES_SIZES_DEFAULTS } from '@/functs/imageSizesUtils'
+import { ImageSizes, IMAGES_SIZES_DEFAULTS } from '~/functs/imageSizesUtils'
 import { StyleValue } from 'vue'
 
 const props = withDefaults(
@@ -69,7 +69,7 @@ onMounted(() => {
 })
 </script>
 <style lang="scss" scoped>
-@import '@/design/scss/skeletons';
+@import '~/design/scss/skeletons';
 
 .cropped-image {
   // higher specificity to override BasicCard styles

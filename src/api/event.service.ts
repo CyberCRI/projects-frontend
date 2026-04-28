@@ -1,6 +1,6 @@
-import type { EventIdOrSlug, EventInput, EventModel, QueryFilterEvent } from '@/models/event.model'
-import useAPI, { UseApiOptions } from '@/composables/useAPI'
-import { OrganizationModel } from '@/models/organization.model'
+import type { EventIdOrSlug, EventInput, EventModel, QueryFilterEvent } from '~/models/event.model'
+import useAPI, { UseApiOptions } from '~/composables/useAPI'
+import { OrganizationModel } from '~/models/organization.model'
 
 type ConfigEvent = UseApiOptions<QueryFilterEvent>
 

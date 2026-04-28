@@ -68,10 +68,10 @@
 </template>
 <script>
 import { LazyImageResizer } from '#components'
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
-import ImageInput from '@/components/base/form/ImageInput.vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import { usePublicURL } from '@/composables/usePublic'
+import CroppedImage from '~/components/base/media/CroppedImage.vue'
+import ImageInput from '~/components/base/form/ImageInput.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+import { usePublicURL } from '~/composables/usePublic'
 
 export default {
   name: 'ImageEditor',

@@ -1,5 +1,5 @@
-import { lpiMount, lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import GroupTeamDrawer from '@/components/people/GroupTeamDrawer/GroupTeamDrawer.vue'
+import { lpiMount, lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import GroupTeamDrawer from '~/components/people/GroupTeamDrawer/GroupTeamDrawer.vue'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 const members = [

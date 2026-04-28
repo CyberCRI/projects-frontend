@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { getAnnouncements } from '@/api/announcements.service'
-import { fullYearDateFormat, nowDate } from '@/functs/date'
-import useOrganizationsStore from '@/stores/useOrganizations'
+import { getAnnouncements } from '~/api/announcements.service'
+import { fullYearDateFormat, nowDate } from '~/functs/date'
+import useOrganizationsStore from '~/stores/useOrganizations'
 
 const organizationsStore = useOrganizationsStore()
 const { t } = useNuxtI18n()

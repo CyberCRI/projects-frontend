@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import LpiButton from '@/components/base/button/LpiButton.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
 const locationButtonHover = ref(false)
 </script>
 

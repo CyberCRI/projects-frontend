@@ -1,10 +1,10 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import CommentItem from '@/components/project/comment/CommentItem.vue'
-import { CommentFactory } from '@/../tests/factories/comment.factory'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import CommentItem from '~/components/project/comment/CommentItem.vue'
+import { CommentFactory } from '~~/tests/factories/comment.factory'
 
-import pinia from '@/stores'
-import useUsersStore from '@/stores/useUsers'
-import useOrganizationsStore from '@/stores/useOrganizations'
+import pinia from '~/stores'
+import useUsersStore from '~/stores/useUsers'
+import useOrganizationsStore from '~/stores/useOrganizations'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 // issue with webcrypto, so mock so offending import

@@ -1,5 +1,5 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import PortalPage from '@/pages/PortalPage/PortalPage.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
+import PortalPage from '~/pages/PortalPage/PortalPage.vue'
 
 import { describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'

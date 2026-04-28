@@ -1,10 +1,10 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import GroupCard from '@/components/group/GroupCard.vue'
-import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import GroupCard from '~/components/group/GroupCard.vue'
+import { ProjectOutputFactory } from '~~/tests/factories/project.factory'
 
 import { beforeEach, describe, expect, it } from 'vitest'
 //TODO : add once model created
-//import { GroupFactory } from '@/../tests/factories/group.factory'
+//import { GroupFactory } from '~~/tests/factories/group.factory'
 
 describe('GroupCard', () => {
   let wrapper

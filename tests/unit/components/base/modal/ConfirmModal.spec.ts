@@ -1,5 +1,5 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 
 import { describe, expect, it } from 'vitest'
 

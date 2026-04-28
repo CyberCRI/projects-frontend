@@ -115,18 +115,18 @@
   />
 </template>
 <script>
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import useTagSearch from '@/composables/useTagSearch.js'
-import EditClassification from '@/components/admin/EditClassification.vue'
-import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
-import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
-import { deleteOrgClassification } from '@/api/tag-classification.service'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import useToasterStore from '@/stores/useToaster.ts'
-import ClassificationDescription from '@/components/admin/ClassificationDescription.vue'
-import { isCustomClassification } from '@/functs/ClassificationUtils.ts'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import useTagSearch from '~/composables/useTagSearch.js'
+import EditClassification from '~/components/admin/EditClassification.vue'
+import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
+import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
+import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
+import { deleteOrgClassification } from '~/api/tag-classification.service'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useToasterStore from '~/stores/useToaster.ts'
+import ClassificationDescription from '~/components/admin/ClassificationDescription.vue'
+import { isCustomClassification } from '~/functs/ClassificationUtils.ts'
 export default {
   name: 'ClassificationAdmin',
 

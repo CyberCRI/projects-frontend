@@ -1,11 +1,11 @@
-// import type { APIResponseList } from '@/api/types'
+// import type { APIResponseList } from '~/api/types'
 
 import type {
   AttachmentLinkInput /*, AttachmentLinkOutput*/,
   AttachmentLinkModel,
-} from '@/models/attachment-link.model'
+} from '~/models/attachment-link.model'
 
-import useAPI from '@/composables/useAPI'
+import useAPI from '~/composables/useAPI'
 
 export async function getAttachmentLinks(id: string) {
   return await useAPI<PaginationResult<AttachmentLinkModel>>(`project/${id}/link/`, {}) //.data.value

@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import IconImage from '@/components/base/media/IconImage.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
 
 const open = ref(false)
 const toggle = () => (open.value = !open.value)

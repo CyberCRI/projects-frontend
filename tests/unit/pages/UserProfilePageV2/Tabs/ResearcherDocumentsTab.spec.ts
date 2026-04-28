@@ -1,5 +1,5 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import ResearcherDocumentsTab from '@/pages/UserProfilePageV2/Tabs/ResearcherDocumentsTab.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
+import ResearcherDocumentsTab from '~/pages/UserProfilePageV2/Tabs/ResearcherDocumentsTab.vue'
 
 import { describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'

@@ -22,8 +22,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import ProjectLogo from '@/components/base/media/ProjectLogo.vue'
-import useOrganizationsStore from '@/stores/useOrganizations'
+import ProjectLogo from '~/components/base/media/ProjectLogo.vue'
+import useOrganizationsStore from '~/stores/useOrganizations'
 
 withDefaults(defineProps<{ signUpTitle?: string }>(), { signUpTitle: '' })
 const organizationsStore = useOrganizationsStore()

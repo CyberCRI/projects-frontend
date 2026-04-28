@@ -1,7 +1,7 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import ProjectSection from '@/components/group/GroupForm/ProjectSection.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
+import ProjectSection from '~/components/group/GroupForm/ProjectSection.vue'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { TranslatedProjectFactory } from '@/../tests/factories/project.factory'
+import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 
 const projects = TranslatedProjectFactory.generateMany(2).map((project) => ({ ...project }))
 

@@ -44,12 +44,12 @@
   </div>
 </template>
 <script setup lang="ts">
-import CardList from '@/components/base/CardList.vue'
-import GroupCard from '@/components/group/GroupCard.vue'
-import EmptyCard from '@/components/people/UserProfile/EmptyCard.vue'
-import ListPaginator from '@/components/base/navigation/ListPaginator.vue'
-import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import { TranslatedUserModel } from '@/models/user.model'
+import CardList from '~/components/base/CardList.vue'
+import GroupCard from '~/components/group/GroupCard.vue'
+import EmptyCard from '~/components/people/UserProfile/EmptyCard.vue'
+import ListPaginator from '~/components/base/navigation/ListPaginator.vue'
+import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
+import { TranslatedUserModel } from '~/models/user.model'
 
 defineProps<{ user: TranslatedUserModel }>()
 

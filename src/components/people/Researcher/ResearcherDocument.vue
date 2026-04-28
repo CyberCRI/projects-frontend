@@ -56,10 +56,10 @@
 </template>
 
 <script setup lang="ts">
-import { TranslatedDocument } from '@/interfaces/researcher'
-import PushPinSvg from '@/assets/svg/pushpin.svg'
-import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
-import IdentifierLink from '@/components/people/Researcher/IdentifierLink.vue'
+import { TranslatedDocument } from '~/interfaces/researcher'
+import PushPinSvg from '~/assets/svg/pushpin.svg'
+import SeeMoreArrow from '~/components/base/button/SeeMoreArrow.vue'
+import IdentifierLink from '~/components/people/Researcher/IdentifierLink.vue'
 
 const { t, locale } = useNuxtI18n()
 const emit = defineEmits(['similar'])

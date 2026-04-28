@@ -41,14 +41,14 @@
 </template>
 
 <script>
-import InstructionItem from '@/components/home/SummaryCards/InstructionItem.vue'
-import BaseListSummaryBlock from '@/components/home/SummaryCards/BaseListSummaryBlock.vue'
-import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
-import EditInstructionDrawer from '@/components/instruction/EditInstructionDrawer/EditInstructionDrawer.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import { deleteInstruction } from '@/api/instruction.service'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import InstructionItem from '~/components/home/SummaryCards/InstructionItem.vue'
+import BaseListSummaryBlock from '~/components/home/SummaryCards/BaseListSummaryBlock.vue'
+import SummaryAction from '~/components/home/SummaryCards/SummaryAction.vue'
+import EditInstructionDrawer from '~/components/instruction/EditInstructionDrawer/EditInstructionDrawer.vue'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import { deleteInstruction } from '~/api/instruction.service'
+import useToasterStore from '~/stores/useToaster.ts'
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
 
 export default {
   name: 'InstructionSummaryBlock',

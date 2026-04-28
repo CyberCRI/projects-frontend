@@ -13,12 +13,12 @@
 </template>
 
 <script setup lang="ts">
-import { postOrganisationLogo } from '@/api/organizations.service'
+import { postOrganisationLogo } from '~/api/organizations.service'
 import AdminBlock from '../AdminBlock.vue'
-import ImageEditor from '@/components/base/form/ImageEditor.vue'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils'
-import useToasterStore from '@/stores/useToaster'
-import useOrganizationsStore from '@/stores/useOrganizations'
+import ImageEditor from '~/components/base/form/ImageEditor.vue'
+import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
+import useToasterStore from '~/stores/useToaster'
+import useOrganizationsStore from '~/stores/useOrganizations'
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()

@@ -1,5 +1,5 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import SwitchInput from '@/components/base/form/SwitchInput.vue'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import SwitchInput from '~/components/base/form/SwitchInput.vue'
 
 import { describe, expect, it } from 'vitest'
 describe('SwitchInput.vue', () => {

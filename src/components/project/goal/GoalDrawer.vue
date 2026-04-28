@@ -51,22 +51,22 @@
 </template>
 
 <script>
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import TextInput from '@/components/base/form/TextInput.vue'
-import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import GroupButton from '@/components/base/button/GroupButton.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
+import GroupButton from '~/components/base/button/GroupButton.vue'
 
 import useVuelidate from '@vuelidate/core'
 import { required, helpers } from '@vuelidate/validators'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import FieldErrors from '~/components/base/form/FieldErrors.vue'
 
-import { createGoal, patchGoal } from '@/api/goals.service'
-import analytics from '@/analytics'
-import useToasterStore from '@/stores/useToaster.ts'
-import DateField from '@/components/base/form/DateField.vue'
-import { fullYearDateFormat } from '@/functs/date'
-import { textIsEmpty } from '@/functs/string'
+import { createGoal, patchGoal } from '~/api/goals.service'
+import analytics from '~/analytics'
+import useToasterStore from '~/stores/useToaster.ts'
+import DateField from '~/components/base/form/DateField.vue'
+import { fullYearDateFormat } from '~/functs/date'
+import { textIsEmpty } from '~/functs/string'
 
 export default {
   name: 'GoalDrawer',

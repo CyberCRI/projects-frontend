@@ -1,5 +1,5 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import GroupDescriptionDrawer from '@/components/group/GroupForm/GroupDescriptionDrawer.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
+import GroupDescriptionDrawer from '~/components/group/GroupForm/GroupDescriptionDrawer.vue'
 import { describe, expect, it } from 'vitest'
 
 describe('GroupDescriptionDrawer.vue', () => {

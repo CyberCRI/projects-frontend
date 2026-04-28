@@ -68,9 +68,9 @@
 </template>
 
 <script setup lang="ts">
-import IconImage from '@/components/base/media/IconImage.vue'
-import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-import { IconImageChoice } from '@/functs/IconImage'
+import IconImage from '~/components/base/media/IconImage.vue'
+import LpiLoader from '~/components/base/loader/LpiLoader.vue'
+import { IconImageChoice } from '~/functs/IconImage'
 import { StyleValue } from 'vue'
 import { RouteLocationRaw } from 'vue-router'
 

@@ -1,5 +1,5 @@
-import { lpiMount, lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import ParentGroupSection from '@/components/group/GroupForm/ParentGroupSection.vue'
+import { lpiMount, lpiMountSuspended } from '~~/tests/helpers/LpiMount'
+import ParentGroupSection from '~/components/group/GroupForm/ParentGroupSection.vue'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import { flushPromises } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'

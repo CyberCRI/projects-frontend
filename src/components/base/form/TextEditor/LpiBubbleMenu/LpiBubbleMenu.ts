@@ -1,7 +1,7 @@
 import {
   LpiBubbleMenuPlugin,
   LpiBubbleMenuPluginProps,
-} from '@/components/base/form/TextEditor/tiptap-extensions/extension-lpi-bubble-menu'
+} from '~/components/base/form/TextEditor/tiptap-extensions/extension-lpi-bubble-menu'
 import { defineComponent, h, onBeforeUnmount, onMounted, PropType, ref } from 'vue'
 
 /**

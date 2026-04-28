@@ -1,5 +1,5 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import BlogSummaryBlock from '@/components/project/blog/BlogSummaryBlock.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
+import BlogSummaryBlock from '~/components/project/blog/BlogSummaryBlock.vue'
 
 import { describe, expect, it } from 'vitest'
 

@@ -161,17 +161,17 @@
 </template>
 
 <script setup lang="ts">
-import LpiLogo from '@/components/app/LpiLogo.vue'
-import ReportDrawer from '@/components/app/ReportDrawer.vue'
-import ContactDrawer from '@/components/app/ContactDrawer.vue'
-import ProjectLogo from '@/components/base/media/ProjectLogo.vue'
-import FooterEnglishTips from '@/components/app/FooterEnglishTips.vue'
-import OnboardingScreens from '@/components/onboarding/OnboardingScreens/OnboardingScreens.vue'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import useUsersStore from '@/stores/useUsers'
+import LpiLogo from '~/components/app/LpiLogo.vue'
+import ReportDrawer from '~/components/app/ReportDrawer.vue'
+import ContactDrawer from '~/components/app/ContactDrawer.vue'
+import ProjectLogo from '~/components/base/media/ProjectLogo.vue'
+import FooterEnglishTips from '~/components/app/FooterEnglishTips.vue'
+import OnboardingScreens from '~/components/onboarding/OnboardingScreens/OnboardingScreens.vue'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useUsersStore from '~/stores/useUsers'
 import { useRuntimeConfig } from '#imports'
-import utils from '@/functs/functions'
-import { usePublicURL } from '@/composables/usePublic'
+import utils from '~/functs/functions'
+import { usePublicURL } from '~/composables/usePublic'
 
 const FOOTER_SRC = usePublicURL('/source.png')
 

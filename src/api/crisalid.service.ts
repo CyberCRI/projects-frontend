@@ -3,8 +3,8 @@ import {
   DocumentType,
   Researcher,
   ResearcherDocumentAnalytics,
-} from '@/interfaces/researcher'
-import { PeopleGroupIdOrSlug } from '@/models/invitation.model'
+} from '~/interfaces/researcher'
+import { PeopleGroupIdOrSlug } from '~/models/invitation.model'
 
 export async function getOwnResearchDocument(
   organisationCode: string,

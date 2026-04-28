@@ -8,7 +8,7 @@ import {
   ProjectMembersDeleteInput,
   ProjectMemberPeopleGroupOutput,
   ProjectTeamModel,
-} from '@/models/project-member.model'
+} from '~/models/project-member.model'
 import { UserFactory } from './user.factory'
 
 export const ProjectMemberFactory = createFactory<ProjectMemberModel>(() => ({

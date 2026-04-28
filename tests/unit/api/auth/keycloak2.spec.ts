@@ -1,14 +1,14 @@
-import * as keycloakUtils from '@/api/auth/keycloakUtils'
-import useKeycloak from '@/api/auth/keycloak'
+import * as keycloakUtils from '~/api/auth/keycloakUtils'
+import useKeycloak from '~/api/auth/keycloak'
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
 
-import pinia from '@/stores'
-import useUsersStore from '@/stores/useUsers'
+import pinia from '~/stores'
+import useUsersStore from '~/stores/useUsers'
 import { flushPromises } from '@vue/test-utils'
 
-vi.mock('@/api/auth/keycloakUtils')
+vi.mock('~/api/auth/keycloakUtils')
 const keycloak = useKeycloak()
 
 vi.spyOn(keycloakUtils, 'getRefreshTokenInterval').mockReturnValue(10)

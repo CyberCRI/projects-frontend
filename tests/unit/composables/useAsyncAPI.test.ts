@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { ref, computed } from 'vue'
-import useAsyncAPI from '@/composables/useAsyncAPI'
+import useAsyncAPI from '~/composables/useAsyncAPI'
 import { flushPromises } from '@vue/test-utils'
 
 describe('useAsyncAPI composable', () => {

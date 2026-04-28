@@ -26,12 +26,12 @@
 </template>
 
 <script setup lang="ts">
-import { capitalize, cropIfTooLong, html2Text } from '@/functs/string'
+import { capitalize, cropIfTooLong, html2Text } from '~/functs/string'
 
-import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
-import { TranslatedProject } from '@/models/project.model'
-import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
+import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
+import SummaryAction from '~/components/home/SummaryCards/SummaryAction.vue'
+import { TranslatedProject } from '~/models/project.model'
+import { DEFAULT_PROJECT_PATATOID } from '~/composables/usePatatoids'
 
 defineOptions({ name: 'NewsfeedProjectItem' })
 

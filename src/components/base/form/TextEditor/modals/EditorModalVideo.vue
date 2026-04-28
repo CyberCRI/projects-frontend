@@ -26,9 +26,9 @@
 </template>
 
 <script>
-import DialogModal from '@/components/base/modal/DialogModal.vue'
-import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
-import TextInput from '@/components/base/form/TextInput.vue'
+import DialogModal from '~/components/base/modal/DialogModal.vue'
+import LpiSnackbar from '~/components/base/LpiSnackbar.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
 
 // TODO: validate video src and display error message
 export default {
