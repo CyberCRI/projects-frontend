@@ -59,7 +59,7 @@ export type OrganizationOutput = BaseModel &
     children: string[]
     access_request_enabled?: boolean
     languages?: string[]
-    default_skills_tags?: UserSkillModel[]
+    default_skills_tags?: TagModel[]
     default_projects_tags?: TagModel[]
   }
 

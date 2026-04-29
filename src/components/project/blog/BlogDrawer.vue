@@ -64,7 +64,6 @@
         v-model="editorBlogEntry"
         :room="room"
         :provider-params="providerParams"
-        class="input-field content-editor"
         mode="full"
         save-icon-visible
         :save-image-callback="saveBlogImage"

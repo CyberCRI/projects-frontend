@@ -12,7 +12,7 @@ const { t } = useNuxtI18n()
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
-const skillText = useSkillTexts()
+const tagText = useTagTexts()
 
 const newTags = ref([])
 
@@ -77,12 +77,12 @@ const deleteOrganizationTag = async () => {
 
     <div class="tags-ctn">
       <FilterValue
-        v-for="skill in organizationSkills"
-        :key="skill.id"
+        v-for="tag in organizationSkills"
+        :key="tag.id"
         data-test="default-skill"
-        :label="skillText.title(skill)"
+        :label="tagText.title(tag)"
         icon="Close"
-        @click="tagToDelete = skill"
+        @click="tagToDelete = tag"
       />
     </div>
 

@@ -69,17 +69,20 @@ export function getGroup(
 
 export async function patchGroup(
   organizationCode: OrganizationModel['code'],
-  groupName: number,
+  groupId: PeopleGroupIdOrSlug,
   groupData: Partial<PostGroupData>
 ) {
-  return await useAPI(`organization/${organizationCode}/people-group/${groupName}/`, {
+  return await useAPI(`organization/${organizationCode}/people-group/${groupId}/`, {
     body: groupData,
     method: 'PATCH',
   })
 }
 
-export async function deleteGroup(organizationCode: OrganizationModel['code'], groupName: string) {
-  return await useAPI(`organization/${organizationCode}/people-group/${groupName}/`, {
+export async function deleteGroup(
+  organizationCode: OrganizationModel['code'],
+  groupId: PeopleGroupIdOrSlug
+) {
+  return await useAPI(`organization/${organizationCode}/people-group/${groupId}/`, {
     method: 'DELETE',
   })
 }
@@ -133,22 +136,22 @@ export async function getGroupProject(
 }
 
 export async function postGroupProjects(
-  org: string,
-  group_id: number,
+  organizationCode: OrganizationModel['code'],
+  groupId: PeopleGroupIdOrSlug,
   projectsData: PostGroupProjects
 ) {
-  return await useAPI(`organization/${org}/people-group/${group_id}/project/add/`, {
+  return await useAPI(`organization/${organizationCode}/people-group/${groupId}/project/add/`, {
     body: projectsData,
     method: 'POST',
   })
 }
 
 export async function removeGroupProject(
-  org: string,
-  group_id: number,
+  organizationCode: OrganizationModel['code'],
+  groupId: PeopleGroupIdOrSlug,
   projectsData: PostGroupProjects
 ) {
-  return await useAPI(`organization/${org}/people-group/${group_id}/project/remove/`, {
+  return await useAPI(`organization/${organizationCode}/people-group/${groupId}/project/remove/`, {
     body: projectsData,
     method: 'POST',
   })
@@ -156,15 +159,23 @@ export async function removeGroupProject(
 
 // GROUP HEADER
 
-export async function postGroupHeader(org: string, group_id: number, headerData: FormData) {
-  return await useAPI(`organization/${org}/people-group/${group_id}/header/`, {
+export async function postGroupHeader(
+  organizationCode: OrganizationModel['code'],
+  groupId: PeopleGroupIdOrSlug,
+  headerData: FormData
+) {
+  return await useAPI(`organization/${organizationCode}/people-group/${groupId}/header/`, {
     body: headerData,
     method: 'POST',
   })
 }
 
-export async function patchGroupHeader(org: string, group_id: number, headerData: FormData) {
-  return await useAPI(`organization/${org}/people-group/${group_id}/header/`, {
+export async function patchGroupHeader(
+  organizationCode: OrganizationModel['code'],
+  groupId: PeopleGroupIdOrSlug,
+  headerData: FormData
+) {
+  return await useAPI(`organization/${organizationCode}/people-group/${groupId}/header/`, {
     body: headerData,
     method: 'PATCH',
   })

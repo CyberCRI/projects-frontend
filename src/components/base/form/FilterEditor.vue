@@ -17,9 +17,12 @@
       </li>
     </ul>
   </div>
+  <NothingHere v-if="options.length === 0" />
 </template>
 
 <script setup lang="ts">
+import NothingHere from '~/components/base/NothingHere.vue'
+
 type Value = {
   id: number
   name: string

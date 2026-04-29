@@ -3,7 +3,7 @@
     :confirm-action-name="$t('common.save')"
     :is-opened="isOpened"
     :title="!category?.id ? $t('admin.portal.categories.add') : $t('admin.portal.categories.edit')"
-    class="category-modal small"
+    class="category-modal medium"
     :asyncing="asyncing"
     @close="closeModal"
     @confirm="submitCategory"

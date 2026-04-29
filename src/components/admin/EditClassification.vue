@@ -8,24 +8,17 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import type { TagClassificationModel } from '~/models/tagclassification.model'
 import useOrganizationsStore from '~/stores/useOrganizations'
+import { defaultForm } from '~/form/classification'
 import useToasterStore from '~/stores/useToaster'
 
 const { t } = useNuxtI18n()
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
 
-const defaultForm = () => ({
-  id: null,
-  title: '',
-  description: '',
-  is_enabled_for_projects: false,
-  is_enabled_for_skills: false,
-})
-
 const emit = defineEmits(['close', 'classification-created', 'classification-edited'])
 
 const props = defineProps<{
-  classification: TagClassificationModel
+  classification?: TagClassificationModel
   isOpen: boolean
 }>()
 

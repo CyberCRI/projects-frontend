@@ -2,7 +2,7 @@
   <BaseDrawer
     :title="drawerTitle"
     :is-opened="isOpened"
-    class="small"
+    class="medium"
     :confirm-action-name="t('common.save')"
     :confirm-action-disabled="!rooted && selectedGroup === null"
     :asyncing="status !== 'success'"
