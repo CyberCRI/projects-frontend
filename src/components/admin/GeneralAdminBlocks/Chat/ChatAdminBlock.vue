@@ -12,11 +12,11 @@
     <template v-if="hasChat" #default>
       <p class="chat-data">
         <strong>{{ $t('chat.data.wording') }}</strong>
-        <span>{{ chat_button_text }}</span>
+        <span>{{ chatButtonText }}</span>
       </p>
       <p class="chat-data">
         <strong>{{ $t('chat.data.link') }}</strong>
-        <a v-if="chat_url" target="_blank" :href="chat_url">{{ chat_url }}</a>
+        <a v-if="chatURL" target="_blank" :href="chatURL">{{ chatURL }}</a>
         <span v-else>{{ $t('chat.data.no-link') }}</span>
       </p>
     </template>
@@ -47,10 +47,10 @@ const blockTitle = computed(() => {
   return t('admin.portal.chat')
 })
 
-const chat_url = computed(() => organization.value?.chat_url)
-const hasChat = computed(() => !!chat_url.value)
+const chatURL = computed(() => organization.value?.chat_url)
+const hasChat = computed(() => !!chatURL.value)
 
-const chat_button_text = computed(() => {
+const chatButtonText = computed(() => {
   return organization.value?.chat_button_text || t('chat.data.no-wording')
 })
 

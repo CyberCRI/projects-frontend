@@ -17,7 +17,7 @@
         <p class="notice">
           {{ $t('chat.drawer.url.notice') }}
         </p>
-        <TextInput v-model="chat_url" :placeholder="$t('chat.drawer.url.placeholder')" />
+        <TextInput v-model="chatURL" :placeholder="$t('chat.drawer.url.placeholder')" />
       </div>
 
       <div class="form-section">
@@ -54,7 +54,7 @@ const organizationCode = useOrganizationCode()
 const { t } = useNuxtI18n()
 
 const chat_button_text = ref(organizationsStore.current.chat_button_text || '')
-const chat_url = ref(organizationsStore.current.chat_url || '')
+const chatURL = ref(organizationsStore.current.chat_url || '')
 const asyncing = ref(false)
 
 const cancel = () => emit('close')
@@ -64,7 +64,7 @@ const saveChat = async () => {
   try {
     const payload = {
       chat_button_text: chat_button_text.value,
-      chat_url: chat_url.value,
+      chat_url: chatURL.value,
     }
 
     await patchOrganization(organizationCode, payload)
