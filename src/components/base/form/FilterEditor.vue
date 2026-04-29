@@ -19,19 +19,16 @@
   </div>
 </template>
 
-<script setup>
-defineOptions({
-  name: 'FilterEditor',
-})
+<script setup lang="ts">
+type Value = {
+  id: number
+  name: string
+}
+defineProps<{
+  options: Value[]
+}>()
 
-defineProps({
-  options: {
-    type: Array,
-    required: true,
-  },
-})
-
-const modelValue = defineModel('modelValue', { required: true, type: Array })
+const modelValue = defineModel<Value[]>('modelValue')
 const emit = defineEmits(['update:modelValue'])
 
 const selectedId = computed(() => modelValue.value.map((el) => el.id))

@@ -13,6 +13,8 @@ export type TagClassificationModel = BaseModel & {
   outdated_slugs: string[]
   description: string
   tags: TagModel[]
+  is_enabled_for_projects?: boolean
+  is_enabled_for_skills?: boolean
 }
 
 export type QueryFilterTagClassification = Partial<

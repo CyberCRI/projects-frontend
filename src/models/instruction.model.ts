@@ -22,8 +22,13 @@ export type InstructionId = InstructionModel['id'] | string
 
 export type InstructionOutput = BaseModel & Required<InstructionModel>
 
-export type InstructionInput = Required<InstructionModel> & {
-  organization_code: string
+export type InstructionInput = Required<Omit<InstructionModel, 'id' | 'people_groups'>> & {
+  id?: InstructionModel['id']
+  people_groups: {
+    [key: string]: PeopleGroupModel
+  }
+  organization_code?: string
+  people_groups_ids: string[]
 }
 
 export type TranslatedInstruction = Translated<InstructionModel, 'title' | 'content'>

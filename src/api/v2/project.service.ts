@@ -8,7 +8,7 @@ import type {
   TranslatedPojectMember,
 } from '@/models/project-member.model'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
-import { getProjectLocations as fetchProjectLocations } from '@/api/locations.services'
+import { getProjectLocations as fetchProjectLocations } from '@/api/locations.service'
 import type { OrganizationModel } from '@/models/organization.model'
 import type { ProjectSlugOrId } from '@/models/project.model'
 import type { RefOrRaw } from '@/interfaces/utils'

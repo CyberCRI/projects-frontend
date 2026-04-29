@@ -1,8 +1,8 @@
 import type { OrganizationModel } from '@/models/organization.model'
 import type { TemplateOutput } from '@/models/template.model'
+import type { TagModel, TagOutput } from '@/models/tag.model'
 import type { Translated } from '@/interfaces/translated'
 import type { ImageModel } from '@/models/image.model'
-import type { TagOutput } from '@/models/tag.model'
 import type BaseModel from '@/models/base.model'
 
 /**
@@ -11,36 +11,52 @@ import type BaseModel from '@/models/base.model'
  */
 export interface ProjectCategoryModel extends BaseModel {
   id: number
-  slug?: string
-  background_color: string
-  background_image: ImageModel
-  description: string
-  foreground_color: string // Text color
-  is_reviewable: boolean
+
   name: string
+  slug: string
+  outdated_slugs?: string[]
+  description: string
+
+  background_image: ImageModel | null
+
+  organization: OrganizationModel | OrganizationModel['code']
+
+  is_reviewable: boolean
   order_index: number
-  children: ProjectCategoryOutput[] | number[]
-  hierarchy?: ProjectCategoryOutput[] | number[]
+  tags: TagModel[]
+
+  only_reviewer_can_publish: boolean
+  is_root: boolean
+  parent: ProjectCategoryModel | null
+
+  background_color: string
+  foreground_color: string
+
+  // extra
+  children?: ProjectCategoryModel[]
+
   projects_count?: number
+
+  hierarchy?: ProjectCategoryModel[]
 }
 
 export type TranslatedProjectCategory = Translated<ProjectCategoryModel, 'name' | 'description'>
 
-export type ProjectCategoryCreateInput = Required<ProjectCategoryModel> & {
+export type ProjectCategoryCreateInput = Required<Omit<ProjectCategoryModel, 'tags'>> & {
   organization_code: string
   tags?: number[]
 }
 
-export type ProjectCategoryPutInput = Required<ProjectCategoryModel> & {
+export type ProjectCategoryPutInput = Required<Omit<ProjectCategoryModel, 'tags'>> & {
   tags: number[]
 }
 
-export type ProjectCategoryPatchInput = Partial<ProjectCategoryModel> & {
+export type ProjectCategoryPatchInput = Partial<Omit<ProjectCategoryModel, 'tags'>> & {
   tags?: number[]
 }
 
 export type ProjectCategoryOutput = BaseModel &
-  Required<ProjectCategoryModel> & {
+  Required<Omit<ProjectCategoryModel, 'tags'>> & {
     template: TemplateOutput
     organization: OrganizationModel['code']
     tags: TagOutput[]

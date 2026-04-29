@@ -21,52 +21,43 @@
     </FetchLoader>
   </BaseDrawer>
 </template>
-<script setup>
+
+<script setup lang="ts">
+import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
 import PickGroup from '~/components/group/PickGroup/PickGroup.vue'
+import type { HierarchyGroupModel } from '~/models/group.model'
 import FetchLoader from '~/components/base/FetchLoader.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
+import type { AsyncDataRequestStatus } from '#app'
 
-const props = defineProps({
-  drawerTitle: {
+const props = withDefaults(
+  defineProps<{
     // title of the drawer
-    type: String,
-    default: '',
-  },
-  subtitle: {
+    drawerTitle?: string
     // text before the serach input
-    type: String,
-    default: '',
-  },
-  groups: {
+    subtitle?: string
     // groups hierarchy
-    type: Array,
-    default: () => [],
-  },
-  initialGroup: {
+    groups?: (HierarchyGroupModel | TranslatedPeopleGroupModel)[]
     // initially selected group
-    type: Object,
-    default: null,
-  },
-  isOpened: {
-    // drawer visibility
-    type: Boolean,
-    default: false,
-  },
-  forbiddenIds: {
+    initialGroup?: HierarchyGroupModel
+    isOpened?: boolean
     // array of unselectable group ids
-    type: Array,
-    default: () => [],
-  },
-  rooted: {
+    forbiddenIds?: any[]
     // allow to show and pick a (null) root group
-    type: Boolean,
-    default: false,
-  },
-  status: {
-    type: String,
-    default: 'success',
-  },
-})
+    rooted?: boolean
+    status?: AsyncDataRequestStatus
+  }>(),
+  {
+    drawerTitle: '',
+    subtitle: '',
+    groups: () => [],
+    initialGroup: null,
+    isOpened: false,
+    forbiddenIds: () => [],
+    rooted: false,
+    status: 'success',
+  }
+)
 
 const emit = defineEmits(['close', 'confirm'])
 const { t } = useNuxtI18n()

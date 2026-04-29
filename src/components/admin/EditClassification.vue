@@ -6,6 +6,7 @@ import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
+import type { TagClassificationModel } from '~/models/tagclassification.model'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'
 
@@ -23,16 +24,10 @@ const defaultForm = () => ({
 
 const emit = defineEmits(['close', 'classification-created', 'classification-edited'])
 
-const props = defineProps({
-  classification: {
-    type: [Object, null],
-    required: true,
-  },
-  isOpen: {
-    type: Boolean,
-    required: true,
-  },
-})
+const props = defineProps<{
+  classification: TagClassificationModel
+  isOpen: boolean
+}>()
 
 const asyncing = ref(false)
 

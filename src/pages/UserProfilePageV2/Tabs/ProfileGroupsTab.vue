@@ -45,22 +45,19 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
 import ListPaginator from '~/components/base/navigation/ListPaginator.vue'
 import EmptyCard from '~/components/people/UserProfile/EmptyCard.vue'
 import GroupCard from '~/components/group/GroupCard.vue'
 import CardList from '~/components/base/CardList.vue'
 
-import useUsersStore from '~/stores/useUsers.ts'
+import type { TranslatedUserModel } from '~/models/user.model'
+import useUsersStore from '~/stores/useUsers'
 
-defineOptions({ name: 'ProfileGroupsTab' })
-const props = defineProps({
-  user: {
-    type: Object,
-    required: true,
-  },
-})
+const props = defineProps<{
+  user: TranslatedUserModel
+}>()
 
 const emit = defineEmits(['close'])
 const { t } = useNuxtI18n()

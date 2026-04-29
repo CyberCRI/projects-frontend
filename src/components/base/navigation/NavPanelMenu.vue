@@ -36,7 +36,7 @@ import type { IconImageChoice } from '@/functs/IconImage'
 import useGlobals from '@/stores/useGlobals'
 import { NuxtLink } from '#components'
 
-type MenyEntry = {
+export type MenyEntry = {
   condition: boolean
   label: string
   icon: IconImageChoice

@@ -8,6 +8,7 @@
     <div class="user-container">
       <CroppedApiImage
         :alt="
+          // @ts-expect-error TODO refacto isNotGroup
           user.keycloack_id ? `${user.given_name} ${user.family_name} image` : `${user.name} image`
         "
         class="img-container"
@@ -21,7 +22,10 @@
           {{ capitalize(user.family_name) }}
         </div>
         <div v-else class="name">
-          {{ capitalize(user.name) }}
+          {{
+            // @ts-expect-error TODO refacto isNotGroup
+            capitalize(user.name)
+          }}
         </div>
 
         <div v-if="role" class="role">
@@ -42,41 +46,34 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
+import type { IconImageChoice } from '~/functs/IconImage'
 
+import type { TranslatedUserModel } from '~/models/user.model'
 import { capitalize } from '~/functs/string'
 import { isNotGroup } from '~/functs/users'
 
-defineOptions({ name: 'UserCardInline' })
 const { t } = useNuxtI18n()
 
-const props = defineProps({
-  user: {
-    type: Object,
-    required: true,
-  },
-  role: {
-    type: String,
-    default: null,
-  },
-
-  icon: {
-    type: String,
-    default: null,
-  },
-  selected: {
-    type: Boolean,
-    default: false,
-  },
-  passive: {
-    type: Boolean,
-    default: false,
-  },
-})
+const props = withDefaults(
+  defineProps<{
+    user: TranslatedUserModel
+    role?: string
+    icon?: IconImageChoice
+    selected?: boolean
+    passive?: boolean
+  }>(),
+  {
+    role: null,
+    icon: null,
+    selected: false,
+    passive: false,
+  }
+)
 
 const emit = defineEmits(['user-clicked'])
 
@@ -93,6 +90,7 @@ const userImage = computed(() => {
   if (isNotGroup(props.user)) {
     return props.user.profile_picture
   }
+  // @ts-expect-error TODO TODO refacto isNotGroup isNotGroup
   return props.user.header_image
 })
 </script>

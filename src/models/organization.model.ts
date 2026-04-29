@@ -6,7 +6,7 @@ import type BaseModel from '~/models/base.model'
 
 import type { Translated } from '~/interfaces/translated'
 
-import type { SkillModel } from '~/models/skill.model'
+import type { UserSkillModel } from '~/models/user.model'
 import type { TagModel } from './tag.model'
 
 export interface TermsAndConditions {
@@ -47,6 +47,8 @@ export interface OrganizationModel extends BaseModel {
 
 export type OrganizationPatchInput = Partial<OrganizationModel> & {
   tags?: number[]
+  default_skills_tags?: UserSkillModel[] | number[]
+  default_projects_tags?: TagModel[] | number[]
 }
 
 export type OrganizationOutput = BaseModel &
@@ -57,7 +59,7 @@ export type OrganizationOutput = BaseModel &
     children: string[]
     access_request_enabled?: boolean
     languages?: string[]
-    default_skills_tags?: SkillModel[]
+    default_skills_tags?: UserSkillModel[]
     default_projects_tags?: TagModel[]
   }
 

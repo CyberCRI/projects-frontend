@@ -7,7 +7,7 @@
 // import { getSuggestedProjects } from '@/api/welearn.service'
 // import { getComments as getCommentApi } from '@/api/comments.service'
 // import { getProjectMessages as getProjectMessagesApi } from '@/api/project-messages.service'
-// import { getProjectLocations as getProjectLocationsApi } from '@/api/locations.services'
+// import { getProjectLocations as getProjectLocationsApi } from '@/api/locations.service'
 // import { getAttachmentLinks } from '@/api/attachment-links.service'
 // import { getAttachmentFiles } from '@/api/attachment-files.service'
 // import { getProjectAnnouncements } from '@/api/announcements.service'

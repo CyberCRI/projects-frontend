@@ -1,5 +1,5 @@
-<script setup>
-import useSectionFilters from '~/components/search/Filters/useSectionFilters.ts'
+<script setup lang="ts">
+import useSectionFilters, { ALL_SECTION_KEY } from '~/components/search/Filters/useSectionFilters'
 import LpiLoader from '~/components/base/loader/LpiLoader.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 
@@ -10,17 +10,16 @@ const selectedSection = defineModel('selectedSection', {
 
 const { sectionFilters } = useSectionFilters({ selectedSection })
 
-defineProps({
-  hasSeparator: {
-    type: Boolean,
-    default: false,
-  },
-
-  isLoading: {
-    type: Boolean,
-    default: false,
-  },
-})
+withDefaults(
+  defineProps<{
+    hasSeparator?: boolean
+    isLoading?: boolean
+  }>(),
+  {
+    hasSeparator: false,
+    isLoading: false,
+  }
+)
 
 const open = ref(false)
 

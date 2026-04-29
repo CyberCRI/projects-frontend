@@ -1,20 +1,18 @@
-<script setup>
+<script setup lang="ts">
 import SkillsFilterEditor from '~/components/search/Filters/SkillsFilterEditor.vue'
 import FilterValue from '~/components/search/Filters/FilterValue.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
-import useToasterStore from '~/stores/useToaster.ts'
-
-import useTagTexts from '~/composables/useTagTexts.ts'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useToasterStore from '~/stores/useToaster'
 
 const { t } = useNuxtI18n()
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
-const tagTexts = useTagTexts()
+const skillText = useSkillTexts()
 
 const newTags = ref([])
 
@@ -24,13 +22,13 @@ watch(tagSearchIsOpened, (value) => {
     newTags.value = []
   }
 })
-const organizationTags = computed(() => {
+const organizationSkills = computed(() => {
   return organizationsStore.current.default_skills_tags
 })
 
 const saveOrganizationTags = async () => {
   const newTagsIds = newTags.value.map((tag) => tag.id)
-  const oldTagsIds = organizationTags.value.map((tag) => tag.id)
+  const oldTagsIds = organizationSkills.value.map((tag) => tag.id)
 
   try {
     await organizationsStore.updateCurrentOrganization({
@@ -56,7 +54,7 @@ const deleteOrganizationTag = async () => {
   try {
     asyncing.value = true
     await organizationsStore.updateCurrentOrganization({
-      default_skills_tags: organizationTags.value.filter((t) => t.id != tag.id).map((t) => t.id),
+      default_skills_tags: organizationSkills.value.filter((t) => t.id != tag.id).map((t) => t.id),
     })
     toaster.pushSuccess(t('toasts.organization-tag-delete.success'))
   } catch (error) {
@@ -79,12 +77,12 @@ const deleteOrganizationTag = async () => {
 
     <div class="tags-ctn">
       <FilterValue
-        v-for="tag in organizationTags"
-        :key="tag.id"
+        v-for="skill in organizationSkills"
+        :key="skill.id"
         data-test="default-skill"
-        :label="tagTexts.title(tag)"
+        :label="skillText.title(skill)"
         icon="Close"
-        @click="tagToDelete = tag"
+        @click="tagToDelete = skill"
       />
     </div>
 
@@ -108,7 +106,7 @@ const deleteOrganizationTag = async () => {
     >
       <SkillsFilterEditor
         v-model="newTags"
-        :blocked-skills="organizationTags"
+        :blocked-skills="organizationSkills"
         hide-organization-tags
         :all-search-mode="false"
       />
@@ -122,7 +120,7 @@ const deleteOrganizationTag = async () => {
       confirm-button-label="common.yes"
       :asyncing="asyncing"
       @cancel="tagToDelete = null"
-      @confirm="deleteOrganizationTag(tag)"
+      @confirm="deleteOrganizationTag()"
     />
   </div>
 </template>

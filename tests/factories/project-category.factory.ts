@@ -46,6 +46,10 @@ export const ProjectCategoryFactory = createFactory<ProjectCategoryOutput>((fake
   children: [],
   hierarchy: [],
   projects_count: faker.datatype.number(),
+  is_root: faker.datatype.boolean(),
+  only_reviewer_can_publish: faker.datatype.boolean(),
+  outdated_slugs: [],
+  parent: null,
 }))
 
 export const ProjectCategoryOutputFactory = createFactory<ProjectCategoryOutput>(() => ({

@@ -1,9 +1,16 @@
-<script setup>
+<script setup lang="ts">
 const { t } = useNuxtI18n()
-defineProps({
-  disconnectionGrace: { type: Boolean, required: true },
-  status: { type: String, required: true },
-})
+
+withDefaults(
+  defineProps<{
+    disconnectionGrace: boolean
+    status: string
+    online?: boolean
+  }>(),
+  {
+    online: false,
+  }
+)
 </script>
 
 <template>
