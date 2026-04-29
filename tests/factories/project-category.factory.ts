@@ -50,6 +50,7 @@ export const ProjectCategoryFactory = createFactory<ProjectCategoryOutput>((fake
   only_reviewer_can_publish: faker.datatype.boolean(),
   outdated_slugs: [],
   parent: null,
+  templates: [],
 }))
 
 export const ProjectCategoryOutputFactory = createFactory<ProjectCategoryOutput>(() => ({

@@ -75,7 +75,7 @@ import CurrentTags from '~/components/search/FilterTags/CurrentTags.vue'
 import TagResults from '~/components/search/FilterTags/TagResults.vue'
 import LpiSelect from '~/components/base/form/LpiSelect.vue'
 
-import useTagSearch from '~/composables/useTagSearch.js'
+import useTagSearch from '~/composables/useTagSearch.ts'
 
 export default {
   name: 'TagsFilterEditor',

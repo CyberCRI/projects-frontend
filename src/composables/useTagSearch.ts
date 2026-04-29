@@ -5,12 +5,14 @@ import {
 
 import useOrganizationsStore from '~/stores/useOrganizations'
 
-export default function useTagSearch({
-  useSkills,
-  useProjects,
-  hideOrganizationTags,
-  classificationType,
-}) {
+export default function useTagSearch(
+  { useSkills, useProjects, hideOrganizationTags, classificationType } = {
+    useSkills: false,
+    useProjects: false,
+    hideOrganizationTags: false,
+    classificationType: false,
+  }
+) {
   const organizationCode = useOrganizationCode()
   const organizationsStore = useOrganizationsStore()
   const allOrgClassifications = ref([])

@@ -1,6 +1,7 @@
+import type { TemplateModel, TemplateOutput } from '@/models/template.model'
 import type { OrganizationModel } from '@/models/organization.model'
-import type { TemplateOutput } from '@/models/template.model'
 import type { TagModel, TagOutput } from '@/models/tag.model'
+import type { ImageSizes } from '~/functs/imageSizesUtils'
 import type { Translated } from '@/interfaces/translated'
 import type { ImageModel } from '@/models/image.model'
 import type BaseModel from '@/models/base.model'
@@ -38,6 +39,8 @@ export interface ProjectCategoryModel extends BaseModel {
   projects_count?: number
 
   hierarchy?: ProjectCategoryModel[]
+
+  templates: TemplateModel[]
 }
 
 export type TranslatedProjectCategory = Translated<ProjectCategoryModel, 'name' | 'description'>
@@ -69,4 +72,9 @@ export interface ProjectCategoryBackgroundOutput {
   height: number
   width: number
   created_at: Date
+}
+
+export type ProjectCategoryForm = Omit<ProjectCategoryModel, 'parent'> & {
+  parent: number
+  imageSizes?: ImageSizes
 }

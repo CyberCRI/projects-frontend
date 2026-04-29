@@ -27,61 +27,35 @@
     @chat-edited="reloadOrganization"
   />
 </template>
-<script>
+
+<script setup lang="ts">
 import EditChatDrawer from '~/components/admin/GeneralAdminBlocks/Chat/EditChatDrawer.vue'
 import LinkButton from '~/components/base/button/LinkButton.vue'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useOrganizationsStore from '~/stores/useOrganizations'
 
-import AdminBlock from '../AdminBlock.vue'
+const organizationsStore = useOrganizationsStore()
+const editChatIsOpen = ref(false)
+const isLoading = ref(false)
+const organizationCode = useOrganizationCode()
 
-export default {
-  name: 'ChatAdminBlock',
+const { t } = useNuxtI18n()
 
-  components: {
-    AdminBlock,
-    LinkButton,
-    EditChatDrawer,
-  },
-  setup() {
-    const organizationsStore = useOrganizationsStore()
-    return {
-      organizationsStore,
-    }
-  },
-  data() {
-    return {
-      editChatIsOpen: false,
-      isLoading: false,
-    }
-  },
+const organization = computed(() => organizationsStore.current)
 
-  computed: {
-    organization() {
-      return this.organizationsStore.current
-    },
+const blockTitle = computed(() => {
+  return t('admin.portal.chat')
+})
 
-    blockTitle() {
-      return this.$t('admin.portal.chat')
-    },
-    hasChat() {
-      return !!this.chat_url
-    },
+const chat_url = computed(() => organization.value?.chat_url)
+const hasChat = computed(() => !!chat_url.value)
 
-    chat_button_text() {
-      return this.organization?.chat_button_text || this.$t('chat.data.no-wording')
-    },
+const chat_button_text = computed(() => {
+  return organization.value?.chat_button_text || t('chat.data.no-wording')
+})
 
-    chat_url() {
-      return this.organization?.chat_url
-    },
-  },
-
-  methods: {
-    reloadOrganization() {
-      this.organizationsStore.getCurrentOrganization(this.organization.code)
-    },
-  },
+const reloadOrganization = () => {
+  organizationsStore.getCurrentOrganization(organizationCode)
 }
 </script>
 <style lang="scss" scoped>
