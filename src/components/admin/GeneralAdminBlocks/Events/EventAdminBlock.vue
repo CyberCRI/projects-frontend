@@ -53,21 +53,19 @@
 </template>
 
 <script setup lang="ts">
-import { getAllEvents } from '~/api/v2/event.service'
-import { deleteEvent } from '~/api/event.service'
-
-import { defaultForm } from '~/components/instruction/InstructionForm/InstructionForm.vue'
-import PaginationButtonsV2 from '~/components/base/navigation/PaginationButtonsV2.vue'
-import EditEventDrawer from '~/components/event/EditEventDrawer/EditEventDrawer.vue'
-import AdminBlock from '~/components/admin/GeneralAdminBlocks/AdminBlock.vue'
-import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
-import EventItem from '~/components/event/EventList/EventItem.vue'
-import LinkButton from '~/components/base/button/LinkButton.vue'
-import LocationDrawer from '~/components/map/LocationDrawer.vue'
-import LpiButton from '~/components/base/button/LpiButton.vue'
-import FetchLoader from '~/components/base/FetchLoader.vue'
-
-import useToasterStore from '~/stores/useToaster'
+import PaginationButtonsV2 from '@/components/base/navigation/PaginationButtonsV2.vue'
+import EditEventDrawer from '@/components/event/EditEventDrawer/EditEventDrawer.vue'
+import AdminBlock from '@/components/admin/GeneralAdminBlocks/AdminBlock.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import EventItem from '@/components/event/EventList/EventItem.vue'
+import LinkButton from '@/components/base/button/LinkButton.vue'
+import LocationDrawer from '@/components/map/LocationDrawer.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import FetchLoader from '@/components/base/FetchLoader.vue'
+import { getAllEvents } from '@/api/v2/event.service'
+import useToasterStore from '@/stores/useToaster'
+import { deleteEvent } from '@/api/event.service'
+import { defaultForm } from '@/form/event'
 
 const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()

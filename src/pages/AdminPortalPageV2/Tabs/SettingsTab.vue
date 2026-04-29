@@ -75,7 +75,7 @@ onMounted(() => {
   if (!form.value.background_color) form.value.background_color = '#FFFFFF'
   startEditWatcher()
 })
-const rules = {
+const rules = computed(() => ({
   name: {
     required: helpers.withMessage(t('admin.form.admin-info.name.required'), required),
     maxLength: helpers.withMessage(t('admin.form.admin-info.name.max-length'), maxLength(32)),
@@ -93,7 +93,7 @@ const rules = {
       requiredIf(form.value.is_logo_visible_on_parent_dashboard)
     ),
   },
-}
+}))
 
 const v$ = useVuelidate(rules, form)
 

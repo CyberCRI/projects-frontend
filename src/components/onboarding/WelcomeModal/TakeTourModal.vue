@@ -17,7 +17,7 @@
           allowfullscreen
         />
       </div>
-      <i18n-t keypath="plateform-tour-modal.notice-tutorial" tag="p" class="notice" scope="global">
+      <I18nT keypath="plateform-tour-modal.notice-tutorial" tag="p" class="notice" scope="global">
         <NuxtLink
           class="link"
           :to="{ name: 'HelpVideoTab' }"
@@ -26,7 +26,7 @@
         >
           {{ $t('plateform-tour-modal.tutorial') }}
         </NuxtLink>
-      </i18n-t>
+      </I18nT>
     </template>
     <template #footer>
       <!-- empty -->
@@ -34,8 +34,9 @@
   </BaseModal>
 </template>
 <script setup lang="ts">
-import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
-import BaseModal from '~/components/base/modal/BaseModal.vue'
+import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
+import BaseModal from '@/components/base/modal/BaseModal.vue'
+import { I18nT } from 'vue-i18n'
 
 const emit = defineEmits<{ close: [] }>()
 const { locale } = useNuxtI18n()

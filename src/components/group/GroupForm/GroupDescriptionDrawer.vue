@@ -1,7 +1,6 @@
 <template>
   <BaseDrawer
     :confirm-action-name="$t('common.save')"
-    :confirm-action-disabled="v$.$invalid"
     :is-opened="isOpened"
     :title="$t('group.form.add-description')"
     class="group-drawer"
@@ -29,88 +28,55 @@
   </BaseDrawer>
 </template>
 
-<script>
-import useVuelidate from '@vuelidate/core'
+<script setup lang="ts">
+import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import BaseDrawer from '@/components/base/BaseDrawer.vue'
 
-import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
-import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
-import BaseDrawer from '~/components/base/BaseDrawer.vue'
+const props = withDefaults(
+  defineProps<{
+    isOpened?: boolean
+    originalDescription?: string
+  }>(),
+  {
+    isOpened: false,
+    originalDescription: null,
+  }
+)
 
-export default {
-  name: 'GroupDescriptionDrawer',
+const emit = defineEmits<{
+  close: []
+  'update-description': [string]
+}>()
 
-  components: {
-    TipTapEditor,
-    BaseDrawer,
-    ConfirmModal,
-  },
+const description = ref('<p></p>')
+const addedImages = ref([])
+const confirmModalIsOpen = ref(false)
 
-  props: {
-    isOpened: {
-      type: Boolean,
-      default: false,
-    },
-    // TODO this will set the collaborative
-    // when the HocusPocus server is updated
-    // eslint-disable-next-line
-    isAddMode: {
-      type: Boolean,
-      default: true,
-    },
-
-    originalDescription: {
-      type: String,
-      default: null,
-    },
-  },
-
-  emits: ['close', 'update-description'],
-
-  data() {
-    return {
-      v$: useVuelidate(),
-      description: '<p></p>',
-      addedImages: [],
-      confirmModalIsOpen: false,
-
-      room: null, // TODO: set to something when socket is enabled and we are in add mode
+watch(
+  () => props.isOpened,
+  (neo) => {
+    if (neo) {
+      description.value = props.originalDescription || '<p></p>'
     }
   },
+  { immediate: true }
+)
 
-  watch: {
-    isOpened: {
-      handler: function (neo) {
-        if (neo) {
-          this.description = this.originalDescription || '<p></p>'
-        }
-        this.$nextTick(() => {
-          if (this.v$) this.v$.$reset()
-        })
-      },
-      immediate: true,
-    },
-  },
+const close = () => emit('close')
 
-  methods: {
-    closeDrawer() {
-      this.confirmModalIsOpen = false
-      this.v$.$reset()
-      this.$emit('close')
-    },
+const closeDrawer = () => {
+  confirmModalIsOpen.value = false
+  emit('close')
+}
 
-    saveDescription() {
-      this.$emit('update-description', this.description)
-      this.close()
-    },
+const saveDescription = () => {
+  emit('update-description', description.value)
+  close()
+}
 
-    handleImage(img) {
-      this.addedImages.push(img.id)
-    },
-
-    close() {
-      this.$emit('close')
-    },
-  },
+const handleImage = (img) => {
+  addedImages.value.push(img.id)
 }
 </script>
 

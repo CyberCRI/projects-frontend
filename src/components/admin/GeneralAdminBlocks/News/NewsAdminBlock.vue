@@ -44,25 +44,20 @@
 </template>
 
 <script setup lang="ts">
-import type { QueryFilterNews } from '~/models/news.model'
-
-import { getAllNews } from '~/api/v2/news.service'
-import { deleteNews } from '~/api/news.service'
-
-import { defaultForm } from '~/components/instruction/InstructionForm/InstructionForm.vue'
-import EditNewsDrawer from '~/components/news/EditNewsDrawer/EditNewsDrawer.vue'
-import AdminBlock from '~/components/admin/GeneralAdminBlocks/AdminBlock.vue'
-import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
-import LinkButton from '~/components/base/button/LinkButton.vue'
-import LpiButton from '~/components/base/button/LpiButton.vue'
-import FetchLoader from '~/components/base/FetchLoader.vue'
-import NewsItem from '~/components/news/NewsItem.vue'
-
-import useToasterStore from '~/stores/useToaster'
-
-import { useModals } from '~/composables/useModal'
-
-import { nowDate } from '~/functs/date'
+import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
+import AdminBlock from '@/components/admin/GeneralAdminBlocks/AdminBlock.vue'
+import type LinkButton from '@/components/base/button/LinkButton.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import FetchLoader from '@/components/base/FetchLoader.vue'
+import type { QueryFilterNews } from '@/models/news.model'
+import NewsItem from '@/components/news/NewsItem.vue'
+import { useModals } from '@/composables/useModal'
+import { getAllNews } from '@/api/v2/news.service'
+import useToasterStore from '@/stores/useToaster'
+import { deleteNews } from '@/api/news.service'
+import { defaultForm } from '@/form/news'
+import { nowDate } from '@/functs/date'
 
 const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()

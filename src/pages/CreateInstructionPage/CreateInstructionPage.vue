@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { createInstruction } from '~/api/instruction.service'
 
-import { defaultForm } from '~/components/instruction/InstructionForm/InstructionForm.vue'
-
 import useToasterStore from '~/stores/useToaster'
+import { defaultForm } from '@/form/instruction'
 
 const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()

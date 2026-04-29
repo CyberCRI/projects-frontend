@@ -63,25 +63,16 @@
 </template>
 
 <script setup lang="ts">
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { email, helpers, required } from '@vuelidate/validators'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import useToasterStore from '@/stores/useToaster'
+import { contactUs } from '@/api/report.service'
+import { defaultForm } from '@/form/contact'
 import useValidate from '@vuelidate/core'
 
-import { contactUs } from '~/api/report.service'
-
-import FieldErrors from '~/components/base/form/FieldErrors.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
-
-import useOrganizationsStore from '~/stores/useOrganizations'
-import useToasterStore from '~/stores/useToaster'
-
-const defaultForm = () => {
-  return {
-    subject: '',
-    email: '',
-    content: '',
-  }
-}
 
 const props = defineProps<{ isOpened: boolean }>()
 const emit = defineEmits<{ close: [] }>()
@@ -113,8 +104,8 @@ const orgCode = computed(() => organizationsStore?.current?.code)
 watch(
   () => props.isOpened,
   () => {
-    v$.value.$reset()
     form.value = defaultForm()
+    v$.value.$reset()
   }
 )
 

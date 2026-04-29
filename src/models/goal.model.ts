@@ -22,4 +22,8 @@ export type GoalInput = Required<GoalModel> & {
   goal_id: string
 }
 
+export type GoalForm = Omit<GoalModel, 'id'> & {
+  id?: GoalModel['id']
+}
+
 export type GoalOutput = Required<GoalModel>

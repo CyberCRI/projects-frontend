@@ -16,9 +16,9 @@
       <div v-if="!collapsed" class="onboarding-todos blue-patatoid-bg">
         <LpiButton class="close-btn" btn-icon="Close" secondary @click="collapsed = true" />
 
-        <i18n-t keypath="onboarding-todo.welcome" tag="h2" class="welcome-title">
+        <I18nT keypath="onboarding-todo.welcome" tag="h2" class="welcome-title">
           <span>{{ username }}</span>
-        </i18n-t>
+        </I18nT>
 
         <ul class="todo-list">
           <OnboardingTodo
@@ -67,14 +67,13 @@
   </div>
 </template>
 <script>
-import { patchUser } from '~/api/people.service.ts'
-
-import OnboardingTodo from '~/components/onboarding/OnboardingTodoBlock/OnboardingTodo.vue'
-import LinkButton from '~/components/base/button/LinkButton.vue'
-import LpiButton from '~/components/base/button/LpiButton.vue'
-import IconImage from '~/components/base/media/IconImage.vue'
-
-import useUsersStore from '~/stores/useUsers.ts'
+import OnboardingTodo from '@/components/onboarding/OnboardingTodoBlock/OnboardingTodo.vue'
+import LinkButton from '@/components/base/button/LinkButton.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import IconImage from '@/components/base/media/IconImage.vue'
+import { patchUser } from '@/api/people.service.ts'
+import useUsersStore from '@/stores/useUsers.ts'
+import { I18nT } from 'vue-i18n'
 
 export default {
   name: 'OnboardingTodoBlock',
@@ -84,6 +83,7 @@ export default {
     LpiButton,
     IconImage,
     LinkButton,
+    I18nT,
   },
 
   setup() {

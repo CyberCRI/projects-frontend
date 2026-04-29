@@ -92,8 +92,7 @@ export default {
     },
     defaultPicture: {
       type: [String, Array],
-      required: false,
-      default: '',
+      required: true,
     },
     pictureAlt: {
       type: String,
