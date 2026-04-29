@@ -1,6 +1,5 @@
 <script setup>
-import { ref, watch, nextTick, useAttrs } from 'vue'
-import fixEditorContent from '@/functs/editorUtils.ts'
+import fixEditorContent from '~/functs/editorUtils.ts'
 
 const props = defineProps({
   content: { type: String, default: '' },

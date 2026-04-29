@@ -1,5 +1,5 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import StatsPage from '@/pages/StatsPage/StatsPage.vue'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import StatsPage from '~/pages/StatsPage/StatsPage.vue'
 
 import { describe, expect, it } from 'vitest'
 

@@ -44,20 +44,20 @@
 </template>
 
 <script setup lang="ts">
-import { useModals } from '@/composables/useModal'
-import { deleteNews } from '@/api/news.service'
-import useToasterStore from '@/stores/useToaster'
-import { getAllNews } from '@/api/v2/news.service'
-import { QueryFilterNews } from '@/models/news.model'
-import NewsItem from '@/components/news/NewsItem.vue'
-import FetchLoader from '@/components/base/FetchLoader.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
 import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import LinkButton from '@/components/base/button/LinkButton.vue'
 import AdminBlock from '@/components/admin/GeneralAdminBlocks/AdminBlock.vue'
-import { nowDate } from '@/functs/date'
+import type LinkButton from '@/components/base/button/LinkButton.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import FetchLoader from '@/components/base/FetchLoader.vue'
+import type { QueryFilterNews } from '@/models/news.model'
+import NewsItem from '@/components/news/NewsItem.vue'
+import { useModals } from '@/composables/useModal'
+import { getAllNews } from '@/api/v2/news.service'
+import useToasterStore from '@/stores/useToaster'
+import { deleteNews } from '@/api/news.service'
 import { defaultForm } from '@/form/news'
+import { nowDate } from '@/functs/date'
 
 const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()
@@ -87,7 +87,7 @@ const {
 })
 
 const blockTitle = computed(() => {
-  let extra = isLoading.value ? '' : ` (${pagination.count.value})`
+  const extra = isLoading.value ? '' : ` (${pagination.count.value})`
   return t('admin.portal.news') + extra
 })
 

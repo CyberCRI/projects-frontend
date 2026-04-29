@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { CHART_COLORS, SDGS } from '@/functs/constants.ts'
+import { CHART_COLORS, SDGS } from '~/functs/constants.ts'
 import LpiBarChart from './Generic/LpiBarChart.vue'
 
 export default {

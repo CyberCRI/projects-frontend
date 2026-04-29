@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import BaseRecommendationList from '@/components/search/Recommendations/BaseRecommendationList.vue'
-import UserRecommendationItem from '@/components/search/Recommendations/UserRecommendationItem.vue'
+import UserRecommendationItem from '~/components/search/Recommendations/UserRecommendationItem.vue'
+import BaseRecommendationList from '~/components/search/Recommendations/BaseRecommendationList.vue'
 
 export default {
   name: 'UserRecommendationList',

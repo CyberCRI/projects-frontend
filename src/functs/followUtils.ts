@@ -1,16 +1,18 @@
-import {
+import type {
+  FollowCategoryInput,
   FollowInput,
   FollowOutput,
-  FollowCategoryInput,
   UnfollowCategoryInput,
-} from '@/models/follow.model'
-import { deleteFollow, postFollow, postFollowMany } from '@/api/follows.service'
+} from '~/models/follow.model'
+
 import {
+  deleteProjectCategoryFollow,
   // getProjectCategoriesFollow,
   postProjectCategoryFollow,
-  deleteProjectCategoryFollow,
-} from '@/api/project-categories.service'
-import analytics from '@/analytics'
+} from '~/api/project-categories.service'
+import { deleteFollow, postFollow, postFollowMany } from '~/api/follows.service'
+
+import analytics from '~/analytics'
 
 async function follow(follow: FollowInput) {
   const result = await postFollow(follow)

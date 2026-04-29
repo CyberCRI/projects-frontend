@@ -1,4 +1,4 @@
-import funct from '@/functs/functions'
+import funct from '~/functs/functions'
 
 function scrollToTab() {
   funct.scrollTo(document.querySelector('.tabs-wrapper'))

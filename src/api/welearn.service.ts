@@ -1,4 +1,4 @@
-import useAPI from '@/composables/useAPI'
+import useAPI from '~/composables/useAPI'
 
 export async function getSuggestedProjects(id, orgCode) {
   const url = `/project/${id}/similar/`
@@ -10,7 +10,7 @@ export async function getSuggestedProjects(id, orgCode) {
   }
   try {
     const response = await useAPI(url, payload)
-    return response //.data.value
+    return response
   } catch {
     return []
   }

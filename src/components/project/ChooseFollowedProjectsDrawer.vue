@@ -50,12 +50,12 @@
 </template>
 
 <script setup lang="ts">
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import SearchInput from '@/components/base/form/SearchInput.vue'
-import ProjectCard from '@/components/project/ProjectCard.vue'
-import CardList from '@/components/base/CardList.vue'
-import SearchResults from '@/components/project/SearchResults.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
+import SearchResults from '~/components/project/SearchResults.vue'
+import SearchInput from '~/components/base/form/SearchInput.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import ProjectCard from '~/components/project/ProjectCard.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+import CardList from '~/components/base/CardList.vue'
 
 const props = withDefaults(
   defineProps<{

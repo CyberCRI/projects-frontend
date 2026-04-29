@@ -1,5 +1,6 @@
-import analytics from '@/analytics/index'
-import { CommentModel } from '@/models/comment.model'
+import type { CommentModel } from '~/models/comment.model'
+
+import analytics from '~/analytics/index'
 
 export interface CommentAnalytic {
   project: {

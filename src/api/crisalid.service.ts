@@ -1,10 +1,11 @@
-import {
+import type { PeopleGroupIdOrSlug } from '~/models/invitation.model'
+
+import type {
   Document,
   DocumentType,
   Researcher,
   ResearcherDocumentAnalytics,
-} from '@/interfaces/researcher'
-import { PeopleGroupIdOrSlug } from '@/models/invitation.model'
+} from '~/interfaces/researcher'
 
 export async function getOwnResearchDocument(
   organisationCode: string,

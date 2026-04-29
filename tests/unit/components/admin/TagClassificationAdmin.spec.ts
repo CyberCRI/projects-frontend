@@ -1,23 +1,23 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import TagClassificationAdmin from '~/components/admin/TagClassificationAdmin.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
 import waitForExpect from 'wait-for-expect'
-import TagClassificationAdmin from '@/components/admin/TagClassificationAdmin.vue'
 
-import pinia from '@/stores'
-import useOrganizationsStore from '@/stores/useOrganizations'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import pinia from '~/stores'
 
-import { OrganizationOutput } from '@/models/organization.model'
+import { OrganizationOutput } from '~/models/organization.model'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
 
-import { getOrgClassificationTags } from '@/api/tag-classification.service'
+import { getOrgClassificationTags } from '~/api/tag-classification.service'
 
 vi.mock('es-toolkit', () => ({
   debounce: vi.fn((fn) => fn),
   throttle: vi.fn((fn) => fn),
   capitalize: vi.fn((t) => t || ''),
 }))
-vi.mock('@/api/tag-classification.service', () => ({
+vi.mock('~/api/tag-classification.service', () => ({
   getOrgClassificationTags: vi.fn().mockResolvedValue({
     count: 3,
     current_page: 1,

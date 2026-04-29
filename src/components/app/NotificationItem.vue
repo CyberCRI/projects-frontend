@@ -114,12 +114,14 @@
 </template>
 
 <script>
-import IconImage from '@/components/base/media/IconImage.vue'
-import utils from '@/functs/functions.ts'
-import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import { NuxtLink } from '#components'
-import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
+import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+
+import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
+
 import { getTimePassed } from '@/functs/date'
+import utils from '~/functs/functions.ts'
+import { NuxtLink } from '#components'
 import { I18nT } from 'vue-i18n'
 
 export default {

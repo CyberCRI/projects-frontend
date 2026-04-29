@@ -13,12 +13,14 @@
 </template>
 
 <script setup lang="ts">
-import { getNewsfeed } from '@/api/v2/newsfeed.service'
-import NewsFeed from '@/components/app/NewsFeed.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import FetchLoader from '@/components/base/FetchLoader.vue'
-import { factoryPagination } from '@/skeletons/base.skeletons'
-import { newsFeedSkeleton } from '@/skeletons/newsfeed.skeletons'
+import { getNewsfeed } from '~/api/v2/newsfeed.service'
+
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import FetchLoader from '~/components/base/FetchLoader.vue'
+import NewsFeed from '~/components/app/NewsFeed.vue'
+
+import { newsFeedSkeleton } from '~/skeletons/newsfeed.skeletons'
+import { factoryPagination } from '~/skeletons/base.skeletons'
 
 const props = withDefaults(defineProps<{ limit?: number }>(), { limit: 6 })
 const organizationCode = useOrganizationCode()

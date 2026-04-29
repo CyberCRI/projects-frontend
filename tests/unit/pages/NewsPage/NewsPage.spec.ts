@@ -1,10 +1,10 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import NewsPage from '@/pages/NewsPage/NewsPage.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
+import NewsPage from '~/pages/NewsPage/NewsPage.vue'
 
-import { describe, expect, it } from 'vitest'
-import { flushPromises } from '@vue/test-utils'
+import { NewsFactory } from '~~/tests/factories/news.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
-import { NewsFactory } from '../../../factories/news.factory'
+import { flushPromises } from '@vue/test-utils'
+import { describe, expect, it } from 'vitest'
 
 describe('NewsPage.vue', () => {
   it('should render component', async () => {

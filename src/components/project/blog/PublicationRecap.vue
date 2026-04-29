@@ -28,8 +28,8 @@
 </template>
 
 <script setup>
-import SectionHeader from '@/components/base/SectionHeader.vue'
-import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
+import TipTapOutput from '~/components/base/form/TextEditor/TipTapOutput.vue'
+import SectionHeader from '~/components/base/SectionHeader.vue'
 
 defineOptions({ name: 'PublicationRecap' })
 const router = useRouter()

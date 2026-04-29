@@ -1,4 +1,4 @@
-import { NewsForm } from '@/models/news.model'
+import type { NewsForm } from '~/models/news.model'
 
 export const defaultForm = (): NewsForm => ({
   header_image: null,

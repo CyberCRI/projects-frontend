@@ -48,13 +48,14 @@
 </template>
 
 <script setup lang="ts">
-import LocationEventTooltip from '@/components/event/map/LocationEventTooltip.vue'
-import GroupLocationToolTip from '@/components/group/Map/GroupLocationToolTip.vue'
-import BaseMap from '@/components/map/BaseMap.vue'
-import MapPointer from '@/components/map/MapPointer.vue'
-import LocationNewsTooltip from '@/components/news/map/LocationNewsTooltip.vue'
-import ProjectLocationTooltip from '@/components/project/map/ProjectLocationTooltip.vue'
-import { TranslatedLocations } from '@/interfaces/maps'
+import type { TranslatedLocations } from '~/interfaces/maps'
+
+import ProjectLocationTooltip from '~/components/project/map/ProjectLocationTooltip.vue'
+import GroupLocationToolTip from '~/components/group/Map/GroupLocationToolTip.vue'
+import LocationEventTooltip from '~/components/event/map/LocationEventTooltip.vue'
+import LocationNewsTooltip from '~/components/news/map/LocationNewsTooltip.vue'
+import MapPointer from '~/components/map/MapPointer.vue'
+import BaseMap from '~/components/map/BaseMap.vue'
 
 const props = withDefaults(
   defineProps<{

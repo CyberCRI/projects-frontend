@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import LpiLoader from '@/components/base/loader/LpiLoader.vue'
+import LpiLoader from '~/components/base/loader/LpiLoader.vue'
 
 const { locale } = useNuxtI18n()
 const runtimeConfig = useRuntimeConfig()

@@ -68,20 +68,25 @@
 </template>
 
 <script setup lang="ts">
-import LocationNewsTooltip from '@/components/news/map/LocationNewsTooltip.vue'
-import { getNews } from '@/api/v2/news.service'
-import { newsSkeleton } from '@/skeletons/news.skeletons'
-import { deleteNews } from '@/api/news.service'
-import NewsItem from '@/components/news/NewsItem.vue'
-import useToasterStore from '@/stores/useToaster'
-import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import { NewsModel } from '@/models/news.model'
-import { html2Text } from '@/functs/string'
-import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
-import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
-import { DEFAULT_NEWS_PATATOID } from '@/composables/usePatatoids'
+import type { NewsModel } from '~/models/news.model'
+
+import { getNews } from '~/api/v2/news.service'
+import { deleteNews } from '~/api/news.service'
+
+import EditNewsDrawer from '~/components/news/EditNewsDrawer/EditNewsDrawer.vue'
+import LocationNewsTooltip from '~/components/news/map/LocationNewsTooltip.vue'
+import TipTapOutput from '~/components/base/form/TextEditor/TipTapOutput.vue'
+import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
+import BreadCrumbs from '~/components/base/navigation/BreadCrumbs.vue'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import NewsItem from '~/components/news/NewsItem.vue'
+
+import useToasterStore from '~/stores/useToaster'
+
+import { DEFAULT_NEWS_PATATOID } from '~/composables/usePatatoids'
+
+import { newsSkeleton } from '~/skeletons/news.skeletons'
+import { html2Text } from '~/functs/string'
 
 const props = defineProps<{
   slugOrId: string | number

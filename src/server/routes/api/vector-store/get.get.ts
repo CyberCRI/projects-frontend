@@ -1,5 +1,5 @@
-import getVectorStore from '@/server/utils/vector-db.js'
-import checkVectorDbRights from '@/server/utils/check-vector-db-rights.js'
+import checkVectorDbRights from '~/server/utils/check-vector-db-rights.js'
+import getVectorStore from '~/server/utils/vector-db.js'
 import format from 'pg-format'
 
 export default defineLazyEventHandler(() => {

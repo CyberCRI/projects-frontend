@@ -28,8 +28,8 @@
   </MenuTip>
 </template>
 <script setup lang="ts">
-import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
-import MenuTip from '@/components/base/MenuTip.vue'
+import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
+import MenuTip from '~/components/base/MenuTip.vue'
 
 withDefaults(
   defineProps<{

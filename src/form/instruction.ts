@@ -1,4 +1,4 @@
-import { InstructionForm } from '@/models/instruction.model'
+import type { InstructionForm } from '@/models/instruction.model'
 
 export const defaultForm = (): InstructionForm => ({
   title: '',

@@ -1,4 +1,4 @@
-import type { HarvesterType, Identifier } from '@/interfaces/researcher'
+import type { HarvesterType, Identifier } from '~/interfaces/researcher'
 
 const cleanIdentifier = (identifier: Identifier): Identifier => {
   const newIdentifier = { ...identifier }

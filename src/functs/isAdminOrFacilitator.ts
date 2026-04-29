@@ -1,6 +1,7 @@
-import utils from '@/functs/functions'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import useUsersStore from '@/stores/useUsers'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useUsersStore from '~/stores/useUsers'
+
+import utils from '~/functs/functions'
 
 const isAdminOrFacilitator = () => {
   const usersStore = useUsersStore()

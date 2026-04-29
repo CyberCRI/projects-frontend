@@ -1,10 +1,10 @@
-import { Translated } from '@/interfaces/translated'
-import BaseModel from '@/models/base.model'
-import { ImageModel } from '@/models/image.model'
-import { OrganizationModel } from '@/models/organization.model'
-import { ProjectCategoryModel } from '@/models/project-category.model'
-import { TagModel } from '@/models/tag.model'
-import { Language } from '@/models/types'
+import type { ProjectCategoryModel } from '@/models/project-category.model'
+import type { OrganizationModel } from '@/models/organization.model'
+import type { Translated } from '@/interfaces/translated'
+import type { ImageModel } from '@/models/image.model'
+import type { TagModel } from '@/models/tag.model'
+import type BaseModel from '@/models/base.model'
+import type { Language } from '@/models/types'
 
 /**
  * @name TemplateModel

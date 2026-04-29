@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import DialogModal from '@/components/base/modal/DialogModal.vue'
+import DialogModal from '~/components/base/modal/DialogModal.vue'
 
 withDefaults(
   defineProps<{

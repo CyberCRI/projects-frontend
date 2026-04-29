@@ -1,9 +1,11 @@
-import { IconImageChoice } from '@/functs/IconImage'
-import { Translated } from '@/interfaces/translated'
-import { Image } from '@/models/image.model'
-import { BaseLocationModel, BaseTranslatedLocationModel } from '@/models/location.model'
-import { OrganizationModel } from '@/models/organization.model'
-import { TagModel } from '@/models/tag.model'
+import type { BaseLocationModel, BaseTranslatedLocationModel } from '~/models/location.model'
+import type { OrganizationModel } from '~/models/organization.model'
+import type { TagModel } from '~/models/tag.model'
+import type { Image } from '~/models/image.model'
+
+import type { Translated } from '~/interfaces/translated'
+
+import type { IconImageChoice } from '~/functs/IconImage'
 
 export type SubGroup = {
   id: number

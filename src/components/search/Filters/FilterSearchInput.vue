@@ -3,6 +3,7 @@
     <input
       ref="search-input"
       v-bind="attrs"
+      v-model="model"
       class="search-input"
       type="text"
       data-test="search-input"
@@ -13,6 +14,7 @@
 
 <script setup lang="ts">
 const attrs = useAttrs()
+const model = defineModel<string>()
 
 defineEmits<{ enter: [] }>()
 </script>

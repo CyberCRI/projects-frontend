@@ -224,15 +224,19 @@
   /-->
 </template>
 <script>
+import { email, helpers, required, url } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
-import { helpers, required, email, url } from '@vuelidate/validators'
-import { patchUser, patchUserPicture, postUserPicture } from '@/api/people.service.ts'
+
+import { patchUser, patchUserPicture, postUserPicture } from '~/api/people.service.ts'
+
+import SdgList from '~/components/sdgs/SdgList.vue'
+
+import useToasterStore from '~/stores/useToaster.ts'
+import useUsersStore from '~/stores/useUsers.ts'
+
+import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils.ts'
+import { VALID_NAME_REGEX } from '~/functs/constants.ts'
 import { isEqual } from 'es-toolkit'
-import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils.ts'
-import { VALID_NAME_REGEX } from '@/functs/constants.ts'
-import useToasterStore from '@/stores/useToaster.ts'
-import useUsersStore from '@/stores/useUsers.ts'
-import SdgList from '@/components/sdgs/SdgList.vue'
 
 function defaultForm() {
   return {

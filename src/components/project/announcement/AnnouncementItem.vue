@@ -45,10 +45,12 @@
 </template>
 
 <script setup lang="ts">
-import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import { formatDate } from '@/functs/date'
-import { TranslatedAnnouncement } from '@/models/announcement.model'
+import type { TranslatedAnnouncement } from '~/models/announcement.model'
+
+import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+
+import { formatDate } from '~/functs/date'
 
 const props = withDefaults(
   defineProps<{

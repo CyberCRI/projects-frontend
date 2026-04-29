@@ -87,7 +87,7 @@ useLpiHead2({
             </td>
           </tr>
           <tr class="even">
-            <td style="text-align: left"></td>
+            <td style="text-align: left" />
             <td style="text-align: left">Perte de données</td>
             <td style="text-align: left">
               Perte de crédibilité de la plateforme Incapacité d’utiliser les services
@@ -98,7 +98,7 @@ useLpiHead2({
             </td>
           </tr>
           <tr class="odd">
-            <td style="text-align: left"></td>
+            <td style="text-align: left" />
             <td style="text-align: left">Dégradation volontaire</td>
             <td style="text-align: left">Perte de crédibilité de la plateforme</td>
             <td style="text-align: left">Moyenne</td>
@@ -108,7 +108,7 @@ useLpiHead2({
             </td>
           </tr>
           <tr class="even">
-            <td style="text-align: left"></td>
+            <td style="text-align: left" />
             <td style="text-align: left">Utilisation frauduleuse et clandestine des serveurs</td>
             <td style="text-align: left">
               Extension du blast radius à d’autres services numériques
@@ -119,7 +119,7 @@ useLpiHead2({
             </td>
           </tr>
           <tr class="odd">
-            <td style="text-align: left"></td>
+            <td style="text-align: left" />
             <td style="text-align: left">Phishing et impersonation de compte</td>
             <td style="text-align: left">
               Extension du blast radius à d’autres services numériques
@@ -153,7 +153,7 @@ useLpiHead2({
             </td>
           </tr>
           <tr class="even">
-            <td style="text-align: left"></td>
+            <td style="text-align: left" />
             <td style="text-align: left">Non paiement d’un prestataire clé</td>
             <td style="text-align: left">Incapacité d’utiliser les services Perte de données</td>
             <td style="text-align: left">Faible</td>
@@ -174,7 +174,7 @@ useLpiHead2({
             <td style="text-align: left">Géo-réplication</td>
           </tr>
           <tr class="even">
-            <td style="text-align: left"></td>
+            <td style="text-align: left" />
             <td style="text-align: left">Baisse de performance en cas de pic de charge</td>
             <td style="text-align: left">
               Incapacité d’utiliser les services Perte de crédibilité de la plateforme

@@ -1,5 +1,6 @@
 <script setup>
-import useOrganizations from '@/stores/useOrganizations'
+import useOrganizations from '~/stores/useOrganizations'
+
 const { t } = useNuxtI18n()
 const organizationsStore = useOrganizations()
 const termsDateStr = computed(() =>

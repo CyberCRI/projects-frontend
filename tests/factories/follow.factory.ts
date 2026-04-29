@@ -1,6 +1,6 @@
 import { createFactory } from 'faker-create-factory'
 
-import { FollowModel, FollowInput } from '@/models/follow.model'
+import { FollowModel, FollowInput } from '~/models/follow.model'
 import { BaseFactory } from './base.factory'
 
 export const FollowFactory = createFactory<FollowModel>((faker) => ({

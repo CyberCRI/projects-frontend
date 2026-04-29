@@ -1,15 +1,14 @@
-import { Doc } from '@/composables/pdf-helpers/doc-builder'
-import { fetchPdf } from '@/composables/pdf-helpers/usePdfHelpers'
+import useOrganizationsStore from '~/stores/useOrganizations'
 
-import useOrganizationsStore from '@/stores/useOrganizations'
-
-import addPageOneFactory from '@/composables/project-pdf-components/PageOne'
-import addPageDescriptionFactory from '@/composables/pdf-helpers/PageDescription'
-import addPageTeamFactory from '@/composables/project-pdf-components/PageTeam'
+import addPageLinkedProjectsFactory from '~/composables/project-pdf-components/addPageLinkedProjects'
 // TODO: blog are disabled for now (as per client request) keep code for later use
-// import addPageBlogFactory from './project-pdf-components/PageBlog'
-import addPageResourceFactory from '@/composables/project-pdf-components/PageResource'
-import addPageLinkedProjectsFactory from '@/composables/project-pdf-components/addPageLinkedProjects'
+
+import addPageResourceFactory from '~/composables/project-pdf-components/PageResource'
+import addPageDescriptionFactory from '~/composables/pdf-helpers/PageDescription'
+import addPageTeamFactory from '~/composables/project-pdf-components/PageTeam'
+import addPageOneFactory from '~/composables/project-pdf-components/PageOne'
+import { fetchPdf } from '~/composables/pdf-helpers/usePdfHelpers'
+import { Doc } from '~/composables/pdf-helpers/doc-builder'
 
 export default function useProjectToPdf() {
   const generateAndDownloadPdf = async ({

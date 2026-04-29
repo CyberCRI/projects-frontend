@@ -1,6 +1,8 @@
 import { PGVectorStore } from '@langchain/community/vectorstores/pgvector'
-import { OpenAIEmbeddings } from '@langchain/openai' // Or any other embedding model
-// import { Client } from 'pg'
+import { OpenAIEmbeddings } from '@langchain/openai'
+
+// Or any other embedding model
+
 import { parse } from 'pg-connection-string'
 import pg from 'pg'
 

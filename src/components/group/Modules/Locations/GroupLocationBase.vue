@@ -19,13 +19,16 @@
 </template>
 
 <script setup lang="ts">
-import { getGroupAllLocations } from '@/api/v2/group.service'
-import LocationDrawer from '@/components/map/LocationDrawer.vue'
-import LocationList from '@/components/map/LocationList.vue'
-import MapRecap from '@/components/map/MapRecap.vue'
-import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import { factoriesSkeleton } from '@/skeletons/base.skeletons'
-import { locationSkeleton } from '@/skeletons/location.skeleton'
+import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+
+import { getGroupAllLocations } from '~/api/v2/group.service'
+
+import LocationDrawer from '~/components/map/LocationDrawer.vue'
+import LocationList from '~/components/map/LocationList.vue'
+import MapRecap from '~/components/map/MapRecap.vue'
+
+import { locationSkeleton } from '~/skeletons/location.skeleton'
+import { factoriesSkeleton } from '~/skeletons/base.skeletons'
 
 const props = withDefaults(
   defineProps<{

@@ -12,15 +12,19 @@
 </template>
 
 <script setup lang="ts">
+import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+
+import type { DocumentType } from '~/interfaces/researcher'
+
 import {
   getGroupResearchDocument,
   getGroupResearchDocumentAnalytics,
-} from '@/api/v2/crisalid.service'
-import ResearcherDocumentsListBase from '@/components/people/Researcher/ResearcherDocumentsListBase.vue'
-import { DocumentType } from '@/interfaces/researcher'
-import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import { factoryPagination } from '@/skeletons/base.skeletons'
-import { documentAnalyticsSkeleton, researchDocumentSkeleton } from '@/skeletons/crisalid.skeletons'
+} from '~/api/v2/crisalid.service'
+
+import ResearcherDocumentsListBase from '~/components/people/Researcher/ResearcherDocumentsListBase.vue'
+
+import { documentAnalyticsSkeleton, researchDocumentSkeleton } from '~/skeletons/crisalid.skeletons'
+import { factoryPagination } from '~/skeletons/base.skeletons'
 
 const props = withDefaults(
   defineProps<{

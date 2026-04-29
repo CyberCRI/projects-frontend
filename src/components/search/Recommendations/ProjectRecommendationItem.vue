@@ -28,8 +28,9 @@
 </template>
 
 <script setup lang="ts">
-import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
+import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
+
+import { DEFAULT_PROJECT_PATATOID } from '~/composables/usePatatoids'
 
 defineProps<{
   recommendation: any

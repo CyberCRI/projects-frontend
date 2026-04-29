@@ -1,6 +1,6 @@
-import { InvitationModel, InvitationModelInput } from '@/models/invitation.model'
+import type { InvitationModel, InvitationModelInput } from '@/models/invitation.model'
+import type { OrganizationModel } from '@/models/organization.model'
 import useAPI from '@/composables/useAPI'
-import { OrganizationModel } from '@/models/organization.model'
 
 export async function getInvitation(
   organizationCode: OrganizationModel['code'],
@@ -32,7 +32,7 @@ export async function deleteInvitation(
   id: OrganizationModel['id'],
   config = {}
 ) {
-  return await useAPI<void>(`organization/${organizationCode}/invitation/${id}/`, {
+  return await useAPI<undefined>(`organization/${organizationCode}/invitation/${id}/`, {
     ...config,
     method: 'DELETE',
   })

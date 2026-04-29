@@ -1,6 +1,6 @@
 import type { GoalForm, GoalModel } from '@/models/goal.model'
+import type { ProjectModel } from '@/models/project.model'
 import useAPI from '@/composables/useAPI'
-import { ProjectModel } from '@/models/project.model'
 
 export async function getAllGoals(projectId: ProjectModel['id'], config = {}) {
   return await useAPI(`project/${projectId}/goal/`, config)
@@ -28,5 +28,8 @@ export async function deleteGoal(
   goalId: GoalModel['id'],
   config = {}
 ) {
-  return await useAPI<void>(`project/${projectId}/goal/${goalId}/`, { ...config, method: 'DELETE' })
+  return await useAPI<undefined>(`project/${projectId}/goal/${goalId}/`, {
+    ...config,
+    method: 'DELETE',
+  })
 }

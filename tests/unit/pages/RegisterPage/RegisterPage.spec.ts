@@ -1,10 +1,10 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import RegisterPage from '@/pages/RegisterPage/RegisterPage.vue'
+import RegisterPage from '~/pages/RegisterPage/RegisterPage.vue'
 
-import { describe, expect, it } from 'vitest'
-import { flushPromises } from '@vue/test-utils'
-import { registerEndpoint } from '@nuxt/test-utils/runtime'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import { createRandomString } from '@/api/auth/keycloakUtils'
+import { registerEndpoint } from '@nuxt/test-utils/runtime'
+import { flushPromises } from '@vue/test-utils'
+import { describe, expect, it } from 'vitest'
 
 describe('RegisterPage.vue', () => {
   it('should render component', async () => {

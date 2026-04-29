@@ -3,10 +3,11 @@
 </template>
 
 <script setup lang="ts">
+import { onResize } from '~/composables/onResize'
+
 import { LineChart, useLineChart } from 'vue-chart-3'
 import { Chart, registerables } from 'chart.js'
 import { debounce } from 'es-toolkit'
-import { onResize } from '@/composables/onResize'
 
 Chart.register(...registerables)
 defineOptions({ name: 'LpiLineChart' })

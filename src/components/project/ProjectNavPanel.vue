@@ -110,8 +110,9 @@
 </template>
 
 <script>
-import useUsersStore from '@/stores/useUsers.ts'
-import followUtils from '@/functs/followUtils.ts'
+import useUsersStore from '~/stores/useUsers.ts'
+
+import followUtils from '~/functs/followUtils.ts'
 
 export default {
   name: 'ProjectNavPanel',
@@ -251,7 +252,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/components/base/navigation/navpanel-menu-entry';
+@import '~/components/base/navigation/navpanel-menu-entry';
 
 .edit-btn-ctn {
   padding-bottom: 1rem;

@@ -3,7 +3,7 @@ import {
   createRandomString,
   getRefreshTokenInterval,
   cleanLocalStorage,
-} from '@/api/auth/keycloakUtils'
+} from '~/api/auth/keycloakUtils'
 
 import { afterAll, describe, expect, it, vi } from 'vitest'
 

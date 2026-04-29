@@ -53,14 +53,18 @@
 </template>
 
 <script>
-import BlogEntry from '@/components/project/blog/BlogEntry.vue'
-import BlogSummaryBlock from '@/components/project/blog/BlogSummaryBlock.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import analytics from '@/analytics'
-import { deleteBlogEntry } from '@/api/blogentries.service'
-import useToasterStore from '@/stores/useToaster.ts'
+import { deleteBlogEntry } from '~/api/blogentries.service'
+
+import BlogSummaryBlock from '~/components/project/blog/BlogSummaryBlock.vue'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import BlogEntry from '~/components/project/blog/BlogEntry.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+
+import useToasterStore from '~/stores/useToaster.ts'
+
 import { useRuntimeConfig } from '#imports'
+import analytics from '~/analytics'
+
 export default {
   name: 'ProjectBlogEntriesTab',
 

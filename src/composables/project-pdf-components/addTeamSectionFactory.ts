@@ -1,12 +1,13 @@
-import { Container } from '@/composables/pdf-helpers/doc-builder'
 import {
   croppedImageData,
   fetchImageAsDataUrl,
   proxyImageUrl,
-} from '@/composables/pdf-helpers/usePdfHelpers'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils'
-import { usePatatoids } from '@/composables/usePatatoids'
-import { cardListStyles } from '@/composables/project-pdf-components/common-styles'
+} from '~/composables/pdf-helpers/usePdfHelpers'
+import { cardListStyles } from '~/composables/project-pdf-components/common-styles'
+import type { Container } from '~/composables/pdf-helpers/doc-builder'
+import { usePatatoids } from '~/composables/usePatatoids'
+
+import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 
 export default async function addTeamSectionFactory(title: string, team: any[]) {
   const defaultPatatoid = usePatatoids()[0]

@@ -31,7 +31,7 @@ const { isMobile } = useViewportWidth()
           v-if="!isLoading && !isNavCollapsed"
           class="nav-panel-backdrop"
           @click="collapseNavPanel"
-        ></div>
+        />
       </transition>
       <transition name="slide-panel">
         <div v-if="!isNavCollapsed" class="nav-panel">

@@ -59,16 +59,16 @@
 </template>
 
 <script setup lang="ts">
-import useToasterStore from '@/stores/useToaster'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import TextInput from '@/components/base/form/TextInput.vue'
-import useValidate from '@vuelidate/core'
-import { email, helpers, required } from '@vuelidate/validators'
-import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { askMentorship, offerMentorship } from '@/api/mentorship.service'
-import useUsersStore from '@/stores/useUsers'
-import { SkillModel } from '@/models/skill.model'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import { email, helpers, required } from '@vuelidate/validators'
+import TextInput from '@/components/base/form/TextInput.vue'
+import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import type { SkillModel } from '@/models/skill.model'
+import useToasterStore from '@/stores/useToaster'
 import { defaultForm } from '@/form/mentorship'
+import useUsersStore from '@/stores/useUsers'
+import useValidate from '@vuelidate/core'
 
 const props = withDefaults(
   defineProps<{

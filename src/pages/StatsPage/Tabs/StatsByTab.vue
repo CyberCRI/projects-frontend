@@ -23,14 +23,16 @@
 </template>
 
 <script>
-import StatCard from '@/components/stats/StatCard.vue'
-import SdgChart from '@/components/stats/Charts/SdgChart.vue'
-import TagChart from '@/components/stats/Charts/TagChart.vue'
-import LpiLoader from '@/components/base/loader/LoaderSimple.vue'
-import TimeOrgChart from '@/components/stats/Charts/TimeOrgChart.vue'
-import { getStats } from '@/api/stats.service'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import TotalChart from '@/components/stats/Charts/TotalChart.vue'
+import { getStats } from '~/api/stats.service'
+
+import TimeOrgChart from '~/components/stats/Charts/TimeOrgChart.vue'
+import LpiLoader from '~/components/base/loader/LoaderSimple.vue'
+import TotalChart from '~/components/stats/Charts/TotalChart.vue'
+import TagChart from '~/components/stats/Charts/TagChart.vue'
+import SdgChart from '~/components/stats/Charts/SdgChart.vue'
+import StatCard from '~/components/stats/StatCard.vue'
+
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
 
 export default {
   name: 'StatsByTab',

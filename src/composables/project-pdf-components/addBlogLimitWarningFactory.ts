@@ -1,4 +1,5 @@
-import { Container } from '@/composables/pdf-helpers/doc-builder'
+import type { Container } from '~/composables/pdf-helpers/doc-builder'
+
 export default async function addBlogLimitWarningFactory(blogEntries: any[], MAX_BLOG_ENTRIES) {
   const { t } = useNuxtI18n()
   const entryCount = blogEntries.length

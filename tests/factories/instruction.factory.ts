@@ -1,7 +1,7 @@
-import { InstructionModel } from '@/models/instruction.model'
+import { InstructionModel } from '~/models/instruction.model'
 import { createFactory } from 'faker-create-factory'
-import BaseFactory from './base.factory'
 import { peopleGroupFactory } from './group.factory'
+import BaseFactory from './base.factory'
 
 export const InstructionFactory = createFactory<InstructionModel>((faker) => ({
   ...BaseFactory.generate(),

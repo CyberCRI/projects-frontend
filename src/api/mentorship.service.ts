@@ -1,7 +1,7 @@
+import type { OrganizationModel } from '@/models/organization.model'
+import type { Mentoring } from '@/models/mentoring.model'
+import type { SkillModel } from '@/models/skill.model'
 import useAPI from '@/composables/useAPI'
-import { Mentoring } from '@/models/mentoring.model'
-import { OrganizationModel } from '@/models/organization.model'
-import { SkillModel } from '@/models/skill.model'
 
 // fetch mentorshup demand and offer for currentr user
 export async function getUserMentorship(organizationCode: OrganizationModel['code'], config = {}) {

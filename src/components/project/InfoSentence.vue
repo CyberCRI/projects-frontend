@@ -70,12 +70,15 @@
 </template>
 
 <script setup lang="ts">
-// TODO need to change this whole things (wtf components)
-import IconImage from '@/components/base/media/IconImage.vue'
-import TagsList from '@/components/tags/TagsList.vue'
-import { IconImageChoice } from '@/functs/IconImage'
-import { TagModel } from '@/models/tag.model'
-import { usePublicURL } from '@/composables/usePublic'
+// TODO need to change this whole things (wtf components)
+import type { TagModel } from '~/models/tag.model'
+
+import IconImage from '~/components/base/media/IconImage.vue'
+import TagsList from '~/components/tags/TagsList.vue'
+
+import { usePublicURL } from '~/composables/usePublic'
+
+import type { IconImageChoice } from '~/functs/IconImage'
 
 type Data = {
   number?: number

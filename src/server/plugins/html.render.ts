@@ -4,7 +4,7 @@ import { useRuntimeConfig } from '#imports'
 
 export default defineNitroPlugin((nitroApp) => {
   const runtimeConfig = useRuntimeConfig()
-  nitroApp.hooks.hook('render:html', (html /*, { event }*/) => {
+  nitroApp.hooks.hook('render:html', (html) => {
     html.head.push(
       `<style>
             body {
@@ -71,7 +71,7 @@ export default defineNitroPlugin((nitroApp) => {
             .app-loader svg .right-leaf {
                 animation-delay: -300ms;
             }
-        </style>        
+        </style>
         `
     )
 

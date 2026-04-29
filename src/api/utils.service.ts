@@ -1,4 +1,4 @@
-import type { SearchParams } from '@/api/types'
+import type { SearchParams } from '~/api/types'
 
 export function _adaptParamsToGetQuery(params: SearchParams) {
   return {

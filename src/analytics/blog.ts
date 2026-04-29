@@ -1,5 +1,6 @@
-import analytics from '@/analytics'
-import { BlogEntryModel } from '@/models/blog-entry.model'
+import type { BlogEntryModel } from '~/models/blog-entry.model'
+
+import analytics from '~/analytics'
 
 export interface BlogAnalytic {
   project: {

@@ -1,5 +1,5 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import TagChart from '@/components/stats/Charts/TagChart.vue'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import TagChart from '~/components/stats/Charts/TagChart.vue'
 
 import { describe, expect, it } from 'vitest'
 

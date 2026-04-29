@@ -1,5 +1,5 @@
 import { defineNuxtPlugin } from '#imports'
-import main from '@/main'
+import main from '~/main'
 
 export default defineNuxtPlugin(async () => {
   // main make some unit (keycloak.spec) tests fail

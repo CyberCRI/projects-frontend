@@ -1,5 +1,6 @@
 <script setup>
 import UserCard from './UserPresenceCard.vue'
+
 defineProps({
   status: {
     type: String,

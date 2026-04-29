@@ -1,12 +1,13 @@
-import { Container } from '@/composables/pdf-helpers/doc-builder'
 import {
   croppedImageData,
   fetchImageAsDataUrl,
   proxyImageUrl,
-} from '@/composables/pdf-helpers/usePdfHelpers'
-import { usePatatoids } from '@/composables/usePatatoids'
-import { cardListStyles } from '@/composables/project-pdf-components/common-styles'
-import { pictureApiToImageSizes } from '@/functs/imageSizesUtils'
+} from '~/composables/pdf-helpers/usePdfHelpers'
+import { cardListStyles } from '~/composables/project-pdf-components/common-styles'
+import type { Container } from '~/composables/pdf-helpers/doc-builder'
+import { usePatatoids } from '~/composables/usePatatoids'
+
+import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 
 export default async function addLinkedProjectSectionFactory(linkedProjects: any[]) {
   const defaultPatatoid = usePatatoids()[0]

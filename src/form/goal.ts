@@ -1,4 +1,4 @@
-import { GoalForm } from '@/models/goal.model'
+import type { GoalForm } from '@/models/goal.model'
 
 export const defaultForm = (): GoalForm => ({
   title: '',

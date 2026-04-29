@@ -15,14 +15,14 @@
 </template>
 
 <script setup lang="ts">
-import { DEFAULT_IMAGE_PATATOID } from '@/composables/usePatatoids'
 import { postOrganisationBanner, patchOrganisationBanner } from '@/api/organizations.service'
-import AdminBlock from '../AdminBlock.vue'
-import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils'
-import { isEqual } from 'es-toolkit'
-import useToasterStore from '@/stores/useToaster'
+import { DEFAULT_IMAGE_PATATOID } from '@/composables/usePatatoids'
+import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import useOrganizationsStore from '@/stores/useOrganizations'
+import useToasterStore from '@/stores/useToaster'
+import AdminBlock from '../AdminBlock.vue'
+import { isEqual } from 'es-toolkit'
 
 const { t } = useNuxtI18n()
 const toaster = useToasterStore()

@@ -1,5 +1,5 @@
+import { usePagination, PaginationResult } from '~/composables/usePagination'
 import { describe, it, expect } from 'vitest'
-import { usePagination, PaginationResult } from '@/composables/usePagination'
 
 describe('usePagination', () => {
   it('methods', async () => {

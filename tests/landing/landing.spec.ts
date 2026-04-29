@@ -1,7 +1,7 @@
+import { Logger, LogLevel } from '~~/tests/playwright/logger'
+import { usersDict } from '~~/tests/playwright/variables'
+import { logIn } from '~~/tests/playwright/lib'
 import { test } from '@playwright/test'
-import { usersDict } from '../playwright/variables'
-import { logIn } from '../playwright/lib'
-import { LogLevel, Logger } from '../playwright/logger'
 import { expect } from 'chai'
 
 const groupId = 'clubs'

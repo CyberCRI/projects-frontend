@@ -11,7 +11,8 @@
 </template>
 
 <script>
-import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
+import SkeletonComponent from '~/components/base/loader/SkeletonComponent.vue'
+
 export default {
   name: 'UserRecommendationItemSkeleton',
 

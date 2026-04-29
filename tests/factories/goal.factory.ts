@@ -1,6 +1,6 @@
 import { createFactory } from 'faker-create-factory'
 
-import { GoalInput, GoalModel, TranslatedGoal } from '@/models/goal.model'
+import { GoalInput, GoalModel, TranslatedGoal } from '~/models/goal.model'
 import BaseFactory from './base.factory'
 
 export const GoalFactory = createFactory<GoalModel>((faker) => ({

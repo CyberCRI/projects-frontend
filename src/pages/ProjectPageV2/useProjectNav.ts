@@ -1,4 +1,4 @@
-import utils from '@/functs/functions'
+import utils from '~/functs/functions'
 
 export default function useProjectNav(slugOrId) {
   const router = useRouter()

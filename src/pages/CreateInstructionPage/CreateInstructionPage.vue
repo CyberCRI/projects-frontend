@@ -1,7 +1,7 @@
 <script setup>
+import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { createInstruction } from '@/api/instruction.service'
 import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
 import { defaultForm } from '@/form/instruction'
 
 const toaster = useToasterStore()

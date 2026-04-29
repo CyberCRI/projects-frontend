@@ -1,20 +1,24 @@
-import { GeneralLocationPeopleGroup, TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import { TranslatedOrganizationModel } from '@/models/organization.model'
-import { TranslatedProject } from '@/models/project.model'
-import { AttachmentFileModel, TranslatedAttachmentFile } from '@/models/attachment-file.model'
-import { AttachmentLinkModel, TranslatedAttachmentLink } from '@/models/attachment-link.model'
-import { TranslatedDocument } from '@/interfaces/researcher'
-import {
+import type {
   TranslatedEventLocation,
   TranslatedLocation,
   TranslatedNewsLocation,
-} from '@/models/location.model'
-import { TranslatedNews } from '@/models/news.model'
-import { TranslatedEventModel } from '@/models/event.model'
-import { TranslatedNewsfeed } from '@/models/newsfeed.model'
-import { TranslatedAnnouncement } from '@/models/announcement.model'
-import { TranslatedUserModel } from '@/models/user.model'
-import { TranslatedInstruction } from '@/models/instruction.model'
+} from '~/models/location.model'
+import type {
+  GeneralLocationPeopleGroup,
+  TranslatedPeopleGroupModel,
+} from '~/models/invitation.model'
+import type { AttachmentLinkModel, TranslatedAttachmentLink } from '~/models/attachment-link.model'
+import type { AttachmentFileModel, TranslatedAttachmentFile } from '~/models/attachment-file.model'
+import type { TranslatedOrganizationModel } from '~/models/organization.model'
+import type { TranslatedAnnouncement } from '~/models/announcement.model'
+import type { TranslatedInstruction } from '~/models/instruction.model'
+import type { TranslatedNewsfeed } from '~/models/newsfeed.model'
+import type { TranslatedEventModel } from '~/models/event.model'
+import type { TranslatedProject } from '~/models/project.model'
+import type { TranslatedUserModel } from '~/models/user.model'
+import type { TranslatedNews } from '~/models/news.model'
+
+import type { TranslatedDocument } from '~/interfaces/researcher'
 
 // type can be computed or object
 type RefOrRaw<DataT> = ComputedRef<DataT> | Ref<DataT> | DataT

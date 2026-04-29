@@ -1,14 +1,13 @@
 <script setup>
-import EditorModalImage from './modals/EditorModalImage.vue'
-import EditorModalLink from './modals/EditorModalLink.vue'
-import EditorModalColor from './modals/EditorModalColor.vue'
 import EditorModalVideo from './modals/EditorModalVideo.vue'
-import TableMenuBar from './TableMenuBar.vue'
-import LinkMenuBar from './LinkMenuBar.vue'
-import ImageMenuBar from './ImageMenuBar.vue'
+import EditorModalImage from './modals/EditorModalImage.vue'
+import EditorModalColor from './modals/EditorModalColor.vue'
+import EditorModalLink from './modals/EditorModalLink.vue'
 import VideoMenuBar from './VideoMenuBar.vue'
+import TableMenuBar from './TableMenuBar.vue'
+import ImageMenuBar from './ImageMenuBar.vue'
+import LinkMenuBar from './LinkMenuBar.vue'
 import MenuBar from './MenuBar.vue'
-import { reactive } from 'vue'
 
 const emit = defineEmits(['image', 'saved'])
 

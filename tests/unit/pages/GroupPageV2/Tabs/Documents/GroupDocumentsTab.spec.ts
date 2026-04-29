@@ -1,14 +1,14 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import GroupDocumentsTab from '@/pages/GroupPageV2/Tabs/Documents/GroupDocumentsTab.vue'
+import GroupDocumentsTab from '~/pages/GroupPageV2/Tabs/Documents/GroupDocumentsTab.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import { flushPromises } from '@vue/test-utils'
 
-import { describe, expect, it } from 'vitest'
-import { TranslatedProjectFactory } from '../../../../../factories/project.factory'
-import { DocumentType, ResearcherDocumentAnalytics } from '@/interfaces/researcher'
+import { DocumentType, ResearcherDocumentAnalytics } from '~/interfaces/researcher'
+import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
+import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
+import { documentAnalyticsSkeleton } from '~/skeletons/crisalid.skeletons'
+import { DocumentFactory } from '~~/tests/factories/researcher.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
-import { PaginationsFactory } from '../../../../../factories/paginations.factory'
-import { DocumentFactory } from '../../../../../factories/researcher.factory'
-import { documentAnalyticsSkeleton } from '@/skeletons/crisalid.skeletons'
+import { describe, expect, it } from 'vitest'
 
 describe('GroupDocumentsTab.vue', () => {
   it('should render component', async () => {

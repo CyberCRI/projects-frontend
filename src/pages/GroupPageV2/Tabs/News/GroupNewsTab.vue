@@ -5,9 +5,12 @@
 </template>
 
 <script setup lang="ts">
-import BaseGroupNewsList from '@/components/group/Modules/News/BaseGroupNewsList.vue'
-import { GroupModuleTitle, TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import BaseGroupTab from '@/pages/GroupPageV2/Tabs/BaseGroupTab.vue'
+import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import { GroupModuleTitle } from '~/models/invitation.model'
+
+import BaseGroupNewsList from '~/components/group/Modules/News/BaseGroupNewsList.vue'
+
+import BaseGroupTab from '~/pages/GroupPageV2/Tabs/BaseGroupTab.vue'
 
 const props = withDefaults(
   defineProps<{

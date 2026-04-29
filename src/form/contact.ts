@@ -1,4 +1,4 @@
-import { ContactModel } from '@/models/report.model'
+import type { ContactModel } from '@/models/report.model'
 
 export const defaultForm = (): ContactModel => ({
   subject: '',

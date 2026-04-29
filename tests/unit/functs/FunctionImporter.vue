@@ -4,7 +4,7 @@
 
 <script>
 // this files is only for tests
-import funct from '@/functs/functions'
+import funct from '~/functs/functions'
 
 export default {
   name: 'FunctionImporter',

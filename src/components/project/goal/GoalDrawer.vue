@@ -51,25 +51,23 @@
 </template>
 
 <script setup lang="ts">
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import TextInput from '@/components/base/form/TextInput.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import GroupButton from '@/components/base/button/GroupButton.vue'
+import TextInput from '@/components/base/form/TextInput.vue'
+import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import { helpers, required } from '@vuelidate/validators'
 
 import useVuelidate from '@vuelidate/core'
-import { required, helpers } from '@vuelidate/validators'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import FieldErrors from '@/components/base/form/FieldErrors.vue'
 
-import { createGoal, patchGoal } from '@/api/goals.service'
-import analytics from '@/analytics'
-import useToasterStore from '@/stores/useToaster'
+import type { TranslatedProject } from '@/models/project.model'
 import DateField from '@/components/base/form/DateField.vue'
+import { createGoal, patchGoal } from '@/api/goals.service'
+import type { GoalModel } from '@/models/goal.model'
 import { fullYearDateFormat } from '@/functs/date'
+import useToasterStore from '@/stores/useToaster'
 import { textIsEmpty } from '@/functs/string'
-import { TranslatedProject } from '@/models/project.model'
-import { GoalModel } from '@/models/goal.model'
 import { defaultForm } from '@/form/goal'
+import analytics from '@/analytics'
 
 const props = withDefaults(
   defineProps<{

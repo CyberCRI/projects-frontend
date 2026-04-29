@@ -172,24 +172,28 @@
     </BaseDrawer>
   </template>
 </template>
+
 <script>
-import { getUser, patchUser, patchUserPicture, postUserPicture } from '@/api/people.service.ts'
-import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils.ts'
-import { isEqual } from 'es-toolkit'
-import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
-import { SDGS, VALID_NAME_REGEX } from '@/functs/constants.ts'
-import useToasterStore from '@/stores/useToaster.ts'
-import useUsersStore from '@/stores/useUsers.ts'
-import { useRuntimeConfig } from '#imports'
-import { usePatatoids } from '@/composables/usePatatoids'
-import { I18nT } from 'vue-i18n'
-import IconImage from '@/components/base/media/IconImage.vue'
+import useVuelidate from '@vuelidate/core'
+
+import { getUser, patchUser, patchUserPicture, postUserPicture } from '~/api/people.service.ts'
+
+import useToasterStore from '~/stores/useToaster.ts'
+import useUsersStore from '~/stores/useUsers.ts'
+
+import { usePatatoids } from '~/composables/usePatatoids'
+
 import ProfileEditBlock from '@/components/people/CompleteProfileDrawer/ProfileEditBlock.vue'
+import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils.ts'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import UserProfileV2 from '@/components/people/UserProfileV2.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
+import UserProfileV2 from '@/components/people/UserProfileV2.vue'
+import { SDGS, VALID_NAME_REGEX } from '~/functs/constants.ts'
+import IconImage from '@/components/base/media/IconImage.vue'
+import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import { useRuntimeConfig } from '#imports'
+import { I18nT } from 'vue-i18n'
 
 export default {
   name: 'CompleteProfileStep1',

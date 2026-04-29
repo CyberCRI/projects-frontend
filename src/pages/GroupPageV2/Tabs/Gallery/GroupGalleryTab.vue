@@ -7,9 +7,12 @@
 </template>
 
 <script setup lang="ts">
-import BaseGroupGallery from '@/components/group/Modules/Gallery/BaseGroupGallery.vue'
-import { GroupModuleTitle, TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import BaseGroupTab from '@/pages/GroupPageV2/Tabs/BaseGroupTab.vue'
+import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import { GroupModuleTitle } from '~/models/invitation.model'
+
+import BaseGroupGallery from '~/components/group/Modules/Gallery/BaseGroupGallery.vue'
+
+import BaseGroupTab from '~/pages/GroupPageV2/Tabs/BaseGroupTab.vue'
 
 const props = withDefaults(
   defineProps<{

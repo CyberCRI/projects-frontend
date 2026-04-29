@@ -32,10 +32,11 @@
 </template>
 
 <script setup lang="ts">
-import ProjectLine from '@/components/home/SummaryCards/ProjectLine.vue'
-import BaseListSummaryBlock from '@/components/home/SummaryCards/BaseListSummaryBlock.vue'
-import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
-import { TranslatedProject } from '@/models/project.model'
+import type { TranslatedProject } from '~/models/project.model'
+
+import BaseListSummaryBlock from '~/components/home/SummaryCards/BaseListSummaryBlock.vue'
+import SummaryAction from '~/components/home/SummaryCards/SummaryAction.vue'
+import ProjectLine from '~/components/home/SummaryCards/ProjectLine.vue'
 
 withDefaults(
   defineProps<{

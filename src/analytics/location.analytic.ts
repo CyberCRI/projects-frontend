@@ -1,5 +1,6 @@
-import analytics from '@/analytics/index'
-import { ProjectLocationForm } from '@/models/location.model'
+import type { ProjectLocationForm } from '~/models/location.model'
+
+import analytics from '~/analytics/index'
 
 export interface LocationAnalytic {
   project: {

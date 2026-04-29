@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import useVuelidate from '@vuelidate/core'
-import { helpers, required, email } from '@vuelidate/validators'
-import { postUserWithInvitation } from '@/api/people.service'
 import { imageSizesFormDataPost } from '@/functs/imageSizesUtils'
+import { email, helpers, required } from '@vuelidate/validators'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
-import { getInvitation } from '@/api/invitations.service'
-import useToasterStore from '@/stores/useToaster'
 import useOrganizationsStore from '@/stores/useOrganizations'
+import { postUserWithInvitation } from '@/api/people.service'
 import { getPatatoidFile } from '@/composables/usePatatoids'
+import { getInvitation } from '@/api/invitations.service'
 import { usePublicURL } from '@/composables/usePublic'
+import useToasterStore from '@/stores/useToaster'
+import useVuelidate from '@vuelidate/core'
 import { I18nT } from 'vue-i18n'
 
 const props = defineProps<{

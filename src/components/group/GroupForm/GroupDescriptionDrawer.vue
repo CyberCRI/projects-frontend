@@ -30,8 +30,8 @@
 
 <script setup lang="ts">
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import BaseDrawer from '@/components/base/BaseDrawer.vue'
 
 const props = withDefaults(
   defineProps<{

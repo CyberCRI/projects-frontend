@@ -1,5 +1,5 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import BadgeItem from '@/components/base/BadgeItem.vue'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import BadgeItem from '~/components/base/BadgeItem.vue'
 
 import { beforeEach, describe, expect, it } from 'vitest'
 describe('BadgeItem', () => {

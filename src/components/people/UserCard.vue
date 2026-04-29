@@ -30,10 +30,11 @@
 </template>
 
 <script setup>
-import BasicCard from '@/components/base/BasicCard.vue'
-import IconImage from '@/components/base/media/IconImage.vue'
-import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
+import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+import BasicCard from '~/components/base/BasicCard.vue'
+
+import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
 
 defineOptions({ name: 'UserCard' })
 

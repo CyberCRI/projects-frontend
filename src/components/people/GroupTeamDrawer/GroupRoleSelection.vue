@@ -66,9 +66,9 @@
 </template>
 
 <script setup>
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import IconImage from '@/components/base/media/IconImage.vue'
-import ToolTip from '@/components/base/ToolTip.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+import ToolTip from '~/components/base/ToolTip.vue'
 
 defineOptions({ name: 'GroupRoleSelection' })
 

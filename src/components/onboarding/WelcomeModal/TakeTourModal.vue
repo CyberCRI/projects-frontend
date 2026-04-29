@@ -34,8 +34,8 @@
   </BaseModal>
 </template>
 <script setup lang="ts">
-import BaseModal from '@/components/base/modal/BaseModal.vue'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
+import BaseModal from '@/components/base/modal/BaseModal.vue'
 import { I18nT } from 'vue-i18n'
 
 const emit = defineEmits<{ close: [] }>()

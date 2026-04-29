@@ -73,16 +73,16 @@
 </template>
 
 <script setup lang="ts">
-import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import TextInput from '@/components/base/form/TextInput.vue'
-import useVuelidate from '@vuelidate/core'
-import { helpers, required } from '@vuelidate/validators'
-import IconImage from '@/components/base/media/IconImage.vue'
 import MultiGroupPicker from '@/components/group/MultiGroupPicker/MultiGroupPicker.vue'
-import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import { postOrganizationImage } from '@/api/organizations.service'
+import type { InstructionForm } from '@/models/instruction.model'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import IconImage from '@/components/base/media/IconImage.vue'
+import TextInput from '@/components/base/form/TextInput.vue'
 import DateField from '@/components/base/form/DateField.vue'
-import { InstructionForm } from '@/models/instruction.model'
+import { helpers, required } from '@vuelidate/validators'
+import useVuelidate from '@vuelidate/core'
 
 const model = defineModel<InstructionForm>()
 

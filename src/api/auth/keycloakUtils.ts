@@ -1,4 +1,4 @@
-import { removeApiCookie } from '@/api/auth/cookie.service'
+import { removeApiCookie } from '~/api/auth/cookie.service'
 
 export function createRandomString(stringLength: number) {
   return [...Array(stringLength)].map(() => (~~(Math.random() * 20)).toString(20)).join('')
