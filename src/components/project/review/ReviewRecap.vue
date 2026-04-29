@@ -9,6 +9,7 @@
       v-for="(review, index) in reviews"
       :key="index"
       :review="review"
+      :editable="editable"
       @delete-review="toDelete = $event"
       @edit-review="editReview = $event"
     />
@@ -40,10 +41,14 @@ import type { TranslatedReview } from '@/models/review.model'
 import { deleteReview } from '@/api/reviews.service'
 import useToasterStore from '@/stores/useToaster'
 
-const props = defineProps<{
-  project: TranslatedProject
-  reviews: TranslatedReview[]
-}>()
+const props = withDefaults(
+  defineProps<{
+    project: TranslatedProject
+    reviews: TranslatedReview[]
+    editable?: boolean
+  }>(),
+  { editable: false }
+)
 
 const emit = defineEmits<{
   'reload-reviews': []
