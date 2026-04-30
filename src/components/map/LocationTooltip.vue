@@ -4,17 +4,17 @@
       <LocationType :location-type="location.type" />
       <LpiButton
         btn-icon="Close"
-        class="location-tooltip-icon skeletons-background"
+        class="location-tooltip-icon"
         :title="$t('common.close')"
         @click="closePopUp"
       />
     </div>
 
     <div v-if="title || description" class="location-tooltip-info">
-      <h3 class="skeletons-text">
+      <h3>
         {{ title }}
       </h3>
-      <p class="skeletons-text">
+      <p>
         {{ description }}
       </p>
     </div>
@@ -43,25 +43,36 @@ const closePopUp = inject('closePopUp')
 
 <style lang="scss" scoped>
 .location-tooltip {
-  width: pxToRem(300px);
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  // 25px is the size of "line" in map (a 5px too)
-  transform: translate(calc(-50% + 25px), calc(-100% + 5px));
   overflow: hidden;
   display: grid;
   grid-template-rows: auto 1fr;
   gap: 0.2rem;
-  background-color: var(--white);
   transition: opacity 0.15s ease-in-out;
   border: $border-width-l solid;
   border-radius: $border-radius-m;
-  border-color: var(--location-color);
+
+  &.impact {
+    border-color: $location-impact;
+  }
+
+  &.team {
+    border-color: $location-team;
+  }
+
+  &.address {
+    border-color: $location-address;
+  }
+
+  &.news {
+    border-color: $location-news;
+  }
+
+  &.event {
+    border-color: $location-event;
+  }
 
   > * {
-    padding: 0.5rem 1rem;
+    padding: 0 1rem;
   }
 
   > *:first-child {

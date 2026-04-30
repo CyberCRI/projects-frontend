@@ -162,10 +162,10 @@ export default function useAutoTranslate() {
   const translateGoal = (goal) => translateEntity<TranslatedGoal>(goal, ['title', 'description'])
   const translateGoals = (goals) => translateEntities<TranslatedGoal>(goals, translateGoal)
 
-  const translateLocation = <T = TranslatedLocation>(location) =>
-    translateEntity<T>(location, ['title', 'description'])
-  const translateLocations = <T = TranslatedLocation>(locations) =>
-    translateEntities<T>(locations, translateLocation)
+  const translateLocation = (location) =>
+    translateEntity<TranslatedLocation>(location, ['title', 'description'])
+  const translateLocations = (locations) =>
+    translateEntities<TranslatedLocation>(locations, translateLocation)
 
   const translateProjectLocation = (location) => {
     return computed<TranslatedLocation>(() => {
@@ -232,7 +232,7 @@ export default function useAutoTranslate() {
   // -----------------
   // groups
   const translateGroup = (group) =>
-    computed<TranslatedPeopleGroupModel>(() => {
+    computed(() => {
       const _group = unref(
         translateEntity<TranslatedPeopleGroupModel>(group, [
           'name',

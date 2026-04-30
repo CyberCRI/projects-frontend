@@ -1,7 +1,7 @@
-import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
+import { ProjectOutputFactory } from '~~/tests/factories/project.factory'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
-import GeneralMap from '@/components/map/GeneralMap.vue'
+import MapRecap from '~/components/map/MapRecap.vue'
 import useProjectsStore from '~/stores/useProjects'
 import pinia from '~/stores'
 
@@ -16,7 +16,7 @@ describe('MapRecap.vue', () => {
         links: [],
       }
     })
-    const wrapper = lpiShallowMount(GeneralMap, {
+    const wrapper = lpiShallowMount(MapRecap, {
       provide: {
         projectLayoutToggleAddModal: vi.fn(),
       },

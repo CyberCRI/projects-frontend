@@ -1,8 +1,8 @@
 <template>
-  <LocationPopUp :location="location">
+  <LocationTooltip :location="location">
     <LinkButton
       :label="label"
-      class="card-tooltip-button skeletons-background"
+      class="card-tooltip-button"
       btn-icon="ArrowRight"
       :title="label"
       :to="to"
@@ -13,29 +13,31 @@
           v-if="haveImage"
           :picture-data="image"
           :default-picture="defaultPicture"
-          class="card-tooltip-content-image skeletons-background"
+          class="card-tooltip__image"
         />
         <div>
-          <h3 class="card-title skeletons-text" :title="props.title">
+          <h3 class="card-title" :title="props.title">
             {{ title }}
           </h3>
-          <p class="card-purpose skeletons-text" :title="props.description">
+          <p class="card-purpose" :title="props.description">
             {{ description }}
           </p>
         </div>
       </slot>
     </div>
-  </LocationPopUp>
+  </LocationTooltip>
 </template>
 
 <script setup lang="ts">
-import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import type { AnyTranslatedLocation } from '@/models/location.model'
-import LinkButton from '@/components/base/button/LinkButton.vue'
-import LocationPopUp from '@/components/map/LocationPopUp.vue'
+import type { AnyTranslatedLocation } from '~/models/location.model'
+import type { Image } from '~/models/image.model'
+
+import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
+import LocationTooltip from '~/components/map/LocationTooltip.vue'
+import LinkButton from '~/components/base/button/LinkButton.vue'
+
 import type { RouteLocationRaw } from 'vue-router'
-import type { Image } from '@/models/image.model'
-import { cropIfTooLong } from '@/functs/string'
+import { cropIfTooLong } from '~/functs/string'
 
 const props = withDefaults(
   defineProps<{
@@ -52,7 +54,7 @@ const props = withDefaults(
 
 const title = computed(() => cropIfTooLong(props.title, 45))
 const description = computed(() => cropIfTooLong(props.description, 85))
-const haveImage = computed(() => props.image || props.defaultPicture)
+const haveImage = computed(() => props.image && props.defaultPicture)
 </script>
 
 <style lang="scss" scoped>
@@ -61,23 +63,30 @@ const haveImage = computed(() => props.image || props.defaultPicture)
 }
 
 .card-tooltip-content {
-  flex-basis: 100%;
-  display: flex;
+  flex-basis: 60%;
   padding: 1.5rem $space-s;
-  background-color: color-mix(in srgb, var(--location-color), transparent 90%);
+  background-color: $primary-lighter;
+  display: flex;
+  justify-content: space-between;
 
-  &-image,
-  &-image img {
-    width: pxToRem(72px);
-    flex-basis: pxToRem(72px);
-    flex-shrink: 0;
-    height: pxToRem(72px);
-    background-position: center center;
-    background-size: cover;
-    border-radius: $border-radius-xs;
-    object-fit: cover;
-    object-position: 50% 50%;
-    margin-right: $space-m;
+  &.impact {
+    background-color: color-mix(in srgb, $location-impact, transparent 90%);
+  }
+
+  &.address {
+    background-color: color-mix(in srgb, $location-address, transparent 90%);
+  }
+
+  &.news {
+    background-color: color-mix(in srgb, $location-news, transparent 90%);
+  }
+
+  &.team {
+    background-color: color-mix(in srgb, $location-team, transparent 90%);
+  }
+
+  &.event {
+    background-color: color-mix(in srgb, $location-event, transparent 90%);
   }
 
   .card-title {
