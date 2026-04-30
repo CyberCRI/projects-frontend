@@ -380,6 +380,7 @@ describe('Store module | users | actions', () => {
     vi.spyOn(usersStore, 'logIn')
 
     await usersStore.logIn({
+      expires_in: 0,
       refresh_token,
       refresh_token_exp: 1646876100,
       access_token,
