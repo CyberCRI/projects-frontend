@@ -101,7 +101,7 @@ export default {
       this.computing = true
       this.croppedHtml = this.html
 
-      if (!this.$refs.inner) {
+      if (!this.$refs.inner || !this.$refs.outer) {
         return
       }
 
