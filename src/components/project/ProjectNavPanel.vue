@@ -36,7 +36,7 @@
         :label="$t('group.news')"
         btn-icon="Article"
         vertical-layout
-        :nb-button="announcements.length.toString()"
+        :nb-button="announcements.length"
         label-on-hover
         @click="goToAnnouncements"
       />
