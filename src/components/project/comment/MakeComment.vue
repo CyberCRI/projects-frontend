@@ -213,7 +213,7 @@ export default {
       } else {
         if (this.repliedComment) payload.reply_on_id = this.repliedComment.id
         try {
-          const result = await postComment(payload)
+          const result = await postComment(this.project.id, payload)
           analytics.comment.comment({
             project: {
               id: this.project.id,
@@ -269,7 +269,7 @@ export default {
         }
 
         try {
-          const result = await patchComment(comment.id, comment)
+          const result = await patchComment(this.project.id, comment.id, comment)
           analytics.comment.updateComment({
             project: {
               id: this.project.id,
