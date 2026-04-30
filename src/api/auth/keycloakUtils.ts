@@ -5,6 +5,11 @@ export function createRandomString(stringLength: number) {
 }
 
 export function getRefreshTokenInterval(): number {
+  const expireIn = localStorage.getItem('EXPIRES_IN')
+  if (expireIn) {
+    // get expires seconds substract "30" seconds for "padding" in refresh
+    return Math.abs(parseInt(expireIn, 10) - 1_000 * 30)
+  }
   const refreshToken = localStorage.getItem('REFRESH_TOKEN')
   if (!refreshToken) return -1
 

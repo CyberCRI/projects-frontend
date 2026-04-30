@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'
 

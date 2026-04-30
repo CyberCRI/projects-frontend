@@ -56,17 +56,15 @@ const rules = computed(() => {
           maxLengthValue: helpers.withMessage(t('project.form.purpose-errors.max'), maxLength(180)),
         }
   return {
-    form: {
-      title: {
-        required: helpers.withMessage(t('project.form.title-errors.required'), required),
-        maxLengthValue: helpers.withMessage(t('project.form.title-errors.max'), maxLength(120)),
-      },
-      purpose: purposeRules,
+    title: {
+      required: helpers.withMessage(t('project.form.title-errors.required'), required),
+      maxLengthValue: helpers.withMessage(t('project.form.title-errors.max'), maxLength(120)),
     },
+    purpose: purposeRules,
   }
 })
 
-const v$ = useValidate(rules, { form })
+const v$ = useValidate(rules, form)
 
 const categories = computed(() => {
   return projectCategoriesStore.allOrderedByOrderId

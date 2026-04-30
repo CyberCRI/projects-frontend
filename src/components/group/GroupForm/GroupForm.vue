@@ -76,6 +76,7 @@
         <TipTapOutput class="description-content" :content="form.description" />
         <!-- TODO htmllimiter-->
       </div>
+      <empty-label v-else />
     </div>
 
     <!-- tags -->

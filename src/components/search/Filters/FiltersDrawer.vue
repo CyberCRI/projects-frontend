@@ -4,7 +4,7 @@
     :confirm-action-name="$t('common.confirm')"
     :is-opened="isOpened"
     :title="drawerTitle"
-    class="medium"
+    :class="filters[mode]?.drawerClass ?? 'medium'"
     @close="close"
     @confirm="confirm"
   >
@@ -42,93 +42,73 @@
   </Drawer>
 </template>
 
-<script>
-import { ALL_FILTERS_MODE } from '~/components/search/Filters/useContextualFilters.ts'
+<script setup lang="ts">
+import { ALL_FILTERS_MODE } from '~/components/search/Filters/useContextualFilters'
 import FilterWrapper from '~/components/search/Filters/FilterWrapper.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 import Drawer from '~/components/base/BaseDrawer.vue'
 
-export default {
-  name: 'FiltersDrawer',
+const props = withDefaults(
+  defineProps<{
+    isOpened: boolean
+    mode?: string
+    filters: any
+    preselection: any
+  }>(),
+  {
+    mode: null,
+  }
+)
 
-  components: { FilterWrapper, Drawer, IconImage },
+const emit = defineEmits<{
+  confirm: [any]
+  close: []
+}>()
+const { t } = useNuxtI18n()
 
-  props: {
-    isOpened: {
-      type: Boolean,
-      required: true,
-    },
+const selection = ref(JSON.parse(JSON.stringify(props.preselection)))
+const focusedFilter = ref(null)
+const allFiltersMode = ref(ALL_FILTERS_MODE)
 
-    mode: {
-      type: [String, null],
-      required: true,
-    },
-
-    filters: {
-      type: Object,
-      required: true,
-    },
-
-    preselection: {
-      type: Object,
-      required: true,
-    },
-  },
-
-  emits: ['confirm', 'close'],
-
-  data() {
-    return {
-      selection: JSON.parse(JSON.stringify(this.preselection)),
-      focusedFilter: null,
-      allFiltersMode: ALL_FILTERS_MODE,
+const drawerTitle = computed(() => {
+  if (props.mode === allFiltersMode.value) {
+    if (focusedFilter.value) {
+      const title = props.filters[focusedFilter.value].title
+      return t(`search.${title}`)
     }
-  },
 
-  computed: {
-    drawerTitle() {
-      if (this.mode === this.allFiltersMode) {
-        if (this.focusedFilter) {
-          const title = this.filters[this.focusedFilter].title
-          return this.$t(`search.${title}`)
-        }
+    return t('search.all-filters')
+  }
 
-        return this.$t('search.all-filters')
-      }
+  const title = props.filters[props.mode].title
+  return t(`search.${title}`)
+})
 
-      const title = this.filters[this.mode].title
-      return this.$t(`search.${title}`)
-    },
-  },
+watch(
+  () => props.isOpened,
+  () => {
+    selection.value = JSON.parse(JSON.stringify(props.preselection))
+    focusedFilter.value = null
+  }
+)
 
-  watch: {
-    isOpened: function () {
-      this.selection = JSON.parse(JSON.stringify(this.preselection))
-      this.focusedFilter = null
-    },
-  },
+const confirm = () => emit('confirm', selection.value)
+const close = () => emit('close')
 
-  methods: {
-    hasFilters(key) {
-      return ['sdfs', 'languages'].includes(key) || this.selection[key]?.length > 0
-    },
-    confirm() {
-      this.$emit('confirm', this.selection)
-    },
+const hasFilters = (key) => {
+  return ['sdfs', 'languages'].includes(key) || selection.value[key]?.length > 0
+}
 
-    toggleFilter(filterKey) {
-      this.focusedFilter = filterKey
-    },
+const toggleFilter = (filterKey) => {
+  focusedFilter.value = filterKey
+}
 
-    closeFocusedOrModeFilter() {
-      if (this.focusedFilter) this.focusedFilter = null
-      else this.$emit('close')
-    },
-
-    close() {
-      this.$emit('close')
-    },
-  },
+const closeFocusedOrModeFilter = () => {
+  if (focusedFilter.value) {
+    focusedFilter.value = null
+  } else {
+    close()
+  }
 }
 </script>
 

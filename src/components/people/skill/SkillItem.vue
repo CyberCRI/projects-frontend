@@ -13,31 +13,24 @@
     </transition>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 import SkillSteps from '~/components/people/skill/SkillSteps.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 
 import { capitalize } from '~/functs/string'
 
-defineOptions({ name: 'SkillItem' })
-defineProps({
-  label: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  level: {
-    type: Number,
-    required: true,
-  },
-  steps: {
-    type: Number,
-    default: 4,
-  },
-})
+withDefaults(
+  defineProps<{
+    label: string
+    description: string
+    level: number
+    steps?: number
+  }>(),
+  {
+    steps: 4,
+  }
+)
+
 const isOpen = ref(false)
 </script>
 <style lang="scss" scoped>

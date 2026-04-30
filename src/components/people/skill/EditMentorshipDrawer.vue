@@ -1,15 +1,16 @@
-<script setup>
+<script setup lang="ts">
 import MentorshipForm from '~/components/people/skill/MentorshipForm.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
-import useSkillTexts from '~/composables/useSkillTexts.ts'
+import type { UserSkillModel } from '~/models/user.model'
+import useSkillTexts from '~/composables/useSkillTexts'
 
 const emit = defineEmits(['close', 'update-mentorship'])
 
-const props = defineProps({
-  skill: { type: Object, required: true },
-  isOpened: { type: Boolean, required: true },
-})
+const props = defineProps<{
+  skill: UserSkillModel
+  isOpened: boolean
+}>()
 
 const mentorship = ref({
   can_mentor: false,

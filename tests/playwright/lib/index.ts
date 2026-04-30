@@ -21,10 +21,8 @@ import { editBio } from './user/editBio'
 import { logOut } from './login/logout'
 import { logIn } from './login/login'
 import { makeId } from './tools'
-import { delay } from './tools'
 
 export {
-  delay,
   makeId,
   logIn,
   logOut,

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { helpers, required } from '@vuelidate/validators'
 import useValidate from '@vuelidate/core'
 
@@ -9,23 +9,18 @@ import CharCounter from '~/components/base/form/CharCounter.vue'
 import BaseModal from '~/components/base/modal/BaseModal.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
-import useToasterStore from '~/stores/useToaster.ts'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useToasterStore from '~/stores/useToaster'
 
+import type { TagClassificationModel } from '~/models/tagclassification.model'
 import LpiButton from '../base/button/LpiButton.vue'
+import type { TagModel } from '~/models/tag.model'
+import { defaultForm } from '~/form/tag'
 
 const { t } = useNuxtI18n()
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
-
-const defaultForm = () => ({
-  id: null,
-  title_en: '',
-  description_en: '',
-  title_fr: '',
-  description_fr: '',
-})
 
 const rules = computed(() => ({
   title_en: {
@@ -42,20 +37,17 @@ const rules = computed(() => ({
   },
 }))
 
-const props = defineProps({
-  tag: {
-    type: [Object, null],
-    required: true,
-  },
-  classification: {
-    type: Object,
-    required: true,
-  },
-  isOpen: {
-    type: Boolean,
-    required: true,
-  },
-})
+const props = withDefaults(
+  defineProps<{
+    tag?: TagModel
+    classification: TagClassificationModel
+    isOpen?: boolean
+  }>(),
+  {
+    tag: null,
+    isOpen: true,
+  }
+)
 
 const emit = defineEmits(['close', 'tag-edited'])
 
@@ -71,11 +63,7 @@ watchEffect(() => {
     form.value = defaultForm()
     if (props.tag) {
       form.value = {
-        id: props.tag.id,
-        title_en: props.tag.title_en,
-        description_en: props.tag.description_en,
-        title_fr: props.tag.title_fr,
-        description_fr: props.tag.description_fr,
+        ...props.tag,
       }
     }
   }

@@ -101,15 +101,8 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 import useToasterStore from '~/stores/useToaster.ts'
 
 import useSkillTexts from '~/composables/useSkillTexts.ts'
-import useTagSearch from '~/composables/useTagSearch.js'
-
-function defaultMentorship() {
-  return {
-    can_mentor: false,
-    needs_mentor: false,
-    comment: '',
-  }
-}
+import useTagSearch from '~/composables/useTagSearch.ts'
+import { defaultMentorship } from '~/form/mentorship'
 
 export default {
   name: 'SkillsEditDrawer',

@@ -1,11 +1,11 @@
-<script setup>
+<script setup lang="ts">
 import { getProjectCategory } from '~/api/project-categories.service'
 import { getAllTagsById } from '~/api/tag-classification.service'
 
 import useContextualFilters, {
   ALL_FILTERS_MODE,
   ALL_SECTION_KEY,
-} from '~/components/search/Filters/useContextualFilters.ts'
+} from '~/components/search/Filters/useContextualFilters'
 import FiltersDrawer from '~/components/search/Filters/FiltersDrawer.vue'
 import FilterButton from '~/components/search/Filters/FilterButton.vue'
 
@@ -91,7 +91,7 @@ const cache = reactive({
 
 async function hydrateFilters() {
   const rawFilters = props.search || {}
-  const filters = {}
+  const filters = defaultFilters()
   const organizationCode = useOrganizationCode()
 
   filters.categories = await Promise.all(

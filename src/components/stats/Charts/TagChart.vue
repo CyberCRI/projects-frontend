@@ -4,82 +4,68 @@
   </div>
 </template>
 
-<script>
-import useTagTexts from '~/composables/useTagTexts.ts'
+<script setup lang="ts">
+import useTagTexts from '~/composables/useTagTexts'
 
-import { CHART_COLORS } from '~/functs/constants.ts'
 import LpiBarChart from './Generic/LpiBarChart.vue'
+import { CHART_COLORS } from '~/functs/constants'
+import type { Stats } from '~/api/stats.service'
 
-export default {
-  name: 'TagChart',
+const props = withDefaults(
+  defineProps<{
+    stats?: Stats['top_tags']
+  }>(),
+  {
+    stats: () => [],
+  }
+)
 
-  components: { LpiBarChart },
-  props: {
-    stats: {
-      type: Array,
-      default: () => [],
+const tagTexts = useTagTexts()
+const chartData = ref(undefined)
+const options = ref({
+  maintainAspectRatio: true,
+  responsive: true,
+  plugins: {
+    legend: {
+      display: false,
     },
   },
-
-  setup() {
-    const tagTexts = useTagTexts()
-    return {
-      tagTexts,
-    }
-  },
-
-  data() {
-    return {
-      chartData: undefined,
-      options: {
-        maintainAspectRatio: true,
-        responsive: true,
-        plugins: {
-          legend: {
-            display: false,
-          },
-        },
-        scales: {
-          x: {
-            beginAtZero: true,
-            grid: {
-              display: false,
-            },
-          },
-        },
+  scales: {
+    x: {
+      beginAtZero: true,
+      grid: {
+        display: false,
       },
-    }
-  },
-
-  created() {
-    this.populateDataChart()
-  },
-
-  methods: {
-    populateDataChart() {
-      if (this.stats.length) {
-        const tagLabels = []
-        const tagData = []
-        const tagColors = []
-        this.stats.forEach((tag, i) => {
-          tagLabels.push(this.tagTexts.title(tag))
-          tagData.push(tag.project_count)
-          tagColors.push(CHART_COLORS[i % CHART_COLORS.length])
-        })
-
-        this.chartData = {
-          datasets: [
-            {
-              data: tagData,
-              backgroundColor: tagColors,
-            },
-          ],
-          labels: tagLabels,
-        }
-      }
     },
   },
+})
+
+const populateDataChart = () => {
+  if (props.stats.length) {
+    const tagLabels = []
+    const tagData = []
+    const tagColors = []
+    props.stats.forEach((tag, i) => {
+      tagLabels.push(tagTexts.title(tag))
+      tagData.push(tag.project_count)
+      tagColors.push(CHART_COLORS[i % CHART_COLORS.length])
+    })
+
+    chartData.value = {
+      datasets: [
+        {
+          data: tagData,
+          backgroundColor: tagColors,
+        },
+      ],
+      labels: tagLabels,
+    }
+  }
 }
+
+onMounted(() => {
+  populateDataChart()
+})
 </script>
 
 <style lang="scss" scoped>

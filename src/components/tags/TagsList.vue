@@ -5,7 +5,7 @@
         v-for="tag in displayedTags || []"
         :key="prefix + tag.id"
         :to="browsePageWithQuery('tags', tag.id)"
-        class="tag-elt tag-elt-anim"
+        class="tag-elt tag-elt-anim skeletons-background"
       >
         <BadgeItem
           v-if="tagTitle(tag)"
@@ -19,7 +19,7 @@
           v-for="tag in displayedInfoTags || []"
           :key="prefix + tag.name"
           :to="tag.direction"
-          class="tag-elt"
+          class="tag-elt skeletons-background"
         >
           <BadgeItem v-if="tag.name" :key="prefix + tag.name" :label="tag.name" size="small" />
         </NuxtLink>
@@ -30,13 +30,13 @@
           :key="prefix + tag.direction"
           :href="tag.direction"
           target="_blank"
-          class="tag-elt"
+          class="tag-elt skeletons-background"
         >
           <BadgeItem v-if="tag.name" :key="prefix + tag.name" :label="tag.name" size="small" />
         </a>
       </template>
       <button
-        class="tag-elt-show-more reset-btn"
+        class="tag-elt-show-more reset-btn skeletons-background"
         :class="{ hidden: !hasMoreTags }"
         @click.prevent="showExtraTags = !showExtraTags"
       >
@@ -55,7 +55,7 @@
         v-for="tag in moreTags || []"
         :key="tag.id"
         :to="browsePageWithQuery('tags', tag.id)"
-        class="extra-tag-elt tag-elt-anim"
+        class="extra-tag-elt tag-elt-anim skeletons-background"
       >
         <BadgeItem v-if="tagTitle(tag)" :label="tagTitle(tag)" size="small" />
       </NuxtLink>
@@ -65,7 +65,7 @@
           v-for="tag in moreInfoTags || []"
           :key="prefix + tag.name"
           :to="tag.direction"
-          class="extra-tag-elt"
+          class="extra-tag-elt skeletons-background"
         >
           <BadgeItem v-if="tag.name" :key="prefix + tag.name" :label="tag.name" size="small" />
         </NuxtLink>
@@ -76,7 +76,7 @@
           :key="prefix + tag.direction"
           :href="tag.direction"
           target="_blank"
-          class="extra-tag-elt"
+          class="extra-tag-elt skeletons-background"
         >
           <BadgeItem v-if="tag.name" :key="prefix + tag.name" :label="tag.name" size="small" />
         </a>

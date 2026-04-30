@@ -54,17 +54,14 @@
     </li>
   </ul>
 </template>
-<script setup>
+
+<script setup lang="ts">
+import type { HierarchyGroupModel } from '~/models/group.model'
 import IconImage from '~/components/base/media/IconImage.vue'
 
-defineOptions({ name: 'GroupsElement' })
-
-defineProps({
-  group: {
-    type: Object,
-    required: true,
-  },
-})
+defineProps<{
+  group: HierarchyGroupModel
+}>()
 
 const router = useRouter()
 const emit = defineEmits(['move', 'add', 'edit'])

@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { required, requiredIf, maxLength, email, helpers } from '@vuelidate/validators'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import useToasterStore from '@/stores/useToaster'
+import { email, helpers, maxLength, required, requiredIf } from '@vuelidate/validators'
 import { useVuelidate } from '@vuelidate/core'
 import { Sketch } from '@ckpack/vue-color'
+
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useToasterStore from '~/stores/useToaster'
+
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
 const { t } = useNuxtI18n()
@@ -83,7 +85,7 @@ const rules = computed(() => ({
     email: helpers.withMessage(t('admin.form.admin-info.contact-email.email'), email),
   },
   language: {
-    required: helpers.withMessage(t('admin.from.admin-info.language.required'), required),
+    required: helpers.withMessage(t('admin.form.admin-info.language.required'), required),
   },
   background_color: {
     required: helpers.withMessage(

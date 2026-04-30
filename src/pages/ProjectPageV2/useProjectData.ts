@@ -1,6 +1,6 @@
 import { getProjectMessages as getProjectMessagesApi } from '~/api/project-messages.service'
 import { duplicateProject as duplicateProjectAPI, getProject } from '~/api/projects.service'
-import { getProjectLocations as getProjectLocationsApi } from '~/api/locations.services'
+import { getProjectLocations as getProjectLocationsApi } from '~/api/locations.service'
 import { getBlogEntries as getBlogEntriesApi } from '~/api/blogentries.service'
 import { getProjectAnnouncements } from '~/api/announcements.service'
 import { getComments as getCommentApi } from '~/api/comments.service'

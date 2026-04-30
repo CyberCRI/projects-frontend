@@ -14,8 +14,8 @@ import useOrganizationsStore from '~/stores/useOrganizations'
 import useAPI from '~/composables/useAPI'
 
 // New user service using projects API
-export async function getUser(id: string, noError: boolean = false) {
-  return await useAPI<UserModel>(`user/${id}/`, { noError: noError })
+export async function getUser(userId: string | number, noError: boolean = false) {
+  return await useAPI<UserModel>(`user/${userId}/`, { noError: noError })
 }
 
 export async function postUser(payload: FormData) {

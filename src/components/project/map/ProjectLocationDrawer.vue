@@ -13,7 +13,7 @@
 import type { TranslatedLocation } from '~/models/location.model'
 import type { TranslatedProject } from '~/models/project.model'
 
-import { deleteLocation, patchLocation, postLocations } from '~/api/locations.services'
+import { deleteLocation, patchLocation, postLocations } from '~/api/locations.service'
 
 import LocationDrawer from '~/components/map/LocationDrawer.vue'
 

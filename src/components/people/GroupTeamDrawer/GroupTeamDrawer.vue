@@ -25,30 +25,25 @@
   </BaseDrawer>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import GroupUserSelection from './GroupUserSelection.vue'
 import GroupRoleSelection from './GroupRoleSelection.vue'
+import type { UserModel } from '~/models/user.model'
 
-defineOptions({ name: 'GroupTeamDrawer' })
-
-const props = defineProps({
-  currentUsers: {
-    type: Array,
-    default: () => [],
-  },
-
-  isOpened: {
-    type: Boolean,
-    default: false,
-  },
-
-  mode: {
-    type: String,
-    default: 'select', // 'select' or 'roles'
-  },
-})
+const props = withDefaults(
+  defineProps<{
+    currentUsers?: UserModel[]
+    isOpened?: boolean
+    mode?: 'select' | 'roles'
+  }>(),
+  {
+    currentUsers: () => [],
+    isOpened: false,
+    mode: 'select',
+  }
+)
 
 const emit = defineEmits(['close', 'add-user', 'set-mode'])
 const { t } = useNuxtI18n()

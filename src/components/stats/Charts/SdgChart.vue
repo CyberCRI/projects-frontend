@@ -4,77 +4,65 @@
   </div>
 </template>
 
-<script>
-import { CHART_COLORS, SDGS } from '~/functs/constants.ts'
+<script setup lang="ts">
+import { CHART_COLORS, SDGS } from '~/functs/constants'
 import LpiBarChart from './Generic/LpiBarChart.vue'
+import type { Stats } from '~/api/stats.service'
 
-export default {
-  name: 'SdgChart',
+const props = withDefaults(
+  defineProps<{
+    stats?: Stats['by_sdg']
+  }>(),
+  {
+    stats: () => [],
+  }
+)
 
-  components: { LpiBarChart },
+const { t } = useNuxtI18n()
 
-  props: {
-    stats: {
-      type: Array,
-      default: () => [],
+const formattedData = ref(undefined)
+const options = ref({
+  responsive: true,
+  maintainAspectRatio: true,
+  plugins: {
+    legend: {
+      display: false,
     },
   },
-
-  data() {
-    return {
-      formattedData: undefined,
-      options: {
-        responsive: true,
-        maintainAspectRatio: true,
-        plugins: {
-          legend: {
-            display: false,
-          },
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
-          x: {
-            grid: {
-              display: false,
-            },
-          },
-        },
+  scales: {
+    y: {
+      beginAtZero: true,
+    },
+    x: {
+      grid: {
+        display: false,
       },
-      clonedStats: this.stats,
-    }
-  },
-
-  created() {
-    this.populateDataChart()
-  },
-
-  methods: {
-    populateDataChart() {
-      const sdgsLabels = []
-      const sdgsColors = []
-      SDGS.forEach((sdg, i) => {
-        sdgsLabels.push(this.$t(`sdg.${sdg.id}.title`))
-        sdgsColors.push(CHART_COLORS[i % CHART_COLORS.length])
-      })
-
-      const sdgsData = [...this.stats]
-        .sort((a, b) => parseInt(a.sdg) - parseInt(b.sdg))
-        .map((item) => item.project_count)
-
-      this.formattedData = {
-        datasets: [
-          {
-            data: sdgsData,
-            backgroundColor: sdgsColors,
-          },
-        ],
-        labels: sdgsLabels,
-      }
     },
   },
+})
+
+const populateDataChart = () => {
+  const sdgsLabels = []
+  const sdgsColors = []
+  SDGS.forEach((sdg, i) => {
+    sdgsLabels.push(t(`sdg.${sdg.id}.title`))
+    sdgsColors.push(CHART_COLORS[i % CHART_COLORS.length])
+  })
+
+  const sdgsData = [...props.stats].sort((a, b) => a.sdg - b.sdg).map((item) => item.project_count)
+
+  formattedData.value = {
+    datasets: [
+      {
+        data: sdgsData,
+        backgroundColor: sdgsColors,
+      },
+    ],
+    labels: sdgsLabels,
+  }
 }
+
+onMounted(() => populateDataChart())
 </script>
 
 <style lang="scss" scoped>

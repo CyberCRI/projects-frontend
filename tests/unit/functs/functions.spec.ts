@@ -60,7 +60,7 @@ describe('Function projectCanBeEdited', () => {
   test('that project can be edited if user is org-admin of one of the organisations the project belongs to', () => {
     const user = UserFactory.generate()
     const project = ProjectOutputFactory.generate()
-    project.categories[0].organization.code = 'CRI' // Add same org code from project factory generated
+    project.categories[0].organization = 'CRI' // Add same org code from project factory generated
 
     organizationsStore._current = { code: 'CRI' } // getters are writable only in tests
     usersStore.user = user // getters are writable only in tests

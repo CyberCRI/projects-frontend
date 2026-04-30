@@ -1,87 +1,54 @@
-<script setup>
-import { getUsersRecommendationsForUser } from '~/api/recommendations.service'
+<script setup lang="ts">
+import PaginationButtonsV2 from '~/components/base/navigation/PaginationButtonsV2.vue'
+import { getUsersRecommendationsForUser } from '~/api/v2/recommendations.service'
+import { factoryPagination } from '~/skeletons/base.skeletons'
+import NothingHere from '~/components/base/NothingHere.vue'
+import { userSkeleton } from '~/skeletons/user.skeletons'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
-
-import useAPI from '~/composables/useAPI.ts'
-
-const organizationsStore = useOrganizationsStore()
+const organizationCode = useOrganizationCode()
 const { t } = useNuxtI18n()
 
-const usersRecommendationsRequest = useState(() => null)
-const limit = useState(() => 10)
-const isLoading = useState(() => false)
-const pagination = computed(() => ({
-  currentPage: usersRecommendationsRequest.value?.current_page || 1,
-  total: usersRecommendationsRequest.value?.total_page || 1,
-  previous: usersRecommendationsRequest.value?.previous || undefined,
-  next: usersRecommendationsRequest.value?.next || undefined,
-  first: usersRecommendationsRequest.value?.first || undefined,
-  last: usersRecommendationsRequest.value?.last || undefined,
-}))
-
-onMounted(async () => {
-  isLoading.value = true
-  usersRecommendationsRequest.value = await getUsersRecommendationsForUser(
-    organizationsStore.current.code,
-    { limit: limit.value }
-  )
-  isLoading.value = false
+const { status, data, pagination } = getUsersRecommendationsForUser(organizationCode, {
+  default: () => factoryPagination(userSkeleton, 10),
 })
-
-const onClickPagination = async (requestedPage) => {
-  isLoading.value = true
-  usersRecommendationsRequest.value = await useAPI(requestedPage, {})
-  isLoading.value = false
-  const el = document.querySelector('.page-title')
-  if (el) el.scrollIntoView({ behavior: 'smooth' })
-}
 
 useLpiHead2({
-  title: computed(() => t('recommendations.connect-to')),
+  title: computed(() => t('recommendations.people.title')),
 })
 </script>
+
 <template>
   <div class="page-section-wide page-top recommendation-page">
     <h1 class="page-title">
-      {{ $t('recommendations.connect-to') }}
+      {{ $t('recommendations.people.title') }}
     </h1>
 
-    <CardList :is-loading="isLoading" :limit="limit" :items="usersRecommendationsRequest?.results">
-      <template #default="peoplesListSlotProps">
+    <FetchLoader :status="status" only-error skeleton>
+      <div class="list-users">
         <UserCard
-          :user="peoplesListSlotProps.item"
+          v-for="user in data"
+          :key="user.id"
+          :user="user"
           :to-link="{
             name: 'ProfileOtherUser',
             params: {
-              userId: peoplesListSlotProps.item.slug || peoplesListSlotProps.item.id,
+              userId: user.slug || user.id,
             },
           }"
         />
-      </template>
-    </CardList>
+        <NothingHere v-if="data.length === 0" class="m-auto" />
+      </div>
 
-    <div v-if="pagination.total > 1 && !isLoading" class="pagination-wrapper">
-      <PaginationButtons
-        :current="pagination.currentPage"
-        :pagination="pagination"
-        :total="pagination.total"
-        @update-pagination="onClickPagination"
-      />
-    </div>
+      <PaginationButtonsV2 :pagination="pagination" />
+    </FetchLoader>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.pagination-wrapper {
-  width: 100%;
+.list-users {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: $space-xl;
-}
-
-.recommendation-page {
-  margin-bottom: 4rem;
+  gap: 0.5rem;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 </style>

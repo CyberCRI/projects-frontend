@@ -7,61 +7,57 @@
       class="navpanel-menu-entry"
       :class="{ active: isCurrentTab(entry) }"
     >
-      <template v-if="entry.condition">
-        <span
-          v-if="entry.isNotLink"
-          class="navpanel-menu-link"
-          :data-test="entry.dataTest"
-          @click="onMenuEntryClicked(entry)"
-        >
-          <IconImage class="icon" :name="entry.icon || 'Article'" />
+      <component
+        :is="entry.isNotLink ? 'span' : NuxtLink"
+        v-if="entry.condition"
+        class="navpanel-menu-link"
+        :data-test="entry.dataTest"
+        :to="entry.view"
+        @click="onMenuEntryClicked(entry)"
+      >
+        <IconImage class="icon skeletons-background" :name="entry.icon || 'Article'" />
 
+        <span class="skeletons-text">
           {{ entry.label }}
-
-          <IconImage v-if="entry.actionIcon" class="icon action-icon" :name="entry.actionIcon" />
         </span>
-        <NuxtLink
-          v-else
-          class="navpanel-menu-link"
-          :data-test="entry.dataTest"
-          :to="entry.view"
-          @click="onMenuEntryClicked(entry)"
-        >
-          <IconImage class="icon" :name="entry.icon || 'Article'" />
 
-          {{ entry.label }}
-
-          <IconImage v-if="entry.actionIcon" class="icon action-icon" :name="entry.actionIcon" />
-        </NuxtLink>
-      </template>
+        <IconImage
+          v-if="entry.actionIcon"
+          class="icon action-icon skeletons-background"
+          :name="entry.actionIcon"
+        />
+      </component>
     </li>
   </menu>
 </template>
 
 <script setup lang="ts">
-import useGlobals from '~/stores/useGlobals'
+import type { IconImageChoice } from '@/functs/IconImage'
+import type { RouteLocationRaw } from 'vue-router'
+import useGlobals from '@/stores/useGlobals'
+import { NuxtLink } from '#components'
 
-import type { IconImageChoice } from '~/functs/IconImage'
-
-type MenyEntry = {
+export type MenuEntry = {
+  isEditing?: boolean
   condition: boolean
   label: string
   icon: IconImageChoice
   actionIcon?: IconImageChoice
   key: string
-  view:
-    | {
-        name: string
-      }
-    | string
+  view: RouteLocationRaw
+  altView?: RouteLocationRaw
+  props?: {
+    [key: string]: any
+  }
   isNotLink?: boolean
   dataTest?: string
+  noTitle?: boolean
   isAddAction?: () => void
 }
 const props = withDefaults(
   defineProps<{
-    menuEntries: MenyEntry[]
-    currentTab?: any
+    menuEntries: MenuEntry[]
+    currentTab?: MenuEntry
   }>(),
   {
     currentTab: null,
@@ -70,12 +66,12 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   navigated: []
-  'action-triggered': [MenyEntry]
+  'action-triggered': [MenuEntry]
 }>()
 
 const globalsStore = useGlobals()
 
-const onMenuEntryClicked = async (entry: MenyEntry) => {
+const onMenuEntryClicked = async (entry: MenuEntry) => {
   if (entry.isAddAction) {
     if (globalsStore.hasUnsavedEdit) {
       let answer = true
@@ -99,11 +95,12 @@ const onMenuEntryClicked = async (entry: MenyEntry) => {
   // naviguation guard is in middleware
   emit('navigated')
 }
-const isCurrentTab = (entry: MenyEntry) => {
+const isCurrentTab = (entry: MenuEntry) => {
   let entryName
   if (typeof entry.view === 'string') {
     entryName = entry.view
   } else {
+    // @ts-expect-error name not exists in some route
     entryName = entry.view?.name
   }
 
@@ -115,6 +112,7 @@ const isCurrentTab = (entry: MenyEntry) => {
   if (typeof props.currentTab.view === 'string') {
     currentTabName = props.currentTab.view
   } else {
+    // @ts-expect-error name not exists in some route
     currentTabName = props.currentTab.view?.name
   }
 

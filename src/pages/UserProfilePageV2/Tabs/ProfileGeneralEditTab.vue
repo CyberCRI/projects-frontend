@@ -7,9 +7,9 @@
         :label="$t('profile.edit.general.first-name.label')"
         :placeholder="$t('profile.edit.general.first-name.placeholder')"
         data-test="first-name-input"
-        @blur="v$.form.first_name.$validate"
+        @blur="v$.first_name.$validate"
       />
-      <FieldErrors :errors="v$.form.first_name.$errors" />
+      <FieldErrors :errors="v$.first_name.$errors" />
     </div>
 
     <!-- last name -->
@@ -19,9 +19,9 @@
         :label="$t('profile.edit.general.last-name.label')"
         :placeholder="$t('profile.edit.general.last-name.placeholder')"
         data-test="last-name-input"
-        @blur="v$.form.last_name.$validate"
+        @blur="v$.last_name.$validate"
       />
-      <FieldErrors :errors="v$.form.last_name.$errors" />
+      <FieldErrors :errors="v$.last_name.$errors" />
     </div>
 
     <!-- pronouns -->
@@ -46,9 +46,9 @@
         :placeholder="$t('profile.edit.general.professional-email.placeholder')"
         :disabled="true"
         input-type="email"
-        @blur="v$.form.professional_email.$validate"
+        @blur="v$.professional_email.$validate"
       />
-      <FieldErrors :errors="v$.form.professional_email.$errors" />
+      <FieldErrors :errors="v$.professional_email.$errors" />
     </div>
 
     <!-- pro number -->
@@ -78,9 +78,9 @@
         :label="$t('profile.edit.general.personal-webpage.label')"
         :placeholder="$t('profile.edit.general.personal-webpage.placeholder')"
         data-test="personal-webpage-input"
-        @blur="v$.form.personal_webpage.$validate"
+        @blur="v$.personal_webpage.$validate"
       />
-      <FieldErrors :errors="v$.form.personal_webpage.$errors" />
+      <FieldErrors :errors="v$.personal_webpage.$errors" />
     </div>
 
     <!-- linkedin -->
@@ -90,9 +90,9 @@
         :label="$t('profile.edit.general.linkedin.label')"
         :placeholder="$t('profile.edit.general.linkedin.placeholder')"
         data-test="linkedin-input"
-        @blur="v$.form.linkedin.$validate"
+        @blur="v$.linkedin.$validate"
       />
-      <FieldErrors :errors="v$.form.linkedin.$errors" />
+      <FieldErrors :errors="v$.linkedin.$errors" />
     </div>
 
     <!-- twitter -->
@@ -101,10 +101,10 @@
                 v-model="form.twitter"
                 :label="$t('profile.edit.general.twitter.label')"
                 :placeholder="$t('profile.edit.general.twitter.placeholder')"
-                @blur="v$.form.twitter.$validate"
+                @blur="v$.twitter.$validate"
                 data-test="twitter-input"
             ></TextInput>
-            <FieldErrors :errors="v$.form.twitter.$errors" />
+            <FieldErrors :errors="v$.twitter.$errors" />
         </div-->
 
     <hr class="form-separator" />
@@ -131,9 +131,9 @@
         :label="$t('profile.edit.general.title.label')"
         :placeholder="$t('profile.edit.general.title.placeholder')"
         data-test="title-input"
-        @blur="v$.form.title.$validate"
+        @blur="v$.title.$validate"
       />
-      <FieldErrors :errors="v$.form.title.$errors" />
+      <FieldErrors :errors="v$.title.$errors" />
     </div>
 
     <!-- org address -->
@@ -160,7 +160,7 @@
           :label="$t('profile.edit.general.sdgs.add')"
           btn-icon="Plus"
           data-test="sdg-add"
-          @click="openSdgsDrawer"
+          @click="showSdgsDrawer = true"
         />
       </div>
       <p class="notice">
@@ -170,9 +170,7 @@
         </a>
         {{ $t('profile.edit.general.sdgs.notice-end') }}
       </p>
-      <TransitionGroup v-if="form.sdgs && form.sdgs.length" tag="div" name="sdg">
-        <SdgList :sdgs="form.sdgs" />
-      </TransitionGroup>
+      <SdgList :sdgs="form.sdgs" />
     </div>
 
     <hr class="form-separator" />
@@ -201,17 +199,7 @@
     </div>
   </div>
   <!-- sdgs selector -->
-  <BaseDrawer
-    :confirm-action-name="$t('common.confirm')"
-    :is-opened="showSdgsDrawer"
-    :title="$t('profile.edit.general.sdgs.label')"
-    class="medium"
-    data-test="sdgs-drawer"
-    @close="showSdgsDrawer = false"
-    @confirm="selectSdgs"
-  >
-    <SdgsFilter v-if="showSdgsDrawer" v-model="sdgsSelection" />
-  </BaseDrawer>
+  <SdgsDrawer v-model="form.sdgs" :is-opened="showSdgsDrawer" @close="showSdgsDrawer = false" />
 
   <!--ConfirmModal
     v-if="showCancelConfirmModal"
@@ -285,50 +273,39 @@ export default {
 
     const rules = computed(() => {
       return {
-        form: {
-          first_name: {
-            required: helpers.withMessage(
-              t('profile.edit.general.first-name.is-required'),
-              required
-            ),
-            alphanum: helpers.withMessage(
-              t('profile.edit.general.no-special-characters'),
-              helpers.regex(VALID_NAME_REGEX)
-            ),
-          },
-          last_name: {
-            required: helpers.withMessage(
-              t('profile.edit.general.last-name.is-required'),
-              required
-            ),
-            alphanum: helpers.withMessage(
-              t('profile.edit.general.no-special-characters'),
-              helpers.regex(VALID_NAME_REGEX)
-            ),
-          },
-          professional_email: {
-            required: helpers.withMessage(
-              t('profile.edit.general.professional-email.is-required'),
-              required
-            ),
-            email: helpers.withMessage(
-              t('profile.edit.general.professional-email.is-email'),
-              email
-            ),
-          },
-          title: {
-            required: helpers.withMessage(t('profile.edit.general.title.is-required'), required),
-          },
-          personal_webpage: {
-            url: helpers.withMessage(t('profile.edit.general.personal-webpage.is-url'), url),
-          },
-          linkedin: {
-            url: helpers.withMessage(t('profile.edit.general.linkedin.is-url'), url),
-          },
-          // twitter: {
-          //   url: helpers.withMessage(t('profile.edit.general.twitter.is-url'), url),
-          // },
+        first_name: {
+          required: helpers.withMessage(t('profile.edit.general.first-name.is-required'), required),
+          alphanum: helpers.withMessage(
+            t('profile.edit.general.no-special-characters'),
+            helpers.regex(VALID_NAME_REGEX)
+          ),
         },
+        last_name: {
+          required: helpers.withMessage(t('profile.edit.general.last-name.is-required'), required),
+          alphanum: helpers.withMessage(
+            t('profile.edit.general.no-special-characters'),
+            helpers.regex(VALID_NAME_REGEX)
+          ),
+        },
+        professional_email: {
+          required: helpers.withMessage(
+            t('profile.edit.general.professional-email.is-required'),
+            required
+          ),
+          email: helpers.withMessage(t('profile.edit.general.professional-email.is-email'), email),
+        },
+        title: {
+          required: helpers.withMessage(t('profile.edit.general.title.is-required'), required),
+        },
+        personal_webpage: {
+          url: helpers.withMessage(t('profile.edit.general.personal-webpage.is-url'), url),
+        },
+        linkedin: {
+          url: helpers.withMessage(t('profile.edit.general.linkedin.is-url'), url),
+        },
+        // twitter: {
+        //   url: helpers.withMessage(t('profile.edit.general.twitter.is-url'), url),
+        // },
       }
     })
 
@@ -349,7 +326,6 @@ export default {
       asyncing: false,
       tagsSelection: [],
       showSdgsDrawer: false,
-      sdgsSelection: [],
     }
   },
 
@@ -482,16 +458,6 @@ export default {
       }
       this.startEditWatcher()
     },
-
-    openSdgsDrawer() {
-      this.sdgsSelection = [...this.form.sdgs]
-      this.showSdgsDrawer = true
-    },
-
-    selectSdgs() {
-      this.form.sdgs = [...this.sdgsSelection]
-      this.showSdgsDrawer = false
-    },
   },
 }
 </script>
@@ -507,27 +473,6 @@ export default {
   label {
     align-self: flex-start;
   }
-}
-
-$sdg-size: $layout-size-4xl;
-
-.tags-list,
-.sdgs-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax($sdg-size, 1fr));
-  gap: $space-m;
-  margin-top: $space-m;
-}
-
-.sdg-enter-active,
-.sdg-leave-active {
-  transition: all 0.4s ease;
-  transform: translateZ(0);
-}
-
-.sdg-enter-from,
-.sdg-leave-to {
-  transform: translateZ(0) scale(0) translateY(200%);
 }
 
 .form-actions {

@@ -283,7 +283,10 @@
         "add": "Añadir una plantilla",
         "delete-templates": "Eliminar plantillas",
         "delete-templates-description": "¿Estás seguro de que quieres eliminar la plantilla '{templateName}' ?"
-      }
+      },
+      "events": "Últimos acontecimientos (actualizados)",
+      "instructions": "Últimas instrucciones (actualizaciones)",
+      "news": "Noticias recientes (actualizaciones)"
     },
     "form": {
       "admin-info": {
@@ -2515,7 +2518,8 @@
     "drawer": {
       "title": "Edición de noticias"
     },
-    "view": "Ver noticias"
+    "view": "Ver noticias",
+    "empty": "Aún no hay noticias."
   },
   "instructions": {
     "create": {
@@ -2572,7 +2576,8 @@
     },
     "drawer": {
       "title": "Edición de la instrucción"
-    }
+    },
+    "empty": "Todavía no hay instrucción."
   },
   "chat": {
     "drawer": {
@@ -3148,5 +3153,12 @@
     "file-field": "Archivo",
     "document-added": "Documento agregado.",
     "document-updated": "Documento actualizado."
+  },
+  "announcements": {
+    "empty": "Aún no hay aviso."
+  },
+  "follow": {
+    "follow": "Seguir",
+    "unfollow": "Unfollow"
   }
 }

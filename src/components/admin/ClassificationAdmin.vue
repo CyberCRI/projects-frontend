@@ -128,7 +128,7 @@ import LpiButton from '~/components/base/button/LpiButton.vue'
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
 import useToasterStore from '~/stores/useToaster.ts'
 
-import useTagSearch from '~/composables/useTagSearch.js'
+import useTagSearch from '~/composables/useTagSearch.ts'
 
 import { isCustomClassification } from '~/functs/ClassificationUtils.ts'
 

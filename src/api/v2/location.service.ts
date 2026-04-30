@@ -3,7 +3,7 @@ import type { OrganizationModel } from '~/models/organization.model'
 import type { RefOrRaw } from '~/interfaces/utils'
 import type { Locations } from '~/interfaces/maps'
 
-import { getLocations as fetchGetLocations } from '~/api/locations.services'
+import { getLocations as fetchGetLocations } from '~/api/locations.service'
 
 import useAsyncAPI from '~/composables/useAsyncAPI'
 

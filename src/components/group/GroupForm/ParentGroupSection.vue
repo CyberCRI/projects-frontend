@@ -33,14 +33,13 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
-
+import type { TrasnlatedHierarchyGroupModel } from '~/models/group.model'
 import { getHierarchyGroups } from '~/api/v2/group.service'
 
 const props = defineProps<{
   organizationCode: string
 }>()
-const model = defineModel<TranslatedPeopleGroupModel | null>()
+const model = defineModel<TrasnlatedHierarchyGroupModel | null>()
 
 const { t } = useNuxtI18n()
 const { closeModal, openModal, stateModal } = useModal()

@@ -40,48 +40,37 @@
   </SearchResults>
 </template>
 
-<script>
+<script setup lang="ts">
 import SearchResults from '~/components/project/SearchResults.vue'
 import ProjectCard from '~/components/project/ProjectCard.vue'
 import GroupCard from '~/components/group/GroupCard.vue'
 import UserCard from '~/components/people/UserCard.vue'
 import CardList from '~/components/base/CardList.vue'
 
-export default {
-  name: 'GlobalSearchTab',
+withDefaults(
+  defineProps<{
+    search?: any
+    freezeSearch?: boolean
+  }>(),
+  {
+    search: null,
+    freezeSearch: false,
+  }
+)
 
-  components: {
-    UserCard,
-    GroupCard,
-    ProjectCard,
-    CardList,
-    SearchResults,
-  },
+const route = useRoute()
+const router = useRouter()
 
-  props: {
-    search: {
-      type: Object,
-      default: () => {},
-    },
-    freezeSearch: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  methods: {
-    onPaginationChange(pagination) {
-      if (
-        this.$route.query.page === pagination.currentPage ||
-        (!this.$route.query.page && pagination.currentPage === 1)
-      )
-        return
-      this.$router.push({
-        path: this.$route.path,
-        query: { ...this.$route.query, page: pagination.currentPage },
-      })
-    },
-  },
+const onPaginationChange = (pagination) => {
+  if (
+    route.query.page === pagination.currentPage ||
+    (!route.query.page && pagination.currentPage === 1)
+  )
+    return
+  router.push({
+    path: route.path,
+    query: { ...route.query, page: pagination.currentPage },
+  })
 }
 </script>
 

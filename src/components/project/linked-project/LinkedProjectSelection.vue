@@ -251,7 +251,7 @@ export default {
   .results-ctn {
     display: flex;
     flex-wrap: wrap;
-    place-content: flex-start space-between;
+    place-content: flex-start;
     gap: $space-m;
     overflow: hidden;
     padding-top: 40px;

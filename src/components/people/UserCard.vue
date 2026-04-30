@@ -29,33 +29,28 @@
   </BasicCard>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 import BasicCard from '~/components/base/BasicCard.vue'
 
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
+import type { UserModel } from '~/models/user.model'
+import type { RouteLocationRaw } from 'vue-router'
 
-defineOptions({ name: 'UserCard' })
-
-const props = defineProps({
-  user: {
-    type: Object,
-    required: true,
-  },
-  toLink: {
-    type: [String, Object],
-    default: null,
-  },
-  role: {
-    type: String,
-    default: '',
-  },
-  mode: {
-    type: String,
-    default: 'card', // 'card' or 'list'
-  },
-})
+const props = withDefaults(
+  defineProps<{
+    user: UserModel
+    toLink?: RouteLocationRaw
+    role?: string
+    mode?: 'card' | 'list'
+  }>(),
+  {
+    toLink: null,
+    role: '',
+    mode: 'card',
+  }
+)
 
 const emit = defineEmits(['click'])
 const { getTranslatableField } = useAutoTranslate()

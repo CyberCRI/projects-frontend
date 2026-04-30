@@ -19,11 +19,16 @@ export function deleteTemplate(
   organizationCode: OrganizationModel['code'],
   templateId: number | string
 ) {
-  return useAPI(`organization/${organizationCode}/template/${templateId}/`, { method: 'DELETE' })
+  return useAPI<undefined>(`organization/${organizationCode}/template/${templateId}/`, {
+    method: 'DELETE',
+  })
 }
 
 export function postTemplate(organizationCode: OrganizationModel['code'], body: object) {
-  return useAPI(`organization/${organizationCode}/template/`, { method: 'POST', body })
+  return useAPI<TemplateModel>(`organization/${organizationCode}/template/`, {
+    method: 'POST',
+    body,
+  })
 }
 
 export function postTemplateImage(

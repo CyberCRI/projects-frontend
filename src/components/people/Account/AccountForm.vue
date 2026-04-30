@@ -575,6 +575,10 @@ export default {
     padding-top: 24px;
     gap: 12px;
     display: inline-flex;
+
+    button {
+      height: unset;
+    }
   }
 
   .confirm-ctn {

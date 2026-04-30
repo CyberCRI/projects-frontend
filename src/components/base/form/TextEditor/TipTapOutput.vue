@@ -1,9 +1,12 @@
-<script setup>
-import fixEditorContent from '~/functs/editorUtils.ts'
+<script setup lang="ts">
+import fixEditorContent from '~/functs/editorUtils'
 
-const props = defineProps({
-  content: { type: String, default: '' },
-})
+const props = withDefaults(
+  defineProps<{
+    content?: string
+  }>(),
+  { content: '' }
+)
 
 const attrs = useAttrs()
 
@@ -12,14 +15,12 @@ const wrapper = ref(null)
 watch(
   () => [props.content, wrapper.value],
   () => {
-    nextTick(
-      () => {
-        if (wrapper.value) fixEditorContent(wrapper.value)
-      },
-      {
-        immediate: true,
-      }
-    )
+    nextTick(() => {
+      if (wrapper.value) fixEditorContent(wrapper.value)
+    })
+  },
+  {
+    immediate: true,
   }
 )
 </script>

@@ -1,14 +1,8 @@
-import {
-  logIn,
-  delay,
-  createProject,
-  search,
-  makeId,
-  destroyProject,
-} from '~~/tests/playwright/lib'
+import { logIn, createProject, search, makeId, destroyProject } from '~~/tests/playwright/lib'
 import { LogLevel, Logger } from '~~/tests/playwright/logger'
 import { users } from '~~/tests/playwright/variables'
 import { test } from '@playwright/test'
+import { delay } from 'es-toolkit'
 
 const logger = new Logger(LogLevel.Debug)
 const projId = makeId(5)

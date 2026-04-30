@@ -283,7 +283,10 @@
         "add": "Vorlage hinzufügen",
         "delete-templates": "Vorlagen löschen",
         "delete-templates-description": "Sind Sie sicher, dass Sie '{templateName}' Vorlage löschen möchten?"
-      }
+      },
+      "events": "Neueste Veranstaltungen (aktualisiert)",
+      "instructions": "Aktuelle Anweisungen (Updates)",
+      "news": "Aktuelle Nachrichten (Updates)"
     },
     "form": {
       "admin-info": {
@@ -2515,7 +2518,8 @@
     "drawer": {
       "title": "Nachrichten bearbeiten"
     },
-    "view": "Siehe Nachrichten"
+    "view": "Siehe Nachrichten",
+    "empty": "Noch keine Neuigkeiten."
   },
   "instructions": {
     "create": {
@@ -2572,7 +2576,8 @@
     },
     "drawer": {
       "title": "Befehl bearbeiten"
-    }
+    },
+    "empty": "Noch keine Anleitung."
   },
   "chat": {
     "drawer": {
@@ -3148,5 +3153,12 @@
     "file-field": "Datei",
     "document-added": "Dokument hinzugefügt.",
     "document-updated": "Dokument bearbeitet."
+  },
+  "announcements": {
+    "empty": "Noch keine Ankündigung."
+  },
+  "follow": {
+    "follow": "Folgen",
+    "unfollow": "Unfollow"
   }
 }

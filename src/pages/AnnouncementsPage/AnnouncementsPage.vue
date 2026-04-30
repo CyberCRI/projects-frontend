@@ -19,9 +19,11 @@ const doGetAnnouncements = async () => {
   try {
     isLoading.value = true
     const { results } = await getAnnouncements({
-      organizations: [organization.value.code],
-      ordering: '-updated_at',
-      from_date: fullYearDateFormat(nowDate()),
+      query: {
+        organizations: [organization.value.code],
+        ordering: '-updated_at',
+        from_date: fullYearDateFormat(nowDate()),
+      },
     })
     announcements.value = results
   } catch (err) {

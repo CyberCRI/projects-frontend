@@ -89,17 +89,6 @@ const adaptedCurrentUser = computed(() => {
   }
 })
 
-watch(
-  adaptedCurrentUser,
-  (neo) => {
-    if (neo) {
-      // current user is automatically added as owner
-      addUser(adaptedCurrentUser.value)
-    }
-  },
-  { immediate: true }
-)
-
 const addUser = (newUser) => {
   // don't duplicate users
   if (projectUsers.value.find(({ user }) => user.id === newUser.id)) {
@@ -111,6 +100,18 @@ const addUser = (newUser) => {
   })
   emit('update-team', projectUsers.value)
 }
+
+watch(
+  adaptedCurrentUser,
+  (neo) => {
+    if (neo) {
+      // current user is automatically added as owner
+      addUser(adaptedCurrentUser.value)
+    }
+  },
+  { immediate: true }
+)
+
 const addPayloadUsers = (payload) => {
   payload.forEach((user) => addUser(user))
 }

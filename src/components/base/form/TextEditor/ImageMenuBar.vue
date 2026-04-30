@@ -14,8 +14,8 @@
 <script>
 import LpiBubbleMenu from '~/components/base/form/TextEditor/LpiBubbleMenu/LpiBubbleMenu.ts'
 
+import menuBarTippyOptions from '~/functs/menuBarTippyOptions'
 import ContextualToolMenu from './ContexttualToolMenu.vue'
-import menuBarTippyOptions from './menuBarTippyOptions.js'
 import TextButtonMenuItem from './TextButtonMenuItem.vue'
 
 export default {

@@ -11,6 +11,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
 
 import { getOrgClassificationTags } from '~/api/tag-classification.service'
+import NothingHere from '~/components/base/NothingHere.vue'
 
 vi.mock('~/api/tag-classification.service', () => ({
   getOrgClassificationTags: vi
@@ -178,7 +179,7 @@ describe('TagsFilterEditor', () => {
     })
     const vm: any = wrapper.vm
 
-    const select = wrapper.findComponent('[data-test="classification-picker"]')
+    const select = wrapper.findComponent(NothingHere)
     expect(select.exists()).toBeTruthy()
 
     // resolve mock api call for classifcation options

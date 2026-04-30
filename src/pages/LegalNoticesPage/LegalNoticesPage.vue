@@ -3,6 +3,7 @@ useLpiHead2({
   title: 'Mentions légales',
 })
 </script>
+
 <template>
   <div class="page-section-narrow legal-page legal-notices page-top">
     <h1 class="page-title">Mentions légales</h1>

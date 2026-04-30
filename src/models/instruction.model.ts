@@ -27,15 +27,21 @@ export type InstructionForm = Omit<InstructionModel, 'id' | 'people_groups'> & {
   people_groups: any
 }
 
-export type InstructionInput = Required<InstructionModel> & {
-  organization_code: string
+export type InstructionInput = Required<Omit<InstructionModel, 'id' | 'people_groups'>> & {
+  id?: InstructionModel['id']
+  people_groups: {
+    [key: string]: PeopleGroupModel
+  }
+  organization_code?: string
+  people_groups_ids: string[]
 }
 
 export type TranslatedInstruction = Translated<InstructionModel, 'title' | 'content'>
 
-export type QueryFilterInstruction = Partial<{
-  ordering: Ordering<'publication_date' | 'updated_at' | 'created_at'>
-  from_date: string
-  to_date: string
-}> &
-  Partial<PaginationQuery>
+export type QueryFilterInstruction = Partial<
+  {
+    ordering: Ordering<'publication_date' | 'updated_at' | 'created_at'>
+    from_date: string
+    to_date: string
+  } & PaginationQuery
+>

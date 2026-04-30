@@ -86,9 +86,8 @@
             <h3 class="label">
               {{ $t('invitation.create.field.group.label') }}
             </h3>
-            <LinkButton
+            <LpiButton
               :label="$t('invitation.create.field.group.add')"
-              class="btn"
               btn-icon="Plus"
               data-test="add-group"
               @click="addGroup"
@@ -134,7 +133,6 @@ import { postInvitation } from '~/api/invitations.service.ts'
 
 import GroupSelectDrawer from '~/components/group/GroupSelectDrawer/GroupSelectDrawer.vue'
 import DatePickerModal from '~/components/base/modal/DatePickerModal.vue'
-import LinkButton from '~/components/base/button/LinkButton.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
@@ -153,7 +151,7 @@ export default {
     DatePickerModal,
     GroupSelectDrawer,
     GroupCard,
-    LinkButton,
+    LpiButton,
     DisplayDate,
   },
   setup() {
@@ -274,10 +272,6 @@ export default {
       .label {
         flex-grow: 1;
       }
-
-      .lpi-button {
-        padding: 0 !important;
-      }
     }
 
     .notice {
@@ -286,7 +280,6 @@ export default {
   }
 
   .actions {
-    margin-top: $space-3xl;
     display: flex;
     justify-content: center;
     gap: $space-l;
@@ -342,5 +335,6 @@ export default {
   align-items: center;
   margin-top: $space-unit;
   gap: $space-unit;
+  width: 100%;
 }
 </style>

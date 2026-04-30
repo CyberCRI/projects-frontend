@@ -1,33 +1,75 @@
-import type { ProjectMessageInputModel } from '~/models/project-message.model'
+import type {
+  ProjectMessageInputModel,
+  ProjectMessageModel,
+  QueryFilterProjectMessage,
+} from '@/models/project-message.model'
+import type { ProjectSlugOrId } from '@/models/project.model'
+import useAPI from '@/composables/useAPI'
 
-import useAPI from '~/composables/useAPI'
+type Config = UseApiOptions<QueryFilterProjectMessage>
 
-export async function getProjectMessages(project_id: string) {
-  return await useAPI(`project/${project_id}/project-message/`, {})
+export async function getProjectMessages(projectId: ProjectSlugOrId, config: Config = {}) {
+  return await useAPI<PaginationResult<ProjectMessageModel>>(
+    `project/${projectId}/project-message/`,
+    config
+  )
 }
 
-export async function postProjectMessage(projectMessage: ProjectMessageInputModel) {
-  return await useAPI(`project/${projectMessage.project_id}/project-message/`, {
-    body: projectMessage,
+export async function postProjectMessage(
+  projectMessage: ProjectMessageInputModel,
+  config: Config = {}
+) {
+  return await useAPI<ProjectMessageModel>(
+    `project/${projectMessage.project_id}/project-message/`,
+    {
+      body: projectMessage,
+      method: 'POST',
+      ...config,
+    }
+  )
+}
+
+export async function getProjectMessage(body: ProjectMessageInputModel, config: Config = {}) {
+  return await useAPI<ProjectMessageModel>(
+    `project/${body.project_id}/project-message/${body.project_message_id}/`,
+    config
+  )
+}
+
+export async function patchProjectMessage(
+  messageId: ProjectMessageModel['id'],
+  projectMessage: ProjectMessageInputModel,
+  config: Config = {}
+) {
+  return await useAPI<ProjectMessageModel>(
+    `project/${projectMessage.project_id}/project-message/${messageId}/`,
+    {
+      body: projectMessage,
+      method: 'PATCH',
+      ...config,
+    }
+  )
+}
+
+export async function deleteProjectMessage(
+  projectId: ProjectSlugOrId,
+  projectMessageId: ProjectMessageModel['id'],
+  config: Config = {}
+) {
+  return await useAPI<undefined>(`project/${projectId}/project-message/${projectMessageId}/`, {
+    method: 'DELETE',
+    ...config,
+  })
+}
+
+export async function postProjectMessageImage(
+  projectId: ProjectSlugOrId,
+  body: any,
+  config: Config = {}
+): Promise<any> {
+  return await useAPI(`project/${projectId}/project-message-image/`, {
+    body,
     method: 'POST',
+    ...config,
   })
-}
-
-export async function getProjectMessage(body: ProjectMessageInputModel) {
-  return await useAPI(`project/${body.project_id}/project-message/${body.project_message_id}/`, {})
-}
-
-export async function patchProjectMessage(id: number, projectMessage: ProjectMessageInputModel) {
-  return await useAPI(`project/${projectMessage.project_id}/project-message/${id}/`, {
-    body: projectMessage,
-    method: 'PATCH',
-  })
-}
-
-export async function deleteProjectMessage(project_id: string, id: number) {
-  return await useAPI(`project/${project_id}/project-message/${id}/`, { method: 'DELETE' })
-}
-
-export async function postProjectMessageImage(project_id: string, body: any): Promise<any> {
-  return await useAPI(`project/${project_id}/project-message-image/`, { body, method: 'POST' })
 }

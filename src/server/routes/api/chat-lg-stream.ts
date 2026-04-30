@@ -7,7 +7,7 @@ import { MemorySaver } from '@langchain/langgraph'
 import { tokenMap, traceMcp } from '~/server/routes/api/chat-stream'
 import { initChatModel } from 'langchain/chat_models/universal'
 import { createAgent, createMiddleware } from 'langchain'
-import getVectorStore from '~/server/utils/vector-db.js'
+import getVectorStore from '~/server/utils/vector-db'
 import { v4 as uuidv4 } from 'uuid'
 
 const runtimeConfig = useRuntimeConfig()

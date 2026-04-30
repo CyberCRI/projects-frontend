@@ -22,38 +22,28 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import SearchOptionDropDown from '~/components/search/SearchOptionDropDown/SearchOptionDropDown.vue'
-import { ALL_SECTION_KEY } from '~/components/search/Filters/useSectionFilters.ts'
+import { ALL_SECTION_KEY } from '~/components/search/Filters/useSectionFilters'
 import SearchInput from '~/components/base/form/SearchInput.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 
-export default {
-  name: 'HomeSearchOptions',
-
-  components: {
-    SearchOptionDropDown,
-    SearchInput,
-    LpiButton,
-  },
-
-  emits: ['search'],
-
-  data() {
-    return {
-      selectedQuery: '',
-      selectedSection: ALL_SECTION_KEY,
-    }
-  },
-
-  methods: {
-    search() {
-      this.$emit('search', {
-        search: this.selectedQuery,
-        section: this.selectedSection,
-      })
+const emit = defineEmits<{
+  search: [
+    {
+      search: string
+      section: string
     },
-  },
+  ]
+}>()
+const selectedQuery = ref('')
+const selectedSection = ref(ALL_SECTION_KEY)
+
+const search = () => {
+  emit('search', {
+    search: selectedQuery.value,
+    section: selectedSection.value,
+  })
 }
 </script>
 

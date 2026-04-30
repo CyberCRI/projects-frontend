@@ -141,7 +141,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
@@ -151,17 +151,19 @@ import useNuxtI18n from '~/composables/useNuxtI18n'
 
 import { capitalize } from '~/functs/string'
 
-defineOptions({ name: 'TemplateForm' })
-defineProps({
-  errors: {
-    type: Object,
-    default: () => {},
-  },
-  saveImageCallback: {
-    type: Function,
-    required: true,
-  },
-})
+withDefaults(
+  defineProps<{
+    errors?: {
+      [key: string]: []
+    }
+    saveImageCallback: (file: File) => void
+  }>(),
+  {
+    errors: () => ({
+      name: [],
+    }),
+  }
+)
 
 const { t } = useNuxtI18n()
 

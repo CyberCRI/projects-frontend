@@ -38,7 +38,7 @@
             'projectPrivateExchange',
             'projectAnnouncements',
             'ProjectSettings',
-            'projectSummaryEdit',
+            'projectEdit',
             'projectDescriptionEdit',
             'ProjectLocationsEdit',
             'projectBlogEdit',
@@ -576,8 +576,10 @@ export default {
     async getGlobalAnnouncements() {
       try {
         const announcements = await getAnnouncements({
-          organizations: [this.organization.code],
-          ordering: '-updated_at',
+          query: {
+            organizations: [this.organization.code],
+            ordering: '-updated_at',
+          },
         })
         this.announcements =
           announcements.results?.filter(

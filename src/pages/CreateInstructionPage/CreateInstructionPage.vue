@@ -1,11 +1,11 @@
-<script setup>
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import { createInstruction } from '@/api/instruction.service'
-import useToasterStore from '@/stores/useToaster.ts'
+<script setup lang="ts">
+import { createInstruction } from '~/api/instruction.service'
+
+import useToasterStore from '~/stores/useToaster'
 import { defaultForm } from '@/form/instruction'
 
 const toaster = useToasterStore()
-const organizationsStore = useOrganizationsStore()
+const organizationCode = useOrganizationCode()
 const router = useRouter()
 const { t } = useNuxtI18n()
 
@@ -35,7 +35,7 @@ const saveInstruction = async () => {
         .filter(([, value]) => value)
         .map(([id]) => id),
     }
-    await createInstruction(organizationsStore.current?.code, formData)
+    await createInstruction(organizationCode, formData)
     toaster.pushSuccess(t('instructions.save.success'))
   } catch (err) {
     toaster.pushError(`${t('instructions.save.error')} (${err})`)

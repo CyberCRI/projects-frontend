@@ -21,13 +21,11 @@
 </template>
 
 <script setup lang="ts">
-import { GroupModuleIcon, GroupModuleTitle } from '~/models/invitation.model'
-import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
-
-import type { DocumentType } from '~/interfaces/researcher'
-
-import GroupResearcherDocumentsList from '~/components/people/Researcher/GroupResearcherDocumentsList.vue'
-import BaseGroupPreview from '~/components/group/Modules/BaseGroupPreview.vue'
+import GroupResearcherDocumentsList from '@/components/people/Researcher/GroupResearcherDocumentsList.vue'
+import { GroupModuleIcon, GroupModuleTitle } from '@/models/invitation.model'
+import type { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
+import type { DocumentType } from '@/interfaces/researcher'
 
 const props = defineProps<{
   documentType: DocumentType

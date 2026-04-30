@@ -12,24 +12,27 @@
   </button>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { capitalize } from '~/functs/string'
 
-defineOptions({
-  name: 'LpiDropDownElementButton',
-})
 defineEmits(['click'])
 
-const props = defineProps({
-  option: {
-    type: Object,
-    required: true,
-  },
-  selected: {
-    type: Boolean,
-    default: false,
-  },
-})
+export type Option = {
+  id: number
+  label?: string
+  name?: string
+  value: string
+}
+
+const props = withDefaults(
+  defineProps<{
+    option: Option
+    selected?: boolean
+  }>(),
+  {
+    selected: false,
+  }
+)
 
 const label = computed(() => {
   const vl = props.option.label ?? props.option.name ?? props.option.value

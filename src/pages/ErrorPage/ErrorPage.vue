@@ -46,6 +46,7 @@ watchEffect(() => {
   })
 })
 </script>
+
 <template>
   <div class="page404">
     <div class="content">
@@ -75,6 +76,7 @@ watchEffect(() => {
     </div>
   </div>
 </template>
+
 <style lang="scss" scoped>
 .page404 {
   display: flex;

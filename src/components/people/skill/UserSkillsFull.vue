@@ -35,36 +35,29 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import SkillLevelTip from '~/components/people/skill/SkillLevelTip.vue'
 import SkillItemFull from '~/components/people/skill/SkillItemFull.vue'
 import LinkButton from '~/components/base/button/LinkButton.vue'
+import type { UserSkillModel } from '~/models/user.model'
 
-defineOptions({ name: 'UserSkillsFull' })
+withDefaults(
+  defineProps<{
+    skills: UserSkillModel[]
+    title?: string
+    // {skillId: "mentor"| "mentoree"}
+    userMentorship?: any
+    isSelf?: boolean
+    mentorshipIsLoading?: boolean
+  }>(),
+  {
+    title: '',
+    userMentorship: () => ({}),
+    isSelf: false,
+    mentorshipIsLoading: false,
+  }
+)
 
-defineProps({
-  skills: {
-    type: Array,
-    required: true,
-  },
-
-  title: {
-    type: String,
-    default: '',
-  },
-  userMentorship: {
-    type: Object, // {skillId: "mentor"| "mentoree"}
-    default: () => ({}),
-  },
-  isSelf: {
-    type: Boolean,
-    default: false,
-  },
-  mentorshipIsLoading: {
-    type: Boolean,
-    default: false,
-  },
-})
 const { t } = useNuxtI18n()
 const emit = defineEmits(['reload-mentorship'])
 </script>

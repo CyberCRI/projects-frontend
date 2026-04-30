@@ -1,43 +1,17 @@
-<script setup>
-import { getProjectsRecommendationsForUser } from '~/api/recommendations.service'
+<script setup lang="ts">
+import PaginationButtonsV2 from '~/components/base/navigation/PaginationButtonsV2.vue'
+import { getProjectsRecommendationsForUser } from '~/api/v2/recommendations.service'
+import { projectSkeleton } from '~/skeletons/project.skeletons'
+import { factoryPagination } from '~/skeletons/base.skeletons'
+import NothingHere from '~/components/base/NothingHere.vue'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
-
-const organizationsStore = useOrganizationsStore()
 const { t } = useNuxtI18n()
 
-const projectRecommendationsRequest = useState(() => null)
-const limit = useState(() => 10)
-const isLoading = useState(() => false)
+const organizationCode = useOrganizationCode()
 
-const pagination = computed(() => ({
-  currentPage: projectRecommendationsRequest.value?.current_page || 1,
-  total: projectRecommendationsRequest.value?.total_page || 1,
-  previous: projectRecommendationsRequest.value?.previous,
-  next: projectRecommendationsRequest.value?.next,
-  first: projectRecommendationsRequest.value?.first,
-  last: projectRecommendationsRequest.value?.last,
-}))
-
-const onClickPagination = async (requestedPage) => {
-  isLoading.value = true
-  projectRecommendationsRequest.value = await useAPI(requestedPage, {})
-  isLoading.value = false
-  const el = document.querySelector('.page-title')
-  if (el) el.scrollIntoView({ behavior: 'smooth' })
-}
-
-onMounted(async () => {
-  isLoading.value = true
-  projectRecommendationsRequest.value = await getProjectsRecommendationsForUser(
-    organizationsStore.current.code,
-    { limit: limit.value }
-  )
-  isLoading.value = false
+const { status, data, pagination } = getProjectsRecommendationsForUser(organizationCode, {
+  default: () => factoryPagination(projectSkeleton, 10),
 })
-
-const { translateProjects } = useAutoTranslate()
-const results = translateProjects(computed(() => projectRecommendationsRequest.value?.results))
 
 useLpiHead2({
   title: computed(() => t('recommendations.projects.title')),
@@ -50,33 +24,32 @@ useLpiHead2({
       {{ $t('recommendations.projects.title') }}
     </h1>
 
-    <CardList :is-loading="isLoading" :limit="limit" :items="results">
-      <template #default="projectListSlotProps">
-        <ProjectCard :project="projectListSlotProps.item" />
-      </template>
-    </CardList>
+    <FetchLoader :status="status" only-error skeleton>
+      <div class="list-users">
+        <ProjectCard
+          v-for="project in data"
+          :key="project.id"
+          :project="project"
+          :to-link="{
+            name: 'ProfileOtherUser',
+            params: {
+              userId: project.slug || project.id,
+            },
+          }"
+        />
+        <NothingHere v-if="data.length === 0" class="m-auto" />
+      </div>
 
-    <div v-if="pagination.total > 1 && !isLoading" class="pagination-wrapper">
-      <PaginationButtons
-        :current="pagination.currentPage"
-        :pagination="pagination"
-        :total="pagination.total"
-        @update-pagination="onClickPagination"
-      />
-    </div>
+      <PaginationButtonsV2 :pagination="pagination" />
+    </FetchLoader>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.pagination-wrapper {
-  width: 100%;
+.list-users {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: $space-xl;
-}
-
-.recommendation-page {
-  margin-bottom: 4rem;
+  gap: 0.5rem;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 </style>

@@ -35,6 +35,7 @@ export interface PeopleModel {
   linkedin?: string
   medium?: string
   website?: string
+  mobile?: string
   skype?: string
   landline_phone?: string
   twitter?: string

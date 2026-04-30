@@ -32,29 +32,21 @@
   </div>
 </template>
 
-<script setup>
-import useUsersStore from '~/stores/useUsers.ts'
+<script setup lang="ts">
+import type { TranslatedUserModel } from '~/models/user.model'
+import useUsersStore from '~/stores/useUsers'
 
-defineOptions({ name: 'ProfileBioTab' })
-
-const props = defineProps({
-  user: {
-    type: Object,
-    required: true,
-  },
-})
+const props = defineProps<{
+  user: TranslatedUserModel
+}>()
 
 const { t } = useNuxtI18n()
 
 const usersStore = useUsersStore()
 
-const isCurrentUser = computed(() => {
-  return usersStore.id === props.user.id
-})
+const isCurrentUser = computed(() => usersStore.id === props.user.id)
 
-const noDescription = computed(() => {
-  return isCurrentUser.value ? t('me.no-bio') : t('you.no-bio')
-})
+const noDescription = computed(() => (isCurrentUser.value ? t('me.no-bio') : t('you.no-bio')))
 </script>
 
 <style lang="scss" scoped>

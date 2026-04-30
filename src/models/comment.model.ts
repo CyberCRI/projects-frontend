@@ -1,4 +1,8 @@
-import type BaseModel from '~/models/base.model'
+import type { Translated } from '@/interfaces/translated'
+import type { ImageModel } from '@/models/image.model'
+import type { UserModel } from '@/models/user.model'
+import type { Ordering } from '@/interfaces/query'
+import type BaseModel from '@/models/base.model'
 
 /**
  * @name CommentModel
@@ -7,15 +11,16 @@ import type BaseModel from '~/models/base.model'
 export interface CommentModel extends BaseModel {
   id: number
   content: string
-  author: {
-    email: string
-    family_name: string
-    given_name: string
-    id: number
-    people_id: string
-  }
+  author: UserModel
+  images: ImageModel[]
+  created_at: string
   deleted_at: string
   updated_at: string
+  replies: CommentModel[]
+}
+
+export type TranslatedComment = Translated<Omit<CommentModel, 'replies'>, 'content'> & {
+  replies: TranslatedComment[]
 }
 
 export type CommentInputModel = Required<CommentModel> & {
@@ -28,3 +33,9 @@ export type CommentInputModel = Required<CommentModel> & {
 export type CommentOutput = Required<CommentModel> & {
   replies: Array<CommentModel>
 }
+
+export type QueryFilterComments = Partial<
+  {
+    ordering: Ordering<'updated_at' | 'created_at'>
+  } & PaginationResult
+>

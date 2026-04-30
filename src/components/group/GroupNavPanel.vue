@@ -19,15 +19,17 @@
 </template>
 
 <script setup lang="ts">
+import type { MenuEntry } from '~/components/base/navigation/NavPanelMenu.vue'
+
 const props = withDefaults(
   defineProps<{
-    groupTabs: any
-    currentTab?: object
+    groupTabs: MenuEntry[]
+    currentTab?: MenuEntry
     canEditGroup?: boolean
     isEditing?: boolean
   }>(),
   {
-    currentTab: () => ({}),
+    currentTab: null,
     canEditGroup: false,
     isEditing: false,
   }

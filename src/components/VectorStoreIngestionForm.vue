@@ -1,17 +1,20 @@
-<script setup>
+<script setup lang="ts">
 import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'
 
 const { t } = useNuxtI18n()
 
-const props = defineProps({
-  isOpened: {
-    type: Boolean,
-    required: true,
-  },
-  documentTitle: { type: String, default: '' },
-  isEdit: { type: Boolean, default: false },
-})
+const props = withDefaults(
+  defineProps<{
+    isOpened: boolean
+    documentTitle?: string
+    isEdit?: boolean
+  }>(),
+  {
+    documentTitle: '',
+    isEdit: false,
+  }
+)
 const emit = defineEmits(['close', 'document-added', 'document-updated'])
 
 const toaster = useToasterStore()

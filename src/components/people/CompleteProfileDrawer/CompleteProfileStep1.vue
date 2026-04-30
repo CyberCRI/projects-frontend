@@ -187,9 +187,9 @@ import { usePatatoids } from '~/composables/usePatatoids'
 import ProfileEditBlock from '@/components/people/CompleteProfileDrawer/ProfileEditBlock.vue'
 import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils.ts'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
+import { NULL_CONTENT, SDGS, VALID_NAME_REGEX } from '~/functs/constants.ts'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import UserProfileV2 from '@/components/people/UserProfileV2.vue'
-import { SDGS, VALID_NAME_REGEX } from '~/functs/constants.ts'
 import IconImage from '@/components/base/media/IconImage.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import { useRuntimeConfig } from '#imports'
@@ -241,7 +241,7 @@ export default {
         job: '',
         description: '',
       },
-      bio: '<p></p>',
+      bio: NULL_CONTENT,
       exempleToShow: null,
       loading: false,
     }
@@ -329,7 +329,7 @@ export default {
           this.form[field] = this.user[field]
         })
 
-        this.bio = this.user.description || '<p></p>'
+        this.bio = this.user.description || NULL_CONTENT
 
         this.sdgs.forEach((sdg) => {
           sdg.selected = (this.user.sdgs || []).includes(sdg.id)

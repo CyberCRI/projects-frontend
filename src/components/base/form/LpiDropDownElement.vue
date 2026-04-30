@@ -16,21 +16,22 @@
   </li>
 </template>
 
-<script setup>
-defineOptions({
-  name: 'LpiDropDownElement',
-})
+<script setup lang="ts">
+import type { Option } from '~/components/base/form/LpiDropDownElementButton.vue'
 
-defineProps({
-  option: {
-    type: Object,
-    required: true,
-  },
-  selected: {
-    type: Boolean,
-    default: false,
-  },
-})
+type Options = {
+  children: Option[]
+}
+
+withDefaults(
+  defineProps<{
+    option: Options
+    selected?: boolean
+  }>(),
+  {
+    selected: false,
+  }
+)
 </script>
 
 <style lang="scss" scoped>

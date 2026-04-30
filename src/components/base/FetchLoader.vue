@@ -90,9 +90,15 @@ const loading = computed(() => {
   return inLoading.value
 })
 
-const inSkeletons = computed(() => {
-  return inLoading.value && (!firstLoading.value || !props.withData) && props.skeleton
+const inSkeletons = ref(true)
+watchEffect(() => {
+  const value = inLoading.value && (!firstLoading.value || !props.withData) && props.skeleton
+  nextTick(() => (inSkeletons.value = value))
 })
+
+// const inSkeletons = computed(() => {
+//   return inLoading.value && (!firstLoading.value || !props.withData) && props.skeleton
+// })
 
 watch(inLoading, (newValue, oldValue) => {
   if (oldValue === true && newValue === false && !firstLoading.value) {

@@ -14,42 +14,28 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import FilterValue from '~/components/search/Filters/FilterValue.vue'
 
-import useTagTexts from '~/composables/useTagTexts.ts'
+import useTagTexts from '~/composables/useTagTexts'
+import type { TagModel } from '~/models/tag.model'
 
-export default {
-  name: 'CurrentTags',
+withDefaults(
+  defineProps<{
+    currentTags?: TagModel[]
+    showSeparator?: boolean
+  }>(),
+  {
+    currentTags: () => [],
+    showSeparator: false,
+  }
+)
 
-  components: { FilterValue },
-  props: {
-    currentTags: {
-      type: Array,
-      default: () => [],
-    },
-
-    showSeparator: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  emits: ['remove-tag'],
-
-  setup() {
-    const tagTexts = useTagTexts()
-    return {
-      tagTexts,
-    }
-  },
-
-  methods: {
-    removeTag(tag) {
-      this.$emit('remove-tag', tag)
-    },
-  },
-}
+const emit = defineEmits<{
+  'remove-tag': [TagModel]
+}>()
+const tagTexts = useTagTexts()
+const removeTag = (tag) => emit('remove-tag', tag)
 </script>
 
 <style lang="scss" scoped>

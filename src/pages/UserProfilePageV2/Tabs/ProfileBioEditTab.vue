@@ -1,18 +1,9 @@
 <template>
   <div class="profile-edit-bio">
-    <!--div class="header">
-      <LinkButton
-        class="edit-btn"
-        btn-icon="Eye"
-        :label="$t('profile.edit.back-to-profile')"
-        :to="profileBioLink"
-        data-test="edit-bio"
-      />
-    </div-->
     <!-- short bio -->
     <div class="form-group">
       <TextInput
-        v-model="form.shortBio"
+        v-model="form.short_description"
         :label="$t('profile.edit.bio.short-bio.label')"
         :placeholder="$t('profile.edit.bio.short-bio.placeholder')"
         :max-length="300"
@@ -28,7 +19,7 @@
       <TipTapEditor
         ref="faq-editor"
         :key="user?.id || 'curren-user'"
-        v-model="form.bio"
+        v-model="form.description"
         data-test="long-bio-editor"
       />
     </div>
@@ -56,126 +47,91 @@
   </div>
 </template>
 
-<script>
-import { patchUser } from '~/api/people.service.ts'
+<script setup lang="ts">
+import type { TranslatedUserModel } from '~/models/user.model'
+import { patchUser } from '~/api/people.service'
+import { defaultFormBio } from '~/form/profile'
 
-import useToasterStore from '~/stores/useToaster.ts'
-import useUsersStore from '~/stores/useUsers.ts'
+import useToasterStore from '~/stores/useToaster'
+import useUsersStore from '~/stores/useUsers'
 
-function defaultForm() {
-  return {
-    shortBio: '',
-    bio: '<p></p>',
+const props = defineProps<{
+  user: TranslatedUserModel
+}>()
+
+const emit = defineEmits<{
+  'profile-edited': []
+}>()
+const { t } = useNuxtI18n()
+const router = useRouter()
+const toaster = useToasterStore()
+const usersStore = useUsersStore()
+const form = ref(defaultFormBio())
+const { startEditWatcher, stopEditWatcher } = useEditWatcher(form)
+const asyncing = ref(false)
+
+const isSelf = computed(() => {
+  if (!props.user) return true
+  const connectedUser = usersStore.userFromApi
+  return connectedUser && props.user?.id === connectedUser?.id
+})
+
+const resetForm = () => {
+  stopEditWatcher()
+  form.value = defaultFormBio()
+  if (props.user) {
+    form.value = {
+      short_description: props.user.short_description || form.value.short_description,
+      description: props.user.description || form.value.description,
+    }
+  }
+  startEditWatcher()
+}
+
+const redirectToProfile = () => {
+  if (isSelf.value) {
+    router.push({ name: 'ProfileBio' })
+  } else {
+    router.push({
+      name: 'ProfileBioOther',
+      params: { userId: props.user.id },
+    })
   }
 }
 
-export default {
-  name: 'ProfileBioEditTab',
+const save = async () => {
+  asyncing.value = true
+  try {
+    const data = { ...form.value }
 
-  props: {
-    user: {
-      type: Object,
-      required: true,
-    },
-  },
+    await patchUser(props.user.id, data)
 
-  emits: ['profile-edited'],
-  setup() {
-    const toaster = useToasterStore()
-    const usersStore = useUsersStore()
-    const form = ref(defaultForm())
+    startEditWatcher()
 
-    const { startEditWatcher, stopEditWatcher } = useEditWatcher(form)
-    return {
-      form,
-      toaster,
-      usersStore,
-      startEditWatcher,
-      stopEditWatcher,
-    }
-  },
-  data() {
-    return {
-      asyncing: false,
-    }
-  },
+    emit('profile-edited')
 
-  computed: {
-    isSelf() {
-      if (!this.user) return true
-      const connectedUser = this.usersStore.userFromApi
-      return connectedUser && this.user?.id === connectedUser?.id
-    },
-    // profileBioLink() {
-    //   return {
-    //     name: 'ProfileBio' + (this.isSelf ? '' : 'Other'),
-    //     params: this.isSelf ? {} : { userId: this.user?.slug || this.user?.id },
-    //   }
-    // },
-  },
-
-  watch: {
-    user: {
-      handler(neo) {
-        if (neo) this.resetForm()
-      },
-      immediate: true,
-    },
-  },
-
-  methods: {
-    redirectToProfile() {
-      if (this.isSelf) this.$router.push({ name: 'ProfileBio' })
-      else
-        this.$router.push({
-          name: 'ProfileBioOther',
-          params: { userId: this.user.id },
-        })
-    },
-
-    cancel() {
-      // this.resetForm()
-      this.redirectToProfile()
-    },
-    async save() {
-      this.asyncing = true
-      try {
-        const data = {
-          short_description: this.form.shortBio,
-          description: this.form.bio,
-        }
-
-        await patchUser(this.user.id, data)
-
-        this.startEditWatcher()
-
-        this.$emit('profile-edited')
-
-        // update store if self
-        if (this.isSelf) this.usersStore.getUser(this.user.id)
-        this.toaster.pushSuccess(this.$t('profile.edit.bio.save-success'))
-        this.redirectToProfile()
-      } catch (error) {
-        this.toaster.pushError(`${this.$t('profile.edit.bio.save-error')} (${error})`)
-        console.error(error)
-      } finally {
-        this.asyncing = false
-      }
-    },
-    resetForm() {
-      this.stopEditWatcher()
-      if (this.user) {
-        this.form = {
-          shortBio: this.user.short_description || '',
-          bio: this.user.description || '<p></p>',
-        }
-      } else {
-        this.form = defaultForm()
-      }
-      this.startEditWatcher()
-    },
-  },
+    // update store if self
+    if (isSelf.value) usersStore.getUser(props.user.id)
+    toaster.pushSuccess(t('profile.edit.bio.save-success'))
+    redirectToProfile()
+  } catch (error) {
+    toaster.pushError(`${t('profile.edit.bio.save-error')} (${error})`)
+    console.error(error)
+  } finally {
+    asyncing.value = false
+  }
 }
+
+const cancel = () => redirectToProfile()
+watch(
+  () => props.user,
+  (neo) => {
+    if (neo) {
+      resetForm()
+    }
+  },
+  { immediate: true }
+)
 </script>
 <style scoped lang="scss">
 @import './profile-form';
@@ -185,11 +141,4 @@ export default {
   bottom: 0;
   background-color: white;
 }
-
-// .header {
-//   padding-top: $space-m;
-//   display: flex;
-//   justify-content: flex-end;
-//   align-items: center;
-// }
 </style>

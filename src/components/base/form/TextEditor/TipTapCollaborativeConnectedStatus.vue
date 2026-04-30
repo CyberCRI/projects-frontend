@@ -1,20 +1,12 @@
-<script setup>
+<script setup lang="ts">
+import type { TranslatedUserModel } from '~/models/user.model'
 import UserCard from './UserPresenceCard.vue'
 
-defineProps({
-  status: {
-    type: String,
-    required: true,
-  },
-  onlineAndConnected: {
-    type: Boolean,
-    required: true,
-  },
-  users: {
-    type: Array,
-    required: true,
-  },
-})
+defineProps<{
+  users: TranslatedUserModel[]
+  status: string
+  onlineAndConnected: boolean
+}>()
 </script>
 <template>
   <div class="editor-socket">

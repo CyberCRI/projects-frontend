@@ -1,7 +1,22 @@
+import type { IconImageChoice } from '~/functs/IconImage'
+
 export const ALL_SECTION_KEY = 'all'
 export const PROJECT_SECTION_KEY = 'projects'
 export const GROUP_SECTION_KEY = 'groups'
 export const PEOPLE_SECTION_KEY = 'people'
+
+type Section = {
+  action: (key: string) => void
+  clear: (key: string) => void
+  names?: string[]
+  leftIcon?: IconImageChoice
+  rightIcon?: IconImageChoice
+  label: string
+  dataTest: string
+  condition: boolean
+  isSelected: boolean
+  isUnused: boolean
+}
 
 export default function useSectionFilters({ selectedSection }) {
   const { t } = useNuxtI18n()
@@ -58,6 +73,8 @@ export default function useSectionFilters({ selectedSection }) {
         isSelected: selectedSection.value === PEOPLE_SECTION_KEY,
         isUnused: false,
       },
+    } as {
+      [key: string]: Section
     }
   })
 

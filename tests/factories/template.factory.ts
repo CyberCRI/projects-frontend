@@ -10,24 +10,21 @@ export const TemplateFactory = createFactory<TemplateModel>((faker) => ({
   id: faker.datatype.number(),
   name: faker.lorem.paragraph(),
   description: faker.lorem.paragraph(),
-
   language: 'en',
   categories: [],
   organization: OrganizationFactory.generate(),
-
   images: ImageFactory.generateMany(2),
-
-  project_title: faker.lorem.paragraph(),
-  project_description: faker.lorem.paragraph(),
-  project_purpose: faker.lorem.paragraph(),
+  blogentry_content: faker.datatype.string(),
+  comment_content: faker.datatype.string(),
+  goal_description: faker.datatype.string(),
+  project_purpose: faker.datatype.string(),
   project_tags: [],
-  blogentry_title: faker.lorem.paragraph(),
-  blogentry_content: faker.lorem.paragraph(),
-  goal_title: faker.lorem.paragraph(),
-  goal_description: faker.lorem.paragraph(),
-  review_title: faker.lorem.paragraph(),
-  review_description: faker.lorem.paragraph(),
-  comment_content: faker.lorem.paragraph(),
+  review_description: faker.datatype.string(),
+  review_title: faker.datatype.string(),
+  blogentry_title: faker.datatype.string(),
+  goal_title: faker.datatype.string(),
+  project_description: faker.datatype.string(),
+  project_title: faker.datatype.string(),
 }))
 
 export const TemplateInputFactory = createFactory<TemplateCreateInput>((faker) => ({

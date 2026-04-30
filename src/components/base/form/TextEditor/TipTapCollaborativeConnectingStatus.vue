@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 
@@ -6,16 +6,10 @@ const { t } = useNuxtI18n()
 
 const emit = defineEmits(['do-fallback-edit'])
 
-defineProps({
-  cnxTimedout: {
-    type: Boolean,
-    required: true,
-  },
-  status: {
-    type: String,
-    required: true,
-  },
-})
+defineProps<{
+  cnxTimedout: boolean
+  status: string
+}>()
 
 const riskAck = ref(false)
 </script>

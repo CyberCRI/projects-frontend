@@ -62,6 +62,7 @@ import useProjectsStore from '~/stores/useProjects.ts'
 import useToasterStore from '~/stores/useToaster.ts'
 import useUsersStore from '~/stores/useUsers.ts'
 
+import { NULL_CONTENT } from '~/functs/constants'
 import { textIsEmpty } from '~/functs/string'
 
 export default {
@@ -193,7 +194,7 @@ export default {
           this.newReview = {
             data: {
               title: '',
-              description: '<p></p>',
+              description: NULL_CONTENT,
             },
           }
         }

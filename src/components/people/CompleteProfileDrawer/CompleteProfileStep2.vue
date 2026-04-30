@@ -9,13 +9,13 @@
   </template>
 </template>
 
-<script setup>
-import { getUser } from '~/api/people.service.ts'
+<script setup lang="ts">
+import { getUser } from '~/api/people.service'
 
 import ProfileEditBlock from '~/components/people/CompleteProfileDrawer/ProfileEditBlock.vue'
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 
-import useUsersStore from '~/stores/useUsers.ts'
+import useUsersStore from '~/stores/useUsers'
 
 import ProfileSkillsEditTab from '~/pages/UserProfilePageV2/Tabs/ProfileSkillsEditTab.vue'
 

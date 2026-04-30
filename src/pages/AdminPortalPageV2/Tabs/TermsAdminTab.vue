@@ -1,10 +1,10 @@
-<script setup>
+<script setup lang="ts">
 import { patchTermsAndConditions } from '~/api/organizations.service'
+import { NULL_CONTENT } from '~/functs/constants'
 
 import useOrganizations from '~/stores/useOrganizations'
-import useToasterStore from '~/stores/useToaster.ts'
+import useToasterStore from '~/stores/useToaster'
 
-const NULL_CONTENT = '<p></p>'
 const { t } = useNuxtI18n()
 const toaster = useToasterStore()
 const organizationsStore = useOrganizations()
@@ -12,7 +12,7 @@ const organizationsStore = useOrganizations()
 const currentOrganization = computed(() => organizationsStore.current)
 
 // TODO: use default term of service content ?
-const termsContent = ref('<p></p>')
+const termsContent = ref(NULL_CONTENT)
 
 const isLoading = ref(true)
 

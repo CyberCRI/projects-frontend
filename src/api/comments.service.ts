@@ -1,30 +1,57 @@
-import type { CommentInputModel } from '~/models/comment.model'
+import type { CommentInputModel, CommentModel, QueryFilterComments } from '@/models/comment.model'
+import type { ProjectSlugOrId } from '@/models/project.model'
+import useAPI from '@/composables/useAPI'
 
-import useAPI from '~/composables/useAPI'
+type Config = UseApiOptions<QueryFilterComments>
 
-export async function getComments(project_id: string) {
-  return await useAPI(`project/${project_id}/comment/`, {})
+export async function getComments(projectId: ProjectSlugOrId, config: Config = {}) {
+  return await useAPI<PaginationResult<CommentModel>>(`project/${projectId}/comment/`, config)
 }
 
-export async function postComment(comment: CommentInputModel) {
-  return await useAPI(`project/${comment.project_id}/comment/`, { body: comment, method: 'POST' })
+export async function postComment(
+  projectId: ProjectSlugOrId,
+  comment: CommentInputModel,
+  config: Config = {}
+) {
+  return await useAPI<CommentModel>(`project/${projectId}/comment/`, {
+    ...config,
+    body: comment,
+    method: 'POST',
+  })
 }
 
-export async function getComment(body: CommentInputModel) {
-  return await useAPI(`project/${body.project_id}/comment/${body.comment_id}/`, {})
+export async function getComment(
+  projectId: ProjectSlugOrId,
+  commentId: CommentModel['id'],
+  config: Config = {}
+) {
+  return await useAPI<CommentModel>(`project/${projectId}/comment/${commentId}/`, config)
 }
 
-export async function patchComment(id: number, comment: CommentInputModel) {
-  return await useAPI(`project/${comment.project_id}/comment/${id}/`, {
+export async function patchComment(
+  projectId: ProjectSlugOrId,
+  commentId: CommentModel['id'],
+  comment: CommentInputModel,
+  config: Config = {}
+) {
+  return await useAPI<CommentModel>(`project/${projectId}/comment/${commentId}/`, {
+    ...config,
     body: comment,
     method: 'PATCH',
   })
 }
 
-export async function deleteComment(project_id: string, id: number) {
-  return await useAPI(`project/${project_id}/comment/${id}/`, { method: 'DELETE' })
+export async function deleteComment(
+  projectId: ProjectSlugOrId,
+  commentId: CommentModel['id'],
+  config: Config = {}
+) {
+  return await useAPI<undefined>(`project/${projectId}/comment/${commentId}/`, {
+    ...config,
+    method: 'DELETE',
+  })
 }
 
-export async function postCommentImage(project_id: string, body: any) {
-  return await useAPI(`project/${project_id}/comment-image/`, { body, method: 'POST' }) // .data.value
+export async function postCommentImage(projectId: ProjectSlugOrId, body: any) {
+  return await useAPI(`project/${projectId}/comment-image/`, { body, method: 'POST' })
 }

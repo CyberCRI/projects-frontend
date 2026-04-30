@@ -42,6 +42,7 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
 import useToasterStore from '~/stores/useToaster.ts'
+import { NULL_CONTENT } from '~/functs/constants'
 
 export default {
   name: 'OrgWordingDrawer',
@@ -75,7 +76,7 @@ export default {
 
     return {
       title: title,
-      description: org?.description || '<p></p>',
+      description: org?.description || NULL_CONTENT,
       addedImages: [],
       asyncing: false,
     }
@@ -90,7 +91,7 @@ export default {
   watch: {
     isOpened() {
       const org = this.organization
-      this.description = org?.description || '<p></p>'
+      this.description = org?.description || NULL_CONTENT
     },
   },
 

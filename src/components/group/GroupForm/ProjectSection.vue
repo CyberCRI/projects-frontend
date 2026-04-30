@@ -41,6 +41,7 @@
         @click="showFullList = !showFullList"
       />
     </div>
+    <empty-label v-if="(showFullList ? modelValue : shortList).length === 0" />
 
     <PickProjectsDrawer
       v-if="drawerIsOpen"

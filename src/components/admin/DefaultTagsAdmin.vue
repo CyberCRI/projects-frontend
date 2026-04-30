@@ -1,14 +1,14 @@
-<script setup>
+<script setup lang="ts">
 import TagsFilterEditor from '~/components/search/Filters/TagsFilterEditor.vue'
 import FilterValue from '~/components/search/Filters/FilterValue.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
-import useToasterStore from '~/stores/useToaster.ts'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useToasterStore from '~/stores/useToaster'
 
-import useTagTexts from '~/composables/useTagTexts.ts'
+import useTagTexts from '~/composables/useTagTexts'
 
 const { t } = useNuxtI18n()
 
@@ -50,6 +50,7 @@ const closeTagsSelector = () => {
 
 const tagToDelete = ref(null)
 const asyncing = ref(false)
+
 const deleteOrganizationTag = async () => {
   const tag = tagToDelete.value
   if (!tag) return
@@ -118,11 +119,11 @@ const deleteOrganizationTag = async () => {
       data-test="confirm-delete-default-tag"
       :title="$t('common.confirm-delete')"
       content=""
-      cancel-button-label="common.no"
-      confirm-button-label="common.yes"
+      :cancel-button-label="$t('common.no')"
+      :confirm-button-label="$t('common.yes')"
       :asyncing="asyncing"
       @cancel="tagToDelete = null"
-      @confirm="deleteOrganizationTag(tag)"
+      @confirm="deleteOrganizationTag()"
     />
   </div>
 </template>

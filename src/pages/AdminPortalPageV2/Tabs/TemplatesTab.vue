@@ -39,7 +39,7 @@
   </LayoutTab>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { deleteTemplate, getTemplates } from '~/api/templates.service'
 
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
@@ -48,8 +48,6 @@ import FetchLoader from '~/components/base/FetchLoader.vue'
 import LayoutTab from '~/components/admin/LayoutTab.vue'
 
 import useNuxtI18n from '~/composables/useNuxtI18n'
-
-defineOptions({ name: 'TemplatesTab' })
 
 const { t } = useNuxtI18n()
 const organizationCode = useOrganizationCode()

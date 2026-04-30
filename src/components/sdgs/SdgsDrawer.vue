@@ -7,7 +7,7 @@
     @close="emit('close')"
     @confirm="confirm"
   >
-    <SdgsFilter v-model="tmpModel" class="sdg-grid" />
+    <SdgsFilter v-model="tmpModel" />
   </BaseDrawer>
 </template>
 
@@ -44,9 +44,3 @@ const confirm = () => {
   emit('close')
 }
 </script>
-
-<style lang="scss" scoped>
-.sdg-grid {
-  grid-template-columns: 1fr 1fr 1fr;
-}
-</style>

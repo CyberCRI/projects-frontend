@@ -36,51 +36,38 @@
     </template>
   </ToolTip>
 </template>
-<script>
+
+<script setup lang="ts">
 import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
 import ToolTip from '~/components/base/ToolTip.vue'
 
-export default {
-  name: 'FilterButton',
+const props = withDefaults(
+  defineProps<{
+    label?: string
+    isSelected?: boolean
+    isHidden?: boolean
+    isUnused?: boolean
+    names?: string[]
+  }>(),
+  {
+    label: null,
+    isSelected: false,
+    isHidden: false,
+    isUnused: false,
+    names: () => [],
+  }
+)
 
-  components: {
-    ContextActionButton,
-    ToolTip,
-  },
+defineEmits<{
+  'clear-action': []
+  'main-action': []
+}>()
 
-  props: {
-    label: {
-      type: String,
-      default: () => {},
-    },
-    isSelected: {
-      type: Boolean,
-      default: false,
-    },
-    isHidden: {
-      type: Boolean,
-      default: false,
-    },
-    isUnused: {
-      type: Boolean,
-      default: false,
-    },
-    names: {
-      type: Array,
-      default: () => [],
-    },
-  },
-
-  emits: ['clear-action', 'main-action'],
-
-  computed: {
-    filteredNames() {
-      if (!this.names?.length) return []
-      if (this.names.length < 10) return this.names
-      return [...this.names.slice(0, 9), '...']
-    },
-  },
-}
+const filteredNames = computed(() => {
+  if (!props.names?.length) return []
+  if (props.names.length < 10) return props.names
+  return [...props.names.slice(0, 9), '...']
+})
 </script>
 <style lang="scss" scoped>
 .filter-button {

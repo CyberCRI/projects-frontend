@@ -65,6 +65,7 @@ import { createGoal, patchGoal } from '@/api/goals.service'
 import type { GoalModel } from '@/models/goal.model'
 import { fullYearDateFormat } from '@/functs/date'
 import useToasterStore from '@/stores/useToaster'
+import { NULL_CONTENT } from '~/functs/constants'
 import { textIsEmpty } from '@/functs/string'
 import { defaultForm } from '@/form/goal'
 import analytics from '@/analytics'
@@ -158,7 +159,7 @@ const fillForm = () => {
 const resetForm = () => {
   form.value = {
     title: props.project.template?.$t?.goal_title || '',
-    description: props.project.template?.$t?.goal_description || '<p></p>',
+    description: props.project.template?.$t?.goal_description || NULL_CONTENT,
     deadline_at: null,
     status: 'na',
   }

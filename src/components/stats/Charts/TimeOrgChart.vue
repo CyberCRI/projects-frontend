@@ -5,11 +5,12 @@
 </template>
 
 <script setup lang="ts">
-import LpiLineChart from './Generic/LpiLineChart.vue'
+import type LpiLineChart from './Generic/LpiLineChart.vue'
+import type { Stats } from '~/api/stats.service'
 
 const props = withDefaults(
   defineProps<{
-    stats?: any[]
+    stats?: Stats['by_month']
   }>(),
   { stats: () => [] }
 )

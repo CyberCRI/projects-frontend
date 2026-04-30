@@ -155,7 +155,11 @@ export default {
   },
 
   async mounted() {
-    await Promise.all([this.loadProjects(), this.loadEvents(), this.loadInstructions()])
+    await Promise.all([this.loadProjects(), this.loadEvents(), this.loadInstructions()]).catch(
+      (err) => {
+        console.error(err)
+      }
+    )
 
     this.isLoading = false
   },

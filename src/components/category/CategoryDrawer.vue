@@ -3,7 +3,7 @@
     :confirm-action-name="$t('common.save')"
     :is-opened="isOpened"
     :title="!category?.id ? $t('admin.portal.categories.add') : $t('admin.portal.categories.edit')"
-    class="category-modal small"
+    class="category-modal medium"
     :asyncing="asyncing"
     @close="closeModal"
     @confirm="submitCategory"
@@ -66,9 +66,10 @@
           <div v-html="$t('tips.background-color')" />
         </div>
         <SketchPicker
-          v-model="category.background_color"
+          :model-value="category.background_color"
           :preset-colors="[]"
           data-test="category-background-color"
+          @update:model-value="(color) => setColor(color)"
         />
       </CategoryField>
 
@@ -239,10 +240,11 @@
   </Drawer>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { Sketch as SketchPicker } from '@ckpack/vue-color'
+import type { Payload } from '@ckpack/vue-color'
 
-import { getTemplates } from '~/api/templates.service.ts'
+import { getTemplates } from '~/api/templates.service'
 
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
 import CategoryCardImage from '~/components/category/CategoryCardImage.vue'
@@ -257,27 +259,26 @@ import FilterDrawer from '~/components/base/FilterDrawer.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import Drawer from '~/components/base/BaseDrawer.vue'
 
-import useOrganizationCode from '~/composables/useOrganizationCode.ts'
+import useOrganizationCode from '~/composables/useOrganizationCode'
 
-import { pictureApiToImageSizes } from '~/functs/imageSizesUtils.ts'
+import type { ProjectCategoryForm, ProjectCategoryModel } from '~/models/project-category.model'
+import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 import { LazyImageResizer } from '#components'
 import { defaultForm } from '~/form/category'
 import { Sortable } from 'sortablejs-vue3'
 
-const props = defineProps({
-  editedCategory: {
-    type: Object,
-    default: null,
-  },
-  parentCategory: {
-    type: Number,
-    default: null,
-  },
-  isOpened: {
-    type: Boolean,
-    default: false,
-  },
-})
+const props = withDefaults(
+  defineProps<{
+    editedCategory?: ProjectCategoryModel
+    parentCategory?: number
+    isOpened?: boolean
+  }>(),
+  {
+    editedCategory: null,
+    parentCategory: null,
+    isOpened: false,
+  }
+)
 
 const emits = defineEmits(['close-modal', 'submit-category'])
 
@@ -289,7 +290,7 @@ const category = ref({
   ...props.editedCategory,
   parent: props.parentCategory,
   organization_code: organizationCode,
-})
+} as ProjectCategoryForm)
 
 const bgImage = category.value.background_image
 category.value.imageSizes = (bgImage && pictureApiToImageSizes(bgImage)) || null
@@ -308,23 +309,9 @@ const DRAG_OPTIONS = {
   ghostClass: 'child-ghost',
 }
 
-watch(
-  () => category.value.foreground_color,
-  (val) => {
-    if (typeof val !== String && val.hex) {
-      category.value.foreground_color = val.hex
-    }
-  }
-)
-
-watch(
-  () => category.value.background_color,
-  (val) => {
-    if (typeof val !== String && val.hex) {
-      category.value.background_color = val.hex
-    }
-  }
-)
+const setColor = (color: Payload) => {
+  category.value.background_color = color.hex
+}
 
 // not using computed
 // beacuse can also be set from a file object in form
