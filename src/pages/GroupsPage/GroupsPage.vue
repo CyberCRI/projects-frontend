@@ -60,6 +60,7 @@ onBeforeRouteLeave((to, from, next) => {
 })
 
 const showGroups = () => navigateTo({ query: {} })
+
 useLpiHead2({
   title: computed(() => t('common.groups')),
 })

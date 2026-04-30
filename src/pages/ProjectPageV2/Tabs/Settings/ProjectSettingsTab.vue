@@ -164,7 +164,7 @@
       :content="$t('common.cant-quit-self')"
       :title="$t('project.quit')"
       no-second-button
-      cancel-button-label="common.ok"
+      :cancel-button-label="$t('common.ok')"
       @cancel="toggleShowQuitIsImposibleVisible"
     />
 

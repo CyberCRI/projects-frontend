@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import useUsersStore from '~/stores/useUsers'
 
+import FollowIcon from '~/components/base/FollowIcon.vue'
 import followUtils from '~/functs/followUtils'
 
 const { t } = useNuxtI18n()
@@ -30,13 +31,6 @@ const hasCustomMessages = computed(() => {
   return props.messageFollow && props.messageFollowing
 })
 
-const label = computed(() => {
-  if (hasCustomMessages.value) {
-    return followed.value ? t(props.messageFollowing) : t(props.messageFollow)
-  }
-  return followed.value ? t('project.followed') : t('project.follow')
-})
-
 const toggleFollow = async () => {
   try {
     if (followed.value) {
@@ -57,14 +51,12 @@ const toggleFollow = async () => {
 }
 </script>
 <template>
-  <ExternalLabelButton
-    v-if="usersStore.isConnected"
-    class="space-button bg-on-hover small-top-padding follow-button"
-    :label="label"
-    :btn-icon="followed ? 'BookmarkFill' : 'BookmarkLine'"
-    :vertical-layout="!hasCustomMessages"
-    :label-on-hover="!hasCustomMessages"
-    @click="toggleFollow"
+  <FollowIcon
+    :followed="followed"
+    :follow-label="hasCustomMessages ? t(props.messageFollowing) : t('project.followed')"
+    :unfollow-label="hasCustomMessages ? t(props.messageFollow) : t('project.follow')"
+    @follow="toggleFollow"
+    @unfollow="toggleFollow"
   />
 </template>
 <style lang="css" scoped>

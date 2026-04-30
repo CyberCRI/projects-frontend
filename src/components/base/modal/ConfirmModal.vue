@@ -3,8 +3,8 @@
     class="confirm-modal"
     :asyncing="asyncing"
     :no-second-button="noSecondButton"
-    :cancel-button-label="$t(cancelButtonLabel)"
-    :confirm-button-label="$t(confirmButtonLabel)"
+    :cancel-button-label="cancelButtonLabel || $t('common.no')"
+    :confirm-button-label="confirmButtonLabel || $t('common.yes')"
     @close="$emit('cancel')"
     @submit="$emit('confirm')"
   >
@@ -34,8 +34,8 @@ withDefaults(
   {
     title: '',
     content: '',
-    cancelButtonLabel: 'common.no',
-    confirmButtonLabel: 'common.yes',
+    cancelButtonLabel: null,
+    confirmButtonLabel: null,
     noSecondButton: false,
     asyncing: false,
   }

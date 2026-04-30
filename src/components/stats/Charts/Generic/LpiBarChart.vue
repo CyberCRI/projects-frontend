@@ -25,8 +25,11 @@ const props = withDefaults(
   }
 )
 
-const dataValue = computed(() => props.chartData)
-const dataOptions = computed(() => props.options)
+const dataValue = computed(() => ({
+  datasets: [],
+  ...(toRaw(props.chartData) ?? {}),
+}))
+const dataOptions = computed(() => toRaw(props.options))
 
 const { barChartProps, update } = useBarChart({
   chartData: dataValue,

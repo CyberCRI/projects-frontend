@@ -1,30 +1,15 @@
 <template>
-  <IconImage
-    v-if="!isFollowing && usersStore.isConnected"
-    class="icon skeletons-background"
-    name="BookmarkLine"
-    tabindex="1"
-    @click="actionFollow"
-  />
-  <IconImage
-    v-else-if="usersStore.isConnected"
-    class="icon skeletons-background"
-    name="BookmarkFill"
-    tabindex="1"
-    @click="actionFollow"
-  />
+  <FollowIcon :followed="isFollowing" @follow="actionFollow" @unfollow="actionFollow" />
 </template>
 
 <script setup lang="ts">
 import { useProjectFollow } from '@/pages/ProjectPageV2/useProject'
 import type { TranslatedProject } from '@/models/project.model'
-import useUsersStore from '@/stores/useUsers'
 
 const props = defineProps<{
   project: TranslatedProject
 }>()
 
-const usersStore = useUsersStore()
 const emit = defineEmits<{
   follow: [TranslatedProject['is_followed']]
   unfollow: []
@@ -45,10 +30,3 @@ const actionFollow = () => {
 // can access from ref
 defineExpose({ actionFollow })
 </script>
-
-<style lang="scss" scoped>
-.icon {
-  fill: $primary-dark;
-  cursor: pointer;
-}
-</style>

@@ -11,7 +11,7 @@
       v-if="confirmModalIsOpen"
       content=""
       :title="$t('description.quit-without-saving-title')"
-      confirm-button-label="common.continue"
+      :confirm-button-label="$t('common.continue')"
       @cancel="confirmModalIsOpen = false"
       @confirm="closeDrawer"
     />

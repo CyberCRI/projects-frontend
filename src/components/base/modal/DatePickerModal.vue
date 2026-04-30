@@ -344,7 +344,6 @@ const resetTime = () => {
   .custom-navBtnNext,
   .custom-navBtnPrev {
     width: 2rem;
-    height: 2rem;
     border-radius: 100%;
     background-color: var(--primary-dark);
 

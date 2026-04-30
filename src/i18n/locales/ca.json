@@ -283,7 +283,10 @@
         "add": "Afegeix una plantilla",
         "delete-templates": "Esborra plantilles",
         "delete-templates-description": "Esteu segur que voleu esborrar la plantilla '{templateName}'?"
-      }
+      },
+      "events": "Els últims esdeveniments (actualitzats)",
+      "instructions": "Les últimes instruccions (actualitzacions)",
+      "news": "Notícies recents (actualitzacions)"
     },
     "form": {
       "admin-info": {
@@ -2515,7 +2518,8 @@
     "drawer": {
       "title": "Edita notícies"
     },
-    "view": "Veure notícies"
+    "view": "Veure notícies",
+    "empty": "Encara no hi ha notícies."
   },
   "instructions": {
     "create": {
@@ -2572,7 +2576,8 @@
     },
     "drawer": {
       "title": "Edita instrucció"
-    }
+    },
+    "empty": "Encara no hi ha instruccions."
   },
   "chat": {
     "drawer": {
@@ -3148,5 +3153,12 @@
     "file-field": "Fitxer",
     "document-added": "Document afegit.",
     "document-updated": "Document actualitzat."
+  },
+  "announcements": {
+    "empty": "Encara no s'anuncia."
+  },
+  "follow": {
+    "follow": "Segueix",
+    "unfollow": "Sense ningú"
   }
 }

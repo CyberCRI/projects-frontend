@@ -166,6 +166,6 @@ export const useLpiHead2 = async (options: OptionsHead) => {
 
     useLpiHead(url, title, description, image, dimensions)
   } catch (e) {
-    console.error(e)
+    console.error(`can't set LpiHead: ${e.toString()}`)
   }
 }

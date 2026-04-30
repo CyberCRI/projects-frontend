@@ -1,9 +1,9 @@
 <template>
-  <div class="sdg-ctn">
+  <TransitionGroup tag="div" name="sdg" class="sdg-ctn">
     <component :is="is" v-for="sdg in sdgsArray" :key="sdg.id" :to="sdg.to">
       <SdgIcon :sdg-id="sdg.id" class="sdg-img" logo="short" />
     </component>
-  </div>
+  </TransitionGroup>
 </template>
 
 <script setup lang="ts">
@@ -65,5 +65,16 @@ const sdgsArray = computed(() => {
       transform: translateZ(0) scale(1.2);
     }
   }
+}
+
+.sdg-enter-active,
+.sdg-leave-active {
+  transition: all 0.4s ease;
+  transform: translateZ(0);
+}
+
+.sdg-enter-from,
+.sdg-leave-to {
+  transform: translateZ(0) scale(0) translateY(200%);
 }
 </style>
