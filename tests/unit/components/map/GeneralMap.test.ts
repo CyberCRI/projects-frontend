@@ -1,10 +1,9 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
 import GeneralMap from '@/components/map/GeneralMap.vue'
+import { lpiMount } from '@/../tests/helpers/LpiMount'
 import { LocationGeneral } from '@/interfaces/maps'
 import { flushPromises } from '@vue/test-utils'
-import { delay } from 'es-toolkit'
 
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 describe('GeneralMap', () => {
   it('should render GeneralMap component', () => {
