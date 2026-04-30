@@ -69,6 +69,7 @@ export default function useContextualFilters({
             }) || [],
         dataTest: 'contextual-filter-sdgs',
         condition: !filterBlackList.value.includes('sdgs'),
+        drawerClass: 'small',
         // drawer config part
         title: 'sdg',
         componentSummary: SdgsFilter,

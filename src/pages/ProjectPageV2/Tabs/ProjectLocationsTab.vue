@@ -51,7 +51,7 @@ import type { TranslatedLocation } from '~/models/location.model'
 import type { TranslatedProject } from '~/models/project.model'
 import type { LocationType } from '~/models/types'
 
-import { deleteLocation, patchLocation, postLocations } from '~/api/locations.services'
+import { deleteLocation, patchLocation, postLocations } from '~/api/locations.service'
 
 import LocationList from '~/components/map/LocationList.vue'
 import LocationForm from '~/components/map/LocationForm.vue'

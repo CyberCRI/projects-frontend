@@ -1,16 +1,15 @@
 <template>
-  <BaseGroupTab :title="$t(GroupModuleTitle.featured_projects)" :count="countElement">
+  <BaseModuleTab :title="$t(GroupModuleTitle.featured_projects)" :count="countElement">
     <BaseGroupProjectsList :group="group" />
-  </BaseGroupTab>
+  </BaseModuleTab>
 </template>
 
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
-import { GroupModuleTitle } from '~/models/invitation.model'
+import BaseGroupProjectsList from '@/components/group/Modules/Projects/BaseGroupProjectsList.vue'
+import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
 
-import BaseGroupProjectsList from '~/components/group/Modules/Projects/BaseGroupProjectsList.vue'
-
-import BaseGroupTab from '~/pages/GroupPageV2/Tabs/BaseGroupTab.vue'
+import type { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import { GroupModuleTitle } from '@/models/invitation.model'
 
 const props = defineProps<{
   group: TranslatedPeopleGroupModel

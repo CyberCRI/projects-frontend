@@ -1,10 +1,10 @@
-import type { ProjectCategoryModel } from '@/models/project-category.model'
-import type { OrganizationModel } from '@/models/organization.model'
-import type { Translated } from '@/interfaces/translated'
-import type { ImageModel } from '@/models/image.model'
-import type { TagModel } from '@/models/tag.model'
-import type BaseModel from '@/models/base.model'
-import type { Language } from '@/models/types'
+import type { ProjectCategoryModel } from '~/models/project-category.model'
+import type { OrganizationModel } from '~/models/organization.model'
+import type { Translated } from '~/interfaces/translated'
+import type { ImageModel } from '~/models/image.model'
+import type { TagModel } from '~/models/tag.model'
+import type { LanguageType } from '~/models/types'
+import type BaseModel from '~/models/base.model'
 
 /**
  * @name TemplateModel
@@ -14,14 +14,14 @@ export interface TemplateModel extends BaseModel {
   id: number
   name: string
   description: string
-  language: Language
+  language: LanguageType
   images: ImageModel[]
   organization: OrganizationModel
   categories: ProjectCategoryModel[]
-  project_tags: TagModel[]
   project_title: string
   project_description: string
   project_purpose: string
+  project_tags: TagModel[]
   blogentry_title: string
   blogentry_content: string
   goal_title: string

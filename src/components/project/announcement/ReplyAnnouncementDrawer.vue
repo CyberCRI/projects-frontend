@@ -208,6 +208,11 @@ export default {
     },
 
     createRecaptcha() {
+      if (import.meta.dev) {
+        this.captchatoken = 'XXX'
+        return
+      }
+
       const captchaCB = (resp) => {
         this.captchatoken = resp
       }

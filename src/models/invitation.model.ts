@@ -24,7 +24,7 @@ export interface PeopleGroupModel {
   header_image: Image
   publication_status: string
   organization: OrganizationModel
-  children: SubGroup[]
+  children: PeopleGroupModel[]
   hierarchy: any
   sdgs: number[]
   tags: TagModel[]

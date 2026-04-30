@@ -2670,6 +2670,10 @@
     "title": "Documents of the {platformName} platform",
     "description": "Find here all the documents related to the {platformName} platform, including the terms of service, privacy policy, and other legal documents."
   },
+  "follow": {
+    "follow": "Follow",
+    "unfollow": "Unfollow"
+  },
   "chatbot": {
     "title": "Chat with AI",
     "input-placeholder": "Type your message here...",

@@ -3,6 +3,7 @@ useLpiHead2({
   title: 'Politique de protection des données personnelles',
 })
 </script>
+
 <template>
   <div class="page-section-narrow legal-page personal-data page-top">
     <h1 class="page-title">Politique de protection des données personnelles</h1>

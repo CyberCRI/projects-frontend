@@ -1,5 +1,6 @@
 import { ReviewModel, ReviewModelInput } from '~/models/review.model'
 import { createFactory } from 'faker-create-factory'
+import { UserFactory } from './user.factory'
 import BaseFactory from './base.factory'
 
 export const ReviewFactory = createFactory<ReviewModel>((faker) => ({
@@ -7,14 +8,9 @@ export const ReviewFactory = createFactory<ReviewModel>((faker) => ({
   id: faker.datatype.number(),
   description: faker.datatype.string(),
   title: faker.datatype.string(),
-  reviewer: {
-    id: faker.datatype.number(),
-    people_id: faker.datatype.string(),
-    email: faker.datatype.string(),
-    given_name: faker.datatype.string(),
-    family_name: faker.datatype.string(),
-  },
+  reviewer: UserFactory.generate(),
   created_at: faker.datatype.datetime().toISOString(),
+  updated_at: faker.datatype.datetime().toISOString(),
 }))
 
 export const ReviewInputFactory = createFactory<ReviewModelInput>((faker) => ({

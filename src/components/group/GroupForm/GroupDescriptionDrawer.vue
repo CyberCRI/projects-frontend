@@ -11,7 +11,7 @@
       v-if="confirmModalIsOpen"
       content=""
       :title="$t('description.quit-without-saving-title')"
-      confirm-button-label="common.continue"
+      :confirm-button-label="$t('common.continue')"
       @cancel="confirmModalIsOpen = false"
       @confirm="closeDrawer"
     />
@@ -32,6 +32,7 @@
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import { NULL_CONTENT } from '~/functs/constants'
 
 const props = withDefaults(
   defineProps<{
@@ -49,7 +50,7 @@ const emit = defineEmits<{
   'update-description': [string]
 }>()
 
-const description = ref('<p></p>')
+const description = ref(NULL_CONTENT)
 const addedImages = ref([])
 const confirmModalIsOpen = ref(false)
 
@@ -57,7 +58,7 @@ watch(
   () => props.isOpened,
   (neo) => {
     if (neo) {
-      description.value = props.originalDescription || '<p></p>'
+      description.value = props.originalDescription || NULL_CONTENT
     }
   },
   { immediate: true }

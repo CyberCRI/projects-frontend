@@ -1,6 +1,3 @@
-<script setup>
-// NADA
-</script>
 <template>
   <section>
     <h3>1. Objet</h3>

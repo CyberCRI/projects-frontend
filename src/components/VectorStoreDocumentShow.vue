@@ -1,9 +1,11 @@
-<script setup>
+<script setup lang="ts">
 import useUsersStore from '~/stores/useUsers'
 
 const usersStore = useUsersStore()
 
-const props = defineProps({ documentTitle: { type: String, required: true } })
+const props = defineProps<{
+  documentTitle: string
+}>()
 const emit = defineEmits(['close'])
 
 const isAsyncing = ref(false)
@@ -52,7 +54,7 @@ load()
     :title="documentTitle"
     :asyncing="isAsyncing"
     no-second-button
-    cancel-button-label="common.close"
+    :cancel-button-label="$t('common.close')"
     @cancel="close"
     @confirm="close"
   >

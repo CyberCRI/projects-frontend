@@ -30,32 +30,20 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import LpiDropdDownElement from '~/components/base/form/LpiDropDownElement.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 
 import { capitalize } from '~/functs/string'
 
-defineOptions({
-  name: 'LpiDropDown',
-})
-
 defineEmits(['close'])
 
-const props = defineProps({
-  defaultLabel: {
-    type: String,
-    required: true,
-  },
-  modelValue: {
-    type: [Number, null, Object],
-    required: true,
-  },
-  options: {
-    type: Array,
-    required: true,
-  },
-})
+const props = defineProps<{
+  defaultLabel: string
+  options: any[]
+}>()
+
+const modelValue = defineModel<number | { id: number }>()
 
 const open = ref(false)
 
@@ -63,11 +51,11 @@ const close = () => (open.value = false)
 const toggle = () => (open.value = !open.value)
 
 // when value change, close select
-watch(() => props.modelValue, close)
+watch(() => modelValue.value, close)
 
 // find the correct element form modelValue (modelValue is object from options or the id )
 const selectedOption = computed(() => {
-  const choice = props.modelValue?.id ?? props.modelValue
+  const choice = typeof modelValue.value === 'number' ? modelValue.value : modelValue.value?.id
   const flatChild = (el) => {
     let arr = []
     el.forEach((e) => {

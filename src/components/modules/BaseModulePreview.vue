@@ -1,6 +1,6 @@
 <template>
-  <div class="group shadowed-box2">
-    <div class="group-header">
+  <div class="module shadowed-box2">
+    <div class="module-header">
       <div class="title-container">
         <IconImage v-if="icon" :name="icon" class="icon" />
         <h2 class="title">
@@ -17,7 +17,7 @@
       </slot>
     </div>
 
-    <div class="group-container">
+    <div class="module-container">
       <slot v-if="loading" name="skeleton" />
       <slot v-else name="content" />
     </div>
@@ -35,13 +35,14 @@
 import IconImage from '~/components/base/media/IconImage.vue'
 
 import type { IconImageChoice } from '~/functs/IconImage'
+import type { RouteLocationRaw } from 'vue-router'
 import { isNil } from 'es-toolkit'
 
 withDefaults(
   defineProps<{
     title: string
     total?: number
-    seeMore?: any
+    seeMore?: RouteLocationRaw
     loading?: boolean
     icon?: IconImageChoice
     seeMorePosition?: 'bottom' | 'top'
@@ -51,7 +52,7 @@ withDefaults(
 </script>
 
 <style lang="scss" scoped>
-.group {
+.module {
   display: grid;
   grid-template-rows: auto 1fr auto;
   background-color: white;
@@ -59,7 +60,7 @@ withDefaults(
   padding: 1rem;
 }
 
-.group-header {
+.module-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -67,7 +68,7 @@ withDefaults(
   flex-wrap: wrap;
 }
 
-.group-container {
+.module-container {
   margin-top: 1rem;
 }
 

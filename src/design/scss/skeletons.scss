@@ -59,10 +59,10 @@
 }
 
 .skeletons {
-  --primary: #{$lighter-gray};
-  --primary-lighter: #{$lighter-gray};
-  --primary-light: #{$lighter-gray};
-  --primary-dark: #{$lighter-gray};
+  --primary: var(--skeleton-50);
+  --primary-lighter: var(--skeleton-50);
+  --primary-light: var(--skeleton-50);
+  --primary-dark: var(--skeleton-50);
 
   pointer-events: none;
   user-select: none;

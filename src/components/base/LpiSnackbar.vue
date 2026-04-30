@@ -48,17 +48,14 @@ const close = () => emit('close')
   &.success,
   &.info {
     background: $primary-light;
-    border: $border-width-l solid $primary-dark;
   }
 
   &.error {
     background: $salmon;
-    border: $border-width-l solid $salmon;
   }
 
   &.warning {
     background: $yellow;
-    border: $border-width-l solid $yellow;
   }
 
   .left-icon {

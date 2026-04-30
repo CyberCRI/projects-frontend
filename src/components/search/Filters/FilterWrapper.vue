@@ -21,7 +21,7 @@ const props = withDefaults(
   defineProps<{
     isToggleable?: boolean
     rightIcon?: IconImageChoice
-    filterKey: string
+    filterKey: string | number
     hasFilters?: boolean
   }>(),
   { isToggleable: false, rightIcon: 'ChevronRight', hasFilters: true }

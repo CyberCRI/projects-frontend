@@ -25,9 +25,11 @@
 </template>
 
 <script setup lang="ts">
+import type { RouteLocationRaw } from 'vue-router'
+
 const props = withDefaults(
   defineProps<{
-    toLink?: string | object
+    toLink?: RouteLocationRaw
     mode?: 'card' | 'list'
     lineClamp?: number
     isInactive?: boolean

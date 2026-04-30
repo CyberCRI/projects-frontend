@@ -7,20 +7,17 @@
     </div>
   </div>
 </template>
-<script>
-export default {
-  name: 'FieldDisabler',
-  props: {
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-    label: {
-      type: String,
-      required: true,
-    },
-  },
-}
+
+<script setup lang="ts">
+withDefaults(
+  defineProps<{
+    disabled?: boolean
+    label: string
+  }>(),
+  {
+    disabled: false,
+  }
+)
 </script>
 <style lang="scss" scoped>
 .field-disabler {

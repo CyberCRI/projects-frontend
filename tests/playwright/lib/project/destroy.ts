@@ -1,5 +1,5 @@
-import { delay } from '~~/tests/playwright/lib/index'
 import { expect } from '@playwright/test'
+import { delay } from 'es-toolkit'
 export async function destroyProject(page) {
   await delay(1000) // give times skeleton to kick in
   await expect(page.locator('.project-tabs-skeleton')).toHaveCount(0)

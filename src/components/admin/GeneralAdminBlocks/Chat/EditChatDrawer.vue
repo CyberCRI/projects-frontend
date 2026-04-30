@@ -1,7 +1,6 @@
 <template>
   <BaseDrawer
     :confirm-action-name="$t('common.save')"
-    :confirm-action-disabled="form?.v$?.$invalid"
     :is-opened="isOpened"
     :title="$t('chat.drawer.title')"
     class="chat-drawer small"
@@ -18,7 +17,7 @@
         <p class="notice">
           {{ $t('chat.drawer.url.notice') }}
         </p>
-        <TextInput v-model="chat_url" :placeholder="$t('chat.drawer.url.placeholder')" />
+        <TextInput v-model="chatURL" :placeholder="$t('chat.drawer.url.placeholder')" />
       </div>
 
       <div class="form-section">
@@ -34,77 +33,50 @@
     </form>
   </BaseDrawer>
 </template>
-<script>
-import { patchOrganization } from '~/api/organizations.service.ts'
+<script setup lang="ts">
+import { patchOrganization } from '~/api/organizations.service'
 
 import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
-import useToasterStore from '~/stores/useToaster.ts'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useToasterStore from '~/stores/useToaster'
 
-export default {
-  name: 'EditChatDrawer',
+defineProps<{ isOpened: boolean }>()
 
-  components: {
-    BaseDrawer,
-    TextInput,
-  },
+const emit = defineEmits<{
+  close: []
+  'chat-edited': []
+}>()
+const toaster = useToasterStore()
+const organizationsStore = useOrganizationsStore()
+const organizationCode = useOrganizationCode()
+const { t } = useNuxtI18n()
 
-  props: {
-    isOpened: {
-      type: Boolean,
-      required: true,
-    },
-  },
+const chat_button_text = ref(organizationsStore.current.chat_button_text || '')
+const chatURL = ref(organizationsStore.current.chat_url || '')
+const asyncing = ref(false)
 
-  emits: ['close', 'chat-edited'],
+const cancel = () => emit('close')
+const saveChat = async () => {
+  asyncing.value = true
 
-  setup() {
-    const toaster = useToasterStore()
-    const organizationsStore = useOrganizationsStore()
-    return {
-      toaster,
-      organizationsStore,
+  try {
+    const payload = {
+      chat_button_text: chat_button_text.value,
+      chat_url: chatURL.value,
     }
-  },
 
-  data() {
-    const org = this.organizationsStore.current
-
-    return {
-      chat_button_text: org.chat_button_text || '',
-      chat_url: org.chat_url || '',
-      asyncing: false,
-      form: {},
-    }
-  },
-
-  methods: {
-    cancel() {
-      this.$emit('close')
-    },
-    async saveChat() {
-      this.asyncing = true
-
-      try {
-        const payload = {
-          chat_button_text: this.chat_button_text,
-          chat_url: this.chat_url,
-        }
-
-        await patchOrganization(this.organizationsStore.current?.code, payload)
-        this.$emit('chat-edited')
-        this.toaster.pushSuccess(this.$t('chat.drawer.success'))
-      } catch (err) {
-        this.toaster.pushError(`${this.$t('chat.drawer.error')} (${err})`)
-        console.error(err)
-      } finally {
-        this.asyncing = false
-        this.$emit('close')
-      }
-    },
-  },
+    await patchOrganization(organizationCode, payload)
+    emit('chat-edited')
+    toaster.pushSuccess(t('chat.drawer.success'))
+  } catch (err) {
+    toaster.pushError(`${t('chat.drawer.error')} (${err})`)
+    console.error(err)
+  } finally {
+    asyncing.value = false
+    emit('close')
+  }
 }
 </script>
 <style lang="scss" scoped>

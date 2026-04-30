@@ -1,10 +1,9 @@
-import type { OrganizationModel, OrganizationPatchInput } from '~/models/organization.model'
-import type { GroupModelInput, RemoveGroupModelInput } from '~/models/group.model'
-import type { ImageOrganizationInput } from '~/models/image.model'
-
-import { _adaptParamsToGetQuery } from '~/api/utils.service'
-
-import useAPI from '~/composables/useAPI'
+import type { /*GroupModel,*/ GroupModelInput, RemoveGroupModelInput } from '@/models/group.model'
+import type { /*ImageOrganizationOutput,*/ ImageOrganizationInput } from '@/models/image.model'
+import type { OrganizationModel, OrganizationPatchInput } from '@/models/organization.model'
+import { _adaptParamsToGetQuery } from '@/api/utils.service'
+import type { ProjectModel } from '@/models/project.model'
+import useAPI from '@/composables/useAPI'
 
 export async function patchOrganization(
   code: string,
@@ -56,44 +55,66 @@ export async function removeOrgMember({
   return await useAPI(`organization/${org_id}/member/remove/`, { body, method: 'POST' }) // .data.value
 }
 
-export async function postAccessRequest(org_code, body) {
-  return await useAPI(`organization/${org_code}/access-request/`, { body, method: 'POST' })
+export async function postAccessRequest(organizationCode: OrganizationModel['code'], body) {
+  return await useAPI(`organization/${organizationCode}/access-request/`, { body, method: 'POST' })
 }
 
-export async function getAccessRequests(org_code, params) {
-  return await useAPI(`organization/${org_code}/access-request/`, {
+export async function getAccessRequests(organizationCode: OrganizationModel['code'], params) {
+  return await useAPI(`organization/${organizationCode}/access-request/`, {
     ..._adaptParamsToGetQuery(params),
   })
 }
 
-export async function declineAccessRequest(org_code, params) {
-  return await useAPI(`organization/${org_code}/access-request/decline/`, {
+export async function declineAccessRequest(organizationCode: OrganizationModel['code'], params) {
+  return await useAPI(`organization/${organizationCode}/access-request/decline/`, {
     body: params,
     method: 'POST',
   })
 }
 
-export async function acceptAccessRequest(org_code, params) {
-  return await useAPI(`organization/${org_code}/access-request/accept/`, {
+export async function acceptAccessRequest(organizationCode: OrganizationModel['code'], params) {
+  return await useAPI(`organization/${organizationCode}/access-request/accept/`, {
     body: params,
     method: 'POST',
   })
 }
 
-export async function getFeaturedProjects(org_code, params) {
-  return await useAPI(`organization/${org_code}/featured-project/`, {
-    ..._adaptParamsToGetQuery(params),
-  })
+// --- featured
+type ConfigFeaturedProject = UseApiOptions
+type FeaturedProjectBody = {
+  featured_projects_ids: number[]
+}
+export async function getFeaturedProjects(
+  organizationCode: OrganizationModel['code'],
+  config: ConfigFeaturedProject = {}
+) {
+  return await useAPI<PaginationResult<ProjectModel>>(
+    `organization/${organizationCode}/featured-project/`,
+    config
+  )
 }
 
-export async function addFeaturedProject(org_code, body) {
-  return await useAPI(`organization/${org_code}/featured-project/add/`, { body, method: 'POST' })
-}
-
-export async function removeFeaturedProject(org_code, body) {
-  return await useAPI(`organization/${org_code}/featured-project/remove/`, {
+export async function addFeaturedProject(
+  organizationCode: OrganizationModel['code'],
+  body: FeaturedProjectBody,
+  config: ConfigFeaturedProject = {}
+) {
+  return await useAPI<ProjectModel>(`organization/${organizationCode}/featured-project/add/`, {
+    method: 'POST',
     body,
+    ...config,
+  })
+}
+
+export async function removeFeaturedProject(
+  organizationCode: OrganizationModel['code'],
+  body: FeaturedProjectBody,
+  config: ConfigFeaturedProject = {}
+) {
+  return await useAPI<undefined>(`organization/${organizationCode}/featured-project/remove/`, {
     method: 'POST',
+    body,
+    ...config,
   })
 }
 

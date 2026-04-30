@@ -16,10 +16,11 @@ import type { NewsModel } from '~/models/news.model'
 
 import { _adaptParamsToGetQuery } from '~/api/utils.service'
 
+import type { OrganizationModel } from '~/models/organization.model'
 import useAPI from '~/composables/useAPI'
 
 // HIERARCHY
-export async function getHierarchyGroups(organizationCode: string, config = {}) {
+export async function getHierarchyGroups(organizationCode: OrganizationModel['code'], config = {}) {
   return await useAPI<HierarchyGroupModel>(
     `organization/${organizationCode}/people-groups-hierarchy/`,
     config
@@ -36,7 +37,10 @@ export async function getPeopleGroups(organizationCode, config) {
   )
 }
 
-export async function postGroup(organizationCode: string, groupData: PostGroupData) {
+export async function postGroup(
+  organizationCode: OrganizationModel['code'],
+  groupData: PostGroupData
+) {
   return await useAPI(`organization/${organizationCode}/people-group/`, {
     body: groupData,
     method: 'POST',
@@ -52,7 +56,11 @@ export async function addParentGroup(
   return await useAPI(`organization/${orgId}/people-group/${groupId}/`, { body, method: 'PATCH' })
 }
 
-export function getGroup(organizationCode: string, groupId: PeopleGroupIdOrSlug, config = {}) {
+export function getGroup(
+  organizationCode: OrganizationModel['code'],
+  groupId: PeopleGroupIdOrSlug,
+  config = {}
+) {
   return useAPI<PeopleGroupModel>(
     `organization/${organizationCode}/people-group/${groupId}/`,
     config
@@ -60,18 +68,21 @@ export function getGroup(organizationCode: string, groupId: PeopleGroupIdOrSlug,
 }
 
 export async function patchGroup(
-  organizationCode: string,
-  groupName: number,
+  organizationCode: OrganizationModel['code'],
+  groupId: PeopleGroupIdOrSlug,
   groupData: Partial<PostGroupData>
 ) {
-  return await useAPI(`organization/${organizationCode}/people-group/${groupName}/`, {
+  return await useAPI(`organization/${organizationCode}/people-group/${groupId}/`, {
     body: groupData,
     method: 'PATCH',
   })
 }
 
-export async function deleteGroup(organizationCode: string, groupName: string) {
-  return await useAPI(`organization/${organizationCode}/people-group/${groupName}/`, {
+export async function deleteGroup(
+  organizationCode: OrganizationModel['code'],
+  groupId: PeopleGroupIdOrSlug
+) {
+  return await useAPI(`organization/${organizationCode}/people-group/${groupId}/`, {
     method: 'DELETE',
   })
 }
@@ -79,7 +90,7 @@ export async function deleteGroup(organizationCode: string, groupName: string) {
 // GROUP MEMBERS
 
 export async function getGroupMember(
-  organizationCode: string,
+  organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
   config = {}
 ) {
@@ -90,7 +101,7 @@ export async function getGroupMember(
 }
 
 export async function postGroupMembers(
-  organizationCode: string,
+  organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
   membersData: AddGroupMembers
 ) {
@@ -101,7 +112,7 @@ export async function postGroupMembers(
 }
 
 export async function removeGroupMember(
-  organizationCode: string,
+  organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
   membersData: RemoveGroupMember
 ) {
@@ -114,7 +125,7 @@ export async function removeGroupMember(
 // GROUP PROJECTS
 
 export async function getGroupProject(
-  organizationCode: string,
+  organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
   config = {}
 ) {
@@ -125,22 +136,22 @@ export async function getGroupProject(
 }
 
 export async function postGroupProjects(
-  org: string,
-  group_id: number,
+  organizationCode: OrganizationModel['code'],
+  groupId: PeopleGroupIdOrSlug,
   projectsData: PostGroupProjects
 ) {
-  return await useAPI(`organization/${org}/people-group/${group_id}/project/add/`, {
+  return await useAPI(`organization/${organizationCode}/people-group/${groupId}/project/add/`, {
     body: projectsData,
     method: 'POST',
   })
 }
 
 export async function removeGroupProject(
-  org: string,
-  group_id: number,
+  organizationCode: OrganizationModel['code'],
+  groupId: PeopleGroupIdOrSlug,
   projectsData: PostGroupProjects
 ) {
-  return await useAPI(`organization/${org}/people-group/${group_id}/project/remove/`, {
+  return await useAPI(`organization/${organizationCode}/people-group/${groupId}/project/remove/`, {
     body: projectsData,
     method: 'POST',
   })
@@ -148,22 +159,30 @@ export async function removeGroupProject(
 
 // GROUP HEADER
 
-export async function postGroupHeader(org: string, group_id: number, headerData: FormData) {
-  return await useAPI(`organization/${org}/people-group/${group_id}/header/`, {
+export async function postGroupHeader(
+  organizationCode: OrganizationModel['code'],
+  groupId: PeopleGroupIdOrSlug,
+  headerData: FormData
+) {
+  return await useAPI(`organization/${organizationCode}/people-group/${groupId}/header/`, {
     body: headerData,
     method: 'POST',
   })
 }
 
-export async function patchGroupHeader(org: string, group_id: number, headerData: FormData) {
-  return await useAPI(`organization/${org}/people-group/${group_id}/header/`, {
+export async function patchGroupHeader(
+  organizationCode: OrganizationModel['code'],
+  groupId: PeopleGroupIdOrSlug,
+  headerData: FormData
+) {
+  return await useAPI(`organization/${organizationCode}/people-group/${groupId}/header/`, {
     body: headerData,
     method: 'PATCH',
   })
 }
 
 export async function getGroupSimilar(
-  organizationCode: string,
+  organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
   config = {}
 ) {
@@ -174,7 +193,7 @@ export async function getGroupSimilar(
 }
 
 export async function getSubGroup(
-  organizationCode: string,
+  organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
   config = {}
 ) {
@@ -185,7 +204,7 @@ export async function getSubGroup(
 }
 
 export async function getGroupAllLocations(
-  organizationCode: string,
+  organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
   config = {}
 ) {
@@ -196,7 +215,7 @@ export async function getGroupAllLocations(
 }
 
 export async function getGroupLocation(
-  organizationCode: string,
+  organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
   config = {}
 ) {
@@ -207,7 +226,7 @@ export async function getGroupLocation(
 }
 
 export async function removeGroupLocation(
-  organizationCode: string,
+  organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
   locationId: number,
   config = {}
@@ -222,7 +241,7 @@ export async function removeGroupLocation(
 }
 
 export async function patchGroupLocation(
-  organizationCode: string,
+  organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
   locationId: number,
   payload: Partial<BaseLocationModel>,
@@ -239,7 +258,7 @@ export async function patchGroupLocation(
 }
 
 export async function postGroupLocation(
-  organizationCode: string,
+  organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
   payload: BaseLocationModel,
   config = {}
@@ -255,7 +274,7 @@ export async function postGroupLocation(
 }
 
 export function getGroupGallery(
-  organizationCode: string,
+  organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
   config = {}
 ) {
@@ -268,7 +287,7 @@ export function getGroupGallery(
 }
 
 export function deleteGroupGallery(
-  organizationCode: string,
+  organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
   imageId: number,
   config = {}
@@ -283,7 +302,7 @@ export function deleteGroupGallery(
 }
 
 export function postGroupGallery(
-  organizationCode: string,
+  organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
   body: FormData,
   config = {}
@@ -296,7 +315,7 @@ export function postGroupGallery(
 }
 
 export async function getGroupNews(
-  organizationCode: string,
+  organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
   config = {}
 ) {
@@ -310,7 +329,7 @@ export async function getGroupNews(
 }
 
 export async function getGroupEvent(
-  organizationCode: string,
+  organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
   config = {}
 ) {

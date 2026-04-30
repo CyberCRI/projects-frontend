@@ -15,6 +15,8 @@ export interface BaseLocationModel extends BaseModel {
   description: string
 }
 
+export type LocationId = BaseLocationModel['id']
+
 export type BaseTranslatedLocationModel = Translated<BaseLocationModel, 'title' | 'description'>
 
 export interface NewsLocation extends BaseLocationModel {

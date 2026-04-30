@@ -93,6 +93,8 @@ const closePopUp = inject('closePopUp')
 }
 
 .location-tooltip-info {
+  padding-bottom: 0.5rem;
+
   h3 {
     font-size: medium;
   }

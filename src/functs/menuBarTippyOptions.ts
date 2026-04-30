@@ -1,4 +1,4 @@
-export default function (mebuBarComponent, selector) {
+export default function (mebuBarComponent, selector?: string) {
   return {
     inlinePositioning: true,
     popperOptions: {
