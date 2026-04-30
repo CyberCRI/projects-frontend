@@ -14,7 +14,7 @@
     <template #body>
       <div class="location-map-ctn">
         <!-- form not have it, so ignore typescript -->
-        <MapRecap :locations="[form as any]" :expand="false" />
+        <GeneralMap :locations="[form as any]" :controls="false" />
       </div>
 
       <div class="location-type-ctn">
@@ -46,16 +46,14 @@
 </template>
 
 <script setup lang="ts">
-import type { LocationForm } from '~/models/location.model'
-import type { LocationType } from '~/models/types'
-
-import GroupButton from '~/components/base/button/GroupButton.vue'
-import DialogModal from '~/components/base/modal/DialogModal.vue'
-import LpiButton from '~/components/base/button/LpiButton.vue'
-import TextInput from '~/components/base/form/TextInput.vue'
-import MapRecap from '~/components/map/MapRecap.vue'
-
-import { useLocationForm } from '~/form/location'
+import GroupButton from '@/components/base/button/GroupButton.vue'
+import DialogModal from '@/components/base/modal/DialogModal.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import TextInput from '@/components/base/form/TextInput.vue'
+import type { LocationForm } from '@/models/location.model'
+import GeneralMap from '~/components/map/GeneralMap.vue'
+import type { LocationType } from '@/models/types'
+import { useLocationForm } from '@/form/location'
 
 const props = withDefaults(
   defineProps<{
@@ -114,7 +112,10 @@ const { form, isValid, errors } = useLocationForm({ model })
 watch(
   () => form.value.type,
   () => {
-    if (!form.value.type || !props.locationTypes?.includes(form.value.type)) {
+    if (
+      !form.value.type ||
+      (props.locationTypes && !props.locationTypes.includes(form.value.type))
+    ) {
       form.value.type = defaultLocationType.value
     }
   },
@@ -154,7 +155,7 @@ const isExist = computed(() => !!form.value.id)
 </style>
 
 <style>
-.location-map-ctn .map-recap {
+.location-map-ctn .leaflet-map {
   height: 250px;
 }
 </style>
