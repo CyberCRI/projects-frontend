@@ -148,7 +148,7 @@ onMounted(() => {
   map.on('click', (e) => emit('click', e))
 
   mapInstance.value = map
-  centerMap()
+  refreshMap()
 })
 </script>
 

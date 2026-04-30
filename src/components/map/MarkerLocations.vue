@@ -18,6 +18,7 @@ const { locale } = useNuxtI18n()
 
 const first = ref(true)
 
+const map = inject<Ref<L.Map>>('map')
 const centerMap = inject<() => void>('centerMap')
 const addLayers = inject<(l: L.Layer[]) => void>('addLayers')
 const getLayers = inject<() => L.Layer[]>('getLayers')
@@ -94,7 +95,6 @@ watchEffect(async () => {
   nextTick(() => firstCenterMap())
 })
 
-const map = inject<Ref<L.Map>>('map')
 watchEffect(() => {
   const mapRaw = toRaw(map.value)
   mapRaw.on('popupopen', (ev) => {
