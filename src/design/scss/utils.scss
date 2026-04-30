@@ -23,6 +23,10 @@
   pointer-events: none;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .text-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -43,7 +47,7 @@
   transition: transform 0.2s;
 
   &:hover {
-    transform: scale(1.03);
+    transform: scale(1.02);
   }
 }
 

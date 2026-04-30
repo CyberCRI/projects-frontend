@@ -1,7 +1,7 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import AnnouncementDrawer from '@/components/project/announcement/AnnouncementDrawer.vue'
-import waitForExpect from 'wait-for-expect'
+import AnnouncementDrawer from '~/components/project/announcement/AnnouncementDrawer.vue'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import { describe, expect, it } from 'vitest'
+import waitForExpect from 'wait-for-expect'
 
 describe('AnnouncementDrawer.vue', () => {
   it('should render component', () => {

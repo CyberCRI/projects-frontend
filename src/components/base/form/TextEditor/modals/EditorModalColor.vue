@@ -56,8 +56,8 @@
 </template>
 
 <script>
-import DialogModal from '@/components/base/modal/DialogModal.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
+import DialogModal from '~/components/base/modal/DialogModal.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
 
 export default {
   name: 'EditorModalColor',

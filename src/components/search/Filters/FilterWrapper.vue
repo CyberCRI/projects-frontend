@@ -13,14 +13,15 @@
 </template>
 
 <script setup lang="ts">
-import { IconImageChoice } from '@/functs/IconImage'
-import IconImage from '@/components/base/media/IconImage.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+
+import type { IconImageChoice } from '~/functs/IconImage'
 
 const props = withDefaults(
   defineProps<{
     isToggleable?: boolean
     rightIcon?: IconImageChoice
-    filterKey: string
+    filterKey: string | number
     hasFilters?: boolean
   }>(),
   { isToggleable: false, rightIcon: 'ChevronRight', hasFilters: true }

@@ -1,6 +1,8 @@
-import { Translated } from '@/interfaces/translated'
-import BaseModel from '@/models/base.model'
-import { BaseLocationModel, BaseTranslatedLocationModel } from '@/models/location.model'
+import type { BaseLocationModel, BaseTranslatedLocationModel } from '~/models/location.model'
+import type BaseModel from '~/models/base.model'
+
+import type { Translated } from '~/interfaces/translated'
+import type { Ordering } from '~/interfaces/query'
 
 /**
  * @name NewsModel
@@ -19,6 +21,8 @@ export interface EventModel extends BaseModel {
   people_groups: string[]
 }
 
+export type EventIdOrSlug = EventModel['id']
+
 export type EventInput = Required<Omit<EventModel, 'id' | 'created_at' | 'updated_at'>>
 
 export type EventForm = Omit<EventInput, 'people_groups' | 'start_date' | 'end_date'> & {
@@ -33,8 +37,11 @@ export type TranslatedEventModel = Translated<EventModel, 'title' | 'content'> &
   location: BaseTranslatedLocationModel
 }
 
-export type QueryFilterEvent = Partial<{
-  ordering: 'start_date' | '-start_date' | 'end_date' | '-end_date'
-  from_date: string
-  to_date: string
-}>
+export type QueryFilterEvent = Partial<
+  {
+    ordering: Ordering<'start_date' | 'end_date' | 'updated_at' | 'created_at'>
+    from_date: string
+    to_date: string
+    serializer: 'light' | 'superlight'
+  } & PaginationQuery
+>

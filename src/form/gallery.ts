@@ -1,7 +1,9 @@
 import { required } from '@vuelidate/validators'
-import useForm from '@/composables/useForm'
 import { clone } from 'es-toolkit'
-import { ImageGalleryForm } from '@/interfaces/gallery'
+
+import type { ImageGalleryForm } from '~/interfaces/gallery'
+
+import useForm from '~/composables/useForm'
 
 const DEFAULT_FORM: ImageGalleryForm = {
   files: null,

@@ -1,28 +1,36 @@
+import type { OrganizationModel } from '~/models/organization.model'
+import type { PeopleGroupIdOrSlug } from '~/models/invitation.model'
+
+import type { RefOrRaw } from '~/interfaces/utils'
+
 import {
   getGroup as fetchGetGroup,
-  getGroupProject as fetchGetGroupProject,
-  getHierarchyGroups as fetchGetHierarchyGroups,
   getGroupMember as fetchGetGroupMember,
+  getGroupProject as fetchGetGroupProject,
   getGroupSimilar as fetchGetGroupSimilar,
+  getHierarchyGroups as fetchGetHierarchyGroups,
   getSubGroup as fetchGetSubGroup,
-  getGroupGallery as fetchGroupGallery,
   getGroupAllLocations as fetchGroupAllLocations,
-  getGroupNews as fetchGroupNews,
   getGroupEvent as fetchGroupEvent,
-} from '@/api/groups.service'
-import useAsyncAPI from '@/composables/useAsyncAPI'
-import useAsyncPaginationAPI from '@/composables/useAsyncPaginationAPI'
-import { onlyRefs } from '@/functs/onlyRefs'
-import { RefOrRaw } from '@/interfaces/utils'
-import { PeopleGroupIdOrSlug } from '@/models/invitation.model'
-import { OrganizationModel } from '@/models/organization.model'
+  getGroupGallery as fetchGroupGallery,
+  getGroupNews as fetchGroupNews,
+} from '~/api/groups.service'
+import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
+
+import useAsyncPaginationAPI from '~/composables/useAsyncPaginationAPI'
+import useAsyncAPI from '~/composables/useAsyncAPI'
+
+import { onlyRefs } from '~/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}
+
+type Config = UseAsyncApiConfig
+type ConfigPagination = UseAsyncPaginationApiConfig
 
 export const getGroup = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   groupId: RefOrRaw<PeopleGroupIdOrSlug>,
-  config = {}
+  config: Config = {}
 ) => {
   const { translateGroup } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}`)
@@ -41,7 +49,7 @@ export const getGroup = (
 
 export const getHierarchyGroups = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
-  config = {}
+  config: Config = {}
 ) => {
   const { translateGroup } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::hierarchy-groups`)
@@ -61,7 +69,7 @@ export const getHierarchyGroups = (
 export const getGroupProject = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   groupId: RefOrRaw<PeopleGroupIdOrSlug>,
-  config = {}
+  config: ConfigPagination = {}
 ) => {
   const { translateProjects } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::projects`)
@@ -84,7 +92,7 @@ export const getGroupProject = (
 export const getGroupMember = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   groupId: RefOrRaw<PeopleGroupIdOrSlug>,
-  config = {}
+  config: ConfigPagination = {}
 ) => {
   const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::members`)
 
@@ -105,7 +113,7 @@ export const getGroupMember = (
 export const getGroupSimilar = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   groupId: RefOrRaw<PeopleGroupIdOrSlug>,
-  config = {}
+  config: ConfigPagination = {}
 ) => {
   const { translateGroups } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::similars`)
@@ -128,7 +136,7 @@ export const getGroupSimilar = (
 export const getSubGroup = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   groupId: RefOrRaw<PeopleGroupIdOrSlug>,
-  config = {}
+  config: ConfigPagination = {}
 ) => {
   const { translateGroups } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::subgroup`)
@@ -151,7 +159,7 @@ export const getSubGroup = (
 export const getGroupAllLocations = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   groupId: RefOrRaw<PeopleGroupIdOrSlug>,
-  config = {}
+  config: Config = {}
 ) => {
   const { translateProjectLocations } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::locations`)
@@ -174,7 +182,7 @@ export const getGroupAllLocations = (
 export const getGroupGallery = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   groupId: RefOrRaw<PeopleGroupIdOrSlug>,
-  config = {}
+  config: ConfigPagination = {}
 ) => {
   const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::gallery`)
 
@@ -196,7 +204,7 @@ export const getGroupGallery = (
 export const getGroupNews = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   groupId: RefOrRaw<PeopleGroupIdOrSlug>,
-  config = {}
+  config: ConfigPagination = {}
 ) => {
   const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::news`)
 
@@ -221,7 +229,7 @@ export const getGroupNews = (
 export const getGroupEvent = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
   groupId: RefOrRaw<PeopleGroupIdOrSlug>,
-  config = {}
+  config: ConfigPagination = {}
 ) => {
   const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::event`)
 

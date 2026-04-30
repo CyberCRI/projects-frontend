@@ -1,17 +1,21 @@
 import * as oauth from '@panva/oauth4webapi'
+
 import {
   cleanLocalStorage,
   createRandomString,
   getRefreshTokenInterval,
-} from '@/api/auth/keycloakUtils'
-import useUsersStore from '@/stores/useUsers'
-import { useRuntimeConfig, useNuxtApp } from '#imports'
-import useToasterStore from '@/stores/useToaster'
-import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
+} from '~/api/auth/keycloakUtils'
+import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
+
+import useToasterStore from '~/stores/useToaster'
+import useUsersStore from '~/stores/useUsers'
+
+import { useNuxtApp, useRuntimeConfig } from '#imports'
 
 export type AuthResult = {
   access_token: string
   refresh_token: string
+  expires_in: number
   refresh_token_exp: number
   parsedToken: any
   fromURL?: string
@@ -200,8 +204,10 @@ export default function useKeycloak() {
       const access_token: string = result.access_token
       const refresh_token: string = result.refresh_token
       const refresh_token_exp: number = result.refresh_expires_in + Math.floor(Date.now() / 1000)
+      // expires is in second so 300 is 5 minutes
+      const expires_in: number = result.expires_in * 1000
       const parsedToken = await oauth.getValidatedIdTokenClaims(result)
-      return { access_token, refresh_token, refresh_token_exp, parsedToken, id_token }
+      return { access_token, refresh_token, expires_in, refresh_token_exp, parsedToken, id_token }
     },
 
     onLoginError(): void {

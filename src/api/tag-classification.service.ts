@@ -1,153 +1,166 @@
-import useAPI from '@/composables/useAPI'
-import type { APIParams /*, APIResponseList*/ } from '@/api/types'
-import type { TagModel } from '@/models/tag.model'
+import type { TagModel } from '~/models/tag.model'
 
-export async function getAllOrgClassifications(orgCode: string, params: APIParams) {
-  return await useAPI<PaginationResult<TagModel>>(`organization/${orgCode}/tag-classification/`, {
-    params,
-  })
+import type {
+  QueryFilterTagClassification,
+  TagClassificationModel,
+} from '~/models/tagclassification.model'
+import type { OrganizationModel } from '~/models/organization.model'
+import type { UseApiOptions } from '~/composables/useAPI'
+import useAPI from '~/composables/useAPI'
+
+type Config = UseApiOptions<PaginationQuery>
+
+export async function getAllOrgClassifications(
+  organizationCode: OrganizationModel['code'],
+  config: Config = {}
+) {
+  return await useAPI<PaginationResult<TagModel>>(
+    `organization/${organizationCode}/tag-classification/`,
+    config
+  )
 }
 
 export async function getOrgClassification(
-  orgCode: string,
-  classificationId: number,
-  params: APIParams
+  organizationCode: OrganizationModel['code'],
+  classificationId: TagClassificationModel['id'],
+  config: Config = {}
 ) {
-  return await useAPI(`organization/${orgCode}/tag-classification/${classificationId}/`, {
-    params,
-  }) //.data.value
+  return await useAPI<TagClassificationModel>(
+    `organization/${organizationCode}/tag-classification/${classificationId}/`,
+    config
+  )
 }
 
 export async function postOrgClassification(
-  orgCode: string,
-  classification: any // TODO: Add type
+  organizationCode: OrganizationModel['code'],
+  classification: Partial<TagClassificationModel>
 ) {
-  return await useAPI(`organization/${orgCode}/tag-classification/`, {
-    body: classification,
-    method: 'POST',
-  }) //.data.value
+  return await useAPI<TagClassificationModel>(
+    `organization/${organizationCode}/tag-classification/`,
+    {
+      body: classification,
+      method: 'POST',
+    }
+  )
 }
 
 export async function putOrgClassification(
-  orgCode: string,
-  classificationId: number,
-  classification: any // TODO: Add type
+  organizationCode: OrganizationModel['code'],
+  classificationId: TagClassificationModel['id'],
+  classification: Partial<TagClassificationModel>
 ) {
-  return await useAPI(`organization/${orgCode}/tag-classification/${classificationId}/`, {
-    body: classification,
-    method: 'PUT',
-  }) //.data.value
+  return await useAPI<TagClassificationModel>(
+    `organization/${organizationCode}/tag-classification/${classificationId}/`,
+    {
+      body: classification,
+      method: 'PUT',
+    }
+  )
 }
 
 export async function patchOrgClassification(
-  orgCode: string,
-  classificationId: number,
-  classification: any // TODO: Add type
+  organizationCode: OrganizationModel['code'],
+  classificationId: TagClassificationModel['id'],
+  classification: Partial<TagClassificationModel>
 ) {
-  return await useAPI(`organization/${orgCode}/tag-classification/${classificationId}/`, {
-    body: classification,
-    method: 'PATCH',
-  }) //.data.value
+  return await useAPI<TagClassificationModel>(
+    `organization/${organizationCode}/tag-classification/${classificationId}/`,
+    {
+      body: classification,
+      method: 'PATCH',
+    }
+  )
 }
 
-export async function deleteOrgClassification(orgCode: string, classificationId: number) {
-  return await useAPI(`organization/${orgCode}/tag-classification/${classificationId}/`, {
-    method: 'DELETE',
-  }) //.data.value
+export async function deleteOrgClassification(
+  organizationCode: OrganizationModel['code'],
+  classificationId: TagClassificationModel['id']
+) {
+  return await useAPI<undefined>(
+    `organization/${organizationCode}/tag-classification/${classificationId}/`,
+    {
+      method: 'DELETE',
+    }
+  )
 }
+
+type ConfigClassification = UseApiOptions<QueryFilterTagClassification>
 
 export async function getOrgClassificationTags(
-  orgCode: string,
-  classificationId: number,
-  params?: APIParams
+  organizationCode: OrganizationModel['code'],
+  classificationId: TagClassificationModel['id'],
+  config: ConfigClassification = {}
 ) {
-  return await useAPI(`organization/${orgCode}/tag-classification/${classificationId}/tag/`, {
-    params,
+  return await useAPI<PaginationResult<TagClassificationModel>>(
+    `organization/${organizationCode}/tag-classification/${classificationId}/tag/`,
+    config
+  )
+}
+
+export async function getTags(ids: number[], config: Config = {}) {
+  return await useAPI<TagModel[]>(`tag/`, {
+    ...config,
+    query: {
+      ...(config.query || {}),
+      ids: ids.join(','),
+    },
   })
 }
 
-export async function getOrgClassificationAutocomplete(
-  orgCode: string,
-  classificationId: number,
-  params?: APIParams
-) {
-  return await useAPI(
-    `/organization/${orgCode}/tag-classification/${classificationId}/tag/autocomplete/`,
-    { params }
-  ) //.data.value
-}
-
-export async function getOrgTag(orgCode: string, tagId: number, params: APIParams) {
-  return await useAPI(`organization/${orgCode}/tag/${tagId}/`, { params }) //.data.value
-}
-
-export async function getTags(ids: number[], params?: APIParams) {
-  return await useAPI(`tag/`, {
-    params: {
-      ...params,
-      ids: ids.join(','),
-    } as any,
-  }) //.data.value
-}
-
-export async function getAllTagsById(ids: number[], params?: APIParams) {
+export async function getAllTagsById(ids: number[], config: Config = {}) {
   return {
     count: -1,
     next: null,
     previous: null,
-    results: await Promise.all(
-      ids.map(
-        async (id) =>
-          await useAPI(`tag/${id}/`, {
-            params,
-          }) //.data.value
-      )
-    ),
+    results: await Promise.all(ids.map(async (id) => await useAPI(`tag/${id}/`, config))),
   }
 }
 
 export async function putClassificationTag(
-  orgCode: string,
-  classificationId: number,
-  tagtId: number,
+  organizationCode: OrganizationModel['code'],
+  classificationId: TagClassificationModel['id'],
+  tagtId: TagModel['id'],
   tag: TagModel
 ) {
-  return await useAPI(
-    `/organization/${orgCode}/tag-classification/${classificationId}/tag/${tagtId}/`,
+  return await useAPI<TagModel>(
+    `/organization/${organizationCode}/tag-classification/${classificationId}/tag/${tagtId}/`,
     { body: tag, method: 'PUT' }
-  ) //.data.value
+  )
 }
 
 export async function patchClassificationTag(
-  orgCode: string,
-  classificationId: number,
-  tagtId: number,
+  organizationCode: OrganizationModel['code'],
+  classificationId: TagClassificationModel['id'],
+  tagtId: TagModel['id'],
   tag: TagModel
 ) {
-  return await useAPI(
-    `/organization/${orgCode}/tag-classification/${classificationId}/tag/${tagtId}/`,
+  return await useAPI<TagModel>(
+    `/organization/${organizationCode}/tag-classification/${classificationId}/tag/${tagtId}/`,
     { body: tag, method: 'PATCH' }
-  ) //.data.value
+  )
 }
 
 export async function deleteClassificationTag(
-  orgCode: string,
-  classificationId: number,
-  tagtId: number
+  organizationCode: OrganizationModel['code'],
+  classificationId: TagClassificationModel['id'],
+  tagtId: TagModel['id']
 ) {
-  return await useAPI(
-    `/organization/${orgCode}/tag-classification/${classificationId}/tag/${tagtId}/`,
+  return await useAPI<TagModel>(
+    `/organization/${organizationCode}/tag-classification/${classificationId}/tag/${tagtId}/`,
     { method: 'DELETE' }
-  ) //.data.value
+  )
 }
 
 export async function postClassificationTag(
-  orgCode: string,
-  classificationId: number,
+  organizationCode: OrganizationModel['code'],
+  classificationId: TagClassificationModel['id'],
   tag: TagModel
 ) {
-  return await useAPI(`organization/${orgCode}/tag-classification/${classificationId}/tag/`, {
-    body: tag,
-    method: 'POST',
-  }) //.data.value
+  return await useAPI<TagModel>(
+    `organization/${organizationCode}/tag-classification/${classificationId}/tag/`,
+    {
+      body: tag,
+      method: 'POST',
+    }
+  )
 }

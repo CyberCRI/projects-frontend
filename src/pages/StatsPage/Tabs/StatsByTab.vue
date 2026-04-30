@@ -22,58 +22,34 @@
   </div>
 </template>
 
-<script>
-import StatCard from '@/components/stats/StatCard.vue'
-import SdgChart from '@/components/stats/Charts/SdgChart.vue'
-import TagChart from '@/components/stats/Charts/TagChart.vue'
-import LpiLoader from '@/components/base/loader/LoaderSimple.vue'
-import TimeOrgChart from '@/components/stats/Charts/TimeOrgChart.vue'
-import { getStats } from '@/api/stats.service'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import TotalChart from '@/components/stats/Charts/TotalChart.vue'
+<script setup lang="ts">
+import { getStats } from '~/api/stats.service'
 
-export default {
-  name: 'StatsByTab',
+import TimeOrgChart from '~/components/stats/Charts/TimeOrgChart.vue'
+import LpiLoader from '~/components/base/loader/LoaderSimple.vue'
+import TotalChart from '~/components/stats/Charts/TotalChart.vue'
+import TagChart from '~/components/stats/Charts/TagChart.vue'
+import SdgChart from '~/components/stats/Charts/SdgChart.vue'
+import StatCard from '~/components/stats/StatCard.vue'
 
-  components: {
-    StatCard,
-    LpiLoader,
-    SdgChart,
-    TagChart,
-    TimeOrgChart,
-    TotalChart,
-  },
-  props: {
-    filter: {
-      type: String,
-      default: '',
-    },
-  },
-  setup() {
-    const organizationsStore = useOrganizationsStore()
-    return {
-      organizationsStore,
-    }
-  },
+const props = withDefaults(
+  defineProps<{
+    filter?: string
+  }>(),
+  {
+    filter: '',
+  }
+)
 
-  data() {
-    return {
-      isLoading: true,
-      renderCount: 0,
-      stats: undefined,
-    }
-  },
-  computed: {
-    organization() {
-      return this.organizationsStore.current
-    },
-  },
+const organizationCode = useOrganizationCode()
 
-  async created() {
-    this.stats = await getStats(this.filter, this.organization.code)
-    this.isLoading = false
-  },
-}
+const isLoading = ref(true)
+const stats = ref()
+
+onMounted(async () => {
+  stats.value = await getStats(organizationCode, { query: { publication_status: props.filter } })
+  isLoading.value = false
+})
 </script>
 
 <style lang="scss" scoped>

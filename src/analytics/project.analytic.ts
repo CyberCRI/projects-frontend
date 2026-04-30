@@ -1,6 +1,11 @@
-import analytics from '@/analytics'
-import { SearchParams } from '@/api/types'
-import { ProjectMembersAddInput, ProjectMembersDeleteInput } from '@/models/project-member.model'
+import type {
+  ProjectMembersAddInput,
+  ProjectMembersDeleteInput,
+} from '~/models/project-member.model'
+
+import type { SearchParams } from '~/api/types'
+
+import analytics from '~/analytics'
 
 export interface ProjectAnalytic {
   id: string // Project id (in OLD API was called shortid)

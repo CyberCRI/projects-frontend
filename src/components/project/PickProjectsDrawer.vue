@@ -42,12 +42,12 @@
 </template>
 
 <script>
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import PickProjectSelection from '@/components/project/PickProjectSelection.vue'
-import ProjectCard from '@/components/project/ProjectCard.vue'
-import LinkButton from '@/components/base/button/LinkButton.vue'
-import { toRaw } from 'vue'
-import useToasterStore from '@/stores/useToaster.ts'
+import PickProjectSelection from '~/components/project/PickProjectSelection.vue'
+import LinkButton from '~/components/base/button/LinkButton.vue'
+import ProjectCard from '~/components/project/ProjectCard.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+
+import useToasterStore from '~/stores/useToaster.ts'
 
 export default {
   name: 'PickProjectsDrawer',
@@ -106,7 +106,11 @@ export default {
       return this.isSeeMore ? 'common.see-less' : 'common.see-more'
     },
     remainingPicks() {
-      return this.maxPick ? new Array(Math.max(this.maxPick - this.listProjects.length, 0)) : []
+      if (!this.maxPick) {
+        return []
+      }
+      const arrayLength = Math.max(this.maxPick - this.listProjects.length, 0)
+      return Array.from(Array.from({ length: arrayLength }).keys())
     },
 
     drawerTitleWithLimit() {
@@ -167,7 +171,7 @@ export default {
       this.listProjects.splice(0)
     },
     unselectProject(project) {
-      let index = this.listProjects.indexOf(project)
+      const index = this.listProjects.indexOf(project)
       if (index > -1) {
         this.listProjects.splice(index, 1)
       }

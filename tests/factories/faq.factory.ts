@@ -1,6 +1,6 @@
 import { createFactory } from 'faker-create-factory'
 
-import { FaqModel, FaqImageModel, FaqInput } from '@/models/faq.model'
+import { FaqModel, FaqImageModel, FaqInput } from '~/models/faq.model'
 import BaseFactory from './base.factory'
 
 export const FaqFactory = createFactory<FaqModel>((faker) => ({

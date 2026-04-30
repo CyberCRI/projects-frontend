@@ -1,49 +1,58 @@
 <script setup lang="ts">
-import { getAllInstructions, deleteInstruction } from '@/api/instruction.service'
-import useToasterStore from '@/stores/useToaster'
-import useOrganizationsStore from '@/stores/useOrganizations'
+import type { QueryFilterInstruction } from '~/models/instruction.model'
 
-const { translateInstructions } = useAutoTranslate()
+import { getAllInstructions } from '~/api/v2/instruction.service'
+import { deleteInstruction } from '~/api/instruction.service'
+
+import FetchLoader from '~/components/base/FetchLoader.vue'
+
+import useToasterStore from '~/stores/useToaster'
+
+import { instructionSkeleton } from '~/skeletons/instructions.skeletons'
+import { factoryPagination } from '~/skeletons/base.skeletons'
+import { nowDate } from '~/functs/date'
+
 const toaster = useToasterStore()
-const organizationsStore = useOrganizationsStore()
 const { canCreateInstruction, canEditInstruction, canDeleteInstruction } = usePermissions()
-const router = useRouter()
 const { t } = useNuxtI18n()
 
-const orgininalAllInstructions = useState(() => [])
-const allInstructions = translateInstructions(orgininalAllInstructions)
-
-const loading = ref(false)
 const editedInstruction = ref(null)
 const instructionToDelete = ref(null)
 const isDeletingInstruction = ref(false)
 
-const createInstruction = () => {
-  router.push({ name: 'CreateInstructionPage' })
-}
+const organizationCode = useOrganizationCode()
 
-const loadInstructions = async () => {
-  const dateLimit =
-    canEditInstruction.value || canDeleteInstruction.value
-      ? {}
-      : { to_date: new Date().toISOString() }
-  loading.value = true
-  orgininalAllInstructions.value = (
-    await getAllInstructions(organizationsStore.current?.code, {
-      ordering: '-publication_date',
-      ...dateLimit,
-    })
-  ).results
-  loading.value = false
-}
+const { query, setQuery, removeQuery } = useQuery<QueryFilterInstruction>({
+  ordering: '-publication_date',
+})
+
+// if user as not right permissions, add filter from_date
+watchEffect(() => {
+  if (!canEditInstruction.value && !canDeleteInstruction.value) {
+    setQuery('from_date', nowDate().toISOString())
+  } else {
+    removeQuery('from_date')
+  }
+})
+
+const {
+  status,
+  data: instructions,
+  pagination,
+  refresh,
+  isLoading,
+} = getAllInstructions(organizationCode, {
+  query,
+  default: () => factoryPagination(instructionSkeleton),
+})
 
 const doDeleteInstruction = async () => {
   isDeletingInstruction.value = true
   try {
-    await deleteInstruction(organizationsStore.current?.code, instructionToDelete.value.id)
+    await deleteInstruction(organizationCode, instructionToDelete.value.id)
     toaster.pushSuccess(t('instructions.delete.success'))
 
-    loadInstructions()
+    refresh()
   } catch (err) {
     toaster.pushError(`${t('instructions.delete.error')} (${err})`)
     console.error(err)
@@ -52,10 +61,6 @@ const doDeleteInstruction = async () => {
     isDeletingInstruction.value = false
   }
 }
-
-onMounted(() => {
-  loadInstructions()
-})
 
 useLpiHead2({
   title: computed(() => t('instructions.list.title')),
@@ -68,36 +73,37 @@ useLpiHead2({
       {{ $t('instructions.list.title') }}
     </h1>
 
-    <div class="create-instruction-button-ctn">
-      <LpiButton
-        v-if="canCreateInstruction"
-        primary
-        :label="$t('instructions.list.create')"
-        data-test="create-instruction-button"
-        btn-icon="Plus"
-        class="create-instruction-button"
-        @click="createInstruction"
-      />
-    </div>
-    <div v-if="loading" class="instruction-list">
-      <InstructionListItemSkeleton />
-      <InstructionListItemSkeleton />
-    </div>
-    <div v-else class="instruction-list">
-      <InstructionListItem
-        v-for="instruction in allInstructions"
-        :key="instruction.id"
-        :instruction="instruction"
-        @edit-instruction="editedInstruction = instruction"
-        @delete-instruction="instructionToDelete = instruction"
-      />
+    <LpiButton
+      v-if="canCreateInstruction"
+      :disabled="isLoading"
+      primary
+      :label="$t('instructions.list.create')"
+      data-test="create-instruction-button"
+      btn-icon="Plus"
+      class="create-instruction-button"
+      :to="{
+        name: 'CreateInstructionPage',
+      }"
+    />
+    <div class="instruction-list">
+      <FetchLoader :status="status" only-error skeleton>
+        <InstructionListItem
+          v-for="instruction in instructions"
+          :key="instruction.id"
+          :instruction="instruction"
+          @edit-instruction="editedInstruction = instruction"
+          @delete-instruction="instructionToDelete = instruction"
+        />
+        <EmptyLabel v-if="instructions.length === 0" :label="$t('instructions.empty')" />
+        <PaginationButtonsV2 :pagination="pagination" />
+      </FetchLoader>
     </div>
   </div>
   <EditInstructionDrawer
     :is-opened="!!editedInstruction"
     :instruction="editedInstruction"
     @close="editedInstruction = null"
-    @instruction-edited="loadInstructions"
+    @instruction-edited="() => refresh()"
   />
   <ConfirmModal
     v-if="instructionToDelete"
@@ -113,21 +119,11 @@ useLpiHead2({
   margin-bottom: $space-2xl;
 }
 
-.create-instruction-button-ctn {
-  margin: 2rem 0;
-}
-
 .create-instruction-button {
-  margin-left: auto;
+  align-self: flex-end;
 }
 
-.loader-ctn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 5rem 0;
-}
-
+.instruction-list-page,
 .instruction-list {
   display: flex;
   flex-direction: column;

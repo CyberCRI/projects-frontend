@@ -27,16 +27,17 @@
 </template>
 
 <script>
-import { debounce } from 'es-toolkit'
+import { getOrgClassificationTags } from '~/api/tag-classification.service'
 
-import { getOrgClassificationTags } from '@/api/tag-classification.service'
+import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
+import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
+
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
+
+import useAPI from '~/composables/useAPI.ts'
 
 import TagSearchResults from './TagSearchResults.vue'
-import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-
-import useAPI from '@/composables/useAPI.ts'
-import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
+import { debounce } from 'es-toolkit'
 
 export default {
   name: 'TagResults',
@@ -148,7 +149,7 @@ export default {
         this.request = await getOrgClassificationTags(
           this.organizationsStore.current.code,
           classificationId,
-          options
+          { query: options }
         )
           //.then((r) => r.data) // TODO: classificationName: this.allClassifications[j].title,
           .catch(() => ({

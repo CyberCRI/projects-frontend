@@ -77,13 +77,16 @@
 </template>
 
 <script setup lang="ts">
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import { reportBug, reportAbuse } from '@/api/report.service'
-import TextInput from '@/components/base/form/TextInput.vue'
+import { email, helpers, required, url } from '@vuelidate/validators'
 import useValidate from '@vuelidate/core'
-import { helpers, url, required, email } from '@vuelidate/validators'
-import FieldErrors from '@/components/base/form/FieldErrors.vue'
-import useToasterStore from '@/stores/useToaster'
+
+import { reportAbuse, reportBug } from '~/api/report.service'
+
+import FieldErrors from '~/components/base/form/FieldErrors.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+
+import useToasterStore from '~/stores/useToaster'
 
 const defaultForm = () => {
   return {
@@ -120,7 +123,7 @@ const rules = computed(() => ({
   },
 }))
 const form = ref(defaultForm())
-const v$ = useValidate(rules.value, form)
+const v$ = useValidate(rules, form)
 const isLoading = ref(false)
 
 const orgCode = useOrganizationCode()

@@ -24,9 +24,10 @@
 </template>
 
 <script setup lang="ts">
-import CategoryCardDefaultBackground from '@/components/category/CategoryCardDefaultBackground.vue'
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
-import { ImageSizes } from '@/functs/imageSizesUtils'
+import CategoryCardDefaultBackground from '~/components/category/CategoryCardDefaultBackground.vue'
+import CroppedImage from '~/components/base/media/CroppedImage.vue'
+
+import type { ImageSizes } from '~/functs/imageSizesUtils'
 
 const props = withDefaults(
   defineProps<{

@@ -68,11 +68,12 @@
 </template>
 
 <script setup lang="ts">
-import IconImage from '@/components/base/media/IconImage.vue'
-import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-import { IconImageChoice } from '@/functs/IconImage'
-import { StyleValue } from 'vue'
-import { RouteLocationRaw } from 'vue-router'
+import LpiLoader from '~/components/base/loader/LpiLoader.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+
+import type { IconImageChoice } from '~/functs/IconImage'
+import type { RouteLocationRaw } from 'vue-router'
+import type { StyleValue } from 'vue'
 
 type MenuItem = {
   to?: RouteLocationRaw
@@ -92,6 +93,7 @@ withDefaults(
     menuItems?: MenuItem[]
     hasSeparator?: boolean
     customStyle?: StyleValue
+
     isLoading?: boolean
     dataTest?: string
   }>(),

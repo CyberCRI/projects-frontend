@@ -1,18 +1,13 @@
-// import type { APIResponseList } from '@/api/types'
+import type { AttachmentFileInput, AttachmentFileModel } from '~/models/attachment-file.model'
 
-import type {
-  AttachmentFileInput /*, AttachmentFileOutput*/,
-  AttachmentFileModel,
-} from '@/models/attachment-file.model'
-
-import useAPI from '@/composables/useAPI'
+import useAPI from '~/composables/useAPI'
 
 export async function getAttachmentFiles(id: string) {
-  return await useAPI<PaginationResult<AttachmentFileModel>>(`project/${id}/file/`, {}) //.data.value
+  return await useAPI<PaginationResult<AttachmentFileModel>>(`project/${id}/file/`, {})
 }
 
 export async function getAttachmentFile(body: AttachmentFileInput) {
-  return await useAPI<AttachmentFileModel>(`project/${body.project_id}/file/${body.file}`, {}) //.data.value
+  return await useAPI<AttachmentFileModel>(`project/${body.project_id}/file/${body.file}`, {})
 }
 
 export async function postAttachmentFiles(body: AttachmentFileInput) {
@@ -26,7 +21,7 @@ export async function postAttachmentFiles(body: AttachmentFileInput) {
   return await useAPI<AttachmentFileModel>(`project/${body.project_id}/file/`, {
     body: fd,
     method: 'POST',
-  }) //.data.value
+  })
 }
 
 export async function patchAttachmentFile(body: AttachmentFileInput) {
@@ -39,7 +34,7 @@ export async function patchAttachmentFile(body: AttachmentFileInput) {
     // headers,
     body: fd,
     method: 'PATCH',
-  }) //.data.value
+  })
 }
 
 export async function deleteAttachmentFile({ id, projectId }) {

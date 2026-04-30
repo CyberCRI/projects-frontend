@@ -1,8 +1,16 @@
+import {
+  logIn,
+  logOut,
+  createGroup,
+  deleteGroup,
+  setRights,
+  testRights,
+  makeId,
+} from '~~/tests/playwright/lib'
+import { usersDict as users } from '~~/tests/playwright/variables'
+import { LogLevel, Logger } from '~~/tests/playwright/logger'
 import { test } from '@playwright/test'
-import { usersDict as users } from '../variables'
-import { LogLevel, Logger } from '../logger'
-import { delay } from '../lib/index'
-import { logIn, logOut, createGroup, deleteGroup, setRights, testRights, makeId } from '../lib'
+import { delay } from 'es-toolkit'
 
 const logger = new Logger(LogLevel.Debug)
 const groupName = makeId(5)

@@ -1,12 +1,10 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import UserProjectList from '@/components/people/UserProfile/UserProjectList.vue'
+import UserProjectList from '~/components/people/UserProfile/UserProjectList.vue'
+import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
+import { OrganizationOutput } from '~/models/organization.model'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import { beforeEach, describe, expect, it } from 'vitest'
-import PeopleFactory from '@/../tests/factories/people.factory'
-import MockComponent from '@/../tests/helpers/MockComponent.vue'
-import pinia from '@/stores'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import { OrganizationOutput } from '@/models/organization.model'
-import { TranslatedProjectFactory } from '../../../../factories/project.factory'
+import pinia from '~/stores'
 
 describe('UserProjectList.vue', () => {
   beforeEach(() => {

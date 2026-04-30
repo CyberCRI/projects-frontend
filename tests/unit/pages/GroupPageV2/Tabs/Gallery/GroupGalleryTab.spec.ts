@@ -1,12 +1,12 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import GroupGalleryTab from '@/pages/GroupPageV2/Tabs/Gallery/GroupGalleryTab.vue'
+import GroupGalleryTab from '~/pages/GroupPageV2/Tabs/Gallery/GroupGalleryTab.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import { flushPromises } from '@vue/test-utils'
 
-import { describe, expect, it } from 'vitest'
-import { groupTranslatedFactory } from '../../../../../factories/group.factory'
+import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
+import { groupTranslatedFactory } from '~~/tests/factories/group.factory'
+import { ImageFactory } from '~~/tests/factories/image.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
-import { PaginationsFactory } from '../../../../../factories/paginations.factory'
-import { ImageFactory } from '../../../../../factories/image.factory'
+import { describe, expect, it } from 'vitest'
 
 describe('GroupGalleryTab.vue', () => {
   it('should render component', async () => {

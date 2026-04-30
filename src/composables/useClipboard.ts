@@ -1,4 +1,4 @@
-import useToasterStore from '@/stores/useToaster'
+import useToasterStore from '~/stores/useToaster'
 
 export const useClipBoard = () => {
   const toaster = useToasterStore()

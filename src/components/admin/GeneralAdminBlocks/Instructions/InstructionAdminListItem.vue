@@ -15,9 +15,11 @@
 </template>
 
 <script setup lang="ts">
-import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
-import { cropIfTooLong, html2Text } from '@/functs/string'
-import { InstructionModel } from '@/models/instruction.model'
+import type { InstructionModel } from '~/models/instruction.model'
+
+import ContextActionMenu from '~/components/base/button/ContextActionMenu.vue'
+
+import { cropIfTooLong, html2Text } from '~/functs/string'
 
 const props = defineProps<{
   instruction: InstructionModel

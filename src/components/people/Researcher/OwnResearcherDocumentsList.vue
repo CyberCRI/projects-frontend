@@ -12,12 +12,16 @@
 </template>
 
 <script setup lang="ts">
-import { getOwnResearchDocument, getOwnResearchDocumentAnalytics } from '@/api/v2/crisalid.service'
-import ResearcherDocumentsListBase from '@/components/people/Researcher/ResearcherDocumentsListBase.vue'
-import { DocumentType } from '@/interfaces/researcher'
-import { UserModel } from '@/models/user.model'
-import { factoryPagination } from '@/skeletons/base.skeletons'
-import { researchDocumentSkeleton, documentAnalyticsSkeleton } from '@/skeletons/crisalid.skeletons'
+import type { UserModel } from '~/models/user.model'
+
+import type { DocumentType } from '~/interfaces/researcher'
+
+import { getOwnResearchDocument, getOwnResearchDocumentAnalytics } from '~/api/v2/crisalid.service'
+
+import ResearcherDocumentsListBase from '~/components/people/Researcher/ResearcherDocumentsListBase.vue'
+
+import { documentAnalyticsSkeleton, researchDocumentSkeleton } from '~/skeletons/crisalid.skeletons'
+import { factoryPagination } from '~/skeletons/base.skeletons'
 
 const props = withDefaults(
   defineProps<{ preview?: boolean; limit?: number; user: UserModel; docType: DocumentType }>(),

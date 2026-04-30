@@ -1,14 +1,14 @@
 import { createFactory } from 'faker-create-factory'
 
 import BaseFactory from './base.factory'
-// import {
+
 //     ProjectMembersAddEntry,
 //     ProjectMembersAddInput,
 //     ProjectMemberModel,
 //     ProjectMembersDeleteInput,
 //     ProjectMemberPeopleGroupOutput,
 //     ProjectTeamModel,
-// } from '@/models/project-member.model'
+// } from '~/models/project-member.model'
 
 // todo use groupmember model
 export const GroupMemberFactory = createFactory<any>((faker) => ({

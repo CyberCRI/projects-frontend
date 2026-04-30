@@ -1,10 +1,10 @@
-import { createFactory } from 'faker-create-factory'
-import BaseFactory from './base.factory'
-import { GroupModel, GroupModelInput } from '@/models/group.model'
-import { PeopleGroupModel, TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import { ImageFactory } from './image.factory'
-import { OrganizationOutputFactory } from './organization.factory'
+import { PeopleGroupModel, TranslatedPeopleGroupModel } from '~/models/invitation.model'
 import { BaseTranslatedLocationModelFactory } from './location.factory'
+import { OrganizationOutputFactory } from './organization.factory'
+import { GroupModel, GroupModelInput } from '~/models/group.model'
+import { createFactory } from 'faker-create-factory'
+import { ImageFactory } from './image.factory'
+import BaseFactory from './base.factory'
 
 export const groupFactory = createFactory<GroupModel>((faker) => ({
   ...BaseFactory.generate(),

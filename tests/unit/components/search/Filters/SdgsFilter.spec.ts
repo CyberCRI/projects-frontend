@@ -1,6 +1,6 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import SdgsFilter from '@/components/search/Filters/SdgsFilter.vue'
-import SdgFactory from '@/../tests/factories/sdg.factory'
+import SdgsFilter from '~/components/search/Filters/SdgsFilter.vue'
+import SdgFactory from '~~/tests/factories/sdg.factory'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
 
 import { describe, expect, it } from 'vitest'
 const sdgs = SdgFactory.generateMany(17).map((sdg, index) => ({ ...sdg, id: index + 1 }))

@@ -1,5 +1,5 @@
-import { GroupMember } from '@/models/group.model'
-import { PeopleGroupModel } from '@/models/invitation.model'
+import type { PeopleGroupModel } from '~/models/invitation.model'
+import type { GroupMember } from '~/models/group.model'
 
 export const groupSkeleton = (def?: Partial<PeopleGroupModel>): Omit<PeopleGroupModel, 'id'> => ({
   slug: 'slug',
@@ -29,7 +29,7 @@ export const groupSkeleton = (def?: Partial<PeopleGroupModel>): Omit<PeopleGroup
     news: 0,
     event: 0,
   },
-  ...(def || {}),
+  ...def,
 })
 
 export const memberSkeleton = (def?: Partial<GroupMember>): Omit<GroupMember, 'id'> => ({
@@ -53,5 +53,5 @@ export const memberSkeleton = (def?: Partial<GroupMember>): Omit<GroupMember, 'i
   },
   is_manager: false,
   is_leader: false,
-  ...(def || {}),
+  ...def,
 })

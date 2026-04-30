@@ -3,6 +3,7 @@
     :class="{ 'sdg--unselected': !selected, [props.logo]: true }"
     class="sdg"
     :data-test="`sdg-${sdgId}`"
+    :title="alt"
     @click="toggle"
   >
     <CroppedImage
@@ -16,8 +17,11 @@
 </template>
 
 <script setup lang="ts">
-import IconImage from '@/components/base/media/IconImage.vue'
-import { SDGS } from '@/functs/constants'
+import IconImage from '~/components/base/media/IconImage.vue'
+
+import { usePublicURL } from '~/composables/usePublic'
+
+import { SDGS } from '~/functs/constants'
 
 const props = withDefaults(
   defineProps<{

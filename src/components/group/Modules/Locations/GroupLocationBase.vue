@@ -27,13 +27,13 @@
 </template>
 
 <script setup lang="ts">
-import { getGroupAllLocations } from '@/api/v2/group.service'
-import GeneralMap from '@/components/map/GeneralMap.vue'
+import type { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import LocationDrawer from '@/components/map/LocationDrawer.vue'
-import LocationList from '@/components/map/LocationList.vue'
-import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import { factoriesSkeleton } from '@/skeletons/base.skeletons'
 import { locationSkeleton } from '@/skeletons/location.skeleton'
+import { factoriesSkeleton } from '@/skeletons/base.skeletons'
+import { getGroupAllLocations } from '@/api/v2/group.service'
+import LocationList from '@/components/map/LocationList.vue'
+import GeneralMap from '@/components/map/GeneralMap.vue'
 
 const props = withDefaults(
   defineProps<{

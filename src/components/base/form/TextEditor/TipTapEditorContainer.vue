@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Editor } from '@tiptap/vue-3'
+import type { Editor } from '@tiptap/vue-3'
 
 const props = withDefaults(
   defineProps<{

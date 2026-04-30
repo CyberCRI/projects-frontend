@@ -2,9 +2,9 @@
 import * as L from 'leaflet'
 
 import type { AnyLocation, AnyTranslatedLocation } from '@/models/location.model'
-import MarkerIcon from '@/components/map/MarkerIcon.vue'
-import { LocationType } from '@/models/types'
 import AllLocationPopUp from '@/components/map/AllLocationPopUp.vue'
+import MarkerIcon from '@/components/map/MarkerIcon.vue'
+import type { LocationType } from '@/models/types'
 
 const props = withDefaults(
   defineProps<{

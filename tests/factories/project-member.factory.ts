@@ -1,6 +1,5 @@
 import { createFactory } from 'faker-create-factory'
 
-import BaseFactory from './base.factory'
 import {
   ProjectMembersAddEntry,
   ProjectMembersAddInput,
@@ -8,8 +7,9 @@ import {
   ProjectMembersDeleteInput,
   ProjectMemberPeopleGroupOutput,
   ProjectTeamModel,
-} from '@/models/project-member.model'
+} from '~/models/project-member.model'
 import { UserFactory } from './user.factory'
+import BaseFactory from './base.factory'
 
 export const ProjectMemberFactory = createFactory<ProjectMemberModel>(() => ({
   ...UserFactory.generate(),

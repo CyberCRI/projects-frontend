@@ -1,19 +1,18 @@
-<script setup>
-import { ref, computed, watch } from 'vue'
-import FilterValue from '@/components/search/Filters/FilterValue.vue'
-import SkillsFilterEditor from '@/components/search/Filters/SkillsFilterEditor.vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import useTagTexts from '@/composables/useTagTexts.ts'
+<script setup lang="ts">
+import SkillsFilterEditor from '~/components/search/Filters/SkillsFilterEditor.vue'
+import FilterValue from '~/components/search/Filters/FilterValue.vue'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useToasterStore from '~/stores/useToaster'
 
 const { t } = useNuxtI18n()
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
-const tagTexts = useTagTexts()
+const tagText = useTagTexts()
 
 const newTags = ref([])
 
@@ -23,13 +22,13 @@ watch(tagSearchIsOpened, (value) => {
     newTags.value = []
   }
 })
-const organizationTags = computed(() => {
+const organizationSkills = computed(() => {
   return organizationsStore.current.default_skills_tags
 })
 
 const saveOrganizationTags = async () => {
   const newTagsIds = newTags.value.map((tag) => tag.id)
-  const oldTagsIds = organizationTags.value.map((tag) => tag.id)
+  const oldTagsIds = organizationSkills.value.map((tag) => tag.id)
 
   try {
     await organizationsStore.updateCurrentOrganization({
@@ -55,7 +54,7 @@ const deleteOrganizationTag = async () => {
   try {
     asyncing.value = true
     await organizationsStore.updateCurrentOrganization({
-      default_skills_tags: organizationTags.value.filter((t) => t.id != tag.id).map((t) => t.id),
+      default_skills_tags: organizationSkills.value.filter((t) => t.id != tag.id).map((t) => t.id),
     })
     toaster.pushSuccess(t('toasts.organization-tag-delete.success'))
   } catch (error) {
@@ -78,10 +77,10 @@ const deleteOrganizationTag = async () => {
 
     <div class="tags-ctn">
       <FilterValue
-        v-for="tag in organizationTags"
+        v-for="tag in organizationSkills"
         :key="tag.id"
         data-test="default-skill"
-        :label="tagTexts.title(tag)"
+        :label="tagText.title(tag)"
         icon="Close"
         @click="tagToDelete = tag"
       />
@@ -107,7 +106,7 @@ const deleteOrganizationTag = async () => {
     >
       <SkillsFilterEditor
         v-model="newTags"
-        :blocked-skills="organizationTags"
+        :blocked-skills="organizationSkills"
         hide-organization-tags
         :all-search-mode="false"
       />
@@ -117,11 +116,11 @@ const deleteOrganizationTag = async () => {
       data-test="confirm-delete-default-skill"
       :title="$t('common.confirm-delete')"
       content=""
-      cancel-button-label="common.no"
-      confirm-button-label="common.yes"
+      :cancel-button-label="$t('common.no')"
+      :confirm-button-label="$t('common.yes')"
       :asyncing="asyncing"
       @cancel="tagToDelete = null"
-      @confirm="deleteOrganizationTag(tag)"
+      @confirm="deleteOrganizationTag()"
     />
   </div>
 </template>

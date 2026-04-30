@@ -4,57 +4,46 @@
     :to="{ name: 'InstructionPage', params: { slugOrId: instruction.id } }"
   >
     <div class="instruction-title-ctn">
-      <h3 class="instruction-title">
-        {{ instruction?.$t?.title }}
+      <h3 class="instruction-title skeletons-text">
+        {{ instruction.$t.title }}
       </h3>
-      <ContextActionMenu
-        v-if="canEditInstruction || canDeleteInstruction"
-        class="instruction-actions"
-        :can-edit="canEditInstruction"
-        :can-delete="canDeleteInstruction"
-        @edit="emit('edit-instruction', instruction)"
-        @delete="emit('delete-instruction', instruction)"
-      />
     </div>
-    <div class="instruction-excerpt" :style="style">
-      <HtmlLimiter
-        :html="instruction?.$t?.content"
-        :striped-tags="['table']"
-        class="description-content"
-        @computed="layoutComputed"
-        @computing="computeLayout"
-      />
-    </div>
+
+    <ContentExpandable :description="instruction.$t.content" :height-limit="100" hide-see-more />
+
     <div class="read-more-ctn">
-      <SummaryAction class="read-button" :action-label="t('instructions.list.read-more')" />
+      <SummaryAction
+        class="read-button skeletons-text"
+        :action-label="t('instructions.list.read-more')"
+      />
     </div>
+
+    <ContextActionMenuInline
+      class="context-action"
+      :can-delete="canDeleteInstruction"
+      :can-edit="canEditInstruction"
+      @edit="emit('edit-instruction', instruction)"
+      @delete="emit('delete-instruction', instruction)"
+    />
   </NuxtLink>
 </template>
 <script setup lang="ts">
-import ContextActionMenu from '@/components/base/button/ContextActionMenu.vue'
-import SummaryAction from '@/components/home/SummaryCards/SummaryAction.vue'
-import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
+import type { TranslatedInstruction } from '~/models/instruction.model'
 
-defineOptions({ name: 'InstructionListItem' })
+import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
+import SummaryAction from '~/components/home/SummaryCards/SummaryAction.vue'
 
-defineProps<{ instruction: any }>()
+defineProps<{ instruction: TranslatedInstruction }>()
 
 const { t } = useNuxtI18n()
 const emit = defineEmits<{
-  'delete-instruction': [any]
-  'edit-instruction': [any]
+  'delete-instruction': [TranslatedInstruction]
+  'edit-instruction': [TranslatedInstruction]
 }>()
 
 const { canEditInstruction, canDeleteInstruction } = usePermissions()
-
-const style = ref({})
-const computeLayout = () => {
-  style.value = {}
-}
-const layoutComputed = (event) => {
-  style.value = { height: event.height + 'px' }
-}
 </script>
+
 <style scoped lang="scss">
 .instruction-list-item {
   --instruction-dimension: 13rem;
@@ -78,6 +67,13 @@ const layoutComputed = (event) => {
 
 .instruction-title {
   font-size: $font-size-xl;
+}
+
+.context-action {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0.5rem;
 }
 
 .instruction-excerpt {

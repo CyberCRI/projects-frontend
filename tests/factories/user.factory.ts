@@ -1,6 +1,6 @@
 import { createFactory } from 'faker-create-factory'
 
-import { UserModel, UserFromJWTModel } from '@/models/user.model'
+import { UserModel, UserFromJWTModel } from '~/models/user.model'
 
 export const UserFactory = createFactory<UserModel>((faker) => ({
   id: faker.datatype.number(),

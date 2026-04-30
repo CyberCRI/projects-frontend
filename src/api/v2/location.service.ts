@@ -1,9 +1,13 @@
-import { getLocations as fetchGetLocations } from '@/api/locations.services'
-import useAsyncAPI from '@/composables/useAsyncAPI'
-import { onlyRefs } from '@/functs/onlyRefs'
-import { TranslatedLocationGeneral } from '@/interfaces/maps'
-import { RefOrRaw } from '@/interfaces/utils'
-import { OrganizationModel } from '@/models/organization.model'
+import type { OrganizationModel } from '~/models/organization.model'
+
+import type { RefOrRaw } from '~/interfaces/utils'
+
+import { getLocations as fetchGetLocations } from '~/api/locations.service'
+
+import useAsyncAPI from '~/composables/useAsyncAPI'
+
+import type { TranslatedLocationGeneral } from '~/interfaces/maps'
+import { onlyRefs } from '~/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}
 

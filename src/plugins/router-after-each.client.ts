@@ -1,5 +1,3 @@
-// import analytics from '@/analytics'
-
 export default defineNuxtPlugin(async () => {
   useRouter().afterEach((to) => {
     // console.log('AFTER EACH')

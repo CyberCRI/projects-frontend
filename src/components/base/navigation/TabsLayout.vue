@@ -101,9 +101,11 @@
 </template>
 
 <script setup lang="ts">
-import IconImage from '@/components/base/media/IconImage.vue'
-import useViewportWidth from '@/composables/useViewportWidth'
-import LinkButton from '@/components/base/button/LinkButton.vue'
+import LinkButton from '~/components/base/button/LinkButton.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+
+import useViewportWidth from '~/composables/useViewportWidth'
+
 import { debounce } from 'es-toolkit'
 
 const props = withDefaults(
@@ -164,6 +166,7 @@ const containerRef = useTemplateRef('container')
 const layoutTabs = debounce(
   // debounced to not hammer the browser on each resize
   async () => {
+    console.log('latouttabs')
     if (!import.meta.client) return
 
     /* for each tab, we check if it fit in the wrapper
@@ -254,7 +257,7 @@ const selectTab = (index) => {
 }
 
 watch(() => props.tabs, layoutTabs, { deep: true, immediate: true })
-onResize(layoutTabs)
+onResize(layoutTabs, { immediate: true })
 provide('tabsLayoutSelectTab', selectTab)
 </script>
 

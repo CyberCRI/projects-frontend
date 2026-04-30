@@ -1,32 +1,32 @@
-<script setup>
-import EditorModalImage from './modals/EditorModalImage.vue'
-import EditorModalLink from './modals/EditorModalLink.vue'
-import EditorModalColor from './modals/EditorModalColor.vue'
+<script setup lang="ts">
 import EditorModalVideo from './modals/EditorModalVideo.vue'
-import TableMenuBar from './TableMenuBar.vue'
-import LinkMenuBar from './LinkMenuBar.vue'
-import ImageMenuBar from './ImageMenuBar.vue'
+import EditorModalImage from './modals/EditorModalImage.vue'
+import EditorModalColor from './modals/EditorModalColor.vue'
+import EditorModalLink from './modals/EditorModalLink.vue'
 import VideoMenuBar from './VideoMenuBar.vue'
+import TableMenuBar from './TableMenuBar.vue'
+import ImageMenuBar from './ImageMenuBar.vue'
+import LinkMenuBar from './LinkMenuBar.vue'
 import MenuBar from './MenuBar.vue'
-import { reactive } from 'vue'
 
 const emit = defineEmits(['image', 'saved'])
 
-defineProps({
-  editor: { type: Object, required: true },
-  showMenu: { type: Boolean, required: true },
-  mode: { type: String, required: true },
-
-  disableSave: { type: Boolean, default: false },
-
-  saveIconVisible: { type: Boolean, default: false },
-  saveImageCallback: {
+withDefaults(
+  defineProps<{
+    editor: any
+    showMenu: boolean
+    mode: string
+    disableSave?: boolean
+    saveIconVisible?: boolean
+    saveImageCallback?: (file: File) => void
+  }>(),
+  {
+    disableSave: false,
+    saveIconVisible: false,
     // function must take a file argument and return a promise resolving to an {url, width, height} object
-    type: [Function, null],
-    required: false,
-    default: null,
-  },
-})
+    saveImageCallback: null,
+  }
+)
 
 // data
 

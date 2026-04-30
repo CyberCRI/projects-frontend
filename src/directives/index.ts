@@ -1,4 +1,5 @@
-import { defineNuxtPlugin, DirectiveBinding } from '#imports'
+import type { DirectiveBinding } from '#imports'
+import { defineNuxtPlugin } from '#imports'
 
 export const clickOutside = {
   beforeMount: (el: HTMLElement, binding: DirectiveBinding<(Event) => void>) => {

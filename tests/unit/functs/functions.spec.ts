@@ -1,14 +1,14 @@
 // @vitest-environment nuxt
-import funct from '@/functs/functions'
-import FunctionImporter from './FunctionImporter.vue'
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
-import { UserFactory } from '@/../tests/factories/user.factory'
+import { ProjectOutputFactory } from '~~/tests/factories/project.factory'
+import { ProjectMemberModel } from '~/models/project-member.model'
 import { test, beforeEach, describe, expect, it } from 'vitest'
-import pinia from '@/stores'
-import useUsersStore from '@/stores/useUsers'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import { ProjectMemberModel } from '@/models/project-member.model'
+import { UserFactory } from '~~/tests/factories/user.factory'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import FunctionImporter from './FunctionImporter.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
+import useUsersStore from '~/stores/useUsers'
+import funct from '~/functs/functions'
+import pinia from '~/stores'
 
 describe('Function getOrgsFromRoles', () => {
   it('should return empty array', () => {
@@ -60,7 +60,7 @@ describe('Function projectCanBeEdited', () => {
   test('that project can be edited if user is org-admin of one of the organisations the project belongs to', () => {
     const user = UserFactory.generate()
     const project = ProjectOutputFactory.generate()
-    project.categories[0].organization.code = 'CRI' // Add same org code from project factory generated
+    project.categories[0].organization = 'CRI' // Add same org code from project factory generated
 
     organizationsStore._current = { code: 'CRI' } // getters are writable only in tests
     usersStore.user = user // getters are writable only in tests

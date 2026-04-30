@@ -1,5 +1,6 @@
-import analytics from '@/analytics'
-import { GoalModel } from '@/models/goal.model'
+import type { GoalModel } from '~/models/goal.model'
+
+import analytics from '~/analytics'
 
 export interface GoalAnalytic {
   project: {

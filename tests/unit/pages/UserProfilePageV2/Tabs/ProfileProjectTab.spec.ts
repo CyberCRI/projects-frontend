@@ -1,19 +1,19 @@
-import ProfileProjectTab from '@/pages/UserProfilePageV2/Tabs/ProfileProjectTab.vue'
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import { UserFactory } from '@/../tests/factories/user.factory'
+import ProfileProjectTab from '~/pages/UserProfilePageV2/Tabs/ProfileProjectTab.vue'
+import { UserFactory } from '~~/tests/factories/user.factory'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import { flushPromises } from '@vue/test-utils'
 
+import useOrganizationsStore from '~/stores/useOrganizations'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import pinia from '@/stores'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import useUsersStore from '@/stores/useUsers'
+import useUsersStore from '~/stores/useUsers'
+import pinia from '~/stores'
 
-import usePeopleGroupsStore from '@/stores/usePeopleGroups'
-import useProjectsStore from '@/stores/useProjects'
+import usePeopleGroupsStore from '~/stores/usePeopleGroups'
+import useProjectsStore from '~/stores/useProjects'
 
-import { OrganizationOutput } from '@/models/organization.model'
+import { OrganizationOutput } from '~/models/organization.model'
 
-vi.mock('@/api/follows.service', () => ({
+vi.mock('~/api/follows.service', () => ({
   getUserFollows: vi.fn().mockResolvedValue({ results: [] }),
 }))
 

@@ -1,8 +1,6 @@
-// import type { APIResponseList } from '@/api/types'
+import type { AttachmentFileInput, AttachmentFileModel } from '~/models/attachment-file.model'
 
-import type { AttachmentFileInput, AttachmentFileModel } from '@/models/attachment-file.model'
-
-import useAPI from '@/composables/useAPI'
+import useAPI from '~/composables/useAPI'
 
 export async function getOrganizationFiles(organizationCode: string, config = {}) {
   return await useAPI<PaginationResult<AttachmentFileModel>>(
@@ -12,7 +10,7 @@ export async function getOrganizationFiles(organizationCode: string, config = {}
 }
 
 export async function getOrganizationFile(orgCode: string, body: AttachmentFileInput) {
-  return await useAPI(`organization/${orgCode}/file/${body.file}`, {}) //.data.value
+  return await useAPI(`organization/${orgCode}/file/${body.file}`, {})
 }
 
 export async function postOrganizationFiles(orgCode: string, body: AttachmentFileInput) {
@@ -26,7 +24,7 @@ export async function postOrganizationFiles(orgCode: string, body: AttachmentFil
   return await useAPI(`organization/${orgCode}/file/`, {
     body: fd,
     method: 'POST',
-  }) //.data.value
+  })
 }
 
 export async function patchOrganizationFile(orgCode: string, body: AttachmentFileInput) {
@@ -39,7 +37,7 @@ export async function patchOrganizationFile(orgCode: string, body: AttachmentFil
     // headers,
     body: fd,
     method: 'PATCH',
-  }) //.data.value
+  })
 }
 
 export async function deleteOrganizationFile(orgCode: string, id) {

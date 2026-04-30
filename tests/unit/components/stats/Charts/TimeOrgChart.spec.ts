@@ -1,5 +1,5 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import TimeOrgChart from '@/components/stats/Charts/TimeOrgChart.vue'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import TimeOrgChart from '~/components/stats/Charts/TimeOrgChart.vue'
 
 import { describe, expect, it } from 'vitest'
 

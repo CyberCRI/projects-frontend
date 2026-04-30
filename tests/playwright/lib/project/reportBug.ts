@@ -1,7 +1,7 @@
+import { emailToReport } from '~~/tests/playwright/variables'
+import { LogLevel, Logger } from '~~/tests/playwright/logger'
 import { expect } from '@playwright/test'
-import { emailToReport } from '../../variables'
-import { LogLevel, Logger } from '../../logger'
-import { delay } from '../index'
+import { delay } from 'es-toolkit'
 
 const logger = new Logger(LogLevel.Debug)
 

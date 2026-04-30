@@ -59,8 +59,10 @@
 </template>
 
 <script setup lang="ts">
-import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
-import { useUniqueId } from '@/composables/useUniqueId'
+import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
+
+import { useUniqueId } from '~/composables/useUniqueId'
+
 import { delay } from 'es-toolkit'
 
 const props = withDefaults(

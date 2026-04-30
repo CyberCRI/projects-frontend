@@ -86,9 +86,8 @@
             <h3 class="label">
               {{ $t('invitation.create.field.group.label') }}
             </h3>
-            <LinkButton
+            <LpiButton
               :label="$t('invitation.create.field.group.add')"
-              class="btn"
               btn-icon="Plus"
               data-test="add-group"
               @click="addGroup"
@@ -130,17 +129,18 @@
   </div>
 </template>
 <script>
-import IconImage from '@/components/base/media/IconImage.vue'
-import { postInvitation } from '@/api/invitations.service.ts'
-import TextInput from '@/components/base/form/TextInput.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import LinkButton from '@/components/base/button/LinkButton.vue'
-import GroupSelectDrawer from '@/components/group/GroupSelectDrawer/GroupSelectDrawer.vue'
-import GroupCard from '@/components/group/GroupCard.vue'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import DatePickerModal from '@/components/base/modal/DatePickerModal.vue'
-import DisplayDate from '@/components/base/DisplayDate.vue'
+import { postInvitation } from '~/api/invitations.service.ts'
+
+import GroupSelectDrawer from '~/components/group/GroupSelectDrawer/GroupSelectDrawer.vue'
+import DatePickerModal from '~/components/base/modal/DatePickerModal.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+import DisplayDate from '~/components/base/DisplayDate.vue'
+import GroupCard from '~/components/group/GroupCard.vue'
+
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useToasterStore from '~/stores/useToaster.ts'
 
 export default {
   name: 'LinkCreateTab',
@@ -151,7 +151,7 @@ export default {
     DatePickerModal,
     GroupSelectDrawer,
     GroupCard,
-    LinkButton,
+    LpiButton,
     DisplayDate,
   },
   setup() {
@@ -233,7 +233,7 @@ export default {
 
     fixDateTime() {
       // make date expire at midnight
-      let d = new Date(this.form.expire_at)
+      const d = new Date(this.form.expire_at)
       d.setHours(23, 59, 59, 999)
       this.form.expire_at = d.toISOString()
     },
@@ -272,10 +272,6 @@ export default {
       .label {
         flex-grow: 1;
       }
-
-      .lpi-button {
-        padding: 0 !important;
-      }
     }
 
     .notice {
@@ -284,7 +280,6 @@ export default {
   }
 
   .actions {
-    margin-top: $space-3xl;
     display: flex;
     justify-content: center;
     gap: $space-l;
@@ -340,5 +335,6 @@ export default {
   align-items: center;
   margin-top: $space-unit;
   gap: $space-unit;
+  width: 100%;
 }
 </style>

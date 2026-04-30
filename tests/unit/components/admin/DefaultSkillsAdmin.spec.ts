@@ -1,11 +1,13 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import DefaultSkillsAdmin from '@/components/admin/DefaultSkillsAdmin.vue'
+import DefaultSkillsAdmin from '~/components/admin/DefaultSkillsAdmin.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
 
-import pinia from '@/stores'
-import useOrganizationsStore from '@/stores/useOrganizations'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import pinia from '~/stores'
 
-import { OrganizationOutput } from '@/models/organization.model'
+import { OrganizationOutput } from '~/models/organization.model'
 
+import OrganizationTagFactory from '~~/tests/factories/tag.factory'
+import UserSkillFactory from '~~/tests/factories/skill.factory'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
 
@@ -15,7 +17,7 @@ vi.mock('es-toolkit', () => ({
   capitalize: vi.fn((t) => t || ''),
 }))
 
-vi.mock('@/api/tag-classification.service', () => ({
+vi.mock('~/api/tag-classification.service', () => ({
   getOrgClassificationTags: vi.fn().mockResolvedValue({
     data: {
       count: 3,
@@ -76,8 +78,8 @@ describe('DefaultSkillsAdmin', () => {
         { id: 456, slug: 'for-skill', type: 'Custom' },
         { id: 789, slug: 'for-skill-and-project', type: 'Custom' },
       ],
-      default_projects_tags: [{ id: 11 }, { id: 12 }, { id: 13 }],
-      default_skills_tags: [{ id: 21 }, { id: 22 }, { id: 23 }],
+      default_projects_tags: OrganizationTagFactory.generateMany(3),
+      default_skills_tags: UserSkillFactory.generateMany(3),
     } as unknown as OrganizationOutput
     defaultParams = {
       props: {},
@@ -102,9 +104,8 @@ describe('DefaultSkillsAdmin', () => {
     const vm: any = wrapper.vm
     await flushPromises()
     await vm.$nextTick()
-    expect(vm.organizationTags.length).toBe(3)
     const tagEntries = wrapper.findAll('[data-test="default-skill"]')
-    expect(tagEntries.length).toBe(3)
+    expect(tagEntries.length).toBe(organizationsStore._current.default_skills_tags.length)
   })
 
   it('should ask confirmation for deleting tag', async () => {

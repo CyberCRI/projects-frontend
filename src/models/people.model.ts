@@ -1,5 +1,6 @@
-import { Translated } from '@/interfaces/translated'
-import { PeopleGroupModel, TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import type { PeopleGroupModel, TranslatedPeopleGroupModel } from '~/models/invitation.model'
+
+import type { Translated } from '~/interfaces/translated'
 
 /**
  * @name PeopleModel
@@ -34,6 +35,7 @@ export interface PeopleModel {
   linkedin?: string
   medium?: string
   website?: string
+  mobile?: string
   skype?: string
   landline_phone?: string
   twitter?: string

@@ -1,24 +1,14 @@
 <template>
-  <IconImage
-    v-if="!isFollowing && usersStore.isConnected"
-    class="icon"
-    name="BookmarkLine"
-    tabindex="1"
-    @click="actionFollow"
-  />
-  <IconImage
-    v-else-if="usersStore.isConnected"
-    class="icon"
-    name="BookmarkFill"
-    tabindex="1"
-    @click="actionFollow"
-  />
+  <FollowIcon :followed="isFollowing" @follow="actionFollow" @unfollow="actionFollow" />
 </template>
 
 <script setup lang="ts">
-import { TranslatedProject } from '@/models/project.model'
-import followUtils from '@/functs/followUtils'
-import useUsersStore from '@/stores/useUsers'
+import type { TranslatedProject } from '~/models/project.model'
+
+import useUsersStore from '~/stores/useUsers'
+
+import FollowIcon from '~/components/base/FollowIcon.vue'
+import followUtils from '~/functs/followUtils'
 
 const props = withDefaults(
   defineProps<{
@@ -74,10 +64,3 @@ const actionFollow = async () => {
 // can access from ref
 defineExpose({ actionFollow })
 </script>
-
-<style lang="scss" scoped>
-.icon {
-  fill: $primary-dark;
-  cursor: pointer;
-}
-</style>

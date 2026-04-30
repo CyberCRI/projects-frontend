@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import DynamicGrid from '@/components/base/DynamicGrid.vue'
+import DynamicGrid from '~/components/base/DynamicGrid.vue'
 
 withDefaults(defineProps<{ limit?: number; minGap?: number; mode?: 'card' | 'list' }>(), {
   limit: 12,

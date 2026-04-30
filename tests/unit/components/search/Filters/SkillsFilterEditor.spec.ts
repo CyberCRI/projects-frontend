@@ -1,17 +1,17 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import SkillsFilterEditor from '~/components/search/Filters/SkillsFilterEditor.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
 import waitForExpect from 'wait-for-expect'
-import SkillsFilterEditor from '@/components/search/Filters/SkillsFilterEditor.vue'
 
-import pinia from '@/stores'
-import useOrganizationsStore from '@/stores/useOrganizations'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import pinia from '~/stores'
 
-import { OrganizationOutput } from '@/models/organization.model'
+import { OrganizationOutput } from '~/models/organization.model'
 
+import { getOrgClassificationTags } from '~/api/tag-classification.service'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
-import { getOrgClassificationTags } from '@/api/tag-classification.service'
 
-vi.mock('@/api/tag-classification.service', () => ({
+vi.mock('~/api/tag-classification.service', () => ({
   getOrgClassificationTags: vi
     .fn()
     .mockResolvedValue({ results: [{ id: 1 }, { id: 2 }, { id: 3 }] }),

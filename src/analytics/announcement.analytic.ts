@@ -1,5 +1,5 @@
-import analytics from '@/analytics'
-import { ProjectAnalytic } from '@/analytics/project.analytic'
+import type { ProjectAnalytic } from '~/analytics/project.analytic'
+import analytics from '~/analytics'
 
 export interface Announcement {
   project: {

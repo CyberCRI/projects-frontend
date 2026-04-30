@@ -5,7 +5,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import TabsLayout from '@/components/base/navigation/TabsLayout.vue'
+import TabsLayout from '~/components/base/navigation/TabsLayout.vue'
 
 const DEBUG_TABS = [
   {

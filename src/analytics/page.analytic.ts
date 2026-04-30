@@ -1,4 +1,4 @@
-import analytics from '@/analytics'
+import analytics from '~/analytics'
 
 export interface PageAnalytic {
   name: string

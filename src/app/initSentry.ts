@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/vue'
+
 import { useRuntimeConfig } from '#imports'
 
 export default async function initSentry(app) {

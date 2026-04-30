@@ -1,4 +1,4 @@
-import { getGroupProject, postGroupProjects, removeGroupProject } from '@/api/groups.service'
+import { getGroupProject, postGroupProjects, removeGroupProject } from '~/api/groups.service'
 
 export default function useGroupProjectsUpdate(orgCode, groupId, form) {
   const groupProjectData = ref(null)

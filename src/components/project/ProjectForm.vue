@@ -54,7 +54,7 @@
         :unfocusable="otherFieldDisabled"
         space-below-label="large-space"
         data-test="title-input"
-        @blur="validation.form.title.$touch"
+        @blur="validation.title.$touch"
       >
         <label>
           {{
@@ -62,7 +62,7 @@
           }}
         </label>
       </TextInput>
-      <FieldErrors :errors="validation.form.title.$errors" />
+      <FieldErrors :errors="validation.title.$errors" />
     </FieldDisabler>
 
     <!-- Purpose -->
@@ -81,11 +81,11 @@
         :unfocusable="otherFieldDisabled"
         data-test="purpose-input"
         space-below-label="large-space"
-        @blur="validation.form.purpose.$touch"
+        @blur="validation.purpose.$touch"
       >
         <label>{{ $t('project.form.purpose-label') + ' *' }}</label>
       </TextInput>
-      <FieldErrors :errors="validation.form.purpose.$errors" />
+      <FieldErrors :errors="validation.purpose.$errors" />
     </FieldDisabler>
 
     <!-- Team -->
@@ -195,24 +195,28 @@
 </template>
 
 <script>
-import TextInput from '@/components/base/form/TextInput.vue'
-import LpiSelect from '@/components/base/form/LpiSelect.vue'
-import ProjectCategoriesDropdown from '@/components/category/ProjectCategoriesDropdown.vue'
-import ProjectCategoriesDropdownElementButton from '@/components/category/ProjectCategoriesDropdownElementButton.vue'
-import TeamSection from '@/components/project/TeamSection.vue'
-import FieldDisabler from '@/components/base/form/FieldDisabler.vue'
-import TagsFilterSummary from '@/components/search/Filters/TagsFilterSummary.vue'
-import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
-import IconImage from '@/components/base/media/IconImage.vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import ImageEditor from '@/components/base/form/ImageEditor.vue'
-import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import { getTemplate } from '~/api/templates.service'
+
+import ProjectCategoriesDropdownElementButton from '~/components/category/ProjectCategoriesDropdownElementButton.vue'
+import ProjectCategoriesDropdown from '~/components/category/ProjectCategoriesDropdown.vue'
+import LpiDropDownElementButton from '~/components/base/form/LpiDropDownElementButton.vue'
+import TagsFilterSummary from '~/components/search/Filters/TagsFilterSummary.vue'
+import TagsFilterEditor from '~/components/search/Filters/TagsFilterEditor.vue'
+import FieldDisabler from '~/components/base/form/FieldDisabler.vue'
+import LpiDropDown from '~/components/base/form/LpiDropDown.vue'
+import ImageEditor from '~/components/base/form/ImageEditor.vue'
+import FieldErrors from '~/components/base/form/FieldErrors.vue'
+import TeamSection from '~/components/project/TeamSection.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+import LpiSelect from '~/components/base/form/LpiSelect.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
+
+import { usePatatoids } from '~/composables/usePatatoids'
+
 import { useRuntimeConfig } from '#imports'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import LpiDropDown from '@/components/base/form/LpiDropDown.vue'
-import LpiDropDownElementButton from '@/components/base/form/LpiDropDownElementButton.vue'
-import { getTemplate } from '@/api/templates.service'
-import { usePatatoids } from '@/composables/usePatatoids'
 
 export default {
   name: 'ProjectForm',

@@ -1,8 +1,12 @@
-import useAPI from '@/composables/useAPI'
 import * as oauth from '@panva/oauth4webapi'
-import useKeycloak from '@/api/auth/keycloak'
-import useProjectsStore from '@/stores/useProjects'
-import useOrganizationsStore from '@/stores/useOrganizations'
+
+import useKeycloak from '~/api/auth/keycloak'
+
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useProjectsStore from '~/stores/useProjects'
+
+import useAPI from '~/composables/useAPI'
+
 import { useRuntimeConfig } from '#imports'
 
 // TODO fix this in uxt sever side (windows is undefined)
@@ -40,7 +44,7 @@ export async function goToKeycloakLoginPage(): Promise<void> {
   )
 
   let fromUrl = window.location.href
-  if (window.location.pathname === '/login' || /^\/register\//.test(window.location.pathname)) {
+  if (window.location.pathname === '/login' || window.location.pathname.startsWith('/register/')) {
     fromUrl = window.location.origin
   }
 
@@ -144,6 +148,7 @@ export async function refreshAccessToken(): Promise<any> {
     await oauth.processRefreshTokenResponse(as, client, response)
   const payload = await keycloak.processKeycloakResponse(result)
   return {
+    expires_in: payload.expires_in,
     access_token: payload.access_token,
     refresh_token: payload.refresh_token,
     refresh_token_exp: payload.refresh_token_exp,
@@ -154,7 +159,7 @@ export async function refreshAccessToken(): Promise<any> {
 
 export async function getNotifications(id) {
   // TODO: should getNotificationsSetting
-  return await useAPI(`notifications-setting/${id}/`, {}) //.data.value
+  return await useAPI(`notifications-setting/${id}/`, {})
 }
 
 export async function patchNotifications({ id, payload }) {

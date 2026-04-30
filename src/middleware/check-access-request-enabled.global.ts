@@ -1,4 +1,4 @@
-import useOrganizationsStore from '@/stores/useOrganizations'
+import useOrganizationsStore from '~/stores/useOrganizations'
 
 export default defineNuxtRouteMiddleware(async function checkAccessRequestEnabled(to) {
   if (!to.meta?.checkAccessRequestEnabled || to.name == 'page404') return

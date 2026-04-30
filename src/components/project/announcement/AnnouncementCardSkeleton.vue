@@ -31,14 +31,8 @@
   </div>
 </template>
 
-<script>
-import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
-
-export default {
-  name: 'AnnouncementCardSkeleton',
-
-  components: { SkeletonComponent },
-}
+<script setup lang="ts">
+import SkeletonComponent from '~/components/base/loader/SkeletonComponent.vue'
 </script>
 
 <style lang="scss" scoped>

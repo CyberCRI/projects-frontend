@@ -1,5 +1,6 @@
-import analytics from '@/analytics'
-import { AttachmentLinkModel } from '@/models/attachment-link.model'
+import type { AttachmentLinkModel } from '~/models/attachment-link.model'
+
+import analytics from '~/analytics'
 
 export interface AttachmentAnalytic {
   project: {

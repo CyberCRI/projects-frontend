@@ -43,12 +43,16 @@
 </template>
 
 <script setup lang="ts">
-import EditEventDrawer from '@/components/event/EditEventDrawer/EditEventDrawer.vue'
+import type { TranslatedEventModel } from '~/models/event.model'
+
+import { deleteEvent } from '~/api/event.service'
+
+import EditEventDrawer from '~/components/event/EditEventDrawer/EditEventDrawer.vue'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+
+import useToasterStore from '~/stores/useToaster'
+
 import EventItem from './EventItem.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import { deleteEvent } from '@/api/event.service'
-import useToasterStore from '@/stores/useToaster'
-import { TranslatedEventModel } from '@/models/event.model'
 
 withDefaults(
   defineProps<{
@@ -121,11 +125,11 @@ const onCancel = () => {
 }
 
 .month-title {
-  margin-bottom: $space-l;
-  margin-top: $space-xl;
+  margin: $space-m auto;
   text-transform: uppercase;
   color: var(--almost-black);
   text-align: center;
+  width: fit-content;
 }
 
 .events-wrapper {

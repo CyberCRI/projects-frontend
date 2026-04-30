@@ -1,5 +1,3 @@
-import { computed } from 'vue'
-
 export default function useSkillLevels() {
   const { t } = useNuxtI18n()
 

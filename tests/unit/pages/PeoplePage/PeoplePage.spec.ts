@@ -1,8 +1,8 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import PeoplePage from '@/pages/PeoplePage/PeoplePage.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
+import PeoplePage from '~/pages/PeoplePage/PeoplePage.vue'
 
-import { describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
+import { describe, expect, it } from 'vitest'
 
 describe('PeoplePage.vue', () => {
   it('should render component', async () => {

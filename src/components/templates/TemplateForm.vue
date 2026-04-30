@@ -141,26 +141,29 @@
   </div>
 </template>
 
-<script setup>
-import { capitalize } from '@/functs/string'
-import useNuxtI18n from '@/composables/useNuxtI18n'
+<script setup lang="ts">
+import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
-import TextInput from '@/components/base/form/TextInput.vue'
-import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import useNuxtI18n from '~/composables/useNuxtI18n'
 
-defineOptions({ name: 'TemplateForm' })
-defineProps({
-  errors: {
-    type: Object,
-    default: () => {},
-  },
-  saveImageCallback: {
-    type: Function,
-    required: true,
-  },
-})
+import { capitalize } from '~/functs/string'
+
+withDefaults(
+  defineProps<{
+    errors?: {
+      [key: string]: []
+    }
+    saveImageCallback: (file: File) => void
+  }>(),
+  {
+    errors: () => ({
+      name: [],
+    }),
+  }
+)
 
 const { t } = useNuxtI18n()
 

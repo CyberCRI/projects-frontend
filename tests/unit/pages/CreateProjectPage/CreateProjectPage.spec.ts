@@ -1,12 +1,12 @@
 // TODO mock category endpoints
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import CreateProjectPage from '@/pages/CreateProjectPage/CreateProjectPage.vue'
+import CreateProjectPage from '~/pages/CreateProjectPage/CreateProjectPage.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
-import { describe, expect, it } from 'vitest'
-import { flushPromises } from '@vue/test-utils'
+import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
+import OrganizationTagFactory from '~~/tests/factories/tag.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
-import { PaginationsFactory } from '../../../factories/paginations.factory'
-import OrganizationTagFactory from '../../../factories/tag.factory'
+import { flushPromises } from '@vue/test-utils'
+import { describe, expect, it } from 'vitest'
 
 describe('CreateProjectPage.vue', () => {
   it('should render component', async () => {

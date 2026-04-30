@@ -1,6 +1,6 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import EmptyCard from '@/components/people/UserProfile/EmptyCard.vue'
+import EmptyCard from '~/components/people/UserProfile/EmptyCard.vue'
 import { beforeEach, describe, expect, it } from 'vitest'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
 
 describe('EmptyCard.vue', () => {
   let wrapper

@@ -1,22 +1,21 @@
-import BaseModel from '@/models/base.model'
-import { LanguageType, ProjectPublicationStatusType, ProjectStatusType } from '@/models/types'
-import { ProjectTeamOutput } from '@/models/project-member.model'
-import { ProjectCategoryOutput } from '@/models/project-category.model'
-import { LocationOutput } from '@/models/location.model'
-import { SdgOutput } from '@/models/sdg.model'
-import { GoalOutput } from '@/models/goal.model'
-import { AttachmentLinkOutput } from '@/models/attachment-link.model'
-import { AttachmentFileOutput } from '@/models/attachment-file.model'
-import { ImageModel, ImageOutput } from '@/models/image.model'
-import { CommentOutput } from '@/models/comment.model'
-import { BlogEntryOutput } from '@/models/blog-entry.model'
-import { OrganizationModel, OrganizationOutput } from '@/models/organization.model'
-import { ReviewModel } from '@/models/review.model'
-import { AnnouncementModel, AnnouncementOutput } from '@/models/announcement.model'
-import { FollowOutput } from '@/models/follow.model'
-import { TemplateModel } from '@/models/template.model'
-import { TagModel, TagOutput } from '@/models/tag.model'
-import { Translated } from '@/interfaces/translated'
+import type { LanguageType, ProjectPublicationStatusType, ProjectStatusType } from '@/models/types'
+import type { ProjectTeamModel, ProjectTeamOutput } from '@/models/project-member.model'
+import type { OrganizationModel, OrganizationOutput } from '@/models/organization.model'
+import type { AnnouncementModel, AnnouncementOutput } from '@/models/announcement.model'
+import type { TemplateModel, TranslatedTemplate } from '@/models/template.model'
+import type { ProjectCategoryOutput } from '@/models/project-category.model'
+import type { AttachmentLinkOutput } from '@/models/attachment-link.model'
+import type { AttachmentFileOutput } from '@/models/attachment-file.model'
+import type { ImageModel, ImageOutput } from '@/models/image.model'
+import type { BlogEntryOutput } from '@/models/blog-entry.model'
+import type { LocationOutput } from '@/models/location.model'
+import type { TagModel, TagOutput } from '@/models/tag.model'
+import type { CommentOutput } from '@/models/comment.model'
+import type { Translated } from '@/interfaces/translated'
+import type { FollowOutput } from '@/models/follow.model'
+import type { ReviewModel } from '@/models/review.model'
+import type { GoalOutput } from '@/models/goal.model'
+import type BaseModel from '@/models/base.model'
 
 /**
  * @name ProjectModel
@@ -30,6 +29,7 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
   is_locked: boolean
   is_shareable: boolean
   purpose: string
+  categories: ProjectCategoryOutput[]
   organizations: OrganizationModel[]
   language: LanguageType
   locations: LocationOutput[]
@@ -37,6 +37,7 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
   life_status: ProjectStatusType
   reviews: ReviewModel[]
   tags: TagModel[]
+  sdgs: number[]
   is_followed: {
     is_followed: boolean
     follow_id: number
@@ -49,11 +50,20 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
   goals: GoalOutput[]
   slug: string
   updated_at: string
+  created_at: string
+  views?: number
+  linked_projects: LinkedProject[]
+  team: ProjectTeamModel
+}
+
+export type TranslatedProject = Translated<
+  Omit<ProjectModel, 'template'>,
+  'title' | 'description' | 'purpose'
+> & {
+  template?: TranslatedTemplate
 }
 
 export type ProjectSlugOrId = ProjectModel['id'] | ProjectModel['slug']
-
-export type TranslatedProject = Translated<ProjectModel, 'title' | 'description' | 'purpose'>
 
 export type ProjectCreateInput = Required<ProjectModel> & {
   project_categories_ids: number
@@ -67,7 +77,13 @@ export type ProjectPatchInput = Partial<ProjectCreateInput>
 
 export type LinkedProject = {
   id: number
-  project: ProjectOutput
+  project: ProjectModel
+  target?: ProjectModel
+}
+
+export type TranslatedLinkedProject = LinkedProject & {
+  project: TranslatedProject
+  target?: TranslatedProject
 }
 
 export type LinkedProjectRef = {
@@ -93,7 +109,7 @@ export type ProjectOutput = Required<ProjectModel> & {
   categories: ProjectCategoryOutput[]
   geolocation_coordinates: LocationOutput
   tags: TagOutput[]
-  sdgs: SdgOutput[]
+  sdgs: number[]
   goals: GoalOutput[]
   links: AttachmentLinkOutput[]
   files: AttachmentFileOutput[]

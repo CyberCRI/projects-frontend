@@ -1,5 +1,5 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import SkillSteps from '@/components/people/skill/SkillSteps.vue'
+import SkillSteps from '~/components/people/skill/SkillSteps.vue'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
 import { beforeEach, describe, expect, it } from 'vitest'
 

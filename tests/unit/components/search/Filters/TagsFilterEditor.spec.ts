@@ -1,18 +1,19 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import TagsFilterEditor from '~/components/search/Filters/TagsFilterEditor.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
 import waitForExpect from 'wait-for-expect'
-import TagsFilterEditor from '@/components/search/Filters/TagsFilterEditor.vue'
 
-import pinia from '@/stores'
-import useOrganizationsStore from '@/stores/useOrganizations'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import pinia from '~/stores'
 
-import { OrganizationOutput } from '@/models/organization.model'
+import { OrganizationOutput } from '~/models/organization.model'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
 
-import { getOrgClassificationTags } from '@/api/tag-classification.service'
+import { getOrgClassificationTags } from '~/api/tag-classification.service'
+import NothingHere from '~/components/base/NothingHere.vue'
 
-vi.mock('@/api/tag-classification.service', () => ({
+vi.mock('~/api/tag-classification.service', () => ({
   getOrgClassificationTags: vi
     .fn()
     .mockResolvedValue({ results: [{ id: 1 }, { id: 2 }, { id: 3 }] }),
@@ -178,7 +179,7 @@ describe('TagsFilterEditor', () => {
     })
     const vm: any = wrapper.vm
 
-    const select = wrapper.findComponent('[data-test="classification-picker"]')
+    const select = wrapper.findComponent(NothingHere)
     expect(select.exists()).toBeTruthy()
 
     // resolve mock api call for classifcation options

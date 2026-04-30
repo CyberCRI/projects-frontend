@@ -1,11 +1,12 @@
 <template>
-  <div class="cropped-image" :class="{ contain, loading: loadStatus }">
+  <div class="cropped-image skeletons-background" :class="{ contain, loading: loadStatus }">
     <img :alt="alt" :src="src" :style="imageStyles" @load="onLoad" @error="onError" />
   </div>
 </template>
 <script setup lang="ts">
-import { ImageSizes, IMAGES_SIZES_DEFAULTS } from '@/functs/imageSizesUtils'
-import { StyleValue } from 'vue'
+import { IMAGES_SIZES_DEFAULTS } from '~/functs/imageSizesUtils'
+import type { ImageSizes } from '~/functs/imageSizesUtils'
+import type { StyleValue } from 'vue'
 
 const props = withDefaults(
   defineProps<{
@@ -69,7 +70,7 @@ onMounted(() => {
 })
 </script>
 <style lang="scss" scoped>
-@import '@/design/scss/skeletons';
+@import '~/design/scss/skeletons';
 
 .cropped-image {
   // higher specificity to override BasicCard styles
@@ -79,6 +80,8 @@ onMounted(() => {
   position: relative;
   width: 100%;
   height: 100%;
+
+  --skeleton-100: v-bind('loadingColor');
 
   img {
     width: 100%;

@@ -1,7 +1,7 @@
+import { logIn, createInvitaionLink } from '~~/tests/playwright/lib'
+import { LogLevel, Logger } from '~~/tests/playwright/logger'
+import { usersDict } from '~~/tests/playwright/variables'
 import { test } from '@playwright/test'
-import { usersDict } from '../variables'
-import { logIn, createInvitaionLink } from '../lib'
-import { LogLevel, Logger } from '../logger'
 
 const logger = new Logger(LogLevel.Debug)
 

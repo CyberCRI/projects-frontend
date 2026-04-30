@@ -10,12 +10,12 @@
 </template>
 
 <script setup lang="ts">
-import * as L from 'leaflet'
-import fixLeaflet from '@/app/fixLeaflet'
-import 'leaflet.markercluster'
-import { AnyLocation } from '@/models/location.model'
-import { UnwrapRef } from 'vue'
+import type { AnyLocation } from '@/models/location.model'
 import { createClusterIcons } from '@/functs/leaflet'
+import fixLeaflet from '~/app/fixLeaflet'
+import type { UnwrapRef } from 'vue'
+import 'leaflet.markercluster'
+import * as L from 'leaflet'
 
 const props = withDefaults(
   defineProps<{
@@ -101,7 +101,7 @@ const addLayers = (layers: L.Layer[]) => {
 
   // get all layers actualy loaded
   const toRemove = getLayers()
-  let toAdd = layers
+  const toAdd = layers
 
   // all layers not included in toAdd, need to be removed
   removeLayers(Array.from(toRemove).filter((el) => !toAdd.includes(el)))

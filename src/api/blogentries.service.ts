@@ -1,9 +1,16 @@
 // import type { APIResponseList } from '@/api/types'
-import type { BlogEntryInput /*, BlogEntryOutput*/ } from '@/models/blog-entry.model'
+import type {
+  BlogEntryInput /*, BlogEntryOutput*/,
+  BlogEntryModel,
+  QueryFilterBlogEntry,
+} from '@/models/blog-entry.model'
+import type { ProjectSlugOrId } from '@/models/project.model'
 import useAPI from '@/composables/useAPI'
 
-export async function getBlogEntries(id) {
-  return await useAPI(`project/${id}/blog-entry/`, {}) //.data.value
+type ConfigBlogEntries = UseApiOptions<QueryFilterBlogEntry>
+
+export async function getBlogEntries(projectId: ProjectSlugOrId, config: ConfigBlogEntries = {}) {
+  return await useAPI<PaginationResult<BlogEntryModel>>(`project/${projectId}/blog-entry/`, config)
 }
 
 export async function getBlogEntry(body: BlogEntryInput) {
@@ -14,7 +21,7 @@ export async function postBlogEntry(blogEntry: BlogEntryInput) {
   return await useAPI(`project/${blogEntry.project_id}/blog-entry/`, {
     body: blogEntry,
     method: 'POST',
-  }) //.data.value
+  })
 }
 
 export async function patchBlogEntry({
@@ -25,7 +32,6 @@ export async function patchBlogEntry({
   body: BlogEntryInput
 }) {
   return await useAPI(`project/${project_id}/blog-entry/${body.id}/`, { body, method: 'PATCH' })
-  //.data.value
 }
 
 export async function deleteBlogEntry({ project_id, id }: { project_id: string; id: number }) {
@@ -34,5 +40,5 @@ export async function deleteBlogEntry({ project_id, id }: { project_id: string; 
 
 export async function postBlogEntryImage({ body, project_id, blog_entry_id = null }) {
   const query = blog_entry_id ? { blog_entry_id } : {}
-  return await useAPI(`project/${project_id}/blog-entry-image/`, { body, method: 'POST', query }) //.data.value
+  return await useAPI(`project/${project_id}/blog-entry-image/`, { body, method: 'POST', query })
 }

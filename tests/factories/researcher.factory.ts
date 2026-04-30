@@ -1,4 +1,4 @@
-import { Document, Identifier, Researcher, HarvesterType } from '@/interfaces/researcher'
+import { Document, Identifier, Researcher, HarvesterType } from '~/interfaces/researcher'
 import { createFactory } from 'faker-create-factory'
 import { UserFactory } from './user.factory'
 

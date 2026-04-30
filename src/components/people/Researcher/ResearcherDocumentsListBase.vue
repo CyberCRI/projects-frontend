@@ -110,17 +110,23 @@
 </template>
 
 <script setup lang="ts">
-import { sanitizeResearcherDocumentAnalyticsYears } from '@/api/sanitizes/researcher'
-import PaginationButtonsV2 from '@/components/base/navigation/PaginationButtonsV2.vue'
-import ResearcherDocument from '@/components/people/Researcher/ResearcherDocument.vue'
-import ResearcherDocumentSimilars from '@/components/people/Researcher/ResearcherDocumentSimilars.vue'
-import { Pagination as PaginationType } from '@/composables/usePagination'
-import { useQuery } from '@/composables/useQuery'
-import {
+import type {
+  DocumentCrisalidType,
   QueryFilterDocument,
+  Relators,
   ResearcherDocumentAnalytics,
   TranslatedDocument,
-} from '@/interfaces/researcher'
+} from '~/interfaces/researcher'
+
+import { sanitizeResearcherDocumentAnalyticsYears } from '~/api/sanitizes/researcher'
+
+import ResearcherDocumentSimilars from '~/components/people/Researcher/ResearcherDocumentSimilars.vue'
+import ResearcherDocument from '~/components/people/Researcher/ResearcherDocument.vue'
+import PaginationButtonsV2 from '~/components/base/navigation/PaginationButtonsV2.vue'
+
+import type { Pagination as PaginationType } from '~/composables/usePagination'
+import { useQuery } from '~/composables/useQuery'
+
 import { isNil } from 'es-toolkit'
 
 const props = withDefaults(
@@ -183,10 +189,10 @@ const sortInfos = (
 }
 
 // fix when no role/document_type are set in current analytics
-const pushQueryIfNotExist = (
-  arr: [name: string, count: number][],
-  name?: string
-): [name: string, count: number][] => {
+const pushQueryIfNotExist = <T = string,>(
+  arr: [name: T, count: number][],
+  name?: T
+): [name: T, count: number][] => {
   if (isNil(name)) {
     return arr
   }
@@ -199,11 +205,14 @@ const pushQueryIfNotExist = (
 const documentTypeInfos = computed(() => {
   return pushQueryIfNotExist(
     sortInfos(props.documentsAnalytics?.document_types),
-    query.document_type
-  )
+    query.value.document_type
+  ) as [DocumentCrisalidType, number][]
 })
 const documentsRoleInfos = computed(() => {
-  return pushQueryIfNotExist(sortInfos(props.documentsAnalytics?.roles), query.roles)
+  return pushQueryIfNotExist(sortInfos(props.documentsAnalytics?.roles), query.value.roles) as [
+    Relators,
+    number,
+  ][]
 })
 </script>
 

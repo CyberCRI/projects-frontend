@@ -2,41 +2,52 @@ import { defineStore } from 'pinia'
 
 export type ToastType = 'error' | 'warning' | 'info' | 'success'
 
-export interface Toast {
+export type Toast = {
   message: string
-  isOpened: boolean
+  isOpened?: boolean
   type: ToastType
   translate?: boolean
 }
 
-export interface ToastState {
-  toastList: Toast[]
+type ToastConfig = Toast & {
+  remaining: boolean
+  duration: number
 }
 
 export const DEFAULT_TOAST_DURATION = 5 * 1000
 
 const useToasterStore = defineStore('toaster', {
-  state: (): ToastState => ({
+  state: () => ({
     toastList: [],
   }),
 
   actions: {
-    _pushToast({
-      message,
-      type,
-      remaining,
-      duration,
-      translate,
-    }: {
-      message: string
-      type: ToastType
-      remaining: boolean
-      duration: number
-      translate?: boolean
-    }): void {
-      this.toastList.push({ message, type, isOpened: true, translate: !!translate })
+    _findIndexToast({ message, type }: Toast) {
+      return this.toastList.find((item) => item.message === message && item.type === type)
+    },
+    deleteToast(toast: Toast): void {
+      const findedIndex = this.toastList.findIndex((item) => toRaw(item) === toRaw(toast))
+      if (findedIndex !== -1) {
+        this.toastList.splice(findedIndex, 1)
+      }
+    },
+
+    _deleteToastFromInfo(toast: Pick<Toast, 'message' | 'type'>) {
+      this.deleteToast(this._findIndexToast(toast))
+    },
+
+    _pushToast({ message, type, remaining, duration, translate }: ToastConfig) {
+      this._deleteToastFromInfo({ message, type })
+
+      const toast = {
+        message,
+        type,
+        isOpened: true,
+        translate: !!translate,
+      }
+      this.toastList.push(toast)
       if (!remaining) {
-        setTimeout(() => this.deleteToast(0), duration || DEFAULT_TOAST_DURATION)
+        setTimeout(() => this.deleteToast(toast), duration || DEFAULT_TOAST_DURATION)
       }
     },
 
@@ -52,7 +63,7 @@ const useToasterStore = defineStore('toaster', {
         remaining: false,
         duration: DEFAULT_TOAST_DURATION,
         translate: false,
-        ...(options || {}),
+        ...options,
       }
       this._pushToast({ message, type: 'warning', ..._options })
     },
@@ -68,7 +79,7 @@ const useToasterStore = defineStore('toaster', {
         remaining: false,
         duration: DEFAULT_TOAST_DURATION,
         translate: false,
-        ...(options || {}),
+        ...options,
       }
       this._pushToast({ message, type: 'error', ..._options })
     },
@@ -84,7 +95,7 @@ const useToasterStore = defineStore('toaster', {
         remaining: false,
         duration: DEFAULT_TOAST_DURATION,
         translate: false,
-        ...(options || {}),
+        ...options,
       }
       this._pushToast({ message, type: 'info', ..._options })
     },
@@ -100,13 +111,9 @@ const useToasterStore = defineStore('toaster', {
         remaining: false,
         duration: DEFAULT_TOAST_DURATION,
         translate: false,
-        ...(options || {}),
+        ...options,
       }
       this._pushToast({ message, type: 'success', ..._options })
-    },
-
-    deleteToast(toastIndex: number): void {
-      this.toastList.splice(toastIndex, 1)
     },
   },
 })

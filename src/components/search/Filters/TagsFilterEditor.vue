@@ -9,7 +9,7 @@
       />
     </div>
 
-    <div v-if="!allSearchMode" class="section">
+    <div v-if="!allSearchMode && orgClassificationOptions?.length" class="section">
       <p class="notice">
         {{ $t('search.pick-tag-classification') }}
       </p>
@@ -25,6 +25,8 @@
         :classification="selectedClassification"
       />
     </div>
+
+    <NothingHere v-if="!orgClassificationOptions?.length" />
 
     <div v-show="allSearchMode || selectedClassification || showTagSearch" class="section">
       <p class="notice">
@@ -68,13 +70,16 @@
 </template>
 
 <script>
-import FilterSearchInput from '@/components/search/Filters/FilterSearchInput.vue'
-import CurrentTags from '@/components/search/FilterTags/CurrentTags.vue'
-import SuggestedTags from '@/components/search/FilterTags/SuggestedTags.vue'
-import TagResults from '@/components/search/FilterTags/TagResults.vue'
-import LpiSelect from '@/components/base/form/LpiSelect.vue'
-import useTagSearch from '@/composables/useTagSearch.js'
-import ClassificationDescription from '@/components/admin/ClassificationDescription.vue'
+import ClassificationDescription from '~/components/admin/ClassificationDescription.vue'
+import FilterSearchInput from '~/components/search/Filters/FilterSearchInput.vue'
+import SuggestedTags from '~/components/search/FilterTags/SuggestedTags.vue'
+import CurrentTags from '~/components/search/FilterTags/CurrentTags.vue'
+import TagResults from '~/components/search/FilterTags/TagResults.vue'
+import LpiSelect from '~/components/base/form/LpiSelect.vue'
+
+import NothingHere from '~/components/base/NothingHere.vue'
+import useTagSearch from '~/composables/useTagSearch.ts'
+
 export default {
   name: 'TagsFilterEditor',
 
@@ -85,6 +90,7 @@ export default {
     TagResults,
     LpiSelect,
     ClassificationDescription,
+    NothingHere,
   },
 
   props: {

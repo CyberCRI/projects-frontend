@@ -1,12 +1,12 @@
-import AccountDrawer from '@/components/people/Account/AccountDrawer.vue'
-import { lpiMount } from '@/../tests/helpers/LpiMount'
+import AccountDrawer from '~/components/people/Account/AccountDrawer.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
 
-import { beforeEach, describe, expect, it } from 'vitest'
-import { UserFactory } from '@/../tests/factories/user.factory'
-import ExistingAccountChecker from '@/components/people/Account/ExistingAccountChecker.vue'
-import AccountLayout from '@/components/people/Account/AccountLayout.vue'
+import ExistingAccountChecker from '~/components/people/Account/ExistingAccountChecker.vue'
+import { OrganizationOutputFactory } from '~~/tests/factories/organization.factory'
+import AccountLayout from '~/components/people/Account/AccountLayout.vue'
+import { UserFactory } from '~~/tests/factories/user.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
-import { OrganizationOutputFactory } from '../../../../factories/organization.factory'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
 
 describe('AccountDrawer', () => {

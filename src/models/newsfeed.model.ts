@@ -1,7 +1,9 @@
-import { Project } from '@playwright/test'
-import { AnnouncementModel, TranslatedAnnouncement } from './announcement.model'
-import { TranslatedProject } from './project.model'
-import { NewsModel, TranslatedNews } from '@/models/news.model'
+import type { Project } from '@playwright/test'
+
+import type { NewsModel, TranslatedNews } from '~/models/news.model'
+
+import type { AnnouncementModel, TranslatedAnnouncement } from './announcement.model'
+import type { TranslatedProject } from './project.model'
 
 /**
  * @name NewsfeedModel

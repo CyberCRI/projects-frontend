@@ -1,6 +1,6 @@
-import routerOptions from '@/app/router.options'
-import { RouteRecordRaw } from 'vue-router'
+import routerOptions from '~/app/router.options'
 import MockComponent from './MockComponent.vue'
+import { RouteRecordRaw } from 'vue-router'
 
 const ReplaceComponents = (element: RouteRecordRaw): RouteRecordRaw => {
   const cloned = { ...element }

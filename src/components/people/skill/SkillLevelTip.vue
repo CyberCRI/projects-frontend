@@ -31,10 +31,8 @@
   </ToolTip>
 </template>
 
-<script setup>
-import ToolTip from '@/components/base/ToolTip.vue'
-
-defineOptions({ name: 'SkillLevelTip' })
+<script setup lang="ts">
+import ToolTip from '~/components/base/ToolTip.vue'
 const { t } = useNuxtI18n()
 </script>
 

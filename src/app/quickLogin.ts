@@ -1,4 +1,4 @@
-import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
+import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
 
 export default function quickLogin() {
   // speedy redirect to keycloak login without loading the whole app

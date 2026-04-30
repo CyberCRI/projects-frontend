@@ -7,13 +7,13 @@
     @close="emit('close')"
     @confirm="confirm"
   >
-    <SdgsFilter v-model="tmpModel" class="sdg-grid" />
+    <SdgsFilter v-model="tmpModel" />
   </BaseDrawer>
 </template>
 
 <script setup lang="ts">
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import SdgsFilter from '@/components/search/Filters/SdgsFilter.vue'
+import SdgsFilter from '~/components/search/Filters/SdgsFilter.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -44,9 +44,3 @@ const confirm = () => {
   emit('close')
 }
 </script>
-
-<style lang="scss" scoped>
-.sdg-grid {
-  grid-template-columns: 1fr 1fr 1fr;
-}
-</style>

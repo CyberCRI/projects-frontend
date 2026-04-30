@@ -44,8 +44,9 @@
 </template>
 
 <script setup lang="ts">
-import { textIsEmpty } from '@/functs/string'
-import { TranslatedProject } from '@/models/project.model'
+import type { TranslatedProject } from '~/models/project.model'
+
+import { textIsEmpty } from '~/functs/string'
 
 const props = defineProps<{
   project: TranslatedProject

@@ -1,8 +1,8 @@
-import { Doc, Page } from '@/composables/pdf-helpers/doc-builder'
-import PageTitle from '@/composables/project-pdf-components/PageTitle'
-
-import addBlogSectionFactory from '@/composables/project-pdf-components/addBlogSectionFactory'
-import addBlogLimitWarningFactory from '@/composables/project-pdf-components/addBlogLimitWarningFactory'
+import addBlogLimitWarningFactory from '~/composables/project-pdf-components/addBlogLimitWarningFactory'
+import addBlogSectionFactory from '~/composables/project-pdf-components/addBlogSectionFactory'
+import PageTitle from '~/composables/project-pdf-components/PageTitle'
+import type { Doc } from '~/composables/pdf-helpers/doc-builder'
+import { Page } from '~/composables/pdf-helpers/doc-builder'
 
 export default async function addPageBlogFactory(blogEntries: any[]) {
   const { t } = useNuxtI18n()

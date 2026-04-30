@@ -1,10 +1,13 @@
-import BaseModel from '@/models/base.model'
-import { FaqModel } from '@/models/faq.model'
-import { LanguageType } from '@/models/types'
-import { OrganizationDirectoryModel } from '@/models/organization-directory.model'
-import { TagModel } from './tag.model'
-import { Translated } from '@/interfaces/translated'
-import { ImageModel } from '@/models/image.model'
+import type { OrganizationDirectoryModel } from '~/models/organization-directory.model'
+import type { ImageModel } from '~/models/image.model'
+import type { FaqModel } from '~/models/faq.model'
+import type { LanguageType } from '~/models/types'
+import type BaseModel from '~/models/base.model'
+
+import type { Translated } from '~/interfaces/translated'
+
+import type { UserSkillModel } from '~/models/user.model'
+import type { TagModel } from './tag.model'
 
 export interface TermsAndConditions {
   id: number
@@ -12,7 +15,7 @@ export interface TermsAndConditions {
   content: string
   displayed_version: number
   displayed_content: string
-  displayed_updated_at: number
+  displayed_updated_at: string
 }
 
 export interface OrganizationModel extends BaseModel {
@@ -44,6 +47,8 @@ export interface OrganizationModel extends BaseModel {
 
 export type OrganizationPatchInput = Partial<OrganizationModel> & {
   tags?: number[]
+  default_skills_tags?: UserSkillModel[] | number[]
+  default_projects_tags?: TagModel[] | number[]
 }
 
 export type OrganizationOutput = BaseModel &
@@ -54,6 +59,8 @@ export type OrganizationOutput = BaseModel &
     children: string[]
     access_request_enabled?: boolean
     languages?: string[]
+    default_skills_tags?: TagModel[]
+    default_projects_tags?: TagModel[]
   }
 
 export type TranslatedOrganizationModel = Translated<

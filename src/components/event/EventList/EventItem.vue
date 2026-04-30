@@ -30,9 +30,9 @@
     </time>
 
     <div class="info">
-      <h4 class="title skeletons-text">
+      <h3 class="title skeletons-text">
         {{ event.$t.title }}
-      </h4>
+      </h3>
       <div v-if="haveContent" class="event-information skeletons-text">
         <LineClamped v-if="contentText" :line-number="contentLineNumber">
           {{ content }}
@@ -89,16 +89,18 @@
 </template>
 
 <script setup lang="ts">
-import IconImage from '@/components/base/media/IconImage.vue'
-import { TranslatedEventModel } from '@/models/event.model'
-import ContentExpandable from '@/components/base/ContentExpandable.vue'
-import ContextActionMenuInline from '@/components/base/button/ContextActionMenuInline.vue'
-import { html2Text } from '@/functs/string'
-import { dateWithoutHours, sanitizeDate } from '@/functs/date'
-import DisplayDate from '@/components/base/DisplayDate.vue'
-import LineClamped from '@/components/base/LineClamped.vue'
-import { useIntervalNow } from '@/composables/useDate'
-import GeneralMap from '@/components/map/GeneralMap.vue'
+import type { TranslatedEventModel } from '~/models/event.model'
+
+import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
+import ContentExpandable from '~/components/base/ContentExpandable.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+import LineClamped from '~/components/base/LineClamped.vue'
+import DisplayDate from '~/components/base/DisplayDate.vue'
+
+import { useIntervalNow } from '~/composables/useDate'
+
+import { dateWithoutHours, sanitizeDate } from '~/functs/date'
+import { html2Text } from '~/functs/string'
 
 const props = withDefaults(
   defineProps<{
@@ -210,6 +212,10 @@ const locationEvent = (event) => emit('location', event)
   fill: var(--primary);
   width: pxToRem(24px);
   height: pxToRem(24px);
+}
+
+.title {
+  font-size: 1.5rem;
 }
 
 .btn-location {

@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 // TODO(remi): component no needed ?
-import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
+import TipTapOutput from '~/components/base/form/TextEditor/TipTapOutput.vue'
 
 const onBoardingData = ref({
   content: '',

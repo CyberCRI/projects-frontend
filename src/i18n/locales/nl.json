@@ -278,15 +278,15 @@
         "tips-background-image": "Het is niet vereist als u liever gewoon een kleur weergeven. Minimale breedte: 1024px, Minimale hoogte: 400px."
       },
       "chat": "Chatplatform (Verbonden weergave)",
-      "events": "Gebeurtenissen",
-      "instructions": "Instructies",
-      "news": "Nieuws",
       "featured-projects": "Aanbevolen projecten",
       "templates": {
         "add": "Een sjabloon toevoegen",
         "delete-templates": "Sjablonen verwijderen",
         "delete-templates-description": "Weet u zeker dat u '{templateName}' sjabloon wilt verwijderen?"
-      }
+      },
+      "events": "Laatste gebeurtenissen (bijgewerkt)",
+      "instructions": "Laatste instructies (updates)",
+      "news": "Recent nieuws (updates)"
     },
     "form": {
       "admin-info": {
@@ -2408,61 +2408,11 @@
     }
   },
   "event": {
-    "no-event": "Nog geen evenement.",
+    "empty": "Nog geen evenement.",
     "calendar": {
       "title": "Agenda",
-      "future": "Toekomst",
-      "past": "Verleden",
-      "month": {
-        "10": {
-          "short": "okt",
-          "long": "oktober"
-        },
-        "11": {
-          "short": "Nov",
-          "long": "November"
-        },
-        "12": {
-          "short": "Dec",
-          "long": "December"
-        },
-        "01": {
-          "short": "Jan",
-          "long": "Januari"
-        },
-        "02": {
-          "short": "Feb",
-          "long": "Februari"
-        },
-        "03": {
-          "short": "Mar",
-          "long": "Maart"
-        },
-        "04": {
-          "short": "apr",
-          "long": "april"
-        },
-        "05": {
-          "short": "Mei",
-          "long": "Mei"
-        },
-        "06": {
-          "short": "Juni",
-          "long": "Juni"
-        },
-        "07": {
-          "short": "jul",
-          "long": "Juli"
-        },
-        "08": {
-          "short": "Aug",
-          "long": "Augustus"
-        },
-        "09": {
-          "short": "sep",
-          "long": "September"
-        }
-      }
+      "future": "Huidige/toekomstige gebeurtenissen",
+      "past": "Gebeurtenissen voltooid"
     },
     "create": {
       "title": "Agendanotitie toevoegen",
@@ -2571,7 +2521,8 @@
     "drawer": {
       "title": "Nieuws bewerken"
     },
-    "view": "Zie nieuws"
+    "view": "Zie nieuws",
+    "empty": "Nog geen nieuws."
   },
   "instructions": {
     "create": {
@@ -2628,7 +2579,8 @@
     },
     "drawer": {
       "title": "Gebruiksaanwijzing bewerken"
-    }
+    },
+    "empty": "Nog geen instructie."
   },
   "chat": {
     "drawer": {
@@ -3204,5 +3156,12 @@
     "file-field": "Bestand",
     "document-added": "Document toegevoegd.",
     "document-updated": "Document bijgewerkt."
+  },
+  "announcements": {
+    "empty": "Nog geen aankondiging."
+  },
+  "follow": {
+    "follow": "Volgen",
+    "unfollow": "Onvolgbaar"
   }
 }

@@ -1,5 +1,6 @@
+import useOrganizationsStore from '~/stores/useOrganizations'
+
 import { useRuntimeConfig } from '#imports'
-import useOrganizationsStore from '@/stores/useOrganizations'
 
 /**
  * return current organizationCode

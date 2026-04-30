@@ -217,7 +217,7 @@
 </template>
 
 <script setup lang="ts">
-import BadgeItem from '@/components/base/BadgeItem.vue'
+import BadgeItem from '~/components/base/BadgeItem.vue'
 
 withDefaults(
   defineProps<{

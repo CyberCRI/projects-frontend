@@ -1,14 +1,14 @@
-import { z } from 'zod'
-import N from './zod-schema-utils'
-import { mcpFetch, API_BASE_URL, orgCode } from './base'
 import {
-  USER_PREVIEW_OUTPUT_SCHEMA,
-  mapUserPreview,
   PEOPLE_GROUP_PREVIEW_OUTPUT_SCHEMA,
+  USER_PREVIEW_OUTPUT_SCHEMA,
   mapPeopleGroupPreview,
+  mapUserPreview,
 } from './people-tool'
+import { API_BASE_URL, mcpFetch, orgCode } from './base'
 import { SDG_OUTPUT_SCHEMA, mapSDG } from './sdg-tool'
 import { tagMapper } from './tag-schema'
+import N from './zod-schema-utils'
+import { z } from 'zod'
 
 export const CATEGORY_PREVIEW_OUTPUT_SCHEMA = N.object({
   id: N.number().describe('The ID of the category'),

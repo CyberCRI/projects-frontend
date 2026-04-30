@@ -1,4 +1,5 @@
-import { UserFromJWTModel, UserModel } from '@/models/user.model'
+import type { PeopleGroupModel, TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import type { UserFromJWTModel, UserModel } from '~/models/user.model'
 
 /**
  * @name GroupModel
@@ -20,11 +21,8 @@ export type GroupMember = UserModel & {
 // TODO translted
 export type TranslatedGroupMember = GroupMember
 
-export interface HierarchyGroupModel {
-  id: number
-  name: string
-  children: Array<HierarchyGroupModel>
-}
+export type HierarchyGroupModel = PeopleGroupModel
+export type TrasnlatedHierarchyGroupModel = TranslatedPeopleGroupModel
 
 export interface GroupModelInput {
   user_ids: Array<number>

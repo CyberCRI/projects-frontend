@@ -25,12 +25,15 @@
 </template>
 
 <script>
-import { postProjectHeader, patchProjectHeader } from '@/api/projects.service'
-import useValidate from '@vuelidate/core'
 import { helpers, maxLength, minLength, required } from '@vuelidate/validators'
-import useToasterStore from '@/stores/useToaster.ts'
-import useProjectsStore from '@/stores/useProjects.ts'
-import { imageSizesFormData } from '@/functs/imageSizesUtils.ts'
+import useValidate from '@vuelidate/core'
+
+import { patchProjectHeader, postProjectHeader } from '~/api/projects.service'
+
+import useProjectsStore from '~/stores/useProjects.ts'
+import useToasterStore from '~/stores/useToaster.ts'
+
+import { imageSizesFormData } from '~/functs/imageSizesUtils.ts'
 
 export default {
   name: 'ProjectEditGeneralInfos',
@@ -84,13 +87,11 @@ export default {
               ),
             }
       return {
-        form: {
-          title: {
-            required: helpers.withMessage(t('project.form.title-errors.required'), required),
-            maxLengthValue: helpers.withMessage(t('project.form.title-errors.max'), maxLength(120)),
-          },
-          purpose: rules,
+        title: {
+          required: helpers.withMessage(t('project.form.title-errors.required'), required),
+          maxLengthValue: helpers.withMessage(t('project.form.title-errors.max'), maxLength(120)),
         },
+        purpose: rules,
       }
     })
 

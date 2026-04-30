@@ -36,15 +36,19 @@
   </div>
 </template>
 <script setup lang="ts">
-import AccountFormTitleBlock from '@/components/people/Account/AccountFormTitleBlock.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import TextInput from '@/components/base/form/TextInput.vue'
-import { searchPeopleByExactMail } from '@/api/people.service'
+import { email as emailValidator, helpers, required } from '@vuelidate/validators'
 import useValidate from '@vuelidate/core'
-import { helpers, required, email as emailValidator } from '@vuelidate/validators'
-import FieldErrors from '@/components/base/form/FieldErrors.vue'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import { UserModel } from '@/models/user.model'
+
+import type { UserModel } from '~/models/user.model'
+
+import { searchPeopleByExactMail } from '~/api/people.service'
+
+import AccountFormTitleBlock from '~/components/people/Account/AccountFormTitleBlock.vue'
+import FieldErrors from '~/components/base/form/FieldErrors.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+
+import useOrganizationsStore from '~/stores/useOrganizations'
 
 const emits = defineEmits<{
   cancel: []

@@ -1,9 +1,9 @@
 <script setup lang="ts" generic="T extends AnyTranslatedLocation">
-import type { LocationType } from '@/models/types'
 import LocationTypeComponent from '@/components/map/LocationType.vue'
-import { groupBy } from 'es-toolkit'
+import type { AnyTranslatedLocation } from '@/models/location.model'
 import IconImage from '@/components/base/media/IconImage.vue'
-import { AnyTranslatedLocation } from '@/models/location.model'
+import type { LocationType } from '@/models/types'
+import { groupBy } from 'es-toolkit'
 
 const { stateModal, toggleModal, closeModal } = useModal()
 

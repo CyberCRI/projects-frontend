@@ -41,13 +41,16 @@
 </template>
 
 <script>
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import GroupCard from '@/components/group/GroupCard.vue'
-import SearchInput from '@/components/base/form/SearchInput.vue'
-import { searchGroups } from '@/api/search.service.ts'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { searchGroups } from '~/api/search.service.ts'
+
+import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
+import SearchInput from '~/components/base/form/SearchInput.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+import GroupCard from '~/components/group/GroupCard.vue'
+
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
+
 export default {
   name: 'GroupSelectDrawer',
 

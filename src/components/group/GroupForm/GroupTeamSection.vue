@@ -56,6 +56,7 @@
         :label="$t(seeMoreLabel)"
         @click="showFullList = !showFullList"
       />
+      <empty-label v-if="(showFullList ? modelValue : shortList).length === 0" />
     </div>
 
     <GroupTeamDrawer
@@ -71,7 +72,7 @@
 </template>
 
 <script>
-import useUsersStore from '@/stores/useUsers'
+import useUsersStore from '~/stores/useUsers'
 
 export default {
   name: 'GroupTeamSection',

@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { StyleValue } from 'vue'
+import type { StyleValue } from 'vue'
 
 const { t } = useNuxtI18n()
 

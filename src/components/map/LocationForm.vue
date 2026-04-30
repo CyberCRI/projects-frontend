@@ -1,6 +1,4 @@
 <template>
-  {{ JSON.stringify({ isValid, errors }) }}
-
   <DialogModal
     :confirm-button-label="isExist ? $t('common.edit') : $t('common.add')"
     :cancel-button-label="$t('common.cancel')"
@@ -48,13 +46,14 @@
 </template>
 
 <script setup lang="ts">
-import DialogModal from '@/components/base/modal/DialogModal.vue'
-import TextInput from '@/components/base/form/TextInput.vue'
 import GroupButton from '@/components/base/button/GroupButton.vue'
+import DialogModal from '@/components/base/modal/DialogModal.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
-import { LocationForm } from '@/models/location.model'
+import TextInput from '@/components/base/form/TextInput.vue'
+import type { LocationForm } from '@/models/location.model'
+import GeneralMap from '~/components/map/GeneralMap.vue'
+import type { LocationType } from '@/models/types'
 import { useLocationForm } from '@/form/location'
-import { LocationType } from '@/models/types'
 
 const props = withDefaults(
   defineProps<{
@@ -156,7 +155,7 @@ const isExist = computed(() => !!form.value.id)
 </style>
 
 <style>
-.location-map-ctn .map-recap {
+.location-map-ctn .leaflet-map {
   height: 250px;
 }
 </style>

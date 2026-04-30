@@ -1,5 +1,5 @@
-import { lpiShallowMount, lpiMount } from '@/../tests/helpers/LpiMount'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import { lpiShallowMount, lpiMount } from '~~/tests/helpers/LpiMount'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import { beforeEach, describe, expect, it } from 'vitest'
 

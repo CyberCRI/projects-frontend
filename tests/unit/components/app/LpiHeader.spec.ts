@@ -1,16 +1,16 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import LpiHeader from '@/components/app/LpiHeader.vue'
-import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
-import { ProjectCategoryOutputFactory } from '@/../tests/factories/project-category.factory'
-import pinia from '@/stores'
-import useProjectCategoriesStore from '@/stores/useProjectCategories'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import useUsersStore from '@/stores/useUsers'
+import { ProjectCategoryOutputFactory } from '~~/tests/factories/project-category.factory'
+import { OrganizationOutputFactory } from '~~/tests/factories/organization.factory'
+import useProjectCategoriesStore from '~/stores/useProjectCategories'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import LpiHeader from '~/components/app/LpiHeader.vue'
+import useUsersStore from '~/stores/useUsers'
+import pinia from '~/stores'
 
 // quick fix for vi error
 // "Cannot log after tests are done. Did you forget to wait for something async in your test?"
 // caused by error log af failing call to fetch announcement in LpiHeader
-vi.mock('@/composables/useAPI', () => {
+vi.mock('~/composables/useAPI', () => {
   return {
     default: vi.fn().mockResolvedValue({ data: { results: [] } }), // TODO nuxt check this
   }

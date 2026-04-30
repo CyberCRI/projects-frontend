@@ -1,13 +1,9 @@
-import {
-  Pagination,
-  PaginationResult,
-  paginationConfig,
-  usePagination,
-} from '@/composables/usePagination'
-import { omit } from 'es-toolkit'
+import type { Pagination, PaginationResult, paginationConfig } from '~/composables/usePagination'
+import { usePagination } from '~/composables/usePagination'
 
 import type { AsyncConfig } from './useAsyncAPI'
 import useAsyncAPI from './useAsyncAPI'
+import { omit } from 'es-toolkit'
 
 type AsyncPaginationHandler = Parameters<Parameters<typeof useAsyncAPI>['1']>[0]
 

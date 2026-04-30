@@ -4,11 +4,11 @@ import {
   ProjectCategoryCreateInput,
   ProjectCategoryOutput,
   ProjectCategoryPatchInput,
-} from '@/models/project-category.model'
-import BaseFactory from './base.factory'
-import TagFactory from './tag.factory'
+} from '~/models/project-category.model'
 import { OrganizationOutputFactory } from './organization.factory'
 import TemplateFactory from './template.factory'
+import BaseFactory from './base.factory'
+import TagFactory from './tag.factory'
 
 export const ProjectCategoryFactory = createFactory<ProjectCategoryOutput>((faker) => ({
   ...BaseFactory.generate(),
@@ -41,17 +41,22 @@ export const ProjectCategoryFactory = createFactory<ProjectCategoryOutput>((fake
   name: faker.name.title(),
   order_index: faker.datatype.number(),
   template: TemplateFactory.generate(),
-  organization: OrganizationOutputFactory.generate(),
+  organization: OrganizationOutputFactory.generate().code,
   tags: TagFactory.generateMany(2),
   children: [],
   hierarchy: [],
   projects_count: faker.datatype.number(),
+  is_root: faker.datatype.boolean(),
+  only_reviewer_can_publish: faker.datatype.boolean(),
+  outdated_slugs: [],
+  parent: null,
+  templates: [],
 }))
 
 export const ProjectCategoryOutputFactory = createFactory<ProjectCategoryOutput>(() => ({
   ...ProjectCategoryFactory.generate(),
   template: TemplateFactory.generate(),
-  organization: OrganizationOutputFactory.generate(),
+  organization: OrganizationOutputFactory.generate().code,
   tags: TagFactory.generateMany(2),
 }))
 

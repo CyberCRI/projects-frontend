@@ -10,8 +10,8 @@
 </template>
 
 <script setup lang="ts">
-import DefaultSkillsAdmin from '@/components/admin/DefaultSkillsAdmin.vue'
-import ClassificationAdmin from '@/components/admin/ClassificationAdmin.vue'
+import ClassificationAdmin from '~/components/admin/ClassificationAdmin.vue'
+import DefaultSkillsAdmin from '~/components/admin/DefaultSkillsAdmin.vue'
 </script>
 
 <style lang="scss" scoped>

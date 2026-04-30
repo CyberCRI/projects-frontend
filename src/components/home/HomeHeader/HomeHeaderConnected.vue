@@ -54,17 +54,21 @@
   </div>
 </template>
 <script>
-import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-import ProjectSummaryBlock from '@/components/home/SummaryCards/ProjectSummaryBlock.vue'
-import EventSummaryBlock from '@/components/home/SummaryCards/EventSummaryBlock.vue'
-import InstructionSummaryBlock from '@/components/home/SummaryCards/InstructionSummaryBlock.vue'
-import { getAllEvents } from '@/api/event.service'
-import { getAllInstructions } from '@/api/instruction.service'
-import { searchProjects } from '@/api/search.service'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import useUsersStore from '@/stores/useUsers.ts'
-import { nowDate } from '@/functs/date'
+import { getAllInstructions } from '~/api/instruction.service'
+import { searchProjects } from '~/api/search.service'
+import { getAllEvents } from '~/api/event.service'
+
+import InstructionSummaryBlock from '~/components/home/SummaryCards/InstructionSummaryBlock.vue'
+import ProjectSummaryBlock from '~/components/home/SummaryCards/ProjectSummaryBlock.vue'
+import EventSummaryBlock from '~/components/home/SummaryCards/EventSummaryBlock.vue'
+import LpiLoader from '~/components/base/loader/LpiLoader.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useUsersStore from '~/stores/useUsers.ts'
+
+import { nowDate } from '~/functs/date'
+
 export default {
   name: 'HomeHeaderConnected',
 
@@ -151,7 +155,11 @@ export default {
   },
 
   async mounted() {
-    await Promise.all([this.loadProjects(), this.loadEvents(), this.loadInstructions()])
+    await Promise.all([this.loadProjects(), this.loadEvents(), this.loadInstructions()]).catch(
+      (err) => {
+        console.error(err)
+      }
+    )
 
     this.isLoading = false
   },
@@ -170,24 +178,26 @@ export default {
     },
 
     async loadEvents() {
+      const query = {
+        ordering: 'start_date',
+        from_date: nowDate().toISOString(),
+        limit: this.summaryMaxEvents,
+      }
       this.originalEvents = (
         await getAllEvents(this.organizationsStore.current?.code, {
-          query: {
-            ordering: 'start_date',
-            from_date: nowDate().toISOString(),
-            limit: this.summaryMaxEvents,
-          },
+          query,
         })
       ).results
     },
 
     async loadInstructions() {
+      const query = {
+        ordering: '-publication_date',
+        to_date: nowDate().toISOString(),
+        limit: 1,
+      }
       this.originalInstructions = (
-        await getAllInstructions(this.organizationsStore.current?.code, {
-          ordering: '-publication_date',
-          to_date: new Date().toISOString(),
-          limit: 1,
-        })
+        await getAllInstructions(this.organizationsStore.current?.code, { query })
       ).results
     },
   },

@@ -13,9 +13,10 @@
 </template>
 
 <script setup lang="ts">
-import GalleryItem from '@/components/base/gallery/GalleryItem.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import { ImageModel } from '@/models/image.model'
+import type { ImageModel } from '~/models/image.model'
+
+import GalleryItem from '~/components/base/gallery/GalleryItem.vue'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 
 defineProps<{ image: ImageModel; loading?: boolean }>()
 defineEmits(['close', 'submit'])

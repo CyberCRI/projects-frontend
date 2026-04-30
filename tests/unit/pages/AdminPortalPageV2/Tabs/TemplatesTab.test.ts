@@ -1,7 +1,7 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import TemplatesTab from '@/pages/AdminPortalPageV2/Tabs/TemplatesTab.vue'
-import { describe, expect, it, vi } from 'vitest'
+import TemplatesTab from '~/pages/AdminPortalPageV2/Tabs/TemplatesTab.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
+import { describe, expect, it, vi } from 'vitest'
 
 describe('TemplatesTab.vue', () => {
   it('BackendError', async () => {
@@ -12,7 +12,7 @@ describe('TemplatesTab.vue', () => {
     expect(wrapper.find('.error')).toBeTruthy()
   })
   it('BackendResult', async () => {
-    vi.mock('@/api/templates.service', () => ({
+    vi.mock('~/api/templates.service', () => ({
       getTemplates: () => ({
         loading: false,
         data: {
@@ -28,7 +28,7 @@ describe('TemplatesTab.vue', () => {
     expect(wrapper.findAll('li').length).toEqual(2)
   })
   it('DeleteTemplate', async () => {
-    vi.mock('@/api/templates.service', () => ({
+    vi.mock('~/api/templates.service', () => ({
       getTemplates: () => ({
         loading: false,
         data: {
@@ -48,7 +48,7 @@ describe('TemplatesTab.vue', () => {
     await expect(wrapper.findAll('[data-test^=template-modal-delete]').length).toEqual(1)
   })
   it('EditTemplate', async () => {
-    vi.mock('@/api/templates.service', () => ({
+    vi.mock('~/api/templates.service', () => ({
       getTemplates: () => ({
         loading: false,
         data: {

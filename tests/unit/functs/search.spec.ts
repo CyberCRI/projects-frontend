@@ -1,4 +1,4 @@
-import { searchEquals, resetPaginationIfNeeded, updateFiltersFromURL } from '@/functs/search'
+import { searchEquals, resetPaginationIfNeeded, updateFiltersFromURL } from '~/functs/search'
 
 import { describe, expect, it, vi } from 'vitest'
 describe('updateFiltersFromURL', () => {

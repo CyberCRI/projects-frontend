@@ -6,13 +6,13 @@
     </div>
 
     <div v-show="open" class="body custom-scrollbar">
-      <slot :close-summary="close"></slot>
+      <slot :close-summary="close" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import IconImage from '@/components/base/media/IconImage.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
 
 const open = ref(false)
 const toggle = () => (open.value = !open.value)

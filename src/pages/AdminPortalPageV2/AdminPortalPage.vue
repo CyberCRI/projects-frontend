@@ -1,6 +1,7 @@
-<script setup>
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import { getOrganizationByCode } from '@/api/organizations.service'
+<script setup lang="ts">
+import { getOrganizationByCode } from '~/api/organizations.service'
+
+import useOrganizationsStore from '~/stores/useOrganizations'
 
 const organizationsStore = useOrganizationsStore()
 const { isSuperAdmin } = usePermissions()

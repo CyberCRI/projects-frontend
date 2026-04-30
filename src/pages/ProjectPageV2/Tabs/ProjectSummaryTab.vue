@@ -30,13 +30,14 @@
       />
 
       <!-- locations -->
-      <GeneralMap
-        v-if="locations.length"
-        class="unboxed"
-        :editable="false"
-        :locations="locations"
-        @expand="projectLayoutToggleAddModal('location')"
-      />
+      <div v-if="locations.length" class="location-map-ctn">
+        <GeneralMap
+          class="unboxed"
+          :editable="false"
+          :locations="locations"
+          @expand="projectLayoutToggleAddModal('location')"
+        />
+      </div>
 
       <!-- goals -->
       <GoalsRecap v-if="filteredGoals.length" class="unboxed" :goals="filteredGoals" />
@@ -107,17 +108,17 @@
 
 <script setup lang="ts">
 import ProjectMemberSection from '@/components/group/ProjectMemberSection/ProjectMemberSection.vue'
+import type { AttachmentLinkModel } from '@/models/attachment-link.model'
+import type { AttachmentFileModel } from '@/models/attachment-file.model'
+import type { BlogEntryModel } from '@/models/blog-entry.model'
+import type { TranslatedProject } from '@/models/project.model'
+import type { LocationModel } from '@/models/location.model'
+import type { CommentModel } from '@/models/comment.model'
+import type { TranslatedGoal } from '@/models/goal.model'
 import GeneralMap from '@/components/map/GeneralMap.vue'
+import type { UserModel } from '@/models/user.model'
 import { textIsEmpty } from '@/functs/string'
 import { isNotGroup } from '@/functs/users'
-import { AttachmentFileModel } from '@/models/attachment-file.model'
-import { AttachmentLinkModel } from '@/models/attachment-link.model'
-import { BlogEntryModel } from '@/models/blog-entry.model'
-import { CommentModel } from '@/models/comment.model'
-import { TranslatedGoal } from '@/models/goal.model'
-import { LocationModel } from '@/models/location.model'
-import { TranslatedProject } from '@/models/project.model'
-import { UserModel } from '@/models/user.model'
 
 const projectLayoutToggleAddModal = inject<(name: string) => void>('projectLayoutToggleAddModal')
 
@@ -257,5 +258,9 @@ const closeProfileDrawer = () => {
 
 :deep(.unboxed .section-header) {
   justify-content: space-between !important;
+}
+
+.location-map-ctn .leaflet-map {
+  height: 350px;
 }
 </style>

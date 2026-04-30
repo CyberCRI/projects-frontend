@@ -142,3 +142,6 @@ export const VALID_NAME_REGEX = /^[\p{Letter}\p{Mark}\p{Number} \-_.']+$/giu
 
 // default organization code
 export const DEFAULT_ORGANIZATION_CODE = 'DEFAULT'
+
+// default content value (html)
+export const NULL_CONTENT = '<p></p>'

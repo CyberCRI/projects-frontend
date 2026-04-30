@@ -1,7 +1,8 @@
-import useAPI from '@/composables/useAPI'
-import useAPI2 from '@/composables/useAPI2'
-import { OrganizationModel } from '@/models/organization.model'
-import { TemplateModel } from '@/models/template.model'
+import type { OrganizationModel } from '~/models/organization.model'
+import type { TemplateModel } from '~/models/template.model'
+
+import useAPI2 from '~/composables/useAPI2'
+import useAPI from '~/composables/useAPI'
 
 export function getTemplates(organizationCode: OrganizationModel['code']) {
   return useAPI2<PaginationResult<TemplateModel>>(`organization/${organizationCode}/template/`)
@@ -18,11 +19,16 @@ export function deleteTemplate(
   organizationCode: OrganizationModel['code'],
   templateId: number | string
 ) {
-  return useAPI(`organization/${organizationCode}/template/${templateId}/`, { method: 'DELETE' })
+  return useAPI<undefined>(`organization/${organizationCode}/template/${templateId}/`, {
+    method: 'DELETE',
+  })
 }
 
 export function postTemplate(organizationCode: OrganizationModel['code'], body: object) {
-  return useAPI(`organization/${organizationCode}/template/`, { method: 'POST', body })
+  return useAPI<TemplateModel>(`organization/${organizationCode}/template/`, {
+    method: 'POST',
+    body,
+  })
 }
 
 export function postTemplateImage(

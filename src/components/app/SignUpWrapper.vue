@@ -22,8 +22,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import ProjectLogo from '@/components/base/media/ProjectLogo.vue'
-import useOrganizationsStore from '@/stores/useOrganizations'
+import ProjectLogo from '~/components/base/media/ProjectLogo.vue'
+
+import useOrganizationsStore from '~/stores/useOrganizations'
 
 withDefaults(defineProps<{ signUpTitle?: string }>(), { signUpTitle: '' })
 const organizationsStore = useOrganizationsStore()
@@ -32,7 +33,7 @@ const organizationLogo = computed(() => {
   return organizationsStore.current?.logo_image?.variations?.medium
 })
 const orgLogoStyle = computed(() => {
-  return { 'background-image': `url(${organizationLogo})` }
+  return { 'background-image': `url(${organizationLogo.value})` }
 })
 </script>
 

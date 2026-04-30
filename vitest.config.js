@@ -1,9 +1,9 @@
 import { defineVitestConfig } from '@nuxt/test-utils/config'
-import { alias } from './alias'
 
 // https://vitejs.dev/config/
 export default defineVitestConfig({
   plugins: [],
+  root: './',
   test: {
     include: ['tests/unit/**/*.{test,spec}.?(c|m)[jt]s?(x)'],
     globals: true,
@@ -55,8 +55,5 @@ export default defineVitestConfig({
         },
       },
     },
-  },
-  resolve: {
-    alias,
   },
 })

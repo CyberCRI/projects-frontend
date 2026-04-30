@@ -46,15 +46,15 @@
 </template>
 
 <script setup lang="ts">
-import useToasterStore from '@/stores/useToaster'
-import analytics from '@/analytics'
-import { deleteLocation, patchLocation, postLocations } from '@/api/locations.services'
-import { TranslatedLocation } from '@/models/location.model'
-import { TranslatedProject } from '@/models/project.model'
+import { deleteLocation, patchLocation, postLocations } from '@/api/locations.service'
+import type { TranslatedLocation } from '@/models/location.model'
+import type { TranslatedProject } from '@/models/project.model'
 import LocationList from '@/components/map/LocationList.vue'
 import LocationForm from '@/components/map/LocationForm.vue'
 import GeneralMap from '@/components/map/GeneralMap.vue'
-import { LocationType } from '@/models/types'
+import type { LocationType } from '@/models/types'
+import useToasterStore from '@/stores/useToaster'
+import analytics from '@/analytics'
 
 const projectLayoutToggleAddModal: any = inject('projectLayoutToggleAddModal')
 

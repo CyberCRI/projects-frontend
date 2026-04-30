@@ -1,5 +1,5 @@
-import { LogLevel, Logger } from '../../logger'
-import { delay } from '../index'
+import { LogLevel, Logger } from '~~/tests/playwright/logger'
+import { delay } from 'es-toolkit'
 
 const logger = new Logger(LogLevel.Debug)
 

@@ -1,9 +1,10 @@
-<script setup>
-import 'deep-chat'
-import analytics from '@/analytics'
-import useUsersStore from '@/stores/useUsers.ts'
+<script setup lang="ts">
+import useUsersStore from '~/stores/useUsers'
+
+import { SDGS } from '~/functs/constants'
 import { shuffle } from 'es-toolkit'
-import { SDGS } from '@/functs/constants'
+import analytics from '~/analytics'
+import 'deep-chat'
 
 const { t } = useNuxtI18n()
 const router = useRouter()
@@ -38,6 +39,7 @@ const connectOptions = {
   // url: IS_STREAMED.value ? '/api/chat-stream' : '/api/chat',
   url: CHAT_ENDPOINT.value,
   stream: IS_STREAMED.value,
+  headers: {},
 }
 const usersStore = useUsersStore()
 const accessToken = usersStore.accessToken
@@ -101,28 +103,7 @@ const pageContext = computed(() => {
   if (allowCurrentPage.value) return pageData
   else return ''
 })
-watch(
-  () => [props.isOpened, route],
-  () => {
-    let res = ''
-    const pageMeta = route.matched
-      .filter((r) => !!r.meta.chatBotContext)
-      .map((r) => r.meta.chatBotContext(route))
-      .join('\n')
 
-    if (pageMeta)
-      res += `# here are some meta information about the current page
-      ${pageMeta}
-    `
-    if (import.meta.client) {
-      res += `# Here is the content of the current page, use it as a context for your responses:
-      ${document.querySelector('.main-view')?.textContent || ''}
-      `
-      pageContextData.value = res
-    }
-  },
-  { immediate: true }
-)
 const contextMessage = computed(() => [
   {
     role: 'assistant',
@@ -293,7 +274,9 @@ function placeCaretAtEnd(el) {
     const sel = window.getSelection()
     sel.removeAllRanges()
     sel.addRange(range)
+    // @ts-expect-error createTextRange not correct
   } else if (typeof document.body.createTextRange != 'undefined') {
+    // @ts-expect-error createTextRange not correct
     const textRange = document.body.createTextRange()
     textRange.moveToElementText(el)
     textRange.collapse(false)
@@ -308,24 +291,6 @@ const onSuggestButtonClick = (buttonText) => {
     placeCaretAtEnd(inputBox)
   }
 }
-
-watch(
-  () => chatBox.value,
-  (neo, old) => {
-    if (neo && !old) {
-      neo.requestInterceptor = requestInterceptor
-      neo.responseInterceptor = responseInterceptor
-      neo.htmlWrappers = htmlWrappers.value
-    }
-    history.value = JSON.parse(JSON.stringify(conversation.value))
-  }
-)
-
-watchEffect(() => {
-  if (chatBox.value) {
-    chatBox.value.setPlaceholderText(placeholderText.value)
-  }
-})
 
 const textInputOptions = computed(() => ({
   placeholder: { text: placeholderText.value },
@@ -417,6 +382,53 @@ const resetChat = () => {
   conversationId.value = null
   history.value = []
 }
+
+watch(
+  () => chatBox.value,
+  (neo, old) => {
+    if (neo && !old) {
+      neo.requestInterceptor = requestInterceptor
+      neo.responseInterceptor = responseInterceptor
+      neo.htmlWrappers = htmlWrappers.value
+    }
+    history.value = JSON.parse(JSON.stringify(conversation.value))
+  }
+)
+
+watchEffect(() => {
+  if (chatBox.value) {
+    chatBox.value.setPlaceholderText(placeholderText.value)
+  }
+})
+
+watch(
+  () => [props.isOpened, route],
+  () => {
+    // reset chat
+    resetChat()
+    // set page context
+    let res = ''
+    const pageMeta = route.matched
+      .filter((r) => !!r.meta.chatBotContext)
+      .map((r) => {
+        const chatBotContext = r.meta.chatBotContext as (any) => void
+        chatBotContext(route)
+      })
+      .join('\n')
+
+    if (pageMeta)
+      res += `# here are some meta information about the current page
+      ${pageMeta}
+    `
+    if (import.meta.client) {
+      res += `# Here is the content of the current page, use it as a context for your responses:
+      ${document.querySelector('.main-view')?.textContent || ''}
+      `
+      pageContextData.value = res
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <template>
@@ -438,7 +450,6 @@ const resetChat = () => {
       :messageStyles="messageStyles"
       :stream="IS_STREAMED"
       :remarkable="remarkableOptions"
-      :customButtons="customButtons"
       auxiliaryStyle="
         a {
           color: #1d727c;

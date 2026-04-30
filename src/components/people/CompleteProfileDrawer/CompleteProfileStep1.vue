@@ -129,7 +129,7 @@
       <p class="section-notice">
         <span>{{ $t('complete-profile.bio.notice') }}</span>
         &nbsp;
-        <i18n-t
+        <I18nT
           v-if="hasBioExemple"
           tag="span"
           keypath="complete-profile.bio.notice-exemples"
@@ -144,7 +144,7 @@
           <a class="link bio-exemple-link" href="#" @click="exempleToShow = studentSlugOrId">
             {{ $t('complete-profile.bio.exemples.student') }}
           </a>
-        </i18n-t>
+        </I18nT>
       </p>
       <div>
         <div>
@@ -172,19 +172,41 @@
     </BaseDrawer>
   </template>
 </template>
+
 <script>
-import { getUser, patchUser, patchUserPicture, postUserPicture } from '@/api/people.service.ts'
-import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils.ts'
-import { isEqual } from 'es-toolkit'
-import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
-import { SDGS, VALID_NAME_REGEX } from '@/functs/constants.ts'
-import useToasterStore from '@/stores/useToaster.ts'
-import useUsersStore from '@/stores/useUsers.ts'
+import useVuelidate from '@vuelidate/core'
+
+import { getUser, patchUser, patchUserPicture, postUserPicture } from '~/api/people.service.ts'
+
+import useToasterStore from '~/stores/useToaster.ts'
+import useUsersStore from '~/stores/useUsers.ts'
+
+import { usePatatoids } from '~/composables/usePatatoids'
+
+import ProfileEditBlock from '@/components/people/CompleteProfileDrawer/ProfileEditBlock.vue'
+import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils.ts'
+import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
+import { NULL_CONTENT, SDGS, VALID_NAME_REGEX } from '~/functs/constants.ts'
+import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
+import UserProfileV2 from '@/components/people/UserProfileV2.vue'
+import IconImage from '@/components/base/media/IconImage.vue'
+import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import { useRuntimeConfig } from '#imports'
-import { usePatatoids } from '@/composables/usePatatoids'
+import { I18nT } from 'vue-i18n'
+
 export default {
   name: 'CompleteProfileStep1',
+
+  components: {
+    I18nT,
+    IconImage,
+    ProfileEditBlock,
+    TipTapEditor,
+    BaseDrawer,
+    UserProfileV2,
+    LoaderSimple,
+  },
 
   emits: ['saving', 'loading', 'invalid'],
 
@@ -219,7 +241,7 @@ export default {
         job: '',
         description: '',
       },
-      bio: '<p></p>',
+      bio: NULL_CONTENT,
       exempleToShow: null,
       loading: false,
     }
@@ -307,7 +329,7 @@ export default {
           this.form[field] = this.user[field]
         })
 
-        this.bio = this.user.description || '<p></p>'
+        this.bio = this.user.description || NULL_CONTENT
 
         this.sdgs.forEach((sdg) => {
           sdg.selected = (this.user.sdgs || []).includes(sdg.id)

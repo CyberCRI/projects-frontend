@@ -1,17 +1,17 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import App from '@/app.vue'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import App from '~/app.vue'
 
-import { checkExpiredToken } from '@/api/auth/keycloakUtils'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { Mock } from 'vitest'
-// issue with webcrypto, so mock so offending import
-import pinia from '@/stores'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import type { OrganizationOutput } from '@/models/organization.model'
+import type { OrganizationOutput } from '~/models/organization.model'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import { checkExpiredToken } from '~/api/auth/keycloakUtils'
 import { flushPromises } from '@vue/test-utils'
 import { Router } from 'vue-router'
+import type { Mock } from 'vitest'
+// issue with webcrypto, so mock so offending import
+import pinia from '~/stores'
 
-vi.mock('@/api/auth/keycloakUtils', () => {
+vi.mock('~/api/auth/keycloakUtils', () => {
   return {
     checkExpiredToken: vi.fn(),
     cleanLocalStorage: vi.fn(),
@@ -19,7 +19,7 @@ vi.mock('@/api/auth/keycloakUtils', () => {
   }
 })
 
-vi.mock('@/api/auth/auth.service', () => {
+vi.mock('~/api/auth/auth.service', () => {
   return {
     refreshAccessToken: vi.fn(() =>
       Promise.resolve({

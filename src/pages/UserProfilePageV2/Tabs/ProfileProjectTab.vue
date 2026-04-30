@@ -95,12 +95,14 @@
 </template>
 
 <script setup lang="ts">
-import UserProjectsSearch from '@/components/people/UserProfile/UserProjectsSearch.vue'
-import UserProjectList from '@/components/people/UserProfile/UserProjectList.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import useUsersStore from '@/stores/useUsers'
-import useProjectCategories from '@/stores/useProjectCategories'
-import { TranslatedUserModel } from '@/models/user.model'
+import type { TranslatedUserModel } from '~/models/user.model'
+
+import UserProjectsSearch from '~/components/people/UserProfile/UserProjectsSearch.vue'
+import UserProjectList from '~/components/people/UserProfile/UserProjectList.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+
+import useProjectCategories from '~/stores/useProjectCategories'
+import useUsersStore from '~/stores/useUsers'
 
 const props = defineProps<{
   user: TranslatedUserModel

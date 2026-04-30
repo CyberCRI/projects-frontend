@@ -110,13 +110,16 @@
 </template>
 
 <script setup lang="ts">
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import useToasterStore from '@/stores/useToaster'
-import { AnyTranslatedLocation, LocationForm as LocationFormType } from '@/models/location.model'
-import { Geocoding } from '@/interfaces/maps'
+import type {
+  AnyTranslatedLocation,
+  LocationForm as LocationFormType,
+} from '@/models/location.model'
+import type BaseDrawer from '@/components/base/BaseDrawer.vue'
 import { useSuggestLocations } from '@/api/geocoding.service'
-import { LocationType } from '@/models/types'
 import GeneralMap from '@/components/map/GeneralMap.vue'
+import type { Geocoding } from '@/interfaces/maps'
+import type { LocationType } from '@/models/types'
+import useToasterStore from '@/stores/useToaster'
 
 const props = withDefaults(
   defineProps<{

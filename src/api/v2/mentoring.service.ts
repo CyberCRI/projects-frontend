@@ -1,13 +1,19 @@
-import { getUserMentorship as fetchUserMentorship } from '@/api/mentorship.service'
-import { onlyRefs } from '@/functs/onlyRefs'
-import { RefOrRaw } from '@/interfaces/utils'
-import { OrganizationModel } from '@/models/organization.model'
+import type { OrganizationModel } from '~/models/organization.model'
+
+import type { RefOrRaw } from '~/interfaces/utils'
+
+import { getUserMentorship as fetchUserMentorship } from '~/api/mentorship.service'
+import type { UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
+
+import { onlyRefs } from '~/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}
 
+type ConfigPagination = UseAsyncPaginationApiConfig
+
 export const getUserMentorship = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
-  config = {}
+  config: ConfigPagination = {}
 ) => {
   const key = computed(() => `${unref(organizationCode)}::mentoring`)
 

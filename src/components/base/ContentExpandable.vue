@@ -8,7 +8,7 @@
     >
       <div ref="content">
         <slot>
-          <TipTapOutput class="description" :content="description" />
+          <TipTapOutput class="description tiptap-output skeletons-text" :content="description" />
         </slot>
       </div>
       <div class="description-limited-transparancy" />
@@ -27,8 +27,9 @@
 </template>
 
 <script setup lang="ts">
-import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
-import { onResizeElement } from '@/composables/onResize'
+import TipTapOutput from '~/components/base/form/TextEditor/TipTapOutput.vue'
+
+import { onResizeElement } from '~/composables/onResize'
 
 const props = withDefaults(
   defineProps<{

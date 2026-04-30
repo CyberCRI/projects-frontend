@@ -19,8 +19,8 @@
 </template>
 
 <script setup lang="ts">
+import type { AsyncDataRequestStatus, NuxtError, NuxtLinkProps } from 'nuxt/app'
 import { isNil } from 'es-toolkit'
-import { AsyncDataRequestStatus, NuxtError, NuxtLinkProps } from 'nuxt/app'
 
 /*
   componets wrappers aroud usefetch status result
@@ -90,9 +90,15 @@ const loading = computed(() => {
   return inLoading.value
 })
 
-const inSkeletons = computed(() => {
-  return inLoading.value && (!firstLoading.value || !props.withData) && props.skeleton
+const inSkeletons = ref(true)
+watchEffect(() => {
+  const value = inLoading.value && (!firstLoading.value || !props.withData) && props.skeleton
+  nextTick(() => (inSkeletons.value = value))
 })
+
+// const inSkeletons = computed(() => {
+//   return inLoading.value && (!firstLoading.value || !props.withData) && props.skeleton
+// })
 
 watch(inLoading, (newValue, oldValue) => {
   if (oldValue === true && newValue === false && !firstLoading.value) {
@@ -102,6 +108,7 @@ watch(inLoading, (newValue, oldValue) => {
 
 // if error are set and error 404 is set to true, redirect to page 404
 const router = useRouter()
+const route = useRoute()
 watch(
   () => [props.error, props.error404, isError.value],
   () => {
@@ -113,7 +120,15 @@ watch(
     if (!errors.filter((r) => !isNil(r)).find((r) => r.statusCode === 404)) {
       return
     }
-    const to = props.error404 === true ? { name: 'page404' } : props.error404
+    const to =
+      props.error404 === true
+        ? {
+            name: 'page404',
+            params: {
+              pathMatch: route.path.substring(1).split('/'),
+            },
+          }
+        : props.error404
     router.push(to)
   }
 )

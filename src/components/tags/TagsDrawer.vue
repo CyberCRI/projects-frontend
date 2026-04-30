@@ -12,8 +12,9 @@
 </template>
 
 <script setup lang="ts">
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import { TagModel } from '@/models/tag.model'
+import type { TagModel } from '~/models/tag.model'
+
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 const props = withDefaults(
   defineProps<{

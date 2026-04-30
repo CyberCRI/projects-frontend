@@ -1,37 +1,26 @@
 <script setup lang="ts">
-import { ref, computed, watchEffect } from 'vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import TextInput from '@/components/base/form/TextInput.vue'
-import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
-import useToasterStore from '@/stores/useToaster'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import { postOrgClassification, putOrgClassification } from '@/api/tag-classification.service'
-import TagClassificationAdmin from '@/components/admin/TagClassificationAdmin.vue'
+import { postOrgClassification, putOrgClassification } from '~/api/tag-classification.service'
+
+import TagClassificationAdmin from '~/components/admin/TagClassificationAdmin.vue'
+import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+
+import type { TagClassificationModel } from '~/models/tagclassification.model'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import { defaultForm } from '~/form/classification'
+import useToasterStore from '~/stores/useToaster'
 
 const { t } = useNuxtI18n()
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
 
-const defaultForm = () => ({
-  id: null,
-  title: '',
-  description: '',
-  is_enabled_for_projects: false,
-  is_enabled_for_skills: false,
-})
-
 const emit = defineEmits(['close', 'classification-created', 'classification-edited'])
 
-const props = defineProps({
-  classification: {
-    type: [Object, null],
-    required: true,
-  },
-  isOpen: {
-    type: Boolean,
-    required: true,
-  },
-})
+const props = defineProps<{
+  classification?: TagClassificationModel
+  isOpen: boolean
+}>()
 
 const asyncing = ref(false)
 

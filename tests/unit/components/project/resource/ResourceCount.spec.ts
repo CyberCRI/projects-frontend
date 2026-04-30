@@ -1,6 +1,6 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import ResourceCount from '@/components/project/resource/ResourceCount.vue'
-import MockComponent from '@/../tests/helpers/MockComponent.vue'
+import ResourceCount from '~/components/project/resource/ResourceCount.vue'
+import MockComponent from '~~/tests/helpers/MockComponent.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
 
 import { describe, expect, it, vi } from 'vitest'
 

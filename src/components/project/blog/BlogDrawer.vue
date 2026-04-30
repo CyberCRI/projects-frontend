@@ -64,7 +64,6 @@
         v-model="editorBlogEntry"
         :room="room"
         :provider-params="providerParams"
-        class="input-field content-editor"
         mode="full"
         save-icon-visible
         :save-image-callback="saveBlogImage"
@@ -85,21 +84,25 @@
 </template>
 
 <script>
-import TipTapCollaborativeEditor from '@/components/base/form/TextEditor/TipTapCollaborativeEditor.vue'
-import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import TextInput from '@/components/base/form/TextInput.vue'
-import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import FieldErrors from '@/components/base/form/FieldErrors.vue'
-import { postBlogEntryImage } from '@/api/blogentries.service'
-import { postBlogEntry, patchBlogEntry } from '@/api/blogentries.service'
-import analytics from '@/analytics'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import useUsersStore from '@/stores/useUsers.ts'
-import DateField from '@/components/base/form/DateField.vue'
+import useVuelidate from '@vuelidate/core'
+
+import { patchBlogEntry, postBlogEntry, postBlogEntryImage } from '~/api/blogentries.service'
+
+import TipTapCollaborativeEditor from '~/components/base/form/TextEditor/TipTapCollaborativeEditor.vue'
+import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import FieldErrors from '~/components/base/form/FieldErrors.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+import DateField from '~/components/base/form/DateField.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useToasterStore from '~/stores/useToaster.ts'
+import useUsersStore from '~/stores/useUsers.ts'
+
+import { NULL_CONTENT } from '~/functs/constants'
+import analytics from '~/analytics'
 
 export default {
   name: 'BlogDrawer',
@@ -229,7 +232,7 @@ export default {
 
   methods: {
     getNewBlogIniatialContent() {
-      return this.project?.template?.$t?.blogentry_content || '<p></p>'
+      return this.project?.template?.$t?.blogentry_content || NULL_CONTENT
     },
     getNewBlogIniatialTitle() {
       return this.project?.template?.$t?.blogentry_title || ''

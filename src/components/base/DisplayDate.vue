@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import EmptyLabel from '@/components/base/EmptyLabel.vue'
-import { dateWithoutHours, formatDateTime, formatTime } from '@/functs/date'
-import { LpiDate } from '@/interfaces/utils'
+import type { LpiDate } from '~/interfaces/utils'
+
+import EmptyLabel from '~/components/base/EmptyLabel.vue'
+
+import { dateWithoutHours, formatDateTime, formatTime } from '~/functs/date'
 
 const props = withDefaults(
   defineProps<{

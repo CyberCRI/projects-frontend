@@ -1,9 +1,8 @@
+import type { OrganizationModel } from '@/models/organization.model'
 import { getProject as fetchProject } from '@/api/projects.service'
-import useAsyncAPI from '@/composables/useAsyncAPI'
+import type { ProjectSlugOrId } from '@/models/project.model'
+import type { RefOrRaw } from '@/interfaces/utils'
 import { onlyRefs } from '@/functs/onlyRefs'
-import { RefOrRaw } from '@/interfaces/utils'
-import { OrganizationModel } from '@/models/organization.model'
-import { ProjectSlugOrId } from '@/models/project.model'
 
 const DEFAULT_CONFIG = {}
 

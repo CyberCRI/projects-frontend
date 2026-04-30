@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
-import useUsersStore from '@/stores/useUsers'
+import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
+
+import useUsersStore from '~/stores/useUsers'
+
+import { usePublicURL } from '~/composables/usePublic'
+
 import { I18nT } from 'vue-i18n'
 
 const usersStore = useUsersStore()
@@ -42,6 +46,7 @@ watchEffect(() => {
   })
 })
 </script>
+
 <template>
   <div class="page404">
     <div class="content">
@@ -71,6 +76,7 @@ watchEffect(() => {
     </div>
   </div>
 </template>
+
 <style lang="scss" scoped>
 .page404 {
   display: flex;

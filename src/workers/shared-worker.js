@@ -1,4 +1,5 @@
 let connections = []
+// eslint-disable-next-line no-undef
 onconnect = (e) => {
   const port = e.ports[0]
   connections.push(port)

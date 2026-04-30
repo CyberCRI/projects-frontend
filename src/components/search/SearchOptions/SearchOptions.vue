@@ -26,10 +26,12 @@
 </template>
 
 <script>
-import SearchInput from '@/components/base/form/SearchInput.vue'
-import SearchFilters from '@/components/search/Filters/SearchFilters.vue'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
-import useSearch from '@/composables/useSearch.ts'
+import SearchFilters from '~/components/search/Filters/SearchFilters.vue'
+import SearchInput from '~/components/base/form/SearchInput.vue'
+
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
+
+import useSearch from '~/composables/useSearch.ts'
 
 export default {
   name: 'SearchOptions',

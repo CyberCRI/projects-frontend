@@ -1,5 +1,5 @@
-import { withQuery } from '@/functs/query'
 import { describe, expect, it } from 'vitest'
+import { withQuery } from '~/functs/query'
 describe('withQuery', () => {
   it('empty query', () => {
     expect(withQuery(null)).toEqual([])

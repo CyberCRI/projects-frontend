@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import SkeletonComponent from '@/components/base/loader/SkeletonComponent.vue'
+import SkeletonComponent from '~/components/base/loader/SkeletonComponent.vue'
 </script>
 
 <style lang="scss" scoped>

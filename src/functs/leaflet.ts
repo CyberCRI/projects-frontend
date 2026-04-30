@@ -1,6 +1,6 @@
-import { ICONS } from '@/functs/IconImage'
 import { IconMapLocationType } from '@/functs/maps'
 import type { LocationType } from '@/models/types'
+import { ICONS } from '@/functs/IconImage'
 import * as L from 'leaflet'
 
 export const createClusterIcons = (cluster) => {

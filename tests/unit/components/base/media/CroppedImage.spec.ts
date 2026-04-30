@@ -1,5 +1,5 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
+import CroppedImage from '~/components/base/media/CroppedImage.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
 
 import { describe, beforeEach, expect, it } from 'vitest'
 describe('CroppedImage.vue', () => {

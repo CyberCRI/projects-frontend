@@ -4,8 +4,8 @@
   </div>
 </template>
 <script>
-import Croppr from 'croppr'
 import 'croppr/dist/croppr.css'
+import Croppr from 'croppr'
 
 export default {
   name: 'ImageResizer',
@@ -148,10 +148,10 @@ export default {
       // init croppr
       const cropCircle = this.roundShape
         ? (data) => {
-            let x = (this.bboxWidth * (data.x + data.width / 2)) / this.naturalWidth
-            let y = (this.bboxHeight * (data.y + data.height / 2)) / this.naturalHeight
+            const x = (this.bboxWidth * (data.x + data.width / 2)) / this.naturalWidth
+            const y = (this.bboxHeight * (data.y + data.height / 2)) / this.naturalHeight
             // strangely it is always bboxHeight that works
-            let radius = (this.bboxHeight * data.width) / 2 / this.naturalHeight
+            const radius = (this.bboxHeight * data.width) / 2 / this.naturalHeight
             const imageClipped = this.$el.querySelector('.croppr-imageClipped')
             if (imageClipped) imageClipped.style.clipPath = `circle(${radius}px at ${x}px ${y}px)`
           }

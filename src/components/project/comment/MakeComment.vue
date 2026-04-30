@@ -38,21 +38,24 @@
 </template>
 
 <script>
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
-// import utils from '@/functs/functions.ts'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import analytics from '@/analytics'
-import { patchComment, postComment, postCommentImage } from '@/api/comments.service'
-import useToasterStore from '@/stores/useToaster.ts'
-import useUsersStore from '@/stores/useUsers.ts'
-
 import {
   patchProjectMessage,
   postProjectMessage,
   postProjectMessageImage,
-} from '@/api/project-messages.service'
+} from '~/api/project-messages.service'
+import { patchComment, postComment, postCommentImage } from '~/api/comments.service'
+import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
+
+import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
+
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+
+import useToasterStore from '~/stores/useToaster.ts'
+import useUsersStore from '~/stores/useUsers.ts'
+
+import { NULL_CONTENT } from '~/functs/constants'
+import analytics from '~/analytics'
 
 export default {
   name: 'MakeComment',
@@ -102,7 +105,7 @@ export default {
 
   data() {
     return {
-      comment: this.originalComment?.content || '<p></p>',
+      comment: this.originalComment?.content || NULL_CONTENT,
       addedImages: [],
       asyncing: false,
       confirmModalIsOpen: false,
@@ -112,11 +115,11 @@ export default {
 
   computed: {
     commentTemplate() {
-      return this.project.template?.$t?.comment_content || '<p></p>'
+      return this.project.template?.$t?.comment_content || NULL_CONTENT
     },
 
     initialComment() {
-      return this.originalComment?.content || this.commentTemplate || '<p></p>'
+      return this.originalComment?.content || this.commentTemplate || NULL_CONTENT
     },
 
     isLoggedIn() {
@@ -210,7 +213,7 @@ export default {
       } else {
         if (this.repliedComment) payload.reply_on_id = this.repliedComment.id
         try {
-          const result = await postComment(payload)
+          const result = await postComment(this.project.id, payload)
           analytics.comment.comment({
             project: {
               id: this.project.id,
@@ -266,7 +269,7 @@ export default {
         }
 
         try {
-          const result = await patchComment(comment.id, comment)
+          const result = await patchComment(this.project.id, comment.id, comment)
           analytics.comment.updateComment({
             project: {
               id: this.project.id,

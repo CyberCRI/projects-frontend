@@ -1,12 +1,19 @@
-import { usePublicURL } from '@/composables/usePublic'
+import { usePublicURL } from '~/composables/usePublic'
 
-const urlPatatoid = (index: string | number) => `/patatoids-project/Patatoid-${index}.png`
+import { range } from 'es-toolkit'
 
-const DEFAULT_USER_PATATOID = urlPatatoid(0)
-const DEFAULT_GROUP_PATATOID = urlPatatoid(1)
-const DEFAULT_PROJECT_PATATOID = urlPatatoid(2)
-const DEFAULT_IMAGE_PATATOID = urlPatatoid(3)
-const DEFAULT_NEWS_PATATOID = urlPatatoid(4)
+const urlPatatoid = (index: string | number) => {
+  if (parseInt(index.toString(), 10) <= 0) {
+    console.error(`can't get patatoids index less than zero: index=${index}`)
+    index = 1
+  }
+  return `/patatoids-project/Patatoid-${index}.png`
+}
+const DEFAULT_USER_PATATOID = urlPatatoid(1)
+const DEFAULT_GROUP_PATATOID = urlPatatoid(2)
+const DEFAULT_PROJECT_PATATOID = urlPatatoid(3)
+const DEFAULT_IMAGE_PATATOID = urlPatatoid(4)
+const DEFAULT_NEWS_PATATOID = urlPatatoid(5)
 
 /**
  * Description
@@ -30,8 +37,8 @@ const usePatatoid = (index: string | number) => {
  * @param {number} number?
  * @returns {string[]}
  */
-const usePatatoids = (number: number = 6) => {
-  return Array.from(Array(number).keys()).map((index) => usePatatoid(index))
+const usePatatoids = (number: number = 7) => {
+  return range(1, number).map((index) => usePatatoid(index))
 }
 
 /**
@@ -45,16 +52,21 @@ const usePatatoids = (number: number = 6) => {
  * @returns {Promise<File>}
  */
 const getPatatoidFile = async (index: string | number) => {
-  const url = usePatatoid(index)
-  const urlDefault = usePatatoid(1)
+  const indexDefault = 1
 
-  return useAPI(url, { responseType: 'blob' })
-    .catch(() => useAPI(urlDefault, { responseType: 'blob' }))
-    .then((response) => {
-      const fileName = response.split('/').at(-1)
-      return new File([response.blob], fileName)
-    })
-    .catch(() => new File([], ''))
+  const fetchFile = (patatoidIndex: string | number) => {
+    const url = usePatatoid(patatoidIndex)
+    const fileName = url.split('/').at(-1)
+    return useAPI<Blob>(url, { responseType: 'blob' }).then((blob) => new File([blob], fileName))
+  }
+
+  return (
+    fetchFile(index)
+      // if we can't get index patatoid, fetch default index
+      .catch(() => fetchFile(indexDefault))
+      // if error return empty file
+      .catch(() => new File([], 'error.png'))
+  )
 }
 
 export {

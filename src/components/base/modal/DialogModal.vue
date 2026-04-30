@@ -45,8 +45,8 @@
 </template>
 
 <script setup lang="ts">
-import BaseModal from '@/components/base/modal/BaseModal.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import BaseModal from '~/components/base/modal/BaseModal.vue'
 
 const props = withDefaults(
   defineProps<{

@@ -1,5 +1,5 @@
-import AccountFormTitleBlock from '@/components/people/Account/AccountFormTitleBlock.vue'
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
+import AccountFormTitleBlock from '~/components/people/Account/AccountFormTitleBlock.vue'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('AccountFormTitleBlock', () => {

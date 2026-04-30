@@ -1,6 +1,6 @@
+import { ensureNavPanelIOpened } from '~~/tests/playwright/lib/utils/nav-panel'
+import { LogLevel, Logger } from '~~/tests/playwright/logger'
 import { Page, expect } from '@playwright/test'
-import { LogLevel, Logger } from '../../logger'
-import { ensureNavPanelIOpened } from '../utils/nav-panel'
 const logger = new Logger(LogLevel.Debug)
 
 export async function testRights(

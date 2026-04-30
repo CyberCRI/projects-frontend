@@ -1,6 +1,7 @@
+import { usersDict as users } from '~~/tests/playwright/variables'
+import { LogLevel, Logger } from '~~/tests/playwright/logger'
+
 import { Page } from '@playwright/test'
-import { LogLevel, Logger } from '../../logger'
-import { usersDict as users } from '../../variables'
 
 const logger = new Logger(LogLevel.Debug)
 

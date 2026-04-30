@@ -31,6 +31,7 @@
         @delete-clicked="openModal(file, 'file')"
       />
     </div>
+    <EmptyLabel v-else />
 
     <SectionHeader
       v-if="linkResources.length"
@@ -67,11 +68,12 @@
 </template>
 
 <script>
-import SectionHeader from '@/components/base/SectionHeader.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import ResourceCard from '@/components/resources/ResourceCard.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import useToasterStore from '@/stores/useToaster.ts'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import ResourceCard from '~/components/resources/ResourceCard.vue'
+import SectionHeader from '~/components/base/SectionHeader.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+
+import useToasterStore from '~/stores/useToaster.ts'
 
 export default {
   name: 'ResourcesTab',

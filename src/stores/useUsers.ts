@@ -1,19 +1,19 @@
-import type { AuthResult } from '@/api/auth/keycloak'
-import { getProjectCategoriesFollow } from '@/api/project-categories.service'
+import type { NotificationsSettings, UserModel } from '~/models/user.model'
 
 import {
-  logoutFromKeycloak,
-  refreshAccessToken,
   getNotifications as apiGetNotifications,
   patchNotifications as apiPatchNotifications,
-} from '@/api/auth/auth.service'
-import { getUser as _getUser } from '@/api/people.service'
-import analytics from '@/analytics'
-import funct from '@/functs/functions'
-import { NotificationsSettings, UserModel } from '@/models/user.model'
-import { checkExpiredToken } from '@/api/auth/keycloakUtils'
-import { removeApiCookie } from '@/api/auth/cookie.service'
+  logoutFromKeycloak,
+  refreshAccessToken,
+} from '~/api/auth/auth.service'
+import { getProjectCategoriesFollow } from '~/api/project-categories.service'
+import { checkExpiredToken } from '~/api/auth/keycloakUtils'
+import { removeApiCookie } from '~/api/auth/cookie.service'
+import { getUser as _getUser } from '~/api/people.service'
+import type { AuthResult } from '~/api/auth/keycloak'
 
+import funct from '~/functs/functions'
+import analytics from '~/analytics'
 import { defineStore } from 'pinia'
 
 // fix undefined localStorage on sever
@@ -22,6 +22,7 @@ if (import.meta.client) _localStorage = window.localStorage
 const localStorage = _localStorage
 
 export interface UsersState {
+  expiresIn?: number
   refreshToken?: string
   refreshTokenExp?: number
   accessToken?: string
@@ -135,6 +136,7 @@ const useUsersStore = defineStore('users', () => {
 
   // ex mutations
   function setUser(payload: UsersState) {
+    localStorage?.setItem('EXPIRES_IN', payload.expiresIn)
     localStorage?.setItem('REFRESH_TOKEN', payload.refreshToken)
     localStorage?.setItem('REFRESH_TOKEN_EXP', '' + payload.refreshTokenExp)
     localStorage?.setItem('ACCESS_TOKEN', payload.accessToken)
@@ -151,12 +153,14 @@ const useUsersStore = defineStore('users', () => {
   async function logIn({
     access_token,
     refresh_token,
+    expires_in,
     refresh_token_exp,
     parsedToken,
     id_token,
   }: AuthResult): Promise<string> {
     const keycloakID = parsedToken.sub
     setUser({
+      expiresIn: expires_in,
       refreshToken: refresh_token,
       refreshTokenExp: refresh_token_exp,
       accessToken: access_token,
@@ -172,12 +176,13 @@ const useUsersStore = defineStore('users', () => {
   // was refreshTock
   async function doRefreshToken(): Promise<string> {
     try {
-      const { refresh_token, access_token, parsedToken, refresh_token_exp, id_token } =
+      const { refresh_token, access_token, parsedToken, expires_in, refresh_token_exp, id_token } =
         await refreshAccessToken()
 
       if (refresh_token && access_token && parsedToken) {
         const keycloakID = parsedToken.sub
         setUser({
+          expiresIn: expires_in,
           refreshToken: refresh_token,
           refreshTokenExp: refresh_token_exp,
           accessToken: access_token,

@@ -1,15 +1,16 @@
 <template>
-  <BaseGroupTab :title="$t(GroupModuleTitle[documentType])" :count="countElement">
+  <BaseModuleTab :title="$t(GroupModuleTitle[documentType])" :count="countElement">
     <GroupResearcherDocumentsList :doc-type="documentType" :group="group" />
-  </BaseGroupTab>
+  </BaseModuleTab>
 </template>
 
 <script setup lang="ts">
 import GroupResearcherDocumentsList from '@/components/people/Researcher/GroupResearcherDocumentsList.vue'
-import { DocumentType } from '@/interfaces/researcher'
+import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
+import type { DocumentType } from '@/interfaces/researcher'
 
-import { GroupModuleTitle, TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import BaseGroupTab from '@/pages/GroupPageV2/Tabs/BaseGroupTab.vue'
+import type { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import { GroupModuleTitle } from '@/models/invitation.model'
 
 const props = defineProps<{
   documentType: DocumentType

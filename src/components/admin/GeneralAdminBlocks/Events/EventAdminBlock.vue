@@ -53,20 +53,19 @@
 </template>
 
 <script setup lang="ts">
-import { deleteEvent } from '@/api/event.service'
-import useToasterStore from '@/stores/useToaster'
-import { defaultForm } from '@/components/instruction/InstructionForm/InstructionForm.vue'
-import EventItem from '@/components/event/EventList/EventItem.vue'
-import { getAllEvents } from '@/api/v2/event.service'
-import AdminBlock from '@/components/admin/GeneralAdminBlocks/AdminBlock.vue'
-import FetchLoader from '@/components/base/FetchLoader.vue'
 import PaginationButtonsV2 from '@/components/base/navigation/PaginationButtonsV2.vue'
-import LocationDrawer from '@/components/map/LocationDrawer.vue'
 import EditEventDrawer from '@/components/event/EditEventDrawer/EditEventDrawer.vue'
+import AdminBlock from '@/components/admin/GeneralAdminBlocks/AdminBlock.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
+import EventItem from '@/components/event/EventList/EventItem.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
-import { nowDate } from '@/functs/date'
+import LocationDrawer from '@/components/map/LocationDrawer.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import FetchLoader from '@/components/base/FetchLoader.vue'
+import { getAllEvents } from '@/api/v2/event.service'
+import useToasterStore from '@/stores/useToaster'
+import { deleteEvent } from '@/api/event.service'
+import { defaultForm } from '@/form/event'
 
 const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()
@@ -81,11 +80,6 @@ const { stateModals, closeModals, openModals } = useModals({
   delete: false,
 })
 
-const query = {
-  ordering: 'start_date',
-  from_date: nowDate().toISOString(),
-}
-
 const {
   status,
   data: events,
@@ -93,14 +87,16 @@ const {
   refresh,
   isLoading,
 } = getAllEvents(organizationCode, {
-  query,
+  query: {
+    ordering: '-updated_at',
+  },
   paginationConfig: {
-    limit: 4,
+    limit: 3,
   },
 })
 
 const blockTitle = computed(() => {
-  let extra = isLoading.value ? '' : ` (${pagination.count.value})`
+  const extra = isLoading.value ? '' : ` (${pagination.count.value})`
   return t('admin.portal.events') + extra
 })
 

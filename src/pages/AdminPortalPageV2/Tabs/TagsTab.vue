@@ -11,8 +11,8 @@
 </template>
 
 <script setup lang="ts">
-import DefaultTagsAdmin from '@/components/admin/DefaultTagsAdmin.vue'
-import ClassificationAdmin from '@/components/admin/ClassificationAdmin.vue'
+import ClassificationAdmin from '~/components/admin/ClassificationAdmin.vue'
+import DefaultTagsAdmin from '~/components/admin/DefaultTagsAdmin.vue'
 </script>
 
 <style lang="scss" scoped>

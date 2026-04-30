@@ -1,9 +1,9 @@
 <script setup lang="ts" generic="TLocation extends AnyLocation">
 import * as L from 'leaflet'
 
+import MarkerDynamic from '@/components/map/MarkerDynamic.vue'
 import type { AnyLocation } from '@/models/location.model'
 import { throttle } from 'es-toolkit'
-import MarkerDynamic from '@/components/map/MarkerDynamic.vue'
 
 export type MarkerDynamicInfo = {
   marker: HTMLElement

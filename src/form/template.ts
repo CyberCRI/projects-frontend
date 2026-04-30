@@ -1,5 +1,8 @@
-import { required, minLength } from '@vuelidate/validators'
-import useForm from '@/composables/useForm'
+import { minLength, required } from '@vuelidate/validators'
+
+import useForm from '~/composables/useForm'
+
+import { NULL_CONTENT } from '~/functs/constants'
 import { clone } from 'es-toolkit'
 
 const DEFAULT_FORM = {
@@ -7,15 +10,15 @@ const DEFAULT_FORM = {
   description: '',
 
   project_title: '',
-  project_description: '<p></p>',
+  project_description: NULL_CONTENT,
   project_purpose: '',
   project_tags: [],
 
   blogentry_title: '',
-  blogentry_content: '<p></p>',
+  blogentry_content: NULL_CONTENT,
 
   goal_title: '',
-  goal_description: '<p></p>',
+  goal_description: NULL_CONTENT,
 
   comment_content: '',
   categories: [],

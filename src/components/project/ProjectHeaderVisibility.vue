@@ -16,8 +16,9 @@
 </template>
 
 <script setup lang="ts">
-import { IconImageChoice } from '@/functs/IconImage'
-import { ProjectModel } from '@/models/project.model'
+import type { ProjectModel } from '~/models/project.model'
+
+import type { IconImageChoice } from '~/functs/IconImage'
 
 const props = withDefaults(
   defineProps<{

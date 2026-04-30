@@ -1,6 +1,8 @@
 <template>
   <FetchLoader :status="status" only-error skeleton>
     <div class="list-container">
+      <!-- hide filter if we are in preview or nothing to show (no past/furture events) -->
+      <EventFilter v-if="!preview && limitSkeletons !== 0" v-model="query" />
       <LpiButton
         v-if="editable"
         btn-icon="Plus"
@@ -19,6 +21,7 @@
           @edit="onEditEvent"
           @delete="onDeleteEvent"
         />
+        <EmptyLabel v-if="!data.length" :label="$t('event.empty')" />
       </div>
 
       <LocationDrawer
@@ -49,16 +52,21 @@
 </template>
 
 <script setup lang="ts">
-import { deleteEvent } from '@/api/event.service'
-import { getGroupEvent } from '@/api/v2/group.service'
-import FetchLoader from '@/components/base/FetchLoader.vue'
-import EditEventDrawer from '@/components/event/EditEventDrawer/EditEventDrawer.vue'
-import EventItem from '@/components/event/EventList/EventItem.vue'
-import { QueryFilterEvent, TranslatedEventModel } from '@/models/event.model'
-import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
-import { eventSkeleton } from '@/skeletons/event.skeletons'
-import useToasterStore from '@/stores/useToaster'
+import type { QueryFilterEvent, TranslatedEventModel } from '~/models/event.model'
+import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+
+import { getGroupEvent } from '~/api/v2/group.service'
+import { deleteEvent } from '~/api/event.service'
+
+import EditEventDrawer from '~/components/event/EditEventDrawer/EditEventDrawer.vue'
+import EventItem from '~/components/event/EventList/EventItem.vue'
+import EventFilter from '~/components/event/EventFilter.vue'
+import FetchLoader from '~/components/base/FetchLoader.vue'
+
+import useToasterStore from '~/stores/useToaster'
+
+import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
+import { eventSkeleton } from '~/skeletons/event.skeletons'
 
 const props = withDefaults(
   defineProps<{
@@ -88,7 +96,10 @@ const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()
 const groupId = computed(() => props.group?.id)
 
-const { query } = useQuery<QueryFilterEvent>({})
+const query = ref<QueryFilterEvent>({
+  // when in preview, show all events
+  ordering: props.preview ? '-created_at' : 'start_date',
+})
 
 const limitSkeletons = computed(() => maxSkeleton(props.group?.modules?.event, props.limit))
 
@@ -143,6 +154,12 @@ const onLocation = (event) => {
 </script>
 
 <style lang="scss" scoped>
+.filter-list {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
 .events-wrapper {
   display: flex;
   flex-flow: column nowrap;

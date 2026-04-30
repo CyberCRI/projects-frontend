@@ -1,20 +1,21 @@
 <script setup lang="ts">
-import { ref, watch, computed, nextTick } from 'vue'
+import { deleteClassificationTag, getOrgClassificationTags } from '~/api/tag-classification.service'
+
+import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
+import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
+import FilterSearchInput from '~/components/search/Filters/FilterSearchInput.vue'
+import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import EditTagModal from '~/components/admin/EditTagModal.vue'
+
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useToasterStore from '~/stores/useToaster'
+
+import type { TagClassificationModel } from '~/models/tagclassification.model'
+import useTagTexts from '~/composables/useTagTexts'
+import useAPI from '~/composables/useAPI'
 import { debounce } from 'es-toolkit'
-import { getOrgClassificationTags, deleteClassificationTag } from '@/api/tag-classification.service'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import FilterSearchInput from '@/components/search/Filters/FilterSearchInput.vue'
-import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import useAPI from '@/composables/useAPI'
-import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import EditTagModal from '@/components/admin/EditTagModal.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import useToasterStore from '@/stores/useToaster'
-
-import useTagTexts from '@/composables/useTagTexts'
-
-import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
 
 const { t } = useNuxtI18n()
 
@@ -22,10 +23,13 @@ const organizationsStore = useOrganizationsStore()
 const toaster = useToasterStore()
 const tagTexts = useTagTexts()
 
-const props = defineProps({
-  classification: { type: Object, required: true },
-  pageLimit: { type: Number, default: 12 },
-})
+const props = withDefaults(
+  defineProps<{
+    classification: TagClassificationModel
+    pageLimit?: number
+  }>(),
+  { pageLimit: 12 }
+)
 
 const search = ref('')
 const isLoading = ref(false)
@@ -94,9 +98,11 @@ const fetchTagStats = async () => {
     organizationsStore.current.code,
     props.classification.id,
     {
-      search: '',
-      order_by: 'title',
-      limit: 1,
+      query: {
+        search: '',
+        order_by: 'title',
+        limit: 1,
+      },
     }
   )
   tagCount.value = data.count
@@ -108,7 +114,9 @@ const getTags = debounce(async function () {
     const apiReq = await getOrgClassificationTags(
       organizationsStore.current.code,
       props.classification.id,
-      { search: search.value, ordering: 'title', limit: props.pageLimit }
+      {
+        query: { search: search.value, ordering: 'title', limit: props.pageLimit },
+      }
     )
     request.value = apiReq
   } catch (e) {
@@ -165,8 +173,8 @@ const onTagEdited = async () => {
   editTagIsOpen.value = false
 }
 
-watch(() => [props.classification.value], fetchTagStats, { immediate: true })
-watch(() => [props.classification.value, search.value], getTags, { immediate: true })
+watch(() => props.classification, fetchTagStats, { immediate: true })
+watch(() => [props.classification, search.value], getTags, { immediate: true })
 </script>
 <template>
   <div class="classification-addmin">

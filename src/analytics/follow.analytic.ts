@@ -1,4 +1,4 @@
-import analytics from '@/analytics/index'
+import analytics from '~/analytics/index'
 
 export interface FollowAnalytic {
   project: {

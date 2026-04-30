@@ -34,12 +34,16 @@
 </template>
 
 <script>
-import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import TextInput from '@/components/base/form/TextInput.vue'
-import { patchOrganization, postOrganizationImage } from '@/api/organizations.service.ts'
-import useToasterStore from '@/stores/useToaster.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+import { patchOrganization, postOrganizationImage } from '~/api/organizations.service.ts'
+
+import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useToasterStore from '~/stores/useToaster.ts'
+import { NULL_CONTENT } from '~/functs/constants'
+
 export default {
   name: 'OrgWordingDrawer',
 
@@ -72,7 +76,7 @@ export default {
 
     return {
       title: title,
-      description: org?.description || '<p></p>',
+      description: org?.description || NULL_CONTENT,
       addedImages: [],
       asyncing: false,
     }
@@ -87,7 +91,7 @@ export default {
   watch: {
     isOpened() {
       const org = this.organization
-      this.description = org?.description || '<p></p>'
+      this.description = org?.description || NULL_CONTENT
     },
   },
 

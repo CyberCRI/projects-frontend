@@ -1,9 +1,9 @@
-import AccountGroupsForm from '@/components/people/Account/AccountGroupsForm.vue'
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
+import { OrganizationOutputFactory } from '~~/tests/factories/organization.factory'
+import AccountGroupsForm from '~/components/people/Account/AccountGroupsForm.vue'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { OrganizationOutputFactory } from '@/../tests/factories/organization.factory'
-import pinia from '@/stores'
-import useOrganizationsStore from '@/stores/useOrganizations'
+import pinia from '~/stores'
 
 describe('GroupForm', () => {
   let wrapper

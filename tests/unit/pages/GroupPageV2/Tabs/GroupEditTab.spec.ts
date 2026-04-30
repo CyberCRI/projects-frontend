@@ -1,8 +1,8 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import GroupEditTab from '@/pages/GroupPageV2/Tabs/GroupEditTab.vue'
+import GroupEditTab from '~/pages/GroupPageV2/Tabs/GroupEditTab.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
+import { peopleGroupFactory } from '~~/tests/factories/group.factory'
 import { describe, expect, it } from 'vitest'
-import { peopleGroupFactory } from '../../../../factories/group.factory'
 
 describe('GroupEditTab.vue', () => {
   it('should render component', async () => {

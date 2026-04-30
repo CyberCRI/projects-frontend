@@ -56,11 +56,13 @@
 </template>
 
 <script setup lang="ts">
-import BasicCard from '@/components/base/BasicCard.vue'
-import IconImage from '@/components/base/media/IconImage.vue'
-import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
-import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+
+import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+import BasicCard from '~/components/base/BasicCard.vue'
+
+import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
 
 const props = withDefaults(
   defineProps<{

@@ -1,8 +1,20 @@
-import useToasterStore from '@/stores/useToaster'
-// import useProjectsStore from '@/stores/useProjects'
-import { merge } from 'es-toolkit'
+import useToasterStore from '~/stores/useToaster'
+import useUsersStore from '~/stores/useUsers'
+
 import { useRuntimeConfig } from '#imports'
-import useUsersStore from '@/stores/useUsers'
+
+import { merge } from 'es-toolkit'
+
+type OFetchOrgiginalOptions = Parameters<typeof $fetch>['1']
+
+export type UseApiOptions<
+  Query extends OFetchOrgiginalOptions['query'] = OFetchOrgiginalOptions['query'],
+  Body extends OFetchOrgiginalOptions['body'] = OFetchOrgiginalOptions['body'],
+> = OFetchOrgiginalOptions & {
+  query?: Query
+  body?: Body
+  noError?: boolean
+}
 
 export const defaultOptions = () => {
   let _localStorage = null
@@ -90,7 +102,10 @@ export const defaultOptions = () => {
   }
 }
 
-const useAPI = <T>(url: string, options?: any) => {
+const useAPI = <T, Query = unknown, Body = unknown>(
+  url: string,
+  options?: UseApiOptions<Query, Body>
+) => {
   const _options = merge(defaultOptions(), options || {})
   return $fetch<T>(url, _options)
 }

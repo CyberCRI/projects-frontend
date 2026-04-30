@@ -67,10 +67,14 @@
   </div>
 </template>
 <script>
+import CroppedImage from '~/components/base/media/CroppedImage.vue'
+import ImageInput from '~/components/base/form/ImageInput.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+
+import { usePublicURL } from '~/composables/usePublic'
+
 import { LazyImageResizer } from '#components'
-import CroppedImage from '@/components/base/media/CroppedImage.vue'
-import ImageInput from '@/components/base/form/ImageInput.vue'
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
+
 export default {
   name: 'ImageEditor',
 
@@ -88,8 +92,7 @@ export default {
     },
     defaultPicture: {
       type: [String, Array],
-      required: false,
-      default: '',
+      required: true,
     },
     pictureAlt: {
       type: String,

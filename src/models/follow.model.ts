@@ -1,11 +1,12 @@
-import BaseModel from '@/models/base.model'
-import { ProjectModel } from '@/models/project.model'
+import type { ProjectModel } from '~/models/project.model'
+import type BaseModel from '~/models/base.model'
 
 /**
  * @name FollowModel
  * @description User who follow a project
  */
 export interface FollowModel extends BaseModel {
+  id: number
   follower: {
     id: number
     email: string
@@ -42,7 +43,6 @@ export type FollowOutput = Required<FollowModel> & {
 }
 
 export type FollowManyOutput = Required<FollowOutput> & {
-  id: number
   project: {
     id: string
   }

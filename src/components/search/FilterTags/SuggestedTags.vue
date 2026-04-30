@@ -16,55 +16,38 @@
   </div>
 </template>
 
-<script>
-import FilterValue from '@/components/search/Filters/FilterValue.vue'
-import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import useTagTexts from '@/composables/useTagTexts.ts'
+<script setup lang="ts">
+import FilterValue from '~/components/search/Filters/FilterValue.vue'
+import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 
-export default {
-  name: 'SuggestedTags',
+import useTagTexts from '~/composables/useTagTexts'
+import type { TagModel } from '~/models/tag.model'
 
-  components: { FilterValue, LoaderSimple },
-  props: {
-    currentTags: {
-      // array of tag ids
-      type: Array,
-      default: () => [],
-    },
+const props = withDefaults(
+  defineProps<{
+    // array of tag ids
+    currentTags?: TagModel['id'][]
+    // array of tag objects
+    suggestedTags?: TagModel[]
+    loading?: boolean
+  }>(),
+  {
+    currentTags: () => [],
+    suggestedTags: () => [],
+    loading: false,
+  }
+)
 
-    suggestedTags: {
-      // array of tag objects
-      type: Array,
-      default: () => [],
-    },
+const emit = defineEmits<{
+  'add-tag': [TagModel]
+}>()
 
-    loading: {
-      type: Boolean,
-      default: false,
-    },
-  },
+const tagTexts = useTagTexts()
+const displayableTags = computed(() => {
+  return props.suggestedTags.filter((tag) => !props.currentTags.includes(tag.id))
+})
 
-  emits: ['add-tag'],
-
-  setup() {
-    const tagTexts = useTagTexts()
-    return {
-      tagTexts,
-    }
-  },
-
-  computed: {
-    displayableTags() {
-      return this.suggestedTags.filter((tag) => !this.currentTags.includes(tag.id))
-    },
-  },
-
-  methods: {
-    addTag(tag) {
-      this.$emit('add-tag', tag)
-    },
-  },
-}
+const addTag = (tag) => emit('add-tag', tag)
 </script>
 
 <style lang="scss" scoped>

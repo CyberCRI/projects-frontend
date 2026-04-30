@@ -2,7 +2,11 @@
   <LayoutTab :title="$t('template.create')" :notice="t('template.info')">
     <TemplateForm v-model="form" :errors="errors" :save-image-callback="saveImageTemplate" />
     <div class="form-actions">
-      <LpiButton data-test="cancel" :label="capitalize(t('common.cancel'))" @click="redirect" />
+      <LpiButton
+        data-test="cancel"
+        :label="capitalize(t('common.cancel'))"
+        :to="LOCATION_TEMPLATES"
+      />
       <LpiButton
         data-test="submit"
         :disabled="!isValid"
@@ -13,28 +17,30 @@
   </LayoutTab>
 </template>
 
-<script setup>
-import { capitalize } from '@/functs/string'
-import useNuxtI18n from '@/composables/useNuxtI18n'
-import LayoutTab from '@/components/admin/LayoutTab.vue'
-import { postTemplate, postTemplateImage } from '@/api/templates.service'
-import { useTemplateForm } from '@/form/template'
-import TemplateForm from '@/components/templates/TemplateForm.vue'
+<script setup lang="ts">
+import { postTemplate, postTemplateImage } from '~/api/templates.service'
 
-defineOptions({ name: 'TemplatesCreateTab' })
+import TemplateForm from '~/components/templates/TemplateForm.vue'
+import LayoutTab from '~/components/admin/LayoutTab.vue'
+
+import useNuxtI18n from '~/composables/useNuxtI18n'
+
+import type { RouteLocationRaw } from 'vue-router'
+import { useTemplateForm } from '~/form/template'
+import { capitalize } from '~/functs/string'
 
 const { t } = useNuxtI18n()
 const router = useRouter()
 const organizationCode = useOrganizationCode()
 const { form, errors, isValid, cleanedData } = useTemplateForm()
 
+const LOCATION_TEMPLATES: RouteLocationRaw = { name: 'templatesList' }
+
 const submit = () => {
   postTemplate(organizationCode, cleanedData.value)
-    .then(() => redirect())
+    .then(() => router.push(LOCATION_TEMPLATES))
     .catch(console.error)
 }
-
-const redirect = () => router.push({ name: 'templatesList' })
 
 // we don't have the templateId (we are on creation) so we put -1
 // backend have a task to check/replace image from templates

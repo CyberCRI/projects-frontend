@@ -28,11 +28,12 @@
 </template>
 
 <script setup lang="ts">
-import CommentItem from '@/components/project/comment/CommentItem.vue'
-import NoItem from '@/components/project/comment/NoItem.vue'
-import MakeComment from '@/components/project/comment/MakeComment.vue'
-import { TranslatedProject } from '@/models/project.model'
-import { CommentModel } from '@/models/comment.model'
+import type { TranslatedProject } from '~/models/project.model'
+import type { CommentModel } from '~/models/comment.model'
+
+import MakeComment from '~/components/project/comment/MakeComment.vue'
+import CommentItem from '~/components/project/comment/CommentItem.vue'
+import NoItem from '~/components/project/comment/NoItem.vue'
 
 defineProps<{
   project: TranslatedProject

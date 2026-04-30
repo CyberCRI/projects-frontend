@@ -23,9 +23,10 @@
 </template>
 
 <script setup lang="ts">
-import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
-import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
-import { TranslatedProject } from '@/models/project.model'
+import type { TranslatedProject } from '~/models/project.model'
+
+import SeeMoreArrow from '~/components/base/button/SeeMoreArrow.vue'
+import HtmlLimiter from '~/components/base/HtmlLimiter.vue'
 
 defineProps<{ project: TranslatedProject; description: string }>()
 

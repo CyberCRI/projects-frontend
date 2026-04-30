@@ -1,13 +1,15 @@
 <script setup lang="ts">
+import { helpers, maxLength, minLength, required } from '@vuelidate/validators'
 import useValidate from '@vuelidate/core'
-import { required, minLength, maxLength, helpers } from '@vuelidate/validators'
-import useToasterStore from '@/stores/useToaster'
-import useProjectCategories from '@/stores/useProjectCategories'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import useUsersStore from '@/stores/useUsers'
 
-import analytics from '@/analytics'
-import { createProject, createProjectHeader } from '@/api/projects.service'
+import { createProject, createProjectHeader } from '~/api/projects.service'
+
+import useProjectCategories from '~/stores/useProjectCategories'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useToasterStore from '~/stores/useToaster'
+import useUsersStore from '~/stores/useUsers'
+
+import analytics from '~/analytics'
 
 defineEmits(['close'])
 
@@ -54,17 +56,15 @@ const rules = computed(() => {
           maxLengthValue: helpers.withMessage(t('project.form.purpose-errors.max'), maxLength(180)),
         }
   return {
-    form: {
-      title: {
-        required: helpers.withMessage(t('project.form.title-errors.required'), required),
-        maxLengthValue: helpers.withMessage(t('project.form.title-errors.max'), maxLength(120)),
-      },
-      purpose: purposeRules,
+    title: {
+      required: helpers.withMessage(t('project.form.title-errors.required'), required),
+      maxLengthValue: helpers.withMessage(t('project.form.title-errors.max'), maxLength(120)),
     },
+    purpose: purposeRules,
   }
 })
 
-const v$ = useValidate(rules, { form })
+const v$ = useValidate(rules, form)
 
 const categories = computed(() => {
   return projectCategoriesStore.allOrderedByOrderId

@@ -11,10 +11,10 @@
 </template>
 
 <script setup lang="ts" generic="T extends AnyTranslatedLocation">
-import { AnyTranslatedLocation } from '@/models/location.model'
-import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import type CardLocationPopUp from '@/components/map/CardLocationPopUp.vue'
+import type { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import type { AnyTranslatedLocation } from '@/models/location.model'
 import { DEFAULT_GROUP_PATATOID } from '@/composables/usePatatoids'
-import CardLocationPopUp from '@/components/map/CardLocationPopUp.vue'
 
 defineProps<{ location: T; group: TranslatedPeopleGroupModel }>()
 </script>

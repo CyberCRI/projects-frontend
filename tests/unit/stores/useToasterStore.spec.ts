@@ -1,9 +1,9 @@
 import { setActivePinia, createPinia } from 'pinia'
 
-import useToasterStore, { ToastType } from '@/stores/useToaster'
+import useToasterStore, { ToastType } from '~/stores/useToaster'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-vi.mock('@/api/notifications.service')
+vi.mock('~/api/notifications.service')
 
 describe('Toaster Store', () => {
   beforeEach(() => {
@@ -73,13 +73,14 @@ describe('Toaster Store', () => {
 
   it('deleteToast()', () => {
     const toaster = useToasterStore()
-    toaster.toastList.push({
+    const toast = {
       message: 'my success message',
       type: 'success' as ToastType,
       isOpened: true,
-    })
+    }
+    toaster.toastList.push(toast)
     expect(toaster.toastList.length).toBe(1)
-    toaster.deleteToast(0)
+    toaster.deleteToast(toast)
 
     expect(toaster.toastList.length).toBe(0)
   })

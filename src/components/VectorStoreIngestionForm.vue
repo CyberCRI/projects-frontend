@@ -1,17 +1,20 @@
-<script setup>
-import useUsersStore from '@/stores/useUsers'
-import useToasterStore from '@/stores/useToaster'
+<script setup lang="ts">
+import useToasterStore from '~/stores/useToaster'
+import useUsersStore from '~/stores/useUsers'
 
 const { t } = useNuxtI18n()
 
-const props = defineProps({
-  isOpened: {
-    type: Boolean,
-    required: true,
-  },
-  documentTitle: { type: String, default: '' },
-  isEdit: { type: Boolean, default: false },
-})
+const props = withDefaults(
+  defineProps<{
+    isOpened: boolean
+    documentTitle?: string
+    isEdit?: boolean
+  }>(),
+  {
+    documentTitle: '',
+    isEdit: false,
+  }
+)
 const emit = defineEmits(['close', 'document-added', 'document-updated'])
 
 const toaster = useToasterStore()
@@ -34,7 +37,7 @@ watch(
 )
 
 const onFileChange = (e) => {
-  let files = e.target.files || e.dataTransfer.files
+  const files = e.target.files || e.dataTransfer.files
   if (!files.length) return
   file.value = files[0]
 }

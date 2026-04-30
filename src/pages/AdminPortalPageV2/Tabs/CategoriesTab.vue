@@ -86,25 +86,30 @@
 </template>
 
 <script>
-import LpiSnackbar from '@/components/base/LpiSnackbar.vue'
-import CategoryAdminElement from '@/components/category/CategoryAdminElement.vue'
-import LinkButton from '@/components/base/button/LinkButton.vue'
-import CategoryDrawer from '@/components/category/CategoryDrawer.vue'
 import {
-  postProjectCategoryBackground,
-  patchProjectCategoryBackground,
+  createProjectCategory,
   deleteProjectCategory,
-} from '@/api/project-categories.service'
-import { imageSizesFormData } from '@/functs/imageSizesUtils.ts'
-import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import { toRaw } from 'vue'
+  patchProjectCategory,
+  patchProjectCategoryBackground,
+  postProjectCategoryBackground,
+} from '~/api/project-categories.service'
+
+import CategoryAdminElement from '~/components/category/CategoryAdminElement.vue'
+import CategoryDrawer from '~/components/category/CategoryDrawer.vue'
+import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import LinkButton from '~/components/base/button/LinkButton.vue'
+import LpiLoader from '~/components/base/loader/LpiLoader.vue'
+import LpiSnackbar from '~/components/base/LpiSnackbar.vue'
+
+import useProjectCategories from '~/stores/useProjectCategories.ts'
+import useToasterStore from '~/stores/useToaster.ts'
+
+import useOrganizationCode from '~/composables/useOrganizationCode.ts'
+
+import { imageSizesFormData } from '~/functs/imageSizesUtils.ts'
 import { Sortable } from 'sortablejs-vue3'
-import { createProjectCategory, patchProjectCategory } from '@/api/project-categories.service'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import useToasterStore from '@/stores/useToaster.ts'
-import useProjectCategories from '@/stores/useProjectCategories.ts'
-import useOrganizationCode from '@/composables/useOrganizationCode.ts'
+import { toRaw } from 'vue'
 
 export default {
   name: 'CategoriesTab',

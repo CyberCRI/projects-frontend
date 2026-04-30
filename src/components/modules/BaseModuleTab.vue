@@ -42,7 +42,7 @@ withDefaults(
       .title {
         font-weight: 700;
         font-size: $font-size-l;
-        color: $primary-dark;
+        color: var(--primary-dark);
         margin-bottom: 1rem;
       }
     }

@@ -11,8 +11,9 @@
 </template>
 
 <script setup lang="ts">
-import { IconImageChoice } from '@/functs/IconImage'
-import IconImage from '@/components/base/media/IconImage.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+
+import type { IconImageChoice } from '~/functs/IconImage'
 
 withDefaults(
   defineProps<{
@@ -47,17 +48,14 @@ const close = () => emit('close')
   &.success,
   &.info {
     background: $primary-light;
-    border: $border-width-l solid $primary-dark;
   }
 
   &.error {
     background: $salmon;
-    border: $border-width-l solid $salmon;
   }
 
   &.warning {
     background: $yellow;
-    border: $border-width-l solid $yellow;
   }
 
   .left-icon {

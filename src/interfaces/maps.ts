@@ -1,5 +1,5 @@
-import { Translated } from '@/interfaces/translated'
-import { AnyLocation, BaseLocationModel } from '@/models/location.model'
+import type { AnyLocation, BaseLocationModel } from '@/models/location.model'
+import type { Translated } from '@/interfaces/translated'
 
 export type Geocoding = BaseLocationModel & {
   label?: string

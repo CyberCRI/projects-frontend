@@ -32,11 +32,13 @@
   </div>
 </template>
 <script>
-import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
-import { getUser } from '@/api/people.service.ts'
-import { getOrganizations } from '@/api/organizations.service.ts'
-import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
+import { getOrganizations } from '~/api/organizations.service.ts'
+import { getUser } from '~/api/people.service.ts'
+
+import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
+import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
+
+import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
 
 export default {
   name: 'OtherOrgUserCard',

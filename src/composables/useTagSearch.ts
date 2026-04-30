@@ -1,21 +1,24 @@
-import { computed, watch, ref } from 'vue'
-import useOrganizationsStore from '@/stores/useOrganizations'
 import {
   getAllOrgClassifications,
   getOrgClassificationTags,
-} from '@/api/tag-classification.service'
-export default function useTagSearch({
-  useSkills,
-  useProjects,
-  hideOrganizationTags,
-  classificationType,
-} = {}) {
+} from '~/api/tag-classification.service'
+
+import useOrganizationsStore from '~/stores/useOrganizations'
+
+export default function useTagSearch(
+  { useSkills, useProjects, hideOrganizationTags, classificationType } = {
+    useSkills: false,
+    useProjects: false,
+    hideOrganizationTags: false,
+    classificationType: false,
+  }
+) {
   const organizationCode = useOrganizationCode()
   const organizationsStore = useOrganizationsStore()
   const allOrgClassifications = ref([])
   const isLoadingOrgClassifications = ref(false)
 
-  const fetchAllClassifications = async (noLoading) => {
+  const fetchAllClassifications = async (noLoading: boolean = false) => {
     if (!noLoading) isLoadingOrgClassifications.value = true
     try {
       const res = await getAllOrgClassifications(organizationCode)
@@ -115,7 +118,11 @@ export default function useTagSearch({
         organizationCode,
         selectedClassificationId.value,
         // temp hackish fix until we have count in the org data
-        { search: '' }
+        {
+          query: {
+            search: '',
+          },
+        }
       )
       // if there's too many tags, show none
       // this will display the search input

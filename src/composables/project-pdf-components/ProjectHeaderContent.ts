@@ -1,4 +1,4 @@
-import { Container } from '@/composables/pdf-helpers/doc-builder'
+import { Container } from '~/composables/pdf-helpers/doc-builder'
 
 export default class ProjectHeaderContent extends Container {
   constructor(parent: Container) {

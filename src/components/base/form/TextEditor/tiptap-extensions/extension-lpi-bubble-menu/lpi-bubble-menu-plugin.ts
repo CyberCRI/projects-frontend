@@ -1,7 +1,11 @@
-import { Editor, isNodeSelection, isTextSelection, posToDOMRect } from '@tiptap/core'
-import { EditorState, Plugin, PluginKey } from '@tiptap/pm/state'
-import { EditorView } from '@tiptap/pm/view'
-import tippy, { Instance, Props } from 'tippy.js'
+import { isNodeSelection, isTextSelection, posToDOMRect } from '@tiptap/core'
+import { Plugin, PluginKey } from '@tiptap/pm/state'
+import type { EditorState } from '@tiptap/pm/state'
+import type { EditorView } from '@tiptap/pm/view'
+import type { Editor } from '@tiptap/core'
+
+import type { Instance, Props } from 'tippy.js'
+import tippy from 'tippy.js'
 
 export interface LpiBubbleMenuPluginProps {
   view?: EditorView

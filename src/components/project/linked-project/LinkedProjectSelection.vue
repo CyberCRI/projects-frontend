@@ -53,15 +53,20 @@
 </template>
 
 <script>
-import { searchProjects } from '@/api/search.service'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import ProjectCard from '@/components/project/ProjectCard.vue'
-import SearchInput from '@/components/base/form/SearchInput.vue'
-import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
+import { searchProjects } from '~/api/search.service'
+
+import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
+import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
+import SearchInput from '~/components/base/form/SearchInput.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import ProjectCard from '~/components/project/ProjectCard.vue'
+
+import useOrganizationsStore from '~/stores/useOrganizations.ts'
+
+import useAPI from '~/composables/useAPI.ts'
+
 import { debounce } from 'es-toolkit'
-import PaginationButtons from '@/components/base/navigation/PaginationButtons.vue'
-import useAPI from '@/composables/useAPI.ts'
-import useOrganizationsStore from '@/stores/useOrganizations.ts'
+
 export default {
   name: 'LinkedProjectSelection',
 
@@ -246,7 +251,7 @@ export default {
   .results-ctn {
     display: flex;
     flex-wrap: wrap;
-    place-content: flex-start space-between;
+    place-content: flex-start;
     gap: $space-m;
     overflow: hidden;
     padding-top: 40px;

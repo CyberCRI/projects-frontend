@@ -93,16 +93,19 @@
 </template>
 
 <script setup lang="ts">
-import TextInput from '@/components/base/form/TextInput.vue'
-import useVuelidate from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
-import MultiGroupPicker from '@/components/group/MultiGroupPicker/MultiGroupPicker.vue'
-import FieldErrors from '@/components/base/form/FieldErrors.vue'
-import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import { LocationType } from '@/models/types'
-import { EventForm } from '@/models/event.model'
-import { defaultForm } from '@/form/event'
-import DateField from '@/components/base/form/DateField.vue'
+import useVuelidate from '@vuelidate/core'
+
+import type { EventForm } from '~/models/event.model'
+import type { LocationType } from '~/models/types'
+
+import MultiGroupPicker from '~/components/group/MultiGroupPicker/MultiGroupPicker.vue'
+import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
+import FieldErrors from '~/components/base/form/FieldErrors.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+import DateField from '~/components/base/form/DateField.vue'
+
+import { defaultForm } from '~/form/event'
 
 withDefaults(
   defineProps<{

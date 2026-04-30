@@ -66,13 +66,16 @@
   </div>
 </template>
 <script setup lang="ts">
-import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
-import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import LinkButton from '@/components/base/button/LinkButton.vue'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
+import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
+
+import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
+import LinkButton from '~/components/base/button/LinkButton.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import HtmlLimiter from '~/components/base/HtmlLimiter.vue'
+
+import useOrganizationsStore from '~/stores/useOrganizations'
+
+import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
 
 const organizationsStore = useOrganizationsStore()
 const styleDescription = ref({})

@@ -1,20 +1,20 @@
-import { defineStore } from 'pinia'
-import {
-  getOrganizationByCode,
-  getOrganizations,
-  patchOrganization,
-} from '@/api/organizations.service'
-
 import type {
   OrganizationModel,
   OrganizationOutput,
   OrganizationPatchInput,
-} from '@/models/organization.model'
+} from '~/models/organization.model'
 
-import analytics from '@/analytics'
+import {
+  getOrganizationByCode,
+  getOrganizations,
+  patchOrganization,
+} from '~/api/organizations.service'
 
-import useAutoTranslate from '@/composables/useAutoTranslate'
-import functions from '@/functs/functions'
+import useAutoTranslate from '~/composables/useAutoTranslate'
+
+import functions from '~/functs/functions'
+import analytics from '~/analytics'
+import { defineStore } from 'pinia'
 
 export interface OrganizationsState {
   _all: OrganizationOutput[]
@@ -60,7 +60,7 @@ const useOrganizationsStore = defineStore('organizations', () => {
   const tos = computed(() => current.value?.terms_and_conditions || null)
   const termsId = computed((): number | null => tos?.value?.id || null)
   const termsVersion = computed((): number | null => tos?.value?.displayed_version || null)
-  const termsUpdatedAt = computed((): number | null => tos?.value?.displayed_updated_at || null)
+  const termsUpdatedAt = computed(() => tos?.value?.displayed_updated_at || null)
   const termsContent = computed((): string | null => tos?.value?.displayed_content || null)
   const termsContentTranslated = getTranslatableField(tos, 'displayed_content', termsContent)
   const hasTerms = computed((): boolean => !!(termsId.value && termsContent.value))

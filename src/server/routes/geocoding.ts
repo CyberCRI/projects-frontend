@@ -1,4 +1,4 @@
-import { Geocoding } from '@/interfaces/maps'
+import type { Geocoding } from '~/interfaces/maps'
 
 async function fetchFromPhoton(address, locale, runtimeConfig) {
   // TODO: use an env variable for the geocoding API URL

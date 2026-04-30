@@ -107,22 +107,23 @@
 </template>
 
 <script setup lang="ts">
-import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import TextInput from '@/components/base/form/TextInput.vue'
-import useVuelidate from '@vuelidate/core'
-import { helpers, required } from '@vuelidate/validators'
-import ImageEditor from '@/components/base/form/ImageEditor.vue'
 import MultiGroupPicker from '@/components/group/MultiGroupPicker/MultiGroupPicker.vue'
-import { throttle } from 'es-toolkit'
-import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import { postOrganizationImage } from '@/api/organizations.service'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import { usePatatoids } from '@/composables/usePatatoids'
-import { LocationType } from '@/models/types'
 import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
+import ImageEditor from '@/components/base/form/ImageEditor.vue'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import TextInput from '@/components/base/form/TextInput.vue'
 import DateField from '@/components/base/form/DateField.vue'
-import { NewsForm } from '@/models/news.model'
+import { usePatatoids } from '@/composables/usePatatoids'
+import { helpers, required } from '@vuelidate/validators'
+import type { NewsForm } from '@/models/news.model'
+import type { LocationType } from '@/models/types'
+import useVuelidate from '@vuelidate/core'
 import { defaultForm } from '@/form/news'
+
+import { throttle } from 'es-toolkit'
 
 const LOCATION_TYPES: LocationType[] = ['news']
 withDefaults(

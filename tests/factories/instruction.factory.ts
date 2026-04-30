@@ -1,7 +1,7 @@
-import { InstructionModel } from '@/models/instruction.model'
+import { InstructionModel } from '~/models/instruction.model'
 import { createFactory } from 'faker-create-factory'
-import BaseFactory from './base.factory'
 import { peopleGroupFactory } from './group.factory'
+import BaseFactory from './base.factory'
 
 export const InstructionFactory = createFactory<InstructionModel>((faker) => ({
   ...BaseFactory.generate(),
@@ -11,4 +11,5 @@ export const InstructionFactory = createFactory<InstructionModel>((faker) => ({
   id: faker.datatype.number(),
   has_to_be_notified: faker.datatype.boolean(),
   people_groups: peopleGroupFactory.generateMany(10),
+  visible_by_all: faker.datatype.boolean(),
 }))

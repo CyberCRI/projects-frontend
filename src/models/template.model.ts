@@ -1,5 +1,10 @@
-import BaseModel from '@/models/base.model'
-import { ImageModel } from '@/models/image.model'
+import type { ProjectCategoryModel } from '~/models/project-category.model'
+import type { OrganizationModel } from '~/models/organization.model'
+import type { Translated } from '~/interfaces/translated'
+import type { ImageModel } from '~/models/image.model'
+import type { TagModel } from '~/models/tag.model'
+import type { LanguageType } from '~/models/types'
+import type BaseModel from '~/models/base.model'
 
 /**
  * @name TemplateModel
@@ -7,12 +12,41 @@ import { ImageModel } from '@/models/image.model'
  */
 export interface TemplateModel extends BaseModel {
   id: number
-  project_title: string
-  goal_title: string
-  project_description: string
-  blogentry_title: string
+  name: string
+  description: string
+  language: LanguageType
   images: ImageModel[]
+  organization: OrganizationModel
+  categories: ProjectCategoryModel[]
+  project_title: string
+  project_description: string
+  project_purpose: string
+  project_tags: TagModel[]
+  blogentry_title: string
+  blogentry_content: string
+  goal_title: string
+  goal_description: string
+  review_title: string
+  review_description: string
+  comment_content: string
 }
+
+export type TranslatedTemplate = Translated<
+  TemplateModel,
+  | 'name'
+  | 'description'
+  | 'project_title'
+  | 'project_description'
+  | 'project_purpose'
+  | 'project_tags'
+  | 'blogentry_title'
+  | 'blogentry_content'
+  | 'goal_title'
+  | 'goal_description'
+  | 'review_title'
+  | 'review_description'
+  | 'comment_content'
+>
 
 export type TemplateCreateInput = Required<TemplateModel> & {
   project_categories_ids: number[]

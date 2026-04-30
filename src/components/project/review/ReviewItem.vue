@@ -41,9 +41,10 @@
   </div>
 </template>
 <script>
-import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
-import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
+import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
+import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
+
+import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
 
 export default {
   name: 'ReviewItem',

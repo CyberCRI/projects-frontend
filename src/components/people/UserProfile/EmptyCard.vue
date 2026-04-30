@@ -7,15 +7,14 @@
     </slot>
   </div>
 </template>
-<script setup>
-defineOptions({ name: 'EmptyCard' })
 
-defineProps({
-  label: {
-    type: String,
-    default: '',
-  },
-})
+<script setup lang="ts">
+withDefaults(
+  defineProps<{
+    label?: string
+  }>(),
+  { label: '' }
+)
 </script>
 <style scoped lang="scss">
 // same as src/components/base/BasicCard.vue except for border color and justify content

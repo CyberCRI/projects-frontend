@@ -19,10 +19,11 @@
 </template>
 
 <script setup lang="ts">
-import { getUser } from '@/api/people.service'
-import LpiLoader from '@/components/base/loader/LpiLoader.vue'
-import AccountFormTitleBlock from '@/components/people/Account/AccountFormTitleBlock.vue'
-import AccountForm from '@/components/people/Account/AccountForm.vue'
+import { getUser } from '~/api/people.service'
+
+import AccountFormTitleBlock from '~/components/people/Account/AccountFormTitleBlock.vue'
+import AccountForm from '~/components/people/Account/AccountForm.vue'
+import LpiLoader from '~/components/base/loader/LpiLoader.vue'
 
 defineOptions({ name: 'AccountLayout' })
 

@@ -1,5 +1,7 @@
-import useLoadingFromStatus from '@/composables/useLoadingFromStatus'
-import { withQuery } from '@/functs/query'
+import useLoadingFromStatus from '~/composables/useLoadingFromStatus'
+import type { UseApiOptions } from '~/composables/useAPI'
+
+import { withQuery } from '~/functs/query'
 import { isNil } from 'es-toolkit'
 
 type AsyncHandler = {
@@ -14,7 +16,7 @@ export type AsyncConfig<ResDataT, DataT, Result> = Parameters<
 >['2'] & {
   translate?: (data: DataT) => Result
   // query params
-  query?: object
+  query?: UseApiOptions['query']
   // d'ont run fetch if any of args/params are null/undefined
   checkArgs?: boolean
   // force fixed key (no add query params in key)
@@ -61,7 +63,7 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
   // wraps query around computed to "watch change"
   const orginalQuery = params[2].query
   params[2].query = computed(() => {
-    return { ...(unref(orginalQuery) || {}) }
+    return { ...unref(orginalQuery) }
   })
   params[2].watch.push(params[2].query)
 
@@ -97,7 +99,7 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
 
   const { status, data, ...res } = useAsyncData<ResDataT, unknown, DataT>(
     key,
-    ({}) => {
+    () => {
       if (!checkArgs.value) {
         return null
       }

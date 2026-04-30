@@ -18,11 +18,13 @@
 </template>
 
 <script setup lang="ts">
-import { capitalize } from '@/functs/string'
+import type { TranslatedProject } from '~/models/project.model'
 
-import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
-import { TranslatedProject } from '@/models/project.model'
+import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
+
+import { DEFAULT_PROJECT_PATATOID } from '~/composables/usePatatoids'
+
+import { capitalize } from '~/functs/string'
 
 defineProps<{
   project: TranslatedProject

@@ -11,8 +11,9 @@
 </template>
 
 <script setup lang="ts">
-import SdgIcon from '@/components/search/Filters/SdgIcon.vue'
-import { SDGS } from '@/functs/constants'
+import SdgIcon from '~/components/search/Filters/SdgIcon.vue'
+
+import { SDGS } from '~/functs/constants'
 
 const model = defineModel<number[]>()
 
@@ -42,7 +43,7 @@ const toggleSdg = (sdgId) => {
 
 @media screen and (min-width: $min-tablet) {
   .sdg-filter-container {
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
   }
 }
 </style>

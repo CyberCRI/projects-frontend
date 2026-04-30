@@ -1,5 +1,6 @@
-import analytics from '@/analytics'
-import { LinkedProject } from '@/models/project.model'
+import type { LinkedProject } from '~/models/project.model'
+
+import analytics from '~/analytics'
 
 export interface LinkedProjectAnalytic {
   project: {

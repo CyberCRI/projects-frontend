@@ -50,9 +50,11 @@
 </template>
 
 <script>
-import { getUser } from '@/api/people.service.ts'
-import useUsersStore from '@/stores/useUsers.ts'
-import ProfileSummaryTab from '@/pages/UserProfilePageV2/Tabs/ProfileSummaryTab.vue'
+import { getUser } from '~/api/people.service.ts'
+
+import useUsersStore from '~/stores/useUsers.ts'
+
+import ProfileSummaryTab from '~/pages/UserProfilePageV2/Tabs/ProfileSummaryTab.vue'
 
 export default {
   name: 'UserProfileV2',
@@ -558,7 +560,7 @@ export default {
     },
 
     currentTab() {
-      return this.allProfileTabs.find((tab) => this.$route.name === tab.view.name)
+      return this.allProfileTabs.find((tab) => this.$route.name === tab.view?.name)
     },
 
     isEditing() {

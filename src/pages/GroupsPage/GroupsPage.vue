@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { getHierarchyGroups } from '@/api/v2/group.service'
-import { useLpiHead2 } from '@/composables/useLpiHead'
-import { PeopleGroupModulesKeys } from '@/models/invitation.model'
-import { factoriesSkeleton } from '@/skeletons/base.skeletons'
-import { groupSkeleton } from '@/skeletons/group.skeletons'
+import type { PeopleGroupModulesKeys } from '~/models/invitation.model'
+
+import { getHierarchyGroups } from '~/api/v2/group.service'
+
+import { useLpiHead2 } from '~/composables/useLpiHead'
+
+import { factoriesSkeleton } from '~/skeletons/base.skeletons'
+import { groupSkeleton } from '~/skeletons/group.skeletons'
 
 const props = withDefaults(defineProps<{ groupIdOrSlug?: string }>(), { groupIdOrSlug: '' })
 const organizationCode = useOrganizationCode()
@@ -57,6 +60,7 @@ onBeforeRouteLeave((to, from, next) => {
 })
 
 const showGroups = () => navigateTo({ query: {} })
+
 useLpiHead2({
   title: computed(() => t('common.groups')),
 })

@@ -29,13 +29,13 @@
 </template>
 
 <script setup lang="ts">
-import { cropIfTooLong } from '@/functs/string'
-import LinkButton from '@/components/base/button/LinkButton.vue'
-import { AnyTranslatedLocation } from '@/models/location.model'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import { Image } from '@/models/image.model'
+import type { AnyTranslatedLocation } from '@/models/location.model'
+import LinkButton from '@/components/base/button/LinkButton.vue'
 import LocationPopUp from '@/components/map/LocationPopUp.vue'
-import { RouteLocationRaw } from 'vue-router'
+import type { RouteLocationRaw } from 'vue-router'
+import type { Image } from '@/models/image.model'
+import { cropIfTooLong } from '@/functs/string'
 
 const props = withDefaults(
   defineProps<{

@@ -1,22 +1,28 @@
-import { GeneralLocationPeopleGroup, TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import { TranslatedOrganizationModel } from '@/models/organization.model'
-import { TranslatedProject } from '@/models/project.model'
-import { AttachmentFileModel, TranslatedAttachmentFile } from '@/models/attachment-file.model'
-import { AttachmentLinkModel, TranslatedAttachmentLink } from '@/models/attachment-link.model'
-import { TranslatedDocument } from '@/interfaces/researcher'
-import {
+import type {
   TranslatedEventLocation,
   TranslatedLocation,
   TranslatedNewsLocation,
 } from '@/models/location.model'
-import { TranslatedNews } from '@/models/news.model'
-import { TranslatedEventModel } from '@/models/event.model'
-import { TranslatedNewsfeed } from '@/models/newsfeed.model'
-import { TranslatedAnnouncement } from '@/models/announcement.model'
-import { TranslatedUserModel } from '@/models/user.model'
-
-// type can be computed or object
-type RefOrRaw<DataT> = ComputedRef<DataT> | Ref<DataT> | DataT
+import type {
+  GeneralLocationPeopleGroup,
+  TranslatedPeopleGroupModel,
+} from '@/models/invitation.model'
+import type { AttachmentLinkModel, TranslatedAttachmentLink } from '@/models/attachment-link.model'
+import type { AttachmentFileModel, TranslatedAttachmentFile } from '@/models/attachment-file.model'
+import type { TranslatedLinkedProject, TranslatedProject } from '@/models/project.model'
+import type { TranslatedProjectMessage } from '@/models/project-message.model'
+import type { TranslatedOrganizationModel } from '@/models/organization.model'
+import type { TranslatedAnnouncement } from '@/models/announcement.model'
+import type { TranslatedInstruction } from '@/models/instruction.model'
+import type { TranslatedBlogEntry } from '@/models/blog-entry.model'
+import type { TranslatedNewsfeed } from '@/models/newsfeed.model'
+import type { TranslatedDocument } from '@/interfaces/researcher'
+import type { TranslatedEventModel } from '@/models/event.model'
+import type { TranslatedComment } from '@/models/comment.model'
+import type { TranslatedUserModel } from '@/models/user.model'
+import type { TranslatedNews } from '@/models/news.model'
+import type { TranslatedGoal } from '@/models/goal.model'
+import type { RefOrRaw } from '~/interfaces/utils'
 
 export default function useAutoTranslate() {
   // TODO: memoize in local storage / user prefs
@@ -73,7 +79,7 @@ export default function useAutoTranslate() {
       return res
     })
 
-  const translateEntity = <DataT = any>(entity, fields) =>
+  const translateEntity = <DataT = any>(entity, fields: string[]) =>
     computed<DataT>(() => ({
       ...unref(entity || {}),
       $t: unref(getTranslatableFields(entity, fields)),
@@ -100,12 +106,29 @@ export default function useAutoTranslate() {
   const translateProjects = (projects) =>
     translateEntities<TranslatedProject>(projects, translateProject)
 
-  const translateComment = (comment) => {
-    const _comment = unref(comment)
-    if (_comment) _comment.replies = translateEntities(_comment.replies, translateComment)
-    return translateEntity(_comment, ['content'])
-  }
-  const translateComments = (comments) => translateEntities(comments, translateComment)
+  const translatedProjectLinked = (linkedProject) =>
+    computed<TranslatedLinkedProject>(() => {
+      const raw = unref(linkedProject)
+      return {
+        ...raw,
+        project: raw.project ? unref(translateProject(raw.project)) : null,
+        target: raw.target ? unref(translateProject(raw.target)) : null,
+      }
+    })
+  const translatedProjectLinkeds = (linkedProjects) =>
+    translateEntities<TranslatedLinkedProject>(linkedProjects, translatedProjectLinked)
+
+  const translateComment = (comment) =>
+    computed<TranslatedComment>(() => {
+      const raw = unref(comment)
+      return {
+        ...unref(translateEntity<TranslatedComment>(comment, ['content'])),
+        replies: raw.replies ? unref(translateComments(raw.replies)) : null,
+      }
+    })
+
+  const translateComments = (comments) =>
+    translateEntities<TranslatedComment>(comments, translateComment)
 
   const translateAnnouncement = (announcement) =>
     computed(() => {
@@ -131,11 +154,13 @@ export default function useAutoTranslate() {
   const translateFiles = (files: RefOrRaw<AttachmentFileModel[]>) =>
     translateEntities<TranslatedAttachmentFile>(files, translateFile)
 
-  const translateBlogEntry = (blogEntry) => translateEntity(blogEntry, ['title', 'content'])
-  const translateBlogEntries = (blogEntries) => translateEntities(blogEntries, translateBlogEntry)
+  const translateBlogEntry = (blogEntry) =>
+    translateEntity<TranslatedBlogEntry>(blogEntry, ['title', 'content'])
+  const translateBlogEntries = (blogEntries) =>
+    translateEntities<TranslatedBlogEntry>(blogEntries, translateBlogEntry)
 
-  const translateGoal = (goal) => translateEntity(goal, ['title', 'description'])
-  const translateGoals = (goals) => translateEntities(goals, translateGoal)
+  const translateGoal = (goal) => translateEntity<TranslatedGoal>(goal, ['title', 'description'])
+  const translateGoals = (goals) => translateEntities<TranslatedGoal>(goals, translateGoal)
 
   const translateLocation = <T = TranslatedLocation>(location) =>
     translateEntity<T>(location, ['title', 'description'])
@@ -170,9 +195,16 @@ export default function useAutoTranslate() {
   const translatePeopleGroupLocations = (Locations) =>
     translateEntities<GeneralLocationPeopleGroup>(Locations, translatePeopleGroupLocation)
 
-  const translateProjectMessage = (message) => translateEntity(message, ['content'])
+  const translateProjectMessage = (message) =>
+    computed(() => {
+      const raw = unref(message)
+      return {
+        ...unref(translateEntity<TranslatedProjectMessage>(message, ['content'])),
+        replies: raw.replies ? unref(translateProjectMessages(raw.replies)) : null,
+      }
+    })
   const translateProjectMessages = (messages) =>
-    translateEntities(messages, translateProjectMessage)
+    translateEntities<TranslatedProjectMessage>(messages, translateProjectMessage)
 
   // --------------------
   // People
@@ -287,9 +319,10 @@ export default function useAutoTranslate() {
 
   // -----------
   // instructions
-  const translateInstruction = (instruction) => translateEntity(instruction, ['title', 'content'])
+  const translateInstruction = (instruction) =>
+    translateEntity<TranslatedInstruction>(instruction, ['title', 'content'])
   const translateInstructions = (instructions) =>
-    translateEntities(instructions, translateInstruction)
+    translateEntities<TranslatedInstruction>(instructions, translateInstruction)
 
   // -----------
   // events
@@ -380,6 +413,9 @@ export default function useAutoTranslate() {
 
     translateProjectLocation,
     translateProjectLocations,
+
+    translatedProjectLinked,
+    translatedProjectLinkeds,
 
     // people
     translateUser,

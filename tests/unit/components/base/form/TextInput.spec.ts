@@ -1,5 +1,5 @@
-import { lpiMount } from '@/../tests/helpers/LpiMount'
-import TextInput from '@/components/base/form/TextInput.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+import { lpiMount } from '~~/tests/helpers/LpiMount'
 
 import { describe, expect, it } from 'vitest'
 

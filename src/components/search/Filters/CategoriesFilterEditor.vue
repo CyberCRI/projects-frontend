@@ -22,8 +22,9 @@
 </template>
 
 <script>
-import CategoryPicker from '@/components/category/CategoryPicker.vue'
-import useProjectCategories from '@/stores/useProjectCategories.ts'
+import CategoryPicker from '~/components/category/CategoryPicker.vue'
+
+import useProjectCategories from '~/stores/useProjectCategories.ts'
 
 export default {
   name: 'CategoriesFilterEditor',

@@ -1,11 +1,11 @@
-import { lpiMountSuspended } from '@/../tests/helpers/LpiMount'
-import CalendarPage from '@/pages/CalendarPage/CalendarPage.vue'
+import CalendarPage from '~/pages/CalendarPage/CalendarPage.vue'
+import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 
-import { describe, expect, it } from 'vitest'
-import { PaginationsFactory } from '../../../factories/paginations.factory'
+import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
+import { EventFactory } from '~~/tests/factories/event.factory'
 import { flushPromises } from '@vue/test-utils'
-import { EventFactory } from '../../../factories/event.factory'
+import { describe, expect, it } from 'vitest'
 
 describe('CalendarPage.vue', () => {
   it('should render component', async () => {
@@ -16,9 +16,7 @@ describe('CalendarPage.vue', () => {
       })
     })
 
-    const wrapper = await lpiMountSuspended(CalendarPage, {
-      route: { name: 'FutureEvents' },
-    })
+    const wrapper = await lpiMountSuspended(CalendarPage)
     await flushPromises()
     expect(wrapper.exists()).toBe(true)
   })

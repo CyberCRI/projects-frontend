@@ -1,15 +1,15 @@
-import NewHomePage from '@/pages/NewHomePage/NewHomePage.vue'
-import { lpiShallowMountSuspended } from '@/../tests/helpers/LpiMount'
+import { lpiShallowMountSuspended } from '~~/tests/helpers/LpiMount'
+import NewHomePage from '~/pages/NewHomePage/NewHomePage.vue'
 import { beforeEach, vi, describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
 
-import { ProjectCategoryOutputFactory } from '@/../tests/factories/project-category.factory'
+import { ProjectCategoryOutputFactory } from '~~/tests/factories/project-category.factory'
 
-import pinia from '@/stores'
-import useUsersStore from '@/stores/useUsers'
-import useProjectCategoriesStore from '@/stores/useProjectCategories'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import { OrganizationOutput } from '@/models/organization.model'
+import useProjectCategoriesStore from '~/stores/useProjectCategories'
+import { OrganizationOutput } from '~/models/organization.model'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useUsersStore from '~/stores/useUsers'
+import pinia from '~/stores'
 
 function connectedStore(usersStore) {
   usersStore.id = 123

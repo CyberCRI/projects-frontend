@@ -1,10 +1,10 @@
-import { createFactory } from 'faker-create-factory'
-import { ProjectFactory, TranslatedProjectFactory } from './project.factory'
 import {
   AnnouncementInput,
   AnnouncementOutput,
   TranslatedAnnouncement,
-} from '@/models/announcement.model'
+} from '~/models/announcement.model'
+import { ProjectFactory, TranslatedProjectFactory } from './project.factory'
+import { createFactory } from 'faker-create-factory'
 import BaseFactory from './base.factory'
 import { shuffle } from 'es-toolkit'
 

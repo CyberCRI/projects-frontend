@@ -1,11 +1,11 @@
-import useOrganizationsStore from '@/stores/useOrganizations'
+import useOrganizationsStore from '~/stores/useOrganizations'
 
 export default defineNuxtPlugin((nuxtApp) => {
   // called right before setting a new locale
   nuxtApp.hook(
-    //  @ts-expect-error i18n:beforeLocaleSwitch not defined
     'i18n:beforeLocaleSwitch',
-    ({ oldLocale, newLocale /*, initialSetup, context */ }) => {
+    //  @ts-expect-error i18n:beforeLocaleSwitch not defined
+    ({ oldLocale, newLocale }) => {
       const organizationStore = useOrganizationsStore()
       const availableLanguages = organizationStore.current?.languages || []
 

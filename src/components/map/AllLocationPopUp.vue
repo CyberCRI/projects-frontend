@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import { getEvent } from '@/api/v2/event.service'
-import { getGroup } from '@/api/v2/group.service'
-import { getNews } from '@/api/v2/news.service'
-import { getProject } from '@/api/v2/projects.service'
-import LocationEventPopUp from '@/components/event/map/LocationEventPopUp.vue'
-import GroupLocationPopUp from '@/components/group/Map/GroupLocationPopUp.vue'
-import LocationPopUp from '@/components/map/LocationPopUp.vue'
-import LocationNewsPopUp from '@/components/news/map/LocationNewsPopUp.vue'
 import ProjectLocationPopUp from '@/components/project/map/ProjectLocationPopUp.vue'
-import { LocationGeneral } from '@/interfaces/maps'
-import { TranslatedEventModel } from '@/models/event.model'
-import { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import { TranslatedNews } from '@/models/news.model'
-import { TranslatedProject } from '@/models/project.model'
-import { eventSkeleton } from '@/skeletons/event.skeletons'
-import { groupSkeleton } from '@/skeletons/group.skeletons'
-import { newsSkeleton } from '@/skeletons/news.skeletons'
+import GroupLocationPopUp from '@/components/group/Map/GroupLocationPopUp.vue'
+import LocationEventPopUp from '@/components/event/map/LocationEventPopUp.vue'
+import LocationNewsPopUp from '@/components/news/map/LocationNewsPopUp.vue'
+import type { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import type { TranslatedEventModel } from '@/models/event.model'
 import { projectSkeleton } from '@/skeletons/project.skeletons'
+import type { TranslatedProject } from '@/models/project.model'
+import LocationPopUp from '@/components/map/LocationPopUp.vue'
+import { groupSkeleton } from '@/skeletons/group.skeletons'
+import { eventSkeleton } from '@/skeletons/event.skeletons'
+import { newsSkeleton } from '@/skeletons/news.skeletons'
+import type { TranslatedNews } from '@/models/news.model'
+import type { LocationGeneral } from '@/interfaces/maps'
+import { getProject } from '@/api/v2/projects.service'
+import { getGroup } from '@/api/v2/group.service'
+import { getEvent } from '@/api/v2/event.service'
+import { getNews } from '@/api/v2/news.service'
 
 const props = defineProps<{
   location: LocationGeneral
@@ -102,7 +102,7 @@ const data = computed(() => {
     case 'event':
       return event.value
     default:
-      return
+      return ''
   }
 })
 

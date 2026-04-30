@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { getAnnouncements } from '@/api/announcements.service'
-import { fullYearDateFormat, nowDate } from '@/functs/date'
-import useOrganizationsStore from '@/stores/useOrganizations'
+import { getAnnouncements } from '~/api/announcements.service'
+
+import useOrganizationsStore from '~/stores/useOrganizations'
+
+import { fullYearDateFormat, nowDate } from '~/functs/date'
 
 const organizationsStore = useOrganizationsStore()
 const { t } = useNuxtI18n()
@@ -17,9 +19,11 @@ const doGetAnnouncements = async () => {
   try {
     isLoading.value = true
     const { results } = await getAnnouncements({
-      organizations: [organization.value.code],
-      ordering: '-updated_at',
-      from_date: fullYearDateFormat(nowDate()),
+      query: {
+        organizations: [organization.value.code],
+        ordering: '-updated_at',
+        from_date: fullYearDateFormat(nowDate()),
+      },
     })
     announcements.value = results
   } catch (err) {
@@ -44,6 +48,11 @@ useLpiHead2({
     <AnnouncementCardListSkeleton v-if="isLoading" />
 
     <AnnouncementCardList v-else :announcements="announcements" :is-more-toggled="true" />
+
+    <EmptyLabel
+      v-if="!isLoading && announcements.length === 0"
+      :label="$t('announcements.empty')"
+    />
   </div>
 </template>
 <style lang="scss" scoped>

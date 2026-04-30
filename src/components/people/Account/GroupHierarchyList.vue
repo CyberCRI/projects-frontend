@@ -32,8 +32,8 @@
 </template>
 
 <script setup lang="ts">
-import IconImage from '@/components/base/media/IconImage.vue'
-import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
+import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
 
 defineOptions({ name: 'GroupHierarchyList' })
 withDefaults(

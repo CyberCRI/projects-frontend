@@ -4,3 +4,5 @@ tabWidth: 2
 semi: false
 singleQuote: true
 htmlWhitespaceSensitivity: 'ignore'
+plugins:
+  - 'prettier-plugin-sort-imports'

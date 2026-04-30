@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { textIsEmpty } from '@/functs/string'
+import { textIsEmpty } from '~/functs/string'
 
 const { onboardingTrap } = useOnboardingStatus()
 const { t } = useNuxtI18n()

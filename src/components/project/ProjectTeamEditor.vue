@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
+import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
 
 withDefaults(
   defineProps<{

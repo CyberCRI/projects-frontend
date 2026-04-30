@@ -1,5 +1,5 @@
-<script setup>
-import useUsersStore from '@/stores/useUsers'
+<script setup lang="ts">
+import useUsersStore from '~/stores/useUsers'
 
 const emit = defineEmits(['show-document', 'delete-document', 'edit-document'])
 

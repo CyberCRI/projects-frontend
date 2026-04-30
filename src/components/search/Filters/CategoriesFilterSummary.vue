@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import FilterValue from '@/components/search/Filters/FilterValue.vue'
+import FilterValue from '~/components/search/Filters/FilterValue.vue'
 
 export default {
   name: 'CategoriesFilterSummary',

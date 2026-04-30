@@ -19,62 +19,37 @@
   </div>
 </template>
 
-<script>
-import HtmlLimiter from '@/components/base/HtmlLimiter.vue'
-import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
-export default {
-  name: 'UserDescriptions',
-  components: {
-    HtmlLimiter,
-    SeeMoreArrow,
-  },
+<script setup lang="ts">
+import SeeMoreArrow from '~/components/base/button/SeeMoreArrow.vue'
+import type { TranslatedUserModel } from '~/models/user.model'
+import HtmlLimiter from '~/components/base/HtmlLimiter.vue'
+import type { StyleValue } from 'vue'
 
-  inject: {
-    selectTab: {
-      from: 'tabsLayoutSelectTab',
-      default: () => {},
-    },
-  },
+const tabsLayoutSelectTab = inject<(number) => void>('tabsLayoutSelectTab')
 
-  props: {
-    user: {
-      type: Object,
-      default: () => {},
-    },
-    isLimited: {
-      type: Boolean,
-      default: false,
-    },
-  },
+const props = withDefaults(
+  defineProps<{
+    user?: TranslatedUserModel
+    isLimited?: boolean
+  }>(),
+  {
+    user: null,
+    isLimited: false,
+  }
+)
+const limiterStyle = ref<StyleValue>()
 
-  data() {
-    return {
-      limiterStyle: {},
-    }
-  },
+const fullDescription = computed(() => {
+  return `<div class="description-content">${props.user?.$t?.description}</div>`
+})
 
-  computed: {
-    fullDescription() {
-      return `
-                <div class="description-content">
-                    ${this.user?.$t?.description}
-                </div>
-            `
-    },
-  },
-
-  methods: {
-    computeLayout() {
-      this.limiterStyle = {}
-    },
-    layoutComputed(event) {
-      this.limiterStyle = { height: event.height + 'px' }
-    },
-    goToProfileBio() {
-      this.selectTab(1)
-    },
-  },
+const computeLayout = () => {
+  limiterStyle.value = {}
 }
+const layoutComputed = (event) => {
+  limiterStyle.value = { height: event.height + 'px' }
+}
+const goToProfileBio = () => tabsLayoutSelectTab(1)
 </script>
 
 <style lang="scss" scoped>

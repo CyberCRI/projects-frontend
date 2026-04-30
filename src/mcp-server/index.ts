@@ -1,13 +1,14 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
-import registerEventTool from './projects/event-tool'
-import registerInstructionTool from './projects/instruction-tool'
-import registerNewsTool from './projects/news-tool'
+
+import registerSorbobotTool, { sorbobotIsEnabled } from './sorbobot/sorbobot-tool'
 import registerOrganizationTool from './projects/organization-tool'
-import registerSdgTool from './projects/sdg-tool'
-import registerPeopleTool from './projects/people-tool'
+import registerInstructionTool from './projects/instruction-tool'
 import registerProjectTool from './projects/project-tool'
-import { default as registerSorbobotTool, sorbobotIsEnabled } from './sorbobot/sorbobot-tool'
 import registerSearchTool from './projects/search-tool'
+import registerPeopleTool from './projects/people-tool'
+import registerEventTool from './projects/event-tool'
+import registerNewsTool from './projects/news-tool'
+import registerSdgTool from './projects/sdg-tool'
 
 // TODO people group member and project
 // TODO org files

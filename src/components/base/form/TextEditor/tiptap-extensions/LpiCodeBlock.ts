@@ -1,9 +1,10 @@
+import type { CodeBlockLowlightOptions } from '@tiptap/extension-code-block-lowlight'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
-import LpiCodeBlockNodeView from './LpiCodeBlockNodeView.vue'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import { mergeAttributes } from '@tiptap/core'
-import { CodeBlockLowlightOptions } from '@tiptap/extension-code-block-lowlight'
 import { PluginKey } from '@tiptap/pm/state'
+
+import LpiCodeBlockNodeView from './LpiCodeBlockNodeView.vue'
 
 export const DEFAULT_THEME = 'light'
 export const DEFAULT_TAB = '2'

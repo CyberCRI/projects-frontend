@@ -1,6 +1,7 @@
 import { Extension } from '@tiptap/core'
 
-import { LpiBubbleMenuPlugin, LpiBubbleMenuPluginProps } from './lpi-bubble-menu-plugin'
+import type { LpiBubbleMenuPluginProps } from './lpi-bubble-menu-plugin'
+import { LpiBubbleMenuPlugin } from './lpi-bubble-menu-plugin'
 
 export type LpiBubbleMenuOptions = Omit<LpiBubbleMenuPluginProps, 'editor' | 'element'> & {
   element: HTMLElement | null

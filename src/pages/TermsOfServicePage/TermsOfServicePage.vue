@@ -1,10 +1,12 @@
-<script setup>
-import useOrganizations from '@/stores/useOrganizations'
-const { t } = useNuxtI18n()
+<script setup lang="ts">
+import useOrganizations from '~/stores/useOrganizations'
+import { formatDate } from '~/functs/date'
+
+const { t, locale } = useNuxtI18n()
 const organizationsStore = useOrganizations()
 const termsDateStr = computed(() =>
   organizationsStore.termsUpdatedAt
-    ? new Date(organizationsStore.termsUpdatedAt).toLocaleString()
+    ? formatDate(organizationsStore.termsUpdatedAt, locale.value)
     : ''
 )
 
@@ -12,6 +14,7 @@ useLpiHead2({
   title: computed(() => t('tos.title')),
 })
 </script>
+
 <template>
   <div class="page-section-narrow legal-page terms-of-service page-top">
     <h1 class="page-title">{{ $t('tos.title') }}</h1>
@@ -24,6 +27,7 @@ useLpiHead2({
     </p>
   </div>
 </template>
+
 <style scoped lang="scss">
 .terms-version {
   margin-top: 2rem;

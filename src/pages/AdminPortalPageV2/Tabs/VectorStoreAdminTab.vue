@@ -1,6 +1,6 @@
-<script setup>
-import useUsersStore from '@/stores/useUsers'
-import useToasterStore from '@/stores/useToaster'
+<script setup lang="ts">
+import useToasterStore from '~/stores/useToaster'
+import useUsersStore from '~/stores/useUsers'
 
 const toaster = useToasterStore()
 const usersStore = useUsersStore()

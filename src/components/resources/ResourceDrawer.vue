@@ -89,18 +89,19 @@
 </template>
 
 <script>
-import utils from '@/functs/functions.ts'
-
-import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import TextInput from '@/components/base/form/TextInput.vue'
-import ImageInput from '@/components/base/form/ImageInput.vue'
-import LpiButton from '@/components/base/button/LpiButton.vue'
-import useVuelidate from '@vuelidate/core'
 import { helpers, required, url } from '@vuelidate/validators'
-import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import useVuelidate from '@vuelidate/core'
 
-import analytics from '@/analytics'
-import useToasterStore from '@/stores/useToaster.ts'
+import FieldErrors from '~/components/base/form/FieldErrors.vue'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import ImageInput from '~/components/base/form/ImageInput.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+
+import useToasterStore from '~/stores/useToaster.ts'
+
+import utils from '~/functs/functions.ts'
+import analytics from '~/analytics'
 
 export default {
   name: 'ResourceDrawer',

@@ -1,5 +1,5 @@
-import { lpiShallowMount } from '@/../tests/helpers/LpiMount'
-import LpiLogo from '@/components/app/LpiLogo.vue'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import LpiLogo from '~/components/app/LpiLogo.vue'
 import { describe, expect, it } from 'vitest'
 
 describe('LpiFooter', () => {
