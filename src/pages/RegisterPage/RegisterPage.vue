@@ -1,18 +1,15 @@
 <script setup lang="ts">
+import { imageSizesFormDataPost } from '@/functs/imageSizesUtils'
 import { email, helpers, required } from '@vuelidate/validators'
+import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import { postUserWithInvitation } from '@/api/people.service'
+import { getPatatoidFile } from '@/composables/usePatatoids'
+import { getInvitation } from '@/api/invitations.service'
+import { usePublicURL } from '@/composables/usePublic'
+import useToasterStore from '@/stores/useToaster'
 import useVuelidate from '@vuelidate/core'
-
-import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
-import { postUserWithInvitation } from '~/api/people.service'
-import { getInvitation } from '~/api/invitations.service'
-
-import useOrganizationsStore from '~/stores/useOrganizations'
-import useToasterStore from '~/stores/useToaster'
-
-import { getPatatoidFile } from '~/composables/usePatatoids'
-import { usePublicURL } from '~/composables/usePublic'
-
-import { imageSizesFormDataPost } from '~/functs/imageSizesUtils'
+import { I18nT } from 'vue-i18n'
 
 const props = defineProps<{
   token: string
@@ -21,6 +18,7 @@ const props = defineProps<{
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
 const { t, locale } = useNuxtI18n()
+const organizationCode = useOrganizationCode()
 
 const form = ref({
   email: '',
@@ -39,7 +37,7 @@ const isLinkValid = ref(false)
 const contactEmail = ref('')
 const verifyingLink = ref(true)
 
-const rules = {
+const rules = computed(() => ({
   acceptedTOS: {
     checked: helpers.withMessage(
       () => t('register.tos-is-required'),
@@ -59,22 +57,18 @@ const rules = {
   password: {
     required: helpers.withMessage(() => t('register.password.is-required'), required),
   },
-}
+}))
 
-const v$ = useVuelidate(rules, form)
+const v$ = useVuelidate(rules, form, {
+  // ContactDrawer have form/vuelidate, so no scope all child
+  $scope: false,
+})
 
 const backgroundImageUrl = computed(() => usePublicURL('/page404/page-404.png'))
 
-const validateIfInvalid = () => {
-  // force form error display even if save button is disabled
-  if (v$.value.form.$invalid) {
-    v$.value.form.$validate()
-  }
-}
-
 const validateToken = async () => {
   try {
-    const apiToken = await getInvitation(organizationsStore.current.code, props.token)
+    const apiToken = await getInvitation(organizationCode, props.token)
     const expirationDate = new Date(apiToken.expire_at)
     if (expirationDate > new Date()) {
       return true
@@ -85,8 +79,8 @@ const validateToken = async () => {
   return false
 }
 const register = async () => {
-  v$.value.form.$validate()
-  if (v$.value.form.$error) {
+  const isValid = await v$.value.$validate()
+  if (!isValid) {
     return
   }
   asyncing.value = true
@@ -137,6 +131,7 @@ useLpiHead2({
   title: computed(() => t('register.title')),
 })
 </script>
+
 <template>
   <div v-if="verifyingLink" class="loader">
     <LoaderSimple />
@@ -164,9 +159,9 @@ useLpiHead2({
       <SignUpWrapper :sign-up-title="confirm ? $t('register.title-confirm') : $t('register.title')">
         <transition name="fade" mode="out-in">
           <div v-if="confirm" class="confirm-message">
-            <i18n-t keypath="register.confirmation" tag="p">
+            <I18nT keypath="register.confirmation" tag="p">
               <strong>{{ form.email }}</strong>
-            </i18n-t>
+            </I18nT>
           </div>
           <div v-else class="form">
             <div class="form-group">
@@ -175,9 +170,9 @@ useLpiHead2({
                 :label="$t('register.given_name.label')"
                 :placeholder="$t('register.given_name.placeholder')"
                 data-test="first-name"
-                @blur="v$.form.given_name.$validate"
+                @blur="v$.given_name.$validate"
               />
-              <FieldErrors :errors="v$.form.given_name.$errors" />
+              <FieldErrors :errors="v$.given_name.$errors" />
             </div>
             <div class="form-group">
               <TextInput
@@ -185,9 +180,9 @@ useLpiHead2({
                 :label="$t('register.family_name.label')"
                 :placeholder="$t('register.family_name.placeholder')"
                 data-test="last-name"
-                @blur="v$.form.family_name.$validate"
+                @blur="v$.family_name.$validate"
               />
-              <FieldErrors :errors="v$.form.family_name.$errors" />
+              <FieldErrors :errors="v$.family_name.$errors" />
             </div>
             <div class="form-group">
               <TextInput
@@ -196,9 +191,9 @@ useLpiHead2({
                 input-type="email"
                 :placeholder="$t('register.email.placeholder')"
                 data-test="email"
-                @blur="v$.form.email.$validate"
+                @blur="v$.email.$validate"
               />
-              <FieldErrors :errors="v$.form.email.$errors" />
+              <FieldErrors :errors="v$.email.$errors" />
             </div>
 
             <div class="form-group">
@@ -208,14 +203,14 @@ useLpiHead2({
                 :label="$t('register.password.label')"
                 :placeholder="$t('register.password.placeholder')"
                 data-test="password"
-                @blur="v$.form.password.$validate"
+                @blur="v$.password.$validate"
               />
-              <FieldErrors :errors="v$.form.password.$errors" />
+              <FieldErrors :errors="v$.password.$errors" />
             </div>
             <div class="form-group">
               <div class="tos-wrapper">
                 <LpiCheckbox v-model="form.acceptedTOS" label="" data-test="accepted-tos" />
-                <i18n-t keypath="register.tos" tag="p" class="tos">
+                <I18nT keypath="register.tos" tag="p" class="tos">
                   <template #term>
                     <NuxtLink to="/terms-of-service" class="link" target="_blank">
                       {{ $t('register.term') }}
@@ -227,14 +222,14 @@ useLpiHead2({
                       {{ $t('register.privacy') }}
                     </NuxtLink>
                   </template>
-                </i18n-t>
+                </I18nT>
               </div>
-              <FieldErrors :errors="v$.form.acceptedTOS.$errors" />
+              <FieldErrors :errors="v$.acceptedTOS.$errors" />
             </div>
             <div class="action">
-              <div @click="validateIfInvalid">
+              <div>
                 <LpiButton
-                  :disabled="v$.form.$invalid || asyncing"
+                  :disabled="v$.$invalid || asyncing"
                   :label="$t('common.confirm')"
                   :btn-icon="asyncing ? 'LoaderSimple' : null"
                   class="register-btn"

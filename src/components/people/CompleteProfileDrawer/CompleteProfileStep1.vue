@@ -129,7 +129,7 @@
       <p class="section-notice">
         <span>{{ $t('complete-profile.bio.notice') }}</span>
         &nbsp;
-        <i18n-t
+        <I18nT
           v-if="hasBioExemple"
           tag="span"
           keypath="complete-profile.bio.notice-exemples"
@@ -144,7 +144,7 @@
           <a class="link bio-exemple-link" href="#" @click="exempleToShow = studentSlugOrId">
             {{ $t('complete-profile.bio.exemples.student') }}
           </a>
-        </i18n-t>
+        </I18nT>
       </p>
       <div>
         <div>
@@ -172,6 +172,7 @@
     </BaseDrawer>
   </template>
 </template>
+
 <script>
 import { helpers, required } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
@@ -183,13 +184,29 @@ import useUsersStore from '~/stores/useUsers.ts'
 
 import { usePatatoids } from '~/composables/usePatatoids'
 
+import ProfileEditBlock from '@/components/people/CompleteProfileDrawer/ProfileEditBlock.vue'
 import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils.ts'
+import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
+import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
+import UserProfileV2 from '@/components/people/UserProfileV2.vue'
 import { SDGS, VALID_NAME_REGEX } from '~/functs/constants.ts'
+import IconImage from '@/components/base/media/IconImage.vue'
+import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import { useRuntimeConfig } from '#imports'
-import { isEqual } from 'es-toolkit'
+import { I18nT } from 'vue-i18n'
 
 export default {
   name: 'CompleteProfileStep1',
+
+  components: {
+    I18nT,
+    IconImage,
+    ProfileEditBlock,
+    TipTapEditor,
+    BaseDrawer,
+    UserProfileV2,
+    LoaderSimple,
+  },
 
   emits: ['saving', 'loading', 'invalid'],
 

@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { email, helpers, required } from '@vuelidate/validators'
+import { postAccessRequest } from '@/api/organizations.service'
+import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
+import useOrganizationsStore from '@/stores/useOrganizations'
+import useToasterStore from '@/stores/useToaster'
 import useValidate from '@vuelidate/core'
-
-import { postAccessRequest } from '~/api/organizations.service'
-import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
-
-import useOrganizationsStore from '~/stores/useOrganizations'
-import useToasterStore from '~/stores/useToaster'
+import { I18nT } from 'vue-i18n'
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
@@ -37,9 +36,10 @@ const rules = computed(() => ({
   },
 }))
 
-const v$ = useValidate(rules, form)
-
-const formIsInvalid = computed(() => v$.value.$invalid)
+const v$ = useValidate(rules, form, {
+  // ContactDrawer have form/vuelidate, so no scope all child
+  $scope: false,
+})
 
 const asyncing = ref(false)
 const confirm = ref(false)
@@ -101,9 +101,9 @@ useLpiHead2({
   >
     <transition name="fade" mode="out-in">
       <div v-if="confirm" class="confirm-message">
-        <i18n-t keypath="request-access.confirmation" tag="p">
+        <I18nT keypath="request-access.confirmation" tag="p">
           <strong>{{ form.email }}</strong>
-        </i18n-t>
+        </I18nT>
       </div>
       <div v-else class="form">
         <p class="notice">
@@ -171,7 +171,7 @@ useLpiHead2({
             @click="cancel"
           />
           <LpiButton
-            :disabled="formIsInvalid || asyncing"
+            :disabled="v$.$invalid || asyncing"
             :label="$t('common.confirm')"
             :btn-icon="asyncing ? 'LoaderSimple' : null"
             class="register-btn"

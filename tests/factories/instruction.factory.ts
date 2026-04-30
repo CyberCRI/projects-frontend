@@ -11,4 +11,5 @@ export const InstructionFactory = createFactory<InstructionModel>((faker) => ({
   id: faker.datatype.number(),
   has_to_be_notified: faker.datatype.boolean(),
   people_groups: peopleGroupFactory.generateMany(10),
+  visible_by_all: faker.datatype.boolean(),
 }))

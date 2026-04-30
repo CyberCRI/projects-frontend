@@ -130,7 +130,7 @@ export interface InvitationModel {
   organization: string
   description: string
   ownner: InvitationUserModel
-  expire_at: Date
+  expire_at: string
 }
 
 export interface InvitationModelInput {

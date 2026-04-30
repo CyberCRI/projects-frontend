@@ -1,7 +1,7 @@
-import type { OrganizationModel } from '~/models/organization.model'
-import type { Mentoring } from '~/models/mentoring.model'
-
-import useAPI from '~/composables/useAPI'
+import type { OrganizationModel } from '@/models/organization.model'
+import type { Mentoring } from '@/models/mentoring.model'
+import type { SkillModel } from '@/models/skill.model'
+import useAPI from '@/composables/useAPI'
 
 // fetch mentorshup demand and offer for currentr user
 export async function getUserMentorship(organizationCode: OrganizationModel['code'], config = {}) {
@@ -24,7 +24,11 @@ export async function getMentorshipDetails(
 }
 
 // offer mentroship fro a skill
-export async function offerMentorship(organizationCode: OrganizationModel['code'], skill, payload) {
+export async function offerMentorship(
+  organizationCode: OrganizationModel['code'],
+  skill: SkillModel,
+  payload
+) {
   return await useAPI(`organization/${organizationCode}/mentoring/contact-mentoree/${skill.id}/`, {
     body: payload,
     method: 'POST',
@@ -32,7 +36,11 @@ export async function offerMentorship(organizationCode: OrganizationModel['code'
 }
 
 // ask mentorship for a skill
-export async function askMentorship(organizationCode: OrganizationModel['code'], skill, payload) {
+export async function askMentorship(
+  organizationCode: OrganizationModel['code'],
+  skill: SkillModel,
+  payload
+) {
   return await useAPI(`organization/${organizationCode}/mentoring/contact-mentor/${skill.id}/`, {
     body: payload,
     method: 'POST',
@@ -41,11 +49,11 @@ export async function askMentorship(organizationCode: OrganizationModel['code'],
 // respond to mentroship offer
 export async function respondMentorship(
   organizationCode: OrganizationModel['code'],
-  mentorshipId,
+  mentorshipId: Mentoring['id'],
   payload
 ) {
   return await useAPI(`organization/${organizationCode}/mentoring/${mentorshipId}/respond/`, {
     body: payload,
     method: 'POST',
-  }) // .data
+  })
 }

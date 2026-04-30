@@ -1,17 +1,33 @@
 import { createFactory } from 'faker-create-factory'
 
 import { TemplateCreateInput, TemplateModel } from '~/models/template.model'
+import { OrganizationFactory } from './organization.factory'
 import { ImageFactory } from './image.factory'
 import BaseFactory from './base.factory'
 
 export const TemplateFactory = createFactory<TemplateModel>((faker) => ({
   ...BaseFactory.generate(),
   id: faker.datatype.number(),
-  project_title: faker.datatype.string(),
-  goal_title: faker.datatype.string(),
-  project_description: faker.datatype.string(),
-  blogentry_title: faker.datatype.string(),
+  name: faker.lorem.paragraph(),
+  description: faker.lorem.paragraph(),
+
+  language: 'en',
+  categories: [],
+  organization: OrganizationFactory.generate(),
+
   images: ImageFactory.generateMany(2),
+
+  project_title: faker.lorem.paragraph(),
+  project_description: faker.lorem.paragraph(),
+  project_purpose: faker.lorem.paragraph(),
+  project_tags: [],
+  blogentry_title: faker.lorem.paragraph(),
+  blogentry_content: faker.lorem.paragraph(),
+  goal_title: faker.lorem.paragraph(),
+  goal_description: faker.lorem.paragraph(),
+  review_title: faker.lorem.paragraph(),
+  review_description: faker.lorem.paragraph(),
+  comment_content: faker.lorem.paragraph(),
 }))
 
 export const TemplateInputFactory = createFactory<TemplateCreateInput>((faker) => ({

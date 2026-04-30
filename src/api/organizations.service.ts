@@ -24,21 +24,11 @@ export async function getOrganizations(config = {}) {
   return await useAPI<PaginationResult<OrganizationModel>>(`organization/`, config)
 }
 
-export async function postOrganisationBanner({
-  code,
-  body,
-}: {
-  code: string
-  body: ImageOrganizationInput
-}) {
-  return await useAPI(`organization/${code}/banner/`, { body, method: 'POST' })
+export async function postOrganisationBanner({ code, body }: { code: string; body: FormData }) {
+  return await useAPI(`organization/${code}/banner/`, { body, method: 'POST' }) //.data.value
 }
 
-export async function patchOrganisationBanner(
-  code: string,
-  banner_id: number,
-  body: ImageOrganizationInput
-) {
+export async function patchOrganisationBanner(code: string, banner_id: number, body: FormData) {
   return await useAPI(`organization/${code}/banner/${banner_id}/`, { body, method: 'PATCH' })
 }
 

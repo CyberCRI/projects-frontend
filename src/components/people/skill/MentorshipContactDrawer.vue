@@ -19,10 +19,10 @@
         class="text-input"
         data-test="ask-mentorship-title"
         :placeholder="$t(`profile.edit.skills.mentorship.contact.fields.title.placeholder-${mode}`)"
-        @blur="v$.form.title.$validate"
+        @blur="v$.title.$validate"
       />
 
-      <FieldErrors :errors="v$.form.title.$errors" />
+      <FieldErrors :errors="v$.title.$errors" />
     </div>
 
     <div class="form-input">
@@ -36,9 +36,9 @@
         class="text-input"
         data-test="ask-mentorship-text"
         :placeholder="$t('profile.edit.skills.mentorship.contact.fields.text.placeholder')"
-        @blur="v$.form.content.$validate"
+        @blur="v$.content.$validate"
       />
-      <FieldErrors :errors="v$.form.content.$errors" />
+      <FieldErrors :errors="v$.content.$errors" />
     </div>
 
     <div class="form-input">
@@ -51,150 +51,113 @@
         class="text-input"
         data-test="ask-mentorship-email"
         :placeholder="$t('profile.edit.skills.mentorship.contact.fields.email.placeholder')"
-        @blur="v$.form.reply_to.$validate"
+        @blur="v$.reply_to.$validate"
       />
-      <FieldErrors :errors="v$.form.reply_to.$errors" />
+      <FieldErrors :errors="v$.reply_to.$errors" />
     </div>
   </BaseDrawer>
 </template>
-<script>
+
+<script setup lang="ts">
+import { askMentorship, offerMentorship } from '@/api/mentorship.service'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { email, helpers, required } from '@vuelidate/validators'
+import TextInput from '@/components/base/form/TextInput.vue'
+import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import type { SkillModel } from '@/models/skill.model'
+import useToasterStore from '@/stores/useToaster'
+import { defaultForm } from '@/form/mentorship'
+import useUsersStore from '@/stores/useUsers'
 import useValidate from '@vuelidate/core'
 
-import { askMentorship, offerMentorship } from '~/api/mentorship.service.ts'
-
-import FieldErrors from '~/components/base/form/FieldErrors.vue'
-import TextInput from '~/components/base/form/TextInput.vue'
-import BaseDrawer from '~/components/base/BaseDrawer.vue'
-
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
-import useToasterStore from '~/stores/useToaster.ts'
-import useUsersStore from '~/stores/useUsers.ts'
-
-export function defaultForm() {
-  return {
-    title: '',
-    content: '',
-    reply_to: '',
+const props = withDefaults(
+  defineProps<{
+    skill: SkillModel
+    isOpen?: boolean
+    asyncing?: boolean
+    isOffer?: boolean
+  }>(),
+  {
+    isOpen: false,
+    asyncing: false,
+    isOffer: false,
   }
-}
+)
 
-export default {
-  name: 'MentorshipContactDrawer',
+const emit = defineEmits<{
+  close: []
+  'mentorship-send': []
+}>()
+const { t } = useNuxtI18n()
+const toaster = useToasterStore()
+const organizationCode = useOrganizationCode()
+const usersStore = useUsersStore()
 
-  components: { BaseDrawer, TextInput, FieldErrors },
+const form = ref(defaultForm())
 
-  props: {
-    skill: {
-      type: Object,
-      required: true,
-    },
-    isOpen: {
-      type: Boolean,
-      default: false,
-    },
-
-    asyncing: {
-      type: Boolean,
-      default: false,
-    },
-    isOffer: {
-      type: Boolean,
-      default: false,
-    },
+const rules = computed(() => ({
+  title: {
+    required: helpers.withMessage(
+      t('profile.edit.skills.mentorship.contact.fields.title.required'),
+      required
+    ),
   },
+  content: {
+    required: helpers.withMessage(
+      t('profile.edit.skills.mentorship.contact.fields.title.required'),
+      required
+    ),
+  },
+  reply_to: {
+    required: helpers.withMessage(
+      t('profile.edit.skills.mentorship.contact.fields.title.required'),
+      required
+    ),
+    email: helpers.withMessage(
+      t('profile.edit.skills.mentorship.contact.fields.email.invalid'),
+      email
+    ),
+  },
+}))
 
-  emits: ['close', 'mentorship-send'],
-  setup() {
-    const toaster = useToasterStore()
-    const organizationsStore = useOrganizationsStore()
-    const usersStore = useUsersStore()
+const v$ = useValidate(rules, form)
+const isLoading = ref(false)
 
-    return {
-      toaster,
-      organizationsStore,
-      usersStore,
+const mode = computed(() => (props.isOffer ? 'offer' : 'ask'))
+
+watch(
+  () => props.isOpen,
+  () => {
+    form.value = defaultForm()
+    // this the login mail
+    form.value.reply_to = usersStore.userFromApi?.email || ''
+    v$.value.$reset()
+  }
+)
+
+const confirm = async () => {
+  const isValid = await v$.value.$validate()
+  if (!isValid) {
+    return
+  }
+
+  isLoading.value = true
+  try {
+    if (props.isOffer) {
+      await offerMentorship(organizationCode, props.skill, form.value)
+    } else {
+      await askMentorship(organizationCode, props.skill, form.value)
     }
-  },
-  data() {
-    return {
-      v$: useValidate(),
-      form: defaultForm(),
-      isLoading: false,
-    }
-  },
-  validations() {
-    return {
-      form: {
-        title: {
-          required: helpers.withMessage(
-            this.$t('profile.edit.skills.mentorship.contact.fields.title.required'),
-            required
-          ),
-        },
-        content: {
-          required: helpers.withMessage(
-            this.$t('profile.edit.skills.mentorship.contact.fields.title.required'),
-            required
-          ),
-        },
-        reply_to: {
-          required: helpers.withMessage(
-            this.$t('profile.edit.skills.mentorship.contact.fields.title.required'),
-            required
-          ),
-          email: helpers.withMessage(
-            this.$t('profile.edit.skills.mentorship.contact.fields.email.invalid'),
-            email
-          ),
-        },
-      },
-    }
-  },
-
-  computed: {
-    mode() {
-      return this.isOffer ? 'offer' : 'ask'
-    },
-  },
-
-  watch: {
-    isOpen() {
-      this.v$.$reset()
-      this.form = defaultForm()
-      // this.form.reply_to = this.usersStore.user?.email || '' // thhis is keycloak contact mail
-      this.form.reply_to = this.usersStore.userFromApi?.email || '' // this the login mail
-    },
-  },
-
-  methods: {
-    async confirm() {
-      const isValid = await this.v$.$validate()
-
-      if (isValid) {
-        this.isLoading = true
-        try {
-          const orgCode = this.organizationsStore.current?.code
-          if (this.isOffer) {
-            await offerMentorship(orgCode, this.skill, this.form)
-          } else {
-            await askMentorship(orgCode, this.skill, this.form)
-          }
-          this.$emit('mentorship-send')
-          await this.$nextTick()
-          this.toaster.pushSuccess(this.$t('profile.edit.skills.mentorship.contact.success'))
-        } catch (error) {
-          this.toaster.pushError(
-            `${this.$t('profile.edit.skills.mentorship.contact.error')} (${error})`
-          )
-          console.error(error)
-        } finally {
-          this.isLoading = false
-          this.$emit('close')
-        }
-      }
-    },
-  },
+    emit('mentorship-send')
+    await nextTick()
+    toaster.pushSuccess(t('profile.edit.skills.mentorship.contact.success'))
+  } catch (error) {
+    toaster.pushError(`${t('profile.edit.skills.mentorship.contact.error')} (${error})`)
+    console.error(error)
+  } finally {
+    isLoading.value = false
+    emit('close')
+  }
 }
 </script>
 
