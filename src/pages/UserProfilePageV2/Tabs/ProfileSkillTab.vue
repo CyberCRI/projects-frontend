@@ -56,8 +56,7 @@ const { refresh, status, data } = getUserMentorship(organizationCode, {
 
 watch(
   () => usersStore.isConnected,
-  (connected) => connected && refresh(),
-  { immediate: true }
+  () => refresh()
 )
 
 const userMentorship = computed(() => {

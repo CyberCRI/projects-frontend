@@ -41,7 +41,11 @@
 
       <TipTapOutput class="description-content" :content="news.$t.content" />
 
-      <GeneralMap v-if="news.location" class="map" :locations="[news.location]" />
+      <MapRecap v-if="news.location" class="map" :locations="[news.location]">
+        <template #tooltip="{ location }">
+          <LocationNewsTooltip :location="location" :news="news" />
+        </template>
+      </MapRecap>
     </div>
 
     <EditNewsDrawer
@@ -64,19 +68,25 @@
 </template>
 
 <script setup lang="ts">
-import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
-import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
-import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import type { DEFAULT_NEWS_PATATOID } from '@/composables/usePatatoids'
-import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
-import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
-import { newsSkeleton } from '@/skeletons/news.skeletons'
-import NewsItem from '@/components/news/NewsItem.vue'
-import type { NewsModel } from '@/models/news.model'
-import useToasterStore from '@/stores/useToaster'
-import { getNews } from '@/api/v2/news.service'
-import { deleteNews } from '@/api/news.service'
-import { html2Text } from '@/functs/string'
+import type { NewsModel } from '~/models/news.model'
+
+import { getNews } from '~/api/v2/news.service'
+import { deleteNews } from '~/api/news.service'
+
+import EditNewsDrawer from '~/components/news/EditNewsDrawer/EditNewsDrawer.vue'
+import LocationNewsTooltip from '~/components/news/map/LocationNewsTooltip.vue'
+import TipTapOutput from '~/components/base/form/TextEditor/TipTapOutput.vue'
+import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
+import BreadCrumbs from '~/components/base/navigation/BreadCrumbs.vue'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import NewsItem from '~/components/news/NewsItem.vue'
+
+import useToasterStore from '~/stores/useToaster'
+
+import { DEFAULT_NEWS_PATATOID } from '~/composables/usePatatoids'
+
+import { newsSkeleton } from '~/skeletons/news.skeletons'
+import { html2Text } from '~/functs/string'
 
 const props = defineProps<{
   slugOrId: string | number

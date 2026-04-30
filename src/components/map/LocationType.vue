@@ -52,7 +52,26 @@ const pointerIcon = computed(() => IconMapLocationType(props.locationType))
     height: 16px;
     padding: 0.3rem;
     border-radius: 100%;
-    background-color: var(--location-color);
+
+    &.impact {
+      background-color: $location-impact;
+    }
+
+    &.team {
+      background-color: $location-team;
+    }
+
+    &.address {
+      background-color: $location-address;
+    }
+
+    &.news {
+      background-color: $location-news;
+    }
+
+    &.event {
+      background-color: $location-event;
+    }
   }
 
   .location-title {
