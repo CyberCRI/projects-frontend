@@ -1,35 +1,31 @@
 <script setup lang="ts">
 const { t } = useNuxtI18n()
-const tabs = computed(() =>
-  import.meta.client
-    ? [
-        {
-          key: 'stats-all',
-          label: t('home.all-projects'),
-          component: defineAsyncComponent(() => import('./Tabs/StatsByTab.vue')),
-          props: { filter: 'all' },
-        },
-        {
-          key: 'stats-public',
-          label: t('group.visibility-public'),
-          component: defineAsyncComponent(() => import('./Tabs/StatsByTab.vue')),
-          props: { filter: 'public' },
-        },
-        {
-          key: 'stats-private',
-          label: t('group.visibility-private'),
-          component: defineAsyncComponent(() => import('./Tabs/StatsByTab.vue')),
-          props: { filter: 'private' },
-        },
-        {
-          key: 'stats-community',
-          label: t('group.visibility-org'),
-          component: defineAsyncComponent(() => import('./Tabs/StatsByTab.vue')),
-          props: { filter: 'org' },
-        },
-      ]
-    : []
-)
+const tabs = computed(() => [
+  {
+    key: 'stats-all',
+    label: t('home.all-projects'),
+    component: defineAsyncComponent(() => import('./Tabs/StatsByTab.vue')),
+    props: { filter: 'all' },
+  },
+  {
+    key: 'stats-public',
+    label: t('group.visibility-public'),
+    component: defineAsyncComponent(() => import('./Tabs/StatsByTab.vue')),
+    props: { filter: 'public' },
+  },
+  {
+    key: 'stats-private',
+    label: t('group.visibility-private'),
+    component: defineAsyncComponent(() => import('./Tabs/StatsByTab.vue')),
+    props: { filter: 'private' },
+  },
+  {
+    key: 'stats-community',
+    label: t('group.visibility-org'),
+    component: defineAsyncComponent(() => import('./Tabs/StatsByTab.vue')),
+    props: { filter: 'org' },
+  },
+])
 
 useLpiHead2({
   title: computed(() => t('stats.page-title')),

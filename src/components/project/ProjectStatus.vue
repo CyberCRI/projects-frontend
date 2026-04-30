@@ -1,5 +1,5 @@
 <template>
-  <BadgeItem :icon-name="icon" :label="goalStatus" />
+  <BadgeItem :icon-name="icon" :label="goalStatus" :title="goalStatus" />
 </template>
 
 <script setup lang="ts">

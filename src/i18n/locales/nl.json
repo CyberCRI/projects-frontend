@@ -283,7 +283,10 @@
         "add": "Een sjabloon toevoegen",
         "delete-templates": "Sjablonen verwijderen",
         "delete-templates-description": "Weet u zeker dat u '{templateName}' sjabloon wilt verwijderen?"
-      }
+      },
+      "events": "Laatste gebeurtenissen (bijgewerkt)",
+      "instructions": "Laatste instructies (updates)",
+      "news": "Recent nieuws (updates)"
     },
     "form": {
       "admin-info": {
@@ -2515,7 +2518,8 @@
     "drawer": {
       "title": "Nieuws bewerken"
     },
-    "view": "Zie nieuws"
+    "view": "Zie nieuws",
+    "empty": "Nog geen nieuws."
   },
   "instructions": {
     "create": {
@@ -2572,7 +2576,8 @@
     },
     "drawer": {
       "title": "Gebruiksaanwijzing bewerken"
-    }
+    },
+    "empty": "Nog geen instructie."
   },
   "chat": {
     "drawer": {
@@ -3148,5 +3153,12 @@
     "file-field": "Bestand",
     "document-added": "Document toegevoegd.",
     "document-updated": "Document bijgewerkt."
+  },
+  "announcements": {
+    "empty": "Nog geen aankondiging."
+  },
+  "follow": {
+    "follow": "Volgen",
+    "unfollow": "Onvolgbaar"
   }
 }

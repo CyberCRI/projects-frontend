@@ -283,7 +283,10 @@
         "add": "Malli lisamine",
         "delete-templates": "Mallide kustutamine",
         "delete-templates-description": "Kas tõesti kustutada mall '{templateName}'?"
-      }
+      },
+      "events": "Viimased sündmused (ajakohastatud)",
+      "instructions": "Viimased juhised (ajakohastatud)",
+      "news": "Viimased uudised (ajakohastatud)"
     },
     "form": {
       "admin-info": {
@@ -2515,7 +2518,8 @@
     "drawer": {
       "title": "Muuda uudiseid"
     },
-    "view": "Vaata uudiseid"
+    "view": "Vaata uudiseid",
+    "empty": "Uudiseid veel pole."
   },
   "instructions": {
     "create": {
@@ -2572,7 +2576,8 @@
     },
     "drawer": {
       "title": "Juhise muutmine"
-    }
+    },
+    "empty": "Pole veel juhiseid."
   },
   "chat": {
     "drawer": {
@@ -3148,5 +3153,12 @@
     "file-field": "Fail",
     "document-added": "Dokument lisatud.",
     "document-updated": "Dokument uuendatud."
+  },
+  "announcements": {
+    "empty": "Pole veel teadaannet."
+  },
+  "follow": {
+    "follow": "Järgne",
+    "unfollow": "Unfollow"
   }
 }

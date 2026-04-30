@@ -2619,7 +2619,8 @@
     "drawer": {
       "title": "Éditer une actualité"
     },
-    "view": "Voir la nouvelle"
+    "view": "Voir la nouvelle",
+    "empty": "Pas encore de nouvelles."
   },
   "instructions": {
     "create": {
@@ -2676,7 +2677,8 @@
     },
     "drawer": {
       "title": "Éditer une instruction"
-    }
+    },
+    "empty": "Pas encore d'instruction."
   },
   "chat": {
     "drawer": {
@@ -3151,5 +3153,12 @@
     "file-field": "Fichier",
     "document-added": "Document ajouté.",
     "document-updated": "Document modifié."
+  },
+  "announcements": {
+    "empty": "Pas encore d'annonce."
+  },
+  "follow": {
+    "follow": "Suivre",
+    "unfollow": "Ne pas suivre"
   }
 }

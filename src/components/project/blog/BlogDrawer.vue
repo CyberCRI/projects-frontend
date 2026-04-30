@@ -64,7 +64,6 @@
         v-model="editorBlogEntry"
         :room="room"
         :provider-params="providerParams"
-        class="input-field content-editor"
         mode="full"
         save-icon-visible
         :save-image-callback="saveBlogImage"
@@ -102,6 +101,7 @@ import useOrganizationsStore from '~/stores/useOrganizations.ts'
 import useToasterStore from '~/stores/useToaster.ts'
 import useUsersStore from '~/stores/useUsers.ts'
 
+import { NULL_CONTENT } from '~/functs/constants'
 import analytics from '~/analytics'
 
 export default {
@@ -232,7 +232,7 @@ export default {
 
   methods: {
     getNewBlogIniatialContent() {
-      return this.project?.template?.$t?.blogentry_content || '<p></p>'
+      return this.project?.template?.$t?.blogentry_content || NULL_CONTENT
     },
     getNewBlogIniatialTitle() {
       return this.project?.template?.$t?.blogentry_title || ''

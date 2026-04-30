@@ -72,7 +72,7 @@
                 secondary
                 btn-icon="EmailOutline"
                 :label="t('profile.offer-mentorship')"
-                @click="offerMentorship(needLogin)"
+                @click="offerMentorship()"
               />
             </template>
           </NeedLoginToolTip>
@@ -95,7 +95,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import MentorshipContactDrawer from '~/components/people/skill/MentorshipContactDrawer.vue'
 import NeedLoginToolTip from '~/components/base/NeedLoginToolTip.vue'
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
@@ -104,38 +104,30 @@ import LpiButton from '~/components/base/button/LpiButton.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 import ToolTip from '~/components/base/ToolTip.vue'
 
-import useSkillTexts from '~/composables/useSkillTexts.ts'
+import useSkillTexts from '~/composables/useSkillTexts'
 
+import type { UserSkillModel } from '~/models/user.model'
 import { capitalize } from '~/functs/string'
 
-defineOptions({ name: 'SkillItemFull' })
-
-const props = defineProps({
-  skill: {
-    type: Object,
-    required: true,
-  },
-  steps: {
-    type: Number,
-    default: 4,
-  },
-  hasAskedMentorship: {
-    type: Boolean,
-    default: false,
-  },
-  hasOfferedMentorship: {
-    type: Boolean,
-    default: false,
-  },
-  isSelf: {
-    type: Boolean,
-    default: false,
-  },
-  mentorshipIsLoading: {
-    type: Boolean,
-    default: false,
-  },
-})
+const props = withDefaults(
+  defineProps<{
+    skill: UserSkillModel
+    steps?: number
+    hasAskedMentorship?: boolean
+    hasOfferedMentorship?: boolean
+    isSelf?: boolean
+    mentorshipIsLoading?: boolean
+    label?: string
+  }>(),
+  {
+    steps: 4,
+    hasAskedMentorship: false,
+    hasOfferedMentorship: false,
+    isSelf: false,
+    mentorshipIsLoading: false,
+    label: '',
+  }
+)
 
 const { t } = useNuxtI18n()
 const emit = defineEmits(['mentorship-send'])

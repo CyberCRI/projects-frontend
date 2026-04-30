@@ -10,14 +10,16 @@
     }"
     :to="to"
   >
-    <div v-if="btnIcon" class="over-button">
-      <IconImage :name="btnIcon" class="btn" />
-      <span v-if="nbButton" class="number over">
-        <span>{{ nbButton }}</span>
-      </span>
-    </div>
+    <slot>
+      <div v-if="btnIcon" class="over-button">
+        <IconImage :name="btnIcon" class="btn" />
+        <span v-if="nbButton" class="number over">
+          <span>{{ nbButton }}</span>
+        </span>
+      </div>
 
-    <span v-if="label" data-test="button-label" class="label">{{ label }}</span>
+      <span v-if="label" data-test="button-label" class="label">{{ label }}</span>
+    </slot>
   </component>
 </template>
 

@@ -1,9 +1,8 @@
 import { defineStore } from 'pinia'
-import { toRaw } from 'vue'
 
 export type ToastType = 'error' | 'warning' | 'info' | 'success'
 
-export interface Toast {
+export type Toast = {
   message: string
   isOpened?: boolean
   type: ToastType
@@ -15,17 +14,11 @@ type ToastConfig = Toast & {
   duration: number
 }
 
-export interface ToastState {
-  toastList: Toast[]
-  timeouts: any // any == Timeout result
-}
-
 export const DEFAULT_TOAST_DURATION = 5 * 1000
 
 const useToasterStore = defineStore('toaster', {
-  state: (): ToastState => ({
+  state: () => ({
     toastList: [],
-    timeouts: new Map(),
   }),
 
   actions: {
@@ -35,11 +28,6 @@ const useToasterStore = defineStore('toaster', {
     deleteToast(toast: Toast): void {
       const findedIndex = this.toastList.findIndex((item) => toRaw(item) === toRaw(toast))
       if (findedIndex !== -1) {
-        const timeout = this.timeouts.get(toast)
-        if (timeout !== undefined) {
-          clearTimeout(timeout)
-          this.timeouts.delete(toast)
-        }
         this.toastList.splice(findedIndex, 1)
       }
     },
@@ -59,11 +47,7 @@ const useToasterStore = defineStore('toaster', {
       }
       this.toastList.push(toast)
       if (!remaining) {
-        const timeout = setTimeout(
-          () => this.deleteToast(toast),
-          duration || DEFAULT_TOAST_DURATION
-        )
-        this.timeouts.set(toast, timeout)
+        setTimeout(() => this.deleteToast(toast), duration || DEFAULT_TOAST_DURATION)
       }
     },
 

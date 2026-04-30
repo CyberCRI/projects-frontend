@@ -1,11 +1,11 @@
 import type { LanguageType, ProjectPublicationStatusType, ProjectStatusType } from '@/models/types'
+import type { ProjectTeamModel, ProjectTeamOutput } from '@/models/project-member.model'
 import type { OrganizationModel, OrganizationOutput } from '@/models/organization.model'
 import type { AnnouncementModel, AnnouncementOutput } from '@/models/announcement.model'
 import type { TemplateModel, TranslatedTemplate } from '@/models/template.model'
 import type { ProjectCategoryOutput } from '@/models/project-category.model'
 import type { AttachmentLinkOutput } from '@/models/attachment-link.model'
 import type { AttachmentFileOutput } from '@/models/attachment-file.model'
-import type { ProjectTeamOutput } from '@/models/project-member.model'
 import type { ImageModel, ImageOutput } from '@/models/image.model'
 import type { BlogEntryOutput } from '@/models/blog-entry.model'
 import type { LocationOutput } from '@/models/location.model'
@@ -16,7 +16,6 @@ import type { FollowOutput } from '@/models/follow.model'
 import type { ReviewModel } from '@/models/review.model'
 import type { GoalOutput } from '@/models/goal.model'
 import type BaseModel from '@/models/base.model'
-import { UserModel } from '~/models/user.model'
 
 /**
  * @name ProjectModel
@@ -54,9 +53,7 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
   created_at: string
   views?: number
   linked_projects: LinkedProject[]
-  team: {
-    [key: string]: UserModel[]
-  }
+  team: ProjectTeamModel
 }
 
 export type TranslatedProject = Translated<

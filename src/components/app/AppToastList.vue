@@ -32,10 +32,7 @@ const snackbars = computed(() => {
   })
 })
 
-const onClose = (snackbar) => {
-  console.log(onClose)
-  toaster.deleteToast(snackbar.toast)
-}
+const onClose = (snackbar) => toaster.deleteToast(snackbar.toast)
 </script>
 
 <template>

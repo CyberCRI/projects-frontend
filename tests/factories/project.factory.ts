@@ -51,7 +51,7 @@ export const ProjectFactory = createFactory<ProjectModel>((faker) => ({
   created_at: faker.date.past().toString(),
   sdgs: [],
   linked_projects: [],
-  team: {},
+  team: ProjectTeamOutputFactory.generate(),
 }))
 
 export const TranslatedProjectFactory = createFactory<TranslatedProject>(() => {

@@ -44,7 +44,7 @@ import {
   postProjectMessageImage,
 } from '~/api/project-messages.service'
 import { patchComment, postComment, postCommentImage } from '~/api/comments.service'
-import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
+import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
 
@@ -54,6 +54,7 @@ import LpiButton from '~/components/base/button/LpiButton.vue'
 import useToasterStore from '~/stores/useToaster.ts'
 import useUsersStore from '~/stores/useUsers.ts'
 
+import { NULL_CONTENT } from '~/functs/constants'
 import analytics from '~/analytics'
 
 export default {
@@ -104,7 +105,7 @@ export default {
 
   data() {
     return {
-      comment: this.originalComment?.content || '<p></p>',
+      comment: this.originalComment?.content || NULL_CONTENT,
       addedImages: [],
       asyncing: false,
       confirmModalIsOpen: false,
@@ -114,11 +115,11 @@ export default {
 
   computed: {
     commentTemplate() {
-      return this.project.template?.$t?.comment_content || '<p></p>'
+      return this.project.template?.$t?.comment_content || NULL_CONTENT
     },
 
     initialComment() {
-      return this.originalComment?.content || this.commentTemplate || '<p></p>'
+      return this.originalComment?.content || this.commentTemplate || NULL_CONTENT
     },
 
     isLoggedIn() {

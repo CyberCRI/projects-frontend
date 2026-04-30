@@ -160,7 +160,7 @@
           :label="$t('profile.edit.general.sdgs.add')"
           btn-icon="Plus"
           data-test="sdg-add"
-          @click="openSdgsDrawer"
+          @click="showSdgsDrawer = true"
         />
       </div>
       <p class="notice">
@@ -170,9 +170,7 @@
         </a>
         {{ $t('profile.edit.general.sdgs.notice-end') }}
       </p>
-      <TransitionGroup v-if="form.sdgs && form.sdgs.length" tag="div" name="sdg">
-        <SdgList :sdgs="form.sdgs" />
-      </TransitionGroup>
+      <SdgList :sdgs="form.sdgs" />
     </div>
 
     <hr class="form-separator" />
@@ -201,17 +199,7 @@
     </div>
   </div>
   <!-- sdgs selector -->
-  <BaseDrawer
-    :confirm-action-name="$t('common.confirm')"
-    :is-opened="showSdgsDrawer"
-    :title="$t('profile.edit.general.sdgs.label')"
-    class="medium"
-    data-test="sdgs-drawer"
-    @close="showSdgsDrawer = false"
-    @confirm="selectSdgs"
-  >
-    <SdgsFilter v-if="showSdgsDrawer" v-model="sdgsSelection" />
-  </BaseDrawer>
+  <SdgsDrawer v-model="form.sdgs" :is-opened="showSdgsDrawer" @close="showSdgsDrawer = false" />
 
   <!--ConfirmModal
     v-if="showCancelConfirmModal"
@@ -338,7 +326,6 @@ export default {
       asyncing: false,
       tagsSelection: [],
       showSdgsDrawer: false,
-      sdgsSelection: [],
     }
   },
 
@@ -471,16 +458,6 @@ export default {
       }
       this.startEditWatcher()
     },
-
-    openSdgsDrawer() {
-      this.sdgsSelection = [...this.form.sdgs]
-      this.showSdgsDrawer = true
-    },
-
-    selectSdgs() {
-      this.form.sdgs = [...this.sdgsSelection]
-      this.showSdgsDrawer = false
-    },
   },
 }
 </script>
@@ -496,27 +473,6 @@ export default {
   label {
     align-self: flex-start;
   }
-}
-
-$sdg-size: $layout-size-4xl;
-
-.tags-list,
-.sdgs-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax($sdg-size, 1fr));
-  gap: $space-m;
-  margin-top: $space-m;
-}
-
-.sdg-enter-active,
-.sdg-leave-active {
-  transition: all 0.4s ease;
-  transform: translateZ(0);
-}
-
-.sdg-enter-from,
-.sdg-leave-to {
-  transform: translateZ(0) scale(0) translateY(200%);
 }
 
 .form-actions {

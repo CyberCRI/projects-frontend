@@ -5,8 +5,8 @@
 <script setup lang="ts">
 import { onResize } from '~/composables/onResize'
 
+import { BarChart, useBarChart } from 'vue-chart-3'
 import { Chart, registerables } from 'chart.js'
-import { useBarChart } from 'vue-chart-3'
 import type { ChartData } from 'chart.js'
 import { debounce } from 'es-toolkit'
 
@@ -25,8 +25,11 @@ const props = withDefaults(
   }
 )
 
-const dataValue = computed(() => props.chartData)
-const dataOptions = computed(() => props.options)
+const dataValue = computed(() => ({
+  datasets: [],
+  ...(toRaw(props.chartData) ?? {}),
+}))
+const dataOptions = computed(() => toRaw(props.options))
 
 const { barChartProps, update } = useBarChart({
   chartData: dataValue,

@@ -1,19 +1,27 @@
-<script setup>
+<script setup lang="ts">
 import EditMentorshipDrawer from '~/components/people/skill/EditMentorshipDrawer.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 import ToolTip from '~/components/base/ToolTip.vue'
 
-import useSkillLevels from '~/composables/useSkillLevels.ts'
-import useSkillTexts from '~/composables/useSkillTexts.ts'
+import useSkillLevels from '~/composables/useSkillLevels'
+import type { UserSkillModel } from '~/models/user.model'
+import useSkillTexts from '~/composables/useSkillTexts'
 
-const props = defineProps({
-  skill: { type: Object, required: true },
-  type: { type: String, required: true }, // "skills" or "hobbies"
-  scrollIntoView: { type: Boolean, default: false },
-  noMentorship: { type: Boolean, default: false },
-})
+const props = withDefaults(
+  defineProps<{
+    skill: UserSkillModel
+    type: 'skills' | 'hobbies'
+    scrollIntoView?: boolean
+    noMentorship?: boolean
+  }>(),
+  {
+    scrollIntoView: false,
+    noMentorship: false,
+  }
+)
+
 const emit = defineEmits(['set-level', 'update-mentorship', 'delete'])
 
 const elementIsVisibleInViewport = (el, partiallyVisible = false) => {
@@ -145,8 +153,8 @@ function onUpdateMentorship(mentorship) {
       v-if="confirmDelete"
       :title="$t('common.confirm-delete')"
       content=""
-      cancel-button-label="common.no"
-      confirm-button-label="common.yes"
+      :cancel-button-label="$t('common.no')"
+      :confirm-button-label="$t('common.yes')"
       :asyncing="asyncing"
       @cancel="confirmDelete = false"
       @confirm="deleteSkill"
