@@ -5,7 +5,7 @@
         {{ t('me.groups') }}
         <span>({{ user?.people_groups?.length || 0 }})</span>
       </h4>
-      <ListPaginator class="paginator" :limit="listLimit" :list="user?.people_groups || []">
+      <ListPaginator :limit="listLimit" :list="user?.people_groups || []">
         <template #default="groupListSlotProps">
           <CardList
             :limit="listLimit"

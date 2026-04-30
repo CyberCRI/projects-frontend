@@ -40,7 +40,9 @@ const useForm = <T, CleanResult = T>(
   const _onClean = options.onClean ?? onClean
 
   const isValid = ref<boolean>(false)
-  const v$ = useValidate(options.rules ?? {}, form)
+  const v$ = useValidate(options.rules ?? {}, form, {
+    $scope: false,
+  })
 
   const validate = () => v$.value.$validate().then((v) => (isValid.value = v))
   // const debounceValidate = debounce(validate, options.validateTimeout ?? 50)

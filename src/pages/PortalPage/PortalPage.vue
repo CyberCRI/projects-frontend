@@ -1,13 +1,25 @@
 <script setup lang="ts">
-import useOrganizationsStore from '~/stores/useOrganizations'
+import { organizationSkeleton } from '~/skeletons/organizations.skeletons'
+import { getOrganizations } from '~/api/v2/organizations.service'
+import { factoryPagination } from '~/skeletons/base.skeletons'
 
-const organizationsStore = useOrganizationsStore()
 const { t } = useNuxtI18n()
 
-onMounted(organizationsStore.getAllOrganizations)
+const LIMIT = 20
 
-const organisations = computed(() =>
-  organizationsStore.all.filter((org) => org.is_logo_visible_on_parent_dashboard)
+const {
+  status,
+  data: organizations,
+  pagination,
+} = getOrganizations({
+  paginationConfig: {
+    limit: LIMIT,
+  },
+  default: () => factoryPagination(organizationSkeleton, LIMIT),
+})
+
+const organisationsFiltered = computed(() =>
+  organizations.value.filter((org) => org.is_logo_visible_on_parent_dashboard)
 )
 
 useLpiHead2({
@@ -25,26 +37,29 @@ useLpiHead2({
       {{ $t('portal.sub-title') }}
     </p>
 
-    <div class="org-card-ctn">
-      <a
-        v-for="organisation in organisations"
-        :key="organisation.id"
-        class="org-card shadow-box"
-        :href="organisation.website_url"
-        target="_blank"
-        :style="{
-          backgroundColor: organisation.background_color,
-        }"
-        :title="organisation.$t.name"
-      >
-        <div
-          class="portal-image"
+    <FetchLoader :status="status" only-error skeleton>
+      <div class="org-card-ctn">
+        <a
+          v-for="organisation in organisationsFiltered"
+          :key="organisation.id"
+          class="org-card shadow-box skeletons-background"
+          :href="organisation.website_url"
+          target="_blank"
           :style="{
-            backgroundImage: `url(${organisation.logo_image.variations.medium})`,
+            backgroundColor: organisation.background_color,
           }"
-        />
-      </a>
-    </div>
+          :title="organisation.$t.name"
+        >
+          <div
+            class="portal-image"
+            :style="{
+              backgroundImage: `url(${organisation.logo_image.variations.medium})`,
+            }"
+          />
+        </a>
+      </div>
+      <PaginationButtonsV2 :pagination="pagination" />
+    </FetchLoader>
   </div>
 </template>
 
@@ -69,7 +84,7 @@ useLpiHead2({
       justify-content: stretch;
       align-items: stretch;
       border-radius: $border-radius-m;
-      border: $border-width-s solid $primary;
+      border: $border-width-s solid var(--primary);
       overflow: hidden;
       padding: $space-m;
       height: pxToRem(96px);

@@ -1,9 +1,10 @@
 import type { ProjectCategoryModel } from '~/models/project-category.model'
+import { NULL_CONTENT } from '~/functs/constants'
 
 export const defaultForm = (): Partial<ProjectCategoryModel> => {
   return {
     name: '',
-    description: '<p></p>',
+    description: NULL_CONTENT,
     background_color: '#81A617',
     foreground_color: '#FFFFFF',
     // @ts-expect-error TODO need to refacto this

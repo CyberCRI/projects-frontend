@@ -1,10 +1,6 @@
-// import type { APIResponseList } from '@/api/types'
-import type {
-  /* OrganizationOutput,*/ OrganizationModel,
-  OrganizationPatchInput,
-} from '@/models/organization.model'
 import type { /*GroupModel,*/ GroupModelInput, RemoveGroupModelInput } from '@/models/group.model'
 import type { /*ImageOrganizationOutput,*/ ImageOrganizationInput } from '@/models/image.model'
+import type { OrganizationModel, OrganizationPatchInput } from '@/models/organization.model'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import type { ProjectModel } from '@/models/project.model'
 import useAPI from '@/composables/useAPI'

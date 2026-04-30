@@ -22,9 +22,7 @@ import type { TranslatedComment } from '@/models/comment.model'
 import type { TranslatedUserModel } from '@/models/user.model'
 import type { TranslatedNews } from '@/models/news.model'
 import type { TranslatedGoal } from '@/models/goal.model'
-
-// type can be computed or object
-type RefOrRaw<DataT> = ComputedRef<DataT> | Ref<DataT> | DataT
+import type { RefOrRaw } from '~/interfaces/utils'
 
 export default function useAutoTranslate() {
   // TODO: memoize in local storage / user prefs

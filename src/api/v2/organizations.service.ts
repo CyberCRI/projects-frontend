@@ -1,4 +1,7 @@
-import { getFeaturedProjects as fetchFeaturedProjects } from '@/api/organizations.service'
+import {
+  getFeaturedProjects as fetchFeaturedProjects,
+  getOrganizations as fetchOrganizations,
+} from '@/api/organizations.service'
 import type { UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
 import type { OrganizationModel } from '@/models/organization.model'
 import type { RefOrRaw } from '@/interfaces/utils'
@@ -25,6 +28,24 @@ export const getFeaturedProjects = (
     {
       translate: translateProjects,
       watch: onlyRefs([organizationCode]),
+      ...config,
+    }
+  )
+}
+
+export const getOrganizations = (config: ConfigPagination = {}) => {
+  const { translateOrganizations } = useAutoTranslate()
+  const key = computed(() => `organization-all`)
+
+  return useAsyncPaginationAPI(
+    key,
+    ({ config }) =>
+      fetchOrganizations({
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
+    {
+      translate: translateOrganizations,
       ...config,
     }
   )

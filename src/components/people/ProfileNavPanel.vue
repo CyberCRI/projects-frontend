@@ -69,7 +69,7 @@
 </template>
 
 <script setup lang="ts">
-import type { MenyEntry } from '~/components/base/navigation/NavPanelMenu.vue'
+import type { MenuEntry } from '~/components/base/navigation/NavPanelMenu.vue'
 import type { PeopleModel } from '~/models/people.model'
 import type { RouteLocationRaw } from 'vue-router'
 
@@ -80,8 +80,8 @@ const props = withDefaults(
     editButtonLabel: string
     editProfileLink: RouteLocationRaw
     canEditUser?: boolean
-    profileTabs: MenyEntry[]
-    currentTab?: MenyEntry
+    profileTabs: MenuEntry[]
+    currentTab?: MenuEntry
     isEditing?: boolean
   }>(),
   {
