@@ -592,6 +592,7 @@
     "date": "Fecha",
     "clear-date": "Fecha clara",
     "chose-date": "Seleccionar fecha | Seleccione la fecha(s)",
+    "filter": "filtro | filtros",
     "empty": "Nada aquí...",
     "file": "archivo | archivos"
   },
@@ -984,7 +985,7 @@
   "location": {
     "loading": "Lugares de carga",
     "focus-on-map": "centrarse en el mapa",
-    "expand-map": "Ver mapa más grande",
+    "expand": "Ver mapa más grande",
     "edit-location-point": "Editar punto de ubicación",
     "location-type-label": "Tipo de ubicación",
     "impact": "Impacto",
@@ -996,7 +997,9 @@
     "add-location-point": "Agregar un punto de ubicación",
     "default-title": "Ubicación",
     "news": "Noticias | Noticias",
-    "event": "Evento"
+    "event": "Evento",
+    "zoom-in": "zoom",
+    "zoom-out": "zoom"
   },
   "map": {
     "page-title": "Mapa",

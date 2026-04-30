@@ -1,6 +1,6 @@
 import type { LocationId, LocationModel, ProjectLocationForm } from '@/models/location.model'
 import type { ProjectSlugOrId } from '@/models/project.model'
-import type { Locations } from '@/interfaces/maps'
+import type { LocationGeneral } from '~/interfaces/maps'
 import useAPI from '@/composables/useAPI'
 
 type Config = UseApiOptions
@@ -42,5 +42,5 @@ export async function deleteLocation(projectId: ProjectSlugOrId, locationId: Loc
 }
 
 export async function getLocations(organizationCode: string, config: Config = {}) {
-  return await useAPI<Locations>(`organization/${organizationCode}/location/`, config)
+  return await useAPI<LocationGeneral[]>(`organization/${organizationCode}/location/`, config)
 }

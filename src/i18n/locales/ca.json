@@ -592,6 +592,7 @@
     "date": "Data",
     "clear-date": "Neteja la data",
     "chose-date": "Seleccioneu la data | Seleccioneu la data(s)",
+    "filter": "filtre | Filtres",
     "empty": "Aquí no hi ha res...",
     "file": "fitxer | fitxers"
   },
@@ -987,7 +988,7 @@
     "team": "Equip",
     "address": "Adreça",
     "focus-on-map": "Centra't en el mapa",
-    "expand-map": "Augmenta el mapa",
+    "expand": "Augmenta el mapa",
     "edit-location-point": "Edita el punt de localització",
     "location-type-label": "Tipus d' emplaçament",
     "edit-map": "Edita geolocalització",
@@ -996,7 +997,9 @@
     "add-location-point": "Afegeix un punt d' emplaçament",
     "default-title": "Localització",
     "news": "Notícies | Notícies",
-    "event": "Esdeveniment"
+    "event": "Esdeveniment",
+    "zoom-in": "Apropa",
+    "zoom-out": "Redueix"
   },
   "map": {
     "page-title": "Mapa",
