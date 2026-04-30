@@ -4,7 +4,7 @@ export default function useProjectPagesRoutes() {
       // For retro compatibility with old URLS, both slugs and ids can be used
       path: '/projects/:slugOrId',
       name: 'pageProject',
-      redirect: { name: 'projectSummary' },
+      redirect: { name: 'ProjectSnapshot' },
       component: () => import('../pages/ProjectPageV2/ProjectPage.vue'),
       meta: {
         chatBotContext: (route) => `
@@ -15,8 +15,8 @@ export default function useProjectPagesRoutes() {
       children: [
         {
           path: 'summary',
-          name: 'projectSummary',
-          component: () => import('../pages/ProjectPageV2/Tabs/ProjectSummaryTab.vue'),
+          name: 'ProjectSnapshot',
+          component: () => import('../pages/ProjectPageV2/ProjectSnapshotTab.vue'),
         },
         {
           path: 'des', // back compatibility with old routes
@@ -25,7 +25,8 @@ export default function useProjectPagesRoutes() {
         {
           path: 'description',
           name: 'projectDescription',
-          component: () => import('../pages/ProjectPageV2/Tabs/ProjectDescriptionTab.vue'),
+          component: () =>
+            import('../pages/ProjectPageV2/Tabs/Description/ProjectDescriptionTab.vue'),
         },
         {
           path: 'blogentries', // back compatibility with old routes
@@ -34,17 +35,18 @@ export default function useProjectPagesRoutes() {
         {
           path: 'blog-entries',
           name: 'projectBlog',
-          component: () => import('../pages/ProjectPageV2/Tabs/ProjectBlogEntriesTab.vue'),
+          component: () =>
+            import('../pages/ProjectPageV2/Tabs/BlogEntries/ProjectBlogEntriesTab.vue'),
         },
         {
           path: 'goals',
           name: 'projectGoals',
-          component: () => import('../pages/ProjectPageV2/Tabs/ProjectGoalsTab.vue'),
+          component: () => import('../pages/ProjectPageV2/Tabs/Goals/ProjectGoalsTab.vue'),
         },
         {
           path: 'team',
           name: 'projectTeam',
-          component: () => import('../pages/ProjectPageV2/Tabs/ProjectTeamTab.vue'),
+          component: () => import('../pages/ProjectPageV2/Tabs/Team/ProjectTeamTab2.vue'),
         },
         {
           path: 'ressources', // back compatibility with old routes
@@ -53,47 +55,50 @@ export default function useProjectPagesRoutes() {
         {
           path: 'resources',
           name: 'projectResources',
-          component: () => import('../pages/ProjectPageV2/Tabs/ProjectResourcesTab.vue'),
+          component: () => import('../pages/ProjectPageV2/Tabs/Resources/ProjectResourcesTab.vue'),
         },
         {
           path: 'linked-projects',
           name: 'projectLinkedProjects',
-          component: () => import('../pages/ProjectPageV2/Tabs/ProjectLinkedProjectsTab.vue'),
+          component: () =>
+            import('../pages/ProjectPageV2/Tabs/LinkedProjects/ProjectLinkedProjectsTab.vue'),
         },
         {
           path: 'comments',
           name: 'projectComments',
-          component: () => import('../pages/ProjectPageV2/Tabs/ProjectCommentsTab.vue'),
+          component: () => import('../pages/ProjectPageV2/Tabs/Comments/ProjectCommentsTab.vue'),
         },
         {
           path: 'private-exchange',
           name: 'projectPrivateExchange',
-          component: () => import('../pages/ProjectPageV2/Tabs/ProjectPrivateExchangeTab.vue'),
+          component: () =>
+            import('../pages/ProjectPageV2/Tabs/PrivateExchange/ProjectPrivateExchangeTab.vue'),
         },
         {
           path: 'announcements',
           name: 'projectAnnouncements',
-          component: () => import('../pages/ProjectPageV2/Tabs/ProjectAnnouncementsTab.vue'),
+          component: () =>
+            import('../pages/ProjectPageV2/Tabs/Announcements/ProjectAnnouncementsTab.vue'),
         },
         {
           path: 'project-settings',
           name: 'ProjectSettings',
           // component: () => import('../pages/ProjectPageV2/Tabs/ProjectSettingsTab.vue'),
-          redirect: { name: 'projectSummary' },
+          redirect: { name: 'ProjectSnapshot' },
         },
 
         {
           path: 'locations',
           name: 'ProjectLocations',
-          component: () => import('../pages/ProjectPageV2/Tabs/ProjectLocationsTab.vue'),
+          component: () => import('../pages/ProjectPageV2/Tabs/Locations/ProjectLocationsTab.vue'),
         },
 
         // EDIT PATHS
 
         {
           path: 'summary/edit',
-          name: 'projectSummaryEdit',
-          component: () => import('../pages/ProjectPageV2/Tabs/ProjectEditGeneralInfos.vue'),
+          name: 'projectEdit',
+          component: () => import('../pages/ProjectPageV2/Tabs/Team/ProjectEditTab.vue'),
           meta: {
             requiresAuth: true,
           },
@@ -108,7 +113,8 @@ export default function useProjectPagesRoutes() {
         {
           path: 'description/edit',
           name: 'projectDescriptionEdit',
-          component: () => import('../pages/ProjectPageV2/Tabs/ProjectEditDescriptionTab.vue'),
+          component: () =>
+            import('../pages/ProjectPageV2/Tabs/Description/ProjectEditDescriptionTab.vue'),
           meta: {
             requiresAuth: true,
           },
@@ -123,7 +129,8 @@ export default function useProjectPagesRoutes() {
         {
           path: 'blog-entries/edit',
           name: 'projectBlogEdit',
-          component: () => import('../pages/ProjectPageV2/Tabs/ProjectBlogEntriesTab.vue'),
+          component: () =>
+            import('../pages/ProjectPageV2/Tabs/BlogEntries/ProjectBlogEntriesTab.vue'),
           meta: {
             requiresAuth: true,
           },
@@ -131,7 +138,7 @@ export default function useProjectPagesRoutes() {
         {
           path: 'goals/edit',
           name: 'projectGoalsEdit',
-          component: () => import('../pages/ProjectPageV2/Tabs/ProjectGoalsTab.vue'),
+          component: () => import('../pages/ProjectPageV2/Tabs/Goals/ProjectGoalsTab.vue'),
           meta: {
             requiresAuth: true,
           },
@@ -139,7 +146,7 @@ export default function useProjectPagesRoutes() {
         {
           path: 'team/edit',
           name: 'projectTeamEdit',
-          component: () => import('../pages/ProjectPageV2/Tabs/ProjectTeamTab.vue'),
+          component: () => import('../pages/ProjectPageV2/Tabs/Team/ProjectTeamTab.vue'),
           meta: {
             requiresAuth: true,
           },
@@ -154,7 +161,7 @@ export default function useProjectPagesRoutes() {
         {
           path: 'resources/edit',
           name: 'projectResourcesEdit',
-          component: () => import('../pages/ProjectPageV2/Tabs/ProjectResourcesTab.vue'),
+          component: () => import('../pages/ProjectPageV2/Tabs/Resources/ProjectResourcesTab.vue'),
           meta: {
             requiresAuth: true,
           },
@@ -162,7 +169,8 @@ export default function useProjectPagesRoutes() {
         {
           path: 'linked-projects/edit',
           name: 'projectLinkedProjectsEdit',
-          component: () => import('../pages/ProjectPageV2/Tabs/ProjectLinkedProjectsTab.vue'),
+          component: () =>
+            import('../pages/ProjectPageV2/Tabs/LinkedProjects/ProjectLinkedProjectsTab.vue'),
           meta: {
             requiresAuth: true,
           },
@@ -170,7 +178,7 @@ export default function useProjectPagesRoutes() {
         {
           path: 'comments/edit',
           name: 'projectCommentsEdit',
-          component: () => import('../pages/ProjectPageV2/Tabs/ProjectCommentsTab.vue'),
+          component: () => import('../pages/ProjectPageV2/Tabs/Comments/ProjectCommentsTab.vue'),
           meta: {
             requiresAuth: true,
           },
@@ -178,7 +186,8 @@ export default function useProjectPagesRoutes() {
         {
           path: 'private-exchange/edit',
           name: 'projectPrivateExchangeEdit',
-          component: () => import('../pages/ProjectPageV2/Tabs/ProjectPrivateExchangeTab.vue'),
+          component: () =>
+            import('../pages/ProjectPageV2/Tabs/PrivateExchange/ProjectPrivateExchangeTab.vue'),
           meta: {
             requiresAuth: true,
           },
@@ -186,7 +195,8 @@ export default function useProjectPagesRoutes() {
         {
           path: 'announcements/edit',
           name: 'projectAnnouncementsEdit',
-          component: () => import('../pages/ProjectPageV2/Tabs/ProjectAnnouncementsTab.vue'),
+          component: () =>
+            import('../pages/ProjectPageV2/Tabs/Announcements/ProjectAnnouncementsTab.vue'),
           meta: {
             requiresAuth: true,
           },
@@ -194,7 +204,7 @@ export default function useProjectPagesRoutes() {
         {
           path: 'project-settings/edit',
           name: 'ProjectSettingsEdit',
-          component: () => import('../pages/ProjectPageV2/Tabs/ProjectSettingsTab.vue'),
+          component: () => import('../pages/ProjectPageV2/Tabs/Settings/ProjectSettingsTab.vue'),
           meta: {
             requiresAuth: true,
           },
@@ -202,7 +212,7 @@ export default function useProjectPagesRoutes() {
         {
           path: 'locations/edit',
           name: 'ProjectLocationsEdit',
-          component: () => import('../pages/ProjectPageV2/Tabs/ProjectLocationsTab.vue'),
+          component: () => import('../pages/ProjectPageV2/Tabs/Locations/ProjectLocationsTab.vue'),
           meta: {
             requiresAuth: true,
           },

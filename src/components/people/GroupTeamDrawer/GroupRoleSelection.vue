@@ -65,24 +65,22 @@
   </section>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
+import type { UserModel } from '~/models/user.model'
 import ToolTip from '~/components/base/ToolTip.vue'
 
-defineOptions({ name: 'GroupRoleSelection' })
-
-const props = defineProps({
-  selectedUsers: {
-    type: Object,
-    default: () => {},
-  },
-
-  isEditMode: {
-    type: Boolean,
-    default: false,
-  },
-})
+const props = withDefaults(
+  defineProps<{
+    selectedUsers?: UserModel[]
+    isEditMode?: boolean
+  }>(),
+  {
+    selectedUsers: () => [],
+    isEditMode: false,
+  }
+)
 
 const emit = defineEmits(['select-role', 'back-to-user-selection'])
 const { t } = useNuxtI18n()

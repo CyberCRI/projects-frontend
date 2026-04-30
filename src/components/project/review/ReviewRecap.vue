@@ -9,6 +9,7 @@
       v-for="(review, index) in reviews"
       :key="index"
       :review="review"
+      :editable="editable"
       @delete-review="toDelete = $event"
       @edit-review="editReview = $event"
     />
@@ -31,22 +32,23 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedProject } from '~/models/project.model'
-import type { ReviewModel } from '~/models/review.model'
+import ReviewDrawer from '@/components/project/review/ReviewDrawer.vue'
+import ReviewItem from '@/components/project/review/ReviewItem.vue'
+import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
+import SectionHeader from '@/components/base/SectionHeader.vue'
+import type { TranslatedProject } from '@/models/project.model'
+import type { TranslatedReview } from '@/models/review.model'
+import { deleteReview } from '@/api/reviews.service'
+import useToasterStore from '@/stores/useToaster'
 
-import { deleteReview } from '~/api/reviews.service'
-
-import ReviewDrawer from '~/components/project/review/ReviewDrawer.vue'
-import ReviewItem from '~/components/project/review/ReviewItem.vue'
-import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
-import SectionHeader from '~/components/base/SectionHeader.vue'
-
-import useToasterStore from '~/stores/useToaster'
-
-const props = defineProps<{
-  project: TranslatedProject
-  reviews: ReviewModel[]
-}>()
+const props = withDefaults(
+  defineProps<{
+    project: TranslatedProject
+    reviews: TranslatedReview[]
+    editable?: boolean
+  }>(),
+  { editable: false }
+)
 
 const emit = defineEmits<{
   'reload-reviews': []

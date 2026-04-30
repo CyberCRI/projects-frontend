@@ -1,14 +1,14 @@
 <template>
   <IconImage
     v-if="!isFollowing && usersStore.isConnected"
-    class="icon"
+    class="icon skeletons-background"
     name="BookmarkLine"
     tabindex="1"
     @click="actionFollow"
   />
   <IconImage
     v-else-if="usersStore.isConnected"
-    class="icon"
+    class="icon skeletons-background"
     name="BookmarkFill"
     tabindex="1"
     @click="actionFollow"
@@ -16,19 +16,13 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedProject } from '~/models/project.model'
+import { useProjectFollow } from '@/pages/ProjectPageV2/useProject'
+import type { TranslatedProject } from '@/models/project.model'
+import useUsersStore from '@/stores/useUsers'
 
-import useUsersStore from '~/stores/useUsers'
-
-import followUtils from '~/functs/followUtils'
-
-const props = withDefaults(
-  defineProps<{
-    project: TranslatedProject
-    targetUserId?: number
-  }>(),
-  { targetUserId: null }
-)
+const props = defineProps<{
+  project: TranslatedProject
+}>()
 
 const usersStore = useUsersStore()
 const emit = defineEmits<{
@@ -36,41 +30,16 @@ const emit = defineEmits<{
   unfollow: []
 }>()
 
-const isFollowed = ref(props.project.is_followed)
-watchEffect(() => {
-  isFollowed.value = props.project.is_followed
-})
-const isFollowing = computed(() => isFollowed.value.is_followed)
+const { isFollowing, toggleFollow } = useProjectFollow(computed(() => props.project))
 
-const asyncing = ref(false)
-
-const actionFollow = async () => {
-  // ignore already in aciton
-  if (asyncing.value) {
-    return
-  }
-  asyncing.value = true
-
-  if (isFollowing.value) {
-    await followUtils.unfollow({
-      follower_id: isFollowed.value.follow_id,
-      project_id: props.project.id,
-    })
-    isFollowed.value = {
-      is_followed: false,
-      follow_id: null,
+const actionFollow = () => {
+  return toggleFollow().then((val) => {
+    if (val) {
+      emit('follow', val)
+    } else {
+      emit('unfollow')
     }
-    emit('unfollow')
-  } else {
-    const results = await followUtils.follow({
-      follower_id: props.targetUserId ?? usersStore.user.id,
-      project_id: props.project.id,
-    })
-    isFollowed.value = results.project.is_followed
-    emit('follow', results.project.is_followed)
-  }
-
-  nextTick(() => (asyncing.value = false))
+  })
 }
 
 // can access from ref

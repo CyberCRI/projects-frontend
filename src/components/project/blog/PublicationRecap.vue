@@ -27,24 +27,23 @@
   </div>
 </template>
 
-<script setup>
-import TipTapOutput from '~/components/base/form/TextEditor/TipTapOutput.vue'
-import SectionHeader from '~/components/base/SectionHeader.vue'
+<script setup lang="ts">
+import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
+import SectionHeader from '@/components/base/SectionHeader.vue'
+import type { TranslatedProject } from '@/models/project.model'
 
-defineOptions({ name: 'PublicationRecap' })
 const router = useRouter()
-const route = useRoute()
 
-const props = defineProps({
-  isBlog: {
-    type: Boolean,
-    default: true,
-  },
-  publications: {
-    type: Array,
-    required: true,
-  },
-})
+const props = withDefaults(
+  defineProps<{
+    project: TranslatedProject
+    isBlog?: boolean
+    publications: any[]
+  }>(),
+  {
+    isBlog: true,
+  }
+)
 
 const lastPublication = computed(() => {
   return props.publications.reduce((mostRecent, publication) =>
@@ -56,8 +55,7 @@ const redirectToPage = () => {
   const routeName = props.isBlog ? 'projectBlog' : 'projectComments'
   router.push({
     name: routeName,
-    params: { slugOrId: route.params.slugOrId },
-    hash: '#tab',
+    params: { slugOrId: props.project.slug || props.project.id },
   })
 }
 </script>

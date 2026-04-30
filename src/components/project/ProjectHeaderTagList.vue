@@ -1,12 +1,6 @@
 <template>
   <div class="tag-list-ctn">
-    <div v-if="loading" class="tag-ctn-skeleton">
-      <SkeletonComponent height="19px" width="50px" />
-      <SkeletonComponent height="19px" width="50px" />
-      <SkeletonComponent height="19px" width="50px" />
-    </div>
     <TagsList
-      v-else-if="project?.tags?.length"
       :tags="project.tags"
       class="tag-list"
       prefix="mobile"
@@ -21,17 +15,12 @@
 </template>
 
 <script setup lang="ts">
-import type { ProjectModel } from '~/models/project.model'
+import type { TranslatedProject } from '@/models/project.model'
+import TagsList from '@/components/tags/TagsList.vue'
 
-import TagsList from '~/components/tags/TagsList.vue'
-
-withDefaults(
-  defineProps<{
-    project?: ProjectModel
-    loading?: boolean
-  }>(),
-  { project: null, loading: true }
-)
+defineProps<{
+  project: TranslatedProject
+}>()
 </script>
 
 <style scoped lang="scss">

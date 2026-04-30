@@ -20,7 +20,6 @@ export async function getMentorshipDetails(
   return await useAPI(`organization/${organizationCode}/mentoring/${mentorshipId}/`, {
     params: payload,
   })
-  // .data
 }
 
 // offer mentroship fro a skill
@@ -32,7 +31,7 @@ export async function offerMentorship(
   return await useAPI(`organization/${organizationCode}/mentoring/contact-mentoree/${skill.id}/`, {
     body: payload,
     method: 'POST',
-  }) // .data
+  })
 }
 
 // ask mentorship for a skill
@@ -44,7 +43,7 @@ export async function askMentorship(
   return await useAPI(`organization/${organizationCode}/mentoring/contact-mentor/${skill.id}/`, {
     body: payload,
     method: 'POST',
-  }) // .data
+  })
 }
 // respond to mentroship offer
 export async function respondMentorship(

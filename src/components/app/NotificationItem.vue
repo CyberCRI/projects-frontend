@@ -205,7 +205,7 @@ export default {
         }
       } else if (this.notification.project) {
         return {
-          name: 'projectSummary',
+          name: 'ProjectSnapshot',
           params: { slugOrId: this.notification.project.slug },
         }
       } else {

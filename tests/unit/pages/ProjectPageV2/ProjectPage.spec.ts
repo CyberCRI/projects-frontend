@@ -3,7 +3,7 @@ import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
 import { AttachmentLinkFactory } from '~~/tests/factories/attachment-link.factory'
 import { AttachmentFileFactory } from '~~/tests/factories/attachment-file.factory'
-import ProjectSummaryTab from '~/pages/ProjectPageV2/Tabs/ProjectSummaryTab.vue'
+import ProjectSnapshotTab from '~/pages/ProjectPageV2/ProjectSnapshotTab.vue'
 import { AnnouncementFactory } from '~~/tests/factories/announcement.factory'
 import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
 import { mockNuxtImport, registerEndpoint } from '@nuxt/test-utils/runtime'
@@ -61,7 +61,7 @@ describe('ProjectPage.vue', () => {
     registerEndpoint(`project/${project.id}/`, () => project)
 
     const wrapper = await lpiMountSuspended(ProjectPage, {
-      stubs: { NuxtPage: ProjectSummaryTab, NuxtLink: true },
+      stubs: { NuxtPage: ProjectSnapshotTab, NuxtLink: true },
     })
     await flushPromises()
     expect(wrapper.exists()).toBe(true)

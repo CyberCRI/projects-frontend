@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink :to="target" class="resource-count shadow-box">
+  <NuxtLink :to="target" class="resource-count shadow-box skeletons-background">
     <div class="icon-ctn">
       <div v-if="isFile" class="resource-type">
         <IconImage name="Paperclip" />
@@ -35,7 +35,7 @@ withDefaults(
 <style lang="scss" scoped>
 .resource-count {
   cursor: pointer;
-  border: $border-width-s solid $primary;
+  border: $border-width-s solid var(--primary);
   border-radius: $border-radius-m;
   overflow: hidden;
   width: 150px;
@@ -43,10 +43,10 @@ withDefaults(
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  background-color: $white;
+  background-color: var(--white);
 
   &:hover {
-    background-color: $primary-lighter;
+    background-color: var(--primary-lighter);
   }
 
   .icon-ctn {
@@ -59,25 +59,25 @@ withDefaults(
       align-items: center;
       font-size: $font-size-s;
       font-weight: bold;
-      color: $black;
+      color: var(--black);
       text-align: center;
 
       svg {
         height: 50px;
         width: 50px;
-        fill: $primary-dark;
+        fill: var(--primary-dark);
         margin-bottom: $space-s;
       }
     }
   }
 
   .count {
-    background: $primary;
+    background: var(--primary);
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: bold;
-    color: $white;
+    color: var(--white);
     padding: $space-s 0;
     font-size: $font-size-2xl;
   }

@@ -1,6 +1,6 @@
-import ProjectSettingsTab from '~/pages/ProjectPageV2/Tabs/ProjectSettingsTab.vue'
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
+import ProjectSettingsTab from '~/pages/ProjectPageV2/Tabs/Settings/ProjectSettingsTab.vue'
 import { OrganizationFactory } from '~~/tests/factories/organization.factory'
 import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import { PaginationsFactory } from '~~/tests/factories/paginations.factory'

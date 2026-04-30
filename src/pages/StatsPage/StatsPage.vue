@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const { t } = useNuxtI18n()
 const tabs = computed(() =>
   import.meta.client

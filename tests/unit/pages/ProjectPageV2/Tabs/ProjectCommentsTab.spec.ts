@@ -1,6 +1,6 @@
-import ProjectCommentsTab from '~/pages/ProjectPageV2/Tabs/ProjectCommentsTab.vue'
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
+import ProjectCommentsTab from '~/pages/ProjectPageV2/Tabs/Comments/ProjectCommentsTab.vue'
 import { ProjectFactory } from '~~/tests/factories/project.factory'
 import { CommentFactory } from '~~/tests/factories/comment.factory'
 import { describe, expect, it, vi } from 'vitest'

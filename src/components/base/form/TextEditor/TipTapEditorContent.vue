@@ -1,12 +1,18 @@
-<script setup>
+<script setup lang="ts">
 import { EditorContent } from '@tiptap/vue-3'
 
 // props
-const props = defineProps({
-  editor: { type: Object, required: true },
-  editorFrozen: { type: Boolean, default: false },
-  isConnected: { type: Boolean, default: false },
-})
+const props = withDefaults(
+  defineProps<{
+    editor: any
+    editorFrozen?: boolean
+    isConnected?: boolean
+  }>(),
+  {
+    editorFrozen: false,
+    isConnected: false,
+  }
+)
 
 // computed
 const dataTest = computed(() =>

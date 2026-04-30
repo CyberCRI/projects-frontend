@@ -10,26 +10,18 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'TagResult',
-
-  props: {
-    label: {
-      type: String,
-      required: true,
-    },
-
-    description: {
-      type: String,
-      default: '',
-    },
-    classificationName: {
-      type: String,
-      default: '',
-    },
-  },
-}
+<script setup lang="ts">
+withDefaults(
+  defineProps<{
+    label: string
+    description?: string
+    classificationName?: string
+  }>(),
+  {
+    description: '',
+    classificationName: '',
+  }
+)
 </script>
 
 <style lang="scss" scoped>

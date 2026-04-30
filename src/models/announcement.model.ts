@@ -1,7 +1,8 @@
-import type { ProjectModel, TranslatedProject } from '~/models/project.model'
-import type BaseModel from '~/models/base.model'
-
-import type { Translated } from '~/interfaces/translated'
+import type { ProjectModel, TranslatedProject } from '@/models/project.model'
+import type { OrganizationModel } from '@/models/organization.model'
+import type { Translated } from '@/interfaces/translated'
+import type { Ordering } from '@/interfaces/query'
+import type BaseModel from '@/models/base.model'
 
 export interface AnnouncementModel extends BaseModel {
   id: number
@@ -37,3 +38,12 @@ export type AnnouncementApplyInput = {
 }
 
 export type AnnouncementOutput = Required<AnnouncementModel>
+
+export type QueryFilterAnnouncement = Partial<{
+  ordering: Ordering<'created_at' | 'updated_at' | 'deadline'>
+  organizations: OrganizationModel['code'][]
+  from_date: string
+  to_date: string
+  from_date_or_none: string
+  to_date_or_none: string
+}>

@@ -1,9 +1,7 @@
 <template>
-  <SkeletonComponent v-if="loading" class="skeleton-block" height="24px" tag="h4" />
   <RevealableClamped
     is="h4"
-    v-else
-    class="purpose-block"
+    class="purpose-block skeletons-text"
     :text-content="capitalizedPurpose"
     :line-number="3"
     :style-limited="STYLE_LIMITED"
@@ -17,10 +15,9 @@ import { capitalize } from '~/functs/string'
 
 const props = defineProps<{
   project: TranslatedProject
-  loading: boolean
 }>()
 
-const capitalizedPurpose = computed(() => capitalize(props.project?.$t?.purpose))
+const capitalizedPurpose = computed(() => capitalize(props.project.$t.purpose))
 
 const STYLE_LIMITED = Object.freeze({
   fontWeight: 400,
@@ -36,8 +33,3 @@ const STYLE_FULL = Object.freeze({
   width: '100%',
 })
 </script>
-<style scoped lang="scss">
-.skeleton-block {
-  margin-top: 12px;
-}
-</style>

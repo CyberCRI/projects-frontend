@@ -3,6 +3,7 @@ useLpiHead2({
   title: "Plan de Continuité d'Activité",
 })
 </script>
+
 <template>
   <div class="page-section-narrow legal-page pca page-top">
     <h1

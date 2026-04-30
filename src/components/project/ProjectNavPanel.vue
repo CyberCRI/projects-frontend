@@ -1,6 +1,6 @@
 <template>
   <NavPanelAside>
-    <div v-if="project && canEditProject" class="edit-btn-ctn">
+    <div v-if="project && canEditProject" class="edit-btn-ctn skeletons-background">
       <GroupButton
         :model-value="isEditing"
         :options="[
@@ -16,29 +16,32 @@
     <NavPanelMenu
       :menu-entries="projectTabs"
       :current-tab="currentTab"
-      @navigated="navigated"
+      @navigated="emit('navigated')"
       @action-triggered="onActionTriggered"
     />
 
-    <div class="share-buttons">
+    <div class="share-buttons skeletons-background">
       <ExternalLabelButton
         v-if="usersStore.isConnected"
         class="space-button"
-        :label="followed ? $t('project.followed') : $t('project.follow')"
-        :btn-icon="followed ? 'BookmarkFill' : 'BookmarkLine'"
+        :label="isFollowing ? $t('project.followed') : $t('project.follow')"
+        :btn-icon="isFollowing ? 'BookmarkFill' : 'BookmarkLine'"
         vertical-layout
         label-on-hover
         @click="toggleFollow"
       />
       <ExternalLabelButton
-        v-if="announcements?.length"
+        v-if="project.modules.announcements"
         class="space-button article-button"
         :label="$t('group.news')"
         btn-icon="Article"
         vertical-layout
-        :nb-button="announcements.length.toString()"
+        :nb-button="project.modules.announcements"
         label-on-hover
-        @click="goToAnnouncements"
+        :to="{
+          name: 'projectAnnouncements',
+          params: { slugOrId: project.slug || project.id },
+        }"
       />
       <ExternalLabelButton
         class="space-button"
@@ -46,9 +49,12 @@
         btn-icon="ChatBubble"
         vertical-layout
         label-on-hover
-        @click="goToCommentView"
+        :to="{
+          name: 'projectComments',
+          params: { slugOrId: project.slug || project.id },
+        }"
       />
-      <template v-if="appGotenbergEnabled && usersStore.isConnected">
+      <!-- <template v-if="appGotenbergEnabled && usersStore.isConnected">
         <ExternalLabelButton
           v-if="!isProcessingPdf"
           class="space-button"
@@ -61,15 +67,15 @@
         <span v-else class="space-button-loader-ctn">
           <LoaderSimple class="space-button-loader" />
         </span>
-      </template>
+      </template> -->
 
       <SocialShareButton :shared-url="sharedUrl" />
     </div>
 
-    <div v-if="actionMenu.length" class="side-actions">
+    <div v-if="actionMenu.length" class="side-actions skeletons-background">
       <NavPanelMenu
         :menu-entries="actionMenu"
-        @navigated="navigated"
+        @navigated="emit('navigated')"
         @action-triggered="onActionTriggered"
       >
         <li class="navpanel-menu-entry">
@@ -84,10 +90,10 @@
                 <dt>{{ $t('header.views') }}</dt>
                 <dd>{{ project?.views }}</dd>
                 <dt>{{ $t('header.creation') }}</dt>
-                <dd>{{ $d(new Date(project.created_at)) }}</dd>
+                <dd v-if="project.created_at">{{ $d(new Date(project.created_at)) }}</dd>
 
                 <dt>{{ $t('header.update') }}</dt>
-                <dd>{{ $d(new Date(project.updated_at)) }}</dd>
+                <dd v-if="project.updated_at">{{ $d(new Date(project.updated_at)) }}</dd>
               </dl>
             </template>
             <span class="navpanel-menu-link" data-test="project-infos">
@@ -100,155 +106,62 @@
       </NavPanelMenu>
     </div>
 
-    <SimilarProjectsV2
+    <!-- <SimilarProjectsV2
       v-if="similarProjects && similarProjects.length"
       id="similar-projects"
       :similar-projects="similarProjects"
       class="similar-projects v2"
-    />
+    /> -->
   </NavPanelAside>
 </template>
 
-<script>
-import useUsersStore from '~/stores/useUsers.ts'
+<script setup lang="ts">
+import { useProjectFollow } from '@/pages/ProjectPageV2/useProject'
+import type { TranslatedProject } from '@/models/project.model'
+import useUsersStore from '@/stores/useUsers'
 
-import followUtils from '~/functs/followUtils.ts'
+const props = withDefaults(
+  defineProps<{
+    project: TranslatedProject
+    projectTabs?: any[]
+    currentTab?: any
+    isEditing?: boolean
+    // isProcessingPdf?: boolean
+    actionMenu?: any[]
+  }>(),
+  {
+    projectTabs: () => [],
+    currentTab: null,
+    isEditing: false,
+    // isProcessingPdf: false,
+    actionMenu: () => [],
+  }
+)
 
-export default {
-  name: 'ProjectNavPanel',
+const emit = defineEmits<{
+  navigated: []
+  'update-follow': any
+  'toggle-editing': [boolean]
+}>()
+// emits: ['update-follow', 'navigated', 'toggle-editing', 'duplicate-project', 'get-pdf'],
 
-  inject: ['projectLayoutToggleAddModal', 'projectLayoutGoToTab'],
+const usersStore = useUsersStore()
 
-  props: {
-    project: {
-      type: Object,
-      default: () => {},
-    },
+const { canEditProject } = usePermissions()
+const { isFollowing, toggleFollow } = useProjectFollow(computed(() => props.project))
+// const { appGotenbergEnabled } = useRuntimeConfig().public
 
-    similarProjects: {
-      type: Array,
-      default: () => [],
-    },
+const sharedUrl = useRequestURL()
 
-    announcements: {
-      type: Array,
-      default: () => [],
-    },
-    projectTabs: { type: Array, required: true },
-    currentTab: {
-      type: Object,
-      default: () => {},
-    },
-    follow: {
-      type: Object,
-      default: () => {},
-    },
-    isEditing: {
-      type: Boolean,
-      default: false,
-    },
-    actionMenu: {
-      type: Array,
-      default: () => [],
-    },
-    isProcessingPdf: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  emits: ['update-follow', 'navigated', 'toggle-editing', 'duplicate-project', 'get-pdf'],
-
-  setup() {
-    const usersStore = useUsersStore()
-    const { canEditProject, isAdmin, isOrgAdmin } = usePermissions()
-    const { appGotenbergEnabled } = useRuntimeConfig().public
-    return {
-      usersStore,
-      canEditProject,
-      isAdmin,
-      isOrgAdmin,
-      appGotenbergEnabled,
-    }
-  },
-
-  data() {
-    return {
-      addToProjectMenuVisible: false,
-      sharedUrl: useRequestURL().toString(),
-    }
-  },
-
-  computed: {
-    followed() {
-      return this.follow && this.follow.is_followed
-    },
-  },
-
-  methods: {
-    onActionTriggered(menuEntry) {
-      if (menuEntry.addModal === 'duplicate') {
-        this.$emit('duplicate-project')
-      } else {
-        this.projectLayoutToggleAddModal(menuEntry.addModal)
-      }
-    },
-
-    navigated() {
-      this.$emit('navigated')
-    },
-
-    switchView() {
-      this.$emit('toggle-editing', !this.isEditing)
-    },
-
-    // toggleAddToProject() {
-    //   this.addToProjectMenuVisible = !this.addToProjectMenuVisible
-    // },
-
-    // editProject() {
-    //   this.navigated()
-    //   this.projectLayoutToggleAddModal('project')
-    // },
-
-    async toggleFollow() {
-      try {
-        if (this.follow && this.follow.is_followed) {
-          await followUtils.unfollow({
-            follower_id: this.follow.follow_id,
-            project_id: this.project.id,
-          })
-          this.$emit('update-follow', { is_followed: false })
-        } else {
-          await followUtils.follow({
-            follower_id: this.usersStore.id,
-            project_id: this.project.id,
-          })
-          this.$emit('update-follow', {
-            follower_id: this.usersStore.id,
-            is_followed: true,
-          })
-        }
-      } catch (error) {
-        console.error('Error updating follow', error)
-      }
-    },
-
-    goToCommentView() {
-      this.navigated()
-      this.projectLayoutGoToTab('comments')
-    },
-    goToAnnouncements() {
-      this.navigated()
-      this.projectLayoutGoToTab('announcements')
-    },
-
-    /* TODO: Put this back once we figured out to who are we supposed to write to */
-    // mailTo() {
-    //     window?.open('mailto:projects.platform@learningplanetinstitute.org')
-    // },
-  },
+const onActionTriggered = () => {
+  // if (menuEntry.addModal === 'duplicate') {
+  //   emit('duplicate-project')
+  // } else {
+  //   this.projectLayoutToggleAddModal(menuEntry.addModal)
+  // }
 }
+
+const switchView = () => emit('toggle-editing', !props.isEditing)
 </script>
 
 <style lang="scss" scoped>
@@ -264,44 +177,6 @@ export default {
   margin-top: 3rem;
 }
 
-// .add-to-project-ctn {
-//   display: flex;
-//   justify-content: center;
-//   position: relative;
-//   padding: 0.5rem 0;
-
-//   .add-to-project-button:hover,
-//   .project-config-button:hover {
-//     opacity: 1 !important;
-//   }
-
-//   .add-to-project-button.active,
-//   .project-config-button.active {
-//     background-color: $white !important;
-//     color: $primary-dark !important;
-
-//     svg {
-//       fill: $primary-dark;
-//     }
-//   }
-
-//   .add-to-project,
-//   .project-config {
-//     position: absolute;
-//     z-index: $zindex-toast;
-//   }
-
-//   .add-to-project {
-//     bottom: 0;
-//     left: 1px;
-//   }
-
-//   .project-config {
-//     top: 42px;
-//     right: 0;
-//   }
-// }
-
 .share-buttons {
   display: flex;
   justify-content: space-between;
@@ -310,7 +185,7 @@ export default {
   margin: 0.5rem 0;
   border-width: 1px 0;
   border-style: solid;
-  border-color: $light-gray;
+  border-color: var(--light-gray);
 
   --external-button-outer-size: 1.2rem;
   --external-button-inner-size: 1.2rem;

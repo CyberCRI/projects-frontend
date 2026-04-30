@@ -1,6 +1,6 @@
-import ProjectPrivateExchangeTab from '~/pages/ProjectPageV2/Tabs/ProjectPrivateExchangeTab.vue'
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
+import ProjectPrivateExchangeTab from '~/pages/ProjectPageV2/Tabs/PrivateExchange/ProjectPrivateExchangeTab.vue'
 import { ProjectTeamOutputFactory } from '~~/tests/factories/project-member.factory'
 import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import { flushPromises } from '@vue/test-utils'

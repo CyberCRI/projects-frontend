@@ -31,6 +31,7 @@
         @delete-clicked="openModal(file, 'file')"
       />
     </div>
+    <EmptyLabel v-else />
 
     <SectionHeader
       v-if="linkResources.length"

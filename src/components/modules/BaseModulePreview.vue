@@ -1,0 +1,91 @@
+<template>
+  <div class="module shadowed-box2">
+    <div class="module-header">
+      <div class="title-container">
+        <IconImage v-if="icon" :name="icon" class="icon" />
+        <h2 class="title">
+          {{ title }}
+          <span v-if="!isNil(total)">({{ total }})</span>
+        </h2>
+      </div>
+      <slot v-if="!loading" name="header">
+        <SeeMoreArrow
+          v-if="seeMore && seeMorePosition === 'top'"
+          class="see-more-button"
+          :to="seeMore"
+        />
+      </slot>
+    </div>
+
+    <div class="module-container">
+      <slot v-if="loading" name="skeleton" />
+      <slot v-else name="content" />
+    </div>
+    <slot v-if="!loading" name="footer">
+      <SeeMoreArrow
+        v-if="seeMore && seeMorePosition === 'bottom'"
+        class="see-more-button"
+        :to="seeMore"
+      />
+    </slot>
+  </div>
+</template>
+
+<script setup lang="ts">
+import IconImage from '~/components/base/media/IconImage.vue'
+
+import type { IconImageChoice } from '~/functs/IconImage'
+import type { RouteLocationRaw } from 'vue-router'
+import { isNil } from 'es-toolkit'
+
+withDefaults(
+  defineProps<{
+    title: string
+    total?: number
+    seeMore?: RouteLocationRaw
+    loading?: boolean
+    icon?: IconImageChoice
+    seeMorePosition?: 'bottom' | 'top'
+  }>(),
+  { loading: false, icon: null, total: null, seeMore: null, seeMorePosition: 'top' }
+)
+</script>
+
+<style lang="scss" scoped>
+.module {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.module-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-transform: uppercase;
+  flex-wrap: wrap;
+}
+
+.module-container {
+  margin-top: 1rem;
+}
+
+.title-container {
+  color: $primary-dark;
+  fill: $primary-dark;
+  display: flex;
+  align-items: center;
+
+  .icon {
+    display: inline-block;
+    width: 1.5rem;
+    margin: 0 0.3rem;
+  }
+
+  .title {
+    display: inline-block;
+  }
+}
+</style>

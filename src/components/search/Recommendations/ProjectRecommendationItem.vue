@@ -1,25 +1,25 @@
 <template>
-  <li v-if="recommendation" class="recommendation-item">
+  <li class="recommendation-item">
     <NuxtLink
       class="recommendation"
       :to="{
-        name: 'projectSummary',
-        params: { slugOrId: recommendation.slug },
+        name: 'ProjectSnapshot',
+        params: { slugOrId: project.slug },
       }"
     >
       <CroppedApiImage
         ref="projectImg"
-        :alt="`${recommendation?.$t?.title} image`"
-        class="img-container"
-        :picture-data="recommendation?.header_image"
+        :alt="`${project.$t.title} image`"
+        class="img-container skeletons-background"
+        :picture-data="project.header_image"
         picture-size="small"
         :default-picture="DEFAULT_PROJECT_PATATOID"
       />
       <div class="text-container">
-        <span class="project-title">
-          {{ recommendation?.$t?.title }}
+        <span class="project-title skeletons-text">
+          {{ project.$t.title }}
         </span>
-        <span v-if="recommendation.isFeatured" class="is-featured">
+        <span v-if="project.isFeatured" class="is-featured skeletons-text">
           {{ $t('recommendations.is-featured') }}
         </span>
       </div>
@@ -27,13 +27,17 @@
   </li>
 </template>
 
-<script setup lang="ts">
-import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
+<script setup lang="ts" generic="">
+import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
+import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
+import type { TranslatedProject } from '@/models/project.model'
 
-import { DEFAULT_PROJECT_PATATOID } from '~/composables/usePatatoids'
+type TranslatedProjectRecomended = TranslatedProject & {
+  isFeatured?: boolean
+}
 
 defineProps<{
-  recommendation: any
+  project: TranslatedProjectRecomended
 }>()
 </script>
 

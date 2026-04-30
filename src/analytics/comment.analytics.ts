@@ -1,12 +1,11 @@
-import type { CommentModel } from '~/models/comment.model'
-
-import analytics from '~/analytics/index'
+import type { CommentModel, TranslatedComment } from '@/models/comment.model'
+import analytics from '@/analytics/index'
 
 export interface CommentAnalytic {
   project: {
     id: string
   }
-  comment: CommentModel
+  comment: CommentModel | TranslatedComment
 }
 
 export default {

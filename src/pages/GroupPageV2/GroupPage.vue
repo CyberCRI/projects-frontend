@@ -49,6 +49,8 @@
 </template>
 
 <script setup lang="ts">
+import type { MenuEntry } from '~/components/base/navigation/NavPanelMenu.vue'
+
 import { GroupModuleIcon, GroupModuleTitle } from '~/models/invitation.model'
 
 import { getGroup } from '~/api/v2/group.service'
@@ -130,7 +132,7 @@ const groupTabsDisplay = computed(() => {
       label: t(GroupModuleTitle.members, groupModules.value.members),
       view: `/group/${route.params.groupIdOrSlug}/members`,
       altView: `/group/${route.params.groupIdOrSlug}/members/edit`,
-      condition: groupModules.value.members,
+      condition: !!groupModules.value.members,
       icon: GroupModuleIcon.members,
     },
     {
@@ -140,7 +142,7 @@ const groupTabsDisplay = computed(() => {
       label: t(GroupModuleTitle.featured_projects, groupModules.value.featured_projects),
       view: `/group/${route.params.groupIdOrSlug}/projects`,
       altView: `/group/${route.params.groupIdOrSlug}/projects/edit`,
-      condition: groupModules.value.featured_projects,
+      condition: !!groupModules.value.featured_projects,
       icon: GroupModuleIcon.featured_projects,
     },
     {
@@ -150,7 +152,7 @@ const groupTabsDisplay = computed(() => {
       label: t(GroupModuleTitle.subgroups, groupModules.value.subgroups),
       view: `/group/${route.params.groupIdOrSlug}/subgroups`,
       altView: '',
-      condition: groupModules.value.subgroups,
+      condition: !!groupModules.value.subgroups,
       icon: GroupModuleIcon.subgroups,
     },
     {
@@ -163,7 +165,7 @@ const groupTabsDisplay = computed(() => {
       props: {
         documentType: 'publications',
       },
-      condition: groupModules.value.publications,
+      condition: !!groupModules.value.publications,
       icon: GroupModuleIcon.publications,
     },
     {
@@ -176,7 +178,7 @@ const groupTabsDisplay = computed(() => {
       props: {
         documentType: 'conferences',
       },
-      condition: groupModules.value.conferences,
+      condition: !!groupModules.value.conferences,
       icon: GroupModuleIcon.conferences,
     },
     {
@@ -186,7 +188,7 @@ const groupTabsDisplay = computed(() => {
       label: t(GroupModuleTitle.news, groupModules.value.news),
       view: `/group/${route.params.groupIdOrSlug}/news`,
       altView: `/group/${route.params.groupIdOrSlug}/news/edit`,
-      condition: groupModules.value.news,
+      condition: !!groupModules.value.news,
       icon: GroupModuleIcon.news,
     },
     {
@@ -196,7 +198,7 @@ const groupTabsDisplay = computed(() => {
       label: t(GroupModuleTitle.event, groupModules.value.event),
       view: `/group/${route.params.groupIdOrSlug}/event`,
       altView: `/group/${route.params.groupIdOrSlug}/event/edit`,
-      condition: groupModules.value.event,
+      condition: !!groupModules.value.event,
       icon: GroupModuleIcon.event,
     },
     {
@@ -206,7 +208,7 @@ const groupTabsDisplay = computed(() => {
       label: t(GroupModuleTitle.locations, groupModules.value.locations),
       view: `/group/${route.params.groupIdOrSlug}/locations`,
       altView: `/group/${route.params.groupIdOrSlug}/locations/edit`,
-      condition: groupModules.value.locations,
+      condition: !!groupModules.value.locations,
       icon: GroupModuleIcon.locations,
     },
     {
@@ -216,10 +218,10 @@ const groupTabsDisplay = computed(() => {
       label: t(GroupModuleTitle.gallery, groupModules.value.gallery),
       view: `/group/${route.params.groupIdOrSlug}/gallery`,
       altView: `/group/${route.params.groupIdOrSlug}/gallery/edit`,
-      condition: groupModules.value.gallery,
+      condition: !!groupModules.value.gallery,
       icon: GroupModuleIcon.gallery,
     },
-  ]
+  ] satisfies MenuEntry[]
 })
 
 const groupTabsEdit = computed(() => {
@@ -331,7 +333,7 @@ const groupTabsEdit = computed(() => {
       condition: true,
       icon: 'Pen',
     },
-  ]
+  ] satisfies MenuEntry[]
 })
 
 const groupTabsDisplayFiltered = computed(() => {

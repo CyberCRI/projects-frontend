@@ -1,22 +1,19 @@
 import { createFactory } from 'faker-create-factory'
 
 import { CommentInputModel, CommentOutput } from '~/models/comment.model'
+import { UserFactory } from './user.factory'
 import BaseFactory from './base.factory'
 
 export const CommentFactory = createFactory<CommentOutput>((faker) => ({
   ...BaseFactory.generate(),
   id: faker.datatype.number(),
-  author: {
-    email: faker.datatype.string(),
-    family_name: faker.datatype.string(),
-    given_name: faker.datatype.string(),
-    id: faker.datatype.number(),
-    people_id: faker.datatype.string(),
-  },
+  author: UserFactory.generate(),
   content: faker.datatype.string(),
   replies: [],
   deleted_at: faker.datatype.datetime().toISOString(),
   updated_at: faker.datatype.datetime().toISOString(),
+  created_at: faker.datatype.datetime().toISOString(),
+  images: [],
 }))
 
 export const CommentInputFactory = createFactory<CommentInputModel>((faker) => ({

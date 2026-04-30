@@ -48,6 +48,23 @@ export const ProjectFactory = createFactory<ProjectModel>((faker) => ({
   goals: GoalFactory.generateMany(2),
   slug: faker.lorem.slug(),
   updated_at: faker.date.past().toString(),
+  created_at: faker.date.past().toString(),
+  sdgs: [],
+  modules: {
+    members: 0,
+    groups: 0,
+    linked_projects: 0,
+    similars: 0,
+    locations: 0,
+    comments: 0,
+    goals: 0,
+    blogs: 0,
+    links: 0,
+    files: 0,
+    announcements: 0,
+    reviews: 0,
+    messages: 0,
+  },
 }))
 
 export const TranslatedProjectFactory = createFactory<TranslatedProject>(() => {
@@ -71,7 +88,7 @@ export const ProjectOutputFactory = createFactory<ProjectOutput>((faker) => ({
   categories: ProjectCategoryOutputFactory.generateMany(2),
   geolocation_coordinates: LocationFactory.generate(),
   tags: TagFactory.generateMany(2),
-  sdgs: SdgFactory.generateMany(2),
+  sdgs: [],
   goals: GoalFactory.generateMany(2),
   links: AttachmentLinkFactory.generateMany(2),
   files: AttachmentFileFactory.generateMany(2),

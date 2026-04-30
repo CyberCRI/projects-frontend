@@ -13,9 +13,9 @@ import type { TagModel, TagOutput } from '@/models/tag.model'
 import type { CommentOutput } from '@/models/comment.model'
 import type { Translated } from '@/interfaces/translated'
 import type { FollowOutput } from '@/models/follow.model'
+import type { IconImageChoice } from '@/functs/IconImage'
 import type { ReviewModel } from '@/models/review.model'
 import type { GoalOutput } from '@/models/goal.model'
-import type { SdgOutput } from '@/models/sdg.model'
 import type BaseModel from '@/models/base.model'
 
 /**
@@ -30,6 +30,7 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
   is_locked: boolean
   is_shareable: boolean
   purpose: string
+  categories: ProjectCategoryOutput[]
   organizations: OrganizationModel[]
   language: LanguageType
   locations: LocationOutput[]
@@ -37,6 +38,7 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
   life_status: ProjectStatusType
   reviews: ReviewModel[]
   tags: TagModel[]
+  sdgs: number[]
   is_followed: {
     is_followed: boolean
     follow_id: number
@@ -49,7 +51,57 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
   goals: GoalOutput[]
   slug: string
   updated_at: string
-  template?: TemplateModel
+  created_at: string
+  views?: number
+  modules: {
+    members: number
+    groups: number
+    linked_projects: number
+    similars: number
+    locations: number
+    comments: number
+    goals: number
+    blogs: number
+    announcements: number
+    links: number
+    files: number
+    reviews: number
+    messages: number
+  }
+}
+
+export type ProjectModulesKeys = keyof ProjectModel['modules']
+
+export const ProjectModuleIcon: { [key in ProjectModulesKeys]: IconImageChoice } = {
+  announcements: 'BullhornOutline',
+  blogs: 'Progress5',
+  goals: 'TimerLine',
+  members: 'Users',
+  similars: 'PeopleGroup',
+  locations: 'Map',
+  links: 'Paperclip',
+  files: 'Globe',
+  linked_projects: 'LinkRotated',
+  comments: 'ChatBubble',
+  groups: 'Briefcase',
+  reviews: 'Alert',
+  messages: 'ChatBubble',
+}
+
+export const ProjectModuleTitle: { [key in ProjectModulesKeys]: string } = {
+  announcements: 'home.announcements',
+  blogs: 'blog.title',
+  goals: 'goal.goals',
+  members: 'team.team',
+  similars: 'project.similars',
+  locations: 'project.add-to-project.location',
+  files: 'project.files',
+  links: 'project.links',
+  linked_projects: 'project.linked-projects',
+  comments: 'comment.comments',
+  groups: 'project,groups',
+  reviews: 'project.reviews',
+  messages: 'project.private-exchange',
 }
 
 export type TranslatedProject = Translated<
@@ -58,6 +110,8 @@ export type TranslatedProject = Translated<
 > & {
   template?: TranslatedTemplate
 }
+
+export type ProjectSlugOrId = ProjectModel['id'] | ProjectModel['slug']
 
 export type ProjectCreateInput = Required<ProjectModel> & {
   project_categories_ids: number
@@ -71,7 +125,13 @@ export type ProjectPatchInput = Partial<ProjectCreateInput>
 
 export type LinkedProject = {
   id: number
-  project: ProjectOutput
+  project: ProjectModel
+  target?: ProjectModel
+}
+
+export type TranslatedLinkedProject = LinkedProject & {
+  project: TranslatedProject
+  target?: TranslatedProject
 }
 
 export type LinkedProjectRef = {
@@ -97,7 +157,7 @@ export type ProjectOutput = Required<ProjectModel> & {
   categories: ProjectCategoryOutput[]
   geolocation_coordinates: LocationOutput
   tags: TagOutput[]
-  sdgs: SdgOutput[]
+  sdgs: number[]
   goals: GoalOutput[]
   links: AttachmentLinkOutput[]
   files: AttachmentFileOutput[]

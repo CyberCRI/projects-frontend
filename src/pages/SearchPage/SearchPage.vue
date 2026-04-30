@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const { searchFromQuery } = useSearch(null)
 
 const { onboardingTrap } = useOnboardingStatus()

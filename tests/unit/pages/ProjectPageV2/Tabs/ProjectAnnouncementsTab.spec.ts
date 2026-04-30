@@ -1,6 +1,6 @@
-import ProjectAnnouncementsTab from '~/pages/ProjectPageV2/Tabs/ProjectAnnouncementsTab.vue'
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
+import ProjectAnnouncementsTab from '~/pages/ProjectPageV2/Tabs/Announcements/ProjectAnnouncementsTab.vue'
 import { TranslatedAnnouncementFactory } from '~~/tests/factories/announcement.factory'
 import { ProjectFactory } from '~~/tests/factories/project.factory'
 import { describe, expect, it, vi } from 'vitest'

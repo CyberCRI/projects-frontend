@@ -1,28 +1,20 @@
 <template>
-  <div :class="{ loading }" class="project-header-ctn">
-    <ProjectStatus class="project-status" :project="project" :loading="loading" />
+  <div class="project-header-ctn">
+    <ProjectStatus class="project-status" :project="project" />
+
     <div class="img-block">
-      <ProjectHeaderImage class="img-ctn" :project="project" :loading="loading" />
+      <ProjectHeaderImage class="img-ctn" :project="project" />
     </div>
     <div class="text-content">
-      <ProjectHeaderTitle class="title-block" :project="project" :loading="loading" />
+      <ProjectHeaderTitle class="title-block" :project="project" />
 
-      <ProjectHeaderTagList
-        class="tag-list-bloc tag-list-desktop"
-        :project="project"
-        :loading="loading"
-      />
+      <ProjectHeaderTagList class="tag-list-bloc tag-list-desktop" :project="project" />
 
-      <ProjectHeaderPurpose
-        v-if="showPurposeWithEmptyContent"
-        class="purpose-block"
-        :project="project"
-        :loading="loading"
-      />
+      <ProjectHeaderPurpose class="purpose-block" :project="project" />
 
-      <ProjectHeaderVisibility class="visibility-ctn" :project="project" :loading="loading" />
+      <ProjectHeaderVisibility class="visibility-ctn" :project="project" />
 
-      <ProjectHeaderSdgList :sdgs="sdgs" :loading="loading" class="sdg-ctn" />
+      <ProjectHeaderSdgList :project="project" class="sdg-ctn" />
     </div>
   </div>
 </template>
@@ -32,22 +24,9 @@ import type { TranslatedProject } from '~/models/project.model'
 
 import ProjectStatus from '~/components/project/ProjectStatus.vue'
 
-const props = withDefaults(
-  defineProps<{
-    project?: TranslatedProject
-    sdgs?: number[]
-    loading?: boolean
-  }>(),
-  {
-    project: null,
-    sdgs: () => [],
-    loading: true,
-  }
-)
-
-const showPurposeWithEmptyContent = computed(() => {
-  return props.project && props.project.purpose.trim()
-})
+defineProps<{
+  project: TranslatedProject
+}>()
 </script>
 
 <style lang="scss" scoped>

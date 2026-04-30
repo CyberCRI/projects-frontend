@@ -7,15 +7,15 @@
   </section>
 </template>
 
-<script setup>
-defineOptions({ name: 'ProfileEditBlock' })
-
-defineProps({
-  blockTitle: {
-    type: String,
-    default: '',
-  },
-})
+<script setup lang="ts">
+withDefaults(
+  defineProps<{
+    blockTitle?: string
+  }>(),
+  {
+    blockTitle: '',
+  }
+)
 </script>
 
 <style lang="scss" scoped>

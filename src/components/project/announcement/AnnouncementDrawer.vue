@@ -68,6 +68,7 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 import useToasterStore from '~/stores/useToaster.ts'
 
 import { fullYearDateFormat } from '~/functs/date'
+import { NULL_CONTENT } from '~/functs/constants'
 import { textIsEmpty } from '~/functs/string'
 import analytics from '~/analytics'
 
@@ -121,7 +122,7 @@ export default {
       confirmModalIsOpen: false,
       form: {
         title: '',
-        description: '<p></p>',
+        description: NULL_CONTENT,
         deadline: null,
       },
       asyncing: false,
@@ -182,7 +183,7 @@ export default {
         if (this.isAddMode) {
           this.form = {
             title: '',
-            description: '<p></p>',
+            description: NULL_CONTENT,
             deadline: new Date(),
             type: 'na',
           }

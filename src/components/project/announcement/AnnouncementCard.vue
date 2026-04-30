@@ -1,7 +1,7 @@
 <template>
   <div class="announcement-wrapper">
     <div class="announcement-card shadow-box" @click="emit('know-more-clicked', announcement)">
-      <div class="announcement-header horizontal-padding top-padding">
+      <div class="announcement-header horizontal-padding top-padding skeletons-text">
         <span class="date-ctn">
           {{ $d(new Date(announcement.updated_at)) }}
         </span>
@@ -12,19 +12,22 @@
       </div>
 
       <div class="main-content horizontal-padding bottom-padding">
-        <h3 class="announcement-title bottom-padding">
+        <h3 class="announcement-title bottom-padding skeletons-text">
           {{ capitalize(announcement.title) }}
         </h3>
 
-        <div class="description" v-html="announcement.description" />
+        <div class="description skeletons-text" v-html="announcement.description" />
       </div>
       <div class="announcement-link horizontal-padding bottom-padding">
-        <span class="read">
+        <span class="read skeletons-background">
           <span class="icon"><IconImage name="ArrowRight" /></span>
           {{ t('common.read') }}
         </span>
       </div>
-      <div class="announcement-project horizontal-padding top-padding bottom-padding">
+      <div
+        class="announcement-project horizontal-padding top-padding bottom-padding skeletons-background"
+      >
+        <!-- TODO change background-image to ImageResize components -->
         <div
           :style="{
             'background-image': projectImage,
@@ -36,7 +39,7 @@
             {{ t('common.the-project') }}
           </h5>
           <h4 class="project-title">
-            {{ announcement.project.title }}
+            {{ projectActual.$t.title }}
           </h4>
         </div>
       </div>
@@ -45,22 +48,22 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedAnnouncement } from '~/models/announcement.model'
+import type { TranslatedAnnouncement } from '@/models/announcement.model'
+import type { TranslatedProject } from '@/models/project.model'
+import IconImage from '@/components/base/media/IconImage.vue'
+import { usePatatoid } from '@/composables/usePatatoids'
+import { capitalize } from '@/functs/string'
 
-import IconImage from '~/components/base/media/IconImage.vue'
-
-import { usePatatoid } from '~/composables/usePatatoids'
-
-import { capitalize } from '~/functs/string'
-
-const props = defineProps<{ announcement: TranslatedAnnouncement }>()
+const props = defineProps<{ project?: TranslatedProject; announcement: TranslatedAnnouncement }>()
 
 const emit = defineEmits(['know-more-clicked'])
 
 const { t } = useNuxtI18n()
 
+const projectActual = computed(() => props.project ?? props.announcement.project)
+
 const projectImage = computed(() => {
-  return `url(${props.announcement.project?.header_image?.variations?.small}), url(${usePatatoid(1)})`
+  return `url(${projectActual.value?.header_image?.variations?.small}), url(${usePatatoid(1)})`
 })
 </script>
 
@@ -69,16 +72,16 @@ $annoucement-picto-size: 72px;
 $annoucement-padding: pxToRem(20px);
 
 .announcement-wrapper {
-  width: min-content;
+  width: 100%;
 
   .announcement-card {
     position: relative;
-    border: $border-width-s solid $primary;
+    border: $border-width-s solid var(--primary);
     border-radius: $border-radius-m;
-    width: 356px;
-    height: 462px;
-    background: $white;
-    color: $black;
+    width: 100%;
+    height: 480px;
+    background: var(--white);
+    color: var(--black);
     display: flex;
     flex-flow: column nowrap;
 
@@ -96,7 +99,7 @@ $annoucement-padding: pxToRem(20px);
     }
 
     .announcement-header {
-      color: $primary-dark;
+      color: var(--primary-dark);
       font-size: $font-size-s;
       font-weight: 700;
       text-transform: uppercase;
@@ -146,7 +149,7 @@ $annoucement-padding: pxToRem(20px);
       border: 0 none;
       outline: none;
       background-color: transparent;
-      color: $primary-dark;
+      color: var(--primary-dark);
       font-weight: 700;
       font-size: $font-size-m;
       text-transform: capitalize;
@@ -160,7 +163,7 @@ $annoucement-padding: pxToRem(20px);
         display: inline-block;
 
         svg {
-          fill: $primary-dark;
+          fill: var(--primary-dark);
         }
       }
     }
@@ -168,13 +171,13 @@ $annoucement-padding: pxToRem(20px);
     .announcement-project {
       flex: 0 0 0;
       display: flex;
-      background-color: $primary-lighter;
+      background-color: var(--primary-lighter);
       border-bottom-left-radius: $border-radius-m;
       border-bottom-right-radius: $border-radius-m;
 
       .project-label {
         text-transform: uppercase;
-        color: $primary-dark;
+        color: var(--primary-dark);
         font-size: $font-size-2xs;
         font-weight: bold;
         margin: 0;
@@ -231,7 +234,7 @@ $annoucement-padding: pxToRem(20px);
   }
 
   a {
-    color: $primary-dark;
+    color: var(--primary-dark);
 
     &:hover {
       text-decoration: underline;

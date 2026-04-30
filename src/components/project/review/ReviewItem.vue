@@ -1,6 +1,6 @@
 <template>
   <div class="review">
-    <div class="actions">
+    <div v-if="editable" class="actions">
       <ContextActionButton
         v-if="canDestroyReview"
         action-icon="Close"
@@ -20,7 +20,7 @@
       <CroppedApiImage
         :alt="`${review.reviewer.given_name} ${review.reviewer.family_name} image`"
         class="image"
-        :picture-data="review?.reviewer?.profile_picture"
+        :picture-data="review.reviewer.profile_picture"
         picture-size="medium"
         :default-picture="DEFAULT_USER_PATATOID"
       />
@@ -34,40 +34,27 @@
     </div>
 
     <div class="review-content">
-      <div class="title" v-html="review?.$t?.title" />
+      <div class="title" v-html="review.$t.title" />
 
-      <div class="des" v-html="review?.$t?.description" />
+      <div class="des" v-html="review.$t.description" />
     </div>
   </div>
 </template>
-<script>
-import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
-import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 
-import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
+<script setup lang="ts">
+import ContextActionButton from '@/components/base/button/ContextActionButton.vue'
+import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
+import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
+import type { TranslatedReview } from '@/models/review.model'
 
-export default {
-  name: 'ReviewItem',
+withDefaults(defineProps<{ review: TranslatedReview; editable?: boolean }>(), { editable: false })
 
-  components: {
-    CroppedApiImage,
-    ContextActionButton,
-  },
+defineEmits<{
+  'delete-review': [TranslatedReview]
+  'edit-review': [TranslatedReview]
+}>()
 
-  props: {
-    review: {
-      type: Object,
-      required: true,
-    },
-  },
-
-  emits: ['delete-review', 'edit-review'],
-
-  setup() {
-    const { canDestroyReview, canAddReview } = usePermissions()
-    return { canDestroyReview, canAddReview, DEFAULT_USER_PATATOID }
-  },
-}
+const { canDestroyReview, canAddReview } = usePermissions()
 </script>
 
 <style lang="scss" scoped>

@@ -1,5 +1,5 @@
-<script setup>
-import useUsersStore from '~/stores/useUsers.ts'
+<script setup lang="ts">
+import useUsersStore from '~/stores/useUsers'
 
 import { SDGS } from '~/functs/constants'
 import { shuffle } from 'es-toolkit'
@@ -39,6 +39,7 @@ const connectOptions = {
   // url: IS_STREAMED.value ? '/api/chat-stream' : '/api/chat',
   url: CHAT_ENDPOINT.value,
   stream: IS_STREAMED.value,
+  headers: {},
 }
 const usersStore = useUsersStore()
 const accessToken = usersStore.accessToken
@@ -273,7 +274,9 @@ function placeCaretAtEnd(el) {
     const sel = window.getSelection()
     sel.removeAllRanges()
     sel.addRange(range)
+    // @ts-expect-error createTextRange not correct
   } else if (typeof document.body.createTextRange != 'undefined') {
+    // @ts-expect-error createTextRange not correct
     const textRange = document.body.createTextRange()
     textRange.moveToElementText(el)
     textRange.collapse(false)
@@ -407,7 +410,10 @@ watch(
     let res = ''
     const pageMeta = route.matched
       .filter((r) => !!r.meta.chatBotContext)
-      .map((r) => r.meta.chatBotContext(route))
+      .map((r) => {
+        const chatBotContext = r.meta.chatBotContext as (any) => void
+        chatBotContext(route)
+      })
       .join('\n')
 
     if (pageMeta)
@@ -444,7 +450,6 @@ watch(
       :messageStyles="messageStyles"
       :stream="IS_STREAMED"
       :remarkable="remarkableOptions"
-      :customButtons="customButtons"
       auxiliaryStyle="
         a {
           color: #1d727c;

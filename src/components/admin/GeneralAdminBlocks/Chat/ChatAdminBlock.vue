@@ -12,11 +12,11 @@
     <template v-if="hasChat" #default>
       <p class="chat-data">
         <strong>{{ $t('chat.data.wording') }}</strong>
-        <span>{{ chat_button_text }}</span>
+        <span>{{ chatButtonText }}</span>
       </p>
       <p class="chat-data">
         <strong>{{ $t('chat.data.link') }}</strong>
-        <a v-if="chat_url" target="_blank" :href="chat_url">{{ chat_url }}</a>
+        <a v-if="chatURL" target="_blank" :href="chatURL">{{ chatURL }}</a>
         <span v-else>{{ $t('chat.data.no-link') }}</span>
       </p>
     </template>
@@ -27,61 +27,35 @@
     @chat-edited="reloadOrganization"
   />
 </template>
-<script>
+
+<script setup lang="ts">
 import EditChatDrawer from '~/components/admin/GeneralAdminBlocks/Chat/EditChatDrawer.vue'
 import LinkButton from '~/components/base/button/LinkButton.vue'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useOrganizationsStore from '~/stores/useOrganizations'
 
-import AdminBlock from '../AdminBlock.vue'
+const organizationsStore = useOrganizationsStore()
+const editChatIsOpen = ref(false)
+const isLoading = ref(false)
+const organizationCode = useOrganizationCode()
 
-export default {
-  name: 'ChatAdminBlock',
+const { t } = useNuxtI18n()
 
-  components: {
-    AdminBlock,
-    LinkButton,
-    EditChatDrawer,
-  },
-  setup() {
-    const organizationsStore = useOrganizationsStore()
-    return {
-      organizationsStore,
-    }
-  },
-  data() {
-    return {
-      editChatIsOpen: false,
-      isLoading: false,
-    }
-  },
+const organization = computed(() => organizationsStore.current)
 
-  computed: {
-    organization() {
-      return this.organizationsStore.current
-    },
+const blockTitle = computed(() => {
+  return t('admin.portal.chat')
+})
 
-    blockTitle() {
-      return this.$t('admin.portal.chat')
-    },
-    hasChat() {
-      return !!this.chat_url
-    },
+const chatURL = computed(() => organization.value?.chat_url)
+const hasChat = computed(() => !!chatURL.value)
 
-    chat_button_text() {
-      return this.organization?.chat_button_text || this.$t('chat.data.no-wording')
-    },
+const chatButtonText = computed(() => {
+  return organization.value?.chat_button_text || t('chat.data.no-wording')
+})
 
-    chat_url() {
-      return this.organization?.chat_url
-    },
-  },
-
-  methods: {
-    reloadOrganization() {
-      this.organizationsStore.getCurrentOrganization(this.organization.code)
-    },
-  },
+const reloadOrganization = () => {
+  organizationsStore.getCurrentOrganization(organizationCode)
 }
 </script>
 <style lang="scss" scoped>

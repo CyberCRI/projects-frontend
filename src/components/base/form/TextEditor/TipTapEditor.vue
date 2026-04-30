@@ -4,8 +4,8 @@ import {
   emitsDefinitions,
   useTipTap,
 } from '~/components/base/form/TextEditor/useTipTap'
-import TipTapEditorContainer from '~/components/base/form/TextEditor/TipTapEditorContainer.vue'
-import TipTapEditorContent from '~/components/base/form/TextEditor/TipTapEditorContent.vue'
+import TipTapEditorContainer from '@/components/base/form/TextEditor/TipTapEditorContainer.vue'
+import TipTapEditorContent from '@/components/base/form/TextEditor/TipTapEditorContent.vue'
 import type { PropsDefinitions } from '~/components/base/form/TextEditor/useTipTap'
 import TipTapModals from '~/components/base/form/TextEditor/TipTapModals.vue'
 
@@ -40,6 +40,7 @@ defineExpose({
   resetContent,
 })
 </script>
+
 <template>
   <TipTapEditorContainer v-if="editor" :editor="editor" :mode="mode">
     <TipTapModals

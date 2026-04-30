@@ -6,28 +6,28 @@
   >
     <CroppedApiImage
       :alt="user.id ? `${user.given_name} ${user.family_name} image` : `${user.name} image`"
-      class="picture"
+      class="picture skeletons-background"
       :picture-data="user.profile_picture"
       picture-size="medium"
       :default-picture="DEFAULT_USER_PATATOID"
     />
-    <span v-if="roleLabel" class="badge" data-test="leader-badge">
+    <span v-if="roleLabel" class="badge skeletons-text" data-test="leader-badge">
       {{ t(roleLabel) }}
     </span>
 
     <div v-if="isNotGroup(user)" class="name-ctn">
-      <h4 class="user-name">
+      <h4 class="user-name skeletons-text">
         {{ userName }}
       </h4>
     </div>
 
     <!--        TODO: ask Api to send information-->
-    <div v-if="isNotGroup(user)" class="job">
+    <div v-if="isNotGroup(user)" class="job skeletons-text">
       {{ user?.$t?.job }}
     </div>
 
     <div v-if="isGroup(user)" class="name-ctn">
-      <h4 class="user-name">
+      <h4 class="user-name skeletons-text">
         {{ user.name }}
       </h4>
     </div>

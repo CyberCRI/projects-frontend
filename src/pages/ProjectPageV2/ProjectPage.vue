@@ -1,205 +1,117 @@
 <script setup lang="ts">
-import { getProject } from '~/api/projects.service'
-
-import useToasterStore from '~/stores/useToaster'
-import useGlobalsStore from '~/stores/useGlobals'
-
-import useProjectSocket from './useProjectSocket'
-import useProjectModals from './useProjectModals'
-import useProjectData from './useProjectData'
-import useProjectNav from './useProjectNav'
-import utils from '~/functs/functions'
+import { useProjectHierarchy } from '@/pages/ProjectPageV2/useProject'
+import { useProjectTabs } from '@/pages/ProjectPageV2/ProjectTabs'
+import { projectSkeleton } from '@/skeletons/project.skeletons'
+import type { ProjectSlugOrId } from '@/models/project.model'
+import { getProject } from '@/api/v2/project.service'
 
 const route = useRoute()
-const router = useRouter()
-
-const globalsStore = useGlobalsStore()
-
-const toaster = useToasterStore()
 
 const { t } = useNuxtI18n()
-
-const { modals, toggleAddModal, closeModal } = useProjectModals()
-
-const loading = ref(true)
 
 const uniqueId = 'project-nav-panel'
 const { isNavCollapsed, toggleNavPanel, collapseIfUnderBreakpoint } =
   useToggleableNavPanel(uniqueId)
 
-const onNavigated = collapseIfUnderBreakpoint
+const { canEditProject, isOrgUser } = usePermissions()
 
+const projectIdOrSlug = computed<ProjectSlugOrId>(() => route.params.slugOrId.toString())
+
+const organizationCode = useOrganizationCode()
 const {
-  // data
-  project,
-  similarProjects,
-  locations,
-  announcements,
-  follow,
-  sdgs,
-  linkedProjects,
-  commentLoop,
-  linkedProjectsLoading,
-  postFecthProjectHook,
-  //computed
-  fileResources,
-  linkResources,
-  goals,
-  team,
-  // blogEntries,
-  mergedTeam,
-  projectTabs,
-  currentTab,
-  categoryHierarchy,
-  isEditing,
-  actionMenu,
-  // methods
-  getGoals,
-  getLinkedProjects,
-  getSdgs,
-  reloadTeam,
-  getBlogEntries,
-  getFileResources,
-  getLinkResources,
-  getAnnouncements,
-  reloadProject,
-  setProject,
-  getProjectLocations,
-  toggleEditing,
-  duplicateProject,
-} = useProjectData()
-
-const { canEditProject } = usePermissions()
-
-const { connectToSocket, cleanupProvider, projectPatched } = useProjectSocket({
-  project,
-  reloadProject,
-  getBlogEntries,
+  status,
+  data: project,
+  error,
+} = getProject(organizationCode, projectIdOrSlug, {
+  default: projectSkeleton,
 })
 
-const { generateAndDownloadPdf } = useProjectToPdf()
+const { tabs, currentTab, isEditing, toggleEditing } = useProjectTabs(projectIdOrSlug, project)
 
-const { translateProject } = useAutoTranslate()
+// set headers
+watchEffect(() => {
+  useLpiHead2({
+    title: project.value?.$t?.title,
+    description: project.value?.$t?.purpose,
+    image: project.value?.header_image,
+  })
+})
 
-const { goToProjectTab } = useProjectNav(route.params.slugOrId)
+const breadcrumbs = useProjectHierarchy(project)
+const actionMenu = computed(() =>
+  [
+    {
+      icon: 'Copy',
+      condition: canEditProject.value || isOrgUser.value,
+      label: t('project.duplicate'),
+      isAddAction: true,
+      addModal: 'duplicate',
+      dataTest: 'duplicate-project',
+    },
+    {
+      icon: 'Bug',
+      condition: true,
+      label: t('report.bug'),
+      isAddAction: true,
+      addModal: 'bug',
+      dataTest: 'report-bug',
+    },
+    {
+      icon: 'Flag',
+      condition: true,
+      label: t('report.abuse'),
+      isAddAction: true,
+      addModal: 'abuse',
+      dataTest: 'report-abuse',
+    },
+  ].filter((a) => a.condition)
+)
 
-const onDuplicateProject = async () => {
-  try {
-    // emit('asyncing', true)
-    globalsStore.uiIsLocked = true
+// const { connectToSocket, cleanupProvider, projectPatched } = useProjectSocket({
+//   project,
+//   reloadProject,
+//   getBlogEntries,
+// })
+// onMounted(() => {
+//   if (import.meta.client) {
+//     connectToSocket()
+//   }
+// })
 
-    const projectCopy = await duplicateProject()
-    router.push({
-      name: 'projectSummary',
-      params: { slugOrId: projectCopy.slug },
-    })
+// const onDuplicateProject = async () => {
+//   try {
+//     // emit('asyncing', true)
+//     globalsStore.uiIsLocked = true
 
-    toaster.pushSuccess(t('toasts.project-duplication.success'))
-  } catch (error) {
-    toaster.pushError(`${t('toasts.project-duplication.error')} (${error})`)
-    console.error(error)
-  } finally {
-    // emit('asyncing', false)
-    globalsStore.uiIsLocked = false
-  }
-}
+//     const projectCopy = await duplicateProject()
+//     router.push({
+//       name: 'ProjectSnapshot',
+//       params: { slugOrId: projectCopy.slug },
+//     })
+
+//     toaster.pushSuccess(t('toasts.project-duplication.success'))
+//   } catch (error) {
+//     toaster.pushError(`${t('toasts.project-duplication.error')} (${error})`)
+//     console.error(error)
+//   } finally {
+//     // emit('asyncing', false)
+//     globalsStore.uiIsLocked = false
+//   }
+// }
 
 // provide
-provide('projectLayoutToggleAddModal', toggleAddModal)
-provide('projectLayoutGoToTab', goToProjectTab)
-provide('projectLayoutProjectPatched', projectPatched)
-
-// hooks
-
-// onBeforeUnmount(() => {
-//     if (commentLoop.value) clearInterval(commentLoop.value)
-//     cleanupProvider()
-// })
-const setLpiHead = (_projectData) => {
-  if (_projectData) {
-    const projectData = translateProject(_projectData)
-    const { image, dimensions } = useImageAndDimension(projectData.value?.header_image, 'medium')
-    try {
-      useLpiHead(
-        useRequestURL().toString(),
-        computed(() => projectData.value?.$t?.title || projectData.value.title),
-        computed(() => projectData.value?.$t?.purpose || projectData.value.purpose),
-        image,
-        dimensions
-      )
-    } catch (e) {
-      console.error(e)
-    }
-  }
-}
-if (import.meta.server) {
-  try {
-    // project might need access right
-    const projectData = await getProject(route.params.slugOrId.toString(), true)
-    setLpiHead(projectData)
-  } catch (err) {
-    // DGAF
-    console.log(err)
-  }
-}
-
-postFecthProjectHook.value = setLpiHead
-
-onMounted(async () => {
-  if (import.meta.client) {
-    try {
-      loading.value = true
-      await setProject(route.params.slugOrId)
-      connectToSocket()
-      loading.value = false
-      utils.resetScroll()
-    } catch (err) {
-      console.log(err)
-      router.replace({
-        name: 'page404',
-        params: { pathMatch: route.path.substring(1).split('/') },
-      })
-    }
-  }
-})
-
-onBeforeRouteUpdate((to, from, next) => {
-  if (to.params.slugOrId !== from.params.slugOrId) {
-    if (commentLoop.value) clearInterval(commentLoop.value)
-    cleanupProvider()
-  }
-  next()
-})
-
-if (import.meta.client) {
-  watchEffect(() => {
-    if (route.hash == '#tab') {
-      // nextTick(() => window?.scrollTo({ top: 0, behavior: 'smooth' }))
-    }
-  })
-}
-
-const chooseGoalOrSdg = (choice) => {
-  toggleAddModal(choice)
-  toggleAddModal('goalOrSdg')
-}
+provide('projectLayoutToggleAddModal', () => {})
+provide('projectLayoutGoToTab', () => {})
+provide('projectLayoutProjectPatched', () => {})
 
 const editable = computed(() => isEditing.value && canEditProject.value)
-const isProcessingPdf = ref(false)
-const getAsPDF = async () => {
-  isProcessingPdf.value = true
-  await generateAndDownloadPdf({
-    project: project.value,
-    team: team.value,
-    goals: goals.value,
-    // blogEntries: blogEntries.value,
-    fileResources: fileResources.value,
-    linkResources: linkResources.value,
-    linkedProjects: linkedProjects.value,
-  })
-  isProcessingPdf.value = false
-}
+
+const propsTab = computed(() => ({
+  editable: editable.value,
+  project: project.value,
+}))
 </script>
+
 <template>
   <div
     class="page-section-extra-wide project-layout"
@@ -208,126 +120,33 @@ const getAsPDF = async () => {
       'project-display-layout': !isEditing,
     }"
   >
-    <NavPanelLayout
-      v-if="!loading"
-      :is-loading="loading"
-      :is-nav-collapsed="isNavCollapsed"
-      :breadcrumbs="categoryHierarchy || []"
-      @toggle-nav-panel="toggleNavPanel"
-      @collapse-nav-panel="isNavCollapsed = true"
-    >
-      <template #nav-panel>
-        <LazyProjectNavPanel
-          v-if="!loading && !isNavCollapsed"
-          class="slide-panel"
-          :class="{ collapsed: isNavCollapsed }"
-          :project-tabs="projectTabs"
-          :current-tab="currentTab"
-          :project="project"
-          :announcements="announcements"
-          :similar-projects="similarProjects"
-          :follow="follow"
-          :is-editing="isEditing"
-          :is-processing-pdf="isProcessingPdf"
-          :action-menu="actionMenu"
-          @toggle-editing="toggleEditing"
-          @update-follow="follow = $event"
-          @navigated="onNavigated"
-          @duplicate-project="onDuplicateProject"
-          @get-pdf="getAsPDF"
-        />
-      </template>
-      <template #content>
-        <SubPageTitle :title-prefix="project?.$t?.title" :current-tab="currentTab" />
-        <NuxtPage v-bind="currentTab?.props" />
-      </template>
-    </NavPanelLayout>
-
-    <NavPanelLoader v-if="loading" />
-
-    <!-- add/edit modals -->
-    <LazyProjectDrawer
-      v-if="modals.project.visible"
-      :is-opened="modals.project.visible"
-      @close="closeModal('project')"
-      @project-edited="reloadProject"
-    />
-    <LazyGoalDrawer
-      :project="project"
-      :edited-goal="modals.goal.editedItem"
-      :is-opened="modals.goal.visible"
-      @close="closeModal('goal')"
-      @reload-goals="getGoals"
-    />
-    <LazyTeamDrawer
-      :project="project"
-      :current-users="mergedTeam"
-      :selected-categories="project?.categories || []"
-      :edited-user="modals.teamMember?.editedItem || null"
-      :is-opened="modals.teamMember.visible"
-      @close="closeModal('teamMember')"
-      @reload-team="reloadTeam"
-    />
-    <LazyProjectResourceDrawer
-      :project="project"
-      :is-add-mode="!modals.resource.editedItem"
-      :is-opened="modals.resource.visible"
-      :selected-item="modals.resource.editedItem"
-      @close="closeModal('resource')"
-      @reload-file-resources="getFileResources"
-      @reload-link-resources="getLinkResources"
-    />
-    <LazyAnnouncementDrawer
-      :project="project"
-      :announcement="modals.announcement.editedItem"
-      :is-add-mode="!modals.announcement.editedItem"
-      :is-opened="modals.announcement.visible"
-      @reload-announcements="getAnnouncements"
-      @close="closeModal('announcement')"
-    />
-    <LazyLinkedProjectDrawer
-      :project="project"
-      :already-linked-projects="linkedProjects"
-      :edited-linked-project="modals.linkedProject.editedItem"
-      :is-opened="modals.linkedProject.visible"
-      :is-loading="linkedProjectsLoading"
-      @reload-linked-projects="getLinkedProjects($event)"
-      @close="closeModal('linkedProject')"
-    />
-    <LazyProjectLocationDrawer
-      :project="project"
-      :locations="locations"
-      :is-opened="modals.location.visible"
-      :editable="editable"
-      @reload="getProjectLocations"
-      @close="closeModal('location')"
-    />
-    <LazyBlogDrawer
-      :project="project"
-      :edited-blog="modals.blogEntry.editedItem"
-      :is-add-mode="!modals.blogEntry.editedItem"
-      :is-opened="modals.blogEntry.visible"
-      @close="closeModal('blogEntry')"
-      @reload-blog-entries="getBlogEntries"
-    />
-
-    <LazyProjectSdgsDrawer
-      class="medium"
-      :project="project"
-      :is-opened="modals.sdg.visible"
-      :sdgs="sdgs || []"
-      @reload-sdgs="getSdgs"
-      @close="closeModal('sdg')"
-    />
-    <LazyGoalOrSdgsDrawer
-      :is-opened="modals.goalOrSdg.visible"
-      @close="closeModal('goalOrSdg')"
-      @choice-made="chooseGoalOrSdg"
-    />
-
-    <LazyReportDrawer :is-opened="modals.bug.visible" type="bug" @close="closeModal('bug')" />
-
-    <LazyReportDrawer :is-opened="modals.abuse.visible" type="abuse" @close="closeModal('abuse')" />
+    <FetchLoader :status="status" only-error :error="error" error404 skeleton>
+      <NavPanelLayout
+        :is-nav-collapsed="isNavCollapsed"
+        :breadcrumbs="breadcrumbs"
+        @toggle-nav-panel="toggleNavPanel"
+        @collapse-nav-panel="isNavCollapsed = true"
+      >
+        <template #nav-panel>
+          <ProjectNavPanel
+            v-if="!isNavCollapsed"
+            class="slide-panel"
+            :class="{ collapsed: isNavCollapsed }"
+            :project-tabs="tabs"
+            :current-tab="currentTab"
+            :project="project"
+            :action-menu="actionMenu"
+            :is-editing="isEditing"
+            @toggle-editing="toggleEditing"
+            @navigated="collapseIfUnderBreakpoint"
+          />
+        </template>
+        <template #content>
+          <SubPageTitle :title-prefix="project.$t.title" :current-tab="currentTab" />
+          <NuxtPage v-if="currentTab" v-bind="propsTab" />
+        </template>
+      </NavPanelLayout>
+    </FetchLoader>
   </div>
 </template>
 

@@ -1,6 +1,6 @@
-import ProjectEditDescriptionTab from '~/pages/ProjectPageV2/Tabs/ProjectEditDescriptionTab.vue'
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
+import ProjectEditDescriptionTab from '~/pages/ProjectPageV2/Tabs/Description/ProjectEditDescriptionTab.vue'
 import { ProjectFactory } from '~~/tests/factories/project.factory'
 import { UserFactory } from '~~/tests/factories/user.factory'
 import { describe, expect, it, vi } from 'vitest'

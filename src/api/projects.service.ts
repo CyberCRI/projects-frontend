@@ -1,18 +1,22 @@
 import type {
   AddLinkedProjectInput,
   AddManyLinkedProjectInput,
+  ProjectModel,
   // LinkedProject,
   // ProjectHeaderOutput,
   // ProjectOutput,
   ProjectPatchInput,
-} from '~/models/project.model'
+  ProjectSlugOrId,
+} from '@/models/project.model'
+import { _adaptParamsToGetQuery } from '@/api/utils.service'
+import type { SearchParams } from '@/api/types'
+import useAPI from '@/composables/useAPI'
 
-import { _adaptParamsToGetQuery } from '~/api/utils.service'
-import type { SearchParams } from '~/api/types'
+import type { ProjectMemberModel, QueryFilterProjectMembers } from '@/models/project-member.model'
+import { imageSizesFormData } from '@/functs/imageSizesUtils'
 
-import useAPI from '~/composables/useAPI'
-
-import { imageSizesFormData } from '~/functs/imageSizesUtils'
+type Config = UseApiOptions
+type ConfigMembers = UseApiOptions<QueryFilterProjectMembers>
 
 export async function createProject(project) {
   const result: any = await useAPI(`project/`, { body: project, method: 'POST' })
@@ -47,6 +51,13 @@ export async function duplicateProject(id: string) {
   return await useAPI(`project/${id}/duplicate/`, { method: 'POST' })
 }
 
+export async function getLinkedProject(projectId: ProjectSlugOrId, config: Config = {}) {
+  return await useAPI<PaginationResult<ProjectModel>>(
+    `project/${projectId}/linked-project/`,
+    config
+  )
+}
+
 export async function addLinkedProject({
   id,
   body,
@@ -73,10 +84,18 @@ export async function deleteLinkedProject({ id, project_id }: { id: number; proj
   return await useAPI(`project/${project_id}/linked-project/${id}/`, { method: 'DELETE' })
 }
 
-export async function getProject(slugOrId: string, noError: boolean = false) {
-  return await useAPI(`project/${slugOrId}/`, {
-    noError: noError,
-  })
+export async function getProject(projectSlugOrId: ProjectSlugOrId, config = {}) {
+  return await useAPI<ProjectModel>(`project/${projectSlugOrId}/`, config)
+}
+
+export async function getProjectMembers(
+  projectSlugOrId: ProjectSlugOrId,
+  config: ConfigMembers = {}
+) {
+  return await useAPI<PaginationResult<ProjectMemberModel>>(
+    `project/${projectSlugOrId}/members/`,
+    config
+  )
 }
 
 export async function getAllRecommendedProjects(params: SearchParams) {
