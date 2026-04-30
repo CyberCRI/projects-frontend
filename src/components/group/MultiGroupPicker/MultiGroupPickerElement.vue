@@ -40,27 +40,31 @@
     </div>
   </li>
 </template>
-<script setup>
+
+<script setup lang="ts">
+import type { GroupModel, HierarchyGroupModel } from '~/models/group.model'
 import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 
-defineOptions({ name: 'MultiGroupPickerElement' })
+type Group = Omit<HierarchyGroupModel, 'children'> & {
+  hidden?: boolean
+  disabled?: boolean
+  children: Group[]
+}
 
-const props = defineProps({
-  group: {
-    type: Object,
-    required: true,
-  },
-  selectedGroups: {
-    type: Object,
-    default: () => ({}),
-  },
-
-  forceOpen: {
-    type: Boolean,
-    default: false,
-  },
-})
+const props = withDefaults(
+  defineProps<{
+    group: Group
+    selectedGroups?: {
+      [key: GroupModel['id']]: boolean
+    }
+    forceOpen?: boolean
+  }>(),
+  {
+    selectedGroups: () => ({}),
+    forceOpen: false,
+  }
+)
 
 const emit = defineEmits(['toggle-group'])
 const showChild = ref(false)

@@ -22,7 +22,7 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import { getStats } from '~/api/stats.service'
 
 import TimeOrgChart from '~/components/stats/Charts/TimeOrgChart.vue'
@@ -32,50 +32,24 @@ import TagChart from '~/components/stats/Charts/TagChart.vue'
 import SdgChart from '~/components/stats/Charts/SdgChart.vue'
 import StatCard from '~/components/stats/StatCard.vue'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
+const props = withDefaults(
+  defineProps<{
+    filter?: string
+  }>(),
+  {
+    filter: '',
+  }
+)
 
-export default {
-  name: 'StatsByTab',
+const organizationCode = useOrganizationCode()
 
-  components: {
-    StatCard,
-    LpiLoader,
-    SdgChart,
-    TagChart,
-    TimeOrgChart,
-    TotalChart,
-  },
-  props: {
-    filter: {
-      type: String,
-      default: '',
-    },
-  },
-  setup() {
-    const organizationsStore = useOrganizationsStore()
-    return {
-      organizationsStore,
-    }
-  },
+const isLoading = ref(true)
+const stats = ref()
 
-  data() {
-    return {
-      isLoading: true,
-      renderCount: 0,
-      stats: undefined,
-    }
-  },
-  computed: {
-    organization() {
-      return this.organizationsStore.current
-    },
-  },
-
-  async created() {
-    this.stats = await getStats(this.filter, this.organization.code)
-    this.isLoading = false
-  },
-}
+onMounted(async () => {
+  stats.value = await getStats(organizationCode, { query: { publication_status: props.filter } })
+  isLoading.value = false
+})
 </script>
 
 <style lang="scss" scoped>

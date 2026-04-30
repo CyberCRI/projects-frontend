@@ -80,9 +80,10 @@ export type NewsHeaderOutput = {
   created_at: Date
 }
 
-export type QueryFilterNews = Partial<{
-  ordering: Ordering<'created_at' | 'updated_at' | 'publication_date'>
-  from_date: string
-  to_date: string
-}> &
-  Partial<PaginationQuery>
+export type QueryFilterNews = Partial<
+  {
+    ordering: Ordering<'created_at' | 'updated_at' | 'publication_date'>
+    from_date: string
+    to_date: string
+  } & PaginationQuery
+>

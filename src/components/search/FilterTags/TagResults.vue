@@ -149,7 +149,7 @@ export default {
         this.request = await getOrgClassificationTags(
           this.organizationsStore.current.code,
           classificationId,
-          options
+          { query: options }
         )
           //.then((r) => r.data) // TODO: classificationName: this.allClassifications[j].title,
           .catch(() => ({

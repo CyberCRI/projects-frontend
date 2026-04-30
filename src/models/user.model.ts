@@ -8,6 +8,7 @@ import type { ImageModel } from '~/models/image.model'
 import type { ResearcherLight } from '~/interfaces/researcher'
 import type { Translated } from '~/interfaces/translated'
 
+import type BaseModel from '~/models/base.model'
 import type { TagModel } from './tag.model'
 
 export type PrivacyValue = 'hide' | 'org' | 'pub'
@@ -121,7 +122,8 @@ export interface UserPrivacyPatchModel {
   twitter?: PrivacyValue
 }
 
-export interface UserSkillModel {
+export interface UserSkillModel extends BaseModel {
+  id: number
   user: string
   tag: TagModel
   level: number
@@ -130,6 +132,7 @@ export interface UserSkillModel {
   type: 'skill' | 'hobby'
   can_mentor: boolean
   needs_mentor: boolean
+  comment: string
 }
 
 export type TranslatedUserModel = Translated<

@@ -1,6 +1,7 @@
-import type { TranslatedUserModel, UserModel } from '~/models/user.model'
-import type { ProjectMemberRoleType } from '~/models/types'
-import type BaseModel from '~/models/base.model'
+import type { TranslatedUserModel, UserModel } from '@/models/user.model'
+import type { ProjectMemberRoleType } from '@/models/types'
+import type { Ordering } from '@/interfaces/query'
+import type BaseModel from '@/models/base.model'
 
 /**
  * Member of a project
@@ -55,3 +56,10 @@ export type ProjectTeamOutput = {
 }
 
 export type ProjectMemberOutput = ProjectMemberModel
+
+export type QueryFilterProjectMembers = Partial<
+  {
+    ordering: Ordering<'role'>
+    role: ProjectMemberRoleType
+  } & PaginationQuery
+>

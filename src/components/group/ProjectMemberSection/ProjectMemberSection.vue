@@ -28,20 +28,12 @@
   </div>
 </template>
 
-<script setup>
-import SectionHeader from '~/components/base/SectionHeader.vue'
-import LpiButton from '~/components/base/button/LpiButton.vue'
+<script setup lang="ts">
+import SectionHeader from '@/components/base/SectionHeader.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import useViewportWidth from '@/composables/useViewportWidth'
 
-import useViewportWidth from '~/composables/useViewportWidth.ts'
-
-defineOptions({ name: 'ProjectMemberSection' })
-
-const props = defineProps({
-  members: {
-    type: Array,
-    required: true,
-  },
-})
+const props = defineProps<{ members: any }>()
 
 const emit = defineEmits(['user-click'])
 const { isMobile } = useViewportWidth()

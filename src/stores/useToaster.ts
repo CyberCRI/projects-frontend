@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { toRaw } from 'vue'
 
 export type ToastType = 'error' | 'warning' | 'info' | 'success'
 
@@ -16,6 +17,7 @@ type ToastConfig = Toast & {
 
 export interface ToastState {
   toastList: Toast[]
+  timeouts: any // any == Timeout result
 }
 
 export const DEFAULT_TOAST_DURATION = 5 * 1000
@@ -23,39 +25,45 @@ export const DEFAULT_TOAST_DURATION = 5 * 1000
 const useToasterStore = defineStore('toaster', {
   state: (): ToastState => ({
     toastList: [],
+    timeouts: new Map(),
   }),
 
   actions: {
-    _findIndexToast({ message, type }: ToastConfig) {
-      return this.toastList.findIndex((item) => item.message === message && item.type === type)
+    _findIndexToast({ message, type }: Toast) {
+      return this.toastList.find((item) => item.message === message && item.type === type)
     },
-    deleteToast(toastIndex: number): void {
-      this.toastList.splice(toastIndex, 1)
-    },
-
-    _deleteToastFromToast(toast: Pick<Toast, 'message' | 'type'>) {
-      const findedIndex = this.toastList.findIndex(
-        (item) => item.message === toast.message && item.type === toast.type
-      )
+    deleteToast(toast: Toast): void {
+      const findedIndex = this.toastList.findIndex((item) => toRaw(item) === toRaw(toast))
       if (findedIndex !== -1) {
-        this.deleteToast(findedIndex)
+        const timeout = this.timeouts.get(toast)
+        if (timeout !== undefined) {
+          clearTimeout(timeout)
+          this.timeouts.delete(toast)
+        }
+        this.toastList.splice(findedIndex, 1)
       }
     },
 
-    _pushToast({ message, type, remaining, duration, translate }: ToastConfig) {
-      this._deleteToastFromToast({ message, type })
+    _deleteToastFromInfo(toast: Pick<Toast, 'message' | 'type'>) {
+      this.deleteToast(this._findIndexToast(toast))
+    },
 
-      this.toastList.push({
+    _pushToast({ message, type, remaining, duration, translate }: ToastConfig) {
+      this._deleteToastFromInfo({ message, type })
+
+      const toast = {
         message,
         type,
         isOpened: true,
         translate: !!translate,
-      })
+      }
+      this.toastList.push(toast)
       if (!remaining) {
-        setTimeout(
-          () => this._deleteToastFromToast({ message, type }),
+        const timeout = setTimeout(
+          () => this.deleteToast(toast),
           duration || DEFAULT_TOAST_DURATION
         )
+        this.timeouts.set(toast, timeout)
       }
     },
 

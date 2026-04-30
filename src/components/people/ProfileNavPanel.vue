@@ -68,43 +68,30 @@
   </NavPanelAside>
 </template>
 
-<script setup>
-defineOptions({ name: 'ProfileNavPanel' })
+<script setup lang="ts">
+import type { MenuEntry } from '~/components/base/navigation/NavPanelMenu.vue'
+import type { PeopleModel } from '~/models/people.model'
+import type { RouteLocationRaw } from 'vue-router'
 
-const props = defineProps({
-  user: {
-    type: Object,
-    default: () => {},
-  },
-
-  isSelf: {
-    type: Boolean,
-    default: false,
-  },
-
-  editButtonLabel: {
-    type: String,
-    required: true,
-  },
-  editProfileLink: {
-    type: Object,
-    required: true,
-  },
-
-  canEditUser: {
-    type: Boolean,
-    default: false,
-  },
-  profileTabs: { type: Array, required: true },
-  currentTab: {
-    type: Object,
-    default: () => {},
-  },
-  isEditing: {
-    type: Boolean,
-    default: false,
-  },
-})
+const props = withDefaults(
+  defineProps<{
+    user?: PeopleModel
+    isSelf?: boolean
+    editButtonLabel: string
+    editProfileLink: RouteLocationRaw
+    canEditUser?: boolean
+    profileTabs: MenuEntry[]
+    currentTab?: MenuEntry
+    isEditing?: boolean
+  }>(),
+  {
+    user: null,
+    isSelf: false,
+    canEditUser: false,
+    currentTab: null,
+    isEditing: false,
+  }
+)
 
 const router = useRouter()
 const emit = defineEmits(['navigated'])

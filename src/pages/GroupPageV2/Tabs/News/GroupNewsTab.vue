@@ -1,16 +1,14 @@
 <template>
-  <BaseGroupTab :title="$t(GroupModuleTitle.news)" :count="countElement">
+  <BaseModuleTab :title="$t(GroupModuleTitle.news)" :count="countElement">
     <BaseGroupNewsList :group="group" :editable="isInEditingMode" />
-  </BaseGroupTab>
+  </BaseModuleTab>
 </template>
 
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
-import { GroupModuleTitle } from '~/models/invitation.model'
-
-import BaseGroupNewsList from '~/components/group/Modules/News/BaseGroupNewsList.vue'
-
-import BaseGroupTab from '~/pages/GroupPageV2/Tabs/BaseGroupTab.vue'
+import BaseGroupNewsList from '@/components/group/Modules/News/BaseGroupNewsList.vue'
+import type { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
+import { GroupModuleTitle } from '@/models/invitation.model'
 
 const props = withDefaults(
   defineProps<{

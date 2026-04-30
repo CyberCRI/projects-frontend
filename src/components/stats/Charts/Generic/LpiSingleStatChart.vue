@@ -5,14 +5,15 @@
   </div>
 </template>
 
-<script setup>
-defineOptions({ name: 'LpiSingleStatChart' })
-const props = defineProps({
-  number: {
-    type: Number,
-    default: null,
-  },
-})
+<script setup lang="ts">
+const props = withDefaults(
+  defineProps<{
+    number?: number
+  }>(),
+  {
+    number: null,
+  }
+)
 
 const chartData = null
 const displayedNumber = ref(0)

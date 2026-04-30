@@ -39,7 +39,7 @@ const { isMobile } = useViewportWidth()
             <LpiButton
               v-if="!isMobile && !isNavCollapsed"
               btn-icon="MenuFoldLine"
-              class="toggle-button nav-panel-toggle-button"
+              class="toggle-button nav-panel-toggle-button skeletons-background"
               secondary
               @click="toggleNavPanel"
             />
@@ -52,7 +52,7 @@ const { isMobile } = useViewportWidth()
           <LpiButton
             v-if="isMobile || isNavCollapsed"
             btn-icon="MenuUnfoldLine"
-            class="toggle-button nav-panel-toggle-button nav-panel-toggle-button-collapsed"
+            class="toggle-button nav-panel-toggle-button nav-panel-toggle-button-collapsed skeletons-background"
             secondary
             @click="toggleNavPanel"
           />
@@ -78,7 +78,7 @@ const { isMobile } = useViewportWidth()
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgb(0 0 0 / 70%);
+    background-color: color-mix(in srgb, var(--black), transparent 70%);
     z-index: 99;
   }
 }
@@ -130,36 +130,4 @@ const { isMobile } = useViewportWidth()
 .content-panel {
   flex-basis: 100%;
 }
-
-// @media screen and (max-width: $min-tablet) {
-//   .slide-panel-enter-from,
-//   .slide-panel-leave-to {
-//     transform: translateX(-100%);
-//   }
-
-//   .slide-panel-enter-active,
-//   .slide-panel-leave-active {
-//     transition: transform 0.2s ease-in-out;
-//   }
-
-//   .slide-panel-enter-to,
-//   .slide-panel-leave-from {
-//     transform: translateX(0);
-//   }
-
-//   .backdrop-fade-enter-active,
-//   .backdrop-fade-leave-active {
-//     transition: opacity 0.2s ease-in-out;
-//   }
-
-//   .backdrop-fade-enter-to,
-//   .backdrop-fade-leave-from {
-//     opacity: 1;
-//   }
-
-//   .backdrop-fade-enter-from,
-//   .backdrop-fade-leave-to {
-//     opacity: 0;
-//   }
-// }
 </style>

@@ -3,6 +3,7 @@ useLpiHead2({
   title: 'Accessibilité',
 })
 </script>
+
 <template>
   <div class="page-section-narrow legal-page accessibility page-top">
     <h1 class="page-title">Accessibilité</h1>

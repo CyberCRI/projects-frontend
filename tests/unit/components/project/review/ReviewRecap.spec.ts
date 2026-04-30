@@ -100,6 +100,7 @@ describe('ReviewRecap.vue', () => {
     const wrapper = setUpComponent({
       project,
       reviews,
+      editable: true,
     })
 
     expect(wrapper.findAll('.edit-btn').length).toBe(2)

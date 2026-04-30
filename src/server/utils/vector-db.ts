@@ -6,6 +6,8 @@ import { OpenAIEmbeddings } from '@langchain/openai'
 import { parse } from 'pg-connection-string'
 import pg from 'pg'
 
+type PGVectorConfig = Parameters<typeof PGVectorStore.initialize>['1']
+
 let vectorStore = null
 let pool = null
 
@@ -34,7 +36,7 @@ export default async () => {
         apiKey,
       })
 
-      const config = {
+      const config: PGVectorConfig = {
         pool,
         dimensions: vectorDimensions,
         tableName: vectorTableName,

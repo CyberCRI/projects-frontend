@@ -1,17 +1,19 @@
 import type { GoalForm, GoalModel } from '@/models/goal.model'
-import type { ProjectModel } from '@/models/project.model'
+import type { ProjectSlugOrId } from '@/models/project.model'
 import useAPI from '@/composables/useAPI'
 
-export async function getAllGoals(projectId: ProjectModel['id'], config = {}) {
-  return await useAPI(`project/${projectId}/goal/`, config)
+type ConfigGoal = UseApiOptions
+
+export async function getAllGoals(projectId: ProjectSlugOrId, config: ConfigGoal = {}) {
+  return await useAPI<PaginationResult<GoalModel>>(`project/${projectId}/goal/`, config)
 }
 
-export async function createGoal(projectId: ProjectModel['id'], body: GoalForm, config = {}) {
+export async function createGoal(projectId: ProjectSlugOrId, body: GoalForm, config = {}) {
   return await useAPI<GoalModel>(`project/${projectId}/goal/`, { ...config, body, method: 'POST' })
 }
 
 export async function patchGoal(
-  projectId: ProjectModel['id'],
+  projectId: ProjectSlugOrId,
   goalId: GoalModel['id'],
   body: GoalForm,
   config = {}
@@ -23,11 +25,7 @@ export async function patchGoal(
   })
 }
 
-export async function deleteGoal(
-  projectId: ProjectModel['id'],
-  goalId: GoalModel['id'],
-  config = {}
-) {
+export async function deleteGoal(projectId: ProjectSlugOrId, goalId: GoalModel['id'], config = {}) {
   return await useAPI<undefined>(`project/${projectId}/goal/${goalId}/`, {
     ...config,
     method: 'DELETE',

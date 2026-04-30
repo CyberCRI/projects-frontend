@@ -8,7 +8,7 @@ export const GoalFactory = createFactory<GoalModel>((faker) => ({
   id: faker.datatype.number(),
   title: faker.datatype.string(),
   description: faker.lorem.sentence(),
-  deadline_at: faker.date.soon().toISOString(),
+  deadline_at: faker.datatype.datetime().toISOString(),
   status: 'ongoing',
 }))
 

@@ -1,7 +1,7 @@
 import { emailToReport } from '~~/tests/playwright/variables'
 import { LogLevel, Logger } from '~~/tests/playwright/logger'
-import { delay } from '~~/tests/playwright/lib/index'
 import { expect } from '@playwright/test'
+import { delay } from 'es-toolkit'
 const logger = new Logger(LogLevel.Debug)
 
 export async function reportAbuse(page) {

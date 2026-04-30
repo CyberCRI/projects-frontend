@@ -56,6 +56,7 @@
         :label="$t(seeMoreLabel)"
         @click="showFullList = !showFullList"
       />
+      <empty-label v-if="(showFullList ? modelValue : shortList).length === 0" />
     </div>
 
     <GroupTeamDrawer

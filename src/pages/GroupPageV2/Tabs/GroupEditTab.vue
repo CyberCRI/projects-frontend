@@ -22,8 +22,8 @@ import { isEqual } from 'es-toolkit'
 
 const props = defineProps({
   groupIdOrSlug: {
-    type: [Number, null],
-    required: true,
+    type: [Number, String],
+    default: null,
   },
   postCancelRouteFactory: {
     type: [Function, null],

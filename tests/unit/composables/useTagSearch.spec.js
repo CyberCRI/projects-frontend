@@ -1,7 +1,7 @@
 import { getAllOrgClassifications } from '~/api/tag-classification.service'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import useTagSearch from '~/composables/useTagSearch.js'
+import useTagSearch from '~/composables/useTagSearch.ts'
 
 vi.mock('~/stores/useOrganizations')
 vi.mock('~/api/tag-classification.service', () => ({

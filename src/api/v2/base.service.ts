@@ -9,6 +9,7 @@ export type UseAsyncApiConfig<Query = useAsyncConfig['query']> = {
 } & Pick<useAsyncConfig, 'immediate'>
 
 export type UseAsyncPaginationApiConfig<Query = useAsyncConfig['query']> = {
-  query?: RefOrRaw<Query>
+  // remove PaginationQuery (use paginationConfig)
+  query?: RefOrRaw<Omit<Query, keyof PaginationQuery>>
   default?: () => any
 } & Pick<useAsyncPaginationConfig, 'paginationConfig' | 'immediate'>

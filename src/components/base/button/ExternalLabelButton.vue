@@ -1,5 +1,6 @@
 <template>
-  <button
+  <component
+    :is="is"
     class="external-btn"
     :class="{
       'reversed-order': reversedOrder,
@@ -7,6 +8,7 @@
       'has-border': hasBorder,
       'label-on-hover': labelOnHover,
     }"
+    :to="to"
   >
     <div v-if="btnIcon" class="over-button">
       <IconImage :name="btnIcon" class="btn" />
@@ -16,23 +18,25 @@
     </div>
 
     <span v-if="label" data-test="button-label" class="label">{{ label }}</span>
-  </button>
+  </component>
 </template>
 
 <script setup lang="ts">
-import IconImage from '~/components/base/media/IconImage.vue'
+import IconImage from '@/components/base/media/IconImage.vue'
+import type { IconImageChoice } from '@/functs/IconImage'
+import type { RouteLocationRaw } from 'vue-router'
+import { NuxtLink } from '#components'
 
-import type { IconImageChoice } from '~/functs/IconImage'
-
-withDefaults(
+const props = withDefaults(
   defineProps<{
     label?: string
     btnIcon?: IconImageChoice
     verticalLayout?: boolean
     reversedOrder?: boolean
     hasBorder?: boolean
-    nbButton?: string
+    nbButton?: number
     labelOnHover?: boolean
+    to?: RouteLocationRaw
   }>(),
   {
     label: '',
@@ -42,8 +46,11 @@ withDefaults(
     hasBorder: false,
     nbButton: null,
     labelOnHover: false,
+    to: null,
   }
 )
+
+const is = computed(() => (props.to ? NuxtLink : 'button'))
 </script>
 
 <style lang="scss" scoped>

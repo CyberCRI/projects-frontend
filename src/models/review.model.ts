@@ -1,4 +1,7 @@
-import type BaseModel from '~/models/base.model'
+import type { Translated } from '@/interfaces/translated'
+import type { UserModel } from '@/models/user.model'
+import type { Ordering } from '@/interfaces/query'
+import type BaseModel from '@/models/base.model'
 
 /**
  * @name ReviewModel
@@ -8,16 +11,22 @@ export interface ReviewModel extends BaseModel {
   id: number
   description: string
   title: string
-  reviewer: {
-    id: number
-    email: string
-    given_name: string
-    family_name: string
-  }
+  reviewer: UserModel
   created_at: string
+  updated_at: string
 }
 
 export type ReviewModelInput = Required<ReviewModel> & {
   reviewer_id: string
   project_id: string
 }
+
+export type TranslatedReview = Translated<ReviewModel, 'title' | 'description'>
+
+export type QueryFilterReviews = Partial<
+  {
+    project: number
+    reviewer: number
+    ordering: Ordering<'created_at' | 'updated_at'>
+  } & PaginationQuery
+>

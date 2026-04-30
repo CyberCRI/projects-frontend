@@ -1,19 +1,27 @@
-import type BaseModel from '~/models/base.model'
+import type { Translated } from '@/interfaces/translated'
+import type { UserModel } from '@/models/user.model'
+import type { Ordering } from '@/interfaces/query'
+import type BaseModel from '@/models/base.model'
 
 /**
  * @name CommentModel
  * @description Comment of a project
  * */
 export interface ProjectMessageModel extends BaseModel {
+  id: number
   content: string
-  author: {
-    email: string
-    family_name: string
-    given_name: string
-    id: number
-    people_id: string
-  }
-  deleted_at: Date
+  author: UserModel
+  created_at: string
+  deleted_at: string
+  updated_at: string
+  replies: ProjectMessageModel[]
+}
+
+export type TranslatedProjectMessage = Translated<
+  Omit<ProjectMessageModel, 'replies'>,
+  'content'
+> & {
+  replies: TranslatedProjectMessage[]
 }
 
 export type ProjectMessageInputModel = Required<ProjectMessageModel> & {
@@ -26,3 +34,9 @@ export type ProjectMessageInputModel = Required<ProjectMessageModel> & {
 export type ProjectMessageOutput = Required<ProjectMessageModel> & {
   replies: Array<ProjectMessageModel>
 }
+
+export type QueryFilterProjectMessage = Partial<
+  {
+    ordering: Ordering<'created_at' | 'updated_at'>
+  } & PaginationQuery
+>
