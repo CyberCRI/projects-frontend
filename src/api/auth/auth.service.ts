@@ -148,6 +148,7 @@ export async function refreshAccessToken(): Promise<any> {
     await oauth.processRefreshTokenResponse(as, client, response)
   const payload = await keycloak.processKeycloakResponse(result)
   return {
+    expires_in: payload.expires_in,
     access_token: payload.access_token,
     refresh_token: payload.refresh_token,
     refresh_token_exp: payload.refresh_token_exp,
