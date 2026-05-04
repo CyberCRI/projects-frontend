@@ -3,40 +3,35 @@
     <SearchOptions
       v-bind="$props"
       @search-options-updated="$emit('search-options-updated', $event)"
-      @filter-section-update="$emit('filter-section-update', $event)"
     />
   </div>
 </template>
-<script>
-export default {
-  name: 'SearchBlock',
 
-  props: {
-    showSectionFilter: {
-      type: Boolean,
-      default: false,
-    },
+<script setup lang="ts">
+import type { ALL_SECTIONS } from '~/components/search/Filters/useSectionFilters'
 
-    section: {
-      type: [String, null],
-      default: null, // ALL_SECTION_KEY,
-    },
+withDefaults(
+  defineProps<{
+    showSectionFilter?: boolean
+    // ALL_SECTION_KEY,
+    section?: ALL_SECTIONS
+    // filters we dont want to show/edit but are still active (i.e. categories in category page)
+    filterBlackList?: any[]
+    freezeSearch?: boolean
+  }>(),
+  {
+    showSectionFilter: false,
+    section: null,
+    filterBlackList: () => [],
+    freezeSearch: false,
+  }
+)
 
-    filterBlackList: {
-      // filters we dont want to show/edit but are still active (i.e. categories in category page)
-      type: Array,
-      default: () => [],
-    },
-
-    freezeSearch: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  emits: ['search-options-updated', 'filter-section-update'],
-}
+defineEmits<{
+  'search-options-updated': [ALL_SECTIONS]
+}>()
 </script>
+
 <style lang="scss" scoped>
 .search-input-container {
   display: flex;

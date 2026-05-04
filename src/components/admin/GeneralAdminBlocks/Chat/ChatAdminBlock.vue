@@ -1,5 +1,5 @@
 <template>
-  <AdminBlock :block-title="blockTitle" :is-loading="isLoading">
+  <AdminBlock :block-title="t('admin.portal.chat')" :is-loading="isLoading">
     <template #actions>
       <LinkButton
         v-if="hasChat"
@@ -27,7 +27,6 @@
     @chat-edited="reloadOrganization"
   />
 </template>
-
 <script setup lang="ts">
 import EditChatDrawer from '~/components/admin/GeneralAdminBlocks/Chat/EditChatDrawer.vue'
 import LinkButton from '~/components/base/button/LinkButton.vue'
@@ -42,10 +41,6 @@ const organizationCode = useOrganizationCode()
 const { t } = useNuxtI18n()
 
 const organization = computed(() => organizationsStore.current)
-
-const blockTitle = computed(() => {
-  return t('admin.portal.chat')
-})
 
 const chatURL = computed(() => organization.value?.chat_url)
 const hasChat = computed(() => !!chatURL.value)

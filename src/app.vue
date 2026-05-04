@@ -47,7 +47,7 @@ import useUsersStore from '~/stores/useUsers'
 import { fixTiptapTableHeight } from '~/functs/editorUtils'
 
 useRuntimeHook('app:error', (error) => {
-  console.log('app:error', error)
+  console.error('app:error', error)
 })
 
 const route = useRoute()

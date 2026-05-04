@@ -10,7 +10,7 @@
   />
 </template>
 <script setup lang="ts">
-import type { ImageModel } from '~/models/image.model'
+import type { ImageModel, ImageVariations } from '~/models/image.model'
 
 import CroppedImage from '~/components/base/media/CroppedImage.vue'
 
@@ -23,7 +23,7 @@ defineOptions({ name: 'CroppedApiImage' })
 const props = withDefaults(
   defineProps<{
     pictureData?: ImageModel
-    pictureSize?: keyof ImageModel['variations']
+    pictureSize?: ImageVariations
     defaultPicture: string
     alt?: string
     contain?: boolean

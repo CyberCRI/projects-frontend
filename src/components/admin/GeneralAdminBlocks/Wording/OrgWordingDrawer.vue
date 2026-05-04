@@ -10,7 +10,7 @@
   >
     <div class="field-section title-section">
       <TextInput
-        v-model="title"
+        v-model="form.dashboard_title"
         :label="$t('admin.portal.general.wording.fields.title')"
         :placeholder="$t('admin.portal.general.wording.fields.title-placeholder')"
         class="input-field"
@@ -23,7 +23,7 @@
       </h4>
       <TipTapEditor
         ref="tiptapEditor"
-        v-model="description"
+        v-model="form.description"
         :save-image-callback="saveOrganizationImage"
         class="input-field content-editor"
         mode="full"
@@ -33,109 +33,82 @@
   </BaseDrawer>
 </template>
 
-<script>
-import { patchOrganization, postOrganizationImage } from '~/api/organizations.service.ts'
+<script setup lang="ts">
+import { patchOrganization, postOrganizationImage } from '~/api/organizations.service'
 
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
-import useToasterStore from '~/stores/useToaster.ts'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useToasterStore from '~/stores/useToaster'
 import { NULL_CONTENT } from '~/functs/constants'
 
-export default {
-  name: 'OrgWordingDrawer',
+const props = withDefaults(defineProps<{ isOpened?: boolean }>(), { isOpened: false })
 
-  components: {
-    TipTapEditor,
-    BaseDrawer,
-    TextInput,
+const emit = defineEmits<{
+  close: []
+  'organization-edited': []
+}>()
+
+const { t } = useNuxtI18n()
+const toaster = useToasterStore()
+const organizationsStore = useOrganizationsStore()
+
+const form = ref({
+  dashboard_title: '',
+  description: '',
+})
+const addedImages = ref([])
+const asyncing = ref(false)
+const organization = computed(() => organizationsStore.current)
+const organizationCode = useOrganizationCode()
+
+watch(
+  () => props.isOpened,
+  () => {
+    // reset form
+    form.value.dashboard_title = organization.value?.dashboard_title || ''
+    form.value.description = organization.value?.description || NULL_CONTENT
   },
+  {
+    immediate: true,
+  }
+)
 
-  props: {
-    isOpened: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  emits: ['close', 'organization-edited'],
-  setup() {
-    const toaster = useToasterStore()
-    const organizationsStore = useOrganizationsStore()
-    return {
-      toaster,
-      organizationsStore,
-    }
-  },
-
-  data() {
-    const org = this.organizationsStore.current
-    const title = org?.dashboard_title || ''
-
-    return {
-      title: title,
-      description: org?.description || NULL_CONTENT,
-      addedImages: [],
-      asyncing: false,
-    }
-  },
-
-  computed: {
-    organization() {
-      return this.organizationsStore.current
-    },
-  },
-
-  watch: {
-    isOpened() {
-      const org = this.organization
-      this.description = org?.description || NULL_CONTENT
-    },
-  },
-
-  methods: {
-    saveOrganizationImage(file) {
-      const formData = new FormData()
-      formData.append('file', file, file.name)
-      return postOrganizationImage({
-        orgCode: this.organization.code,
-        body: formData,
-      })
-    },
-
-    async saveWording() {
-      this.asyncing = true
-
-      try {
-        const payload = {
-          dashboard_title: this.title,
-          description: this.description,
-        }
-
-        await patchOrganization(this.organizationsStore.current?.code, payload)
-        this.$emit('organization-edited')
-        this.toaster.pushSuccess(this.$t('admin.portal.general.wording.success'))
-      } catch (err) {
-        this.toaster.pushError(`${this.$t('admin.portal.general.wording.error')} (${err})`)
-        console.error(err)
-      } finally {
-        this.asyncing = false
-        this.$emit('close')
-      }
-    },
-
-    close() {
-      this.$emit('close')
-    },
-
-    handleImage(img) {
-      // TODO see BlogDrawer
-      this.addedImages.push(img.id)
-    },
-  },
+const saveOrganizationImage = (file) => {
+  const formData = new FormData()
+  formData.append('file', file, file.name)
+  return postOrganizationImage({
+    orgCode: organizationCode,
+    body: formData,
+  })
 }
+
+const saveWording = async () => {
+  asyncing.value = true
+
+  try {
+    const payload = {
+      ...form.value,
+    }
+
+    await patchOrganization(organizationCode, payload)
+    emit('organization-edited')
+    toaster.pushSuccess(t('admin.portal.general.wording.success'))
+  } catch (err) {
+    toaster.pushError(`${t('admin.portal.general.wording.error')} (${err})`)
+    console.error(err)
+  } finally {
+    asyncing.value = false
+    emit('close')
+  }
+}
+
+const close = () => emit('close')
+
+// TODO see BlogDrawer
+const handleImage = (img) => addedImages.value.push(img.id)
 </script>
 <style lang="scss" scoped>
 .field-section {

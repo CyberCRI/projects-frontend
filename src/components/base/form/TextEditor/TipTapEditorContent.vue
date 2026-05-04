@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { EditorContent } from '@tiptap/vue-3'
+import type { Editor } from '@tiptap/vue-3'
 
 // props
 const props = withDefaults(
   defineProps<{
-    editor: any
+    editor: Editor
     editorFrozen?: boolean
     isConnected?: boolean
   }>(),

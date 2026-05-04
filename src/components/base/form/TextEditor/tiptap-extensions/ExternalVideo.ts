@@ -1,5 +1,15 @@
 import { Node, mergeAttributes } from '@tiptap/core'
 
+declare module '@tiptap/core' {
+  interface Commands<ReturnType> {
+    ExternalVideo: {
+      setExternalVideo: () => ReturnType
+      deleteExternalVideo: () => ReturnType
+      setAlign: () => ReturnType
+    }
+  }
+}
+
 const getFormattedSrc = (newVideoId) => {
   let resolvedid: string
   let link: string
@@ -199,28 +209,6 @@ export default Node.create({
         ({ commands }) => {
           return commands.deleteSelection()
         },
-      setSize:
-        (attributes) =>
-        ({ tr, dispatch }) => {
-          // Check it's a valid size option
-          if (!this.options.sizes.includes(attributes.size)) {
-            return false
-          }
-
-          const { selection } = tr
-
-          const options = {
-            ...selection.node.attrs,
-            ...attributes,
-          }
-
-          const node = this.type.create(options)
-
-          if (dispatch) {
-            tr.replaceRangeWith(selection.from, selection.to, node)
-          }
-        },
-
       setAlign:
         (attributes) =>
         ({ tr, dispatch }) => {

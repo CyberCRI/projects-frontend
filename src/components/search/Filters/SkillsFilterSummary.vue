@@ -4,50 +4,31 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import CurrentTags from '~/components/search/FilterTags/CurrentTags.vue'
 
-export default {
-  name: 'SkillsFilterSummary',
+const model = defineModel<any[]>({ default: [] })
+const skills = ref([])
 
-  components: {
-    CurrentTags,
-  },
-
-  props: {
-    modelValue: {
-      type: Array,
-      default: () => [],
-    },
-  },
-
-  emits: ['update:modelValue'],
-
-  data() {
-    return {
-      skills: [],
+watch(
+  model,
+  (neo, old) => {
+    if (neo && neo !== old) {
+      skills.value = [...model.value]
     }
   },
+  {
+    immediate: true,
+    deep: true,
+  }
+)
 
-  watch: {
-    modelValue: {
-      handler: function (neo, old) {
-        if (neo && neo != old) this.skills = [...this.modelValue]
-      },
-      immediate: true,
-      deep: true,
-    },
-  },
-
-  methods: {
-    removeSkill(skill) {
-      const skillsIndex = this.skills.findIndex(
-        (element) => element.id === skill.id && element.name === skill.name
-      )
-      this.skills.splice(skillsIndex, 1)
-      this.$emit('update:modelValue', this.skills)
-    },
-  },
+const removeSkill = (skill) => {
+  const skillsIndex = skills.value.findIndex(
+    (element) => element.id === skill.id && element.name === skill.name
+  )
+  skills.value.splice(skillsIndex, 1)
+  model.value = [...skills.value]
 }
 </script>
 

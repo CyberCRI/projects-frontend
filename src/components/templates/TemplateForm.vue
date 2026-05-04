@@ -149,12 +149,13 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import useNuxtI18n from '~/composables/useNuxtI18n'
 
+import type { ErrorObject } from '@vuelidate/core'
 import { capitalize } from '~/functs/string'
 
 withDefaults(
   defineProps<{
     errors?: {
-      [key: string]: []
+      [key: string]: ErrorObject[]
     }
     saveImageCallback: (file: File) => void
   }>(),
