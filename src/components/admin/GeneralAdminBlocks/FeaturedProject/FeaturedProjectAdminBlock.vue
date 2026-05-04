@@ -6,6 +6,7 @@
         :key="featuredProject.id"
         :project="featuredProject"
       />
+      <EmptyLabel v-if="featuredProjects.length === 0" />
     </template>
     <template #footer>
       <LpiButton

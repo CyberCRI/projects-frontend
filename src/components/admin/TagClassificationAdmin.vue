@@ -231,7 +231,6 @@ watch(() => [props.classification, search.value], getTags, { immediate: true })
                 @click="editTag(tag)"
               />
               <ContextActionButton
-                secondary
                 class="small"
                 action-icon="TrashCanOutline"
                 data-test="delete-tag-button"

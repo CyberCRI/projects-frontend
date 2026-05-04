@@ -28,7 +28,7 @@
         <template v-if="hasDescription">
           <div v-if="showLessDescription" :style="styleDescription" class="description-limited">
             <HtmlLimiter
-              :html="organization?.$t?.description || ''"
+              :html="organization.$t.description || ''"
               :striped-tags="['table']"
               class="introduction-text homepage-introduction-text"
               @computed="descriptionLayoutComputed"
@@ -38,7 +38,7 @@
           <div
             v-else
             class="introduction-text homepage-introduction-text"
-            v-html="organization.description || ''"
+            v-html="organization.$t.description || ''"
           />
           <div class="description-toggle">
             <LinkButton

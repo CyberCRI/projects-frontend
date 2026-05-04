@@ -4,30 +4,34 @@
     :is-opened="isOpened"
     :title="$t('chat.drawer.title')"
     class="chat-drawer small"
+    :confirm-action-disabled="!isValid"
     @confirm="saveChat"
     @close="cancel"
   >
     <form>
-      <p class="notice">
-        {{ $t('chat.drawer.notice') }}
-      </p>
+      <p class="notice">{{ $t('chat.drawer.notice') }}</p>
 
       <div class="form-section">
-        <label class="label">{{ $t('chat.drawer.url.label') }}</label>
+        <label class="label">{{ $t('chat.drawer.url.label') }} *</label>
         <p class="notice">
           {{ $t('chat.drawer.url.notice') }}
         </p>
-        <TextInput v-model="chatURL" :placeholder="$t('chat.drawer.url.placeholder')" />
+        <TextInput
+          v-model="form.chat_url"
+          :placeholder="$t('chat.drawer.url.placeholder')"
+          :errors="errors.chat_url"
+        />
       </div>
 
       <div class="form-section">
-        <label class="label">{{ $t('chat.drawer.wording.label') }}</label>
+        <label class="label">{{ $t('chat.drawer.wording.label') }} *</label>
         <p class="notice">
           {{ $t('chat.drawer.wording.notice') }}
         </p>
         <TextInput
-          v-model="chat_button_text"
+          v-model="form.chat_button_text"
           :placeholder="$t('chat.drawer.wording.placeholder')"
+          :errors="errors.chat_button_text"
         />
       </div>
     </form>
@@ -41,8 +45,14 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'
+import { useChatForm } from '~/form/admin/chat'
 
-defineProps<{ isOpened: boolean }>()
+const props = withDefaults(
+  defineProps<{
+    isOpened?: boolean
+  }>(),
+  { isOpened: false }
+)
 
 const emit = defineEmits<{
   close: []
@@ -53,20 +63,36 @@ const organizationsStore = useOrganizationsStore()
 const organizationCode = useOrganizationCode()
 const { t } = useNuxtI18n()
 
-const chat_button_text = ref(organizationsStore.current.chat_button_text || '')
-const chatURL = ref(organizationsStore.current.chat_url || '')
+const { form, errors, isValid, v$ } = useChatForm({
+  default: {
+    chat_button_text: organizationsStore.current.chat_button_text || '',
+    chat_url: organizationsStore.current.chat_url || '',
+  },
+  lazy: true,
+})
+
+watch(
+  () => props.isOpened,
+  () => {
+    form.value.chat_button_text = organizationsStore.current.chat_button_text || ''
+    form.value.chat_url = organizationsStore.current.chat_url || ''
+    v$.value.$reset()
+  }
+)
+
 const asyncing = ref(false)
 
 const cancel = () => emit('close')
 const saveChat = async () => {
+  if (!isValid.value) {
+    return
+  }
   asyncing.value = true
 
   try {
     const payload = {
-      chat_button_text: chat_button_text.value,
-      chat_url: chatURL.value,
+      ...form.value,
     }
-
     await patchOrganization(organizationCode, payload)
     emit('chat-edited')
     toaster.pushSuccess(t('chat.drawer.success'))
@@ -79,6 +105,7 @@ const saveChat = async () => {
   }
 }
 </script>
+
 <style lang="scss" scoped>
 .notice,
 .label {

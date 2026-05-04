@@ -20,9 +20,7 @@
         <h5 class="sub-title">
           {{ $t('admin.portal.general.wording.fields.description') }}
         </h5>
-        <p class="sub-field">
-          {{ description }}
-        </p>
+        <ContentExpandable :description="description" :height-limit="400" />
       </div>
     </template>
   </AdminBlock>
@@ -39,7 +37,7 @@ import LinkButton from '~/components/base/button/LinkButton.vue'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
 
-import { cropIfTooLong, html2Text } from '~/functs/string'
+import ContentExpandable from '~/components/base/ContentExpandable.vue'
 import AdminBlock from '../AdminBlock.vue'
 
 const organizationsStore = useOrganizationsStore()
@@ -56,7 +54,7 @@ const title = computed(() => {
 })
 const description = computed(() => {
   if (organization.value?.$t.description) {
-    return cropIfTooLong(html2Text(organization.value.$t.description), 255)
+    return organization.value.$t.description
   }
   return t('admin.portal.general.wording.fields.description-placeholder')
 })
@@ -86,6 +84,10 @@ const reloadOrganization = () => {
     color: $black;
     font-weight: normal;
     margin: $space-m 0;
+  }
+
+  .sub-title {
+    font-weight: 700;
   }
 }
 </style>

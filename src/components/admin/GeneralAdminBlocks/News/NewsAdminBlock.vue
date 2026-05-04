@@ -1,7 +1,7 @@
 <template>
   <AdminBlock :block-title="blockTitle">
     <template #default>
-      <FetchLoader :status="status">
+      <FetchLoader :status="status" only-error skeleton>
         <div class="list-divider list-container">
           <NewsItem
             v-for="news in allNews"
@@ -12,6 +12,7 @@
             @delete="onDelete"
           />
         </div>
+        <EmptyLabel v-if="allNews.length === 0" />
       </FetchLoader>
     </template>
 
@@ -49,8 +50,10 @@ import AdminBlock from '@/components/admin/GeneralAdminBlocks/AdminBlock.vue'
 import type LinkButton from '@/components/base/button/LinkButton.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
+import { factoryPagination } from '~/skeletons/base.skeletons'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import type { QueryFilterNews } from '@/models/news.model'
+import { newsSkeleton } from '~/skeletons/news.skeletons'
 import NewsItem from '@/components/news/NewsItem.vue'
 import { useModals } from '@/composables/useModal'
 import { getAllNews } from '@/api/v2/news.service'
@@ -73,6 +76,7 @@ const { query } = useQuery<QueryFilterNews>({
   from_date: nowDate().toISOString(),
 })
 
+const LIMIT = 3
 const {
   status,
   data: allNews,
@@ -82,8 +86,9 @@ const {
 } = getAllNews(organizationCode, {
   query,
   paginationConfig: {
-    limit: 3,
+    limit: LIMIT,
   },
+  default: () => factoryPagination(newsSkeleton, LIMIT),
 })
 
 const blockTitle = computed(() => {

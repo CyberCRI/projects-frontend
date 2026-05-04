@@ -29,7 +29,7 @@
 import DialogModal from '~/components/base/modal/DialogModal.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import LpiSnackbar from '~/components/base/LpiSnackbar.vue'
-import type { Editor } from '@tiptap/core'
+import type { Editor } from '@tiptap/vue-3'
 
 // TODO: validate video src and display error message
 

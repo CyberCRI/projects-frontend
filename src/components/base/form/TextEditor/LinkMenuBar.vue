@@ -16,8 +16,8 @@
 import LpiBubbleMenu from '~/components/base/form/TextEditor/LpiBubbleMenu/LpiBubbleMenu'
 
 import ContextualToolMenu from './ContexttualToolMenu.vue'
+import type { Editor } from '@tiptap/vue-3'
 import type MenuItem from './MenuItem.vue'
-import type { Editor } from '@tiptap/core'
 
 const props = defineProps<{
   editor: Editor
