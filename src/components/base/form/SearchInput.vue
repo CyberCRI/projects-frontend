@@ -31,75 +31,43 @@
   </div>
 </template>
 
-<script>
-import IconImage from '~/components/base/media/IconImage.vue'
+<script setup lang="ts">
+import type IconImage from '~/components/base/media/IconImage.vue'
+import type { Events } from 'vue'
 
-export default {
-  name: 'SearchInput',
+const props = withDefaults(
+  defineProps<{
+    full?: boolean
+    placeholder?: string
+    suggestions?: string[]
+  }>(),
+  {
+    full: false,
+    placeholder: '',
+    suggestions: () => [],
+  }
+)
+const model = defineModel<string>({ default: '' })
 
-  components: {
-    IconImage,
-  },
+const emit = defineEmits<{
+  'delete-query': []
+  enter: []
+  keyup: [Events['onKeyup']]
+}>()
 
-  props: {
-    full: {
-      type: Boolean,
-      default: false,
-    },
+const hideSuggestions = ref(false)
+watch(
+  () => props.suggestions,
+  () => (hideSuggestions.value = false)
+)
 
-    modelValue: {
-      type: String,
-      default: '',
-    },
+const deleteValue = () => emit('delete-query')
+const onEnter = () => emit('enter')
 
-    placeholder: {
-      type: String,
-      default: '',
-    },
-
-    suggestions: {
-      type: Array,
-      default: () => [],
-    },
-  },
-
-  emits: ['update:modelValue', 'delete-query', 'enter', 'keyup'],
-
-  data() {
-    return {
-      model: this.modelValue,
-      hideSuggestions: false,
-    }
-  },
-
-  watch: {
-    modelValue(value) {
-      this.model = value
-    },
-    model(value) {
-      this.$emit('update:modelValue', value)
-    },
-
-    suggestions() {
-      this.hideSuggestions = false
-    },
-  },
-
-  methods: {
-    deleteValue() {
-      this.$emit('delete-query')
-    },
-
-    onEnter() {
-      this.$emit('enter')
-    },
-
-    acceptSuggestion(suggestion) {
-      this.model = suggestion
-      this.hideSuggestions = true
-      this.$nextTick(this.onEnter)
-    },
-  },
+const acceptSuggestion = (suggestion: string) => {
+  model.value = suggestion
+  hideSuggestions.value = true
+  nextTick(onEnter)
 }
 </script>
 

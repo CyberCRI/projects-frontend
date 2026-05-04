@@ -166,7 +166,6 @@ const containerRef = useTemplateRef('container')
 const layoutTabs = debounce(
   // debounced to not hammer the browser on each resize
   async () => {
-    console.log('latouttabs')
     if (!import.meta.client) return
 
     /* for each tab, we check if it fit in the wrapper

@@ -5,6 +5,12 @@ export const PROJECT_SECTION_KEY = 'projects'
 export const GROUP_SECTION_KEY = 'groups'
 export const PEOPLE_SECTION_KEY = 'people'
 
+export type ALL_SECTIONS =
+  | typeof ALL_SECTION_KEY
+  | typeof PROJECT_SECTION_KEY
+  | typeof GROUP_SECTION_KEY
+  | typeof PEOPLE_SECTION_KEY
+
 type Section = {
   action: (key: string) => void
   clear: (key: string) => void

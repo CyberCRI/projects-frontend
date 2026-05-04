@@ -9,18 +9,21 @@
     v-text="item.label"
   />
 </template>
-<script>
-export default {
-  name: 'TextButtonMenuItem',
 
-  props: {
-    item: {
-      type: Object,
-      required: true,
-    },
-  },
-  emits: ['click'],
+<script setup lang="ts">
+import type { Events } from 'vue'
+
+type MenuItem = {
+  isActive?: () => boolean
+  title: string
+  isDisabled?: () => boolean
+  action: (event: Events['onClick']) => void
+  label: string
 }
+
+defineProps<{
+  item: MenuItem
+}>()
 </script>
 <style lang="scss" scoped>
 .labelled-menu-item {

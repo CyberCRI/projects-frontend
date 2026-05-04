@@ -21,80 +21,57 @@
     />
   </div>
 </template>
-<script>
-import { patchUser } from '~/api/people.service.ts'
+<script setup lang="ts">
+import { patchUser } from '~/api/people.service'
 
 import LpiButton from '~/components/base/button/LpiButton.vue'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
-import useToasterStore from '~/stores/useToaster.ts'
-import useUsersStore from '~/stores/useUsers.ts'
+import useToasterStore from '~/stores/useToaster'
+import useUsersStore from '~/stores/useUsers'
 
-export default {
-  name: 'DebugOnboarding',
-  components: { LpiButton },
-  setup() {
-    const toaster = useToasterStore()
-    const usersStore = useUsersStore()
+const toaster = useToasterStore()
+const usersStore = useUsersStore()
 
-    const organizationsStore = useOrganizationsStore()
-    return {
-      toaster,
-      usersStore,
-      organizationsStore,
+const reseting = ref(false)
+const resetingTerms = ref(false)
+const organizationCode = useOrganizationCode()
+
+const resetOnboardingStatus = async () => {
+  reseting.value = true
+  try {
+    const payload = { onboarding_status: { show_welcome: true, show_progress: true } }
+    const user = usersStore.userFromApi
+    const keycloak_id = user.keycloak_id
+    await patchUser(keycloak_id, payload)
+    await usersStore.getUser(keycloak_id)
+    toaster.pushSuccess(`Onboarding reseted for ${user.email}`)
+  } catch (err) {
+    console.error(err)
+    toaster.pushError(`Error while reseting onboarding status`)
+  } finally {
+    reseting.value = false
+  }
+}
+const resetTermsSigned = async () => {
+  resetingTerms.value = true
+  try {
+    if (!usersStore.userFromApi) return
+    const user = usersStore.userFromApi
+    const payload = {
+      signed_terms_and_conditions: {
+        ...user.signed_terms_and_conditions,
+        [organizationCode]: undefined,
+      },
     }
-  },
-
-  data() {
-    return {
-      reseting: false,
-      resetingTerms: false,
-    }
-  },
-  computed: {
-    orgCode() {
-      return this.organizationsStore.current?.code
-    },
-  },
-  methods: {
-    async resetOnboardingStatus() {
-      this.reseting = true
-      try {
-        const payload = { onboarding_status: { show_welcome: true, show_progress: true } }
-        const user = this.usersStore.userFromApi
-        const keycloak_id = user.keycloak_id
-        await patchUser(keycloak_id, payload)
-        await this.usersStore.getUser(keycloak_id)
-        this.toaster.pushSuccess(`Onboarding reseted for ${user.email}`)
-      } catch (err) {
-        console.error(err)
-        this.toaster.pushError(`Error while reseting onboarding status`)
-      } finally {
-        this.reseting = false
-      }
-    },
-    async resetTermsSigned() {
-      this.resetingTerms = true
-      try {
-        if (!this.usersStore.userFromApi) return
-        const user = this.usersStore.userFromApi
-        const payload = {
-          signed_terms_and_conditions: {
-            ...user.signed_terms_and_conditions,
-            [this.orgCode]: undefined,
-          },
-        }
-        await patchUser(user.id, payload)
-        await this.usersStore.getUser(user.id)
-        this.toaster.pushSuccess(`Terms approval reseted for ${user.email}`)
-      } catch (err) {
-        console.error(err)
-        this.toaster.pushError(`Error while reseting terms approval`)
-      } finally {
-        this.resetingTerms = false
-      }
-    },
-  },
+    await patchUser(user.id, payload)
+    await usersStore.getUser(user.id)
+    toaster.pushSuccess(`Terms approval reseted for ${user.email}`)
+  } catch (err) {
+    console.error(err)
+    toaster.pushError(`Error while reseting terms approval`)
+  } finally {
+    resetingTerms.value = false
+  }
 }
 </script>
 <style lang="scss" scoped>

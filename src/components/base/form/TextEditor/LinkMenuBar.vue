@@ -6,69 +6,44 @@
       :should-show="({ editor }) => editor.isActive('link')"
     >
       <ContextualToolMenu class="link-menu-bar">
-        <template v-for="(item, index) in items">
-          <div v-if="item.type === 'divider'" :key="`divider${index}`" class="divider" />
-          <MenuItem v-else v-bind="item" :key="index" />
-        </template>
+        <MenuItem v-for="item in items" :key="item.title" v-bind="item" />
       </ContextualToolMenu>
     </LpiBubbleMenu>
   </div>
 </template>
 
-<script>
-import LpiBubbleMenu from '~/components/base/form/TextEditor/LpiBubbleMenu/LpiBubbleMenu.ts'
+<script setup lang="ts">
+import LpiBubbleMenu from '~/components/base/form/TextEditor/LpiBubbleMenu/LpiBubbleMenu'
 
 import ContextualToolMenu from './ContexttualToolMenu.vue'
-import MenuItem from './MenuItem.vue'
+import type MenuItem from './MenuItem.vue'
+import type { Editor } from '@tiptap/core'
 
-export default {
-  name: 'LinkMenuBar',
+const props = defineProps<{
+  editor: Editor
+  openLinkModal: () => void
+}>()
 
-  components: {
-    MenuItem,
-    LpiBubbleMenu,
-    ContextualToolMenu,
-  },
-
-  props: {
-    editor: {
-      type: Object,
-      required: true,
-    },
-    openLinkModal: {
-      type: Function,
-      default: null,
+const items = computed(() => [
+  {
+    icon: 'external-link-line',
+    title: 'multieditor.external_link',
+    action: () => {
+      window.open(props.editor.getAttributes('link').href, '_blank')
     },
   },
-
-  data() {
-    const items = [
-      {
-        icon: 'external-link-line',
-        title: 'multieditor.external_link',
-        action: () => {
-          window.open(this.editor.getAttributes('link').href, '_blank')
-        },
-      },
-      {
-        icon: 'edit-line',
-        title: 'multieditor.edit-link',
-        action: () => {
-          this.openLinkModal()
-        },
-      },
-      {
-        icon: 'close-circle-line',
-        title: 'multieditor.remove_link',
-        action: () => this.editor.chain().focus().extendMarkRange('link').unsetLink().run(),
-        isDisabled: !this.editor.can().unsetLink(),
-      },
-    ]
-
-    return {
-      items: items,
-      isActiveLink: false,
-    }
+  {
+    icon: 'edit-line',
+    title: 'multieditor.edit-link',
+    action: () => {
+      props.openLinkModal()
+    },
   },
-}
+  {
+    icon: 'close-circle-line',
+    title: 'multieditor.remove_link',
+    action: () => props.editor.chain().focus().extendMarkRange('link').unsetLink().run(),
+    isDisabled: !props.editor.can().unsetLink(),
+  },
+])
 </script>

@@ -32,58 +32,37 @@
     @organization-edited="reloadOrganization"
   />
 </template>
-<script>
+
+<script setup lang="ts">
 import OrgWordingDrawer from '~/components/admin/GeneralAdminBlocks/Wording/OrgWordingDrawer.vue'
 import LinkButton from '~/components/base/button/LinkButton.vue'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useOrganizationsStore from '~/stores/useOrganizations'
 
+import { cropIfTooLong, html2Text } from '~/functs/string'
 import AdminBlock from '../AdminBlock.vue'
 
-export default {
-  name: 'WordingAdminBlock',
+const organizationsStore = useOrganizationsStore()
+const drawerIsOpen = ref(false)
+const { t } = useNuxtI18n()
 
-  components: {
-    AdminBlock,
-    LinkButton,
-    OrgWordingDrawer,
-  },
-  setup() {
-    const organizationsStore = useOrganizationsStore()
-    return {
-      organizationsStore,
-    }
-  },
-  data() {
-    return {
-      drawerIsOpen: false,
-    }
-  },
+const organization = computed(() => organizationsStore.current)
 
-  computed: {
-    organization() {
-      return this.organizationsStore.current
-    },
-    title() {
-      return (
-        this.organization?.dashboard_title ||
-        this.$t('admin.portal.general.wording.fields.title-placeholder')
-      )
-    },
-    description() {
-      if (this.organization?.description) {
-        const sanitized = this.organization?.description.replace(/<[^>]+>/g, ' ')
-        return sanitized.substring(0, 255) + (sanitized.length > 255 ? '...' : '')
-      }
-      return this.$t('admin.portal.general.wording.fields.description-placeholder')
-    },
-  },
+const title = computed(() => {
+  return (
+    organization.value?.$t.dashboard_title ||
+    t('admin.portal.general.wording.fields.title-placeholder')
+  )
+})
+const description = computed(() => {
+  if (organization.value?.$t.description) {
+    return cropIfTooLong(html2Text(organization.value.$t.description), 255)
+  }
+  return t('admin.portal.general.wording.fields.description-placeholder')
+})
 
-  methods: {
-    reloadOrganization() {
-      this.organizationsStore.getCurrentOrganization(this.organization.code)
-    },
-  },
+const reloadOrganization = () => {
+  organizationsStore.getCurrentOrganization(organization.value?.code)
 }
 </script>
 <style lang="scss" scoped>

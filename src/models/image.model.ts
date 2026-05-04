@@ -23,6 +23,8 @@ export type ImageModel = BaseModel &
     }
   }
 
+export type ImageVariations = keyof ImageModel['variations']
+
 export type Image = ImageModel &
   ImageSizesFromApi & {
     variations: {

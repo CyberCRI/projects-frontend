@@ -18,7 +18,7 @@
       </h5>
       <div class="swatches">
         <span
-          v-for="preset in presets"
+          v-for="preset in PRESETS"
           :key="preset"
           class="swatch"
           :class="{ selected: preset == color }"
@@ -30,7 +30,7 @@
         {{ $t('multieditor.color.choose') }}
       </h5>
       <div class="pick">
-        <input v-model="color" type="color" :class="{ selected: !presets.includes(color) }" />
+        <input v-model="color" type="color" :class="{ selected: !PRESETS.includes(color) }" />
       </div>
 
       <h5 class="inter-title">
@@ -55,78 +55,52 @@
   </DialogModal>
 </template>
 
-<script>
+<script setup lang="ts">
 import DialogModal from '~/components/base/modal/DialogModal.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
+import type { Editor } from '@tiptap/vue-3'
 
-export default {
-  name: 'EditorModalColor',
+const props = defineProps<{
+  editor: Editor
+}>()
 
-  components: { DialogModal, LpiButton },
+const emit = defineEmits<{
+  closeModal: []
+}>()
 
-  props: {
-    editor: {
-      type: Object,
-      required: true,
-    },
-  },
+const color = ref(undefined)
+const PRESETS = [
+  '#00BDA7', // Carribean green
+  '#1D727C', // Ming
+  '#99FFE7', // Aquamarine
+  '#F0FFFB', // Mint Cream
+  '#FF9473', // Light Salmon
+  '#FFCC00', // Sun glow
+  '#D6A2FF', // Mauve
+  '#6CD5FF', // Baby Blue
+  '#FF3C00', // Coquelicot
+]
 
-  emits: ['closeModal'],
+const currentColor = computed(() => props.editor.getAttributes('textStyle').color)
+const mode = computed(() => (currentColor.value !== undefined ? 'edit' : 'add'))
 
-  data() {
-    return {
-      color: undefined,
-      presets: [
-        '#00BDA7', // Carribean green
-        '#1D727C', // Ming
-        '#99FFE7', // Aquamarine
-        '#F0FFFB', // Mint Cream
-        '#FF9473', // Light Salmon
-        '#FFCC00', // Sun glow
-        '#D6A2FF', // Mauve
-        '#6CD5FF', // Baby Blue
-        '#FF3C00', // Coquelicot
-      ],
-    }
-  },
+onMounted(() => {
+  color.value = currentColor.value || '#000000'
+})
 
-  computed: {
-    currentColor() {
-      return this.editor.getAttributes('textStyle').color
-    },
-    mode() {
-      return this.currentColor !== undefined ? 'edit' : 'add'
-    },
-  },
+const closeModal = () => emit('closeModal')
+const handleColorModalConfirmed = (data) => {
+  if (data) {
+    props.editor.chain().focus().setColor(data).run()
+  } else {
+    props.editor.chain().focus().unsetColor().run()
+  }
 
-  mounted() {
-    this.color = this.currentColor || '#000000'
-  },
-
-  methods: {
-    closeModal() {
-      this.$emit('closeModal')
-    },
-
-    setColor() {
-      this.handleColorModalConfirmed(this.color)
-    },
-
-    removeColor() {
-      this.handleColorModalConfirmed(null)
-    },
-
-    handleColorModalConfirmed(data) {
-      if (data) {
-        this.editor.chain().focus().setColor(data).run()
-      } else {
-        this.editor.chain().focus().unsetColor().run()
-      }
-
-      this.closeModal()
-    },
-  },
+  closeModal()
 }
+
+const setColor = () => handleColorModalConfirmed(color.value)
+const removeColor = () => handleColorModalConfirmed(null)
 </script>
 
 <style lang="scss" scoped>

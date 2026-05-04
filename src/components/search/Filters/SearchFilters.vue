@@ -9,6 +9,8 @@ import useContextualFilters, {
 import FiltersDrawer from '~/components/search/Filters/FiltersDrawer.vue'
 import FilterButton from '~/components/search/Filters/FilterButton.vue'
 
+type QUERY_FILTERS_SEARCH = 'categories' | 'languages' | 'sdgs' | 'tags' | 'skills'
+
 function defaultFilters() {
   return {
     categories: [],
@@ -73,7 +75,7 @@ function confirm($event) {
   updateFiltersFromDrawer($event)
 }
 
-function clearSelectedFilters(key) {
+function clearSelectedFilters(key?: QUERY_FILTERS_SEARCH | typeof ALL_FILTERS_MODE) {
   const newValue = defaultFilters()
   if (!key || key === ALL_FILTERS_MODE) {
     selectedFilters.value = newValue

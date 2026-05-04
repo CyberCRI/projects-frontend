@@ -7,13 +7,14 @@ import VideoMenuBar from './VideoMenuBar.vue'
 import TableMenuBar from './TableMenuBar.vue'
 import ImageMenuBar from './ImageMenuBar.vue'
 import LinkMenuBar from './LinkMenuBar.vue'
-import MenuBar from './MenuBar.vue'
+import type { Editor } from '@tiptap/vue-3'
+import type MenuBar from './MenuBar.vue'
 
 const emit = defineEmits(['image', 'saved'])
 
 withDefaults(
   defineProps<{
-    editor: any
+    editor: Editor
     showMenu: boolean
     mode: string
     disableSave?: boolean
