@@ -2,7 +2,7 @@
   <AdminBlock :block-title="blockTitle">
     <template #actions />
     <template #default>
-      <FetchLoader :status="status">
+      <FetchLoader :status="status" only-error skeleton>
         <div class="list-divider list-container">
           <EventItem
             v-for="event in events"
@@ -15,6 +15,7 @@
             @delete="onDelete"
           />
         </div>
+        <EmptyLabel v-if="events.length === 0" />
         <PaginationButtonsV2 :pagination="pagination" />
         <LocationDrawer
           :is-opened="stateModals.location"
@@ -61,7 +62,9 @@ import EventItem from '@/components/event/EventList/EventItem.vue'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import LocationDrawer from '@/components/map/LocationDrawer.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
+import { factoryPagination } from '~/skeletons/base.skeletons'
 import FetchLoader from '@/components/base/FetchLoader.vue'
+import { eventSkeleton } from '~/skeletons/event.skeletons'
 import { getAllEvents } from '@/api/v2/event.service'
 import useToasterStore from '@/stores/useToaster'
 import { deleteEvent } from '@/api/event.service'
@@ -80,6 +83,7 @@ const { stateModals, closeModals, openModals } = useModals({
   delete: false,
 })
 
+const LIMIT = 3
 const {
   status,
   data: events,
@@ -91,8 +95,9 @@ const {
     ordering: '-updated_at',
   },
   paginationConfig: {
-    limit: 3,
+    limit: LIMIT,
   },
+  default: () => factoryPagination(eventSkeleton, LIMIT),
 })
 
 const blockTitle = computed(() => {

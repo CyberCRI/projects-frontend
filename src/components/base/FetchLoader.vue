@@ -96,10 +96,6 @@ watchEffect(() => {
   nextTick(() => (inSkeletons.value = value))
 })
 
-// const inSkeletons = computed(() => {
-//   return inLoading.value && (!firstLoading.value || !props.withData) && props.skeleton
-// })
-
 watch(inLoading, (newValue, oldValue) => {
   if (oldValue === true && newValue === false && !firstLoading.value) {
     firstLoading.value = true

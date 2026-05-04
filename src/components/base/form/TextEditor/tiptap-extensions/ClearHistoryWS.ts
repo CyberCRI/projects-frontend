@@ -5,14 +5,14 @@ import { yUndoPluginKey } from 'y-prosemirror'
 import type { UndoManager } from 'yjs'
 
 declare module '@tiptap/core' {
-  // interface Commands<ReturnType> {
-  //     clearhistory: {
-  //         /**
-  //          * clear history
-  //          */
-  //         clearHistory: () => ReturnType
-  //     }
-  // }
+  interface Commands<ReturnType> {
+    clearhistoryws: {
+      /**
+       * clear history
+       */
+      clearHistoryWS: () => ReturnType
+    }
+  }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type

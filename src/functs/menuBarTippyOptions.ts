@@ -1,4 +1,9 @@
-export default function (mebuBarComponent, selector?: string) {
+import type { LpiBubbleMenuPluginProps } from '~/components/base/form/TextEditor/tiptap-extensions/extension-lpi-bubble-menu'
+
+export default function (
+  componentRef: ReturnType<typeof useTemplateRef>,
+  selector?: string
+): LpiBubbleMenuPluginProps['tippyOptions'] {
   return {
     inlinePositioning: true,
     popperOptions: {
@@ -8,7 +13,8 @@ export default function (mebuBarComponent, selector?: string) {
           name: 'offset',
           options: {
             offset: ({ popper }) => {
-              const wrapper = mebuBarComponent.$el.closest('.content-wrapper')
+              // @ts-ignore do better typing
+              const wrapper = componentRef.value?.closest('.content-wrapper')
               if (wrapper) {
                 const selection = wrapper.querySelector(selector || '.ProseMirror-selectednode')
                 if (selection) {

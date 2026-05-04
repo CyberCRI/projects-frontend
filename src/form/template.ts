@@ -31,7 +31,7 @@ const RULES = {
   },
 }
 
-export const useTemplateForm = (...options) => {
+export const useTemplateForm = (options = {}) => {
   const onClean = (data) => {
     // convert categories element to ids
     data.categories_ids = data.categories.map((el) => el.id)

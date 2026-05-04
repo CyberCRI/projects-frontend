@@ -96,7 +96,7 @@ const confirm = () => emit('confirm', selection.value)
 const close = () => emit('close')
 
 const hasFilters = (key) => {
-  return ['sdfs', 'languages'].includes(key) || selection.value[key]?.length > 0
+  return ['sdgs', 'languages'].includes(key) || selection.value[key]?.length > 0
 }
 
 const toggleFilter = (filterKey) => {

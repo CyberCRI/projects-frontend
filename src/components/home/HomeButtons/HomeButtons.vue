@@ -17,6 +17,7 @@
         :label="organization.chat_button_text"
         secondary
         white-bg
+        btn-icon="ChatBubble"
         class="individual-button white-bg"
         data-test="go-to-chat"
         no-text-transform

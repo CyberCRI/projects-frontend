@@ -1,8 +1,11 @@
+import type { useVuelidate } from '@vuelidate/core'
+import { difference, isNil } from 'es-toolkit'
 import useValidate from '@vuelidate/core'
 
-type OptionsForm<T, CleanResult> = {
+export type OptionsForm<T, CleanResult> = {
   default?: T
   rules?: object
+  lazy?: boolean
   validateTimeout?: number
   onClean?: (data: T) => CleanResult
   model?: Ref<T>
@@ -15,6 +18,29 @@ export type UseFormResult<T, CleanResult> = {
     [key: string]: any
   }>
   cleanedData: null | Ref<CleanResult>
+  v$: ReturnType<typeof useVuelidate<T>>
+}
+
+const differencesObjects = (obj: any, obj2: any): string[] => {
+  obj ??= {}
+  obj2 ??= {}
+  const key = Object.keys(obj)
+  const key2 = Object.keys(obj2)
+
+  const diff = difference(key, key2)
+
+  key.forEach((k) => {
+    if (obj[k] !== obj2[k]) {
+      diff.push(k)
+    }
+  })
+  key2.forEach((k) => {
+    if (obj[k] !== obj2[k]) {
+      diff.push(k)
+    }
+  })
+
+  return Array.from(new Set(diff))
 }
 
 const onClean = (d) => d
@@ -39,14 +65,25 @@ const useForm = <T, CleanResult = T>(
   const form = ref<T>(def) as Ref<T>
   const _onClean = options.onClean ?? onClean
 
-  const isValid = ref<boolean>(false)
   const v$ = useValidate(options.rules ?? {}, form, {
     $scope: false,
   })
+  const isValid = computed(() => !v$.value.$invalid)
 
-  const validate = () => v$.value.$validate().then((v) => (isValid.value = v))
-  // const debounceValidate = debounce(validate, options.validateTimeout ?? 50)
-  watch(form, () => validate(), { deep: true, immediate: true })
+  const lazy = isNil(options.lazy) ? true : !options.lazy
+  watch(
+    () => ({ ...unref(form) }),
+    (newForm, oldForm) => {
+      const diffKeys = differencesObjects(newForm, oldForm)
+
+      Object.keys(unref(options.rules ?? {})).forEach((key) => {
+        if (lazy || diffKeys.includes(key)) {
+          v$.value[key].$touch()
+        }
+      })
+    },
+    { deep: true, immediate: lazy }
+  )
 
   const errors = computed<{
     [key: string]: string[]
@@ -84,6 +121,8 @@ const useForm = <T, CleanResult = T>(
     errors,
     isValid,
     cleanedData,
+    // @ts-expect-error better type
+    v$,
   }
 }
 

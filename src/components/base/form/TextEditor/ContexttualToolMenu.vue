@@ -3,11 +3,7 @@
     <slot />
   </div>
 </template>
-<script>
-export default {
-  name: 'ContexttualToolMenu',
-}
-</script>
+
 <style lang="scss" scoped>
 .contextual-tool-menu {
   position: relative;

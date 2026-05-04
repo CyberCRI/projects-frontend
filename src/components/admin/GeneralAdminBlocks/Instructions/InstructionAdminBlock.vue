@@ -1,7 +1,7 @@
 <template>
   <AdminBlock :block-title="blockTitle">
     <template #default>
-      <FetchLoader :status="status">
+      <FetchLoader :status="status" only-error skeleton>
         <InstructionAdminListItem
           v-for="instruction in instructions"
           :key="instruction.id"
@@ -9,6 +9,7 @@
           @edit-instruction="onEditInstruction"
           @delete-instruction="onDeleteInstruction"
         />
+        <EmptyLabel v-if="instructions.length === 0" />
       </FetchLoader>
     </template>
 
@@ -39,7 +40,9 @@
 </template>
 
 <script setup lang="ts">
+import { instructionSkeleton } from '~/skeletons/instructions.skeletons'
 import { getAllInstructions } from '@/api/v2/instruction.service'
+import { factoryPagination } from '~/skeletons/base.skeletons'
 import { deleteInstruction } from '@/api/instruction.service'
 import useToasterStore from '@/stores/useToaster'
 import { defaultForm } from '@/form/instruction'
@@ -52,6 +55,7 @@ const { t } = useNuxtI18n()
 const organizationCode = useOrganizationCode()
 const router = useRouter()
 
+const LIMIT = 3
 const {
   status,
   data: instructions,
@@ -62,8 +66,9 @@ const {
     ordering: '-updated_at',
   },
   paginationConfig: {
-    limit: 3,
+    limit: LIMIT,
   },
+  default: () => factoryPagination(instructionSkeleton, LIMIT),
 })
 
 const blockTitle = computed(() => {

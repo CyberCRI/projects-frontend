@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { getOrganizationByCode } from '~/api/organizations.service'
-
 import useOrganizationsStore from '~/stores/useOrganizations'
 
 const organizationsStore = useOrganizationsStore()
@@ -144,28 +142,18 @@ const breadcrumbs = computed(() => [
     route: { name: 'Admin' },
   },
 ])
-try {
-  const runtimeConfig = useRuntimeConfig()
-  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
 
-  useLpiHead(
-    useRequestURL().toString(),
-    computed(() => t('admin.portal.management')),
-    organization?.dashboard_subtitle,
-    image,
-    dimensions
-  )
-} catch (err) {
-  console.log(err)
-}
+useLpiHead2({
+  title: computed(() => t('admin.portal.management')),
+})
 </script>
+
 <template>
   <div class="admin-portal-layout page-section-extra-wide page-top">
     <div class="page-section-extra-wide">
       <NavPanelLayout
         :is-nav-collapsed="isNavCollapsed"
-        :breadcrumbs="breadcrumbs || []"
+        :breadcrumbs="breadcrumbs"
         @toggle-nav-panel="toggleNavPanel"
         @collapse-nav-panel="isNavCollapsed = true"
       >

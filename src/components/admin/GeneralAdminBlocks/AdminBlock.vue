@@ -19,28 +19,21 @@
     </template>
   </div>
 </template>
-<script>
+
+<script setup lang="ts">
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 
-export default {
-  name: 'AdminBlock',
-
-  components: {
-    LoaderSimple,
-  },
-
-  props: {
-    blockTitle: {
-      type: String,
-      required: true,
-    },
-    isLoading: {
-      type: Boolean,
-      default: false,
-    },
-  },
-}
+withDefaults(
+  defineProps<{
+    blockTitle: string
+    isLoading?: boolean
+  }>(),
+  {
+    isLoading: false,
+  }
+)
 </script>
+
 <style lang="scss" scoped>
 .admin-block {
   padding: $space-2xl 0;
