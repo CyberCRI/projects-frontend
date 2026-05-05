@@ -14,7 +14,7 @@ import { v4 as uuidv4 } from 'uuid'
 import getVectorStore from '@/server/utils/vector-db.js'
 import { createRetrieverTool } from '@langchain/classic/tools/retriever'
 import { MultiServerMCPClient } from '@langchain/mcp-adapters'
-import checkSuperAdminRights from '@/server/utils/check-super-admin-rights.js'
+import checkAdminRights from '@/server/utils/check-admin-rights.js'
 import { tokenMap, traceMcp } from '@/server/routes/api/chat-stream'
 
 // TODO: fix import issue (useNuxtRuntime in dependncies)
@@ -137,7 +137,7 @@ export default defineLazyEventHandler(() => {
     // check admin priviledge for preview
     if (!agentData.isEnabled) {
       traceMcp('chat-stream: agent is diabled, checking rights to preview')
-      await checkSuperAdminRights(event)
+      await checkAdminRights(event)
     }
 
     /* --------- Response headers  --------- */

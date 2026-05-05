@@ -38,6 +38,25 @@ export function getKeycloakIdFromToken(tokenHeader) {
   return kcId
 }
 
+export async function getOrg(tokenHeader) {
+  const runtimeConfig = useRuntimeConfig()
+  const orgCode = runtimeConfig.public.appApiOrgCode
+  let org
+  try {
+    const baseUrl = runtimeConfig.public.appApiUrl + runtimeConfig.public.appApiDefaultVersion + '/'
+    org = await $fetch(`${baseUrl}/organization/${orgCode}/`, {
+      headers: { Authorization: tokenHeader },
+    })
+  } catch (e) {
+    throw createError({
+      statusCode: 401,
+      statusMessage: 'no_org',
+      message: 'Could not retrieve org: ' + e.toString(),
+    })
+  }
+  return org
+}
+
 export async function getUserByKeycloakId(kcId, tokenHeader) {
   let user = null
   try {
@@ -57,11 +76,14 @@ export async function getUserByKeycloakId(kcId, tokenHeader) {
   return user
 }
 
-export async function isSuperAdmin(user) {
+export function isSuperAdmin(user) {
   return !!user?.is_superuser
 }
+export function isAdmin(user, orgId) {
+  return (user.roles || []).some((role) => role === `organization:#${orgId}:admins`)
+}
 
-export default async function checkSuperAdminRights(event) {
+export default async function checkAdminRights(event) {
   const tokenHeader = getRequestHeader(event, 'authorization') || ''
   if (!tokenHeader) {
     throw createError({
@@ -70,11 +92,11 @@ export default async function checkSuperAdminRights(event) {
       message: 'You must authenticate to access this resource.',
     })
   }
-
+  const org = await getOrg(tokenHeader)
+  const orgId = org?.id
   const kcId = getKeycloakIdFromToken(tokenHeader)
   const user = await getUserByKeycloakId(kcId, tokenHeader)
-
-  if (!isSuperAdmin(user)) {
+  if (!isSuperAdmin(user) && !isAdmin(user, orgId)) {
     throw createError({
       statusCode: 403,
       statusMessage: 'Forbidden',

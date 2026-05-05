@@ -3,12 +3,12 @@ import { PDFLoader } from '@langchain/community/document_loaders/fs/pdf'
 import { TextLoader } from '@langchain/classic/document_loaders/fs/text'
 import { DocxLoader } from '@langchain/community/document_loaders/fs/docx'
 import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters'
-import checkSuperAdminRights from '~/server/utils/check-super-admin-rights.js'
+import checkAdminRights from '~/server/utils/check-admin-rights.js'
 import path from 'path'
 
 export default defineLazyEventHandler(() => {
   return defineEventHandler(async (event) => {
-    await checkSuperAdminRights(event)
+    await checkAdminRights(event)
 
     const { appApiOrgCode } = useRuntimeConfig().public
     const { vectorStore } = await getVectorStore()

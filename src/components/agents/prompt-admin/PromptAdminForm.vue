@@ -102,6 +102,7 @@ const submit = async () => {
         input-type="textarea"
         :label="$t('prompts.content')"
         @change="titleExists = false"
+        rows="12"
       />
     </div>
   </BaseDrawer>

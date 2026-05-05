@@ -1,5 +1,5 @@
 import getVectorStore from '~/server/utils/vector-db.js'
-import checkSuperAdminRights from '~/server/utils/check-super-admin-rights.js'
+import checkAdminRights from '~/server/utils/check-admin-rights.js'
 
 export default defineLazyEventHandler(() => {
   return defineEventHandler(async (event) => {
@@ -13,7 +13,7 @@ export default defineLazyEventHandler(() => {
       })
     }
 
-    await checkSuperAdminRights(event)
+    await checkAdminRights(event)
 
     const rawTitle = getQuery(event)?.title
     const title = typeof rawTitle === 'string' ? rawTitle.trim() : ''
