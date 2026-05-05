@@ -116,7 +116,10 @@ const onConfirmDeleteNews = () => {
 }
 
 const onAfterEdit = () => {
-  refreshNuxtData(`${organizationCode}::group::${groupId.value}`)
+  refreshNuxtData([
+    `${organizationCode}::group::${props.group.slug}`,
+    `${organizationCode}::group::${props.group.id}`,
+  ])
   refresh()
   onCancel()
 }

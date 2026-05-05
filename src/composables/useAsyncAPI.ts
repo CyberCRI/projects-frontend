@@ -34,8 +34,11 @@ type AsyncReturn<ResDataT, DataT, Result> = Omit<
   ReturnType<typeof useAsyncData<ResDataT, unknown, DataT>>,
   'data'
 > & {
+  // if Results is undefied (no translate functions) get Results from useAsyncData
   data: Result extends undefined
-    ? ReturnType<typeof useAsyncData<ResDataT, unknown, DataT>>['data']
+    ? ReturnType<
+        typeof useAsyncData<ResDataT, unknown, DataT extends any ? ResDataT : DataT>
+      >['data']
     : Result
   isLoading: ComputedRef<boolean>
 }

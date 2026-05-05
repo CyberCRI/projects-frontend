@@ -109,13 +109,20 @@ const onDelete = (image) => {
   openModals('delete')
 }
 
+const afterRequest = () => {
+  refreshNuxtData([
+    `${organizationCode}::group::${props.group.slug}`,
+    `${organizationCode}::group::${props.group.id}`,
+  ])
+  refresh()
+}
+
 const deleteImage = () => {
   loading.value = true
   deleteGroupGallery(organizationCode, groupId.value, selected.value.id)
     .then(() => {
       toaster.pushSuccess(t('gallery.success-delete'))
-      refreshNuxtData(`${organizationCode}::group::${groupId.value}`)
-      refresh()
+      afterRequest()
     })
     .catch(() => toaster.pushError(t('gallery.error-delete')))
     .finally(() => {
@@ -157,8 +164,7 @@ const createImage = async (form: ImageGalleryForm) => {
   // if one or more images are uploaded, refresh
   if (values.includes('success')) {
     // refetch new datas
-    refreshNuxtData(`${organizationCode}::group::${groupId.value}`)
-    refresh()
+    afterRequest()
   }
   loading.value = false
 }
