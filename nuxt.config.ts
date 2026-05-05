@@ -143,6 +143,10 @@ export default defineNuxtConfig({
     appVectorEmbeddingDimensions: '',
     appVectorToolPrompt: '',
     appChatbotPromptDb: '',
+    langsmithTracing: process.env.LANGSMITH_TRACING,
+    langsmithEndpoint: process.env.LANGSMITH_ENDPOINT,
+    langsmithApiKey: process.env.LANGSMITH_API_KEY,
+    langsmithProject: process.env.LANGSMITH_PROJECT,
     public: {
       appVersion: '',
       appApiOrgCode: '',
