@@ -31,71 +31,57 @@
     </div>
   </div>
 </template>
-<script>
-import { getOrganizations } from '~/api/organizations.service.ts'
-import { getUser } from '~/api/people.service.ts'
+
+<script setup lang="ts">
+import { getOrganizations } from '~/api/organizations.service'
+import { getUser } from '~/api/people.service'
 
 import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
+import type { TranslatedUserModel } from '~/models/user.model'
+import type { GroupDataRole } from '~/models/types'
 
-export default {
-  name: 'OtherOrgUserCard',
+const props = defineProps<{
+  user: TranslatedUserModel
+}>()
 
-  components: { CroppedApiImage, LoaderSimple },
+const isLoadingOrgRoles = ref(false)
+const orgRoles = ref([])
+const { t } = useNuxtI18n()
 
-  props: {
-    user: {
-      type: Object,
-      required: true,
-    },
-  },
-  setup() {
-    return { DEFAULT_USER_PATATOID }
-  },
-  data() {
-    return {
-      isLoadingOrgRoles: false,
-      orgRoles: [],
-    }
-  },
-
-  mounted() {
-    this.loadRoles()
-  },
-
-  methods: {
-    async loadRoles() {
-      this.isLoadingOrgRoles = true
-      // TODO: getOrganizations might be paginated if more than 100, we'll need to handle the case some day
-      await Promise.all([getUser(this.user.id), getOrganizations()]).then(([user, orgs]) => {
-        const orgIndex = orgs.results.reduce((acc, org) => {
-          acc['#' + org.id] = org // the # is prefixed to org id in role code
-          return acc
-        }, {})
-        this.orgRoles =
-          user?.roles
-            .filter((role) => role.match(/^organization:[^:]+:[^:]+$/))
-            .map((role) => {
-              const roleParts = role.split(':')
-              return {
-                role: roleParts[2],
-                orgName: orgIndex[roleParts[1]]?.name || this.$t('account.another-organization'),
-              }
-            }) || []
-      })
-      this.isLoadingOrgRoles = false
-    },
-
-    orgRoleLabel(role) {
-      if (role == 'users') return this.$t('account.role.user')
-      if (role == 'facilitators') return this.$t('account.role.facilitator')
-      if (role == 'admins') return this.$t('account.role.admin')
-    },
-  },
+const orgRoleLabel = (role: GroupDataRole) => {
+  if (role == 'users') return t('account.role.user')
+  if (role == 'facilitators') return t('account.role.facilitator')
+  if (role == 'admins') return t('account.role.admin')
 }
+
+const loadRoles = async () => {
+  isLoadingOrgRoles.value = true
+  // TODO: getOrganizations might be paginated if more than 100, we'll need to handle the case some day
+  await Promise.all([getUser(props.user.id), getOrganizations()]).then(([user, orgs]) => {
+    const orgIndex = orgs.results.reduce((acc, org) => {
+      acc['#' + org.id] = org // the # is prefixed to org id in role code
+      return acc
+    }, {})
+    orgRoles.value =
+      user?.roles
+        .filter((role) => role.match(/^organization:[^:]+:[^:]+$/))
+        .map((role) => {
+          const roleParts = role.split(':')
+          return {
+            role: roleParts[2],
+            orgName: orgIndex[roleParts[1]]?.name || t('account.another-organization'),
+          }
+        }) || []
+  })
+  isLoadingOrgRoles.value = false
+}
+
+onMounted(() => loadRoles())
 </script>
+
 <style lang="scss" scoped>
 .other-org-account-card {
   display: flex;

@@ -141,6 +141,13 @@ if (!props.isReducedMode) {
   updateGroupMembers = membersObj.updateGroupMembers
 }
 
+const refresh = () => {
+  return refreshNuxtData([
+    `${organizationCode}::group::${groupData.value.id}`,
+    `${organizationCode}::group::${groupData.value.slug}`,
+  ])
+}
+
 const updateHeader = async (groupId) => {
   // check if header has changed
   if (
@@ -154,14 +161,14 @@ const updateHeader = async (groupId) => {
       payloadHeader.append('file', form.value.header_image, form.value.header_image.name)
 
       await postGroupHeader(orgCode.value, groupId, payloadHeader)
-      await refreshNuxtData(`${organizationCode}::group::${groupId}`)
+      await refresh()
 
       // TODO: make this in POST when backend allows it
       payloadHeader.delete('file')
     } else if (form.value.imageSizes) {
       // TODO else ?
       await patchGroupHeader(orgCode.value, groupId, payloadHeader)
-      await refreshNuxtData(`${organizationCode}::group::${groupId}`)
+      refresh()
     }
   }
 }
@@ -215,7 +222,6 @@ const createGroup = async () => {
 
     // save header
     await updateHeader(newGroupId)
-    await refreshNuxtData(`${organizationCode}::group::${newGroup.id}`)
 
     startEditWatcher()
 
@@ -256,7 +262,7 @@ const updateGroup = async () => {
       await updateGroupProjects()
     }
 
-    await refreshNuxtData(`${organizationCode}::group::${groupData.value.id}`)
+    refresh()
 
     startEditWatcher()
 

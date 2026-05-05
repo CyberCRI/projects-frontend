@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { PropsDefinitions } from '~/components/base/form/TextEditor/useTipTap'
 import EditorModalVideo from './modals/EditorModalVideo.vue'
 import EditorModalImage from './modals/EditorModalImage.vue'
 import EditorModalColor from './modals/EditorModalColor.vue'
@@ -16,7 +17,7 @@ withDefaults(
   defineProps<{
     editor: Editor
     showMenu: boolean
-    mode: string
+    mode: PropsDefinitions['mode']
     disableSave?: boolean
     saveIconVisible?: boolean
     saveImageCallback?: (file: File) => void
@@ -98,7 +99,7 @@ function openImageModal() {
   />
 
   <TableMenuBar
-    v-if="showMenu && mode != 'node' && mode != 'simple'"
+    v-if="showMenu && mode != 'none' && mode != 'simple'"
     :editor="editor"
     class="editortablemenu"
   />

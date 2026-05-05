@@ -113,107 +113,99 @@
   </li>
 </template>
 
-<script>
+<script setup lang="ts">
 import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
 
+import type { NotificationModel } from '~/models/notifications.model'
+import type { IconImageChoice } from '~/functs/IconImage'
+import type { RouteLocationRaw } from 'vue-router'
 import { getTimePassed } from '@/functs/date'
-import utils from '~/functs/functions.ts'
+import utils from '~/functs/functions'
 import { NuxtLink } from '#components'
 import { I18nT } from 'vue-i18n'
 
-export default {
-  name: 'NotificationItem',
+const props = defineProps<{
+  notification: NotificationModel
+}>()
 
-  components: { IconImage, CroppedApiImage, NuxtLink, I18nT },
+defineEmits<{
+  navigated: [NotificationModel]
+}>()
 
-  props: {
-    notification: {
-      type: Object,
-      required: true,
-    },
-  },
+const icon = computed<IconImageChoice>(() => (props.notification?.is_viewed ? null : 'Circle'))
+const context = computed(() => {
+  if (utils.isEmpty(props.notification.context)) return null
+  return props.notification.context
+})
 
-  emits: ['navigated'],
-
-  setup() {
-    return { DEFAULT_USER_PATATOID }
-  },
-
-  computed: {
-    icon() {
-      return this.notification?.is_viewed ? null : 'Circle'
-    },
-    deletedName() {
-      const givenName = this.context?.deleted_members?.[0]?.given_name || ''
-      const familyName = this.context?.deleted_members?.[0]?.family_name || ''
-      return (givenName.toLowerCase() + ' ' + familyName.toLowerCase()).trim()
-    },
-
-    modifiedName() {
-      const givenName = this.context?.modified_members?.[0]?.given_name || ''
-      const familyName = this.context?.modified_members?.[0]?.family_name || ''
-      return (givenName.toLowerCase() + ' ' + familyName.toLowerCase()).trim()
-    },
-
-    applicantName() {
-      const firstName = this.context?.application?.applicant_firstname || ''
-      const name = this.context?.application?.applicant_name || ''
-      return (firstName.toLowerCase() + ' ' + name.toLowerCase()).trim()
-    },
-    senderName() {
-      const givenName = this.notification.sender?.given_name || ''
-      const familyName = this.notification.sender?.family_name || ''
-      return (givenName.toLowerCase() + ' ' + familyName.toLowerCase()).trim()
-    },
-    timePassed() {
-      return getTimePassed(new Date(this.notification.created))
-    },
-
-    context() {
-      if (utils.isEmpty(this.notification.context)) return null
-      return this.notification.context
-    },
-
-    notificationRoute() {
-      if (
-        this.notification.type === 'invitation_week_reminder' ||
-        this.notification.type === 'invitation_today_reminder'
-      ) {
-        return null
-      } else if (
-        this.notification.type === 'access_request' ||
-        this.notification.type === 'pending_access_requests'
-      ) {
-        return { name: 'RequestsAdminTab' }
-      } else if (this.notification.type === 'comment') {
-        return {
-          name: 'projectComments',
-          params: { slugOrId: this.notification.project.slug },
-        }
-      } else if (this.notification.type === 'project_message') {
-        return {
-          name: 'projectPrivateExchange',
-          params: { slugOrId: this.notification.project.slug },
-        }
-      } else if (this.notification.type === 'new_instruction') {
-        return {
-          name: 'InstructionListPage',
-          params: {},
-        }
-      } else if (this.notification.project) {
-        return {
-          name: 'projectSummary',
-          params: { slugOrId: this.notification.project.slug },
-        }
-      } else {
-        return { name: 'HomeRoot' }
-      }
-    },
-  },
+const formatUser = (firstname: string | null, lastname: string | null): string => {
+  return ((firstname ?? '').toLowerCase() + ' ' + (lastname ?? '').toLowerCase()).trim()
 }
+
+const deletedName = computed(() =>
+  formatUser(
+    context.value?.deleted_members?.[0]?.given_name,
+    context.value?.deleted_members?.[0]?.family_name
+  )
+)
+
+const modifiedName = computed(() =>
+  formatUser(
+    context.value?.modified_members?.[0]?.given_name,
+    context.value?.modified_members?.[0]?.family_name
+  )
+)
+
+const applicantName = computed(() =>
+  formatUser(
+    context.value?.application?.applicant_firstname,
+    context.value?.application?.applicant_name
+  )
+)
+
+const senderName = computed(() =>
+  formatUser(props.notification.sender?.given_name, props.notification.sender?.family_name)
+)
+const timePassed = computed(() => getTimePassed(new Date(props.notification.created)))
+
+const notificationRoute = computed<RouteLocationRaw>(() => {
+  if (
+    props.notification.type === 'invitation_week_reminder' ||
+    props.notification.type === 'invitation_today_reminder'
+  ) {
+    return null
+  } else if (
+    props.notification.type === 'access_request' ||
+    props.notification.type === 'pending_access_requests'
+  ) {
+    return { name: 'RequestsAdminTab' }
+  } else if (props.notification.type === 'comment') {
+    return {
+      name: 'projectComments',
+      params: { slugOrId: props.notification.project.slug },
+    }
+  } else if (props.notification.type === 'project_message') {
+    return {
+      name: 'projectPrivateExchange',
+      params: { slugOrId: props.notification.project.slug },
+    }
+  } else if (props.notification.type === 'new_instruction') {
+    return {
+      name: 'InstructionListPage',
+      params: {},
+    }
+  } else if (props.notification.project) {
+    return {
+      name: 'projectSummary',
+      params: { slugOrId: props.notification.project.slug },
+    }
+  } else {
+    return { name: 'HomeRoot' }
+  }
+})
 </script>
 
 <style lang="scss" scoped>

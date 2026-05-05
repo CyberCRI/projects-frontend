@@ -1,18 +1,22 @@
 import LpiSelect from '~/components/base/form/LpiSelect.vue'
 import { lpiMount } from '~~/tests/helpers/LpiMount'
 
+import { flushPromises } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 const props = {
   options: [
     {
+      dataTest: 'options-recommended',
       value: 'recommended',
       label: 'recommended',
     },
     {
+      dataTest: 'options-updated',
       value: '-updated_at',
       label: 'updated at',
     },
     {
+      dataTest: 'options-test',
       value: 'test',
       label: 'test',
     },
@@ -30,8 +34,10 @@ describe('LpiSelect.vue', () => {
     const wrapper = lpiMount(LpiSelect, { props })
     const vm: any = wrapper.vm
 
-    vm.selected = { name: 'test', value: 'test' }
-    await vm.$nextTick()
-    expect(wrapper.emitted('update:model-value')[0][0]).toEqual('test')
+    // click on elements options
+    wrapper.find<HTMLElement>(`[data-test='options-test']`).element.click()
+
+    await flushPromises()
+    expect(wrapper.emitted('update:modelValue')[0][0]).toEqual('test')
   })
 })

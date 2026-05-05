@@ -67,122 +67,95 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import ResourceCard from '~/components/resources/ResourceCard.vue'
 import SectionHeader from '~/components/base/SectionHeader.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 
-import useToasterStore from '~/stores/useToaster.ts'
+import type { TranslatedAttachmentLink } from '~/models/attachment-link.model'
+import type { TranslatedAttachmentFile } from '~/models/attachment-file.model'
+import useToasterStore from '~/stores/useToaster'
 
-export default {
-  name: 'ResourcesTab',
+const props = withDefaults(
+  defineProps<{
+    fileResources?: TranslatedAttachmentFile[]
+    linkResources?: TranslatedAttachmentLink[]
+    deleteAttachmentLink: (item: TranslatedAttachmentFile) => Promise<undefined>
+    deleteAttachmentFile: (item: TranslatedAttachmentLink) => Promise<undefined>
+    isInEditingMode?: boolean
+    permissions?: boolean
+  }>(),
+  {
+    fileResources: () => [],
+    linkResources: () => [],
+    isInEditingMode: false,
+    permissions: true,
+  }
+)
 
-  components: {
-    SectionHeader,
-    ResourceCard,
-    ConfirmModal,
-    LpiButton,
-  },
+const emit = defineEmits<{
+  'reload-file-resources': []
+  'reload-link-resources': []
+  edit: [TranslatedAttachmentFile | TranslatedAttachmentLink] | []
+}>()
 
-  props: {
-    fileResources: {
-      type: Array,
-      default: () => [],
-    },
-    linkResources: {
-      type: Array,
-      default: () => [],
-    },
-    deleteAttachmentLink: {
-      type: Function,
-      required: true,
-    },
-    deleteAttachmentFile: {
-      type: Function,
-      required: true,
-    },
-    isInEditingMode: {
-      type: Boolean,
-      default: false,
-    },
-    permissions: {
-      type: Boolean,
-      default: true,
-    },
-  },
+const { t } = useNuxtI18n()
+const toaster = useToasterStore()
+useScrollToTab()
 
-  emits: ['reload-file-resources', 'reload-link-resources', 'edit'],
+const confirmModalVisible = ref(false)
+const currentType = ref(null)
+const currentResource = ref(null)
+const confirmModalContent = ref(null)
+const asyncing = ref(false)
 
-  setup() {
-    const toaster = useToasterStore()
-    useScrollToTab()
-    return {
-      toaster,
+const isEditionEnabled = computed(() => {
+  return props.permissions && props.isInEditingMode
+})
+
+const openModal = (resource, type) => {
+  confirmModalVisible.value = true
+  currentType.value = type
+  currentResource.value = resource
+
+  confirmModalContent.value =
+    currentType.value === 'link'
+      ? t('resources.link-confirm-delete')
+      : t('resources.file-confirm-delete')
+}
+
+const deleteResource = async (resource, type) => {
+  asyncing.value = true
+  if (type === 'link') {
+    try {
+      await props.deleteAttachmentLink(resource.id)
+
+      emit('reload-link-resources')
+
+      toaster.pushSuccess(t('toasts.link-delete.success'))
+    } catch (error) {
+      toaster.pushError(`${t('toasts.link-delete.error')} (${error})`)
+      console.error(error)
+    } finally {
+      asyncing.value = false
+      confirmModalVisible.value = false
     }
-  },
+  } else if (type === 'file') {
+    try {
+      await props.deleteAttachmentFile(resource.id)
 
-  data() {
-    return {
-      confirmModalVisible: false,
-      currentType: null,
-      currentResource: null,
-      confirmModalContent: null,
-      asyncing: false,
+      emit('reload-file-resources')
+
+      toaster.pushSuccess(t('toasts.file-delete.success'))
+    } catch (error) {
+      toaster.pushError(`${t('toasts.file-delete.error')} (${error})`)
+      console.error(error)
+    } finally {
+      asyncing.value = false
+      confirmModalVisible.value = false
     }
-  },
-
-  computed: {
-    isEditionEnabled() {
-      return this.permissions && this.isInEditingMode
-    },
-  },
-
-  methods: {
-    openModal(resource, type) {
-      this.confirmModalVisible = true
-      this.currentType = type
-      this.currentResource = resource
-
-      this.confirmModalContent =
-        this.currentType === 'link'
-          ? this.$t('resources.link-confirm-delete')
-          : this.$t('resources.file-confirm-delete')
-    },
-
-    async deleteResource(resource, type) {
-      this.asyncing = true
-      if (type === 'link') {
-        try {
-          await this.deleteAttachmentLink(resource.id)
-
-          this.$emit('reload-link-resources')
-
-          this.toaster.pushSuccess(this.$t('toasts.link-delete.success'))
-        } catch (error) {
-          this.toaster.pushError(`${this.$t('toasts.link-delete.error')} (${error})`)
-          console.error(error)
-        } finally {
-          this.asyncing = false
-          this.confirmModalVisible = false
-        }
-      } else if (type === 'file') {
-        try {
-          await this.deleteAttachmentFile(resource.id)
-
-          this.$emit('reload-file-resources')
-
-          this.toaster.pushSuccess(this.$t('toasts.file-delete.success'))
-        } catch (error) {
-          this.toaster.pushError(`${this.$t('toasts.file-delete.error')} (${error})`)
-          console.error(error)
-        } finally {
-          this.asyncing = false
-          this.confirmModalVisible = false
-        }
-      }
-    },
-  },
+  }
 }
 </script>
 
