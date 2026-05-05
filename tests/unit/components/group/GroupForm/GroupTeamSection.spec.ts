@@ -1,6 +1,10 @@
 import GroupTeamSection from '~/components/group/GroupForm/GroupTeamSection.vue'
+import { UserFactory } from '~~/tests/factories/user.factory'
 import { beforeEach, describe, expect, it } from 'vitest'
+import { users } from '~~/tests/playwright/variables'
 import { lpiMount } from '~~/tests/helpers/LpiMount'
+import useUsersStore from '~/stores/useUsers'
+import pinia from '~/stores'
 
 describe('GroupTeamSection.vue', () => {
   let wrapper
@@ -8,18 +12,13 @@ describe('GroupTeamSection.vue', () => {
   beforeEach(() => {
     defaultParams = {
       props: {
-        modelValue: [
-          {
-            id: 1,
-            profile_picture: { variations: {} },
-          },
-          {
-            id: 2,
-            profile_picture: { variations: {} },
-          },
-        ],
+        modelValue: UserFactory.generateMany(2),
       },
     }
+
+    const user = UserFactory.generate()
+    const usersStore = useUsersStore(pinia)
+    usersStore.userFromApi = user
   })
   it('should render GroupTeamSection component', () => {
     wrapper = lpiMount(GroupTeamSection, defaultParams)
@@ -30,6 +29,6 @@ describe('GroupTeamSection.vue', () => {
     const vm: any = wrapper.vm
 
     vm.addUsers([])
-    expect(wrapper.emitted('update:model-value')).toBeTruthy()
+    expect(wrapper.emitted('update:modelValue')).toBeTruthy()
   })
 })

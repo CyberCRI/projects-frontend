@@ -3,10 +3,10 @@
     <label>
       <span class="section-title">
         {{ $t('team.group-members') }}
-        <span v-if="modelValue.length">({{ modelValue.length }})</span>
+        <span v-if="model.length">({{ model.length }})</span>
       </span>
       <LpiButton
-        v-if="!modelValue.length"
+        v-if="!model.length"
         class="add-user-card"
         btn-icon="Plus"
         :label="$t('group.form.add')"
@@ -34,7 +34,7 @@
 
     <div class="team-grid">
       <TeamCardInline
-        v-for="user in showFullList ? modelValue : shortList"
+        v-for="user in showFullList ? model : shortList"
         :key="user.id"
         icon="Close"
         :member="user"
@@ -51,17 +51,17 @@
     </div>
     <div class="show-more">
       <LinkButton
-        v-if="shortList?.length < modelValue?.length"
+        v-if="shortList?.length < model?.length"
         class="see-more-btn"
         :label="$t(seeMoreLabel)"
         @click="showFullList = !showFullList"
       />
-      <empty-label v-if="(showFullList ? modelValue : shortList).length === 0" />
+      <empty-label v-if="(showFullList ? model : shortList).length === 0" />
     </div>
 
     <GroupTeamDrawer
       v-if="teamModalVisible"
-      :current-users="modelValue"
+      :current-users="model"
       :is-opened="teamModalVisible"
       :mode="teamModalMode"
       @close="teamModalVisible = false"
@@ -71,99 +71,81 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import type { GroupMember } from '~/models/group.model'
+import type { GroupDataRole } from '~/models/types'
 import useUsersStore from '~/stores/useUsers'
 
-export default {
-  name: 'GroupTeamSection',
+type TeamModel = {
+  role: GroupDataRole
+  user: {
+    family_name: string
+    given_name: string
+    job: string
+    people_id: number
+  }
+}
 
-  props: {
-    modelValue: {
-      type: Array,
-      required: true,
-    },
-  },
+const model = defineModel<GroupMember[]>({ default: [] })
 
-  emits: ['update-team', 'remove-user', 'update:model-value'],
-  setup() {
-    const usersStore = useUsersStore()
-    const { stateModal, closeModal, openModal } = useModal()
-    return {
-      usersStore,
-      stateModal,
-      closeModal,
-      openModal,
+const emit = defineEmits<{
+  'update-team': [TeamModel[]]
+  'remove-user': []
+}>()
+
+const usersStore = useUsersStore()
+const { stateModal, closeModal, openModal } = useModal()
+const teamModalVisible = ref(false)
+const teamModalMode = ref<'select' | 'roles'>('select')
+const showFullList = ref(false)
+const removeUser = ref(null)
+
+const currentUser = computed(() => usersStore.userFromApi)
+
+const shortList = computed(() => model.value.slice(0, 8))
+
+const adaptedCurrentUser = computed<TeamModel['user']>(() => {
+  /* Only selecting what we need for the card and also not selecting
+   * the keycloak_id, so we don't add this user to the API call
+   */
+  return {
+    family_name: currentUser.value.family_name,
+    given_name: currentUser.value.given_name,
+    job: currentUser.value.job,
+    people_id: currentUser.value.people_id,
+  }
+})
+const seeMoreLabel = computed(() => (showFullList.value ? 'common.see-less' : 'common.see-more'))
+
+watch(
+  adaptedCurrentUser,
+  (neo) => {
+    if (neo) {
+      emit('update-team', [{ user: adaptedCurrentUser.value, role: 'owners' }])
     }
   },
+  {
+    immediate: true,
+  }
+)
 
-  data() {
-    return {
-      groupMembers: [],
-      teamModalVisible: false,
-      teamModalMode: 'select', // 'select' or 'roles'
-      showFullList: false,
-      removeUser: null,
-    }
-  },
+const addUsers = (team) => {
+  model.value = team
+}
 
-  computed: {
-    currentUser() {
-      return this.usersStore.userFromApi
-    },
+const onRemoveUser = () => {
+  model.value = model.value.filter((member) => removeUser.value.id !== member.id)
+  removeUser.value = null
+  closeModal()
+}
+const openDrawer = (mode) => {
+  teamModalMode.value = mode
+  teamModalVisible.value = true
+}
 
-    shortList() {
-      return this.modelValue.slice(0, 8)
-    },
-
-    adaptedCurrentUser() {
-      /* Only selecting what we need for the card and also not selecting
-       * the keycloak_id, so we don't add this user to the API call
-       */
-      return {
-        family_name: this.currentUser.family_name,
-        given_name: this.currentUser.given_name,
-        job: this.currentUser.job,
-        people_id: this.currentUser.people_id,
-      }
-    },
-    seeMoreLabel() {
-      return this.showFullList ? 'common.see-less' : 'common.see-more'
-    },
-  },
-
-  watch: {
-    currentUser: {
-      handler: function (neo) {
-        if (neo) {
-          this.groupMembers.push({ user: this.adaptedCurrentUser, role: 'owners' })
-          this.$emit('update-team', this.groupMembers)
-        }
-      },
-      immediate: true,
-    },
-  },
-
-  methods: {
-    addUsers(team) {
-      this.$emit('update:model-value', team)
-    },
-
-    onRemoveUser() {
-      const team = this.modelValue.filter((member) => this.removeUser.id !== member.id)
-      this.$emit('update:model-value', team)
-      this.removeUser = null
-      this.closeModal()
-    },
-    openDrawer(mode) {
-      this.teamModalMode = mode
-      this.teamModalVisible = true
-    },
-
-    onConfirmRemoveUser(user) {
-      this.removeUser = user
-      this.openModal()
-    },
-  },
+const onConfirmRemoveUser = (user) => {
+  removeUser.value = user
+  openModal()
 }
 </script>
 

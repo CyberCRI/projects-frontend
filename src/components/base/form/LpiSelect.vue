@@ -70,8 +70,8 @@ const styles = computed<StyleValue>(() => {
   }
 })
 
-const select = (option) => {
-  model.value = option
+const select = (option: Option) => {
+  model.value = option.value
   closeModal()
 }
 const clickOutside = () => {
