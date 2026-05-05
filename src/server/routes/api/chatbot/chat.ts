@@ -29,19 +29,8 @@ const {
   appLangchainTrace,
   appSorbobotApiTrace,
   appVectorToolPrompt,
-  langsmithTracing,
-  langsmithEndpoint,
-  langsmithApiKey,
-  langsmithProject,
 } = runtimeConfig
 const { appApiOrgCode, appChatbotEnabled } = runtimeConfig.public
-
-// LangChain's SDK reads directly from process.env,
-// so we need to bridge the Nuxt runtime config values back into it.
-process.env.LANGSMITH_TRACING = langsmithTracing
-process.env.LANGSMITH_ENDPOINT = langsmithEndpoint
-process.env.LANGSMITH_API_KEY = langsmithApiKey
-process.env.LANGSMITH_PROJECT = langsmithProject
 
 // TODO use own token map instead chat-stream one when refactoed
 // Map conversationId to token and date for authed api requests in MCP
