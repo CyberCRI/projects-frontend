@@ -22,6 +22,31 @@ export type GroupDataRole =
   | 'users'
   | 'viewers'
 
+export type NotificationType =
+  | 'comment'
+  | 'reply'
+  | 'review'
+  | 'project_message'
+  | 'ready_for_review'
+  | 'project_created'
+  | 'project_updated'
+  | 'member_added_self'
+  | 'group_member_added_self'
+  | 'member_updated_self'
+  | 'member_added'
+  | 'member_updated'
+  | 'member_removed'
+  | 'group_member_removed'
+  | 'group_member_added'
+  | 'announcement'
+  | 'application'
+  | 'blog_entry'
+  | 'invitation_today_reminder'
+  | 'invitation_week_reminder'
+  | 'access_request'
+  | 'pending_access_requests'
+  | 'new_instruction'
+
 export type ProjectMemberRoleType = GroupDataRole
 
 export type TagType = 'Wikipedia' | 'ESCO' | 'Custom'

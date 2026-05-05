@@ -103,9 +103,8 @@ watchEffect(() => {
           {{ publicationDate }}
         </p>
       </div>
+      <TipTapOutput class="instruction-content skeletons-text" :content="instruction.$t.content" />
     </div>
-
-    <TipTapOutput class="instruction-content skeletons-text" :content="instruction.$t.content" />
   </FetchLoader>
 
   <EditInstructionDrawer
