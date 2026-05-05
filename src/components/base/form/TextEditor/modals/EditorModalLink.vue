@@ -40,113 +40,83 @@
   </DialogModal>
 </template>
 
-<script>
+<script setup lang="ts">
 import DialogModal from '~/components/base/modal/DialogModal.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 
-import funct from '~/functs/functions.ts'
+import type { Editor } from '@tiptap/vue-3'
+import functions from '~/functs/functions'
 
-export default {
-  name: 'EditorModalLink',
+const props = defineProps<{ editor: Editor }>()
+const emit = defineEmits<{ closeModal: [] }>()
 
-  components: { DialogModal, TextInput, LpiButton },
+const link = ref(undefined)
+const text = ref(undefined)
 
-  props: {
-    editor: { type: Object, required: true },
-  },
+const linkHref = computed(() => props.editor.getAttributes('link').href)
+const hasSelection = computed(() => !props.editor.view.state.selection.empty)
+const needText = computed(() => !hasSelection.value && mode.value === 'add')
+const mode = computed(() => (linkHref.value !== undefined ? 'edit' : 'add'))
+const disabled = computed(() => !link.value || (needText.value && !text.value))
 
-  emits: ['closeModal'],
+onMounted(() => {
+  link.value = linkHref.value
+})
 
-  data() {
-    return {
-      link: undefined,
-      text: undefined,
+const closeModal = () => emit('closeModal')
+
+const handleLinkModalConfirmed = (data) => {
+  // set the link if there's data from popup
+  if (data) {
+    props.editor
+      .chain()
+      .focus()
+      .extendMarkRange('link')
+      .setLink({
+        href: (functions.isValidUrl(data.href) ? '' : 'http://') + data.href,
+      })
+      .run()
+    // if link made from empty selection, add the entered text as content
+    if (data.text) {
+      const selection = props.editor.view.state.selection
+      props.editor
+        .chain()
+        .focus()
+        .insertContentAt(
+          {
+            from: selection.from,
+            to: selection.to,
+          },
+          data.text
+        )
+        .run()
     }
-  },
+  } else {
+    // if there is no data, unset the link
+    props.editor.chain().focus().extendMarkRange('link').unsetLink().run()
+  }
 
-  computed: {
-    needText() {
-      return !this.hasSelection && this.mode === 'add'
-    },
-    mode() {
-      return this.linkHref !== undefined ? 'edit' : 'add'
-    },
-    disabled() {
-      return !this.link || (this.needText && !this.text)
-    },
-    linkHref() {
-      return this.editor.getAttributes('link').href
-    },
-    hasSelection() {
-      return !this.editor.view.state.selection.empty
-    },
-  },
+  closeModal()
+}
 
-  mounted() {
-    this.link = this.linkHref
-  },
-
-  methods: {
-    closeModal() {
-      this.$emit('closeModal')
-    },
-
-    insertLink() {
-      const data = {
-        href: this.link,
-      }
-      if (this.needText) {
-        data.text = this.text
-      }
-      this.handleLinkModalConfirmed(data)
-    },
-
-    removeLink() {
-      this.handleLinkModalConfirmed(null)
-    },
-
-    handleLinkModalConfirmed(data) {
-      // set the link if there's data from popup
-      if (data) {
-        this.editor
-          .chain()
-          .focus()
-          .extendMarkRange('link')
-          .setLink({
-            href: (funct.isValidUrl(data.href) ? '' : 'http://') + data.href,
-          })
-          .run()
-        // if link made from empty selection, add the entered text as content
-        if (data.text) {
-          const selection = this.editor.view.state.selection
-          this.editor
-            .chain()
-            .focus()
-            .insertContentAt(
-              {
-                from: selection.from,
-                to: selection.to,
-              },
-              data.text
-            )
-            .run()
-        }
-      } else {
-        // if there is no data, unset the link
-        this.editor.chain().focus().extendMarkRange('link').unsetLink().run()
-      }
-
-      this.closeModal()
-    },
-  },
+const removeLink = () => handleLinkModalConfirmed(null)
+const insertLink = () => {
+  const data = {
+    href: link.value,
+    text: null,
+  }
+  if (needText.value) {
+    data.text = text.value
+  }
+  handleLinkModalConfirmed(data)
 }
 </script>
 
 <style lang="scss" scoped>
 .button-delete {
-  color: $white;
-  background: $salmon;
+  color: var(--white);
+  background: var(--salmon);
 }
 
 label {

@@ -21,7 +21,7 @@ import { Editor } from '@tiptap/vue-3'
 export const emitsDefinitions = ['saved', 'image', 'blur', 'update:modelValue']
 
 export type PropsDefinitions = {
-  modelValue: string
+  modelValue?: string
   mode?: 'none' | 'simple' | 'medium' | 'full'
   saveIconVisible?: boolean
   // function must take a file argument and return a promise resolving to an {url, width, height} object
@@ -196,7 +196,7 @@ export function useTipTap({ props, emit, t }) {
 
   function resetContent() {
     emit('update:modelValue', initialContent.value)
-    editor.value.commands.setContent(initialContent.value)
+    editor.value?.commands.setContent(initialContent.value)
   }
 
   return {

@@ -43,12 +43,19 @@ const redirect = (numberMembers) => {
   })
 }
 
+const refresh = async () => {
+  await refreshNuxtData([
+    `${organizationCode.value}::group::${props.group.slug}`,
+    `${organizationCode.value}::group::${props.group.id}`,
+  ])
+}
+
 const save = async () => {
   try {
     const { removed, added } = await updateGroupMembers()
     stopEditWatcher()
     // refresh group parent info
-    await refreshNuxtData(`${organizationCode.value}::group::${props.group.id}`)
+    await refresh()
     redirect(groupMemberData.value.length - removed + added)
   } catch (e) {
     console.error(e)

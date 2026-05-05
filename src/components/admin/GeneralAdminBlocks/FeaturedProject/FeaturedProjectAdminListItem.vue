@@ -1,7 +1,7 @@
 <template>
   <NuxtLink
     class="featured-project-admin-list-item"
-    :to="{ name: 'pageProject', params: { slugOrId: project.slug } }"
+    :to="{ name: 'pageProject', params: { slugOrId: project.slug || project.id } }"
   >
     <div class="project-image">
       <CroppedApiImage
@@ -14,7 +14,7 @@
     </div>
     <div project-text>
       <h4 class="title">
-        {{ project.title }}
+        {{ project.$t.title }}
       </h4>
     </div>
   </NuxtLink>

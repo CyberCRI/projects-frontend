@@ -1,18 +1,18 @@
 <template>
-  <div v-click-outside="clickOutside" class="lpi-select" :class="{ active: isOpen }">
+  <div v-click-outside="clickOutside" class="lpi-select" :class="{ active: stateModal }">
     <div
       class="menu-header"
-      :class="{ placeholder: !selected, 'placeholder--open': isOpen }"
-      @click="toggleMenu"
+      :class="{ placeholder: !selected, 'placeholder--open': stateModal }"
+      @click="toggleModal"
     >
       <span class="selected-label" :style="styles">
         {{ selected ? selected.label : placeholder }}
       </span>
-      <IconImage :name="chevron" class="svg" />
+      <IconImage :name="icon" class="svg" />
     </div>
     <div class="options-wrapper">
       <Transition name="menu-fade">
-        <ul v-show="isOpen" class="option-list">
+        <ul v-show="stateModal" class="option-list">
           <template v-for="option in options">
             <li v-if="!selected || option.value !== selected.value" :key="option.value">
               <button class="menu-dropdown" :data-test="option.dataTest" @click="select(option)">
@@ -26,94 +26,57 @@
   </div>
 </template>
 
-<script>
-import IconImage from '~/components/base/media/IconImage.vue'
+<script setup lang="ts" generic="ModelType extends string | number">
+import type IconImage from '~/components/base/media/IconImage.vue'
+import type { IconImageChoice } from '~/functs/IconImage'
+import type { StyleValue } from 'vue'
 
-export default {
-  name: 'LpiSelect',
+type Option = {
+  label?: string
+  value: ModelType
+  dataTest?: string
+}
 
-  components: {
-    IconImage,
-  },
+const props = withDefaults(
+  defineProps<{
+    options: Option[]
+    placeholder?: string
+  }>(),
+  {
+    placeholder: 'Select',
+  }
+)
+const emit = defineEmits<{
+  blur: []
+}>()
 
-  props: {
-    modelValue: {
-      type: [String, Number], // value
-      default: '',
-    },
+const model = defineModel<ModelType>({ default: null })
+const { stateModal, toggleModal, closeModal } = useModal(false)
+const icon = computed<IconImageChoice>(() => (stateModal.value ? 'ChevronUp' : 'ChevronDown'))
 
-    options: {
-      type: Array, // [{label:'', value:''}, ...]
-      required: true,
-    },
+const selected = computed(() => props.options.find((option) => option.value === model.value))
 
-    placeholder: {
-      type: String,
-      default: 'Select',
-    },
-  },
+const styles = computed<StyleValue>(() => {
+  let maxCharLength = props.placeholder ? props.placeholder.length : 0
+  for (let i = 0; i < props.options.length; i++) {
+    maxCharLength = Math.max(
+      maxCharLength,
+      props.options[i].label ? props.options[i].label.length : 0
+    )
+  }
 
-  emits: ['update:model-value', 'blur'],
-  data() {
-    return {
-      isOpen: false,
-      selected: this.options.find((option) => option.value === this.modelValue),
-      chevron: 'ChevronDown',
-    }
-  },
+  return {
+    width: `${maxCharLength}em`, // use em to get current font width
+  }
+})
 
-  computed: {
-    styles() {
-      let maxCharLength = this.placeholder ? this.placeholder.length : 0
-      for (let i = 0; i < this.options.length; i++) {
-        maxCharLength = Math.max(
-          maxCharLength,
-          this.options[i].label ? this.options[i].label.length : 0
-        )
-      }
-
-      return {
-        width: `${maxCharLength}em`, // use em to get current font width
-      }
-    },
-  },
-  watch: {
-    selected(neo) {
-      this.$emit('update:model-value', neo ? neo.value : null)
-    },
-    options: {
-      handler: function (neo) {
-        this.selected = neo.find((option) => option.value === this.modelValue)
-      },
-      deep: true,
-    },
-
-    modelValue: function (neo) {
-      this.selected = this.options.find((option) => option.value === neo)
-    },
-
-    isOpen: {
-      handler: function (open) {
-        this.chevron = open ? 'ChevronUp' : 'ChevronDown'
-      },
-      immediate: true,
-    },
-  },
-
-  methods: {
-    toggleMenu() {
-      this.isOpen = !this.isOpen
-    },
-
-    select(option) {
-      this.selected = option
-      this.isOpen = false
-    },
-    clickOutside() {
-      this.isOpen = false
-      this.$emit('blur', {})
-    },
-  },
+const select = (option: Option) => {
+  model.value = option.value
+  closeModal()
+}
+const clickOutside = () => {
+  closeModal()
+  emit('blur')
 }
 </script>
 

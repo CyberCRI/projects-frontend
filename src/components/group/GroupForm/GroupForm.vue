@@ -165,7 +165,7 @@
     <!-- Parent group -->
     <div class="parent-group">
       <ParentGroupSection v-model="form.parentGroup" :organization-code="organizationCode" />
-      <empty-label v-if="!form.parentGroup" :label="$t('empty')" />
+      <empty-label v-if="!form.parentGroup" />
     </div>
 
     <!-- Visibility -->

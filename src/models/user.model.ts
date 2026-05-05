@@ -28,6 +28,7 @@ export interface UserModel {
     firstname: string
     lastname: string
   }
+  keycloack_id?: number
   pronouns?: string
   slug: string
   email: string
