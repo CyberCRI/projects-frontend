@@ -17,6 +17,8 @@ export interface AnnouncementModel extends BaseModel {
   created_at: string
 }
 
+export type AnnouncementId = AnnouncementModel['id']
+
 export type TranslatedAnnouncement = Omit<
   Translated<AnnouncementModel, 'title' | 'description'>,
   'project'
@@ -38,6 +40,14 @@ export type AnnouncementApplyInput = {
 }
 
 export type AnnouncementOutput = Required<AnnouncementModel>
+
+export type AnnouncementForm = Omit<
+  AnnouncementModel,
+  'id' | 'updated_at' | 'created_at' | 'deadline'
+> & {
+  id?: AnnouncementModel['id']
+  deadline: string | Date
+}
 
 export type QueryFilterAnnouncement = Partial<{
   ordering: Ordering<'created_at' | 'updated_at' | 'deadline'>

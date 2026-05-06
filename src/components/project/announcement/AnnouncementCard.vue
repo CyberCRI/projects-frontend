@@ -1,6 +1,14 @@
 <template>
   <div class="announcement-wrapper">
-    <div class="announcement-card shadow-box" @click="emit('know-more-clicked', announcement)">
+    <component :is="is" class="announcement-card" :class="{ 'shadow-box': !!to }" :to="to">
+      <ContextActionMenuInline
+        v-if="editable"
+        class="editable"
+        :can-edit="canEditProject"
+        :can-delete="canEditProject"
+        @delete="emit('delete')"
+        @edit="emit('edit')"
+      />
       <div class="announcement-header horizontal-padding top-padding skeletons-text">
         <span class="date-ctn">
           {{ $d(new Date(announcement.updated_at)) }}
@@ -43,7 +51,7 @@
           </h4>
         </div>
       </div>
-    </div>
+    </component>
   </div>
 </template>
 
@@ -52,15 +60,37 @@ import type { TranslatedAnnouncement } from '@/models/announcement.model'
 import type { TranslatedProject } from '@/models/project.model'
 import IconImage from '@/components/base/media/IconImage.vue'
 import { usePatatoid } from '@/composables/usePatatoids'
+import type { RouteLocationRaw } from 'vue-router'
 import { capitalize } from '@/functs/string'
+import { NuxtLink } from '#components'
 
-const props = defineProps<{ project?: TranslatedProject; announcement: TranslatedAnnouncement }>()
+const props = withDefaults(
+  defineProps<{
+    project?: TranslatedProject
+    announcement: TranslatedAnnouncement
+    editable?: boolean
+    to?: RouteLocationRaw
+  }>(),
+  {
+    project: null,
+    editable: false,
+    to: null,
+  }
+)
 
-const emit = defineEmits(['know-more-clicked'])
+const emit = defineEmits<{
+  edit: []
+  delete: []
+  'know-more-clicked': [TranslatedAnnouncement]
+}>()
 
 const { t } = useNuxtI18n()
 
+const is = computed(() => (props.to ? NuxtLink : 'div'))
+
 const projectActual = computed(() => props.project ?? props.announcement.project)
+
+const { canEditProject } = usePermissions()
 
 const projectImage = computed(() => {
   return `url(${projectActual.value?.header_image?.variations?.small}), url(${usePatatoid(1)})`
@@ -218,6 +248,13 @@ $annoucement-padding: pxToRem(20px);
       }
     }
   }
+}
+
+.editable {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5rem;
 }
 
 :deep(.description) {

@@ -2,9 +2,9 @@
   <div>
     <BaseDrawer
       :confirm-action-name="$t('common.save')"
-      :confirm-action-disabled="v$.$invalid"
+      :confirm-action-disabled="!isValid"
       :is-opened="isOpened"
-      :title="isAddMode ? $t('recruit.add-announcement') : $t('recruit.edit-announcement')"
+      :title="form.id ? $t('recruit.edit-announcement') : $t('recruit.add-announcement')"
       class="medium"
       :asyncing="asyncing"
       @close="close"
@@ -22,19 +22,14 @@
             :label="`${$t('recruit.title')}:`"
             :placeholder="$t('recruit.title')"
             class="form-section"
-            @blur="v$.form.title.$touch"
           />
-          <FieldErrors :errors="v$.form.title.$errors" />
+          <FieldErrors :errors="errors.title" />
         </div>
         <div class="form-section description-section">
           <label class="label">{{ $t('common.description') }}:</label>
-          <TipTapEditor
-            v-model="form.description"
-            class="description-field"
-            @blur="v$.form.description.$validate"
-          />
+          <TipTapEditor v-model="form.description" class="description-field" />
 
-          <FieldErrors :errors="v$.form.description.$errors" />
+          <FieldErrors :errors="errors.description" />
         </div>
 
         <DateField v-model="form.deadline" :label="$t('common.deadline')" />
@@ -51,10 +46,7 @@
   </div>
 </template>
 
-<script>
-import { helpers, required } from '@vuelidate/validators'
-import useVuelidate from '@vuelidate/core'
-
+<script setup lang="ts">
 import { patchAnnouncement, postAnnouncement } from '~/api/announcements.service'
 
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
@@ -65,219 +57,166 @@ import TextInput from '~/components/base/form/TextInput.vue'
 import DateField from '~/components/base/form/DateField.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
-import useToasterStore from '~/stores/useToaster.ts'
+import useToasterStore from '~/stores/useToaster'
 
+import type { AnnouncementModel, TranslatedAnnouncement } from '~/models/announcement.model'
+import { defaultForm, useAnnouncementForm } from '~/form/annoucement'
+import type { TranslatedProject } from '~/models/project.model'
 import { fullYearDateFormat } from '~/functs/date'
-import { NULL_CONTENT } from '~/functs/constants'
 import { textIsEmpty } from '~/functs/string'
 import analytics from '~/analytics'
 
-export default {
-  name: 'AnnouncementDrawer',
+const props = withDefaults(
+  defineProps<{
+    project: TranslatedProject
+    announcement?: TranslatedAnnouncement
+    isOpened?: boolean
+  }>(),
+  {
+    announcement: null,
+    isOpened: false,
+  }
+)
 
-  components: {
-    ConfirmModal,
-    BaseDrawer,
-    GroupButton,
-    TextInput,
-    TipTapEditor,
-    FieldErrors,
-    DateField,
+const emit = defineEmits<{
+  close: []
+  reload: []
+}>()
+
+const toaster = useToasterStore()
+const { t } = useNuxtI18n()
+
+const { isValid, errors, form, v$ } = useAnnouncementForm({ default: defaultForm(), lazy: true })
+
+const confirmModalIsOpen = ref(false)
+const asyncing = ref(false)
+
+const typeOptions = computed<
+  {
+    value: AnnouncementModel['type']
+    label: string
+  }[]
+>(() => [
+  {
+    value: 'na',
+    label: t('common.none'),
   },
-
-  props: {
-    project: {
-      type: Object,
-      default: () => ({}),
-    },
-
-    announcement: {
-      type: Object || null,
-      default: null,
-    },
-
-    isAddMode: {
-      type: Boolean,
-      default: true,
-    },
-
-    isOpened: {
-      type: Boolean,
-      default: false,
-    },
+  {
+    value: 'participant',
+    label: t('recruit.participant'),
   },
+  {
+    value: 'traineeship',
+    label: t('recruit.traineeship'),
+  },
+  {
+    value: 'job',
+    label: t('recruit.job'),
+  },
+])
 
-  emits: ['close', 'reload-announcements'],
+const titleChanged = computed(() => {
+  return props.announcement
+    ? props.announcement.title !== form.value.title
+    : form.value.title !== ''
+})
 
-  setup() {
-    const toaster = useToasterStore()
-    return {
-      toaster,
+const descriptionChanged = computed(() => {
+  return props.announcement
+    ? props.announcement.description !== form.value.description
+    : !textIsEmpty(form.value.description)
+})
+
+watch(
+  () => props.isOpened,
+  () => {
+    form.value = {
+      ...defaultForm(),
+      ...(props.announcement || {}),
     }
+    nextTick(() => v$.value.$reset())
   },
+  { immediate: true }
+)
 
-  data() {
-    return {
-      v$: useVuelidate(),
-      confirmModalIsOpen: false,
-      form: {
-        title: '',
-        description: NULL_CONTENT,
-        deadline: null,
-      },
-      asyncing: false,
+const submit = async () => {
+  if (!isValid.value) {
+    return
+  }
+
+  asyncing.value = true
+  const body = {
+    ...form.value,
+    deadline: form.value.deadline ? fullYearDateFormat(form.value.deadline) : null,
+    description: form.value.description,
+    project_id: props.project.id,
+  }
+
+  if (body.id) {
+    try {
+      const result = await patchAnnouncement(props.project.id, body.id, body)
+
+      analytics.announcement.updateAnnouncement({
+        project: {
+          id: props.project.id,
+        },
+        announcement: result,
+      })
+
+      toaster.pushSuccess(t('toasts.announcement-update.success'))
+    } catch (error) {
+      toaster.pushError(`${t('toasts.announcement-update.error')} (${error})`)
+      console.error(error)
+    } finally {
+      emit('reload')
+      asyncing.value = false
+      closeNoConfirm()
     }
-  },
+  } else {
+    try {
+      const result = await postAnnouncement(props.project.id, body)
+      analytics.announcement.addAnnouncement({
+        project: {
+          id: props.project.id,
+        },
+        announcement: result,
+      })
 
-  validations() {
-    return {
-      form: {
-        title: {
-          required: helpers.withMessage(this.$t('form.announcement.title'), required),
-        },
-        description: {
-          required: helpers.withMessage(this.$t('form.announcement.description'), required),
-        },
-      },
+      toaster.pushSuccess(t('toasts.announcement-create.success'))
+    } catch (error) {
+      toaster.pushError(`${t('toasts.announcement-create.error')} (${error})`)
+      console.error(error)
+    } finally {
+      emit('reload')
+      asyncing.value = false
+      closeNoConfirm()
     }
-  },
+  }
+}
 
-  computed: {
-    typeOptions() {
-      return [
-        {
-          value: 'na',
-          label: this.$t('common.none'),
-        },
-        {
-          value: 'participant',
-          label: this.$t('recruit.participant'),
-        },
-        {
-          value: 'traineeship',
-          label: this.$t('recruit.traineeship'),
-        },
-        {
-          value: 'job',
-          label: this.$t('recruit.job'),
-        },
-      ]
-    },
+const toggleConfirmModal = () => {
+  if (asyncing.value) return
+  confirmModalIsOpen.value = !confirmModalIsOpen.value
+}
 
-    titleChanged() {
-      return this.announcement
-        ? this.announcement.title !== this.form.title
-        : this.form.title !== ''
-    },
+const close = () => {
+  if (descriptionChanged.value || titleChanged.value) {
+    toggleConfirmModal()
+  } else {
+    closeNoConfirm()
+  }
+}
 
-    descriptionChanged() {
-      return this.announcement
-        ? this.announcement.description !== this.form.description
-        : !textIsEmpty(this.form.description)
-    },
-  },
+const closeNoConfirm = () => {
+  if (asyncing.value) return
+  v$.value.$reset()
+  emit('close')
+}
 
-  watch: {
-    isOpened: {
-      handler: function () {
-        if (this.isAddMode) {
-          this.form = {
-            title: '',
-            description: NULL_CONTENT,
-            deadline: new Date(),
-            type: 'na',
-          }
-        } else {
-          this.form = {
-            ...this.announcement,
-          }
-        }
-      },
-      immediate: true,
-    },
-  },
-
-  methods: {
-    async submit() {
-      const isValid = await this.v$.$validate()
-
-      if (isValid) {
-        this.asyncing = true
-        const body = {
-          ...this.form,
-          deadline: this.form.deadline ? fullYearDateFormat(this.form.deadline) : null,
-          description: this.form.description,
-          project_id: this.project.id,
-        }
-
-        if (this.isAddMode) {
-          try {
-            const result = await postAnnouncement(body)
-            analytics.announcement.addAnnouncement({
-              project: {
-                id: this.project.id,
-              },
-              announcement: result,
-            })
-
-            this.toaster.pushSuccess(this.$t('toasts.announcement-create.success'))
-          } catch (error) {
-            this.toaster.pushError(`${this.$t('toasts.announcement-create.error')} (${error})`)
-            console.error(error)
-          } finally {
-            this.$emit('reload-announcements')
-            this.asyncing = false
-            this.closeNoConfirm()
-          }
-        } else {
-          try {
-            const result = await patchAnnouncement(body)
-
-            analytics.announcement.updateAnnouncement({
-              project: {
-                id: this.project.id,
-              },
-              announcement: result,
-            })
-
-            this.toaster.pushSuccess(this.$t('toasts.announcement-update.success'))
-          } catch (error) {
-            this.toaster.pushError(`${this.$t('toasts.announcement-update.error')} (${error})`)
-            console.error(error)
-          } finally {
-            this.$emit('reload-announcements')
-            this.asyncing = false
-            this.closeNoConfirm()
-          }
-        }
-      }
-    },
-
-    toggleConfirmModal() {
-      if (this.asyncing) return
-      this.confirmModalIsOpen = !this.confirmModalIsOpen
-    },
-
-    close() {
-      if (this.descriptionChanged || this.titleChanged) {
-        this.toggleConfirmModal()
-      } else {
-        this.closeNoConfirm()
-      }
-    },
-
-    closeNoConfirm() {
-      if (this.asyncing) return
-      this.v$.$reset()
-      this.$emit('close')
-    },
-
-    confirmClose() {
-      if (this.asyncing) return
-      this.toggleConfirmModal()
-      this.closeNoConfirm()
-    },
-  },
+const confirmClose = () => {
+  if (asyncing.value) return
+  toggleConfirmModal()
+  closeNoConfirm()
 }
 </script>
 

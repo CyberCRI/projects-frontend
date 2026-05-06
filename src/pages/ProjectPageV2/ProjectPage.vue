@@ -31,8 +31,8 @@ const { tabs, currentTab, isEditing, toggleEditing } = useProjectTabs(projectIdO
 // set headers
 watchEffect(() => {
   useLpiHead2({
-    title: project.value?.$t?.title,
-    description: project.value?.$t?.purpose,
+    title: project.value?.$t.title,
+    description: project.value?.$t.purpose,
     image: project.value?.header_image,
   })
 })
