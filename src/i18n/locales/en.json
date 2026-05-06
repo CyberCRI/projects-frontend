@@ -3214,6 +3214,7 @@
     "use-latest-prompt-version": "Use latest prompt version",
     "use-prompt-version": "Use prompt version: ",
     "prompt-version-placeholder": "Choose prompt version",
+    "start-message-section": "Agent welcome message",
     "tools-section": "Tools",
     "docs-section": "Documents",
     "skills-section": "Skills",

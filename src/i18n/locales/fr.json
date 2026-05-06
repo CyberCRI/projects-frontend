@@ -3213,6 +3213,7 @@
     "use-latest-prompt-version": "Utiliser la dernière version de l'invite",
     "use-prompt-version": "Utiliser la version de l'invite : ",
     "prompt-version-placeholder": "Choisir la version de l'invite",
+    "start-message-section": "Message de bienvenue de l'agent",
     "tools-section": "Outils",
     "docs-section": "Documents",
     "skills-section": "Compétences",

@@ -3213,6 +3213,7 @@
     "use-latest-prompt-version": "Kasuta uusimat käsu versiooni",
     "use-prompt-version": "Kasuta käsu versiooni: ",
     "prompt-version-placeholder": "Vali käsu versioon",
+    "start-message-section": "Agendi tervitussõnum",
     "tools-section": "Tööriistad",
     "docs-section": "Dokumendid",
     "skills-section": "Oskused",

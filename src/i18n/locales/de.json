@@ -3210,6 +3210,7 @@
     "model-temperature": "Modelltemperatur",
     "prompt-section": "Prompt",
     "prompt-placeholder": "Wähle einen Prompt",
+    "start-message-section": "Begrüßungsnachricht des Agenten",
     "use-latest-prompt-version": "Neueste Prompt-Version verwenden",
     "use-prompt-version": "Prompt-Version verwenden: ",
     "prompt-version-placeholder": "Wähle die Prompt-Version",

@@ -3210,6 +3210,7 @@
     "model-temperature": "Temperatura del model",
     "prompt-section": "indicació",
     "prompt-placeholder": "Tria una indicació",
+    "start-message-section": "Missatge de benvinguda de l'agent",
     "use-latest-prompt-version": "Utilitza la versió més recent de l'indicació",
     "use-prompt-version": "Utilitza la versió de l'indicació: ",
     "prompt-version-placeholder": "Tria la versió de l'indicació",

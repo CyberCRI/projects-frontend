@@ -6,6 +6,8 @@ const props = defineProps({ agentSlug: { type: String, required: true } })
 
 // type Params = Parameters<typeof useFetch>
 const usersStore = useUsersStore()
+const router = useRouter()
+const route = useRoute()
 
 if (!useRuntimeConfig().public.appHasChatbotPromptDb) {
   usePage404()
@@ -20,6 +22,12 @@ const options = { headers }
 
 const url = `/api/chatbot/${props.agentSlug}`
 const { data: agent, error } = await useFetch(url, options)
+if (!agent?.value) {
+  router.replace({
+    name: 'page404',
+    params: { pathMatch: route.path.substring(1).split('/') },
+  })
+}
 
 const CHAT_ENDPOINT = computed(() => '/api/chatbot/chat?id=' + agent.value?.id)
 onBeforeUnmount(() => {

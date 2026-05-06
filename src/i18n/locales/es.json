@@ -3212,6 +3212,7 @@
     "prompt-placeholder": "Elige una indicación",
     "use-latest-prompt-version": "Usar la versión más reciente de la indicación",
     "use-prompt-version": "Usar versión de la indicación: ",
+    "start-message-section": "Mensaje de bienvenida del agente",
     "prompt-version-placeholder": "Elige la versión de la indicación",
     "tools-section": "Herramientas",
     "docs-section": "Documentos",

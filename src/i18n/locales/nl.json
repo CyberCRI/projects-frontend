@@ -3213,6 +3213,7 @@
     "use-latest-prompt-version": "Meest recente promptversie gebruiken",
     "use-prompt-version": "Promptversie gebruiken: ",
     "prompt-version-placeholder": "Kies de promptversie",
+    "start-message-section": "Welkomstbericht van de agent",
     "tools-section": "Hulpmiddelen",
     "docs-section": "Documenten",
     "skills-section": "Vaardigheden",
