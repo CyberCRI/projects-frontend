@@ -203,6 +203,7 @@ const formMode = ref<'click' | 'form'>()
 const form = ref(null)
 
 const openEditModal = (location) => {
+  console.log('icic')
   form.value = location
   showForm.value = true
 }

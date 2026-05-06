@@ -24,13 +24,14 @@ defineEmits<{
     <div />
     <LpiButton
       v-if="add"
+      class="skeletons-background"
       btn-icon="Plus"
       :label="labelAdd ?? $t('common.add')"
       @click="$emit('add')"
     />
     <LpiSelect
       v-if="pagination"
-      class="pagination-limit small"
+      class="pagination-limit small skeletons-background"
       :model-value="pagination.limit.value"
       :title="$t('pagination.visibylity-per-par')"
       :options="[

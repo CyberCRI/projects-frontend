@@ -5,11 +5,7 @@
         <div :class="['badge', location.type]">
           <LocationType :location-type="location.type" />
           <div v-if="editable" class="actions">
-            <ContextActionButton
-              action-icon="Pen"
-              class="edit-btn small"
-              @click.stop="emit('edit', location)"
-            />
+            <ContextActionButton action-icon="Pen" class="edit-btn small" @click.stop="onEdit" />
           </div>
         </div>
       </slot>
@@ -21,7 +17,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends AnyLocation">
 import type { AnyLocation } from '~/models/location.model'
 
 import type { MapPointerOption } from '~/interfaces/maps'
@@ -30,7 +26,7 @@ import LocationType from '~/components/map/LocationType.vue'
 
 const props = withDefaults(
   defineProps<{
-    location: AnyLocation
+    location: T
     editable?: boolean
   }>(),
   {
@@ -40,12 +36,16 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   mounted: [MapPointerOption]
-  unmounted: [AnyLocation | null]
-  edit: [AnyLocation | null]
+  unmounted: [T | null]
+  edit: [T | null]
 }>()
 
 const markerRef = useTemplateRef('marker')
 const tooltipRef = useTemplateRef('tooltip')
+
+const onEdit = () => {
+  emit('edit', props.location)
+}
 
 onMounted(() => {
   emit('mounted', {

@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import ProjectLocationDrawer from '@/components/project/map/ProjectLocationDrawer.vue'
+import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { locationSkeleton } from '@/skeletons/location.skeleton'
 import type { TranslatedProject } from '@/models/project.model'
 import { factoriesSkeleton } from '@/skeletons/base.skeletons'
 import { getProjectLocations } from '@/api/v2/project.service'
+import LocationForm from '~/components/map/LocationForm.vue'
 import LocationList from '@/components/map/LocationList.vue'
-import MapRecap from '@/components/map/MapRecap.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -19,8 +20,13 @@ const props = withDefaults(
   }
 )
 
+const drawerRef = useTemplateRef('drawer')
+const { stateModals, openModals, closeModals, closeAllModals } = useModals({
+  edit: false,
+  delete: false,
+  map: false,
+})
 const isEdit = computed(() => props.editable && !props.preview)
-const opened = ref(false)
 const organizationCode = useOrganizationCode()
 const projectId = computed(() => props.project.id)
 
@@ -30,31 +36,88 @@ const onFocus = (location) => mapRef.value?.map?.flyTo(location)
 const {
   status,
   data: locations,
-  refresh,
+  key,
 } = getProjectLocations(organizationCode, projectId, {
   default: () => factoriesSkeleton(locationSkeleton, props.project.modules.locations),
 })
+
+const selectedLocation = ref()
+
+const cancel = () => {
+  selectedLocation.value = null
+  closeAllModals()
+}
+
+const refreshProjectData = () => {
+  refreshNuxtData([
+    `${organizationCode}::project::${props.project.id}`,
+    `${organizationCode}::project::${props.project.slug}`,
+    key.value,
+  ])
+  cancel()
+}
+
+const onDelete = (location) => {
+  selectedLocation.value = location
+  openModals('delete')
+}
+
+const onEdit = (location) => {
+  selectedLocation.value = location
+  openModals('edit')
+}
+
+const onConfirmEdit = () => drawerRef.value.onSubmit(selectedLocation.value)
+const onConFirmDelete = () => drawerRef.value.onDelete(selectedLocation.value)
 </script>
 
 <template>
   <FetchLoader :status="status" skeleton only-error>
-    <MapRecap ref="map" :locations="locations" expand :editable="isEdit" @expand="opened = true" />
+    <BaseModuleHeader v-if="!preview" :add="editable" @add="openModals('map')" />
+    <MapRecap
+      ref="map"
+      :locations="locations"
+      expand
+      :editable="isEdit"
+      @edit="onEdit"
+      @expand="openModals('map')"
+    />
     <ProjectLocationDrawer
+      ref="drawer"
       :project="project"
-      :is-opened="opened"
+      :is-opened="stateModals.map"
       :editable="isEdit"
       :locations="locations"
       :use-cluster="true"
-      @close="opened = false"
-      @reload="refresh"
+      @close="closeModals('map')"
+      @reload="refreshProjectData"
     />
     <LocationList
       v-if="!props.preview"
       focus
       :editable="isEdit"
       :locations="locations"
+      @delete="onDelete"
+      @edit="onEdit"
       @focus="onFocus"
     />
-    <!-- TODO edit locations -->
+
+    <ConfirmModal
+      v-if="stateModals.delete"
+      :title="$t('geocoding.confirm-delete-location')"
+      @cancel="cancel"
+      @confirm="onConFirmDelete"
+    >
+      <MapRecap :locations="[selectedLocation]" :expand="false" />
+    </ConfirmModal>
+
+    <LocationForm
+      v-if="stateModals.edit"
+      v-model="selectedLocation"
+      :location-types="['address', 'team', 'impact']"
+      @delete="onConFirmDelete"
+      @close="closeAllModals"
+      @submit="onConfirmEdit"
+    />
   </FetchLoader>
 </template>

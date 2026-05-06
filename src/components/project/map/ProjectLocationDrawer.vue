@@ -3,6 +3,7 @@
     ref="drawer"
     :is-opened="isOpened"
     :locations="locations"
+    :location-types="['address', 'impact', 'team']"
     @close="$emit('close')"
     @submit="onSubmit"
     @delete="onDelete"
@@ -129,4 +130,11 @@ const onSubmit = (form) => {
     onCreate(body)
   }
 }
+
+defineExpose({
+  onSubmit,
+  onDelete,
+  onCreate,
+  onEdit,
+})
 </script>
