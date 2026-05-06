@@ -7,10 +7,16 @@ import FetchLoader from '@/components/base/FetchLoader.vue'
 import { getLinkedProject } from '@/api/v2/project.service'
 
 const props = withDefaults(
-  defineProps<{ project: TranslatedProject; preview?: boolean; limit?: number }>(),
+  defineProps<{
+    project: TranslatedProject
+    preview?: boolean
+    limit?: number
+    editable?: boolean
+  }>(),
   {
     preview: false,
     limit: null,
+    editable: false,
   }
 )
 

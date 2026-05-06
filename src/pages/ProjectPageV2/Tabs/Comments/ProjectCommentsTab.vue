@@ -1,6 +1,6 @@
 <template>
   <BaseModuleTab :title="$t(ProjectModuleTitle.comments, countElement)" :count="countElement">
-    <BaseProjectComments :project="project" :editable="editable" />
+    <BaseProjectComments :project="project" />
   </BaseModuleTab>
 </template>
 
@@ -10,13 +10,9 @@ import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
 import type { TranslatedProject } from '@/models/project.model'
 import { ProjectModuleTitle } from '@/models/project.model'
 
-const props = withDefaults(
-  defineProps<{
-    project: TranslatedProject
-    editable?: boolean
-  }>(),
-  { editable: false }
-)
+const props = defineProps<{
+  project: TranslatedProject
+}>()
 
 const countElement = computed<number>(() => props.project.modules?.comments)
 </script>

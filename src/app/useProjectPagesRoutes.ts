@@ -176,23 +176,6 @@ export default function useProjectPagesRoutes() {
           },
         },
         {
-          path: 'comments/edit',
-          name: 'projectCommentsEdit',
-          component: () => import('../pages/ProjectPageV2/Tabs/Comments/ProjectCommentsTab.vue'),
-          meta: {
-            requiresAuth: true,
-          },
-        },
-        {
-          path: 'private-exchange/edit',
-          name: 'projectPrivateExchangeEdit',
-          component: () =>
-            import('../pages/ProjectPageV2/Tabs/PrivateExchange/ProjectPrivateExchangeTab.vue'),
-          meta: {
-            requiresAuth: true,
-          },
-        },
-        {
           path: 'announcements/edit',
           name: 'projectAnnouncementsEdit',
           component: () =>

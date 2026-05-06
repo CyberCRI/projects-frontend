@@ -312,7 +312,7 @@ $comment-pic-size: pxToRem(72px);
   }
 
   .comment-footer {
-    padding-top: $space-l;
+    padding-top: $space-m;
 
     .actions {
       display: flex;
