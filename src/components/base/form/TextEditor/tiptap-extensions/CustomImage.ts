@@ -86,7 +86,7 @@ export default Image.extend({
   parseHTML() {
     const getAttrs = (dom) => {
       let size: ImageVariations = 'original'
-      const sizes = (this.options as any).size as ImageVariations[]
+      const sizes = (this.options as any).sizes as ImageVariations[]
 
       sizes.forEach((s) => {
         const hasSize = (dom as HTMLElement).classList.contains('custom-image-' + s)
