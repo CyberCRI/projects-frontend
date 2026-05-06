@@ -9,6 +9,7 @@ const router = useRouter()
 const props = defineProps({
   contextMessages: { type: Array, default: () => [] },
   endpoint: { type: String, required: true },
+  startMessage: { type: String, default: '' },
 })
 
 const emit = defineEmits(['close', 'start-conversation'])
@@ -54,13 +55,23 @@ const addToConversation = (...args) => {
   }
 }
 
+const welcoming = []
+if (props.startMessage) {
+  const msg = {
+    role: 'assistant',
+    text: props.startMessage,
+  }
+  welcoming.push(msg)
+  addToConversation(welcoming[0])
+}
+
 const conversationStarted = ref(false)
 const requestInterceptor = (requestDetails) => {
   const allMessages = conversationStarted.value
     ? // Server maintains full history via LangGraph checkpointer — only send the new message
       [requestDetails.body.messages[requestDetails.body.messages.length - 1]]
     : // but initial request has also context messages
-      [...props.contextMessages, ...requestDetails.body.messages]
+      [...props.contextMessages, ...welcoming, ...requestDetails.body.messages]
 
   conversationStarted.value = true
   addToConversation(...allMessages)
@@ -277,7 +288,8 @@ const resetChat = () => {
   conversationStarted.value = false
   conversation.value = []
   conversationId.value = null
-  history.value = []
+  history.value = welcoming
+  // addToConversation(welcoming[0])
 }
 
 defineExpose({ resetChat })

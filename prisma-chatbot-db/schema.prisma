@@ -97,6 +97,8 @@ model Agent {
   modelName         String @default("")
   modelTemperature  String @default("0.7")
 
+  startMessage      String @default("")
+
   isEnabled         Boolean @default(false)
 
   promptId          Int

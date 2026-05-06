@@ -33,6 +33,7 @@ const defaultForm = (agent = null) => ({
   modelTemperature: agent?.modelTemperature ?? '',
   promptId: agent?.promptId ?? 0,
   promptVersion: agent?.promptVersion ?? 0,
+  startMessage: agent?.startMessage ?? '',
   skillContents:
     agent?.skillsContents?.map(({ skillId, skillVersion, useLatestSkillVersion }) => ({
       skillId,
@@ -330,7 +331,10 @@ const submit = async () => {
           :placeholder="$t('agents.prompt-version-placeholder')"
         />
       </div>
-
+      <h4 class="form-section-title">{{ $t('agents.start-message-section') }}</h4>
+      <div class="form-section">
+        <TextInput v-model.trim="form.startMessage" input-type="textarea" label="" rows="5" />
+      </div>
       <h4 class="form-section-title">{{ $t('agents.tools-section') }}</h4>
       <div class="form-section">
         <div class="agent-tool-picker">

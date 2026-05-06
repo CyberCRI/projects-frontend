@@ -113,6 +113,7 @@ const submit = async () => {
         input-type="textarea"
         :label="$t('agent-skills.content')"
         @change="titleExists = false"
+        rows="12"
       />
     </div>
   </BaseDrawer>

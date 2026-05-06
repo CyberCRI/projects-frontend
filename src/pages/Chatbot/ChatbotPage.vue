@@ -53,7 +53,12 @@ const { contextMessages } = useChatbotContext({ hasUserContext, hasPageContext }
     </div>
     <ChatbotOptions :has-user-context="hasUserContext" />
     <ClientOnly>
-      <ChatbotUi ref="chatbotUi" :endpoint="CHAT_ENDPOINT" :context-messages="contextMessages" />
+      <ChatbotUi
+        ref="chatbotUi"
+        :endpoint="CHAT_ENDPOINT"
+        :start-message="agent.startMessage"
+        :context-messages="contextMessages"
+      />
     </ClientOnly>
   </div>
 </template>
