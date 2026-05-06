@@ -23,7 +23,7 @@ defineEmits<{
     <LpiButton v-if="add" btn-icon="Plus" :label="$t('common.add')" @click="$emit('add')" />
     <LpiSelect
       v-if="pagination"
-      class="pagination-limit"
+      class="pagination-limit small"
       :model-value="pagination.limit.value"
       :title="$t('pagination.visibylity-per-par')"
       :options="[

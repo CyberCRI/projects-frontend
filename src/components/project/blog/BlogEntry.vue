@@ -1,5 +1,5 @@
 <template>
-  <div class="blog-entry" :class="{ 'shadow-box': !isExpanded }">
+  <div class="blog-entry" :class="{ 'shadow-box': !stateModal }">
     <div class="blog-entry-header">
       <div class="header-main">
         <div class="entry-title skeletons-text">
@@ -11,40 +11,47 @@
         </div>
       </div>
 
-      <div class="expand-button skeletons-background" @click="toggleExpand">
-        <span>{{ isExpanded ? $t('common.shrink') : $t('common.read') }}</span>
+      <div class="expand-button skeletons-background" @click="toggleModal">
+        <span>{{ stateModal ? $t('common.shrink') : $t('common.read') }}</span>
 
-        <IconImage v-if="isExpanded" name="ChevronUp" />
+        <IconImage v-if="stateModal" name="ChevronUp" />
         <IconImage v-else name="ChevronDown" />
       </div>
     </div>
 
-    <div v-if="isExpanded && isLastBlogEntry" class="last-publication-flag skeletons-text">
+    <div v-if="stateModal && isLastBlogEntry" class="last-publication-flag skeletons-text">
       {{ $t('blog.last-publication') }}
     </div>
 
-    <TipTapOutput
-      v-if="isExpanded"
-      class="entry-body skeletons-text"
-      :content="blogEntry.$t.content"
-    />
+    <ContentExpandable
+      class="skeletons-text"
+      :height-limit="stateModal ? 10000000000 : 0"
+      hide-see-more
+    >
+      <div class="entry-body">
+        <TipTapOutput
+          class="description tiptap-output skeletons-text"
+          :content="blogEntry.$t.content"
+        />
+      </div>
+    </ContentExpandable>
 
     <div
       v-if="canEdit || canDelete"
-      :class="{ 'button-ctn--expanded': isExpanded }"
+      :class="{ 'button-ctn--expanded': stateModal }"
       class="button-ctn skeletons-background"
     >
       <ContextActionButton
         v-if="canEdit"
         class="button small"
         action-icon="Pen"
-        @click="$emit('edit-clicked')"
+        @click="$emit('edit')"
       />
       <ContextActionButton
         v-if="canDelete"
         class="button small"
-        action-icon="Close"
-        @click="$emit('delete-clicked')"
+        action-icon="TrashCanOutline"
+        @click="$emit('delete')"
       />
     </div>
   </div>
@@ -61,25 +68,38 @@ const props = withDefaults(
   defineProps<{
     blogEntry: TranslatedBlogEntry
     isLastBlogEntry?: boolean
-    isExpanded?: boolean
+    expanded?: boolean
     canEdit?: boolean
     canDelete?: boolean
   }>(),
   {
     isLastBlogEntry: false,
-    isExpanded: false,
+    expanded: false,
     canEdit: false,
     canDelete: false,
   }
 )
 
 const emit = defineEmits<{
-  'edit-clicked': []
-  'delete-clicked': []
-  'toggle-expand': [TranslatedBlogEntry]
+  edit: []
+  delete: []
+  expanded: [boolean]
 }>()
 
-const toggleExpand = () => emit('toggle-expand', props.blogEntry)
+const { stateModal, toggleModal, openModal, closeModal } = useModal(props.expanded)
+
+watch(stateModal, () => emit('expanded', stateModal.value))
+
+watch(
+  () => props.expanded,
+  (val) => {
+    if (val) {
+      openModal()
+    } else {
+      closeModal()
+    }
+  }
+)
 </script>
 
 <style lang="scss" scoped>
