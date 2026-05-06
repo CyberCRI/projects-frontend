@@ -2,40 +2,41 @@
   <div class="goal-ctn">
     <div class="goal" :class="{ 'shadow-box': hasDescription }" @click="toggleModal">
       <div class="content">
-        <div class="left" :class="goal.status">
+        <div class="left skeletons-text" :class="goal.status">
           {{ goal.status == 'na' ? '&nbsp;' : $t(`status.${goal.status}`) }}
         </div>
 
         <div class="right">
           <div class="main-content">
-            <p class="goal-title">
+            <p class="goal-title skeletons-text">
               {{ goal.$t.title }}
             </p>
 
-            <p v-if="deadlineVisible" class="goal-deadline" :class="goal.status">
+            <p v-if="deadlineVisible" class="goal-deadline skeletons-text" :class="goal.status">
               {{ deadlineFormatted }}
             </p>
 
-            <span v-if="hasDescription" class="chevron-icon">
+            <span v-if="hasDescription" class="chevron-icon skeletons-background">
               <IconImage v-if="stateModal" name="ChevronUp" />
               <IconImage v-else name="ChevronDown" />
             </span>
           </div>
 
           <div v-show="stateModal" class="goal-description-wrapper">
-            <TipTapOutput class="goal-description-content" :content="goal.$t.description" />
+            <TipTapOutput
+              class="goal-description-content skeletons-text"
+              :content="goal.$t.description"
+            />
           </div>
         </div>
       </div>
 
       <div class="actions-btns">
-        <ContextActionButton v-if="canEditGoal" class="small" action-icon="Pen" @click="editGoal" />
-
-        <ContextActionButton
-          v-if="canDeleteGoal"
-          class="small"
-          action-icon="Close"
-          @click="deleteGoal"
+        <ContextActionMenuInline
+          :can-delete="canDelete"
+          :can-edit="canEdit"
+          @edit="editGoal"
+          @delete="deleteGoal"
         />
       </div>
     </div>
@@ -45,7 +46,6 @@
 <script setup lang="ts">
 import type { TranslatedGoal } from '~/models/goal.model'
 
-import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
 import TipTapOutput from '~/components/base/form/TextEditor/TipTapOutput.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 
@@ -55,20 +55,20 @@ import { formatDate } from '~/functs/date'
 const props = withDefaults(
   defineProps<{
     goal: TranslatedGoal
-    canEditGoal?: boolean
-    canDeleteGoal?: boolean
+    canEdit?: boolean
+    canDelete?: boolean
   }>(),
   {
-    canEditGoal: false,
-    canDeleteGoal: false,
+    canEdit: false,
+    canDelete: false,
   }
 )
 
 const { t, locale } = useNuxtI18n()
 
 const emit = defineEmits<{
-  'edit-goal': [any]
-  'delete-goal': [any]
+  edit: [any]
+  delete: [any]
 }>()
 
 const { stateModal, toggleModal } = useModal()
@@ -85,8 +85,8 @@ const deadlineFormatted = computed(() => {
 
 const hasDescription = computed(() => !textIsEmpty(props.goal.description))
 
-const editGoal = () => emit('edit-goal', props.goal)
-const deleteGoal = () => emit('delete-goal', props.goal)
+const editGoal = () => emit('edit', props.goal)
+const deleteGoal = () => emit('delete', props.goal)
 </script>
 
 <style lang="scss" scoped>

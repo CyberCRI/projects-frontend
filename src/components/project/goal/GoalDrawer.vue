@@ -2,11 +2,11 @@
   <BaseDrawer
     :title="$t('goal.add')"
     :confirm-action-name="$t('common.save')"
-    :confirm-action-disabled="v$.$invalid"
+    :confirm-action-disabled="!isValid"
     :is-opened="isOpened"
     class="medium"
     :asyncing="asyncing"
-    @close="closeModal"
+    @close="checkClose"
     @confirm="submit"
   >
     <div class="form">
@@ -14,18 +14,13 @@
         v-model="form.title"
         :label="`${$t('goal.title')}:`"
         :placeholder="$t('goal.title')"
-        @blur="v$.title.$touch"
+        :errors="errors.title"
       />
-      <FieldErrors :errors="v$.title.$errors" />
 
       <div class="goal-description-section">
         <span class="goal-label">{{ $t('goal.description') }}:</span>
-        <TipTapEditor
-          v-model="form.description"
-          class="goal-description"
-          @blur="v$.description.$touch"
-        />
-        <FieldErrors :errors="v$.description.$errors" />
+        <TipTapEditor v-model="form.description" class="goal-description" />
+        <FieldErrors :errors="errors.description" />
       </div>
 
       <DateField v-model="form.deadline_at" :label="$t('common.set-deadline')" />
@@ -41,12 +36,13 @@
       </div>
     </div>
   </BaseDrawer>
+
   <ConfirmModal
-    v-if="showConfirmModal"
+    v-if="stateModal"
     :title="$t('description.quit-without-saving-title')"
     :content="$t('common.confirm-close')"
-    @cancel="showConfirmModal = false"
-    @confirm="closeModalAndDrawer"
+    @cancel="closeModal"
+    @confirm="clear"
   />
 </template>
 
@@ -55,55 +51,81 @@ import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import GroupButton from '@/components/base/button/GroupButton.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
-import { helpers, required } from '@vuelidate/validators'
-
-import useVuelidate from '@vuelidate/core'
 
 import type { TranslatedProject } from '@/models/project.model'
 import DateField from '@/components/base/form/DateField.vue'
 import { createGoal, patchGoal } from '@/api/goals.service'
+import { defaultForm, useGoalForm } from '@/form/goal'
 import type { GoalModel } from '@/models/goal.model'
 import { fullYearDateFormat } from '@/functs/date'
 import useToasterStore from '@/stores/useToaster'
-import { NULL_CONTENT } from '~/functs/constants'
 import { textIsEmpty } from '@/functs/string'
-import { defaultForm } from '@/form/goal'
+import { isEqual } from 'es-toolkit'
 import analytics from '@/analytics'
 
 const props = withDefaults(
   defineProps<{
     project: TranslatedProject
     isOpened?: boolean
-    editedGoal?: GoalModel
+    goal?: GoalModel
   }>(),
   {
     isOpened: false,
-    editedGoal: null,
+    goal: null,
   }
 )
 
 const emit = defineEmits<{
   close: []
-  'reload-goals': []
+  reload: []
 }>()
+
 const toaster = useToasterStore()
 const { t } = useNuxtI18n()
-const route = useRoute()
-const router = useRouter()
 
-const form = ref(defaultForm())
+const defaultGoalForm = () => {
+  const baseForm = defaultForm()
+  const newForm = { ...baseForm }
 
-const rules = computed(() => ({
-  title: {
-    required: helpers.withMessage(t('form.goal.title'), required),
+  const goal = props.goal
+  if (goal) {
+    newForm.id = goal.id
+    newForm.title = goal.title
+    newForm.status = goal.status
+    newForm.description = goal.description
+    newForm.deadline_at = goal.deadline_at
+  }
+
+  newForm.project_id = props.project.id
+
+  const template = props.project.template
+  if (template) {
+    if (textIsEmpty(newForm.title)) {
+      newForm.title = template.goal_title
+    }
+    if (textIsEmpty(newForm.description)) {
+      newForm.description = template.goal_description
+    }
+  }
+
+  newForm.title ??= baseForm.title
+  newForm.description ??= baseForm.description
+
+  return newForm
+}
+
+const { form, isValid, errors, cleanedData, v$ } = useGoalForm({ lazy: true })
+
+watch(
+  () => [props.isOpened, props.goal],
+  () => {
+    form.value = defaultGoalForm()
+    v$.value.$reset()
   },
-  description: {
-    required: helpers.withMessage(t('form.goal.description'), required),
-  },
-}))
-const v$ = useVuelidate(rules, form)
+  { immediate: true }
+)
 
-const showConfirmModal = ref(false)
+const { stateModal, openModal, closeModal } = useModal()
 const asyncing = ref(false)
 
 const statusColor = computed(() => {
@@ -136,48 +158,22 @@ const statusOptions = computed(() => [
   },
 ])
 
-const isEdited = computed(() => {
-  if (props.editedGoal) {
-    return (
-      props.editedGoal.description != form.value.description ||
-      props.editedGoal.title != form.value.title
-    )
-  }
-  return !textIsEmpty(form.value.title) || !textIsEmpty(form.value.description)
-})
-
-const fillForm = () => {
-  if (props.editedGoal) {
-    form.value.id = props.editedGoal.id
-    form.value.title = props.editedGoal.title
-    form.value.description = props.editedGoal.description
-    form.value.deadline_at = props.editedGoal.deadline_at
-    form.value.status = props.editedGoal.status
-  }
-}
-
-const resetForm = () => {
-  form.value = {
-    title: props.project.template?.$t?.goal_title || '',
-    description: props.project.template?.$t?.goal_description || NULL_CONTENT,
-    deadline_at: null,
-    status: 'na',
-  }
+const clear = () => {
+  closeModal()
+  emit('close')
 }
 
 const submit = async () => {
-  const isValid = await v$.value.$validate()
-  if (!isValid) {
+  if (!isValid.value) {
     return
   }
 
   asyncing.value = true
   const payload = {
-    ...form.value,
-    project_id: props.project.id,
-    description: form.value.description,
+    ...cleanedData.value,
     deadline_at: form.value.deadline_at ? fullYearDateFormat(form.value.deadline_at) : null,
   }
+
   if (form.value.id) {
     // Update goal
     try {
@@ -190,7 +186,7 @@ const submit = async () => {
         goal: result,
       })
 
-      emit('reload-goals')
+      emit('reload')
 
       toaster.pushSuccess(t('toasts.goal-update.success'))
     } catch (error) {
@@ -198,7 +194,7 @@ const submit = async () => {
       console.error(error)
     } finally {
       asyncing.value = false
-      closeModalNoConfirm()
+      clear()
     }
   } else {
     // Create goal
@@ -211,60 +207,26 @@ const submit = async () => {
         goal: result,
       })
 
-      emit('reload-goals')
+      emit('reload')
 
       toaster.pushSuccess(t('toasts.goal-create.success'))
-
-      if (route.name !== 'projectGoals') {
-        router.push({
-          name: 'projectGoals',
-          params: { slugOrId: props.project.slug || props.project.id },
-        })
-      }
     } catch (error) {
       toaster.pushError(`${t('toasts.goal-create.error')} (${error})`)
       console.error(error)
     } finally {
       asyncing.value = false
-      closeModalNoConfirm()
+      clear()
     }
   }
 }
 
-const openConfirmModal = () => {
-  showConfirmModal.value = !showConfirmModal.value
-}
-
-const closeModal = () => {
-  if (asyncing.value) return
-  if (isEdited.value) openConfirmModal()
-  else {
-    closeModalNoConfirm()
+const checkClose = () => {
+  if (isEqual(form.value, defaultGoalForm())) {
+    clear()
+  } else {
+    openModal()
   }
 }
-
-const closeModalNoConfirm = () => {
-  if (asyncing.value) return
-  v$.value.$reset()
-  emit('close')
-}
-
-const closeModalAndDrawer = () => {
-  openConfirmModal()
-  closeModalNoConfirm()
-}
-
-watch(
-  () => props.isOpened,
-  () => {
-    if (props.editedGoal?.id) {
-      fillForm()
-    } else {
-      resetForm()
-    }
-  },
-  { immediate: true }
-)
 </script>
 
 <style lang="scss" scoped>

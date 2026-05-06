@@ -12,6 +12,7 @@ $mid-gray: #999; // Grey04
 $light-gray: #bdbdbd; // Grey03
 $lighter-gray: #d4d4d4; // Grey02
 $almost-white: #f1f1f1; // Grey01
+$gray-darker: #1e2021;
 $white: #fff; // no ?
 $blue: #6cd5ff; // Baby blue, Brand05
 $salmon: #ff9473; // Light Salmon, Brand02
@@ -140,4 +141,5 @@ $location-event: $salmon;
   --skeleton-50: #{$skeleton-50};
   --skeleton-100: #{$skeleton-100};
   --modal-background: #{$modal-background};
+  --gray-darker: #{$gray-darker};
 }

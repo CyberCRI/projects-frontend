@@ -4,10 +4,12 @@ import LpiSelect from '~/components/base/form/LpiSelect.vue'
 withDefaults(
   defineProps<{
     add?: boolean
+    labelAdd?: string
     pagination?: Pagination
   }>(),
   {
     add: true,
+    labelAdd: null,
     pagination: null,
   }
 )
@@ -20,7 +22,12 @@ defineEmits<{
 <template>
   <div class="header-container">
     <div />
-    <LpiButton v-if="add" btn-icon="Plus" :label="$t('common.add')" @click="$emit('add')" />
+    <LpiButton
+      v-if="add"
+      btn-icon="Plus"
+      :label="labelAdd ?? $t('common.add')"
+      @click="$emit('add')"
+    />
     <LpiSelect
       v-if="pagination"
       class="pagination-limit small"

@@ -15,15 +15,37 @@
     <div v-if="deadlineAt" class="deadline skeletons-text">
       {{ deadlineAt }}
     </div>
+
+    <ContextActionMenuInline
+      class="actions"
+      :can-delete="canDelete"
+      :can-edit="canEdit"
+      @delete="$emit('delete')"
+      @edit="$emit('edit')"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
+import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
 import type { TranslatedGoal } from '@/models/goal.model'
 import { formatDate } from '@/functs/date'
 
-const props = defineProps<{
-  goal: TranslatedGoal
+const props = withDefaults(
+  defineProps<{
+    goal: TranslatedGoal
+    canDelete?: boolean
+    canEdit?: boolean
+  }>(),
+  {
+    canDelete: false,
+    canEdit: false,
+  }
+)
+
+defineEmits<{
+  edit: []
+  delete: []
 }>()
 
 const { locale } = useNuxtI18n()
@@ -39,13 +61,14 @@ const deadlineAt = computed(() =>
 
 <style lang="scss" scoped>
 .goal {
+  position: relative;
   display: flex;
-  overflow: hidden;
   border-radius: $border-radius-m;
   border: $border-width-s solid $primary-dark;
   color: $primary-dark;
   font-weight: bold;
   background: $primary-lighter;
+  overflow: hidden;
 
   > div {
     padding: $space-xs;
@@ -97,5 +120,12 @@ const deadlineAt = computed(() =>
     justify-content: center;
     border-left: $border-width-s solid $primary-dark;
   }
+}
+
+.actions {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: -1rem 0;
 }
 </style>

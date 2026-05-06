@@ -120,7 +120,14 @@ const propsTab = computed(() => ({
       'project-display-layout': !isEditing,
     }"
   >
-    <FetchLoader :status="status" only-error :error="error" error404 skeleton>
+    <FetchLoader
+      :status="status"
+      only-error
+      :error="error"
+      error404
+      skeleton
+      :with-data="!!project?.id"
+    >
       <NavPanelLayout
         :is-nav-collapsed="isNavCollapsed"
         :breadcrumbs="breadcrumbs"

@@ -1825,7 +1825,7 @@
     "filter-by-language": "Add a language",
     "filter-by-people": "Add a person",
     "filter-by-tag": "Add a tag",
-    "filter-by-sdg": "Add a sdd",
+    "filter-by-sdg": "Add a sdg",
     "filter-by-category": "Add a category",
     "language": "Language",
     "people": "People",
@@ -1938,7 +1938,7 @@
     "17": {
       "title": "Partnerships for the Goals"
     },
-    "add-short": "Add a sdg",
+    "add-short": "Add a SDG",
     "sdg-fulltext": "sustainable development goals",
     "title": "SDG",
     "empty": "Nothing here yet... Contributors did not added SDGs yet."

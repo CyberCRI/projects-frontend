@@ -19,6 +19,11 @@ export const useModals = <modalNames = { [key: string]: boolean }>(
     keys.forEach((k) => (stateModals.value[k] = false))
   }
 
+  const closeAllModals = () => {
+    const keys = Object.keys(stateModals.value) as unknown as (keyof modalNames)[]
+    closeModals(...keys)
+  }
+
   /**
    * toggle value in object ( if exists with the same value, remove it else set it)
    */
@@ -36,6 +41,7 @@ export const useModals = <modalNames = { [key: string]: boolean }>(
     stateModals,
     openModals,
     closeModals,
+    closeAllModals,
     toggleModals,
   }
 }

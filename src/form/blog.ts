@@ -1,6 +1,7 @@
 import type { BlogEntryForm } from '~/models/blog-entry.model'
 import { helpers, required } from '@vuelidate/validators'
 import { NULL_CONTENT } from '~/functs/constants'
+import { requiredContent } from '~/form/base'
 import { nowDate } from '~/functs/date'
 
 export const defaultForm = (): BlogEntryForm => {
@@ -19,7 +20,7 @@ export const useBlogEntryForm = (options = {}) => {
       required: helpers.withMessage(t('form.blog.title'), required),
     },
     content: {
-      required: helpers.withMessage(t('form.blog.description'), required),
+      required: helpers.withMessage(t('form.blog.description'), requiredContent),
     },
   }))
 

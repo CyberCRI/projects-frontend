@@ -78,7 +78,12 @@ const onDeleteConfirm = () => {
 
 <template>
   <FetchLoader :status="status" only-error skeleton>
-    <BaseModuleHeader :add="editable" :pagination="pagination" @add="openModals('edit')" />
+    <BaseModuleHeader
+      v-if="!preview"
+      :add="editable"
+      :pagination="pagination"
+      @add="openModals('edit')"
+    />
     <ul class="project-list list-divider">
       <li v-for="linked in linkedProjects" :key="linked.id">
         <ProjectPreview :project="linked.project">

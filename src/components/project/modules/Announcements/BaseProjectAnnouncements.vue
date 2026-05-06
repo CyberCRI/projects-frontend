@@ -86,7 +86,12 @@ const onDeleteConfirm = () => {
 
 <template>
   <FetchLoader :status="status" only-error skeleton>
-    <BaseModuleHeader :add="editable" :pagination="pagination" @add="openModals('edit')" />
+    <BaseModuleHeader
+      v-if="!preview"
+      :add="editable"
+      :pagination="pagination"
+      @add="openModals('edit')"
+    />
     <div class="announcement-list">
       <AnnouncementCard
         v-for="announcement in announcements"

@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import BaseGoalList from '~/components/project/modules/Goals/BaseGoalList.vue'
 import { ProjectModuleIcon, ProjectModuleTitle } from '@/models/project.model'
 import BaseModulePreview from '@/components/modules/BaseModulePreview.vue'
-import GoalsRecap from '@/components/project/goal/GoalsRecap.vue'
 import type { TranslatedProject } from '@/models/project.model'
 
 defineProps<{ project: TranslatedProject }>()
@@ -18,7 +18,7 @@ defineProps<{ project: TranslatedProject }>()
     }"
   >
     <template #content>
-      <GoalsRecap :project="project" preview />
+      <BaseGoalList :project="project" preview />
     </template>
   </BaseModulePreview>
 </template>
