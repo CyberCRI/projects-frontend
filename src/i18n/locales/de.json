@@ -3196,6 +3196,7 @@
     "empty-list": "Noch kein Agenten-Skill vorhanden."
   },
   "agents": {
+    "need-login": "Sie müssen angemeldet sein, um diesen Agenten zu nutzen.",
     "create-agent": "Agent erstellen",
     "create-success": "Agent erfolgreich erstellt",
     "create-error": "Fehler beim Erstellen des Agents",

@@ -29,7 +29,7 @@ const routes = ({
       props: true,
       meta: {
         resetScroll: true,
-        requiresAuth: true,
+        // requiresAuth: true,
       },
     })
   }
@@ -37,6 +37,15 @@ const routes = ({
     {
       path: '/',
       name: 'HomeRoot',
+      component: () => import(`../pages/NewHomePage/NewHomePage.vue`),
+      meta: {
+        resetScroll: true,
+      },
+    },
+    {
+      // fix middleware (requireAuth ?) bug that tries to redirect to a 'Home' route
+      path: '/',
+      name: 'Home',
       component: () => import(`../pages/NewHomePage/NewHomePage.vue`),
       meta: {
         resetScroll: true,

@@ -3196,6 +3196,7 @@
     "empty-list": "Encara no hi ha cap habilitat d'agent."
   },
   "agents": {
+    "need-login": "Heu d'iniciar la sessió per utilitzar aquest agent.",
     "create-agent": "Crea un agent",
     "create-success": "Agent creat correctament",
     "create-error": "Error en crear l'agent",

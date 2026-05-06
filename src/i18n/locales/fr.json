@@ -3196,6 +3196,7 @@
     "empty-list": "Aucune compétence d'agent pour le moment."
   },
   "agents": {
+    "need-login": "Vous devez être connecté pour utiliser cet agent.",
     "create-agent": "Créer un agent",
     "create-success": "Agent créé avec succès",
     "create-error": "Erreur lors de la création de l'agent",

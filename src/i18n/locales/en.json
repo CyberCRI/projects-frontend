@@ -3197,6 +3197,7 @@
   },
 
   "agents": {
+    "need-login": "You need to be logged in to use this agent.",
     "create-agent": "Create agent",
     "create-success": "Agent created successfuly",
     "create-error": "Error creating agent",

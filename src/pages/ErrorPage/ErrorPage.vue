@@ -38,13 +38,15 @@ const login = () => {
   goToKeycloakLoginPage()
 }
 
-watchEffect(() => {
-  useLpiHead2({
-    title: title.value,
-    description: title.value,
-    image: imageFullUrl.value,
-  })
-})
+// watchEffect(() => {
+//   useLpiHead2({
+//     title: title.value,
+//     description: title.value,
+//     image: imageFullUrl.value,
+//   })
+// })
+// TODO: check this
+useLpiHead(useRequestURL().toString(), title.value, title.value, imageFullUrl.value)
 </script>
 
 <template>

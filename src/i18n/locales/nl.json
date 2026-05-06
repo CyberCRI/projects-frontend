@@ -3196,6 +3196,7 @@
     "empty-list": "Nog geen agent-vaardigheid beschikbaar."
   },
   "agents": {
+    "need-login": "Je moet ingelogd zijn om deze agent te kunnen gebruiken.",
     "create-agent": "Agent aanmaken",
     "create-success": "Agent succesvol aangemaakt",
     "create-error": "Fout bij het aanmaken van de agent",

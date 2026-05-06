@@ -1,4 +1,5 @@
 <script setup>
+import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 // import useLoadingFromStatus from '@/composables/useLoadingFromStatus'
 import useUsersStore from '@/stores/useUsers'
 
@@ -6,28 +7,27 @@ const props = defineProps({ agentSlug: { type: String, required: true } })
 
 // type Params = Parameters<typeof useFetch>
 const usersStore = useUsersStore()
-const router = useRouter()
-const route = useRoute()
+const isConnected = computed(() => usersStore.isConnected)
 
 if (!useRuntimeConfig().public.appHasChatbotPromptDb) {
   usePage404()
+}
+
+const login = () => {
+  goToKeycloakLoginPage()
 }
 
 const chatbotUi = useTemplateRef('chatbotUi')
 
 let headers = {}
 const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
+
 if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
 const options = { headers }
 
 const url = `/api/chatbot/${props.agentSlug}`
 const { data: agent, error } = await useFetch(url, options)
-if (!agent?.value) {
-  router.replace({
-    name: 'page404',
-    params: { pathMatch: route.path.substring(1).split('/') },
-  })
-}
+if (!agent?.value) usePage404()
 
 const CHAT_ENDPOINT = computed(() => '/api/chatbot/chat?id=' + agent.value?.id)
 onBeforeUnmount(() => {
@@ -60,16 +60,26 @@ const { contextMessages } = useChatbotContext({ hasUserContext, hasPageContext }
       </h2>
       <TipTapOutput class="description" :content="agent.description" />
     </div>
-    <ChatbotOptions :has-user-context="hasUserContext" />
-    <ClientOnly>
-      <ChatbotUi
-        v-if="agent"
-        ref="chatbotUi"
-        :endpoint="CHAT_ENDPOINT"
-        :start-message="agent?.startMessage || ''"
-        :context-messages="contextMessages"
-      />
-    </ClientOnly>
+    <div v-if="!isConnected">
+      <p class="login-notice">
+        {{ $t('agents.need-login') }}
+      </p>
+      <div class="login-button">
+        <LpiButton :label="$t('common.login')" @click="login" />
+      </div>
+    </div>
+    <div v-else>
+      <ClientOnly>
+        <ChatbotOptions :has-user-context="hasUserContext" />
+        <ChatbotUi
+          v-if="agent"
+          ref="chatbotUi"
+          :endpoint="CHAT_ENDPOINT"
+          :start-message="agent?.startMessage || ''"
+          :context-messages="contextMessages"
+        />
+      </ClientOnly>
+    </div>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -88,5 +98,16 @@ const { contextMessages } = useChatbotContext({ hasUserContext, hasPageContext }
 
 .description {
   margin-block: 2rem;
+}
+.login-notice {
+  background-color: $primary-lighter;
+  padding: 1rem;
+  border-radius: 1rem;
+  text-align: center;
+}
+.login-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
 }
 </style>
