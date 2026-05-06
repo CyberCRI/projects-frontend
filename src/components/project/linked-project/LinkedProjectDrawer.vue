@@ -83,7 +83,7 @@ export default {
     },
   },
 
-  emits: ['close', 'clear', 'unselect', 'reload-linked-projects'],
+  emits: ['close', 'clear', 'unselect', 'reload'],
   setup() {
     const toaster = useToasterStore()
     const projectsStore = useProjectsStore()
@@ -156,12 +156,15 @@ export default {
       this.asyncing = true
       try {
         const projectId = this.project.id
-        const addedLinkedProjects = this.listProjects.map((addedProject) => {
-          return {
-            project_id: addedProject.id,
-            target_id: projectId,
-          }
-        })
+        const addedLinkedProjects = this.listProjects
+          .map((addedProject) => {
+            return {
+              project_id: addedProject.id,
+              target_id: projectId,
+            }
+          })
+          // remove own linked
+          .filter((el) => el.project_id !== projectId)
         const addedLinkedProjectsIdSet = new Set(
           addedLinkedProjects.map((addedLinkedProject) => addedLinkedProject.project_id)
         )
@@ -177,18 +180,9 @@ export default {
               linkedProject: linked_project,
             })
           })
-        this.$emit('reload-linked-projects', result['linked_projects'])
+        this.$emit('reload', result['linked_projects'])
 
         this.toaster.pushSuccess(this.$t('toasts.linked-project-create.success'))
-
-        if (this.$route.name !== 'projectLinkedProjects') {
-          this.$router.push({
-            name: 'projectLinkedProjects',
-            params: {
-              slugOrId: this.projectsStore.currentProjectSlug,
-            },
-          })
-        }
       } catch (error) {
         this.toaster.pushError(`${this.$t('toasts.linked-project-create.error')} (${error})`)
         console.error(error)
@@ -212,7 +206,7 @@ export default {
 
         const result = await patchLinkedProject({ target_id, id, body })
 
-        this.$emit('reload-linked-projects')
+        this.$emit('reload')
         analytics.linkedProject.patchLinkedProject({
           project: {
             id: this.project.id,

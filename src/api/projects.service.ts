@@ -80,8 +80,10 @@ export async function patchLinkedProject({
   return await useAPI(`project/${target_id}/linked-project/${id}/`, { body, method: 'PATCH' })
 }
 
-export async function deleteLinkedProject({ id, project_id }: { id: number; project_id: string }) {
-  return await useAPI(`project/${project_id}/linked-project/${id}/`, { method: 'DELETE' })
+export async function deleteLinkedProject(projectId: ProjectSlugOrId, linkedProjectId) {
+  return await useAPI<undefined>(`project/${projectId}/linked-project/${linkedProjectId}/`, {
+    method: 'DELETE',
+  })
 }
 
 export async function getProject(projectSlugOrId: ProjectSlugOrId, config = {}) {
