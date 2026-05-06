@@ -20,6 +20,7 @@ const options = { headers }
 
 const url = `/api/chatbot/${props.agentSlug}`
 const { data: agent, error } = await useFetch(url, options)
+
 const CHAT_ENDPOINT = computed(() => '/api/chatbot/chat?id=' + agent.value?.id)
 onBeforeUnmount(() => {
   chatbotUi.value?.resetChat()
@@ -54,9 +55,10 @@ const { contextMessages } = useChatbotContext({ hasUserContext, hasPageContext }
     <ChatbotOptions :has-user-context="hasUserContext" />
     <ClientOnly>
       <ChatbotUi
+        v-if="agent"
         ref="chatbotUi"
         :endpoint="CHAT_ENDPOINT"
-        :start-message="agent.startMessage"
+        :start-message="agent?.startMessage || ''"
         :context-messages="contextMessages"
       />
     </ClientOnly>
