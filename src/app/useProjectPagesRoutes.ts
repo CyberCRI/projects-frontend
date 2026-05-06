@@ -146,7 +146,7 @@ export default function useProjectPagesRoutes() {
         {
           path: 'team/edit',
           name: 'projectTeamEdit',
-          component: () => import('../pages/ProjectPageV2/Tabs/Team/ProjectTeamTab.vue'),
+          component: () => import('../pages/ProjectPageV2/Tabs/Team/ProjectTeamTab2.vue'),
           meta: {
             requiresAuth: true,
           },

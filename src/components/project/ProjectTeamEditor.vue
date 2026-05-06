@@ -1,19 +1,12 @@
 <template>
   <div class="project-team-editor">
-    <div class="actions">
-      <ContextActionButton
-        v-if="canBeRemoved"
-        action-icon="Close"
-        class="remove-btn small"
-        @click="$emit('remove-user')"
-      />
-      <ContextActionButton
-        v-if="canBeEdited"
-        action-icon="Pen"
-        class="edit-btn small"
-        @click="$emit('edit-user')"
-      />
-    </div>
+    <ContextActionMenuInline
+      class="actions"
+      :can-delete="canDelete"
+      :can-edit="canEdit"
+      @edit="$emit('edit')"
+      @delete="$emit('delete')"
+    />
     <div>
       <slot />
     </div>
@@ -21,22 +14,22 @@
 </template>
 
 <script setup lang="ts">
-import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
+import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
 
 withDefaults(
   defineProps<{
-    canBeRemoved?: boolean
-    canBeEdited?: boolean
+    canDelete?: boolean
+    canEdit?: boolean
   }>(),
   {
-    canBeRemoved: false,
-    canBeEdited: false,
+    canDelete: false,
+    canEdit: false,
   }
 )
 
 defineEmits<{
-  'remove-user': []
-  'edit-user': []
+  delete: []
+  edit: []
 }>()
 </script>
 

@@ -3,13 +3,13 @@ import LpiSelect from '~/components/base/form/LpiSelect.vue'
 
 withDefaults(
   defineProps<{
-    add?: boolean
-    labelAdd?: string
+    editable?: boolean
+    addLabel?: string
     pagination?: Pagination
   }>(),
   {
-    add: true,
-    labelAdd: null,
+    editable: true,
+    addLabel: null,
     pagination: null,
   }
 )
@@ -23,10 +23,10 @@ defineEmits<{
   <div class="header-container">
     <div />
     <LpiButton
-      v-if="add"
+      v-if="editable"
       class="skeletons-background"
       btn-icon="Plus"
-      :label="labelAdd ?? $t('common.add')"
+      :label="addLabel ?? $t('common.add')"
       @click="$emit('add')"
     />
     <LpiSelect

@@ -2,8 +2,8 @@
   <FetchLoader :status="status" only-error skeleton>
     <div v-if="!preview">
       <BaseModuleHeader
-        :add="editable"
-        :label-add="$t('sdg.add-short')"
+        :editable="editable"
+        :add-label="$t('sdg.add-short')"
         @add="openModals('editSdg')"
       />
       <SdgPreview :sdgs="project.sdgs" />
@@ -11,7 +11,7 @@
 
     <BaseModuleHeader
       v-if="!preview"
-      :add="editable"
+      :editable="editable"
       :pagination="pagination"
       @add="openModals('edit')"
     />

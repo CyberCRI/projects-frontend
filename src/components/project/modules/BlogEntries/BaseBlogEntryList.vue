@@ -97,7 +97,7 @@ const setExpanded = (state: boolean, blog: TranslatedBlogEntry) => {
   <FetchLoader :status="status" only-error skeleton>
     <BaseModuleHeader
       v-if="!preview"
-      :add="editable"
+      :editable="editable"
       :pagination="pagination"
       @add="openModals('edit')"
     />

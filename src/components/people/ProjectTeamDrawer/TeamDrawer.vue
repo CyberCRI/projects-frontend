@@ -116,7 +116,7 @@ export default {
     isOpened: {
       handler: function () {
         if (this.editedUser) {
-          this.selectedUsers = [this.editedUser.user]
+          this.selectedUsers = [this.editedUser]
           this.selectedUserRole = this.editedUser.role
           this.selectedGroupRole = this.editedUser.role
           this.isSelectingRoles = true
@@ -204,6 +204,8 @@ export default {
       this.form.team.member_groups = []
       this.form.team.owner_groups = []
       this.form.team.reviewer_groups = []
+
+      console.log(this.selectedUsers)
 
       this.selectedUsers.forEach((user) => {
         if (!this.form.team[user.role].includes(user.id)) {

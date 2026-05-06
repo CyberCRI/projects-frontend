@@ -73,7 +73,7 @@ const onConFirmDelete = () => drawerRef.value.onDelete(selectedLocation.value)
 
 <template>
   <FetchLoader :status="status" skeleton only-error>
-    <BaseModuleHeader v-if="!preview" :add="editable" @add="openModals('map')" />
+    <BaseModuleHeader v-if="!preview" :editable="editable" @add="openModals('map')" />
     <MapRecap
       ref="map"
       :locations="locations"

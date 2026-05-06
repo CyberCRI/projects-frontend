@@ -88,7 +88,7 @@ const onDeleteConfirm = () => {
   <FetchLoader :status="status" only-error skeleton>
     <BaseModuleHeader
       v-if="!preview"
-      :add="editable"
+      :editable="editable"
       :pagination="pagination"
       @add="openModals('edit')"
     />
