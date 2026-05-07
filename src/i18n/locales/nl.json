@@ -3157,6 +3157,7 @@
     },
     "label": "Rol | Rol",
     "edit": "Modifier les roles",
-    "select": "De rechten selecteren"
+    "select": "De rechten selecteren",
+    "help": "Informatie over rollen."
   }
 }

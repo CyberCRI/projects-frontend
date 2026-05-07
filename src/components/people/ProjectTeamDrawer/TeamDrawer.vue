@@ -205,8 +205,6 @@ export default {
       this.form.team.owner_groups = []
       this.form.team.reviewer_groups = []
 
-      console.log(this.selectedUsers)
-
       this.selectedUsers.forEach((user) => {
         if (!this.form.team[user.role].includes(user.id)) {
           this.form.team[user.role].push(user.id)

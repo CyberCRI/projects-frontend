@@ -3157,6 +3157,7 @@
     },
     "label": "Funció | Rols",
     "edit": "Modificadors de rôles",
-    "select": "Seleccioneu els drets"
+    "select": "Seleccioneu els drets",
+    "help": "Informació sobre funcions."
   }
 }

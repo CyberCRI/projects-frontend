@@ -1,9 +1,12 @@
 import type { AttachmentFileInput, AttachmentFileModel } from '~/models/attachment-file.model'
 
-import useAPI from '~/composables/useAPI'
+import useAPI, { UseApiOptions } from '~/composables/useAPI'
+import { ProjectSlugOrId } from '~/models/project.model'
 
-export async function getAttachmentFiles(id: string) {
-  return await useAPI<PaginationResult<AttachmentFileModel>>(`project/${id}/file/`, {})
+type Config = UseApiOptions
+
+export async function getAttachmentFiles(projectId: ProjectSlugOrId, config: Config = {}) {
+  return await useAPI<PaginationResult<AttachmentFileModel>>(`project/${projectId}/file/`, config)
 }
 
 export async function getAttachmentFile(body: AttachmentFileInput) {

@@ -3157,6 +3157,7 @@
     },
     "label": "Roll | Rollid",
     "edit": "Modifier les rôles",
-    "select": "Õiguste valimine"
+    "select": "Õiguste valimine",
+    "help": "Teave rollide kohta."
   }
 }

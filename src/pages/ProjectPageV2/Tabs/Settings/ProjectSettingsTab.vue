@@ -117,18 +117,6 @@
           <div v-if="isLoading" class="loader-block">
             <LpiLoader type="simple" class="loader" />
           </div>
-          <!--div v-for="category in categories" :key="category.id">
-                            <div class="checkbox-item">
-                                <label class="form-control">
-                                    <input
-                                        v-model="selectedCategory.id"
-                                        :value="category.id"
-                                        type="radio"
-                                        @change="setCategory(category)"
-                                    />{{ category.name }}</label
-                                >
-                            </div>
-                        </div-->
           <ul>
             <CategoryPicker
               v-for="category in categories"
@@ -223,6 +211,7 @@ export default {
     const projectsStore = useProjectsStore()
     const usersStore = useUsersStore()
     const { isMobile } = useViewportWidth()
+
     const {
       canEditProject,
       isOrgUser,
@@ -302,6 +291,7 @@ export default {
           this.toaster.pushSuccess(this.$t('toasts.project-life-status-update.success'))
 
           analytics.project.updateStatus({ id: this.project.id })
+          this.refresh()
         } catch (error) {
           console.error(error)
         }
@@ -415,6 +405,12 @@ export default {
   },
 
   methods: {
+    refresh() {
+      refreshNuxtData([
+        `${this.organizationsStore.current.code}::project::${this.project.id}`,
+        `${this.organizationsStore.current.code}::project::${this.project.slug}`,
+      ])
+    },
     disableLastOrg(org) {
       return this.organizations_codes.length === 1 && this.organizations_codes[0] === org.code
     },

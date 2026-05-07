@@ -3112,7 +3112,7 @@
       "help": "A tous les droits d'édition pour ce groupe."
     },
     "reviewers": {
-      "label": "examinateur | Les évaluateurs",
+      "label": "Examinateur | Les évaluateurs",
       "help": "Lorsque le projet a été marqué « prêt à faire l'objet d'un examen », l'examinateur peut donner son avis et verrouiller un projet afin d'éviter d'autres modifications dans le projet. Un examinateur a également des droits de modification."
     },
     "members": {
@@ -3157,6 +3157,7 @@
     },
     "label": "Rôle | Rôles",
     "edit": "Modifier les rôles",
-    "select": "Sélectionnez les droits"
+    "select": "Sélectionnez les droits",
+    "help": "Informations sur les rôles."
   }
 }

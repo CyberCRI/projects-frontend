@@ -1689,6 +1689,7 @@
     "cannot-upload-image": "Cannot upload image for now",
     "link-address": "Link address",
     "resources": "Resources",
+    "delete": "Are you sure to delete this resource?",
     "web": "Link to web resource | links to web resources",
     "web-link": "Web link | web link | web links"
   },
@@ -1826,6 +1827,7 @@
       "label": "",
       "help": ""
     },
+    "help": "Information about roles.",
     "label": "Role | Roles",
     "edit": "Modifier les rôles",
     "select": "Select the rights"

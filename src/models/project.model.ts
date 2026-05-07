@@ -71,8 +71,9 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
 }
 
 export type ProjectModulesKeys = keyof ProjectModel['modules']
+export type ProjectModuleExtra = ProjectModulesKeys | 'resources'
 
-export const ProjectModuleIcon: { [key in ProjectModulesKeys]: IconImageChoice } = {
+export const ProjectModuleIcon: { [key in ProjectModuleExtra]: IconImageChoice } = {
   announcements: 'BullhornOutline',
   blogs: 'Progress5',
   goals: 'TimerLine',
@@ -81,6 +82,7 @@ export const ProjectModuleIcon: { [key in ProjectModulesKeys]: IconImageChoice }
   locations: 'Map',
   links: 'Paperclip',
   files: 'Globe',
+  resources: 'Globe',
   linked_projects: 'LinkRotated',
   comments: 'ChatBubble',
   groups: 'Briefcase',
@@ -88,7 +90,7 @@ export const ProjectModuleIcon: { [key in ProjectModulesKeys]: IconImageChoice }
   messages: 'ChatBubble',
 }
 
-export const ProjectModuleTitle: { [key in ProjectModulesKeys]: string } = {
+export const ProjectModuleTitle: { [key in ProjectModuleExtra]: string } = {
   announcements: 'home.announcements',
   blogs: 'blog.title',
   goals: 'goal.goals',
@@ -97,6 +99,9 @@ export const ProjectModuleTitle: { [key in ProjectModulesKeys]: string } = {
   locations: 'project.add-to-project.location',
   files: 'project.files',
   links: 'project.links',
+
+  resources: 'project.resources',
+
   linked_projects: 'project.linked-projects',
   comments: 'comment.comments',
   groups: 'project,groups',

@@ -1,28 +1,26 @@
 <script setup lang="ts">
+import BaseProjectResources from '~/components/project/modules/Resources/BaseProjectResources.vue'
 import { ProjectModuleIcon, ProjectModuleTitle } from '@/models/project.model'
 import BaseModulePreview from '@/components/modules/BaseModulePreview.vue'
 import type { TranslatedProject } from '@/models/project.model'
 
 const props = defineProps<{ project: TranslatedProject }>()
 
-const target = computed(() => ({
-  name: 'projectResources',
-  params: { slugOrId: props.project.slug || props.project.id },
-}))
+const resources = computed(() => props.project.modules.links + props.project.modules.files)
 </script>
 
 <template>
   <BaseModulePreview
-    :title="$t(ProjectModuleTitle.links)"
+    :title="$t(ProjectModuleTitle.resources)"
     :icon="ProjectModuleIcon.links"
-    :total="project.modules.links"
-    :see-more="target"
+    :total="resources"
+    :see-more="{
+      name: 'projectResources',
+      params: { slugOrId: project.slug || project.id },
+    }"
   >
     <template #content>
-      <div class="resources-list">
-        <ResourceCount :count="project.modules.files" :is-file="true" :target="target" />
-        <ResourceCount :count="project.modules.links" :is-file="false" :target="target" />
-      </div>
+      <BaseProjectResources :project="project" preview :limit="3" />
     </template>
   </BaseModulePreview>
 </template>

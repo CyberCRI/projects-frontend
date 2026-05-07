@@ -3157,6 +3157,7 @@
     },
     "label": "Laufsohle | Roggen",
     "edit": "Modifier les rôles",
-    "select": "Wählen Sie die Rechte"
+    "select": "Wählen Sie die Rechte",
+    "help": "Informationen zu Rollen."
   }
 }

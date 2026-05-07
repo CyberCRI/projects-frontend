@@ -1,9 +1,12 @@
 import type { AttachmentLinkInput, AttachmentLinkModel } from '~/models/attachment-link.model'
 
-import useAPI from '~/composables/useAPI'
+import useAPI, { UseApiOptions } from '~/composables/useAPI'
+import { ProjectSlugOrId } from '~/models/project.model'
 
-export async function getAttachmentLinks(id: string) {
-  return await useAPI<PaginationResult<AttachmentLinkModel>>(`project/${id}/link/`, {})
+type Config = UseApiOptions
+
+export async function getAttachmentLinks(projectId: ProjectSlugOrId, config: Config = {}) {
+  return await useAPI<PaginationResult<AttachmentLinkModel>>(`project/${projectId}/link/`, config)
 }
 
 export async function getAttachmentLink(body: AttachmentLinkInput) {

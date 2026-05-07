@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { addProjectMembers, deleteProjectMembers } from '~/api/project-members.service'
-import TeamDrawer from '~/components/people/ProjectTeamDrawer/TeamDrawer.vue'
 import type { TranslatedPojectMember } from '~/models/project-member.model'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import ProjectTeamEditor from '~/components/project/ProjectTeamEditor.vue'
@@ -34,7 +33,6 @@ const toaster = useToaster()
 const projectId = computed(() => props.project.id)
 const organizationCode = useOrganizationCode()
 const limitSkeletons = computed(() => maxSkeleton(props.project.modules.members, props.limit))
-console.log(limitSkeletons)
 const asyncing = ref(false)
 
 const {
@@ -54,20 +52,13 @@ type Team = {
   members: TranslatedPojectMember[]
 }
 
-const ORDER_ROLES: ProjectMemberRoleType[] = [
-  'owners',
-  'members',
-  'reviewers',
-  'owner_groups',
-  'reviewer_groups',
-  'member_groups',
-]
+//  order is important for choices
+const PROJECTS_ROLES: ProjectMemberRoleType[] = ['owners', 'members', 'reviewers']
 const teams = computed<Team[]>(() => {
   const sortedTeams = []
 
   const groupedUserByRole = groupBy(members.value, (item) => item.role)
-
-  ORDER_ROLES.forEach((role) => {
+  PROJECTS_ROLES.forEach((role) => {
     sortedTeams.push({
       role,
       title: role,
@@ -82,6 +73,7 @@ const { stateModals, openModals, closeAllModals, closeModals } = useModals({
   edit: false,
   delete: false,
   view: false,
+  add: false,
 })
 
 const selectedMember = ref<TranslatedPojectMember>()
@@ -103,7 +95,7 @@ const refreshProjectData = () => {
 const onAdd = () => {
   selectedMember.value = null
   mode.value = 'select'
-  openModals('edit')
+  openModals('add')
 }
 
 const openProfile = (member) => {
@@ -122,12 +114,11 @@ const onEdit = (member) => {
   openModals('edit')
 }
 
-const addUser = (members: TranslatedPojectMember[]) => {
-  console.log(members)
+const addUser = (memberRoles: { [key: number]: ProjectMemberRoleType }) => {
   const body = {}
-  members.forEach((member) => {
-    body[member.role] ??= []
-    body[member.role].push(member.id)
+  Object.entries(memberRoles).forEach(([memberId, role]) => {
+    body[role] ??= []
+    body[role].push(memberId)
   })
 
   addProjectMembers(props.project.id, body)
@@ -186,21 +177,20 @@ const onDeleteConfirm = () => {
     </div>
   </FetchLoader>
   <!-- d<rawer / modal -->
-  <!-- <TeamDrawer
-    :is-opened="stateModals.edit"
+  <TeamDrawer
+    :is-opened="stateModals.add"
     :project="project"
     :current-users="members"
-    :edited-user="selectedMember"
     :mode="mode"
-    @close="closeModals('edit')"
-    @add-user="addUser"
-  /> -->
+    @close="closeModals('add')"
+  />
 
   <RolesDrawer
     :is-opened="stateModals.edit"
     :members="selectedMember ? [selectedMember] : []"
-    :roles="['owners', 'members', 'reviewers'] as ProjectMemberRoleType[]"
+    :roles="PROJECTS_ROLES"
     @close="closeModals('edit')"
+    @update="addUser"
   />
 
   <GroupMemberDrawer

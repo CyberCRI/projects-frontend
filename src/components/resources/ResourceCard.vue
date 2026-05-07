@@ -6,24 +6,24 @@
       @click="openResource"
     >
       <div v-if="icon" class="icon-ctn">
-        <IconImage :name="icon" class="icon" />
+        <IconImage :name="icon" class="icon skeletons-background" />
       </div>
 
       <div class="content">
-        <span class="resource-title">{{ title }}</span>
-        <span class="resource-subtitle">{{ subtitle }}</span>
+        <span class="resource-title skeletons-text">{{ title }}</span>
+        <span class="resource-subtitle skeletons-text">{{ subtitle }}</span>
       </div>
     </div>
     <div v-if="canEdit || canDelete" class="actions-ctn">
       <ContextActionButton
         v-if="canEdit"
-        class="small"
+        class="small skeletons-background"
         action-icon="Pen"
         @click="$emit('edit-clicked')"
       />
       <ContextActionButton
         v-if="canDelete"
-        class="small"
+        class="small skeletons-background"
         action-icon="Close"
         @click="$emit('delete-clicked')"
       />
@@ -90,7 +90,7 @@ const openResource = () => {
   }
 
   .resource-card {
-    border: $border-width-s solid $primary;
+    border: $border-width-s solid var(--primary);
     border-radius: $border-radius-m;
     display: flex;
     cursor: pointer;
@@ -102,18 +102,18 @@ const openResource = () => {
       flex-direction: row-reverse;
 
       .icon-ctn {
-        border-left: 1px solid $primary;
+        border-left: 1px solid var(--primary);
         border-right: unset;
       }
     }
 
     &:hover .content {
-      background-color: $primary-lighter;
+      background-color: var(--primary-lighter);
     }
 
     .icon-ctn {
-      background: $primary;
-      border-right: 1px solid $primary;
+      background: var(--primary);
+      border-right: 1px solid var(--primary);
       padding: $space-l;
       display: flex;
       justify-content: center;
@@ -123,12 +123,12 @@ const openResource = () => {
       > svg {
         width: 30px;
         max-height: 100%;
-        fill: $white;
+        fill: var(--white);
       }
     }
 
     .content {
-      background-color: $white;
+      background-color: var(--white);
       font-size: $font-size-m;
       padding: $space-s pxToRem(18px);
       margin-right: auto;
@@ -169,9 +169,9 @@ const openResource = () => {
 
       .svg-wrapper {
         padding: $space-2xs;
-        background: $primary-lighter;
+        background: var(--primary-lighter);
         border-radius: 100%;
-        border: $border-width-s solid $primary;
+        border: $border-width-s solid var(--primary);
         width: 20px;
         height: 20px;
         display: flex;
@@ -182,7 +182,7 @@ const openResource = () => {
         svg {
           width: 12px;
           height: 12px;
-          fill: $primary-dark;
+          fill: var(--primary-dark);
         }
 
         &:nth-child(2) {

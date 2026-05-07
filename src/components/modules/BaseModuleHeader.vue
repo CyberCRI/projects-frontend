@@ -21,7 +21,9 @@ defineEmits<{
 
 <template>
   <div class="header-container">
-    <div />
+    <slot>
+      <div />
+    </slot>
     <LpiButton
       v-if="editable"
       class="skeletons-background"
@@ -29,8 +31,9 @@ defineEmits<{
       :label="addLabel ?? $t('common.add')"
       @click="$emit('add')"
     />
+    <!-- show pagiation if is set and total element is upper than 10 (min from select) -->
     <LpiSelect
-      v-if="pagination"
+      v-if="pagination && pagination.total.value > 10"
       class="pagination-limit small skeletons-background"
       :model-value="pagination.limit.value"
       :title="$t('pagination.visibylity-per-par')"

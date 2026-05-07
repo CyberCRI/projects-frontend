@@ -3157,6 +3157,7 @@
     },
     "label": "Función | Funciones",
     "edit": "Modifier les rôles",
-    "select": "Seleccione los derechos"
+    "select": "Seleccione los derechos",
+    "help": "Información sobre roles."
   }
 }
