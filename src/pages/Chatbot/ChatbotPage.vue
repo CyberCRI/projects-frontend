@@ -52,6 +52,11 @@ watch(
 const hasUserContext = computed(() => !!agent.value?.useProfileData)
 const hasPageContext = ref(false)
 const { contextMessages } = useChatbotContext({ hasUserContext, hasPageContext })
+
+useLpiHead2({
+  title: computed(() => agent.value?.title),
+  description: computed(() => agent.value?.description),
+})
 </script>
 <template>
   <div class="page-section page-section-narrow page-top">
