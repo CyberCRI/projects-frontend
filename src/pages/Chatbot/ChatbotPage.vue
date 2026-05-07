@@ -27,7 +27,13 @@ const options = { headers }
 
 const url = `/api/chatbot/${props.agentSlug}`
 const { data: agent, error } = await useFetch(url, options)
-if (!agent?.value) usePage404()
+watch(
+  () => error.value,
+  (e) => {
+    if (e) usePage404()
+  },
+  { immediate: true }
+)
 
 const CHAT_ENDPOINT = computed(() => '/api/chatbot/chat?id=' + agent.value?.id)
 onBeforeUnmount(() => {
