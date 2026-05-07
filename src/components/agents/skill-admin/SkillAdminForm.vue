@@ -112,8 +112,8 @@ const submit = async () => {
         v-model.trim="form.content"
         input-type="textarea"
         :label="$t('agent-skills.content')"
-        @change="titleExists = false"
         rows="12"
+        @change="titleExists = false"
       />
     </div>
   </BaseDrawer>

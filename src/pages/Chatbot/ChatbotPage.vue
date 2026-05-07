@@ -99,12 +99,14 @@ const { contextMessages } = useChatbotContext({ hasUserContext, hasPageContext }
 .description {
   margin-block: 2rem;
 }
+
 .login-notice {
   background-color: $primary-lighter;
   padding: 1rem;
   border-radius: 1rem;
   text-align: center;
 }
+
 .login-button {
   display: flex;
   justify-content: center;
