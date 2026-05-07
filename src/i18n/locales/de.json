@@ -556,7 +556,6 @@
     "disconnect": "Trennen",
     "confirm-close": "Sind Sie sicher, dass Sie den Editor schließen wollen? Änderungen, die Sie vorgenommen haben, werden nicht gespeichert.",
     "ok": "Ok.",
-    "file-too-big": "Die Datei ist zu groß (max: {maxSize}Mb)",
     "select": "Wählen",
     "year": "Jahr",
     "link-to": "Link zu",
@@ -640,8 +639,7 @@
     "delete": "Sind Sie sicher, dass Sie den Editor schließen wollen?",
     "edit-saved": "Änderungen, die Sie (und alle Co-Autor) vorgenommen haben, werden nicht gespeichert.",
     "edit": "Beschreibung bearbeiten (draft)",
-    "add": "Beschreibung hinzufügen",
-    "quit-without-saving-title": "Nicht zu retten?"
+    "add": "Beschreibung hinzufügen"
   },
   "discover": {
     "page-title": "Entdecken",
@@ -890,7 +888,8 @@
       },
       "description": "Das Beschreibungsfeld ist erforderlich"
     },
-    "templates": "Vorlagen"
+    "templates": "Vorlagen",
+    "quit-without-saving-title": "Nicht zu retten?"
   },
   "footer": {
     "contact": "Kontaktieren Sie uns",
@@ -1690,7 +1689,23 @@
     "link-address": "Linkadresse",
     "resources": "Ressourcen",
     "web": "Link zur Webressource | Links zu Webressourcen",
-    "web-link": "Weblink | web link | web links"
+    "web-link": "Weblink | web link | web links",
+    "delete": "Sind Sie sicher, diese Ressource zu löschen?",
+    "file": {
+      "add": "Datei hinzufügen | Dateien hinzufügen",
+      "edit": "Datei bearbeiten | Dateien bearbeiten",
+      "label": "Datei",
+      "delete": "Sind Sie sicher, diese Datei zu löschen? | Sind Sie sicher, Dateien zu löschen?",
+      "form": {
+        "too-big": "Die Datei ist zu groß (max: {maxSize}Mb)"
+      }
+    },
+    "link": {
+      "add": "Einen Link hinzufügen | Links hinzufügen",
+      "edit": "Einen Link bearbeiten | Links bearbeiten",
+      "label": "Link Adresse",
+      "delete": "Sind Sie sicher, diesen Link zu löschen? | Sind Sie sicher, Links zu löschen?"
+    }
   },
   "result_box": {
     "people": "Menschen",

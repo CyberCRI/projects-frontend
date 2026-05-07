@@ -556,7 +556,6 @@
     "disconnect": "Desconexión",
     "confirm-close": "¿Seguro que quieres cerrar el editor? Cualquier cambio que hayas hecho no será salvado.",
     "ok": "Ok",
-    "file-too-big": "El archivo es demasiado grande (max: {maxSize}Mb)",
     "select": "seleccionar",
     "year": "año",
     "link-to": "enlace",
@@ -640,7 +639,6 @@
     "edit-saved": "Cualquier cambio que usted (y cualquier co-autor) haga no será salvado.",
     "edit": "descripción de la edición (proyecto)",
     "add": "Añadir descripción",
-    "quit-without-saving-title": "¿Dejar de salvar?",
     "default-placeholder": "Ahora describir su proyecto."
   },
   "discover": {
@@ -890,7 +888,8 @@
       },
       "description": "El campo de descripción es necesario"
     },
-    "templates": "Plantillas"
+    "templates": "Plantillas",
+    "quit-without-saving-title": "¿Dejar de salvar?"
   },
   "footer": {
     "contact": "Contacta con nosotros",
@@ -1690,7 +1689,23 @@
     "link-address": "Dirección de enlace",
     "resources": "Recursos",
     "web": "Enlace al recurso web | enlaces a recursos web",
-    "web-link": "Enlace web | web | web links"
+    "web-link": "Enlace web | web | web links",
+    "delete": "¿Estás seguro de eliminar este recurso?",
+    "file": {
+      "add": "Agregar un archivo | Agregar archivos",
+      "edit": "Editar un archivo | Editar archivos",
+      "label": "Archivo",
+      "delete": "¿Estás seguro de eliminar este archivo ? | ¿Está seguro de borrar archivos?",
+      "form": {
+        "too-big": "El archivo es demasiado grande (max: {maxSize}Mb)"
+      }
+    },
+    "link": {
+      "add": "Agregar un enlace | Agregar enlaces",
+      "edit": "Editar un enlace | Editar enlaces",
+      "label": "Enlace",
+      "delete": "¿Está seguro de borrar este enlace? | ¿Está seguro de borrar enlaces ?"
+    }
   },
   "result_box": {
     "people": "gente",

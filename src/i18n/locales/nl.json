@@ -556,7 +556,6 @@
     "disconnect": "Verbinding verbreken",
     "confirm-close": "Weet u zeker dat u de editor wilt sluiten? Wijzigingen die u hebt gemaakt worden niet opgeslagen.",
     "ok": "Ok",
-    "file-too-big": "Bestand is te groot (max: {maxSize}Mb)",
     "select": "selecteren",
     "year": "jaar",
     "link-to": "verwijzing naar",
@@ -640,7 +639,6 @@
     "edit-saved": "Wijzigingen die u (en eventuele co-auteurs) heeft aangebracht, worden niet opgeslagen.",
     "edit": "bewerk beschrijving (ontwerp)",
     "add": "Beschrijving toevoegen",
-    "quit-without-saving-title": "Stoppen zonder te redden?",
     "default-placeholder": "Beschrijf nu je project."
   },
   "discover": {
@@ -890,7 +888,8 @@
       },
       "description": "Het beschrijvingsveld is vereist"
     },
-    "templates": "Sjablonen"
+    "templates": "Sjablonen",
+    "quit-without-saving-title": "Stoppen zonder te redden?"
   },
   "footer": {
     "contact": "Contacteer ons",
@@ -1690,7 +1689,23 @@
     "link-address": "Linkadres",
     "resources": "Middelen",
     "web": "Link naar webbron | links naar webbronnen",
-    "web-link": "Weblink | weblink | weblinks"
+    "web-link": "Weblink | weblink | weblinks",
+    "delete": "Weet u zeker dat u deze hulpbron wilt verwijderen?",
+    "file": {
+      "add": "Bestand toevoegen | Bestanden toevoegen",
+      "edit": "Bestand bewerken | Bestanden bewerken",
+      "label": "Bestand",
+      "delete": "Weet u zeker dat u dit bestand wilt verwijderen? | Weet u zeker dat u bestanden moet verwijderen?",
+      "form": {
+        "too-big": "Bestand is te groot (max: {maxSize}Mb)"
+      }
+    },
+    "link": {
+      "add": "Verwijzing toevoegen | Links toevoegen",
+      "edit": "Verwijzing bewerken | Links bewerken",
+      "label": "Linkadres",
+      "delete": "Weet u zeker dat u deze link wilt verwijderen? | Weet u zeker dat u links moet verwijderen?"
+    }
   },
   "result_box": {
     "people": "mensen",

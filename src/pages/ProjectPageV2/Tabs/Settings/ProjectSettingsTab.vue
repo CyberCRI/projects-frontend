@@ -270,6 +270,7 @@ export default {
           this.toaster.pushSuccess(this.$t('toasts.project-visibility-update.success'))
 
           analytics.project.updateVisibility({ id: this.project.id })
+          this.refresh()
         } catch (error) {
           console.error(error)
         }

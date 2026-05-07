@@ -29,7 +29,7 @@ const {
   status,
   data: comments,
   pagination,
-  refresh,
+  key,
 } = (props.isPrivate ? getProjectMessages : getProjectComments)(organizationCode, projectId, {
   query: {
     ordering: '-created_at',
@@ -39,12 +39,33 @@ const {
   },
   default: () => factoryPagination(projectCommentSkeleton, limitSkeletons.value),
 })
+
+const refresh = () => {
+  console.log('refresh')
+  refreshNuxtData(key.value)
+}
+const refreshProjectData = () => {
+  console.log('refresjPro')
+  refreshNuxtData([
+    `${organizationCode}::project::${props.project.id}`,
+    `${organizationCode}::project::${props.project.slug}`,
+    key.value,
+  ])
+}
 </script>
 
 <template>
   <FetchLoader :status="status" only-error skeleton>
     <div>
-      <MakeComment v-if="!preview" :project="project" @comment-posted="refresh" />
+      <MakeComment
+        v-if="!preview"
+        :project="project"
+        :is-private="isPrivate"
+        @comment-posted="refreshProjectData"
+        @project-message-posted="refreshProjectData"
+        @comment-edited="refresh"
+        @project-message-edited="refresh"
+      />
       <CommentItem
         v-for="comment in comments"
         :key="comment.id"

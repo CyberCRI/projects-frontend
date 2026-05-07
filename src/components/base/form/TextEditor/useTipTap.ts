@@ -73,7 +73,7 @@ export function useTipTap({ props, emit, t }) {
   const onFileSizeError = (evt, err) => {
     console.error(err)
     evt.preventDefault()
-    toaster.pushError(t('common.file-too-big', { maxSize: '1' }))
+    toaster.pushError(t('resource.file.form.too-big', { maxSize: '1' }))
   }
 
   const onDrop = (evt) => {

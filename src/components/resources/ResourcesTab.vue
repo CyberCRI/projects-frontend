@@ -26,7 +26,7 @@
         :resource="file"
         :subtitle="file?.$t?.description"
         :title="file?.$t?.title"
-        icon="File"
+        :mime="file?.mime"
         @edit-clicked="$emit('edit', file)"
         @delete-clicked="openModal(file, 'file')"
       />
@@ -50,7 +50,7 @@
         :resource="link"
         :subtitle="link?.$t?.description"
         :title="link?.$t?.title"
-        icon="LinkRotated"
+        :mime="link?.site_url"
         @edit-clicked="$emit('edit', link)"
         @delete-clicked="openModal(link, 'link')"
       />

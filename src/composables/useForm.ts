@@ -1,4 +1,4 @@
-import type { useVuelidate } from '@vuelidate/core'
+import type { ErrorObject, useVuelidate } from '@vuelidate/core'
 import { difference, isNil } from 'es-toolkit'
 import useValidate from '@vuelidate/core'
 
@@ -14,9 +14,7 @@ export type OptionsForm<T, CleanResult> = {
 export type UseFormResult<T, CleanResult> = {
   form: Ref<T>
   isValid: Ref<boolean>
-  errors: ComputedRef<{
-    [key: string]: any
-  }>
+  errors: ComputedRef<Record<keyof T, ErrorObject[]>>
   cleanedData: null | Ref<CleanResult>
   v$: ReturnType<typeof useVuelidate<T>>
 }
@@ -85,16 +83,14 @@ const useForm = <T, CleanResult = T>(
     { deep: true, immediate: lazy }
   )
 
-  const errors = computed<{
-    [key: string]: string[]
-  }>(() => {
+  const errors = computed(() => {
     const err = {}
     Object.keys(form.value).forEach((k) => {
       if (v$.value[k]?.$errors) {
         err[k] = v$.value[k].$errors
       }
     })
-    return err
+    return err as Record<keyof T, ErrorObject[]>
   })
 
   const cleanedData = ref<CleanResult>()

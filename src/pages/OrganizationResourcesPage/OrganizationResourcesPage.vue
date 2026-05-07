@@ -110,7 +110,7 @@ useLpiHead2({
         :resource="file"
         :subtitle="file.description"
         :title="file.title"
-        icon="File"
+        :mine="file.mime"
         @edit-clicked="openDrawer(file)"
         @delete-clicked="openModal(file)"
       />

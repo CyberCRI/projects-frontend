@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BaseProjectReview from '@/components/project/review/BaseProjectReview.vue'
+import BaseProjectComments from '~/components/project/modules/Comments/BaseProjectComments.vue'
 import { ProjectModuleIcon, ProjectModuleTitle } from '@/models/project.model'
 import type { TranslatedProject } from '@/models/project.model'
 
@@ -12,13 +12,12 @@ defineProps<{ project: TranslatedProject }>()
     :icon="ProjectModuleIcon.reviews"
     :total="project.modules.reviews"
     :see-more="{
-      // TODO
-      name: 'projectResources',
+      name: 'projectPrivateExchange',
       params: { slugOrId: project.slug || project.id },
     }"
   >
     <template #content>
-      <BaseProjectReview :project="project" />
+      <BaseProjectComments :project="project" is-private />
     </template>
   </BaseModulePreview>
 </template>

@@ -1,10 +1,18 @@
 <script setup lang="ts">
+import {
+  deleteAttachmentFile,
+  patchAttachmentFile,
+  postAttachmentFiles,
+} from '~/api/attachment-files.service'
+import type { TranslatedAttachmentLink } from '~/models/attachment-link.model'
 import { attachementFileSkeletons } from '~/skeletons/attachements.skeletons'
 import { getProjectAttachmentFiles } from '~/api/v2/attachment-files.service'
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
+import ResourceDrawerV2 from '~/components/resources/ResourceDrawerV2.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import ResourceCard from '~/components/resources/ResourceCard.vue'
 import SectionHeader from '~/components/base/SectionHeader.vue'
+import type { AttachmentForm } from '~/models/attachment.model'
 import type { TranslatedProject } from '@/models/project.model'
 import NothingHere from '~/components/base/NothingHere.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
@@ -23,6 +31,9 @@ const props = withDefaults(
   }
 )
 
+const { t } = useNuxtI18n()
+const asyncing = ref(false)
+const toaster = useToaster()
 const projectId = computed(() => props.project.id)
 const organizationCode = useOrganizationCode()
 const limitSkeletons = computed(() => maxSkeleton(props.project.modules.files, props.limit))
@@ -39,7 +50,7 @@ const {
   default: () => factoryPagination(attachementFileSkeletons, limitSkeletons.value),
 })
 
-const { stateModals, closeAllModals, closeModals, openModals } = useModals({
+const { stateModals, closeAllModals, openModals } = useModals({
   edit: false,
   add: false,
   delete: false,
@@ -59,7 +70,7 @@ const refreshProjectData = () => {
   cancel()
 }
 
-const selectedFile = ref()
+const selectedFile = ref<TranslatedAttachmentLink>()
 const onEdit = (item) => {
   selectedFile.value = item
   openModals('edit')
@@ -71,7 +82,46 @@ const onDelete = (item) => {
 }
 
 const onDeleteConfirm = () => {
-  cancel()
+  asyncing.value = true
+  deleteAttachmentFile(props.project.id, selectedFile.value.id)
+    .then(() => {
+      toaster.pushSuccess(t('toasts.link-delete.success'))
+      refreshProjectData()
+    })
+    .catch(() => toaster.pushError(t('toasts.link-delete.error')))
+    .finally(() => (asyncing.value = false))
+}
+
+const onSubmit = (form: AttachmentForm) => {
+  asyncing.value = true
+
+  const formData = new FormData()
+  formData.append('title', form.title)
+  formData.append('description', form.description)
+  formData.append('project_id', props.project.id)
+  formData.append('file', form.file, form.file.name)
+  formData.append('mime', form.file.type)
+
+  if (form.id) {
+    // on update remove file (old things 😕)
+    formData.delete('file')
+    formData.delete('mime')
+    patchAttachmentFile(props.project.id, selectedFile.value.id, formData)
+      .then(() => {
+        toaster.pushSuccess(t('toasts.link-update.success'))
+        refreshProjectData()
+      })
+      .catch(() => toaster.pushError(t('toasts.link-update.error')))
+      .finally(() => (asyncing.value = false))
+  } else {
+    postAttachmentFiles(props.project.id, formData)
+      .then(() => {
+        toaster.pushSuccess(t('toasts.link-create.success'))
+        refreshProjectData()
+      })
+      .catch(() => toaster.pushError(t('toasts.link-create.error')))
+      .finally(() => (asyncing.value = false))
+  }
 }
 </script>
 
@@ -82,7 +132,7 @@ const onDeleteConfirm = () => {
       v-if="!preview"
       :editable="editable"
       :pagination="pagination"
-      @add="openModals('add')"
+      @add="openModals('edit')"
     >
       <SectionHeader
         :title="$t('resource.files', project.modules.files)"
@@ -99,7 +149,7 @@ const onDeleteConfirm = () => {
         :resource="item"
         :subtitle="item.$t.description"
         :title="item.$t.title"
-        icon="File"
+        :mime="item.mime"
         @delete-clicked="onDelete(item)"
         @edit-clicked="onEdit(item)"
       />
@@ -120,9 +170,20 @@ const onDeleteConfirm = () => {
       :resource="selectedFile"
       :subtitle="selectedFile.$t.description"
       :title="selectedFile.$t.title"
+      :mime="selectedFile.site_url"
       icon="File"
     />
   </ConfirmModal>
+
+  <!-- drawer -->
+  <ResourceDrawerV2
+    :is-opened="stateModals.edit"
+    :asyncing="asyncing"
+    form-type="file"
+    :resource="selectedFile"
+    @close="cancel"
+    @submit="onSubmit"
+  />
 </template>
 
 <style lang="scss" scoped>
@@ -130,7 +191,7 @@ const onDeleteConfirm = () => {
   display: flex;
   flex-wrap: wrap;
   gap: $space-m;
-  padding: $space-l 0;
+  padding: $space-m 0;
 
   &:empty {
     display: none;

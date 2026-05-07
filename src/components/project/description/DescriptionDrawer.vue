@@ -13,7 +13,7 @@
     <ConfirmModal
       v-if="confirmDestroyModalIsOpen"
       :content="$t('description.delete') + ' ' + $t('description.edit-saved')"
-      :title="$t('description.quit-without-saving-title')"
+      :title="$t('form.quit-without-saving-title')"
       @cancel="confirmDestroyModalIsOpen = false"
       @confirm="handleDestroyModalConfirmed"
     />

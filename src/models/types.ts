@@ -49,7 +49,13 @@ export type NotificationType =
   | 'pending_access_requests'
   | 'new_instruction'
 
-export type ProjectMemberRoleType = 'owners' | 'members' | 'reviewers'
+export type ProjectMemberRoleType =
+  | 'owners'
+  | 'members'
+  | 'reviewers'
+  | 'owner_groups'
+  | 'member_groups'
+  | 'reviewer_groups'
 
 export type TagType = 'Wikipedia' | 'ESCO' | 'Custom'
 export type SecondaryTagType = 'skill' | 'occupation' | 'tag'

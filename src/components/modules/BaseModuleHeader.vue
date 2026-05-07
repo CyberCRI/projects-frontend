@@ -52,7 +52,7 @@ defineEmits<{
   display: grid;
   align-items: center;
   grid-template-columns: 1fr auto auto;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
   gap: 1rem;
 }
 </style>

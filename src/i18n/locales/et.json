@@ -556,7 +556,6 @@
     "disconnect": "Logi välja",
     "confirm-close": "Kas oled kindel, et soovid toimetaja sulgeda? Teie tehtud muudatusi ei salvestata.",
     "ok": "Ok.",
-    "file-too-big": "Fail on liiga suur (maksimaalselt: {maxSize}Mb)",
     "select": "vali",
     "year": "aasta",
     "link-to": "link",
@@ -640,7 +639,6 @@
     "edit-saved": "Teie (ja kaasautorite) tehtud muudatusi ei salvestata.",
     "edit": "redigeerimise kirjeldus (joonis)",
     "add": "Lisa kirjeldus",
-    "quit-without-saving-title": "Lõpetad säästmata?",
     "default-placeholder": "Nüüd kirjelda oma projekti."
   },
   "discover": {
@@ -890,7 +888,8 @@
       },
       "description": "Kirjeldusväli on nõutav"
     },
-    "templates": "Mallid"
+    "templates": "Mallid",
+    "quit-without-saving-title": "Lõpetad säästmata?"
   },
   "footer": {
     "contact": "Võta meiega ühendust",
@@ -1690,7 +1689,23 @@
     "link-address": "Linki aadress",
     "resources": "Ressursse",
     "web": "Link veebiressursile | lingid veebiressurssidele",
-    "web-link": "Veebilink | veebilink | veebilingid"
+    "web-link": "Veebilink | veebilink | veebilingid",
+    "delete": "Kas tõesti kustutada see ressurss?",
+    "file": {
+      "add": "Faili lisamine | Failide lisamine",
+      "edit": "Faili redigeerimine | Failide redigeerimine",
+      "label": "Fail",
+      "delete": "Kas tõesti kustutada see fail? | Kas tõesti kustutada failid?",
+      "form": {
+        "too-big": "Fail on liiga suur (maksimaalselt: {maxSize}Mb)"
+      }
+    },
+    "link": {
+      "add": "Lisa link | Lisa lingid",
+      "edit": "Muuda linki | Viitade muutmine",
+      "label": "Link aadress",
+      "delete": "Kas tõesti kustutada see link? | Kas tõesti kustutada lingid?"
+    }
   },
   "result_box": {
     "people": "inimesi",

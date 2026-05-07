@@ -53,11 +53,20 @@ type Team = {
 }
 
 //  order is important for choices
-const PROJECTS_ROLES: ProjectMemberRoleType[] = ['owners', 'members', 'reviewers']
+const PROJECTS_ROLES: ProjectMemberRoleType[] = [
+  'owners',
+  'members',
+  'reviewers',
+  'owner_groups',
+  'member_groups',
+  'reviewer_groups',
+]
 const teams = computed<Team[]>(() => {
   const sortedTeams = []
 
-  const groupedUserByRole = groupBy(members.value, (item) => item.role)
+  // groups by role
+  // if we are in preview mode, return all members in owners ( for only one line)
+  const groupedUserByRole = groupBy(members.value, (item) => (props.preview ? 'owners' : item.role))
   PROJECTS_ROLES.forEach((role) => {
     sortedTeams.push({
       role,

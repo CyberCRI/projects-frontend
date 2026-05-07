@@ -39,7 +39,7 @@
 
   <ConfirmModal
     v-if="stateModal"
-    :title="$t('description.quit-without-saving-title')"
+    :title="$t('form.quit-without-saving-title')"
     :content="$t('common.confirm-close')"
     @cancel="closeModal"
     @confirm="clear"

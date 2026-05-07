@@ -1,10 +1,17 @@
 <script setup lang="ts">
+import {
+  deleteAttachmentLink,
+  patchAttachmentLink,
+  postAttachmentLinks,
+} from '~/api/attachment-links.service'
 import { attachementLinkSkeletons } from '~/skeletons/attachements.skeletons'
 import { getProjectAttachmentLinks } from '~/api/v2/attachment-link.service'
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
+import ResourceDrawerV2 from '~/components/resources/ResourceDrawerV2.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import ResourceCard from '~/components/resources/ResourceCard.vue'
 import SectionHeader from '~/components/base/SectionHeader.vue'
+import type { AttachmentForm } from '~/models/attachment.model'
 import type { TranslatedProject } from '@/models/project.model'
 import NothingHere from '~/components/base/NothingHere.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
@@ -23,6 +30,9 @@ const props = withDefaults(
   }
 )
 
+const { t } = useNuxtI18n()
+const asyncing = ref(false)
+const toaster = useToaster()
 const projectId = computed(() => props.project.id)
 const organizationCode = useOrganizationCode()
 const limitSkeletons = computed(() => maxSkeleton(props.project.modules.links, props.limit))
@@ -39,14 +49,14 @@ const {
   default: () => factoryPagination(attachementLinkSkeletons, limitSkeletons.value),
 })
 
-const { stateModals, closeAllModals, closeModals, openModals } = useModals({
+const { stateModals, closeAllModals, openModals } = useModals({
   edit: false,
   add: false,
   delete: false,
 })
 
 const cancel = () => {
-  selectedFile.value = null
+  selectedLink.value = null
   closeAllModals()
 }
 
@@ -59,19 +69,48 @@ const refreshProjectData = () => {
   cancel()
 }
 
-const selectedFile = ref()
+const selectedLink = ref()
 const onEdit = (item) => {
-  selectedFile.value = item
+  selectedLink.value = item
   openModals('edit')
 }
 
 const onDelete = (item) => {
-  selectedFile.value = item
+  selectedLink.value = item
   openModals('delete')
 }
 
 const onDeleteConfirm = () => {
-  cancel()
+  asyncing.value = true
+  deleteAttachmentLink(props.project.id, selectedLink.value.id)
+    .then(() => {
+      toaster.pushSuccess(t('toasts.link-delete.success'))
+      refreshProjectData()
+    })
+    .catch(() => toaster.pushError(t('toasts.link-delete.error')))
+    .finally(() => (asyncing.value = false))
+}
+
+const onSubmit = (form: AttachmentForm) => {
+  asyncing.value = true
+  form.project_id = props.project.id
+  if (form.id) {
+    patchAttachmentLink(props.project.id, selectedLink.value.id, form)
+      .then(() => {
+        toaster.pushSuccess(t('toasts.link-update.success'))
+        refreshProjectData()
+      })
+      .catch(() => toaster.pushError(t('toasts.link-update.error')))
+      .finally(() => (asyncing.value = false))
+  } else {
+    postAttachmentLinks(props.project.id, form)
+      .then(() => {
+        toaster.pushSuccess(t('toasts.link-create.success'))
+        refreshProjectData()
+      })
+      .catch(() => toaster.pushError(t('toasts.link-create.error')))
+      .finally(() => (asyncing.value = false))
+  }
 }
 </script>
 
@@ -82,7 +121,7 @@ const onDeleteConfirm = () => {
       v-if="!preview"
       :editable="editable"
       :pagination="pagination"
-      @add="openModals('add')"
+      @add="openModals('edit')"
     >
       <SectionHeader
         :title="$t('resource.links', project.modules.links)"
@@ -117,12 +156,22 @@ const onDeleteConfirm = () => {
     @confirm="onDeleteConfirm"
   >
     <ResourceCard
-      :resource="selectedFile"
-      :subtitle="selectedFile.$t.description"
-      :title="selectedFile.$t.title"
+      :resource="selectedLink"
+      :subtitle="selectedLink.$t.description"
+      :title="selectedLink.$t.title"
       icon="File"
     />
   </ConfirmModal>
+
+  <!-- drawer -->
+  <ResourceDrawerV2
+    :is-opened="stateModals.edit"
+    :asyncing="asyncing"
+    form-type="link"
+    :resource="selectedLink"
+    @close="cancel"
+    @submit="onSubmit"
+  />
 </template>
 
 <style lang="scss" scoped>
@@ -130,7 +179,7 @@ const onDeleteConfirm = () => {
   display: flex;
   flex-wrap: wrap;
   gap: $space-m;
-  padding: $space-l 0;
+  padding: $space-m 0;
 
   &:empty {
     display: none;

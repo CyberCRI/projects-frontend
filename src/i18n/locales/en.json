@@ -571,7 +571,6 @@
     "disconnect": "Disconnect",
     "confirm-close": "Are you sure you want to close the editor ? Any changes you made will not be saved.",
     "ok": "Ok",
-    "file-too-big": "File is too big (max: {maxSize}Mb)",
     "to": "to",
     "new": "new",
     "now": "Today",
@@ -640,7 +639,6 @@
     "edit-saved": "Any changes you (and any co-authors) made will not be saved.",
     "edit": "edit description (draft)",
     "add": "Add description",
-    "quit-without-saving-title": "Quit without saving?",
     "default-placeholder": "Now describe your project."
   },
   "discover": {
@@ -890,7 +888,8 @@
         "format": "Please enter a valid email address"
       },
       "description": "The description field is required"
-    }
+    },
+    "quit-without-saving-title": "Quit without saving?"
   },
   "footer": {
     "contact": "Contact us",
@@ -1691,7 +1690,22 @@
     "resources": "Resources",
     "delete": "Are you sure to delete this resource?",
     "web": "Link to web resource | links to web resources",
-    "web-link": "Web link | web link | web links"
+    "web-link": "Web link | web link | web links",
+    "file": {
+      "add": "Add a file | Add files",
+      "edit": "Edit a file | Edit files",
+      "label": "File",
+      "delete": "Are you sure to delete this file ? | Are you sure to delete files ?",
+      "form": {
+        "too-big": "File is too big (max: {maxSize}Mb)"
+      }
+    },
+    "link": {
+      "add": "Add a link | Add links",
+      "edit": "Edit a link | Edit links",
+      "label": "Link Address",
+      "delete": "Are you sure to delete this link ? | Are you sure to delete links ?"
+    }
   },
   "result_box": {
     "people": "people",

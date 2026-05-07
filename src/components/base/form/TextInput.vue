@@ -1,6 +1,10 @@
 <template>
   <div :class="{ 'big-input': bigInput, disabled: disabled }" class="input-ctn">
-    <label v-if="label" :for="inputId || randomId">{{ label }}</label>
+    <label v-if="label" :for="inputId || randomId">
+      {{ label }}
+      <!-- add start end of label if required -->
+      {{ required && !label.trim().endsWith('*') ? ' * ' : '' }}
+    </label>
     <slot v-else />
 
     <textarea
@@ -67,6 +71,7 @@ const props = withDefaults(
     dataTest?: string
     disabled?: boolean
     maxLength?: number
+    required?: boolean
     rows?: number
     errors?: ErrorObject[]
   }>(),
@@ -77,6 +82,7 @@ const props = withDefaults(
     bottomText: null,
     inputId: '',
     inputType: 'text',
+    required: false,
     bigInput: false,
     unfocusable: false,
     dataTest: 'input-field',

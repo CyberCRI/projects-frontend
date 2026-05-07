@@ -13,7 +13,7 @@ import BaseFactory from './base.factory'
 
 export const ProjectMemberFactory = createFactory<ProjectMemberModel>(() => ({
   ...UserFactory.generate(),
-  role: 'leaders',
+  role: 'owners',
 }))
 
 export const ProjectTeamOutputFactory = createFactory<ProjectTeamModel>(() => ({

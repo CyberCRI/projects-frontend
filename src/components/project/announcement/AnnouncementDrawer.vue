@@ -39,7 +39,7 @@
     <ConfirmModal
       v-if="confirmModalIsOpen"
       :content="$t('common.confirm-close')"
-      :title="$t('description.quit-without-saving-title')"
+      :title="$t('form.quit-without-saving-title')"
       @cancel="confirmModalIsOpen = false"
       @confirm="confirmClose"
     />

@@ -46,7 +46,7 @@ export default function useProjectPagesRoutes() {
         {
           path: 'team',
           name: 'projectTeam',
-          component: () => import('../pages/ProjectPageV2/Tabs/Team/ProjectTeamTab2.vue'),
+          component: () => import('../pages/ProjectPageV2/Tabs/Team/ProjectTeamTab.vue'),
         },
         {
           path: 'ressources', // back compatibility with old routes
@@ -98,7 +98,7 @@ export default function useProjectPagesRoutes() {
         {
           path: 'summary/edit',
           name: 'projectEdit',
-          component: () => import('../pages/ProjectPageV2/Tabs/Team/ProjectEditTab.vue'),
+          component: () => import('../pages/ProjectPageV2/ProjectEditTab.vue'),
           meta: {
             requiresAuth: true,
           },
@@ -146,7 +146,7 @@ export default function useProjectPagesRoutes() {
         {
           path: 'team/edit',
           name: 'projectTeamEdit',
-          component: () => import('../pages/ProjectPageV2/Tabs/Team/ProjectTeamTab2.vue'),
+          component: () => import('../pages/ProjectPageV2/Tabs/Team/ProjectTeamTab.vue'),
           meta: {
             requiresAuth: true,
           },

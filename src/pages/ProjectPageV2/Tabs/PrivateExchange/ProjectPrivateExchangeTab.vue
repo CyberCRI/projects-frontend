@@ -1,6 +1,6 @@
 <template>
   <BaseModuleTab :title="$t(ProjectModuleTitle.messages, countElement)" :count="countElement">
-    <BaseProjectComments :project="project" :editable="editable" is-private />
+    <BaseProjectComments :project="project" :editable="editable" is-private :preview="preview" />
   </BaseModuleTab>
 </template>
 
@@ -14,8 +14,9 @@ const props = withDefaults(
   defineProps<{
     project: TranslatedProject
     editable?: boolean
+    preview?: boolean
   }>(),
-  { editable: false }
+  { editable: false, preview: false }
 )
 
 const countElement = computed<number>(() => props.project.modules?.messages)

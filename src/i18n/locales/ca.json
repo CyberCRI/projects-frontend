@@ -556,7 +556,6 @@
     "disconnect": "Desconnecta",
     "confirm-close": "Esteu segur que voleu tancar l' editor? Qualsevol canvi que heu fet no serà desat.",
     "ok": "Bé",
-    "file-too-big": "El fitxer és massa gran (màx: {maxSize}Mb)",
     "select": "Selecciona",
     "year": "any",
     "link-to": "enllaç a",
@@ -640,7 +639,6 @@
     "edit-saved": "Qualsevol canvi que (i cap co- authors) hagi fet no serà desat.",
     "edit": "Descripció d' edició (projecte)",
     "add": "Afegeix descripció",
-    "quit-without-saving-title": "Surto sense desar?",
     "default-placeholder": "Ara descriu el teu projecte."
   },
   "discover": {
@@ -890,7 +888,8 @@
       },
       "description": "Cal el camp de descripció"
     },
-    "templates": "Plantilles"
+    "templates": "Plantilles",
+    "quit-without-saving-title": "Surto sense desar?"
   },
   "footer": {
     "contact": "Contacta amb nosaltres",
@@ -1690,7 +1689,23 @@
     "link-address": "Adreça de l' enllaç",
     "resources": "Recursos",
     "web": "Enllaç al recurs web | Enllaços als recursos web",
-    "web-link": "Enllaç web | Enllaç web | Enllaços web"
+    "web-link": "Enllaç web | Enllaç web | Enllaços web",
+    "delete": "Esteu segur d' eliminar aquest recurs?",
+    "file": {
+      "add": "Afegeix un fitxer | Afegeix fitxers",
+      "edit": "Edita un fitxer | Edita fitxers",
+      "label": "Fitxer",
+      "delete": "Esteu segur d' eliminar aquest fitxer? | Esteu segur d' esborrar els fitxers?",
+      "form": {
+        "too-big": "El fitxer és massa gran (màx. {maxSize}Mb)"
+      }
+    },
+    "link": {
+      "add": "Afegeix un enllaç | Afegeix enllaços",
+      "edit": "Edita un enllaç | Edita els enllaços",
+      "label": "Adreça d' enllaç",
+      "delete": "Esteu segur d' esborrar aquest enllaç? | Esteu segur d' esborrar els enllaços?"
+    }
   },
   "result_box": {
     "people": "gent",

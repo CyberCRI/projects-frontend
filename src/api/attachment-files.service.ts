@@ -1,7 +1,13 @@
-import type { AttachmentFileInput, AttachmentFileModel } from '~/models/attachment-file.model'
+import type {
+  AttachmentFileId,
+  AttachmentFileInput,
+  AttachmentFileModel,
+} from '~/models/attachment-file.model'
 
-import useAPI, { UseApiOptions } from '~/composables/useAPI'
-import { ProjectSlugOrId } from '~/models/project.model'
+import type { ProjectSlugOrId } from '~/models/project.model'
+import { AttachmentForm } from '~/models/attachment.model'
+import type { UseApiOptions } from '~/composables/useAPI'
+import useAPI from '~/composables/useAPI'
 
 type Config = UseApiOptions
 
@@ -13,35 +19,38 @@ export async function getAttachmentFile(body: AttachmentFileInput) {
   return await useAPI<AttachmentFileModel>(`project/${body.project_id}/file/${body.file}`, {})
 }
 
-export async function postAttachmentFiles(body: AttachmentFileInput) {
-  const fd = new FormData()
-  fd.append('description', body.description)
-  fd.append('title', body.title)
-  fd.append('project_id', body.project_id)
+export async function postAttachmentFiles(projectId: ProjectSlugOrId, body: FormData) {
+  // const fd = new FormData()
+  // fd.append('description', body.description)
+  // fd.append('title', body.title)
+  // fd.append('project_id', body.project_id)
 
-  fd.append('file', body.file, body.file.name)
-  fd.append('mime', body.file.type || 'file')
-  return await useAPI<AttachmentFileModel>(`project/${body.project_id}/file/`, {
-    body: fd,
+  // fd.append('file', body.file, body.file.name)
+  // fd.append('mime', body.file.type || 'file')
+  return await useAPI<AttachmentFileModel>(`project/${projectId}/file/`, {
+    body,
     method: 'POST',
   })
 }
 
-export async function patchAttachmentFile(body: AttachmentFileInput) {
-  const fd = new FormData()
-  fd.append('description', body.description)
-  fd.append('title', body.title)
-  fd.append('project_id', body.project_id)
+export async function patchAttachmentFile(
+  projectId: ProjectSlugOrId,
+  fileId: AttachmentFileId,
+  body: FormData
+) {
+  // const fd = new FormData()
+  // fd.append('description', body.description)
+  // fd.append('title', body.title)
+  // fd.append('project_id', body.project_id)
 
-  return await useAPI<AttachmentFileModel>(`project/${body.project_id}/file/${body.id}/`, {
-    // headers,
-    body: fd,
+  return await useAPI<AttachmentFileModel>(`project/${projectId}/file/${fileId}/`, {
+    body,
     method: 'PATCH',
   })
 }
 
-export async function deleteAttachmentFile({ id, projectId }) {
-  return await useAPI(`project/${projectId}/file/${id}/`, { method: 'DELETE' })
+export async function deleteAttachmentFile(projectId: ProjectSlugOrId, fileId: AttachmentFileId) {
+  return await useAPI<undefined>(`project/${projectId}/file/${fileId}/`, { method: 'DELETE' })
 }
 
 // -- user
@@ -49,7 +58,7 @@ export function getUserAttachmentFile(userId: number, options) {
   return useAPI2<PaginationResult<AttachmentFileModel>>(`user/${userId}/file/`, options)
 }
 
-export async function postUserAttachmentFile(userId: number, data: AttachmentFileModel) {
+export async function postUserAttachmentFile(userId: number, data: AttachmentForm) {
   const body = new FormData()
   body.set('description', data.description)
   body.set('title', data.title)

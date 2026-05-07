@@ -558,7 +558,6 @@
     "disconnect": "Déconnexion",
     "confirm-close": "Êtes-vous sûr de vouloir fermer l'éditeur ? Vos modifications ne seront pas sauvegardées.",
     "ok": "Ok",
-    "file-too-big": "Fichier trop volumineux (max: {maxSize}Mo)",
     "select": "Sélectionner",
     "year": "année",
     "link-to": "lien vers",
@@ -640,7 +639,6 @@
     "edit": "modifier la description (brouillon)",
     "placeholder": "Vous n’avez pas encore de description, pensez à en ajouter une !",
     "add": "Ajouter une description",
-    "quit-without-saving-title": "Quitter sans sauvegarder ?",
     "default-placeholder": "Décrivez votre projet."
   },
   "discover": {
@@ -890,7 +888,8 @@
       },
       "description": "Le champ description est obligatoire"
     },
-    "templates": "Modèles"
+    "templates": "Modèles",
+    "quit-without-saving-title": "Quitter sans épargner ?"
   },
   "footer": {
     "contact": "Contactez-nous",
@@ -1773,7 +1772,23 @@
     "link-address": "Url du lien",
     "resources": "Ressources",
     "web": "Lien aux ressources web | lien aux ressources web",
-    "web-link": "Lien Web | lien Web | Liens Web"
+    "web-link": "Lien Web | lien Web | Liens Web",
+    "delete": "Êtes-vous sûr de supprimer cette ressource?",
+    "file": {
+      "add": "Ajouter un fichier | Ajouter des fichiers",
+      "edit": "Modifier un fichier | Modifier les fichiers",
+      "label": "Fichier",
+      "delete": "Êtes-vous sûr de supprimer ce fichier ? | Êtes-vous sûr de supprimer les fichiers ?",
+      "form": {
+        "too-big": "Le fichier est trop grand (max: {maxSize}Mb)"
+      }
+    },
+    "link": {
+      "add": "Ajouter un lien | Ajouter des liens",
+      "edit": "Modifier un lien | Modifier les liens",
+      "label": "Adresse du lien",
+      "delete": "Êtes-vous sûr de supprimer ce lien ? | Êtes-vous sûr de supprimer les liens ?"
+    }
   },
   "result_box": {
     "people": "personnes",
