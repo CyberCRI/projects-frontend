@@ -123,7 +123,6 @@
         "last-name": "Vorname",
         "first-name": "Vorname",
         "title": "Titel",
-        "roles": "Rolle(en)",
         "groups": "Gruppe(n)",
         "inscription": "Inschrift",
         "activation": "Aktivierung",
@@ -387,13 +386,6 @@
     "reset-password": "Passwort vergessen?",
     "reset-delete": "Passwort zurücksetzen und Konto löschen",
     "error": "Ein Fehler ist veraltet.",
-    "role": {
-      "none": "Keine",
-      "user": "Benutzer",
-      "facilitator": "Fazit",
-      "admin": "Org admin",
-      "viewer": "Betrachter"
-    },
     "user-exists-in-other-org": "Ein Benutzer mit der gleichen E-Mail existiert in unserer Datenbank. Wir können ihn hier zu Ihrem Portal hinzufügen."
   },
   "userItem": {
@@ -406,12 +398,6 @@
     "facilitators": "Fazit: Diese Rolle ist für Lehrer oder Tutoren: Sie sehen alle privaten Projekte im Portal und können sie bearbeiten. Sie haben auch alle Rechte der Nutzer.",
     "admins": "Org admin: Diese Rolle ermöglicht es, Ihr Portal zu konfigurieren und Benutzer in Ihrem Portal zu verwalten. Org admins haben Zugriff auf das Admin-Menü des Portals, um das Portal einzurichten und seine Benutzer zu verwalten. Sie haben auch alle Rechte der Facilitatoren.",
     "none": "Keine Diese Person hat ein Projektkonto, ist aber nicht Teil Ihres Portals. Sie können nur die öffentlichen Projekte sehen.",
-    "roles": {
-      "none": "Keine",
-      "users": "Benutzer",
-      "facilitators": "Fazit",
-      "admins": "Org admin"
-    },
     "empty": "Keine Gruppen",
     "main-groups": "Hauptgruppen"
   },
@@ -1791,29 +1777,6 @@
     "need-help": "Brauchen Sie Hilfe?",
     "contact-us": "Kontaktieren Sie uns"
   },
-  "role": {
-    "role-editor": "Hat alle Bearbeitungsrechte für diese Gruppe.",
-    "role-reviewer": "Wenn das Projekt als \"ready for review\" markiert wurde, kann der Reviewer Feedback geben und ein Projekt sperren, um weitere Bearbeitungen im Projekt zu verhindern. Ein Reviewer hat auch Bearbeitungsrechte.",
-    "role-teammate": "Er hat keine Bearbeitungsrechte, erscheint aber als Teammitglied.",
-    "editor": "Herausgeber",
-    "editors": "Herausgeber",
-    "editor-groups": "Gruppen",
-    "editor-group": "Gruppe",
-    "reviewer": "Rückblick",
-    "reviewers": "Bewertungen",
-    "reviewer-groups": "Rezensionen",
-    "reviewer-group": "Rezensionsgruppe",
-    "teammate": "Teilnehmer",
-    "teammates": "Teilnehmer",
-    "teammate-groups": "Teilnehmergruppen",
-    "teammate-group": "Teilnehmergruppe",
-    "select": "Wählen Sie die Rechte",
-    "group": "Gruppen",
-    "leader": "Gruppenleiter",
-    "role-leader": "Ist ein Editor, der mit einem „Group Leader“-Tag erscheinen wird.",
-    "member": "Mitglied",
-    "role-member": "Erscheint als Gruppenmitglied. Ihre Projekte erscheinen unter den Projekten der Gruppe."
-  },
   "search": {
     "all-filters": "Alle Filter",
     "banner-portal": "Sie können auch nach Projekten aller Gemeinschaften auf suchen",
@@ -2735,7 +2698,6 @@
       "add-projects": "Empfohlene Projekte hinzufügen",
       "edit": "Änderung",
       "edit-members": "Mitglieder bearbeiten",
-      "edit-roles": "Rollen bearbeiten",
       "form-incomplete": "Felder fehlen oder ungültig, komplett um speichern zu können.",
       "create-group": "Gruppe erstellen",
       "edit-group": "Gruppe bearbeiten",
@@ -2771,23 +2733,6 @@
         "required": "Dieses Feld ist erforderlich"
       },
       "delete": "Gruppe löschen"
-    },
-    "role": {
-      "members": {
-        "label": "Mitglied",
-        "help": "Mitglied"
-      },
-      "leaders": {
-        "label": "Gruppenleiter",
-        "help": "Gruppenleiter"
-      },
-      "leaders-managers": {
-        "label": "Leiter und Manager"
-      },
-      "managers": {
-        "label": "Verlag",
-        "help": "Verlag"
-      }
     },
     "view": "Siehe Gruppe",
     "conferences": "Konferenzen",
@@ -3160,5 +3105,58 @@
   "follow": {
     "follow": "Folgen",
     "unfollow": "Unfollow"
+  },
+  "role": {
+    "owners": {
+      "label": "Herausgeber | Herausgeber",
+      "help": "Hat alle Bearbeitungsrechte für diese Gruppe."
+    },
+    "reviewers": {
+      "label": "Rückblick | Bewertungen",
+      "help": "Wenn das Projekt als \"ready for review\" gekennzeichnet wurde, kann der Reviewer Feedback geben und ein Projekt sperren, um weitere Bearbeitungen im Projekt zu verhindern. Ein Reviewer hat auch Bearbeitungsrechte."
+    },
+    "members": {
+      "label": "Teilnehmer | Teilnehmer",
+      "help": "Er hat keine Bearbeitungsrechte, erscheint aber als Teammitglied."
+    },
+    "leaders": {
+      "label": "Gruppe | Leaders Gruppe",
+      "help": "Ist ein Editor, der mit einem „Group Leader“-Tag erscheinen wird."
+    },
+    "owner_groups": {
+      "label": "Redaktionsgruppe | Redaktionsgruppe",
+      "help": "Ist ein Editor, der mit einem „Group Leader“-Tag erscheinen wird."
+    },
+    "reviewer_groups": {
+      "label": "Rezensionsgruppe | Bewertungsgruppe",
+      "help": ""
+    },
+    "member_groups": {
+      "label": "Teilnehmergruppe | Teilnehmergruppe",
+      "help": "Erscheint als Gruppenmitglied. Ihre Projekte erscheinen unter den Projekten der Gruppe."
+    },
+    "facilitators": {
+      "label": "Fazit | Fazit",
+      "help": "Fazit: Diese Rolle ist für Lehrer oder Tutoren: Sie sehen alle privaten Projekte im Portal und können sie bearbeiten. Sie haben auch alle Rechte der Nutzer."
+    },
+    "admins": {
+      "label": "Admin Gruppe | Admins Gruppe",
+      "help": "Org admin: Diese Rolle ermöglicht es, Ihr Portal zu konfigurieren und Benutzer in Ihrem Portal zu verwalten. Org Admins haben Zugriff auf das Admin-Menü des Portals, um das Portal einzurichten und seine Benutzer zu verwalten. Sie haben auch alle Rechte der Facilitatoren."
+    },
+    "users": {
+      "label": "Benutzer | Benutzer",
+      "help": "Benutzer: Ein Benutzer ist Teil Ihrer Community. Sie können Projekte erstellen, ihre Projekte bearbeiten und Kommentare zu jedem Projekt schreiben. Sie sehen ein privates Projekt, wenn sie Teil des Teams dieser Projekte sind, sehen alle Projekte mit der Gemeinschaftssicht und alle öffentlichen Projekte."
+    },
+    "managers": {
+      "label": "Verlag | Verlag",
+      "help": ""
+    },
+    "none": {
+      "label": "",
+      "help": ""
+    },
+    "label": "Laufsohle | Roggen",
+    "edit": "Modifier les rôles",
+    "select": "Wählen Sie die Rechte"
   }
 }

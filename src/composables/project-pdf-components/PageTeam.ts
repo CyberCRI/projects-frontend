@@ -3,27 +3,28 @@ import addTeamSectionFactory from '~/composables/project-pdf-components/addTeamS
 import PageTitle from '~/composables/project-pdf-components/PageTitle'
 import type { Doc } from '~/composables/pdf-helpers/doc-builder'
 import { Page } from '~/composables/pdf-helpers/doc-builder'
+import { roleI18n } from '~/functs/rolesUtils'
 
 export default async function addPageTeamFactory(team: any) {
   const { t } = useNuxtI18n()
 
-  const addOwnerTeamSection = await addTeamSectionFactory(t('role.editors'), team?.owners || [])
-  const addEditorTeamSection = await addTeamSectionFactory(t('role.teammates'), team?.members || [])
+  const addOwnerTeamSection = await addTeamSectionFactory(roleI18n('owners'), team?.owners || [])
+  const addEditorTeamSection = await addTeamSectionFactory(roleI18n('members'), team?.members || [])
   const addReviewerTeamSection = await addTeamSectionFactory(
-    t('role.reviewers'),
+    roleI18n('reviewers'),
     team?.reviewers || []
   )
 
   const addOwnerGroupSection = await addGroupSectionFactory(
-    t('role.editor-groups'),
+    roleI18n('owner_groups'),
     team?.owner_groups || []
   )
   const addMemberGroupSection = await addGroupSectionFactory(
-    t('role.teammate-groups'),
+    roleI18n('member_groups'),
     team?.member_groups || []
   )
   const addReviewerGroupSection = await addGroupSectionFactory(
-    t('role.reviewer-groups'),
+    roleI18n('reviewer_groups'),
     team?.reviewer_groups || []
   )
 

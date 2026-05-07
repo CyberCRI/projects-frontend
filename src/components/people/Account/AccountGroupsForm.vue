@@ -84,6 +84,7 @@ import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
 
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import { roleHelpI18n, roleI18n } from '~/functs/rolesUtils'
 
 export default {
   name: 'AccountGroupsForm',
@@ -127,21 +128,21 @@ export default {
       return [
         {
           value: 'leaders',
-          label: this.$t('group.role.leaders.label'),
+          label: roleI18n('leaders'),
           dataTest: 'button-role-leader',
-          tip: this.$t('group.role.leaders.help'),
+          tip: roleHelpI18n('leaders'),
         },
         {
           value: 'managers',
-          label: this.$t('group.role.managers.label'),
+          label: roleI18n('managers'),
           dataTest: 'button-role-editor',
-          tip: this.$t('group.role.managers.help'),
+          tip: roleHelpI18n('managers'),
         },
         // keeping for future use
         // {
         //     value: 'members',
-        //     label: this.$t('group.role.members.label'),
-        //     tip: this.$t('group.role.members.help'),
+        //     label: roleI18n('members')),
+        //     tip: roleHelpI18n('members'),
         //     dataTest: 'button-role-members',
         // },
       ]

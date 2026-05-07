@@ -20,7 +20,7 @@
       <TeamCardInline
         v-for="user in projectUsers"
         :key="user?.user.id"
-        :role-label="roleLabel(user.role)"
+        :role-label="roleI18n(user.role)"
         :member="user.user"
         @click="removeUser(user)"
       />
@@ -41,12 +41,11 @@ import type { ProjectCategoryModel } from '~/models/project-category.model'
 import type { ProjectMemberRoleType } from '~/models/types'
 import type { GroupMember } from '~/models/group.model'
 
-import { TEAMS_ROLE_I18N } from '~/interfaces/user'
-
 import TeamDrawer from '~/components/people/ProjectTeamDrawer/TeamDrawer.vue'
 import TeamCardInline from '~/components/people/TeamCard/TeamCardInline.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 
+import { roleI18n } from '~/functs/rolesUtils'
 import useUsersStore from '~/stores/useUsers'
 
 withDefaults(
@@ -59,8 +58,6 @@ withDefaults(
     unfocusable: false,
   }
 )
-
-const { t } = useNuxtI18n()
 
 type ProjectMembers = { user: GroupMember; role: ProjectMemberRoleType }[]
 
@@ -122,10 +119,6 @@ const removeUser = (user) => {
   })
   projectUsers.value.splice(userIndexToDelete, 1)
   emit('update-team', projectUsers.value)
-}
-const roleLabel = (role) => {
-  const key = TEAMS_ROLE_I18N[role]
-  return role ? t(key) : null
 }
 </script>
 

@@ -123,7 +123,6 @@
         "last-name": "Apellido",
         "first-name": "Nombre",
         "title": "Título",
-        "roles": "Papel(s)",
         "groups": "Grupos",
         "inscription": "Inscripción",
         "activation": "Activación",
@@ -387,13 +386,6 @@
     "reset-password": "Reiniciar contraseña",
     "reset-delete": "Reiniciar contraseña &gt; eliminar cuenta",
     "error": "Un error ocurrido.",
-    "role": {
-      "none": "Ninguno",
-      "user": "Usuario",
-      "facilitator": "Facilitador",
-      "admin": "Org admin",
-      "viewer": "Visualizador"
-    },
     "user-exists-in-other-org": "Un usuario con el mismo email existe en nuestra base de datos. Podemos añadirlo a su portal aquí."
   },
   "userItem": {
@@ -406,12 +398,6 @@
     "facilitators": "Facilitador: Este papel es para profesores o tutores: Ellos ven todos los proyectos privados en el portal y pueden editarlos. También tienen todos los derechos de los Usuarios.",
     "admins": "Org admin: Este papel permite configurar su portal y gestionar usuarios en su portal. Los administradores de org tienen acceso al menú de administración del portal para configurar el portal y administrar sus usuarios. También tienen todos los derechos de los facilitadores.",
     "none": "Ninguno. Esta persona tiene una cuenta de Proyectos pero no es parte de su portal. Sólo pueden ver los proyectos públicos.",
-    "roles": {
-      "none": "Ninguno",
-      "users": "Usuario",
-      "facilitators": "Facilitador",
-      "admins": "Org admin"
-    },
     "empty": "No grupos",
     "main-groups": "Grupos principales"
   },
@@ -1791,29 +1777,6 @@
     "need-help": "¿Necesitas ayuda?",
     "contact-us": "Contacta con nosotros"
   },
-  "role": {
-    "role-editor": "Tiene todos los derechos de edición para este grupo.",
-    "role-reviewer": "Cuando el proyecto ha sido marcado como 'listo para revisión', el revisor puede dar retroalimentación, y puede bloquear un proyecto para evitar nuevas ediciones en el proyecto. Un revisor también tiene derechos de edición.",
-    "role-teammate": "No tiene derechos de edición, pero aparece como miembro del equipo.",
-    "editor": "Editor",
-    "editors": "Editores",
-    "editor-groups": "Grupos de redacción",
-    "editor-group": "Grupo de redacción",
-    "reviewer": "Reviewer",
-    "reviewers": "Revisores",
-    "reviewer-groups": "Grupos de examen",
-    "reviewer-group": "Grupo de examen",
-    "teammate": "Participante",
-    "teammates": "Participantes",
-    "teammate-groups": "Grupos participantes",
-    "teammate-group": "Grupo participante",
-    "select": "Seleccione los derechos",
-    "group": "Grupos",
-    "leader": "Group Leader",
-    "role-leader": "Es un editor que aparecerá con una etiqueta “Líder de crecimiento”.",
-    "member": "Miembro",
-    "role-member": "Parece miembro del grupo. Sus proyectos aparecen entre los proyectos del grupo."
-  },
   "search": {
     "all-filters": "Todos los filtros",
     "banner-portal": "También puede buscar proyectos de todas las comunidades en",
@@ -2735,7 +2698,6 @@
       "add-projects": "Agregar Proyectos Destacados",
       "edit": "Modificar",
       "edit-members": "Editar miembros",
-      "edit-roles": "Edición de funciones",
       "form-incomplete": "Los campos están desaparecidos o inválidos, completos para poder salvar.",
       "create-group": "Crear grupo",
       "edit-group": "Edit Group",
@@ -2771,23 +2733,6 @@
         "required": "Este campo es necesario"
       },
       "delete": "Grupo Suprímase"
-    },
-    "role": {
-      "members": {
-        "label": "Miembro",
-        "help": "Miembro"
-      },
-      "leaders": {
-        "label": "Head of Group",
-        "help": "Head of Group"
-      },
-      "leaders-managers": {
-        "label": "Leader and Manager"
-      },
-      "managers": {
-        "label": "Editorial",
-        "help": "Editorial"
-      }
     },
     "view": "Ver grupo",
     "conferences": "Conferencias",
@@ -3160,5 +3105,58 @@
   "follow": {
     "follow": "Seguir",
     "unfollow": "Unfollow"
+  },
+  "role": {
+    "owners": {
+      "label": "Editor | Editores",
+      "help": "Tiene todos los derechos de edición para este grupo."
+    },
+    "reviewers": {
+      "label": "Reviewer | Revisores",
+      "help": "Cuando el proyecto ha sido marcado como 'listo para revisión', el revisor puede dar retroalimentación, y puede bloquear un proyecto para evitar nuevas ediciones en el proyecto. Un revisor también tiene derechos de edición."
+    },
+    "members": {
+      "label": "Participante | Participantes",
+      "help": "No tiene derechos de edición, pero aparece como miembro del equipo."
+    },
+    "leaders": {
+      "label": "Grupo líder | Grupo de líderes",
+      "help": "Es un editor que aparecerá con una etiqueta “Líder de crecimiento”."
+    },
+    "owner_groups": {
+      "label": "Grupo de redacción | Grupo de editores",
+      "help": "Es un editor que aparecerá con una etiqueta “Líder de crecimiento”."
+    },
+    "reviewer_groups": {
+      "label": "Grupo de examen | Reviewers group",
+      "help": ""
+    },
+    "member_groups": {
+      "label": "Grupo participante | Grupo de participantes",
+      "help": "Parece miembro del grupo. Sus proyectos aparecen entre los proyectos del grupo."
+    },
+    "facilitators": {
+      "label": "Facilitador | Facilitadores",
+      "help": "Facilitador: Este papel es para profesores o tutores: Ellos ven todos los proyectos privados en el portal y pueden editarlos. También tienen todos los derechos de los Usuarios."
+    },
+    "admins": {
+      "label": "Grupo admin | Grupo de administradores",
+      "help": "Org admin: Este papel permite configurar su portal y gestionar usuarios en su portal. Los administradores de org tienen acceso al menú de administración del portal para configurar el portal y administrar sus usuarios. También tienen todos los derechos de los facilitadores."
+    },
+    "users": {
+      "label": "Usuario | Usuarios",
+      "help": "Usuario: un usuario es parte de su comunidad. Pueden crear proyectos, editar sus proyectos y escribir comentarios sobre cualquier proyecto. Ellos ven un proyecto privado cuando son parte del equipo de estos proyectos, ven todos los proyectos con visibilidad comunitaria, y todos los proyectos públicos."
+    },
+    "managers": {
+      "label": "Editorial | Editores",
+      "help": ""
+    },
+    "none": {
+      "label": "",
+      "help": ""
+    },
+    "label": "Función | Funciones",
+    "edit": "Modifier les rôles",
+    "select": "Seleccione los derechos"
   }
 }

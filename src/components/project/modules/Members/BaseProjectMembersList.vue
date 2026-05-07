@@ -5,13 +5,14 @@ import type { TranslatedPojectMember } from '~/models/project-member.model'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import ProjectTeamEditor from '~/components/project/ProjectTeamEditor.vue'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
+import { projectMemberSkeleton } from '~/skeletons/project.skeletons'
+import RolesDrawer from '~/components/people/Drawer/RolesDrawer.vue'
 import SectionHeader from '~/components/base/SectionHeader.vue'
 import type { TranslatedProject } from '@/models/project.model'
 import type UserCard from '~/components/people/UserCard.vue'
 import { getProjectMembers } from '@/api/v2/project.service'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import type { ProjectMemberRoleType } from '~/models/types'
-import { userSkeleton } from '@/skeletons/user.skeletons'
 import { groupBy } from 'es-toolkit'
 
 const props = withDefaults(
@@ -33,6 +34,7 @@ const toaster = useToaster()
 const projectId = computed(() => props.project.id)
 const organizationCode = useOrganizationCode()
 const limitSkeletons = computed(() => maxSkeleton(props.project.modules.members, props.limit))
+console.log(limitSkeletons)
 const asyncing = ref(false)
 
 const {
@@ -43,7 +45,7 @@ const {
   paginationConfig: {
     limit: props.preview ? props.limit : 999999,
   },
-  default: () => factoryPagination(userSkeleton, limitSkeletons.value),
+  default: () => factoryPagination(projectMemberSkeleton, limitSkeletons.value),
 })
 
 type Team = {
@@ -184,7 +186,7 @@ const onDeleteConfirm = () => {
     </div>
   </FetchLoader>
   <!-- d<rawer / modal -->
-  <TeamDrawer
+  <!-- <TeamDrawer
     :is-opened="stateModals.edit"
     :project="project"
     :current-users="members"
@@ -192,6 +194,13 @@ const onDeleteConfirm = () => {
     :mode="mode"
     @close="closeModals('edit')"
     @add-user="addUser"
+  /> -->
+
+  <RolesDrawer
+    :is-opened="stateModals.edit"
+    :members="selectedMember ? [selectedMember] : []"
+    :roles="['owners', 'members', 'reviewers'] as ProjectMemberRoleType[]"
+    @close="closeModals('edit')"
   />
 
   <GroupMemberDrawer
@@ -228,8 +237,7 @@ const onDeleteConfirm = () => {
 .team-members {
   display: flex;
   justify-content: flex-start;
-  align-items: center;
-  gap: 0.5rem;
+  gap: 2rem;
   flex-wrap: wrap;
 
   .project-member {

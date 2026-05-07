@@ -20,16 +20,16 @@
           <div class="tooltip-div">
             <ul class="list-ctn">
               <li class="item">
-                <span class="item-bold">{{ t('role.leader') }}</span>
-                : {{ t('role.role-leader') }}
+                <span class="item-bold">{{ roleI18n('leaders') }}</span>
+                : {{ roleHelpI18n('leaders') }}
               </li>
               <li class="item">
-                <span class="item-bold">{{ t('role.editor') }}</span>
-                : {{ t('role.role-editor') }}
+                <span class="item-bold">{{ roleI18n('owners') }}</span>
+                : {{ roleHelpI18n('owners') }}
               </li>
               <li class="item">
-                <span class="item-bold">{{ t('role.member') }}</span>
-                : {{ t('role.role-member') }}
+                <span class="item-bold">{{ roleI18n('member_groups') }}</span>
+                : {{ roleHelpI18n('member_groups') }}
               </li>
             </ul>
           </div>
@@ -68,6 +68,7 @@
 <script setup lang="ts">
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
+import { roleHelpI18n, roleI18n } from '~/functs/rolesUtils'
 import type { UserModel } from '~/models/user.model'
 import ToolTip from '~/components/base/ToolTip.vue'
 
@@ -86,29 +87,29 @@ const emit = defineEmits(['select-role', 'back-to-user-selection'])
 const { t } = useNuxtI18n()
 const userList = ref([])
 
-const roleOptions = [
+const roleOptions = computed(() => [
   {
     value: 'leaders',
-    label: t('group.role.leaders.label'),
+    label: roleI18n('leaders'),
     dataTest: 'button-role-leader',
-    tip: t('group.role.leaders.help'),
+    tip: roleHelpI18n('leaders'),
     userKey: 'is_leader',
   },
   {
     value: 'editors',
-    label: t('group.role.managers.label'),
+    label: roleI18n('managers'),
     dataTest: 'button-role-managers',
-    tip: t('group.role.managers.help'),
+    tip: roleHelpI18n('managers'),
     userKey: 'is_manager',
   },
   {
     value: 'members',
-    label: t('group.role.members.label'),
-    tip: t('group.role.members.help'),
+    label: roleI18n('members'),
+    tip: roleHelpI18n('members'),
     dataTest: 'button-role-members',
     userKey: 'is_member',
   },
-]
+])
 
 onMounted(() => {
   userList.value = [...props.selectedUsers]

@@ -11,8 +11,8 @@
       picture-size="medium"
       :default-picture="DEFAULT_USER_PATATOID"
     />
-    <span v-if="roleLabel" class="badge skeletons-text" data-test="leader-badge">
-      {{ t(roleLabel) }}
+    <span v-if="roleI18n(user?.role)" class="badge skeletons-text" data-test="leader-badge">
+      {{ roleI18n(user.role) }}
     </span>
 
     <div v-if="isNotGroup(user)" class="name-ctn">
@@ -40,6 +40,7 @@ import type { TranslatedPojectMember } from '~/models/project-member.model'
 import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 
 import { isGroup, isNotGroup } from '~/functs/users'
+import { roleI18n } from '~/functs/rolesUtils'
 
 const props = withDefaults(
   defineProps<{
@@ -47,7 +48,6 @@ const props = withDefaults(
   }>(),
   { user: null }
 )
-const { t } = useNuxtI18n()
 const emit = defineEmits(['user-click'])
 
 const isPrivateUser = computed(() => {
@@ -58,25 +58,6 @@ const isPrivateUser = computed(() => {
 const userName = computed(
   () => `${props.user.given_name?.toLowerCase()} ${props.user.family_name?.toLowerCase()}`
 )
-
-const roleLabel = computed(() => {
-  switch (props.user?.role) {
-    case 'owners':
-      return 'role.editor'
-    case 'members':
-      return 'role.teammate'
-    case 'reviewers':
-      return 'role.reviewer'
-    case 'owner_groups':
-      return 'role.editor-group'
-    case 'reviewer_groups':
-      return 'role.reviewer-group'
-    case 'member_groups':
-      return 'role.teammate-group'
-    default:
-      return null
-  }
-})
 </script>
 
 <style lang="scss" scoped>
