@@ -3,6 +3,7 @@ import { addProjectMembers, deleteProjectMembers } from '~/api/project-members.s
 import type { TranslatedPojectMember } from '~/models/project-member.model'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import ProjectTeamEditor from '~/components/project/ProjectTeamEditor.vue'
+import { refreshProjectData } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { projectMemberSkeleton } from '~/skeletons/project.skeletons'
 import RolesDrawer from '~/components/people/Drawer/RolesDrawer.vue'
@@ -38,7 +39,7 @@ const asyncing = ref(false)
 const {
   status,
   data: members,
-  key,
+  refresh,
 } = getProjectMembers(organizationCode, projectId, {
   paginationConfig: {
     limit: props.preview ? props.limit : 999999,
@@ -92,12 +93,9 @@ const cancel = () => {
   closeAllModals()
 }
 
-const refreshProjectData = () => {
-  refreshNuxtData([
-    `${organizationCode}::project::${props.project.id}`,
-    `${organizationCode}::project::${props.project.slug}`,
-    key.value,
-  ])
+const fullRefresh = () => {
+  refreshProjectData(props.project)
+  refresh()
   cancel()
 }
 
@@ -133,7 +131,7 @@ const addUser = (memberRoles: { [key: number]: ProjectMemberRoleType }) => {
   addProjectMembers(props.project.id, body)
     .then(() => {
       toaster.pushSuccess(t('toasts.team-member-delete.success'))
-      refreshProjectData()
+      fullRefresh()
     })
     .catch(() => toaster.pushError(t('toasts.team-member-delete.error')))
 }
@@ -145,7 +143,7 @@ const onDeleteConfirm = () => {
   deleteProjectMembers(props.project.id, body)
     .then(() => {
       toaster.pushSuccess(t('toasts.team-member-delete.success'))
-      refreshProjectData()
+      fullRefresh()
     })
     .catch(() => toaster.pushError(t('toasts.team-member-delete.error')))
 }

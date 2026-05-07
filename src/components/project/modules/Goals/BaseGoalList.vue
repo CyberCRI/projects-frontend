@@ -53,7 +53,7 @@
     :is-opened="stateModals.edit"
     :project="project"
     :goal="selectedGoal"
-    @reload="refreshData"
+    @reload="fullRefresh"
     @close="cancel"
   />
 </template>
@@ -61,6 +61,7 @@
 <script setup lang="ts">
 import GoalSummaryItem from '~/components/project/goal/GoalSummaryItem.vue'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
+import { refreshProjectData } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import GoalDrawer from '~/components/project/goal/GoalDrawer.vue'
 import SdgPreview from '~/components/project/sdg/SdgPreview.vue'
@@ -94,7 +95,7 @@ const {
   status,
   data: goals,
   pagination,
-  key,
+  refresh,
 } = getAllGoals(organizationCode, projectId, {
   paginationConfig: {
     limit: props.limit,
@@ -138,21 +139,16 @@ const cancel = () => {
   closeAllModals()
 }
 
-const refreshProjectData = (keys?: string[]) => {
-  refreshNuxtData([
-    `${organizationCode}::project::${props.project.id}`,
-    `${organizationCode}::project::${props.project.slug}`,
-    ...(keys ?? []),
-  ])
+const fullRefresh = () => {
+  refreshProjectData(props.project)
+  refresh()
 }
-
-const refreshData = () => refreshProjectData([key.value])
 
 const onDeleteConfirm = () => {
   deleteGoal(props.project.id, selectedGoal.value.id)
     .then(() => {
       toaster.pushSuccess(t('toasts.goal.success'))
-      refreshData()
+      fullRefresh()
     })
     .catch(() => toaster.pushSuccess(t('toasts.goal.error')))
     .finally(() => cancel())
@@ -164,7 +160,7 @@ const onUpdateSdgs = (sdgs: number[]) => {
   })
     .then(() => {
       toaster.pushSuccess(t('toasts.sdgs-update.success'))
-      refreshProjectData()
+      fullRefresh()
     })
     .catch(() => toaster.pushError(t('toasts.sdgs-update.error')))
     .finally(() => closeModals('editSdg'))

@@ -32,6 +32,7 @@
         ref="imageInput"
         :unfocusable="disabled"
         :label="$t('common.modify')"
+        :max-size-mb="maxSizeMb"
         @upload-image="uploadImage"
       />
 
@@ -118,6 +119,10 @@ export default {
     noResize: {
       type: Boolean,
       default: false,
+    },
+    maxSizeMb: {
+      type: Number,
+      default: undefined,
     },
 
     dontResizeOnChange: {

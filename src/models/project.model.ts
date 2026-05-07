@@ -185,3 +185,12 @@ export type ProjectHeaderOutput = {
   width: number
   created_at: Date
 }
+
+export type ProjectForm = Partial<
+  Pick<ProjectModel, 'title' | 'purpose' | 'categories' | 'language' | 'tags'> & {
+    id: ProjectModel['id']
+    imageSizes: any
+    file: ImageModel | File
+    sdgs: number[]
+  }
+>

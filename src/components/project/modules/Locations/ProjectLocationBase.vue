@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ProjectLocationDrawer from '@/components/project/map/ProjectLocationDrawer.vue'
+import { refreshProjectData } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { locationSkeleton } from '@/skeletons/location.skeleton'
 import type { TranslatedProject } from '@/models/project.model'
@@ -36,7 +37,7 @@ const onFocus = (location) => mapRef.value?.map?.flyTo(location)
 const {
   status,
   data: locations,
-  key,
+  refresh,
 } = getProjectLocations(organizationCode, projectId, {
   default: () => factoriesSkeleton(locationSkeleton, props.project.modules.locations),
 })
@@ -48,12 +49,9 @@ const cancel = () => {
   closeAllModals()
 }
 
-const refreshProjectData = () => {
-  refreshNuxtData([
-    `${organizationCode}::project::${props.project.id}`,
-    `${organizationCode}::project::${props.project.slug}`,
-    key.value,
-  ])
+const fullRefresh = () => {
+  refreshProjectData(props.project)
+  refresh()
   cancel()
 }
 
@@ -90,7 +88,7 @@ const onConFirmDelete = () => drawerRef.value.onDelete(selectedLocation.value)
       :locations="locations"
       :use-cluster="true"
       @close="closeModals('map')"
-      @reload="refreshProjectData"
+      @reload="fullRefresh"
     />
     <LocationList
       v-if="!props.preview"

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { getProjectComments, getProjectMessages } from '@/api/v2/comments.service'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
+import { refreshProjectData } from '~/composables/project/refreshProject'
 import { projectCommentSkeleton } from '@/skeletons/comments.skeletons'
 import CommentItem from '@/components/project/comment/CommentItem.vue'
 import type FetchLoader from '@/components/base/FetchLoader.vue'
@@ -29,7 +30,7 @@ const {
   status,
   data: comments,
   pagination,
-  key,
+  refresh,
 } = (props.isPrivate ? getProjectMessages : getProjectComments)(organizationCode, projectId, {
   query: {
     ordering: '-created_at',
@@ -40,17 +41,9 @@ const {
   default: () => factoryPagination(projectCommentSkeleton, limitSkeletons.value),
 })
 
-const refresh = () => {
-  console.log('refresh')
-  refreshNuxtData(key.value)
-}
-const refreshProjectData = () => {
-  console.log('refresjPro')
-  refreshNuxtData([
-    `${organizationCode}::project::${props.project.id}`,
-    `${organizationCode}::project::${props.project.slug}`,
-    key.value,
-  ])
+const fullRefresh = () => {
+  refreshProjectData(props.project)
+  refresh()
 }
 </script>
 
@@ -61,8 +54,8 @@ const refreshProjectData = () => {
         v-if="!preview"
         :project="project"
         :is-private="isPrivate"
-        @comment-posted="refreshProjectData"
-        @project-message-posted="refreshProjectData"
+        @comment-posted="fullRefresh"
+        @project-message-posted="fullRefresh"
         @comment-edited="refresh"
         @project-message-edited="refresh"
       />

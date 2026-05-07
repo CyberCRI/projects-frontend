@@ -9,6 +9,7 @@ import { attachementFileSkeletons } from '~/skeletons/attachements.skeletons'
 import { getProjectAttachmentFiles } from '~/api/v2/attachment-files.service'
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import ResourceDrawerV2 from '~/components/resources/ResourceDrawerV2.vue'
+import { refreshProjectData } from '~/composables/project/refreshProject'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import ResourceCard from '~/components/resources/ResourceCard.vue'
 import SectionHeader from '~/components/base/SectionHeader.vue'
@@ -42,7 +43,7 @@ const {
   status,
   data: files,
   pagination,
-  key,
+  refresh,
 } = getProjectAttachmentFiles(organizationCode, projectId, {
   paginationConfig: {
     limit: props.limit,
@@ -61,12 +62,9 @@ const cancel = () => {
   closeAllModals()
 }
 
-const refreshProjectData = () => {
-  refreshNuxtData([
-    `${organizationCode}::project::${props.project.id}`,
-    `${organizationCode}::project::${props.project.slug}`,
-    key.value,
-  ])
+const fullRefresh = () => {
+  refreshProjectData(props.project)
+  refresh()
   cancel()
 }
 
@@ -86,7 +84,7 @@ const onDeleteConfirm = () => {
   deleteAttachmentFile(props.project.id, selectedFile.value.id)
     .then(() => {
       toaster.pushSuccess(t('toasts.link-delete.success'))
-      refreshProjectData()
+      fullRefresh()
     })
     .catch(() => toaster.pushError(t('toasts.link-delete.error')))
     .finally(() => (asyncing.value = false))
@@ -109,7 +107,7 @@ const onSubmit = (form: AttachmentForm) => {
     patchAttachmentFile(props.project.id, selectedFile.value.id, formData)
       .then(() => {
         toaster.pushSuccess(t('toasts.link-update.success'))
-        refreshProjectData()
+        fullRefresh()
       })
       .catch(() => toaster.pushError(t('toasts.link-update.error')))
       .finally(() => (asyncing.value = false))
@@ -117,7 +115,7 @@ const onSubmit = (form: AttachmentForm) => {
     postAttachmentFiles(props.project.id, formData)
       .then(() => {
         toaster.pushSuccess(t('toasts.link-create.success'))
-        refreshProjectData()
+        fullRefresh()
       })
       .catch(() => toaster.pushError(t('toasts.link-create.error')))
       .finally(() => (asyncing.value = false))

@@ -82,5 +82,9 @@ const confirm = () => emit('confirm')
       text-transform: capitalize;
     }
   }
+
+  .drawer__main {
+    margin: 1rem 0;
+  }
 }
 </style>

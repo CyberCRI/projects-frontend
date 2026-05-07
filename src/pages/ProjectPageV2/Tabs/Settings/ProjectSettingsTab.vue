@@ -181,6 +181,7 @@ import useProjectsStore from '~/stores/useProjects.ts'
 import useToasterStore from '~/stores/useToaster.ts'
 import useUsersStore from '~/stores/useUsers.ts'
 
+import { refreshProjectData } from '~/composables/project/refreshProject'
 import { DEFAULT_ORGANIZATION_CODE } from '~/functs/constants'
 import analytics from '~/analytics'
 
@@ -407,10 +408,7 @@ export default {
 
   methods: {
     refresh() {
-      refreshNuxtData([
-        `${this.organizationsStore.current.code}::project::${this.project.id}`,
-        `${this.organizationsStore.current.code}::project::${this.project.slug}`,
-      ])
+      refreshProjectData(this.project)
     },
     disableLastOrg(org) {
       return this.organizations_codes.length === 1 && this.organizations_codes[0] === org.code

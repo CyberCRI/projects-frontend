@@ -4,8 +4,8 @@ import type {
   AttachmentFileModel,
 } from '~/models/attachment-file.model'
 
+import type { AttachmentForm } from '~/models/attachment.model'
 import type { ProjectSlugOrId } from '~/models/project.model'
-import { AttachmentForm } from '~/models/attachment.model'
 import type { UseApiOptions } from '~/composables/useAPI'
 import useAPI from '~/composables/useAPI'
 
