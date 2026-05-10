@@ -1,7 +1,7 @@
 <script setup>
-import 'deep-chat'
 import { shuffle } from 'es-toolkit'
 import analytics from '~/analytics'
+import 'deep-chat'
 import 'deep-chat'
 
 const props = defineProps({
@@ -49,17 +49,18 @@ const pageContext = computed(() => {
   if (allowCurrentPage.value) return pageData
   else return ''
 })
-watch(
-  () => [props.isOpened, route],
-  () => {
-    let res = ''
-    const pageMeta = route.matched
-      .filter((r) => !!r.meta.chatBotContext)
-      .map((r) => {
-        const chatBotContext = r.meta.chatBotContext as (any) => void
-        chatBotContext(route)
-      })
-      .join('\n')
+// watch(
+//   () => [props.isOpened, route],
+//   () => {
+//     let res = ''
+//     const pageMeta = route.matched
+//       .filter((r) => !!r.meta.chatBotContext)
+//       .map((r) => {
+//         const chatBotContext = r.meta.chatBotContext as (any) => void
+//         chatBotContext(route)
+//       })
+//       .join('\n')
+//   })
 watch(() => [props.isOpened, route], computePageContext, { immediate: true })
 
 const runtimeConfig = useRuntimeConfig()

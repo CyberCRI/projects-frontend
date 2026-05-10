@@ -85,7 +85,7 @@ const props = withDefaults(
     disabled: false,
     maxLength: null,
     rows: 3,
-    suggestionListId: ''
+    suggestionListId: '',
     errors: () => [],
   }
 )
