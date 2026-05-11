@@ -68,7 +68,7 @@ const props = withDefaults(
     dataTest?: string
     disabled?: boolean
     maxLength?: number
-    rows?: number
+    rows?: number | string
     errors?: ErrorObject[]
     suggestionListId?: string
   }>(),

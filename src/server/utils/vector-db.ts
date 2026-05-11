@@ -10,7 +10,7 @@ type PGVectorConfig = Parameters<typeof PGVectorStore.initialize>['1']
 // attempt to fix azure postgres complaining about vector extension
 // TODO: put commaented code behing a env variable for easy toggle
 class CustomPGVectorStore extends PGVectorStore {
-  async ensureTableInDatabase(dimensions /*?: number*/) /* : Promise<void> */ {
+  override async ensureTableInDatabase(dimensions /*?: number*/) /* : Promise<void> */ {
     if (this.skipInitializationCheck) {
       return
     }
@@ -33,7 +33,7 @@ class CustomPGVectorStore extends PGVectorStore {
     await this.pool.query(tableQuery)
   }
 
-  static async initialize(
+  static override async initialize(
     embeddings /* : EmbeddingsInterface*/,
     config /*: PGVectorStoreArgs & { dimensions?: number }*/
   ) /*: Promise<PGVectorStore>  */ {
@@ -78,7 +78,7 @@ export default async () => {
     }
 
     if (!pool) {
-      pool = new pg.Pool(parse(connectionString))
+      pool = new pg.Pool(parse(connectionString) as any)
     }
 
     if (!vectorStore) {

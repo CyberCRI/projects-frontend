@@ -1,6 +1,6 @@
 <script setup>
-import useUsersStore from '@/stores/useUsers'
 import useToasterStore from '@/stores/useToaster'
+import useUsersStore from '@/stores/useUsers'
 
 if (!useRuntimeConfig().public.appHasChatbotPromptDb) {
   usePage404()

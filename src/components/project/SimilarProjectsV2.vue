@@ -54,7 +54,7 @@ const similarProjectsDisplayed = computed(() => {
   }
 
   .similar-project {
-    --similar-project-text-color: $primary-dark;
+    --similar-project-text-color: #{$primary-dark};
 
     &:hover {
       background-color: $primary-light;

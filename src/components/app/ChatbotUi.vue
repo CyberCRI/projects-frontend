@@ -1,8 +1,8 @@
 <script setup>
-import 'deep-chat'
-import analytics from '@/analytics'
 import useUsersStore from '@/stores/useUsers.ts'
 import { shuffle } from 'es-toolkit'
+import analytics from '@/analytics'
+import 'deep-chat'
 
 const { t } = useI18n()
 const router = useRouter()

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
 import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'
 
@@ -49,13 +50,14 @@ const defaultForm = (agent = null) => ({
     })) ?? [],
   useLatestPromptVersion: agent?.useLatestPromptVersion ?? true,
   useProfileData: agent?.useProfileData ?? false,
+  useProjectsMcp: agent?.useProjectsMcp ?? false,
 })
 
 const form = ref(defaultForm())
 
 const titleExists = ref(false)
 
-const tted = useTemplateRef('TipTapEditor')
+const tted = useTemplateRef<InstanceType<typeof TipTapEditor>>('TipTapEditor')
 const prompts = ref([])
 const skills = ref([])
 const skillOptions = ref([])
@@ -196,11 +198,11 @@ watch(
   }
 )
 
-const onFileChange = (e) => {
-  const files = e.target.files || e.dataTransfer.files
-  if (!files.length) return
-  file.value = files[0]
-}
+// const onFileChange = (e) => {
+//   const files = e.target.files || e.dataTransfer.files
+//   if (!files.length) return
+//   file.value = files[0]
+// }
 
 const isAsyncing = ref(false)
 

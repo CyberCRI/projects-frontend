@@ -10,7 +10,7 @@ import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
 import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'
 
-import { useNuxtApp, useRuntimeConfig } from '#imports'
+import { useRuntimeConfig } from '#imports'
 
 export type AuthResult = {
   access_token: string

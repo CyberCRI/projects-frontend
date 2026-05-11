@@ -1,4 +1,3 @@
-import { initChatModel } from 'langchain/chat_models/universal'
 import {
   tool,
   createAgent,
@@ -7,15 +6,17 @@ import {
   // ClearToolUsesEdit,
   // summarizationMiddleware,
 } from 'langchain'
-import * as z from 'zod'
-import { MemorySaver } from '@langchain/langgraph'
-import { SystemMessage, HumanMessage, AIMessage, BaseMessageChunk } from '@langchain/core/messages'
-import { v4 as uuidv4 } from 'uuid'
-import getVectorStore from '@/server/utils/vector-db.js'
+import { SystemMessage, HumanMessage, AIMessage } from '@langchain/core/messages'
 import { createRetrieverTool } from '@langchain/classic/tools/retriever'
-import { MultiServerMCPClient } from '@langchain/mcp-adapters'
-import checkAdminRights from '@/server/utils/check-admin-rights.js'
 import { tokenMap, traceMcp } from '@/server/routes/api/chat-stream'
+import checkAdminRights from '@/server/utils/check-admin-rights.js'
+import type { BaseMessageChunk } from '@langchain/core/messages'
+import { initChatModel } from 'langchain/chat_models/universal'
+import { MultiServerMCPClient } from '@langchain/mcp-adapters'
+import getVectorStore from '@/server/utils/vector-db.js'
+import { MemorySaver } from '@langchain/langgraph'
+import { v4 as uuidv4 } from 'uuid'
+import * as z from 'zod'
 
 // TODO: fix import issue (useNuxtRuntime in dependncies)
 // import { PROJECTS_DEFAULT_VECTOR_STORE_KEY } from '@/composables/useVectorStore'

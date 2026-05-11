@@ -2,7 +2,6 @@
 import { shuffle } from 'es-toolkit'
 import analytics from '~/analytics'
 import 'deep-chat'
-import 'deep-chat'
 
 const props = defineProps({
   isOpened: { type: Boolean, default: false },
@@ -42,13 +41,13 @@ const { computePageContext, contextMessages } = useChatbotContext({
 })
 
 const route = useRoute()
-const pageContextData = ref('')
-const pageContext = computed(() => {
-  // keep this out the if so it is registred for reactivity
-  const pageData = pageContextData.value
-  if (allowCurrentPage.value) return pageData
-  else return ''
-})
+// const pageContextData = ref('')
+// const pageContext = computed(() => {
+//   // keep this out the if so it is registred for reactivity
+//   const pageData = pageContextData.value
+//   if (allowCurrentPage.value) return pageData
+//   else return ''
+// })
 // watch(
 //   () => [props.isOpened, route],
 //   () => {
