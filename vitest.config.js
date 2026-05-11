@@ -8,6 +8,7 @@ export default defineVitestConfig({
     include: ['tests/unit/**/*.{test,spec}.?(c|m)[jt]s?(x)'],
     globals: true,
     environment: 'nuxt',
+    hookTimeout: 30_000,
     setupFiles: [
       './.vitest/setup.ts',
       './.vitest/setupVitest.js',

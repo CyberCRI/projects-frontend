@@ -22,6 +22,8 @@ const props = defineProps({
 })
 const emit = defineEmits(['close', 'entity-created', 'entity-updated'])
 
+const tiptapId = ref('tipttap-' + Date.now())
+
 const isEdit = computed(() => !!props.agent)
 const toaster = useToasterStore()
 const usersStore = useUsersStore()
@@ -53,6 +55,7 @@ const form = ref(defaultForm())
 
 const titleExists = ref(false)
 
+const tted = useTemplateRef('TipTapEditor')
 const prompts = ref([])
 const skills = ref([])
 const skillOptions = ref([])
@@ -183,6 +186,8 @@ watch(
         }
       })
       form.value = defaultForm(props.agent)
+      tiptapId.value = 'TipTapEditor'
+      tted.value?.resetContent()
     } catch (e) {
       console.error(e)
     } finally {
@@ -362,7 +367,6 @@ const submit = async () => {
           :key="opt.skill.id"
           v-model="opt.model"
           :skill="opt.skill"
-          ,
         />
       </div>
     </template>
