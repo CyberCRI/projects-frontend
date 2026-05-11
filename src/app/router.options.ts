@@ -51,6 +51,17 @@ const routes = ({
         resetScroll: true,
       },
     },
+
+    {
+      // fix keycloak login redirect to this path
+      // TODO: fix kc authorized rerirects to / and remove this
+      path: '/dashboard',
+      name: 'Dashboard',
+      component: () => import(`../pages/NewHomePage/NewHomePage.vue`),
+      meta: {
+        resetScroll: true,
+      },
+    },
     // TODO: Remove or recreate ?
     // {
     //     path: '/discover',
