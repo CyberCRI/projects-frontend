@@ -107,6 +107,18 @@ export default defineNuxtConfig({
     ],
     resolve: {
       extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json'],
+      // Force all prosemirror packages to resolve to a single instance.
+      // prosemirror-dropcursor and prosemirror-gapcursor ship their own nested
+      // prosemirror-state (v1.4.4) with an independent key counter, while the
+      // rest of the app uses the top-level v1.4.3. Both create keyless plugins
+      // (new Plugin({})) that each get key "plugin$1" from their counter — a
+      // collision that causes "Adding different instances of a keyed plugin".
+      alias: {
+        'prosemirror-state': path.resolve('./node_modules/prosemirror-state'),
+        'prosemirror-view': path.resolve('./node_modules/prosemirror-view'),
+        'prosemirror-model': path.resolve('./node_modules/prosemirror-model'),
+        'prosemirror-transform': path.resolve('./node_modules/prosemirror-transform'),
+      },
     },
     css: {
       preprocessorOptions: {

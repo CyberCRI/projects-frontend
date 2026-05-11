@@ -26,7 +26,19 @@ const fixPrismaExtensionlessImports = {
 export default defineVitestConfig({
   plugins: [fixPrismaExtensionlessImports],
   root: './',
+  resolve: {
+    dedupe: ['prosemirror-state'],
+  },
   test: {
+    server: {
+      deps: {
+        // Force all @tiptap packages through Vite's ESM bundler so they share
+        // a single prosemirror-state instance. Without this, the CJS extension
+        // packages and the ESM @tiptap/core each load their own copy, both
+        // generating 'plugin$' as their first auto-keyed plugin → conflict.
+        inline: [/@tiptap/, /prosemirror/],
+      },
+    },
     include: ['tests/unit/**/*.{test,spec}.?(c|m)[jt]s?(x)'],
     globals: true,
     environment: 'nuxt',
