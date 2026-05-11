@@ -359,11 +359,12 @@ defineExpose({
       :model-value="modelValue"
       :save-image-callback="saveImageCallback"
       :mode="mode"
+      :errors="errors"
       :save-icon-visible="false"
       @update:model-value="emit('update:modelValue', $event)"
     />
   </template>
-  <TipTapEditorContainer v-else :editor="editor" :mode="mode">
+  <TipTapEditorContainer v-else :editor="editor" :mode="mode" :errors="errors">
     <template v-if="firstSync">
       <TipTapCollaborativeConnectedStatus
         v-if="editor"

@@ -50,7 +50,7 @@ const defaultForm = () => {
   return newForm
 }
 
-const { isValid, form, errors, v$, cleanedData } = useAttachmentForm(
+const { isValid, form, errors, cleanedData, reset } = useAttachmentForm(
   computed(() => props.formType),
   { lazy: true, default: defaultForm() }
 )
@@ -62,10 +62,7 @@ const emit = defineEmits<{
 
 watch(
   () => [props.resource, props.isOpened],
-  () => {
-    form.value = defaultForm()
-    v$.value.$reset()
-  },
+  () => reset(defaultForm()),
   { immediate: true }
 )
 

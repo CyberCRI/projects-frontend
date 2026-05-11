@@ -16,6 +16,7 @@ export type UseFormResult<T, CleanResult> = {
   isValid: Ref<boolean>
   errors: ComputedRef<Record<keyof T, ErrorObject[]>>
   cleanedData: null | Ref<CleanResult>
+  reset: (data?: T) => void
   v$: ReturnType<typeof useVuelidate<T>>
 }
 
@@ -52,7 +53,7 @@ const onClean = (d) => d
  * @param {OptionsForm} options?
  * @returns {UseFormResult}
  */
-const useForm = <T, CleanResult = T>(
+const useForm = <T extends object, CleanResult = T>(
   options: OptionsForm<T, CleanResult> = { onClean }
 ): UseFormResult<T, CleanResult> => {
   const def = {
@@ -112,12 +113,28 @@ const useForm = <T, CleanResult = T>(
     { deep: true, immediate: true }
   )
 
+  //
+  /**
+   * reset form value with new value and call $reset in vulidate
+   *
+   * @function
+   * @name reset
+   * @kind variable
+   * @memberof useForm
+   * @param {T} newData?
+   * @returns {void}
+   */
+  const reset = (newData?: T) => {
+    form.value = newData ?? ({} as T)
+    v$.value.$reset()
+  }
+
   return {
     form,
     errors,
     isValid,
     cleanedData,
-    // @ts-expect-error better type
+    reset,
     v$,
   }
 }

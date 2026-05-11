@@ -63,21 +63,16 @@ const organizationsStore = useOrganizationsStore()
 const organizationCode = useOrganizationCode()
 const { t } = useNuxtI18n()
 
-const { form, errors, isValid, v$ } = useChatForm({
-  default: {
-    chat_button_text: organizationsStore.current.chat_button_text || '',
-    chat_url: organizationsStore.current.chat_url || '',
-  },
-  lazy: true,
-})
+const { form, errors, isValid, reset } = useChatForm({ lazy: true })
 
 watch(
   () => props.isOpened,
-  () => {
-    form.value.chat_button_text = organizationsStore.current.chat_button_text || ''
-    form.value.chat_url = organizationsStore.current.chat_url || ''
-    v$.value.$reset()
-  }
+  () =>
+    reset({
+      chat_button_text: organizationsStore.current.chat_button_text || '',
+      chat_url: organizationsStore.current.chat_url || '',
+    }),
+  { immediate: true }
 )
 
 const asyncing = ref(false)

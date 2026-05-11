@@ -1,306 +1,174 @@
 <template>
-  <!-- TODO: Change disabled action -->
   <BaseDrawer
-    :confirm-action-disabled="v$.$invalid"
+    :confirm-action-disabled="!isValid"
     :confirm-action-name="$t('common.save')"
     :is-opened="isOpened"
-    :title="!rdata?.id ? $t('project.add-review') : $t('project.edit-review')"
+    :title="review?.id ? $t('project.add-review') : $t('project.edit-review')"
     class="review-drawer medium"
     :asyncing="asyncing"
-    @close="closeDrawer"
-    @confirm="saveReview"
+    @close="onClose"
+    @confirm="submit"
   >
     <div class="review-form">
       <div class="review-entry">
         <label>{{ $t('common.title') }}</label>
-        <TextInput v-model="newReview.data.title" @blur="v$.newReview.data.title.$touch" />
-        <FieldErrors :errors="v$.newReview.data.title.$errors" />
+        <TextInput v-model="form.title" :errors="errors.title" />
       </div>
 
       <div class="review-entry editor-entry">
         <label>{{ $t('form.description') }}</label>
-        <TipTapEditor
-          v-model="newReview.data.description"
-          @blur="v$.newReview.data.description.$touch"
-        />
-        <FieldErrors :errors="v$.newReview.data.description.$errors" />
+        <TipTapEditor v-model="form.description" :errors="errors.description" />
       </div>
       <div class="review-entry review-switch">
         <label>{{ $t('project.publish') }}</label>
-        <SwitchInput v-model="publish" />
+        <SwitchInput v-model="form.publish" />
       </div>
       <div class="review-entry review-switch">
         <label>{{ $t('project.lock') }}</label>
-        <SwitchInput v-model="lock" />
+        <SwitchInput v-model="form.lock" />
       </div>
     </div>
   </BaseDrawer>
 
   <ConfirmModal
-    v-if="showConfirmModal"
+    v-if="stateModals.saveChange"
     :title="$t('form.quit-without-saving-title')"
     :content="$t('common.confirm-close')"
-    @cancel="showConfirmModal = false"
-    @confirm="closeModalAndDrawer"
+    @cancel="closeModals('saveChange')"
+    @confirm="$emit('close')"
   />
 </template>
 
-<script>
-import { helpers, required } from '@vuelidate/validators'
-import useVuelidate from '@vuelidate/core'
-
+<script setup lang="ts">
 import { patchReview, postReview } from '~/api/reviews.service'
 
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import SwitchInput from '~/components/base/form/SwitchInput.vue'
-import FieldErrors from '~/components/base/form/FieldErrors.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
-import useProjectsStore from '~/stores/useProjects.ts'
-import useToasterStore from '~/stores/useToaster.ts'
-import useUsersStore from '~/stores/useUsers.ts'
+import useToasterStore from '~/stores/useToaster'
+import useUsersStore from '~/stores/useUsers'
 
-import { NULL_CONTENT } from '~/functs/constants'
-import { textIsEmpty } from '~/functs/string'
+import type { ReviewForm, ReviewModel, TranslatedReview } from '~/models/review.model'
+import type { ProjectForm, TranslatedProject } from '~/models/project.model'
+import { defaultProjectReviewForm, useProjectReview } from '~/form/review'
+import { patchProject } from '~/api/projects.service'
+import { isEqual } from 'es-toolkit'
 
-export default {
-  name: 'ReviewDrawer',
+const props = withDefaults(
+  defineProps<{
+    project: TranslatedProject
+    review?: TranslatedReview
+    isOpened?: boolean
+  }>(),
+  {
+    rdata: null,
+    isOpened: false,
+    review: null,
+  }
+)
 
-  components: {
-    ConfirmModal,
-    TipTapEditor,
-    TextInput,
-    BaseDrawer,
-    SwitchInput,
-    FieldErrors,
-  },
+const emit = defineEmits<{
+  close: []
+  reload: [ReviewModel]
+}>()
 
-  props: {
-    project: {
-      type: Object,
-      required: true,
-    },
+const usersStore = useUsersStore()
 
-    rdata: {
-      type: Object,
-      default: () => {},
-    },
-    isOpened: {
-      type: Boolean,
-      default: false,
-    },
-  },
+const defaultLocalForm = () => {
+  const defaultForm = defaultProjectReviewForm()
+  const newForm = { ...defaultForm }
 
-  emits: ['reload-reviews', 'close', 'reload-project'],
+  newForm.project_id = props.project.id
+  newForm.lock = props.project.is_locked
+  newForm.publish = props.project.publication_status === 'public'
 
-  setup() {
-    const toaster = useToasterStore()
-    const projectsStore = useProjectsStore()
-    const usersStore = useUsersStore()
-    return {
-      toaster,
-      projectsStore,
-      usersStore,
-    }
-  },
+  if (props.review) {
+    newForm.title = props.review.title || newForm.title
+    newForm.description = props.review.description || newForm.description
+    newForm.reviewer_id = props.review.reviewer.id
+  } else {
+    newForm.reviewer_id = usersStore.id
+  }
+  return newForm
+}
 
-  data() {
-    return {
-      asyncing: false,
-      v$: useVuelidate(),
-      showConfirmModal: false,
-      editorOption: {
-        modules: {
-          toolbar: [['bold', 'italic', 'underline'], ['link']],
-        },
-      },
-      publish: false,
-      lock: true,
-      newReview: {
-        data: {
-          title: '',
-          description: '',
-          reviewer: '',
-        },
-      },
-      publishOptions: [
-        {
-          value: false,
-          label: this.$t('common.no'),
-        },
-        {
-          value: true,
-          label: this.$t('common.yes'),
-        },
-      ],
-      lockOptions: [
-        {
-          value: false,
-          label: this.$t('common.no'),
-        },
-        {
-          value: true,
-          label: this.$t('common.yes'),
-        },
-      ],
-    }
-  },
+const toaster = useToasterStore()
+const { t } = useNuxtI18n()
 
-  validations() {
-    return {
-      newReview: {
-        data: {
-          title: {
-            required: helpers.withMessage(this.$t('form.review.title'), required),
-            $autoDirty: true,
-          },
-          description: {
-            required: helpers.withMessage(this.$t('form.review.message'), required),
-            $autoDirty: true,
-          },
-        },
-      },
-    }
-  },
+const asyncing = ref(false)
+const { stateModals, closeModals, openModals } = useModals({ saveChange: false })
 
-  computed: {
-    isEdited() {
-      if (this.rdata?.id) {
-        return (
-          this.rdata.title != this.newReview.data.title ||
-          this.rdata.description != this.newReview.data.description
-        )
-      }
-      return (
-        !textIsEmpty(this.newReview.data.title) || !textIsEmpty(this.newReview.data.description)
-      )
-    },
-  },
+const { form, isValid, errors, cleanedData, reset } = useProjectReview({ lazy: true })
 
-  watch: {
-    isOpened: {
-      handler: function () {
-        this.publish = false
-        this.lock = true
+const isFormEqual = () => isEqual(form.value, defaultLocalForm())
 
-        if (this.rdata?.id) {
-          this.publish = this.project.publication_status === 'public'
-          this.lock = this.project.is_locked
-          this.newReview.id = this.rdata.id
-          this.newReview.data = { ...this.rdata }
-        } else {
-          this.newReview = {
-            data: {
-              title: '',
-              description: NULL_CONTENT,
-            },
-          }
-        }
-        this.newReview.data.reviewer = this.usersStore.id
-      },
-      immediate: true,
-    },
-  },
+watch(
+  () => [props.review, props.isOpened],
+  () => reset(defaultLocalForm()),
+  { immediate: true }
+)
 
-  methods: {
-    async saveReview() {
-      const isValid = await this.v$.$validate()
-      if (isValid) {
-        this.asyncing = true
-        if (!this.rdata?.id) {
-          // add
-          await this.createReview()
-        } else {
-          //edit
-          await this.updateReview()
-        }
-        try {
-          // Update other project properties
-          const projectData = { life_status: 'private', is_locked: false }
-          if (this.publish) projectData.publication_status = 'public'
-          if (this.lock) {
-            projectData.is_locked = true
-            projectData.life_status = 'completed'
-          } else {
-            projectData.life_status = 'running'
-          }
-          await this.projectsStore.updateProject({
-            id: this.project.id,
-            project: projectData,
-          })
-        } catch (error) {
-          console.error(error)
-        }
-        this.asyncing = false
-        this.closeDrawerNoConfirm()
-      }
-    },
+const onSuccess = (body: ReviewForm, review: ReviewModel) => {
+  const projectForm: ProjectForm = {
+    life_status: 'running',
+    is_locked: false,
+  }
+  if (body.publish) {
+    projectForm.publication_status = 'public'
+  }
+  if (body.lock) {
+    projectForm.is_locked = true
+    projectForm.life_status = 'completed'
+  }
 
-    async createReview() {
-      const body = {
-        description: this.newReview.data.description,
-        title: this.newReview.data.title,
-        project_id: this.project.id,
-        reviewer_id: this.newReview.data.reviewer,
-      }
+  patchProject(props.project.id, projectForm).then(() => {
+    emit('reload', review)
+    emit('close')
+  })
+}
 
-      try {
-        await postReview(body)
-        this.$emit('reload-reviews')
+const saveReview = (body: ReviewForm) => {
+  return postReview(props.project.id, body)
+    .then((review) => {
+      toaster.pushSuccess(t('toasts.review-create.success'))
+      onSuccess(body, review)
+    })
+    .catch(() => toaster.pushError(t('toasts.review-create.error')))
+}
 
-        await this.projectsStore.lockUnlockProject({
-          project_id: this.project.id,
-          context: this.lock ? 'lock' : 'unlock',
-        })
-        await this.$nextTick()
-        this.$emit('reload-project')
+const updateReview = (body: ReviewForm) => {
+  return patchReview(props.project.id, props.review.id, body)
+    .then((review) => {
+      toaster.pushSuccess(t('toasts.review-create.success'))
+      onSuccess(body, review)
+    })
+    .catch(() => toaster.pushError(t('toasts.review-create.error')))
+}
 
-        this.toaster.pushSuccess(this.$t('toasts.review-create.success'))
-      } catch (error) {
-        this.toaster.pushError(`${this.$t('toasts.review-create.error')} (${error})`)
-        console.error(error)
-      }
-    },
+const submit = () => {
+  if (!isValid.value) {
+    return
+  }
+  asyncing.value = true
 
-    async updateReview() {
-      const body = {
-        description: this.newReview.data.description,
-        title: this.newReview.data.title,
-        project_id: this.project.id,
-        reviewer_id: this.newReview.data.reviewer.id,
-        id: this.newReview.id,
-      }
+  const body = { ...cleanedData.value }
 
-      try {
-        await patchReview(body)
-        this.$emit('reload-reviews')
-        this.toaster.pushSuccess(this.$t('toasts.review-update.success'))
-      } catch (error) {
-        this.toaster.pushError(`${this.$t('toasts.review-update.error')} (${error})`)
-        console.error(error)
-      }
-    },
+  if (props.review?.id) {
+    updateReview(body).finally(() => (asyncing.value = false))
+  } else {
+    saveReview(body).finally(() => (asyncing.value = false))
+  }
+}
 
-    closeDrawer() {
-      if (this.isEdited) this.openConfirmModal()
-      else this.closeDrawerNoConfirm()
-    },
-
-    closeDrawerNoConfirm() {
-      this.$emit('close')
-    },
-
-    closeModalAndDrawer() {
-      this.openConfirmModal()
-      this.closeDrawerNoConfirm()
-    },
-
-    openConfirmModal() {
-      this.showConfirmModal = !this.showConfirmModal
-    },
-  },
+const onClose = () => {
+  if (isFormEqual()) {
+    emit('close')
+  } else {
+    openModals('saveChange')
+  }
 }
 </script>
 

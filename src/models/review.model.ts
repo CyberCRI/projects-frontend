@@ -1,3 +1,4 @@
+import type { ProjectSlugOrId } from '~/models/project.model'
 import type { Translated } from '@/interfaces/translated'
 import type { UserModel } from '@/models/user.model'
 import type { Ordering } from '@/interfaces/query'
@@ -16,6 +17,8 @@ export interface ReviewModel extends BaseModel {
   updated_at: string
 }
 
+export type ReviewId = ReviewModel['id']
+
 export type ReviewModelInput = Required<ReviewModel> & {
   reviewer_id: string
   project_id: string
@@ -29,4 +32,14 @@ export type QueryFilterReviews = Partial<
     reviewer: number
     ordering: Ordering<'created_at' | 'updated_at'>
   } & PaginationQuery
+>
+
+export type ReviewForm = Partial<
+  Pick<ReviewModel, 'id' | 'title' | 'description'> & {
+    project_id: ProjectSlugOrId
+    reviewer_id: ReviewModel['reviewer']['id']
+
+    publish: boolean
+    lock: boolean
+  }
 >

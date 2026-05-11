@@ -165,9 +165,8 @@
     <ReviewDrawer
       :is-opened="reviewDrawerVisible"
       :project="project"
-      @reload-reviews="$emit('reload-reviews')"
+      @reload="refresh"
       @close="toggleReviewDrawer"
-      @reload-project="$emit('reload-project')"
     />
   </div>
 </template>
@@ -326,10 +325,12 @@ export default {
     },
 
     projectReviewers() {
-      return [
-        ...(this.project?.team?.reviewers || []),
-        ...(this.project?.team?.reviewer_groups || []),
-      ]
+      // TODO change this
+      // return [
+      //   ...(this.project?.team?.reviewers || []),
+      //   ...(this.project?.team?.reviewer_groups || []),
+      // ]
+      return this.project.modules.members
     },
 
     lifeStatusOptions() {
@@ -345,7 +346,7 @@ export default {
           label: this.$t('project.reviewable'),
           iconName: 'ListCheck',
           condition:
-            this.projectReviewers.length &&
+            this.projectReviewers &&
             (this.isOwner || this.isOrgAdmin || this.isAdmin || this.canAddReview),
         },
         {

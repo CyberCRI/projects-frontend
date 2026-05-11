@@ -148,7 +148,7 @@ const { stateModals, closeModals, openModals } = useModals({ saveChange: false, 
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
-const { form, isValid, errors, cleanedData, v$ } = useBlogEntryForm({ lazy: true })
+const { form, isValid, errors, cleanedData, reset } = useBlogEntryForm({ lazy: true })
 const asyncing = ref(false)
 
 const providerParams = computed(() => ({
@@ -163,10 +163,7 @@ const isCreated = computed(() => isNil(props.blog?.id) || inOfflineMode.value)
 
 watch(
   () => [props.blog, props.isOpened],
-  () => {
-    form.value = defaultBlogForm()
-    v$.value.$reset()
-  },
+  () => reset(defaultBlogForm()),
   { immediate: true }
 )
 

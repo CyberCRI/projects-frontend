@@ -1,6 +1,6 @@
 import { getProject, lockUnlockProject, patchProject } from '~/api/projects.service'
 
-import type { ProjectModel, ProjectOutput, ProjectPatchInput } from '@/models/project.model'
+import type { ProjectForm, ProjectModel, ProjectOutput } from '@/models/project.model'
 import { defineStore } from 'pinia'
 
 export interface ProjectState {
@@ -20,14 +20,7 @@ const useProjectsStore = defineStore('projects', {
     },
   },
   actions: {
-    async updateProject({
-      id,
-      project,
-    }: {
-      id: string
-      project: ProjectPatchInput | FormData
-      scope?: string
-    }) {
+    async updateProject({ id, project }: { id: string; project: ProjectForm; scope?: string }) {
       const result = await patchProject(id, project)
       this.project = { ...this.project, ...result }
       return result

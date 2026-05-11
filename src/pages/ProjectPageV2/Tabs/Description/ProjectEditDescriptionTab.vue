@@ -1,265 +1,179 @@
-<template>
-  <ClientOnly>
-    <FormPanel
-      class="description-editor-panel"
-      :class="{ fs: isFullScreen }"
-      :confirm-action-name="$t('common.save')"
-      :confirm-action-disabled="!inSoloMode && !socketReady"
-      :asyncing="asyncing"
-      @close="closeDrawer"
-      @confirm="save"
-    >
-      <ConfirmModal
-        v-if="confirmDestroyModalIsOpen"
-        :content="$t('description.delete') + ' ' + $t('description.edit-saved')"
-        :title="$t('form.quit-without-saving-title')"
-        @cancel="confirmDestroyModalIsOpen = false"
-        @confirm="handleDestroyModalConfirmed"
-      />
-      <ConfirmModal
-        v-if="showConfirmSaveInSoloMode"
-        :title="$t(`multieditor.server-unconnectable.confirm-save-title`)"
-        :content="$t(`multieditor.server-unconnectable.confirm-save-text`)"
-        :confirm-button-label="$t('common.save')"
-        :cancel-button-label="$t('common.cancel')"
-        :asyncing="asyncing"
-        @cancel="showConfirmSaveInSoloMode = false"
-        @confirm="patchProject(true)"
-      />
-      <TipTapCollaborativeEditor
-        ref="tiptapEditor"
-        v-model="editorDescription"
-        :room="room"
-        save-icon-visible
-        :provider-params="providerParams"
-        :save-image-callback="saveDescriptionImage"
-        mode="full"
-        :disable-save="asyncing"
-        @unauthorized="$emit('close')"
-        @saved="patchProject(false)"
-        @socket-ready="socketReady = $event"
-        @falled-back-to-solo-edit="inSoloMode = true"
-      />
-    </FormPanel>
-  </ClientOnly>
-</template>
-
-<script>
-import { postProjectImage } from '~/api/projects.service'
-
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
-import useProjectsStore from '~/stores/useProjects.ts'
-import useToasterStore from '~/stores/useToaster.ts'
-import useUsersStore from '~/stores/useUsers.ts'
-
+<script setup lang="ts">
+import { defaultProjectForm, useProjectDescriptionForm } from '~/form/project'
+import { refreshProjectData } from '~/composables/project/refreshProject'
+import { patchProject, postProjectImage } from '~/api/projects.service'
+import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
+import type { TranslatedProject } from '~/models/project.model'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import FormPanel from '~/components/base/FormPanel.vue'
 import { textIsEmpty } from '~/functs/string'
-import analytics from '~/analytics'
-import retry from 'async-retry'
+import { isEqual, pick } from 'es-toolkit'
 
-export default {
-  name: 'ProjectEditDescriptionTab',
+const props = defineProps<{ project: TranslatedProject }>()
 
-  inject: {
-    notifyPatch: {
-      from: 'projectLayoutProjectPatched',
-      default: () => {
-        console.warn('injection projectLayoutProjectPatched not found')
-      },
-    },
-  },
+const toaster = useToaster()
+const { t } = useNuxtI18n()
+const asyncing = ref(false)
+const inSoloMode = ref(false)
+const socketReady = ref(false)
+const router = useRouter()
+const organizationsStore = useOrganizationsStore()
 
-  props: {
-    project: {
-      type: Object,
-      required: true,
-    },
-  },
+const editorRef = useTemplateRef('tiptapEditor')
 
-  emits: ['close'],
-  setup() {
-    const toaster = useToasterStore()
-    const organizationsStore = useOrganizationsStore()
-    const projectsStore = useProjectsStore()
-    const usersStore = useUsersStore()
-    const editorDescription = ref('')
-    const { startEditWatcher, stopEditWatcher } = useEditWatcher(editorDescription)
-    return {
-      toaster,
-      organizationsStore,
-      projectsStore,
-      usersStore,
-      startEditWatcher,
-      stopEditWatcher,
-      editorDescription,
+const room = computed(() => `description_${props.project.id}`)
+const providerParams = computed(() => {
+  return {
+    projectId: props.project.id,
+    organizationId: organizationsStore.current.id,
+  }
+})
+
+const defaultLocalForm = () => {
+  const defaultForm = pick(defaultProjectForm(), ['description'])
+  const newForm = { ...defaultForm }
+  if (textIsEmpty(props.project.description)) {
+    if (props.project.template?.project_description) {
+      newForm.description = props.project.template.project_description
     }
-  },
+  } else {
+    newForm.description = props.project.description
+  }
+  return newForm
+}
 
-  data() {
-    return {
-      isFullScreen: false,
-      room: '',
-      socketReady: false,
-      confirmDestroyModalIsOpen: false,
-      inSoloMode: false,
-      showConfirmSaveInSoloMode: false,
-      asyncing: false,
-    }
-  },
+const { isValid, form, errors, reset } = useProjectDescriptionForm()
 
-  computed: {
-    descriptionIsNotEmpty() {
-      return !textIsEmpty(this.project.description)
+watch(
+  () => props.project.description,
+  () => reset(defaultLocalForm()),
+  { immediate: true }
+)
+
+const { stateModals, openModals, closeModals } = useModals({
+  saveChange: false,
+  saveSolo: false,
+  unauthorized: false,
+})
+
+// callback
+
+const saveDescriptionImage = (file) => {
+  const formData = new FormData()
+  formData.append('file', file, file.name)
+  return postProjectImage(props.project.id, formData)
+}
+
+const redirect = () => {
+  router.push({
+    name: 'projectDescription',
+    params: {
+      slugOrId: props.project.slug || props.project.id,
     },
+  })
+}
 
-    projectSlug() {
-      return this.projectsStore.currentProjectSlug
-    },
+const onSubmit = () => {
+  if (!isValid.value) {
+    return
+  }
 
-    providerParams() {
-      return {
-        projectId: this.projectsStore.currentProjectId,
-        organizationId: this.organizationsStore.current.id,
-      }
-    },
-  },
+  asyncing.value = true
 
-  watch: {
-    'project.description': function (neo, old) {
-      if (neo != old) {
-        this.stopEditWatcher()
-        this.editorDescription = neo
-        this.startEditWatcher()
-      }
-    },
-  },
+  const body = {
+    description: form.value.description,
+  }
 
-  mounted() {
-    this.inSoloMode = false
-    this.showConfirmSaveInSoloMode = false
-    this.loadProject(this.project)
-  },
+  patchProject(props.project.id, body)
+    .then(() => {
+      // TODO notify + analytics
+      toaster.pushSuccess(t('toasts.description-update.success'))
+      refreshProjectData(props.project)
+      redirect()
+    })
+    .catch(() => {
+      toaster.pushSuccess(t('toasts.description-update.error'))
+    })
+    .then(() => {
+      asyncing.value = false
+    })
+}
 
-  methods: {
-    handleDestroyModalConfirmed() {
-      this.confirmDestroyModalIsOpen = false
-      this.$refs.tiptapEditor?.resetContent()
-      this.$emit('close')
-    },
-    saveDescriptionImage(file) {
-      const formData = new FormData()
-      formData.append('file', file, file.name)
-      return postProjectImage({
-        project_id: this.project.id,
-        body: formData,
-      })
-    },
+const checkClose = () => {
+  const numberEditor = inSoloMode.value
+    ? 1
+    : editorRef.value.editor?.storage?.collaborationCursor?.users?.length || 0
 
-    save() {
-      if (this.inSoloMode) {
-        this.showConfirmSaveInSoloMode = true
-      } else {
-        this.patchProject(true)
-      }
-    },
+  // if form is same or your are in multiple user editor
+  if (isEqual(form.value, defaultLocalForm()) || numberEditor !== 1) {
+    redirect()
+  } else {
+    openModals('saveChange')
+  }
+}
 
-    async patchProject(closeWindowAfterPatch = true) {
-      try {
-        this.asyncing = true
-        await retry(
-          async () => {
-            try {
-              const res = await this.projectsStore.updateProject({
-                id: this.project.id,
-                project: {
-                  description: this.editorDescription,
-                },
-              })
-
-              this.toaster.pushSuccess(this.$t('toasts.description-update.success'))
-
-              const connectedUser = this.usersStore.userFromApi
-
-              this.notifyPatch({
-                pid: this.usersStore.id,
-                author_name: connectedUser
-                  ? connectedUser.given_name + ' ' + connectedUser.family_name
-                  : '',
-                type: 'description-update',
-                id: res.id,
-                updated_at: res.updated_at,
-                scope: 'project.updated.description',
-              })
-              this.startEditWatcher()
-
-              return res
-            } catch (e) {
-              console.error(e)
-              throw e
-            }
-          },
-          {
-            retries: 10,
-          }
-        )
-      } catch (error) {
-        this.toaster.pushError(`${this.$t('toasts.description-update.error')} (${error})`)
-        console.error(error)
-      } finally {
-        this.asyncing = false
-      }
-
-      analytics.project.updateDescription({ id: this.project.id })
-
-      if (this.$route.name !== 'projectDescription') {
-        this.$router.push({
-          name: 'projectDescription',
-          params: { slugOrId: this.projectSlug },
-        })
-      }
-
-      if (closeWindowAfterPatch) this.$emit('close')
-    },
-
-    getProjectDescription(project) {
-      if (this.descriptionIsNotEmpty) {
-        return project.description
-      }
-      return (
-        this.project.template?.$t?.project_description || this.$t('description.default-project')
-      )
-    },
-
-    loadProject(project) {
-      this.stopEditWatcher()
-      this.editorDescription = this.getProjectDescription(project)
-      this.startEditWatcher()
-      this.room = 'description_' + project.id
-    },
-
-    closeDrawer() {
-      const customEditor = this.$refs.tiptapEditor
-
-      // If the editor does not exist, we should be able to close the modal.
-      if (!customEditor?.editor) {
-        this.$emit('close')
-      } else {
-        const usersOnline = customEditor.editor?.storage?.collaborationCursor?.users?.length || 0
-
-        if (usersOnline === 1 && this.project?.description !== this.editorDescription) {
-          this.confirmDestroyModalIsOpen = true
-        } else {
-          this.$emit('close')
-        }
-      }
-    },
-  },
+const checkSubmit = () => {
+  if (inSoloMode.value) {
+    openModals('saveSolo')
+  } else {
+    onSubmit()
+  }
 }
 </script>
 
-<!-- Do not scope -->
-<style lang="scss">
-.editor {
-  flex-grow: 1;
-  min-height: pxToRem(300px);
-}
-</style>
+<template>
+  <BaseModuleTab :title="project.$t.title">
+    <FormPanel
+      :confirm-action-disabled="!isValid || (!inSoloMode && !socketReady)"
+      @close="checkClose"
+      @confirm="checkSubmit"
+    >
+      <ClientOnly>
+        <TipTapCollaborativeEditor
+          ref="tiptapEditor"
+          v-model="form.description"
+          :room="room"
+          save-icon-visible
+          :provider-params="providerParams"
+          :save-image-callback="saveDescriptionImage"
+          mode="full"
+          :disable-save="asyncing"
+          :errors="errors.description"
+          @unauthorized="openModals('unauthorized')"
+          @saved="checkSubmit"
+          @socket-ready="socketReady = $event"
+          @falled-back-to-solo-edit="inSoloMode = true"
+        />
+      </ClientOnly>
+    </FormPanel>
+  </BaseModuleTab>
+  <!-- drawer -->
+
+  <ConfirmModal
+    v-if="stateModals.unauthorized"
+    :title="$t('multieditor.unauthorized')"
+    :content="$t('message.error-default')"
+    :cancel-button-label="$t('common.ok')"
+    no-second-button
+    @cancel="redirect"
+  />
+
+  <ConfirmModal
+    v-if="stateModals.saveChange"
+    :title="$t('form.quit-without-saving-title')"
+    :content="$t('common.confirm-close')"
+    @cancel="closeModals('saveChange')"
+    @confirm="redirect"
+  />
+
+  <ConfirmModal
+    v-if="stateModals.saveSolo"
+    :title="$t(`multieditor.server-unconnectable.confirm-save-title`)"
+    :content="$t(`multieditor.server-unconnectable.confirm-save-text`)"
+    :confirm-button-label="$t('common.save')"
+    :cancel-button-label="$t('common.cancel')"
+    :asyncing="asyncing"
+    @cancel="closeModals('saveSolo')"
+    @confirm="onSubmit"
+  />
+</template>

@@ -108,8 +108,8 @@ export async function getAllProjects(params: SearchParams) {
   return await useAPI(`project/`, { ..._adaptParamsToGetQuery(params) })
 }
 
-export async function postProjectImage({ project_id, body }) {
-  return await useAPI(`project/${project_id}/image/`, { body, method: 'POST' })
+export async function postProjectImage(projectId: ProjectSlugOrId, body: FormData) {
+  return await useAPI<ImageModel>(`project/${projectId}/image/`, { body, method: 'POST' })
 }
 
 export async function postProjectHeader(projectId: ProjectSlugOrId, body: any) {

@@ -1,12 +1,14 @@
 import { helpers, maxLength, minLength, required } from '@vuelidate/validators'
 import type { ProjectForm } from '~/models/project.model'
+import { NULL_CONTENT } from '~/functs/constants'
+import { pick } from 'es-toolkit'
 
 export const defaultProjectForm = (): ProjectForm => {
   return {
     title: '',
     purpose: '',
     categories: [],
-    header_image: null,
+    description: NULL_CONTENT,
     language: 'en',
     tags: [],
   }
@@ -36,4 +38,11 @@ export const useProjectForm = (options = {}) => {
   }
 
   return useForm<ProjectForm>({ default: defaultProjectForm(), rules, onClean, ...options })
+}
+
+export const useProjectDescriptionForm = (options = {}) => {
+  return useForm<Pick<ProjectForm, 'description'>>({
+    default: pick(defaultProjectForm(), ['description']),
+    ...options,
+  })
 }

@@ -118,16 +118,6 @@ export type TranslatedProject = Translated<
 
 export type ProjectSlugOrId = ProjectModel['id'] | ProjectModel['slug']
 
-export type ProjectCreateInput = Required<ProjectModel> & {
-  project_categories_ids: number
-  tags?: number[]
-  sdgs?: number[]
-}
-
-export type ProjectPutInput = Required<ProjectCreateInput>
-
-export type ProjectPatchInput = Partial<ProjectCreateInput>
-
 export type LinkedProject = {
   id: number
   project: ProjectModel
@@ -187,10 +177,21 @@ export type ProjectHeaderOutput = {
 }
 
 export type ProjectForm = Partial<
-  Pick<ProjectModel, 'title' | 'purpose' | 'categories' | 'language' | 'tags'> & {
-    id: ProjectModel['id']
+  Pick<
+    ProjectModel,
+    | 'id'
+    | 'title'
+    | 'purpose'
+    | 'categories'
+    | 'language'
+    | 'tags'
+    | 'description'
+    | 'sdgs'
+    | 'is_locked'
+    | 'publication_status'
+    | 'life_status'
+  > & {
     imageSizes: any
     file: ImageModel | File
-    sdgs: number[]
   }
 >

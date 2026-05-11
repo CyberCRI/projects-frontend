@@ -114,14 +114,11 @@ const defaultGoalForm = () => {
   return newForm
 }
 
-const { form, isValid, errors, cleanedData, v$ } = useGoalForm({ lazy: true })
+const { form, isValid, errors, cleanedData, reset } = useGoalForm({ lazy: true })
 
 watch(
   () => [props.isOpened, props.goal],
-  () => {
-    form.value = defaultGoalForm()
-    v$.value.$reset()
-  },
+  () => reset(defaultGoalForm()),
   { immediate: true }
 )
 
