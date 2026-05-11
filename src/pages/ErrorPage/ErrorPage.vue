@@ -5,8 +5,6 @@ import useUsersStore from '~/stores/useUsers'
 
 import { usePublicURL } from '~/composables/usePublic'
 
-import { I18nT } from 'vue-i18n'
-
 const usersStore = useUsersStore()
 const { t } = useNuxtI18n()
 
