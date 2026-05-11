@@ -58,13 +58,13 @@ useLpiHead(useRequestURL().toString(), title.value, title.value, imageFullUrl.va
         </h1>
         <I18nT :keypath="searchDescriptionPath" class="notice" tag="p">
           <NuxtLink v-if="isConnected" :to="{ name: 'Search' }">
-            {{ $t('page404.search-again') }}
+            {{ t('page404.search-again') }}
           </NuxtLink>
           <a v-else href="" @click="login">{{ t('page404.not-connected.login') }}</a>
         </I18nT>
         <I18nT class="notice" keypath="page404.contact" tag="p">
           <a :href="`mailto:${t('page404.contact-mail')}`">
-            {{ $t('page404.contact-mail') }}
+            {{ t('page404.contact-mail') }}
           </a>
         </I18nT>
         <LpiButton v-if="!isConnected" :label="t('common.login')" @click="login" />

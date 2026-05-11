@@ -201,7 +201,8 @@
     "@vue/runtime-dom": "3.5.22",
     "@vue/runtime-core": "3.5.22",
     "@vue/reactivity": "3.5.22",
-    "@vue/shared": "3.5.22"
+    "@vue/shared": "3.5.22",
+    "@nuxt/test-utils": "3.19.2"
   },
   "browserslist": [
     "> 1%",

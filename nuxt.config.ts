@@ -86,6 +86,25 @@ export default defineNuxtConfig({
     },
   },
   vite: {
+    plugins: [
+      {
+        // Vitest 2.x bundles Vite 5 internally. Nuxt 3.19+ uses this.environment.name
+        // (Vite 6 Environment API) in nuxt:resolve-bare-imports (enforce:'post').
+        // When this.environment is undefined (Vite 5 context), that plugin throws a
+        // plain object that tinypool serialises as "[object Object]" → "Unknown Error".
+        // Intercept optional-peer-dep virtual IDs before Nuxt's post-plugin runs so the
+        // crash is never reached. Safe in production: Vite 6 has this.environment, and
+        // optional deps that are missing should produce empty modules anyway.
+        name: 'fix-vite5-optional-peer-dep',
+        enforce: 'pre' as const,
+        resolveId(id: string) {
+          if (id.startsWith('__vite-optional-peer-dep:')) return '\0' + id
+        },
+        load(id: string) {
+          if (id.startsWith('\0__vite-optional-peer-dep:')) return ''
+        },
+      },
+    ],
     resolve: {
       extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json'],
     },

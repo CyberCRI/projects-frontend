@@ -1,8 +1,30 @@
 import { defineVitestConfig } from '@nuxt/test-utils/config'
+import { extname } from 'path'
+
+// Vite plugin to resolve extensionless relative imports inside the Prisma generated
+// client before Nuxt's nuxt:resolve-bare-imports (enforce:'post') runs.
+// That plugin calls pathe.normalize('./enums') which strips './' → 'enums', then
+// tries to resolve it as a bare package specifier, fails, and falls through to
+// this.environment.name — a Vite 6 API absent in Vitest's bundled Vite 5 —
+// producing a plain-object throw that tinypool serialises as "[object Object]".
+const fixPrismaExtensionlessImports = {
+  name: 'fix-prisma-extensionless-imports',
+  enforce: 'pre',
+  async resolveId(id, importer) {
+    if (
+      importer &&
+      importer.includes('prisma-chatbot-db/generated') &&
+      (id.startsWith('./') || id.startsWith('../')) &&
+      extname(id) === ''
+    ) {
+      return this.resolve(id + '.ts', importer, { skipSelf: true })
+    }
+  },
+}
 
 // https://vitejs.dev/config/
 export default defineVitestConfig({
-  plugins: [],
+  plugins: [fixPrismaExtensionlessImports],
   root: './',
   test: {
     include: ['tests/unit/**/*.{test,spec}.?(c|m)[jt]s?(x)'],
