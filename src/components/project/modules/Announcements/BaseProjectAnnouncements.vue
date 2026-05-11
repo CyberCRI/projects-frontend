@@ -2,12 +2,14 @@
 import AnnouncementDrawer from '~/components/project/announcement/AnnouncementDrawer.vue'
 import AnnouncementCard from '@/components/project/announcement/AnnouncementCard.vue'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
+import { refreshProjectData } from '~/composables/project/refreshProject'
 import { announcementSkeleton } from '@/skeletons/announcement.skeletons'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { getProjectAnnouncements } from '@/api/v2/announcements.service'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import { deleteAnnouncement } from '~/api/announcements.service'
 import type { TranslatedProject } from '@/models/project.model'
+import NothingHere from '~/components/base/NothingHere.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 
 const props = withDefaults(
@@ -33,7 +35,7 @@ const {
   status,
   data: announcements,
   pagination,
-  key,
+  refresh,
 } = getProjectAnnouncements(organizationCode, projectId, {
   query: {
     ordering: '-created_at',
@@ -66,11 +68,8 @@ const cancel = () => {
 }
 
 const refreshData = () => {
-  refreshNuxtData([
-    `${organizationCode}::project::${props.project.id}`,
-    `${organizationCode}::project::${props.project.slug}`,
-    key.value,
-  ])
+  refreshProjectData(props.project)
+  refresh()
 }
 
 const onDeleteConfirm = () => {
@@ -103,7 +102,7 @@ const onDeleteConfirm = () => {
         @edit="onEdit(announcement)"
       />
     </div>
-    <EmptyLabel v-if="announcements.length === 0" />
+    <NothingHere v-if="announcements.length === 0" />
     <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
 
     <ConfirmModal

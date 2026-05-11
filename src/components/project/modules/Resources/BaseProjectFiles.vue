@@ -133,7 +133,7 @@ const onSubmit = (form: AttachmentForm) => {
       @add="openModals('edit')"
     >
       <SectionHeader
-        :title="$t('resource.files', project.modules.files)"
+        :title="$t('resource.file.label', project.modules.files)"
         :quantity="project.modules.files"
         :has-button="false"
       />

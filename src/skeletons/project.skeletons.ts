@@ -26,6 +26,7 @@ export const projectSkeleton = (def?: Partial<ProjectModel>): ProjectModel => ({
   language: 'fr',
   locations: [],
   categories: [],
+  organizations: [],
   publication_status: 'public',
   life_status: 'completed',
   reviews: [],

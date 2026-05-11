@@ -1,8 +1,12 @@
+import type {
+  ProjectCategoryModel,
+  ProjectCategoryOutput,
+  TranslatedProjectCategory,
+} from '@/models/project-category.model'
 import type { LanguageType, ProjectPublicationStatusType, ProjectStatusType } from '@/models/types'
 import type { OrganizationModel, OrganizationOutput } from '@/models/organization.model'
 import type { AnnouncementModel, AnnouncementOutput } from '@/models/announcement.model'
 import type { TemplateModel, TranslatedTemplate } from '@/models/template.model'
-import type { ProjectCategoryOutput } from '@/models/project-category.model'
 import type { AttachmentLinkOutput } from '@/models/attachment-link.model'
 import type { AttachmentFileOutput } from '@/models/attachment-file.model'
 import type { ProjectTeamOutput } from '@/models/project-member.model'
@@ -30,7 +34,7 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
   is_locked: boolean
   is_shareable: boolean
   purpose: string
-  categories: ProjectCategoryOutput[]
+  categories: ProjectCategoryModel[]
   organizations: OrganizationModel[]
   language: LanguageType
   locations: LocationOutput[]
@@ -100,7 +104,7 @@ export const ProjectModuleTitle: { [key in ProjectModuleExtra]: string } = {
   files: 'project.files',
   links: 'project.links',
 
-  resources: 'project.resources',
+  resources: 'resource.resources',
 
   linked_projects: 'project.linked-projects',
   comments: 'comment.comments',
@@ -110,10 +114,11 @@ export const ProjectModuleTitle: { [key in ProjectModuleExtra]: string } = {
 }
 
 export type TranslatedProject = Translated<
-  Omit<ProjectModel, 'template'>,
+  Omit<ProjectModel, 'template' | 'categories'>,
   'title' | 'description' | 'purpose'
 > & {
   template?: TranslatedTemplate
+  categories: TranslatedProjectCategory[]
 }
 
 export type ProjectSlugOrId = ProjectModel['id'] | ProjectModel['slug']
@@ -182,7 +187,6 @@ export type ProjectForm = Partial<
     | 'id'
     | 'title'
     | 'purpose'
-    | 'categories'
     | 'language'
     | 'tags'
     | 'description'
@@ -193,5 +197,8 @@ export type ProjectForm = Partial<
   > & {
     imageSizes: any
     file: ImageModel | File
+    organizations_codes: OrganizationModel['code'][]
+    categories: (TranslatedProjectCategory | ProjectCategoryModel)[]
+    project_categories_ids: TranslatedProjectCategory['id'][]
   }
 >

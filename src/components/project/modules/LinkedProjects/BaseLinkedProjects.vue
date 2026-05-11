@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
+import { refreshProjectData } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { projectLinkedSkeleton } from '@/skeletons/project.skeletons'
 import ProjectPreview from '~/components/project/ProjectPreview.vue'
 import type { TranslatedProject } from '@/models/project.model'
 import { deleteLinkedProject } from '~/api/projects.service'
+import NothingHere from '~/components/base/NothingHere.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { getLinkedProject } from '@/api/v2/project.service'
 
@@ -33,7 +35,7 @@ const {
   status,
   data: linkedProjects,
   pagination,
-  key,
+  refresh,
 } = getLinkedProject(organizationCode, projectId, {
   paginationConfig: {
     limit: props.limit,
@@ -58,11 +60,8 @@ const cancel = () => {
 }
 
 const refreshData = () => {
-  refreshNuxtData([
-    `${organizationCode}::project::${props.project.id}`,
-    `${organizationCode}::project::${props.project.slug}`,
-    key.value,
-  ])
+  refreshProjectData(props.project)
+  refresh()
 }
 
 const onDeleteConfirm = () => {
@@ -97,6 +96,7 @@ const onDeleteConfirm = () => {
         </ProjectPreview>
       </li>
     </ul>
+    <NothingHere v-if="linkedProjects.length === 0" />
     <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
   </FetchLoader>
 

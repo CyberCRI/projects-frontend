@@ -28,7 +28,7 @@
         @delete="onDelete(goal)"
         @edit="onEdit(goal)"
       />
-      <EmptyLabel v-if="sortedGoals.length === 0" />
+      <NothingHere v-if="sortedGoals.length === 0" />
     </div>
     <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
   </FetchLoader>
@@ -67,6 +67,7 @@ import GoalDrawer from '~/components/project/goal/GoalDrawer.vue'
 import SdgPreview from '~/components/project/sdg/SdgPreview.vue'
 import type { TranslatedProject } from '@/models/project.model'
 import GoalItem from '~/components/project/goal/GoalItem.vue'
+import NothingHere from '~/components/base/NothingHere.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { goalSkeletons } from '@/skeletons/goals.skeletons'
 import SdgsDrawer from '~/components/sdgs/SdgsDrawer.vue'

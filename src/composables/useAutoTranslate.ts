@@ -10,6 +10,7 @@ import type {
 import type { AttachmentLinkModel, TranslatedAttachmentLink } from '@/models/attachment-link.model'
 import type { AttachmentFileModel, TranslatedAttachmentFile } from '@/models/attachment-file.model'
 import type { TranslatedLinkedProject, TranslatedProject } from '@/models/project.model'
+import type { TranslatedProjectCategory } from '~/models/project-category.model'
 import type { TranslatedProjectMessage } from '@/models/project-message.model'
 import type { TranslatedOrganizationModel } from '@/models/organization.model'
 import type { TranslatedAnnouncement } from '@/models/announcement.model'
@@ -371,9 +372,10 @@ export default function useAutoTranslate() {
       rawCategory.children = unref(translateEntities(rawCategory.children, translateCategory))
     if (rawCategory?.hierarchy)
       rawCategory.hierarchy = unref(translateEntities(rawCategory.hierarchy, translateCategory))
-    return translateEntity(rawCategory, ['name', 'description'])
+    return translateEntity<TranslatedProjectCategory>(rawCategory, ['name', 'description'])
   }
-  const translateCategories = (categories) => translateEntities(categories, translateCategory)
+  const translateCategories = (categories) =>
+    translateEntities<TranslatedProjectCategory>(categories, translateCategory)
 
   /*
     researcher document

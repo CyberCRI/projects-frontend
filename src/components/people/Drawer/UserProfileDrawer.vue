@@ -7,10 +7,10 @@
     @confirm="$emit('close')"
   >
     <UserProfileV2
-      v-if="!!memberId"
+      v-if="!!userId"
       ref="profile-user"
       :can-edit="false"
-      :user-id="memberId"
+      :user-id="userId"
       is-preview
       @close="$emit('close')"
     />
@@ -18,14 +18,14 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedGroupMember } from '~/models/group.model'
+import type { UserModel } from '~/models/user.model'
 
 withDefaults(
   defineProps<{
     isOpened: boolean
-    memberId?: TranslatedGroupMember['id']
+    userId?: UserModel['id']
   }>(),
-  { memberId: null }
+  { userId: null }
 )
 
 defineEmits<{

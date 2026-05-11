@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BaseProjectMembersList from '@/components/project/modules/Members/BaseProjectMembersList.vue'
+import BaseProjectTeamsList from '@/components/project/modules/Teams/BaseProjectTeamsList.vue'
 import { ProjectModuleIcon, ProjectModuleTitle } from '@/models/project.model'
 import BaseModulePreview from '@/components/modules/BaseModulePreview.vue'
 import type { TranslatedProject } from '@/models/project.model'
@@ -18,7 +18,7 @@ defineProps<{ project: TranslatedProject }>()
     }"
   >
     <template #content>
-      <BaseProjectMembersList :project="project" preview />
+      <BaseProjectTeamsList :project="project" preview />
     </template>
   </BaseModulePreview>
 </template>

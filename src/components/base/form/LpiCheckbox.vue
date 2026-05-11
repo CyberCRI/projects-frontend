@@ -1,5 +1,8 @@
 <template>
-  <label class="lpi-checkbox" :class="{ disabled: disabled, 'is-on': modelValue }">
+  <label
+    class="lpi-checkbox"
+    :class="{ disabled: disabled, 'is-checked': modelValue, 'as-button': asButton }"
+  >
     <input
       type="checkbox"
       name="checkbox"
@@ -17,8 +20,10 @@ withDefaults(
   defineProps<{
     label: string
     disabled?: boolean
+    asButton?: boolean
   }>(),
   {
+    asButton: false,
     disabled: false,
   }
 )
@@ -34,12 +39,30 @@ const toggle = (e: Event) => {
 <style scoped lang="scss">
 .lpi-checkbox {
   font-size: $font-size-m;
-  color: $primary-dark;
+  color: var(--primary-dark);
   font-weight: 400;
   line-height: $line-height-squashed;
   display: grid;
   grid-template-columns: 1em auto;
   gap: $space-m;
+}
+
+.as-button {
+  text-transform: capitalize;
+  border: $border-width-s solid var(--primary-dark);
+  border-radius: $border-radius-xs;
+  padding: $space-m $space-s;
+  margin-right: $space-m;
+
+  &:hover {
+    background-color: var(--primary-lighter);
+  }
+
+  &.is-checked {
+    background-color: var(--primary-dark);
+    color: $white;
+    cursor: default;
+  }
 }
 
 input[type='checkbox'] {
@@ -49,7 +72,7 @@ input[type='checkbox'] {
   font: inherit;
   width: pxToRem(20px);
   height: pxToRem(20px);
-  border: $border-width-s solid $primary-dark;
+  border: $border-width-s solid var(--primary-dark);
   border-radius: $border-radius-xs;
   transform: translateY(-0.075em);
   display: grid;
@@ -63,7 +86,7 @@ input[type='checkbox']::before {
   height: pxToRem(12px);
   transform: translateZ(0) scale(0);
   transition: 120ms transform ease-in-out;
-  box-shadow: inset 1em 1em $primary-dark;
+  box-shadow: inset 1em 1em var(--primary-dark);
 }
 
 .disabled input[type='checkbox']::before {

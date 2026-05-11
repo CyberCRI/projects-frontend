@@ -40,7 +40,7 @@ export async function patchProject(projectId: ProjectSlugOrId, project: ProjectF
 }
 
 export async function deleteProject(projectId: ProjectSlugOrId) {
-  return await useAPI<ProjectModel>(`project/${projectId}/`, { method: 'DELETE' })
+  return await useAPI<undefined>(`project/${projectId}/`, { method: 'DELETE' })
 }
 
 export async function duplicateProject(projectId: ProjectSlugOrId) {

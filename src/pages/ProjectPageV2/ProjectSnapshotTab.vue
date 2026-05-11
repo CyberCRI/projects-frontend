@@ -4,7 +4,7 @@
 
     <ProjectDescriptionPreview v-if="!descripitonEmpty" :project="project" />
 
-    <ProjectMembersPreview v-if="project.modules.members" :project="project" />
+    <ProjectTeamPreview v-if="project.modules.members" :project="project" />
 
     <ProjectLocationsPreview v-if="project.modules.locations" :project="project" />
 
@@ -40,9 +40,9 @@ import ProjectBlogEntriesPreview from '@/components/project/modules/BlogEntries/
 import ProjectResourcesPreview from '@/components/project/modules/Resources/ProjectResourcesPreview.vue'
 import ProjectLocationsPreview from '@/components/project/modules/Locations/ProjectLocationsPreview.vue'
 import ProjectCommentsPreview from '@/components/project/modules/Comments/ProjectCommentsPreview.vue'
-import ProjectMembersPreview from '@/components/project/modules/Members/ProjectMembersPreview.vue'
 import ProjectDescriptionPreview from '@/components/project/modules/ProjectDescriptionPreview.vue'
 import ProjectGoalsPreview from '@/components/project/modules/Goals/ProjectGoalsPreview.vue'
+import ProjectTeamPreview from '@/components/project/modules/Teams/ProjectTeamsPreview.vue'
 import ProjectReviewPreview from '@/components/project/review/ProjectReviewPreview.vue'
 import type { TranslatedProject } from '@/models/project.model'
 import { textIsEmpty } from '@/functs/string'
@@ -51,55 +51,11 @@ const props = defineProps<{
   project: TranslatedProject
 }>()
 
-// const router = useRouter()
+const { isMember, isAdmin } = usePermissions()
 
-const isMemberOrAdmin = computed(() => false)
+const isMemberOrAdmin = computed(() => isMember.value || isAdmin.value)
 
 const descripitonEmpty = computed(() => textIsEmpty(props.project.$t.description))
-// useScrollToTab()
-// const { translateUser, translateGroup } = useAutoTranslate()
-// const profileDrawer = ref({
-//   isOpened: false,
-//   user_id: null,
-// })
-
-// const filteredGoals = computed(() => {
-//   return (
-//     props.goals?.filter(
-//       (goal) => goal.status && (goal.status === 'complete' || goal.status === 'ongoing')
-//     ) || []
-//   )
-// })
-
-// const mergedTeam = computed(() => {
-//   return [
-//     ...(props.team.owners || []).map((o) => ({
-//       ...unref(translateUser(o)),
-//       role: 'owners',
-//     })),
-//     ...(props.team.reviewers || []).map((o) => ({
-//       ...unref(translateUser(o)),
-//       role: 'reviewers',
-//     })),
-//     ...(props.team.members || []).map((o) => ({
-//       ...unref(translateUser(o)),
-//       role: 'members',
-//     })),
-//     ...(props.team.owner_groups || []).map((o) => ({
-//       ...unref(translateGroup(o)),
-//       role: 'owner_groups',
-//     })),
-//     ...(props.team.reviewer_groups || []).map((o) => ({
-//       ...unref(translateGroup(o)),
-//       role: 'reviewer_groups',
-//     })),
-//     ...(props.team.member_groups || []).map((o) => ({
-//       ...unref(translateGroup(o)),
-//       role: 'member_groups',
-//     })),
-//   ]
-// })
-// }
 </script>
 
 <style lang="scss" scoped>

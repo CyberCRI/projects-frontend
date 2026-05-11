@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import type { ProjectCategoryModel } from '~/models/project-category.model'
+import type {
+  ProjectCategoryModel,
+  TranslatedProjectCategory,
+} from '~/models/project-category.model'
 
 import IconImage from '~/components/base/media/IconImage.vue'
 
@@ -9,7 +12,7 @@ const emit = defineEmits<{
 
 const props = withDefaults(
   defineProps<{
-    category: ProjectCategoryModel
+    category: TranslatedProjectCategory
     selectedCategory?: ProjectCategoryModel
     selectedCategories?: ProjectCategoryModel[]
     type?: string
@@ -86,7 +89,7 @@ const chevronImage = computed(() => {
     <div class="child-list">
       <ul>
         <CategoryPicker
-          v-for="child in category.children as ProjectCategoryModel[]"
+          v-for="child in category.children"
           v-show="showChild"
           :key="child.id"
           :category="child"

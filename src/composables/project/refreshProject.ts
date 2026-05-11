@@ -1,6 +1,6 @@
-import type { ProjectModel } from '~/models/project.model'
+import type { ProjectModel, TranslatedProject } from '~/models/project.model'
 
-export const refreshProjectData = <T extends ProjectModel>(project: T) => {
+export const refreshProjectData = <T extends ProjectModel | TranslatedProject>(project: T) => {
   const route = useRoute()
 
   const organizationCode = useOrganizationCode()

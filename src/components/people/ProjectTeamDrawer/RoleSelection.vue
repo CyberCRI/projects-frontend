@@ -138,6 +138,8 @@ export default {
     const organizationsStore = useOrganizationsStore()
     return {
       organizationsStore,
+      roleHelpI18n,
+      roleI18n,
     }
   },
 

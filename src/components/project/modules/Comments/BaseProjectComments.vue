@@ -6,6 +6,7 @@ import { projectCommentSkeleton } from '@/skeletons/comments.skeletons'
 import CommentItem from '@/components/project/comment/CommentItem.vue'
 import type FetchLoader from '@/components/base/FetchLoader.vue'
 import type { TranslatedProject } from '@/models/project.model'
+import { throttle } from 'es-toolkit'
 
 const props = withDefaults(
   defineProps<{
@@ -41,10 +42,12 @@ const {
   default: () => factoryPagination(projectCommentSkeleton, limitSkeletons.value),
 })
 
-const fullRefresh = () => {
+const throttleRefresh = throttle(() => refresh(), 100)
+
+const throttlefullRefresh = throttle(() => {
   refreshProjectData(props.project)
-  refresh()
-}
+  throttleRefresh()
+}, 100)
 </script>
 
 <template>
@@ -54,10 +57,10 @@ const fullRefresh = () => {
         v-if="!preview"
         :project="project"
         :is-private="isPrivate"
-        @comment-posted="fullRefresh"
-        @project-message-posted="fullRefresh"
-        @comment-edited="refresh"
-        @project-message-edited="refresh"
+        @comment-posted="throttlefullRefresh"
+        @project-message-posted="throttlefullRefresh"
+        @comment-edited="throttleRefresh"
+        @project-message-edited="throttleRefresh"
       />
       <CommentItem
         v-for="comment in comments"
@@ -65,6 +68,12 @@ const fullRefresh = () => {
         :project="project"
         :comment="comment"
         :is-private="isPrivate"
+        @project-message-posted="throttlefullRefresh"
+        @project-message-edited="throttleRefresh"
+        @project-message-deleted="throttlefullRefresh"
+        @comment-posted="throttlefullRefresh"
+        @comment-edited="throttleRefresh"
+        @comment-deleted="throttlefullRefresh"
       />
       <EmptyLabel v-if="comments.length === 0" />
     </div>

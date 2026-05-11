@@ -94,6 +94,11 @@ export default function usePermissions() {
     )
   })
 
+  const isMember = computed(() => {
+    // TODO is Member
+    return isOwner.value || isFacilitator.value || isViewer.value
+  })
+
   const isAdmin = computed(() => {
     return (
       (isConnectedForPermissions.value && hasPermission('organizations', 'destroy')) ||
@@ -342,6 +347,7 @@ export default function usePermissions() {
     getPermissionsForPermissions,
     getUserRolesForPermissions,
 
+    isMember,
     isOwner,
 
     isSuperAdmin,

@@ -18,8 +18,9 @@ export const useProjectTabs = (
     }
   })
 
-  // TODO change to correct permissions
-  const isMemberOrAdmin = computed(() => true)
+  const { isAdmin, isMember } = usePermissions()
+
+  const isMemberOrAdmin = computed(() => isMember.value || isAdmin.value)
 
   const TabsDisplay = computed(() => {
     return [

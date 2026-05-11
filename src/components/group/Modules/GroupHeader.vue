@@ -91,9 +91,9 @@
         :locations="group.locations"
         @close="closeModal()"
       />
-      <GroupMemberDrawer
+      <UserProfileDrawer
         :is-opened="!!leaderIdDrawer"
-        :member-id="leaderIdDrawer"
+        :user-id="leaderIdDrawer"
         @close="closeProfile"
       />
     </template>
@@ -101,8 +101,8 @@
 </template>
 
 <script setup lang="ts">
-import GroupMemberDrawer from '@/components/group/Modules/Members/GroupMemberDrawer.vue'
 import GroupMemberItem from '@/components/group/Modules/Members/GroupMemberItem.vue'
+import UserProfileDrawer from '~/components/people/Drawer/UserProfileDrawer.vue'
 import type { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
 import { DEFAULT_GROUP_PATATOID } from '@/composables/usePatatoids'

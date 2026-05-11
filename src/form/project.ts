@@ -46,3 +46,26 @@ export const useProjectDescriptionForm = (options = {}) => {
     ...options,
   })
 }
+
+export const useProjectSettingForm = (options = {}) => {
+  const onClean = (data) => {
+    const cleanedData = { ...data }
+
+    if (cleanedData.categories) {
+      cleanedData.project_categories_ids = cleanedData.categories.map((cat) => cat.id)
+      delete cleanedData.categories
+    }
+
+    return cleanedData
+  }
+
+  return useForm<
+    Pick<
+      ProjectForm,
+      'publication_status' | 'life_status' | 'is_locked' | 'organizations_codes' | 'categories'
+    >
+  >({
+    onClean,
+    ...options,
+  })
+}

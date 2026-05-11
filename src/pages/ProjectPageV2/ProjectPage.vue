@@ -22,14 +22,8 @@ const {
   status,
   data: project,
   error,
-  key,
 } = getProject(organizationCode, projectIdOrSlug, {
   default: projectSkeleton,
-})
-
-watchEffect(() => {
-  console.log(project.value)
-  console.log(`projectKey: ${key.value}`)
 })
 
 const { tabs, currentTab, isEditing, toggleEditing } = useProjectTabs(projectIdOrSlug, project)

@@ -1687,14 +1687,14 @@
     "error-uploading-image": "Error while uploading image ",
     "cannot-upload-image": "Cannot upload image for now",
     "link-address": "Link address",
-    "resources": "Resources",
+    "resources": "Resource | Resources",
     "delete": "Are you sure to delete this resource?",
     "web": "Link to web resource | links to web resources",
     "web-link": "Web link | web link | web links",
     "file": {
       "add": "Add a file | Add files",
       "edit": "Edit a file | Edit files",
-      "label": "File",
+      "label": "File | Files",
       "delete": "Are you sure to delete this file ? | Are you sure to delete files ?",
       "form": {
         "too-big": "File is too big (max: {maxSize}Mb)"
@@ -1703,7 +1703,7 @@
     "link": {
       "add": "Add a link | Add links",
       "edit": "Edit a link | Edit links",
-      "label": "Link Address",
+      "label": "Link Address | Links Address",
       "delete": "Are you sure to delete this link ? | Are you sure to delete links ?"
     }
   },

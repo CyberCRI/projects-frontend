@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
+import { refreshProjectData } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { blogentriesSkeletons } from '@/skeletons/blogentries.skeletons'
 import type { TranslatedBlogEntry } from '~/models/blog-entry.model'
 import BlogDrawer from '~/components/project/blog/BlogDrawer.vue'
 import type { TranslatedProject } from '@/models/project.model'
 import { getBlogEntries } from '@/api/v2/blogentries.service'
+import NothingHere from '~/components/base/NothingHere.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { deleteBlogEntry } from '~/api/blogentries.service'
 
@@ -32,7 +34,7 @@ const {
   status,
   data: blogs,
   pagination,
-  key,
+  refresh,
 } = getBlogEntries(organizationCode, projectId, {
   query: {
     ordering: '-created_at',
@@ -65,11 +67,8 @@ const cancel = () => {
 }
 
 const refreshData = () => {
-  refreshNuxtData([
-    `${organizationCode}::project::${props.project.id}`,
-    `${organizationCode}::project::${props.project.slug}`,
-    key.value,
-  ])
+  refreshProjectData(props.project)
+  refresh()
 }
 
 const onDeleteConfirm = () => {
@@ -113,7 +112,7 @@ const setExpanded = (state: boolean, blog: TranslatedBlogEntry) => {
         @edit="onEdit(blog)"
         @delete="onDelete(blog)"
       />
-      <EmptyLabel v-if="blogs.length === 0" />
+      <NothingHere v-if="blogs.length === 0" />
     </div>
     <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
   </FetchLoader>

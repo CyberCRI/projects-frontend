@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { addProjectMembers, deleteProjectMembers } from '~/api/project-members.service'
+import UserProfileDrawer from '~/components/people/Drawer/UserProfileDrawer.vue'
 import type { TranslatedPojectMember } from '~/models/project-member.model'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import ProjectTeamEditor from '~/components/project/ProjectTeamEditor.vue'
@@ -13,6 +14,7 @@ import type UserCard from '~/components/people/UserCard.vue'
 import { getProjectMembers } from '@/api/v2/project.service'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import type { ProjectMemberRoleType } from '~/models/types'
+import { roleI18n } from '~/functs/rolesUtils'
 import { groupBy } from 'es-toolkit'
 
 const props = withDefaults(
@@ -54,10 +56,9 @@ type Team = {
 }
 
 //  order is important for choices
-const PROJECTS_ROLES: ProjectMemberRoleType[] = [
-  'owners',
-  'members',
-  'reviewers',
+const PROJECTS_ROLES: ProjectMemberRoleType[] = ['owners', 'members', 'reviewers']
+const ALL_PROJECTS_ROLES: ProjectMemberRoleType[] = [
+  ...PROJECTS_ROLES,
   'owner_groups',
   'member_groups',
   'reviewer_groups',
@@ -68,10 +69,10 @@ const teams = computed<Team[]>(() => {
   // groups by role
   // if we are in preview mode, return all members in owners ( for only one line)
   const groupedUserByRole = groupBy(members.value, (item) => (props.preview ? 'owners' : item.role))
-  PROJECTS_ROLES.forEach((role) => {
+  ALL_PROJECTS_ROLES.forEach((role) => {
     sortedTeams.push({
       role,
-      title: role,
+      title: roleI18n(role),
       members: groupedUserByRole[role] ?? [],
     })
   })
@@ -183,7 +184,7 @@ const onDeleteConfirm = () => {
       </template>
     </div>
   </FetchLoader>
-  <!-- d<rawer / modal -->
+  <!-- drawer / modal -->
   <TeamDrawer
     :is-opened="stateModals.add"
     :project="project"
@@ -200,11 +201,7 @@ const onDeleteConfirm = () => {
     @update="addUser"
   />
 
-  <GroupMemberDrawer
-    :is-opened="stateModals.view"
-    :member-id="selectedMember?.id"
-    @close="cancel"
-  />
+  <UserProfileDrawer :is-opened="stateModals.view" :user-id="selectedMember?.id" @close="cancel" />
 
   <ConfirmModal
     v-if="stateModals.delete"

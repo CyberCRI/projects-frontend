@@ -43,7 +43,13 @@ export interface ProjectCategoryModel extends BaseModel {
   templates: TemplateModel[]
 }
 
-export type TranslatedProjectCategory = Translated<ProjectCategoryModel, 'name' | 'description'>
+export type TranslatedProjectCategory = Translated<
+  ProjectCategoryModel,
+  'name' | 'description' | 'hierarchy'
+> & {
+  hierarchy?: TranslatedProjectCategory[]
+  children?: TranslatedProjectCategory[]
+}
 
 export type ProjectCategoryCreateInput = Required<Omit<ProjectCategoryModel, 'tags'>> & {
   organization_code: string
