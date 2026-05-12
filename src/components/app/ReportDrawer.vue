@@ -1,104 +1,78 @@
 <template>
   <BaseDrawer
     :is-opened="isOpened"
-    :title="type ? $t(`report.${type}`) : ''"
-    class="report-form medium"
+    :title="$t(`report.${type}`)"
+    class="medium"
     :confirm-action-name="$t('common.save')"
-    :confirm-action-disabled="v$.$invalid"
+    :confirm-action-disabled="!isValid"
     :asyncing="isLoading"
-    @close="$emit('close')"
+    @close="checkClose"
     @confirm="submit"
   >
-    <div class="form">
-      <div>
-        <h4 class="title">
-          {{ $t('form.email-contact') }}
-        </h4>
-        <TextInput
-          v-model="form.reported_by"
-          class="text-input"
-          data-test="report-email"
-          @blur="v$.reported_by.$validate"
-        />
-        <FieldErrors :errors="v$.reported_by.$errors" />
-      </div>
+    <FormPanel no-footer>
+      <div class="list-container">
+        <Field :label="$t('form.email-contact')" required>
+          <TextInput
+            v-model="form.reported_by"
+            class="text-input"
+            data-test="report-email"
+            :errors="errors.reported_by"
+          />
+        </Field>
+        <Field :label="$t('form.url')" :help="$t(`report.${type}-url`)" required>
+          <TextInput
+            v-model="form.url"
+            class="text-input"
+            data-test="report-url"
+            :errors="errors.url"
+          />
+        </Field>
 
-      <div>
-        <h4 class="title">
-          {{ $t('form.url') }}
-        </h4>
-        <span class="description">
-          {{ type === 'abuse' ? $t('report.abuse-url') : $t('report.bug-url') }}
-        </span>
-        <TextInput
-          v-model="form.url"
-          class="text-input"
-          data-test="report-url"
-          @blur="v$.url.$validate"
-        />
-        <FieldErrors :errors="v$.url.$errors" />
-      </div>
+        <Field :label="$t('form.description')" :help="$t(`report.${type}-title`)" required>
+          <TextInput
+            v-model="form.title"
+            class="text-input"
+            data-test="report-title"
+            :errors="errors.title"
+          />
+        </Field>
 
-      <div>
-        <h4 class="title">
-          {{ $t('form.title') }}
-        </h4>
-        <span class="description">
-          {{ type === 'abuse' ? $t('report.abuse-title') : $t('report.bug-title') }}
-        </span>
-        <TextInput
-          v-model="form.title"
-          class="text-input"
-          data-test="report-title"
-          @blur="v$.title.$validate"
-        />
-        <FieldErrors :errors="v$.title.$errors" />
+        <Field :label="$t('form.title')" :help="$t(`report.${type}-text`)" required>
+          <TextInput
+            v-model="form.message"
+            class="text-input-test"
+            input-type="textarea"
+            :rows="10"
+            data-test="report-description"
+            :errors="errors.message"
+          />
+        </Field>
       </div>
+    </FormPanel>
 
-      <div>
-        <h4 class="title">
-          {{ $t('form.description') }}
-        </h4>
-        <span class="description">
-          {{ type === 'abuse' ? $t('report.abuse-text') : $t('report.bug-text') }}
-        </span>
-        <TextInput
-          v-model="form.message"
-          class="text-input-test"
-          input-type="textarea"
-          :rows="10"
-          data-test="report-description"
-          @blur="v$.message.$validate"
-        />
-        <FieldErrors :errors="v$.message.$errors" />
-      </div>
-    </div>
+    <ConfirmModal
+      v-if="stateModals.saveChange"
+      :title="$t('form.quit-without-saving-title')"
+      :content="$t('common.confirm-close')"
+      @cancel="closeModals('saveChange')"
+      @confirm="close"
+    />
   </BaseDrawer>
 </template>
 
 <script setup lang="ts">
-import { email, helpers, required, url } from '@vuelidate/validators'
-import useValidate from '@vuelidate/core'
-
 import { reportAbuse, reportBug } from '~/api/report.service'
 
-import FieldErrors from '~/components/base/form/FieldErrors.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
+import { defaultReportForm, useReportForm } from '~/form/report'
+import FormPanel from '~/components/base/FormPanel.vue'
+import Field from '~/components/base/form/Field.vue'
 import useToasterStore from '~/stores/useToaster'
+import { isEqual } from 'es-toolkit'
 
-const defaultForm = () => {
-  return {
-    title: '',
-    message: '',
-    url: '',
-    reported_by: '',
-  }
-}
-
-const props = withDefaults(defineProps<{ type?: string; isOpened?: boolean }>(), {
-  type: '',
+const props = withDefaults(defineProps<{ type: 'abuse' | 'bug'; isOpened?: boolean }>(), {
   isOpened: false,
 })
 
@@ -106,76 +80,61 @@ const emit = defineEmits<{ close: [] }>()
 
 const toaster = useToasterStore()
 const { t } = useNuxtI18n()
-const rules = computed(() => ({
-  message: {
-    required: helpers.withMessage(t('form.report.message'), required),
-  },
-  url: {
-    required: helpers.withMessage(t('form.report.url.required'), required),
-    url: helpers.withMessage(t('form.report.url.format'), url),
-  },
-  reported_by: {
-    required: helpers.withMessage(t('form.report.email.required'), required),
-    email: helpers.withMessage(t('form.report.email.format'), email),
-  },
-  title: {
-    required: helpers.withMessage(t('form.report.title'), required),
-  },
-}))
-const form = ref(defaultForm())
-const v$ = useValidate(rules, form)
+
+const { stateModals, closeModals, openModals, closeAllModals } = useModals({ saveChange: false })
+const { form, isValid, errors, cleanedData, reset } = useReportForm({ lazy: true })
 const isLoading = ref(false)
 
-const orgCode = useOrganizationCode()
+const close = () => {
+  closeAllModals()
+  emit('close')
+}
+
+const organizationCode = useOrganizationCode()
+
+const checkClose = () => {
+  if (isEqual(form.value, defaultReportForm())) {
+    close()
+  } else {
+    openModals('saveChange')
+  }
+}
 
 watch(
   () => props.isOpened,
-  () => {
-    v$.value.$reset()
-    form.value = defaultForm()
-  }
+  () =>
+    reset({
+      ...defaultReportForm(),
+      // default urls
+      url: useRequestURL().toString(),
+    }),
+  { immediate: true }
 )
 
 const submit = async () => {
-  const isValid = await v$.value.$validate()
+  if (!isValid.value) {
+    return
+  }
+  isLoading.value = true
 
-  if (isValid) {
-    isLoading.value = true
+  const body = { ...cleanedData.value }
 
-    if (props.type === 'abuse') {
-      try {
-        await reportAbuse(orgCode, form.value)
+  if (props.type === 'abuse') {
+    reportAbuse(organizationCode, body)
+      .then(() => {
         toaster.pushSuccess(t('toasts.abuse-report.success'))
-      } catch (error) {
-        toaster.pushError(`${t('toasts.abuse-report.error')} (${error})`)
-        console.error(error)
-      } finally {
-        isLoading.value = false
-        emit('close')
-      }
-    } else if (props.type === 'bug') {
-      try {
-        await reportBug(orgCode, form.value)
+        close()
+      })
+      .catch(() => toaster.pushError(t('toasts.abuse-report.error')))
+      .finally(() => (isLoading.value = false))
+  } else if (props.type === 'bug') {
+    reportBug(organizationCode, body)
+      .then(() => {
         toaster.pushSuccess(t('toasts.bug-report.success'))
-      } catch (error) {
-        toaster.pushError(`${t('toasts.bug-report.error')} (${error})`)
-        console.error(error)
-      } finally {
-        isLoading.value = false
-        emit('close')
-      }
-    }
+        close()
+      })
+      .catch(() => toaster.pushError(t('toasts.bug-report.error')))
+      .finally(() => (isLoading.value = false))
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.report-form {
-  padding: 0 1.5rem;
-
-  h1 {
-    font-size: $font-size-l;
-    margin-bottom: $space-l;
-  }
-}
-</style>

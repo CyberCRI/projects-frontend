@@ -17,7 +17,6 @@
       :menu-entries="projectTabs"
       :current-tab="currentTab"
       @navigated="emit('navigated')"
-      @action-triggered="onActionTriggered"
     />
 
     <div class="share-buttons skeletons-background">
@@ -54,21 +53,6 @@
           params: { slugOrId: project.slug || project.id },
         }"
       />
-      <!-- <template v-if="appGotenbergEnabled && usersStore.isConnected">
-        <ExternalLabelButton
-          v-if="!isProcessingPdf"
-          class="space-button"
-          :label="$t('pdf.download-pdf')"
-          btn-icon="FilePdfLine"
-          vertical-layout
-          label-on-hover
-          @click="$emit('get-pdf')"
-        />
-        <span v-else class="space-button-loader-ctn">
-          <LoaderSimple class="space-button-loader" />
-        </span>
-      </template> -->
-
       <SocialShareButton :shared-url="sharedUrl" />
     </div>
 
@@ -76,7 +60,7 @@
       <NavPanelMenu
         :menu-entries="actionMenu"
         @navigated="emit('navigated')"
-        @action-triggered="onActionTriggered"
+        @action-triggered="actionTriggered"
       >
         <li class="navpanel-menu-entry">
           <ToolTip
@@ -112,12 +96,31 @@
       :similar-projects="similarProjects"
       class="similar-projects v2"
     /> -->
+    <!-- drawer/modal -->
+    <ConfirmModal
+      v-if="stateModals.duplicate"
+      :asyncing="asyncing"
+      :title="$t('project.duplicate')"
+      @cancel="closeModals('duplicate')"
+      @confirm="onDuplicate"
+    />
+
+    <ReportDrawer
+      :is-opened="stateModals.abuse || stateModals.bug"
+      :type="stateModals.abuse ? 'abuse' : 'bug'"
+      @close="closeAllModals"
+    />
   </NavPanelAside>
 </template>
 
 <script setup lang="ts">
+import type { MenuEntry } from '~/components/base/navigation/NavPanelMenu.vue'
+import { duplicateProject, patchProject } from '~/api/projects.service'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import { useProjectFollow } from '@/pages/ProjectPageV2/useProject'
 import type { TranslatedProject } from '@/models/project.model'
+import ReportDrawer from '~/components/app/ReportDrawer.vue'
+import type { IconImageChoice } from '~/functs/IconImage'
 import useUsersStore from '@/stores/useUsers'
 
 const props = withDefaults(
@@ -127,14 +130,12 @@ const props = withDefaults(
     currentTab?: any
     isEditing?: boolean
     // isProcessingPdf?: boolean
-    actionMenu?: any[]
   }>(),
   {
     projectTabs: () => [],
     currentTab: null,
     isEditing: false,
     // isProcessingPdf: false,
-    actionMenu: () => [],
   }
 )
 
@@ -145,23 +146,89 @@ const emit = defineEmits<{
 }>()
 // emits: ['update-follow', 'navigated', 'toggle-editing', 'duplicate-project', 'get-pdf'],
 
+const asyncing = ref(false)
+const toaster = useToaster()
+const { stateModals, closeModals, openModals, closeAllModals } = useModals({
+  duplicate: false,
+  abuse: false,
+  bug: false,
+})
+
+const { t } = useNuxtI18n()
+const router = useRouter()
 const usersStore = useUsersStore()
 
-const { canEditProject } = usePermissions()
+const { canEditProject, isOrgUser } = usePermissions()
 const { isFollowing, toggleFollow } = useProjectFollow(computed(() => props.project))
 // const { appGotenbergEnabled } = useRuntimeConfig().public
 
-const sharedUrl = useRequestURL()
+const actionMenu = computed(
+  () =>
+    [
+      {
+        icon: 'Copy' as IconImageChoice,
+        key: 'duplicate',
+        condition: canEditProject.value || isOrgUser.value,
+        label: t('project.duplicate'),
+        isAddAction: true,
+        addModal: 'duplicate',
+        dataTest: 'duplicate-project',
+      },
+      {
+        icon: 'Bug' as IconImageChoice,
+        condition: true,
+        label: t('report.bug'),
+        isAddAction: true,
+        addModal: 'bug',
+        key: 'bug',
+        dataTest: 'report-bug',
+      },
+      {
+        icon: 'Flag' as IconImageChoice,
+        condition: true,
+        label: t('report.abuse'),
+        isAddAction: true,
+        addModal: 'abuse',
+        key: 'abuse',
+        dataTest: 'report-abuse',
+      },
+    ].filter((a) => a.condition) satisfies MenuEntry[]
+)
 
-const onActionTriggered = () => {
-  // if (menuEntry.addModal === 'duplicate') {
-  //   emit('duplicate-project')
-  // } else {
-  //   this.projectLayoutToggleAddModal(menuEntry.addModal)
-  // }
+const sharedUrl = useRequestURL()
+const switchView = () => emit('toggle-editing', !props.isEditing)
+
+const actionTriggered = (menu: (typeof actionMenu.value)[0]) => {
+  // @ts-expect-error ignore
+  openModals(menu.addModal)
 }
 
-const switchView = () => emit('toggle-editing', !props.isEditing)
+// drawer callback
+const onDuplicate = () => {
+  asyncing.value = true
+  duplicateProject(props.project.id)
+    .then((project) => {
+      // update projects title (to add copy)
+      return patchProject(project.id, {
+        title: `${project.title} ${t('project.copy')}`,
+      })
+    })
+    .then((project) => {
+      // redirect to new projects
+      toaster.pushSuccess(t('toasts.project-duplication.success'))
+      router.push({
+        name: 'ProjectSnapshot',
+        params: {
+          slugOrId: project.slug || project.id,
+        },
+      })
+    })
+    .catch(() => toaster.pushError(t('toasts.project-duplication.error')))
+    .finally(() => {
+      asyncing.value = false
+      closeModals('duplicate')
+    })
+}
 </script>
 
 <style lang="scss" scoped>

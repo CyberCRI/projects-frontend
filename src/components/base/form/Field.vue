@@ -7,6 +7,9 @@
         </label>
         <slot name="in-label" />
       </div>
+      <span v-if="help" class="description">
+        {{ help }}
+      </span>
     </slot>
 
     <slot />
@@ -23,6 +26,7 @@ import type { ErrorObject } from '@vuelidate/core'
 const props = withDefaults(
   defineProps<{
     label?: string
+    help?: string
     attrsLabel?: any
     bottomText?: string
     bigInput?: boolean
@@ -32,6 +36,7 @@ const props = withDefaults(
   }>(),
   {
     label: null,
+    help: null,
     attrsLabel: null,
     bottomText: null,
     required: false,

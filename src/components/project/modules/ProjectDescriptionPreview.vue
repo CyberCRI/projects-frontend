@@ -18,7 +18,6 @@ defineProps<{ project: TranslatedProject }>()
     }"
   >
     <template #content>
-      <!-- <DescriptionPlaceholder v-if="canEditProject && descripitonEmpty" class="unboxed" :project="project" /> -->
       <ContentExpandable :description="project.$t.description" :height-limit="400" />
     </template>
   </BaseModulePreview>

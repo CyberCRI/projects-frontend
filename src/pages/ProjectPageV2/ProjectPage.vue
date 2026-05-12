@@ -7,13 +7,11 @@ import { getProject } from '@/api/v2/project.service'
 
 const route = useRoute()
 
-const { t } = useNuxtI18n()
-
 const uniqueId = 'project-nav-panel'
 const { isNavCollapsed, toggleNavPanel, collapseIfUnderBreakpoint } =
   useToggleableNavPanel(uniqueId)
 
-const { canEditProject, isOrgUser } = usePermissions()
+const { canEditProject } = usePermissions()
 
 const projectIdOrSlug = computed<ProjectSlugOrId>(() => route.params.slugOrId.toString())
 
@@ -38,71 +36,6 @@ watchEffect(() => {
 })
 
 const breadcrumbs = useProjectHierarchy(project)
-const actionMenu = computed(() =>
-  [
-    {
-      icon: 'Copy',
-      condition: canEditProject.value || isOrgUser.value,
-      label: t('project.duplicate'),
-      isAddAction: true,
-      addModal: 'duplicate',
-      dataTest: 'duplicate-project',
-    },
-    {
-      icon: 'Bug',
-      condition: true,
-      label: t('report.bug'),
-      isAddAction: true,
-      addModal: 'bug',
-      dataTest: 'report-bug',
-    },
-    {
-      icon: 'Flag',
-      condition: true,
-      label: t('report.abuse'),
-      isAddAction: true,
-      addModal: 'abuse',
-      dataTest: 'report-abuse',
-    },
-  ].filter((a) => a.condition)
-)
-
-// const { connectToSocket, cleanupProvider, projectPatched } = useProjectSocket({
-//   project,
-//   reloadProject,
-//   getBlogEntries,
-// })
-// onMounted(() => {
-//   if (import.meta.client) {
-//     connectToSocket()
-//   }
-// })
-
-// const onDuplicateProject = async () => {
-//   try {
-//     // emit('asyncing', true)
-//     globalsStore.uiIsLocked = true
-
-//     const projectCopy = await duplicateProject()
-//     router.push({
-//       name: 'ProjectSnapshot',
-//       params: { slugOrId: projectCopy.slug },
-//     })
-
-//     toaster.pushSuccess(t('toasts.project-duplication.success'))
-//   } catch (error) {
-//     toaster.pushError(`${t('toasts.project-duplication.error')} (${error})`)
-//     console.error(error)
-//   } finally {
-//     // emit('asyncing', false)
-//     globalsStore.uiIsLocked = false
-//   }
-// }
-
-// provide
-provide('projectLayoutToggleAddModal', () => {})
-provide('projectLayoutGoToTab', () => {})
-provide('projectLayoutProjectPatched', () => {})
 
 const editable = computed(() => isEditing.value && canEditProject.value)
 
@@ -142,7 +75,6 @@ const propsTab = computed(() => ({
             :project-tabs="tabs"
             :current-tab="currentTab"
             :project="project"
-            :action-menu="actionMenu"
             :is-editing="isEditing"
             @toggle-editing="toggleEditing"
             @navigated="collapseIfUnderBreakpoint"
