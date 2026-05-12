@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import BlogDrawer from '~/components/project/modules/BlogEntries/BlogDrawer.vue'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { blogentriesSkeletons } from '@/skeletons/blogentries.skeletons'
 import type { TranslatedBlogEntry } from '~/models/blog-entry.model'
-import BlogDrawer from '~/components/project/blog/BlogDrawer.vue'
 import type { TranslatedProject } from '@/models/project.model'
 import { getBlogEntries } from '@/api/v2/blogentries.service'
 import NothingHere from '~/components/base/NothingHere.vue'

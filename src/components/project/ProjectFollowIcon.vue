@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { useProjectFollow } from '@/pages/ProjectPageV2/useProject'
+import { useProjectFollow } from '~/composables/project/useProjectFollow'
 import type { TranslatedProject } from '@/models/project.model'
 
 const props = defineProps<{

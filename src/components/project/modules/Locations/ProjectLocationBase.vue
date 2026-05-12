@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ProjectLocationDrawer from '@/components/project/map/ProjectLocationDrawer.vue'
+import ProjectLocationDrawer from '~/components/project/modules/Locations/ProjectLocationDrawer.vue'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { locationSkeleton } from '@/skeletons/location.skeleton'

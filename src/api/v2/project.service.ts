@@ -2,15 +2,16 @@ import {
   getProject as fetchProject,
   getLinkedProject as fetchLinkedProject,
   getProjectMembers as fetchProjectMembers,
+  getProjectSimilars as fetchProjectSimilars,
 } from '@/api/projects.service'
 import type {
   QueryFilterProjectMembers,
   TranslatedPojectMember,
 } from '@/models/project-member.model'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
+import type { ProjectSlugOrId, QueryFilterProjectSimilars } from '@/models/project.model'
 import { getProjectLocations as fetchProjectLocations } from '@/api/locations.service'
 import type { OrganizationModel } from '@/models/organization.model'
-import type { ProjectSlugOrId } from '@/models/project.model'
 import type { RefOrRaw } from '@/interfaces/utils'
 import { onlyRefs } from '@/functs/onlyRefs'
 
@@ -115,6 +116,32 @@ export const getProjectLocations = (
       }),
     {
       translate: translateLocations,
+      watch: onlyRefs([organization, projectSlugOrId]),
+      ...config,
+    }
+  )
+}
+
+type ConfigSimilar = UseAsyncApiConfig<QueryFilterProjectSimilars>
+
+export const getProjectSimilars = (
+  organization: RefOrRaw<OrganizationModel['code']>,
+  projectSlugOrId: RefOrRaw<ProjectSlugOrId>,
+  config: ConfigSimilar = {}
+) => {
+  const key = computed(() => `${unref(organization)}::project::${unref(projectSlugOrId)}::similar`)
+
+  const { translateProjects } = useAutoTranslate()
+
+  return useAsyncAPI(
+    key,
+    ({ config }) =>
+      fetchProjectSimilars(unref(projectSlugOrId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
+    {
+      translate: translateProjects,
       watch: onlyRefs([organization, projectSlugOrId]),
       ...config,
     }

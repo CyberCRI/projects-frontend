@@ -202,3 +202,11 @@ export type ProjectForm = Partial<
     project_categories_ids: TranslatedProjectCategory['id'][]
   }
 >
+
+export type AnyProject = ProjectModel | TranslatedProject
+
+export type QueryFilterProjectSimilars = {
+  // required in back
+  organizations: OrganizationModel['code'][]
+  threshold?: number
+}

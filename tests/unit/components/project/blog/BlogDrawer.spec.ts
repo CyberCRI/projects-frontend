@@ -1,7 +1,7 @@
 import { OrganizationOutputFactory } from '~~/tests/factories/organization.factory'
+import BlogDrawer from '~/components/project/modules/BlogEntries/BlogDrawer.vue'
 import { ProjectOutputFactory } from '~~/tests/factories/project.factory'
 import { lpiMount, lpiShallowMount } from '~~/tests/helpers/LpiMount'
-import BlogDrawer from '~/components/project/blog/BlogDrawer.vue'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import useUsersStore from '~/stores/useUsers'

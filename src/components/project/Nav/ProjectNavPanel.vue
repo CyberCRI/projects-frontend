@@ -90,12 +90,11 @@
       </NavPanelMenu>
     </div>
 
-    <!-- <SimilarProjectsV2
-      v-if="similarProjects && similarProjects.length"
-      id="similar-projects"
-      :similar-projects="similarProjects"
-      class="similar-projects v2"
-    /> -->
+    <!-- similars projects -->
+    <FetchLoader v-if="project.modules.similars" :status="status" only-error skeleton>
+      <ProjectsNavSimilar id="similar-projects" :projects="similars" class="similar-projects" />
+    </FetchLoader>
+
     <!-- drawer/modal -->
     <ConfirmModal
       v-if="stateModals.duplicate"
@@ -114,12 +113,17 @@
 </template>
 
 <script setup lang="ts">
+import ProjectsNavSimilar from '~/components/project/Nav/ProjectsNavSimilar.vue'
 import type { MenuEntry } from '~/components/base/navigation/NavPanelMenu.vue'
+import { useProjectFollow } from '~/composables/project/useProjectFollow'
 import { duplicateProject, patchProject } from '~/api/projects.service'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
-import { useProjectFollow } from '@/pages/ProjectPageV2/useProject'
+import { projectSkeleton } from '~/skeletons/project.skeletons'
 import type { TranslatedProject } from '@/models/project.model'
+import { factoriesSkeleton } from '~/skeletons/base.skeletons'
+import { getProjectSimilars } from '~/api/v2/project.service'
 import ReportDrawer from '~/components/app/ReportDrawer.vue'
+import FetchLoader from '~/components/base/FetchLoader.vue'
 import type { IconImageChoice } from '~/functs/IconImage'
 import useUsersStore from '@/stores/useUsers'
 
@@ -145,6 +149,7 @@ const emit = defineEmits<{
   'toggle-editing': [boolean]
 }>()
 // emits: ['update-follow', 'navigated', 'toggle-editing', 'duplicate-project', 'get-pdf'],
+// const { appGotenbergEnabled } = useRuntimeConfig().public
 
 const asyncing = ref(false)
 const toaster = useToaster()
@@ -158,9 +163,20 @@ const { t } = useNuxtI18n()
 const router = useRouter()
 const usersStore = useUsersStore()
 
+const organizationCode = useOrganizationCode()
+
+const project = computed(() => props.project)
+const projectId = computed(() => props.project.id)
+
 const { canEditProject, isOrgUser } = usePermissions()
-const { isFollowing, toggleFollow } = useProjectFollow(computed(() => props.project))
-// const { appGotenbergEnabled } = useRuntimeConfig().public
+const { isFollowing, toggleFollow } = useProjectFollow(project)
+
+const { status, data: similars } = getProjectSimilars(organizationCode, projectId, {
+  query: {
+    organizations: [organizationCode],
+  },
+  default: () => factoriesSkeleton(projectSkeleton, props.project.modules.similars),
+})
 
 const actionMenu = computed(
   () =>

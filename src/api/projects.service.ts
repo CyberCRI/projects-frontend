@@ -4,8 +4,10 @@ import type {
   ProjectForm,
   ProjectModel,
   ProjectSlugOrId,
+  QueryFilterProjectSimilars,
 } from '@/models/project.model'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
+import type { UseApiOptions } from '@/composables/useAPI'
 import type { SearchParams } from '@/api/types'
 import useAPI from '@/composables/useAPI'
 
@@ -132,4 +134,10 @@ export async function patchProjectHeader(
 
 export async function lockUnlockProject({ project_id, context }) {
   return await useAPI(`project/${project_id}/${context}/`, { method: 'POST' })
+}
+
+export type ConfigSimilar = UseApiOptions<QueryFilterProjectSimilars>
+
+export async function getProjectSimilars(projectId: ProjectSlugOrId, config: ConfigSimilar = {}) {
+  return await useAPI<ProjectModel[]>(`/project/${projectId}/similar/`, config)
 }

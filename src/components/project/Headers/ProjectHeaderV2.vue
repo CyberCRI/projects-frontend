@@ -1,6 +1,6 @@
 <template>
   <div class="project-header-ctn">
-    <ProjectStatus class="project-status" :project="project" />
+    <ProjectHeaderStatus class="project-status" :project="project" />
 
     <div class="img-block">
       <ProjectHeaderImage class="img-ctn" :project="project" />
@@ -20,9 +20,8 @@
 </template>
 
 <script setup lang="ts">
+import ProjectHeaderStatus from '~/components/project/Headers/ProjectHeaderStatus.vue'
 import type { TranslatedProject } from '~/models/project.model'
-
-import ProjectStatus from '~/components/project/ProjectStatus.vue'
 
 defineProps<{
   project: TranslatedProject

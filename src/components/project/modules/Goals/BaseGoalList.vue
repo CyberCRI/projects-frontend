@@ -59,14 +59,14 @@
 </template>
 
 <script setup lang="ts">
-import GoalSummaryItem from '~/components/project/goal/GoalSummaryItem.vue'
+import GoalSummaryItem from '~/components/project/modules/Goals/GoalSummaryItem.vue'
+import SdgPreview from '~/components/project/modules/Goals/sdg/SdgPreview.vue'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
+import GoalDrawer from '~/components/project/modules/Goals/GoalDrawer.vue'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
-import GoalDrawer from '~/components/project/goal/GoalDrawer.vue'
-import SdgPreview from '~/components/project/sdg/SdgPreview.vue'
+import GoalItem from '~/components/project/modules/Goals/GoalItem.vue'
 import type { TranslatedProject } from '@/models/project.model'
-import GoalItem from '~/components/project/goal/GoalItem.vue'
 import NothingHere from '~/components/base/NothingHere.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { goalSkeletons } from '@/skeletons/goals.skeletons'

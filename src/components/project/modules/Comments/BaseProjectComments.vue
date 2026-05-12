@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { getProjectComments, getProjectMessages } from '@/api/v2/comments.service'
+import CommentItem from '~/components/project/modules/Comments/CommentItem.vue'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import { projectCommentSkeleton } from '@/skeletons/comments.skeletons'
-import CommentItem from '@/components/project/comment/CommentItem.vue'
 import type FetchLoader from '@/components/base/FetchLoader.vue'
 import type { TranslatedProject } from '@/models/project.model'
 import { throttle } from 'es-toolkit'

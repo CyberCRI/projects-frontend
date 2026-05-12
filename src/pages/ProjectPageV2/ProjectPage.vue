@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { useProjectHierarchy } from '@/pages/ProjectPageV2/useProject'
-import { useProjectTabs } from '@/pages/ProjectPageV2/ProjectTabs'
+import { useProjectHierarchy } from '~/composables/project/useProjectHierarchy'
+import ProjectNavPanel from '~/components/project/Nav/ProjectNavPanel.vue'
+import { useProjectTabs } from '~/composables/project/useProjectTabs'
 import { projectSkeleton } from '@/skeletons/project.skeletons'
 import type { ProjectSlugOrId } from '@/models/project.model'
 import { getProject } from '@/api/v2/project.service'

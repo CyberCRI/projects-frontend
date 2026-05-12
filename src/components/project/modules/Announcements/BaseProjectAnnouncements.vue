@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import AnnouncementDrawer from '~/components/project/announcement/AnnouncementDrawer.vue'
-import AnnouncementCard from '@/components/project/announcement/AnnouncementCard.vue'
+import AnnouncementDrawer from '~/components/project/modules/Announcements/AnnouncementDrawer.vue'
+import AnnouncementItem from '~/components/project/modules/Announcements/AnnouncementItem.vue'
+import AnnouncementCard from '~/components/project/modules/Announcements/AnnouncementCard.vue'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import { announcementSkeleton } from '@/skeletons/announcement.skeletons'
@@ -92,7 +93,7 @@ const onDeleteConfirm = () => {
       @add="openModals('edit')"
     />
     <div class="announcement-list">
-      <AnnouncementCard
+      <AnnouncementItem
         v-for="announcement in announcements"
         :key="announcement.id"
         :project="project"

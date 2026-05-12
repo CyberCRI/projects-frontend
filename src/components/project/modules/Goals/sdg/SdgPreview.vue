@@ -1,3 +1,19 @@
+<script setup lang="ts">
+import SdgList from '~/components/sdgs/SdgList.vue'
+
+withDefaults(
+  defineProps<{
+    sdgs?: number[]
+  }>(),
+  {
+    sdgs: () => [],
+  }
+)
+
+// TODO change to better images
+const SDG_LOGO_HEADER = 'https://sdgs.un.org/themes/custom/porto/assets/goals/global-goals.png' // usePublicURL('/sdgs/logo.png')
+</script>
+
 <template>
   <div class="sdg-preview">
     <div class="sdg-logo skeletons-background">
@@ -19,21 +35,6 @@
     />
   </div>
 </template>
-
-<script setup lang="ts">
-import SdgList from '~/components/sdgs/SdgList.vue'
-
-withDefaults(
-  defineProps<{
-    sdgs?: number[]
-  }>(),
-  {
-    sdgs: () => [],
-  }
-)
-
-const SDG_LOGO_HEADER = 'https://sdgs.un.org/themes/custom/porto/assets/goals/global-goals.png' // usePublicURL('/sdgs/logo.png')
-</script>
 
 <style lang="scss" scoped>
 .sdg-preview {

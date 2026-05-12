@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import LinkedProjectDrawer from '~/components/project/modules/LinkedProjects/LinkedProjectDrawer.vue'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'

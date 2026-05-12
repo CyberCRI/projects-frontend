@@ -19,11 +19,18 @@
 
       <div class="goal-description-section">
         <span class="goal-label">{{ $t('goal.description') }}:</span>
-        <TipTapEditor v-model="form.description" class="goal-description" />
-        <FieldErrors :errors="errors.description" />
+        <TipTapEditor
+          v-model="form.description"
+          :errors="errors.description"
+          class="goal-description"
+        />
       </div>
 
-      <DateField v-model="form.deadline_at" :label="$t('common.set-deadline')" />
+      <DateField
+        v-model="form.deadline_at"
+        :errors="errors.deadline_at"
+        :label="$t('common.set-deadline')"
+      />
 
       <div class="status-ctn">
         <span class="goal-label">{{ $t('goal.status-title') }}:</span>
@@ -33,6 +40,7 @@
           :options="statusOptions"
           :custom-color="statusColor"
         />
+        <FieldErrors :errors="errors.status" />
       </div>
     </div>
   </BaseDrawer>
@@ -52,6 +60,7 @@ import GroupButton from '@/components/base/button/GroupButton.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 
+import FieldErrors from '~/components/base/form/FieldErrors.vue'
 import type { TranslatedProject } from '@/models/project.model'
 import DateField from '@/components/base/form/DateField.vue'
 import { createGoal, patchGoal } from '@/api/goals.service'

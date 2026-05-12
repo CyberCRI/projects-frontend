@@ -27,6 +27,7 @@
         class="input-field content-editor"
         mode="full"
         :save-image-callback="saveBlogImage"
+        :errors="errors.content"
         @image="handleImage"
       />
       <TipTapCollaborativeEditor
@@ -39,16 +40,15 @@
         save-icon-visible
         :save-image-callback="saveBlogImage"
         :disable-save="asyncing"
+        :errors="errors.content"
         @unauthorized="clear"
         @image="handleImage"
         @saved="save"
         @falled-back-to-solo-edit="inOfflineMode = true"
       />
-
-      <FieldErrors :errors="errors.content" />
     </div>
 
-    <DateField v-model="form.created_at" :label="$t('common.date')" />
+    <DateField v-model="form.created_at" :label="$t('common.date')" :errors="errors.created_at" />
   </BaseDrawer>
 
   <ConfirmModal
@@ -77,7 +77,6 @@ import { patchBlogEntry, postBlogEntry, postBlogEntryImage } from '~/api/blogent
 import TipTapCollaborativeEditor from '~/components/base/form/TextEditor/TipTapCollaborativeEditor.vue'
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
-import FieldErrors from '~/components/base/form/FieldErrors.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import DateField from '~/components/base/form/DateField.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'

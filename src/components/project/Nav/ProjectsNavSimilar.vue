@@ -1,12 +1,12 @@
 <template>
   <div class="similar-projects">
     <h3 class="group-section-title">
-      {{ t('project.suggested', similarProjects.length) }}
+      {{ $t('project.suggested', projects.length) }}
     </h3>
-    <p class="hint">{{ t('project.suggested-hint') }}</p>
+    <p class="hint">{{ $t('project.suggested-hint') }}</p>
 
     <SimilarProjectsItem
-      v-for="project in similarProjectsDisplayed"
+      v-for="project in projectsSliced"
       :key="project.id"
       class="similar-project"
       :project="project"
@@ -16,21 +16,22 @@
 
 <script setup lang="ts">
 import type { TranslatedProject } from '~/models/project.model'
+import { isNil } from 'es-toolkit'
 
 const props = withDefaults(
   defineProps<{
-    similarProjects?: TranslatedProject[]
+    projects?: TranslatedProject[]
+    limit?: number
   }>(),
   {
-    similarProjects: () => [],
+    projects: () => [],
+    limit: null,
   }
 )
 
-const { t } = useNuxtI18n()
-
-const similarProjectsDisplayed = computed(() => {
-  return props.similarProjects.slice(0, 4)
-})
+const projectsSliced = computed(() =>
+  isNil(props.limit) ? props.projects : props.projects.slice(0, props.limit)
+)
 </script>
 
 <style lang="scss" scoped>

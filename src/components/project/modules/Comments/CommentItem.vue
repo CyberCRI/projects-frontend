@@ -136,10 +136,10 @@
 
 <script setup lang="ts">
 import ExternalLabelButton from '@/components/base/button/ExternalLabelButton.vue'
+import MakeComment from '~/components/project/modules/Comments/MakeComment.vue'
 import type { TranslatedProjectMessage } from '@/models/project-message.model'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import MakeComment from '@/components/project/comment/MakeComment.vue'
 import { deleteProjectMessage } from '@/api/project-messages.service'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'

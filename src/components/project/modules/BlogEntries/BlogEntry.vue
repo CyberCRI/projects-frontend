@@ -25,7 +25,7 @@
 
     <ContentExpandable
       class="skeletons-text"
-      :height-limit="stateModal ? 10000000000 : 0"
+      :height-limit="stateModal ? Infinity : 0"
       hide-see-more
     >
       <div class="entry-body">
