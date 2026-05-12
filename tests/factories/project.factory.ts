@@ -50,8 +50,21 @@ export const ProjectFactory = createFactory<ProjectModel>((faker) => ({
   updated_at: faker.date.past().toString(),
   created_at: faker.date.past().toString(),
   sdgs: [],
-  linked_projects: [],
-  team: ProjectTeamOutputFactory.generate(),
+  modules: {
+    members: 0,
+    groups: 0,
+    linked_projects: 0,
+    similars: 0,
+    locations: 0,
+    comments: 0,
+    goals: 0,
+    blogs: 0,
+    links: 0,
+    files: 0,
+    announcements: 0,
+    reviews: 0,
+    messages: 0,
+  },
 }))
 
 export const TranslatedProjectFactory = createFactory<TranslatedProject>(() => {
@@ -60,6 +73,7 @@ export const TranslatedProjectFactory = createFactory<TranslatedProject>(() => {
   return {
     ...project,
     template: null,
+    categories: [],
     $t: {
       title: project.title,
       description: project.description,

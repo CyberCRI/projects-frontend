@@ -83,7 +83,7 @@ export default {
               (selected) => isNotGroup(selected) && selected.id === user.id
             ) ||
             this.currentUsers.some(
-              (currentUser) => isNotGroup(currentUser.user) && currentUser.user.id === user.id
+              (currentUser) => isNotGroup(currentUser.user) && currentUser.id === user.id
             ),
         }))
       } else {

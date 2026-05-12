@@ -1,6 +1,6 @@
-import AnnouncementCard from '~/components/project/announcement/AnnouncementCard.vue'
 import { lpiMount } from '~~/tests/helpers/LpiMount'
 
+import AnnouncementCard from '~/components/project/modules/Announcements/AnnouncementCard.vue'
 import { TranslatedAnnouncementFactory } from '~~/tests/factories/announcement.factory'
 import { describe, expect, it } from 'vitest'
 

@@ -5,15 +5,17 @@
       <h4>{{ title }}</h4>
       <p>{{ description }}</p>
     </div>
-    <ToolTip v-if="focus" hover :content="$t('location.focus-on-map')" placement="top">
-      <ContextActionButton
-        secondary
-        no-border
-        action-icon="MapMarker"
-        @click="$emit('focus', location)"
-      />
-    </ToolTip>
-    <ContextActionMenu
+    <div class="location-actions">
+      <ToolTip v-if="focus" hover :content="$t('location.focus-on-map')" placement="top">
+        <ContextActionButton
+          secondary
+          no-border
+          action-icon="MapMarker"
+          @click="$emit('focus', location)"
+        />
+      </ToolTip>
+    </div>
+    <ContextActionMenuInline
       v-if="editable"
       class="location-actions"
       can-edit
@@ -29,6 +31,7 @@ import type { AnyTranslatedLocation } from '~/models/location.model'
 
 import LocationType from '~/components/map/LocationType.vue'
 
+import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
 import { cropIfTooLong } from '~/functs/string'
 
 const props = withDefaults(
@@ -82,5 +85,9 @@ const description = computed(() =>
       font-weight: 300;
     }
   }
+}
+
+.location-actions {
+  margin: auto;
 }
 </style>

@@ -42,7 +42,7 @@ defineExpose({
 </script>
 
 <template>
-  <TipTapEditorContainer v-if="editor" :editor="editor" :mode="mode">
+  <TipTapEditorContainer v-if="editor" :editor="editor" :mode="mode" :errors="errors">
     <TipTapModals
       :editor="editor"
       :mode="mode"

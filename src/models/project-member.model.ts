@@ -38,7 +38,7 @@ export type ProjectMembersAddInput = {
 
 export type ProjectMembersDeleteInput = {
   name?: string
-  user?: string // keycloak id
+  users?: number[] // keycloak id
   member_people_group?: string
 }
 

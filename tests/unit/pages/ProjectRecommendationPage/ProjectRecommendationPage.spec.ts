@@ -11,10 +11,9 @@ describe('ProjectRecommendationPage.vue', () => {
   it('should render component', async () => {
     const organizationCode = useOrganizationCode()
     registerEndpoint(`organization/${organizationCode}/recommended-project/user/`, () => {
-      return PaginationsFactory.generate({
-        results: ProjectFactory.generateMany(10),
-      })
+      return PaginationsFactory.generate({ results: ProjectFactory.generateMany(10) })
     })
+
     const wrapper = await lpiMountSuspended(ProjectRecommendationPage)
     await flushPromises()
     expect(wrapper.exists()).toBe(true)

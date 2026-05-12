@@ -123,7 +123,6 @@
         "last-name": "Perekonnanimi",
         "first-name": "Eesnimi",
         "title": "Pealkiri",
-        "roles": "Roll(id)",
         "groups": "Rühm(ad)",
         "inscription": "Kiri",
         "activation": "Aktiveerimine",
@@ -387,13 +386,6 @@
     "reset-password": "Lähtesõna",
     "reset-delete": "Parooli lähtestamine ja konto kustutamine",
     "error": "Tekkis viga.",
-    "role": {
-      "none": "Mitte ükski",
-      "user": "Kasutaja",
-      "facilitator": "Vahendaja",
-      "admin": "Org",
-      "viewer": "Vaataja"
-    },
     "user-exists-in-other-org": "Sama e-posti kasutaja on meie andmebaasis olemas. Me võime teda teie portaali lisada siin."
   },
   "userItem": {
@@ -406,12 +398,6 @@
     "facilitators": "Korraldaja: See roll on õpetajatele või juhendajatele: Nad näevad portaalis kõiki eraprojekte ja saavad neid redigeerida. Neil on ka kõik kasutajate õigused.",
     "admins": "Org admin: See funktsioon võimaldab seadistada oma portaali ja hallata kasutajaid oma portaalis. Orgi administraatoritel on juurdepääs portaali administraatori menüüle, et portaali luua ja selle kasutajaid hallata. Neil on ka kõik vahendajate õigused.",
     "none": "Puudub: Sellel isikul on projektikonto, kuid see ei kuulu teie portaali. Nad saavad näha ainult avalikke projekte.",
-    "roles": {
-      "none": "Mitte ükski",
-      "users": "Kasutaja",
-      "facilitators": "Vahendaja",
-      "admins": "Orgihaldur"
-    },
     "empty": "Gruppe pole",
     "main-groups": "Põhigrupid"
   },
@@ -570,7 +556,6 @@
     "disconnect": "Logi välja",
     "confirm-close": "Kas oled kindel, et soovid toimetaja sulgeda? Teie tehtud muudatusi ei salvestata.",
     "ok": "Ok.",
-    "file-too-big": "Fail on liiga suur (maksimaalselt: {maxSize}Mb)",
     "select": "vali",
     "year": "aasta",
     "link-to": "link",
@@ -654,7 +639,6 @@
     "edit-saved": "Teie (ja kaasautorite) tehtud muudatusi ei salvestata.",
     "edit": "redigeerimise kirjeldus (joonis)",
     "add": "Lisa kirjeldus",
-    "quit-without-saving-title": "Lõpetad säästmata?",
     "default-placeholder": "Nüüd kirjelda oma projekti."
   },
   "discover": {
@@ -904,7 +888,8 @@
       },
       "description": "Kirjeldusväli on nõutav"
     },
-    "templates": "Mallid"
+    "templates": "Mallid",
+    "quit-without-saving-title": "Lõpetad säästmata?"
   },
   "footer": {
     "contact": "Võta meiega ühendust",
@@ -1704,7 +1689,23 @@
     "link-address": "Linki aadress",
     "resources": "Ressursse",
     "web": "Link veebiressursile | lingid veebiressurssidele",
-    "web-link": "Veebilink | veebilink | veebilingid"
+    "web-link": "Veebilink | veebilink | veebilingid",
+    "delete": "Kas tõesti kustutada see ressurss?",
+    "file": {
+      "add": "Faili lisamine | Failide lisamine",
+      "edit": "Faili redigeerimine | Failide redigeerimine",
+      "label": "Fail",
+      "delete": "Kas tõesti kustutada see fail? | Kas tõesti kustutada failid?",
+      "form": {
+        "too-big": "Fail on liiga suur (maksimaalselt: {maxSize}Mb)"
+      }
+    },
+    "link": {
+      "add": "Lisa link | Lisa lingid",
+      "edit": "Muuda linki | Viitade muutmine",
+      "label": "Link aadress",
+      "delete": "Kas tõesti kustutada see link? | Kas tõesti kustutada lingid?"
+    }
   },
   "result_box": {
     "people": "inimesi",
@@ -1790,29 +1791,6 @@
     "login": "Sisselogimine",
     "need-help": "Vajad abi?",
     "contact-us": "Võta meiega ühendust"
-  },
-  "role": {
-    "role-editor": "Sellel grupil on kõik redigeerimisõigused.",
-    "role-reviewer": "Kui projekt on märgitud kui „ülevaatamiseks valmis, saab ülevaataja anda tagasisidet ja lukustada projekti, et vältida projekti edasisi muudatusi. Retsensendil on ka redigeerimisõigused.",
-    "role-teammate": "Tal ei ole redigeerimisõigust, kuid ta esineb meeskonna liikmena.",
-    "editor": "Toimetaja",
-    "editors": "Toimetajad",
-    "editor-groups": "Redaktorigrupid",
-    "editor-group": "Redaktorigrupp",
-    "reviewer": "Hindaja",
-    "reviewers": "Hindajad",
-    "reviewer-groups": "Kontrollijate rühmad",
-    "reviewer-group": "Kontrollijate rühm",
-    "teammate": "Osaleja",
-    "teammates": "Osalejad",
-    "teammate-groups": "Osalejate rühmad",
-    "teammate-group": "Osalejate rühm",
-    "select": "Õiguste valimine",
-    "group": "Grupid",
-    "leader": "grupijuht",
-    "role-leader": "On toimetaja, kes ilmub \"grupijuhi\" sildiga.",
-    "member": "Liikmesriik",
-    "role-member": "Ilmub grupi liikmena. Nende projektid kuuluvad rühma projektide hulka."
   },
   "search": {
     "all-filters": "Kõik filtrid",
@@ -2735,7 +2713,6 @@
       "add-projects": "Lisa funktsioonid projektid",
       "edit": "Muuda",
       "edit-members": "Muuda liikmeid",
-      "edit-roles": "Rollide muutmine",
       "form-incomplete": "Väljad on puudu või vigased, täielikud, et neid oleks võimalik salvestada.",
       "create-group": "Grupi loomine",
       "edit-group": "Redigeerimisgrupp",
@@ -2771,23 +2748,6 @@
         "required": "See väli on nõutav"
       },
       "delete": "Kustuta grupp"
-    },
-    "role": {
-      "members": {
-        "label": "Liikmesriik",
-        "help": "Liikmesriik"
-      },
-      "leaders": {
-        "label": "Grupi juht",
-        "help": "Grupi juht"
-      },
-      "leaders-managers": {
-        "label": "Juht ja juht"
-      },
-      "managers": {
-        "label": "Kirjastaja",
-        "help": "Kirjastaja"
-      }
     },
     "view": "Vaata gruppi",
     "conferences": "Konverentsid",
@@ -3160,5 +3120,59 @@
   "follow": {
     "follow": "Järgne",
     "unfollow": "Unfollow"
+  },
+  "role": {
+    "owners": {
+      "label": "Toimetaja | Toimetajad",
+      "help": "Sellel grupil on kõik redigeerimisõigused."
+    },
+    "reviewers": {
+      "label": "Hindaja | Hindajad",
+      "help": "Kui projekt on märgitud kui \"läbivaatamiseks valmis\", saab hindaja anda tagasisidet ja lukustada projekti, et vältida projekti edasisi muudatusi. Retsensendil on ka redigeerimisõigused."
+    },
+    "members": {
+      "label": "Osaleja | Osalejad",
+      "help": "Tal ei ole redigeerimisõigust, kuid ta esineb meeskonna liikmena."
+    },
+    "leaders": {
+      "label": "Leader-rühm | Juhtide rühm",
+      "help": "On toimetaja, kes ilmub \"grupijuhi\" sildiga."
+    },
+    "owner_groups": {
+      "label": "Redaktorigrupp | Redaktorite grupp",
+      "help": "On toimetaja, kes ilmub \"grupijuhi\" sildiga."
+    },
+    "reviewer_groups": {
+      "label": "Kontrollirühm | Hindajate rühm",
+      "help": ""
+    },
+    "member_groups": {
+      "label": "Osalejate rühm | Osalejate rühm",
+      "help": "Ilmub grupi liikmena. Nende projektid kuuluvad rühma projektide hulka."
+    },
+    "facilitators": {
+      "label": "Vahendaja | Vahendajad",
+      "help": "Korraldaja: See roll on õpetajatele või juhendajatele: Nad näevad portaalis kõiki eraprojekte ja saavad neid redigeerida. Neil on ka kõik kasutajate õigused."
+    },
+    "admins": {
+      "label": "Admin grupp | Haldusrühm",
+      "help": "Org admin: See funktsioon võimaldab seadistada oma portaali ja hallata kasutajaid oma portaalis. Orgi administraatoritel on portaali seadistamiseks ja selle kasutajate haldamiseks juurdepääs portaali administraatori menüüle. Neil on ka kõik vahendajate õigused."
+    },
+    "users": {
+      "label": "Kasutaja | Kasutajad",
+      "help": "Kasutaja: kasutaja on osa teie kogukonnast. Nad saavad luua projekte, redigeerida oma projekte ja kirjutada kommentaare mis tahes projekti kohta. Nad näevad eraprojekti, kui nad on osa selle projekti meeskonnast, nad näevad kõiki projekte kogukonna nähtavusega ja kõiki avalikke projekte."
+    },
+    "managers": {
+      "label": "Kirjastaja | Kirjastus",
+      "help": ""
+    },
+    "none": {
+      "label": "",
+      "help": ""
+    },
+    "label": "Roll | Rollid",
+    "edit": "Modifier les rôles",
+    "select": "Õiguste valimine",
+    "help": "Teave rollide kohta."
   }
 }

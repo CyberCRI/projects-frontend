@@ -25,7 +25,7 @@
         <LpiButton
           class="add-user-card"
           btn-icon="Pen"
-          :label="$t('group.form.edit-roles')"
+          :label="$t('role.edit')"
           data-test="edit-roles"
           @click="openDrawer('roles')"
         />

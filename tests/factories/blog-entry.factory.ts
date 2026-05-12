@@ -10,6 +10,7 @@ export const BlogEntryFactory = createFactory<BlogEntryOutput>((faker) => ({
   content: faker.lorem.sentence(),
   updated_at: faker.datatype.datetime().toISOString(),
   created_at: faker.datatype.datetime().toISOString(),
+  images: [],
 }))
 
 export const BlogEntryInputFactory = createFactory<BlogEntryInput>((faker) => ({

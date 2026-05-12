@@ -199,7 +199,7 @@ const notificationRoute = computed<RouteLocationRaw>(() => {
     }
   } else if (props.notification.project) {
     return {
-      name: 'projectSummary',
+      name: 'ProjectSnapshot',
       params: { slugOrId: props.notification.project.slug },
     }
   } else {

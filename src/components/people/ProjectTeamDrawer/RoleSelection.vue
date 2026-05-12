@@ -21,16 +21,16 @@
             <ul class="list-ctn">
               <!-- TODO only on certain portal -->
               <li class="item">
-                <span class="item-bold">{{ $t('role.editor') }}:</span>
-                {{ $t('role.role-editor') }}
+                <span class="item-bold">{{ roleI18n('owners') }}:</span>
+                {{ roleHelpI18n('owners') }}
               </li>
               <li v-if="isReviewable" class="item">
-                <span class="item-bold">{{ $t('role.reviewer') }}:</span>
-                {{ $t('role.role-reviewer') }}
+                <span class="item-bold">{{ roleI18n('reviewer') }}:</span>
+                {{ roleHelpI18n('reviewer') }}
               </li>
               <li class="item">
-                <span class="item-bold">{{ $t('role.teammate') }}:</span>
-                {{ $t('role.role-teammate') }}
+                <span class="item-bold">{{ roleI18n('members') }}:</span>
+                {{ roleHelpI18n('members') }}
               </li>
             </ul>
           </div>
@@ -98,6 +98,7 @@ import ToolTip from '~/components/base/ToolTip.vue'
 
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
 
+import { roleHelpI18n, roleI18n } from '~/functs/rolesUtils'
 import { isGroup, isNotGroup } from '~/functs/users'
 
 export default {
@@ -137,6 +138,8 @@ export default {
     const organizationsStore = useOrganizationsStore()
     return {
       organizationsStore,
+      roleHelpI18n,
+      roleI18n,
     }
   },
 
@@ -169,24 +172,24 @@ export default {
       return [
         {
           value: 'owners',
-          label: this.$t('role.editor'),
+          label: roleI18n('owners'),
           condition: true,
           dataTest: 'button-role-editor',
-          tip: this.$t('role.role-editor'),
+          tip: roleHelpI18n('owners'),
         },
         {
           value: 'reviewers',
-          label: this.$t('role.reviewer'),
+          label: roleI18n('reviewers'),
           condition: this.isReviewable,
           dataTest: 'button-role-reviewer',
-          tip: this.$t('role.role-reviewer'),
+          tip: roleHelpI18n('reviewers'),
         },
         {
           value: 'members',
-          label: this.$t('role.teammate'),
+          label: roleI18n('members'),
           condition: true,
           dataTest: 'button-role-teammate',
-          tip: this.$t('role.role-teammate'),
+          tip: roleHelpI18n('members'),
         },
       ].filter((option) => option.condition)
     },
@@ -195,24 +198,24 @@ export default {
       return [
         {
           value: 'owner_groups',
-          label: this.$t('role.editor'),
+          label: roleHelpI18n('owner_groups'),
           condition: true,
           dataTest: 'button-group-role-editor',
-          tip: this.$t('role.role-editor'),
+          tip: roleHelpI18n('owner_groups'),
         },
         {
           value: 'reviewer_groups',
-          label: this.$t('role.reviewer'),
+          label: roleHelpI18n('reviewer_groups'),
           condition: this.isReviewable,
           dataTest: 'button-group-role-reviewer',
-          tip: this.$t('role.role-reviewer'),
+          tip: roleHelpI18n('reviewer_groups'),
         },
         {
           value: 'member_groups',
-          label: this.$t('role.teammate'),
+          label: roleHelpI18n('member_groups'),
           condition: true,
           dataTest: 'button-group-role-teammate',
-          tip: this.$t('role.role-teammate'),
+          tip: roleHelpI18n('member_groups'),
         },
       ].filter((option) => option.condition)
     },

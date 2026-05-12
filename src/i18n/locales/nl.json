@@ -123,7 +123,6 @@
         "last-name": "Achternaam",
         "first-name": "Voornaam",
         "title": "Titel",
-        "roles": "Rol(s)",
         "groups": "Groep(s)",
         "inscription": "Omschrijving",
         "activation": "Activering",
@@ -387,13 +386,6 @@
     "reset-password": "Wachtwoord resetten",
     "reset-delete": "Wachtwoord opnieuw instellen en account verwijderen",
     "error": "Er is een fout opgetreden.",
-    "role": {
-      "none": "Geen",
-      "user": "Gebruiker",
-      "facilitator": "Vergemakkelijking",
-      "admin": "org admin",
-      "viewer": "Kijker"
-    },
     "user-exists-in-other-org": "Een gebruiker met dezelfde e-mail bestaat in onze database. We kunnen hem toevoegen aan uw portaal hier."
   },
   "userItem": {
@@ -406,12 +398,6 @@
     "facilitators": "Facilitator: Deze rol is weggelegd voor leraren of docenten: Ze zien alle particuliere projecten in het portaal en ze kunnen ze bewerken. Ze hebben ook alle rechten van gebruikers.",
     "admins": "org admin: Deze rol maakt het mogelijk om uw portal te configureren en gebruikers te beheren in uw portal. Org admins hebben toegang tot het admin menu van het portaal om het portaal op te zetten en de gebruikers ervan te beheren. Zij hebben ook alle rechten van facilitatoren.",
     "none": "Geen: Deze persoon heeft een Projectaccount maar maakt geen deel uit van uw portaal. Ze kunnen alleen de openbare projecten zien.",
-    "roles": {
-      "none": "Geen",
-      "users": "Gebruiker",
-      "facilitators": "Vergemakkelijking",
-      "admins": "org admin"
-    },
     "empty": "Geen groepen",
     "main-groups": "Belangrijkste groepen"
   },
@@ -570,7 +556,6 @@
     "disconnect": "Verbinding verbreken",
     "confirm-close": "Weet u zeker dat u de editor wilt sluiten? Wijzigingen die u hebt gemaakt worden niet opgeslagen.",
     "ok": "Ok",
-    "file-too-big": "Bestand is te groot (max: {maxSize}Mb)",
     "select": "selecteren",
     "year": "jaar",
     "link-to": "verwijzing naar",
@@ -654,7 +639,6 @@
     "edit-saved": "Wijzigingen die u (en eventuele co-auteurs) heeft aangebracht, worden niet opgeslagen.",
     "edit": "bewerk beschrijving (ontwerp)",
     "add": "Beschrijving toevoegen",
-    "quit-without-saving-title": "Stoppen zonder te redden?",
     "default-placeholder": "Beschrijf nu je project."
   },
   "discover": {
@@ -904,7 +888,8 @@
       },
       "description": "Het beschrijvingsveld is vereist"
     },
-    "templates": "Sjablonen"
+    "templates": "Sjablonen",
+    "quit-without-saving-title": "Stoppen zonder te redden?"
   },
   "footer": {
     "contact": "Contacteer ons",
@@ -1704,7 +1689,23 @@
     "link-address": "Linkadres",
     "resources": "Middelen",
     "web": "Link naar webbron | links naar webbronnen",
-    "web-link": "Weblink | weblink | weblinks"
+    "web-link": "Weblink | weblink | weblinks",
+    "delete": "Weet u zeker dat u deze hulpbron wilt verwijderen?",
+    "file": {
+      "add": "Bestand toevoegen | Bestanden toevoegen",
+      "edit": "Bestand bewerken | Bestanden bewerken",
+      "label": "Bestand",
+      "delete": "Weet u zeker dat u dit bestand wilt verwijderen? | Weet u zeker dat u bestanden moet verwijderen?",
+      "form": {
+        "too-big": "Bestand is te groot (max: {maxSize}Mb)"
+      }
+    },
+    "link": {
+      "add": "Verwijzing toevoegen | Links toevoegen",
+      "edit": "Verwijzing bewerken | Links bewerken",
+      "label": "Linkadres",
+      "delete": "Weet u zeker dat u deze link wilt verwijderen? | Weet u zeker dat u links moet verwijderen?"
+    }
   },
   "result_box": {
     "people": "mensen",
@@ -1790,29 +1791,6 @@
     "login": "Aanmelden",
     "need-help": "Hulp nodig?",
     "contact-us": "Contacteer ons"
-  },
-  "role": {
-    "role-editor": "Heeft alle bewerken rechten voor deze groep.",
-    "role-reviewer": "Wanneer het project is gemarkeerd als 'ready for review', kan de recensent feedback geven en een project vergrendelen om verdere bewerkingen in het project te voorkomen. Een recensent heeft ook edit rechten.",
-    "role-teammate": "Hij heeft geen redactierechten, maar verschijnt als lid van het team.",
-    "editor": "Editor",
-    "editors": "Editors",
-    "editor-groups": "Editor groepen",
-    "editor-group": "Editor groep",
-    "reviewer": "Reviewer",
-    "reviewers": "Reviewers",
-    "reviewer-groups": "Groepen recensies",
-    "reviewer-group": "Recensiesgroep",
-    "teammate": "Deelnemer",
-    "teammates": "Deelnemers",
-    "teammate-groups": "Deelnemersgroepen",
-    "teammate-group": "Deelnemersgroep",
-    "select": "De rechten selecteren",
-    "group": "Groepen",
-    "leader": "Groepsleider",
-    "role-leader": "Is een Editor die zal verschijnen met een groep Leader tag.",
-    "member": "Lid",
-    "role-member": "Verschijnt als groepslid. Hun projecten worden tot de projecten van de groep gerekend."
   },
   "search": {
     "all-filters": "Alle filters",
@@ -2735,7 +2713,6 @@
       "add-projects": "Aanbevolen projecten toevoegen",
       "edit": "Wijzigen",
       "edit-members": "Leden bewerken",
-      "edit-roles": "Rollen bewerken",
       "form-incomplete": "Velden ontbreken of zijn ongeldig, volledig om op te slaan.",
       "create-group": "Groep aanmaken",
       "edit-group": "Groep bewerken",
@@ -2771,23 +2748,6 @@
         "required": "Dit veld is vereist"
       },
       "delete": "Groep verwijderen"
-    },
-    "role": {
-      "members": {
-        "label": "Lid",
-        "help": "Lid"
-      },
-      "leaders": {
-        "label": "Groepshoofd",
-        "help": "Groepshoofd"
-      },
-      "leaders-managers": {
-        "label": "Leider en beheerder"
-      },
-      "managers": {
-        "label": "Uitgever",
-        "help": "Uitgever"
-      }
     },
     "view": "Zie groep",
     "conferences": "Conferenties",
@@ -3160,5 +3120,59 @@
   "follow": {
     "follow": "Volgen",
     "unfollow": "Onvolgbaar"
+  },
+  "role": {
+    "owners": {
+      "label": "Editor | Editors",
+      "help": "Heeft alle bewerken rechten voor deze groep."
+    },
+    "reviewers": {
+      "label": "Reviewer | Reviewers",
+      "help": "Wanneer het project is gemarkeerd als 'ready for review', kan de beoordelaar feedback geven en een project vergrendelen om verdere bewerkingen in het project te voorkomen. Een recensent heeft ook edit rechten."
+    },
+    "members": {
+      "label": "Deelnemer | Deelnemers",
+      "help": "Hij heeft geen redactierechten, maar verschijnt als lid van het team."
+    },
+    "leaders": {
+      "label": "Leidergroep | Groep leiders",
+      "help": "Is een editor die zal verschijnen met een groep leider tag."
+    },
+    "owner_groups": {
+      "label": "Editor groep | Editors-groep",
+      "help": "Is een editor die zal verschijnen met een groep leider tag."
+    },
+    "reviewer_groups": {
+      "label": "Groep recensies | Groep recensies",
+      "help": ""
+    },
+    "member_groups": {
+      "label": "Deelnemersgroep | Deelnemersgroep",
+      "help": "Verschijnt als groepslid. Hun projecten worden tot de projecten van de groep gerekend."
+    },
+    "facilitators": {
+      "label": "Vergemakkelijking | Bevorderaars",
+      "help": "Facilitator: Deze rol is weggelegd voor docenten of docenten: Ze zien alle particuliere projecten in het portaal en ze kunnen ze bewerken. Ze hebben ook alle rechten van gebruikers."
+    },
+    "admins": {
+      "label": "Beheerdersgroep | Beheerdersgroep",
+      "help": "org admin: Deze rol maakt het mogelijk om uw portal te configureren en gebruikers in uw portal te beheren. Org admins hebben toegang tot het admin menu van het portaal om het portaal op te zetten en de gebruikers ervan te beheren. Zij hebben ook alle rechten van facilitatoren."
+    },
+    "users": {
+      "label": "Gebruiker | Gebruikers",
+      "help": "Gebruiker: een gebruiker maakt deel uit van uw community. Ze kunnen projecten maken, hun projecten bewerken en commentaar schrijven op elk project. Ze zien een privé project als ze deel uitmaken van het team van deze projecten, ze zien alle projecten met de zichtbaarheid van de gemeenschap, en alle openbare projecten."
+    },
+    "managers": {
+      "label": "Uitgever | Uitgevers",
+      "help": ""
+    },
+    "none": {
+      "label": "",
+      "help": ""
+    },
+    "label": "Rol | Rol",
+    "edit": "Modifier les roles",
+    "select": "De rechten selecteren",
+    "help": "Informatie over rollen."
   }
 }

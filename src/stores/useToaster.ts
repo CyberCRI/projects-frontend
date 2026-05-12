@@ -19,6 +19,7 @@ export const DEFAULT_TOAST_DURATION = 5 * 1000
 const useToasterStore = defineStore('toaster', {
   state: () => ({
     toastList: [],
+    timeouts: new Map(),
   }),
 
   actions: {

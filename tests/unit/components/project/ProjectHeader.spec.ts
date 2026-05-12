@@ -1,5 +1,4 @@
 import { ProjectOutputFactory } from '~~/tests/factories/project.factory'
-import ProjectHeader from '~/components/project/ProjectHeaderV2.vue'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
 import { OrganizationOutput } from '~/models/organization.model'
@@ -7,6 +6,7 @@ import useOrganizationsStore from '~/stores/useOrganizations'
 import useUsersStore from '~/stores/useUsers'
 import pinia from '~/stores'
 
+import ProjectHeaderV2 from '~/components/project/Headers/ProjectHeaderV2.vue'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 vi.mock('~/composables/usePermissions', () => ({
@@ -29,7 +29,7 @@ describe('ProjectHeader.vue', () => {
   })
 
   it('should render component', () => {
-    const wrapper = lpiShallowMount(ProjectHeader, {
+    const wrapper = lpiShallowMount(ProjectHeaderV2, {
       props: {
         project: ProjectOutputFactory.generate(),
       },

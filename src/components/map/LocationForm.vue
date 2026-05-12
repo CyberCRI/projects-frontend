@@ -3,7 +3,7 @@
     :confirm-button-label="isExist ? $t('common.edit') : $t('common.add')"
     :cancel-button-label="$t('common.cancel')"
     :asyncing="loading"
-    :disabled="loading || !isValid"
+    :disabled="!isValid"
     @close="$emit('close')"
     @submit="$emit('submit')"
   >

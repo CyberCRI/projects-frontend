@@ -130,7 +130,6 @@
         "last-name": "Last name",
         "first-name": "First name",
         "title": "Title",
-        "roles": "Role(s)",
         "groups": "Group(s)",
         "inscription": "Inscription",
         "activation": "Activation",
@@ -387,13 +386,6 @@
     "reset-password": "Reset password",
     "reset-delete": "Reset password & delete account",
     "error": "An error ocurred.",
-    "role": {
-      "none": "None",
-      "user": "User",
-      "facilitator": "Facilitator",
-      "admin": "Org admin",
-      "viewer": "Viewer"
-    },
     "user-exists-in-other-org": "A user with the same email exists in our database. We can add him/her to your portal here."
   },
   "userItem": {
@@ -406,12 +398,6 @@
     "facilitators": "Facilitator: This role is for teachers or tutors: They see all private projects in the portal and they can edit them. They also have all the rights of Users.",
     "admins": "Org admin: This role allows to configure your portal and manage users in your portal. Org admins have access to the admin menu of the portal to set up the portal and manage its users. They also have all the rights of Facilitators.",
     "none": "None: This person has a Projects account but is not part of your portal. They can only see the public projects.",
-    "roles": {
-      "none": "None",
-      "users": "User",
-      "facilitators": "Facilitator",
-      "admins": "Org admin"
-    },
     "empty": "No groups",
     "main-groups": "Main Groups"
   },
@@ -585,7 +571,6 @@
     "disconnect": "Disconnect",
     "confirm-close": "Are you sure you want to close the editor ? Any changes you made will not be saved.",
     "ok": "Ok",
-    "file-too-big": "File is too big (max: {maxSize}Mb)",
     "to": "to",
     "new": "new",
     "now": "Today",
@@ -654,7 +639,6 @@
     "edit-saved": "Any changes you (and any co-authors) made will not be saved.",
     "edit": "edit description (draft)",
     "add": "Add description",
-    "quit-without-saving-title": "Quit without saving?",
     "default-placeholder": "Now describe your project."
   },
   "discover": {
@@ -904,7 +888,8 @@
         "format": "Please enter a valid email address"
       },
       "description": "The description field is required"
-    }
+    },
+    "quit-without-saving-title": "Quit without saving?"
   },
   "footer": {
     "contact": "Contact us",
@@ -1702,9 +1687,25 @@
     "error-uploading-image": "Error while uploading image ",
     "cannot-upload-image": "Cannot upload image for now",
     "link-address": "Link address",
-    "resources": "Resources",
+    "resources": "Resource | Resources",
+    "delete": "Are you sure to delete this resource?",
     "web": "Link to web resource | links to web resources",
-    "web-link": "Web link | web link | web links"
+    "web-link": "Web link | web link | web links",
+    "file": {
+      "add": "Add a file | Add files",
+      "edit": "Edit a file | Edit files",
+      "label": "File | Files",
+      "delete": "Are you sure to delete this file ? | Are you sure to delete files ?",
+      "form": {
+        "too-big": "File is too big (max: {maxSize}Mb)"
+      }
+    },
+    "link": {
+      "add": "Add a link | Add links",
+      "edit": "Edit a link | Edit links",
+      "label": "Link Address | Links Address",
+      "delete": "Are you sure to delete this link ? | Are you sure to delete links ?"
+    }
   },
   "result_box": {
     "people": "people",
@@ -1792,27 +1793,62 @@
     "contact-us": "Contact us"
   },
   "role": {
-    "role-editor": "Has all edit rights for this group.",
-    "role-reviewer": "When the project has been marked as 'ready for review', the reviewer can give feedback, and can lock a project to prevent further edits in the project. A reviewer also has edit rights.",
-    "role-teammate": "He has no edit rights, but appears as member of the team.",
-    "editor": "Editor",
-    "editors": "Editors",
-    "editor-groups": "Editor groups",
-    "editor-group": "Editor group",
-    "reviewer": "Reviewer",
-    "reviewers": "Reviewers",
-    "reviewer-groups": "Reviewer groups",
-    "reviewer-group": "Reviewer group",
-    "teammate": "Participant",
-    "teammates": "Participants",
-    "teammate-groups": "Participant groups",
-    "teammate-group": "Participant group",
-    "select": "Select the rights",
-    "group": "Groups",
-    "leader": "Group Leader",
-    "role-leader": "Is an Editor who will appear with a “Group Leader” tag.",
-    "member": "Member",
-    "role-member": "Appears as group member. Their projects appear among the projects of the group."
+    "owners": {
+      "label": "Editor | Editors",
+      "help": "Has all edit rights for this group."
+    },
+    "reviewers": {
+      "label": "Reviewer | Reviewers",
+      "help": "When the project has been marked as 'ready for review', the reviewer can give feedback, and can lock a project to prevent further edits in the project. A reviewer also has edit rights."
+    },
+    "members": {
+      "label": "Participant | Participants",
+      "help": "He has no edit rights, but appears as member of the team."
+    },
+    "leaders": {
+      "label": "Leader group | Leaders group",
+      "help": "Is an Editor who will appear with a “Group Leader” tag."
+    },
+    "owner_groups": {
+      "label": "Editor group | Editors group",
+      "help": "Is an Editor who will appear with a “Group Leader” tag."
+    },
+    "reviewer_groups": {
+      "label": "Reviewer group | Reviewers group",
+      "help": ""
+    },
+    "member_groups": {
+      "label": "Participant group | Participants group",
+      "help": "Appears as group member. Their projects appear among the projects of the group."
+    },
+    "facilitators": {
+      "label": "Facilitator | Facilitators",
+      "help": "Facilitator: This role is for teachers or tutors: They see all private projects in the portal and they can edit them. They also have all the rights of Users."
+    },
+    "viewers": {
+      "label": "Viewer | Viewers",
+      "help": "Viewer: He has no edit rights."
+    },
+    "admins": {
+      "label": "Admin group | Admins group",
+      "help": "Org admin: This role allows to configure your portal and manage users in your portal. Org admins have access to the admin menu of the portal to set up the portal and manage its users. They also have all the rights of Facilitators."
+    },
+    "users": {
+      "label": "User | Users",
+      "help": "User: a user is part of your community. They can create projects, edit their projects, and write comments on any project. They see a private project when they are part of the team of this projects, they see all projects with the community visibility, and all public projects."
+    },
+    "managers": {
+      "label": "Publisher | Publishers",
+      "help": ""
+    },
+    "none": {
+      "label": "",
+      "help": ""
+    },
+    "help": "Information about roles.",
+    "label": "Role | Roles",
+    "edit": "Modifier les rôles",
+    "select": "Select the rights"
   },
   "search": {
     "all-filters": "All filters",
@@ -1825,7 +1861,7 @@
     "filter-by-language": "Add a language",
     "filter-by-people": "Add a person",
     "filter-by-tag": "Add a tag",
-    "filter-by-sdg": "Add a sdd",
+    "filter-by-sdg": "Add a sdg",
     "filter-by-category": "Add a category",
     "language": "Language",
     "people": "People",
@@ -1938,7 +1974,7 @@
     "17": {
       "title": "Partnerships for the Goals"
     },
-    "add-short": "Add a sdg",
+    "add-short": "Add a SDG",
     "sdg-fulltext": "sustainable development goals",
     "title": "SDG",
     "empty": "Nothing here yet... Contributors did not added SDGs yet."
@@ -3070,7 +3106,6 @@
       "add-projects": "Add Featured Projects",
       "edit": "Modify",
       "edit-members": "Edit members",
-      "edit-roles": "Edit roles",
       "form-incomplete": "Fields are missing or invalid, complete to be able to save.",
       "create-group": "Create Group",
       "edit-group": "Edit Group",
@@ -3106,23 +3141,6 @@
         "required": "This field is required"
       },
       "delete": "Delete group"
-    },
-    "role": {
-      "members": {
-        "label": "Member",
-        "help": "Member"
-      },
-      "leaders": {
-        "label": "Head of Group",
-        "help": "Head of Group"
-      },
-      "leaders-managers": {
-        "label": "Leader and Manager"
-      },
-      "managers": {
-        "label": "Publisher",
-        "help": "Publisher"
-      }
     },
     "view": "See group",
     "conferences": "Conferences",

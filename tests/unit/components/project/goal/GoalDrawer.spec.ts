@@ -1,7 +1,7 @@
 import { OrganizationOutputFactory } from '~~/tests/factories/organization.factory'
 import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
+import GoalDrawer from '~/components/project/modules/Goals/GoalDrawer.vue'
 import { lpiShallowMount, lpiMount } from '~~/tests/helpers/LpiMount'
-import GoalDrawer from '@/components/project/goal/GoalDrawer.vue'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { beforeEach, describe, expect, it } from 'vitest'
 import useProjectsStore from '~/stores/useProjects'

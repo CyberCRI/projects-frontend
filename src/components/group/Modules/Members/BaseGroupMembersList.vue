@@ -20,11 +20,7 @@
       :pagination="pagination"
       :disable="isLoading"
     />
-    <GroupMemberDrawer
-      :is-opened="!!userIdDrawer"
-      :member-id="userIdDrawer"
-      @close="closeProfile"
-    />
+    <UserProfileDrawer :is-opened="!!userIdDrawer" :user-id="userIdDrawer" @close="closeProfile" />
   </FetchLoader>
 </template>
 
@@ -33,10 +29,10 @@ import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
 
 import { getGroupMember } from '~/api/v2/group.service'
 
-import GroupMemberDrawer from '~/components/group/Modules/Members/GroupMemberDrawer.vue'
 import PaginationButtonsV2 from '~/components/base/navigation/PaginationButtonsV2.vue'
 import GroupMemberItem from '~/components/group/Modules/Members/GroupMemberItem.vue'
 
+import UserProfileDrawer from '~/components/people/Drawer/UserProfileDrawer.vue'
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import { memberSkeleton } from '~/skeletons/group.skeletons'
 

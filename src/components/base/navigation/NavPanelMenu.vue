@@ -44,7 +44,7 @@ export type MenuEntry = {
   icon: IconImageChoice
   actionIcon?: IconImageChoice
   key: string
-  view: RouteLocationRaw
+  view?: RouteLocationRaw
   altView?: RouteLocationRaw
   props?: {
     [key: string]: any
@@ -52,7 +52,7 @@ export type MenuEntry = {
   isNotLink?: boolean
   dataTest?: string
   noTitle?: boolean
-  isAddAction?: () => void
+  isAddAction?: boolean
 }
 const props = withDefaults(
   defineProps<{

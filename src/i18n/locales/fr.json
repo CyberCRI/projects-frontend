@@ -130,7 +130,6 @@
         "last-name": "Nom",
         "first-name": "Prénom",
         "title": "Titre",
-        "roles": "Rôle(s)",
         "groups": "Groupe(s)",
         "inscription": "Inscription",
         "activation": "Activation",
@@ -387,13 +386,6 @@
     "reset-password": "Changer le mot de passe",
     "reset-delete": "Changer le mot de passe & supprimer le compte",
     "error": "Une erreur s'est produite.",
-    "role": {
-      "none": "Aucun",
-      "user": "Utilisateur",
-      "facilitator": "Facilitateur",
-      "admin": "Org admin",
-      "viewer": "Visualisateur"
-    },
     "user-exists-in-other-org": "Un utilisateur avec le même email existe dans notre base de données. Nous pouvons l'ajouter à votre portail ici."
   },
   "userItem": {
@@ -406,12 +398,6 @@
     "facilitators": "Facilitateur: ce rôle est destiné aux enseignants ou aux tuteurs : ils voient tous les projets privés dans le portail et ils peuvent les modifier. Ils disposent également de tous les droits des Utilisateurs.",
     "admins": "Org admin: ce rôle permet de configurer votre portail et de gérer les utilisateurs de votre portail. Les administrateurs de l'organisation ont accès au menu d'administration du portail pour configurer le portail et gérer ses utilisateurs. Ils ont également tous les droits des Facilitateurs.",
     "none": "Aucun: Cette personne a un compte Projects, mais ne fait pas partie de votre portail. Elle peut seulement voir les projets publics",
-    "roles": {
-      "none": "Aucun",
-      "users": "Utilisateur",
-      "facilitators": "Facilitateur",
-      "admins": "Org admin"
-    },
     "empty": "Pas de groupes",
     "main-groups": "Groupes Principaux"
   },
@@ -572,7 +558,6 @@
     "disconnect": "Déconnexion",
     "confirm-close": "Êtes-vous sûr de vouloir fermer l'éditeur ? Vos modifications ne seront pas sauvegardées.",
     "ok": "Ok",
-    "file-too-big": "Fichier trop volumineux (max: {maxSize}Mo)",
     "select": "Sélectionner",
     "year": "année",
     "link-to": "lien vers",
@@ -654,7 +639,6 @@
     "edit": "modifier la description (brouillon)",
     "placeholder": "Vous n’avez pas encore de description, pensez à en ajouter une !",
     "add": "Ajouter une description",
-    "quit-without-saving-title": "Quitter sans sauvegarder ?",
     "default-placeholder": "Décrivez votre projet."
   },
   "discover": {
@@ -904,7 +888,8 @@
       },
       "description": "Le champ description est obligatoire"
     },
-    "templates": "Modèles"
+    "templates": "Modèles",
+    "quit-without-saving-title": "Quitter sans épargner ?"
   },
   "footer": {
     "contact": "Contactez-nous",
@@ -967,7 +952,6 @@
       "add-projects": "Ajouter des projets en vedette",
       "edit": "Modifier",
       "edit-members": "Modifier les membres",
-      "edit-roles": "Modifier les rôles",
       "form-incomplete": "Des champs sont manquant ou invalides, complétez pour pouvoir sauvegarder.",
       "create-group": "Créer le groupe",
       "edit-group": "Modifier le groupe",
@@ -1003,23 +987,6 @@
         "required": "Ce champ est requis"
       },
       "delete": "Supprimer le groupe"
-    },
-    "role": {
-      "members": {
-        "label": "Membre",
-        "help": "Membre"
-      },
-      "leaders": {
-        "label": "Chef du groupe",
-        "help": "Chef du groupe"
-      },
-      "leaders-managers": {
-        "label": "Leader et Manager"
-      },
-      "managers": {
-        "label": "Editeur",
-        "help": "Editeur"
-      }
     },
     "view": "Voir le groupe",
     "conferences": "Conférences",
@@ -1805,7 +1772,23 @@
     "link-address": "Url du lien",
     "resources": "Ressources",
     "web": "Lien aux ressources web | lien aux ressources web",
-    "web-link": "Lien Web | lien Web | Liens Web"
+    "web-link": "Lien Web | lien Web | Liens Web",
+    "delete": "Êtes-vous sûr de supprimer cette ressource?",
+    "file": {
+      "add": "Ajouter un fichier | Ajouter des fichiers",
+      "edit": "Modifier un fichier | Modifier les fichiers",
+      "label": "Fichier",
+      "delete": "Êtes-vous sûr de supprimer ce fichier ? | Êtes-vous sûr de supprimer les fichiers ?",
+      "form": {
+        "too-big": "Le fichier est trop grand (max: {maxSize}Mb)"
+      }
+    },
+    "link": {
+      "add": "Ajouter un lien | Ajouter des liens",
+      "edit": "Modifier un lien | Modifier les liens",
+      "label": "Adresse du lien",
+      "delete": "Êtes-vous sûr de supprimer ce lien ? | Êtes-vous sûr de supprimer les liens ?"
+    }
   },
   "result_box": {
     "people": "personnes",
@@ -1891,29 +1874,6 @@
     "login": "Se connecter",
     "need-help": "Besoin d'aide?",
     "contact-us": "Contactez-nous"
-  },
-  "role": {
-    "role-editor": "A tous les droits d'édition pour ce groupe.",
-    "role-reviewer": "Une fois que le projet a été marqué comme 'prêt pour révision', le correcteur peut donner un feedback, peut verrouiller le projet pour ne plus autoriser d'éditions. Le correcteur a aussi les droits d'édition.",
-    "role-teammate": "Ne possède pas de droits d'édition, mais apparaît comme membre de l'équipe.",
-    "editor": "Editeur",
-    "editors": "Editeurs",
-    "editor-groups": "Groupes éditeurs",
-    "editor-group": "Groupe éditeur",
-    "reviewer": "Correcteur",
-    "reviewers": "Correcteurs",
-    "reviewer-groups": "Groupes correcteurs",
-    "reviewer-group": "Groupe correcteur",
-    "teammate": "Participant",
-    "teammates": "Participants",
-    "teammate-groups": "Groupes participants",
-    "teammate-group": "Groupe participant",
-    "select": "Sélectionnez les droits",
-    "group": "Groupes",
-    "leader": "Chef du groupe",
-    "role-leader": "Est un Éditeur qui apparaît avec un tag “Chef du groupe”.",
-    "member": "Membre",
-    "role-member": "Apparaît comme membre du groupe. Ses projets apparaissent parmi les projets du groupe."
   },
   "search": {
     "all-filters": "Tous les filtres",
@@ -3160,5 +3120,59 @@
   "follow": {
     "follow": "Suivre",
     "unfollow": "Ne pas suivre"
+  },
+  "role": {
+    "owners": {
+      "label": "Éditeur | Éditeurs",
+      "help": "A tous les droits d'édition pour ce groupe."
+    },
+    "reviewers": {
+      "label": "Examinateur | Les évaluateurs",
+      "help": "Lorsque le projet a été marqué « prêt à faire l'objet d'un examen », l'examinateur peut donner son avis et verrouiller un projet afin d'éviter d'autres modifications dans le projet. Un examinateur a également des droits de modification."
+    },
+    "members": {
+      "label": "Participant | Participants",
+      "help": "Il n'a aucun droit d'édition, mais apparaît comme membre de l'équipe."
+    },
+    "leaders": {
+      "label": "Groupe dirigeant | Groupe des dirigeants",
+      "help": "Est un éditeur qui va apparaître avec un tag «Group Leader»."
+    },
+    "owner_groups": {
+      "label": "Groupe d'éditeurs | Groupe des éditeurs",
+      "help": "Est un éditeur qui va apparaître avec un tag «Group Leader»."
+    },
+    "reviewer_groups": {
+      "label": "Groupe des évaluateurs | Groupe des évaluateurs",
+      "help": ""
+    },
+    "member_groups": {
+      "label": "Groupe de participants | Groupe des participants",
+      "help": "Il apparaît comme membre du groupe. Leurs projets figurent parmi les projets du groupe."
+    },
+    "facilitators": {
+      "label": "Facilitateur | Facilitateurs",
+      "help": "Facilitateur : Ce rôle s'adresse aux enseignants ou aux tuteurs: Ils voient tous les projets privés dans le portail et ils peuvent les modifier. Ils ont également tous les droits des Utilisateurs."
+    },
+    "admins": {
+      "label": "Groupe administratif | Groupe des administrateurs",
+      "help": "Org administrateur: Ce rôle permet de configurer votre portail et de gérer les utilisateurs de votre portail. Org admins ont accès au menu admin du portail pour configurer le portail et gérer ses utilisateurs. Ils ont également tous les droits des facilitateurs."
+    },
+    "users": {
+      "label": "Utilisateur | Utilisateur",
+      "help": "Utilisateur : un utilisateur fait partie de votre communauté. Ils peuvent créer des projets, modifier leurs projets et écrire des commentaires sur tout projet. Ils voient un projet privé quand ils font partie de l'équipe de ces projets, ils voient tous les projets avec la visibilité communautaire, et tous les projets publics."
+    },
+    "managers": {
+      "label": "Éditeur | Éditeurs",
+      "help": ""
+    },
+    "none": {
+      "label": "",
+      "help": ""
+    },
+    "label": "Rôle | Rôles",
+    "edit": "Modifier les rôles",
+    "select": "Sélectionnez les droits",
+    "help": "Informations sur les rôles."
   }
 }

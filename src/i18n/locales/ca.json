@@ -123,7 +123,6 @@
         "last-name": "Cognoms",
         "first-name": "Nom",
         "title": "Títol",
-        "roles": "Rol(s)",
         "groups": "Grup(s)",
         "inscription": "Inscripció",
         "activation": "Activació",
@@ -387,13 +386,6 @@
     "reset-password": "Reinicia la contrasenya",
     "reset-delete": "Reinicia la contrasenya i esborra el compte",
     "error": "Un error ocret.",
-    "role": {
-      "none": "Cap",
-      "user": "Usuari",
-      "facilitator": "Facilitor",
-      "admin": "Org administrador",
-      "viewer": "Visualitzador"
-    },
     "user-exists-in-other-org": "Existeix un usuari amb el mateix correu electrònic a la nostra base de dades. Podem afegir-lo al seu portal aquí."
   },
   "userItem": {
@@ -406,12 +398,6 @@
     "facilitators": "Facilitor: Aquest paper és per professors o tutors: Veuen tots els projectes privats al portal i els poden editar. També tenen tots els drets d'usuaris.",
     "admins": "Org administrador: Aquest paper permet configurar el vostre portal i gestionar usuaris al portal. Els administradors d' Org tenen accés al menú administrador del portal per establir el portal i gestionar els seus usuaris. També tenen tots els drets dels faculitadors.",
     "none": "Cap: Aquesta persona té un compte de projectes però no forma part del seu portal. Només poden veure els projectes públics.",
-    "roles": {
-      "none": "Cap",
-      "users": "Usuari",
-      "facilitators": "Facilitor",
-      "admins": "Org administrador"
-    },
     "empty": "Sense grups",
     "main-groups": "Grups principals"
   },
@@ -570,7 +556,6 @@
     "disconnect": "Desconnecta",
     "confirm-close": "Esteu segur que voleu tancar l' editor? Qualsevol canvi que heu fet no serà desat.",
     "ok": "Bé",
-    "file-too-big": "El fitxer és massa gran (màx: {maxSize}Mb)",
     "select": "Selecciona",
     "year": "any",
     "link-to": "enllaç a",
@@ -654,7 +639,6 @@
     "edit-saved": "Qualsevol canvi que (i cap co- authors) hagi fet no serà desat.",
     "edit": "Descripció d' edició (projecte)",
     "add": "Afegeix descripció",
-    "quit-without-saving-title": "Surto sense desar?",
     "default-placeholder": "Ara descriu el teu projecte."
   },
   "discover": {
@@ -904,7 +888,8 @@
       },
       "description": "Cal el camp de descripció"
     },
-    "templates": "Plantilles"
+    "templates": "Plantilles",
+    "quit-without-saving-title": "Surto sense desar?"
   },
   "footer": {
     "contact": "Contacta amb nosaltres",
@@ -1704,7 +1689,23 @@
     "link-address": "Adreça de l' enllaç",
     "resources": "Recursos",
     "web": "Enllaç al recurs web | Enllaços als recursos web",
-    "web-link": "Enllaç web | Enllaç web | Enllaços web"
+    "web-link": "Enllaç web | Enllaç web | Enllaços web",
+    "delete": "Esteu segur d' eliminar aquest recurs?",
+    "file": {
+      "add": "Afegeix un fitxer | Afegeix fitxers",
+      "edit": "Edita un fitxer | Edita fitxers",
+      "label": "Fitxer",
+      "delete": "Esteu segur d' eliminar aquest fitxer? | Esteu segur d' esborrar els fitxers?",
+      "form": {
+        "too-big": "El fitxer és massa gran (màx. {maxSize}Mb)"
+      }
+    },
+    "link": {
+      "add": "Afegeix un enllaç | Afegeix enllaços",
+      "edit": "Edita un enllaç | Edita els enllaços",
+      "label": "Adreça d' enllaç",
+      "delete": "Esteu segur d' esborrar aquest enllaç? | Esteu segur d' esborrar els enllaços?"
+    }
   },
   "result_box": {
     "people": "gent",
@@ -1790,29 +1791,6 @@
     "login": "Entrada",
     "need-help": "Necessites ajuda?",
     "contact-us": "Contacta amb nosaltres"
-  },
-  "role": {
-    "role-editor": "Té tots els drets d' edició per aquest grup.",
-    "role-reviewer": "Quan el projecte s' ha marcat com a \" Jack per a revisar,\" el revisor pot donar comentaris, i pot bloquejar un projecte per evitar més edició al projecte. Un revisor també té drets d' edició.",
-    "role-teammate": "No té drets d' edició, però apareix com a membre de l'equip.",
-    "editor": "Editor",
-    "editors": "Editors",
-    "editor-groups": "Grups d' edició",
-    "editor-group": "Grup de l' editor",
-    "reviewer": "Revisor",
-    "reviewers": "Revisor",
-    "reviewer-groups": "Grups de manteniment",
-    "reviewer-group": "Grup de manteniment",
-    "teammate": "Participant",
-    "teammates": "Participants",
-    "teammate-groups": "Grups pensatius",
-    "teammate-group": "Grup Participant",
-    "select": "Seleccioneu els drets",
-    "group": "Grups",
-    "leader": "Líder del grup",
-    "role-leader": "És un editor que apareixerà amb una etiqueta del Líder UserkinkGroup.",
-    "member": "Estats membres",
-    "role-member": "Sembla membre del grup. Els seus projectes apareixen entre els projectes del grup."
   },
   "search": {
     "all-filters": "Tots els filtres",
@@ -2735,7 +2713,6 @@
       "add-projects": "Afegeix projectes característiques",
       "edit": "Modifica",
       "edit-members": "Edita els membres",
-      "edit-roles": "Edita els rols",
       "form-incomplete": "Els camps no s' han trobat o no són vàlids, complets per a poder desar.",
       "create-group": "Crea un grup",
       "edit-group": "Edita el grup",
@@ -2771,23 +2748,6 @@
         "required": "Cal aquest camp"
       },
       "delete": "Esborra el grup"
-    },
-    "role": {
-      "members": {
-        "label": "Estats membres",
-        "help": "Estats membres"
-      },
-      "leaders": {
-        "label": "Capçalera de grup",
-        "help": "Capçalera de grup"
-      },
-      "leaders-managers": {
-        "label": "Líder i gestor"
-      },
-      "managers": {
-        "label": "Editor",
-        "help": "Editor"
-      }
     },
     "view": "Mireu el grup",
     "conferences": "Conferèncias",
@@ -3160,5 +3120,59 @@
   "follow": {
     "follow": "Segueix",
     "unfollow": "Sense ningú"
+  },
+  "role": {
+    "owners": {
+      "label": "Editor | Editors",
+      "help": "Té tots els drets d' edició per aquest grup."
+    },
+    "reviewers": {
+      "label": "Revisor | Revisor",
+      "help": "Quan el projecte s' ha marcat com a \" Jack per a revisar,\" el revisor pot donar comentaris, i pot bloquejar un projecte per a evitar més edició al projecte. Un revisor també té drets d' edició."
+    },
+    "members": {
+      "label": "Participant | Participants",
+      "help": "No té drets d' edició, però apareix com a membre de l'equip."
+    },
+    "leaders": {
+      "label": "Grup Líder | Grup dels líders",
+      "help": "És un editor que apareixerà amb una etiqueta del Líder UserkinkGroup."
+    },
+    "owner_groups": {
+      "label": "Grup de l' editor | Grup d' editors",
+      "help": "És un editor que apareixerà amb una etiqueta del Líder UserkinkGroup."
+    },
+    "reviewer_groups": {
+      "label": "Grup de manteniment | Grup de revisions",
+      "help": ""
+    },
+    "member_groups": {
+      "label": "Grup Participant | Grup participants",
+      "help": "Sembla membre del grup. Els seus projectes apareixen entre els projectes del grup."
+    },
+    "facilitators": {
+      "label": "Facilitor | Facilitors",
+      "help": "Facilitor: Aquest paper és per professors o tutors: Veuen tots els projectes privats al portal i els poden editar. També tenen tots els drets d'usuaris."
+    },
+    "admins": {
+      "label": "Grup d' administració | Grup d' administració",
+      "help": "Org administrador: Aquest paper permet configurar el vostre portal i gestionar els usuaris del portal. Els administradors d' Org tenen accés al menú administrador del portal per establir el portal i gestionar els seus usuaris. També tenen tots els drets dels faculitadors."
+    },
+    "users": {
+      "label": "Usuari | Usuaris",
+      "help": "Usuari: un usuari forma part de la vostra comunitat. Poden crear projectes, editar els seus projectes i escriure comentaris en qualsevol projecte. Veuen un projecte privat quan formen part de l'equip d'aquests projectes, veuen tots els projectes amb la visibilitat de la comunitat, i tots els projectes públics."
+    },
+    "managers": {
+      "label": "Editor | Editors",
+      "help": ""
+    },
+    "none": {
+      "label": "",
+      "help": ""
+    },
+    "label": "Funció | Rols",
+    "edit": "Modificadors de rôles",
+    "select": "Seleccioneu els drets",
+    "help": "Informació sobre funcions."
   }
 }

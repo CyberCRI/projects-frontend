@@ -1,0 +1,382 @@
+<script setup lang="ts">
+import { getAllProjectCategories } from '~/api/v2/project-categories.service'
+import { refreshProjectData } from '~/composables/project/refreshProject'
+import { deleteProjectMembersSelf } from '~/api/project-members.service'
+import { deleteProject, patchProject } from '~/api/projects.service'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
+import { getOrganizations } from '~/api/v2/organizations.service'
+import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
+import type { TranslatedProject } from '~/models/project.model'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import { factoryPagination } from '~/skeletons/base.skeletons'
+import { DEFAULT_ORGANIZATION_CODE } from '~/functs/constants'
+import { useProjectSettingForm } from '~/form/project'
+import Section from '~/components/base/Section.vue'
+import useUsersStore from '~/stores/useUsers'
+import analytics from '~/analytics'
+
+const props = withDefaults(
+  defineProps<{
+    project: TranslatedProject
+  }>(),
+  {}
+)
+
+const { t } = useNuxtI18n()
+const toaster = useToaster()
+const router = useRouter()
+const usersStore = useUsersStore()
+const { stateModals, openModals, closeModals } = useModals({
+  delete: false,
+  memberQuit: false,
+  review: false,
+  report: false,
+})
+const { canDestroyProject, canEditProject, isMember, isOwner, isOrgAdmin, isAdmin, canAddReview } =
+  usePermissions()
+
+const { isMobile } = useViewportWidth()
+
+const projectOrganizationCodes = computed(() => props.project.organizations.map((org) => org.code))
+const organizationCode = useOrganizationCode()
+
+// form
+const defaultLocalForm = () => {
+  return {
+    publication_status: props.project.publication_status,
+    life_status: props.project.life_status,
+    is_locked: props.project.is_locked,
+    organizations_codes: projectOrganizationCodes.value || [],
+    categories: props.project.categories.filter((cat) => cat.organization === organizationCode),
+  }
+}
+const { form, reset, cleanedData } = useProjectSettingForm({
+  default: defaultLocalForm(),
+  lazy: true,
+})
+watch(
+  () => props.project,
+  () => reset(defaultLocalForm())
+)
+// removeOrganization
+const updateOrganisation = (orgCode: string, state: boolean) => {
+  if (state) {
+    form.value.organizations_codes.push(orgCode)
+  } else {
+    form.value.organizations_codes = form.value.organizations_codes.filter((c) => c !== orgCode)
+  }
+}
+
+const asyncing = ref(false)
+
+const visibilityOptions = computed(() =>
+  [
+    {
+      value: 'public',
+      label: t('status.public'),
+      iconName: 'Eye',
+      condition: true,
+    },
+    {
+      value: 'org',
+      label: t('common.org'),
+      iconName: 'PeopleGroup',
+      condition: !projectOrganizationCodes.value.includes(DEFAULT_ORGANIZATION_CODE),
+    },
+    {
+      value: 'private',
+      label: t('status.private'),
+      iconName: 'EyeSlash',
+      condition: true,
+    },
+  ].filter((status) => status.condition)
+)
+
+const lifeStatusOptions = computed(() =>
+  [
+    {
+      value: 'running',
+      label: t('status.ongoing'),
+      iconName: 'Spinner',
+      condition: true,
+    },
+    {
+      value: 'toreview',
+      label: t('project.reviewable'),
+      iconName: 'ListCheck',
+      condition:
+        props.project.modules.members > 0 &&
+        (isOwner.value || isOrgAdmin.value || isAdmin.value || canAddReview.value),
+    },
+    {
+      value: 'completed',
+      label: t('status.completed'),
+      iconName: 'Check',
+      condition: true,
+    },
+  ].filter((status) => status.condition)
+)
+
+const optionsPublications = computed(() => [
+  { label: t('visibility.private-title'), description: t('visibility.private') },
+  { label: t('visibility.public-title'), description: t('visibility.public') },
+  { label: t('visibility.community-title'), description: t('visibility.community') },
+])
+
+// TODO change limit to get only organizations ?
+const { data: organizations } = getOrganizations({
+  paginationConfig: { limit: 999 },
+  default: () => factoryPagination(() => []),
+})
+const disableLastOrg = (org) =>
+  projectOrganizationCodes.value.length === 1 && projectOrganizationCodes.value[0] === org.code
+const selectedOrgLinks = computed(() => {
+  return organizations.value
+    .filter((org) => projectOrganizationCodes.value.includes(org.code))
+    .map((org) => ({
+      ...org,
+      website_url: `${org.website_url}/projects/${props.project.slug}/project-settings`,
+    }))
+})
+
+// category
+const { data: categories } = getAllProjectCategories(organizationCode, {
+  default: () => factoryPagination(() => []),
+})
+
+// callback
+const refresh = () => refreshProjectData(props.project)
+
+const onUpdate = () => {
+  const body = { ...cleanedData.value }
+
+  patchProject(props.project.id, body)
+    .then(() => {
+      toaster.pushSuccess(t('toasts.project-edit.success'))
+      refresh()
+    })
+    .catch(() => toaster.pushError(t('toasts.project-edit.error')))
+    .finally(() => (asyncing.value = false))
+}
+
+// when form changes update project
+// use JSON.stringigy to avoid compare object change
+watch(
+  () => JSON.stringify(cleanedData.value),
+  () => {
+    // only update for real project (no skeletons)
+    if (props.project.id) {
+      onUpdate()
+    }
+  }
+)
+
+const onDeleteProject = () => {
+  asyncing.value = true
+  deleteProject(props.project.id)
+    .then(() => {
+      analytics.project.delete({ id: props.project.id })
+      toaster.pushSuccess(t('toasts.project-destroy.success'))
+      router.push({ name: 'HomeRoot' })
+    })
+    .catch(() => toaster.pushError(t('toasts.project-destroy.error')))
+    .finally(() => (asyncing.value = false))
+}
+
+const onQuitProject = () => {
+  asyncing.value = true
+  deleteProjectMembersSelf(props.project.id)
+    .then(() => {
+      analytics.project.removeTeamMember({
+        project: {
+          id: props.project.id,
+        },
+        members: {
+          users: [usersStore.id],
+        },
+      })
+      toaster.pushSuccess(t('toasts.project-quit.success'))
+      if (props.project.publication_status == 'private') {
+        router.push({ name: 'HomeRoot' })
+      } else {
+        router.push({
+          name: 'ProjectSnapshot',
+          params: {
+            slugOrId: props.project.slug || props.project.id,
+          },
+        })
+      }
+      refresh()
+    })
+    .catch(() => toaster.pushError(t('toasts.project-quit.error')))
+    .finally(() => (asyncing.value = false))
+}
+</script>
+
+<template>
+  <BaseModuleTab :title="project.$t.title">
+    <!-- actions -->
+    <div class="list-container">
+      <Section class="section-green skeletons-background" :title="$t('project.actions')">
+        <div class="list-container">
+          <LpiButton
+            v-if="canDestroyProject"
+            :label="$t('project.destroy')"
+            class="button"
+            btn-icon="TrashCanOutline"
+            data-test="destroy-project"
+            @click="openModals('delete')"
+          />
+          <LpiButton
+            v-if="isMember"
+            :label="$t('project.quit')"
+            class="button"
+            btn-icon="Logout"
+            @click="openModals('memberQuit')"
+          />
+        </div>
+      </Section>
+
+      <template v-if="canEditProject">
+        <Section class="skeletons-background" :title="$t('project.visibility')">
+          <GroupButton
+            v-model="form.publication_status"
+            :has-icon="true"
+            :is-vertical="isMobile"
+            :options="visibilityOptions"
+            class="setting"
+          />
+          <TableInfo class="publications-opacity" :options="optionsPublications" />
+        </Section>
+        <Section class="skeletons-background" :title="$t('project.life-status')">
+          <GroupButton
+            v-model="form.life_status"
+            :has-icon="true"
+            :is-vertical="isMobile"
+            :options="lifeStatusOptions"
+          />
+        </Section>
+        <Section
+          v-if="canAddReview && project.life_status === 'toreview'"
+          class="skeletons-background"
+          :title="$t('project.reviews')"
+        >
+          <LpiButton
+            :label="$t('project.review')"
+            :secondary="true"
+            @click="openModals('review')"
+          />
+        </Section>
+
+        <Section
+          v-if="organizations?.length"
+          class="skeletons-background"
+          :title="$t('project.org-settings.title')"
+        >
+          <p class="org-description">
+            {{ $t('project.org-settings.description') }}
+          </p>
+
+          <div class="organization-ctn">
+            <LpiCheckbox
+              v-for="org in organizations"
+              :key="org.code"
+              :model-value="form.organizations_codes.includes(org.code)"
+              as-button
+              :label="org.name"
+              :disabled="disableLastOrg(org)"
+              @update:model-value="updateOrganisation(org.code, $event)"
+            />
+          </div>
+        </Section>
+
+        <Section :title="$t('project.form.project-category')" class="skeletons-background">
+          <template v-if="form.organizations_codes.length === 0">
+            <LpiSnackbar class="completed-form-snackbar" icon="QuestionMark" type="error">
+              <p>{{ $t('project.org-settings.warning') }}</p>
+            </LpiSnackbar>
+            <ul class="links-list">
+              <li v-for="link in selectedOrgLinks" :key="link.id">
+                <a :href="link.website_url" class="link" target="_blank">{{ link.website_url }}</a>
+              </li>
+            </ul>
+          </template>
+
+          <div v-else-if="categories.length > 0" class="categories-ctn">
+            <ul>
+              <CategoryPicker
+                v-for="category in categories"
+                :key="category.id"
+                :category="category"
+                :selected-category="form.categories[0]"
+                @pick-category="
+                  // @ts-expect-error ignore
+                  form.categories = $event
+                "
+              />
+            </ul>
+          </div>
+        </Section>
+      </template>
+    </div>
+  </BaseModuleTab>
+
+  <!-- Drawer/modal -->
+  <ConfirmModal
+    v-if="stateModals.delete"
+    :content="$t('common.destroy-confirm')"
+    :title="$t('project.destroy')"
+    :asyncing="asyncing"
+    @cancel="closeModals('delete')"
+    @confirm="onDeleteProject"
+  />
+
+  <ConfirmModal
+    v-if="stateModals.memberQuit"
+    :content="$t('common.quit-project')"
+    :title="$t('project.quit')"
+    :asyncing="asyncing"
+    @cancel="closeModals('memberQuit')"
+    @confirm="onQuitProject"
+  />
+
+  <ReviewDrawer
+    :is-opened="stateModals.review"
+    :project="project"
+    @reload="refresh"
+    @close="closeModals('review')"
+  />
+</template>
+
+<style lang="scss" scoped>
+.section-green {
+  background-color: var(--primary-lighter);
+}
+
+.organization-ctn {
+  flex-wrap: wrap;
+  gap: $space-m;
+  margin: 1rem 0;
+}
+
+.categories-ctn {
+  position: relative;
+  display: flex;
+  justify-content: stretch;
+
+  > ul {
+    flex-grow: 1;
+  }
+}
+
+.organization-ctn,
+.categories-ctn {
+  position: relative;
+  display: flex;
+}
+
+.publications-opacity {
+  opacity: 0.7;
+}
+</style>

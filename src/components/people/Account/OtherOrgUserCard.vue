@@ -23,7 +23,7 @@
           :key="`${orgRole.role}:${orgRole.orgName}`"
           class="role-line"
         >
-          {{ orgRoleLabel(orgRole.role) }}
+          {{ roleI18n(orgRole.role) }}
           {{ $t('account.role-in-organization') }}
           {{ orgRole.orgName }}
         </li>
@@ -41,7 +41,7 @@ import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
 import type { TranslatedUserModel } from '~/models/user.model'
-import type { GroupDataRole } from '~/models/types'
+import { roleI18n } from '~/functs/rolesUtils'
 
 const props = defineProps<{
   user: TranslatedUserModel
@@ -50,12 +50,6 @@ const props = defineProps<{
 const isLoadingOrgRoles = ref(false)
 const orgRoles = ref([])
 const { t } = useNuxtI18n()
-
-const orgRoleLabel = (role: GroupDataRole) => {
-  if (role == 'users') return t('account.role.user')
-  if (role == 'facilitators') return t('account.role.facilitator')
-  if (role == 'admins') return t('account.role.admin')
-}
 
 const loadRoles = async () => {
   isLoadingOrgRoles.value = true

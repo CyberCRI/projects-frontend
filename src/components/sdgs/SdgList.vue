@@ -1,7 +1,7 @@
 <template>
   <TransitionGroup tag="div" name="sdg" class="sdg-ctn">
     <component :is="is" v-for="sdg in sdgsArray" :key="sdg.id" :to="sdg.to">
-      <SdgIcon :sdg-id="sdg.id" class="sdg-img" logo="short" />
+      <SdgIcon :sdg-id="sdg.id" class="sdg-img" :logo="logo" />
     </component>
   </TransitionGroup>
 </template>
@@ -15,9 +15,11 @@ const props = withDefaults(
   defineProps<{
     sdgs: number[]
     to?: RouteLocationNamedRaw
+    logo?: 'short' | 'full'
   }>(),
   {
     to: null,
+    logo: 'short',
   }
 )
 

@@ -2,7 +2,7 @@
   <NuxtLink
     class="similar-project"
     :to="{
-      name: 'projectSummary',
+      name: 'ProjectSnapshot',
       params: {
         slugOrId: project.slug,
       },

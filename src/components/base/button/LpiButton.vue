@@ -33,6 +33,7 @@ const props = withDefaults(
     noTextTransform?: boolean
     ariaLabel?: string
     to?: RouteLocationRaw
+    color?: 'primary-dark' | 'red'
   }>(),
   {
     label: null,
@@ -43,6 +44,7 @@ const props = withDefaults(
     noTextTransform: false,
     ariaLabel: '',
     to: null,
+    color: 'primary-dark',
   }
 )
 
@@ -53,11 +55,13 @@ const is = computed(() => (props.to ? resolveComponent('NuxtLink') : 'button'))
 
 <style lang="scss" scoped>
 .lpi-button {
+  --color: v-bind(`var(--${color}) `);
+
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-  border: $border-width-s solid $primary-dark;
+  border: $border-width-s solid var(--color);
   border-radius: $border-radius-50;
   font-weight: 700;
   font-size: $font-size-m;
@@ -66,7 +70,7 @@ const is = computed(() => (props.to ? resolveComponent('NuxtLink') : 'button'))
   cursor: pointer;
   will-change: transform;
   overflow: hidden;
-  background: $primary-dark;
+  background: var(--color);
   color: $white;
   height: 35px;
   padding: $space-s $space-l;
@@ -85,8 +89,8 @@ const is = computed(() => (props.to ? resolveComponent('NuxtLink') : 'button'))
 
   &.secondary {
     background: transparent;
-    color: $primary-dark;
-    fill: $primary-dark;
+    color: var(--color);
+    fill: var(--color);
 
     &.white-bg {
       // temp fix class used is ProjectDescriptionTab. TODO: fix cleanly while refactoring this component
@@ -128,7 +132,7 @@ const is = computed(() => (props.to ? resolveComponent('NuxtLink') : 'button'))
 }
 
 .lpi-button.secondary :deep(svg) {
-  fill: $primary-dark;
+  fill: var(--color);
 }
 
 .lpi-button.small {

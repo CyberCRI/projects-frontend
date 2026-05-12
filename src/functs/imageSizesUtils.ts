@@ -1,3 +1,4 @@
+import type { IconImageChoice } from '~/functs/IconImage'
 import type { ImageModel } from '~/models/image.model'
 
 export type ImageSizes = {
@@ -141,4 +142,52 @@ export const urlToImageModel = (url: string): ImageModel => {
 export const fileToImageModel = (file: File): ImageModel => {
   const url = URL.createObjectURL(file)
   return urlToImageModel(url)
+}
+
+/**
+ * mimeType can be a mimeType 'application/pdf', 'image/png' or url 'https://linkeding.com ...ect
+ *
+ * @function
+ * @name mimeTypeToInfo
+ * @kind variable
+ * @param {string} mimeType
+ * @returns {{ icon: "Account" | "Alert" | "AlertOutline" | "Archive" | "ArrowLeft" | "ArrowRight" | "ArrowUpRightFromSquare" | "Article" | "Ban" | "BarsStaggered" | "Bell" | "BookmarkBoxOutline" | "BookmarkFill" | "BookmarkLine" | "Briefcase" | "Bug" | "BullhornOutline" | "Calendar" | "Cancel" | "ChartBox" | "ChatBubble" | "Check" | "CheckBoxBlankOutline" | "CheckBoxChecked" | "CheckBoxOutline" | "ChevronDown" | "ChevronLeft" | "ChevronRight" | "ChevronUp" | "Circle" | "CircleOutline" | "Close" | "CloseCircle" | "Cog" | "Copy" | ... 76 more ... | "Video"; color?: string; }}
+ * @exports
+ */
+export const mimeTypeToInfo = (
+  mimeType: string | null
+): { icon: IconImageChoice; color?: string } => {
+  mimeType ??= ''
+  if (mimeType.startsWith('image/')) {
+    return {
+      icon: 'Gallery',
+      color: 'blue',
+    }
+  }
+  if (mimeType.startsWith('text/')) {
+    return {
+      icon: 'FileText',
+    }
+  }
+
+  if (mimeType.startsWith('application/pdf')) {
+    return {
+      icon: 'FilePdf',
+      color: 'red',
+    }
+  }
+
+  if (mimeType.startsWith('application/')) {
+    return { icon: 'Archive', color: 'red' }
+  }
+
+  if (mimeType.startsWith('audio/')) {
+    return { icon: 'Audio', color: 'yellow' }
+  }
+
+  if (mimeType.startsWith('video/')) {
+    return { icon: 'Video', color: 'violet' }
+  }
+
+  return { icon: 'File' }
 }

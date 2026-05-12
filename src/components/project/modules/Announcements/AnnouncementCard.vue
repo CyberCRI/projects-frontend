@@ -1,0 +1,281 @@
+<template>
+  <div class="announcement-wrapper">
+    <component :is="is" class="announcement-card" :class="{ 'shadow-box': !!to }" :to="to">
+      <ContextActionMenuInline
+        v-if="editable"
+        class="editable"
+        :can-edit="canEditProject"
+        :can-delete="canEditProject"
+        @delete="emit('delete')"
+        @edit="emit('edit')"
+      />
+      <div class="announcement-header horizontal-padding top-padding skeletons-text">
+        <span class="date-ctn">
+          {{ $d(new Date(announcement.updated_at)) }}
+        </span>
+        <span v-if="announcement.type && announcement.type !== 'na'" class="dot">&#9679;</span>
+        <span v-if="announcement.type && announcement.type !== 'na'" class="announcement-type">
+          {{ t(`recruit.${announcement.type}`) }}
+        </span>
+      </div>
+
+      <div class="main-content horizontal-padding bottom-padding">
+        <h3 class="announcement-title bottom-padding skeletons-text">
+          {{ capitalize(announcement.title) }}
+        </h3>
+
+        <div class="description skeletons-text" v-html="announcement.description" />
+      </div>
+      <div class="announcement-link horizontal-padding bottom-padding">
+        <span class="read skeletons-background">
+          <span class="icon"><IconImage name="ArrowRight" /></span>
+          {{ t('common.read') }}
+        </span>
+      </div>
+      <div
+        class="announcement-project horizontal-padding top-padding bottom-padding skeletons-background"
+      >
+        <!-- TODO change background-image to ImageResize components -->
+        <div
+          :style="{
+            'background-image': projectImage,
+          }"
+          class="picto"
+        />
+        <div class="text">
+          <h5 class="project-label">
+            {{ t('common.the-project') }}
+          </h5>
+          <h4 class="project-title">
+            {{ projectActual.$t.title }}
+          </h4>
+        </div>
+      </div>
+    </component>
+  </div>
+</template>
+
+<script setup lang="ts">
+import type { TranslatedAnnouncement } from '@/models/announcement.model'
+import type { TranslatedProject } from '@/models/project.model'
+import IconImage from '@/components/base/media/IconImage.vue'
+import { usePatatoid } from '@/composables/usePatatoids'
+import type { RouteLocationRaw } from 'vue-router'
+import { capitalize } from '@/functs/string'
+import { NuxtLink } from '#components'
+
+const props = withDefaults(
+  defineProps<{
+    project?: TranslatedProject
+    announcement: TranslatedAnnouncement
+    editable?: boolean
+    to?: RouteLocationRaw
+  }>(),
+  {
+    project: null,
+    editable: false,
+    to: null,
+  }
+)
+
+const emit = defineEmits<{
+  edit: []
+  delete: []
+  'know-more-clicked': [TranslatedAnnouncement]
+}>()
+
+const { t } = useNuxtI18n()
+
+const is = computed(() => (props.to ? NuxtLink : 'div'))
+
+const projectActual = computed(() => props.project ?? props.announcement.project)
+
+const { canEditProject } = usePermissions()
+
+const projectImage = computed(() => {
+  return `url(${projectActual.value?.header_image?.variations?.small}), url(${usePatatoid(1)})`
+})
+</script>
+
+<style lang="scss" scoped>
+$annoucement-picto-size: 72px;
+$annoucement-padding: pxToRem(20px);
+
+.announcement-wrapper {
+  width: 100%;
+
+  .announcement-card {
+    position: relative;
+    border: $border-width-s solid var(--primary);
+    border-radius: $border-radius-m;
+    width: 100%;
+    height: 480px;
+    background: var(--white);
+    color: var(--black);
+    display: flex;
+    flex-flow: column nowrap;
+
+    .horizontal-padding {
+      padding-left: $annoucement-padding;
+      padding-right: $annoucement-padding;
+    }
+
+    .top-padding {
+      padding-top: $annoucement-padding;
+    }
+
+    .bottom-padding {
+      padding-bottom: $annoucement-padding;
+    }
+
+    .announcement-header {
+      color: var(--primary-dark);
+      font-size: $font-size-s;
+      font-weight: 700;
+      text-transform: uppercase;
+      flex-shrink: 0;
+      flex-grow: 0;
+
+      .dot {
+        position: relative;
+        top: -2px;
+        padding: 0 $space-s;
+      }
+    }
+
+    .main-content {
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: flex-start;
+      padding-top: $space-l;
+
+      .announcement-title,
+      .description {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-word;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+      }
+
+      .announcement-title {
+        font-size: $font-size-l;
+        font-weight: 500;
+        -webkit-line-clamp: 3;
+      }
+
+      .description {
+        font-size: $font-size-m;
+        -webkit-line-clamp: 6;
+      }
+    }
+
+    .announcement-link {
+      flex-shrink: 0;
+      flex-grow: 1;
+    }
+
+    .read {
+      border: 0 none;
+      outline: none;
+      background-color: transparent;
+      color: var(--primary-dark);
+      font-weight: 700;
+      font-size: $font-size-m;
+      text-transform: capitalize;
+      padding: 0;
+      display: flex;
+      align-items: flex-start;
+
+      .icon {
+        width: $layout-size-l;
+        padding-right: $space-xs;
+        display: inline-block;
+
+        svg {
+          fill: var(--primary-dark);
+        }
+      }
+    }
+
+    .announcement-project {
+      flex: 0 0 0;
+      display: flex;
+      background-color: var(--primary-lighter);
+      border-bottom-left-radius: $border-radius-m;
+      border-bottom-right-radius: $border-radius-m;
+
+      .project-label {
+        text-transform: uppercase;
+        color: var(--primary-dark);
+        font-size: $font-size-2xs;
+        font-weight: bold;
+        margin: 0;
+        padding-bottom: $space-s;
+      }
+
+      .picto {
+        width: pxToRem($annoucement-picto-size);
+        flex-basis: pxToRem($annoucement-picto-size);
+        flex-shrink: 0;
+        height: pxToRem($annoucement-picto-size);
+        background-position: center center;
+        background-size: cover;
+        border-radius: $border-radius-xs;
+      }
+
+      .text {
+        padding-left: $annoucement-padding;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+        flex-grow: 1;
+
+        .project-label,
+        .spacer {
+          flex-shrink: 0;
+          flex-grow: 0;
+        }
+      }
+
+      .project-title {
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-word;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+      }
+    }
+  }
+}
+
+.editable {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5rem;
+}
+
+:deep(.description) {
+  strong {
+    font-weight: 700;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  u {
+    text-decoration: underline;
+  }
+
+  a {
+    color: var(--primary-dark);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+</style>

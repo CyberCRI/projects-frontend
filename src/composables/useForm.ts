@@ -1,4 +1,4 @@
-import type { useVuelidate } from '@vuelidate/core'
+import type { ErrorObject, useVuelidate } from '@vuelidate/core'
 import { difference, isNil } from 'es-toolkit'
 import useValidate from '@vuelidate/core'
 
@@ -14,10 +14,9 @@ export type OptionsForm<T, CleanResult> = {
 export type UseFormResult<T, CleanResult> = {
   form: Ref<T>
   isValid: Ref<boolean>
-  errors: ComputedRef<{
-    [key: string]: any
-  }>
+  errors: ComputedRef<Record<keyof T, ErrorObject[]>>
   cleanedData: null | Ref<CleanResult>
+  reset: (data?: T) => void
   v$: ReturnType<typeof useVuelidate<T>>
 }
 
@@ -54,7 +53,7 @@ const onClean = (d) => d
  * @param {OptionsForm} options?
  * @returns {UseFormResult}
  */
-const useForm = <T, CleanResult = T>(
+const useForm = <T extends object, CleanResult = T>(
   options: OptionsForm<T, CleanResult> = { onClean }
 ): UseFormResult<T, CleanResult> => {
   const def = {
@@ -85,16 +84,14 @@ const useForm = <T, CleanResult = T>(
     { deep: true, immediate: lazy }
   )
 
-  const errors = computed<{
-    [key: string]: string[]
-  }>(() => {
+  const errors = computed(() => {
     const err = {}
     Object.keys(form.value).forEach((k) => {
       if (v$.value[k]?.$errors) {
         err[k] = v$.value[k].$errors
       }
     })
-    return err
+    return err as Record<keyof T, ErrorObject[]>
   })
 
   const cleanedData = ref<CleanResult>()
@@ -116,12 +113,28 @@ const useForm = <T, CleanResult = T>(
     { deep: true, immediate: true }
   )
 
+  //
+  /**
+   * reset form value with new value and call $reset in vulidate
+   *
+   * @function
+   * @name reset
+   * @kind variable
+   * @memberof useForm
+   * @param {T} newData?
+   * @returns {void}
+   */
+  const reset = (newData?: T) => {
+    form.value = newData ?? ({} as T)
+    v$.value.$reset()
+  }
+
   return {
     form,
     errors,
     isValid,
     cleanedData,
-    // @ts-expect-error better type
+    reset,
     v$,
   }
 }

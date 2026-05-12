@@ -1,9 +1,9 @@
 import { BlogEntryFactory } from '~~/tests/factories/blog-entry.factory'
-import BlogEntry from '~/components/project/blog/BlogEntry.vue'
 import { lpiMount } from '~~/tests/helpers/LpiMount'
 
 import { describe, expect, it } from 'vitest'
 
+import BlogEntry from '~/components/project/modules/BlogEntries/BlogEntry.vue'
 import useAutoTranslate from '~/composables/useAutoTranslate'
 
 describe('BlogEntry.vue', () => {

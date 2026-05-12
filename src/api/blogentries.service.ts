@@ -1,44 +1,60 @@
-// import type { APIResponseList } from '@/api/types'
 import type {
-  BlogEntryInput /*, BlogEntryOutput*/,
+  BlogEntryForm,
+  BlogEntryId,
   BlogEntryModel,
   QueryFilterBlogEntry,
 } from '@/models/blog-entry.model'
 import type { ProjectSlugOrId } from '@/models/project.model'
+import type { ImageModel } from '~/models/image.model'
 import useAPI from '@/composables/useAPI'
 
+type ConfigBlogEntry = UseApiOptions
 type ConfigBlogEntries = UseApiOptions<QueryFilterBlogEntry>
 
 export async function getBlogEntries(projectId: ProjectSlugOrId, config: ConfigBlogEntries = {}) {
   return await useAPI<PaginationResult<BlogEntryModel>>(`project/${projectId}/blog-entry/`, config)
 }
 
-export async function getBlogEntry(body: BlogEntryInput) {
-  return await useAPI(`project/${body.project_id}/blog-entry/${body.blog_entry_id}/`, {})
+export async function getBlogEntry(
+  projectId: ProjectSlugOrId,
+  blogEntryId: BlogEntryId,
+  config: ConfigBlogEntry = {}
+) {
+  return await useAPI<BlogEntryModel>(`project/${projectId}/blog-entry/${blogEntryId}/`, config)
 }
 
-export async function postBlogEntry(blogEntry: BlogEntryInput) {
-  return await useAPI(`project/${blogEntry.project_id}/blog-entry/`, {
-    body: blogEntry,
+export async function postBlogEntry(projectId: ProjectSlugOrId, body: BlogEntryForm) {
+  return await useAPI<BlogEntryModel>(`project/${projectId}/blog-entry/`, {
+    body,
     method: 'POST',
   })
 }
 
-export async function patchBlogEntry({
-  project_id,
-  body,
-}: {
-  project_id: string
-  body: BlogEntryInput
-}) {
-  return await useAPI(`project/${project_id}/blog-entry/${body.id}/`, { body, method: 'PATCH' })
+export async function patchBlogEntry(
+  projectId: ProjectSlugOrId,
+  blogEntryId: BlogEntryId,
+  body: BlogEntryForm
+) {
+  return await useAPI<BlogEntryModel>(`project/${projectId}/blog-entry/${blogEntryId}/`, {
+    body,
+    method: 'PATCH',
+  })
 }
 
-export async function deleteBlogEntry({ project_id, id }: { project_id: string; id: number }) {
-  return await useAPI(`project/${project_id}/blog-entry/${id}/`, { method: 'DELETE' })
+export async function deleteBlogEntry(projectId: ProjectSlugOrId, blogEntryId: BlogEntryId) {
+  return await useAPI<undefined>(`project/${projectId}/blog-entry/${blogEntryId}/`, {
+    method: 'DELETE',
+  })
 }
 
-export async function postBlogEntryImage({ body, project_id, blog_entry_id = null }) {
-  const query = blog_entry_id ? { blog_entry_id } : {}
-  return await useAPI(`project/${project_id}/blog-entry-image/`, { body, method: 'POST', query })
+export async function postBlogEntryImage(
+  projectId: ProjectSlugOrId,
+  body: FormData,
+  config: ConfigBlogEntry = {}
+) {
+  return await useAPI<ImageModel>(`project/${projectId}/blog-entry-image/`, {
+    ...config,
+    body,
+    method: 'POST',
+  })
 }

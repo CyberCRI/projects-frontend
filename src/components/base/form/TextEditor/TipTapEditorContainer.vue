@@ -1,13 +1,16 @@
 <script setup lang="ts">
-import type { Editor } from '@tiptap/core'
+import type { ErrorObject } from '@vuelidate/core'
+import type { Editor } from '@tiptap/vue-3'
 
 const props = withDefaults(
   defineProps<{
     mode: string
     editor?: Editor
+    errors?: ErrorObject[]
   }>(),
   {
     editor: null,
+    errors: () => [],
   }
 )
 
@@ -29,6 +32,7 @@ const { locale } = useNuxtI18n()
     @click.self="focusEditor"
   >
     <slot />
+    <field-errors :errors="errors" />
   </div>
 </template>
 <style lang="scss" scoped>

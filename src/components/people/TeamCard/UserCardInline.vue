@@ -45,7 +45,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends Roles">
 import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 
@@ -53,15 +53,15 @@ import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
 import type { IconImageChoice } from '~/functs/IconImage'
 
 import type { TranslatedUserModel } from '~/models/user.model'
+import { roleI18n } from '~/functs/rolesUtils'
 import { capitalize } from '~/functs/string'
+import type { Roles } from '~/models/types'
 import { isNotGroup } from '~/functs/users'
-
-const { t } = useNuxtI18n()
 
 const props = withDefaults(
   defineProps<{
     user: TranslatedUserModel
-    role?: string
+    role?: T
     icon?: IconImageChoice
     selected?: boolean
     passive?: boolean
@@ -78,9 +78,7 @@ const emit = defineEmits(['user-clicked'])
 
 const roleLabel = computed(() => {
   if (props.role) {
-    if (props.role === 'owners') return t('role.editor')
-    else if (props.role === 'members') return t('role.teammate')
-    else if (props.role === 'reviewers') return t('role.reviewer')
+    return roleI18n(props.role)
   }
   return null
 })

@@ -15,6 +15,8 @@ import CustomTableCell from './tiptap-extensions/CustomTableCell.js'
 import ExternalVideo from './tiptap-extensions/ExternalVideo.js'
 import LpiCodeBlock from './tiptap-extensions/LpiCodeBlock.js'
 import CustomImage from './tiptap-extensions/CustomImage.js'
+import type { ErrorObject } from '@vuelidate/core'
+import type { ExtractDefaultPropTypes } from 'vue'
 import lowlight from '~/functs/lowlight'
 import { Editor } from '@tiptap/vue-3'
 
@@ -23,17 +25,19 @@ export const emitsDefinitions = ['saved', 'image', 'blur', 'update:modelValue']
 export type PropsDefinitions = {
   modelValue?: string
   mode?: 'none' | 'simple' | 'medium' | 'full'
+  errors?: ErrorObject[]
   saveIconVisible?: boolean
   // function must take a file argument and return a promise resolving to an {url, width, height} object
   saveImageCallback?: (image) => void
   disableSave?: boolean
 }
 
-export const PropsDefault: Partial<PropsDefinitions> = {
+export const PropsDefault: ExtractDefaultPropTypes<PropsDefinitions> = {
   mode: 'simple',
   saveIconVisible: false,
   saveImageCallback: null,
   disableSave: false,
+  errors: () => [],
 }
 
 export function useTipTap({ props, emit, t }) {
@@ -73,7 +77,7 @@ export function useTipTap({ props, emit, t }) {
   const onFileSizeError = (evt, err) => {
     console.error(err)
     evt.preventDefault()
-    toaster.pushError(t('common.file-too-big', { maxSize: '1' }))
+    toaster.pushError(t('resource.file.form.too-big', { maxSize: '1' }))
   }
 
   const onDrop = (evt) => {

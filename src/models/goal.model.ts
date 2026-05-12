@@ -1,6 +1,7 @@
 import type BaseModel from '~/models/base.model'
 import type { StatusType } from '~/models/types'
 
+import type { ProjectSlugOrId } from '~/models/project.model'
 import type { Translated } from '~/interfaces/translated'
 
 /**
@@ -24,6 +25,7 @@ export type GoalInput = Required<GoalModel> & {
 
 export type GoalForm = Omit<GoalModel, 'id'> & {
   id?: GoalModel['id']
+  project_id?: ProjectSlugOrId
 }
 
 export type GoalOutput = Required<GoalModel>

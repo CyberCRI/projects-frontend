@@ -1,14 +1,19 @@
 import type {
   ProjectCategoryCreateInput,
+  ProjectCategoryModel,
   ProjectCategoryPatchInput,
   ProjectCategoryPutInput,
 } from '~/models/project-category.model'
 
+import type { UseApiOptions } from '~/composables/useAPI'
 import useAPI from '~/composables/useAPI'
 
-import type { TagModel } from '~/models/tag.model'
+import type { OrganizationModel } from '~/models/organization.model'
+
+type Config = UseApiOptions
+
 export async function createProjectCategory(
-  organizationCode: string,
+  organizationCode: OrganizationModel['code'],
   category: ProjectCategoryCreateInput | FormData
 ) {
   return await useAPI(`organization/${organizationCode}/category/`, {
@@ -18,7 +23,7 @@ export async function createProjectCategory(
 }
 
 export async function putProjectCategory(
-  organizationCode: string,
+  organizationCode: OrganizationModel['code'],
   id: number,
   category: ProjectCategoryPutInput | FormData
 ) {
@@ -29,7 +34,7 @@ export async function putProjectCategory(
 }
 
 export async function patchProjectCategory(
-  organizationCode: string,
+  organizationCode: OrganizationModel['code'],
   id: number,
   category: ProjectCategoryPatchInput | FormData
 ) {
@@ -39,27 +44,42 @@ export async function patchProjectCategory(
   })
 }
 
-export async function deleteProjectCategory(organizationCode: string, id: number) {
+export async function deleteProjectCategory(
+  organizationCode: OrganizationModel['code'],
+  id: number
+) {
   return await useAPI(`organization/${organizationCode}/category/${id}/`, { method: 'DELETE' })
 }
 
-export async function getProjectCategory(organizationCode: string, id: number) {
+export async function getProjectCategory(organizationCode: OrganizationModel['code'], id: number) {
   return await useAPI(`organization/${organizationCode}/category/${id}/`)
 }
 
-export async function getAllProjectCategories(organizationCode: string) {
-  return await useAPI<PaginationResult<TagModel>>(`organization/${organizationCode}/category/`)
+export async function getAllProjectCategories(
+  organizationCode: OrganizationModel['code'],
+  config: Config = {}
+) {
+  return await useAPI<PaginationResult<ProjectCategoryModel>>(
+    `organization/${organizationCode}/category/`,
+    config
+  )
 }
 
-export async function getRootProjectCategory(organizationCode: string) {
+export async function getRootProjectCategory(organizationCode: OrganizationModel['code']) {
   return await useAPI(`organization/${organizationCode}/categories-hierarchy/`)
 }
 
-export async function getProjectCategoriesHierarchy(organizationCode: string, rootId: number) {
+export async function getProjectCategoriesHierarchy(
+  organizationCode: OrganizationModel['code'],
+  rootId: number
+) {
   return await useAPI(`organization/${organizationCode}/category/${rootId}/hierarchy/`)
 }
 
-export async function postProjectCategoryBackground(organizationCode: string, { id, body }) {
+export async function postProjectCategoryBackground(
+  organizationCode: OrganizationModel['code'],
+  { id, body }
+) {
   return await useAPI(`organization/${organizationCode}/category/${id}/background/`, {
     body,
     method: 'POST',
@@ -67,7 +87,7 @@ export async function postProjectCategoryBackground(organizationCode: string, { 
 }
 
 export async function patchProjectCategoryBackground(
-  organizationCode: string,
+  organizationCode: OrganizationModel['code'],
   { id, imageId, body }
 ) {
   return await useAPI(`organization/${organizationCode}/category/${id}/background/${imageId}/`, {
@@ -77,7 +97,7 @@ export async function patchProjectCategoryBackground(
 }
 
 export async function deleteProjectCategoryBackground(
-  organizationCode: string,
+  organizationCode: OrganizationModel['code'],
   { category_id, id }
 ) {
   return await useAPI(

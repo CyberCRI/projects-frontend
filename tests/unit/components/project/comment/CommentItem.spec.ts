@@ -1,4 +1,4 @@
-import CommentItem from '~/components/project/comment/CommentItem.vue'
+import CommentItem from '~/components/project/modules/Comments/CommentItem.vue'
 import { CommentFactory } from '~~/tests/factories/comment.factory'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 

@@ -26,7 +26,7 @@
             'Categories',
             'Category',
             'pageProject',
-            'projectSummary',
+            'ProjectSnapshot',
             'projectDescription',
             'ProjectLocations',
             'projectBlog',

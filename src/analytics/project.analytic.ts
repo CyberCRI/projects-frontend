@@ -5,6 +5,7 @@ import type {
 
 import type { SearchParams } from '~/api/types'
 
+import type { ProjectSlugOrId } from '~/models/project.model'
 import analytics from '~/analytics'
 
 export interface ProjectAnalytic {
@@ -14,7 +15,7 @@ export interface ProjectAnalytic {
 
 export interface MemberAnalytic {
   project: {
-    id: string
+    id: ProjectSlugOrId
   }
   members: ProjectMembersAddInput | ProjectMembersDeleteInput
 }

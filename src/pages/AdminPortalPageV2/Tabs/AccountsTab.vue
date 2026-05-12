@@ -112,9 +112,9 @@
                       <dd>{{ user.job }}</dd>
                     </dl>
                     <dl class="user-details">
-                      <dt>{{ $t('admin.accounts.table.roles') }}</dt>
+                      <dt>{{ $t('role.label', 2) }}</dt>
                       <dd v-if="user.current_org_role">
-                        {{ $t(`groups.roles.${user.current_org_role}`) }}
+                        {{ roleI18n(user.current_org_role) }}
                       </dd>
                       <dd v-else>-</dd>
                     </dl>
@@ -167,6 +167,7 @@ import useOrganizationsStore from '~/stores/useOrganizations'
 
 import { factoriesSkeleton } from '~/skeletons/base.skeletons'
 import { peopleSkeleton } from '~/skeletons/people.skeletons'
+import { roleI18n } from '~/functs/rolesUtils'
 import { capitalize } from '~/functs/string'
 
 const organizationsStore = useOrganizationsStore()

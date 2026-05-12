@@ -85,7 +85,7 @@ describe('Function projectCanBeEdited', () => {
     const project = ProjectOutputFactory.generate()
     project.team.owners[0] = {
       ...UserFactory.generate({ id: 1 }),
-      role: 'leaders',
+      role: 'owners',
     } as ProjectMemberModel
     project.is_locked = false
 

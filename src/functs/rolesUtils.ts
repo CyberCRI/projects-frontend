@@ -1,3 +1,5 @@
+import type { Roles } from '~/models/types'
+
 export function roleIndex(user) {
   const index = user.roles?.reduce((acc, roleString) => {
     const [scope, pk, role] = roleString.split(':')
@@ -14,4 +16,27 @@ export function roleIndex(user) {
       return res
     },
   }
+}
+
+export const roleI18n = (role: Roles, ...args: any[]): string => {
+  const { t } = useNuxtI18n()
+
+  const key = `role.${role}.label`
+  const result = t(key, args)
+  if (result === key) {
+    console.error(`invalid role translated ${role}`)
+    return role
+  }
+  return result
+}
+
+export const roleHelpI18n = (role: Roles, ...args: any[]): string => {
+  const { t } = useNuxtI18n()
+
+  const key = `role.${role}.help`
+  const result = t(key, args)
+  if (result === key) {
+    return ''
+  }
+  return result
 }

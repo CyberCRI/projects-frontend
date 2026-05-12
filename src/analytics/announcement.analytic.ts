@@ -1,3 +1,4 @@
+import type { AnnouncementModel } from '~/models/announcement.model'
 import type { ProjectAnalytic } from '~/analytics/project.analytic'
 import analytics from '~/analytics'
 
@@ -5,14 +6,7 @@ export interface Announcement {
   project: {
     id: string
   }
-  announcement: {
-    description: string
-    title: string
-    type: string
-    status: string
-    deadline: Date
-    is_remunerated: boolean
-  }
+  announcement: AnnouncementModel
 }
 
 export default {

@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 
 describe('useModals composable', () => {
   it('default', () => {
-    const { stateModals, closeModals, openModals, toggleModals } = useModals({
+    const { stateModals, closeModals, openModals, toggleModals, closeAllModals } = useModals({
       drawer: true,
       modal: false,
     })
@@ -18,6 +18,11 @@ describe('useModals composable', () => {
 
     openModals('modal')
     expect(stateModals.value.modal).toBe(true)
+
+    openModals('modal', 'drawer')
+    expect(stateModals.value).toEqual({ modal: true, drawer: true })
+    closeAllModals()
+    expect(stateModals.value).toEqual({ modal: false, drawer: false })
   })
 })
 
