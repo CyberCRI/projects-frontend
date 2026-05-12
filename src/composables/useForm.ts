@@ -77,6 +77,7 @@ const useForm = <T extends object, CleanResult = T>(
 
       Object.keys(unref(options.rules ?? {})).forEach((key) => {
         if (lazy || diffKeys.includes(key)) {
+          console.log(key)
           v$.value[key].$touch()
         }
       })
@@ -87,9 +88,7 @@ const useForm = <T extends object, CleanResult = T>(
   const errors = computed(() => {
     const err = {}
     Object.keys(form.value).forEach((k) => {
-      if (v$.value[k]?.$errors) {
-        err[k] = v$.value[k].$errors
-      }
+      err[k] = v$.value[k]?.$errors || []
     })
     return err as Record<keyof T, ErrorObject[]>
   })

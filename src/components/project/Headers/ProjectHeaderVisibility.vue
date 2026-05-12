@@ -15,6 +15,7 @@
 </template>
 
 <script setup lang="ts">
+import InfoSentence from '~/components/project/Headers/InfoSentence.vue'
 import type { TranslatedProject } from '@/models/project.model'
 import type { IconImageChoice } from '@/functs/IconImage'
 

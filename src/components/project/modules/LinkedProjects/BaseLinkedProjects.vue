@@ -84,23 +84,18 @@ const onDeleteConfirm = () => {
       :pagination="pagination"
       @add="openModals('edit')"
     />
-    <ul class="project-list list-divider">
-      <li v-for="linked in linkedProjects" :key="linked.id">
-        <ProjectPreview :project="linked.project">
-          <template v-if="editable" #action>
-            <LpiButton
-              btn-icon="TrashCanOutline"
-              class="skeletons-background"
-              @click="onDelete(linked)"
-            />
-          </template>
-        </ProjectPreview>
-      </li>
-    </ul>
+    <div class="list-flow-container">
+      <ProjectCard v-for="linked in linkedProjects" :key="linked.id" :project="linked.project">
+        <template v-if="editable" #action>
+          <ContextActionMenuInline can-delete @delete="onDelete(linked)" />
+        </template>
+      </ProjectCard>
+    </div>
     <NothingHere v-if="linkedProjects.length === 0" />
-    <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
+    <PaginationButtonsV2 v-if="!preview" class="m8" :pagination="pagination" />
   </FetchLoader>
 
+  <!-- drawer/modal -->
   <ConfirmModal
     v-if="stateModals.delete"
     :title="$t('project.linked-project-confirm-delete')"

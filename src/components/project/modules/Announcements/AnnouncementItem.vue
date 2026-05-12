@@ -1,33 +1,32 @@
 <template>
   <div class="announcement">
     <div class="banner">
-      <div class="creation-date">
+      <div class="creation-date skeletons-text">
         {{ createdDateLabel }}
       </div>
-      <div v-if="!!announcement.deadline" class="deadline">
+      <div v-if="!!announcement.deadline" class="deadline skeletons-text">
         {{ deadlineLabel }}
       </div>
-      <div v-if="announcement.type && announcement.type !== 'na'" class="type">
+      <div v-if="announcement.type && announcement.type !== 'na'" class="type skeletons-text">
         {{ $t(`recruit.${announcement.type}`) }}
       </div>
     </div>
 
-    <div class="title">
+    <div class="title skeletons-text">
       {{ announcement.$t.title }}
     </div>
 
-    <div class="description" v-html="announcement.$t.description" />
+    <TipTapOutput
+      class="description tiptap-output skeletons-text"
+      :content="announcement.$t.description"
+    />
 
-    <div v-if="canEditAndDelete" class="action-buttons">
-      <ContextActionButton
-        action-icon="Pen"
-        class="udpate-btn small"
-        @click="$emit('update-announcement')"
-      />
-      <ContextActionButton
-        action-icon="Close"
-        class="udpate-btn small"
-        @click="$emit('open-confirm-modal')"
+    <div class="action-buttons">
+      <ContextActionMenuInline
+        :can-delete="canEditAndDelete"
+        :can-edit="canEditAndDelete"
+        @edit="$emit('update-announcement')"
+        @delete="$emit('open-confirm-modal')"
       />
     </div>
 
@@ -47,20 +46,20 @@
 <script setup lang="ts">
 import type { TranslatedAnnouncement } from '~/models/announcement.model'
 
-import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 
+import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
 import { formatDate } from '~/functs/date'
 
 const props = withDefaults(
   defineProps<{
     announcement: TranslatedAnnouncement
     showApplyAction?: boolean
-    isInEditingMode?: boolean
+    editable?: boolean
   }>(),
   {
     showApplyAction: false,
-    isInEditingMode: false,
+    editable: false,
   }
 )
 
@@ -75,7 +74,7 @@ const { locale, t } = useNuxtI18n()
 const { canEditProject } = usePermissions()
 
 const canEditAndDelete = computed(() => {
-  return canEditProject.value && props.isInEditingMode
+  return canEditProject.value && props.editable
 })
 
 const createdDateLabel = computed(() => {

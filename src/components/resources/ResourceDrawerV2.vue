@@ -104,7 +104,6 @@ const onClose = () => {
     @close="onClose"
     @confirm="onConfirm"
   >
-    {{ JSON.stringify(errors) }}
     <div class="list-container">
       <TextInput
         v-model="form.title"

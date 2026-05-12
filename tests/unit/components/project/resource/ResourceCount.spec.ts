@@ -1,7 +1,7 @@
 import MockComponent from '~~/tests/helpers/MockComponent.vue'
 import { lpiMount } from '~~/tests/helpers/LpiMount'
 
-import ResourceCount from '~/components/resource/ResourceCount.vue'
+import ResourceCount from '~/components/resources/ResourceCount.vue'
 import { describe, expect, it, vi } from 'vitest'
 
 const mockRouter = {

@@ -7,15 +7,13 @@
         </div>
 
         <div class="date skeletons-text">
-          {{ $d(new Date(blogEntry.created_at)) }}
+          {{ formatDate(blogEntry.created_at, locale) }}
         </div>
       </div>
 
       <div class="expand-button skeletons-background" @click="toggleModal">
         <span>{{ stateModal ? $t('common.shrink') : $t('common.read') }}</span>
-
-        <IconImage v-if="stateModal" name="ChevronUp" />
-        <IconImage v-else name="ChevronDown" />
+        <IconImage :name="stateModal ? 'ChevronUp' : 'ChevronDown'" />
       </div>
     </div>
 
@@ -41,17 +39,11 @@
       :class="{ 'button-ctn--expanded': stateModal }"
       class="button-ctn skeletons-background"
     >
-      <ContextActionButton
-        v-if="canEdit"
-        class="button small"
-        action-icon="Pen"
-        @click="$emit('edit')"
-      />
-      <ContextActionButton
-        v-if="canDelete"
-        class="button small"
-        action-icon="TrashCanOutline"
-        @click="$emit('delete')"
+      <ContextActionMenuInline
+        :can-delete="canDelete"
+        :can-edit="canEdit"
+        @delete="$emit('delete')"
+        @edit="$emit('edit')"
       />
     </div>
   </div>
@@ -60,9 +52,9 @@
 <script setup lang="ts">
 import type { TranslatedBlogEntry } from '~/models/blog-entry.model'
 
-import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
 import TipTapOutput from '~/components/base/form/TextEditor/TipTapOutput.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
+import { formatDate } from '~/functs/date'
 
 const props = withDefaults(
   defineProps<{
@@ -86,6 +78,7 @@ const emit = defineEmits<{
   expanded: [boolean]
 }>()
 
+const { locale } = useNuxtI18n()
 const { stateModal, toggleModal, openModal, closeModal } = useModal(props.expanded)
 
 watch(stateModal, () => emit('expanded', stateModal.value))

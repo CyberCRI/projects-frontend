@@ -1,44 +1,3 @@
-<template>
-  <BaseDrawer
-    :confirm-action-disabled="!isValid"
-    :confirm-action-name="$t('common.save')"
-    :is-opened="isOpened"
-    :title="review?.id ? $t('project.add-review') : $t('project.edit-review')"
-    class="review-drawer medium"
-    :asyncing="asyncing"
-    @close="onClose"
-    @confirm="submit"
-  >
-    <div class="review-form">
-      <div class="review-entry">
-        <label>{{ $t('common.title') }}</label>
-        <TextInput v-model="form.title" :errors="errors.title" />
-      </div>
-
-      <div class="review-entry editor-entry">
-        <label>{{ $t('form.description') }}</label>
-        <TipTapEditor v-model="form.description" :errors="errors.description" />
-      </div>
-      <div class="review-entry review-switch">
-        <label>{{ $t('project.publish') }}</label>
-        <SwitchInput v-model="form.publish" />
-      </div>
-      <div class="review-entry review-switch">
-        <label>{{ $t('project.lock') }}</label>
-        <SwitchInput v-model="form.lock" />
-      </div>
-    </div>
-  </BaseDrawer>
-
-  <ConfirmModal
-    v-if="stateModals.saveChange"
-    :title="$t('form.quit-without-saving-title')"
-    :content="$t('common.confirm-close')"
-    @cancel="closeModals('saveChange')"
-    @confirm="$emit('close')"
-  />
-</template>
-
 <script setup lang="ts">
 import { patchReview, postReview } from '~/api/reviews.service'
 
@@ -171,6 +130,47 @@ const onClose = () => {
   }
 }
 </script>
+
+<template>
+  <BaseDrawer
+    :confirm-action-disabled="!isValid"
+    :confirm-action-name="$t('common.save')"
+    :is-opened="isOpened"
+    :title="review?.id ? $t('project.add-review') : $t('project.edit-review')"
+    class="review-drawer medium"
+    :asyncing="asyncing"
+    @close="onClose"
+    @confirm="submit"
+  >
+    <div class="review-form">
+      <div class="review-entry">
+        <label>{{ $t('common.title') }}</label>
+        <TextInput v-model="form.title" :errors="errors.title" />
+      </div>
+
+      <div class="review-entry editor-entry">
+        <label>{{ $t('form.description') }}</label>
+        <TipTapEditor v-model="form.description" :errors="errors.description" />
+      </div>
+      <div class="review-entry review-switch">
+        <label>{{ $t('project.publish') }}</label>
+        <SwitchInput v-model="form.publish" />
+      </div>
+      <div class="review-entry review-switch">
+        <label>{{ $t('project.lock') }}</label>
+        <SwitchInput v-model="form.lock" />
+      </div>
+    </div>
+  </BaseDrawer>
+
+  <ConfirmModal
+    v-if="stateModals.saveChange"
+    :title="$t('form.quit-without-saving-title')"
+    :content="$t('common.confirm-close')"
+    @cancel="closeModals('saveChange')"
+    @confirm="$emit('close')"
+  />
+</template>
 
 <style lang="scss" scoped>
 .review-form {

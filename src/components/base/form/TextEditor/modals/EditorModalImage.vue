@@ -12,14 +12,16 @@
     </template>
 
     <template #body>
-      <img :src="displayedImage" />
+      <div class="list-container">
+        <img :src="displayedImage" />
 
-      <ImageInput
-        id="editor-image"
-        :label="$t('project.form.upload-image')"
-        class="image-input"
-        @upload-image="fileChange"
-      />
+        <ImageInput
+          id="editor-image"
+          :label="$t('project.form.upload-image')"
+          class="image-input"
+          @upload-image="fileChange"
+        />
+      </div>
     </template>
   </DialogModal>
 </template>

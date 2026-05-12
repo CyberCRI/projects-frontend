@@ -263,9 +263,7 @@ const save = () => {
 }
 
 .editor-section {
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 </style>

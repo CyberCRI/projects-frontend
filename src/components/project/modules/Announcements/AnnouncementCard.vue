@@ -11,7 +11,7 @@
       />
       <div class="announcement-header horizontal-padding top-padding skeletons-text">
         <span class="date-ctn">
-          {{ $d(new Date(announcement.updated_at)) }}
+          {{ formatDate(announcement.updated_at, locale) }}
         </span>
         <span v-if="announcement.type && announcement.type !== 'na'" class="dot">&#9679;</span>
         <span v-if="announcement.type && announcement.type !== 'na'" class="announcement-type">
@@ -62,6 +62,7 @@ import IconImage from '@/components/base/media/IconImage.vue'
 import { usePatatoid } from '@/composables/usePatatoids'
 import type { RouteLocationRaw } from 'vue-router'
 import { capitalize } from '@/functs/string'
+import { formatDate } from '~/functs/date'
 import { NuxtLink } from '#components'
 
 const props = withDefaults(
@@ -84,7 +85,7 @@ const emit = defineEmits<{
   'know-more-clicked': [TranslatedAnnouncement]
 }>()
 
-const { t } = useNuxtI18n()
+const { t, locale } = useNuxtI18n()
 
 const is = computed(() => (props.to ? NuxtLink : 'div'))
 

@@ -17,8 +17,7 @@
             </p>
 
             <span v-if="hasDescription" class="chevron-icon skeletons-background">
-              <IconImage v-if="stateModal" name="ChevronUp" />
-              <IconImage v-else name="ChevronDown" />
+              <IconImage :name="stateModal ? 'ChevronUp' : 'ChevronDown'" />
             </span>
           </div>
 

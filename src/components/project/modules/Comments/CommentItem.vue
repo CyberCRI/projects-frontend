@@ -19,23 +19,23 @@
             <span class="separator skeletons-text">&bull;</span>
             <span class="date skeletons-text">
               <span v-if="showEditDate">
-                {{ $d(new Date(comment.updated_at)) }}
+                {{ formatDate(comment.updated_at, locale) }}
               </span>
               <span v-else>
-                {{ $d(new Date(comment.created_at)) }}
+                {{ formatDate(comment.created_at, locale) }}
               </span>
             </span>
           </div>
         </div>
 
-        <div v-if="editing" class="comment-body skeletons-background">
+        <div v-if="stateModals.edit" class="comment-body skeletons-background">
           <MakeComment
             :project="project"
             :original-comment="comment"
             :replied-comment="repliedComment"
             :is-private="isPrivate"
-            @canceled="toggleEdit"
-            @submited="toggleEdit"
+            @canceled="closeModals('edit')"
+            @submited="closeModals('edit')"
             @comment-edited="$emit('comment-edited', $event)"
             @project-message-edited="$emit('project-message-posted', $event)"
           />
@@ -45,30 +45,20 @@
         <div class="comment-footer">
           <div v-if="isConnected" class="actions">
             <div class="reply-action skeletons-background">
-              <ExternalLabelButton
+              <LpiButton
                 v-if="!isReply"
                 :label="$t('common.reply')"
                 btn-icon="Reply"
-                :has-border="true"
-                @click="toggleReply"
+                @click="toggleModals('replying')"
               />
             </div>
 
-            <div v-if="canEdit" class="author-action skeletons-background">
-              <ExternalLabelButton
-                v-if="canEdit"
-                :label="$t('common.edit')"
-                :has-border="true"
-                btn-icon="Pen"
-                @click="toggleEdit"
-              />
-
-              <ExternalLabelButton
-                v-if="canEdit"
-                :label="$t('common.delete')"
-                :has-border="true"
-                btn-icon="TrashCanOutline"
-                @click="openConfirmModal"
+            <div class="author-action skeletons-background">
+              <ContextActionMenuInline
+                :can-edit="canEdit"
+                :can-delete="canEdit"
+                @delete="openModals('delete')"
+                @edit="toggleModals('edit')"
               />
             </div>
           </div>
@@ -85,18 +75,18 @@
           <IconImage name="Alert" class="skeletons-background" />
           <span class="skeletons-text">
             {{ isPrivate ? $t('comment.private-exchange.deleted') : $t('comment.deleted') }}
-            {{ $d(new Date(comment.deleted_at)) }}
+            {{ formatDate(comment.deleted_at, locale) }}
           </span>
         </div>
       </div>
     </div>
-    <div v-if="replying" class="comment-reply-ctn skeletons-text">
+    <div v-if="stateModals.replying" class="comment-reply-ctn skeletons-text">
       <MakeComment
         :project="project"
         :replied-comment="comment"
         :is-private="isPrivate"
-        @canceled="toggleReply"
-        @submited="toggleReply"
+        @canceled="toggleModals('replying')"
+        @submited="toggleModals('replying')"
         @comment-posted="$emit('comment-posted', $event)"
         @project-message-posted="$emit('project-message-posted', $event)"
       />
@@ -120,35 +110,37 @@
     </div>
 
     <ConfirmModal
-      v-if="confirmDeleteComment"
+      v-if="stateModals.delete"
       :content="
         isPrivate
           ? $t('comment.private-exchange.delete-description')
           : $t('comment.delete-description')
       "
       :title="isPrivate ? $t('comment.private-exchange.delete-title') : $t('comment.delete-title')"
-      :asyncing="isDeleting"
-      @cancel="openConfirmModal"
+      :asyncing="asyncing"
+      @cancel="closeModals('delete')"
       @confirm="onDeleteComment"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import ExternalLabelButton from '@/components/base/button/ExternalLabelButton.vue'
+import type { ProjectMessageModel, TranslatedProjectMessage } from '@/models/project-message.model'
+import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
 import MakeComment from '~/components/project/modules/Comments/MakeComment.vue'
-import type { TranslatedProjectMessage } from '@/models/project-message.model'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
+import type { CommentModel, TranslatedComment } from '@/models/comment.model'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import { deleteProjectMessage } from '@/api/project-messages.service'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 import type { TranslatedProject } from '@/models/project.model'
-import type { TranslatedComment } from '@/models/comment.model'
+import LpiButton from '~/components/base/button/LpiButton.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import { deleteComment } from '@/api/comments.service'
 import useToasterStore from '@/stores/useToaster'
 import useUsersStore from '@/stores/useUsers'
+import { formatDate } from '~/functs/date'
 import analytics from '@/analytics'
 
 const props = withDefaults(
@@ -166,13 +158,13 @@ const props = withDefaults(
   }
 )
 
-const { t } = useNuxtI18n()
+const { t, locale } = useNuxtI18n()
 
 const emit = defineEmits<{
-  'comment-posted': [TranslatedComment | TranslatedProjectMessage]
-  'project-message-posted': [TranslatedComment | TranslatedProjectMessage]
-  'comment-edited': [TranslatedComment | TranslatedProjectMessage]
-  'project-message-edited': [TranslatedComment | TranslatedProjectMessage]
+  'comment-posted': [CommentModel]
+  'project-message-posted': [ProjectMessageModel]
+  'comment-edited': [CommentModel]
+  'project-message-edited': [ProjectMessageModel]
   'comment-deleted': [TranslatedComment | TranslatedProjectMessage]
   'project-message-deleted': [TranslatedComment | TranslatedProjectMessage]
 }>()
@@ -180,14 +172,14 @@ const toaster = useToasterStore()
 const usersStore = useUsersStore()
 const { isAdmin } = usePermissions()
 
-const replying = ref(false)
-const editing = ref(false)
-const confirmDeleteComment = ref(false)
-const isDeleting = ref(false)
-
-const currentUserId = computed(() => {
-  return usersStore.id || null
+const { stateModals, toggleModals, closeModals, openModals } = useModals({
+  replying: false,
+  delete: false,
+  edit: false,
 })
+const asyncing = ref(false)
+
+const currentUserId = computed(() => usersStore.id || null)
 
 const canEdit = computed(() => {
   return props.comment.author.id === currentUserId.value || isAdmin.value
@@ -202,58 +194,38 @@ const showEditDate = computed(() => {
   )
 })
 
-const toggleEdit = () => {
-  editing.value = !editing.value
-}
-
-const toggleReply = () => {
-  replying.value = !replying.value
-}
-
-const openConfirmModal = () => {
-  confirmDeleteComment.value = !confirmDeleteComment.value
-}
-
 const onDeleteComment = async () => {
-  isDeleting.value = true
+  asyncing.value = true
+
   if (props.isPrivate) {
-    try {
-      await deleteProjectMessage(props.project.id, props.comment.id)
-
-      analytics.projectMessage.deleteProjectMessage({
-        project: {
-          id: props.project.id,
-        },
-        projectMessage: props.comment,
+    deleteProjectMessage(props.project.id, props.comment.id)
+      .then(() => {
+        analytics.projectMessage.deleteProjectMessage({
+          project: {
+            id: props.project.id,
+          },
+          projectMessage: props.comment,
+        })
+        toaster.pushSuccess(t('toasts.project-message-delete.success'))
+        emit('project-message-deleted', props.comment)
       })
-      toaster.pushSuccess(t('toasts.project-message-delete.success') /* TODO */)
-      emit('project-message-deleted', props.comment)
-    } catch (error) {
-      toaster.pushError(`${t('toasts.comment-delete.error')} (${error})` /* TODO */)
-      console.error(error)
-    } finally {
-      confirmDeleteComment.value = false
-      isDeleting.value = false
-    }
+      .catch(() => toaster.pushError(t('toasts.project-message-delete.error')))
+      .finally(() => (asyncing.value = false))
   } else {
-    try {
-      await deleteComment(props.project.id, props.comment.id)
-      analytics.comment.deleteComment({
-        project: {
-          id: props.project.id,
-        },
-        comment: props.comment as TranslatedComment,
-      })
-      toaster.pushSuccess(t('toasts.comment-delete.success'))
+    deleteComment(props.project.id, props.comment.id)
+      .then(() => {
+        analytics.comment.deleteComment({
+          project: {
+            id: props.project.id,
+          },
+          comment: props.comment as TranslatedComment,
+        })
+        toaster.pushSuccess(t('toasts.comment-delete.success'))
 
-      emit('comment-deleted', props.comment)
-    } catch (error) {
-      toaster.pushError(`${t('toasts.comment-delete.error')} (${error})`)
-      console.error(error)
-    } finally {
-      confirmDeleteComment.value = false
-      isDeleting.value = false
-    }
+        emit('comment-deleted', props.comment)
+      })
+      .catch(() => toaster.pushError(t('toasts.comment-delete.error')))
+      .finally(() => (asyncing.value = false))
   }
 }
 </script>

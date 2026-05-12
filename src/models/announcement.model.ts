@@ -1,4 +1,4 @@
-import type { ProjectModel, TranslatedProject } from '@/models/project.model'
+import type { ProjectModel, ProjectSlugOrId, TranslatedProject } from '@/models/project.model'
 import type { OrganizationModel } from '@/models/organization.model'
 import type { Translated } from '@/interfaces/translated'
 import type { Ordering } from '@/interfaces/query'
@@ -47,6 +47,17 @@ export type AnnouncementForm = Omit<
 > & {
   id?: AnnouncementModel['id']
   deadline: string | Date
+}
+
+export type AnnouncementApplyForm = {
+  recaptcha: string
+  project_id: ProjectSlugOrId
+  announcement_id: AnnouncementId
+
+  applicant_firstname: string
+  applicant_name: string
+  applicant_email: string
+  applicant_message: string
 }
 
 export type QueryFilterAnnouncement = Partial<{

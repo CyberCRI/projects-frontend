@@ -1,9 +1,9 @@
 import type {
-  AnnouncementApplyInput,
   AnnouncementModel,
   QueryFilterAnnouncement,
   AnnouncementForm,
   AnnouncementId,
+  AnnouncementApplyForm,
 } from '@/models/announcement.model'
 
 import type { ProjectSlugOrId } from '@/models/project.model'
@@ -58,8 +58,12 @@ export async function deleteAnnouncement(
   })
 }
 
-export async function applyAnnouncement(body: AnnouncementApplyInput) {
-  return await useAPI(`project/${body.project_id}/announcement/${body.announcement_id}/apply/`, {
+export async function applyAnnouncement(
+  projectId: ProjectSlugOrId,
+  announcementId: AnnouncementId,
+  body: AnnouncementApplyForm
+) {
+  return await useAPI<undefined>(`project/${projectId}/announcement/${announcementId}/apply/`, {
     body,
     method: 'POST',
   })

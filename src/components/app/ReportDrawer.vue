@@ -1,3 +1,83 @@
+<script setup lang="ts">
+import { reportAbuse, reportBug } from '~/api/report.service'
+
+import TextInput from '~/components/base/form/TextInput.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+
+import { defaultReportForm, useReportForm } from '~/form/report'
+import FormPanel from '~/components/base/FormPanel.vue'
+import Field from '~/components/base/form/Field.vue'
+import useToasterStore from '~/stores/useToaster'
+import { isEqual } from 'es-toolkit'
+
+const props = withDefaults(defineProps<{ type: 'abuse' | 'bug'; isOpened?: boolean }>(), {
+  isOpened: false,
+})
+
+const emit = defineEmits<{ close: [] }>()
+
+const toaster = useToasterStore()
+const { t } = useNuxtI18n()
+
+const { stateModals, closeModals, openModals, closeAllModals } = useModals({ saveChange: false })
+const { form, isValid, errors, cleanedData, reset } = useReportForm({ lazy: true })
+const isLoading = ref(false)
+
+const close = () => {
+  closeAllModals()
+  emit('close')
+}
+
+const organizationCode = useOrganizationCode()
+
+const defaultLocalForm = () => ({
+  ...defaultReportForm(),
+  // default urls
+  url: useRequestURL().toString(),
+})
+
+const checkClose = () => {
+  if (isEqual(form.value, defaultLocalForm())) {
+    close()
+  } else {
+    openModals('saveChange')
+  }
+}
+
+watch(
+  () => props.isOpened,
+  () => reset(defaultLocalForm()),
+  { immediate: true }
+)
+
+const submit = async () => {
+  if (!isValid.value) {
+    return
+  }
+  isLoading.value = true
+
+  const body = { ...cleanedData.value }
+
+  if (props.type === 'abuse') {
+    reportAbuse(organizationCode, body)
+      .then(() => {
+        toaster.pushSuccess(t('toasts.abuse-report.success'))
+        close()
+      })
+      .catch(() => toaster.pushError(t('toasts.abuse-report.error')))
+      .finally(() => (isLoading.value = false))
+  } else if (props.type === 'bug') {
+    reportBug(organizationCode, body)
+      .then(() => {
+        toaster.pushSuccess(t('toasts.bug-report.success'))
+        close()
+      })
+      .catch(() => toaster.pushError(t('toasts.bug-report.error')))
+      .finally(() => (isLoading.value = false))
+  }
+}
+</script>
+
 <template>
   <BaseDrawer
     :is-opened="isOpened"
@@ -59,82 +139,3 @@
     />
   </BaseDrawer>
 </template>
-
-<script setup lang="ts">
-import { reportAbuse, reportBug } from '~/api/report.service'
-
-import TextInput from '~/components/base/form/TextInput.vue'
-import BaseDrawer from '~/components/base/BaseDrawer.vue'
-
-import { defaultReportForm, useReportForm } from '~/form/report'
-import FormPanel from '~/components/base/FormPanel.vue'
-import Field from '~/components/base/form/Field.vue'
-import useToasterStore from '~/stores/useToaster'
-import { isEqual } from 'es-toolkit'
-
-const props = withDefaults(defineProps<{ type: 'abuse' | 'bug'; isOpened?: boolean }>(), {
-  isOpened: false,
-})
-
-const emit = defineEmits<{ close: [] }>()
-
-const toaster = useToasterStore()
-const { t } = useNuxtI18n()
-
-const { stateModals, closeModals, openModals, closeAllModals } = useModals({ saveChange: false })
-const { form, isValid, errors, cleanedData, reset } = useReportForm({ lazy: true })
-const isLoading = ref(false)
-
-const close = () => {
-  closeAllModals()
-  emit('close')
-}
-
-const organizationCode = useOrganizationCode()
-
-const checkClose = () => {
-  if (isEqual(form.value, defaultReportForm())) {
-    close()
-  } else {
-    openModals('saveChange')
-  }
-}
-
-watch(
-  () => props.isOpened,
-  () =>
-    reset({
-      ...defaultReportForm(),
-      // default urls
-      url: useRequestURL().toString(),
-    }),
-  { immediate: true }
-)
-
-const submit = async () => {
-  if (!isValid.value) {
-    return
-  }
-  isLoading.value = true
-
-  const body = { ...cleanedData.value }
-
-  if (props.type === 'abuse') {
-    reportAbuse(organizationCode, body)
-      .then(() => {
-        toaster.pushSuccess(t('toasts.abuse-report.success'))
-        close()
-      })
-      .catch(() => toaster.pushError(t('toasts.abuse-report.error')))
-      .finally(() => (isLoading.value = false))
-  } else if (props.type === 'bug') {
-    reportBug(organizationCode, body)
-      .then(() => {
-        toaster.pushSuccess(t('toasts.bug-report.success'))
-        close()
-      })
-      .catch(() => toaster.pushError(t('toasts.bug-report.error')))
-      .finally(() => (isLoading.value = false))
-  }
-}
-</script>

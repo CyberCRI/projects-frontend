@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ApplyAnnouncementDrawer from '~/components/project/modules/Announcements/ApplyAnnouncementDrawer.vue'
 import AnnouncementDrawer from '~/components/project/modules/Announcements/AnnouncementDrawer.vue'
 import AnnouncementItem from '~/components/project/modules/Announcements/AnnouncementItem.vue'
 import AnnouncementCard from '~/components/project/modules/Announcements/AnnouncementCard.vue'
@@ -48,9 +49,10 @@ const {
 })
 
 const selectedAnnouncement = ref()
-const { stateModals, openModals, closeModals } = useModals({
+const { stateModals, openModals, closeAllModals } = useModals({
   edit: false,
   delete: false,
+  apply: false,
 })
 
 const onEdit = (announcement) => {
@@ -63,9 +65,14 @@ const onDelete = (announcement) => {
   openModals('delete')
 }
 
+const onApply = (announcement) => {
+  selectedAnnouncement.value = announcement
+  openModals('apply')
+}
+
 const cancel = () => {
   selectedAnnouncement.value = null
-  closeModals('delete', 'edit')
+  closeAllModals()
 }
 
 const refreshData = () => {
@@ -99,13 +106,16 @@ const onDeleteConfirm = () => {
         :project="project"
         :announcement="announcement"
         :editable="editable"
+        :show-apply-action="!preview"
         @delete="onDelete(announcement)"
         @edit="onEdit(announcement)"
+        @apply="onApply(announcement)"
       />
     </div>
     <NothingHere v-if="announcements.length === 0" />
     <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
 
+    <!-- drawer/modal -->
     <ConfirmModal
       v-if="stateModals.delete"
       :title="$t('recruit.delete-announcement-message')"
@@ -122,13 +132,20 @@ const onDeleteConfirm = () => {
       @close="cancel"
       @reload="refreshData"
     />
+
+    <ApplyAnnouncementDrawer
+      :is-opened="stateModals.apply"
+      :announcement="selectedAnnouncement"
+      :project="project"
+      @close="cancel"
+    />
   </FetchLoader>
 </template>
 
 <style lang="scss" scoped>
 .announcement-list {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 0.5rem;
   margin-bottom: 1rem;
 }

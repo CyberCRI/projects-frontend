@@ -1,27 +1,27 @@
 <template>
   <div class="make-comment">
     <ConfirmModal
-      v-if="confirmModalIsOpen"
+      v-if="stateModals.saveChange"
       content=""
       :title="originalComment ? $t('comment.discard-changes') : $t('comment.discard-comment')"
-      @cancel="confirmModalIsOpen = false"
+      @cancel="closeModals('saveChange')"
       @confirm="cancel"
     />
 
-    <div v-if="isLoggedIn">
+    <div v-if="usersStore.isConnected">
       <TipTapEditor
-        :key="editorKey"
-        v-model="comment"
+        v-model="form.content"
+        :errors="errors.content"
         :save-image-callback="saveCommentImage"
         class="comment-description"
         mode="full"
-        @image="handleImage"
+        @image="addImage"
       />
 
       <div class="action">
         <LpiButton :label="$t('common.cancel')" :secondary="true" @click="checkCancel" />
         <LpiButton
-          :disabled="!canSubmitComment || asyncing"
+          :disabled="!canSubmitComment || asyncing || !isValid"
           :btn-icon="asyncing ? 'LoaderSimple' : null"
           :label="isPrivate ? $t('comment.private-exchange.send') : $t('comment.publish')"
           @click="submit"
@@ -31,13 +31,13 @@
     <div v-else class="no-account">
       <div>{{ $t('comment.need-account') }}</div>
       <div>
-        <LpiButton :label="$t('common.login')" @click="login" />
+        <LpiButton :label="$t('common.login')" @click="goToKeycloakLoginPage" />
       </div>
     </div>
   </div>
 </template>
 
-<script>
+<script setup lang="ts" generic="GenericComment extends ProjectMessageModel | CommentModel">
 import {
   patchProjectMessage,
   postProjectMessage,
@@ -51,257 +51,182 @@ import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 
-import useToasterStore from '~/stores/useToaster.ts'
-import useUsersStore from '~/stores/useUsers.ts'
+import useToasterStore from '~/stores/useToaster'
+import useUsersStore from '~/stores/useUsers'
 
-import { NULL_CONTENT } from '~/functs/constants'
+import { defaultProjectMessageForm, useProjectMessageForm } from '~/form/messages'
+import type { ProjectMessageModel } from '~/models/project-message.model'
+import type { TranslatedProject } from '~/models/project.model'
+import type { CommentModel } from '~/models/comment.model'
+import type { ImageModel } from '~/models/image.model'
+import { isEqual } from 'es-toolkit'
 import analytics from '~/analytics'
 
-export default {
-  name: 'MakeComment',
+const props = withDefaults(
+  defineProps<{
+    project: TranslatedProject
+    repliedComment?: GenericComment
+    originalComment?: GenericComment
+    isPrivate?: boolean
+  }>(),
+  {
+    repliedComment: null,
+    originalComment: null,
+    isPrivate: false,
+  }
+)
 
-  components: { LpiButton, TipTapEditor, ConfirmModal },
+const emit = defineEmits<{
+  submited: []
+  canceled: []
+  'comment-posted': [CommentModel]
+  'project-message-posted': [ProjectMessageModel]
+  'comment-edited': [CommentModel]
+  'project-message-edited': [ProjectMessageModel]
+}>()
 
-  props: {
-    project: {
-      type: Object,
-      default: () => {},
-    },
+const toaster = useToasterStore()
+const usersStore = useUsersStore()
+const { canCreateComments } = usePermissions()
 
-    repliedComment: {
-      type: Object,
-      default: null,
-    },
+const { t } = useNuxtI18n()
 
-    originalComment: {
-      type: Object,
-      default: null,
-    },
+const defaultLocalForm = () => {
+  const newForm = defaultProjectMessageForm()
 
-    isPrivate: {
-      type: Boolean,
-      default: false,
-    },
-  },
+  newForm.project_id = props.project.id
 
-  emits: [
-    'submited',
-    'canceled',
-    'comment-posted',
-    'project-message-posted',
-    'comment-edited',
-    'project-message-edited',
-  ],
-  setup() {
-    const toaster = useToasterStore()
-    const usersStore = useUsersStore()
-    const { canCreateComments } = usePermissions()
-    return {
-      toaster,
-      usersStore,
-      canCreateComments,
-    }
-  },
+  if (props.repliedComment) {
+    newForm.reply_on = newForm.reply_on_id = props.repliedComment.id
+  }
 
-  data() {
-    return {
-      comment: this.originalComment?.content || NULL_CONTENT,
-      addedImages: [],
-      asyncing: false,
-      confirmModalIsOpen: false,
-      editorKey: 0,
-    }
-  },
+  if (props.project.template) {
+    newForm.content = props.project.template.$t.comment_content || newForm.content
+  }
+  if (props.originalComment) {
+    newForm.content = props.originalComment.content || newForm.content
+  }
 
-  computed: {
-    commentTemplate() {
-      return this.project.template?.$t?.comment_content || NULL_CONTENT
-    },
+  return newForm
+}
 
-    initialComment() {
-      return this.originalComment?.content || this.commentTemplate || NULL_CONTENT
-    },
+const { stateModals, closeModals, openModals, closeAllModals } = useModals({ saveChange: false })
+const asyncing = ref(false)
 
-    isLoggedIn() {
-      return this.usersStore.isConnected
-    },
+const { form, isValid, errors, reset } = useProjectMessageForm({ lazy: true })
+watch(
+  () => [props.project, props.originalComment, props.repliedComment],
+  () => reset(defaultLocalForm()),
+  {
+    immediate: true,
+    deep: true,
+  }
+)
 
-    canSubmitComment() {
-      return this.isEdited && this.canCreateComments
-    },
-    isEdited() {
-      return this.comment !== this.initialComment
-      // TODO WTF was this here for?
-      // utils.editorCanEdit(this.comment, 'add')
-    },
-  },
+const isEdited = computed(() => !isEqual(form.value, defaultLocalForm()))
+const canSubmitComment = computed(() => isEdited.value && canCreateComments.value)
 
-  mounted() {
-    this.comment = this.initialComment
-    this.editorKey++
-  },
+const cancel = () => {
+  closeAllModals()
+  emit('canceled')
+}
 
-  methods: {
-    saveCommentImage(file) {
-      const formData = new FormData()
-      formData.append('file', file, file.name)
-      if (this.isPrivate) {
-        return postProjectMessageImage(this.project.id, formData)
-      } else {
-        return postCommentImage(this.project.id, formData)
-      }
-    },
+const checkCancel = () => {
+  if (isEdited.value) {
+    openModals('saveChange')
+  } else {
+    cancel()
+  }
+}
 
-    reset() {
-      this.confirmModalIsOpen = false
-      // reset comment
-      this.comment = this.initialComment
-      this.addedImages = []
-      this.editorKey++
-    },
+const scrollToNewComment = (comment) => {
+  document.getElementById(comment.id)?.scrollIntoView({
+    behavior: 'smooth',
+  })
+}
 
-    async submit() {
-      if (this.originalComment) await this.updateComment()
-      else {
-        await this.createComment()
-        this.reset()
-      }
-      this.editorKey++
-      this.$emit('submited')
-    },
+const addImage = (image: ImageModel) => form.value.images_ids.push(image.id)
 
-    cancel() {
-      this.reset()
-      this.$emit('canceled')
-    },
+const submit = async () => {
+  if (props.originalComment) {
+    await updateComment().then(() => emit('submited'))
+  } else {
+    await createComment().then(() => emit('submited'))
+  }
+}
 
-    checkCancel() {
-      if (this.isEdited) this.confirmModalIsOpen = true
-      else this.cancel()
-    },
+const createComment = () => {
+  asyncing.value = true
 
-    async createComment() {
-      this.asyncing = true
-      const payload = {
-        content: this.comment,
-        project_id: this.project.id,
-        images_ids: this.addedImages,
-      }
-
-      if (this.isPrivate) {
-        if (this.repliedComment) payload.reply_on = this.repliedComment.id // // reply_on_id in comment
-        try {
-          const result = await postProjectMessage(payload)
-          analytics.projectMessage.projectMessage({
-            project: {
-              id: this.project.id,
-            },
-            projectMessage: result,
-          })
-          this.toaster.pushSuccess(this.$t('toasts.project-message-create.success') /* TODO */)
-          this.$emit('project-message-posted', result)
-          this.$nextTick(() => {
-            if (!this.repliedComment) this.scrollToNewComment(result)
-          })
-        } catch (error) {
-          this.toaster.pushError(
-            `${this.$t('toasts.project-message-create.error')} (${error})` /* TODO */
-          )
-        } finally {
-          this.asyncing = false
-        }
-      } else {
-        if (this.repliedComment) payload.reply_on_id = this.repliedComment.id
-        try {
-          const result = await postComment(this.project.id, payload)
-          analytics.comment.comment({
-            project: {
-              id: this.project.id,
-            },
-            comment: result,
-          })
-          this.toaster.pushSuccess(this.$t('toasts.comment-create.success'))
-
-          this.$emit('comment-posted', result)
-          this.$nextTick(() => {
-            if (!this.repliedComment) this.scrollToNewComment(result)
-          })
-        } catch (error) {
-          this.toaster.pushError(`${this.$t('toasts.comment-create.error')} (${error})`)
-        } finally {
-          this.asyncing = false
-        }
-      }
-    },
-
-    async updateComment() {
-      this.asyncing = true
-      if (this.isPrivate) {
-        const projectMessage = {
-          id: this.originalComment.id,
-          content: this.comment,
-          project_id: this.project.id,
-          images_ids: this.addedImages,
-        }
-
-        try {
-          const result = await patchProjectMessage(projectMessage.id, projectMessage)
-          analytics.projectMessage.updateProjectMessage({
-            project: {
-              id: this.project.id,
-            },
-            projectMessage: result,
-          })
-          this.toaster.pushSuccess(this.$t('toasts.project-message-update.success') /* TODO */)
-          this.$emit('project-message-edited', projectMessage)
-        } catch (error) {
-          this.toaster.pushError(`${this.$t('toasts.project-message-update.error')} (${error})`)
-          console.error(error)
-        } finally {
-          this.asyncing = false
-        }
-      } else {
-        const comment = {
-          id: this.originalComment.id,
-          content: this.comment,
-          project_id: this.project.id,
-          images_ids: this.addedImages,
-        }
-
-        try {
-          const result = await patchComment(this.project.id, comment.id, comment)
-          analytics.comment.updateComment({
-            project: {
-              id: this.project.id,
-            },
-            comment: result,
-          })
-          this.toaster.pushSuccess(this.$t('toasts.comment-update.success'))
-
-          this.$emit('comment-edited', comment)
-        } catch (error) {
-          this.toaster.pushError(`${this.$t('toasts.comment-update.error')} (${error})`)
-          console.error(error)
-        } finally {
-          this.asyncing = false
-        }
-      }
-    },
-
-    scrollToNewComment(comment) {
-      document.getElementById(comment.id)?.scrollIntoView({
-        behavior: 'smooth',
+  if (props.isPrivate) {
+    return postProjectMessage(props.project.id, form.value)
+      .then((message) => {
+        analytics.projectMessage.projectMessage({
+          project: { id: props.project.id },
+          projectMessage: message,
+        })
+        toaster.pushSuccess(t('toasts.project-message-create.success'))
+        emit('project-message-posted', message)
+        nextTick(() => scrollToNewComment(message))
       })
-    },
+      .catch(() => toaster.pushError(t('toasts.project-message-create.error')))
+      .finally(() => (asyncing.value = false))
+  } else {
+    return postComment(props.project.id, form.value)
+      .then((comment) => {
+        analytics.comment.comment({
+          project: { id: props.project.id },
+          comment,
+        })
+        toaster.pushSuccess(t('toasts.comment-create.success'))
+        emit('comment-posted', comment)
+        nextTick(() => scrollToNewComment(comment))
+      })
+      .catch(() => toaster.pushError(t('toasts.comment-create.error')))
+      .finally(() => (asyncing.value = false))
+  }
+}
 
-    handleImage(image) {
-      this.addedImages.push(image.id)
-    },
+const updateComment = async () => {
+  asyncing.value = true
 
-    login() {
-      goToKeycloakLoginPage()
-    },
-  },
+  if (props.isPrivate) {
+    return patchProjectMessage(props.project.id, props.originalComment.id, form.value)
+      .then((message) => {
+        analytics.projectMessage.updateProjectMessage({
+          project: { id: props.project.id },
+          projectMessage: message,
+        })
+        toaster.pushSuccess(t('toasts.project-message-update.success'))
+        emit('project-message-edited', message)
+      })
+      .catch(() => toaster.pushError(t('toasts.project-message-update.error')))
+      .finally(() => (asyncing.value = false))
+  } else {
+    return patchComment(props.project.id, props.originalComment.id, form.value)
+      .then((message) => {
+        analytics.projectMessage.updateProjectMessage({
+          project: { id: props.project.id },
+          projectMessage: message,
+        })
+        toaster.pushSuccess(t('toasts.comment-update.success'))
+        emit('comment-edited', message)
+      })
+      .catch(() => toaster.pushError(t('toasts.comment-update.error')))
+      .finally(() => (asyncing.value = false))
+  }
+}
+
+// Methods
+const saveCommentImage = (file: File) => {
+  const formData = new FormData()
+  formData.append('file', file, file.name)
+
+  if (props.isPrivate) {
+    return postProjectMessageImage(props.project.id, formData)
+  } else {
+    return postCommentImage(props.project.id, formData)
+  }
 }
 </script>
 
