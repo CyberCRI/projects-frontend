@@ -9,7 +9,16 @@ import FormPanel from '~/components/base/FormPanel.vue'
 import { textIsEmpty } from '~/functs/string'
 import { isEqual, pick } from 'es-toolkit'
 
-const props = defineProps<{ project: TranslatedProject }>()
+const props = withDefaults(
+  defineProps<{
+    project: TranslatedProject
+    // eslint-disable-next-line vue/no-unused-properties
+    editable?: boolean
+  }>(),
+  {
+    editable: true,
+  }
+)
 
 const toaster = useToaster()
 const { t } = useNuxtI18n()

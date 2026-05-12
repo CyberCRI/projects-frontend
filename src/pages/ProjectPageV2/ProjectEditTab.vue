@@ -1,5 +1,7 @@
 <template>
-  <ProjectFormV2 :project="project" :loading="loading" @close="close" @submit="onSubmit" />
+  <BaseModuleTab>
+    <ProjectFormV2 :project="project" :loading="loading" @close="close" @submit="onSubmit" />
+  </BaseModuleTab>
 </template>
 
 <script setup lang="ts">
@@ -7,12 +9,18 @@ import { patchProject, patchProjectHeader, postProjectHeader } from '~/api/proje
 import type { ProjectForm, TranslatedProject } from '~/models/project.model'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import ProjectFormV2 from '~/components/project/ProjectFormV2.vue'
+import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
 import { imageSizesFormData } from '~/functs/imageSizesUtils'
 import { omit } from 'es-toolkit'
 
-const props = defineProps<{
-  project: TranslatedProject
-}>()
+const props = withDefaults(
+  defineProps<{
+    project: TranslatedProject
+    // eslint-disable-next-line vue/no-unused-properties
+    editable?: boolean
+  }>(),
+  { editable: true }
+)
 
 const router = useRouter()
 

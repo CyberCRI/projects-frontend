@@ -1825,6 +1825,10 @@
       "label": "Facilitator | Facilitators",
       "help": "Facilitator: This role is for teachers or tutors: They see all private projects in the portal and they can edit them. They also have all the rights of Users."
     },
+    "viewers": {
+      "label": "Viewer | Viewers",
+      "help": "Viewer: He has no edit rights."
+    },
     "admins": {
       "label": "Admin group | Admins group",
       "help": "Org admin: This role allows to configure your portal and manage users in your portal. Org admins have access to the admin menu of the portal to set up the portal and manage its users. They also have all the rights of Facilitators."

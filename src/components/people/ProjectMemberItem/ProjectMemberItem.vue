@@ -1,7 +1,10 @@
 <template>
   <div
     class="user"
-    :class="{ inactive: isPrivateUser }"
+    :class="{
+      inactive: isPrivateUser,
+      'scale-hover pointer': !isPrivateUser,
+    }"
     @click="!isPrivateUser && emit('user-click', user)"
   >
     <CroppedApiImage

@@ -19,7 +19,7 @@
       :project="project"
     />
 
-    <ProjectReviewPreview v-if="project.modules.reviews" :project="project" />
+    <ProjectReviewPreview v-if="isConnected && project.modules.reviews" :project="project" />
 
     <ProjectAnnouncementsPreview v-if="project.modules.announcements" :project="project" />
 
@@ -45,6 +45,7 @@ import ProjectGoalsPreview from '@/components/project/modules/Goals/ProjectGoals
 import ProjectTeamPreview from '@/components/project/modules/Teams/ProjectTeamsPreview.vue'
 import ProjectReviewPreview from '@/components/project/review/ProjectReviewPreview.vue'
 import type { TranslatedProject } from '@/models/project.model'
+import useUsersStore from '~/stores/useUsers'
 import { textIsEmpty } from '@/functs/string'
 
 const props = defineProps<{
@@ -52,6 +53,8 @@ const props = defineProps<{
 }>()
 
 const { isMember, isAdmin } = usePermissions()
+
+const { isConnected } = useUsersStore()
 
 const isMemberOrAdmin = computed(() => isMember.value || isAdmin.value)
 
