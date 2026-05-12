@@ -198,7 +198,7 @@ export type ProjectForm = Partial<
     imageSizes: any
     file: ImageModel | File
     organizations_codes: OrganizationModel['code'][]
-    categories: (TranslatedProjectCategory | ProjectCategoryModel)[]
+    categories: TranslatedProjectCategory | ProjectCategoryModel
     project_categories_ids: TranslatedProjectCategory['id'][]
   }
 >

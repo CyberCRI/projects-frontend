@@ -96,6 +96,7 @@ const emit = defineEmits<{
   submit: [ProjectForm]
 }>()
 
+const organizationCode = useOrganizationCode()
 const { stateModals, closeModals, openModals } = useModals({ tags: false, saveChange: false })
 
 const organizationsStore = useOrganizationsStore()
@@ -103,7 +104,7 @@ const organizationsStore = useOrganizationsStore()
 // const toaster = useToasterStore()
 const { t, locale } = useNuxtI18n()
 
-const defaultForm = () => {
+const defaultLocalForm = () => {
   const newForm = defaultProjectForm()
 
   const project = props.project
@@ -114,19 +115,19 @@ const defaultForm = () => {
     newForm.imageSizes = pictureApiToImageSizes(project.header_image) || newForm.imageSizes
     newForm.file = project.header_image || newForm.file
     newForm.language = project.language || locale.value || project.language
-    newForm.categories = [...(project.categories || newForm.categories)]
+    newForm.categories = [...(project.categories || []), newForm.categories].find(
+      (cat) => cat.organization === organizationCode
+    )
     newForm.tags = [...(project.tags || newForm.tags)]
   }
 
   return newForm
 }
 
-const { form, errors, isValid, cleanedData } = useProjectForm({ lazy: true })
+const { form, errors, isValid, cleanedData, reset } = useProjectForm({ lazy: true })
 watch(
   () => props.project,
-  () => {
-    form.value = defaultForm()
-  },
+  () => reset(defaultLocalForm()),
   { immediate: true }
 )
 
@@ -141,7 +142,7 @@ const languageOptions = computed(() => {
 })
 
 const onClose = () => {
-  if (isEqual(form.value, defaultForm())) {
+  if (isEqual(form.value, defaultLocalForm())) {
     emit('close')
   } else {
     openModals('saveChange')

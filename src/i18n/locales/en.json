@@ -1541,6 +1541,7 @@
       "notice": "Fields marked with * are mandatory. You can always modify this later. No idea what you should do?",
       "title": "Create a new project"
     },
+    "description": "Description",
     "destroy": "Delete project",
     "duplicate": "Duplicate this project",
     "edit": "Edit project",

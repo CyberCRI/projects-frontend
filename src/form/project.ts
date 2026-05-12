@@ -7,7 +7,7 @@ export const defaultProjectForm = (): ProjectForm => {
   return {
     title: '',
     purpose: '',
-    categories: [],
+    categories: null,
     description: NULL_CONTENT,
     language: 'en',
     tags: [],
@@ -48,11 +48,11 @@ export const useProjectDescriptionForm = (options = {}) => {
 }
 
 export const useProjectSettingForm = (options = {}) => {
-  const onClean = (data) => {
+  const onClean = (data: ProjectForm) => {
     const cleanedData = { ...data }
 
     if (cleanedData.categories) {
-      cleanedData.project_categories_ids = cleanedData.categories.map((cat) => cat.id)
+      cleanedData.project_categories_ids = [cleanedData.categories.id]
       delete cleanedData.categories
     }
 

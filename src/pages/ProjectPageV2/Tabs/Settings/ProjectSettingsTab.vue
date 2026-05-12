@@ -48,7 +48,9 @@ const defaultLocalForm = () => {
     life_status: props.project.life_status,
     is_locked: props.project.is_locked,
     organizations_codes: projectOrganizationCodes.value || [],
-    categories: props.project.categories.filter((cat) => cat.organization === organizationCode),
+    categories: (props.project.categories || []).find(
+      (cat) => cat.organization === organizationCode
+    ),
   }
 }
 const { form, reset, cleanedData } = useProjectSettingForm({
@@ -309,11 +311,8 @@ const onQuitProject = () => {
                 v-for="category in categories"
                 :key="category.id"
                 :category="category"
-                :selected-category="form.categories[0]"
-                @pick-category="
-                  // @ts-expect-error ignore
-                  form.categories = $event
-                "
+                :selected-category="form.categories"
+                @pick-category="form.categories = $event"
               />
             </ul>
           </div>

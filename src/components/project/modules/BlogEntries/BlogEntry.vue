@@ -21,9 +21,10 @@
       {{ $t('blog.last-publication') }}
     </div>
 
+    <!-- add infinity height to only click shw -->
     <ContentExpandable
       class="skeletons-text"
-      :height-limit="stateModal ? Infinity : 0"
+      :height-limit="stateModal ? 100000000 : 0"
       hide-see-more
     >
       <div class="entry-body">
