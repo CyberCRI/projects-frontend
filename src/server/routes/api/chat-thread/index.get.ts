@@ -6,10 +6,10 @@ export default defineLazyEventHandler(() => {
   return defineEventHandler(async (event) => {
     await checkAdminRights(event)
 
-    const { appApiOrgCode } = useRuntimeConfig().public
+    // const { appApiOrgCode } = useRuntimeConfig().public
     const { checkpointer } = await useCheckpointerDb()
 
-    const pool = checkpointer.pool
+    const pool = (checkpointer as any).pool
 
     // return 404 if not configured
     if (!pool) {

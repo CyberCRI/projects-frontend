@@ -11,10 +11,11 @@ if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
 function fetchAll() {
   return useFetch('/api/chat-thread/', { headers })
 }
-const { data: documentList, status, error, refresh } = await fetchAll()
+const { data: documentList, status, /*error,*/ refresh } = fetchAll()
 const isAsyncing = computed(() => status.value === 'pending')
 
 defineExpose({ refresh })
+refresh()
 
 refresh()
 </script>

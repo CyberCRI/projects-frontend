@@ -1,6 +1,6 @@
 import checkAdminRights from '@/server/utils/check-admin-rights.js'
 import useCheckpointerDb from '@/server/utils/checkpointer-db'
-import format from 'pg-format'
+// import format from 'pg-format'
 
 export default defineLazyEventHandler(() => {
   return defineEventHandler(async (event) => {
@@ -17,7 +17,7 @@ export default defineLazyEventHandler(() => {
     const { appApiOrgCode } = useRuntimeConfig().public
     const { checkpointer } = await useCheckpointerDb()
 
-    const pool = checkpointer.pool
+    const pool = (checkpointer as any).pool
 
     // return 404 if not configured
     if (!pool) {

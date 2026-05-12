@@ -1,17 +1,17 @@
-import { tool, createAgent, createMiddleware } from 'langchain'
-import useCheckpointerDb from '@/server/utils/checkpointer-db'
+import { StateSchema, ReducedValue /*, MemorySaver */ } from '@langchain/langgraph'
 import { SystemMessage, HumanMessage, AIMessage } from '@langchain/core/messages'
 import { createRetrieverTool } from '@langchain/classic/tools/retriever'
 import { tokenMap, traceMcp } from '@/server/routes/api/chat-stream'
 import checkAdminRights from '@/server/utils/check-admin-rights.js'
 import type { BaseMessageChunk } from '@langchain/core/messages'
 import { initChatModel } from 'langchain/chat_models/universal'
-import * as z from 'zod'
+import { tool, createAgent, createMiddleware } from 'langchain'
+import useCheckpointerDb from '@/server/utils/checkpointer-db'
 import { MultiServerMCPClient } from '@langchain/mcp-adapters'
 import getVectorStore from '@/server/utils/vector-db.js'
 import { ChatOpenAI } from '@langchain/openai'
 import { v4 as uuidv4 } from 'uuid'
-import { StateSchema, ReducedValue, MemorySaver } from '@langchain/langgraph'
+import * as z from 'zod'
 
 // TODO: fix import issue (useNuxtRuntime in dependncies)
 // import { PROJECTS_DEFAULT_VECTOR_STORE_KEY } from '@/composables/useVectorStore'
@@ -69,14 +69,14 @@ export const traceSorbobot = (...args) => {
 // const StateAnnotation = Annotation.Root({
 //   ...MessagesAnnotation.spec,
 //   agent_id: Annotation<string>(),
-//   keycloak_id: Annotation<string>(),
+//   keycloack_id: Annotation<string>(),
 //   people_id: Annotation<string>(),
 //   organization_code: Annotation<string>(),
 // })
 
 const AgentState = new StateSchema({
   agent_id: z.number(),
-  keycloak_id: z.string(),
+  keycloack_id: z.string(),
   people_id: z.string(),
   organization_code: z.string(),
   // count: z.number().default(0),
@@ -366,8 +366,8 @@ export default defineLazyEventHandler(() => {
     }
     const debugCircularRef = createMiddleware({
       name: 'DebugCircularRef',
-      beforeMoel: (state) => {
-        conole.log('[DEBUG] check circular ref')
+      beforeModel: (state) => {
+        console.log('[DEBUG] check circular ref')
         findCircular(state)
         return
       },
@@ -424,7 +424,7 @@ export default defineLazyEventHandler(() => {
           },
         ],
       }),
-      stateSchema: AgentState,
+      stateSchema: AgentState as StateSchema<any>,
       middleware: [
         toolMonitoringMiddleware,
         loggingMiddleware,
@@ -455,7 +455,7 @@ export default defineLazyEventHandler(() => {
 
     // console.log('[MEATAFA]', {
     //   agent_id: agentData.id,
-    //   keycloak_id: user.keycloak_id,
+    //   keycloack_id: user.keycloack_id,
     //   people_id: user.people_id,
     //   organization_code: appApiOrgCode,
     // })
@@ -467,8 +467,8 @@ export default defineLazyEventHandler(() => {
 
     const customMetadata = {
       agent_id: agentData.id,
-      keycloak_id: user.keycloak_id,
-      people_id: user.people_id,
+      keycloack_id: user.keycloack_id,
+      user_id: user.id,
       organization_code: appApiOrgCode,
     }
 

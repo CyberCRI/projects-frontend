@@ -1,14 +1,14 @@
 <script setup>
-import useToasterStore from '@/stores/useToaster'
-import useUsersStore from '@/stores/useUsers'
+// import useToasterStore from '@/stores/useToaster'
+// import useUsersStore from '@/stores/useUsers'
 
 // if (!useRuntimeConfig().public.appHasChatbotPromptDb) {
 //   usePage404()
 // }
 
-const toaster = useToasterStore()
-const usersStore = useUsersStore()
-const { t } = useNuxtI18n()
+// const toaster = useToasterStore()
+// const usersStore = useUsersStore()
+// const { t } = useNuxtI18n()
 
 const showDocumentTitle = ref('')
 </script>

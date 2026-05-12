@@ -16,7 +16,7 @@ const close = () => emit('close')
 function fetchAll() {
   return useFetch(`/api/chat-thread/${props.documentTitle}`, { headers })
 }
-const { data: checkpoints, status, error, refresh } = await fetchAll()
+const { data: checkpoints, status /* , error */, refresh } = fetchAll()
 const isAsyncing = computed(() => status.value === 'pending')
 
 const showMessage = (message) => {
@@ -25,6 +25,7 @@ const showMessage = (message) => {
     (message.kwargs.content || message.kwargs.tool_calls?.length)
   )
 }
+refresh()
 </script>
 <template>
   <ConfirmModal
@@ -47,7 +48,7 @@ const showMessage = (message) => {
             <pre v-if="message.kwargs.content">{{ message.kwargs.content }}</pre>
             <div v-if="message.kwargs.tool_calls?.length">
               <ul>
-                <li v-for="tool_call in message.kwargs.tool_calls">
+                <li v-for="(tool_call, j) in message.kwargs.tool_calls" :key="j">
                   {{ tool_call.type }}:
                   <code>{{ tool_call.name }}({{ JSON.stringify(tool_call.args) }})</code>
                 </li>
@@ -91,7 +92,7 @@ const showMessage = (message) => {
 }
 
 .message-header {
-  with: auto;
+  width: auto;
   padding: 0.4rem;
   background-color: $primary-lighter;
   border-bottom: 1px solid $primary-dark;
