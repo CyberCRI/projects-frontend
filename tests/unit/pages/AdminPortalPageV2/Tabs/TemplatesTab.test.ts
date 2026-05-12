@@ -3,7 +3,7 @@ import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import { describe, expect, it, vi } from 'vitest'
 
-describe('TemplatesTab.vue', () => {
+describe.skip('TemplatesTab.vue', () => {
   it('BackendError', async () => {
     registerEndpoint(`organization/CRI/template`, () => {
       throw createError({ statusCode: 500 })

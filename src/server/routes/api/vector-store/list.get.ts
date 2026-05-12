@@ -1,10 +1,10 @@
-import checkVectorDbRights from '~/server/utils/check-vector-db-rights'
-import getVectorStore from '~/server/utils/vector-db'
+import checkAdminRights from '~/server/utils/check-admin-rights.js'
+import getVectorStore from '~/server/utils/vector-db.js'
 import format from 'pg-format'
 
 export default defineLazyEventHandler(() => {
   return defineEventHandler(async (event) => {
-    await checkVectorDbRights(event)
+    await checkAdminRights(event)
 
     const { appApiOrgCode } = useRuntimeConfig().public
     const { pool } = await getVectorStore()
