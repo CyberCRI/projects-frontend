@@ -125,7 +125,7 @@ import type { RouteLocationRaw } from 'vue-router'
 import { getTimePassed } from '@/functs/date'
 import utils from '~/functs/functions'
 import { NuxtLink } from '#components'
-import { I18nT } from 'vue-i18n'
+// import { I18nT } from 'vue-i18n'
 
 const props = defineProps<{
   notification: NotificationModel

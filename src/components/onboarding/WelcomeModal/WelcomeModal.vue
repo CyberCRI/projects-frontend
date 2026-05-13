@@ -44,7 +44,7 @@
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import BaseModal from '@/components/base/modal/BaseModal.vue'
 import useOrganizationsStore from '@/stores/useOrganizations'
-import { I18nT } from 'vue-i18n'
+// import { I18nT } from 'vue-i18n'
 
 const emit = defineEmits<{
   close: []

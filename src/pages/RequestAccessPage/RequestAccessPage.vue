@@ -5,7 +5,7 @@ import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useToasterStore from '@/stores/useToaster'
 import useValidate from '@vuelidate/core'
-import { I18nT } from 'vue-i18n'
+// import { I18nT } from 'vue-i18n'
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
