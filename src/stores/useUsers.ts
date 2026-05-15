@@ -287,6 +287,17 @@ const useUsersStore = defineStore('users', () => {
     }
   }
 
+  /**
+   * refresh connected user (form permissions refresh)
+   *
+   * @function
+   * @name refreshUser
+   * @kind variable
+   * @memberof useUsersStore.defineStore('users') callback
+   * @returns {Promise<UserModel>}
+   */
+  const refreshUser = () => getUser(id.value)
+
   return {
     // state
     refreshToken,
@@ -314,6 +325,7 @@ const useUsersStore = defineStore('users', () => {
     doRefreshToken,
     startUserDataRefreshLoop,
     getUser,
+    refreshUser,
     getNotifications,
     patchNotifications,
     fetchFollowedCategories,

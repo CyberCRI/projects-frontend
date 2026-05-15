@@ -1,246 +1,161 @@
 <script setup lang="ts">
-import { helpers, maxLength, minLength, required } from '@vuelidate/validators'
-import useValidate from '@vuelidate/core'
-
-import { createProject, createProjectHeader } from '~/api/projects.service'
-
-import useProjectCategories from '~/stores/useProjectCategories'
-import useOrganizationsStore from '~/stores/useOrganizations'
+import type { TranslatedProjectCategory } from '~/models/project-category.model'
+import { postProject, postProjectHeader } from '~/api/projects.service'
+import ProjectFormV2 from '~/components/project/ProjectFormV2.vue'
+import { imageSizesFormData } from '~/functs/imageSizesUtils'
+import type { TemplateModel } from '~/models/template.model'
+import type { ProjectForm } from '~/models/project.model'
+import { useProjectTemplatesForm } from '~/form/project'
+import BasePage from '~/components/pages/BasePage.vue'
+import { getTemplate } from '~/api/templates.service'
+import Field from '~/components/base/form/Field.vue'
 import useToasterStore from '~/stores/useToaster'
+import { useOrganizationCode } from '#imports'
 import useUsersStore from '~/stores/useUsers'
-
 import analytics from '~/analytics'
 
-defineEmits(['close'])
+const { t, locale } = useNuxtI18n()
+const router = useRouter()
+const loading = ref(false)
+const organizationCode = useOrganizationCode()
+const usersStore = useUsersStore()
+const { onboardingTrap } = useOnboardingStatus()
+
+const projectCategoriesStore = useProjectCategories()
+onMounted(async () => {
+  await projectCategoriesStore.getAllProjectCategories()
+})
+
+const { form, isValid } = useProjectTemplatesForm()
+const { translateTemplate } = useAutoTranslate()
 
 const toaster = useToasterStore()
-const projectCategoriesStore = useProjectCategories()
-const organizationsStore = useOrganizationsStore()
-const usersStore = useUsersStore()
-const router = useRouter()
-const { onboardingTrap } = useOnboardingStatus()
-const { t, locale } = useNuxtI18n()
+const categoryDropdownRef = useTemplateRef('categoryDropdown')
 
-const isFormCorrect = ref(true)
-const form = ref({
-  title: '',
-  purpose: '',
-  category: undefined,
-  template: undefined,
-  header_image: null,
+const onSubmit = (form: ProjectForm) => {
+  loading.value = true
 
-  language: locale.value,
+  // add organizationsCode in form
+  form.organizations_codes = [organizationCode]
 
-  tags: [],
+  postProject(form)
+    .then(async (project) => {
+      // post image
+      if (form.file) {
+        const file = form.file as File
+        const formData = new FormData()
+        formData.append('file', file, file.name)
+        imageSizesFormData(formData, form.imageSizes)
+        await postProjectHeader(project.id, formData).catch(() =>
+          toaster.pushError(t('toasts.project-header-create.error'))
+        )
+      }
+      // fetch updated project list from user so permissions as set correctly
+      await usersStore.refreshUser()
 
-  team: {
-    owners: null,
-    members: null,
-    reviewers: null,
-    people_groups: null,
-  },
-  imageSizes: null,
-})
-const isSaving = ref(false)
+      analytics.project.create({ id: project.id, title: project.title })
 
-const rules = computed(() => {
-  const purposeRules =
-    form.value.purpose === '   '
-      ? {
-          minLengthValue: helpers.withMessage(t('project.form.purpose-errors.min'), minLength(3)),
-          maxLengthValue: helpers.withMessage(t('project.form.purpose-errors.max'), maxLength(180)),
-        }
-      : {
-          required: helpers.withMessage(t('project.form.purpose-errors.required'), required),
-          minLengthValue: helpers.withMessage(t('project.form.purpose-errors.min'), minLength(3)),
-          maxLengthValue: helpers.withMessage(t('project.form.purpose-errors.max'), maxLength(180)),
-        }
-  return {
-    title: {
-      required: helpers.withMessage(t('project.form.title-errors.required'), required),
-      maxLengthValue: helpers.withMessage(t('project.form.title-errors.max'), maxLength(120)),
-    },
-    purpose: purposeRules,
-  }
-})
+      await onboardingTrap('create_project', false)
 
-const v$ = useValidate(rules, form)
-
-const categories = computed(() => {
-  return projectCategoriesStore.allOrderedByOrderId
-})
-
-const formNotEmpty = computed(() => {
-  if (organizationsStore.isDefault) {
-    return !!form.value.title && !!form.value.purpose
-  }
-  return (
-    !!form.value.title &&
-    !!form.value.purpose &&
-    (!categories.value?.length || !!form.value.category || !!form.value.template)
-  )
-})
-
-onMounted(async () => {
-  if (!categories.value.length) {
-    await projectCategoriesStore.getAllProjectCategories()
-  }
-})
-
-const cancel = () => {
-  router.push('/')
-}
-
-const doCreateProject = async () => {
-  const payload = {
-    ...form.value,
-    is_locked: false,
-    is_shareable: false,
-    publication_status: 'private',
-    life_status: 'running',
-    organizations_codes: [organizationsStore.current.code],
-    tags: form.value.tags.map((tag) => tag.id),
-  }
-
-  if (form.value.category) {
-    payload['project_categories_ids'] = [form.value.category.toString()]
-  }
-  if (form.value.template) {
-    payload['template_id'] = form.value.template
-  }
-  isSaving.value = true
-  try {
-    const project = await createProject(payload)
-    try {
-      await createProjectHeader(project.id, payload)
-    } catch (headerError) {
-      toaster.pushError(`${t('toasts.project-header-create.error')} (${headerError})`)
-    }
-    // fetch updated project list from user so permissions as set correctly
-    await usersStore.getUser(usersStore.id)
-
-    analytics.project.create({ id: project.id, title: project.title })
-
-    await onboardingTrap('create_project', false)
-    // reload current to user to get new permissions
-    // maybe set a endpoint to fetch only permission ?
-    const user = usersStore.userFromApi
-    if (user) usersStore.getUser(user.id)
-    router.push({
-      name: 'projectDescription',
-      params: { slugOrId: project.slug },
+      router.push({
+        name: 'ProjectSnapshot',
+        params: { slugOrId: project.slug || project.id },
+      })
+      toaster.pushSuccess(t('toasts.project-create.success'))
     })
-    toaster.pushSuccess(t('toasts.project-create.success'))
-  } catch (error) {
-    toaster.pushError(`${t('toasts.project-create.error')} (${error})`)
-    console.error(error)
-  } finally {
-    isSaving.value = false
-  }
+    .catch((err) => {
+      toaster.pushError(t('toasts.project-create.error'))
+      console.error(err)
+    })
+    .finally(() => {
+      loading.value = false
+    })
 }
 
-const submit = async () => {
-  isFormCorrect.value = await v$.value.$validate()
-
-  if (isFormCorrect.value) {
-    isSaving.value = true
-    doCreateProject()
-  }
-}
-
-useLpiHead2({
-  title: computed(() => t('project.create.title')),
+const haveMultipleCategories = computed(() => {
+  return form.value.categorie?.templates.length > 1
 })
+
+const onSelectTemplate = (template: TemplateModel) => {
+  return getTemplate(organizationCode, template.id)
+    .then((template) => (form.value.template = unref(translateTemplate(template))))
+    .catch(() => toaster.pushError(t('template-get.error')))
+}
+
+const onChangeCategories = async (categorie: TranslatedProjectCategory) => {
+  categoryDropdownRef.value.close()
+  form.value.categorie = categorie
+  if (categorie.templates.length === 1) {
+    await onSelectTemplate(categorie.templates[0])
+  } else {
+    form.value.template = null
+  }
+}
+
+// create default "project" with template selected (or null if categories are not template)
+const project = computed(() => ({
+  language: locale.value,
+  template: form.value.template,
+  tags: form.value.categorie.tags,
+  categories: [form.value.categorie],
+}))
 </script>
 
 <template>
-  <ClientOnly>
-    <div class="create-project">
-      <div class="header">
-        <h1>{{ $t('project.create.title') }}</h1>
-        <p>
-          {{ $t('project.create.notice') }}
-          <NuxtLink :to="{ name: 'Help' }" class="help-link">
-            {{ $t('project.create.help-link') }}
-          </NuxtLink>
-        </p>
-      </div>
-      <div class="project-form">
-        <LazyProjectForm
-          ref="projectForm"
-          v-model="form"
-          :categories="categories"
-          :validation="v$"
-          is-add-mode
-          @close="$emit('close')"
-        />
+  <BasePage :title="$t('project.create.title')" :notice="$t('project.create.notice')">
+    <template #notice>
+      <NuxtLink :to="{ name: 'Help' }" class="help-link">
+        {{ $t('project.create.help-link') }}
+      </NuxtLink>
+    </template>
 
-        <LazyLpiSnackbar
-          v-if="!isFormCorrect"
-          class="completed-form-snackbar"
-          icon="ExclamationMark"
-          type="warning"
+    <div class="list-container">
+      <Field :label="$t('project.form.project-category')">
+        <ProjectCategoriesDropdown
+          ref="categoryDropdown"
+          class="w-full"
+          data-test="select-project-category"
+          :dropdown-label="form.categorie?.name || $t('project.form.select-category')"
         >
-          <div v-html="$t('project.form.completed-info-to-access-presentation')" />
-        </LazyLpiSnackbar>
+          <template #default="{ category }">
+            <ProjectCategoriesDropdownElementButton
+              :category="category"
+              @choose-category="onChangeCategories(category)"
+            />
+          </template>
+        </ProjectCategoriesDropdown>
+      </Field>
 
-        <div class="actions">
-          <LpiButton
-            :disabled="isSaving"
-            :label="$t('common.cancel')"
-            :secondary="true"
-            class="submit-btn"
-            data-test="cancel-project-create-button"
-            @click="cancel"
-          />
-          <LpiButton
-            :disabled="!formNotEmpty || isSaving"
-            :label="$t('project.form.create-project')"
-            :btn-icon="isSaving ? 'LoaderSimple' : null"
-            class="submit-btn"
-            data-test="project-create-button"
-            @click="submit"
-          />
-        </div>
-      </div>
+      <Field v-if="haveMultipleCategories" :label="$t('project.form.project-templates')">
+        <LpiDropDown
+          v-model="form.template"
+          class="w-full"
+          :options="form.categorie.templates"
+          data-test="select-project-template"
+          :default-label="$t('project.form.project-templates')"
+        >
+          <template #default="{ option, selected }">
+            <LpiDropDownElementButton
+              :option="option"
+              :selected="selected"
+              @click="onSelectTemplate(option)"
+            />
+          </template>
+        </LpiDropDown>
+      </Field>
+
+      <ProjectFormV2
+        v-if="isValid || (form.categorie && !haveMultipleCategories)"
+        :project="project"
+        :loading="loading"
+        @submit="onSubmit"
+      />
     </div>
-  </ClientOnly>
+  </BasePage>
 </template>
 
 <style lang="scss" scoped>
-.create-project {
-  width: 100%;
-  max-width: pxToRem(532px);
-  margin: $navbar-height auto 0 auto;
-  padding: 0 $space-l;
-  box-sizing: border-box;
-}
-
-.header {
-  margin-top: pxToRem(110px);
-  margin-bottom: $space-xl;
-
-  h1 {
-    font-size: $font-size-5xl;
-    font-weight: 700;
-    text-align: center;
-  }
-
-  p {
-    font-size: $font-size-m;
-    margin: $space-xl 0;
-  }
-
-  .help-link {
-    color: $primary-dark;
-  }
-}
-
-.actions {
-  display: flex;
-  justify-content: center;
-  gap: $space-xl;
-  margin-top: $space-m;
-  margin-bottom: $space-xl;
+.help-link {
+  color: $primary-dark;
 }
 </style>

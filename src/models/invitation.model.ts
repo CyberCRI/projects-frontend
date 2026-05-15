@@ -6,6 +6,7 @@ import type { Image } from '~/models/image.model'
 import type { Translated } from '~/interfaces/translated'
 
 import type { IconImageChoice } from '~/functs/IconImage'
+import type { GroupDataRole } from '~/models/types'
 
 export type SubGroup = {
   id: number
@@ -21,6 +22,7 @@ export interface PeopleGroupModel {
   short_description: string
   email: string
   type: string
+  role?: GroupDataRole
   header_image: Image
   publication_status: string
   organization: OrganizationModel

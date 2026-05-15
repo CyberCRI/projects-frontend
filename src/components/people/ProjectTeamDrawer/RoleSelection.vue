@@ -20,17 +20,9 @@
           <div class="tooltip-div">
             <ul class="list-ctn">
               <!-- TODO only on certain portal -->
-              <li class="item">
-                <span class="item-bold">{{ roleI18n('owners') }}:</span>
-                {{ roleHelpI18n('owners') }}
-              </li>
-              <li v-if="isReviewable" class="item">
-                <span class="item-bold">{{ roleI18n('reviewer') }}:</span>
-                {{ roleHelpI18n('reviewer') }}
-              </li>
-              <li class="item">
-                <span class="item-bold">{{ roleI18n('members') }}:</span>
-                {{ roleHelpI18n('members') }}
+              <li v-for="option in roleOptions" :key="option.role" class="item">
+                <span class="item-bold">{{ option.label }}:</span>
+                {{ option.tip }}
               </li>
             </ul>
           </div>
@@ -198,26 +190,37 @@ export default {
       return [
         {
           value: 'owner_groups',
-          label: roleHelpI18n('owner_groups'),
+          label: roleI18n('owner_groups'),
           condition: true,
           dataTest: 'button-group-role-editor',
           tip: roleHelpI18n('owner_groups'),
         },
         {
           value: 'reviewer_groups',
-          label: roleHelpI18n('reviewer_groups'),
+          label: roleI18n('reviewer_groups'),
           condition: this.isReviewable,
           dataTest: 'button-group-role-reviewer',
           tip: roleHelpI18n('reviewer_groups'),
         },
         {
           value: 'member_groups',
-          label: roleHelpI18n('member_groups'),
+          label: roleI18n('member_groups'),
           condition: true,
           dataTest: 'button-group-role-teammate',
           tip: roleHelpI18n('member_groups'),
         },
       ].filter((option) => option.condition)
+    },
+
+    roleOptions() {
+      const roles = []
+      if (this.userList.length) {
+        roles.push(...this.userRoleOptions)
+      }
+      if (this.groupList.length) {
+        roles.push(...this.groupRoleOptions)
+      }
+      return roles
     },
   },
 

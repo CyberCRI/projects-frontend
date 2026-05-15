@@ -1,59 +1,3 @@
-<template>
-  <BaseDrawer
-    :title="$t('goal.add')"
-    :confirm-action-name="$t('common.save')"
-    :confirm-action-disabled="!isValid"
-    :is-opened="isOpened"
-    class="medium"
-    :asyncing="asyncing"
-    @close="checkClose"
-    @confirm="submit"
-  >
-    <div class="form">
-      <TextInput
-        v-model="form.title"
-        :label="`${$t('goal.title')}:`"
-        :placeholder="$t('goal.title')"
-        :errors="errors.title"
-      />
-
-      <div class="goal-description-section">
-        <span class="goal-label">{{ $t('goal.description') }}:</span>
-        <TipTapEditor
-          v-model="form.description"
-          :errors="errors.description"
-          class="goal-description"
-        />
-      </div>
-
-      <DateField
-        v-model="form.deadline_at"
-        :errors="errors.deadline_at"
-        :label="$t('common.set-deadline')"
-      />
-
-      <div class="status-ctn">
-        <span class="goal-label">{{ $t('goal.status-title') }}:</span>
-        <GroupButton
-          v-model="form.status"
-          class="group-button-labels"
-          :options="statusOptions"
-          :custom-color="statusColor"
-        />
-        <FieldErrors :errors="errors.status" />
-      </div>
-    </div>
-  </BaseDrawer>
-
-  <ConfirmModal
-    v-if="stateModal"
-    :title="$t('form.quit-without-saving-title')"
-    :content="$t('common.confirm-close')"
-    @cancel="closeModal"
-    @confirm="clear"
-  />
-</template>
-
 <script setup lang="ts">
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import GroupButton from '@/components/base/button/GroupButton.vue'
@@ -64,11 +8,11 @@ import FieldErrors from '~/components/base/form/FieldErrors.vue'
 import type { TranslatedProject } from '@/models/project.model'
 import DateField from '@/components/base/form/DateField.vue'
 import { createGoal, patchGoal } from '@/api/goals.service'
-import { defaultForm, useGoalForm } from '@/form/goal'
+import { defaultGoalForm, useGoalForm } from '@/form/goal'
+import { getFirstTextNotEmpty } from '@/functs/string'
 import type { GoalModel } from '@/models/goal.model'
 import { fullYearDateFormat } from '@/functs/date'
 import useToasterStore from '@/stores/useToaster'
-import { textIsEmpty } from '@/functs/string'
 import { isEqual } from 'es-toolkit'
 import analytics from '@/analytics'
 
@@ -92,33 +36,23 @@ const emit = defineEmits<{
 const toaster = useToasterStore()
 const { t } = useNuxtI18n()
 
-const defaultGoalForm = () => {
-  const baseForm = defaultForm()
+const defaultLocalForm = () => {
+  const baseForm = defaultGoalForm()
   const newForm = { ...baseForm }
 
   const goal = props.goal
+  const template = props.project.template
   if (goal) {
     newForm.id = goal.id
-    newForm.title = goal.title
     newForm.status = goal.status
-    newForm.description = goal.description
     newForm.deadline_at = goal.deadline_at
   }
 
   newForm.project_id = props.project.id
 
-  const template = props.project.template
-  if (template) {
-    if (textIsEmpty(newForm.title)) {
-      newForm.title = template.goal_title
-    }
-    if (textIsEmpty(newForm.description)) {
-      newForm.description = template.goal_description
-    }
-  }
-
-  newForm.title ??= baseForm.title
-  newForm.description ??= baseForm.description
+  newForm.title = getFirstTextNotEmpty([goal?.title, template?.goal_title]) || newForm.title
+  newForm.description =
+    getFirstTextNotEmpty([goal?.description, template?.goal_description]) || newForm.description
 
   return newForm
 }
@@ -127,7 +61,7 @@ const { form, isValid, errors, cleanedData, reset } = useGoalForm({ lazy: true }
 
 watch(
   () => [props.isOpened, props.goal],
-  () => reset(defaultGoalForm()),
+  () => reset(defaultLocalForm()),
   { immediate: true }
 )
 
@@ -182,58 +116,115 @@ const submit = async () => {
 
   if (form.value.id) {
     // Update goal
-    try {
-      const result = await patchGoal(props.project.id, form.value.id, payload)
-
-      analytics.goal.updateGoalProject({
-        project: {
-          id: props.project.id,
-        },
-        goal: result,
+    patchGoal(props.project.id, form.value.id, payload)
+      .then((goal) => {
+        analytics.goal.updateGoalProject({
+          project: {
+            id: props.project.id,
+          },
+          goal,
+        })
+        emit('reload')
+        toaster.pushSuccess(t('toasts.goal-update.success'))
       })
-
-      emit('reload')
-
-      toaster.pushSuccess(t('toasts.goal-update.success'))
-    } catch (error) {
-      toaster.pushError(`${t('toasts.goal-update.error')} (${error})`)
-      console.error(error)
-    } finally {
-      asyncing.value = false
-      clear()
-    }
+      .catch((error) => {
+        toaster.pushError(t('toasts.goal-update.error'))
+        console.error(error)
+      })
+      .finally(() => {
+        asyncing.value = false
+        clear()
+      })
   } else {
-    // Create goal
-    try {
-      const result = await createGoal(props.project.id, payload)
-      analytics.goal.addGoalProject({
-        project: {
-          id: props.project.id,
-        },
-        goal: result,
+    // Update goal
+    createGoal(props.project.id, payload)
+      .then((goal) => {
+        analytics.goal.addGoalProject({
+          project: {
+            id: props.project.id,
+          },
+          goal,
+        })
+        emit('reload')
+        toaster.pushSuccess(t('toasts.goal-create.success'))
       })
-
-      emit('reload')
-
-      toaster.pushSuccess(t('toasts.goal-create.success'))
-    } catch (error) {
-      toaster.pushError(`${t('toasts.goal-create.error')} (${error})`)
-      console.error(error)
-    } finally {
-      asyncing.value = false
-      clear()
-    }
+      .catch((error) => {
+        toaster.pushError(t('toasts.goal-create.error'))
+        console.error(error)
+      })
+      .finally(() => {
+        asyncing.value = false
+        clear()
+      })
   }
 }
 
+const isFormEqual = computed(() => isEqual(form.value, defaultLocalForm()))
+
 const checkClose = () => {
-  if (isEqual(form.value, defaultGoalForm())) {
+  if (isFormEqual.value) {
     clear()
   } else {
     openModal()
   }
 }
 </script>
+
+<template>
+  <BaseDrawer
+    :title="$t('goal.add')"
+    :confirm-action-name="$t('common.save')"
+    :confirm-action-disabled="!isValid || isFormEqual"
+    :is-opened="isOpened"
+    class="medium"
+    :asyncing="asyncing"
+    @close="checkClose"
+    @confirm="submit"
+  >
+    <div class="form">
+      <TextInput
+        v-model="form.title"
+        :label="`${$t('goal.title')}:`"
+        :placeholder="$t('goal.title')"
+        :errors="errors.title"
+      />
+
+      <div class="goal-description-section">
+        <span class="goal-label">{{ $t('goal.description') }}:</span>
+        <TipTapEditor
+          v-model="form.description"
+          :errors="errors.description"
+          class="goal-description"
+        />
+      </div>
+
+      <DateField
+        v-model="form.deadline_at"
+        :errors="errors.deadline_at"
+        :label="$t('common.set-deadline')"
+      />
+
+      <div class="status-ctn">
+        <span class="goal-label">{{ $t('goal.status-title') }}:</span>
+        <GroupButton
+          v-model="form.status"
+          class="group-button-labels"
+          :options="statusOptions"
+          :custom-color="statusColor"
+        />
+        <FieldErrors :errors="errors.status" />
+      </div>
+    </div>
+  </BaseDrawer>
+
+  <ConfirmModal
+    v-if="stateModal"
+    :title="$t('form.quit-without-saving-title')"
+    :content="$t('common.confirm-close')"
+    @cancel="closeModal"
+    @confirm="clear"
+  />
+</template>
 
 <style lang="scss" scoped>
 .goal-description-section {

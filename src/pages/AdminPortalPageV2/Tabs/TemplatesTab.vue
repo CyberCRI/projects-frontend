@@ -8,11 +8,11 @@
       />
     </template>
 
-    <FetchLoader :status="status" :with-data="!!data">
+    <FetchLoader :status="status" :with-data="!!templates">
       <div class="list">
         <ul>
           <AdminList
-            v-for="template in data?.results"
+            v-for="template in templates"
             :key="template.id"
             :label="template.name"
             :action-see="false"
@@ -40,18 +40,19 @@
 </template>
 
 <script setup lang="ts">
-import { deleteTemplate, getTemplates } from '~/api/templates.service'
+import { deleteTemplate } from '~/api/templates.service'
 
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import AdminList from '~/components/admin/AdminListItem.vue'
 import FetchLoader from '~/components/base/FetchLoader.vue'
 import LayoutTab from '~/components/admin/LayoutTab.vue'
 
+import { getTemplates } from '~/api/v2/templates.service'
 import useNuxtI18n from '~/composables/useNuxtI18n'
 
 const { t } = useNuxtI18n()
 const organizationCode = useOrganizationCode()
-const { data, status, refresh } = getTemplates(organizationCode)
+const { data: templates, status, refresh } = getTemplates(organizationCode)
 
 const router = useRouter()
 const redirectEditTemplate = (template) =>

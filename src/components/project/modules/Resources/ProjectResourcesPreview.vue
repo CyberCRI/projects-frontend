@@ -20,7 +20,9 @@ const resources = computed(() => props.project.modules.links + props.project.mod
     }"
   >
     <template #content>
-      <BaseProjectResources :project="project" preview :limit="3" />
+      <div class="flat-resources">
+        <BaseProjectResources :project="project" preview :limit="3" />
+      </div>
     </template>
   </BaseModulePreview>
 </template>
@@ -29,5 +31,17 @@ const resources = computed(() => props.project.modules.links + props.project.mod
 .resources-list {
   display: flex;
   gap: 1rem;
+}
+</style>
+
+<style lang="scss">
+.flat-resources {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  .resource-container {
+    display: contents !important;
+  }
 }
 </style>

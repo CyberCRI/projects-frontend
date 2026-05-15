@@ -2,30 +2,27 @@
   <li class="drop-down-menu-item">
     <slot name="default" :option="option" :selected="selected" />
     <ul class="sub-list">
-      <LpiProjectDropDownElement
+      <LpiDropDownElement
         v-for="child in option.children"
         :key="child.id"
-        :category="child"
         :selected="selected"
+        :option="child"
       >
         <template #default="{ option: subOption, selected: subSelected }">
           <slot name="default" :option="subOption" :selected="subSelected" />
         </template>
-      </LpiProjectDropDownElement>
+      </LpiDropDownElement>
     </ul>
   </li>
 </template>
 
 <script setup lang="ts">
 import type { Option } from '~/components/base/form/LpiDropDownElementButton.vue'
-
-type Options = {
-  children: Option[]
-}
+import LpiDropDownElement from '~/components/base/form/LpiDropDownElement.vue'
 
 withDefaults(
   defineProps<{
-    option: Options
+    option: Option
     selected?: boolean
   }>(),
   {

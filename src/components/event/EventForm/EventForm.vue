@@ -105,7 +105,7 @@ import FieldErrors from '~/components/base/form/FieldErrors.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import DateField from '~/components/base/form/DateField.vue'
 
-import { defaultForm } from '~/form/event'
+import { defaultEventForm } from '~/form/event'
 
 withDefaults(
   defineProps<{
@@ -116,7 +116,7 @@ withDefaults(
   }
 )
 const { t } = useNuxtI18n()
-const model = defineModel<EventForm>({ default: defaultForm() })
+const model = defineModel<EventForm>({ default: defaultEventForm() })
 const emit = defineEmits<{
   invalid: [boolean]
 }>()

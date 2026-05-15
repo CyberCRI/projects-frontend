@@ -22,6 +22,7 @@
     </PageStickyHead>
 
     <TipTapOutput class="description-content" :content="description" />
+    <NothingHere v-if="descriptionEmpty" />
   </BaseModuleTab>
 </template>
 
@@ -31,6 +32,8 @@ import PageStickyHead from '~/components/base/navigation/PageStickyHead.vue'
 import PageIndex from '~/components/base/navigation/PageIndex.vue'
 import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
 import type { TranslatedProject } from '~/models/project.model'
+import NothingHere from '~/components/base/NothingHere.vue'
+import { textIsEmpty } from '~/functs/string'
 
 const props = defineProps<{
   project: TranslatedProject
@@ -42,6 +45,8 @@ const hasSummary = ref(false)
 const description = computed(() => {
   return (props.project.$t.description || '').replaceAll(/\xa0»/g, '"')
 })
+
+const descriptionEmpty = computed(() => textIsEmpty(description.value))
 
 const summaryBlock = useTemplateRef('summaryBlock')
 watch(description, (neo, old) => {

@@ -33,7 +33,7 @@ import { createEvent } from '~/api/event.service'
 
 import useToasterStore from '~/stores/useToaster'
 
-import { defaultForm } from '~/form/event'
+import { defaultEventForm } from '~/form/event'
 
 const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()
@@ -41,12 +41,12 @@ const router = useRouter()
 const { t } = useNuxtI18n()
 
 const asyncing = ref(false)
-const form = ref(defaultForm())
+const form = ref(defaultEventForm())
 const invalid = ref(false)
 const eventForm = useTemplateRef('eventForm')
 
 const cancel = () => {
-  form.value = defaultForm()
+  form.value = defaultEventForm()
   router.push({ name: 'CalendarPage' })
 }
 

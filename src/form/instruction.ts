@@ -1,7 +1,7 @@
 import type { InstructionForm } from '@/models/instruction.model'
 import { NULL_CONTENT } from '~/functs/constants'
 
-export const defaultForm = (): InstructionForm => ({
+export const defaultInstructionForm = (): InstructionForm => ({
   title: '',
   content: NULL_CONTENT,
   publication_date: new Date().toISOString(),

@@ -120,8 +120,8 @@ import { usePatatoids } from '@/composables/usePatatoids'
 import { helpers, required } from '@vuelidate/validators'
 import type { NewsForm } from '@/models/news.model'
 import type { LocationType } from '@/models/types'
+import { defaultNewsForm } from '@/form/news'
 import useVuelidate from '@vuelidate/core'
-import { defaultForm } from '@/form/news'
 
 import { throttle } from 'es-toolkit'
 
@@ -133,7 +133,7 @@ withDefaults(
   { selectedGroup: true }
 )
 
-const model = defineModel<NewsForm>({ default: defaultForm() })
+const model = defineModel<NewsForm>({ default: defaultNewsForm() })
 const { stateModals, openModals, closeModals } = useModals({
   LocationForm: false,
   LocationDrawer: false,

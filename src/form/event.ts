@@ -1,7 +1,7 @@
 import type { EventForm } from '~/models/event.model'
 import { NULL_CONTENT } from '~/functs/constants'
 
-export const defaultForm = (): EventForm => ({
+export const defaultEventForm = (): EventForm => ({
   title: '',
   content: NULL_CONTENT,
   start_date: null,

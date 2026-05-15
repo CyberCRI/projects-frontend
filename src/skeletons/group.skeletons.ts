@@ -9,6 +9,7 @@ export const groupSkeleton = (def?: Partial<PeopleGroupModel>): Omit<PeopleGroup
     'Esse culpa qui quis ea aliqua commodo reprehenderit minim elit dolore amet Lorem.',
   email: '',
   type: 'type',
+  role: 'owners',
   header_image: null,
   publication_status: 'public',
   organization: null,

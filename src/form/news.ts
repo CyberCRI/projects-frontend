@@ -1,7 +1,7 @@
 import type { NewsForm } from '~/models/news.model'
 import { NULL_CONTENT } from '~/functs/constants'
 
-export const defaultForm = (): NewsForm => ({
+export const defaultNewsForm = (): NewsForm => ({
   header_image: null,
   imageSizes: null,
   title: '',

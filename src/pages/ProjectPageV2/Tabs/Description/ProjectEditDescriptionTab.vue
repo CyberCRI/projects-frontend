@@ -6,7 +6,7 @@ import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
 import type { TranslatedProject } from '~/models/project.model'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import FormPanel from '~/components/base/FormPanel.vue'
-import { textIsEmpty } from '~/functs/string'
+import { getFirstTextNotEmpty } from '~/functs/string'
 import { isEqual, pick } from 'es-toolkit'
 
 const props = withDefaults(
@@ -41,13 +41,12 @@ const providerParams = computed(() => {
 const defaultLocalForm = () => {
   const defaultForm = pick(defaultProjectForm(), ['description'])
   const newForm = { ...defaultForm }
-  if (textIsEmpty(props.project.description)) {
-    if (props.project.template?.project_description) {
-      newForm.description = props.project.template.project_description
-    }
-  } else {
-    newForm.description = props.project.description
-  }
+
+  newForm.description =
+    getFirstTextNotEmpty([
+      props.project.$t.description,
+      props.project.template?.$t.project_description,
+    ]) || newForm.description
   return newForm
 }
 

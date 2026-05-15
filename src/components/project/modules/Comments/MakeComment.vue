@@ -21,7 +21,7 @@
       <div class="action">
         <LpiButton :label="$t('common.cancel')" :secondary="true" @click="checkCancel" />
         <LpiButton
-          :disabled="!canSubmitComment || asyncing || !isValid"
+          :disabled="!canSubmitComment || asyncing || !isValid || isFormEqual"
           :btn-icon="asyncing ? 'LoaderSimple' : null"
           :label="isPrivate ? $t('comment.private-exchange.send') : $t('comment.publish')"
           @click="submit"
@@ -59,6 +59,7 @@ import type { ProjectMessageModel } from '~/models/project-message.model'
 import type { TranslatedProject } from '~/models/project.model'
 import type { CommentModel } from '~/models/comment.model'
 import type { ImageModel } from '~/models/image.model'
+import { getFirstTextNotEmpty } from '~/functs/string'
 import { isEqual } from 'es-toolkit'
 import analytics from '~/analytics'
 
@@ -100,12 +101,11 @@ const defaultLocalForm = () => {
     newForm.reply_on = newForm.reply_on_id = props.repliedComment.id
   }
 
-  if (props.project.template) {
-    newForm.content = props.project.template.$t.comment_content || newForm.content
-  }
-  if (props.originalComment) {
-    newForm.content = props.originalComment.content || newForm.content
-  }
+  newForm.content =
+    getFirstTextNotEmpty([
+      props.project.template?.$t.comment_content,
+      props.originalComment?.content,
+    ]) || newForm.content
 
   return newForm
 }
@@ -123,8 +123,8 @@ watch(
   }
 )
 
-const isEdited = computed(() => !isEqual(form.value, defaultLocalForm()))
-const canSubmitComment = computed(() => isEdited.value && canCreateComments.value)
+const isFormEqual = computed(() => isEqual(form.value, defaultLocalForm()))
+const canSubmitComment = computed(() => !isFormEqual.value && canCreateComments.value)
 
 const cancel = () => {
   closeAllModals()
@@ -132,7 +132,7 @@ const cancel = () => {
 }
 
 const checkCancel = () => {
-  if (isEdited.value) {
+  if (isFormEqual.value) {
     openModals('saveChange')
   } else {
     cancel()

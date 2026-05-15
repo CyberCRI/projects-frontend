@@ -1,45 +1,62 @@
-import type { AttachmentFileInput, AttachmentFileModel } from '~/models/attachment-file.model'
+import type { AttachmentFileModel } from '~/models/attachment-file.model'
 
+import type { OrganizationModel } from '~/models/organization.model'
+import type { UseApiOptions } from '~/composables/useAPI'
 import useAPI from '~/composables/useAPI'
 
-export async function getOrganizationFiles(organizationCode: string, config = {}) {
+type Config = UseApiOptions
+type ConfigPagiations = UseApiOptions<Partial<PaginationQuery>>
+
+export async function getOrganizationFiles(
+  organizationCode: string,
+  config: ConfigPagiations = {}
+) {
   return await useAPI<PaginationResult<AttachmentFileModel>>(
     `organization/${organizationCode}/file/`,
     config
   )
 }
 
-export async function getOrganizationFile(orgCode: string, body: AttachmentFileInput) {
-  return await useAPI(`organization/${orgCode}/file/${body.file}`, {})
+export async function getOrganizationFile(
+  organizationCode: OrganizationModel['code'],
+  attachmentId: AttachmentFileModel['id'],
+  config: Config = {}
+) {
+  return await useAPI<AttachmentFileModel>(
+    `organization/${organizationCode}/file/${attachmentId}`,
+    config
+  )
 }
 
-export async function postOrganizationFiles(orgCode: string, body: AttachmentFileInput) {
-  const fd = new FormData()
-  fd.append('description', body.description)
-  fd.append('title', body.title)
-  fd.append('project_id', body.project_id)
-
-  fd.append('file', body.file, body.file.name)
-  fd.append('mime', body.file.type || 'file')
-  return await useAPI(`organization/${orgCode}/file/`, {
-    body: fd,
+export async function postOrganizationFiles(
+  organizationCode: OrganizationModel['code'],
+  body: FormData
+) {
+  return await useAPI<AttachmentFileModel>(`organization/${organizationCode}/file/`, {
+    body,
     method: 'POST',
   })
 }
 
-export async function patchOrganizationFile(orgCode: string, body: AttachmentFileInput) {
-  const fd = new FormData()
-  fd.append('description', body.description)
-  fd.append('title', body.title)
-  fd.append('project_id', body.project_id)
-
-  return await useAPI(`organization/${orgCode}/file/${body.id}/`, {
-    // headers,
-    body: fd,
-    method: 'PATCH',
-  })
+export async function patchOrganizationFile(
+  organizationCode: OrganizationModel['code'],
+  attachmentId: AttachmentFileModel['id'],
+  body: FormData
+) {
+  return await useAPI<AttachmentFileModel>(
+    `organization/${organizationCode}/file/${attachmentId}/`,
+    {
+      body,
+      method: 'PATCH',
+    }
+  )
 }
 
-export async function deleteOrganizationFile(orgCode: string, id) {
-  return await useAPI(`organization/${orgCode}/file/${id}/`, { method: 'DELETE' })
+export async function deleteOrganizationFile(
+  organizationCode: OrganizationModel['code'],
+  attachmentId: AttachmentFileModel['id']
+) {
+  return await useAPI<undefined>(`organization/${organizationCode}/file/${attachmentId}/`, {
+    method: 'DELETE',
+  })
 }

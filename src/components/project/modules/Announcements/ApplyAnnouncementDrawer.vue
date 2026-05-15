@@ -81,8 +81,12 @@ const close = () => {
   emit('close')
 }
 
+const isFormEqual = computed(() =>
+  isEqual(omit(form.value, ['recaptcha']), omit(defaultLocalForm(), ['recaptcha']))
+)
+
 const checkClose = () => {
-  if (isEqual(omit(form.value, ['recaptcha']), omit(defaultLocalForm(), ['recaptcha']))) {
+  if (isFormEqual.value) {
     close()
   } else {
     openModals('saveChange')
@@ -113,7 +117,7 @@ const onApplyAnnouncement = () => {
     :is-opened="isOpened"
     :title="$t('project.announcements')"
     :confirm-action-name="$t('recruit.apply')"
-    :confirm-action-disabled="!isValid"
+    :confirm-action-disabled="!isValid || isFormEqual"
     :asyncing="asyncing"
     @close="checkClose"
     @confirm="onApplyAnnouncement"

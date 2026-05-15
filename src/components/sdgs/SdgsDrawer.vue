@@ -4,6 +4,7 @@
     :is-opened="isOpened"
     :title="$t('sdg.sdg-fulltext')"
     class="small"
+    :confirm-action-disabled="isFormEqual"
     @close="checkClose"
     @confirm="confirm"
   >
@@ -53,9 +54,10 @@ const close = () => {
   closeModals('saveChange')
   emit('close')
 }
+const isFormEqual = computed(() => isEqual(model.value, tmpModel.value))
 
 const checkClose = () => {
-  if (isEqual(model.value, tmpModel.value)) {
+  if (isFormEqual.value) {
     close()
   } else {
     openModals('saveChange')

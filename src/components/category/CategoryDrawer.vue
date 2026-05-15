@@ -51,7 +51,7 @@
           <FilterDrawer
             v-model:open="templateSearchIsOpened"
             v-model="category.templates"
-            :options="allTemplates?.results"
+            :options="templates"
             :title="$t('template.add-template')"
           />
         </div>
@@ -244,8 +244,6 @@
 import { Sketch as SketchPicker } from '@ckpack/vue-color'
 import type { Payload } from '@ckpack/vue-color'
 
-import { getTemplates } from '~/api/templates.service'
-
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
 import CategoryCardImage from '~/components/category/CategoryCardImage.vue'
 import CategoryField from '~/components/category/CategoryField.vue'
@@ -263,8 +261,9 @@ import useOrganizationCode from '~/composables/useOrganizationCode'
 
 import type { ProjectCategoryForm, ProjectCategoryModel } from '~/models/project-category.model'
 import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
+import { defaultProjectCategoryForm } from '~/form/category'
+import { getTemplates } from '~/api/v2/templates.service'
 import { LazyImageResizer } from '#components'
-import { defaultForm } from '~/form/category'
 import { Sortable } from 'sortablejs-vue3'
 
 const props = withDefaults(
@@ -283,10 +282,10 @@ const props = withDefaults(
 const emits = defineEmits(['close-modal', 'submit-category'])
 
 const organizationCode = useOrganizationCode()
-const { data: allTemplates, status } = getTemplates(organizationCode)
+const { data: templates, status } = getTemplates(organizationCode)
 
 const category = ref({
-  ...defaultForm(),
+  ...defaultProjectCategoryForm(),
   ...props.editedCategory,
   parent: props.parentCategory,
   organization_code: organizationCode,

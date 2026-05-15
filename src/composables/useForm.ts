@@ -77,8 +77,7 @@ const useForm = <T extends object, CleanResult = T>(
 
       Object.keys(unref(options.rules ?? {})).forEach((key) => {
         if (lazy || diffKeys.includes(key)) {
-          console.log(key)
-          v$.value[key].$touch()
+          v$.value[key]?.$touch()
         }
       })
     },

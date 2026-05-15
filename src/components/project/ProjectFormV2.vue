@@ -1,6 +1,104 @@
+<script setup lang="ts">
+import type { ProjectForm, TranslatedProject } from '~/models/project.model'
+import { defaultProjectForm, useProjectForm } from '~/form/project'
+import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import TagsDrawer from '~/components/tags/TagsDrawer.vue'
+import { getFirstTextNotEmpty } from '~/functs/string'
+import Field from '~/components/base/form/Field.vue'
+import { isEqual, isNil } from 'es-toolkit'
+
+const props = withDefaults(
+  defineProps<{
+    project?: Partial<TranslatedProject>
+    loading?: boolean
+  }>(),
+  {
+    project: null,
+    loading: false,
+  }
+)
+
+const emit = defineEmits<{
+  close: []
+  submit: [ProjectForm]
+}>()
+
+const organizationCode = useOrganizationCode()
+const { stateModals, closeModals, openModals } = useModals({ tags: false, saveChange: false })
+
+const organizationsStore = useOrganizationsStore()
+
+// const toaster = useToasterStore()
+const { t, locale } = useNuxtI18n()
+
+const defaultLocalForm = () => {
+  const newForm = defaultProjectForm()
+
+  const project = props.project
+
+  if (project) {
+    newForm.title =
+      getFirstTextNotEmpty([
+        project.$t?.title,
+        project.title,
+        project.template?.$t.project_title,
+      ]) || newForm.title
+    newForm.purpose =
+      getFirstTextNotEmpty([
+        project.$t?.purpose,
+        project.purpose,
+        project.template?.$t.project_purpose,
+      ]) || newForm.purpose
+    newForm.imageSizes = pictureApiToImageSizes(project.header_image) || newForm.imageSizes
+    newForm.file = project.header_image || newForm.file
+    newForm.language = project.language || locale.value || newForm.language
+    newForm.template = project.template || newForm.template
+
+    newForm.categories = [...(project.categories || []), newForm.categories]
+      .filter((v) => !isNil(v))
+      .find((cat) => cat.organization === organizationCode)
+
+    newForm.tags = [...(project.tags || project.template?.project_tags || newForm.tags)]
+  }
+
+  return newForm
+}
+
+const { form, errors, isValid, cleanedData, reset } = useProjectForm({ lazy: true })
+watch(
+  () => props.project,
+  () => reset(defaultLocalForm()),
+  { immediate: true }
+)
+
+const languageOptions = computed(() => {
+  return organizationsStore.languages.map((language) => {
+    return {
+      value: language,
+      label: t(`language.label-${language}`),
+      dataTest: `project-form-${language}`,
+    }
+  })
+})
+
+const isFormEqual = computed(() => isEqual(form.value, defaultLocalForm()))
+
+const onClose = () => {
+  if (isFormEqual.value) {
+    emit('close')
+  } else {
+    openModals('saveChange')
+  }
+}
+
+const onSubmit = () => emit('submit', cleanedData.value)
+</script>
+
 <template>
   <FormPanel
-    :confirm-action-disabled="!isValid"
+    :confirm-action-disabled="!isValid || isFormEqual"
     :asyncing="loading"
     @close="onClose"
     @confirm="onSubmit"
@@ -69,85 +167,3 @@
     @confirm="emit('close')"
   />
 </template>
-
-<script setup lang="ts">
-import type { ProjectForm, ProjectModel } from '~/models/project.model'
-import { defaultProjectForm, useProjectForm } from '~/form/project'
-import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
-import LpiButton from '~/components/base/button/LpiButton.vue'
-import useOrganizationsStore from '~/stores/useOrganizations'
-import TagsDrawer from '~/components/tags/TagsDrawer.vue'
-import Field from '~/components/base/form/Field.vue'
-import { isEqual } from 'es-toolkit'
-
-const props = withDefaults(
-  defineProps<{
-    project?: Partial<ProjectModel>
-    loading?: boolean
-  }>(),
-  {
-    project: null,
-    loading: false,
-  }
-)
-
-const emit = defineEmits<{
-  close: []
-  submit: [ProjectForm]
-}>()
-
-const organizationCode = useOrganizationCode()
-const { stateModals, closeModals, openModals } = useModals({ tags: false, saveChange: false })
-
-const organizationsStore = useOrganizationsStore()
-
-// const toaster = useToasterStore()
-const { t, locale } = useNuxtI18n()
-
-const defaultLocalForm = () => {
-  const newForm = defaultProjectForm()
-
-  const project = props.project
-
-  if (project) {
-    newForm.title = project.title || newForm.title
-    newForm.purpose = project.purpose || project.purpose
-    newForm.imageSizes = pictureApiToImageSizes(project.header_image) || newForm.imageSizes
-    newForm.file = project.header_image || newForm.file
-    newForm.language = project.language || locale.value || project.language
-    newForm.categories = [...(project.categories || []), newForm.categories].find(
-      (cat) => cat.organization === organizationCode
-    )
-    newForm.tags = [...(project.tags || newForm.tags)]
-  }
-
-  return newForm
-}
-
-const { form, errors, isValid, cleanedData, reset } = useProjectForm({ lazy: true })
-watch(
-  () => props.project,
-  () => reset(defaultLocalForm()),
-  { immediate: true }
-)
-
-const languageOptions = computed(() => {
-  return organizationsStore.languages.map((language) => {
-    return {
-      value: language,
-      label: t(`language.label-${language}`),
-      dataTest: `project-form-${language}`,
-    }
-  })
-})
-
-const onClose = () => {
-  if (isEqual(form.value, defaultLocalForm())) {
-    emit('close')
-  } else {
-    openModals('saveChange')
-  }
-}
-
-const onSubmit = () => emit('submit', cleanedData.value)
-</script>

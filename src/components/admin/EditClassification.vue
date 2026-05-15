@@ -7,8 +7,8 @@ import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import type { TagClassificationModel } from '~/models/tagclassification.model'
+import { defaultTagClassificationForm } from '~/form/classification'
 import useOrganizationsStore from '~/stores/useOrganizations'
-import { defaultForm } from '~/form/classification'
 import useToasterStore from '~/stores/useToaster'
 
 const { t } = useNuxtI18n()
@@ -24,9 +24,9 @@ const props = defineProps<{
 
 const asyncing = ref(false)
 
-const form = ref(defaultForm())
+const form = ref(defaultTagClassificationForm())
 watchEffect(() => {
-  form.value = defaultForm()
+  form.value = defaultTagClassificationForm()
   if (props.classification) {
     form.value = {
       id: props.classification.id,

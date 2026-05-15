@@ -1,7 +1,7 @@
 import type { ProjectCategoryModel } from '~/models/project-category.model'
 import { NULL_CONTENT } from '~/functs/constants'
 
-export const defaultForm = (): Partial<ProjectCategoryModel> => {
+export const defaultProjectCategoryForm = (): Partial<ProjectCategoryModel> => {
   return {
     name: '',
     description: NULL_CONTENT,

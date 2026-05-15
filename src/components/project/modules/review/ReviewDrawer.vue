@@ -62,7 +62,7 @@ const { stateModals, closeModals, openModals } = useModals({ saveChange: false }
 
 const { form, isValid, errors, cleanedData, reset } = useProjectReview({ lazy: true })
 
-const isFormEqual = () => isEqual(form.value, defaultLocalForm())
+const isFormEqual = computed(() => isEqual(form.value, defaultLocalForm()))
 
 watch(
   () => [props.review, props.isOpened],
@@ -123,7 +123,7 @@ const submit = () => {
 }
 
 const onClose = () => {
-  if (isFormEqual()) {
+  if (isFormEqual.value) {
     emit('close')
   } else {
     openModals('saveChange')
@@ -133,7 +133,7 @@ const onClose = () => {
 
 <template>
   <BaseDrawer
-    :confirm-action-disabled="!isValid"
+    :confirm-action-disabled="!isValid || isFormEqual"
     :confirm-action-name="$t('common.save')"
     :is-opened="isOpened"
     :title="review?.id ? $t('project.add-review') : $t('project.edit-review')"

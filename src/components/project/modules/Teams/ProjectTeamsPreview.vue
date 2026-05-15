@@ -18,7 +18,7 @@ defineProps<{ project: TranslatedProject }>()
     }"
   >
     <template #content>
-      <BaseProjectTeamsList :project="project" preview />
+      <BaseProjectTeamsList :project="project" preview :limit="5" />
     </template>
   </BaseModulePreview>
 </template>

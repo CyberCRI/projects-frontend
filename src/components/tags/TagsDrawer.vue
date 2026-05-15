@@ -4,6 +4,7 @@
     :is-opened="isOpened"
     :title="$t('project.form.add-tags')"
     class="medium"
+    :confirm-action-disabled="isFormEqual"
     @close="checkClose"
     @confirm="confirm"
   >
@@ -52,8 +53,10 @@ const close = () => {
 }
 const emit = defineEmits(['close', 'confirm'])
 
+const isFormEqual = computed(() => isEqual(model.value, tmpModel.value))
+
 const checkClose = () => {
-  if (isEqual(model.value, tmpModel.value)) {
+  if (isFormEqual.value) {
     close()
   } else {
     openModals('saveChange')

@@ -12,29 +12,14 @@ import type { SearchParams } from '@/api/types'
 import useAPI from '@/composables/useAPI'
 
 import type { ProjectMemberModel, QueryFilterProjectMembers } from '@/models/project-member.model'
-import { imageSizesFormData } from '@/functs/imageSizesUtils'
+import type { PeopleGroupModel } from '~/models/invitation.model'
 import type { ImageModel } from '~/models/image.model'
 
 type Config = UseApiOptions
 type ConfigMembers = UseApiOptions<QueryFilterProjectMembers>
 
-export async function createProject(project) {
-  const result: any = await useAPI(`project/`, { body: project, method: 'POST' })
-  return result
-}
-
-export async function createProjectHeader(projectId, project) {
-  if (project.header_image instanceof File && projectId) {
-    const headerFormData = new FormData()
-    headerFormData.append('file', project['header_image'], project['header_image'].name)
-
-    const imageSizes = project['imageSizes']
-    imageSizesFormData(headerFormData, imageSizes)
-    project.header_image_id = ((await postProjectHeader(projectId, headerFormData)) as any).id
-    return project.header_image_id
-  }
-
-  return false
+export function postProject(body: ProjectForm) {
+  return useAPI(`project/`, { body, method: 'POST' })
 }
 
 export async function patchProject(projectId: ProjectSlugOrId, project: ProjectForm) {
@@ -93,17 +78,9 @@ export async function getProjectMembers(
   config: ConfigMembers = {}
 ) {
   return await useAPI<PaginationResult<ProjectMemberModel>>(
-    `project/${projectSlugOrId}/members/`,
+    `project/${projectSlugOrId}/member/`,
     config
   )
-}
-
-export async function getAllRecommendedProjects(params: SearchParams) {
-  return await useAPI(`project/misc/top/`, { ..._adaptParamsToGetQuery(params) })
-}
-
-export async function getAllRandomProjects(params: SearchParams) {
-  return await useAPI(`project/misc/random/`, { ..._adaptParamsToGetQuery(params) })
 }
 
 export async function getAllProjects(params: SearchParams) {
@@ -140,4 +117,13 @@ export type ConfigSimilar = UseApiOptions<QueryFilterProjectSimilars>
 
 export async function getProjectSimilars(projectId: ProjectSlugOrId, config: ConfigSimilar = {}) {
   return await useAPI<ProjectModel[]>(`/project/${projectId}/similar/`, config)
+}
+
+type ConfigProjectGroup = UseApiOptions<PaginationResult>
+
+export async function getProjectGroups(
+  projectId: ProjectSlugOrId,
+  config: ConfigProjectGroup = {}
+) {
+  return await useAPI<PaginationResult<PeopleGroupModel>>(`/project/${projectId}/group/`, config)
 }

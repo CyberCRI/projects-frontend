@@ -22,6 +22,7 @@ export type Option = {
   label?: string
   name?: string
   value: string
+  children?: Option[]
 }
 
 const props = withDefaults(

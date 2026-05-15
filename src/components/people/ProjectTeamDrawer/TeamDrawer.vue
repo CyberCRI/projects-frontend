@@ -103,10 +103,6 @@ export default {
   },
 
   computed: {
-    projectSlug() {
-      return this.project?.slug || ''
-    },
-
     label() {
       return this.editedUser ? this.$t('team.edit') : this.$t('team.add')
     },
@@ -148,16 +144,8 @@ export default {
             members: { ...this.form.team },
           })
 
-          this.$emit('reload-team')
-
           this.toaster.pushSuccess(this.$t('toasts.team-member-create.success'))
-
-          if (this.$route.name !== 'projectTeam') {
-            this.$router.push({
-              name: 'projectTeam',
-              params: { slugOrId: this.projectSlug },
-            })
-          }
+          this.$emit('reload-team')
         } catch (error) {
           this.toaster.pushError(`${this.$t('toasts.team-member-create.error')} (${error})`)
           console.error(error)

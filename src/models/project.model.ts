@@ -72,6 +72,7 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
     reviews: number
     messages: number
   }
+  template?: TemplateModel
 }
 
 export type ProjectModulesKeys = keyof ProjectModel['modules']
@@ -188,18 +189,21 @@ export type ProjectForm = Partial<
     | 'title'
     | 'purpose'
     | 'language'
-    | 'tags'
     | 'description'
     | 'sdgs'
     | 'is_locked'
+    | 'is_shareable'
     | 'publication_status'
     | 'life_status'
+    | 'template'
   > & {
     imageSizes: any
     file: ImageModel | File
     organizations_codes: OrganizationModel['code'][]
     categories: TranslatedProjectCategory | ProjectCategoryModel
     project_categories_ids: TranslatedProjectCategory['id'][]
+    template_id: number
+    tags: TagModel[]
   }
 >
 

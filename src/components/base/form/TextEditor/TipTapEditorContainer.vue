@@ -45,6 +45,7 @@ const { locale } = useNuxtI18n()
 </template>
 <style lang="scss" scoped>
 .errors-tiptap {
+  width: 100%;
   transition: all 0.2s;
   border-radius: $border-radius-l;
   border: $border-width-s solid $primary;

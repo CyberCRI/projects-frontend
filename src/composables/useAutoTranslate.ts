@@ -16,6 +16,7 @@ import type { TranslatedOrganizationModel } from '@/models/organization.model'
 import type { TranslatedAnnouncement } from '@/models/announcement.model'
 import type { TranslatedInstruction } from '@/models/instruction.model'
 import type { TranslatedBlogEntry } from '@/models/blog-entry.model'
+import type { TranslatedTemplate } from '~/models/template.model'
 import type { TranslatedNewsfeed } from '@/models/newsfeed.model'
 import type { TranslatedDocument } from '@/interfaces/researcher'
 import type { TranslatedEventModel } from '@/models/event.model'
@@ -100,7 +101,9 @@ export default function useAutoTranslate() {
       if (!unrefProject) return project
       return {
         ...unref(translateEntity(unrefProject, ['title', 'description', 'purpose'])),
-        template: unref(translateTemplate(unrefProject.template)),
+        template: unrefProject.template
+          ? unref(translateTemplate(unrefProject.template))
+          : unrefProject.template,
       }
     })
   }
@@ -261,26 +264,30 @@ export default function useAutoTranslate() {
   const translateOrganizations = (orgs) =>
     translateEntities<TranslatedOrganizationModel>(orgs, translateOrganization)
 
-  const translateTemplate = (template) => {
-    const _template = unref(template)
-    if (_template?.project_tags)
-      _template.project_tags = unref(translateTags(_template.project_tags))
-    if (_template?.categories)
-      _template.categories = unref(translateCategories(_template.categories))
-    return translateEntity(_template, [
-      'name',
-      'description',
-      'project_title',
-      'project_description',
-      'project_purpose',
-      'blogentry_title',
-      'blogentry_content',
-      'goal_title',
-      'goal_description',
-      'comment_content',
-    ])
-  }
-  const translateTemplates = (templates) => translateEntities(templates, translateTemplate)
+  const translateTemplate = (template) =>
+    computed(() => {
+      const _template = unref(
+        translateEntity<TranslatedTemplate>(template, [
+          'name',
+          'description',
+          'project_title',
+          'project_description',
+          'project_purpose',
+          'blogentry_title',
+          'blogentry_content',
+          'goal_title',
+          'goal_description',
+          'comment_content',
+        ])
+      )
+      if (_template?.project_tags)
+        _template.project_tags = unref(translateTags(_template.project_tags))
+      if (_template?.categories)
+        _template.categories = unref(translateCategories(_template.categories))
+      return _template
+    })
+  const translateTemplates = (templates) =>
+    translateEntities<TranslatedTemplate>(templates, translateTemplate)
 
   // -------
   // use full

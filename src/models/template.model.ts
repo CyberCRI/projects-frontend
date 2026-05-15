@@ -31,6 +31,8 @@ export interface TemplateModel extends BaseModel {
   comment_content: string
 }
 
+export type TemplateId = TemplateModel['id']
+
 export type TranslatedTemplate = Translated<
   TemplateModel,
   | 'name'

@@ -64,9 +64,9 @@ import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { email, helpers, required } from '@vuelidate/validators'
 import TextInput from '@/components/base/form/TextInput.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
+import { defaultMentoringForm } from '@/form/mentorship'
 import type { SkillModel } from '@/models/skill.model'
 import useToasterStore from '@/stores/useToaster'
-import { defaultForm } from '@/form/mentorship'
 import useUsersStore from '@/stores/useUsers'
 import useValidate from '@vuelidate/core'
 
@@ -93,7 +93,7 @@ const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()
 const usersStore = useUsersStore()
 
-const form = ref(defaultForm())
+const form = ref(defaultMentoringForm())
 
 const rules = computed(() => ({
   title: {
@@ -128,7 +128,7 @@ const mode = computed(() => (props.isOffer ? 'offer' : 'ask'))
 watch(
   () => props.isOpen,
   () => {
-    form.value = defaultForm()
+    form.value = defaultMentoringForm()
     // this the login mail
     form.value.reply_to = usersStore.userFromApi?.email || ''
     v$.value.$reset()

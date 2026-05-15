@@ -24,7 +24,7 @@ const { stateModals, openModals, closeModals, closeAllModals } = useModals({
   saveChange: false,
 })
 
-const defaultForm = () => {
+const defaultLocalForm = () => {
   const newForm = defaultAttachmentForm()
 
   if (props.resource) {
@@ -52,7 +52,7 @@ const defaultForm = () => {
 
 const { isValid, form, errors, cleanedData, reset } = useAttachmentForm(
   computed(() => props.formType),
-  { lazy: true, default: defaultForm() }
+  { lazy: true }
 )
 
 const emit = defineEmits<{
@@ -62,7 +62,7 @@ const emit = defineEmits<{
 
 watch(
   () => [props.resource, props.isOpened],
-  () => reset(defaultForm()),
+  () => reset(defaultLocalForm()),
   { immediate: true }
 )
 
@@ -79,13 +79,17 @@ const onConfirm = () => {
   }
 }
 
-const onClose = () => {
+const isFormEqual = computed(() => {
   const actualForm = { ...form.value }
-  const originalForm = defaultForm()
+  const originalForm = defaultLocalForm()
   if (actualForm.id && props.formType === 'file') {
     actualForm.file = originalForm.file = null
   }
-  if (isEqual(actualForm, originalForm)) {
+  return isEqual(actualForm, originalForm)
+})
+
+const onClose = () => {
+  if (isFormEqual.value) {
     cancel()
   } else {
     openModals('saveChange')
@@ -95,7 +99,7 @@ const onClose = () => {
 
 <template>
   <BaseDrawer
-    :confirm-action-disabled="!isValid"
+    :confirm-action-disabled="!isValid || isFormEqual"
     :confirm-action-name="$t('common.save')"
     :is-opened="isOpened"
     :title="form.id ? $t(`resource.${formType}.edit`) : $t(`resource.${formType}.add`)"

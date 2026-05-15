@@ -11,9 +11,11 @@ import type { TranslatedProject } from '~/models/project.model'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import { DEFAULT_ORGANIZATION_CODE } from '~/functs/constants'
+import FormPanel from '~/components/base/FormPanel.vue'
 import { useProjectSettingForm } from '~/form/project'
 import Section from '~/components/base/Section.vue'
 import useUsersStore from '~/stores/useUsers'
+import { isEqual } from 'es-toolkit'
 import analytics from '~/analytics'
 
 const props = withDefaults(
@@ -32,6 +34,7 @@ const { stateModals, openModals, closeModals } = useModals({
   memberQuit: false,
   review: false,
   report: false,
+  saveChange: false,
 })
 const { canDestroyProject, canEditProject, isMember, isOwner, isOrgAdmin, isAdmin, canAddReview } =
   usePermissions()
@@ -53,7 +56,7 @@ const defaultLocalForm = () => {
     ),
   }
 }
-const { form, reset, cleanedData } = useProjectSettingForm({
+const { form, reset, cleanedData, isValid } = useProjectSettingForm({
   default: defaultLocalForm(),
   lazy: true,
 })
@@ -150,6 +153,25 @@ const { data: categories } = getAllProjectCategories(organizationCode, {
 // callback
 const refresh = () => refreshProjectData(props.project)
 
+const redirect = () => {
+  router.push({
+    name: 'ProjectSnapshot',
+    params: {
+      slugOrId: props.project.slug || props.project.id,
+    },
+  })
+}
+
+const isFormEqual = computed(() => isEqual(form.value, defaultLocalForm()))
+
+const onCancel = () => {
+  if (isFormEqual.value) {
+    redirect()
+  } else {
+    openModals('saveChange')
+  }
+}
+
 const onUpdate = () => {
   const body = { ...cleanedData.value }
 
@@ -161,18 +183,6 @@ const onUpdate = () => {
     .catch(() => toaster.pushError(t('toasts.project-edit.error')))
     .finally(() => (asyncing.value = false))
 }
-
-// when form changes update project
-// use JSON.stringigy to avoid compare object change
-watch(
-  () => JSON.stringify(cleanedData.value),
-  () => {
-    // only update for real project (no skeletons)
-    if (props.project.id) {
-      onUpdate()
-    }
-  }
-)
 
 const onDeleteProject = () => {
   asyncing.value = true
@@ -202,12 +212,7 @@ const onQuitProject = () => {
       if (props.project.publication_status == 'private') {
         router.push({ name: 'HomeRoot' })
       } else {
-        router.push({
-          name: 'ProjectSnapshot',
-          params: {
-            slugOrId: props.project.slug || props.project.id,
-          },
-        })
+        redirect()
       }
       refresh()
     })
@@ -219,106 +224,115 @@ const onQuitProject = () => {
 <template>
   <BaseModuleTab :title="project.$t.title">
     <!-- actions -->
-    <div class="list-container">
-      <Section class="section-green skeletons-background" :title="$t('project.actions')">
-        <div class="list-container">
-          <LpiButton
-            v-if="canDestroyProject"
-            :label="$t('project.destroy')"
-            class="button"
-            btn-icon="TrashCanOutline"
-            data-test="destroy-project"
-            @click="openModals('delete')"
-          />
-          <LpiButton
-            v-if="isMember"
-            :label="$t('project.quit')"
-            class="button"
-            btn-icon="Logout"
-            @click="openModals('memberQuit')"
-          />
-        </div>
-      </Section>
-
-      <template v-if="canEditProject">
-        <Section class="skeletons-background" :title="$t('project.visibility')">
-          <GroupButton
-            v-model="form.publication_status"
-            :has-icon="true"
-            :is-vertical="isMobile"
-            :options="visibilityOptions"
-            class="setting"
-          />
-          <TableInfo class="publications-opacity" :options="optionsPublications" />
-        </Section>
-        <Section class="skeletons-background" :title="$t('project.life-status')">
-          <GroupButton
-            v-model="form.life_status"
-            :has-icon="true"
-            :is-vertical="isMobile"
-            :options="lifeStatusOptions"
-          />
-        </Section>
-        <Section
-          v-if="canAddReview && project.life_status === 'toreview'"
-          class="skeletons-background"
-          :title="$t('project.reviews')"
-        >
-          <LpiButton
-            :label="$t('project.review')"
-            :secondary="true"
-            @click="openModals('review')"
-          />
-        </Section>
-
-        <Section
-          v-if="organizations?.length"
-          class="skeletons-background"
-          :title="$t('project.org-settings.title')"
-        >
-          <p class="org-description">
-            {{ $t('project.org-settings.description') }}
-          </p>
-
-          <div class="organization-ctn">
-            <LpiCheckbox
-              v-for="org in organizations"
-              :key="org.code"
-              :model-value="form.organizations_codes.includes(org.code)"
-              as-button
-              :label="org.name"
-              :disabled="disableLastOrg(org)"
-              @update:model-value="updateOrganisation(org.code, $event)"
+    <FormPanel
+      :asyncing="asyncing"
+      :confirm-action-disabled="!isValid || isFormEqual"
+      @confirm="onUpdate"
+      @close="onCancel"
+    >
+      <div class="list-container">
+        <Section class="section-green skeletons-background" :title="$t('project.actions')">
+          <div class="list-container">
+            <LpiButton
+              v-if="canDestroyProject"
+              :label="$t('project.destroy')"
+              class="button"
+              btn-icon="TrashCanOutline"
+              data-test="destroy-project"
+              @click="openModals('delete')"
+            />
+            <LpiButton
+              v-if="isMember"
+              :label="$t('project.quit')"
+              class="button"
+              btn-icon="Logout"
+              @click="openModals('memberQuit')"
             />
           </div>
         </Section>
 
-        <Section :title="$t('project.form.project-category')" class="skeletons-background">
-          <template v-if="form.organizations_codes.length === 0">
-            <LpiSnackbar class="completed-form-snackbar" icon="QuestionMark" type="error">
-              <p>{{ $t('project.org-settings.warning') }}</p>
-            </LpiSnackbar>
-            <ul class="links-list">
-              <li v-for="link in selectedOrgLinks" :key="link.id">
-                <a :href="link.website_url" class="link" target="_blank">{{ link.website_url }}</a>
-              </li>
-            </ul>
-          </template>
+        <template v-if="canEditProject">
+          <Section class="skeletons-background" :title="$t('project.visibility')">
+            <GroupButton
+              v-model="form.publication_status"
+              :has-icon="true"
+              :is-vertical="isMobile"
+              :options="visibilityOptions"
+              class="setting"
+            />
+            <TableInfo class="publications-opacity" :options="optionsPublications" />
+          </Section>
+          <Section class="skeletons-background" :title="$t('project.life-status')">
+            <GroupButton
+              v-model="form.life_status"
+              :has-icon="true"
+              :is-vertical="isMobile"
+              :options="lifeStatusOptions"
+            />
+          </Section>
+          <Section
+            v-if="canAddReview && project.life_status === 'toreview'"
+            class="skeletons-background"
+            :title="$t('project.reviews')"
+          >
+            <LpiButton
+              :label="$t('project.review')"
+              :secondary="true"
+              @click="openModals('review')"
+            />
+          </Section>
 
-          <div v-else-if="categories.length > 0" class="categories-ctn">
-            <ul>
-              <CategoryPicker
-                v-for="category in categories"
-                :key="category.id"
-                :category="category"
-                :selected-category="form.categories"
-                @pick-category="form.categories = $event"
+          <Section
+            v-if="organizations?.length"
+            class="skeletons-background"
+            :title="$t('project.org-settings.title')"
+          >
+            <p class="org-description">
+              {{ $t('project.org-settings.description') }}
+            </p>
+
+            <div class="organization-ctn">
+              <LpiCheckbox
+                v-for="org in organizations"
+                :key="org.code"
+                :model-value="form.organizations_codes.includes(org.code)"
+                as-button
+                :label="org.$t.name"
+                :disabled="disableLastOrg(org)"
+                @update:model-value="updateOrganisation(org.code, $event)"
               />
-            </ul>
-          </div>
-        </Section>
-      </template>
-    </div>
+            </div>
+          </Section>
+
+          <Section :title="$t('project.form.project-category')" class="skeletons-background">
+            <template v-if="form.organizations_codes.length === 0">
+              <LpiSnackbar class="completed-form-snackbar" icon="QuestionMark" type="error">
+                <p>{{ $t('project.org-settings.warning') }}</p>
+              </LpiSnackbar>
+              <ul class="links-list">
+                <li v-for="link in selectedOrgLinks" :key="link.id">
+                  <a :href="link.website_url" class="link" target="_blank">
+                    {{ link.website_url }}
+                  </a>
+                </li>
+              </ul>
+            </template>
+
+            <div v-else-if="categories.length > 0" class="categories-ctn">
+              <ul>
+                <CategoryPicker
+                  v-for="category in categories"
+                  :key="category.id"
+                  :category="category"
+                  :selected-category="form.categories"
+                  @pick-category="form.categories = $event"
+                />
+              </ul>
+            </div>
+          </Section>
+        </template>
+      </div>
+    </FormPanel>
   </BaseModuleTab>
 
   <!-- Drawer/modal -->
@@ -345,6 +359,14 @@ const onQuitProject = () => {
     :project="project"
     @reload="refresh"
     @close="closeModals('review')"
+  />
+
+  <ConfirmModal
+    v-if="stateModals.saveChange"
+    :title="$t('form.quit-without-saving-title')"
+    :content="$t('common.confirm-close')"
+    @cancel="closeModals('saveChange')"
+    @confirm="redirect"
   />
 </template>
 

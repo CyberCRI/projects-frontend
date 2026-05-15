@@ -24,7 +24,7 @@ export const roleI18n = (role: Roles, ...args: any[]): string => {
   const key = `role.${role}.label`
   const result = t(key, args)
   if (result === key) {
-    console.error(`invalid role translated ${role}`)
+    console.error(`invalid role translated '${role}'`)
     return role
   }
   return result

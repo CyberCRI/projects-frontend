@@ -3,11 +3,11 @@ import { helpers, required, email } from '@vuelidate/validators'
 import { NULL_CONTENT } from '~/functs/constants'
 import { requiredContent } from '~/form/base'
 
-export const defaultForm = (): AnnouncementForm => {
+export const defaultAnnouncementForm = (): AnnouncementForm => {
   return {
     title: '',
     description: NULL_CONTENT,
-    deadline: new Date(),
+    deadline: null,
     type: 'na',
     is_remunerated: false,
     status: 'open',
@@ -26,7 +26,7 @@ export const useAnnouncementForm = (options = {}) => {
     },
   }))
 
-  return useForm<AnnouncementForm>({ default: defaultForm(), rules, ...options })
+  return useForm<AnnouncementForm>({ default: defaultAnnouncementForm(), rules, ...options })
 }
 
 export const defaultAnnouncementReplyForm = (): AnnouncementApplyForm => {

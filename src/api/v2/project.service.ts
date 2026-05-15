@@ -3,6 +3,7 @@ import {
   getLinkedProject as fetchLinkedProject,
   getProjectMembers as fetchProjectMembers,
   getProjectSimilars as fetchProjectSimilars,
+  getProjectGroups as fetchProjectGroups,
 } from '@/api/projects.service'
 import type {
   QueryFilterProjectMembers,
@@ -92,6 +93,30 @@ export const getProjectMembers = (
       }),
     {
       translate: (data) => translateUsers<TranslatedPojectMember>(data),
+      watch: onlyRefs([organization, projectSlugOrId]),
+      ...config,
+    }
+  )
+}
+
+export const getProjectGroups = (
+  organization: RefOrRaw<OrganizationModel['code']>,
+  projectSlugOrId: RefOrRaw<ProjectSlugOrId>,
+  config: ConfigPaginationMembers = {}
+) => {
+  const key = computed(() => `${unref(organization)}::project::${unref(projectSlugOrId)}::groups`)
+
+  const { translateGroups } = useAutoTranslate()
+
+  return useAsyncPaginationAPI(
+    key,
+    ({ config }) =>
+      fetchProjectGroups(unref(projectSlugOrId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
+    {
+      translate: (data) => translateGroups(data),
       watch: onlyRefs([organization, projectSlugOrId]),
       ...config,
     }

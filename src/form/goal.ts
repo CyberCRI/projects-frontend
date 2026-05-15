@@ -3,7 +3,7 @@ import type { GoalForm } from '@/models/goal.model'
 import { NULL_CONTENT } from '~/functs/constants'
 import { requiredContent } from '~/form/base'
 
-export const defaultForm = (): GoalForm => ({
+export const defaultGoalForm = (): GoalForm => ({
   title: '',
   description: NULL_CONTENT,
   status: 'na',
@@ -21,5 +21,5 @@ export const useGoalForm = (options = {}) => {
     },
   }))
 
-  return useForm<GoalForm>({ default: defaultForm(), rules, ...options })
+  return useForm<GoalForm>({ default: defaultGoalForm(), rules, ...options })
 }

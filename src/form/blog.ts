@@ -4,7 +4,7 @@ import { NULL_CONTENT } from '~/functs/constants'
 import { requiredContent } from '~/form/base'
 import { nowDate } from '~/functs/date'
 
-export const defaultForm = (): BlogEntryForm => {
+export const defaultBlogForm = (): BlogEntryForm => {
   return {
     title: '',
     content: NULL_CONTENT,
@@ -24,5 +24,5 @@ export const useBlogEntryForm = (options = {}) => {
     },
   }))
 
-  return useForm<BlogEntryForm>({ default: defaultForm(), rules, ...options })
+  return useForm<BlogEntryForm>({ default: defaultBlogForm(), rules, ...options })
 }

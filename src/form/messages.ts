@@ -16,7 +16,7 @@ export const useProjectMessageForm = (options = {}) => {
 
   const rules = computed(() => ({
     content: {
-      required: helpers.withMessage(t('form.review.content'), requiredContent),
+      required: helpers.withMessage(t('project.form.comment'), requiredContent),
     },
   }))
 

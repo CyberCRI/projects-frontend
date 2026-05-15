@@ -1,22 +1,22 @@
 <script setup lang="ts">
 import { createInstruction } from '~/api/instruction.service'
 
+import { defaultInstructionForm } from '@/form/instruction'
 import useToasterStore from '~/stores/useToaster'
-import { defaultForm } from '@/form/instruction'
 
 const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()
 const router = useRouter()
 const { t } = useNuxtI18n()
 
-const form = ref(defaultForm())
+const form = ref(defaultInstructionForm())
 const asyncing = ref(false)
 const invalid = ref(false)
 
 const instructionForm = useTemplateRef('instructionForm')
 
 const cancel = () => {
-  form.value = defaultForm()
+  form.value = defaultInstructionForm()
   router.push({ name: 'InstructionListPage' })
 }
 

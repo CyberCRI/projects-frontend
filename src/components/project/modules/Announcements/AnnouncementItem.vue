@@ -25,8 +25,8 @@
       <ContextActionMenuInline
         :can-delete="canEditAndDelete"
         :can-edit="canEditAndDelete"
-        @edit="$emit('update-announcement')"
-        @delete="$emit('open-confirm-modal')"
+        @edit="$emit('edit')"
+        @delete="$emit('delete')"
       />
     </div>
 
@@ -64,8 +64,8 @@ const props = withDefaults(
 )
 
 defineEmits<{
-  'update-announcement': []
-  'open-confirm-modal': []
+  edit: []
+  delete: []
   apply: [TranslatedAnnouncement]
 }>()
 

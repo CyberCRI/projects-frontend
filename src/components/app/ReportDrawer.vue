@@ -36,8 +36,10 @@ const defaultLocalForm = () => ({
   url: useRequestURL().toString(),
 })
 
+const isFormEqual = computed(() => isEqual(form.value, defaultLocalForm()))
+
 const checkClose = () => {
-  if (isEqual(form.value, defaultLocalForm())) {
+  if (isFormEqual.value) {
     close()
   } else {
     openModals('saveChange')
@@ -84,7 +86,7 @@ const submit = async () => {
     :title="$t(`report.${type}`)"
     class="medium"
     :confirm-action-name="$t('common.save')"
-    :confirm-action-disabled="!isValid"
+    :confirm-action-disabled="!isValid || isFormEqual"
     :asyncing="isLoading"
     @close="checkClose"
     @confirm="submit"

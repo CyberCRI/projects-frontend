@@ -4,7 +4,10 @@
 
     <ProjectDescriptionPreview v-if="!descripitonEmpty" :project="project" />
 
-    <ProjectTeamPreview v-if="project.modules.members" :project="project" />
+    <ProjectTeamPreview
+      v-if="project.modules.members || project.modules.groups"
+      :project="project"
+    />
 
     <ProjectLocationsPreview v-if="project.modules.locations" :project="project" />
 

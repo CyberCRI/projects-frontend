@@ -15,16 +15,18 @@
         picture-size="medium"
         :default-picture="DEFAULT_USER_PATATOID"
       />
-      <div class="user-info">
+      <div class="user-info text-ellipsis">
         <div v-if="isNotGroup(user)" class="name">
           {{ capitalize(user.given_name) }}
           {{ capitalize(user.family_name) }}
         </div>
         <div v-else class="name">
-          {{
-            // @ts-expect-error TODO refacto isNotGroup
-            capitalize(user.name)
-          }}
+          <LineClamped :line-number="2">
+            {{
+              // @ts-expect-error TODO refacto isNotGroup
+              capitalize(user.name)
+            }}
+          </LineClamped>
         </div>
 
         <div v-if="role" class="role">

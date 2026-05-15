@@ -1,76 +1,3 @@
-<template>
-  <BaseDrawer
-    :confirm-action-name="$t('common.save')"
-    :confirm-action-disabled="!isValid"
-    :is-opened="isOpened"
-    :title="$t('blog.entry')"
-    class="blog-drawer"
-    :asyncing="asyncing"
-    @close="checkClose"
-    @confirm="save"
-  >
-    <div>
-      <TextInput
-        v-model="form.title"
-        :label="$t('common.title')"
-        :placeholder="$t('common.title')"
-        class="input-field"
-        :errors="errors.title"
-      />
-    </div>
-
-    <div class="editor-section">
-      <TipTapEditor
-        v-if="isCreated"
-        ref="tiptapEditor"
-        v-model="form.content"
-        class="input-field content-editor"
-        mode="full"
-        :save-image-callback="saveBlogImage"
-        :errors="errors.content"
-        @image="handleImage"
-      />
-      <TipTapCollaborativeEditor
-        v-else
-        ref="tiptapEditor"
-        v-model="form.content"
-        :room="room"
-        :provider-params="providerParams"
-        mode="full"
-        save-icon-visible
-        :save-image-callback="saveBlogImage"
-        :disable-save="asyncing"
-        :errors="errors.content"
-        @unauthorized="clear"
-        @image="handleImage"
-        @saved="save"
-        @falled-back-to-solo-edit="inOfflineMode = true"
-      />
-    </div>
-
-    <DateField v-model="form.created_at" :label="$t('common.date')" :errors="errors.created_at" />
-  </BaseDrawer>
-
-  <ConfirmModal
-    v-if="stateModals.saveChange"
-    content=""
-    :title="$t('form.quit-without-saving-title')"
-    @cancel="closeModals('saveChange')"
-    @confirm="clear"
-  />
-
-  <ConfirmModal
-    v-if="stateModals.saveSolo"
-    :title="$t(`multieditor.server-unconnectable.confirm-save-title`)"
-    :content="$t(`multieditor.server-unconnectable.confirm-save-text`)"
-    :confirm-button-label="$t('common.save')"
-    :cancel-button-label="$t('common.cancel')"
-    :asyncing="asyncing"
-    @cancel="closeModals('saveSolo')"
-    @confirm="save"
-  />
-</template>
-
 <script setup lang="ts">
 import { patchBlogEntry, postBlogEntry, postBlogEntryImage } from '~/api/blogentries.service'
 
@@ -86,9 +13,9 @@ import useToasterStore from '~/stores/useToaster'
 
 import type { BlogEntryForm, BlogEntryModel } from '~/models/blog-entry.model'
 import type { TranslatedProject } from '~/models/project.model'
-import { defaultForm, useBlogEntryForm } from '~/form/blog'
+import { defaultBlogForm, useBlogEntryForm } from '~/form/blog'
 import type { ImageModel } from '~/models/image.model'
-import { textIsEmpty } from '~/functs/string'
+import { getFirstTextNotEmpty } from '~/functs/string'
 import { isEqual, isNil } from 'es-toolkit'
 import analytics from '~/analytics'
 
@@ -109,16 +36,15 @@ const emit = defineEmits<{
   reload: []
 }>()
 
-const defaultBlogForm = () => {
-  const baseForm = defaultForm()
+const defaultLocaleForm = () => {
+  const baseForm = defaultBlogForm()
   const newForm = {
     ...baseForm,
   }
   const blog = props.blog
+  const template = props.project.template
   if (blog) {
     newForm.id = blog.id
-    newForm.title = blog.title
-    newForm.content = blog.content
     newForm.created_at = blog.created_at
     newForm.images_ids = [...blog.images]
   }
@@ -127,18 +53,15 @@ const defaultBlogForm = () => {
   newForm.project_id = props.project.id
 
   // set default content from template
-  const template = props.project.template
-  if (template) {
-    if (textIsEmpty(newForm.title)) {
-      newForm.title = template.blogentry_title
-    }
-    if (textIsEmpty(newForm.content)) {
-      newForm.content = template.blogentry_content
-    }
-  }
-
-  newForm.title ??= baseForm.title
-  newForm.content ??= baseForm.content
+  newForm.title =
+    getFirstTextNotEmpty([blog?.title, template?.$t.blogentry_title, template?.blogentry_title]) ||
+    newForm.title
+  newForm.content =
+    getFirstTextNotEmpty([
+      blog?.content,
+      template?.$t.blogentry_content,
+      template?.blogentry_title,
+    ]) || newForm.content
   return newForm
 }
 
@@ -162,7 +85,7 @@ const isCreated = computed(() => isNil(props.blog?.id) || inOfflineMode.value)
 
 watch(
   () => [props.blog, props.isOpened],
-  () => reset(defaultBlogForm()),
+  () => reset(defaultLocaleForm()),
   { immediate: true }
 )
 
@@ -174,9 +97,11 @@ const clear = () => {
   emit('close')
 }
 
+const isFormEqual = computed(() => isEqual(form.value, defaultLocaleForm()))
+
 const checkClose = () => {
   // if form is not changed , ignore and close
-  if (isEqual(form.value, defaultBlogForm())) {
+  if (isFormEqual.value) {
     clear()
     // else open modal
   } else {
@@ -247,6 +172,79 @@ const save = () => {
   }
 }
 </script>
+
+<template>
+  <BaseDrawer
+    :confirm-action-name="$t('common.save')"
+    :confirm-action-disabled="!isValid || isFormEqual"
+    :is-opened="isOpened"
+    :title="$t('blog.entry')"
+    class="blog-drawer"
+    :asyncing="asyncing"
+    @close="checkClose"
+    @confirm="save"
+  >
+    <div>
+      <TextInput
+        v-model="form.title"
+        :label="$t('common.title')"
+        :placeholder="$t('common.title')"
+        class="input-field"
+        :errors="errors.title"
+      />
+    </div>
+
+    <div class="editor-section">
+      <TipTapEditor
+        v-if="isCreated"
+        ref="tiptapEditor"
+        v-model="form.content"
+        class="input-field content-editor"
+        mode="full"
+        :save-image-callback="saveBlogImage"
+        :errors="errors.content"
+        @image="handleImage"
+      />
+      <TipTapCollaborativeEditor
+        v-else
+        ref="tiptapEditor"
+        v-model="form.content"
+        :room="room"
+        :provider-params="providerParams"
+        mode="full"
+        save-icon-visible
+        :save-image-callback="saveBlogImage"
+        :disable-save="asyncing"
+        :errors="errors.content"
+        @unauthorized="clear"
+        @image="handleImage"
+        @saved="save"
+        @falled-back-to-solo-edit="inOfflineMode = true"
+      />
+    </div>
+
+    <DateField v-model="form.created_at" :label="$t('common.date')" :errors="errors.created_at" />
+  </BaseDrawer>
+
+  <ConfirmModal
+    v-if="stateModals.saveChange"
+    content=""
+    :title="$t('form.quit-without-saving-title')"
+    @cancel="closeModals('saveChange')"
+    @confirm="clear"
+  />
+
+  <ConfirmModal
+    v-if="stateModals.saveSolo"
+    :title="$t(`multieditor.server-unconnectable.confirm-save-title`)"
+    :content="$t(`multieditor.server-unconnectable.confirm-save-text`)"
+    :confirm-button-label="$t('common.save')"
+    :cancel-button-label="$t('common.cancel')"
+    :asyncing="asyncing"
+    @cancel="closeModals('saveSolo')"
+    @confirm="save"
+  />
+</template>
 
 <style lang="scss" scoped>
 .blog-drawer {

@@ -8,7 +8,7 @@
       <div v-if="open" class="lpi-dropdown-choose">
         <div class="dropdown-menu custom-scrollbar">
           <ul>
-            <LpiDropdDownElement
+            <LpiDropDownElement
               v-for="option in props.options"
               :key="option.id"
               :option="option"
@@ -22,7 +22,7 @@
                   @click.prevent="close"
                 />
               </template>
-            </LpiDropdDownElement>
+            </LpiDropDownElement>
           </ul>
         </div>
       </div>
@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import LpiDropdDownElement from '~/components/base/form/LpiDropDownElement.vue'
+import LpiDropDownElement from '~/components/base/form/LpiDropDownElement.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 
 import { capitalize } from '~/functs/string'
@@ -101,10 +101,6 @@ const showLabel = computed(() => {
   align-items: center;
   width: 100%;
   background-color: transparent;
-
-  @media (min-width: $min-tablet) {
-    margin-top: $space-l;
-  }
 
   .dropdown-btn {
     color: $primary-dark;

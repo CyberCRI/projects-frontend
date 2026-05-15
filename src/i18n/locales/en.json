@@ -1566,6 +1566,7 @@
       "title-label": "Add a title",
       "title-placeholder": "What is the name of this project?",
       "upload-image": "Upload an image",
+      "comment": "The comment field is required.",
       "title-errors": {
         "required": "The title field is required",
         "max": "The title field may not be greater than 180 characters"
@@ -1816,7 +1817,7 @@
     },
     "reviewer_groups": {
       "label": "Reviewer group | Reviewers group",
-      "help": ""
+      "help": "Appears as group member. Their projects appear among the projects of the group."
     },
     "member_groups": {
       "label": "Participant group | Participants group",
@@ -2095,6 +2096,9 @@
     "bug-report": {
       "success": "The bug has been reported successfully",
       "error": "Error during the bug report"
+    },
+    "template-get": {
+      "error": "Error during getting template"
     },
     "category-template-update": {
       "success": "The category template has been updated successfully",
