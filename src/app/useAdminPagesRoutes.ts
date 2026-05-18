@@ -160,7 +160,6 @@ export default function useAdminPagesRoutes() {
           path: 'terms-and-conditions',
           name: 'termsAdmin',
           component: () => import('../pages/AdminPortalPageV2/Tabs/TermsAdminTab.vue'),
-          meta: { checkAccessRequestEnabled: true },
         },
         ...vectorStoreRoutes,
         ...agentRoutes,
