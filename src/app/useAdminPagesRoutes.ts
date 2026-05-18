@@ -6,7 +6,6 @@ export default function useAdminPagesRoutes() {
       path: 'vector-store',
       name: 'VectorStoreAdminTab',
       component: () => import('../pages/AdminPortalPageV2/Tabs/VectorStoreAdminTab.vue'),
-      meta: { checkAccessRequestEnabled: true },
     })
   }
   if (useRuntimeConfig().public.appHasChatbotPromptDb) {
@@ -15,28 +14,24 @@ export default function useAdminPagesRoutes() {
         path: 'agents',
         name: 'AgentsAdminTab',
         component: () => import('../pages/AdminPortalPageV2/Tabs/AgentsAdminTab.vue'),
-        meta: { checkAccessRequestEnabled: true },
       },
 
       {
         path: 'prompts',
         name: 'PromptsAdminTab',
         component: () => import('../pages/AdminPortalPageV2/Tabs/PromptsAdminTab.vue'),
-        meta: { checkAccessRequestEnabled: true },
       },
 
       {
         path: 'agent-skills',
         name: 'AgentSkillsAdminTab',
         component: () => import('../pages/AdminPortalPageV2/Tabs/AgentSkillsAdminTab.vue'),
-        meta: { checkAccessRequestEnabled: true },
       },
 
       {
         path: 'mcps',
         name: 'McpsAdminTab',
         component: () => import('../pages/AdminPortalPageV2/Tabs/McpsAdminTab.vue'),
-        meta: { checkAccessRequestEnabled: true },
       }
     )
   }
