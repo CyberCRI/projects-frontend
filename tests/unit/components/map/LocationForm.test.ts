@@ -28,13 +28,12 @@ describe('LocationForm', () => {
           type: 'address',
         },
         locationTypes: ['team', 'impact'],
-        'onUpdate:modelValue': (v) => wrapper?.setProps({ modelValue: v }),
       },
     })
 
     await flushPromises()
 
     // form type is 'address' but only 'team' and 'impact' are accepcted, so form change first correct type
-    expect(wrapper.props('modelValue').type).toEqual('team')
+    expect(wrapper.emitted()['update:modelValue'].at(-1)[0].type).toEqual('team')
   })
 })
