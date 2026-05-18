@@ -142,10 +142,13 @@ if (!props.isReducedMode) {
 }
 
 const refresh = () => {
-  return refreshNuxtData([
-    `${organizationCode}::group::${groupData.value.id}`,
-    `${organizationCode}::group::${groupData.value.slug}`,
-  ])
+  // only refresh if group exists (when we are in admin/create-group)
+  if (groupData.value) {
+    return refreshNuxtData([
+      `${organizationCode}::group::${groupData.value.id}`,
+      `${organizationCode}::group::${groupData.value.slug}`,
+    ])
+  }
 }
 
 const updateHeader = async (groupId) => {
@@ -218,7 +221,7 @@ const createGroup = async () => {
     const payload = buildPayload()
 
     const newGroup = await postGroup(orgCode.value, payload)
-    const newGroupId = newGroup.id
+    const newGroupId = newGroup.slug || newGroup.id
 
     // save header
     await updateHeader(newGroupId)
@@ -231,8 +234,8 @@ const createGroup = async () => {
 
     router.push(
       props.postCreateRouteFactory
-        ? props.postCreateRouteFactory(newGroupId)
-        : { name: 'Group', params: { groupIdOrSlug: newGroupId } }
+        ? props.postCreateRouteFactory(newGroup.slug || newGroup.id)
+        : { name: 'Group', params: { groupIdOrSlug: newGroup.slug || newGroup.id } }
     )
   } catch (error) {
     toaster.pushError(`${t('toasts.group-create.error')} (${error})`)

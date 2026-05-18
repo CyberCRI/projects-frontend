@@ -407,7 +407,7 @@ export default {
       await deleteGroup(organization, this.$route.params.groupIdOrSlug)
       this.loading = false
       this.$router.push({
-        name: 'HomeRoot',
+        name: 'Groups',
       })
     },
     async removeLocations(location) {
