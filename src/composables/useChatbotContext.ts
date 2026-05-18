@@ -1,6 +1,6 @@
 import useUsersStore from '@/stores/useUsers'
 
-import sdgJson from '@/data/sdgs.json'
+import { SDGS } from '~/functs/constants'
 // gloabls !
 const _allowProfile = ref(false)
 const _allowCurrentPage = ref(false)
@@ -33,7 +33,7 @@ export default function useChatbotContext({ hasUserContext, hasPageContext }) {
     - Short description: ${user.short_description}
     - Description: ${user.description}
     - SDGs of interest: ${user.sdgs
-      .map((sid) => sdgJson[sid - 1])
+      .map((sid) => SDGS[sid - 1])
       .filter((s) => !!s)
       .map((s) => s.title + ' - ' + s.description)
       .join('; ')}
