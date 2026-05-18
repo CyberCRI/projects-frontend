@@ -1,6 +1,7 @@
 <template>
   <LocationDrawer
     ref="drawer"
+    :location-types="LOCATIONS_TYPES"
     :is-opened="isOpened"
     :locations="locations"
     @close="$emit('close')"
@@ -10,17 +11,15 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedLocation } from '~/models/location.model'
-import type { TranslatedProject } from '~/models/project.model'
+import { postLocations, patchLocation, deleteLocation } from '@/api/locations.service'
+import type { TranslatedLocation } from '@/models/location.model'
+import LocationDrawer from '@/components/map/LocationDrawer.vue'
+import type { TranslatedProject } from '@/models/project.model'
+import type { LocationType } from '@/models/types'
+import useToasterStore from '@/stores/useToaster'
+import analytics from '@/analytics'
 
-import { deleteLocation, patchLocation, postLocations } from '~/api/locations.service'
-
-import LocationDrawer from '~/components/map/LocationDrawer.vue'
-
-import useToasterStore from '~/stores/useToaster'
-
-import analytics from '~/analytics'
-
+const LOCATIONS_TYPES: LocationType[] = ['address', 'team', 'impact']
 const props = withDefaults(
   defineProps<{
     isOpened?: boolean
