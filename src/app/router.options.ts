@@ -77,16 +77,6 @@ const routes = ({
       component: () => import('../pages/OrganizationResourcesPage/OrganizationResourcesPage.vue'),
       meta: { requiresAuth: true, resetScroll: true },
     },
-    {
-      path: '/help',
-      name: 'Help',
-      component: () => import('../pages/HelpPage/HelpPage.vue'),
-
-      redirect: showDebug ? { name: 'HelpFaqTab' } : undefined,
-      meta: {
-        resetScroll: true,
-      },
-    },
     ...profilePagesRoutes,
     {
       path: '/mentorship/respond/:token',
@@ -319,16 +309,34 @@ const routes = ({
         resetScroll: true,
       },
     },
-    // TDOD nuxt test this
-    ...(showDebug
-      ? [
-          {
-            path: '/faq',
-            name: 'HelpHelpTab',
-            component: () => import('../pages/HelpPage/Tabs/OnBoardingTab.vue'),
-          },
-        ]
-      : []),
+    {
+      path: '/help',
+      name: 'Help',
+      component: () => import('../pages/HelpPage/HelpPage.vue'),
+
+      redirect: { name: 'HelpFaqTab' },
+      meta: {
+        resetScroll: true,
+      },
+
+      children: [
+        {
+          path: 'faq',
+          name: 'HelpFaqTab',
+          component: () => import('../pages/HelpPage/Tabs/OnBoardingTab.vue'),
+        },
+        {
+          path: 'help',
+          name: 'HelpHelpTab',
+          component: () => import('../pages/HelpPage/Tabs/HelpTab.vue'),
+        },
+        {
+          path: 'tutorials',
+          name: 'HelpVideoTab',
+          component: () => import('../pages/HelpPage/Tabs/VideoTab.vue'),
+        },
+      ],
+    },
     {
       path: '/announcements',
       name: 'AnnouncementsPage',
