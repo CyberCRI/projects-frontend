@@ -201,6 +201,7 @@ export type ProjectForm = Partial<
     file: ImageModel | File
     organizations_codes: OrganizationModel['code'][]
     categories: TranslatedProjectCategory | ProjectCategoryModel
+    categorie: TranslatedProjectCategory
     project_categories_ids: TranslatedProjectCategory['id'][]
     template_id: number
     tags: TagModel[]

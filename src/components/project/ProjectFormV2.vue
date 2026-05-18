@@ -84,6 +84,9 @@ const languageOptions = computed(() => {
 })
 
 const isFormEqual = computed(() => isEqual(form.value, defaultLocalForm()))
+// onBeforeRouteLeave((to, from, next) => {
+//   console.log(to, from, next)
+// })
 
 const onClose = () => {
   if (isFormEqual.value) {

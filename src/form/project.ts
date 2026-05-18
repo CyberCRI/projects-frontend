@@ -1,5 +1,6 @@
+import { helpers, maxLength, minLength, required, requiredIf } from '@vuelidate/validators'
 import type { TranslatedProjectCategory } from '~/models/project-category.model'
-import { helpers, maxLength, minLength, required } from '@vuelidate/validators'
+import ProjectTemplateForm from '~/components/project/ProjectTemplateForm.vue'
 import type { TranslatedTemplate } from '~/models/template.model'
 import type { ProjectForm } from '~/models/project.model'
 import { NULL_CONTENT } from '~/functs/constants'
@@ -16,6 +17,10 @@ const onCleanProjectForm = (data: ProjectForm) => {
   if (cleanedData.categories) {
     cleanedData.project_categories_ids = [cleanedData.categories.id]
     delete cleanedData.categories
+  }
+  if (cleanedData.categorie) {
+    cleanedData.project_categories_ids = [cleanedData.categorie.id]
+    delete cleanedData.categorie
   }
   if (cleanedData.template) {
     cleanedData.template_id = cleanedData.template.id
@@ -74,7 +79,13 @@ export const useProjectSettingForm = (options = {}) => {
   return useForm<
     Pick<
       ProjectForm,
-      'publication_status' | 'life_status' | 'is_locked' | 'organizations_codes' | 'categories'
+      | 'publication_status'
+      | 'life_status'
+      | 'is_locked'
+      | 'organizations_codes'
+      | 'categories'
+      | 'categorie'
+      | 'template'
     >
   >({
     onClean: onCleanProjectForm,
@@ -95,7 +106,21 @@ export const useProjectTemplatesForm = (options = {}) => {
       required: helpers.withMessage(t('project.form.title-errors.required'), required),
     },
     template: {
-      required: helpers.withMessage(t('project.form.purpose-errors.required'), required),
+      // @ts-expect-error ignore type requiredIf
+      required: helpers.withMessage(
+        t('project.form.purpose-errors.required'),
+        requiredIf((val, form: ProjectTemplateForm) => {
+          // required categorie
+          if (!form.categorie) {
+            return true
+          }
+          // if only one templates or no template, reuired is not needed
+          if (form.categorie.templates.length < 2) {
+            return false
+          }
+          return true
+        })
+      ),
     },
   }))
 

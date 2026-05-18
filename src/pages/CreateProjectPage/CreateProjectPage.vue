@@ -1,18 +1,16 @@
 <script setup lang="ts">
-import type { TranslatedProjectCategory } from '~/models/project-category.model'
+import ProjectTemplateForm from '~/components/project/ProjectTemplateForm.vue'
 import { postProject, postProjectHeader } from '~/api/projects.service'
 import ProjectFormV2 from '~/components/project/ProjectFormV2.vue'
 import { imageSizesFormData } from '~/functs/imageSizesUtils'
-import type { TemplateModel } from '~/models/template.model'
 import type { ProjectForm } from '~/models/project.model'
 import { useProjectTemplatesForm } from '~/form/project'
 import BasePage from '~/components/pages/BasePage.vue'
-import { getTemplate } from '~/api/templates.service'
-import Field from '~/components/base/form/Field.vue'
 import useToasterStore from '~/stores/useToaster'
 import { useOrganizationCode } from '#imports'
 import useUsersStore from '~/stores/useUsers'
 import analytics from '~/analytics'
+import { pick } from 'es-toolkit'
 
 const { t, locale } = useNuxtI18n()
 const router = useRouter()
@@ -21,16 +19,9 @@ const organizationCode = useOrganizationCode()
 const usersStore = useUsersStore()
 const { onboardingTrap } = useOnboardingStatus()
 
-const projectCategoriesStore = useProjectCategories()
-onMounted(async () => {
-  await projectCategoriesStore.getAllProjectCategories()
-})
-
 const { form, isValid } = useProjectTemplatesForm()
-const { translateTemplate } = useAutoTranslate()
 
 const toaster = useToasterStore()
-const categoryDropdownRef = useTemplateRef('categoryDropdown')
 
 const onSubmit = (form: ProjectForm) => {
   loading.value = true
@@ -72,25 +63,7 @@ const onSubmit = (form: ProjectForm) => {
     })
 }
 
-const haveMultipleCategories = computed(() => {
-  return form.value.categorie?.templates.length > 1
-})
-
-const onSelectTemplate = (template: TemplateModel) => {
-  return getTemplate(organizationCode, template.id)
-    .then((template) => (form.value.template = unref(translateTemplate(template))))
-    .catch(() => toaster.pushError(t('template-get.error')))
-}
-
-const onChangeCategories = async (categorie: TranslatedProjectCategory) => {
-  categoryDropdownRef.value.close()
-  form.value.categorie = categorie
-  if (categorie.templates.length === 1) {
-    await onSelectTemplate(categorie.templates[0])
-  } else {
-    form.value.template = null
-  }
-}
+const haveMultipleTemplates = computed(() => form.value.categorie?.templates.length > 1)
 
 // create default "project" with template selected (or null if categories are not template)
 const project = computed(() => ({
@@ -99,6 +72,15 @@ const project = computed(() => ({
   tags: form.value.categorie.tags,
   categories: [form.value.categorie],
 }))
+
+const updateForm = (f) => {
+  form.value = {
+    ...form.value,
+    template: null,
+    categorie: null,
+    ...(f || {}),
+  }
+}
 </script>
 
 <template>
@@ -110,42 +92,12 @@ const project = computed(() => ({
     </template>
 
     <div class="list-container">
-      <Field :label="$t('project.form.project-category')">
-        <ProjectCategoriesDropdown
-          ref="categoryDropdown"
-          class="w-full"
-          data-test="select-project-category"
-          :dropdown-label="form.categorie?.name || $t('project.form.select-category')"
-        >
-          <template #default="{ category }">
-            <ProjectCategoriesDropdownElementButton
-              :category="category"
-              @choose-category="onChangeCategories(category)"
-            />
-          </template>
-        </ProjectCategoriesDropdown>
-      </Field>
-
-      <Field v-if="haveMultipleCategories" :label="$t('project.form.project-templates')">
-        <LpiDropDown
-          v-model="form.template"
-          class="w-full"
-          :options="form.categorie.templates"
-          data-test="select-project-template"
-          :default-label="$t('project.form.project-templates')"
-        >
-          <template #default="{ option, selected }">
-            <LpiDropDownElementButton
-              :option="option"
-              :selected="selected"
-              @click="onSelectTemplate(option)"
-            />
-          </template>
-        </LpiDropDown>
-      </Field>
-
+      <ProjectTemplateForm
+        :model-value="pick(form, ['template', 'categorie'])"
+        @update:model-value="updateForm"
+      />
       <ProjectFormV2
-        v-if="isValid || (form.categorie && !haveMultipleCategories)"
+        v-if="isValid || (form.categorie && !haveMultipleTemplates)"
         :project="project"
         :loading="loading"
         @submit="onSubmit"

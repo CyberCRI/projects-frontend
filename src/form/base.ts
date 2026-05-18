@@ -16,6 +16,16 @@ export const requiredContent: ValidationRuleWithoutParams = {
   $message: required.$message,
 }
 
+/**
+ * check max fileSize input
+ *
+ * @function
+ * @name maxFileSize
+ * @kind variable
+ * @param {number} maxSize
+ * @returns {ValidationRuleWithParams<object, any>}
+ * @exports
+ */
 export const maxFileSize = (maxSize: number): ValidationRuleWithParams => ({
   $validator: (value?: File) => {
     if (!value) {

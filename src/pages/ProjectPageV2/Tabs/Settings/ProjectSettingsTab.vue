@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ProjectTemplateForm from '~/components/project/ProjectTemplateForm.vue'
 import { getAllProjectCategories } from '~/api/v2/project-categories.service'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import { deleteProjectMembersSelf } from '~/api/project-members.service'
@@ -15,7 +16,7 @@ import FormPanel from '~/components/base/FormPanel.vue'
 import { useProjectSettingForm } from '~/form/project'
 import Section from '~/components/base/Section.vue'
 import useUsersStore from '~/stores/useUsers'
-import { isEqual } from 'es-toolkit'
+import { isEqual, pick } from 'es-toolkit'
 import analytics from '~/analytics'
 
 const props = withDefaults(
@@ -51,15 +52,26 @@ const defaultLocalForm = () => {
     life_status: props.project.life_status,
     is_locked: props.project.is_locked,
     organizations_codes: projectOrganizationCodes.value || [],
-    categories: (props.project.categories || []).find(
+    categorie: (props.project.categories || []).find(
       (cat) => cat.organization === organizationCode
     ),
+    template: props.project.template,
   }
 }
 const { form, reset, cleanedData, isValid } = useProjectSettingForm({
   default: defaultLocalForm(),
   lazy: true,
 })
+
+const updateFormTemplates = (templateForm) => {
+  form.value = {
+    ...form.value,
+    template: null,
+    categories: [],
+    ...(templateForm || {}),
+  }
+}
+
 watch(
   () => props.project,
   () => reset(defaultLocalForm())
@@ -136,6 +148,7 @@ const { data: organizations } = getOrganizations({
 })
 const disableLastOrg = (org) =>
   projectOrganizationCodes.value.length === 1 && projectOrganizationCodes.value[0] === org.code
+
 const selectedOrgLinks = computed(() => {
   return organizations.value
     .filter((org) => projectOrganizationCodes.value.includes(org.code))
@@ -145,10 +158,10 @@ const selectedOrgLinks = computed(() => {
     }))
 })
 
-// category
-const { data: categories } = getAllProjectCategories(organizationCode, {
-  default: () => factoryPagination(() => []),
-})
+// // category
+// const { data: categories } = getAllProjectCategories(organizationCode, {
+//   default: () => factoryPagination(() => []),
+// })
 
 // callback
 const refresh = () => refreshProjectData(props.project)
@@ -317,18 +330,10 @@ const onQuitProject = () => {
                 </li>
               </ul>
             </template>
-
-            <div v-else-if="categories.length > 0" class="categories-ctn">
-              <ul>
-                <CategoryPicker
-                  v-for="category in categories"
-                  :key="category.id"
-                  :category="category"
-                  :selected-category="form.categories"
-                  @pick-category="form.categories = $event"
-                />
-              </ul>
-            </div>
+            <ProjectTemplateForm
+              :model-value="pick(form, ['template', 'categorie'])"
+              @update:model-value="updateFormTemplates"
+            />
           </Section>
         </template>
       </div>
