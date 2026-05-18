@@ -1,6 +1,6 @@
 import { helpers, maxLength, minLength, required, requiredIf } from '@vuelidate/validators'
+import type ProjectTemplateForm from '~/components/project/ProjectTemplateForm.vue'
 import type { TranslatedProjectCategory } from '~/models/project-category.model'
-import ProjectTemplateForm from '~/components/project/ProjectTemplateForm.vue'
 import type { TranslatedTemplate } from '~/models/template.model'
 import type { ProjectForm } from '~/models/project.model'
 import { NULL_CONTENT } from '~/functs/constants'
@@ -106,9 +106,9 @@ export const useProjectTemplatesForm = (options = {}) => {
       required: helpers.withMessage(t('project.form.title-errors.required'), required),
     },
     template: {
-      // @ts-expect-error ignore type requiredIf
       required: helpers.withMessage(
         t('project.form.purpose-errors.required'),
+        // @ts-expect-error ignore type requiredIf
         requiredIf((val, form: ProjectTemplateForm) => {
           // required categorie
           if (!form.categorie) {

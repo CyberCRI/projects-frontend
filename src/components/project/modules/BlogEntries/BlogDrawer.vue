@@ -12,6 +12,7 @@ import useOrganizationsStore from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'
 
 import type { BlogEntryForm, BlogEntryModel } from '~/models/blog-entry.model'
+import { useBlockNavigation } from '~/composables/useBlockNavigation'
 import type { TranslatedProject } from '~/models/project.model'
 import { defaultBlogForm, useBlogEntryForm } from '~/form/blog'
 import type { ImageModel } from '~/models/image.model'
@@ -36,7 +37,7 @@ const emit = defineEmits<{
   reload: []
 }>()
 
-const defaultLocaleForm = () => {
+const defaultLocalForm = () => {
   const baseForm = defaultBlogForm()
   const newForm = {
     ...baseForm,
@@ -66,11 +67,18 @@ const defaultLocaleForm = () => {
 }
 
 const { t } = useNuxtI18n()
-const { stateModals, closeModals, openModals } = useModals({ saveChange: false, saveSolo: false })
+const { stateModals, closeModals } = useModals({ saveSolo: false })
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
 const { form, isValid, errors, cleanedData, reset } = useBlogEntryForm({ lazy: true })
+watch(
+  () => [props.blog, props.isOpened],
+  () => reset(defaultLocalForm()),
+  { immediate: true }
+)
+const isFormEqual = useBlockNavigation(() => isEqual(form.value, defaultLocalForm()))
+
 const asyncing = ref(false)
 
 const providerParams = computed(() => ({
@@ -83,31 +91,7 @@ const inOfflineMode = ref(false)
 
 const isCreated = computed(() => isNil(props.blog?.id) || inOfflineMode.value)
 
-watch(
-  () => [props.blog, props.isOpened],
-  () => reset(defaultLocaleForm()),
-  { immediate: true }
-)
-
 const room = computed(() => (props.blog?.id ? `blog_${props.blog.id}` : null))
-
-const clear = () => {
-  asyncing.value = false
-  closeModals('saveChange')
-  emit('close')
-}
-
-const isFormEqual = computed(() => isEqual(form.value, defaultLocaleForm()))
-
-const checkClose = () => {
-  // if form is not changed , ignore and close
-  if (isFormEqual.value) {
-    clear()
-    // else open modal
-  } else {
-    openModals('saveChange')
-  }
-}
 
 const handleImage = (img: ImageModel) => {
   console.log(img)
@@ -136,9 +120,10 @@ const patchBlog = (body: BlogEntryForm) => {
       })
       toaster.pushSuccess(t('toasts.blog-create.success'))
       emit('reload')
-      clear()
+      emit('close')
     })
     .catch(() => toaster.pushError(t('toasts.blog-create.error')))
+    .finally(() => (asyncing.value = false))
 }
 
 const postBlog = (body: BlogEntryForm) => {
@@ -152,9 +137,10 @@ const postBlog = (body: BlogEntryForm) => {
       })
       toaster.pushSuccess(t('toasts.blog-update.success'))
       emit('reload')
-      clear()
+      emit('close')
     })
     .catch(() => toaster.pushError(t('toasts.blog-update.error')))
+    .finally(() => (asyncing.value = false))
 }
 
 const save = () => {
@@ -166,9 +152,9 @@ const save = () => {
   const body = cleanedData.value
 
   if (props.blog?.id) {
-    patchBlog(body).finally(() => (asyncing.value = false))
+    patchBlog(body)
   } else {
-    postBlog(body).finally(() => (asyncing.value = false))
+    postBlog(body)
   }
 }
 </script>
@@ -181,7 +167,7 @@ const save = () => {
     :title="$t('blog.entry')"
     class="blog-drawer"
     :asyncing="asyncing"
-    @close="checkClose"
+    @close="emit('close')"
     @confirm="save"
   >
     <div>
@@ -216,7 +202,7 @@ const save = () => {
         :save-image-callback="saveBlogImage"
         :disable-save="asyncing"
         :errors="errors.content"
-        @unauthorized="clear"
+        @unauthorized="emit('close')"
         @image="handleImage"
         @saved="save"
         @falled-back-to-solo-edit="inOfflineMode = true"
@@ -225,14 +211,6 @@ const save = () => {
 
     <DateField v-model="form.created_at" :label="$t('common.date')" :errors="errors.created_at" />
   </BaseDrawer>
-
-  <ConfirmModal
-    v-if="stateModals.saveChange"
-    content=""
-    :title="$t('form.quit-without-saving-title')"
-    @cancel="closeModals('saveChange')"
-    @confirm="clear"
-  />
 
   <ConfirmModal
     v-if="stateModals.saveSolo"

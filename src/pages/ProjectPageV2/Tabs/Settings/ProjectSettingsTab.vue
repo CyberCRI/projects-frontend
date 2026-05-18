@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import ProjectTemplateForm from '~/components/project/ProjectTemplateForm.vue'
-import { getAllProjectCategories } from '~/api/v2/project-categories.service'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import { deleteProjectMembersSelf } from '~/api/project-members.service'
+import { useBlockNavigation } from '~/composables/useBlockNavigation'
 import { deleteProject, patchProject } from '~/api/projects.service'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
@@ -67,15 +67,31 @@ const updateFormTemplates = (templateForm) => {
   form.value = {
     ...form.value,
     template: null,
-    categories: [],
+    categorie: null,
     ...(templateForm || {}),
   }
 }
-
 watch(
   () => props.project,
   () => reset(defaultLocalForm())
 )
+const isFormEqual = useBlockNavigation(() => {
+  const compareForm = form.value
+  const orginalForm = defaultLocalForm()
+  // change categorie/template with id (to avoid compare element memoryCheck)
+  return isEqual(
+    {
+      ...compareForm,
+      categorie: compareForm.categorie?.id,
+      template: compareForm.template?.id,
+    },
+    {
+      ...orginalForm,
+      categorie: orginalForm.categorie?.id,
+      template: orginalForm.template?.id,
+    }
+  )
+})
 // removeOrganization
 const updateOrganisation = (orgCode: string, state: boolean) => {
   if (state) {
@@ -158,11 +174,6 @@ const selectedOrgLinks = computed(() => {
     }))
 })
 
-// // category
-// const { data: categories } = getAllProjectCategories(organizationCode, {
-//   default: () => factoryPagination(() => []),
-// })
-
 // callback
 const refresh = () => refreshProjectData(props.project)
 
@@ -173,16 +184,6 @@ const redirect = () => {
       slugOrId: props.project.slug || props.project.id,
     },
   })
-}
-
-const isFormEqual = computed(() => isEqual(form.value, defaultLocalForm()))
-
-const onCancel = () => {
-  if (isFormEqual.value) {
-    redirect()
-  } else {
-    openModals('saveChange')
-  }
 }
 
 const onUpdate = () => {
@@ -241,7 +242,7 @@ const onQuitProject = () => {
       :asyncing="asyncing"
       :confirm-action-disabled="!isValid || isFormEqual"
       @confirm="onUpdate"
-      @close="onCancel"
+      @close="redirect"
     >
       <div class="list-container">
         <Section class="section-green skeletons-background" :title="$t('project.actions')">
@@ -364,14 +365,6 @@ const onQuitProject = () => {
     :project="project"
     @reload="refresh"
     @close="closeModals('review')"
-  />
-
-  <ConfirmModal
-    v-if="stateModals.saveChange"
-    :title="$t('form.quit-without-saving-title')"
-    :content="$t('common.confirm-close')"
-    @cancel="closeModals('saveChange')"
-    @confirm="redirect"
   />
 </template>
 

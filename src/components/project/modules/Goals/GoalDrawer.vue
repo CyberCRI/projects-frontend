@@ -4,7 +4,7 @@ import GroupButton from '@/components/base/button/GroupButton.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 
-import FieldErrors from '~/components/base/form/FieldErrors.vue'
+import { useBlockNavigation } from '~/composables/useBlockNavigation'
 import type { TranslatedProject } from '@/models/project.model'
 import DateField from '@/components/base/form/DateField.vue'
 import { createGoal, patchGoal } from '@/api/goals.service'
@@ -58,14 +58,13 @@ const defaultLocalForm = () => {
 }
 
 const { form, isValid, errors, cleanedData, reset } = useGoalForm({ lazy: true })
-
 watch(
   () => [props.isOpened, props.goal],
   () => reset(defaultLocalForm()),
   { immediate: true }
 )
+const isFormEqual = useBlockNavigation(() => isEqual(form.value, defaultLocalForm()))
 
-const { stateModal, openModal, closeModal } = useModal()
 const asyncing = ref(false)
 
 const statusColor = computed(() => {
@@ -98,11 +97,6 @@ const statusOptions = computed(() => [
   },
 ])
 
-const clear = () => {
-  closeModal()
-  emit('close')
-}
-
 const submit = async () => {
   if (!isValid.value) {
     return
@@ -133,7 +127,7 @@ const submit = async () => {
       })
       .finally(() => {
         asyncing.value = false
-        clear()
+        emit('close')
       })
   } else {
     // Update goal
@@ -154,18 +148,8 @@ const submit = async () => {
       })
       .finally(() => {
         asyncing.value = false
-        clear()
+        emit('close')
       })
-  }
-}
-
-const isFormEqual = computed(() => isEqual(form.value, defaultLocalForm()))
-
-const checkClose = () => {
-  if (isFormEqual.value) {
-    clear()
-  } else {
-    openModal()
   }
 }
 </script>
@@ -178,7 +162,7 @@ const checkClose = () => {
     :is-opened="isOpened"
     class="medium"
     :asyncing="asyncing"
-    @close="checkClose"
+    @close="emit('close')"
     @confirm="submit"
   >
     <div class="form">
@@ -216,14 +200,6 @@ const checkClose = () => {
       </div>
     </div>
   </BaseDrawer>
-
-  <ConfirmModal
-    v-if="stateModal"
-    :title="$t('form.quit-without-saving-title')"
-    :content="$t('common.confirm-close')"
-    @cancel="closeModal"
-    @confirm="clear"
-  />
 </template>
 
 <style lang="scss" scoped>

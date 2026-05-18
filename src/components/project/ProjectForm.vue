@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ProjectForm, TranslatedProject } from '~/models/project.model'
+import { useBlockNavigation } from '~/composables/useBlockNavigation'
 import { defaultProjectForm, useProjectForm } from '~/form/project'
 import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 import LpiButton from '~/components/base/button/LpiButton.vue'
@@ -26,7 +27,7 @@ const emit = defineEmits<{
 }>()
 
 const organizationCode = useOrganizationCode()
-const { stateModals, closeModals, openModals } = useModals({ tags: false, saveChange: false })
+const { stateModals, closeModals, openModals } = useModals({ tags: false })
 
 const organizationsStore = useOrganizationsStore()
 
@@ -72,6 +73,7 @@ watch(
   () => reset(defaultLocalForm()),
   { immediate: true }
 )
+const isFormEqual = useBlockNavigation(() => isEqual(form.value, defaultLocalForm()))
 
 const languageOptions = computed(() => {
   return organizationsStore.languages.map((language) => {
@@ -83,19 +85,6 @@ const languageOptions = computed(() => {
   })
 })
 
-const isFormEqual = computed(() => isEqual(form.value, defaultLocalForm()))
-// onBeforeRouteLeave((to, from, next) => {
-//   console.log(to, from, next)
-// })
-
-const onClose = () => {
-  if (isFormEqual.value) {
-    emit('close')
-  } else {
-    openModals('saveChange')
-  }
-}
-
 const onSubmit = () => emit('submit', cleanedData.value)
 </script>
 
@@ -103,7 +92,7 @@ const onSubmit = () => emit('submit', cleanedData.value)
   <FormPanel
     :confirm-action-disabled="!isValid || isFormEqual"
     :asyncing="loading"
-    @close="onClose"
+    @close="emit('close')"
     @confirm="onSubmit"
   >
     <div class="list-container">
@@ -161,12 +150,4 @@ const onSubmit = () => emit('submit', cleanedData.value)
 
   <!-- drawer -->
   <TagsDrawer v-model="form.tags" :is-opened="stateModals.tags" @close="closeModals('tags')" />
-
-  <ConfirmModal
-    v-if="stateModals.saveChange"
-    :title="$t('form.quit-without-saving-title')"
-    :content="$t('common.confirm-close')"
-    @cancel="closeModals('saveChange')"
-    @confirm="emit('close')"
-  />
 </template>

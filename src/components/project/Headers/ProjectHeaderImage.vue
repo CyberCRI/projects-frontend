@@ -4,7 +4,7 @@
       :picture-data="project.header_image"
       class="skeletons-background"
       picture-size="medium"
-      default-picture="/placeholders/header_placeholder.png"
+      :default-picture="DEFAULT_PROJECT_PATATOID"
       :alt="`${project.title} image`"
     />
   </div>

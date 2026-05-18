@@ -1,13 +1,5 @@
 <template>
   <div class="make-comment skeletons-background">
-    <ConfirmModal
-      v-if="stateModals.saveChange"
-      content=""
-      :title="originalComment ? $t('comment.discard-changes') : $t('comment.discard-comment')"
-      @cancel="closeModals('saveChange')"
-      @confirm="cancel"
-    />
-
     <div v-if="usersStore.isConnected">
       <TipTapEditor
         v-model="form.content"
@@ -19,7 +11,7 @@
       />
 
       <div class="action">
-        <LpiButton :label="$t('common.cancel')" :secondary="true" @click="checkCancel" />
+        <LpiButton :label="$t('common.cancel')" :secondary="true" @click="emit('canceled')" />
         <LpiButton
           :disabled="!canSubmitComment || asyncing || !isValid || isFormEqual"
           :btn-icon="asyncing ? 'LoaderSimple' : null"
@@ -48,7 +40,6 @@ import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
 
-import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 
 import useToasterStore from '~/stores/useToaster'
@@ -56,6 +47,7 @@ import useUsersStore from '~/stores/useUsers'
 
 import { defaultProjectMessageForm, useProjectMessageForm } from '~/form/messages'
 import type { ProjectMessageModel } from '~/models/project-message.model'
+import { useBlockNavigation } from '~/composables/useBlockNavigation'
 import type { TranslatedProject } from '~/models/project.model'
 import type { CommentModel } from '~/models/comment.model'
 import type { ImageModel } from '~/models/image.model'
@@ -110,7 +102,6 @@ const defaultLocalForm = () => {
   return newForm
 }
 
-const { stateModals, closeModals, openModals, closeAllModals } = useModals({ saveChange: false })
 const asyncing = ref(false)
 
 const { form, isValid, errors, reset } = useProjectMessageForm({ lazy: true })
@@ -122,22 +113,8 @@ watch(
     deep: true,
   }
 )
-
-const isFormEqual = computed(() => isEqual(form.value, defaultLocalForm()))
+const isFormEqual = useBlockNavigation(() => isEqual(form.value, defaultLocalForm()))
 const canSubmitComment = computed(() => !isFormEqual.value && canCreateComments.value)
-
-const cancel = () => {
-  closeAllModals()
-  emit('canceled')
-}
-
-const checkCancel = () => {
-  if (isFormEqual.value) {
-    openModals('saveChange')
-  } else {
-    cancel()
-  }
-}
 
 const scrollToNewComment = (comment) => {
   document.getElementById(comment.id)?.scrollIntoView({

@@ -163,7 +163,7 @@ const onClose = () => {
   <!-- modal -->
   <ConfirmModal
     v-if="stateModals.saveChange"
-    content=""
+    :content="$t('common.confirm-close')"
     :title="$t('form.quit-without-saving-title')"
     @cancel="closeModals('saveChange')"
     @confirm="cancel"

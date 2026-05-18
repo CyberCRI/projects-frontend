@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import ProjectTemplateForm from '~/components/project/ProjectTemplateForm.vue'
+import type { ProjectForm as ProjectFormType } from '~/models/project.model'
 import { postProject, postProjectHeader } from '~/api/projects.service'
-import ProjectFormV2 from '~/components/project/ProjectFormV2.vue'
+import ProjectForm from '~/components/project/ProjectForm.vue'
 import { imageSizesFormData } from '~/functs/imageSizesUtils'
-import type { ProjectForm } from '~/models/project.model'
 import { useProjectTemplatesForm } from '~/form/project'
 import BasePage from '~/components/pages/BasePage.vue'
 import useToasterStore from '~/stores/useToaster'
@@ -23,7 +23,7 @@ const { form, isValid } = useProjectTemplatesForm()
 
 const toaster = useToasterStore()
 
-const onSubmit = (form: ProjectForm) => {
+const onSubmit = (form: ProjectFormType) => {
   loading.value = true
 
   // add organizationsCode in form
@@ -96,7 +96,7 @@ const updateForm = (f) => {
         :model-value="pick(form, ['template', 'categorie'])"
         @update:model-value="updateForm"
       />
-      <ProjectFormV2
+      <ProjectForm
         v-if="isValid || (form.categorie && !haveMultipleTemplates)"
         :project="project"
         :loading="loading"

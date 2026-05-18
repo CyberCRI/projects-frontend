@@ -1,15 +1,15 @@
 <template>
   <BaseModuleTab>
-    <ProjectFormV2 :project="project" :loading="loading" @close="close" @submit="onSubmit" />
+    <ProjectForm :project="project" :loading="loading" @close="close" @submit="onSubmit" />
   </BaseModuleTab>
 </template>
 
 <script setup lang="ts">
+import type { ProjectForm as ProjectFormType, TranslatedProject } from '~/models/project.model'
 import { patchProject, patchProjectHeader, postProjectHeader } from '~/api/projects.service'
-import type { ProjectForm, TranslatedProject } from '~/models/project.model'
 import { refreshProjectData } from '~/composables/project/refreshProject'
-import ProjectFormV2 from '~/components/project/ProjectFormV2.vue'
 import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
+import ProjectForm from '~/components/project/ProjectForm.vue'
 import { imageSizesFormData } from '~/functs/imageSizesUtils'
 import { omit } from 'es-toolkit'
 
@@ -41,7 +41,7 @@ const close = () => {
   })
 }
 
-const onSubmit = (form: ProjectForm) => {
+const onSubmit = (form: ProjectFormType) => {
   loading.value = true
   const body = {
     ...omit(form, ['imageSizes', 'file']),

@@ -157,10 +157,6 @@ export default {
     ).map((url) => usePublicURL(url))
 
     this.defaultPictureFiles = await Promise.all(urlArray.map(this.getFilesFromUrl))
-
-    if (!this.picture && this.defaultPictureFiles.length) {
-      this.setImage(this.defaultPictureFiles[0])
-    }
   },
 
   methods: {
