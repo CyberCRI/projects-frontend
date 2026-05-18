@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { getOrganizationByCode } from '~/api/organizations.service'
-
 import useOrganizationsStore from '~/stores/useOrganizations'
 
 const organizationsStore = useOrganizationsStore()
-const { isSuperAdmin } = usePermissions()
+const { isSuperAdmin, isAdmin } = usePermissions()
+
+const hasVectorTabs = useRuntimeConfig().public.appHasVectorDb
+const hasAgentTabs = useRuntimeConfig().public.appHasChatbotPromptDb
 
 const { t } = useNuxtI18n()
 const tabs = computed(() => {
@@ -22,18 +23,49 @@ const tabs = computed(() => {
     : []
 
   // TODO: also check is vector-store is enabled
-  const vectorStoreTab = isSuperAdmin.value
-    ? [
-        {
-          key: 'admin-vector-store',
-          label: t('admin.tabs.vector-store'),
-          view: { name: 'VectorStoreAdminTab' },
-          props: {},
-          icon: 'Article', // TODO: use a bulb or db icon
-          condition: true,
-        },
-      ]
-    : []
+  let vectorStoreTab = []
+  let agentTabs = []
+
+  if (hasVectorTabs && (isSuperAdmin.value || isAdmin.value)) {
+    vectorStoreTab = [
+      {
+        key: 'admin-vector-store',
+        label: t('admin.tabs.vector-store'),
+        view: { name: 'VectorStoreAdminTab' },
+        props: {},
+        icon: 'Article', // TODO: use a bulb or db icon
+        condition: true,
+      },
+    ]
+  }
+  if (hasAgentTabs && (isSuperAdmin.value || isAdmin.value)) {
+    agentTabs = [
+      {
+        key: 'admin-prompts',
+        label: t('admin.tabs.prompts'),
+        view: { name: 'PromptsAdminTab' },
+        props: {},
+        icon: 'Article', // TODO: use a bulb or db icon
+        condition: true,
+      },
+      {
+        key: 'admin-agent-skills',
+        label: t('admin.tabs.agent-skills'),
+        view: { name: 'AgentSkillsAdminTab' },
+        props: {},
+        icon: 'Article', // TODO: use a bulb or db icon
+        condition: true,
+      },
+      {
+        key: 'admin-agents',
+        label: t('admin.tabs.agents'),
+        view: { name: 'AgentsAdminTab' },
+        props: {},
+        icon: 'Article', // TODO: use a bulb or db icon
+        condition: true,
+      },
+    ]
+  }
 
   return [
     {
@@ -123,6 +155,7 @@ const tabs = computed(() => {
       condition: true,
     },
     ...vectorStoreTab,
+    ...agentTabs,
   ].map((entry) => ({ ...entry, dataTest: entry.key }))
 })
 
@@ -144,28 +177,18 @@ const breadcrumbs = computed(() => [
     route: { name: 'Admin' },
   },
 ])
-try {
-  const runtimeConfig = useRuntimeConfig()
-  const organization = await getOrganizationByCode(runtimeConfig.public.appApiOrgCode)
-  const { image, dimensions } = useImageAndDimension(organization?.banner_image, 'medium')
 
-  useLpiHead(
-    useRequestURL().toString(),
-    computed(() => t('admin.portal.management')),
-    organization?.dashboard_subtitle,
-    image,
-    dimensions
-  )
-} catch (err) {
-  console.log(err)
-}
+useLpiHead2({
+  title: computed(() => t('admin.portal.management')),
+})
 </script>
+
 <template>
   <div class="admin-portal-layout page-section-extra-wide page-top">
     <div class="page-section-extra-wide">
       <NavPanelLayout
         :is-nav-collapsed="isNavCollapsed"
-        :breadcrumbs="breadcrumbs || []"
+        :breadcrumbs="breadcrumbs"
         @toggle-nav-panel="toggleNavPanel"
         @collapse-nav-panel="isNavCollapsed = true"
       >

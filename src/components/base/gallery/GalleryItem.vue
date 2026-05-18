@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ImageModel } from '~/models/image.model'
+import type { ImageModel, ImageVariations } from '~/models/image.model'
 
 import LpiButton from '~/components/base/button/LpiButton.vue'
 
@@ -32,7 +32,7 @@ const props = withDefaults(
     image: ImageModel
     editable?: boolean
     styleImg?: StyleValue
-    size?: keyof ImageModel['variations']
+    size?: ImageVariations
   }>(),
   { editable: false, styleImg: null, size: 'medium' }
 )

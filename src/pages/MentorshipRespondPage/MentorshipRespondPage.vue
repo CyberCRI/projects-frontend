@@ -48,7 +48,7 @@
           label=""
           :placeholder="$t('mentorship.respond.comment-placeholder')"
           input-type="textarea"
-          rows="10"
+          :rows="10"
         />
       </div>
 

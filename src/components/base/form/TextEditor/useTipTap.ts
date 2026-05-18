@@ -7,7 +7,6 @@ import StarterKit from '@tiptap/starter-kit'
 import Table from '@tiptap/extension-table'
 import Color from '@tiptap/extension-color'
 import Link from '@tiptap/extension-link'
-import { Editor } from '@tiptap/vue-3'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'
@@ -17,11 +16,12 @@ import ExternalVideo from './tiptap-extensions/ExternalVideo.js'
 import LpiCodeBlock from './tiptap-extensions/LpiCodeBlock.js'
 import CustomImage from './tiptap-extensions/CustomImage.js'
 import lowlight from '~/functs/lowlight'
+import { Editor } from '@tiptap/vue-3'
 
 export const emitsDefinitions = ['saved', 'image', 'blur', 'update:modelValue']
 
 export type PropsDefinitions = {
-  modelValue: string
+  modelValue?: string
   mode?: 'none' | 'simple' | 'medium' | 'full'
   saveIconVisible?: boolean
   // function must take a file argument and return a promise resolving to an {url, width, height} object
@@ -196,7 +196,7 @@ export function useTipTap({ props, emit, t }) {
 
   function resetContent() {
     emit('update:modelValue', initialContent.value)
-    editor.value.commands.setContent(initialContent.value)
+    editor.value?.commands.setContent(initialContent.value)
   }
 
   return {

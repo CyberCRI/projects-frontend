@@ -25,91 +25,69 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import SearchFilters from '~/components/search/Filters/SearchFilters.vue'
 import SearchInput from '~/components/base/form/SearchInput.vue'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import type { ALL_SECTIONS } from '~/components/search/Filters/useSectionFilters'
+import useSearch from '~/composables/useSearch'
 
-import useSearch from '~/composables/useSearch.ts'
+const props = withDefaults(
+  defineProps<{
+    showSectionFilter?: boolean
+    section?: ALL_SECTIONS
+    // filters we dont want to show/edit but are still active (i.e. categories in category page)
+    filterBlackList?: any[]
+    freezeSearch?: boolean
+  }>(),
+  {
+    showSectionFilter: false,
+    section: null,
+    filterBlackList: () => [],
+    freezeSearch: false,
+  }
+)
 
-export default {
-  name: 'SearchOptions',
+const emit = defineEmits<{
+  'filter-section-update': [ALL_SECTIONS]
+}>()
 
-  components: {
-    SearchInput,
-    SearchFilters,
-  },
+const { searchFromQuery, updateSelectedQuery, updatdeSelectedFilters, updatdeSelectedSection } =
+  useSearch(props.section)
 
-  props: {
-    showSectionFilter: {
-      type: Boolean,
-      default: false,
-    },
+const managedSearch = ref<{
+  search?: string
+  section?: string
+}>({})
 
-    section: {
-      type: [String, null],
-      default: null, // ALL_SECTION_KEY,
-    },
-
-    filterBlackList: {
-      // filters we dont want to show/edit but are still active (i.e. categories in category page)
-      type: Array,
-      default: () => [],
-    },
-
-    freezeSearch: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  emits: ['search-options-updated', 'filter-section-update'],
-  expose: ['clearSelectedFilters', 'deleteQuery'],
-  setup(props) {
-    const organizationsStore = useOrganizationsStore()
-
-    const { searchFromQuery, updateSelectedQuery, updatdeSelectedFilters, updatdeSelectedSection } =
-      useSearch(props.section)
-
-    const managedSearch = ref({})
-    return {
-      organizationsStore,
-      searchFromQuery,
-      updateSelectedQuery,
-      updatdeSelectedFilters,
-      updatdeSelectedSection,
-      managedSearch,
+watch(
+  searchFromQuery,
+  (neo) => {
+    if (!props.freezeSearch) {
+      managedSearch.value = neo
     }
   },
+  {
+    immediate: true,
+    deep: true,
+  }
+)
 
-  watch: {
-    searchFromQuery: {
-      handler(neo) {
-        if (!this.freezeSearch) this.managedSearch = neo
-      },
-      deep: true,
-      immediate: true,
-    },
+watch(
+  () => props.section,
+  (newValue) => {
+    emit('filter-section-update', newValue)
+  }
+)
 
-    section: {
-      handler(newValue) {
-        this.$emit('filter-section-update', newValue)
-      },
-    },
-  },
+const deleteQuery = () => updateSelectedQuery('')
 
-  methods: {
-    deleteQuery() {
-      this.updateSelectedQuery('')
-    },
-    // this method is used by CategoriesPage and GroupsPage via a ref
-
-    clearSelectedFilters() {
-      this.$refs.searchFilters?.clearSelectedFilters()
-    },
-  },
+const searchFiltersRef = useTemplateRef('searchFilters')
+// this method is used by CategoriesPage and GroupsPage via a ref
+const clearSelectedFilters = () => {
+  searchFiltersRef.value?.clearSelectedFilters()
 }
+defineExpose({ clearSelectedFilters })
 </script>
 
 <style lang="scss" scoped>

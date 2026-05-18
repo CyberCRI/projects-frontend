@@ -1,20 +1,17 @@
-<script setup lang="ts">
-import useToasterStore from '~/stores/useToaster'
-import useUsersStore from '~/stores/useUsers'
+<script setup>
+import useToasterStore from '@/stores/useToaster'
+import useUsersStore from '@/stores/useUsers'
 
 const { t } = useNuxtI18n()
 
-const props = withDefaults(
-  defineProps<{
-    isOpened: boolean
-    documentTitle?: string
-    isEdit?: boolean
-  }>(),
-  {
-    documentTitle: '',
-    isEdit: false,
-  }
-)
+const props = defineProps({
+  isOpened: {
+    type: Boolean,
+    required: true,
+  },
+  documentTitle: { type: String, default: '' },
+  isEdit: { type: Boolean, default: false },
+})
 const emit = defineEmits(['close', 'document-added', 'document-updated'])
 
 const toaster = useToasterStore()
@@ -130,9 +127,16 @@ const submit = async () => {
       <p v-if="titleExists" class="error">{{ $t('vector-store.title-exists') }}</p>
     </div>
     <div class="form-section">
-      <label>{{ $t('vector-store.file-field') }}</label>
+      <label>{{ $t('vector-store.file-field') }} (.pdf, .txt, .docx)</label>
       <br />
-      <input id="file" type="file" name="file" required @change="onFileChange" />
+      <input
+        id="file"
+        type="file"
+        name="file"
+        accept=".pdf,.txt,.docx,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        required
+        @change="onFileChange"
+      />
     </div>
   </BaseDrawer>
 </template>

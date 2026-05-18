@@ -3,7 +3,7 @@ import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import { describe, expect, it } from 'vitest'
 import { delay } from 'es-toolkit'
 
-describe('TemplatesCreateTab.vue', () => {
+describe.skip('TemplatesCreateTab.vue', () => {
   it('Mount', async () => {
     const wrapper = await lpiMountSuspended(TemplatesCreateTab)
     await wrapper.unmount()

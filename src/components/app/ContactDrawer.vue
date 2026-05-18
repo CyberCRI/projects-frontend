@@ -49,7 +49,7 @@
         </h4>
         <TextInput
           v-model="form.content"
-          rows="10"
+          :rows="10"
           input-type="textarea"
           class="text-input"
           data-test="contact-content"

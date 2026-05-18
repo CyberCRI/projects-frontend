@@ -41,12 +41,19 @@ const redirect = (numberProject: number) => {
   })
 }
 
+const refresh = async () => {
+  await refreshNuxtData([
+    `${organizationCode.value}::group::${props.group.slug}`,
+    `${organizationCode.value}::group::${props.group.id}`,
+  ])
+}
+
 const save = async () => {
   try {
     const { removed, added } = await updateGroupProjects()
     stopEditWatcher()
     // refresh group parent info
-    await refreshNuxtData(`${organizationCode.value}::group::${props.group.id}`)
+    await refresh()
     redirect(groupProjectData.value.length - removed + added)
   } catch (e) {
     console.error(e)

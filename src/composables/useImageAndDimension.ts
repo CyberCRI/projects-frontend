@@ -1,8 +1,8 @@
-import type { ImageModel } from '~/models/image.model'
+import type { ImageModel, ImageVariations } from '~/models/image.model'
 
 export default function useImageAndDimensions(
   imageData: ImageModel | null,
-  variation: keyof ImageModel['variations']
+  variation: ImageVariations
 ) {
   const image = imageData?.variations?.[variation]
 

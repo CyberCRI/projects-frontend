@@ -66,7 +66,7 @@
           v-model="form.message"
           class="text-input-test"
           input-type="textarea"
-          rows="10"
+          :rows="10"
           data-test="report-description"
           @blur="v$.message.$validate"
         />

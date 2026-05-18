@@ -25,57 +25,44 @@
   </DialogModal>
 </template>
 
-<script>
+<script setup lang="ts">
 import DialogModal from '~/components/base/modal/DialogModal.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import LpiSnackbar from '~/components/base/LpiSnackbar.vue'
+import type { Editor } from '@tiptap/vue-3'
 
 // TODO: validate video src and display error message
-export default {
-  name: 'EditorModalVideo',
 
-  components: { DialogModal, LpiSnackbar, TextInput },
+const props = defineProps<{
+  editor: Editor
+}>()
 
-  props: {
-    editor: {
-      type: Object,
-      required: true,
-    },
-  },
+const emit = defineEmits<{
+  closeModal: []
+}>()
 
-  emits: ['closeModal'],
-  data() {
-    return {
-      videoSrc: '',
-    }
-  },
+const videoSrc = ref('')
 
-  computed: {
-    validVideo() {
-      return this.videoSrc.match(/youtu\.be|youtube|vimeo/)
-    },
-    disabled() {
-      return !this.videoSrc || !this.validVideo
-    },
-  },
+const validVideo = computed(() => {
+  return videoSrc.value.match(/youtu\.be|youtube|vimeo/)
+})
+const disabled = computed(() => {
+  return !videoSrc.value || !validVideo.value
+})
 
-  methods: {
-    closeModal() {
-      this.$emit('closeModal')
-    },
+const closeModal = () => emit('closeModal')
 
-    insertVideo() {
-      if (this.validVideo) {
-        this.handleVideoModalConfirmed({ src: this.videoSrc })
-        this.videoSrc = ''
-      }
-    },
+const handleVideoModalConfirmed = (data) => {
+  // @ts-expect-error 'setExternalVideo' is set in extetions (from ExternalVideo.ts)
+  props.editor.chain().focus().setExternalVideo({ src: data.src }).run()
+  closeModal()
+}
 
-    handleVideoModalConfirmed(data) {
-      this.editor.chain().focus().setExternalVideo({ src: data.src }).run()
-      this.closeModal()
-    },
-  },
+const insertVideo = () => {
+  if (validVideo.value) {
+    handleVideoModalConfirmed({ src: videoSrc.value })
+    videoSrc.value = ''
+  }
 }
 </script>
 

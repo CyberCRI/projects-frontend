@@ -3,21 +3,17 @@
     {{ error.$message }}
   </p>
 </template>
-<script>
-export default {
-  name: 'FieldErrors',
 
-  props: {
-    errors: {
-      type: Array,
-      default: () => [],
-    },
-  },
-}
+<script setup lang="ts">
+import type { ErrorObject } from '@vuelidate/core'
+
+defineProps<{
+  errors: ErrorObject[]
+}>()
 </script>
 <style lang="scss" scoped>
 .error-description {
-  color: $red;
+  color: var(--red);
   margin-top: $space-s;
   font-size: $font-size-s;
 }

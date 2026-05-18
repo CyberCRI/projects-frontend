@@ -1,8 +1,17 @@
+import type { ImageVariations } from '~/models/image.model'
 import { mergeAttributes } from '@tiptap/core'
 import Image from '@tiptap/extension-image'
 
+declare module '@tiptap/core' {
+  interface Commands<ReturnType> {
+    CustomImage: {
+      setImage: (options: { src: string; alt?: string; title?: string }) => ReturnType
+    }
+  }
+}
+
 export default Image.extend({
-  name: 'image',
+  name: 'CustomImage',
 
   addAttributes() {
     return {
@@ -19,7 +28,7 @@ export default Image.extend({
       ...Image.options,
       inline: true,
       HTMLAttributes: {},
-      sizes: ['small', 'medium', 'large', 'full', 'custom', 'original'],
+      sizes: ['small', 'medium', 'large', 'full', 'custom', 'original'] as ImageVariations[],
       allowBase64: false,
     }
   },
@@ -60,28 +69,6 @@ export default Image.extend({
 
           return true
         },
-      setSize:
-        (attributes) =>
-        ({ tr, dispatch }) => {
-          // Check it's a valid size option
-          // @ts-expect-error sizes
-          if (!this.options.sizes.includes(attributes.size)) {
-            return false
-          }
-
-          const { selection } = tr
-
-          const options = {
-            ...selection.node.attrs,
-            ...attributes,
-          }
-
-          const node = this.type.create(options)
-
-          if (dispatch) {
-            tr.replaceRangeWith(selection.from, selection.to, node)
-          }
-        },
     }
   },
 
@@ -98,9 +85,10 @@ export default Image.extend({
 
   parseHTML() {
     const getAttrs = (dom) => {
-      let size = 'original'
-      // @ts-expect-error sizes
-      this.options.sizes.forEach((s) => {
+      let size: ImageVariations = 'original'
+      const sizes = (this.options as any).sizes as ImageVariations[]
+
+      sizes.forEach((s) => {
         const hasSize = (dom as HTMLElement).classList.contains('custom-image-' + s)
         if (hasSize) {
           size = s

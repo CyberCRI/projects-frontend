@@ -26,7 +26,7 @@
         :title="$t('instructions.delete.title')"
         :asyncing="isDeletingInstruction"
         @cancel="instructionToDelete = null"
-        @confirm="deleteInstruction"
+        @confirm="onDeleteInstruction"
       />
     </template>
 
@@ -40,7 +40,7 @@
   </BaseListSummaryBlock>
 </template>
 
-<script>
+<script setup lang="ts">
 import { deleteInstruction } from '~/api/instruction.service'
 
 import EditInstructionDrawer from '~/components/instruction/EditInstructionDrawer/EditInstructionDrawer.vue'
@@ -49,67 +49,48 @@ import InstructionItem from '~/components/home/SummaryCards/InstructionItem.vue'
 import SummaryAction from '~/components/home/SummaryCards/SummaryAction.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
-import useToasterStore from '~/stores/useToaster.ts'
+import type { TranslatedInstruction } from '~/models/instruction.model'
+import useToasterStore from '~/stores/useToaster'
 
-export default {
-  name: 'InstructionSummaryBlock',
+withDefaults(
+  defineProps<{
+    instructions?: TranslatedInstruction[]
+    inlined?: boolean
+  }>(),
+  {
+    instructions: () => [],
+    inlined: false,
+  }
+)
 
-  components: {
-    InstructionItem,
-    BaseListSummaryBlock,
-    SummaryAction,
-    EditInstructionDrawer,
-    ConfirmModal,
-  },
+const emit = defineEmits<{
+  'reload-instructions': []
+}>()
 
-  props: {
-    instructions: {
-      type: Array,
-      default: () => [],
-    },
-    inlined: {
-      type: Boolean,
-      default: false,
-    },
-  },
+const { t } = useNuxtI18n()
 
-  emits: ['reload-instructions'],
-  setup() {
-    const toaster = useToasterStore()
-    const organizationsStore = useOrganizationsStore()
-    return {
-      toaster,
-      organizationsStore,
-    }
-  },
+const toaster = useToasterStore()
+const organizationCode = useOrganizationCode()
 
-  data() {
-    return {
-      editedInstruction: null,
-      instructionToDelete: null,
-      isDeletingInstruction: false,
-    }
-  },
+const editedInstruction = ref(null)
+const instructionToDelete = ref(null)
+const isDeletingInstruction = ref(false)
 
-  methods: {
-    async deleteInstruction() {
-      // TODO: delete intstuction
-      console.log('delete instruction', this.instructionToDelete)
-      this.isDeletingInstruction = true
-      try {
-        await deleteInstruction(this.organizationsStore.current?.code, this.instructionToDelete.id)
-        this.toaster.pushSuccess(this.$t('instructions.delete.success'))
+const onDeleteInstruction = async () => {
+  // TODO: delete intstuction
+  console.log('delete instruction', instructionToDelete.value)
+  isDeletingInstruction.value = true
+  try {
+    await deleteInstruction(organizationCode, instructionToDelete.value.id)
+    toaster.pushSuccess(t('instructions.delete.success'))
 
-        this.$emit('reload-instructions')
-      } catch (err) {
-        this.toaster.pushError(`${this.$t('instructions.delete.error')} (${err})`)
-        console.error(err)
-      } finally {
-        this.instructionToDelete = null
-        this.isDeletingInstruction = false
-      }
-    },
-  },
+    emit('reload-instructions')
+  } catch (err) {
+    toaster.pushError(`${t('instructions.delete.error')} (${err})`)
+    console.error(err)
+  } finally {
+    instructionToDelete.value = null
+    isDeletingInstruction.value = false
+  }
 }
 </script>

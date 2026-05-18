@@ -2,6 +2,7 @@ import { Extension } from '@tiptap/core'
 
 import type { LpiBubbleMenuPluginProps } from './lpi-bubble-menu-plugin'
 import { LpiBubbleMenuPlugin } from './lpi-bubble-menu-plugin'
+import type { Editor } from '@tiptap/vue-3'
 
 export type LpiBubbleMenuOptions = Omit<LpiBubbleMenuPluginProps, 'editor' | 'element'> & {
   element: HTMLElement | null
@@ -28,7 +29,7 @@ export default Extension.create<LpiBubbleMenuOptions>({
     return [
       LpiBubbleMenuPlugin({
         pluginKey: this.options.pluginKey,
-        editor: this.editor,
+        editor: this.editor as Editor,
         element: this.options.element,
         tippyOptions: this.options.tippyOptions,
         updateDelay: this.options.updateDelay,

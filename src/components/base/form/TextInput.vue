@@ -29,6 +29,7 @@
         :disabled="disabled"
         :data-test="dataTest"
         :maxlength="maxLength"
+        :list="suggestionListId"
         @change="$emit('change', $event)"
         @keydown.enter="$emit('enter')"
         @focus="$emit('focus', $event)"
@@ -48,110 +49,65 @@
   </div>
 </template>
 
-<script>
-import FieldErrors from '~/components/base/form/FieldErrors.vue'
+<script setup lang="ts">
+import type FieldErrors from '~/components/base/form/FieldErrors.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
+import type { ErrorObject } from '@vuelidate/core'
+import type { Events } from 'vue'
 
-export default {
-  name: 'TextInput',
+const props = withDefaults(
+  defineProps<{
+    autofocus?: boolean
+    placeholder?: string
+    label?: string
+    bottomText?: string
+    inputId?: string
+    inputType?: string
+    bigInput?: boolean
+    unfocusable?: boolean
+    dataTest?: string
+    disabled?: boolean
+    maxLength?: number
+    rows?: number | string
+    errors?: ErrorObject[]
+    suggestionListId?: string
+  }>(),
+  {
+    autofocus: false,
+    placeholder: '',
+    label: null,
+    bottomText: null,
+    inputId: '',
+    inputType: 'text',
+    bigInput: false,
+    unfocusable: false,
+    dataTest: 'input-field',
+    disabled: false,
+    maxLength: null,
+    rows: 3,
+    suggestionListId: '',
+    errors: () => [],
+  }
+)
 
-  components: { IconImage, FieldErrors },
+const model = defineModel<string>({ default: '' })
 
-  props: {
-    autofocus: {
-      type: Boolean,
-      default: false,
-    },
+defineEmits<{
+  enter: []
+  focus: [Events['onFocus']]
+  blur: [Events['onBlur']]
+  change: [Events['onChange']]
+}>()
 
-    modelValue: {
-      type: String,
-      default: '',
-    },
+const randomId = useUniqueId()
+const typeOverride = ref(null)
 
-    placeholder: {
-      type: String,
-      default: '',
-    },
-
-    label: {
-      type: String,
-      default: null,
-    },
-
-    bottomText: {
-      type: String,
-      default: null,
-    },
-
-    inputId: {
-      type: String,
-      default: '',
-    },
-
-    inputType: {
-      type: String,
-      default: 'text',
-    },
-
-    bigInput: {
-      type: Boolean,
-      default: false,
-    },
-
-    unfocusable: {
-      type: Boolean,
-      default: false,
-    },
-    dataTest: {
-      type: String,
-      default: 'input-field',
-    },
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-    maxLength: {
-      type: Number,
-      default: null,
-    },
-    rows: {
-      type: [Number, String],
-      default: 3,
-    },
-    errors: {
-      type: Array,
-      default: () => [],
-    },
-  },
-
-  emits: ['update:modelValue', 'enter', 'focus', 'blur', 'change'],
-
-  data() {
-    return {
-      randomId: (Math.random() + 1).toString(36).substring(7),
-      typeOverride: null,
-    }
-  },
-
-  computed: {
-    model: {
-      get() {
-        return this.modelValue
-      },
-      set(value) {
-        this.$emit('update:modelValue', value)
-      },
-    },
-  },
-
-  mounted() {
-    if (this.autofocus) {
-      this.$nextTick(() => {
-        this.$refs.inputField?.focus()
-      })
-    }
-  },
-}
+const inputFieldRef = useTemplateRef('inputField')
+onMounted(() => {
+  if (props.autofocus) {
+    nextTick(() => inputFieldRef.value?.focus())
+  }
+})
 </script>
 
 <style lang="scss" scoped>

@@ -1,115 +1,80 @@
 <template>
-  <AdminBlock :block-title="blockTitle" :is-loading="isLoading">
+  <AdminBlock :block-title="blockTitle">
     <template #default>
-      <FeaturedProjectAdminListItem
-        v-for="featuredProject in featuredProjects"
-        :key="featuredProject.id"
-        :project="featuredProject"
-      />
+      <FetchLoader :status="status" only-error skeleton>
+        <FeaturedProjectAdminListItem
+          v-for="featuredProject in featuredProjects"
+          :key="featuredProject.id"
+          :project="featuredProject"
+        />
+        <EmptyLabel v-if="featuredProjects.length === 0" />
+      </FetchLoader>
     </template>
     <template #footer>
       <LpiButton
-        v-if="featuredProjects.length"
-        btn-icon="Pen"
-        :label="$t('common.edit')"
-        @click="editFeaturedProjects = true"
-      />
-      <LpiButton
-        v-else
-        btn-icon="Plus"
-        :label="$t('common.add')"
-        @click="editFeaturedProjects = true"
+        :btn-icon="featuredProjects.length ? 'Pen' : 'Plus'"
+        :label="featuredProjects.length ? $t('common.edit') : $t('common.add')"
+        @click="openModal"
       />
     </template>
   </AdminBlock>
   <PickProjectsDrawer
-    :is-opened="editFeaturedProjects"
+    :is-opened="stateModal"
     :pre-selected-projects="featuredProjects"
-    :max-pick="maxProjects"
+    :max-pick="LIMIT_PROJECTS"
     :drawer-title="$t('featured-projects.drawer.title')"
-    @close="editFeaturedProjects = false"
+    @close="closeModal"
     @picked-projects="onPickProjects"
   />
 </template>
-<script>
-import {
-  addFeaturedProject,
-  getFeaturedProjects,
-  removeFeaturedProject,
-} from '~/api/organizations.service'
+<script setup lang="ts">
+import { addFeaturedProject, removeFeaturedProject } from '~/api/organizations.service'
+import { getFeaturedProjects } from '~/api/v2/organizations.service'
+import { projectSkeleton } from '~/skeletons/project.skeletons'
+import { factoryPagination } from '~/skeletons/base.skeletons'
+import FetchLoader from '~/components/base/FetchLoader.vue'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
-import useToasterStore from '~/stores/useToaster.ts'
+import useToasterStore from '~/stores/useToaster'
 
-export default {
-  name: 'FeaturedProjectAdminBlock',
+const { t } = useNuxtI18n()
+const toaster = useToasterStore()
+const organizationCode = useOrganizationCode()
+const { stateModal, openModal, closeModal } = useModal()
+const LIMIT_PROJECTS = 3
 
-  setup() {
-    const toaster = useToasterStore()
-    const organizationsStore = useOrganizationsStore()
-    return {
-      toaster,
-      organizationsStore,
-    }
-  },
+const blockTitle = computed(
+  () =>
+    `${t('admin.portal.featured-projects')} (${featuredProjects.value.length} ${t('common.of')} ${LIMIT_PROJECTS})`
+)
 
-  data() {
-    return {
-      featuredProjects: [],
-      isLoading: true,
-      editFeaturedProjects: false,
-      maxProjects: 3,
-      asyncing: false,
-    }
-  },
+const {
+  status,
+  data: featuredProjects,
+  refresh,
+} = getFeaturedProjects(organizationCode, {
+  default: () => factoryPagination(projectSkeleton, LIMIT_PROJECTS),
+})
 
-  computed: {
-    blockTitle() {
-      const extra = this.isLoading
-        ? ''
-        : ` (${this.featuredProjects.length} ${this.$t('common.of')} ${this.maxProjects})`
-      return this.$t('admin.portal.featured-projects') + extra
-    },
-    organizationCode() {
-      return this.organizationsStore.current?.code
-    },
-  },
+const onPickProjects = async (projects) => {
+  try {
+    const current = featuredProjects.value.map((p) => p.id)
+    const picked = projects.map((p) => p.id)
 
-  async mounted() {
-    await this.loadFeaturedProjects()
-  },
+    const toAdd = picked.filter((p) => !current.includes(p))
+    const toRemove = current.filter((p) => !picked.includes(p))
 
-  methods: {
-    async loadFeaturedProjects() {
-      this.isLoading = true
-      this.featuredProjects = (await getFeaturedProjects(this.organizationCode)).results
-      this.isLoading = false
-    },
+    await addFeaturedProject(organizationCode, { featured_projects_ids: toAdd })
+    await removeFeaturedProject(organizationCode, {
+      featured_projects_ids: toRemove,
+    })
+    toaster.pushSuccess(t('featured-projects.save.success'))
 
-    async onPickProjects(projects) {
-      this.isLoading = true
-      this.editFeaturedProjects = false
-      try {
-        const current = this.featuredProjects.map((p) => p.id)
-        const picked = projects.map((p) => p.id)
-
-        const toAdd = picked.filter((p) => !current.includes(p))
-        const toRemove = current.filter((p) => !picked.includes(p))
-
-        await addFeaturedProject(this.organizationCode, { featured_projects_ids: toAdd })
-        await removeFeaturedProject(this.organizationCode, {
-          featured_projects_ids: toRemove,
-        })
-        this.toaster.pushSuccess(this.$t('featured-projects.save.success'))
-
-        this.featuredProjects = (await getFeaturedProjects(this.organizationCode)).results
-      } catch (err) {
-        this.toaster.pushError(`${this.$t('featured-projects.save.error')} (${err})`)
-        console.error(err)
-      } finally {
-        this.isLoading = false
-      }
-    },
-  },
+    refresh()
+  } catch (err) {
+    toaster.pushError(`${t('featured-projects.save.error')} (${err})`)
+    console.error(err)
+  } finally {
+    closeModal()
+  }
 }
 </script>

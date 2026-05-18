@@ -1,7 +1,7 @@
 <template>
   <div class="filter-categories-selected">
     <FilterValue
-      v-for="category in selection"
+      v-for="category in model"
       :key="category.id"
       class="actionable"
       icon="Close"
@@ -11,49 +11,13 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import FilterValue from '~/components/search/Filters/FilterValue.vue'
 
-export default {
-  name: 'CategoriesFilterSummary',
+const model = defineModel<any[]>({ default: [] })
 
-  components: {
-    FilterValue,
-  },
-
-  props: {
-    modelValue: {
-      type: Array,
-      required: true,
-    },
-  },
-
-  emits: ['update:modelValue'],
-
-  data: () => {
-    return {
-      selection: [],
-    }
-  },
-
-  watch: {
-    modelValue: {
-      handler: function (neo, old) {
-        if (neo && neo != old) {
-          this.selection = [...neo]
-        }
-      },
-      immediate: true,
-      deep: true,
-    },
-  },
-
-  methods: {
-    removeCategory(category) {
-      this.selection = this.selection.filter((cat) => cat.id !== category.id)
-      this.$emit('update:modelValue', this.selection)
-    },
-  },
+const removeCategory = (category) => {
+  model.value = model.value.filter((cat) => cat.id !== category.id)
 }
 </script>
 

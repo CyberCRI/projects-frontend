@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import GroupResearcherDocumentsList from '@/components/people/Researcher/GroupResearcherDocumentsList.vue'
+import GroupResearcherDocumentsList from '~/components/people/Researcher/GroupResearcherDocumentsList.vue'
 import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
 import type { DocumentType } from '@/interfaces/researcher'
 

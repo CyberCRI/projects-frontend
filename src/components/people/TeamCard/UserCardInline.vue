@@ -8,7 +8,6 @@
     <div class="user-container">
       <CroppedApiImage
         :alt="
-          // @ts-expect-error TODO refacto isNotGroup
           user.keycloack_id ? `${user.given_name} ${user.family_name} image` : `${user.name} image`
         "
         class="img-container"
