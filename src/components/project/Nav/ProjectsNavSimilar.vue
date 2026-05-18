@@ -1,9 +1,9 @@
 <template>
   <div class="similar-projects">
-    <h3 class="group-section-title">
+    <h3 class="group-section-title skeletons-text">
       {{ $t('project.suggested', projects.length) }}
     </h3>
-    <p class="hint">{{ $t('project.suggested-hint') }}</p>
+    <p class="hint skeletons-text">{{ $t('project.suggested-hint') }}</p>
 
     <SimilarProjectsItem
       v-for="project in projectsSliced"
@@ -36,7 +36,7 @@ const projectsSliced = computed(() =>
 
 <style lang="scss" scoped>
 .similar-projects {
-  border: 1px solid $lighter-gray;
+  border: 1px solid var(--lighter-gray);
   border-radius: 1rem;
   padding: 0.8rem;
   display: flex;
@@ -55,10 +55,10 @@ const projectsSliced = computed(() =>
   }
 
   .similar-project {
-    --similar-project-text-color: $primary-dark;
+    --similar-project-text-color: var(--primary-dark);
 
     &:hover {
-      background-color: $primary-light;
+      background-color: var(--primary-light);
     }
   }
 }

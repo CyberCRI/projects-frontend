@@ -5,14 +5,14 @@
       :class="{ placeholder: !selected, 'placeholder--open': stateModal }"
       @click="toggleModal"
     >
-      <span class="selected-label" :style="styles">
+      <span class="selected-label skeletons-text" :style="styles">
         {{ selected ? selected.label : placeholder }}
       </span>
-      <IconImage :name="icon" class="svg" />
+      <IconImage :name="icon" class="svg skeletons-background" />
     </div>
     <div class="options-wrapper">
       <Transition name="menu-fade">
-        <ul v-show="stateModal" class="option-list">
+        <ul v-show="stateModal" class="option-list skeletons-background">
           <template v-for="option in options">
             <li v-if="!selected || option.value !== selected.value" :key="option.value">
               <button class="menu-dropdown" :data-test="option.dataTest" @click="select(option)">
@@ -86,7 +86,7 @@ const clickOutside = () => {
   position: relative;
   background: $white;
   border-radius: $border-radius-s;
-  border: $border-width-s solid $light-gray;
+  border: $border-width-s solid var(--light-gray);
 
   &.active {
     border-bottom-left-radius: 0;
@@ -102,7 +102,7 @@ const clickOutside = () => {
 
   .option-list {
     background-color: $white;
-    border: $border-width-s solid $light-gray;
+    border: $border-width-s solid var(--light-gray);
     border-radius: $border-radius-s;
   }
 
@@ -118,10 +118,10 @@ const clickOutside = () => {
     background: transparent;
     border: none;
     cursor: pointer;
-    color: $black;
+    color: var(--black);
 
     &.placeholder {
-      color: $mid-gray;
+      color: var(--mid-gray);
       font-weight: 400;
 
       &--open {
@@ -146,10 +146,10 @@ const clickOutside = () => {
     border: none;
     cursor: pointer;
     text-align: left;
-    color: $black;
+    color: var(--black);
 
     &:hover {
-      background: $almost-white;
+      background: var(--almost-white);
     }
   }
 
@@ -179,7 +179,7 @@ const clickOutside = () => {
   top: 50%;
   transform: translateY(-50%);
   right: 8px;
-  fill: $black;
+  fill: var(--black);
 }
 
 .menu-fade-leave-active,
@@ -217,7 +217,7 @@ const clickOutside = () => {
 // old style, add 'primary' class to use it
 // TODO check if still needed
 .lpi-select.primary {
-  background: $primary-dark;
+  background: var(--primary-dark);
   border-radius: $border-radius-l;
   border: 0 none;
 
@@ -232,20 +232,20 @@ const clickOutside = () => {
   }
 
   .menu-header {
-    color: $white;
+    color: var(--white);
   }
 
   .option-list {
-    background-color: $primary-dark;
+    background-color: var(--primary-dark);
     border-radius: $border-radius-l;
   }
 
   .menu-dropdown {
-    color: $white;
+    color: var(--white);
   }
 
   .svg {
-    fill: $white;
+    fill: var(--white);
   }
 }
 </style>

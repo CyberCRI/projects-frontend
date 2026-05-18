@@ -40,6 +40,7 @@ const resources = computed(() => props.project.modules.links + props.project.mod
   align-items: center;
   gap: 0.5rem;
   flex-wrap: wrap;
+
   .resource-container {
     display: contents !important;
   }

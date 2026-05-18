@@ -62,7 +62,7 @@ const { locale } = useNuxtI18n()
 .editor {
   overflow: hidden;
   border-radius: $border-radius-l;
-  border: $border-width-s solid $primary;
+  border: $border-width-s solid var(--primary);
   display: flex;
   flex-flow: column nowrap;
 

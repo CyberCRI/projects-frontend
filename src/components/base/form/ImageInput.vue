@@ -2,16 +2,9 @@
   <div>
     <div class="image-input-ctn">
       <label ref="label" :for="uniqueId" class="image-button" data-test="upload-image-button">
-        <LinkButton
+        <component
+          :is="isLink ? LinkButton : LpiButton"
           v-if="isLink"
-          v-disable-focus="unfocusable"
-          btn-icon="Upload"
-          :label="displayedLabel"
-          @click.prevent="labelRef.click()"
-        />
-
-        <LpiButton
-          v-else
           v-disable-focus="unfocusable"
           btn-icon="Upload"
           :label="displayedLabel"

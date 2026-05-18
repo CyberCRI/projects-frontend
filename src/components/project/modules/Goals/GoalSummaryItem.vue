@@ -64,10 +64,10 @@ const deadlineAt = computed(() =>
   position: relative;
   display: flex;
   border-radius: $border-radius-m;
-  border: $border-width-s solid $primary-dark;
-  color: $primary-dark;
+  border: $border-width-s solid var(--primary-dark);
+  color: var(--primary-dark);
   font-weight: bold;
-  background: $primary-lighter;
+  background: var(--primary-lighter);
   overflow: hidden;
 
   > div {
@@ -78,7 +78,7 @@ const deadlineAt = computed(() =>
     display: flex;
     align-items: center;
     justify-content: center;
-    border-right: $border-width-s solid $primary-dark;
+    border-right: $border-width-s solid var(--primary-dark);
     flex: 0 0 10em;
 
     svg {
@@ -87,19 +87,19 @@ const deadlineAt = computed(() =>
     }
 
     &.completed {
-      background: $primary;
-      color: $white;
+      background: var(--primary);
+      color: var(--white);
 
       svg {
-        fill: $black;
+        fill: var(--black);
       }
     }
 
     &.ongoing {
-      background: $white;
+      background: var(--white);
 
       svg {
-        fill: $black;
+        fill: var(--black);
       }
     }
   }
@@ -118,7 +118,7 @@ const deadlineAt = computed(() =>
     display: flex;
     align-items: center;
     justify-content: center;
-    border-left: $border-width-s solid $primary-dark;
+    border-left: $border-width-s solid var(--primary-dark);
   }
 }
 

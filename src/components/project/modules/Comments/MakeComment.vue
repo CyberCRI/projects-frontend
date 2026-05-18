@@ -1,5 +1,5 @@
 <template>
-  <div class="make-comment">
+  <div class="make-comment skeletons-background">
     <ConfirmModal
       v-if="stateModals.saveChange"
       content=""

@@ -92,9 +92,9 @@ const deleteGoal = () => emit('delete', props.goal)
 .goal-ctn {
   .goal {
     position: relative;
-    outline: $border-width-s solid $black; // outline is crisper than border
+    outline: $border-width-s solid var(--black); // outline is crisper than border
     border-radius: $border-radius-l;
-    background: $white;
+    background: var(--white);
     transform: scale3d(1, 1, 1); // fix rounding pixel glitch
     &.shadow-box {
       cursor: pointer;
@@ -107,8 +107,8 @@ const deleteGoal = () => emit('delete', props.goal)
       .left {
         writing-mode: tb-rl;
         transform: rotate(-180deg);
-        background: $primary-lighter;
-        color: $black;
+        background: var(--primary-lighter);
+        color: var(--black);
         text-align: center;
         padding: $space-m;
         box-sizing: border-box;
@@ -118,16 +118,16 @@ const deleteGoal = () => emit('delete', props.goal)
         border-bottom-right-radius: $border-radius-l;
 
         &.complete {
-          background: $primary;
+          background: var(--primary);
         }
 
         &.ongoing {
-          background: $primary-light;
+          background: var(--primary-light);
         }
 
         &.cancel {
-          background: $lighter-gray;
-          color: $mid-gray;
+          background: var(--lighter-gray);
+          color: var(--mid-gray);
         }
       }
 
@@ -157,11 +157,11 @@ const deleteGoal = () => emit('delete', props.goal)
             font-weight: 400;
 
             &.complete {
-              color: $black;
+              color: var(--black);
             }
 
             &.ongoing {
-              color: $black;
+              color: var(--black);
             }
           }
 
@@ -170,12 +170,12 @@ const deleteGoal = () => emit('delete', props.goal)
             width: 20px;
             border-radius: 50%;
             cursor: pointer;
-            fill: $primary-dark;
+            fill: var(--primary-dark);
             align-self: center;
             transition: background-color 0.2s ease-in-out;
 
             &:hover {
-              background-color: $primary-light;
+              background-color: var(--primary-light);
             }
           }
         }

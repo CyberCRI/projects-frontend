@@ -242,8 +242,8 @@ export default {
   }
 
   .img-preview {
-    border: $border-width-s solid $primary;
-    background-color: $white;
+    border: $border-width-s solid var(--primary);
+    background-color: var(--white);
     overflow: hidden;
   }
 

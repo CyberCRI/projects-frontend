@@ -100,7 +100,7 @@ const outdated = computed(() => {
 .announcement {
   position: relative;
   padding: $space-m $space-s;
-  border: $border-width-m solid $primary-dark;
+  border: $border-width-m solid var(--primary-dark);
   border-radius: $border-radius-m;
 
   .banner {

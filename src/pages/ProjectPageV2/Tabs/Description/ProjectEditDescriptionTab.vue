@@ -145,6 +145,7 @@ const checkSubmit = () => {
           :provider-params="providerParams"
           :save-image-callback="saveDescriptionImage"
           mode="full"
+          class="skeletons-background"
           :disable-save="asyncing"
           :errors="errors.description"
           @unauthorized="openModals('unauthorized')"

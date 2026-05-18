@@ -2,19 +2,19 @@
   <div :class="{ 'big-input': bigInput, disabled: disabled }" class="input-ctn">
     <slot name="label">
       <div class="label-form">
-        <label v-if="label" v-bind="attrsLabel">
+        <label v-if="label" v-bind="attrsLabel" class="skeletons-text">
           {{ formatedLabel }}
         </label>
         <slot name="in-label" />
       </div>
-      <span v-if="help" class="description">
+      <span v-if="help" class="description skeletons-text">
         {{ help }}
       </span>
     </slot>
 
     <slot />
 
-    <small v-if="bottomText">{{ bottomText }}</small>
+    <small v-if="bottomText" class="skeletons-text">{{ bottomText }}</small>
     <FieldErrors :errors="errors" />
   </div>
 </template>

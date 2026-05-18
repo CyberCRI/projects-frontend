@@ -6,6 +6,7 @@
           <template #default="{ closeSummary }">
             <DescriptionSummaryBlock
               ref="summaryBlock"
+              class="skeletons-background"
               summary-text-container=".description-content"
               :anchor-offset="anchorOffset"
               @item-clicked="
@@ -21,7 +22,7 @@
       </template>
     </PageStickyHead>
 
-    <TipTapOutput class="description-content" :content="description" />
+    <TipTapOutput class="description-content skeletons-background" :content="description" />
     <NothingHere v-if="descriptionEmpty" />
   </BaseModuleTab>
 </template>

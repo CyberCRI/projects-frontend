@@ -36,7 +36,7 @@ defineProps<{
   gap: 1.25rem;
 
   @media screen and (min-width: $min-tablet) {
-    border: $border-width-s solid $primary;
+    border: $border-width-s solid var(--primary);
     border-radius: $border-radius-l;
     z-index: 1;
     padding: 2.5rem;

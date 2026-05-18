@@ -11,8 +11,8 @@
       target="_blank"
       rel="noopener,noreferer"
     >
-      <div v-if="icon" class="icon-ctn">
-        <IconImage :name="icon" class="icon skeletons-background" />
+      <div v-if="mimeInfo.icon" class="icon-ctn">
+        <IconImage :name="mimeInfo.icon" class="icon skeletons-background" />
       </div>
 
       <div class="content">
@@ -83,17 +83,16 @@ const url = computed(() => {
 })
 
 const mimeInfo = computed(() => {
-  return {
+  const defaultMime = mimeTypeToInfo(props.mime)
+  const info = {
     color: 'primary',
-    ...(props.mime ? mimeTypeToInfo(props.mime) : {}),
+    ...defaultMime,
   }
-})
-
-const icon = computed(() => {
   if (props.icon) {
-    return props.icon
+    info.icon = props.icon
   }
-  return mimeInfo.value.icon
+
+  return info
 })
 </script>
 

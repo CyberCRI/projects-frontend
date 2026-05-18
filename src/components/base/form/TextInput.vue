@@ -17,12 +17,17 @@
       :data-test="dataTest"
       :maxlength="maxLength"
       :rows="rows"
+      class="skeletons-background"
       @keydown.enter="$emit('enter')"
       @focus="$emit('focus', $event)"
       @blur="$emit('blur', $event)"
     />
 
-    <span v-else class="input-wrapper" :class="{ 'is-password': inputType == 'password' }">
+    <span
+      v-else
+      class="input-wrapper skeletons-background"
+      :class="{ 'is-password': inputType == 'password' }"
+    >
       <input
         :id="inputId || (label ? randomId : null)"
         ref="inputField"
