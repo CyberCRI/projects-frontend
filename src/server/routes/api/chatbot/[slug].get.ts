@@ -1,4 +1,4 @@
-// import checkAdminRights from '@/server/utils/check-admin-rights.js'
+import { getUser } from '@/server/utils/check-admin-rights.js'
 
 export default defineLazyEventHandler(() => {
   const { appApiOrgCode } = useRuntimeConfig().public
@@ -11,6 +11,15 @@ export default defineLazyEventHandler(() => {
         error: 'Missing required "id" query parameter',
       }
     }
+
+    const user = await getUser(event)
+    if (!user) {
+      setResponseStatus(event, 401)
+      return {
+        error: 'Unauthorized',
+      }
+    }
+
     // findUnique dont work because slug is not globally unique
     const agent = await chatbotPrisma.agent.findFirst({
       where: {
@@ -18,6 +27,7 @@ export default defineLazyEventHandler(() => {
         orgCode: appApiOrgCode,
       },
     })
+    const runtimeConfig = useRuntimeConfig()
 
     // console.log(agent)
     if (!agent) {
@@ -26,6 +36,17 @@ export default defineLazyEventHandler(() => {
         error: 'Not found',
       }
     }
-    return agent
+
+    const conversation = chatbotPrisma.conversation.findFirst({
+      where: {
+        organizationCode: appApiOrgCode,
+        userId: user.id,
+        agentId: agentId,
+      },
+      include: { messages: { orderBy: { position: 'asc' } } },
+      orderBy: { lastActiveAt: 'desc' },
+    })
+
+    return { agent, conversation }
   })
 })

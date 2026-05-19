@@ -14,9 +14,9 @@ const showDocumentTitle = ref('')
 </script>
 <template>
   <div class="vector-store-admin-tab">
-    <ChatThreadList @show-document="showDocumentTitle = $event" />
+    <ChatConversationList @show-document="showDocumentTitle = $event" />
   </div>
-  <ChatThreadShow
+  <ChatConversationShow
     v-if="showDocumentTitle"
     :document-title="showDocumentTitle"
     @close="showDocumentTitle = ''"

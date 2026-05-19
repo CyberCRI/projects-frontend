@@ -2,6 +2,7 @@ import { StateSchema, ReducedValue /*, MemorySaver */ } from '@langchain/langgra
 import { SystemMessage, HumanMessage, AIMessage } from '@langchain/core/messages'
 import { createRetrieverTool } from '@langchain/classic/tools/retriever'
 import { tokenMap, traceMcp } from '@/server/routes/api/chat-stream'
+import { BaseCallbackHandler } from '@langchain/core/callbacks/base'
 import checkAdminRights from '@/server/utils/check-admin-rights.js'
 import type { BaseMessageChunk } from '@langchain/core/messages'
 import { initChatModel } from 'langchain/chat_models/universal'
@@ -74,17 +75,17 @@ export const traceSorbobot = (...args) => {
 //   organization_code: Annotation<string>(),
 // })
 
-const AgentState = new StateSchema({
-  agent_id: z.number(),
-  keycloack_id: z.string(),
-  people_id: z.string(),
-  organization_code: z.string(),
-  // count: z.number().default(0),
-  history: new ReducedValue(
-    z.array(z.string()).default(() => []),
-    { inputSchema: z.string(), reducer: (c, n) => [...c, n] }
-  ),
-})
+// const AgentState = new StateSchema({
+//   agent_id: z.number(),
+//   // keycloack_id: z.string(),
+//   user_id: z.number(),
+//   organization_code: z.string(),
+//   // count: z.number().default(0),
+//   history: new ReducedValue(
+//     z.array(z.string()).default(() => []),
+//     { inputSchema: z.string(), reducer: (c, n) => [...c, n] }
+//   ),
+// })
 
 export default defineLazyEventHandler(() => {
   traceLangchain(
@@ -352,26 +353,26 @@ export default defineLazyEventHandler(() => {
       },
     })
 
-    function findCircular(obj: any, path = '', seen = new WeakSet()): void {
-      if (obj && typeof obj === 'object') {
-        if (seen.has(obj)) {
-          console.error('[DEBUG] Circular reference at:', path)
-          return
-        }
-        seen.add(obj)
-        for (const key of Object.keys(obj)) {
-          findCircular(obj[key], `${path}.${key}`, seen)
-        }
-      }
-    }
-    const debugCircularRef = createMiddleware({
-      name: 'DebugCircularRef',
-      beforeModel: (state) => {
-        console.log('[DEBUG] check circular ref')
-        findCircular(state)
-        return
-      },
-    })
+    // function findCircular(obj: any, path = '', seen = new WeakSet()): void {
+    //   if (obj && typeof obj === 'object') {
+    //     if (seen.has(obj)) {
+    //       console.error('[DEBUG] Circular reference at:', path)
+    //       return
+    //     }
+    //     seen.add(obj)
+    //     for (const key of Object.keys(obj)) {
+    //       findCircular(obj[key], `${path}.${key}`, seen)
+    //     }
+    //   }
+    // }
+    // const debugCircularRef = createMiddleware({
+    //   name: 'DebugCircularRef',
+    //   beforeModel: (state) => {
+    //     console.log('[DEBUG] check circular ref')
+    //     findCircular(state)
+    //     return
+    //   },
+    // })
 
     const loggingMiddleware = createMiddleware({
       name: 'LoggingMiddleware',
@@ -386,6 +387,139 @@ export default defineLazyEventHandler(() => {
         return
       },
     })
+
+    /* --------- memory ---------------- */
+
+    class ConversationPersistenceHandler extends BaseCallbackHandler {
+      name = 'ConversationPersistenceHandler'
+
+      conversation: null
+
+      constructor(conversation: any) {
+        super()
+        this.conversation = conversation
+      }
+
+      async updateConversation(tx) {
+        await tx.conversation.update({
+          where: { id: this.conversation.id },
+          data: {}, // @updatedAt fires on any update, even an empty one
+        })
+      }
+
+      async getNextPosition(tx) {
+        const lastMessage = await tx.conversationMessage.findFirst({
+          where: { conversationId: this.conversation.id },
+          orderBy: { position: 'desc' },
+          select: { position: true },
+        })
+        return (lastMessage?.position ?? -1) + 1
+      }
+
+      async handleUserMessage(message: any) {
+        console.log('handle user message')
+        if (!this.conversation?.id) {
+          console.error('No conversation set')
+          return
+        }
+        await chatbotPrisma.$transaction(async (tx) => {
+          const position = await this.getNextPosition(tx)
+          await tx.conversationMessage.create({
+            data: {
+              conversationId: this.conversation.id,
+              role: 'user',
+              content: message.content,
+              // tool_calls: message.tool_calls ?? null,
+              position,
+            },
+          })
+          await this.updateConversation(tx)
+        })
+      }
+
+      async handleLLMEnd(output: any) {
+        console.log('handle model end')
+        if (!this.conversation?.id) {
+          console.error('No conversation set')
+          return
+        }
+        const message = output.generations[0][0].message
+
+        await chatbotPrisma.$transaction(async (tx) => {
+          const position = await this.getNextPosition(tx)
+          await tx.conversationMessage.create({
+            data: {
+              conversationId: this.conversation.id,
+              role: 'assistant',
+              content: message.content,
+              toolCalls: message.tool_calls ?? null,
+              position,
+            },
+          })
+          await this.updateConversation(tx)
+        })
+      }
+
+      async handleToolEnd(output: string, runId: string, parentRunId: string, tags, metadata) {
+        console.log('handle tool end')
+        if (!this.conversation?.id) {
+          console.error('No conversation set')
+          return
+        }
+        await chatbotPrisma.$transaction(async (tx) => {
+          const position = await this.getNextPosition(tx)
+          await tx.conversationMessage.create({
+            data: {
+              conversationId: this.conversation.id,
+              role: 'tool',
+              content: output,
+              toolCallId: metadata?.tool_call_id ?? null,
+              position,
+            },
+          })
+          await this.updateConversation(tx)
+        })
+      }
+    }
+
+    async function createConversationPersistenceHandler({
+      threadId,
+      organizationCode,
+      agent,
+      userId,
+    }: {
+      threadId: string
+      organizationCode: string
+      agent: any
+      userId: number
+    }): Promise<ConversationPersistenceHandler> {
+      const agentId = agent.id
+      const conversationData = {
+        threadId,
+        organizationCode,
+        userId,
+        agentId,
+      }
+      const date = new Date().toISOString()
+      const defaultConversationTitle = agent.title + ' - ' + date //TODO: find a better default
+
+      let conversation = await chatbotPrisma.conversation.findUnique({
+        where: conversationData,
+      })
+
+      if (!conversation) {
+        console.log('Create new conversation')
+        conversation = await chatbotPrisma.conversation.create({
+          data: {
+            ...conversationData,
+            title: defaultConversationTitle,
+            titleSource: 'fallback',
+          },
+        })
+      }
+
+      return new ConversationPersistenceHandler(conversation)
+    }
 
     /* --------- LLM settings  --------- */
 
@@ -424,11 +558,11 @@ export default defineLazyEventHandler(() => {
           },
         ],
       }),
-      stateSchema: AgentState as StateSchema<any>,
+      // stateSchema: AgentState as StateSchema<any>,
       middleware: [
         toolMonitoringMiddleware,
         loggingMiddleware,
-        debugCircularRef,
+        // debugCircularRef,
         // contextEditingMiddleware({
         //   // TODO: make configurable in agent data{
         //   edits: [
@@ -459,16 +593,30 @@ export default defineLazyEventHandler(() => {
     //   people_id: user.people_id,
     //   organization_code: appApiOrgCode,
     // })
+    //
+    const persistenceHandler = await createConversationPersistenceHandler({
+      threadId: conversationId,
+      organizationCode: appApiOrgCode,
+      userId: user.id,
+      agent: agentData,
+    })
     const config = {
       configurable: {
         thread_id: conversationId,
       },
+      callbacks: [persistenceHandler],
       // durability: "exit", // ← one checkpoint per turn, not per superstep
+    }
+
+    const lastUserMessage = messages[messages.length - 1]
+    if (lastUserMessage?.role === 'user') {
+      console.log('Saving last human message:', lastUserMessage.text)
+      await persistenceHandler.handleUserMessage({ content: lastUserMessage.text })
     }
 
     const customMetadata = {
       agent_id: agentData.id,
-      keycloack_id: user.keycloack_id,
+      // keycloack_id: user.keycloack_id,
       user_id: user.id,
       organization_code: appApiOrgCode,
     }

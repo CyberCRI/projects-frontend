@@ -26,7 +26,10 @@ if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
 const options = { headers }
 
 const url = `/api/chatbot/${props.agentSlug}`
-const { data: agent, error } = await useFetch(url, options)
+const { data, error } = await useFetch(url, options)
+
+const agent = computed(() => data.agent)
+const conversation = computed(() => data.conversation)
 watch(
   () => error.value,
   (e) => {

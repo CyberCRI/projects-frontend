@@ -9,7 +9,7 @@ const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKE
 if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
 
 function fetchAll() {
-  return useFetch('/api/chat-thread/', { headers })
+  return useFetch('/api/chat-checkpoint/', { headers })
 }
 const { data: documentList, status, /*error,*/ refresh } = fetchAll()
 const isAsyncing = computed(() => status.value === 'pending')

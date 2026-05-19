@@ -65,9 +65,17 @@ const tabs = computed(() => {
         condition: true,
       },
       {
-        key: 'admin-convesations',
-        label: t('admin.tabs.conversation'),
-        view: { name: 'MemoriesAdminTab' },
+        key: 'admin-conversations',
+        label: t('admin.tabs.conversations'),
+        view: { name: 'ConversationsAdminTab' },
+        props: {},
+        icon: 'Article', // TODO: use a bulb or db icon
+        condition: true,
+      },
+      {
+        key: 'admin-checkpoints',
+        label: t('admin.tabs.checkpoints'),
+        view: { name: 'CheckpointsAdminTab' },
         props: {},
         icon: 'Article', // TODO: use a bulb or db icon
         condition: true,
