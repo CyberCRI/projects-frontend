@@ -64,6 +64,14 @@ const tabs = computed(() => {
         icon: 'Article', // TODO: use a bulb or db icon
         condition: true,
       },
+      {
+        key: 'admin-convesations',
+        label: t('admin.tabs.conversation'),
+        view: { name: 'MemoriesAdminTab' },
+        props: {},
+        icon: 'Article', // TODO: use a bulb or db icon
+        condition: true,
+      },
     ]
   }
 

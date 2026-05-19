@@ -463,6 +463,7 @@ export default defineLazyEventHandler(() => {
       configurable: {
         thread_id: conversationId,
       },
+      // durability: "exit", // ← one checkpoint per turn, not per superstep
     }
 
     const customMetadata = {
