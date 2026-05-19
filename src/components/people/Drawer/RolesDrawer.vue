@@ -1,46 +1,21 @@
-<template>
-  <BaseDrawer
-    :is-opened="isOpened"
-    :title="$t('role.select')"
-    class="medium"
-    @close="$emit('close')"
-    @confirm="confirm"
-  >
-    <div class="list-container">
-      <!-- help roles -->
-      <ContentExpandable :height-limit="remToPx(2)">
-        <h3>
-          <IconImage name="HelpCircle" class="icon" />
-          {{ $t('role.help') }}
-        </h3>
-        <TableInfo :options="options" />
-      </ContentExpandable>
-
-      <div v-for="member in members" :key="member.id" class="member-item">
-        <UserCardInline :user="member" />
-        <div class="role-select">
-          <GroupButton v-model="rolesValue[member.id]" :options="options" />
-        </div>
-      </div>
-    </div>
-  </BaseDrawer>
-</template>
-
-<script setup lang="ts" generic="T extends Roles">
-import UserCardInline from '~/components/people/TeamCard/UserCardInline.vue'
-import type { TranslatedPojectMember } from '~/models/project-member.model'
+<script
+  setup
+  lang="ts"
+  generic="Item extends { id: number | string; role?: string }, T extends Roles"
+>
 import { roleHelpI18n, roleI18n } from '~/functs/rolesUtils'
 import TableInfo from '~/components/base/TableInfo.vue'
 import type { Roles } from '~/models/types'
 import { remToPx } from '~/functs/style'
+import { isEqual } from 'es-toolkit'
 
 const props = withDefaults(
   defineProps<{
     isOpened?: boolean
-    members?: TranslatedPojectMember[]
+    items?: Item[]
     roles: T[]
   }>(),
-  { members: () => [], isOpened: false }
+  { items: () => [], isOpened: false }
 )
 
 type RoleUser = {
@@ -53,16 +28,25 @@ const emit = defineEmits<{
   update: [RoleUser]
 }>()
 
+const { stateModals, closeModals, openModals } = useModals({ saveChange: false })
+
 const rolesValue = ref<RoleUser>()
+
+const generateMappingRoles = (defaultRole: T) => {
+  const roles = {}
+  props.items.forEach((member) => {
+    // if role not exists, default to selected roles
+    let userRole = rolesValue?.[member.id] ?? member.role
+    if (!userRole || !props.roles.includes(userRole)) {
+      userRole = defaultRole
+    }
+    roles[member.id] = userRole
+  })
+  return roles
+}
 watch(
-  () => props.members,
-  () => {
-    const roles = {}
-    props.members.forEach((member) => {
-      roles[member.id] = rolesValue?.[member.id] ?? member.role
-    })
-    rolesValue.value = roles
-  },
+  () => [props.items, props.roles],
+  () => (rolesValue.value = generateMappingRoles(props.roles[0])),
   { immediate: true, deep: true }
 )
 
@@ -76,11 +60,64 @@ const options = computed(() => {
   })
 })
 
-const confirm = () => {
-  emit('update', rolesValue.value)
+// check is equal ( pass null in role to default mapping roles to null (for first add elements))
+const isFormEqual = computed(() => isEqual(rolesValue.value, generateMappingRoles(null)))
+
+const close = () => {
+  closeModals('saveChange')
   emit('close')
 }
+
+const confirm = () => {
+  emit('update', rolesValue.value)
+  close()
+}
+
+const checkClose = () => {
+  if (isFormEqual.value) {
+    close()
+  } else {
+    openModals('saveChange')
+  }
+}
 </script>
+
+<template>
+  <BaseDrawer
+    :is-opened="isOpened"
+    :title="$t('role.select')"
+    class="medium"
+    :confirm-action-disabled="isFormEqual"
+    @close="checkClose"
+    @confirm="confirm"
+  >
+    <div class="list-container">
+      <!-- help roles -->
+      <ContentExpandable :height-limit="remToPx(2)" opened>
+        <h3>
+          <IconImage name="HelpCircle" class="icon" />
+          {{ $t('role.help') }}
+        </h3>
+        <TableInfo :options="options" />
+      </ContentExpandable>
+
+      <div v-for="item in items" :key="item.id" class="member-item">
+        <slot :item="item" />
+        <div class="role-select">
+          <GroupButton v-model="rolesValue[item.id]" :options="options" />
+        </div>
+      </div>
+    </div>
+  </BaseDrawer>
+
+  <ConfirmModal
+    v-if="stateModals.saveChange"
+    :title="$t('form.quit-without-saving-title')"
+    :content="$t('common.confirm-close')"
+    @cancel="closeModals('saveChange')"
+    @confirm="close"
+  />
+</template>
 
 <style lang="scss" scoped>
 .member-item {

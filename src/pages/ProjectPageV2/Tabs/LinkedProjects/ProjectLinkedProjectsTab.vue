@@ -1,12 +1,3 @@
-<template>
-  <BaseModuleTab
-    :title="$t(ProjectModuleTitle.linked_projects, countElement)"
-    :count="countElement"
-  >
-    <BaseLinkedProjects :project="project" :editable="editable" />
-  </BaseModuleTab>
-</template>
-
 <script setup lang="ts">
 import BaseLinkedProjects from '@/components/project/modules/LinkedProjects/BaseLinkedProjects.vue'
 import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
@@ -23,3 +14,12 @@ const props = withDefaults(
 
 const countElement = computed<number>(() => props.project.modules?.linked_projects)
 </script>
+
+<template>
+  <BaseModuleTab
+    :title="$t(ProjectModuleTitle.linked_projects, countElement)"
+    :count="countElement"
+  >
+    <BaseLinkedProjects :project="project" :editable="editable" />
+  </BaseModuleTab>
+</template>

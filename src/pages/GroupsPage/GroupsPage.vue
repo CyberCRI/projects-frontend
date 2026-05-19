@@ -25,7 +25,6 @@ const {
     depth: 1,
     parent: props.groupIdOrSlug || undefined,
   },
-  // @ts-expect-error children need "id"
   default: () => groupSkeleton({ children: factoriesSkeleton(groupSkeleton, 10) }),
 })
 

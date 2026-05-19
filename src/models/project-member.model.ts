@@ -1,4 +1,5 @@
 import type { TranslatedUserModel, UserModel } from '@/models/user.model'
+import type { PeopleGroupIdOrSlug } from '~/models/invitation.model'
 import type { ProjectMemberRoleType } from '@/models/types'
 import type { Ordering } from '@/interfaces/query'
 import type BaseModel from '@/models/base.model'
@@ -39,7 +40,7 @@ export type ProjectMembersAddInput = {
 export type ProjectMembersDeleteInput = {
   name?: string
   users?: number[] // keycloak id
-  member_people_group?: string
+  people_groups?: PeopleGroupIdOrSlug[]
 }
 
 export type ProjectMemberPeopleGroupOutput = {

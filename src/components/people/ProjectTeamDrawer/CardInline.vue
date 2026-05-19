@@ -1,29 +1,63 @@
+<script setup lang="ts" generic="T extends Roles">
+import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
+import type { IconImageChoice } from '~/functs/IconImage'
+
+import type { ImageModel } from '~/models/image.model'
+import type { Roles } from '~/models/types'
+
+withDefaults(
+  defineProps<{
+    label: string
+    job?: string
+    description?: string
+    role?: string
+    image?: ImageModel
+    defaultPicture: string
+    icon?: IconImageChoice
+    selected?: boolean
+    passive?: boolean
+    minimal?: boolean
+  }>(),
+  {
+    job: null,
+    description: null,
+    role: null,
+    image: null,
+    icon: null,
+    selected: false,
+    passive: false,
+    minimal: false,
+  }
+)
+</script>
+
 <template>
   <div
     class="user-card-small"
-    :class="{ selected: selected, passive: passive, fit: !info }"
-    :data-test="`user-card-${name}`"
-    :title="name"
+    :class="{ selected: selected, passive: passive, fit: minimal }"
+    :data-test="`user-card-${label}`"
+    :title="label"
   >
     <div class="user-container">
       <CroppedApiImage
-        :alt="`${name} image`"
+        :alt="`${label} image`"
         class="img-container skeletons-background"
-        :picture-data="userImage"
+        :picture-data="image"
         picture-size="medium"
-        :default-picture="DEFAULT_USER_PATATOID"
+        :default-picture="defaultPicture"
       />
-      <div v-if="info" class="user-info text-ellipsis">
+      <div v-if="!minimal" class="user-info text-ellipsis">
         <div class="name">
           <LineClamped :line-number="2">
             <span class="skeletons-text">
-              {{ name }}
+              {{ label }}
             </span>
           </LineClamped>
         </div>
 
         <div v-if="role" class="role skeletons-text">
-          {{ roleLabel }}
+          {{ role }}
         </div>
 
         <div v-if="job" class="title skeletons-text">
@@ -39,82 +73,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts" generic="T extends Roles">
-import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
-import IconImage from '~/components/base/media/IconImage.vue'
-
-import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
-import type { IconImageChoice } from '~/functs/IconImage'
-
-import type { PeopleGroupModel, TranslatedPeopleGroupModel } from '~/models/invitation.model'
-import type { TranslatedProject } from '~/models/project.model'
-import type { TranslatedUserModel } from '~/models/user.model'
-import { roleI18n } from '~/functs/rolesUtils'
-import { capitalize } from '~/functs/string'
-import type { Roles } from '~/models/types'
-import { isNotGroup } from '~/functs/users'
-
-const props = withDefaults(
-  defineProps<{
-    item: TranslatedUserModel | TranslatedPeopleGroupModel | TranslatedProject
-    role?: T
-    icon?: IconImageChoice
-    selected?: boolean
-    passive?: boolean
-    info?: boolean
-  }>(),
-  {
-    role: null,
-    icon: null,
-    selected: false,
-    passive: false,
-    info: true,
-  }
-)
-
-const roleLabel = computed(() => {
-  if (props.role) {
-    return roleI18n(props.role)
-  }
-  return null
-})
-
-const userImage = computed(() => {
-  if (isNotGroup(props.item)) {
-    const user = props.item as unknown as TranslatedUserModel
-    return user.profile_picture
-  }
-  // @ts-expect-error TODO TODO refacto isNotGroup isNotGroup
-  return props.item.header_image
-})
-
-const name = computed(() => {
-  if (isNotGroup(props.item)) {
-    const user = props.item as unknown as TranslatedUserModel
-    return `${capitalize(user.given_name)} ${capitalize(user.family_name)}`
-  }
-  // TODO rework this compoenents (user is UserModel or PeopleGroup)
-  const group = props.item as unknown as PeopleGroupModel
-  return capitalize(group.name)
-})
-
-const job = computed(() => {
-  if (isNotGroup(props.item)) {
-    const user = props.item as unknown as TranslatedUserModel
-    return user.job
-  }
-  return null
-})
-
-const description = computed(() => {
-  if (isNotGroup(props.item)) {
-    const user = props.item as unknown as TranslatedUserModel
-    return user.short_description
-  }
-  return null
-})
-</script>
 
 <style lang="scss" scoped>
 .user-card-small {

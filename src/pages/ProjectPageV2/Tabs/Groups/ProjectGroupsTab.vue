@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BaseProjectTeamsList from '@/components/project/modules/Teams/BaseProjectTeamsList.vue'
+import BaseProjectGroupsList from '~/components/project/modules/Groups/BaseProjectGroupsList.vue'
 import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
 import type { TranslatedProject } from '@/models/project.model'
 
@@ -14,6 +14,6 @@ withDefaults(
 
 <template>
   <BaseModuleTab :header="false">
-    <BaseProjectTeamsList :project="project" :editable="editable" />
+    <BaseProjectGroupsList :project="project" :editable="editable" />
   </BaseModuleTab>
 </template>

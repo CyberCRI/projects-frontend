@@ -3,7 +3,7 @@
     <IconImage class="left-icon search" name="Search" />
     <input
       ref="search-input"
-      v-model.trim="model"
+      v-model.trim="tempModel"
       :placeholder="placeholder"
       class="search-input"
       type="text"
@@ -11,7 +11,7 @@
       @keyup.enter="onEnter"
       @keyup="$emit('keyup', $event)"
     />
-    <span v-if="model.length" class="right-icon delete" @click="deleteValue">
+    <span v-if="tempModel.length" class="right-icon delete" @click="deleteValue">
       <IconImage name="Close" />
     </span>
     <div v-if="suggestions?.length && !hideSuggestions" class="suggestions">
@@ -33,6 +33,7 @@
 
 <script setup lang="ts">
 import type IconImage from '~/components/base/media/IconImage.vue'
+import { debounce as debounceFn } from 'es-toolkit'
 import type { Events } from 'vue'
 
 const props = withDefaults(
@@ -40,14 +41,24 @@ const props = withDefaults(
     full?: boolean
     placeholder?: string
     suggestions?: string[]
+    debounce?: number
   }>(),
   {
     full: false,
     placeholder: '',
     suggestions: () => [],
+    debounce: 0,
   }
 )
 const model = defineModel<string>({ default: '' })
+const tempModel = ref('')
+watch(model, () => (tempModel.value = model.value), { immediate: true })
+
+// debounce update search
+const debounceUpdate = debounceFn(() => {
+  model.value = tempModel.value
+}, props.debounce)
+watch(tempModel, debounceUpdate)
 
 const emit = defineEmits<{
   'delete-query': []
@@ -65,7 +76,7 @@ const deleteValue = () => emit('delete-query')
 const onEnter = () => emit('enter')
 
 const acceptSuggestion = (suggestion: string) => {
-  model.value = suggestion
+  tempModel.value = suggestion
   hideSuggestions.value = true
   nextTick(onEnter)
 }
@@ -79,9 +90,9 @@ const acceptSuggestion = (suggestion: string) => {
   max-width: 100%;
 
   .search-input {
-    border-radius: $border-radius-l;
+    border-radius: $border-radius-m;
     background: $white;
-    border: $border-width-s solid $primary;
+    border: $border-width-s solid var(--primary-dark);
     color: $black;
     padding: 11px $space-xl 10px; // 11 + 1 px border
     font-size: $font-size-m;
@@ -90,11 +101,11 @@ const acceptSuggestion = (suggestion: string) => {
     box-sizing: border-box;
 
     &::placeholder {
-      color: $light-gray;
+      color: var(--light-gray);
     }
 
     &:focus-visible {
-      outline-color: $primary;
+      outline-color: var(--primary-dark);
     }
   }
 
@@ -111,7 +122,7 @@ const acceptSuggestion = (suggestion: string) => {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    fill: $primary-dark;
+    fill: var(--primary-dark);
   }
 
   .left-icon {
@@ -127,12 +138,12 @@ const acceptSuggestion = (suggestion: string) => {
     width: $layout-size-s;
     height: $layout-size-s;
     background: $primary-dark;
-    border: $border-width-m solid $primary-dark;
+    border: $border-width-m solid var(--primary-dark);
     border-radius: 100%;
 
     svg {
       width: $layout-size-s;
-      fill: $white;
+      fill: var(--white);
       position: absolute;
       top: 50%;
       left: 50%;
@@ -147,8 +158,8 @@ const acceptSuggestion = (suggestion: string) => {
     left: 0;
     right: 0;
     max-height: 10rem;
-    background-color: $white;
-    border: $border-width-s solid $primary;
+    background-color: var(--white);
+    border: $border-width-s solid var(--primary);
     border-radius: $border-radius-l;
     display: flex;
     flex-flow: column nowrap;
@@ -170,7 +181,7 @@ const acceptSuggestion = (suggestion: string) => {
       cursor: pointer;
 
       &:hover {
-        background-color: $primary-lighter;
+        background-color: var(--primary-lighter);
       }
     }
   }

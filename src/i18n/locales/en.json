@@ -801,7 +801,23 @@
   },
   "drawer": {
     "clear": "Clear all selected",
-    "select-all": "Select all"
+    "select-all": "Select all",
+
+    "member": {
+      "add": "Add member | Add members",
+      "edit": "Edit member | Edit members",
+      "delete": "Delete member | Delete members"
+    },
+    "group": {
+      "add": "Add group | Add groups",
+      "edit": "Edit group | Edit groups",
+      "delete": "Delete group | Delete groups"
+    },
+    "project": {
+      "add": "Add project | Add projects",
+      "edit": "Edit project | Edit projects",
+      "delete": "Delete project | Delete projects"
+    }
   },
   "faq": {
     "delete-confirm-content": "Are you sure that you want to delete the Help Tab personalised for your portal. All its content will be deleted.",
@@ -1584,6 +1600,7 @@
       "upload": "Upload",
       "notice": "Upload a new visual to maximise impact! You’ll need a square shape!"
     },
+    "groups": "Group | Groups",
     "impact": "Impact",
     "language": "Project language",
     "life-status": "Project's life status",
@@ -2021,6 +2038,16 @@
     "empty": "Nothing here yet... Contributors did not added tags yet."
   },
   "team": {
+    "member": {
+      "add": "Add member | Add members",
+      "edit": "Edit member | Edit members",
+      "delete": "Delete member | Delete members"
+    },
+    "group": {
+      "add": "Add group | Add groups",
+      "edit": "Edit group | Edit groups",
+      "delete": "Delete group | Delete groups"
+    },
     "add": "Add members / groups",
     "edit": "Edit team member",
     "group-members": "Group members",

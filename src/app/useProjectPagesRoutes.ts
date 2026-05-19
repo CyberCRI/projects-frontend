@@ -44,13 +44,14 @@ export default function useProjectPagesRoutes() {
           component: () => import('../pages/ProjectPageV2/Tabs/Goals/ProjectGoalsTab.vue'),
         },
         {
-          path: 'team',
-          name: 'projectTeam',
-          component: () => import('../pages/ProjectPageV2/Tabs/Teams/ProjectTeamsTab.vue'),
+          path: 'members',
+          name: 'projectMembers',
+          component: () => import('../pages/ProjectPageV2/Tabs/Members/ProjectMembersTab.vue'),
         },
         {
-          path: 'ressources', // back compatibility with old routes
-          redirect: 'resources',
+          path: 'groups',
+          name: 'projectGroups',
+          component: () => import('../pages/ProjectPageV2/Tabs/Groups/ProjectGroupsTab.vue'),
         },
         {
           path: 'resources',
@@ -144,9 +145,17 @@ export default function useProjectPagesRoutes() {
           },
         },
         {
-          path: 'team/edit',
-          name: 'projectTeamEdit',
-          component: () => import('../pages/ProjectPageV2/Tabs/Teams/ProjectTeamsTab.vue'),
+          path: 'groups/edit',
+          name: 'projectGroupsEdit',
+          component: () => import('../pages/ProjectPageV2/Tabs/Groups/ProjectGroupsTab.vue'),
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
+          path: 'members/edit',
+          name: 'projectMembersEdit',
+          component: () => import('../pages/ProjectPageV2/Tabs/Members/ProjectMembersTab.vue'),
           meta: {
             requiresAuth: true,
           },

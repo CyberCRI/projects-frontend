@@ -47,6 +47,7 @@
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: space-around;
 }
 
@@ -78,6 +79,18 @@ svg.icon {
 
 .m8 {
   margin: 2rem;
+}
+
+.my2 {
+  margin: 0.5rem 0;
+}
+
+.my4 {
+  margin: 1rem 0;
+}
+
+.my8 {
+  margin: 2rem 0;
 }
 
 .w-full {

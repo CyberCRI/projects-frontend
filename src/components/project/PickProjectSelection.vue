@@ -52,7 +52,6 @@
 </template>
 
 <script>
-import { getAllProjects } from '~/api/projects.service'
 import { searchProjects } from '~/api/search.service'
 
 import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
@@ -152,16 +151,12 @@ export default {
     launchSearch: debounce(async function () {
       this.isLoading = true
 
-      const filters = {
+      const query = {
         limit: 24,
-        organizations: this.organizationsStore.current.code,
+        organizations: [this.organizationsStore.current.code],
       }
 
-      if (this.queryString) {
-        this.request = await searchProjects(encodeURIComponent(this.queryString), filters)
-      } else {
-        this.request = await getAllProjects(filters)
-      }
+      this.request = await searchProjects(this.queryString || '', { query })
 
       this.isLoading = false
       this.$emit('search-done', true)

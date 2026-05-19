@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BaseProjectTeamsList from '@/components/project/modules/Teams/BaseProjectTeamsList.vue'
+import BaseProjectGroupsList from '~/components/project/modules/Groups/BaseProjectGroupsList.vue'
 import { ProjectModuleIcon, ProjectModuleTitle } from '@/models/project.model'
 import BaseModulePreview from '@/components/modules/BaseModulePreview.vue'
 import type { TranslatedProject } from '@/models/project.model'
@@ -9,16 +9,16 @@ defineProps<{ project: TranslatedProject }>()
 
 <template>
   <BaseModulePreview
-    :title="$t(ProjectModuleTitle.members)"
-    :icon="ProjectModuleIcon.members"
-    :total="project.modules.members"
+    :title="$t(ProjectModuleTitle.groups)"
+    :icon="ProjectModuleIcon.groups"
+    :total="project.modules.groups"
     :see-more="{
-      name: 'projectTeam',
+      name: 'projectGroups',
       params: { slugOrId: project.slug || project.id },
     }"
   >
     <template #content>
-      <BaseProjectTeamsList :project="project" preview :limit="5" />
+      <BaseProjectGroupsList :project="project" :limit="5" preview />
     </template>
   </BaseModulePreview>
 </template>

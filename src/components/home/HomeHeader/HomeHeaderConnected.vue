@@ -166,14 +166,14 @@ export default {
 
   methods: {
     async loadProjects() {
-      const filters = {
+      const query = {
         limit: 3,
-        ordering: '-updated_at',
+        ordering: '-last_update',
         members: [this.usersStore.id],
         member_role: ['owners', 'members', 'reviewers'],
-        organizations: this.organizationsStore.current.code,
+        organizations: [this.organizationsStore.current.code],
       }
-      const response = await searchProjects('', filters)
+      const response = await searchProjects('', { query })
       this.originalProject = response.results.map((result) => result.project)
     },
 

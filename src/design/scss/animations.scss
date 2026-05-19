@@ -5,9 +5,9 @@
   transition: opacity 0.3s;
 }
 
-.fade-enter,
+.fade-enter-to,
 .fade-leave-to {
-  opacity: 0;
+  opacity: 1;
 }
 
 // Slide-left

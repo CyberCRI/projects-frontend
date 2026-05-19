@@ -4,10 +4,10 @@
       <UserCardInline
         v-for="(user, index) in filteredUsers"
         :key="user.id"
-        :user="user"
+        :item="user"
         :selected="true"
         icon="Close"
-        @user-clicked="removeUser(user, index)"
+        @click="removeUser(user, index)"
       />
     </div>
     <div v-if="selectedUsers.length > listLimit" class="show-more">
@@ -38,10 +38,10 @@
         <UserCardInline
           v-for="user in userResults"
           :key="user.id"
-          :user="user"
+          :item="user"
           :icon="user.selected ? 'Check' : 'Plus'"
           :selected="user.selected"
-          @user-clicked="selectUser(user)"
+          @click="selectUser(user)"
         />
       </div>
 

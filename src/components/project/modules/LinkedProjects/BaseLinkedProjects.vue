@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import LinkedProjectDrawer from '~/components/project/modules/LinkedProjects/LinkedProjectDrawer.vue'
+import ProjectSelectDrawer from '~/components/people/Drawer/ProjectSelectDrawer.vue'
+import { addLinkedProject, deleteLinkedProject } from '~/api/projects.service'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { projectLinkedSkeleton } from '@/skeletons/project.skeletons'
 import ProjectPreview from '~/components/project/ProjectPreview.vue'
 import type { TranslatedProject } from '@/models/project.model'
-import { deleteLinkedProject } from '~/api/projects.service'
 import NothingHere from '~/components/base/NothingHere.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { getLinkedProject } from '@/api/v2/project.service'
+import analytics from '~/analytics'
 
 const props = withDefaults(
   defineProps<{
@@ -25,6 +26,8 @@ const props = withDefaults(
   }
 )
 const toaster = useToaster()
+const asyncing = ref(false)
+const { t } = useNuxtI18n()
 
 const limitSkeletons = computed(() =>
   maxSkeleton(props.project.modules.linked_projects, props.limit)
@@ -45,8 +48,8 @@ const {
 })
 
 const selectedLinkedProject = ref()
-const { stateModals, openModals, closeModals } = useModals({
-  edit: false,
+const { stateModals, openModals, closeAllModals } = useModals({
+  add: false,
   delete: false,
 })
 
@@ -56,8 +59,9 @@ const onDelete = (linkedProject) => {
 }
 
 const cancel = () => {
+  asyncing.value = false
   selectedLinkedProject.value = null
-  closeModals('delete', 'edit')
+  closeAllModals()
 }
 
 const refreshData = () => {
@@ -66,12 +70,37 @@ const refreshData = () => {
 }
 
 const onDeleteConfirm = () => {
+  asyncing.value = true
   deleteLinkedProject(props.project.id, selectedLinkedProject.value.id)
     .then(() => {
       toaster.pushSuccess($t('toasts.linked-project-delete.success'))
       refreshData()
     })
     .catch(() => toaster.pushSuccess($t('toasts.linked-project-delete.error')))
+    .finally(() => cancel())
+}
+
+const onSubmit = (linkedProjects: TranslatedProject[]) => {
+  asyncing.value = true
+  const body = {
+    projects: linkedProjects.map((linkedProject) => ({
+      project_id: linkedProject.id,
+      target_id: props.project.id,
+    })),
+  }
+
+  addLinkedProject(props.project.id, body)
+    .then((linkedProject) => {
+      analytics.linkedProject.addLinkedProject({
+        project: {
+          id: props.project.id,
+        },
+        linkedProject,
+      })
+      toaster.pushSuccess(t('toasts.linked-project-create.success'))
+      refreshData()
+    })
+    .catch(() => toaster.pushError(t('toasts.linked-project-create.error')))
     .finally(() => cancel())
 }
 </script>
@@ -82,7 +111,7 @@ const onDeleteConfirm = () => {
       v-if="!preview"
       :editable="editable"
       :pagination="pagination"
-      @add="openModals('edit')"
+      @add="openModals('add')"
     />
     <div class="list-flow-container">
       <ProjectCard v-for="linked in linkedProjects" :key="linked.id" :project="linked.project">
@@ -96,6 +125,13 @@ const onDeleteConfirm = () => {
   </FetchLoader>
 
   <!-- drawer/modal -->
+  <ProjectSelectDrawer
+    :is-opened="stateModals.add"
+    :asyncing="asyncing"
+    @close="cancel"
+    @submit="onSubmit"
+  />
+
   <ConfirmModal
     v-if="stateModals.delete"
     :title="$t('project.linked-project-confirm-delete')"
@@ -104,12 +140,4 @@ const onDeleteConfirm = () => {
   >
     <ProjectPreview :project="selectedLinkedProject.project" />
   </ConfirmModal>
-
-  <LinkedProjectDrawer
-    :project="project"
-    :is-opened="stateModals.edit"
-    :already-linked-projects="linkedProjects"
-    @close="cancel"
-    @reload="refreshNuxtData"
-  />
 </template>

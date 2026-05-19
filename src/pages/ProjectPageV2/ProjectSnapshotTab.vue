@@ -4,10 +4,8 @@
 
     <ProjectDescriptionPreview v-if="!descripitonEmpty" :project="project" />
 
-    <ProjectTeamPreview
-      v-if="project.modules.members || project.modules.groups"
-      :project="project"
-    />
+    <ProjectMembersPreview v-if="project.modules.members" :project="project" />
+    <ProjectGroupsPreview v-if="project.modules.groups" :project="project" />
 
     <ProjectLocationsPreview v-if="project.modules.locations" :project="project" />
 
@@ -43,10 +41,11 @@ import ProjectBlogEntriesPreview from '@/components/project/modules/BlogEntries/
 import ProjectResourcesPreview from '@/components/project/modules/Resources/ProjectResourcesPreview.vue'
 import ProjectLocationsPreview from '@/components/project/modules/Locations/ProjectLocationsPreview.vue'
 import ProjectCommentsPreview from '@/components/project/modules/Comments/ProjectCommentsPreview.vue'
+import ProjectMembersPreview from '~/components/project/modules/Members/ProjectMembersPreview.vue'
 import ProjectDescriptionPreview from '@/components/project/modules/ProjectDescriptionPreview.vue'
 import ProjectReviewPreview from '~/components/project/modules/review/ProjectReviewPreview.vue'
+import ProjectGroupsPreview from '~/components/project/modules/Groups/ProjectGroupsPreview.vue'
 import ProjectGoalsPreview from '@/components/project/modules/Goals/ProjectGoalsPreview.vue'
-import ProjectTeamPreview from '@/components/project/modules/Teams/ProjectTeamsPreview.vue'
 import type { TranslatedProject } from '@/models/project.model'
 import useUsersStore from '~/stores/useUsers'
 import { textIsEmpty } from '@/functs/string'

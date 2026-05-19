@@ -123,15 +123,15 @@
     </div>
     <GroupSelectDrawer
       :is-opened="showGroupSelectDrawer"
+      :multiple="false"
       @close="showGroupSelectDrawer = false"
-      @select-group="onGroupSelected"
+      @submit="onGroupSelected"
     />
   </div>
 </template>
 <script>
 import { postInvitation } from '~/api/invitations.service.ts'
 
-import GroupSelectDrawer from '~/components/group/GroupSelectDrawer/GroupSelectDrawer.vue'
 import DatePickerModal from '~/components/base/modal/DatePickerModal.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
@@ -139,6 +139,7 @@ import TextInput from '~/components/base/form/TextInput.vue'
 import DisplayDate from '~/components/base/DisplayDate.vue'
 import GroupCard from '~/components/group/GroupCard.vue'
 
+import GroupSelectDrawer from '~/components/people/Drawer/GroupSelectDrawer.vue'
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
 import useToasterStore from '~/stores/useToaster.ts'
 

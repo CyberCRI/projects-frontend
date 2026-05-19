@@ -6,6 +6,8 @@ export type ProjectPublicationStatusType = 'public' | 'private' | 'org'
 
 export type ProjectStatusType = 'running' | 'completed' | 'canceled' | 'toreview'
 
+export type SearchObjectType = 'project' | 'people_group' | 'user'
+
 export type Roles =
   | 'superadmins'
   | 'default'
@@ -49,13 +51,11 @@ export type NotificationType =
   | 'pending_access_requests'
   | 'new_instruction'
 
-export type ProjectMemberRoleType =
-  | 'owners'
-  | 'members'
-  | 'reviewers'
-  | 'owner_groups'
-  | 'member_groups'
-  | 'reviewer_groups'
+export type ProjectMemberRoleType = 'owners' | 'members' | 'reviewers'
+
+export type ProjectGroupRoleType = 'owner_groups' | 'member_groups' | 'reviewer_groups'
+
+export type ProjectRoleType = ProjectMemberRoleType | ProjectGroupRoleType
 
 export type TagType = 'Wikipedia' | 'ESCO' | 'Custom'
 export type SecondaryTagType = 'skill' | 'occupation' | 'tag'

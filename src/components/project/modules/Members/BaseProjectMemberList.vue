@@ -1,19 +1,22 @@
 <script setup lang="ts">
 import { addProjectMembers, deleteProjectMembers } from '~/api/project-members.service'
 import UserProfileDrawer from '~/components/people/Drawer/UserProfileDrawer.vue'
+import UserSelectDrawer from '~/components/people/Drawer/UserSelectDrawer.vue'
+import CardInline from '~/components/people/ProjectTeamDrawer/CardInline.vue'
+import type { TranslatedPojectMember } from '~/models/project-member.model'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
-import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
 import ProjectTeamEditor from '~/components/project/ProjectTeamEditor.vue'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
+import { projectMemberSkeleton } from '~/skeletons/project.skeletons'
 import RolesDrawer from '~/components/people/Drawer/RolesDrawer.vue'
 import SectionHeader from '~/components/base/SectionHeader.vue'
 import type { TranslatedProject } from '@/models/project.model'
+import type { TranslatedUserModel } from '~/models/user.model'
+import type UserCard from '~/components/people/UserCard.vue'
+import { getProjectMembers } from '@/api/v2/project.service'
 import FetchLoader from '@/components/base/FetchLoader.vue'
-import { groupSkeleton } from '~/skeletons/group.skeletons'
-import { getProjectGroups } from '@/api/v2/project.service'
 import type { ProjectMemberRoleType } from '~/models/types'
-import GroupCard from '~/components/group/GroupCard.vue'
 import { roleI18n } from '~/functs/rolesUtils'
 import { groupBy } from 'es-toolkit'
 
@@ -35,46 +38,45 @@ const { t } = useNuxtI18n()
 const toaster = useToaster()
 const projectId = computed(() => props.project.id)
 const organizationCode = useOrganizationCode()
-const limitGroupsSkeletons = computed(() => maxSkeleton(props.project.modules.groups, props.limit))
+const limitMembersSkeletons = computed(() =>
+  maxSkeleton(props.project.modules.members, props.limit)
+)
 const asyncing = ref(false)
 
 const {
   status,
-  data: groups,
+  data: members,
   refresh,
-} = getProjectGroups(organizationCode, projectId, {
+} = getProjectMembers(organizationCode, projectId, {
   paginationConfig: {
     limit: props.preview ? props.limit : 999999,
   },
-  default: () => factoryPagination(groupSkeleton, limitGroupsSkeletons.value),
+  default: () => factoryPagination(projectMemberSkeleton, limitMembersSkeletons.value),
 })
 
 type Team = {
   title: string
   role: ProjectMemberRoleType
-  groups: TranslatedPeopleGroupModel[]
+  members: TranslatedPojectMember[]
 }
 
 //  order is important for choices
-const PROJECTS_GROUP_ROLES: ProjectMemberRoleType[] = [
-  'owner_groups',
-  'member_groups',
-  'reviewer_groups',
-]
+const PROJECTS_ROLES: ProjectMemberRoleType[] = ['owners', 'members', 'reviewers']
 
 const teams = computed<Team[]>(() => {
   const sortedTeams = []
 
   // groups by role
-  // if we are in preview mode, return all groups in owners ( for only one line)
-  const groupedUserByRole = groupBy(groups.value, (item) =>
-    props.preview ? 'owner_groups' : item.role
-  )
-  PROJECTS_GROUP_ROLES.forEach((role) => {
+  // if we are in preview mode, return all members in owners ( for only one line)
+  const groupedUserByRole = groupBy(members.value, (item) => (props.preview ? 'owners' : item.role))
+  PROJECTS_ROLES.forEach((role) => {
+    if (!groupedUserByRole[role]?.length) {
+      return
+    }
     sortedTeams.push({
       role,
       title: roleI18n(role),
-      groups: groupedUserByRole[role] ?? [],
+      members: groupedUserByRole[role],
     })
   })
 
@@ -88,10 +90,10 @@ const { stateModals, openModals, closeAllModals, closeModals } = useModals({
   add: false,
 })
 
-const selectedGroup = ref<TranslatedPeopleGroupModel>()
-const mode = ref<'roles' | 'select'>('select')
+const selectedMember = ref<TranslatedPojectMember>()
+const selectedMemberRoles = ref<TranslatedPojectMember[] | TranslatedUserModel[]>()
 const cancel = () => {
-  selectedGroup.value = null
+  selectedMember.value = null
   closeAllModals()
 }
 
@@ -102,19 +104,28 @@ const fullRefresh = () => {
 }
 
 const onAdd = () => {
-  selectedGroup.value = null
-  mode.value = 'select'
+  selectedMember.value = null
   openModals('add')
 }
 
-const onDelete = (group) => {
-  selectedGroup.value = group
+const openProfile = (member: TranslatedPojectMember) => {
+  selectedMember.value = member
+  openModals('view')
+}
+
+const onDelete = (member: TranslatedPojectMember) => {
+  selectedMember.value = member
   openModals('delete')
 }
 
-const onEdit = (group) => {
-  selectedGroup.value = group
-  mode.value = 'roles'
+const onEdit = (member: TranslatedUserModel) => {
+  selectedMemberRoles.value = [member]
+  openModals('edit')
+}
+
+const onSelectedUser = (members: TranslatedUserModel[]) => {
+  selectedMemberRoles.value = members
+  closeModals('add')
   openModals('edit')
 }
 
@@ -127,22 +138,22 @@ const addUser = (memberRoles: { [key: number]: ProjectMemberRoleType }) => {
 
   addProjectMembers(props.project.id, body)
     .then(() => {
-      toaster.pushSuccess(t('toasts.team-group-delete.success'))
+      toaster.pushSuccess(t('toasts.team-member-delete.success'))
       fullRefresh()
     })
-    .catch(() => toaster.pushError(t('toasts.team-group-delete.error')))
+    .catch(() => toaster.pushError(t('toasts.team-member-delete.error')))
 }
 
 const onDeleteConfirm = () => {
   const body = {
-    users: [selectedGroup.value.id],
+    users: [selectedMember.value.id],
   }
   deleteProjectMembers(props.project.id, body)
     .then(() => {
-      toaster.pushSuccess(t('toasts.team-group-delete.success'))
+      toaster.pushSuccess(t('toasts.team-member-delete.success'))
       fullRefresh()
     })
-    .catch(() => toaster.pushError(t('toasts.team-group-delete.error')))
+    .catch(() => toaster.pushError(t('toasts.team-member-delete.error')))
 }
 </script>
 
@@ -151,53 +162,60 @@ const onDeleteConfirm = () => {
     <BaseModuleHeader
       v-if="!preview"
       :editable="editable"
-      :add-label="$t('team.add')"
+      :add-label="$t('team.member.add')"
       @add="onAdd"
     />
     <div class="teams">
-      <template v-for="team in teams">
-        <div v-if="team.groups.length > 0" :key="team.title" class="team-card">
-          <SectionHeader
-            v-if="!preview"
-            :title="team.title"
-            :has-button="false"
-            :quantity="team.groups.length"
-          />
-          <div class="team-groups">
-            <ProjectTeamEditor
-              v-for="group in team.groups"
-              :key="group.id"
-              :can-edit="editable"
-              :can-delete="editable"
-              @edit="onEdit(group)"
-              @delete="onDelete(group)"
-            >
-              <GroupCard :group="group" />
-            </ProjectTeamEditor>
-          </div>
+      <div v-for="team in teams" :key="team.title" class="team-card">
+        <SectionHeader
+          v-if="!preview"
+          :title="team.title"
+          :has-button="false"
+          :quantity="team.members.length"
+        />
+        <div class="team-members">
+          <ProjectTeamEditor
+            v-for="member in team.members"
+            :key="member.id"
+            :can-edit="editable"
+            :can-delete="editable"
+            @edit="onEdit(member)"
+            @delete="onDelete(member)"
+          >
+            <UserCard :user="member" @click="openProfile(member)" />
+          </ProjectTeamEditor>
         </div>
-      </template>
+      </div>
+      <NothingHere v-if="teams.length === 0" />
     </div>
   </FetchLoader>
+
   <!-- drawer / modal -->
-  <TeamDrawer
+  <UserSelectDrawer
     :is-opened="stateModals.add"
-    :project="project"
-    :current-users="groups"
-    :mode="mode"
-    @reload-team="fullRefresh"
+    @submit="onSelectedUser"
     @close="closeModals('add')"
   />
 
   <RolesDrawer
     :is-opened="stateModals.edit"
-    :members="selectedGroup ? [selectedGroup] : []"
-    :roles="PROJECTS_GROUP_ROLES"
+    :items="selectedMemberRoles"
+    :roles="PROJECTS_ROLES"
     @close="closeModals('edit')"
     @update="addUser"
-  />
+  >
+    <template #default="{ item }">
+      <CardInline
+        :key="item.id"
+        :label="`${item.given_name} ${item.family_name}`"
+        :image="item.profile_picture"
+        :description="item.$t.job"
+        :default-picture="DEFAULT_USER_PATATOID"
+      />
+    </template>
+  </RolesDrawer>
 
-  <UserProfileDrawer :is-opened="stateModals.view" :user-id="selectedGroup?.id" @close="cancel" />
+  <UserProfileDrawer :is-opened="stateModals.view" :user-id="selectedMember?.id" @close="cancel" />
 
   <ConfirmModal
     v-if="stateModals.delete"
@@ -224,13 +242,13 @@ const onDeleteConfirm = () => {
   gap: 1rem;
 }
 
-.team-groups {
+.team-members {
   display: flex;
   justify-content: flex-start;
   gap: 2rem;
   flex-wrap: wrap;
 
-  .project-group {
+  .project-member {
     width: 100%;
     max-width: 200px;
   }

@@ -41,14 +41,11 @@ export async function getLinkedProject(projectId: ProjectSlugOrId, config: Confi
   )
 }
 
-export async function addLinkedProject({
-  id,
-  body,
-}: {
-  id: string
+export async function addLinkedProject(
+  projectId: ProjectSlugOrId,
   body: AddManyLinkedProjectInput
-}) {
-  return await useAPI(`project/${id}/linked-project/add-many/`, { body, method: 'POST' })
+) {
+  return await useAPI(`project/${projectId}/linked-project/add-many/`, { body, method: 'POST' })
 }
 
 export async function patchLinkedProject({

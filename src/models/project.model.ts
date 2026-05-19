@@ -109,7 +109,7 @@ export const ProjectModuleTitle: { [key in ProjectModuleExtra]: string } = {
 
   linked_projects: 'project.linked-projects',
   comments: 'comment.comments',
-  groups: 'project,groups',
+  groups: 'project.groups',
   reviews: 'project.reviews',
   messages: 'project.private-exchange',
 }
