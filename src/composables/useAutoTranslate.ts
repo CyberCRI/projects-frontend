@@ -217,19 +217,6 @@ export default function useAutoTranslate() {
   const translateUsers = <Model = TranslatedUserModel>(users) =>
     translateEntities<Model>(users, translateUser)
 
-  const translateTeam = (team) =>
-    computed(() => {
-      const _team = unref(team)
-      return {
-        owners: unref(translateUsers(_team.owners)),
-        members: unref(translateUsers(_team.members)),
-        reviewers: unref(translateUsers(_team.reviewers)),
-        owner_groups: unref(translateGroups(_team.owner_groups)),
-        member_groups: unref(translateGroups(_team.member_groups)),
-        reviewer_groups: unref(translateGroups(_team.reviewer_groups)),
-      }
-    })
-
   const translateTag = (tag) => translateEntity(tag, ['description', 'title'])
   const translateTags = (tags) => translateEntities(tags, translateTag)
 
@@ -429,7 +416,6 @@ export default function useAutoTranslate() {
     // people
     translateUser,
     translateUsers,
-    translateTeam,
     translateUserFull,
     translateTag,
     translateTags,

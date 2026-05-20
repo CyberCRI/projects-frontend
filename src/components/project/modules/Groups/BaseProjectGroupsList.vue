@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { addProjectMembers, deleteProjectMembers } from '~/api/project-members.service'
+import GroupSelectDrawer from '~/components/Drawer/Group/GroupSelectDrawer.vue'
 import CardInlineGroup from '~/components/Drawer/Group/CardInlineGroup.vue'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
