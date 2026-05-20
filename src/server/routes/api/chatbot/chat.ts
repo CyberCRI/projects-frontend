@@ -400,10 +400,12 @@ export default defineLazyEventHandler(() => {
 
       conversation: null
       lastMessage: null
+      messages: []
 
       constructor(conversation: any) {
         super()
         this.conversation = conversation
+        this.messages = conversation.messages
       }
 
       async updateConversation(tx) {
@@ -519,6 +521,7 @@ export default defineLazyEventHandler(() => {
       const defaultConversationTitle = agent.title + ' - ' + date //TODO: find a better default
 
       let conversation = await chatbotPrisma.conversation.findUnique({
+        include: { messages: { orderBy: { position: 'asc' } } },
         where: conversationData,
       })
 
@@ -567,7 +570,7 @@ export default defineLazyEventHandler(() => {
       model,
       tools,
       // TODO reanble checkpoint after tests
-      checkpointer,
+      // checkpointer,
       systemPrompt: new SystemMessage({
         content: [
           {
@@ -626,7 +629,9 @@ export default defineLazyEventHandler(() => {
       // durability: "exit", // ← one checkpoint per turn, not per superstep
     }
 
-    console.log('=================================')
+    console.log('================ HISTORY =================')
+    console.log(JSON.stringify(persistenceHandler.messages, null, 2))
+    console.log('================== NEW MESSSAGES ===========')
     console.log(JSON.stringify(messages, null, 2))
     console.log('=================================')
 
@@ -665,11 +670,14 @@ export default defineLazyEventHandler(() => {
     try {
       for await (const [token, metadata] of (await agent.stream(
         {
-          messages: messages.map((msg) =>
-            msg.role === 'ai' || msg.role === 'assistant'
-              ? new AIMessage(msg.text)
-              : new HumanMessage(msg.text)
-          ),
+          messages: [
+            ...(persistenceHandler.messages || []),
+            ...messages.map((msg) =>
+              msg.role === 'ai' || msg.role === 'assistant'
+                ? new AIMessage(msg.text)
+                : new HumanMessage(msg.text)
+            ),
+          ],
           ...customMetadata,
         } as any,
         { ...config, streamMode: 'messages' }
