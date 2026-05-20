@@ -75,7 +75,6 @@ export default function useGroupPagesRoutes() {
           path: 'snapshot/edit',
           name: 'groupSnapshotEdit',
           props: (route) => ({
-            isReducedMode: true,
             groupIdOrSlug: route.params.groupIdOrSlug,
           }),
           component: () => import('../pages/GroupPageV2/Tabs/GroupEditTab.vue'),

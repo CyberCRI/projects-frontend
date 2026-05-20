@@ -37,13 +37,7 @@ const roleLabel = computed(() => {
   if (props.roleLabel !== undefined) {
     return props.roleLabel
   }
-  if (props.member) {
-    if (props.member.is_leader && props.member.is_manager) return roleI18n('owner_groups')
-    else if (props.member.is_manager) return roleI18n('managers')
-    else if (props.member.is_leader) return roleI18n('leaders')
-    else return roleI18n('member_groups')
-  }
-  return null
+  return roleI18n(props.member.role)
 })
 
 const click = () => {

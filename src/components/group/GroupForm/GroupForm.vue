@@ -151,17 +151,6 @@
       />
     </div>
 
-    <template v-if="!isReducedMode">
-      <!-- Team -->
-      <div class="team">
-        <GroupTeamSection v-model="form.members" />
-      </div>
-
-      <!-- Featured projects -->
-      <div class="project">
-        <ProjectSection v-model="form.featuredProjects" />
-      </div>
-    </template>
     <!-- Parent group -->
     <div class="parent-group">
       <ParentGroupSection v-model="form.parentGroup" :organization-code="organizationCode" />
@@ -274,10 +263,6 @@ export default {
       type: Object,
       default: () => {},
     },
-    isReducedMode: {
-      type: Boolean,
-      default: false,
-    },
   },
 
   emits: ['update:modelValue', 'close'],
@@ -331,11 +316,9 @@ export default {
         type: '', // TODO ??? "club" | "group"?
         parentGroup: null, // group object
         organization: '',
-        members: [],
         sdgs: [],
         tags: [],
         locations: [],
-        featuredProjects: [],
         header_image: null,
         imageSizes: null,
         publication_status: 'public',

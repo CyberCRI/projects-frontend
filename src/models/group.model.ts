@@ -17,8 +17,7 @@ export interface GroupModel {
 }
 
 export type GroupMember = UserModel & {
-  is_manager: boolean
-  is_leader: boolean
+  role: GroupMemberRoleType
 }
 
 // TODO translted

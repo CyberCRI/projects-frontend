@@ -143,10 +143,10 @@ const onDeleteConfirm = () => {
         :key="member.id"
         :member="member"
         :class="{
-          'focus-leader': focusLeader && member.is_leader,
-          'focus-member': focusLeader && !member.is_leader,
+          'focus-leader': focusLeader && member.role === 'leaders',
+          'focus-member': focusLeader && !(member.role !== 'leaders'),
         }"
-        :role-label="member.is_leader ? undefined : ''"
+        :role-label="member.role === 'leaders' ? undefined : ''"
         @click="openProfile"
       >
         <template v-if="editable" #actions>

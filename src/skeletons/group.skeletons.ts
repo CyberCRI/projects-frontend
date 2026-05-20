@@ -53,7 +53,6 @@ export const memberSkeleton = (def?: Partial<GroupMember>): Omit<GroupMember, 'i
     files: 0,
     links: 0,
   },
-  is_manager: false,
-  is_leader: false,
+  role: 'members',
   ...def,
 })
