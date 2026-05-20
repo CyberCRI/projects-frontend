@@ -1,14 +1,6 @@
 <template>
   <div class="project-resources">
-    <div v-if="isEditionEnabled" class="add-resource">
-      <LpiButton
-        :label="$t('resource.add')"
-        class="add-item-btn"
-        btn-icon="Plus"
-        data-test="in-page-add-resources"
-        @click="$emit('edit')"
-      />
-    </div>
+    <BaseModuleHeader :editable="editable" @add="$emit('edit')" />
 
     <SectionHeader
       v-if="fileResources.length"
@@ -27,8 +19,8 @@
         :subtitle="file?.$t?.description"
         :title="file?.$t?.title"
         :mime="file?.mime"
-        @edit-clicked="$emit('edit', file)"
-        @delete-clicked="openModal(file, 'file')"
+        @edit="$emit('edit', file)"
+        @delete="openModal(file, 'file')"
       />
     </div>
     <EmptyLabel v-else />
@@ -51,8 +43,8 @@
         :subtitle="link?.$t?.description"
         :title="link?.$t?.title"
         :mime="link?.site_url"
-        @edit-clicked="$emit('edit', link)"
-        @delete-clicked="openModal(link, 'link')"
+        @edit="$emit('edit', link)"
+        @delete="openModal(link, 'link')"
       />
     </div>
 
@@ -71,10 +63,10 @@
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import ResourceCard from '~/components/resources/ResourceCard.vue'
 import SectionHeader from '~/components/base/SectionHeader.vue'
-import LpiButton from '~/components/base/button/LpiButton.vue'
 
 import type { TranslatedAttachmentLink } from '~/models/attachment-link.model'
 import type { TranslatedAttachmentFile } from '~/models/attachment-file.model'
+import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import useToasterStore from '~/stores/useToaster'
 
 const props = withDefaults(
@@ -83,13 +75,13 @@ const props = withDefaults(
     linkResources?: TranslatedAttachmentLink[]
     deleteAttachmentLink: (item: TranslatedAttachmentFile) => Promise<undefined>
     deleteAttachmentFile: (item: TranslatedAttachmentLink) => Promise<undefined>
-    isInEditingMode?: boolean
+    editable?: boolean
     permissions?: boolean
   }>(),
   {
     fileResources: () => [],
     linkResources: () => [],
-    isInEditingMode: false,
+    editable: false,
     permissions: true,
   }
 )
@@ -111,7 +103,7 @@ const confirmModalContent = ref(null)
 const asyncing = ref(false)
 
 const isEditionEnabled = computed(() => {
-  return props.permissions && props.isInEditingMode
+  return props.permissions && props.editable
 })
 
 const openModal = (resource, type) => {

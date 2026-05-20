@@ -107,7 +107,7 @@ const onDeleteConfirm = () => {
       </li>
     </ul>
     <NothingHere v-if="data.length === 0" />
-    <PaginationButtonsV2 :pagination="pagination" />
+    <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
   </FetchLoader>
 
   <!-- drawer/modal -->

@@ -31,9 +31,9 @@ defineEmits<{
       :label="addLabel ?? $t('common.add')"
       @click="$emit('add')"
     />
-    <!-- show pagiation if is set and total element is upper than 10 (min from select) -->
+    <!-- show pagiation if is set and count element is upper than 10 (min from select) -->
     <LpiSelect
-      v-if="pagination && pagination.total.value > 10"
+      v-if="pagination && pagination.count.value > 10"
       class="pagination-limit small skeletons-background"
       :model-value="pagination.limit.value"
       :title="$t('pagination.visibylity-per-par')"
@@ -53,5 +53,10 @@ defineEmits<{
   align-items: center;
   grid-template-columns: 1fr auto auto;
   gap: 1rem;
+  margin: 1rem 0;
+}
+
+.pagination-limit {
+  border-radius: 20px;
 }
 </style>

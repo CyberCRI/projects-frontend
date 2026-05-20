@@ -137,8 +137,8 @@ const onSubmit = (form: AttachmentForm) => {
         :subtitle="item.$t.description"
         :title="item.$t.title"
         icon="LinkRotated"
-        @delete-clicked="onDelete(item)"
-        @edit-clicked="onEdit(item)"
+        @delete="onDelete(item)"
+        @edit="onEdit(item)"
       />
     </div>
     <NothingHere v-if="links.length === 0 && !preview" />

@@ -15,7 +15,7 @@ const attrs = useAttrs()
     :image="group.header_image"
     :description="group.short_description"
     :default-picture="DEFAULT_GROUP_PATATOID"
-    :data-test="`group-card-${label}`"
+    :data-test="`group-card-${group.$t.name}`"
     v-bind="attrs"
   />
 </template>

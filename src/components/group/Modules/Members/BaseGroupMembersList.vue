@@ -136,7 +136,6 @@ const onDeleteConfirm = () => {
       :pagination="pagination"
       @add="openModals('add')"
     />
-    `
     <div class="group-members-list">
       <GroupMemberItem
         v-for="member in data"
@@ -161,7 +160,7 @@ const onDeleteConfirm = () => {
     </div>
     <NothingHere v-if="data.length === 0" />
     <PaginationButtonsV2
-      v-if="withPagination"
+      v-if="!preview && withPagination"
       hide-empty
       class="pagination-span"
       :pagination="pagination"

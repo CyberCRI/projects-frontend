@@ -1,13 +1,12 @@
 <template>
   <FetchLoader :status="status" only-error skeleton>
+    <BaseModuleHeader
+      v-if="!preview"
+      :pagination="pagination"
+      :editable="editable"
+      @add="onCreate"
+    />
     <div class="list-container">
-      <LpiButton
-        v-if="editable"
-        btn-icon="Plus"
-        :label="$t('group.form.add')"
-        class="edit-btn skeletons-background"
-        @click="onCreate"
-      />
       <div class="list-divider">
         <NewsItem
           v-for="news in data"
@@ -18,26 +17,28 @@
           @delete="onDeleteNews"
         />
       </div>
-      <EditNewsDrawer
-        :is-opened="stateModals.edit"
-        :news="selectedNews"
-        :selected-group="false"
-        @close="onCancel"
-        @news-edited="onAfterEdit"
-      />
-
-      <ConfirmModal
-        v-if="stateModals.delete"
-        :title="$t('news.delete.message')"
-        @confirm="onConfirmDeleteNews"
-        @cancel="onCancel"
-      >
-        <NewsItem v-if="selectedNews" :news="selectedNews" />
-      </ConfirmModal>
-
-      <PaginationButtonsV2 v-if="withPagination" :pagination="pagination" />
+      <NothingHere v-if="data.length === 0" />
+      <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
     </div>
   </FetchLoader>
+  <!-- drawer/modal -->
+
+  <EditNewsDrawer
+    :is-opened="stateModals.edit"
+    :news="selectedNews"
+    :selected-group="false"
+    @close="onCancel"
+    @news-edited="onAfterEdit"
+  />
+
+  <ConfirmModal
+    v-if="stateModals.delete"
+    :title="$t('news.delete.message')"
+    @confirm="onConfirmDeleteNews"
+    @cancel="onCancel"
+  >
+    <NewsItem v-if="selectedNews" :news="selectedNews" />
+  </ConfirmModal>
 </template>
 
 <script setup lang="ts">
@@ -54,19 +55,21 @@ import NewsItem from '~/components/news/NewsItem.vue'
 import useToasterStore from '~/stores/useToaster'
 
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
+import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
+import NothingHere from '~/components/base/NothingHere.vue'
 import { newsSkeleton } from '~/skeletons/news.skeletons'
 
 const props = withDefaults(
   defineProps<{
     group: TranslatedPeopleGroupModel
     limit?: number
-    withPagination?: boolean
     editable?: boolean
+    preview?: boolean
   }>(),
   {
-    withPagination: true,
     limit: null,
     editable: false,
+    preview: false,
   }
 )
 

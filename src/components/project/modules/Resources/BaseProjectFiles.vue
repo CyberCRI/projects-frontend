@@ -10,6 +10,7 @@ import { getProjectAttachmentFiles } from '~/api/v2/attachment-files.service'
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import ResourceDrawerV2 from '~/components/resources/ResourceDrawerV2.vue'
 import { refreshProjectData } from '~/composables/project/refreshProject'
+import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import ResourceCard from '~/components/resources/ResourceCard.vue'
 import SectionHeader from '~/components/base/SectionHeader.vue'
@@ -148,8 +149,8 @@ const onSubmit = (form: AttachmentForm) => {
         :subtitle="item.$t.description"
         :title="item.$t.title"
         :mime="item.mime"
-        @delete-clicked="onDelete(item)"
-        @edit-clicked="onEdit(item)"
+        @delete="onDelete(item)"
+        @edit="onEdit(item)"
       />
     </div>
     <NothingHere v-if="files.length === 0 && !preview" />

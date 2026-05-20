@@ -4,7 +4,6 @@
       <label ref="label" :for="uniqueId" class="image-button" data-test="upload-image-button">
         <component
           :is="isLink ? LinkButton : LpiButton"
-          v-if="isLink"
           v-disable-focus="unfocusable"
           btn-icon="Upload"
           :label="displayedLabel"

@@ -134,8 +134,8 @@ useLpiHead2({
           :title="file.$t.title"
           :subtitle="file.$t.description"
           :mime="file.mime"
-          @edit-clicked="onEdit(file)"
-          @delete-clicked="onDelete(file)"
+          @edit="onEdit(file)"
+          @delete="onDelete(file)"
         />
       </div>
       <NothingHere v-if="resources.length === 0" />

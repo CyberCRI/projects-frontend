@@ -20,25 +20,17 @@
         <span class="resource-subtitle skeletons-text">{{ subtitle }}</span>
       </div>
     </component>
-    <div v-if="canEdit || canDelete" class="actions-ctn">
-      <ContextActionButton
-        v-if="canEdit"
-        class="small skeletons-background"
-        action-icon="Pen"
-        @click="$emit('edit-clicked')"
-      />
-      <ContextActionButton
-        v-if="canDelete"
-        class="small skeletons-background"
-        action-icon="Close"
-        @click="$emit('delete-clicked')"
-      />
-    </div>
+    <ContextActionMenuInline
+      class="actions-ctn"
+      :can-delete="canDelete"
+      :can-edit="canEdit"
+      @edit="$emit('edit')"
+      @delete="$emit('delete')"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 
 import { mimeTypeToInfo } from '~/functs/imageSizesUtils'
@@ -67,8 +59,8 @@ const props = withDefaults(
 )
 
 defineEmits<{
-  'delete-clicked': []
-  'edit-clicked': []
+  delete: []
+  edit: []
 }>()
 
 const url = computed(() => {

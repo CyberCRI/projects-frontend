@@ -125,6 +125,7 @@ withDefaults(
     &.minimal {
       display: none;
     }
+
     &:hover {
       display: block;
     }

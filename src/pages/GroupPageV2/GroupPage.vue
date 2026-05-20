@@ -110,8 +110,6 @@ const defaultProps = computed(() => {
     group: group.value,
     isLoading: groupLoading.value,
     editable: isEditing.value,
-    // TODO remove this dupicate props
-    isInEditingMode: isEditing.value,
   }
 })
 

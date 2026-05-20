@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import { usePublicURL } from '~/composables/usePublic'
 
+defineProps<{
+  label?: string
+}>()
+
 const SRC = usePublicURL(`/empties/emptyBox.svg`)
 </script>
 
 <template>
   <div class="card-list__empty">
     <p class="card-list__empty--text skeletons-text">
-      {{ $t('project.nothing') }}
+      {{ label ?? $t('project.nothing') }}
     </p>
     <svg class="card-list__empty--image skeletons-blur">
       <image :xlink:href="SRC" alt="Nothing here" />

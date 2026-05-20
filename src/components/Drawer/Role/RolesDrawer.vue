@@ -1,6 +1,11 @@
-<script setup lang="ts" generic="Item extends { id: number | string; role?: string }, Role">
+<script
+  setup
+  lang="ts"
+  generic="Item extends { id: number | string; role?: string }, Role extends Roles"
+>
 import { roleHelpI18n, roleI18n } from '~/functs/rolesUtils'
 import TableInfo from '~/components/base/TableInfo.vue'
+import type { Roles } from '~/models/types'
 import { remToPx } from '~/functs/style'
 import { isEqual } from 'es-toolkit'
 
