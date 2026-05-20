@@ -467,9 +467,7 @@ export default {
     }
   }
 
-  .team,
   .parent-group,
-  .project,
   .location {
     margin-bottom: $space-xl;
   }
