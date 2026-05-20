@@ -23,13 +23,83 @@ let headers = {}
 const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
 
 if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
-const options = { headers }
+const options = {
+  headers,
+  server: false, // ⚠️ Crucial: Skips server execution
+}
 
 const url = `/api/chatbot/${props.agentSlug}`
 const { data, error } = await useFetch(url, options)
 
-const agent = computed(() => data.agent)
-const conversation = computed(() => data.conversation)
+const agent = computed(() => data.value?.agent)
+const conversation = ref(null)
+const conversationId = ref(null)
+function onConversationRestarted() {
+  conversation.value = null
+}
+const allConversations = ref([])
+const allConversationOptions = computed(() => [
+  ...allConversations.value.map((c) => ({
+    label: c.title,
+    value: c.id,
+  })),
+  {
+    label: 'New conversation',
+    value: null,
+  },
+])
+watch(
+  () => data.value,
+  () => {
+    conversation.value = data.value?.lastConversation || null
+    conversationId.value = data.value?.lastConversation?.id || null
+    allConversations.value = data.value?.allConversations || []
+  }
+)
+
+const isLoadingConversation = ref(false)
+watch(
+  () => conversationId.value,
+  async (neo, old) => {
+    console.log('conversationId', neo, old)
+    if (neo !== old) {
+      if (neo) {
+        isLoadingConversation.value = true
+        try {
+          const url = `/api/chatbot/${props.agentSlug}/conversation/${neo}`
+          const { data, error } = await useFetch(url, options)
+          if (data.value?.conversation) {
+            conversation.value = data.value?.conversation
+          } else {
+            // TODO toaster
+            console.error('Coversation not found')
+            conversationId.value = old
+          }
+        } finally {
+          isLoadingConversation.value = false
+        }
+      } else {
+        console.log('resetting')
+        conversation.value = null
+        nextTick(() => chatbotUi.value?.resetChat())
+      }
+    }
+  }
+)
+const history = computed(() => {
+  const h = conversation.value?.messages || []
+  return h.map((message) => {
+    console.log(message)
+    return {
+      role: message.role,
+      text: message.content,
+      custom: {
+        id: message.id,
+      },
+    }
+  })
+})
+const threadId = computed(() => conversation.value?.threadId || null)
 watch(
   () => error.value,
   (e) => {
@@ -82,15 +152,33 @@ useLpiHead2({
         <LpiButton :label="$t('common.login')" @click="login" />
       </div>
     </div>
-    <div v-else>
+    <div v-else-if="agent">
       <ClientOnly>
+        <!--div v-if="conversation">
+          <h4>{{ conversation.title }}</h4>
+          <pre>
+            {{ JSON.stringify(history, null, 2) }}
+          </pre>
+          </div-->
+
+        <div>
+          Conversations:
+          <LpiSelect v-model="conversationId" :options="allConversationOptions" />
+        </div>
         <ChatbotOptions :has-user-context="hasUserContext" />
+        <div v-if="isLoadingConversation" class="conversation-is-loading">
+          <LoaderSimple />
+        </div>
         <ChatbotUi
-          v-if="agent"
+          v-else
           ref="chatbotUi"
+          :key="conversationId"
           :endpoint="CHAT_ENDPOINT"
           :start-message="agent?.startMessage || ''"
           :context-messages="contextMessages"
+          :history="history"
+          :conversation-id="threadId"
+          @conversation-restarted="onConversationRestarted"
         />
       </ClientOnly>
     </div>
@@ -125,5 +213,10 @@ useLpiHead2({
   display: flex;
   justify-content: center;
   margin-top: 2rem;
+}
+.conversation-is-loading {
+  padding: 3rem 0;
+  display: flex;
+  justify-content: center;
 }
 </style>

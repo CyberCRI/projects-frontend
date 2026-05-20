@@ -199,6 +199,11 @@ export default defineLazyEventHandler(() => {
     const messages = body.messages || []
 
     let conversationId = body.conversationId || null
+    if (conversationId) {
+      // TODO: validate existence and ownership
+      console.log('Resuming coverstion ', conversationId)
+    }
+
     // if no conversationId, we start a new conversation
     if (!conversationId) {
       conversationId = uuidv4()
@@ -394,6 +399,7 @@ export default defineLazyEventHandler(() => {
       name = 'ConversationPersistenceHandler'
 
       conversation: null
+      lastMessage: null
 
       constructor(conversation: any) {
         super()
@@ -407,13 +413,18 @@ export default defineLazyEventHandler(() => {
         })
       }
 
-      async getNextPosition(tx) {
-        const lastMessage = await tx.conversationMessage.findFirst({
+      async getLastMessage(tx) {
+        const lastMessage = await (tx || chatbotPrisma).conversationMessage.findFirst({
           where: { conversationId: this.conversation.id },
           orderBy: { position: 'desc' },
           select: { position: true },
         })
-        return (lastMessage?.position ?? -1) + 1
+        this.lastMessage = lastMessage
+      }
+
+      async getNextPosition(tx) {
+        await this.getLastMessage(tx)
+        return (this.lastMessage?.position ?? -1) + 1
       }
 
       async handleUserMessage(message: any) {
@@ -437,14 +448,7 @@ export default defineLazyEventHandler(() => {
         })
       }
 
-      async handleLLMEnd(output: any) {
-        console.log('handle model end')
-        if (!this.conversation?.id) {
-          console.error('No conversation set')
-          return
-        }
-        const message = output.generations[0][0].message
-
+      async handleAssistantMessage(message) {
         await chatbotPrisma.$transaction(async (tx) => {
           const position = await this.getNextPosition(tx)
           await tx.conversationMessage.create({
@@ -458,6 +462,17 @@ export default defineLazyEventHandler(() => {
           })
           await this.updateConversation(tx)
         })
+      }
+
+      async handleLLMEnd(output: any) {
+        console.log('handle model end')
+        if (!this.conversation?.id) {
+          console.error('No conversation set')
+          return
+        }
+        const message = output.generations[0][0].message
+
+        await this.handleAssistantMessage(message)
       }
 
       async handleToolEnd(output: string, runId: string, parentRunId: string, tags, metadata) {
@@ -518,7 +533,9 @@ export default defineLazyEventHandler(() => {
         })
       }
 
-      return new ConversationPersistenceHandler(conversation)
+      const persistenceHandler = new ConversationPersistenceHandler(conversation)
+      await persistenceHandler.getLastMessage()
+      return persistenceHandler
     }
 
     /* --------- LLM settings  --------- */
@@ -549,6 +566,7 @@ export default defineLazyEventHandler(() => {
     const agent = createAgent({
       model,
       tools,
+      // TODO reanble checkpoint after tests
       checkpointer,
       systemPrompt: new SystemMessage({
         content: [
@@ -608,10 +626,32 @@ export default defineLazyEventHandler(() => {
       // durability: "exit", // ← one checkpoint per turn, not per superstep
     }
 
-    const lastUserMessage = messages[messages.length - 1]
-    if (lastUserMessage?.role === 'user') {
-      console.log('Saving last human message:', lastUserMessage.text)
-      await persistenceHandler.handleUserMessage({ content: lastUserMessage.text })
+    console.log('=================================')
+    console.log(JSON.stringify(messages, null, 2))
+    console.log('=================================')
+
+    // const lastUserMessage = messages[messages.length - 1]
+    // if (lastUserMessage?.role === 'user') {
+    //   console.log('Saving last human message:', lastUserMessage.text)
+    //   await persistenceHandler.handleUserMessage({ content: lastUserMessage.text })
+    // }
+
+    const unsaved = []
+    //let lastSavedPassed = !persistenceHandler?.lastMessage
+    for (const message of messages) {
+      //if (lastSavedPassed) {
+      if (message.role === 'user') {
+        console.log('Saving last human message:', message.text)
+        if (message.text) await persistenceHandler.handleUserMessage({ content: message.text })
+      } else if (message.role === 'assistant') {
+        console.log('Saving last assistant message:', message.text)
+        // TODO: handle tool call parameters ?
+        if (message.text) await persistenceHandler.handleAssistantMessage({ content: message.text })
+      }
+      // TODO handle tool response  message ?
+      //}
+      // if (message.custom && message.custom.id === persistenceHandler?.lastMessage?.id)
+      //   lastSavedPassed = true
     }
 
     const customMetadata = {

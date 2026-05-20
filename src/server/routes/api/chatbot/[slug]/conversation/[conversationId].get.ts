@@ -8,7 +8,15 @@ export default defineLazyEventHandler(() => {
     if (!slug) {
       setResponseStatus(event, 400)
       return {
-        error: 'Missing required "id" query parameter',
+        error: 'Missing required "slug" query parameter',
+      }
+    }
+
+    const conversationId = getRouterParam(event, 'conversationId')
+    if (!conversationId) {
+      setResponseStatus(event, 400)
+      return {
+        error: 'Missing required "conversationId" query parameter',
       }
     }
 
@@ -37,17 +45,9 @@ export default defineLazyEventHandler(() => {
       }
     }
 
-    const allConversations = await chatbotPrisma.conversation.findMany({
+    const conversation = await chatbotPrisma.conversation.findFirst({
       where: {
-        organizationCode: appApiOrgCode,
-        userId: user.id,
-        agentId: agent.id,
-      },
-      orderBy: { lastActiveAt: 'desc' },
-    })
-
-    const lastConversation = await chatbotPrisma.conversation.findFirst({
-      where: {
+        id: conversationId,
         organizationCode: appApiOrgCode,
         userId: user.id,
         agentId: agent.id,
@@ -56,6 +56,6 @@ export default defineLazyEventHandler(() => {
       orderBy: { lastActiveAt: 'desc' },
     })
 
-    return { agent, lastConversation, allConversations }
+    return { conversation }
   })
 })
