@@ -16,6 +16,7 @@ import type { TranslatedUserModel } from '~/models/user.model'
 import type UserCard from '~/components/people/UserCard.vue'
 import { getProjectMembers } from '@/api/v2/project.service'
 import FetchLoader from '@/components/base/FetchLoader.vue'
+import { PROJECTS_MEMBERS_ROLES } from '~/functs/constants'
 import type { ProjectMemberRoleType } from '~/models/types'
 import { roleI18n } from '~/functs/rolesUtils'
 import { groupBy } from 'es-toolkit'
@@ -60,16 +61,13 @@ type Team = {
   members: TranslatedPojectMember[]
 }
 
-//  order is important for choices
-const PROJECTS_ROLES: ProjectMemberRoleType[] = ['owners', 'members', 'reviewers']
-
 const teams = computed<Team[]>(() => {
   const sortedTeams = []
 
   // groups by role
   // if we are in preview mode, return all members in owners ( for only one line)
   const groupedUserByRole = groupBy(members.value, (item) => (props.preview ? 'owners' : item.role))
-  PROJECTS_ROLES.forEach((role) => {
+  PROJECTS_MEMBERS_ROLES.forEach((role) => {
     if (!groupedUserByRole[role]?.length) {
       return
     }
@@ -129,7 +127,7 @@ const onSelectedUser = (members: TranslatedUserModel[]) => {
   openModals('edit')
 }
 
-const addUser = (memberRoles: { [key: number]: ProjectMemberRoleType }) => {
+const addUser = (memberRoles: { [key: TranslatedUserModel['id']]: ProjectMemberRoleType }) => {
   const body = {}
   Object.entries(memberRoles).forEach(([memberId, role]) => {
     body[role] ??= []
@@ -200,7 +198,7 @@ const onDeleteConfirm = () => {
   <RolesDrawer
     :is-opened="stateModals.edit"
     :items="selectedMemberRoles"
-    :roles="PROJECTS_ROLES"
+    :roles="PROJECTS_MEMBERS_ROLES"
     @close="closeModals('edit')"
     @update="addUser"
   >

@@ -10,7 +10,7 @@
     }"
   >
     <template #content>
-      <BaseGroupProjectsList :group="group" :limit="6" />
+      <BaseGroupProjectsList :group="group" :limit="6" preview />
     </template>
   </BaseGroupPreview>
 </template>

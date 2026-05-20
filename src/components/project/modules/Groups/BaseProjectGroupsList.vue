@@ -14,6 +14,7 @@ import FetchLoader from '@/components/base/FetchLoader.vue'
 import { groupSkeleton } from '~/skeletons/group.skeletons'
 import { getProjectGroups } from '~/api/v2/project.service'
 import type { ProjectGroupRoleType } from '~/models/types'
+import { PROJECTS_GROUP_ROLES } from '~/functs/constants'
 import GroupCard from '~/components/group/GroupCard.vue'
 import { roleI18n } from '~/functs/rolesUtils'
 import { groupBy } from 'es-toolkit'
@@ -49,13 +50,6 @@ const {
   },
   default: () => factoryPagination(groupSkeleton, limitGroupsSkeletons.value),
 })
-
-//  order is important for choices
-const PROJECTS_GROUP_ROLES: ProjectGroupRoleType[] = [
-  'owner_groups',
-  'member_groups',
-  'reviewer_groups',
-]
 
 type Team = {
   title: string

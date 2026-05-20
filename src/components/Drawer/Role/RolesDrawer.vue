@@ -14,8 +14,9 @@ const props = withDefaults(
     isOpened?: boolean
     items?: Item[]
     roles: T[]
+    asyncing?: boolean
   }>(),
-  { items: () => [], isOpened: false }
+  { items: () => [], isOpened: false, asyncing: false }
 )
 
 type RoleUser = {
@@ -88,6 +89,7 @@ const checkClose = () => {
     :title="$t('role.select')"
     class="medium"
     :confirm-action-disabled="isFormEqual"
+    :asyncing="asyncing"
     @close="checkClose"
     @confirm="confirm"
   >

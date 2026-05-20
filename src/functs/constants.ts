@@ -1,3 +1,9 @@
+import type {
+  GroupMemberRoleType,
+  ProjectGroupRoleType,
+  ProjectMemberRoleType,
+} from '~/models/types'
+
 export const RESOURCE_PROJECT_CATEGORY = [
   'inspired-by',
   'element-of',
@@ -145,3 +151,16 @@ export const DEFAULT_ORGANIZATION_CODE = 'DEFAULT'
 
 // default content value (html)
 export const NULL_CONTENT = '<p></p>'
+
+// --- roles ---
+//  order is important for choices
+export const PROJECTS_GROUP_ROLES: ProjectGroupRoleType[] = [
+  'owner_groups',
+  'member_groups',
+  'reviewer_groups',
+]
+
+//  order is important for choices
+export const PROJECTS_MEMBERS_ROLES: ProjectMemberRoleType[] = ['owners', 'members', 'reviewers']
+
+export const GROUP_MEMBERS_ROLES: GroupMemberRoleType[] = ['leaders', 'managers', 'members']

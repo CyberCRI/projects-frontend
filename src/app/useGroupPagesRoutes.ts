@@ -83,12 +83,12 @@ export default function useGroupPagesRoutes() {
         {
           path: 'members/edit',
           name: 'groupMembersEdit',
-          component: () => import('../pages/GroupPageV2/Tabs/Members/GroupMembersEditTab.vue'),
+          component: () => import('../pages/GroupPageV2/Tabs/Members/GroupMembersTab.vue'),
         },
         {
           path: 'projects/edit',
           name: 'groupProjectsEdit',
-          component: () => import('../pages/GroupPageV2/Tabs/Projects/GroupProjectsEditTab.vue'),
+          component: () => import('../pages/GroupPageV2/Tabs/Projects/GroupProjectsTab.vue'),
         },
         {
           path: 'gallery/edit',

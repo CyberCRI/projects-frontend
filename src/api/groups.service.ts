@@ -103,10 +103,10 @@ export async function getGroupMember(
 export async function postGroupMembers(
   organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
-  membersData: AddGroupMembers
+  body: AddGroupMembers
 ) {
   return await useAPI(`organization/${organizationCode}/people-group/${groupId}/member/add/`, {
-    body: membersData,
+    body,
     method: 'POST',
   })
 }
@@ -114,10 +114,10 @@ export async function postGroupMembers(
 export async function removeGroupMember(
   organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
-  membersData: RemoveGroupMember
+  body: RemoveGroupMember
 ) {
   return await useAPI(`organization/${organizationCode}/people-group/${groupId}/member/remove/`, {
-    body: membersData,
+    body,
     method: 'POST',
   })
 }

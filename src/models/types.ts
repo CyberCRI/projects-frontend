@@ -52,8 +52,9 @@ export type NotificationType =
   | 'new_instruction'
 
 export type ProjectMemberRoleType = 'owners' | 'members' | 'reviewers'
-
 export type ProjectGroupRoleType = 'owner_groups' | 'member_groups' | 'reviewer_groups'
+
+export type GroupMemberRoleType = 'leaders' | 'managers' | 'members'
 
 export type ProjectRoleType = ProjectMemberRoleType | ProjectGroupRoleType
 

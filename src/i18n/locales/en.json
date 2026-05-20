@@ -2349,6 +2349,14 @@
     "team-group-delete": {
       "success": "The group has been deleted successfully",
       "error": "Error during the group deletion"
+    },
+    "group-project-create": {
+      "success": "The projects have been added successfully",
+      "error": "Error during the added projects"
+    },
+    "group-project-remove": {
+      "success": "The project has been removed successfully",
+      "error": "Error during the project removed"
     }
   },
   "success": {
@@ -3172,7 +3180,9 @@
       "publication-status-errors": {
         "required": "This field is required"
       },
-      "delete": "Delete group"
+      "delete": "Delete group",
+      "confirm-remove-project": "Do you really want to remove this project?",
+      "confirm-remove-member": "Do you really want to remove this member?"
     },
     "view": "See group",
     "conferences": "Conferences",

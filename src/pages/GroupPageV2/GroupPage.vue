@@ -109,6 +109,9 @@ const defaultProps = computed(() => {
   return {
     group: group.value,
     isLoading: groupLoading.value,
+    editable: isEditing.value,
+    // TODO remove this dupicate props
+    isInEditingMode: isEditing.value,
   }
 })
 
@@ -233,9 +236,6 @@ const groupTabsEdit = computed(() => {
       label: t('group.snapshot'),
       view: `/group/${route.params.groupIdOrSlug}/snapshot/edit`,
       altView: `/group/${route.params.groupIdOrSlug}/snapshot`,
-      props: {
-        isInEditingMode: true,
-      },
       condition: true,
       noTitle: true,
       icon: 'Pen',
@@ -247,9 +247,6 @@ const groupTabsEdit = computed(() => {
       label: t(GroupModuleTitle.members, groupModules.value.members),
       view: `/group/${route.params.groupIdOrSlug}/members/edit`,
       altView: `/group/${route.params.groupIdOrSlug}/members`,
-      props: {
-        isInEditingMode: true,
-      },
       condition: true,
       icon: 'Pen',
     },
@@ -260,9 +257,6 @@ const groupTabsEdit = computed(() => {
       label: t(GroupModuleTitle.featured_projects, groupModules.value.featured_projects),
       view: `/group/${route.params.groupIdOrSlug}/projects/edit`,
       altView: `/group/${route.params.groupIdOrSlug}/projects`,
-      props: {
-        isInEditingMode: true,
-      },
       condition: true,
       icon: 'Pen',
     },
@@ -275,7 +269,6 @@ const groupTabsEdit = computed(() => {
       altView: `/group/${route.params.groupIdOrSlug}/publications`,
       props: {
         documentType: 'publications',
-        isInEditingMode: true,
       },
       condition: false,
       icon: 'Pen',
@@ -289,7 +282,6 @@ const groupTabsEdit = computed(() => {
       altView: `/group/${route.params.groupIdOrSlug}/conferences`,
       props: {
         documentType: 'conferences',
-        isInEditingMode: true,
       },
       condition: false,
       icon: 'Pen',
@@ -301,9 +293,6 @@ const groupTabsEdit = computed(() => {
       label: t(GroupModuleTitle.news, groupModules.value.news),
       view: `/group/${route.params.groupIdOrSlug}/news/edit`,
       altView: `/group/${route.params.groupIdOrSlug}/news`,
-      props: {
-        isInEditingMode: true,
-      },
       condition: true,
       icon: 'Pen',
     },
@@ -314,9 +303,6 @@ const groupTabsEdit = computed(() => {
       label: t(GroupModuleTitle.event, groupModules.value.event),
       view: `/group/${route.params.groupIdOrSlug}/event/edit`,
       altView: `/group/${route.params.groupIdOrSlug}/event`,
-      props: {
-        isInEditingMode: true,
-      },
       condition: true,
       icon: 'Pen',
     },
@@ -327,9 +313,6 @@ const groupTabsEdit = computed(() => {
       label: t(GroupModuleTitle.gallery, groupModules.value.gallery),
       view: `/group/${route.params.groupIdOrSlug}/gallery/edit`,
       altView: `/group/${route.params.groupIdOrSlug}/gallery`,
-      props: {
-        isInEditingMode: true,
-      },
       condition: true,
       icon: 'Pen',
     },

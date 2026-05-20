@@ -1,26 +1,24 @@
 <script setup lang="ts">
 import BaseCardInline from '~/components/Drawer/BaseCardInline.vue'
-import type { TranslatedUserModel } from '~/models/user.model'
+import type { TranslatedGroupMember } from '~/models/group.model'
 import { capitalize } from '~/functs/string'
 
 const props = defineProps<{
-  user: TranslatedUserModel
+  member: TranslatedGroupMember
 }>()
-
-watchEffect(() => console.log(props.user))
 
 const attrs = useAttrs()
 
 const label = computed(
-  () => `${capitalize(props.user.given_name)} ${capitalize(props.user.family_name)}`
+  () => `${capitalize(props.member.given_name)} ${capitalize(props.member.family_name)}`
 )
 </script>
 
 <template>
   <BaseCardInline
     :label="label"
-    :image="user.profile_picture"
-    :description="user.$t.job"
+    :image="member.profile_picture"
+    :description="member.$t.job"
     :default-picture="DEFAULT_USER_PATATOID"
     v-bind="attrs"
   />
