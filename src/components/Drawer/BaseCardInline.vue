@@ -34,12 +34,11 @@ withDefaults(
 
 <template>
   <div
-    class="user-card-small"
+    class="card-small"
     :class="{ selected: selected, passive: passive, fit: minimal }"
-    :data-test="`user-card-${label}`"
     :title="label"
   >
-    <div class="user-container">
+    <div class="card-container">
       <CroppedApiImage
         :alt="`${label} image`"
         class="img-container skeletons-background"
@@ -47,7 +46,12 @@ withDefaults(
         picture-size="medium"
         :default-picture="defaultPicture"
       />
-      <div v-if="!minimal" class="user-info text-ellipsis">
+      <div
+        class="card-info text-ellipsis"
+        :class="{
+          minimal: minimal,
+        }"
+      >
         <div class="name">
           <LineClamped :line-number="2">
             <span class="skeletons-text">
@@ -75,7 +79,7 @@ withDefaults(
 </template>
 
 <style lang="scss" scoped>
-.user-card-small {
+.card-small {
   display: flex;
   align-items: center;
   padding: $space-s;
@@ -100,7 +104,7 @@ withDefaults(
     pointer-events: none;
   }
 
-  .user-container {
+  .card-container {
     display: flex;
     align-items: center;
   }
@@ -114,9 +118,16 @@ withDefaults(
     flex-shrink: 0;
   }
 
-  .user-info {
+  .card-info {
     margin-left: $space-m;
     flex-grow: 1;
+
+    &.minimal {
+      display: none;
+    }
+    &:hover {
+      display: block;
+    }
 
     .title {
       font-size: $font-size-xs;

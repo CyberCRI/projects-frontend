@@ -199,6 +199,7 @@ const onDeleteConfirm = () => {
     :is-opened="stateModals.edit"
     :items="selectedMemberRoles"
     :roles="PROJECTS_MEMBERS_ROLES"
+    default-role="members"
     @close="closeModals('edit')"
     @update="addUser"
   >

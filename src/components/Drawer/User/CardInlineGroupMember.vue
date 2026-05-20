@@ -20,6 +20,7 @@ const label = computed(
     :image="member.profile_picture"
     :description="member.$t.job"
     :default-picture="DEFAULT_USER_PATATOID"
+    :data-test="`group-member-card-${label}`"
     v-bind="attrs"
   />
 </template>

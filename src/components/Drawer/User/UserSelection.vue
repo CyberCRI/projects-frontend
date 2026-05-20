@@ -63,7 +63,7 @@ const toggleUser = (user: TranslatedUserModel) => {
               :user="user"
               minimal
               selected
-              icon="Check"
+              icon="Close"
               @click="toggleUser(user)"
             />
           </TransitionGroup>

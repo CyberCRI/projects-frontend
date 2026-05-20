@@ -178,6 +178,7 @@ const onDeleteConfirm = () => {
     :is-opened="stateModals.role"
     :items="membersSelectRoles"
     :roles="GROUP_MEMBERS_ROLES"
+    default-role="members"
     @close="clear"
     @update="onAddMembers"
   >

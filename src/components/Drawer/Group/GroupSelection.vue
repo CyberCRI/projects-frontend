@@ -64,7 +64,7 @@ const toggleUser = (user: TranslatedPeopleGroupModel) => {
               :group="group"
               minimal
               selected
-              icon="Check"
+              icon="Close"
               @click="toggleUser(group)"
             />
           </TransitionGroup>

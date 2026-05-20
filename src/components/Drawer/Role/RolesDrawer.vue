@@ -1,11 +1,6 @@
-<script
-  setup
-  lang="ts"
-  generic="Item extends { id: number | string; role?: string }, T extends Roles"
->
+<script setup lang="ts" generic="Item extends { id: number | string; role?: string }, Role">
 import { roleHelpI18n, roleI18n } from '~/functs/rolesUtils'
 import TableInfo from '~/components/base/TableInfo.vue'
-import type { Roles } from '~/models/types'
 import { remToPx } from '~/functs/style'
 import { isEqual } from 'es-toolkit'
 
@@ -13,15 +8,16 @@ const props = withDefaults(
   defineProps<{
     isOpened?: boolean
     items?: Item[]
-    roles: T[]
+    roles: Role[]
+    defaultRole?: Role
     asyncing?: boolean
   }>(),
-  { items: () => [], isOpened: false, asyncing: false }
+  { items: () => [], isOpened: false, asyncing: false, defaultRole: null }
 )
 
 type RoleUser = {
   // key is user.id, and T is the role
-  [key: number]: T
+  [key: number]: Role
 }
 
 const emit = defineEmits<{
@@ -33,7 +29,7 @@ const { stateModals, closeModals, openModals } = useModals({ saveChange: false }
 
 const rolesValue = ref<RoleUser>()
 
-const generateMappingRoles = (defaultRole: T) => {
+const generateMappingRoles = (defaultRole: Role) => {
   const roles = {}
   props.items.forEach((member) => {
     // if role not exists, default to selected roles
@@ -47,7 +43,7 @@ const generateMappingRoles = (defaultRole: T) => {
 }
 watch(
   () => [props.items, props.roles],
-  () => (rolesValue.value = generateMappingRoles(props.roles[0])),
+  () => (rolesValue.value = generateMappingRoles(props.defaultRole || props.roles[0])),
   { immediate: true, deep: true }
 )
 

@@ -7,8 +7,6 @@ const props = defineProps<{
   user: TranslatedUserModel
 }>()
 
-watchEffect(() => console.log(props.user))
-
 const attrs = useAttrs()
 
 const label = computed(
@@ -21,6 +19,7 @@ const label = computed(
     :label="label"
     :image="user.profile_picture"
     :description="user.$t.job"
+    :data-test="`user-card-${label}`"
     :default-picture="DEFAULT_USER_PATATOID"
     v-bind="attrs"
   />
