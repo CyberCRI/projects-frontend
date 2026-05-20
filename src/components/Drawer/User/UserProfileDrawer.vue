@@ -1,3 +1,19 @@
+<script setup lang="ts">
+import type { UserModel } from '~/models/user.model'
+
+withDefaults(
+  defineProps<{
+    isOpened: boolean
+    userId?: UserModel['id']
+  }>(),
+  { userId: null }
+)
+
+defineEmits<{
+  close: []
+}>()
+</script>
+
 <template>
   <BaseDrawer
     no-footer
@@ -16,19 +32,3 @@
     />
   </BaseDrawer>
 </template>
-
-<script setup lang="ts">
-import type { UserModel } from '~/models/user.model'
-
-withDefaults(
-  defineProps<{
-    isOpened: boolean
-    userId?: UserModel['id']
-  }>(),
-  { userId: null }
-)
-
-defineEmits<{
-  close: []
-}>()
-</script>

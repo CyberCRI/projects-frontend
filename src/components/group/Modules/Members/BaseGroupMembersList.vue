@@ -32,7 +32,7 @@ import { getGroupMember } from '~/api/v2/group.service'
 import PaginationButtonsV2 from '~/components/base/navigation/PaginationButtonsV2.vue'
 import GroupMemberItem from '~/components/group/Modules/Members/GroupMemberItem.vue'
 
-import UserProfileDrawer from '~/components/people/Drawer/UserProfileDrawer.vue'
+import UserProfileDrawer from '~/components/Drawer/User/UserProfileDrawer.vue'
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import { memberSkeleton } from '~/skeletons/group.skeletons'
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import BaseDrawerSearch from '~/components/people/Drawer/BaseDrawerSearch.vue'
-import CardInline from '~/components/people/ProjectTeamDrawer/CardInline.vue'
+import CardInlineGroup from '~/components/Drawer/Group/CardInlineGroup.vue'
 import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import BaseDrawerSearch from '~/components/Drawer/BaseDrawerSearch.vue'
 import { searchGroupSkeleton } from '~/skeletons/search.skeletons'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import type { QueryFilterSearch } from '~/models/search.model'
@@ -58,12 +58,10 @@ const toggleUser = (user: TranslatedPeopleGroupModel) => {
       <template #selected>
         <div class="list-flow-container selected-user my2">
           <TransitionGroup name="fade-member">
-            <CardInline
+            <CardInlineGroup
               v-for="group in selectedGroups"
               :key="group.id"
-              :label="group.$t.name"
-              :image="group.header_image"
-              :default-picture="DEFAULT_GROUP_PATATOID"
+              :group="group"
               minimal
               selected
               icon="Check"
@@ -74,13 +72,10 @@ const toggleUser = (user: TranslatedPeopleGroupModel) => {
       </template>
       <template #results>
         <div class="list-flow-container">
-          <CardInline
+          <CardInlineGroup
             v-for="item in searchGroups"
             :key="item.id"
-            :label="item.people_group.$t.name"
-            :image="item.people_group.header_image"
-            :description="item.people_group.short_description"
-            :default-picture="DEFAULT_GROUP_PATATOID"
+            :group="item.people_group"
             :selected="selectedGroupsId.includes(item.people_group.id)"
             :icon="selectedGroupsId.includes(item.people_group.id) ? 'Check' : 'Plus'"
             @click="toggleUser(item.people_group)"

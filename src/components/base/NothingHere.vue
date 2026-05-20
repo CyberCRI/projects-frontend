@@ -6,10 +6,12 @@ const SRC = usePublicURL(`/empties/emptyBox.svg`)
 
 <template>
   <div class="card-list__empty">
-    <p class="card-list__empty--text">
+    <p class="card-list__empty--text skeletons-text">
       {{ $t('project.nothing') }}
     </p>
-    <img :src="SRC" alt="Nothing here" />
+    <svg class="card-list__empty--image skeletons-blur">
+      <image :xlink:href="SRC" alt="Nothing here" />
+    </svg>
   </div>
 </template>
 
@@ -29,6 +31,8 @@ const SRC = usePublicURL(`/empties/emptyBox.svg`)
 }
 
 .card-list__empty--image {
+  // this is the size of the svg
+  height: 220px;
   width: 200px;
 }
 </style>

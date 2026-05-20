@@ -1,46 +1,56 @@
 <script setup lang="ts">
-import UserSelectionV2 from '~/components/people/ProjectTeamDrawer/UserSelectionV2.vue'
+import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import GroupSelection from '~/components/Drawer/Group/GroupSelection.vue'
 import type { QueryFilterSearch } from '~/models/search.model'
-import type { TranslatedUserModel } from '~/models/user.model'
 
 const props = withDefaults(
   defineProps<{
     isOpened?: boolean
     label?: string
     asyncing?: boolean
-    selectedUsers?: TranslatedUserModel[]
+    selectedGroups?: TranslatedPeopleGroupModel[]
     query?: QueryFilterSearch
+    multiple?: boolean
   }>(),
   {
     isOpened: false,
     label: null,
     asyncing: false,
-    selectedUsers: () => [],
+    multiple: true,
+    selectedGroups: () => [],
     query: () => ({}),
   }
 )
 
-const emit = defineEmits<{
+type EmitType = {
   close: []
-  submit: [TranslatedUserModel[]]
-}>()
+  submit: [TranslatedPeopleGroupModel[] | TranslatedPeopleGroupModel]
+}
+const emit = defineEmits<EmitType>()
 
 const { stateModals, openModals, closeModals } = useModals({ saveChange: false })
 
-const users = ref<TranslatedUserModel[]>([])
+const groups = ref<TranslatedPeopleGroupModel[]>([])
 watch(
-  () => [props.selectedUsers, props.isOpened],
-  () => (users.value = [...props.selectedUsers]),
+  () => [props.selectedGroups, props.isOpened],
+  () => (groups.value = [...props.selectedGroups]),
   { immediate: true }
 )
 
-const isFormEqual = computed(() => users.value.length === 0)
+const isFormEqual = computed(() => groups.value.length === 0)
 
 const close = () => {
   closeModals('saveChange')
   emit('close')
 }
-const onConfirm = () => emit('submit', users.value)
+// TODO type this change
+const onConfirm = () => {
+  if (props.multiple) {
+    emit('submit', groups.value)
+  } else {
+    emit('submit', groups.value[0])
+  }
+}
 
 const checkClose = () => {
   if (isFormEqual.value) {
@@ -49,20 +59,26 @@ const checkClose = () => {
     openModals('saveChange')
   }
 }
+
+watchEffect(() => {
+  if (groups.value.length === 1 && props.multiple === false) {
+    onConfirm()
+  }
+})
 </script>
 
 <template>
   <BaseDrawer
     :confirm-action-name="$t('common.add')"
     :is-opened="isOpened"
-    :title="label || $t('drawer.member.add', 2)"
+    :title="label || $t('drawer.group.add', 2)"
     class="team-modal large"
     :confirm-action-disabled="isFormEqual"
     :asyncing="asyncing"
     @close="checkClose"
     @confirm="onConfirm"
   >
-    <UserSelectionV2 v-model="users" :query="query" />
+    <GroupSelection v-model="groups" :query="query" :multiple="multiple" />
   </BaseDrawer>
 
   <ConfirmModal

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ProjectSelectDrawer from '~/components/people/Drawer/ProjectSelectDrawer.vue'
+import ProjectSelectDrawer from '~/components/Drawer/Project/ProjectSelectDrawer.vue'
 import { addLinkedProject, deleteLinkedProject } from '~/api/projects.service'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import { refreshProjectData } from '~/composables/project/refreshProject'

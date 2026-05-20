@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { addProjectMembers, deleteProjectMembers } from '~/api/project-members.service'
-import UserProfileDrawer from '~/components/people/Drawer/UserProfileDrawer.vue'
-import UserSelectDrawer from '~/components/people/Drawer/UserSelectDrawer.vue'
-import CardInline from '~/components/people/ProjectTeamDrawer/CardInline.vue'
+import UserProfileDrawer from '~/components/Drawer/User/UserProfileDrawer.vue'
+import UserSelectDrawer from '~/components/Drawer/User/UserSelectDrawer.vue'
 import type { TranslatedPojectMember } from '~/models/project-member.model'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import ProjectTeamEditor from '~/components/project/ProjectTeamEditor.vue'
 import { refreshProjectData } from '~/composables/project/refreshProject'
+import CardInlineUser from '~/components/Drawer/User/CardInlineUser.vue'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { projectMemberSkeleton } from '~/skeletons/project.skeletons'
-import RolesDrawer from '~/components/people/Drawer/RolesDrawer.vue'
+import RolesDrawer from '~/components/Drawer/Role/RolesDrawer.vue'
 import SectionHeader from '~/components/base/SectionHeader.vue'
 import type { TranslatedProject } from '@/models/project.model'
 import type { TranslatedUserModel } from '~/models/user.model'
@@ -205,13 +205,7 @@ const onDeleteConfirm = () => {
     @update="addUser"
   >
     <template #default="{ item }">
-      <CardInline
-        :key="item.id"
-        :label="`${item.given_name} ${item.family_name}`"
-        :image="item.profile_picture"
-        :description="item.$t.job"
-        :default-picture="DEFAULT_USER_PATATOID"
-      />
+      <CardInlineUser :key="item.id" :user="item" />
     </template>
   </RolesDrawer>
 

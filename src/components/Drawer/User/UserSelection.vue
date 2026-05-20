@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import BaseDrawerSearch from '~/components/people/Drawer/BaseDrawerSearch.vue'
-import CardInline from '~/components/people/ProjectTeamDrawer/CardInline.vue'
+import CardInlineUser from '~/components/Drawer/User/CardInlineUser.vue'
+import BaseDrawerSearch from '~/components/Drawer/BaseDrawerSearch.vue'
 import { searchUserSkeleton } from '~/skeletons/search.skeletons'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import type { QueryFilterSearch } from '~/models/search.model'
@@ -57,12 +57,10 @@ const toggleUser = (user: TranslatedUserModel) => {
       <template #selected>
         <div class="list-flow-container selected-user my2">
           <TransitionGroup name="fade-member">
-            <CardInline
+            <CardInlineUser
               v-for="user in selectedUser"
               :key="user.id"
-              :label="`${user.given_name} ${user.family_name}`"
-              :image="user.profile_picture"
-              :default-picture="DEFAULT_USER_PATATOID"
+              :user="user"
               minimal
               selected
               icon="Check"
@@ -73,13 +71,10 @@ const toggleUser = (user: TranslatedUserModel) => {
       </template>
       <template #results>
         <div class="list-flow-container">
-          <CardInline
+          <CardInlineUser
             v-for="item in searchUsers"
             :key="item.id"
-            :label="`${item.user.given_name} ${item.user.family_name}`"
-            :description="item.user.$t.job"
-            :image="item.user.profile_picture"
-            :default-picture="DEFAULT_USER_PATATOID"
+            :user="item.user"
             :selected="selectedUserId.includes(item.user.id)"
             :icon="selectedUserId.includes(item.user.id) ? 'Check' : 'Plus'"
             @click="toggleUser(item.user)"

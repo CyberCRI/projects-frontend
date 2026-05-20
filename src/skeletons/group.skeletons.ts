@@ -10,7 +10,7 @@ export const groupSkeleton = (def?: Partial<PeopleGroupModel>): PeopleGroupModel
     'Esse culpa qui quis ea aliqua commodo reprehenderit minim elit dolore amet Lorem.',
   email: '',
   type: 'type',
-  role: 'owners',
+  role: 'owner_groups',
   header_image: null,
   publication_status: 'public',
   organization: null,

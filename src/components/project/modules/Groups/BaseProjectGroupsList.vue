@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { addProjectMembers, deleteProjectMembers } from '~/api/project-members.service'
-import GroupSelectDrawer from '~/components/people/Drawer/GroupSelectDrawer.vue'
-import CardInline from '~/components/people/ProjectTeamDrawer/CardInline.vue'
+import CardInlineGroup from '~/components/Drawer/Group/CardInlineGroup.vue'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
 import ProjectTeamEditor from '~/components/project/ProjectTeamEditor.vue'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
-import RolesDrawer from '~/components/people/Drawer/RolesDrawer.vue'
+import RolesDrawer from '~/components/Drawer/Role/RolesDrawer.vue'
 import SectionHeader from '~/components/base/SectionHeader.vue'
 import type { TranslatedProject } from '@/models/project.model'
 import NothingHere from '~/components/base/NothingHere.vue'
@@ -203,13 +202,7 @@ const onDeleteConfirm = () => {
     @update="addGroup"
   >
     <template #default="{ item }">
-      <CardInline
-        :key="item.id"
-        :label="item.$t.name"
-        :image="item.header_image"
-        :description="item.$t.short_description"
-        :default-picture="DEFAULT_GROUP_PATATOID"
-      />
+      <CardInlineGroup :key="item.id" :group="item" />
     </template>
   </RolesDrawer>
 

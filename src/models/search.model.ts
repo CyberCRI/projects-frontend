@@ -72,7 +72,9 @@ export type QueryFilterSearch = Partial<
     // search options
     types: ('user' | 'project' | 'people_group')[]
     fuzziness: number
-    search_type: string
+
+    // default is 'most_fields
+    search_type: 'most_fields' | 'best_fields'
 
     // filters
     organizations: OrganizationModel['code'][]
@@ -90,6 +92,7 @@ export type QueryFilterSearch = Partial<
     projects: ProjectSlugOrId[]
     people_group: PeopleGroupIdOrSlug[]
 
+    // modules filtereds
     modules: 'none' | ProjectModulesKeys[] | PeopleGroupModulesKeys[]
   } & PaginationQuery
 >

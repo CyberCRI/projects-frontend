@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import BaseDrawerSearch from '~/components/people/Drawer/BaseDrawerSearch.vue'
-import CardInline from '~/components/people/ProjectTeamDrawer/CardInline.vue'
+import CardInlineProject from '~/components/Drawer/Project/CardInlineProject.vue'
+import BaseDrawerSearch from '~/components/Drawer/BaseDrawerSearch.vue'
 import { searchProjectSkeleton } from '~/skeletons/search.skeletons'
 import type { TranslatedProject } from '~/models/project.model'
 import { factoryPagination } from '~/skeletons/base.skeletons'
@@ -58,12 +58,10 @@ const toggleUser = (user: TranslatedProject) => {
       <template #selected>
         <div class="list-flow-container selected-user my2">
           <TransitionGroup name="fade-member">
-            <CardInline
+            <CardInlineProject
               v-for="project in selectedProjects"
               :key="project.id"
-              :label="project.$t.title"
-              :image="project.header_image"
-              :default-picture="DEFAULT_PROJECT_PATATOID"
+              :project="project"
               minimal
               selected
               icon="Check"
@@ -74,13 +72,10 @@ const toggleUser = (user: TranslatedProject) => {
       </template>
       <template #results>
         <div class="list-flow-container">
-          <CardInline
+          <CardInlineProject
             v-for="item in searchProjects"
             :key="item.id"
-            :label="item.project.$t.title"
-            :description="item.project.$t.purpose"
-            :image="item.project.header_image"
-            :default-picture="DEFAULT_PROJECT_PATATOID"
+            :project="item.project"
             :selected="selectedProjectsId.includes(item.project.id)"
             :icon="selectedProjectsId.includes(item.project.id) ? 'Check' : 'Plus'"
             @click="toggleUser(item.project)"
