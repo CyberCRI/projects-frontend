@@ -13,6 +13,14 @@ if (!useRuntimeConfig().public.appHasChatbotPromptDb) {
   usePage404()
 }
 
+function toConversationEnd() {
+  nextTick(() => {
+    const element = document.querySelector('.chat-conversation-bottom')
+    console.log('scrollIntoView', element)
+    element?.scrollIntoView({ behavior: 'smooth', block: 'end' })
+  })
+}
+
 const login = () => {
   goToKeycloakLoginPage()
 }
@@ -54,6 +62,7 @@ watch(
     conversation.value = data.value?.lastConversation || null
     conversationId.value = data.value?.lastConversation?.id || null
     allConversations.value = data.value?.allConversations || []
+    nextTick(toConversationEnd)
   }
 )
 
@@ -81,7 +90,7 @@ watch(
       } else {
         console.log('resetting')
         conversation.value = null
-        nextTick(() => chatbotUi.value?.resetChat())
+        nextTick(toConversationEnd)
       }
     }
   }
@@ -106,6 +115,13 @@ watch(
     if (e) usePage404()
   },
   { immediate: true }
+)
+
+watch(
+  () => [conversationId.value, isLoadingConversation.value],
+  (neo) => {
+    if (!neo[1]) nextTick(() => chatbotUi.value?.scrollToBottom())
+  }
 )
 
 const CHAT_ENDPOINT = computed(() => '/api/chatbot/chat?id=' + agent.value?.id)
@@ -179,8 +195,10 @@ useLpiHead2({
           :history="history"
           :conversation-id="threadId"
           @conversation-restarted="onConversationRestarted"
+          @on-component-render="toConversationEnd"
         />
       </ClientOnly>
+      <span class="chat-conversation-bottom"></span>
     </div>
   </div>
 </template>

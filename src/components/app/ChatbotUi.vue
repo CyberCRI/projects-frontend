@@ -14,7 +14,13 @@ const props = defineProps({
   conversationId: { type: String, default: null },
 })
 
-const emit = defineEmits(['close', 'start-conversation', 'conversation-restarted'])
+const emit = defineEmits([
+  'close',
+  'start-conversation',
+  'conversation-restarted',
+  'new-message',
+  'on-component-render',
+])
 
 const IS_STREAMED = ref(!useRuntimeConfig().public.appChatbotWithoutStream)
 const CHAT_ENDPOINT = ref(props.endpoint)
@@ -295,7 +301,17 @@ const resetChat = () => {
   // addToConversation(welcoming[0])
 }
 
-defineExpose({ resetChat })
+function scrollToBottom() {
+  chatBox.value?.scrollToBottom()
+}
+
+function onMessage(event) {
+  console.log('onMessage', event)
+  emit('new-message', event)
+  nextTick(scrollToBottom)
+}
+
+defineExpose({ resetChat, scrollToBottom })
 
 watch(
   () => conversationStarted.value,
@@ -308,6 +324,10 @@ watch(
   }
 )
 
+function onComponentRender() {
+  emit('on-component-render')
+}
+
 watch(
   () => chatBox.value,
   (neo, old) => {
@@ -315,6 +335,8 @@ watch(
       neo.requestInterceptor = requestInterceptor
       neo.responseInterceptor = responseInterceptor
       neo.htmlWrappers = htmlWrappers.value
+      neo.onMessage = onMessage
+      neo.onComponentRender = onComponentRender
     }
     // ??
     console.log('chatbox change', JSON.parse(JSON.stringify(conversation.value)))
