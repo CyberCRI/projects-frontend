@@ -801,7 +801,22 @@
   },
   "drawer": {
     "clear": "Limpiar todo seleccionado",
-    "select-all": "Seleccione todo"
+    "select-all": "Seleccione todo",
+    "member": {
+      "add": "Añadir miembro | Añadir miembros",
+      "edit": "Editar miembro | Editar miembros",
+      "delete": "Suprimir miembro | Suprimir miembros"
+    },
+    "group": {
+      "add": "Agregar grupo | Agregar grupos",
+      "edit": "Editar grupo | Editar grupos",
+      "delete": "Grupo Suprímase | Eliminar grupos"
+    },
+    "project": {
+      "add": "Agregar proyecto | Agregar proyectos",
+      "edit": "Editar proyecto | Editar proyectos",
+      "delete": "Eliminar el proyecto | Eliminar proyectos"
+    }
   },
   "faq": {
     "delete-confirm-content": "¿Estás seguro de que quieres eliminar la pestaña Ayuda personalizada para tu portal. Todo su contenido será eliminado.",
@@ -1542,7 +1557,6 @@
       "title": "Crear un nuevo proyecto"
     },
     "destroy": "Eliminar el proyecto",
-    "duplicate": "Duplicar este proyecto",
     "edit": "Editar proyecto",
     "edit-linked-project": "Editar proyecto enlazado",
     "edit-location-point": "Editar punto de ubicación",
@@ -1575,7 +1589,8 @@
         "min": "El campo de propósito debe ser por lo menos 3 caracteres"
       },
       "project-templates": "Nombre de plantilla",
-      "completed-info-to-access-presentation": "Toda la información de la página debe completarse para acceder a la presentación."
+      "completed-info-to-access-presentation": "Toda la información de la página debe completarse para acceder a la presentación.",
+      "comment": "El campo de comentarios es necesario."
     },
     "image-header": "Imagen",
     "image-alert": {
@@ -1627,7 +1642,14 @@
     "actions": "Medidas rápidas",
     "copy": "(copia)",
     "nothing": "Nada aquí...",
-    "tag-warning": "NB: Si un usuario cambia idiomas en su portal, las etiquetas con traducciones se traducirán para ellos. De lo contrario, las etiquetas se mostrarán en inglés."
+    "tag-warning": "NB: Si un usuario cambia idiomas en su portal, las etiquetas con traducciones se traducirán para ellos. De lo contrario, las etiquetas se mostrarán en inglés.",
+    "description": "Descripción",
+    "duplicate": {
+      "label": "Proyecto duplicado",
+      "title": "¿De verdad quieres duplicar este proyecto?",
+      "help": "El proyecto será clonado sin miembros."
+    },
+    "groups": "Grupo | Grupos"
   },
   "project_list": {
     "updated_at": "Último activo",
@@ -1687,14 +1709,14 @@
     "error-uploading-image": "Error al subir la imagen",
     "cannot-upload-image": "No puedo subir la imagen por ahora",
     "link-address": "Dirección de enlace",
-    "resources": "Recursos",
+    "resources": "Recursos | Recursos",
     "web": "Enlace al recurso web | enlaces a recursos web",
     "web-link": "Enlace web | web | web links",
     "delete": "¿Estás seguro de eliminar este recurso?",
     "file": {
       "add": "Agregar un archivo | Agregar archivos",
       "edit": "Editar un archivo | Editar archivos",
-      "label": "Archivo",
+      "label": "Archivo | Archivos",
       "delete": "¿Estás seguro de eliminar este archivo ? | ¿Está seguro de borrar archivos?",
       "form": {
         "too-big": "El archivo es demasiado grande (max: {maxSize}Mb)"
@@ -1703,7 +1725,7 @@
     "link": {
       "add": "Agregar un enlace | Agregar enlaces",
       "edit": "Editar un enlace | Editar enlaces",
-      "label": "Enlace",
+      "label": "Enlace | Enlaces",
       "delete": "¿Está seguro de borrar este enlace? | ¿Está seguro de borrar enlaces ?"
     }
   },
@@ -1968,7 +1990,17 @@
     "no-user-message": "Ningún usuario corresponde a su búsqueda",
     "remove-user-confirm": "¿Estás seguro de querer borrar este usuario del proyecto?",
     "remove-group-confirm": "¿Estás seguro de que quieres eliminar este grupo del proyecto?",
-    "team": "Equipo"
+    "team": "Equipo",
+    "member": {
+      "add": "Añadir miembro | Añadir miembros",
+      "edit": "Editar miembro | Editar miembros",
+      "delete": "Suprimir miembro | Suprimir miembros"
+    },
+    "group": {
+      "add": "Agregar grupo | Agregar grupos",
+      "edit": "Editar grupo | Editar grupos",
+      "delete": "Grupo Suprímase | Eliminar grupos"
+    }
   },
   "template": {
     "edit-tags": "Editar etiquetas",
@@ -2259,6 +2291,17 @@
     "team-group-delete": {
       "success": "El grupo ha sido eliminado con éxito",
       "error": "Error durante la eliminación del grupo"
+    },
+    "template-get": {
+      "error": "Error durante la obtención de plantilla"
+    },
+    "group-project-create": {
+      "success": "Los proyectos se han añadido con éxito",
+      "error": "Error durante los proyectos añadidos"
+    },
+    "group-project-remove": {
+      "success": "El proyecto se ha eliminado con éxito",
+      "error": "Error durante el proyecto eliminado"
     }
   },
   "success": {
@@ -2747,7 +2790,9 @@
       "publication-status-errors": {
         "required": "Este campo es necesario"
       },
-      "delete": "Grupo Suprímase"
+      "delete": "Grupo Suprímase",
+      "confirm-remove-project": "¿De verdad quieres eliminar este proyecto?",
+      "confirm-remove-member": "¿De verdad quieres eliminar a este miembro?"
     },
     "view": "Ver grupo",
     "conferences": "Conferencias",
@@ -3173,6 +3218,10 @@
     "label": "Función | Funciones",
     "edit": "Modifier les rôles",
     "select": "Seleccione los derechos",
-    "help": "Información sobre roles."
+    "help": "Información sobre roles.",
+    "viewers": {
+      "label": "Viewer | Viewers",
+      "help": "Viewer: No tiene derechos de edición."
+    }
   }
 }

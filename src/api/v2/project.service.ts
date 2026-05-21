@@ -147,7 +147,7 @@ export const getProjectLocations = (
   )
 }
 
-type ConfigSimilar = UseAsyncApiConfig<QueryFilterProjectSimilars>
+type ConfigSimilar = UseAsyncPaginationApiConfig<QueryFilterProjectSimilars>
 
 export const getProjectSimilars = (
   organization: RefOrRaw<OrganizationModel['code']>,
@@ -158,7 +158,7 @@ export const getProjectSimilars = (
 
   const { translateProjects } = useAutoTranslate()
 
-  return useAsyncAPI(
+  return useAsyncPaginationAPI(
     key,
     ({ config }) =>
       fetchProjectSimilars(unref(projectSlugOrId), {

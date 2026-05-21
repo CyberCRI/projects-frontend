@@ -802,7 +802,6 @@
   "drawer": {
     "clear": "Clear all selected",
     "select-all": "Select all",
-
     "member": {
       "add": "Add member | Add members",
       "edit": "Edit member | Edit members",
@@ -1559,7 +1558,11 @@
     },
     "description": "Description",
     "destroy": "Delete project",
-    "duplicate": "Duplicate this project",
+    "duplicate": {
+      "label": "Duplicate project",
+      "title": "Do you realy want to duplicate this project?",
+      "help": "The project will be cloned without members."
+    },
     "edit": "Edit project",
     "edit-linked-project": "Edit linked project",
     "edit-location-point": "Edit location point",

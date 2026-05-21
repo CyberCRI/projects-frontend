@@ -801,7 +801,22 @@
   },
   "drawer": {
     "clear": "Puhasta kõik valitud",
-    "select-all": "Valige kõik"
+    "select-all": "Valige kõik",
+    "member": {
+      "add": "Lisa liige | Lisa liikmeid",
+      "edit": "Muuda liiget | Muuda liikmeid",
+      "delete": "Kustuta liige | Liikmete kustutamine"
+    },
+    "group": {
+      "add": "Lisa grupp | Gruppide lisamine",
+      "edit": "Redigeerimisgrupp | Gruppide redigeerimine",
+      "delete": "Kustuta grupp | Gruppide kustutamine"
+    },
+    "project": {
+      "add": "Lisa projekt | Lisa projekte",
+      "edit": "Muuda projekti | Muuda projekte",
+      "delete": "Kustuta projekt | Kustuta projektid"
+    }
   },
   "faq": {
     "delete-confirm-content": "Kas oled kindel, et soovid kustutada portaali jaoks isikupärastatud abikaardi. Kogu selle sisu kustutatakse.",
@@ -1542,7 +1557,6 @@
       "title": "Uue projekti loomine"
     },
     "destroy": "Kustuta projekt",
-    "duplicate": "Dubleerib projekti",
     "edit": "Redigeerida",
     "edit-linked-project": "Seotud projekti muutmine",
     "edit-location-point": "Muuda asukohapunkti",
@@ -1575,7 +1589,8 @@
       },
       "project-templates": "Malli nimi",
       "completed-info-to-access-presentation": "Esitlusele pääsemiseks tuleb täita kogu lehel olev teave.",
-      "purpose-placeholder": "Mis on teie projekti eesmärk?"
+      "purpose-placeholder": "Mis on teie projekti eesmärk?",
+      "comment": "Kommentaari väli on nõutav."
     },
     "image-header": "Pilt",
     "image-alert": {
@@ -1627,7 +1642,14 @@
     "actions": "Kiire tegutsemine",
     "copy": "(koopia)",
     "nothing": "Siin pole midagi...",
-    "tag-warning": "NB: Kui kasutaja vahetab teie portaalis keeli, tõlgime nende jaoks tõlkimisega sildid. Vastasel juhul näidatakse silte inglise keeles."
+    "tag-warning": "NB: Kui kasutaja vahetab teie portaalis keeli, tõlgime nende jaoks tõlkimisega sildid. Vastasel juhul näidatakse silte inglise keeles.",
+    "description": "Kirjeldus",
+    "duplicate": {
+      "label": "Topeltprojekt",
+      "title": "Kas sa tõesti tahad seda projekti dubleerida?",
+      "help": "Projekt kloonitakse ilma liikmeteta."
+    },
+    "groups": "Grupp | Grupid"
   },
   "project_list": {
     "updated_at": "Viimane aktiivne",
@@ -1687,14 +1709,14 @@
     "error-uploading-image": "Viga pildi üleslaadimisel",
     "cannot-upload-image": "Pildi üleslaadimine nurjus",
     "link-address": "Linki aadress",
-    "resources": "Ressursse",
+    "resources": "Ressursi | Ressursid",
     "web": "Link veebiressursile | lingid veebiressurssidele",
     "web-link": "Veebilink | veebilink | veebilingid",
     "delete": "Kas tõesti kustutada see ressurss?",
     "file": {
       "add": "Faili lisamine | Failide lisamine",
       "edit": "Faili redigeerimine | Failide redigeerimine",
-      "label": "Fail",
+      "label": "Fail | Failid",
       "delete": "Kas tõesti kustutada see fail? | Kas tõesti kustutada failid?",
       "form": {
         "too-big": "Fail on liiga suur (maksimaalselt: {maxSize}Mb)"
@@ -1703,7 +1725,7 @@
     "link": {
       "add": "Lisa link | Lisa lingid",
       "edit": "Muuda linki | Viitade muutmine",
-      "label": "Link aadress",
+      "label": "Link aadress | Linkide aadress",
       "delete": "Kas tõesti kustutada see link? | Kas tõesti kustutada lingid?"
     }
   },
@@ -1968,7 +1990,17 @@
     "no-user-message": "Ükski kasutaja ei vasta sinu otsingule",
     "remove-user-confirm": "Kas tõesti kustutada see kasutaja projektist?",
     "remove-group-confirm": "Kas tõesti kustutada see grupp projektist?",
-    "team": "Meeskond"
+    "team": "Meeskond",
+    "member": {
+      "add": "Lisa liige | Lisa liikmeid",
+      "edit": "Muuda liiget | Muuda liikmeid",
+      "delete": "Kustuta liige | Liikmete kustutamine"
+    },
+    "group": {
+      "add": "Lisa grupp | Gruppide lisamine",
+      "edit": "Redigeerimisgrupp | Gruppide redigeerimine",
+      "delete": "Kustuta grupp | Gruppide kustutamine"
+    }
   },
   "template": {
     "edit-tags": "Siltide muutmine",
@@ -2259,6 +2291,17 @@
     "team-group-delete": {
       "success": "Grupp on edukalt kustutatud",
       "error": "Viga grupi kustutamisel"
+    },
+    "template-get": {
+      "error": "Viga malli hankimisel"
+    },
+    "group-project-create": {
+      "success": "Projektid on edukalt lisandunud",
+      "error": "Viga lisatud projektides"
+    },
+    "group-project-remove": {
+      "success": "Projekt on edukalt eemaldatud",
+      "error": "Viga projekti jooksul eemaldatud"
     }
   },
   "success": {
@@ -2747,7 +2790,9 @@
       "publication-status-errors": {
         "required": "See väli on nõutav"
       },
-      "delete": "Kustuta grupp"
+      "delete": "Kustuta grupp",
+      "confirm-remove-project": "Kas tõesti soovite selle projekti eemaldada?",
+      "confirm-remove-member": "Kas te tõesti soovite selle liikme eemaldada?"
     },
     "view": "Vaata gruppi",
     "conferences": "Konverentsid",
@@ -3173,6 +3218,10 @@
     "label": "Roll | Rollid",
     "edit": "Modifier les rôles",
     "select": "Õiguste valimine",
-    "help": "Teave rollide kohta."
+    "help": "Teave rollide kohta.",
+    "viewers": {
+      "label": "Vaataja | Vaatajad",
+      "help": "Vaataja: tal ei ole redigeerimisõigusi."
+    }
   }
 }

@@ -63,12 +63,7 @@
         @action-triggered="actionTriggered"
       >
         <li class="navpanel-menu-entry">
-          <ToolTip
-            class="project-infos-tip shadowed"
-            placement="top"
-            trigger="clickToOpen"
-            style="width: 100%"
-          >
+          <ToolTip class="project-infos-tip shadowed w-full" placement="top" trigger="clickToOpen">
             <template #custom-content>
               <dl class="projects-infos-list">
                 <dt>{{ $t('header.views') }}</dt>
@@ -99,7 +94,8 @@
     <ConfirmModal
       v-if="stateModals.duplicate"
       :asyncing="asyncing"
-      :title="$t('project.duplicate')"
+      :title="$t('project.duplicate.title')"
+      :content="$t('project.duplicate.help')"
       @cancel="closeModals('duplicate')"
       @confirm="onDuplicate"
     />
@@ -118,11 +114,11 @@ import type { MenuEntry } from '~/components/base/navigation/NavPanelMenu.vue'
 import { useProjectFollow } from '~/composables/project/useProjectFollow'
 import { duplicateProject, patchProject } from '~/api/projects.service'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import ReportDrawer from '~/components/drawer/ReportDrawer.vue'
 import { projectSkeleton } from '~/skeletons/project.skeletons'
 import type { TranslatedProject } from '@/models/project.model'
 import { factoriesSkeleton } from '~/skeletons/base.skeletons'
 import { getProjectSimilars } from '~/api/v2/project.service'
-import ReportDrawer from '~/components/app/ReportDrawer.vue'
 import FetchLoader from '~/components/base/FetchLoader.vue'
 import type { IconImageChoice } from '~/functs/IconImage'
 import useUsersStore from '@/stores/useUsers'
@@ -166,16 +162,21 @@ const usersStore = useUsersStore()
 const organizationCode = useOrganizationCode()
 
 const project = computed(() => props.project)
-const projectId = computed(() => props.project.id)
+const projectId = computed(() => project.value.id)
 
 const { canEditProject, isOrgUser } = usePermissions()
 const { isFollowing, toggleFollow } = useProjectFollow(project)
+
+const LIMIT_SIMILARS = 5
 
 const { status, data: similars } = getProjectSimilars(organizationCode, projectId, {
   query: {
     organizations: [organizationCode],
   },
-  default: () => factoriesSkeleton(projectSkeleton, props.project.modules.similars),
+  paginationConfig: {
+    limit: LIMIT_SIMILARS,
+  },
+  default: () => factoriesSkeleton(projectSkeleton, props.project.modules.similars, LIMIT_SIMILARS),
 })
 
 const actionMenu = computed(
@@ -185,7 +186,7 @@ const actionMenu = computed(
         icon: 'Copy' as IconImageChoice,
         key: 'duplicate',
         condition: canEditProject.value || isOrgUser.value,
-        label: t('project.duplicate'),
+        label: t('project.duplicate.label'),
         isAddAction: true,
         addModal: 'duplicate',
         dataTest: 'duplicate-project',

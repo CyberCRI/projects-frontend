@@ -801,7 +801,22 @@
   },
   "drawer": {
     "clear": "Effacer la sélection",
-    "select-all": "Tout sélectionner"
+    "select-all": "Tout sélectionner",
+    "member": {
+      "add": "Ajouter un membre | Ajouter des membres",
+      "edit": "Modifier le membre | Modifier les membres",
+      "delete": "Supprimer le membre | Supprimer les membres"
+    },
+    "group": {
+      "add": "Ajouter un groupe | Ajouter des groupes",
+      "edit": "Modifier le groupe | Modifier les groupes",
+      "delete": "Supprimer le groupe | Supprimer les groupes"
+    },
+    "project": {
+      "add": "Ajouter un projet | Ajouter des projets",
+      "edit": "Modifier le projet | Modifier les projets",
+      "delete": "Supprimer le projet | Supprimer les projets"
+    }
   },
   "faq": {
     "delete-confirm-content": "Etes-vous bien sûr de vouloir supprimer l'onglet d'aide personnalisée pour votre portail? Tout son contenu sera effacé.",
@@ -986,7 +1001,9 @@
       "publication-status-errors": {
         "required": "Ce champ est requis"
       },
-      "delete": "Supprimer le groupe"
+      "delete": "Supprimer le groupe",
+      "confirm-remove-project": "Voulez-vous vraiment supprimer ce projet ?",
+      "confirm-remove-member": "Voulez-vous vraiment retirer ce membre?"
     },
     "view": "Voir le groupe",
     "conferences": "Conférences",
@@ -1625,7 +1642,6 @@
       "title": "Créer un nouveau projet"
     },
     "destroy": "Supprimer ce projet",
-    "duplicate": "Dupliquer ce projet",
     "edit": "Modifier le projet",
     "edit-linked-project": "Modifier le projet lié",
     "edit-location-point": "Modifier ce point de localisation",
@@ -1658,7 +1674,8 @@
         "min": "Le champ mission doit contenir au minimum 3 caractères"
       },
       "project-templates": "Nom du modèle",
-      "purpose-placeholder": "Quel est le but de votre projet?"
+      "purpose-placeholder": "Quel est le but de votre projet?",
+      "comment": "Le champ de commentaires est requis."
     },
     "image-header": "Image",
     "image-alert": {
@@ -1710,7 +1727,14 @@
     "actions": "Actions rapides",
     "copy": "(copie)",
     "nothing": "Il n'y a rien ici...",
-    "tag-warning": "NB: Si un utilisateur change la langue de votre portail, les tags qui possèdent des traductions dans Wikipedia seront traduits. Les autres seront affichés en priorité en anglais et sinon dans la langue originale."
+    "tag-warning": "NB: Si un utilisateur change la langue de votre portail, les tags qui possèdent des traductions dans Wikipedia seront traduits. Les autres seront affichés en priorité en anglais et sinon dans la langue originale.",
+    "description": "Désignation des marchandises",
+    "duplicate": {
+      "label": "Projet en double",
+      "title": "Voulez-vous vraiment reproduire ce projet ?",
+      "help": "Le projet sera cloné sans membres."
+    },
+    "groups": "Groupe | Groupes"
   },
   "project_list": {
     "updated_at": "Dernier actif",
@@ -1770,14 +1794,14 @@
     "error-uploading-image": "Erreur à la sauvegarde de l'image ",
     "cannot-upload-image": "Impossible de sauveagrder l'image pour l'instant",
     "link-address": "Url du lien",
-    "resources": "Ressources",
+    "resources": "Ressources | Ressources",
     "web": "Lien aux ressources web | lien aux ressources web",
     "web-link": "Lien Web | lien Web | Liens Web",
     "delete": "Êtes-vous sûr de supprimer cette ressource?",
     "file": {
       "add": "Ajouter un fichier | Ajouter des fichiers",
       "edit": "Modifier un fichier | Modifier les fichiers",
-      "label": "Fichier",
+      "label": "Fichier | Fichiers",
       "delete": "Êtes-vous sûr de supprimer ce fichier ? | Êtes-vous sûr de supprimer les fichiers ?",
       "form": {
         "too-big": "Le fichier est trop grand (max: {maxSize}Mb)"
@@ -1786,7 +1810,7 @@
     "link": {
       "add": "Ajouter un lien | Ajouter des liens",
       "edit": "Modifier un lien | Modifier les liens",
-      "label": "Adresse du lien",
+      "label": "Adresse du lien | Liens Adresse",
       "delete": "Êtes-vous sûr de supprimer ce lien ? | Êtes-vous sûr de supprimer les liens ?"
     }
   },
@@ -2051,7 +2075,17 @@
     "no-user-message": "Aucun utilisateur ne correspond à votre recherche",
     "remove-user-confirm": "Êtes-vous sûr de vouloir supprimer cet utilisateur du projet ?",
     "remove-group-confirm": "Êtes-vous sûr de vouloir supprimer ce groupe du projet ?",
-    "team": "Équipe"
+    "team": "Équipe",
+    "member": {
+      "add": "Ajouter un membre | Ajouter des membres",
+      "edit": "Modifier le membre | Modifier les membres",
+      "delete": "Supprimer le membre | Supprimer les membres"
+    },
+    "group": {
+      "add": "Ajouter un groupe | Ajouter des groupes",
+      "edit": "Modifier le groupe | Modifier les groupes",
+      "delete": "Supprimer le groupe | Supprimer les groupes"
+    }
   },
   "template": {
     "edit-tags": "Modifier les tags",
@@ -2342,6 +2376,17 @@
     "team-group-delete": {
       "success": "Le groupe a bien été supprimé",
       "error": "Erreur lors de la suppression du groupe"
+    },
+    "template-get": {
+      "error": "Erreur lors de l'obtention du modèle"
+    },
+    "group-project-create": {
+      "success": "Les projets ont été ajoutés avec succès",
+      "error": "Erreur lors des projets ajoutés"
+    },
+    "group-project-remove": {
+      "success": "Le projet a été supprimé avec succès",
+      "error": "Erreur pendant le projet supprimé"
     }
   },
   "success": {
@@ -3173,6 +3218,10 @@
     "label": "Rôle | Rôles",
     "edit": "Modifier les rôles",
     "select": "Sélectionnez les droits",
-    "help": "Informations sur les rôles."
+    "help": "Informations sur les rôles.",
+    "viewers": {
+      "label": "Affichage | Affichages",
+      "help": "Il n'a aucun droit d'édition."
+    }
   }
 }

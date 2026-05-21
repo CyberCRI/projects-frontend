@@ -801,7 +801,22 @@
   },
   "drawer": {
     "clear": "Alles wissen",
-    "select-all": "Alles selecteren"
+    "select-all": "Alles selecteren",
+    "member": {
+      "add": "Lid toevoegen | Leden toevoegen",
+      "edit": "Lid bewerken | Leden bewerken",
+      "delete": "Lid schrappen | Leden schrappen"
+    },
+    "group": {
+      "add": "Groep toevoegen | Groepen toevoegen",
+      "edit": "Groep bewerken | Groepen bewerken",
+      "delete": "Groep verwijderen | Groepen verwijderen"
+    },
+    "project": {
+      "add": "Project toevoegen | Projecten toevoegen",
+      "edit": "Project bewerken | Projecten bewerken",
+      "delete": "Project verwijderen | Projecten verwijderen"
+    }
   },
   "faq": {
     "delete-confirm-content": "Weet u zeker dat u de Help Tab wilt verwijderen die voor uw portal is gepersonaliseerd. Alle inhoud wordt verwijderd.",
@@ -1542,7 +1557,6 @@
       "title": "Een nieuw project aanmaken"
     },
     "destroy": "Project verwijderen",
-    "duplicate": "Dit project dupliceren",
     "edit": "Project bewerken",
     "edit-linked-project": "Gekoppeld project bewerken",
     "edit-location-point": "Locatiepunt bewerken",
@@ -1575,7 +1589,8 @@
       },
       "project-templates": "Sjabloonnaam",
       "completed-info-to-access-presentation": "Alle informatie op de pagina moet worden ingevuld om toegang te krijgen tot de presentatie.",
-      "purpose-placeholder": "Wat is het doel van uw project?"
+      "purpose-placeholder": "Wat is het doel van uw project?",
+      "comment": "Het commentaarveld is vereist."
     },
     "image-header": "Afbeelding",
     "image-alert": {
@@ -1627,7 +1642,14 @@
     "actions": "Snelle acties",
     "copy": "(kopie)",
     "nothing": "Niets hier...",
-    "tag-warning": "NB: Als een gebruiker van taal wisselt in uw portal, zullen de tags met vertalingen voor hen vertaald worden. Anders worden de tags in het Engels weergegeven."
+    "tag-warning": "NB: Als een gebruiker van taal wisselt in uw portal, zullen de tags met vertalingen voor hen vertaald worden. Anders worden de tags in het Engels weergegeven.",
+    "description": "Omschrijving",
+    "duplicate": {
+      "label": "Project dupliceren",
+      "title": "Wil je dit project echt dupliceren?",
+      "help": "Het project wordt gekloond zonder leden."
+    },
+    "groups": "Groep | Groepen"
   },
   "project_list": {
     "updated_at": "Laatste activiteit",
@@ -1687,14 +1709,14 @@
     "error-uploading-image": "Fout bij uploaden van afbeelding",
     "cannot-upload-image": "Kan afbeelding voorlopig niet uploaden",
     "link-address": "Linkadres",
-    "resources": "Middelen",
+    "resources": "Hulpbron | Middelen",
     "web": "Link naar webbron | links naar webbronnen",
     "web-link": "Weblink | weblink | weblinks",
     "delete": "Weet u zeker dat u deze hulpbron wilt verwijderen?",
     "file": {
       "add": "Bestand toevoegen | Bestanden toevoegen",
       "edit": "Bestand bewerken | Bestanden bewerken",
-      "label": "Bestand",
+      "label": "Bestand | Bestanden",
       "delete": "Weet u zeker dat u dit bestand wilt verwijderen? | Weet u zeker dat u bestanden moet verwijderen?",
       "form": {
         "too-big": "Bestand is te groot (max: {maxSize}Mb)"
@@ -1703,7 +1725,7 @@
     "link": {
       "add": "Verwijzing toevoegen | Links toevoegen",
       "edit": "Verwijzing bewerken | Links bewerken",
-      "label": "Linkadres",
+      "label": "Linkadres | Links adres",
       "delete": "Weet u zeker dat u deze link wilt verwijderen? | Weet u zeker dat u links moet verwijderen?"
     }
   },
@@ -1968,7 +1990,17 @@
     "no-user-message": "Geen gebruiker komt overeen met uw zoekopdracht",
     "remove-user-confirm": "Weet u zeker dat u deze gebruiker uit het project wilt verwijderen?",
     "remove-group-confirm": "Weet u zeker dat u deze groep wilt verwijderen uit het project?",
-    "team": "Team"
+    "team": "Team",
+    "member": {
+      "add": "Lid toevoegen | Leden toevoegen",
+      "edit": "Lid bewerken | Leden bewerken",
+      "delete": "Lid schrappen | Leden schrappen"
+    },
+    "group": {
+      "add": "Groep toevoegen | Groepen toevoegen",
+      "edit": "Groep bewerken | Groepen bewerken",
+      "delete": "Groep verwijderen | Groepen verwijderen"
+    }
   },
   "template": {
     "edit-tags": "Tags bewerken",
@@ -2259,6 +2291,17 @@
     "team-group-delete": {
       "success": "De groep is succesvol verwijderd",
       "error": "Fout tijdens het verwijderen van groep"
+    },
+    "template-get": {
+      "error": "Fout bij het ophalen van sjabloon"
+    },
+    "group-project-create": {
+      "success": "De projecten zijn succesvol toegevoegd",
+      "error": "Fout tijdens de toegevoegde projecten"
+    },
+    "group-project-remove": {
+      "success": "Het project is succesvol verwijderd",
+      "error": "Fout tijdens project verwijderd"
     }
   },
   "success": {
@@ -2747,7 +2790,9 @@
       "publication-status-errors": {
         "required": "Dit veld is vereist"
       },
-      "delete": "Groep verwijderen"
+      "delete": "Groep verwijderen",
+      "confirm-remove-project": "Wilt u dit project verwijderen?",
+      "confirm-remove-member": "Wilt u dit lid verwijderen?"
     },
     "view": "Zie groep",
     "conferences": "Conferenties",
@@ -3173,6 +3218,10 @@
     "label": "Rol | Rol",
     "edit": "Modifier les roles",
     "select": "De rechten selecteren",
-    "help": "Informatie over rollen."
+    "help": "Informatie over rollen.",
+    "viewers": {
+      "label": "Viewer | Viewers",
+      "help": "Kijker: Hij heeft geen bewerkingsrechten."
+    }
   }
 }

@@ -801,7 +801,22 @@
   },
   "drawer": {
     "clear": "Alle ausgewählten löschen",
-    "select-all": "Alles auswählen"
+    "select-all": "Alles auswählen",
+    "member": {
+      "add": "Mitglied hinzufügen | Mitglieder hinzufügen",
+      "edit": "Mitglied bearbeiten | Mitglieder bearbeiten",
+      "delete": "Löschen | Mitglieder löschen"
+    },
+    "group": {
+      "add": "Gruppe hinzufügen | Gruppen hinzufügen",
+      "edit": "Gruppe bearbeiten | Gruppen bearbeiten",
+      "delete": "Gruppe löschen | Gruppen löschen"
+    },
+    "project": {
+      "add": "Projekt hinzufügen | Projekte hinzufügen",
+      "edit": "Projekt bearbeiten | Projekte bearbeiten",
+      "delete": "Projekt löschen | Projekte löschen"
+    }
   },
   "faq": {
     "delete-confirm-content": "Sind Sie sicher, dass Sie das für Ihr Portal personalisierte Help Tab löschen möchten. Alle Inhalte werden gelöscht.",
@@ -1542,7 +1557,6 @@
       "title": "Neues Projekt erstellen"
     },
     "destroy": "Projekt löschen",
-    "duplicate": "Duplikat dieses Projekt",
     "edit": "Projekt bearbeiten",
     "edit-linked-project": "Verknüpftes Projekt bearbeiten",
     "edit-location-point": "Standortpunkt bearbeiten",
@@ -1575,7 +1589,8 @@
       },
       "project-templates": "Vorname",
       "completed-info-to-access-presentation": "Alle Informationen auf der Seite müssen ausgefüllt werden, um auf die Präsentation zuzugreifen.",
-      "purpose-placeholder": "Was ist der Zweck Ihres Projekts?"
+      "purpose-placeholder": "Was ist der Zweck Ihres Projekts?",
+      "comment": "Das Kommentarfeld ist erforderlich."
     },
     "image-header": "Bild",
     "image-alert": {
@@ -1627,7 +1642,14 @@
     "actions": "Schnelle Aktionen",
     "copy": "(Kopieren)",
     "nothing": "Nichts hier...",
-    "tag-warning": "NB: Wenn ein Benutzer Sprachen in Ihrem Portal schaltet, werden die Tags mit Übersetzungen für sie übersetzt. Ansonsten werden die Tags auf Englisch angezeigt."
+    "tag-warning": "NB: Wenn ein Benutzer Sprachen in Ihrem Portal schaltet, werden die Tags mit Übersetzungen für sie übersetzt. Ansonsten werden die Tags auf Englisch angezeigt.",
+    "description": "Warenbezeichnung",
+    "duplicate": {
+      "label": "Duplikates Projekt",
+      "title": "Wollen Sie wirklich dieses Projekt duplizieren?",
+      "help": "Das Projekt wird ohne Mitglieder kloniert."
+    },
+    "groups": "Gruppe | Gruppen"
   },
   "project_list": {
     "updated_at": "Letzter Beitrag",
@@ -1687,14 +1709,14 @@
     "error-uploading-image": "Fehler beim Hochladen von Bild",
     "cannot-upload-image": "Bild jetzt nicht hochladen",
     "link-address": "Linkadresse",
-    "resources": "Ressourcen",
+    "resources": "Ressourcen | Ressourcen",
     "web": "Link zur Webressource | Links zu Webressourcen",
     "web-link": "Weblink | web link | web links",
     "delete": "Sind Sie sicher, diese Ressource zu löschen?",
     "file": {
       "add": "Datei hinzufügen | Dateien hinzufügen",
       "edit": "Datei bearbeiten | Dateien bearbeiten",
-      "label": "Datei",
+      "label": "Datei | Dateien",
       "delete": "Sind Sie sicher, diese Datei zu löschen? | Sind Sie sicher, Dateien zu löschen?",
       "form": {
         "too-big": "Die Datei ist zu groß (max: {maxSize}Mb)"
@@ -1703,7 +1725,7 @@
     "link": {
       "add": "Einen Link hinzufügen | Links hinzufügen",
       "edit": "Einen Link bearbeiten | Links bearbeiten",
-      "label": "Link Adresse",
+      "label": "Link Adresse | Anschrift",
       "delete": "Sind Sie sicher, diesen Link zu löschen? | Sind Sie sicher, Links zu löschen?"
     }
   },
@@ -1968,7 +1990,17 @@
     "no-user-message": "Kein Benutzer entspricht Ihrer Suche",
     "remove-user-confirm": "Sind Sie sicher, dass Sie diesen Benutzer aus dem Projekt löschen möchten?",
     "remove-group-confirm": "Sind Sie sicher, dass Sie diese Gruppe aus dem Projekt löschen möchten?",
-    "team": "Team"
+    "team": "Team",
+    "member": {
+      "add": "Mitglied hinzufügen | Mitglieder hinzufügen",
+      "edit": "Mitglied bearbeiten | Mitglieder bearbeiten",
+      "delete": "Löschen | Mitglieder löschen"
+    },
+    "group": {
+      "add": "Gruppe hinzufügen | Gruppen hinzufügen",
+      "edit": "Gruppe bearbeiten | Gruppen bearbeiten",
+      "delete": "Gruppe löschen | Gruppen löschen"
+    }
   },
   "template": {
     "edit-tags": "Tags bearbeiten",
@@ -2259,6 +2291,17 @@
     "team-group-delete": {
       "success": "Die Gruppe wurde erfolgreich gelöscht",
       "error": "Fehler bei der Gruppenlöschung"
+    },
+    "template-get": {
+      "error": "Fehler beim Speichern der Vorlage"
+    },
+    "group-project-create": {
+      "success": "Die Projekte wurden erfolgreich ergänzt",
+      "error": "Fehler bei den hinzugefügten Projekten"
+    },
+    "group-project-remove": {
+      "success": "Das Projekt wurde erfolgreich entfernt",
+      "error": "Fehler während des Projekts entfernt"
     }
   },
   "success": {
@@ -2747,7 +2790,9 @@
       "publication-status-errors": {
         "required": "Dieses Feld ist erforderlich"
       },
-      "delete": "Gruppe löschen"
+      "delete": "Gruppe löschen",
+      "confirm-remove-project": "Möchten Sie dieses Projekt wirklich entfernen?",
+      "confirm-remove-member": "Möchten Sie wirklich dieses Mitglied entfernen?"
     },
     "view": "Siehe Gruppe",
     "conferences": "Konferenzen",
@@ -3173,6 +3218,10 @@
     "label": "Laufsohle | Roggen",
     "edit": "Modifier les rôles",
     "select": "Wählen Sie die Rechte",
-    "help": "Informationen zu Rollen."
+    "help": "Informationen zu Rollen.",
+    "viewers": {
+      "label": "Blick | Sichter",
+      "help": "Viewer: Er hat keine Bearbeitungsrechte."
+    }
   }
 }

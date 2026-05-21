@@ -801,7 +801,22 @@
   },
   "drawer": {
     "clear": "Neteja tots els seleccionats",
-    "select-all": "Selecciona- ho tot"
+    "select-all": "Selecciona- ho tot",
+    "member": {
+      "add": "Afegeix un membre | Afegeix membres",
+      "edit": "Edita el membre | Edita els membres",
+      "delete": "Elimina el membre | Esborra els membres"
+    },
+    "group": {
+      "add": "Afegeix grup | Afegeix grups",
+      "edit": "Edita el grup | Edita grups",
+      "delete": "Esborra el grup | Esborra grups"
+    },
+    "project": {
+      "add": "Afegeix projecte | Afegeix projectes",
+      "edit": "Edita projecte | Edita projectes",
+      "delete": "Elimina projecte | Esborra projectes"
+    }
   },
   "faq": {
     "delete-confirm-content": "Esteu segur que voleu esborrar la pestanya d' ajuda personalitzada pel vostre portal. S' esborrarà tot el seu contingut.",
@@ -1542,7 +1557,6 @@
       "title": "Crea un nou projecte"
     },
     "destroy": "Elimina projecte",
-    "duplicate": "Duplicat aquest projecte",
     "edit": "Edita el projecte",
     "edit-linked-project": "Edita el projecte enllaçat",
     "edit-location-point": "Edita el punt de localització",
@@ -1575,7 +1589,8 @@
       },
       "project-templates": "Nom de la plantilla",
       "completed-info-to-access-presentation": "S' ha de completar tota la informació de la pàgina per accedir a la presentació.",
-      "purpose-placeholder": "Quin és el propòsit del teu projecte?"
+      "purpose-placeholder": "Quin és el propòsit del teu projecte?",
+      "comment": "Es requereix el camp de comentari."
     },
     "image-header": "Imatge",
     "image-alert": {
@@ -1627,7 +1642,14 @@
     "actions": "Accions ràpides",
     "copy": "(copia)",
     "nothing": "No hi ha res aquí...",
-    "tag-warning": "NB: Si un usuari desactiva les llengües al portal, les etiquetes amb traduccions es traduiran per ells. Altrament, les etiquetes es mostraran en anglès."
+    "tag-warning": "NB: Si un usuari desactiva les llengües al portal, les etiquetes amb traduccions es traduiran per ells. Altrament, les etiquetes es mostraran en anglès.",
+    "description": "Descripció",
+    "duplicate": {
+      "label": "Duplica el projecte",
+      "title": "Voleu duplicar aquest projecte?",
+      "help": "El projecte serà clonat sense membres."
+    },
+    "groups": "Grup | Grups"
   },
   "project_list": {
     "updated_at": "L' últim actiu",
@@ -1687,14 +1709,14 @@
     "error-uploading-image": "S' ha produït un error en pujar la imatge",
     "cannot-upload-image": "No es pot pujar la imatge per ara",
     "link-address": "Adreça de l' enllaç",
-    "resources": "Recursos",
+    "resources": "Recurs | Recursos",
     "web": "Enllaç al recurs web | Enllaços als recursos web",
     "web-link": "Enllaç web | Enllaç web | Enllaços web",
     "delete": "Esteu segur d' eliminar aquest recurs?",
     "file": {
       "add": "Afegeix un fitxer | Afegeix fitxers",
       "edit": "Edita un fitxer | Edita fitxers",
-      "label": "Fitxer",
+      "label": "Fitxer | Fitxers",
       "delete": "Esteu segur d' eliminar aquest fitxer? | Esteu segur d' esborrar els fitxers?",
       "form": {
         "too-big": "El fitxer és massa gran (màx. {maxSize}Mb)"
@@ -1703,7 +1725,7 @@
     "link": {
       "add": "Afegeix un enllaç | Afegeix enllaços",
       "edit": "Edita un enllaç | Edita els enllaços",
-      "label": "Adreça d' enllaç",
+      "label": "Adreça d' enllaç | Adreça dels enllaços",
       "delete": "Esteu segur d' esborrar aquest enllaç? | Esteu segur d' esborrar els enllaços?"
     }
   },
@@ -1968,7 +1990,17 @@
     "no-user-message": "No es correspon cap usuari a la cerca",
     "remove-user-confirm": "Esteu segur que voleu eliminar aquest usuari del projecte?",
     "remove-group-confirm": "Esteu segur que voleu eliminar aquest grup del projecte?",
-    "team": "Equip"
+    "team": "Equip",
+    "member": {
+      "add": "Afegeix un membre | Afegeix membres",
+      "edit": "Edita el membre | Edita els membres",
+      "delete": "Elimina el membre | Esborra els membres"
+    },
+    "group": {
+      "add": "Afegeix grup | Afegeix grups",
+      "edit": "Edita el grup | Edita grups",
+      "delete": "Esborra el grup | Esborra grups"
+    }
   },
   "template": {
     "edit-tags": "Edita etiquetes",
@@ -2259,6 +2291,17 @@
     "team-group-delete": {
       "success": "El grup s' ha esborrat correctament",
       "error": "Error durant l' esborrat del grup"
+    },
+    "template-get": {
+      "error": "Error en obtenir la plantilla"
+    },
+    "group-project-create": {
+      "success": "Els projectes s' han afegit correctament",
+      "error": "Error durant els projectes afegits"
+    },
+    "group-project-remove": {
+      "success": "El projecte s' ha eliminat correctament",
+      "error": "Error durant el projecte esborrat"
     }
   },
   "success": {
@@ -2747,7 +2790,9 @@
       "publication-status-errors": {
         "required": "Cal aquest camp"
       },
-      "delete": "Esborra el grup"
+      "delete": "Esborra el grup",
+      "confirm-remove-project": "Esteu segur que voleu eliminar aquest projecte?",
+      "confirm-remove-member": "Esteu segur que voleu eliminar aquest membre?"
     },
     "view": "Mireu el grup",
     "conferences": "Conferèncias",
@@ -3173,6 +3218,10 @@
     "label": "Funció | Rols",
     "edit": "Modificadors de rôles",
     "select": "Seleccioneu els drets",
-    "help": "Informació sobre funcions."
+    "help": "Informació sobre funcions.",
+    "viewers": {
+      "label": "Visor | Visors",
+      "help": "Visor: no té drets d' edició."
+    }
   }
 }

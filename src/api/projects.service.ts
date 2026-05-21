@@ -113,7 +113,8 @@ export async function lockUnlockProject({ project_id, context }) {
 export type ConfigSimilar = UseApiOptions<QueryFilterProjectSimilars>
 
 export async function getProjectSimilars(projectId: ProjectSlugOrId, config: ConfigSimilar = {}) {
-  return await useAPI<ProjectModel[]>(`/project/${projectId}/similar/`, config)
+  console.log('call similars')
+  return await useAPI<PaginationResult<ProjectModel[]>>(`/project/${projectId}/similar/`, config)
 }
 
 type ConfigProjectGroup = UseApiOptions<PaginationResult>

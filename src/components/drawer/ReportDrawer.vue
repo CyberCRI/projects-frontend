@@ -8,6 +8,7 @@ import { defaultReportForm, useReportForm } from '~/form/report'
 import FormPanel from '~/components/base/FormPanel.vue'
 import Field from '~/components/base/form/Field.vue'
 import useToasterStore from '~/stores/useToaster'
+import useUsersStore from '~/stores/useUsers'
 import { isEqual } from 'es-toolkit'
 
 const props = withDefaults(defineProps<{ type: 'abuse' | 'bug'; isOpened?: boolean }>(), {
@@ -18,6 +19,8 @@ const emit = defineEmits<{ close: [] }>()
 
 const toaster = useToasterStore()
 const { t } = useNuxtI18n()
+
+const usersStore = useUsersStore()
 
 const { stateModals, closeModals, openModals, closeAllModals } = useModals({ saveChange: false })
 const { form, isValid, errors, cleanedData, reset } = useReportForm({ lazy: true })
@@ -34,6 +37,8 @@ const defaultLocalForm = () => ({
   ...defaultReportForm(),
   // default urls
   url: useRequestURL().toString(),
+  // add default url from user if user is connected
+  reported_by: usersStore.user?.email || '',
 })
 
 const isFormEqual = computed(() => isEqual(form.value, defaultLocalForm()))
