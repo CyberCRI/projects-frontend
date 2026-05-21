@@ -420,10 +420,15 @@ export default defineLazyEventHandler(() => {
         this.messages = conversation.messages ?? []
       }
 
-      async updateConversation(tx: any) {
+      // TODO: also update this.conversation ? test this for side effects...
+      async updateConversation(tx: any, newTitle: string = '') {
+        const data = {}
+        if (this.conversation!.titleSource === 'fallback' && newTitle) {
+          data.title = newTitle
+        }
         await tx.conversation.update({
           where: { id: this.conversation!.id },
-          data: {},
+          data,
         })
       }
 
@@ -447,6 +452,14 @@ export default defineLazyEventHandler(() => {
           traceAgentMemory('No conversation set')
           return
         }
+
+        // TODO: move this to to updateCOnversation ?
+        // Keep only Unicode letters, digits, underscore, and spaces
+        let newTitle = message.content
+          .replace(/[^\p{L}\p{N}_\s]/gu, '')
+          .replace(/\s+/, ' ')
+          .trim()
+          .slice(0, 25)
         await chatbotPrisma.$transaction(async (tx) => {
           const position = await this.getNextPosition(tx)
           await tx.conversationMessage.create({
@@ -457,7 +470,7 @@ export default defineLazyEventHandler(() => {
               position,
             },
           })
-          await this.updateConversation(tx)
+          await this.updateConversation(tx, newTitle)
         })
       }
 

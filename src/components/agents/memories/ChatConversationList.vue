@@ -1,5 +1,8 @@
 <script setup>
+import { formatDateTime } from '~/functs/date'
 import useUsersStore from '@/stores/useUsers'
+
+const { locale } = useNuxtI18n()
 
 const emit = defineEmits(['show-document'])
 
@@ -13,6 +16,8 @@ function fetchAll() {
 }
 const { data: documentList, status, /*error,*/ refresh } = fetchAll()
 const isAsyncing = computed(() => status.value === 'pending')
+
+const prettyDate = (s) => formatDateTime(new Date(s), locale.value)
 
 defineExpose({ refresh })
 refresh()
@@ -36,8 +41,12 @@ refresh()
         <IconImage name="Article" />
       </div>
       <div class="title">
-        {{ document.title }}
-        <span class="chunk-count">({{ document.lastActiveAt }})</span>
+        {{ document.agent?.title }} - {{ document.title }}
+        <br />
+
+        <span class="chunk-count">User #{{ document.userId }}</span>
+        -
+        <span class="chunk-count">{{ prettyDate(document.lastActiveAt) }}</span>
       </div>
       <div class="actions">
         <ContextActionButton

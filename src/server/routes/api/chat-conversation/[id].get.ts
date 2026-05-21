@@ -21,7 +21,7 @@ export default defineLazyEventHandler(() => {
         organizationCode: runtimeConfig.public.appApiOrgCode,
         id: id,
       },
-      include: { messages: { orderBy: { position: 'asc' } } },
+      include: { messages: { orderBy: { position: 'asc' } }, agent: { select: { title: true } } },
     })
 
     return conversation

@@ -1,9 +1,17 @@
 <script setup>
+import { formatDateTime } from '~/functs/date'
+
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 // import useLoadingFromStatus from '@/composables/useLoadingFromStatus'
 import useUsersStore from '@/stores/useUsers'
 
 const props = defineProps({ agentSlug: { type: String, required: true } })
+
+const { locale } = useNuxtI18n()
+
+const prettyDate = (s) => formatDateTime(new Date(s), locale.value)
+const prettyTitle = (conversation) =>
+  conversation ? `${conversation.title} - ${prettyDate(conversation.lastActiveAt)}` : 'Loading...'
 
 // type Params = Parameters<typeof useFetch>
 const usersStore = useUsersStore()
@@ -52,7 +60,7 @@ function onConversationRestarted() {
 const allConversations = ref([])
 const allConversationOptions = computed(() => [
   ...allConversations.value.map((c) => ({
-    label: c.title,
+    label: prettyTitle(c),
     value: c.id,
   })),
   {

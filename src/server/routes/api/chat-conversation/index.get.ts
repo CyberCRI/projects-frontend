@@ -10,6 +10,7 @@ export default defineLazyEventHandler(() => {
       where: {
         organizationCode: runtimeConfig.public.appApiOrgCode,
       },
+      include: { agent: { select: { title: true } } },
       orderBy: { lastActiveAt: 'desc' },
     })
 

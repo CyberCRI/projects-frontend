@@ -1,16 +1,27 @@
 <script setup>
+import { formatDateTime } from '~/functs/date'
 import useUsersStore from '@/stores/useUsers'
 import { Remarkable } from 'remarkable'
 
+const { locale } = useNuxtI18n()
+
+const prettyDate = (s) => formatDateTime(new Date(s), locale.value)
+
 const md = new Remarkable()
 function renderMd(s) {
-  return md.render(s)
+  try {
+    return md.render(s)
+  } catch {
+    return s
+  }
 }
 
 const usersStore = useUsersStore()
 
 // documentTitle is thread_id
-const props = defineProps({ documentTitle: { type: String, required: true } })
+const props = defineProps({
+  documentTitle: { type: String, required: true },
+})
 const emit = defineEmits(['close'])
 
 let headers = {}
@@ -29,16 +40,26 @@ function isOpen(message) {
   return message.role != 'tool' && message.content != ''
 }
 
+const prettyTitle = computed(() =>
+  conversation.value
+    ? `${conversation.value?.agent?.title} - ${conversation.value?.title} - User #${conversation.value?.userId} - ${prettyDate(conversation.value?.lastActiveAt)}`
+    : 'Loading...'
+)
+
 function showToolContent(s) {
-  console.log(s)
-  const o = JSON.parse(s)
-  return JSON.stringify(JSON.parse(o.text), null, 2)
+  // console.log(s)
+  try {
+    const o = JSON.parse(s)
+    return JSON.stringify(JSON.parse(o.text), null, 2)
+  } catch {
+    return renderMd(s)
+  }
 }
 refresh()
 </script>
 <template>
   <ConfirmModal
-    :title="documentTitle"
+    :title="prettyTitle"
     :asyncing="isAsyncing"
     no-second-button
     :cancel-button-label="$t('common.close')"
