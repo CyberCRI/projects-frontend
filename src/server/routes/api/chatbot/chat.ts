@@ -406,33 +406,37 @@ export default defineLazyEventHandler(() => {
     class ConversationPersistenceHandler extends BaseCallbackHandler {
       name = 'ConversationPersistenceHandler'
 
-      conversation: null
-      lastMessage: null
-      messages: []
+      conversation: {
+        id: string
+        messages?: any[]
+        [key: string]: any
+      } | null = null
+      lastMessage: { position: number } | null = null
+      messages: any[] = []
 
       constructor(conversation: any) {
         super()
         this.conversation = conversation
-        this.messages = conversation.messages
+        this.messages = conversation.messages ?? []
       }
 
-      async updateConversation(tx) {
+      async updateConversation(tx: any) {
         await tx.conversation.update({
-          where: { id: this.conversation.id },
-          data: {}, // @updatedAt fires on any update, even an empty one
+          where: { id: this.conversation!.id },
+          data: {},
         })
       }
 
-      async getLastMessage(tx) {
+      async getLastMessage(tx?: any) {
         const lastMessage = await (tx || chatbotPrisma).conversationMessage.findFirst({
-          where: { conversationId: this.conversation.id },
+          where: { conversationId: this.conversation!.id },
           orderBy: { position: 'desc' },
           select: { position: true },
         })
         this.lastMessage = lastMessage
       }
 
-      async getNextPosition(tx) {
+      async getNextPosition(tx: any) {
         await this.getLastMessage(tx)
         return (this.lastMessage?.position ?? -1) + 1
       }
@@ -447,10 +451,9 @@ export default defineLazyEventHandler(() => {
           const position = await this.getNextPosition(tx)
           await tx.conversationMessage.create({
             data: {
-              conversationId: this.conversation.id,
+              conversationId: this.conversation!.id,
               role: 'user',
               content: message.content,
-              // tool_calls: message.tool_calls ?? null,
               position,
             },
           })
@@ -458,12 +461,12 @@ export default defineLazyEventHandler(() => {
         })
       }
 
-      async handleAssistantMessage(message) {
+      async handleAssistantMessage(message: any) {
         await chatbotPrisma.$transaction(async (tx) => {
           const position = await this.getNextPosition(tx)
           await tx.conversationMessage.create({
             data: {
-              conversationId: this.conversation.id,
+              conversationId: this.conversation!.id,
               role: 'assistant',
               content: message.content,
               toolCalls: message.tool_calls ?? null,
@@ -474,18 +477,23 @@ export default defineLazyEventHandler(() => {
         })
       }
 
-      async handleLLMEnd(output: any) {
+      override async handleLLMEnd(output: any) {
         traceAgentMemory('handle model end')
         if (!this.conversation?.id) {
           traceAgentMemory('No conversation set')
           return
         }
         const message = output.generations[0][0].message
-
         await this.handleAssistantMessage(message)
       }
 
-      async handleToolEnd(output: string, runId: string, parentRunId: string, tags, metadata) {
+      override async handleToolEnd(
+        output: any,
+        runId: string,
+        parentRunId?: string,
+        tags?: string[],
+        metadata?: any
+      ) {
         traceAgentMemory('handle tool end')
         if (!this.conversation?.id) {
           traceAgentMemory('No conversation set')
@@ -495,9 +503,10 @@ export default defineLazyEventHandler(() => {
           const position = await this.getNextPosition(tx)
           await tx.conversationMessage.create({
             data: {
-              conversationId: this.conversation.id,
+              conversationId: this.conversation!.id,
               role: 'tool',
-              content: output.content,
+              content:
+                typeof output === 'string' ? output : (output?.content ?? JSON.stringify(output)),
               toolCallId: metadata?.tool_call_id ?? null,
               position,
             },
@@ -506,18 +515,16 @@ export default defineLazyEventHandler(() => {
         })
       }
 
-      async handleRetrieverMessage(content, runId) {
-        if (!content) return // skip if retriever returned nothing
+      async handleRetrieverMessage(content: string, runId: string) {
+        if (!content) return
 
         await chatbotPrisma.$transaction(async (tx) => {
           const position = await this.getNextPosition(tx)
           await tx.conversationMessage.create({
             data: {
-              conversationId: this.conversation.id,
+              conversationId: this.conversation!.id,
               role: 'tool',
               content,
-              // use runId to correlate with the retriever invocation
-              // LangChain doesn't give retrievers a tool_call_id the way it does tool nodes, so runId is the best available correlator. If yo
               toolCallId: `retriever_${runId}`,
               position,
             },
@@ -526,7 +533,7 @@ export default defineLazyEventHandler(() => {
         })
       }
 
-      async handleRetrieverEnd(
+      override async handleRetrieverEnd(
         documents: DocumentInterface[],
         runId: string,
         _parentRunId?: string,
@@ -538,14 +545,13 @@ export default defineLazyEventHandler(() => {
           return
         }
 
-        // Serialize retrieved docs into a readable string, preserving source metadata
         const content = documents
           .map((doc, i) => {
             const source = doc.metadata?.source ?? doc.metadata?.id ?? `doc_${i}`
             return `[${source}]\n${doc.pageContent}`
           })
           .join('\n\n---\n\n')
-        await handleRetrieverMessage(content, runId)
+        await this.handleRetrieverMessage(content, runId)
       }
     }
 
@@ -568,7 +574,7 @@ export default defineLazyEventHandler(() => {
         agentId,
       }
       const date = new Date().toISOString()
-      const defaultConversationTitle = agent.title + ' - ' + date //TODO: find a better default
+      const defaultConversationTitle = agent.title + ' - ' + date
 
       let conversation = await chatbotPrisma.conversation.findUnique({
         include: { messages: { orderBy: { position: 'asc' } } },
@@ -577,13 +583,14 @@ export default defineLazyEventHandler(() => {
 
       if (!conversation) {
         traceAgentMemory('Create new conversation')
-        conversation = await chatbotPrisma.conversation.create({
+        const created = await chatbotPrisma.conversation.create({
           data: {
             ...conversationData,
             title: defaultConversationTitle,
             titleSource: 'fallback',
           },
         })
+        conversation = { ...created, messages: [] }
       }
 
       const persistenceHandler = new ConversationPersistenceHandler(conversation)
@@ -707,18 +714,42 @@ export default defineLazyEventHandler(() => {
       organization_code: appApiOrgCode,
     }
 
+    function memoryFilter(msg) {
+      // deliberatly ignore tool to mininimize context
+      // TODO: if required, re-enable tool messages
+      return (
+        (msg.role != 'tool' || msg.toolCallId?.startsWith('retriever_user_context')) && msg.content
+      )
+    }
+
+    function memoryMapper(msg) {
+      // langchanin doenst support tool message ithout correponding ai tool call
+      // but we disguise user context as tool result
+      // so revert back to a pseudo 'assistant' message
+      // TODO: fix when context is done server side tool
+      if (msg.role === 'tool' && msg.toolCallId?.startsWith('retriever_user_context')) {
+        msg.role = 'assistant'
+      }
+      return msg.role === 'ai' || msg.role === 'assistant'
+        ? new AIMessage(msg.content) // langchaine (and memory) use "content", deep-chat uses "text"
+        : new HumanMessage(msg.content) // langchaine (and memory) use "content", deep-chat uses "text"
+    }
+
+    function messageMapper(msg) {
+      return msg.role === 'ai' || msg.role === 'assistant'
+        ? new AIMessage(msg.text) // langchaine (and memory) use "content", deep-chat uses "text"
+        : new HumanMessage(msg.text) // langchaine (and memory) use "content", deep-chat uses "text"
+    }
+
     // TODO: fix typescript mess with agent.stream return type
     try {
       for await (const [token, metadata] of (await agent.stream(
         {
           messages: [
-            ...(persistenceHandler.messages || []),
-            ...messages.map((msg) =>
-              msg.role === 'ai' || msg.role === 'assistant'
-                ? new AIMessage(msg.text)
-                : new HumanMessage(msg.text)
-            ),
+            ...(persistenceHandler.messages || []).filter(memoryFilter).map(memoryMapper),
+            ...messages.map(messageMapper),
           ],
+
           ...customMetadata,
         } as any,
         { ...config, streamMode: 'messages' }
