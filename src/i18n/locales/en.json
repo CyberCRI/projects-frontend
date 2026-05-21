@@ -231,7 +231,9 @@
       "vector-store": "Vector store",
       "prompts": "Prompts",
       "agent-skills": "Agent skills",
-      "agents": "Agents"
+      "agents": "Agents",
+      "conversations": "Conversations",
+      "checkpoints": "Checkpoints"
     },
     "page-title": "Admin",
     "portal": {
@@ -3214,6 +3216,8 @@
     "prompt-placeholder": "Choose a prompt",
     "use-latest-prompt-version": "Use latest prompt version",
     "use-prompt-version": "Use prompt version: ",
+    "use-profile-data": "Access user profile data",
+    "use-project-mcp": "Use Projects MCP",
     "prompt-version-placeholder": "Choose prompt version",
     "start-message-section": "Agent welcome message",
     "tools-section": "Tools",

@@ -37,12 +37,13 @@ export default function useAdminPagesRoutes() {
         path: 'conversations',
         name: 'ConversationsAdminTab',
         component: () => import('../pages/AdminPortalPageV2/Tabs/AgentConversationsAdminTab.vue'),
-      },
-      {
-        path: 'checkpoints',
-        name: 'CheckpointsAdminTab',
-        component: () => import('../pages/AdminPortalPageV2/Tabs/AgentCheckpointsAdminTab.vue'),
       }
+      // TODO: keeping for now
+      // {
+      //   path: 'checkpoints',
+      //   name: 'CheckpointsAdminTab',
+      //   component: () => import('../pages/AdminPortalPageV2/Tabs/AgentCheckpointsAdminTab.vue'),
+      // }
     )
   }
   return [
