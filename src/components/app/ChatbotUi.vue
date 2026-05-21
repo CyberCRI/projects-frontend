@@ -74,6 +74,11 @@ if (props.startMessage) {
 }
 
 const conversationStarted = ref(!!props.history?.length)
+// TODO this is a bit hackish/brittle
+if (!conversationStarted.value) {
+  history.value = welcoming
+}
+
 const requestInterceptor = (requestDetails) => {
   const allMessages = conversationStarted.value
     ? // Server maintains full history via LangGraph checkpointer — only send the new message

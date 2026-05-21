@@ -140,7 +140,12 @@ watch(
 
 const hasUserContext = computed(() => !!agent.value?.useProfileData)
 const hasPageContext = ref(false)
-const { contextMessages } = useChatbotContext({ hasUserContext, hasPageContext })
+const contextMessageRole = 'retriever'
+const { contextMessages } = useChatbotContext({
+  hasUserContext,
+  hasPageContext,
+  contextMessageRole,
+})
 
 useLpiHead2({
   title: computed(() => agent.value?.title),

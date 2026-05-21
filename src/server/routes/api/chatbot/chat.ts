@@ -4,6 +4,7 @@ import { createRetrieverTool } from '@langchain/classic/tools/retriever'
 import { tokenMap, traceMcp } from '@/server/routes/api/chat-stream'
 import { BaseCallbackHandler } from '@langchain/core/callbacks/base'
 import checkAdminRights from '@/server/utils/check-admin-rights.js'
+import type { DocumentInterface } from '@langchain/core/documents'
 import type { BaseMessageChunk } from '@langchain/core/messages'
 import { initChatModel } from 'langchain/chat_models/universal'
 import { tool, createAgent, createMiddleware } from 'langchain'
@@ -489,13 +490,55 @@ export default defineLazyEventHandler(() => {
             data: {
               conversationId: this.conversation.id,
               role: 'tool',
-              content: output,
+              content: output.content,
               toolCallId: metadata?.tool_call_id ?? null,
               position,
             },
           })
           await this.updateConversation(tx)
         })
+      }
+
+      async handleRetrieverMessage(content, runId) {
+        if (!content) return // skip if retriever returned nothing
+
+        await chatbotPrisma.$transaction(async (tx) => {
+          const position = await this.getNextPosition(tx)
+          await tx.conversationMessage.create({
+            data: {
+              conversationId: this.conversation.id,
+              role: 'tool',
+              content,
+              // use runId to correlate with the retriever invocation
+              // LangChain doesn't give retrievers a tool_call_id the way it does tool nodes, so runId is the best available correlator. If yo
+              toolCallId: `retriever_${runId}`,
+              position,
+            },
+          })
+          await this.updateConversation(tx)
+        })
+      }
+
+      async handleRetrieverEnd(
+        documents: DocumentInterface[],
+        runId: string,
+        parentRunId?: string,
+        tags?: string[]
+      ) {
+        console.log('handle retriever end')
+        if (!this.conversation?.id) {
+          console.error('No conversation set')
+          return
+        }
+
+        // Serialize retrieved docs into a readable string, preserving source metadata
+        const content = documents
+          .map((doc, i) => {
+            const source = doc.metadata?.source ?? doc.metadata?.id ?? `doc_${i}`
+            return `[${source}]\n${doc.pageContent}`
+          })
+          .join('\n\n---\n\n')
+        await handleRetrieverMessage(content, runId)
       }
     }
 
@@ -652,6 +695,12 @@ export default defineLazyEventHandler(() => {
         console.log('Saving last assistant message:', message.text)
         // TODO: handle tool call parameters ?
         if (message.text) await persistenceHandler.handleAssistantMessage({ content: message.text })
+      } else if (message.role === 'retriever') {
+        // handle "user profile" stuffed. TODO: make a real server side tool
+        console.log('Saving last retriever message:', message.text)
+        // TODO: handle tool call parameters ?
+        if (message.text)
+          await persistenceHandler.handleRetrieverMessage(message.text, `user_context_${uuidv4()}`)
       }
       // TODO handle tool response  message ?
       //}

@@ -1,5 +1,11 @@
 <script setup>
 import useUsersStore from '@/stores/useUsers'
+import { Remarkable } from 'remarkable'
+
+const md = new Remarkable()
+function renderMd(s) {
+  return md.render(s)
+}
 
 const usersStore = useUsersStore()
 
@@ -19,6 +25,15 @@ function fetchAll() {
 const { data: conversation, status /* , error */, refresh } = fetchAll()
 const isAsyncing = computed(() => status.value === 'pending')
 
+function isOpen(message) {
+  return message.role != 'tool' && message.content != ''
+}
+
+function showToolContent(s) {
+  console.log(s)
+  const o = JSON.parse(s)
+  return JSON.stringify(JSON.parse(o.text), null, 2)
+}
 refresh()
 </script>
 <template>
@@ -34,10 +49,43 @@ refresh()
       <LoaderSimple />
     </div>
     <div v-else>
-      <div v-for="message in conversation.messages" :key="message.id" class="message">
-        <h4 class="message.role">{{ message.position }} - {{ message.role }}</h4>
-        <p>{{ message.content }}</p>
-      </div>
+      <details
+        v-for="message in conversation.messages"
+        :key="message.id"
+        class="message"
+        :open="isOpen(message)"
+      >
+        <summary>
+          <strong class="message.role">
+            {{ message.position }} - {{ message.role }}
+            <span v-if="message.toolCalls?.length">(Tool requests)</span>
+            <span
+              v-else-if="
+                message.role == 'tool' && message.toolCallId?.startsWith('retriever_user_context')
+              "
+            >
+              (User context)
+            </span>
+            <span
+              v-else-if="message.role == 'tool' && message.toolCallId?.startsWith('retriever_')"
+            >
+              (Retriever)
+            </span>
+            <span v-else="message.role == 'tool'">(Result)</span>
+          </strong>
+        </summary>
+        <div class="message-content">
+          <pre v-if="message.role == 'tool' && !message.toolCallId?.startsWith('retriever_')">
+            {{ showToolContent(message.content) }}
+          </pre>
+          <div v-else v-html="renderMd(message.content)" />
+          <ul v-if="message.toolCalls">
+            <li v-for="tool_call in message.toolCalls" :key="tool_call.id">
+              <pre>{{ JSON.stringify(tool_call, null, 2) }}</pre>
+            </li>
+          </ul>
+        </div>
+      </details>
     </div>
   </ConfirmModal>
 </template>
@@ -74,5 +122,14 @@ refresh()
   background-color: $primary-lighter;
   border-bottom: 1px solid $primary-dark;
   text-align: center;
+}
+
+summary {
+  color: $primary-dark;
+  background-color: $primary-lighter;
+  font-size: 1.16em;
+}
+.message-content {
+  margin-left: 1rem;
 }
 </style>

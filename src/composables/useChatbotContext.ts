@@ -5,7 +5,7 @@ import { SDGS } from '~/functs/constants'
 const _allowProfile = ref(false)
 const _allowCurrentPage = ref(false)
 
-export default function useChatbotContext({ hasUserContext, hasPageContext }) {
+export default function useChatbotContext({ hasUserContext, hasPageContext, contextMessageRole }) {
   const usersStore = useUsersStore()
 
   const allowProfile = computed(() => unref(hasUserContext) && _allowProfile.value)
@@ -88,11 +88,11 @@ export default function useChatbotContext({ hasUserContext, hasPageContext }) {
   }
   const contextMessages = computed(() => [
     {
-      role: 'assistant',
+      role: contextMessageRole || 'assistant',
       text: userContext.value,
     },
     {
-      role: 'assistant',
+      role: contextMessageRole || 'assistant',
       text: pageContext.value,
     },
   ])

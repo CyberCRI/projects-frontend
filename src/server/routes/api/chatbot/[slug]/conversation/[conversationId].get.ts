@@ -52,7 +52,15 @@ export default defineLazyEventHandler(() => {
         userId: user.id,
         agentId: agent.id,
       },
-      include: { messages: { orderBy: { position: 'asc' } } },
+      include: {
+        messages: {
+          where: {
+            role: { in: ['user', 'assistant'] },
+            content: { not: '' }, // so we filter out tool call request message
+          },
+          orderBy: { position: 'asc' },
+        },
+      },
       orderBy: { lastActiveAt: 'desc' },
     })
 
