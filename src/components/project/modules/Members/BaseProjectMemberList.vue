@@ -4,7 +4,6 @@ import UserProfileDrawer from '~/components/drawer/User/UserProfileDrawer.vue'
 import UserSelectDrawer from '~/components/drawer/User/UserSelectDrawer.vue'
 import type { TranslatedPojectMember } from '~/models/project-member.model'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
-import ProjectTeamEditor from '~/components/project/ProjectTeamEditor.vue'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import CardInlineUser from '~/components/drawer/User/CardInlineUser.vue'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
@@ -18,6 +17,7 @@ import { getProjectMembers } from '@/api/v2/project.service'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { PROJECTS_MEMBERS_ROLES } from '~/functs/constants'
 import type { ProjectMemberRoleType } from '~/models/types'
+import CardEditor from '~/components/base/CardEditor.vue'
 import { roleI18n } from '~/functs/rolesUtils'
 import { groupBy } from 'es-toolkit'
 
@@ -172,7 +172,7 @@ const onDeleteConfirm = () => {
           :quantity="team.members.length"
         />
         <div class="team-members">
-          <ProjectTeamEditor
+          <CardEditor
             v-for="member in team.members"
             :key="member.id"
             :can-edit="editable"
@@ -181,7 +181,7 @@ const onDeleteConfirm = () => {
             @delete="onDelete(member)"
           >
             <UserCard :user="member" @click="openProfile(member)" />
-          </ProjectTeamEditor>
+          </CardEditor>
         </div>
       </div>
       <NothingHere v-if="teams.length === 0" />
@@ -191,6 +191,9 @@ const onDeleteConfirm = () => {
   <!-- drawer / modal -->
   <UserSelectDrawer
     :is-opened="stateModals.add"
+    :query="{
+      exclude_users_in_project: project.id,
+    }"
     @submit="onSelectedUser"
     @close="closeModals('add')"
   />

@@ -4,7 +4,6 @@ import GroupSelectDrawer from '~/components/drawer/Group/GroupSelectDrawer.vue'
 import CardInlineGroup from '~/components/drawer/Group/CardInlineGroup.vue'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
-import ProjectTeamEditor from '~/components/project/ProjectTeamEditor.vue'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import RolesDrawer from '~/components/drawer/Role/RolesDrawer.vue'
@@ -15,6 +14,7 @@ import FetchLoader from '@/components/base/FetchLoader.vue'
 import { groupSkeleton } from '~/skeletons/group.skeletons'
 import { getProjectGroups } from '~/api/v2/project.service'
 import type { ProjectGroupRoleType } from '~/models/types'
+import CardEditor from '~/components/base/CardEditor.vue'
 import { PROJECTS_GROUP_ROLES } from '~/functs/constants'
 import GroupCard from '~/components/group/GroupCard.vue'
 import { roleI18n } from '~/functs/rolesUtils'
@@ -173,7 +173,7 @@ const onDeleteConfirm = () => {
           :quantity="team.groups.length"
         />
         <div class="team-groups">
-          <ProjectTeamEditor
+          <CardEditor
             v-for="group in team.groups"
             :key="group.id"
             :can-edit="editable"
@@ -182,7 +182,7 @@ const onDeleteConfirm = () => {
             @delete="onDelete(group)"
           >
             <GroupCard :group="group" />
-          </ProjectTeamEditor>
+          </CardEditor>
         </div>
       </div>
       <NothingHere v-if="teams.length === 0" />
@@ -192,6 +192,9 @@ const onDeleteConfirm = () => {
   <!-- drawer / modal -->
   <GroupSelectDrawer
     :is-opened="stateModals.add"
+    :query="{
+      exclude_groups_in_project: project.id,
+    }"
     @submit="onSelectedGroup"
     @close="closeModals('add')"
   />

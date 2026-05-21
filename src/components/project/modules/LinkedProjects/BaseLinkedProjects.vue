@@ -10,6 +10,7 @@ import type { TranslatedProject } from '@/models/project.model'
 import NothingHere from '~/components/base/NothingHere.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { getLinkedProject } from '@/api/v2/project.service'
+import CardEditor from '~/components/base/CardEditor.vue'
 import analytics from '~/analytics'
 
 const props = withDefaults(
@@ -82,12 +83,11 @@ const onDeleteConfirm = () => {
 
 const onSubmit = (linkedProjects: TranslatedProject[]) => {
   asyncing.value = true
-  const body = {
-    projects: linkedProjects.map((linkedProject) => ({
-      project_id: linkedProject.id,
-      target_id: props.project.id,
-    })),
-  }
+
+  const body = linkedProjects.map((linkedProject) => ({
+    project_id: linkedProject.id,
+    target_id: props.project.id,
+  }))
 
   addLinkedProject(props.project.id, body)
     .then((linkedProject) => {
@@ -114,11 +114,14 @@ const onSubmit = (linkedProjects: TranslatedProject[]) => {
       @add="openModals('add')"
     />
     <div class="list-flow-container">
-      <ProjectCard v-for="linked in linkedProjects" :key="linked.id" :project="linked.project">
-        <template v-if="editable" #action>
-          <ContextActionMenuInline can-delete @delete="onDelete(linked)" />
-        </template>
-      </ProjectCard>
+      <CardEditor
+        v-for="linked in linkedProjects"
+        :key="linked.id"
+        :can-delete="editable"
+        @delete="onDelete(linked)"
+      >
+        <ProjectCard :project="linked.project"></ProjectCard>
+      </CardEditor>
     </div>
     <NothingHere v-if="linkedProjects.length === 0" />
     <PaginationButtonsV2 v-if="!preview" class="m8" :pagination="pagination" />
@@ -128,6 +131,10 @@ const onSubmit = (linkedProjects: TranslatedProject[]) => {
   <ProjectSelectDrawer
     :is-opened="stateModals.add"
     :asyncing="asyncing"
+    :query="{
+      exclude_projects_in_project: project.id,
+      exclude_projects: [project.id],
+    }"
     @close="clear"
     @submit="onSubmit"
   />

@@ -94,5 +94,16 @@ export type QueryFilterSearch = Partial<
 
     // modules filtereds
     modules: 'none' | ProjectModulesKeys[] | PeopleGroupModulesKeys[]
+
+    // extras
+
+    exclude_projects: ProjectModel['id'][]
+    exclude_projects_in_project: ProjectModel['id']
+    exclude_groups_in_project: ProjectModel['id']
+    exclude_users_in_project: ProjectModel['id']
+
+    exclude_groups: PeopleGroupModel['id'][]
+    exclude_projects_in_group: PeopleGroupModel['id']
+    exclude_users_in_group: PeopleGroupModel['id']
   } & PaginationQuery
 >

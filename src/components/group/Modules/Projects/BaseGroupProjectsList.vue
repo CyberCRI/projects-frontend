@@ -114,6 +114,9 @@ const onDeleteConfirm = () => {
   <ProjectSelectDrawer
     :is-opened="stateModals.add"
     :asyncing="asyncing"
+    :query="{
+      exclude_projects_in_group: group.id,
+    }"
     @close="clear"
     @submit="onSubmit"
   />

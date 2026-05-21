@@ -171,7 +171,14 @@ const onDeleteConfirm = () => {
   <!-- drawer/modal -->
   <UserProfileDrawer :is-opened="stateModals.view" :user-id="selectedMember?.id" @close="clear" />
 
-  <UserSelectDrawer :is-opened="stateModals.add" @close="closeAllModals()" @submit="addMembers" />
+  <UserSelectDrawer
+    :is-opened="stateModals.add"
+    :query="{
+      exclude_users_in_group: group.id,
+    }"
+    @close="closeAllModals()"
+    @submit="addMembers"
+  />
 
   <RolesDrawer
     :is-opened="stateModals.role"

@@ -140,13 +140,7 @@ export type LinkedProjectRef = {
   target_id: string
 }
 
-export type AddLinkedProjectInput = {
-  projects: LinkedProjectRef
-}
-
-export type AddManyLinkedProjectInput = {
-  projects: LinkedProjectRef[]
-}
+export type AddManyLinkedProjectInput = LinkedProjectRef[]
 
 export type RemoveLinkedProjectInput = {
   project_ids: string[]
