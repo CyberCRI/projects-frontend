@@ -59,19 +59,13 @@ refresh()
           <strong class="message.role">
             {{ message.position }} - {{ message.role }}
             <span v-if="message.toolCalls?.length">(Tool requests)</span>
-            <span
-              v-else-if="
-                message.role == 'tool' && message.toolCallId?.startsWith('retriever_user_context')
-              "
-            >
-              (User context)
-            </span>
-            <span
-              v-else-if="message.role == 'tool' && message.toolCallId?.startsWith('retriever_')"
-            >
-              (Retriever)
-            </span>
-            <span v-else="message.role == 'tool'">(Result)</span>
+            <template v-if="message.role == 'tool'">
+              <span v-if="message.toolCallId?.startsWith('retriever_user_context')">
+                (User context)
+              </span>
+              <span v-else-if="message.toolCallId?.startsWith('retriever_')">(Retriever)</span>
+              <span v-else>(Result)</span>
+            </template>
           </strong>
         </summary>
         <div class="message-content">
@@ -129,6 +123,7 @@ summary {
   background-color: $primary-lighter;
   font-size: 1.16em;
 }
+
 .message-content {
   margin-left: 1rem;
 }

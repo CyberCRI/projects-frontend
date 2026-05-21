@@ -1,4 +1,4 @@
-import { StateSchema, ReducedValue /*, MemorySaver */ } from '@langchain/langgraph'
+// import { StateSchema, ReducedValue /*, MemorySaver */ } from '@langchain/langgraph'
 import { SystemMessage, HumanMessage, AIMessage } from '@langchain/core/messages'
 import { createRetrieverTool } from '@langchain/classic/tools/retriever'
 import { tokenMap, traceMcp } from '@/server/routes/api/chat-stream'
@@ -8,7 +8,7 @@ import type { DocumentInterface } from '@langchain/core/documents'
 import type { BaseMessageChunk } from '@langchain/core/messages'
 import { initChatModel } from 'langchain/chat_models/universal'
 import { tool, createAgent, createMiddleware } from 'langchain'
-import useCheckpointerDb from '@/server/utils/checkpointer-db'
+// import useCheckpointerDb from '@/server/utils/checkpointer-db'
 import { MultiServerMCPClient } from '@langchain/mcp-adapters'
 import getVectorStore from '@/server/utils/vector-db.js'
 import { ChatOpenAI } from '@langchain/openai'
@@ -26,6 +26,7 @@ const {
   appMcpServerUrl,
   appLangchainTrace,
   appSorbobotApiTrace,
+  appAgentMemoryTrace,
   appVectorToolPrompt,
 } = runtimeConfig
 const { appApiOrgCode, appChatbotEnabled } = runtimeConfig.public
@@ -68,6 +69,12 @@ export const traceSorbobot = (...args) => {
   }
 }
 
+export const traceAgentMemory = (...args) => {
+  if (appAgentMemoryTrace) {
+    console.log('[Agent Memory TRACE]', ...args)
+  }
+}
+
 // const StateAnnotation = Annotation.Root({
 //   ...MessagesAnnotation.spec,
 //   agent_id: Annotation<string>(),
@@ -98,7 +105,7 @@ export default defineLazyEventHandler(() => {
     !!appLangchainModelName
   )
   return defineEventHandler(async (event) => {
-    const { checkpointer } = await useCheckpointerDb()
+    // const { checkpointer } = await useCheckpointerDb()
     // return 404 if not configured
     if (!appLangchainModelApiKey || !appChatbotEnabled) {
       throw createError({
@@ -270,7 +277,7 @@ export default defineLazyEventHandler(() => {
 
     let skillSystemPromptExtra = ''
     if (agentData.skillContents.length) {
-      console.log(`Found ${agentData.skillContents.length} skills`)
+      traceLangchain(`Found ${agentData.skillContents.length} skills`)
       const skillMap = {}
       agentData.skillContents.forEach((agentSkillContent) => {
         const skillContent = agentSkillContent.skillContent
@@ -431,9 +438,9 @@ export default defineLazyEventHandler(() => {
       }
 
       async handleUserMessage(message: any) {
-        console.log('handle user message')
+        traceAgentMemory('handle user message')
         if (!this.conversation?.id) {
-          console.error('No conversation set')
+          traceAgentMemory('No conversation set')
           return
         }
         await chatbotPrisma.$transaction(async (tx) => {
@@ -468,9 +475,9 @@ export default defineLazyEventHandler(() => {
       }
 
       async handleLLMEnd(output: any) {
-        console.log('handle model end')
+        traceAgentMemory('handle model end')
         if (!this.conversation?.id) {
-          console.error('No conversation set')
+          traceAgentMemory('No conversation set')
           return
         }
         const message = output.generations[0][0].message
@@ -479,9 +486,9 @@ export default defineLazyEventHandler(() => {
       }
 
       async handleToolEnd(output: string, runId: string, parentRunId: string, tags, metadata) {
-        console.log('handle tool end')
+        traceAgentMemory('handle tool end')
         if (!this.conversation?.id) {
-          console.error('No conversation set')
+          traceAgentMemory('No conversation set')
           return
         }
         await chatbotPrisma.$transaction(async (tx) => {
@@ -522,12 +529,12 @@ export default defineLazyEventHandler(() => {
       async handleRetrieverEnd(
         documents: DocumentInterface[],
         runId: string,
-        parentRunId?: string,
-        tags?: string[]
+        _parentRunId?: string,
+        _tags?: string[]
       ) {
-        console.log('handle retriever end')
+        traceAgentMemory('handle retriever end')
         if (!this.conversation?.id) {
-          console.error('No conversation set')
+          traceAgentMemory('No conversation set')
           return
         }
 
@@ -569,7 +576,7 @@ export default defineLazyEventHandler(() => {
       })
 
       if (!conversation) {
-        console.log('Create new conversation')
+        traceAgentMemory('Create new conversation')
         conversation = await chatbotPrisma.conversation.create({
           data: {
             ...conversationData,
@@ -647,7 +654,7 @@ export default defineLazyEventHandler(() => {
 
     /* --------- Start coversation  --------- */
 
-    traceMcp(
+    traceLangchain(
       `Starting chat stream for conversation ${conversationId} with ${tools.map((t) => `"${t.name}"`).join(', ')}  tools and ${messages.length} messages`
     )
 
@@ -672,40 +679,25 @@ export default defineLazyEventHandler(() => {
       // durability: "exit", // ← one checkpoint per turn, not per superstep
     }
 
-    console.log('================ HISTORY =================')
-    console.log(JSON.stringify(persistenceHandler.messages, null, 2))
-    console.log('================== NEW MESSSAGES ===========')
-    console.log(JSON.stringify(messages, null, 2))
-    console.log('=================================')
+    // console.log('================ HISTORY =================')
+    // console.log(JSON.stringify(persistenceHandler.messages, null, 2))
+    // console.log('================== NEW MESSSAGES ===========')
+    // console.log(JSON.stringify(messages, null, 2))
+    // console.log('=================================')
 
-    // const lastUserMessage = messages[messages.length - 1]
-    // if (lastUserMessage?.role === 'user') {
-    //   console.log('Saving last human message:', lastUserMessage.text)
-    //   await persistenceHandler.handleUserMessage({ content: lastUserMessage.text })
-    // }
-
-    const unsaved = []
-    //let lastSavedPassed = !persistenceHandler?.lastMessage
     for (const message of messages) {
-      //if (lastSavedPassed) {
       if (message.role === 'user') {
-        console.log('Saving last human message:', message.text)
+        traceAgentMemory('Saving last human message:', message.text)
         if (message.text) await persistenceHandler.handleUserMessage({ content: message.text })
       } else if (message.role === 'assistant') {
-        console.log('Saving last assistant message:', message.text)
-        // TODO: handle tool call parameters ?
+        traceAgentMemory('Saving last assistant message:', message.text)
         if (message.text) await persistenceHandler.handleAssistantMessage({ content: message.text })
       } else if (message.role === 'retriever') {
         // handle "user profile" stuffed. TODO: make a real server side tool
-        console.log('Saving last retriever message:', message.text)
-        // TODO: handle tool call parameters ?
+        traceAgentMemory('Saving last retriever message:', message.text)
         if (message.text)
           await persistenceHandler.handleRetrieverMessage(message.text, `user_context_${uuidv4()}`)
       }
-      // TODO handle tool response  message ?
-      //}
-      // if (message.custom && message.custom.id === persistenceHandler?.lastMessage?.id)
-      //   lastSavedPassed = true
     }
 
     const customMetadata = {

@@ -76,7 +76,8 @@ watch(
         isLoadingConversation.value = true
         try {
           const url = `/api/chatbot/${props.agentSlug}/conversation/${neo}`
-          const { data, error } = await useFetch(url, options)
+          // TODO: error, status...
+          const { data } = await useFetch(url, options)
           if (data.value?.conversation) {
             conversation.value = data.value?.conversation
           } else {
@@ -237,6 +238,7 @@ useLpiHead2({
   justify-content: center;
   margin-top: 2rem;
 }
+
 .conversation-is-loading {
   padding: 3rem 0;
   display: flex;

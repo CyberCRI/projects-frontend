@@ -1,7 +1,8 @@
 import { getUser } from '@/server/utils/check-admin-rights.js'
 
 export default defineLazyEventHandler(() => {
-  const { appApiOrgCode } = useRuntimeConfig().public
+  const runtimeConfig = useRuntimeConfig()
+  const { appApiOrgCode } = runtimeConfig.public
   return defineEventHandler(async (event) => {
     // await checkAdminRights(event)
     const slug = getRouterParam(event, 'slug')
@@ -35,7 +36,6 @@ export default defineLazyEventHandler(() => {
         orgCode: appApiOrgCode,
       },
     })
-    const runtimeConfig = useRuntimeConfig()
 
     // console.log(agent)
     if (!agent) {

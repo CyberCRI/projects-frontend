@@ -1,5 +1,5 @@
 import checkAdminRights from '@/server/utils/check-admin-rights.js'
-import useCheckpointerDb from '@/server/utils/checkpointer-db'
+// import useCheckpointerDb from '@/server/utils/checkpointer-db'
 // import format from 'pg-format'
 
 export default defineLazyEventHandler(() => {

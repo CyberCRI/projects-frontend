@@ -1,5 +1,5 @@
 import checkAdminRights from '@/server/utils/check-admin-rights.js'
-import format from 'pg-format'
+// import format from 'pg-format'
 
 export default defineLazyEventHandler(() => {
   const runtimeConfig = useRuntimeConfig()
