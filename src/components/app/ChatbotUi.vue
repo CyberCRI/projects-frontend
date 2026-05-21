@@ -311,7 +311,6 @@ function scrollToBottom() {
 }
 
 function onMessage(event) {
-  console.log('onMessage', event)
   emit('new-message', event)
   nextTick(scrollToBottom)
 }
@@ -354,6 +353,16 @@ watchEffect(() => {
     chatBox.value.setPlaceholderText(placeholderText.value)
   }
 })
+
+const showConfirmRestart = ref(false)
+const confirmRestart = () => {
+  resetChat()
+  showConfirmRestart.value = false
+}
+
+const cancelRestart = () => {
+  showConfirmRestart.value = false
+}
 </script>
 
 <template>
@@ -393,7 +402,7 @@ watchEffect(() => {
     </div>
   </deep-chat>
   <div class="action-bar">
-    <a class="action-button" href="#" @click.prevent="resetChat()">
+    <a class="action-button" href="#" @click.prevent="showConfirmRestart = true">
       <IconImage class="icon" name="RestartLeft" />
       {{ $t('chatbot.restart') }}
     </a>
@@ -410,6 +419,16 @@ watchEffect(() => {
       {{ button }}
     </a>
   </div>
+
+  <ConfirmModal
+    v-if="showConfirmRestart"
+    :title="$t('agents.confirm-restart-title')"
+    :content="$t('agents.confirm-restart-content')"
+    :cancel-button-label="$t('common.no')"
+    :confirm-button-label="$t('common.yes')"
+    @cancel="cancelRestart"
+    @confirm="confirmRestart"
+  />
 </template>
 <style lang="scss" scoped>
 .action-bar {

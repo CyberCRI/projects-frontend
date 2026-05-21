@@ -16,7 +16,6 @@ if (!useRuntimeConfig().public.appHasChatbotPromptDb) {
 function toConversationEnd() {
   nextTick(() => {
     const element = document.querySelector('.chat-conversation-bottom')
-    console.log('scrollIntoView', element)
     element?.scrollIntoView({ behavior: 'smooth', block: 'end' })
   })
 }
@@ -42,8 +41,13 @@ const { data, error } = await useFetch(url, options)
 const agent = computed(() => data.value?.agent)
 const conversation = ref(null)
 const conversationId = ref(null)
+const tempKey = ref(Date.now())
+const chatbotUiKey = computed(() => conversationId.value || tempKey.value)
 function onConversationRestarted() {
+  console.log('onConversationRestarted')
   conversation.value = null
+  conversationId.value = null
+  tempKey.value = Date.now()
 }
 const allConversations = ref([])
 const allConversationOptions = computed(() => [
@@ -70,7 +74,7 @@ const isLoadingConversation = ref(false)
 watch(
   () => conversationId.value,
   async (neo, old) => {
-    console.log('conversationId', neo, old)
+    // console.log('conversationId', neo, old)
     if (neo !== old) {
       if (neo) {
         isLoadingConversation.value = true
@@ -82,7 +86,7 @@ watch(
             conversation.value = data.value?.conversation
           } else {
             // TODO toaster
-            console.error('Coversation not found')
+            console.error('Conversation not found')
             conversationId.value = old
           }
         } finally {
@@ -148,6 +152,16 @@ const { contextMessages } = useChatbotContext({
   contextMessageRole,
 })
 
+const showConversationList = ref(false)
+const route = useRoute()
+watch(
+  () => route.hash,
+  (neo, old) => {
+    showConversationList.value = neo === '#show-list'
+  },
+  { immediate: true }
+)
+
 useLpiHead2({
   title: computed(() => agent.value?.title),
   description: computed(() => agent.value?.description),
@@ -183,18 +197,18 @@ useLpiHead2({
           </pre>
           </div-->
 
-        <div>
+        <div v-if="showConversationList">
           Conversations:
           <LpiSelect v-model="conversationId" :options="allConversationOptions" />
         </div>
         <ChatbotOptions :has-user-context="hasUserContext" />
-        <div v-if="isLoadingConversation" class="conversation-is-loading">
+        <div id="show-list" v-if="isLoadingConversation" class="conversation-is-loading">
           <LoaderSimple />
         </div>
         <ChatbotUi
           v-else
           ref="chatbotUi"
-          :key="conversationId"
+          :key="chatbotUiKey"
           :endpoint="CHAT_ENDPOINT"
           :start-message="agent?.startMessage || ''"
           :context-messages="contextMessages"
