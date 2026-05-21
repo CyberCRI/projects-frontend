@@ -34,6 +34,7 @@
   <ConfirmModal
     v-if="stateModals.delete"
     :title="$t('news.delete.message')"
+    :asyncing="asyncing"
     @confirm="onConfirmDeleteNews"
     @cancel="onCancel"
   >
@@ -56,6 +57,7 @@ import useToasterStore from '~/stores/useToaster'
 
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
+import { refreshGroupData } from '~/composables/groups/refreshGroup'
 import NothingHere from '~/components/base/NothingHere.vue'
 import { newsSkeleton } from '~/skeletons/news.skeletons'
 
@@ -80,6 +82,7 @@ const { stateModals, openModals, closeModals } = useModals({ delete: false, edit
 const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()
 const groupId = computed(() => props.group?.id)
+const asyncing = ref(false)
 
 const { query } = useQuery<QueryFilterNews>({})
 
@@ -92,6 +95,18 @@ const { status, data, pagination, refresh } = getGroupNews(organizationCode, gro
   },
   default: () => factoryPagination(newsSkeleton, limitSkeletons.value),
 })
+
+const onCancel = () => {
+  selectedNews.value = null
+  asyncing.value = false
+  closeModals('edit', 'delete')
+}
+
+const onAfterEdit = () => {
+  refreshGroupData(props.group)
+  refresh()
+  onCancel()
+}
 
 const onEditNews = (news: TranslatedNews) => {
   selectedNews.value = news
@@ -109,6 +124,7 @@ const onDeleteNews = (news: TranslatedNews) => {
   openModals('delete')
 }
 const onConfirmDeleteNews = () => {
+  asyncing.value = true
   deleteNews(organizationCode, selectedNews.value.id)
     .then(() => {
       toaster.pushSuccess(t('news.delete.success'))
@@ -116,19 +132,5 @@ const onConfirmDeleteNews = () => {
     })
     .catch(() => toaster.pushError(t('news.delete.error')))
     .finally(() => onCancel())
-}
-
-const onAfterEdit = () => {
-  refreshNuxtData([
-    `${organizationCode}::group::${props.group.slug}`,
-    `${organizationCode}::group::${props.group.id}`,
-  ])
-  refresh()
-  onCancel()
-}
-
-const onCancel = () => {
-  selectedNews.value = null
-  closeModals('edit', 'delete')
 }
 </script>

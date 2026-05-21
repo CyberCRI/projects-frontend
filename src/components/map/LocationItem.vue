@@ -40,12 +40,13 @@ const props = withDefaults(
     editable?: boolean
     focus?: boolean
     showLocationType?: boolean
-    defaultTitle: string
+    defaultTitle?: string
   }>(),
   {
     editable: false,
     focus: true,
     showLocationType: false,
+    defaultTitle: null,
   }
 )
 
@@ -55,9 +56,14 @@ defineEmits<{
   edit: [AnyTranslatedLocation]
 }>()
 
+const { t } = useNuxtI18n()
+
 // need to safe guard with translated title (if we are in edit/create mode)
 const title = computed(() =>
-  cropIfTooLong(props.location.$t?.title || props.location.title || props.defaultTitle, 40)
+  cropIfTooLong(
+    props.location.$t?.title || props.location.title || props.defaultTitle || t('location.address'),
+    40
+  )
 )
 const description = computed(() =>
   cropIfTooLong(props.location.$t?.description || props.location.description, 80)

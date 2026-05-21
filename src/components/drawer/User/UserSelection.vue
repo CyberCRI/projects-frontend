@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import CardInlineUser from '~/components/Drawer/User/CardInlineUser.vue'
-import BaseDrawerSearch from '~/components/Drawer/BaseDrawerSearch.vue'
+import CardInlineUser from '~/components/drawer/User/CardInlineUser.vue'
+import BaseDrawerSearch from '~/components/drawer/BaseDrawerSearch.vue'
 import { searchUserSkeleton } from '~/skeletons/search.skeletons'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import type { QueryFilterSearch } from '~/models/search.model'

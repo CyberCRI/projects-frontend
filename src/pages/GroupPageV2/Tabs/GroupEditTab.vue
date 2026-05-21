@@ -17,6 +17,7 @@ import useUsersStore from '~/stores/useUsers'
 import { useLpiHead2 } from '~/composables/useLpiHead'
 
 import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils'
+import { refreshGroupData } from '~/composables/groups/refreshGroup'
 import type { AsyncDataRequestStatus } from 'nuxt/app'
 import { isEqual } from 'es-toolkit'
 
@@ -125,12 +126,7 @@ const cancel = () => {
   }
 }
 
-const refresh = () => {
-  return refreshNuxtData([
-    `${organizationCode}::group::${groupData.value.id}`,
-    `${organizationCode}::group::${groupData.value.slug}`,
-  ])
-}
+const refresh = () => refreshGroupData(groupData.value)
 
 const updateHeader = async (groupId) => {
   // check if header has changed

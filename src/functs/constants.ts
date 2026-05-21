@@ -1,5 +1,6 @@
 import type {
   GroupMemberRoleType,
+  LocationType,
   ProjectGroupRoleType,
   ProjectMemberRoleType,
 } from '~/models/types'
@@ -164,3 +165,5 @@ export const PROJECTS_GROUP_ROLES: ProjectGroupRoleType[] = [
 export const PROJECTS_MEMBERS_ROLES: ProjectMemberRoleType[] = ['owners', 'members', 'reviewers']
 
 export const GROUP_MEMBERS_ROLES: GroupMemberRoleType[] = ['leaders', 'managers', 'members']
+
+export const PROJECT_LOCATIONS_TYPES: LocationType[] = ['address', 'impact', 'team']

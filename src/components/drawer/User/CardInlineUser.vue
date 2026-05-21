@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BaseCardInline from '~/components/Drawer/BaseCardInline.vue'
+import BaseCardInline from '~/components/drawer/BaseCardInline.vue'
 import type { TranslatedUserModel } from '~/models/user.model'
 import { capitalize } from '~/functs/string'
 

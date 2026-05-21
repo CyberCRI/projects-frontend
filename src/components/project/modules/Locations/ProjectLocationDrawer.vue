@@ -3,7 +3,7 @@
     ref="drawer"
     :is-opened="isOpened"
     :locations="locations"
-    :location-types="['address', 'impact', 'team']"
+    :location-types="PROJECT_LOCATIONS_TYPES"
     @close="$emit('close')"
     @submit="onSubmit"
     @delete="onDelete"
@@ -20,6 +20,7 @@ import LocationDrawer from '~/components/map/LocationDrawer.vue'
 
 import useToasterStore from '~/stores/useToaster'
 
+import { PROJECT_LOCATIONS_TYPES } from '~/functs/constants'
 import analytics from '~/analytics'
 
 const props = withDefaults(
@@ -70,52 +71,52 @@ const onCreate = async (form) => {
 }
 
 const onEdit = async (form) => {
-  try {
-    asyncing.value = true
-    await patchLocation(props.project.id, form.id, form)
+  asyncing.value = true
+  return patchLocation(props.project.id, form.id, form)
+    .then(() => {
+      analytics.location.updateLocationMapPoint({
+        project: {
+          id: props.project.id,
+        },
+        location: form,
+      })
 
-    analytics.location.updateLocationMapPoint({
-      project: {
-        id: props.project.id,
-      },
-      location: form,
+      toaster.pushSuccess(t('toasts.location-update.success'))
+
+      emit('reload')
     })
-
-    toaster.pushSuccess(t('toasts.location-update.success'))
-
-    emit('reload')
-  } catch (error) {
-    toaster.pushError(`${t('toasts.location-update.error')} (${error})`)
-    console.error(error)
-  } finally {
-    emit('close')
-    asyncing.value = false
-  }
+    .catch((error) => {
+      toaster.pushError(t('toasts.location-update.error'))
+      console.error(error)
+    })
+    .finally(() => {
+      emit('close')
+      asyncing.value = false
+    })
 }
 
 const onDelete = async (form) => {
-  try {
-    asyncing.value = true
-    await deleteLocation(props.project.id, form.id)
-
-    analytics.location.deleteLocationMapPoint({
-      project: {
-        id: props.project.id,
-      },
-      location: form,
+  asyncing.value = true
+  return deleteLocation(props.project.id, form.id)
+    .then(() => {
+      analytics.location.deleteLocationMapPoint({
+        project: {
+          id: props.project.id,
+        },
+        location: form,
+      })
+      toaster.pushSuccess(t('toasts.location-delete.success'))
+      emit('reload')
+      nextTick(() => drawerRef.value?.centerMap())
     })
-
-    toaster.pushSuccess(t('toasts.location-delete.success'))
-
-    emit('reload')
-    nextTick(() => drawerRef.value?.centerMap())
-  } catch (error) {
-    toaster.pushError(`${t('toasts.location-delete.error')} (${error})`)
-    console.error(error)
-  } finally {
-    emit('close')
-    asyncing.value = false
-  }
+    .catch((error) => {
+      toaster.pushError(t('toasts.location-delete.error'))
+      console.error(error)
+    })
+    .finally(() => {
+      emit('close')
+      asyncing.value = false
+    })
 }
 
 const onSubmit = (form) => {
@@ -125,9 +126,9 @@ const onSubmit = (form) => {
   }
 
   if (body.id) {
-    onEdit(body)
+    return onEdit(body)
   } else {
-    onCreate(body)
+    return onCreate(body)
   }
 }
 

@@ -6,15 +6,15 @@ import { getGroupMember } from '~/api/v2/group.service'
 import PaginationButtonsV2 from '~/components/base/navigation/PaginationButtonsV2.vue'
 import GroupMemberItem from '~/components/group/Modules/Members/GroupMemberItem.vue'
 
-import CardInlineGroupMember from '~/components/Drawer/User/CardInlineGroupMember.vue'
+import CardInlineGroupMember from '~/components/drawer/User/CardInlineGroupMember.vue'
 import type { AddGroupMembers, TranslatedGroupMember } from '~/models/group.model'
-import UserProfileDrawer from '~/components/Drawer/User/UserProfileDrawer.vue'
-import UserSelectDrawer from '~/components/Drawer/User/UserSelectDrawer.vue'
+import UserProfileDrawer from '~/components/drawer/User/UserProfileDrawer.vue'
+import UserSelectDrawer from '~/components/drawer/User/UserSelectDrawer.vue'
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import { postGroupMembers, removeGroupMember } from '~/api/groups.service'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { refreshGroupData } from '~/composables/groups/refreshGroup'
-import RolesDrawer from '~/components/Drawer/Role/RolesDrawer.vue'
+import RolesDrawer from '~/components/drawer/Role/RolesDrawer.vue'
 import type { TranslatedUserModel } from '~/models/user.model'
 import { memberSkeleton } from '~/skeletons/group.skeletons'
 import NothingHere from '~/components/base/NothingHere.vue'
@@ -177,6 +177,7 @@ const onDeleteConfirm = () => {
     :is-opened="stateModals.role"
     :items="membersSelectRoles"
     :roles="GROUP_MEMBERS_ROLES"
+    :asyncing="asyncing"
     default-role="members"
     @close="clear"
     @update="onAddMembers"

@@ -25,6 +25,7 @@ const props = withDefaults(
   }
 )
 
+const asyncing = ref(false)
 const toaster = useToaster()
 const limitSkeletons = computed(() => maxSkeleton(props.project.modules.blogs, props.limit))
 
@@ -62,6 +63,7 @@ const onDelete = (blogEntry) => {
 }
 
 const cancel = () => {
+  asyncing.value = false
   selectedBlogEntry.value = null
   closeModals('delete', 'edit')
 }
@@ -72,6 +74,7 @@ const refreshData = () => {
 }
 
 const onDeleteConfirm = () => {
+  asyncing.value = true
   deleteBlogEntry(props.project.id, selectedBlogEntry.value.id)
     .then(() => {
       toaster.pushSuccess($t('toasts.blog-delete.success'))
@@ -120,6 +123,7 @@ const setExpanded = (state: boolean, blog: TranslatedBlogEntry) => {
   <ConfirmModal
     v-if="stateModals.delete"
     :title="$t('project.blog-entry-confirm-delete')"
+    :asyncing="asyncing"
     @cancel="cancel"
     @confirm="onDeleteConfirm"
   >

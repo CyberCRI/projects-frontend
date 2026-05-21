@@ -139,7 +139,7 @@ import TextInput from '~/components/base/form/TextInput.vue'
 import DisplayDate from '~/components/base/DisplayDate.vue'
 import GroupCard from '~/components/group/GroupCard.vue'
 
-import GroupSelectDrawer from '~/components/Drawer/Group/GroupSelectDrawer.vue'
+import GroupSelectDrawer from '~/components/drawer/Group/GroupSelectDrawer.vue'
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
 import useToasterStore from '~/stores/useToaster.ts'
 

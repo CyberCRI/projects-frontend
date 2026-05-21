@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import CardInlineGroup from '~/components/Drawer/Group/CardInlineGroup.vue'
+import CardInlineGroup from '~/components/drawer/Group/CardInlineGroup.vue'
 import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
-import BaseDrawerSearch from '~/components/Drawer/BaseDrawerSearch.vue'
+import BaseDrawerSearch from '~/components/drawer/BaseDrawerSearch.vue'
 import { searchGroupSkeleton } from '~/skeletons/search.skeletons'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import type { QueryFilterSearch } from '~/models/search.model'

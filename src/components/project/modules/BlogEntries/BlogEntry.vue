@@ -38,7 +38,7 @@
     <div
       v-if="canEdit || canDelete"
       :class="{ 'button-ctn--expanded': stateModal }"
-      class="button-ctn skeletons-background"
+      class="button-ctn"
     >
       <ContextActionMenuInline
         :can-delete="canDelete"

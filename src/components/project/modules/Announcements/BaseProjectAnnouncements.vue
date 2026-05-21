@@ -48,6 +48,7 @@ const {
   default: () => factoryPagination(announcementSkeleton, limitSkeletons.value),
 })
 
+const asyncing = ref(false)
 const selectedAnnouncement = ref()
 const { stateModals, openModals, closeAllModals } = useModals({
   edit: false,
@@ -71,6 +72,7 @@ const onApply = (announcement) => {
 }
 
 const cancel = () => {
+  asyncing.value = true
   selectedAnnouncement.value = null
   closeAllModals()
 }
@@ -81,6 +83,7 @@ const refreshData = () => {
 }
 
 const onDeleteConfirm = () => {
+  asyncing.value = true
   deleteAnnouncement(props.project.id, selectedAnnouncement.value.id)
     .then(() => {
       toaster.pushSuccess($t('toasts.announcement-delete.success'))
@@ -119,6 +122,7 @@ const onDeleteConfirm = () => {
     <ConfirmModal
       v-if="stateModals.delete"
       :title="$t('recruit.delete-announcement-message')"
+      :asyncing="asyncing"
       @cancel="cancel"
       @confirm="onDeleteConfirm"
     >

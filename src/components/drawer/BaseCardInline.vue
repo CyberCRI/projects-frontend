@@ -35,7 +35,7 @@ withDefaults(
 <template>
   <div
     class="card-small"
-    :class="{ selected: selected, passive: passive, fit: minimal }"
+    :class="{ selected: selected, passive: passive, minimal: minimal }"
     :title="label"
   >
     <div class="card-container">
@@ -94,9 +94,13 @@ withDefaults(
   cursor: pointer;
   width: pxToRem(240px);
 
-  &.fit {
+  &.minimal {
     height: fit-content;
     width: fit-content;
+
+    &:hover .card-info.minimal {
+      display: block;
+    }
   }
 
   &.passive {
@@ -124,10 +128,6 @@ withDefaults(
 
     &.minimal {
       display: none;
-    }
-
-    &:hover {
-      display: block;
     }
 
     .title {

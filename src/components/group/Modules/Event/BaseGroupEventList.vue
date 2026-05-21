@@ -87,6 +87,7 @@ const props = withDefaults(
 
 const { t } = useNuxtI18n()
 
+const asyncing = ref(false)
 const selectedEvent = ref<any>()
 const { stateModals, openModals, closeModals } = useModals({
   delete: false,
@@ -112,6 +113,18 @@ const { status, data, pagination, refresh } = getGroupEvent(organizationCode, gr
   default: () => factoryPagination(eventSkeleton, limitSkeletons.value),
 })
 
+const onCancel = () => {
+  asyncing.value = true
+  selectedEvent.value = null
+  closeModals('edit', 'delete', 'location')
+}
+
+const onAfterEdit = () => {
+  refreshGroupData(props.group)
+  refresh()
+  onCancel()
+}
+
 const onEditEvent = (event: TranslatedEventModel) => {
   selectedEvent.value = event
   openModals('edit')
@@ -127,7 +140,14 @@ const onDeleteEvent = (event: TranslatedEventModel) => {
   selectedEvent.value = event
   openModals('delete')
 }
+
+const onLocation = (event) => {
+  selectedEvent.value = event
+  openModals('location')
+}
+
 const onConfirmDeleteEvent = () => {
+  asyncing.value = true
   deleteEvent(organizationCode, selectedEvent.value.id)
     .then(() => {
       toaster.pushSuccess(t('event.delete.success'))
@@ -135,22 +155,6 @@ const onConfirmDeleteEvent = () => {
     })
     .catch(() => toaster.pushError(t('event.delete.error')))
     .finally(() => onCancel())
-}
-
-const onAfterEdit = () => {
-  refreshGroupData(props.group)
-  refresh()
-  onCancel()
-}
-
-const onCancel = () => {
-  selectedEvent.value = null
-  closeModals('edit', 'delete', 'location')
-}
-
-const onLocation = (event) => {
-  selectedEvent.value = event
-  openModals('location')
 }
 </script>
 

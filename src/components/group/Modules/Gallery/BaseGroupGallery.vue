@@ -64,6 +64,7 @@ import { useModals } from '~/composables/useModal'
 
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
+import { refreshGroupData } from '~/composables/groups/refreshGroup'
 import { imageGallerySkeleton } from '~/skeletons/gallery.skeletons'
 import type { AsyncDataRequestStatus } from 'nuxt/app'
 
@@ -107,10 +108,7 @@ const onDelete = (image) => {
 }
 
 const afterRequest = () => {
-  refreshNuxtData([
-    `${organizationCode}::group::${props.group.slug}`,
-    `${organizationCode}::group::${props.group.id}`,
-  ])
+  refreshGroupData(props.group)
   refresh()
 }
 

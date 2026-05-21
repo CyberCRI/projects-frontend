@@ -142,24 +142,20 @@ const onClose = () => {
     @close="onClose"
     @confirm="submit"
   >
-    <div class="review-form">
-      <div class="review-entry">
-        <label>{{ $t('common.title') }}</label>
-        <TextInput v-model="form.title" :errors="errors.title" />
-      </div>
+    <div class="list-container">
+      <TextInput v-model="form.title" :label="$t('common.title')" required :errors="errors.title" />
 
-      <div class="review-entry editor-entry">
-        <label>{{ $t('form.description') }}</label>
+      <Field :label="$t('project.description')">
         <TipTapEditor v-model="form.description" :errors="errors.description" />
-      </div>
-      <div class="review-entry review-switch">
-        <label>{{ $t('project.publish') }}</label>
+      </Field>
+
+      <Field :label="$t('project.publish')">
         <SwitchInput v-model="form.publish" />
-      </div>
-      <div class="review-entry review-switch">
-        <label>{{ $t('project.lock') }}</label>
+      </Field>
+
+      <Field label="$t('project.lock')">
         <SwitchInput v-model="form.lock" />
-      </div>
+      </Field>
     </div>
   </BaseDrawer>
 
@@ -173,48 +169,7 @@ const onClose = () => {
 </template>
 
 <style lang="scss" scoped>
-.review-form {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  flex-grow: 1;
-}
-
-.review-switch {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.review-entry {
-  margin-bottom: $space-l;
-  text-align: left;
-  flex-shrink: 0;
-}
-
-.editor-entry {
-  flex-grow: 1;
-  flex-shrink: 1;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-
-  .editor {
-    flex-grow: 1;
-  }
-}
-
-.review-entry:last-child {
-  margin-bottom: 0;
-}
-
-label {
-  display: block;
-  font-size: $font-size-l;
-  color: $primary-dark;
-  font-weight: bold;
-  margin-bottom: $space-s;
-  text-align: left;
+.list-container {
+  gap: 2rem;
 }
 </style>

@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { addProjectMembers, deleteProjectMembers } from '~/api/project-members.service'
-import GroupSelectDrawer from '~/components/Drawer/Group/GroupSelectDrawer.vue'
-import CardInlineGroup from '~/components/Drawer/Group/CardInlineGroup.vue'
+import GroupSelectDrawer from '~/components/drawer/Group/GroupSelectDrawer.vue'
+import CardInlineGroup from '~/components/drawer/Group/CardInlineGroup.vue'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
 import ProjectTeamEditor from '~/components/project/ProjectTeamEditor.vue'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
-import RolesDrawer from '~/components/Drawer/Role/RolesDrawer.vue'
+import RolesDrawer from '~/components/drawer/Role/RolesDrawer.vue'
 import SectionHeader from '~/components/base/SectionHeader.vue'
 import type { TranslatedProject } from '@/models/project.model'
 import NothingHere from '~/components/base/NothingHere.vue'
@@ -89,7 +89,9 @@ const { stateModals, openModals, closeAllModals, closeModals } = useModals({
 
 const selectedGroup = ref<TranslatedPeopleGroupModel>()
 const selectedGroupsRoles = ref<TranslatedPeopleGroupModel[]>()
-const cancel = () => {
+
+const clear = () => {
+  asyncing.value = false
   selectedGroup.value = null
   closeAllModals()
 }
@@ -97,7 +99,7 @@ const cancel = () => {
 const fullRefresh = () => {
   refreshProjectData(props.project)
   refresh()
-  cancel()
+  clear()
 }
 
 const onAdd = () => {
@@ -122,6 +124,8 @@ const onSelectedGroup = (groups: TranslatedPeopleGroupModel[]) => {
 }
 
 const addGroup = (groupRoles: { [key: number]: ProjectGroupRoleType }) => {
+  asyncing.value = true
+
   const body = {}
   Object.entries(groupRoles).forEach(([groupId, role]) => {
     body[role] ??= []
@@ -134,9 +138,11 @@ const addGroup = (groupRoles: { [key: number]: ProjectGroupRoleType }) => {
       fullRefresh()
     })
     .catch(() => toaster.pushError(t('toasts.team-group-delete.error')))
+    .finally(() => clear())
 }
 
 const onDeleteConfirm = () => {
+  asyncing.value = true
   const body = {
     people_groups: [selectedGroup.value.id],
   }
@@ -146,6 +152,7 @@ const onDeleteConfirm = () => {
       fullRefresh()
     })
     .catch(() => toaster.pushError(t('toasts.team-group-delete.error')))
+    .finally(() => clear())
 }
 </script>
 
@@ -209,7 +216,7 @@ const onDeleteConfirm = () => {
     :confirm-button-label="$t('common.delete-user')"
     :cancel-button-label="$t('common.cancel')"
     :asyncing="asyncing"
-    @cancel="cancel"
+    @cancel="clear"
     @confirm="onDeleteConfirm"
   />
 </template>

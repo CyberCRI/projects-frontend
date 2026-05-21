@@ -8,6 +8,7 @@ import { factoriesSkeleton } from '@/skeletons/base.skeletons'
 import { getProjectLocations } from '@/api/v2/project.service'
 import LocationForm from '~/components/map/LocationForm.vue'
 import LocationList from '@/components/map/LocationList.vue'
+import { PROJECT_LOCATIONS_TYPES } from '~/functs/constants'
 
 const props = withDefaults(
   defineProps<{
@@ -21,6 +22,7 @@ const props = withDefaults(
   }
 )
 
+const asyncing = ref(false)
 const drawerRef = useTemplateRef('drawer')
 const { stateModals, openModals, closeModals, closeAllModals } = useModals({
   edit: false,
@@ -44,7 +46,8 @@ const {
 
 const selectedLocation = ref()
 
-const cancel = () => {
+const clear = () => {
+  asyncing.value = false
   selectedLocation.value = null
   closeAllModals()
 }
@@ -52,7 +55,7 @@ const cancel = () => {
 const fullRefresh = () => {
   refreshProjectData(props.project)
   refresh()
-  cancel()
+  clear()
 }
 
 const onDelete = (location) => {
@@ -65,8 +68,14 @@ const onEdit = (location) => {
   openModals('edit')
 }
 
-const onConfirmEdit = () => drawerRef.value.onSubmit(selectedLocation.value)
-const onConFirmDelete = () => drawerRef.value.onDelete(selectedLocation.value)
+const onConfirmEdit = () => {
+  asyncing.value = true
+  drawerRef.value.onSubmit(selectedLocation.value).finally(() => (asyncing.value = false))
+}
+const onConFirmDelete = () => {
+  asyncing.value = true
+  drawerRef.value.onDelete(selectedLocation.value).finally(() => (asyncing.value = false))
+}
 </script>
 
 <template>
@@ -103,7 +112,8 @@ const onConFirmDelete = () => drawerRef.value.onDelete(selectedLocation.value)
     <ConfirmModal
       v-if="stateModals.delete"
       :title="$t('geocoding.confirm-delete-location')"
-      @cancel="cancel"
+      :asyncing="asyncing"
+      @clear="clear"
       @confirm="onConFirmDelete"
     >
       <MapRecap :locations="[selectedLocation]" :expand="false" />
@@ -112,7 +122,7 @@ const onConFirmDelete = () => drawerRef.value.onDelete(selectedLocation.value)
     <LocationForm
       v-if="stateModals.edit"
       v-model="selectedLocation"
-      :location-types="['address', 'team', 'impact']"
+      :location-types="PROJECT_LOCATIONS_TYPES"
       @delete="onConFirmDelete"
       @close="closeAllModals"
       @submit="onConfirmEdit"

@@ -5,7 +5,7 @@ import { getGroupProject } from '~/api/v2/group.service'
 
 import ProjectPreview from '~/components/project/ProjectPreview.vue'
 
-import ProjectSelectDrawer from '~/components/Drawer/Project/ProjectSelectDrawer.vue'
+import ProjectSelectDrawer from '~/components/drawer/Project/ProjectSelectDrawer.vue'
 import { postGroupProjects, removeGroupProject } from '~/api/groups.service'
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'

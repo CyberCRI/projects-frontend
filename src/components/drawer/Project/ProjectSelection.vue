@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import CardInlineProject from '~/components/Drawer/Project/CardInlineProject.vue'
-import BaseDrawerSearch from '~/components/Drawer/BaseDrawerSearch.vue'
+import CardInlineProject from '~/components/drawer/Project/CardInlineProject.vue'
+import BaseDrawerSearch from '~/components/drawer/BaseDrawerSearch.vue'
 import { searchProjectSkeleton } from '~/skeletons/search.skeletons'
 import type { TranslatedProject } from '~/models/project.model'
 import { factoryPagination } from '~/skeletons/base.skeletons'

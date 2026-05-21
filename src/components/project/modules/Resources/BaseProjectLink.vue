@@ -150,6 +150,7 @@ const onSubmit = (form: AttachmentForm) => {
   <ConfirmModal
     v-if="stateModals.delete"
     :title="$t('resource.delete')"
+    :asyncing="asyncing"
     @cancel="cancel"
     @confirm="onDeleteConfirm"
   >

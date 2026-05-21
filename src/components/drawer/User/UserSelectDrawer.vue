@@ -1,46 +1,46 @@
 <script setup lang="ts">
-import ProjectSelection from '~/components/Drawer/Project/ProjectSelection.vue'
-import type { TranslatedProject } from '~/models/project.model'
+import UserSelection from '~/components/drawer/User/UserSelection.vue'
 import type { QueryFilterSearch } from '~/models/search.model'
+import type { TranslatedUserModel } from '~/models/user.model'
 
 const props = withDefaults(
   defineProps<{
     isOpened?: boolean
     label?: string
     asyncing?: boolean
-    selectedProjects?: TranslatedProject[]
+    selectedUsers?: TranslatedUserModel[]
     query?: QueryFilterSearch
   }>(),
   {
     isOpened: false,
     label: null,
     asyncing: false,
-    selectedProjects: () => [],
+    selectedUsers: () => [],
     query: () => ({}),
   }
 )
 
 const emit = defineEmits<{
   close: []
-  submit: [TranslatedProject[]]
+  submit: [TranslatedUserModel[]]
 }>()
 
 const { stateModals, openModals, closeModals } = useModals({ saveChange: false })
 
-const projects = ref<TranslatedProject[]>([])
+const users = ref<TranslatedUserModel[]>([])
 watch(
-  () => [props.selectedProjects, props.isOpened],
-  () => (projects.value = [...props.selectedProjects]),
+  () => [props.selectedUsers, props.isOpened],
+  () => (users.value = [...props.selectedUsers]),
   { immediate: true }
 )
 
-const isFormEqual = computed(() => projects.value.length === 0)
+const isFormEqual = computed(() => users.value.length === 0)
 
 const close = () => {
   closeModals('saveChange')
   emit('close')
 }
-const onConfirm = () => emit('submit', projects.value)
+const onConfirm = () => emit('submit', users.value)
 
 const checkClose = () => {
   if (isFormEqual.value) {
@@ -55,14 +55,14 @@ const checkClose = () => {
   <BaseDrawer
     :confirm-action-name="$t('common.add')"
     :is-opened="isOpened"
-    :title="label || $t('drawer.project.add', 2)"
+    :title="label || $t('drawer.member.add', 2)"
     class="team-modal large"
     :confirm-action-disabled="isFormEqual"
     :asyncing="asyncing"
     @close="checkClose"
     @confirm="onConfirm"
   >
-    <ProjectSelection v-model="projects" :query="query" />
+    <UserSelection v-model="users" :query="query" />
   </BaseDrawer>
 
   <ConfirmModal

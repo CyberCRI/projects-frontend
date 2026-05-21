@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
-import GroupSelection from '~/components/Drawer/Group/GroupSelection.vue'
+import GroupSelection from '~/components/drawer/Group/GroupSelection.vue'
 import type { QueryFilterSearch } from '~/models/search.model'
 
 const props = withDefaults(

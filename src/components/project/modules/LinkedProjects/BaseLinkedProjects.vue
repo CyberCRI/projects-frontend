@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ProjectSelectDrawer from '~/components/Drawer/Project/ProjectSelectDrawer.vue'
+import ProjectSelectDrawer from '~/components/drawer/Project/ProjectSelectDrawer.vue'
 import { addLinkedProject, deleteLinkedProject } from '~/api/projects.service'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import { refreshProjectData } from '~/composables/project/refreshProject'
@@ -58,7 +58,7 @@ const onDelete = (linkedProject) => {
   openModals('delete')
 }
 
-const cancel = () => {
+const clear = () => {
   asyncing.value = false
   selectedLinkedProject.value = null
   closeAllModals()
@@ -77,7 +77,7 @@ const onDeleteConfirm = () => {
       refreshData()
     })
     .catch(() => toaster.pushSuccess($t('toasts.linked-project-delete.error')))
-    .finally(() => cancel())
+    .finally(() => clear())
 }
 
 const onSubmit = (linkedProjects: TranslatedProject[]) => {
@@ -101,7 +101,7 @@ const onSubmit = (linkedProjects: TranslatedProject[]) => {
       refreshData()
     })
     .catch(() => toaster.pushError(t('toasts.linked-project-create.error')))
-    .finally(() => cancel())
+    .finally(() => clear())
 }
 </script>
 
@@ -128,14 +128,15 @@ const onSubmit = (linkedProjects: TranslatedProject[]) => {
   <ProjectSelectDrawer
     :is-opened="stateModals.add"
     :asyncing="asyncing"
-    @close="cancel"
+    @close="clear"
     @submit="onSubmit"
   />
 
   <ConfirmModal
     v-if="stateModals.delete"
     :title="$t('project.linked-project-confirm-delete')"
-    @cancel="cancel"
+    :asyncing="asyncing"
+    @cancel="clear"
     @confirm="onDeleteConfirm"
   >
     <ProjectPreview :project="selectedLinkedProject.project" />

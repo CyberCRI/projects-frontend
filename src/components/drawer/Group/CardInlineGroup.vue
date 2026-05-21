@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
-import BaseCardInline from '~/components/Drawer/BaseCardInline.vue'
+import BaseCardInline from '~/components/drawer/BaseCardInline.vue'
 
 defineProps<{
   group: TranslatedPeopleGroupModel

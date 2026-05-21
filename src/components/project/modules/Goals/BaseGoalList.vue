@@ -1,5 +1,6 @@
 <template>
   <FetchLoader :status="status" only-error skeleton>
+    <!-- only for sdgs -->
     <div v-if="!preview">
       <BaseModuleHeader
         :editable="editable"
@@ -36,6 +37,7 @@
   <ConfirmModal
     v-if="stateModals.delete"
     :title="$t('project.goal-confirm-delete')"
+    :asyncing="asyncing"
     @cancel="cancel"
     @confirm="onDeleteConfirm"
   >
@@ -87,6 +89,7 @@ const props = withDefaults(
 
 const { t } = useNuxtI18n()
 
+const asyncing = ref(false)
 const toaster = useToaster()
 const limitSkeletons = computed(() => maxSkeleton(props.project.modules.goals, props.limit))
 
@@ -136,6 +139,7 @@ const onDelete = (goal) => {
 }
 
 const cancel = () => {
+  asyncing.value = false
   selectedGoal.value = null
   closeAllModals()
 }
@@ -146,6 +150,7 @@ const fullRefresh = () => {
 }
 
 const onDeleteConfirm = () => {
+  asyncing.value = true
   deleteGoal(props.project.id, selectedGoal.value.id)
     .then(() => {
       toaster.pushSuccess(t('toasts.goal.success'))

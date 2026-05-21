@@ -18,11 +18,12 @@
 <script setup lang="ts">
 withDefaults(
   defineProps<{
-    label: string
+    label?: string
     disabled?: boolean
     asButton?: boolean
   }>(),
   {
+    label: '',
     asButton: false,
     disabled: false,
   }
