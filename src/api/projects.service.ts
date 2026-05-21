@@ -1,5 +1,4 @@
 import type {
-  AddLinkedProjectInput,
   AddManyLinkedProjectInput,
   ProjectForm,
   ProjectModel,
@@ -8,15 +7,27 @@ import type {
 } from '@/models/project.model'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import type { UseApiOptions } from '@/composables/useAPI'
-import type { SearchParams } from '@/api/types'
 import useAPI from '@/composables/useAPI'
 
-import type { ProjectMemberModel, QueryFilterProjectMembers } from '@/models/project-member.model'
+import type {
+  ProjectMemberModel,
+  QueryFilterProject,
+  QueryFilterProjectMembers,
+} from '@/models/project-member.model'
 import type { PeopleGroupModel } from '~/models/invitation.model'
 import type { ImageModel } from '~/models/image.model'
 
-type Config = UseApiOptions
-type ConfigMembers = UseApiOptions<QueryFilterProjectMembers>
+type ConfigProject = UseApiOptions<QueryFilterProject>
+type ConfigProjectLinked = UseApiOptions
+type ConfigProjectMembers = UseApiOptions<QueryFilterProjectMembers>
+
+export async function getAllProjects(config: ConfigProject = {}) {
+  return await useAPI<PaginationResult<ProjectModel>>(`project/`, config)
+}
+
+export async function getProject(projectSlugOrId: ProjectSlugOrId, config = {}) {
+  return await useAPI<ProjectModel>(`project/${projectSlugOrId}/`, config)
+}
 
 export function postProject(body: ProjectForm) {
   return useAPI(`project/`, { body, method: 'POST' })
@@ -34,7 +45,10 @@ export async function duplicateProject(projectId: ProjectSlugOrId) {
   return await useAPI<ProjectModel>(`project/${projectId}/duplicate/`, { method: 'POST' })
 }
 
-export async function getLinkedProject(projectId: ProjectSlugOrId, config: Config = {}) {
+export async function getLinkedProject(
+  projectId: ProjectSlugOrId,
+  config: ConfigProjectLinked = {}
+) {
   return await useAPI<PaginationResult<ProjectModel>>(
     `project/${projectId}/linked-project/`,
     config
@@ -48,40 +62,20 @@ export async function addLinkedProject(
   return await useAPI(`project/${projectId}/linked-project/add-many/`, { body, method: 'POST' })
 }
 
-export async function patchLinkedProject({
-  target_id,
-  id,
-  body,
-}: {
-  target_id: string
-  id: number
-  body: AddLinkedProjectInput
-}) {
-  return await useAPI(`project/${target_id}/linked-project/${id}/`, { body, method: 'PATCH' })
-}
-
 export async function deleteLinkedProject(projectId: ProjectSlugOrId, linkedProjectId) {
   return await useAPI<undefined>(`project/${projectId}/linked-project/${linkedProjectId}/`, {
     method: 'DELETE',
   })
 }
 
-export async function getProject(projectSlugOrId: ProjectSlugOrId, config = {}) {
-  return await useAPI<ProjectModel>(`project/${projectSlugOrId}/`, config)
-}
-
 export async function getProjectMembers(
   projectSlugOrId: ProjectSlugOrId,
-  config: ConfigMembers = {}
+  config: ConfigProjectMembers = {}
 ) {
   return await useAPI<PaginationResult<ProjectMemberModel>>(
     `project/${projectSlugOrId}/member/`,
     config
   )
-}
-
-export async function getAllProjects(params: SearchParams) {
-  return await useAPI(`project/`, { ..._adaptParamsToGetQuery(params) })
 }
 
 export async function postProjectImage(projectId: ProjectSlugOrId, body: FormData) {
