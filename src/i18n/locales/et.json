@@ -3230,6 +3230,8 @@
     "confirm-deletion-of": "Kas tõesti soovid kustutada agendi '{title}'?",
     "deleted": "Agent kustutatud",
     "delete-error": "Viga agendi kustutamisel",
-    "empty-list": "Agente veel ei ole."
+    "empty-list": "Agente veel ei ole.",
+    "confirm-restart-title": "Alusta vestlust uuesti",
+    "confirm-restart-content": "Kas soovite alustada uut vestlust?"
   }
 }

@@ -3230,6 +3230,8 @@
     "confirm-deletion-of": "¿Realmente quieres eliminar el agente '{title}'?",
     "deleted": "Agente eliminado",
     "delete-error": "Error al eliminar el agente",
-    "empty-list": "Aún no hay ningún agente."
+    "empty-list": "Aún no hay ningún agente.",
+    "confirm-restart-title": "Reiniciar conversación",
+    "confirm-restart-content": "¿Quieres iniciar una nueva conversación?"
   }
 }

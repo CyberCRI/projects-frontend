@@ -3231,6 +3231,8 @@
     "confirm-deletion-of": "Do you really want to delete the agent '{title}'?",
     "deleted": "Agent deleted",
     "delete-error": "Error deleting the agent",
-    "empty-list": "No agent yet."
+    "empty-list": "No agent yet.",
+    "confirm-restart-title": "Restart conversation",
+    "confirm-restart-content": "Do you want to start a new conversation?"
   }
 }

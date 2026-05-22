@@ -3230,6 +3230,8 @@
     "confirm-deletion-of": "Wil je de agent '{title}' echt verwijderen?",
     "deleted": "Agent verwijderd",
     "delete-error": "Fout bij het verwijderen van de agent",
-    "empty-list": "Nog geen agent beschikbaar."
+    "empty-list": "Nog geen agent beschikbaar.",
+    "confirm-restart-title": "Gesprek opnieuw starten",
+    "confirm-restart-content": "Wilt u een nieuw gesprek starten?"
   }
 }

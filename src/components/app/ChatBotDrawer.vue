@@ -7,6 +7,16 @@ const props = defineProps({
   isOpened: { type: Boolean, default: false },
 })
 
+const conversation = ref(null)
+const conversationId = ref(null)
+const tempKey = ref(Date.now())
+const chatbotUiKey = computed(() => conversationId.value || tempKey.value)
+function onConversationRestarted() {
+  conversation.value = null
+  conversationId.value = null
+  tempKey.value = Date.now()
+}
+
 watch(
   () => props.isOpened,
   (neo, old) => {
@@ -103,10 +113,12 @@ watch(
   >
     <ChatbotUi
       ref="chatbotUi"
+      :key="chatbotUiKey"
       :endpoint="CHAT_ENDPOINT"
       :context-messages="contextMessages"
       @start-conversation="startConversation"
       @close="$emit('close')"
+      @conversation-restarted="onConversationRestarted"
     >
       <ChatbotOptions :has-user-context="hasUserContext" :has-page-context="hasPageContext" />
 

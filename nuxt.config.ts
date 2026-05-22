@@ -175,6 +175,7 @@ export default defineNuxtConfig({
     appVectorToolPrompt: '',
     appChatbotPromptDb: '',
     appAgentMemoryTrace: '',
+    appAgentMemorySlidingWindowSize: '',
     public: {
       appVersion: '',
       appApiOrgCode: '',

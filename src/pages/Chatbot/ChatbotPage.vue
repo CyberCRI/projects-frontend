@@ -52,7 +52,6 @@ const conversationId = ref(null)
 const tempKey = ref(Date.now())
 const chatbotUiKey = computed(() => conversationId.value || tempKey.value)
 function onConversationRestarted() {
-  console.log('onConversationRestarted')
   conversation.value = null
   conversationId.value = null
   tempKey.value = Date.now()
@@ -164,7 +163,7 @@ const showConversationList = ref(false)
 const route = useRoute()
 watch(
   () => route.hash,
-  (neo, old) => {
+  (neo) => {
     showConversationList.value = neo === '#show-list'
   },
   { immediate: true }
@@ -210,7 +209,7 @@ useLpiHead2({
           <LpiSelect v-model="conversationId" :options="allConversationOptions" />
         </div>
         <ChatbotOptions :has-user-context="hasUserContext" />
-        <div id="show-list" v-if="isLoadingConversation" class="conversation-is-loading">
+        <div v-if="isLoadingConversation" id="show-list" class="conversation-is-loading">
           <LoaderSimple />
         </div>
         <ChatbotUi

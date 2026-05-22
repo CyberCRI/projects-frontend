@@ -1,7 +1,7 @@
-import { PROJECT_PREVIEW_OUTPUT_SCHEMA, mapProjectPreview } from './project-tool'
+import { /*PROJECT_PREVIEW_OUTPUT_SCHEMA,*/ mapProjectPreview } from './project-tool'
 import { API_BASE_URL, mcpFetch, orgCode } from './base'
-import N from './zod-schema-utils'
-import { z } from 'zod'
+// import N from './zod-schema-utils'
+// import { z } from 'zod'
 
 export default (server) => {
   // Add an search tool
@@ -12,7 +12,7 @@ export default (server) => {
       description:
         'Get main general data about the platform organization such as its  description, title and terms and conditions. ',
       inputSchema: {},
-      outputSchema: {
+      /*outputSchema: {
         organization_data: N.object({
           id: N.number().describe('The ID of the organization'),
           code: N.string().describe('The code of the organization'),
@@ -24,7 +24,7 @@ export default (server) => {
           description: N.string().describe('The description of the organization'),
           website_url: N.string().describe('The website URL of the organization'),
         }).describe('The organization general data'),
-      },
+      },*/
     },
     async (_input, extras) => {
       let results = {}
@@ -66,9 +66,9 @@ export default (server) => {
       title: 'Organization featured projects',
       description: 'Get a list of featured projects for the platform organization.',
       inputSchema: {},
-      outputSchema: {
+      /*outputSchema: {
         results: z.array(PROJECT_PREVIEW_OUTPUT_SCHEMA).describe('The list of featured projects'),
-      },
+        },*/
     },
     async (_input, extras) => {
       let results = {}

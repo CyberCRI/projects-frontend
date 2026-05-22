@@ -28,6 +28,7 @@ const {
   appSorbobotApiTrace,
   appAgentMemoryTrace,
   appVectorToolPrompt,
+  appAgentMemorySlidingWindowSize,
 } = runtimeConfig
 const { appApiOrgCode, appChatbotEnabled } = runtimeConfig.public
 
@@ -41,6 +42,23 @@ const { appApiOrgCode, appChatbotEnabled } = runtimeConfig.public
 //     console.log('[MCP TRACE]', ...args)
 //   }
 // }
+
+function safeParseInt(s) {
+  if (!s) return 0
+  if (typeof s === 'number') return Math.floor(s)
+  try {
+    const res = parseInt(s, 10)
+    if (isNaN(res)) throw 'Not a number'
+    return res
+  } catch (err) {
+    console.error(`parseInt error for ${s}`, err)
+    return 0
+  }
+}
+
+let contextWindowSize = safeParseInt(appAgentMemorySlidingWindowSize)
+// ensure always positive
+if (contextWindowSize < 0) contextWindowSize *= -1
 
 export const safeStringify = (obj: unknown) => {
   const seen = new WeakSet()
@@ -422,7 +440,7 @@ export default defineLazyEventHandler(() => {
 
       // TODO: also update this.conversation ? test this for side effects...
       async updateConversation(tx: any, newTitle: string = '') {
-        const data = {}
+        const data: { title?: string } = {}
         if (this.conversation!.titleSource === 'fallback' && newTitle) {
           data.title = newTitle
         }
@@ -455,7 +473,7 @@ export default defineLazyEventHandler(() => {
 
         // TODO: move this to to updateCOnversation ?
         // Keep only Unicode letters, digits, underscore, and spaces
-        let newTitle = message.content
+        const newTitle = message.content
           .replace(/[^\p{L}\p{N}_\s]/gu, '')
           .replace(/\s+/, ' ')
           .trim()
@@ -589,10 +607,37 @@ export default defineLazyEventHandler(() => {
       const date = new Date().toISOString()
       const defaultConversationTitle = agent.title + ' - ' + date
 
-      let conversation = await chatbotPrisma.conversation.findUnique({
-        include: { messages: { orderBy: { position: 'asc' } } },
+      const messagesOption: {
+        where: any
+        orderBy: { position: string }
+        take?: number
+      } = {
+        where: {
+          OR: [
+            { role: { in: ['assistant', 'user'] as any[] }, content: { not: '' } },
+            { toolCallId: { startsWith: 'retriever_user_context_' } },
+          ],
+        },
+        orderBy: {
+          position: 'desc',
+        },
+      }
+      if (contextWindowSize) messagesOption.take = contextWindowSize
+
+      let conversation:
+        | (Awaited<ReturnType<typeof chatbotPrisma.conversation.findUnique>> & { messages: any[] })
+        | null = null
+
+      const found = await chatbotPrisma.conversation.findUnique({
+        include: {
+          messages: messagesOption as any,
+        },
         where: conversationData,
       })
+
+      if (found) {
+        conversation = found as typeof conversation
+      }
 
       if (!conversation) {
         traceAgentMemory('Create new conversation')
@@ -605,6 +650,8 @@ export default defineLazyEventHandler(() => {
         })
         conversation = { ...created, messages: [] }
       }
+
+      conversation.messages = conversation.messages?.reverse() || []
 
       const persistenceHandler = new ConversationPersistenceHandler(conversation)
       await persistenceHandler.getLastMessage()
@@ -727,6 +774,8 @@ export default defineLazyEventHandler(() => {
       organization_code: appApiOrgCode,
     }
 
+    // filtering is now done in db request
+    // TODO keeping for now
     function memoryFilter(msg) {
       // deliberatly ignore tool to mininimize context
       // TODO: if required, re-enable tool messages
@@ -756,13 +805,25 @@ export default defineLazyEventHandler(() => {
 
     // TODO: fix typescript mess with agent.stream return type
     try {
+      const transmittedMessages = [
+        ...(persistenceHandler.messages || [])
+          .filter(memoryFilter)
+          .slice(-contextWindowSize)
+          .map(memoryMapper),
+        ...messages.map(messageMapper),
+      ]
+
+      traceAgentMemory('==========  MEMORIES  =======', persistenceHandler.messages?.length)
+      traceAgentMemory(persistenceHandler.messages)
+      traceAgentMemory('========== /MEMORIES =======')
+
+      traceLangchain('==========  MESSAGES  =======', persistenceHandler.messages?.length)
+      traceLangchain(transmittedMessages)
+      traceLangchain('========== /MESSAGES =======')
+
       for await (const [token, metadata] of (await agent.stream(
         {
-          messages: [
-            ...(persistenceHandler.messages || []).filter(memoryFilter).map(memoryMapper),
-            ...messages.map(messageMapper),
-          ],
-
+          messages: transmittedMessages,
           ...customMetadata,
         } as any,
         { ...config, streamMode: 'messages' }
@@ -791,6 +852,25 @@ export default defineLazyEventHandler(() => {
       }
     } catch (err) {
       traceLangchain('Stream error:', err)
+
+      // Extract a readable message (MCP/tool errors are often nested)
+      const errorMessage =
+        err?.cause?.message ?? // MCP transport errors
+        err?.message ?? // standard Error
+        'An unexpected error occurred'
+
+      event.node.res.write(
+        `data: ${JSON.stringify({
+          text: '',
+          role: 'ai',
+          is_done: true,
+          conversationId,
+          error: errorMessage,
+        })}\n\n`
+      )
+      if (typeof (event.node.res as any).flush === 'function') {
+        ;(event.node.res as any).flush()
+      }
     } finally {
       event.node.res.end()
     }

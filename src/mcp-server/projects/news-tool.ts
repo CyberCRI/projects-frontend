@@ -1,7 +1,7 @@
 import { API_BASE_URL, mcpFetch, orgCode } from './base'
-import N from './zod-schema-utils'
+// import N from './zod-schema-utils'
 import { z } from 'zod'
-
+/*
 const NEWS_ARTICLE_OUTPUT_SCHEMA = N.object({
   id: N.number().describe('The ID of the news article'),
   slug: N.string().describe('The slug of the news article'),
@@ -10,6 +10,7 @@ const NEWS_ARTICLE_OUTPUT_SCHEMA = N.object({
   publication_date: N.string().describe('The publication date of the news article'),
   item_type: N.literal('news_article').describe('The type of the item, always news_article'),
 })
+*/
 
 const mapNewsArticle = (n: any) => ({
   id: n.id,
@@ -28,9 +29,9 @@ export default (server) => {
       title: 'News list',
       description: 'Get a list of recent news articles.',
       inputSchema: {},
-      outputSchema: {
+      /*outputSchema: {
         results: z.array(NEWS_ARTICLE_OUTPUT_SCHEMA).describe('The list of recent news articles'),
-      },
+        },*/
     },
     async (_input, extras) => {
       const params = { ordering: '-publication_date', limit: 30, to_date: new Date().toISOString() }
@@ -62,9 +63,9 @@ export default (server) => {
       title: 'News data',
       description: 'Get a news article. Use the news-list tool to get news ids.',
       inputSchema: { slugOrId: z.string().describe('The slug or id of the news article') },
-      outputSchema: {
+      /*outputSchema: {
         results: z.array(NEWS_ARTICLE_OUTPUT_SCHEMA).describe('The news article data'),
-      },
+        },*/
     },
     async ({ slugOrId }, extras) => {
       let results = {}

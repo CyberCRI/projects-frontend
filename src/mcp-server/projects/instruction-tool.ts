@@ -1,7 +1,8 @@
 import { API_BASE_URL, mcpFetch, orgCode } from './base'
-import N from './zod-schema-utils'
+// import N from './zod-schema-utils'
 import { z } from 'zod'
 
+/*
 const INSTRUCTION_ARTICLE_OUTPUT_SCHEMA = N.object({
   id: N.number().describe('The ID of the instruction article'),
   slug: N.string().describe('The slug of the instruction article'),
@@ -12,6 +13,7 @@ const INSTRUCTION_ARTICLE_OUTPUT_SCHEMA = N.object({
     .literal('instruction_article')
     .describe('The type of the item, always instruction_article'),
 })
+*/
 
 const mapInstructionArticle = (i: any) => ({
   id: i.id,
@@ -30,11 +32,11 @@ export default (server) => {
       title: 'Instructions list',
       description: 'Get a list of instructions  .',
       inputSchema: {},
-      outputSchema: {
+      /*outputSchema: {
         results: z
           .array(INSTRUCTION_ARTICLE_OUTPUT_SCHEMA)
           .describe('The list of instruction articles'),
-      },
+          },*/
     },
     async (_input, extras) => {
       let results = {}
@@ -66,11 +68,11 @@ export default (server) => {
       description:
         'Get an instruction article. Use the instructions-list tool to get instruction ids.',
       inputSchema: { slugOrId: z.string().describe('The slug or id of the instruction article') },
-      outputSchema: {
+      /*outputSchema: {
         instruction_data: INSTRUCTION_ARTICLE_OUTPUT_SCHEMA.describe(
           'The instruction article data'
         ),
-      },
+        },*/
     },
     async ({ slugOrId }, extras) => {
       let results = {}

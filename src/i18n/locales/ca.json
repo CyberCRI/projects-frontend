@@ -3230,6 +3230,8 @@
     "confirm-deletion-of": "Realment vols suprimir l'agent '{title}'?",
     "deleted": "Agent suprimit",
     "delete-error": "Error en suprimir l'agent",
-    "empty-list": "Encara no hi ha cap agent."
+    "empty-list": "Encara no hi ha cap agent.",
+    "confirm-restart-title": "Reinicia la conversa",
+    "confirm-restart-content": "Vols iniciar una conversa nova?"
   }
 }
