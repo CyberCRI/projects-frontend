@@ -1,11 +1,11 @@
 import {
-  PEOPLE_GROUP_PREVIEW_OUTPUT_SCHEMA,
-  USER_PREVIEW_OUTPUT_SCHEMA,
+  // PEOPLE_GROUP_PREVIEW_OUTPUT_SCHEMA,
+  // USER_PREVIEW_OUTPUT_SCHEMA,
   mapPeopleGroupPreview,
   mapUserPreview,
 } from './people-tool'
+import { /*SDG_OUTPUT_SCHEMA,*/ mapSDG } from './sdg-tool'
 import { API_BASE_URL, mcpFetch, orgCode } from './base'
-import { SDG_OUTPUT_SCHEMA, mapSDG } from './sdg-tool'
 import { tagMapper } from './tag-schema'
 import N from './zod-schema-utils'
 import { z } from 'zod'
@@ -49,12 +49,13 @@ export const mapProjectPreview = (p: any) => ({
   link_url: `/projects/${p.slug}/`,
   item_image: p.header_image?.variations?.small,
 })
-
+/*
 const BLOG_ENTRY_OUTPUT_SCHEMA = N.object({
   id: N.number().describe('The ID of the blog entry'),
   title: N.string().describe('The title of the blog entry'),
   content: N.string().describe('The content of the blog entry'),
 })
+*/
 
 export const FETCH_PROJECT_SLUG_OR_ID =
   'If you dont have the slug (given under "slug" or "id" key in a previous tool call data) or id of the project, use the search tool with the project name, the project id or slug will be in the first result, else use the previously mentioned slug or id.'
@@ -73,7 +74,7 @@ export default (server) => {
       title: 'Project general data',
       description: `Get main general data (description, goals, blog entries, members...) about a project given its id or slug. ${FETCH_PROJECT_SLUG_OR_ID}`,
       inputSchema: { idOrSlug: z.string().describe('The id or slug of the project') },
-      outputSchema: {
+      /*outputSchema: {
         project_data: PROJECT_PREVIEW_OUTPUT_SCHEMA.extend({
           purpose: N.string().describe('The purpose of the project'),
           description: N.string().nullable().describe('The description of the project'),
@@ -165,7 +166,7 @@ export default (server) => {
             ),
           }),
         }),
-      },
+      },*/
     },
     async ({ idOrSlug }, extras) => {
       let results = {}
@@ -263,9 +264,9 @@ export default (server) => {
       title: 'Project similar projects',
       description: `Get projects that are similar to the one given by its id or slug.   ${FETCH_PROJECT_SLUG_OR_ID}`,
       inputSchema: { idOrSlug: z.string().describe('The id or slug of the project') },
-      outputSchema: {
+      /*outputSchema: {
         results: z.array(PROJECT_PREVIEW_OUTPUT_SCHEMA).describe('The list of similar projects'),
-      },
+        },*/
     },
     async ({ idOrSlug }, extras) => {
       let results = []
@@ -300,9 +301,9 @@ export default (server) => {
       title: 'Project blog entries',
       description: `Get main blog entries about a project given its id or slug. ${FETCH_PROJECT_SLUG_OR_ID}`,
       inputSchema: { idOrSlug: z.string().describe('The id or slug of the project') },
-      outputSchema: {
+      /*  outputSchema: {
         results: N.array(BLOG_ENTRY_OUTPUT_SCHEMA).describe('The list of blog entries'),
-      },
+        },*/
     },
     async ({ idOrSlug }, extras) => {
       let results = {}
@@ -336,7 +337,7 @@ export default (server) => {
         idOrSlug: z.string().describe('The id or slug of the project'),
         blogEntryId: z.string().describe('The id of the blog entry'),
       },
-      outputSchema: { blog_entry: BLOG_ENTRY_OUTPUT_SCHEMA },
+      /* outputSchema: { blog_entry: BLOG_ENTRY_OUTPUT_SCHEMA },*/
     },
     async ({ idOrSlug, blogEntryId }, extras) => {
       let results = {}

@@ -116,6 +116,8 @@ model Agent {
 
   useLatestPromptVersion Boolean @default(true)
 
+  conversations     Conversation[]
+
   @@unique([title, orgCode])
   @@unique([slug, orgCode])
   @@index([title, orgCode])
@@ -145,4 +147,66 @@ model AgentDocument {
   agent                 Agent @relation(fields: [agentId], references:[id])
 
   @@id([vectorStoreKey, documentTitle, agentId])
+}
+
+
+
+enum ConversationTitleSource {
+  pending
+  user
+  llm
+  fallback
+}
+
+model Conversation {
+  id                  String  @id @default(uuid())
+  threadId            String  @unique
+
+  organizationCode    String
+  userId              Int
+
+  agentId             Int
+  agent               Agent @relation(fields: [agentId], references:[id])
+
+  startedAt           DateTime  @default(now())
+  lastActiveAt        DateTime @updatedAt
+  archivedAt          DateTime?
+
+  title               String
+  titleSource         ConversationTitleSource @default(fallback)
+
+  deletedAt           DateTime?
+
+  messages            ConversationMessage[]
+
+
+  @@index([organizationCode, userId])
+  @@index([agentId, userId])
+  @@index([organizationCode, agentId])
+  @@index([deletedAt])
+  @@index([archivedAt])
+}
+
+
+enum ConversationMessageRole {
+  user
+  assistant
+  tool
+  system
+}
+
+model ConversationMessage {
+  id                  String  @id @default(uuid())
+
+  conversationId      String
+  conversation        Conversation @relation(fields: [conversationId], references: [id])
+
+  role                ConversationMessageRole
+  content             String
+  toolCalls           Json?
+  toolCallId          String?
+  createdAt           DateTime  @default(now())
+  position            Int
+
+  @@index([conversationId])
 }

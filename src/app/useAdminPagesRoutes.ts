@@ -32,7 +32,18 @@ export default function useAdminPagesRoutes() {
         path: 'mcps',
         name: 'McpsAdminTab',
         component: () => import('../pages/AdminPortalPageV2/Tabs/McpsAdminTab.vue'),
+      },
+      {
+        path: 'conversations',
+        name: 'ConversationsAdminTab',
+        component: () => import('../pages/AdminPortalPageV2/Tabs/AgentConversationsAdminTab.vue'),
       }
+      // TODO: keeping for now
+      // {
+      //   path: 'checkpoints',
+      //   name: 'CheckpointsAdminTab',
+      //   component: () => import('../pages/AdminPortalPageV2/Tabs/AgentCheckpointsAdminTab.vue'),
+      // }
     )
   }
   return [

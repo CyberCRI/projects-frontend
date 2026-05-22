@@ -1,20 +1,17 @@
-import {
-  tool,
-  createAgent,
-  createMiddleware,
-  // contextEditingMiddleware,
-  // ClearToolUsesEdit,
-  // summarizationMiddleware,
-} from 'langchain'
+// import { StateSchema, ReducedValue /*, MemorySaver */ } from '@langchain/langgraph'
 import { SystemMessage, HumanMessage, AIMessage } from '@langchain/core/messages'
 import { createRetrieverTool } from '@langchain/classic/tools/retriever'
 import { tokenMap, traceMcp } from '@/server/routes/api/chat-stream'
+import { BaseCallbackHandler } from '@langchain/core/callbacks/base'
 import checkAdminRights from '@/server/utils/check-admin-rights.js'
+import type { DocumentInterface } from '@langchain/core/documents'
 import type { BaseMessageChunk } from '@langchain/core/messages'
 import { initChatModel } from 'langchain/chat_models/universal'
+import { tool, createAgent, createMiddleware } from 'langchain'
+// import useCheckpointerDb from '@/server/utils/checkpointer-db'
 import { MultiServerMCPClient } from '@langchain/mcp-adapters'
 import getVectorStore from '@/server/utils/vector-db.js'
-import { MemorySaver } from '@langchain/langgraph'
+import { ChatOpenAI } from '@langchain/openai'
 import { v4 as uuidv4 } from 'uuid'
 import * as z from 'zod'
 
@@ -29,7 +26,9 @@ const {
   appMcpServerUrl,
   appLangchainTrace,
   appSorbobotApiTrace,
+  appAgentMemoryTrace,
   appVectorToolPrompt,
+  appAgentMemorySlidingWindowSize,
 } = runtimeConfig
 const { appApiOrgCode, appChatbotEnabled } = runtimeConfig.public
 
@@ -37,14 +36,44 @@ const { appApiOrgCode, appChatbotEnabled } = runtimeConfig.public
 // Map conversationId to token and date for authed api requests in MCP
 // export const tokenMap = new Map<string, { date: Date; token: string }>()
 
-export const checkpointer = new MemorySaver()
-
 // TODO use own traceMcp map instead cgat-stream one when refactoed
 // export const traceMcp = (...args) => {
 //   if (appMcpServerTrace) {
 //     console.log('[MCP TRACE]', ...args)
 //   }
 // }
+
+function safeParseInt(s) {
+  if (!s) return 0
+  if (typeof s === 'number') return Math.floor(s)
+  try {
+    const res = parseInt(s, 10)
+    if (isNaN(res)) throw 'Not a number'
+    return res
+  } catch (err) {
+    console.error(`parseInt error for ${s}`, err)
+    return 0
+  }
+}
+
+let contextWindowSize = safeParseInt(appAgentMemorySlidingWindowSize)
+// ensure always positive
+if (contextWindowSize < 0) contextWindowSize *= -1
+
+export const safeStringify = (obj: unknown) => {
+  const seen = new WeakSet()
+  return JSON.stringify(
+    obj,
+    (_, value) => {
+      if (typeof value === 'object' && value !== null) {
+        if (seen.has(value)) return '[Circular]'
+        seen.add(value)
+      }
+      return value
+    },
+    2
+  )
+}
 
 export const traceLangchain = (...args) => {
   if (appLangchainTrace) {
@@ -58,6 +87,32 @@ export const traceSorbobot = (...args) => {
   }
 }
 
+export const traceAgentMemory = (...args) => {
+  if (appAgentMemoryTrace) {
+    console.log('[Agent Memory TRACE]', ...args)
+  }
+}
+
+// const StateAnnotation = Annotation.Root({
+//   ...MessagesAnnotation.spec,
+//   agent_id: Annotation<string>(),
+//   keycloack_id: Annotation<string>(),
+//   people_id: Annotation<string>(),
+//   organization_code: Annotation<string>(),
+// })
+
+// const AgentState = new StateSchema({
+//   agent_id: z.number(),
+//   // keycloack_id: z.string(),
+//   user_id: z.number(),
+//   organization_code: z.string(),
+//   // count: z.number().default(0),
+//   history: new ReducedValue(
+//     z.array(z.string()).default(() => []),
+//     { inputSchema: z.string(), reducer: (c, n) => [...c, n] }
+//   ),
+// })
+
 export default defineLazyEventHandler(() => {
   traceLangchain(
     'appChatbotEnabled:',
@@ -68,12 +123,23 @@ export default defineLazyEventHandler(() => {
     !!appLangchainModelName
   )
   return defineEventHandler(async (event) => {
+    // const { checkpointer } = await useCheckpointerDb()
     // return 404 if not configured
     if (!appLangchainModelApiKey || !appChatbotEnabled) {
       throw createError({
         statusCode: 404,
         message: 'Chat is not configured',
       })
+    }
+
+    /* -------- Check user ------------ */
+
+    const user = await getUser(event)
+    if (!user) {
+      setResponseStatus(event, 401)
+      return {
+        error: 'Unauthorized',
+      }
     }
 
     /* --------- Fetch Agent  --------- */
@@ -159,6 +225,11 @@ export default defineLazyEventHandler(() => {
     const messages = body.messages || []
 
     let conversationId = body.conversationId || null
+    if (conversationId) {
+      // TODO: validate existence and ownership
+      console.log('Resuming coverstion ', conversationId)
+    }
+
     // if no conversationId, we start a new conversation
     if (!conversationId) {
       conversationId = uuidv4()
@@ -224,7 +295,7 @@ export default defineLazyEventHandler(() => {
 
     let skillSystemPromptExtra = ''
     if (agentData.skillContents.length) {
-      console.log(`Found ${agentData.skillContents.length} skills`)
+      traceLangchain(`Found ${agentData.skillContents.length} skills`)
       const skillMap = {}
       agentData.skillContents.forEach((agentSkillContent) => {
         const skillContent = agentSkillContent.skillContent
@@ -313,11 +384,32 @@ export default defineLazyEventHandler(() => {
       },
     })
 
+    // function findCircular(obj: any, path = '', seen = new WeakSet()): void {
+    //   if (obj && typeof obj === 'object') {
+    //     if (seen.has(obj)) {
+    //       console.error('[DEBUG] Circular reference at:', path)
+    //       return
+    //     }
+    //     seen.add(obj)
+    //     for (const key of Object.keys(obj)) {
+    //       findCircular(obj[key], `${path}.${key}`, seen)
+    //     }
+    //   }
+    // }
+    // const debugCircularRef = createMiddleware({
+    //   name: 'DebugCircularRef',
+    //   beforeModel: (state) => {
+    //     console.log('[DEBUG] check circular ref')
+    //     findCircular(state)
+    //     return
+    //   },
+    // })
+
     const loggingMiddleware = createMiddleware({
       name: 'LoggingMiddleware',
       beforeModel: (state) => {
         traceLangchain(`About to call model with ${state.messages.length} messages`)
-        traceLangchain(JSON.stringify(state.messages, null, 2))
+        traceLangchain(safeStringify(state.messages))
         return
       },
       afterModel: (state) => {
@@ -327,22 +419,275 @@ export default defineLazyEventHandler(() => {
       },
     })
 
+    /* --------- memory ---------------- */
+
+    class ConversationPersistenceHandler extends BaseCallbackHandler {
+      name = 'ConversationPersistenceHandler'
+
+      conversation: {
+        id: string
+        messages?: any[]
+        [key: string]: any
+      } | null = null
+      lastMessage: { position: number } | null = null
+      messages: any[] = []
+
+      constructor(conversation: any) {
+        super()
+        this.conversation = conversation
+        this.messages = conversation.messages ?? []
+      }
+
+      // TODO: also update this.conversation ? test this for side effects...
+      async updateConversation(tx: any, newTitle: string = '') {
+        const data: { title?: string } = {}
+        if (this.conversation!.titleSource === 'fallback' && newTitle) {
+          data.title = newTitle
+        }
+        await tx.conversation.update({
+          where: { id: this.conversation!.id },
+          data,
+        })
+      }
+
+      async getLastMessage(tx?: any) {
+        const lastMessage = await (tx || chatbotPrisma).conversationMessage.findFirst({
+          where: { conversationId: this.conversation!.id },
+          orderBy: { position: 'desc' },
+          select: { position: true },
+        })
+        this.lastMessage = lastMessage
+      }
+
+      async getNextPosition(tx: any) {
+        await this.getLastMessage(tx)
+        return (this.lastMessage?.position ?? -1) + 1
+      }
+
+      async handleUserMessage(message: any) {
+        traceAgentMemory('handle user message')
+        if (!this.conversation?.id) {
+          traceAgentMemory('No conversation set')
+          return
+        }
+
+        // TODO: move this to to updateCOnversation ?
+        // Keep only Unicode letters, digits, underscore, and spaces
+        const newTitle = message.content
+          .replace(/[^\p{L}\p{N}_\s]/gu, '')
+          .replace(/\s+/, ' ')
+          .trim()
+          .slice(0, 25)
+        await chatbotPrisma.$transaction(async (tx) => {
+          const position = await this.getNextPosition(tx)
+          await tx.conversationMessage.create({
+            data: {
+              conversationId: this.conversation!.id,
+              role: 'user',
+              content: message.content,
+              position,
+            },
+          })
+          await this.updateConversation(tx, newTitle)
+        })
+      }
+
+      async handleAssistantMessage(message: any) {
+        await chatbotPrisma.$transaction(async (tx) => {
+          const position = await this.getNextPosition(tx)
+          await tx.conversationMessage.create({
+            data: {
+              conversationId: this.conversation!.id,
+              role: 'assistant',
+              content: message.content,
+              toolCalls: message.tool_calls ?? null,
+              position,
+            },
+          })
+          await this.updateConversation(tx)
+        })
+      }
+
+      override async handleLLMEnd(output: any) {
+        traceAgentMemory('handle model end')
+        if (!this.conversation?.id) {
+          traceAgentMemory('No conversation set')
+          return
+        }
+        const message = output.generations[0][0].message
+        await this.handleAssistantMessage(message)
+      }
+
+      override async handleToolEnd(
+        output: any,
+        runId: string,
+        parentRunId?: string,
+        tags?: string[],
+        metadata?: any
+      ) {
+        traceAgentMemory('handle tool end')
+        if (!this.conversation?.id) {
+          traceAgentMemory('No conversation set')
+          return
+        }
+        await chatbotPrisma.$transaction(async (tx) => {
+          const position = await this.getNextPosition(tx)
+          await tx.conversationMessage.create({
+            data: {
+              conversationId: this.conversation!.id,
+              role: 'tool',
+              content:
+                typeof output === 'string' ? output : (output?.content ?? JSON.stringify(output)),
+              toolCallId: metadata?.tool_call_id ?? null,
+              position,
+            },
+          })
+          await this.updateConversation(tx)
+        })
+      }
+
+      async handleRetrieverMessage(content: string, runId: string) {
+        if (!content) return
+
+        await chatbotPrisma.$transaction(async (tx) => {
+          const position = await this.getNextPosition(tx)
+          await tx.conversationMessage.create({
+            data: {
+              conversationId: this.conversation!.id,
+              role: 'tool',
+              content,
+              toolCallId: `retriever_${runId}`,
+              position,
+            },
+          })
+          await this.updateConversation(tx)
+        })
+      }
+
+      override async handleRetrieverEnd(
+        documents: DocumentInterface[],
+        runId: string,
+        _parentRunId?: string,
+        _tags?: string[]
+      ) {
+        traceAgentMemory('handle retriever end')
+        if (!this.conversation?.id) {
+          traceAgentMemory('No conversation set')
+          return
+        }
+
+        const content = documents
+          .map((doc, i) => {
+            const source = doc.metadata?.source ?? doc.metadata?.id ?? `doc_${i}`
+            return `[${source}]\n${doc.pageContent}`
+          })
+          .join('\n\n---\n\n')
+        await this.handleRetrieverMessage(content, runId)
+      }
+    }
+
+    async function createConversationPersistenceHandler({
+      threadId,
+      organizationCode,
+      agent,
+      userId,
+    }: {
+      threadId: string
+      organizationCode: string
+      agent: any
+      userId: number
+    }): Promise<ConversationPersistenceHandler> {
+      const agentId = agent.id
+      const conversationData = {
+        threadId,
+        organizationCode,
+        userId,
+        agentId,
+      }
+      const date = new Date().toISOString()
+      const defaultConversationTitle = agent.title + ' - ' + date
+
+      const messagesOption: {
+        where: any
+        orderBy: { position: string }
+        take?: number
+      } = {
+        where: {
+          OR: [
+            { role: { in: ['assistant', 'user'] as any[] }, content: { not: '' } },
+            { toolCallId: { startsWith: 'retriever_user_context_' } },
+          ],
+        },
+        orderBy: {
+          position: 'desc',
+        },
+      }
+      if (contextWindowSize) messagesOption.take = contextWindowSize
+
+      let conversation:
+        | (Awaited<ReturnType<typeof chatbotPrisma.conversation.findUnique>> & { messages: any[] })
+        | null = null
+
+      const found = await chatbotPrisma.conversation.findUnique({
+        include: {
+          messages: messagesOption as any,
+        },
+        where: conversationData,
+      })
+
+      if (found) {
+        conversation = found as typeof conversation
+      }
+
+      if (!conversation) {
+        traceAgentMemory('Create new conversation')
+        const created = await chatbotPrisma.conversation.create({
+          data: {
+            ...conversationData,
+            title: defaultConversationTitle,
+            titleSource: 'fallback',
+          },
+        })
+        conversation = { ...created, messages: [] }
+      }
+
+      conversation.messages = conversation.messages?.reverse() || []
+
+      const persistenceHandler = new ConversationPersistenceHandler(conversation)
+      await persistenceHandler.getLastMessage()
+      return persistenceHandler
+    }
+
     /* --------- LLM settings  --------- */
 
     const parsedTemperature = parseFloat(appLangchainTemperature)
     const temperature = Number.isNaN(parsedTemperature) ? 0.7 : parsedTemperature
 
-    const model = await initChatModel(appLangchainModelName, {
-      temperature,
-      apiKey: appLangchainModelApiKey,
-    })
+    let model
+
+    // fix circular ref bug in state
+    // see https://github.com/langchain-ai/langchainjs/issues/9572
+    if (/^openai:/.test(appLangchainModelName)) {
+      model = new ChatOpenAI({
+        model: appLangchainModelName.replace(/^openai:/, ''),
+        temperature,
+        apiKey: appLangchainModelApiKey,
+      })
+    } else {
+      // fallback for non openai models and keep for when circular ref bug is resolved
+      model = await initChatModel(appLangchainModelName, {
+        temperature,
+        apiKey: appLangchainModelApiKey,
+      })
+    }
 
     /* --------- Agent setup  --------- */
 
     const agent = createAgent({
       model,
       tools,
-      checkpointer,
+      // TODO reanble checkpoint after tests
+      // checkpointer,
       systemPrompt: new SystemMessage({
         content: [
           {
@@ -351,9 +696,11 @@ export default defineLazyEventHandler(() => {
           },
         ],
       }),
+      // stateSchema: AgentState as StateSchema<any>,
       middleware: [
         toolMonitoringMiddleware,
         loggingMiddleware,
+        // debugCircularRef,
         // contextEditingMiddleware({
         //   // TODO: make configurable in agent data{
         //   edits: [
@@ -374,23 +721,110 @@ export default defineLazyEventHandler(() => {
 
     /* --------- Start coversation  --------- */
 
-    traceMcp(
+    traceLangchain(
       `Starting chat stream for conversation ${conversationId} with ${tools.map((t) => `"${t.name}"`).join(', ')}  tools and ${messages.length} messages`
     )
 
+    // console.log('[MEATAFA]', {
+    //   agent_id: agentData.id,
+    //   keycloack_id: user.keycloack_id,
+    //   people_id: user.people_id,
+    //   organization_code: appApiOrgCode,
+    // })
+    //
+    const persistenceHandler = await createConversationPersistenceHandler({
+      threadId: conversationId,
+      organizationCode: appApiOrgCode,
+      userId: user.id,
+      agent: agentData,
+    })
     const config = {
-      configurable: { thread_id: conversationId },
+      configurable: {
+        thread_id: conversationId,
+      },
+      callbacks: [persistenceHandler],
+      // durability: "exit", // ← one checkpoint per turn, not per superstep
+    }
+
+    // console.log('================ HISTORY =================')
+    // console.log(JSON.stringify(persistenceHandler.messages, null, 2))
+    // console.log('================== NEW MESSSAGES ===========')
+    // console.log(JSON.stringify(messages, null, 2))
+    // console.log('=================================')
+
+    for (const message of messages) {
+      if (message.role === 'user') {
+        traceAgentMemory('Saving last human message:', message.text)
+        if (message.text) await persistenceHandler.handleUserMessage({ content: message.text })
+      } else if (message.role === 'assistant') {
+        traceAgentMemory('Saving last assistant message:', message.text)
+        if (message.text) await persistenceHandler.handleAssistantMessage({ content: message.text })
+      } else if (message.role === 'retriever') {
+        // handle "user profile" stuffed. TODO: make a real server side tool
+        traceAgentMemory('Saving last retriever message:', message.text)
+        if (message.text)
+          await persistenceHandler.handleRetrieverMessage(message.text, `user_context_${uuidv4()}`)
+      }
+    }
+
+    const customMetadata = {
+      agent_id: agentData.id,
+      // keycloack_id: user.keycloack_id,
+      user_id: user.id,
+      organization_code: appApiOrgCode,
+    }
+
+    // filtering is now done in db request
+    // TODO keeping for now
+    function memoryFilter(msg) {
+      // deliberatly ignore tool to mininimize context
+      // TODO: if required, re-enable tool messages
+      return (
+        (msg.role != 'tool' || msg.toolCallId?.startsWith('retriever_user_context')) && msg.content
+      )
+    }
+
+    function memoryMapper(msg) {
+      // langchanin doenst support tool message ithout correponding ai tool call
+      // but we disguise user context as tool result
+      // so revert back to a pseudo 'assistant' message
+      // TODO: fix when context is done server side tool
+      if (msg.role === 'tool' && msg.toolCallId?.startsWith('retriever_user_context')) {
+        msg.role = 'assistant'
+      }
+      return msg.role === 'ai' || msg.role === 'assistant'
+        ? new AIMessage(msg.content) // langchaine (and memory) use "content", deep-chat uses "text"
+        : new HumanMessage(msg.content) // langchaine (and memory) use "content", deep-chat uses "text"
+    }
+
+    function messageMapper(msg) {
+      return msg.role === 'ai' || msg.role === 'assistant'
+        ? new AIMessage(msg.text) // langchaine (and memory) use "content", deep-chat uses "text"
+        : new HumanMessage(msg.text) // langchaine (and memory) use "content", deep-chat uses "text"
     }
 
     // TODO: fix typescript mess with agent.stream return type
     try {
+      const transmittedMessages = [
+        ...(persistenceHandler.messages || [])
+          .filter(memoryFilter)
+          .slice(-contextWindowSize)
+          .map(memoryMapper),
+        ...messages.map(messageMapper),
+      ]
+
+      traceAgentMemory('==========  MEMORIES  =======', persistenceHandler.messages?.length)
+      traceAgentMemory(persistenceHandler.messages)
+      traceAgentMemory('========== /MEMORIES =======')
+
+      traceLangchain('==========  MESSAGES  =======', persistenceHandler.messages?.length)
+      traceLangchain(transmittedMessages)
+      traceLangchain('========== /MESSAGES =======')
+
       for await (const [token, metadata] of (await agent.stream(
         {
-          messages: messages.map((msg) =>
-            msg.role === 'ai' || msg.role === 'assistant'
-              ? new AIMessage(msg.text)
-              : new HumanMessage(msg.text)
-          ),
+          messages: transmittedMessages,
+          ...customMetadata,
         } as any,
         { ...config, streamMode: 'messages' }
       )) as AsyncIterableIterator<[BaseMessageChunk, { status: string; langgraph_node?: any }]>) {
@@ -418,6 +852,25 @@ export default defineLazyEventHandler(() => {
       }
     } catch (err) {
       traceLangchain('Stream error:', err)
+
+      // Extract a readable message (MCP/tool errors are often nested)
+      const errorMessage =
+        err?.cause?.message ?? // MCP transport errors
+        err?.message ?? // standard Error
+        'An unexpected error occurred'
+
+      event.node.res.write(
+        `data: ${JSON.stringify({
+          text: '',
+          role: 'ai',
+          is_done: true,
+          conversationId,
+          error: errorMessage,
+        })}\n\n`
+      )
+      if (typeof (event.node.res as any).flush === 'function') {
+        ;(event.node.res as any).flush()
+      }
     } finally {
       event.node.res.end()
     }

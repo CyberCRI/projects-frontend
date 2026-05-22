@@ -1,6 +1,9 @@
+import type { OrganizationModel } from '~/models/organization.model'
+import type { UserModel } from '~/models/user.model'
+
 export function parseJwt(token) {
   try {
-    let base64Url = token.split('.')[1]
+    const base64Url = token.split('.')[1]
     if (!base64Url) {
       throw new Error('Invalid token format: missing payload')
     }
@@ -38,9 +41,10 @@ export function getKeycloakIdFromToken(tokenHeader) {
   return kcId
 }
 
-export async function getOrg(tokenHeader) {
+export async function getOrg(event): Promise<OrganizationModel | null> {
   const runtimeConfig = useRuntimeConfig()
   const orgCode = runtimeConfig.public.appApiOrgCode
+  const tokenHeader = getRequestHeader(event, 'authorization') || ''
   let org
   try {
     const baseUrl = runtimeConfig.public.appApiUrl + runtimeConfig.public.appApiDefaultVersion + '/'
@@ -57,7 +61,7 @@ export async function getOrg(tokenHeader) {
   return org
 }
 
-export async function getUserByKeycloakId(kcId, tokenHeader) {
+export async function getUserByKeycloakId(kcId, tokenHeader): Promise<UserModel | null> {
   let user = null
   try {
     const runtimeConfig = useRuntimeConfig()
@@ -83,19 +87,24 @@ export function isAdmin(user, orgId) {
   return (user.roles || []).some((role) => role === `organization:#${orgId}:admins`)
 }
 
-export default async function checkAdminRights(event) {
+export async function getUser(event) {
   const tokenHeader = getRequestHeader(event, 'authorization') || ''
-  if (!tokenHeader) {
+  const kcId = getKeycloakIdFromToken(tokenHeader)
+  const user = await getUserByKeycloakId(kcId, tokenHeader)
+  return user
+}
+
+export default async function checkAdminRights(event) {
+  const user = await getUser(event)
+  if (!user) {
     throw createError({
       statusCode: 401,
       statusMessage: 'Unauthorized',
       message: 'You must authenticate to access this resource.',
     })
   }
-  const org = await getOrg(tokenHeader)
+  const org = await getOrg(event)
   const orgId = org?.id
-  const kcId = getKeycloakIdFromToken(tokenHeader)
-  const user = await getUserByKeycloakId(kcId, tokenHeader)
   if (!isSuperAdmin(user) && !isAdmin(user, orgId)) {
     throw createError({
       statusCode: 403,

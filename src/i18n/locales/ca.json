@@ -224,7 +224,9 @@
       "vector-store": "Vector store",
       "prompts": "Sol·licituds",
       "agent-skills": "Habilitats de l'agent",
-      "agents": "Agents"
+      "agents": "Agents",
+      "conversations": "Converses",
+      "checkpoints": "Checkpoints"
     },
     "page-title": "Administrador",
     "portal": {
@@ -3214,6 +3216,8 @@
     "start-message-section": "Missatge de benvinguda de l'agent",
     "use-latest-prompt-version": "Utilitza la versió més recent de l'indicació",
     "use-prompt-version": "Utilitza la versió de l'indicació: ",
+    "use-profile-data": "Accedeix a les dades del perfil d'usuari",
+    "use-project-mcp": "Utilitza Projects MCP",
     "prompt-version-placeholder": "Tria la versió de l'indicació",
     "tools-section": "Eines",
     "docs-section": "Documents",
@@ -3226,6 +3230,8 @@
     "confirm-deletion-of": "Realment vols suprimir l'agent '{title}'?",
     "deleted": "Agent suprimit",
     "delete-error": "Error en suprimir l'agent",
-    "empty-list": "Encara no hi ha cap agent."
+    "empty-list": "Encara no hi ha cap agent.",
+    "confirm-restart-title": "Reinicia la conversa",
+    "confirm-restart-content": "Vols iniciar una conversa nova?"
   }
 }

@@ -10,9 +10,17 @@ const props = defineProps({
   contextMessages: { type: Array, default: () => [] },
   endpoint: { type: String, required: true },
   startMessage: { type: String, default: '' },
+  history: { type: Array, default: () => [] },
+  conversationId: { type: String, default: null },
 })
 
-const emit = defineEmits(['close', 'start-conversation'])
+const emit = defineEmits([
+  'close',
+  'start-conversation',
+  'conversation-restarted',
+  'new-message',
+  'on-component-render',
+])
 
 const IS_STREAMED = ref(!useRuntimeConfig().public.appChatbotWithoutStream)
 const CHAT_ENDPOINT = ref(props.endpoint)
@@ -40,9 +48,9 @@ const chatStyle = ref({
   width: '100%',
 })
 
-const conversationId = ref(null)
+const conversationId = ref(props.conversationId)
 const conversation = useState('chat-box', () => [])
-const history = ref([])
+const history = ref(props.history)
 
 const chatBox = useTemplateRef('deep-chat')
 
@@ -65,14 +73,19 @@ if (props.startMessage) {
   addToConversation(welcoming[0])
 }
 
-const conversationStarted = ref(false)
+const conversationStarted = ref(!!props.history?.length)
+// TODO this is a bit hackish/brittle
+if (!conversationStarted.value) {
+  history.value = welcoming
+}
+
 const requestInterceptor = (requestDetails) => {
   const allMessages = conversationStarted.value
     ? // Server maintains full history via LangGraph checkpointer — only send the new message
       [requestDetails.body.messages[requestDetails.body.messages.length - 1]]
     : // but initial request has also context messages
       [...props.contextMessages, ...welcoming, ...requestDetails.body.messages]
-
+  console.log('allMessages', allMessages)
   conversationStarted.value = true
   addToConversation(...allMessages)
   requestDetails.body.messages = allMessages
@@ -289,10 +302,20 @@ const resetChat = () => {
   conversation.value = []
   conversationId.value = null
   history.value = welcoming
+  emit('conversation-restarted', {})
   // addToConversation(welcoming[0])
 }
 
-defineExpose({ resetChat })
+function scrollToBottom() {
+  chatBox.value?.scrollToBottom()
+}
+
+function onMessage(event) {
+  emit('new-message', event)
+  nextTick(scrollToBottom)
+}
+
+defineExpose({ resetChat, scrollToBottom })
 
 watch(
   () => conversationStarted.value,
@@ -305,6 +328,10 @@ watch(
   }
 )
 
+function onComponentRender() {
+  emit('on-component-render')
+}
+
 watch(
   () => chatBox.value,
   (neo, old) => {
@@ -312,8 +339,12 @@ watch(
       neo.requestInterceptor = requestInterceptor
       neo.responseInterceptor = responseInterceptor
       neo.htmlWrappers = htmlWrappers.value
+      neo.onMessage = onMessage
+      neo.onComponentRender = onComponentRender
     }
-    history.value = JSON.parse(JSON.stringify(conversation.value))
+    // ??
+    console.log('chatbox change', JSON.parse(JSON.stringify(conversation.value)))
+    // history.value = JSON.parse(JSON.stringify(conversation.value))
   }
 )
 
@@ -322,6 +353,16 @@ watchEffect(() => {
     chatBox.value.setPlaceholderText(placeholderText.value)
   }
 })
+
+const showConfirmRestart = ref(false)
+const confirmRestart = () => {
+  resetChat()
+  showConfirmRestart.value = false
+}
+
+const cancelRestart = () => {
+  showConfirmRestart.value = false
+}
 </script>
 
 <template>
@@ -361,7 +402,7 @@ watchEffect(() => {
     </div>
   </deep-chat>
   <div class="action-bar">
-    <a class="action-button" href="#" @click.prevent="resetChat()">
+    <a class="action-button" href="#" @click.prevent="showConfirmRestart = true">
       <IconImage class="icon" name="RestartLeft" />
       {{ $t('chatbot.restart') }}
     </a>
@@ -378,6 +419,16 @@ watchEffect(() => {
       {{ button }}
     </a>
   </div>
+
+  <ConfirmModal
+    v-if="showConfirmRestart"
+    :title="$t('agents.confirm-restart-title')"
+    :content="$t('agents.confirm-restart-content')"
+    :cancel-button-label="$t('common.no')"
+    :confirm-button-label="$t('common.yes')"
+    @cancel="cancelRestart"
+    @confirm="confirmRestart"
+  />
 </template>
 <style lang="scss" scoped>
 .action-bar {

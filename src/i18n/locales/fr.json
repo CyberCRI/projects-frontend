@@ -231,7 +231,9 @@
       "vector-store": "Vector store",
       "prompts": "Invites",
       "agent-skills": "Compétences de l'agent",
-      "agents": "Agents"
+      "agents": "Agents",
+      "conversations": "Conversations",
+      "checkpoints": "Checkpoints"
     },
     "page-title": "Admin",
     "portal": {
@@ -3213,6 +3215,8 @@
     "prompt-placeholder": "Choisir une invite",
     "use-latest-prompt-version": "Utiliser la dernière version de l'invite",
     "use-prompt-version": "Utiliser la version de l'invite : ",
+    "use-profile-data": "Accéder aux données du profil utilisateur",
+    "use-project-mcp": "Utiliser Projects MCP",
     "prompt-version-placeholder": "Choisir la version de l'invite",
     "start-message-section": "Message de bienvenue de l'agent",
     "tools-section": "Outils",
@@ -3226,6 +3230,8 @@
     "confirm-deletion-of": "Voulez-vous vraiment supprimer l'agent '{title}' ?",
     "deleted": "Agent supprimé",
     "delete-error": "Erreur lors de la suppression de l'agent",
-    "empty-list": "Aucun agent pour le moment."
+    "empty-list": "Aucun agent pour le moment.",
+    "confirm-restart-title": "Relancer la conversation",
+    "confirm-restart-content": "Voulez-vous entamer une nouvelle conversation ?"
   }
 }

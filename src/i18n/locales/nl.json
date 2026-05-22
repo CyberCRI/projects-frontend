@@ -224,7 +224,9 @@
       "vector-store": "Vector store",
       "prompts": "Opdrachten",
       "agent-skills": "Vaardigheden van de agent",
-      "agents": "Agenten"
+      "agents": "Agenten",
+      "conversations": "Gesprekken",
+      "checkpoints": "Checkpoints"
     },
     "page-title": "Beheerder",
     "portal": {
@@ -3213,6 +3215,8 @@
     "prompt-placeholder": "Kies een prompt",
     "use-latest-prompt-version": "Meest recente promptversie gebruiken",
     "use-prompt-version": "Promptversie gebruiken: ",
+    "use-profile-data": "Toegang tot gebruikersprofielgegevens",
+    "use-project-mcp": "Gebruik Projecten MCP",
     "prompt-version-placeholder": "Kies de promptversie",
     "start-message-section": "Welkomstbericht van de agent",
     "tools-section": "Hulpmiddelen",
@@ -3226,6 +3230,8 @@
     "confirm-deletion-of": "Wil je de agent '{title}' echt verwijderen?",
     "deleted": "Agent verwijderd",
     "delete-error": "Fout bij het verwijderen van de agent",
-    "empty-list": "Nog geen agent beschikbaar."
+    "empty-list": "Nog geen agent beschikbaar.",
+    "confirm-restart-title": "Gesprek opnieuw starten",
+    "confirm-restart-content": "Wilt u een nieuw gesprek starten?"
   }
 }
