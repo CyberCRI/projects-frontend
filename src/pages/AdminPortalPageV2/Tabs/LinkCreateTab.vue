@@ -214,8 +214,8 @@ export default {
     },
 
     onGroupSelected(groups) {
-      this.selectedGroup = groups[0]
-      this.form.people_group_id = groups[0].id
+      this.selectedGroup = groups?.[0]
+      this.form.people_group_id = this.selectedGroup?.id
       this.showGroupSelectDrawer = false
     },
 
