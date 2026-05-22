@@ -82,7 +82,7 @@ const results = computed(() => searchUsers.value.map((searchObj) => searchObj.us
           minimal
           selected
           icon="Close"
-          @click="onClick"
+          @click="onClick(item)"
         />
       </template>
       <template #search-item="{ item, onClick, selected }">
@@ -91,7 +91,7 @@ const results = computed(() => searchUsers.value.map((searchObj) => searchObj.us
           :user="item"
           :selected="selected"
           :icon="selected ? 'Check' : 'Plus'"
-          @click="onClick"
+          @click="onClick(item)"
         />
       </template>
     </BaseDrawerSearch>
