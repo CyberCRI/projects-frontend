@@ -18,13 +18,13 @@
       />
     </template>
   </AdminBlock>
-  <PickProjectsDrawer
+  <ProjectSelectDrawer
     :is-opened="stateModal"
-    :pre-selected-projects="featuredProjects"
-    :max-pick="LIMIT_PROJECTS"
-    :drawer-title="$t('featured-projects.drawer.title')"
+    :selected-projects="featuredProjects"
+    :max-selected="LIMIT_PROJECTS"
+    :title="$t('featured-projects.drawer.title')"
     @close="closeModal"
-    @picked-projects="onPickProjects"
+    @submit="onPickProjects"
   />
 </template>
 <script setup lang="ts">
@@ -34,6 +34,7 @@ import { projectSkeleton } from '~/skeletons/project.skeletons'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import FetchLoader from '~/components/base/FetchLoader.vue'
 
+import ProjectSelectDrawer from '~/components/drawer/Project/ProjectSelectDrawer.vue'
 import useToasterStore from '~/stores/useToaster'
 
 const { t } = useNuxtI18n()

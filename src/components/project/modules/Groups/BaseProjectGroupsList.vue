@@ -203,6 +203,7 @@ const onDeleteConfirm = () => {
     :is-opened="stateModals.edit"
     :items="selectedGroupsRoles"
     :roles="PROJECTS_GROUP_ROLES"
+    :asyncing="asyncing"
     default-role="member_groups"
     @close="closeModals('edit')"
     @update="addGroup"

@@ -1,91 +1,99 @@
 <script setup lang="ts">
+import type { DrawerSearchProps } from '~/components/drawer/BaseDrawerSearch.vue'
+import CardInlineGroup from '~/components/drawer/Group/CardInlineGroup.vue'
 import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
-import GroupSelection from '~/components/drawer/Group/GroupSelection.vue'
+import BaseDrawerSearch from '~/components/drawer/BaseDrawerSearch.vue'
+import { searchGroupSkeleton } from '~/skeletons/search.skeletons'
+import { factoryPagination } from '~/skeletons/base.skeletons'
 import type { QueryFilterSearch } from '~/models/search.model'
+import FetchLoader from '~/components/base/FetchLoader.vue'
+import { getSearchGroup } from '~/api/v2/search.service'
 
 const props = withDefaults(
   defineProps<{
-    isOpened?: boolean
-    label?: string
-    asyncing?: boolean
     selectedGroups?: TranslatedPeopleGroupModel[]
     query?: QueryFilterSearch
-    multiple?: boolean
+    title?: string
+    isOpened?: boolean
   }>(),
   {
-    isOpened: false,
-    label: null,
-    asyncing: false,
-    multiple: true,
     selectedGroups: () => [],
     query: () => ({}),
+    title: null,
+    isOpened: false,
   }
 )
-
-type EmitType = {
+const emit = defineEmits<{
   close: []
-  submit: [TranslatedPeopleGroupModel[] | TranslatedPeopleGroupModel]
-}
-const emit = defineEmits<EmitType>()
+  submit: [TranslatedPeopleGroupModel[]]
+}>()
 
-const { stateModals, openModals, closeModals } = useModals({ saveChange: false })
+const attrs = useAttrs() as DrawerSearchProps<TranslatedPeopleGroupModel>
 
-const groups = ref<TranslatedPeopleGroupModel[]>([])
-watch(
-  () => [props.selectedGroups, props.isOpened],
-  () => (groups.value = [...props.selectedGroups]),
-  { immediate: true }
-)
+const search = ref('')
+const LIMIT = 30
 
-const isFormEqual = computed(() => groups.value.length === 0)
+const organizationCode = useOrganizationCode()
+const {
+  status,
+  data: searchGroups,
+  pagination,
+  refresh,
+} = getSearchGroup(organizationCode, search, {
+  query: {
+    ...props.query,
+    organizations: [organizationCode],
+    modules: 'none',
+  },
+  paginationConfig: {
+    limit: LIMIT,
+  },
+  default: () => factoryPagination(searchGroupSkeleton, LIMIT, LIMIT),
+})
 
-const close = () => {
-  closeModals('saveChange')
-  emit('close')
-}
-// TODO type this change
-const onConfirm = () => {
-  if (props.multiple) {
-    emit('submit', groups.value)
-  } else {
-    emit('submit', groups.value[0])
-  }
-}
-
-const checkClose = () => {
-  if (isFormEqual.value) {
-    close()
-  } else {
-    openModals('saveChange')
-  }
-}
-
+// reset and refresh when opened
 watchEffect(() => {
-  if (groups.value.length === 1 && props.multiple === false) {
-    onConfirm()
+  if (props.isOpened) {
+    search.value = ''
+    refresh()
   }
 })
+
+const results = computed(() => searchGroups.value.map((searchObj) => searchObj.people_group))
 </script>
 
 <template>
-  <BaseDrawer
-    :confirm-action-name="$t('common.add')"
-    :is-opened="isOpened"
-    :title="label || $t('drawer.group.add', 2)"
-    class="team-modal large"
-    :confirm-action-disabled="isFormEqual"
-    :asyncing="asyncing"
-    @close="checkClose"
-    @confirm="onConfirm"
-  >
-    <GroupSelection v-model="groups" :query="query" :multiple="multiple" />
-  </BaseDrawer>
-
-  <ConfirmModal
-    v-if="stateModals.saveChange"
-    :title="$t('form.quit-without-saving-title')"
-    :content="$t('common.confirm-close')"
-    @cancel="closeModals('saveChange')"
-    @confirm="close"
-  />
+  <FetchLoader :status="status" only-error skeleton>
+    <BaseDrawerSearch
+      v-bind="attrs"
+      v-model:search="search"
+      :is-opened="isOpened"
+      :title="title || $t('drawer.group.add', attrs.maxSelected)"
+      :pagination="pagination"
+      :results="results"
+      :selected="selectedGroups"
+      @close="emit('close')"
+      @confirm="emit('submit', $event)"
+    >
+      <template #select-item="{ item, onClick }">
+        <CardInlineGroup
+          :key="item.id"
+          :group="item"
+          minimal
+          selected
+          icon="Close"
+          @click="onClick"
+        />
+      </template>
+      <template #search-item="{ item, onClick, selected }">
+        <CardInlineGroup
+          :key="item.id"
+          :group="item"
+          :selected="selected"
+          :icon="selected ? 'Check' : 'Plus'"
+          @click="onClick"
+        />
+      </template>
+    </BaseDrawerSearch>
+  </FetchLoader>
 </template>

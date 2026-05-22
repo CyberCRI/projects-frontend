@@ -24,7 +24,14 @@
           />
         </header>
 
-        <main ref="main" :style="customStyle" class="drawer__main custom-scrollbar">
+        <main
+          ref="main"
+          :style="customStyle"
+          class="drawer__main custom-scrollbar"
+          :class="{
+            'pointer-events-none opacity-80': asyncing,
+          }"
+        >
           <slot />
         </main>
 

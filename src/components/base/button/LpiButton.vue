@@ -8,8 +8,8 @@
       'reversed-order': reversedOrder,
     }"
     :disabled="disabled"
-    :aria-label="ariaLabel"
-    :title="ariaLabel"
+    :aria-label="ariaLabel ?? label"
+    :title="ariaLabel ?? label"
     type="button"
     rel="noopener"
     class="lpi-button shadow-box"

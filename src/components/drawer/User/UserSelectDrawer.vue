@@ -1,75 +1,98 @@
 <script setup lang="ts">
-import UserSelection from '~/components/drawer/User/UserSelection.vue'
+import type { DrawerSearchProps } from '~/components/drawer/BaseDrawerSearch.vue'
+import CardInlineUser from '~/components/drawer/User/CardInlineUser.vue'
+import BaseDrawerSearch from '~/components/drawer/BaseDrawerSearch.vue'
+import { searchUserSkeleton } from '~/skeletons/search.skeletons'
+import { factoryPagination } from '~/skeletons/base.skeletons'
 import type { QueryFilterSearch } from '~/models/search.model'
 import type { TranslatedUserModel } from '~/models/user.model'
+import FetchLoader from '~/components/base/FetchLoader.vue'
+import { getSearchUser } from '~/api/v2/search.service'
 
 const props = withDefaults(
   defineProps<{
-    isOpened?: boolean
-    label?: string
-    asyncing?: boolean
     selectedUsers?: TranslatedUserModel[]
     query?: QueryFilterSearch
+    title?: string
+    isOpened?: boolean
   }>(),
   {
-    isOpened: false,
-    label: null,
-    asyncing: false,
     selectedUsers: () => [],
     query: () => ({}),
+    title: null,
+    isOpened: false,
   }
 )
-
 const emit = defineEmits<{
   close: []
   submit: [TranslatedUserModel[]]
 }>()
 
-const { stateModals, openModals, closeModals } = useModals({ saveChange: false })
+const attrs = useAttrs() as DrawerSearchProps<TranslatedUserModel>
 
-const users = ref<TranslatedUserModel[]>([])
-watch(
-  () => [props.selectedUsers, props.isOpened],
-  () => (users.value = [...props.selectedUsers]),
-  { immediate: true }
-)
+const search = ref('')
+const LIMIT = 30
 
-const isFormEqual = computed(() => users.value.length === 0)
+const organizationCode = useOrganizationCode()
+const {
+  status,
+  data: searchUsers,
+  pagination,
+  refresh,
+} = getSearchUser(organizationCode, search, {
+  query: {
+    ...props.query,
+    organizations: [organizationCode],
+  },
+  paginationConfig: {
+    limit: LIMIT,
+  },
+  default: () => factoryPagination(searchUserSkeleton, LIMIT, LIMIT),
+})
 
-const close = () => {
-  closeModals('saveChange')
-  emit('close')
-}
-const onConfirm = () => emit('submit', users.value)
-
-const checkClose = () => {
-  if (isFormEqual.value) {
-    close()
-  } else {
-    openModals('saveChange')
+// reset and refresh when opened
+watchEffect(() => {
+  if (props.isOpened) {
+    search.value = ''
+    refresh()
   }
-}
+})
+
+const results = computed(() => searchUsers.value.map((searchObj) => searchObj.user))
 </script>
 
 <template>
-  <BaseDrawer
-    :confirm-action-name="$t('common.add')"
-    :is-opened="isOpened"
-    :title="label || $t('drawer.member.add', 2)"
-    class="team-modal large"
-    :confirm-action-disabled="isFormEqual"
-    :asyncing="asyncing"
-    @close="checkClose"
-    @confirm="onConfirm"
-  >
-    <UserSelection v-model="users" :query="query" />
-  </BaseDrawer>
-
-  <ConfirmModal
-    v-if="stateModals.saveChange"
-    :title="$t('form.quit-without-saving-title')"
-    :content="$t('common.confirm-close')"
-    @cancel="closeModals('saveChange')"
-    @confirm="close"
-  />
+  <FetchLoader :status="status" only-error skeleton>
+    <BaseDrawerSearch
+      v-bind="attrs"
+      v-model:search="search"
+      :is-opened="isOpened"
+      :title="title || $t('drawer.user.add', attrs.maxSelected)"
+      :pagination="pagination"
+      :results="results"
+      :selected="selectedUsers"
+      @close="emit('close')"
+      @confirm="emit('submit', $event)"
+    >
+      <template #select-item="{ item, onClick }">
+        <CardInlineUser
+          :key="item.id"
+          :user="item"
+          minimal
+          selected
+          icon="Close"
+          @click="onClick"
+        />
+      </template>
+      <template #search-item="{ item, onClick, selected }">
+        <CardInlineUser
+          :key="item.id"
+          :user="item"
+          :selected="selected"
+          :icon="selected ? 'Check' : 'Plus'"
+          @click="onClick"
+        />
+      </template>
+    </BaseDrawerSearch>
+  </FetchLoader>
 </template>

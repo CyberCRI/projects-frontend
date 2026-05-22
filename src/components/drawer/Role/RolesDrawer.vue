@@ -72,7 +72,6 @@ const close = () => {
 
 const confirm = () => {
   emit('update', rolesValue.value)
-  close()
 }
 
 const checkClose = () => {

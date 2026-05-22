@@ -1,75 +1,98 @@
 <script setup lang="ts">
-import ProjectSelection from '~/components/drawer/Project/ProjectSelection.vue'
+import type { DrawerSearchProps } from '~/components/drawer/BaseDrawerSearch.vue'
+import BaseDrawerSearch from '~/components/drawer/BaseDrawerSearch.vue'
+import { searchProjectSkeleton } from '~/skeletons/search.skeletons'
 import type { TranslatedProject } from '~/models/project.model'
+import { factoryPagination } from '~/skeletons/base.skeletons'
 import type { QueryFilterSearch } from '~/models/search.model'
+import FetchLoader from '~/components/base/FetchLoader.vue'
+import { getSearchProjects } from '~/api/v2/search.service'
 
 const props = withDefaults(
   defineProps<{
-    isOpened?: boolean
-    label?: string
-    asyncing?: boolean
     selectedProjects?: TranslatedProject[]
     query?: QueryFilterSearch
+    title?: string
+    isOpened?: boolean
   }>(),
   {
-    isOpened: false,
-    label: null,
-    asyncing: false,
     selectedProjects: () => [],
     query: () => ({}),
+    title: null,
+    isOpened: false,
   }
 )
-
 const emit = defineEmits<{
   close: []
   submit: [TranslatedProject[]]
 }>()
 
-const { stateModals, openModals, closeModals } = useModals({ saveChange: false })
+const attrs = useAttrs() as DrawerSearchProps<TranslatedProject>
 
-const projects = ref<TranslatedProject[]>([])
-watch(
-  () => [props.selectedProjects, props.isOpened],
-  () => (projects.value = [...props.selectedProjects]),
-  { immediate: true }
-)
+const search = ref('')
+const LIMIT = 30
 
-const isFormEqual = computed(() => projects.value.length === 0)
+const organizationCode = useOrganizationCode()
+const {
+  status,
+  data: searchProjects,
+  pagination,
+  refresh,
+} = getSearchProjects(organizationCode, search, {
+  query: {
+    ...props.query,
+    organizations: [organizationCode],
+    modules: 'none',
+  },
+  paginationConfig: {
+    limit: LIMIT,
+  },
+  default: () => factoryPagination(searchProjectSkeleton, LIMIT, LIMIT),
+})
 
-const close = () => {
-  closeModals('saveChange')
-  emit('close')
-}
-const onConfirm = () => emit('submit', projects.value)
-
-const checkClose = () => {
-  if (isFormEqual.value) {
-    close()
-  } else {
-    openModals('saveChange')
+// reset and refresh when opened
+watchEffect(() => {
+  if (props.isOpened) {
+    search.value = ''
+    refresh()
   }
-}
+})
+
+const results = computed(() => searchProjects.value.map((searchObj) => searchObj.project))
 </script>
 
 <template>
-  <BaseDrawer
-    :confirm-action-name="$t('common.add')"
-    :is-opened="isOpened"
-    :title="label || $t('drawer.project.add', 2)"
-    class="team-modal large"
-    :confirm-action-disabled="isFormEqual"
-    :asyncing="asyncing"
-    @close="checkClose"
-    @confirm="onConfirm"
-  >
-    <ProjectSelection v-model="projects" :query="query" />
-  </BaseDrawer>
-
-  <ConfirmModal
-    v-if="stateModals.saveChange"
-    :title="$t('form.quit-without-saving-title')"
-    :content="$t('common.confirm-close')"
-    @cancel="closeModals('saveChange')"
-    @confirm="close"
-  />
+  <FetchLoader :status="status" only-error skeleton>
+    <BaseDrawerSearch
+      v-bind="attrs"
+      v-model:search="search"
+      :is-opened="isOpened"
+      :title="title || $t('drawer.project.add', attrs.maxSelected)"
+      :pagination="pagination"
+      :results="results"
+      :selected="selectedProjects"
+      @close="emit('close')"
+      @confirm="emit('submit', $event)"
+    >
+      <template #select-item="{ item, onClick }">
+        <CardInlineProject
+          :key="item.id"
+          :project="item"
+          minimal
+          selected
+          icon="Close"
+          @click="onClick"
+        />
+      </template>
+      <template #search-item="{ item, onClick, selected }">
+        <CardInlineProject
+          :key="item.id"
+          :project="item"
+          :selected="selected"
+          :icon="selected ? 'Check' : 'Plus'"
+          @click="onClick"
+        />
+      </template>
+    </BaseDrawerSearch>
+  </FetchLoader>
 </template>

@@ -123,7 +123,9 @@
     </div>
     <GroupSelectDrawer
       :is-opened="showGroupSelectDrawer"
-      :multiple="false"
+      :max-selected="1"
+      :selected-groups="selectedGroup ? [selectedGroup] : []"
+      max-auto-confirm
       @close="showGroupSelectDrawer = false"
       @submit="onGroupSelected"
     />
@@ -211,9 +213,9 @@ export default {
       this.showDatePicker = false
     },
 
-    onGroupSelected(group) {
-      this.selectedGroup = group
-      this.form.people_group_id = group.id
+    onGroupSelected(groups) {
+      this.selectedGroup = groups[0]
+      this.form.people_group_id = groups[0].id
       this.showGroupSelectDrawer = false
     },
 

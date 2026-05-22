@@ -90,15 +90,17 @@ const { stateModals, openModals, closeAllModals, closeModals } = useModals({
 
 const selectedMember = ref<TranslatedPojectMember>()
 const selectedMemberRoles = ref<TranslatedPojectMember[] | TranslatedUserModel[]>()
-const cancel = () => {
+
+const clear = () => {
   selectedMember.value = null
+  asyncing.value = false
   closeAllModals()
 }
 
 const fullRefresh = () => {
   refreshProjectData(props.project)
   refresh()
-  cancel()
+  clear()
 }
 
 const onAdd = () => {
@@ -128,6 +130,7 @@ const onSelectedUser = (members: TranslatedUserModel[]) => {
 }
 
 const addUser = (memberRoles: { [key: TranslatedUserModel['id']]: ProjectMemberRoleType }) => {
+  asyncing.value = true
   const body = {}
   Object.entries(memberRoles).forEach(([memberId, role]) => {
     body[role] ??= []
@@ -140,9 +143,11 @@ const addUser = (memberRoles: { [key: TranslatedUserModel['id']]: ProjectMemberR
       fullRefresh()
     })
     .catch(() => toaster.pushError(t('toasts.team-member-delete.error')))
+    .then(() => clear())
 }
 
 const onDeleteConfirm = () => {
+  asyncing.value = true
   const body = {
     users: [selectedMember.value.id],
   }
@@ -152,6 +157,7 @@ const onDeleteConfirm = () => {
       fullRefresh()
     })
     .catch(() => toaster.pushError(t('toasts.team-member-delete.error')))
+    .then(() => clear())
 }
 </script>
 
@@ -202,6 +208,7 @@ const onDeleteConfirm = () => {
     :is-opened="stateModals.edit"
     :items="selectedMemberRoles"
     :roles="PROJECTS_MEMBERS_ROLES"
+    :asyncing="asyncing"
     default-role="members"
     @close="closeModals('edit')"
     @update="addUser"
@@ -211,16 +218,16 @@ const onDeleteConfirm = () => {
     </template>
   </RolesDrawer>
 
-  <UserProfileDrawer :is-opened="stateModals.view" :user-id="selectedMember?.id" @close="cancel" />
+  <UserProfileDrawer :is-opened="stateModals.view" :user-id="selectedMember?.id" @close="clear" />
 
   <ConfirmModal
     v-if="stateModals.delete"
     :content="$t('team.remove-user-confirm')"
     :title="$t('common.delete-user')"
     :confirm-button-label="$t('common.delete-user')"
-    :cancel-button-label="$t('common.cancel')"
+    :clear-button-label="$t('common.clear')"
     :asyncing="asyncing"
-    @cancel="cancel"
+    @clear="clear"
     @confirm="onDeleteConfirm"
   />
 </template>
