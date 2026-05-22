@@ -187,6 +187,7 @@ const redirect = () => {
 }
 
 const onUpdate = () => {
+  asyncing.value = true
   const body = { ...cleanedData.value }
 
   patchProject(props.project.id, body)

@@ -1,4 +1,6 @@
 import AnnouncementDrawer from '~/components/project/modules/Announcements/AnnouncementDrawer.vue'
+import { TranslatedAnnouncementFactory } from '~~/tests/factories/announcement.factory'
+import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import { describe, expect, it } from 'vitest'
 import waitForExpect from 'wait-for-expect'
@@ -10,15 +12,11 @@ describe('AnnouncementDrawer.vue', () => {
   })
 
   it('assigns existing announcement to form in edit mode', async () => {
-    const announcement = {
-      title: 'job offer',
-      description: '<p>description</p>',
-      is_remunerated: true,
-      deadline: 'Wed Sep 14 2022 17:37:23 GMT+0200 (heure d’été d’Europe centrale)',
-      type: 'job',
-    }
+    const project = TranslatedProjectFactory.generate()
+    const announcement = TranslatedAnnouncementFactory.generate()
+
     const wrapper = lpiShallowMount(AnnouncementDrawer, {
-      props: { isOpened: true, isAddMode: false, announcement },
+      props: { isOpened: true, project, announcement },
     })
 
     const vm: any = wrapper.vm

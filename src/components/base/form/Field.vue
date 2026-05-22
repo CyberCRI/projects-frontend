@@ -8,7 +8,9 @@
         <slot name="in-label" />
       </div>
       <span v-if="help" class="description skeletons-text">
-        {{ help }}
+        <slot name="help">
+          {{ help }}
+        </slot>
       </span>
     </slot>
 

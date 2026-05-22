@@ -2,6 +2,7 @@
   <Field
     :disabled="disabled"
     :label="label"
+    :help="help"
     :required="required"
     :errors="errors"
     :bottom-text="bottomText"
@@ -64,6 +65,7 @@ const props = withDefaults(
     autofocus?: boolean
     placeholder?: string
     label?: string
+    help?: string
     bottomText?: string
     inputId?: string
     inputType?: string
@@ -80,6 +82,7 @@ const props = withDefaults(
     autofocus: false,
     placeholder: '',
     label: null,
+    help: null,
     bottomText: null,
     inputId: '',
     inputType: 'text',

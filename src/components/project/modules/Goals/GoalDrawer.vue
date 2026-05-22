@@ -165,22 +165,22 @@ const submit = async () => {
     @close="emit('close')"
     @confirm="submit"
   >
-    <div class="form">
+    <div class="list-container">
       <TextInput
         v-model="form.title"
-        :label="`${$t('goal.title')}:`"
+        :label="$t('goal.title')"
         :placeholder="$t('goal.title')"
+        required
         :errors="errors.title"
       />
 
-      <div class="goal-description-section">
-        <span class="goal-label">{{ $t('goal.description') }}:</span>
+      <Field :label="$t('goal.description')" required>
         <TipTapEditor
           v-model="form.description"
           :errors="errors.description"
           class="goal-description"
         />
-      </div>
+      </Field>
 
       <DateField
         v-model="form.deadline_at"
@@ -188,57 +188,14 @@ const submit = async () => {
         :label="$t('common.set-deadline')"
       />
 
-      <div class="status-ctn">
-        <span class="goal-label">{{ $t('goal.status-title') }}:</span>
+      <Field :label="$t('goal.status-title')">
         <GroupButton
           v-model="form.status"
           class="group-button-labels"
           :options="statusOptions"
           :custom-color="statusColor"
         />
-        <FieldErrors :errors="errors.status" />
-      </div>
+      </Field>
     </div>
   </BaseDrawer>
 </template>
-
-<style lang="scss" scoped>
-.goal-description-section {
-  display: flex;
-  flex-flow: column nowrap;
-  flex-grow: 1;
-  overflow: hidden;
-}
-
-.goal-title,
-.goal-description,
-.deadline-switch,
-.goal-deadline {
-  margin-bottom: $space-m;
-}
-
-.goal-description {
-  flex-grow: 1;
-}
-
-.status-ctn {
-  display: flex;
-  align-items: center;
-
-  > span {
-    margin-right: $space-m;
-  }
-}
-
-.goal-label {
-  font-size: $font-size-s;
-  color: $primary-dark;
-  font-weight: bold;
-  margin-bottom: $space-2xs;
-}
-
-// This is an overwrite on a co-existing style that is only here
-:deep(.label-selected) {
-  color: $black;
-}
-</style>

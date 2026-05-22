@@ -58,7 +58,7 @@
               />
               <LpiButton
                 :disabled="!searchAddress || geocodingLoading"
-                :label="$t('geocoding.search')"
+                :label="$t('search.label')"
                 :btn-icon="geocodingLoading ? 'LoaderSimple' : null"
                 @click="suggestLocations"
               />

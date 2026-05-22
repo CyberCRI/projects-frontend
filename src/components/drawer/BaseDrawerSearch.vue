@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import NothingHere from '~/components/base/NothingHere.vue'
+
 withDefaults(
   defineProps<{
     countResult?: number
@@ -38,9 +40,13 @@ const onDelete = () => (search.value = '')
     />
 
     <div class="results">
-      <slot v-if="countResult > 0" name="results" />
+      <div v-if="countResult > 0">
+        <Field :label="`${$t('search.results')} :`">
+          <slot name="results" />
+        </Field>
+      </div>
       <slot v-else name="empty">
-        <EmptyLabel :label="$t('common.no-result')" />
+        <NothingHere class="opacity-80" :label="$t('search.empty')" />
       </slot>
     </div>
   </section>

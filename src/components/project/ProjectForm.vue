@@ -8,7 +8,7 @@ import useOrganizationsStore from '~/stores/useOrganizations'
 import TagsDrawer from '~/components/tags/TagsDrawer.vue'
 import { getFirstTextNotEmpty } from '~/functs/string'
 import Field from '~/components/base/form/Field.vue'
-import { isEqual, isNil } from 'es-toolkit'
+import { isEqual, isNil, pick } from 'es-toolkit'
 
 const props = withDefaults(
   defineProps<{
@@ -35,7 +35,16 @@ const organizationsStore = useOrganizationsStore()
 const { t, locale } = useNuxtI18n()
 
 const defaultLocalForm = () => {
-  const newForm = defaultProjectForm()
+  const newForm = pick(defaultProjectForm(), [
+    'title',
+    'purpose',
+    'imageSizes',
+    'file',
+    'language',
+    'tags',
+    'template',
+    'categories',
+  ])
 
   const project = props.project
 
@@ -55,6 +64,7 @@ const defaultLocalForm = () => {
     newForm.imageSizes = pictureApiToImageSizes(project.header_image) || newForm.imageSizes
     newForm.file = project.header_image || newForm.file
     newForm.language = project.language || locale.value || newForm.language
+
     newForm.template = project.template || newForm.template
 
     newForm.categories = [...(project.categories || []), newForm.categories]

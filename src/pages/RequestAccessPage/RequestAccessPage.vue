@@ -115,9 +115,9 @@ useLpiHead2({
             :label="$t('request-access.given_name.label')"
             :placeholder="$t('request-access.given_name.placeholder')"
             data-test="first-name"
+            :errors="v$.given_name.$errors"
             @blur="v$.given_name.$validate"
           />
-          <FieldErrors :errors="v$.given_name.$errors" />
         </div>
         <div class="form-group">
           <TextInput
@@ -125,9 +125,9 @@ useLpiHead2({
             :label="$t('request-access.family_name.label')"
             :placeholder="$t('request-access.family_name.placeholder')"
             data-test="last-name"
+            :errors="v$.family_name.$errors"
             @blur="v$.family_name.$validate"
           />
-          <FieldErrors :errors="v$.family_name.$errors" />
         </div>
         <div class="form-group">
           <TextInput
@@ -136,9 +136,9 @@ useLpiHead2({
             input-type="email"
             :placeholder="$t('request-access.email.placeholder')"
             data-test="email"
+            :errors="v$.email.$errors"
             @blur="v$.email.$validate"
           />
-          <FieldErrors :errors="v$.email.$errors" />
         </div>
         <div class="form-group">
           <TextInput
@@ -146,9 +146,9 @@ useLpiHead2({
             :label="$t('request-access.profile-title.label')"
             :placeholder="$t('request-access.profile-title.placeholder')"
             data-test="title"
+            :errors="v$.job.$errors"
             @blur="v$.job.$validate"
           />
-          <FieldErrors :errors="v$.job.$errors" />
         </div>
         <div class="form-group">
           <TextInput

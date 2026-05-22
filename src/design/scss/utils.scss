@@ -48,7 +48,6 @@
   gap: 1rem;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-around;
 }
 
 .scale-hover {
@@ -95,4 +94,8 @@ svg.icon {
 
 .w-full {
   width: 100%;
+}
+
+.opacity-80 {
+  opacity: 0.8;
 }

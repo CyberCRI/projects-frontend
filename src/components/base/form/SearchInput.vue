@@ -89,10 +89,14 @@ const acceptSuggestion = (suggestion: string) => {
   width: 350px;
   max-width: 100%;
 
+  // add margin top to avoid focus input hidden
+  // https: //developer.mozilla.org/fr/docs/Web/CSS/Reference/Properties/outline-width#medium
+  margin-top: 3px;
+
   .search-input {
-    border-radius: $border-radius-m;
+    border-radius: $border-radius-l;
     background: $white;
-    border: $border-width-s solid var(--primary-dark);
+    border: $border-width-s solid var(--primary);
     color: $black;
     padding: 11px $space-xl 10px; // 11 + 1 px border
     font-size: $font-size-m;
