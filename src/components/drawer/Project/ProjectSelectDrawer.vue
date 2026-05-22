@@ -48,6 +48,7 @@ const {
     limit: LIMIT,
   },
   default: () => factoryPagination(searchProjectSkeleton, LIMIT, LIMIT),
+  immediate: false,
 })
 
 // reset and refresh when opened

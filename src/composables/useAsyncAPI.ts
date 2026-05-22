@@ -73,7 +73,7 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
 
   let immediate = true
   if (params[2].immediate === false) {
-    immediate = true
+    immediate = false
   } else {
     params[2].immediate = false
   }

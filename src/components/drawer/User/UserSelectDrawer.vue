@@ -48,6 +48,7 @@ const {
     limit: LIMIT,
   },
   default: () => factoryPagination(searchUserSkeleton, LIMIT, LIMIT),
+  immediate: false,
 })
 
 // reset and refresh when opened
