@@ -200,8 +200,7 @@ const { status, data: similars } = getProjectSimilars(organizationCode, projectI
 })
 
 // generate PDF
-// const { appGotenbergEnabled } = useRuntimeConfig().public
-const appGotenbergEnabled = true
+const { appGotenbergEnabled } = useRuntimeConfig().public
 const onGeneratePDF = () => {
   asyncingPDF.value = true
   useProjectToPdf(props.project)
