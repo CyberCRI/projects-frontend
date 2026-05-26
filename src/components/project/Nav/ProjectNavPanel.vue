@@ -19,7 +19,7 @@
       @navigated="emit('navigated')"
     />
 
-    <div class="share-buttons skeletons-background">
+    <div class="extra-buttons skeletons-background">
       <ExternalLabelButton
         v-if="usersStore.isConnected"
         class="space-button"
@@ -204,7 +204,6 @@ const { appGotenbergEnabled } = useRuntimeConfig().public
 const onGeneratePDF = () => {
   asyncingPDF.value = true
   useProjectToPdf(props.project)
-    .then(() => toaster.pushSuccess(t('toasts.pdf.success')))
     .catch((err) => {
       console.error(`Error generation pdf for project='${props.project.id}'`, err)
       toaster.pushError(t('toasts.pdf.error'))
@@ -298,7 +297,7 @@ const onDuplicate = () => {
   margin-top: 3rem;
 }
 
-.share-buttons {
+.extra-buttons {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
