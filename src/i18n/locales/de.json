@@ -3179,7 +3179,12 @@
     "confirm-deletion-of": "Möchtest du den Prompt '{title}' wirklich löschen?",
     "deleted": "Prompt gelöscht",
     "delete-error": "Fehler beim Löschen des Prompts",
-    "empty-list": "Noch kein Prompt vorhanden."
+    "empty-list": "Noch kein Prompt vorhanden.",
+    "form": {
+      "invalid": "Das Formular ist unvollständig, bitte füllen Sie die erforderlichen Felder aus",
+      "title-required": "Titel ist erforderlich",
+      "content-required": "Inhalt ist erforderlich"
+    }
   },
   "agent-skills": {
     "create-skill": "Agenten-Skill erstellen",
@@ -3195,7 +3200,13 @@
     "confirm-deletion-of": "Möchtest du den Agenten-Skill '{title}' wirklich löschen?",
     "deleted": "Agenten-Skill gelöscht",
     "delete-error": "Fehler beim Löschen des Agenten-Skills",
-    "empty-list": "Noch kein Agenten-Skill vorhanden."
+    "empty-list": "Noch kein Agenten-Skill vorhanden.",
+    "form": {
+      "invalid": "Das Formular ist unvollständig, bitte füllen Sie die erforderlichen Felder aus",
+      "title-required": "Titel ist erforderlich",
+      "content-required": "Inhalt ist erforderlich",
+      "description-required": "Beschreibung ist erforderlich"
+    }
   },
   "agents": {
     "need-login": "Sie müssen angemeldet sein, um diesen Agenten zu nutzen.",

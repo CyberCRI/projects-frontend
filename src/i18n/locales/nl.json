@@ -3179,7 +3179,12 @@
     "confirm-deletion-of": "Wil je de prompt '{title}' echt verwijderen?",
     "deleted": "Prompt verwijderd",
     "delete-error": "Fout bij het verwijderen van de prompt",
-    "empty-list": "Nog geen prompt beschikbaar."
+    "empty-list": "Nog geen prompt beschikbaar.",
+    "form": {
+      "invalid": "Het formulier is onvolledig, vul de vereiste velden in",
+      "title-required": "Titel is verplicht",
+      "content-required": "Inhoud is verplicht"
+    }
   },
   "agent-skills": {
     "create-skill": "Agent-vaardigheid aanmaken",
@@ -3195,7 +3200,13 @@
     "confirm-deletion-of": "Wil je de agent-vaardigheid '{title}' echt verwijderen?",
     "deleted": "Agent-vaardigheid verwijderd",
     "delete-error": "Fout bij het verwijderen van de agent-vaardigheid",
-    "empty-list": "Nog geen agent-vaardigheid beschikbaar."
+    "empty-list": "Nog geen agent-vaardigheid beschikbaar.",
+    "form": {
+      "invalid": "Het formulier is onvolledig, vul de vereiste velden in",
+      "title-required": "Titel is verplicht",
+      "content-required": "Inhoud is verplicht",
+      "description-required": "Beschrijving is verplicht"
+    }
   },
   "agents": {
     "need-login": "Je moet ingelogd zijn om deze agent te kunnen gebruiken.",

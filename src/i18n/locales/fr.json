@@ -3179,7 +3179,12 @@
     "confirm-deletion-of": "Voulez-vous vraiment supprimer l'invite '{title}' ?",
     "deleted": "Invite supprimée",
     "delete-error": "Erreur lors de la suppression de l'invite",
-    "empty-list": "Aucune invite pour le moment."
+    "empty-list": "Aucune invite pour le moment.",
+    "form": {
+      "invalid": "Le formulaire est incomplet, veuillez remplir les champs requis",
+      "title-required": "Le titre est obligatoire",
+      "content-required": "Le contenu est obligatoire"
+    }
   },
   "agent-skills": {
     "create-skill": "Créer une compétence d'agent",
@@ -3195,7 +3200,13 @@
     "confirm-deletion-of": "Voulez-vous vraiment supprimer la compétence d'agent '{title}' ?",
     "deleted": "Compétence d'agent supprimée",
     "delete-error": "Erreur lors de la suppression de la compétence d'agent",
-    "empty-list": "Aucune compétence d'agent pour le moment."
+    "empty-list": "Aucune compétence d'agent pour le moment.",
+    "form": {
+      "invalid": "Le formulaire est incomplet, veuillez remplir les champs requis",
+      "title-required": "Le titre est obligatoire",
+      "content-required": "Le contenu est obligatoire",
+      "description-required": "La description est obligatoire"
+    }
   },
   "agents": {
     "need-login": "Vous devez être connecté pour utiliser cet agent.",

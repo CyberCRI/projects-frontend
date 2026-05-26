@@ -3179,7 +3179,12 @@
     "confirm-deletion-of": "Do you really want to delete the prompt '{title}'?",
     "deleted": "Prompt deleted",
     "delete-error": "Error deleting the prompt",
-    "empty-list": "No prompt yet."
+    "empty-list": "No prompt yet.",
+    "form": {
+      "invalid": "Form is incomplete, please provide required fields",
+      "title-required": "Title is required",
+      "content-required": "Content is required"
+    }
   },
   "agent-skills": {
     "create-skill": "Create agent skill",
@@ -3195,7 +3200,13 @@
     "confirm-deletion-of": "Do you really want to delete the agent skill '{title}'?",
     "deleted": "Agent skill deleted",
     "delete-error": "Error deleting the agent skill",
-    "empty-list": "No agent skill yet."
+    "empty-list": "No agent skill yet.",
+    "form": {
+      "invalid": "Form is incomplete, please provide required fields",
+      "title-required": "Title is required",
+      "content-required": "Content is required",
+      "description-required": "The description is required"
+    }
   },
 
   "agents": {

@@ -3179,7 +3179,12 @@
     "confirm-deletion-of": "Kas tõesti soovid kustutada käsu '{title}'?",
     "deleted": "Käsk kustutatud",
     "delete-error": "Viga käsu kustutamisel",
-    "empty-list": "Käskusid veel ei ole."
+    "empty-list": "Käskusid veel ei ole.",
+    "form": {
+      "invalid": "Vorm on mittetäielik, palun täida nõutud väljad",
+      "title-required": "Pealkiri on kohustuslik",
+      "content-required": "Sisu on kohustuslik"
+    }
   },
   "agent-skills": {
     "create-skill": "Loo agendi oskus",
@@ -3195,7 +3200,13 @@
     "confirm-deletion-of": "Kas tõesti soovid kustutada agendi oskuse '{title}'?",
     "deleted": "Agendi oskus kustutatud",
     "delete-error": "Viga agendi oskuse kustutamisel",
-    "empty-list": "Agendi oskusi veel ei ole."
+    "empty-list": "Agendi oskusi veel ei ole.",
+    "form": {
+      "invalid": "Vorm on mittetäielik, palun täida nõutud väljad",
+      "title-required": "Pealkiri on kohustuslik",
+      "content-required": "Sisu on kohustuslik",
+      "description-required": "Kirjeldus on kohustuslik"
+    }
   },
   "agents": {
     "need-login": "Selle agendi kasutamiseks peate sisse logima.",
