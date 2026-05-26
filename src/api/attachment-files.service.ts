@@ -9,31 +9,24 @@ import type { ProjectSlugOrId } from '~/models/project.model'
 import type { UseApiOptions } from '~/composables/useAPI'
 import useAPI from '~/composables/useAPI'
 
-type Config = UseApiOptions
+type Config = UseApiOptions<Partial<PaginationQuery>>
 
-export async function getAttachmentFiles(projectId: ProjectSlugOrId, config: Config = {}) {
+export async function getProjectAttachmentFiles(projectId: ProjectSlugOrId, config: Config = {}) {
   return await useAPI<PaginationResult<AttachmentFileModel>>(`project/${projectId}/file/`, config)
 }
 
-export async function getAttachmentFile(body: AttachmentFileInput) {
+export async function getProjectAttachmentFile(body: AttachmentFileInput) {
   return await useAPI<AttachmentFileModel>(`project/${body.project_id}/file/${body.file}`, {})
 }
 
-export async function postAttachmentFiles(projectId: ProjectSlugOrId, body: FormData) {
-  // const fd = new FormData()
-  // fd.append('description', body.description)
-  // fd.append('title', body.title)
-  // fd.append('project_id', body.project_id)
-
-  // fd.append('file', body.file, body.file.name)
-  // fd.append('mime', body.file.type || 'file')
+export async function postProjectAttachmentFiles(projectId: ProjectSlugOrId, body: FormData) {
   return await useAPI<AttachmentFileModel>(`project/${projectId}/file/`, {
     body,
     method: 'POST',
   })
 }
 
-export async function patchAttachmentFile(
+export async function patchProjectAttachmentFile(
   projectId: ProjectSlugOrId,
   fileId: AttachmentFileId,
   body: FormData
@@ -49,7 +42,10 @@ export async function patchAttachmentFile(
   })
 }
 
-export async function deleteAttachmentFile(projectId: ProjectSlugOrId, fileId: AttachmentFileId) {
+export async function deleteProjectAttachmentFile(
+  projectId: ProjectSlugOrId,
+  fileId: AttachmentFileId
+) {
   return await useAPI<undefined>(`project/${projectId}/file/${fileId}/`, { method: 'DELETE' })
 }
 

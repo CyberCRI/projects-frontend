@@ -4,8 +4,9 @@ import useOrganizationsStore from '~/stores/useOrganizations'
 
 import addPageLinkedProjectsFactory from '~/composables/project-pdf-components/addPageLinkedProjects'
 import addPageResourceFactory from '~/composables/project-pdf-components/PageResource'
+import addPageMembersFactory from '~/composables/project-pdf-components/PageMembers'
+import addPageGroupsFactory from '~/composables/project-pdf-components/PageGroups'
 import addPageDescriptionFactory from '~/composables/pdf-helpers/PageDescription'
-import addPageTeamFactory from '~/composables/project-pdf-components/PageTeam'
 import addPageOneFactory from '~/composables/project-pdf-components/PageOne'
 import { fetchPdf } from '~/composables/pdf-helpers/usePdfHelpers'
 import { Doc } from '~/composables/pdf-helpers/doc-builder'
@@ -26,9 +27,10 @@ export const useProjectToPdf = async (project) => {
 
   mainDoc.add(await addPageOneFactory(project))
   mainDoc.add(await addPageDescriptionFactory(project))
-  mainDoc.add(await addPageTeamFactory(project))
+  mainDoc.add(await addPageMembersFactory(project))
+  mainDoc.add(await addPageGroupsFactory(project))
   // TODO: blog are disabled for now (as per client request) keep code for later use
-  // mainDoc.add(await addPageBlogFactory(blogEntries || []))
+  // mainDoc.add(await addPageBlogFactory(project))
   mainDoc.add(await addPageResourceFactory(project))
   mainDoc.add(await addPageLinkedProjectsFactory(project))
 

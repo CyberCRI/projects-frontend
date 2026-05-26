@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import {
-  deleteAttachmentFile,
-  patchAttachmentFile,
-  postAttachmentFiles,
+  deleteProjectAttachmentFile,
+  patchProjectAttachmentFile,
+  postProjectAttachmentFiles,
 } from '~/api/attachment-files.service'
 import type { TranslatedAttachmentLink } from '~/models/attachment-link.model'
 import { attachementFileSkeletons } from '~/skeletons/attachements.skeletons'
@@ -82,7 +82,7 @@ const onDelete = (item) => {
 
 const onDeleteConfirm = () => {
   asyncing.value = true
-  deleteAttachmentFile(props.project.id, selectedFile.value.id)
+  deleteProjectAttachmentFile(props.project.id, selectedFile.value.id)
     .then(() => {
       toaster.pushSuccess(t('toasts.link-delete.success'))
       fullRefresh()
@@ -105,7 +105,7 @@ const onSubmit = (form: AttachmentForm) => {
     // on update remove file (old things 😕)
     formData.delete('file')
     formData.delete('mime')
-    patchAttachmentFile(props.project.id, selectedFile.value.id, formData)
+    patchProjectAttachmentFile(props.project.id, selectedFile.value.id, formData)
       .then(() => {
         toaster.pushSuccess(t('toasts.link-update.success'))
         fullRefresh()
@@ -113,7 +113,7 @@ const onSubmit = (form: AttachmentForm) => {
       .catch(() => toaster.pushError(t('toasts.link-update.error')))
       .finally(() => (asyncing.value = false))
   } else {
-    postAttachmentFiles(props.project.id, formData)
+    postProjectAttachmentFiles(props.project.id, formData)
       .then(() => {
         toaster.pushSuccess(t('toasts.link-create.success'))
         fullRefresh()

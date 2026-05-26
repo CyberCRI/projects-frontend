@@ -107,7 +107,7 @@
     <!-- drawer/modal -->
     <ConfirmModal
       v-if="stateModals.pdf"
-      :asyncing="asyncing"
+      :asyncing="asyncingPDF"
       :title="$t('pdf.confirm', { type: $t('project.label') })"
       @cancel="closeModals('pdf')"
       @confirm="onGeneratePDF"
@@ -200,7 +200,8 @@ const { status, data: similars } = getProjectSimilars(organizationCode, projectI
 })
 
 // generate PDF
-const { appGotenbergEnabled } = useRuntimeConfig().public
+// const { appGotenbergEnabled } = useRuntimeConfig().public
+const appGotenbergEnabled = true
 const onGeneratePDF = () => {
   asyncingPDF.value = true
   useProjectToPdf(props.project)

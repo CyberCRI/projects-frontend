@@ -73,9 +73,9 @@ import NothingHere from '~/components/base/NothingHere.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { goalSkeletons } from '@/skeletons/goals.skeletons'
 import SdgsDrawer from '~/components/sdgs/SdgsDrawer.vue'
+import { getProjectGoals } from '~/api/v2/goals.service'
+import { deleteProjectGoal } from '~/api/goals.service'
 import { patchProject } from '~/api/projects.service'
-import { getAllGoals } from '@/api/v2/goals.service'
-import { deleteGoal } from '~/api/goals.service'
 
 const props = withDefaults(
   defineProps<{
@@ -100,7 +100,7 @@ const {
   data: goals,
   pagination,
   refresh,
-} = getAllGoals(organizationCode, projectId, {
+} = getProjectGoals(organizationCode, projectId, {
   paginationConfig: {
     limit: props.limit,
   },
@@ -151,7 +151,7 @@ const fullRefresh = () => {
 
 const onDeleteConfirm = () => {
   asyncing.value = true
-  deleteGoal(props.project.id, selectedGoal.value.id)
+  deleteProjectGoal(props.project.id, selectedGoal.value.id)
     .then(() => {
       toaster.pushSuccess(t('toasts.goal.success'))
       fullRefresh()

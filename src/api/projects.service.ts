@@ -18,7 +18,7 @@ import type { PeopleGroupModel } from '~/models/invitation.model'
 import type { ImageModel } from '~/models/image.model'
 
 type ConfigProject = UseApiOptions<QueryFilterProject>
-type ConfigProjectLinked = UseApiOptions
+type ConfigProjectLinked = UseApiOptions<Partial<PaginationQuery>>
 type ConfigProjectMembers = UseApiOptions<QueryFilterProjectMembers>
 
 export async function getAllProjects(config: ConfigProject = {}) {
@@ -111,7 +111,7 @@ export async function getProjectSimilars(projectId: ProjectSlugOrId, config: Con
   return await useAPI<PaginationResult<ProjectModel[]>>(`/project/${projectId}/similar/`, config)
 }
 
-type ConfigProjectGroup = UseApiOptions<PaginationResult>
+type ConfigProjectGroup = UseApiOptions<Partial<PaginationQuery>>
 
 export async function getProjectGroups(
   projectId: ProjectSlugOrId,

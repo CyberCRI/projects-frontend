@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import {
-  deleteAttachmentLink,
-  patchAttachmentLink,
-  postAttachmentLinks,
+  deleteProjectAttachmentLink,
+  patchProjectAttachmentLink,
+  postProjectAttachmentLinks,
 } from '~/api/attachment-links.service'
 import { attachementLinkSkeletons } from '~/skeletons/attachements.skeletons'
 import { getProjectAttachmentLinks } from '~/api/v2/attachment-link.service'
@@ -80,7 +80,7 @@ const onDelete = (item) => {
 
 const onDeleteConfirm = () => {
   asyncing.value = true
-  deleteAttachmentLink(props.project.id, selectedLink.value.id)
+  deleteProjectAttachmentLink(props.project.id, selectedLink.value.id)
     .then(() => {
       toaster.pushSuccess(t('toasts.link-delete.success'))
       fullRefresh()
@@ -93,7 +93,7 @@ const onSubmit = (form: AttachmentForm) => {
   asyncing.value = true
   form.project_id = props.project.id
   if (form.id) {
-    patchAttachmentLink(props.project.id, selectedLink.value.id, form)
+    patchProjectAttachmentLink(props.project.id, selectedLink.value.id, form)
       .then(() => {
         toaster.pushSuccess(t('toasts.link-update.success'))
         fullRefresh()
@@ -101,7 +101,7 @@ const onSubmit = (form: AttachmentForm) => {
       .catch(() => toaster.pushError(t('toasts.link-update.error')))
       .finally(() => (asyncing.value = false))
   } else {
-    postAttachmentLinks(props.project.id, form)
+    postProjectAttachmentLinks(props.project.id, form)
       .then(() => {
         toaster.pushSuccess(t('toasts.link-create.success'))
         fullRefresh()

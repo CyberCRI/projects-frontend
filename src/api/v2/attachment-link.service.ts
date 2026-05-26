@@ -1,4 +1,4 @@
-import { getAttachmentLinks as fetchAttachmentLinks } from '~/api/attachment-links.service'
+import { getProjectAttachmentLinks as fetchProjectAttachmentLinks } from '~/api/attachment-links.service'
 import type { UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
 import type { QueryFilterBlogEntry } from '@/models/blog-entry.model'
 import type { OrganizationModel } from '@/models/organization.model'
@@ -25,7 +25,7 @@ export const getProjectAttachmentLinks = (
   return useAsyncPaginationAPI(
     key,
     ({ config }) =>
-      fetchAttachmentLinks(unref(projectSlugOrId), {
+      fetchProjectAttachmentLinks(unref(projectSlugOrId), {
         ...DEFAULT_CONFIG,
         ...config,
       }),

@@ -4,10 +4,10 @@ import GroupButton from '@/components/base/button/GroupButton.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 
+import { createProjectGoal, patchProjectGoal } from '@/api/goals.service'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
 import type { TranslatedProject } from '@/models/project.model'
 import DateField from '@/components/base/form/DateField.vue'
-import { createGoal, patchGoal } from '@/api/goals.service'
 import { defaultGoalForm, useGoalForm } from '@/form/goal'
 import { getFirstTextNotEmpty } from '@/functs/string'
 import type { GoalModel } from '@/models/goal.model'
@@ -110,7 +110,7 @@ const submit = async () => {
 
   if (form.value.id) {
     // Update goal
-    patchGoal(props.project.id, form.value.id, payload)
+    patchProjectGoal(props.project.id, form.value.id, payload)
       .then((goal) => {
         analytics.goal.updateGoalProject({
           project: {
@@ -131,7 +131,7 @@ const submit = async () => {
       })
   } else {
     // Update goal
-    createGoal(props.project.id, payload)
+    createProjectGoal(props.project.id, payload)
       .then((goal) => {
         analytics.goal.addGoalProject({
           project: {

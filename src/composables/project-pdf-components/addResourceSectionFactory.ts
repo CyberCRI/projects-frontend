@@ -1,10 +1,13 @@
 import type { Container } from '~/composables/pdf-helpers/doc-builder'
 
+import type { TranslatedAttachmentLink } from '~/models/attachment-link.model'
+import type { TranslatedAttachmentFile } from '~/models/attachment-file.model'
+import type { TranslatedProject } from '~/models/project.model'
 import QRCode from 'qrcode'
 
 export default async function addResourceSectionFactory(
-  project: any,
-  _resources: any[],
+  project: TranslatedProject,
+  _resources: TranslatedAttachmentFile[] | TranslatedAttachmentLink[],
   type: 'file' | 'link'
 ) {
   const { t } = useNuxtI18n()
@@ -33,10 +36,11 @@ export default async function addResourceSectionFactory(
   )
 
   return function addResourceSection(this: Container) {
-    let out = ''
+    if (resources.length === 0) {
+      return
+    }
 
-    if (resources.length > 0) {
-      this.styles.add(/* CSS */ `
+    this.styles.add(/* CSS */ `
 
           .resource-title {
             font-size: 1rem;
@@ -102,33 +106,31 @@ export default async function addResourceSectionFactory(
             word-wrap: break-word;
           }
           `)
-      const resourceList = resources
-        .map(
-          (resource) => /*HTML*/ `
+    const resourceList = resources
+      .map(
+        (resource) => /*HTML*/ `
           <div class="resource-wrapper">
               <div class="resource-qr-code-ctn">
                 ${resource.qrCodeImg}
               </div>
               <div class="content">
-                <div class="resource-title">${resource?.$t?.title}</div>
-                <div class="resource-subtitle">${resource?.$t?.description}</div>
+                <div class="resource-title">${resource.$t.title}</div>
+                <div class="resource-subtitle">${resource.$t.description}</div>
               </div>
           </div>
             `
-        )
-        .join('')
+      )
+      .join('')
 
-      out = /* HTML */ `
-        <div class="resource-entries-ctn">
-          <h3 class="resource-title">
-            ${type === 'file'
-              ? t('project.files', resources.length)
-              : t('resource.web', resources.length)}
-          </h3>
-          <div>${resourceList}</div>
-        </div>
-      `
-    }
-    this.content.push(out)
+    this.content.push(/* HTML */ `
+      <div class="resource-entries-ctn">
+        <h3 class="resource-title">
+          ${type === 'file'
+            ? t('project.files', resources.length)
+            : t('resource.web', resources.length)}
+        </h3>
+        <div>${resourceList}</div>
+      </div>
+    `)
   }
 }

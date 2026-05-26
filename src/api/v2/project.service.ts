@@ -7,7 +7,7 @@ import {
 } from '@/api/projects.service'
 import type {
   QueryFilterProjectMembers,
-  TranslatedPojectMember,
+  TranslatedProjectMember,
 } from '@/models/project-member.model'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
 import type { ProjectSlugOrId, QueryFilterProjectSimilars } from '@/models/project.model'
@@ -92,7 +92,7 @@ export const getProjectMembers = (
         ...config,
       }),
     {
-      translate: (data) => translateUsers<TranslatedPojectMember>(data),
+      translate: (data) => translateUsers<TranslatedProjectMember>(data),
       watch: onlyRefs([organization, projectSlugOrId]),
       ...config,
     }

@@ -9,11 +9,14 @@ import PageTitle from '~/composables/project-pdf-components/PageTitle'
 import type { Doc } from '~/composables/pdf-helpers/doc-builder'
 import type { TranslatedProject } from '~/models/project.model'
 import { Page } from '~/composables/pdf-helpers/doc-builder'
+import { getProjectGoals } from '~/api/goals.service'
 
 export default async function addPageOneFactory(project: TranslatedProject) {
-  const { locale, t } = useNuxtI18n()
+  const { t } = useNuxtI18n()
 
-  const goals = []
+  const { translateGoals } = useAutoTranslate()
+
+  const goals = unref(translateGoals((await getProjectGoals(project.id)).results))
 
   const sortedGoals = [...goals].sort((a, b) => {
     if (!a.deadline_at && !b.deadline_at) {
@@ -29,7 +32,7 @@ export default async function addPageOneFactory(project: TranslatedProject) {
 
   const projectPhotoHeader = await addProjectPhotoFactory(project)
   const addPurpose = addPurposeFactory(project)
-  const addTags = addTagsFactory(project, locale)
+  const addTags = addTagsFactory(project)
 
   const addSdgs = await addSdgsFactory(project.sdgs || [])
   const addGoalsSection = await addGoalsSectionFactory(sortedGoals)
@@ -82,6 +85,6 @@ export default async function addPageOneFactory(project: TranslatedProject) {
     }
     firstPage
       .render() // Page
-      .render() // Doc
+      .render() // DocDEFAULT_USER_PATATOID
   }
 }

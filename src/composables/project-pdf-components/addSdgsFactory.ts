@@ -14,9 +14,10 @@ export default async function addSdgsFactory(projectSdgs: TranslatedProject['sdg
     )
   }
   return function addSdgs(this: Container) {
-    let sdgs = ''
-    if (sdgImages.length > 0) {
-      this.styles.add(/* CSS */ `
+    if (sdgImages.length === 0) {
+      return
+    }
+    this.styles.add(/* CSS */ `
           .sdg-recap {
             --sdg-size: 1.4cm;
             display: flex;
@@ -48,22 +49,20 @@ export default async function addSdgsFactory(projectSdgs: TranslatedProject['sdg
             background-repeat: no-repeat;
             background-size: contain;
           }`)
-      const sdgList = sdgImages
-        .map(
-          (dataUrl) =>
-            /*HTML*/ `<img class="sdg" src="${dataUrl}" alt="SDG ${sdgImages.indexOf(dataUrl) + 1}" />`
-        )
-        .join('')
+    const sdgList = sdgImages
+      .map(
+        (dataUrl) =>
+          /*HTML*/ `<img class="sdg" src="${dataUrl}" alt="SDG ${sdgImages.indexOf(dataUrl) + 1}" />`
+      )
+      .join('')
 
-      sdgs = /* HTML */ `
-        <div class="sdg-recap">
-          <div>
-            <img src="${sdgLogoDataUrl}" class="sdg-logo" />
-            <div class="current-list">${sdgList}</div>
-          </div>
+    this.content.push(/* HTML */ `
+      <div class="sdg-recap">
+        <div>
+          <img src="${sdgLogoDataUrl}" class="sdg-logo" />
+          <div class="current-list">${sdgList}</div>
         </div>
-      `
-    }
-    this.content.push(sdgs)
+      </div>
+    `)
   }
 }

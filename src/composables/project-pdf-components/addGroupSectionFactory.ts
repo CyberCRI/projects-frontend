@@ -5,73 +5,76 @@ import {
 } from '~/composables/pdf-helpers/usePdfHelpers'
 import { cardListStyles } from '~/composables/project-pdf-components/common-styles'
 import type { Container } from '~/composables/pdf-helpers/doc-builder'
-import { usePatatoids } from '~/composables/usePatatoids'
 
+import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
 import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
+import { cropIfTooLong } from '~/functs/string'
 
-export default async function addGroupSectionFactory(title: string, group: any[]) {
-  const defaultPatatoid = usePatatoids()[0]
+export default async function addGroupSectionFactory(
+  title: string,
+  groups: TranslatedPeopleGroupModel[]
+) {
   const _group = await Promise.all(
-    group.map(async (member) => {
+    groups.map(async (group) => {
       const avatarDataUrl = await fetchImageAsDataUrl(
-        proxyImageUrl(member.header_image?.variations?.medium || defaultPatatoid)
+        proxyImageUrl(
+          group.header_image?.variations?.medium || usePublicURL(DEFAULT_GROUP_PATATOID)
+        )
       )
-      const imageSizes = pictureApiToImageSizes(member.header_image || null)
+      const imageSizes = pictureApiToImageSizes(group.header_image || null)
       const croppedAvatarDataUrl = await croppedImageData({
         imgDataUrl: avatarDataUrl,
         ratio: 1,
         imageSizes,
       })
       return {
-        ...member,
+        ...group,
         avatar_url: croppedAvatarDataUrl,
       }
     })
   )
 
-  const { getTranslatableField } = useAutoTranslate()
   return function addGroupSection(this: Container) {
-    let out = ''
-    if (group.length > 0) {
-      this.styles.add(cardListStyles)
-      this.styles.add(/* CSS */ `
-          .group-section {
-            break-inside: avoid;
-            break-after: auto;
-          }
-          .group-card-title{
-            font-weight: 700;
-          }
-          .group-card-photo {
-             --photo-size: 2cm;
-            width: var(--photo-size);
-            height: var(--photo-size);
-            border-radius: 50%;
-          }`)
-      const groupList = _group
-        .map(
-          (member) => /*HTML*/ `
-          <div class="card-item group-member">
-            <img class="group-card-photo" src="${member.avatar_url}" alt="${getTranslatableField(member, 'name').value || ''}"/>
-            <div class="group-card-group-count">
-            </div>
-            <div class="group-card-title">
-            ${getTranslatableField(member, 'name').value || ''}
-            </div>
-            <p class="group-card-description">
-              ${(getTranslatableField(member, 'short_description').value || '').slice(0, 100)}
-            </p>
-          </div>`
-        )
-        .join('')
-
-      out = /* HTML */ `
-        <div class="group-section">
-          <h3 class="card-list-title group-section-title">${title}</h3>
-          <div class="card-list group-list">${groupList}</div>
-        </div>
-      `
+    if (groups.length === 0) {
+      return
     }
-    this.content.push(out)
+    this.styles.add(cardListStyles)
+    this.styles.add(/* CSS */ `
+        .group-section {
+          break-inside: avoid;
+          break-after: auto;
+        }
+        .group-card-title{
+          font-weight: 700;
+        }
+        .group-card-photo {
+            --photo-size: 2cm;
+          width: var(--photo-size);
+          height: var(--photo-size);
+          border-radius: 50%;
+        }`)
+    const groupList = _group
+      .map(
+        (group) => /*HTML*/ `
+        <div class="card-item group-member">
+          <img class="group-card-photo" src="${group.avatar_url}" alt="${group.$t.name}"/>
+          <div class="group-card-group-count">
+          </div>
+          <div class="group-card-title">
+          ${group.$t.name}
+          </div>
+          <p class="group-card-description">
+            ${cropIfTooLong(group.$t.short_description, 100)}
+          </p>
+        </div>`
+      )
+      .join('')
+
+    this.content.push(/* HTML */ `
+      <div class="group-section">
+        <h3 class="card-list-title group-section-title">${title}</h3>
+        <div class="card-list group-list">${groupList}</div>
+      </div>
+    `)
   }
 }

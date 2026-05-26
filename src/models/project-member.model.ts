@@ -17,7 +17,7 @@ export type ProjectMemberModel = UserModel & {
   role: ProjectMemberRoleType
 }
 
-export type TranslatedPojectMember = TranslatedUserModel & Pick<ProjectMemberModel, 'role'>
+export type TranslatedProjectMember = TranslatedUserModel & Pick<ProjectMemberModel, 'role'>
 
 export interface ProjectTeamModel extends BaseModel {
   reviewers: ProjectMemberModel[]

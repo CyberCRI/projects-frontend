@@ -1,6 +1,6 @@
+import { getProjectGoals as fetchProjectGoals } from '@/api/goals.service'
 import type { UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
 import type { OrganizationModel } from '@/models/organization.model'
-import { getAllGoals as fetchAllGoals } from '@/api/goals.service'
 import type { ProjectSlugOrId } from '@/models/project.model'
 import type { RefOrRaw } from '@/interfaces/utils'
 import { onlyRefs } from '@/functs/onlyRefs'
@@ -10,7 +10,7 @@ const DEFAULT_CONFIG = {}
 type ConfigPagination = UseAsyncPaginationApiConfig
 
 // TODO change backend with prefix organization code in url
-export const getAllGoals = (
+export const getProjectGoals = (
   organization: RefOrRaw<OrganizationModel['code']>,
   projectSlugOrId: RefOrRaw<ProjectSlugOrId>,
   config: ConfigPagination = {}
@@ -24,7 +24,7 @@ export const getAllGoals = (
   return useAsyncPaginationAPI(
     key,
     ({ config }) =>
-      fetchAllGoals(unref(projectSlugOrId), {
+      fetchProjectGoals(unref(projectSlugOrId), {
         ...DEFAULT_CONFIG,
         ...config,
       }),

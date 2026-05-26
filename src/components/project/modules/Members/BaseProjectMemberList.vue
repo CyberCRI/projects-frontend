@@ -2,7 +2,7 @@
 import { addProjectMembers, deleteProjectMembers } from '~/api/project-members.service'
 import UserProfileDrawer from '~/components/drawer/User/UserProfileDrawer.vue'
 import UserSelectDrawer from '~/components/drawer/User/UserSelectDrawer.vue'
-import type { TranslatedPojectMember } from '~/models/project-member.model'
+import type { TranslatedProjectMember } from '~/models/project-member.model'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import CardInlineUser from '~/components/drawer/User/CardInlineUser.vue'
@@ -58,7 +58,7 @@ const {
 type Team = {
   title: string
   role: ProjectMemberRoleType
-  members: TranslatedPojectMember[]
+  members: TranslatedProjectMember[]
 }
 
 const teams = computed<Team[]>(() => {
@@ -88,8 +88,8 @@ const { stateModals, openModals, closeAllModals, closeModals } = useModals({
   add: false,
 })
 
-const selectedMember = ref<TranslatedPojectMember>()
-const selectedMemberRoles = ref<TranslatedPojectMember[] | TranslatedUserModel[]>()
+const selectedMember = ref<TranslatedProjectMember>()
+const selectedMemberRoles = ref<TranslatedProjectMember[] | TranslatedUserModel[]>()
 
 const clear = () => {
   selectedMember.value = null
@@ -108,12 +108,12 @@ const onAdd = () => {
   openModals('add')
 }
 
-const openProfile = (member: TranslatedPojectMember) => {
+const openProfile = (member: TranslatedProjectMember) => {
   selectedMember.value = member
   openModals('view')
 }
 
-const onDelete = (member: TranslatedPojectMember) => {
+const onDelete = (member: TranslatedProjectMember) => {
   selectedMember.value = member
   openModals('delete')
 }
