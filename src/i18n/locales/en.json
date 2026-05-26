@@ -3233,6 +3233,15 @@
     "delete-error": "Error deleting the agent",
     "empty-list": "No agent yet.",
     "confirm-restart-title": "Restart conversation",
-    "confirm-restart-content": "Do you want to start a new conversation?"
+    "confirm-restart-content": "Do you want to start a new conversation?",
+    "form": {
+      "invalid": "Form is incomplete, please provide required fields",
+      "title-required": "Title is required",
+      "model-name-required": "Model name is required",
+      "model-temperature-required": "Model temperature is required",
+      "model-temperature-is-float": "Model temperature must be a floating number",
+      "model-temperature-is-bounded": "Model temperature must be between 0 and 2",
+      "prompt-required": "Prompt is required"
+    }
   }
 }

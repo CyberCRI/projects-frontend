@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import { helpers, required, decimal, between, integer, minValue } from '@vuelidate/validators'
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'
+import useValidate from '@vuelidate/core'
 
 const { t } = useNuxtI18n()
 const modelStrings = ref([
@@ -54,6 +57,27 @@ const defaultForm = (agent = null) => ({
 })
 
 const form = ref(defaultForm())
+
+const rules = computed(() => ({
+  title: {
+    required: helpers.withMessage(t('agents.form.title-required'), required),
+  },
+  modelName: {
+    required: helpers.withMessage(t('agents.form.model-name-required'), required),
+  },
+  modelTemperature: {
+    required: helpers.withMessage(t('agents.form.model-temperature-required'), required),
+    decimal: helpers.withMessage(t('agents.form.model-temperature-is-float'), decimal),
+    between: helpers.withMessage(t('agents.form.model-temperature-is-bounded'), between(0, 2)),
+  },
+  promptId: {
+    required: helpers.withMessage(t('agents.form.prompt-required'), required),
+    integer: helpers.withMessage(t('agents.form.prompt-required'), integer),
+    minValue: helpers.withMessage(t('agents.form.prompt-required'), minValue(1)),
+  },
+}))
+
+const v$ = useValidate(rules, form)
 
 const titleExists = ref(false)
 
@@ -209,6 +233,11 @@ const isAsyncing = ref(false)
 const close = () => emit('close')
 
 const submit = async () => {
+  const isValid = await v$.value.$validate()
+  if (!isValid) {
+    toaster.pushError(t('agents.form.invalid'))
+    return
+  }
   isAsyncing.value = true
 
   let headers = {}
@@ -278,8 +307,10 @@ const submit = async () => {
           :label="$t('agents.title')"
           :disabled="isEdit"
           @change="titleExists = false"
+          @blur="v$.title.$validate"
         />
         <p v-if="titleExists" class="error">{{ $t('agents.title-exists') }}</p>
+        <FieldErrors :errors="v$.title.$errors" />
       </div>
       <div class="form-section">
         <lpiCheckbox v-model="form.isEnabled" :label="$t('agents.is-enabled')" />
@@ -307,10 +338,17 @@ const submit = async () => {
           v-model.trim="form.modelName"
           :label="$t('agents.model-name')"
           suggestion-list-id="modelStrings"
+          @blur="v$.modelName.$validate"
         />
+        <FieldErrors :errors="v$.modelName.$errors" />
       </div>
       <div class="form-section">
-        <TextInput v-model.trim="form.modelTemperature" :label="$t('agents.model-temperature')" />
+        <TextInput
+          v-model.trim="form.modelTemperature"
+          :label="$t('agents.model-temperature')"
+          @blur="v$.modelTemperature.$validate"
+        />
+        <FieldErrors :errors="v$.modelTemperature.$errors" />
       </div>
       <div class="form-section">
         <h4 class="form-section-title">{{ $t('agents.prompt-section') }}</h4>
@@ -318,7 +356,9 @@ const submit = async () => {
           v-model="form.promptId"
           :options="promptOptions"
           :placeholder="$t('agents.prompt-placeholder')"
+          @blur="v$.promptId.$validate"
         />
+        <FieldErrors :errors="v$.promptId.$errors" />
       </div>
       <div v-if="form.promptId" class="form-section">
         <lpiCheckbox

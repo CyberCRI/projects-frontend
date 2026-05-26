@@ -3232,6 +3232,15 @@
     "delete-error": "Viga agendi kustutamisel",
     "empty-list": "Agente veel ei ole.",
     "confirm-restart-title": "Alusta vestlust uuesti",
-    "confirm-restart-content": "Kas soovite alustada uut vestlust?"
+    "confirm-restart-content": "Kas soovite alustada uut vestlust?",
+    "form": {
+      "invalid": "Vorm on mittetäielik, palun täitke nõutud väljad",
+      "title-required": "Pealkiri on nõutud",
+      "model-name-required": "Mudeli nimi on nõutud",
+      "model-temperature-required": "Mudeli temperatuur on nõutud",
+      "model-temperature-is-float": "Mudeli temperatuur peab olema ujukomaarv",
+      "model-temperature-is-bounded": "Mudeli temperatuur peab jääma vahemikku 0 kuni 2",
+      "prompt-required": "Prompt on nõutud"
+    }
   }
 }

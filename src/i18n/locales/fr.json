@@ -3232,6 +3232,15 @@
     "delete-error": "Erreur lors de la suppression de l'agent",
     "empty-list": "Aucun agent pour le moment.",
     "confirm-restart-title": "Relancer la conversation",
-    "confirm-restart-content": "Voulez-vous entamer une nouvelle conversation ?"
+    "confirm-restart-content": "Voulez-vous entamer une nouvelle conversation ?",
+    "form": {
+      "invalid": "Le formulaire est incomplet, veuillez fournir les champs requis",
+      "title-required": "Le titre est requis",
+      "model-name-required": "Le nom du modèle est requis",
+      "model-temperature-required": "La température du modèle est requise",
+      "model-temperature-is-float": "La température du modèle doit être un nombre à virgule flottante",
+      "model-temperature-is-bounded": "La température du modèle doit être comprise entre 0 et 2",
+      "prompt-required": "L'invite est requise"
+    }
   }
 }

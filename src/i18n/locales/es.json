@@ -3232,6 +3232,15 @@
     "delete-error": "Error al eliminar el agente",
     "empty-list": "Aún no hay ningún agente.",
     "confirm-restart-title": "Reiniciar conversación",
-    "confirm-restart-content": "¿Quieres iniciar una nueva conversación?"
+    "confirm-restart-content": "¿Quieres iniciar una nueva conversación?",
+    "form": {
+      "invalid": "El formulario está incompleto, por favor proporcione los campos requeridos",
+      "title-required": "El título es obligatorio",
+      "model-name-required": "El nombre del modelo es obligatorio",
+      "model-temperature-required": "La temperatura del modelo es obligatoria",
+      "model-temperature-is-float": "La temperatura del modelo debe ser un número de punto flotante",
+      "model-temperature-is-bounded": "La temperatura del modelo debe estar entre 0 y 2",
+      "prompt-required": "El prompt es obligatorio"
+    }
   }
 }

@@ -3232,6 +3232,15 @@
     "delete-error": "Fout bij het verwijderen van de agent",
     "empty-list": "Nog geen agent beschikbaar.",
     "confirm-restart-title": "Gesprek opnieuw starten",
-    "confirm-restart-content": "Wilt u een nieuw gesprek starten?"
+    "confirm-restart-content": "Wilt u een nieuw gesprek starten?",
+    "form": {
+      "invalid": "Het formulier is onvolledig, vul de vereiste velden in",
+      "title-required": "Titel is verplicht",
+      "model-name-required": "Modelnaam is verplicht",
+      "model-temperature-required": "Modeltemperatuur is verplicht",
+      "model-temperature-is-float": "Modeltemperatuur moet een drijvende-kommagetal zijn",
+      "model-temperature-is-bounded": "Modeltemperatuur moet tussen 0 en 2 liggen",
+      "prompt-required": "Prompt is verplicht"
+    }
   }
 }
