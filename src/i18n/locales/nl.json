@@ -1648,7 +1648,8 @@
       "title": "Wil je dit project echt dupliceren?",
       "help": "Het project wordt gekloond zonder leden."
     },
-    "groups": "Groep | Groepen"
+    "groups": "Groep | Groepen",
+    "label": "project | projecten"
   },
   "project_list": {
     "updated_at": "Laatste activiteit",
@@ -1883,7 +1884,10 @@
     "disambiguate": "(Disambiguatie)",
     "suggestions": "Voorstellen",
     "choose-skill": "Klik op de gekozen vaardigheid:",
-    "main-tags": "of kies uit de hoofdtags"
+    "main-tags": "of kies uit de hoofdtags",
+    "label": "Zoeken",
+    "empty": "Er zijn geen resultaten beschikbaar",
+    "results": "Zoekresultaten"
   },
   "sdg": {
     "1": {
@@ -2301,6 +2305,10 @@
     "group-project-remove": {
       "success": "Het project is succesvol verwijderd",
       "error": "Fout tijdens project verwijderd"
+    },
+    "pdf": {
+      "success": "De PDF is met succes gegenereerd; een link wordt u per e-mail toegestuurd.",
+      "error": "Er is een fout opgetreden bij het aanmaken van de PDF. Neem contact op met een beheerder."
     }
   },
   "success": {
@@ -2717,7 +2725,8 @@
   "pdf": {
     "blog-entries-limited-warning": "Alleen de eerste {max} blogvermeldingen zijn opgenomen in de PDF-export (van {total} totaal).",
     "download-pdf": "PDF",
-    "generated-on": "Gegenereerd op {date}"
+    "generated-on": "Gegenereerd op {date}",
+    "confirm": "Wilt u pdf genereren voor deze {type} ?"
   },
   "group": {
     "is-other-org": "Deze groep behoort tot een ander platform",

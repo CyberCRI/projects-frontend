@@ -53,6 +53,20 @@
           params: { slugOrId: project.slug || project.id },
         }"
       />
+      <template v-if="appGotenbergEnabled && usersStore.isConnected">
+        <ExternalLabelButton
+          v-if="!asyncingPDF"
+          class="space-button"
+          :label="$t('pdf.download-pdf')"
+          btn-icon="FilePdfLine"
+          vertical-layout
+          label-on-hover
+          @click="openModals('pdf')"
+        />
+        <span v-else class="space-button-loader-ctn">
+          <LoaderSimple class="space-button-loader" />
+        </span>
+      </template>
       <SocialShareButton :shared-url="sharedUrl" />
     </div>
 
@@ -92,6 +106,14 @@
 
     <!-- drawer/modal -->
     <ConfirmModal
+      v-if="stateModals.pdf"
+      :asyncing="asyncing"
+      :title="$t('pdf.confirm', { type: $t('project.label') })"
+      @cancel="closeModals('pdf')"
+      @confirm="onGeneratePDF"
+    />
+
+    <ConfirmModal
       v-if="stateModals.duplicate"
       :asyncing="asyncing"
       :title="$t('project.duplicate.title')"
@@ -129,13 +151,11 @@ const props = withDefaults(
     projectTabs?: any[]
     currentTab?: any
     isEditing?: boolean
-    // isProcessingPdf?: boolean
   }>(),
   {
     projectTabs: () => [],
     currentTab: null,
     isEditing: false,
-    // isProcessingPdf: false,
   }
 )
 
@@ -144,15 +164,15 @@ const emit = defineEmits<{
   'update-follow': any
   'toggle-editing': [boolean]
 }>()
-// emits: ['update-follow', 'navigated', 'toggle-editing', 'duplicate-project', 'get-pdf'],
-// const { appGotenbergEnabled } = useRuntimeConfig().public
 
 const asyncing = ref(false)
+const asyncingPDF = ref(false)
 const toaster = useToaster()
 const { stateModals, closeModals, openModals, closeAllModals } = useModals({
   duplicate: false,
   abuse: false,
   bug: false,
+  pdf: false,
 })
 
 const { t } = useNuxtI18n()
@@ -178,6 +198,22 @@ const { status, data: similars } = getProjectSimilars(organizationCode, projectI
   },
   default: () => factoriesSkeleton(projectSkeleton, props.project.modules.similars, LIMIT_SIMILARS),
 })
+
+// generate PDF
+const { appGotenbergEnabled } = useRuntimeConfig().public
+const onGeneratePDF = () => {
+  asyncingPDF.value = true
+  useProjectToPdf(props.project)
+    .then(() => toaster.pushSuccess(t('toasts.pdf.success')))
+    .catch((err) => {
+      console.error(`Error generation pdf for project='${props.project.id}'`, err)
+      toaster.pushError(t('toasts.pdf.error'))
+    })
+    .finally(() => {
+      asyncingPDF.value = false
+      closeModals('pdf')
+    })
+}
 
 const actionMenu = computed(
   () =>
@@ -226,6 +262,7 @@ const onDuplicate = () => {
   duplicateProject(props.project.id)
     .then((project) => {
       // update projects title (to add copy)
+      // TODO add this in backend ?
       return patchProject(project.id, {
         title: `${project.title} ${t('project.copy')}`,
       })

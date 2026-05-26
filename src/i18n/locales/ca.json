@@ -1648,7 +1648,8 @@
       "title": "Voleu duplicar aquest projecte?",
       "help": "El projecte serà clonat sense membres."
     },
-    "groups": "Grup | Grups"
+    "groups": "Grup | Grups",
+    "label": "projecte | projectes"
   },
   "project_list": {
     "updated_at": "L' últim actiu",
@@ -1883,7 +1884,10 @@
     "disambiguate": "(disambició)",
     "suggestions": "Suggeriments",
     "choose-skill": "Feu clic sobre l' habilitat seleccionada:",
-    "main-tags": "o escolliu des de les etiquetes principals"
+    "main-tags": "o escolliu des de les etiquetes principals",
+    "label": "Cerca",
+    "empty": "No hi ha resultats disponibles",
+    "results": "Resultats de la cerca"
   },
   "sdg": {
     "1": {
@@ -2301,6 +2305,10 @@
     "group-project-remove": {
       "success": "El projecte s' ha eliminat correctament",
       "error": "Error durant el projecte esborrat"
+    },
+    "pdf": {
+      "success": "El PDF s' ha generat amb èxit; s' enviarà un enllaç a través de correu electrònic.",
+      "error": "Hi ha hagut un error en generar el PDF. Si us plau, contacteu amb un administrador."
     }
   },
   "success": {
@@ -2717,7 +2725,8 @@
   "pdf": {
     "blog-entries-limited-warning": "Només s' inclouen les primeres entrades del bloc {max} en l' exportació PDF (de {total} total).",
     "download-pdf": "PDF",
-    "generated-on": "Generat el {date}"
+    "generated-on": "Generat el {date}",
+    "confirm": "Voleu generar pdf per aquest {type}?"
   },
   "group": {
     "is-other-org": "Aquest grup pertany a una altra plataforma",

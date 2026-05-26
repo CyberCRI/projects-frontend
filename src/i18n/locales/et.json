@@ -1648,7 +1648,8 @@
       "title": "Kas sa tõesti tahad seda projekti dubleerida?",
       "help": "Projekt kloonitakse ilma liikmeteta."
     },
-    "groups": "Grupp | Grupid"
+    "groups": "Grupp | Grupid",
+    "label": "projekti | projekte"
   },
   "project_list": {
     "updated_at": "Viimane aktiivne",
@@ -1883,7 +1884,10 @@
     "disambiguate": "(täpsustus)",
     "suggestions": "Soovitused",
     "choose-skill": "Klõpsa valitud oskusel:",
-    "main-tags": "või valida peasiltide hulgast"
+    "main-tags": "või valida peasiltide hulgast",
+    "label": "Otsi",
+    "empty": "Tulemused puuduvad",
+    "results": "Otsingutulemused"
   },
   "sdg": {
     "1": {
@@ -2301,6 +2305,10 @@
     "group-project-remove": {
       "success": "Projekt on edukalt eemaldatud",
       "error": "Viga projekti jooksul eemaldatud"
+    },
+    "pdf": {
+      "success": "PDF on edukalt genereeritud; link saadetakse teile e-posti teel.",
+      "error": "PDF-i genereerimisel tekkis viga. Palun võtke ühendust administraatoriga."
     }
   },
   "success": {
@@ -2717,7 +2725,8 @@
   "pdf": {
     "blog-entries-limited-warning": "PDF-i ekspordi hulka kuuluvad ainult esimesed {max} blogikirjed (kokku {total}).",
     "download-pdf": "PDF",
-    "generated-on": "Geneeritud {date}"
+    "generated-on": "Geneeritud {date}",
+    "confirm": "Kas soovite luua pdf selle {type} jaoks?"
   },
   "group": {
     "is-other-org": "See grupp kuulub teisele platvormile",

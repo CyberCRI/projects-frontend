@@ -3,8 +3,10 @@ import PageTitle from '~/composables/project-pdf-components/PageTitle'
 import type { Doc } from '~/composables/pdf-helpers/doc-builder'
 import { Page } from '~/composables/pdf-helpers/doc-builder'
 
-export default async function addPageLinkedProjectsFactory(project: any, linkedProjects: any[]) {
+export default async function addPageLinkedProjectsFactory(project: any) {
   const { t } = useNuxtI18n()
+
+  const linkedProjects: any[] = []
 
   const addLinkedProjectSection = await addLinkedProjectSectionFactory(linkedProjects || [])
 

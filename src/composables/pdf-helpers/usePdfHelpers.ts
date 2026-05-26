@@ -64,6 +64,9 @@ export async function croppedImageData({ ratio, imgDataUrl, imageSizes }) {
 }
 
 export function proxyImageUrl(url: string): string {
+  if (import.meta.dev) {
+    return url
+  }
   return `/proxy-image?url=${encodeURIComponent(url)}`
 }
 
@@ -132,6 +135,11 @@ export async function fetchPdf(pdfContent: string, fileName: string, url?: strin
     method: 'POST',
     body: payload,
   })
+
+  if (!resp.ok) {
+    throw new Error('Error response', { cause: resp })
+  }
+
   const respBlob = await resp.blob()
   const urlPdf = window.URL.createObjectURL(respBlob)
   const a = document.createElement('a')

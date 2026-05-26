@@ -1733,7 +1733,8 @@
       "title": "Voulez-vous vraiment reproduire ce projet ?",
       "help": "Le projet sera cloné sans membres."
     },
-    "groups": "Groupe | Groupes"
+    "groups": "Groupe | Groupes",
+    "label": "projet | projets"
   },
   "project_list": {
     "updated_at": "Dernier actif",
@@ -1968,7 +1969,10 @@
     "current-skill-description": "Tapez l'intitulé de la compétence et sélectionnez la bonne compétence",
     "disambiguate": "(homonymie)",
     "suggestions": "Suggestions",
-    "choose-skill": "Cliquez sur la compétence de votre choix :"
+    "choose-skill": "Cliquez sur la compétence de votre choix :",
+    "label": "Recherche",
+    "empty": "Aucun résultat n'est disponible",
+    "results": "Résultats de la recherche"
   },
   "sdg": {
     "1": {
@@ -2386,6 +2390,10 @@
     "group-project-remove": {
       "success": "Le projet a été supprimé avec succès",
       "error": "Erreur pendant le projet supprimé"
+    },
+    "pdf": {
+      "success": "Le PDF a été généré avec succès; un lien vous sera envoyé par courriel.",
+      "error": "Une erreur s'est produite lors de la génération du PDF. Veuillez contacter un administrateur."
     }
   },
   "success": {
@@ -2797,7 +2805,8 @@
   "pdf": {
     "blog-entries-limited-warning": "Seuls les {max} premiers articles de blog sont inclus dans l'export PDF (sur un total de {total}).",
     "download-pdf": "PDF",
-    "generated-on": "Généré le {date}"
+    "generated-on": "Généré le {date}",
+    "confirm": "Voulez-vous générer des pdf pour ce {type} ?"
   },
   "pagination": {
     "previous": "Page précédente",

@@ -7,10 +7,13 @@ import addTagsFactory from '~/composables/project-pdf-components/addTagFactory'
 import ProjectHeader from '~/composables/project-pdf-components/ProjectHeader'
 import PageTitle from '~/composables/project-pdf-components/PageTitle'
 import type { Doc } from '~/composables/pdf-helpers/doc-builder'
+import type { TranslatedProject } from '~/models/project.model'
 import { Page } from '~/composables/pdf-helpers/doc-builder'
 
-export default async function addPageOneFactory(project: any, goals: any[]) {
+export default async function addPageOneFactory(project: TranslatedProject) {
   const { locale, t } = useNuxtI18n()
+
+  const goals = []
 
   const sortedGoals = [...goals].sort((a, b) => {
     if (!a.deadline_at && !b.deadline_at) {

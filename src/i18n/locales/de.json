@@ -1648,7 +1648,8 @@
       "title": "Wollen Sie wirklich dieses Projekt duplizieren?",
       "help": "Das Projekt wird ohne Mitglieder kloniert."
     },
-    "groups": "Gruppe | Gruppen"
+    "groups": "Gruppe | Gruppen",
+    "label": "Projekt | Projekte"
   },
   "project_list": {
     "updated_at": "Letzter Beitrag",
@@ -1883,7 +1884,10 @@
     "disambiguate": "(DISAMBIGUATION)",
     "suggestions": "Vorschläge",
     "choose-skill": "Klicken Sie auf die gewählte Fähigkeit:",
-    "main-tags": "oder wählen Sie aus den wichtigsten Tags"
+    "main-tags": "oder wählen Sie aus den wichtigsten Tags",
+    "label": "Suche",
+    "empty": "Es gibt keine Ergebnisse",
+    "results": "Suchergebnisse"
   },
   "sdg": {
     "1": {
@@ -2301,6 +2305,10 @@
     "group-project-remove": {
       "success": "Das Projekt wurde erfolgreich entfernt",
       "error": "Fehler während des Projekts entfernt"
+    },
+    "pdf": {
+      "success": "Das PDF wurde erfolgreich generiert; ein Link wird per E-Mail an Sie gesendet.",
+      "error": "Bei der Generierung des PDF wurde ein Fehler aufgetreten. Bitte kontaktieren Sie einen Administrator."
     }
   },
   "success": {
@@ -2717,7 +2725,8 @@
   "pdf": {
     "blog-entries-limited-warning": "Nur die ersten {max} Blogeinträge sind im PDF-Export enthalten (von {total} insgesamt).",
     "download-pdf": "PDF",
-    "generated-on": "Erstellt am {date}"
+    "generated-on": "Erstellt am {date}",
+    "confirm": "Möchten Sie pdf für diesen {type} generieren?"
   },
   "group": {
     "is-other-org": "Diese Gruppe gehört zu einer anderen Plattform",

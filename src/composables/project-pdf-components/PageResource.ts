@@ -3,11 +3,10 @@ import PageTitle from '~/composables/project-pdf-components/PageTitle'
 import type { Doc } from '~/composables/pdf-helpers/doc-builder'
 import { Page } from '~/composables/pdf-helpers/doc-builder'
 
-export default async function addPageResourceFactory(
-  project: any,
-  fileResources: any[],
-  linkResources: any[]
-) {
+export default async function addPageResourceFactory(project: any) {
+  const fileResources: any[] = []
+  const linkResources: any[] = []
+
   const { t } = useNuxtI18n()
   const addFileResourceSection = await addResourceSectionFactory(project, fileResources, 'file')
   const addLinkResourceSection = await addResourceSectionFactory(project, linkResources, 'link')

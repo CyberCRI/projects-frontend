@@ -1527,6 +1527,7 @@
     "take-tour": "Take the tour now"
   },
   "project": {
+    "label": "project | projects",
     "infos": "Infos",
     "add-linked-project": "Add a linked project",
     "add-review": "Add a review",
@@ -2362,6 +2363,10 @@
     "group-project-remove": {
       "success": "The project has been removed successfully",
       "error": "Error during the project removed"
+    },
+    "pdf": {
+      "success": "The PDF has been successfully generated; a link will be sent to you via email.",
+      "error": "An error occurred whilst generating the PDF. Please contact an administrator."
     }
   },
   "success": {
@@ -2740,7 +2745,8 @@
       "state": "State",
       "country": "Country",
       "other": "Other"
-    }
+    },
+    "search": "Search"
   },
   "card-list": {
     "list": "List",
@@ -3110,6 +3116,7 @@
   "pdf": {
     "blog-entries-limited-warning": "Only the first {max} blog entries are included in the PDF export (of {total} total).",
     "download-pdf": "PDF",
+    "confirm": "Do you want to generate pdf for this {type} ?",
     "generated-on": "Generated on {date}"
   },
   "group": {

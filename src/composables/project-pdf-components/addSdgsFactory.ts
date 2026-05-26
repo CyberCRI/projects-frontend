@@ -1,8 +1,8 @@
 import { fetchImageAsDataUrl, proxyImageUrl } from '~/composables/pdf-helpers/usePdfHelpers'
 import type { Container } from '~/composables/pdf-helpers/doc-builder'
-import { usePublicURL } from '~/composables/usePublic'
+import type { TranslatedProject } from '~/models/project.model'
 
-export default async function addSdgsFactory(projectSdgs: (string | ArrayBuffer)[]) {
+export default async function addSdgsFactory(projectSdgs: TranslatedProject['sdgs']) {
   const { locale } = useNuxtI18n()
   const sdgLogoDataUrl = await fetchImageAsDataUrl(proxyImageUrl(usePublicURL(`/sdgs/logo.png`)))
   let sdgImages = []
