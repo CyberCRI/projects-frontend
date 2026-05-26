@@ -2726,7 +2726,8 @@
     "blog-entries-limited-warning": "Només s' inclouen les primeres entrades del bloc {max} en l' exportació PDF (de {total} total).",
     "download-pdf": "PDF",
     "generated-on": "Generat el {date}",
-    "confirm": "Voleu generar pdf per aquest {type}?"
+    "confirm": "Voleu generar pdf per aquest {type}?",
+    "choices": "Seleccioneu els elements que voleu afegir al PDF."
   },
   "group": {
     "is-other-org": "Aquest grup pertany a una altra plataforma",

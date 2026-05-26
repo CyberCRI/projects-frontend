@@ -11,7 +11,9 @@
       :disabled="disabled"
       @change="toggle"
     />
-    {{ label }}
+    <slot name="label">
+      {{ label }}
+    </slot>
   </label>
 </template>
 

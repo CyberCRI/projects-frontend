@@ -55,7 +55,6 @@
       />
       <template v-if="appGotenbergEnabled && usersStore.isConnected">
         <ExternalLabelButton
-          v-if="!asyncingPDF"
           class="space-button"
           :label="$t('pdf.download-pdf')"
           btn-icon="FilePdfLine"
@@ -63,9 +62,6 @@
           label-on-hover
           @click="openModals('pdf')"
         />
-        <span v-else class="space-button-loader-ctn">
-          <LoaderSimple class="space-button-loader" />
-        </span>
       </template>
       <SocialShareButton :shared-url="sharedUrl" />
     </div>
@@ -105,13 +101,7 @@
     </FetchLoader>
 
     <!-- drawer/modal -->
-    <ConfirmModal
-      v-if="stateModals.pdf"
-      :asyncing="asyncingPDF"
-      :title="$t('pdf.confirm', { type: $t('project.label') })"
-      @cancel="closeModals('pdf')"
-      @confirm="onGeneratePDF"
-    />
+    <ProjectPDFModal v-if="stateModals.pdf" :project="project" @close="closeModals('pdf')" />
 
     <ConfirmModal
       v-if="stateModals.duplicate"
@@ -135,6 +125,7 @@ import ProjectsNavSimilar from '~/components/project/Nav/ProjectsNavSimilar.vue'
 import type { MenuEntry } from '~/components/base/navigation/NavPanelMenu.vue'
 import { useProjectFollow } from '~/composables/project/useProjectFollow'
 import { duplicateProject, patchProject } from '~/api/projects.service'
+import ProjectPDFModal from '~/components/project/ProjectPDFModal.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import ReportDrawer from '~/components/drawer/ReportDrawer.vue'
 import { projectSkeleton } from '~/skeletons/project.skeletons'
@@ -166,7 +157,6 @@ const emit = defineEmits<{
 }>()
 
 const asyncing = ref(false)
-const asyncingPDF = ref(false)
 const toaster = useToaster()
 const { stateModals, closeModals, openModals, closeAllModals } = useModals({
   duplicate: false,
@@ -200,19 +190,8 @@ const { status, data: similars } = getProjectSimilars(organizationCode, projectI
 })
 
 // generate PDF
-const { appGotenbergEnabled } = useRuntimeConfig().public
-const onGeneratePDF = () => {
-  asyncingPDF.value = true
-  useProjectToPdf(props.project)
-    .catch((err) => {
-      console.error(`Error generation pdf for project='${props.project.id}'`, err)
-      toaster.pushError(t('toasts.pdf.error'))
-    })
-    .finally(() => {
-      asyncingPDF.value = false
-      closeModals('pdf')
-    })
-}
+// const { appGotenbergEnabled } = useRuntimeConfig().public
+const appGotenbergEnabled = true
 
 const actionMenu = computed(
   () =>

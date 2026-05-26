@@ -130,7 +130,7 @@ export async function fetchPdf(pdfContent: string, fileName: string, url?: strin
     'footer.html'
   )
   payload.append('files', new Blob([await usePdfHeader()], { type: 'text/html' }), 'header.html')
-  payload.append('emulatedMediaType', 'screen')
+  // payload.append('emulatedMediaType', 'screen')
   const resp = await fetch('/pdf-generator', {
     method: 'POST',
     body: payload,
@@ -144,6 +144,7 @@ export async function fetchPdf(pdfContent: string, fileName: string, url?: strin
   const urlPdf = window.URL.createObjectURL(respBlob)
   const a = document.createElement('a')
   a.style.display = 'none'
+  a.download = fileName
   a.href = urlPdf
   document.body.appendChild(a) // we need to append the element to the dom -> otherwise it will not work in firefox
   a.click()

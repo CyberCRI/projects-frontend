@@ -2726,7 +2726,8 @@
     "blog-entries-limited-warning": "PDF-i ekspordi hulka kuuluvad ainult esimesed {max} blogikirjed (kokku {total}).",
     "download-pdf": "PDF",
     "generated-on": "Geneeritud {date}",
-    "confirm": "Kas soovite luua pdf selle {type} jaoks?"
+    "confirm": "Kas soovite luua pdf selle {type} jaoks?",
+    "choices": "Valige elemendid, mida soovite PDF-i lisada."
   },
   "group": {
     "is-other-org": "See grupp kuulub teisele platvormile",

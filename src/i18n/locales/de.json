@@ -2726,7 +2726,8 @@
     "blog-entries-limited-warning": "Nur die ersten {max} Blogeinträge sind im PDF-Export enthalten (von {total} insgesamt).",
     "download-pdf": "PDF",
     "generated-on": "Erstellt am {date}",
-    "confirm": "Möchten Sie pdf für diesen {type} generieren?"
+    "confirm": "Möchten Sie pdf für diesen {type} generieren?",
+    "choices": "Wählen Sie die Elemente aus, die Sie dem PDF hinzufügen möchten."
   },
   "group": {
     "is-other-org": "Diese Gruppe gehört zu einer anderen Plattform",
