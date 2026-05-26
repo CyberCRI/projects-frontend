@@ -21,6 +21,7 @@ const emit = defineEmits(['close', 'entity-created', 'entity-updated'])
 
 const toaster = useToasterStore()
 const usersStore = useUsersStore()
+
 const defaultForm = (prompt) => ({
   title: prompt?.title ?? '',
   content: prompt?.promptContents?.length ? prompt.promptContents[0].content : '',
