@@ -17,7 +17,7 @@ const form = ref(structuredClone(DEFAULT_PDF_OPTIONS))
 // generate PDF
 const onGeneratePDF = () => {
   asyncing.value = true
-  console.log(form.value)
+
   useProjectToPdf(props.project, form.value)
     .catch((err) => {
       console.error(`Error generation pdf for project='${props.project.id}'`, err)
