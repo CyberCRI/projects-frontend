@@ -1,6 +1,9 @@
 <script setup>
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import { helpers, required } from '@vuelidate/validators'
 import useToasterStore from '@/stores/useToaster'
 import useUsersStore from '@/stores/useUsers'
+import useValidate from '@vuelidate/core'
 
 const { t } = useNuxtI18n()
 
@@ -26,6 +29,20 @@ const defaultForm = (skill) => ({
 
 const form = ref(defaultForm())
 
+const rules = computed(() => ({
+  title: {
+    required: helpers.withMessage(t('agent-skills.form.title-required'), required),
+  },
+  content: {
+    required: helpers.withMessage(t('agent-skills.form.content-required'), required),
+  },
+  description: {
+    required: helpers.withMessage(t('agent-skills.form.description-required'), required),
+  },
+}))
+
+const v$ = useValidate(rules, form)
+
 const titleExists = ref(false)
 
 watch(
@@ -47,6 +64,11 @@ const isAsyncing = ref(false)
 const close = () => emit('close')
 
 const submit = async () => {
+  const isValid = await v$.value.$validate()
+  if (!isValid) {
+    toaster.pushError(t('agent-skills.form.invalid'))
+    return
+  }
   isAsyncing.value = true
 
   let headers = {}
@@ -96,7 +118,9 @@ const submit = async () => {
         :label="$t('agent-skills.title')"
         :disabled="isEdit"
         @change="titleExists = false"
+        @blur="v$.title.$validate"
       />
+      <FieldErrors :errors="v$.title.$errors" />
       <p v-if="titleExists" class="error">{{ $t('agent-skills.title-exists') }}</p>
     </div>
     <div class="form-section">
@@ -105,7 +129,9 @@ const submit = async () => {
         input-type="textarea"
         :label="$t('agent-skills.description')"
         @change="titleExists = false"
+        @blur="v$.description.$validate"
       />
+      <FieldErrors :errors="v$.description.$errors" />
     </div>
     <div class="form-section">
       <TextInput
@@ -114,7 +140,9 @@ const submit = async () => {
         :label="$t('agent-skills.content')"
         rows="12"
         @change="titleExists = false"
+        @blur="v$.content.$validate"
       />
+      <FieldErrors :errors="v$.content.$errors" />
     </div>
   </BaseDrawer>
 </template>

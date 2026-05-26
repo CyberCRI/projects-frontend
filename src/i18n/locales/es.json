@@ -3179,7 +3179,12 @@
     "confirm-deletion-of": "¿Realmente quieres eliminar la indicación '{title}'?",
     "deleted": "Indicación eliminada",
     "delete-error": "Error al eliminar la indicación",
-    "empty-list": "Aún no hay ninguna indicación."
+    "empty-list": "Aún no hay ninguna indicación.",
+    "form": {
+      "invalid": "El formulario está incompleto, por favor proporciona los campos requeridos",
+      "title-required": "El título es obligatorio",
+      "content-required": "El contenido es obligatorio"
+    }
   },
   "agent-skills": {
     "create-skill": "Crear habilidad de agente",
@@ -3195,7 +3200,13 @@
     "confirm-deletion-of": "¿Realmente quieres eliminar la habilidad de agente '{title}'?",
     "deleted": "Habilidad de agente eliminada",
     "delete-error": "Error al eliminar la habilidad de agente",
-    "empty-list": "Aún no hay ninguna habilidad de agente."
+    "empty-list": "Aún no hay ninguna habilidad de agente.",
+    "form": {
+      "invalid": "El formulario está incompleto, por favor proporciona los campos requeridos",
+      "title-required": "El título es obligatorio",
+      "content-required": "El contenido es obligatorio",
+      "description-required": "La descripción es obligatoria"
+    }
   },
   "agents": {
     "need-login": "Necesitas estar conectado para utilizar este agente.",
@@ -3232,6 +3243,15 @@
     "delete-error": "Error al eliminar el agente",
     "empty-list": "Aún no hay ningún agente.",
     "confirm-restart-title": "Reiniciar conversación",
-    "confirm-restart-content": "¿Quieres iniciar una nueva conversación?"
+    "confirm-restart-content": "¿Quieres iniciar una nueva conversación?",
+    "form": {
+      "invalid": "El formulario está incompleto, por favor proporcione los campos requeridos",
+      "title-required": "El título es obligatorio",
+      "model-name-required": "El nombre del modelo es obligatorio",
+      "model-temperature-required": "La temperatura del modelo es obligatoria",
+      "model-temperature-is-float": "La temperatura del modelo debe ser un número de punto flotante",
+      "model-temperature-is-bounded": "La temperatura del modelo debe estar entre 0 y 2",
+      "prompt-required": "El prompt es obligatorio"
+    }
   }
 }

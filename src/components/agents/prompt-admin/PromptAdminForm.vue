@@ -1,6 +1,9 @@
 <script setup>
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import { helpers, required } from '@vuelidate/validators'
 import useToasterStore from '@/stores/useToaster'
 import useUsersStore from '@/stores/useUsers'
+import useValidate from '@vuelidate/core'
 
 const { t } = useNuxtI18n()
 
@@ -18,12 +21,24 @@ const emit = defineEmits(['close', 'entity-created', 'entity-updated'])
 
 const toaster = useToasterStore()
 const usersStore = useUsersStore()
+
 const defaultForm = (prompt) => ({
   title: prompt?.title ?? '',
   content: prompt?.promptContents?.length ? prompt.promptContents[0].content : '',
 })
 
 const form = ref(defaultForm())
+
+const rules = computed(() => ({
+  title: {
+    required: helpers.withMessage(t('prompts.form.title-required'), required),
+  },
+  content: {
+    required: helpers.withMessage(t('prompts.form.content-required'), required),
+  },
+}))
+
+const v$ = useValidate(rules, form)
 
 const titleExists = ref(false)
 
@@ -46,6 +61,11 @@ const isAsyncing = ref(false)
 const close = () => emit('close')
 
 const submit = async () => {
+  const isValid = await v$.value.$validate()
+  if (!isValid) {
+    toaster.pushError(t('prompts.form.invalid'))
+    return
+  }
   isAsyncing.value = true
 
   let headers = {}
@@ -93,7 +113,9 @@ const submit = async () => {
         :label="$t('prompts.title')"
         :disabled="isEdit"
         @change="titleExists = false"
+        @blur="v$.title.$validate"
       />
+      <FieldErrors :errors="v$.title.$errors" />
       <p v-if="titleExists" class="error">{{ $t('agents.title-exists') }}</p>
     </div>
     <div class="form-section">
@@ -103,7 +125,9 @@ const submit = async () => {
         :label="$t('prompts.content')"
         rows="12"
         @change="titleExists = false"
+        @blur="v$.content.$validate"
       />
+      <FieldErrors :errors="v$.content.$errors" />
     </div>
   </BaseDrawer>
 </template>

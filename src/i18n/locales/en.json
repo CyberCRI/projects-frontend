@@ -3179,7 +3179,12 @@
     "confirm-deletion-of": "Do you really want to delete the prompt '{title}'?",
     "deleted": "Prompt deleted",
     "delete-error": "Error deleting the prompt",
-    "empty-list": "No prompt yet."
+    "empty-list": "No prompt yet.",
+    "form": {
+      "invalid": "Form is incomplete, please provide required fields",
+      "title-required": "Title is required",
+      "content-required": "Content is required"
+    }
   },
   "agent-skills": {
     "create-skill": "Create agent skill",
@@ -3195,7 +3200,13 @@
     "confirm-deletion-of": "Do you really want to delete the agent skill '{title}'?",
     "deleted": "Agent skill deleted",
     "delete-error": "Error deleting the agent skill",
-    "empty-list": "No agent skill yet."
+    "empty-list": "No agent skill yet.",
+    "form": {
+      "invalid": "Form is incomplete, please provide required fields",
+      "title-required": "Title is required",
+      "content-required": "Content is required",
+      "description-required": "The description is required"
+    }
   },
 
   "agents": {
@@ -3233,6 +3244,15 @@
     "delete-error": "Error deleting the agent",
     "empty-list": "No agent yet.",
     "confirm-restart-title": "Restart conversation",
-    "confirm-restart-content": "Do you want to start a new conversation?"
+    "confirm-restart-content": "Do you want to start a new conversation?",
+    "form": {
+      "invalid": "Form is incomplete, please provide required fields",
+      "title-required": "Title is required",
+      "model-name-required": "Model name is required",
+      "model-temperature-required": "Model temperature is required",
+      "model-temperature-is-float": "Model temperature must be a floating number",
+      "model-temperature-is-bounded": "Model temperature must be between 0 and 2",
+      "prompt-required": "Prompt is required"
+    }
   }
 }

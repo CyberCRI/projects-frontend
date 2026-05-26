@@ -3179,7 +3179,12 @@
     "confirm-deletion-of": "Realment vols suprimir l'indicació '{title}'?",
     "deleted": "Indicació suprimida",
     "delete-error": "Error en suprimir l'indicació",
-    "empty-list": "Encara no hi ha cap indicació."
+    "empty-list": "Encara no hi ha cap indicació.",
+    "form": {
+      "invalid": "El formulari està incomplet, si us plau proporciona els camps requerits",
+      "title-required": "El títol és obligatori",
+      "content-required": "El contingut és obligatori"
+    }
   },
   "agent-skills": {
     "create-skill": "Crea una habilitat d'agent",
@@ -3195,7 +3200,13 @@
     "confirm-deletion-of": "Realment vols suprimir l'habilitat d'agent '{title}'?",
     "deleted": "Habilitat d'agent suprimida",
     "delete-error": "Error en suprimir l'habilitat d'agent",
-    "empty-list": "Encara no hi ha cap habilitat d'agent."
+    "empty-list": "Encara no hi ha cap habilitat d'agent.",
+    "form": {
+      "invalid": "El formulari està incomplet, si us plau proporciona els camps requerits",
+      "title-required": "El títol és obligatori",
+      "content-required": "El contingut és obligatori",
+      "description-required": "La descripció és obligatòria"
+    }
   },
   "agents": {
     "need-login": "Heu d'iniciar la sessió per utilitzar aquest agent.",
@@ -3232,6 +3243,15 @@
     "delete-error": "Error en suprimir l'agent",
     "empty-list": "Encara no hi ha cap agent.",
     "confirm-restart-title": "Reinicia la conversa",
-    "confirm-restart-content": "Vols iniciar una conversa nova?"
+    "confirm-restart-content": "Vols iniciar una conversa nova?",
+    "form": {
+      "invalid": "El formulari està incomplet, si us plau, proporciona els camps requerits",
+      "title-required": "El títol és obligatori",
+      "model-name-required": "El nom del model és obligatori",
+      "model-temperature-required": "La temperatura del model és obligatòria",
+      "model-temperature-is-float": "La temperatura del model ha de ser un número de coma flotant",
+      "model-temperature-is-bounded": "La temperatura del model ha d'estar entre 0 i 2",
+      "prompt-required": "L'indicació (prompt) és obligatòria"
+    }
   }
 }
