@@ -178,7 +178,7 @@ const submit = async () => {
         <TipTapEditor
           v-model="form.description"
           :errors="errors.description"
-          class="goal-description"
+          class="goal-description w-full"
         />
       </Field>
 

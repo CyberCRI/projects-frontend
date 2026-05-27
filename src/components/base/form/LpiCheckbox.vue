@@ -3,14 +3,16 @@
     class="lpi-checkbox"
     :class="{ disabled: disabled, 'is-checked': modelValue, 'as-button': asButton }"
   >
-    <input
-      type="checkbox"
-      name="checkbox"
-      :value="modelValue"
-      :checked="modelValue"
-      :disabled="disabled"
-      @change="toggle"
-    />
+    <div class="checkbox-container">
+      <input
+        type="checkbox"
+        name="checkbox"
+        :value="modelValue"
+        :checked="modelValue"
+        :disabled="disabled"
+        @change="toggle"
+      />
+    </div>
     <slot name="label">
       {{ label }}
     </slot>
@@ -50,6 +52,14 @@ const toggle = (e: Event) => {
   gap: $space-m;
 }
 
+.checkbox-container {
+  width: calc(20px - (0.2rem * 2));
+  height: calc(20px - (0.2rem * 2));
+  padding: 0.2rem;
+  background-color: var(--white);
+  border-radius: $border-radius-xs;
+}
+
 .as-button {
   text-transform: capitalize;
   border: $border-width-s solid var(--primary-dark);
@@ -69,28 +79,23 @@ const toggle = (e: Event) => {
 }
 
 input[type='checkbox'] {
-  appearance: none;
-  background-color: $white;
+  accent-color: var(--primary-dark);
   margin: 0;
+  background-color: var(--white);
   font: inherit;
-  width: pxToRem(20px);
-  height: pxToRem(20px);
-  border: $border-width-s solid var(--primary-dark);
-  border-radius: $border-radius-xs;
-  transform: translateY(-0.075em);
   display: grid;
   place-content: center;
   cursor: pointer;
 }
 
-input[type='checkbox']::before {
-  content: '';
-  width: pxToRem(12px);
-  height: pxToRem(12px);
-  transform: translateZ(0) scale(0);
-  transition: 120ms transform ease-in-out;
-  box-shadow: inset 1em 1em var(--primary-dark);
-}
+// input[type='checkbox']::before {
+//   content: '';
+//   width: pxToRem(12px);
+//   height: pxToRem(12px);
+//   transform: translateZ(0) scale(0);
+//   transition: 120ms transform ease-in-out;
+//   box-shadow: inset 1em 1em var(--primary-dark);
+// }
 
 .disabled input[type='checkbox']::before {
   box-shadow: inset 1em 1em $mid-gray;
