@@ -1,9 +1,12 @@
-<script setup>
+<script setup lang="ts">
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { helpers, required } from '@vuelidate/validators'
 import useToasterStore from '@/stores/useToaster'
+import { isHtmlNotEmpty } from '~/functs/string'
 import useUsersStore from '@/stores/useUsers'
 import useValidate from '@vuelidate/core'
+
+const { html2md, md2html } = useMarkdown()
 
 const { t } = useNuxtI18n()
 
@@ -24,7 +27,7 @@ const usersStore = useUsersStore()
 
 const defaultForm = (prompt) => ({
   title: prompt?.title ?? '',
-  content: prompt?.promptContents?.length ? prompt.promptContents[0].content : '',
+  content: prompt?.promptContents?.length ? md2html(prompt.promptContents[0].content) : '',
 })
 
 const form = ref(defaultForm())
@@ -34,7 +37,7 @@ const rules = computed(() => ({
     required: helpers.withMessage(t('prompts.form.title-required'), required),
   },
   content: {
-    required: helpers.withMessage(t('prompts.form.content-required'), required),
+    required: helpers.withMessage(t('prompts.form.content-required'), isHtmlNotEmpty),
   },
 }))
 
@@ -73,14 +76,19 @@ const submit = async () => {
   if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
 
   try {
+    const body = { ...form.value, content: html2md(form.value.content) }
     if (isEdit.value) {
       await $fetch(`/api/prompt/${props.prompt.id}`, {
         method: 'put',
-        body: form.value,
+        body,
         headers,
       })
     } else {
-      await $fetch('/api/prompt/', { method: 'post', body: form.value, headers })
+      await $fetch('/api/prompt/', {
+        method: 'post',
+        body,
+        headers,
+      })
     }
 
     toaster.pushSuccess(t(isEdit.value ? 'prompts.edit-success' : 'prompts.create-success'))
@@ -119,12 +127,11 @@ const submit = async () => {
       <p v-if="titleExists" class="error">{{ $t('agents.title-exists') }}</p>
     </div>
     <div class="form-section">
-      <TextInput
+      <h4>{{ $t('prompts.content') }}</h4>
+      <TipTapEditor
         v-model.trim="form.content"
-        input-type="textarea"
-        :label="$t('prompts.content')"
-        rows="12"
-        @change="titleExists = false"
+        class="input-field content-editor"
+        mode="medium"
         @blur="v$.content.$validate"
       />
       <FieldErrors :errors="v$.content.$errors" />
