@@ -28,6 +28,12 @@ const onGeneratePDF = () => {
       emit('close')
     })
 }
+
+// add resources in modules (concat links/files)
+const modules = computed(() => ({
+  ...props.project.modules,
+  resources: props.project.modules.files + props.project.modules.links,
+}))
 </script>
 
 <template>
@@ -45,8 +51,8 @@ const onGeneratePDF = () => {
       <ul class="list-options-pdf">
         <template v-for="(value, name) in form">
           <!-- hide choices if project a empty modules values -->
-          <li v-if="project.modules[name] > 0" :key="name">
-            <LpiCheckbox v-model="form[name]" :label="$t(ProjectModuleTitle[name])" as-button />
+          <li v-if="modules[name] > 0" :key="name">
+            <LpiCheckbox v-model="form[name]" :label="$t(ProjectModuleTitle[name], 10)" as-button />
           </li>
         </template>
       </ul>
@@ -63,6 +69,8 @@ const onGeneratePDF = () => {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  width: fit-content;
+  margin: auto;
 
   li {
     flex-grow: 1;
