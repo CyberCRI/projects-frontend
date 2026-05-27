@@ -53,9 +53,10 @@ const toggle = (e: Event) => {
 }
 
 .checkbox-container {
-  width: calc(20px - (0.2rem * 2));
-  height: calc(20px - (0.2rem * 2));
-  padding: 0.2rem;
+  --padding-checkbox: 0.1rem;
+  width: calc(20px - (var(--padding-checkbox) * 2));
+  height: calc(20px - (var(--padding-checkbox) * 2));
+  padding: var(--padding-checkbox);
   background-color: var(--white);
   border-radius: $border-radius-xs;
 }
@@ -79,6 +80,8 @@ const toggle = (e: Event) => {
 }
 
 input[type='checkbox'] {
+  width: 100%;
+  height: 100%;
   accent-color: var(--primary-dark);
   margin: 0;
   background-color: var(--white);
@@ -87,15 +90,6 @@ input[type='checkbox'] {
   place-content: center;
   cursor: pointer;
 }
-
-// input[type='checkbox']::before {
-//   content: '';
-//   width: pxToRem(12px);
-//   height: pxToRem(12px);
-//   transform: translateZ(0) scale(0);
-//   transition: 120ms transform ease-in-out;
-//   box-shadow: inset 1em 1em var(--primary-dark);
-// }
 
 .disabled input[type='checkbox']::before {
   box-shadow: inset 1em 1em $mid-gray;
