@@ -903,8 +903,7 @@
       },
       "description": "El campo de descripción es necesario"
     },
-    "templates": "Plantillas",
-    "quit-without-saving-title": "¿Dejar de salvar?"
+    "templates": "Plantillas"
   },
   "footer": {
     "contact": "Contacta con nosotros",
@@ -1644,9 +1643,9 @@
     "tag-warning": "NB: Si un usuario cambia idiomas en su portal, las etiquetas con traducciones se traducirán para ellos. De lo contrario, las etiquetas se mostrarán en inglés.",
     "description": "Descripción",
     "duplicate": {
-      "label": "Proyecto duplicado",
       "title": "¿De verdad quieres duplicar este proyecto?",
-      "help": "El proyecto será clonado sin miembros."
+      "help": "El proyecto será clonado sin miembros.",
+      "label": "Duplicar el proyecto"
     },
     "groups": "Grupo | Grupos",
     "label": "proyecto | proyectos"

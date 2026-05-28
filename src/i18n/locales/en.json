@@ -1559,7 +1559,7 @@
     "description": "Description",
     "destroy": "Delete project",
     "duplicate": {
-      "label": "Duplicate project",
+      "label": "Duplicate the project",
       "title": "Do you realy want to duplicate this project?",
       "help": "The project will be cloned without members."
     },

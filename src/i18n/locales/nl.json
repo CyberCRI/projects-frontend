@@ -903,8 +903,7 @@
       },
       "description": "Het beschrijvingsveld is vereist"
     },
-    "templates": "Sjablonen",
-    "quit-without-saving-title": "Stoppen zonder te redden?"
+    "templates": "Sjablonen"
   },
   "footer": {
     "contact": "Contacteer ons",
@@ -1644,9 +1643,9 @@
     "tag-warning": "NB: Als een gebruiker van taal wisselt in uw portal, zullen de tags met vertalingen voor hen vertaald worden. Anders worden de tags in het Engels weergegeven.",
     "description": "Omschrijving",
     "duplicate": {
-      "label": "Project dupliceren",
       "title": "Wil je dit project echt dupliceren?",
-      "help": "Het project wordt gekloond zonder leden."
+      "help": "Het project wordt gekloond zonder leden.",
+      "label": "Het project dupliceren"
     },
     "groups": "Groep | Groepen",
     "label": "project | projecten"

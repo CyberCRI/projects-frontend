@@ -903,8 +903,7 @@
       },
       "description": "Cal el camp de descripció"
     },
-    "templates": "Plantilles",
-    "quit-without-saving-title": "Surto sense desar?"
+    "templates": "Plantilles"
   },
   "footer": {
     "contact": "Contacta amb nosaltres",
@@ -1644,9 +1643,9 @@
     "tag-warning": "NB: Si un usuari desactiva les llengües al portal, les etiquetes amb traduccions es traduiran per ells. Altrament, les etiquetes es mostraran en anglès.",
     "description": "Descripció",
     "duplicate": {
-      "label": "Duplica el projecte",
       "title": "Voleu duplicar aquest projecte?",
-      "help": "El projecte serà clonat sense membres."
+      "help": "El projecte serà clonat sense membres.",
+      "label": "Duplica el projecte"
     },
     "groups": "Grup | Grups",
     "label": "projecte | projectes"

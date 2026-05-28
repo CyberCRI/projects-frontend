@@ -904,7 +904,7 @@
       "description": "Le champ description est obligatoire"
     },
     "templates": "Modèles",
-    "quit-without-saving-title": "Quitter sans épargner ?"
+    "quit-without-saving-title": "Quitter sans enregistrer ?"
   },
   "footer": {
     "contact": "Contactez-nous",
@@ -1729,9 +1729,9 @@
     "tag-warning": "NB: Si un utilisateur change la langue de votre portail, les tags qui possèdent des traductions dans Wikipedia seront traduits. Les autres seront affichés en priorité en anglais et sinon dans la langue originale.",
     "description": "Désignation des marchandises",
     "duplicate": {
-      "label": "Projet en double",
       "title": "Voulez-vous vraiment reproduire ce projet ?",
-      "help": "Le projet sera cloné sans membres."
+      "help": "Le projet sera cloné sans membres.",
+      "label": "Dupliquer le projet"
     },
     "groups": "Groupe | Groupes",
     "label": "projet | projets"

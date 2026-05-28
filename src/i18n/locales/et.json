@@ -903,8 +903,7 @@
       },
       "description": "Kirjeldusväli on nõutav"
     },
-    "templates": "Mallid",
-    "quit-without-saving-title": "Lõpetad säästmata?"
+    "templates": "Mallid"
   },
   "footer": {
     "contact": "Võta meiega ühendust",
@@ -1644,9 +1643,9 @@
     "tag-warning": "NB: Kui kasutaja vahetab teie portaalis keeli, tõlgime nende jaoks tõlkimisega sildid. Vastasel juhul näidatakse silte inglise keeles.",
     "description": "Kirjeldus",
     "duplicate": {
-      "label": "Topeltprojekt",
       "title": "Kas sa tõesti tahad seda projekti dubleerida?",
-      "help": "Projekt kloonitakse ilma liikmeteta."
+      "help": "Projekt kloonitakse ilma liikmeteta.",
+      "label": "Projekti dubleerimine"
     },
     "groups": "Grupp | Grupid",
     "label": "projekti | projekte"
