@@ -33,7 +33,7 @@ const onDelete = () => (search.value = '')
 <template>
   <section>
     <div v-if="countSelected">
-      <LpiButton btn-icon="Eraser" :label="$t('common.clear')" @click="emit('select-clear')" />
+      <LpiButton btn-icon="Eraser" :label="$t('drawer.clear')" @click="emit('select-clear')" />
       <slot name="selected" />
     </div>
 
@@ -51,7 +51,7 @@ const onDelete = () => (search.value = '')
         v-if="selectedAll && countResult > 0"
         btn-icon="CheckDouble"
         :secondary="true"
-        :label="$t('common.select-all')"
+        :label="$t('drawer.select-all')"
         @click="emit('select-all')"
       />
     </div>
