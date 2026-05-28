@@ -10,13 +10,21 @@ const { html2md, md2html } = useMarkdown()
 
 const { t } = useNuxtI18n()
 
-const props = defineProps({
-  isOpened: {
-    type: Boolean,
-    required: true,
-  },
-  prompt: { type: [Object, null], required: true },
-})
+type PromptData = {
+  id: number
+  title: string
+  promptContents: { version: number; content: string }[]
+}
+
+type PromptForm = {
+  title: string
+  content: string
+}
+
+const props = defineProps<{
+  isOpened: boolean
+  prompt?: PromptData
+}>()
 
 const isEdit = computed(() => !!props.prompt)
 
@@ -25,7 +33,7 @@ const emit = defineEmits(['close', 'entity-created', 'entity-updated'])
 const toaster = useToasterStore()
 const usersStore = useUsersStore()
 
-const defaultForm = (prompt) => ({
+const defaultForm = (prompt?: PromptData): PromptForm => ({
   title: prompt?.title ?? '',
   content: prompt?.promptContents?.length ? md2html(prompt.promptContents[0].content) : '',
 })

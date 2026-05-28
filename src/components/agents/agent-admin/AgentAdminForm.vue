@@ -386,12 +386,10 @@ const submit = async () => {
       </div>
       <h4 class="form-section-title">{{ $t('agents.start-message-section') }}</h4>
       <div class="form-section">
-        <!--TextInput v-model.trim="form.startMessage" input-type="textarea" label="" rows="5" /-->
         <TipTapEditor
           v-model.trim="form.startMessage"
           class="input-field content-editor"
           mode="medium"
-          @blur="onBlur"
         />
       </div>
       <h4 class="form-section-title">{{ $t('agents.tools-section') }}</h4>

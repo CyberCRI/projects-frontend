@@ -36,7 +36,17 @@ export const PropsDefault: Partial<PropsDefinitions> = {
   disableSave: false,
 }
 
-export function useTipTap({ props, emit, t, extraOptions }) {
+export function useTipTap({
+  props,
+  emit,
+  t,
+  extraOptions,
+}: {
+  props: any
+  emit: any
+  t: any
+  extraOptions?: any
+}) {
   // data
   const editor = ref(null)
   const editorInited = ref(false)
@@ -179,7 +189,7 @@ export function useTipTap({ props, emit, t, extraOptions }) {
 
     editor.value.view.dom.addEventListener('drop', onDrop, true)
     // editor.value.on('update', onUpdate)
-    editor.value.on('blur', onBlur)
+    // editor.value.on('blur', onBlur)
     // editor.value.on('onDrop', onDrop) // yes event naming is weird
     // editor.value.on('onPaste', onPaste) // yes event naming is weird
   }
