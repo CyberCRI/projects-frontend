@@ -54,6 +54,7 @@ const toggle = (e: Event) => {
 
 .checkbox-container {
   --padding-checkbox: 0.1rem;
+
   width: calc(20px - (var(--padding-checkbox) * 2));
   height: calc(20px - (var(--padding-checkbox) * 2));
   padding: var(--padding-checkbox);

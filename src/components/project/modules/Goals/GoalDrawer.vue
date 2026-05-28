@@ -57,6 +57,8 @@ const defaultLocalForm = () => {
   return newForm
 }
 
+const { stateModals, closeModals, openModals } = useModals({ saveChange: false })
+
 const { form, isValid, errors, cleanedData, reset } = useGoalForm({ lazy: true })
 watch(
   () => [props.isOpened, props.goal],
@@ -97,6 +99,11 @@ const statusOptions = computed(() => [
   },
 ])
 
+const close = () => {
+  emit('close')
+  closeModals('saveChange')
+}
+
 const submit = async () => {
   if (!isValid.value) {
     return
@@ -127,7 +134,7 @@ const submit = async () => {
       })
       .finally(() => {
         asyncing.value = false
-        emit('close')
+        close()
       })
   } else {
     // Update goal
@@ -148,8 +155,16 @@ const submit = async () => {
       })
       .finally(() => {
         asyncing.value = false
-        emit('close')
+        close()
       })
+  }
+}
+
+const checkClose = () => {
+  if (isFormEqual.value) {
+    close()
+  } else {
+    openModals('saveChange')
   }
 }
 </script>
@@ -162,7 +177,7 @@ const submit = async () => {
     :is-opened="isOpened"
     class="medium"
     :asyncing="asyncing"
-    @close="emit('close')"
+    @close="checkClose"
     @confirm="submit"
   >
     <div class="list-container">
@@ -197,5 +212,14 @@ const submit = async () => {
         />
       </Field>
     </div>
+
+    <!-- drawer/modal -->
+    <ConfirmModal
+      v-if="stateModals.saveChange"
+      :title="$t('form.quit-without-saving-title')"
+      :content="$t('common.confirm-close')"
+      @cancel="closeModals('saveChange')"
+      @confirm="close"
+    />
   </BaseDrawer>
 </template>

@@ -67,7 +67,14 @@ const defaultLocalForm = () => {
 }
 
 const { t } = useNuxtI18n()
-const { stateModals, closeModals } = useModals({ saveSolo: false })
+const { stateModals, closeModals, closeAllModals, openModals } = useModals({
+  saveSolo: false,
+  saveChange: false,
+})
+const close = () => {
+  emit('close')
+  closeAllModals()
+}
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
@@ -157,6 +164,14 @@ const save = () => {
     postBlog(body)
   }
 }
+
+const checkClose = () => {
+  if (isFormEqual.value) {
+    close()
+  } else {
+    openModals('saveChange')
+  }
+}
 </script>
 
 <template>
@@ -167,7 +182,7 @@ const save = () => {
     :title="$t('blog.entry')"
     class="blog-drawer"
     :asyncing="asyncing"
-    @close="emit('close')"
+    @close="checkClose"
     @confirm="save"
   >
     <div>
@@ -202,7 +217,7 @@ const save = () => {
         :save-image-callback="saveBlogImage"
         :disable-save="asyncing"
         :errors="errors.content"
-        @unauthorized="emit('close')"
+        @unauthorized="close"
         @image="handleImage"
         @saved="save"
         @falled-back-to-solo-edit="inOfflineMode = true"
@@ -210,18 +225,27 @@ const save = () => {
     </div>
 
     <DateField v-model="form.created_at" :label="$t('common.date')" :errors="errors.created_at" />
-  </BaseDrawer>
 
-  <ConfirmModal
-    v-if="stateModals.saveSolo"
-    :title="$t(`multieditor.server-unconnectable.confirm-save-title`)"
-    :content="$t(`multieditor.server-unconnectable.confirm-save-text`)"
-    :confirm-button-label="$t('common.save')"
-    :cancel-button-label="$t('common.cancel')"
-    :asyncing="asyncing"
-    @cancel="closeModals('saveSolo')"
-    @confirm="save"
-  />
+    <!-- drawer/modal -->
+    <ConfirmModal
+      v-if="stateModals.saveChange"
+      :title="$t('form.quit-without-saving-title')"
+      :content="$t('common.confirm-close')"
+      @cancel="closeModals('saveChange')"
+      @confirm="close"
+    />
+
+    <ConfirmModal
+      v-if="stateModals.saveSolo"
+      :title="$t(`multieditor.server-unconnectable.confirm-save-title`)"
+      :content="$t(`multieditor.server-unconnectable.confirm-save-text`)"
+      :confirm-button-label="$t('common.save')"
+      :cancel-button-label="$t('common.cancel')"
+      :asyncing="asyncing"
+      @cancel="closeModals('saveSolo')"
+      @confirm="save"
+    />
+  </BaseDrawer>
 </template>
 
 <style lang="scss" scoped>
