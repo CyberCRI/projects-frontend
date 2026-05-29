@@ -15,6 +15,13 @@ const props = withDefaults(
   }
 )
 
+const emit = defineEmits(['blur'])
+
+const onBlur = (event) => {
+  console.log('qssfqsdq')
+  emit('blur', event)
+}
+
 // computed
 const dataTest = computed(() =>
   props.isConnected ? 'input-editor-content-connected' : 'input-editor-content-simple'
@@ -27,6 +34,7 @@ const dataTest = computed(() =>
       class="editor-content custom-scrollbar"
       :class="{ 'editor-frozen': editorFrozen }"
       :data-test="dataTest"
+      @blur="onBlur"
     />
   </div>
 </template>

@@ -60,3 +60,10 @@ export const textIsEmpty = (text: string | null): boolean => {
   }
   return html2Text(text).trim() === ''
 }
+
+export function isHtmlNotEmpty(html: string): boolean {
+  if (!document) return !!html // dummy fix for server side
+  const div = document.createElement('div')
+  div.innerHTML = html
+  return div.textContent.trim() !== ''
+}

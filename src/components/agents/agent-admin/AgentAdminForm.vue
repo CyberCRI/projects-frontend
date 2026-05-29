@@ -6,6 +6,8 @@ import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'
 import useValidate from '@vuelidate/core'
 
+const { html2md, md2html } = useMarkdown()
+
 const { t } = useNuxtI18n()
 const modelStrings = ref([
   'openai:gpt-4o-mini',
@@ -39,7 +41,7 @@ const defaultForm = (agent = null) => ({
   modelTemperature: agent?.modelTemperature ?? '',
   promptId: agent?.promptId ?? 0,
   promptVersion: agent?.promptVersion ?? 0,
-  startMessage: agent?.startMessage ?? '',
+  startMessage: md2html(agent?.startMessage ?? ''),
   skillContents:
     agent?.skillsContents?.map(({ skillId, skillVersion, useLatestSkillVersion }) => ({
       skillId,
@@ -262,15 +264,19 @@ const submit = async () => {
     }))
 
   try {
-    console.log('save', isEdit.value)
+    const body = { ...form.value, startMessage: html2md(form.value.startMessage) }
     if (isEdit.value) {
       await $fetch(`/api/agent/${props.agent.id}`, {
         method: 'put',
-        body: form.value,
+        body,
         headers,
       })
     } else {
-      await $fetch('/api/agent/', { method: 'post', body: form.value, headers })
+      await $fetch('/api/agent/', {
+        method: 'post',
+        body,
+        headers,
+      })
     }
 
     toaster.pushSuccess(t(isEdit.value ? 'agents.edit-success' : 'agents.create-success'))
@@ -380,7 +386,11 @@ const submit = async () => {
       </div>
       <h4 class="form-section-title">{{ $t('agents.start-message-section') }}</h4>
       <div class="form-section">
-        <TextInput v-model.trim="form.startMessage" input-type="textarea" label="" rows="5" />
+        <TipTapEditor
+          v-model.trim="form.startMessage"
+          class="input-field content-editor"
+          mode="medium"
+        />
       </div>
       <h4 class="form-section-title">{{ $t('agents.tools-section') }}</h4>
       <div class="form-section">
