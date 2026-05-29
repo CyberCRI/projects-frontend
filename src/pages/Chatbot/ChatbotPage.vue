@@ -60,7 +60,7 @@ const options = {
 }
 
 const more = ref(null)
-const LIMIT = 4
+const LIMIT = 30
 
 const query = ref({
   limit: LIMIT,
@@ -102,40 +102,6 @@ watch(
     nextTick(toConversationEnd)
   }
 )
-
-// const isLoadingConversation = ref(false)
-// watch(
-//   () => conversationId.value,
-//   async (neo, old) => {
-//     // console.log('conversationId', neo, old)
-// if (neo !== old) {
-//   if (neo) {
-// isLoadingConversation.value = true
-// // try {
-// const url = `/api/chatbot/${props.agentSlug}/conversation/${neo}`
-// // TODO: error, status...
-// const { data } = await useFetch(url, options)
-// if (data.value?.conversation) {
-//   conversation.value = data.value?.conversation
-// } else {
-//   // TODO toaster
-//   console.error('Conversation not found')
-//   conversationId.value = old
-// }
-// } finally {
-//   isLoadingConversation.value = false
-// }
-//   } else {
-//     console.log('resetting')
-//     conversation.value = null
-//     nextTick(toConversationEnd)
-//   }
-// }
-//   }
-// )
-
-// try {
-// TODO: error, status...
 
 function getPreviousMessages() {
   if (more.value) {
@@ -214,26 +180,6 @@ watch(
   },
   { immediate: true }
 )
-
-// watch(
-//   () => [conversationId.value, isLoadingConversation.value, more.value],
-//   (neo, old) => {
-//     if (!neo[1]) {
-//       console.log('scroll wtahc', neo, old)
-//       if (neo[0] == old[0] && neo[2] != old[2]) {
-//         // loaded older mesages, scroll to top
-//         nextTick(() =>
-//           document
-//             .querySelector('[name=conversation-top]')
-//             .scrollIntoView({ block: 'start', behavior: 'smooth' })
-//         )
-//       } else if (neo[0] != old[0]) {
-//         // first load of this converation, scroll to bottom
-//         nextTick(() => chatbotUi.value?.scrollToBottom())
-//       }
-//     }
-//   }
-// )
 
 const CHAT_ENDPOINT = computed(() => '/api/chatbot/chat?id=' + agent.value?.id)
 onBeforeUnmount(() => {
