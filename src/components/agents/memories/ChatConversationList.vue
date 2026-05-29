@@ -1,6 +1,7 @@
 <script setup>
-import { formatDateTime } from '~/functs/date'
-import useUsersStore from '@/stores/useUsers'
+import { factoryPagination } from '~/skeletons/base.skeletons.ts'
+import { formatDateTime } from '~/functs/date.ts'
+import useUsersStore from '@/stores/useUsers.ts'
 
 const { locale } = useNuxtI18n()
 
@@ -11,11 +12,28 @@ let headers = {}
 const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
 if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
 
-function fetchAll() {
-  return useFetch('/api/chat-conversation/', { headers })
-}
-const { data: documentList, status, /*error,*/ refresh } = fetchAll()
-const isAsyncing = computed(() => status.value === 'pending')
+const conversationSkeleton = () => ({
+  agent: {
+    title: 'Lorem Ipsum',
+  },
+  title: 'Dolore sit amet',
+  userId: -1,
+  lastActiveAt: '1970-01-01T00:00:00',
+})
+
+const LIMIT = 20
+const { data, status, refresh, pagination } = useAsyncPaginationAPI(
+  'conversations',
+  ({ config }) => $fetch('/api/chat-conversation/', { headers, ...config }),
+  {
+    paginationConfig: { limit: LIMIT },
+    default: () => factoryPagination(conversationSkeleton, LIMIT),
+  }
+)
+
+// const isAsyncing = computed(() => status.value === 'pending')
+
+const documentList = computed(() => data.value || [])
 
 const prettyDate = (s) => formatDateTime(new Date(s), locale.value)
 
@@ -25,39 +43,38 @@ refresh()
 refresh()
 </script>
 <template>
-  <div v-if="isAsyncing" class="loader">
-    <LoaderSimple />
-  </div>
-  <p v-else-if="!documentList.length" class="no-document">
-    {{ $t('chat-conversation.no-conversation-yet') }}
-  </p>
-  <ul v-else>
-    <li
-      v-for="document in documentList"
-      :key="document.title + '-' + document.chunks"
-      class="document"
-    >
-      <div class="icon">
-        <IconImage name="Article" />
-      </div>
-      <div class="title">
-        {{ document.agent?.title }} - {{ document.title }}
-        <br />
+  <FetchLoader :status="status" skeleton only-error>
+    <EmptyLabel v-if="!documentList.length" :label="$t('chat-conversation.no-conversation-yet')" />
+    <ul>
+      <li
+        v-for="document in documentList"
+        :key="document.title + '-' + document.chunks"
+        class="document"
+      >
+        <div class="icon skeletons-background">
+          <IconImage name="Article" />
+        </div>
+        <div class="title skeletons-text">
+          {{ document.agent?.title }} - {{ document.title }}
+          <br />
 
-        <span class="chunk-count">User #{{ document.userId }}</span>
-        -
-        <span class="chunk-count">{{ prettyDate(document.lastActiveAt) }}</span>
-      </div>
-      <div class="actions">
-        <ContextActionButton
-          action-icon="Eye"
-          secondary
-          no-border
-          @click.prevent="emit('show-document', document.id)"
-        />
-      </div>
-    </li>
-  </ul>
+          <span class="chunk-count">User #{{ document.userId }}</span>
+          -
+          <span class="chunk-count">{{ prettyDate(document.lastActiveAt) }}</span>
+        </div>
+        <div class="actions">
+          <ContextActionButton
+            action-icon="Eye"
+            secondary
+            no-border
+            class="skeletons-background"
+            @click.prevent="emit('show-document', document.id)"
+          />
+        </div>
+      </li>
+    </ul>
+    <PaginationButtonsV2 :pagination="pagination" />
+  </FetchLoader>
 </template>
 <style lang="scss" scoped>
 .document {

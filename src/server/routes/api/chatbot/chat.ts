@@ -12,6 +12,7 @@ import { tool, createAgent, createMiddleware } from 'langchain'
 import { MultiServerMCPClient } from '@langchain/mcp-adapters'
 import getVectorStore from '@/server/utils/vector-db.js'
 import { ChatOpenAI } from '@langchain/openai'
+import { safeParseInt } from '@/functs/string'
 import { v4 as uuidv4 } from 'uuid'
 import * as z from 'zod'
 
@@ -42,19 +43,6 @@ const { appApiOrgCode, appChatbotEnabled } = runtimeConfig.public
 //     console.log('[MCP TRACE]', ...args)
 //   }
 // }
-
-function safeParseInt(s) {
-  if (!s) return 0
-  if (typeof s === 'number') return Math.floor(s)
-  try {
-    const res = parseInt(s, 10)
-    if (isNaN(res)) throw 'Not a number'
-    return res
-  } catch (err) {
-    console.error(`parseInt error for ${s}`, err)
-    return 0
-  }
-}
 
 let contextWindowSize = safeParseInt(appAgentMemorySlidingWindowSize)
 // ensure always positive
