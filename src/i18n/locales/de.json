@@ -2683,7 +2683,8 @@
     "restart": "Konversation neu starten",
     "before-we-start": "Bevor wir beginnen, würden Sie:",
     "allow-profile": "Erlauben Sie mir, Ihr Profil zu sehen - damit ich meine Antworten besser anpassen kann",
-    "allow-current-page": "Erlauben Sie mir, die Seite zu sehen, auf der Sie sich befinden - damit ich den Kontext besser verstehe"
+    "allow-current-page": "Erlauben Sie mir, die Seite zu sehen, auf der Sie sich befinden - damit ich den Kontext besser verstehe",
+    "previous-messages": "Vorherige Nachrichten"
   },
   "tos": {
     "evolved": "Unsere Nutzungsbedingungen wurden aktualisiert, bitte nehmen Sie sich einen Moment Zeit, um sie zu überprüfen und zu akzeptieren.",
