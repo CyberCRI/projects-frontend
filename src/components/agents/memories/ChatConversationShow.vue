@@ -182,6 +182,7 @@ summary {
 .message-content {
   margin-left: 1rem;
 }
+
 .more-button {
   margin: 0 auto;
 }
