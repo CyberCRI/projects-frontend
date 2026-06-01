@@ -1,3 +1,4 @@
+import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
 import OpenAI from 'openai'
 
 const runtimeConfig = useRuntimeConfig()
@@ -7,25 +8,11 @@ const {
   appOpenaiApiKey,
   appOpenaiApiVectorStoreId,
   appMcpServerUrl,
-  appMcpServerTrace,
-  appSorbobotApiTrace,
 } = runtimeConfig
 const { appChatbotEnabled } = runtimeConfig.public
 
 // Map conversationId to token and date for authed api requests in MCP
 export const tokenMap = new Map<string, { date: Date; token: string }>()
-
-export const traceMcp = (...args) => {
-  if (appMcpServerTrace) {
-    console.log('[MCP TRACE]', ...args)
-  }
-}
-
-export const traceSorbobot = (...args) => {
-  if (appSorbobotApiTrace) {
-    console.log('[Sorbobot TRACE]', ...args)
-  }
-}
 
 export default defineLazyEventHandler(() => {
   const openai = appOpenaiApiKey
