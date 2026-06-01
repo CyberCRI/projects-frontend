@@ -903,7 +903,8 @@
       },
       "description": "Kirjeldusväli on nõutav"
     },
-    "templates": "Mallid"
+    "templates": "Mallid",
+    "quit-without-saving-title": "Lõpetad säästmata?"
   },
   "footer": {
     "contact": "Võta meiega ühendust",
@@ -2464,7 +2465,8 @@
       },
       "content": {
         "label": "informatsiooni",
-        "placeholder": "Lisa info sündmuse kohta"
+        "placeholder": "Lisa info sündmuse kohta",
+        "required": "Vajalik on sisu"
       },
       "event_date": {
         "label": "Sündmuse kuupäev *",

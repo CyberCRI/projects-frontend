@@ -2527,7 +2527,8 @@
       },
       "content": {
         "label": "information",
-        "placeholder": "Add information about this event"
+        "placeholder": "Add information about this event",
+        "required": "The content is required"
       },
       "event_date": {
         "label": "Event date *",

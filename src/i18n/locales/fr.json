@@ -2550,7 +2550,8 @@
       },
       "content": {
         "label": "Information",
-        "placeholder": "Ajoutez des informations sur cet événement"
+        "placeholder": "Ajoutez des informations sur cet événement",
+        "required": "Le contenu est requis"
       },
       "event_date": {
         "label": "Date de l'événement *",

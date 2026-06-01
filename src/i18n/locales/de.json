@@ -903,7 +903,8 @@
       },
       "description": "Das Beschreibungsfeld ist erforderlich"
     },
-    "templates": "Vorlagen"
+    "templates": "Vorlagen",
+    "quit-without-saving-title": "Nicht zu retten?"
   },
   "footer": {
     "contact": "Kontaktieren Sie uns",
@@ -2464,7 +2465,8 @@
       },
       "content": {
         "label": "Informationen",
-        "placeholder": "Informationen zu diesem Event hinzufügen"
+        "placeholder": "Informationen zu diesem Event hinzufügen",
+        "required": "Der Inhalt ist erforderlich"
       },
       "event_date": {
         "label": "Veranstaltungsdatum *",

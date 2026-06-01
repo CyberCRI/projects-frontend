@@ -1,7 +1,7 @@
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
 import ProjectEditDescriptionTab from '~/pages/ProjectPageV2/Tabs/Description/ProjectEditDescriptionTab.vue'
-import { ProjectFactory } from '~~/tests/factories/project.factory'
+import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import { UserFactory } from '~~/tests/factories/user.factory'
 import { describe, expect, it, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
@@ -9,7 +9,7 @@ import useUsersStore from '~/stores/useUsers'
 
 describe('ProjectEditDescriptionTab.vue', () => {
   it('should render component', async () => {
-    const project = ProjectFactory.generate()
+    const project = TranslatedProjectFactory.generate()
     const props = { project }
 
     const user = UserFactory.generate()

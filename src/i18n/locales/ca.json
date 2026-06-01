@@ -903,7 +903,8 @@
       },
       "description": "Cal el camp de descripció"
     },
-    "templates": "Plantilles"
+    "templates": "Plantilles",
+    "quit-without-saving-title": "Surto sense desar?"
   },
   "footer": {
     "contact": "Contacta amb nosaltres",
@@ -2464,7 +2465,8 @@
       },
       "content": {
         "label": "Informació",
-        "placeholder": "Afegeix informació quant a aquest esdeveniment"
+        "placeholder": "Afegeix informació quant a aquest esdeveniment",
+        "required": "Es requereix el contingut"
       },
       "event_date": {
         "label": "Data de l' esdeveniment *",

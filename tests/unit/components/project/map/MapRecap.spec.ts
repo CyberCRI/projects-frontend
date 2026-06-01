@@ -17,9 +17,6 @@ describe('MapRecap.vue', () => {
       }
     })
     const wrapper = lpiShallowMount(MapRecap, {
-      provide: {
-        projectLayoutToggleAddModal: vi.fn(),
-      },
       props: {
         locations: [
           {

@@ -111,7 +111,7 @@ export const ProjectModuleTitle: { [key in ProjectModuleExtra]: string } = {
   comments: 'comment.comments',
   groups: 'project.groups',
   reviews: 'project.reviews',
-  messages: 'project.private-exchange',
+  messages: 'comment.private-exchange.tab',
 }
 
 export type TranslatedProject = Translated<

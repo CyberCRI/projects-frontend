@@ -33,10 +33,6 @@ describe('ProjectHeader.vue', () => {
       props: {
         project: ProjectOutputFactory.generate(),
       },
-      provide: {
-        projectLayoutGoToTab: vi.fn(),
-        projectLayoutToggleAddModal: vi.fn(),
-      },
       stubs: {
         TagsList: {
           props: ['prefix'],

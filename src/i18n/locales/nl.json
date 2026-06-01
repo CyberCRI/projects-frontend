@@ -903,7 +903,8 @@
       },
       "description": "Het beschrijvingsveld is vereist"
     },
-    "templates": "Sjablonen"
+    "templates": "Sjablonen",
+    "quit-without-saving-title": "Stoppen zonder te redden?"
   },
   "footer": {
     "contact": "Contacteer ons",
@@ -2464,7 +2465,8 @@
       },
       "content": {
         "label": "informatie",
-        "placeholder": "Informatie over deze gebeurtenis toevoegen"
+        "placeholder": "Informatie over deze gebeurtenis toevoegen",
+        "required": "De inhoud is vereist"
       },
       "event_date": {
         "label": "Datum van de gebeurtenis",

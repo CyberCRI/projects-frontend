@@ -7,7 +7,8 @@ import waitForExpect from 'wait-for-expect'
 
 describe('AnnouncementDrawer.vue', () => {
   it('should render component', () => {
-    const wrapper = lpiShallowMount(AnnouncementDrawer, { props: { isOpened: true } })
+    const project = TranslatedProjectFactory.generate()
+    const wrapper = lpiShallowMount(AnnouncementDrawer, { props: { isOpened: true, project } })
     expect(wrapper.exists()).toBe(true)
   })
 

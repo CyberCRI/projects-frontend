@@ -903,7 +903,8 @@
       },
       "description": "El campo de descripción es necesario"
     },
-    "templates": "Plantillas"
+    "templates": "Plantillas",
+    "quit-without-saving-title": "¿Dejar de salvar?"
   },
   "footer": {
     "contact": "Contacta con nosotros",
@@ -2464,7 +2465,8 @@
       },
       "content": {
         "label": "información",
-        "placeholder": "Añada información sobre este evento"
+        "placeholder": "Añada información sobre este evento",
+        "required": "El contenido es necesario"
       },
       "event_date": {
         "label": "Fecha del evento *",

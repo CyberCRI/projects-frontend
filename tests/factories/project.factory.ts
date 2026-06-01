@@ -1,6 +1,11 @@
 import { createFactory } from 'faker-create-factory'
 
-import { ProjectModel, ProjectOutput, TranslatedProject } from '~/models/project.model'
+import {
+  LinkedProject,
+  ProjectModel,
+  ProjectOutput,
+  TranslatedProject,
+} from '~/models/project.model'
 import { ProjectCategoryOutputFactory } from './project-category.factory'
 import { ProjectTeamOutputFactory } from './project-member.factory'
 import { OrganizationOutputFactory } from './organization.factory'
@@ -17,6 +22,7 @@ import { GoalFactory } from './goal.factory'
 import { BaseFactory } from './base.factory'
 import TagFactory from './tag.factory'
 import SdgFactory from './sdg.factory'
+import { fa } from 'zod/v4/locales'
 
 export const ProjectFactory = createFactory<ProjectModel>((faker) => ({
   ...BaseFactory.generate(),
@@ -105,4 +111,10 @@ export const ProjectOutputFactory = createFactory<ProjectOutput>((faker) => ({
     follow_id: null,
   },
   slug: faker.lorem.word(),
+}))
+
+export const LinkedProjectFactory = createFactory<LinkedProject>((faker) => ({
+  id: faker.datatype.number(),
+  target: ProjectFactory.generate(),
+  project: ProjectFactory.generate(),
 }))

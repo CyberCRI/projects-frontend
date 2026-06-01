@@ -18,7 +18,6 @@ describe('TemplatesTab.vue', () => {
     )
     const wrapper = await lpiMountSuspended(TemplatesTab)
     await flushPromises()
-    console.log(wrapper.html())
     expect(wrapper.findAll('li').length).toEqual(2)
   })
   it('DeleteTemplate', async () => {
