@@ -12,6 +12,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import EmptyLabel from '~/components/base/EmptyLabel.vue'
 import { flushPromises } from '@vue/test-utils'
+import { delay } from 'es-toolkit'
 
 const aTag = { title: '123', description: 'abc' }
 
@@ -23,10 +24,12 @@ describe('ProfileSkillTab', () => {
     usersStore.userFromApi = {}
     usersStore.permissions = {}
     usersStore.getUser = vi.fn()
+    usersStore.userFromToken = {}
+    const organizationCode = useOrganizationCode()
     const organizationsStore = useOrganizationsStore(pinia)
     organizationsStore._current = { id: 'TEST', code: 'TEST' } as unknown as OrganizationOutput
 
-    registerEndpoint(`organization/${organizationsStore._current.code}/mentoring`, () => {
+    registerEndpoint(`organization/${organizationCode}/mentoring/`, () => {
       return PaginationsFactory.generate()
     })
   })
@@ -64,7 +67,7 @@ describe('ProfileSkillTab', () => {
     expect(vm.isCurrentUser).toBeFalsy()
   })
 
-  it('should display a message if no kill and no hobby', async () => {
+  it('should display a message if no skill and no hobby', async () => {
     const user: any = UserFactory.generate()
     user.id = '123'
 

@@ -5,8 +5,13 @@ export default defineEventHandler(async (event) => {
     // return 404
     return setResponseStatus(event, 404, 'Page Not Found')
   }
-  const gotenbergServerUrl = 'http://projects-gotenberg.projects'
+  const gotenbergServerUrl = runtimeConfig.appGotenbergServerUrl
   const gotenbergUrl = `${gotenbergServerUrl}/forms/chromium/convert/html`
-  console.log('Proxying request to Gotenberg server at:', gotenbergUrl)
-  return proxyRequest(event, gotenbergUrl)
+  try {
+    console.log('Proxying request to Gotenberg server at:', gotenbergUrl)
+    return proxyRequest(event, gotenbergUrl)
+  } catch (e) {
+    console.error('Error proxying request to Gotenberg server:', e)
+    return setResponseStatus(event, 502, 'Bad Gateway')
+  }
 })

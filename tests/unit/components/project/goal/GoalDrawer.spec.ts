@@ -39,7 +39,7 @@ describe('GoalDrawer.vue', () => {
     wrapper = lpiMount(GoalDrawer, { props: defaultProps })
     const vm: any = wrapper.vm
 
-    vm.closeModalNoConfirm()
+    vm.close()
     expect(wrapper.emitted('close')).toBeTruthy()
   })
 })

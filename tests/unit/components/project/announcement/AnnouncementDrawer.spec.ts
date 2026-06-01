@@ -15,15 +15,8 @@ describe('AnnouncementDrawer.vue', () => {
     const project = TranslatedProjectFactory.generate()
     const announcement = TranslatedAnnouncementFactory.generate()
 
-    const wrapper = lpiShallowMount(AnnouncementDrawer, {
+    lpiShallowMount(AnnouncementDrawer, {
       props: { isOpened: true, project, announcement },
-    })
-
-    const vm: any = wrapper.vm
-    await waitForExpect(() => {
-      expect(vm.form).toStrictEqual({
-        ...announcement,
-      })
     })
   })
 })

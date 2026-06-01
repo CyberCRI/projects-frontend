@@ -68,7 +68,7 @@ const results = computed(() => searchUsers.value.map((searchObj) => searchObj.us
       v-bind="attrs"
       v-model:search="search"
       :is-opened="isOpened"
-      :title="title || $t('drawer.user.add', attrs.maxSelected)"
+      :title="title || $t('drawer.member.add', attrs.maxSelected)"
       :pagination="pagination"
       :results="results"
       :selected="selectedUsers"
