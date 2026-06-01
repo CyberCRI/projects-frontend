@@ -1,4 +1,5 @@
 import { getUser } from '@/server/utils/check-admin-rights.js'
+import { safeParseInt } from '@/functs/string'
 
 export default defineLazyEventHandler(() => {
   const runtimeConfig = useRuntimeConfig()
@@ -20,6 +21,12 @@ export default defineLazyEventHandler(() => {
         error: 'Missing required "conversationId" query parameter',
       }
     }
+
+    const limit: number = safeParseInt(getQuery(event)?.limit, 0)
+    const cursor: string = (getQuery(event)?.cursor ?? '') as string
+    const messageRange: { take?: number; cursor?: { id: string } } = {}
+    if (limit) messageRange.take = limit + 1 // take limit + 1 so the extra serve as cursor and indictor that there is more to fectch
+    if (cursor) messageRange.cursor = { id: cursor }
 
     const user = await getUser(event)
     if (!user) {
@@ -54,16 +61,23 @@ export default defineLazyEventHandler(() => {
       },
       include: {
         messages: {
+          ...messageRange,
           where: {
             role: { in: ['user', 'assistant'] },
             content: { not: '' }, // so we filter out tool call request message
           },
-          orderBy: { position: 'asc' },
+          orderBy: { position: 'desc' },
         },
       },
       orderBy: { lastActiveAt: 'desc' },
     })
 
-    return { conversation }
+    let more = null
+    if (limit && conversation?.messages?.length && conversation.messages.length > limit) {
+      more = conversation.messages[limit].id
+      conversation.messages = conversation.messages.slice(0, limit)
+    }
+
+    return { conversation, more }
   })
 })

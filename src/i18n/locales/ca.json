@@ -2683,7 +2683,8 @@
     "restart": "Reinicia la conversa",
     "before-we-start": "Abans de començar, voldríeu:",
     "allow-profile": "Permeteu-me veure el vostre perfil - perquè pugui adaptar millor les meves respostes",
-    "allow-current-page": "Permeteu-me veure la pàgina en què esteu - perquè tingui una millor comprensió del context"
+    "allow-current-page": "Permeteu-me veure la pàgina en què esteu - perquè tingui una millor comprensió del context",
+    "previous-messages": "Missatges anteriors"
   },
   "tos": {
     "evolved": "Els nostres Termes i Condicions s'han actualitzat, si us plau, reviseu-los i aproveu-los.",

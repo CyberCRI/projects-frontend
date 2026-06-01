@@ -30,11 +30,36 @@ if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
 
 const close = () => emit('close')
 
-function fetchAll() {
-  return useFetch(`/api/chat-conversation/${props.documentTitle}`, { headers })
+const conversation = ref(null)
+const more = ref(null)
+
+const LIMIT = 20
+
+const query = ref({
+  limit: LIMIT,
+  cursor: undefined,
+})
+
+function getPreviousMessages() {
+  if (more.value) query.value.cursor = more.value
 }
-const { data: conversation, status /* , error */, refresh } = fetchAll()
+
+function fetchAll() {
+  return useFetch(`/api/chat-conversation/${props.documentTitle}`, { headers, query })
+}
+const { data, status /* , error */, refresh } = fetchAll()
 const isAsyncing = computed(() => status.value === 'pending')
+
+watch(data, (d) => {
+  console.log('watch data', d)
+  if (!d) return
+  if (more.value && conversation.value)
+    conversation.value.messages.push(...(d.conversation.messages || []))
+  else conversation.value = d.conversation
+  more.value = d.more
+})
+
+const displayableMessages = computed(() => [...(conversation.value?.messages || [])].reverse())
 
 function isOpen(message) {
   return message.role != 'tool' && message.content != ''
@@ -66,12 +91,21 @@ refresh()
     @cancel="close"
     @confirm="close"
   >
-    <div v-if="isAsyncing" class="loader">
+    <div v-if="!more && isAsyncing" class="loader">
       <LoaderSimple />
     </div>
     <div v-else>
+      <LpiButton
+        v-if="more"
+        secondary
+        class="small more-button"
+        :disabled="isAsyncing"
+        :btn-icon="isAsyncing ? 'LoaderSimple' : 'ChevronUp'"
+        :label="$t('chatbot.previous-messages')"
+        @click="getPreviousMessages"
+      />
       <details
-        v-for="message in conversation.messages"
+        v-for="message in displayableMessages"
         :key="message.id"
         class="message"
         :open="isOpen(message)"
@@ -147,5 +181,9 @@ summary {
 
 .message-content {
   margin-left: 1rem;
+}
+
+.more-button {
+  margin: 0 auto;
 }
 </style>

@@ -52,7 +52,7 @@ export default defineLazyEventHandler(() => {
         userId: user.id,
         agentId: agent.id,
       },
-      include: { messages: { orderBy: { position: 'asc' } } },
+      include: { messages: { orderBy: { position: 'desc' } } },
       orderBy: { lastActiveAt: 'desc' },
     })
 

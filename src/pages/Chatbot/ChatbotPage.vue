@@ -21,16 +21,32 @@ if (!useRuntimeConfig().public.appHasChatbotPromptDb) {
   usePage404()
 }
 
+function scrollToTop() {
+  const element = document.querySelector('[name=chat-conversation-top]')
+  element?.scrollIntoView({ behavior: 'smooth', block: 'end' })
+}
+
+function scrollToBottom() {
+  const element = document.querySelector('[name=chat-conversation-bottom]')
+  element?.scrollIntoView({ behavior: 'smooth', block: 'end' })
+}
+
 function toConversationEnd() {
   nextTick(() => {
-    const element = document.querySelector('.chat-conversation-bottom')
-    element?.scrollIntoView({ behavior: 'smooth', block: 'end' })
+    console.log('to end', renderTriggeredBy.value)
+    if (renderTriggeredBy.value == 'previous-messages') {
+      scrollToTop()
+    } else {
+      scrollToBottom()
+    }
   })
 }
 
 const login = () => {
   goToKeycloakLoginPage()
 }
+
+const renderTriggeredBy = ref('initial')
 
 const chatbotUi = useTemplateRef('chatbotUi')
 
@@ -43,15 +59,24 @@ const options = {
   server: false, // ⚠️ Crucial: Skips server execution
 }
 
+const more = ref(null)
+const LIMIT = 30
+
+const query = ref({
+  limit: LIMIT,
+  cursor: undefined,
+})
+
 const url = `/api/chatbot/${props.agentSlug}`
-const { data, error } = await useFetch(url, options)
+const { data, error } = await useFetch(url, { ...options, query: { limit: LIMIT } }) // query is used for conversation only and would retrigger the full chat relaod
 
 const agent = computed(() => data.value?.agent)
 const conversation = ref(null)
 const conversationId = ref(null)
 const tempKey = ref(Date.now())
-const chatbotUiKey = computed(() => conversationId.value || tempKey.value)
+
 function onConversationRestarted() {
+  renderTriggeredBy.value = 'restart'
   conversation.value = null
   conversationId.value = null
   tempKey.value = Date.now()
@@ -72,43 +97,70 @@ watch(
   () => {
     conversation.value = data.value?.lastConversation || null
     conversationId.value = data.value?.lastConversation?.id || null
+    more.value = data.value?.more || null
     allConversations.value = data.value?.allConversations || []
     nextTick(toConversationEnd)
   }
 )
 
-const isLoadingConversation = ref(false)
-watch(
-  () => conversationId.value,
-  async (neo, old) => {
-    // console.log('conversationId', neo, old)
-    if (neo !== old) {
-      if (neo) {
-        isLoadingConversation.value = true
-        try {
-          const url = `/api/chatbot/${props.agentSlug}/conversation/${neo}`
-          // TODO: error, status...
-          const { data } = await useFetch(url, options)
-          if (data.value?.conversation) {
-            conversation.value = data.value?.conversation
-          } else {
-            // TODO toaster
-            console.error('Conversation not found')
-            conversationId.value = old
-          }
-        } finally {
-          isLoadingConversation.value = false
-        }
-      } else {
-        console.log('resetting')
-        conversation.value = null
-        nextTick(toConversationEnd)
-      }
+function getPreviousMessages() {
+  if (more.value) {
+    renderTriggeredBy.value = 'previous-messages'
+    query.value.cursor = more.value
+  }
+}
+
+watch(conversationId, (neo, old) => {
+  if (neo != old) {
+    renderTriggeredBy.value = 'conversation-change'
+    more.value = null
+    query.value = {
+      limit: LIMIT,
+      cursor: undefined,
     }
   }
+})
+
+const { data: conversationData, status: conversationStatus } = await useFetch(
+  () =>
+    (props.agentSlug &&
+      conversationId.value &&
+      `/api/chatbot/${props.agentSlug}/conversation/${conversationId.value}`) ||
+    null,
+  { ...options, query }
 )
+
+const isLoadingConversation = computed(() => conversationStatus.value == 'pending')
+
+watch(conversationData, (cData) => {
+  console.log('cData', cData)
+  if (!cData) return
+  if (conversationId.value) {
+    if (cData?.conversation) {
+      if (more.value && conversation.value) {
+        renderTriggeredBy.value = 'previous-messages'
+        conversation.value.messages.push(...(cData.conversation.messages || []))
+      } else {
+        renderTriggeredBy.value = 'new-conversation'
+        conversation.value = cData.conversation
+      }
+      more.value = cData.more
+    } else {
+      // TODO toaster
+      console.error('Conversation not found')
+      conversationId.value = null
+      more.value = null
+    }
+  } else {
+    conversationId.value = null
+    more.value = null
+  }
+})
+
+const displayableMessages = computed(() => [...(conversation.value?.messages || [])].reverse())
+
 const history = computed(() => {
-  const h = conversation.value?.messages || []
+  const h = displayableMessages.value || []
   return h.map((message) => {
     console.log(message)
     return {
@@ -129,13 +181,6 @@ watch(
   { immediate: true }
 )
 
-watch(
-  () => [conversationId.value, isLoadingConversation.value],
-  (neo) => {
-    if (!neo[1]) nextTick(() => chatbotUi.value?.scrollToBottom())
-  }
-)
-
 const CHAT_ENDPOINT = computed(() => '/api/chatbot/chat?id=' + agent.value?.id)
 onBeforeUnmount(() => {
   chatbotUi.value?.resetChat()
@@ -146,6 +191,11 @@ watch(
   (error) => {
     console.log(error)
   }
+)
+
+const chatbotUiKey = computed(
+  () =>
+    (conversationId.value && `${conversationId.value}---${more.value || 'full'}`) || tempKey.value
 )
 
 // const loading = useLoadingFromStatus(status)
@@ -196,6 +246,12 @@ useLpiHead2({
       </div>
     </div>
     <div v-else-if="agent">
+      <div class="scrollers">
+        <ContextActionButton action-icon="ChevronUp" @click="scrollToTop" />
+
+        <ContextActionButton action-icon="ChevronDown" @click="scrollToBottom" />
+      </div>
+      <a name="chat-conversation-top"></a>
       <ClientOnly>
         <!--div v-if="conversation">
           <h4>{{ conversation.title }}</h4>
@@ -209,11 +265,24 @@ useLpiHead2({
           <LpiSelect v-model="conversationId" :options="allConversationOptions" />
         </div>
         <ChatbotOptions :has-user-context="hasUserContext" />
-        <div v-if="isLoadingConversation" id="show-list" class="conversation-is-loading">
+        <div
+          v-if="isLoadingConversation && renderTriggeredBy != 'previous-messages'"
+          id="show-list"
+          class="conversation-is-loading"
+        >
           <LoaderSimple />
         </div>
+        <LpiButton
+          v-if="more"
+          secondary
+          class="small more-button"
+          :disabled="isLoadingConversation"
+          :btn-icon="isLoadingConversation ? 'LoaderSimple' : 'ChevronUp'"
+          :label="$t('chatbot.previous-messages')"
+          @click="getPreviousMessages"
+        />
         <ChatbotUi
-          v-else
+          v-if="more || !isLoadingConversation"
           ref="chatbotUi"
           :key="chatbotUiKey"
           :endpoint="CHAT_ENDPOINT"
@@ -225,7 +294,7 @@ useLpiHead2({
           @on-component-render="toConversationEnd"
         />
       </ClientOnly>
-      <span class="chat-conversation-bottom"></span>
+      <a name="chat-conversation-bottom"></a>
     </div>
   </div>
 </template>
@@ -264,5 +333,19 @@ useLpiHead2({
   padding: 3rem 0;
   display: flex;
   justify-content: center;
+}
+
+.more-button {
+  margin: 0 auto;
+}
+
+.scrollers {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 0.6rem;
+  width: min-content;
+  position: fixed;
+  bottom: 3rem;
+  right: 1rem;
 }
 </style>
