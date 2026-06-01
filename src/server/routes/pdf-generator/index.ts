@@ -9,9 +9,4 @@ export default defineEventHandler(async (event) => {
   const gotenbergUrl = `${gotenbergServerUrl}/forms/chromium/convert/html`
   console.log('Proxying request to Gotenberg server at:', gotenbergUrl)
   return proxyRequest(event, gotenbergUrl)
-  try {
-  } catch (e) {
-    console.error('Error proxying request to Gotenberg server:', e)
-    return setResponseStatus(event, 502, 'Bad Gateway')
-  }
 })
