@@ -52,9 +52,8 @@
     <div class="form-section">
       <label>{{ $t('instructions.form.visibility.label') }}</label>
       <LpiCheckbox
-        :model-value="modelValue.visible_by_all"
+        v-model="modelValue.visible_by_all"
         :label="$t('instructions.form.visibility.notice')"
-        @update:is-public="updateForm({ visible_by_all: $event })"
       />
     </div>
 
