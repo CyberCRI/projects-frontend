@@ -68,6 +68,19 @@ export function isHtmlNotEmpty(html: string): boolean {
   return div.textContent.trim() !== ''
 }
 
+export function safeParseFloat(s: any, fallback: number = 0): number {
+  if (!s) return fallback
+  if (typeof s === 'number') return s
+  try {
+    const res = parseFloat('' + s)
+    if (isNaN(res)) throw 'Not a number'
+    return res
+  } catch (err) {
+    console.error(`parseFLoat error for ${s}`, err)
+    return fallback
+  }
+}
+
 export function safeParseInt(s: any, fallback: number = 0): number {
   if (!s) return fallback
   if (typeof s === 'number') return Math.floor(s)
