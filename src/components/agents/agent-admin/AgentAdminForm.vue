@@ -49,9 +49,10 @@ const defaultForm = (agent = null) => ({
       useLatestSkillVersion,
     })) ?? [],
   documents:
-    agent?.documents?.map(({ documentTitle, vectorStoreKey }) => ({
+    agent?.documents?.map(({ documentTitle, vectorStoreKey, isGlobal }) => ({
       documentTitle,
       vectorStoreKey,
+      isGlobal,
     })) ?? [],
   useLatestPromptVersion: agent?.useLatestPromptVersion ?? true,
   useProfileData: agent?.useProfileData ?? false,
@@ -177,7 +178,10 @@ watch(
         }
         if (props.agent?.documents) {
           const original = props.agent?.documents.find(
-            (d) => d.documentTitle == document.title && d.vectorStoreKey == document.vectorStoreKey
+            (d) =>
+              d.documentTitle == document.title &&
+              d.vectorStoreKey == document.vectorStoreKey &&
+              d.isGlobal == (document.org_code == '')
           )
           if (original) {
             opt = {
@@ -261,6 +265,7 @@ const submit = async () => {
     .map((o) => ({
       documentTitle: o.document.title,
       vectorStoreKey: o.document.vectorStoreKey,
+      isGlobal: o.document.org_code == '',
     }))
 
   try {
@@ -407,7 +412,13 @@ const submit = async () => {
       <div class="form-section agent-documents-section">
         <AgentDocumentPicker
           v-for="opt in documentOptions"
-          :key="opt.document.vectorStoreKey + '-' + opt.document.id"
+          :key="
+            opt.document.vectorStoreKey +
+            '-' +
+            opt.document.id +
+            '-' +
+            (opt.document.isGlobal ? 'global' : 'local')
+          "
           v-model="opt.model"
           :document="opt.document"
         />

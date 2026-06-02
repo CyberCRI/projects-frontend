@@ -20,13 +20,24 @@ const loggingMiddleware = createMiddleware({
   name: 'LoggingMiddleware',
   beforeModel: (state) => {
     traceLangchain(`About to call model with ${state.messages.length} messages`)
-    traceLangchain(safeStringify(state.messages))
+    traceLangchain(safeStringify(state.messages)?.slice(0, 25) + '(...)')
     return
   },
   afterModel: (state) => {
     const lastMessage = state.messages[state.messages.length - 1]
-    traceLangchain(`Model returned: ${lastMessage.content}`)
+    traceLangchain(`Model returned: ${lastMessage.content?.slice(0, 25)}` + '(...)')
     return
+  },
+  wrapToolCall: (request, handler) => {
+    traceLangchain(`Tool called: ${request?.toolCall?.name}`)
+    try {
+      const result = handler(request)
+      traceLangchain(`Tool completed successfully ${request?.toolCall?.name}`)
+      return result
+    } catch (e) {
+      traceLangchain(`Tool ${request?.toolCall?.name} failed :`, e)
+      throw e
+    }
   },
 })
 

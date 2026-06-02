@@ -12,111 +12,106 @@ datasource db {
   provider = "postgresql"
 }
 
-
 model Prompt {
-  id                Int @id @default(autoincrement())
-  title             String
-  orgCode           String
+  id      Int    @id @default(autoincrement())
+  title   String
+  orgCode String
 
-  promptContents    PromptContent[]
+  promptContents PromptContent[]
 
   @@unique([title, orgCode])
   @@index([title, orgCode])
 }
 
-
 model PromptContent {
-  version           Int
-  content           String
+  version Int
+  content String
 
-  promptId          Int
-  prompt            Prompt @relation(fields: [promptId], references: [id])
+  promptId Int
+  prompt   Prompt @relation(fields: [promptId], references: [id])
 
-  agents            Agent[]
+  agents Agent[]
 
   @@id([promptId, version])
   @@index([promptId, version])
 }
 
-
-
 model Skill {
-  id                Int @id @default(autoincrement())
-  title             String
-  description       String
-  orgCode           String
+  id          Int    @id @default(autoincrement())
+  title       String
+  description String
+  orgCode     String
 
-  skillContents    SkillContent[]
+  skillContents SkillContent[]
 
   @@unique([title, orgCode])
   @@index([title, orgCode])
 }
 
-
 model SkillContent {
-  version           Int
-  content           String
+  version Int
+  content String
 
-  skillId           Int
-  skill             Skill @relation(fields: [skillId], references: [id])
+  skillId Int
+  skill   Skill @relation(fields: [skillId], references: [id])
 
-  agents            AgentSkillContent[]
+  agents AgentSkillContent[]
 
   @@id([skillId, version])
   @@index([skillId, version])
 }
 
 enum TransportType {
-	sse
-	stdio
-	http
+  sse
+  stdio
+  http
 }
 
 model Mcp {
-  id                 Int @id @default(autoincrement())
-  orgCode            String
-  title              String
-  description        String
-  transport          TransportType
-  url                String
-  command            String
-  args               String
+  id          Int           @id @default(autoincrement())
+  orgCode     String
+  title       String
+  description String
+  transport   TransportType
+  url         String
+  command     String
+  args        String
 
-  agents              Agent[]
+  agents Agent[]
 
   @@unique([title, orgCode])
 }
 
 model Agent {
-  id                Int @id @default(autoincrement())
-  title             String
-  slug              String
-  description       String @default("")
-  orgCode           String
+  id          Int    @id @default(autoincrement())
+  title       String
+  slug        String
+  description String @default("")
+  orgCode     String
 
-  modelName         String @default("")
-  modelTemperature  String @default("0.7")
+  modelName        String @default("")
+  modelTemperature String @default("0.7")
 
-  startMessage      String @default("")
+  startMessage String @default("")
 
-  isEnabled         Boolean @default(false)
+  isEnabled Boolean @default(false)
 
-  promptId          Int
-  promptVersion     Int
-  promptContent     PromptContent @relation(fields: [promptId, promptVersion], references: [promptId, version])
+  promptId      Int
+  promptVersion Int
+  promptContent PromptContent @relation(fields: [promptId, promptVersion], references: [promptId, version])
 
-  useProjectsMcp    Boolean @default(false)
-  mcps              Mcp[]
+  useProjectsMcp Boolean @default(false)
+  mcps           Mcp[]
 
-  skillContents     AgentSkillContent[]
+  skillContents AgentSkillContent[]
 
-  documents         AgentDocument[]
+  documents AgentDocument[]
 
-  useProfileData    Boolean @default(false)
+  useProfileData Boolean @default(false)
 
   useLatestPromptVersion Boolean @default(true)
 
-  conversations     Conversation[]
+  conversations Conversation[]
 
   @@unique([title, orgCode])
   @@unique([slug, orgCode])
@@ -125,31 +120,28 @@ model Agent {
 }
 
 model AgentSkillContent {
-  skillId               Int
-  skillVersion          Int
-  agentId               Int
+  skillId      Int
+  skillVersion Int
+  agentId      Int
 
   useLatestSkillVersion Boolean @default(true)
 
-  skillContent          SkillContent @relation(fields: [skillId, skillVersion], references:[skillId, version])
-  agent                 Agent @relation(fields: [agentId], references:[id])
+  skillContent SkillContent @relation(fields: [skillId, skillVersion], references: [skillId, version])
+  agent        Agent        @relation(fields: [agentId], references: [id])
 
   @@id([skillId, skillVersion, agentId])
 }
 
-
-
 model AgentDocument {
-  vectorStoreKey        String
-  documentTitle         String
-  agentId               Int
+  vectorStoreKey String
+  documentTitle  String
+  agentId        Int
+  isGlobal       Boolean @default(false)
 
-  agent                 Agent @relation(fields: [agentId], references:[id])
+  agent Agent @relation(fields: [agentId], references: [id])
 
-  @@id([vectorStoreKey, documentTitle, agentId])
+  @@id([vectorStoreKey, documentTitle, agentId, isGlobal])
 }
-
-
 
 enum ConversationTitleSource {
   pending
@@ -159,26 +151,25 @@ enum ConversationTitleSource {
 }
 
 model Conversation {
-  id                  String  @id @default(uuid())
-  threadId            String  @unique
+  id       String @id @default(uuid())
+  threadId String @unique
 
-  organizationCode    String
-  userId              Int
+  organizationCode String
+  userId           Int
 
-  agentId             Int
-  agent               Agent @relation(fields: [agentId], references:[id])
+  agentId Int
+  agent   Agent @relation(fields: [agentId], references: [id])
 
-  startedAt           DateTime  @default(now())
-  lastActiveAt        DateTime @updatedAt
-  archivedAt          DateTime?
+  startedAt    DateTime  @default(now())
+  lastActiveAt DateTime  @updatedAt
+  archivedAt   DateTime?
 
-  title               String
-  titleSource         ConversationTitleSource @default(fallback)
+  title       String
+  titleSource ConversationTitleSource @default(fallback)
 
-  deletedAt           DateTime?
+  deletedAt DateTime?
 
-  messages            ConversationMessage[]
-
+  messages ConversationMessage[]
 
   @@index([organizationCode, userId])
   @@index([agentId, userId])
@@ -186,7 +177,6 @@ model Conversation {
   @@index([deletedAt])
   @@index([archivedAt])
 }
-
 
 enum ConversationMessageRole {
   user
@@ -196,17 +186,17 @@ enum ConversationMessageRole {
 }
 
 model ConversationMessage {
-  id                  String  @id @default(uuid())
+  id String @id @default(uuid())
 
-  conversationId      String
-  conversation        Conversation @relation(fields: [conversationId], references: [id])
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
 
-  role                ConversationMessageRole
-  content             String
-  toolCalls           Json?
-  toolCallId          String?
-  createdAt           DateTime  @default(now())
-  position            Int
+  role       ConversationMessageRole
+  content    String
+  toolCalls  Json?
+  toolCallId String?
+  createdAt  DateTime                @default(now())
+  position   Int
 
   @@index([conversationId])
 }
