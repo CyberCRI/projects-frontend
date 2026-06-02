@@ -324,13 +324,7 @@ watch(
 
 const imageResizer = useTemplateRef('imageResizer')
 const saveImageSizes = () => {
-  category.value.imageSizes = {
-    scaleX: imageResizer.value.scaleX,
-    scaleY: imageResizer.value.scaleY,
-    left: imageResizer.value.left,
-    top: imageResizer.value.top,
-    naturalRatio: imageResizer.value.naturalRatio,
-  }
+  category.value.imageSizes = imageResizer.value.imageSizes
   showImageResizer.value = false
 }
 const onReorder = (event) => {

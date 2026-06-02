@@ -1,5 +1,6 @@
 import { usePublicURL } from '~/composables/usePublic'
 
+import { getFileFromURL } from '~/api/utils.service'
 import { range } from 'es-toolkit'
 
 const urlPatatoid = (index: string | number) => {
@@ -55,16 +56,10 @@ const usePatatoids = (number: number = 7) => {
 const getPatatoidFile = async (index: string | number) => {
   const indexDefault = 1
 
-  const fetchFile = (patatoidIndex: string | number) => {
-    const url = usePatatoid(patatoidIndex)
-    const fileName = url.split('/').at(-1)
-    return useAPI<Blob>(url, { responseType: 'blob' }).then((blob) => new File([blob], fileName))
-  }
-
   return (
-    fetchFile(index)
+    getFileFromURL(usePatatoid(index))
       // if we can't get index patatoid, fetch default index
-      .catch(() => fetchFile(indexDefault))
+      .catch(() => getFileFromURL(usePatatoid(indexDefault)))
       // if error return empty file
       .catch(() => new File([], 'error.png'))
   )

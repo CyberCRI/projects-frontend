@@ -1,3 +1,115 @@
+<script setup lang="ts">
+import CroppedImage from '~/components/base/media/CroppedImage.vue'
+import ImageInput from '~/components/base/form/ImageInput.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+
+import { usePublicURL } from '~/composables/usePublic'
+
+import { fileToImageModel, type ImageSizes } from '~/functs/imageSizesUtils'
+import type { ImageModel, ImageVariations } from '~/models/image.model'
+import { getFileFromURL } from '~/api/utils.service'
+
+const { t } = useNuxtI18n()
+
+const props = withDefaults(
+  defineProps<{
+    imageSizes?: ImageSizes
+    picture?: File | ImageModel
+    defaultPicture: string | string[]
+    pictureAlt?: string
+    disabled?: boolean
+    roundPicture?: boolean
+    pictureRatio?: number
+
+    noResize?: boolean
+    maxSizeMb?: number
+    variation?: ImageVariations
+    dontResizeOnChange?: boolean
+  }>(),
+  {
+    imageSizes: null,
+    picture: null,
+    pictureAlt: null,
+    disabled: false,
+    roundPicture: false,
+    pictureRatio: 1,
+    noResize: false,
+    maxSizeMb: null,
+    variation: 'large',
+    dontResizeOnChange: false,
+  }
+)
+
+const emit = defineEmits<{
+  'update:imageSizes': [ImageSizes]
+  'update:picture': [File]
+}>()
+
+const { stateModals, openModals, closeModals } = useModals({ resizer: false })
+
+// add prefix on all urls
+const defaultPictureURL = computed(() => {
+  return (Array.isArray(props.defaultPicture) ? props.defaultPicture : [props.defaultPicture]).map(
+    (url) => usePublicURL(url)
+  )
+})
+
+const defaultPictureIndex = ref(0)
+
+const displayedImage = computed(() => {
+  let image: ImageModel
+  if (props.picture instanceof File) {
+    image = fileToImageModel(props.picture)
+  } else {
+    image = props.picture
+  }
+
+  if (props.imageSizes) {
+    return {
+      ...image,
+      ...props.imageSizes,
+    }
+  }
+  return image
+})
+
+const setImage = (image: File) => {
+  emit('update:picture', image)
+  // reinit image cropping data
+  // weird bug : cant emits several event in the same tick
+  nextTick(() => emit('update:imageSizes', null))
+}
+
+const onUploadImage = (image) => {
+  setImage(image)
+  if (!props.noResize && !props.dontResizeOnChange) {
+    openModals('resizer')
+  }
+}
+
+const imageResizerRef = useTemplateRef('imageResizer')
+const saveImageSizes = () => {
+  if (imageResizerRef.value) {
+    emit('update:imageSizes', imageResizerRef.value.imageSizes)
+  }
+  closeModals('resizer')
+}
+
+const nextDefaultPicture = async () => {
+  if (defaultPictureURL.value.length) {
+    defaultPictureIndex.value = (defaultPictureIndex.value + 1) % defaultPictureURL.value.length
+    setImage(await getFileFromURL(defaultPictureURL.value[defaultPictureIndex.value]))
+  }
+}
+
+// safe check image (if not set, set first default pictures)
+watchEffect(async () => {
+  if (!props.picture) {
+    setImage(await getFileFromURL(defaultPictureURL.value[0]))
+  }
+})
+</script>
+
 <template>
   <div
     class="img-inner"
@@ -7,19 +119,19 @@
     <div class="img-preview">
       <div class="preview-wrapper-outer" :class="{ active: !disabled }">
         <CroppedImage
-          :alt="pictureAlt"
+          :alt="pictureAlt || t('common.image')"
           :contain="true"
           :image-sizes="imageSizes"
-          :src="displayedImage"
+          :src="displayedImage?.variations?.[variation]"
           class="preview-wrapper-inner"
           :ratio="pictureRatio"
-          @click="imageOnClick"
+          @click="!disabled && openModals('resizer')"
         />
       </div>
     </div>
     <div class="img-actions">
       <LpiButton
-        v-if="defaultPictureFiles?.length > 1"
+        v-if="defaultPictureURL?.length > 1"
         v-disable-focus="disabled"
         :label="$t('project.random-image')"
         btn-icon="RotateRight"
@@ -33,7 +145,7 @@
         :unfocusable="disabled"
         :label="$t('common.modify')"
         :max-size-mb="maxSizeMb"
-        @upload-image="uploadImage"
+        @upload-image="onUploadImage"
       />
 
       <LpiButton
@@ -42,180 +154,32 @@
         :label="$t('project.form.resize-image')"
         btn-icon="CropFree"
         data-test="resize-image-button"
-        @click="openImageResizer"
+        @click="openModals('resizer')"
       />
     </div>
     <!-- image resizer -->
     <BaseDrawer
       :confirm-action-name="$t('common.confirm')"
-      :is-opened="showImageResizer"
+      :is-opened="stateModals.resizer"
       :title="$t('project.form.resize-image')"
       class="medium"
       data-test="image-resizer-drawer"
-      @close="showImageResizer = false"
+      @close="closeModals('resizer')"
       @confirm="saveImageSizes"
     >
       <LazyImageResizer
-        v-if="showImageResizer"
+        v-if="stateModals.resizer"
         ref="imageResizer"
-        :image="displayedImage"
+        :image="displayedImage.variations.large"
         :image-sizes="imageSizes"
         :round-shape="roundPicture"
         :ratio="pictureRatio"
-        @invalid-image-size="showImageResizer = false"
+        @invalid-image-size="closeModals('resizer')"
       />
     </BaseDrawer>
   </div>
 </template>
-<script>
-import CroppedImage from '~/components/base/media/CroppedImage.vue'
-import ImageInput from '~/components/base/form/ImageInput.vue'
-import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
-import { usePublicURL } from '~/composables/usePublic'
-
-import { LazyImageResizer } from '#components'
-
-export default {
-  name: 'ImageEditor',
-
-  components: { CroppedImage, LazyImageResizer, ImageInput, BaseDrawer },
-
-  props: {
-    imageSizes: {
-      type: [Object, null],
-      default: null,
-    },
-
-    picture: {
-      type: [Object, File],
-      default: null,
-    },
-    defaultPicture: {
-      type: [String, Array],
-      required: true,
-    },
-    pictureAlt: {
-      type: String,
-      required: false,
-      default: 'Image',
-    },
-    disabled: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    roundPicture: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-
-    pictureRatio: {
-      type: Number,
-      required: false,
-      default: 1,
-    },
-    noResize: {
-      type: Boolean,
-      default: false,
-    },
-    maxSizeMb: {
-      type: Number,
-      default: undefined,
-    },
-
-    dontResizeOnChange: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  emits: ['update:imageSizes', 'update:picture'],
-
-  data() {
-    return {
-      showImageResizer: false,
-      defaultPictureFiles: [],
-      defaultPictureIndex: 0,
-      displayableImage: '',
-      isOnClient: false,
-    }
-  },
-
-  computed: {
-    displayedImage() {
-      return this.picture instanceof File
-        ? this.displayableImage
-        : this.picture?.variations?.small || null
-    },
-  },
-
-  async mounted() {
-    const urlArray = (
-      Array.isArray(this.defaultPicture) ? this.defaultPicture : [this.defaultPicture]
-    ).map((url) => usePublicURL(url))
-
-    this.defaultPictureFiles = await Promise.all(urlArray.map(this.getFilesFromUrl))
-  },
-
-  methods: {
-    async getFilesFromUrl(url) {
-      const filename = url.split('/').pop() || 'default-image'
-      const result = await $fetch(url, { responseType: 'blob' }) // TODO nuxt check this
-      return new File([result], filename)
-    },
-
-    setImage(image) {
-      this.displayableImage = ''
-      const fileReader = new FileReader()
-      fileReader.readAsDataURL(image)
-      fileReader.onload = (fileReaderEvent) => {
-        this.displayableImage = fileReaderEvent.target.result
-      }
-
-      this.$emit('update:picture', image)
-      // reinit image cropping data
-      // weird bug : cant emits several event in the same tick
-      this.$nextTick(() => {
-        this.$emit('update:imageSizes', null)
-      })
-    },
-
-    uploadImage(image) {
-      this.setImage(image)
-      if (!this.noResize && !this.dontResizeOnChange) this.$nextTick(this.openImageResizer)
-    },
-
-    openImageResizer() {
-      this.showImageResizer = true
-    },
-
-    saveImageSizes() {
-      if (this.$refs.imageResizer) {
-        this.$emit('update:imageSizes', {
-          scaleX: this.$refs.imageResizer.scaleX,
-          scaleY: this.$refs.imageResizer.scaleY,
-          left: this.$refs.imageResizer.left,
-          top: this.$refs.imageResizer.top,
-          naturalRatio: this.$refs.imageResizer.naturalRatio,
-        })
-      }
-      this.showImageResizer = false
-    },
-
-    nextDefaultPicture() {
-      if (this.defaultPictureFiles.length) {
-        this.defaultPictureIndex = (this.defaultPictureIndex + 1) % this.defaultPictureFiles.length
-        this.setImage(this.defaultPictureFiles[this.defaultPictureIndex])
-      }
-    },
-    imageOnClick() {
-      if (!this.disabled) this.openImageResizer()
-    },
-  },
-}
-</script>
 <style lang="scss" scoped>
 .img-inner {
   width: 100%;
