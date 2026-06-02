@@ -14,10 +14,10 @@ const toaster = useToasterStore()
 const usersStore = useUsersStore()
 const { t } = useNuxtI18n()
 
-const showDocumentTitle = ref('')
+const documentToShow = ref(null)
 const addDocumentIsOpen = ref(false)
-const documentToDelete = ref('')
-const documentToEdit = ref('')
+const documentToDelete = ref(null)
+const documentToEdit = ref(null)
 
 const docList = ref(null)
 const refreshDocumentList = () => docList.value?.refresh()
@@ -31,7 +31,8 @@ const deleteDocument = async () => {
   if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
 
   const query = new URLSearchParams()
-  query.set('title', documentToDelete.value)
+  query.set('title', documentToDelete.value.title)
+  if (documentToDelete.value.org_code == '') query.set('is_global', 'yes')
 
   try {
     const response = await fetch(`/api/vector-store/delete?${query.toString()}`, {
@@ -41,7 +42,9 @@ const deleteDocument = async () => {
     if (response.ok) {
       await response.json()
       refreshDocumentList()
-      toaster.pushSuccess(t('vector-store.document-deleted', { title: documentToDelete.value }))
+      toaster.pushSuccess(
+        t('vector-store.document-deleted', { title: documentToDelete.value.title })
+      )
     } else {
       toaster.pushError(`${response.status} - ${response.statusText}`)
     }
@@ -49,7 +52,7 @@ const deleteDocument = async () => {
     console.log(e.toString())
     toaster.pushError(e.toString())
   } finally {
-    documentToDelete.value = ''
+    documentToDelete.value = null
     isAsyncing.value = false
   }
 }
@@ -65,16 +68,16 @@ const deleteDocument = async () => {
     </div>
     <VectorStoreDocumentList
       ref="docList"
-      @show-document="showDocumentTitle = $event"
+      @show-document="documentToShow = $event"
       @delete-document="documentToDelete = $event"
       @edit-document="documentToEdit = $event"
     />
 
     <VectorStoreDocumentShow
-      v-if="showDocumentTitle"
-      :document-title="showDocumentTitle"
-      @close="showDocumentTitle = ''"
-      @confirm="showDocumentTitle = ''"
+      v-if="documentToShow"
+      :document="documentToShow"
+      @close="documentToShow = null"
+      @confirm="documentToShow = null"
     />
     <VectorStoreIngestionForm
       :is-opened="addDocumentIsOpen"
@@ -83,18 +86,25 @@ const deleteDocument = async () => {
     />
     <VectorStoreIngestionForm
       :is-opened="!!documentToEdit"
-      :document-title="documentToEdit"
+      :document="documentToEdit"
       is-edit
-      @close="documentToEdit = ''"
-      @document-updated="documentToEdit = ''"
+      @close="documentToEdit = null"
+      @document-updated="documentToEdit = null"
     />
     <ConfirmModal
       v-if="documentToDelete"
       :asyncing="isAsyncing"
       :title="$t('vector-store.confirm-deletion')"
-      :content="$t('vector-store.confirm-deletion-of', { title: documentToDelete })"
+      :content="
+        $t('vector-store.confirm-deletion-of', {
+          title:
+            (documentToDelete.org_code == ''
+              ? `!!![${$t('vector-store.is-global-label').toUpperCase()}]!!!  `
+              : '') + documentToDelete.title,
+        })
+      "
       @confirm="deleteDocument"
-      @cancel="documentToDelete = ''"
+      @cancel="documentToDelete = null"
     />
   </div>
 </template>

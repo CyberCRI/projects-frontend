@@ -22,12 +22,23 @@ export default defineLazyEventHandler(() => {
 
     try {
       const sql = format(
+        //   `
+        // SELECT distinct(v.metadata->>'title') as title, count(*) as chunks
+        // FROM %I v
+        // WHERE (v.metadata->>'orgCode' = $1 OR v.metadata->>'orgCode' = '')
+        // GROUP BY v.metadata->>'title'
+        // `
         `
-      SELECT distinct(v.metadata->>'title') as title, count(*) as chunks
-      FROM %I v
-      WHERE v.metadata->>'orgCode' = $1
-      GROUP BY v.metadata->>'title'
-    `,
+        SELECT
+            v.metadata->>'title' AS title,
+            v.metadata->>'orgCode' AS org_code,
+            COUNT(*) AS chunks
+        FROM %I v
+        WHERE (v.metadata->>'orgCode' = $1 OR v.metadata->>'orgCode' = '')
+        GROUP BY
+            v.metadata->>'title',
+            v.metadata->>'orgCode';
+        `,
         vectorTableName
       )
       const result = await client.query(sql, [appApiOrgCode])

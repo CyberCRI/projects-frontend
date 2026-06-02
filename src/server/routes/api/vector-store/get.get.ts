@@ -8,6 +8,8 @@ export default defineLazyEventHandler(() => {
     const rawTitle = getQuery(event)?.title
     const title = typeof rawTitle === 'string' ? rawTitle.trim() : ''
 
+    const isGlobal = !!getQuery(event)?.is_global
+
     if (!title) {
       setResponseStatus(event, 400)
       return {
@@ -26,6 +28,8 @@ export default defineLazyEventHandler(() => {
       })
     }
 
+    const orgCodeOrGlobal = isGlobal ? '' : appApiOrgCode
+
     const client = await pool.connect()
 
     try {
@@ -39,7 +43,7 @@ export default defineLazyEventHandler(() => {
     `,
         vectorTableName
       )
-      const result = await client.query(sql, [appApiOrgCode, title])
+      const result = await client.query(sql, [orgCodeOrGlobal, title])
 
       const docs = result.rows
       return docs

@@ -3157,7 +3157,9 @@
     "title-field": "Pealkiri",
     "file-field": "Fail",
     "document-added": "Dokument lisatud.",
-    "document-updated": "Dokument uuendatud."
+    "document-updated": "Dokument uuendatud.",
+    "is-global-field": "Global document",
+    "is-global-label": "Global"
   },
   "announcements": {
     "empty": "Pole veel teadaannet."

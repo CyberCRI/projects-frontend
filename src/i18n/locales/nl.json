@@ -3157,7 +3157,9 @@
     "title-field": "Titel",
     "file-field": "Bestand",
     "document-added": "Document toegevoegd.",
-    "document-updated": "Document bijgewerkt."
+    "document-updated": "Document bijgewerkt.",
+    "is-global-field": "Global document",
+    "is-global-label": "Global"
   },
   "announcements": {
     "empty": "Nog geen aankondiging."

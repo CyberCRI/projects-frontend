@@ -3164,7 +3164,9 @@
     "title-field": "Title",
     "file-field": "File",
     "document-added": "Document added.",
-    "document-updated": "Document edited."
+    "document-updated": "Document edited.",
+    "is-global-field": "Global document",
+    "is-global-label": "Global"
   },
   "prompts": {
     "create-prompt": "Create prompt",
