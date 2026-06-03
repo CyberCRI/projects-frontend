@@ -4,7 +4,7 @@ import useUsersStore from '~/stores/useUsers'
 const usersStore = useUsersStore()
 
 const props = defineProps<{
-  documentTitle: string
+  document: { title: string; org_code: string }
 }>()
 const emit = defineEmits(['close'])
 
@@ -18,7 +18,9 @@ if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
 const close = () => emit('close')
 
 const query = new URLSearchParams()
-query.set('title', props.documentTitle)
+query.set('title', props.document.title)
+
+if (props.document.org_code == '') query.set('is_global', 'yes')
 
 const load = async () => {
   try {
@@ -51,7 +53,7 @@ load()
 </script>
 <template>
   <ConfirmModal
-    :title="documentTitle"
+    :title="document.title"
     :asyncing="isAsyncing"
     no-second-button
     :cancel-button-label="$t('common.close')"
@@ -61,17 +63,20 @@ load()
     <div v-if="isAsyncing" class="loader">
       <LoaderSimple />
     </div>
-    <ul v-else>
-      <div v-for="(chunk, i) in chunkList" :key="i" class="chunk">
-        <h4 class="chunk-header">
-          Chunk {{ i + 1 }}/{{ chunkList.length }} - Page {{ chunk.metadata.loc.pageNumber }}, Line
-          {{ chunk.metadata.loc.lines.from }}-{{ chunk.metadata.loc.lines.to }}
-        </h4>
-        <div>
-          {{ chunk.content }}
+    <template v-else>
+      <VectorStoreGlobalPill v-if="document?.org_code == ''" />
+      <ul>
+        <div v-for="(chunk, i) in chunkList" :key="i" class="chunk">
+          <h4 class="chunk-header">
+            Chunk {{ i + 1 }}/{{ chunkList.length }} - Page {{ chunk.metadata.loc.pageNumber }},
+            Line {{ chunk.metadata.loc.lines.from }}-{{ chunk.metadata.loc.lines.to }}
+          </h4>
+          <div>
+            {{ chunk.content }}
+          </div>
         </div>
-      </div>
-    </ul>
+      </ul>
+    </template>
   </ConfirmModal>
 </template>
 <style lang="scss" scoped>

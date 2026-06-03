@@ -5,6 +5,9 @@ const { fetchAll } = useVectorStore()
 const isAsyncing = ref(false)
 const documentList = ref([])
 
+const { isSuperAdmin } = usePermissions()
+const canEditDoc = (doc) => isSuperAdmin.value || doc.org_code !== ''
+
 const refresh = async () => {
   isAsyncing.value = true
   try {
@@ -36,6 +39,7 @@ refresh()
         <IconImage name="Article" />
       </div>
       <div class="title">
+        <VectorStoreGlobalPill v-if="document.org_code == ''" />
         {{ document.title }}
         <span class="chunk-count">({{ document.chunks }} {{ $t('vector-store.chunks') }})</span>
       </div>
@@ -44,19 +48,21 @@ refresh()
           action-icon="Eye"
           secondary
           no-border
-          @click.prevent="emit('show-document', document.title)"
+          @click.prevent="emit('show-document', document)"
         />
         <ContextActionButton
+          :disabled="!canEditDoc(document)"
           action-icon="Pen"
           secondary
           no-border
-          @click.prevent="emit('edit-document', document.title)"
+          @click.prevent="emit('edit-document', document)"
         />
         <ContextActionButton
+          :disabled="!canEditDoc(document)"
           action-icon="TrashCanOutline"
           secondary
           no-border
-          @click.prevent="emit('delete-document', document.title)"
+          @click.prevent="emit('delete-document', document)"
         />
       </div>
     </li>

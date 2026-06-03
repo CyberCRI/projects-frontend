@@ -105,11 +105,18 @@ export default async function checkAdminRights(event) {
   }
   const org = await getOrg(event)
   const orgId = org?.id
-  if (!isSuperAdmin(user) && !isAdmin(user, orgId)) {
+  const superAdmin = isSuperAdmin(user)
+  const admin = isAdmin(user, orgId)
+  if (!superAdmin && !admin) {
     throw createError({
       statusCode: 403,
       statusMessage: 'Forbidden',
       message: 'You do not have permission to access this resource.',
     })
+  }
+  return {
+    user,
+    admin,
+    superAdmin,
   }
 }

@@ -1,11 +1,11 @@
 import toolMonitoringMiddleware from '@/server/projects-agent/middlewares/tool-monitor'
-import getRetrieverTool from '@/server/projects-agent/tools/get-retriever-tool'
+import getRetrieverTool from '@/server/projects-agent/tools/get-retriever-tool-new'
 import traceLangchain from '@/server/projects-agent/tracers/trace-langchain'
 import loggingMiddleware from '@/server/projects-agent/middlewares/logging'
 import getMcpTools from '@/server/projects-agent/tools/get-mcp-tools'
 import getLlmModel from '@/server/projects-agent/model/get-llm-model'
 import getSkills from '@/server/projects-agent/tools/get-skills'
-import getVectorStore from '@/server/utils/vector-db.js'
+import getVectorStore from '@/server/utils/vector-db-new.js'
 import { SystemMessage } from '@langchain/core/messages'
 import { createAgent } from 'langchain'
 

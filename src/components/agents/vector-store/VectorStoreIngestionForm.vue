@@ -9,7 +9,7 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
-  documentTitle: { type: String, default: '' },
+  document: { type: [Object, null], default: null },
   isEdit: { type: Boolean, default: false },
 })
 const emit = defineEmits(['close', 'document-added', 'document-updated'])
@@ -19,6 +19,11 @@ const usersStore = useUsersStore()
 
 const file = ref(null)
 const title = ref('')
+const isGlobal = ref(false)
+
+const { isSuperAdmin } = usePermissions()
+
+const canEditGlobal = computed(() => isSuperAdmin.value && !props.isEdit)
 
 const titleExists = ref(false)
 
@@ -27,8 +32,9 @@ watch(
   (neo) => {
     if (neo) {
       file.value = null
-      title.value = props.isEdit ? props.documentTitle : ''
+      title.value = props.isEdit ? props.document.title : ''
       titleExists.value = false
+      isGlobal.value = props.isEdit ? props.document.org_code == '' : false
     }
   }
 )
@@ -54,6 +60,7 @@ const submit = async () => {
     try {
       const query = new URLSearchParams()
       query.set('title', title.value)
+      if (isGlobal.value) query.set('is_global', 'yes')
       const response = await fetch(`/api/vector-store/get?${query.toString()}`, {
         headers,
       })
@@ -82,6 +89,7 @@ const submit = async () => {
   const fd = new FormData()
   fd.append('title', title.value)
   fd.append('file', file.value, file.value.name)
+  fd.append('is_global', isGlobal.value ? 'yes' : '')
 
   try {
     const response = await fetch(`/api/vector-store/ingest`, {
@@ -117,6 +125,9 @@ const submit = async () => {
     @close="close"
     @confirm="submit"
   >
+    <div v-if="isEdit">
+      <VectorStoreGlobalPill v-if="isGlobal" />
+    </div>
     <div class="form-section">
       <TextInput
         v-model.trim="title"
@@ -125,6 +136,13 @@ const submit = async () => {
         @change="titleExists = false"
       />
       <p v-if="titleExists" class="error">{{ $t('vector-store.title-exists') }}</p>
+    </div>
+    <div class="form-section">
+      <LpiCheckbox
+        v-model="isGlobal"
+        :disabled="!canEditGlobal"
+        :label="$t('vector-store.is-global-field')"
+      />
     </div>
     <div class="form-section">
       <label>{{ $t('vector-store.file-field') }} (.pdf, .txt, .docx)</label>
@@ -143,5 +161,9 @@ const submit = async () => {
 <style lang="scss" scoped>
 .error {
   color: $salmon;
+}
+
+.form-section ~ .form-section {
+  margin-top: 1rem;
 }
 </style>

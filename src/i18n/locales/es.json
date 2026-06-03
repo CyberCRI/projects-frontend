@@ -3157,7 +3157,9 @@
     "title-field": "Título",
     "file-field": "Archivo",
     "document-added": "Documento agregado.",
-    "document-updated": "Documento actualizado."
+    "document-updated": "Documento actualizado.",
+    "is-global-field": "Global document",
+    "is-global-label": "Global"
   },
   "announcements": {
     "empty": "Aún no hay aviso."

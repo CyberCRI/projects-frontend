@@ -3157,7 +3157,9 @@
     "title-field": "Títol",
     "file-field": "Fitxer",
     "document-added": "Document afegit.",
-    "document-updated": "Document actualitzat."
+    "document-updated": "Document actualitzat.",
+    "is-global-field": "Global document",
+    "is-global-label": "Global"
   },
   "announcements": {
     "empty": "Encara no s'anuncia."
