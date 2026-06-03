@@ -1,5 +1,5 @@
 import type { ValidationRuleWithoutParams, ValidationRuleWithParams } from '@vuelidate/core'
-import { required } from '@vuelidate/validators'
+import { required, url } from '@vuelidate/validators'
 import { textIsEmpty } from '~/functs/string'
 
 /**
@@ -48,3 +48,26 @@ export const maxFileSize = (maxSize: number): ValidationRuleWithParams => ({
     maxSize,
   },
 })
+
+/**
+ * ignore url without http/https
+ *
+ * @constant
+ * @name urlCheck
+ * @kind variable
+ * @type {ValidationRuleWithoutParams<any>}
+ * @exports
+ */
+export const urlCheck: ValidationRuleWithoutParams = {
+  $validator: (value: string | null, siblingState, vm) => {
+    if (!value) {
+      return false
+    }
+    // if not starts without http, add it to validate with validator
+    if (!/^https?:\/\//i.test(value)) {
+      value = `http://${value}`
+    }
+    return url.$validator(value, siblingState, vm)
+  },
+  $message: url.$message,
+}

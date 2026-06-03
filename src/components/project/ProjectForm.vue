@@ -81,7 +81,7 @@ const { form, errors, isValid, cleanedData, reset } = useProjectForm({ lazy: tru
 watch(
   () => props.project,
   () => reset(defaultLocalForm()),
-  { immediate: true }
+  { immediate: true, deep: true }
 )
 const isFormEqual = useBlockNavigation(() => isEqual(form.value, defaultLocalForm()))
 

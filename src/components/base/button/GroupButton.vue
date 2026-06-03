@@ -1,3 +1,112 @@
+<script setup lang="ts">
+import IconImage from '~/components/base/media/IconImage.vue'
+import type { IconImageChoice } from '~/functs/IconImage'
+import { debounce } from 'es-toolkit'
+
+export type Options = {
+  iconName?: IconImageChoice
+  value: number | string | boolean
+  label: string
+}
+
+const props = withDefaults(
+  defineProps<{
+    options: Options[]
+    hasIcon?: boolean
+    size?: 'default' | 's-small' | 's-extra-small'
+    isDanger?: boolean
+    isVertical?: boolean
+    customColor?: string
+  }>(),
+  {
+    hasIcon: false,
+    size: 'default',
+    isDanger: false,
+    isVertical: false,
+    customColor: null,
+  }
+)
+const model = defineModel<string | boolean>({ default: '' })
+
+const uniqueId = useUniqueId()
+
+const sliderStyle = ref(null)
+const mountedIcons = ref([])
+
+const groupButtonStyle = computed(() => {
+  if (!props.customColor) return {}
+  return { 'border-color': props.customColor }
+})
+
+const selectButton = (selectedButton) => {
+  model.value = selectedButton.value
+  nextTick(setSliderStyle)
+}
+
+const onIconMounted = (icon) => {
+  mountedIcons.value.push(icon)
+  if (mountedIcons.value.length === props.options.filter((el) => el.iconName).length)
+    setSliderStyle()
+}
+
+const setSliderStyle = () => {
+  if (!props.options.some((button) => button.value === model.value)) return
+
+  const container = document.getElementById(`group-button-${uniqueId}`)
+  if (!container) return
+
+  const groupButton = container.getElementsByClassName('button-container')
+  let selectedReached = false
+  let firstButtonSelected = false
+
+  const selected = container.getElementsByClassName('selected')[0] as HTMLElement
+
+  if (!props.isVertical) {
+    // Calculate slider's left offset
+    let leftOffset = 0
+    Array.prototype.forEach.call(groupButton, (button, i) => {
+      if (button.className.split(' ').includes('selected')) {
+        selectedReached = true
+        if (i === 0) firstButtonSelected = true
+      }
+      if (!selectedReached) leftOffset += button.offsetWidth
+    })
+
+    // If not in vertical mode, set slider's width
+    const selectedWidth = selected.offsetWidth
+
+    sliderStyle.value = `left: ${
+      leftOffset + (firstButtonSelected ? 0 : 1)
+    }px; width: ${selectedWidth + (firstButtonSelected ? 1 : 0)}px; ${props.customColor}`
+  } else {
+    // Else set slider's height
+    // Calculate slider's left offset
+    let topOffset = 0
+    Array.prototype.forEach.call(groupButton, (button, i) => {
+      if (button.className.split(' ').includes('selected')) {
+        selectedReached = true
+        if (i === 0) firstButtonSelected = true
+      }
+      if (!selectedReached) topOffset += button.offsetHeight
+    })
+
+    const selectedHeight = selected.offsetHeight
+
+    sliderStyle.value = `top: ${topOffset + (firstButtonSelected ? 0 : 1)}px; height: ${
+      selectedHeight + (firstButtonSelected ? 1 : 0)
+    }px; ${props.customColor}`
+  }
+}
+
+onMounted(() => {
+  if (import.meta.env) {
+    setSliderStyle()
+  }
+})
+
+onResize(debounce(setSliderStyle, 300))
+</script>
+
 <template>
   <div
     :id="`group-button-${uniqueId}`"
@@ -22,7 +131,7 @@
     >
       <transition appear @after-enter="onIconMounted(button)" @after-leave="onIconMounted(button)">
         <IconImage
-          v-if="hasIcon && button.iconName && size === 'default'"
+          v-if="hasIcon && button.iconName"
           :id="button.iconName"
           class="icon"
           :name="button.iconName"
@@ -37,167 +146,6 @@
     <div class="slider" :style="sliderStyle" />
   </div>
 </template>
-
-<script>
-import IconImage from '~/components/base/media/IconImage.vue'
-
-import { debounce } from 'es-toolkit'
-
-export default {
-  name: 'GroupButton',
-
-  components: {
-    IconImage,
-  },
-
-  props: {
-    modelValue: {
-      type: [String, Boolean],
-      default: '',
-    },
-
-    options: {
-      type: Array,
-      required: true,
-    },
-
-    hasIcon: {
-      type: Boolean,
-      default: false,
-    },
-
-    size: {
-      type: String,
-      default: 'default',
-      validator(value) {
-        return ['default', 's-small', 's-extra-small'].includes(value)
-      },
-    },
-
-    isDanger: {
-      type: Boolean,
-      default: false,
-    },
-
-    isVertical: {
-      type: Boolean,
-      default: false,
-    },
-
-    customColor: {
-      type: String,
-      default: null,
-    },
-  },
-
-  emits: ['update:model-value'],
-  setup() {
-    const { locale } = useNuxtI18n()
-    return {
-      locale,
-    }
-  },
-  data() {
-    return {
-      sliderStyle: null,
-      uniqueId: (Math.random() + 1).toString(36).substring(7),
-      mountedIcons: [],
-      onResize: debounce(this.setSliderStyle, 300),
-    }
-  },
-
-  computed: {
-    groupButtonStyle() {
-      if (!this.customColor) return {}
-      return { 'border-color': this.customColor }
-    },
-    lang() {
-      return this.locale
-    },
-  },
-
-  watch: {
-    lang() {
-      this.$nextTick(this.setSliderStyle)
-    },
-  },
-
-  mounted() {
-    if (!import.meta.client) return
-    this.$nextTick(this.setSliderStyle)
-
-    window.addEventListener('resize', this.onResize)
-  },
-  unmounted() {
-    if (!import.meta.client) return
-    window.removeEventListener('resize', this.onResize)
-  },
-
-  methods: {
-    selectButton(selectedButton) {
-      this.$emit('update:model-value', selectedButton.value)
-      this.$nextTick(this.setSliderStyle)
-    },
-
-    onIconMounted(icon) {
-      this.mountedIcons.push(icon)
-      if (this.mountedIcons.length === this.options.filter((el) => el.iconName).length)
-        this.setSliderStyle()
-    },
-
-    setSliderStyle() {
-      if (!this.options.some((button) => button.value === this.modelValue)) return
-
-      const container = document.getElementById(`group-button-${this.uniqueId}`)
-      if (!container) return
-
-      const groupButton = container.getElementsByClassName('button-container')
-      let selectedReached = false
-      let firstButtonSelected = false
-
-      const selected = container.getElementsByClassName('selected')[0]
-
-      if (!this.isVertical) {
-        // Calculate slider's left offset
-        let leftOffset = 0
-        Array.prototype.forEach.call(groupButton, (button, i) => {
-          if (button.className.split(' ').includes('selected')) {
-            selectedReached = true
-            if (i === 0) firstButtonSelected = true
-          }
-          if (!selectedReached) leftOffset += button.offsetWidth
-        })
-
-        // If not in vertical mode, set slider's width
-        const selectedWidth = selected.offsetWidth
-
-        this.sliderStyle = `left: ${
-          leftOffset + (firstButtonSelected ? 0 : 1)
-        }px; width: ${selectedWidth + (firstButtonSelected ? 1 : 0)}px; ${
-          this.customColor ? `background-color: ${this.customColor}` : ''
-        }`
-      } else {
-        // Else set slider's height
-        // Calculate slider's left offset
-        let topOffset = 0
-        Array.prototype.forEach.call(groupButton, (button, i) => {
-          if (button.className.split(' ').includes('selected')) {
-            selectedReached = true
-            if (i === 0) firstButtonSelected = true
-          }
-          if (!selectedReached) topOffset += button.offsetHeight
-        })
-
-        const selectedHeight = selected.offsetHeight
-
-        this.sliderStyle = `top: ${topOffset + (firstButtonSelected ? 0 : 1)}px; height: ${
-          selectedHeight + (firstButtonSelected ? 1 : 0)
-        }px; ${this.customColor ? `background-color: ${this.customColor}` : ''}`
-      }
-    },
-  },
-}
-</script>
 
 <style lang="scss" scoped>
 /* This will be moved to the reset file */
@@ -218,10 +166,6 @@ export default {
 
 .label-selected {
   color: $white;
-
-  &.cancel {
-    color: $mid-gray;
-  }
 }
 
 .icon {

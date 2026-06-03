@@ -4,7 +4,7 @@
     <div v-if="!preview">
       <BaseModuleHeader
         :editable="editable"
-        :add-label="$t('sdg.add-short')"
+        :add-label="project.sdgs?.length ? $t('sdg.add-short') : $t('sdg.edit-short')"
         @add="openModals('editSdg')"
       />
       <SdgPreview :sdgs="project.sdgs" />

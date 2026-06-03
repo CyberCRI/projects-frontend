@@ -1,20 +1,18 @@
 <template>
-  <div class="announcement">
-    <div class="banner">
-      <div class="creation-date skeletons-text">
-        {{ createdDateLabel }}
+  <div
+    class="announcement"
+    :class="{
+      outdated,
+    }"
+  >
+    <h2 class="title skeletons-text">
+      <div class="banner">
+        <div v-if="announcement.type && announcement.type !== 'na'" class="type skeletons-text">
+          {{ $t(`recruit.${announcement.type}`) }}
+        </div>
       </div>
-      <div v-if="!!announcement.deadline" class="deadline skeletons-text">
-        {{ deadlineLabel }}
-      </div>
-      <div v-if="announcement.type && announcement.type !== 'na'" class="type skeletons-text">
-        {{ $t(`recruit.${announcement.type}`) }}
-      </div>
-    </div>
-
-    <div class="title skeletons-text">
       {{ announcement.$t.title }}
-    </div>
+    </h2>
 
     <TipTapOutput
       class="description tiptap-output skeletons-text"
@@ -30,8 +28,12 @@
       />
     </div>
 
-    <div v-if="showApplyAction && !outdated" class="actions">
+    <div class="actions">
+      <div class="announcement-date">
+        {{ dateLabel }}
+      </div>
       <LpiButton
+        v-if="showApplyAction && !outdated"
         btn-icon="EmailOutline"
         class="apply-btn"
         :secondary="true"
@@ -39,7 +41,6 @@
         @click="$emit('apply', announcement)"
       />
     </div>
-    <div v-if="outdated" class="gradient" />
   </div>
 </template>
 
@@ -49,7 +50,7 @@ import type { TranslatedAnnouncement } from '~/models/announcement.model'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 
 import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
-import { formatDate } from '~/functs/date'
+import { dateWithoutHours, formatDate, nowDate } from '~/functs/date'
 
 const props = withDefaults(
   defineProps<{
@@ -77,14 +78,19 @@ const canEditAndDelete = computed(() => {
   return canEditProject.value && props.editable
 })
 
-const createdDateLabel = computed(() => {
-  const date = formatDate(new Date(props.announcement.created_at), locale.value)
-  return `${t('common.added-on-the')} ${date}`
-})
+const dateLabel = computed(() => {
+  if (!props.announcement.deadline) {
+    return
+  }
 
-const deadlineLabel = computed(() => {
-  const date = formatDate(new Date(props.announcement.deadline), locale.value)
-  return `${t('recruit.valid-until-the')} ${date}`
+  const deadline = dateWithoutHours(props.announcement.deadline)
+  const now = nowDate()
+
+  if (deadline < now) {
+    return t('recruit.outdated')
+  }
+
+  return `${t('recruit.valid-until-the')} ${formatDate(deadline, locale.value)}`
 })
 
 const outdated = computed(() => {
@@ -104,7 +110,7 @@ const outdated = computed(() => {
   border-radius: $border-radius-m;
 
   .banner {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     color: $white;
     border-radius: $border-radius-s;
@@ -117,23 +123,18 @@ const outdated = computed(() => {
       padding: $space-2xs $space-xs;
     }
 
-    .creation-date {
-      background: $blue;
-    }
-
-    .deadline {
-      background: $primary;
-    }
+    font-weight: 500;
 
     .type {
-      background: $primary-dark;
+      background: var(--blue);
+      color: var(--black);
     }
   }
 
   .title {
-    margin: $space-xs 0 $space-s;
     color: $primary-dark;
     font-weight: 700;
+    font-size: 1.5rem;
     overflow-wrap: break-word;
   }
 
@@ -141,11 +142,16 @@ const outdated = computed(() => {
     font-size: $font-size-xs;
   }
 
+  .announcement-date {
+    font-style: italic;
+    color: var(--black);
+    opacity: 0.7;
+  }
+
   .action-buttons {
     position: absolute;
-    top: 0;
-    right: 20px;
-    transform: translateY(-50%);
+    top: 0.5rem;
+    right: 0.5rem;
     display: flex;
     align-items: center;
     z-index: 1;
@@ -155,19 +161,9 @@ const outdated = computed(() => {
     }
   }
 
-  .gradient {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: $border-radius-m;
-  }
-
   .actions {
-    padding-top: $space-m;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
   }
 }

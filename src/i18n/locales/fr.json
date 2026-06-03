@@ -1674,7 +1674,8 @@
       },
       "project-templates": "Nom du modèle",
       "purpose-placeholder": "Quel est le but de votre projet?",
-      "comment": "Le champ de commentaires est requis."
+      "comment": "Le champ de commentaires est requis.",
+      "select-template": "Sélectionner le modèle ..."
     },
     "image-header": "Image",
     "image-alert": {
@@ -1723,7 +1724,6 @@
     },
     "view": "Voir le projet",
     "visibility": "Visibilité du projet",
-    "actions": "Actions rapides",
     "copy": "(copie)",
     "nothing": "Il n'y a rien ici...",
     "tag-warning": "NB: Si un utilisateur change la langue de votre portail, les tags qui possèdent des traductions dans Wikipedia seront traduits. Les autres seront affichés en priorité en anglais et sinon dans la langue originale.",
@@ -1734,7 +1734,8 @@
       "label": "Dupliquer le projet"
     },
     "groups": "Groupe | Groupes",
-    "label": "projet | projets"
+    "label": "projet | projets",
+    "actions": "Action dangereuse"
   },
   "project_list": {
     "updated_at": "Dernier actif",
@@ -1767,7 +1768,8 @@
     "type": "Type d'annonce",
     "updated": "Modifié une annonce",
     "valid-until-the": "Valide jusqu'au",
-    "view": "Voir"
+    "view": "Voir",
+    "outdated": "L'offre n'est plus disponible."
   },
   "report": {
     "abuse": "Signaler un abus",
@@ -2029,7 +2031,8 @@
     "add-short": "Ajouter un odd",
     "sdg-fulltext": "objectifs de développement durable",
     "title": "ODD",
-    "empty": "Rien ici... Les contributeurs n'ont pas encore ajouté d'ODD."
+    "empty": "Rien ici... Les contributeurs n'ont pas encore ajouté d'ODD.",
+    "edit-short": "Modifier un ODD"
   },
   "stats": {
     "cumulated-projects": "Nouveaux projets cumulés",

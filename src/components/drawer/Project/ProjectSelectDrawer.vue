@@ -52,12 +52,16 @@ const {
 })
 
 // reset and refresh when opened
-watchEffect(() => {
-  if (props.isOpened) {
-    search.value = ''
-    refresh()
-  }
-})
+watch(
+  () => props.isOpened,
+  () => {
+    if (props.isOpened) {
+      search.value = ''
+      refresh()
+    }
+  },
+  { immediate: true }
+)
 
 const results = computed(() => searchProjects.value.map((searchObj) => searchObj.project))
 </script>

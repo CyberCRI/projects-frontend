@@ -1573,6 +1573,7 @@
     "followed": "Followed",
     "form": {
       "project-templates": "Template name",
+      "select-template": "Select template ...",
       "add-tags": "Add tags",
       "create-project": "Create project",
       "edit-project": "Edit project",
@@ -1646,7 +1647,7 @@
     },
     "view": "View project",
     "visibility": "Project's Visibility",
-    "actions": "Quick actions",
+    "actions": "Dangerous action",
     "copy": "(copy)",
     "nothing": "Nothing here...",
     "tag-warning": "NB: If a user switches languages in your portal, the tags with translations will we translated for them. Otherwise, the tags will be shown in English."
@@ -1662,6 +1663,7 @@
     "about-you": "Tell us about yourself and what motivates you",
     "add-announcement": "Add an announcement",
     "announcement": "Announcement",
+    "outdated": "The offer is no longer available.",
     "announcements": "No announcement | {count} announcement | {count} announcements",
     "apply": "Apply",
     "creation-date": "Created on",
@@ -2000,6 +2002,7 @@
       "title": "Partnerships for the Goals"
     },
     "add-short": "Add a SDG",
+    "edit-short": "Edit a SDG",
     "sdg-fulltext": "sustainable development goals",
     "title": "SDG",
     "empty": "Nothing here yet... Contributors did not added SDGs yet."

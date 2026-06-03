@@ -1,7 +1,7 @@
 import type { AttachmentForm } from '~/models/attachment.model'
-import { helpers, required, url } from '@vuelidate/validators'
+import { helpers, required } from '@vuelidate/validators'
+import { maxFileSize, urlCheck } from '~/form/base'
 import type { RefOrRaw } from '~/interfaces/utils'
-import { maxFileSize } from '~/form/base'
 
 export const defaultAttachmentForm = (): AttachmentForm => {
   return {
@@ -37,7 +37,7 @@ export const useAttachmentForm = (type: RefOrRaw<'file' | 'link'>, options = {})
       // @ts-expect-error not defined in rules
       rules.site_url = {
         required: helpers.withMessage(t('form.resources.link'), required),
-        url,
+        urlCheck,
       }
     }
     return rules

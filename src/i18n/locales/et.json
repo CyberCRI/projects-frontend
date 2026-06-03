@@ -1589,7 +1589,8 @@
       "project-templates": "Malli nimi",
       "completed-info-to-access-presentation": "Esitlusele pääsemiseks tuleb täita kogu lehel olev teave.",
       "purpose-placeholder": "Mis on teie projekti eesmärk?",
-      "comment": "Kommentaari väli on nõutav."
+      "comment": "Kommentaari väli on nõutav.",
+      "select-template": "Vali mall..."
     },
     "image-header": "Pilt",
     "image-alert": {
@@ -1638,7 +1639,6 @@
     },
     "view": "Vaata projekti",
     "visibility": "Projekti nähtavus",
-    "actions": "Kiire tegutsemine",
     "copy": "(koopia)",
     "nothing": "Siin pole midagi...",
     "tag-warning": "NB: Kui kasutaja vahetab teie portaalis keeli, tõlgime nende jaoks tõlkimisega sildid. Vastasel juhul näidatakse silte inglise keeles.",
@@ -1649,7 +1649,8 @@
       "label": "Projekti dubleerimine"
     },
     "groups": "Grupp | Grupid",
-    "label": "projekti | projekte"
+    "label": "projekti | projekte",
+    "actions": "Ohtlik tegevus"
   },
   "project_list": {
     "updated_at": "Viimane aktiivne",
@@ -1682,7 +1683,8 @@
     "type": "Teate liik",
     "updated": "Uuendatud",
     "valid-until-the": "Kehtiv kuni",
-    "view": "Vaade"
+    "view": "Vaade",
+    "outdated": "Pakkumine ei ole enam saadaval."
   },
   "report": {
     "abuse": "Kuritarvitamine",
@@ -1944,7 +1946,8 @@
     "add-short": "Lisa sdg",
     "sdg-fulltext": "säästva arengu eesmärgid",
     "title": "SDG",
-    "empty": "Siin pole veel midagi... Säästva arengu eesmärke panustajad veel ei lisanud."
+    "empty": "Siin pole veel midagi... Säästva arengu eesmärke panustajad veel ei lisanud.",
+    "edit-short": "SDG muutmine"
   },
   "stats": {
     "cumulated-projects": "Uued kumulatiivsed projektid",

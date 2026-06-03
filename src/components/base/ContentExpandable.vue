@@ -100,7 +100,7 @@ const label = computed(() => {
       left: 0;
       width: 100%;
       height: calc(v-bind('heightLimit') * 1px / 5);
-      background: white;
+      background: var(--white);
       background: linear-gradient(0deg, rgb(255 255 255 / 100%) 5%, rgb(255 255 255 / 0%) 100%);
     }
   }
@@ -108,7 +108,7 @@ const label = computed(() => {
 
 .outer {
   .toggle {
-    color: $primary-dark;
+    color: var(--primary-dark);
     font-size: $font-size-m;
     cursor: pointer;
     font-weight: 400;

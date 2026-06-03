@@ -27,7 +27,8 @@
 
 <script setup lang="ts">
 import ProjectListSkeleton from '~/components/project/ProjectListSkeleton.vue'
-import DynamicGrid from '~/components/base/DynamicGrid.vue'
+import type { Options } from '~/components/base/button/GroupButton.vue'
+import type DynamicGrid from '~/components/base/DynamicGrid.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -54,15 +55,15 @@ const displayMode = computed(() => {
   return [
     {
       label: t('card-list.grid'),
-      iconName: 'Card',
+      iconName: 'DotsGrid',
       value: 'card',
     },
     {
       label: t('card-list.list'),
-      iconName: 'List',
+      iconName: 'ListCheck',
       value: 'list',
     },
-  ]
+  ] satisfies Options[]
 })
 
 watch(mode, (newMODE, oldMODE) => {

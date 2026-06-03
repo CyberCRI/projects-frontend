@@ -2,6 +2,7 @@
 import ProjectTemplateForm from '~/components/project/ProjectTemplateForm.vue'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import { deleteProjectMembersSelf } from '~/api/project-members.service'
+import type { Options } from '~/components/base/button/GroupButton.vue'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
 import { deleteProject, patchProject } from '~/api/projects.service'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
@@ -73,7 +74,8 @@ const updateFormTemplates = (templateForm) => {
 }
 watch(
   () => props.project,
-  () => reset(defaultLocalForm())
+  () => reset(defaultLocalForm()),
+  { immediate: true, deep: true }
 )
 const isFormEqual = useBlockNavigation(() => {
   const compareForm = form.value
@@ -103,65 +105,75 @@ const updateOrganisation = (orgCode: string, state: boolean) => {
 
 const asyncing = ref(false)
 
-const visibilityOptions = computed(() =>
-  [
-    {
-      value: 'public',
-      label: t('status.public'),
-      iconName: 'Eye',
-      condition: true,
-    },
-    {
-      value: 'org',
-      label: t('common.org'),
-      iconName: 'PeopleGroup',
-      condition: !projectOrganizationCodes.value.includes(DEFAULT_ORGANIZATION_CODE),
-    },
-    {
-      value: 'private',
-      label: t('status.private'),
-      iconName: 'EyeSlash',
-      condition: true,
-    },
-  ].filter((status) => status.condition)
+const visibilityOptions = computed(
+  () =>
+    [
+      {
+        value: 'public',
+        label: t('status.public'),
+        iconName: 'Eye',
+        condition: true,
+      },
+      {
+        value: 'org',
+        label: t('common.org'),
+        iconName: 'PeopleGroup',
+        condition: !projectOrganizationCodes.value.includes(DEFAULT_ORGANIZATION_CODE),
+      },
+      {
+        value: 'private',
+        label: t('status.private'),
+        iconName: 'EyeSlash',
+        condition: true,
+      },
+    ].filter((status) => status.condition) as Options[]
 )
 
-const lifeStatusOptions = computed(() =>
-  [
-    {
-      value: 'running',
-      label: t('status.ongoing'),
-      iconName: 'Spinner',
-      condition: true,
-    },
-    {
-      value: 'toreview',
-      label: t('project.reviewable'),
-      iconName: 'ListCheck',
-      condition:
-        props.project.modules.members > 0 &&
-        (isOwner.value || isOrgAdmin.value || isAdmin.value || canAddReview.value),
-    },
-    {
-      value: 'completed',
-      label: t('status.completed'),
-      iconName: 'Check',
-      condition: true,
-    },
-  ].filter((status) => status.condition)
+const lifeStatusOptions = computed(
+  () =>
+    [
+      {
+        value: 'running',
+        label: t('status.ongoing'),
+        iconName: 'Spinner',
+        condition: true,
+      },
+      {
+        value: 'toreview',
+        label: t('project.reviewable'),
+        iconName: 'ListCheck',
+        condition:
+          props.project.modules.members > 0 &&
+          (isOwner.value || isOrgAdmin.value || isAdmin.value || canAddReview.value),
+      },
+      {
+        value: 'completed',
+        label: t('status.completed'),
+        iconName: 'Check',
+        condition: true,
+      },
+    ].filter((status) => status.condition) as Options[]
 )
 
-const optionsPublications = computed(() => [
-  { label: t('visibility.private-title'), description: t('visibility.private') },
-  { label: t('visibility.public-title'), description: t('visibility.public') },
-  { label: t('visibility.community-title'), description: t('visibility.community') },
-])
+const selectedPublicationDescription = computed(() => {
+  switch (form.value.publication_status) {
+    case 'private':
+      return t('visibility.private')
+    case 'org':
+      return t('visibility.community')
+    case 'public':
+      return t('visibility.public')
+    default:
+      return ''
+  }
+})
 
 // TODO change limit to get only organizations ?
 const { data: organizations } = getOrganizations({
   paginationConfig: { limit: 999 },
   default: () => factoryPagination(() => []),
 })
+
 const disableLastOrg = (org) =>
   projectOrganizationCodes.value.length === 1 && projectOrganizationCodes.value[0] === org.code
 
@@ -246,26 +258,6 @@ const onQuitProject = () => {
       @close="redirect"
     >
       <div class="list-container">
-        <Section class="section-green skeletons-background" :title="$t('project.actions')">
-          <div class="list-container">
-            <LpiButton
-              v-if="canDestroyProject"
-              :label="$t('project.destroy')"
-              class="button"
-              btn-icon="TrashCanOutline"
-              data-test="destroy-project"
-              @click="openModals('delete')"
-            />
-            <LpiButton
-              v-if="isMember"
-              :label="$t('project.quit')"
-              class="button"
-              btn-icon="Logout"
-              @click="openModals('memberQuit')"
-            />
-          </div>
-        </Section>
-
         <template v-if="canEditProject">
           <Section class="skeletons-background" :title="$t('project.visibility')">
             <GroupButton
@@ -275,7 +267,10 @@ const onQuitProject = () => {
               :options="visibilityOptions"
               class="setting"
             />
-            <TableInfo class="publications-opacity" :options="optionsPublications" />
+            <p class="publication-visibility">
+              <IconImage name="HelpCircle" class="icon" />
+              {{ selectedPublicationDescription }}
+            </p>
           </Section>
           <Section class="skeletons-background" :title="$t('project.life-status')">
             <GroupButton
@@ -338,6 +333,35 @@ const onQuitProject = () => {
             />
           </Section>
         </template>
+
+        <Section class="section-red skeletons-background" title="">
+          <template #label>
+            <span class="actions-title">
+              {{ $t('project.actions') }}
+            </span>
+          </template>
+          <div class="list-container">
+            <LpiButton
+              v-if="canDestroyProject"
+              :label="$t('project.destroy')"
+              class="button"
+              color="red"
+              text-color="white"
+              btn-icon="TrashCanOutline"
+              data-test="destroy-project"
+              @click="openModals('delete')"
+            />
+            <LpiButton
+              v-if="isMember"
+              :label="$t('project.quit')"
+              class="button"
+              btn-icon="Logout"
+              color="red"
+              text-color="white"
+              @click="openModals('memberQuit')"
+            />
+          </div>
+        </Section>
       </div>
     </FormPanel>
   </BaseModuleTab>
@@ -370,8 +394,13 @@ const onQuitProject = () => {
 </template>
 
 <style lang="scss" scoped>
-.section-green {
-  background-color: var(--primary-lighter);
+.section-red {
+  background-color: var(--gray);
+  border: none;
+}
+
+.actions-title {
+  color: var(--white);
 }
 
 .organization-ctn {
@@ -396,7 +425,8 @@ const onQuitProject = () => {
   display: flex;
 }
 
-.publications-opacity {
+.publication-visibility {
   opacity: 0.7;
+  padding: 1rem 0;
 }
 </style>

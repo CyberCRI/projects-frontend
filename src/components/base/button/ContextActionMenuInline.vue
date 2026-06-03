@@ -1,5 +1,6 @@
 <template>
   <div class="context-action-menu-inline">
+    <slot />
     <LpiButton
       v-if="canEdit"
       btn-icon="Pen"

@@ -61,19 +61,21 @@ const { stateModals, closeModals, openModals } = useModals({ saveChange: false }
 
 const { form, isValid, errors, cleanedData, reset } = useGoalForm({ lazy: true })
 watch(
-  () => [props.isOpened, props.goal],
+  () => [props.goal, props.isOpened, props.project],
   () => reset(defaultLocalForm()),
-  { immediate: true }
+  { immediate: true, deep: true }
 )
+
 const isFormEqual = useBlockNavigation(() => isEqual(form.value, defaultLocalForm()))
 
 const asyncing = ref(false)
 
+// TODO changes this shit (whit do this ???)
 const statusColor = computed(() => {
-  if (form.value.status === 'ongoing') return '#99FFE7'
-  else if (form.value.status === 'complete') return '#00DBA7'
-  else if (form.value.status === 'cancel') return '#D4D4D4'
-  return '#F0FFFB' /* for "na" */
+  return `;
+  background-color: var(--goal-${form.value.status}-background);
+  color: var(--goal-${form.value.status}-text);
+  `
 })
 
 const statusOptions = computed(() => [
@@ -81,21 +83,25 @@ const statusOptions = computed(() => [
     value: 'na',
     label: t('status.na'),
     selected: form.value.status === 'na',
+    classSelected: 'goal-na',
   },
   {
     value: 'ongoing',
     label: t('status.ongoing'),
     selected: form.value.status === 'ongoing',
+    classSelected: 'goal-ongoing',
   },
   {
     value: 'complete',
     label: t('status.completed'),
     selected: form.value.status === 'complete',
+    classSelected: 'goal-complete',
   },
   {
     value: 'cancel',
     label: t('status.canceled'),
     selected: form.value.status === 'cancel',
+    classSelected: 'goal-cancel',
   },
 ])
 

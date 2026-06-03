@@ -1589,7 +1589,8 @@
       },
       "project-templates": "Nombre de plantilla",
       "completed-info-to-access-presentation": "Toda la información de la página debe completarse para acceder a la presentación.",
-      "comment": "El campo de comentarios es necesario."
+      "comment": "El campo de comentarios es necesario.",
+      "select-template": "Seleccione la plantilla ..."
     },
     "image-header": "Imagen",
     "image-alert": {
@@ -1638,7 +1639,6 @@
     },
     "view": "Ver proyecto",
     "visibility": "Visibilidad del proyecto",
-    "actions": "Medidas rápidas",
     "copy": "(copia)",
     "nothing": "Nada aquí...",
     "tag-warning": "NB: Si un usuario cambia idiomas en su portal, las etiquetas con traducciones se traducirán para ellos. De lo contrario, las etiquetas se mostrarán en inglés.",
@@ -1649,7 +1649,8 @@
       "label": "Duplicar el proyecto"
     },
     "groups": "Grupo | Grupos",
-    "label": "proyecto | proyectos"
+    "label": "proyecto | proyectos",
+    "actions": "Acción peligrosa"
   },
   "project_list": {
     "updated_at": "Último activo",
@@ -1682,7 +1683,8 @@
     "type": "Tipo de anuncio",
     "updated": "actualizada",
     "valid-until-the": "válido hasta",
-    "view": "vista"
+    "view": "vista",
+    "outdated": "La oferta ya no está disponible."
   },
   "report": {
     "abuse": "Uso indebido de informes",
@@ -1944,7 +1946,8 @@
     "add-short": "añadir un ODS",
     "sdg-fulltext": "Objetivos de desarrollo sostenible",
     "title": "ODS",
-    "empty": "Nada aquí todavía... Los colaboradores aún no han añadido ODS."
+    "empty": "Nada aquí todavía... Los colaboradores aún no han añadido ODS.",
+    "edit-short": "Editar un ODS"
   },
   "stats": {
     "cumulated-projects": "Proyectos nuevos acumulativos",

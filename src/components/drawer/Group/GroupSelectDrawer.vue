@@ -53,13 +53,16 @@ const {
 })
 
 // reset and refresh when opened
-watchEffect(() => {
-  if (props.isOpened) {
-    search.value = ''
-    refresh()
-  }
-})
-
+watch(
+  () => props.isOpened,
+  () => {
+    if (props.isOpened) {
+      search.value = ''
+      refresh()
+    }
+  },
+  { immediate: true }
+)
 const results = computed(() => searchGroups.value.map((searchObj) => searchObj.people_group))
 </script>
 

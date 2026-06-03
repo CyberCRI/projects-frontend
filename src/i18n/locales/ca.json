@@ -1589,7 +1589,8 @@
       "project-templates": "Nom de la plantilla",
       "completed-info-to-access-presentation": "S' ha de completar tota la informació de la pàgina per accedir a la presentació.",
       "purpose-placeholder": "Quin és el propòsit del teu projecte?",
-      "comment": "Es requereix el camp de comentari."
+      "comment": "Es requereix el camp de comentari.",
+      "select-template": "Seleccioneu una plantilla..."
     },
     "image-header": "Imatge",
     "image-alert": {
@@ -1638,7 +1639,6 @@
     },
     "view": "Visualitza el projecte",
     "visibility": "Visibilitat del projecte",
-    "actions": "Accions ràpides",
     "copy": "(copia)",
     "nothing": "No hi ha res aquí...",
     "tag-warning": "NB: Si un usuari desactiva les llengües al portal, les etiquetes amb traduccions es traduiran per ells. Altrament, les etiquetes es mostraran en anglès.",
@@ -1649,7 +1649,8 @@
       "label": "Duplica el projecte"
     },
     "groups": "Grup | Grups",
-    "label": "projecte | projectes"
+    "label": "projecte | projectes",
+    "actions": "Acció perillosa"
   },
   "project_list": {
     "updated_at": "L' últim actiu",
@@ -1682,7 +1683,8 @@
     "type": "Tipus de Anunci",
     "updated": "Actualitzat",
     "valid-until-the": "Vàlid fins",
-    "view": "Visualitza"
+    "view": "Visualitza",
+    "outdated": "L'oferta ja no està disponible."
   },
   "report": {
     "abuse": "abusos d' informe",
@@ -1944,7 +1946,8 @@
     "add-short": "Afegeix un sdg",
     "sdg-fulltext": "objectiu sostenible del desenvolupament",
     "title": "SDG",
-    "empty": "No hi ha res aquí encara... Els col·laboradors encara no han afegit SDGs."
+    "empty": "No hi ha res aquí encara... Els col·laboradors encara no han afegit SDGs.",
+    "edit-short": "Edita un SDG"
   },
   "stats": {
     "cumulated-projects": "Projectes curatius",

@@ -5,24 +5,15 @@
       <h4>{{ title }}</h4>
       <p>{{ description }}</p>
     </div>
-    <div class="location-actions">
-      <ToolTip v-if="focus" hover :content="$t('location.focus-on-map')" placement="top">
-        <ContextActionButton
-          secondary
-          no-border
-          action-icon="MapMarker"
-          @click="$emit('focus', location)"
-        />
-      </ToolTip>
-    </div>
     <ContextActionMenuInline
-      v-if="editable"
       class="location-actions"
-      can-edit
-      can-delete
+      :can-edit="editable"
+      :can-delete="editable"
       @edit="$emit('edit', location)"
       @delete="$emit('delete', location)"
-    />
+    >
+      <LpiButton v-if="focus" btn-icon="MapMarker" @click.prevent="$emit('focus', location)" />
+    </ContextActionMenuInline>
   </div>
 </template>
 

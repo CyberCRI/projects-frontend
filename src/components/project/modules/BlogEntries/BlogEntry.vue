@@ -26,6 +26,7 @@
       class="skeletons-text"
       :height-limit="stateModal ? 100000000 : 0"
       hide-see-more
+      :opened="stateModal"
     >
       <div class="entry-body">
         <TipTapOutput

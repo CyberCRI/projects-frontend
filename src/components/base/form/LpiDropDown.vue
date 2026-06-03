@@ -1,7 +1,14 @@
 <template>
   <div v-click-outside="close" class="lpi-dropdown" :class="{ 'is-open': open }">
     <button type="button" class="dropdown toggle-btn" @click.prevent="toggle">
-      <span class="dropdown-btn">{{ showLabel }}</span>
+      <span
+        class="dropdown-btn"
+        :class="{
+          empty: !showLabel,
+        }"
+      >
+        {{ showLabel || defaultLabel }}
+      </span>
       <IconImage class="caret" :name="open ? 'ChevronUp' : 'ChevronDown'" />
     </button>
     <transition name="slide">
@@ -33,8 +40,6 @@
 <script setup lang="ts">
 import LpiDropDownElement from '~/components/base/form/LpiDropDownElement.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
-
-import { capitalize } from '~/functs/string'
 
 defineEmits(['close'])
 
@@ -72,12 +77,7 @@ const selectedOption = computed(() => {
 })
 
 const showLabel = computed(() => {
-  const vl =
-    selectedOption.value?.label ??
-    selectedOption.value?.name ??
-    selectedOption.value?.value ??
-    props.defaultLabel
-  return capitalize(vl.toString())
+  return selectedOption.value?.label ?? selectedOption.value?.name ?? selectedOption.value?.value
 })
 </script>
 
@@ -106,6 +106,13 @@ const showLabel = computed(() => {
     color: $primary-dark;
     font-size: $font-size-m;
     font-weight: 700;
+
+    &.empty {
+      opacity: 0.7;
+      font-style: italic;
+      color: var(--mid-gray);
+      font-weight: 500;
+    }
   }
 
   .caret {

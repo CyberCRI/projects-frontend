@@ -44,6 +44,7 @@ const defaultLocalForm = () => {
   const newForm = { ...defaultAnnouncementForm() }
 
   if (props.announcement) {
+    newForm.id = props.announcement.id
     newForm.title =
       getFirstTextNotEmpty([props.announcement?.$t.title, props.announcement?.title]) ||
       newForm.title
@@ -93,9 +94,9 @@ const typeOptions = computed<
 const isFormEqual = computed(() => isEqual(form.value, defaultLocalForm()))
 
 watch(
-  () => props.isOpened,
+  () => [props.announcement, props.isOpened, props.project],
   () => reset(defaultLocalForm()),
-  { immediate: true }
+  { immediate: true, deep: true }
 )
 
 const close = () => {

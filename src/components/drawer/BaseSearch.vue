@@ -41,7 +41,7 @@ const onDelete = () => (search.value = '')
       <SearchInput
         ref="search-input-ctn"
         v-model="search"
-        :placeholder="$t('search.search')"
+        :placeholder="$t('search.search-title')"
         full
         :debounce="500"
         @enter="onEnter"

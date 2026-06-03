@@ -69,13 +69,17 @@ const onChangeCategories = async (categorie: TranslatedProjectCategory) => {
     </ProjectCategoriesDropdown>
   </Field>
 
-  <Field v-if="haveMultipleTemplates" :label="$t('project.form.project-templates')">
+  <Field
+    v-if="haveMultipleTemplates"
+    class="template-field"
+    :label="$t('project.form.project-templates')"
+  >
     <LpiDropDown
       v-model="form.template"
       class="w-full"
       :options="form.categorie.templates"
       data-test="select-project-template"
-      :default-label="$t('project.form.project-templates')"
+      :default-label="$t('project.form.select-template')"
     >
       <template #default="{ option, selected }">
         <LpiDropDownElementButton
@@ -87,3 +91,9 @@ const onChangeCategories = async (categorie: TranslatedProjectCategory) => {
     </LpiDropDown>
   </Field>
 </template>
+
+<style lang="scss" scoped>
+.template-field {
+  margin-top: 1rem;
+}
+</style>

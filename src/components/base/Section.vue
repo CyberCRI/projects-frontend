@@ -5,7 +5,9 @@ defineProps<{ title: string }>()
 <template>
   <div class="section">
     <h3 class="label">
-      {{ title }}
+      <slot name="label">
+        {{ title }}
+      </slot>
     </h3>
     <slot />
   </div>

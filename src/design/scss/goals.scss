@@ -1,0 +1,33 @@
+/// export type StatusType='na' | 'ongoing' | 'complete' | 'cancel'
+///
+
+:root {
+  --goal-na-background: var(--gray);
+  --goal-na-text: var(--white);
+  --goal-ongoing-background: var(--blue);
+  --goal-ongoing-text: var(--black);
+  --goal-complete-background: var(--primary);
+  --goal-complete-text: var(--white);
+  --goal-cancel-background: var(--red);
+  --goal-cancel-text: var(--white);
+}
+
+.goal-na {
+  // background-color: var(--goal-na-background);
+  // color: var(--goal-na-text)
+}
+
+.goal-ongoing {
+  background-color: var(--goal-ongoing-background);
+  color: var(--goal-ongoing-text);
+}
+
+.goal-complete {
+  background-color: var(--goal-complete-background);
+  color: var(--goal-complete-text);
+}
+
+.goal-cancel {
+  background-color: var(--goal-cancel-background);
+  color: var(--goal-cancel-text);
+}

@@ -1589,7 +1589,8 @@
       "project-templates": "Sjabloonnaam",
       "completed-info-to-access-presentation": "Alle informatie op de pagina moet worden ingevuld om toegang te krijgen tot de presentatie.",
       "purpose-placeholder": "Wat is het doel van uw project?",
-      "comment": "Het commentaarveld is vereist."
+      "comment": "Het commentaarveld is vereist.",
+      "select-template": "Selecteer sjabloon ..."
     },
     "image-header": "Afbeelding",
     "image-alert": {
@@ -1638,7 +1639,6 @@
     },
     "view": "Project bekijken",
     "visibility": "Zichtbaarheid van het project",
-    "actions": "Snelle acties",
     "copy": "(kopie)",
     "nothing": "Niets hier...",
     "tag-warning": "NB: Als een gebruiker van taal wisselt in uw portal, zullen de tags met vertalingen voor hen vertaald worden. Anders worden de tags in het Engels weergegeven.",
@@ -1649,7 +1649,8 @@
       "label": "Het project dupliceren"
     },
     "groups": "Groep | Groepen",
-    "label": "project | projecten"
+    "label": "project | projecten",
+    "actions": "Gevaarlijke maatregelen"
   },
   "project_list": {
     "updated_at": "Laatste activiteit",
@@ -1682,7 +1683,8 @@
     "type": "Type aankondiging",
     "updated": "Bijgewerkt",
     "valid-until-the": "Geldig tot",
-    "view": "Beeld"
+    "view": "Beeld",
+    "outdated": "Het aanbod is niet meer beschikbaar."
   },
   "report": {
     "abuse": "Misbruik melden",
@@ -1944,7 +1946,8 @@
     "add-short": "Een sdg toevoegen",
     "sdg-fulltext": "Duurzame ontwikkelingsdoelstellingen",
     "title": "SDG",
-    "empty": "Nog niets hier... Medewerkers hebben nog geen SDG's toegevoegd."
+    "empty": "Nog niets hier... Medewerkers hebben nog geen SDG's toegevoegd.",
+    "edit-short": "Een SDG bewerken"
   },
   "stats": {
     "cumulated-projects": "Cumulatieve nieuwe projecten",

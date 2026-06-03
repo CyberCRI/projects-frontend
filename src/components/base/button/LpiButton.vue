@@ -33,7 +33,8 @@ const props = withDefaults(
     noTextTransform?: boolean
     ariaLabel?: string
     to?: RouteLocationRaw
-    color?: 'primary-dark' | 'red'
+    color?: 'primary-dark' | 'red' | 'gray' | 'white'
+    textColor?: 'primary-dark' | 'red' | 'gray' | 'white'
   }>(),
   {
     label: null,
@@ -45,6 +46,7 @@ const props = withDefaults(
     ariaLabel: '',
     to: null,
     color: 'primary-dark',
+    textColor: 'white',
   }
 )
 
@@ -56,6 +58,7 @@ const is = computed(() => (props.to ? resolveComponent('NuxtLink') : 'button'))
 <style lang="scss" scoped>
 .lpi-button {
   --color: v-bind(`var(--${color}) `);
+  --text-color: v-bind(`var(--${textColor}) `);
 
   display: flex;
   flex-flow: row nowrap;
@@ -71,7 +74,7 @@ const is = computed(() => (props.to ? resolveComponent('NuxtLink') : 'button'))
   will-change: transform;
   overflow: hidden;
   background: var(--color);
-  color: $white;
+  color: var(--text-color);
   height: 35px;
   padding: $space-s $space-l;
   box-sizing: border-box;
@@ -128,7 +131,7 @@ const is = computed(() => (props.to ? resolveComponent('NuxtLink') : 'button'))
 
 .lpi-button :deep(svg) {
   transition: 0.15s fill ease-in-out;
-  fill: $white;
+  fill: var(--text-color);
 }
 
 .lpi-button.secondary :deep(svg) {

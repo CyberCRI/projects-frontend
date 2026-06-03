@@ -1589,7 +1589,8 @@
       "project-templates": "Vorname",
       "completed-info-to-access-presentation": "Alle Informationen auf der Seite müssen ausgefüllt werden, um auf die Präsentation zuzugreifen.",
       "purpose-placeholder": "Was ist der Zweck Ihres Projekts?",
-      "comment": "Das Kommentarfeld ist erforderlich."
+      "comment": "Das Kommentarfeld ist erforderlich.",
+      "select-template": "Vorlage auswählen ..."
     },
     "image-header": "Bild",
     "image-alert": {
@@ -1638,7 +1639,6 @@
     },
     "view": "Projekt ansehen",
     "visibility": "Sichtbarkeit des Projekts",
-    "actions": "Schnelle Aktionen",
     "copy": "(Kopieren)",
     "nothing": "Nichts hier...",
     "tag-warning": "NB: Wenn ein Benutzer Sprachen in Ihrem Portal schaltet, werden die Tags mit Übersetzungen für sie übersetzt. Ansonsten werden die Tags auf Englisch angezeigt.",
@@ -1649,7 +1649,8 @@
       "label": "Duplizieren Sie das Projekt"
     },
     "groups": "Gruppe | Gruppen",
-    "label": "Projekt | Projekte"
+    "label": "Projekt | Projekte",
+    "actions": "Gefährliche Maßnahmen"
   },
   "project_list": {
     "updated_at": "Letzter Beitrag",
@@ -1682,7 +1683,8 @@
     "type": "Anzeigeart",
     "updated": "aktualisiert",
     "valid-until-the": "gültig bis",
-    "view": "Blick"
+    "view": "Blick",
+    "outdated": "Das Angebot ist nicht mehr verfügbar."
   },
   "report": {
     "abuse": "Missbrauch melden",
@@ -1944,7 +1946,8 @@
     "add-short": "SDG hinzufügen",
     "sdg-fulltext": "Nachhaltigkeitsziele",
     "title": "SDG",
-    "empty": "Noch nichts hier... Die Mitarbeiter haben noch keine SDGs hinzugefügt."
+    "empty": "Noch nichts hier... Die Mitarbeiter haben noch keine SDGs hinzugefügt.",
+    "edit-short": "SDG bearbeiten"
   },
   "stats": {
     "cumulated-projects": "Neue Projekte kumulieren",

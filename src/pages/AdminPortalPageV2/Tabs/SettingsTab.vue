@@ -3,6 +3,7 @@ import { email, helpers, maxLength, required, requiredIf } from '@vuelidate/vali
 import { useVuelidate } from '@vuelidate/core'
 import { Sketch } from '@ckpack/vue-color'
 
+import type { Options } from '~/components/base/button/GroupButton.vue'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'
 
@@ -64,7 +65,7 @@ const visibilityOptions = computed(() => {
       label: t('admin.portal.general.invisible'),
       iconName: 'EyeSlash',
     },
-  ]
+  ] satisfies Options[]
 })
 
 onMounted(() => {
