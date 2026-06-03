@@ -4,7 +4,7 @@ const model = defineModel({ type: Object, required: true })
 </script>
 <template>
   <div class="agent-document-picker">
-    <lpiCheckbox class="doc-field" v-model="model.useDocument" :label="document.title" />
+    <lpiCheckbox v-model="model.useDocument" class="doc-field" :label="document.title" />
     <VectorStoreGlobalPill v-if="document.org_code == ''" class="global-pill" />
   </div>
 </template>
@@ -19,9 +19,11 @@ const model = defineModel({ type: Object, required: true })
   border-radius: 4px;
   padding: 0.4rem;
 }
+
 .doc-field {
   flex-grow: 1;
 }
+
 .global-pill {
   flex-shrink: 0;
 }

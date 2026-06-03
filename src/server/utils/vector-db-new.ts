@@ -1,0 +1,125 @@
+import type { DistanceStrategy } from '@langchain/pgvector'
+import { OpenAIEmbeddings } from '@langchain/openai'
+import { PGVectorStore } from '@langchain/pgvector'
+import { parse } from 'pg-connection-string'
+import pg from 'pg'
+
+type PGVectorConfig = Parameters<typeof PGVectorStore.initialize>['1']
+// attempt to fix azure postgres complaining about vector extension
+// TODO: put commaented code behing a env variable for easy toggle
+class CustomPGVectorStore extends PGVectorStore {
+  override async ensureTableInDatabase(dimensions /*?: number*/) /* : Promise<void> */ {
+    if (this.skipInitializationCheck) {
+      return
+    }
+    // const vectorQuery =
+    //   this.extensionSchemaName == null
+    //     ? "CREATE EXTENSION IF NOT EXISTS vector;"
+    //     : `CREATE EXTENSION IF NOT EXISTS vector WITH SCHEMA "${this.extensionSchemaName}";`;
+    const extensionName =
+      this.extensionSchemaName == null ? 'vector' : `"${this.extensionSchemaName}"."vector"`
+    const vectorColumnType = dimensions ? `${extensionName}(${dimensions})` : extensionName
+    const tableQuery = `
+        CREATE TABLE IF NOT EXISTS ${this.computedTableName} (
+          "${this.idColumnName}" uuid NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
+          "${this.contentColumnName}" text,
+          "${this.metadataColumnName}" jsonb,
+          "${this.vectorColumnName}" ${vectorColumnType}
+        );
+      `
+    // await this.pool.query(vectorQuery);
+    await this.pool.query(tableQuery)
+  }
+
+  static override async initialize(
+    embeddings /* : EmbeddingsInterface*/,
+    config /*: PGVectorStoreArgs & { dimensions?: number }*/
+  ) /*: Promise<PGVectorStore>  */ {
+    const { dimensions, ...rest } = config
+    const postgresqlVectorStore = new CustomPGVectorStore(embeddings, rest)
+
+    await postgresqlVectorStore._initializeClient()
+    await postgresqlVectorStore.ensureTableInDatabase(dimensions)
+    if (postgresqlVectorStore.collectionTableName) {
+      await postgresqlVectorStore.ensureCollectionTableInDatabase()
+    }
+
+    return postgresqlVectorStore
+  }
+}
+
+let vectorStore = null
+let pool = null
+
+export default async () => {
+  const runtimeConfig = useRuntimeConfig()
+  const connectionString = runtimeConfig.appVectorDbUrl
+  const modelName = runtimeConfig.appVectorEmbeddingModel
+  const vectorDimensions = runtimeConfig.appVectorEmbeddingDimensions
+    ? parseInt(runtimeConfig.appVectorEmbeddingDimensions)
+    : null
+  const apiKey = runtimeConfig.appVectorEmbeddingApiKey
+  const vectorTableName = runtimeConfig.appVectorTableName
+  const hasVectorDb = runtimeConfig.public.appHasVectorDb
+  const extensionSchemaName = runtimeConfig.appVectorExtensionSchema
+
+  try {
+    if (
+      !connectionString ||
+      !modelName ||
+      !vectorDimensions ||
+      !apiKey ||
+      !vectorTableName ||
+      !hasVectorDb
+    ) {
+      throw new Error('Missing required configuration for vector store.')
+    }
+
+    if (!pool) {
+      pool = new pg.Pool(parse(connectionString) as any)
+    }
+
+    if (!vectorStore) {
+      const embeddings = new OpenAIEmbeddings({
+        modelName,
+        apiKey,
+      })
+
+      const config: PGVectorConfig = {
+        pool,
+        dimensions: vectorDimensions,
+        tableName: vectorTableName,
+        columns: {
+          idColumnName: 'id',
+          vectorColumnName: 'vector',
+          contentColumnName: 'content',
+          metadataColumnName: 'metadata',
+        },
+        // supported distance strategies: cosine (default), innerProduct, or euclidean
+        distanceStrategy: 'cosine' as DistanceStrategy, // as DistanceStrategy,
+      }
+
+      if (extensionSchemaName) {
+        config.extensionSchemaName = extensionSchemaName
+      }
+
+      vectorStore = await CustomPGVectorStore.initialize(
+        embeddings,
+        config
+        // Optional: Specify a custom table name if you don't want the default 'langchain_pg_embedding'
+        // tableName: "my_custom_table",
+        // Optional: Use JSONB for metadata (default is usually JSONB in newer versions)
+        // useJsonb: true,
+      )
+
+      console.log(
+        `Vector database connection established and table '${vectorTableName} initialized.`
+      )
+    }
+  } catch (error) {
+    console.error('Error initializing new vector store:', error)
+    // Handle the error as needed, e.g., fallback to an in-memory store or disable vector features
+  }
+
+  return { pool, vectorStore }
+}

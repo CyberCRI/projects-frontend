@@ -1,5 +1,5 @@
 import checkAdminRights from '~/server/utils/check-admin-rights.js'
-import getVectorStore from '~/server/utils/vector-db.js'
+import getVectorStore from '~/server/utils/vector-db-new.js'
 
 export default defineLazyEventHandler(() => {
   return defineEventHandler(async (event) => {

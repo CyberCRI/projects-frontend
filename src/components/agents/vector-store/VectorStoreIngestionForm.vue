@@ -162,6 +162,7 @@ const submit = async () => {
 .error {
   color: $salmon;
 }
+
 .form-section ~ .form-section {
   margin-top: 1rem;
 }

@@ -4,7 +4,7 @@ import useUsersStore from '~/stores/useUsers'
 const usersStore = useUsersStore()
 
 const props = defineProps<{
-  document: { title; orgCode }
+  document: { title: string; org_code: string }
 }>()
 const emit = defineEmits(['close'])
 
@@ -20,7 +20,7 @@ const close = () => emit('close')
 const query = new URLSearchParams()
 query.set('title', props.document.title)
 
-if (props.document.orgCode == '') query.set('is_global', 'yes')
+if (props.document.org_code == '') query.set('is_global', 'yes')
 
 const load = async () => {
   try {

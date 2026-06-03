@@ -16,16 +16,12 @@ export default function getRetrieverTool(agentData, vectorStore) {
     .filter((d) => d.vectorStoreKey === PROJECTS_DEFAULT_VECTOR_STORE_KEY)
     .map((d) => d.documentTitle)
 
-  const filter = {
-    $or: agentDocuments.map((item) => ({
-      orgCode: item.orgCode,
-      title: item.title,
-    })),
-  }
-
   const retriever = vectorStore.asRetriever({
     k: 5,
-    filter,
+    filter: {
+      orgCode: appApiOrgCode,
+      title: { $in: agentDocuments },
+    },
   })
 
   const retrieverTool = createRetrieverTool(retriever, {

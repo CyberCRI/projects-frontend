@@ -3,7 +3,7 @@ import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters'
 import { PDFLoader } from '@langchain/community/document_loaders/fs/pdf'
 import { TextLoader } from '@langchain/classic/document_loaders/fs/text'
 import checkAdminRights from '~/server/utils/check-admin-rights.js'
-import getVectorStore from '~/server/utils/vector-db.js'
+import getVectorStore from '~/server/utils/vector-db-new.js'
 import path from 'path'
 
 export default defineLazyEventHandler(() => {
