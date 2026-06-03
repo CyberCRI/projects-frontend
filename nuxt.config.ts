@@ -227,6 +227,12 @@ export default defineNuxtConfig({
 
   nitro: {
     minify: import.meta.dev,
+    externals: {
+      // known Nitro/Nuxt 3 bundling issue.
+      // The problem is that pg-connection-string ships an ESM entry point (.mjs)
+      // that Nitro can't resolve correctly when it bundles
+      external: ['pg-connection-string'],
+    },
   },
 
   app: {
