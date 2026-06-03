@@ -28,6 +28,7 @@
 
 <script setup lang="ts">
 import TipTapOutput from '~/components/base/form/TextEditor/TipTapOutput.vue'
+import { throttle } from 'es-toolkit'
 
 import { onResizeElement } from '~/composables/onResize'
 
@@ -60,11 +61,13 @@ watch(
   { immediate: true }
 )
 
-const checkLimited = () => {
+const checkLimited = throttle(() => {
+  console.log('checked')
   const rect = contentRef.value.getBoundingClientRect()
   actualHeight.value = rect.height
   isLimited.value = rect.height > props.heightLimit
-}
+}, 100)
+
 onResizeElement(checkLimited, contentRef, { immediate: true })
 
 const label = computed(() => {

@@ -2724,7 +2724,9 @@
   "pagination": {
     "previous": "Pàgina anterior",
     "next": "Pàgina següent",
-    "page": "Pàgina"
+    "page": "Pàgina",
+    "first": "Primera pàgina",
+    "last": "Última pàgina"
   },
   "pdf": {
     "blog-entries-limited-warning": "Només s' inclouen les primeres entrades del bloc {max} en l' exportació PDF (de {total} total).",

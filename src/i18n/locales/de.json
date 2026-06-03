@@ -2724,7 +2724,9 @@
   "pagination": {
     "previous": "Vorherige Seite",
     "next": "Nächste Seite",
-    "page": "Seite"
+    "page": "Seite",
+    "first": "Erste Seite",
+    "last": "Seite"
   },
   "pdf": {
     "blog-entries-limited-warning": "Nur die ersten {max} Blogeinträge sind im PDF-Export enthalten (von {total} insgesamt).",

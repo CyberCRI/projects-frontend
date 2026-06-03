@@ -32,7 +32,7 @@
       />
       <NothingHere v-if="sortedGoals.length === 0" />
     </div>
-    <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
+    <PaginationButtonsV2 v-if="!preview" class="mt-4" :pagination="pagination" />
   </FetchLoader>
 
   <ConfirmModal

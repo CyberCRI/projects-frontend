@@ -2816,7 +2816,9 @@
   "pagination": {
     "previous": "Page précédente",
     "next": "Page suivante",
-    "page": "Page"
+    "page": "Page",
+    "first": "Première page",
+    "last": "Dernière page"
   },
   "gallery": {
     "title": "Galerie",

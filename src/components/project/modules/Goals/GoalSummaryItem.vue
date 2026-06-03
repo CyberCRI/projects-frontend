@@ -1,10 +1,6 @@
 <template>
   <div class="goal">
-    <div
-      v-if="statusIconVisible"
-      :class="{ completed: goal.status === 'complete', ongoing: goal.status === 'ongoing' }"
-      class="status-ctn"
-    >
+    <div v-if="statusIconVisible" :class="`goal-${goal.status}`" class="status-ctn">
       <span class="status skeletons-text">{{ goal.status }}</span>
     </div>
 

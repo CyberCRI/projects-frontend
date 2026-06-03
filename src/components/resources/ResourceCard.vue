@@ -97,9 +97,8 @@ const mimeInfo = computed(() => {
 
   .actions-ctn {
     position: absolute;
-    top: 0;
-    right: 0;
-    transform: translateY(-50%);
+    top: 0.25rem;
+    right: 0.25rem;
     display: flex;
 
     button:last-of-type {

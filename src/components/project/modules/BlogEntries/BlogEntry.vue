@@ -1,5 +1,5 @@
 <template>
-  <div class="blog-entry" :class="{ 'shadow-box': !stateModal }">
+  <div class="blog-entry">
     <div class="blog-entry-header">
       <div class="header-main">
         <div class="entry-title skeletons-text">
@@ -11,23 +11,18 @@
         </div>
       </div>
 
-      <div class="expand-button skeletons-background" @click="toggleModal">
-        <span>{{ stateModal ? $t('common.shrink') : $t('common.read') }}</span>
-        <IconImage :name="stateModal ? 'ChevronUp' : 'ChevronDown'" />
+      <div v-if="canEdit || canDelete" class="expand-button skeletons-background">
+        <ContextActionMenuInline
+          :can-delete="canDelete"
+          :can-edit="canEdit"
+          @delete="$emit('delete')"
+          @edit="$emit('edit')"
+        />
       </div>
     </div>
 
-    <div v-if="stateModal && isLastBlogEntry" class="last-publication-flag skeletons-text">
-      {{ $t('blog.last-publication') }}
-    </div>
-
     <!-- add infinity height to only click shw -->
-    <ContentExpandable
-      class="skeletons-text"
-      :height-limit="stateModal ? 100000000 : 0"
-      hide-see-more
-      :opened="stateModal"
-    >
+    <ContentExpandable class="skeletons-text" :height-limit="remToPx(4)" :opened="stateModal">
       <div class="entry-body">
         <TipTapOutput
           class="description tiptap-output skeletons-text"
@@ -35,19 +30,6 @@
         />
       </div>
     </ContentExpandable>
-
-    <div
-      v-if="canEdit || canDelete"
-      :class="{ 'button-ctn--expanded': stateModal }"
-      class="button-ctn"
-    >
-      <ContextActionMenuInline
-        :can-delete="canDelete"
-        :can-edit="canEdit"
-        @delete="$emit('delete')"
-        @edit="$emit('edit')"
-      />
-    </div>
   </div>
 </template>
 
@@ -55,19 +37,17 @@
 import type { TranslatedBlogEntry } from '~/models/blog-entry.model'
 
 import TipTapOutput from '~/components/base/form/TextEditor/TipTapOutput.vue'
-import IconImage from '~/components/base/media/IconImage.vue'
 import { formatDate } from '~/functs/date'
+import { remToPx } from '~/functs/style'
 
 const props = withDefaults(
   defineProps<{
     blogEntry: TranslatedBlogEntry
-    isLastBlogEntry?: boolean
     expanded?: boolean
     canEdit?: boolean
     canDelete?: boolean
   }>(),
   {
-    isLastBlogEntry: false,
     expanded: false,
     canEdit: false,
     canDelete: false,
@@ -81,7 +61,7 @@ const emit = defineEmits<{
 }>()
 
 const { locale } = useNuxtI18n()
-const { stateModal, toggleModal, openModal, closeModal } = useModal(props.expanded)
+const { stateModal, openModal, closeModal } = useModal(props.expanded)
 
 watch(stateModal, () => emit('expanded', stateModal.value))
 
@@ -138,6 +118,7 @@ watch(
       cursor: pointer;
       flex-basis: pxToRem(75px);
       justify-content: space-between;
+      color: var(--primary-dark);
 
       svg {
         height: 18px;

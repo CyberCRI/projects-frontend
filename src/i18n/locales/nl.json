@@ -2724,7 +2724,9 @@
   "pagination": {
     "previous": "Vorige pagina",
     "next": "Volgende pagina",
-    "page": "Bladzijde"
+    "page": "Bladzijde",
+    "first": "Eerste pagina",
+    "last": "Laatste pagina"
   },
   "pdf": {
     "blog-entries-limited-warning": "Alleen de eerste {max} blogvermeldingen zijn opgenomen in de PDF-export (van {total} totaal).",

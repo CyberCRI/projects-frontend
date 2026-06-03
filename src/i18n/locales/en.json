@@ -3114,6 +3114,8 @@
   },
   "pagination": {
     "previous": "Previous page",
+    "first": "First page",
+    "last": "Last page",
     "next": "Next page",
     "page": "Page"
   },

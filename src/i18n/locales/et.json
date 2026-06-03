@@ -2724,7 +2724,9 @@
   "pagination": {
     "previous": "Eelmine leht",
     "next": "Järgmine",
-    "page": "Page"
+    "page": "Page",
+    "first": "Esimene leht",
+    "last": "Viimane lehekülg"
   },
   "pdf": {
     "blog-entries-limited-warning": "PDF-i ekspordi hulka kuuluvad ainult esimesed {max} blogikirjed (kokku {total}).",

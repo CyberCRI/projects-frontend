@@ -1,4 +1,5 @@
 <script setup lang="ts" generic="Item extends { id: number | string }">
+import PaginationButtonsV2 from '~/components/base/navigation/PaginationButtonsV2.vue'
 import BaseSearch from '~/components/drawer/BaseSearch.vue'
 import { isEqual, isNil } from 'es-toolkit'
 
@@ -164,6 +165,10 @@ const labelMaxSelected = computed(() => {
 </template>
 
 <style lang="scss" scoped>
+.list-flow-container {
+  justify-content: space-around;
+}
+
 .selected-items {
   justify-content: flex-start;
   gap: 0.5rem;
