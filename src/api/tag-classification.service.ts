@@ -88,7 +88,7 @@ type ConfigClassification = UseApiOptions<QueryFilterTagClassification>
 
 export async function getOrgClassificationTags(
   organizationCode: OrganizationModel['code'],
-  classificationId: TagClassificationModel['id'],
+  classificationId: TagClassificationModel['id'] | 'enabled-for-projects' | 'enabled-for-skills',
   config: ConfigClassification = {}
 ) {
   return await useAPI<PaginationResult<TagClassificationModel>>(

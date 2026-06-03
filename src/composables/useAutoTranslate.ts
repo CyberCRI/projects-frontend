@@ -24,6 +24,7 @@ import type { TranslatedComment } from '@/models/comment.model'
 import type { TranslatedUserModel } from '@/models/user.model'
 import type { TranslatedNews } from '@/models/news.model'
 import type { TranslatedGoal } from '@/models/goal.model'
+import type { TranslatedTag } from '~/models/tag.model'
 import type { RefOrRaw } from '~/interfaces/utils'
 
 export default function useAutoTranslate() {
@@ -104,6 +105,10 @@ export default function useAutoTranslate() {
         template: unrefProject.template
           ? unref(translateTemplate(unrefProject.template))
           : unrefProject.template,
+        categories: unrefProject.categories
+          ? unref(translateCategories(unrefProject.categories))
+          : unrefProject.categories,
+        tags: unrefProject.tags ? unref(translateTags(unrefProject.tags)) : unrefProject.tags,
       }
     })
   }
@@ -217,8 +222,8 @@ export default function useAutoTranslate() {
   const translateUsers = <Model = TranslatedUserModel>(users) =>
     translateEntities<Model>(users, translateUser)
 
-  const translateTag = (tag) => translateEntity(tag, ['description', 'title'])
-  const translateTags = (tags) => translateEntities(tags, translateTag)
+  const translateTag = <T = TranslatedTag>(tag) => translateEntity<T>(tag, ['description', 'title'])
+  const translateTags = <T = TranslatedTag>(tags) => translateEntities<T>(tags, translateTag)
 
   // -----------------
   // groups
@@ -363,9 +368,10 @@ export default function useAutoTranslate() {
   const translateCategory = (category) => {
     const rawCategory = unref(category)
     if (rawCategory?.children)
-      rawCategory.children = unref(translateEntities(rawCategory.children, translateCategory))
+      rawCategory.children = unref(translateCategories(rawCategory.children))
     if (rawCategory?.hierarchy)
-      rawCategory.hierarchy = unref(translateEntities(rawCategory.hierarchy, translateCategory))
+      rawCategory.hierarchy = unref(translateCategories(rawCategory.hierarchy))
+    if (rawCategory?.tags) rawCategory.tags = unref(translateTags(rawCategory.tags))
     return translateEntity<TranslatedProjectCategory>(rawCategory, ['name', 'description'])
   }
   const translateCategories = (categories) =>

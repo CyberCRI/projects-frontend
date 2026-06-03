@@ -4,7 +4,7 @@
     <div v-if="!preview">
       <BaseModuleHeader
         :editable="editable"
-        :add-label="project.sdgs?.length ? $t('sdg.add-short') : $t('sdg.edit-short')"
+        :add-label="project.sdgs?.length ? $t('sdg.edit-short') : $t('sdg.add-short')"
         @add="openModals('editSdg')"
       />
       <SdgPreview :sdgs="project.sdgs" />
@@ -14,6 +14,7 @@
       v-if="!preview"
       :editable="editable"
       :pagination="pagination"
+      :add-label="$t('goal.add')"
       @add="openModals('edit')"
     />
 

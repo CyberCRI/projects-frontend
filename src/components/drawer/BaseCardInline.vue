@@ -13,7 +13,7 @@ withDefaults(
     description?: string
     role?: string
     image?: ImageModel
-    defaultPicture: string
+    defaultPicture?: string
     icon?: IconImageChoice
     selected?: boolean
     passive?: boolean
@@ -21,6 +21,7 @@ withDefaults(
   }>(),
   {
     job: null,
+    defaultPicture: null,
     description: null,
     role: null,
     image: null,
@@ -40,6 +41,7 @@ withDefaults(
   >
     <div class="card-container">
       <CroppedApiImage
+        v-if="image || defaultPicture"
         :alt="`${label} image`"
         class="img-container skeletons-background"
         :picture-data="image"

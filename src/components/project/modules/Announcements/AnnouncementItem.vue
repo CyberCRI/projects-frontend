@@ -136,6 +136,9 @@ const outdated = computed(() => {
     font-weight: 700;
     font-size: 1.5rem;
     overflow-wrap: break-word;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   .description {

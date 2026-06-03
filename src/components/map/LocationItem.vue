@@ -12,7 +12,12 @@
       @edit="$emit('edit', location)"
       @delete="$emit('delete', location)"
     >
-      <LpiButton v-if="focus" btn-icon="MapMarker" @click.prevent="$emit('focus', location)" />
+      <LpiButton
+        v-if="focus"
+        btn-icon="MapMarker"
+        :title="$t('location.focus-on-map')"
+        @click.prevent="$emit('focus', location)"
+      />
     </ContextActionMenuInline>
   </div>
 </template>

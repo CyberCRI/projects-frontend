@@ -10,6 +10,7 @@ import type {
   TranslatedSearchResultUser,
 } from '~/models/search.model'
 import { searchAll, searchGroups, searchProjects, searchUser } from '~/api/search.service'
+import { getOrgClassificationTags } from '~/api/tag-classification.service'
 import type { UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
 import type { OrganizationModel } from '@/models/organization.model'
 import type { RefOrRaw } from '@/interfaces/utils'
@@ -208,6 +209,30 @@ export const getSearchGroup = (
     {
       translate: (data) => translatedSearch(data),
       watch: onlyRefs([search, organization]),
+      ...config,
+    }
+  )
+}
+
+// TODO change backend with prefix organization code in url
+export const getSearchTag = (
+  organization: RefOrRaw<OrganizationModel['code']>,
+  classificationType: RefOrRaw<'enabled-for-projects' | 'enabled-for-skills'>,
+  config: ConfigPagination = {}
+) => {
+  const key = computed(() => `${unref(organization)}::search::project::tags`)
+  const { translateTags } = useAutoTranslate()
+
+  return useAsyncPaginationAPI(
+    key,
+    ({ config }) =>
+      getOrgClassificationTags(unref(organization), unref(classificationType), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
+    {
+      translate: (data) => translateTags(data),
+      watch: onlyRefs([classificationType, organization]),
       ...config,
     }
   )

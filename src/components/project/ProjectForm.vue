@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type { ProjectForm, TranslatedProject } from '~/models/project.model'
+import TagSelectDrawer from '~/components/drawer/Tag/TagSelectDrawer.vue'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
 import { defaultProjectForm, useProjectForm } from '~/form/project'
 import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import useOrganizationsStore from '~/stores/useOrganizations'
-import TagsDrawer from '~/components/tags/TagsDrawer.vue'
 import { getFirstTextNotEmpty } from '~/functs/string'
 import Field from '~/components/base/form/Field.vue'
 import { isEqual, isNil, pick } from 'es-toolkit'
@@ -96,6 +96,10 @@ const languageOptions = computed(() => {
 })
 
 const onSubmit = () => emit('submit', cleanedData.value)
+const onSubmitTags = (tags) => {
+  form.value.tags = tags
+  closeModals('tags')
+}
 </script>
 
 <template>
@@ -159,5 +163,11 @@ const onSubmit = () => emit('submit', cleanedData.value)
   </FormPanel>
 
   <!-- drawer -->
-  <TagsDrawer v-model="form.tags" :is-opened="stateModals.tags" @close="closeModals('tags')" />
+  <TagSelectDrawer
+    :selected-tags="form.tags"
+    classification-type="enabled-for-projects"
+    :is-opened="stateModals.tags"
+    @submit="onSubmitTags"
+    @close="closeModals('tags')"
+  />
 </template>

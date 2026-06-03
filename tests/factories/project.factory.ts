@@ -80,6 +80,7 @@ export const TranslatedProjectFactory = createFactory<TranslatedProject>(() => {
     ...project,
     template: null,
     categories: [],
+    tags: [],
     $t: {
       title: project.title,
       description: project.description,

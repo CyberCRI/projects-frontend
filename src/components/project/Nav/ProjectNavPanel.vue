@@ -23,7 +23,7 @@
       <ExternalLabelButton
         v-if="usersStore.isConnected"
         class="space-button"
-        :label="isFollowing ? $t('project.foannouncementsllowed') : $t('project.follow')"
+        :label="isFollowing ? $t('project.followed') : $t('project.follow')"
         :btn-icon="isFollowing ? 'BookmarkFill' : 'BookmarkLine'"
         vertical-layout
         label-on-hover

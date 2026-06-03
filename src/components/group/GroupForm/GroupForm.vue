@@ -79,8 +79,14 @@
         />
       </template>
       <TagsFilterSummary v-model="form.tags" />
-      <empty-label v-if="form.tags.length === 0" :label="$t('tag.empty')" />
-      <TagsDrawer v-model="form.tags" :is-opened="openTags" @close="openTags = false" />
+      <!-- drawer -->
+      <TagSelectDrawer
+        :selected-tags="form.tags"
+        classification-type="enabled-for-projects"
+        :is-opened="openTags"
+        @submit="onSubmitTags"
+        @close="openTags = false"
+      />
     </Field>
 
     <!-- Sdg -->
@@ -206,7 +212,6 @@ import {
 import TagsFilterSummary from '~/components/search/Filters/TagsFilterSummary.vue'
 import LocationDrawer from '~/components/map/LocationDrawer.vue'
 import LocationList from '~/components/map/LocationList.vue'
-import TagsDrawer from '~/components/tags/TagsDrawer.vue'
 import SdgsDrawer from '~/components/sdgs/SdgsDrawer.vue'
 import SdgList from '~/components/sdgs/SdgList.vue'
 
@@ -214,6 +219,7 @@ import useOrganizationsStore from '~/stores/useOrganizations.ts'
 
 import { usePatatoids } from '~/composables/usePatatoids'
 
+import TagSelectDrawer from '~/components/drawer/Tag/TagSelectDrawer.vue'
 import Field from '~/components/base/form/Field.vue'
 import { useRuntimeConfig } from '#imports'
 
@@ -223,7 +229,7 @@ export default {
   components: {
     SdgList,
     SdgsDrawer,
-    TagsDrawer,
+    TagSelectDrawer,
     TagsFilterSummary,
     LocationDrawer,
     LocationList,
@@ -352,6 +358,10 @@ export default {
   },
 
   methods: {
+    onSubmitTags(tags) {
+      this.form.tags = tags
+      this.openTags = false
+    },
     openRemoveOrQuit() {
       this.showRemoveQuit = true
     },

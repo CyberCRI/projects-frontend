@@ -7,13 +7,13 @@ import type { LanguageType, ProjectPublicationStatusType, ProjectStatusType } fr
 import type { OrganizationModel, OrganizationOutput } from '@/models/organization.model'
 import type { AnnouncementModel, AnnouncementOutput } from '@/models/announcement.model'
 import type { TemplateModel, TranslatedTemplate } from '@/models/template.model'
+import type { TagModel, TagOutput, TranslatedTag } from '@/models/tag.model'
 import type { AttachmentLinkOutput } from '@/models/attachment-link.model'
 import type { AttachmentFileOutput } from '@/models/attachment-file.model'
 import type { ProjectTeamOutput } from '@/models/project-member.model'
 import type { ImageModel, ImageOutput } from '@/models/image.model'
 import type { BlogEntryOutput } from '@/models/blog-entry.model'
 import type { LocationOutput } from '@/models/location.model'
-import type { TagModel, TagOutput } from '@/models/tag.model'
 import type { CommentOutput } from '@/models/comment.model'
 import type { Translated } from '@/interfaces/translated'
 import type { FollowOutput } from '@/models/follow.model'
@@ -115,11 +115,12 @@ export const ProjectModuleTitle: { [key in ProjectModuleExtra]: string } = {
 }
 
 export type TranslatedProject = Translated<
-  Omit<ProjectModel, 'template' | 'categories'>,
+  Omit<ProjectModel, 'template' | 'categories' | 'tags'>,
   'title' | 'description' | 'purpose'
 > & {
   template?: TranslatedTemplate
   categories: TranslatedProjectCategory[]
+  tags: TranslatedTag[]
 }
 
 export type ProjectSlugOrId = ProjectModel['id'] | ProjectModel['slug']
@@ -198,7 +199,7 @@ export type ProjectForm = Partial<
     categorie: TranslatedProjectCategory
     project_categories_ids: TranslatedProjectCategory['id'][]
     template_id: number
-    tags: TagModel[]
+    tags: TranslatedTag[]
   }
 >
 
