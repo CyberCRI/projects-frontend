@@ -46,7 +46,7 @@
             <p>{{ $t('resource.max-size') }}</p>
           </div>
           <p v-if="hasFileError" class="error error-file">
-            {{ $t('common.file-required') }}
+            {{ $t('resource.file.form.required') }}
           </p>
         </template>
 

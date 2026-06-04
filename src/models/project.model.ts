@@ -11,7 +11,6 @@ import type { TagModel, TagOutput, TranslatedTag } from '@/models/tag.model'
 import type { AttachmentLinkOutput } from '@/models/attachment-link.model'
 import type { AttachmentFileOutput } from '@/models/attachment-file.model'
 import type { ProjectTeamOutput } from '@/models/project-member.model'
-import type { ImageModel, ImageOutput } from '@/models/image.model'
 import type { BlogEntryOutput } from '@/models/blog-entry.model'
 import type { LocationOutput } from '@/models/location.model'
 import type { CommentOutput } from '@/models/comment.model'
@@ -19,6 +18,7 @@ import type { Translated } from '@/interfaces/translated'
 import type { FollowOutput } from '@/models/follow.model'
 import type { IconImageChoice } from '@/functs/IconImage'
 import type { ReviewModel } from '@/models/review.model'
+import type { ImageModel } from '@/models/image.model'
 import type { GoalOutput } from '@/models/goal.model'
 import type BaseModel from '@/models/base.model'
 
@@ -158,7 +158,7 @@ export type ProjectOutput = Required<ProjectModel> & {
   links: AttachmentLinkOutput[]
   files: AttachmentFileOutput[]
   linked_projects: LinkedProject[]
-  images: ImageOutput[]
+  images: ImageModel[]
   comments: CommentOutput[]
   blog_entries: BlogEntryOutput[]
   announcements: AnnouncementModel[]

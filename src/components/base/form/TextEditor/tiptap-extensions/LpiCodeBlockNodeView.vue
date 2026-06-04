@@ -1,121 +1,135 @@
-<template>
-  <NodeViewWrapper class="vue-component">
-    <div class="code-menu-bar" contenteditable="false">
-      <label>
-        {{ $t('multieditor.code.language.label') }}
-        <select v-model="language">
-          <option v-for="l in languages" :key="l" :value="l">{{ l }}</option>
-        </select>
-      </label>
-      <label>
-        {{ $t('multieditor.code.theme.label') }}
-        <select v-model="theme">
-          <option v-for="t in themes" :key="t" :value="t">
-            {{ $t(`multieditor.code.theme.${t}`) }}
-          </option>
-        </select>
-      </label>
-      <label>
-        {{ $t('multieditor.code.tabs.label') }}
-        <select v-model="tab">
-          <option v-for="t in tabs" :key="t" :value="t">{{ t }}</option>
-        </select>
-      </label>
-    </div>
-    <pre class="lpi-code-block" :class="[`theme-${theme} tab-${tab}`]"><NodeViewContent
-as="code"
-                      class="content-dom hljs"
-:class="[`language-${node.attrs.language}`]"
-spellcheck="false"
-    /></pre>
-  </NodeViewWrapper>
-</template>
-
-<script>
+<script setup lang="ts">
+import ContexttualToolMenu from '~/components/base/form/TextEditor/ContexttualToolMenu.vue'
 import { NodeViewContent, NodeViewWrapper, nodeViewProps } from '@tiptap/vue-3'
+import Field from '~/components/base/form/Field.vue'
 
 import {
+  DEFAULT_LANGUAGE,
   DEFAULT_TAB,
   DEFAULT_THEME,
-} from '~/components/base/form/TextEditor/tiptap-extensions/LpiCodeBlock.ts'
+} from '~/components/base/form/TextEditor/tiptap-extensions/LpiCodeBlock'
 
-import remixiconUrl from 'remixicon/fonts/remixicon.symbol.svg?url'
-import lowlight from '~/functs/lowlight.ts'
+import lowlight from '~/functs/lowlight'
 
-export default defineComponent({
-  name: 'LpiCodeBlockNodeView',
+const props = defineProps(nodeViewProps)
+const { t } = useNuxtI18n()
 
-  components: {
-    NodeViewWrapper,
-    NodeViewContent,
+const language = ref(DEFAULT_LANGUAGE)
+const theme = ref(DEFAULT_THEME)
+const tab = ref(DEFAULT_TAB)
+
+const optionsLanguages = computed(() => {
+  return lowlight.listLanguages().map((language) => ({
+    value: language,
+    label: language,
+  }))
+})
+
+const optionsThemes = computed(() => [
+  { value: 'light', label: t('multieditor.code.theme.light') },
+  { value: 'dark', label: t('multieditor.code.theme.dark') },
+])
+
+const optionsTabs = computed(() => [
+  { value: '2', label: '2' },
+  { value: '4', label: '4' },
+])
+
+watch(
+  () => props.node.attrs.language,
+  (neo, old) => {
+    if (neo != old) language.value = neo.toString() || DEFAULT_LANGUAGE
   },
+  { immediate: true }
+)
 
-  props: nodeViewProps,
-
-  data() {
-    return {
-      language: 'plaintext',
-      languages: lowlight.listLanguages(),
-      theme: DEFAULT_THEME,
-      themes: ['light', 'dark'],
-      remixiconUrl,
-      tabs: ['2', '4'],
-      tab: DEFAULT_TAB,
-    }
+watch(
+  () => props.node.attrs.theme,
+  (neo, old) => {
+    if (neo != old) theme.value = neo.toString() || DEFAULT_THEME
   },
+  { immediate: true }
+)
 
-  watch: {
-    'node.attrs.language'(neo, old) {
-      if (neo != old) this.language = neo || 'plaintext'
-    },
-
-    'node.attrs.theme'(neo, old) {
-      if (neo != old) this.theme = neo || DEFAULT_THEME
-    },
-
-    'node.attrs.tab'(neo, old) {
-      if (neo != old) this.tab = neo || DEFAULT_TAB
-    },
-
-    language(neo, old) {
-      if (neo && neo != old)
-        this.updateAttributes({
-          language: neo,
-          theme: this.theme,
-          tab: this.tab,
-        })
-    },
-
-    theme(neo, old) {
-      if (neo && neo != old)
-        this.updateAttributes({
-          language: this.language,
-          theme: neo,
-          tab: this.tab,
-        })
-    },
-
-    tab(neo, old) {
-      if (neo && neo != old)
-        this.updateAttributes({
-          language: this.language,
-          theme: this.theme,
-          tab: neo,
-        })
-    },
+watch(
+  () => props.node.attrs.tab,
+  (neo, old) => {
+    if (neo != old) tab.value = neo.toString() || DEFAULT_TAB
   },
+  { immediate: true }
+)
 
-  mounted() {
-    this.language = this.node.attrs.language || 'plaintext'
-    this.theme = this.node.attrs.theme || DEFAULT_THEME
-    this.tab = this.node.attrs.tab || DEFAULT_TAB
-  },
+watch(language, (neo, old) => {
+  if (neo && neo != old)
+    props.updateAttributes({
+      language: neo,
+      theme: theme.value,
+      tab: tab.value,
+    })
+})
+
+watch(theme, (neo, old) => {
+  if (neo && neo != old)
+    props.updateAttributes({
+      language: language.value,
+      theme: neo,
+      tab: tab.value,
+    })
+})
+
+watch(tab, (neo, old) => {
+  if (neo && neo != old)
+    props.updateAttributes({
+      language: language.value,
+      theme: theme.value,
+      tab: neo,
+    })
 })
 </script>
+
+<template>
+  <NodeViewWrapper class="vue-component">
+    <ContexttualToolMenu class="code-menu-bar" contenteditable="false">
+      <Field :label="$t('multieditor.code.language.label')">
+        <select v-model="language">
+          <option v-for="item in optionsLanguages" :key="item.value" :value="item.value">
+            {{ item.label }}
+          </option>
+        </select>
+      </Field>
+      <Field :label="$t('multieditor.code.theme.label')">
+        <select v-model="theme">
+          <option v-for="item in optionsThemes" :key="item.value" :value="item.value">
+            {{ item.label }}
+          </option>
+        </select>
+      </Field>
+      <Field :label="$t('multieditor.code.tabs.label')">
+        <select v-model="tab">
+          <option v-for="item in optionsTabs" :key="item.value" :value="item.value">
+            {{ item.label }}
+          </option>
+        </select>
+      </Field>
+    </ContexttualToolMenu>
+
+    <pre class="lpi-code-block" :class="[`theme-${theme} tab-${tab}`]">
+      <NodeViewContent
+        as="code"
+        class="content-dom hljs"
+        :class="[`language-${node.attrs.language}`]"
+        spellcheck="false"
+      />
+    </pre>
+  </NodeViewWrapper>
+</template>
 
 <style lang="scss" scoped>
 .code-menu-bar {
   display: flex;
   gap: 1rem;
+  border: 1px solid var(--primary-dark);
+  border-radius: $border-radius-m;
+  padding: 0.5rem;
 }
 </style>

@@ -98,12 +98,6 @@ const setSliderStyle = () => {
   }
 }
 
-onMounted(() => {
-  if (import.meta.env) {
-    setSliderStyle()
-  }
-})
-
 onResize(debounce(setSliderStyle, 300))
 </script>
 

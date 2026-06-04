@@ -1,15 +1,15 @@
 import { createFactory } from 'faker-create-factory'
 
 import {
-  ImageOutput,
   ImageInput,
   ImageOrganizationInput,
   ImageTemplateInput,
+  ImageModel,
 } from '~/models/image.model'
 
 import BaseFactory from './base.factory'
 
-export const ImageFactory = createFactory<ImageOutput>((faker) => ({
+export const ImageFactory = createFactory<ImageModel>((faker) => ({
   ...BaseFactory.generate(),
   id: faker.datatype.number(),
   url: faker.internet.url(),
@@ -22,6 +22,7 @@ export const ImageFactory = createFactory<ImageOutput>((faker) => ({
   name: faker.name.lastName(),
   height: faker.datatype.number(),
   width: faker.datatype.number(),
+  static_url: faker.internet.url(),
   variations: {
     full: faker.image.image(),
     large: faker.image.image(),

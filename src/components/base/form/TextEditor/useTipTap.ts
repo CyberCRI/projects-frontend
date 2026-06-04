@@ -1,6 +1,5 @@
 import useOrganizationsStore from '~/stores/useOrganizations'
 import TableHeader from '@tiptap/extension-table-header'
-import ImageResize from 'tiptap-extension-resize-image'
 import TextStyle from '@tiptap/extension-text-style'
 import TextAlign from '@tiptap/extension-text-align'
 import Underline from '@tiptap/extension-underline'
@@ -12,6 +11,7 @@ import Color from '@tiptap/extension-color'
 import Link from '@tiptap/extension-link'
 
 import CustomTableCell from './tiptap-extensions/CustomTableCell.js'
+import type { ImageModealCreated } from '~/models/image.model.js'
 import ExternalVideo from './tiptap-extensions/ExternalVideo.js'
 import LpiCodeBlock from './tiptap-extensions/LpiCodeBlock.js'
 import CustomImage from './tiptap-extensions/CustomImage.js'
@@ -28,7 +28,7 @@ export type PropsDefinitions = {
   errors?: ErrorObject[]
   saveIconVisible?: boolean
   // function must take a file argument and return a promise resolving to an {url, width, height} object
-  saveImageCallback?: (image) => void
+  saveImageCallback?: (image: File) => Promise<ImageModealCreated>
   disableSave?: boolean
 }
 
@@ -147,7 +147,6 @@ export function useTipTap({ props, emit, t }) {
       LpiCodeBlock.configure({
         lowlight,
       }),
-      ImageResize,
     ]
   }
 

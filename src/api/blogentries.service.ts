@@ -4,8 +4,8 @@ import type {
   BlogEntryModel,
   QueryFilterBlogEntry,
 } from '@/models/blog-entry.model'
+import type { ImageModealCreated } from '~/models/image.model'
 import type { ProjectSlugOrId } from '@/models/project.model'
-import type { ImageModel } from '~/models/image.model'
 import useAPI from '@/composables/useAPI'
 
 type ConfigBlogEntry = UseApiOptions
@@ -52,7 +52,7 @@ export async function postBlogEntryImage(
   body: FormData,
   config: ConfigBlogEntry = {}
 ) {
-  return await useAPI<ImageModel>(`project/${projectId}/blog-entry-image/`, {
+  return await useAPI<ImageModealCreated>(`project/${projectId}/blog-entry-image/`, {
     ...config,
     body,
     method: 'POST',

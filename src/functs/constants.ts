@@ -167,3 +167,31 @@ export const PROJECTS_MEMBERS_ROLES: ProjectMemberRoleType[] = ['owners', 'membe
 export const GROUP_MEMBERS_ROLES: GroupMemberRoleType[] = ['leaders', 'managers', 'members']
 
 export const PROJECT_LOCATIONS_TYPES: LocationType[] = ['address', 'impact', 'team']
+
+// max size file
+export const MAX_FILE_SIZE = Math.round(10 * 1024 * 1024)
+
+// valid image mimetype for upload
+export const MIMETYPES_IMAGES = [
+  'image/jpeg',
+  'image/png',
+  'image/gif',
+  'image/webp',
+  'image/svg+xml',
+  'image/x-icon',
+  'image/bmp',
+  'image/avif',
+  'image/apng',
+]
+
+export const DEFAULT_COLOR_TIPTAP = [
+  '#00BDA7', // Carribean green
+  '#1D727C', // Ming
+  '#99FFE7', // Aquamarine
+  '#F0FFFB', // Mint Cream
+  '#FF9473', // Light Salmon
+  '#FFCC00', // Sun glow
+  '#D6A2FF', // Mauve
+  '#6CD5FF', // Baby Blue
+  '#FF3C00', // Coquelicot
+]

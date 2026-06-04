@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import type { PropsDefinitions } from '~/components/base/form/TextEditor/useTipTap'
+import ColorMenuBar from '~/components/base/form/TextEditor/ColorMenuBar.vue'
+import type { ImageModealCreated } from '~/models/image.model.js'
 import EditorModalVideo from './modals/EditorModalVideo.vue'
 import EditorModalImage from './modals/EditorModalImage.vue'
 import EditorModalColor from './modals/EditorModalColor.vue'
@@ -20,7 +22,7 @@ withDefaults(
     mode: PropsDefinitions['mode']
     disableSave?: boolean
     saveIconVisible?: boolean
-    saveImageCallback?: (file: File) => void
+    saveImageCallback?: (file: File) => Promise<ImageModealCreated>
   }>(),
   {
     disableSave: false,
@@ -30,76 +32,45 @@ withDefaults(
   }
 )
 
-// data
-
-const activeModals = reactive({
+const { stateModals, closeModals, openModals } = useModals({
   image: false,
   link: false,
   video: false,
   color: false,
 })
-
-// methods
-
-function openLinkModal() {
-  activeModals.link = true
-}
-
-function openColorModal() {
-  activeModals.color = true
-}
-
-function openVideoModal() {
-  activeModals.video = true
-}
-
-function openImageModal() {
-  activeModals.image = true
-}
 </script>
+
 <template>
   <EditorModalImage
-    v-if="activeModals.image"
+    v-if="stateModals.image"
     :editor="editor"
     :save-image-callback="saveImageCallback"
-    @close-modal="activeModals.image = false"
+    @close="closeModals('image')"
     @image="emit('image', $event)"
   />
 
-  <EditorModalLink
-    v-if="activeModals.link"
-    :editor="editor"
-    @close-modal="activeModals.link = false"
-  />
+  <EditorModalLink v-if="stateModals.link" :editor="editor" @close="closeModals('link')" />
 
-  <EditorModalColor
-    v-if="activeModals.color"
-    :editor="editor"
-    @close-modal="activeModals.color = false"
-  />
+  <EditorModalColor v-if="stateModals.color" :editor="editor" @close="closeModals('color')" />
 
-  <EditorModalVideo
-    v-if="activeModals.video"
-    :editor="editor"
-    @close-modal="activeModals.video = false"
-  />
+  <EditorModalVideo v-if="stateModals.video" :editor="editor" @close="closeModals('video')" />
 
   <MenuBar
     v-if="showMenu"
     class="editor-header"
     :editor="editor"
     :mode="mode"
-    :open-color-modal="openColorModal"
-    :open-image-modal="openImageModal"
-    :open-link-modal="openLinkModal"
-    :open-video-modal="openVideoModal"
+    :open-color-modal="() => openModals('color')"
+    :open-image-modal="() => openModals('image')"
+    :open-link-modal="() => openModals('link')"
+    :open-video-modal="() => openModals('video')"
     :save-icon-visible="saveIconVisible"
     :disable-save="disableSave"
     @saved="$emit('saved')"
   />
 
   <TableMenuBar
-    v-if="showMenu && mode != 'none' && mode != 'simple'"
+    v-if="showMenu && !['none', 'simple'].includes(mode)"
     :editor="editor"
     class="editortablemenu"
   />
@@ -107,14 +78,17 @@ function openImageModal() {
   <LinkMenuBar
     v-if="showMenu && mode !== 'none'"
     :editor="editor"
-    :open-link-modal="openLinkModal"
     class="editorlinkmenu"
+    @open="openModals('link')"
   />
+
+  <ColorMenuBar v-if="showMenu && mode !== 'none'" :editor="editor" />
 
   <ImageMenuBar v-if="showMenu && mode !== 'none'" :editor="editor" />
 
   <VideoMenuBar v-if="showMenu && mode !== 'none'" :editor="editor" />
 </template>
+
 <style lang="scss" scoped>
 .editor-header {
   background: $white;

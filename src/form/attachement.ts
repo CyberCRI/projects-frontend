@@ -2,6 +2,7 @@ import type { AttachmentForm } from '~/models/attachment.model'
 import { helpers, required } from '@vuelidate/validators'
 import { maxFileSize, urlCheck } from '~/form/base'
 import type { RefOrRaw } from '~/interfaces/utils'
+import { MAX_FILE_SIZE } from '~/functs/constants'
 
 export const defaultAttachmentForm = (): AttachmentForm => {
   return {
@@ -11,9 +12,6 @@ export const defaultAttachmentForm = (): AttachmentForm => {
     file: null,
   }
 }
-
-// max size file
-const maxSize = Math.round(10 * 1024 * 1024)
 
 export const useAttachmentForm = (type: RefOrRaw<'file' | 'link'>, options = {}) => {
   const { t } = useNuxtI18n()
@@ -29,8 +27,8 @@ export const useAttachmentForm = (type: RefOrRaw<'file' | 'link'>, options = {})
     if (unref(type) === 'file') {
       // @ts-expect-error not defined in rules
       rules.file = {
-        required: helpers.withMessage(t('form.resources.file'), required),
-        maxFileSize: maxFileSize(maxSize),
+        required: helpers.withMessage(t('resources.file.form.required'), required),
+        maxFileSize: maxFileSize(MAX_FILE_SIZE),
       }
     }
     if (unref(type) === 'link') {

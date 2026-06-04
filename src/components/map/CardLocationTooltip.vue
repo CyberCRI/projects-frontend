@@ -30,12 +30,12 @@
 
 <script setup lang="ts">
 import type { AnyTranslatedLocation } from '~/models/location.model'
-import type { Image } from '~/models/image.model'
 
 import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 import LocationTooltip from '~/components/map/LocationTooltip.vue'
 import LinkButton from '~/components/base/button/LinkButton.vue'
 
+import type { ImageModel } from '~/models/image.model'
 import type { RouteLocationRaw } from 'vue-router'
 import { cropIfTooLong } from '~/functs/string'
 
@@ -46,7 +46,7 @@ const props = withDefaults(
     to: RouteLocationRaw
     title: string
     description?: string
-    image?: Image
+    image?: ImageModel
     defaultPicture?: string
   }>(),
   { description: '', image: null, defaultPicture: null }

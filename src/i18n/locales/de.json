@@ -518,7 +518,6 @@
     "cant-quit-self": "Sie sind der letzte Redakteur des Teams. Jedes Projekt muss mindestens einen Editor haben.\nSie können entweder einen anderen Editor hinzufügen, bevor Sie das Projekt verlassen, oder das Projekt aus der Registerkarte Konfiguration löschen.",
     "cant-quit-other": "Das ist der letzte Redakteur des Teams. Jedes Projekt muss mindestens einen Editor haben.\nSie können entweder einen anderen Editor hinzufügen, der diese verdrängt, oder das Projekt aus der Registerkarte Konfiguration löschen.",
     "edit": "Bearbeitung",
-    "file-required": "Eine Datei ist erforderlich",
     "for": "für",
     "groups": "Gruppen",
     "index": "Index",
@@ -1118,9 +1117,13 @@
     "unauthorized": "Unautorisierte Bearbeitung",
     "underline": "unterstrichen",
     "undo": "Und",
-    "video": "Video",
+    "video": {
+      "label": "Video",
+      "error": "Der Link muss ein YouTube- oder Vimeo-Video sein."
+    },
     "save": "Sparen ohne Ausstieg",
-    "server-offline": "Server ist offline."
+    "server-offline": "Server ist offline.",
+    "delete_image": "Löschen von Bild"
   },
   "homeCarousel": {
     "tab1": {
@@ -1576,7 +1579,6 @@
       "resize-image": "Reframe",
       "title-label": "Titel hinzufügen",
       "title-placeholder": "Wie heißt dieses Projekt?",
-      "upload-image": "Bild hochladen",
       "title-errors": {
         "required": "Das Titelfeld ist erforderlich",
         "max": "Das Titelfeld darf nicht größer als 180 Zeichen sein"
@@ -1707,7 +1709,6 @@
     "edit-link": "Einen Link bearbeiten",
     "edit-file": "Datei bearbeiten",
     "max-size": "Max Größe 10MB",
-    "invalid-image": "Ununterstützte Datei ... ist das ein Bild?",
     "error-uploading-image": "Fehler beim Hochladen von Bild",
     "cannot-upload-image": "Bild jetzt nicht hochladen",
     "link-address": "Linkadresse",
@@ -1721,7 +1722,10 @@
       "label": "Datei | Dateien",
       "delete": "Sind Sie sicher, diese Datei zu löschen? | Sind Sie sicher, Dateien zu löschen?",
       "form": {
-        "too-big": "Die Datei ist zu groß (max: {maxSize}Mb)"
+        "too-big": "Die Datei ist zu groß (max: {maxSize}Mb)",
+        "invalid-image": "Nicht unterstützte Datei, muss ein gültiges Bild sein.",
+        "required-image": "Eine Datei ist erforderlich",
+        "required": "Eine Datei ist erforderlich"
       }
     },
     "link": {
@@ -1729,7 +1733,8 @@
       "edit": "Einen Link bearbeiten | Links bearbeiten",
       "label": "Link Adresse | Anschrift",
       "delete": "Sind Sie sicher, diesen Link zu löschen? | Sind Sie sicher, Links zu löschen?"
-    }
+    },
+    "upload-image": "Hochladen eines Bildes"
   },
   "result_box": {
     "people": "Menschen",

@@ -518,7 +518,6 @@
     "cant-quit-self": "Jij bent de laatste redacteur van het team. Elk project moet ten minste één editor hebben.\nU kunt een andere editor toevoegen voordat u het project verlaat, of het project verwijderen van het tabblad Configuratie.",
     "cant-quit-other": "Dit is de laatste redacteur van het team. Elk project moet ten minste één editor hebben.\nU kunt ofwel een andere editor toevoegen om deze te onderdrukken, of het project verwijderen van het tabblad Configuratie.",
     "edit": "Bewerken",
-    "file-required": "Een bestand is vereist",
     "for": "voor",
     "groups": "Groepen",
     "index": "Index",
@@ -1118,9 +1117,13 @@
     "unauthorized": "Ongeautoriseerde bewerking",
     "underline": "benadrukken",
     "undo": "Ongedaan maken",
-    "video": "Video",
+    "video": {
+      "label": "Video",
+      "error": "De link moet een YouTube of Vimeo video zijn."
+    },
     "save": "Opslaan zonder afsluiten",
-    "server-offline": "Server is offline."
+    "server-offline": "Server is offline.",
+    "delete_image": "Afbeelding verwijderen"
   },
   "homeCarousel": {
     "tab1": {
@@ -1576,7 +1579,6 @@
       "resize-image": "Herframe",
       "title-label": "Titel toevoegen",
       "title-placeholder": "Wat is de naam van dit project?",
-      "upload-image": "Een afbeelding uploaden",
       "title-errors": {
         "required": "Het titelveld is vereist",
         "max": "Het titelveld mag niet groter zijn dan 180 tekens"
@@ -1707,7 +1709,6 @@
     "edit-link": "Verwijzing bewerken",
     "edit-file": "Bestand bewerken",
     "max-size": "Max. 10MB",
-    "invalid-image": "Niet ondersteund bestand ... is dit een afbeelding ?",
     "error-uploading-image": "Fout bij uploaden van afbeelding",
     "cannot-upload-image": "Kan afbeelding voorlopig niet uploaden",
     "link-address": "Linkadres",
@@ -1721,7 +1722,10 @@
       "label": "Bestand | Bestanden",
       "delete": "Weet u zeker dat u dit bestand wilt verwijderen? | Weet u zeker dat u bestanden moet verwijderen?",
       "form": {
-        "too-big": "Bestand is te groot (max: {maxSize}Mb)"
+        "too-big": "Bestand is te groot (max: {maxSize}Mb)",
+        "invalid-image": "Niet-ondersteund bestand, moet een geldige afbeelding zijn.",
+        "required-image": "Een bestand is vereist",
+        "required": "Een bestand is vereist"
       }
     },
     "link": {
@@ -1729,7 +1733,8 @@
       "edit": "Verwijzing bewerken | Links bewerken",
       "label": "Linkadres | Links adres",
       "delete": "Weet u zeker dat u deze link wilt verwijderen? | Weet u zeker dat u links moet verwijderen?"
-    }
+    },
+    "upload-image": "Een afbeelding uploaden"
   },
   "result_box": {
     "people": "mensen",

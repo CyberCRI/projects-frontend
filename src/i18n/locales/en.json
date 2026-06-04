@@ -533,7 +533,6 @@
     "edit": "Edit",
     "order-asc": "oldest to newest",
     "order-desc": "newest to oldest",
-    "file-required": "A file is required",
     "for": "for",
     "groups": "Groups",
     "index": "Index",
@@ -1065,6 +1064,7 @@
     "delete_column": "Delete this column",
     "delete_row": "Delete this row",
     "delete_table": "Delete Table",
+    "delete_image": "Delete image",
     "delete_video": "Delete video",
     "external_link": "Open Link",
     "heading_1": "Heading 1",
@@ -1119,7 +1119,10 @@
     "unauthorized": "Unauthorized edit",
     "underline": "underline",
     "undo": "Undo",
-    "video": "Video",
+    "video": {
+      "label": "Video",
+      "error": "The link must be a YouTube or Vimeo video."
+    },
     "save": "Save without exiting"
   },
   "homeCarousel": {
@@ -1585,7 +1588,6 @@
       "resize-image": "Reframe",
       "title-label": "Add a title",
       "title-placeholder": "What is the name of this project?",
-      "upload-image": "Upload an image",
       "comment": "The comment field is required.",
       "title-errors": {
         "required": "The title field is required",
@@ -1707,8 +1709,8 @@
     "edit-link": "Edit a link",
     "edit-file": "Edit a file",
     "max-size": "Max size 10MB",
-    "invalid-image": "Unsupported file ... is this an image ?",
     "error-uploading-image": "Error while uploading image ",
+    "upload-image": "Upload an image",
     "cannot-upload-image": "Cannot upload image for now",
     "link-address": "Link address",
     "resources": "Resource | Resources",
@@ -1721,7 +1723,10 @@
       "label": "File | Files",
       "delete": "Are you sure to delete this file ? | Are you sure to delete files ?",
       "form": {
-        "too-big": "File is too big (max: {maxSize}Mb)"
+        "too-big": "File is too big (max: {maxSize}Mb)",
+        "invalid-image": "Unsupported file, need to be a valid image.",
+        "required-image": "A file is required",
+        "required": "A file is required"
       }
     },
     "link": {

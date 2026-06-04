@@ -518,7 +518,6 @@
     "cant-quit-self": "Eres el último editor del equipo. Cada proyecto debe tener al menos un editor.\nPuede agregar otro editor antes de salir del proyecto, o eliminar el proyecto de la pestaña Configuración.",
     "cant-quit-other": "Este es el último editor del equipo. Cada proyecto debe tener al menos un editor.\nPuede agregar otro editor supressing este, o eliminar el proyecto de la pestaña Configuración.",
     "edit": "Editar",
-    "file-required": "Se requiere un archivo",
     "for": "para",
     "groups": "Grupos",
     "index": "Índice",
@@ -1118,9 +1117,13 @@
     "unauthorized": "Edición no autorizada",
     "underline": "Subsidio",
     "undo": "Undo",
-    "video": "Video",
+    "video": {
+      "label": "Video",
+      "error": "El enlace debe ser un video de YouTube o Vimeo."
+    },
     "save": "Guardar sin salir",
-    "server-offline": "El servidor está fuera de línea."
+    "server-offline": "El servidor está fuera de línea.",
+    "delete_image": "Eliminar la imagen"
   },
   "homeCarousel": {
     "tab1": {
@@ -1577,7 +1580,6 @@
       "resize-image": "Reframe",
       "title-label": "Añadir un título",
       "title-placeholder": "¿Cuál es el nombre de este proyecto?",
-      "upload-image": "Subir una imagen",
       "title-errors": {
         "required": "Se requiere el campo de título",
         "max": "El campo del título puede no ser mayor que 180 caracteres"
@@ -1707,7 +1709,6 @@
     "edit-link": "editar un enlace",
     "edit-file": "editar un archivo",
     "max-size": "Tamaño máximo 10MB",
-    "invalid-image": "Archivo sin soporte ... es esta una imagen ?",
     "error-uploading-image": "Error al subir la imagen",
     "cannot-upload-image": "No puedo subir la imagen por ahora",
     "link-address": "Dirección de enlace",
@@ -1721,7 +1722,10 @@
       "label": "Archivo | Archivos",
       "delete": "¿Estás seguro de eliminar este archivo ? | ¿Está seguro de borrar archivos?",
       "form": {
-        "too-big": "El archivo es demasiado grande (max: {maxSize}Mb)"
+        "too-big": "El archivo es demasiado grande (max: {maxSize}Mb)",
+        "invalid-image": "Archivo sin soporte, necesita ser una imagen válida.",
+        "required-image": "Se requiere un archivo",
+        "required": "Se requiere un archivo"
       }
     },
     "link": {
@@ -1729,7 +1733,8 @@
       "edit": "Editar un enlace | Editar enlaces",
       "label": "Enlace | Enlaces",
       "delete": "¿Está seguro de borrar este enlace? | ¿Está seguro de borrar enlaces ?"
-    }
+    },
+    "upload-image": "Subir una imagen"
   },
   "result_box": {
     "people": "gente",

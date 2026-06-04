@@ -1,11 +1,11 @@
 import type { BaseLocationModel, BaseTranslatedLocationModel } from '~/models/location.model'
 import type { OrganizationModel } from '~/models/organization.model'
 import type { TagModel } from '~/models/tag.model'
-import type { Image } from '~/models/image.model'
 
 import type { Translated } from '~/interfaces/translated'
 
 import type { IconImageChoice } from '~/functs/IconImage'
+import type { ImageModel } from '~/models/image.model'
 import type { GroupDataRole } from '~/models/types'
 
 export type SubGroup = {
@@ -23,7 +23,7 @@ export interface PeopleGroupModel {
   email: string
   type: string
   role?: GroupDataRole
-  header_image: Image
+  header_image: ImageModel
   publication_status: string
   organization: OrganizationModel
   children: PeopleGroupModel[]

@@ -1,5 +1,6 @@
 import type { ValidationRuleWithoutParams, ValidationRuleWithParams } from '@vuelidate/core'
 import { required, url } from '@vuelidate/validators'
+import { MIMETYPES_IMAGES } from '~/functs/constants'
 import { textIsEmpty } from '~/functs/string'
 
 /**
@@ -42,12 +43,35 @@ export const maxFileSize = (maxSize: number): ValidationRuleWithParams => ({
     // convert maxsize to Mo
     const maxSizeMo = Math.round(maxSize / 1024 / 1024)
 
-    return t('resource.file-too-big', { maxSize: maxSizeMo })
+    return t('resource.file.form.too-big', { maxSize: maxSizeMo })
   },
   $params: {
     maxSize,
   },
 })
+
+/**
+ * check if file is a valid image (from mimetype)
+ *
+ * @constant
+ * @name isImageFile
+ * @kind variable
+ * @type {ValidationRuleWithoutParams<any>}
+ * @exports
+ */
+export const isImageFile: ValidationRuleWithoutParams = {
+  $validator: (value?: File) => {
+    if (!value) {
+      return true
+    }
+    return MIMETYPES_IMAGES.includes(value.type)
+  },
+  $message: () => {
+    const { t } = useNuxtI18n()
+
+    return t('resource.form.file.invalid-image')
+  },
+}
 
 /**
  * ignore url without http/https

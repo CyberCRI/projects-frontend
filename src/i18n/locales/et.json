@@ -518,7 +518,6 @@
     "cant-quit-self": "Sa oled meeskonna viimane toimetaja. Igal projektil peab olema vähemalt üks toimetaja.\nVõite enne projektist lahkumist lisada teise redaktori või kustutada projekti kaardilt Seadistused.",
     "cant-quit-other": "See on meeskonna viimane toimetaja. Igal projektil peab olema vähemalt üks toimetaja.\nVõite lisada mõne muu redaktori, mis seda alla surub, või kustutada projekti kaardilt Seadistused.",
     "edit": "Edit",
-    "file-required": "Vajalik on fail",
     "for": "jaoks",
     "groups": "Grupid",
     "index": "Indeks",
@@ -1118,9 +1117,13 @@
     "unauthorized": "Autoriseerimata redigeerimine",
     "underline": "alla",
     "undo": "Võta tagasi",
-    "video": "Video",
+    "video": {
+      "label": "Video",
+      "error": "Link peab olema YouTube'i või Vimeo video."
+    },
     "save": "Salvestamine väljumata",
-    "server-offline": "Server on välja lülitatud."
+    "server-offline": "Server on välja lülitatud.",
+    "delete_image": "Kustuta pilt"
   },
   "homeCarousel": {
     "tab1": {
@@ -1576,7 +1579,6 @@
       "resize-image": "Reframeeri",
       "title-label": "Lisa pealkiri",
       "title-placeholder": "Mis selle projekti nimi on?",
-      "upload-image": "Pildi üleslaadimine",
       "title-errors": {
         "required": "Tiitliväli on nõutav",
         "max": "Tiitliväli ei tohi olla suurem kui 180 märki"
@@ -1707,7 +1709,6 @@
     "edit-link": "Muuda linki",
     "edit-file": "Faili redigeerimine",
     "max-size": "Maksimaalne suurus 10 MB",
-    "invalid-image": "Toetamata fail ... Kas see on pilt?",
     "error-uploading-image": "Viga pildi üleslaadimisel",
     "cannot-upload-image": "Pildi üleslaadimine nurjus",
     "link-address": "Linki aadress",
@@ -1721,7 +1722,10 @@
       "label": "Fail | Failid",
       "delete": "Kas tõesti kustutada see fail? | Kas tõesti kustutada failid?",
       "form": {
-        "too-big": "Fail on liiga suur (maksimaalselt: {maxSize}Mb)"
+        "too-big": "Fail on liiga suur (maksimaalselt: {maxSize}Mb)",
+        "invalid-image": "Toetamata fail peab olema korrektne pilt.",
+        "required-image": "Vajalik on fail",
+        "required": "Vajalik on fail"
       }
     },
     "link": {
@@ -1729,7 +1733,8 @@
       "edit": "Muuda linki | Viitade muutmine",
       "label": "Link aadress | Linkide aadress",
       "delete": "Kas tõesti kustutada see link? | Kas tõesti kustutada lingid?"
-    }
+    },
+    "upload-image": "Pildi üleslaadimine"
   },
   "result_box": {
     "people": "inimesi",

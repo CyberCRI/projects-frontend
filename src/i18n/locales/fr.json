@@ -520,7 +520,6 @@
     "cant-quit-self": "Vous êtes le dernier éditeur de l’équipe. Tout projet doit avoir au moins un éditeur.\nVous pouvez soit ajouter un autre éditeur avant de quitter le projet, soit supprimer le projet depuis l’onglet Configuration.",
     "cant-quit-other": "C'est le dernier éditeur de l’équipe. Tout projet doit avoir au moins un éditeur.\nVous pouvez soit ajouter un autre éditeur avant de supprimer celui-ci, soit supprimer le projet depuis l’onglet Configuration.",
     "edit": "Modifier",
-    "file-required": "Un fichier est requis",
     "for": "pour",
     "groups": "Groupes",
     "index": "Index",
@@ -1203,9 +1202,13 @@
     "unauthorized": "Édition non autorisée",
     "underline": "souligné",
     "undo": "Annuler",
-    "video": "Vidéo",
+    "video": {
+      "label": "Vidéo",
+      "error": "Le lien doit être une vidéo YouTube ou Vimeo."
+    },
     "save": "Enregistrer sans quitter",
-    "server-offline": "Le serveur est hors ligne."
+    "server-offline": "Le serveur est hors ligne.",
+    "delete_image": "Supprimer l'image"
   },
   "homeCarousel": {
     "tab1": {
@@ -1662,7 +1665,6 @@
       "resize-image": "Recadrer",
       "title-label": "Ajouter un titre",
       "title-placeholder": "Comment s'appelle ce projet ?",
-      "upload-image": "Télécharger une image",
       "title-errors": {
         "required": "Le champ titre est obligatoire",
         "max": "Le champ title ne peut pas contenir plus de 120 caractères"
@@ -1792,7 +1794,6 @@
     "edit-link": "Modifier un lien",
     "edit-file": "Modifier un fichier",
     "max-size": "Taille max. 10Mo",
-    "invalid-image": "Fichier non supporté... est-ce bien une image ?",
     "error-uploading-image": "Erreur à la sauvegarde de l'image ",
     "cannot-upload-image": "Impossible de sauveagrder l'image pour l'instant",
     "link-address": "Url du lien",
@@ -1806,7 +1807,10 @@
       "label": "Fichier | Fichiers",
       "delete": "Êtes-vous sûr de supprimer ce fichier ? | Êtes-vous sûr de supprimer les fichiers ?",
       "form": {
-        "too-big": "Le fichier est trop grand (max: {maxSize}Mb)"
+        "too-big": "Le fichier est trop grand (max: {maxSize}Mb)",
+        "invalid-image": "Fichier non pris en charge, doit être une image valide.",
+        "required-image": "Un fichier est requis",
+        "required": "Un fichier est requis"
       }
     },
     "link": {
@@ -1814,7 +1818,8 @@
       "edit": "Modifier un lien | Modifier les liens",
       "label": "Adresse du lien | Liens Adresse",
       "delete": "Êtes-vous sûr de supprimer ce lien ? | Êtes-vous sûr de supprimer les liens ?"
-    }
+    },
+    "upload-image": "Télécharger une image"
   },
   "result_box": {
     "people": "personnes",

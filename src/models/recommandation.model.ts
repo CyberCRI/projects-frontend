@@ -12,7 +12,7 @@ import type { TemplateModel } from '~/models/template.model'
 import type { CommentOutput } from '~/models/comment.model'
 import type { FollowOutput } from '~/models/follow.model'
 import type { ReviewModel } from '~/models/review.model'
-import type { ImageOutput } from '~/models/image.model'
+import type { ImageModel } from '~/models/image.model'
 import type { GoalOutput } from '~/models/goal.model'
 import type { SdgOutput } from '~/models/sdg.model'
 import type BaseModel from '~/models/base.model'
@@ -108,7 +108,7 @@ export type ProjectOutput = Required<ProjectModel> & {
   links: AttachmentLinkOutput[]
   files: AttachmentFileOutput[]
   linked_projects: LinkedProject[]
-  images: ImageOutput[]
+  images: ImageModel[]
   comments: CommentOutput[]
   blog_entries: BlogEntryOutput[]
   announcements: AnnouncementModel[]

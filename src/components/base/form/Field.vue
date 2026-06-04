@@ -1,17 +1,19 @@
 <template>
   <div :class="{ 'big-input': bigInput, disabled: disabled }" class="input-ctn">
     <slot name="label">
-      <div class="label-form">
-        <label v-if="label" v-bind="attrsLabel" class="skeletons-text">
-          {{ formatedLabel }}
-        </label>
-        <slot name="in-label" />
+      <div class="field-header">
+        <div class="label-form">
+          <label v-if="label" v-bind="attrsLabel" class="skeletons-text">
+            {{ formatedLabel }}
+          </label>
+          <slot name="in-label" />
+        </div>
+        <span v-if="help" class="description skeletons-text">
+          <slot name="help">
+            {{ help }}
+          </slot>
+        </span>
       </div>
-      <span v-if="help" class="description skeletons-text">
-        <slot name="help">
-          {{ help }}
-        </slot>
-      </span>
     </slot>
 
     <slot />
@@ -63,15 +65,23 @@ const formatedLabel = computed(() => {
   flex-direction: column;
   align-items: flex-start;
 
-  label {
-    font-size: $font-size-s;
-    font-weight: bold;
+  .description {
+    opacity: 0.7;
+  }
+
+  .field-header {
+    width: 100%;
     margin-bottom: $space-m;
-    color: $black;
 
     &.large-space {
       margin-bottom: $space-l;
     }
+  }
+
+  label {
+    font-size: $font-size-s;
+    font-weight: bold;
+    color: $black;
   }
 
   small {

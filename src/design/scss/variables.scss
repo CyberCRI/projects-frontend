@@ -107,8 +107,8 @@ $zindex-fixed: 1030;
 $zindex-modal: 1050;
 $zindex-navbar: 1080;
 $zindex-drawer: 1080;
-$zindex-modal-backdrop: 3000;
-$zindex-toast: 4000;
+$zindex-modal-backdrop: 9990000;
+$zindex-toast: 500000;
 
 // CARDS
 $card_width: pxToRem(184px);

@@ -22,27 +22,16 @@ export type ImageModel = BaseModel &
       small: string
     }
   }
+// when created return static_url
+export type ImageModealCreated = ImageModel & {
+  static_url: string
+}
 
 export type ImageVariations = keyof ImageModel['variations']
-
-export type Image = ImageModel &
-  ImageSizesFromApi & {
-    variations: {
-      full: string
-      large: string
-      medium: string
-      small: string
-      original: string
-    }
-  }
-
-export type ImageOutput = Required<ImageModel>
 
 export type ImageOrganizationOutput = Partial<ImageModel> & {
   gallery: string
 }
-
-export type ImageTemplateOutput = Partial<ImageModel>
 
 export type ImageInput = Partial<ImageModel> & {
   project_id: string

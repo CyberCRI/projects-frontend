@@ -518,7 +518,6 @@
     "cant-quit-self": "Ets l'últim editor de l'equip. Cada projecte ha de tenir com a mínim un editor.\nPodeu afegir un altre editor abans d' abandonar el projecte o eliminar el projecte des de la pestanya Configuració.",
     "cant-quit-other": "Aquest és l'últim editor de l'equip. Cada projecte ha de tenir com a mínim un editor.\nPodeu afegir un altre editor supressió aquest, o eliminar el projecte de la pestanya Configuració.",
     "edit": "Edita",
-    "file-required": "Es requereix un fitxerName",
     "for": "per",
     "groups": "Grups",
     "index": "Índex",
@@ -1118,9 +1117,13 @@
     "unauthorized": "Edició no autoritzat",
     "underline": "subratllada",
     "undo": "Desfés",
-    "video": "Vídeo",
+    "video": {
+      "label": "Vídeo",
+      "error": "L'enllaç ha de ser un vídeo de YouTube o Vimeo."
+    },
     "save": "Desa sense sortir",
-    "server-offline": "El servidor està fora de línia."
+    "server-offline": "El servidor està fora de línia.",
+    "delete_image": "Esborra la imatge"
   },
   "homeCarousel": {
     "tab1": {
@@ -1576,7 +1579,6 @@
       "resize-image": "Rel· la",
       "title-label": "Afegeix un títol",
       "title-placeholder": "Com es diu aquest projecte?",
-      "upload-image": "Puja una imatge",
       "title-errors": {
         "required": "Cal el camp de títol",
         "max": "El camp títol no pot ser més gran que 180 caràcters"
@@ -1707,7 +1709,6 @@
     "edit-link": "Edita un enllaç",
     "edit-file": "Edita un fitxer",
     "max-size": "Mida màx. 10MB",
-    "invalid-image": "Fitxer no acceptat... és aquesta una imatge?",
     "error-uploading-image": "S' ha produït un error en pujar la imatge",
     "cannot-upload-image": "No es pot pujar la imatge per ara",
     "link-address": "Adreça de l' enllaç",
@@ -1721,7 +1722,10 @@
       "label": "Fitxer | Fitxers",
       "delete": "Esteu segur d' eliminar aquest fitxer? | Esteu segur d' esborrar els fitxers?",
       "form": {
-        "too-big": "El fitxer és massa gran (màx. {maxSize}Mb)"
+        "too-big": "El fitxer és massa gran (màx. {maxSize}Mb)",
+        "invalid-image": "Fitxer no acceptat, ha de ser una imatge vàlida.",
+        "required-image": "Es requereix un fitxer",
+        "required": "Es requereix un fitxer"
       }
     },
     "link": {
@@ -1729,7 +1733,8 @@
       "edit": "Edita un enllaç | Edita els enllaços",
       "label": "Adreça d' enllaç | Adreça dels enllaços",
       "delete": "Esteu segur d' esborrar aquest enllaç? | Esteu segur d' esborrar els enllaços?"
-    }
+    },
+    "upload-image": "Puja una imatge"
   },
   "result_box": {
     "people": "gent",
