@@ -233,7 +233,8 @@
       "agent-skills": "Agent skills",
       "agents": "Agents",
       "conversations": "Conversations",
-      "checkpoints": "Checkpoints"
+      "checkpoints": "Checkpoints",
+      "side-assistant": "Side assistant"
     },
     "page-title": "Admin",
     "portal": {
@@ -3256,5 +3257,11 @@
       "model-temperature-is-bounded": "Model temperature must be between 0 and 2",
       "prompt-required": "Prompt is required"
     }
+  },
+  "side-assistant": {
+    "default": "Default",
+    "save-success": "Side assistant saved",
+    "save-error": "Error while saving side assistant",
+    "choose": "Choose an agent for the side assistant"
   }
 }

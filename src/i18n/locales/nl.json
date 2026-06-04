@@ -226,7 +226,8 @@
       "agent-skills": "Vaardigheden van de agent",
       "agents": "Agenten",
       "conversations": "Gesprekken",
-      "checkpoints": "Checkpoints"
+      "checkpoints": "Checkpoints",
+      "side-assistant": "Zij-assistent"
     },
     "page-title": "Beheerder",
     "portal": {
@@ -3255,5 +3256,11 @@
       "model-temperature-is-bounded": "Modeltemperatuur moet tussen 0 en 2 liggen",
       "prompt-required": "Prompt is verplicht"
     }
+  },
+  "side-assistant": {
+    "default": "Default",
+    "save-success": "Side assistant saved",
+    "save-error": "Error while saving side assistant",
+    "choose": "Choose an agent for the side assistant"
   }
 }

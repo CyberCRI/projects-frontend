@@ -226,7 +226,8 @@
       "agent-skills": "Agendi oskused",
       "agents": "Agendid",
       "conversations": "Vestlused",
-      "checkpoints": "Checkpoints"
+      "checkpoints": "Checkpoints",
+      "side-assistant": "Külgne assistent"
     },
     "page-title": "Admin",
     "portal": {
@@ -3255,5 +3256,11 @@
       "model-temperature-is-bounded": "Mudeli temperatuur peab jääma vahemikku 0 kuni 2",
       "prompt-required": "Prompt on nõutud"
     }
+  },
+  "side-assistant": {
+    "default": "Default",
+    "save-success": "Side assistant saved",
+    "save-error": "Error while saving side assistant",
+    "choose": "Choose an agent for the side assistant"
   }
 }

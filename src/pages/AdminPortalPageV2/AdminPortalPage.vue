@@ -65,6 +65,14 @@ const tabs = computed(() => {
         condition: true,
       },
       {
+        key: 'admin-side-assistant',
+        label: t('admin.tabs.side-assistant'),
+        view: { name: 'SideAssistantAdminTab' },
+        props: {},
+        icon: 'Article', // TODO: use a bulb or db icon
+        condition: true,
+      },
+      {
         key: 'admin-conversations',
         label: t('admin.tabs.conversations'),
         view: { name: 'ConversationsAdminTab' },

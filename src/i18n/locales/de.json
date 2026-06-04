@@ -226,7 +226,8 @@
       "agent-skills": "Agentenfähigkeiten",
       "agents": "Agenten",
       "conversations": "Gespräche",
-      "checkpoints": "Checkpoints"
+      "checkpoints": "Checkpoints",
+      "side-assistant": "Nebenassistent"
     },
     "page-title": "Admin",
     "portal": {
@@ -3255,5 +3256,11 @@
       "model-temperature-is-bounded": "Die Modelltemperatur muss zwischen 0 und 2 liegen",
       "prompt-required": "Prompt ist erforderlich"
     }
+  },
+  "side-assistant": {
+    "default": "Default",
+    "save-success": "Side assistant saved",
+    "save-error": "Error while saving side assistant",
+    "choose": "Choose an agent for the side assistant"
   }
 }

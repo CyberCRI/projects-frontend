@@ -226,7 +226,8 @@
       "agent-skills": "Habilitats de l'agent",
       "agents": "Agents",
       "conversations": "Converses",
-      "checkpoints": "Checkpoints"
+      "checkpoints": "Checkpoints",
+      "side-assistant": "Ajudant lateral"
     },
     "page-title": "Administrador",
     "portal": {
@@ -3255,5 +3256,11 @@
       "model-temperature-is-bounded": "La temperatura del model ha d'estar entre 0 i 2",
       "prompt-required": "L'indicació (prompt) és obligatòria"
     }
+  },
+  "side-assistant": {
+    "default": "Default",
+    "save-success": "Side assistant saved",
+    "save-error": "Error while saving side assistant",
+    "choose": "Choose an agent for the side assistant"
   }
 }

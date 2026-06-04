@@ -27,6 +27,15 @@ export default defineLazyEventHandler(() => {
         slug: slug,
         orgCode: appApiOrgCode,
       },
+      select: {
+        id: true,
+        title: true,
+        slug: true,
+        description: true,
+        startMessage: true,
+        useProfileData: true,
+        isEnabled: true,
+      },
     })
 
     // console.log(agent)

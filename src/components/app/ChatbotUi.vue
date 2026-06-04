@@ -85,7 +85,7 @@ const requestInterceptor = (requestDetails) => {
       [requestDetails.body.messages[requestDetails.body.messages.length - 1]]
     : // but initial request has also context messages
       [...props.contextMessages, ...welcoming, ...requestDetails.body.messages]
-  console.log('allMessages', allMessages)
+  // console.log('allMessages', allMessages)
   conversationStarted.value = true
   addToConversation(...allMessages)
   requestDetails.body.messages = allMessages
@@ -315,7 +315,11 @@ function onMessage(event) {
   nextTick(scrollToBottom)
 }
 
-defineExpose({ resetChat, scrollToBottom })
+function submitUserMessage(message) {
+  chatBox.value?.submitUserMessage({ text: message })
+}
+
+defineExpose({ resetChat, scrollToBottom, submitUserMessage })
 
 watch(
   () => conversationStarted.value,

@@ -233,7 +233,8 @@
       "agent-skills": "Compétences de l'agent",
       "agents": "Agents",
       "conversations": "Conversations",
-      "checkpoints": "Checkpoints"
+      "checkpoints": "Checkpoints",
+      "side-assistant": "Assistant latéral"
     },
     "page-title": "Admin",
     "portal": {
@@ -3255,5 +3256,11 @@
       "model-temperature-is-bounded": "La température du modèle doit être comprise entre 0 et 2",
       "prompt-required": "L'invite est requise"
     }
+  },
+  "side-assistant": {
+    "default": "Défaut",
+    "save-success": "L'assistant latéral est sauvegardé",
+    "save-error": "Erreur lors de la sauvegarde de l'assistant latéral",
+    "choose": "Choisir un agent pour l'assistant latéral"
   }
 }

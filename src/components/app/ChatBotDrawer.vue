@@ -1,12 +1,15 @@
 <script setup>
+import useUsersStore from '~/stores/useUsers'
 import { shuffle } from 'es-toolkit'
 import analytics from '~/analytics'
 import 'deep-chat'
 
+const usersStore = useUsersStore()
+
 const props = defineProps({
   isOpened: { type: Boolean, default: false },
 })
-
+const conversationHasBegin = ref(false)
 const conversation = ref(null)
 const conversationId = ref(null)
 const tempKey = ref(Date.now())
@@ -15,6 +18,7 @@ function onConversationRestarted() {
   conversation.value = null
   conversationId.value = null
   tempKey.value = Date.now()
+  conversationHasBegin.value = false
 }
 
 watch(
@@ -40,10 +44,48 @@ defineEmits(['close'])
 
 const CHAT_ENDPOINT = ref(useRuntimeConfig().public.appChatbotBackend || '/api/chat-lg-stream')
 
+const isLoading = ref(false)
+
+const agent = ref({
+  id: 0,
+  title: '',
+  description: '',
+  startMessage: '',
+  useProfileData: true,
+})
+
+const agentList = ref([])
+
 const chatbotUi = useTemplateRef('chatbotUi')
 
 const hasUserContext = ref(true)
 const hasPageContext = ref(true)
+onMounted(() => {
+  if (useRuntimeConfig().public.appHasChatbotPromptDb) {
+    ;(async () => {
+      isLoading.value = true
+      try {
+        let headers = {}
+        const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
+        if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
+        const sideAssistant = await $fetch('/api/side-assistant')
+        console.log('sideAssisant', sideAssistant)
+        if (sideAssistant && sideAssistant.agentId) {
+          CHAT_ENDPOINT.value = '/api/chatbot/chat?id=' + sideAssistant.agentId
+          agent.value = sideAssistant.agent
+          hasUserContext.value = agent.value.useProfileData
+        }
+        const publicAgents = await $fetch('/api/agent/public-list', { headers })
+        console.log('publicAgents', publicAgents)
+        agentList.value = publicAgents.filter((publicAgent) => publicAgent.id != agent.value.id)
+      } catch (e) {
+        console.log(e)
+      } finally {
+        isLoading.value = false
+      }
+    })()
+  }
+})
 
 const { computePageContext, contextMessages } = useChatbotContext({
   hasUserContext,
@@ -83,7 +125,9 @@ const suggestButtons = ref(setExemples())
 
 const startConversation = () => {
   // conversation was reset
+  console.log('start conversation')
   suggestButtons.value = setExemples()
+  conversationHasBegin.value = true
 }
 
 watch(
@@ -101,31 +145,45 @@ watch(
 //     text: pageContext.value,
 //   },
 // ])
+//
+function onSuggestButtonClick(message) {
+  chatbotUi.value.submitUserMessage(message)
+}
 </script>
 
 <template>
   <BaseDrawer
     class="medium"
     :is-opened="isOpened"
-    :title="$t('chatbot.title')"
+    :title="agent?.title || $t('chatbot.title')"
     no-footer
     @close="$emit('close')"
   >
-    <ChatbotUi
-      ref="chatbotUi"
-      :key="chatbotUiKey"
-      :endpoint="CHAT_ENDPOINT"
-      :context-messages="contextMessages"
-      @start-conversation="startConversation"
-      @close="$emit('close')"
-      @conversation-restarted="onConversationRestarted"
-    >
-      <ChatbotOptions :has-user-context="hasUserContext" :has-page-context="hasPageContext" />
-
-      <div style="margin: 1rem; padding: 1rem; background-color: #f3f3f3; border-radius: 10px">
-        <p>
-          {{ $t('chatbot.intro-message') }}
-        </p>
+    <div v-if="isLoading" class="loader">
+      <LoaderSimple />
+    </div>
+    <template v-else>
+      <details v-if="agentList.length" class="special-agents-access">
+        <summary>Looking for a specialized agent ?</summary>
+        <ul>
+          <li v-for="specialAgent in agentList" :key="specialAgent.id">
+            <LinkButton
+              btn-icon="ArrowUpRightFromSquare"
+              :label="specialAgent.title"
+              :title="specialAgent.description?.replace(/<[^>]*?>/gim, '')"
+              :to="{ name: 'AgentPage', params: { agentSlug: specialAgent.slug } }"
+            />
+          </li>
+        </ul>
+      </details>
+      <AgentDescription v-if="!conversationHasBegin" :agent="agent" />
+      <ChatbotOptions
+        v-if="!conversationHasBegin"
+        :has-user-context="hasUserContext"
+        :has-page-context="hasPageContext"
+      />
+      <div v-if="!conversationHasBegin" class="ice-breakers">
+        <h4>Here's some ice-breakers:</h4>
         <menu v-if="suggestButtons?.length" class="prompt-suggestions" style="padding-left: 0">
           <li
             v-for="button in suggestButtons"
@@ -143,6 +201,50 @@ watch(
           </li>
         </menu>
       </div>
-    </ChatbotUi>
+      <ChatbotUi
+        ref="chatbotUi"
+        :key="chatbotUiKey"
+        :endpoint="CHAT_ENDPOINT"
+        :context-messages="contextMessages"
+        :start-message="agent?.startMessage || $t('chatbot.intro-message')"
+        @start-conversation="startConversation"
+        @close="$emit('close')"
+        @conversation-restarted="onConversationRestarted"
+      ></ChatbotUi>
+    </template>
   </BaseDrawer>
 </template>
+<style lang="scss" scoped>
+.loader {
+  display: flex;
+  justify-content: center;
+  padding-block: 2rem;
+}
+.special-agents-access {
+  text-align: right;
+  margin-bottom: 1rem;
+  summary {
+    color: $primary-dark;
+    font-size: 1.2em;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  &:open summary {
+    text-decoration: underline;
+  }
+  .link-button {
+    margin-top: 0.8rem;
+    width: max-content;
+    margin-left: auto;
+  }
+}
+.ice-breakers {
+  h4 {
+    color: $primary-dark;
+  }
+  margin: 1rem;
+  padding: 1rem;
+  border: 1px $primary-light solid;
+  border-radius: 10px;
+}
+</style>
