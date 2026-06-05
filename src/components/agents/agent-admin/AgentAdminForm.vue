@@ -285,8 +285,8 @@ const submit = async () => {
   try {
     const body = { ...form.value, startMessage: html2md(form.value.startMessage) }
     if (isEdit.value) {
-      await $fetch(`/api/agent/${props.agent.id}`, {
-        method: 'put',
+      await $fetch(`/api/agent/${props.agent.id}/`, {
+        method: 'put' as any, // weird issue with ts here :/
         body,
         headers,
       })
@@ -503,6 +503,7 @@ const submit = async () => {
   margin-top: 3rem;
   margin-inline: auto;
 }
+
 .warn-notice {
   display: block;
   border-left: 2px solid $salmon;

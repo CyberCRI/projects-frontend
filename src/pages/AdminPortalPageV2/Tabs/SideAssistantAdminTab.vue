@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import useToasterStore from '~/stores/useToaster.ts'
+import useToasterStore from '@/stores/useToaster'
 import useUsersStore from '@/stores/useUsers'
 const usersStore = useUsersStore()
 const toaster = useToasterStore()

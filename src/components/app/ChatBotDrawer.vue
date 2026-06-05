@@ -220,28 +220,34 @@ function onSuggestButtonClick(message) {
   justify-content: center;
   padding-block: 2rem;
 }
+
 .special-agents-access {
   text-align: right;
   margin-bottom: 1rem;
+
   summary {
     color: $primary-dark;
     font-size: 1.2em;
     cursor: pointer;
     font-weight: bold;
   }
+
   &:open summary {
     text-decoration: underline;
   }
+
   .link-button {
     margin-top: 0.8rem;
     width: max-content;
     margin-left: auto;
   }
 }
+
 .ice-breakers {
   h4 {
     color: $primary-dark;
   }
+
   margin: 1rem;
   padding: 1rem;
   border: 1px $primary-light solid;

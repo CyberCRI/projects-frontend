@@ -1,13 +1,7 @@
 <script setup>
-import { formatDateTime } from '~/functs/date'
-
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 // import useLoadingFromStatus from '@/composables/useLoadingFromStatus'
 import useUsersStore from '@/stores/useUsers'
-
-const { locale } = useNuxtI18n()
-
-const prettyDate = (s) => formatDateTime(new Date(s), locale.value)
 
 // type Params = Parameters<typeof useFetch>
 const usersStore = useUsersStore()
@@ -31,7 +25,7 @@ const options = {
 }
 
 const url = `/api/chatbot`
-const { data, status, error } = await useFetch(url, { ...options })
+const { data, status } = await useFetch(url, { ...options })
 const agents = computed(() => data.value?.agents)
 
 const isLoading = computed(() => status.value == 'pending')
@@ -94,6 +88,7 @@ useLpiHead2({
   gap: 1rem;
   margin-block: 2rem;
 }
+
 .intro {
   margin: 3rem auto;
   padding: 1rem;
@@ -102,6 +97,7 @@ useLpiHead2({
   max-width: 28rem;
   font-size: 1.2em;
 }
+
 .agent-card {
   display: flex;
   flex-flow: row;
@@ -110,22 +106,25 @@ useLpiHead2({
   border: 1px solid $primary-dark;
   border-radius: 0.5rem;
 }
+
 .picto {
-  flex-basis: 6rem;
-  flex-shrink: 0;
-  flex-grow: 0;
+  flex: 0 0 6rem;
+
   .agent-face {
     width: 5rem;
     fill: $yellow;
   }
 }
+
 .wording {
   flex-grow: 1;
+
   .title {
     color: $primary-dark;
     font-size: 1.3rem;
     font-weight: bold;
   }
+
   .description {
     margin-top: 1rem;
   }
