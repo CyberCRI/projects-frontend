@@ -1652,7 +1652,8 @@
     },
     "groups": "Groep | Groepen",
     "label": "project | projecten",
-    "actions": "Gevaarlijke maatregelen"
+    "actions": "Gevaarlijke maatregelen",
+    "review-not-editable": "U kunt geen beoordelingen aan dit project toevoegen; het project is momenteel niet open voor beoordeling."
   },
   "project_list": {
     "updated_at": "Laatste activiteit",

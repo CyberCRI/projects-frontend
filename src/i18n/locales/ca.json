@@ -1652,7 +1652,8 @@
     },
     "groups": "Grup | Grups",
     "label": "projecte | projectes",
-    "actions": "Acció perillosa"
+    "actions": "Acció perillosa",
+    "review-not-editable": "No podeu afegir revisions a aquest projecte; el projecte no està obert actualment per a revisar."
   },
   "project_list": {
     "updated_at": "L' últim actiu",

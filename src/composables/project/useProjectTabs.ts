@@ -126,6 +126,15 @@ export const useProjectTabs = (
         icon: ProjectModuleIcon.comments,
       },
       {
+        key: 'project-reviews',
+        label: t(ProjectModuleTitle.reviews, modules.value.reviews),
+        view: `/projects/${projectId.value}/reviews`,
+        altView: `/projects/${projectId.value}/reviews/edit`,
+        condition: !!modules.value.reviews,
+        dataTest: 'project-reviews',
+        icon: ProjectModuleIcon.reviews,
+      },
+      {
         key: 'project-private-exchange',
         label: t('comment.private-exchange.tab'),
         view: `/projects/${projectId.value}/private-exchange`,
@@ -138,6 +147,10 @@ export const useProjectTabs = (
   })
 
   const TabsDisplayFiltered = computed(() => TabsDisplay.value.filter((tab) => tab.condition))
+
+  watchEffect(() => {
+    console.log('WAT reviews', modules.value.reviews, project.value.life_status === 'toreview')
+  })
 
   const groupTabsEdit = computed(() =>
     [
@@ -240,6 +253,15 @@ export const useProjectTabs = (
         addModal: 'announcement',
       },
       {
+        key: 'project-reviews',
+        label: t(ProjectModuleTitle.reviews, modules.value.reviews),
+        view: `/projects/${projectId.value}/reviews/edit`,
+        altView: `/projects/${projectId.value}/reviews`,
+        condition: !!modules.value.reviews || project.value.life_status === 'toreview',
+        dataTest: 'project-reviews',
+        icon: ProjectModuleIcon.reviews,
+      },
+      {
         key: 'project-settings',
         label: t('project.settings'),
         view: `/projects/${projectId.value}/project-settings/edit`,
@@ -248,14 +270,16 @@ export const useProjectTabs = (
         dataTest: 'project-settings',
         icon: 'Cog',
       },
-    ].map((t) => ({
-      ...t,
-      isEditing: true,
-      isAddAction: !t.condition,
-      actionIcon: t.condition ? 'Pen' : 'Plus',
-      condition: true,
-      dataTest: t.dataTest + (t.condition ? '-edit' : '-add'),
-    }))
+    ]
+      .map((t) => ({
+        condition: true,
+        ...t,
+        isEditing: true,
+        isAddAction: !t.condition,
+        actionIcon: t.condition ? 'Pen' : 'Plus',
+        dataTest: t.dataTest + (t.condition ? '-edit' : '-add'),
+      }))
+      .filter((item) => item.condition)
   )
 
   const groupTabsEditFiltered = computed(() => groupTabsEdit.value.filter((tab) => tab.condition))

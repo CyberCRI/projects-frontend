@@ -62,13 +62,18 @@ const { stateModals, closeModals, openModals } = useModals({ saveChange: false }
 
 const { form, isValid, errors, cleanedData, reset } = useProjectReview({ lazy: true })
 
-const isFormEqual = computed(() => isEqual(form.value, defaultLocalForm()))
+const isFormEqual = useBlockNavigation(() => isEqual(form.value, defaultLocalForm()))
 
 watch(
-  () => [props.review, props.isOpened],
+  () => [props.project, props.review, props.isOpened],
   () => reset(defaultLocalForm()),
-  { immediate: true }
+  { immediate: true, deep: true }
 )
+
+const close = () => {
+  closeModals('saveChange')
+  emit('close')
+}
 
 const onSuccess = (body: ReviewForm, review: ReviewModel) => {
   const projectForm: ProjectForm = {
@@ -85,7 +90,7 @@ const onSuccess = (body: ReviewForm, review: ReviewModel) => {
 
   patchProject(props.project.id, projectForm).then(() => {
     emit('reload', review)
-    emit('close')
+    close()
   })
 }
 
@@ -101,10 +106,10 @@ const saveReview = (body: ReviewForm) => {
 const updateReview = (body: ReviewForm) => {
   return patchReview(props.project.id, props.review.id, body)
     .then((review) => {
-      toaster.pushSuccess(t('toasts.review-create.success'))
+      toaster.pushSuccess(t('toasts.review-update.success'))
       onSuccess(body, review)
     })
-    .catch(() => toaster.pushError(t('toasts.review-create.error')))
+    .catch(() => toaster.pushError(t('toasts.review-update.error')))
 }
 
 const submit = () => {
@@ -124,7 +129,7 @@ const submit = () => {
 
 const onClose = () => {
   if (isFormEqual.value) {
-    emit('close')
+    close()
   } else {
     openModals('saveChange')
   }
@@ -146,14 +151,19 @@ const onClose = () => {
       <TextInput v-model="form.title" :label="$t('common.title')" required :errors="errors.title" />
 
       <Field :label="$t('project.description')">
-        <TipTapEditor v-model="form.description" :errors="errors.description" />
+        <TipTapEditor
+          v-model="form.description"
+          required
+          class="w-full"
+          :errors="errors.description"
+        />
       </Field>
 
       <Field :label="$t('project.publish')">
         <SwitchInput v-model="form.publish" />
       </Field>
 
-      <Field label="$t('project.lock')">
+      <Field :label="$t('project.lock')">
         <SwitchInput v-model="form.lock" />
       </Field>
     </div>
@@ -164,7 +174,7 @@ const onClose = () => {
     :title="$t('form.quit-without-saving-title')"
     :content="$t('common.confirm-close')"
     @cancel="closeModals('saveChange')"
-    @confirm="$emit('close')"
+    @confirm="close"
   />
 </template>
 

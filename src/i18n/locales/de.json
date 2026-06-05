@@ -1652,7 +1652,8 @@
     },
     "groups": "Gruppe | Gruppen",
     "label": "Projekt | Projekte",
-    "actions": "Gefährliche Maßnahmen"
+    "actions": "Gefährliche Maßnahmen",
+    "review-not-editable": "Sie können Bewertungen zu diesem Projekt nicht hinzufügen; das Projekt ist derzeit nicht zur Überprüfung geöffnet."
   },
   "project_list": {
     "updated_at": "Letzter Beitrag",

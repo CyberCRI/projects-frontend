@@ -1652,7 +1652,8 @@
     },
     "groups": "Grupp | Grupid",
     "label": "projekti | projekte",
-    "actions": "Ohtlik tegevus"
+    "actions": "Ohtlik tegevus",
+    "review-not-editable": "Te ei saa sellele projektile kommentaare lisada; projekt ei ole praegu läbivaatamiseks avatud."
   },
   "project_list": {
     "updated_at": "Viimane aktiivne",

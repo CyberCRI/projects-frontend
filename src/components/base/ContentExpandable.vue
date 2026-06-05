@@ -51,18 +51,14 @@ const actualHeight = ref(0)
 const minHeight = computed(() => Math.min(props.heightLimit, actualHeight.value))
 const toggleDescription = () => (showLess.value = !showLess.value)
 
+// if state change, reverse value (oepend = true == showLess = false)
 watch(
   () => props.opened,
-  (val) => {
-    if (typeof val === 'boolean') {
-      showLess.value = !val
-    }
-  },
+  (val) => (showLess.value = !val),
   { immediate: true }
 )
 
 const checkLimited = throttle(() => {
-  console.log('checked')
   const rect = contentRef.value.getBoundingClientRect()
   actualHeight.value = rect.height
   isLimited.value = rect.height > props.heightLimit

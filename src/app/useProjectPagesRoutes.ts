@@ -94,6 +94,12 @@ export default function useProjectPagesRoutes() {
           component: () => import('../pages/ProjectPageV2/Tabs/Locations/ProjectLocationsTab.vue'),
         },
 
+        {
+          path: 'reviews',
+          name: 'ProjectReviews',
+          component: () => import('../pages/ProjectPageV2/Tabs/Reviews/ProjectReviewsTab.vue'),
+        },
+
         // EDIT PATHS
 
         {
@@ -160,13 +166,6 @@ export default function useProjectPagesRoutes() {
             requiresAuth: true,
           },
         },
-        // {
-        //   path: 'ressources/edit', // back compatibility with old routes
-        //   redirect: 'resourcesEdit',
-        //   meta: {
-        //     requiresAuth: true,
-        //   },
-        // },
         {
           path: 'resources/edit',
           name: 'projectResourcesEdit',
@@ -205,6 +204,14 @@ export default function useProjectPagesRoutes() {
           path: 'locations/edit',
           name: 'ProjectLocationsEdit',
           component: () => import('../pages/ProjectPageV2/Tabs/Locations/ProjectLocationsTab.vue'),
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
+          path: 'reviews/edit',
+          name: 'ProjectReviewsEdit',
+          component: () => import('../pages/ProjectPageV2/Tabs/Reviews/ProjectReviewsTab.vue'),
           meta: {
             requiresAuth: true,
           },

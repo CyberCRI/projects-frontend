@@ -91,7 +91,7 @@ export const ProjectModuleIcon: { [key in ProjectModuleExtra]: IconImageChoice }
   linked_projects: 'LinkRotated',
   comments: 'ChatBubble',
   groups: 'Briefcase',
-  reviews: 'Alert',
+  reviews: 'Feedback',
   messages: 'ChatBubble',
 }
 

@@ -1652,7 +1652,8 @@
     },
     "groups": "Grupo | Grupos",
     "label": "proyecto | proyectos",
-    "actions": "Acción peligrosa"
+    "actions": "Acción peligrosa",
+    "review-not-editable": "Usted no puede añadir comentarios a este proyecto; el proyecto no está actualmente abierto para su revisión."
   },
   "project_list": {
     "updated_at": "Último activo",

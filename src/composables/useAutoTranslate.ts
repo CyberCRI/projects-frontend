@@ -22,6 +22,7 @@ import type { TranslatedDocument } from '@/interfaces/researcher'
 import type { TranslatedEventModel } from '@/models/event.model'
 import type { TranslatedComment } from '@/models/comment.model'
 import type { TranslatedUserModel } from '@/models/user.model'
+import type { TranslatedReview } from '~/models/review.model'
 import type { TranslatedNews } from '@/models/news.model'
 import type { TranslatedGoal } from '@/models/goal.model'
 import type { TranslatedTag } from '~/models/tag.model'
@@ -150,8 +151,10 @@ export default function useAutoTranslate() {
   const translateAnnouncements = (announcements) =>
     translateEntities<TranslatedAnnouncement>(announcements, translateAnnouncement)
 
-  const translateReview = (review) => translateEntity(review, ['title', 'description'])
-  const translateReviews = (reviews) => translateEntities(reviews, translateReview)
+  const translateReview = (review) =>
+    translateEntity<TranslatedReview>(review, ['title', 'description'])
+  const translateReviews = (reviews) =>
+    translateEntities<TranslatedReview>(reviews, translateReview)
 
   const translateLink = (link: RefOrRaw<AttachmentLinkModel>) =>
     translateEntity<TranslatedAttachmentLink>(link, ['title', 'description'])

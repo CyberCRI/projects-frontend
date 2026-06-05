@@ -1737,7 +1737,8 @@
     },
     "groups": "Groupe | Groupes",
     "label": "projet | projets",
-    "actions": "Action dangereuse"
+    "actions": "Action dangereuse",
+    "review-not-editable": "Vous ne pouvez pas ajouter d'avis à ce projet; le projet n'est pas actuellement ouvert à l'examen."
   },
   "project_list": {
     "updated_at": "Dernier actif",

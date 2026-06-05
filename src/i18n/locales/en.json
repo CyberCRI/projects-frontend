@@ -1629,6 +1629,7 @@
     "review-confirm-delete": "Are you sure to delete this review?",
     "reviewable": "Ready for review",
     "reviewed-on-the": "reviewed on the",
+    "review-not-editable": "You cannot add reviews to this project; the project is not currently open for review.",
     "remove-group": "Delete group",
     "remove-user-title": "Delete user",
     "remove-user": "Delete",
