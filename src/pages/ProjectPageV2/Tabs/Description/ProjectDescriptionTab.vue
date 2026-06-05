@@ -34,6 +34,7 @@ import PageIndex from '~/components/base/navigation/PageIndex.vue'
 import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
 import type { TranslatedProject } from '~/models/project.model'
 import NothingHere from '~/components/base/NothingHere.vue'
+import { onClient } from '~/composables/onClient'
 import { textIsEmpty } from '~/functs/string'
 
 const props = defineProps<{
@@ -58,8 +59,7 @@ watch(description, (neo, old) => {
   }
 })
 
-const scrollToSection = (targetId) => {
-  if (!import.meta.client) return
+const scrollToSection = onClient((targetId) => {
   const target = document.getElementById(`anchor-${targetId}`)
   let offset = 20
   const header = document.querySelector('.header__container')
@@ -80,7 +80,7 @@ const scrollToSection = (targetId) => {
       behavior: 'smooth',
     })
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

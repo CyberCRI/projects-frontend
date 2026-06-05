@@ -69,12 +69,6 @@ const isFormEqual = useBlockNavigation(() => {
     ? 1
     : editorRef.value?.editor?.storage?.collaborationCursor?.users?.length || 0
 
-  console.error('ISFORMEUAL')
-  console.error(
-    form.value.description.length,
-    defaultLocalForm().description.length,
-    isEqual(form.value, defaultLocalForm())
-  )
   // if form is same or your are in multiple user editor
   return isEqual(form.value, defaultLocalForm()) || numberEditor !== 1
 })

@@ -4,6 +4,7 @@ import useProjectCategories from '~/stores/useProjectCategories'
 import { onResize } from '~/composables/onResize'
 
 import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
+import { resetScroll } from '~/composables/useScrollToTab'
 
 const { t } = useNuxtI18n()
 const route = useRoute()
@@ -18,7 +19,7 @@ if (!projectCategoriesStore.all || !projectCategoriesStore.all.length) {
 const category = computed(() => {
   const slugOrId = route.params.slugOrId.toString()
   if (slugOrId) {
-    if (import.meta.client) window.scrollTo(0, 0)
+    resetScroll()
     return projectCategoriesStore.allBySlugs[slugOrId] || projectCategoriesStore.allByIds[slugOrId]
   }
 

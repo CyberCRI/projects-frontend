@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { onClient } from '~/composables/onClient'
+
 const runtimeConfig = useRuntimeConfig()
 
 const props = defineProps<{
@@ -9,7 +11,7 @@ const model = defineModel<string>()
 
 const setToken = (respToken) => (model.value = respToken)
 
-const setHeaderScript = async () => {
+const setHeaderScript = onClient(async () => {
   // already Set
   if (document.getElementById('recaptchaScript')) {
     return window.grecaptcha
@@ -21,22 +23,20 @@ const setHeaderScript = async () => {
   script.id = 'recaptchaScript'
   script.src = 'https://www.google.com/recaptcha/api.js?render=explicit'
   document.getElementsByTagName('head')[0].appendChild(script)
-}
+})
 
-const initCaptcha = () => {
+const initCaptcha = onClient(() => {
   window.grecaptcha.render(props.recapchaKey, {
     sitekey: runtimeConfig.public.appCaptchaKey,
     callback: setToken,
   })
-}
+})
 
 onBeforeMount(() => {
   if (import.meta.dev) {
     model.value = 'DEV-TOKEN'
   }
-  if (import.meta.client) {
-    setHeaderScript()
-  }
+  setHeaderScript()
 })
 
 watch(

@@ -2,18 +2,18 @@
 import { ProjectOutputFactory } from '~~/tests/factories/project.factory'
 import { ProjectMemberModel } from '~/models/project-member.model'
 import { test, beforeEach, describe, expect, it } from 'vitest'
+import MockComponent from '~~/tests/helpers/MockComponent.vue'
 import { UserFactory } from '~~/tests/factories/user.factory'
 import useOrganizationsStore from '~/stores/useOrganizations'
-import FunctionImporter from './FunctionImporter.vue'
 import { lpiMount } from '~~/tests/helpers/LpiMount'
+import { getOrgsFromRoles } from '~/functs/utils.js'
 import useUsersStore from '~/stores/useUsers'
-import funct from '~/functs/functions'
 import pinia from '~/stores'
 
 describe('Function getOrgsFromRoles', () => {
   it('should return empty array', () => {
     const roles = []
-    const result = funct.getOrgsFromRoles(roles)
+    const result = getOrgsFromRoles(roles)
 
     expect(result).toEqual([])
   })
@@ -27,7 +27,7 @@ describe('Function getOrgsFromRoles', () => {
       '/projects/organizations/OTHER_ORG/external',
     ]
     const orgs = ['CRI', 'OTHER_ORG']
-    const result = funct.getOrgsFromRoles(roles)
+    const result = getOrgsFromRoles(roles)
 
     expect(result).toEqual(orgs)
   })
@@ -43,7 +43,7 @@ describe('Function projectCanBeEdited', () => {
   test('that project cannot be edited if there is no user', () => {
     usersStore.user = null // getters are writable only in tests
 
-    lpiMount(FunctionImporter)
+    lpiMount(MockComponent)
 
     expect(usersStore.user).toBe(null)
   })
@@ -52,7 +52,7 @@ describe('Function projectCanBeEdited', () => {
     const user = UserFactory.generate()
     usersStore.user = user // getters are writable only in tests
 
-    lpiMount(FunctionImporter)
+    lpiMount(MockComponent)
 
     expect(usersStore.user).toBe(user)
   })
@@ -65,7 +65,7 @@ describe('Function projectCanBeEdited', () => {
     organizationsStore._current = { code: 'CRI' } // getters are writable only in tests
     usersStore.user = user // getters are writable only in tests
 
-    lpiMount(FunctionImporter)
+    lpiMount(MockComponent)
 
     expect(usersStore.user).toBe(user)
   })
@@ -76,7 +76,7 @@ describe('Function projectCanBeEdited', () => {
     usersStore.user = user // getters are writable only in tests
     usersStore.id = user.id // getters are writable only in tests
 
-    lpiMount(FunctionImporter)
+    lpiMount(MockComponent)
     expect(usersStore.user).toBe(user)
   })
 
@@ -91,7 +91,7 @@ describe('Function projectCanBeEdited', () => {
 
     usersStore.user = user // getters are writable only in tests
     usersStore.id = user.id // getters are writable only in tests
-    lpiMount(FunctionImporter)
+    lpiMount(MockComponent)
 
     expect(usersStore.user).toBe(user)
   })
@@ -101,7 +101,7 @@ describe('Function projectCanBeEdited', () => {
 
     usersStore.user = user // getters are writable only in tests
     usersStore.id = user.id // getters are writable only in tests
-    lpiMount(FunctionImporter)
+    lpiMount(MockComponent)
     expect(usersStore.user).toBe(user)
   })
 
@@ -109,7 +109,7 @@ describe('Function projectCanBeEdited', () => {
     const user = UserFactory.generate()
     usersStore.user = user // getters are writable only in tests
     usersStore.id = user.id // getters are writable only in tests
-    lpiMount(FunctionImporter)
+    lpiMount(MockComponent)
     expect(usersStore.user).toBe(user)
   })
 })

@@ -1,3 +1,4 @@
+import { onClient } from '~/composables/onClient'
 import { defineStore } from 'pinia'
 
 const useGlobals = defineStore('useGlobals', () => {
@@ -7,8 +8,7 @@ const useGlobals = defineStore('useGlobals', () => {
 
   watch(
     () => uiIsLocked.value,
-    function (neo, old) {
-      if (!import.meta.client) return
+    onClient((neo, old) => {
       if (neo !== old) {
         const uniqueId = '-uiIsLocked'
         if (neo) {
@@ -17,7 +17,7 @@ const useGlobals = defineStore('useGlobals', () => {
           document.querySelector('body').classList.remove(`has-open-drawer-${uniqueId}`)
         }
       }
-    }
+    })
   )
 
   return {

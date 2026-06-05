@@ -99,7 +99,7 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import useToasterStore from '~/stores/useToaster.ts'
 
-import utils from '~/functs/functions.ts'
+import { removePrefix } from '~/functs/utils'
 import analytics from '~/analytics'
 
 export default {
@@ -248,9 +248,8 @@ export default {
     },
     linkExists() {
       return (
-        this.links.filter(
-          (link) => utils.removePrefix(link.site_url) === utils.removePrefix(this.link)
-        ).length > 0
+        this.links.filter((link) => removePrefix(link.site_url) === removePrefix(this.link))
+          .length > 0
       )
     },
 

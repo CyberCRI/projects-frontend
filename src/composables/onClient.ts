@@ -1,4 +1,23 @@
 /**
+ * run function only if we are in clientSide
+ *
+ * @function
+ * @name onClient
+ * @kind variable
+ * @param {(...any: any[]) => void) => (...args} callback
+ * @param {any} any[]
+ * @returns {void}
+ * @exports
+ */
+export const onClient = (callback: (...any) => any) => {
+  return (...args) => {
+    if (import.meta.client) {
+      return callback(...args)
+    }
+  }
+}
+
+/**
  * run onMounted only if we are in client mode
  *
  * @function
@@ -9,11 +28,7 @@
  * @exports
  */
 export const onClientMounted = (callback: () => void) => {
-  onMounted(() => {
-    if (import.meta.client) {
-      callback()
-    }
-  })
+  onMounted(onClient(callback))
 }
 
 /**
@@ -27,9 +42,5 @@ export const onClientMounted = (callback: () => void) => {
  * @exports
  */
 export const onClientUnmounted = (callback: () => void) => {
-  onUnmounted(() => {
-    if (import.meta.client) {
-      callback()
-    }
-  })
+  onUnmounted(onClient(callback))
 }

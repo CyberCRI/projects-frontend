@@ -173,8 +173,8 @@ import useUsersStore from '~/stores/useUsers'
 import { usePublicURL } from '~/composables/usePublic'
 
 import ReportDrawer from '~/components/drawer/ReportDrawer.vue'
+import { isDefaultPortal } from '~/functs/utils'
 import { useRuntimeConfig } from '#imports'
-import utils from '~/functs/functions'
 
 const FOOTER_SRC = usePublicURL('/source.png')
 
@@ -188,7 +188,7 @@ const showContactUsDrawer = ref(false)
 const canOpen = computed(() => locale.value === 'fr')
 const showDirectoryLink = computed(() => {
   const organization = organizationsStore.current
-  if (organization && utils.isDefaultPortal(organization.code)) {
+  if (organization && isDefaultPortal(organization.code)) {
     return false
   }
   return true

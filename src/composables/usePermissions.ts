@@ -1,10 +1,9 @@
+import { hasPermission as globalHasPermission } from '~/functs/permissions'
 import useOrganizationsStore from '~/stores/useOrganizations'
 
 import usePeopleGroupsStore from '~/stores/usePeopleGroups'
 import useProjectsStore from '~/stores/useProjects'
 import useUsersStore from '~/stores/useUsers'
-
-import utils from '~/functs/functions'
 
 export default function usePermissions() {
   // const { currentPeopleGroupIdForPermissions.value } = mapState(usePeopleGroupsStore, {
@@ -45,7 +44,7 @@ export default function usePermissions() {
 
   function hasPermission(scope, action, pk?) {
     const permissions = getPermissionsForPermissions.value
-    return utils.hasPermission(permissions, scope, action, pk)
+    return globalHasPermission(permissions, scope, action, pk)
   }
 
   const isOwner = computed(() => {

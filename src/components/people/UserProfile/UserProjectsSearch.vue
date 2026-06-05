@@ -19,7 +19,6 @@ import useOrganizationsStore from '~/stores/useOrganizations'
 
 import useAPI from '~/composables/useAPI'
 
-import funct from '~/functs/functions'
 import { debounce } from 'es-toolkit'
 
 export default {
@@ -57,7 +56,7 @@ export default {
 
   data() {
     return {
-      projectListId: funct.newSID(true),
+      projectListId: useUniqueId(16),
       items: [],
       isLoading: true,
       loadProjects: debounce(this.fetchProjects, 40, { leading: false, trailing: true }),

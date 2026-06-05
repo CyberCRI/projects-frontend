@@ -60,6 +60,7 @@ import usePeopleGroupsStore from '~/stores/usePeopleGroups'
 import { useLpiHead2 } from '~/composables/useLpiHead'
 
 import { groupSkeleton } from '~/skeletons/group.skeletons'
+import { onClient } from '~/composables/onClient'
 
 const uniqueId = 'group-nav-panel'
 const peopleGroupsStore = usePeopleGroupsStore()
@@ -349,13 +350,13 @@ const toggleEditing = () => {
   }
 }
 
-if (import.meta.client) {
-  watchEffect(() => {
+watchEffect(
+  onClient(() => {
     if (isEditing.value && !canEditGroup.value) {
       toggleEditing()
     }
   })
-}
+)
 </script>
 
 <style lang="scss" scoped>

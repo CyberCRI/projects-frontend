@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import IconImage from '~/components/base/media/IconImage.vue'
 import type { IconImageChoice } from '~/functs/IconImage'
+import { onClient } from '~/composables/onClient'
 import { debounce } from 'es-toolkit'
 
 export type GroupOption = {
@@ -27,7 +28,7 @@ const props = withDefaults(
     customColor: null,
   }
 )
-const model = defineModel<string | boolean>({ default: '' })
+const model = defineModel<GroupOption['value']>({ default: '' })
 
 const uniqueId = useUniqueId()
 
@@ -39,10 +40,7 @@ const groupButtonStyle = computed(() => {
   return { 'border-color': props.customColor }
 })
 
-const selectButton = (selectedButton) => {
-  model.value = selectedButton.value
-  nextTick(setSliderStyle)
-}
+const selectButton = (groupOption: GroupOption) => (model.value = groupOption.value)
 
 const onIconMounted = (icon) => {
   mountedIcons.value.push(icon)
@@ -50,7 +48,7 @@ const onIconMounted = (icon) => {
     setSliderStyle()
 }
 
-const setSliderStyle = () => {
+const setSliderStyle = onClient(() => {
   if (!props.options.some((button) => button.value === model.value)) return
 
   const container = document.getElementById(`group-button-${uniqueId}`)
@@ -97,9 +95,10 @@ const setSliderStyle = () => {
       selectedHeight + (firstButtonSelected ? 1 : 0)
     }px; ${props.customColor}`
   }
-}
+})
 
-onResize(debounce(setSliderStyle, 300))
+onResize(debounce(setSliderStyle, 100), { immediate: true })
+watch(model, () => setSliderStyle(), { immediate: true })
 </script>
 
 <template>
