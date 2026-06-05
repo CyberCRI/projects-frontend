@@ -3247,6 +3247,7 @@
     "empty-list": "Nog geen agent beschikbaar.",
     "confirm-restart-title": "Gesprek opnieuw starten",
     "confirm-restart-content": "Wilt u een nieuw gesprek starten?",
+    "is-used-as-side-assistant": "Deze agent wordt momenteel als secundaire assistent gebruikt en kan niet worden gedeactiveerd.",
     "form": {
       "invalid": "Het formulier is onvolledig, vul de vereiste velden in",
       "title-required": "Titel is verplicht",

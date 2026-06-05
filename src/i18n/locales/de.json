@@ -3247,6 +3247,7 @@
     "empty-list": "Noch kein Agent vorhanden.",
     "confirm-restart-title": "Unterhaltung neu starten",
     "confirm-restart-content": "Möchten Sie eine neue Unterhaltung beginnen?",
+    "is-used-as-side-assistant": "Dieser Agent wird derzeit als Seitenassistent verwendet und kann nicht deaktiviert werden.",
     "form": {
       "invalid": "Das Formular ist unvollständig, bitte füllen Sie die erforderlichen Felder aus",
       "title-required": "Titel ist erforderlich",

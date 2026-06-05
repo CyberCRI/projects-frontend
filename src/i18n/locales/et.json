@@ -3247,6 +3247,7 @@
     "empty-list": "Agente veel ei ole.",
     "confirm-restart-title": "Alusta vestlust uuesti",
     "confirm-restart-content": "Kas soovite alustada uut vestlust?",
+    "is-used-as-side-assistant": "Seda agenti kasutatakse praegu abilise rollis ja seda ei saa deaktiveerida.",
     "form": {
       "invalid": "Vorm on mittetäielik, palun täitke nõutud väljad",
       "title-required": "Pealkiri on nõutud",

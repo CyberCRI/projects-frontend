@@ -3248,6 +3248,7 @@
     "empty-list": "No agent yet.",
     "confirm-restart-title": "Restart conversation",
     "confirm-restart-content": "Do you want to start a new conversation?",
+    "is-used-as-side-assistant": "This agent is currently used as side assistant and cannot be deactivated.",
     "form": {
       "invalid": "Form is incomplete, please provide required fields",
       "title-required": "Title is required",

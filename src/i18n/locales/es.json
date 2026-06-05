@@ -3247,6 +3247,7 @@
     "empty-list": "Aún no hay ningún agente.",
     "confirm-restart-title": "Reiniciar conversación",
     "confirm-restart-content": "¿Quieres iniciar una nueva conversación?",
+    "is-used-as-side-assistant": "Este agente se utiliza actualmente como asistente secundario y no se puede desactivar.",
     "form": {
       "invalid": "El formulario está incompleto, por favor proporcione los campos requeridos",
       "title-required": "El título es obligatorio",
