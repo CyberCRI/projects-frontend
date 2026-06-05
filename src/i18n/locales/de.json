@@ -973,7 +973,8 @@
     },
     "create-project": "Projekt erstellen",
     "check-locations": "Standorte ansehen",
-    "our-locations": "Unsere Standorte"
+    "our-locations": "Unsere Standorte",
+    "agents": "KI-Agenten"
   },
   "language": {
     "label-en": "Englisch",
@@ -3263,5 +3264,9 @@
     "save-success": "Side assistant saved",
     "save-error": "Error while saving side assistant",
     "choose": "Choose an agent for the side assistant"
+  },
+  "agents-home": {
+    "title": "Let's talk!",
+    "intro": "Welcome to a curated gathering of conversational agents - AI companions designed to chat, help, and engage. Whether you're looking for research assistance, casual conversation, creative collaboration, or practical support, you'll find different voices here, each with its own strengths and personality."
   }
 }

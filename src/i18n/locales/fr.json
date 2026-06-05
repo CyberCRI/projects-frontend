@@ -1074,7 +1074,8 @@
     },
     "create-project": "Créer un projet",
     "check-locations": "Voir nos emplacements",
-    "our-locations": "Nos emplacements"
+    "our-locations": "Nos emplacements",
+    "agents": "Agents IA"
   },
   "language": {
     "label-en": "Anglais",
@@ -3263,5 +3264,9 @@
     "save-success": "L'assistant latéral est sauvegardé",
     "save-error": "Erreur lors de la sauvegarde de l'assistant latéral",
     "choose": "Choisir un agent pour l'assistant latéral"
+  },
+  "agents-home": {
+    "title": "Parlons !",
+    "intro": "Bienvenue dans notre selction d'agents conversationnels – des compagnons IA conçus pour discuter, aider et engager le dialogue. Que vous souhaitiez une aide à la recherche, une conversation informelle, une collaboration créative ou un soutien pratique, vous trouverez ici différentes voix, chacune avec ses propres forces et sa personnalité."
   }
 }
