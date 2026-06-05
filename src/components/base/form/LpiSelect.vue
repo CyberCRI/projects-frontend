@@ -12,7 +12,13 @@
     </div>
     <div class="options-wrapper">
       <Transition name="menu-fade">
-        <ul v-show="stateModal" class="option-list skeletons-background">
+        <ul
+          v-show="stateModal"
+          class="option-list skeletons-background"
+          :class="{
+            'height-limit': maxHeight,
+          }"
+        >
           <template v-for="option in options">
             <li v-if="!selected || option.value !== selected.value" :key="option.value">
               <button class="menu-dropdown" :data-test="option.dataTest" @click="select(option)">
@@ -29,6 +35,7 @@
 <script setup lang="ts" generic="ModelType extends string | number">
 import type IconImage from '~/components/base/media/IconImage.vue'
 import type { IconImageChoice } from '~/functs/IconImage'
+import type { Properties } from 'csstype'
 import type { StyleValue } from 'vue'
 
 type Option = {
@@ -41,9 +48,11 @@ const props = withDefaults(
   defineProps<{
     options: Option[]
     placeholder?: string
+    maxHeight?: Properties['maxHeight']
   }>(),
   {
-    placeholder: 'Select',
+    placeholder: 'Select ...',
+    maxHeight: null,
   }
 )
 const emit = defineEmits<{
@@ -104,6 +113,11 @@ const clickOutside = () => {
     background-color: $white;
     border: $border-width-s solid var(--light-gray);
     border-radius: $border-radius-s;
+
+    &.height-limit {
+      max-height: v-bind('maxHeight');
+      overflow-y: scroll;
+    }
   }
 
   .menu-header {

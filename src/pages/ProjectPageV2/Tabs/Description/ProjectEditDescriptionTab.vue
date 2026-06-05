@@ -58,21 +58,37 @@ watch(
   { immediate: true }
 )
 
-const { stateModals, openModals, closeModals } = useModals({
+const { stateModals, openModals, closeModals, closeAllModals } = useModals({
   saveChange: false,
   saveSolo: false,
   unauthorized: false,
 })
 
+const isFormEqual = useBlockNavigation(() => {
+  const numberEditor = inSoloMode.value
+    ? 1
+    : editorRef.value?.editor?.storage?.collaborationCursor?.users?.length || 0
+
+  console.error('ISFORMEUAL')
+  console.error(
+    form.value.description.length,
+    defaultLocalForm().description.length,
+    isEqual(form.value, defaultLocalForm())
+  )
+  // if form is same or your are in multiple user editor
+  return isEqual(form.value, defaultLocalForm()) || numberEditor !== 1
+})
+
 // callback
 
-const saveDescriptionImage = (file) => {
+const saveDescriptionImage = (file: File) => {
   const formData = new FormData()
   formData.append('file', file, file.name)
   return postProjectImage(props.project.id, formData)
 }
 
 const redirect = () => {
+  closeAllModals()
   router.push({
     name: 'projectDescription',
     params: {
@@ -99,21 +115,12 @@ const onSubmit = () => {
       refreshProjectData(props.project)
       redirect()
     })
-    .catch(() => {
-      toaster.pushSuccess(t('toasts.description-update.error'))
-    })
-    .then(() => {
-      asyncing.value = false
-    })
+    .catch(() => toaster.pushSuccess(t('toasts.description-update.error')))
+    .then(() => (asyncing.value = false))
 }
 
 const checkClose = () => {
-  const numberEditor = inSoloMode.value
-    ? 1
-    : editorRef.value.editor?.storage?.collaborationCursor?.users?.length || 0
-
-  // if form is same or your are in multiple user editor
-  if (isEqual(form.value, defaultLocalForm()) || numberEditor !== 1) {
+  if (isFormEqual.value) {
     redirect()
   } else {
     openModals('saveChange')
@@ -132,7 +139,7 @@ const checkSubmit = () => {
 <template>
   <BaseModuleTab :title="project.$t.title">
     <FormPanel
-      :confirm-action-disabled="!isValid || (!inSoloMode && !socketReady)"
+      :confirm-action-disabled="!isValid || (!inSoloMode && !socketReady) || isFormEqual"
       @close="checkClose"
       @confirm="checkSubmit"
     >

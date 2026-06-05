@@ -9,6 +9,9 @@ import {
   DEFAULT_THEME,
 } from '~/components/base/form/TextEditor/tiptap-extensions/LpiCodeBlock'
 
+import type { GroupOption } from '~/components/base/button/GroupButton.vue'
+import GroupButton from '~/components/base/button/GroupButton.vue'
+import LpiSelect from '~/components/base/form/LpiSelect.vue'
 import lowlight from '~/functs/lowlight'
 
 const props = defineProps(nodeViewProps)
@@ -25,10 +28,13 @@ const optionsLanguages = computed(() => {
   }))
 })
 
-const optionsThemes = computed(() => [
-  { value: 'light', label: t('multieditor.code.theme.light') },
-  { value: 'dark', label: t('multieditor.code.theme.dark') },
-])
+const optionsThemes = computed(
+  () =>
+    [
+      { value: 'light', title: t('multieditor.code.theme.light'), iconName: 'Sun' },
+      { value: 'dark', title: t('multieditor.code.theme.dark'), iconName: 'Moon' },
+    ] satisfies GroupOption[]
+)
 
 const optionsTabs = computed(() => [
   { value: '2', label: '2' },
@@ -91,36 +97,29 @@ watch(tab, (neo, old) => {
   <NodeViewWrapper class="vue-component">
     <ContexttualToolMenu class="code-menu-bar" contenteditable="false">
       <Field :label="$t('multieditor.code.language.label')">
-        <select v-model="language">
-          <option v-for="item in optionsLanguages" :key="item.value" :value="item.value">
-            {{ item.label }}
-          </option>
-        </select>
+        <LpiSelect
+          v-model="language"
+          class="ignore-tip-tap"
+          :options="optionsLanguages"
+          max-height="250px"
+        />
       </Field>
+
       <Field :label="$t('multieditor.code.theme.label')">
-        <select v-model="theme">
-          <option v-for="item in optionsThemes" :key="item.value" :value="item.value">
-            {{ item.label }}
-          </option>
-        </select>
+        <GroupButton v-model="theme" :options="optionsThemes" has-icon />
       </Field>
+
       <Field :label="$t('multieditor.code.tabs.label')">
-        <select v-model="tab">
-          <option v-for="item in optionsTabs" :key="item.value" :value="item.value">
-            {{ item.label }}
-          </option>
-        </select>
+        <GroupButton v-model="tab" :options="optionsTabs" has-icon />
       </Field>
     </ContexttualToolMenu>
 
-    <pre class="lpi-code-block" :class="[`theme-${theme} tab-${tab}`]">
-      <NodeViewContent
+    <pre class="lpi-code-block" :class="[`theme-${theme} tab-${tab}`]"><NodeViewContent
         as="code"
         class="content-dom hljs"
         :class="[`language-${node.attrs.language}`]"
         spellcheck="false"
-      />
-    </pre>
+      /></pre>
   </NodeViewWrapper>
 </template>
 
@@ -129,7 +128,34 @@ watch(tab, (neo, old) => {
   display: flex;
   gap: 1rem;
   border: 1px solid var(--primary-dark);
-  border-radius: $border-radius-m;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: 0;
   padding: 0.5rem;
+  align-items: flex-start;
+  width: fit-content;
+}
+
+.switch-theme {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  border: 2px solid var(--primary-dark);
+  border-radius: 10px;
+  padding: 0.5rem;
+}
+
+.lpi-code-block .content-dom.hljs {
+  border-top-left-radius: 0;
+}
+</style>
+
+<style lang="scss">
+// tiptap overright style , and LpiSelect is impacted too...
+.ignore-tip-tap {
+  li {
+    margin: 0 !important;
+  }
 }
 </style>

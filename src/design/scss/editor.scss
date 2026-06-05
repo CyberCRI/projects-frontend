@@ -20,6 +20,7 @@
 .blog-entry .entry-body {
   pre.lpi-code-block {
     code.hljs {
+      border-radius: 10px;
       display: block;
       overflow-x: auto;
       padding: 1em;
@@ -583,6 +584,7 @@ table .custom-video-ctn {
 .ProseMirror {
   /* Makes the editor clickable on all allocated space */
   min-height: 100px;
+  position: static !important;
 
   &:focus-within,
   &:focus-visible {

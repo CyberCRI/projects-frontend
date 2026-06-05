@@ -6,7 +6,8 @@ import { debounce } from 'es-toolkit'
 export type GroupOption = {
   iconName?: IconImageChoice
   value: number | string | boolean
-  label: string
+  label?: string
+  title?: string
 }
 
 const props = withDefaults(
@@ -119,6 +120,7 @@ onResize(debounce(setSliderStyle, 300))
       :key="index"
       class="button-container"
       :class="[{ selected: button.value === modelValue }, size]"
+      :title="button.title || button.label"
       :tabIndex="index + 1"
       @click="selectButton(button)"
       @transitionend="setSliderStyle"
@@ -132,7 +134,11 @@ onResize(debounce(setSliderStyle, 300))
           :class="{ 'icon-selected': button.value === modelValue }"
         />
       </transition>
-      <label class="label" :class="[{ 'label-selected': button.value === modelValue }, modelValue]">
+      <label
+        v-if="button.label"
+        class="label"
+        :class="[{ 'label-selected': button.value === modelValue }, modelValue]"
+      >
         {{ button.label }}
       </label>
     </div>
@@ -163,7 +169,6 @@ onResize(debounce(setSliderStyle, 300))
 }
 
 .icon {
-  margin-right: $space-s;
   width: 20px;
   height: 18px;
   fill: $primary-dark;
@@ -235,6 +240,10 @@ onResize(debounce(setSliderStyle, 300))
 
   &:not(.selected):hover {
     opacity: 0.7;
+  }
+
+  *:not(:last-child) {
+    margin-right: $space-s;
   }
 }
 

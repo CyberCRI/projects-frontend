@@ -148,10 +148,6 @@ export const useProjectTabs = (
 
   const TabsDisplayFiltered = computed(() => TabsDisplay.value.filter((tab) => tab.condition))
 
-  watchEffect(() => {
-    console.log('WAT reviews', modules.value.reviews, project.value.life_status === 'toreview')
-  })
-
   const groupTabsEdit = computed(() =>
     [
       {

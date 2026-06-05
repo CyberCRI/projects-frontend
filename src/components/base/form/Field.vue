@@ -71,7 +71,10 @@ const formatedLabel = computed(() => {
 
   .field-header {
     width: 100%;
-    margin-bottom: $space-m;
+
+    > *:last-child {
+      margin-bottom: $space-m;
+    }
 
     &.large-space {
       margin-bottom: $space-l;
@@ -110,7 +113,6 @@ const formatedLabel = computed(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.5rem;
 }
 </style>
 
