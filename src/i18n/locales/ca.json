@@ -1059,7 +1059,19 @@
       "color": "Color",
       "current": "Actual",
       "pick": "Tria un color",
-      "set-color": "Arranja el color"
+      "set-color": "Arranja el color",
+      "remove-color": "Elimina color",
+      "colors": {
+        "carribeanGreen": "Verd Càride",
+        "ming": "Ming",
+        "aquamarine": "AquamarinaName",
+        "mintCream": "Mint Cream",
+        "lightSalmon": "Salmon lleuger",
+        "sunGlow": "Làmpada del sol",
+        "mauve": "Mauvezimbabwe  districts. kgm",
+        "babyBlue": "Nadons Blau",
+        "coquelicot": "Coquelicot"
+      }
     },
     "delete_column": "Elimina aquesta columna",
     "delete_row": "Elimina aquesta fila",

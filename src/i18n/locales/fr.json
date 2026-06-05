@@ -1144,7 +1144,19 @@
       "color": "Couleur",
       "current": "Actuelle",
       "pick": "Choisir une couleur existante",
-      "set-color": "Appliquer une couleur"
+      "set-color": "Appliquer une couleur",
+      "remove-color": "Supprimer la couleur",
+      "colors": {
+        "carribeanGreen": "Vert caribéen",
+        "ming": "Ming",
+        "aquamarine": "Aquamarine",
+        "mintCream": "Crème de menthe",
+        "lightSalmon": "Saumon léger",
+        "sunGlow": "Lumière du soleil",
+        "mauve": "Mauve",
+        "babyBlue": "Bébé Bleu",
+        "coquelicot": "Coquelicot"
+      }
     },
     "delete_column": "Supprimer cette colonne",
     "delete_row": "Supprimer cette ligne",

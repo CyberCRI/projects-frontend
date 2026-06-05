@@ -11,8 +11,8 @@ import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'
 
 import type { ReviewForm, ReviewModel, TranslatedReview } from '~/models/review.model'
+import { defaultProjectReviewForm, useProjectReviewForm } from '~/form/review'
 import type { ProjectForm, TranslatedProject } from '~/models/project.model'
-import { defaultProjectReviewForm, useProjectReview } from '~/form/review'
 import { patchProject } from '~/api/projects.service'
 import { isEqual } from 'es-toolkit'
 
@@ -60,7 +60,7 @@ const { t } = useNuxtI18n()
 const asyncing = ref(false)
 const { stateModals, closeModals, openModals } = useModals({ saveChange: false })
 
-const { form, isValid, errors, cleanedData, reset } = useProjectReview({ lazy: true })
+const { form, isValid, errors, cleanedData, reset } = useProjectReviewForm({ lazy: true })
 
 const isFormEqual = useBlockNavigation(() => isEqual(form.value, defaultLocalForm()))
 

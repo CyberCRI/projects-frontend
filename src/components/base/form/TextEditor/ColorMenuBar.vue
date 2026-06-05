@@ -17,7 +17,7 @@ const setColor = (color) => props.editor.chain().focus().setColor(color).run()
 const items = computed(() => [
   {
     icon: 'Close' satisfies IconImageChoice as IconImageChoice,
-    title: t('multieditor.remove_link'),
+    title: t('multieditor.color.remove-color'),
     action: () => props.editor.chain().focus().unsetColor().run(),
   },
 ])
@@ -27,17 +27,19 @@ const items = computed(() => [
   <LpiBubbleMenu
     :editor="editor"
     class="linkmenu"
-    :should-show="({ editor }) => editor.isActive('textStyle')"
+    :should-show="
+      ({ editor }) => editor.isActive('paragraph') && !editor.view.state.selection.empty
+    "
   >
     <ContexttualToolMenu class="link-menu-bar">
-      <MenuItem
-        v-for="color in DEFAULT_COLOR_TIPTAP"
-        :key="color"
-        :title="$t('multieditor.color.color')"
-        :action="() => setColor(color)"
-      >
-        <div class="color-preview" :style="`--color: ${color}`" />
-      </MenuItem>
+      <button
+        v-for="item in DEFAULT_COLOR_TIPTAP"
+        :key="item.color"
+        :title="t(item.label)"
+        class="color-preview pointer"
+        :style="`--color: ${item.color}`"
+        @click="() => setColor(item.color)"
+      />
       <MenuItem v-for="item in items" :key="item.title" v-bind="item" />
     </ContexttualToolMenu>
   </LpiBubbleMenu>
@@ -45,8 +47,13 @@ const items = computed(() => [
 
 <style lang="scss" scoped>
 .color-preview {
-  width: 1rem;
-  height: 1rem;
+  width: 1.5rem;
+  height: 1.5rem;
   background-color: var(--color);
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.2);
+  }
 }
 </style>

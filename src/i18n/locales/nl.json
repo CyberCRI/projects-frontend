@@ -1059,7 +1059,19 @@
       "color": "Kleur",
       "current": "Lopend",
       "pick": "Kies een kleur",
-      "set-color": "Kleur instellen"
+      "set-color": "Kleur instellen",
+      "remove-color": "Kleur verwijderen",
+      "colors": {
+        "carribeanGreen": "Caraïbengroen",
+        "ming": "Ming",
+        "aquamarine": "Aquamarijn",
+        "mintCream": "Muntcrème",
+        "lightSalmon": "Lichte zalm",
+        "sunGlow": "Zongloeien",
+        "mauve": "Mauve",
+        "babyBlue": "Baby Blauw",
+        "coquelicot": "Coquelicot"
+      }
     },
     "delete_column": "Deze kolom verwijderen",
     "delete_row": "Deze rij verwijderen",

@@ -5,16 +5,16 @@ const useGlobals = defineStore('useGlobals', () => {
   const uiIsLocked = ref(false)
   const hasUnsavedEdit = ref(false)
   const confirmDiscardPendingEditsPromise = ref(null)
+  const uniqueId = '-uiIsLocked'
 
   watch(
     () => uiIsLocked.value,
     onClient((neo, old) => {
       if (neo !== old) {
-        const uniqueId = '-uiIsLocked'
         if (neo) {
-          document.querySelector('body').classList.add(`has-open-drawer-${uniqueId}`)
+          document.body.classList.add(`has-open-drawer-${uniqueId}`)
         } else {
-          document.querySelector('body').classList.remove(`has-open-drawer-${uniqueId}`)
+          document.body.classList.remove(`has-open-drawer-${uniqueId}`)
         }
       }
     })

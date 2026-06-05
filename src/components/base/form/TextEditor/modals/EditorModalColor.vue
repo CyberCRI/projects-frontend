@@ -18,12 +18,13 @@
       </h5>
       <div class="swatches">
         <span
-          v-for="preset in DEFAULT_COLOR_TIPTAP"
-          :key="preset"
+          v-for="item in DEFAULT_COLOR_TIPTAP"
+          :key="item.color"
           class="swatch"
-          :class="{ selected: preset == color }"
-          :style="{ 'background-color': preset }"
-          @click="color = preset"
+          :class="{ selected: item.color == color }"
+          :style="{ 'background-color': item.color }"
+          :title="t(item.label)"
+          @click="color = item.color"
         />
       </div>
       <h5 class="inter-title">
@@ -73,6 +74,7 @@ const emit = defineEmits<{
   close: []
 }>()
 
+const { t } = useNuxtI18n()
 const color = ref(undefined)
 const mode = ref<'edit' | 'add'>()
 onMounted(() => {

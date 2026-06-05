@@ -31,7 +31,7 @@ const { t } = useNuxtI18n()
 const toaster = useToaster()
 const router = useRouter()
 const usersStore = useUsersStore()
-const { stateModals, openModals, closeModals } = useModals({
+const { stateModals, openModals, closeModals, closeAllModals } = useModals({
   delete: false,
   memberQuit: false,
   review: false,
@@ -189,6 +189,7 @@ const selectedOrgLinks = computed(() => {
 const refresh = () => refreshProjectData(props.project)
 
 const redirect = () => {
+  closeAllModals()
   router.push({
     name: 'ProjectSnapshot',
     params: {
@@ -245,6 +246,14 @@ const onQuitProject = () => {
     .catch(() => toaster.pushError(t('toasts.project-quit.error')))
     .finally(() => (asyncing.value = false))
 }
+
+const checkClose = () => {
+  if (isFormEqual.value) {
+    redirect()
+  } else {
+    openModals('saveChange')
+  }
+}
 </script>
 
 <template>
@@ -254,7 +263,7 @@ const onQuitProject = () => {
       :asyncing="asyncing"
       :confirm-action-disabled="!isValid || isFormEqual"
       @confirm="onUpdate"
-      @close="redirect"
+      @close="checkClose"
     >
       <div class="list-container">
         <template v-if="canEditProject">
@@ -382,6 +391,14 @@ const onQuitProject = () => {
     :asyncing="asyncing"
     @cancel="closeModals('memberQuit')"
     @confirm="onQuitProject"
+  />
+
+  <ConfirmModal
+    v-if="stateModals.saveChange"
+    :title="$t('form.quit-without-saving-title')"
+    :content="$t('common.confirm-close')"
+    @cancel="closeModals('saveChange')"
+    @confirm="redirect"
   />
 
   <ReviewDrawer

@@ -1059,7 +1059,19 @@
       "color": "Color",
       "current": "Corriente",
       "pick": "Elija un color",
-      "set-color": "Color"
+      "set-color": "Color",
+      "remove-color": "Quitar el color",
+      "colors": {
+        "carribeanGreen": "Carribean verde",
+        "ming": "Ming",
+        "aquamarine": "Aquamarine",
+        "mintCream": "Crema de menta",
+        "lightSalmon": "Salmón de luz",
+        "sunGlow": "El sol brilla",
+        "mauve": "Mauve",
+        "babyBlue": "Baby Blue",
+        "coquelicot": "Coquelicot"
+      }
     },
     "delete_column": "Suprimir esta columna",
     "delete_row": "Eliminar esta fila",

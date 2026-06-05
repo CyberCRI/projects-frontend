@@ -185,13 +185,13 @@ export const MIMETYPES_IMAGES = [
 ]
 
 export const DEFAULT_COLOR_TIPTAP = [
-  '#00BDA7', // Carribean green
-  '#1D727C', // Ming
-  '#99FFE7', // Aquamarine
-  '#F0FFFB', // Mint Cream
-  '#FF9473', // Light Salmon
-  '#FFCC00', // Sun glow
-  '#D6A2FF', // Mauve
-  '#6CD5FF', // Baby Blue
-  '#FF3C00', // Coquelicot
+  { color: '#00BDA7', label: 'multieditor.color.colors.carribeanGreen' },
+  { color: '#1D727C', label: 'multieditor.color.colors.ming' },
+  { color: '#99FFE7', label: 'multieditor.color.colors.aquamarine' },
+  { color: '#F0FFFB', label: 'multieditor.color.colors.mintCream' },
+  { color: '#FF9473', label: 'multieditor.color.colors.lightSalmon' },
+  { color: '#FFCC00', label: 'multieditor.color.colors.sunGlow' },
+  { color: '#D6A2FF', label: 'multieditor.color.colors.mauve' },
+  { color: '#6CD5FF', label: 'multieditor.color.colors.babyBlue' },
+  { color: '#FF3C00', label: 'multieditor.color.colors.coquelicot' },
 ]

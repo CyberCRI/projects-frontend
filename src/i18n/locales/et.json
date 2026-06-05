@@ -1059,7 +1059,19 @@
       "color": "Värv",
       "current": "Praegune",
       "pick": "Vali värv",
-      "set-color": "Määra värv"
+      "set-color": "Määra värv",
+      "remove-color": "Eemalda värv",
+      "colors": {
+        "carribeanGreen": "Carribean Green",
+        "ming": "Ming",
+        "aquamarine": "Aquamarine",
+        "mintCream": "piparmündikoor",
+        "lightSalmon": "Kerge lõhe",
+        "sunGlow": "Päikesekiir",
+        "mauve": "Mauve",
+        "babyBlue": "Sinine",
+        "coquelicot": "Coquelicot"
+      }
     },
     "delete_column": "Kustuta see veerg",
     "delete_row": "Kustuta see rida",

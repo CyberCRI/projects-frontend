@@ -631,4 +631,6 @@ table .custom-video-ctn {
 // tippy (popover js lib) have a max-width to 350px max, so remove it
 .tippy-box {
   max-width: fit-content !important;
+  max-height: fit-content !important;
+  height: fit-content !important;
 }

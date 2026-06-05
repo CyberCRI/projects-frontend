@@ -1059,7 +1059,19 @@
       "color": "Farbe",
       "current": "Strom",
       "pick": "Wählen Sie eine Farbe",
-      "set-color": "Farbe auswählen"
+      "set-color": "Farbe auswählen",
+      "remove-color": "Farbe entfernen",
+      "colors": {
+        "carribeanGreen": "Carribean grün",
+        "ming": "Ming",
+        "aquamarine": "Aquamarin",
+        "mintCream": "Mining Cream",
+        "lightSalmon": "Licht und Licht",
+        "sunGlow": "Sonnenschein",
+        "mauve": "Maut",
+        "babyBlue": "Baby Blau",
+        "coquelicot": "Coquelicot"
+      }
     },
     "delete_column": "Diese Spalte löschen",
     "delete_row": "Diese Zeile löschen",

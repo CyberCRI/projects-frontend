@@ -12,7 +12,7 @@ export const defaultProjectReviewForm = (): ReviewForm => {
   }
 }
 
-export const useProjectReview = (options = {}) => {
+export const useProjectReviewForm = (options = {}) => {
   const { t } = useNuxtI18n()
 
   const rules = computed(() => ({
