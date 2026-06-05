@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 import ProjectListSkeleton from '~/components/project/ProjectListSkeleton.vue'
-import type { Options } from '~/components/base/button/GroupButton.vue'
+import type { GroupOption } from '~/components/base/button/GroupButton.vue'
 import type DynamicGrid from '~/components/base/DynamicGrid.vue'
 
 const props = withDefaults(
@@ -63,7 +63,7 @@ const displayMode = computed(() => {
       iconName: 'ListCheck',
       value: 'list',
     },
-  ] satisfies Options[]
+  ] satisfies GroupOption[]
 })
 
 watch(mode, (newMODE, oldMODE) => {

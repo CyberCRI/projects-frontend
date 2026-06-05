@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import ProjectTemplateForm from '~/components/project/ProjectTemplateForm.vue'
+import type { GroupOption } from '~/components/base/button/GroupButton.vue'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import { deleteProjectMembersSelf } from '~/api/project-members.service'
-import type { Options } from '~/components/base/button/GroupButton.vue'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
 import { deleteProject, patchProject } from '~/api/projects.service'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
@@ -105,55 +105,54 @@ const updateOrganisation = (orgCode: string, state: boolean) => {
 
 const asyncing = ref(false)
 
-const visibilityOptions = computed(
-  () =>
-    [
-      {
-        value: 'public',
-        label: t('status.public'),
-        iconName: 'Eye',
-        condition: true,
-      },
-      {
-        value: 'org',
-        label: t('common.org'),
-        iconName: 'PeopleGroup',
-        condition: !projectOrganizationCodes.value.includes(DEFAULT_ORGANIZATION_CODE),
-      },
-      {
-        value: 'private',
-        label: t('status.private'),
-        iconName: 'EyeSlash',
-        condition: true,
-      },
-    ].filter((status) => status.condition) as Options[]
-)
+const visibilityOptions = computed(() => {
+  const opts: GroupOption[] = [
+    {
+      value: 'public',
+      label: t('status.public'),
+      iconName: 'Eye',
+    },
+  ]
+  if (!projectOrganizationCodes.value.includes(DEFAULT_ORGANIZATION_CODE)) {
+    opts.push({
+      value: 'org',
+      label: t('common.org'),
+      iconName: 'PeopleGroup',
+    })
+  }
+  opts.push({
+    value: 'private',
+    label: t('status.private'),
+    iconName: 'EyeSlash',
+  })
+  return opts
+})
 
-const lifeStatusOptions = computed(
-  () =>
-    [
-      {
-        value: 'running',
-        label: t('status.ongoing'),
-        iconName: 'Spinner',
-        condition: true,
-      },
-      {
-        value: 'toreview',
-        label: t('project.reviewable'),
-        iconName: 'ListCheck',
-        condition:
-          props.project.modules.members > 0 &&
-          (isOwner.value || isOrgAdmin.value || isAdmin.value || canAddReview.value),
-      },
-      {
-        value: 'completed',
-        label: t('status.completed'),
-        iconName: 'Check',
-        condition: true,
-      },
-    ].filter((status) => status.condition) as Options[]
-)
+const lifeStatusOptions = computed(() => {
+  const opts: GroupOption[] = [
+    {
+      value: 'running',
+      label: t('status.ongoing'),
+      iconName: 'Spinner',
+    },
+  ]
+  if (
+    props.project.modules.members > 0 &&
+    (isOwner.value || isOrgAdmin.value || isAdmin.value || canAddReview.value)
+  ) {
+    opts.push({
+      value: 'toreview',
+      label: t('project.reviewable'),
+      iconName: 'ListCheck',
+    })
+  }
+  opts.push({
+    value: 'completed',
+    label: t('status.completed'),
+    iconName: 'Check',
+  })
+  return opts
+})
 
 const selectedPublicationDescription = computed(() => {
   switch (form.value.publication_status) {

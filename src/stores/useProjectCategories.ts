@@ -47,7 +47,6 @@ const useProjectCategoriesStore = defineStore('projectCategories', () => {
   const hierarchy = computed<ProjectCategoryOutput[]>(() => {
     const orderCategories = (a, b) => a.order_index - b.order_index
     const hydrateChildren = (cat) => {
-      console.log(cat)
       cat.children =
         cat?.children?.map((child) => unref(allByIds)[child.id])?.sort(orderCategories) || []
       cat.children?.forEach(hydrateChildren)

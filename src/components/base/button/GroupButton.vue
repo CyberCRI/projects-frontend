@@ -3,7 +3,7 @@ import IconImage from '~/components/base/media/IconImage.vue'
 import type { IconImageChoice } from '~/functs/IconImage'
 import { debounce } from 'es-toolkit'
 
-export type Options = {
+export type GroupOption = {
   iconName?: IconImageChoice
   value: number | string | boolean
   label: string
@@ -11,7 +11,7 @@ export type Options = {
 
 const props = withDefaults(
   defineProps<{
-    options: Options[]
+    options: GroupOption[]
     hasIcon?: boolean
     size?: 'default' | 's-small' | 's-extra-small'
     isDanger?: boolean
