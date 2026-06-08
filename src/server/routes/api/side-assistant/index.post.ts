@@ -27,7 +27,7 @@ export default defineLazyEventHandler(() => {
       } else {
         if (sideAssistant?.id) {
           sideAssistant = await tx.sideAssistant.update({
-            data: { ...sideAssistant, orgCode: appApiOrgCode },
+            data: { ...sideAssistant, agentId, orgCode: appApiOrgCode },
             where: { id: sideAssistant.id },
           })
         } else {
