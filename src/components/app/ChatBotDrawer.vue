@@ -168,19 +168,7 @@ function onSuggestButtonClick(message) {
       <LoaderSimple />
     </div>
     <template v-else>
-      <details v-if="agentList.length" class="special-agents-access">
-        <summary>{{ $t('assistant-drawer.special-agents') }}</summary>
-        <ul>
-          <li v-for="specialAgent in agentList" :key="specialAgent.id">
-            <LinkButton
-              btn-icon="ArrowUpRightFromSquare"
-              :label="specialAgent.title"
-              :title="specialAgent.description?.replace(/<[^>]*?>/gim, '')"
-              :to="{ name: 'AgentPage', params: { agentSlug: specialAgent.slug } }"
-            />
-          </li>
-        </ul>
-      </details>
+      <AgentQuickAccess :title="$t('assistant-drawer.special-agents')" :agent-list="agentList" />
       <AgentDescription v-if="!conversationHasBegin" :agent="agent" />
       <ChatbotOptions
         v-if="!conversationHasBegin"
@@ -216,28 +204,6 @@ function onSuggestButtonClick(message) {
   display: flex;
   justify-content: center;
   padding-block: 2rem;
-}
-
-.special-agents-access {
-  text-align: right;
-  margin-bottom: 1rem;
-
-  summary {
-    color: $primary-dark;
-    font-size: 1.2em;
-    cursor: pointer;
-    font-weight: bold;
-  }
-
-  &:open summary {
-    text-decoration: underline;
-  }
-
-  .link-button {
-    margin-top: 0.8rem;
-    width: max-content;
-    margin-left: auto;
-  }
 }
 
 .ice-breakers {

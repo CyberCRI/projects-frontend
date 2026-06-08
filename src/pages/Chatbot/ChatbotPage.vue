@@ -75,6 +75,12 @@ const conversation = ref(null)
 const conversationId = ref(null)
 const tempKey = ref(Date.now())
 
+const { data: publicAgents } = await useFetch('/api/agent/public-list', options)
+// console.log('publicAgents', publicAgents)
+const agentList = computed(() =>
+  (publicAgents.value || []).filter((publicAgent) => publicAgent.id != agent.value.id)
+)
+
 function onConversationRestarted() {
   renderTriggeredBy.value = 'restart'
   conversation.value = null
@@ -236,6 +242,7 @@ useLpiHead2({
         <IconImage name="AlertOutline" />
       </h2>
 
+      <AgentQuickAccess :title="$t('assistant-drawer.special-agents')" :agent-list="agentList" />
       <AgentDescription :agent="agent" />
     </div>
     <div v-if="!isConnected">
