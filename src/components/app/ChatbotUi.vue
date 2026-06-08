@@ -1,6 +1,6 @@
 <script setup>
 import useUsersStore from '@/stores/useUsers.ts'
-import { shuffle } from 'es-toolkit'
+// import { shuffle } from 'es-toolkit'
 import analytics from '@/analytics'
 import 'deep-chat'
 
@@ -178,15 +178,16 @@ const htmlWrappers = ref({
     </div>`,
 })
 
-const runtimeConfig = useRuntimeConfig()
-const chatExemples = (runtimeConfig.public.appChatbotExemples || '')
-  .split('§')
-  .filter((s) => !!s && s.trim().length)
+// const runtimeConfig = useRuntimeConfig()
+// const chatExemples = (runtimeConfig.public.appChatbotExemples || '')
+//   .split('§')
+//   .filter((s) => !!s && s.trim().length)
 
-const setExemples = () => shuffle(chatExemples).slice(0, 3)
+// const setExemples = () => shuffle(chatExemples).slice(0, 3)
 
-const suggestButtons = ref(setExemples())
+// const suggestButtons = ref(setExemples())
 
+/*
 function placeCaretAtEnd(el) {
   // https://stackoverflow.com/questions/4233265/contenteditable-set-caret-at-the-end-of-the-text-cross-browser
   el.focus()
@@ -203,7 +204,9 @@ function placeCaretAtEnd(el) {
     textRange.collapse(false)
     textRange.select()
   }
-}
+}*/
+
+/*
 const onSuggestButtonClick = (buttonText) => {
   if (chatBox.value) {
     console.log(chatBox.value.textInput)
@@ -212,6 +215,7 @@ const onSuggestButtonClick = (buttonText) => {
     placeCaretAtEnd(inputBox)
   }
 }
+*/
 
 const textInputOptions = computed(() => ({
   placeholder: { text: placeholderText.value },
@@ -326,7 +330,7 @@ watch(
   (neo, old) => {
     if (neo != old) {
       // conversation was reset
-      suggestButtons.value = setExemples()
+      // suggestButtons.value = setExemples()
       emit('start-conversation')
     }
   }
@@ -411,7 +415,7 @@ const cancelRestart = () => {
       {{ $t('chatbot.restart') }}
     </a>
   </div>
-  <div v-if="suggestButtons?.length && conversationStarted">
+  <!--div v-if="suggestButtons?.length && conversationStarted">
     <a
       v-for="button in suggestButtons"
       :key="button"
@@ -422,7 +426,7 @@ const cancelRestart = () => {
       <IconImage class="icon" name="ChatBubble" />
       {{ button }}
     </a>
-  </div>
+  </div -->
 
   <ConfirmModal
     v-if="showConfirmRestart"

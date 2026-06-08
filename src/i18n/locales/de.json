@@ -3268,5 +3268,9 @@
   "agents-home": {
     "title": "Let's talk!",
     "intro": "Welcome to a curated gathering of conversational agents - AI companions designed to chat, help, and engage. Whether you're looking for research assistance, casual conversation, creative collaboration, or practical support, you'll find different voices here, each with its own strengths and personality."
+  },
+  "assistant-drawer": {
+    "ice-breakers": "Hier sind einige Eisbrecher-Themen",
+    "special-agents": "Auf der Suche nach einem spezialisierten Agenten?"
   }
 }
