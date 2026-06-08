@@ -21,19 +21,6 @@ function onConversationRestarted() {
   conversationHasBegin.value = false
 }
 
-watch(
-  () => props.isOpened,
-  (neo, old) => {
-    if (neo != old) {
-      if (neo) {
-        analytics.chatbot.open()
-      } else {
-        analytics.chatbot.close()
-      }
-    }
-  }
-)
-
 onErrorCaptured((err) => {
   console.error('ChatBotDrawer error', err)
   analytics.chatbot.error(err.message || err)
@@ -42,17 +29,19 @@ onErrorCaptured((err) => {
 
 defineEmits(['close'])
 
-const CHAT_ENDPOINT = ref(useRuntimeConfig().public.appChatbotBackend || '/api/chat-lg-stream')
+const DEFAULT_ENDPOINT = useRuntimeConfig().public.appChatbotBackend || '/api/chat-lg-stream'
+const CHAT_ENDPOINT = ref(DEFAULT_ENDPOINT)
 
 const isLoading = ref(false)
 
-const agent = ref({
+const DEFAULT_AGENT_FACTORY = () => ({
   id: 0,
   title: '',
   description: '',
   startMessage: '',
   useProfileData: true,
 })
+const agent = ref(DEFAULT_AGENT_FACTORY())
 
 const agentList = ref([])
 
@@ -60,33 +49,49 @@ const chatbotUi = useTemplateRef('chatbotUi')
 
 const hasUserContext = ref(true)
 const hasPageContext = ref(true)
-onMounted(() => {
-  if (useRuntimeConfig().public.appHasChatbotPromptDb) {
-    ;(async () => {
-      isLoading.value = true
-      try {
-        let headers = {}
-        const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
-        if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
-        const sideAssistant = await $fetch('/api/side-assistant')
-        console.log('sideAssisant', sideAssistant)
-        if (sideAssistant && sideAssistant.agentId) {
-          CHAT_ENDPOINT.value = '/api/chatbot/chat?id=' + sideAssistant.agentId
-          agent.value = sideAssistant.agent
-          hasUserContext.value = agent.value.useProfileData
-        }
-        const publicAgents = await $fetch('/api/agent/public-list', { headers })
-        console.log('publicAgents', publicAgents)
-        agentList.value = publicAgents.filter((publicAgent) => publicAgent.id != agent.value.id)
-      } catch (e) {
-        console.log(e)
-      } finally {
-        isLoading.value = false
-      }
-    })()
-  }
-})
 
+const loadAssistant = async () => {
+  if (useRuntimeConfig().public.appHasChatbotPromptDb) {
+    isLoading.value = true
+    try {
+      let headers = {}
+      const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
+      if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
+      const sideAssistant = await $fetch('/api/side-assistant')
+      // console.log('sideAssisant', sideAssistant)
+      if (sideAssistant && sideAssistant.agentId) {
+        CHAT_ENDPOINT.value = '/api/chatbot/chat?id=' + sideAssistant.agentId
+        agent.value = sideAssistant.agent
+        hasUserContext.value = agent.value.useProfileData
+      } else {
+        CHAT_ENDPOINT.value = ref(DEFAULT_ENDPOINT)
+        agent.value = DEFAULT_AGENT_FACTORY()
+        hasUserContext.value = true
+      }
+      const publicAgents = await $fetch('/api/agent/public-list', { headers })
+      // console.log('publicAgents', publicAgents)
+      agentList.value = publicAgents.filter((publicAgent) => publicAgent.id != agent.value.id)
+    } catch (e) {
+      console.error(e)
+    } finally {
+      isLoading.value = false
+    }
+  }
+}
+
+watch(
+  () => props.isOpened,
+  (neo, old) => {
+    if (neo != old) {
+      if (neo) {
+        loadAssistant()
+        analytics.chatbot.open()
+      } else {
+        analytics.chatbot.close()
+      }
+    }
+  }
+)
 const { computePageContext, contextMessages } = useChatbotContext({
   hasUserContext,
   hasPageContext,
@@ -125,7 +130,7 @@ const suggestButtons = ref(setExemples())
 
 const startConversation = () => {
   // conversation was reset
-  console.log('start conversation')
+  // console.log('start conversation')
   suggestButtons.value = setExemples()
   conversationHasBegin.value = true
 }
@@ -164,7 +169,7 @@ function onSuggestButtonClick(message) {
     </div>
     <template v-else>
       <details v-if="agentList.length" class="special-agents-access">
-        <summary>Looking for a specialized agent ?</summary>
+        <summary>{{ $t('assistant-drawer.special-agents') }}</summary>
         <ul>
           <li v-for="specialAgent in agentList" :key="specialAgent.id">
             <LinkButton
@@ -182,20 +187,12 @@ function onSuggestButtonClick(message) {
         :has-user-context="hasUserContext"
         :has-page-context="hasPageContext"
       />
-      <div v-if="!conversationHasBegin" class="ice-breakers">
-        <h4>Here's some ice-breakers:</h4>
-        <menu v-if="suggestButtons?.length" class="prompt-suggestions" style="padding-left: 0">
-          <li
-            v-for="button in suggestButtons"
-            :key="button"
-            style="list-style-type: none; margin: 0"
-          >
+      <div v-if="!conversationHasBegin && suggestButtons?.length" class="ice-breakers">
+        <h4>{{ $t('assistant-drawer.ice-breakers') }}</h4>
+        <menu class="prompt-suggestions" style="padding-left: 0">
+          <li v-for="button in suggestButtons" :key="button" class="suggestion">
             <a class="prompt-suggestion" href="#" @click.prevent="onSuggestButtonClick(button)">
-              <IconImage
-                class="icon"
-                name="ChatBubble"
-                style="width: 1.6em; height: 1em; vertical-align: middle; fill: #666"
-              />
+              <IconImage class="icon" name="ChatBubble" />
               {{ button }}
             </a>
           </li>
@@ -252,5 +249,17 @@ function onSuggestButtonClick(message) {
   padding: 1rem;
   border: 1px $primary-light solid;
   border-radius: 10px;
+}
+
+.suggestion {
+  list-style-type: none;
+  margin: 0;
+
+  .icon {
+    width: 1.6em;
+    height: 1em;
+    vertical-align: middle;
+    fill: #666;
+  }
 }
 </style>
