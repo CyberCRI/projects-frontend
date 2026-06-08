@@ -3271,6 +3271,7 @@
   },
   "assistant-drawer": {
     "ice-breakers": "Aquí teniu alguns temes per iniciar una conversa",
-    "special-agents": "Busqueu un agent especialitzat?"
+    "special-agents": "Busqueu un agent especialitzat?",
+    "other-special-agents": "Cercant un altre agent especialitzat?"
   }
 }

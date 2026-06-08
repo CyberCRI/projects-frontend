@@ -3267,10 +3267,11 @@
   },
   "agents-home": {
     "title": "Parlons !",
-    "intro": "Bienvenue dans notre selction d'agents conversationnels – des compagnons IA conçus pour discuter, aider et engager le dialogue. Que vous souhaitiez une aide à la recherche, une conversation informelle, une collaboration créative ou un soutien pratique, vous trouverez ici différentes voix, chacune avec ses propres forces et sa personnalité."
+    "intro": "Bienvenue dans notre sélection d'agents conversationnels – des compagnons IA conçus pour discuter, aider et engager le dialogue. Que vous souhaitiez une aide à la recherche, une conversation informelle, une collaboration créative ou un soutien pratique, vous trouverez ici différentes voix, chacune avec ses propres forces et sa personnalité."
   },
   "assistant-drawer": {
     "ice-breakers": "Voici quelques idées pour briser la glace",
-    "special-agents": "Vous cherchez un agent spécialisé ?"
+    "special-agents": "Vous cherchez un agent spécialisé ?",
+    "other-special-agents": "Vous cherchez un autre agent spécialisé ?"
   }
 }

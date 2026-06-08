@@ -8,6 +8,7 @@ import useUsersStore from '@/stores/useUsers'
 const props = defineProps({ agentSlug: { type: String, required: true } })
 
 const { locale } = useNuxtI18n()
+const { t } = useNuxtI18n()
 
 const prettyDate = (s) => formatDateTime(new Date(s), locale.value)
 const prettyTitle = (conversation) =>
@@ -33,7 +34,7 @@ function scrollToBottom() {
 
 function toConversationEnd() {
   nextTick(() => {
-    console.log('to end', renderTriggeredBy.value)
+    // console.log('to end', renderTriggeredBy.value)
     if (renderTriggeredBy.value == 'previous-messages') {
       scrollToTop()
     } else {
@@ -67,13 +68,21 @@ const query = ref({
   cursor: undefined,
 })
 
-const url = `/api/chatbot/${props.agentSlug}`
-const { data, error } = await useFetch(url, { ...options, query: { limit: LIMIT } }) // query is used for conversation only and would retrigger the full chat relaod
+const url = computed(() => `/api/chatbot/${props.agentSlug}`)
+const { data, status, error } = useFetch(url, { ...options, query: { limit: LIMIT } }) // query is used for conversation only and would retrigger the full chat relaod
+
+const agentIsLoading = computed(() => status.value == 'pending')
 
 const agent = computed(() => data.value?.agent)
 const conversation = ref(null)
 const conversationId = ref(null)
 const tempKey = ref(Date.now())
+
+const { data: publicAgents } = useFetch('/api/agent/public-list', options)
+// console.log('publicAgents', publicAgents)
+const agentList = computed(() =>
+  (publicAgents.value || []).filter((publicAgent) => publicAgent.id != agent.value.id)
+)
 
 function onConversationRestarted() {
   renderTriggeredBy.value = 'restart'
@@ -162,7 +171,7 @@ const displayableMessages = computed(() => [...(conversation.value?.messages || 
 const history = computed(() => {
   const h = displayableMessages.value || []
   return h.map((message) => {
-    console.log(message)
+    // console.log(message)
     return {
       role: message.role,
       text: message.content,
@@ -219,6 +228,13 @@ watch(
   { immediate: true }
 )
 
+const breadcrumbs = computed(() => [
+  {
+    name: t('agents-home.title'),
+    route: { name: 'AgentsHomePage' },
+  },
+])
+
 useLpiHead2({
   title: computed(() => agent.value?.title),
   description: computed(() => agent.value?.description),
@@ -226,7 +242,11 @@ useLpiHead2({
 </script>
 <template>
   <div class="page-section page-section-narrow page-top">
-    <div v-if="agent">
+    <BreadCrumbs :breadcrumbs="breadcrumbs" />
+    <div v-if="agentIsLoading" class="agent-loader">
+      <LoaderSimple />
+    </div>
+    <div v-else-if="agent">
       <h1 class="page-title">
         {{ agent?.title }}
       </h1>
@@ -236,6 +256,10 @@ useLpiHead2({
         <IconImage name="AlertOutline" />
       </h2>
 
+      <AgentQuickAccess
+        :title="$t('assistant-drawer.other-special-agents')"
+        :agent-list="agentList"
+      />
       <AgentDescription :agent="agent" />
     </div>
     <div v-if="!isConnected">
@@ -348,5 +372,12 @@ useLpiHead2({
   position: fixed;
   bottom: 3rem;
   right: 1rem;
+}
+
+.agent-loader {
+  width: auto;
+  margin-top: 10rem;
+  display: flex;
+  justify-content: center;
 }
 </style>
