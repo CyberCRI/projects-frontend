@@ -163,14 +163,14 @@ const versionOptions = computed(() =>
 const { fetchAll: fetchDocuments } = useVectorStore()
 const documents = ref([])
 const documentOptions = ref([])
-
-const cannotDeactivate = ref(!!props.agent?.sideAssistants?.length)
+const cannotDeactivate = ref(false)
 
 const isLoading = ref(false)
 watch(
   () => props.isOpened,
   async () => {
     isLoading.value = true
+    cannotDeactivate.value = !!props.agent?.sideAssistants?.length
     try {
       await Promise.all([
         (async () => {
