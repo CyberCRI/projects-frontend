@@ -1,8 +1,19 @@
 <script lang="ts" setup>
-defineProps({
-  agentList: { type: Array, default: () => [] },
-  title: { type: String, required: true },
-})
+type SpecialAgent = {
+  id: number
+  slug: string
+  title: string
+  description: string
+}
+withDefaults(
+  defineProps<{
+    agentList?: SpecialAgent[]
+    title: string
+  }>(),
+  {
+    agentList: () => [],
+  }
+)
 </script>
 <template>
   <details v-if="agentList.length" class="special-agents-access">

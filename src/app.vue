@@ -75,6 +75,17 @@ const hasChatBot = computed(() => {
   return !!useRuntimeConfig().public.appChatbotEnabled && usersStore.isConnected && !isAgentPage
 })
 
+watch(
+  () => hasChatBot.value,
+  (neo, old) => {
+    // fix bug whereby if we go on a chat page with the chat drawer opened
+    // the drawer closes itself but suddenly reopen when we leave the page
+    if (!neo && neo != old) {
+      isChatBotOpen.value = false
+    }
+  }
+)
+
 const toggleReportBugModal = () => {
   reportBugModalActive.value = !reportBugModalActive.value
 }

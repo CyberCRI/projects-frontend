@@ -25,7 +25,7 @@ const options = {
 }
 
 const url = `/api/chatbot`
-const { data, status } = await useFetch(url, { ...options })
+const { data, status } = useFetch(url, { ...options })
 const agents = computed(() => data.value?.agents)
 
 const isLoading = computed(() => status.value == 'pending')
@@ -53,7 +53,7 @@ useLpiHead2({
         <LpiButton :label="$t('common.login')" @click="login" />
       </div>
     </div>
-    <div v-else-if="isLoading">
+    <div v-else-if="isLoading" class="loader">
       <LoaderSimple />
     </div>
     <div v-else>
@@ -128,5 +128,10 @@ useLpiHead2({
   .description {
     margin-top: 1rem;
   }
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
 }
 </style>

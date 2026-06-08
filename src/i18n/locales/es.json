@@ -3271,6 +3271,7 @@
   },
   "assistant-drawer": {
     "ice-breakers": "Aquí tienes algunas ideas para romper el hielo",
-    "special-agents": "¿Buscas un agente especializado?"
+    "special-agents": "¿Buscas un agente especializado?",
+    "other-special-agents": "¿Buscas otro agente especializado?"
   }
 }

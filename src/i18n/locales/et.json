@@ -3271,6 +3271,7 @@
   },
   "assistant-drawer": {
     "ice-breakers": "Siin on mõned jäämurdjad",
-    "special-agents": "Otsite spetsialiseeritud agenti?"
+    "special-agents": "Otsite spetsialiseeritud agenti?",
+    "other-special-agents": "Otsite teist spetsialiseeritudagenti?"
   }
 }

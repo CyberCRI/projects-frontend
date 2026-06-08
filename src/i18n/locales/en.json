@@ -3272,6 +3272,7 @@
   },
   "assistant-drawer": {
     "ice-breakers": "Here are some ice-breakers",
-    "special-agents": "Looking for a specialized agent?"
+    "special-agents": "Looking for a specialized agent?",
+    "other-special-agents": "Looking for another specialized agent?"
   }
 }

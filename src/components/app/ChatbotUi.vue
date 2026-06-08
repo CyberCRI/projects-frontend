@@ -351,7 +351,7 @@ watch(
       neo.onComponentRender = onComponentRender
     }
     // ??
-    console.log('chatbox change', JSON.parse(JSON.stringify(conversation.value)))
+    // console.log('chatbox change', JSON.parse(JSON.stringify(conversation.value)))
     // history.value = JSON.parse(JSON.stringify(conversation.value))
   }
 )

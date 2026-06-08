@@ -3271,6 +3271,7 @@
   },
   "assistant-drawer": {
     "ice-breakers": "Hier sind einige Eisbrecher-Themen",
-    "special-agents": "Auf der Suche nach einem spezialisierten Agenten?"
+    "special-agents": "Auf der Suche nach einem spezialisierten Agenten?",
+    "other-special-agents": "Auf der Suche nach einem anderen spezialisierten Agenten?"
   }
 }
