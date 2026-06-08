@@ -1,5 +1,5 @@
 <template>
-  <div class="goal">
+  <div :id="`goal:${goal.id}`" class="goal">
     <div class="content">
       <div v-if="goal.status !== 'na'" class="left skeletons-text" :class="`goal-${goal.status}`">
         {{ $t(`status.${goal.status}`) }}
@@ -15,7 +15,7 @@
             {{ deadlineFormatted }}
           </p>
         </div>
-        <ContentExpandable :description="goal.$t.description" :height-limit="30" />
+        <ContentExpandable :description="goal.$t.description" :opened="opened" :height-limit="30" />
       </div>
     </div>
 
@@ -40,10 +40,12 @@ const props = withDefaults(
     goal: TranslatedGoal
     canEdit?: boolean
     canDelete?: boolean
+    opened?: boolean
   }>(),
   {
     canEdit: false,
     canDelete: false,
+    opened: false,
   }
 )
 

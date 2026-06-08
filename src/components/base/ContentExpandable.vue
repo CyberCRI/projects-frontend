@@ -44,8 +44,15 @@ const props = withDefaults(
   { opened: null, description: null, seeMoreLabel: null, seeLessLabel: null, hideSeeMore: false }
 )
 
+const emit = defineEmits<{
+  limited: [boolean]
+}>()
+
 const showLess = ref(true)
 const isLimited = ref(true)
+watchEffect(() => {
+  emit('limited', isLimited.value)
+})
 const contentRef = useTemplateRef('content')
 const actualHeight = ref(0)
 const minHeight = computed(() => Math.min(props.heightLimit, actualHeight.value))
@@ -59,6 +66,9 @@ watch(
 )
 
 const checkLimited = throttle(() => {
+  if (!contentRef.value) {
+    return
+  }
   const rect = contentRef.value.getBoundingClientRect()
   actualHeight.value = rect.height
   isLimited.value = rect.height > props.heightLimit

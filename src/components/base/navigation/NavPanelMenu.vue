@@ -53,6 +53,7 @@ export type MenuEntry = {
   dataTest?: string
   noTitle?: boolean
   isAddAction?: boolean
+  ignoreUnsavedEdit?: boolean
 }
 const props = withDefaults(
   defineProps<{
@@ -73,7 +74,7 @@ const globalsStore = useGlobals()
 
 const onMenuEntryClicked = async (entry: MenuEntry) => {
   if (entry.isAddAction) {
-    if (globalsStore.hasUnsavedEdit) {
+    if (!entry.ignoreUnsavedEdit && globalsStore.hasUnsavedEdit) {
       let answer = true
       try {
         answer = await new Promise((accept) => {

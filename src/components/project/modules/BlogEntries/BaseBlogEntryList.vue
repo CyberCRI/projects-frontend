@@ -10,6 +10,7 @@ import { getBlogEntries } from '@/api/v2/blogentries.service'
 import NothingHere from '~/components/base/NothingHere.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { deleteBlogEntry } from '~/api/blogentries.service'
+import { NuxtLink } from '#components'
 
 const props = withDefaults(
   defineProps<{
@@ -85,11 +86,12 @@ const onDeleteConfirm = () => {
 }
 
 // expnadable
-const expanded = ref()
+const route = useRoute()
+const expanded = ref<number>(parseInt(route.hash.replaceAll('#blogentry:', ''), 10))
 const setExpanded = (state: boolean, blog: TranslatedBlogEntry) => {
-  if (state && expanded.value?.id !== blog.id) {
-    expanded.value = blog
-  } else if (!state && expanded.value?.id == blog.id) {
+  if (state && expanded.value !== blog.id) {
+    expanded.value = blog.id
+  } else if (!state && expanded.value == blog.id) {
     expanded.value = null
   }
 }
@@ -105,12 +107,17 @@ const setExpanded = (state: boolean, blog: TranslatedBlogEntry) => {
     />
     <div class="list-container">
       <BlogEntry
+        :is="preview ? NuxtLink : 'div'"
         v-for="blog in blogs"
         :key="blog.id"
+        :project="project"
         :blog-entry="blog"
         :can-delete="editable"
         :can-edit="editable"
-        :expanded="expanded?.id === blog.id"
+        :class="{
+          'scale-hover': preview,
+        }"
+        :expanded="expanded === blog.id"
         @expanded="setExpanded($event, blog)"
         @edit="onEdit(blog)"
         @delete="onDelete(blog)"
@@ -127,7 +134,7 @@ const setExpanded = (state: boolean, blog: TranslatedBlogEntry) => {
     @cancel="cancel"
     @confirm="onDeleteConfirm"
   >
-    <BlogEntry :blog-entry="selectedBlogEntry" />
+    <BlogEntry :blog-entry="selectedBlogEntry" :project="project" />
   </ConfirmModal>
 
   <BlogDrawer

@@ -1,5 +1,12 @@
 <template>
-  <div class="goal">
+  <NuxtLink
+    class="goal scale-hover"
+    :to="{
+      name: 'projectGoals',
+      params: { slugOrId: project.slug || project.id },
+      hash: `#goal:${goal.id}`,
+    }"
+  >
     <div v-if="statusIconVisible" :class="`goal-${goal.status}`" class="status-ctn">
       <span class="status skeletons-text">{{ goal.status }}</span>
     </div>
@@ -19,16 +26,18 @@
       @delete="$emit('delete')"
       @edit="$emit('edit')"
     />
-  </div>
+  </NuxtLink>
 </template>
 
 <script setup lang="ts">
 import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
+import type { TranslatedProject } from '~/models/project.model'
 import type { TranslatedGoal } from '@/models/goal.model'
 import { formatDate } from '@/functs/date'
 
 const props = withDefaults(
   defineProps<{
+    project: TranslatedProject
     goal: TranslatedGoal
     canDelete?: boolean
     canEdit?: boolean

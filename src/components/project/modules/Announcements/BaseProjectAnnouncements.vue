@@ -13,6 +13,7 @@ import { deleteAnnouncement } from '~/api/announcements.service'
 import type { TranslatedProject } from '@/models/project.model'
 import NothingHere from '~/components/base/NothingHere.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
+import { NuxtLink } from '#components'
 
 const props = withDefaults(
   defineProps<{
@@ -30,6 +31,8 @@ const props = withDefaults(
 const toaster = useToaster()
 const organizationCode = useOrganizationCode()
 const limitSkeletons = computed(() => maxSkeleton(props.project.modules.announcements, props.limit))
+
+const route = useRoute()
 
 const projectId = computed(() => props.project.id)
 
@@ -102,14 +105,21 @@ const onDeleteConfirm = () => {
       :pagination="pagination"
       @add="openModals('edit')"
     />
+    {{ route.hash }}
     <div class="announcement-list">
       <AnnouncementItem
+        :is="preview ? NuxtLink : 'div'"
         v-for="announcement in announcements"
         :key="announcement.id"
+        :class="{
+          'scale-hover': preview,
+        }"
         :project="project"
         :announcement="announcement"
         :editable="editable"
         :show-apply-action="!preview"
+        :show-more="`#announcement:${announcement.id.toString()}` === route.hash"
+        :show-see-more="!preview"
         @delete="onDelete(announcement)"
         @edit="onEdit(announcement)"
         @apply="onApply(announcement)"

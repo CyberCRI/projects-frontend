@@ -1,5 +1,13 @@
 <template>
-  <div class="blog-entry">
+  <component
+    :is="is"
+    class="blog-entry"
+    :to="{
+      name: 'projectBlog',
+      params: { slugOrId: project.slug || project.id },
+      hash: `#blogentry:${blogEntry.id}`,
+    }"
+  >
     <div class="blog-entry-header">
       <div class="header-main">
         <div class="entry-title skeletons-text">
@@ -30,27 +38,32 @@
         />
       </div>
     </ContentExpandable>
-  </div>
+  </component>
 </template>
 
 <script setup lang="ts">
 import type { TranslatedBlogEntry } from '~/models/blog-entry.model'
 
 import TipTapOutput from '~/components/base/form/TextEditor/TipTapOutput.vue'
+import type { TranslatedProject } from '~/models/project.model'
 import { formatDate } from '~/functs/date'
 import { remToPx } from '~/functs/style'
 
 const props = withDefaults(
   defineProps<{
+    project: TranslatedProject
     blogEntry: TranslatedBlogEntry
     expanded?: boolean
     canEdit?: boolean
+    is?: string | Component
+
     canDelete?: boolean
   }>(),
   {
     expanded: false,
     canEdit: false,
     canDelete: false,
+    is: 'div',
   }
 )
 

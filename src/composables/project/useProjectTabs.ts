@@ -283,7 +283,7 @@ export const useProjectTabs = (
   const allProjectTabs = computed(() => [...groupTabsEdit.value, ...TabsDisplay.value])
 
   const currentTab = computed(() => {
-    return allProjectTabs.value.find((tab) => route.fullPath === tab.view)
+    return allProjectTabs.value.find((tab) => route.path === tab.view)
   })
 
   const isEditing = computed(() => currentTab.value?.isEditing || false)

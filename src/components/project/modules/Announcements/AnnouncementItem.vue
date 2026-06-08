@@ -1,8 +1,15 @@
 <template>
-  <div
+  <component
+    :is="is"
+    :id="`announcement:${announcement.id}`"
     class="announcement"
     :class="{
       outdated,
+    }"
+    :to="{
+      name: 'projectAnnouncements',
+      params: { slugOrId: project.slug || project.id },
+      hash: `#announcement:${announcement.id}`,
     }"
   >
     <h2 class="title skeletons-text">
@@ -14,10 +21,16 @@
       {{ announcement.$t.title }}
     </h2>
 
-    <TipTapOutput
-      class="description tiptap-output skeletons-text"
-      :content="announcement.$t.description"
+    <ContentExpandable
+      :description="announcement.$t.description"
+      :opened="stateModals.showMore"
+      hide-see-more
+      :height-limit="100"
+      @limited="setModals('expandableIsEnabled', $event)"
     />
+    <div class="announcement-date skeletons-text">
+      {{ dateLabel }}
+    </div>
 
     <div class="action-buttons">
       <ContextActionMenuInline
@@ -29,9 +42,17 @@
     </div>
 
     <div class="actions">
-      <div class="announcement-date">
-        {{ dateLabel }}
-      </div>
+      <LpiButton
+        v-if="stateModals.expandableIsEnabled && showSeeMore"
+        secondary
+        class="no-border"
+        :btn-icon="!stateModals.showMore ? 'ChevronDown' : 'ChevronUp'"
+        :label="!stateModals.showMore ? $t('common.see-more') : $t('common.see-less')"
+        @click.prevent="toggleModals('showMore')"
+      >
+        {{ !stateModals.showMore ? $t('common.see-more') : $t('common.see-less') }}
+      </LpiButton>
+
       <LpiButton
         v-if="showApplyAction && !outdated"
         btn-icon="EmailOutline"
@@ -41,7 +62,7 @@
         @click="$emit('apply', announcement)"
       />
     </div>
-  </div>
+  </component>
 </template>
 
 <script setup lang="ts">
@@ -50,17 +71,26 @@ import type { TranslatedAnnouncement } from '~/models/announcement.model'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 
 import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
+import ContentExpandable from '~/components/base/ContentExpandable.vue'
 import { dateWithoutHours, formatDate, nowDate } from '~/functs/date'
+import type { TranslatedProject } from '~/models/project.model'
 
 const props = withDefaults(
   defineProps<{
+    project: TranslatedProject
     announcement: TranslatedAnnouncement
     showApplyAction?: boolean
     editable?: boolean
+    showMore?: boolean
+    is?: string | Component
+    showSeeMore?: boolean
   }>(),
   {
     showApplyAction: false,
     editable: false,
+    showMore: false,
+    is: 'div',
+    showSeeMore: true,
   }
 )
 
@@ -73,6 +103,16 @@ defineEmits<{
 const { locale, t } = useNuxtI18n()
 
 const { canEditProject } = usePermissions()
+
+const { stateModals, toggleModals, setModals } = useModals({
+  showMore: false,
+  expandableIsEnabled: false,
+})
+watch(
+  () => props.showMore,
+  () => setModals('showMore', props.showMore),
+  { immediate: true }
+)
 
 const canEditAndDelete = computed(() => {
   return canEditProject.value && props.editable

@@ -327,7 +327,7 @@ const groupTabsEditFiltered = computed(() => {
 })
 
 const currentTab = computed(() => {
-  return allGroupsTabs.value.find((tab) => route.fullPath === tab.view)
+  return allGroupsTabs.value.find((tab) => route.path === tab.view)
 })
 
 const isEditing = computed(() => currentTab.value?.isEditing || false)

@@ -23,7 +23,9 @@
         :is="preview ? GoalSummaryItem : GoalItem"
         v-for="(goal, index) in sortedGoals"
         :key="index"
+        :project="project"
         :goal="goal"
+        :opened="`#goal:${goal.id}` === route.hash"
         class="goal"
         :can-delete="editable"
         :can-edit="editable"
@@ -42,7 +44,7 @@
     @cancel="cancel"
     @confirm="onDeleteConfirm"
   >
-    <BlogEntry :blog-entry="selectedGoal" />
+    <BlogEntry :project="project" :blog-entry="selectedGoal" />
   </ConfirmModal>
 
   <SdgsDrawer
@@ -92,6 +94,7 @@ const { t } = useNuxtI18n()
 
 const asyncing = ref(false)
 const toaster = useToaster()
+const route = useRoute()
 const limitSkeletons = computed(() => maxSkeleton(props.project.modules.goals, props.limit))
 
 const organizationCode = useOrganizationCode()
