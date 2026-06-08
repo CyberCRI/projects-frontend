@@ -259,6 +259,13 @@ export default defineNuxtConfig({
         //   content: `${process.env.NUXT_PUBLIC_APP_PUBLIC_BINARIES_PREFIX}/social/meta_background_twt.png`,
         // },
       ],
+      script: [
+        {
+          async: true,
+          defer: true,
+          src: 'https://www.google.com/recaptcha/api.js?render=explicit',
+        },
+      ],
     },
   },
 })
