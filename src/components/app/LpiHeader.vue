@@ -219,6 +219,7 @@ export default {
   },
 
   setup() {
+    const appHasChatbotPromptDb = useRuntimeConfig().public.appHasChatbotPromptDb
     const projectCategoriesStore = useProjectCategories()
     const organizationsStore = useOrganizationsStore()
     const usersStore = useUsersStore()
@@ -226,6 +227,7 @@ export default {
     const { locale, setLocale } = useNuxtI18n()
     const { isAutoTranslateActivated } = useAutoTranslate()
     return {
+      appHasChatbotPromptDb,
       projectCategoriesStore,
       organizationsStore,
       usersStore,
@@ -383,6 +385,13 @@ export default {
           leftIcon: 'Map',
           condition: true,
           dataTest: 'map',
+        },
+        {
+          label: this.$t('home.agents').toUpperCase(),
+          to: { name: 'AgentsHomePage' },
+          leftIcon: 'ChatBubble',
+          condition: this.appHasChatbotPromptDb,
+          dataTest: 'agents',
         },
         {
           label: this.$t('home.communities').toUpperCase(),

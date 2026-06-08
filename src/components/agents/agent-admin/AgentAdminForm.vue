@@ -164,59 +164,72 @@ const { fetchAll: fetchDocuments } = useVectorStore()
 const documents = ref([])
 const documentOptions = ref([])
 
+const cannotDeactivate = ref(!!props.agent?.sideAssistants?.length)
+
 const isLoading = ref(false)
 watch(
   () => props.isOpened,
   async () => {
     isLoading.value = true
     try {
-      prompts.value = await fetchPrompts()
-      documents.value = await fetchDocuments()
-      documentOptions.value = documents.value.map((document) => {
-        let opt = {
-          useDocument: false,
-        }
-        if (props.agent?.documents) {
-          const original = props.agent?.documents.find(
-            (d) =>
-              d.documentTitle == document.title &&
-              d.vectorStoreKey == document.vectorStoreKey &&
-              d.isGlobal == (document.org_code == '')
-          )
-          if (original) {
-            opt = {
-              useDocument: true,
-            }
-          }
-        }
+      await Promise.all([
+        (async () => {
+          prompts.value = await fetchPrompts()
+        })(),
 
-        return {
-          document,
-          model: opt,
-        }
-      })
-      skills.value = await fetchSkills()
-      skillOptions.value = skills.value.map((skill) => {
-        let opt = {
-          useSkill: false,
-          useLatestSkillVersion: true,
-          skillVersion: 0,
-        }
-        if (props.agent?.skillContents) {
-          const original = props.agent?.skillContents.find((s) => s.skillId == skill.id)
-          if (original) {
-            opt = {
-              useSkill: true,
-              useLatestSkillVersion: original.useLatestSkillVersion,
-              skillVersion: original.skillVersion,
+        (async () => {
+          documents.value = await fetchDocuments()
+          documentOptions.value = documents.value.map((document) => {
+            let opt = {
+              useDocument: false,
             }
-          }
-        }
-        return {
-          skill: skill,
-          model: opt,
-        }
-      })
+            if (props.agent?.documents) {
+              const original = props.agent?.documents.find(
+                (d) =>
+                  d.documentTitle == document.title &&
+                  d.vectorStoreKey == document.vectorStoreKey &&
+                  d.isGlobal == (document.org_code == '')
+              )
+              if (original) {
+                opt = {
+                  useDocument: true,
+                }
+              }
+            }
+
+            return {
+              document,
+              model: opt,
+            }
+          })
+        })(),
+
+        (async () => {
+          skills.value = await fetchSkills()
+          skillOptions.value = skills.value.map((skill) => {
+            let opt = {
+              useSkill: false,
+              useLatestSkillVersion: true,
+              skillVersion: 0,
+            }
+            if (props.agent?.skillContents) {
+              const original = props.agent?.skillContents.find((s) => s.skillId == skill.id)
+              if (original) {
+                opt = {
+                  useSkill: true,
+                  useLatestSkillVersion: original.useLatestSkillVersion,
+                  skillVersion: original.skillVersion,
+                }
+              }
+            }
+            return {
+              skill: skill,
+              model: opt,
+            }
+          })
+        })(),
+      ])
+
       form.value = defaultForm(props.agent)
       tiptapId.value = 'TipTapEditor'
       tted.value?.resetContent()
@@ -245,6 +258,7 @@ const submit = async () => {
     return
   }
   isAsyncing.value = true
+  let finallyClose = true
 
   let headers = {}
   const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
@@ -271,8 +285,8 @@ const submit = async () => {
   try {
     const body = { ...form.value, startMessage: html2md(form.value.startMessage) }
     if (isEdit.value) {
-      await $fetch(`/api/agent/${props.agent.id}`, {
-        method: 'put',
+      await $fetch(`/api/agent/${props.agent.id}/`, {
+        method: 'put' as any, // weird issue with ts here :/
         body,
         headers,
       })
@@ -287,12 +301,19 @@ const submit = async () => {
     toaster.pushSuccess(t(isEdit.value ? 'agents.edit-success' : 'agents.create-success'))
     emit(isEdit.value ? 'entity-updated' : 'entity-created')
   } catch (e) {
+    console.dir(e)
+    if (e?.data?.statusCode === 409) {
+      finallyClose = false
+      cannotDeactivate.value = true
+      form.value.isEnabled = true
+      toaster.pushError(t('agents.is-used-as-side-assistant'))
+    }
     toaster.pushError(
       t(isEdit.value ? 'agents.edit-error' : 'agents.create-error') + ' ' + e.toString()
     )
   } finally {
     isAsyncing.value = false
-    close()
+    if (finallyClose) close()
   }
 }
 </script>
@@ -324,7 +345,14 @@ const submit = async () => {
         <FieldErrors :errors="v$.title.$errors" />
       </div>
       <div class="form-section">
-        <lpiCheckbox v-model="form.isEnabled" :label="$t('agents.is-enabled')" />
+        <lpiCheckbox
+          v-model="form.isEnabled"
+          :label="$t('agents.is-enabled')"
+          :disabled="cannotDeactivate"
+        />
+        <p v-if="cannotDeactivate" class="warn-notice">
+          {{ $t('agents.is-used-as-side-assistant') }}
+        </p>
       </div>
       <label>{{ $t('agents.description') }}</label>
       <div class="form-section">
@@ -474,5 +502,15 @@ const submit = async () => {
 .loader {
   margin-top: 3rem;
   margin-inline: auto;
+}
+
+.warn-notice {
+  display: block;
+  border-left: 2px solid $salmon;
+  padding-left: 1rem;
+  margin-left: 0.5rem;
+  margin-bottom: 1rem;
+  padding-block: 4px;
+  font-style: italic;
 }
 </style>

@@ -16,7 +16,6 @@ const refresh = async () => {
   isAsyncing.value = true
   try {
     entityList.value = await props.fetchEntities()
-    console.log('entityList', entityList.value)
   } catch (e) {
     console.log(e.toString())
   } finally {

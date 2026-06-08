@@ -233,7 +233,8 @@
       "agent-skills": "Agent skills",
       "agents": "Agents",
       "conversations": "Conversations",
-      "checkpoints": "Checkpoints"
+      "checkpoints": "Checkpoints",
+      "side-assistant": "Side assistant"
     },
     "page-title": "Admin",
     "portal": {
@@ -972,7 +973,8 @@
     },
     "create-project": "Create a project",
     "check-locations": "Check our locations",
-    "our-locations": "Our locations"
+    "our-locations": "Our locations",
+    "agents": "AI Agents"
   },
   "language": {
     "label-en": "English",
@@ -3247,6 +3249,7 @@
     "empty-list": "No agent yet.",
     "confirm-restart-title": "Restart conversation",
     "confirm-restart-content": "Do you want to start a new conversation?",
+    "is-used-as-side-assistant": "This agent is currently used as side assistant and cannot be deactivated.",
     "form": {
       "invalid": "Form is incomplete, please provide required fields",
       "title-required": "Title is required",
@@ -3256,5 +3259,15 @@
       "model-temperature-is-bounded": "Model temperature must be between 0 and 2",
       "prompt-required": "Prompt is required"
     }
+  },
+  "side-assistant": {
+    "default": "Default",
+    "save-success": "Side assistant saved",
+    "save-error": "Error while saving side assistant",
+    "choose": "Choose an agent for the side assistant"
+  },
+  "agents-home": {
+    "title": "Let's talk!",
+    "intro": "Welcome to a curated gathering of conversational agents - AI companions designed to chat, help, and engage. Whether you're looking for research assistance, casual conversation, creative collaboration, or practical support, you'll find different voices here, each with its own strengths and personality."
   }
 }

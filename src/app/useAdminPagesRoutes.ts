@@ -17,6 +17,12 @@ export default function useAdminPagesRoutes() {
       },
 
       {
+        path: 'side-assitant',
+        name: 'SideAssistantAdminTab',
+        component: () => import('../pages/AdminPortalPageV2/Tabs/SideAssistantAdminTab.vue'),
+      },
+
+      {
         path: 'prompts',
         name: 'PromptsAdminTab',
         component: () => import('../pages/AdminPortalPageV2/Tabs/PromptsAdminTab.vue'),

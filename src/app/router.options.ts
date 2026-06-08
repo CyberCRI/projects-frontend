@@ -22,16 +22,27 @@ const routes = ({
 }): Array<RouteRecordRaw> => {
   const agents = []
   if (useRuntimeConfig().public.appHasChatbotPromptDb) {
-    agents.push({
-      path: '/agents/:agentSlug',
-      name: 'AgentPage',
-      component: () => import('../pages/Chatbot/ChatbotPage.vue'),
-      props: true,
-      meta: {
-        resetScroll: true,
-        // requiresAuth: true,
+    agents.push(
+      {
+        path: '/agents',
+        name: 'AgentsHomePage',
+        component: () => import('../pages/ChatbotHome/ChatbotHomePage.vue'),
+        meta: {
+          resetScroll: true,
+          // requiresAuth: true,
+        },
       },
-    })
+      {
+        path: '/agents/:agentSlug',
+        name: 'AgentPage',
+        component: () => import('../pages/Chatbot/ChatbotPage.vue'),
+        props: true,
+        meta: {
+          resetScroll: true,
+          // requiresAuth: true,
+        },
+      }
+    )
   }
   return [
     {

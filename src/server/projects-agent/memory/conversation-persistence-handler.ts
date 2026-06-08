@@ -61,7 +61,7 @@ export default class ConversationPersistenceHandler extends BaseCallbackHandler 
       .replace(/[^\p{L}\p{N}_\s]/gu, '')
       .replace(/\s+/, ' ')
       .trim()
-      .slice(0, 25)
+      .slice(0, 50)
     await chatbotPrisma.$transaction(async (tx) => {
       const position = await this.getNextPosition(tx)
       await tx.conversationMessage.create({

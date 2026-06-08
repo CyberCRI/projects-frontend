@@ -226,7 +226,8 @@
       "agent-skills": "Vaardigheden van de agent",
       "agents": "Agenten",
       "conversations": "Gesprekken",
-      "checkpoints": "Checkpoints"
+      "checkpoints": "Checkpoints",
+      "side-assistant": "Zij-assistent"
     },
     "page-title": "Beheerder",
     "portal": {
@@ -972,7 +973,8 @@
     },
     "create-project": "Een project aanmaken",
     "check-locations": "Controleer onze locaties",
-    "our-locations": "Onze locaties"
+    "our-locations": "Onze locaties",
+    "agents": "AI-agenten"
   },
   "language": {
     "label-en": "Engels",
@@ -3246,6 +3248,7 @@
     "empty-list": "Nog geen agent beschikbaar.",
     "confirm-restart-title": "Gesprek opnieuw starten",
     "confirm-restart-content": "Wilt u een nieuw gesprek starten?",
+    "is-used-as-side-assistant": "Deze agent wordt momenteel als secundaire assistent gebruikt en kan niet worden gedeactiveerd.",
     "form": {
       "invalid": "Het formulier is onvolledig, vul de vereiste velden in",
       "title-required": "Titel is verplicht",
@@ -3255,5 +3258,15 @@
       "model-temperature-is-bounded": "Modeltemperatuur moet tussen 0 en 2 liggen",
       "prompt-required": "Prompt is verplicht"
     }
+  },
+  "side-assistant": {
+    "default": "Default",
+    "save-success": "Side assistant saved",
+    "save-error": "Error while saving side assistant",
+    "choose": "Choose an agent for the side assistant"
+  },
+  "agents-home": {
+    "title": "Let's talk!",
+    "intro": "Welcome to a curated gathering of conversational agents - AI companions designed to chat, help, and engage. Whether you're looking for research assistance, casual conversation, creative collaboration, or practical support, you'll find different voices here, each with its own strengths and personality."
   }
 }

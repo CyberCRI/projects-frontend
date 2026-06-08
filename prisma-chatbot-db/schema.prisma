@@ -111,7 +111,8 @@ model Agent {
 
   useLatestPromptVersion Boolean @default(true)
 
-  conversations Conversation[]
+  conversations  Conversation[]
+  sideAssistants SideAssistant[]
 
   @@unique([title, orgCode])
   @@unique([slug, orgCode])
@@ -199,4 +200,11 @@ model ConversationMessage {
   position   Int
 
   @@index([conversationId])
+}
+
+model SideAssistant {
+  id      Int    @id @default(autoincrement())
+  orgCode String
+  agentId Int
+  agent   Agent  @relation(fields: [agentId], references: [id])
 }

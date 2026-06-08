@@ -226,7 +226,8 @@
       "agent-skills": "Agendi oskused",
       "agents": "Agendid",
       "conversations": "Vestlused",
-      "checkpoints": "Checkpoints"
+      "checkpoints": "Checkpoints",
+      "side-assistant": "Külgne assistent"
     },
     "page-title": "Admin",
     "portal": {
@@ -972,7 +973,8 @@
     },
     "create-project": "Projekti loomine",
     "check-locations": "Vaata meie asukohti",
-    "our-locations": "Meie asukohad"
+    "our-locations": "Meie asukohad",
+    "agents": "AI agendid"
   },
   "language": {
     "label-en": "Inglise",
@@ -3246,6 +3248,7 @@
     "empty-list": "Agente veel ei ole.",
     "confirm-restart-title": "Alusta vestlust uuesti",
     "confirm-restart-content": "Kas soovite alustada uut vestlust?",
+    "is-used-as-side-assistant": "Seda agenti kasutatakse praegu abilise rollis ja seda ei saa deaktiveerida.",
     "form": {
       "invalid": "Vorm on mittetäielik, palun täitke nõutud väljad",
       "title-required": "Pealkiri on nõutud",
@@ -3255,5 +3258,15 @@
       "model-temperature-is-bounded": "Mudeli temperatuur peab jääma vahemikku 0 kuni 2",
       "prompt-required": "Prompt on nõutud"
     }
+  },
+  "side-assistant": {
+    "default": "Default",
+    "save-success": "Side assistant saved",
+    "save-error": "Error while saving side assistant",
+    "choose": "Choose an agent for the side assistant"
+  },
+  "agents-home": {
+    "title": "Let's talk!",
+    "intro": "Welcome to a curated gathering of conversational agents - AI companions designed to chat, help, and engage. Whether you're looking for research assistance, casual conversation, creative collaboration, or practical support, you'll find different voices here, each with its own strengths and personality."
   }
 }

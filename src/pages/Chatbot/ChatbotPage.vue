@@ -133,7 +133,7 @@ const { data: conversationData, status: conversationStatus } = await useFetch(
 const isLoadingConversation = computed(() => conversationStatus.value == 'pending')
 
 watch(conversationData, (cData) => {
-  console.log('cData', cData)
+  // console.log('cData', cData)
   if (!cData) return
   if (conversationId.value) {
     if (cData?.conversation) {
@@ -235,7 +235,8 @@ useLpiHead2({
         {{ $t('agents.preview-mode') }}
         <IconImage name="AlertOutline" />
       </h2>
-      <TipTapOutput class="description" :content="agent.description" />
+
+      <AgentDescription :agent="agent" />
     </div>
     <div v-if="!isConnected">
       <p class="login-notice">
@@ -312,7 +313,7 @@ useLpiHead2({
   }
 }
 
-.description {
+.agent-description {
   margin-block: 2rem;
 }
 

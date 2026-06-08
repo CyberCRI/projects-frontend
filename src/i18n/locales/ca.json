@@ -226,7 +226,8 @@
       "agent-skills": "Habilitats de l'agent",
       "agents": "Agents",
       "conversations": "Converses",
-      "checkpoints": "Checkpoints"
+      "checkpoints": "Checkpoints",
+      "side-assistant": "Ajudant lateral"
     },
     "page-title": "Administrador",
     "portal": {
@@ -972,7 +973,8 @@
     },
     "create-project": "Crea un projecte",
     "check-locations": "Comprova les nostres ubicacions",
-    "our-locations": "Les nostres ubicacions"
+    "our-locations": "Les nostres ubicacions",
+    "agents": "Agents d'IA"
   },
   "language": {
     "label-en": "Anglès",
@@ -3246,6 +3248,7 @@
     "empty-list": "Encara no hi ha cap agent.",
     "confirm-restart-title": "Reinicia la conversa",
     "confirm-restart-content": "Vols iniciar una conversa nova?",
+    "is-used-as-side-assistant": "Aquest agent s'utilitza actualment com a assistent secundari i no es pot desactivar.",
     "form": {
       "invalid": "El formulari està incomplet, si us plau, proporciona els camps requerits",
       "title-required": "El títol és obligatori",
@@ -3255,5 +3258,15 @@
       "model-temperature-is-bounded": "La temperatura del model ha d'estar entre 0 i 2",
       "prompt-required": "L'indicació (prompt) és obligatòria"
     }
+  },
+  "side-assistant": {
+    "default": "Default",
+    "save-success": "Side assistant saved",
+    "save-error": "Error while saving side assistant",
+    "choose": "Choose an agent for the side assistant"
+  },
+  "agents-home": {
+    "title": "Let's talk!",
+    "intro": "Welcome to a curated gathering of conversational agents - AI companions designed to chat, help, and engage. Whether you're looking for research assistance, casual conversation, creative collaboration, or practical support, you'll find different voices here, each with its own strengths and personality."
   }
 }
