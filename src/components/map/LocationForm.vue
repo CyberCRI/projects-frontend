@@ -14,7 +14,12 @@
     <template #body>
       <div class="location-map-ctn">
         <!-- form not have it, so ignore typescript -->
-        <MapRecap ref="mapInstance" :locations="[form as any]" :expand="false" />
+        <MapRecap
+          ref="mapInstance"
+          :locations="[form as any]"
+          :auto-center="false"
+          :expand="false"
+        />
       </div>
 
       <div class="location-type-ctn">

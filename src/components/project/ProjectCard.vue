@@ -4,6 +4,8 @@
     class="project-card"
     :data-test="`project-card-${project.id}`"
     :mode="mode"
+    :line-clamp="lineClamp"
+    :title="title"
     @click="toProject"
   >
     <template #actions-left>
@@ -20,13 +22,13 @@
         @unfollow="$emit('card-update')"
       />
       <IconImage
-        v-if="showAddButton"
+        v-if="hasAddIcon"
         class="icon skeletons-background"
         name="Plus"
         @click="$emit('add')"
       />
       <IconImage
-        v-if="showCloseButton"
+        v-if="hasCloseIcon"
         class="icon skeletons-background"
         name="CloseCircle"
         @click="$emit('unselect', project)"
@@ -57,197 +59,118 @@
           {{ project.categories[0].name }}
         </div>
       </div>
-      <div class="card-title skeletons-text">
+      <h2 class="card-title skeletons-text">
         {{ translatedTitle }}
-      </div>
-      <div :style="{ '-webkit-line-clamp': purposeClamp }" class="card-description skeletons-text">
+      </h2>
+      <p class="card-description skeletons-text">
         {{ translatedPurpose }}
-      </div>
+      </p>
     </div>
   </BasicCard>
 </template>
 
-<script>
+<script setup lang="ts">
 import ProjectFollowIcon from '~/components/project/ProjectFollowIcon.vue'
 import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 import BasicCard from '~/components/base/BasicCard.vue'
 
-import useUsersStore from '~/stores/useUsers.ts'
+import useUsersStore from '~/stores/useUsers'
 
-import { DEFAULT_PROJECT_PATATOID } from '~/composables/usePatatoids'
+import type { DEFAULT_PROJECT_PATATOID } from '~/composables/usePatatoids'
+import type { TranslatedProject } from '~/models/project.model'
+import type { IconImageChoice } from '~/functs/IconImage'
 
-export default {
-  name: 'ProjectCard',
+const props = withDefaults(
+  defineProps<{
+    // TODO: change to only translatedPRoject (projectModel used in search/profile)
+    project: TranslatedProject
+    hasAddIcon?: boolean
+    hasCloseIcon?: boolean
+    customIcon?: IconImageChoice
+    followOnClick?: boolean
+    targetUserId?: number
+    mode?: 'card' | 'list'
+  }>(),
+  {
+    hasAddIcon: false,
+    hasCloseIcon: false,
+    customIcon: null,
+    followOnClick: false,
+    targetUserId: null,
+    mode: 'card',
+  }
+)
 
-  components: {
-    BasicCard,
-    IconImage,
-    CroppedApiImage,
-    ProjectFollowIcon,
-  },
-  props: {
-    project: {
-      type: Object,
-      required: true,
-    },
+const emit = defineEmits<{
+  add: []
+  unselect: [TranslatedProject]
+  click: []
+  'get-info': []
+  'navigated-away': []
+  'card-update': []
+  'custom-icon-click': [TranslatedProject]
+}>()
 
-    hasAddIcon: {
-      type: Boolean,
-      default: false,
-    },
+const usersStore = useUsersStore()
+const { getTranslatableField } = useAutoTranslate()
 
-    hasCloseIcon: {
-      type: Boolean,
-      default: false,
-    },
-    customIcon: {
-      type: String,
-      default: '',
-    },
+const project = computed(() => props.project)
+const translatedTitle = getTranslatableField(project, 'title')
+const translatedPurpose = getTranslatableField(project, 'purpose')
 
-    followOnClick: {
-      type: Boolean,
-      default: false,
-    },
+const toLink = computed(() => {
+  // a to-link attribute make the basic card a NuxtLink
+  // witch we dont want when just selecting project
+  return props.hasAddIcon || props.hasCloseIcon || props.followOnClick
+    ? null
+    : `/projects/${props.project.slug || props.project.id}/summary`
+})
 
-    targetUserId: {
-      type: [Number, String, null],
-      required: false,
-      default: null,
-    },
-    mode: {
-      type: String,
-      default: 'card', // 'card' or 'list'
-    },
-  },
+const showFollowButton = computed(() => {
+  return !props.hasAddIcon && !props.customIcon && !props.hasCloseIcon && usersStore.isConnected
+})
 
-  emits: [
-    'add',
-    'unselect',
-    'click',
-    'get-info',
-    'navigated-away',
-    'card-update',
-    'custom-icon-click',
-  ],
+const visibilityIcon = computed<IconImageChoice>(() => {
+  switch (props.project.publication_status) {
+    case 'org':
+      return 'PeopleGroup'
+    case 'private':
+      return 'EyeSlash'
+    case 'public':
+      return 'Eye'
+    default:
+      return null
+  }
+})
 
-  setup(props) {
-    const usersStore = useUsersStore()
-    const { getTranslatableField } = useAutoTranslate()
-    const translatedTitle = getTranslatableField(props.project, 'title')
-    const translatedPurpose = getTranslatableField(props.project, 'purpose')
-    return {
-      usersStore,
-      translatedTitle,
-      translatedPurpose,
-      DEFAULT_PROJECT_PATATOID,
-    }
-  },
-
-  data() {
-    return {
-      fullProject: null,
-      isLoading: true,
-      follow: this.project.is_followed,
-      imageLoaded: false,
-      imageError: false,
-    }
-  },
-
-  computed: {
-    slugOrId() {
-      return this.project.slug ? this.project.slug : this.project.id
-    },
-
-    toLink() {
-      // a to-link attribute make the basic card a NuxtLink
-      // witch we dont want when just selecting project
-      return this.hasAddIcon || this.hasCloseIcon || this.followOnClick
-        ? null
-        : `/projects/${this.slugOrId}/summary`
-    },
-
-    showFollowButton() {
-      return (
-        !this.hasAddIcon && !this.customIcon && !this.hasCloseIcon && this.usersStore.isConnected
-      )
-    },
-
-    showAddButton() {
-      return this.hasAddIcon
-    },
-
-    showCloseButton() {
-      return this.hasCloseIcon
-    },
-
-    categorieRoughLines() {
-      if (!this.project.categories.length) {
-        return 0
-      }
-      return Math.ceil(this.project.categories[0].name.length / 18)
-    },
-
-    titleRoughLines() {
-      return Math.ceil(this.translatedTitle.length / 20)
-    },
-
-    // show at least on line for purpose
-    // as per req of profschercheurs
-    // however dont limit to max one line if more space is available
-    purposeClamp() {
-      // 5 is title default line clamp (see css below)
-      // 2 is categorie default line clamp (see css below)
-      return Math.max(1, 5 - this.titleRoughLines) + Math.max(0, 2 - this.categorieRoughLines)
-    },
-
-    visibilityIcon() {
-      const map = {
-        public: 'Eye',
-        private: 'EyeSlash',
-        org: 'PeopleGroup',
-      }
-      return map[this.project.publication_status] || ''
-    },
-  },
-
-  methods: {
-    toProject() {
-      // this is a quick and dirty fix to make whole card clickable for selection
-      if (this.hasAddIcon) this.$emit('add')
-      else if (this.hasCloseIcon) this.$emit('unselect', this.project)
-      else if (this.followOnClick) {
-        this.$refs.follow.actionFollow()
-      } else this.$emit('navigated-away')
-    },
-  },
+const followRef = useTemplateRef('follow')
+const toProject = () => {
+  // this is a quick and dirty fix to make whole card clickable for selection
+  if (props.hasAddIcon) {
+    emit('add')
+  } else if (props.hasCloseIcon) {
+    emit('unselect', props.project)
+  } else if (props.followOnClick) {
+    followRef.value.actionFollow()
+  } else {
+    emit('navigated-away')
+  }
 }
+
+// calculate lineClamp description
+const lineClamp = computed(() => {
+  let defaultLineClamp = 6
+  if (props.project.categories?.length) {
+    defaultLineClamp += 1
+  }
+  return defaultLineClamp
+})
+
+const title = computed(() => `${translatedTitle.value}\n\n${translatedPurpose.value}`.trim())
 </script>
 
 <style lang="scss" scoped>
-.category-name,
-.card-title,
-.card-description {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.category-name {
-  -webkit-line-clamp: 2; // if you change this change also purposeClamp() computed
-  width: 100%;
-}
-
-.card-title {
-  -webkit-line-clamp: 5; // if you change this change also purposeClamp() computed
-}
-
-.card-description {
-  -webkit-line-clamp: 1;
-}
-
 .icon {
   fill: $primary-dark;
 }

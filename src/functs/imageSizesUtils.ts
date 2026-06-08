@@ -1,5 +1,6 @@
 import type { IconImageChoice } from '~/functs/IconImage'
 import type { ImageModel } from '~/models/image.model'
+import type { AttachmentType } from '~/models/types'
 
 export type ImageSizes = {
   scaleX: number
@@ -190,4 +191,25 @@ export const mimeTypeToInfo = (
   }
 
   return { icon: 'File' }
+}
+
+/**
+ * convert attachment type from link to mimetype
+ *
+ * @function
+ * @name getMimeFromType
+ * @kind variable
+ * @param {AttachmentType} type
+ * @returns {string}
+ * @exports
+ */
+export const getMimeFromType = (type: AttachmentType): string => {
+  switch (type) {
+    case 'image':
+      return 'image/unknow'
+    case 'video':
+      return 'video/unknow'
+    case 'file':
+      return
+  }
 }

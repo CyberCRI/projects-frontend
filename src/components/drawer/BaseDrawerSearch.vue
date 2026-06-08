@@ -104,7 +104,6 @@ const labelMaxSelected = computed(() => {
 
 <template>
   <BaseDrawer
-    :confirm-action-name="$t('common.add')"
     :is-opened="isOpened"
     :title="`${title || $t('search.label')} ${labelMaxSelected}`"
     class="team-modal large"

@@ -79,17 +79,24 @@ const typeOptions = computed<
   },
   {
     value: 'participant',
-    label: t('recruit.participant'),
+    label: t('recruit.type.participant.label'),
   },
   {
     value: 'traineeship',
-    label: t('recruit.traineeship'),
+    label: t('recruit.type.traineeship.label'),
   },
   {
     value: 'job',
-    label: t('recruit.job'),
+    label: t('recruit.type.job.label'),
   },
 ])
+
+const selectedTypeDescription = computed(() => {
+  if (form.value.type === 'na') {
+    return ''
+  }
+  return t(`recruit.type.${form.value.type}.description`)
+})
 
 const isFormEqual = computed(() => isEqual(form.value, defaultLocalForm()))
 
@@ -180,9 +187,13 @@ const submit = async () => {
       @confirm="submit"
     >
       <div class="list-container">
-        <Field :label="$t('recruit.type')" required>
+        <Field :label="$t('recruit.type.title')" required>
           <GroupButton v-model="form.type" :options="typeOptions" />
           <FieldErrors :errors="errors.type" />
+          <p v-if="selectedTypeDescription" class="announcement-type">
+            <IconImage name="HelpCircle" class="icon" />
+            {{ selectedTypeDescription }}
+          </p>
         </Field>
 
         <TextInput
@@ -209,3 +220,10 @@ const submit = async () => {
     />
   </div>
 </template>
+
+<style lang="scss" scoped>
+.announcement-type {
+  opacity: 0.7;
+  padding: 1rem 0;
+}
+</style>

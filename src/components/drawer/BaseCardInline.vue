@@ -18,6 +18,7 @@ withDefaults(
     selected?: boolean
     passive?: boolean
     minimal?: boolean
+    title?: string
   }>(),
   {
     job: null,
@@ -29,6 +30,7 @@ withDefaults(
     selected: false,
     passive: false,
     minimal: false,
+    title: '',
   }
 )
 </script>
@@ -37,7 +39,7 @@ withDefaults(
   <div
     class="card-small"
     :class="{ selected: selected, passive: passive, minimal: minimal }"
-    :title="label"
+    :title="title || label"
   >
     <div class="card-container">
       <CroppedApiImage

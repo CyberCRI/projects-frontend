@@ -36,7 +36,7 @@ defineEmits<{
       v-if="pagination && pagination.count.value > 10"
       class="pagination-limit small skeletons-background"
       :model-value="pagination.limit.value"
-      :title="$t('pagination.visibylity-per-par')"
+      :title="$t('pagination.visibility-per-page')"
       :options="[
         { value: 10, label: '10' },
         { value: 25, label: '25' },

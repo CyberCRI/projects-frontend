@@ -1961,11 +1961,11 @@
     "17": {
       "title": "Partnerlus eesmärkide nimel"
     },
-    "add-short": "Lisa sdg",
     "sdg-fulltext": "säästva arengu eesmärgid",
     "title": "SDG",
     "empty": "Siin pole veel midagi... Säästva arengu eesmärke panustajad veel ei lisanud.",
-    "edit-short": "SDG muutmine"
+    "add-short": "Lisa säästva arengu eesmärgid",
+    "edit-short": "Muuda säästva arengu eesmärke"
   },
   "stats": {
     "cumulated-projects": "Uued kumulatiivsed projektid",
@@ -2744,7 +2744,8 @@
     "next": "Järgmine",
     "page": "Page",
     "first": "Esimene leht",
-    "last": "Viimane lehekülg"
+    "last": "Viimane lehekülg",
+    "visibility-per-page": "Kirjete arv leheküljel."
   },
   "pdf": {
     "blog-entries-limited-warning": "PDF-i ekspordi hulka kuuluvad ainult esimesed {max} blogikirjed (kokku {total}).",

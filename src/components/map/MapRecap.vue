@@ -50,11 +50,13 @@ const props = withDefaults(
     locations?: AnyTranslatedLocation[]
     expand?: boolean
     editable?: boolean
+    autoCenter?: boolean
   }>(),
   {
     locations: () => [],
     expand: false,
     editable: false,
+    autoCenter: false,
   }
 )
 
@@ -72,7 +74,11 @@ const CONFIG = {
 
 watch(
   () => props.locations,
-  () => summaryMapRef.value?.centerMap(),
+  () => {
+    if (props.autoCenter) {
+      summaryMapRef.value?.centerMap()
+    }
+  },
   { deep: true }
 )
 

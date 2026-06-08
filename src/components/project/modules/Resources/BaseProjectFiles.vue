@@ -4,7 +4,7 @@ import {
   patchProjectAttachmentFile,
   postProjectAttachmentFiles,
 } from '~/api/attachment-files.service'
-import type { TranslatedAttachmentLink } from '~/models/attachment-link.model'
+import type { TranslatedAttachmentFile } from '~/models/attachment-file.model'
 import { attachementFileSkeletons } from '~/skeletons/attachements.skeletons'
 import { getProjectAttachmentFiles } from '~/api/v2/attachment-files.service'
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
@@ -69,7 +69,7 @@ const fullRefresh = () => {
   cancel()
 }
 
-const selectedFile = ref<TranslatedAttachmentLink>()
+const selectedFile = ref<TranslatedAttachmentFile>()
 const onEdit = (item) => {
   selectedFile.value = item
   openModals('edit')
@@ -170,7 +170,7 @@ const onSubmit = (form: AttachmentForm) => {
       :resource="selectedFile"
       :subtitle="selectedFile.$t.description"
       :title="selectedFile.$t.title"
-      :mime="selectedFile.site_url"
+      :mime="selectedFile.mime"
       icon="File"
     />
   </ConfirmModal>

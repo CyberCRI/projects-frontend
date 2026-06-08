@@ -63,6 +63,7 @@ const onChangeCategories = async (categorie: TranslatedProjectCategory) => {
       <template #default="{ category }">
         <ProjectCategoriesDropdownElementButton
           :category="category"
+          :selected="form.categorie?.id === category.id"
           @choose-category="onChangeCategories(category)"
         />
       </template>

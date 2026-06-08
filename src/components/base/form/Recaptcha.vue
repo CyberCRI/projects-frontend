@@ -11,11 +11,14 @@ const model = defineModel<string>()
 
 const setToken = (respToken) => (model.value = respToken)
 
-const setHeaderScript = onClient(async () => {
+const setHeaderScript = onClient(() => {
   // already Set
+  console.log('recaptachScript')
   if (document.getElementById('recaptchaScript')) {
     return window.grecaptcha
   }
+
+  console.log('recaptaet script')
 
   const script = document.createElement('script')
   script.setAttribute('async', '')
@@ -26,29 +29,23 @@ const setHeaderScript = onClient(async () => {
 })
 
 const initCaptcha = onClient(() => {
+  setHeaderScript()
   window.grecaptcha.render(props.recapchaKey, {
     sitekey: runtimeConfig.public.appCaptchaKey,
     callback: setToken,
   })
 })
 
-onBeforeMount(() => {
-  if (import.meta.dev) {
-    model.value = 'DEV-TOKEN'
+const initialize = onClient(() => {
+  if (model.value) {
+    window.grecaptcha.reset(model.value)
   }
-  setHeaderScript()
+  initCaptcha()
 })
 
-watch(
-  () => props.recapchaKey,
-  () => {
-    if (model.value) {
-      window.grecaptcha.reset(model.value)
-      initCaptcha()
-    }
-  },
-  { immediate: true }
-)
+onBeforeMount(() => setHeaderScript())
+
+watch(() => props.recapchaKey, initialize, { immediate: true })
 </script>
 
 <template>

@@ -120,7 +120,7 @@ const onSubmit = (linkedProjects: TranslatedProject[]) => {
         :can-delete="editable"
         @delete="onDelete(linked)"
       >
-        <ProjectCard :project="linked.project"></ProjectCard>
+        <ProjectCard :project="linked.project" />
       </CardEditor>
     </div>
     <NothingHere v-if="linkedProjects.length === 0" />

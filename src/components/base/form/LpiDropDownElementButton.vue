@@ -63,7 +63,6 @@ const label = computed(() => {
 
   &.selected {
     background-color: $primary-light;
-    font-style: italic;
     color: rgba($primary-dark, 0.7);
   }
 

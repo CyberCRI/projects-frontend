@@ -59,7 +59,6 @@ const defaultLocalForm = () => {
     newForm.applicant_firstname = userStore.user.family_name
     newForm.applicant_name = userStore.user.given_name
     newForm.applicant_email = userStore.user.email
-    newForm.applicant_email = userStore.user.email
   }
 
   return newForm

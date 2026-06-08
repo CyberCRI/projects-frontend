@@ -146,11 +146,18 @@ const lifeStatusOptions = computed(() => {
       iconName: 'ListCheck',
     })
   }
-  opts.push({
-    value: 'completed',
-    label: t('status.completed'),
-    iconName: 'Check',
-  })
+  opts.push(
+    {
+      value: 'completed',
+      label: t('status.completed'),
+      iconName: 'Check',
+    },
+    {
+      value: 'canceled',
+      label: t('status.canceled'),
+      iconName: 'Close',
+    }
+  )
   return opts
 })
 
@@ -300,8 +307,9 @@ const checkClose = () => {
             />
           </Section>
 
+          <!-- this section only for admin -->
           <Section
-            v-if="organizations?.length"
+            v-if="organizations?.length && (isOrgAdmin || isAdmin)"
             class="skeletons-background"
             :title="$t('project.org-settings.title')"
           >

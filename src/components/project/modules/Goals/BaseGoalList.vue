@@ -14,7 +14,7 @@
       v-if="!preview"
       :editable="editable"
       :pagination="pagination"
-      :add-label="$t('goal.add')"
+      :add-label="$t('goal.add-project')"
       @add="openModals('edit')"
     />
 

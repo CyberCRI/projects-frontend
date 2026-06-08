@@ -23,6 +23,8 @@ const { form, isValid } = useProjectTemplatesForm()
 
 const toaster = useToasterStore()
 
+const global = useGlobals()
+
 const onSubmit = (form: ProjectFormType) => {
   loading.value = true
 
@@ -43,6 +45,8 @@ const onSubmit = (form: ProjectFormType) => {
       }
       // fetch updated project list from user so permissions as set correctly
       await usersStore.refreshUser()
+
+      global.hasUnsavedEdit = false
 
       analytics.project.create({ id: project.id, title: project.title })
 

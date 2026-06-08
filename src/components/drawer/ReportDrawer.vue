@@ -8,6 +8,7 @@ import { defaultReportForm, useReportForm } from '~/form/report'
 import FormPanel from '~/components/base/FormPanel.vue'
 import Field from '~/components/base/form/Field.vue'
 import useToasterStore from '~/stores/useToaster'
+import { cropIfTooLong } from '~/functs/string'
 import useUsersStore from '~/stores/useUsers'
 import { isEqual } from 'es-toolkit'
 
@@ -24,6 +25,10 @@ const usersStore = useUsersStore()
 
 const { stateModals, closeModals, openModals, closeAllModals } = useModals({ saveChange: false })
 const { form, isValid, errors, cleanedData, reset } = useReportForm({ lazy: true })
+// auto add title from message content
+watchEffect(() => {
+  form.value.title = cropIfTooLong(form.value.message, 10)
+})
 const isLoading = ref(false)
 
 const close = () => {
@@ -115,16 +120,17 @@ const submit = async () => {
           />
         </Field>
 
-        <Field :label="$t('form.description')" :help="$t(`report.${type}-title`)" required>
+        <!-- we hide title (no needed) -->
+        <!-- <Field :label="$t('form.title')" :help="$t(`report.${type}-title`)" required>
           <TextInput
             v-model="form.title"
             class="text-input"
             data-test="report-title"
             :errors="errors.title"
           />
-        </Field>
+        </Field> -->
 
-        <Field :label="$t('form.title')" :help="$t(`report.${type}-text`)" required>
+        <Field :label="$t('form.description')" :help="$t(`report.${type}-text`)" required>
           <TextInput
             v-model="form.message"
             class="text-input-test"

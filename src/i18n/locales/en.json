@@ -928,7 +928,8 @@
     "planned-for-the": "Planned for the",
     "status-title": "Status",
     "title": "Goal's title",
-    "delete": "Would you like to delete this goal?"
+    "delete": "Would you like to delete this goal?",
+    "add-project": "Add a goal to the project"
   },
   "header": {
     "private": "Private: visible only to team members",
@@ -1687,16 +1688,32 @@
     "email": "Warning, we need a valid email address to contact you. (we will not save this information on the platform).",
     "firstname": "Firstname",
     "is-remunerated": "Is remunerated",
-    "job": "Job",
     "lastname": "Lastname",
     "motivation-hint": "It should contain at least 20 characters",
     "new-announcement": "New announcement",
+
+    "job": "Job",
+    "traineeship": "Traineeship",
     "participant": "Participant",
+
     "remunerated": "Remunerated",
+    "type": {
+      "title": "Announcement type",
+      "job": {
+        "label": "Job",
+        "description": "A traditional employment opportunity, either full-time or part-time, with a defined salary, benefits, and long-term commitment. Suited for those seeking stable, professional roles"
+      },
+      "traineeship": {
+        "label": "Traineeship",
+        "description": "A structured training program combining work experience with learning. Traineeships are often paid, designed for beginners or career changers, and provide hands-on skills development under supervision"
+      },
+      "participant": {
+        "label": "Participant",
+        "description": "Ideal for individuals looking to engage in short-term programs, workshops, or collaborative projects. Often unpaid or stipend-based, these roles focus on learning, networking, or contributing to a specific initiative"
+      }
+    },
     "send": "Send application",
     "title": "Title",
-    "traineeship": "Traineeship",
-    "type": "Announcement type",
     "updated": "Updated",
     "valid-until-the": "Valid until",
     "view": "View"
@@ -2019,8 +2036,8 @@
     "17": {
       "title": "Partnerships for the Goals"
     },
-    "add-short": "Add a SDG",
-    "edit-short": "Edit a SDG",
+    "add-short": "Add SDGs",
+    "edit-short": "Edit SDGs",
     "sdg-fulltext": "sustainable development goals",
     "title": "SDG",
     "empty": "Nothing here yet... Contributors did not added SDGs yet."
@@ -3135,7 +3152,8 @@
     "first": "First page",
     "last": "Last page",
     "next": "Next page",
-    "page": "Page"
+    "page": "Page",
+    "visibility-per-page": "Number of items per page."
   },
   "pdf": {
     "blog-entries-limited-warning": "Only the first {max} blog entries are included in the PDF export (of {total} total).",

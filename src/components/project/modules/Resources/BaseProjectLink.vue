@@ -16,6 +16,7 @@ import type { AttachmentForm } from '~/models/attachment.model'
 import type { TranslatedProject } from '@/models/project.model'
 import NothingHere from '~/components/base/NothingHere.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
+import { getMimeFromType } from '~/functs/imageSizesUtils'
 
 const props = withDefaults(
   defineProps<{
@@ -136,6 +137,7 @@ const onSubmit = (form: AttachmentForm) => {
         :resource="item"
         :subtitle="item.$t.description"
         :title="item.$t.title"
+        :mime="getMimeFromType(item.attachment_type)"
         icon="LinkRotated"
         @delete="onDelete(item)"
         @edit="onEdit(item)"
@@ -158,7 +160,8 @@ const onSubmit = (form: AttachmentForm) => {
       :resource="selectedLink"
       :subtitle="selectedLink.$t.description"
       :title="selectedLink.$t.title"
-      icon="File"
+      :mime="getMimeFromType(selectedLink.attachment_type)"
+      icon="LinkRotated"
     />
   </ConfirmModal>
 

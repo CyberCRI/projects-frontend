@@ -42,7 +42,7 @@
         :resource="link"
         :subtitle="link?.$t?.description"
         :title="link?.$t?.title"
-        :mime="link?.site_url"
+        :mime="getMimeFromType(link?.attachment_type)"
         @edit="$emit('edit', link)"
         @delete="openModal(link, 'link')"
       />
@@ -67,6 +67,7 @@ import SectionHeader from '~/components/base/SectionHeader.vue'
 import type { TranslatedAttachmentLink } from '~/models/attachment-link.model'
 import type { TranslatedAttachmentFile } from '~/models/attachment-file.model'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
+import { getMimeFromType } from '~/functs/imageSizesUtils'
 import useToasterStore from '~/stores/useToaster'
 
 const props = withDefaults(

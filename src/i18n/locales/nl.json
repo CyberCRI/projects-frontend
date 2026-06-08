@@ -1961,11 +1961,11 @@
     "17": {
       "title": "Partnerschappen voor de doelstellingen"
     },
-    "add-short": "Een sdg toevoegen",
     "sdg-fulltext": "Duurzame ontwikkelingsdoelstellingen",
     "title": "SDG",
     "empty": "Nog niets hier... Medewerkers hebben nog geen SDG's toegevoegd.",
-    "edit-short": "Een SDG bewerken"
+    "add-short": "SDG's toevoegen",
+    "edit-short": "SDG's bewerken"
   },
   "stats": {
     "cumulated-projects": "Cumulatieve nieuwe projecten",
@@ -2744,7 +2744,8 @@
     "next": "Volgende pagina",
     "page": "Bladzijde",
     "first": "Eerste pagina",
-    "last": "Laatste pagina"
+    "last": "Laatste pagina",
+    "visibility-per-page": "Aantal artikelen per pagina."
   },
   "pdf": {
     "blog-entries-limited-warning": "Alleen de eerste {max} blogvermeldingen zijn opgenomen in de PDF-export (van {total} totaal).",

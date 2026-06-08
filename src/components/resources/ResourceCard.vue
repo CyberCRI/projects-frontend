@@ -67,11 +67,10 @@ const url = computed(() => {
   if (!props.resource) {
     return
   }
-  if (['file', 'image'].includes(props.resource.attachment_type)) {
-    return props.resource.file
-  } else {
+  if ('site_url' in props.resource && props.resource.site_url) {
     return props.resource.site_url
   }
+  return props.resource.file
 })
 
 const mimeInfo = computed(() => {

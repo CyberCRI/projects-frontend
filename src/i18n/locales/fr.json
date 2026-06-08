@@ -922,6 +922,7 @@
   },
   "goal": {
     "add": "Ajouter un objectif",
+    "add-project": "Ajouter un objectif au project",
     "completed-on-the": "Terminé le",
     "description": "Description",
     "goals": "Objectifs",
@@ -2046,11 +2047,11 @@
     "17": {
       "title": "Partenariats pour la Réalisation des Objectifs"
     },
-    "add-short": "Ajouter un odd",
     "sdg-fulltext": "objectifs de développement durable",
     "title": "ODD",
     "empty": "Rien ici... Les contributeurs n'ont pas encore ajouté d'ODD.",
-    "edit-short": "Modifier un ODD"
+    "add-short": "Ajouter des ODDs",
+    "edit-short": "Modifier les ODDs"
   },
   "stats": {
     "cumulated-projects": "Nouveaux projets cumulés",
@@ -2836,7 +2837,8 @@
     "next": "Page suivante",
     "page": "Page",
     "first": "Première page",
-    "last": "Dernière page"
+    "last": "Dernière page",
+    "visibility-per-page": "Nombre d'articles par page."
   },
   "gallery": {
     "title": "Galerie",

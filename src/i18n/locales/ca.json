@@ -1961,11 +1961,11 @@
     "17": {
       "title": "Associacions pels Objectius"
     },
-    "add-short": "Afegeix un sdg",
     "sdg-fulltext": "objectiu sostenible del desenvolupament",
     "title": "SDG",
     "empty": "No hi ha res aquí encara... Els col·laboradors encara no han afegit SDGs.",
-    "edit-short": "Edita un SDG"
+    "add-short": "Afegeix SDGs",
+    "edit-short": "Edita SDGs"
   },
   "stats": {
     "cumulated-projects": "Projectes curatius",
@@ -2744,7 +2744,8 @@
     "next": "Pàgina següent",
     "page": "Pàgina",
     "first": "Primera pàgina",
-    "last": "Última pàgina"
+    "last": "Última pàgina",
+    "visibility-per-page": "Nombre d' elements per pàgina."
   },
   "pdf": {
     "blog-entries-limited-warning": "Només s' inclouen les primeres entrades del bloc {max} en l' exportació PDF (de {total} total).",
