@@ -166,7 +166,18 @@ watch(conversationData, (cData) => {
   }
 })
 
-const displayableMessages = computed(() => [...(conversation.value?.messages || [])].reverse())
+const hasUserContext = computed(() => !!agent.value?.useProfileData)
+const hasPageContext = ref(false)
+const contextMessageRole = 'retriever'
+const { contextMessages, filterContextMesssages } = useChatbotContext({
+  hasUserContext,
+  hasPageContext,
+  contextMessageRole,
+})
+
+const displayableMessages = computed(() =>
+  [...(conversation.value?.messages || [])].filter(filterContextMesssages).reverse()
+)
 
 const history = computed(() => {
   const h = displayableMessages.value || []
@@ -208,15 +219,6 @@ const chatbotUiKey = computed(
 )
 
 // const loading = useLoadingFromStatus(status)
-
-const hasUserContext = computed(() => !!agent.value?.useProfileData)
-const hasPageContext = ref(false)
-const contextMessageRole = 'retriever'
-const { contextMessages } = useChatbotContext({
-  hasUserContext,
-  hasPageContext,
-  contextMessageRole,
-})
 
 const showConversationList = ref(false)
 const route = useRoute()

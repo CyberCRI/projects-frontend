@@ -19,12 +19,14 @@ export default function useChatbotContext({ hasUserContext, hasPageContext, cont
     }
   }
 
+  const userContextPrefix =
+    '# Use the following information about the user to tailor your response toward the user interests'
   const userContext = computed(() => {
     const user = usersStore.userFromApi
     if (!user || !allowProfile.value) return ''
     // TODO: groups and projects
     return `
-    # Use the following information about the user to tailor your response toward the user interests
+    ${userContextPrefix}
     - Name: ${user.family_name} ${user.given_name}
     - Pronouns: ${user.pronouns}
     - Job: ${user.job}
@@ -68,6 +70,10 @@ export default function useChatbotContext({ hasUserContext, hasPageContext, cont
     else return ''
   })
 
+  const computePageContextMetaPrefix = '# here are some meta information about the current page'
+  const computePageContextPrefix =
+    '# Here is the content of the current page, use it as a context for your responses'
+
   const computePageContext = () => {
     let res = ''
     const pageMeta = route.matched
@@ -76,11 +82,11 @@ export default function useChatbotContext({ hasUserContext, hasPageContext, cont
       .join('\n')
 
     if (pageMeta)
-      res += `# here are some meta information about the current page
+      res += `${computePageContextMetaPrefix}
         ${pageMeta}
       `
     if (import.meta.client) {
-      res += `# Here is the content of the current page, use it as a context for your responses:
+      res += `${computePageContextPrefix}:
         ${document.querySelector('.main-view')?.textContent || ''}
         `
       pageContextData.value = res
@@ -97,6 +103,12 @@ export default function useChatbotContext({ hasUserContext, hasPageContext, cont
     },
   ])
 
+  function filterContextMesssages(message) {
+    return ![userContextPrefix, computePageContextMetaPrefix, computePageContextPrefix].some(
+      (contextPrefix) => (message.content || '').trim().startsWith(contextPrefix)
+    )
+  }
+
   return {
     allowProfile,
     updateAllowProfile,
@@ -104,5 +116,9 @@ export default function useChatbotContext({ hasUserContext, hasPageContext, cont
     updateAllowCurrentPage,
     computePageContext,
     contextMessages,
+    userContextPrefix,
+    computePageContextMetaPrefix,
+    computePageContextPrefix,
+    filterContextMesssages,
   }
 }
