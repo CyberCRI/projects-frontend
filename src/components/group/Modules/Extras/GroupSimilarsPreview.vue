@@ -90,6 +90,10 @@ onMediaChange(
     flex-wrap: wrap;
     gap: 0.5rem;
     padding-bottom: 0.5rem;
+
+    .group-similars-card {
+      width: 100%;
+    }
   }
 }
 
@@ -103,18 +107,6 @@ onMediaChange(
 </style>
 
 <style lang="scss">
-@media screen and (max-width: $min-desktop) {
-  .group-similars {
-    .group-similars-list {
-      width: 100%;
-
-      > * {
-        width: 100%;
-      }
-    }
-  }
-}
-
 .group-similars-card {
   border: none !important;
   height: auto !important;
