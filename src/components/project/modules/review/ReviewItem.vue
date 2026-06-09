@@ -72,7 +72,6 @@ const userStore = useUsersStore()
   border: $border-width-s solid var(--primary-dark);
   box-sizing: border-box;
   position: relative;
-  margin-bottom: $space-l;
 
   .actions {
     display: inline-flex;

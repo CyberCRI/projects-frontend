@@ -577,7 +577,8 @@
     "clear-date": "Neteja la data",
     "chose-date": "Seleccioneu la data | Seleccioneu la data(s)",
     "empty": "Aquí no hi ha res...",
-    "file": "fitxer | fitxers"
+    "file": "fitxer | fitxers",
+    "image": "imatge"
   },
   "complete-profile": {
     "bio": {
@@ -928,7 +929,8 @@
     "planned-for-the": "Planificació per a la",
     "status-title": "Estat",
     "title": "Títol de l' objectiu",
-    "delete": "Voleu esborrar aquest objectiu?"
+    "delete": "Voleu esborrar aquest objectiu?",
+    "add-project": "Afegeix un objectiu al projecte"
   },
   "header": {
     "private": "Privat: només visible per als membres de l' equip",
@@ -1695,7 +1697,21 @@
     "send": "Envia aplicació",
     "title": "Títol",
     "traineeship": "Entrenador",
-    "type": "Tipus de Anunci",
+    "type": {
+      "title": "Tipus de Anunci",
+      "job": {
+        "label": "Treball",
+        "description": "Una oportunitat tradicional d'ocupació, ja sigui a temps complet o a temps parcial, amb un sou definit, beneficis i compromís a llarg termini. Cosats per aquells que busquen estables, rols professionals"
+      },
+      "traineeship": {
+        "label": "Entrenador",
+        "description": "Un programa d'entrenament estructurat que combina l'experiència de treball amb aprendre. Sovint s'han pagat els trens, dissenyat per als principiants o per als canvis de carrera, i proporcionar un desenvolupament d'habilitats a mans sota supervisió."
+      },
+      "participant": {
+        "label": "Participant",
+        "description": "És ideal per als individus que busquen involucrar-se en programes de curt termini, tallers o projectes col·laboratius. Sovint, no pagades o basats en l'objectiu, aquests rols es centren en l'aprenentatge, la xarxa o contribueixen a una iniciativa específica"
+      }
+    },
     "updated": "Actualitzat",
     "valid-until-the": "Vàlid fins",
     "view": "Visualitza",

@@ -577,7 +577,8 @@
     "clear-date": "Datum wissen",
     "chose-date": "Datum selecteren | Selecteer de datum(s)",
     "empty": "Niets hier...",
-    "file": "bestand | bestanden"
+    "file": "bestand | bestanden",
+    "image": "afbeelding"
   },
   "complete-profile": {
     "bio": {
@@ -928,7 +929,8 @@
     "planned-for-the": "Gepland voor de",
     "status-title": "Status",
     "title": "Titel van het doel",
-    "delete": "Wilt u dit doel verwijderen?"
+    "delete": "Wilt u dit doel verwijderen?",
+    "add-project": "Een doel toevoegen aan het project"
   },
   "header": {
     "private": "Privé: alleen zichtbaar voor teamleden",
@@ -1695,7 +1697,21 @@
     "send": "Programma versturen",
     "title": "Titel",
     "traineeship": "Traineeship",
-    "type": "Type aankondiging",
+    "type": {
+      "title": "Type aankondiging",
+      "job": {
+        "label": "Taak",
+        "description": "Een traditionele arbeidsmogelijkheid, hetzij voltijds, hetzij deeltijds, met een bepaald salaris, uitkeringen en een verbintenis op lange termijn. Geschikt voor degenen die op zoek zijn naar stabiele, professionele rollen"
+      },
+      "traineeship": {
+        "label": "Traineeship",
+        "description": "Een gestructureerd trainingsprogramma dat werkervaring en leren combineert. Stages worden vaak betaald, ontworpen voor beginners of loopbaanwisselaars, en bieden hands-on vaardigheden ontwikkeling onder toezicht"
+      },
+      "participant": {
+        "label": "Deelnemer",
+        "description": "Ideaal voor personen die op zoek zijn naar korte termijn programma's, workshops of samenwerkingsprojecten. Vaak onbetaald of op een toelage gebaseerd, richten deze rollen zich op leren, netwerken of bijdragen aan een specifiek initiatief"
+      }
+    },
     "updated": "Bijgewerkt",
     "valid-until-the": "Geldig tot",
     "view": "Beeld",

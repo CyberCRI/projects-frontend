@@ -17,7 +17,7 @@ defineProps<{ project: TranslatedProject }>()
     }"
   >
     <template #content>
-      <BaseProjectComments :project="project" preview is-private />
+      <BaseProjectComments :project="project" preview is-private :limit="3" />
     </template>
   </BaseModulePreview>
 </template>

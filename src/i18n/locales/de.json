@@ -577,7 +577,8 @@
     "clear-date": "Datum",
     "chose-date": "Wählen Sie Datum | Wählen Sie das Datum(en)",
     "empty": "Nichts hier...",
-    "file": "Datei | Dateien"
+    "file": "Datei | Dateien",
+    "image": "Bild"
   },
   "complete-profile": {
     "bio": {
@@ -928,7 +929,8 @@
     "planned-for-the": "geplant für die",
     "status-title": "Status",
     "title": "Titel des Ziels",
-    "delete": "Möchten Sie dieses Ziel löschen?"
+    "delete": "Möchten Sie dieses Ziel löschen?",
+    "add-project": "Ein Ziel zum Projekt hinzufügen"
   },
   "header": {
     "private": "Private: nur für Teammitglieder sichtbar",
@@ -1695,7 +1697,21 @@
     "send": "Bewerbung senden",
     "title": "Titel",
     "traineeship": "Ausbildung",
-    "type": "Anzeigeart",
+    "type": {
+      "title": "Meldetyp",
+      "job": {
+        "label": "Stellen",
+        "description": "Eine traditionelle Beschäftigungsmöglichkeit, entweder Vollzeit oder Teilzeit, mit einem definierten Gehalt, Leistungen und langfristigem Engagement. Geeignet für diejenigen, die stabile, professionelle Rollen suchen"
+      },
+      "traineeship": {
+        "label": "Ausbildung",
+        "description": "Ein strukturiertes Trainingsprogramm, das Arbeitserfahrung mit Lernen verbindet. Auszubildende werden oft bezahlt, für Anfänger oder Karrierewechsler konzipiert und bieten praktische Fähigkeiten Entwicklung unter Aufsicht"
+      },
+      "participant": {
+        "label": "Teilnehmer",
+        "description": "Ideal für Personen, die kurzfristige Programme, Workshops oder kollaborative Projekte in Anspruch nehmen möchten. Oft unbezahlt oder stipendiert, konzentrieren sich diese Rollen auf Lernen, Netzwerken oder einen Beitrag zu einer bestimmten Initiative"
+      }
+    },
     "updated": "aktualisiert",
     "valid-until-the": "gültig bis",
     "view": "Blick",

@@ -577,7 +577,8 @@
     "clear-date": "Puhasta kuupäev",
     "chose-date": "Vali kuupäev | Kuupäevade valimine",
     "empty": "Siin pole midagi...",
-    "file": "faili | failid"
+    "file": "faili | failid",
+    "image": "pilt"
   },
   "complete-profile": {
     "bio": {
@@ -928,7 +929,8 @@
     "planned-for-the": "Planeeritud",
     "status-title": "Staatus",
     "title": "Eesmärgi tiitel",
-    "delete": "Kas soovite selle eesmärgi kustutada?"
+    "delete": "Kas soovite selle eesmärgi kustutada?",
+    "add-project": "Lisa projektile eesmärk"
   },
   "header": {
     "private": "Privaatne: nähtav ainult meeskonnaliikmetele",
@@ -1695,7 +1697,21 @@
     "send": "Saada taotlus",
     "title": "Pealkiri",
     "traineeship": "Praktikakoht",
-    "type": "Teate liik",
+    "type": {
+      "title": "Teate liik",
+      "job": {
+        "label": "Job",
+        "description": "Traditsiooniline töövõimalus, kas täistööajaga või osalise tööajaga, kindlaksmääratud palga, hüvitiste ja pikaajalise kohustusega. Sobib neile, kes otsivad stabiilseid ja professionaalseid rolle"
+      },
+      "traineeship": {
+        "label": "Praktikakoht",
+        "description": "Struktureeritud koolitusprogramm, mis ühendab töökogemuse õppimisega. Praktikakohad on sageli tasulised, mõeldud algajatele või karjäärivahetajatele ning pakuvad praktilist oskuste arendamist järelevalve all."
+      },
+      "participant": {
+        "label": "Osaleja",
+        "description": "Ideaalne üksikisikutele, kes soovivad osaleda lühiajalistes programmides, töötubades või koostööprojektides. Sageli tasustamata või stipendiumipõhine, keskenduvad need rollid õppimisele, võrgustike loomisele või konkreetse algatuse toetamisele."
+      }
+    },
     "updated": "Uuendatud",
     "valid-until-the": "Kehtiv kuni",
     "view": "Vaade",

@@ -503,6 +503,7 @@
     "file": "file | files",
     "empty": "Nothing here...",
     "select": "select",
+    "image": "image",
     "year": "year",
     "link-to": "link to",
     "other": "other",
@@ -1691,11 +1692,9 @@
     "lastname": "Lastname",
     "motivation-hint": "It should contain at least 20 characters",
     "new-announcement": "New announcement",
-
     "job": "Job",
     "traineeship": "Traineeship",
     "participant": "Participant",
-
     "remunerated": "Remunerated",
     "type": {
       "title": "Announcement type",

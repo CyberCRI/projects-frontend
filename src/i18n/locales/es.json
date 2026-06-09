@@ -577,7 +577,8 @@
     "clear-date": "Fecha clara",
     "chose-date": "Seleccionar fecha | Seleccione la fecha(s)",
     "empty": "Nada aquí...",
-    "file": "archivo | archivos"
+    "file": "archivo | archivos",
+    "image": "imagen"
   },
   "complete-profile": {
     "bio": {
@@ -928,7 +929,8 @@
     "planned-for-the": "programado para el",
     "status-title": "Situación",
     "title": "título de gol",
-    "delete": "¿Te gustaría eliminar este objetivo?"
+    "delete": "¿Te gustaría eliminar este objetivo?",
+    "add-project": "Añadir un objetivo al proyecto"
   },
   "header": {
     "private": "Privada: visible sólo a los miembros del equipo",
@@ -1695,7 +1697,21 @@
     "send": "Enviar solicitud",
     "title": "Título",
     "traineeship": "Formación profesional",
-    "type": "Tipo de anuncio",
+    "type": {
+      "title": "Tipo de anuncio",
+      "job": {
+        "label": "Job",
+        "description": "Una oportunidad tradicional de empleo, a tiempo completo o a tiempo parcial, con un salario definido, beneficios y compromiso a largo plazo. Suite para aquellos que buscan roles estables y profesionales"
+      },
+      "traineeship": {
+        "label": "Formación profesional",
+        "description": "Un programa de formación estructurado que combina experiencia laboral con el aprendizaje. A menudo se pagan becas, diseñadas para principiantes o cambiadores de carrera, y proporcionan desarrollo de habilidades prácticas bajo supervisión"
+      },
+      "participant": {
+        "label": "Participante",
+        "description": "Ideal para personas que buscan participar en programas a corto plazo, talleres o proyectos colaborativos. A menudo no remuneradas o basadas en el estipendio, estas funciones se centran en el aprendizaje, la creación de redes o la contribución a una iniciativa específica"
+      }
+    },
     "updated": "actualizada",
     "valid-until-the": "válido hasta",
     "view": "vista",

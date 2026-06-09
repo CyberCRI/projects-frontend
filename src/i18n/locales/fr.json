@@ -577,7 +577,8 @@
     "date": "Date",
     "clear-date": "Effacer la date",
     "empty": "Rien ici...",
-    "file": "fichier | fichiers"
+    "file": "fichier | fichiers",
+    "image": "image"
   },
   "complete-profile": {
     "bio": {
@@ -1781,7 +1782,21 @@
     "send": "Envoi de la candidature",
     "title": "Titre",
     "traineeship": "Stage",
-    "type": "Type d'annonce",
+    "type": {
+      "title": "Type d'annonce",
+      "job": {
+        "label": "Emploi",
+        "description": "Une possibilité d'emploi traditionnelle, à temps plein ou à temps partiel, avec un salaire, des avantages sociaux et un engagement à long terme. Suite pour ceux qui cherchent des rôles stables et professionnels"
+      },
+      "traineeship": {
+        "label": "Stage",
+        "description": "Un programme de formation structuré combinant expérience de travail et apprentissage. Les stages sont souvent rémunérés, conçus pour les débutants ou les changements de carrière, et offrent un perfectionnement pratique sous supervision."
+      },
+      "participant": {
+        "label": "Participant",
+        "description": "Idéal pour les personnes qui souhaitent participer à des programmes, des ateliers ou des projets de collaboration à court terme. Souvent non rémunérées ou fondées sur les allocations, ces rôles sont axés sur l'apprentissage, le réseautage ou la contribution à une initiative particulière."
+      }
+    },
     "updated": "Modifié une annonce",
     "valid-until-the": "Valide jusqu'au",
     "view": "Voir",
