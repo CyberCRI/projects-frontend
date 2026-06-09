@@ -4,6 +4,7 @@ import { lpiMount } from '~~/tests/helpers/LpiMount'
 import { describe, expect, it } from 'vitest'
 
 import BlogEntry from '~/components/project/modules/BlogEntries/BlogEntry.vue'
+import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import useAutoTranslate from '~/composables/useAutoTranslate'
 import { flushPromises } from '@vue/test-utils'
 
@@ -13,6 +14,7 @@ describe('BlogEntry.vue', () => {
     const blog = translateBlogEntry(BlogEntryFactory.generate())
     const wrapper = lpiMount(BlogEntry, {
       props: {
+        project: TranslatedProjectFactory.generate(),
         blogEntry: blog.value,
       },
     })
@@ -24,6 +26,7 @@ describe('BlogEntry.vue', () => {
     const blog = translateBlogEntry(BlogEntryFactory.generate())
     const wrapper = lpiMount(BlogEntry, {
       props: {
+        project: TranslatedProjectFactory.generate(),
         blogEntry: blog.value,
       },
     })

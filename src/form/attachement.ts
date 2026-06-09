@@ -27,7 +27,7 @@ export const useAttachmentForm = (type: RefOrRaw<'file' | 'link'>, options = {})
     if (unref(type) === 'file') {
       // @ts-expect-error not defined in rules
       rules.file = {
-        required: helpers.withMessage(t('resources.file.form.required'), required),
+        required: helpers.withMessage(t('resource.file.form.required'), required),
         maxFileSize: maxFileSize(MAX_FILE_SIZE),
       }
     }

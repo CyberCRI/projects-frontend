@@ -76,7 +76,7 @@ export const useModal = (initialState: boolean = false) => {
   const closeModal = () => closeModals('base')
   const openModal = () => openModals('base')
   const toggleModal = () => toggleModals('base')
-  const setModal = (state: true) => setModals('base', state)
+  const setModal = (state: boolean) => setModals('base', state)
 
   return {
     stateModal,
