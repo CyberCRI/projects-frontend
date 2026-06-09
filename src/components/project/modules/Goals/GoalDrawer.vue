@@ -187,6 +187,15 @@ const checkClose = () => {
     @confirm="submit"
   >
     <div class="list-container">
+      <Field :label="$t('goal.status-title')">
+        <GroupButton
+          v-model="form.status"
+          class="group-button-labels"
+          :options="statusOptions"
+          :custom-color="statusColor"
+        />
+      </Field>
+
       <TextInput
         v-model="form.title"
         :label="$t('goal.title')"
@@ -208,15 +217,6 @@ const checkClose = () => {
         :errors="errors.deadline_at"
         :label="$t('common.set-deadline')"
       />
-
-      <Field :label="$t('goal.status-title')">
-        <GroupButton
-          v-model="form.status"
-          class="group-button-labels"
-          :options="statusOptions"
-          :custom-color="statusColor"
-        />
-      </Field>
     </div>
 
     <!-- drawer/modal -->

@@ -2,7 +2,9 @@
   <div :id="`goal:${goal.id}`" class="goal">
     <div class="content">
       <div v-if="goal.status !== 'na'" class="left skeletons-text" :class="`goal-${goal.status}`">
-        {{ $t(`status.${goal.status}`) }}
+        <span class="rotate-text">
+          {{ $t(`status.${goal.status}`) }}
+        </span>
       </div>
 
       <div class="right">
@@ -86,15 +88,20 @@ const deleteGoal = () => emit('delete', props.goal)
     min-height: 100px;
 
     .left {
-      writing-mode: tb-rl;
-      transform: rotate(-180deg);
       text-align: center;
       padding: $space-m;
       box-sizing: border-box;
       font-size: $font-size-s;
       font-weight: 500;
-      border-top-right-radius: $border-radius-l;
-      border-bottom-right-radius: $border-radius-l;
+      border-top-left-radius: $border-radius-l;
+      border-bottom-left-radius: $border-radius-l;
+      display: flex;
+
+      .rotate-text {
+        display: block;
+        writing-mode: sideways-lr;
+        margin: auto;
+      }
     }
 
     .right {

@@ -105,7 +105,6 @@ const onDeleteConfirm = () => {
       :pagination="pagination"
       @add="openModals('edit')"
     />
-    {{ route.hash }}
     <div class="announcement-list">
       <AnnouncementItem
         :is="preview ? NuxtLink : 'div'"
