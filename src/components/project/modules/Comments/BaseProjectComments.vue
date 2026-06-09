@@ -76,7 +76,7 @@ const throttlefullRefresh = throttle(() => {
         @comment-edited="throttleRefresh"
         @comment-deleted="throttlefullRefresh"
       />
-      <EmptyComment v-if="comments.length === 0 || true" />
+      <EmptyComment v-if="comments.length === 0" />
     </div>
     <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
   </FetchLoader>
