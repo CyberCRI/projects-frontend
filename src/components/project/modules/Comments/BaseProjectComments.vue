@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { getProjectComments, getProjectMessages } from '@/api/v2/comments.service'
+import EmptyComment from '~/components/project/modules/Comments/EmptyComment.vue'
 import CommentItem from '~/components/project/modules/Comments/CommentItem.vue'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import { refreshProjectData } from '~/composables/project/refreshProject'
@@ -75,7 +76,7 @@ const throttlefullRefresh = throttle(() => {
         @comment-edited="throttleRefresh"
         @comment-deleted="throttlefullRefresh"
       />
-      <EmptyLabel v-if="comments.length === 0" />
+      <EmptyComment v-if="comments.length === 0 || true" />
     </div>
     <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
   </FetchLoader>
