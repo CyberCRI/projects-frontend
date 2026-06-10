@@ -1,5 +1,6 @@
 import type { ProjectModel, ProjectSlugOrId, TranslatedProject } from '@/models/project.model'
 import { ProjectModuleIcon, ProjectModuleTitle } from '@/models/project.model'
+import { getAllProjectTab } from '~/api/v2/project-tabs.service'
 import { projectSkeleton } from '@/skeletons/project.skeletons'
 
 export const useProjectTabs = (
@@ -8,6 +9,7 @@ export const useProjectTabs = (
 ) => {
   const route = useRoute()
   const router = useRouter()
+  const organizationCode = useOrganizationCode()
 
   const { t } = useNuxtI18n()
 
@@ -16,6 +18,10 @@ export const useProjectTabs = (
       ...projectSkeleton().modules,
       ...(project.value?.modules ?? {}),
     }
+  })
+
+  const { data: tabs, refresh } = getAllProjectTab(organizationCode, projectId, {
+    default: () => [],
   })
 
   const { isAdmin, isMember } = usePermissions()
@@ -143,6 +149,21 @@ export const useProjectTabs = (
         dataTest: 'project-private-exchange',
         icon: 'EmailOutline',
       },
+
+      ...(tabs.value ?? []).map((tab) => {
+        return {
+          key: `project-additionals-${tab.id}`,
+          label: tab.$t.title,
+          view: `/projects/${projectId.value}/additionals/${tab.id}`,
+          altView: `/projects/${projectId.value}/additionals/${tab.id}/edit`,
+          dataTest: `project-additionals-${tab.id}`,
+          condition: true,
+          icon: tab.icon,
+          props: {
+            tab,
+          },
+        }
+      }),
     ].map((t) => ({ ...t, isEditing: false }))
   })
 
@@ -257,6 +278,31 @@ export const useProjectTabs = (
         dataTest: 'project-reviews',
         icon: ProjectModuleIcon.reviews,
       },
+      ...(tabs.value ?? []).map((tab) => {
+        return {
+          key: `project-additionals-${tab.id}`,
+          label: tab.$t.title,
+          view: `/projects/${projectId.value}/additionals/${tab.id}/edit`,
+          altView: `/projects/${projectId.value}/additionals/${tab.id}`,
+          dataTest: `project-additionals-${tab.id}`,
+          condition: true,
+          icon: tab.icon,
+          props: {
+            tab,
+          },
+        }
+      }),
+
+      {
+        key: 'project-additionals-add',
+        label: t('tab.add'),
+        view: `/projects/${projectId.value}/additionals/create`,
+        altView: ``,
+        condition: true,
+        dataTest: 'project-additionals-add',
+        icon: 'Plus',
+      },
+
       {
         key: 'project-settings',
         label: t('project.settings'),

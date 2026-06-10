@@ -59,6 +59,7 @@ export const projectSkeleton = (def?: Partial<ProjectModel>): ProjectModel => ({
     announcements: 0,
     reviews: 0,
     messages: 0,
+    tabs: 0,
   },
   ...(def || {}),
 })

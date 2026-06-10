@@ -99,6 +99,12 @@ export default function useProjectPagesRoutes() {
           name: 'ProjectReviews',
           component: () => import('../pages/ProjectPageV2/Tabs/Reviews/ProjectReviewsTab.vue'),
         },
+        {
+          path: 'additionals/:tabId',
+          name: 'projectAdditionals',
+          component: () =>
+            import('../pages/ProjectPageV2/Tabs/Additionals/ProjectAddiionalsTab.vue'),
+        },
 
         // EDIT PATHS
 
@@ -215,6 +221,18 @@ export default function useProjectPagesRoutes() {
           meta: {
             requiresAuth: true,
           },
+        },
+        {
+          path: 'additionals/:tabId/edit',
+          name: 'projectAdditionalsEdit',
+          component: () =>
+            import('../pages/ProjectPageV2/Tabs/Additionals/ProjectAddiionalsTab.vue'),
+        },
+        {
+          path: 'additionals/create',
+          name: 'projectAdditionalsCreate',
+          component: () =>
+            import('../pages/ProjectPageV2/Tabs/Additionals/ProjectAddiionalsCreateTab.vue'),
         },
       ],
     },

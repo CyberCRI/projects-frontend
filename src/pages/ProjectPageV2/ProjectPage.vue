@@ -43,6 +43,7 @@ const editable = computed(() => isEditing.value && canEditProject.value)
 const propsTab = computed(() => ({
   editable: editable.value,
   project: project.value,
+  ...(currentTab.value.props || {}),
 }))
 </script>
 

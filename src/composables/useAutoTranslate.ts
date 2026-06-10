@@ -9,6 +9,7 @@ import type {
 } from '@/models/invitation.model'
 import type { AttachmentLinkModel, TranslatedAttachmentLink } from '@/models/attachment-link.model'
 import type { AttachmentFileModel, TranslatedAttachmentFile } from '@/models/attachment-file.model'
+import { TranslatedProjectTab, TranslatedProjectTabItem } from '~/models/projects-tabs.model'
 import type { TranslatedLinkedProject, TranslatedProject } from '@/models/project.model'
 import type { TranslatedProjectCategory } from '~/models/project-category.model'
 import type { TranslatedProjectMessage } from '@/models/project-message.model'
@@ -389,6 +390,20 @@ export default function useAutoTranslate() {
   const translateResearcherDocuments = (datas) =>
     translateEntities<TranslatedDocument>(datas, translateResearcherDocument)
 
+  /*
+    project tabs
+  */
+
+  const translateProjectTab = (data) =>
+    translateEntity<TranslatedProjectTab>(data, ['title', 'description'])
+  const translateProjectTabs = (datas) =>
+    translateEntities<TranslatedProjectTab>(datas, translateProjectTab)
+
+  const translateProjectTabItem = (data) =>
+    translateEntity<TranslatedProjectTabItem>(data, ['title', 'content'])
+  const translateProjectTabItems = (datas) =>
+    translateEntities<TranslatedProjectTabItem>(datas, translateProjectTabItem)
+
   return {
     isAutoTranslateActivated,
     getTranslatableField,
@@ -469,5 +484,11 @@ export default function useAutoTranslate() {
     // researcher document (publications, conferences ...ect)
     translateResearcherDocument,
     translateResearcherDocuments,
+
+    // projects tabs
+    translateProjectTab,
+    translateProjectTabs,
+    translateProjectTabItem,
+    translateProjectTabItems,
   }
 }

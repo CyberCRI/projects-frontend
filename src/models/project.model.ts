@@ -71,6 +71,7 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
     files: number
     reviews: number
     messages: number
+    tabs: number
   }
   template?: TemplateModel
 }

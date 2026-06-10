@@ -8,6 +8,7 @@
       <footer v-if="!noFooter" class="form-panel-footer">
         <slot name="footer">
           <LpiButton
+            v-if="showCancel"
             :disabled="asyncing"
             :label="t('common.cancel')"
             secondary
@@ -15,6 +16,8 @@
             data-test="close-button"
             @click="close"
           />
+
+          <slot name="footer:extra" />
 
           <LpiButton
             :disabled="confirmActionDisabled || asyncing"
@@ -42,6 +45,7 @@ withDefaults(
     customStyle?: StyleValue
     confirmActionDisabled?: boolean
     asyncing?: boolean
+    showCancel?: boolean
   }>(),
   {
     confirmActionName: null,
@@ -49,6 +53,7 @@ withDefaults(
     customStyle: () => ({}),
     confirmActionDisabled: false,
     asyncing: false,
+    showCancel: true,
   }
 )
 

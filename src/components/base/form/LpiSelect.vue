@@ -6,7 +6,12 @@
       @click="toggleModal"
     >
       <span class="selected-label skeletons-text" :style="styles">
-        {{ selected ? selected.label : placeholder }}
+        <slot v-if="selected" name="content" v-bind="selected">
+          {{ selected.label }}
+        </slot>
+        <template v-else>
+          {{ placeholder }}
+        </template>
       </span>
       <IconImage :name="icon" class="svg skeletons-background" />
     </div>
@@ -22,7 +27,9 @@
           <template v-for="option in options">
             <li v-if="!selected || option.value !== selected.value" :key="option.value">
               <button class="menu-dropdown" :data-test="option.dataTest" @click="select(option)">
-                {{ option.label }}
+                <slot name="content" v-bind="option">
+                  {{ option.label }}
+                </slot>
               </button>
             </li>
           </template>
