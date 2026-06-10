@@ -3213,6 +3213,7 @@
     }
   },
   "agents": {
+    "no-active-agent-yet": "Hetkel pole ühtegi agenti saadaval.",
     "need-login": "Selle agendi kasutamiseks peate sisse logima.",
     "create-agent": "Loo agent",
     "create-success": "Agent loodud edukalt",

@@ -3213,6 +3213,7 @@
     }
   },
   "agents": {
+    "no-active-agent-yet": "No hi ha cap agent disponible ara mateix.",
     "need-login": "Heu d'iniciar la sessió per utilitzar aquest agent.",
     "create-agent": "Crea un agent",
     "create-success": "Agent creat correctament",

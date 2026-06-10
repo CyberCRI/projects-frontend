@@ -3213,6 +3213,7 @@
     }
   },
   "agents": {
+    "no-active-agent-yet": "Momenteel is er geen makelaar beschikbaar.",
     "need-login": "Je moet ingelogd zijn om deze agent te kunnen gebruiken.",
     "create-agent": "Agent aanmaken",
     "create-success": "Agent succesvol aangemaakt",

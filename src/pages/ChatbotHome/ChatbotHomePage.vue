@@ -46,10 +46,10 @@ useLpiHead2({
       </p>
     </div>
     <div v-if="!isConnected">
-      <p class="login-notice">
+      <p class="login-notice centered">
         {{ $t('agents.need-login') }}
       </p>
-      <div class="login-button">
+      <div class="login-button centered">
         <LpiButton :label="$t('common.login')" @click="login" />
       </div>
     </div>
@@ -57,7 +57,7 @@ useLpiHead2({
       <LoaderSimple />
     </div>
     <div v-else>
-      <p v-if="!agents.length">
+      <p v-if="!!agents.length" class="centered">
         {{ $t('agents.no-active-agent-yet') }}
       </p>
       <div v-else class="agent-list">
@@ -131,6 +131,11 @@ useLpiHead2({
 }
 
 .loader {
+  display: flex;
+  justify-content: center;
+}
+
+.centered {
   display: flex;
   justify-content: center;
 }

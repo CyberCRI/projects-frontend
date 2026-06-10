@@ -3213,6 +3213,7 @@
     }
   },
   "agents": {
+    "no-active-agent-yet": "Derzeit ist kein Agent verfügbar.",
     "need-login": "Sie müssen angemeldet sein, um diesen Agenten zu nutzen.",
     "create-agent": "Agent erstellen",
     "create-success": "Agent erfolgreich erstellt",

@@ -3214,6 +3214,7 @@
   },
 
   "agents": {
+    "no-active-agent-yet": "No agent available for now.",
     "need-login": "You need to be logged in to use this agent.",
     "create-agent": "Create agent",
     "create-success": "Agent created successfuly",
