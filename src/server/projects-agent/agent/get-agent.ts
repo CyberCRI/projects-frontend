@@ -47,19 +47,15 @@ export default async function getAgent(agentData, event, conversationId) {
 
   /* --------- Agent setup  --------- */
 
+  // traceLangchain(`<system-prompt>
+  //   ${agentData.promptContent.content + skillSystemPromptExtra}
+  //   <system-prompt>`)
   const agent = createAgent({
     model,
     tools,
     // TODO reanble checkpoint after tests
     // checkpointer,
-    systemPrompt: new SystemMessage({
-      content: [
-        {
-          type: 'text',
-          text: agentData.promptContent.content + skillSystemPromptExtra,
-        },
-      ],
-    }),
+    systemPrompt: new SystemMessage(agentData.promptContent.content + skillSystemPromptExtra),
     // stateSchema: AgentState as StateSchema<any>,
     middleware: [
       toolMonitoringMiddleware,

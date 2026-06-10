@@ -20,9 +20,13 @@ export default function getRetrieverTool(agentData, vectorStore) {
   )
 
   const globalTitles = agentDocuments.filter((d) => d.isGlobal).map((d) => d.documentTitle)
-
+  traceLangchain(
+    `Agent has acces to global docs : ${(globalTitles || ['NONE']).map((title) => `"${title}"`).join(', ')}`
+  )
   const orgTitles = agentDocuments.filter((d) => !d.isGlobal).map((d) => d.documentTitle)
-
+  traceLangchain(
+    `Agent has acces to org local docs : ${(orgTitles || ['NONE']).map((title) => `"${title}"`).join(', ')}`
+  )
   // console.log('--------------globalTitles', globalTitles)
   // console.log('--------------orgTitles', orgTitles)
 
