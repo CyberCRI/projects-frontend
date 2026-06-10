@@ -57,7 +57,7 @@ useLpiHead2({
       <LoaderSimple />
     </div>
     <div v-else>
-      <p v-if="!!agents.length" class="centered">
+      <p v-if="!agents.length" class="centered">
         {{ $t('agents.no-active-agent-yet') }}
       </p>
       <div v-else class="agent-list">
