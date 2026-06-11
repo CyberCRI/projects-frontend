@@ -165,6 +165,7 @@ export default defineNuxtConfig({
     appLangchainPrompt: '',
     appLangchainModelName: '',
     appLangchainModelApiKey: '',
+    appLangchainExtraModelApiKeys: '',
     appLangchainTemperature: '',
     appVectorDbUrl: '',
     appVectorEmbeddingApiKey: '',
