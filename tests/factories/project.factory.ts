@@ -21,8 +21,6 @@ import { ImageFactory } from './image.factory'
 import { GoalFactory } from './goal.factory'
 import { BaseFactory } from './base.factory'
 import TagFactory from './tag.factory'
-import SdgFactory from './sdg.factory'
-import { fa } from 'zod/v4/locales'
 
 export const ProjectFactory = createFactory<ProjectModel>((faker) => ({
   ...BaseFactory.generate(),
@@ -70,6 +68,7 @@ export const ProjectFactory = createFactory<ProjectModel>((faker) => ({
     announcements: 0,
     reviews: 0,
     messages: 0,
+    tabs: 0,
   },
 }))
 

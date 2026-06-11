@@ -1,16 +1,15 @@
 import type { ProjectModel } from '~/models/project.model'
 import type { Translated } from '~/interfaces/translated'
+import type { IconImageChoice } from '~/functs/IconImage'
 import type { ImageModel } from '~/models/image.model'
-import type { ProjectTabType } from '~/models/types'
 import type BaseModel from '~/models/base.model'
 
 export interface ProjectTab extends BaseModel {
   id?: number
   project?: ProjectModel
-  type: ProjectTabType
   title: string
   description: string | null
-  icon: string | null
+  icon: IconImageChoice | null
   images?: ImageModel[]
   modules: {
     items: number

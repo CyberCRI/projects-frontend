@@ -24,6 +24,7 @@ import type { TranslatedProject } from '~/models/project.model'
 import type { ImageModel } from '~/models/image.model'
 import { getFirstTextNotEmpty } from '~/functs/string'
 import { isEqual, isNil } from 'es-toolkit'
+import analytics from '~/analytics'
 
 const props = withDefaults(
   defineProps<{
@@ -106,18 +107,24 @@ const saveItemImage = (file: File) => {
     query: {
       tab_item_id: props.item?.id,
     },
+  }).then((image) => {
+    analytics.track('create_project_tab_item_image', {
+      project: props.project.id,
+      tab: props.tab.id,
+      image: image.id,
+    })
+    return image
   })
 }
 
 const patchTabItem = (body: ProjectTabItemForm) => {
   return updateProjectTabItem(props.project.id, props.tab.id, props.item.id, body)
-    .then((result) => {
-      // analytics.blog.updateBlog({
-      //   project: {
-      //     id: props.project.id,
-      //   },
-      //   blogEntry: result,
-      // })
+    .then(() => {
+      analytics.track('update_project_tab_item', {
+        project: props.project.id,
+        tab: props.tab.id,
+        item: props.item.id,
+      })
       toaster.pushSuccess(t('tab.toasts.item-update.success'))
       emit('reload')
       emit('close')
@@ -129,12 +136,11 @@ const patchTabItem = (body: ProjectTabItemForm) => {
 const postTabItem = (body: ProjectTabItemForm) => {
   return createProjectTabItem(props.project.id, props.tab.id, body)
     .then((result) => {
-      // analytics.blog.addBlog({
-      //   project: {
-      //     id: props.project.id,
-      //   },
-      //   blogEntry: result,
-      // })
+      analytics.track('create_project_tab_item', {
+        project: props.project.id,
+        tab: props.tab.id,
+        item: result.id,
+      })
       toaster.pushSuccess(t('tab.toasts.item-create.success'))
       emit('reload')
       emit('close')

@@ -4,6 +4,7 @@ import type { ProjectTabForm } from '~/models/projects-tabs.model'
 import type { TranslatedProject } from '~/models/project.model'
 import { createProjectTab } from '~/api/project-tabs.service'
 import TabForm from '~/components/tabs/TabForm.vue'
+import analytics from '~/analytics'
 
 const props = defineProps<{
   project: TranslatedProject
@@ -22,6 +23,11 @@ const onSubmit = (form: ProjectTabForm) => {
 
   createProjectTab(props.project.id, form)
     .then((projectTab) => {
+      analytics.track('create_project_tab', {
+        project: props.project.id,
+        tab: projectTab.id,
+      })
+
       toaster.pushSuccess(t('tab.toasts.tab-create.success'))
       refreshProjectData(props.project)
         .then(() => refreshProjectTabs(props.project))

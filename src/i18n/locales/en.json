@@ -3279,7 +3279,8 @@
       "delete-confirm": "Are you sure you want to delete this tab? all content will be removed.",
       "delete": "Delete tab",
       "add": "Add a new Tab.",
-      "title": "Tab Creation"
+      "title": "Tab Creation",
+      "label": "Tab | Tabs"
     },
     "item": {
       "delete-confirm": "Are you sure you want to delete this item.",

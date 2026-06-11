@@ -11,13 +11,16 @@ import {
 } from '~/api/project-tabs.service'
 import AdditionalsDrawer from '~/components/project/modules/Additionals/AdditionalsDrawer.vue'
 import ProjectTabItem from '~/components/project/modules/Additionals/ProjectTabItem.vue'
+import { projectTabItemSkeleton } from '~/skeletons/project-tabs.skeletons'
 import { refreshProjectTabs } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { getAllProjectTabItem } from '~/api/v2/project-tabs.service'
 import type { TranslatedProject } from '@/models/project.model'
 import LpiButton from '~/components/base/button/LpiButton.vue'
+import { factoryPagination } from '~/skeletons/base.skeletons'
 import FetchLoader from '~/components/base/FetchLoader.vue'
 import TabForm from '~/components/tabs/TabForm.vue'
+import analytics from '~/analytics'
 
 const props = withDefaults(
   defineProps<{
@@ -56,6 +59,7 @@ const { status, error, data, pagination, refresh } = getAllProjectTabItem(
     paginationConfig: {
       limit: props.limit,
     },
+    default: () => factoryPagination(projectTabItemSkeleton, props.tab.modules.items),
   }
 )
 
@@ -80,6 +84,10 @@ const onPatchTab = (form: ProjectTabForm) => {
   asyncing.value = true
   updateProjectTab(props.project.id, props.tab.id, form)
     .then(() => {
+      analytics.track('update_project_tab', {
+        project: props.project.id,
+        tab: props.tab.id,
+      })
       refreshProjectTabs(props.project)
       toaster.pushSuccess(t(`tab.toasts.tab-update.success`))
     })
@@ -94,6 +102,11 @@ const onConfirmDeleteTab = () => {
   asyncing.value = true
   deleteProjectTab(props.project.id, props.tab.id)
     .then(() => {
+      analytics.track('delete_project_tab', {
+        project: props.project.id,
+        tab: props.tab.id,
+      })
+
       return refreshAll().then(() => {
         toaster.pushSuccess(t(`tab.toasts.tab-delete.success`))
         refreshProjectTabs(props.project).then(() => {
@@ -114,6 +127,11 @@ const onConfirmDeleteTabItem = () => {
   asyncing.value = true
   deleteProjectTabItem(props.project.id, props.tab.id, selectedItem.value.id)
     .then(() => {
+      analytics.track('delete_project_tab_item_image', {
+        project: props.project.id,
+        tab: props.tab.id,
+        item: selectedItem.value.id,
+      })
       refreshAll()
       toaster.pushSuccess(t(`tab.toasts.item-delete.success`))
     })
@@ -123,7 +141,7 @@ const onConfirmDeleteTabItem = () => {
 </script>
 
 <template>
-  <FetchLoader :status="status" :error="error">
+  <FetchLoader :status="status" :error="error" only-error skeleton>
     <TabForm
       v-if="editable"
       class="p2"
@@ -141,9 +159,13 @@ const onConfirmDeleteTabItem = () => {
         />
       </template>
     </TabForm>
-    <div v-else class="description-info">
-      <ContentExpandable key="description" :description="tab.$t.description" :height-limit="300" />
-    </div>
+    <ContentExpandable
+      v-else
+      key="description"
+      class="description-info"
+      :description="tab.$t.description"
+      :height-limit="300"
+    />
 
     <BaseModuleHeader
       v-if="!preview"
@@ -204,7 +226,6 @@ const onConfirmDeleteTabItem = () => {
 .description-info {
   padding: 1rem;
   border-radius: 4px;
-  border: 2px solid var(--primary-dark);
-  background-color: color-mix(in srgb, var(--primary-dark), transparent 95%);
+  border: 2px solid color-mix(in srgb, var(--primary-dark), transparent 85%);
 }
 </style>

@@ -13,8 +13,8 @@ export const defualtProjectTabForm = (): ProjectTabForm => {
 export const defualtProjectTabItemForm = (): ProjectTabItemForm => {
   return {
     title: '',
-    description: '',
-    icon: null,
+    content: '',
+    images_ids: [],
   }
 }
 

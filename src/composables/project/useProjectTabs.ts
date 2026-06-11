@@ -1,9 +1,9 @@
 import type { ProjectModel, ProjectSlugOrId, TranslatedProject } from '@/models/project.model'
-import { factoriesSkeleton, factoryPagination } from '~/skeletons/base.skeletons'
 import { ProjectModuleIcon, ProjectModuleTitle } from '@/models/project.model'
 import { projectTabSkeleton } from '~/skeletons/project-tabs.skeletons'
 import { getAllProjectTab } from '~/api/v2/project-tabs.service'
 import { projectSkeleton } from '@/skeletons/project.skeletons'
+import { factoryPagination } from '~/skeletons/base.skeletons'
 
 export const useProjectTabs = (
   projectId: ComputedRef<ProjectSlugOrId>,
@@ -160,7 +160,7 @@ export const useProjectTabs = (
           altView: `/projects/${projectId.value}/additionals/${tab.id}/edit`,
           dataTest: `project-additionals-${tab.id}`,
           condition: tab.modules.items >= 1,
-          icon: tab.icon,
+          icon: tab.icon || 'Tab',
           props: {
             tab,
           },

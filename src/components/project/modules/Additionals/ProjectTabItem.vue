@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { TranslatedProjectTab, TranslatedProjectTabItem } from '~/models/projects-tabs.model'
 import BlogEntry from '~/components/project/modules/BlogEntries/BlogEntry.vue'
+import type { TranslatedProjectTabItem } from '~/models/projects-tabs.model'
 import type { TranslatedBlogEntry } from '~/models/blog-entry.model'
 import type { TranslatedProject } from '@/models/project.model'
 

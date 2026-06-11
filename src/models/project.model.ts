@@ -94,6 +94,7 @@ export const ProjectModuleIcon: { [key in ProjectModuleExtra]: IconImageChoice }
   groups: 'PeopleGroup',
   reviews: 'Feedback',
   messages: 'ChatBubble',
+  tabs: 'Tab',
 }
 
 export const ProjectModuleTitle: { [key in ProjectModuleExtra]: string } = {
@@ -113,6 +114,7 @@ export const ProjectModuleTitle: { [key in ProjectModuleExtra]: string } = {
   groups: 'project.groups',
   reviews: 'project.reviews',
   messages: 'comment.private-exchange.tab',
+  tabs: 'tab.tab.label',
 }
 
 export type TranslatedProject = Translated<

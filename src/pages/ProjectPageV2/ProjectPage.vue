@@ -43,6 +43,7 @@ const editable = computed(() => isEditing.value && canEditProject.value)
 const propsTab = computed(() => ({
   editable: editable.value,
   project: project.value,
+  // @ts-expect-error ignore props not defined
   ...(currentTab.value.props || {}),
 }))
 </script>

@@ -4,7 +4,7 @@ import type {
   ProjectTabItem,
   ProjectTabItemForm,
 } from '~/models/projects-tabs.model'
-import { ImageModealCreated, ImageModel } from '~/models/image.model'
+import type { ImageModealCreated } from '~/models/image.model'
 import type { ProjectSlugOrId } from '~/models/project.model'
 
 type Config = UseApiOptions
@@ -64,6 +64,7 @@ export async function getAllProjectTabItem(
   projectTabId: ProjectTab['id'],
   config: Config = {}
 ) {
+  // await delay(40000)
   return await useAPI<PaginationResult<ProjectTabItem>>(
     `project/${projectId}/tab/${projectTabId}/item/`,
     config
@@ -131,10 +132,11 @@ export async function createProjectTabImage(
   projectId: ProjectSlugOrId,
   projectTabId: ProjectTab['id'],
   body: FormData,
-  config: Config
+  config: Config = {}
 ) {
-  return await useAPI<ImageModealCreated>(`project/${projectId}/tab/${projectTabId}/item-image`, {
+  return await useAPI<ImageModealCreated>(`project/${projectId}/tab/${projectTabId}/item-image/`, {
     method: 'POST',
     body,
+    ...config,
   })
 }

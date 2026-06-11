@@ -5,6 +5,7 @@ import type { TranslatedProject } from '~/models/project.model'
 import IconImage from '~/components/base/media/IconImage.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import LpiSelect from '~/components/base/form/LpiSelect.vue'
+import { postProjectImage } from '~/api/projects.service'
 import type { IconImageChoice } from '~/functs/IconImage'
 import FormPanel from '~/components/base/FormPanel.vue'
 import { getFirstTextNotEmpty } from '~/functs/string'
@@ -58,6 +59,13 @@ watch(
 )
 
 const onConfirm = () => emit('submit', cleanedData.value)
+
+const onSaveImage = (image: File) => {
+  const body = new FormData()
+  body.append('file', image, image.name)
+
+  return postProjectImage(props.project.id, body)
+}
 </script>
 
 <template>
@@ -78,10 +86,12 @@ const onConfirm = () => emit('submit', cleanedData.value)
 
       <Field :label="$t('tab.form.description.label')" required>
         <!-- <TipTapEditor -->
-        <TextInput
+        <TipTapEditor
+          ref="tiptapEditor"
           v-model="form.description"
-          class="input-field content-editor no-max-height"
-          mode="simple"
+          class="input-field content-editor w-full"
+          mode="full"
+          :save-image-callback="onSaveImage"
           :errors="errors.description"
         />
       </Field>
