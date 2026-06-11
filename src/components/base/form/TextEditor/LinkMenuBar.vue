@@ -42,6 +42,7 @@ const items = computed(() => [
     :editor="editor"
     class="linkmenu"
     :should-show="({ editor }) => editor.isActive('link')"
+    plugin-key="LinkMenu"
   >
     <ContexttualToolMenu class="link-menu-bar">
       <MenuItem v-for="item in items" :key="item.title" v-bind="item" />

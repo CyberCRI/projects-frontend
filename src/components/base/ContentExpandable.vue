@@ -16,7 +16,7 @@
     <LpiButton
       v-if="isLimited && !hideSeeMore"
       secondary
-      class="no-border"
+      class="no-border skeletons-background"
       :btn-icon="showLess ? 'ChevronDown' : 'ChevronUp'"
       :label="showLess ? label.more : label.less"
       @click.prevent="toggleDescription"
