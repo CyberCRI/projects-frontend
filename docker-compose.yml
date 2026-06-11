@@ -7,6 +7,7 @@ services:
     env_file: ./.env
     volumes:
       - ./src:/app/src
+      - ./nuxt.config.ts:/app/nuxt.config.ts
     environment:
       - NUXT_PUBLIC_APP_API_URL:${NUXT_PUBLIC_APP_API_URL}
       - NUXT_PUBLIC_APP_KEYCLOAK_URL:${NUXT_PUBLIC_APP_KEYCLOAK_URL}

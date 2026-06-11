@@ -1,10 +1,11 @@
-import {
+import type {
   ProjectTab,
   ProjectTabForm,
   ProjectTabItem,
   ProjectTabItemForm,
 } from '~/models/projects-tabs.model'
-import { ProjectSlugOrId } from '~/models/project.model'
+import { ImageModealCreated, ImageModel } from '~/models/image.model'
+import type { ProjectSlugOrId } from '~/models/project.model'
 
 type Config = UseApiOptions
 
@@ -124,4 +125,16 @@ export async function deleteProjectTabItem(
       ...config,
     }
   )
+}
+
+export async function createProjectTabImage(
+  projectId: ProjectSlugOrId,
+  projectTabId: ProjectTab['id'],
+  body: FormData,
+  config: Config
+) {
+  return await useAPI<ImageModealCreated>(`project/${projectId}/tab/${projectTabId}/item-image`, {
+    method: 'POST',
+    body,
+  })
 }

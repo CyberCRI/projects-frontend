@@ -139,6 +139,16 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
     )
   }
 
+  // trigger watch en keyFixed is true
+  if (params[2].keyFixed) {
+    watch(
+      () => JSON.stringify(params[2].watch.map((e) => unref(e))),
+      () => {
+        results.refresh()
+      }
+    )
+  }
+
   // log error only in dev
   if (import.meta.dev) {
     watchEffect(() => {

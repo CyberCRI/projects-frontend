@@ -10,8 +10,8 @@ import {
   getAllProjectTabItem as fetchAllProjectTabItem,
   getProjectTabItem as fetchProjectTabItem,
 } from '~/api/project-tabs.service'
-import { ProjectTab, ProjectTabItem } from '~/models/projects-tabs.model'
-import { ProjectSlugOrId } from '~/models/project.model'
+import type { ProjectTab, ProjectTabItem } from '~/models/projects-tabs.model'
+import type { ProjectSlugOrId } from '~/models/project.model'
 import { onlyRefs } from '~/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}
@@ -66,7 +66,7 @@ export const getProjectTab = (
       }),
     {
       translate: translateProjectTab,
-      watch: onlyRefs([organization, projectSlugOrId]),
+      watch: onlyRefs([organization, projectSlugOrId, projectTabId]),
       ...config,
     }
   )
@@ -96,7 +96,7 @@ export const getAllProjectTabItem = (
       }),
     {
       translate: translateProjectTabItems,
-      watch: onlyRefs([organization, projectSlugOrId]),
+      watch: onlyRefs([organization, projectSlugOrId, projectTabId]),
       keyFixed: true,
       ...config,
     }
@@ -126,7 +126,7 @@ export const getProjectTabItem = (
       }),
     {
       translate: translateProjectTabItem,
-      watch: onlyRefs([organization, projectSlugOrId]),
+      watch: onlyRefs([organization, projectSlugOrId, projectTabId, projectTabItemId]),
       ...config,
     }
   )

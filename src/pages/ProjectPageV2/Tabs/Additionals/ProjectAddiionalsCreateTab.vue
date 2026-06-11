@@ -22,7 +22,7 @@ const onSubmit = (form: ProjectTabForm) => {
 
   createProjectTab(props.project.id, form)
     .then((projectTab) => {
-      toaster.pushSuccess(t('tab.toast.created.success'))
+      toaster.pushSuccess(t('tab.toasts.tab-create.success'))
       refreshProjectData(props.project)
         .then(() => refreshProjectTabs(props.project))
         .then(() => {
@@ -36,7 +36,7 @@ const onSubmit = (form: ProjectTabForm) => {
           })
         })
     })
-    .catch(() => toaster.pushError(t('tab.toast.created.error')))
+    .catch(() => toaster.pushError(t('tab.toasts.tab-create.error')))
     .then(() => {
       asyncing.value = false
     })
@@ -44,7 +44,7 @@ const onSubmit = (form: ProjectTabForm) => {
 </script>
 
 <template>
-  <BaseModuleTab :title="$t('tab.title')">
+  <BaseModuleTab :title="$t('tab.tab.title')">
     <TabForm :asyncing="asyncing" :project="project" @submit="onSubmit" />
   </BaseModuleTab>
 </template>

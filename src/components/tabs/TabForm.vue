@@ -64,6 +64,7 @@ const onConfirm = () => emit('submit', cleanedData.value)
   <FormPanel
     :asyncing="asyncing"
     :confirm-action-disabled="!isValid || isFormEqual"
+    :confirm-action-name="$t('common.save')"
     :show-cancel="false"
     @confirm="onConfirm"
   >
@@ -85,7 +86,7 @@ const onConfirm = () => emit('submit', cleanedData.value)
         />
       </Field>
 
-      <Field :label="$t('tab.form.description.label')" required>
+      <Field :label="$t('tab.form.icon.label')" required>
         <!-- <TipTapEditor -->
         <LpiSelect
           v-model="form.icon"

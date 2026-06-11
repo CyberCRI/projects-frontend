@@ -1,5 +1,7 @@
 import type { ProjectModel, ProjectSlugOrId, TranslatedProject } from '@/models/project.model'
+import { factoriesSkeleton, factoryPagination } from '~/skeletons/base.skeletons'
 import { ProjectModuleIcon, ProjectModuleTitle } from '@/models/project.model'
+import { projectTabSkeleton } from '~/skeletons/project-tabs.skeletons'
 import { getAllProjectTab } from '~/api/v2/project-tabs.service'
 import { projectSkeleton } from '@/skeletons/project.skeletons'
 
@@ -20,8 +22,8 @@ export const useProjectTabs = (
     }
   })
 
-  const { data: tabs, refresh } = getAllProjectTab(organizationCode, projectId, {
-    default: () => [],
+  const { data: tabs } = getAllProjectTab(organizationCode, projectId, {
+    default: () => factoryPagination(projectTabSkeleton, 0),
   })
 
   const { isAdmin, isMember } = usePermissions()
@@ -150,14 +152,14 @@ export const useProjectTabs = (
         icon: 'EmailOutline',
       },
 
-      ...(tabs.value ?? []).map((tab) => {
+      ...tabs.value.map((tab) => {
         return {
           key: `project-additionals-${tab.id}`,
           label: tab.$t.title,
           view: `/projects/${projectId.value}/additionals/${tab.id}`,
           altView: `/projects/${projectId.value}/additionals/${tab.id}/edit`,
           dataTest: `project-additionals-${tab.id}`,
-          condition: true,
+          condition: tab.modules.items >= 1,
           icon: tab.icon,
           props: {
             tab,
@@ -278,7 +280,7 @@ export const useProjectTabs = (
         dataTest: 'project-reviews',
         icon: ProjectModuleIcon.reviews,
       },
-      ...(tabs.value ?? []).map((tab) => {
+      ...tabs.value.map((tab) => {
         return {
           key: `project-additionals-${tab.id}`,
           label: tab.$t.title,
@@ -295,7 +297,7 @@ export const useProjectTabs = (
 
       {
         key: 'project-additionals-add',
-        label: t('tab.add'),
+        label: t('tab.tab.add'),
         view: `/projects/${projectId.value}/additionals/create`,
         altView: ``,
         condition: true,

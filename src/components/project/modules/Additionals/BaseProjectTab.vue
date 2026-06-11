@@ -1,7 +1,16 @@
 <script setup lang="ts">
+import type {
+  ProjectTabForm,
+  TranslatedProjectTab,
+  TranslatedProjectTabItem,
+} from '~/models/projects-tabs.model'
+import {
+  deleteProjectTab,
+  deleteProjectTabItem,
+  updateProjectTab,
+} from '~/api/project-tabs.service'
+import AdditionalsDrawer from '~/components/project/modules/Additionals/AdditionalsDrawer.vue'
 import ProjectTabItem from '~/components/project/modules/Additionals/ProjectTabItem.vue'
-import type { ProjectTabForm, TranslatedProjectTab } from '~/models/projects-tabs.model'
-import { deleteProjectTab, updateProjectTab } from '~/api/project-tabs.service'
 import { refreshProjectTabs } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { getAllProjectTabItem } from '~/api/v2/project-tabs.service'
@@ -25,16 +34,21 @@ const { t } = useNuxtI18n()
 const toaster = useToaster()
 const router = useRouter()
 
-const { stateModals, openModals, toggleModals, closeModals } = useModals({
-  edit: false,
-  delete: false,
+const selectedItem = ref<TranslatedProjectTabItem>()
+
+const { stateModals, openModals, closeModals, closeAllModals } = useModals({
+  editTab: false,
+  deleteTab: false,
+  deleteItem: false,
+  addItem: false,
+  editItem: false,
 })
 const asyncing = ref(false)
 const organizationCode = useOrganizationCode()
 const projectId = computed(() => props.project.id)
 const tabId = computed(() => props.tab.id)
 
-const { status, error, data, pagination } = getAllProjectTabItem(
+const { status, error, data, pagination, refresh } = getAllProjectTabItem(
   organizationCode,
   projectId,
   tabId,
@@ -45,84 +59,101 @@ const { status, error, data, pagination } = getAllProjectTabItem(
   }
 )
 
-const onSubmit = (form: ProjectTabForm) => {
+const clean = () => {
+  selectedItem.value = null
+  closeAllModals()
+  asyncing.value = false
+}
+
+const refreshAll = () => refreshProjectTabs(props.project).then(() => refresh())
+
+const onDelete = (item: TranslatedProjectTabItem) => {
+  selectedItem.value = item
+  openModals('deleteItem')
+}
+const onEdit = (item: TranslatedProjectTabItem) => {
+  selectedItem.value = item
+  openModals('editItem')
+}
+
+const onPatchTab = (form: ProjectTabForm) => {
   asyncing.value = true
   updateProjectTab(props.project.id, props.tab.id, form)
     .then(() => {
       refreshProjectTabs(props.project)
-      toaster.pushSuccess(t(`tab.toast.update.success`))
+      toaster.pushSuccess(t(`tab.toasts.tab-update.success`))
     })
-    .catch(() => toaster.pushError(t(`tab.toast.update.error`)))
-    .finally(() => (asyncing.value = false))
+    .catch(() => toaster.pushError(t(`tab.toasts.tab-update.error`)))
+    .finally(() => {
+      clean()
+      openModals('editTab')
+    })
 }
 
-const onDelete = () => {
+const onConfirmDeleteTab = () => {
   asyncing.value = true
   deleteProjectTab(props.project.id, props.tab.id)
     .then(() => {
-      toaster.pushSuccess(t(`tab.toast.delete.success`))
-      refreshProjectTabs(props.project).then(() => {
-        router.push({
-          name: 'ProjectSnapshot',
-          params: {
-            slugOrId: props.project.slug || props.project.id,
-          },
+      return refreshAll().then(() => {
+        toaster.pushSuccess(t(`tab.toasts.tab-delete.success`))
+        refreshProjectTabs(props.project).then(() => {
+          router.push({
+            name: 'ProjectSnapshot',
+            params: {
+              slugOrId: props.project.slug || props.project.id,
+            },
+          })
         })
       })
     })
-    .catch(() => toaster.pushError(t(`tab.toast.delete.error`)))
-    .finally(() => (asyncing.value = false))
+    .catch(() => toaster.pushError(t(`tab.toasts.tab-delete.error`)))
+    .finally(() => clean())
+}
+
+const onConfirmDeleteTabItem = () => {
+  asyncing.value = true
+  deleteProjectTabItem(props.project.id, props.tab.id, selectedItem.value.id)
+    .then(() => {
+      refreshAll()
+      toaster.pushSuccess(t(`tab.toasts.item-delete.success`))
+    })
+    .catch(() => toaster.pushError(t(`tab.toasts.item-delete.error`)))
+    .finally(() => clean())
 }
 </script>
 
 <template>
   <FetchLoader :status="status" :error="error">
-    <BaseModuleHeader
-      v-if="!preview"
-      :editable="false"
-      :add-label="$t('common.edit')"
-      @add="openModals('edit')"
-    >
-      <LpiButton
-        v-if="editable"
-        class="w-fit"
-        :btn-icon="stateModals.edit ? 'ChevronUp' : 'ChevronDown'"
-        :label="$t('tab.edit')"
-        @click="toggleModals('edit')"
-      />
-    </BaseModuleHeader>
-
-    <ContentExpandable
+    <TabForm
       v-if="editable"
-      key="description-editable"
-      :height-limit="0"
-      :opened="stateModals.edit"
-      hide-see-more
+      class="p2"
+      :project="project"
+      :tab="tab"
+      @submit="onPatchTab"
+      @close="closeModals('editTab')"
     >
-      <TabForm
-        class="p2"
-        :project="project"
-        :tab="tab"
-        @submit="onSubmit"
-        @close="closeModals('edit')"
-      >
-        <template #footer>
-          <LpiButton
-            class="w-fit"
-            btn-icon="TrashCanOutline"
-            :label="$t('tab.delete')"
-            @click="closeModals('delete')"
-          />
-        </template>
-      </TabForm>
-      <!-- this is only for form expandable -->
-      <div style="height: 100px" />
-    </ContentExpandable>
+      <template #footer>
+        <LpiButton
+          class="w-fit"
+          btn-icon="TrashCanOutline"
+          :label="$t('tab.tab.delete')"
+          @click="openModals('deleteTab')"
+        />
+      </template>
+    </TabForm>
     <div v-else class="description-info">
       <ContentExpandable key="description" :description="tab.$t.description" :height-limit="300" />
     </div>
 
-    <div class="list-container">
+    <BaseModuleHeader
+      v-if="!preview"
+      :editable="editable"
+      :add-label="$t('tab.item.add')"
+      :pagination="pagination"
+      @add="openModals('addItem')"
+    />
+
+    <div class="list-container mt2">
       <ProjectTabItem
         v-for="item in data"
         :key="item.id"
@@ -130,6 +161,8 @@ const onDelete = () => {
         :tab="tab"
         :item="item"
         :editable="editable"
+        @delete="onDelete(item)"
+        @edit="onEdit(item)"
       />
       <NothingHere v-if="data.length === 0" />
     </div>
@@ -138,20 +171,33 @@ const onDelete = () => {
 
   <!-- drawer/modal -->
   <ConfirmModal
-    v-if="stateModals.delete"
-    :title="$t('project.blog-entry-confirm-delete')"
+    v-if="stateModals.deleteTab"
+    title="$t('tab.tab.delete')"
     :asyncing="asyncing"
-    @cancel="closeModals('delete')"
-    @confirm="onDelete"
+    @cancel="clean"
+    @confirm="onConfirmDeleteTab"
   >
-    <ProjectTabItem
-      v-for="item in data"
-      :key="item.id"
-      :project="project"
-      :tab="tab"
-      :item="item"
-    />
+    {{ $t('tab.tab.delete-confirm') }}
   </ConfirmModal>
+
+  <ConfirmModal
+    v-if="stateModals.deleteItem"
+    :title="$t('tab.item.delete-confirm')"
+    :asyncing="asyncing"
+    @cancel="clean"
+    @confirm="onConfirmDeleteTabItem"
+  >
+    <ProjectTabItem :project="project" :tab="tab" :item="selectedItem" />
+  </ConfirmModal>
+
+  <AdditionalsDrawer
+    :is-opened="stateModals.addItem || stateModals.editItem"
+    :project="project"
+    :tab="tab"
+    :item="selectedItem"
+    @close="clean"
+    @reload="refreshAll"
+  />
 </template>
 
 <style lang="scss" scoped>

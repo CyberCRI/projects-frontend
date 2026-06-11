@@ -1,5 +1,5 @@
 <template>
-  <BaseModuleTab :title="tab.$t.title" :count="countElement">
+  <BaseModuleTab :title="tab.$t.title" :count="tab.modules.items">
     <BaseProjectTab :project="project" :tab="tab" :editable="editable" />
   </BaseModuleTab>
 </template>
@@ -18,6 +18,4 @@ withDefaults(
   }>(),
   { editable: false }
 )
-
-const countElement = 0
 </script>

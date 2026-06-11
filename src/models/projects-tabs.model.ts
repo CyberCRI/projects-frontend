@@ -1,8 +1,8 @@
-import { ProjectModel } from '~/models/project.model'
-import { Translated } from '~/interfaces/translated'
-import { ImageModel } from '~/models/image.model'
-import { ProjectTabType } from '~/models/types'
-import BaseModel from '~/models/base.model'
+import type { ProjectModel } from '~/models/project.model'
+import type { Translated } from '~/interfaces/translated'
+import type { ImageModel } from '~/models/image.model'
+import type { ProjectTabType } from '~/models/types'
+import type BaseModel from '~/models/base.model'
 
 export interface ProjectTab extends BaseModel {
   id?: number
@@ -12,9 +12,12 @@ export interface ProjectTab extends BaseModel {
   description: string | null
   icon: string | null
   images?: ImageModel[]
+  modules: {
+    items: number
+  }
 }
 
-export type ProjectTabForm = Partial<ProjectTab>
+export type ProjectTabForm = Partial<Omit<ProjectTab, 'modules'>>
 
 export type TranslatedProjectTab = Translated<ProjectTab, 'title' | 'description'>
 
@@ -30,4 +33,8 @@ export interface ProjectTabItem extends BaseModel {
 
 export type TranslatedProjectTabItem = Translated<ProjectTabItem, 'title' | 'content'>
 
-export type ProjectTabItemForm = Partial<ProjectTabItem>
+export type ProjectTabItemForm = Partial<
+  ProjectTabItem & {
+    images_ids: number[]
+  }
+>

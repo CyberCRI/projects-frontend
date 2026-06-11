@@ -1,4 +1,4 @@
-import { ProjectTab } from '~/models/projects-tabs.model'
+import type { ProjectTab } from '~/models/projects-tabs.model'
 
 export const projectTabSkeleton = (def?: Partial<ProjectTab>): ProjectTab => ({
   title: 'title',
@@ -6,4 +6,7 @@ export const projectTabSkeleton = (def?: Partial<ProjectTab>): ProjectTab => ({
   icon: null,
   type: 'blog',
   id: -1,
+  modules: {
+    items: 0,
+  },
 })
