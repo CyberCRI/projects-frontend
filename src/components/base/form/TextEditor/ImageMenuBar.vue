@@ -79,6 +79,7 @@ const tippyOptions = menuBarTippyOptions(bubbleRef)
     :should-show="({ editor }) => editor.isActive('image')"
     class="tablemenu"
     :tippy-options="tippyOptions"
+    plugin-key="ImageMenu"
   >
     <ContexttualToolMenu class="image-menu-bar">
       <MenuItem v-for="item in items" :key="item.label" v-bind="item" />

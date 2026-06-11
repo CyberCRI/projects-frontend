@@ -128,6 +128,7 @@ const items = computed(() => {
     :should-show="({ editor }) => editor.isActive('table')"
     class="tablemenu"
     :tippy-options="tippyOptions"
+    plugin-key="TableMenu"
   >
     <ContexttualToolMenu class="table-menu-bar">
       <MenuItem

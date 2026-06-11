@@ -6,6 +6,7 @@
     class="videomenu"
     :tippy-options="tippyOptions"
     deep-selector="iframe"
+    plugin-key="VideoMenu"
   >
     <ContexttualToolMenu class="video-menu-bar">
       <MenuItem v-for="item in items" :key="item.title" v-bind="item" />

@@ -27,6 +27,7 @@ const items = computed(() => [
   <LpiBubbleMenu
     :editor="editor"
     class="linkmenu"
+    plugin-key="ColorMenu"
     :should-show="
       ({ editor }) => editor.isActive('paragraph') && !editor.view.state.selection.empty
     "
