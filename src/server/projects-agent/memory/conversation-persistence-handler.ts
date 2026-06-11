@@ -3,7 +3,25 @@ import contextWindowSize from '@/server/projects-agent/memory/context-window-siz
 import { BaseCallbackHandler } from '@langchain/core/callbacks/base'
 import type { DocumentInterface } from '@langchain/core/documents'
 import * as helpers from '@/server/projects-agent/memory/helpers'
+import type { HumanMessage, ContentBlock } from 'langchain'
 import { v4 as uuidv4 } from 'uuid'
+
+function isEmptyHumanMessage(msg: HumanMessage): boolean {
+  const c = msg.content
+  if (typeof c === 'string') {
+    return c.trim() === ''
+  }
+  // content is an array of content blocks
+  if (Array.isArray(c)) {
+    if (c.length === 0) return true
+    return c.every((block: string | ContentBlock) => {
+      if (typeof block === 'string') return block.trim() === ''
+      if (block.type === 'text') return !block.text || block.text.trim() === ''
+      return false // image/other blocks count as non-empty
+    })
+  }
+  return true
+}
 
 export default class ConversationPersistenceHandler extends BaseCallbackHandler {
   name = 'ConversationPersistenceHandler'
@@ -21,6 +39,12 @@ export default class ConversationPersistenceHandler extends BaseCallbackHandler 
     this.conversation = conversation
     this.messages = conversation.messages ?? []
   }
+
+  // async getFilteredMessages() {
+  //   return (this.messages || []).filter(
+  //     (message) => !(message instanceof HumanMessage && isEmptyHumanMessage(message)
+  //   )
+  // }
 
   // TODO: also update this.conversation ? test this for side effects...
   async updateConversation(tx: any, newTitle: string = '') {
@@ -83,7 +107,7 @@ export default class ConversationPersistenceHandler extends BaseCallbackHandler 
         data: {
           conversationId: this.conversation!.id,
           role: 'assistant',
-          content: message.content,
+          content: message.text, //message.content || message.text
           toolCalls: message.tool_calls ?? null,
           position,
         },
@@ -98,7 +122,9 @@ export default class ConversationPersistenceHandler extends BaseCallbackHandler 
       traceAgentMemory('No conversation set')
       return
     }
-    const message = output.generations[0][0].message
+    // console.log(JSON.stringify(output.generations[0][0], null, 2))
+    // const message = output.generations[0][0].message
+    const message = output.generations[0][0]
     await this.handleAssistantMessage(message)
   }
 
@@ -189,7 +215,8 @@ export default class ConversationPersistenceHandler extends BaseCallbackHandler 
         .filter(helpers.memoryFilter)
         .slice(-contextWindowSize)
         .map(helpers.memoryMapper),
-      ...incomingMessages.map(helpers.messageMapper),
+      // provider like anthropic choke on empty human messages...
+      ...incomingMessages.map(helpers.messageMapper).filter((msg) => !isEmptyHumanMessage(msg)),
     ]
   }
 }

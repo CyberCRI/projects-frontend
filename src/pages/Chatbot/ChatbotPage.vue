@@ -215,7 +215,8 @@ watch(
 
 const chatbotUiKey = computed(
   () =>
-    (conversationId.value && `${conversationId.value}---${more.value || 'full'}`) || tempKey.value
+    (conversationId.value && `chatbot-page-${conversationId.value}---${more.value || 'full'}`) ||
+    tempKey.value
 )
 
 // const loading = useLoadingFromStatus(status)
@@ -262,7 +263,10 @@ useLpiHead2({
         :title="$t('assistant-drawer.other-special-agents')"
         :agent-list="agentList"
       />
-      <AgentDescription :agent="agent" />
+      <AgentDescription
+        v-if="agent.description?.trim() && agent.description?.trim() != '<p></p>'"
+        :agent="agent"
+      />
     </div>
     <div v-if="!isConnected">
       <p class="login-notice">

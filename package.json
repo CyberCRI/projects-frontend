@@ -46,6 +46,7 @@
     "@ckpack/vue-color": "1.6.0",
     "@hocuspocus/provider": "2.15.3",
     "@intlify/vue-i18n-loader": "4.2.0",
+    "@langchain/anthropic": "^1.4.0",
     "@langchain/community": "1.1.28",
     "@langchain/core": "1.1.45",
     "@langchain/groq": "1.1.5",
