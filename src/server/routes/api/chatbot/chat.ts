@@ -151,6 +151,11 @@ export default defineLazyEventHandler(() => {
       }
     }
 
+    function respond(output: any) {
+      event.node.res.write(`data: ${JSON.stringify(output)}\n\n`)
+      handleFlush(event)
+    }
+
     // TODO: fix typescript mess with agent.stream return type
     // TODO rethrow interrupt exception when chepointis enabled
     try {
@@ -220,7 +225,7 @@ export default defineLazyEventHandler(() => {
               is_done,
               conversationId,
             }
-            event.node.res.write(`data: ${JSON.stringify(output)}\n\n`)
+            respond(output)
           }
         } else if (mode == 'messages') {
           /* HANDLE LLM INFERENCE */
@@ -241,8 +246,7 @@ export default defineLazyEventHandler(() => {
             is_done,
             conversationId,
           }
-          event.node.res.write(`data: ${JSON.stringify(output)}\n\n`)
-          handleFlush(event)
+          respond(output)
         }
       }
     } catch (err) {
@@ -261,8 +265,7 @@ export default defineLazyEventHandler(() => {
         conversationId,
         error: errorMessage,
       }
-      event.node.res.write(`data: ${JSON.stringify(output)}\n\n`)
-      handleFlush(event)
+      respond(output)
     } finally {
       event.node.res.end()
     }
