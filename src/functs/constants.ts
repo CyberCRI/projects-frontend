@@ -3,7 +3,9 @@ import type {
   LocationType,
   ProjectGroupRoleType,
   ProjectMemberRoleType,
+  ProjectTabType,
 } from '~/models/types'
+import type { IconTabImageChoice } from '~/functs/IconImage'
 
 export const RESOURCE_PROJECT_CATEGORY = [
   'inspired-by',
@@ -195,3 +197,10 @@ export const DEFAULT_COLOR_TIPTAP = [
   { color: '#6CD5FF', label: 'multieditor.color.colors.babyBlue' },
   { color: '#FF3C00', label: 'multieditor.color.colors.coquelicot' },
 ]
+
+// tabs
+
+export const DEFAULT_ICONS_TABS: { [key in ProjectTabType]: IconTabImageChoice } = {
+  blog: 'NewsLine',
+  text: 'Briefcase',
+}

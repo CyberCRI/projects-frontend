@@ -14,8 +14,8 @@ import type {
   TranslatedProjectTabItem,
 } from '~/models/projects-tabs.model'
 import {
-  createProjectTabImage,
   createProjectTabItem,
+  createProjectTabItemImage,
   updateProjectTabItem,
 } from '~/api/project-tabs.service'
 import { defualtProjectTabItemForm, useProjectTabItemForm } from '~/form/project-tabs'
@@ -103,7 +103,7 @@ const saveItemImage = (file: File) => {
   const body = new FormData()
   body.append('file', file, file.name)
 
-  return createProjectTabImage(props.project.id, props.tab.id, body, {
+  return createProjectTabItemImage(props.project.id, props.tab.id, body, {
     query: {
       tab_item_id: props.item?.id,
     },
@@ -184,43 +184,44 @@ const checkClose = () => {
     @close="checkClose"
     @confirm="save"
   >
-    <div>
+    <div class="list-container">
       <TextInput
         v-model="form.title"
-        :label="$t('common.title')"
-        :placeholder="$t('common.title')"
+        :label="$t('tab.form.title.label')"
+        :placeholder="$t('tab.form.title.abel')"
         class="input-field"
+        required
         :errors="errors.title"
       />
-    </div>
-
-    <div class="editor-section">
-      <TipTapEditor
-        v-if="isCreated"
-        ref="tiptapEditor"
-        v-model="form.content"
-        class="input-field content-editor"
-        mode="full"
-        :save-image-callback="saveItemImage"
-        :errors="errors.content"
-        @image="handleImage"
-      />
-      <TipTapCollaborativeEditor
-        v-else
-        ref="tiptapEditor"
-        v-model="form.content"
-        :room="room"
-        :provider-params="providerParams"
-        mode="full"
-        save-icon-visible
-        :save-image-callback="saveItemImage"
-        :disable-save="asyncing"
-        :errors="errors.content"
-        @unauthorized="close"
-        @image="handleImage"
-        @saved="save"
-        @falled-back-to-solo-edit="inOfflineMode = true"
-      />
+      <Field :label="$t('tab.form.description.label')" required class="editor-section">
+        <TipTapEditor
+          v-if="isCreated"
+          ref="tiptapEditor"
+          v-model="form.content"
+          class="input-field content-editor w-full"
+          mode="full"
+          :save-image-callback="saveItemImage"
+          :errors="errors.content"
+          @image="handleImage"
+        />
+        <TipTapCollaborativeEditor
+          v-else
+          ref="tiptapEditor"
+          v-model="form.content"
+          class="w-full"
+          :room="room"
+          :provider-params="providerParams"
+          mode="full"
+          save-icon-visible
+          :save-image-callback="saveItemImage"
+          :disable-save="asyncing"
+          :errors="errors.content"
+          @unauthorized="close"
+          @image="handleImage"
+          @saved="save"
+          @falled-back-to-solo-edit="inOfflineMode = true"
+        />
+      </Field>
     </div>
 
     <!-- drawer/modal -->

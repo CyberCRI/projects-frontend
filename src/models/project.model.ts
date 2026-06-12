@@ -81,7 +81,7 @@ export type ProjectModuleExtra = ProjectModulesKeys | 'resources'
 
 export const ProjectModuleIcon: { [key in ProjectModuleExtra]: IconImageChoice } = {
   announcements: 'BullhornOutline',
-  blogs: 'Progress5',
+  blogs: 'NewsLine',
   goals: 'TimerLine',
   members: 'Users',
   similars: 'Briefcase',

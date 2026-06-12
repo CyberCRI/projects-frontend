@@ -130,6 +130,18 @@ export async function deleteProjectTabItem(
 
 export async function createProjectTabImage(
   projectId: ProjectSlugOrId,
+  body: FormData,
+  config: Config = {}
+) {
+  return await useAPI<ImageModealCreated>(`project/${projectId}/tab-image/`, {
+    method: 'POST',
+    body,
+    ...config,
+  })
+}
+
+export async function createProjectTabItemImage(
+  projectId: ProjectSlugOrId,
   projectTabId: ProjectTab['id'],
   body: FormData,
   config: Config = {}

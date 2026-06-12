@@ -9,7 +9,7 @@ import {
   deleteProjectTabItem,
   updateProjectTab,
 } from '~/api/project-tabs.service'
-import AdditionalsDrawer from '~/components/project/modules/Additionals/AdditionalsDrawer.vue'
+import AdditionalsItemDrawer from '~/components/project/modules/Additionals/AdditionalsItemDrawer.vue'
 import ProjectTabItem from '~/components/project/modules/Additionals/ProjectTabItem.vue'
 import { projectTabItemSkeleton } from '~/skeletons/project-tabs.skeletons'
 import { refreshProjectTabs } from '~/composables/project/refreshProject'
@@ -20,6 +20,7 @@ import LpiButton from '~/components/base/button/LpiButton.vue'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import FetchLoader from '~/components/base/FetchLoader.vue'
 import TabForm from '~/components/tabs/TabForm.vue'
+import { textIsEmpty } from '~/functs/string'
 import analytics from '~/analytics'
 
 const props = withDefaults(
@@ -39,7 +40,7 @@ const router = useRouter()
 
 const selectedItem = ref<TranslatedProjectTabItem>()
 
-const { stateModals, openModals, closeModals, closeAllModals } = useModals({
+const { stateModals, openModals, toggleModals, closeModals, closeAllModals } = useModals({
   editTab: false,
   deleteTab: false,
   deleteItem: false,
@@ -142,38 +143,56 @@ const onConfirmDeleteTabItem = () => {
 
 <template>
   <FetchLoader :status="status" :error="error" only-error skeleton>
-    <TabForm
-      v-if="editable"
-      class="p2"
-      :project="project"
-      :tab="tab"
-      @submit="onPatchTab"
-      @close="closeModals('editTab')"
-    >
-      <template #footer>
+    <template v-if="!preview">
+      <BaseModuleHeader v-if="editable" :editable="false">
+        <div />
         <LpiButton
           class="w-fit"
-          btn-icon="TrashCanOutline"
-          :label="$t('tab.tab.delete')"
-          @click="openModals('deleteTab')"
+          :btn-icon="stateModals.editTab ? 'ChevronUp' : 'ChevronDown'"
+          :label="$t('tab.tab.edit')"
+          @click="toggleModals('editTab')"
         />
-      </template>
-    </TabForm>
-    <ContentExpandable
-      v-else
-      key="description"
-      class="description-info"
-      :description="tab.$t.description"
-      :height-limit="300"
-    />
+      </BaseModuleHeader>
 
-    <BaseModuleHeader
-      v-if="!preview"
-      :editable="editable"
-      :add-label="$t('tab.item.add')"
-      :pagination="pagination"
-      @add="openModals('addItem')"
-    />
+      <ContentExpandable
+        v-if="editable"
+        :height-limit="0"
+        :opened="stateModals.editTab"
+        hide-see-more
+      >
+        <TabForm
+          class="p2"
+          :project="project"
+          :tab="tab"
+          @submit="onPatchTab"
+          @close="closeModals('editTab')"
+        >
+          <template #footer>
+            <LpiButton
+              class="w-fit"
+              btn-icon="TrashCanOutline"
+              color="red"
+              :label="$t('tab.tab.delete')"
+              @click="openModals('deleteTab')"
+            />
+          </template>
+        </TabForm>
+      </ContentExpandable>
+      <ContentExpandable
+        v-else-if="!textIsEmpty(tab.$t.description)"
+        key="description"
+        class="description-info"
+        :description="tab.$t.description"
+        :height-limit="300"
+      />
+
+      <BaseModuleHeader
+        :editable="editable"
+        :add-label="$t('tab.item.add')"
+        :pagination="pagination"
+        @add="openModals('addItem')"
+      />
+    </template>
 
     <div class="list-container mt2">
       <ProjectTabItem
@@ -194,7 +213,7 @@ const onConfirmDeleteTabItem = () => {
   <!-- drawer/modal -->
   <ConfirmModal
     v-if="stateModals.deleteTab"
-    title="$t('tab.tab.delete')"
+    :title="$t('tab.tab.delete')"
     :asyncing="asyncing"
     @cancel="clean"
     @confirm="onConfirmDeleteTab"
@@ -212,7 +231,15 @@ const onConfirmDeleteTabItem = () => {
     <ProjectTabItem :project="project" :tab="tab" :item="selectedItem" />
   </ConfirmModal>
 
-  <AdditionalsDrawer
+  <AdditionalsTabDrawer
+    :is-opened="stateModals.editTab"
+    :project="project"
+    :tab="tab"
+    @close="clean"
+    @reload="refreshAll"
+  />
+
+  <AdditionalsItemDrawer
     :is-opened="stateModals.addItem || stateModals.editItem"
     :project="project"
     :tab="tab"
