@@ -16,7 +16,7 @@ function isEmptyHumanMessage(msg: HumanMessage): boolean {
     if (c.length === 0) return true
     return c.every((block: string | ContentBlock) => {
       if (typeof block === 'string') return block.trim() === ''
-      if (block.type === 'text') return !block.text || block.text.trim() === ''
+      if (block.type === 'text') return !block.text || (block.text as string).trim() === ''
       return false // image/other blocks count as non-empty
     })
   }
