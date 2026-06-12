@@ -9,7 +9,10 @@ const entityList = useTemplateRef('entityList')
 const refresh = () => entityList.value?.refresh()
 defineExpose({ refresh })
 const router = useRouter()
-const gotoAgent = (agent) => router.push({ name: 'AgentPage', params: { agentSlug: agent.slug } })
+const gotoAgent = (agent) => {
+  const routeData = router.resolve({ name: 'AgentPage', params: { agentSlug: agent.slug } })
+  window.open(routeData.href, '_blank')
+}
 </script>
 <template>
   <EntityAdminList

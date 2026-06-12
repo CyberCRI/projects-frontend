@@ -1,7 +1,7 @@
 import traceLangchain from '@/server/projects-agent/tracers/trace-langchain'
 import { initChatModel } from 'langchain/chat_models/universal'
 import { safeParseFloat } from '@/functs/string'
-import { ChatOpenAI } from '@langchain/openai'
+// import { ChatOpenAI } from '@langchain/openai'
 
 const runtimeConfig = useRuntimeConfig()
 const {
@@ -12,7 +12,7 @@ const {
 } = runtimeConfig
 
 async function getLlmModel(agentData?: any) {
-  let model
+  // let model
 
   const _temperature = safeParseFloat(agentData?.modelTemperature || appLangchainTemperature, 0.7)
   const temperature = Math.max(0, Math.min(2.0, _temperature))
@@ -41,19 +41,19 @@ async function getLlmModel(agentData?: any) {
 
   // TODO: reasoning models like GPT 5 doesnt support temperature != 1
 
-  if (/^openai:/.test(modelName)) {
-    model = new ChatOpenAI({
-      model: modelName.replace(/^openai:/, ''),
-      temperature,
-      apiKey: modelApiKey,
-    })
-  } else {
-    // fallback for non openai models and keep for when circular ref bug is resolved
-    model = await initChatModel(modelName, {
-      temperature,
-      apiKey: modelApiKey,
-    })
-  }
+  // if (/^openai:/.test(modelName)) {
+  //   model = new ChatOpenAI({
+  //     model: modelName.replace(/^openai:/, ''),
+  //     temperature,
+  //     apiKey: modelApiKey,
+  //   })
+  // } else {
+  // fallback for non openai models and keep for when circular ref bug is resolved
+  const model = await initChatModel(modelName, {
+    temperature,
+    apiKey: modelApiKey,
+  })
+  // }
   return model
 }
 
