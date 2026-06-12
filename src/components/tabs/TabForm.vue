@@ -54,7 +54,9 @@ const defaultLocalForm = () => {
   return newForm
 }
 
-const { form, isValid, errors, cleanedData, reset } = useProjectTabForm({ lazy: true })
+const { form, isValid, errors, cleanedData, reset } = useProjectTabForm({
+  default: defaultLocalForm(),
+})
 
 const optionsType = computed<GroupOption[]>(() => [
   {
@@ -70,7 +72,7 @@ const optionsType = computed<GroupOption[]>(() => [
 ])
 
 const selectedTypeDescription = computed(
-  () => optionsType.value.find((option) => option.value === form.value.type).title
+  () => optionsType.value.find((option) => option.value === form.value.type)?.title
 )
 
 const isFormEqual = useBlockNavigation(() => isEqual(form.value, defaultLocalForm()))

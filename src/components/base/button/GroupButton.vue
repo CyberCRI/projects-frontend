@@ -59,6 +59,7 @@ const setSliderStyle = onClient(() => {
   let firstButtonSelected = false
 
   const selected = container.getElementsByClassName('selected')[0] as HTMLElement
+  if (!selected) return
 
   if (!props.isVertical) {
     // Calculate slider's left offset
@@ -117,7 +118,7 @@ watch(model, () => setSliderStyle(), { immediate: true })
     <div
       v-for="(button, index) in options"
       :key="index"
-      class="button-container"
+      class="button-container skeletons-background"
       :class="[{ selected: button.value === modelValue }, size]"
       :title="button.title || button.label"
       :tabIndex="index + 1"
@@ -183,29 +184,29 @@ watch(model, () => setSliderStyle(), { immediate: true })
   display: inline-flex;
   vertical-align: middle;
   overflow: hidden;
-  box-shadow: 0 0 0 $border-width-s $primary-dark inset;
+  box-shadow: 0 0 0 $border-width-s var(--primary-dark) inset;
   border-radius: $border-radius-l;
   z-index: 1;
 
   &.is-danger {
-    box-shadow: 0 0 0 $border-width-s $salmon inset;
+    box-shadow: 0 0 0 $border-width-s var(--salmon) inset;
 
     .button-container.selected {
-      background: $salmon;
+      background: var(--salmon);
     }
 
     .button-container:not(.selected) {
       .label {
-        color: $salmon;
+        color: var(--salmon);
       }
 
       .icon {
-        fill: $salmon;
+        fill: var(--salmon);
       }
     }
 
     .slider {
-      background: $salmon;
+      background: var(--salmon);
     }
   }
 
@@ -234,7 +235,7 @@ watch(model, () => setSliderStyle(), { immediate: true })
   transition: all 0.15s ease-in-out;
 
   &:not(.selected) {
-    color: $primary-dark;
+    color: var(--primary-dark);
   }
 
   &:not(.selected):hover {
@@ -251,10 +252,10 @@ watch(model, () => setSliderStyle(), { immediate: true })
   position: absolute;
   top: 0;
   transition: all 0.15s ease-in-out;
-  background: $primary-dark;
+  background: var(--primary-dark);
   z-index: -1;
   border-radius: $border-radius-l;
-  border: $border-width-s solid $primary-dark;
+  border: $border-width-s solid var(--primary-dark);
 }
 
 // TODO: remove "s-" in the following classes when we don't import Buefy style anymore

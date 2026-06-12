@@ -11,7 +11,7 @@ withDefaults(
 </script>
 
 <template>
-  <p class="content-visibility">
+  <p class="content-visibility skeletons-background">
     <IconImage :name="icon" class="icon" />
     {{ description }}
   </p>

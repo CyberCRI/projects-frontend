@@ -75,8 +75,15 @@ const useForm = <T extends object, CleanResult = T>(
     (newForm, oldForm) => {
       const diffKeys = differencesObjects(newForm, oldForm)
 
+      console.log('--------')
+      console.log(lazy)
+      console.log(diffKeys)
+      console.log(newForm, oldForm)
+
       Object.keys(unref(options.rules ?? {})).forEach((key) => {
-        if (lazy || diffKeys.includes(key)) {
+        console.log(!lazy || diffKeys.includes(key))
+
+        if (!lazy || diffKeys.includes(key)) {
           v$.value[key]?.$touch()
         }
       })
