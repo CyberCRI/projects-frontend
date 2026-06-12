@@ -72,7 +72,9 @@ const close = () => {
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
-const { form, isValid, errors, cleanedData, reset } = useProjectTabItemForm({ lazy: true })
+const { form, isValid, errors, cleanedData, reset } = useProjectTabItemForm({
+  default: defaultLocalForm(),
+})
 watch(
   () => [props.item, props.isOpened, props.project],
   () => reset(defaultLocalForm()),
@@ -188,7 +190,7 @@ const checkClose = () => {
       <TextInput
         v-model="form.title"
         :label="$t('tab.form.title.label')"
-        :placeholder="$t('tab.form.title.abel')"
+        :placeholder="$t('tab.form.title.label')"
         class="input-field"
         required
         :errors="errors.title"

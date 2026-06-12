@@ -1,11 +1,23 @@
 <template>
-  <BaseModuleTab :title="tab.$t.title" :count="tab.modules.items">
-    <BaseProjectTab :project="project" :tab="tab" :editable="editable" />
+  <BaseModuleTab :title="tab.$t.title" :count="tab.type === 'blog' ? tab.modules.items : 0">
+    <BaseProjectTabBlog
+      v-if="tab.type === 'blog'"
+      :project="project"
+      :tab="tab"
+      :editable="editable"
+    />
+    <BaseProjectTabText
+      v-else-if="tab.type === 'text'"
+      :project="project"
+      :tab="tab"
+      :editable="editable"
+    />
   </BaseModuleTab>
 </template>
 
 <script setup lang="ts">
-import BaseProjectTab from '~/components/project/modules/Additionals/BaseProjectTab.vue'
+import BaseProjectTabText from '~/components/project/modules/Additionals/Types/Text/BaseProjectTabText.vue'
+import BaseProjectTabBlog from '~/components/project/modules/Additionals/Types/Blog/BaseProjectTabBlog.vue'
 import type { TranslatedProjectTab } from '~/models/projects-tabs.model'
 import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
 import type { TranslatedProject } from '@/models/project.model'

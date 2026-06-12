@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import AdditionalsItemBlogDrawer from '~/components/project/modules/Additionals/Types/Blog/AdditionalsItemBlogDrawer.vue'
 import type {
   ProjectTabForm,
   TranslatedProjectTab,
@@ -9,8 +10,8 @@ import {
   deleteProjectTabItem,
   updateProjectTab,
 } from '~/api/project-tabs.service'
-import AdditionalsItemDrawer from '~/components/project/modules/Additionals/AdditionalsItemDrawer.vue'
-import ProjectTabItem from '~/components/project/modules/Additionals/ProjectTabItem.vue'
+import ProjectTabItemBlog from '~/components/project/modules/Additionals/Types/Blog/ProjectTabItemBlog.vue'
+import BaseText from '~/components/project/modules/Additionals/Types/Text/BaseText.vue'
 import { projectTabItemSkeleton } from '~/skeletons/project-tabs.skeletons'
 import { refreshProjectTabs } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
@@ -194,8 +195,8 @@ const onConfirmDeleteTabItem = () => {
       />
     </template>
 
-    <div class="list-container mt2">
-      <ProjectTabItem
+    <div v-if="tab.type === 'blog'" class="list-container mt2">
+      <ProjectTabItemBlog
         v-for="item in data"
         :key="item.id"
         :project="project"
@@ -206,6 +207,10 @@ const onConfirmDeleteTabItem = () => {
         @edit="onEdit(item)"
       />
       <NothingHere v-if="data.length === 0" />
+    </div>
+    <div v-else>
+      <BaseText v-if="data?.[0]" :title="data[0].title" :description="data[0].content" />
+      <NothingHere v-else />
     </div>
     <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
   </FetchLoader>
@@ -231,15 +236,7 @@ const onConfirmDeleteTabItem = () => {
     <ProjectTabItem :project="project" :tab="tab" :item="selectedItem" />
   </ConfirmModal>
 
-  <AdditionalsTabDrawer
-    :is-opened="stateModals.editTab"
-    :project="project"
-    :tab="tab"
-    @close="clean"
-    @reload="refreshAll"
-  />
-
-  <AdditionalsItemDrawer
+  <AdditionalsItemBlogDrawer
     :is-opened="stateModals.addItem || stateModals.editItem"
     :project="project"
     :tab="tab"

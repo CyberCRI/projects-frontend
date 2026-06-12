@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BaseProjectTab from '~/components/project/modules/Additionals/BaseProjectTab.vue'
+import BaseProjectTabBlog from '~/components/project/modules/Additionals/Types/Blog/BaseProjectTabBlog.vue'
 import type { TranslatedProjectTab } from '~/models/projects-tabs.model'
 import type { TranslatedProject } from '~/models/project.model'
 
@@ -17,7 +17,14 @@ defineProps<{ project: TranslatedProject; tab: TranslatedProjectTab }>()
     }"
   >
     <template #content>
-      <BaseProjectTab :project="project" :tab="tab" preview :limit="4" />
+      <BaseProjectTabBlog
+        v-if="tab.type === 'blog'"
+        :project="project"
+        :tab="tab"
+        preview
+        :limit="4"
+      />
+      <BaseProjectTabText v-else-if="tab.type === 'text'" :project="project" :tab="tab" preview />
     </template>
   </BaseModulePreview>
 </template>
