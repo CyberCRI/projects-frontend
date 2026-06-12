@@ -160,7 +160,7 @@ export default defineLazyEventHandler(() => {
       traceAgentMemory(persistenceHandler.messages)
       traceAgentMemory('========== /MEMORIES =======')
 
-      traceLangchain('==========  MESSAGES  =======', persistenceHandler.messages?.length)
+      traceLangchain('==========  MESSAGES  =======', transmitedMessages?.length)
       traceLangchain(transmitedMessages)
       traceLangchain('========== /MESSAGES =======')
 

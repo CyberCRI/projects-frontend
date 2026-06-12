@@ -7,18 +7,9 @@ import useUsersStore from '~/stores/useUsers'
 import useValidate from '@vuelidate/core'
 
 const { html2md, md2html } = useMarkdown()
-
+const { appLlmModelSuggestions } = useRuntimeConfig().public
 const { t } = useNuxtI18n()
-const modelStrings = ref([
-  'openai:gpt-4o-mini',
-  'openai:gpt-4o',
-  'openai:gpt-5-nano',
-  'openai:gpt-5-mini',
-  'openai:gpt-5',
-  'openai:gpt-5.4-nano',
-  'openai:gpt-5.4-mini',
-  'openai:gpt-5.4',
-])
+const modelStrings = ref(appLlmModelSuggestions.split('|'))
 const props = defineProps({
   isOpened: {
     type: Boolean,

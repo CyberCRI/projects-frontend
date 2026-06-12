@@ -165,6 +165,7 @@ export default defineNuxtConfig({
     appLangchainPrompt: '',
     appLangchainModelName: '',
     appLangchainModelApiKey: '',
+    appLangchainExtraModelApiKeys: '',
     appLangchainTemperature: '',
     appVectorDbUrl: '',
     appVectorEmbeddingApiKey: '',
@@ -212,6 +213,7 @@ export default defineNuxtConfig({
       appGotenbergEnabled: '',
       appHasVectorDb: 0,
       appHasChatbotPromptDb: 0,
+      appLlmModelSuggestions: '',
     },
   },
   i18n: {
