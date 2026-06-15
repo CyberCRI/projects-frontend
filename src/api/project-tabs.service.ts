@@ -4,12 +4,14 @@ import type {
   ProjectTabItem,
   ProjectTabItemForm,
   QueryFilterProjectTab,
+  QueryFilterProjectTabItem,
 } from '~/models/projects-tabs.model'
 import type { ImageModealCreated } from '~/models/image.model'
 import type { ProjectSlugOrId } from '~/models/project.model'
 
 type Config = UseApiOptions
 type ConfigTab = UseApiOptions<QueryFilterProjectTab>
+type ConfigTabItem = UseApiOptions<QueryFilterProjectTabItem>
 
 export async function getAllProjectTab(projectId: ProjectSlugOrId, config: ConfigTab = {}) {
   return await useAPI<PaginationResult<ProjectTab>>(`project/${projectId}/tab/`, config)
@@ -64,7 +66,7 @@ export async function deleteProjectTab(
 export async function getAllProjectTabItem(
   projectId: ProjectSlugOrId,
   projectTabId: ProjectTab['id'],
-  config: Config = {}
+  config: ConfigTabItem = {}
 ) {
   // await delay(40000)
   return await useAPI<PaginationResult<ProjectTabItem>>(

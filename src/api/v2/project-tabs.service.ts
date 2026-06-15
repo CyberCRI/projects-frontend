@@ -14,6 +14,7 @@ import type {
   ProjectTab,
   ProjectTabItem,
   QueryFilterProjectTab,
+  QueryFilterProjectTabItem,
 } from '~/models/projects-tabs.model'
 import type { ProjectSlugOrId } from '~/models/project.model'
 import { onlyRefs } from '~/functs/onlyRefs'
@@ -21,13 +22,14 @@ import { onlyRefs } from '~/functs/onlyRefs'
 const DEFAULT_CONFIG = {}
 
 type Config = UseAsyncApiConfig
-type ConfigPagiation = UseAsyncPaginationApiConfig<QueryFilterProjectTab>
+type ConfigTabPagiation = UseAsyncPaginationApiConfig<QueryFilterProjectTab>
+type ConfigTabItemPagiation = UseAsyncPaginationApiConfig<QueryFilterProjectTabItem>
 
 // TODO change backend with prefix organization code in url not in query
 export const getAllProjectTab = (
   organization: RefOrRaw<OrganizationModel['code']>,
   projectSlugOrId: RefOrRaw<ProjectSlugOrId>,
-  config: ConfigPagiation = {}
+  config: ConfigTabPagiation = {}
 ) => {
   const key = computed(() => `${unref(organization)}::project::${unref(projectSlugOrId)}::tab::all`)
 
@@ -82,7 +84,7 @@ export const getAllProjectTabItem = (
   organization: RefOrRaw<OrganizationModel['code']>,
   projectSlugOrId: RefOrRaw<ProjectSlugOrId>,
   projectTabId: RefOrRaw<ProjectTab['id']>,
-  config: ConfigPagiation = {}
+  config: ConfigTabItemPagiation = {}
 ) => {
   const key = computed(
     () =>

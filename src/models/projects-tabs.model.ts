@@ -3,6 +3,7 @@ import type { Translated } from '~/interfaces/translated'
 import type { IconImageChoice } from '~/functs/IconImage'
 import type { ImageModel } from '~/models/image.model'
 import type { ProjectTabType } from '~/models/types'
+import type { Ordering } from '~/interfaces/query'
 import type BaseModel from '~/models/base.model'
 
 export interface ProjectTab extends BaseModel {
@@ -49,5 +50,13 @@ export type QueryFilterProjectTab = Partial<
   {
     type: ProjectTabType
     show_preview: boolean
+  } & PaginationQuery
+>
+
+export type QueryFilterProjectTabItem = Partial<
+  {
+    ordering: Ordering<'created_at' | 'updated_at'>
+    from_date: string
+    to_date: string
   } & PaginationQuery
 >
