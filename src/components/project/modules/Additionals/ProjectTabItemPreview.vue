@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import BaseProjectTabText from '~/components/project/modules/Additionals/Types/Text/BaseProjectTabText.vue'
 import BaseProjectTabBlog from '~/components/project/modules/Additionals/Types/Blog/BaseProjectTabBlog.vue'
 import type { TranslatedProjectTab } from '~/models/projects-tabs.model'
 import type { TranslatedProject } from '~/models/project.model'
@@ -17,6 +18,10 @@ defineProps<{ project: TranslatedProject; tab: TranslatedProjectTab }>()
     }"
   >
     <template #content>
+      <!--
+        Here you put all posibility of additions item
+        actually is blog or text (description)
+      -->
       <BaseProjectTabBlog
         v-if="tab.type === 'blog'"
         :project="project"

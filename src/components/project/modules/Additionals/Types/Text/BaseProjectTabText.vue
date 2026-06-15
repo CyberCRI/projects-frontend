@@ -1,24 +1,16 @@
 <script setup lang="ts">
-import AdditionalsItemBlogDrawer from '~/components/project/modules/Additionals/Types/Blog/AdditionalsItemBlogDrawer.vue'
-import type {
-  ProjectTabForm,
-  TranslatedProjectTab,
-  TranslatedProjectTabItem,
-} from '~/models/projects-tabs.model'
-import BaseText from '~/components/project/modules/Additionals/Types/Text/BaseText.vue'
-import { deleteProjectTab, updateProjectTab } from '~/api/project-tabs.service'
+import AdditionalsItemDrawer from '~/components/project/modules/Additionals/Types/AdditionalsItemDrawer.vue'
+import BaseAdditionalsTab from '~/components/project/modules/Additionals/Types/BaseAdditionalsTab.vue'
+import type { TranslatedProjectTab, TranslatedProjectTabItem } from '~/models/projects-tabs.model'
+import BaseDescription from '~/components/modules/Abstract/BaseDescription.vue'
 import { projectTabItemSkeleton } from '~/skeletons/project-tabs.skeletons'
 import { refreshProjectTabs } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import ContentExpandable from '~/components/base/ContentExpandable.vue'
 import { getAllProjectTabItem } from '~/api/v2/project-tabs.service'
 import type { TranslatedProject } from '@/models/project.model'
-import LpiButton from '~/components/base/button/LpiButton.vue'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import FetchLoader from '~/components/base/FetchLoader.vue'
-import TabForm from '~/components/tabs/TabForm.vue'
-import { textIsEmpty } from '~/functs/string'
-import analytics from '~/analytics'
 
 const props = withDefaults(
   defineProps<{
@@ -31,17 +23,9 @@ const props = withDefaults(
   { editable: false, preview: false, limit: null }
 )
 
-const { t } = useNuxtI18n()
-const toaster = useToaster()
-const router = useRouter()
-
 const selectedItem = ref<TranslatedProjectTabItem>()
 
-const { stateModals, openModals, toggleModals, closeModals, closeAllModals } = useModals({
-  editTab: false,
-  deleteTab: false,
-  editItem: false,
-})
+const { stateModals, closeAllModals, openModals } = useModals({ addOrEditItem: false })
 const asyncing = ref(false)
 const organizationCode = useOrganizationCode()
 const projectId = computed(() => props.project.id)
@@ -67,125 +51,30 @@ const clean = () => {
 
 const refreshAll = () => refreshProjectTabs(props.project).then(() => refresh())
 
-const onPatchTab = (form: ProjectTabForm) => {
-  asyncing.value = true
-  updateProjectTab(props.project.id, props.tab.id, form)
-    .then(() => {
-      analytics.track('update_project_tab', {
-        project: props.project.id,
-        tab: props.tab.id,
-      })
-      refreshProjectTabs(props.project)
-      toaster.pushSuccess(t(`tab.toasts.tab-update.success`))
-    })
-    .catch(() => toaster.pushError(t(`tab.toasts.tab-update.error`)))
-    .finally(() => {
-      clean()
-      openModals('editTab')
-    })
-}
-
-const onConfirmDeleteTab = () => {
-  asyncing.value = true
-  deleteProjectTab(props.project.id, props.tab.id)
-    .then(() => {
-      analytics.track('delete_project_tab', {
-        project: props.project.id,
-        tab: props.tab.id,
-      })
-
-      return refreshAll().then(() => {
-        toaster.pushSuccess(t(`tab.toasts.tab-delete.success`))
-        refreshProjectTabs(props.project).then(() => {
-          router.push({
-            name: 'ProjectSnapshot',
-            params: {
-              slugOrId: props.project.slug || props.project.id,
-            },
-          })
-        })
-      })
-    })
-    .catch(() => toaster.pushError(t(`tab.toasts.tab-delete.error`)))
-    .finally(() => clean())
-}
-
 const item = computed(() => data.value[0])
 </script>
 
 <template>
-  <FetchLoader :status="status" :error="error" only-error skeleton>
-    <template v-if="!preview">
-      <BaseModuleHeader v-if="editable" :editable="false">
-        <div />
-        <LpiButton
-          class="w-fit"
-          :btn-icon="stateModals.editTab ? 'ChevronUp' : 'ChevronDown'"
-          :label="$t('tab.tab.edit')"
-          @click="toggleModals('editTab')"
-        />
-      </BaseModuleHeader>
-
-      <ContentExpandable
-        v-if="editable"
-        :height-limit="0"
-        :opened="stateModals.editTab"
-        hide-see-more
-      >
-        <TabForm
-          class="p2"
-          :project="project"
-          :tab="tab"
-          @submit="onPatchTab"
-          @close="closeModals('editTab')"
-        >
-          <template #footer>
-            <LpiButton
-              class="w-fit"
-              btn-icon="TrashCanOutline"
-              color="red"
-              :label="$t('tab.tab.delete')"
-              @click="openModals('deleteTab')"
-            />
-          </template>
-        </TabForm>
-      </ContentExpandable>
-      <ContentExpandable
-        v-else-if="!textIsEmpty(tab.$t.description)"
-        key="description"
-        class="description-info"
-        :description="tab.$t.description"
-        :height-limit="300"
-      />
-
+  <FetchLoader :status="status" ony-error :errror="error" skeleton>
+    <BaseAdditionalsTab :project="project" :tab="tab" :editable="editable" :preview="preview">
       <BaseModuleHeader
+        v-if="editable"
         :editable="editable"
-        :add-label="$t('tab.item.add')"
+        :add-label="item ? $t('tab.item.edit') : $t('tab.item.add')"
+        btn-icon="Pen"
         :pagination="pagination"
-        @add="openModals('editItem')"
+        @add="openModals('addOrEditItem')"
       />
-    </template>
-
-    <template v-if="item">
-      <h2>{{ item.$t.title }}</h2>
-      <BaseText v-if="!preview" title="" :description="item.$t.content" />
-      <ContentExpandable v-else :description="item.$t.content" :height-limit="400" />
-    </template>
+      <template v-if="item">
+        <ContentExpandable v-if="preview" :description="item.$t.content" :height-limit="400" />
+        <BaseDescription v-else :title="item.$t.title" :description="item.$t.content" />
+      </template>
+      <NothingHere v-else />
+    </BaseAdditionalsTab>
   </FetchLoader>
 
-  <!-- drawer/modal -->
-  <ConfirmModal
-    v-if="stateModals.deleteTab"
-    :title="$t('tab.tab.delete')"
-    :asyncing="asyncing"
-    @cancel="clean"
-    @confirm="onConfirmDeleteTab"
-  >
-    {{ $t('tab.tab.delete-confirm') }}
-  </ConfirmModal>
-
-  <AdditionalsItemBlogDrawer
-    :is-opened="stateModals.editItem"
+  <AdditionalsItemDrawer
+    :is-opened="stateModals.addOrEditItem"
     :project="project"
     :tab="tab"
     :item="item"

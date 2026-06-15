@@ -1,11 +1,11 @@
 <template>
   <BaseModuleTab :title="project.$t.title">
-    <BaseText :title="project.$t.title" :description="project.$t.description" />
+    <BaseDescription :title="project.$t.title" :description="project.$t.description" />
   </BaseModuleTab>
 </template>
 
 <script setup lang="ts">
-import BaseText from '~/components/project/modules/Additionals/Types/Text/BaseText.vue'
+import BaseDescription from '~/components/modules/Abstract/BaseDescription.vue'
 import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
 import type { TranslatedProject } from '~/models/project.model'
 

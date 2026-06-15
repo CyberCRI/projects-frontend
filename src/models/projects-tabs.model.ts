@@ -27,11 +27,11 @@ export type ProjectTabForm = Partial<
 export type TranslatedProjectTab = Translated<ProjectTab, 'title' | 'description'>
 
 export interface ProjectTabItem extends BaseModel {
-  id?: number
+  id: number
   tab?: ProjectTab
   title: string
   content: string
-  images?: ImageModel[]
+  images?: number[]
   created_at: string
   updated_at: string
 }

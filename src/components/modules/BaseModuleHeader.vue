@@ -1,16 +1,19 @@
 <script setup lang="ts">
 import LpiSelect from '~/components/base/form/LpiSelect.vue'
+import type { IconImageChoice } from '~/functs/IconImage'
 
 withDefaults(
   defineProps<{
     editable?: boolean
     addLabel?: string
     pagination?: Pagination
+    btnIcon?: IconImageChoice
   }>(),
   {
     editable: true,
     addLabel: null,
     pagination: null,
+    btnIcon: 'Plus',
   }
 )
 
@@ -27,7 +30,7 @@ defineEmits<{
     <LpiButton
       v-if="editable"
       class="skeletons-background"
-      btn-icon="Plus"
+      :btn-icon="btnIcon"
       :label="addLabel ?? $t('common.add')"
       @click="$emit('add')"
     />

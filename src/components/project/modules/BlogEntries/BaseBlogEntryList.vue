@@ -10,7 +10,6 @@ import { getBlogEntries } from '@/api/v2/blogentries.service'
 import NothingHere from '~/components/base/NothingHere.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { deleteBlogEntry } from '~/api/blogentries.service'
-import { NuxtLink } from '#components'
 
 const props = withDefaults(
   defineProps<{
@@ -86,8 +85,9 @@ const onDeleteConfirm = () => {
 }
 
 // expnadable
+// expnadable
 const route = useRoute()
-const expanded = ref<number>(parseInt(route.hash.replaceAll('#blogentry:', ''), 10))
+const expanded = ref<number>()
 const setExpanded = (state: boolean, blog: TranslatedBlogEntry) => {
   if (state && expanded.value !== blog.id) {
     expanded.value = blog.id
@@ -95,6 +95,10 @@ const setExpanded = (state: boolean, blog: TranslatedBlogEntry) => {
     expanded.value = null
   }
 }
+
+watchEffect(() => {
+  expanded.value = parseInt(route.hash.replaceAll('#blogentry:', ''), 10)
+})
 </script>
 
 <template>
@@ -107,9 +111,18 @@ const setExpanded = (state: boolean, blog: TranslatedBlogEntry) => {
     />
     <div class="list-container">
       <BlogEntry
-        :is="preview ? NuxtLink : 'div'"
         v-for="blog in blogs"
+        :id="`blogentry:${blog.id}`"
         :key="blog.id"
+        :to="
+          preview
+            ? {
+                name: 'projectBlog',
+                params: { slugOrId: project.slug || project.id },
+                hash: `#blogentry:${blog.id}`,
+              }
+            : null
+        "
         :project="project"
         :blog-entry="blog"
         :can-delete="editable"

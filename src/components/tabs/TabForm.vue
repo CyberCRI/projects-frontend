@@ -75,21 +75,19 @@ const selectedTypeDescription = computed(
   () => optionsType.value.find((option) => option.value === form.value.type)?.title
 )
 
-const isFormEqual = useBlockNavigation(() => isEqual(form.value, defaultLocalForm()))
+const isFormEqual = useBlockNavigation(() => {
+  console.log(form.value, defaultLocalForm())
+  return isEqual(form.value, defaultLocalForm())
+})
 watch(
   () => [props.project, props.tab],
   () => reset(defaultLocalForm()),
   { immediate: true, deep: true }
 )
 
-// if type is changed , change defualt icons
-watch(
-  () => form.value.type,
-  () => {
-    form.value.icon = DEFAULT_ICONS_TABS[form.value.type]
-  },
-  { immediate: true }
-)
+const onChangeType = (type: ProjectTabForm['type']) => {
+  form.value.icon = DEFAULT_ICONS_TABS[type]
+}
 
 const onConfirm = () => emit('submit', cleanedData.value)
 
@@ -127,7 +125,11 @@ const addImage = (image: ImageModel) => {
     <div class="list-container">
       <!-- hide choices type if already created (you can't change type after create it) -->
       <Field v-if="!form.id" :label="$t('tab.form.type.label')" required>
-        <GroupButton v-model="form.type" :options="optionsType" />
+        <GroupButton
+          v-model="form.type"
+          :options="optionsType"
+          @update:model-value="onChangeType"
+        />
         <HelpField :description="selectedTypeDescription" />
       </Field>
 

@@ -46,13 +46,12 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   limited: [boolean]
+  expanded: [boolean]
 }>()
 
 const showLess = ref(true)
 const isLimited = ref(true)
-watchEffect(() => {
-  emit('limited', isLimited.value)
-})
+
 const contentRef = useTemplateRef('content')
 const actualHeight = ref(0)
 const minHeight = computed(() => Math.min(props.heightLimit, actualHeight.value))
@@ -82,6 +81,9 @@ const label = computed(() => {
     more: props.seeMoreLabel || $t('common.see-more'),
   }
 })
+
+watchEffect(() => emit('limited', isLimited.value))
+watchEffect(() => emit('expanded', !showLess.value))
 </script>
 
 <style lang="scss" scoped>

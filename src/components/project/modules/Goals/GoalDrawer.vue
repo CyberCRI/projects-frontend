@@ -66,7 +66,9 @@ watch(
   { immediate: true, deep: true }
 )
 
-const isFormEqual = useBlockNavigation(() => isEqual(form.value, defaultLocalForm()))
+const isFormEqual = useBlockNavigation(
+  () => !props.isOpened || isEqual(form.value, defaultLocalForm())
+)
 
 const asyncing = ref(false)
 

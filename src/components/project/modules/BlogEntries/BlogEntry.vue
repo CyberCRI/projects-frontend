@@ -1,13 +1,5 @@
 <template>
-  <component
-    :is="is"
-    class="blog-entry"
-    :to="{
-      name: 'projectBlog',
-      params: { slugOrId: project.slug || project.id },
-      hash: `#blogentry:${blogEntry.id}`,
-    }"
-  >
+  <component :is="to ? NuxtLink : 'div'" class="blog-entry" :to="to">
     <div class="blog-entry-header">
       <div class="header-main">
         <div class="entry-title skeletons-text">
@@ -30,7 +22,12 @@
     </div>
 
     <!-- add infinity height to only click shw -->
-    <ContentExpandable class="skeletons-text" :height-limit="remToPx(4)" :opened="stateModal">
+    <ContentExpandable
+      class="skeletons-text"
+      :height-limit="remToPx(4)"
+      :opened="stateModal"
+      @expanded="setModal($event)"
+    >
       <div class="entry-body">
         <TipTapOutput
           class="description tiptap-output skeletons-text"
@@ -45,25 +42,24 @@
 import type { TranslatedBlogEntry } from '~/models/blog-entry.model'
 
 import TipTapOutput from '~/components/base/form/TextEditor/TipTapOutput.vue'
-import type { TranslatedProject } from '~/models/project.model'
+import type { RouteLocationRaw } from 'vue-router'
 import { formatDate } from '~/functs/date'
 import { remToPx } from '~/functs/style'
+import { NuxtLink } from '#components'
 
 const props = withDefaults(
   defineProps<{
-    project: TranslatedProject
     blogEntry: TranslatedBlogEntry
     expanded?: boolean
     canEdit?: boolean
-    is?: string | Component
-
     canDelete?: boolean
+    to?: RouteLocationRaw
   }>(),
   {
     expanded: false,
     canEdit: false,
     canDelete: false,
-    is: 'div',
+    to: null,
   }
 )
 
@@ -74,19 +70,14 @@ const emit = defineEmits<{
 }>()
 
 const { locale } = useNuxtI18n()
-const { stateModal, openModal, closeModal } = useModal(props.expanded)
+const { stateModal, setModal } = useModal(props.expanded)
 
 watch(stateModal, () => emit('expanded', stateModal.value))
 
 watch(
   () => props.expanded,
-  (val) => {
-    if (val) {
-      openModal()
-    } else {
-      closeModal()
-    }
-  }
+  (val) => setModal(val),
+  { immediate: true }
 )
 </script>
 

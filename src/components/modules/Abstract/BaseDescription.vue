@@ -41,9 +41,7 @@ const props = defineProps<{
 const hasSummary = ref(false)
 
 // TODO: temp fix for encoding bug, to be removed soon
-const description = computed(() => {
-  return (props.description || '').replaceAll(/\xa0»/g, '"')
-})
+const description = computed(() => (props.description || '').replaceAll(/\xa0»/g, '"'))
 
 const descriptionEmpty = computed(() => textIsEmpty(description.value))
 
