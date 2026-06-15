@@ -139,11 +139,11 @@ const submit = async () => {
       />
     </div>
     <div class="form-section">
-      <label>{{ $t('vector-store.file-field') }} (.pdf, .txt, .docx)</label>
+      <label>{{ $t('vector-store.file-field') }} (.pdf, .txt, .md, .docx)</label>
       <br />
       <FileInput
         v-model="file"
-        file-types=".pdf,.txt,.docx,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        file-types=".pdf,.txt,.md,.docx,text/plain,text/markdown,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         required
         :label="$t('file.upload')"
       />

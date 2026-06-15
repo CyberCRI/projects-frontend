@@ -50,7 +50,12 @@ export default defineLazyEventHandler(() => {
 
     let loader
 
-    if (extension == '.txt' || mimetype == 'text/plain') {
+    if (
+      extension == '.txt' ||
+      mimetype == 'text/plain' ||
+      extension == '.md' ||
+      mimetype == 'text/markdown'
+    ) {
       loader = new TextLoader(file)
     } else if (extension == '.pdf' || mimetype == 'application/pdf') {
       loader = new PDFLoader(file)
