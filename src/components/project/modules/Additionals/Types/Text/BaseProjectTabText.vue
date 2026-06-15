@@ -55,7 +55,7 @@ const item = computed(() => data.value[0])
 </script>
 
 <template>
-  <FetchLoader :status="status" ony-error :errror="error" skeleton>
+  <FetchLoader :status="status" only-error :error="error" skeleton>
     <BaseAdditionalsTab :project="project" :tab="tab" :editable="editable" :preview="preview">
       <BaseModuleHeader
         v-if="editable"
