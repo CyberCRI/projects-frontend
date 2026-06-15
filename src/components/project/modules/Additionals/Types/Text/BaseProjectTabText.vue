@@ -51,27 +51,25 @@ const item = computed(() => data.value[0])
 <template>
   <FetchLoader :status="status" only-error :error="error" skeleton>
     <BaseAdditionalsTab :project="project" :tab="tab" :editable="editable" :preview="preview">
-      <template v-if="item">
-        <ContentExpandable
-          v-if="preview"
-          :description="item.$t.content"
-          :height-limit="400"
-          hide-see-more
-        />
-        <BaseDescription
-          v-else-if="!editable"
-          :title="item.$t.title"
-          :description="item.$t.content"
-        />
-        <InlineAdditionalsItemForm
-          v-else
-          :project="project"
-          :tab="tab"
-          :item="item"
-          @reload="refreshAll"
-          @close="clean"
-        />
-      </template>
+      <ContentExpandable
+        v-if="item && preview"
+        :description="item.$t.content"
+        :height-limit="400"
+        hide-see-more
+      />
+      <BaseDescription
+        v-else-if="item && !editable"
+        :title="item.$t.title"
+        :description="item.$t.content"
+      />
+      <InlineAdditionalsItemForm
+        v-else-if="editable"
+        :project="project"
+        :tab="tab"
+        :item="item"
+        @reload="refreshAll"
+        @close="clean"
+      />
       <NothingHere v-else />
     </BaseAdditionalsTab>
   </FetchLoader>
