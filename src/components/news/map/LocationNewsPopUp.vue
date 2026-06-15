@@ -1,5 +1,5 @@
 <template>
-  <CardLocationTooltip
+  <CardLocationPopUp
     :location="location"
     :label="$t('news.view')"
     :to="{ name: 'NewsPage', params: { slugOrId: news.id } }"
@@ -11,14 +11,11 @@
 </template>
 
 <script setup lang="ts">
-import type { AnyTranslatedLocation } from '~/models/location.model'
-import type { TranslatedNews } from '~/models/news.model'
-
-import CardLocationTooltip from '~/components/map/CardLocationTooltip.vue'
-
-import { DEFAULT_NEWS_PATATOID } from '~/composables/usePatatoids'
-
-import { html2Text } from '~/functs/string'
+import type CardLocationPopUp from '@/components/map/CardLocationPopUp.vue'
+import type { AnyTranslatedLocation } from '@/models/location.model'
+import { DEFAULT_NEWS_PATATOID } from '@/composables/usePatatoids'
+import type { TranslatedNews } from '@/models/news.model'
+import { html2Text } from '@/functs/string'
 
 const props = defineProps<{ location: AnyTranslatedLocation; news: TranslatedNews }>()
 

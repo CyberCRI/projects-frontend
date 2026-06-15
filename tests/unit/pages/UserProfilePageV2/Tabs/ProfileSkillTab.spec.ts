@@ -1,8 +1,6 @@
 import ProfileSkillTab from '~/pages/UserProfilePageV2/Tabs/ProfileSkillTab.vue'
-import { OrganizationOutput } from '~/models/organization.model'
 import { UserFactory } from '~~/tests/factories/user.factory'
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
-import useOrganizationsStore from '~/stores/useOrganizations'
 import useUsersStore from '~/stores/useUsers'
 import pinia from '~/stores'
 
@@ -23,10 +21,10 @@ describe('ProfileSkillTab', () => {
     usersStore.userFromApi = {}
     usersStore.permissions = {}
     usersStore.getUser = vi.fn()
-    const organizationsStore = useOrganizationsStore(pinia)
-    organizationsStore._current = { id: 'TEST', code: 'TEST' } as unknown as OrganizationOutput
+    usersStore.userFromToken = {}
+    const organizationCode = useOrganizationCode()
 
-    registerEndpoint(`organization/${organizationsStore._current.code}/mentoring`, () => {
+    registerEndpoint(`organization/${organizationCode}/mentoring/`, () => {
       return PaginationsFactory.generate()
     })
   })

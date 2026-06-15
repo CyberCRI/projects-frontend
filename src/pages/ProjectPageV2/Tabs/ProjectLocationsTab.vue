@@ -10,12 +10,11 @@
     </div>
 
     <div class="main-ctn">
-      <LazyMapRecap
+      <GeneralMap
         ref="map"
-        class="unboxed"
-        expand
-        :editable="editable"
+        class="map-recap"
         :locations="locations"
+        :editable="editable"
         @edit="onEditForm($event)"
         @expand="projectLayoutToggleAddModal('location')"
       />
@@ -47,18 +46,15 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedLocation } from '~/models/location.model'
-import type { TranslatedProject } from '~/models/project.model'
-import type { LocationType } from '~/models/types'
-
-import { deleteLocation, patchLocation, postLocations } from '~/api/locations.service'
-
-import LocationList from '~/components/map/LocationList.vue'
-import LocationForm from '~/components/map/LocationForm.vue'
-
-import useToasterStore from '~/stores/useToaster'
-
-import analytics from '~/analytics'
+import { deleteLocation, patchLocation, postLocations } from '@/api/locations.service'
+import type { TranslatedLocation } from '@/models/location.model'
+import type { TranslatedProject } from '@/models/project.model'
+import LocationList from '@/components/map/LocationList.vue'
+import LocationForm from '@/components/map/LocationForm.vue'
+import GeneralMap from '@/components/map/GeneralMap.vue'
+import type { LocationType } from '@/models/types'
+import useToasterStore from '@/stores/useToaster'
+import analytics from '@/analytics'
 
 const projectLayoutToggleAddModal: any = inject('projectLayoutToggleAddModal')
 
@@ -85,7 +81,7 @@ const locationToDelete = ref<TranslatedLocation>(null)
 const asyncing = ref(false)
 
 const mapRef = useTemplateRef('map')
-const centerMap = () => mapRef.value?.map?.centerMap()
+const centerMap = () => mapRef.value?.centerMap()
 const onFocus = (location) => mapRef.value?.map?.flyTo(location)
 
 const editable = computed(() => props.isInEditingMode && canEditProject.value)
