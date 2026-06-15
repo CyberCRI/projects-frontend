@@ -321,6 +321,8 @@ useLpiHead2({
           :context-messages="contextMessages"
           :history="history"
           :conversation-id="threadId"
+          :real-conversation-id="conversationId"
+          :agent-slug="agent?.slug"
           @conversation-restarted="onConversationRestarted"
           @on-component-render="toConversationEnd"
         />

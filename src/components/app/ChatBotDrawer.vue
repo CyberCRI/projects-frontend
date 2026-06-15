@@ -192,6 +192,8 @@ function onSuggestButtonClick(message) {
         :endpoint="CHAT_ENDPOINT"
         :context-messages="contextMessages"
         :start-message="agent?.startMessage || $t('chatbot.intro-message')"
+        :agent-slug="agent.slug"
+        :real-conversation-id="conversationId"
         @start-conversation="startConversation"
         @close="$emit('close')"
         @conversation-restarted="onConversationRestarted"

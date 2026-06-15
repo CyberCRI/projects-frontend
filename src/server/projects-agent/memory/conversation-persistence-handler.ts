@@ -92,7 +92,7 @@ export default class ConversationPersistenceHandler extends BaseCallbackHandler 
         data: {
           conversationId: this.conversation!.id,
           role: 'user',
-          content: message.content,
+          content: message.content || message.text,
           position,
         },
       })
@@ -107,7 +107,7 @@ export default class ConversationPersistenceHandler extends BaseCallbackHandler 
         data: {
           conversationId: this.conversation!.id,
           role: 'assistant',
-          content: message.text, //message.content || message.text
+          content: message.content || message.text,
           toolCalls: message.tool_calls ?? null,
           position,
         },

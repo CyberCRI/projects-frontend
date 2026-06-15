@@ -2682,6 +2682,7 @@
     "fetching_data": "Obteniendo datos...",
     "reasoning": "Pensando...",
     "restart": "Reiniciar conversación",
+    "export": "Exportar conversación",
     "before-we-start": "Antes de comenzar, ¿le gustaría:",
     "allow-profile": "Permítame ver su perfil - para que pueda adaptar mejor mis respuestas",
     "allow-current-page": "Permítame ver la página en la que está - para tener una mejor comprensión del contexto",

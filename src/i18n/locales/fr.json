@@ -2783,6 +2783,7 @@
     "fetching_data": "Récupération des données...",
     "reasoning": "Réflexion en cours...",
     "restart": "Redémarrer la conversation",
+    "export": "Exporter la conversation",
     "before-we-start": "Avant de commencer, voudriez-vous :",
     "allow-profile": "Me permettre de voir votre profil - afin que je puisse mieux adapter mes réponses",
     "allow-current-page": "Me permettre de voir la page sur laquelle vous êtes - afin que j'aie une meilleure compréhension du contexte",

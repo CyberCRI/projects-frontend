@@ -2682,6 +2682,7 @@
     "fetching_data": "Andmete hankimine...",
     "reasoning": "Mõtlemine...",
     "restart": "Vestluse taaskäivitamine",
+    "export": "Ekspordi vestlus",
     "before-we-start": "Enne alustamist, kas sooviksite:",
     "allow-profile": "Lubage mul näha teie profiili - et saaksin oma vastuseid paremini kohandada",
     "allow-current-page": "Lubage mul näha lehte, kus viibite - et mõistaksin konteksti paremini",
