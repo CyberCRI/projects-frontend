@@ -39,12 +39,6 @@ watch(
   }
 )
 
-const onFileChange = (e) => {
-  const files = e.target.files || e.dataTransfer.files
-  if (!files.length) return
-  file.value = files[0]
-}
-
 const isAsyncing = ref(false)
 
 const close = () => emit('close')
@@ -88,7 +82,7 @@ const submit = async () => {
 
   const fd = new FormData()
   fd.append('title', title.value)
-  fd.append('file', file.value, file.value.name)
+  fd.append('file', file.value[0], file.value[0].name)
   fd.append('is_global', isGlobal.value ? 'yes' : '')
 
   try {
@@ -147,13 +141,11 @@ const submit = async () => {
     <div class="form-section">
       <label>{{ $t('vector-store.file-field') }} (.pdf, .txt, .docx)</label>
       <br />
-      <input
-        id="file"
-        type="file"
-        name="file"
-        accept=".pdf,.txt,.docx,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      <FileInput
+        file-types=".pdf,.txt,.docx,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         required
-        @change="onFileChange"
+        :label="$t('file.upload')"
+        v-model="file"
       />
     </div>
   </BaseDrawer>
