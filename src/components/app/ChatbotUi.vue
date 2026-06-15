@@ -140,12 +140,15 @@ const spinnerMD = `![](data:image/svg+xml;base64,${btoa(spinner)}) `
 // to handle 'meta' messages get replaced by next message
 let replacedByNext = false
 const responseInterceptor = (response) => {
-  //console.log('ChatBotDrawer responseInterceptor', response)
+  // console.log('ChatBotDrawer responseInterceptor', response)
   if (response.role === 'meta') {
-    let text = spinnerMD + t(`chatbot.${response.text}`)
-    if (response.is_done) {
-      text = ''
+    let text = spinnerMD + '*' + t(`chatbot.${response.text}`) + '*'
+    if (response.text_extra) {
+      text += ` ${response.text_extra}`
     }
+    // if (response.is_done) {
+    //   text = ''
+    // }
     replacedByNext = true
     return {
       text: text,
@@ -165,7 +168,9 @@ const responseInterceptor = (response) => {
   conversationId.value = response.conversationId
   const overwrite = replacedByNext
   // no way to know when a true message begin, so just assume next is not overwrite
-  replacedByNext = false
+  // BUT if first message is empty text it mess up replaceByNext...
+  if (response.text) replacedByNext = false
+  // console.log('meta overwrite', replacedByNext)
   return { ...response, overwrite }
 }
 
