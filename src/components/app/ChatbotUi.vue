@@ -4,6 +4,7 @@ import useUsersStore from '@/stores/useUsers.ts'
 import analytics from '@/analytics'
 import 'deep-chat'
 
+const { isAdmin } = usePermissions()
 const { t } = useI18n()
 const router = useRouter()
 const props = defineProps({
@@ -11,7 +12,11 @@ const props = defineProps({
   endpoint: { type: String, required: true },
   startMessage: { type: String, default: '' },
   history: { type: Array, default: () => [] },
+  // Beware : it in fact threadId
+  // TODO: rename when legacy (non langchain) agent code will be removed
   conversationId: { type: String, default: null },
+  agentSlug: { type: String, default: null },
+  realConversationId: { type: String, default: null },
 })
 
 const emit = defineEmits([
@@ -238,16 +243,52 @@ const textInputOptions = computed(() => ({
   },
 }))
 
-const submitButtonStyles = computed(() => ({
+const submitButtonStyles = ref({
   submit: {
     container: {
       default: {
         padding: '10px',
         'aspect-ratio': '1',
+        fill: 'white',
+        backgroundColor: '#1d727c',
+        filter: '',
+        cursor: 'pointer',
+      },
+    },
+    svg: {
+      styles: {
+        default: {
+          borderRadiux: '8px',
+          backgroundColor: '#1d727c',
+          color: 'white',
+          filter: 'saturate(100%)',
+        },
+      },
+      content: `<svg
+        ref="svgIcon"
+        viewBox="-4 -4 30 30"
+        xmlns="http://www.w3.org/2000/svg"><path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2M20 16H5.2L4 17.2V4H20V16Z" /></svg>`,
+    },
+  },
+  disabled: {
+    container: {
+      default: {
+        backgroundColor: '#1d727c',
+        filter: 'saturate(0%) brightness(2)',
+        cursor: 'default',
+      },
+    },
+    svg: {
+      styles: {
+        default: {
+          backgroundColor: '#1d727c',
+          cursor: 'default',
+          filter: '',
+        },
       },
     },
   },
-}))
+})
 
 const messageStyles = computed(() => {
   const botStyles = {
@@ -376,6 +417,43 @@ const confirmRestart = () => {
 const cancelRestart = () => {
   showConfirmRestart.value = false
 }
+
+const isExporting = ref(false)
+async function exportConversation() {
+  let headers = {}
+  const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
+  if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
+  isExporting.value = true
+  const url = props.realConversationId
+    ? `/api/chatbot/${props.agentSlug}/export/${props.realConversationId}`
+    : `/api/chatbot/${props.agentSlug}/export/`
+  try {
+    const jsonData = await $fetch(url, { headers })
+    const filename = `conversation-${new Date().toISOString()}.json`
+    // Create a Blob from the JSON data
+    const blob = new Blob([JSON.stringify(jsonData, null, 2)], {
+      type: 'application/json',
+    })
+    // Create a download link
+    const downloadUrl = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = downloadUrl
+    link.download = filename
+
+    // Trigger the download
+    document.body.appendChild(link)
+    link.click()
+
+    // Cleanup
+    document.body.removeChild(link)
+    URL.revokeObjectURL(downloadUrl)
+  } catch (error) {
+    console.error('Error downloading data:', error)
+    throw error
+  } finally {
+    isExporting.value = false
+  }
+}
 </script>
 
 <template>
@@ -415,10 +493,22 @@ const cancelRestart = () => {
     </div>
   </deep-chat>
   <div class="action-bar">
-    <a class="action-button" href="#" @click.prevent="showConfirmRestart = true">
-      <IconImage class="icon" name="RestartLeft" />
-      {{ $t('chatbot.restart') }}
-    </a>
+    <LpiButton
+      v-if="agentSlug && isAdmin"
+      class="action-button"
+      secondary
+      :disabled="isExporting"
+      :btn-icon="isExporting ? 'LoaderSimple' : 'Archive'"
+      :label="$t('chatbot.export')"
+      @click.prevent="exportConversation"
+    />
+    <LpiButton
+      class="action-button"
+      secondary
+      btn-icon="RestartLeft"
+      :label="$t('chatbot.restart')"
+      @click.prevent="showConfirmRestart = true"
+    />
   </div>
   <!--div v-if="suggestButtons?.length && conversationStarted">
     <a
@@ -445,23 +535,16 @@ const cancelRestart = () => {
 </template>
 <style lang="scss" scoped>
 .action-bar {
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
   margin-bottom: 1em;
-}
-
-.action-button {
-  background-color: #eee;
-  border-radius: 4px;
-  padding: 4px;
-  color: #666;
-  font-size: 0.8rem;
 }
 
 .prompt-suggestion ~ .prompt-suggestion {
   margin-left: 8px;
 }
 
-.action-button,
 .prompt-suggestion {
   display: inline-flex;
   align-items: center;
