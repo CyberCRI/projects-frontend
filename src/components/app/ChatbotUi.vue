@@ -494,7 +494,7 @@ async function exportConversation() {
   </deep-chat>
   <div class="action-bar">
     <LpiButton
-      v-if="isAdmin"
+      v-if="agentSlug && isAdmin"
       class="action-button"
       secondary
       :disabled="isExporting"
