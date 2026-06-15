@@ -142,10 +142,10 @@ const submit = async () => {
       <label>{{ $t('vector-store.file-field') }} (.pdf, .txt, .docx)</label>
       <br />
       <FileInput
+        v-model="file"
         file-types=".pdf,.txt,.docx,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         required
         :label="$t('file.upload')"
-        v-model="file"
       />
     </div>
   </BaseDrawer>

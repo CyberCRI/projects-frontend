@@ -28,28 +28,23 @@
 <script setup lang="ts">
 import { useUniqueId } from '~/composables/useUniqueId'
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
     label?: string
-    maxSizeMb?: number
     fileTypes?: string
     multiple?: boolean
     errorMessage?: string | null
-    required?: boolean
   }>(),
   {
-    isLink: false,
-    maxSizeMb: 2.25,
+    label: '',
     fileTypes: '*/*',
     multiple: false,
     errorMessage: null,
-    required: false,
-    label: '',
   }
 )
 
 const files = defineModel({ type: [Array, null], required: true })
-
+defineEmits(['update:modelValue'])
 const uniqueId = useUniqueId()
 const labelRef = useTemplateRef('label')
 </script>
