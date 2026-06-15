@@ -3,13 +3,15 @@ import type {
   ProjectTabForm,
   ProjectTabItem,
   ProjectTabItemForm,
+  QueryFilterProjectTab,
 } from '~/models/projects-tabs.model'
 import type { ImageModealCreated } from '~/models/image.model'
 import type { ProjectSlugOrId } from '~/models/project.model'
 
 type Config = UseApiOptions
+type ConfigTab = UseApiOptions<QueryFilterProjectTab>
 
-export async function getAllProjectTab(projectId: ProjectSlugOrId, config: Config = {}) {
+export async function getAllProjectTab(projectId: ProjectSlugOrId, config: ConfigTab = {}) {
   return await useAPI<PaginationResult<ProjectTab>>(`project/${projectId}/tab/`, config)
 }
 

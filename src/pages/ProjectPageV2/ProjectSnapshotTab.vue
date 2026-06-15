@@ -85,7 +85,13 @@ const {
   error,
   data: tabs,
 } = getAllProjectTab(organizationCode, projectId, {
+  query: {
+    show_preview: true,
+  },
   default: () => factoryPagination(projectTabSkeleton, 0),
+  paginationConfig: {
+    limit: 100,
+  },
 })
 </script>
 

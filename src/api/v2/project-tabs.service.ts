@@ -10,14 +10,18 @@ import {
   getAllProjectTabItem as fetchAllProjectTabItem,
   getProjectTabItem as fetchProjectTabItem,
 } from '~/api/project-tabs.service'
-import type { ProjectTab, ProjectTabItem } from '~/models/projects-tabs.model'
+import type {
+  ProjectTab,
+  ProjectTabItem,
+  QueryFilterProjectTab,
+} from '~/models/projects-tabs.model'
 import type { ProjectSlugOrId } from '~/models/project.model'
 import { onlyRefs } from '~/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}
 
 type Config = UseAsyncApiConfig
-type ConfigPagiation = UseAsyncPaginationApiConfig
+type ConfigPagiation = UseAsyncPaginationApiConfig<QueryFilterProjectTab>
 
 // TODO change backend with prefix organization code in url not in query
 export const getAllProjectTab = (

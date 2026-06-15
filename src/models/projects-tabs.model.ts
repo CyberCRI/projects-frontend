@@ -44,3 +44,10 @@ export type ProjectTabItemForm = Partial<
     images_ids: number[]
   }
 >
+
+export type QueryFilterProjectTab = Partial<
+  {
+    type: ProjectTabType
+    show_preview: boolean
+  } & PaginationQuery
+>
