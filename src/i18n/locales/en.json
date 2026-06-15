@@ -3303,6 +3303,9 @@
       "icon": {
         "label": "Icon"
       },
+      "show_preview": {
+        "label": "Show preview in summary page."
+      },
       "type": {
         "label": "Type",
         "required": "The type of tab is required.",

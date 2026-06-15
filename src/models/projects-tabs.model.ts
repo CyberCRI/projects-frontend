@@ -13,6 +13,7 @@ export interface ProjectTab extends BaseModel {
   description: string | null
   icon: IconImageChoice | null
   images?: ImageModel[]
+  show_preview: boolean
   modules: {
     items: number
   }

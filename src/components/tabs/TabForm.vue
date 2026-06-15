@@ -49,6 +49,7 @@ const defaultLocalForm = () => {
     newForm.description = getFirstTextNotEmpty([tab.description]) || newForm.description
     newForm.icon = tab.icon || newForm.icon
     newForm.type = tab.type || newForm.type
+    newForm.show_preview = tab.show_preview || newForm.show_preview
   }
 
   return newForm
@@ -151,6 +152,10 @@ const addImage = (image: ImageModel) => {
           :errors="errors.description"
           @image="addImage"
         />
+      </Field>
+
+      <Field :label="$t('tab.form.show_preview.label')" required :errors="errors.show_preview">
+        <SwitchInput v-model="form.show_preview" />
       </Field>
 
       <Field :label="$t('tab.form.icon.label')" required>

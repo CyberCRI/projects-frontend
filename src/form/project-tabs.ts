@@ -9,6 +9,7 @@ export const defualtProjectTabForm = (): ProjectTabForm => {
     type: 'text',
     icon: DEFAULT_ICONS_TABS.text,
     images_ids: [],
+    show_preview: true,
   }
 }
 

@@ -8,6 +8,7 @@ export const projectTabSkeleton = (def?: Partial<ProjectTab>): ProjectTab => {
     icon: DEFAULT_ICONS_TABS.text,
     type: 'text',
     id: -1,
+    show_preview: true,
     modules: {
       items: 0,
     },
