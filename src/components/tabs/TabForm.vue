@@ -115,6 +115,10 @@ const onSaveImage = (image: File) => {
 const addImage = (image: ImageModel) => {
   form.value.images_ids.push(image.id)
 }
+
+const icons = Object.keys(ICONS_TABS).toSorted((a, b) =>
+  a.toLowerCase().localeCompare(b)
+) as IconTabImageChoice[]
 </script>
 
 <template>
@@ -173,7 +177,7 @@ const addImage = (image: ImageModel) => {
         <IconDrawer
           v-model="form.icon"
           :is-opened="stateModals.editIcon"
-          :icons="Object.keys(ICONS_TABS) as IconTabImageChoice[]"
+          :icons="icons"
           @close="closeModals('editIcon')"
         />
       </Field>
