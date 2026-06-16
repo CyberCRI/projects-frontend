@@ -2,8 +2,8 @@ import { createRouter, createWebHistory, RouteLocationRaw, RouteRecordRaw } from
 import { ComponentMountingOptions, mount, shallowMount } from '@vue/test-utils'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import { clickOutside, disableFocus } from '~/directives'
+import { createI18n, I18nOptions, I18nT } from 'vue-i18n'
 import { createTestingPinia } from '@pinia/testing'
-import { createI18n, I18nOptions } from 'vue-i18n'
 import routerOptions from '~/app/router.options'
 import { NuxtLink } from '#components'
 
@@ -76,6 +76,7 @@ const buildOptions = <T>(options: OptionsMount<T> = {}): ComponentMountingOption
       components: {
         RouterLink: MockComponent,
         NuxtLink,
+        I18nT,
       },
       ...options.global,
     },

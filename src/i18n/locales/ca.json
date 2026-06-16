@@ -220,7 +220,13 @@
       "groups": "Grups",
       "settings": "Arranjament",
       "terms": "ToS",
-      "vector-store": "Vector store"
+      "vector-store": "Vector store",
+      "prompts": "Sol·licituds",
+      "agent-skills": "Habilitats de l'agent",
+      "agents": "Agents",
+      "conversations": "Converses",
+      "checkpoints": "Checkpoints",
+      "side-assistant": "Ajudant lateral"
     },
     "page-title": "Administrador",
     "portal": {
@@ -913,7 +919,6 @@
     "cookies": "Galetes",
     "accessibility": "Accessibilitat",
     "personal-data": "Dades personals",
-    "directory": "Descobreix molts més projectes d'altres organitzacions a la meta-portal:",
     "help": "Ajuda",
     "projects": "Plataforma de projectes",
     "madeBy": "està fet per",
@@ -969,7 +974,8 @@
     },
     "create-project": "Crea un projecte",
     "check-locations": "Comprova les nostres ubicacions",
-    "our-locations": "Les nostres ubicacions"
+    "our-locations": "Les nostres ubicacions",
+    "agents": "Agents d'IA"
   },
   "language": {
     "label-en": "Anglès",
@@ -2742,9 +2748,11 @@
     "fetching_data": "Obtenció de dades...",
     "reasoning": "Pensant...",
     "restart": "Reinicia la conversa",
+    "export": "Exporta la conversa",
     "before-we-start": "Abans de començar, voldríeu:",
     "allow-profile": "Permeteu-me veure el vostre perfil - perquè pugui adaptar millor les meves respostes",
-    "allow-current-page": "Permeteu-me veure la pàgina en què esteu - perquè tingui una millor comprensió del context"
+    "allow-current-page": "Permeteu-me veure la pàgina en què esteu - perquè tingui una millor comprensió del context",
+    "previous-messages": "Missatges anteriors"
   },
   "tos": {
     "evolved": "Els nostres Termes i Condicions s'han actualitzat, si us plau, reviseu-los i aproveu-los.",
@@ -3207,7 +3215,9 @@
     "title-field": "Títol",
     "file-field": "Fitxer",
     "document-added": "Document afegit.",
-    "document-updated": "Document actualitzat."
+    "document-updated": "Document actualitzat.",
+    "is-global-field": "Global document",
+    "is-global-label": "Global"
   },
   "announcements": {
     "empty": "Encara no s'anuncia."
@@ -3273,5 +3283,110 @@
       "label": "Visor | Visors",
       "help": "Visor: no té drets d' edició."
     }
+  },
+  "prompts": {
+    "create-prompt": "Crea una indicació",
+    "create-success": "Indicació creada correctament",
+    "create-error": "Error en crear l'indicació",
+    "edit-prompt": "Edita l'indicació",
+    "edit-success": "Indicació editada correctament",
+    "edit-error": "Error en actualitzar l'indicació",
+    "title": "Títol",
+    "content": "Contingut",
+    "confirm-deletion": "Confirma la supressió de l'indicació",
+    "confirm-deletion-of": "Realment vols suprimir l'indicació '{title}'?",
+    "deleted": "Indicació suprimida",
+    "delete-error": "Error en suprimir l'indicació",
+    "empty-list": "Encara no hi ha cap indicació.",
+    "form": {
+      "invalid": "El formulari està incomplet, si us plau proporciona els camps requerits",
+      "title-required": "El títol és obligatori",
+      "content-required": "El contingut és obligatori"
+    }
+  },
+  "agent-skills": {
+    "create-skill": "Crea una habilitat d'agent",
+    "create-success": "Habilitat d'agent creada correctament",
+    "create-error": "Error en crear l'habilitat d'agent",
+    "edit-skill": "Edita l'habilitat d'agent",
+    "edit-success": "Habilitat d'agent editada correctament",
+    "edit-error": "Error en actualitzar l'habilitat d'agent",
+    "title": "Títol",
+    "description": "Descripció",
+    "content": "Contingut",
+    "confirm-deletion": "Confirma la supressió de l'habilitat d'agent",
+    "confirm-deletion-of": "Realment vols suprimir l'habilitat d'agent '{title}'?",
+    "deleted": "Habilitat d'agent suprimida",
+    "delete-error": "Error en suprimir l'habilitat d'agent",
+    "empty-list": "Encara no hi ha cap habilitat d'agent.",
+    "form": {
+      "invalid": "El formulari està incomplet, si us plau proporciona els camps requerits",
+      "title-required": "El títol és obligatori",
+      "content-required": "El contingut és obligatori",
+      "description-required": "La descripció és obligatòria"
+    }
+  },
+  "agents": {
+    "no-active-agent-yet": "No hi ha cap agent disponible ara mateix.",
+    "need-login": "Heu d'iniciar la sessió per utilitzar aquest agent.",
+    "create-agent": "Crea un agent",
+    "create-success": "Agent creat correctament",
+    "create-error": "Error en crear l'agent",
+    "edit-agent": "Edita l'agent",
+    "edit-success": "Agent editat correctament",
+    "edit-error": "Error en actualitzar l'agent",
+    "title": "Títol",
+    "description": "Descripció",
+    "is-enabled": "Activat",
+    "model-section": "Model",
+    "model-name": "Nom del model",
+    "model-temperature": "Temperatura del model",
+    "prompt-section": "indicació",
+    "prompt-placeholder": "Tria una indicació",
+    "start-message-section": "Missatge de benvinguda de l'agent",
+    "use-latest-prompt-version": "Utilitza la versió més recent de l'indicació",
+    "use-prompt-version": "Utilitza la versió de l'indicació: ",
+    "use-profile-data": "Accedeix a les dades del perfil d'usuari",
+    "use-project-mcp": "Utilitza Projects MCP",
+    "prompt-version-placeholder": "Tria la versió de l'indicació",
+    "tools-section": "Eines",
+    "docs-section": "Documents",
+    "skills-section": "Habilitats",
+    "use-latest-skill-version": "Utilitza la versió més recent de l'habilitat",
+    "use-skill-version": "Utilitza la versió de l'habilitat:",
+    "choose-skill-version": "Tria la versió de l'habilitat",
+    "preview-mode": "Mode de vista prèvia",
+    "confirm-deletion": "Confirma la supressió de l'agent",
+    "confirm-deletion-of": "Realment vols suprimir l'agent '{title}'?",
+    "deleted": "Agent suprimit",
+    "delete-error": "Error en suprimir l'agent",
+    "empty-list": "Encara no hi ha cap agent.",
+    "confirm-restart-title": "Reinicia la conversa",
+    "confirm-restart-content": "Vols iniciar una conversa nova?",
+    "is-used-as-side-assistant": "Aquest agent s'utilitza actualment com a assistent secundari i no es pot desactivar.",
+    "form": {
+      "invalid": "El formulari està incomplet, si us plau, proporciona els camps requerits",
+      "title-required": "El títol és obligatori",
+      "model-name-required": "El nom del model és obligatori",
+      "model-temperature-required": "La temperatura del model és obligatòria",
+      "model-temperature-is-float": "La temperatura del model ha de ser un número de coma flotant",
+      "model-temperature-is-bounded": "La temperatura del model ha d'estar entre 0 i 2",
+      "prompt-required": "L'indicació (prompt) és obligatòria"
+    }
+  },
+  "side-assistant": {
+    "default": "Default",
+    "save-success": "Side assistant saved",
+    "save-error": "Error while saving side assistant",
+    "choose": "Choose an agent for the side assistant"
+  },
+  "agents-home": {
+    "title": "Let's talk!",
+    "intro": "Welcome to a curated gathering of conversational agents - AI companions designed to chat, help, and engage. Whether you're looking for research assistance, casual conversation, creative collaboration, or practical support, you'll find different voices here, each with its own strengths and personality."
+  },
+  "assistant-drawer": {
+    "ice-breakers": "Aquí teniu alguns temes per iniciar una conversa",
+    "special-agents": "Busqueu un agent especialitzat?",
+    "other-special-agents": "Cercant un altre agent especialitzat?"
   }
 }

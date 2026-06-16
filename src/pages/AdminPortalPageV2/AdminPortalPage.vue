@@ -2,7 +2,10 @@
 import useOrganizationsStore from '~/stores/useOrganizations'
 
 const organizationsStore = useOrganizationsStore()
-const { isSuperAdmin } = usePermissions()
+const { isSuperAdmin, isAdmin } = usePermissions()
+
+const hasVectorTabs = useRuntimeConfig().public.appHasVectorDb
+const hasAgentTabs = useRuntimeConfig().public.appHasChatbotPromptDb
 
 const { t } = useNuxtI18n()
 const tabs = computed(() => {
@@ -20,18 +23,74 @@ const tabs = computed(() => {
     : []
 
   // TODO: also check is vector-store is enabled
-  const vectorStoreTab = isSuperAdmin.value
-    ? [
-        {
-          key: 'admin-vector-store',
-          label: t('admin.tabs.vector-store'),
-          view: { name: 'VectorStoreAdminTab' },
-          props: {},
-          icon: 'Article', // TODO: use a bulb or db icon
-          condition: true,
-        },
-      ]
-    : []
+  let vectorStoreTab = []
+  let agentTabs = []
+
+  if (hasVectorTabs && (isSuperAdmin.value || isAdmin.value)) {
+    vectorStoreTab = [
+      {
+        key: 'admin-vector-store',
+        label: t('admin.tabs.vector-store'),
+        view: { name: 'VectorStoreAdminTab' },
+        props: {},
+        icon: 'Article', // TODO: use a bulb or db icon
+        condition: true,
+      },
+    ]
+  }
+  if (hasAgentTabs && (isSuperAdmin.value || isAdmin.value)) {
+    agentTabs = [
+      {
+        key: 'admin-prompts',
+        label: t('admin.tabs.prompts'),
+        view: { name: 'PromptsAdminTab' },
+        props: {},
+        icon: 'Article', // TODO: use a bulb or db icon
+        condition: true,
+      },
+      {
+        key: 'admin-agent-skills',
+        label: t('admin.tabs.agent-skills'),
+        view: { name: 'AgentSkillsAdminTab' },
+        props: {},
+        icon: 'Article', // TODO: use a bulb or db icon
+        condition: true,
+      },
+      {
+        key: 'admin-agents',
+        label: t('admin.tabs.agents'),
+        view: { name: 'AgentsAdminTab' },
+        props: {},
+        icon: 'Article', // TODO: use a bulb or db icon
+        condition: true,
+      },
+      {
+        key: 'admin-side-assistant',
+        label: t('admin.tabs.side-assistant'),
+        view: { name: 'SideAssistantAdminTab' },
+        props: {},
+        icon: 'Article', // TODO: use a bulb or db icon
+        condition: true,
+      },
+      {
+        key: 'admin-conversations',
+        label: t('admin.tabs.conversations'),
+        view: { name: 'ConversationsAdminTab' },
+        props: {},
+        icon: 'Article', // TODO: use a bulb or db icon
+        condition: true,
+      },
+      // TODO: keeping for now
+      // {
+      //   key: 'admin-checkpoints',
+      //   label: t('admin.tabs.checkpoints'),
+      //   view: { name: 'CheckpointsAdminTab' },
+      //   props: {},
+      //   icon: 'Article', // TODO: use a bulb or db icon
+      //   condition: true,
+      // },
+    ]
+  }
 
   return [
     {
@@ -121,6 +180,7 @@ const tabs = computed(() => {
       condition: true,
     },
     ...vectorStoreTab,
+    ...agentTabs,
   ].map((entry) => ({ ...entry, dataTest: entry.key }))
 })
 

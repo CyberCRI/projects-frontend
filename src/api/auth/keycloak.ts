@@ -10,7 +10,7 @@ import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
 import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'
 
-import { useNuxtApp, useRuntimeConfig } from '#imports'
+import { useRuntimeConfig } from '#imports'
 
 export type AuthResult = {
   access_token: string
@@ -24,7 +24,7 @@ export type AuthResult = {
 
 export default function useKeycloak() {
   const runtimeConfig = useRuntimeConfig()
-
+  const { t } = useNuxtI18n()
   const issuer = new URL(
     `${runtimeConfig.public.appKeycloakUrl}/realms/${runtimeConfig.public.appKeycloakRealm}` // DO NOT add terminal slash here
   )
@@ -190,7 +190,7 @@ export default function useKeycloak() {
       } catch (e) {
         console.error(e)
         // const { t } = useNuxtI18n()
-        toaster.pushError(useNuxtApp().$i18n.t('message.error-login'))
+        toaster.pushError(t('message.error-login'))
       }
     },
 
@@ -214,7 +214,7 @@ export default function useKeycloak() {
       const toaster = useToasterStore()
       const home = '/dashboard'
       // const { t } = useNuxtI18n()
-      toaster.pushError(useNuxtApp().$i18n.t('message.error-login'))
+      toaster.pushError(t('message.error-login'))
       // TOOO do this the nuxt way
       const router = useRouter()
       router.push(home)

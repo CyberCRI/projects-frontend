@@ -220,7 +220,13 @@
       "groups": "Groepen",
       "settings": "Instellingen",
       "terms": "TOS",
-      "vector-store": "Vector store"
+      "vector-store": "Vector store",
+      "prompts": "Opdrachten",
+      "agent-skills": "Vaardigheden van de agent",
+      "agents": "Agenten",
+      "conversations": "Gesprekken",
+      "checkpoints": "Checkpoints",
+      "side-assistant": "Zij-assistent"
     },
     "page-title": "Beheerder",
     "portal": {
@@ -913,7 +919,6 @@
     "cookies": "Cookies",
     "accessibility": "Toegankelijkheid",
     "personal-data": "Persoonsgegevens",
-    "directory": "Ontdek nog veel meer projecten van andere organisaties op ons meta-portaal:",
     "help": "Hulp",
     "projects": "Projectenplatform",
     "madeBy": "is gemaakt door",
@@ -969,7 +974,8 @@
     },
     "create-project": "Een project aanmaken",
     "check-locations": "Controleer onze locaties",
-    "our-locations": "Onze locaties"
+    "our-locations": "Onze locaties",
+    "agents": "AI-agenten"
   },
   "language": {
     "label-en": "Engels",
@@ -2742,9 +2748,11 @@
     "fetching_data": "Gegevens ophalen...",
     "reasoning": "Bezig met nadenken...",
     "restart": "Gesprek opnieuw starten",
+    "export": "Exporteer gesprek",
     "before-we-start": "Voordat we beginnen, zou u:",
     "allow-profile": "Sta mij toe om uw profiel te zien - zodat ik mijn antwoorden beter kan aanpassen",
-    "allow-current-page": "Sta mij toe om de pagina te zien waarop u zich bevindt - zodat ik een beter begrip heb van de context"
+    "allow-current-page": "Sta mij toe om de pagina te zien waarop u zich bevindt - zodat ik een beter begrip heb van de context",
+    "previous-messages": "Eerdere berichten"
   },
   "tos": {
     "evolved": "Onze servicevoorwaarden zijn bijgewerkt, neem even de tijd om ze te bekijken en goed te keuren.",
@@ -3207,7 +3215,9 @@
     "title-field": "Titel",
     "file-field": "Bestand",
     "document-added": "Document toegevoegd.",
-    "document-updated": "Document bijgewerkt."
+    "document-updated": "Document bijgewerkt.",
+    "is-global-field": "Global document",
+    "is-global-label": "Global"
   },
   "announcements": {
     "empty": "Nog geen aankondiging."
@@ -3273,5 +3283,110 @@
       "label": "Viewer | Viewers",
       "help": "Kijker: Hij heeft geen bewerkingsrechten."
     }
+  },
+  "prompts": {
+    "create-prompt": "Prompt aanmaken",
+    "create-success": "Prompt succesvol aangemaakt",
+    "create-error": "Fout bij het aanmaken van de prompt",
+    "edit-prompt": "Prompt bewerken",
+    "edit-success": "Prompt succesvol bewerkt",
+    "edit-error": "Fout bij het bijwerken van de prompt",
+    "title": "Titel",
+    "content": "Inhoud",
+    "confirm-deletion": "Verwijdering van prompt bevestigen",
+    "confirm-deletion-of": "Wil je de prompt '{title}' echt verwijderen?",
+    "deleted": "Prompt verwijderd",
+    "delete-error": "Fout bij het verwijderen van de prompt",
+    "empty-list": "Nog geen prompt beschikbaar.",
+    "form": {
+      "invalid": "Het formulier is onvolledig, vul de vereiste velden in",
+      "title-required": "Titel is verplicht",
+      "content-required": "Inhoud is verplicht"
+    }
+  },
+  "agent-skills": {
+    "create-skill": "Agent-vaardigheid aanmaken",
+    "create-success": "Agent-vaardigheid succesvol aangemaakt",
+    "create-error": "Fout bij het aanmaken van de agent-vaardigheid",
+    "edit-skill": "Agent-vaardigheid bewerken",
+    "edit-success": "Agent-vaardigheid succesvol bewerkt",
+    "edit-error": "Fout bij het bijwerken van de agent-vaardigheid",
+    "title": "Titel",
+    "description": "Beschrijving",
+    "content": "Inhoud",
+    "confirm-deletion": "Verwijdering van agent-vaardigheid bevestigen",
+    "confirm-deletion-of": "Wil je de agent-vaardigheid '{title}' echt verwijderen?",
+    "deleted": "Agent-vaardigheid verwijderd",
+    "delete-error": "Fout bij het verwijderen van de agent-vaardigheid",
+    "empty-list": "Nog geen agent-vaardigheid beschikbaar.",
+    "form": {
+      "invalid": "Het formulier is onvolledig, vul de vereiste velden in",
+      "title-required": "Titel is verplicht",
+      "content-required": "Inhoud is verplicht",
+      "description-required": "Beschrijving is verplicht"
+    }
+  },
+  "agents": {
+    "no-active-agent-yet": "Momenteel is er geen makelaar beschikbaar.",
+    "need-login": "Je moet ingelogd zijn om deze agent te kunnen gebruiken.",
+    "create-agent": "Agent aanmaken",
+    "create-success": "Agent succesvol aangemaakt",
+    "create-error": "Fout bij het aanmaken van de agent",
+    "edit-agent": "Agent bewerken",
+    "edit-success": "Agent succesvol bewerkt",
+    "edit-error": "Fout bij het bijwerken van de agent",
+    "title": "Titel",
+    "description": "Beschrijving",
+    "is-enabled": "Ingeschakeld",
+    "model-section": "Model",
+    "model-name": "Modelnaam",
+    "model-temperature": "Modeltemperatuur",
+    "prompt-section": "prompt",
+    "prompt-placeholder": "Kies een prompt",
+    "use-latest-prompt-version": "Meest recente promptversie gebruiken",
+    "use-prompt-version": "Promptversie gebruiken: ",
+    "use-profile-data": "Toegang tot gebruikersprofielgegevens",
+    "use-project-mcp": "Gebruik Projecten MCP",
+    "prompt-version-placeholder": "Kies de promptversie",
+    "start-message-section": "Welkomstbericht van de agent",
+    "tools-section": "Hulpmiddelen",
+    "docs-section": "Documenten",
+    "skills-section": "Vaardigheden",
+    "use-latest-skill-version": "Meest recente vaardigheidsversie gebruiken",
+    "use-skill-version": "Vaardigheidsversie gebruiken:",
+    "choose-skill-version": "Kies de vaardigheidsversie",
+    "preview-mode": "Voorbeeldmodus",
+    "confirm-deletion": "Verwijdering van agent bevestigen",
+    "confirm-deletion-of": "Wil je de agent '{title}' echt verwijderen?",
+    "deleted": "Agent verwijderd",
+    "delete-error": "Fout bij het verwijderen van de agent",
+    "empty-list": "Nog geen agent beschikbaar.",
+    "confirm-restart-title": "Gesprek opnieuw starten",
+    "confirm-restart-content": "Wilt u een nieuw gesprek starten?",
+    "is-used-as-side-assistant": "Deze agent wordt momenteel als secundaire assistent gebruikt en kan niet worden gedeactiveerd.",
+    "form": {
+      "invalid": "Het formulier is onvolledig, vul de vereiste velden in",
+      "title-required": "Titel is verplicht",
+      "model-name-required": "Modelnaam is verplicht",
+      "model-temperature-required": "Modeltemperatuur is verplicht",
+      "model-temperature-is-float": "Modeltemperatuur moet een drijvende-kommagetal zijn",
+      "model-temperature-is-bounded": "Modeltemperatuur moet tussen 0 en 2 liggen",
+      "prompt-required": "Prompt is verplicht"
+    }
+  },
+  "side-assistant": {
+    "default": "Default",
+    "save-success": "Side assistant saved",
+    "save-error": "Error while saving side assistant",
+    "choose": "Choose an agent for the side assistant"
+  },
+  "agents-home": {
+    "title": "Let's talk!",
+    "intro": "Welcome to a curated gathering of conversational agents - AI companions designed to chat, help, and engage. Whether you're looking for research assistance, casual conversation, creative collaboration, or practical support, you'll find different voices here, each with its own strengths and personality."
+  },
+  "assistant-drawer": {
+    "ice-breakers": "Hier zijn een paar ijsbrekers",
+    "special-agents": "Op zoek naar een gespecialiseerde agent?",
+    "other-special-agents": "Op zoek naar een andere gespecialiseerde agent?"
   }
 }

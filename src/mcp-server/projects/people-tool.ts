@@ -1,5 +1,5 @@
+import { /*SDG_OUTPUT_SCHEMA, */ mapSDG } from './sdg-tool'
 import { API_BASE_URL, mcpFetch, orgCode } from './base'
-import { SDG_OUTPUT_SCHEMA, mapSDG } from './sdg-tool'
 import { tagMapper } from './tag-schema'
 import N from './zod-schema-utils'
 import { z } from 'zod'
@@ -70,7 +70,7 @@ export default (server) => {
       inputSchema: {
         idOrSlug: z.string().describe('The id or slug of the user / profile / person / member'),
       },
-      outputSchema: {
+      /*outputSchema: {
         user_data: USER_PREVIEW_OUTPUT_SCHEMA.extend({
           is_superuser: N.boolean().describe('Whether the user is a superuser'),
           people_groups: N.array(PEOPLE_GROUP_PREVIEW_OUTPUT_SCHEMA).describe(
@@ -100,7 +100,7 @@ export default (server) => {
           website: N.string().describe('The website URL of the user'),
           sdgs: N.array(SDG_OUTPUT_SCHEMA).describe('The list of SDGs related to the user'),
         }),
-      },
+      },*/
     },
     async ({ idOrSlug }, extras) => {
       let results = {}

@@ -5,8 +5,6 @@ import useUsersStore from '~/stores/useUsers'
 
 import { usePublicURL } from '~/composables/usePublic'
 
-import { I18nT } from 'vue-i18n'
-
 const usersStore = useUsersStore()
 const { t } = useNuxtI18n()
 
@@ -38,13 +36,15 @@ const login = () => {
   goToKeycloakLoginPage()
 }
 
-watchEffect(() => {
-  useLpiHead2({
-    title: title.value,
-    description: title.value,
-    image: imageFullUrl.value,
-  })
-})
+// watchEffect(() => {
+//   useLpiHead2({
+//     title: title.value,
+//     description: title.value,
+//     image: imageFullUrl.value,
+//   })
+// })
+// TODO: check this
+useLpiHead(useRequestURL().toString(), title.value, title.value, imageFullUrl.value)
 </script>
 
 <template>
@@ -56,16 +56,16 @@ watchEffect(() => {
         </h1>
         <I18nT :keypath="searchDescriptionPath" class="notice" tag="p">
           <NuxtLink v-if="isConnected" :to="{ name: 'Search' }">
-            {{ $t('page404.search-again') }}
+            {{ t('page404.search-again') }}
           </NuxtLink>
-          <a v-else href="" @click="login">{{ $t('page404.not-connected.login') }}</a>
+          <a v-else href="" @click="login">{{ t('page404.not-connected.login') }}</a>
         </I18nT>
         <I18nT class="notice" keypath="page404.contact" tag="p">
-          <a :href="`mailto:${$t('page404.contact-mail')}`">
-            {{ $t('page404.contact-mail') }}
+          <a :href="`mailto:${t('page404.contact-mail')}`">
+            {{ t('page404.contact-mail') }}
           </a>
         </I18nT>
-        <LpiButton v-if="!isConnected" :label="$t('common.login')" @click="login" />
+        <LpiButton v-if="!isConnected" :label="t('common.login')" @click="login" />
         <div class="illustration">
           <img :src="imageFullUrl" />
           <a :class="{ 'text--connected': !isConnected }" class="text" @click="login">

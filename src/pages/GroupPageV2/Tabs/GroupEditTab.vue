@@ -198,7 +198,7 @@ const createGroup = async () => {
     const payload = buildPayload()
 
     const newGroup = await postGroup(orgCode.value, payload)
-    const newGroupId = newGroup.id
+    const newGroupId = newGroup.slug || newGroup.id
 
     // save header
     await updateHeader(newGroupId)
@@ -211,8 +211,8 @@ const createGroup = async () => {
 
     router.push(
       props.postCreateRouteFactory
-        ? props.postCreateRouteFactory(newGroupId)
-        : { name: 'Group', params: { groupIdOrSlug: newGroupId } }
+        ? props.postCreateRouteFactory(newGroup.slug || newGroup.id)
+        : { name: 'Group', params: { groupIdOrSlug: newGroup.slug || newGroup.id } }
     )
   } catch (error) {
     toaster.pushError(`${t('toasts.group-create.error')} (${error})`)

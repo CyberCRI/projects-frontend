@@ -36,7 +36,7 @@
 <script setup lang="ts">
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import BaseModal from '@/components/base/modal/BaseModal.vue'
-import { I18nT } from 'vue-i18n'
+// import { I18nT } from 'vue-i18n'
 
 const emit = defineEmits<{ close: [] }>()
 const { locale } = useNuxtI18n()

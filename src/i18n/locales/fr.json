@@ -227,7 +227,13 @@
       "groups": "Groupes",
       "settings": "Paramètres",
       "terms": "CGU",
-      "vector-store": "Vector store"
+      "vector-store": "Vector store",
+      "prompts": "Invites",
+      "agent-skills": "Compétences de l'agent",
+      "agents": "Agents",
+      "conversations": "Conversations",
+      "checkpoints": "Checkpoints",
+      "side-assistant": "Assistant latéral"
     },
     "page-title": "Admin",
     "portal": {
@@ -908,7 +914,6 @@
   },
   "footer": {
     "contact": "Contactez-nous",
-    "directory": "Découvrez une mine d’or de projets d’autres organisations sur notre meta-portail:",
     "legal-notices": "Mentions légales",
     "terms-of-service": "Conditions d'utilisation",
     "cookies": "Cookies",
@@ -1054,7 +1059,8 @@
     },
     "create-project": "Créer un projet",
     "check-locations": "Voir nos emplacements",
-    "our-locations": "Nos emplacements"
+    "our-locations": "Nos emplacements",
+    "agents": "Agents IA"
   },
   "language": {
     "label-en": "Anglais",
@@ -2827,9 +2833,11 @@
     "fetching_data": "Récupération des données...",
     "reasoning": "Réflexion en cours...",
     "restart": "Redémarrer la conversation",
+    "export": "Exporter la conversation",
     "before-we-start": "Avant de commencer, voudriez-vous :",
     "allow-profile": "Me permettre de voir votre profil - afin que je puisse mieux adapter mes réponses",
-    "allow-current-page": "Me permettre de voir la page sur laquelle vous êtes - afin que j'aie une meilleure compréhension du contexte"
+    "allow-current-page": "Me permettre de voir la page sur laquelle vous êtes - afin que j'aie une meilleure compréhension du contexte",
+    "previous-messages": "Messages précédents"
   },
   "tos": {
     "evolved": "Nos conditions générales d'utilisation ont été mises à jour, veuillez prendre un moment pour les examiner et les approuver.",
@@ -3207,7 +3215,9 @@
     "title-field": "Titre",
     "file-field": "Fichier",
     "document-added": "Document ajouté.",
-    "document-updated": "Document modifié."
+    "document-updated": "Document modifié.",
+    "is-global-field": "Document global",
+    "is-global-label": "Global"
   },
   "announcements": {
     "empty": "Pas encore d'annonce."
@@ -3273,5 +3283,110 @@
       "label": "Affichage | Affichages",
       "help": "Il n'a aucun droit d'édition."
     }
+  },
+  "prompts": {
+    "create-prompt": "Créer une invite",
+    "create-success": "Invite créée avec succès",
+    "create-error": "Erreur lors de la création de l'invite",
+    "edit-prompt": "Modifier l'invite",
+    "edit-success": "Invite modifiée avec succès",
+    "edit-error": "Erreur lors de la mise à jour de l'invite",
+    "title": "Titre",
+    "content": "Contenu",
+    "confirm-deletion": "Confirmer la suppression de l'invite",
+    "confirm-deletion-of": "Voulez-vous vraiment supprimer l'invite '{title}' ?",
+    "deleted": "Invite supprimée",
+    "delete-error": "Erreur lors de la suppression de l'invite",
+    "empty-list": "Aucune invite pour le moment.",
+    "form": {
+      "invalid": "Le formulaire est incomplet, veuillez remplir les champs requis",
+      "title-required": "Le titre est obligatoire",
+      "content-required": "Le contenu est obligatoire"
+    }
+  },
+  "agent-skills": {
+    "create-skill": "Créer une compétence d'agent",
+    "create-success": "Compétence d'agent créée avec succès",
+    "create-error": "Erreur lors de la création de la compétence d'agent",
+    "edit-skill": "Modifier la compétence d'agent",
+    "edit-success": "Compétence d'agent modifiée avec succès",
+    "edit-error": "Erreur lors de la mise à jour de la compétence d'agent",
+    "title": "Titre",
+    "description": "Description",
+    "content": "Contenu",
+    "confirm-deletion": "Confirmer la suppression de la compétence d'agent",
+    "confirm-deletion-of": "Voulez-vous vraiment supprimer la compétence d'agent '{title}' ?",
+    "deleted": "Compétence d'agent supprimée",
+    "delete-error": "Erreur lors de la suppression de la compétence d'agent",
+    "empty-list": "Aucune compétence d'agent pour le moment.",
+    "form": {
+      "invalid": "Le formulaire est incomplet, veuillez remplir les champs requis",
+      "title-required": "Le titre est obligatoire",
+      "content-required": "Le contenu est obligatoire",
+      "description-required": "La description est obligatoire"
+    }
+  },
+  "agents": {
+    "no-active-agent-yet": "Aucun agent disponible pour le moment.",
+    "need-login": "Vous devez être connecté pour utiliser cet agent.",
+    "create-agent": "Créer un agent",
+    "create-success": "Agent créé avec succès",
+    "create-error": "Erreur lors de la création de l'agent",
+    "edit-agent": "Modifier l'agent",
+    "edit-success": "Agent modifié avec succès",
+    "edit-error": "Erreur lors de la mise à jour de l'agent",
+    "title": "Titre",
+    "description": "Description",
+    "is-enabled": "Activé",
+    "model-section": "Modèle",
+    "model-name": "Nom du modèle",
+    "model-temperature": "Température du modèle",
+    "prompt-section": "invite",
+    "prompt-placeholder": "Choisir une invite",
+    "use-latest-prompt-version": "Utiliser la dernière version de l'invite",
+    "use-prompt-version": "Utiliser la version de l'invite : ",
+    "use-profile-data": "Accéder aux données du profil utilisateur",
+    "use-project-mcp": "Utiliser Projects MCP",
+    "prompt-version-placeholder": "Choisir la version de l'invite",
+    "start-message-section": "Message de bienvenue de l'agent",
+    "tools-section": "Outils",
+    "docs-section": "Documents",
+    "skills-section": "Compétences",
+    "use-latest-skill-version": "Utiliser la dernière version de la compétence",
+    "use-skill-version": "Utiliser la version de la compétence :",
+    "choose-skill-version": "Choisir la version de la compétence",
+    "preview-mode": "Mode aperçu",
+    "confirm-deletion": "Confirmer la suppression de l'agent",
+    "confirm-deletion-of": "Voulez-vous vraiment supprimer l'agent '{title}' ?",
+    "deleted": "Agent supprimé",
+    "delete-error": "Erreur lors de la suppression de l'agent",
+    "empty-list": "Aucun agent pour le moment.",
+    "confirm-restart-title": "Relancer la conversation",
+    "confirm-restart-content": "Voulez-vous entamer une nouvelle conversation ?",
+    "is-used-as-side-assistant": "Cet agent est actuellement utilisé comme assistant latéral et ne peut pas être désactivé.",
+    "form": {
+      "invalid": "Le formulaire est incomplet, veuillez fournir les champs requis",
+      "title-required": "Le titre est requis",
+      "model-name-required": "Le nom du modèle est requis",
+      "model-temperature-required": "La température du modèle est requise",
+      "model-temperature-is-float": "La température du modèle doit être un nombre à virgule flottante",
+      "model-temperature-is-bounded": "La température du modèle doit être comprise entre 0 et 2",
+      "prompt-required": "L'invite est requise"
+    }
+  },
+  "side-assistant": {
+    "default": "Défaut",
+    "save-success": "L'assistant latéral est sauvegardé",
+    "save-error": "Erreur lors de la sauvegarde de l'assistant latéral",
+    "choose": "Choisir un agent pour l'assistant latéral"
+  },
+  "agents-home": {
+    "title": "Parlons !",
+    "intro": "Bienvenue dans notre sélection d'agents conversationnels – des compagnons IA conçus pour discuter, aider et engager le dialogue. Que vous souhaitiez une aide à la recherche, une conversation informelle, une collaboration créative ou un soutien pratique, vous trouverez ici différentes voix, chacune avec ses propres forces et sa personnalité."
+  },
+  "assistant-drawer": {
+    "ice-breakers": "Voici quelques idées pour briser la glace",
+    "special-agents": "Vous cherchez un agent spécialisé ?",
+    "other-special-agents": "Vous cherchez un autre agent spécialisé ?"
   }
 }

@@ -1,13 +1,13 @@
 import { AIMessage, HumanMessage, SystemMessage } from '@langchain/core/messages'
 import { createRetrieverTool } from '@langchain/classic/tools/retriever'
+import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
 import type { BaseMessageChunk } from '@langchain/core/messages'
-import { MultiServerMCPClient } from '@langchain/mcp-adapters'
-import { MemorySaver } from '@langchain/langgraph'
-
-import { tokenMap, traceMcp } from '~/server/routes/api/chat-stream'
 import { initChatModel } from 'langchain/chat_models/universal'
+import { MultiServerMCPClient } from '@langchain/mcp-adapters'
+import { tokenMap } from '~/server/routes/api/chat-stream'
+import getVectorStore from '~/server/utils/vector-db-new'
 import { createAgent, createMiddleware } from 'langchain'
-import getVectorStore from '~/server/utils/vector-db'
+import { MemorySaver } from '@langchain/langgraph'
 import { v4 as uuidv4 } from 'uuid'
 
 const runtimeConfig = useRuntimeConfig()
@@ -17,7 +17,6 @@ const {
   appLangchainTemperature,
   appMcpServerUrl,
   appLangchainTrace,
-  appSorbobotApiTrace,
   appLangchainPrompt,
   appVectorToolPrompt,
 } = runtimeConfig
@@ -39,12 +38,6 @@ export const checkpointer = new MemorySaver()
 export const traceLangchain = (...args) => {
   if (appLangchainTrace) {
     console.log('[LangChain TRACE]', ...args)
-  }
-}
-
-export const traceSorbobot = (...args) => {
-  if (appSorbobotApiTrace) {
-    console.log('[Sorbobot TRACE]', ...args)
   }
 }
 

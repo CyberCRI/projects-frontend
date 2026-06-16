@@ -1,4 +1,5 @@
-import { tokenMap, traceMcp } from '~/server/routes/api/chat-stream'
+import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
+import { tokenMap } from '~/server/routes/api/chat-stream'
 
 const runtimeConfig = useRuntimeConfig()
 

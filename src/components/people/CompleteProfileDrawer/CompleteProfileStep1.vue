@@ -193,13 +193,14 @@ import UserProfileV2 from '@/components/people/UserProfileV2.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import { useRuntimeConfig } from '#imports'
-import { I18nT } from 'vue-i18n'
+// import { I18nT } from 'vue-i18n'
+import { isEqual } from 'es-toolkit'
 
 export default {
   name: 'CompleteProfileStep1',
 
   components: {
-    I18nT,
+    // I18nT,
     IconImage,
     ProfileEditBlock,
     TipTapEditor,

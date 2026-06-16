@@ -1,13 +1,13 @@
 import {
-  PEOPLE_GROUP_PREVIEW_OUTPUT_SCHEMA,
-  USER_PREVIEW_OUTPUT_SCHEMA,
+  // PEOPLE_GROUP_PREVIEW_OUTPUT_SCHEMA,
+  // USER_PREVIEW_OUTPUT_SCHEMA,
   mapPeopleGroupPreview,
   mapUserPreview,
 } from './people-tool'
-import { PROJECT_PREVIEW_OUTPUT_SCHEMA, mapProjectPreview } from './project-tool'
+import { /*PROJECT_PREVIEW_OUTPUT_SCHEMA,*/ mapProjectPreview } from './project-tool'
 import { SORBOBOT_EXTRA, sorbobotIsEnabled } from '../sorbobot/sorbobot-tool'
 import { API_BASE_URL, mcpFetch, orgCode } from './base'
-import N from './zod-schema-utils'
+// import N from './zod-schema-utils'
 import { z } from 'zod'
 
 export async function searchTag(queryTerms: string, extras: any): Promise<number[]> {
@@ -39,7 +39,7 @@ export default (server) => {
       title: 'Search Tool',
       description: `Search on the platform for projects, people profile (user) and groups (of users) related to a query. ${sorbobotIsEnabled ? SORBOBOT_EXTRA : ''}`,
       inputSchema: { queryTerms: z.string().describe('The search query terms') },
-      outputSchema: {
+      /*outputSchema: {
         results: N.array(
           z.union([
             PROJECT_PREVIEW_OUTPUT_SCHEMA,
@@ -47,7 +47,7 @@ export default (server) => {
             PEOPLE_GROUP_PREVIEW_OUTPUT_SCHEMA,
           ])
         ).describe('The list of search results'),
-      },
+      },*/
     },
     async ({ queryTerms }, extras) => {
       let results = []
@@ -99,9 +99,9 @@ export default (server) => {
         members: z.array(z.string()).optional().describe('List of members id to filter by'),
         // categories: z.array(z.string()).optional().describe('List of categories to filter by'),
       },
-      outputSchema: {
+      /*outputSchema: {
         results: N.array(PROJECT_PREVIEW_OUTPUT_SCHEMA).describe('The list of search results'),
-      },
+      },*/
     },
     async ({ queryTerms, tags, sdgs, members /*categories */ }, extras) => {
       let tagIds: number[] = []
@@ -165,9 +165,9 @@ export default (server) => {
         sdgs: z.array(z.number()).optional().describe('List of SDGs id to filter by'),
         categories: z.array(z.string()).optional().describe('List of categories to filter by'),
       },
-      outputSchema: {
+      /*outputSchema: {
         results: N.array(USER_PREVIEW_OUTPUT_SCHEMA).describe('The list of search results'),
-      },
+        },*/
     },
     async ({ queryTerms, skills, sdgs }, extras) => {
       let tagIds: number[] = []

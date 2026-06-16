@@ -1,8 +1,8 @@
 import { API_BASE_URL, mcpFetch, orgCode } from './base'
 import { nowDate } from '~/functs/date'
-import N from './zod-schema-utils'
-import { z } from 'zod'
-
+// import N from './zod-schema-utils'
+// import { z } from 'zod'
+/*
 const EVENT_OUTPUT_SCHEMA = N.object({
   id: N.number().describe('The ID of the event'),
   slug: N.string().describe('The slug of the event'),
@@ -12,6 +12,7 @@ const EVENT_OUTPUT_SCHEMA = N.object({
   end_date: N.string().describe('The end date of the event'),
   item_type: N.literal('event').describe('The type of the item, always event'),
 })
+*/
 
 const mapEvent = (e: any) => ({
   id: e.id,
@@ -31,7 +32,7 @@ export default (server) => {
       title: 'Future Events list',
       description: 'Get a list of future events.',
       inputSchema: {},
-      outputSchema: { results: z.array(EVENT_OUTPUT_SCHEMA).describe('The list of future events') },
+      /*outputSchema: { results: z.array(EVENT_OUTPUT_SCHEMA).describe('The list of future events') },*/
     },
     async (_input, extras) => {
       // today date at midnight
@@ -68,7 +69,7 @@ export default (server) => {
       title: 'Past Events list',
       description: 'Get a list of past events.',
       inputSchema: {},
-      outputSchema: { results: z.array(EVENT_OUTPUT_SCHEMA).describe('The list of past events') },
+      /*outputSchema: { results: z.array(EVENT_OUTPUT_SCHEMA).describe('The list of past events') },*/
     },
     async (_input, extras) => {
       // today date at midnight

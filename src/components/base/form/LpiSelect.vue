@@ -75,7 +75,7 @@ const styles = computed<StyleValue>(() => {
   }
 
   return {
-    width: `${maxCharLength}em`, // use em to get current font width
+    width: `${maxCharLength * 8}px`, // use em to get current font width
   }
 })
 
@@ -152,7 +152,7 @@ const clickOutside = () => {
     padding: pxToRem(10px) $space-l;
     appearance: none;
     font-size: $font-size-m;
-    font-weight: 700;
+    font-weight: 400;
     width: 100%;
     max-width: 100%;
     padding-right: $space-xl;

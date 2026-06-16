@@ -40,7 +40,17 @@ export const PropsDefault: ExtractDefaultPropTypes<PropsDefinitions> = {
   errors: () => [],
 }
 
-export function useTipTap({ props, emit, t }) {
+export function useTipTap({
+  props,
+  emit,
+  t,
+  extraOptions,
+}: {
+  props: any
+  emit: any
+  t: any
+  extraOptions?: any
+}) {
   // data
   const editor = ref(null)
   const editorInited = ref(false)
@@ -178,6 +188,7 @@ export function useTipTap({ props, emit, t }) {
       onBlur,
       // onDrop, for some reason doent work here, put it on component TipTapEditorContent
       onPaste,
+      ...(extraOptions || {}),
     })
 
     editor.value.view.dom.addEventListener('drop', onDrop, true)
