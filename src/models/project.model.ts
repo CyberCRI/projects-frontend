@@ -37,22 +37,14 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
   categories: ProjectCategoryModel[]
   organizations: OrganizationModel[]
   language: LanguageType
-  locations: LocationOutput[]
   publication_status: ProjectPublicationStatusType
   life_status: ProjectStatusType
-  reviews: ReviewModel[]
   tags: TagModel[]
   sdgs: number[]
   is_followed: {
     is_followed: boolean
     follow_id: number
   }
-  follows: FollowOutput[]
-  links: AttachmentLinkOutput[]
-  files: AttachmentFileOutput[]
-  announcements: AnnouncementOutput[]
-  blog_entries: BlogEntryOutput[]
-  goals: GoalOutput[]
   slug: string
   updated_at: string
   created_at: string
@@ -148,23 +140,14 @@ export type RemoveLinkedProjectInput = {
 }
 
 export type ProjectOutput = Required<ProjectModel> & {
-  team: ProjectTeamOutput
   organizations: OrganizationOutput[]
   categories: ProjectCategoryOutput[]
   geolocation_coordinates: LocationOutput
   tags: TagOutput[]
   sdgs: number[]
-  goals: GoalOutput[]
-  links: AttachmentLinkOutput[]
-  files: AttachmentFileOutput[]
-  linked_projects: LinkedProject[]
   images: ImageModel[]
-  comments: CommentOutput[]
-  blog_entries: BlogEntryOutput[]
-  announcements: AnnouncementModel[]
   views: number
   template: TemplateModel
-  follows: FollowOutput[]
   slug: string
 }
 

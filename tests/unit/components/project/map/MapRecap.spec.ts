@@ -10,11 +10,7 @@ describe('MapRecap.vue', () => {
     beforeEach(() => {
       const projectsStore = useProjectsStore(pinia)
 
-      projectsStore.project = {
-        ...ProjectOutputFactory.generate(),
-        files: [],
-        links: [],
-      }
+      projectsStore.project = ProjectOutputFactory.generate()
     })
     const wrapper = lpiShallowMount(MapRecap, {
       props: {

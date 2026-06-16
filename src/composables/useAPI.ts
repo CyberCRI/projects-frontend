@@ -43,11 +43,12 @@ export const defaultOptions = () => {
       if (response?._data) localStorage?.setItem('token', response._data.token)
     },
     async onResponseError({ request, options, response }) {
+      const opts = options as UseApiOptions
       // // keep for futur debug
       // console.error(response)
       // var e = new Error()
       // console.log(e.stack.split('\n').map((s) => s.substring(s.lastIndexOf('/'))))
-      if (options.noError) {
+      if (opts.noError) {
         // console.error(error)
         return null
       }
@@ -58,7 +59,7 @@ export const defaultOptions = () => {
       // We could add specific notification to display the errors
       // And we could also handle refresh token there if needed when catching error
       if (response) {
-        const { status }: { data: any; status: number } = response
+        const { status } = response
 
         const data: any = response._data
 
@@ -99,7 +100,7 @@ export const defaultOptions = () => {
 
       return Promise.reject(response)
     },
-  }
+  } satisfies UseApiOptions
 }
 
 const useAPI = <T, Query = unknown, Body = unknown>(

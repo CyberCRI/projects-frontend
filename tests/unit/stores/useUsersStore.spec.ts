@@ -1,7 +1,7 @@
 import { removeApiCookie } from '~/api/auth/cookie.service'
 import * as keycloakUtils from '~/api/auth/keycloakUtils'
+import { getOrgsFromRoles } from '~/functs/rolesUtils'
 import { setActivePinia, createPinia } from 'pinia'
-import { getOrgsFromRoles } from '~/functs/utils'
 import * as auth from '~/api/auth/auth.service'
 import useUsersStore from '~/stores/useUsers'
 import waitForExpect from 'wait-for-expect'

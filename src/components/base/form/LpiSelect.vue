@@ -6,7 +6,7 @@
       @click="toggleModal"
     >
       <span class="selected-label skeletons-text" :style="styles">
-        {{ selected ? selected.label : placeholder }}
+        {{ selected ? selected.label : translatedPlaceholder }}
       </span>
       <IconImage :name="icon" class="svg skeletons-background" />
     </div>
@@ -51,7 +51,7 @@ const props = withDefaults(
     maxHeight?: Properties['maxHeight']
   }>(),
   {
-    placeholder: 'Select ...',
+    placeholder: null,
     maxHeight: null,
   }
 )
@@ -59,14 +59,17 @@ const emit = defineEmits<{
   blur: []
 }>()
 
+const { t } = useNuxtI18n()
 const model = defineModel<ModelType>({ default: null })
 const { stateModal, toggleModal, closeModal } = useModal(false)
 const icon = computed<IconImageChoice>(() => (stateModal.value ? 'ChevronUp' : 'ChevronDown'))
 
 const selected = computed(() => props.options.find((option) => option.value === model.value))
 
+const translatedPlaceholder = computed(() => props.placeholder || t('common.select-placeholder'))
+
 const styles = computed<StyleValue>(() => {
-  let maxCharLength = props.placeholder ? props.placeholder.length : 0
+  let maxCharLength = translatedPlaceholder.value ? translatedPlaceholder.value.length : 0
   for (let i = 0; i < props.options.length; i++) {
     maxCharLength = Math.max(
       maxCharLength,

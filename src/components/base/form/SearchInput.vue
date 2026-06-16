@@ -6,7 +6,7 @@
       v-model.trim="tempModel"
       :placeholder="placeholder"
       class="search-input"
-      type="text"
+      type="search"
       data-test="search-input"
       @keyup.enter="onEnter"
       @keyup="$emit('keyup', $event)"

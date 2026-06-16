@@ -12,7 +12,7 @@ import { removeApiCookie } from '~/api/auth/cookie.service'
 import { getUser as _getUser } from '~/api/people.service'
 import type { AuthResult } from '~/api/auth/keycloak'
 
-import { getOrgsFromRoles } from '~/functs/utils'
+import { getOrgsFromRoles } from '~/functs/rolesUtils'
 import analytics from '~/analytics'
 import { defineStore } from 'pinia'
 
