@@ -1,4 +1,6 @@
-import { API_BASE_URL, mcpFetch, orgCode } from './base'
+import type { EventModel } from '~/models/event.model'
+import { getAllEvents } from '~/api/event.service'
+import { mcpFetchOptions, orgCode } from './base'
 import { nowDate } from '~/functs/date'
 // import N from './zod-schema-utils'
 // import { z } from 'zod'
@@ -14,9 +16,8 @@ const EVENT_OUTPUT_SCHEMA = N.object({
 })
 */
 
-const mapEvent = (e: any) => ({
+const mapEvent = (e: EventModel) => ({
   id: e.id,
-  slug: e.slug,
   title: e.title,
   content: e.content,
   start_date: e.start_date,
@@ -37,18 +38,16 @@ export default (server) => {
     async (_input, extras) => {
       // today date at midnight
       const todayZeroHour = nowDate()
-      const params = {
-        ordering: 'start_date',
-        from_date: todayZeroHour.toISOString(),
-      }
       let results = {}
       try {
-        const queryResult: any = await mcpFetch(
-          // TODO: use org code from config
-          `${API_BASE_URL}organization/${orgCode}/event/`,
-          { params },
-          extras
-        )
+        const opts = mcpFetchOptions({}, extras)
+        const queryResult = await getAllEvents(orgCode, {
+          ...opts,
+          query: {
+            ordering: 'start_date',
+            from_date: todayZeroHour.toISOString(),
+          },
+        })
         results = queryResult.results.map(mapEvent)
       } catch (error) {
         console.error('Error fetching organization future events list:', error)
@@ -74,19 +73,17 @@ export default (server) => {
     async (_input, extras) => {
       // today date at midnight
       const todayZeroHour = nowDate()
-      const params = {
-        ordering: '-start_date',
-        to_date: todayZeroHour.toISOString(),
-      }
       let results = {}
       try {
-        const queryResult: any = await mcpFetch(
-          // TODO: use org code from config
-          `${API_BASE_URL}organization/${orgCode}/event/`,
-          { params },
-          extras
-        )
-        results = mapEvent(queryResult.results)
+        const opts = mcpFetchOptions({}, extras)
+        const queryResult = await getAllEvents(orgCode, {
+          ...opts,
+          query: {
+            ordering: '-start_date',
+            from_date: todayZeroHour.toISOString(),
+          },
+        })
+        results = queryResult.results.map(mapEvent)
       } catch (error) {
         console.error('Error fetching organization past events list:', error)
       }

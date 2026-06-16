@@ -36,7 +36,6 @@ export default (server) => {
         },*/
     },
     async function () {
-      console.log('foo')
       const output = { results: ALL_SDGS }
       // console.log('MCP TOOL CALLED: search', { query, output })
       return {

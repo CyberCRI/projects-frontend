@@ -1,5 +1,6 @@
+import { getFeaturedProjects, getOrganizationByCode } from '~/api/organizations.service'
 import { /*PROJECT_PREVIEW_OUTPUT_SCHEMA,*/ mapProjectPreview } from './project-tool'
-import { API_BASE_URL, mcpFetch, orgCode } from './base'
+import { mcpFetchOptions, orgCode } from './base'
 // import N from './zod-schema-utils'
 // import { z } from 'zod'
 
@@ -29,12 +30,9 @@ export default (server) => {
     async (_input, extras) => {
       let results = {}
       try {
-        const queryResult: any = await mcpFetch(
-          // TODO: use org code from config
-          `${API_BASE_URL}organization/${orgCode}/`,
-          {},
-          extras
-        )
+        const opts = mcpFetchOptions({}, extras)
+        const queryResult = await getOrganizationByCode(orgCode, opts)
+
         const org = queryResult
         results = {
           id: org.id,
@@ -73,13 +71,9 @@ export default (server) => {
     async (_input, extras) => {
       let results = {}
       try {
-        const queryResult: any = await mcpFetch(
-          // TODO: use org code from config
-          `${API_BASE_URL}organization/${orgCode}/featured-projects/`,
-          {},
-          extras
-        )
-        results = queryResult.results.map((p: any) => mapProjectPreview(p))
+        const opts = mcpFetchOptions({}, extras)
+        const queryResult = await getFeaturedProjects(orgCode, opts)
+        results = queryResult.results.map(mapProjectPreview)
       } catch (error) {
         console.error('Error fetching organization featured projects:', error)
       }

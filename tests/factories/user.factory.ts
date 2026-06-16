@@ -55,6 +55,11 @@ export const UserFactory = createFactory<UserModel>((faker) => ({
     skills: 'org',
     socials: 'org',
   },
+  facebook: null,
+  is_superuser: false,
+  linkedin: null,
+  twitter: null,
+  website: null,
 }))
 
 export const UserFromJWTFactory = createFactory<UserFromJWTModel>((faker) => ({

@@ -1,5 +1,8 @@
+import type { PeopleGroupModel } from '~/models/invitation.model'
+import { getUser as fetchUser } from '~/api/people.service'
 import { /*SDG_OUTPUT_SCHEMA, */ mapSDG } from './sdg-tool'
-import { API_BASE_URL, mcpFetch, orgCode } from './base'
+import { mcpFetchOptions, orgCode } from './base'
+import { getGroup } from '~/api/groups.service'
 import { tagMapper } from './tag-schema'
 import N from './zod-schema-utils'
 import { z } from 'zod'
@@ -47,7 +50,7 @@ export const PEOPLE_GROUP_PREVIEW_OUTPUT_SCHEMA = N.object({
   item_image: N.string().describe('The image URL of the people group'),
 })
 
-export const mapPeopleGroupPreview = (g: any) => ({
+export const mapPeopleGroupPreview = (g: PeopleGroupModel) => ({
   id: g.id,
   slug: g.slug,
   item_type: 'people_group',
@@ -55,7 +58,7 @@ export const mapPeopleGroupPreview = (g: any) => ({
   short_description: g.short_description,
   description: g.description,
   email: g.email,
-  member_count: g.member_count,
+  member_count: g.modules?.members || 0,
   link_url: `/group/${g.slug}/`,
   item_image: g.header_image?.variations?.small,
 })
@@ -105,12 +108,9 @@ export default (server) => {
     async ({ idOrSlug }, extras) => {
       let results = {}
       try {
-        const queryResult: any = await mcpFetch(
-          // TODO: use org code from config
-          `${API_BASE_URL}user/${idOrSlug}/`,
-          {},
-          extras
-        )
+        const opts = mcpFetchOptions({}, extras)
+        const queryResult = await fetchUser(idOrSlug, opts)
+
         const u = queryResult
         results = {
           id: u.id,
@@ -134,7 +134,6 @@ export default (server) => {
           family_name: u.family_name,
           short_description: u.short_description,
           description: u.description,
-          location: u.location,
           job: u.job,
           email: u.email,
           facebook: u.facebook,
@@ -174,12 +173,8 @@ export default (server) => {
     async ({ idOrSlug }, extras) => {
       let results = {}
       try {
-        const queryResult: any = await mcpFetch(
-          // TODO: use org code from config
-          `${API_BASE_URL}organization/${orgCode}/people-group/${idOrSlug}/`,
-          {},
-          extras
-        )
+        const opts = mcpFetchOptions({}, extras)
+        const queryResult = await getGroup(orgCode, idOrSlug, opts)
         const g = queryResult
         results = {
           id: g.id,

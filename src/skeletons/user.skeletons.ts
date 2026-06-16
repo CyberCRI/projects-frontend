@@ -33,5 +33,10 @@ export const userSkeleton = (def?: Partial<UserModel>): UserModel => ({
   description: 'description?',
   job: 'job',
   sdgs: [],
+  facebook: null,
+  is_superuser: false,
+  linkedin: null,
+  twitter: null,
+  website: null,
   ...(def || {}),
 })

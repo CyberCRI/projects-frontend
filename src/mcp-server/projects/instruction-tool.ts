@@ -1,4 +1,6 @@
-import { API_BASE_URL, mcpFetch, orgCode } from './base'
+import { getAllInstructions, getInstruction } from '~/api/instruction.service'
+import type { InstructionModel } from '~/models/instruction.model'
+import { mcpFetchOptions, orgCode } from './base'
 // import N from './zod-schema-utils'
 import { z } from 'zod'
 
@@ -15,9 +17,8 @@ const INSTRUCTION_ARTICLE_OUTPUT_SCHEMA = N.object({
 })
 */
 
-const mapInstructionArticle = (i: any) => ({
+const mapInstructionArticle = (i: InstructionModel) => ({
   id: i.id,
-  slug: i.slug,
   title: i.title,
   content: i.content,
   publication_date: i.publication_date,
@@ -41,12 +42,8 @@ export default (server) => {
     async (_input, extras) => {
       let results = {}
       try {
-        const queryResult: any = await mcpFetch(
-          // TODO: use org code from config
-          `${API_BASE_URL}organization/${orgCode}/instruction/`,
-          {},
-          extras
-        )
+        const opts = mcpFetchOptions({}, extras)
+        const queryResult = await getAllInstructions(orgCode, opts)
         results = queryResult.results.map(mapInstructionArticle)
       } catch (error) {
         console.error('Error fetching organization instructions list:', error)
@@ -77,13 +74,9 @@ export default (server) => {
     async ({ slugOrId }, extras) => {
       let results = {}
       try {
-        const queryResult: any = await mcpFetch(
-          // TODO: use org code from config
-          `${API_BASE_URL}organization/${orgCode}/instruction/${slugOrId}/`,
-          {},
-          extras
-        )
-        results = mapInstructionArticle(queryResult.results)
+        const opts = mcpFetchOptions({}, extras)
+        const queryResult = await getInstruction(orgCode, slugOrId, opts)
+        results = mapInstructionArticle(queryResult)
       } catch (error) {
         console.error('Error fetching organization instruction item:', error)
       }

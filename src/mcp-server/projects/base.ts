@@ -16,7 +16,7 @@ export function getUserToken(extras) {
   return null
 }
 
-export function mcpFetch(url: string, options: any, extras: any = {}) {
+export function mcpFetchOptions(options: any, extras: any = {}) {
   const _options = options || {}
   const accessToken = getUserToken(extras)
   if (accessToken) {
@@ -25,7 +25,13 @@ export function mcpFetch(url: string, options: any, extras: any = {}) {
     }
     _options.headers['Authorization'] = `Bearer ${accessToken}`
   }
-  return $fetch(url, _options)
+
+  return _options
+}
+
+export function mcpFetch<Result = unknown>(url: string, options: any, extras: any = {}) {
+  const _options = mcpFetchOptions(options, extras)
+  return $fetch<Result>(url, _options)
 }
 
 export const orgCode = runtimeConfig.public.appApiOrgCode

@@ -72,20 +72,15 @@ const useUsersStore = defineStore('users', () => {
       | null => {
       if (userFromToken.value) {
         return {
+          ...userFromApi.value,
           id: userFromToken.value.pid,
           name: {
             firstname: userFromToken.value.given_name,
             lastname: userFromToken.value.family_name,
           },
-          given_name: userFromToken.value.given_name,
-          family_name: userFromToken.value.family_name,
-          email: userFromToken.value.email,
           roles: userFromToken.value.roles || [],
           orgs: getOrgsFromRoles(userFromToken.value.roles),
           permissions: permissions.value,
-          slug: userFromToken.value.slug,
-          researcher: userFromToken.value.researcher,
-          resources: userFromToken.value.resources,
           signed_terms_and_conditions: userFromApi.value?.signed_terms_and_conditions || {},
         }
       }

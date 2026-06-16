@@ -31,7 +31,14 @@ export const defaultOptions = () => {
     onRequest({ options }) {
       if (import.meta.client) {
         const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
-        if (accessToken) options.headers.set('Authorization', `Bearer ${accessToken}`)
+
+        // if token alreadyset, ignore it
+        if (options.headers.get('Authorization')) {
+          return
+        }
+        if (accessToken) {
+          options.headers.set('Authorization', `Bearer ${accessToken}`)
+        }
       }
     },
     onRequestError() {

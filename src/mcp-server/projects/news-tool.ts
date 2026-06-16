@@ -1,4 +1,6 @@
-import { API_BASE_URL, mcpFetch, orgCode } from './base'
+import { getAllNews, getNews } from '~/api/news.service'
+import type { NewsModel } from '~/models/news.model'
+import { mcpFetchOptions, orgCode } from './base'
 // import N from './zod-schema-utils'
 import { z } from 'zod'
 /*
@@ -12,9 +14,8 @@ const NEWS_ARTICLE_OUTPUT_SCHEMA = N.object({
 })
 */
 
-const mapNewsArticle = (n: any) => ({
+const mapNewsArticle = (n: NewsModel) => ({
   id: n.id,
-  slug: n.slug,
   title: n.title,
   content: n.content,
   publication_date: n.publication_date,
@@ -34,15 +35,18 @@ export default (server) => {
         },*/
     },
     async (_input, extras) => {
-      const params = { ordering: '-publication_date', limit: 30, to_date: new Date().toISOString() }
       let results = {}
       try {
-        const queryResult: any = await mcpFetch(
-          // TODO: use org code from config
-          `${API_BASE_URL}organization/${orgCode}/news/`,
-          { params },
-          extras
-        )
+        const opts = mcpFetchOptions({}, extras)
+        const queryResult = await getAllNews(orgCode, {
+          ...opts,
+          query: {
+            ordering: '-publication_date',
+            limit: 30,
+            to_date: new Date().toISOString(),
+          },
+        })
+
         results = queryResult.results.map(mapNewsArticle)
       } catch (error) {
         console.error('Error fetching organization news list:', error)
@@ -70,13 +74,12 @@ export default (server) => {
     async ({ slugOrId }, extras) => {
       let results = {}
       try {
-        const queryResult: any = await mcpFetch(
-          // TODO: use org code from config
-          `${API_BASE_URL}organization/${orgCode}/news/${slugOrId}/`,
-          {},
-          extras
-        )
-        results = mapNewsArticle(queryResult.results)
+        const opts = mcpFetchOptions({}, extras)
+        const queryResult = await getNews(orgCode, slugOrId, {
+          ...opts,
+        })
+
+        results = mapNewsArticle(queryResult)
       } catch (error) {
         console.error('Error fetching organization news item:', error)
       }

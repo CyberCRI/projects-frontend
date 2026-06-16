@@ -1,11 +1,10 @@
-import {
-  // PEOPLE_GROUP_PREVIEW_OUTPUT_SCHEMA,
-  // USER_PREVIEW_OUTPUT_SCHEMA,
-  mapPeopleGroupPreview,
-  mapUserPreview,
-} from './people-tool'
+import type { ProjectCategoryModel } from '~/models/project-category.model'
+import { API_BASE_URL, mcpFetch, mcpFetchOptions, orgCode } from './base'
+import { getBlogEntries, getBlogEntry } from '~/api/blogentries.service'
+import { getProject, getProjectSimilars } from '~/api/projects.service'
+import type { BlogEntryModel } from '~/models/blog-entry.model'
+import type { ProjectModel } from '~/models/project.model'
 import { /*SDG_OUTPUT_SCHEMA,*/ mapSDG } from './sdg-tool'
-import { API_BASE_URL, mcpFetch, orgCode } from './base'
 import { tagMapper } from './tag-schema'
 import N from './zod-schema-utils'
 import { z } from 'zod'
@@ -18,7 +17,7 @@ export const CATEGORY_PREVIEW_OUTPUT_SCHEMA = N.object({
   link_url: N.string().describe('The URL link to the category'),
 })
 
-export const categoryMapper = (c: any) => ({
+export const categoryMapper = (c: ProjectCategoryModel) => ({
   id: c.id,
   slug: c.slug,
   name: c.name,
@@ -39,7 +38,7 @@ export const PROJECT_PREVIEW_OUTPUT_SCHEMA = N.object({
   item_image: N.string().nullable().describe('The image URL of the project'),
 })
 
-export const mapProjectPreview = (p: any) => ({
+export const mapProjectPreview = (p: ProjectModel) => ({
   id: p.id,
   slug: p.slug,
   item_type: 'project',
@@ -60,7 +59,7 @@ const BLOG_ENTRY_OUTPUT_SCHEMA = N.object({
 export const FETCH_PROJECT_SLUG_OR_ID =
   'If you dont have the slug (given under "slug" or "id" key in a previous tool call data) or id of the project, use the search tool with the project name, the project id or slug will be in the first result, else use the previously mentioned slug or id.'
 
-export const mapBlogEntry = (b: any) => ({
+export const mapBlogEntry = (b: BlogEntryModel) => ({
   id: b.id,
   title: b.title,
   content: b.content,
@@ -171,12 +170,9 @@ export default (server) => {
     async ({ idOrSlug }, extras) => {
       let results = {}
       try {
-        const queryResult: any = await mcpFetch(
-          // TODO: use org code from config
-          `${API_BASE_URL}project/${idOrSlug}/`,
-          {},
-          extras
-        )
+        const opts = mcpFetchOptions({}, extras)
+        const queryResult = await getProject(idOrSlug, opts)
+
         const p = queryResult
         results = {
           item_type: 'project',
@@ -190,60 +186,7 @@ export default (server) => {
           purpose: p.purpose,
           tags: (p.tags || []).map(tagMapper),
           categories: (p.categories || []).map(categoryMapper),
-          goals: (p.goals || []).map((g: any) => ({
-            id: g.id,
-            title: g.title,
-            description: g.description,
-            status: g.status,
-          })),
-          reviews: (p.reviews || []).map((r: any) => ({
-            r: r.id,
-            title: r.title,
-            description: r.description,
-            reviewer: r.reviewer ? mapUserPreview(r.reviewer) : null,
-          })),
-          locations: (p.locations || []).map((l: any) => ({
-            id: l.id,
-            title: l.title,
-            description: l.description,
-            type: l.type,
-            lat: l.lat,
-            lng: l.lng,
-          })),
-          announcements: (p.announcements || []).map((a: any) => ({
-            id: a.id,
-            title: a.title,
-            description: a.description,
-            status: a.status,
-            deadline: a.deadline,
-            is_remunerated: a.is_remunerated,
-          })),
-          links: (p.links || []).map((link: any) => ({
-            id: link.id,
-            title: link.title,
-            category: link.category,
-            description: link.description,
-            site_name: link.site_name,
-            site_url: link.site_url,
-          })),
-          files: (p.files || []).map((file: any) => ({
-            id: file.id,
-            title: file.title,
-            description: file.description,
-            file: file.file,
-            mime: file.mime,
-          })),
-          blog_entries: (p.blog_entries || []).map(mapBlogEntry),
-          linked_projects: (p.linked_projects || []).map(mapProjectPreview),
           views: p.views,
-          team: {
-            members: (p.team?.members || []).map(mapUserPreview),
-            owners: (p.team?.owners || []).map(mapUserPreview),
-            reviewers: (p.team?.reviewers || []).map(mapUserPreview),
-            member_groups: (p.team?.member_groups || []).map(mapPeopleGroupPreview),
-            owner_groups: (p.team?.owner_groups || []).map(mapPeopleGroupPreview),
-            reviewer_groups: (p.team?.reviewer_groups || []).map(mapPeopleGroupPreview),
-          },
         }
       } catch (error) {
         console.error('Error fetching project general data:', error)
@@ -271,17 +214,14 @@ export default (server) => {
     async ({ idOrSlug }, extras) => {
       let results = []
       try {
-        const queryResult: any = await mcpFetch(
-          // TODO: use org code from config
-          `${API_BASE_URL}project/${idOrSlug}/similar/`,
-          {
-            query: {
-              organizations: orgCode,
-            },
+        const opts = mcpFetchOptions({}, extras)
+        const queryResult = await getProjectSimilars(idOrSlug, {
+          ...opts,
+          query: {
+            organizations: [orgCode],
           },
-          extras
-        )
-        results = queryResult.map((p: any) => mapProjectPreview(p))
+        })
+        results = queryResult.results.map(mapProjectPreview)
       } catch (error) {
         console.error('Error fetching project similar projects:', error)
       }
@@ -308,12 +248,8 @@ export default (server) => {
     async ({ idOrSlug }, extras) => {
       let results = {}
       try {
-        const queryResult: any = await mcpFetch(
-          // TODO: use org code from config
-          `${API_BASE_URL}project/${idOrSlug}/blog-entry/`,
-          {},
-          extras
-        )
+        const opts = mcpFetchOptions({}, extras)
+        const queryResult = await getBlogEntries(idOrSlug, opts)
         results = queryResult.results.map(mapBlogEntry)
       } catch (error) {
         console.error('Error fetching project blog entries:', error)
@@ -342,12 +278,8 @@ export default (server) => {
     async ({ idOrSlug, blogEntryId }, extras) => {
       let results = {}
       try {
-        const queryResult: any = await mcpFetch(
-          // TODO: use org code from config
-          `${API_BASE_URL}project/${idOrSlug}/blog-entry/${blogEntryId}/`,
-          {},
-          extras
-        )
+        const opts = mcpFetchOptions({}, extras)
+        const queryResult = await getBlogEntry(idOrSlug, blogEntryId, opts)
         results = mapBlogEntry(queryResult)
       } catch (error) {
         console.error('Error fetching project blog entry:', error)
