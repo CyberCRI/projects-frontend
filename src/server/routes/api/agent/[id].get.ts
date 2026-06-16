@@ -24,6 +24,7 @@ export default defineLazyEventHandler(() => {
         orgCode: appApiOrgCode,
       },
       include: {
+        agentSlugAlias: true,
         promptContent: {
           include: { prompt: true },
         },

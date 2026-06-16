@@ -113,11 +113,25 @@ model Agent {
 
   conversations  Conversation[]
   sideAssistants SideAssistant[]
+  agentSlugAlias AgentSlugAlias[]
 
   @@unique([title, orgCode])
   @@unique([slug, orgCode])
   @@index([title, orgCode])
   @@index([slug, orgCode])
+}
+
+model AgentSlugAlias {
+  slug    String
+  orgCode String
+
+  agentId Int
+  agent   Agent @relation(fields: [agentId], references: [id])
+
+  lastAccess DateTime?
+
+  @@id([slug, agentId, orgCode])
+  @@unique([slug, orgCode])
 }
 
 model AgentSkillContent {

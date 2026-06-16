@@ -328,7 +328,6 @@ const submit = async () => {
         <TextInput
           v-model.trim="form.title"
           :label="$t('agents.title')"
-          :disabled="isEdit"
           @change="titleExists = false"
           @blur="v$.title.$validate"
         />

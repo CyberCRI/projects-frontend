@@ -1,6 +1,6 @@
 import checkAdminRights from '@/server/utils/check-admin-rights.js'
+import findSafeAgentSlug from '@/server/utils/agent-safe-slug.js'
 import slugify from '@sindresorhus/slugify'
-
 function sendError(code, message) {
   // setResponseStatus(event, code)
   // return {
@@ -43,6 +43,27 @@ export default defineLazyEventHandler(() => {
       if (sideAssistant && body.isEnabled === false) {
         sendError(409, 'Agent is used as a side assistant')
       }
+
+      const oldAgent = await tx.agent.findUnique({
+        where: {
+          id: id,
+        },
+      })
+
+      body.slug = await findSafeAgentSlug(tx, id, body.slug, appApiOrgCode)
+
+      if (oldAgent && oldAgent.slug != body.slug) {
+        // TODO: delete old aliases based on lastAccess
+        await tx.agentSlugAlias.create({
+          data: {
+            slug: oldAgent.slug,
+            orgCode: appApiOrgCode,
+            agentId: oldAgent.id,
+            lastAccess: new Date(),
+          },
+        })
+      }
+
       return await tx.agent.update({
         where: {
           id: id,
