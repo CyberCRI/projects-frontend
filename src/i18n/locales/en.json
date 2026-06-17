@@ -3252,6 +3252,7 @@
     "confirm-restart-title": "Restart conversation",
     "confirm-restart-content": "Do you want to start a new conversation?",
     "is-used-as-side-assistant": "This agent is currently used as side assistant and cannot be deactivated.",
+    "title-already-used": "Title is already used by another agent",
     "form": {
       "invalid": "Form is incomplete, please provide required fields",
       "title-required": "Title is required",

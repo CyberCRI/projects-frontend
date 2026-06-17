@@ -1,4 +1,5 @@
 import checkAdminRights from '@/server/utils/check-admin-rights.js'
+import agentFindBySlug from '@/server/utils/agent-find-by-slug'
 import { safeParseInt } from '@/functs/string'
 
 export default defineLazyEventHandler(() => {
@@ -28,20 +29,13 @@ export default defineLazyEventHandler(() => {
       }
     }
 
-    // findUnique dont work because slug is not globally unique
-    const agent = await chatbotPrisma.agent.findFirst({
-      where: {
-        slug: slug,
-        orgCode: appApiOrgCode,
+    const agent = await agentFindBySlug(chatbotPrisma, slug, appApiOrgCode, {
+      promptContent: {
+        include: { prompt: true },
       },
-      include: {
-        promptContent: {
-          include: { prompt: true },
-        },
-        skillContents: { include: { skillContent: { include: { skill: true } } } },
-        documents: true,
-        mcps: true,
-      },
+      skillContents: { include: { skillContent: { include: { skill: true } } } },
+      documents: true,
+      mcps: true,
     })
 
     // console.log(agent)
