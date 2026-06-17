@@ -20,6 +20,15 @@ export default async function findSafeAgentSlug(
         where: { slug: testSlug, orgCode: appApiOrgCode, id: { not: agentId } },
       }),
     ])
+
+    // if new slug is an old alias, reuse it
+    if (!agent && alias && alias.agentId == agentId) {
+      // composite id not supported by deleet (need an id field) so use deleteMany heere
+      await tx.agentSlugAlias.deleteMany({
+        where: { slug: testSlug, orgCode: appApiOrgCode, agentId: agentId },
+      })
+      return false
+    }
     return alias !== null || agent !== null
   }
 

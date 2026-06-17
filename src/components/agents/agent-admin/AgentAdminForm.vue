@@ -293,15 +293,17 @@ const submit = async () => {
     emit(isEdit.value ? 'entity-updated' : 'entity-created')
   } catch (e) {
     console.dir(e)
+    const defaultErrorMessage = isEdit.value ? 'agents.edit-error' : 'agents.create-error'
     if (e?.data?.statusCode === 409) {
       finallyClose = false
-      cannotDeactivate.value = true
-      form.value.isEnabled = true
-      toaster.pushError(t('agents.is-used-as-side-assistant'))
+      if (e?.data?.message == 'agents.is-used-as-side-assistant') {
+        cannotDeactivate.value = true
+        form.value.isEnabled = true
+      }
+      toaster.pushError(t(e?.data?.message || defaultErrorMessage))
+    } else {
+      toaster.pushError(t(defaultErrorMessage))
     }
-    toaster.pushError(
-      t(isEdit.value ? 'agents.edit-error' : 'agents.create-error') + ' ' + e.toString()
-    )
   } finally {
     isAsyncing.value = false
     if (finallyClose) close()

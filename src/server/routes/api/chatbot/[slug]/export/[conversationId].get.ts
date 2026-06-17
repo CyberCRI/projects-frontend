@@ -1,5 +1,5 @@
 import checkAdminRights from '@/server/utils/check-admin-rights.js'
-import agentFindBySlug from '@/server/utils/find-safe-agent-slug'
+import agentFindBySlug from '@/server/utils/agent-find-by-slug'
 import { safeParseInt } from '@/functs/string'
 
 export default defineLazyEventHandler(() => {
