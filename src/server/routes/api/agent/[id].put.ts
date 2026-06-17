@@ -1,5 +1,5 @@
+import findSafeAgentSlug from '@/server/utils/find-safe-agent-slug.js'
 import checkAdminRights from '@/server/utils/check-admin-rights.js'
-import findSafeAgentSlug from '@/server/utils/agent-safe-slug.js'
 import slugify from '@sindresorhus/slugify'
 function sendError(code, message) {
   // setResponseStatus(event, code)
