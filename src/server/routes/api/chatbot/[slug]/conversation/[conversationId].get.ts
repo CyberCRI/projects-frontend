@@ -1,4 +1,4 @@
-import agentFindBySlug from '@/server/utils/agent-find-by-slug.js'
+import agentFindBySlug from '@/server/utils/find-safe-agent-slug'
 import { getUser } from '@/server/utils/check-admin-rights.js'
 import { safeParseInt } from '@/functs/string'
 
