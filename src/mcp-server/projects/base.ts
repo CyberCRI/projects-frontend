@@ -1,7 +1,9 @@
+import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp'
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
 import { tokenMap } from '~/server/routes/api/chat-stream'
 
 const runtimeConfig = useRuntimeConfig()
+export const orgCode = runtimeConfig.public.appApiOrgCode
 
 export function getUserToken(extras) {
   const convesrationId = (extras.requestInfo.headers['authorization'] || '').replace('Bearer ', '')
@@ -16,25 +18,45 @@ export function getUserToken(extras) {
   return null
 }
 
-export function mcpFetchOptions(options: any, extras: any = {}) {
-  const _options = options || {}
+export function mcpOptions(extras: any = {}): UseApiOptions {
   const accessToken = getUserToken(extras)
-  if (accessToken) {
-    if (!_options.headers) {
-      _options.headers = {}
+  if (!accessToken) {
+    return {}
+  }
+  return {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  }
+}
+
+type RegisterToolType = Parameters<McpServer['registerTool']>
+type RegisterToolCallback = RegisterToolType[2]
+type OwnRegisterToolCallback = (...args: Parameters<RegisterToolCallback>) => Promise<any>
+
+/**
+ * auto contruct tool result from callback
+ *
+ * @async
+ * @function
+ * @name resultFromTool
+ * @kind variable
+ * @exports
+ */
+export const resultFromTool = (callback: OwnRegisterToolCallback) => {
+  const callbackTool: RegisterToolCallback = async (args, extra) => {
+    let output = null
+    try {
+      output = await callback(args, extra)
+    } catch (error) {
+      console.error('Error fetching search results:', error)
     }
-    _options.headers['Authorization'] = `Bearer ${accessToken}`
+
+    return {
+      content: [{ type: 'text', text: JSON.stringify(output) }],
+      structuredContent: output,
+    } satisfies ReturnType<RegisterToolCallback>
   }
 
-  return _options
+  return callbackTool
 }
-
-export function mcpFetch<Result = unknown>(url: string, options: any, extras: any = {}) {
-  const _options = mcpFetchOptions(options, extras)
-  return $fetch<Result>(url, _options)
-}
-
-export const orgCode = runtimeConfig.public.appApiOrgCode
-
-export const API_BASE_URL =
-  runtimeConfig.public.appApiUrl + runtimeConfig.public.appApiDefaultVersion + '/'

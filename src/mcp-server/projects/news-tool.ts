@@ -1,6 +1,7 @@
+import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp'
+import { mcpOptions, orgCode, resultFromTool } from './base'
 import { getAllNews, getNews } from '~/api/news.service'
 import type { NewsModel } from '~/models/news.model'
-import { mcpFetchOptions, orgCode } from './base'
 // import N from './zod-schema-utils'
 import { z } from 'zod'
 /*
@@ -22,7 +23,7 @@ const mapNewsArticle = (n: NewsModel) => ({
   item_type: 'news_article',
 })
 
-export default (server) => {
+export default (server: McpServer) => {
   // Add an search tool
   server.registerTool(
     'news-list',
@@ -34,30 +35,17 @@ export default (server) => {
         results: z.array(NEWS_ARTICLE_OUTPUT_SCHEMA).describe('The list of recent news articles'),
         },*/
     },
-    async (_input, extras) => {
-      let results = {}
-      try {
-        const opts = mcpFetchOptions({}, extras)
-        const queryResult = await getAllNews(orgCode, {
-          ...opts,
-          query: {
-            ordering: '-publication_date',
-            limit: 30,
-            to_date: new Date().toISOString(),
-          },
-        })
-
-        results = queryResult.results.map(mapNewsArticle)
-      } catch (error) {
-        console.error('Error fetching organization news list:', error)
-      }
-      const output = { results }
-      console.log('MCP TOOL CALLED: news-list', { output })
-      return {
-        content: [{ type: 'text', text: JSON.stringify(output) }],
-        structuredContent: output,
-      }
-    }
+    resultFromTool((_, extras) => {
+      const opts = mcpOptions(extras)
+      return getAllNews(orgCode, {
+        ...opts,
+        query: {
+          ordering: '-publication_date',
+          limit: 30,
+          to_date: new Date().toISOString(),
+        },
+      }).then((pages) => pages.results.map(mapNewsArticle))
+    })
   )
 
   // Add an search tool
@@ -71,24 +59,16 @@ export default (server) => {
         results: z.array(NEWS_ARTICLE_OUTPUT_SCHEMA).describe('The news article data'),
         },*/
     },
-    async ({ slugOrId }, extras) => {
-      let results = {}
-      try {
-        const opts = mcpFetchOptions({}, extras)
-        const queryResult = await getNews(orgCode, slugOrId, {
-          ...opts,
-        })
-
-        results = mapNewsArticle(queryResult)
-      } catch (error) {
-        console.error('Error fetching organization news item:', error)
-      }
-      const output = results
-      console.log('MCP TOOL CALLED: news-article', { output })
-      return {
-        content: [{ type: 'text', text: JSON.stringify(output) }],
-        structuredContent: output,
-      }
-    }
+    resultFromTool(({ slugOrId }, extras) => {
+      const opts = mcpOptions(extras)
+      return getNews(orgCode, slugOrId, {
+        ...opts,
+        query: {
+          ordering: '-publication_date',
+          limit: 30,
+          to_date: new Date().toISOString(),
+        },
+      }).then((article) => mapNewsArticle(article))
+    })
   )
 }

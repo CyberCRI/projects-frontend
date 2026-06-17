@@ -1,8 +1,8 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 
-import registerSorbobotTool, { sorbobotIsEnabled } from './sorbobot/sorbobot-tool'
 import registerOrganizationTool from './projects/organization-tool'
 import registerInstructionTool from './projects/instruction-tool'
+import registerSorbobotTool from './sorbobot/sorbobot-tool'
 import registerProjectTool from './projects/project-tool'
 import registerSearchTool from './projects/search-tool'
 import registerPeopleTool from './projects/people-tool'
@@ -30,9 +30,7 @@ function createMCPServer() {
   //   !!sorbobotApiToken
   // )
 
-  if (sorbobotIsEnabled) {
-    registerSorbobotTool(server)
-  }
+  registerSorbobotTool(server)
 
   registerSearchTool(server)
 

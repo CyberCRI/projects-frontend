@@ -1,37 +1,25 @@
-import {
-  // PEOPLE_GROUP_PREVIEW_OUTPUT_SCHEMA,
-  // USER_PREVIEW_OUTPUT_SCHEMA,
-  mapPeopleGroupPreview,
-  mapUserPreview,
-} from './people-tool'
-import { /*PROJECT_PREVIEW_OUTPUT_SCHEMA,*/ mapProjectPreview } from './project-tool'
 import { SORBOBOT_EXTRA, sorbobotIsEnabled } from '../sorbobot/sorbobot-tool'
-import { API_BASE_URL, mcpFetch, orgCode } from './base'
-// import N from './zod-schema-utils'
+import { searchAll, searchProjects, searchUser } from '~/api/search.service'
+import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp'
+import { mapPeopleGroupPreview, mapUserPreview } from './people-tool'
+import { getAllTagsById } from '~/api/tag-classification.service'
+import type { Config } from '~/api/tag-classification.service'
+import { mapProjectPreview } from './project-tool'
+import { mcpOptions, orgCode } from './base'
 import { z } from 'zod'
 
-export async function searchTag(queryTerms: string, extras: any): Promise<number[]> {
-  let results = []
-  const params = {
-    limit: 12,
-    organizations: [orgCode],
-    search: queryTerms,
-  }
-  try {
-    const queryResult: any = await mcpFetch(
-      // TODO: use org code from config
-      `${API_BASE_URL}tag/${encodeURIComponent(queryTerms)}`,
-      { params },
-      extras
-    )
-    results = queryResult.results.map((item) => item.id)
-  } catch (error) {
-    console.error('Error fetching tags:', error)
-  }
-  return results
+export async function getAllTags(tagsId: number[], extras): Promise<number[]> {
+  const opts = mcpOptions(extras) as Config
+
+  return await getAllTagsById(tagsId, opts)
+    .then((results) => results.results.map((tag) => tag.id))
+    .catch((error) => {
+      console.error('Error fetching tags:', error)
+      return []
+    })
 }
 
-export default (server) => {
+export default (server: McpServer) => {
   // Add an search tool
   server.registerTool(
     'search',
@@ -52,26 +40,22 @@ export default (server) => {
     async ({ queryTerms }, extras) => {
       let results = []
       try {
-        const query = {
-          limit: 12,
-          organizations: [orgCode],
-        }
-        const queryResult: any = await mcpFetch(
-          // TODO: use org code from config
-          `${API_BASE_URL}search/${encodeURIComponent(queryTerms)}/?limit=30&organizations=${orgCode}`,
-          { query },
-          extras
-        )
+        const opts = mcpOptions(extras)
+        const queryResult = await searchAll(queryTerms, {
+          ...opts,
+          query: {
+            limit: 12,
+            organizations: [orgCode],
+          },
+        })
         results = queryResult.results.map((item) => {
-          if (item.type === 'project') {
-            const p = item.project
-            return mapProjectPreview(p)
-          } else if (item.type === 'user') {
-            const u = item.user
-            return mapUserPreview(u)
-          } else if (item.type === 'people_group') {
-            const g = item.people_group
-            return mapPeopleGroupPreview(g)
+          switch (item.type) {
+            case 'people_group':
+              return mapPeopleGroupPreview(item.people_group)
+            case 'user':
+              return mapUserPreview(item.user)
+            case 'project':
+              return mapProjectPreview(item.project)
           }
         })
       } catch (error) {
@@ -106,41 +90,22 @@ export default (server) => {
     async ({ queryTerms, tags, sdgs, members /*categories */ }, extras) => {
       let tagIds: number[] = []
       if (tags && tags.length > 0) {
-        for (const tag of tags) {
-          const ids = await searchTag(tag, extras)
-          tagIds = tagIds.concat(ids)
-        }
+        tagIds = await getAllTags(tags, extras)
       }
       let results = []
       try {
-        const query = {
-          limit: 12,
-          organizations: [orgCode],
-          tags: tagIds || [],
-          sdgs: sdgs || [],
-          members: members || [],
-          types: ['project'],
-          // categorieIds,
-        }
-        const queryResult: any = await mcpFetch(
-          `${API_BASE_URL}search/${encodeURIComponent(queryTerms)}/?limit=30&organizations=${orgCode}`,
-          { query },
-          extras
-        )
-
-        // leaving "all cases" mapping for safety, even if this is "projects only" search
-        results = queryResult.results.map((item) => {
-          if (item.type === 'project') {
-            const p = item.project
-            return mapProjectPreview(p)
-          } else if (item.type === 'user') {
-            const u = item.user
-            return mapUserPreview(u)
-          } else if (item.type === 'people_group') {
-            const g = item.people_group
-            return mapPeopleGroupPreview(g)
-          }
+        const opts = mcpOptions(extras)
+        const queryResult = await searchProjects(queryTerms, {
+          ...opts,
+          query: {
+            limit: 12,
+            organizations: [orgCode],
+            tags: tagIds || [],
+            sdgs: sdgs || [],
+            members: members || [],
+          },
         })
+        results = queryResult.results.map((item) => mapProjectPreview(item.project))
       } catch (error) {
         console.error('Error fetching search results:', error)
       }
@@ -172,38 +137,21 @@ export default (server) => {
     async ({ queryTerms, skills, sdgs }, extras) => {
       let tagIds: number[] = []
       if (skills && skills.length > 0) {
-        for (const tag of skills) {
-          const ids = await searchTag(tag, extras)
-          tagIds = tagIds.concat(ids)
-        }
+        tagIds = await getAllTags(skills, extras)
       }
       let results = []
       try {
-        const query = {
-          limit: 12,
-          organizations: [orgCode],
-          skills: tagIds || [],
-          sdgs: sdgs || [],
-          types: ['user'],
-        }
-        const queryResult: any = await mcpFetch(
-          `${API_BASE_URL}search/${encodeURIComponent(queryTerms)}/?limit=30&organizations=${orgCode}`,
-          { query },
-          extras
-        )
-        // leaving "all cases" mapping for safety, even if this is "people only" search
-        results = queryResult.results.map((item) => {
-          if (item.type === 'project') {
-            const p = item.project
-            return mapProjectPreview(p)
-          } else if (item.type === 'user') {
-            const u = item.user
-            return mapUserPreview(u)
-          } else if (item.type === 'people_group') {
-            const g = item.people_group
-            return mapPeopleGroupPreview(g)
-          }
+        const opts = mcpOptions(extras)
+        const queryResult = await searchUser(queryTerms, {
+          ...opts,
+          query: {
+            limit: 12,
+            organizations: [orgCode],
+            skills: tagIds || [],
+            sdgs: sdgs || [],
+          },
         })
+        results = queryResult.results.map((item) => mapUserPreview(item.project))
       } catch (error) {
         console.error('Error fetching search results:', error)
       }

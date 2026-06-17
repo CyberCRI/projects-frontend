@@ -1,89 +1,95 @@
-export async function initSession(api_url, api_token) {
-  // start session
-  const startResp = await fetch(`${api_url}/api/sorbobot/session/start`, {
-    method: 'POST',
+import type { $Fetch, FetchOptions } from 'ofetch'
+import { ofetch } from 'ofetch'
+
+export const sorbobotCreateFetch = (config: FetchOptions = {}) =>
+  ofetch.create({
     headers: {
       'User-Agent': 'LpiProject-SorboBot/1.0',
-      Accept: 'application/json',
-      'api-key': api_token,
+      ...(config.headers || {}),
     },
-    body: null,
   })
 
-  const jsonResp = await startResp.json()
-  const sessionId = jsonResp?.data?.session_id
-
-  if (!sessionId) {
-    console.error('Failed to start session')
-    return
-  }
-  return sessionId as number
-}
-
-export async function makeQuery(api_url, api_token, sessionId, queryPrompt) {
-  const queryResp = await fetch(`${api_url}/api/sorbobot/query`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'User-Agent': 'LpiProject-SorboBot/1.0',
-      Accept: 'application/json',
-      'api-key': api_token,
-    },
-    body: JSON.stringify({
-      session_id: sessionId,
-      prompt: queryPrompt,
-      search_results: null,
-    }),
-  })
-
-  const queryJson = await queryResp.json()
-  const { authors, search_results } = queryJson.data
-
-  const authorsArrays = Object.entries(authors)
-  const limitedAuthors = Object.fromEntries(authorsArrays.slice(0, 12))
-
-  return {
-    authors: limitedAuthors,
-    search_results,
+type SorbobotResponseSession = {
+  data: {
+    session_id: number
   }
 }
-
-export async function closeSession(api_url, api_token, sessionId) {
-  const closeResp = await fetch(`${api_url}/api/sorbobot/session/end/${sessionId}`, {
-    method: 'DELETE',
-    headers: {
-      'User-Agent': 'LpiProject-SorboBot/1.0',
-      Accept: 'application/json',
-      'api-key': api_token,
-    },
-    body: null,
-  })
-
-  return closeResp.ok
+export type SorbobotAuthor = {
+  id: string
+}
+export type SorbobotResponseData = {
+  data: {
+    authors: {
+      [key: string]: SorbobotAuthor
+    }
+    search_results: any
+  }
 }
 
 export default class SorbobotAPI {
-  apiToken: string
-  apiUrl: string
   sessionId: null | number
+  fetch: $Fetch
 
-  constructor(apiToken, apiUrl) {
-    this.apiToken = apiToken
-    this.apiUrl = apiUrl
+  constructor(apiToken: string, apiUrl: string) {
     this.sessionId = null
+
+    // create base fetch
+    this.fetch = sorbobotCreateFetch({
+      baseURL: apiUrl,
+      headers: {
+        'api-key': apiToken,
+      },
+    })
   }
   async init() {
-    this.sessionId = await initSession(this.apiUrl, this.apiToken)
-    return this.sessionId
+    const session = await this.fetch<SorbobotResponseSession>(`/api/sorbobot/session/start`, {
+      method: 'POST',
+    })
+      .then((data) => {
+        if (!data?.data?.session_id) {
+          throw new Error(`Failed to start session: seesionId is empty`)
+        }
+        return data.data.session_id
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+    this.sessionId = session || null
   }
-  async query(queryPrompt) {
-    return await makeQuery(this.apiUrl, this.apiToken, this.sessionId, queryPrompt)
+
+  async query<Result extends SorbobotResponseData>(queryPrompt: string) {
+    return this.fetch<Result>(`/api/sorbobot/query`, {
+      body: {
+        session_id: this.sessionId,
+        prompt: queryPrompt,
+        search_results: null,
+      },
+    }).then((data) => {
+      const { authors, search_results } = data.data
+
+      const authorsArrays = Object.entries(authors)
+      const limitedAuthors = Object.fromEntries(authorsArrays.slice(0, 12))
+
+      return {
+        authors: limitedAuthors,
+        search_results,
+      }
+    })
   }
   async close() {
-    const hasclosed = await closeSession(this.apiUrl, this.apiToken, this.sessionId)
-    if (hasclosed) {
-      this.sessionId = null
+    if (!this.sessionId) {
+      console.info("Can't close sorbobot session: sessionId is empty")
+      return
     }
-    return hasclosed
+
+    await this.fetch<undefined>(`/api/sorbobot/session/end/${encodeURIComponent(this.sessionId)}`, {
+      method: 'DELETE',
+    })
+      .then(() => {
+        this.sessionId = null
+      })
+      .catch((error) => {
+        console.error(error)
+      })
   }
 }

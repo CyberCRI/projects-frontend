@@ -430,3 +430,10 @@ export type ResearcherDocumentAnalytics = {
   }>
   roles: { [key in Relators]?: number }
 }
+
+export type QueryFilterResearcher = Partial<
+  {
+    harvester: HarvesterType
+    values: string // TODO: change to string[] (need to update backend)
+  } & PaginationQuery
+>

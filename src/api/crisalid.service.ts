@@ -3,9 +3,11 @@ import type { PeopleGroupIdOrSlug } from '~/models/invitation.model'
 import type {
   Document,
   DocumentType,
+  QueryFilterResearcher,
   Researcher,
   ResearcherDocumentAnalytics,
 } from '~/interfaces/researcher'
+import type { OrganizationModel } from '~/models/organization.model'
 
 export async function getOwnResearchDocument(
   organisationCode: string,
@@ -62,6 +64,21 @@ export async function getResearchDocumentSimilars(
 ) {
   return await useAPI<PaginationResult<Document>>(
     `crisalid/organization/${organisationCode}/document/${documentId}/similars/`,
+    config
+  )
+}
+
+type ConfigSearch = UseApiOptions<QueryFilterResearcher>
+type ResearcherSearchResponse = {
+  // key is harvester values
+  [key: string | number]: Researcher
+}
+export async function searchResearcher(
+  organizationCode: OrganizationModel['code'],
+  config: ConfigSearch = {}
+) {
+  return useAPI<PaginationResult<ResearcherSearchResponse>>(
+    `crisalid/organization/${organizationCode}/researcher/search/`,
     config
   )
 }

@@ -1,7 +1,8 @@
+import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp'
 import type { PeopleGroupModel } from '~/models/invitation.model'
+import { mcpOptions, orgCode, resultFromTool } from './base'
 import { getUser as fetchUser } from '~/api/people.service'
 import { /*SDG_OUTPUT_SCHEMA, */ mapSDG } from './sdg-tool'
-import { mcpFetchOptions, orgCode } from './base'
 import { getGroup } from '~/api/groups.service'
 import { tagMapper } from './tag-schema'
 import N from './zod-schema-utils'
@@ -61,9 +62,11 @@ export const mapPeopleGroupPreview = (g: PeopleGroupModel) => ({
   member_count: g.modules?.members || 0,
   link_url: `/group/${g.slug}/`,
   item_image: g.header_image?.variations?.small,
+  hierarchy: (g.hierarchy || []).map(mapPeopleGroupPreview),
+  children: (g.children || []).map(mapPeopleGroupPreview),
 })
 
-export default (server) => {
+export default (server: McpServer) => {
   // Add an search tool
   server.registerTool(
     'people-general-data',
@@ -105,52 +108,38 @@ export default (server) => {
         }),
       },*/
     },
-    async ({ idOrSlug }, extras) => {
-      let results = {}
-      try {
-        const opts = mcpFetchOptions({}, extras)
-        const queryResult = await fetchUser(idOrSlug, opts)
-
-        const u = queryResult
-        results = {
-          id: u.id,
-          item_type: 'user',
-          link_url: `/profile/${u.slug}/`,
-          item_image: u.profile_picture?.variations?.small,
-          slug: u.slug,
-          is_superuser: u.is_superuser,
-          people_groups: (u.people_groups || []).map(mapPeopleGroupPreview),
-          skills: (u.skills || []).map((s) => ({
-            id: s.id,
-            tag: tagMapper(s.tag),
-            level: s.level,
-            level_to_reach: s.level_to_reach,
-            type: s.type,
-            can_mentor: s.can_mentor,
-            needs_mentor: s.needs_mentor,
-            comment: s.comment,
-          })),
-          given_name: u.given_name,
-          family_name: u.family_name,
-          short_description: u.short_description,
-          description: u.description,
-          job: u.job,
-          email: u.email,
-          facebook: u.facebook,
-          linkedin: u.linkedin,
-          website: u.website,
-          sdgs: (u.sdgs || []).map(mapSDG),
-        }
-      } catch (error) {
-        console.error('Error fetching profile general data:', error)
-      }
-      const output = { user_data: results }
-      // console.log('MCP TOOL CALLED: profile-general-data', { idOrSlug, output })
-      return {
-        content: [{ type: 'text', text: JSON.stringify(output) }],
-        structuredContent: output,
-      }
-    }
+    resultFromTool(({ idOrSlug }, extras) => {
+      const opts = mcpOptions(extras)
+      return fetchUser(idOrSlug, opts).then((user) => ({
+        id: user.id,
+        item_type: 'user',
+        link_url: `/profile/${user.slug}/`,
+        item_image: user.profile_picture?.variations?.small,
+        slug: user.slug,
+        is_superuser: user.is_superuser,
+        people_groups: (user.people_groups || []).map(mapPeopleGroupPreview),
+        skills: (user.skills || []).map((s) => ({
+          id: s.id,
+          tag: tagMapper(s.tag),
+          level: s.level,
+          level_to_reach: s.level_to_reach,
+          type: s.type,
+          can_mentor: s.can_mentor,
+          needs_mentor: s.needs_mentor,
+          comment: s.comment,
+        })),
+        given_name: user.given_name,
+        family_name: user.family_name,
+        short_description: user.short_description,
+        description: user.description,
+        job: user.job,
+        email: user.email,
+        facebook: user.facebook,
+        linkedin: user.linkedin,
+        website: user.website,
+        sdgs: (user.sdgs || []).map(mapSDG),
+      }))
+    })
   )
 
   // Add an search tool
@@ -170,33 +159,9 @@ export default (server) => {
         }),
       },
     },
-    async ({ idOrSlug }, extras) => {
-      let results = {}
-      try {
-        const opts = mcpFetchOptions({}, extras)
-        const queryResult = await getGroup(orgCode, idOrSlug, opts)
-        const g = queryResult
-        results = {
-          id: g.id,
-          item_type: 'people_group',
-          item_image: g.header_image?.variations?.small,
-          slug: g.slug,
-          name: g.name,
-          description: g.description,
-          short_description: g.short_description,
-          email: g.email,
-          hierarchy: (g.hierarchy || []).map(mapPeopleGroupPreview),
-          children: (g.children || []).map(mapPeopleGroupPreview),
-        }
-      } catch (error) {
-        console.error('Error fetching group general data:', error)
-      }
-      const output = { people_group_data: results }
-      // console.log('MCP TOOL CALLED: people-group-data', { idOrSlug, output })
-      return {
-        content: [{ type: 'text', text: JSON.stringify(output) }],
-        structuredContent: output,
-      }
-    }
+    resultFromTool(({ idOrSlug }, extras) => {
+      const opts = mcpOptions(extras)
+      return getGroup(orgCode, idOrSlug, opts).then((group) => mapPeopleGroupPreview(group))
+    })
   )
 }

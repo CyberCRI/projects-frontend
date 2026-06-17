@@ -1,5 +1,7 @@
 import { usePublicURL } from '~/composables/usePublic'
 
+import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp'
+import { resultFromTool } from '~/mcp-server/projects/base'
 import { SDGS } from '~/functs/constants'
 import N from './zod-schema-utils'
 import { z } from 'zod'
@@ -23,7 +25,7 @@ export const SDG_OUTPUT_SCHEMA = z.object({
   item_type: N.literal('sdg').describe('The type of the item, always sdg'),
 })
 
-export default (server) => {
+export default (server: McpServer) => {
   // Add an search tool
   server.registerTool(
     'all-sdgs',
@@ -35,14 +37,11 @@ export default (server) => {
         results: N.array(SDG_OUTPUT_SCHEMA),
         },*/
     },
-    async function () {
-      const output = { results: ALL_SDGS }
-      // console.log('MCP TOOL CALLED: search', { query, output })
-      return {
-        content: [{ type: 'text', text: JSON.stringify(output) }],
-        structuredContent: output,
-      }
-    }
+
+    resultFromTool(async () => {
+      // only return sdgs
+      return ALL_SDGS
+    })
   )
 
   server.registerTool(
@@ -57,19 +56,10 @@ export default (server) => {
       },
       /*outputSchema: { results: SDG_OUTPUT_SCHEMA },*/
     },
-    async ({ sdgId }) => {
-      let results: any = {}
-      try {
-        results = ALL_SDGS[sdgId] || 'SDG not found'
-      } catch (error) {
-        console.error('Error fetching search results:', error)
-      }
-      const output = results
-      // console.log('MCP TOOL CALLED: search', { query, output })
-      return {
-        content: [{ type: 'text', text: JSON.stringify(output) }],
-        structuredContent: output,
-      }
-    }
+
+    resultFromTool(async ({ sdgId }, _) => {
+      // only return sdgs
+      return ALL_SDGS[sdgId] || 'SDG not found'
+    })
   )
 }

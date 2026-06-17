@@ -1,6 +1,7 @@
+import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp'
+import { mcpOptions, orgCode, resultFromTool } from './base'
 import type { EventModel } from '~/models/event.model'
 import { getAllEvents } from '~/api/event.service'
-import { mcpFetchOptions, orgCode } from './base'
 import { nowDate } from '~/functs/date'
 // import N from './zod-schema-utils'
 // import { z } from 'zod'
@@ -25,7 +26,7 @@ const mapEvent = (e: EventModel) => ({
   item_type: 'event',
 })
 
-export default (server) => {
+export default (server: McpServer) => {
   // Add an search tool
   server.registerTool(
     'future-events-list',
@@ -35,30 +36,17 @@ export default (server) => {
       inputSchema: {},
       /*outputSchema: { results: z.array(EVENT_OUTPUT_SCHEMA).describe('The list of future events') },*/
     },
-    async (_input, extras) => {
-      // today date at midnight
+    resultFromTool((_, extras) => {
       const todayZeroHour = nowDate()
-      let results = {}
-      try {
-        const opts = mcpFetchOptions({}, extras)
-        const queryResult = await getAllEvents(orgCode, {
-          ...opts,
-          query: {
-            ordering: 'start_date',
-            from_date: todayZeroHour.toISOString(),
-          },
-        })
-        results = queryResult.results.map(mapEvent)
-      } catch (error) {
-        console.error('Error fetching organization future events list:', error)
-      }
-      const output = { results }
-      console.log('MCP TOOL CALLED: future- events-list', { output })
-      return {
-        content: [{ type: 'text', text: JSON.stringify(output) }],
-        structuredContent: output,
-      }
-    }
+      const opts = mcpOptions(extras)
+      return getAllEvents(orgCode, {
+        ...opts,
+        query: {
+          ordering: 'start_date',
+          from_date: todayZeroHour.toISOString(),
+        },
+      }).then((response) => response.results.map(mapEvent))
+    })
   )
 
   // Add an search tool
@@ -70,29 +58,16 @@ export default (server) => {
       inputSchema: {},
       /*outputSchema: { results: z.array(EVENT_OUTPUT_SCHEMA).describe('The list of past events') },*/
     },
-    async (_input, extras) => {
-      // today date at midnight
+    resultFromTool((_, extras) => {
       const todayZeroHour = nowDate()
-      let results = {}
-      try {
-        const opts = mcpFetchOptions({}, extras)
-        const queryResult = await getAllEvents(orgCode, {
-          ...opts,
-          query: {
-            ordering: '-start_date',
-            from_date: todayZeroHour.toISOString(),
-          },
-        })
-        results = queryResult.results.map(mapEvent)
-      } catch (error) {
-        console.error('Error fetching organization past events list:', error)
-      }
-      const output = results
-      console.log('MCP TOOL CALLED: past-events-list', { output })
-      return {
-        content: [{ type: 'text', text: JSON.stringify(output) }],
-        structuredContent: output,
-      }
-    }
+      const opts = mcpOptions(extras)
+      return getAllEvents(orgCode, {
+        ...opts,
+        query: {
+          ordering: '-start_date',
+          from_date: todayZeroHour.toISOString(),
+        },
+      }).then((response) => response.results.map(mapEvent))
+    })
   )
 }

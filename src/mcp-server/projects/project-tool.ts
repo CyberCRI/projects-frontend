@@ -1,8 +1,9 @@
 import type { ProjectCategoryModel } from '~/models/project-category.model'
-import { API_BASE_URL, mcpFetch, mcpFetchOptions, orgCode } from './base'
 import { getBlogEntries, getBlogEntry } from '~/api/blogentries.service'
 import { getProject, getProjectSimilars } from '~/api/projects.service'
+import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp'
 import type { BlogEntryModel } from '~/models/blog-entry.model'
+import { mcpOptions, orgCode, resultFromTool } from './base'
 import type { ProjectModel } from '~/models/project.model'
 import { /*SDG_OUTPUT_SCHEMA,*/ mapSDG } from './sdg-tool'
 import { tagMapper } from './tag-schema'
@@ -65,13 +66,13 @@ export const mapBlogEntry = (b: BlogEntryModel) => ({
   content: b.content,
 })
 
-export default (server) => {
+export default (server: McpServer) => {
   // Add an search tool
   server.registerTool(
     'project-general-data',
     {
       title: 'Project general data',
-      description: `Get main general data (description, goals, blog entries, members...) about a project given its id or slug. ${FETCH_PROJECT_SLUG_OR_ID}`,
+      description: `Get main general data (description, purpose, tags, categories...) about a project given its id or slug. ${FETCH_PROJECT_SLUG_OR_ID}`,
       inputSchema: { idOrSlug: z.string().describe('The id or slug of the project') },
       /*outputSchema: {
         project_data: PROJECT_PREVIEW_OUTPUT_SCHEMA.extend({
@@ -167,37 +168,23 @@ export default (server) => {
         }),
       },*/
     },
-    async ({ idOrSlug }, extras) => {
-      let results = {}
-      try {
-        const opts = mcpFetchOptions({}, extras)
-        const queryResult = await getProject(idOrSlug, opts)
-
-        const p = queryResult
-        results = {
-          item_type: 'project',
-          link_url: `/projects/${p.slug}/`,
-          id: p.id,
-          item_image: p.header_image?.variations?.small,
-          slug: p.slug,
-          title: p.title,
-          description: p.description,
-          sdgs: (p.sdgs || []).map(mapSDG),
-          purpose: p.purpose,
-          tags: (p.tags || []).map(tagMapper),
-          categories: (p.categories || []).map(categoryMapper),
-          views: p.views,
-        }
-      } catch (error) {
-        console.error('Error fetching project general data:', error)
-      }
-      const output = { project_data: results }
-      // console.log('MCP TOOL CALLED: project-general-data', { idOrSlug, output })
-      return {
-        content: [{ type: 'text', text: JSON.stringify(output) }],
-        structuredContent: output,
-      }
-    }
+    resultFromTool(({ idOrSlug }, extras) => {
+      const opts = mcpOptions(extras)
+      return getProject(idOrSlug, opts).then((project) => ({
+        item_type: 'project',
+        link_url: `/projects/${project.slug}/`,
+        id: project.id,
+        item_image: project.header_image?.variations?.small,
+        slug: project.slug,
+        title: project.title,
+        description: project.description,
+        sdgs: (project.sdgs || []).map(mapSDG),
+        purpose: project.purpose,
+        tags: (project.tags || []).map(tagMapper),
+        categories: (project.categories || []).map(categoryMapper),
+        views: project.views,
+      }))
+    })
   )
 
   // Add an search tool
@@ -211,27 +198,15 @@ export default (server) => {
         results: z.array(PROJECT_PREVIEW_OUTPUT_SCHEMA).describe('The list of similar projects'),
         },*/
     },
-    async ({ idOrSlug }, extras) => {
-      let results = []
-      try {
-        const opts = mcpFetchOptions({}, extras)
-        const queryResult = await getProjectSimilars(idOrSlug, {
-          ...opts,
-          query: {
-            organizations: [orgCode],
-          },
-        })
-        results = queryResult.results.map(mapProjectPreview)
-      } catch (error) {
-        console.error('Error fetching project similar projects:', error)
-      }
-      const output = { results }
-      console.log('MCP TOOL CALLED: project-similar-projects', { idOrSlug, output })
-      return {
-        content: [{ type: 'text', text: JSON.stringify(output) }],
-        structuredContent: output,
-      }
-    }
+    resultFromTool(({ idOrSlug }, extras) => {
+      const opts = mcpOptions(extras)
+      return getProjectSimilars(idOrSlug, {
+        ...opts,
+        query: {
+          organizations: [orgCode],
+        },
+      }).then((page) => page.results.map(mapProjectPreview))
+    })
   )
 
   // Add an search tool
@@ -245,22 +220,10 @@ export default (server) => {
         results: N.array(BLOG_ENTRY_OUTPUT_SCHEMA).describe('The list of blog entries'),
         },*/
     },
-    async ({ idOrSlug }, extras) => {
-      let results = {}
-      try {
-        const opts = mcpFetchOptions({}, extras)
-        const queryResult = await getBlogEntries(idOrSlug, opts)
-        results = queryResult.results.map(mapBlogEntry)
-      } catch (error) {
-        console.error('Error fetching project blog entries:', error)
-      }
-      const output = { results }
-      console.log('MCP TOOL CALLED: project-blog-entries', { idOrSlug, output })
-      return {
-        content: [{ type: 'text', text: JSON.stringify(output) }],
-        structuredContent: output,
-      }
-    }
+    resultFromTool(({ idOrSlug }, extras) => {
+      const opts = mcpOptions(extras)
+      return getBlogEntries(idOrSlug, opts).then((page) => page.results.map(mapBlogEntry))
+    })
   )
 
   // Add an search tool
@@ -275,21 +238,9 @@ export default (server) => {
       },
       /* outputSchema: { blog_entry: BLOG_ENTRY_OUTPUT_SCHEMA },*/
     },
-    async ({ idOrSlug, blogEntryId }, extras) => {
-      let results = {}
-      try {
-        const opts = mcpFetchOptions({}, extras)
-        const queryResult = await getBlogEntry(idOrSlug, blogEntryId, opts)
-        results = mapBlogEntry(queryResult)
-      } catch (error) {
-        console.error('Error fetching project blog entry:', error)
-      }
-      const output = { blog_entry: results }
-      // console.log('MCP TOOL CALLED: project-blog-entry', { idOrSlug, output })
-      return {
-        content: [{ type: 'text', text: JSON.stringify(output) }],
-        structuredContent: output,
-      }
-    }
+    resultFromTool(({ idOrSlug, blogEntryId }, extras) => {
+      const opts = mcpOptions(extras)
+      return getBlogEntry(idOrSlug, blogEntryId, opts).then((blog) => mapBlogEntry(blog))
+    })
   )
 }

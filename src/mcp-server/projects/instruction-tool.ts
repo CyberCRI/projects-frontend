@@ -1,6 +1,7 @@
 import { getAllInstructions, getInstruction } from '~/api/instruction.service'
+import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp'
 import type { InstructionModel } from '~/models/instruction.model'
-import { mcpFetchOptions, orgCode } from './base'
+import { mcpOptions, orgCode, resultFromTool } from './base'
 // import N from './zod-schema-utils'
 import { z } from 'zod'
 
@@ -25,7 +26,7 @@ const mapInstructionArticle = (i: InstructionModel) => ({
   item_type: 'instruction_article',
 })
 
-export default (server) => {
+export default (server: McpServer) => {
   // Add an search tool
   server.registerTool(
     'instructions-list',
@@ -39,22 +40,12 @@ export default (server) => {
           .describe('The list of instruction articles'),
           },*/
     },
-    async (_input, extras) => {
-      let results = {}
-      try {
-        const opts = mcpFetchOptions({}, extras)
-        const queryResult = await getAllInstructions(orgCode, opts)
-        results = queryResult.results.map(mapInstructionArticle)
-      } catch (error) {
-        console.error('Error fetching organization instructions list:', error)
-      }
-      const output = { results }
-      console.log('MCP TOOL CALLED: instructions-list', { output })
-      return {
-        content: [{ type: 'text', text: JSON.stringify(output) }],
-        structuredContent: output,
-      }
-    }
+    resultFromTool((_, extras) => {
+      const opts = mcpOptions(extras)
+      return getAllInstructions(orgCode, opts).then((pages) =>
+        pages.results.map(mapInstructionArticle)
+      )
+    })
   )
 
   // Add an search tool
@@ -71,21 +62,11 @@ export default (server) => {
         ),
         },*/
     },
-    async ({ slugOrId }, extras) => {
-      let results = {}
-      try {
-        const opts = mcpFetchOptions({}, extras)
-        const queryResult = await getInstruction(orgCode, slugOrId, opts)
-        results = mapInstructionArticle(queryResult)
-      } catch (error) {
-        console.error('Error fetching organization instruction item:', error)
-      }
-      const output = results
-      console.log('MCP TOOL CALLED: instruction-article', { output })
-      return {
-        content: [{ type: 'text', text: JSON.stringify(output) }],
-        structuredContent: output,
-      }
-    }
+    resultFromTool(({ slugOrId }, extras) => {
+      const opts = mcpOptions(extras)
+      return getInstruction(orgCode, slugOrId, opts).then((article) =>
+        mapInstructionArticle(article)
+      )
+    })
   )
 }
