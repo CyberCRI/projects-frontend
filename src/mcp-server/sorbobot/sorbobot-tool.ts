@@ -2,8 +2,8 @@ import type { SorbobotAuthor, SorbobotResponseData } from '~/mcp-server/sorbobot
 import { mcpOptions, resultFromTool } from '../projects/base'
 import SorbobotAPI from '~/mcp-server/sorbobot/sorbobot-api'
 import type { HarvesterType } from '~/interfaces/researcher'
-import type { TypeMcpServer } from '~/mcp-server/interface'
 import { searchResearcher } from '~/api/crisalid.service'
+import type { TypeMcpServer } from '~/interfaces/mcp'
 import { z } from 'zod'
 
 const runtimeConfig = useRuntimeConfig()

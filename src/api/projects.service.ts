@@ -25,7 +25,7 @@ export async function getAllProjects(config: ConfigProject = {}) {
   return await useAPI<PaginationResult<ProjectModel>>(`project/`, config)
 }
 
-export async function getProject(projectSlugOrId: ProjectSlugOrId, config = {}) {
+export async function getProject(projectSlugOrId: ProjectSlugOrId, config: ConfigProject = {}) {
   return await useAPI<ProjectModel>(`project/${projectSlugOrId}/`, config)
 }
 

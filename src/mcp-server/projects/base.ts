@@ -1,6 +1,6 @@
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
-import type { TypeMcpServer } from '~/mcp-server/interface'
 import { tokenMap } from '~/server/routes/api/chat-stream'
+import type { TypeMcpServer } from '~/interfaces/mcp'
 
 const runtimeConfig = useRuntimeConfig()
 export const orgCode = runtimeConfig.public.appApiOrgCode

@@ -1,13 +1,5 @@
-import type { $Fetch, FetchOptions } from 'ofetch'
+import type { $Fetch } from 'ofetch'
 import { ofetch } from 'ofetch'
-
-export const sorbobotCreateFetch = (config: FetchOptions = {}) =>
-  ofetch.create({
-    headers: {
-      'User-Agent': 'LpiProject-SorboBot/1.0',
-      ...(config.headers || {}),
-    },
-  })
 
 type SorbobotResponseSession = {
   data: {
@@ -34,9 +26,10 @@ export default class SorbobotAPI {
     this.sessionId = null
 
     // create base fetch
-    this.fetch = sorbobotCreateFetch({
+    this.fetch = ofetch.create({
       baseURL: apiUrl,
       headers: {
+        'User-Agent': 'LpiProject-SorboBot/1.0',
         'api-key': apiToken,
       },
     })

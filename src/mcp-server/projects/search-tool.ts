@@ -4,7 +4,7 @@ import { mapPeopleGroupPreview, mapUserPreview } from './people-tool'
 import { getAllTagsById } from '~/api/tag-classification.service'
 import type { Config } from '~/api/tag-classification.service'
 import { mcpOptions, orgCode, resultFromTool } from './base'
-import type { TypeMcpServer } from '~/mcp-server/interface'
+import type { TypeMcpServer } from '~/interfaces/mcp'
 import { mapProjectPreview } from './project-tool'
 import { z } from 'zod'
 

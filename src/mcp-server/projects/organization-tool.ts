@@ -1,7 +1,7 @@
 import { getFeaturedProjects, getOrganizationByCode } from '~/api/organizations.service'
 import { /*PROJECT_PREVIEW_OUTPUT_SCHEMA,*/ mapProjectPreview } from './project-tool'
 import { mcpOptions, orgCode, resultFromTool } from './base'
-import type { TypeMcpServer } from '~/mcp-server/interface'
+import type { TypeMcpServer } from '~/interfaces/mcp'
 // import N from './zod-schema-utils'
 // import { z } from 'zod'
 

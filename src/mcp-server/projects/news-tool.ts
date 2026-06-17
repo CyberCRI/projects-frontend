@@ -1,6 +1,6 @@
 import { mcpOptions, orgCode, resultFromTool } from './base'
-import type { TypeMcpServer } from '~/mcp-server/interface'
 import { getAllNews, getNews } from '~/api/news.service'
+import type { TypeMcpServer } from '~/interfaces/mcp'
 import type { NewsModel } from '~/models/news.model'
 // import N from './zod-schema-utils'
 import { z } from 'zod'

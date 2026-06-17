@@ -1,6 +1,6 @@
 import { mcpOptions, orgCode, resultFromTool } from './base'
-import type { TypeMcpServer } from '~/mcp-server/interface'
 import type { EventModel } from '~/models/event.model'
+import type { TypeMcpServer } from '~/interfaces/mcp'
 import { getAllEvents } from '~/api/event.service'
 import { nowDate } from '~/functs/date'
 // import N from './zod-schema-utils'

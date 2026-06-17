@@ -1,7 +1,7 @@
 import { usePublicURL } from '~/composables/usePublic'
 
 import { resultFromTool } from '~/mcp-server/projects/base'
-import type { TypeMcpServer } from '~/mcp-server/interface'
+import type { TypeMcpServer } from '~/interfaces/mcp'
 import { SDGS } from '~/functs/constants'
 import N from './zod-schema-utils'
 import { z } from 'zod'

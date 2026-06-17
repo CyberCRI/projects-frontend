@@ -1,7 +1,7 @@
 import { getAllInstructions, getInstruction } from '~/api/instruction.service'
 import type { InstructionModel } from '~/models/instruction.model'
 import { mcpOptions, orgCode, resultFromTool } from './base'
-import type { TypeMcpServer } from '~/mcp-server/interface'
+import type { TypeMcpServer } from '~/interfaces/mcp'
 // import N from './zod-schema-utils'
 import { z } from 'zod'
 

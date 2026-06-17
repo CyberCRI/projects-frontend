@@ -1,13 +1,33 @@
+import {
+  getLinkedProject,
+  getProject,
+  getProjectGroups,
+  getProjectMembers,
+  getProjectSimilars,
+} from '~/api/projects.service'
+import { mapPeopleGroupPreview, mapUserPreview } from '~/mcp-server/projects/people-tool'
 import type { ProjectCategoryModel } from '~/models/project-category.model'
+import { getProjectAttachmentLinks } from '~/api/attachment-links.service'
+import { getProjectAttachmentFiles } from '~/api/attachment-files.service'
+import type { AttachmentLinkModel } from '~/models/attachment-link.model'
+import type { AttachmentFileModel } from '~/models/attachment-file.model'
 import { getBlogEntries, getBlogEntry } from '~/api/blogentries.service'
-import { getProject, getProjectSimilars } from '~/api/projects.service'
+import { getProjectAnnouncements } from '~/api/announcements.service'
+import type { AnnouncementModel } from '~/models/announcement.model'
 import type { BlogEntryModel } from '~/models/blog-entry.model'
+import { getProjectLocations } from '~/api/locations.service'
+import type { LocationModel } from '~/models/location.model'
 import { mcpOptions, orgCode, resultFromTool } from './base'
-import type { TypeMcpServer } from '~/mcp-server/interface'
 import type { ProjectModel } from '~/models/project.model'
 import { /*SDG_OUTPUT_SCHEMA,*/ mapSDG } from './sdg-tool'
+import type { ReviewModel } from '~/models/review.model'
+import { getProjectGoals } from '~/api/goals.service'
+import type { TypeMcpServer } from '~/interfaces/mcp'
+import type { GoalModel } from '~/models/goal.model'
+import { getReviews } from '~/api/reviews.service'
 import { tagMapper } from './tag-schema'
 import N from './zod-schema-utils'
+import { pick } from 'es-toolkit'
 import { z } from 'zod'
 
 export const CATEGORY_PREVIEW_OUTPUT_SCHEMA = N.object({
@@ -39,16 +59,36 @@ export const PROJECT_PREVIEW_OUTPUT_SCHEMA = N.object({
   item_image: N.string().nullable().describe('The image URL of the project'),
 })
 
-export const mapProjectPreview = (p: ProjectModel) => ({
-  id: p.id,
-  slug: p.slug,
+export const mapProjectPreview = (project: ProjectModel) => ({
   item_type: 'project',
-  title: p.title,
-  purpose: p.purpose,
-  categories: (p.categories || []).map(categoryMapper),
-  link_url: `/projects/${p.slug}/`,
-  item_image: p.header_image?.variations?.small,
+  link_url: `/projects/${project.slug}/`,
+  id: project.id,
+  item_image: project.header_image?.variations?.small,
+  slug: project.slug,
+  title: project.title,
+  description: project.description,
+  sdgs: (project.sdgs || []).map(mapSDG),
+  purpose: project.purpose,
+  tags: (project.tags || []).map(tagMapper),
+  categories: (project.categories || []).map(categoryMapper),
+  views: project.views,
 })
+
+const mapGoalPreview = (goal: GoalModel) => pick(goal, ['id', 'title', 'description', 'status'])
+const mapReviewPreview = (review: ReviewModel) => ({
+  ...pick(review, ['id', 'title', 'description']),
+  reviewer: review.reviewer ? mapUserPreview(review.reviewer) : null,
+})
+const mapLocationPreview = (location: LocationModel) =>
+  pick(location, ['id', 'title', 'description', 'type', 'lat', 'lng'])
+const mapAnnouncementPreview = (announcement: AnnouncementModel) =>
+  pick(announcement, ['id', 'title', 'description', 'status', 'deadline', 'is_remunerated'])
+
+const mapLinkPreview = (link: AttachmentLinkModel) =>
+  pick(link, ['id', 'title', 'description', 'site_name', 'site_url'])
+const mapFilePreview = (file: AttachmentFileModel) =>
+  pick(file, ['id', 'title', 'description', 'file', 'mime'])
+
 /*
 const BLOG_ENTRY_OUTPUT_SCHEMA = N.object({
   id: N.number().describe('The ID of the blog entry'),
@@ -72,7 +112,7 @@ export default (server: TypeMcpServer) => {
     'project-general-data',
     {
       title: 'Project general data',
-      description: `Get main general data (description, purpose, tags, categories...) about a project given its id or slug. ${FETCH_PROJECT_SLUG_OR_ID}`,
+      description: `Get main general data (description, goals, blog entries, members...) about a project given its id or slug. ${FETCH_PROJECT_SLUG_OR_ID}`,
       inputSchema: { idOrSlug: z.string().describe('The id or slug of the project') },
       /*outputSchema: {
         project_data: PROJECT_PREVIEW_OUTPUT_SCHEMA.extend({
@@ -168,21 +208,70 @@ export default (server: TypeMcpServer) => {
         }),
       },*/
     },
-    resultFromTool(({ idOrSlug }, extras) => {
+    resultFromTool(async ({ idOrSlug }, extras) => {
       const opts = mcpOptions(extras)
-      return getProject(idOrSlug, opts).then((project) => ({
-        item_type: 'project',
-        link_url: `/projects/${project.slug}/`,
-        id: project.id,
-        item_image: project.header_image?.variations?.small,
-        slug: project.slug,
-        title: project.title,
-        description: project.description,
-        sdgs: (project.sdgs || []).map(mapSDG),
-        purpose: project.purpose,
-        tags: (project.tags || []).map(tagMapper),
-        categories: (project.categories || []).map(categoryMapper),
-        views: project.views,
+
+      const onError = (error) => {
+        console.error(error)
+        // return empty objects
+        return {}
+      }
+
+      /*
+       fetch all datas from projects
+       and contruct object with each key equal results
+      */
+
+      const datas = await Promise.all([
+        getProjectGoals(idOrSlug, opts)
+          .then((data) => ({ goals: data.results.map(mapGoalPreview) }))
+          .catch(onError),
+        getReviews(idOrSlug, opts)
+          .then((data) => ({ reviews: data.results.map(mapReviewPreview) }))
+          .catch(onError),
+        getProjectLocations(idOrSlug, opts)
+          .then((data) => ({ locations: data.map(mapLocationPreview) }))
+          .catch(onError),
+        getProjectAnnouncements(idOrSlug, opts)
+          .then((data) => ({ announcements: data.results.map(mapAnnouncementPreview) }))
+          .catch(onError),
+        getProjectAttachmentLinks(idOrSlug, opts)
+          .then((data) => ({ links: data.results.map(mapLinkPreview) }))
+          .catch(onError),
+        getProjectAttachmentFiles(idOrSlug, opts)
+          .then((data) => ({ files: data.results.map(mapFilePreview) }))
+          .catch(onError),
+        getBlogEntries(idOrSlug, opts)
+          .then((data) => ({ blogs: data.results.map(mapBlogEntry) }))
+          .catch(onError),
+        getLinkedProject(idOrSlug, opts)
+          .then((data) => ({ linked_project: data.results.map(mapProjectPreview) }))
+          .catch(onError),
+        getProjectMembers(idOrSlug, opts)
+          .then((data) => ({ members: data.results.map(mapUserPreview) }))
+          .catch(onError),
+        getProjectGroups(idOrSlug, opts)
+          .then((data) => ({ groups: data.results.map(mapPeopleGroupPreview) }))
+          .catch(onError),
+      ]).then((arr) => {
+        return arr.reduce(
+          (previous, now) => ({
+            ...previous,
+            ...now,
+          }),
+          {}
+        )
+      })
+
+      return getProject(idOrSlug, {
+        ...opts,
+        query: {
+          modules: 'none',
+        },
+      }).then((project) => ({
+        ...mapProjectPreview(project),
+        // add all modules
+        ...datas,
       }))
     })
   )
