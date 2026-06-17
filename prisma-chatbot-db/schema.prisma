@@ -111,9 +111,12 @@ model Agent {
 
   useLatestPromptVersion Boolean @default(true)
 
-  conversations  Conversation[]
-  sideAssistants SideAssistant[]
-  agentSlugAlias AgentSlugAlias[]
+  conversations     Conversation[]
+  sideAssistants    SideAssistant[]
+  agentSlugAlias    AgentSlugAlias[]
+  agentTranslations AgentTranslation[]
+
+  updatedAt DateTime @updatedAt
 
   @@unique([title, orgCode])
   @@unique([slug, orgCode])
@@ -132,6 +135,20 @@ model AgentSlugAlias {
 
   @@id([slug, agentId, orgCode])
   @@unique([slug, orgCode])
+}
+
+model AgentTranslation {
+  agentId Int
+  agent   Agent @relation(fields: [agentId], references: [id])
+
+  fieldName String
+  lang      String
+  content   String
+
+  updatedAt DateTime @updatedAt
+
+  @@id([agentId, fieldName, lang])
+  @@index([agentId])
 }
 
 model AgentSkillContent {
