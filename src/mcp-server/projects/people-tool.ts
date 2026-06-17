@@ -1,12 +1,13 @@
+import { addIfExists, tagMapPreview } from '~/mcp-server/projects/utils'
+import type { UserModel, UserSkillModel } from '~/models/user.model'
 import type { PeopleGroupModel } from '~/models/invitation.model'
 import { mcpOptions, orgCode, resultFromTool } from './base'
 import { getUser as fetchUser } from '~/api/people.service'
 import { /*SDG_OUTPUT_SCHEMA, */ mapSDG } from './sdg-tool'
 import type { TypeMcpServer } from '~/interfaces/mcp'
-import type { UserModel } from '~/models/user.model'
 import { getGroup } from '~/api/groups.service'
-import { tagMapper } from './tag-schema'
 import N from './zod-schema-utils'
+import { pick } from 'es-toolkit'
 import { z } from 'zod'
 
 export const FETCH_USER_SLUG_OR_ID =
@@ -27,16 +28,47 @@ export const USER_PREVIEW_OUTPUT_SCHEMA = N.object({
   item_image: N.string().describe('The image URL of the user profile'),
 })
 
-export const mapUserPreview = (u: UserModel) => ({
-  id: u.id,
-  slug: u.slug,
+const mapUserSkill = (skill: UserSkillModel) => ({
+  item_type: 'user_skill',
+  ...pick(skill, [
+    'id',
+    'level',
+    'level_to_reach',
+    'type',
+    'can_mentor',
+    'needs_mentor',
+    'comment',
+  ]),
+  tag: tagMapPreview(skill.tag),
+})
+
+// people_groups: (user.people_groups || []).map(mapPeopleGroupPreview),
+export const mapUserPreview = (user: UserModel) => ({
   item_type: 'user',
-  given_name: u.given_name,
-  family_name: u.family_name,
-  job: u.job,
-  email: u.email,
-  link_url: `/profile/${u.slug}/`,
-  item_image: u.profile_picture?.variations?.small,
+  link_url: `/profile/${user.slug}/`,
+  ...pick(user, [
+    'id',
+    'slug',
+    'given_name',
+    'family_name',
+    'job',
+    'email',
+    // this can be not exists, but add if exists
+    'is_superuser',
+    'short_description',
+    'description',
+    'facebook',
+    'linkedin',
+    'website',
+  ]),
+  item_image: user.profile_picture?.variations?.small,
+
+  // this can be not set, add it and convert it only if exists
+  ...addIfExists('skills', user, (skills: UserModel['skills']) => skills.map(mapUserSkill)),
+  ...addIfExists('sdgs', user, (sdgs: UserModel['sdgs']) => sdgs.map(mapSDG)),
+  ...addIfExists('people_groups', user, (groups: UserModel['people_groups']) =>
+    groups.map(mapPeopleGroupPreview)
+  ),
 })
 
 export const PEOPLE_GROUP_PREVIEW_OUTPUT_SCHEMA = N.object({
@@ -52,19 +84,18 @@ export const PEOPLE_GROUP_PREVIEW_OUTPUT_SCHEMA = N.object({
   item_image: N.string().describe('The image URL of the people group'),
 })
 
-export const mapPeopleGroupPreview = (g: PeopleGroupModel) => ({
-  id: g.id,
-  slug: g.slug,
+export const mapPeopleGroupPreview = (group: PeopleGroupModel) => ({
   item_type: 'people_group',
-  name: g.name,
-  short_description: g.short_description,
-  description: g.description,
-  email: g.email,
-  member_count: g.modules?.members || 0,
-  link_url: `/group/${g.slug}/`,
-  item_image: g.header_image?.variations?.small,
-  hierarchy: (g.hierarchy || []).map(mapPeopleGroupPreview),
-  children: (g.children || []).map(mapPeopleGroupPreview),
+  link_url: `/group/${group.slug}/`,
+  ...pick(group, ['id', 'slug', 'name', 'short_description', 'description', 'email']),
+  item_image: group.header_image?.variations?.small,
+  member_count: group.modules?.members || 0,
+  ...addIfExists('children', group, (data: PeopleGroupModel['children']) =>
+    data.map(mapPeopleGroupPreview)
+  ),
+  ...addIfExists('hierarchy', group, (data: PeopleGroupModel['hierarchy']) =>
+    data.map(mapPeopleGroupPreview)
+  ),
 })
 
 export default (server: TypeMcpServer) => {
@@ -111,35 +142,7 @@ export default (server: TypeMcpServer) => {
     },
     resultFromTool(({ idOrSlug }, extras) => {
       const opts = mcpOptions(extras)
-      return fetchUser(idOrSlug, opts).then((user) => ({
-        id: user.id,
-        item_type: 'user',
-        link_url: `/profile/${user.slug}/`,
-        item_image: user.profile_picture?.variations?.small,
-        slug: user.slug,
-        is_superuser: user.is_superuser,
-        people_groups: (user.people_groups || []).map(mapPeopleGroupPreview),
-        skills: (user.skills || []).map((s) => ({
-          id: s.id,
-          tag: tagMapper(s.tag),
-          level: s.level,
-          level_to_reach: s.level_to_reach,
-          type: s.type,
-          can_mentor: s.can_mentor,
-          needs_mentor: s.needs_mentor,
-          comment: s.comment,
-        })),
-        given_name: user.given_name,
-        family_name: user.family_name,
-        short_description: user.short_description,
-        description: user.description,
-        job: user.job,
-        email: user.email,
-        facebook: user.facebook,
-        linkedin: user.linkedin,
-        website: user.website,
-        sdgs: (user.sdgs || []).map(mapSDG),
-      }))
+      return fetchUser(idOrSlug, opts).then(mapUserPreview)
     })
   )
 

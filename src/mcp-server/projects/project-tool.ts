@@ -11,6 +11,7 @@ import { getProjectAttachmentLinks } from '~/api/attachment-links.service'
 import { getProjectAttachmentFiles } from '~/api/attachment-files.service'
 import type { AttachmentLinkModel } from '~/models/attachment-link.model'
 import type { AttachmentFileModel } from '~/models/attachment-file.model'
+import { addIfExists, tagMapPreview } from '~/mcp-server/projects/utils'
 import { getBlogEntries, getBlogEntry } from '~/api/blogentries.service'
 import { getProjectAnnouncements } from '~/api/announcements.service'
 import type { AnnouncementModel } from '~/models/announcement.model'
@@ -25,7 +26,6 @@ import { getProjectGoals } from '~/api/goals.service'
 import type { TypeMcpServer } from '~/interfaces/mcp'
 import type { GoalModel } from '~/models/goal.model'
 import { getReviews } from '~/api/reviews.service'
-import { tagMapper } from './tag-schema'
 import N from './zod-schema-utils'
 import { pick } from 'es-toolkit'
 import { z } from 'zod'
@@ -39,11 +39,9 @@ export const CATEGORY_PREVIEW_OUTPUT_SCHEMA = N.object({
 })
 
 export const categoryMapper = (c: ProjectCategoryModel) => ({
-  id: c.id,
-  slug: c.slug,
-  name: c.name,
   link_url: `/categories/${c.slug}/`,
   item_type: 'category',
+  ...pick(c, ['id', 'slug', 'name']),
 })
 
 export const PROJECT_PREVIEW_OUTPUT_SCHEMA = N.object({
@@ -62,32 +60,47 @@ export const PROJECT_PREVIEW_OUTPUT_SCHEMA = N.object({
 export const mapProjectPreview = (project: ProjectModel) => ({
   item_type: 'project',
   link_url: `/projects/${project.slug}/`,
-  id: project.id,
+  ...pick(project, ['id', 'slug', 'title', 'description', 'purpose', 'views']),
   item_image: project.header_image?.variations?.small,
-  slug: project.slug,
-  title: project.title,
-  description: project.description,
-  sdgs: (project.sdgs || []).map(mapSDG),
-  purpose: project.purpose,
-  tags: (project.tags || []).map(tagMapper),
-  categories: (project.categories || []).map(categoryMapper),
-  views: project.views,
+
+  ...addIfExists('sdgs', project, (data: ProjectModel['sdgs']) => data.map(mapSDG)),
+  ...addIfExists('tags', project, (data: ProjectModel['tags']) => data.map(tagMapPreview)),
+  ...addIfExists('categories', project, (data: ProjectModel['categories']) =>
+    data.map(categoryMapper)
+  ),
 })
 
-const mapGoalPreview = (goal: GoalModel) => pick(goal, ['id', 'title', 'description', 'status'])
+const mapGoalPreview = (goal: GoalModel) => ({
+  item_type: 'project_goal',
+  ...pick(goal, ['id', 'title', 'description', 'status']),
+})
 const mapReviewPreview = (review: ReviewModel) => ({
+  item_type: 'project_review',
   ...pick(review, ['id', 'title', 'description']),
   reviewer: review.reviewer ? mapUserPreview(review.reviewer) : null,
 })
-const mapLocationPreview = (location: LocationModel) =>
-  pick(location, ['id', 'title', 'description', 'type', 'lat', 'lng'])
-const mapAnnouncementPreview = (announcement: AnnouncementModel) =>
-  pick(announcement, ['id', 'title', 'description', 'status', 'deadline', 'is_remunerated'])
+const mapLocationPreview = (location: LocationModel) => ({
+  item_type: 'project_location',
+  ...pick(location, ['id', 'title', 'description', 'type', 'lat', 'lng']),
+})
+const mapAnnouncementPreview = (announcement: AnnouncementModel) => ({
+  item_type: 'project_announcement',
+  ...pick(announcement, ['id', 'title', 'description', 'status', 'deadline', 'is_remunerated']),
+})
 
-const mapLinkPreview = (link: AttachmentLinkModel) =>
-  pick(link, ['id', 'title', 'description', 'site_name', 'site_url'])
-const mapFilePreview = (file: AttachmentFileModel) =>
-  pick(file, ['id', 'title', 'description', 'file', 'mime'])
+const mapLinkPreview = (link: AttachmentLinkModel) => ({
+  item_type: 'project_link',
+  ...pick(link, ['id', 'title', 'description', 'site_name', 'site_url']),
+})
+const mapFilePreview = (file: AttachmentFileModel) => ({
+  item_type: 'project_file',
+  ...pick(file, ['id', 'title', 'description', 'file', 'mime']),
+})
+
+export const mapBlogEntry = (blog: BlogEntryModel) => ({
+  item_type: 'project_blog',
+  ...pick(blog, ['id', 'title', 'content']),
+})
 
 /*
 const BLOG_ENTRY_OUTPUT_SCHEMA = N.object({
@@ -99,12 +112,6 @@ const BLOG_ENTRY_OUTPUT_SCHEMA = N.object({
 
 export const FETCH_PROJECT_SLUG_OR_ID =
   'If you dont have the slug (given under "slug" or "id" key in a previous tool call data) or id of the project, use the search tool with the project name, the project id or slug will be in the first result, else use the previously mentioned slug or id.'
-
-export const mapBlogEntry = (b: BlogEntryModel) => ({
-  id: b.id,
-  title: b.title,
-  content: b.content,
-})
 
 export default (server: TypeMcpServer) => {
   // Add an search tool

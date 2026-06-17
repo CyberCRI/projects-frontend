@@ -3,6 +3,7 @@ import type { EventModel } from '~/models/event.model'
 import type { TypeMcpServer } from '~/interfaces/mcp'
 import { getAllEvents } from '~/api/event.service'
 import { nowDate } from '~/functs/date'
+import { pick } from 'es-toolkit'
 // import N from './zod-schema-utils'
 // import { z } from 'zod'
 /*
@@ -17,13 +18,9 @@ const EVENT_OUTPUT_SCHEMA = N.object({
 })
 */
 
-const mapEvent = (e: EventModel) => ({
-  id: e.id,
-  title: e.title,
-  content: e.content,
-  start_date: e.start_date,
-  end_date: e.end_date,
+const mapEvent = (event: EventModel) => ({
   item_type: 'event',
+  ...pick(event, ['id', 'title', 'content', 'start_date', 'end_date']),
 })
 
 export default (server: TypeMcpServer) => {

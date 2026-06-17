@@ -2,6 +2,7 @@ import { getAllInstructions, getInstruction } from '~/api/instruction.service'
 import type { InstructionModel } from '~/models/instruction.model'
 import { mcpOptions, orgCode, resultFromTool } from './base'
 import type { TypeMcpServer } from '~/interfaces/mcp'
+import { pick } from 'es-toolkit'
 // import N from './zod-schema-utils'
 import { z } from 'zod'
 
@@ -18,12 +19,9 @@ const INSTRUCTION_ARTICLE_OUTPUT_SCHEMA = N.object({
 })
 */
 
-const mapInstructionArticle = (i: InstructionModel) => ({
-  id: i.id,
-  title: i.title,
-  content: i.content,
-  publication_date: i.publication_date,
+const mapInstructionArticle = (instruction: InstructionModel) => ({
   item_type: 'instruction_article',
+  ...pick(instruction, ['id', 'title', 'content', 'publication_date']),
 })
 
 export default (server: TypeMcpServer) => {

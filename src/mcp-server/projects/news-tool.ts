@@ -2,6 +2,7 @@ import { mcpOptions, orgCode, resultFromTool } from './base'
 import { getAllNews, getNews } from '~/api/news.service'
 import type { TypeMcpServer } from '~/interfaces/mcp'
 import type { NewsModel } from '~/models/news.model'
+import { pick } from 'es-toolkit'
 // import N from './zod-schema-utils'
 import { z } from 'zod'
 /*
@@ -15,12 +16,9 @@ const NEWS_ARTICLE_OUTPUT_SCHEMA = N.object({
 })
 */
 
-const mapNewsArticle = (n: NewsModel) => ({
-  id: n.id,
-  title: n.title,
-  content: n.content,
-  publication_date: n.publication_date,
+const mapNewsArticle = (news: NewsModel) => ({
   item_type: 'news_article',
+  ...pick(news, ['id', 'title', 'content', 'publication_date']),
 })
 
 export default (server: TypeMcpServer) => {

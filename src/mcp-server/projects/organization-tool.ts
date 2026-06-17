@@ -31,6 +31,7 @@ export default (server: TypeMcpServer) => {
     resultFromTool((_, extras) => {
       const opts = mcpOptions(extras)
       return getOrganizationByCode(orgCode, opts).then((orgnization) => ({
+        item_type: 'organization',
         id: orgnization.id,
         code: orgnization.code,
         terms_and_conditions: orgnization.terms_and_conditions?.displayed_content || '',
