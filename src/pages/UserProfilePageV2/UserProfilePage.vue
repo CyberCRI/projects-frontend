@@ -19,7 +19,7 @@ watchEffect(async () => {
   if (!props.userId) {
     return
   }
-  const user = await getUser(props.userId.toString(), true)
+  const user = await getUser(props.userId.toString(), { noError: true })
   useLpiHead2({
     title: `${user.given_name} ${user.family_name}`,
     description: user.short_description,

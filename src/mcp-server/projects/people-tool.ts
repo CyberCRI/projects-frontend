@@ -1,8 +1,9 @@
-import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp'
 import type { PeopleGroupModel } from '~/models/invitation.model'
 import { mcpOptions, orgCode, resultFromTool } from './base'
+import type { TypeMcpServer } from '~/mcp-server/interface'
 import { getUser as fetchUser } from '~/api/people.service'
 import { /*SDG_OUTPUT_SCHEMA, */ mapSDG } from './sdg-tool'
+import type { UserModel } from '~/models/user.model'
 import { getGroup } from '~/api/groups.service'
 import { tagMapper } from './tag-schema'
 import N from './zod-schema-utils'
@@ -26,7 +27,7 @@ export const USER_PREVIEW_OUTPUT_SCHEMA = N.object({
   item_image: N.string().describe('The image URL of the user profile'),
 })
 
-export const mapUserPreview = (u: any) => ({
+export const mapUserPreview = (u: UserModel) => ({
   id: u.id,
   slug: u.slug,
   item_type: 'user',
@@ -66,7 +67,7 @@ export const mapPeopleGroupPreview = (g: PeopleGroupModel) => ({
   children: (g.children || []).map(mapPeopleGroupPreview),
 })
 
-export default (server: McpServer) => {
+export default (server: TypeMcpServer) => {
   // Add an search tool
   server.registerTool(
     'people-general-data',

@@ -1,5 +1,5 @@
-import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp'
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
+import type { TypeMcpServer } from '~/mcp-server/interface'
 import { tokenMap } from '~/server/routes/api/chat-stream'
 
 const runtimeConfig = useRuntimeConfig()
@@ -30,7 +30,7 @@ export function mcpOptions(extras: any = {}): UseApiOptions {
   }
 }
 
-type RegisterToolType = Parameters<McpServer['registerTool']>
+type RegisterToolType = Parameters<TypeMcpServer['registerTool']>
 type RegisterToolCallback = RegisterToolType[2]
 type OwnRegisterToolCallback = (...args: Parameters<RegisterToolCallback>) => Promise<any>
 

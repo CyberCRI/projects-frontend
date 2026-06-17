@@ -11,11 +11,12 @@ import { _adaptParamsToGetQuery } from '~/api/utils.service'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
 
+import type { UseApiOptions } from '~/composables/useAPI'
 import useAPI from '~/composables/useAPI'
 
 // New user service using projects API
-export async function getUser(userId: string | number, noError: boolean = false) {
-  return await useAPI<UserModel>(`user/${userId}/`, { noError: noError })
+export async function getUser(userId: string | number, config: UseApiOptions = {}) {
+  return await useAPI<UserModel>(`user/${userId}/`, config)
 }
 
 export async function postUser(payload: FormData) {

@@ -1,8 +1,8 @@
 import type { SorbobotAuthor, SorbobotResponseData } from '~/mcp-server/sorbobot/sorbobot-api'
-import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp'
 import { mcpOptions, resultFromTool } from '../projects/base'
 import SorbobotAPI from '~/mcp-server/sorbobot/sorbobot-api'
 import type { HarvesterType } from '~/interfaces/researcher'
+import type { TypeMcpServer } from '~/mcp-server/interface'
 import { searchResearcher } from '~/api/crisalid.service'
 import { z } from 'zod'
 
@@ -86,7 +86,7 @@ const sorbobotRewriteTopics = (topics: string[]) => {
   return Array.from(topicSet)
 }
 
-export default (server: McpServer) => {
+export default (server: TypeMcpServer) => {
   if (!sorbobotIsEnabled) {
     console.log('Sorbobot API not configured, skipping Sorbobot tool registration')
     return

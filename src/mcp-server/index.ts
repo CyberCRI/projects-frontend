@@ -3,6 +3,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import registerOrganizationTool from './projects/organization-tool'
 import registerInstructionTool from './projects/instruction-tool'
 import registerSorbobotTool from './sorbobot/sorbobot-tool'
+import type { TypeMcpServer } from '~/mcp-server/interface'
 import registerProjectTool from './projects/project-tool'
 import registerSearchTool from './projects/search-tool'
 import registerPeopleTool from './projects/people-tool'
@@ -20,7 +21,7 @@ function createMCPServer() {
   const server = new McpServer({
     name: 'demo-server',
     version: '1.0.0',
-  })
+  }) as TypeMcpServer
 
   // console.log(
   //   'Sorbobot config',

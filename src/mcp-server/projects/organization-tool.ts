@@ -1,11 +1,11 @@
 import { getFeaturedProjects, getOrganizationByCode } from '~/api/organizations.service'
 import { /*PROJECT_PREVIEW_OUTPUT_SCHEMA,*/ mapProjectPreview } from './project-tool'
-import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp'
 import { mcpOptions, orgCode, resultFromTool } from './base'
+import type { TypeMcpServer } from '~/mcp-server/interface'
 // import N from './zod-schema-utils'
 // import { z } from 'zod'
 
-export default (server: McpServer) => {
+export default (server: TypeMcpServer) => {
   // Add an search tool
   server.registerTool(
     'organization-data',

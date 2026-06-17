@@ -1,7 +1,7 @@
 import { usePublicURL } from '~/composables/usePublic'
 
-import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp'
 import { resultFromTool } from '~/mcp-server/projects/base'
+import type { TypeMcpServer } from '~/mcp-server/interface'
 import { SDGS } from '~/functs/constants'
 import N from './zod-schema-utils'
 import { z } from 'zod'
@@ -25,7 +25,7 @@ export const SDG_OUTPUT_SCHEMA = z.object({
   item_type: N.literal('sdg').describe('The type of the item, always sdg'),
 })
 
-export default (server: McpServer) => {
+export default (server: TypeMcpServer) => {
   // Add an search tool
   server.registerTool(
     'all-sdgs',

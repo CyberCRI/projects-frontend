@@ -1,5 +1,5 @@
-import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp'
 import { mcpOptions, orgCode, resultFromTool } from './base'
+import type { TypeMcpServer } from '~/mcp-server/interface'
 import { getAllNews, getNews } from '~/api/news.service'
 import type { NewsModel } from '~/models/news.model'
 // import N from './zod-schema-utils'
@@ -23,7 +23,7 @@ const mapNewsArticle = (n: NewsModel) => ({
   item_type: 'news_article',
 })
 
-export default (server: McpServer) => {
+export default (server: TypeMcpServer) => {
   // Add an search tool
   server.registerTool(
     'news-list',

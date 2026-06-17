@@ -1,7 +1,7 @@
 import { getAllInstructions, getInstruction } from '~/api/instruction.service'
-import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp'
 import type { InstructionModel } from '~/models/instruction.model'
 import { mcpOptions, orgCode, resultFromTool } from './base'
+import type { TypeMcpServer } from '~/mcp-server/interface'
 // import N from './zod-schema-utils'
 import { z } from 'zod'
 
@@ -26,7 +26,7 @@ const mapInstructionArticle = (i: InstructionModel) => ({
   item_type: 'instruction_article',
 })
 
-export default (server: McpServer) => {
+export default (server: TypeMcpServer) => {
   // Add an search tool
   server.registerTool(
     'instructions-list',

@@ -1,5 +1,5 @@
-import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp'
 import { mcpOptions, orgCode, resultFromTool } from './base'
+import type { TypeMcpServer } from '~/mcp-server/interface'
 import type { EventModel } from '~/models/event.model'
 import { getAllEvents } from '~/api/event.service'
 import { nowDate } from '~/functs/date'
@@ -26,7 +26,7 @@ const mapEvent = (e: EventModel) => ({
   item_type: 'event',
 })
 
-export default (server: McpServer) => {
+export default (server: TypeMcpServer) => {
   // Add an search tool
   server.registerTool(
     'future-events-list',

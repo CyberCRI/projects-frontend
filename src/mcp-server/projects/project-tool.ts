@@ -1,9 +1,9 @@
 import type { ProjectCategoryModel } from '~/models/project-category.model'
 import { getBlogEntries, getBlogEntry } from '~/api/blogentries.service'
 import { getProject, getProjectSimilars } from '~/api/projects.service'
-import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp'
 import type { BlogEntryModel } from '~/models/blog-entry.model'
 import { mcpOptions, orgCode, resultFromTool } from './base'
+import type { TypeMcpServer } from '~/mcp-server/interface'
 import type { ProjectModel } from '~/models/project.model'
 import { /*SDG_OUTPUT_SCHEMA,*/ mapSDG } from './sdg-tool'
 import { tagMapper } from './tag-schema'
@@ -66,7 +66,7 @@ export const mapBlogEntry = (b: BlogEntryModel) => ({
   content: b.content,
 })
 
-export default (server: McpServer) => {
+export default (server: TypeMcpServer) => {
   // Add an search tool
   server.registerTool(
     'project-general-data',

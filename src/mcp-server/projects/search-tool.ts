@@ -1,11 +1,11 @@
 import { SORBOBOT_EXTRA, sorbobotIsEnabled } from '../sorbobot/sorbobot-tool'
 import { searchAll, searchProjects, searchUser } from '~/api/search.service'
-import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp'
 import { mapPeopleGroupPreview, mapUserPreview } from './people-tool'
 import { getAllTagsById } from '~/api/tag-classification.service'
 import type { Config } from '~/api/tag-classification.service'
+import { mcpOptions, orgCode, resultFromTool } from './base'
+import type { TypeMcpServer } from '~/mcp-server/interface'
 import { mapProjectPreview } from './project-tool'
-import { mcpOptions, orgCode } from './base'
 import { z } from 'zod'
 
 export async function getAllTags(tagsId: number[], extras): Promise<number[]> {
@@ -19,7 +19,7 @@ export async function getAllTags(tagsId: number[], extras): Promise<number[]> {
     })
 }
 
-export default (server: McpServer) => {
+export default (server: TypeMcpServer) => {
   // Add an search tool
   server.registerTool(
     'search',
@@ -37,18 +37,16 @@ export default (server: McpServer) => {
         ).describe('The list of search results'),
       },*/
     },
-    async ({ queryTerms }, extras) => {
-      let results = []
-      try {
-        const opts = mcpOptions(extras)
-        const queryResult = await searchAll(queryTerms, {
-          ...opts,
-          query: {
-            limit: 12,
-            organizations: [orgCode],
-          },
-        })
-        results = queryResult.results.map((item) => {
+    resultFromTool(({ queryTerms }, extras) => {
+      const opts = mcpOptions(extras)
+      return searchAll(queryTerms, {
+        ...opts,
+        query: {
+          limit: 12,
+          organizations: [orgCode],
+        },
+      }).then((page) =>
+        page.results.map((item) => {
           switch (item.type) {
             case 'people_group':
               return mapPeopleGroupPreview(item.people_group)
@@ -58,16 +56,8 @@ export default (server: McpServer) => {
               return mapProjectPreview(item.project)
           }
         })
-      } catch (error) {
-        console.error('Error fetching search results:', error)
-      }
-      const output = { results } // skip pagination for simplicity
-      // console.log('MCP TOOL CALLED: search', { query, output })
-      return {
-        content: [{ type: 'text', text: JSON.stringify(output) }],
-        structuredContent: output,
-      }
-    }
+      )
+    })
   )
 
   // Add an projects search tool
@@ -87,35 +77,22 @@ export default (server: McpServer) => {
         results: N.array(PROJECT_PREVIEW_OUTPUT_SCHEMA).describe('The list of search results'),
       },*/
     },
-    async ({ queryTerms, tags, sdgs, members /*categories */ }, extras) => {
-      let tagIds: number[] = []
-      if (tags && tags.length > 0) {
-        tagIds = await getAllTags(tags, extras)
-      }
-      let results = []
-      try {
-        const opts = mcpOptions(extras)
-        const queryResult = await searchProjects(queryTerms, {
-          ...opts,
-          query: {
-            limit: 12,
-            organizations: [orgCode],
-            tags: tagIds || [],
-            sdgs: sdgs || [],
-            members: members || [],
-          },
+    resultFromTool(({ queryTerms, skills, sdgs }, extras) => {
+      return getAllTags(skills, extras)
+        .then((tagsId) => {
+          const opts = mcpOptions(extras)
+          return searchProjects(queryTerms, {
+            ...opts,
+            query: {
+              limit: 12,
+              organizations: [orgCode],
+              skills: tagsId || [],
+              sdgs: sdgs || [],
+            },
+          })
         })
-        results = queryResult.results.map((item) => mapProjectPreview(item.project))
-      } catch (error) {
-        console.error('Error fetching search results:', error)
-      }
-      const output = { results } // skip pagination for simplicity
-      // console.log('MCP TOOL CALLED: search', { query, output })
-      return {
-        content: [{ type: 'text', text: JSON.stringify(output) }],
-        structuredContent: output,
-      }
-    }
+        .then((page) => page.results.map((item) => mapProjectPreview(item.project)))
+    })
   )
 
   // Add an projects search tool
@@ -134,33 +111,21 @@ export default (server: McpServer) => {
         results: N.array(USER_PREVIEW_OUTPUT_SCHEMA).describe('The list of search results'),
         },*/
     },
-    async ({ queryTerms, skills, sdgs }, extras) => {
-      let tagIds: number[] = []
-      if (skills && skills.length > 0) {
-        tagIds = await getAllTags(skills, extras)
-      }
-      let results = []
-      try {
-        const opts = mcpOptions(extras)
-        const queryResult = await searchUser(queryTerms, {
-          ...opts,
-          query: {
-            limit: 12,
-            organizations: [orgCode],
-            skills: tagIds || [],
-            sdgs: sdgs || [],
-          },
+    resultFromTool(({ queryTerms, skills, sdgs }, extras) => {
+      return getAllTags(skills, extras)
+        .then((tagsId) => {
+          const opts = mcpOptions(extras)
+          return searchUser(queryTerms, {
+            ...opts,
+            query: {
+              limit: 12,
+              organizations: [orgCode],
+              skills: tagsId || [],
+              sdgs: sdgs || [],
+            },
+          })
         })
-        results = queryResult.results.map((item) => mapUserPreview(item.project))
-      } catch (error) {
-        console.error('Error fetching search results:', error)
-      }
-      const output = { results } // skip pagination for simplicity
-      // console.log('MCP TOOL CALLED: search', { query, output })
-      return {
-        content: [{ type: 'text', text: JSON.stringify(output) }],
-        structuredContent: output,
-      }
-    }
+        .then((page) => page.results.map((item) => mapUserPreview(item.user)))
+    })
   )
 }
