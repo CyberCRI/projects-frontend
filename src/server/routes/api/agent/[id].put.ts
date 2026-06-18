@@ -1,11 +1,8 @@
+import findSafeAgentSlug from '@/server/utils/find-safe-agent-slug.js'
 import checkAdminRights from '@/server/utils/check-admin-rights.js'
 import slugify from '@sindresorhus/slugify'
 
 function sendError(code, message) {
-  // setResponseStatus(event, code)
-  // return {
-  //   error: 'message',
-  // }
   throw createError({
     statusCode: code,
     message: message,
@@ -36,13 +33,45 @@ export default defineLazyEventHandler(() => {
     delete body.documents
 
     const agent = await chatbotPrisma.$transaction(async (tx) => {
+      const homonymous = await tx.agent.findFirst({
+        where: {
+          id: { not: id },
+          title: body.title,
+          orgCode: appApiOrgCode,
+        },
+      })
+      if (homonymous !== null) {
+        sendError(409, 'agents.title-already-used')
+      }
+
       const sideAssistant = await tx.sideAssistant.findFirst({
         where: { agentId: id, orgCode: appApiOrgCode },
       })
 
       if (sideAssistant && body.isEnabled === false) {
-        sendError(409, 'Agent is used as a side assistant')
+        sendError(409, 'agents.is-used-as-side-assistant')
       }
+
+      const oldAgent = await tx.agent.findUnique({
+        where: {
+          id: id,
+        },
+      })
+
+      body.slug = await findSafeAgentSlug(tx, id, body.slug, appApiOrgCode)
+
+      if (oldAgent && oldAgent.slug != body.slug) {
+        // TODO: delete old aliases based on lastAccess
+        await tx.agentSlugAlias.create({
+          data: {
+            slug: oldAgent.slug,
+            orgCode: appApiOrgCode,
+            agentId: oldAgent.id,
+            lastAccess: new Date(),
+          },
+        })
+      }
+
       return await tx.agent.update({
         where: {
           id: id,

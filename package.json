@@ -40,6 +40,7 @@
     "list-icons": "node ./utilities/list-icons.js",
     "autotranslate": "node ./utilities/autotranslate.js",
     "delete-keys": "node ./utilities/delete-keys.js",
+    "prisma-chatbot-db": "prisma --config ./prisma-chatbot-db/prisma-config.ts",
     "prisma-chatbot-db:generate": "prisma --config ./prisma-chatbot-db/prisma-config.ts generate"
   },
   "dependencies": {

@@ -3364,6 +3364,7 @@
     "confirm-restart-title": "Reinicia la conversa",
     "confirm-restart-content": "Vols iniciar una conversa nova?",
     "is-used-as-side-assistant": "Aquest agent s'utilitza actualment com a assistent secundari i no es pot desactivar.",
+    "title-already-used": "El títol ja l'utilitza un altre agent",
     "form": {
       "invalid": "El formulari està incomplet, si us plau, proporciona els camps requerits",
       "title-required": "El títol és obligatori",

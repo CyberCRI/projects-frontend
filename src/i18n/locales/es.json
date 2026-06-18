@@ -3364,6 +3364,7 @@
     "confirm-restart-title": "Reiniciar conversación",
     "confirm-restart-content": "¿Quieres iniciar una nueva conversación?",
     "is-used-as-side-assistant": "Este agente se utiliza actualmente como asistente secundario y no se puede desactivar.",
+    "title-already-used": "El título ya está siendo utilizado por otro agente",
     "form": {
       "invalid": "El formulario está incompleto, por favor proporcione los campos requeridos",
       "title-required": "El título es obligatorio",
