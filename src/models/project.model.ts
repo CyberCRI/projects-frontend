@@ -1,20 +1,16 @@
+import type {
+  ProjectCategoryModel,
+  ProjectCategoryOutput,
+  TranslatedProjectCategory,
+} from '@/models/project-category.model'
 import type { LanguageType, ProjectPublicationStatusType, ProjectStatusType } from '@/models/types'
-import type { ProjectTeamModel, ProjectTeamOutput } from '@/models/project-member.model'
 import type { OrganizationModel, OrganizationOutput } from '@/models/organization.model'
-import type { AnnouncementModel, AnnouncementOutput } from '@/models/announcement.model'
 import type { TemplateModel, TranslatedTemplate } from '@/models/template.model'
-import type { ProjectCategoryOutput } from '@/models/project-category.model'
-import type { AttachmentLinkOutput } from '@/models/attachment-link.model'
-import type { AttachmentFileOutput } from '@/models/attachment-file.model'
-import type { ImageModel, ImageOutput } from '@/models/image.model'
-import type { BlogEntryOutput } from '@/models/blog-entry.model'
+import type { TagModel, TagOutput, TranslatedTag } from '@/models/tag.model'
 import type { LocationOutput } from '@/models/location.model'
-import type { TagModel, TagOutput } from '@/models/tag.model'
-import type { CommentOutput } from '@/models/comment.model'
 import type { Translated } from '@/interfaces/translated'
-import type { FollowOutput } from '@/models/follow.model'
-import type { ReviewModel } from '@/models/review.model'
-import type { GoalOutput } from '@/models/goal.model'
+import type { IconImageChoice } from '@/functs/IconImage'
+import type { ImageModel } from '@/models/image.model'
 import type BaseModel from '@/models/base.model'
 
 /**
@@ -29,51 +25,88 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
   is_locked: boolean
   is_shareable: boolean
   purpose: string
-  categories: ProjectCategoryOutput[]
+  categories: ProjectCategoryModel[]
   organizations: OrganizationModel[]
   language: LanguageType
-  locations: LocationOutput[]
   publication_status: ProjectPublicationStatusType
   life_status: ProjectStatusType
-  reviews: ReviewModel[]
   tags: TagModel[]
   sdgs: number[]
   is_followed: {
     is_followed: boolean
     follow_id: number
   }
-  follows: FollowOutput[]
-  links: AttachmentLinkOutput[]
-  files: AttachmentFileOutput[]
-  announcements: AnnouncementOutput[]
-  blog_entries: BlogEntryOutput[]
-  goals: GoalOutput[]
   slug: string
   updated_at: string
   created_at: string
   views?: number
-  linked_projects: LinkedProject[]
-  team: ProjectTeamModel
+  modules: {
+    members: number
+    groups: number
+    linked_projects: number
+    similars: number
+    locations: number
+    comments: number
+    goals: number
+    blogs: number
+    announcements: number
+    links: number
+    files: number
+    reviews: number
+    messages: number
+  }
+  template?: TemplateModel
+}
+
+export type ProjectModulesKeys = keyof ProjectModel['modules']
+export type ProjectModuleExtra = ProjectModulesKeys | 'resources'
+
+export const ProjectModuleIcon: { [key in ProjectModuleExtra]: IconImageChoice } = {
+  announcements: 'BullhornOutline',
+  blogs: 'Progress5',
+  goals: 'TimerLine',
+  members: 'Users',
+  similars: 'Briefcase',
+  locations: 'Map',
+  links: 'Paperclip',
+  files: 'Globe',
+  resources: 'Globe',
+  linked_projects: 'LinkRotated',
+  comments: 'ChatBubble',
+  groups: 'PeopleGroup',
+  reviews: 'Feedback',
+  messages: 'ChatBubble',
+}
+
+export const ProjectModuleTitle: { [key in ProjectModuleExtra]: string } = {
+  announcements: 'home.announcements',
+  blogs: 'blog.title',
+  goals: 'goal.goals',
+  members: 'team.team',
+  similars: 'project.similars',
+  locations: 'project.add-to-project.location',
+  files: 'project.files',
+  links: 'project.links',
+
+  resources: 'resource.resources',
+
+  linked_projects: 'project.linked-projects',
+  comments: 'comment.comments',
+  groups: 'project.groups',
+  reviews: 'project.reviews',
+  messages: 'comment.private-exchange.tab',
 }
 
 export type TranslatedProject = Translated<
-  Omit<ProjectModel, 'template'>,
+  Omit<ProjectModel, 'template' | 'categories' | 'tags'>,
   'title' | 'description' | 'purpose'
 > & {
   template?: TranslatedTemplate
+  categories: TranslatedProjectCategory[]
+  tags: TranslatedTag[]
 }
 
 export type ProjectSlugOrId = ProjectModel['id'] | ProjectModel['slug']
-
-export type ProjectCreateInput = Required<ProjectModel> & {
-  project_categories_ids: number
-  tags?: number[]
-  sdgs?: number[]
-}
-
-export type ProjectPutInput = Required<ProjectCreateInput>
-
-export type ProjectPatchInput = Partial<ProjectCreateInput>
 
 export type LinkedProject = {
   id: number
@@ -91,36 +124,21 @@ export type LinkedProjectRef = {
   target_id: string
 }
 
-export type AddLinkedProjectInput = {
-  projects: LinkedProjectRef
-}
-
-export type AddManyLinkedProjectInput = {
-  projects: LinkedProjectRef[]
-}
+export type AddManyLinkedProjectInput = LinkedProjectRef[]
 
 export type RemoveLinkedProjectInput = {
   project_ids: string[]
 }
 
 export type ProjectOutput = Required<ProjectModel> & {
-  team: ProjectTeamOutput
   organizations: OrganizationOutput[]
   categories: ProjectCategoryOutput[]
   geolocation_coordinates: LocationOutput
   tags: TagOutput[]
   sdgs: number[]
-  goals: GoalOutput[]
-  links: AttachmentLinkOutput[]
-  files: AttachmentFileOutput[]
-  linked_projects: LinkedProject[]
-  images: ImageOutput[]
-  comments: CommentOutput[]
-  blog_entries: BlogEntryOutput[]
-  announcements: AnnouncementModel[]
+  images: ImageModel[]
   views: number
   template: TemplateModel
-  follows: FollowOutput[]
   slug: string
 }
 
@@ -131,4 +149,38 @@ export type ProjectHeaderOutput = {
   height: number
   width: number
   created_at: Date
+}
+
+export type ProjectForm = Partial<
+  Pick<
+    ProjectModel,
+    | 'id'
+    | 'title'
+    | 'purpose'
+    | 'language'
+    | 'description'
+    | 'sdgs'
+    | 'is_locked'
+    | 'is_shareable'
+    | 'publication_status'
+    | 'life_status'
+    | 'template'
+  > & {
+    imageSizes: any
+    file: ImageModel | File
+    organizations_codes: OrganizationModel['code'][]
+    categories: TranslatedProjectCategory | ProjectCategoryModel
+    categorie: TranslatedProjectCategory
+    project_categories_ids: TranslatedProjectCategory['id'][]
+    template_id: number
+    tags: TranslatedTag[]
+  }
+>
+
+export type AnyProject = ProjectModel | TranslatedProject
+
+export type QueryFilterProjectSimilars = {
+  // required in back
+  organizations: OrganizationModel['code'][]
+  threshold?: number
 }

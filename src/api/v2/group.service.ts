@@ -20,6 +20,7 @@ import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/ba
 import useAsyncPaginationAPI from '~/composables/useAsyncPaginationAPI'
 import useAsyncAPI from '~/composables/useAsyncAPI'
 
+import type { TranslatedGroupMember } from '~/models/group.model'
 import { onlyRefs } from '~/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}
@@ -96,6 +97,8 @@ export const getGroupMember = (
 ) => {
   const key = computed(() => `${unref(organizationCode)}::group::${unref(groupId)}::members`)
 
+  const { translateUsers } = useAutoTranslate()
+
   return useAsyncPaginationAPI(
     key,
     ({ config }) =>
@@ -104,6 +107,7 @@ export const getGroupMember = (
         ...config,
       }),
     {
+      translate: (data) => translateUsers<TranslatedGroupMember>(data),
       watch: onlyRefs([organizationCode, groupId]),
       ...config,
     }

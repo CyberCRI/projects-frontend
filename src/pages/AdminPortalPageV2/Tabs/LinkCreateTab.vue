@@ -123,15 +123,17 @@
     </div>
     <GroupSelectDrawer
       :is-opened="showGroupSelectDrawer"
+      :max-selected="1"
+      :selected-groups="selectedGroup ? [selectedGroup] : []"
+      max-auto-confirm
       @close="showGroupSelectDrawer = false"
-      @select-group="onGroupSelected"
+      @submit="onGroupSelected"
     />
   </div>
 </template>
 <script>
 import { postInvitation } from '~/api/invitations.service.ts'
 
-import GroupSelectDrawer from '~/components/group/GroupSelectDrawer/GroupSelectDrawer.vue'
 import DatePickerModal from '~/components/base/modal/DatePickerModal.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
@@ -139,6 +141,7 @@ import TextInput from '~/components/base/form/TextInput.vue'
 import DisplayDate from '~/components/base/DisplayDate.vue'
 import GroupCard from '~/components/group/GroupCard.vue'
 
+import GroupSelectDrawer from '~/components/drawer/Group/GroupSelectDrawer.vue'
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
 import useToasterStore from '~/stores/useToaster.ts'
 
@@ -210,9 +213,9 @@ export default {
       this.showDatePicker = false
     },
 
-    onGroupSelected(group) {
-      this.selectedGroup = group
-      this.form.people_group_id = group.id
+    onGroupSelected(groups) {
+      this.selectedGroup = groups?.[0]
+      this.form.people_group_id = this.selectedGroup?.id
       this.showGroupSelectDrawer = false
     },
 

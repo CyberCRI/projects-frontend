@@ -17,11 +17,16 @@ const emit = defineEmits(emitsDefinitions)
 // props
 const props = withDefaults(defineProps<PropsDefinitions>(), PropsDefault)
 
-const { editor, onDrop, resetContent, appendTranslationsStyle, initEditor, destroyEditor } =
+const { editor, onDrop, onBlur, resetContent, appendTranslationsStyle, initEditor, destroyEditor } =
   useTipTap({
     props,
     emit,
     t,
+    extraOptions: {
+      onBlur: (...args) => {
+        emit('blur', ...args)
+      },
+    },
   })
 
 // lifecycle
@@ -42,7 +47,7 @@ defineExpose({
 </script>
 
 <template>
-  <TipTapEditorContainer v-if="editor" :editor="editor" :mode="mode">
+  <TipTapEditorContainer v-if="editor" :editor="editor" :mode="mode" :errors="errors">
     <TipTapModals
       :editor="editor"
       :mode="mode"
@@ -54,6 +59,6 @@ defineExpose({
       @saved="emit('saved', $event)"
     />
 
-    <TipTapEditorContent :editor="editor" @drop="onDrop" />
+    <TipTapEditorContent :editor="editor" @drop="onDrop" @blur="onBlur" />
   </TipTapEditorContainer>
 </template>

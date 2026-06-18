@@ -26,12 +26,12 @@ const { query, setQuery, removeQuery } = useQuery<QueryFilterInstruction>({
   ordering: '-publication_date',
 })
 
-// if user as not right permissions, add filter from_date
+// if user as not right permissions, add filter to_date
 watchEffect(() => {
   if (!canEditInstruction.value && !canDeleteInstruction.value) {
-    setQuery('from_date', nowDate().toISOString())
+    setQuery('to_date', nowDate().toISOString())
   } else {
-    removeQuery('from_date')
+    removeQuery('to_date')
   }
 })
 

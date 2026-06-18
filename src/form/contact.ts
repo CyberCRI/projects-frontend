@@ -1,6 +1,6 @@
 import type { ContactModel } from '@/models/report.model'
 
-export const defaultForm = (): ContactModel => ({
+export const defaultContactForm = (): ContactModel => ({
   subject: '',
   email: '',
   content: '',

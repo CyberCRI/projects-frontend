@@ -1,10 +1,11 @@
 <script setup lang="ts" generic="TLocation extends AnyTranslatedLocation">
 import * as L from 'leaflet'
 
-import type { AnyLocation, AnyTranslatedLocation } from '@/models/location.model'
 import AllLocationPopUp from '@/components/map/AllLocationPopUp.vue'
+import type { AnyTranslatedLocation } from '@/models/location.model'
 import MarkerIcon from '@/components/map/MarkerIcon.vue'
 import type { LocationType } from '@/models/types'
+import { isEqual } from 'es-toolkit'
 
 const props = withDefaults(
   defineProps<{
@@ -47,7 +48,7 @@ const markerToRef = (locationType: LocationType) => {
   }
 }
 
-const locationToMarker = async (location: AnyLocation) => {
+const locationToMarker = async (location: TLocation) => {
   const svg = markerToRef(location.type)
   const popup = markerPopup.value
   const options = {
@@ -88,7 +89,12 @@ watchEffect(async () => {
 
   const markers = []
   for (const location of locations) {
-    markers.push(layers.get(location) || (await locationToMarker(location)))
+    const existsLayer = layers.get(location)
+    if (!existsLayer || !isEqual(existsLayer?.options?.location, location)) {
+      markers.push(await locationToMarker(location))
+    } else {
+      markers.push(existsLayer)
+    }
   }
 
   addLayers(markers)

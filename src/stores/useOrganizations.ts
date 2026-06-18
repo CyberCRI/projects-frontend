@@ -12,7 +12,7 @@ import {
 
 import useAutoTranslate from '~/composables/useAutoTranslate'
 
-import functions from '~/functs/functions'
+import { isDefaultPortal } from '~/functs/utils'
 import analytics from '~/analytics'
 import { defineStore } from 'pinia'
 
@@ -32,7 +32,7 @@ const useOrganizationsStore = defineStore('organizations', () => {
 
   const isAutoTranslate = computed(() => !!current.value?.auto_translate_content)
 
-  const isDefault = computed((): boolean => functions.isDefaultPortal(current.value?.code))
+  const isDefault = computed((): boolean => isDefaultPortal(current.value?.code))
 
   const languages = computed((): string[] => {
     return current.value?.languages || []

@@ -1,19 +1,15 @@
 <script setup lang="ts">
+import { helpers, required, decimal, between, integer, minValue } from '@vuelidate/validators'
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'
+import useValidate from '@vuelidate/core'
 
+const { html2md, md2html } = useMarkdown()
+const { appLlmModelSuggestions } = useRuntimeConfig().public
 const { t } = useNuxtI18n()
-const modelStrings = ref([
-  'openai:gpt-4o-mini',
-  'openai:gpt-4o',
-  'openai:gpt-5-nano',
-  'openai:gpt-5-mini',
-  'openai:gpt-5',
-  'openai:gpt-5.4-nano',
-  'openai:gpt-5.4-mini',
-  'openai:gpt-5.4',
-])
+const modelStrings = ref(appLlmModelSuggestions.split('|'))
 const props = defineProps({
   isOpened: {
     type: Boolean,
@@ -36,7 +32,7 @@ const defaultForm = (agent = null) => ({
   modelTemperature: agent?.modelTemperature ?? '',
   promptId: agent?.promptId ?? 0,
   promptVersion: agent?.promptVersion ?? 0,
-  startMessage: agent?.startMessage ?? '',
+  startMessage: md2html(agent?.startMessage ?? ''),
   skillContents:
     agent?.skillsContents?.map(({ skillId, skillVersion, useLatestSkillVersion }) => ({
       skillId,
@@ -44,9 +40,10 @@ const defaultForm = (agent = null) => ({
       useLatestSkillVersion,
     })) ?? [],
   documents:
-    agent?.documents?.map(({ documentTitle, vectorStoreKey }) => ({
+    agent?.documents?.map(({ documentTitle, vectorStoreKey, isGlobal }) => ({
       documentTitle,
       vectorStoreKey,
+      isGlobal,
     })) ?? [],
   useLatestPromptVersion: agent?.useLatestPromptVersion ?? true,
   useProfileData: agent?.useProfileData ?? false,
@@ -54,6 +51,27 @@ const defaultForm = (agent = null) => ({
 })
 
 const form = ref(defaultForm())
+
+const rules = computed(() => ({
+  title: {
+    required: helpers.withMessage(t('agents.form.title-required'), required),
+  },
+  modelName: {
+    required: helpers.withMessage(t('agents.form.model-name-required'), required),
+  },
+  modelTemperature: {
+    required: helpers.withMessage(t('agents.form.model-temperature-required'), required),
+    decimal: helpers.withMessage(t('agents.form.model-temperature-is-float'), decimal),
+    between: helpers.withMessage(t('agents.form.model-temperature-is-bounded'), between(0, 2)),
+  },
+  promptId: {
+    required: helpers.withMessage(t('agents.form.prompt-required'), required),
+    integer: helpers.withMessage(t('agents.form.prompt-required'), integer),
+    minValue: helpers.withMessage(t('agents.form.prompt-required'), minValue(1)),
+  },
+}))
+
+const v$ = useValidate(rules, form)
 
 const titleExists = ref(false)
 
@@ -136,57 +154,73 @@ const versionOptions = computed(() =>
 const { fetchAll: fetchDocuments } = useVectorStore()
 const documents = ref([])
 const documentOptions = ref([])
+const cannotDeactivate = ref(false)
 
 const isLoading = ref(false)
 watch(
   () => props.isOpened,
   async () => {
     isLoading.value = true
+    cannotDeactivate.value = !!props.agent?.sideAssistants?.length
     try {
-      prompts.value = await fetchPrompts()
-      documents.value = await fetchDocuments()
-      documentOptions.value = documents.value.map((document) => {
-        let opt = {
-          useDocument: false,
-        }
-        if (props.agent?.documents) {
-          const original = props.agent?.documents.find(
-            (d) => d.documentTitle == document.title && d.vectorStoreKey == document.vectorStoreKey
-          )
-          if (original) {
-            opt = {
-              useDocument: true,
-            }
-          }
-        }
+      await Promise.all([
+        (async () => {
+          prompts.value = await fetchPrompts()
+        })(),
 
-        return {
-          document,
-          model: opt,
-        }
-      })
-      skills.value = await fetchSkills()
-      skillOptions.value = skills.value.map((skill) => {
-        let opt = {
-          useSkill: false,
-          useLatestSkillVersion: true,
-          skillVersion: 0,
-        }
-        if (props.agent?.skillContents) {
-          const original = props.agent?.skillContents.find((s) => s.skillId == skill.id)
-          if (original) {
-            opt = {
-              useSkill: true,
-              useLatestSkillVersion: original.useLatestSkillVersion,
-              skillVersion: original.skillVersion,
+        (async () => {
+          documents.value = await fetchDocuments()
+          documentOptions.value = documents.value.map((document) => {
+            let opt = {
+              useDocument: false,
             }
-          }
-        }
-        return {
-          skill: skill,
-          model: opt,
-        }
-      })
+            if (props.agent?.documents) {
+              const original = props.agent?.documents.find(
+                (d) =>
+                  d.documentTitle == document.title &&
+                  d.vectorStoreKey == document.vectorStoreKey &&
+                  d.isGlobal == (document.org_code == '')
+              )
+              if (original) {
+                opt = {
+                  useDocument: true,
+                }
+              }
+            }
+
+            return {
+              document,
+              model: opt,
+            }
+          })
+        })(),
+
+        (async () => {
+          skills.value = await fetchSkills()
+          skillOptions.value = skills.value.map((skill) => {
+            let opt = {
+              useSkill: false,
+              useLatestSkillVersion: true,
+              skillVersion: 0,
+            }
+            if (props.agent?.skillContents) {
+              const original = props.agent?.skillContents.find((s) => s.skillId == skill.id)
+              if (original) {
+                opt = {
+                  useSkill: true,
+                  useLatestSkillVersion: original.useLatestSkillVersion,
+                  skillVersion: original.skillVersion,
+                }
+              }
+            }
+            return {
+              skill: skill,
+              model: opt,
+            }
+          })
+        })(),
+      ])
+
       form.value = defaultForm(props.agent)
       tiptapId.value = 'TipTapEditor'
       tted.value?.resetContent()
@@ -209,7 +243,13 @@ const isAsyncing = ref(false)
 const close = () => emit('close')
 
 const submit = async () => {
+  const isValid = await v$.value.$validate()
+  if (!isValid) {
+    toaster.pushError(t('agents.form.invalid'))
+    return
+  }
   isAsyncing.value = true
+  let finallyClose = true
 
   let headers = {}
   const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
@@ -230,29 +270,43 @@ const submit = async () => {
     .map((o) => ({
       documentTitle: o.document.title,
       vectorStoreKey: o.document.vectorStoreKey,
+      isGlobal: o.document.org_code == '',
     }))
 
   try {
-    console.log('save', isEdit.value)
+    const body = { ...form.value, startMessage: html2md(form.value.startMessage) }
     if (isEdit.value) {
-      await $fetch(`/api/agent/${props.agent.id}`, {
-        method: 'put',
-        body: form.value,
+      await $fetch(`/api/agent/${props.agent.id}/`, {
+        method: 'put' as any, // weird issue with ts here :/
+        body,
         headers,
       })
     } else {
-      await $fetch('/api/agent/', { method: 'post', body: form.value, headers })
+      await $fetch('/api/agent/', {
+        method: 'post',
+        body,
+        headers,
+      })
     }
 
     toaster.pushSuccess(t(isEdit.value ? 'agents.edit-success' : 'agents.create-success'))
     emit(isEdit.value ? 'entity-updated' : 'entity-created')
   } catch (e) {
-    toaster.pushError(
-      t(isEdit.value ? 'agents.edit-error' : 'agents.create-error') + ' ' + e.toString()
-    )
+    console.dir(e)
+    const defaultErrorMessage = isEdit.value ? 'agents.edit-error' : 'agents.create-error'
+    if (e?.data?.statusCode === 409) {
+      finallyClose = false
+      if (e?.data?.message == 'agents.is-used-as-side-assistant') {
+        cannotDeactivate.value = true
+        form.value.isEnabled = true
+      }
+      toaster.pushError(t(e?.data?.message || defaultErrorMessage))
+    } else {
+      toaster.pushError(t(defaultErrorMessage))
+    }
   } finally {
     isAsyncing.value = false
-    close()
+    if (finallyClose) close()
   }
 }
 </script>
@@ -276,13 +330,21 @@ const submit = async () => {
         <TextInput
           v-model.trim="form.title"
           :label="$t('agents.title')"
-          :disabled="isEdit"
           @change="titleExists = false"
+          @blur="v$.title.$validate"
         />
         <p v-if="titleExists" class="error">{{ $t('agents.title-exists') }}</p>
+        <FieldErrors :errors="v$.title.$errors" />
       </div>
       <div class="form-section">
-        <lpiCheckbox v-model="form.isEnabled" :label="$t('agents.is-enabled')" />
+        <lpiCheckbox
+          v-model="form.isEnabled"
+          :label="$t('agents.is-enabled')"
+          :disabled="cannotDeactivate"
+        />
+        <p v-if="cannotDeactivate" class="warn-notice">
+          {{ $t('agents.is-used-as-side-assistant') }}
+        </p>
       </div>
       <label>{{ $t('agents.description') }}</label>
       <div class="form-section">
@@ -307,10 +369,17 @@ const submit = async () => {
           v-model.trim="form.modelName"
           :label="$t('agents.model-name')"
           suggestion-list-id="modelStrings"
+          @blur="v$.modelName.$validate"
         />
+        <FieldErrors :errors="v$.modelName.$errors" />
       </div>
       <div class="form-section">
-        <TextInput v-model.trim="form.modelTemperature" :label="$t('agents.model-temperature')" />
+        <TextInput
+          v-model.trim="form.modelTemperature"
+          :label="$t('agents.model-temperature')"
+          @blur="v$.modelTemperature.$validate"
+        />
+        <FieldErrors :errors="v$.modelTemperature.$errors" />
       </div>
       <div class="form-section">
         <h4 class="form-section-title">{{ $t('agents.prompt-section') }}</h4>
@@ -318,7 +387,9 @@ const submit = async () => {
           v-model="form.promptId"
           :options="promptOptions"
           :placeholder="$t('agents.prompt-placeholder')"
+          @blur="v$.promptId.$validate"
         />
+        <FieldErrors :errors="v$.promptId.$errors" />
       </div>
       <div v-if="form.promptId" class="form-section">
         <lpiCheckbox
@@ -340,7 +411,11 @@ const submit = async () => {
       </div>
       <h4 class="form-section-title">{{ $t('agents.start-message-section') }}</h4>
       <div class="form-section">
-        <TextInput v-model.trim="form.startMessage" input-type="textarea" label="" rows="5" />
+        <TipTapEditor
+          v-model.trim="form.startMessage"
+          class="input-field content-editor"
+          mode="medium"
+        />
       </div>
       <h4 class="form-section-title">{{ $t('agents.tools-section') }}</h4>
       <div class="form-section">
@@ -357,7 +432,13 @@ const submit = async () => {
       <div class="form-section agent-documents-section">
         <AgentDocumentPicker
           v-for="opt in documentOptions"
-          :key="opt.document.vectorStoreKey + '-' + opt.document.id"
+          :key="
+            opt.document.vectorStoreKey +
+            '-' +
+            opt.document.id +
+            '-' +
+            (opt.document.isGlobal ? 'global' : 'local')
+          "
           v-model="opt.model"
           :document="opt.document"
         />
@@ -413,5 +494,15 @@ const submit = async () => {
 .loader {
   margin-top: 3rem;
   margin-inline: auto;
+}
+
+.warn-notice {
+  display: block;
+  border-left: 2px solid $salmon;
+  padding-left: 1rem;
+  margin-left: 0.5rem;
+  margin-bottom: 1rem;
+  padding-block: 4px;
+  font-style: italic;
 }
 </style>

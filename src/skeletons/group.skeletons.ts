@@ -1,7 +1,8 @@
 import type { PeopleGroupModel } from '~/models/invitation.model'
 import type { GroupMember } from '~/models/group.model'
 
-export const groupSkeleton = (def?: Partial<PeopleGroupModel>): Omit<PeopleGroupModel, 'id'> => ({
+export const groupSkeleton = (def?: Partial<PeopleGroupModel>): PeopleGroupModel => ({
+  id: -1,
   slug: 'slug',
   name: 'name',
   description: 'Esse culpa qui quis ea aliqua commodo reprehenderit minim elit dolore amet Lorem.',
@@ -9,6 +10,7 @@ export const groupSkeleton = (def?: Partial<PeopleGroupModel>): Omit<PeopleGroup
     'Esse culpa qui quis ea aliqua commodo reprehenderit minim elit dolore amet Lorem.',
   email: '',
   type: 'type',
+  role: 'owner_groups',
   header_image: null,
   publication_status: 'public',
   organization: null,
@@ -51,7 +53,6 @@ export const memberSkeleton = (def?: Partial<GroupMember>): Omit<GroupMember, 'i
     files: 0,
     links: 0,
   },
-  is_manager: false,
-  is_leader: false,
+  role: 'members',
   ...def,
 })

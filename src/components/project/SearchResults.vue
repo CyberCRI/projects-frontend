@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { searchAll, searchGroupsAlgolia, searchProjects, searchUser } from '~/api/search.service'
+import { searchAll, searchGroups, searchProjects, searchUser } from '~/api/search.service'
 
 import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
 
@@ -24,7 +24,7 @@ import useOrganizationsStore from '~/stores/useOrganizations.ts'
 import useAPI from '~/composables/useAPI.ts'
 
 import { searchEquals } from '~/functs/search.ts'
-import { debounce } from 'es-toolkit'
+import { debounce, omit } from 'es-toolkit'
 
 export default {
   name: 'SearchResults',
@@ -112,21 +112,19 @@ export default {
 
     loadProjects: debounce(async function (specificPageIndex = null) {
       if (!import.meta.client) return
-      const filters = {
-        ...this.search,
+      const query = {
+        ...omit(this.search, ['search']),
         organizations: [this.organizationsStore.current.code],
       }
-
-      const query = filters.search ? encodeURIComponent(filters.search) : null
-      delete filters.search
+      const search = this.search.search
 
       // if we forced a page (on page load only)
       // manually compute offset
-      const page = parseInt(filters.page || 1)
+      const page = parseInt(query.page || 1)
       if (page > 1) {
-        filters['offset'] = (page - 1) * filters.limit
+        query['offset'] = (page - 1) * query.limit
       }
-      delete filters.page
+      delete query.page
 
       // memoize request order
       // to only update with response to the last one
@@ -139,17 +137,13 @@ export default {
       if (specificPageIndex) {
         response = await useAPI(specificPageIndex, {})
       } else if (this.mode === 'projects') {
-        response = await searchProjects(query, filters)
+        response = await searchProjects(search, { query })
       } else if (this.mode === 'groups') {
-        response = await searchGroupsAlgolia(query, filters)
+        response = await searchGroups(search, { query })
       } else if (this.mode === 'people') {
-        response = await searchUser(query, filters)
+        response = await searchUser(search, { query })
       } else {
-        // assume mode === 'global'
-        response = await searchAll(query, {
-          limit: 30,
-          ...filters,
-        })
+        response = await searchAll(search, { query })
       }
       // update with the ltest request result
       // to fix concurrency issue when multiple request fired

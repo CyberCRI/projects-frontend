@@ -1,8 +1,8 @@
 import type { ProjectCategoryModel } from '~/models/project-category.model'
 import type { OrganizationModel } from '~/models/organization.model'
+import type { TagModel, TranslatedTag } from '~/models/tag.model'
 import type { Translated } from '~/interfaces/translated'
 import type { ImageModel } from '~/models/image.model'
-import type { TagModel } from '~/models/tag.model'
 import type { LanguageType } from '~/models/types'
 import type BaseModel from '~/models/base.model'
 
@@ -31,22 +31,29 @@ export interface TemplateModel extends BaseModel {
   comment_content: string
 }
 
-export type TranslatedTemplate = Translated<
-  TemplateModel,
-  | 'name'
-  | 'description'
-  | 'project_title'
-  | 'project_description'
-  | 'project_purpose'
-  | 'project_tags'
-  | 'blogentry_title'
-  | 'blogentry_content'
-  | 'goal_title'
-  | 'goal_description'
-  | 'review_title'
-  | 'review_description'
-  | 'comment_content'
->
+export type TemplateId = TemplateModel['id']
+
+export type TranslatedTemplate = Omit<
+  Translated<
+    TemplateModel,
+    | 'name'
+    | 'description'
+    | 'project_title'
+    | 'project_description'
+    | 'project_purpose'
+    | 'project_tags'
+    | 'blogentry_title'
+    | 'blogentry_content'
+    | 'goal_title'
+    | 'goal_description'
+    | 'review_title'
+    | 'review_description'
+    | 'comment_content'
+  >,
+  'project_tags'
+> & {
+  project_tags: TranslatedTag[]
+}
 
 export type TemplateCreateInput = Required<TemplateModel> & {
   project_categories_ids: number[]

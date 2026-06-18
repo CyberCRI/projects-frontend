@@ -1,11 +1,11 @@
 import useUsersStore from '@/stores/useUsers'
 
-import sdgJson from '@/data/sdgs.json'
+import { SDGS } from '~/functs/constants'
 // gloabls !
 const _allowProfile = ref(false)
 const _allowCurrentPage = ref(false)
 
-export default function useChatbotContext({ hasUserContext, hasPageContext }) {
+export default function useChatbotContext({ hasUserContext, hasPageContext, contextMessageRole }) {
   const usersStore = useUsersStore()
 
   const allowProfile = computed(() => unref(hasUserContext) && _allowProfile.value)
@@ -19,12 +19,14 @@ export default function useChatbotContext({ hasUserContext, hasPageContext }) {
     }
   }
 
+  const userContextPrefix =
+    '# Use the following information about the user to tailor your response toward the user interests'
   const userContext = computed(() => {
     const user = usersStore.userFromApi
     if (!user || !allowProfile.value) return ''
     // TODO: groups and projects
     return `
-    # Use the following information about the user to tailor your response toward the user interests
+    ${userContextPrefix}
     - Name: ${user.family_name} ${user.given_name}
     - Pronouns: ${user.pronouns}
     - Job: ${user.job}
@@ -33,7 +35,7 @@ export default function useChatbotContext({ hasUserContext, hasPageContext }) {
     - Short description: ${user.short_description}
     - Description: ${user.description}
     - SDGs of interest: ${user.sdgs
-      .map((sid) => sdgJson[sid - 1])
+      .map((sid) => SDGS[sid - 1])
       .filter((s) => !!s)
       .map((s) => s.title + ' - ' + s.description)
       .join('; ')}
@@ -68,6 +70,10 @@ export default function useChatbotContext({ hasUserContext, hasPageContext }) {
     else return ''
   })
 
+  const computePageContextMetaPrefix = '# here are some meta information about the current page'
+  const computePageContextPrefix =
+    '# Here is the content of the current page, use it as a context for your responses'
+
   const computePageContext = () => {
     let res = ''
     const pageMeta = route.matched
@@ -76,11 +82,11 @@ export default function useChatbotContext({ hasUserContext, hasPageContext }) {
       .join('\n')
 
     if (pageMeta)
-      res += `# here are some meta information about the current page
+      res += `${computePageContextMetaPrefix}
         ${pageMeta}
       `
     if (import.meta.client) {
-      res += `# Here is the content of the current page, use it as a context for your responses:
+      res += `${computePageContextPrefix}:
         ${document.querySelector('.main-view')?.textContent || ''}
         `
       pageContextData.value = res
@@ -88,14 +94,20 @@ export default function useChatbotContext({ hasUserContext, hasPageContext }) {
   }
   const contextMessages = computed(() => [
     {
-      role: 'assistant',
+      role: contextMessageRole || 'assistant',
       text: userContext.value,
     },
     {
-      role: 'assistant',
+      role: contextMessageRole || 'assistant',
       text: pageContext.value,
     },
   ])
+
+  function filterContextMesssages(message) {
+    return ![userContextPrefix, computePageContextMetaPrefix, computePageContextPrefix].some(
+      (contextPrefix) => (message.content || '').trim().startsWith(contextPrefix)
+    )
+  }
 
   return {
     allowProfile,
@@ -104,5 +116,9 @@ export default function useChatbotContext({ hasUserContext, hasPageContext }) {
     updateAllowCurrentPage,
     computePageContext,
     contextMessages,
+    userContextPrefix,
+    computePageContextMetaPrefix,
+    computePageContextPrefix,
+    filterContextMesssages,
   }
 }

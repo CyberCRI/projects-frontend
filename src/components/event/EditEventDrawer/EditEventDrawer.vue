@@ -29,7 +29,7 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import useToasterStore from '~/stores/useToaster'
 
-import { defaultForm } from '~/form/event'
+import { defaultEventForm } from '~/form/event'
 
 const props = withDefaults(
   defineProps<{
@@ -48,7 +48,7 @@ const { t } = useNuxtI18n()
 const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()
 
-const form = ref(defaultForm())
+const form = ref(defaultEventForm())
 const asyncing = ref(false)
 const invalid = ref(false)
 
@@ -69,7 +69,7 @@ watch(
           : event.people_groups,
       }
     } else {
-      form.value = defaultForm()
+      form.value = defaultEventForm()
     }
   },
   { immediate: true }

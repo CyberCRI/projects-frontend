@@ -1,4 +1,6 @@
+import type { ProjectSlugOrId } from '~/models/project.model'
 import type { Translated } from '@/interfaces/translated'
+import type { ImageModel } from '~/models/image.model'
 import type { UserModel } from '@/models/user.model'
 import type { Ordering } from '@/interfaces/query'
 import type BaseModel from '@/models/base.model'
@@ -30,6 +32,16 @@ export type ProjectMessageInputModel = Required<ProjectMessageModel> & {
   project_id: string
   project_message_id: string
 }
+
+export type ProjectMessageForm = Partial<{
+  id: number
+  content: string
+  project_id: ProjectSlugOrId
+  images_ids: ImageModel['id'][]
+  reply_on: number
+  // TODO need this ?
+  reply_on_id: number
+}>
 
 export type ProjectMessageOutput = Required<ProjectMessageModel> & {
   replies: Array<ProjectMessageModel>

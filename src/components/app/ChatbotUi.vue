@@ -1,18 +1,31 @@
 <script setup>
 import useUsersStore from '@/stores/useUsers.ts'
-import { shuffle } from 'es-toolkit'
+// import { shuffle } from 'es-toolkit'
 import analytics from '@/analytics'
 import 'deep-chat'
 
+const { isAdmin } = usePermissions()
 const { t } = useI18n()
 const router = useRouter()
 const props = defineProps({
   contextMessages: { type: Array, default: () => [] },
   endpoint: { type: String, required: true },
   startMessage: { type: String, default: '' },
+  history: { type: Array, default: () => [] },
+  // Beware : it in fact threadId
+  // TODO: rename when legacy (non langchain) agent code will be removed
+  conversationId: { type: String, default: null },
+  agentSlug: { type: String, default: null },
+  realConversationId: { type: String, default: null },
 })
 
-const emit = defineEmits(['close', 'start-conversation'])
+const emit = defineEmits([
+  'close',
+  'start-conversation',
+  'conversation-restarted',
+  'new-message',
+  'on-component-render',
+])
 
 const IS_STREAMED = ref(!useRuntimeConfig().public.appChatbotWithoutStream)
 const CHAT_ENDPOINT = ref(props.endpoint)
@@ -40,9 +53,9 @@ const chatStyle = ref({
   width: '100%',
 })
 
-const conversationId = ref(null)
+const conversationId = ref(props.conversationId)
 const conversation = useState('chat-box', () => [])
-const history = ref([])
+const history = ref(props.history)
 
 const chatBox = useTemplateRef('deep-chat')
 
@@ -65,14 +78,19 @@ if (props.startMessage) {
   addToConversation(welcoming[0])
 }
 
-const conversationStarted = ref(false)
+const conversationStarted = ref(!!props.history?.length)
+// TODO this is a bit hackish/brittle
+if (!conversationStarted.value) {
+  history.value = welcoming
+}
+
 const requestInterceptor = (requestDetails) => {
   const allMessages = conversationStarted.value
     ? // Server maintains full history via LangGraph checkpointer — only send the new message
       [requestDetails.body.messages[requestDetails.body.messages.length - 1]]
     : // but initial request has also context messages
       [...props.contextMessages, ...welcoming, ...requestDetails.body.messages]
-
+  // console.log('allMessages', allMessages)
   conversationStarted.value = true
   addToConversation(...allMessages)
   requestDetails.body.messages = allMessages
@@ -127,12 +145,15 @@ const spinnerMD = `![](data:image/svg+xml;base64,${btoa(spinner)}) `
 // to handle 'meta' messages get replaced by next message
 let replacedByNext = false
 const responseInterceptor = (response) => {
-  //console.log('ChatBotDrawer responseInterceptor', response)
+  // console.log('ChatBotDrawer responseInterceptor', response)
   if (response.role === 'meta') {
-    let text = spinnerMD + t(`chatbot.${response.text}`)
-    if (response.is_done) {
-      text = ''
+    let text = spinnerMD + '*' + t(`chatbot.${response.text}`) + '*'
+    if (response.text_extra) {
+      text += ` ${response.text_extra}`
     }
+    // if (response.is_done) {
+    //   text = ''
+    // }
     replacedByNext = true
     return {
       text: text,
@@ -152,7 +173,9 @@ const responseInterceptor = (response) => {
   conversationId.value = response.conversationId
   const overwrite = replacedByNext
   // no way to know when a true message begin, so just assume next is not overwrite
-  replacedByNext = false
+  // BUT if first message is empty text it mess up replaceByNext...
+  if (response.text) replacedByNext = false
+  // console.log('meta overwrite', replacedByNext)
   return { ...response, overwrite }
 }
 
@@ -165,15 +188,16 @@ const htmlWrappers = ref({
     </div>`,
 })
 
-const runtimeConfig = useRuntimeConfig()
-const chatExemples = (runtimeConfig.public.appChatbotExemples || '')
-  .split('§')
-  .filter((s) => !!s && s.trim().length)
+// const runtimeConfig = useRuntimeConfig()
+// const chatExemples = (runtimeConfig.public.appChatbotExemples || '')
+//   .split('§')
+//   .filter((s) => !!s && s.trim().length)
 
-const setExemples = () => shuffle(chatExemples).slice(0, 3)
+// const setExemples = () => shuffle(chatExemples).slice(0, 3)
 
-const suggestButtons = ref(setExemples())
+// const suggestButtons = ref(setExemples())
 
+/*
 function placeCaretAtEnd(el) {
   // https://stackoverflow.com/questions/4233265/contenteditable-set-caret-at-the-end-of-the-text-cross-browser
   el.focus()
@@ -190,7 +214,9 @@ function placeCaretAtEnd(el) {
     textRange.collapse(false)
     textRange.select()
   }
-}
+}*/
+
+/*
 const onSuggestButtonClick = (buttonText) => {
   if (chatBox.value) {
     console.log(chatBox.value.textInput)
@@ -199,6 +225,7 @@ const onSuggestButtonClick = (buttonText) => {
     placeCaretAtEnd(inputBox)
   }
 }
+*/
 
 const textInputOptions = computed(() => ({
   placeholder: { text: placeholderText.value },
@@ -216,16 +243,52 @@ const textInputOptions = computed(() => ({
   },
 }))
 
-const submitButtonStyles = computed(() => ({
+const submitButtonStyles = ref({
   submit: {
     container: {
       default: {
         padding: '10px',
         'aspect-ratio': '1',
+        fill: 'white',
+        backgroundColor: '#1d727c',
+        filter: '',
+        cursor: 'pointer',
+      },
+    },
+    svg: {
+      styles: {
+        default: {
+          borderRadiux: '8px',
+          backgroundColor: '#1d727c',
+          color: 'white',
+          filter: 'saturate(100%)',
+        },
+      },
+      content: `<svg
+        ref="svgIcon"
+        viewBox="-4 -4 30 30"
+        xmlns="http://www.w3.org/2000/svg"><path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2M20 16H5.2L4 17.2V4H20V16Z" /></svg>`,
+    },
+  },
+  disabled: {
+    container: {
+      default: {
+        backgroundColor: '#1d727c',
+        filter: 'saturate(0%) brightness(2)',
+        cursor: 'default',
+      },
+    },
+    svg: {
+      styles: {
+        default: {
+          backgroundColor: '#1d727c',
+          cursor: 'default',
+          filter: '',
+        },
       },
     },
   },
-}))
+})
 
 const messageStyles = computed(() => {
   const botStyles = {
@@ -289,21 +352,39 @@ const resetChat = () => {
   conversation.value = []
   conversationId.value = null
   history.value = welcoming
+  emit('conversation-restarted', {})
   // addToConversation(welcoming[0])
 }
 
-defineExpose({ resetChat })
+function scrollToBottom() {
+  chatBox.value?.scrollToBottom()
+}
+
+function onMessage(event) {
+  emit('new-message', event)
+  nextTick(scrollToBottom)
+}
+
+function submitUserMessage(message) {
+  chatBox.value?.submitUserMessage({ text: message })
+}
+
+defineExpose({ resetChat, scrollToBottom, submitUserMessage })
 
 watch(
   () => conversationStarted.value,
   (neo, old) => {
     if (neo != old) {
       // conversation was reset
-      suggestButtons.value = setExemples()
+      // suggestButtons.value = setExemples()
       emit('start-conversation')
     }
   }
 )
+
+function onComponentRender() {
+  emit('on-component-render')
+}
 
 watch(
   () => chatBox.value,
@@ -312,8 +393,12 @@ watch(
       neo.requestInterceptor = requestInterceptor
       neo.responseInterceptor = responseInterceptor
       neo.htmlWrappers = htmlWrappers.value
+      neo.onMessage = onMessage
+      neo.onComponentRender = onComponentRender
     }
-    history.value = JSON.parse(JSON.stringify(conversation.value))
+    // ??
+    // console.log('chatbox change', JSON.parse(JSON.stringify(conversation.value)))
+    // history.value = JSON.parse(JSON.stringify(conversation.value))
   }
 )
 
@@ -322,6 +407,53 @@ watchEffect(() => {
     chatBox.value.setPlaceholderText(placeholderText.value)
   }
 })
+
+const showConfirmRestart = ref(false)
+const confirmRestart = () => {
+  resetChat()
+  showConfirmRestart.value = false
+}
+
+const cancelRestart = () => {
+  showConfirmRestart.value = false
+}
+
+const isExporting = ref(false)
+async function exportConversation() {
+  let headers = {}
+  const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
+  if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
+  isExporting.value = true
+  const url = props.realConversationId
+    ? `/api/chatbot/${props.agentSlug}/export/${props.realConversationId}`
+    : `/api/chatbot/${props.agentSlug}/export/`
+  try {
+    const jsonData = await $fetch(url, { headers })
+    const filename = `conversation-${new Date().toISOString()}.json`
+    // Create a Blob from the JSON data
+    const blob = new Blob([JSON.stringify(jsonData, null, 2)], {
+      type: 'application/json',
+    })
+    // Create a download link
+    const downloadUrl = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = downloadUrl
+    link.download = filename
+
+    // Trigger the download
+    document.body.appendChild(link)
+    link.click()
+
+    // Cleanup
+    document.body.removeChild(link)
+    URL.revokeObjectURL(downloadUrl)
+  } catch (error) {
+    console.error('Error downloading data:', error)
+    throw error
+  } finally {
+    isExporting.value = false
+  }
+}
 </script>
 
 <template>
@@ -361,12 +493,24 @@ watchEffect(() => {
     </div>
   </deep-chat>
   <div class="action-bar">
-    <a class="action-button" href="#" @click.prevent="resetChat()">
-      <IconImage class="icon" name="RestartLeft" />
-      {{ $t('chatbot.restart') }}
-    </a>
+    <LpiButton
+      v-if="agentSlug && isAdmin"
+      class="action-button"
+      secondary
+      :disabled="isExporting"
+      :btn-icon="isExporting ? 'LoaderSimple' : 'Archive'"
+      :label="$t('chatbot.export')"
+      @click.prevent="exportConversation"
+    />
+    <LpiButton
+      class="action-button"
+      secondary
+      btn-icon="RestartLeft"
+      :label="$t('chatbot.restart')"
+      @click.prevent="showConfirmRestart = true"
+    />
   </div>
-  <div v-if="suggestButtons?.length && conversationStarted">
+  <!--div v-if="suggestButtons?.length && conversationStarted">
     <a
       v-for="button in suggestButtons"
       :key="button"
@@ -377,27 +521,30 @@ watchEffect(() => {
       <IconImage class="icon" name="ChatBubble" />
       {{ button }}
     </a>
-  </div>
+  </div -->
+
+  <ConfirmModal
+    v-if="showConfirmRestart"
+    :title="$t('agents.confirm-restart-title')"
+    :content="$t('agents.confirm-restart-content')"
+    :cancel-button-label="$t('common.no')"
+    :confirm-button-label="$t('common.yes')"
+    @cancel="cancelRestart"
+    @confirm="confirmRestart"
+  />
 </template>
 <style lang="scss" scoped>
 .action-bar {
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
   margin-bottom: 1em;
-}
-
-.action-button {
-  background-color: #eee;
-  border-radius: 4px;
-  padding: 4px;
-  color: #666;
-  font-size: 0.8rem;
 }
 
 .prompt-suggestion ~ .prompt-suggestion {
   margin-left: 8px;
 }
 
-.action-button,
 .prompt-suggestion {
   display: inline-flex;
   align-items: center;

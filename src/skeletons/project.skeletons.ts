@@ -1,5 +1,7 @@
 import type { LinkedProject, ProjectModel } from '@/models/project.model'
+import type { ProjectMemberModel } from '~/models/project-member.model'
 import { factoriesSkeleton } from '@/skeletons/base.skeletons'
+import { userSkeleton } from '~/skeletons/user.skeletons'
 import type { TagModel } from '@/models/tag.model'
 import { randomInt } from 'es-toolkit'
 
@@ -24,6 +26,7 @@ export const projectSkeleton = (def?: Partial<ProjectModel>): ProjectModel => ({
   language: 'fr',
   locations: [],
   categories: [],
+  organizations: [],
   publication_status: 'public',
   life_status: 'completed',
   reviews: [],
@@ -42,11 +45,32 @@ export const projectSkeleton = (def?: Partial<ProjectModel>): ProjectModel => ({
   goals: [],
   slug: 'slug',
   updated_at: '',
+  modules: {
+    members: 0,
+    groups: 0,
+    linked_projects: 0,
+    similars: 0,
+    locations: 0,
+    comments: 0,
+    goals: 0,
+    blogs: 0,
+    links: 0,
+    files: 0,
+    announcements: 0,
+    reviews: 0,
+    messages: 0,
+  },
   ...(def || {}),
 })
 
 export const projectLinkedSkeleton = (def?: Partial<LinkedProject>): LinkedProject => ({
   id: -1,
   project: projectSkeleton(),
+  ...(def || {}),
+})
+
+export const projectMemberSkeleton = (def?: Partial<ProjectMemberModel>): ProjectMemberModel => ({
+  ...userSkeleton(),
+  role: 'owners',
   ...(def || {}),
 })

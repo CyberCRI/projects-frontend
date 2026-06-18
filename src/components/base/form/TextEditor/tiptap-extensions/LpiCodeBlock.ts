@@ -6,7 +6,8 @@ import { PluginKey } from '@tiptap/pm/state'
 
 import LpiCodeBlockNodeView from './LpiCodeBlockNodeView.vue'
 
-export const DEFAULT_THEME = 'light'
+export const DEFAULT_LANGUAGE = 'plaintext'
+export const DEFAULT_THEME = 'dark'
 export const DEFAULT_TAB = '2'
 
 export interface LpiBlockOptions extends CodeBlockLowlightOptions {

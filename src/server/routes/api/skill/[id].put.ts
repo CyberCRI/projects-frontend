@@ -37,6 +37,7 @@ export default defineLazyEventHandler(() => {
         orgCode: appApiOrgCode,
       },
       data: {
+        description: body.description,
         skillContents: {
           create: [{ content: body.content, version }],
         },
@@ -49,9 +50,7 @@ export default defineLazyEventHandler(() => {
         skillId: id,
         useLatestSkillVersion: true,
       },
-      data: {
-        skillVersion: version,
-      },
+      data: { skillVersion: version },
     })
 
     return skill

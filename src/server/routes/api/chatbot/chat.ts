@@ -1,61 +1,34 @@
-import {
-  tool,
-  createAgent,
-  createMiddleware,
-  // contextEditingMiddleware,
-  // ClearToolUsesEdit,
-  // summarizationMiddleware,
-} from 'langchain'
-import { SystemMessage, HumanMessage, AIMessage } from '@langchain/core/messages'
-import { createRetrieverTool } from '@langchain/classic/tools/retriever'
-import { tokenMap, traceMcp } from '@/server/routes/api/chat-stream'
+// import { StateSchema, ReducedValue /*, MemorySaver */ } from '@langchain/langgraph'
+import createConversationPersistenceHandler from '@/server/projects-agent/memory/factory'
+import { traceAgentMemory } from '@/server/projects-agent/tracers/trace-agent-memory'
+// import useCheckpointerDb from '@/server/utils/checkpointer-db'
+// import type { BaseMessageChunk, ToolMessageChunk } from '@langchain/core/messages'
+import traceLangchain from '@/server/projects-agent/tracers/trace-langchain'
+import getAgentData from '@/server/projects-agent/agent/get-agent-data'
+import getMetadata from '@/server/projects-agent/agent/get-metadata'
+import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
 import checkAdminRights from '@/server/utils/check-admin-rights.js'
-import type { BaseMessageChunk } from '@langchain/core/messages'
-import { initChatModel } from 'langchain/chat_models/universal'
-import { MultiServerMCPClient } from '@langchain/mcp-adapters'
-import getVectorStore from '@/server/utils/vector-db.js'
-import { MemorySaver } from '@langchain/langgraph'
+import getAgent from '@/server/projects-agent/agent/get-agent'
+import { tokenMap } from '@/server/routes/api/chat-stream'
 import { v4 as uuidv4 } from 'uuid'
-import * as z from 'zod'
 
-// TODO: fix import issue (useNuxtRuntime in dependncies)
-// import { PROJECTS_DEFAULT_VECTOR_STORE_KEY } from '@/composables/useVectorStore'
-const PROJECTS_DEFAULT_VECTOR_STORE_KEY = 'ProjectsDefaultVectorStoreKey'
 const runtimeConfig = useRuntimeConfig()
-const {
-  appLangchainModelName,
-  appLangchainModelApiKey,
-  appLangchainTemperature,
-  appMcpServerUrl,
-  appLangchainTrace,
-  appSorbobotApiTrace,
-  appVectorToolPrompt,
-} = runtimeConfig
+const { appLangchainModelName, appLangchainModelApiKey } = runtimeConfig
 const { appApiOrgCode, appChatbotEnabled } = runtimeConfig.public
 
 // TODO use own token map instead chat-stream one when refactoed
 // Map conversationId to token and date for authed api requests in MCP
 // export const tokenMap = new Map<string, { date: Date; token: string }>()
 
-export const checkpointer = new MemorySaver()
-
-// TODO use own traceMcp map instead cgat-stream one when refactoed
-// export const traceMcp = (...args) => {
-//   if (appMcpServerTrace) {
-//     console.log('[MCP TRACE]', ...args)
-//   }
-// }
-
-export const traceLangchain = (...args) => {
-  if (appLangchainTrace) {
-    console.log('[LangChain TRACE]', ...args)
-  }
-}
-
-export const traceSorbobot = (...args) => {
-  if (appSorbobotApiTrace) {
-    console.log('[Sorbobot TRACE]', ...args)
-  }
+function sendError(code, message) {
+  // setResponseStatus(event, code)
+  // return {
+  //   error: 'message',
+  // }
+  throw createError({
+    statusCode: code,
+    message: message,
+  })
 }
 
 export default defineLazyEventHandler(() => {
@@ -68,51 +41,28 @@ export default defineLazyEventHandler(() => {
     !!appLangchainModelName
   )
   return defineEventHandler(async (event) => {
+    // const { checkpointer } = await useCheckpointerDb()
     // return 404 if not configured
     if (!appLangchainModelApiKey || !appChatbotEnabled) {
-      throw createError({
-        statusCode: 404,
-        message: 'Chat is not configured',
-      })
+      sendError(404, 'Chat is not configured')
     }
+
+    /* -------- Check user ------------ */
+
+    const user = await getUser(event)
+    if (!user) sendError(401, 'Unauthorized')
 
     /* --------- Fetch Agent  --------- */
 
     const _id = getQuery(event)?.id
-    if (!_id) {
-      setResponseStatus(event, 400)
-      return {
-        error: 'Missing required "id" query parameter',
-      }
-    }
-    const id = parseInt(_id as string)
-    if (isNaN(id)) {
-      setResponseStatus(event, 400)
-      return {
-        error: 'Wrong type for "id" query parameter',
-      }
-    }
-    const agentData = await chatbotPrisma.agent.findUnique({
-      where: {
-        id: id,
-        orgCode: appApiOrgCode,
-      },
-      include: {
-        promptContent: {
-          include: { prompt: true },
-        },
-        skillContents: { include: { skillContent: { include: { skill: true } } } },
-        documents: true,
-        mcps: true,
-      },
-    })
+    if (!_id) sendError(400, 'Missing required "id" query parameter')
 
-    if (!agentData) {
-      throw createError({
-        statusCode: 404,
-        message: 'Agent not found',
-      })
-    }
+    const id = parseInt(_id as string)
+    if (isNaN(id)) sendError(400, 'Wrong type for "id" query parameter')
+
+    const agentData = await getAgentData(id)
+    if (!agentData) sendError(404, 'Agent not found')
+
     // clean up token map as a bonus
     const now = new Date()
     for (const [key, value] of tokenMap.entries()) {
@@ -126,18 +76,15 @@ export default defineLazyEventHandler(() => {
 
     const tokenHeader = getRequestHeader(event, 'authorization') || ''
     if (tokenHeader) {
-      traceMcp('chat-stream: got Authorization header provided')
+      traceLangchain('chat-stream: got Authorization header provided')
     } else {
-      traceMcp('chat-stream: no Authorization header provided')
-      throw createError({
-        statusCode: 401,
-        message: 'Not authorized',
-      })
+      traceLangchain('chat-stream: no Authorization header provided')
+      sendError(401, 'Not authorized')
     }
 
     // check admin priviledge for preview
     if (!agentData.isEnabled) {
-      traceMcp('chat-stream: agent is diabled, checking rights to preview')
+      traceLangchain('chat-stream: agent is disabled, checking rights to preview')
       await checkAdminRights(event)
     }
 
@@ -159,8 +106,10 @@ export default defineLazyEventHandler(() => {
     const messages = body.messages || []
 
     let conversationId = body.conversationId || null
-    // if no conversationId, we start a new conversation
-    if (!conversationId) {
+    if (conversationId) {
+      // TODO: validate existence and ownership (this is done in persistance factory)
+      traceLangchain('Resuming coverstion ', conversationId)
+    } else {
       conversationId = uuidv4()
       traceLangchain('Starting new conversation with id:', conversationId)
     }
@@ -171,253 +120,152 @@ export default defineLazyEventHandler(() => {
       token: ('' + tokenHeader).replace('Bearer ', ''),
     })
 
-    /* --------- MCPs  --------- */
-
-    const tools = []
-
-    if (agentData.useProjectsMcp || agentData.mcps.length) {
-      const mcpConfigs = {}
-
-      if (agentData.useProjectsMcp) {
-        traceMcp('Adding projects MCP')
-        mcpConfigs['projects-mcp'] = {
-          // TODO use stdio or diect tool instead a mcp
-          transport: 'http', // HTTP-based remote server
-          url: appMcpServerUrl,
-          headers: {
-            Authorization: `${conversationId}`,
-          },
-        }
-      }
-
-      agentData.mcps.forEach((mcp) => {
-        const aConfig = {
-          transport: mcp.transport,
-        }
-        if (mcp.transport == 'stdio') {
-          aConfig['command'] = mcp.command
-          aConfig['args'] = mcp.args
-          traceMcp('Adding MCP tool with command:', mcp.command, mcp.args)
-        } else {
-          aConfig['url'] = mcp.url
-          traceMcp('Adding MCP tool with server URL:', mcp.url)
-          // TODO: auth
-        }
-
-        const slug = mcp.title.replace(/\s+/gim, '_')
-
-        mcpConfigs[slug] = aConfig
-      })
-
-      const client = new MultiServerMCPClient(mcpConfigs)
-
-      // TODO: add middlkewrae to select tools
-      const mcpTools = await client.getTools()
-      traceMcp('mcp tool', JSON.stringify(mcpTools, null, 2))
-      event.node.res.on('close', () => {
-        client.close().catch(() => {})
-      })
-      tools.unshift(...mcpTools)
-    }
-
-    /* --------- Skills  --------- */
-
-    let skillSystemPromptExtra = ''
-    if (agentData.skillContents.length) {
-      console.log(`Found ${agentData.skillContents.length} skills`)
-      const skillMap = {}
-      agentData.skillContents.forEach((agentSkillContent) => {
-        const skillContent = agentSkillContent.skillContent
-        const skillTitle = skillContent.skill.title
-        const skillSlug = skillTitle.replace(/\s+/gim, '_')
-        skillMap[skillSlug] = {
-          description: skillContent.skill.description,
-          content: skillContent.content,
-        }
-      })
-
-      skillSystemPromptExtra = `
-        You have access to ${agentData.skillContents.length} skills:
-        ${Object.keys(skillMap).join(', ')}.
-        Use load_skill tool to access them.`
-
-      const loadSkill = tool(
-        async ({ skillName }) => {
-          console.log(`Fetching skil ${skillName}`)
-          // Load skill content from file/database
-          return skillMap[skillName]?.content || ''
-        },
-        {
-          name: 'load_skill',
-          description: `Load a specialized skill.
-
-      Available skills:
-      ${Object.entries(skillMap)
-        .map(([key, val]) => '- ' + key + ': ' + (val as any).description)
-        .join('\n')}
-
-      Returns the skill's prompt and context.`,
-          schema: z.object({
-            skillName: z.string().describe('Name of skill to load'),
-          }),
-        }
-      )
-
-      tools.unshift(loadSkill)
-    }
-
-    /* --------- Vector Stores  --------- */
-
-    // TODO: set vector store iu agent ?
-    const { vectorStore } = await getVectorStore()
-    if (vectorStore) {
-      traceLangchain(`Configure vector tool with prompt "${appVectorToolPrompt}"`)
-
-      const agentDocuments = (agentData.documents || [])
-        .filter((d) => d.vectorStoreKey === PROJECTS_DEFAULT_VECTOR_STORE_KEY)
-        .map((d) => d.documentTitle)
-
-      const retriever = vectorStore.asRetriever({
-        k: 5,
-        filter: {
-          orgCode: appApiOrgCode,
-          title: { $in: agentDocuments },
-        },
-      })
-
-      const retrieverTool = createRetrieverTool(retriever, {
-        name: 'pgvector_tool',
-        description: appVectorToolPrompt,
-      })
-      tools.push(retrieverTool)
-    }
-
-    /* --------- Loggers  --------- */
-
-    const toolMonitoringMiddleware = createMiddleware({
-      name: 'ToolMonitoringMiddleware',
-      wrapToolCall: async (request, handler) => {
-        traceLangchain(`Executing tool: ${request.toolCall.name}`)
-        traceLangchain(`Arguments: ${JSON.stringify(request.toolCall.args)}`)
-        try {
-          const result = await handler(request)
-          const content: string = (result as { content: string }).content
-          traceLangchain(
-            `Tool completed successfully: "${content.substring(0, 100)}${content.length > 100 ? ' (...)' : ''}"`
-          )
-          return result
-        } catch (e) {
-          traceLangchain(`Tool failed: ${e}`)
-          throw e
-        }
-      },
-    })
-
-    const loggingMiddleware = createMiddleware({
-      name: 'LoggingMiddleware',
-      beforeModel: (state) => {
-        traceLangchain(`About to call model with ${state.messages.length} messages`)
-        traceLangchain(JSON.stringify(state.messages, null, 2))
-        return
-      },
-      afterModel: (state) => {
-        const lastMessage = state.messages[state.messages.length - 1]
-        traceLangchain(`Model returned: ${lastMessage.content}`)
-        return
-      },
-    })
-
-    /* --------- LLM settings  --------- */
-
-    const parsedTemperature = parseFloat(appLangchainTemperature)
-    const temperature = Number.isNaN(parsedTemperature) ? 0.7 : parsedTemperature
-
-    const model = await initChatModel(appLangchainModelName, {
-      temperature,
-      apiKey: appLangchainModelApiKey,
-    })
-
-    /* --------- Agent setup  --------- */
-
-    const agent = createAgent({
-      model,
-      tools,
-      checkpointer,
-      systemPrompt: new SystemMessage({
-        content: [
-          {
-            type: 'text',
-            text: agentData.promptContent.content + skillSystemPromptExtra,
-          },
-        ],
-      }),
-      middleware: [
-        toolMonitoringMiddleware,
-        loggingMiddleware,
-        // contextEditingMiddleware({
-        //   // TODO: make configurable in agent data{
-        //   edits: [
-        //     new ClearToolUsesEdit({
-        //       triggerTokens: 1000, // 10_000, // 1 ingle-spaced page ~= 3500 chars
-        //       keep: 3, // keep at least n tool call
-        //     }),
-        //   ],
-        // }),
-        // summarizationMiddleware({
-        //   // TODO: make configurable in agent data
-        //   model, // TODO: make model independent from agent  model
-        //   trigger: { tokens: 1600 }, // 16_000 }, // 1 ingle-spaced page ~= 3500 chars
-        //   keep: { messages: 4 }, // 42 },
-        // }),
-      ] as any,
-    })
+    const agent = await getAgent(agentData, event, conversationId)
 
     /* --------- Start coversation  --------- */
 
-    traceMcp(
-      `Starting chat stream for conversation ${conversationId} with ${tools.map((t) => `"${t.name}"`).join(', ')}  tools and ${messages.length} messages`
+    traceLangchain(
+      `Starting chat stream for conversation ${conversationId}  tools and ${messages.length} incoming messages`
     )
 
+    const persistenceHandler = await createConversationPersistenceHandler({
+      threadId: conversationId,
+      organizationCode: appApiOrgCode,
+      userId: user.id,
+      agent: agentData,
+    })
     const config = {
-      configurable: { thread_id: conversationId },
+      configurable: {
+        thread_id: conversationId,
+      },
+      callbacks: [persistenceHandler],
+      // durability: "exit", // ← one checkpoint per turn, not per superstep
+    }
+
+    const customMetadata = getMetadata(agentData, user)
+
+    function handleFlush(event: any) {
+      const res = event.node.res
+      if (typeof (res as any).flush === 'function') {
+        ;(res as any).flush()
+      }
+    }
+
+    function respond(output: any) {
+      event.node.res.write(`data: ${JSON.stringify(output)}\n\n`)
+      handleFlush(event)
     }
 
     // TODO: fix typescript mess with agent.stream return type
+    // TODO rethrow interrupt exception when chepointis enabled
     try {
-      for await (const [token, metadata] of (await agent.stream(
-        {
-          messages: messages.map((msg) =>
-            msg.role === 'ai' || msg.role === 'assistant'
-              ? new AIMessage(msg.text)
-              : new HumanMessage(msg.text)
-          ),
-        } as any,
-        { ...config, streamMode: 'messages' }
-      )) as AsyncIterableIterator<[BaseMessageChunk, { status: string; langgraph_node?: any }]>) {
-        // prevent writing tool message to front
-        if (token.lc_id[token.lc_id.length - 1] != 'AIMessageChunk') continue
+      const transmitedMessages = await persistenceHandler.handleIncomingMessages(messages)
 
-        const content = token.contentBlocks || []
-        const text = content
-          .filter((part) => part.type == 'text')
-          .map((part) => part.text)
-          .join('')
-        const is_done = metadata.status === 'completed'
-        const role = 'ai'
-        event.node.res.write(
-          `data: ${JSON.stringify({
+      traceAgentMemory('==========  MEMORIES  =======', persistenceHandler.messages?.length)
+      traceAgentMemory(persistenceHandler.messages)
+      traceAgentMemory('========== /MEMORIES =======')
+
+      traceLangchain('==========  MESSAGES  =======', transmitedMessages?.length)
+      traceLangchain(transmitedMessages)
+      traceLangchain('========== /MESSAGES =======')
+
+      for await (const [mode, chunk] of (await agent.stream(
+        {
+          messages: transmitedMessages,
+          ...customMetadata,
+        } as any,
+        { ...config, streamMode: ['messages', 'tools'] }
+      )) as AsyncIterableIterator<[string, any]>) {
+        ///
+        // if (mode != 'messages')
+        //   console.log('XXXXXXXXXXXXXXXXXX', JSON.stringify(mode, null, 2), chunk.constructor.name)
+
+        if (mode == 'tools') {
+          /* HANDLE TOOLS */
+
+          let text = ''
+          let is_done = false
+          let text_extra = ''
+          switch (chunk.event) {
+            case 'on_tool_start':
+              // const { name, input, toolCallId } = chunk
+              text = 'fetching_data' // 'fetching_tools' 'reasoning'
+              text_extra = '👀' // chunk.input.query || ''
+              break
+            case 'on_tool_event':
+              // const { name, data, toolCallId } = chunk
+              text = 'fetching_data'
+              text_extra = '✨' //''
+              break
+            case 'on_tool_end':
+              // const { name, output, toolCallId } = chunk
+              text = 'fetching_data'
+              text_extra = '✅' // chunk.output
+              is_done = true
+              break
+            case 'on_tool_error':
+              // const { name, error, toolCallId } = chunk
+              text = 'fetching_data'
+              text_extra = '❌'
+              is_done = true
+              break
+            default:
+              console.error('Unknown tool event', chunk.event)
+          }
+          if (text) {
+            // "fetching_tools": "Fetching tools...",
+            // "fetching_data": "Fetching data...",
+            // "reasoning": "Thinking...",
+            // const is_done = metadata.status === 'completed'
+            const role = 'meta'
+            const output = {
+              text,
+              text_extra,
+              role,
+              is_done,
+              conversationId,
+            }
+            respond(output)
+          }
+        } else if (mode == 'messages') {
+          /* HANDLE LLM INFERENCE */
+
+          const [token, metadata] = chunk
+          if (token.lc_id[token.lc_id.length - 1] != 'AIMessageChunk') continue
+
+          const content = token.contentBlocks || []
+          const text = content
+            .filter((part) => part.type == 'text')
+            .map((part) => part.text)
+            .join('')
+          const is_done = metadata.status === 'completed'
+          const role = 'ai'
+          const output = {
             text,
             role,
             is_done,
             conversationId,
-          })}\n\n`
-        )
-        if (typeof (event.node.res as any).flush === 'function') {
-          ;(event.node.res as any).flush()
+          }
+          respond(output)
         }
       }
     } catch (err) {
+      // TODO rethrow interrupt exception when chepointis enabled
       traceLangchain('Stream error:', err)
+      // Extract a readable message (MCP/tool errors are often nested)
+      const errorMessage =
+        err?.cause?.message ?? // MCP transport errors
+        err?.message ?? // standard Error
+        'An unexpected error occurred'
+
+      const output = {
+        text: '',
+        role: 'ai',
+        is_done: true,
+        conversationId,
+        error: errorMessage,
+      }
+      respond(output)
     } finally {
       event.node.res.end()
     }

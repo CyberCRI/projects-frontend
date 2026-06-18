@@ -1,13 +1,16 @@
 import type { Container } from '~/composables/pdf-helpers/doc-builder'
+import type { TranslatedBlogEntry } from '~/models/blog-entry.model'
+import { formatDate } from '~/functs/date'
 
-export default async function addBlogSectionFactory(blogEntries: any[], MAX_BLOG_ENTRIES) {
-  const { d } = useNuxtI18n()
+export default async function addBlogSectionFactory(blogEntries: TranslatedBlogEntry[]) {
+  const { locale } = useNuxtI18n()
   // const { getTranslatableField } = useAutoTranslate()
   return function addBlogSection(this: Container) {
-    let out = ''
+    if (blogEntries.length === 0) {
+      return
+    }
 
-    if (blogEntries.length > 0) {
-      this.styles.add(/* CSS */ `
+    this.styles.add(/* CSS */ `
 
           .blog-entries-ctn {
             display: flex;
@@ -56,15 +59,14 @@ export default async function addBlogSectionFactory(blogEntries: any[], MAX_BLOG
 
           `)
 
-      const blogList = blogEntries
-        .slice(0, MAX_BLOG_ENTRIES)
-        .map(
-          (blogEntry) => /*HTML*/ `
+    const blogList = blogEntries
+      .map(
+        (blogEntry) => /*HTML*/ `
             <div class="blog-entry">
               <div class="blog-entry-header">
                 <div class="header-main">
                   <div class="date">
-                    ${d(new Date(blogEntry.created_at))}
+                    ${formatDate(new Date(blogEntry.created_at), locale.value)}
                   </div>
                   <div class="entry-title">
                     ${blogEntry.$t.title}
@@ -75,13 +77,11 @@ export default async function addBlogSectionFactory(blogEntries: any[], MAX_BLOG
                 ${blogEntry.$t.content}
               </div>
             </div>`
-        )
-        .join('')
+      )
+      .join('')
 
-      out = /* HTML */ `
-        <div class="blog-entries-ctn">${blogList}</div>
-      `
-    }
-    this.content.push(out)
+    this.content.push(/* HTML */ `
+      <div class="blog-entries-ctn">${blogList}</div>
+    `)
   }
 }

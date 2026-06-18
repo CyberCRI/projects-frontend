@@ -1,18 +1,20 @@
 import type { Container } from '~/composables/pdf-helpers/doc-builder'
+import type { TranslatedGoal } from '~/models/goal.model'
 
-export default async function addGoalsSectionFactory(goals: any[]) {
+export default async function addGoalsSectionFactory(goals: TranslatedGoal[]) {
   const { t, d } = useNuxtI18n()
   // const { getTranslatableField } = useAutoTranslate()
 
   return function addGoalSection(this: Container) {
-    let out = ''
+    if (goals.length == 0) {
+      return
+    }
     const deadlineFormatted = (g) =>
       `${
         g.status === 'complete' ? t('goal.completed-on-the') : t('goal.planned-for-the')
       } ${d(new Date(g.deadline_at))}`
 
-    if (goals.length > 0) {
-      this.styles.add(/* CSS */ `
+    this.styles.add(/* CSS */ `
           .group-section {
             break-inside: avoid;
             break-after: auto;
@@ -117,9 +119,9 @@ export default async function addGoalsSectionFactory(goals: any[]) {
             padding-right: 2rem; // dirty fix for table overlow. TODO: fix in a cleaner way
           }
           `)
-      const goalsList = goals
-        .map(
-          (goal) => /*HTML*/ `
+    const goalsList = goals
+      .map(
+        (goal) => /*HTML*/ `
           <div class="goal-ctn">
             <div class="goal shadow-box  ${goal.status}"">
               <div class="content">
@@ -129,7 +131,7 @@ export default async function addGoalsSectionFactory(goals: any[]) {
                 <div class="right">
                   <div class="main-content">
                     <p class="goal-title">
-                      ${goal?.$t?.title}
+                      ${goal.$t.title}
                     </p>
 
                     <p v-if="deadlineVisible" class="goal-deadline ${goal.status}">
@@ -138,19 +140,17 @@ export default async function addGoalsSectionFactory(goals: any[]) {
                   </div>
 
                   <div class="goal-description-wrapper">
-                    ${goal?.$t?.description}
+                    ${goal.$t.description}
                   </div>
                 </div>
               </div>
             </div>
           </div>`
-        )
-        .join('')
+      )
+      .join('')
 
-      out = /* HTML */ `
-        <div class="goal-list">${goalsList}</div>
-      `
-    }
-    this.content.push(out)
+    this.content.push(/* HTML */ `
+      <div class="goal-list">${goalsList}</div>
+    `)
   }
 }

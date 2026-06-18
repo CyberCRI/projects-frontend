@@ -5,7 +5,7 @@ import useOrganizationsStore from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'
 
 import { imageSizesFormData } from '~/functs/imageSizesUtils'
-import { defaultForm } from '~/form/news'
+import { defaultNewsForm } from '~/form/news'
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
@@ -14,12 +14,12 @@ const { t } = useNuxtI18n()
 
 const newsForm = useTemplateRef('newsForm')
 
-const form = ref(defaultForm())
+const form = ref(defaultNewsForm())
 const asyncing = ref(false)
 const invalid = ref(false)
 
 const cancel = () => {
-  form.value = defaultForm()
+  form.value = defaultNewsForm()
   router.push({ name: 'NewsListPage' })
 }
 

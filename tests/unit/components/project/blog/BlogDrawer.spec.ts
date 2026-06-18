@@ -1,7 +1,7 @@
+import { ProjectOutputFactory, TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import { OrganizationOutputFactory } from '~~/tests/factories/organization.factory'
-import { ProjectOutputFactory } from '~~/tests/factories/project.factory'
+import BlogDrawer from '~/components/project/modules/BlogEntries/BlogDrawer.vue'
 import { lpiMount, lpiShallowMount } from '~~/tests/helpers/LpiMount'
-import BlogDrawer from '~/components/project/blog/BlogDrawer.vue'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import useUsersStore from '~/stores/useUsers'
@@ -22,11 +22,7 @@ describe('BlogDrawer.vue', () => {
     const organizationsStore = useOrganizationsStore(pinia)
     organizationsStore._current = OrganizationOutputFactory.generate()
 
-    const project = {
-      ...ProjectOutputFactory.generate(),
-      files: [],
-      links: [],
-    }
+    const project = TranslatedProjectFactory.generate()
     defaultParams = {
       props: {
         isOpened: true,
@@ -46,7 +42,7 @@ describe('BlogDrawer.vue', () => {
     wrapper = lpiShallowMount(BlogDrawer, defaultParams)
     const vm: any = wrapper.vm
 
-    vm.closeDrawer()
+    vm.close()
     expect(wrapper.emitted('close')).toBeTruthy()
   })
 })

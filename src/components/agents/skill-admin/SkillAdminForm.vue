@@ -1,7 +1,12 @@
 <script setup>
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import { helpers, required } from '@vuelidate/validators'
 import useToasterStore from '@/stores/useToaster'
 import useUsersStore from '@/stores/useUsers'
+import { requiredContent } from '~/form/base'
+import useValidate from '@vuelidate/core'
 
+const { html2md, md2html } = useMarkdown()
 const { t } = useNuxtI18n()
 
 const props = defineProps({
@@ -20,11 +25,25 @@ const toaster = useToasterStore()
 const usersStore = useUsersStore()
 const defaultForm = (skill) => ({
   title: skill?.title ?? '',
-  description: skill?.description ?? '',
-  content: skill?.skillContents?.length ? skill.skillContents[0].content : '',
+  description: md2html(skill?.description ?? ''),
+  content: md2html(skill?.skillContents?.length ? skill.skillContents[0].content : ''),
 })
 
 const form = ref(defaultForm())
+
+const rules = computed(() => ({
+  title: {
+    required: helpers.withMessage(t('agent-skills.form.title-required'), required),
+  },
+  content: {
+    required: helpers.withMessage(t('agent-skills.form.content-required'), requiredContent),
+  },
+  description: {
+    required: helpers.withMessage(t('agent-skills.form.description-required'), requiredContent),
+  },
+}))
+
+const v$ = useValidate(rules, form)
 
 const titleExists = ref(false)
 
@@ -47,6 +66,11 @@ const isAsyncing = ref(false)
 const close = () => emit('close')
 
 const submit = async () => {
+  const isValid = await v$.value.$validate()
+  if (!isValid) {
+    toaster.pushError(t('agent-skills.form.invalid'))
+    return
+  }
   isAsyncing.value = true
 
   let headers = {}
@@ -54,14 +78,23 @@ const submit = async () => {
   if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
 
   try {
+    const body = {
+      ...form.value,
+      description: html2md(form.value.description),
+      content: html2md(form.value.content),
+    }
     if (isEdit.value) {
       await $fetch(`/api/skill/${props.skill.id}`, {
         method: 'put',
-        body: form.value,
+        body,
         headers,
       })
     } else {
-      await $fetch('/api/skill/', { method: 'post', body: form.value, headers })
+      await $fetch('/api/skill/', {
+        method: 'post',
+        body,
+        headers,
+      })
     }
 
     toaster.pushSuccess(
@@ -96,25 +129,30 @@ const submit = async () => {
         :label="$t('agent-skills.title')"
         :disabled="isEdit"
         @change="titleExists = false"
+        @blur="v$.title.$validate"
       />
+      <FieldErrors :errors="v$.title.$errors" />
       <p v-if="titleExists" class="error">{{ $t('agent-skills.title-exists') }}</p>
     </div>
     <div class="form-section">
-      <TextInput
+      <h4>{{ $t('agent-skills.description') }}</h4>
+      <TipTapEditor
         v-model.trim="form.description"
-        input-type="textarea"
-        :label="$t('agent-skills.description')"
-        @change="titleExists = false"
+        class="input-field content-editor"
+        mode="medium"
+        @blur="v$.description.$validate"
       />
+      <FieldErrors :errors="v$.description.$errors" />
     </div>
     <div class="form-section">
-      <TextInput
+      <h4>{{ $t('agent-skills.content') }}</h4>
+      <TipTapEditor
         v-model.trim="form.content"
-        input-type="textarea"
-        :label="$t('agent-skills.content')"
-        rows="12"
-        @change="titleExists = false"
+        class="input-field content-editor"
+        mode="medium"
+        @blur="v$.content.$validate"
       />
+      <FieldErrors :errors="v$.content.$errors" />
     </div>
   </BaseDrawer>
 </template>

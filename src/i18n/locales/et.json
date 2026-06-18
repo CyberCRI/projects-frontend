@@ -123,7 +123,6 @@
         "last-name": "Perekonnanimi",
         "first-name": "Eesnimi",
         "title": "Pealkiri",
-        "roles": "Roll(id)",
         "groups": "Rühm(ad)",
         "inscription": "Kiri",
         "activation": "Aktiveerimine",
@@ -224,7 +223,10 @@
       "vector-store": "Vector store",
       "prompts": "Soovid",
       "agent-skills": "Agendi oskused",
-      "agents": "Agendid"
+      "agents": "Agendid",
+      "conversations": "Vestlused",
+      "checkpoints": "Checkpoints",
+      "side-assistant": "Külgne assistent"
     },
     "page-title": "Admin",
     "portal": {
@@ -390,13 +392,6 @@
     "reset-password": "Lähtesõna",
     "reset-delete": "Parooli lähtestamine ja konto kustutamine",
     "error": "Tekkis viga.",
-    "role": {
-      "none": "Mitte ükski",
-      "user": "Kasutaja",
-      "facilitator": "Vahendaja",
-      "admin": "Org",
-      "viewer": "Vaataja"
-    },
     "user-exists-in-other-org": "Sama e-posti kasutaja on meie andmebaasis olemas. Me võime teda teie portaali lisada siin."
   },
   "userItem": {
@@ -409,12 +404,6 @@
     "facilitators": "Korraldaja: See roll on õpetajatele või juhendajatele: Nad näevad portaalis kõiki eraprojekte ja saavad neid redigeerida. Neil on ka kõik kasutajate õigused.",
     "admins": "Org admin: See funktsioon võimaldab seadistada oma portaali ja hallata kasutajaid oma portaalis. Orgi administraatoritel on juurdepääs portaali administraatori menüüle, et portaali luua ja selle kasutajaid hallata. Neil on ka kõik vahendajate õigused.",
     "none": "Puudub: Sellel isikul on projektikonto, kuid see ei kuulu teie portaali. Nad saavad näha ainult avalikke projekte.",
-    "roles": {
-      "none": "Mitte ükski",
-      "users": "Kasutaja",
-      "facilitators": "Vahendaja",
-      "admins": "Orgihaldur"
-    },
     "empty": "Gruppe pole",
     "main-groups": "Põhigrupid"
   },
@@ -535,7 +524,6 @@
     "cant-quit-self": "Sa oled meeskonna viimane toimetaja. Igal projektil peab olema vähemalt üks toimetaja.\nVõite enne projektist lahkumist lisada teise redaktori või kustutada projekti kaardilt Seadistused.",
     "cant-quit-other": "See on meeskonna viimane toimetaja. Igal projektil peab olema vähemalt üks toimetaja.\nVõite lisada mõne muu redaktori, mis seda alla surub, või kustutada projekti kaardilt Seadistused.",
     "edit": "Edit",
-    "file-required": "Vajalik on fail",
     "for": "jaoks",
     "groups": "Grupid",
     "index": "Indeks",
@@ -573,7 +561,6 @@
     "disconnect": "Logi välja",
     "confirm-close": "Kas oled kindel, et soovid toimetaja sulgeda? Teie tehtud muudatusi ei salvestata.",
     "ok": "Ok.",
-    "file-too-big": "Fail on liiga suur (maksimaalselt: {maxSize}Mb)",
     "select": "vali",
     "year": "aasta",
     "link-to": "link",
@@ -597,7 +584,8 @@
     "chose-date": "Vali kuupäev | Kuupäevade valimine",
     "filter": "filter | filtrid",
     "empty": "Siin pole midagi...",
-    "file": "faili | failid"
+    "file": "faili | failid",
+    "image": "pilt"
   },
   "complete-profile": {
     "bio": {
@@ -658,7 +646,6 @@
     "edit-saved": "Teie (ja kaasautorite) tehtud muudatusi ei salvestata.",
     "edit": "redigeerimise kirjeldus (joonis)",
     "add": "Lisa kirjeldus",
-    "quit-without-saving-title": "Lõpetad säästmata?",
     "default-placeholder": "Nüüd kirjelda oma projekti."
   },
   "discover": {
@@ -821,7 +808,22 @@
   },
   "drawer": {
     "clear": "Puhasta kõik valitud",
-    "select-all": "Valige kõik"
+    "select-all": "Valige kõik",
+    "member": {
+      "add": "Lisa liige | Lisa liikmeid",
+      "edit": "Muuda liiget | Muuda liikmeid",
+      "delete": "Kustuta liige | Liikmete kustutamine"
+    },
+    "group": {
+      "add": "Lisa grupp | Gruppide lisamine",
+      "edit": "Redigeerimisgrupp | Gruppide redigeerimine",
+      "delete": "Kustuta grupp | Gruppide kustutamine"
+    },
+    "project": {
+      "add": "Lisa projekt | Lisa projekte",
+      "edit": "Muuda projekti | Muuda projekte",
+      "delete": "Kustuta projekt | Kustuta projektid"
+    }
   },
   "faq": {
     "delete-confirm-content": "Kas oled kindel, et soovid kustutada portaali jaoks isikupärastatud abikaardi. Kogu selle sisu kustutatakse.",
@@ -908,7 +910,8 @@
       },
       "description": "Kirjeldusväli on nõutav"
     },
-    "templates": "Mallid"
+    "templates": "Mallid",
+    "quit-without-saving-title": "Lõpetad säästmata?"
   },
   "footer": {
     "contact": "Võta meiega ühendust",
@@ -917,7 +920,6 @@
     "cookies": "Küpsised",
     "accessibility": "Ligipääsetavus",
     "personal-data": "Isikuandmed",
-    "directory": "Avasta meie metaportaalist veel palju teiste organisatsioonide projekte:",
     "help": "Abi",
     "projects": "Projektiplatvorm",
     "madeBy": "tehtud",
@@ -933,7 +935,8 @@
     "planned-for-the": "Planeeritud",
     "status-title": "Staatus",
     "title": "Eesmärgi tiitel",
-    "delete": "Kas soovite selle eesmärgi kustutada?"
+    "delete": "Kas soovite selle eesmärgi kustutada?",
+    "add-project": "Lisa projektile eesmärk"
   },
   "header": {
     "private": "Privaatne: nähtav ainult meeskonnaliikmetele",
@@ -972,7 +975,8 @@
     },
     "create-project": "Projekti loomine",
     "check-locations": "Vaata meie asukohti",
-    "our-locations": "Meie asukohad"
+    "our-locations": "Meie asukohad",
+    "agents": "AI agendid"
   },
   "language": {
     "label-en": "Inglise",
@@ -1066,7 +1070,19 @@
       "color": "Värv",
       "current": "Praegune",
       "pick": "Vali värv",
-      "set-color": "Määra värv"
+      "set-color": "Määra värv",
+      "remove-color": "Eemalda värv",
+      "colors": {
+        "carribeanGreen": "Carribean Green",
+        "ming": "Ming",
+        "aquamarine": "Aquamarine",
+        "mintCream": "piparmündikoor",
+        "lightSalmon": "Kerge lõhe",
+        "sunGlow": "Päikesekiir",
+        "mauve": "Mauve",
+        "babyBlue": "Sinine",
+        "coquelicot": "Coquelicot"
+      }
     },
     "delete_column": "Kustuta see veerg",
     "delete_row": "Kustuta see rida",
@@ -1124,9 +1140,13 @@
     "unauthorized": "Autoriseerimata redigeerimine",
     "underline": "alla",
     "undo": "Võta tagasi",
-    "video": "Video",
+    "video": {
+      "label": "Video",
+      "error": "Link peab olema YouTube'i või Vimeo video."
+    },
     "save": "Salvestamine väljumata",
-    "server-offline": "Server on välja lülitatud."
+    "server-offline": "Server on välja lülitatud.",
+    "delete_image": "Kustuta pilt"
   },
   "homeCarousel": {
     "tab1": {
@@ -1346,7 +1366,6 @@
         "intro": "Sa ei ole veel oma oskusi välja valinud. Professionaalsed oskused ja hobid võimaldavad teie kolleegidel ja teie kogukonnal leida teid selle põhjal, milles olete hea, millest olete huvitatud ja millest hoolite.",
         "save-error": "Viga profiili salvestamisel.",
         "save-success": "Profiil salvestatud.",
-        "search": "otsingu",
         "suggested-skills": "Või vali soovitatud oskus",
         "already-added": "(juba lisatud)",
         "skills": {
@@ -1563,7 +1582,6 @@
       "title": "Uue projekti loomine"
     },
     "destroy": "Kustuta projekt",
-    "duplicate": "Dubleerib projekti",
     "edit": "Redigeerida",
     "edit-linked-project": "Seotud projekti muutmine",
     "edit-location-point": "Muuda asukohapunkti",
@@ -1584,7 +1602,6 @@
       "resize-image": "Reframeeri",
       "title-label": "Lisa pealkiri",
       "title-placeholder": "Mis selle projekti nimi on?",
-      "upload-image": "Pildi üleslaadimine",
       "title-errors": {
         "required": "Tiitliväli on nõutav",
         "max": "Tiitliväli ei tohi olla suurem kui 180 märki"
@@ -1596,7 +1613,9 @@
       },
       "project-templates": "Malli nimi",
       "completed-info-to-access-presentation": "Esitlusele pääsemiseks tuleb täita kogu lehel olev teave.",
-      "purpose-placeholder": "Mis on teie projekti eesmärk?"
+      "purpose-placeholder": "Mis on teie projekti eesmärk?",
+      "comment": "Kommentaari väli on nõutav.",
+      "select-template": "Vali mall..."
     },
     "image-header": "Pilt",
     "image-alert": {
@@ -1645,10 +1664,19 @@
     },
     "view": "Vaata projekti",
     "visibility": "Projekti nähtavus",
-    "actions": "Kiire tegutsemine",
     "copy": "(koopia)",
     "nothing": "Siin pole midagi...",
-    "tag-warning": "NB: Kui kasutaja vahetab teie portaalis keeli, tõlgime nende jaoks tõlkimisega sildid. Vastasel juhul näidatakse silte inglise keeles."
+    "tag-warning": "NB: Kui kasutaja vahetab teie portaalis keeli, tõlgime nende jaoks tõlkimisega sildid. Vastasel juhul näidatakse silte inglise keeles.",
+    "description": "Kirjeldus",
+    "duplicate": {
+      "title": "Kas sa tõesti tahad seda projekti dubleerida?",
+      "help": "Projekt kloonitakse ilma liikmeteta.",
+      "label": "Projekti dubleerimine"
+    },
+    "groups": "Grupp | Grupid",
+    "label": "projekti | projekte",
+    "actions": "Ohtlik tegevus",
+    "review-not-editable": "Te ei saa sellele projektile kommentaare lisada; projekt ei ole praegu läbivaatamiseks avatud."
   },
   "project_list": {
     "updated_at": "Viimane aktiivne",
@@ -1678,10 +1706,25 @@
     "send": "Saada taotlus",
     "title": "Pealkiri",
     "traineeship": "Praktikakoht",
-    "type": "Teate liik",
+    "type": {
+      "title": "Teate liik",
+      "job": {
+        "label": "Job",
+        "description": "Traditsiooniline töövõimalus, kas täistööajaga või osalise tööajaga, kindlaksmääratud palga, hüvitiste ja pikaajalise kohustusega. Sobib neile, kes otsivad stabiilseid ja professionaalseid rolle"
+      },
+      "traineeship": {
+        "label": "Praktikakoht",
+        "description": "Struktureeritud koolitusprogramm, mis ühendab töökogemuse õppimisega. Praktikakohad on sageli tasulised, mõeldud algajatele või karjäärivahetajatele ning pakuvad praktilist oskuste arendamist järelevalve all."
+      },
+      "participant": {
+        "label": "Osaleja",
+        "description": "Ideaalne üksikisikutele, kes soovivad osaleda lühiajalistes programmides, töötubades või koostööprojektides. Sageli tasustamata või stipendiumipõhine, keskenduvad need rollid õppimisele, võrgustike loomisele või konkreetse algatuse toetamisele."
+      }
+    },
     "updated": "Uuendatud",
     "valid-until-the": "Kehtiv kuni",
-    "view": "Vaade"
+    "view": "Vaade",
+    "outdated": "Pakkumine ei ole enam saadaval."
   },
   "report": {
     "abuse": "Kuritarvitamine",
@@ -1704,13 +1747,32 @@
     "edit-link": "Muuda linki",
     "edit-file": "Faili redigeerimine",
     "max-size": "Maksimaalne suurus 10 MB",
-    "invalid-image": "Toetamata fail ... Kas see on pilt?",
     "error-uploading-image": "Viga pildi üleslaadimisel",
     "cannot-upload-image": "Pildi üleslaadimine nurjus",
     "link-address": "Linki aadress",
-    "resources": "Ressursse",
+    "resources": "Ressursi | Ressursid",
     "web": "Link veebiressursile | lingid veebiressurssidele",
-    "web-link": "Veebilink | veebilink | veebilingid"
+    "web-link": "Veebilink | veebilink | veebilingid",
+    "delete": "Kas tõesti kustutada see ressurss?",
+    "file": {
+      "add": "Faili lisamine | Failide lisamine",
+      "edit": "Faili redigeerimine | Failide redigeerimine",
+      "label": "Fail | Failid",
+      "delete": "Kas tõesti kustutada see fail? | Kas tõesti kustutada failid?",
+      "form": {
+        "too-big": "Fail on liiga suur (maksimaalselt: {maxSize}Mb)",
+        "invalid-image": "Toetamata fail peab olema korrektne pilt.",
+        "required-image": "Vajalik on fail",
+        "required": "Vajalik on fail"
+      }
+    },
+    "link": {
+      "add": "Lisa link | Lisa lingid",
+      "edit": "Muuda linki | Viitade muutmine",
+      "label": "Link aadress | Linkide aadress",
+      "delete": "Kas tõesti kustutada see link? | Kas tõesti kustutada lingid?"
+    },
+    "upload-image": "Pildi üleslaadimine"
   },
   "result_box": {
     "people": "inimesi",
@@ -1797,29 +1859,6 @@
     "need-help": "Vajad abi?",
     "contact-us": "Võta meiega ühendust"
   },
-  "role": {
-    "role-editor": "Sellel grupil on kõik redigeerimisõigused.",
-    "role-reviewer": "Kui projekt on märgitud kui „ülevaatamiseks valmis, saab ülevaataja anda tagasisidet ja lukustada projekti, et vältida projekti edasisi muudatusi. Retsensendil on ka redigeerimisõigused.",
-    "role-teammate": "Tal ei ole redigeerimisõigust, kuid ta esineb meeskonna liikmena.",
-    "editor": "Toimetaja",
-    "editors": "Toimetajad",
-    "editor-groups": "Redaktorigrupid",
-    "editor-group": "Redaktorigrupp",
-    "reviewer": "Hindaja",
-    "reviewers": "Hindajad",
-    "reviewer-groups": "Kontrollijate rühmad",
-    "reviewer-group": "Kontrollijate rühm",
-    "teammate": "Osaleja",
-    "teammates": "Osalejad",
-    "teammate-groups": "Osalejate rühmad",
-    "teammate-group": "Osalejate rühm",
-    "select": "Õiguste valimine",
-    "group": "Grupid",
-    "leader": "grupijuht",
-    "role-leader": "On toimetaja, kes ilmub \"grupijuhi\" sildiga.",
-    "member": "Liikmesriik",
-    "role-member": "Ilmub grupi liikmena. Nende projektid kuuluvad rühma projektide hulka."
-  },
   "search": {
     "all-filters": "Kõik filtrid",
     "banner-portal": "Võite otsida ka kõigi kogukondade projekte",
@@ -1890,7 +1929,10 @@
     "disambiguate": "(täpsustus)",
     "suggestions": "Soovitused",
     "choose-skill": "Klõpsa valitud oskusel:",
-    "main-tags": "või valida peasiltide hulgast"
+    "main-tags": "või valida peasiltide hulgast",
+    "label": "Otsi",
+    "empty": "Tulemused puuduvad",
+    "results": "Otsingutulemused"
   },
   "sdg": {
     "1": {
@@ -1944,10 +1986,11 @@
     "17": {
       "title": "Partnerlus eesmärkide nimel"
     },
-    "add-short": "Lisa sdg",
     "sdg-fulltext": "säästva arengu eesmärgid",
     "title": "SDG",
-    "empty": "Siin pole veel midagi... Säästva arengu eesmärke panustajad veel ei lisanud."
+    "empty": "Siin pole veel midagi... Säästva arengu eesmärke panustajad veel ei lisanud.",
+    "add-short": "Lisa säästva arengu eesmärgid",
+    "edit-short": "Muuda säästva arengu eesmärke"
   },
   "stats": {
     "cumulated-projects": "Uued kumulatiivsed projektid",
@@ -1996,7 +2039,17 @@
     "no-user-message": "Ükski kasutaja ei vasta sinu otsingule",
     "remove-user-confirm": "Kas tõesti kustutada see kasutaja projektist?",
     "remove-group-confirm": "Kas tõesti kustutada see grupp projektist?",
-    "team": "Meeskond"
+    "team": "Meeskond",
+    "member": {
+      "add": "Lisa liige | Lisa liikmeid",
+      "edit": "Muuda liiget | Muuda liikmeid",
+      "delete": "Kustuta liige | Liikmete kustutamine"
+    },
+    "group": {
+      "add": "Lisa grupp | Gruppide lisamine",
+      "edit": "Redigeerimisgrupp | Gruppide redigeerimine",
+      "delete": "Kustuta grupp | Gruppide kustutamine"
+    }
   },
   "template": {
     "edit-tags": "Siltide muutmine",
@@ -2287,6 +2340,21 @@
     "team-group-delete": {
       "success": "Grupp on edukalt kustutatud",
       "error": "Viga grupi kustutamisel"
+    },
+    "template-get": {
+      "error": "Viga malli hankimisel"
+    },
+    "group-project-create": {
+      "success": "Projektid on edukalt lisandunud",
+      "error": "Viga lisatud projektides"
+    },
+    "group-project-remove": {
+      "success": "Projekt on edukalt eemaldatud",
+      "error": "Viga projekti jooksul eemaldatud"
+    },
+    "pdf": {
+      "success": "PDF on edukalt genereeritud; link saadetakse teile e-posti teel.",
+      "error": "PDF-i genereerimisel tekkis viga. Palun võtke ühendust administraatoriga."
     }
   },
   "success": {
@@ -2443,7 +2511,8 @@
       },
       "content": {
         "label": "informatsiooni",
-        "placeholder": "Lisa info sündmuse kohta"
+        "placeholder": "Lisa info sündmuse kohta",
+        "required": "Vajalik on sisu"
       },
       "event_date": {
         "label": "Sündmuse kuupäev *",
@@ -2682,9 +2751,11 @@
     "fetching_data": "Andmete hankimine...",
     "reasoning": "Mõtlemine...",
     "restart": "Vestluse taaskäivitamine",
+    "export": "Ekspordi vestlus",
     "before-we-start": "Enne alustamist, kas sooviksite:",
     "allow-profile": "Lubage mul näha teie profiili - et saaksin oma vastuseid paremini kohandada",
-    "allow-current-page": "Lubage mul näha lehte, kus viibite - et mõistaksin konteksti paremini"
+    "allow-current-page": "Lubage mul näha lehte, kus viibite - et mõistaksin konteksti paremini",
+    "previous-messages": "Eelmised sõnumid"
   },
   "tos": {
     "evolved": "Meie teenusetingimusi on uuendatud, palun vaadake need üle ja kinnitage.",
@@ -2698,12 +2769,17 @@
   "pagination": {
     "previous": "Eelmine leht",
     "next": "Järgmine",
-    "page": "Page"
+    "page": "Page",
+    "first": "Esimene leht",
+    "last": "Viimane lehekülg",
+    "visibility-per-page": "Kirjete arv leheküljel."
   },
   "pdf": {
     "blog-entries-limited-warning": "PDF-i ekspordi hulka kuuluvad ainult esimesed {max} blogikirjed (kokku {total}).",
     "download-pdf": "PDF",
-    "generated-on": "Geneeritud {date}"
+    "generated-on": "Geneeritud {date}",
+    "confirm": "Kas soovite luua pdf selle {type} jaoks?",
+    "choices": "Valige elemendid, mida soovite PDF-i lisada."
   },
   "group": {
     "is-other-org": "See grupp kuulub teisele platvormile",
@@ -2741,7 +2817,6 @@
       "add-projects": "Lisa funktsioonid projektid",
       "edit": "Muuda",
       "edit-members": "Muuda liikmeid",
-      "edit-roles": "Rollide muutmine",
       "form-incomplete": "Väljad on puudu või vigased, täielikud, et neid oleks võimalik salvestada.",
       "create-group": "Grupi loomine",
       "edit-group": "Redigeerimisgrupp",
@@ -2776,24 +2851,9 @@
       "publication-status-errors": {
         "required": "See väli on nõutav"
       },
-      "delete": "Kustuta grupp"
-    },
-    "role": {
-      "members": {
-        "label": "Liikmesriik",
-        "help": "Liikmesriik"
-      },
-      "leaders": {
-        "label": "Grupi juht",
-        "help": "Grupi juht"
-      },
-      "leaders-managers": {
-        "label": "Juht ja juht"
-      },
-      "managers": {
-        "label": "Kirjastaja",
-        "help": "Kirjastaja"
-      }
+      "delete": "Kustuta grupp",
+      "confirm-remove-project": "Kas tõesti soovite selle projekti eemaldada?",
+      "confirm-remove-member": "Kas te tõesti soovite selle liikme eemaldada?"
     },
     "view": "Vaata gruppi",
     "conferences": "Konverentsid",
@@ -3158,7 +3218,9 @@
     "title-field": "Pealkiri",
     "file-field": "Fail",
     "document-added": "Dokument lisatud.",
-    "document-updated": "Dokument uuendatud."
+    "document-updated": "Dokument uuendatud.",
+    "is-global-field": "Global document",
+    "is-global-label": "Global"
   },
   "announcements": {
     "empty": "Pole veel teadaannet."
@@ -3166,6 +3228,64 @@
   "follow": {
     "follow": "Järgne",
     "unfollow": "Unfollow"
+  },
+  "role": {
+    "owners": {
+      "label": "Toimetaja | Toimetajad",
+      "help": "Sellel grupil on kõik redigeerimisõigused."
+    },
+    "reviewers": {
+      "label": "Hindaja | Hindajad",
+      "help": "Kui projekt on märgitud kui \"läbivaatamiseks valmis\", saab hindaja anda tagasisidet ja lukustada projekti, et vältida projekti edasisi muudatusi. Retsensendil on ka redigeerimisõigused."
+    },
+    "members": {
+      "label": "Osaleja | Osalejad",
+      "help": "Tal ei ole redigeerimisõigust, kuid ta esineb meeskonna liikmena."
+    },
+    "leaders": {
+      "label": "Leader-rühm | Juhtide rühm",
+      "help": "On toimetaja, kes ilmub \"grupijuhi\" sildiga."
+    },
+    "owner_groups": {
+      "label": "Redaktorigrupp | Redaktorite grupp",
+      "help": "On toimetaja, kes ilmub \"grupijuhi\" sildiga."
+    },
+    "reviewer_groups": {
+      "label": "Kontrollirühm | Hindajate rühm",
+      "help": ""
+    },
+    "member_groups": {
+      "label": "Osalejate rühm | Osalejate rühm",
+      "help": "Ilmub grupi liikmena. Nende projektid kuuluvad rühma projektide hulka."
+    },
+    "facilitators": {
+      "label": "Vahendaja | Vahendajad",
+      "help": "Korraldaja: See roll on õpetajatele või juhendajatele: Nad näevad portaalis kõiki eraprojekte ja saavad neid redigeerida. Neil on ka kõik kasutajate õigused."
+    },
+    "admins": {
+      "label": "Admin grupp | Haldusrühm",
+      "help": "Org admin: See funktsioon võimaldab seadistada oma portaali ja hallata kasutajaid oma portaalis. Orgi administraatoritel on portaali seadistamiseks ja selle kasutajate haldamiseks juurdepääs portaali administraatori menüüle. Neil on ka kõik vahendajate õigused."
+    },
+    "users": {
+      "label": "Kasutaja | Kasutajad",
+      "help": "Kasutaja: kasutaja on osa teie kogukonnast. Nad saavad luua projekte, redigeerida oma projekte ja kirjutada kommentaare mis tahes projekti kohta. Nad näevad eraprojekti, kui nad on osa selle projekti meeskonnast, nad näevad kõiki projekte kogukonna nähtavusega ja kõiki avalikke projekte."
+    },
+    "managers": {
+      "label": "Kirjastaja | Kirjastus",
+      "help": ""
+    },
+    "none": {
+      "label": "",
+      "help": ""
+    },
+    "label": "Roll | Rollid",
+    "edit": "Modifier les rôles",
+    "select": "Õiguste valimine",
+    "help": "Teave rollide kohta.",
+    "viewers": {
+      "label": "Vaataja | Vaatajad",
+      "help": "Vaataja: tal ei ole redigeerimisõigusi."
+    }
   },
   "prompts": {
     "create-prompt": "Loo käsk",
@@ -3180,7 +3300,12 @@
     "confirm-deletion-of": "Kas tõesti soovid kustutada käsu '{title}'?",
     "deleted": "Käsk kustutatud",
     "delete-error": "Viga käsu kustutamisel",
-    "empty-list": "Käskusid veel ei ole."
+    "empty-list": "Käskusid veel ei ole.",
+    "form": {
+      "invalid": "Vorm on mittetäielik, palun täida nõutud väljad",
+      "title-required": "Pealkiri on kohustuslik",
+      "content-required": "Sisu on kohustuslik"
+    }
   },
   "agent-skills": {
     "create-skill": "Loo agendi oskus",
@@ -3196,9 +3321,16 @@
     "confirm-deletion-of": "Kas tõesti soovid kustutada agendi oskuse '{title}'?",
     "deleted": "Agendi oskus kustutatud",
     "delete-error": "Viga agendi oskuse kustutamisel",
-    "empty-list": "Agendi oskusi veel ei ole."
+    "empty-list": "Agendi oskusi veel ei ole.",
+    "form": {
+      "invalid": "Vorm on mittetäielik, palun täida nõutud väljad",
+      "title-required": "Pealkiri on kohustuslik",
+      "content-required": "Sisu on kohustuslik",
+      "description-required": "Kirjeldus on kohustuslik"
+    }
   },
   "agents": {
+    "no-active-agent-yet": "Hetkel pole ühtegi agenti saadaval.",
     "need-login": "Selle agendi kasutamiseks peate sisse logima.",
     "create-agent": "Loo agent",
     "create-success": "Agent loodud edukalt",
@@ -3216,6 +3348,8 @@
     "prompt-placeholder": "Vali käsk",
     "use-latest-prompt-version": "Kasuta uusimat käsu versiooni",
     "use-prompt-version": "Kasuta käsu versiooni: ",
+    "use-profile-data": "Juurdepääs kasutajaprofiili andmetele",
+    "use-project-mcp": "Kasutage Projects MCP-d",
     "prompt-version-placeholder": "Vali käsu versioon",
     "start-message-section": "Agendi tervitussõnum",
     "tools-section": "Tööriistad",
@@ -3229,6 +3363,34 @@
     "confirm-deletion-of": "Kas tõesti soovid kustutada agendi '{title}'?",
     "deleted": "Agent kustutatud",
     "delete-error": "Viga agendi kustutamisel",
-    "empty-list": "Agente veel ei ole."
+    "empty-list": "Agente veel ei ole.",
+    "confirm-restart-title": "Alusta vestlust uuesti",
+    "confirm-restart-content": "Kas soovite alustada uut vestlust?",
+    "is-used-as-side-assistant": "Seda agenti kasutatakse praegu abilise rollis ja seda ei saa deaktiveerida.",
+    "title-already-used": "Teine agent kasutab juba tiitlit",
+    "form": {
+      "invalid": "Vorm on mittetäielik, palun täitke nõutud väljad",
+      "title-required": "Pealkiri on nõutud",
+      "model-name-required": "Mudeli nimi on nõutud",
+      "model-temperature-required": "Mudeli temperatuur on nõutud",
+      "model-temperature-is-float": "Mudeli temperatuur peab olema ujukomaarv",
+      "model-temperature-is-bounded": "Mudeli temperatuur peab jääma vahemikku 0 kuni 2",
+      "prompt-required": "Prompt on nõutud"
+    }
+  },
+  "side-assistant": {
+    "default": "Default",
+    "save-success": "Side assistant saved",
+    "save-error": "Error while saving side assistant",
+    "choose": "Choose an agent for the side assistant"
+  },
+  "agents-home": {
+    "title": "Let's talk!",
+    "intro": "Welcome to a curated gathering of conversational agents - AI companions designed to chat, help, and engage. Whether you're looking for research assistance, casual conversation, creative collaboration, or practical support, you'll find different voices here, each with its own strengths and personality."
+  },
+  "assistant-drawer": {
+    "ice-breakers": "Siin on mõned jäämurdjad",
+    "special-agents": "Otsite spetsialiseeritud agenti?",
+    "other-special-agents": "Otsite teist spetsialiseeritudagenti?"
   }
 }

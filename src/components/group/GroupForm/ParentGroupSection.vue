@@ -1,10 +1,6 @@
 <template>
-  <div class="group-section">
-    <label>
-      <span class="section-title">
-        {{ t('group.form.parent-group-label') }}
-      </span>
-
+  <Field :label="t('group.form.parent-group-label')">
+    <template #in-label>
       <LpiButton
         class="add-parent-group-card"
         :btn-icon="model ? 'Pen' : 'Plus'"
@@ -12,11 +8,12 @@
         data-test="add-parent-group-card"
         @click="openModal()"
       />
-    </label>
+    </template>
 
     <div v-if="model" class="group-grid">
       <GroupCard :group="model" mode="list" />
     </div>
+    <empty-label v-if="!model" />
 
     <PickGroupDrawer
       :drawer-title="t('group.form.add-parent-group')"
@@ -29,7 +26,7 @@
       @close="closeModal()"
       @confirm="confirmGroup"
     />
-  </div>
+  </Field>
 </template>
 
 <script setup lang="ts">

@@ -33,9 +33,9 @@ import { cropIfTooLong } from '~/functs/string'
 const props = defineProps<{ location: AnyLocation }>()
 
 // when create new point (from locationDrawer) we not have $t
-const title = computed(() => cropIfTooLong(props.location?.$t?.title ?? props.location.title, 45))
+const title = computed(() => cropIfTooLong(props.location?.$t?.title || props.location.title, 45))
 const description = computed(() =>
-  cropIfTooLong(props.location?.$t?.description ?? props.location.description, 85)
+  cropIfTooLong(props.location?.$t?.description || props.location.description, 85)
 )
 
 const closePopUp = inject('closePopUp')

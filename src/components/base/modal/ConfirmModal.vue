@@ -5,6 +5,7 @@
     :no-second-button="noSecondButton"
     :cancel-button-label="cancelButtonLabel || $t('common.no')"
     :confirm-button-label="confirmButtonLabel || $t('common.yes')"
+    v-bind="attrs"
     @close="$emit('cancel')"
     @submit="$emit('confirm')"
   >
@@ -45,6 +46,8 @@ defineEmits<{
   cancel: []
   confirm: []
 }>()
+
+const attrs = useAttrs()
 </script>
 <style lang="scss" scoped>
 .confirm-modal {

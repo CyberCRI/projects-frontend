@@ -33,8 +33,8 @@ import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import type { AnyTranslatedLocation } from '@/models/location.model'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import LocationPopUp from '@/components/map/LocationPopUp.vue'
+import type { ImageModel } from '~/models/image.model'
 import type { RouteLocationRaw } from 'vue-router'
-import type { Image } from '@/models/image.model'
 import { cropIfTooLong } from '@/functs/string'
 
 const props = withDefaults(
@@ -44,7 +44,7 @@ const props = withDefaults(
     to: RouteLocationRaw
     title: string
     description?: string
-    image?: Image
+    image?: ImageModel
     defaultPicture?: string
   }>(),
   { description: '', image: null, defaultPicture: null }

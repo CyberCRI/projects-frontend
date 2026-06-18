@@ -2,15 +2,14 @@ import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
 
 import useUsersStore from '~/stores/useUsers'
 
-import isAdminOrFacilitator from '~/functs/isAdminOrFacilitator'
-import utils from '~/functs/functions'
-import isAdmin from '~/functs/isAdmin'
+import { isAdmin, isAdminOrFacilitator } from '~/functs/permissions'
+import { resetScroll } from '~/composables/useScrollToTab'
 
 export default defineNuxtPlugin(async () => {
   useRouter().beforeEach((to, from, next) => {
     // console.log('BEFORE EACH')
     if (to.matched.some((route) => route.meta.resetScroll)) {
-      utils.resetScroll()
+      resetScroll()
     }
 
     const usersStore = useUsersStore()

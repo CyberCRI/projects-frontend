@@ -16,6 +16,7 @@
 
 <script setup lang="ts">
 import UserCard from '~/components/people/UserCard.vue'
+import { roleI18n } from '~/functs/rolesUtils'
 
 import { isAnonymousUser } from '~/functs/users'
 
@@ -28,8 +29,6 @@ const props = withDefaults(
   { mode: 'list', roleLabel: undefined }
 )
 
-const { t } = useNuxtI18n()
-
 const emit = defineEmits(['click'])
 
 const isAnonymous = computed(() => isAnonymousUser(props.member))
@@ -38,14 +37,7 @@ const roleLabel = computed(() => {
   if (props.roleLabel !== undefined) {
     return props.roleLabel
   }
-  if (props.member) {
-    if (props.member.is_leader && props.member.is_manager)
-      return t('group.role.leaders-managers.label')
-    else if (props.member.is_manager) return t('group.role.managers.label')
-    else if (props.member.is_leader) return t('group.role.leaders.label')
-    else return t('group.role.members.label')
-  }
-  return null
+  return roleI18n(props.member.role)
 })
 
 const click = () => {

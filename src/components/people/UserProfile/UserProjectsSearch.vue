@@ -15,11 +15,10 @@
 import { getAllProjects } from '~/api/projects.service'
 import { getUserFollows } from '~/api/follows.service'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useOrganizationsStore from '~/stores/useOrganizations'
 
-import useAPI from '~/composables/useAPI.ts'
+import useAPI from '~/composables/useAPI'
 
-import funct from '~/functs/functions.ts'
 import { debounce } from 'es-toolkit'
 
 export default {
@@ -57,7 +56,7 @@ export default {
 
   data() {
     return {
-      projectListId: funct.newSID(true),
+      projectListId: useUniqueId(16),
       items: [],
       isLoading: true,
       loadProjects: debounce(this.fetchProjects, 40, { leading: false, trailing: true }),
@@ -78,7 +77,7 @@ export default {
       return {
         limit: this.limit,
         ordering: '-updated_at',
-        member_role: this.memberRoles,
+        member_role: [this.memberRoles],
         members: [this.user.id],
         organizations: [this.organizationsStore.current.code],
         // page: this.pagination.currentPage,
@@ -116,7 +115,7 @@ export default {
           { limit: this.limit }
         )
       } else {
-        response = await getAllProjects(this.search)
+        response = await getAllProjects({ query: this.search })
       }
       this.updateProjectList(response)
     },

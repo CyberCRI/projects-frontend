@@ -46,7 +46,7 @@
             <p>{{ $t('resource.max-size') }}</p>
           </div>
           <p v-if="hasFileError" class="error error-file">
-            {{ $t('common.file-required') }}
+            {{ $t('resource.file.form.required') }}
           </p>
         </template>
 
@@ -57,9 +57,9 @@
             class="text-input"
             data-test="input-link-adress"
             placeholder="https://..."
+            :errors="v$.link.$errors"
             @blur="v$.link.$touch"
           />
-          <FieldErrors :errors="v$.link.$errors" />
         </template>
 
         <TextInput
@@ -68,10 +68,10 @@
           :placeholder="$t('common.title')"
           class="text-input"
           data-test="input-link-title"
+          :errors="v$.title.$errors"
           @focus="checkFile"
           @blur="v$.title.$touch"
         />
-        <FieldErrors :errors="v$.title.$errors" />
 
         <TextInput
           v-model="description"
@@ -79,10 +79,10 @@
           :placeholder="$t('form.description')"
           class="text-input"
           data-test="input-link-description"
+          :errors="v$.description.$errors"
           @focus="checkFile"
           @blur="v$.description.$touch"
         />
-        <FieldErrors :errors="v$.description.$errors" />
       </div>
     </BaseDrawer>
   </div>
@@ -92,7 +92,6 @@
 import { helpers, required, url } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
 
-import FieldErrors from '~/components/base/form/FieldErrors.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import ImageInput from '~/components/base/form/ImageInput.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
@@ -100,13 +99,13 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import useToasterStore from '~/stores/useToaster.ts'
 
-import utils from '~/functs/functions.ts'
+import { removePrefix } from '~/functs/utils'
 import analytics from '~/analytics'
 
 export default {
   name: 'ResourceDrawer',
 
-  components: { LpiButton, ImageInput, BaseDrawer, TextInput, FieldErrors },
+  components: { LpiButton, ImageInput, BaseDrawer, TextInput },
 
   props: {
     isAddMode: {
@@ -249,9 +248,8 @@ export default {
     },
     linkExists() {
       return (
-        this.links.filter(
-          (link) => utils.removePrefix(link.site_url) === utils.removePrefix(this.link)
-        ).length > 0
+        this.links.filter((link) => removePrefix(link.site_url) === removePrefix(this.link))
+          .length > 0
       )
     },
 

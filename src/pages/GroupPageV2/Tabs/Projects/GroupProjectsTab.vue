@@ -1,6 +1,6 @@
 <template>
   <BaseModuleTab :title="$t(GroupModuleTitle.featured_projects)" :count="countElement">
-    <BaseGroupProjectsList :group="group" />
+    <BaseGroupProjectsList :group="group" :editable="editable" />
   </BaseModuleTab>
 </template>
 
@@ -13,6 +13,7 @@ import { GroupModuleTitle } from '@/models/invitation.model'
 
 const props = defineProps<{
   group: TranslatedPeopleGroupModel
+  editable?: boolean
 }>()
 
 const countElement = computed(() => props.group.modules?.featured_projects)

@@ -1,15 +1,11 @@
 <template>
   <FetchLoader :status="status" only-error skeleton>
-    <div class="list-container">
+    <BaseModuleHeader v-if="!preview" :editable="editable" :pagination="pagination" @add="onCreate">
       <!-- hide filter if we are in preview or nothing to show (no past/furture events) -->
-      <EventFilter v-if="!preview && limitSkeletons !== 0" v-model="query" />
-      <LpiButton
-        v-if="editable"
-        btn-icon="Plus"
-        :label="$t('group.form.add')"
-        class="edit-btn skeletons-background"
-        @click="onCreate"
-      />
+      <EventFilter v-if="limitSkeletons !== 0" v-model="query" />
+    </BaseModuleHeader>
+
+    <div class="list-container">
       <div class="list-divider events-wrapper">
         <EventItem
           v-for="event in data"
@@ -21,27 +17,30 @@
           @edit="onEditEvent"
           @delete="onDeleteEvent"
         />
-        <EmptyLabel v-if="!data.length" :label="$t('event.empty')" />
+        <NothingHere v-if="!data.length" :label="$t('event.empty')" />
       </div>
-
-      <LocationDrawer
-        :is-opened="stateModals.location"
-        :locations="selectedEvent?.location ? [selectedEvent.location] : []"
-        @close="closeModals('location')"
-      />
-
-      <ConfirmModal
-        v-if="stateModals.delete"
-        :title="$t('event.delete.message')"
-        @confirm="onConfirmDeleteEvent"
-        @cancel="onCancel"
-      >
-        <EventItem is="div" :event="selectedEvent" location-preview />
-      </ConfirmModal>
 
       <PaginationButtonsV2 v-if="withPagination" :pagination="pagination" />
     </div>
   </FetchLoader>
+
+  <!-- drawer/modal -->
+
+  <LocationDrawer
+    :is-opened="stateModals.location"
+    :locations="selectedEvent?.location ? [selectedEvent.location] : []"
+    @close="closeModals('location')"
+  />
+
+  <ConfirmModal
+    v-if="stateModals.delete"
+    :title="$t('event.delete.message')"
+    @confirm="onConfirmDeleteEvent"
+    @cancel="onCancel"
+  >
+    <EventItem is="div" :event="selectedEvent" location-preview />
+  </ConfirmModal>
+
   <EditEventDrawer
     :is-opened="stateModals.edit"
     :event="selectedEvent"
@@ -66,6 +65,8 @@ import FetchLoader from '~/components/base/FetchLoader.vue'
 import useToasterStore from '~/stores/useToaster'
 
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
+import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
+import { refreshGroupData } from '~/composables/groups/refreshGroup'
 import { eventSkeleton } from '~/skeletons/event.skeletons'
 
 const props = withDefaults(
@@ -86,6 +87,7 @@ const props = withDefaults(
 
 const { t } = useNuxtI18n()
 
+const asyncing = ref(false)
 const selectedEvent = ref<any>()
 const { stateModals, openModals, closeModals } = useModals({
   delete: false,
@@ -111,6 +113,18 @@ const { status, data, pagination, refresh } = getGroupEvent(organizationCode, gr
   default: () => factoryPagination(eventSkeleton, limitSkeletons.value),
 })
 
+const onCancel = () => {
+  asyncing.value = true
+  selectedEvent.value = null
+  closeModals('edit', 'delete', 'location')
+}
+
+const onAfterEdit = () => {
+  refreshGroupData(props.group)
+  refresh()
+  onCancel()
+}
+
 const onEditEvent = (event: TranslatedEventModel) => {
   selectedEvent.value = event
   openModals('edit')
@@ -126,7 +140,14 @@ const onDeleteEvent = (event: TranslatedEventModel) => {
   selectedEvent.value = event
   openModals('delete')
 }
+
+const onLocation = (event) => {
+  selectedEvent.value = event
+  openModals('location')
+}
+
 const onConfirmDeleteEvent = () => {
+  asyncing.value = true
   deleteEvent(organizationCode, selectedEvent.value.id)
     .then(() => {
       toaster.pushSuccess(t('event.delete.success'))
@@ -134,25 +155,6 @@ const onConfirmDeleteEvent = () => {
     })
     .catch(() => toaster.pushError(t('event.delete.error')))
     .finally(() => onCancel())
-}
-
-const onAfterEdit = () => {
-  refreshNuxtData([
-    `${organizationCode}::group::${props.group.slug}`,
-    `${organizationCode}::group::${props.group.id}`,
-  ])
-  refresh()
-  onCancel()
-}
-
-const onCancel = () => {
-  selectedEvent.value = null
-  closeModals('edit', 'delete', 'location')
-}
-
-const onLocation = (event) => {
-  selectedEvent.value = event
-  openModals('location')
 }
 </script>
 

@@ -66,9 +66,9 @@
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { email, helpers, required } from '@vuelidate/validators'
 import useOrganizationsStore from '@/stores/useOrganizations'
+import { defaultContactForm } from '@/form/contact'
 import useToasterStore from '@/stores/useToaster'
 import { contactUs } from '@/api/report.service'
-import { defaultForm } from '@/form/contact'
 import useValidate from '@vuelidate/core'
 
 import TextInput from '~/components/base/form/TextInput.vue'
@@ -92,7 +92,7 @@ const rules = computed(() => ({
     required: helpers.withMessage(t('form.report.content'), required),
   },
 }))
-const form = ref(defaultForm())
+const form = ref(defaultContactForm())
 const v$ = useValidate(rules, form)
 const isLoading = ref(false)
 const customNotificationStyle = {
@@ -104,7 +104,7 @@ const orgCode = computed(() => organizationsStore?.current?.code)
 watch(
   () => props.isOpened,
   () => {
-    form.value = defaultForm()
+    form.value = defaultContactForm()
     v$.value.$reset()
   }
 )

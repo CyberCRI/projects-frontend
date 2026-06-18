@@ -1,13 +1,13 @@
 <template>
-  <div class="basegroup-card">
-    <div class="basegroup">
-      <div class="basegroup-header">
-        <h2 v-if="header" class="title">
+  <div class="basemodule-card">
+    <div class="basemodule">
+      <div v-if="header" class="basemodule-header">
+        <h2 class="title skeletons-text">
           {{ title }}
           <span v-show="count">( {{ count }} )</span>
         </h2>
       </div>
-      <div class="basegroup-container">
+      <div class="basemodule-container">
         <slot />
       </div>
     </div>
@@ -26,8 +26,8 @@ withDefaults(
 </script>
 
 <style lang="scss" scoped>
-.basegroup-card {
-  .basegroup {
+.basemodule-card {
+  .basemodule {
     display: flex;
     flex-direction: column;
     align-items: flex-start;

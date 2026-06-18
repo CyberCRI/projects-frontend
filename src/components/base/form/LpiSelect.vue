@@ -5,14 +5,20 @@
       :class="{ placeholder: !selected, 'placeholder--open': stateModal }"
       @click="toggleModal"
     >
-      <span class="selected-label" :style="styles">
-        {{ selected ? selected.label : placeholder }}
+      <span class="selected-label skeletons-text" :style="styles">
+        {{ selected ? selected.label : translatedPlaceholder }}
       </span>
-      <IconImage :name="icon" class="svg" />
+      <IconImage :name="icon" class="svg skeletons-background" />
     </div>
     <div class="options-wrapper">
       <Transition name="menu-fade">
-        <ul v-show="stateModal" class="option-list">
+        <ul
+          v-show="stateModal"
+          class="option-list skeletons-background"
+          :class="{
+            'height-limit': maxHeight,
+          }"
+        >
           <template v-for="option in options">
             <li v-if="!selected || option.value !== selected.value" :key="option.value">
               <button class="menu-dropdown" :data-test="option.dataTest" @click="select(option)">
@@ -29,6 +35,7 @@
 <script setup lang="ts" generic="ModelType extends string | number">
 import type IconImage from '~/components/base/media/IconImage.vue'
 import type { IconImageChoice } from '~/functs/IconImage'
+import type { Properties } from 'csstype'
 import type { StyleValue } from 'vue'
 
 type Option = {
@@ -41,23 +48,28 @@ const props = withDefaults(
   defineProps<{
     options: Option[]
     placeholder?: string
+    maxHeight?: Properties['maxHeight']
   }>(),
   {
-    placeholder: 'Select',
+    placeholder: null,
+    maxHeight: null,
   }
 )
 const emit = defineEmits<{
   blur: []
 }>()
 
+const { t } = useNuxtI18n()
 const model = defineModel<ModelType>({ default: null })
 const { stateModal, toggleModal, closeModal } = useModal(false)
 const icon = computed<IconImageChoice>(() => (stateModal.value ? 'ChevronUp' : 'ChevronDown'))
 
 const selected = computed(() => props.options.find((option) => option.value === model.value))
 
+const translatedPlaceholder = computed(() => props.placeholder || t('common.select-placeholder'))
+
 const styles = computed<StyleValue>(() => {
-  let maxCharLength = props.placeholder ? props.placeholder.length : 0
+  let maxCharLength = translatedPlaceholder.value ? translatedPlaceholder.value.length : 0
   for (let i = 0; i < props.options.length; i++) {
     maxCharLength = Math.max(
       maxCharLength,
@@ -66,7 +78,7 @@ const styles = computed<StyleValue>(() => {
   }
 
   return {
-    width: `${maxCharLength}em`, // use em to get current font width
+    width: `${maxCharLength * 8}px`, // use em to get current font width
   }
 })
 
@@ -86,7 +98,7 @@ const clickOutside = () => {
   position: relative;
   background: $white;
   border-radius: $border-radius-s;
-  border: $border-width-s solid $light-gray;
+  border: $border-width-s solid var(--light-gray);
 
   &.active {
     border-bottom-left-radius: 0;
@@ -102,8 +114,13 @@ const clickOutside = () => {
 
   .option-list {
     background-color: $white;
-    border: $border-width-s solid $light-gray;
+    border: $border-width-s solid var(--light-gray);
     border-radius: $border-radius-s;
+
+    &.height-limit {
+      max-height: v-bind('maxHeight');
+      overflow-y: scroll;
+    }
   }
 
   .menu-header {
@@ -118,10 +135,10 @@ const clickOutside = () => {
     background: transparent;
     border: none;
     cursor: pointer;
-    color: $black;
+    color: var(--black);
 
     &.placeholder {
-      color: $mid-gray;
+      color: var(--mid-gray);
       font-weight: 400;
 
       &--open {
@@ -138,7 +155,7 @@ const clickOutside = () => {
     padding: pxToRem(10px) $space-l;
     appearance: none;
     font-size: $font-size-m;
-    font-weight: 700;
+    font-weight: 400;
     width: 100%;
     max-width: 100%;
     padding-right: $space-xl;
@@ -146,10 +163,10 @@ const clickOutside = () => {
     border: none;
     cursor: pointer;
     text-align: left;
-    color: $black;
+    color: var(--black);
 
     &:hover {
-      background: $almost-white;
+      background: var(--almost-white);
     }
   }
 
@@ -179,7 +196,7 @@ const clickOutside = () => {
   top: 50%;
   transform: translateY(-50%);
   right: 8px;
-  fill: $black;
+  fill: var(--black);
 }
 
 .menu-fade-leave-active,
@@ -217,7 +234,7 @@ const clickOutside = () => {
 // old style, add 'primary' class to use it
 // TODO check if still needed
 .lpi-select.primary {
-  background: $primary-dark;
+  background: var(--primary-dark);
   border-radius: $border-radius-l;
   border: 0 none;
 
@@ -232,20 +249,20 @@ const clickOutside = () => {
   }
 
   .menu-header {
-    color: $white;
+    color: var(--white);
   }
 
   .option-list {
-    background-color: $primary-dark;
+    background-color: var(--primary-dark);
     border-radius: $border-radius-l;
   }
 
   .menu-dropdown {
-    color: $white;
+    color: var(--white);
   }
 
   .svg {
-    fill: $white;
+    fill: var(--white);
   }
 }
 </style>

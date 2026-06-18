@@ -1,4 +1,3 @@
-import { traceSorbobot } from '~/server/routes/api/chat-stream'
 import SorbobotAPI from '~/mcp-server/sorbobot/sorbobot-api'
 import { API_BASE_URL, mcpFetch } from '../projects/base'
 import { z } from 'zod'
@@ -7,8 +6,15 @@ const runtimeConfig = useRuntimeConfig()
 const sorbobotApiUrl = runtimeConfig.public.appSorbobotApiUrl
 const sorbobotApiToken = runtimeConfig.appSorbobotApiToken
 const orgCode = runtimeConfig.public.appApiOrgCode
+const appSorbobotApiTrace = runtimeConfig.appSorbobotApiTrace
 
 export const sorbobotIsEnabled = sorbobotApiUrl && sorbobotApiToken
+
+export const traceSorbobot = (...args) => {
+  if (appSorbobotApiTrace) {
+    console.log('[Sorbobot TRACE]', ...args)
+  }
+}
 
 const sorbobotApi = sorbobotIsEnabled ? new SorbobotAPI(sorbobotApiToken, sorbobotApiUrl) : null
 export const SORBOBOT_EXTRA =

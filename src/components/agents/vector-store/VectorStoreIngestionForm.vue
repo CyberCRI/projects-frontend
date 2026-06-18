@@ -9,7 +9,7 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
-  documentTitle: { type: String, default: '' },
+  document: { type: [Object, null], default: null },
   isEdit: { type: Boolean, default: false },
 })
 const emit = defineEmits(['close', 'document-added', 'document-updated'])
@@ -19,6 +19,11 @@ const usersStore = useUsersStore()
 
 const file = ref(null)
 const title = ref('')
+const isGlobal = ref(false)
+
+const { isSuperAdmin } = usePermissions()
+
+const canEditGlobal = computed(() => isSuperAdmin.value && !props.isEdit)
 
 const titleExists = ref(false)
 
@@ -27,17 +32,12 @@ watch(
   (neo) => {
     if (neo) {
       file.value = null
-      title.value = props.isEdit ? props.documentTitle : ''
+      title.value = props.isEdit ? props.document.title : ''
       titleExists.value = false
+      isGlobal.value = props.isEdit ? props.document.org_code == '' : false
     }
   }
 )
-
-const onFileChange = (e) => {
-  const files = e.target.files || e.dataTransfer.files
-  if (!files.length) return
-  file.value = files[0]
-}
 
 const isAsyncing = ref(false)
 
@@ -54,6 +54,7 @@ const submit = async () => {
     try {
       const query = new URLSearchParams()
       query.set('title', title.value)
+      if (isGlobal.value) query.set('is_global', 'yes')
       const response = await fetch(`/api/vector-store/get?${query.toString()}`, {
         headers,
       })
@@ -81,7 +82,8 @@ const submit = async () => {
 
   const fd = new FormData()
   fd.append('title', title.value)
-  fd.append('file', file.value, file.value.name)
+  fd.append('file', file.value[0], file.value[0].name)
+  fd.append('is_global', isGlobal.value ? 'yes' : '')
 
   try {
     const response = await fetch(`/api/vector-store/ingest`, {
@@ -117,6 +119,9 @@ const submit = async () => {
     @close="close"
     @confirm="submit"
   >
+    <div v-if="isEdit">
+      <VectorStoreGlobalPill v-if="isGlobal" />
+    </div>
     <div class="form-section">
       <TextInput
         v-model.trim="title"
@@ -127,15 +132,20 @@ const submit = async () => {
       <p v-if="titleExists" class="error">{{ $t('vector-store.title-exists') }}</p>
     </div>
     <div class="form-section">
-      <label>{{ $t('vector-store.file-field') }} (.pdf, .txt, .docx)</label>
+      <LpiCheckbox
+        v-model="isGlobal"
+        :disabled="!canEditGlobal"
+        :label="$t('vector-store.is-global-field')"
+      />
+    </div>
+    <div class="form-section">
+      <label>{{ $t('vector-store.file-field') }} (.pdf, .txt, .md, .docx)</label>
       <br />
-      <input
-        id="file"
-        type="file"
-        name="file"
-        accept=".pdf,.txt,.docx,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      <FileInput
+        v-model="file"
+        file-types=".pdf,.txt,.md,.docx,text/plain,text/markdown,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         required
-        @change="onFileChange"
+        :label="$t('file.upload')"
       />
     </div>
   </BaseDrawer>
@@ -143,5 +153,9 @@ const submit = async () => {
 <style lang="scss" scoped>
 .error {
   color: $salmon;
+}
+
+.form-section ~ .form-section {
+  margin-top: 1rem;
 }
 </style>

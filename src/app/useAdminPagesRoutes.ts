@@ -6,7 +6,6 @@ export default function useAdminPagesRoutes() {
       path: 'vector-store',
       name: 'VectorStoreAdminTab',
       component: () => import('../pages/AdminPortalPageV2/Tabs/VectorStoreAdminTab.vue'),
-      meta: { checkAccessRequestEnabled: true },
     })
   }
   if (useRuntimeConfig().public.appHasChatbotPromptDb) {
@@ -15,29 +14,42 @@ export default function useAdminPagesRoutes() {
         path: 'agents',
         name: 'AgentsAdminTab',
         component: () => import('../pages/AdminPortalPageV2/Tabs/AgentsAdminTab.vue'),
-        meta: { checkAccessRequestEnabled: true },
+      },
+
+      {
+        path: 'side-assitant',
+        name: 'SideAssistantAdminTab',
+        component: () => import('../pages/AdminPortalPageV2/Tabs/SideAssistantAdminTab.vue'),
       },
 
       {
         path: 'prompts',
         name: 'PromptsAdminTab',
         component: () => import('../pages/AdminPortalPageV2/Tabs/PromptsAdminTab.vue'),
-        meta: { checkAccessRequestEnabled: true },
       },
 
       {
         path: 'agent-skills',
         name: 'AgentSkillsAdminTab',
         component: () => import('../pages/AdminPortalPageV2/Tabs/AgentSkillsAdminTab.vue'),
-        meta: { checkAccessRequestEnabled: true },
       },
 
       {
         path: 'mcps',
         name: 'McpsAdminTab',
         component: () => import('../pages/AdminPortalPageV2/Tabs/McpsAdminTab.vue'),
-        meta: { checkAccessRequestEnabled: true },
+      },
+      {
+        path: 'conversations',
+        name: 'ConversationsAdminTab',
+        component: () => import('../pages/AdminPortalPageV2/Tabs/AgentConversationsAdminTab.vue'),
       }
+      // TODO: keeping for now
+      // {
+      //   path: 'checkpoints',
+      //   name: 'CheckpointsAdminTab',
+      //   component: () => import('../pages/AdminPortalPageV2/Tabs/AgentCheckpointsAdminTab.vue'),
+      // }
     )
   }
   return [
@@ -165,7 +177,6 @@ export default function useAdminPagesRoutes() {
           path: 'terms-and-conditions',
           name: 'termsAdmin',
           component: () => import('../pages/AdminPortalPageV2/Tabs/TermsAdminTab.vue'),
-          meta: { checkAccessRequestEnabled: true },
         },
         ...vectorStoreRoutes,
         ...agentRoutes,

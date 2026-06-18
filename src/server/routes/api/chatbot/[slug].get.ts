@@ -1,7 +1,8 @@
-// import checkAdminRights from '@/server/utils/check-admin-rights.js'
-
+import agentFindBySlug from '@/server/utils/agent-find-by-slug'
+import { getUser } from '@/server/utils/check-admin-rights.js'
 export default defineLazyEventHandler(() => {
-  const { appApiOrgCode } = useRuntimeConfig().public
+  const runtimeConfig = useRuntimeConfig()
+  const { appApiOrgCode } = runtimeConfig.public
   return defineEventHandler(async (event) => {
     // await checkAdminRights(event)
     const slug = getRouterParam(event, 'slug')
@@ -11,14 +12,26 @@ export default defineLazyEventHandler(() => {
         error: 'Missing required "id" query parameter',
       }
     }
-    // findUnique dont work because slug is not globally unique
-    const agent = await chatbotPrisma.agent.findFirst({
-      where: {
-        slug: slug,
-        orgCode: appApiOrgCode,
-      },
-    })
 
+    const user = await getUser(event)
+    if (!user) {
+      setResponseStatus(event, 401)
+      return {
+        error: 'Unauthorized',
+      }
+    }
+
+    const agentFields: any = {
+      id: true,
+      title: true,
+      slug: true,
+      description: true,
+      startMessage: true,
+      useProfileData: true,
+      isEnabled: true,
+    }
+
+    const agent = await agentFindBySlug(chatbotPrisma, slug, appApiOrgCode, agentFields)
     // console.log(agent)
     if (!agent) {
       setResponseStatus(event, 400)
@@ -26,6 +39,26 @@ export default defineLazyEventHandler(() => {
         error: 'Not found',
       }
     }
-    return agent
+
+    const allConversations = await chatbotPrisma.conversation.findMany({
+      where: {
+        organizationCode: appApiOrgCode,
+        userId: user.id,
+        agentId: agent.id,
+      },
+      orderBy: { lastActiveAt: 'desc' },
+    })
+
+    const lastConversation = await chatbotPrisma.conversation.findFirst({
+      where: {
+        organizationCode: appApiOrgCode,
+        userId: user.id,
+        agentId: agent.id,
+      },
+      include: { messages: { orderBy: { position: 'desc' } } },
+      orderBy: { lastActiveAt: 'desc' },
+    })
+
+    return { agent, lastConversation, allConversations }
   })
 })

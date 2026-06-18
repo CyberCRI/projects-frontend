@@ -22,6 +22,7 @@ export type Option = {
   label?: string
   name?: string
   value: string
+  children?: Option[]
 }
 
 const props = withDefaults(
@@ -62,7 +63,6 @@ const label = computed(() => {
 
   &.selected {
     background-color: $primary-light;
-    font-style: italic;
     color: rgba($primary-dark, 0.7);
   }
 

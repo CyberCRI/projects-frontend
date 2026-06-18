@@ -1,128 +1,100 @@
 import type {
-  AddLinkedProjectInput,
   AddManyLinkedProjectInput,
+  ProjectForm,
   ProjectModel,
-  // LinkedProject,
-  // ProjectHeaderOutput,
-  // ProjectOutput,
-  ProjectPatchInput,
   ProjectSlugOrId,
+  QueryFilterProjectSimilars,
 } from '@/models/project.model'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
-import type { SearchParams } from '@/api/types'
+import type { UseApiOptions } from '@/composables/useAPI'
 import useAPI from '@/composables/useAPI'
 
-import type { ProjectMemberModel, QueryFilterProjectMembers } from '@/models/project-member.model'
-import { imageSizesFormData } from '@/functs/imageSizesUtils'
+import type {
+  ProjectMemberModel,
+  QueryFilterProject,
+  QueryFilterProjectMembers,
+} from '@/models/project-member.model'
+import type { ImageModealCreated, ImageModel } from '~/models/image.model'
+import type { PeopleGroupModel } from '~/models/invitation.model'
 
-type Config = UseApiOptions
-type ConfigMembers = UseApiOptions<QueryFilterProjectMembers>
+type ConfigProject = UseApiOptions<QueryFilterProject>
+type ConfigProjectLinked = UseApiOptions<Partial<PaginationQuery>>
+type ConfigProjectMembers = UseApiOptions<QueryFilterProjectMembers>
 
-export async function createProject(project) {
-  const result: any = await useAPI(`project/`, { body: project, method: 'POST' })
-  return result
-}
-
-export async function createProjectHeader(projectId, project) {
-  if (project.header_image instanceof File && projectId) {
-    const headerFormData = new FormData()
-    headerFormData.append('file', project['header_image'], project['header_image'].name)
-
-    const imageSizes = project['imageSizes']
-    imageSizesFormData(headerFormData, imageSizes)
-    project.header_image_id = (
-      (await postProjectHeader({ project_id: projectId, body: headerFormData })) as any
-    ).id
-    return project.header_image_id
-  }
-
-  return false
-}
-
-export async function patchProject(id: string, project: ProjectPatchInput | FormData) {
-  return await useAPI(`project/${id}/`, { body: project, method: 'PATCH' })
-}
-
-export async function deleteProject(id: string) {
-  return await useAPI(`project/${id}/`, { method: 'DELETE' })
-}
-
-export async function duplicateProject(id: string) {
-  return await useAPI(`project/${id}/duplicate/`, { method: 'POST' })
-}
-
-export async function getLinkedProject(projectId: ProjectSlugOrId, config: Config = {}) {
-  return await useAPI<PaginationResult<ProjectModel>>(
-    `project/${projectId}/linked-project/`,
-    config
-  )
-}
-
-export async function addLinkedProject({
-  id,
-  body,
-}: {
-  id: string
-  body: AddManyLinkedProjectInput
-}) {
-  return await useAPI(`project/${id}/linked-project/add-many/`, { body, method: 'POST' })
-}
-
-export async function patchLinkedProject({
-  target_id,
-  id,
-  body,
-}: {
-  target_id: string
-  id: number
-  body: AddLinkedProjectInput
-}) {
-  return await useAPI(`project/${target_id}/linked-project/${id}/`, { body, method: 'PATCH' })
-}
-
-export async function deleteLinkedProject({ id, project_id }: { id: number; project_id: string }) {
-  return await useAPI(`project/${project_id}/linked-project/${id}/`, { method: 'DELETE' })
+export async function getAllProjects(config: ConfigProject = {}) {
+  return await useAPI<PaginationResult<ProjectModel>>(`project/`, config)
 }
 
 export async function getProject(projectSlugOrId: ProjectSlugOrId, config = {}) {
   return await useAPI<ProjectModel>(`project/${projectSlugOrId}/`, config)
 }
 
-export async function getProjectMembers(
-  projectSlugOrId: ProjectSlugOrId,
-  config: ConfigMembers = {}
+export function postProject(body: ProjectForm) {
+  return useAPI(`project/`, { body, method: 'POST' })
+}
+
+export async function patchProject(projectId: ProjectSlugOrId, project: ProjectForm) {
+  return await useAPI<ProjectModel>(`project/${projectId}/`, { body: project, method: 'PATCH' })
+}
+
+export async function deleteProject(projectId: ProjectSlugOrId) {
+  return await useAPI<undefined>(`project/${projectId}/`, { method: 'DELETE' })
+}
+
+export async function duplicateProject(projectId: ProjectSlugOrId) {
+  return await useAPI<ProjectModel>(`project/${projectId}/duplicate/`, { method: 'POST' })
+}
+
+export async function getLinkedProject(
+  projectId: ProjectSlugOrId,
+  config: ConfigProjectLinked = {}
 ) {
-  return await useAPI<PaginationResult<ProjectMemberModel>>(
-    `project/${projectSlugOrId}/members/`,
+  return await useAPI<PaginationResult<ProjectModel>>(
+    `project/${projectId}/linked-project/`,
     config
   )
 }
 
-export async function getAllRecommendedProjects(params: SearchParams) {
-  return await useAPI(`project/misc/top/`, { ..._adaptParamsToGetQuery(params) })
+export async function addLinkedProject(
+  projectId: ProjectSlugOrId,
+  body: AddManyLinkedProjectInput
+) {
+  return await useAPI(`project/${projectId}/linked-project/add-many/`, { body, method: 'POST' })
 }
 
-export async function getAllRandomProjects(params: SearchParams) {
-  return await useAPI(`project/misc/random/`, { ..._adaptParamsToGetQuery(params) })
+export async function deleteLinkedProject(projectId: ProjectSlugOrId, linkedProjectId) {
+  return await useAPI<undefined>(`project/${projectId}/linked-project/${linkedProjectId}/`, {
+    method: 'DELETE',
+  })
 }
 
-export async function getAllProjects(params: SearchParams) {
-  return await useAPI(`project/`, { ..._adaptParamsToGetQuery(params) })
+export async function getProjectMembers(
+  projectSlugOrId: ProjectSlugOrId,
+  config: ConfigProjectMembers = {}
+) {
+  return await useAPI<PaginationResult<ProjectMemberModel>>(
+    `project/${projectSlugOrId}/member/`,
+    config
+  )
 }
 
-export async function postProjectImage({ project_id, body }) {
-  return await useAPI(`project/${project_id}/image/`, { body, method: 'POST' })
+export async function postProjectImage(projectId: ProjectSlugOrId, body: FormData) {
+  return await useAPI<ImageModealCreated>(`project/${projectId}/image/`, { body, method: 'POST' })
 }
 
-export async function postProjectHeader({ project_id, body }) {
-  return await useAPI(`project/${project_id}/header/`, {
+export async function postProjectHeader(projectId: ProjectSlugOrId, body: any) {
+  return await useAPI<ImageModealCreated>(`project/${projectId}/header/`, {
     body,
     method: 'POST',
   })
 }
 
-export async function patchProjectHeader({ project_id, image_id, body }) {
-  return await useAPI(`project/${project_id}/header/${image_id}/`, {
+export async function patchProjectHeader(
+  projectId: ProjectSlugOrId,
+  imageId: ImageModel['id'],
+  body: any
+) {
+  return await useAPI<ImageModel>(`project/${projectId}/header/${imageId}/`, {
     body,
     method: 'PATCH',
   })
@@ -130,4 +102,19 @@ export async function patchProjectHeader({ project_id, image_id, body }) {
 
 export async function lockUnlockProject({ project_id, context }) {
   return await useAPI(`project/${project_id}/${context}/`, { method: 'POST' })
+}
+
+export type ConfigSimilar = UseApiOptions<QueryFilterProjectSimilars>
+
+export async function getProjectSimilars(projectId: ProjectSlugOrId, config: ConfigSimilar = {}) {
+  return await useAPI<PaginationResult<ProjectModel[]>>(`/project/${projectId}/similar/`, config)
+}
+
+type ConfigProjectGroup = UseApiOptions<Partial<PaginationQuery>>
+
+export async function getProjectGroups(
+  projectId: ProjectSlugOrId,
+  config: ConfigProjectGroup = {}
+) {
+  return await useAPI<PaginationResult<PeopleGroupModel>>(`/project/${projectId}/group/`, config)
 }

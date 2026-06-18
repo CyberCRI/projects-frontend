@@ -1,4 +1,7 @@
-import type { ProjectCategoryOutput } from '~/models/project-category.model'
+import type {
+  ProjectCategoryOutput,
+  TranslatedProjectCategory,
+} from '~/models/project-category.model'
 
 import {
   getAllProjectCategories as apiGetAllProjectCategories,
@@ -64,10 +67,10 @@ const useProjectCategoriesStore = defineStore('projectCategories', () => {
   //     state.all.find((category: ProjectCategoryOutput) => category.id === Number(id)),
 
   // TODO: what's the use ?
-  const allOrderedByOrderId = computed<ProjectCategoryOutput[]>(() => {
+  const allOrderedByOrderId = computed<TranslatedProjectCategory[]>(() => {
     const orderedList = [...all.value]
 
-    return orderedList.sort((a: ProjectCategoryOutput, b: ProjectCategoryOutput) => {
+    return orderedList.sort((a, b) => {
       if (a.order_index > b.order_index) {
         return 1
       }

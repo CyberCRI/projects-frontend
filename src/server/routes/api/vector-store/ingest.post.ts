@@ -3,12 +3,12 @@ import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters'
 import { PDFLoader } from '@langchain/community/document_loaders/fs/pdf'
 import { TextLoader } from '@langchain/classic/document_loaders/fs/text'
 import checkAdminRights from '~/server/utils/check-admin-rights.js'
-import getVectorStore from '~/server/utils/vector-db.js'
+import getVectorStore from '~/server/utils/vector-db-new.js'
 import path from 'path'
 
 export default defineLazyEventHandler(() => {
   return defineEventHandler(async (event) => {
-    await checkAdminRights(event)
+    const { superAdmin } = await checkAdminRights(event)
 
     const { appApiOrgCode } = useRuntimeConfig().public
     const { vectorStore } = await getVectorStore()
@@ -23,6 +23,10 @@ export default defineLazyEventHandler(() => {
     const formData = await readFormData(event)
 
     const file = formData.get('file') as File
+
+    let isGlobal = !!formData.get('is_global')
+    // only super admin can create or modify global docs
+    if (isGlobal && !superAdmin) isGlobal = false
 
     const rawTitle = formData.get('title')
     const title = typeof rawTitle === 'string' ? rawTitle.trim() : ''
@@ -46,7 +50,12 @@ export default defineLazyEventHandler(() => {
 
     let loader
 
-    if (extension == '.txt' || mimetype == 'text/plain') {
+    if (
+      extension == '.txt' ||
+      mimetype == 'text/plain' ||
+      extension == '.md' ||
+      mimetype == 'text/markdown'
+    ) {
       loader = new TextLoader(file)
     } else if (extension == '.pdf' || mimetype == 'application/pdf') {
       loader = new PDFLoader(file)
@@ -66,7 +75,7 @@ export default defineLazyEventHandler(() => {
     const extraMetadata = {
       title: title,
       timestamp: new Date().toISOString(),
-      orgCode: appApiOrgCode,
+      orgCode: isGlobal ? '' : appApiOrgCode,
     }
     const fileDocsWithMeta = fileDocs.map((d) => ({
       ...d,
@@ -80,7 +89,7 @@ export default defineLazyEventHandler(() => {
     await vectorStore.delete({
       filter: {
         title: extraMetadata.title,
-        orgCode: extraMetadata.orgCode,
+        orgCode: isGlobal ? '' : extraMetadata.orgCode,
       },
     })
 
@@ -90,7 +99,7 @@ export default defineLazyEventHandler(() => {
       status: 'ok',
       chunkCount: chunks.length,
       title: extraMetadata.title,
-      orgCode: extraMetadata.orgCode,
+      orgCode: isGlobal ? '' : extraMetadata.orgCode,
     }
   })
 })

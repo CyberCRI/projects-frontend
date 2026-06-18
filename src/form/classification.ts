@@ -1,6 +1,6 @@
 import type { TagClassificationModel } from '~/models/tagclassification.model'
 
-export const defaultForm = (): Partial<TagClassificationModel> => ({
+export const defaultTagClassificationForm = (): Partial<TagClassificationModel> => ({
   id: null,
   title: '',
   description: '',

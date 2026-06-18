@@ -1,8 +1,10 @@
 import type {
+  ProjectMessageForm,
   ProjectMessageInputModel,
   ProjectMessageModel,
   QueryFilterProjectMessage,
 } from '@/models/project-message.model'
+import type { ImageModealCreated } from '~/models/image.model'
 import type { ProjectSlugOrId } from '@/models/project.model'
 import useAPI from '@/composables/useAPI'
 
@@ -15,18 +17,11 @@ export async function getProjectMessages(projectId: ProjectSlugOrId, config: Con
   )
 }
 
-export async function postProjectMessage(
-  projectMessage: ProjectMessageInputModel,
-  config: Config = {}
-) {
-  return await useAPI<ProjectMessageModel>(
-    `project/${projectMessage.project_id}/project-message/`,
-    {
-      body: projectMessage,
-      method: 'POST',
-      ...config,
-    }
-  )
+export async function postProjectMessage(projectId: ProjectSlugOrId, body: ProjectMessageForm) {
+  return await useAPI<ProjectMessageModel>(`project/${projectId}/project-message/`, {
+    body,
+    method: 'POST',
+  })
 }
 
 export async function getProjectMessage(body: ProjectMessageInputModel, config: Config = {}) {
@@ -37,18 +32,14 @@ export async function getProjectMessage(body: ProjectMessageInputModel, config: 
 }
 
 export async function patchProjectMessage(
+  projectId: ProjectSlugOrId,
   messageId: ProjectMessageModel['id'],
-  projectMessage: ProjectMessageInputModel,
-  config: Config = {}
+  body: ProjectMessageForm
 ) {
-  return await useAPI<ProjectMessageModel>(
-    `project/${projectMessage.project_id}/project-message/${messageId}/`,
-    {
-      body: projectMessage,
-      method: 'PATCH',
-      ...config,
-    }
-  )
+  return await useAPI<ProjectMessageModel>(`project/${projectId}/project-message/${messageId}/`, {
+    body,
+    method: 'PATCH',
+  })
 }
 
 export async function deleteProjectMessage(
@@ -64,10 +55,10 @@ export async function deleteProjectMessage(
 
 export async function postProjectMessageImage(
   projectId: ProjectSlugOrId,
-  body: any,
+  body: FormData,
   config: Config = {}
 ): Promise<any> {
-  return await useAPI(`project/${projectId}/project-message-image/`, {
+  return await useAPI<ImageModealCreated>(`project/${projectId}/project-message-image/`, {
     body,
     method: 'POST',
     ...config,

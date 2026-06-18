@@ -16,7 +16,7 @@
     <LpiButton
       v-if="isLimited && !hideSeeMore"
       secondary
-      class="no-border"
+      class="no-border skeletons-background"
       :btn-icon="showLess ? 'ChevronDown' : 'ChevronUp'"
       :label="showLess ? label.more : label.less"
       @click.prevent="toggleDescription"
@@ -28,6 +28,7 @@
 
 <script setup lang="ts">
 import TipTapOutput from '~/components/base/form/TextEditor/TipTapOutput.vue'
+import { throttle } from 'es-toolkit'
 
 import { onResizeElement } from '~/composables/onResize'
 
@@ -43,28 +44,36 @@ const props = withDefaults(
   { opened: null, description: null, seeMoreLabel: null, seeLessLabel: null, hideSeeMore: false }
 )
 
+const emit = defineEmits<{
+  limited: [boolean]
+}>()
+
 const showLess = ref(true)
 const isLimited = ref(true)
+watchEffect(() => {
+  emit('limited', isLimited.value)
+})
 const contentRef = useTemplateRef('content')
 const actualHeight = ref(0)
 const minHeight = computed(() => Math.min(props.heightLimit, actualHeight.value))
 const toggleDescription = () => (showLess.value = !showLess.value)
 
+// if state change, reverse value (oepend = true == showLess = false)
 watch(
   () => props.opened,
-  (val) => {
-    if (typeof val === 'boolean') {
-      showLess.value = !val
-    }
-  },
+  (val) => (showLess.value = !val),
   { immediate: true }
 )
 
-const checkLimited = () => {
+const checkLimited = throttle(() => {
+  if (!contentRef.value) {
+    return
+  }
   const rect = contentRef.value.getBoundingClientRect()
   actualHeight.value = rect.height
   isLimited.value = rect.height > props.heightLimit
-}
+}, 100)
+
 onResizeElement(checkLimited, contentRef, { immediate: true })
 
 const label = computed(() => {
@@ -100,7 +109,7 @@ const label = computed(() => {
       left: 0;
       width: 100%;
       height: calc(v-bind('heightLimit') * 1px / 5);
-      background: white;
+      background: var(--white);
       background: linear-gradient(0deg, rgb(255 255 255 / 100%) 5%, rgb(255 255 255 / 0%) 100%);
     }
   }
@@ -108,7 +117,7 @@ const label = computed(() => {
 
 .outer {
   .toggle {
-    color: $primary-dark;
+    color: var(--primary-dark);
     font-size: $font-size-m;
     cursor: pointer;
     font-weight: 400;

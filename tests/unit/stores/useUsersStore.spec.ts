@@ -1,10 +1,10 @@
 import { removeApiCookie } from '~/api/auth/cookie.service'
 import * as keycloakUtils from '~/api/auth/keycloakUtils'
+import { getOrgsFromRoles } from '~/functs/rolesUtils'
 import { setActivePinia, createPinia } from 'pinia'
 import * as auth from '~/api/auth/auth.service'
 import useUsersStore from '~/stores/useUsers'
 import waitForExpect from 'wait-for-expect'
-import funct from '~/functs/functions'
 import analytics from '~/analytics'
 
 import { flushPromises } from '@vue/test-utils'
@@ -277,7 +277,7 @@ describe('Store module | users | getters', () => {
       family_name: stateWithSessionToken.userFromToken.family_name,
       email: stateWithSessionToken.userFromToken.email,
       roles: [],
-      orgs: funct.getOrgsFromRoles([]),
+      orgs: getOrgsFromRoles([]),
       permissions: [
         'organization.create',
         'organization.retrieve',

@@ -1,6 +1,6 @@
 import type { MentoringContactForm } from '@/models/mentoring.model'
 
-export const defaultForm = (): MentoringContactForm => ({
+export const defaultMentoringForm = (): MentoringContactForm => ({
   title: '',
   content: '',
   reply_to: '',

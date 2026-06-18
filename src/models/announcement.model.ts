@@ -1,4 +1,4 @@
-import type { ProjectModel, TranslatedProject } from '@/models/project.model'
+import type { ProjectModel, ProjectSlugOrId, TranslatedProject } from '@/models/project.model'
 import type { OrganizationModel } from '@/models/organization.model'
 import type { Translated } from '@/interfaces/translated'
 import type { Ordering } from '@/interfaces/query'
@@ -16,6 +16,8 @@ export interface AnnouncementModel extends BaseModel {
   updated_at: string
   created_at: string
 }
+
+export type AnnouncementId = AnnouncementModel['id']
 
 export type TranslatedAnnouncement = Omit<
   Translated<AnnouncementModel, 'title' | 'description'>,
@@ -38,6 +40,25 @@ export type AnnouncementApplyInput = {
 }
 
 export type AnnouncementOutput = Required<AnnouncementModel>
+
+export type AnnouncementForm = Omit<
+  AnnouncementModel,
+  'id' | 'updated_at' | 'created_at' | 'deadline'
+> & {
+  id?: AnnouncementModel['id']
+  deadline: string | Date
+}
+
+export type AnnouncementApplyForm = {
+  recaptcha: string
+  project_id: ProjectSlugOrId
+  announcement_id: AnnouncementId
+
+  applicant_firstname: string
+  applicant_name: string
+  applicant_email: string
+  applicant_message: string
+}
 
 export type QueryFilterAnnouncement = Partial<{
   ordering: Ordering<'created_at' | 'updated_at' | 'deadline'>

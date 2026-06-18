@@ -6,7 +6,10 @@ const emit = defineEmits(['update:modelValue'])
 const model = defineModel({ type: Object, required: true })
 
 const skillVersions = computed(() =>
-  (props.skill.skillContents || []).toSorted((a, b) => b.version - a.version)
+  (props.skill.skillContents || []).toSorted((a, b) => {
+    // console.log('skillversion', a.version, b.version)
+    return b.version - a.version
+  })
 )
 const latestSkillVersion = computed(() =>
   skillVersions.value?.length ? skillVersions.value[0].version : 0

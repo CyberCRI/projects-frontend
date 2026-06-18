@@ -123,7 +123,6 @@
         "last-name": "Cognoms",
         "first-name": "Nom",
         "title": "Títol",
-        "roles": "Rol(s)",
         "groups": "Grup(s)",
         "inscription": "Inscripció",
         "activation": "Activació",
@@ -224,7 +223,10 @@
       "vector-store": "Vector store",
       "prompts": "Sol·licituds",
       "agent-skills": "Habilitats de l'agent",
-      "agents": "Agents"
+      "agents": "Agents",
+      "conversations": "Converses",
+      "checkpoints": "Checkpoints",
+      "side-assistant": "Ajudant lateral"
     },
     "page-title": "Administrador",
     "portal": {
@@ -390,13 +392,6 @@
     "reset-password": "Reinicia la contrasenya",
     "reset-delete": "Reinicia la contrasenya i esborra el compte",
     "error": "Un error ocret.",
-    "role": {
-      "none": "Cap",
-      "user": "Usuari",
-      "facilitator": "Facilitor",
-      "admin": "Org administrador",
-      "viewer": "Visualitzador"
-    },
     "user-exists-in-other-org": "Existeix un usuari amb el mateix correu electrònic a la nostra base de dades. Podem afegir-lo al seu portal aquí."
   },
   "userItem": {
@@ -409,12 +404,6 @@
     "facilitators": "Facilitor: Aquest paper és per professors o tutors: Veuen tots els projectes privats al portal i els poden editar. També tenen tots els drets d'usuaris.",
     "admins": "Org administrador: Aquest paper permet configurar el vostre portal i gestionar usuaris al portal. Els administradors d' Org tenen accés al menú administrador del portal per establir el portal i gestionar els seus usuaris. També tenen tots els drets dels faculitadors.",
     "none": "Cap: Aquesta persona té un compte de projectes però no forma part del seu portal. Només poden veure els projectes públics.",
-    "roles": {
-      "none": "Cap",
-      "users": "Usuari",
-      "facilitators": "Facilitor",
-      "admins": "Org administrador"
-    },
     "empty": "Sense grups",
     "main-groups": "Grups principals"
   },
@@ -535,7 +524,6 @@
     "cant-quit-self": "Ets l'últim editor de l'equip. Cada projecte ha de tenir com a mínim un editor.\nPodeu afegir un altre editor abans d' abandonar el projecte o eliminar el projecte des de la pestanya Configuració.",
     "cant-quit-other": "Aquest és l'últim editor de l'equip. Cada projecte ha de tenir com a mínim un editor.\nPodeu afegir un altre editor supressió aquest, o eliminar el projecte de la pestanya Configuració.",
     "edit": "Edita",
-    "file-required": "Es requereix un fitxerName",
     "for": "per",
     "groups": "Grups",
     "index": "Índex",
@@ -573,7 +561,6 @@
     "disconnect": "Desconnecta",
     "confirm-close": "Esteu segur que voleu tancar l' editor? Qualsevol canvi que heu fet no serà desat.",
     "ok": "Bé",
-    "file-too-big": "El fitxer és massa gran (màx: {maxSize}Mb)",
     "select": "Selecciona",
     "year": "any",
     "link-to": "enllaç a",
@@ -597,7 +584,8 @@
     "chose-date": "Seleccioneu la data | Seleccioneu la data(s)",
     "filter": "filtre | Filtres",
     "empty": "Aquí no hi ha res...",
-    "file": "fitxer | fitxers"
+    "file": "fitxer | fitxers",
+    "image": "imatge"
   },
   "complete-profile": {
     "bio": {
@@ -658,7 +646,6 @@
     "edit-saved": "Qualsevol canvi que (i cap co- authors) hagi fet no serà desat.",
     "edit": "Descripció d' edició (projecte)",
     "add": "Afegeix descripció",
-    "quit-without-saving-title": "Surto sense desar?",
     "default-placeholder": "Ara descriu el teu projecte."
   },
   "discover": {
@@ -821,7 +808,22 @@
   },
   "drawer": {
     "clear": "Neteja tots els seleccionats",
-    "select-all": "Selecciona- ho tot"
+    "select-all": "Selecciona- ho tot",
+    "member": {
+      "add": "Afegeix un membre | Afegeix membres",
+      "edit": "Edita el membre | Edita els membres",
+      "delete": "Elimina el membre | Esborra els membres"
+    },
+    "group": {
+      "add": "Afegeix grup | Afegeix grups",
+      "edit": "Edita el grup | Edita grups",
+      "delete": "Esborra el grup | Esborra grups"
+    },
+    "project": {
+      "add": "Afegeix projecte | Afegeix projectes",
+      "edit": "Edita projecte | Edita projectes",
+      "delete": "Elimina projecte | Esborra projectes"
+    }
   },
   "faq": {
     "delete-confirm-content": "Esteu segur que voleu esborrar la pestanya d' ajuda personalitzada pel vostre portal. S' esborrarà tot el seu contingut.",
@@ -908,7 +910,8 @@
       },
       "description": "Cal el camp de descripció"
     },
-    "templates": "Plantilles"
+    "templates": "Plantilles",
+    "quit-without-saving-title": "Surto sense desar?"
   },
   "footer": {
     "contact": "Contacta amb nosaltres",
@@ -917,7 +920,6 @@
     "cookies": "Galetes",
     "accessibility": "Accessibilitat",
     "personal-data": "Dades personals",
-    "directory": "Descobreix molts més projectes d'altres organitzacions a la meta-portal:",
     "help": "Ajuda",
     "projects": "Plataforma de projectes",
     "madeBy": "està fet per",
@@ -933,7 +935,8 @@
     "planned-for-the": "Planificació per a la",
     "status-title": "Estat",
     "title": "Títol de l' objectiu",
-    "delete": "Voleu esborrar aquest objectiu?"
+    "delete": "Voleu esborrar aquest objectiu?",
+    "add-project": "Afegeix un objectiu al projecte"
   },
   "header": {
     "private": "Privat: només visible per als membres de l' equip",
@@ -972,7 +975,8 @@
     },
     "create-project": "Crea un projecte",
     "check-locations": "Comprova les nostres ubicacions",
-    "our-locations": "Les nostres ubicacions"
+    "our-locations": "Les nostres ubicacions",
+    "agents": "Agents d'IA"
   },
   "language": {
     "label-en": "Anglès",
@@ -1066,7 +1070,19 @@
       "color": "Color",
       "current": "Actual",
       "pick": "Tria un color",
-      "set-color": "Arranja el color"
+      "set-color": "Arranja el color",
+      "remove-color": "Elimina color",
+      "colors": {
+        "carribeanGreen": "Verd Càride",
+        "ming": "Ming",
+        "aquamarine": "AquamarinaName",
+        "mintCream": "Mint Cream",
+        "lightSalmon": "Salmon lleuger",
+        "sunGlow": "Làmpada del sol",
+        "mauve": "Mauvezimbabwe  districts. kgm",
+        "babyBlue": "Nadons Blau",
+        "coquelicot": "Coquelicot"
+      }
     },
     "delete_column": "Elimina aquesta columna",
     "delete_row": "Elimina aquesta fila",
@@ -1124,9 +1140,13 @@
     "unauthorized": "Edició no autoritzat",
     "underline": "subratllada",
     "undo": "Desfés",
-    "video": "Vídeo",
+    "video": {
+      "label": "Vídeo",
+      "error": "L'enllaç ha de ser un vídeo de YouTube o Vimeo."
+    },
     "save": "Desa sense sortir",
-    "server-offline": "El servidor està fora de línia."
+    "server-offline": "El servidor està fora de línia.",
+    "delete_image": "Esborra la imatge"
   },
   "homeCarousel": {
     "tab1": {
@@ -1346,7 +1366,6 @@
         "intro": "Encara no heu seleccionat habilitats. Les habilitats professionals i les hobbies permeten als teus col·legues i a la teva comunitat trobar-te basant-te en allò que t'importa.",
         "save-error": "Error en desar el perfil.",
         "save-success": "El perfil s' ha desat.",
-        "search": "cerca",
         "suggested-skills": "O triar una habilitat suggerida",
         "already-added": "(Ja està afegit)",
         "skills": {
@@ -1563,7 +1582,6 @@
       "title": "Crea un nou projecte"
     },
     "destroy": "Elimina projecte",
-    "duplicate": "Duplicat aquest projecte",
     "edit": "Edita el projecte",
     "edit-linked-project": "Edita el projecte enllaçat",
     "edit-location-point": "Edita el punt de localització",
@@ -1584,7 +1602,6 @@
       "resize-image": "Rel· la",
       "title-label": "Afegeix un títol",
       "title-placeholder": "Com es diu aquest projecte?",
-      "upload-image": "Puja una imatge",
       "title-errors": {
         "required": "Cal el camp de títol",
         "max": "El camp títol no pot ser més gran que 180 caràcters"
@@ -1596,7 +1613,9 @@
       },
       "project-templates": "Nom de la plantilla",
       "completed-info-to-access-presentation": "S' ha de completar tota la informació de la pàgina per accedir a la presentació.",
-      "purpose-placeholder": "Quin és el propòsit del teu projecte?"
+      "purpose-placeholder": "Quin és el propòsit del teu projecte?",
+      "comment": "Es requereix el camp de comentari.",
+      "select-template": "Seleccioneu una plantilla..."
     },
     "image-header": "Imatge",
     "image-alert": {
@@ -1645,10 +1664,19 @@
     },
     "view": "Visualitza el projecte",
     "visibility": "Visibilitat del projecte",
-    "actions": "Accions ràpides",
     "copy": "(copia)",
     "nothing": "No hi ha res aquí...",
-    "tag-warning": "NB: Si un usuari desactiva les llengües al portal, les etiquetes amb traduccions es traduiran per ells. Altrament, les etiquetes es mostraran en anglès."
+    "tag-warning": "NB: Si un usuari desactiva les llengües al portal, les etiquetes amb traduccions es traduiran per ells. Altrament, les etiquetes es mostraran en anglès.",
+    "description": "Descripció",
+    "duplicate": {
+      "title": "Voleu duplicar aquest projecte?",
+      "help": "El projecte serà clonat sense membres.",
+      "label": "Duplica el projecte"
+    },
+    "groups": "Grup | Grups",
+    "label": "projecte | projectes",
+    "actions": "Acció perillosa",
+    "review-not-editable": "No podeu afegir revisions a aquest projecte; el projecte no està obert actualment per a revisar."
   },
   "project_list": {
     "updated_at": "L' últim actiu",
@@ -1678,10 +1706,25 @@
     "send": "Envia aplicació",
     "title": "Títol",
     "traineeship": "Entrenador",
-    "type": "Tipus de Anunci",
+    "type": {
+      "title": "Tipus de Anunci",
+      "job": {
+        "label": "Treball",
+        "description": "Una oportunitat tradicional d'ocupació, ja sigui a temps complet o a temps parcial, amb un sou definit, beneficis i compromís a llarg termini. Cosats per aquells que busquen estables, rols professionals"
+      },
+      "traineeship": {
+        "label": "Entrenador",
+        "description": "Un programa d'entrenament estructurat que combina l'experiència de treball amb aprendre. Sovint s'han pagat els trens, dissenyat per als principiants o per als canvis de carrera, i proporcionar un desenvolupament d'habilitats a mans sota supervisió."
+      },
+      "participant": {
+        "label": "Participant",
+        "description": "És ideal per als individus que busquen involucrar-se en programes de curt termini, tallers o projectes col·laboratius. Sovint, no pagades o basats en l'objectiu, aquests rols es centren en l'aprenentatge, la xarxa o contribueixen a una iniciativa específica"
+      }
+    },
     "updated": "Actualitzat",
     "valid-until-the": "Vàlid fins",
-    "view": "Visualitza"
+    "view": "Visualitza",
+    "outdated": "L'oferta ja no està disponible."
   },
   "report": {
     "abuse": "abusos d' informe",
@@ -1704,13 +1747,32 @@
     "edit-link": "Edita un enllaç",
     "edit-file": "Edita un fitxer",
     "max-size": "Mida màx. 10MB",
-    "invalid-image": "Fitxer no acceptat... és aquesta una imatge?",
     "error-uploading-image": "S' ha produït un error en pujar la imatge",
     "cannot-upload-image": "No es pot pujar la imatge per ara",
     "link-address": "Adreça de l' enllaç",
-    "resources": "Recursos",
+    "resources": "Recurs | Recursos",
     "web": "Enllaç al recurs web | Enllaços als recursos web",
-    "web-link": "Enllaç web | Enllaç web | Enllaços web"
+    "web-link": "Enllaç web | Enllaç web | Enllaços web",
+    "delete": "Esteu segur d' eliminar aquest recurs?",
+    "file": {
+      "add": "Afegeix un fitxer | Afegeix fitxers",
+      "edit": "Edita un fitxer | Edita fitxers",
+      "label": "Fitxer | Fitxers",
+      "delete": "Esteu segur d' eliminar aquest fitxer? | Esteu segur d' esborrar els fitxers?",
+      "form": {
+        "too-big": "El fitxer és massa gran (màx. {maxSize}Mb)",
+        "invalid-image": "Fitxer no acceptat, ha de ser una imatge vàlida.",
+        "required-image": "Es requereix un fitxer",
+        "required": "Es requereix un fitxer"
+      }
+    },
+    "link": {
+      "add": "Afegeix un enllaç | Afegeix enllaços",
+      "edit": "Edita un enllaç | Edita els enllaços",
+      "label": "Adreça d' enllaç | Adreça dels enllaços",
+      "delete": "Esteu segur d' esborrar aquest enllaç? | Esteu segur d' esborrar els enllaços?"
+    },
+    "upload-image": "Puja una imatge"
   },
   "result_box": {
     "people": "gent",
@@ -1797,29 +1859,6 @@
     "need-help": "Necessites ajuda?",
     "contact-us": "Contacta amb nosaltres"
   },
-  "role": {
-    "role-editor": "Té tots els drets d' edició per aquest grup.",
-    "role-reviewer": "Quan el projecte s' ha marcat com a \" Jack per a revisar,\" el revisor pot donar comentaris, i pot bloquejar un projecte per evitar més edició al projecte. Un revisor també té drets d' edició.",
-    "role-teammate": "No té drets d' edició, però apareix com a membre de l'equip.",
-    "editor": "Editor",
-    "editors": "Editors",
-    "editor-groups": "Grups d' edició",
-    "editor-group": "Grup de l' editor",
-    "reviewer": "Revisor",
-    "reviewers": "Revisor",
-    "reviewer-groups": "Grups de manteniment",
-    "reviewer-group": "Grup de manteniment",
-    "teammate": "Participant",
-    "teammates": "Participants",
-    "teammate-groups": "Grups pensatius",
-    "teammate-group": "Grup Participant",
-    "select": "Seleccioneu els drets",
-    "group": "Grups",
-    "leader": "Líder del grup",
-    "role-leader": "És un editor que apareixerà amb una etiqueta del Líder UserkinkGroup.",
-    "member": "Estats membres",
-    "role-member": "Sembla membre del grup. Els seus projectes apareixen entre els projectes del grup."
-  },
   "search": {
     "all-filters": "Tots els filtres",
     "banner-portal": "També podeu cercar projectes de totes les comunitats en",
@@ -1890,7 +1929,10 @@
     "disambiguate": "(disambició)",
     "suggestions": "Suggeriments",
     "choose-skill": "Feu clic sobre l' habilitat seleccionada:",
-    "main-tags": "o escolliu des de les etiquetes principals"
+    "main-tags": "o escolliu des de les etiquetes principals",
+    "label": "Cerca",
+    "empty": "No hi ha resultats disponibles",
+    "results": "Resultats de la cerca"
   },
   "sdg": {
     "1": {
@@ -1944,10 +1986,11 @@
     "17": {
       "title": "Associacions pels Objectius"
     },
-    "add-short": "Afegeix un sdg",
     "sdg-fulltext": "objectiu sostenible del desenvolupament",
     "title": "SDG",
-    "empty": "No hi ha res aquí encara... Els col·laboradors encara no han afegit SDGs."
+    "empty": "No hi ha res aquí encara... Els col·laboradors encara no han afegit SDGs.",
+    "add-short": "Afegeix SDGs",
+    "edit-short": "Edita SDGs"
   },
   "stats": {
     "cumulated-projects": "Projectes curatius",
@@ -1996,7 +2039,17 @@
     "no-user-message": "No es correspon cap usuari a la cerca",
     "remove-user-confirm": "Esteu segur que voleu eliminar aquest usuari del projecte?",
     "remove-group-confirm": "Esteu segur que voleu eliminar aquest grup del projecte?",
-    "team": "Equip"
+    "team": "Equip",
+    "member": {
+      "add": "Afegeix un membre | Afegeix membres",
+      "edit": "Edita el membre | Edita els membres",
+      "delete": "Elimina el membre | Esborra els membres"
+    },
+    "group": {
+      "add": "Afegeix grup | Afegeix grups",
+      "edit": "Edita el grup | Edita grups",
+      "delete": "Esborra el grup | Esborra grups"
+    }
   },
   "template": {
     "edit-tags": "Edita etiquetes",
@@ -2287,6 +2340,21 @@
     "team-group-delete": {
       "success": "El grup s' ha esborrat correctament",
       "error": "Error durant l' esborrat del grup"
+    },
+    "template-get": {
+      "error": "Error en obtenir la plantilla"
+    },
+    "group-project-create": {
+      "success": "Els projectes s' han afegit correctament",
+      "error": "Error durant els projectes afegits"
+    },
+    "group-project-remove": {
+      "success": "El projecte s' ha eliminat correctament",
+      "error": "Error durant el projecte esborrat"
+    },
+    "pdf": {
+      "success": "El PDF s' ha generat amb èxit; s' enviarà un enllaç a través de correu electrònic.",
+      "error": "Hi ha hagut un error en generar el PDF. Si us plau, contacteu amb un administrador."
     }
   },
   "success": {
@@ -2443,7 +2511,8 @@
       },
       "content": {
         "label": "Informació",
-        "placeholder": "Afegeix informació quant a aquest esdeveniment"
+        "placeholder": "Afegeix informació quant a aquest esdeveniment",
+        "required": "Es requereix el contingut"
       },
       "event_date": {
         "label": "Data de l' esdeveniment *",
@@ -2682,9 +2751,11 @@
     "fetching_data": "Obtenció de dades...",
     "reasoning": "Pensant...",
     "restart": "Reinicia la conversa",
+    "export": "Exporta la conversa",
     "before-we-start": "Abans de començar, voldríeu:",
     "allow-profile": "Permeteu-me veure el vostre perfil - perquè pugui adaptar millor les meves respostes",
-    "allow-current-page": "Permeteu-me veure la pàgina en què esteu - perquè tingui una millor comprensió del context"
+    "allow-current-page": "Permeteu-me veure la pàgina en què esteu - perquè tingui una millor comprensió del context",
+    "previous-messages": "Missatges anteriors"
   },
   "tos": {
     "evolved": "Els nostres Termes i Condicions s'han actualitzat, si us plau, reviseu-los i aproveu-los.",
@@ -2698,12 +2769,17 @@
   "pagination": {
     "previous": "Pàgina anterior",
     "next": "Pàgina següent",
-    "page": "Pàgina"
+    "page": "Pàgina",
+    "first": "Primera pàgina",
+    "last": "Última pàgina",
+    "visibility-per-page": "Nombre d' elements per pàgina."
   },
   "pdf": {
     "blog-entries-limited-warning": "Només s' inclouen les primeres entrades del bloc {max} en l' exportació PDF (de {total} total).",
     "download-pdf": "PDF",
-    "generated-on": "Generat el {date}"
+    "generated-on": "Generat el {date}",
+    "confirm": "Voleu generar pdf per aquest {type}?",
+    "choices": "Seleccioneu els elements que voleu afegir al PDF."
   },
   "group": {
     "is-other-org": "Aquest grup pertany a una altra plataforma",
@@ -2741,7 +2817,6 @@
       "add-projects": "Afegeix projectes característiques",
       "edit": "Modifica",
       "edit-members": "Edita els membres",
-      "edit-roles": "Edita els rols",
       "form-incomplete": "Els camps no s' han trobat o no són vàlids, complets per a poder desar.",
       "create-group": "Crea un grup",
       "edit-group": "Edita el grup",
@@ -2776,24 +2851,9 @@
       "publication-status-errors": {
         "required": "Cal aquest camp"
       },
-      "delete": "Esborra el grup"
-    },
-    "role": {
-      "members": {
-        "label": "Estats membres",
-        "help": "Estats membres"
-      },
-      "leaders": {
-        "label": "Capçalera de grup",
-        "help": "Capçalera de grup"
-      },
-      "leaders-managers": {
-        "label": "Líder i gestor"
-      },
-      "managers": {
-        "label": "Editor",
-        "help": "Editor"
-      }
+      "delete": "Esborra el grup",
+      "confirm-remove-project": "Esteu segur que voleu eliminar aquest projecte?",
+      "confirm-remove-member": "Esteu segur que voleu eliminar aquest membre?"
     },
     "view": "Mireu el grup",
     "conferences": "Conferèncias",
@@ -3158,7 +3218,9 @@
     "title-field": "Títol",
     "file-field": "Fitxer",
     "document-added": "Document afegit.",
-    "document-updated": "Document actualitzat."
+    "document-updated": "Document actualitzat.",
+    "is-global-field": "Global document",
+    "is-global-label": "Global"
   },
   "announcements": {
     "empty": "Encara no s'anuncia."
@@ -3166,6 +3228,64 @@
   "follow": {
     "follow": "Segueix",
     "unfollow": "Sense ningú"
+  },
+  "role": {
+    "owners": {
+      "label": "Editor | Editors",
+      "help": "Té tots els drets d' edició per aquest grup."
+    },
+    "reviewers": {
+      "label": "Revisor | Revisor",
+      "help": "Quan el projecte s' ha marcat com a \" Jack per a revisar,\" el revisor pot donar comentaris, i pot bloquejar un projecte per a evitar més edició al projecte. Un revisor també té drets d' edició."
+    },
+    "members": {
+      "label": "Participant | Participants",
+      "help": "No té drets d' edició, però apareix com a membre de l'equip."
+    },
+    "leaders": {
+      "label": "Grup Líder | Grup dels líders",
+      "help": "És un editor que apareixerà amb una etiqueta del Líder UserkinkGroup."
+    },
+    "owner_groups": {
+      "label": "Grup de l' editor | Grup d' editors",
+      "help": "És un editor que apareixerà amb una etiqueta del Líder UserkinkGroup."
+    },
+    "reviewer_groups": {
+      "label": "Grup de manteniment | Grup de revisions",
+      "help": ""
+    },
+    "member_groups": {
+      "label": "Grup Participant | Grup participants",
+      "help": "Sembla membre del grup. Els seus projectes apareixen entre els projectes del grup."
+    },
+    "facilitators": {
+      "label": "Facilitor | Facilitors",
+      "help": "Facilitor: Aquest paper és per professors o tutors: Veuen tots els projectes privats al portal i els poden editar. També tenen tots els drets d'usuaris."
+    },
+    "admins": {
+      "label": "Grup d' administració | Grup d' administració",
+      "help": "Org administrador: Aquest paper permet configurar el vostre portal i gestionar els usuaris del portal. Els administradors d' Org tenen accés al menú administrador del portal per establir el portal i gestionar els seus usuaris. També tenen tots els drets dels faculitadors."
+    },
+    "users": {
+      "label": "Usuari | Usuaris",
+      "help": "Usuari: un usuari forma part de la vostra comunitat. Poden crear projectes, editar els seus projectes i escriure comentaris en qualsevol projecte. Veuen un projecte privat quan formen part de l'equip d'aquests projectes, veuen tots els projectes amb la visibilitat de la comunitat, i tots els projectes públics."
+    },
+    "managers": {
+      "label": "Editor | Editors",
+      "help": ""
+    },
+    "none": {
+      "label": "",
+      "help": ""
+    },
+    "label": "Funció | Rols",
+    "edit": "Modificadors de rôles",
+    "select": "Seleccioneu els drets",
+    "help": "Informació sobre funcions.",
+    "viewers": {
+      "label": "Visor | Visors",
+      "help": "Visor: no té drets d' edició."
+    }
   },
   "prompts": {
     "create-prompt": "Crea una indicació",
@@ -3180,7 +3300,12 @@
     "confirm-deletion-of": "Realment vols suprimir l'indicació '{title}'?",
     "deleted": "Indicació suprimida",
     "delete-error": "Error en suprimir l'indicació",
-    "empty-list": "Encara no hi ha cap indicació."
+    "empty-list": "Encara no hi ha cap indicació.",
+    "form": {
+      "invalid": "El formulari està incomplet, si us plau proporciona els camps requerits",
+      "title-required": "El títol és obligatori",
+      "content-required": "El contingut és obligatori"
+    }
   },
   "agent-skills": {
     "create-skill": "Crea una habilitat d'agent",
@@ -3196,9 +3321,16 @@
     "confirm-deletion-of": "Realment vols suprimir l'habilitat d'agent '{title}'?",
     "deleted": "Habilitat d'agent suprimida",
     "delete-error": "Error en suprimir l'habilitat d'agent",
-    "empty-list": "Encara no hi ha cap habilitat d'agent."
+    "empty-list": "Encara no hi ha cap habilitat d'agent.",
+    "form": {
+      "invalid": "El formulari està incomplet, si us plau proporciona els camps requerits",
+      "title-required": "El títol és obligatori",
+      "content-required": "El contingut és obligatori",
+      "description-required": "La descripció és obligatòria"
+    }
   },
   "agents": {
+    "no-active-agent-yet": "No hi ha cap agent disponible ara mateix.",
     "need-login": "Heu d'iniciar la sessió per utilitzar aquest agent.",
     "create-agent": "Crea un agent",
     "create-success": "Agent creat correctament",
@@ -3217,6 +3349,8 @@
     "start-message-section": "Missatge de benvinguda de l'agent",
     "use-latest-prompt-version": "Utilitza la versió més recent de l'indicació",
     "use-prompt-version": "Utilitza la versió de l'indicació: ",
+    "use-profile-data": "Accedeix a les dades del perfil d'usuari",
+    "use-project-mcp": "Utilitza Projects MCP",
     "prompt-version-placeholder": "Tria la versió de l'indicació",
     "tools-section": "Eines",
     "docs-section": "Documents",
@@ -3229,6 +3363,34 @@
     "confirm-deletion-of": "Realment vols suprimir l'agent '{title}'?",
     "deleted": "Agent suprimit",
     "delete-error": "Error en suprimir l'agent",
-    "empty-list": "Encara no hi ha cap agent."
+    "empty-list": "Encara no hi ha cap agent.",
+    "confirm-restart-title": "Reinicia la conversa",
+    "confirm-restart-content": "Vols iniciar una conversa nova?",
+    "is-used-as-side-assistant": "Aquest agent s'utilitza actualment com a assistent secundari i no es pot desactivar.",
+    "title-already-used": "El títol ja l'utilitza un altre agent",
+    "form": {
+      "invalid": "El formulari està incomplet, si us plau, proporciona els camps requerits",
+      "title-required": "El títol és obligatori",
+      "model-name-required": "El nom del model és obligatori",
+      "model-temperature-required": "La temperatura del model és obligatòria",
+      "model-temperature-is-float": "La temperatura del model ha de ser un número de coma flotant",
+      "model-temperature-is-bounded": "La temperatura del model ha d'estar entre 0 i 2",
+      "prompt-required": "L'indicació (prompt) és obligatòria"
+    }
+  },
+  "side-assistant": {
+    "default": "Default",
+    "save-success": "Side assistant saved",
+    "save-error": "Error while saving side assistant",
+    "choose": "Choose an agent for the side assistant"
+  },
+  "agents-home": {
+    "title": "Let's talk!",
+    "intro": "Welcome to a curated gathering of conversational agents - AI companions designed to chat, help, and engage. Whether you're looking for research assistance, casual conversation, creative collaboration, or practical support, you'll find different voices here, each with its own strengths and personality."
+  },
+  "assistant-drawer": {
+    "ice-breakers": "Aquí teniu alguns temes per iniciar una conversa",
+    "special-agents": "Busqueu un agent especialitzat?",
+    "other-special-agents": "Cercant un altre agent especialitzat?"
   }
 }

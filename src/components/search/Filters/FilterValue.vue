@@ -1,11 +1,11 @@
 <template>
   <div :class="type" class="filter-value" :data-test="`filter-value-${label}`">
-    <div class="filter-value-label">
+    <div class="filter-value-label skeletons-text">
       {{ label }}
     </div>
 
     <span v-if="icon" class="icon-ctn">
-      <IconImage :name="icon" />
+      <IconImage :name="icon" class="skeletons-background" />
     </span>
   </div>
 </template>
@@ -31,7 +31,7 @@ $filter-value-icon-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: $border-width-s solid $primary-dark;
+  border: $border-width-s solid var(--primary-dark);
   border-radius: $border-radius-l;
   overflow: hidden;
   box-sizing: border-box;
@@ -43,7 +43,7 @@ $filter-value-icon-size: 16px;
     text-transform: uppercase;
     font-size: $font-size-s;
     font-weight: 700;
-    color: $primary-dark;
+    color: var(--primary-dark);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -56,9 +56,9 @@ $filter-value-icon-size: 16px;
     display: inline-block;
     width: pxToRem($filter-value-icon-size);
     height: pxToRem($filter-value-icon-size);
-    background: $primary-dark;
+    background: var(--primary-dark);
     position: relative;
-    border: $border-width-m solid $primary-dark;
+    border: $border-width-m solid var(--primary-dark);
     border-radius: 100%;
 
     svg {

@@ -55,6 +55,7 @@ const props = withDefaults(
     controlFilter?: boolean
     editable?: boolean
     markerDynamic?: boolean
+    autoCenter?: boolean
   }>(),
   {
     loading: false,
@@ -64,6 +65,7 @@ const props = withDefaults(
     controlZoom: true,
     controlFilter: true,
     markerDynamic: false,
+    autoCenter: false,
   }
 )
 
@@ -118,6 +120,16 @@ const locationsFilter = computed(() => {
   // TODO add more filters (event current running, search bar ...ect)
   return locations
 })
+
+watch(
+  () => props.locations,
+  () => {
+    if (props.autoCenter) {
+      centerMap()
+    }
+  },
+  { deep: true }
+)
 </script>
 
 <style lang="scss" scoped>

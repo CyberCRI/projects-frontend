@@ -22,34 +22,39 @@ const routes = ({
 }): Array<RouteRecordRaw> => {
   const agents = []
   if (useRuntimeConfig().public.appHasChatbotPromptDb) {
-    agents.push({
-      path: '/agents/:agentSlug',
-      name: 'AgentPage',
-      component: () => import('../pages/Chatbot/ChatbotPage.vue'),
-      props: true,
-      meta: {
-        resetScroll: true,
-        // requiresAuth: true,
+    agents.push(
+      {
+        path: '/agents',
+        name: 'AgentsHomePage',
+        component: () => import('../pages/ChatbotHome/ChatbotHomePage.vue'),
+        meta: {
+          resetScroll: true,
+          // requiresAuth: true,
+        },
       },
-    })
+      {
+        path: '/agents/:agentSlug',
+        name: 'AgentPage',
+        component: () => import('../pages/Chatbot/ChatbotPage.vue'),
+        props: true,
+        meta: {
+          resetScroll: true,
+          // requiresAuth: true,
+        },
+      }
+    )
   }
   return [
     {
       path: '/',
       name: 'HomeRoot',
-      component: () => import(`../pages/NewHomePage/NewHomePage.vue`),
-      meta: {
-        resetScroll: true,
-      },
+      redirect: { name: 'Dashboard' },
     },
     {
       // fix middleware (requireAuth ?) bug that tries to redirect to a 'Home' route
       path: '/',
       name: 'Home',
-      component: () => import(`../pages/NewHomePage/NewHomePage.vue`),
-      meta: {
-        resetScroll: true,
-      },
+      redirect: { name: 'Dashboard' },
     },
 
     {
@@ -61,6 +66,11 @@ const routes = ({
       meta: {
         resetScroll: true,
       },
+    },
+    {
+      path: '/login',
+      name: 'LoginPseudoPage',
+      component: () => import('../pages/LoginPage/LoginPage.vue'),
     },
     // TODO: Remove or recreate ?
     // {
@@ -81,11 +91,27 @@ const routes = ({
       path: '/help',
       name: 'Help',
       component: () => import('../pages/HelpPage/HelpPage.vue'),
-
-      redirect: showDebug ? { name: 'HelpFaqTab' } : undefined,
+      redirect: { name: 'HelpFaqTab' },
       meta: {
         resetScroll: true,
       },
+      children: [
+        {
+          path: 'faq',
+          name: 'HelpFaqTab',
+          component: () => import('../pages/HelpPage/Tabs/OnBoardingTab.vue'),
+        },
+        {
+          path: 'help',
+          name: 'HelpHelpTab',
+          component: () => import('../pages/HelpPage/Tabs/HelpTab.vue'),
+        },
+        {
+          path: 'tutorials',
+          name: 'HelpVideoTab',
+          component: () => import('../pages/HelpPage/Tabs/VideoTab.vue'),
+        },
+      ],
     },
     ...profilePagesRoutes,
     {
@@ -236,228 +262,7 @@ const routes = ({
     },
     {
       path: '/tos', // back compatibility with old routes
-      redirect: 'terms-of-service',
-    },
-    {
-      path: '/terms-of-service',
-      name: 'tos',
-      component: () => import('../pages/TermsOfServicePage/TermsOfServicePage.vue'),
-
-      meta: {
-        resetScroll: true,
-      },
-    },
-    {
-      path: '/legal-notices',
-      name: 'legal-notices',
-      component: () => import('../pages/LegalNoticesPage/LegalNoticesPage.vue'),
-
-      meta: {
-        resetScroll: true,
-      },
-    },
-    {
-      path: '/cookies',
-      name: 'cookies',
-      component: () => import('../pages/CookiesPage/CookiesPage.vue'),
-
-      meta: {
-        resetScroll: true,
-      },
-    },
-    {
-      path: '/accessibility',
-      name: 'accessibility',
-      component: () => import('../pages/AccessibilityPage/AccessibilityPage.vue'),
-
-      meta: {
-        resetScroll: true,
-      },
-    },
-    {
-      path: '/personal-data',
-      name: 'personal-data',
-      component: () => import('../pages/PersonalDataPage/PersonalDataPage.vue'),
-
-      meta: {
-        resetScroll: true,
-      },
-    },
-    {
-      path: '/plan-de-continuite-d-action',
-      name: 'pca-page',
-      component: () => import('../pages/PcaPage/PcaPage.vue'),
-
-      meta: {
-        resetScroll: true,
-      },
-    },
-
-    {
-      path: '/plan-de-securite-des-systemes-d-information',
-      name: 'pssi-page',
-      component: () => import('../pages/PssiPage/PssiPage.vue'),
-
-      meta: {
-        resetScroll: true,
-      },
-    },
-    {
-      path: '/:pathMatch(.*)*',
-      name: 'page404',
-      component: () => import('../pages/ErrorPage/ErrorPage.vue'),
-      meta: {
-        resetScroll: true,
-        checkAccessRequestEnabled: false,
-      },
-    },
-    {
-      path: '/newsfeed',
-      name: 'Newsfeed',
-      component: () => import('../pages/NewsfeedPage/NewsfeedPage.vue'),
-      meta: {
-        resetScroll: true,
-      },
-    },
-    // TDOD nuxt test this
-    ...(showDebug
-      ? [
-          {
-            path: '/faq',
-            name: 'HelpHelpTab',
-            component: () => import('../pages/HelpPage/Tabs/OnBoardingTab.vue'),
-          },
-        ]
-      : []),
-    {
-      path: '/announcements',
-      name: 'AnnouncementsPage',
-      component: () => import('../pages/AnnouncementsPage/AnnouncementsPage.vue'),
-      meta: {
-        resetScroll: true,
-      },
-    },
-    {
-      path: '/create-event',
-      name: 'CreateEvent',
-      component: () => import('../pages/CreateEventPage/CreateEventPage.vue'),
-      meta: {
-        resetScroll: true,
-        requiresAuth: true,
-        requiresAdminOrFacilitator: true,
-      },
-    },
-
-    {
-      path: '/calendar',
-      name: 'CalendarPage',
-      component: () => import('../pages/CalendarPage/CalendarPage.vue'),
-      meta: {
-        resetScroll: true,
-      },
-    },
-    {
-      path: '/event/:eventId',
-      name: 'EventPage',
-      component: () => import('../pages/EventPage/EventPage.vue'),
-      props: (route) => ({
-        eventId: route.params.eventId,
-      }),
-      meta: {
-        resetScroll: true,
-      },
-    },
-    {
-      path: '/groups/:groupIdOrSlug?',
-      name: 'Groups',
-      component: () => import('../pages/GroupsPage/GroupsPage.vue'),
-      props: true,
-      meta: {
-        resetScroll: true,
-      },
-    },
-
-    ...groupPageRoutes,
-
-    {
-      path: '/search',
-      name: 'Search',
-
-      component: () => import('../pages/SearchPage/SearchPage.vue'),
-      meta: {
-        resetScroll: true,
-      },
-      // keep child route for retro compatibility of shared search links
-      children: [
-        {
-          path: 'global',
-          name: 'GlobalSearch',
-          redirect: { name: 'Search' },
-        },
-        {
-          path: 'projects',
-          name: 'ProjectSearch',
-          redirect: { name: 'Search' },
-        },
-        {
-          path: 'groups',
-          name: 'GroupSearch',
-          redirect: { name: 'Search' },
-        },
-        {
-          path: 'people',
-          name: 'PeopleSearch',
-          redirect: { name: 'Search' },
-        },
-      ],
-    },
-    {
-      path: '/map',
-      name: 'map',
-      component: () => import('../pages/MapPage/MapPage.vue'),
-      meta: {
-        resetScroll: true,
-      },
-    },
-    {
-      path: '/create-group',
-      name: 'createGroup',
-      component: () => import('../pages/GroupPageV2/Tabs/GroupEditTab.vue'),
-
-      meta: {
-        resetScroll: true,
-        requiresAuth: true,
-      },
-    },
-    {
-      path: '/create-project',
-      name: 'createProject',
-      component: () => import('../pages/CreateProjectPage/CreateProjectPage.vue'),
-
-      meta: {
-        resetScroll: true,
-        requiresAuth: true,
-      },
-    },
-    ...projectPageRoutes,
-    {
-      path: '/stats',
-      name: 'stats',
-      component: () => import('../pages/StatsPage/StatsPage.vue'),
-      meta: { requiresAuth: true, resetScroll: true },
-    },
-    {
-      path: '/notifications-settings',
-      name: 'settings',
-      component: () => import('../pages/NotificationSettingsPage/NotificationSettingsPage.vue'),
-      meta: {
-        requiresAuth: true,
-        resetScroll: true,
-      },
-    },
-    {
-      path: '/tos', // back compatibility with old routes
-      redirect: 'terms-of-service',
+      redirect: { name: 'tos' },
     },
     {
       path: '/terms-of-service',
@@ -586,34 +391,9 @@ const routes = ({
       path: '/calendar',
       name: 'CalendarPage',
       component: () => import('../pages/CalendarPage/CalendarPage.vue'),
-      redirect: { name: 'FutureEvents' },
       meta: {
         resetScroll: true,
       },
-      children: [
-        {
-          path: 'future',
-          name: 'FutureEvents',
-          component: () => import('../pages/CalendarPage/Tabs/EventsList.vue'),
-          props: {
-            isFuture: true,
-          },
-          meta: {
-            resetScroll: true,
-          },
-        },
-        {
-          path: 'past',
-          name: 'PastEvents',
-          component: () => import('../pages/CalendarPage/Tabs/EventsList.vue'),
-          props: {
-            isFuture: false,
-          },
-          meta: {
-            resetScroll: true,
-          },
-        },
-      ],
     },
     {
       path: '/event/:eventId',

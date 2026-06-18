@@ -1,61 +1,62 @@
 <script setup lang="ts">
-import { getAnnouncements } from '~/api/announcements.service'
-
-import useOrganizationsStore from '~/stores/useOrganizations'
-
+import { announcementSkeleton } from '~/skeletons/announcement.skeletons'
+import { getAnnouncements } from '~/api/v2/announcements.service'
+import { factoryPagination } from '~/skeletons/base.skeletons'
+import FetchLoader from '~/components/base/FetchLoader.vue'
 import { fullYearDateFormat, nowDate } from '~/functs/date'
 
-const organizationsStore = useOrganizationsStore()
 const { t } = useNuxtI18n()
 
-const announcements = useState(() => [])
-const isLoading = useState(() => false)
-
-const organization = computed(() => {
-  return organizationsStore.current
+const organizationCode = useOrganizationCode()
+const {
+  status,
+  data: announcements,
+  pagination,
+} = getAnnouncements(organizationCode, {
+  query: {
+    organizations: [organizationCode],
+    ordering: '-updated_at',
+    from_date: fullYearDateFormat(nowDate()),
+  },
+  default: () => factoryPagination(announcementSkeleton),
 })
-
-const doGetAnnouncements = async () => {
-  try {
-    isLoading.value = true
-    const { results } = await getAnnouncements({
-      query: {
-        organizations: [organization.value.code],
-        ordering: '-updated_at',
-        from_date: fullYearDateFormat(nowDate()),
-      },
-    })
-    announcements.value = results
-  } catch (err) {
-    console.error(err)
-  } finally {
-    isLoading.value = false
-  }
-}
-
-onMounted(doGetAnnouncements)
 
 useLpiHead2({
   title: computed(() => t('home.announcements')),
 })
 </script>
+
 <template>
   <div class="announcements-page page-section-medium page-top">
     <h1 class="page-title">
       {{ $t('home.announcements') }}
     </h1>
 
-    <AnnouncementCardListSkeleton v-if="isLoading" />
-
-    <AnnouncementCardList v-else :announcements="announcements" :is-more-toggled="true" />
-
-    <EmptyLabel
-      v-if="!isLoading && announcements.length === 0"
-      :label="$t('announcements.empty')"
-    />
+    <FetchLoader :status="status" only-error skeleton>
+      <div class="announcemet-grid">
+        <AnnouncementCard
+          v-for="(announcement, index) in announcements"
+          :key="index"
+          :announcement="announcement"
+          :to="{
+            name: 'projectAnnouncements',
+            params: { slugOrId: announcement.project.slug || announcement.project.id },
+          }"
+        />
+      </div>
+      <EmptyLabel v-if="announcements.length === 0" :label="$t('announcements.empty')" />
+      <PaginationButtonsV2 :pagination="pagination" />
+    </FetchLoader>
   </div>
 </template>
+
 <style lang="scss" scoped>
+.announcemet-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
 .page-title {
   margin-bottom: $space-2xl;
 }

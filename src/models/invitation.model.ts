@@ -1,11 +1,12 @@
 import type { BaseLocationModel, BaseTranslatedLocationModel } from '~/models/location.model'
 import type { OrganizationModel } from '~/models/organization.model'
 import type { TagModel } from '~/models/tag.model'
-import type { Image } from '~/models/image.model'
 
 import type { Translated } from '~/interfaces/translated'
 
 import type { IconImageChoice } from '~/functs/IconImage'
+import type { ImageModel } from '~/models/image.model'
+import type { GroupDataRole } from '~/models/types'
 
 export type SubGroup = {
   id: number
@@ -21,7 +22,8 @@ export interface PeopleGroupModel {
   short_description: string
   email: string
   type: string
-  header_image: Image
+  role?: GroupDataRole
+  header_image: ImageModel
   publication_status: string
   organization: OrganizationModel
   children: PeopleGroupModel[]

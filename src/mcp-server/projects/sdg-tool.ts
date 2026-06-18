@@ -31,9 +31,9 @@ export default (server) => {
       title: 'LList of all SDGs Sustainable Development Goals',
       description: 'Get name, description and id of all SDGs Sustainable Development Goals.',
       inputSchema: {},
-      outputSchema: {
+      /*outputSchema: {
         results: N.array(SDG_OUTPUT_SCHEMA),
-      },
+        },*/
     },
     async function () {
       console.log('foo')
@@ -56,7 +56,7 @@ export default (server) => {
           'The ID of the Sustainable Development Goal (SDG) between 1 and 17'
         ),
       },
-      outputSchema: { results: SDG_OUTPUT_SCHEMA },
+      /*outputSchema: { results: SDG_OUTPUT_SCHEMA },*/
     },
     async ({ sdgId }) => {
       let results: any = {}

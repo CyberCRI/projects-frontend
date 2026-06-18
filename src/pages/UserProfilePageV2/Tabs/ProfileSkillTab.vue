@@ -54,11 +54,11 @@ const { refresh, status, data } = getUserMentorship(organizationCode, {
   immediate: false,
 })
 
-watch(
-  () => usersStore.isConnected,
-  (connected) => connected && refresh(),
-  { immediate: true }
-)
+watchEffect(() => {
+  if (usersStore.isConnected) {
+    refresh()
+  }
+})
 
 const userMentorship = computed(() => {
   return (data.value || []).reduce((acc, mentorship) => {

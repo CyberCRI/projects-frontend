@@ -17,6 +17,7 @@ import useUsersStore from '~/stores/useUsers'
 import { useLpiHead2 } from '~/composables/useLpiHead'
 
 import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils'
+import { refreshGroupData } from '~/composables/groups/refreshGroup'
 import type { AsyncDataRequestStatus } from 'nuxt/app'
 import { isEqual } from 'es-toolkit'
 
@@ -38,11 +39,6 @@ const props = defineProps({
   postCreateRouteFactory: {
     type: [Function, null],
     default: null,
-  },
-
-  isReducedMode: {
-    type: Boolean,
-    default: false,
   },
 })
 
@@ -130,23 +126,7 @@ const cancel = () => {
   }
 }
 
-// TODO need to rework all this :D
-let setProjectsData, updateGroupProjects, setMembersData, updateGroupMembers
-if (!props.isReducedMode) {
-  const projectsObj = useGroupProjectsUpdate(orgCode, props.groupIdOrSlug, form)
-  setProjectsData = projectsObj.setProjectsData
-  updateGroupProjects = projectsObj.updateGroupProjects
-  const membersObj = useGroupMembersUpdate(orgCode, props.groupIdOrSlug, form)
-  setMembersData = membersObj.setMembersData
-  updateGroupMembers = membersObj.updateGroupMembers
-}
-
-const refresh = () => {
-  return refreshNuxtData([
-    `${organizationCode}::group::${groupData.value.id}`,
-    `${organizationCode}::group::${groupData.value.slug}`,
-  ])
-}
+const refresh = () => refreshGroupData(groupData.value)
 
 const updateHeader = async (groupId) => {
   // check if header has changed
@@ -182,9 +162,9 @@ const buildPayload = () => {
 
   form.value.members.forEach((member) => {
     if (member?.id) {
-      if (member.is_leader) {
+      if (member.role === 'leader') {
         team.leaders.push(member.id)
-      } else if (member.is_manager) {
+      } else if (member.role === 'managers') {
         team.managers.push(member.id)
       } else {
         team.members.push(member.id)
@@ -218,7 +198,7 @@ const createGroup = async () => {
     const payload = buildPayload()
 
     const newGroup = await postGroup(orgCode.value, payload)
-    const newGroupId = newGroup.id
+    const newGroupId = newGroup.slug || newGroup.id
 
     // save header
     await updateHeader(newGroupId)
@@ -231,8 +211,8 @@ const createGroup = async () => {
 
     router.push(
       props.postCreateRouteFactory
-        ? props.postCreateRouteFactory(newGroupId)
-        : { name: 'Group', params: { groupIdOrSlug: newGroupId } }
+        ? props.postCreateRouteFactory(newGroup.slug || newGroup.id)
+        : { name: 'Group', params: { groupIdOrSlug: newGroup.slug || newGroup.id } }
     )
   } catch (error) {
     toaster.pushError(`${t('toasts.group-create.error')} (${error})`)
@@ -254,13 +234,6 @@ const updateGroup = async () => {
 
     // save header
     await updateHeader(props.groupIdOrSlug)
-
-    if (!props.isReducedMode) {
-      // save members
-      await updateGroupMembers()
-      //save featured projects
-      await updateGroupProjects()
-    }
 
     refresh()
 
@@ -346,13 +319,6 @@ onBeforeMount(async () => {
       // header image
       form.value.header_image = originalGroupData.header_image
       form.value.imageSizes = pictureApiToImageSizes(originalGroupData.header_image)
-
-      if (!props.isReducedMode) {
-        // save members
-        await setMembersData()
-        //save featured projects
-        await setProjectsData()
-      }
     } catch (error) {
       console.log(error)
       redirectTo404()
@@ -378,7 +344,6 @@ useLpiHead2({
           v-model="form"
           :validation="v$"
           :is-add-mode="!groupIdOrSlug"
-          :is-reduced-mode="isReducedMode"
           @close="$emit('close')"
         />
       </FetchLoader>

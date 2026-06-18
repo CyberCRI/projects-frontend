@@ -1,7 +1,8 @@
-import CommentItem from '~/components/project/comment/CommentItem.vue'
+import CommentItem from '~/components/project/modules/Comments/CommentItem.vue'
 import { CommentFactory } from '~~/tests/factories/comment.factory'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
+import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import useUsersStore from '~/stores/useUsers'
@@ -29,6 +30,7 @@ describe('CommentItem', () => {
     defaultParams = {
       props: {
         comment: { ...CommentFactory.generate(), author: { id: 123 } },
+        project: TranslatedProjectFactory.generate(),
       },
     }
   })

@@ -1,13 +1,12 @@
 <template>
   <FetchLoader :status="status" only-error skeleton>
+    <BaseModuleHeader
+      v-if="!preview"
+      :pagination="pagination"
+      :editable="editable"
+      @add="onCreate"
+    />
     <div class="list-container">
-      <LpiButton
-        v-if="editable"
-        btn-icon="Plus"
-        :label="$t('group.form.add')"
-        class="edit-btn skeletons-background"
-        @click="onCreate"
-      />
       <div class="list-divider">
         <NewsItem
           v-for="news in data"
@@ -18,26 +17,29 @@
           @delete="onDeleteNews"
         />
       </div>
-      <EditNewsDrawer
-        :is-opened="stateModals.edit"
-        :news="selectedNews"
-        :selected-group="false"
-        @close="onCancel"
-        @news-edited="onAfterEdit"
-      />
-
-      <ConfirmModal
-        v-if="stateModals.delete"
-        :title="$t('news.delete.message')"
-        @confirm="onConfirmDeleteNews"
-        @cancel="onCancel"
-      >
-        <NewsItem v-if="selectedNews" :news="selectedNews" />
-      </ConfirmModal>
-
-      <PaginationButtonsV2 v-if="withPagination" :pagination="pagination" />
+      <NothingHere v-if="data.length === 0" />
+      <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
     </div>
   </FetchLoader>
+  <!-- drawer/modal -->
+
+  <EditNewsDrawer
+    :is-opened="stateModals.edit"
+    :news="selectedNews"
+    :selected-group="false"
+    @close="onCancel"
+    @news-edited="onAfterEdit"
+  />
+
+  <ConfirmModal
+    v-if="stateModals.delete"
+    :title="$t('news.delete.message')"
+    :asyncing="asyncing"
+    @confirm="onConfirmDeleteNews"
+    @cancel="onCancel"
+  >
+    <NewsItem v-if="selectedNews" :news="selectedNews" />
+  </ConfirmModal>
 </template>
 
 <script setup lang="ts">
@@ -54,19 +56,22 @@ import NewsItem from '~/components/news/NewsItem.vue'
 import useToasterStore from '~/stores/useToaster'
 
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
+import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
+import { refreshGroupData } from '~/composables/groups/refreshGroup'
+import NothingHere from '~/components/base/NothingHere.vue'
 import { newsSkeleton } from '~/skeletons/news.skeletons'
 
 const props = withDefaults(
   defineProps<{
     group: TranslatedPeopleGroupModel
     limit?: number
-    withPagination?: boolean
     editable?: boolean
+    preview?: boolean
   }>(),
   {
-    withPagination: true,
     limit: null,
     editable: false,
+    preview: false,
   }
 )
 
@@ -77,6 +82,7 @@ const { stateModals, openModals, closeModals } = useModals({ delete: false, edit
 const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()
 const groupId = computed(() => props.group?.id)
+const asyncing = ref(false)
 
 const { query } = useQuery<QueryFilterNews>({})
 
@@ -89,6 +95,18 @@ const { status, data, pagination, refresh } = getGroupNews(organizationCode, gro
   },
   default: () => factoryPagination(newsSkeleton, limitSkeletons.value),
 })
+
+const onCancel = () => {
+  selectedNews.value = null
+  asyncing.value = false
+  closeModals('edit', 'delete')
+}
+
+const onAfterEdit = () => {
+  refreshGroupData(props.group)
+  refresh()
+  onCancel()
+}
 
 const onEditNews = (news: TranslatedNews) => {
   selectedNews.value = news
@@ -106,6 +124,7 @@ const onDeleteNews = (news: TranslatedNews) => {
   openModals('delete')
 }
 const onConfirmDeleteNews = () => {
+  asyncing.value = true
   deleteNews(organizationCode, selectedNews.value.id)
     .then(() => {
       toaster.pushSuccess(t('news.delete.success'))
@@ -113,19 +132,5 @@ const onConfirmDeleteNews = () => {
     })
     .catch(() => toaster.pushError(t('news.delete.error')))
     .finally(() => onCancel())
-}
-
-const onAfterEdit = () => {
-  refreshNuxtData([
-    `${organizationCode}::group::${props.group.slug}`,
-    `${organizationCode}::group::${props.group.id}`,
-  ])
-  refresh()
-  onCancel()
-}
-
-const onCancel = () => {
-  selectedNews.value = null
-  closeModals('edit', 'delete')
 }
 </script>

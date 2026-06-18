@@ -89,8 +89,8 @@
             v-if="showRemoveUserQuit"
             :content="$t('common.remove-user')"
             :title="$t('project.remove-user-title')"
-            :cancel-button-label="'common.cancel'"
-            :confirm-button-label="'project.remove-user'"
+            :cancel-button-label="$t('common.cancel')"
+            :confirm-button-label="$t('common.delete')"
             @cancel="toggleShowRemoveUserVisible"
             @confirm="deleteUser"
           />
@@ -158,6 +158,7 @@ import {
   pictureApiToImageSizes,
 } from '~/functs/imageSizesUtils.ts'
 import { VALID_NAME_REGEX } from '~/functs/constants.ts'
+import { roleI18n } from '~/functs/rolesUtils'
 
 export default {
   name: 'AccountForm',
@@ -269,35 +270,17 @@ export default {
       return {
         value: 0,
         name: 'none',
-        label: this.$t('account.role.none'),
+        label: roleI18n('none'),
       }
     },
 
     roleOptions() {
       const res = []
-      const roles = [
-        {
-          name: 'users',
-          label: this.$t('account.role.user'),
-          value: `organization:#${this.organizationsStore.current.id}:users`,
-        },
-        {
-          name: 'facilitators',
-          label: this.$t('account.role.facilitator'),
-          value: `organization:#${this.organizationsStore.current.id}:facilitators`,
-        },
-
-        {
-          name: 'viewers',
-          label: this.$t('account.role.viewer'),
-          value: `organization:#${this.organizationsStore.current.id}:viewers`,
-        },
-        {
-          name: 'admins',
-          label: this.$t('account.role.admin'),
-          value: `organization:#${this.organizationsStore.current.id}:admins`,
-        },
-      ]
+      const roles = ['users', 'facilitators', 'viewers', 'admins'].map((role) => ({
+        name: role,
+        label: roleI18n(role),
+        value: `organization:#${this.organizationsStore.current.id}:${role}`,
+      }))
 
       // user created in google can't have "none" role
       if (!this.form.create_in_google && !this.isAddMode) {

@@ -1,6 +1,6 @@
 <template>
   <BaseModuleTab :title="$t(GroupModuleTitle.news)" :count="countElement">
-    <BaseGroupNewsList :group="group" :editable="isInEditingMode" />
+    <BaseGroupNewsList :group="group" :editable="editable" />
   </BaseModuleTab>
 </template>
 
@@ -13,10 +13,10 @@ import { GroupModuleTitle } from '@/models/invitation.model'
 const props = withDefaults(
   defineProps<{
     group: TranslatedPeopleGroupModel
-    isInEditingMode?: boolean
+    editable?: boolean
   }>(),
   {
-    isInEditingMode: false,
+    editable: false,
   }
 )
 

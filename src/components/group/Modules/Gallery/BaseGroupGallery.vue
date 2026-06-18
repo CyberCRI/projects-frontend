@@ -1,49 +1,46 @@
 <template>
-  <div class="gallery-container">
-    <!-- editable button -->
-    <LpiButton
-      v-if="editable"
-      btn-icon="Plus"
-      :label="$t('group.form.add')"
-      class="edit-btn"
-      @click="openModals('create')"
-    />
-
-    <FetchLoader :status="status" skeleton only-error>
-      <GalleryList
-        :images="data"
-        :editable="editable"
-        :image-size="preview ? 'small' : 'medium'"
-        @click="onView"
-        @delete="onDelete"
-      />
-      <EmptyLabel v-if="data.length === 0" :label="$t('gallery.empty')" />
-      <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
-    </FetchLoader>
-
-    <GalleryDeleteModal
-      v-if="stateModals.delete"
-      :loading="loading"
-      :image="selected"
-      @close="closeModals('delete')"
-      @submit="deleteImage"
-    />
-    <GalleryDrawer
-      :is-opened="stateModals.gallery"
-      :status="status"
-      :images="data"
-      :selected="selected"
+  <FetchLoader :status="status" skeleton only-error>
+    <BaseModuleHeader
+      v-if="!preview"
+      :editable="editable"
       :pagination="pagination"
-      @close="closeModals('gallery')"
+      @add="openModals('create')"
     />
-    <GalleryForm
-      v-if="stateModals.create"
-      :loading="loading"
-      :status="imagesStatusUploading"
-      @close="closeForm"
-      @submit="createImage"
+
+    <GalleryList
+      :images="data"
+      :editable="editable"
+      :image-size="preview ? 'small' : 'medium'"
+      @click="onView"
+      @delete="onDelete"
     />
-  </div>
+    <NothingHere v-if="data.length === 0" :label="$t('gallery.empty')" />
+    <PaginationButtonsV2 v-if="!preview" :pagination="pagination" />
+
+    <!-- drawer/modal -->
+  </FetchLoader>
+  <GalleryDeleteModal
+    v-if="stateModals.delete"
+    :loading="loading"
+    :image="selected"
+    @close="closeModals('delete')"
+    @submit="deleteImage"
+  />
+  <GalleryDrawer
+    :is-opened="stateModals.gallery"
+    :status="status"
+    :images="data"
+    :selected="selected"
+    :pagination="pagination"
+    @close="closeModals('gallery')"
+  />
+  <GalleryForm
+    v-if="stateModals.create"
+    :loading="loading"
+    :status="imagesStatusUploading"
+    @close="closeForm"
+    @submit="createImage"
+  />
 </template>
 
 <script setup lang="ts">
@@ -60,13 +57,14 @@ import GalleryDrawer from '~/components/base/gallery/GalleryDrawer.vue'
 import GalleryList from '~/components/base/gallery/GalleryList.vue'
 import GalleryForm from '~/components/base/gallery/GalleryForm.vue'
 import FetchLoader from '~/components/base/FetchLoader.vue'
-import EmptyLabel from '~/components/base/EmptyLabel.vue'
 
 import useToasterStore from '~/stores/useToaster'
 
 import { useModals } from '~/composables/useModal'
 
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
+import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
+import { refreshGroupData } from '~/composables/groups/refreshGroup'
 import { imageGallerySkeleton } from '~/skeletons/gallery.skeletons'
 import type { AsyncDataRequestStatus } from 'nuxt/app'
 
@@ -110,10 +108,7 @@ const onDelete = (image) => {
 }
 
 const afterRequest = () => {
-  refreshNuxtData([
-    `${organizationCode}::group::${props.group.slug}`,
-    `${organizationCode}::group::${props.group.id}`,
-  ])
+  refreshGroupData(props.group)
   refresh()
 }
 
@@ -176,13 +171,6 @@ const closeForm = () => {
 </script>
 
 <style lang="scss">
-.gallery-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
-
 .edit-btn {
   align-self: end;
 }

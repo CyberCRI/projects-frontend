@@ -165,6 +165,7 @@ export default defineNuxtConfig({
     appLangchainPrompt: '',
     appLangchainModelName: '',
     appLangchainModelApiKey: '',
+    appLangchainExtraModelApiKeys: '',
     appLangchainTemperature: '',
     appVectorDbUrl: '',
     appVectorEmbeddingApiKey: '',
@@ -174,6 +175,8 @@ export default defineNuxtConfig({
     appVectorEmbeddingDimensions: '',
     appVectorToolPrompt: '',
     appChatbotPromptDb: '',
+    appAgentMemoryTrace: '',
+    appAgentMemorySlidingWindowSize: '',
     public: {
       appVersion: '',
       appApiOrgCode: '',
@@ -210,6 +213,7 @@ export default defineNuxtConfig({
       appGotenbergEnabled: '',
       appHasVectorDb: 0,
       appHasChatbotPromptDb: 0,
+      appLlmModelSuggestions: '',
     },
   },
   i18n: {
@@ -293,6 +297,13 @@ export default defineNuxtConfig({
         //   name: 'twitter:image',
         //   content: `${process.env.NUXT_PUBLIC_APP_PUBLIC_BINARIES_PREFIX}/social/meta_background_twt.png`,
         // },
+      ],
+      script: [
+        {
+          async: true,
+          defer: true,
+          src: 'https://www.google.com/recaptcha/api.js?render=explicit',
+        },
       ],
     },
   },

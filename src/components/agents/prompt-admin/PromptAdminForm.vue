@@ -1,16 +1,30 @@
-<script setup>
+<script setup lang="ts">
+import FieldErrors from '@/components/base/form/FieldErrors.vue'
+import { helpers, required } from '@vuelidate/validators'
 import useToasterStore from '@/stores/useToaster'
 import useUsersStore from '@/stores/useUsers'
+import { requiredContent } from '~/form/base'
+import useValidate from '@vuelidate/core'
+
+const { html2md, md2html } = useMarkdown()
 
 const { t } = useNuxtI18n()
 
-const props = defineProps({
-  isOpened: {
-    type: Boolean,
-    required: true,
-  },
-  prompt: { type: [Object, null], required: true },
-})
+type PromptData = {
+  id: number
+  title: string
+  promptContents: { version: number; content: string }[]
+}
+
+type PromptForm = {
+  title: string
+  content: string
+}
+
+const props = defineProps<{
+  isOpened: boolean
+  prompt?: PromptData
+}>()
 
 const isEdit = computed(() => !!props.prompt)
 
@@ -18,12 +32,24 @@ const emit = defineEmits(['close', 'entity-created', 'entity-updated'])
 
 const toaster = useToasterStore()
 const usersStore = useUsersStore()
-const defaultForm = (prompt) => ({
+
+const defaultForm = (prompt?: PromptData): PromptForm => ({
   title: prompt?.title ?? '',
-  content: prompt?.promptContents?.length ? prompt.promptContents[0].content : '',
+  content: prompt?.promptContents?.length ? md2html(prompt.promptContents[0].content) : '',
 })
 
 const form = ref(defaultForm())
+
+const rules = computed(() => ({
+  title: {
+    required: helpers.withMessage(t('prompts.form.title-required'), required),
+  },
+  content: {
+    required: helpers.withMessage(t('prompts.form.content-required'), requiredContent),
+  },
+}))
+
+const v$ = useValidate(rules, form)
 
 const titleExists = ref(false)
 
@@ -46,6 +72,11 @@ const isAsyncing = ref(false)
 const close = () => emit('close')
 
 const submit = async () => {
+  const isValid = await v$.value.$validate()
+  if (!isValid) {
+    toaster.pushError(t('prompts.form.invalid'))
+    return
+  }
   isAsyncing.value = true
 
   let headers = {}
@@ -53,14 +84,19 @@ const submit = async () => {
   if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
 
   try {
+    const body = { ...form.value, content: html2md(form.value.content) }
     if (isEdit.value) {
       await $fetch(`/api/prompt/${props.prompt.id}`, {
         method: 'put',
-        body: form.value,
+        body,
         headers,
       })
     } else {
-      await $fetch('/api/prompt/', { method: 'post', body: form.value, headers })
+      await $fetch('/api/prompt/', {
+        method: 'post',
+        body,
+        headers,
+      })
     }
 
     toaster.pushSuccess(t(isEdit.value ? 'prompts.edit-success' : 'prompts.create-success'))
@@ -93,17 +129,20 @@ const submit = async () => {
         :label="$t('prompts.title')"
         :disabled="isEdit"
         @change="titleExists = false"
+        @blur="v$.title.$validate"
       />
+      <FieldErrors :errors="v$.title.$errors" />
       <p v-if="titleExists" class="error">{{ $t('agents.title-exists') }}</p>
     </div>
     <div class="form-section">
-      <TextInput
+      <h4>{{ $t('prompts.content') }}</h4>
+      <TipTapEditor
         v-model.trim="form.content"
-        input-type="textarea"
-        :label="$t('prompts.content')"
-        rows="12"
-        @change="titleExists = false"
+        class="input-field content-editor"
+        mode="medium"
+        @blur="v$.content.$validate"
       />
+      <FieldErrors :errors="v$.content.$errors" />
     </div>
   </BaseDrawer>
 </template>

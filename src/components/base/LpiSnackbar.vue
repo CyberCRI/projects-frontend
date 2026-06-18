@@ -17,7 +17,7 @@ import type { IconImageChoice } from '~/functs/IconImage'
 
 withDefaults(
   defineProps<{
-    type?: string
+    type?: 'success' | 'info' | 'error' | 'warning' | ''
     icon?: IconImageChoice
     closable?: boolean
     border?: boolean

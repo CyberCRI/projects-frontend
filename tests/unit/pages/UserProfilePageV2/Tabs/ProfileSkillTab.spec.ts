@@ -6,6 +6,8 @@ import pinia from '~/stores'
 
 import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
 import UserSkillsFull from '~/components/people/skill/UserSkillsFull.vue'
+import { OrganizationOutput } from '~/models/organization.model'
+import useOrganizationsStore from '~/stores/useOrganizations'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import EmptyLabel from '~/components/base/EmptyLabel.vue'
@@ -23,6 +25,8 @@ describe('ProfileSkillTab', () => {
     usersStore.getUser = vi.fn()
     usersStore.userFromToken = {}
     const organizationCode = useOrganizationCode()
+    const organizationsStore = useOrganizationsStore(pinia)
+    organizationsStore._current = { id: 'TEST', code: 'TEST' } as unknown as OrganizationOutput
 
     registerEndpoint(`organization/${organizationCode}/mentoring/`, () => {
       return PaginationsFactory.generate()
@@ -62,7 +66,7 @@ describe('ProfileSkillTab', () => {
     expect(vm.isCurrentUser).toBeFalsy()
   })
 
-  it('should display a message if no kill and no hobby', async () => {
+  it('should display a message if no skill and no hobby', async () => {
     const user: any = UserFactory.generate()
     user.id = '123'
 

@@ -1,6 +1,6 @@
-import type { TemplateModel, TemplateOutput } from '@/models/template.model'
+import type { TemplateModel, TemplateOutput, TranslatedTemplate } from '@/models/template.model'
+import type { TagModel, TagOutput, TranslatedTag } from '@/models/tag.model'
 import type { OrganizationModel } from '@/models/organization.model'
-import type { TagModel, TagOutput } from '@/models/tag.model'
 import type { ImageSizes } from '~/functs/imageSizesUtils'
 import type { Translated } from '@/interfaces/translated'
 import type { ImageModel } from '@/models/image.model'
@@ -43,7 +43,15 @@ export interface ProjectCategoryModel extends BaseModel {
   templates: TemplateModel[]
 }
 
-export type TranslatedProjectCategory = Translated<ProjectCategoryModel, 'name' | 'description'>
+export type TranslatedProjectCategory = Translated<
+  ProjectCategoryModel,
+  'name' | 'description' | 'hierarchy' | 'templates'
+> & {
+  hierarchy?: TranslatedProjectCategory[]
+  children?: TranslatedProjectCategory[]
+  templates?: TranslatedTemplate[]
+  tags?: TranslatedTag[]
+}
 
 export type ProjectCategoryCreateInput = Required<Omit<ProjectCategoryModel, 'tags'>> & {
   organization_code: string

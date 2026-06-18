@@ -59,7 +59,7 @@ import { useModals } from '@/composables/useModal'
 import { getAllNews } from '@/api/v2/news.service'
 import useToasterStore from '@/stores/useToaster'
 import { deleteNews } from '@/api/news.service'
-import { defaultForm } from '@/form/news'
+import { defaultNewsForm } from '@/form/news'
 import { nowDate } from '@/functs/date'
 
 const toaster = useToasterStore()
@@ -97,7 +97,7 @@ const blockTitle = computed(() => {
 })
 
 const addNews = () => {
-  selectedNews.value = defaultForm()
+  selectedNews.value = defaultNewsForm()
   openModals('edit')
 }
 

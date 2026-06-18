@@ -68,7 +68,7 @@ import { eventSkeleton } from '~/skeletons/event.skeletons'
 import { getAllEvents } from '@/api/v2/event.service'
 import useToasterStore from '@/stores/useToaster'
 import { deleteEvent } from '@/api/event.service'
-import { defaultForm } from '@/form/event'
+import { defaultEventForm } from '@/form/event'
 
 const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()
@@ -106,7 +106,7 @@ const blockTitle = computed(() => {
 })
 
 const addEvent = () => {
-  selectedEvent.value = defaultForm()
+  selectedEvent.value = defaultEventForm()
   openModals('edit')
 }
 const onDelete = (event) => {

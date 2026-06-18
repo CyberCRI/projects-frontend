@@ -9,8 +9,8 @@ import type {
 } from '~/models/group.model'
 import type { PeopleGroupIdOrSlug, PeopleGroupModel } from '~/models/invitation.model'
 import type { BaseLocationModel, LocationModel } from '~/models/location.model'
+import type { ImageModealCreated, ImageModel } from '~/models/image.model'
 import type { ProjectModel } from '~/models/project.model'
-import type { ImageModel } from '~/models/image.model'
 import type { EventModel } from '~/models/event.model'
 import type { NewsModel } from '~/models/news.model'
 
@@ -103,10 +103,10 @@ export async function getGroupMember(
 export async function postGroupMembers(
   organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
-  membersData: AddGroupMembers
+  body: AddGroupMembers
 ) {
   return await useAPI(`organization/${organizationCode}/people-group/${groupId}/member/add/`, {
-    body: membersData,
+    body,
     method: 'POST',
   })
 }
@@ -114,10 +114,10 @@ export async function postGroupMembers(
 export async function removeGroupMember(
   organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
-  membersData: RemoveGroupMember
+  body: RemoveGroupMember
 ) {
   return await useAPI(`organization/${organizationCode}/people-group/${groupId}/member/remove/`, {
-    body: membersData,
+    body,
     method: 'POST',
   })
 }
@@ -292,7 +292,7 @@ export function deleteGroupGallery(
   imageId: number,
   config = {}
 ) {
-  return useAPI<ImageModel>(
+  return useAPI<undefined>(
     `organization/${organizationCode}/people-group/${groupId}/gallery/${imageId}/`,
     {
       ...config,
@@ -307,11 +307,14 @@ export function postGroupGallery(
   body: FormData,
   config = {}
 ) {
-  return useAPI<ImageModel>(`organization/${organizationCode}/people-group/${groupId}/gallery/`, {
-    ...config,
-    body,
-    method: 'POST',
-  })
+  return useAPI<ImageModealCreated>(
+    `organization/${organizationCode}/people-group/${groupId}/gallery/`,
+    {
+      ...config,
+      body,
+      method: 'POST',
+    }
+  )
 }
 
 export async function getGroupNews(

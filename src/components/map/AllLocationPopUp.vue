@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ProjectLocationPopUp from '@/components/project/map/ProjectLocationPopUp.vue'
+import ProjectLocationPopUp from '~/components/project/modules/Locations/ProjectLocationPopUp.vue'
 import GroupLocationPopUp from '@/components/group/Map/GroupLocationPopUp.vue'
 import LocationEventPopUp from '@/components/event/map/LocationEventPopUp.vue'
 import LocationNewsPopUp from '@/components/news/map/LocationNewsPopUp.vue'

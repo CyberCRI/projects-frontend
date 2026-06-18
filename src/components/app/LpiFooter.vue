@@ -1,16 +1,5 @@
 <template>
   <footer id="footer" class="page-section-full">
-    <div v-if="!isRegisterPage && showDirectoryLink" class="directory-ctn">
-      <p v-if="showDirectoryLink" class="content">
-        {{ $t('footer.directory') }}
-        <a class="link" href="https://projects.directory" target="_blank">
-          https://projects.directory
-        </a>
-      </p>
-
-      <ProjectLogo v-if="showDirectoryLink" class="logo" />
-      <div v-else class="no-logo" />
-    </div>
     <div class="footer-content">
       <div class="footer-lists">
         <ul class="footer-links">
@@ -163,9 +152,7 @@
 <script setup lang="ts">
 import OnboardingScreens from '~/components/onboarding/OnboardingScreens/OnboardingScreens.vue'
 import FooterEnglishTips from '~/components/app/FooterEnglishTips.vue'
-import ProjectLogo from '~/components/base/media/ProjectLogo.vue'
 import ContactDrawer from '~/components/app/ContactDrawer.vue'
-import ReportDrawer from '~/components/app/ReportDrawer.vue'
 import LpiLogo from '~/components/app/LpiLogo.vue'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
@@ -173,8 +160,8 @@ import useUsersStore from '~/stores/useUsers'
 
 import { usePublicURL } from '~/composables/usePublic'
 
+import ReportDrawer from '~/components/drawer/ReportDrawer.vue'
 import { useRuntimeConfig } from '#imports'
-import utils from '~/functs/functions'
 
 const FOOTER_SRC = usePublicURL('/source.png')
 
@@ -186,16 +173,7 @@ const reportBugOpen = ref(false)
 const showContactUsDrawer = ref(false)
 
 const canOpen = computed(() => locale.value === 'fr')
-const showDirectoryLink = computed(() => {
-  const organization = organizationsStore.current
-  if (organization && utils.isDefaultPortal(organization.code)) {
-    return false
-  }
-  return true
-})
-const route = useRoute()
 
-const isRegisterPage = computed(() => route.name === 'Register')
 const appVersion = computed(() => runtimeConfig.public.appVersion)
 const isConnected = computed(() => usersStore.isConnected)
 const approveTermIsActive = computed(() => !!usersStore.userFromApi)
@@ -204,6 +182,7 @@ const showOnboardingScreen = computed(() => organizationsStore.current?.onboardi
 
 <style lang="scss" scoped>
 footer {
+  border-top: 1px solid $light-gray;
   color: $almost-black;
 
   .footer-content {
@@ -283,46 +262,12 @@ footer {
   .report-form {
     position: absolute; // get out of my flex !
   }
-
-  .directory-ctn {
-    display: inline-flex;
-    flex-wrap: wrap;
-    align-items: center;
-    width: 100%;
-    background-color: $almost-white;
-    padding: 1rem 0;
-    justify-content: center;
-
-    .logo {
-      margin-left: $space-m;
-      height: pxToRem(40px);
-      background-color: $white;
-      border-radius: $border-radius-8;
-    }
-
-    .no-logo {
-      height: pxToRem(40px);
-    }
-
-    .link {
-      color: $primary-dark;
-      font-weight: bold;
-    }
-  }
 }
 
 @media screen and (width <= 768px) {
   footer {
     flex-direction: column;
     align-items: start;
-
-    .directory-ctn {
-      justify-content: center;
-
-      .content {
-        padding: $space-m;
-      }
-    }
 
     .logo {
       margin-left: unset;

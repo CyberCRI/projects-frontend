@@ -3,7 +3,7 @@
     :confirm-button-label="isExist ? $t('common.edit') : $t('common.add')"
     :cancel-button-label="$t('common.cancel')"
     :asyncing="loading"
-    :disabled="loading || !isValid"
+    :disabled="!isValid"
     @close="$emit('close')"
     @submit="$emit('submit')"
   >
@@ -14,14 +14,20 @@
     <template #body>
       <div class="location-map-ctn">
         <!-- form not have it, so ignore typescript -->
-        <GeneralMap :locations="[form as any]" :controls="false" />
+        <GeneralMap
+          ref="mapInstance"
+          :locations="[{ ...form } as any]"
+          :auto-center="false"
+          :control-expand="false"
+          :control-filter="false"
+        />
       </div>
 
       <div class="location-type-ctn">
         <div class="location-type-label">
           {{ $t('location.location-type-label') }}
         </div>
-        <GroupButton v-model="form.type" :options="locationTypeOptions" />
+        <GroupButton v-model="form.type" :options="locationTypeOptions" has-icon />
       </div>
       <TextInput v-model="form.title" :errors="errors.title" :label="$t('common.title')" />
 
@@ -46,12 +52,14 @@
 </template>
 
 <script setup lang="ts">
+import type { GroupOption } from '@/components/base/button/GroupButton.vue'
 import GroupButton from '@/components/base/button/GroupButton.vue'
 import DialogModal from '@/components/base/modal/DialogModal.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import type { LocationForm } from '@/models/location.model'
 import GeneralMap from '~/components/map/GeneralMap.vue'
+import { IconMapLocationType } from '~/functs/maps'
 import type { LocationType } from '@/models/types'
 import { useLocationForm } from '@/form/location'
 
@@ -59,40 +67,47 @@ const props = withDefaults(
   defineProps<{
     loading?: boolean
     locationTypes?: LocationType[]
+    zoom?: number
   }>(),
   {
     loading: false,
     locationTypes: null,
+    zoom: null,
   }
 )
 defineEmits(['submit', 'close', 'delete'])
 const { t } = useNuxtI18n()
 
 const locationTypeOptions = computed(() => {
-  const arr: { value: LocationType; label: string }[] = [
+  const arr: GroupOption[] = [
     {
       value: 'team',
       label: t('location.team'),
+      iconName: IconMapLocationType('team'),
     },
     {
       value: 'impact',
       label: t('location.impact'),
+      iconName: IconMapLocationType('impact'),
     },
     {
       value: 'address',
       label: t('location.address'),
+      iconName: IconMapLocationType('address'),
     },
     {
       value: 'news',
       label: t('location.news'),
+      iconName: IconMapLocationType('news'),
     },
     {
       value: 'event',
       label: t('location.event'),
+      iconName: IconMapLocationType('event'),
     },
   ]
   if (props.locationTypes) {
-    return arr.filter(({ value }) => props.locationTypes.includes(value))
+    return arr.filter(({ value }) => props.locationTypes.includes(value as LocationType))
   }
   return arr
 })
@@ -123,6 +138,21 @@ watch(
 )
 
 const isExist = computed(() => !!form.value.id)
+
+const mapInstanceRef = useTemplateRef('mapInstance')
+
+// auto zoom to points if only zoom is defined
+onMounted(() => {
+  if (props.zoom) {
+    const timeout = setInterval(() => {
+      if (!mapInstanceRef.value) {
+        return
+      }
+      mapInstanceRef.value.map.setZoom(props.zoom)
+      clearInterval(timeout)
+    }, 100)
+  }
+})
 </script>
 
 <style lang="scss" scoped>

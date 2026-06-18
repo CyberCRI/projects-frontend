@@ -1,7 +1,7 @@
 import { OrganizationOutputFactory } from '~~/tests/factories/organization.factory'
 import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
+import GoalDrawer from '~/components/project/modules/Goals/GoalDrawer.vue'
 import { lpiShallowMount, lpiMount } from '~~/tests/helpers/LpiMount'
-import GoalDrawer from '@/components/project/goal/GoalDrawer.vue'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { beforeEach, describe, expect, it } from 'vitest'
 import useProjectsStore from '~/stores/useProjects'
@@ -14,11 +14,8 @@ describe('GoalDrawer.vue', () => {
   beforeEach(() => {
     const projectsStore = useProjectsStore(pinia)
 
-    projectsStore.project = {
-      ...TranslatedProjectFactory.generate(),
-      files: [],
-      links: [],
-    }
+    projectsStore.project = TranslatedProjectFactory.generate()
+
     const organizationsStore = useOrganizationsStore(pinia)
     organizationsStore._current = OrganizationOutputFactory.generate()
     defaultProps = {
@@ -39,7 +36,7 @@ describe('GoalDrawer.vue', () => {
     wrapper = lpiMount(GoalDrawer, { props: defaultProps })
     const vm: any = wrapper.vm
 
-    vm.closeModalNoConfirm()
+    vm.close()
     expect(wrapper.emitted('close')).toBeTruthy()
   })
 })

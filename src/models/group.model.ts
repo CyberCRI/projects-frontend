@@ -1,5 +1,8 @@
 import type { PeopleGroupModel, TranslatedPeopleGroupModel } from '~/models/invitation.model'
 import type { UserFromJWTModel, UserModel } from '~/models/user.model'
+import type { ProjectSlugOrId } from '~/models/project.model'
+import type { Translated } from '~/interfaces/translated'
+import type { GroupMemberRoleType } from '~/models/types'
 
 /**
  * @name GroupModel
@@ -14,12 +17,11 @@ export interface GroupModel {
 }
 
 export type GroupMember = UserModel & {
-  is_manager: boolean
-  is_leader: boolean
+  role: GroupMemberRoleType
 }
 
 // TODO translted
-export type TranslatedGroupMember = GroupMember
+export type TranslatedGroupMember = Translated<GroupMember, 'job'>
 
 export type HierarchyGroupModel = PeopleGroupModel
 export type TrasnlatedHierarchyGroupModel = TranslatedPeopleGroupModel
@@ -67,19 +69,13 @@ export interface PostGroupData {
   publication_status: string
 }
 
-export interface AddGroupMembers {
-  leaders: Array<string>
-  managers: Array<string>
-  members: Array<string>
+export type AddGroupMembers = {
+  [key in GroupMemberRoleType]: UserModel['id'][]
 }
-
-export type GroupRole = 'leaders' | 'managers' | 'members'
-
 export interface RemoveGroupMember {
-  name: GroupRole
-  user: string
+  users: UserModel['id'][]
 }
 
 export interface PostGroupProjects {
-  featured_projects: Array<string>
+  featured_projects: ProjectSlugOrId[]
 }

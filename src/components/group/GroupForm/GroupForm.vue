@@ -2,54 +2,43 @@
   <div v-if="loading" class="loader-ctn">
     <LoaderSimple />
   </div>
-  <form v-else class="group-form">
+  <form v-else class="list-divider list-margin list-container">
     <!--  Group Name -->
-    <div>
-      <TextInput
-        v-model="form.name"
-        :placeholder="namePlaceholder"
-        space-below-label="large-space"
-        data-test="group-name-input"
-        @blur="validation.form.name.$validate"
-      >
-        <label>
-          {{ isAddMode ? `${$t('group.form.name-label')} *` : `${$t('group.form.edit-name')} *` }}
-        </label>
-      </TextInput>
-      <FieldErrors :errors="validation.form.name.$errors" />
-    </div>
+    <TextInput
+      v-model="form.name"
+      :placeholder="namePlaceholder"
+      space-below-label="large-space"
+      data-test="group-name-input"
+      :label="isAddMode ? $t('group.form.name-label') : $t('group.form.edit-name')"
+      required
+      :errors="validation.form.name.$errors"
+      @blur="validation.form.name.$validate"
+    />
 
     <!-- Email -->
-    <div class="input">
-      <TextInput
-        v-model="form.email"
-        :placeholder="emailPlaceholder"
-        space-below-label="large-space"
-        data-test="group-email-input"
-        @blur="validation.form.email.$validate"
-      >
-        <label>{{ $t('group.form.email-label') }}</label>
-      </TextInput>
-      <FieldErrors :errors="validation.form.email.$errors" />
-    </div>
+    <TextInput
+      v-model="form.email"
+      :placeholder="emailPlaceholder"
+      space-below-label="large-space"
+      data-test="group-email-input"
+      :label="$t('group.form.email-label')"
+      :errors="validation.form.email.$errors"
+      @blur="validation.form.email.$validate"
+    />
 
     <!-- Short Description-->
-    <div class="input">
-      <TextInput
-        v-model="form.short_description"
-        :placeholder="shortDescriptionPlaceholder"
-        space-below-label="large-space"
-        data-test="group-short-desciption"
-        @blur="validation.form.short_description.$validate"
-      >
-        <label>{{ $t('group.form.short-description-label') }}</label>
-      </TextInput>
-      <FieldErrors :errors="validation.form.short_description.$errors" />
-    </div>
+    <TextInput
+      v-model="form.short_description"
+      :placeholder="shortDescriptionPlaceholder"
+      space-below-label="large-space"
+      data-test="group-short-desciption"
+      :label="$t('group.form.short-description-label')"
+      :errors="validation.form.short_description.$errors"
+      @blur="validation.form.short_description.$validate"
+    />
 
     <!-- Image -->
-    <div class="img-ctn">
-      <label>{{ $t('group.image-header') }}</label>
+    <Field :label="$t('group.image-header')">
       <ImageEditor
         v-model:image-sizes="form.imageSizes"
         v-model:picture="form.header_image"
@@ -58,12 +47,11 @@
         :round-picture="true"
         :default-picture="defaultPictures"
       />
-    </div>
+    </Field>
 
     <!-- Description -->
-    <div class="description">
-      <label>
-        {{ $t('group.form.description-label') }}
+    <Field :label="$t('group.form.description-label')">
+      <template #in-label>
         <LpiButton
           class="add-btn"
           :btn-icon="form.description ? 'Pen' : 'Plus'"
@@ -71,18 +59,17 @@
           :label="$t(form.description ? 'group.form.edit' : 'group.form.add')"
           @click="descriptionIsOpened = true"
         />
-      </label>
+      </template>
       <div v-if="form.description">
         <TipTapOutput class="description-content" :content="form.description" />
         <!-- TODO htmllimiter-->
       </div>
       <empty-label v-else />
-    </div>
+    </Field>
 
     <!-- tags -->
-    <div class="description">
-      <label>
-        {{ $t('tag.title') }}
+    <Field :label="$t('tag.title')">
+      <template #in-label>
         <LpiButton
           class="add-btn"
           :btn-icon="form.tags?.length ? 'Pen' : 'Plus'"
@@ -90,16 +77,21 @@
           :label="$t(form.tags?.length ? 'group.form.edit' : 'group.form.add')"
           @click="openTags = true"
         />
-      </label>
+      </template>
       <TagsFilterSummary v-model="form.tags" />
-      <empty-label v-if="form.tags.length === 0" :label="$t('tag.empty')" />
-      <TagsDrawer v-model="form.tags" :is-opened="openTags" @close="openTags = false" />
-    </div>
+      <!-- drawer -->
+      <TagSelectDrawer
+        :selected-tags="form.tags"
+        classification-type="enabled-for-projects"
+        :is-opened="openTags"
+        @submit="onSubmitTags"
+        @close="openTags = false"
+      />
+    </Field>
 
     <!-- Sdg -->
-    <div class="description">
-      <label>
-        {{ $t('sdg.title') }}
+    <Field :label="$t('sdg.title')">
+      <template #in-label>
         <LpiButton
           class="add-btn"
           :btn-icon="form.sdgs?.length ? 'Pen' : 'Plus'"
@@ -107,16 +99,15 @@
           :label="$t(form.sdgs?.length ? 'group.form.edit' : 'group.form.add')"
           @click="openSdg = true"
         />
-      </label>
+      </template>
       <SdgList :sdgs="form.sdgs" />
       <empty-label v-if="form.sdgs.length === 0" :label="$t('sdg.empty')" />
       <SdgsDrawer v-model="form.sdgs" :is-opened="openSdg" @close="openSdg = false" />
-    </div>
+    </Field>
 
     <!-- locations -->
-    <div class="description">
-      <label>
-        {{ $t('group.location', form.locations.length) }}
+    <Field :label="$t('group.location', form.locations.length)">
+      <template #in-label>
         <LpiButton
           class="add-btn"
           :btn-icon="form.locations.length ? 'Pen' : 'Plus'"
@@ -124,7 +115,7 @@
           :label="$t(form.locations.length ? 'group.form.edit' : 'group.form.add')"
           @click="openModals('LocationDrawer')"
         />
-      </label>
+      </template>
       <LocationList
         :locations="form.locations"
         editable
@@ -149,28 +140,13 @@
         @submit="submitLocations"
         @delete="removeLocations"
       />
-    </div>
+    </Field>
 
-    <template v-if="!isReducedMode">
-      <!-- Team -->
-      <div class="team">
-        <GroupTeamSection v-model="form.members" />
-      </div>
-
-      <!-- Featured projects -->
-      <div class="project">
-        <ProjectSection v-model="form.featuredProjects" />
-      </div>
-    </template>
     <!-- Parent group -->
-    <div class="parent-group">
-      <ParentGroupSection v-model="form.parentGroup" :organization-code="organizationCode" />
-      <empty-label v-if="!form.parentGroup" />
-    </div>
+    <ParentGroupSection v-model="form.parentGroup" :organization-code="organizationCode" />
 
     <!-- Visibility -->
-    <div class="visibility">
-      <label>{{ $t('group.form.visibility.title') }}</label>
+    <Field :label="$t('group.form.visibility.title')" class="visibility">
       <div class="visibility-options">
         <template v-for="visibility in visibilities" :key="visibility.id">
           <label
@@ -193,21 +169,19 @@
         </template>
       </div>
       <FieldErrors :errors="validation.form.publication_status.$errors" />
-    </div>
+    </Field>
 
-    <div v-if="$route.params.groupIdOrSlug" class="delete-group">
-      <label>
-        <span class="section-title">{{ $t('group.form.delete') }}</span>
-        <LpiButton
-          :label="$t('group.form.delete')"
-          btn-icon="TrashCanOutline"
-          secondary
-          data-test="delete-group-button"
-          @click="openRemoveOrQuit"
-        />
-      </label>
-    </div>
+    <Field v-if="$route.params.groupIdOrSlug" :label="$t('group.form.delete')">
+      <LpiButton
+        :label="$t('group.form.delete')"
+        btn-icon="TrashCanOutline"
+        secondary
+        data-test="delete-group-button"
+        @click="openRemoveOrQuit"
+      />
+    </Field>
   </form>
+
   <GroupDescriptionDrawer
     :original-description="form.description"
     :is-add-mode="isAddMode"
@@ -220,8 +194,8 @@
     v-if="showRemoveQuit"
     :content="$t('common.remove-group')"
     :title="$t('project.remove-group')"
-    :cancel-button-label="'common.cancel'"
-    :confirm-button-label="'project.remove-group'"
+    :cancel-button-label="$t('common.cancel')"
+    :confirm-button-label="$t('common.delete')"
     @cancel="toggleShowRemoveGroupVisible"
     @confirm="removeGroup"
   />
@@ -238,7 +212,6 @@ import {
 import TagsFilterSummary from '~/components/search/Filters/TagsFilterSummary.vue'
 import LocationDrawer from '~/components/map/LocationDrawer.vue'
 import LocationList from '~/components/map/LocationList.vue'
-import TagsDrawer from '~/components/tags/TagsDrawer.vue'
 import SdgsDrawer from '~/components/sdgs/SdgsDrawer.vue'
 import SdgList from '~/components/sdgs/SdgList.vue'
 
@@ -246,6 +219,8 @@ import useOrganizationsStore from '~/stores/useOrganizations.ts'
 
 import { usePatatoids } from '~/composables/usePatatoids'
 
+import TagSelectDrawer from '~/components/drawer/Tag/TagSelectDrawer.vue'
+import Field from '~/components/base/form/Field.vue'
 import { useRuntimeConfig } from '#imports'
 
 export default {
@@ -254,10 +229,11 @@ export default {
   components: {
     SdgList,
     SdgsDrawer,
-    TagsDrawer,
+    TagSelectDrawer,
     TagsFilterSummary,
     LocationDrawer,
     LocationList,
+    Field,
   },
 
   props: {
@@ -273,10 +249,6 @@ export default {
     validation: {
       type: Object,
       default: () => {},
-    },
-    isReducedMode: {
-      type: Boolean,
-      default: false,
     },
   },
 
@@ -331,11 +303,9 @@ export default {
         type: '', // TODO ??? "club" | "group"?
         parentGroup: null, // group object
         organization: '',
-        members: [],
         sdgs: [],
         tags: [],
         locations: [],
-        featuredProjects: [],
         header_image: null,
         imageSizes: null,
         publication_status: 'public',
@@ -388,6 +358,10 @@ export default {
   },
 
   methods: {
+    onSubmitTags(tags) {
+      this.form.tags = tags
+      this.openTags = false
+    },
     openRemoveOrQuit() {
       this.showRemoveQuit = true
     },
@@ -407,7 +381,7 @@ export default {
       await deleteGroup(organization, this.$route.params.groupIdOrSlug)
       this.loading = false
       this.$router.push({
-        name: 'HomeRoot',
+        name: 'Groups',
       })
     },
     async removeLocations(location) {
@@ -465,213 +439,179 @@ export default {
   justify-content: center;
 }
 
-.group-form {
-  margin-top: 2rem;
+.category-ctn {
+  margin-bottom: $space-xl;
+}
 
-  .input {
-    margin: $space-xl 0;
-  }
+.category-select {
+  width: 100%;
 
-  .category-ctn {
-    margin-bottom: $space-xl;
-  }
-
-  .category-select {
+  select {
     width: 100%;
-
-    select {
-      width: 100%;
-    }
   }
+}
 
-  .team,
-  .parent-group,
-  .project,
-  .location {
-    margin-bottom: $space-xl;
-  }
+.completed-form-snackbar {
+  width: fit-content;
+  margin: $space-xl auto;
+  border: $border-width-s solid $salmon;
+}
 
-  .description {
-    margin-bottom: $space-xl;
-  }
+.visibility {
+  margin-bottom: $space-xl;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 
-  .completed-form-snackbar {
-    width: fit-content;
-    margin: $space-xl auto;
-    border: $border-width-s solid $salmon;
-  }
+  &-options {
+    display: grid;
+    grid-template-columns: min-content max-content;
+    align-items: center;
 
-  .visibility {
-    margin-bottom: $space-xl;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-
-    &-options {
-      display: grid;
-      grid-template-columns: min-content max-content;
-      align-items: center;
-
-      @media screen and (max-width: $med-mobile) {
-        display: flex;
-        flex-flow: column;
-        align-items: stretch;
-      }
-    }
-
-    .checkbox-description {
-      width: 70%;
-
-      @media screen and (max-width: $med-mobile) {
-        width: 100%;
-        padding: $space-2xs 0 $space-s 0;
-      }
-    }
-
-    .checkbox-item {
-      border: 1px solid $primary-dark;
-      padding: $space-m;
-      margin: $space-s pxToRem(16px) $space-s 0;
-      border-radius: $border-radius-xs;
+    @media screen and (max-width: $med-mobile) {
       display: flex;
-      align-items: center;
-      text-align: right;
+      flex-flow: column;
+      align-items: stretch;
+    }
+  }
 
-      &:hover {
-        background-color: $primary-lighter;
-      }
+  .checkbox-description {
+    width: 70%;
 
-      > .label {
-        font-weight: 700;
-        font-size: $font-size-m;
-        line-height: $line-height-compact;
-        color: $primary-dark;
-        margin: 0;
-        cursor: pointer;
-      }
+    @media screen and (max-width: $med-mobile) {
+      width: 100%;
+      padding: $space-2xs 0 $space-s 0;
+    }
+  }
 
-      &.selected {
-        background-color: $primary-dark;
-        color: $white;
+  .checkbox-item {
+    border: 1px solid $primary-dark;
+    padding: $space-m;
+    margin: $space-s pxToRem(16px) $space-s 0;
+    border-radius: $border-radius-xs;
+    display: flex;
+    align-items: center;
+    text-align: right;
 
-        > .label {
-          color: $white;
-        }
-      }
+    &:hover {
+      background-color: $primary-lighter;
     }
 
-    .form-control {
+    > .label {
+      font-weight: 700;
       font-size: $font-size-m;
+      line-height: $line-height-compact;
       color: $primary-dark;
-      font-weight: 400;
-      display: grid;
-      grid-template-columns: 1em auto;
-      gap: $space-m;
-    }
-
-    .form-control + .form-control {
-      margin-top: 1em;
-    }
-
-    input[type='radio'] {
-      appearance: none;
-      background-color: $white;
       margin: 0;
-      font: inherit;
-      width: pxToRem(20px);
-      height: pxToRem(20px);
-      border: $border-width-s solid $primary-dark;
-      border-radius: 50%;
-      transform: translateY(-0.075em);
-      display: grid;
-      place-content: center;
       cursor: pointer;
     }
 
-    input[type='radio']::before {
-      content: '';
-      width: pxToRem(12px);
-      height: pxToRem(12px);
-      transform: scale(0);
-      transition: 120ms transform ease-in-out;
-      box-shadow: inset 1em 1em $primary-dark;
-      border-radius: 50%;
-    }
+    &.selected {
+      background-color: $primary-dark;
+      color: $white;
 
-    input[type='radio']:checked::before {
-      transform: scale(1);
-    }
-
-    input[type='radio']:disabled {
-      border: $border-width-s solid $mid-gray;
-      color: $mid-gray;
-      cursor: not-allowed;
-    }
-
-    .form-control--disabled {
-      color: $mid-gray;
-      cursor: not-allowed;
-    }
-  }
-
-  .delete-group {
-    label {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-direction: row;
-      width: 100%;
-      font-size: $font-size-m;
-      margin-bottom: $space-l;
-
-      .section-title {
-        color: $black;
-        font-weight: bold;
-        display: block;
-      }
-    }
-
-    .img-ctn {
-      margin-bottom: $space-xl;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      label {
-        align-self: flex-start;
+      > .label {
+        color: $white;
       }
     }
   }
 
-  .description label {
+  .form-control {
+    font-size: $font-size-m;
+    color: $primary-dark;
+    font-weight: 400;
+    display: grid;
+    grid-template-columns: 1em auto;
+    gap: $space-m;
+  }
+
+  .form-control + .form-control {
+    margin-top: 1em;
+  }
+
+  input[type='radio'] {
+    appearance: none;
+    background-color: $white;
+    margin: 0;
+    font: inherit;
+    width: pxToRem(20px);
+    height: pxToRem(20px);
+    border: $border-width-s solid $primary-dark;
+    border-radius: 50%;
+    transform: translateY(-0.075em);
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+  }
+
+  input[type='radio']::before {
+    content: '';
+    width: pxToRem(12px);
+    height: pxToRem(12px);
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em $primary-dark;
+    border-radius: 50%;
+  }
+
+  input[type='radio']:checked::before {
+    transform: scale(1);
+  }
+
+  input[type='radio']:disabled {
+    border: $border-width-s solid $mid-gray;
+    color: $mid-gray;
+    cursor: not-allowed;
+  }
+
+  .form-control--disabled {
+    color: $mid-gray;
+    cursor: not-allowed;
+  }
+}
+
+.delete-group {
+  label {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
     width: 100%;
+    font-size: $font-size-m;
     margin-bottom: $space-l;
 
     .section-title {
-      font-size: $font-size-s;
       color: $black;
       font-weight: bold;
       display: block;
     }
   }
 
-  label {
-    margin-bottom: $space-l;
-    font-size: $font-size-m;
+  .img-ctn {
+    margin-bottom: $space-xl;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    label {
+      align-self: flex-start;
+    }
+  }
+}
+
+.description label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  margin-bottom: $space-l;
+
+  .section-title {
+    font-size: $font-size-s;
     color: $black;
     font-weight: bold;
-    display: block;
-  }
-
-  > *::after {
-    border-top: 1px solid $lighter-gray;
-    margin: 34px 0;
-    content: '';
     display: block;
   }
 }

@@ -8,7 +8,7 @@
       :reverse-date="!isFuture"
       @reload="refresh"
     />
-    <EmptyLabel v-else class="no-event" :label="$t('event.no-event')" />
+    <NothingHere v-else class="no-event" :label="$t('event.empty')" />
     <PaginationButtonsV2 :pagination="pagination" />
   </FetchLoader>
 </template>
@@ -22,6 +22,7 @@ import EventList from '~/components/event/EventList/EventList.vue'
 import EventFilter from '~/components/event/EventFilter.vue'
 
 import { factoryPagination } from '~/skeletons/base.skeletons'
+import NothingHere from '~/components/base/NothingHere.vue'
 import { eventSkeleton } from '~/skeletons/event.skeletons'
 import { YearMonthDateFormat } from '~/functs/date'
 import { groupBy } from 'es-toolkit'

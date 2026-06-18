@@ -1,7 +1,10 @@
 <template>
   <button
     type="button"
-    class="drop-down-menu-item-content"
+    class="drop-down-menu-item-content pointer"
+    :class="{
+      selected: selected,
+    }"
     :data-test="`project-form-${category.id}`"
     @click="emit('choose-category', category)"
   >
@@ -14,10 +17,9 @@ import type { TranslatedProjectCategory } from '~/models/project-category.model'
 
 import { capitalize } from '~/functs/string'
 
-defineOptions({ name: 'ProjectCategoriesDropdownElementButton' })
-
 defineProps<{
   category: TranslatedProjectCategory
+  selected?: boolean
 }>()
 
 const emit = defineEmits(['choose-category'])
@@ -42,6 +44,11 @@ const emit = defineEmits(['choose-category'])
     transform-origin: left center;
     font-weight: 400;
     font-size: $font-size-m;
+  }
+
+  &.selected {
+    background-color: $primary-light;
+    color: rgba($primary-dark, 0.7);
   }
 
   &:hover {

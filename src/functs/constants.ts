@@ -1,3 +1,10 @@
+import type {
+  GroupMemberRoleType,
+  LocationType,
+  ProjectGroupRoleType,
+  ProjectMemberRoleType,
+} from '~/models/types'
+
 export const RESOURCE_PROJECT_CATEGORY = [
   'inspired-by',
   'element-of',
@@ -145,3 +152,46 @@ export const DEFAULT_ORGANIZATION_CODE = 'DEFAULT'
 
 // default content value (html)
 export const NULL_CONTENT = '<p></p>'
+
+// --- roles ---
+//  order is important for choices
+export const PROJECTS_GROUP_ROLES: ProjectGroupRoleType[] = [
+  'owner_groups',
+  'member_groups',
+  'reviewer_groups',
+]
+
+//  order is important for choices
+export const PROJECTS_MEMBERS_ROLES: ProjectMemberRoleType[] = ['owners', 'members', 'reviewers']
+
+export const GROUP_MEMBERS_ROLES: GroupMemberRoleType[] = ['leaders', 'managers', 'members']
+
+export const PROJECT_LOCATIONS_TYPES: LocationType[] = ['address', 'impact', 'team']
+
+// max size file
+export const MAX_FILE_SIZE = Math.round(10 * 1024 * 1024)
+
+// valid image mimetype for upload
+export const MIMETYPES_IMAGES = [
+  'image/jpeg',
+  'image/png',
+  'image/gif',
+  'image/webp',
+  'image/svg+xml',
+  'image/x-icon',
+  'image/bmp',
+  'image/avif',
+  'image/apng',
+]
+
+export const DEFAULT_COLOR_TIPTAP = [
+  { color: '#00BDA7', label: 'multieditor.color.colors.carribeanGreen' },
+  { color: '#1D727C', label: 'multieditor.color.colors.ming' },
+  { color: '#99FFE7', label: 'multieditor.color.colors.aquamarine' },
+  { color: '#F0FFFB', label: 'multieditor.color.colors.mintCream' },
+  { color: '#FF9473', label: 'multieditor.color.colors.lightSalmon' },
+  { color: '#FFCC00', label: 'multieditor.color.colors.sunGlow' },
+  { color: '#D6A2FF', label: 'multieditor.color.colors.mauve' },
+  { color: '#6CD5FF', label: 'multieditor.color.colors.babyBlue' },
+  { color: '#FF3C00', label: 'multieditor.color.colors.coquelicot' },
+]

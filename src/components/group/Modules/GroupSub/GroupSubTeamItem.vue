@@ -23,6 +23,7 @@
         :group="group"
         :with-pagination="withPagination"
         :limit="limitMembers"
+        preview
         focus-leader
       />
     </div>

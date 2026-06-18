@@ -1,12 +1,14 @@
 import type { Container } from '~/composables/pdf-helpers/doc-builder'
+import type { TranslatedProject } from '~/models/project.model'
 
-export default function addTagsFactory(project, locale) {
-  const tagTitle = (tag) => tag[`title_${locale.value}`] || tag.title
+export default function addTagsFactory(project: TranslatedProject) {
+  const tagTexts = useTagTexts()
 
   return function addTags(this: Container) {
-    let tags = ''
-    if (project?.tags?.length) {
-      this.styles.add(/* CSS */ `
+    if (!project.tags?.length) {
+      return
+    }
+    this.styles.add(/* CSS */ `
           .tags {
             font-size: .8rem;
             display: flex;
@@ -24,13 +26,11 @@ export default function addTagsFactory(project, locale) {
             border-radius: .1cm;
             line-height: 1;
           }`)
-      const tagList = project.tags
-        .map((tag) => /*HTML*/ `<span class="tag">${tagTitle(tag)}</span>`)
-        .join('')
-      tags = /* HTML */ `
-        <div class="tags">${tagList}</div>
-      `
-    }
-    this.content.push(tags)
+    const tagList = project.tags
+      .map((tag) => /*HTML*/ `<span class="tag">${tagTexts.title(tag)}</span>`)
+      .join('')
+    this.content.push(/* HTML */ `
+      <div class="tags">${tagList}</div>
+    `)
   }
 }

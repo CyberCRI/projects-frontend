@@ -1,6 +1,6 @@
-import ProjectDescriptionTab from '~/pages/ProjectPageV2/Tabs/ProjectDescriptionTab.vue'
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
+import ProjectDescriptionTab from '~/pages/ProjectPageV2/Tabs/Description/ProjectDescriptionTab.vue'
 import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import { describe, expect, it, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'

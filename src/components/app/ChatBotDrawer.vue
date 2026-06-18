@@ -1,24 +1,25 @@
 <script setup>
+import useUsersStore from '~/stores/useUsers'
 import { shuffle } from 'es-toolkit'
 import analytics from '~/analytics'
 import 'deep-chat'
 
+const usersStore = useUsersStore()
+
 const props = defineProps({
   isOpened: { type: Boolean, default: false },
 })
-
-watch(
-  () => props.isOpened,
-  (neo, old) => {
-    if (neo != old) {
-      if (neo) {
-        analytics.chatbot.open()
-      } else {
-        analytics.chatbot.close()
-      }
-    }
-  }
-)
+const conversationHasBegin = ref(false)
+const conversation = ref(null)
+const conversationId = ref(null)
+const tempKey = ref(Date.now())
+const chatbotUiKey = computed(() => conversationId.value || tempKey.value)
+function onConversationRestarted() {
+  conversation.value = null
+  conversationId.value = null
+  tempKey.value = Date.now()
+  conversationHasBegin.value = false
+}
 
 onErrorCaptured((err) => {
   console.error('ChatBotDrawer error', err)
@@ -28,13 +29,69 @@ onErrorCaptured((err) => {
 
 defineEmits(['close'])
 
-const CHAT_ENDPOINT = ref(useRuntimeConfig().public.appChatbotBackend || '/api/chat-lg-stream')
+const DEFAULT_ENDPOINT = useRuntimeConfig().public.appChatbotBackend || '/api/chat-lg-stream'
+const CHAT_ENDPOINT = ref(DEFAULT_ENDPOINT)
+
+const isLoading = ref(false)
+
+const DEFAULT_AGENT_FACTORY = () => ({
+  id: 0,
+  title: '',
+  description: '',
+  startMessage: '',
+  useProfileData: true,
+})
+const agent = ref(DEFAULT_AGENT_FACTORY())
+
+const agentList = ref([])
 
 const chatbotUi = useTemplateRef('chatbotUi')
 
 const hasUserContext = ref(true)
 const hasPageContext = ref(true)
 
+const loadAssistant = async () => {
+  if (useRuntimeConfig().public.appHasChatbotPromptDb) {
+    isLoading.value = true
+    try {
+      let headers = {}
+      const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
+      if (accessToken) headers = { Authorization: `Bearer ${accessToken}` }
+      const sideAssistant = await $fetch('/api/side-assistant')
+      // console.log('sideAssisant', sideAssistant)
+      if (sideAssistant && sideAssistant.agentId) {
+        CHAT_ENDPOINT.value = '/api/chatbot/chat?id=' + sideAssistant.agentId
+        agent.value = sideAssistant.agent
+        hasUserContext.value = agent.value.useProfileData
+      } else {
+        CHAT_ENDPOINT.value = ref(DEFAULT_ENDPOINT)
+        agent.value = DEFAULT_AGENT_FACTORY()
+        hasUserContext.value = true
+      }
+      const publicAgents = await $fetch('/api/agent/public-list', { headers })
+      // console.log('publicAgents', publicAgents)
+      agentList.value = publicAgents.filter((publicAgent) => publicAgent.id != agent.value.id)
+    } catch (e) {
+      console.error(e)
+    } finally {
+      isLoading.value = false
+    }
+  }
+}
+
+watch(
+  () => props.isOpened,
+  (neo, old) => {
+    if (neo != old) {
+      if (neo) {
+        loadAssistant()
+        analytics.chatbot.open()
+      } else {
+        analytics.chatbot.close()
+      }
+    }
+  }
+)
 const { computePageContext, contextMessages } = useChatbotContext({
   hasUserContext,
   hasPageContext,
@@ -73,53 +130,104 @@ const suggestButtons = ref(setExemples())
 
 const startConversation = () => {
   // conversation was reset
+  // console.log('start conversation')
   suggestButtons.value = setExemples()
+  conversationHasBegin.value = true
 }
 
 watch(
   () => props.isOpened,
   () => chatbotUi.value?.resetChat()
 )
+
+// const contextMessages = computed(() => [
+//   {
+//     role: 'assistant',
+//     text: userContext.value,
+//   },
+//   {
+//     role: 'assistant',
+//     text: pageContext.value,
+//   },
+// ])
+//
+function onSuggestButtonClick(message) {
+  chatbotUi.value.submitUserMessage(message)
+}
 </script>
 
 <template>
   <BaseDrawer
     class="medium"
     :is-opened="isOpened"
-    :title="$t('chatbot.title')"
+    :title="agent?.title || $t('chatbot.title')"
     no-footer
     @close="$emit('close')"
   >
-    <ChatbotUi
-      ref="chatbotUi"
-      :endpoint="CHAT_ENDPOINT"
-      :context-messages="contextMessages"
-      @start-conversation="startConversation"
-      @close="$emit('close')"
-    >
-      <ChatbotOptions :has-user-context="hasUserContext" :has-page-context="hasPageContext" />
-
-      <div style="margin: 1rem; padding: 1rem; background-color: #f3f3f3; border-radius: 10px">
-        <p>
-          {{ $t('chatbot.intro-message') }}
-        </p>
-        <menu v-if="suggestButtons?.length" class="prompt-suggestions" style="padding-left: 0">
-          <li
-            v-for="button in suggestButtons"
-            :key="button"
-            style="list-style-type: none; margin: 0"
-          >
+    <div v-if="isLoading" class="loader">
+      <LoaderSimple />
+    </div>
+    <template v-else>
+      <AgentQuickAccess :title="$t('assistant-drawer.special-agents')" :agent-list="agentList" />
+      <AgentDescription v-if="!conversationHasBegin" :agent="agent" />
+      <ChatbotOptions
+        v-if="!conversationHasBegin"
+        :has-user-context="hasUserContext"
+        :has-page-context="hasPageContext"
+      />
+      <div v-if="!conversationHasBegin && suggestButtons?.length" class="ice-breakers">
+        <h4>{{ $t('assistant-drawer.ice-breakers') }}</h4>
+        <menu class="prompt-suggestions" style="padding-left: 0">
+          <li v-for="button in suggestButtons" :key="button" class="suggestion">
             <a class="prompt-suggestion" href="#" @click.prevent="onSuggestButtonClick(button)">
-              <IconImage
-                class="icon"
-                name="ChatBubble"
-                style="width: 1.6em; height: 1em; vertical-align: middle; fill: #666"
-              />
+              <IconImage class="icon" name="ChatBubble" />
               {{ button }}
             </a>
           </li>
         </menu>
       </div>
-    </ChatbotUi>
+      <ChatbotUi
+        ref="chatbotUi"
+        :key="chatbotUiKey"
+        :endpoint="CHAT_ENDPOINT"
+        :context-messages="contextMessages"
+        :start-message="agent?.startMessage || $t('chatbot.intro-message')"
+        :agent-slug="agent.slug"
+        :real-conversation-id="conversationId"
+        @start-conversation="startConversation"
+        @close="$emit('close')"
+        @conversation-restarted="onConversationRestarted"
+      ></ChatbotUi>
+    </template>
   </BaseDrawer>
 </template>
+<style lang="scss" scoped>
+.loader {
+  display: flex;
+  justify-content: center;
+  padding-block: 2rem;
+}
+
+.ice-breakers {
+  h4 {
+    color: $primary-dark;
+  }
+
+  margin: 1rem;
+  padding: 1rem;
+  border: 1px $primary-light solid;
+  border-radius: 10px;
+}
+
+.suggestion {
+  list-style-type: none;
+  margin: 0;
+
+  .icon {
+    width: 1.6em;
+    height: 1em;
+    vertical-align: middle;
+    fill: #666;
+  }
+}
+</style>
