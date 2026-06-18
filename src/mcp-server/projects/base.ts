@@ -45,7 +45,12 @@ export const resultFromTool = <InputSchema, OutputSchema>(
   ) => InferSchema<OutputSchema> | Promise<InferSchema<OutputSchema>>
 ): ToolCallback<InputSchema, OutputSchema> => {
   return async (args, extra) => {
-    const output = await callback(args, extra)
+    let output = null
+    try {
+      output = await callback(args, extra)
+    } catch (error) {
+      console.error('Error fetching search results:', error)
+    }
 
     return {
       content: [{ type: 'text', text: JSON.stringify(output) }],
