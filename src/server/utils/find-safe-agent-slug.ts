@@ -7,17 +7,24 @@ type PrismaTx = Omit<
 
 export default async function findSafeAgentSlug(
   tx: PrismaClient | PrismaTx,
-  agentId: number,
+  agentId: number | null,
   slug: string,
   appApiOrgCode: string
 ): Promise<string> {
   async function isSlugUsed(testSlug: string): Promise<boolean> {
+    const agentWhere: { slug: string; orgCode: string; id?: { not: number } } = {
+      slug: testSlug,
+      orgCode: appApiOrgCode,
+    }
+    if (agentId) {
+      agentWhere.id = { not: agentId }
+    }
     const [alias, agent] = await Promise.all([
       tx.agentSlugAlias.findFirst({
         where: { slug: testSlug, orgCode: appApiOrgCode },
       }),
       tx.agent.findFirst({
-        where: { slug: testSlug, orgCode: appApiOrgCode, id: { not: agentId } },
+        where: agentWhere,
       }),
     ])
 
