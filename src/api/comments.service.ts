@@ -1,4 +1,5 @@
-import type { CommentInputModel, CommentModel, QueryFilterComments } from '@/models/comment.model'
+import type { CommentModel, QueryFilterComments } from '@/models/comment.model'
+import type { ProjectMessageForm } from '~/models/project-message.model'
 import type { ProjectSlugOrId } from '@/models/project.model'
 import useAPI from '@/composables/useAPI'
 
@@ -10,7 +11,7 @@ export async function getComments(projectId: ProjectSlugOrId, config: Config = {
 
 export async function postComment(
   projectId: ProjectSlugOrId,
-  comment: CommentInputModel,
+  comment: ProjectMessageForm,
   config: Config = {}
 ) {
   return await useAPI<CommentModel>(`project/${projectId}/comment/`, {
@@ -31,12 +32,10 @@ export async function getComment(
 export async function patchComment(
   projectId: ProjectSlugOrId,
   commentId: CommentModel['id'],
-  comment: CommentInputModel,
-  config: Config = {}
+  body: ProjectMessageForm
 ) {
   return await useAPI<CommentModel>(`project/${projectId}/comment/${commentId}/`, {
-    ...config,
-    body: comment,
+    body,
     method: 'PATCH',
   })
 }

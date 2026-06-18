@@ -10,7 +10,7 @@
     }"
   >
     <template #content>
-      <BaseGroupNewsList :group="group" :with-pagination="false" :limit="6" />
+      <BaseGroupNewsList :group="group" :limit="6" preview />
     </template>
   </BaseGroupPreview>
 </template>

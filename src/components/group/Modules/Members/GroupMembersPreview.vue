@@ -12,6 +12,7 @@
         :is-loading="isLoading"
         :with-pagination="false"
         focus-leader
+        preview
       />
     </template>
   </BaseGroupPreview>

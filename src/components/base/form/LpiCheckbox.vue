@@ -1,24 +1,34 @@
 <template>
-  <label class="lpi-checkbox" :class="{ disabled: disabled, 'is-on': modelValue }">
-    <input
-      type="checkbox"
-      name="checkbox"
-      :value="modelValue"
-      :checked="modelValue"
-      :disabled="disabled"
-      @change="toggle"
-    />
-    {{ label }}
+  <label
+    class="lpi-checkbox pointer"
+    :class="{ disabled: disabled, 'is-checked': modelValue, 'as-button': asButton }"
+  >
+    <div class="checkbox-container">
+      <input
+        type="checkbox"
+        name="checkbox"
+        :value="modelValue"
+        :checked="modelValue"
+        :disabled="disabled"
+        @change="toggle"
+      />
+    </div>
+    <slot name="label">
+      {{ label }}
+    </slot>
   </label>
 </template>
 
 <script setup lang="ts">
 withDefaults(
   defineProps<{
-    label: string
+    label?: string
     disabled?: boolean
+    asButton?: boolean
   }>(),
   {
+    label: '',
+    asButton: false,
     disabled: false,
   }
 )
@@ -34,7 +44,7 @@ const toggle = (e: Event) => {
 <style scoped lang="scss">
 .lpi-checkbox {
   font-size: $font-size-m;
-  color: $primary-dark;
+  color: var(--primary-dark);
   font-weight: 400;
   line-height: $line-height-squashed;
   display: grid;
@@ -42,28 +52,44 @@ const toggle = (e: Event) => {
   gap: $space-m;
 }
 
-input[type='checkbox'] {
-  appearance: none;
-  background-color: $white;
-  margin: 0;
-  font: inherit;
-  width: pxToRem(20px);
-  height: pxToRem(20px);
-  border: $border-width-s solid $primary-dark;
+.checkbox-container {
+  --padding-checkbox: 0.1rem;
+
+  width: calc(20px - (var(--padding-checkbox) * 2));
+  height: calc(20px - (var(--padding-checkbox) * 2));
+  padding: var(--padding-checkbox);
+  background-color: var(--white);
   border-radius: $border-radius-xs;
-  transform: translateY(-0.075em);
+}
+
+.as-button {
+  text-transform: capitalize;
+  border: $border-width-s solid var(--primary-dark);
+  border-radius: $border-radius-xs;
+  padding: $space-m $space-s;
+  margin-right: $space-m;
+
+  &:hover {
+    background-color: var(--primary-lighter);
+  }
+
+  &.is-checked {
+    background-color: var(--primary-dark);
+    color: $white;
+    cursor: default;
+  }
+}
+
+input[type='checkbox'] {
+  width: 100%;
+  height: 100%;
+  accent-color: var(--primary-dark);
+  margin: 0;
+  background-color: var(--white);
+  font: inherit;
   display: grid;
   place-content: center;
   cursor: pointer;
-}
-
-input[type='checkbox']::before {
-  content: '';
-  width: pxToRem(12px);
-  height: pxToRem(12px);
-  transform: translateZ(0) scale(0);
-  transition: 120ms transform ease-in-out;
-  box-shadow: inset 1em 1em $primary-dark;
 }
 
 .disabled input[type='checkbox']::before {

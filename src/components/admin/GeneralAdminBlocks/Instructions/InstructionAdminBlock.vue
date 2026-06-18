@@ -44,8 +44,8 @@ import { instructionSkeleton } from '~/skeletons/instructions.skeletons'
 import { getAllInstructions } from '@/api/v2/instruction.service'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import { deleteInstruction } from '@/api/instruction.service'
+import { defaultInstructionForm } from '@/form/instruction'
 import useToasterStore from '@/stores/useToaster'
-import { defaultForm } from '@/form/instruction'
 
 const toaster = useToasterStore()
 const editedInstruction = ref(null)
@@ -77,7 +77,7 @@ const blockTitle = computed(() => {
 })
 
 const addInstruction = () => {
-  editedInstruction.value = defaultForm()
+  editedInstruction.value = defaultInstructionForm()
 }
 
 const onEditInstruction = (instruction) => {

@@ -47,7 +47,7 @@ const diffLocal = (obj1, obj2) => {
       empty = new Set([...empty, ...subEmpty])
     } else if (!['object', 'number', 'string'].includes(typeof obj1[key])) {
       console.error(typeof obj1[key])
-    } else if (!(key in obj2)) {
+    } else if (typeof obj2 !== 'object' || !(key in obj2)) {
       missing.add(key)
     } else if (
       typeof obj1[key] === 'string' &&
@@ -75,7 +75,7 @@ const getKeyValue = (content, key) => {
   let actual = content
   const keys = key.split('.')
   for (const k of keys) {
-    if (!(k in actual)) {
+    if (typeof actual !== 'object' || !(k in actual)) {
       return
     }
     actual = actual[k]
@@ -239,6 +239,9 @@ const setValue = (content, key, value) => {
   const keys = key.split('.')
   for (const k of keys.slice(0, keys.length - 1)) {
     if (!(k in actual)) {
+      actual[k] = {}
+    }
+    if (typeof actual[k] !== 'object') {
       actual[k] = {}
     }
     actual = actual[k]

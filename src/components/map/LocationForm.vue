@@ -3,7 +3,7 @@
     :confirm-button-label="isExist ? $t('common.edit') : $t('common.add')"
     :cancel-button-label="$t('common.cancel')"
     :asyncing="loading"
-    :disabled="loading || !isValid"
+    :disabled="!isValid"
     @close="$emit('close')"
     @submit="$emit('submit')"
   >
@@ -14,7 +14,12 @@
     <template #body>
       <div class="location-map-ctn">
         <!-- form not have it, so ignore typescript -->
-        <MapRecap :locations="[form as any]" :expand="false" />
+        <MapRecap
+          ref="mapInstance"
+          :locations="[form as any]"
+          :auto-center="false"
+          :expand="false"
+        />
       </div>
 
       <div class="location-type-ctn">
@@ -61,10 +66,12 @@ const props = withDefaults(
   defineProps<{
     loading?: boolean
     locationTypes?: LocationType[]
+    zoom?: number
   }>(),
   {
     loading: false,
     locationTypes: null,
+    zoom: null,
   }
 )
 defineEmits(['submit', 'close', 'delete'])
@@ -122,6 +129,21 @@ watch(
 )
 
 const isExist = computed(() => !!form.value.id)
+
+const mapInstanceRef = useTemplateRef('mapInstance')
+
+// auto zoom to points if only zoom is defined
+onMounted(() => {
+  if (props.zoom) {
+    const timeout = setInterval(() => {
+      if (!mapInstanceRef.value) {
+        return
+      }
+      mapInstanceRef.value.map.map.setZoom(props.zoom)
+      clearInterval(timeout)
+    }, 100)
+  }
+})
 </script>
 
 <style lang="scss" scoped>

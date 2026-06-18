@@ -1,23 +1,30 @@
+import type { TemplateId, TemplateModel } from '~/models/template.model'
 import type { OrganizationModel } from '~/models/organization.model'
-import type { TemplateModel } from '~/models/template.model'
 
-import useAPI2 from '~/composables/useAPI2'
+import type { UseApiOptions } from '~/composables/useAPI'
 import useAPI from '~/composables/useAPI'
 
-export function getTemplates(organizationCode: OrganizationModel['code']) {
-  return useAPI2<PaginationResult<TemplateModel>>(`organization/${organizationCode}/template/`)
+export function getTemplates(
+  organizationCode: OrganizationModel['code'],
+  config: UseApiOptions<PaginationQuery> = {}
+) {
+  return useAPI<PaginationResult<TemplateModel>>(
+    `organization/${organizationCode}/template/`,
+    config
+  )
 }
 
 export function getTemplate(
   organizationCode: OrganizationModel['code'],
-  templateId: number | string
+  templateId: TemplateId,
+  config: UseApiOptions = {}
 ) {
-  return useAPI2<TemplateModel>(`organization/${organizationCode}/template/${templateId}/`)
+  return useAPI<TemplateModel>(`organization/${organizationCode}/template/${templateId}/`, config)
 }
 
 export function deleteTemplate(
   organizationCode: OrganizationModel['code'],
-  templateId: number | string
+  templateId: TemplateId
 ) {
   return useAPI<undefined>(`organization/${organizationCode}/template/${templateId}/`, {
     method: 'DELETE',
@@ -33,7 +40,7 @@ export function postTemplate(organizationCode: OrganizationModel['code'], body: 
 
 export function postTemplateImage(
   organizationCode: OrganizationModel['code'],
-  templateId: number | string,
+  templateId: TemplateId,
   file: File
 ) {
   const body = new FormData()
@@ -46,7 +53,7 @@ export function postTemplateImage(
 
 export function patchTemplate(
   organizationCode: OrganizationModel['code'],
-  templateId: number | string,
+  templateId: TemplateId,
   body: object
 ) {
   return useAPI(`organization/${organizationCode}/template/${templateId}/`, {

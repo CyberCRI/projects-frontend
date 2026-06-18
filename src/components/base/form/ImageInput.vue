@@ -1,40 +1,39 @@
 <template>
-  <div class="image-input-ctn">
-    <label ref="label" :for="uniqueId" class="image-button" data-test="upload-image-button">
-      <LinkButton
-        v-if="isLink"
-        v-disable-focus="unfocusable"
-        btn-icon="Upload"
-        :label="displayedLabel"
-        @click.prevent="labelRef.click()"
-      />
+  <div>
+    <div class="image-input-ctn">
+      <label ref="label" :for="uniqueId" class="image-button" data-test="upload-image-button">
+        <component
+          :is="isLink ? LinkButton : LpiButton"
+          v-disable-focus="unfocusable"
+          btn-icon="Upload"
+          :label="displayedLabel"
+          @click.prevent="labelRef.click()"
+        />
+      </label>
 
-      <LpiButton
-        v-else
-        v-disable-focus="unfocusable"
-        btn-icon="Upload"
-        :label="displayedLabel"
-        @click.prevent="labelRef.click()"
+      <input
+        :id="uniqueId"
+        ref="fileInput"
+        type="file"
+        :accept="fileTypes"
+        :multiple="multiple"
+        @change="uploadImage"
       />
-    </label>
-
-    <input
-      :id="uniqueId"
-      ref="fileInput"
-      type="file"
-      :accept="fileTypes"
-      :multiple="multiple"
-      @change="uploadImage"
-    />
-    <p v-if="fileIsTooLarge" class="error-message">
-      {{ $t('common.file-too-big', { maxSize: maxSizeMb }) }}
-    </p>
+    </div>
+    <div>
+      <p v-if="fileIsTooLarge" class="error-message">
+        {{ $t('resource.file.form.too-big', { maxSize: maxSizeMb }) }}
+      </p>
+      <FieldErrors :errors="errors" />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import type FieldErrors from '~/components/base/form/FieldErrors.vue'
 import LinkButton from '~/components/base/button/LinkButton.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
+import type { ErrorObject } from '@vuelidate/core'
 
 import { useUniqueId } from '~/composables/useUniqueId'
 
@@ -47,6 +46,8 @@ const props = withDefaults(
     maxSizeMb?: number
     fileTypes?: string
     multiple?: boolean
+    required?: boolean
+    errors?: ErrorObject[]
   }>(),
   {
     existingImage: null,
@@ -56,6 +57,8 @@ const props = withDefaults(
     maxSizeMb: 2.25,
     fileTypes: 'image/*',
     multiple: false,
+    required: false,
+    errors: () => [],
   }
 )
 
@@ -70,7 +73,7 @@ const uniqueId = useUniqueId()
 
 const displayedLabel = computed(() => {
   if (props.label) {
-    return props.label
+    return `${props.label} ${props.required ? '*' : ''}`
   }
   if (props.existingImage) {
     return t('picture.change-picture')

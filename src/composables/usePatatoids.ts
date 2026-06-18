@@ -1,5 +1,6 @@
 import { usePublicURL } from '~/composables/usePublic'
 
+import { getFileFromURL } from '~/api/utils.service'
 import { range } from 'es-toolkit'
 
 const urlPatatoid = (index: string | number) => {
@@ -14,6 +15,7 @@ const DEFAULT_GROUP_PATATOID = urlPatatoid(2)
 const DEFAULT_PROJECT_PATATOID = urlPatatoid(3)
 const DEFAULT_IMAGE_PATATOID = urlPatatoid(4)
 const DEFAULT_NEWS_PATATOID = urlPatatoid(5)
+const DEFAULT_ANNOUNCEMENT_PATATOID = urlPatatoid(6)
 
 /**
  * Description
@@ -54,16 +56,10 @@ const usePatatoids = (number: number = 7) => {
 const getPatatoidFile = async (index: string | number) => {
   const indexDefault = 1
 
-  const fetchFile = (patatoidIndex: string | number) => {
-    const url = usePatatoid(patatoidIndex)
-    const fileName = url.split('/').at(-1)
-    return useAPI<Blob>(url, { responseType: 'blob' }).then((blob) => new File([blob], fileName))
-  }
-
   return (
-    fetchFile(index)
+    getFileFromURL(usePatatoid(index))
       // if we can't get index patatoid, fetch default index
-      .catch(() => fetchFile(indexDefault))
+      .catch(() => getFileFromURL(usePatatoid(indexDefault)))
       // if error return empty file
       .catch(() => new File([], 'error.png'))
   )
@@ -78,4 +74,5 @@ export {
   DEFAULT_PROJECT_PATATOID,
   DEFAULT_IMAGE_PATATOID,
   DEFAULT_NEWS_PATATOID,
+  DEFAULT_ANNOUNCEMENT_PATATOID,
 }

@@ -1,6 +1,10 @@
 import type { Container } from '~/composables/pdf-helpers/doc-builder'
+import type { TranslatedBlogEntry } from '~/models/blog-entry.model'
 
-export default async function addBlogLimitWarningFactory(blogEntries: any[], MAX_BLOG_ENTRIES) {
+export default async function addBlogLimitWarningFactory(
+  blogEntries: TranslatedBlogEntry[],
+  MAX_BLOG_ENTRIES
+) {
   const { t } = useNuxtI18n()
   const entryCount = blogEntries.length
   let limitedWarning = ''

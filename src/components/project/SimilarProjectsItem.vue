@@ -2,7 +2,7 @@
   <NuxtLink
     class="similar-project"
     :to="{
-      name: 'projectSummary',
+      name: 'ProjectSnapshot',
       params: {
         slugOrId: project.slug,
       },
@@ -13,10 +13,11 @@
       :alt="`${project.$t.title} image`"
       :picture-data="project.header_image"
       picture-size="small"
+      class="skeletons-background"
       :default-picture="DEFAULT_PROJECT_PATATOID"
     />
 
-    <p>{{ project.$t.title }}</p>
+    <p class="skeletons-text">{{ project.$t.title }}</p>
   </NuxtLink>
 </template>
 

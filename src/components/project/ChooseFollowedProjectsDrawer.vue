@@ -60,7 +60,7 @@ import CardList from '~/components/base/CardList.vue'
 const props = withDefaults(
   defineProps<{
     isOpened?: boolean
-    targetUserId?: string | number
+    targetUserId?: number
   }>(),
   {
     isOpened: false,

@@ -123,7 +123,7 @@ import type { NotificationModel } from '~/models/notifications.model'
 import type { IconImageChoice } from '~/functs/IconImage'
 import type { RouteLocationRaw } from 'vue-router'
 import { getTimePassed } from '@/functs/date'
-import utils from '~/functs/functions'
+import { isEmpty } from '~/functs/utils'
 import { NuxtLink } from '#components'
 // import { I18nT } from 'vue-i18n'
 
@@ -137,7 +137,7 @@ defineEmits<{
 
 const icon = computed<IconImageChoice>(() => (props.notification?.is_viewed ? null : 'Circle'))
 const context = computed(() => {
-  if (utils.isEmpty(props.notification.context)) return null
+  if (isEmpty(props.notification.context)) return null
   return props.notification.context
 })
 
@@ -199,7 +199,7 @@ const notificationRoute = computed<RouteLocationRaw>(() => {
     }
   } else if (props.notification.project) {
     return {
-      name: 'projectSummary',
+      name: 'ProjectSnapshot',
       params: { slugOrId: props.notification.project.slug },
     }
   } else {

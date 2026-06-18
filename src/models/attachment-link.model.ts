@@ -17,6 +17,13 @@ export interface AttachmentLinkModel extends BaseModel {
   title: string
 }
 
+export type AttachmentLinkId = AttachmentLinkModel['id']
+
+export type AttachmentFileForm = Omit<AttachmentLinkModel, 'id'> & {
+  id?: number
+  link?: string
+}
+
 export type TranslatedAttachmentLink = Translated<AttachmentLinkModel, 'title' | 'description'>
 
 export type AttachmentLinkOutput = Required<AttachmentLinkModel>

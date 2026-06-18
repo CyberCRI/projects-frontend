@@ -123,7 +123,6 @@
         "last-name": "Achternaam",
         "first-name": "Voornaam",
         "title": "Titel",
-        "roles": "Rol(s)",
         "groups": "Groep(s)",
         "inscription": "Omschrijving",
         "activation": "Activering",
@@ -393,13 +392,6 @@
     "reset-password": "Wachtwoord resetten",
     "reset-delete": "Wachtwoord opnieuw instellen en account verwijderen",
     "error": "Er is een fout opgetreden.",
-    "role": {
-      "none": "Geen",
-      "user": "Gebruiker",
-      "facilitator": "Vergemakkelijking",
-      "admin": "org admin",
-      "viewer": "Kijker"
-    },
     "user-exists-in-other-org": "Een gebruiker met dezelfde e-mail bestaat in onze database. We kunnen hem toevoegen aan uw portaal hier."
   },
   "userItem": {
@@ -412,12 +404,6 @@
     "facilitators": "Facilitator: Deze rol is weggelegd voor leraren of docenten: Ze zien alle particuliere projecten in het portaal en ze kunnen ze bewerken. Ze hebben ook alle rechten van gebruikers.",
     "admins": "org admin: Deze rol maakt het mogelijk om uw portal te configureren en gebruikers te beheren in uw portal. Org admins hebben toegang tot het admin menu van het portaal om het portaal op te zetten en de gebruikers ervan te beheren. Zij hebben ook alle rechten van facilitatoren.",
     "none": "Geen: Deze persoon heeft een Projectaccount maar maakt geen deel uit van uw portaal. Ze kunnen alleen de openbare projecten zien.",
-    "roles": {
-      "none": "Geen",
-      "users": "Gebruiker",
-      "facilitators": "Vergemakkelijking",
-      "admins": "org admin"
-    },
     "empty": "Geen groepen",
     "main-groups": "Belangrijkste groepen"
   },
@@ -538,7 +524,6 @@
     "cant-quit-self": "Jij bent de laatste redacteur van het team. Elk project moet ten minste één editor hebben.\nU kunt een andere editor toevoegen voordat u het project verlaat, of het project verwijderen van het tabblad Configuratie.",
     "cant-quit-other": "Dit is de laatste redacteur van het team. Elk project moet ten minste één editor hebben.\nU kunt ofwel een andere editor toevoegen om deze te onderdrukken, of het project verwijderen van het tabblad Configuratie.",
     "edit": "Bewerken",
-    "file-required": "Een bestand is vereist",
     "for": "voor",
     "groups": "Groepen",
     "index": "Index",
@@ -576,7 +561,6 @@
     "disconnect": "Verbinding verbreken",
     "confirm-close": "Weet u zeker dat u de editor wilt sluiten? Wijzigingen die u hebt gemaakt worden niet opgeslagen.",
     "ok": "Ok",
-    "file-too-big": "Bestand is te groot (max: {maxSize}Mb)",
     "select": "selecteren",
     "year": "jaar",
     "link-to": "verwijzing naar",
@@ -599,7 +583,8 @@
     "clear-date": "Datum wissen",
     "chose-date": "Datum selecteren | Selecteer de datum(s)",
     "empty": "Niets hier...",
-    "file": "bestand | bestanden"
+    "file": "bestand | bestanden",
+    "image": "afbeelding"
   },
   "complete-profile": {
     "bio": {
@@ -660,7 +645,6 @@
     "edit-saved": "Wijzigingen die u (en eventuele co-auteurs) heeft aangebracht, worden niet opgeslagen.",
     "edit": "bewerk beschrijving (ontwerp)",
     "add": "Beschrijving toevoegen",
-    "quit-without-saving-title": "Stoppen zonder te redden?",
     "default-placeholder": "Beschrijf nu je project."
   },
   "discover": {
@@ -823,7 +807,22 @@
   },
   "drawer": {
     "clear": "Alles wissen",
-    "select-all": "Alles selecteren"
+    "select-all": "Alles selecteren",
+    "member": {
+      "add": "Lid toevoegen | Leden toevoegen",
+      "edit": "Lid bewerken | Leden bewerken",
+      "delete": "Lid schrappen | Leden schrappen"
+    },
+    "group": {
+      "add": "Groep toevoegen | Groepen toevoegen",
+      "edit": "Groep bewerken | Groepen bewerken",
+      "delete": "Groep verwijderen | Groepen verwijderen"
+    },
+    "project": {
+      "add": "Project toevoegen | Projecten toevoegen",
+      "edit": "Project bewerken | Projecten bewerken",
+      "delete": "Project verwijderen | Projecten verwijderen"
+    }
   },
   "faq": {
     "delete-confirm-content": "Weet u zeker dat u de Help Tab wilt verwijderen die voor uw portal is gepersonaliseerd. Alle inhoud wordt verwijderd.",
@@ -910,7 +909,8 @@
       },
       "description": "Het beschrijvingsveld is vereist"
     },
-    "templates": "Sjablonen"
+    "templates": "Sjablonen",
+    "quit-without-saving-title": "Stoppen zonder te redden?"
   },
   "footer": {
     "contact": "Contacteer ons",
@@ -934,7 +934,8 @@
     "planned-for-the": "Gepland voor de",
     "status-title": "Status",
     "title": "Titel van het doel",
-    "delete": "Wilt u dit doel verwijderen?"
+    "delete": "Wilt u dit doel verwijderen?",
+    "add-project": "Een doel toevoegen aan het project"
   },
   "header": {
     "private": "Privé: alleen zichtbaar voor teamleden",
@@ -1066,7 +1067,19 @@
       "color": "Kleur",
       "current": "Lopend",
       "pick": "Kies een kleur",
-      "set-color": "Kleur instellen"
+      "set-color": "Kleur instellen",
+      "remove-color": "Kleur verwijderen",
+      "colors": {
+        "carribeanGreen": "Caraïbengroen",
+        "ming": "Ming",
+        "aquamarine": "Aquamarijn",
+        "mintCream": "Muntcrème",
+        "lightSalmon": "Lichte zalm",
+        "sunGlow": "Zongloeien",
+        "mauve": "Mauve",
+        "babyBlue": "Baby Blauw",
+        "coquelicot": "Coquelicot"
+      }
     },
     "delete_column": "Deze kolom verwijderen",
     "delete_row": "Deze rij verwijderen",
@@ -1124,9 +1137,13 @@
     "unauthorized": "Ongeautoriseerde bewerking",
     "underline": "benadrukken",
     "undo": "Ongedaan maken",
-    "video": "Video",
+    "video": {
+      "label": "Video",
+      "error": "De link moet een YouTube of Vimeo video zijn."
+    },
     "save": "Opslaan zonder afsluiten",
-    "server-offline": "Server is offline."
+    "server-offline": "Server is offline.",
+    "delete_image": "Afbeelding verwijderen"
   },
   "homeCarousel": {
     "tab1": {
@@ -1347,7 +1364,6 @@
         "intro": "Je hebt nog geen vaardigheden geselecteerd. Professionele vaardigheden en hobby's kunt uw collega's en uw gemeenschap om u te vinden op basis van waar je goed in bent, waar je geïnteresseerd in bent en waar je om geeft.",
         "save-error": "Fout bij opslaan van profiel.",
         "save-success": "Profiel opgeslagen.",
-        "search": "zoeken",
         "suggested-skills": "Of kies een aanbevolen vaardigheid",
         "already-added": "(reeds toegevoegd)",
         "skills": {
@@ -1563,7 +1579,6 @@
       "title": "Een nieuw project aanmaken"
     },
     "destroy": "Project verwijderen",
-    "duplicate": "Dit project dupliceren",
     "edit": "Project bewerken",
     "edit-linked-project": "Gekoppeld project bewerken",
     "edit-location-point": "Locatiepunt bewerken",
@@ -1584,7 +1599,6 @@
       "resize-image": "Herframe",
       "title-label": "Titel toevoegen",
       "title-placeholder": "Wat is de naam van dit project?",
-      "upload-image": "Een afbeelding uploaden",
       "title-errors": {
         "required": "Het titelveld is vereist",
         "max": "Het titelveld mag niet groter zijn dan 180 tekens"
@@ -1596,7 +1610,9 @@
       },
       "project-templates": "Sjabloonnaam",
       "completed-info-to-access-presentation": "Alle informatie op de pagina moet worden ingevuld om toegang te krijgen tot de presentatie.",
-      "purpose-placeholder": "Wat is het doel van uw project?"
+      "purpose-placeholder": "Wat is het doel van uw project?",
+      "comment": "Het commentaarveld is vereist.",
+      "select-template": "Selecteer sjabloon ..."
     },
     "image-header": "Afbeelding",
     "image-alert": {
@@ -1645,10 +1661,19 @@
     },
     "view": "Project bekijken",
     "visibility": "Zichtbaarheid van het project",
-    "actions": "Snelle acties",
     "copy": "(kopie)",
     "nothing": "Niets hier...",
-    "tag-warning": "NB: Als een gebruiker van taal wisselt in uw portal, zullen de tags met vertalingen voor hen vertaald worden. Anders worden de tags in het Engels weergegeven."
+    "tag-warning": "NB: Als een gebruiker van taal wisselt in uw portal, zullen de tags met vertalingen voor hen vertaald worden. Anders worden de tags in het Engels weergegeven.",
+    "description": "Omschrijving",
+    "duplicate": {
+      "title": "Wil je dit project echt dupliceren?",
+      "help": "Het project wordt gekloond zonder leden.",
+      "label": "Het project dupliceren"
+    },
+    "groups": "Groep | Groepen",
+    "label": "project | projecten",
+    "actions": "Gevaarlijke maatregelen",
+    "review-not-editable": "U kunt geen beoordelingen aan dit project toevoegen; het project is momenteel niet open voor beoordeling."
   },
   "project_list": {
     "updated_at": "Laatste activiteit",
@@ -1678,10 +1703,25 @@
     "send": "Programma versturen",
     "title": "Titel",
     "traineeship": "Traineeship",
-    "type": "Type aankondiging",
+    "type": {
+      "title": "Type aankondiging",
+      "job": {
+        "label": "Taak",
+        "description": "Een traditionele arbeidsmogelijkheid, hetzij voltijds, hetzij deeltijds, met een bepaald salaris, uitkeringen en een verbintenis op lange termijn. Geschikt voor degenen die op zoek zijn naar stabiele, professionele rollen"
+      },
+      "traineeship": {
+        "label": "Traineeship",
+        "description": "Een gestructureerd trainingsprogramma dat werkervaring en leren combineert. Stages worden vaak betaald, ontworpen voor beginners of loopbaanwisselaars, en bieden hands-on vaardigheden ontwikkeling onder toezicht"
+      },
+      "participant": {
+        "label": "Deelnemer",
+        "description": "Ideaal voor personen die op zoek zijn naar korte termijn programma's, workshops of samenwerkingsprojecten. Vaak onbetaald of op een toelage gebaseerd, richten deze rollen zich op leren, netwerken of bijdragen aan een specifiek initiatief"
+      }
+    },
     "updated": "Bijgewerkt",
     "valid-until-the": "Geldig tot",
-    "view": "Beeld"
+    "view": "Beeld",
+    "outdated": "Het aanbod is niet meer beschikbaar."
   },
   "report": {
     "abuse": "Misbruik melden",
@@ -1704,13 +1744,32 @@
     "edit-link": "Verwijzing bewerken",
     "edit-file": "Bestand bewerken",
     "max-size": "Max. 10MB",
-    "invalid-image": "Niet ondersteund bestand ... is dit een afbeelding ?",
     "error-uploading-image": "Fout bij uploaden van afbeelding",
     "cannot-upload-image": "Kan afbeelding voorlopig niet uploaden",
     "link-address": "Linkadres",
-    "resources": "Middelen",
+    "resources": "Hulpbron | Middelen",
     "web": "Link naar webbron | links naar webbronnen",
-    "web-link": "Weblink | weblink | weblinks"
+    "web-link": "Weblink | weblink | weblinks",
+    "delete": "Weet u zeker dat u deze hulpbron wilt verwijderen?",
+    "file": {
+      "add": "Bestand toevoegen | Bestanden toevoegen",
+      "edit": "Bestand bewerken | Bestanden bewerken",
+      "label": "Bestand | Bestanden",
+      "delete": "Weet u zeker dat u dit bestand wilt verwijderen? | Weet u zeker dat u bestanden moet verwijderen?",
+      "form": {
+        "too-big": "Bestand is te groot (max: {maxSize}Mb)",
+        "invalid-image": "Niet-ondersteund bestand, moet een geldige afbeelding zijn.",
+        "required-image": "Een bestand is vereist",
+        "required": "Een bestand is vereist"
+      }
+    },
+    "link": {
+      "add": "Verwijzing toevoegen | Links toevoegen",
+      "edit": "Verwijzing bewerken | Links bewerken",
+      "label": "Linkadres | Links adres",
+      "delete": "Weet u zeker dat u deze link wilt verwijderen? | Weet u zeker dat u links moet verwijderen?"
+    },
+    "upload-image": "Een afbeelding uploaden"
   },
   "result_box": {
     "people": "mensen",
@@ -1797,29 +1856,6 @@
     "need-help": "Hulp nodig?",
     "contact-us": "Contacteer ons"
   },
-  "role": {
-    "role-editor": "Heeft alle bewerken rechten voor deze groep.",
-    "role-reviewer": "Wanneer het project is gemarkeerd als 'ready for review', kan de recensent feedback geven en een project vergrendelen om verdere bewerkingen in het project te voorkomen. Een recensent heeft ook edit rechten.",
-    "role-teammate": "Hij heeft geen redactierechten, maar verschijnt als lid van het team.",
-    "editor": "Editor",
-    "editors": "Editors",
-    "editor-groups": "Editor groepen",
-    "editor-group": "Editor groep",
-    "reviewer": "Reviewer",
-    "reviewers": "Reviewers",
-    "reviewer-groups": "Groepen recensies",
-    "reviewer-group": "Recensiesgroep",
-    "teammate": "Deelnemer",
-    "teammates": "Deelnemers",
-    "teammate-groups": "Deelnemersgroepen",
-    "teammate-group": "Deelnemersgroep",
-    "select": "De rechten selecteren",
-    "group": "Groepen",
-    "leader": "Groepsleider",
-    "role-leader": "Is een Editor die zal verschijnen met een groep Leader tag.",
-    "member": "Lid",
-    "role-member": "Verschijnt als groepslid. Hun projecten worden tot de projecten van de groep gerekend."
-  },
   "search": {
     "all-filters": "Alle filters",
     "banner-portal": "U kunt ook zoeken naar projecten van alle gemeenschappen op",
@@ -1890,7 +1926,10 @@
     "disambiguate": "(Disambiguatie)",
     "suggestions": "Voorstellen",
     "choose-skill": "Klik op de gekozen vaardigheid:",
-    "main-tags": "of kies uit de hoofdtags"
+    "main-tags": "of kies uit de hoofdtags",
+    "label": "Zoeken",
+    "empty": "Er zijn geen resultaten beschikbaar",
+    "results": "Zoekresultaten"
   },
   "sdg": {
     "1": {
@@ -1944,10 +1983,11 @@
     "17": {
       "title": "Partnerschappen voor de doelstellingen"
     },
-    "add-short": "Een sdg toevoegen",
     "sdg-fulltext": "Duurzame ontwikkelingsdoelstellingen",
     "title": "SDG",
-    "empty": "Nog niets hier... Medewerkers hebben nog geen SDG's toegevoegd."
+    "empty": "Nog niets hier... Medewerkers hebben nog geen SDG's toegevoegd.",
+    "add-short": "SDG's toevoegen",
+    "edit-short": "SDG's bewerken"
   },
   "stats": {
     "cumulated-projects": "Cumulatieve nieuwe projecten",
@@ -1996,7 +2036,17 @@
     "no-user-message": "Geen gebruiker komt overeen met uw zoekopdracht",
     "remove-user-confirm": "Weet u zeker dat u deze gebruiker uit het project wilt verwijderen?",
     "remove-group-confirm": "Weet u zeker dat u deze groep wilt verwijderen uit het project?",
-    "team": "Team"
+    "team": "Team",
+    "member": {
+      "add": "Lid toevoegen | Leden toevoegen",
+      "edit": "Lid bewerken | Leden bewerken",
+      "delete": "Lid schrappen | Leden schrappen"
+    },
+    "group": {
+      "add": "Groep toevoegen | Groepen toevoegen",
+      "edit": "Groep bewerken | Groepen bewerken",
+      "delete": "Groep verwijderen | Groepen verwijderen"
+    }
   },
   "template": {
     "edit-tags": "Tags bewerken",
@@ -2287,6 +2337,21 @@
     "team-group-delete": {
       "success": "De groep is succesvol verwijderd",
       "error": "Fout tijdens het verwijderen van groep"
+    },
+    "template-get": {
+      "error": "Fout bij het ophalen van sjabloon"
+    },
+    "group-project-create": {
+      "success": "De projecten zijn succesvol toegevoegd",
+      "error": "Fout tijdens de toegevoegde projecten"
+    },
+    "group-project-remove": {
+      "success": "Het project is succesvol verwijderd",
+      "error": "Fout tijdens project verwijderd"
+    },
+    "pdf": {
+      "success": "De PDF is met succes gegenereerd; een link wordt u per e-mail toegestuurd.",
+      "error": "Er is een fout opgetreden bij het aanmaken van de PDF. Neem contact op met een beheerder."
     }
   },
   "success": {
@@ -2443,7 +2508,8 @@
       },
       "content": {
         "label": "informatie",
-        "placeholder": "Informatie over deze gebeurtenis toevoegen"
+        "placeholder": "Informatie over deze gebeurtenis toevoegen",
+        "required": "De inhoud is vereist"
       },
       "event_date": {
         "label": "Datum van de gebeurtenis",
@@ -2700,12 +2766,17 @@
   "pagination": {
     "previous": "Vorige pagina",
     "next": "Volgende pagina",
-    "page": "Bladzijde"
+    "page": "Bladzijde",
+    "first": "Eerste pagina",
+    "last": "Laatste pagina",
+    "visibility-per-page": "Aantal artikelen per pagina."
   },
   "pdf": {
     "blog-entries-limited-warning": "Alleen de eerste {max} blogvermeldingen zijn opgenomen in de PDF-export (van {total} totaal).",
     "download-pdf": "PDF",
-    "generated-on": "Gegenereerd op {date}"
+    "generated-on": "Gegenereerd op {date}",
+    "confirm": "Wilt u pdf genereren voor deze {type} ?",
+    "choices": "Selecteer de items die u wilt toevoegen aan de PDF."
   },
   "group": {
     "is-other-org": "Deze groep behoort tot een ander platform",
@@ -2743,7 +2814,6 @@
       "add-projects": "Aanbevolen projecten toevoegen",
       "edit": "Wijzigen",
       "edit-members": "Leden bewerken",
-      "edit-roles": "Rollen bewerken",
       "form-incomplete": "Velden ontbreken of zijn ongeldig, volledig om op te slaan.",
       "create-group": "Groep aanmaken",
       "edit-group": "Groep bewerken",
@@ -2778,24 +2848,9 @@
       "publication-status-errors": {
         "required": "Dit veld is vereist"
       },
-      "delete": "Groep verwijderen"
-    },
-    "role": {
-      "members": {
-        "label": "Lid",
-        "help": "Lid"
-      },
-      "leaders": {
-        "label": "Groepshoofd",
-        "help": "Groepshoofd"
-      },
-      "leaders-managers": {
-        "label": "Leider en beheerder"
-      },
-      "managers": {
-        "label": "Uitgever",
-        "help": "Uitgever"
-      }
+      "delete": "Groep verwijderen",
+      "confirm-remove-project": "Wilt u dit project verwijderen?",
+      "confirm-remove-member": "Wilt u dit lid verwijderen?"
     },
     "view": "Zie groep",
     "conferences": "Conferenties",
@@ -3170,6 +3225,64 @@
   "follow": {
     "follow": "Volgen",
     "unfollow": "Onvolgbaar"
+  },
+  "role": {
+    "owners": {
+      "label": "Editor | Editors",
+      "help": "Heeft alle bewerken rechten voor deze groep."
+    },
+    "reviewers": {
+      "label": "Reviewer | Reviewers",
+      "help": "Wanneer het project is gemarkeerd als 'ready for review', kan de beoordelaar feedback geven en een project vergrendelen om verdere bewerkingen in het project te voorkomen. Een recensent heeft ook edit rechten."
+    },
+    "members": {
+      "label": "Deelnemer | Deelnemers",
+      "help": "Hij heeft geen redactierechten, maar verschijnt als lid van het team."
+    },
+    "leaders": {
+      "label": "Leidergroep | Groep leiders",
+      "help": "Is een editor die zal verschijnen met een groep leider tag."
+    },
+    "owner_groups": {
+      "label": "Editor groep | Editors-groep",
+      "help": "Is een editor die zal verschijnen met een groep leider tag."
+    },
+    "reviewer_groups": {
+      "label": "Groep recensies | Groep recensies",
+      "help": ""
+    },
+    "member_groups": {
+      "label": "Deelnemersgroep | Deelnemersgroep",
+      "help": "Verschijnt als groepslid. Hun projecten worden tot de projecten van de groep gerekend."
+    },
+    "facilitators": {
+      "label": "Vergemakkelijking | Bevorderaars",
+      "help": "Facilitator: Deze rol is weggelegd voor docenten of docenten: Ze zien alle particuliere projecten in het portaal en ze kunnen ze bewerken. Ze hebben ook alle rechten van gebruikers."
+    },
+    "admins": {
+      "label": "Beheerdersgroep | Beheerdersgroep",
+      "help": "org admin: Deze rol maakt het mogelijk om uw portal te configureren en gebruikers in uw portal te beheren. Org admins hebben toegang tot het admin menu van het portaal om het portaal op te zetten en de gebruikers ervan te beheren. Zij hebben ook alle rechten van facilitatoren."
+    },
+    "users": {
+      "label": "Gebruiker | Gebruikers",
+      "help": "Gebruiker: een gebruiker maakt deel uit van uw community. Ze kunnen projecten maken, hun projecten bewerken en commentaar schrijven op elk project. Ze zien een privé project als ze deel uitmaken van het team van deze projecten, ze zien alle projecten met de zichtbaarheid van de gemeenschap, en alle openbare projecten."
+    },
+    "managers": {
+      "label": "Uitgever | Uitgevers",
+      "help": ""
+    },
+    "none": {
+      "label": "",
+      "help": ""
+    },
+    "label": "Rol | Rol",
+    "edit": "Modifier les roles",
+    "select": "De rechten selecteren",
+    "help": "Informatie over rollen.",
+    "viewers": {
+      "label": "Viewer | Viewers",
+      "help": "Kijker: Hij heeft geen bewerkingsrechten."
+    }
   },
   "prompts": {
     "create-prompt": "Prompt aanmaken",

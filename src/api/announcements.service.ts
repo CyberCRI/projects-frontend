@@ -1,8 +1,9 @@
 import type {
-  AnnouncementInput,
-  AnnouncementApplyInput,
   AnnouncementModel,
   QueryFilterAnnouncement,
+  AnnouncementForm,
+  AnnouncementId,
+  AnnouncementApplyForm,
 } from '@/models/announcement.model'
 
 import type { ProjectSlugOrId } from '@/models/project.model'
@@ -21,31 +22,48 @@ export async function getProjectAnnouncements(projectId: ProjectSlugOrId, config
   )
 }
 
-export async function postAnnouncement(body: AnnouncementInput, config: Config = {}) {
-  return await useAPI<AnnouncementModel>(`project/${body.project_id}/announcement/`, {
+export async function postAnnouncement(
+  projectId: ProjectSlugOrId,
+  body: AnnouncementForm,
+  config: Config = {}
+) {
+  return await useAPI<AnnouncementModel>(`project/${projectId}/announcement/`, {
     body,
     method: 'POST',
     ...config,
   })
 }
 
-export async function patchAnnouncement(body: AnnouncementInput, config: Config = {}) {
-  return await useAPI<AnnouncementModel>(`project/${body.project_id}/announcement/${body.id}/`, {
+export async function patchAnnouncement(
+  projectId: ProjectSlugOrId,
+  announcementId: AnnouncementId,
+  body: AnnouncementForm,
+  config: Config = {}
+) {
+  return await useAPI<AnnouncementModel>(`project/${projectId}/announcement/${announcementId}/`, {
     body,
     method: 'PATCH',
     ...config,
   })
 }
 
-export async function deleteAnnouncement(body, config: Config = {}) {
-  return await useAPI<undefined>(`project/${body.project.id}/announcement/${body.id}/`, {
+export async function deleteAnnouncement(
+  projectId: ProjectSlugOrId,
+  announcementId: AnnouncementId,
+  config: Config = {}
+) {
+  return await useAPI<undefined>(`project/${projectId}/announcement/${announcementId}/`, {
     method: 'DELETE',
     ...config,
   })
 }
 
-export async function applyAnnouncement(body: AnnouncementApplyInput) {
-  return await useAPI(`project/${body.project_id}/announcement/${body.announcement_id}/apply/`, {
+export async function applyAnnouncement(
+  projectId: ProjectSlugOrId,
+  announcementId: AnnouncementId,
+  body: AnnouncementApplyForm
+) {
+  return await useAPI<undefined>(`project/${projectId}/announcement/${announcementId}/apply/`, {
     body,
     method: 'POST',
   })

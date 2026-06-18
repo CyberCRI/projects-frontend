@@ -1,40 +1,39 @@
 <template>
   <div class="resource-wrapper">
-    <div
-      :class="{ 'h-reverse': horizontalReverse }"
-      class="resource-card shadow-box"
-      @click="openResource"
+    <component
+      :is="url ? 'a' : 'div'"
+      :class="{
+        'h-reverse': horizontalReverse,
+        'shadow-box pointer': !!url,
+      }"
+      class="resource-card"
+      :href="url"
+      target="_blank"
+      rel="noopener,noreferer"
     >
-      <div v-if="icon" class="icon-ctn">
-        <IconImage :name="icon" class="icon" />
+      <div v-if="mimeInfo.icon" class="icon-ctn">
+        <IconImage :name="mimeInfo.icon" class="icon skeletons-background" />
       </div>
 
       <div class="content">
-        <span class="resource-title">{{ title }}</span>
-        <span class="resource-subtitle">{{ subtitle }}</span>
+        <span class="resource-title skeletons-text">{{ title }}</span>
+        <span class="resource-subtitle skeletons-text">{{ subtitle }}</span>
       </div>
-    </div>
-    <div v-if="canEdit || canDelete" class="actions-ctn">
-      <ContextActionButton
-        v-if="canEdit"
-        class="small"
-        action-icon="Pen"
-        @click="$emit('edit-clicked')"
-      />
-      <ContextActionButton
-        v-if="canDelete"
-        class="small"
-        action-icon="Close"
-        @click="$emit('delete-clicked')"
-      />
-    </div>
+    </component>
+    <ContextActionMenuInline
+      class="actions-ctn"
+      :can-delete="canDelete"
+      :can-edit="canEdit"
+      @edit="$emit('edit')"
+      @delete="$emit('delete')"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 
+import { mimeTypeToInfo } from '~/functs/imageSizesUtils'
 import type { IconImageChoice } from '~/functs/IconImage'
 
 const props = withDefaults(
@@ -46,6 +45,7 @@ const props = withDefaults(
     canDelete?: boolean
     horizontalReverse?: boolean
     icon?: IconImageChoice
+    mime?: string
   }>(),
   {
     subtitle: '',
@@ -54,22 +54,37 @@ const props = withDefaults(
     canDelete: false,
     horizontalReverse: false,
     icon: null,
+    mime: null,
   }
 )
 
 defineEmits<{
-  'delete-clicked': []
-  'edit-clicked': []
+  delete: []
+  edit: []
 }>()
 
-const openResource = () => {
-  if (['file', 'image'].includes(props.resource.attachment_type)) {
-    window.open(props.resource.file, '_blank')
-  } else {
-    //'link', 'video'...
-    window.open(props.resource.site_url, '_blank')
+const url = computed(() => {
+  if (!props.resource) {
+    return
   }
-}
+  if ('site_url' in props.resource && props.resource.site_url) {
+    return props.resource.site_url
+  }
+  return props.resource.file
+})
+
+const mimeInfo = computed(() => {
+  const defaultMime = mimeTypeToInfo(props.mime)
+  const info = {
+    color: 'primary',
+    ...defaultMime,
+  }
+  if (props.icon) {
+    info.icon = props.icon
+  }
+
+  return info
+})
 </script>
 
 <style lang="scss" scoped>
@@ -77,11 +92,12 @@ const openResource = () => {
   width: 100%;
   position: relative;
 
+  --color-resource: v-bind(`var(--${mimeInfo.color}) `);
+
   .actions-ctn {
     position: absolute;
-    top: 0;
-    right: 0;
-    transform: translateY(-50%);
+    top: 0.25rem;
+    right: 0.25rem;
     display: flex;
 
     button:last-of-type {
@@ -90,10 +106,9 @@ const openResource = () => {
   }
 
   .resource-card {
-    border: $border-width-s solid $primary;
+    border: $border-width-s solid var(--color-resource);
     border-radius: $border-radius-m;
     display: flex;
-    cursor: pointer;
     height: 96px;
     overflow: hidden;
     position: relative;
@@ -102,18 +117,18 @@ const openResource = () => {
       flex-direction: row-reverse;
 
       .icon-ctn {
-        border-left: 1px solid $primary;
+        border-left: 1px solid var(--color-resource);
         border-right: unset;
       }
     }
 
     &:hover .content {
-      background-color: $primary-lighter;
+      background-color: var(--color-resource-2);
     }
 
     .icon-ctn {
-      background: $primary;
-      border-right: 1px solid $primary;
+      background: var(--color-resource);
+      border-right: 1px solid var(--color-resource);
       padding: $space-l;
       display: flex;
       justify-content: center;
@@ -123,12 +138,12 @@ const openResource = () => {
       > svg {
         width: 30px;
         max-height: 100%;
-        fill: $white;
+        fill: var(--white);
       }
     }
 
     .content {
-      background-color: $white;
+      background-color: var(--white);
       font-size: $font-size-m;
       padding: $space-s pxToRem(18px);
       margin-right: auto;
@@ -169,9 +184,9 @@ const openResource = () => {
 
       .svg-wrapper {
         padding: $space-2xs;
-        background: $primary-lighter;
+        background: var(--color-resource-2);
         border-radius: 100%;
-        border: $border-width-s solid $primary;
+        border: $border-width-s solid var(--color-resource);
         width: 20px;
         height: 20px;
         display: flex;
@@ -182,7 +197,7 @@ const openResource = () => {
         svg {
           width: 12px;
           height: 12px;
-          fill: $primary-dark;
+          fill: var(--color-resource-2);
         }
 
         &:nth-child(2) {

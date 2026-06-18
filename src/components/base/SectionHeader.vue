@@ -1,6 +1,6 @@
 <template>
   <div class="section-header-ctn">
-    <div class="section-header">
+    <div class="section-header skeletons-text">
       <span>{{ title }}</span>
       &nbsp;
       <span v-if="quantity">({{ quantity }})</span>

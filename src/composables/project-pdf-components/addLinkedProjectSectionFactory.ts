@@ -5,16 +5,20 @@ import {
 } from '~/composables/pdf-helpers/usePdfHelpers'
 import { cardListStyles } from '~/composables/project-pdf-components/common-styles'
 import type { Container } from '~/composables/pdf-helpers/doc-builder'
-import { usePatatoids } from '~/composables/usePatatoids'
 
+import type { TranslatedLinkedProject } from '~/models/project.model'
 import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 
-export default async function addLinkedProjectSectionFactory(linkedProjects: any[]) {
-  const defaultPatatoid = usePatatoids()[0]
+export default async function addLinkedProjectSectionFactory(
+  linkedProjects: TranslatedLinkedProject[]
+) {
   const _linkedProjects = await Promise.all(
     linkedProjects.map(async (linkedProject) => {
       const avatarDataUrl = await fetchImageAsDataUrl(
-        proxyImageUrl(linkedProject.project?.header_image?.variations?.medium || defaultPatatoid)
+        proxyImageUrl(
+          linkedProject.project?.header_image?.variations?.medium ||
+            usePublicURL(DEFAULT_PROJECT_PATATOID)
+        )
       )
       const imageSizes = pictureApiToImageSizes(linkedProject.project?.header_image || null)
       const croppedAvatarDataUrl = await croppedImageData({
@@ -29,7 +33,6 @@ export default async function addLinkedProjectSectionFactory(linkedProjects: any
     })
   )
 
-  const { getTranslatableField } = useAutoTranslate()
   return function addLinkedProjectSection(this: Container) {
     let out = ''
     if (_linkedProjects.length > 0) {
@@ -81,17 +84,17 @@ export default async function addLinkedProjectSectionFactory(linkedProjects: any
         .map(
           (linkedProject) => /*HTML*/ `
           <div class="card-item linked-project">
-            <img class="linked-project-photo" src="${linkedProject.photo_url}" alt="${getTranslatableField(linkedProject.project, 'title').value || ''}"/>
+            <img class="linked-project-photo" src="${linkedProject.photo_url}" alt="${linkedProject.project.$t.title}"/>
             <div class="card-type">
               <div class="category-name">
-                ${linkedProject.project.categories?.[0]?.name || ''}
+                ${linkedProject.project.categories?.[0]?.$t?.name || ''}
               </div>
             </div>
             <div class="card-title">
-              ${getTranslatableField(linkedProject.project, 'title').value || ''}
+            ${linkedProject.project.$t.title}
             </div>
             <div  class="card-description">
-              ${getTranslatableField(linkedProject.project, 'purpose').value || ''}
+            ${linkedProject.project.$t.purpose}
             </div>
           </div>`
         )

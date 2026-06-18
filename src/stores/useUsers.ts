@@ -12,7 +12,7 @@ import { removeApiCookie } from '~/api/auth/cookie.service'
 import { getUser as _getUser } from '~/api/people.service'
 import type { AuthResult } from '~/api/auth/keycloak'
 
-import funct from '~/functs/functions'
+import { getOrgsFromRoles } from '~/functs/rolesUtils'
 import analytics from '~/analytics'
 import { defineStore } from 'pinia'
 
@@ -81,7 +81,7 @@ const useUsersStore = defineStore('users', () => {
           family_name: userFromToken.value.family_name,
           email: userFromToken.value.email,
           roles: userFromToken.value.roles || [],
-          orgs: funct.getOrgsFromRoles(userFromToken.value.roles),
+          orgs: getOrgsFromRoles(userFromToken.value.roles),
           permissions: permissions.value,
           slug: userFromToken.value.slug,
           researcher: userFromToken.value.researcher,
@@ -287,6 +287,17 @@ const useUsersStore = defineStore('users', () => {
     }
   }
 
+  /**
+   * refresh connected user (form permissions refresh)
+   *
+   * @function
+   * @name refreshUser
+   * @kind variable
+   * @memberof useUsersStore.defineStore('users') callback
+   * @returns {Promise<UserModel>}
+   */
+  const refreshUser = () => getUser(id.value)
+
   return {
     // state
     refreshToken,
@@ -314,6 +325,7 @@ const useUsersStore = defineStore('users', () => {
     doRefreshToken,
     startUserDataRefreshLoop,
     getUser,
+    refreshUser,
     getNotifications,
     patchNotifications,
     fetchFollowedCategories,

@@ -11,14 +11,14 @@ describe('ResourcesRecap.vue', () => {
 
     projectsStore.project = {
       ...ProjectOutputFactory.generate(),
-      files: [],
-      links: [],
     }
   })
   it('should render component', () => {
     const props = {
       target: '/file',
       redirect: '/redirect',
+      files: [],
+      links: [],
     }
     const wrapper = lpiShallowMount(ResourcesRecap, { props })
     expect(wrapper.exists()).toBe(true)

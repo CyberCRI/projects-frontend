@@ -6,12 +6,12 @@
     :title="$t('instructions.drawer.title')"
     class="instruction-drawer medium"
     :asyncing="asyncing"
-    @confirm="saveInstruction"
+    @confirm="onSubmit"
     @close="cancel"
   >
     <InstructionForm
-      ref="instructionForm"
       v-model="form"
+      :instruction="instruction"
       class="instruction-form"
       @invalid="invalid = $event"
     />
@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import type { InstructionModel } from '~/models/instruction.model'
+import type { InstructionInput, InstructionModel } from '~/models/instruction.model'
 
 import { createInstruction, putInstruction } from '~/api/instruction.service'
 
@@ -28,7 +28,7 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import useToasterStore from '~/stores/useToaster'
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
     instruction?: InstructionModel
     isOpened: boolean
@@ -47,64 +47,32 @@ const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()
 
 const { t } = useNuxtI18n()
-
-const form = ref(null)
 const asyncing = ref(false)
 const invalid = ref(false)
-
-watch(
-  () => props.instruction,
-  (instruction) => {
-    if (instruction)
-      form.value = {
-        ...instruction,
-        publication_date: new Date(instruction.publication_date),
-        // only reduce to array if not already an object
-        people_groups: instruction.people_groups.reduce
-          ? instruction.people_groups.reduce((acc, group) => {
-              acc[group.id] = true
-              return acc
-            }, {})
-          : instruction.people_groups,
-      }
-  },
-  { immediate: true }
-)
-
+const form = ref<InstructionInput>()
 const cancel = () => emit('close')
 
-const instructionFormRef = useTemplateRef('instructionForm')
-
-const saveInstruction = async () => {
-  const isValid = await instructionFormRef.value.v$.$validate()
-  if (!isValid) {
-    return
+const createOrUpdate = () => {
+  if (form.value.id) {
+    // put but no patch ??
+    return putInstruction(organizationCode, form.value.id, form.value)
+  } else {
+    return createInstruction(organizationCode, form.value)
   }
+}
+
+const onSubmit = () => {
   asyncing.value = true
 
-  try {
-    const formData = {
-      ...form.value,
-      publication_date: form.value.publication_date.toISOString(),
-      people_groups_ids: Object.entries(form.value.people_groups)
-        .filter(([, value]) => value)
-        .map(([id]) => id),
-    }
-    let savedInstruction: InstructionModel
-    if (props.instruction?.id) {
-      savedInstruction = await putInstruction(organizationCode, props.instruction.id, formData)
-    } else {
-      savedInstruction = await createInstruction(organizationCode, formData)
-    }
-    toaster.pushSuccess(t('instructions.save.success'))
-
-    emit('instruction-edited', savedInstruction)
-  } catch (err) {
-    toaster.pushError(`${t('instructions.save.error')} (${err})`)
-    console.error(err)
-  } finally {
-    asyncing.value = false
-    emit('close')
-  }
+  createOrUpdate()
+    .then((newInstruction) => {
+      toaster.pushSuccess(t('instructions.save.success'))
+      emit('instruction-edited', newInstruction)
+      emit('close')
+    })
+    .catch(() => toaster.pushError(t('instructions.save.error')))
+    .finally(() => {
+      asyncing.value = false
+    })
 }
 </script>

@@ -1,6 +1,7 @@
 import type { PeopleGroupModel, TranslatedPeopleGroupModel } from '~/models/invitation.model'
 
 import type { Translated } from '~/interfaces/translated'
+import type { Roles } from '~/models/types'
 
 /**
  * @name PeopleModel
@@ -11,7 +12,7 @@ export interface PeopleModel {
   roles?: Array<string>
   permissions?: Array<string>
   is_superuser?: boolean
-  current_org_role: string
+  current_org_role: Roles
   people_groups: PeopleGroupModel[]
   notifications?: number
   privacy_settings?: object

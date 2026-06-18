@@ -1,4 +1,9 @@
 <template>
+  <span v-if="duplicateIcons">
+    <span>dulicate Icon values</span>
+    <TableInfo :options="duplicateIcons" />
+  </span>
+
   <div class="search-bar">
     <input v-model="search" type="search" placeholder="Search a name to filter list" />
   </div>
@@ -21,6 +26,7 @@ import useToasterStore from '~/stores/useToaster'
 
 import type { IconImageChoice } from '~/functs/IconImage'
 import { ICONS } from '~/functs/IconImage'
+import { omit } from 'es-toolkit'
 
 const toaster = useToasterStore()
 const search = ref('')
@@ -37,6 +43,30 @@ const copy = async (name) => {
   await navigator.clipboard.writeText(name)
   toaster.pushSuccess(`"${name}" copied to clipboard`)
 }
+
+// check duplicate icons
+const duplicateIcons = computed(() => {
+  const duplicates = []
+  Object.entries(ICONS).forEach(([name, value]) => {
+    const dupli = []
+    Object.entries(omit(ICONS, [name as IconImageChoice])).forEach(([nameB, valueB]) => {
+      if (valueB === value) {
+        dupli.push(nameB)
+      }
+    })
+    if (dupli.length) {
+      duplicates.push({
+        label: name,
+        description: dupli.join(', '),
+      })
+    }
+  })
+
+  if (duplicates.length) {
+    return duplicates
+  }
+  return null
+})
 </script>
 <style lang="scss" scoped>
 .wrapper {

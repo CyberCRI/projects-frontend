@@ -1,7 +1,9 @@
 <template>
   <div v-if="currentTags.length" class="current-tags-ctn">
     <template v-for="(tag, index) in currentTags">
-      <span v-if="showSeparator && index > 0" :key="tag.id">{{ $t('search.or') }}</span>
+      <span v-if="showSeparator && index > 0" :key="tag.id" class="skeletons-text">
+        {{ $t('search.or') }}
+      </span>
       <FilterValue
         v-if="tagTexts.title(tag)"
         :key="tag.id"

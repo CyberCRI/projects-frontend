@@ -1,13 +1,15 @@
-import GoalSummaryItem from '~/components/project/goal/GoalSummaryItem.vue'
 import { TranslatedGoalFactory } from '~~/tests/factories/goal.factory'
 import { lpiMount } from '~~/tests/helpers/LpiMount'
 
+import GoalSummaryItem from '~/components/project/modules/Goals/GoalSummaryItem.vue'
+import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import { describe, expect, it } from 'vitest'
 
 describe('GoalSummaryItem.vue', () => {
   it('should render component', () => {
     const wrapper = lpiMount(GoalSummaryItem, {
       props: {
+        project: TranslatedProjectFactory.generate(),
         goal: TranslatedGoalFactory.generate(),
       },
     })
@@ -17,6 +19,7 @@ describe('GoalSummaryItem.vue', () => {
   it('should have status icon visible', () => {
     const wrapper = lpiMount(GoalSummaryItem, {
       props: {
+        project: TranslatedProjectFactory.generate(),
         goal: TranslatedGoalFactory.generate({ status: 'complete' }),
       },
     })
@@ -26,6 +29,7 @@ describe('GoalSummaryItem.vue', () => {
   it('should not have status icon visible', () => {
     const wrapper = lpiMount(GoalSummaryItem, {
       props: {
+        project: TranslatedProjectFactory.generate(),
         goal: TranslatedGoalFactory.generate({ status: 'na' }),
       },
     })

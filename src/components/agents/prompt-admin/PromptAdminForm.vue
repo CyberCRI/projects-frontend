@@ -2,8 +2,8 @@
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { helpers, required } from '@vuelidate/validators'
 import useToasterStore from '@/stores/useToaster'
-import { isHtmlNotEmpty } from '~/functs/string'
 import useUsersStore from '@/stores/useUsers'
+import { requiredContent } from '~/form/base'
 import useValidate from '@vuelidate/core'
 
 const { html2md, md2html } = useMarkdown()
@@ -45,7 +45,7 @@ const rules = computed(() => ({
     required: helpers.withMessage(t('prompts.form.title-required'), required),
   },
   content: {
-    required: helpers.withMessage(t('prompts.form.content-required'), isHtmlNotEmpty),
+    required: helpers.withMessage(t('prompts.form.content-required'), requiredContent),
   },
 }))
 

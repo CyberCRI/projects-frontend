@@ -5,13 +5,20 @@ import Image from '@tiptap/extension-image'
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     CustomImage: {
-      setImage: (options: { src: string; alt?: string; title?: string }) => ReturnType
+      setImage: (options: {
+        src: string
+        alt?: string
+        title?: string
+        width?: number
+        height?: number
+        size?: ImageVariations
+      }) => ReturnType
     }
   }
 }
 
 export default Image.extend({
-  name: 'CustomImage',
+  name: 'image',
 
   addAttributes() {
     return {

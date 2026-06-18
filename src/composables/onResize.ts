@@ -1,3 +1,4 @@
+import { onClientMounted, onClientUnmounted } from '~/composables/onClient'
 import { isNil } from 'es-toolkit'
 
 type Options = {
@@ -16,19 +17,15 @@ type Options = {
  * @exports
  */
 export const onResize = (callback: () => void, options: Options = {}) => {
-  onMounted(() => {
-    if (import.meta.client) {
-      window.addEventListener('resize', callback)
-      if (options.immediate) {
-        callback()
-      }
+  onClientMounted(() => {
+    window.addEventListener('resize', callback)
+    if (options.immediate) {
+      callback()
     }
   })
 
-  onUnmounted(() => {
-    if (import.meta.client) {
-      window.removeEventListener('resize', callback)
-    }
+  onClientUnmounted(() => {
+    window.removeEventListener('resize', callback)
   })
 }
 
@@ -59,19 +56,15 @@ export const onMediaChange = (
     callback(!!eventer.matches)
   }
 
-  onMounted(() => {
-    if (import.meta.client) {
-      eventer.addEventListener('change', proxyCallback)
-      if (options.immediate) {
-        proxyCallback()
-      }
+  onClientMounted(() => {
+    eventer.addEventListener('change', proxyCallback)
+    if (options.immediate) {
+      proxyCallback()
     }
   })
 
-  onUnmounted(() => {
-    if (import.meta.client) {
-      eventer.removeEventListener('change', proxyCallback)
-    }
+  onClientUnmounted(() => {
+    eventer.removeEventListener('change', proxyCallback)
   })
 }
 

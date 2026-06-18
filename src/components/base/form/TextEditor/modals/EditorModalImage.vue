@@ -2,9 +2,9 @@
   <DialogModal
     :confirm-button-label="$t('common.confirm')"
     :cancel-button-label="$t('common.cancel')"
-    :disabled="!file"
-    :asyncing="uploading"
-    @close="closeModal"
+    :disabled="!isValid"
+    :asyncing="asyncing"
+    @close="emit('close')"
     @submit="insertImage"
   >
     <template #header>
@@ -12,161 +12,102 @@
     </template>
 
     <template #body>
-      <img :src="displayedImage" />
+      <div class="list-container">
+        <GalleryItem
+          v-if="displayedImage"
+          class="image-preview"
+          :image="displayedImage"
+          editable
+          @delete="form.file = null"
+        />
 
-      <ImageInput
-        id="editor-image"
-        :label="$t('project.form.upload-image')"
-        class="image-input"
-        @upload-image="fileChange"
-      />
+        <ImageInput
+          id="editor-image"
+          :label="$t('resource.upload-image')"
+          class="image-input"
+          :errors="errors.file"
+          :max-size-mb="Infinity"
+          @upload-image="form.file = $event"
+        />
+      </div>
     </template>
   </DialogModal>
 </template>
 
-<script>
+<script setup lang="ts">
 import DialogModal from '~/components/base/modal/DialogModal.vue'
 import ImageInput from '~/components/base/form/ImageInput.vue'
 
-import useToasterStore from '~/stores/useToaster.ts'
+import useToasterStore from '~/stores/useToaster'
 
-import { useRuntimeConfig } from '#imports'
+import type { ImageModealCreated, ImageModel } from '~/models/image.model'
+import GalleryItem from '~/components/base/gallery/GalleryItem.vue'
+import { fileToImageModel } from '~/functs/imageSizesUtils'
+import { useTipTapImageForm } from '~/form/tiptap/image'
+import type { Editor } from '@tiptap/vue-3'
 
-export default {
-  name: 'EditorModalImage',
+const props = defineProps<{
+  // function must take a file argument and return a promise resolving to an {url, width, height} object
+  saveImageCallback: (file: File) => Promise<ImageModealCreated>
+  editor: Editor
+}>()
 
-  components: { DialogModal, ImageInput },
+const emit = defineEmits<{
+  close: []
+  image: [ImageModel]
+}>()
 
-  props: {
-    saveImageCallback: {
-      // function must take a file argument and return a promise resolving to an {url, width, height} object
-      type: [Function, null],
-      required: false,
-      default: null,
-    },
-    editor: {
-      type: Object,
-      required: true,
-    },
-  },
+const { t } = useNuxtI18n()
+const toaster = useToasterStore()
+const asyncing = ref(false)
 
-  emits: ['closeModal', 'image'],
-  setup() {
-    const toaster = useToasterStore()
-    const runtimeConfig = useRuntimeConfig()
+const { form, isValid, errors, cleanedData } = useTipTapImageForm()
 
-    return {
-      toaster,
-      runtimeConfig,
-    }
-  },
+const displayedImage = computed(() => {
+  if (cleanedData.value?.file) {
+    return fileToImageModel(cleanedData.value.file)
+  }
+  return null
+})
 
-  data() {
-    return {
-      imageSrc: '',
-      file: undefined,
-      uploading: false,
-      displayedImage: undefined,
-    }
-  },
+const addImageToEditor = (img: ImageModealCreated) => {
+  const MAX_SIZE = 1100
+  const width = img.width < MAX_SIZE ? img.width : MAX_SIZE
+  const height = img.height < MAX_SIZE ? img.height : img.height * (MAX_SIZE / img.width)
 
-  computed: {
-    validImage() {
-      return this.validImageExtension && this.validImageSize
-    },
+  props.editor
+    .chain()
+    .focus()
+    .setImage({
+      src: img.static_url,
+      size: 'small',
+      width,
+      height,
+    })
+    .run()
+}
 
-    validImageExtension() {
-      return this.imageSrc.match(/\.(jpeg|jpg|gif|png|jfif|webp)$/i) != null
-    },
-
-    validImageSize() {
-      return this.file && this.file.size < this.maxFileSize
-    },
-
-    maxFileSize() {
-      return Number(this.runtimeConfig.public.appMaxSizeFile) || 5000000 // 5MB
-    },
-  },
-
-  methods: {
-    closeModal() {
-      this.imageSrc = ''
-      this.$emit('closeModal')
-    },
-
-    fileChange(image) {
-      const sizeMax = this.maxFileSize / 1000 / 1000
-      this.file = image
-      this.imageSrc = this.file.name
-
-      if (!this.validImageExtension) {
-        this.toaster.pushError(this.$t('resource.invalid-image'))
-        this.closeModal()
-        return
-      }
-
-      if (!this.validImageSize) {
-        this.toaster.pushError(this.$t(`crikit.errors.too-big-file-size`, { sizeMax }))
-        this.icloseModal()
-        return
-      }
-
-      this.displayedImage = undefined
-
-      const fileReader = new FileReader()
-      fileReader.readAsDataURL(image)
-
-      fileReader.onload = (fileReaderEvent) => {
-        this.displayedImage = fileReaderEvent.target.result
-      }
-    },
-
-    async insertImage() {
-      if (!this.validImage) return
-      if (!this.saveImageCallback) {
-        this.toaster.pushError(this.$t('resource.cannot-upload-image'))
-        console.error('saveImageCallback is not defined')
-      } else {
-        this.uploading = true
-        try {
-          const image = await this.saveImageCallback(this.file)
-          this.handleImageModalConfirmed(image)
-          this.$nextTick(() => {
-            this.$emit('image', image)
-            this.closeModal()
-          })
-          this.uploading = false
-        } catch {
-          this.toaster.pushError(this.$t('resource.error-uploading-image'))
-          this.uploading = false
-        }
-      }
-    },
-
-    handleImageModalConfirmed(img) {
-      const MAX_SIZE = 1100
-      const attrsw = img.width < MAX_SIZE ? img.width : MAX_SIZE
-      const attrsh =
-        img.height < MAX_SIZE ? img.height : img.height * (MAX_SIZE / parseFloat(img.width))
-
-      this.editor
-        .chain()
-        .focus()
-        .setImage({
-          src: img.static_url,
-          width: attrsw,
-          height: attrsh,
-        })
-        .run()
-    },
-  },
+const insertImage = () => {
+  asyncing.value = true
+  return props
+    .saveImageCallback(cleanedData.value.file)
+    .then((image) => {
+      addImageToEditor(image)
+      nextTick(() => {
+        emit('image', image)
+        emit('close')
+      })
+    })
+    .catch(() => toaster.pushError(t('resource.error-asyncing-image')))
+    .finally(() => (asyncing.value = false))
 }
 </script>
 
 <style lang="scss" scoped>
-img {
-  width: 100%;
-  margin-bottom: $space-s;
+.image-preview {
+  width: fit-content;
+  margin: auto;
+  height: 400px;
 }
 
 .image-input {

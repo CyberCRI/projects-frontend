@@ -228,3 +228,7 @@ body[class*='has-open-modal-'] {
   z-index: 0;
   background-color: #d4d4d4;
 }
+
+.list-margin > *:not(:last-child)::after {
+  margin: 1rem 0;
+}

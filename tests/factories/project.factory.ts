@@ -1,6 +1,11 @@
 import { createFactory } from 'faker-create-factory'
 
-import { ProjectModel, ProjectOutput, TranslatedProject } from '~/models/project.model'
+import {
+  LinkedProject,
+  ProjectModel,
+  ProjectOutput,
+  TranslatedProject,
+} from '~/models/project.model'
 import { ProjectCategoryOutputFactory } from './project-category.factory'
 import { ProjectTeamOutputFactory } from './project-member.factory'
 import { OrganizationOutputFactory } from './organization.factory'
@@ -17,6 +22,7 @@ import { GoalFactory } from './goal.factory'
 import { BaseFactory } from './base.factory'
 import TagFactory from './tag.factory'
 import SdgFactory from './sdg.factory'
+import { fa } from 'zod/v4/locales'
 
 export const ProjectFactory = createFactory<ProjectModel>((faker) => ({
   ...BaseFactory.generate(),
@@ -50,8 +56,21 @@ export const ProjectFactory = createFactory<ProjectModel>((faker) => ({
   updated_at: faker.date.past().toString(),
   created_at: faker.date.past().toString(),
   sdgs: [],
-  linked_projects: [],
-  team: ProjectTeamOutputFactory.generate(),
+  modules: {
+    members: 0,
+    groups: 0,
+    linked_projects: 0,
+    similars: 0,
+    locations: 0,
+    comments: 0,
+    goals: 0,
+    blogs: 0,
+    links: 0,
+    files: 0,
+    announcements: 0,
+    reviews: 0,
+    messages: 0,
+  },
 }))
 
 export const TranslatedProjectFactory = createFactory<TranslatedProject>(() => {
@@ -60,6 +79,8 @@ export const TranslatedProjectFactory = createFactory<TranslatedProject>(() => {
   return {
     ...project,
     template: null,
+    categories: [],
+    tags: [],
     $t: {
       title: project.title,
       description: project.description,
@@ -70,25 +91,23 @@ export const TranslatedProjectFactory = createFactory<TranslatedProject>(() => {
 
 export const ProjectOutputFactory = createFactory<ProjectOutput>((faker) => ({
   ...ProjectFactory.generate(),
-  team: ProjectTeamOutputFactory.generate(),
   organizations: OrganizationOutputFactory.generateMany(2),
   categories: ProjectCategoryOutputFactory.generateMany(2),
   geolocation_coordinates: LocationFactory.generate(),
   tags: TagFactory.generateMany(2),
   sdgs: [],
-  goals: GoalFactory.generateMany(2),
-  links: AttachmentLinkFactory.generateMany(2),
-  files: AttachmentFileFactory.generateMany(2),
   images: ImageFactory.generateMany(2),
-  comments: CommentFactory.generateMany(2),
-  blog_entries: BlogEntryFactory.generateMany(2),
-  linked_projects: [],
   views: faker.datatype.number(),
   template: TemplateFactory.generate(),
-  follows: [],
   is_followed: {
     is_followed: false,
     follow_id: null,
   },
   slug: faker.lorem.word(),
+}))
+
+export const LinkedProjectFactory = createFactory<LinkedProject>((faker) => ({
+  id: faker.datatype.number(),
+  target: ProjectFactory.generate(),
+  project: ProjectFactory.generate(),
 }))

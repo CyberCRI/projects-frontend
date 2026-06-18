@@ -22,6 +22,7 @@ import LpiSnackbar from '~/components/base/LpiSnackbar.vue'
 import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'
 
+import { onClientMounted, onClientUnmounted } from '~/composables/onClient'
 import { ClearHistoryWS } from './tiptap-extensions/ClearHistoryWS'
 import { useRuntimeConfig } from '#imports'
 import { randomInt } from 'es-toolkit'
@@ -222,24 +223,6 @@ function initCollaborativeEditor() {
     },
   })
 
-  // debug
-  // ;[
-  //     'open',
-  //     'connect',
-  //     'authenticated',
-  //     'authenticationFailed',
-  //     'status',
-  //     'message',
-  //     'outgoingMessage',
-  //     'synced',
-  //     'close',
-  //     'disconnect',
-  //     'destroy',
-  //     'awarenessUpdate',
-  //     'awarenessChange',
-  //     'stateless',
-  // ].forEach((evt) => provider.value.on(evt, () => console.log('provider event ', evt)))
-
   // so also listen to client connection status
   window.addEventListener('offline', setOffline)
   window.addEventListener('online', setOnline)
@@ -259,10 +242,6 @@ function initCollaborativeEditor() {
     onPaste,
     onUpdate,
   })
-  // editor.value.on('update', onUpdate)
-  // editor.value.on('blur', onBlur)
-  // editor.value.on('onDrop', onDrop) // yes event naming is weird
-  // editor.value.on('onPaste', onPaste) // yes event naming is weird
 }
 
 function setOnline() {
@@ -294,22 +273,8 @@ function destroyCollaborativeEditor() {
     provider.value.destroy()
     provider.value = null
   }
-  // editor.value?.off('update', onUpdate)
-  // editor.value?.off('blur', onBlur)
-  // editor.value?.off('drop', onDrop) // yes event naming is weird
-  // editor.value?.off('onPaste', onPaste) // yes event naming is weird
   destroyEditor()
 }
-
-// watch
-// re-set the cookie when token change
-// TODO really ?
-// watch(
-//     () => accessToken.value,
-//     () => {
-//         funct.setTokenForWS(accessToken.value)
-//     }
-// )
 
 watchEffect(() => {
   if (onlineAndConnected.value) {
@@ -318,20 +283,15 @@ watchEffect(() => {
     handleDisconnection()
   }
 })
-watchEffect(
-  () => emit('socket-ready', socketReady.value)
-  // , {immediate: true,}
-)
+watchEffect(() => emit('socket-ready', socketReady.value))
 
 // lifecycle
-onMounted(() => {
-  if (!import.meta.client) return
+onClientMounted(() => {
   appendTranslationsStyle()
   initCollaborativeEditor()
 })
 
-onBeforeUnmount(() => {
-  if (!import.meta.client) return
+onClientUnmounted(() => {
   destroyCollaborativeEditor()
   window.removeEventListener('offline', setOffline)
   window.removeEventListener('online', setOnline)
@@ -359,11 +319,12 @@ defineExpose({
       :model-value="modelValue"
       :save-image-callback="saveImageCallback"
       :mode="mode"
+      :errors="errors"
       :save-icon-visible="false"
       @update:model-value="emit('update:modelValue', $event)"
     />
   </template>
-  <TipTapEditorContainer v-else :editor="editor" :mode="mode">
+  <TipTapEditorContainer v-else :editor="editor" :mode="mode" :errors="errors">
     <template v-if="firstSync">
       <TipTapCollaborativeConnectedStatus
         v-if="editor"

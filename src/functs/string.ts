@@ -61,11 +61,19 @@ export const textIsEmpty = (text: string | null): boolean => {
   return html2Text(text).trim() === ''
 }
 
-export function isHtmlNotEmpty(html: string): boolean {
-  if (!document) return !!html // dummy fix for server side
-  const div = document.createElement('div')
-  div.innerHTML = html
-  return div.textContent.trim() !== ''
+/**
+ * get first text is not empty (html content string)
+ *  or return empty string
+ *
+ * @function
+ * @name getFirstTextNotEmpty
+ * @kind variable
+ * @param {string[]} texts
+ * @returns {string}
+ * @exports
+ */
+export const getFirstTextNotEmpty = (texts: (string | null)[]): string => {
+  return texts.find((text) => !textIsEmpty(text)) || ''
 }
 
 export function safeParseFloat(s: any, fallback: number = 0): number {

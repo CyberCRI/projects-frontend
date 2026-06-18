@@ -19,6 +19,11 @@ export const useModals = <modalNames = { [key: string]: boolean }>(
     keys.forEach((k) => (stateModals.value[k] = false))
   }
 
+  const closeAllModals = () => {
+    const keys = Object.keys(stateModals.value) as unknown as (keyof modalNames)[]
+    closeModals(...keys)
+  }
+
   /**
    * toggle value in object ( if exists with the same value, remove it else set it)
    */
@@ -32,11 +37,21 @@ export const useModals = <modalNames = { [key: string]: boolean }>(
     })
   }
 
+  const setModals = <K extends keyof modalNames>(key: K, state: boolean) => {
+    if (state) {
+      openModals(key)
+    } else {
+      closeModals(key)
+    }
+  }
+
   return {
     stateModals,
     openModals,
     closeModals,
+    closeAllModals,
     toggleModals,
+    setModals,
   }
 }
 
@@ -53,18 +68,22 @@ export const useModals = <modalNames = { [key: string]: boolean }>(
  * @exports
  */
 export const useModal = (initialState: boolean = false) => {
-  const { stateModals, closeModals, openModals, toggleModals } = useModals({ base: initialState })
+  const { stateModals, closeModals, openModals, toggleModals, setModals } = useModals({
+    base: initialState,
+  })
 
   const stateModal = computed(() => stateModals.value.base)
   const closeModal = () => closeModals('base')
   const openModal = () => openModals('base')
   const toggleModal = () => toggleModals('base')
+  const setModal = (state: boolean) => setModals('base', state)
 
   return {
     stateModal,
     closeModal,
     openModal,
     toggleModal,
+    setModal,
   }
 }
 

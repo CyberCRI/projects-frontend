@@ -2,8 +2,8 @@
   <div class="module shadowed-box2">
     <div class="module-header">
       <div class="title-container">
-        <IconImage v-if="icon" :name="icon" class="icon" />
-        <h2 class="title">
+        <IconImage v-if="icon" :name="icon" class="icon skeletons-background" />
+        <h2 class="title skeletons-text">
           {{ title }}
           <span v-if="!isNil(total)">({{ total }})</span>
         </h2>
@@ -11,7 +11,7 @@
       <slot v-if="!loading" name="header">
         <SeeMoreArrow
           v-if="seeMore && seeMorePosition === 'top'"
-          class="see-more-button"
+          class="see-more-button skeletons-text"
           :to="seeMore"
         />
       </slot>
@@ -24,7 +24,7 @@
     <slot v-if="!loading" name="footer">
       <SeeMoreArrow
         v-if="seeMore && seeMorePosition === 'bottom'"
-        class="see-more-button"
+        class="see-more-button skeletons-background"
         :to="seeMore"
       />
     </slot>

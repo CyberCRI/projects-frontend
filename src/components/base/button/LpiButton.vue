@@ -8,8 +8,8 @@
       'reversed-order': reversedOrder,
     }"
     :disabled="disabled"
-    :aria-label="ariaLabel"
-    :title="ariaLabel"
+    :aria-label="ariaLabel ?? label"
+    :title="ariaLabel ?? label"
     type="button"
     rel="noopener"
     class="lpi-button shadow-box"
@@ -33,6 +33,8 @@ const props = withDefaults(
     noTextTransform?: boolean
     ariaLabel?: string
     to?: RouteLocationRaw
+    color?: 'primary-dark' | 'red' | 'gray' | 'white'
+    textColor?: 'primary-dark' | 'red' | 'gray' | 'white'
   }>(),
   {
     label: null,
@@ -43,6 +45,8 @@ const props = withDefaults(
     noTextTransform: false,
     ariaLabel: '',
     to: null,
+    color: 'primary-dark',
+    textColor: 'white',
   }
 )
 
@@ -53,11 +57,14 @@ const is = computed(() => (props.to ? resolveComponent('NuxtLink') : 'button'))
 
 <style lang="scss" scoped>
 .lpi-button {
+  --color: v-bind(`var(--${color}) `);
+  --text-color: v-bind(`var(--${textColor}) `);
+
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-  border: $border-width-s solid $primary-dark;
+  border: $border-width-s solid var(--color);
   border-radius: $border-radius-50;
   font-weight: 700;
   font-size: $font-size-m;
@@ -66,8 +73,8 @@ const is = computed(() => (props.to ? resolveComponent('NuxtLink') : 'button'))
   cursor: pointer;
   will-change: transform;
   overflow: hidden;
-  background: $primary-dark;
-  color: $white;
+  background: var(--color);
+  color: var(--text-color);
   height: 35px;
   padding: $space-s $space-l;
   box-sizing: border-box;
@@ -85,8 +92,8 @@ const is = computed(() => (props.to ? resolveComponent('NuxtLink') : 'button'))
 
   &.secondary {
     background: transparent;
-    color: $primary-dark;
-    fill: $primary-dark;
+    color: var(--color);
+    fill: var(--color);
 
     &.white-bg {
       // temp fix class used is ProjectDescriptionTab. TODO: fix cleanly while refactoring this component
@@ -124,11 +131,11 @@ const is = computed(() => (props.to ? resolveComponent('NuxtLink') : 'button'))
 
 .lpi-button :deep(svg) {
   transition: 0.15s fill ease-in-out;
-  fill: $white;
+  fill: var(--text-color);
 }
 
 .lpi-button.secondary :deep(svg) {
-  fill: $primary-dark;
+  fill: var(--color);
 }
 
 .lpi-button.small {

@@ -7,9 +7,10 @@ import type { Container } from '~/composables/pdf-helpers/doc-builder'
 import { usePublicURL } from '~/composables/usePublic'
 
 import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
+import type { TranslatedProject } from '~/models/project.model'
 
-export default async function addProjectPhotoFactory(project: any) {
-  const defaultProjectPicture = usePublicURL(`/placeholders/header_placeholder.png`)
+export default async function addProjectPhotoFactory(project: TranslatedProject) {
+  const defaultProjectPicture = usePublicURL(DEFAULT_PROJECT_PATATOID)
   const projectPhoto = project.header_image?.variations?.medium || defaultProjectPicture
   const projectPhotoDataUrl = await fetchImageAsDataUrl(proxyImageUrl(projectPhoto))
 

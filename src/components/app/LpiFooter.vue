@@ -153,7 +153,6 @@
 import OnboardingScreens from '~/components/onboarding/OnboardingScreens/OnboardingScreens.vue'
 import FooterEnglishTips from '~/components/app/FooterEnglishTips.vue'
 import ContactDrawer from '~/components/app/ContactDrawer.vue'
-import ReportDrawer from '~/components/app/ReportDrawer.vue'
 import LpiLogo from '~/components/app/LpiLogo.vue'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
@@ -161,6 +160,7 @@ import useUsersStore from '~/stores/useUsers'
 
 import { usePublicURL } from '~/composables/usePublic'
 
+import ReportDrawer from '~/components/drawer/ReportDrawer.vue'
 import { useRuntimeConfig } from '#imports'
 
 const FOOTER_SRC = usePublicURL('/source.png')

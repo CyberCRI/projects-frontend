@@ -1,14 +1,21 @@
 <template>
   <div v-click-outside="close" class="lpi-dropdown" :class="{ 'is-open': open }">
     <button type="button" class="dropdown toggle-btn" @click.prevent="toggle">
-      <span class="dropdown-btn">{{ showLabel }}</span>
+      <span
+        class="dropdown-btn"
+        :class="{
+          empty: !showLabel,
+        }"
+      >
+        {{ showLabel || defaultLabel }}
+      </span>
       <IconImage class="caret" :name="open ? 'ChevronUp' : 'ChevronDown'" />
     </button>
     <transition name="slide">
       <div v-if="open" class="lpi-dropdown-choose">
         <div class="dropdown-menu custom-scrollbar">
           <ul>
-            <LpiDropdDownElement
+            <LpiDropDownElement
               v-for="option in props.options"
               :key="option.id"
               :option="option"
@@ -22,7 +29,7 @@
                   @click.prevent="close"
                 />
               </template>
-            </LpiDropdDownElement>
+            </LpiDropDownElement>
           </ul>
         </div>
       </div>
@@ -31,10 +38,8 @@
 </template>
 
 <script setup lang="ts">
-import LpiDropdDownElement from '~/components/base/form/LpiDropDownElement.vue'
+import LpiDropDownElement from '~/components/base/form/LpiDropDownElement.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
-
-import { capitalize } from '~/functs/string'
 
 defineEmits(['close'])
 
@@ -72,12 +77,7 @@ const selectedOption = computed(() => {
 })
 
 const showLabel = computed(() => {
-  const vl =
-    selectedOption.value?.label ??
-    selectedOption.value?.name ??
-    selectedOption.value?.value ??
-    props.defaultLabel
-  return capitalize(vl.toString())
+  return selectedOption.value?.label ?? selectedOption.value?.name ?? selectedOption.value?.value
 })
 </script>
 
@@ -102,14 +102,17 @@ const showLabel = computed(() => {
   width: 100%;
   background-color: transparent;
 
-  @media (min-width: $min-tablet) {
-    margin-top: $space-l;
-  }
-
   .dropdown-btn {
     color: $primary-dark;
     font-size: $font-size-m;
     font-weight: 700;
+
+    &.empty {
+      opacity: 0.7;
+      font-style: italic;
+      color: var(--mid-gray);
+      font-weight: 500;
+    }
   }
 
   .caret {

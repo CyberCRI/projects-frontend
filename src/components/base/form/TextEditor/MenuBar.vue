@@ -1,22 +1,12 @@
-<template>
-  <div>
-    <div class="icons">
-      <template v-for="(item, index) in items">
-        <div v-if="item.type === 'divider'" :key="`divider${index}`" class="divider" />
-        <MenuItem v-else v-bind="item as Item" :key="index" />
-      </template>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import type { PropsDefinitions } from '~/components/base/form/TextEditor/useTipTap'
+import type { IconImageChoice } from '~/functs/IconImage.js'
 import type { Editor } from '@tiptap/vue-3'
 import MenuItem from './MenuItem.vue'
 
 type Item = {
   type?: 'divider'
-  icon: string
+  icon: IconImageChoice
   title: string
   action: () => void
   isActive?: () => void
@@ -49,25 +39,27 @@ const emit = defineEmits<{
   saved: []
 }>()
 
+const { t } = useNuxtI18n()
+
 const items = computed(() => {
   const items: (Divider | Item)[] = [
     {
-      icon: 'bold',
-      title: 'multieditor.bold',
+      icon: 'bold' satisfies IconImageChoice as IconImageChoice,
+      title: t('multieditor.bold'),
       action: () => props.editor.chain().focus().toggleBold().run(),
       isActive: () => props.editor.isActive('bold'),
       isDisabled: false,
     },
     {
-      icon: 'italic',
-      title: 'multieditor.italic',
+      icon: 'italic' satisfies IconImageChoice as IconImageChoice,
+      title: t('multieditor.italic'),
       action: () => props.editor.chain().focus().toggleItalic().run(),
       isActive: () => props.editor.isActive('italic'),
       isDisabled: false,
     },
     {
-      icon: 'underline',
-      title: 'multieditor.underline',
+      icon: 'Underline' satisfies IconImageChoice as IconImageChoice,
+      title: t('multieditor.underline'),
       action: () => props.editor.chain().focus().toggleUnderline().run(),
       isActive: () => props.editor.isActive('underline'),
       isDisabled: false,
@@ -76,8 +68,8 @@ const items = computed(() => {
       type: 'divider',
     },
     {
-      icon: 'link',
-      title: 'multieditor.link',
+      icon: 'Link' satisfies IconImageChoice as IconImageChoice,
+      title: t('multieditor.link'),
       action: () => props.openLinkModal(),
       isActive: () => props.editor.isActive('link'),
       isDisabled: false,
@@ -90,8 +82,8 @@ const items = computed(() => {
 
   items.push(
     {
-      icon: 'palette-line',
-      title: 'multieditor.color.color',
+      icon: 'paletteLine' satisfies IconImageChoice as IconImageChoice,
+      title: t('multieditor.color.color'),
       action: () => props.openColorModal(),
       isActive: () => props.editor.isActive('textStyle'),
       isDisabled: false,
@@ -100,22 +92,22 @@ const items = computed(() => {
       type: 'divider',
     },
     {
-      icon: 'h-1',
-      title: 'multieditor.heading_1',
+      icon: 'H1' satisfies IconImageChoice as IconImageChoice,
+      title: t('multieditor.heading_1'),
       action: () => props.editor.chain().focus().toggleHeading({ level: 1 }).run(),
       isActive: () => props.editor.isActive('heading', { level: 1 }),
       isDisabled: false,
     },
     {
-      icon: 'h-2',
-      title: 'multieditor.heading_2',
+      icon: 'H2' satisfies IconImageChoice as IconImageChoice,
+      title: t('multieditor.heading_2'),
       action: () => props.editor.chain().focus().toggleHeading({ level: 2 }).run(),
       isActive: () => props.editor.isActive('heading', { level: 2 }),
       isDisabled: false,
     },
     {
-      icon: 'h-3',
-      title: 'multieditor.heading_3',
+      icon: 'H3' satisfies IconImageChoice as IconImageChoice,
+      title: t('multieditor.heading_3'),
       action: () => props.editor.chain().focus().toggleHeading({ level: 3 }).run(),
       isActive: () => props.editor.isActive('heading', { level: 3 }),
       isDisabled: false,
@@ -124,8 +116,8 @@ const items = computed(() => {
       type: 'divider',
     },
     {
-      icon: 'align-left',
-      title: 'multieditor.text_align_left',
+      icon: 'AlignLeft' satisfies IconImageChoice as IconImageChoice,
+      title: t('multieditor.text_align_left'),
       action: () =>
         props.editor.isActive('external-video')
           ? props.editor.commands.updateAttributes('external-video', {
@@ -139,8 +131,8 @@ const items = computed(() => {
       isDisabled: false,
     },
     {
-      icon: 'align-center',
-      title: 'multieditor.text_align_center',
+      icon: 'AlignCenter' satisfies IconImageChoice as IconImageChoice,
+      title: t('multieditor.text_align_center'),
       action: () =>
         props.editor.isActive('external-video')
           ? props.editor.commands.updateAttributes('external-video', {
@@ -154,8 +146,8 @@ const items = computed(() => {
       isDisabled: false,
     },
     {
-      icon: 'align-right',
-      title: 'multieditor.text_align_right',
+      icon: 'AlignRight' satisfies IconImageChoice as IconImageChoice,
+      title: t('multieditor.text_align_right'),
       action: () =>
         props.editor.isActive('external-video')
           ? props.editor.commands.updateAttributes('external-video', {
@@ -174,30 +166,30 @@ const items = computed(() => {
     },
 
     {
-      icon: 'list-unordered',
-      title: 'multieditor.bullet_list',
+      icon: 'ListUnordered' satisfies IconImageChoice as IconImageChoice,
+      title: t('multieditor.bullet_list'),
       action: () => props.editor.chain().focus().toggleBulletList().run(),
       isActive: () => props.editor.isActive('bulletList'),
       isDisabled: false,
     },
     {
-      icon: 'table-2',
-      title: 'multieditor.table',
+      icon: 'Table' satisfies IconImageChoice as IconImageChoice,
+      title: t('multieditor.table'),
       action: () =>
         props.editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run(),
       isActive: () => props.editor.isActive('table'),
       isDisabled: false,
     },
     {
-      icon: 'double-quotes-l',
-      title: 'multieditor.blockquote',
+      icon: 'DoubleQuotesL' satisfies IconImageChoice as IconImageChoice,
+      title: t('multieditor.blockquote'),
       action: () => props.editor.chain().focus().toggleBlockquote().run(),
       isActive: () => props.editor.isActive('blockquote'),
       isDisabled: false,
     },
     {
-      icon: 'code-s-slash-line',
-      title: 'multieditor.code.label',
+      icon: 'CodeSSlash' satisfies IconImageChoice as IconImageChoice,
+      title: t('multieditor.code.label'),
       action: () => props.editor.chain().focus().toggleCodeBlock().run(),
       isActive: () => props.editor.isActive('codeBlock'),
       isDisabled: false,
@@ -210,14 +202,14 @@ const items = computed(() => {
   if (props.mode === 'full') {
     items.push(
       {
-        icon: 'image-fill',
-        title: 'multieditor.image.image',
+        icon: 'Gallery' satisfies IconImageChoice as IconImageChoice,
+        title: t('multieditor.image.image'),
         action: () => props.openImageModal(),
         isDisabled: false,
       },
       {
-        icon: 'film-fill',
-        title: 'multieditor.video',
+        icon: 'Movie' satisfies IconImageChoice as IconImageChoice,
+        title: t('multieditor.video.label'),
         action: () => props.openVideoModal(),
         isDisabled: false,
       },
@@ -229,14 +221,14 @@ const items = computed(() => {
 
   items.push(
     {
-      icon: 'arrow-go-back-line',
-      title: 'multieditor.undo',
+      icon: 'arrowGoBackLine' satisfies IconImageChoice as IconImageChoice,
+      title: t('multieditor.undo'),
       action: () => props.editor.chain().focus().undo().run(),
       isDisabled: false,
     },
     {
-      icon: 'arrow-go-forward-line',
-      title: 'multieditor.redo',
+      icon: 'arrowGoForwardLine' satisfies IconImageChoice as IconImageChoice,
+      title: t('multieditor.redo'),
       action: () => props.editor.chain().focus().redo().run(),
       isDisabled: false,
     }
@@ -248,8 +240,8 @@ const items = computed(() => {
         type: 'divider',
       },
       {
-        icon: 'save-line',
-        title: 'multieditor.save',
+        icon: 'saveLine' satisfies IconImageChoice as IconImageChoice,
+        title: t('multieditor.save'),
         action: () => emit('saved'),
         isDisabled: props.disableSave,
       }
@@ -259,6 +251,17 @@ const items = computed(() => {
   return items
 })
 </script>
+
+<template>
+  <div>
+    <div class="icons">
+      <template v-for="(item, index) in items">
+        <div v-if="item.type === 'divider'" :key="`divider${index}`" class="divider" />
+        <MenuItem v-else v-bind="item as Item" :key="index" />
+      </template>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 .divider {

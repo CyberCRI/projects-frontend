@@ -7,7 +7,12 @@
   >
     <template #actions-right>
       <slot name="actions">
-        <IconImage v-if="user.email" class="icon" name="EmailOutline" @click="mailTo" />
+        <IconImage
+          v-if="user.email"
+          class="icon skeletons-background"
+          name="EmailOutline"
+          @click="mailTo"
+        />
       </slot>
     </template>
     <CroppedApiImage

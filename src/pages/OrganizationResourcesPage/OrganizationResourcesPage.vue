@@ -1,76 +1,104 @@
 <script setup lang="ts">
-import { deleteOrganizationFile, getOrganizationFiles } from '~/api/organization-files.service'
-
+import {
+  deleteOrganizationFile,
+  patchOrganizationFile,
+  postOrganizationFiles,
+} from '~/api/organization-files.service'
+import { attachementFileSkeletons } from '~/skeletons/attachements.skeletons'
+import ResourceDrawerV2 from '~/components/resources/ResourceDrawerV2.vue'
+import { getOrganizationFiles } from '~/api/v2/organization-files.service'
+import type { AttachmentFileModel } from '~/models/attachment-file.model'
+import type { AttachmentForm } from '~/models/attachment.model'
+import { factoryPagination } from '~/skeletons/base.skeletons'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'
 
 const { t } = useNuxtI18n()
 
-const fileResources = ref([])
-
 const toaster = useToasterStore()
 const { isAdmin } = usePermissions()
 
+const { stateModals, closeModals, openModals, closeAllModals } = useModals({
+  drawer: false,
+  delete: false,
+})
+
 const organizationsStore = useOrganizationsStore()
 const organizationCode = useOrganizationCode()
-
 const organization = computed(() => organizationsStore?.current)
 
-const confirmModalVisible = ref(false)
-const currentResource = ref(null)
 const asyncing = ref(false)
-const isDrawerOpen = ref(false)
-const editedItem = ref(null)
+
+const selectedItem = ref<AttachmentFileModel | null>(null)
 
 const isEditionEnabled = computed(() => isAdmin.value)
 
-const getFileResources = async () => {
-  try {
-    asyncing.value = true
-    const response = await getOrganizationFiles(organizationCode)
-    fileResources.value = response.results
-  } catch (err) {
-    console.error(err)
-  } finally {
-    asyncing.value = false
-  }
+const {
+  status,
+  data: resources,
+  refresh,
+  pagination,
+} = getOrganizationFiles(organizationCode, {
+  default: () => factoryPagination(attachementFileSkeletons),
+})
+
+const onEdit = (resource?: AttachmentFileModel) => {
+  selectedItem.value = resource
+  openModals('drawer')
 }
 
-onMounted(getFileResources)
-
-const openModal = (resource) => {
-  currentResource.value = resource
-  confirmModalVisible.value = true
+const onDelete = (resource) => {
+  selectedItem.value = resource
+  openModals('delete')
 }
 
-const deleteResource = async (resource) => {
+const onDeleteConfirm = () => {
   asyncing.value = true
-  try {
-    await deleteOrganizationFile(organizationCode, resource.id)
-
-    // TODO: use org event
-    // analytics.attachmentFile.removeAttachment({
-    //   project: {
-    //     id: this.project.id,
-    //   },
-    //   attachment: resource,
-    // })
-
-    await getFileResources()
-
-    toaster.pushSuccess(t('toasts.file-delete.success'))
-  } catch (error) {
-    toaster.pushError(`${t('toasts.file-delete.error')} (${error})`)
-    console.error(error)
-  } finally {
-    asyncing.value = false
-    confirmModalVisible.value = false
-  }
+  deleteOrganizationFile(organizationCode, selectedItem.value.id)
+    .then(() => {
+      closeAllModals()
+      toaster.pushSuccess(t('toasts.file-delete.success'))
+      refresh()
+    })
+    .catch(() => toaster.pushError(t('toasts.file-delete.error')))
+    .finally(() => {
+      asyncing.value = false
+      closeModals('delete')
+    })
 }
 
-const openDrawer = (resource = null) => {
-  editedItem.value = resource
-  isDrawerOpen.value = true
+const onSubmit = (resource: AttachmentForm) => {
+  asyncing.value = true
+
+  const formData = new FormData()
+  formData.append('title', resource.title)
+  formData.append('description', resource.description)
+  formData.append('file', resource.file, resource.file.name)
+  formData.append('mime', resource.file.type)
+
+  if (resource.id) {
+    // on update remove file (old things 😕)
+    formData.delete('file')
+    formData.delete('mime')
+
+    patchOrganizationFile(organizationCode, resource.id, formData)
+      .then(() => {
+        closeAllModals()
+        toaster.pushSuccess(t('toasts.file-update.success'))
+        refresh()
+      })
+      .catch(() => toaster.pushError(t('toasts.file-update.success')))
+      .finally(() => (asyncing.value = false))
+  } else {
+    postOrganizationFiles(organizationCode, formData)
+      .then(() => {
+        closeAllModals()
+        toaster.pushSuccess(t('toasts.file-create.success'))
+        refresh()
+      })
+      .catch(() => toaster.pushError(t('toasts.file-create.error')))
+      .finally(() => (asyncing.value = false))
+  }
 }
 
 useLpiHead2({
@@ -81,56 +109,54 @@ useLpiHead2({
 <template>
   <div class="page-section-narrow organization-resources-page pssi page-top">
     <h1 class="page-title">
-      {{ t('documents-page.title', { platformName: organization?.name }) }}
+      {{ t('documents-page.title', { platformName: organization.$t.name }) }}
     </h1>
     <p class="notice">
-      {{ t('documents-page.description', { platformName: organization?.name }) }}
+      {{ t('documents-page.description', { platformName: organization.$t.name }) }}
     </p>
-    <div v-if="isEditionEnabled" class="add-resource">
-      <LpiButton
-        :label="t('resource.add-file')"
-        class="add-item-btn"
-        btn-icon="Plus"
-        data-test="in-page-add-resources"
-        @click="() => openDrawer()"
-      />
-    </div>
-    <div v-if="asyncing" class="loader">
-      <LoaderSimple />
-    </div>
-    <div v-else-if="!fileResources.length" class="nothing-here">
-      <NothingHere />
-    </div>
-    <div v-else class="resource-ctn">
-      <ResourceCard
-        v-for="file in fileResources"
-        :key="file.id"
-        :can-delete="isEditionEnabled"
-        :can-edit="isEditionEnabled"
-        :resource="file"
-        :subtitle="file.description"
-        :title="file.title"
-        icon="File"
-        @edit-clicked="openDrawer(file)"
-        @delete-clicked="openModal(file)"
-      />
-    </div>
+    <FetchLoader :status="status" only-error skeleton>
+      <div v-if="isEditionEnabled" class="add-resource">
+        <LpiButton
+          :label="t('resource.add-file')"
+          class="add-item-btn skeletons-background"
+          btn-icon="Plus"
+          data-test="in-page-add-resources"
+          @click="onEdit"
+        />
+      </div>
+      <div class="resource-ctn">
+        <ResourceCard
+          v-for="file in resources"
+          :key="file.id"
+          :can-delete="isEditionEnabled"
+          :can-edit="isEditionEnabled"
+          :resource="file"
+          :title="file.$t.title"
+          :subtitle="file.$t.description"
+          :mime="file.mime"
+          @edit="onEdit(file)"
+          @delete="onDelete(file)"
+        />
+      </div>
+      <NothingHere v-if="resources.length === 0" />
+      <PaginationButtonsV2 :pagination="pagination" />
+    </FetchLoader>
 
     <ConfirmModal
-      v-if="confirmModalVisible"
+      v-if="stateModals.delete"
       :content="t('admin.org-file-confirm-delete')"
       :title="t('common.delete')"
       :asyncing="asyncing"
-      @cancel="confirmModalVisible = false"
-      @confirm="deleteResource(currentResource)"
+      @cancel="closeModals('delete')"
+      @confirm="onDeleteConfirm"
     />
 
-    <LazyOrganizationResourceDrawer
-      :is-add-mode="!editedItem"
-      :is-opened="isDrawerOpen"
-      :selected-item="editedItem"
-      @close="isDrawerOpen = false"
-      @reload-file-resources="getFileResources"
+    <ResourceDrawerV2
+      :is-opened="stateModals.drawer"
+      :resource="selectedItem"
+      form-type="file"
+      @close="closeModals('drawer')"
+      @submit="onSubmit"
     />
   </div>
 </template>

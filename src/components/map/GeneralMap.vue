@@ -50,7 +50,7 @@
 <script setup lang="ts">
 import type { TranslatedLocations } from '~/interfaces/maps'
 
-import ProjectLocationTooltip from '~/components/project/map/ProjectLocationTooltip.vue'
+import ProjectLocationTooltip from '~/components/project/modules/Locations/ProjectLocationTooltip.vue'
 import GroupLocationToolTip from '~/components/group/Map/GroupLocationToolTip.vue'
 import LocationEventTooltip from '~/components/event/map/LocationEventTooltip.vue'
 import LocationNewsTooltip from '~/components/news/map/LocationNewsTooltip.vue'

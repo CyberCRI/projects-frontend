@@ -10,18 +10,22 @@ import type {
 import type { AttachmentLinkModel, TranslatedAttachmentLink } from '@/models/attachment-link.model'
 import type { AttachmentFileModel, TranslatedAttachmentFile } from '@/models/attachment-file.model'
 import type { TranslatedLinkedProject, TranslatedProject } from '@/models/project.model'
+import type { TranslatedProjectCategory } from '~/models/project-category.model'
 import type { TranslatedProjectMessage } from '@/models/project-message.model'
 import type { TranslatedOrganizationModel } from '@/models/organization.model'
 import type { TranslatedAnnouncement } from '@/models/announcement.model'
 import type { TranslatedInstruction } from '@/models/instruction.model'
 import type { TranslatedBlogEntry } from '@/models/blog-entry.model'
+import type { TranslatedTemplate } from '~/models/template.model'
 import type { TranslatedNewsfeed } from '@/models/newsfeed.model'
 import type { TranslatedDocument } from '@/interfaces/researcher'
 import type { TranslatedEventModel } from '@/models/event.model'
 import type { TranslatedComment } from '@/models/comment.model'
 import type { TranslatedUserModel } from '@/models/user.model'
+import type { TranslatedReview } from '~/models/review.model'
 import type { TranslatedNews } from '@/models/news.model'
 import type { TranslatedGoal } from '@/models/goal.model'
+import type { TranslatedTag } from '~/models/tag.model'
 import type { RefOrRaw } from '~/interfaces/utils'
 
 export default function useAutoTranslate() {
@@ -99,7 +103,13 @@ export default function useAutoTranslate() {
       if (!unrefProject) return project
       return {
         ...unref(translateEntity(unrefProject, ['title', 'description', 'purpose'])),
-        template: unref(translateTemplate(unrefProject.template)),
+        template: unrefProject.template
+          ? unref(translateTemplate(unrefProject.template))
+          : unrefProject.template,
+        categories: unrefProject.categories
+          ? unref(translateCategories(unrefProject.categories))
+          : unrefProject.categories,
+        tags: unrefProject.tags ? unref(translateTags(unrefProject.tags)) : unrefProject.tags,
       }
     })
   }
@@ -141,8 +151,10 @@ export default function useAutoTranslate() {
   const translateAnnouncements = (announcements) =>
     translateEntities<TranslatedAnnouncement>(announcements, translateAnnouncement)
 
-  const translateReview = (review) => translateEntity(review, ['title', 'description'])
-  const translateReviews = (reviews) => translateEntities(reviews, translateReview)
+  const translateReview = (review) =>
+    translateEntity<TranslatedReview>(review, ['title', 'description'])
+  const translateReviews = (reviews) =>
+    translateEntities<TranslatedReview>(reviews, translateReview)
 
   const translateLink = (link: RefOrRaw<AttachmentLinkModel>) =>
     translateEntity<TranslatedAttachmentLink>(link, ['title', 'description'])
@@ -213,21 +225,8 @@ export default function useAutoTranslate() {
   const translateUsers = <Model = TranslatedUserModel>(users) =>
     translateEntities<Model>(users, translateUser)
 
-  const translateTeam = (team) =>
-    computed(() => {
-      const _team = unref(team)
-      return {
-        owners: unref(translateUsers(_team.owners)),
-        members: unref(translateUsers(_team.members)),
-        reviewers: unref(translateUsers(_team.reviewers)),
-        owner_groups: unref(translateGroups(_team.owner_groups)),
-        member_groups: unref(translateGroups(_team.member_groups)),
-        reviewer_groups: unref(translateGroups(_team.reviewer_groups)),
-      }
-    })
-
-  const translateTag = (tag) => translateEntity(tag, ['description', 'title'])
-  const translateTags = (tags) => translateEntities(tags, translateTag)
+  const translateTag = <T = TranslatedTag>(tag) => translateEntity<T>(tag, ['description', 'title'])
+  const translateTags = <T = TranslatedTag>(tags) => translateEntities<T>(tags, translateTag)
 
   // -----------------
   // groups
@@ -260,26 +259,30 @@ export default function useAutoTranslate() {
   const translateOrganizations = (orgs) =>
     translateEntities<TranslatedOrganizationModel>(orgs, translateOrganization)
 
-  const translateTemplate = (template) => {
-    const _template = unref(template)
-    if (_template?.project_tags)
-      _template.project_tags = unref(translateTags(_template.project_tags))
-    if (_template?.categories)
-      _template.categories = unref(translateCategories(_template.categories))
-    return translateEntity(_template, [
-      'name',
-      'description',
-      'project_title',
-      'project_description',
-      'project_purpose',
-      'blogentry_title',
-      'blogentry_content',
-      'goal_title',
-      'goal_description',
-      'comment_content',
-    ])
-  }
-  const translateTemplates = (templates) => translateEntities(templates, translateTemplate)
+  const translateTemplate = (template) =>
+    computed(() => {
+      const _template = unref(
+        translateEntity<TranslatedTemplate>(template, [
+          'name',
+          'description',
+          'project_title',
+          'project_description',
+          'project_purpose',
+          'blogentry_title',
+          'blogentry_content',
+          'goal_title',
+          'goal_description',
+          'comment_content',
+        ])
+      )
+      if (_template?.project_tags)
+        _template.project_tags = unref(translateTags(_template.project_tags))
+      if (_template?.categories)
+        _template.categories = unref(translateCategories(_template.categories))
+      return _template
+    })
+  const translateTemplates = (templates) =>
+    translateEntities<TranslatedTemplate>(templates, translateTemplate)
 
   // -------
   // use full
@@ -368,12 +371,14 @@ export default function useAutoTranslate() {
   const translateCategory = (category) => {
     const rawCategory = unref(category)
     if (rawCategory?.children)
-      rawCategory.children = unref(translateEntities(rawCategory.children, translateCategory))
+      rawCategory.children = unref(translateCategories(rawCategory.children))
     if (rawCategory?.hierarchy)
-      rawCategory.hierarchy = unref(translateEntities(rawCategory.hierarchy, translateCategory))
-    return translateEntity(rawCategory, ['name', 'description'])
+      rawCategory.hierarchy = unref(translateCategories(rawCategory.hierarchy))
+    if (rawCategory?.tags) rawCategory.tags = unref(translateTags(rawCategory.tags))
+    return translateEntity<TranslatedProjectCategory>(rawCategory, ['name', 'description'])
   }
-  const translateCategories = (categories) => translateEntities(categories, translateCategory)
+  const translateCategories = (categories) =>
+    translateEntities<TranslatedProjectCategory>(categories, translateCategory)
 
   /*
     researcher document
@@ -420,7 +425,6 @@ export default function useAutoTranslate() {
     // people
     translateUser,
     translateUsers,
-    translateTeam,
     translateUserFull,
     translateTag,
     translateTags,

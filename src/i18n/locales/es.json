@@ -123,7 +123,6 @@
         "last-name": "Apellido",
         "first-name": "Nombre",
         "title": "Título",
-        "roles": "Papel(s)",
         "groups": "Grupos",
         "inscription": "Inscripción",
         "activation": "Activación",
@@ -393,13 +392,6 @@
     "reset-password": "Reiniciar contraseña",
     "reset-delete": "Reiniciar contraseña &gt; eliminar cuenta",
     "error": "Un error ocurrido.",
-    "role": {
-      "none": "Ninguno",
-      "user": "Usuario",
-      "facilitator": "Facilitador",
-      "admin": "Org admin",
-      "viewer": "Visualizador"
-    },
     "user-exists-in-other-org": "Un usuario con el mismo email existe en nuestra base de datos. Podemos añadirlo a su portal aquí."
   },
   "userItem": {
@@ -412,12 +404,6 @@
     "facilitators": "Facilitador: Este papel es para profesores o tutores: Ellos ven todos los proyectos privados en el portal y pueden editarlos. También tienen todos los derechos de los Usuarios.",
     "admins": "Org admin: Este papel permite configurar su portal y gestionar usuarios en su portal. Los administradores de org tienen acceso al menú de administración del portal para configurar el portal y administrar sus usuarios. También tienen todos los derechos de los facilitadores.",
     "none": "Ninguno. Esta persona tiene una cuenta de Proyectos pero no es parte de su portal. Sólo pueden ver los proyectos públicos.",
-    "roles": {
-      "none": "Ninguno",
-      "users": "Usuario",
-      "facilitators": "Facilitador",
-      "admins": "Org admin"
-    },
     "empty": "No grupos",
     "main-groups": "Grupos principales"
   },
@@ -538,7 +524,6 @@
     "cant-quit-self": "Eres el último editor del equipo. Cada proyecto debe tener al menos un editor.\nPuede agregar otro editor antes de salir del proyecto, o eliminar el proyecto de la pestaña Configuración.",
     "cant-quit-other": "Este es el último editor del equipo. Cada proyecto debe tener al menos un editor.\nPuede agregar otro editor supressing este, o eliminar el proyecto de la pestaña Configuración.",
     "edit": "Editar",
-    "file-required": "Se requiere un archivo",
     "for": "para",
     "groups": "Grupos",
     "index": "Índice",
@@ -576,7 +561,6 @@
     "disconnect": "Desconexión",
     "confirm-close": "¿Seguro que quieres cerrar el editor? Cualquier cambio que hayas hecho no será salvado.",
     "ok": "Ok",
-    "file-too-big": "El archivo es demasiado grande (max: {maxSize}Mb)",
     "select": "seleccionar",
     "year": "año",
     "link-to": "enlace",
@@ -599,7 +583,8 @@
     "clear-date": "Fecha clara",
     "chose-date": "Seleccionar fecha | Seleccione la fecha(s)",
     "empty": "Nada aquí...",
-    "file": "archivo | archivos"
+    "file": "archivo | archivos",
+    "image": "imagen"
   },
   "complete-profile": {
     "bio": {
@@ -660,7 +645,6 @@
     "edit-saved": "Cualquier cambio que usted (y cualquier co-autor) haga no será salvado.",
     "edit": "descripción de la edición (proyecto)",
     "add": "Añadir descripción",
-    "quit-without-saving-title": "¿Dejar de salvar?",
     "default-placeholder": "Ahora describir su proyecto."
   },
   "discover": {
@@ -823,7 +807,22 @@
   },
   "drawer": {
     "clear": "Limpiar todo seleccionado",
-    "select-all": "Seleccione todo"
+    "select-all": "Seleccione todo",
+    "member": {
+      "add": "Añadir miembro | Añadir miembros",
+      "edit": "Editar miembro | Editar miembros",
+      "delete": "Suprimir miembro | Suprimir miembros"
+    },
+    "group": {
+      "add": "Agregar grupo | Agregar grupos",
+      "edit": "Editar grupo | Editar grupos",
+      "delete": "Grupo Suprímase | Eliminar grupos"
+    },
+    "project": {
+      "add": "Agregar proyecto | Agregar proyectos",
+      "edit": "Editar proyecto | Editar proyectos",
+      "delete": "Eliminar el proyecto | Eliminar proyectos"
+    }
   },
   "faq": {
     "delete-confirm-content": "¿Estás seguro de que quieres eliminar la pestaña Ayuda personalizada para tu portal. Todo su contenido será eliminado.",
@@ -910,7 +909,8 @@
       },
       "description": "El campo de descripción es necesario"
     },
-    "templates": "Plantillas"
+    "templates": "Plantillas",
+    "quit-without-saving-title": "¿Dejar de salvar?"
   },
   "footer": {
     "contact": "Contacta con nosotros",
@@ -934,7 +934,8 @@
     "planned-for-the": "programado para el",
     "status-title": "Situación",
     "title": "título de gol",
-    "delete": "¿Te gustaría eliminar este objetivo?"
+    "delete": "¿Te gustaría eliminar este objetivo?",
+    "add-project": "Añadir un objetivo al proyecto"
   },
   "header": {
     "private": "Privada: visible sólo a los miembros del equipo",
@@ -1066,7 +1067,19 @@
       "color": "Color",
       "current": "Corriente",
       "pick": "Elija un color",
-      "set-color": "Color"
+      "set-color": "Color",
+      "remove-color": "Quitar el color",
+      "colors": {
+        "carribeanGreen": "Carribean verde",
+        "ming": "Ming",
+        "aquamarine": "Aquamarine",
+        "mintCream": "Crema de menta",
+        "lightSalmon": "Salmón de luz",
+        "sunGlow": "El sol brilla",
+        "mauve": "Mauve",
+        "babyBlue": "Baby Blue",
+        "coquelicot": "Coquelicot"
+      }
     },
     "delete_column": "Suprimir esta columna",
     "delete_row": "Eliminar esta fila",
@@ -1124,9 +1137,13 @@
     "unauthorized": "Edición no autorizada",
     "underline": "Subsidio",
     "undo": "Undo",
-    "video": "Video",
+    "video": {
+      "label": "Video",
+      "error": "El enlace debe ser un video de YouTube o Vimeo."
+    },
     "save": "Guardar sin salir",
-    "server-offline": "El servidor está fuera de línea."
+    "server-offline": "El servidor está fuera de línea.",
+    "delete_image": "Eliminar la imagen"
   },
   "homeCarousel": {
     "tab1": {
@@ -1346,7 +1363,6 @@
         "intro": "Aún no has seleccionado habilidades. Las habilidades profesionales y los pasatiempos permiten a tus colegas y a tu comunidad encontrarte basado en lo que eres bueno, en lo que te interesa y en lo que te importa.",
         "save-error": "Error al guardar el perfil.",
         "save-success": "Perfil guardado.",
-        "search": "búsqueda",
         "suggested-skills": "O elegir una habilidad sugerida",
         "already-added": "(ya añadido)",
         "skills": {
@@ -1563,7 +1579,6 @@
       "title": "Crear un nuevo proyecto"
     },
     "destroy": "Eliminar el proyecto",
-    "duplicate": "Duplicar este proyecto",
     "edit": "Editar proyecto",
     "edit-linked-project": "Editar proyecto enlazado",
     "edit-location-point": "Editar punto de ubicación",
@@ -1585,7 +1600,6 @@
       "resize-image": "Reframe",
       "title-label": "Añadir un título",
       "title-placeholder": "¿Cuál es el nombre de este proyecto?",
-      "upload-image": "Subir una imagen",
       "title-errors": {
         "required": "Se requiere el campo de título",
         "max": "El campo del título puede no ser mayor que 180 caracteres"
@@ -1596,7 +1610,9 @@
         "min": "El campo de propósito debe ser por lo menos 3 caracteres"
       },
       "project-templates": "Nombre de plantilla",
-      "completed-info-to-access-presentation": "Toda la información de la página debe completarse para acceder a la presentación."
+      "completed-info-to-access-presentation": "Toda la información de la página debe completarse para acceder a la presentación.",
+      "comment": "El campo de comentarios es necesario.",
+      "select-template": "Seleccione la plantilla ..."
     },
     "image-header": "Imagen",
     "image-alert": {
@@ -1645,10 +1661,19 @@
     },
     "view": "Ver proyecto",
     "visibility": "Visibilidad del proyecto",
-    "actions": "Medidas rápidas",
     "copy": "(copia)",
     "nothing": "Nada aquí...",
-    "tag-warning": "NB: Si un usuario cambia idiomas en su portal, las etiquetas con traducciones se traducirán para ellos. De lo contrario, las etiquetas se mostrarán en inglés."
+    "tag-warning": "NB: Si un usuario cambia idiomas en su portal, las etiquetas con traducciones se traducirán para ellos. De lo contrario, las etiquetas se mostrarán en inglés.",
+    "description": "Descripción",
+    "duplicate": {
+      "title": "¿De verdad quieres duplicar este proyecto?",
+      "help": "El proyecto será clonado sin miembros.",
+      "label": "Duplicar el proyecto"
+    },
+    "groups": "Grupo | Grupos",
+    "label": "proyecto | proyectos",
+    "actions": "Acción peligrosa",
+    "review-not-editable": "Usted no puede añadir comentarios a este proyecto; el proyecto no está actualmente abierto para su revisión."
   },
   "project_list": {
     "updated_at": "Último activo",
@@ -1678,10 +1703,25 @@
     "send": "Enviar solicitud",
     "title": "Título",
     "traineeship": "Formación profesional",
-    "type": "Tipo de anuncio",
+    "type": {
+      "title": "Tipo de anuncio",
+      "job": {
+        "label": "Job",
+        "description": "Una oportunidad tradicional de empleo, a tiempo completo o a tiempo parcial, con un salario definido, beneficios y compromiso a largo plazo. Suite para aquellos que buscan roles estables y profesionales"
+      },
+      "traineeship": {
+        "label": "Formación profesional",
+        "description": "Un programa de formación estructurado que combina experiencia laboral con el aprendizaje. A menudo se pagan becas, diseñadas para principiantes o cambiadores de carrera, y proporcionan desarrollo de habilidades prácticas bajo supervisión"
+      },
+      "participant": {
+        "label": "Participante",
+        "description": "Ideal para personas que buscan participar en programas a corto plazo, talleres o proyectos colaborativos. A menudo no remuneradas o basadas en el estipendio, estas funciones se centran en el aprendizaje, la creación de redes o la contribución a una iniciativa específica"
+      }
+    },
     "updated": "actualizada",
     "valid-until-the": "válido hasta",
-    "view": "vista"
+    "view": "vista",
+    "outdated": "La oferta ya no está disponible."
   },
   "report": {
     "abuse": "Uso indebido de informes",
@@ -1704,13 +1744,32 @@
     "edit-link": "editar un enlace",
     "edit-file": "editar un archivo",
     "max-size": "Tamaño máximo 10MB",
-    "invalid-image": "Archivo sin soporte ... es esta una imagen ?",
     "error-uploading-image": "Error al subir la imagen",
     "cannot-upload-image": "No puedo subir la imagen por ahora",
     "link-address": "Dirección de enlace",
-    "resources": "Recursos",
+    "resources": "Recursos | Recursos",
     "web": "Enlace al recurso web | enlaces a recursos web",
-    "web-link": "Enlace web | web | web links"
+    "web-link": "Enlace web | web | web links",
+    "delete": "¿Estás seguro de eliminar este recurso?",
+    "file": {
+      "add": "Agregar un archivo | Agregar archivos",
+      "edit": "Editar un archivo | Editar archivos",
+      "label": "Archivo | Archivos",
+      "delete": "¿Estás seguro de eliminar este archivo ? | ¿Está seguro de borrar archivos?",
+      "form": {
+        "too-big": "El archivo es demasiado grande (max: {maxSize}Mb)",
+        "invalid-image": "Archivo sin soporte, necesita ser una imagen válida.",
+        "required-image": "Se requiere un archivo",
+        "required": "Se requiere un archivo"
+      }
+    },
+    "link": {
+      "add": "Agregar un enlace | Agregar enlaces",
+      "edit": "Editar un enlace | Editar enlaces",
+      "label": "Enlace | Enlaces",
+      "delete": "¿Está seguro de borrar este enlace? | ¿Está seguro de borrar enlaces ?"
+    },
+    "upload-image": "Subir una imagen"
   },
   "result_box": {
     "people": "gente",
@@ -1797,29 +1856,6 @@
     "need-help": "¿Necesitas ayuda?",
     "contact-us": "Contacta con nosotros"
   },
-  "role": {
-    "role-editor": "Tiene todos los derechos de edición para este grupo.",
-    "role-reviewer": "Cuando el proyecto ha sido marcado como 'listo para revisión', el revisor puede dar retroalimentación, y puede bloquear un proyecto para evitar nuevas ediciones en el proyecto. Un revisor también tiene derechos de edición.",
-    "role-teammate": "No tiene derechos de edición, pero aparece como miembro del equipo.",
-    "editor": "Editor",
-    "editors": "Editores",
-    "editor-groups": "Grupos de redacción",
-    "editor-group": "Grupo de redacción",
-    "reviewer": "Reviewer",
-    "reviewers": "Revisores",
-    "reviewer-groups": "Grupos de examen",
-    "reviewer-group": "Grupo de examen",
-    "teammate": "Participante",
-    "teammates": "Participantes",
-    "teammate-groups": "Grupos participantes",
-    "teammate-group": "Grupo participante",
-    "select": "Seleccione los derechos",
-    "group": "Grupos",
-    "leader": "Group Leader",
-    "role-leader": "Es un editor que aparecerá con una etiqueta “Líder de crecimiento”.",
-    "member": "Miembro",
-    "role-member": "Parece miembro del grupo. Sus proyectos aparecen entre los proyectos del grupo."
-  },
   "search": {
     "all-filters": "Todos los filtros",
     "banner-portal": "También puede buscar proyectos de todas las comunidades en",
@@ -1890,7 +1926,10 @@
     "disambiguate": "(desambiguación)",
     "suggestions": "Propuestas",
     "choose-skill": "Haga clic en la habilidad elegida:",
-    "main-tags": "o elegir entre las etiquetas principales"
+    "main-tags": "o elegir entre las etiquetas principales",
+    "label": "Búsqueda",
+    "empty": "No hay resultados disponibles",
+    "results": "Resultados de la búsqueda"
   },
   "sdg": {
     "1": {
@@ -1944,10 +1983,11 @@
     "17": {
       "title": "Asociaciones para los Objetivos"
     },
-    "add-short": "añadir un ODS",
     "sdg-fulltext": "Objetivos de desarrollo sostenible",
     "title": "ODS",
-    "empty": "Nada aquí todavía... Los colaboradores aún no han añadido ODS."
+    "empty": "Nada aquí todavía... Los colaboradores aún no han añadido ODS.",
+    "add-short": "Añadir ODS",
+    "edit-short": "Editar los ODS"
   },
   "stats": {
     "cumulated-projects": "Proyectos nuevos acumulativos",
@@ -1996,7 +2036,17 @@
     "no-user-message": "Ningún usuario corresponde a su búsqueda",
     "remove-user-confirm": "¿Estás seguro de querer borrar este usuario del proyecto?",
     "remove-group-confirm": "¿Estás seguro de que quieres eliminar este grupo del proyecto?",
-    "team": "Equipo"
+    "team": "Equipo",
+    "member": {
+      "add": "Añadir miembro | Añadir miembros",
+      "edit": "Editar miembro | Editar miembros",
+      "delete": "Suprimir miembro | Suprimir miembros"
+    },
+    "group": {
+      "add": "Agregar grupo | Agregar grupos",
+      "edit": "Editar grupo | Editar grupos",
+      "delete": "Grupo Suprímase | Eliminar grupos"
+    }
   },
   "template": {
     "edit-tags": "Editar etiquetas",
@@ -2287,6 +2337,21 @@
     "team-group-delete": {
       "success": "El grupo ha sido eliminado con éxito",
       "error": "Error durante la eliminación del grupo"
+    },
+    "template-get": {
+      "error": "Error durante la obtención de plantilla"
+    },
+    "group-project-create": {
+      "success": "Los proyectos se han añadido con éxito",
+      "error": "Error durante los proyectos añadidos"
+    },
+    "group-project-remove": {
+      "success": "El proyecto se ha eliminado con éxito",
+      "error": "Error durante el proyecto eliminado"
+    },
+    "pdf": {
+      "success": "El PDF se ha generado con éxito; un enlace se enviará a usted por correo electrónico.",
+      "error": "Se produjo un error al generar el PDF. Por favor contacte con un administrador."
     }
   },
   "success": {
@@ -2443,7 +2508,8 @@
       },
       "content": {
         "label": "información",
-        "placeholder": "Añada información sobre este evento"
+        "placeholder": "Añada información sobre este evento",
+        "required": "El contenido es necesario"
       },
       "event_date": {
         "label": "Fecha del evento *",
@@ -2700,12 +2766,17 @@
   "pagination": {
     "previous": "Página anterior",
     "next": "Página siguiente",
-    "page": "Página"
+    "page": "Página",
+    "first": "Primera página",
+    "last": "Última página",
+    "visibility-per-page": "Número de artículos por página."
   },
   "pdf": {
     "blog-entries-limited-warning": "Sólo las primeras {max} entradas del blog se incluyen en la exportación de PDF (del total {total}).",
     "download-pdf": "PDF",
-    "generated-on": "Generado en {date}"
+    "generated-on": "Generado en {date}",
+    "confirm": "¿Quieres generar pdf para este {type} ?",
+    "choices": "Seleccione los elementos que desea agregar al PDF."
   },
   "group": {
     "is-other-org": "Este grupo pertenece a otra plataforma",
@@ -2743,7 +2814,6 @@
       "add-projects": "Agregar Proyectos Destacados",
       "edit": "Modificar",
       "edit-members": "Editar miembros",
-      "edit-roles": "Edición de funciones",
       "form-incomplete": "Los campos están desaparecidos o inválidos, completos para poder salvar.",
       "create-group": "Crear grupo",
       "edit-group": "Edit Group",
@@ -2778,24 +2848,9 @@
       "publication-status-errors": {
         "required": "Este campo es necesario"
       },
-      "delete": "Grupo Suprímase"
-    },
-    "role": {
-      "members": {
-        "label": "Miembro",
-        "help": "Miembro"
-      },
-      "leaders": {
-        "label": "Head of Group",
-        "help": "Head of Group"
-      },
-      "leaders-managers": {
-        "label": "Leader and Manager"
-      },
-      "managers": {
-        "label": "Editorial",
-        "help": "Editorial"
-      }
+      "delete": "Grupo Suprímase",
+      "confirm-remove-project": "¿De verdad quieres eliminar este proyecto?",
+      "confirm-remove-member": "¿De verdad quieres eliminar a este miembro?"
     },
     "view": "Ver grupo",
     "conferences": "Conferencias",
@@ -3170,6 +3225,64 @@
   "follow": {
     "follow": "Seguir",
     "unfollow": "Unfollow"
+  },
+  "role": {
+    "owners": {
+      "label": "Editor | Editores",
+      "help": "Tiene todos los derechos de edición para este grupo."
+    },
+    "reviewers": {
+      "label": "Reviewer | Revisores",
+      "help": "Cuando el proyecto ha sido marcado como 'listo para revisión', el revisor puede dar retroalimentación, y puede bloquear un proyecto para evitar nuevas ediciones en el proyecto. Un revisor también tiene derechos de edición."
+    },
+    "members": {
+      "label": "Participante | Participantes",
+      "help": "No tiene derechos de edición, pero aparece como miembro del equipo."
+    },
+    "leaders": {
+      "label": "Grupo líder | Grupo de líderes",
+      "help": "Es un editor que aparecerá con una etiqueta “Líder de crecimiento”."
+    },
+    "owner_groups": {
+      "label": "Grupo de redacción | Grupo de editores",
+      "help": "Es un editor que aparecerá con una etiqueta “Líder de crecimiento”."
+    },
+    "reviewer_groups": {
+      "label": "Grupo de examen | Reviewers group",
+      "help": ""
+    },
+    "member_groups": {
+      "label": "Grupo participante | Grupo de participantes",
+      "help": "Parece miembro del grupo. Sus proyectos aparecen entre los proyectos del grupo."
+    },
+    "facilitators": {
+      "label": "Facilitador | Facilitadores",
+      "help": "Facilitador: Este papel es para profesores o tutores: Ellos ven todos los proyectos privados en el portal y pueden editarlos. También tienen todos los derechos de los Usuarios."
+    },
+    "admins": {
+      "label": "Grupo admin | Grupo de administradores",
+      "help": "Org admin: Este papel permite configurar su portal y gestionar usuarios en su portal. Los administradores de org tienen acceso al menú de administración del portal para configurar el portal y administrar sus usuarios. También tienen todos los derechos de los facilitadores."
+    },
+    "users": {
+      "label": "Usuario | Usuarios",
+      "help": "Usuario: un usuario es parte de su comunidad. Pueden crear proyectos, editar sus proyectos y escribir comentarios sobre cualquier proyecto. Ellos ven un proyecto privado cuando son parte del equipo de estos proyectos, ven todos los proyectos con visibilidad comunitaria, y todos los proyectos públicos."
+    },
+    "managers": {
+      "label": "Editorial | Editores",
+      "help": ""
+    },
+    "none": {
+      "label": "",
+      "help": ""
+    },
+    "label": "Función | Funciones",
+    "edit": "Modifier les rôles",
+    "select": "Seleccione los derechos",
+    "help": "Información sobre roles.",
+    "viewers": {
+      "label": "Viewer | Viewers",
+      "help": "Viewer: No tiene derechos de edición."
+    }
   },
   "prompts": {
     "create-prompt": "Crear indicación",

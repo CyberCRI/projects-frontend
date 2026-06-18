@@ -43,6 +43,13 @@
   gap: 1rem;
 }
 
+.list-flow-container {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
 .scale-hover {
   transition: transform 0.2s;
 
@@ -59,4 +66,40 @@ svg.icon {
   width: 1.5rem;
   display: inline-block;
   vertical-align: center;
+}
+
+.m2 {
+  margin: 0.5rem;
+}
+
+.m4 {
+  margin: 1rem;
+}
+
+.m8 {
+  margin: 2rem;
+}
+
+.my2 {
+  margin: 0.5rem 0;
+}
+
+.my4 {
+  margin: 1rem 0;
+}
+
+.my8 {
+  margin: 2rem 0;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.opacity-80 {
+  opacity: 0.8;
+}
+
+.opacity-50 {
+  opacity: 0.5;
 }

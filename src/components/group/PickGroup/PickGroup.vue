@@ -29,13 +29,14 @@
     </ul>
   </div>
 </template>
+
 <script>
-import { searchGroupsAlgolia } from '~/api/search.service.ts'
+import { searchGroups } from '~/api/search.service'
 
 import GroupsElementRadio from '~/components/group/GroupsElement/GroupsElementRadio.vue'
 import SearchInput from '~/components/base/form/SearchInput.vue'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useOrganizationsStore from '~/stores/useOrganizations'
 
 export default {
   name: 'PickGroup',
@@ -146,12 +147,13 @@ export default {
       if (this.queryString) {
         this.isLoading = true
 
-        const filters = {
-          limit: 12,
-          organizations: this.organizationsStore.current.code,
-        }
         const listGroups = (
-          await searchGroupsAlgolia(encodeURIComponent(this.queryString), filters)
+          await searchGroups(this.queryString, {
+            query: {
+              organizations: [this.organizationsStore.current.code],
+              limit: 12,
+            },
+          })
         ).results
 
         this.listGroups = listGroups ? listGroups.map((result) => result.people_group) : []

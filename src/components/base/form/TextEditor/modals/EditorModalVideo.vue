@@ -1,73 +1,71 @@
 <template>
   <DialogModal
-    :disabled="disabled"
+    :disabled="!isValid"
     :confirm-button-label="$t('common.confirm')"
     :cancel-button-label="$t('common.cancel')"
-    @close="closeModal"
-    @submit="insertVideo"
+    @close="emit('close')"
+    @submit="updateVideo"
   >
     <template #header>
       {{ $t('file.add-video') }}
     </template>
 
     <template #body>
+      <div class="video-preview">
+        <iframe v-if="displaySrc" :src="displaySrc" width="440" height="220" frameborder="0" />
+      </div>
       <TextInput
-        v-model="videoSrc"
+        v-model="form.src"
+        :label="$t('multieditor.video.label')"
+        required
+        :help="$t('file.add-video-hint')"
         :placeholder="$t('resource.add-link')"
         data-test="input-video-link"
         class="text-input"
+        :errors="errors.src"
       />
-
-      <LpiSnackbar type="info" icon="QuestionMark">
-        <div v-html="$t('file.add-video-hint')" />
-      </LpiSnackbar>
     </template>
   </DialogModal>
 </template>
 
 <script setup lang="ts">
+import { getFormatedVideoSrc } from '~/components/base/form/TextEditor/tiptap-extensions/ExternalVideo'
 import DialogModal from '~/components/base/modal/DialogModal.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
-import LpiSnackbar from '~/components/base/LpiSnackbar.vue'
+import { useTipTapVideoForm } from '~/form/tiptap/video'
 import type { Editor } from '@tiptap/vue-3'
-
-// TODO: validate video src and display error message
 
 const props = defineProps<{
   editor: Editor
 }>()
 
 const emit = defineEmits<{
-  closeModal: []
+  close: []
 }>()
 
-const videoSrc = ref('')
+const { form, isValid, errors, cleanedData } = useTipTapVideoForm()
 
-const validVideo = computed(() => {
-  return videoSrc.value.match(/youtu\.be|youtube|vimeo/)
-})
-const disabled = computed(() => {
-  return !videoSrc.value || !validVideo.value
-})
-
-const closeModal = () => emit('closeModal')
-
-const handleVideoModalConfirmed = (data) => {
-  // @ts-expect-error 'setExternalVideo' is set in extetions (from ExternalVideo.ts)
-  props.editor.chain().focus().setExternalVideo({ src: data.src }).run()
-  closeModal()
-}
-
-const insertVideo = () => {
-  if (validVideo.value) {
-    handleVideoModalConfirmed({ src: videoSrc.value })
-    videoSrc.value = ''
+const displaySrc = computed(() => {
+  if (cleanedData.value) {
+    return getFormatedVideoSrc(cleanedData.value.src)
   }
+  return ''
+})
+
+const updateVideo = () => {
+  props.editor
+    .chain()
+    .focus()
+    .setExternalVideo({ src: cleanedData.value.src, size: 'medium' })
+    .run()
+  emit('close')
 }
 </script>
 
 <style lang="scss" scoped>
-.text-input {
-  margin-bottom: $space-l;
+.video-preview {
+  display: flex;
+  justify-content: center;
+  margin: 1rem;
 }
 </style>

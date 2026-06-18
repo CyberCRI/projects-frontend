@@ -12,7 +12,7 @@
     }"
   >
     <template #content>
-      <GroupSubList :group="group" :limit="2" :limit-members="6" :with-pagination="false" />
+      <GroupSubList :group="group" :limit="2" :limit-members="6" :with-pagination="false" preview />
     </template>
   </BaseGroupPreview>
 </template>

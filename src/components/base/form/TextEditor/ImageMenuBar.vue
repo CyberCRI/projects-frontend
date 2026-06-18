@@ -1,23 +1,10 @@
-<template>
-  <LpiBubbleMenu
-    ref="bubble"
-    :editor="editor"
-    :should-show="({ editor }) => editor.isActive('image')"
-    class="tablemenu"
-    :tippy-options="tippyOptions"
-  >
-    <ContextualToolMenu class="image-menu-bar">
-      <TextButtonMenuItem v-for="(item, index) in items" :key="index" :item="item" />
-    </ContextualToolMenu>
-  </LpiBubbleMenu>
-</template>
-
 <script setup lang="ts">
 import LpiBubbleMenu from '~/components/base/form/TextEditor/LpiBubbleMenu/LpiBubbleMenu'
 
+import MenuItem from '~/components/base/form/TextEditor/MenuItem.vue'
 import menuBarTippyOptions from '~/functs/menuBarTippyOptions'
-import ContextualToolMenu from './ContexttualToolMenu.vue'
-import TextButtonMenuItem from './TextButtonMenuItem.vue'
+import type { IconImageChoice } from '~/functs/IconImage.js'
+import ContexttualToolMenu from './ContexttualToolMenu.vue'
 import type { Editor } from '@tiptap/vue-3'
 
 const props = defineProps<{
@@ -47,28 +34,24 @@ const items = computed(() => [
     title: t('multieditor.image.25_width'),
     action: fixSelection(() => props.editor.commands.updateAttributes('image', { size: 'small' })),
     isActive: () => props.editor.getAttributes('image').size === 'small',
-    isDisabled: () => false,
   },
   {
     label: t('multieditor.image.medium'),
     title: t('multieditor.image.50_width'),
     action: fixSelection(() => props.editor.commands.updateAttributes('image', { size: 'medium' })),
     isActive: () => props.editor.getAttributes('image').size === 'medium',
-    isDisabled: () => false,
   },
   {
     label: t('multieditor.image.large'),
     title: t('multieditor.image.75_width'),
     action: fixSelection(() => props.editor.commands.updateAttributes('image', { size: 'large' })),
     isActive: () => props.editor.getAttributes('image').size === 'large',
-    isDisabled: () => false,
   },
   {
     label: t('multieditor.image.full'),
     title: t('multieditor.image.100_width'),
     action: fixSelection(() => props.editor.commands.updateAttributes('image', { size: 'full' })),
     isActive: () => props.editor.getAttributes('image').size === 'full',
-    isDisabled: () => false,
   },
   {
     label: t('multieditor.image.original'),
@@ -77,10 +60,29 @@ const items = computed(() => [
       props.editor.commands.updateAttributes('image', { size: 'original' })
     ),
     isActive: () => props.editor.getAttributes('image').size === 'original',
-    isDisabled: () => false,
+  },
+  {
+    icon: 'Close' satisfies IconImageChoice as IconImageChoice,
+    title: t('multieditor.delete_image'),
+    action: () => props.editor.chain().focus().deleteSelection().run(),
   },
 ])
 
 const bubbleRef = useTemplateRef('bubble')
 const tippyOptions = menuBarTippyOptions(bubbleRef)
 </script>
+
+<template>
+  <LpiBubbleMenu
+    ref="bubble"
+    :editor="editor"
+    :should-show="({ editor }) => editor.isActive('image')"
+    class="tablemenu"
+    :tippy-options="tippyOptions"
+    plugin-key="ImageMenu"
+  >
+    <ContexttualToolMenu class="image-menu-bar">
+      <MenuItem v-for="item in items" :key="item.label" v-bind="item" />
+    </ContexttualToolMenu>
+  </LpiBubbleMenu>
+</template>

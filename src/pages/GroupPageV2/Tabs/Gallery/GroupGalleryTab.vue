@@ -1,6 +1,6 @@
 <template>
   <BaseModuleTab :title="$t(GroupModuleTitle.gallery, countElement)" :count="countElement">
-    <BaseGroupGallery :group="group" :editable="isInEditingMode" />
+    <BaseGroupGallery :group="group" :editable="editable" />
   </BaseModuleTab>
 </template>
 
@@ -13,9 +13,9 @@ import { GroupModuleTitle } from '@/models/invitation.model'
 const props = withDefaults(
   defineProps<{
     group: TranslatedPeopleGroupModel
-    isInEditingMode?: boolean
+    editable?: boolean
   }>(),
-  { isInEditingMode: false }
+  { editable: false }
 )
 
 const countElement = computed<number>(() => props.group.modules?.gallery)

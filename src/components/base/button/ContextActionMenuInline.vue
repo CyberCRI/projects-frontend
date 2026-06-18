@@ -1,5 +1,6 @@
 <template>
   <div class="context-action-menu-inline">
+    <slot />
     <LpiButton
       v-if="canEdit"
       btn-icon="Pen"
@@ -9,7 +10,7 @@
     />
     <LpiButton
       v-if="canDelete"
-      btn-icon="Close"
+      btn-icon="TrashCanOutline"
       :aria-label="$t('common.delete')"
       class="skeletons-background"
       @click.prevent="$emit('delete')"

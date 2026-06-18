@@ -5,22 +5,20 @@
       <h4>{{ title }}</h4>
       <p>{{ description }}</p>
     </div>
-    <ToolTip v-if="focus" hover :content="$t('location.focus-on-map')" placement="top">
-      <ContextActionButton
-        secondary
-        no-border
-        action-icon="MapMarker"
-        @click="$emit('focus', location)"
-      />
-    </ToolTip>
-    <ContextActionMenu
-      v-if="editable"
+    <ContextActionMenuInline
       class="location-actions"
-      can-edit
-      can-delete
+      :can-edit="editable"
+      :can-delete="editable"
       @edit="$emit('edit', location)"
       @delete="$emit('delete', location)"
-    />
+    >
+      <LpiButton
+        v-if="focus"
+        btn-icon="MapMarker"
+        :title="$t('location.focus-on-map')"
+        @click.prevent="$emit('focus', location)"
+      />
+    </ContextActionMenuInline>
   </div>
 </template>
 
@@ -29,6 +27,7 @@ import type { AnyTranslatedLocation } from '~/models/location.model'
 
 import LocationType from '~/components/map/LocationType.vue'
 
+import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
 import { cropIfTooLong } from '~/functs/string'
 
 const props = withDefaults(
@@ -37,12 +36,13 @@ const props = withDefaults(
     editable?: boolean
     focus?: boolean
     showLocationType?: boolean
-    defaultTitle: string
+    defaultTitle?: string
   }>(),
   {
     editable: false,
     focus: true,
     showLocationType: false,
+    defaultTitle: null,
   }
 )
 
@@ -52,9 +52,14 @@ defineEmits<{
   edit: [AnyTranslatedLocation]
 }>()
 
+const { t } = useNuxtI18n()
+
 // need to safe guard with translated title (if we are in edit/create mode)
 const title = computed(() =>
-  cropIfTooLong(props.location.$t?.title || props.location.title || props.defaultTitle, 40)
+  cropIfTooLong(
+    props.location.$t?.title || props.location.title || props.defaultTitle || t('location.address'),
+    40
+  )
 )
 const description = computed(() =>
   cropIfTooLong(props.location.$t?.description || props.location.description, 80)
@@ -82,5 +87,9 @@ const description = computed(() =>
       font-weight: 300;
     }
   }
+}
+
+.location-actions {
+  margin: auto;
 }
 </style>

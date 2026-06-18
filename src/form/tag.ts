@@ -1,6 +1,6 @@
 import type { TagModel } from '~/models/tag.model'
 
-export const defaultForm = (): TagModel => ({
+export const defaultTagForm = (): TagModel => ({
   id: null,
   title: '',
   title_en: '',

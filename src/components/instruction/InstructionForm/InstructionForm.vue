@@ -1,123 +1,106 @@
 <template>
-  <form>
-    <div class="form-section">
-      <TextInput
-        :model-value="modelValue.title"
-        :label="$t('instructions.form.title.label')"
-        :placeholder="$t('instructions.form.title.placeholder')"
-        class="input-field"
-        @update:model-value="updateForm({ title: $event })"
-        @blur="v$.title.$validate"
-      />
-      <FieldErrors :errors="v$.title.$errors" />
-    </div>
-
-    <div class="form-section">
-      <label>{{ $t('instructions.form.content.label') }}</label>
-      <TipTapEditor
-        ref="tiptapEditor"
-        :model-value="modelValue.content"
-        :save-image-callback="saveOrganizationImage"
-        class="input-field content-editor no-max-height"
-        mode="full"
-        @update:model-value="updateForm({ content: $event })"
-        @blur="v$.content.$validate"
-      />
-
-      <FieldErrors :errors="v$.content.$errors" />
-    </div>
-
-    <DateField
-      :model-value="modelValue.publication_date"
-      :label="$t('instructions.form.publication_date.label')"
-      :errors="v$.publication_date.$errors"
-      @update:model-value="onDateSelected"
+  <form class="list-container">
+    <TextInput
+      v-model="form.title"
+      :label="$t('instructions.form.title.label')"
+      :placeholder="$t('instructions.form.title.placeholder')"
+      class="input-field"
+      :errors="errors.title"
+      required
     />
 
-    <div class="form-section">
-      <label>{{ $t('instructions.form.notify.label') }}</label>
-      <p class="notice">
-        {{ $t('instructions.form.notify.notice') }}
-      </p>
+    <Field :label="$t('instructions.form.content.label')" required>
+      <TipTapEditor
+        ref="tiptapEditor"
+        v-model="form.content"
+        :save-image-callback="saveOrganizationImage"
+        class="input-field content-editor no-max-height w-full"
+        mode="full"
+        :errors="errors.content"
+      />
+    </Field>
 
+    <DateField
+      v-model="form.publication_date"
+      :label="$t('instructions.form.publication_date.label')"
+      :errors="errors.publication_date"
+    />
+
+    <Field
+      :label="$t('instructions.form.notify.label')"
+      :help="$t('instructions.form.notify.notice')"
+    >
       <button type="button" class="date-btn" @click="toggleNotify">
         <IconImage
           class="icon"
-          :name="modelValue.has_to_be_notified ? 'SquareRounded' : 'SquareRoundedOutline'"
+          :name="form.has_to_be_notified ? 'SquareRounded' : 'SquareRoundedOutline'"
         />
         {{ $t('instructions.form.notify.button') }}
       </button>
-    </div>
+    </Field>
 
-    <div class="form-section">
-      <label>{{ $t('instructions.form.visibility.label') }}</label>
+    <Field :label="$t('instructions.form.visibility.label')">
       <LpiCheckbox
-        v-model="modelValue.visible_by_all"
+        v-model="form.visible_by_all"
         :label="$t('instructions.form.visibility.notice')"
       />
-    </div>
+    </Field>
 
-    <div class="form-section">
-      <label>{{ $t('instructions.form.groups.label') }}</label>
-      <p class="notice">
-        {{ $t('instructions.form.groups.notice') }}
-      </p>
-
-      <MultiGroupPicker
-        :model-value="modelValue.people_groups"
-        @update:model-value="updateForm({ people_groups: $event })"
-      />
-    </div>
+    <Field
+      :label="$t('instructions.form.groups.label')"
+      :help="$t('instructions.form.groups.notice')"
+    >
+      <MultiGroupPicker v-model="form.people_groups" />
+    </Field>
   </form>
 </template>
 
 <script setup lang="ts">
 import MultiGroupPicker from '@/components/group/MultiGroupPicker/MultiGroupPicker.vue'
+import { defaultInstructionForm, useInstructionForm } from '~/form/instruction'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import { postOrganizationImage } from '@/api/organizations.service'
 import type { InstructionForm } from '@/models/instruction.model'
-import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import DateField from '@/components/base/form/DateField.vue'
-import { helpers, required } from '@vuelidate/validators'
-import useVuelidate from '@vuelidate/core'
+import Field from '~/components/base/form/Field.vue'
 
-const model = defineModel<InstructionForm>()
+const props = defineProps<{
+  instruction?: Partial<InstructionForm>
+}>()
+
+const defaultLocalForm = () => {
+  const newForm = defaultInstructionForm()
+  if (props.instruction) {
+    newForm.id = props.instruction.id
+    newForm.title = props.instruction.title || newForm.title
+    newForm.content = props.instruction.content || newForm.content
+    newForm.visible_by_all = props.instruction.visible_by_all ?? newForm.visible_by_all
+    newForm.publication_date = props.instruction.publication_date || newForm.publication_date
+    newForm.has_to_be_notified = props.instruction.has_to_be_notified || newForm.has_to_be_notified
+  }
+  return newForm
+}
+
+const model = defineModel<InstructionForm>({ default: defaultInstructionForm() })
+
+const { form, isValid, errors, cleanedData, reset } = useInstructionForm({ lazy: true })
+watch(
+  () => props.instruction,
+  () => reset(defaultLocalForm()),
+  { immediate: true, deep: true }
+)
+watchEffect(() => (model.value = cleanedData.value))
 
 const emit = defineEmits<{
   invalid: [boolean]
 }>()
-const { t } = useNuxtI18n()
+watchEffect(() => emit('invalid', !isValid.value))
 const organizationCode = useOrganizationCode()
 
-const rules = computed(() => ({
-  title: {
-    required: helpers.withMessage(t('instructions.form.title.required'), required),
-  },
-  content: {
-    required: helpers.withMessage(t('instructions.form.content.required'), required),
-  },
-  publication_date: {
-    required: helpers.withMessage(t('instructions.form.publication_date.required'), required),
-  },
-}))
-
-const v$ = useVuelidate(rules, model)
-defineExpose({ v$ })
-
-watch(
-  () => v$.value.$invalid,
-  (isInvalid) => {
-    emit('invalid', isInvalid)
-  }
-)
-
-const updateForm = (data) => {
-  model.value = {
-    ...model.value,
-    ...data,
-  }
+const toggleNotify = () => {
+  form.value.has_to_be_notified = !form.value.has_to_be_notified
 }
 
 const saveOrganizationImage = (file) => {
@@ -127,13 +110,6 @@ const saveOrganizationImage = (file) => {
     orgCode: organizationCode,
     body: formData,
   })
-}
-const onDateSelected = (modelData) => {
-  updateForm({ publication_date: modelData })
-}
-
-const toggleNotify = () => {
-  updateForm({ has_to_be_notified: !model.value.has_to_be_notified })
 }
 </script>
 

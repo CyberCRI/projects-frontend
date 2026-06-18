@@ -170,9 +170,9 @@ useLpiHead2({
                 :label="$t('register.given_name.label')"
                 :placeholder="$t('register.given_name.placeholder')"
                 data-test="first-name"
+                :errors="v$.given_name.$errors"
                 @blur="v$.given_name.$validate"
               />
-              <FieldErrors :errors="v$.given_name.$errors" />
             </div>
             <div class="form-group">
               <TextInput
@@ -182,7 +182,6 @@ useLpiHead2({
                 data-test="last-name"
                 @blur="v$.family_name.$validate"
               />
-              <FieldErrors :errors="v$.family_name.$errors" />
             </div>
             <div class="form-group">
               <TextInput
@@ -193,7 +192,6 @@ useLpiHead2({
                 data-test="email"
                 @blur="v$.email.$validate"
               />
-              <FieldErrors :errors="v$.email.$errors" />
             </div>
 
             <div class="form-group">
@@ -203,9 +201,9 @@ useLpiHead2({
                 :label="$t('register.password.label')"
                 :placeholder="$t('register.password.placeholder')"
                 data-test="password"
+                :errors="v$.password.$errors"
                 @blur="v$.password.$validate"
               />
-              <FieldErrors :errors="v$.password.$errors" />
             </div>
             <div class="form-group">
               <div class="tos-wrapper">

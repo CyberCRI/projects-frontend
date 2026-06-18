@@ -9,17 +9,25 @@ import type { Translated } from '~/interfaces/translated'
  */
 export interface AttachmentFileModel extends BaseModel {
   id: number
-  file: File
+  file: string
   title: string
   attachment_type: AttachmentType
   description: string
   mime: string
 }
 
+export type AttachmentFileId = AttachmentFileModel['id']
+
+export type AttachmentFileForm = Omit<AttachmentFileModel, 'id'> & {
+  id?: number
+}
+
 export type TranslatedAttachmentFile = Translated<AttachmentFileModel, 'title' | 'description'>
 
-export type AttachmentFileOutput = Required<AttachmentFileModel>
+export type AttachmentFileOutput = Omit<Required<AttachmentFileModel>, 'file'> & {
+  file: File
+}
 
-export type AttachmentFileInput = Required<AttachmentFileModel> & {
+export type AttachmentFileInput = Required<AttachmentFileOutput> & {
   project_id: string
 }

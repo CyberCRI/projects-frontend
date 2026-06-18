@@ -1,19 +1,28 @@
 import useGlobalsStore from '~/stores/useGlobals'
 
-export default defineNuxtRouteMiddleware(async function useGuardFromPendingEdit(/*to, from*/) {
-  const globalsStore = useGlobalsStore()
-  if (globalsStore.hasUnsavedEdit) {
-    let answer = true
-    try {
-      answer = await new Promise((accept) => {
-        globalsStore.confirmDiscardPendingEditsPromise = accept
-      })
-    } catch (e) {
-      console.error(e)
-    } finally {
-      globalsStore.confirmDiscardPendingEditsPromise = null
+export default defineNuxtRouteMiddleware(
+  onClient(async () => {
+    const globalsStore = useGlobalsStore()
+    if (!globalsStore.hasUnsavedEdit) {
+      return
     }
-    if (answer) globalsStore.hasUnsavedEdit = false
-    else return abortNavigation()
-  }
-})
+
+    return new Promise((accept) => {
+      globalsStore.confirmDiscardPendingEditsPromise = accept
+    })
+      .then((answer: boolean) => {
+        if (!answer) {
+          return abortNavigation()
+        }
+        globalsStore.hasUnsavedEdit = false
+      })
+      .catch((err) => {
+        console.error(err)
+        // if errors co to next page
+        globalsStore.hasUnsavedEdit = false
+      })
+      .finally(() => {
+        globalsStore.confirmDiscardPendingEditsPromise = null
+      })
+  })
+)

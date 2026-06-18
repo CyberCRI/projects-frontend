@@ -1,0 +1,185 @@
+<script setup lang="ts">
+import { patchReview, postReview } from '~/api/reviews.service'
+
+import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
+import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import SwitchInput from '~/components/base/form/SwitchInput.vue'
+import TextInput from '~/components/base/form/TextInput.vue'
+import BaseDrawer from '~/components/base/BaseDrawer.vue'
+
+import useToasterStore from '~/stores/useToaster'
+import useUsersStore from '~/stores/useUsers'
+
+import type { ReviewForm, ReviewModel, TranslatedReview } from '~/models/review.model'
+import { defaultProjectReviewForm, useProjectReviewForm } from '~/form/review'
+import type { ProjectForm, TranslatedProject } from '~/models/project.model'
+import { patchProject } from '~/api/projects.service'
+import { isEqual } from 'es-toolkit'
+
+const props = withDefaults(
+  defineProps<{
+    project: TranslatedProject
+    review?: TranslatedReview
+    isOpened?: boolean
+  }>(),
+  {
+    rdata: null,
+    isOpened: false,
+    review: null,
+  }
+)
+
+const emit = defineEmits<{
+  close: []
+  reload: [ReviewModel]
+}>()
+
+const usersStore = useUsersStore()
+
+const defaultLocalForm = () => {
+  const defaultForm = defaultProjectReviewForm()
+  const newForm = { ...defaultForm }
+
+  newForm.project_id = props.project.id
+  newForm.lock = props.project.is_locked
+  newForm.publish = props.project.publication_status === 'public'
+
+  if (props.review) {
+    newForm.title = props.review.title || newForm.title
+    newForm.description = props.review.description || newForm.description
+    newForm.reviewer_id = props.review.reviewer.id
+  } else {
+    newForm.reviewer_id = usersStore.id
+  }
+  return newForm
+}
+
+const toaster = useToasterStore()
+const { t } = useNuxtI18n()
+
+const asyncing = ref(false)
+const { stateModals, closeModals, openModals } = useModals({ saveChange: false })
+
+const { form, isValid, errors, cleanedData, reset } = useProjectReviewForm({ lazy: true })
+
+const isFormEqual = useBlockNavigation(() => isEqual(form.value, defaultLocalForm()))
+
+watch(
+  () => [props.project, props.review, props.isOpened],
+  () => reset(defaultLocalForm()),
+  { immediate: true, deep: true }
+)
+
+const close = () => {
+  closeModals('saveChange')
+  emit('close')
+}
+
+const onSuccess = (body: ReviewForm, review: ReviewModel) => {
+  const projectForm: ProjectForm = {
+    life_status: 'running',
+    is_locked: false,
+  }
+  if (body.publish) {
+    projectForm.publication_status = 'public'
+  }
+  if (body.lock) {
+    projectForm.is_locked = true
+    projectForm.life_status = 'completed'
+  }
+
+  patchProject(props.project.id, projectForm).then(() => {
+    emit('reload', review)
+    close()
+  })
+}
+
+const saveReview = (body: ReviewForm) => {
+  return postReview(props.project.id, body)
+    .then((review) => {
+      toaster.pushSuccess(t('toasts.review-create.success'))
+      onSuccess(body, review)
+    })
+    .catch(() => toaster.pushError(t('toasts.review-create.error')))
+}
+
+const updateReview = (body: ReviewForm) => {
+  return patchReview(props.project.id, props.review.id, body)
+    .then((review) => {
+      toaster.pushSuccess(t('toasts.review-update.success'))
+      onSuccess(body, review)
+    })
+    .catch(() => toaster.pushError(t('toasts.review-update.error')))
+}
+
+const submit = () => {
+  if (!isValid.value) {
+    return
+  }
+  asyncing.value = true
+
+  const body = { ...cleanedData.value }
+
+  if (props.review?.id) {
+    updateReview(body).finally(() => (asyncing.value = false))
+  } else {
+    saveReview(body).finally(() => (asyncing.value = false))
+  }
+}
+
+const onClose = () => {
+  if (isFormEqual.value) {
+    close()
+  } else {
+    openModals('saveChange')
+  }
+}
+</script>
+
+<template>
+  <BaseDrawer
+    :confirm-action-disabled="!isValid || isFormEqual"
+    :confirm-action-name="$t('common.save')"
+    :is-opened="isOpened"
+    :title="review?.id ? $t('project.add-review') : $t('project.edit-review')"
+    class="review-drawer medium"
+    :asyncing="asyncing"
+    @close="onClose"
+    @confirm="submit"
+  >
+    <div class="list-container">
+      <TextInput v-model="form.title" :label="$t('common.title')" required :errors="errors.title" />
+
+      <Field :label="$t('project.description')">
+        <TipTapEditor
+          v-model="form.description"
+          required
+          class="w-full"
+          :errors="errors.description"
+        />
+      </Field>
+
+      <Field :label="$t('project.publish')">
+        <SwitchInput v-model="form.publish" />
+      </Field>
+
+      <Field :label="$t('project.lock')">
+        <SwitchInput v-model="form.lock" />
+      </Field>
+    </div>
+  </BaseDrawer>
+
+  <ConfirmModal
+    v-if="stateModals.saveChange"
+    :title="$t('form.quit-without-saving-title')"
+    :content="$t('common.confirm-close')"
+    @cancel="closeModals('saveChange')"
+    @confirm="close"
+  />
+</template>
+
+<style lang="scss" scoped>
+.list-container {
+  gap: 2rem;
+}
+</style>

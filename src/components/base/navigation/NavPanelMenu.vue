@@ -44,7 +44,7 @@ export type MenuEntry = {
   icon: IconImageChoice
   actionIcon?: IconImageChoice
   key: string
-  view: RouteLocationRaw
+  view?: RouteLocationRaw
   altView?: RouteLocationRaw
   props?: {
     [key: string]: any
@@ -52,7 +52,8 @@ export type MenuEntry = {
   isNotLink?: boolean
   dataTest?: string
   noTitle?: boolean
-  isAddAction?: () => void
+  isAddAction?: boolean
+  ignoreUnsavedEdit?: boolean
 }
 const props = withDefaults(
   defineProps<{
@@ -73,7 +74,7 @@ const globalsStore = useGlobals()
 
 const onMenuEntryClicked = async (entry: MenuEntry) => {
   if (entry.isAddAction) {
-    if (globalsStore.hasUnsavedEdit) {
+    if (!entry.ignoreUnsavedEdit && globalsStore.hasUnsavedEdit) {
       let answer = true
       try {
         answer = await new Promise((accept) => {

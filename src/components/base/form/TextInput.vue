@@ -1,8 +1,13 @@
 <template>
-  <div :class="{ 'big-input': bigInput, disabled: disabled }" class="input-ctn">
-    <label v-if="label" :for="inputId || randomId">{{ label }}</label>
-    <slot v-else />
-
+  <Field
+    :disabled="disabled"
+    :label="label"
+    :help="help"
+    :required="required"
+    :errors="errors"
+    :bottom-text="bottomText"
+    :big-input="bigInput"
+  >
     <textarea
       v-if="inputType === 'textarea'"
       :id="inputId || (label ? randomId : null)"
@@ -13,12 +18,17 @@
       :data-test="dataTest"
       :maxlength="maxLength"
       :rows="rows"
+      class="skeletons-background"
       @keydown.enter="$emit('enter')"
       @focus="$emit('focus', $event)"
       @blur="$emit('blur', $event)"
     />
 
-    <span v-else class="input-wrapper" :class="{ 'is-password': inputType == 'password' }">
+    <span
+      v-else
+      class="input-wrapper skeletons-background"
+      :class="{ 'is-password': inputType == 'password' }"
+    >
       <input
         :id="inputId || (label ? randomId : null)"
         ref="inputField"
@@ -42,16 +52,12 @@
         @click="typeOverride = typeOverride ? null : 'text'"
       />
     </span>
-
-    <small v-if="bottomText">{{ bottomText }}</small>
-
-    <FieldErrors :errors="errors" />
-  </div>
+  </Field>
 </template>
 
 <script setup lang="ts">
-import type FieldErrors from '~/components/base/form/FieldErrors.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
+import Field from '~/components/base/form/Field.vue'
 import type { ErrorObject } from '@vuelidate/core'
 import type { Events } from 'vue'
 
@@ -60,6 +66,7 @@ const props = withDefaults(
     autofocus?: boolean
     placeholder?: string
     label?: string
+    help?: string
     bottomText?: string
     inputId?: string
     inputType?: string
@@ -68,7 +75,8 @@ const props = withDefaults(
     dataTest?: string
     disabled?: boolean
     maxLength?: number
-    rows?: number | string
+    required?: boolean
+    rows?: number
     errors?: ErrorObject[]
     suggestionListId?: string
   }>(),
@@ -76,9 +84,11 @@ const props = withDefaults(
     autofocus: false,
     placeholder: '',
     label: null,
+    help: null,
     bottomText: null,
     inputId: '',
     inputType: 'text',
+    required: false,
     bigInput: false,
     unfocusable: false,
     dataTest: 'input-field',
@@ -103,7 +113,8 @@ const randomId = useUniqueId()
 const typeOverride = ref(null)
 
 const inputFieldRef = useTemplateRef('inputField')
-onMounted(() => {
+
+watchEffect(() => {
   if (props.autofocus) {
     nextTick(() => inputFieldRef.value?.focus())
   }
@@ -111,99 +122,46 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.input-ctn {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+.input-wrapper {
+  width: 100%;
 
-  .input-wrapper {
-    width: 100%;
+  &.is-password {
+    position: relative;
 
-    &.is-password {
-      position: relative;
-
-      input {
-        padding-right: 2rem;
-      }
-
-      .show-password {
-        position: absolute;
-        z-index: 10;
-        right: 0;
-        top: 50%;
-        transform: translate(-20%, -50%);
-        height: 60%;
-        fill: $primary-dark;
-        cursor: pointer;
-      }
-    }
-  }
-
-  input,
-  textarea {
-    padding: 10px;
-    font-size: 1em;
-    box-sizing: border-box;
-    width: 100%;
-    border-radius: $border-radius-s;
-    background: $white;
-    border: $border-width-s solid $light-gray;
-    color: $black;
-  }
-
-  textarea {
-    border-bottom-right-radius: $border-radius-s;
-  }
-
-  ::placeholder {
-    color: $mid-gray;
-  }
-
-  label {
-    font-size: $font-size-s;
-    font-weight: bold;
-    margin-bottom: $space-m;
-    color: $black;
-
-    &.large-space {
-      margin-bottom: $space-l;
-    }
-  }
-
-  small {
-    font-size: $font-size-xs;
-    align-self: flex-end;
-    color: $black;
-  }
-
-  &.disabled {
     input {
-      color: $light-gray;
+      padding-right: 2rem;
     }
 
-    label {
-      color: $light-gray;
-    }
-
-    small {
-      color: $light-gray;
-    }
-  }
-
-  &.big-input input {
-    height: 60px;
-    border-radius: 35px;
-    font-size: $font-size-3xl;
-    line-height: 1;
-  }
-
-  @media screen and (min-width: $min-tablet) {
-    &.big-input input {
-      height: 90px;
-      font-size: $font-size-5xl;
-      line-height: 1;
-      border-radius: $border-radius-s;
+    .show-password {
+      position: absolute;
+      z-index: 10;
+      right: 0;
+      top: 50%;
+      transform: translate(-20%, -50%);
+      height: 60%;
+      fill: $primary-dark;
+      cursor: pointer;
     }
   }
+}
+
+input,
+textarea {
+  padding: 10px;
+  font-size: 1em;
+  box-sizing: border-box;
+  width: 100%;
+  border-radius: $border-radius-s;
+  background: $white;
+  border: $border-width-s solid $light-gray;
+  color: $black;
+}
+
+textarea {
+  border-bottom-right-radius: $border-radius-s;
+}
+
+::placeholder {
+  color: $mid-gray;
 }
 </style>

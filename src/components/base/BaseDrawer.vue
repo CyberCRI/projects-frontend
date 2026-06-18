@@ -24,7 +24,14 @@
           />
         </header>
 
-        <main ref="main" :style="customStyle" class="drawer__main custom-scrollbar">
+        <main
+          ref="main"
+          :style="customStyle"
+          class="drawer__main custom-scrollbar"
+          :class="{
+            'pointer-events-none opacity-80': asyncing,
+          }"
+        >
           <slot />
         </main>
 
@@ -58,6 +65,7 @@
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import type { StyleValue } from 'vue'
 
+import { onClient, onClientUnmounted } from '~/composables/onClient'
 import { capitalize } from '~/functs/string'
 
 const props = withDefaults(
@@ -83,7 +91,7 @@ const props = withDefaults(
 const emit = defineEmits(['close', 'confirm', 'unselect'])
 
 const scrolled = ref(false)
-const uniqueId = (Math.random() + 1).toString(36).substring(7)
+const uniqueId = useUniqueId()
 const mainRef = useTemplateRef('main')
 
 const close = () => emit('close')
@@ -92,8 +100,7 @@ const onScroll = () => (scrolled.value = mainRef.value && mainRef.value.scrollTo
 
 watch(
   () => props.isOpened,
-  (neo, old) => {
-    if (!import.meta.client) return
+  onClient((neo, old) => {
     if (neo !== old) {
       if (neo) {
         document.querySelector('body').classList.add(`has-open-drawer-${uniqueId}`)
@@ -103,15 +110,13 @@ watch(
         if (mainRef.value) mainRef.value.removeEventListener('scroll', onScroll)
       }
     }
-  },
+  }),
   { immediate: true }
 )
 
-onUnmounted(() => {
-  if (import.meta.client) {
-    // if destroyed before closing, need to cleanup un-scrollable body
-    document.querySelector('body').classList.remove(`has-open-drawer-${uniqueId}`)
-  }
+onClientUnmounted(() => {
+  // if destroyed before closing, need to cleanup un-scrollable body
+  document.querySelector('body').classList.remove(`has-open-drawer-${uniqueId}`)
 })
 </script>
 

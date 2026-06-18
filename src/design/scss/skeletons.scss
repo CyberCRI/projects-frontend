@@ -9,6 +9,16 @@
   }
 }
 
+@keyframes skeleton-text-loading {
+  0% {
+    filter: drop-shadow(2px 2px 2px var(--skeleton-0)) blur(2px);
+  }
+
+  100% {
+    filter: drop-shadow(2px 2px 2px var(--skeleton-100)) blur(2px);
+  }
+}
+
 @keyframes skeleton-background-loading {
   0% {
     background-color: var(--skeleton-0);
@@ -16,6 +26,16 @@
 
   100% {
     background-color: var(--skeleton-100);
+  }
+}
+
+@keyframes skeleton-blur-loading {
+  0% {
+    filter: blur(15px) grayscale(1);
+  }
+
+  100% {
+    filter: blur(30px) grayscale(1);
   }
 }
 
@@ -46,16 +66,17 @@
 
 %skeleton-text-block {
   border-radius: $border-radius-xs;
-  color: transparent !important;
-  fill: transparent !important;
+
+  // color: transparent !important;
+  // fill: transparent !important;
   filter: drop-shadow(2px 2px 2px var(--skeleton-0)) blur(2px);
   user-select: none;
+  animation: skeleton-text-loading 1s linear infinite alternate !important;
+}
 
-  * {
-    opacity: 0;
-  }
-
-  animation: skeleton-background-loading 1s linear infinite alternate !important;
+%skeletons-blur {
+  filter: blur(30px) grayscale(0);
+  animation: skeleton-blur-loading 1s linear infinite alternate !important;
 }
 
 .skeletons {
@@ -63,6 +84,11 @@
   --primary-lighter: var(--skeleton-50);
   --primary-light: var(--skeleton-50);
   --primary-dark: var(--skeleton-50);
+  --red: var(--skeleton-50);
+  --black: var(--skeleton-50);
+  --blue: var(--skeleton-50);
+  --yellow: var(--skeleton-50);
+  --violet: var(--skeleton-50);
 
   pointer-events: none;
   user-select: none;
@@ -73,6 +99,10 @@
 
   .skeletons-background {
     @extend %skeleton-background-block;
+  }
+
+  .skeletons-blur {
+    @extend %skeletons-blur;
   }
 
   .skeletons-opacity {

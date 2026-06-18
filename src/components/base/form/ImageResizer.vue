@@ -1,208 +1,203 @@
-<template>
-  <div class="image-resizer">
-    <img :src="image" alt="" class="cropper-image" @load="init" />
-  </div>
-</template>
-<script>
+<script setup lang="ts">
+import type { ImageSizes } from '~/functs/imageSizesUtils'
 import 'croppr/dist/croppr.css'
 import Croppr from 'croppr'
 
-export default {
-  name: 'ImageResizer',
+const props = withDefaults(
+  defineProps<{
+    imageSizes?: ImageSizes
+    image?: string
+    // is crop area a circle
+    roundShape?: boolean
+    // crop area aspect ratio
+    ratio?: number
+  }>(),
+  {
+    imageSizes: null,
+    image: null,
+    roundShape: false,
+    ratio: 1,
+  }
+)
 
-  props: {
-    imageSizes: {
-      type: Object,
-      required: false,
-      default: null,
-    },
-    image: {
-      type: String,
-      required: true,
-    },
+const emit = defineEmits<{
+  'invalid-image-size': []
+}>()
 
-    ratio: {
-      // crop area aspect ratio
-      type: Number,
-      default: 1,
-    },
+const imageContainerRef = useTemplateRef('imageContainer')
+const x = ref(0)
+const y = ref(0)
+const width = ref(0)
+const height = ref(0)
+const naturalWidth = ref(0)
+const naturalHeight = ref(0)
+const maxWidth = ref(0)
+const maxHeight = ref(0)
+const left = ref(0)
+const top = ref(0)
+const scaleX = ref(1)
+const scaleY = ref(1)
+const naturalRatio = ref(1)
+const croppr = ref(null)
+const bboxWidth = ref(0)
+const bboxHeight = ref(0)
+const bboxScale = ref(1)
 
-    roundShape: {
-      // is crop area a circle
-      type: Boolean,
-      default: false,
-    },
-  },
+const init = () => {
+  // get image natural size and aspect ratio
+  const img = imageContainerRef.value.querySelector<HTMLImageElement>('.cropper-image')
+  naturalWidth.value = img.naturalWidth
+  naturalHeight.value = img.naturalHeight
+  if (!naturalWidth.value || !naturalHeight.value) {
+    emit('invalid-image-size')
+  }
+  naturalRatio.value = img.naturalWidth / naturalHeight.value
 
-  emits: ['invalid-image-size'],
+  // get container aspect ratio
+  // so we can fit croppr to availabe space
+  const containerBbox = imageContainerRef.value.getBoundingClientRect()
+  const containerRatio = containerBbox.width / containerBbox.height
 
-  data() {
-    return {
-      x: 0,
-      y: 0,
-      width: 0,
-      height: 0,
-      naturalWidth: 0,
-      naturalHeight: 0,
-      maxWidth: 0,
-      maxHeight: 0,
-      left: 0,
-      top: 0,
-      scaleX: 1,
-      scaleY: 1,
-      naturalRatio: 1,
-      croppr: null,
-      bboxWidth: 0,
-      bboxHeight: 0,
-      bboxScale: 1,
+  // set a limit on width or height
+  // according to image and container ratio
+  // this must be done with js or croppr gets lost on vertical pictures
+  if (naturalRatio.value >= containerRatio) {
+    imageContainerRef.value.classList.remove('limit-height')
+    imageContainerRef.value.classList.add('limit-width')
+  } else {
+    imageContainerRef.value.classList.remove('limit-width')
+    imageContainerRef.value.classList.add('limit-height')
+  }
+
+  // get image bounding box size and scale from natural size
+  // because croppr data are in natural sizes
+  const bbox = img.getBoundingClientRect()
+  bboxWidth.value = bbox.width
+  bboxHeight.value = bbox.height
+  bboxScale.value = bboxWidth.value / naturalWidth.value
+
+  // again croppr gets lost on vertical pictures
+  // and we cant set this via js because croppr is not yet initialized and after it is too late
+  // so hack this with css custom properties
+  imageContainerRef.value.style.setProperty('--croppr-width', `${bboxWidth.value}px`)
+  imageContainerRef.value.style.setProperty('--croppr-height', `${bboxHeight.value}px`)
+
+  // set maximum cropping area accordiang to aspect crop ratio
+  maxWidth.value = bboxWidth.value
+  maxHeight.value = bboxHeight.value
+  if (naturalRatio.value > props.ratio) {
+    maxWidth.value = bboxHeight.value * props.ratio
+  } else {
+    maxHeight.value = bboxWidth.value / props.ratio
+  }
+
+  // default croping area to max size and centered
+  if (!props.imageSizes) {
+    x.value = (bboxWidth.value - maxWidth.value) / 2 // pixel position, centered
+    y.value = (bboxHeight.value - maxHeight.value) / 2 // pixel position, centered
+    width.value = maxWidth.value // pixel size
+    height.value = maxHeight.value // pixel size
+    // or use the given croping area
+  } else {
+    // positon is negated because trandform is reciprocal in croppr and in image display
+    // i.e. in cropper we move and scale the crop area
+    // and in showing image we scale and move the image
+    x.value = -bboxWidth.value * (props.imageSizes.left / 100) // percentage to pixel size
+    y.value = -bboxHeight.value * (props.imageSizes.top / 100) // percentage to pixel size
+
+    if ((props.ratio || 1) > naturalRatio.value) {
+      width.value = bboxWidth.value / props.imageSizes.scaleX // ratio to pixel size
+      height.value = width.value / (props.ratio || 1) // ratio to pixel size
+    } else {
+      height.value = bboxHeight.value / props.imageSizes.scaleY // ratio to pixel size
+      width.value = height.value * (props.ratio || 1) // ratio to pixel size
     }
-  },
+  }
 
-  mounted() {
-    if (!import.meta.client) return
-    window.addEventListener('resize', this.reinit)
-  },
-
-  unmounted() {
-    if (!import.meta.client) return
-    window.removeEventListener('resize', this.reinit)
-  },
-
-  methods: {
-    reinit() {
-      // reinit croppr on resize
-      // because resize invalidate all size data
-      this.croppr.destroy()
-      this.init()
-    },
-
-    init() {
-      // get image natural size and aspect ratio
-      const img = this.$el.querySelector('.cropper-image')
-      this.naturalWidth = img.naturalWidth
-      this.naturalHeight = img.naturalHeight
-      if (!this.naturalWidth || !this.naturalHeight) this.$emit('invalid-image-size')
-      this.naturalRatio = img.naturalWidth / this.naturalHeight
-
-      // get container aspect ratio
-      // so we can fit croppr to availabe space
-      const containerBbox = this.$el.getBoundingClientRect()
-      const containerRatio = containerBbox.width / containerBbox.height
-
-      // set a limit on width or height
-      // according to image and container ratio
-      // this must be done with js or croppr gets lost on vertical pictures
-      if (this.naturalRatio >= containerRatio) {
-        this.$el.classList.remove('limit-height')
-        this.$el.classList.add('limit-width')
-      } else {
-        this.$el.classList.remove('limit-width')
-        this.$el.classList.add('limit-height')
+  // init croppr
+  const cropCircle = props.roundShape
+    ? (data) => {
+        const x = (bboxWidth.value * (data.x + data.width / 2)) / naturalWidth.value
+        const y = (bboxHeight.value * (data.y + data.height / 2)) / naturalHeight.value
+        // strangely it is always bboxHeight that works
+        const radius = (bboxHeight.value * data.width) / 2 / naturalHeight.value
+        const imageClipped =
+          imageContainerRef.value.querySelector<HTMLElement>('.croppr-imageClipped')
+        if (imageClipped) imageClipped.style.clipPath = `circle(${radius}px at ${x}px ${y}px)`
       }
+    : () => {}
 
-      // get image bounding box size and scale from natural size
-      // because croppr data are in natural sizes
-      const bbox = img.getBoundingClientRect()
-      this.bboxWidth = bbox.width
-      this.bboxHeight = bbox.height
-      this.bboxScale = this.bboxWidth / this.naturalWidth
-
-      // again croppr gets lost on vertical pictures
-      // and we cant set this via js because croppr is not yet initialized and after it is too late
-      // so hack this with css custom properties
-      this.$el.style.setProperty('--croppr-width', `${this.bboxWidth}px`)
-      this.$el.style.setProperty('--croppr-height', `${this.bboxHeight}px`)
-
-      // set maximum cropping area accordiang to aspect crop ratio
-      this.maxWidth = this.bboxWidth
-      this.maxHeight = this.bboxHeight
-      if (this.naturalRatio > this.ratio) {
-        this.maxWidth = this.bboxHeight * this.ratio
-      } else {
-        this.maxHeight = this.bboxWidth / this.ratio
-      }
-
-      // default croping area to max size and centered
-      if (!this.imageSizes) {
-        this.x = (this.bboxWidth - this.maxWidth) / 2 // pixel position, centered
-        this.y = (this.bboxHeight - this.maxHeight) / 2 // pixel position, centered
-        this.width = this.maxWidth // pixel size
-        this.height = this.maxHeight // pixel size
-        // or use the given croping area
-      } else {
-        // positon is negated because trandform is reciprocal in croppr and in image display
-        // i.e. in cropper we move and scale the crop area
-        // and in showing image we scale and move the image
-        this.x = -this.bboxWidth * (this.imageSizes.left / 100) // percentage to pixel size
-        this.y = -this.bboxHeight * (this.imageSizes.top / 100) // percentage to pixel size
-
-        if ((this.ratio || 1) > this.naturalRatio) {
-          this.width = this.bboxWidth / this.imageSizes.scaleX // ratio to pixel size
-          this.height = this.width / (this.ratio || 1) // ratio to pixel size
-        } else {
-          this.height = this.bboxHeight / this.imageSizes.scaleY // ratio to pixel size
-          this.width = this.height * (this.ratio || 1) // ratio to pixel size
-        }
-      }
-
-      // init croppr
-      const cropCircle = this.roundShape
-        ? (data) => {
-            const x = (this.bboxWidth * (data.x + data.width / 2)) / this.naturalWidth
-            const y = (this.bboxHeight * (data.y + data.height / 2)) / this.naturalHeight
-            // strangely it is always bboxHeight that works
-            const radius = (this.bboxHeight * data.width) / 2 / this.naturalHeight
-            const imageClipped = this.$el.querySelector('.croppr-imageClipped')
-            if (imageClipped) imageClipped.style.clipPath = `circle(${radius}px at ${x}px ${y}px)`
-          }
-        : () => {}
-
-      this.croppr = new Croppr(img, {
-        aspectRatio: this.ratio ? 1 / this.ratio : 1,
-        onCropEnd: (data) => {
-          this.updateData(data)
-          cropCircle(data)
-        },
-        onCropMove: (data) => {
-          cropCircle(data)
-        },
-        onInitialize: (instance) => {
-          // set initial cropping area (order of op matters !)
-          instance.moveTo(this.x, this.y).resizeTo(this.width, this.height, [
-            0, // transform origin is top left
-            0,
-          ])
-          // timeout seem to fix bug where y and height are NaN
-          setTimeout(() => {
-            const data = instance.getValue()
-            cropCircle(data)
-            this.updateData(instance.getValue())
-          }, 1)
-        },
-        minSize: [1, 1, '%'],
-      })
+  croppr.value = new Croppr(img, {
+    aspectRatio: props.ratio ? 1 / props.ratio : 1,
+    onCropEnd: (data) => {
+      updateData(data)
+      cropCircle(data)
     },
-
-    updateData(data) {
-      if (isNaN(data.x) || isNaN(data.y) || isNaN(data.width) || isNaN(data.height)) return
-      // memoize the data so it can be acesses from parent comoponent
-      // data need to be scaled according to the image display size (ie natural vs bbox)
-
-      const scale =
-        (this.ratio || 1) > this.naturalRatio
-          ? this.naturalWidth / data.width
-          : this.naturalHeight / data.height
-      if (!isFinite(scale)) return
-
-      this.left = (-100 * data.x) / this.naturalWidth // percentage, negated for recriprocal transformation
-      this.top = (-100 * data.y) / this.naturalHeight // percentage, negated for recriprocal transformation
-
-      this.scaleX = scale
-      this.scaleY = scale
+    onCropMove: (data) => {
+      cropCircle(data)
     },
-  },
+    onInitialize: (instance) => {
+      // set initial cropping area (order of op matters !)
+      instance.moveTo(x.value, y.value).resizeTo(width.value, height.value, [
+        0, // transform origin is top left
+        0,
+      ])
+      // timeout seem to fix bug where y and height are NaN
+      setTimeout(() => {
+        const data = instance.getValue()
+        cropCircle(data)
+        updateData(instance.getValue())
+      }, 1)
+    },
+    minSize: [1, 1, '%'],
+  })
 }
+
+const updateData = (data) => {
+  if (isNaN(data.x) || isNaN(data.y) || isNaN(data.width) || isNaN(data.height)) return
+  // memoize the data so it can be acesses from parent comoponent
+  // data need to be scaled according to the image display size (ie natural vs bbox)
+
+  const scale =
+    (props.ratio || 1) > naturalRatio.value
+      ? naturalWidth.value / data.width
+      : naturalHeight.value / data.height
+  if (!isFinite(scale)) return
+
+  left.value = (-100 * data.x) / naturalWidth.value // percentage, negated for recriprocal transformation
+  top.value = (-100 * data.y) / naturalHeight.value // percentage, negated for recriprocal transformation
+
+  scaleX.value = scale
+  scaleY.value = scale
+}
+
+const imageSizesExposed = computed(() => {
+  return {
+    scaleX: scaleX.value,
+    scaleY: scaleY.value,
+    left: left.value,
+    top: top.value,
+    naturalRatio: naturalRatio.value,
+  } satisfies ImageSizes
+})
+defineExpose({
+  imageSizes: imageSizesExposed,
+})
+
+onResize(() => {
+  // reinit croppr on resize
+  // because resize invalidate all size data
+  croppr.value.destroy()
+  init()
+})
 </script>
+
+<template>
+  <div ref="imageContainer" class="image-resizer">
+    <img :src="image" alt="" class="cropper-image" @load="init" />
+  </div>
+</template>
+
 <style lang="scss" scoped>
 .image-resizer {
   flex-grow: 1;

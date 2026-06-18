@@ -3,7 +3,7 @@ import type { PeopleModel } from '~/models/people.model'
 export const peopleSkeleton = (def?: Partial<PeopleModel>): Omit<PeopleModel, 'id'> => ({
   slug: 'slug',
   roles: [],
-  current_org_role: 'current_org_role',
+  current_org_role: 'leaders',
   created_at: new Date().toISOString(),
   permissions: [],
   is_superuser: true,

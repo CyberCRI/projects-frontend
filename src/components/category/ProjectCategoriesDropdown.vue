@@ -67,10 +67,6 @@ defineExpose({ close })
   width: 100%;
   background-color: transparent;
 
-  @media (min-width: $min-tablet) {
-    margin-top: $space-l;
-  }
-
   .categories-btn {
     color: $primary-dark;
     font-size: $font-size-m;

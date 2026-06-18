@@ -1,6 +1,7 @@
 import type { Container } from '~/composables/pdf-helpers/doc-builder'
+import type { TranslatedProject } from '~/models/project.model'
 
-export default function addPurposeFactory(project) {
+export default function addPurposeFactory(project: TranslatedProject) {
   return function addPurpose(this: Container) {
     let purpose = ''
     if (project.$t.purpose) {

@@ -1,3 +1,5 @@
+import { onClient, onClientUnmounted } from '~/composables/onClient'
+
 // TODO: use onMediaChange
 export default function useToggleableNavPanel(uniqueId, breakpoint = 768) {
   const isNavCollapsed = ref(window?.innerWidth < breakpoint)
@@ -13,35 +15,28 @@ export default function useToggleableNavPanel(uniqueId, breakpoint = 768) {
 
   const { freezeBodyScroll, unfreezeBodyScroll } = useFreezeBodyScroll(uniqueId)
 
-  watchEffect(() => {
-    if (!import.meta.client) return
-    if (!isNavCollapsed.value) {
-      if (window?.innerWidth < breakpoint) {
-        freezeBodyScroll()
+  watchEffect(
+    onClient(() => {
+      if (!isNavCollapsed.value) {
+        if (window?.innerWidth < breakpoint) {
+          freezeBodyScroll()
+        }
+      } else {
+        unfreezeBodyScroll()
       }
-    } else {
-      unfreezeBodyScroll()
-    }
-  })
+    })
+  )
 
-  const onWindowResize = () => {
+  onResize(() => {
     if (window?.innerWidth >= breakpoint) {
       unfreezeBodyScroll()
     } else if (!isNavCollapsed.value) {
       freezeBodyScroll()
     }
-  }
-
-  onMounted(() => {
-    window?.addEventListener('resize', onWindowResize)
   })
 
-  onBeforeUnmount(() => {
-    if (!import.meta.client) return
-    // if destroyed before closing, need to cleanup un-scrollable body
-    unfreezeBodyScroll()
-    window?.removeEventListener('resize', onWindowResize)
-  })
+  // if destroyed before closing, need to cleanup un-scrollable body
+  onClientUnmounted(unfreezeBodyScroll)
 
   return {
     isNavCollapsed,

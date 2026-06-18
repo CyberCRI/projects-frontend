@@ -1,49 +1,35 @@
 <script setup lang="ts">
 import { createInstruction } from '~/api/instruction.service'
 
+import type { InstructionInput } from '~/models/instruction.model'
 import useToasterStore from '~/stores/useToaster'
-import { defaultForm } from '@/form/instruction'
 
 const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()
 const router = useRouter()
 const { t } = useNuxtI18n()
 
-const form = ref(defaultForm())
 const asyncing = ref(false)
 const invalid = ref(false)
 
-const instructionForm = useTemplateRef('instructionForm')
+const form = ref<InstructionInput>()
 
-const cancel = () => {
-  form.value = defaultForm()
-  router.push({ name: 'InstructionListPage' })
-}
+const cancel = () => router.push({ name: 'InstructionListPage' })
 
-const saveInstruction = async () => {
-  const isValid = await instructionForm.value?.v$.$validate()
-  if (!isValid) {
-    return
-  }
+const onSubmit = () => {
   asyncing.value = true
-
-  try {
-    const formData = {
-      ...form.value,
-      publication_date: form.value.publication_date,
-      people_groups_ids: Object.entries(form.value.people_groups)
-        .filter(([, value]) => value)
-        .map(([id]) => id),
-    }
-    await createInstruction(organizationCode, formData)
-    toaster.pushSuccess(t('instructions.save.success'))
-  } catch (err) {
-    toaster.pushError(`${t('instructions.save.error')} (${err})`)
-    console.error(err)
-  } finally {
-    asyncing.value = false
-    router.push({ name: 'InstructionListPage' })
-  }
+  createInstruction(organizationCode, form.value)
+    .then((instruction) => {
+      toaster.pushSuccess(t('instructions.save.success'))
+      router.push({
+        name: 'InstructionPage',
+        params: {
+          slugOrId: instruction.id,
+        },
+      })
+    })
+    .catch(() => toaster.pushError(t('instructions.save.error')))
+    .finally(() => (asyncing.value = false))
 }
 
 useLpiHead2({
@@ -56,9 +42,7 @@ useLpiHead2({
       {{ $t('instructions.create.title') }}
     </h1>
 
-    <ClientOnly>
-      <InstructionForm ref="instructionForm" v-model="form" @invalid="invalid = $event" />
-    </ClientOnly>
+    <InstructionForm ref="instructionForm" v-model="form" @invalid="invalid = $event" />
 
     <div class="form-actions">
       <LpiButton
@@ -76,7 +60,7 @@ useLpiHead2({
         :btn-icon="asyncing ? 'LoaderSimple' : null"
         class="footer__right-button"
         data-test="confirm-button"
-        @click="saveInstruction"
+        @click="onSubmit"
       />
     </div>
   </div>

@@ -19,9 +19,9 @@
 </template>
 
 <script setup lang="ts">
-import ResourceCount from '~/components/project/resource/ResourceCount.vue'
 import SectionHeader from '~/components/base/SectionHeader.vue'
 
+import ResourceCount from '~/components/resources/ResourceCount.vue'
 import type { RouteLocationRaw } from 'vue-router'
 
 const router = useRouter()

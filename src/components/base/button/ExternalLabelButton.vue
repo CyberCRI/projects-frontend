@@ -11,8 +11,10 @@
     :to="to"
   >
     <slot>
-      <div v-if="btnIcon" class="over-button">
-        <IconImage :name="btnIcon" class="btn" />
+      <div v-if="btnIcon || $slots.icon" class="over-button">
+        <slot name="icon" class="btn">
+          <IconImage :name="btnIcon" class="btn" />
+        </slot>
         <span v-if="nbButton" class="number over">
           <span>{{ nbButton }}</span>
         </span>

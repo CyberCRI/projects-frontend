@@ -91,9 +91,9 @@
         :locations="group.locations"
         @close="closeModal()"
       />
-      <GroupMemberDrawer
+      <UserProfileDrawer
         :is-opened="!!leaderIdDrawer"
-        :member-id="leaderIdDrawer"
+        :user-id="leaderIdDrawer"
         @close="closeProfile"
       />
     </template>
@@ -101,8 +101,8 @@
 </template>
 
 <script setup lang="ts">
-import GroupMemberDrawer from '@/components/group/Modules/Members/GroupMemberDrawer.vue'
 import GroupMemberItem from '@/components/group/Modules/Members/GroupMemberItem.vue'
+import UserProfileDrawer from '~/components/drawer/User/UserProfileDrawer.vue'
 import type { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
 import { DEFAULT_GROUP_PATATOID } from '@/composables/usePatatoids'
@@ -128,12 +128,12 @@ const organizationCode = useOrganizationCode()
 const groupId = computed(() => props.group.id)
 
 const { data: members, status } = getGroupMember(organizationCode, groupId, {
-  default: () => factoryPagination(() => memberSkeleton({ is_leader: true }), 1),
+  default: () => factoryPagination(() => memberSkeleton({ role: 'leaders' }), 1),
   paginationConfig: {
     limit: 5,
   },
 })
-const leaders = computed(() => members.value?.filter((item) => item.is_leader) ?? [])
+const leaders = computed(() => members.value?.filter((item) => item.role === 'leaders') ?? [])
 
 const groupVisibilityLabel = computed(() => {
   if (props.group.publication_status === 'public') {

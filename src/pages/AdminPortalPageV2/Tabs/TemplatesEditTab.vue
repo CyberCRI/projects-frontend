@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { getTemplate, patchTemplate, postTemplateImage } from '~/api/templates.service'
+import { patchTemplate, postTemplateImage } from '~/api/templates.service'
 
 import TemplateForm from '~/components/templates/TemplateForm.vue'
 import FetchLoader from '~/components/base/FetchLoader.vue'
@@ -24,6 +24,7 @@ import LayoutTab from '~/components/admin/LayoutTab.vue'
 
 import useNuxtI18n from '~/composables/useNuxtI18n'
 
+import { getTemplate } from '~/api/v2/templates.service'
 import { useTemplateForm } from '~/form/template'
 import { capitalize } from '~/functs/string'
 
@@ -31,7 +32,7 @@ const { t } = useNuxtI18n()
 const route = useRoute()
 const router = useRouter()
 const organizationCode = useOrganizationCode()
-const templateId = route.params.id.toString()
+const templateId = computed(() => parseInt(route.params.id.toString(), 10))
 const { data: template, status } = getTemplate(organizationCode, templateId)
 const { form, errors, isValid, cleanedData } = useTemplateForm()
 
@@ -45,12 +46,12 @@ watch(
 )
 
 const submit = () => {
-  patchTemplate(organizationCode, templateId, cleanedData.value)
+  patchTemplate(organizationCode, templateId.value, cleanedData.value)
     .then(() => redirect())
     .catch(console.error)
 }
 const redirect = () => router.push({ name: 'templatesList' })
-const saveImageTemplate = (file) => postTemplateImage(organizationCode, templateId, file)
+const saveImageTemplate = (file) => postTemplateImage(organizationCode, templateId.value, file)
 </script>
 
 <style lang="scss">

@@ -1,5 +1,5 @@
 <template>
-  <ToolTip class="share-tip shadowed" placement="bottom" trigger="clickToOpen">
+  <ToolTip class="share-buttons share-tip shadowed" placement="bottom" trigger="clickToOpen">
     <template #custom-content>
       <div class="share-ctn">
         <LinkButton btn-icon="Facebook" @click="facebookShare" />

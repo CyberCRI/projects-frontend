@@ -1,16 +1,21 @@
+import type { ImageVariations } from '~/models/image.model'
 import { Node, mergeAttributes } from '@tiptap/core'
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     ExternalVideo: {
-      setExternalVideo: () => ReturnType
+      setExternalVideo: (option: {
+        size?: ImageVariations
+        src: string
+        aligns?: 'left' | 'center' | 'right'
+      }) => ReturnType
       deleteExternalVideo: () => ReturnType
       setAlign: () => ReturnType
     }
   }
 }
 
-const getFormattedSrc = (newVideoId) => {
+export const getFormatedVideoSrc = (newVideoId: string) => {
   let resolvedid: string
   let link: string
 
@@ -60,7 +65,7 @@ export default Node.create({
     return {
       inline: false,
       HTMLAttributes: {},
-      sizes: ['small', 'medium', 'large', 'full', 'custom'],
+      sizes: ['small', 'medium', 'large', 'full', 'custom', 'original'] as ImageVariations[],
       aligns: ['left', 'center', 'right'],
     }
   },
@@ -164,7 +169,7 @@ export default Node.create({
   },
 
   renderHTML({ node, HTMLAttributes }) {
-    HTMLAttributes.src = getFormattedSrc(HTMLAttributes.src)
+    HTMLAttributes.src = getFormatedVideoSrc(HTMLAttributes.src)
     HTMLAttributes.width = '440px'
     HTMLAttributes.height = '220px'
     HTMLAttributes.frameborder = 0

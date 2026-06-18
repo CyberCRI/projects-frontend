@@ -1,4 +1,5 @@
 import type { SecondaryTagType, TagType } from '~/models/types'
+import type { Translated } from '~/interfaces/translated'
 import type BaseModel from '~/models/base.model'
 
 /**
@@ -17,6 +18,8 @@ export interface TagModel extends BaseModel {
   description_en: string
   description_fr: string
 }
+
+export type TranslatedTag = Translated<TagModel, 'title' | 'description'>
 
 export type TagCreateInput = Required<TagModel>
 

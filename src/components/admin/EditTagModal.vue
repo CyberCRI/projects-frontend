@@ -15,7 +15,7 @@ import useToasterStore from '~/stores/useToaster'
 import type { TagClassificationModel } from '~/models/tagclassification.model'
 import LpiButton from '../base/button/LpiButton.vue'
 import type { TagModel } from '~/models/tag.model'
-import { defaultForm } from '~/form/tag'
+import { defaultTagForm } from '~/form/tag'
 
 const { t } = useNuxtI18n()
 
@@ -53,14 +53,14 @@ const emit = defineEmits(['close', 'tag-edited'])
 
 const asyncing = ref(false)
 
-const form = ref(defaultForm())
+const form = ref(defaultTagForm())
 
 const v$ = useValidate(rules, form)
 
 watchEffect(() => {
   if (props.isOpen) {
     nextTick(() => v$.value.$reset())
-    form.value = defaultForm()
+    form.value = defaultTagForm()
     if (props.tag) {
       form.value = {
         ...props.tag,

@@ -1,28 +1,26 @@
 <template>
-  <form>
-    <div class="form-section">
-      <label>{{ $t('event.form.title.label') }}</label>
-      <TextInput
-        input-type="text"
-        label=""
-        :model-value="model.title"
-        :placeholder="$t('event.form.title.placeholder')"
-        @update:model-value="updateForm({ title: $event })"
-        @blur="v$.title.$validate"
-      />
-      <FieldErrors :errors="v$.title.$errors" />
-    </div>
-    <div class="form-section">
-      <label>{{ $t('event.form.content.label') }}</label>
+  <form class="list-container">
+    <TextInput
+      input-type="text"
+      :label="$t('event.form.title.label')"
+      required
+      :model-value="model.title"
+      :placeholder="$t('event.form.title.placeholder')"
+      :errors="v$.title.$errors"
+      @update:model-value="updateForm({ title: $event })"
+      @blur="v$.title.$validate"
+    />
 
+    <Field :label="$t('event.form.content.label')" required>
       <TipTapEditor
         ref="tiptapEditor"
         :model-value="model.content"
         class="input-field content-editor no-max-height"
         mode="full"
+        :errors="v$.content.$errors"
         @update:model-value="updateForm({ content: $event })"
       />
-    </div>
+    </Field>
 
     <DateField
       :label="$t('event.form.event_date.label')"
@@ -35,25 +33,28 @@
 
     <div class="form-section">
       <!-- locations -->
-      <div v-if="!model.location" class="event-location">
-        <label>
-          {{ $t('location.default-title') }}
-        </label>
-        <LpiButton
-          class="add-btn"
-          :btn-icon="model.location ? 'Pen' : 'Plus'"
-          data-test="add-location"
-          :label="$t(model.location ? 'group.form.edit' : 'group.form.add')"
-          @click="openModals('LocationDrawer')"
+      <Field :label="$t('location.default-title')">
+        <template #in-label>
+          <LpiButton
+            v-if="!model.location"
+            class="add-btn"
+            :btn-icon="model.location ? 'Pen' : 'Plus'"
+            data-test="add-location"
+            :label="$t(model.location ? 'group.form.edit' : 'group.form.add')"
+            @click="openModals('LocationDrawer')"
+          />
+        </template>
+        <LocationItem
+          v-if="model.location"
+          :location="model.location"
+          editable
+          :focus="false"
+          @edit="openModals('LocationForm')"
+          @delete="updateLocation(null)"
         />
-      </div>
-      <LocationList
-        :locations="model.location ? [model.location] : []"
-        editable
-        :focus="false"
-        @edit="openModals('LocationForm')"
-        @delete="updateLocation(null)"
-      />
+        <EmptyLabel v-else :label="$t('map.empty')" class="m-auto" />
+      </Field>
+
       <LocationForm
         v-if="stateModals.LocationForm"
         v-model="model.location"
@@ -73,22 +74,20 @@
       />
     </div>
 
-    <div class="form-section">
-      <label>{{ $t('event.form.visibility.label') }}</label>
+    <Field :label="$t('event.form.visibility.label')">
       <LpiCheckbox v-model="model.visible_by_all" :label="$t('event.form.visibility.notice')" />
-    </div>
+    </Field>
 
-    <div v-if="selectedGroup" class="form-section">
-      <label>{{ $t('event.form.people_groups.label') }}</label>
-      <p class="notice">
-        {{ $t('event.form.people_groups.notice') }}
-      </p>
-
+    <Field
+      v-if="selectedGroup"
+      :label="$t('event.form.people_groups.label')"
+      :help="$t('event.form.people_groups.notice')"
+    >
       <MultiGroupPicker
         :model-value="model.people_groups"
         @update:model-value="updateForm({ people_groups: $event })"
       />
-    </div>
+    </Field>
   </form>
 </template>
 
@@ -101,11 +100,13 @@ import type { LocationType } from '~/models/types'
 
 import MultiGroupPicker from '~/components/group/MultiGroupPicker/MultiGroupPicker.vue'
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
-import FieldErrors from '~/components/base/form/FieldErrors.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import DateField from '~/components/base/form/DateField.vue'
 
-import { defaultForm } from '~/form/event'
+import LocationItem from '~/components/map/LocationItem.vue'
+import EmptyLabel from '~/components/base/EmptyLabel.vue'
+import { defaultEventForm } from '~/form/event'
+import { requiredContent } from '~/form/base'
 
 withDefaults(
   defineProps<{
@@ -116,7 +117,7 @@ withDefaults(
   }
 )
 const { t } = useNuxtI18n()
-const model = defineModel<EventForm>({ default: defaultForm() })
+const model = defineModel<EventForm>({ default: defaultEventForm() })
 const emit = defineEmits<{
   invalid: [boolean]
 }>()
@@ -131,6 +132,9 @@ const LOCATION_TYPES: LocationType[] = ['event']
 const rules = computed(() => ({
   title: {
     required: helpers.withMessage(t('event.form.title.required'), required),
+  },
+  content: {
+    required: helpers.withMessage(t('event.form.content.required'), requiredContent),
   },
   start_date: {
     required: helpers.withMessage(t('event.form.event_date.required'), required),
@@ -199,24 +203,8 @@ const updateLocation = (location) => {
 }
 </script>
 <style lang="scss" scoped>
-.form-section + .form-section {
-  margin-top: $space-xl;
-}
-
-.form-section {
-  position: relative;
-}
-
-label {
-  font-size: $font-size-s;
-  font-weight: 700;
-  color: $black;
-  display: block;
-}
-
-label,
-.notice {
-  margin-bottom: $space-l !important;
+.list-container {
+  gap: 2rem;
 }
 
 .event-location {

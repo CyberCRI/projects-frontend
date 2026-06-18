@@ -1,6 +1,7 @@
 import SearchInput from '~/components/base/form/SearchInput.vue'
 import { lpiMount } from '~~/tests/helpers/LpiMount'
 
+import { flushPromises } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
 describe('SearchInput.vue', () => {
@@ -29,7 +30,7 @@ describe('SearchInput.vue', () => {
     const wrapper = lpiMount(SearchInput)
 
     wrapper.find('input').setValue('test')
-    await wrapper.vm.$nextTick()
+    await flushPromises()
     expect(wrapper.emitted('update:modelValue')).toBeTruthy()
   })
 })

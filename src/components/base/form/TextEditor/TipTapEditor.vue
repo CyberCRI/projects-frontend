@@ -44,12 +44,10 @@ defineExpose({
   editor,
   resetContent,
 })
-
-// const onBlur = () => console.log('yoyoyoy')
 </script>
 
 <template>
-  <TipTapEditorContainer v-if="editor" :editor="editor" :mode="mode" @blur="onBlur">
+  <TipTapEditorContainer v-if="editor" :editor="editor" :mode="mode" :errors="errors">
     <TipTapModals
       :editor="editor"
       :mode="mode"

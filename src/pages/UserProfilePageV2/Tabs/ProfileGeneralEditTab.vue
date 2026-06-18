@@ -19,9 +19,9 @@
         :label="$t('profile.edit.general.last-name.label')"
         :placeholder="$t('profile.edit.general.last-name.placeholder')"
         data-test="last-name-input"
+        :errors="v$.last_name.$errors"
         @blur="v$.last_name.$validate"
       />
-      <FieldErrors :errors="v$.last_name.$errors" />
     </div>
 
     <!-- pronouns -->
@@ -30,12 +30,9 @@
         v-model="form.pronouns"
         :placeholder="$t('profile.edit.general.pronouns.placeholder')"
         data-test="pronouns-input"
-      >
-        <label>{{ $t('profile.edit.general.pronouns.label') }}</label>
-        <p class="notice">
-          {{ $t('profile.edit.general.pronouns.notice') }}
-        </p>
-      </TextInput>
+        :label="$t('profile.edit.general.pronouns.label')"
+        :help="$t('profile.edit.general.pronouns.notice')"
+      />
     </div>
 
     <!-- pro email -->
@@ -46,9 +43,9 @@
         :placeholder="$t('profile.edit.general.professional-email.placeholder')"
         :disabled="true"
         input-type="email"
+        :errors="v$.professional_email.$errors"
         @blur="v$.professional_email.$validate"
       />
-      <FieldErrors :errors="v$.professional_email.$errors" />
     </div>
 
     <!-- pro number -->
@@ -78,9 +75,9 @@
         :label="$t('profile.edit.general.personal-webpage.label')"
         :placeholder="$t('profile.edit.general.personal-webpage.placeholder')"
         data-test="personal-webpage-input"
+        :errors="v$.personal_webpage.$errors"
         @blur="v$.personal_webpage.$validate"
       />
-      <FieldErrors :errors="v$.personal_webpage.$errors" />
     </div>
 
     <!-- linkedin -->
@@ -90,9 +87,9 @@
         :label="$t('profile.edit.general.linkedin.label')"
         :placeholder="$t('profile.edit.general.linkedin.placeholder')"
         data-test="linkedin-input"
+        :errors="v$.linkedin.$errors"
         @blur="v$.linkedin.$validate"
       />
-      <FieldErrors :errors="v$.linkedin.$errors" />
     </div>
 
     <!-- twitter -->
@@ -131,9 +128,9 @@
         :label="$t('profile.edit.general.title.label')"
         :placeholder="$t('profile.edit.general.title.placeholder')"
         data-test="title-input"
+        :errors="v$.title.$errors"
         @blur="v$.title.$validate"
       />
-      <FieldErrors :errors="v$.title.$errors" />
     </div>
 
     <!-- org address -->
@@ -150,28 +147,26 @@
     <hr class="form-separator" />
 
     <!-- SDGs -->
-    <div class="form-group">
-      <div class="label-wrapper">
-        <label>
-          {{ $t('profile.edit.general.sdgs.label') }} ({{ form.sdgs ? form.sdgs.length : '0' }})
-        </label>
-
+    <Field
+      :label="`${$t('profile.edit.general.sdgs.label')} (${form.sdgs ? form.sdgs.length : '0'})`"
+    >
+      <template #in-label>
         <LpiButton
           :label="$t('profile.edit.general.sdgs.add')"
           btn-icon="Plus"
           data-test="sdg-add"
           @click="showSdgsDrawer = true"
         />
-      </div>
-      <p class="notice">
+      </template>
+      <template #help>
         {{ $t('profile.edit.general.sdgs.notice-start') }}
         <a :href="$t('profile.edit.general.sdgs.link')" target="_blank" class="link">
           {{ $t('profile.edit.general.sdgs.notice-link') }}
         </a>
         {{ $t('profile.edit.general.sdgs.notice-end') }}
-      </p>
+      </template>
       <SdgList :sdgs="form.sdgs" />
-    </div>
+    </Field>
 
     <hr class="form-separator" />
     <p v-if="v$.$errors.length" class="error-message">

@@ -58,7 +58,7 @@
               />
               <LpiButton
                 :disabled="!searchAddress || geocodingLoading"
-                :label="$t('geocoding.search')"
+                :label="$t('search.label')"
                 :btn-icon="geocodingLoading ? 'LoaderSimple' : null"
                 @click="suggestLocations"
               />
@@ -83,6 +83,9 @@
             <client-only>
               <LazyBaseMap
                 ref="map"
+                :class="{
+                  'pointer-map': formMode === 'click',
+                }"
                 :use-cluster="useCluster"
                 @click="formMode === 'click' ? clickOnMap($event) : null"
               >
@@ -125,6 +128,7 @@
       v-if="editable && showForm"
       v-model="form"
       to-string
+      :zoom="mapRef?.map?.getZoom()"
       :location-types="locationTypes"
       @close="closeModal"
       @submit="onSubmit"
@@ -203,6 +207,7 @@ const formMode = ref<'click' | 'form'>()
 const form = ref(null)
 
 const openEditModal = (location) => {
+  console.log('icic')
   form.value = location
   showForm.value = true
 }
@@ -326,5 +331,9 @@ const onSubmit = () => {
   align-items: center;
   gap: 1rem;
   margin-bottom: 1rem;
+}
+
+.pointer-map {
+  cursor: crosshair;
 }
 </style>

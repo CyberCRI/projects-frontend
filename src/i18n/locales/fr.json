@@ -130,7 +130,6 @@
         "last-name": "Nom",
         "first-name": "Prénom",
         "title": "Titre",
-        "roles": "Rôle(s)",
         "groups": "Groupe(s)",
         "inscription": "Inscription",
         "activation": "Activation",
@@ -393,13 +392,6 @@
     "reset-password": "Changer le mot de passe",
     "reset-delete": "Changer le mot de passe & supprimer le compte",
     "error": "Une erreur s'est produite.",
-    "role": {
-      "none": "Aucun",
-      "user": "Utilisateur",
-      "facilitator": "Facilitateur",
-      "admin": "Org admin",
-      "viewer": "Visualisateur"
-    },
     "user-exists-in-other-org": "Un utilisateur avec le même email existe dans notre base de données. Nous pouvons l'ajouter à votre portail ici."
   },
   "userItem": {
@@ -412,12 +404,6 @@
     "facilitators": "Facilitateur: ce rôle est destiné aux enseignants ou aux tuteurs : ils voient tous les projets privés dans le portail et ils peuvent les modifier. Ils disposent également de tous les droits des Utilisateurs.",
     "admins": "Org admin: ce rôle permet de configurer votre portail et de gérer les utilisateurs de votre portail. Les administrateurs de l'organisation ont accès au menu d'administration du portail pour configurer le portail et gérer ses utilisateurs. Ils ont également tous les droits des Facilitateurs.",
     "none": "Aucun: Cette personne a un compte Projects, mais ne fait pas partie de votre portail. Elle peut seulement voir les projets publics",
-    "roles": {
-      "none": "Aucun",
-      "users": "Utilisateur",
-      "facilitators": "Facilitateur",
-      "admins": "Org admin"
-    },
     "empty": "Pas de groupes",
     "main-groups": "Groupes Principaux"
   },
@@ -540,7 +526,6 @@
     "cant-quit-self": "Vous êtes le dernier éditeur de l’équipe. Tout projet doit avoir au moins un éditeur.\nVous pouvez soit ajouter un autre éditeur avant de quitter le projet, soit supprimer le projet depuis l’onglet Configuration.",
     "cant-quit-other": "C'est le dernier éditeur de l’équipe. Tout projet doit avoir au moins un éditeur.\nVous pouvez soit ajouter un autre éditeur avant de supprimer celui-ci, soit supprimer le projet depuis l’onglet Configuration.",
     "edit": "Modifier",
-    "file-required": "Un fichier est requis",
     "for": "pour",
     "groups": "Groupes",
     "index": "Index",
@@ -578,7 +563,6 @@
     "disconnect": "Déconnexion",
     "confirm-close": "Êtes-vous sûr de vouloir fermer l'éditeur ? Vos modifications ne seront pas sauvegardées.",
     "ok": "Ok",
-    "file-too-big": "Fichier trop volumineux (max: {maxSize}Mo)",
     "select": "Sélectionner",
     "year": "année",
     "link-to": "lien vers",
@@ -599,7 +583,8 @@
     "date": "Date",
     "clear-date": "Effacer la date",
     "empty": "Rien ici...",
-    "file": "fichier | fichiers"
+    "file": "fichier | fichiers",
+    "image": "image"
   },
   "complete-profile": {
     "bio": {
@@ -660,7 +645,6 @@
     "edit": "modifier la description (brouillon)",
     "placeholder": "Vous n’avez pas encore de description, pensez à en ajouter une !",
     "add": "Ajouter une description",
-    "quit-without-saving-title": "Quitter sans sauvegarder ?",
     "default-placeholder": "Décrivez votre projet."
   },
   "discover": {
@@ -823,7 +807,22 @@
   },
   "drawer": {
     "clear": "Effacer la sélection",
-    "select-all": "Tout sélectionner"
+    "select-all": "Tout sélectionner",
+    "member": {
+      "add": "Ajouter un membre | Ajouter des membres",
+      "edit": "Modifier le membre | Modifier les membres",
+      "delete": "Supprimer le membre | Supprimer les membres"
+    },
+    "group": {
+      "add": "Ajouter un groupe | Ajouter des groupes",
+      "edit": "Modifier le groupe | Modifier les groupes",
+      "delete": "Supprimer le groupe | Supprimer les groupes"
+    },
+    "project": {
+      "add": "Ajouter un projet | Ajouter des projets",
+      "edit": "Modifier le projet | Modifier les projets",
+      "delete": "Supprimer le projet | Supprimer les projets"
+    }
   },
   "faq": {
     "delete-confirm-content": "Etes-vous bien sûr de vouloir supprimer l'onglet d'aide personnalisée pour votre portail? Tout son contenu sera effacé.",
@@ -910,7 +909,8 @@
       },
       "description": "Le champ description est obligatoire"
     },
-    "templates": "Modèles"
+    "templates": "Modèles",
+    "quit-without-saving-title": "Quitter sans enregistrer ?"
   },
   "footer": {
     "contact": "Contactez-nous",
@@ -928,6 +928,7 @@
   },
   "goal": {
     "add": "Ajouter un objectif",
+    "add-project": "Ajouter un objectif au project",
     "completed-on-the": "Terminé le",
     "description": "Description",
     "goals": "Objectifs",
@@ -972,7 +973,6 @@
       "add-projects": "Ajouter des projets en vedette",
       "edit": "Modifier",
       "edit-members": "Modifier les membres",
-      "edit-roles": "Modifier les rôles",
       "form-incomplete": "Des champs sont manquant ou invalides, complétez pour pouvoir sauvegarder.",
       "create-group": "Créer le groupe",
       "edit-group": "Modifier le groupe",
@@ -1007,24 +1007,9 @@
       "publication-status-errors": {
         "required": "Ce champ est requis"
       },
-      "delete": "Supprimer le groupe"
-    },
-    "role": {
-      "members": {
-        "label": "Membre",
-        "help": "Membre"
-      },
-      "leaders": {
-        "label": "Chef du groupe",
-        "help": "Chef du groupe"
-      },
-      "leaders-managers": {
-        "label": "Leader et Manager"
-      },
-      "managers": {
-        "label": "Editeur",
-        "help": "Editeur"
-      }
+      "delete": "Supprimer le groupe",
+      "confirm-remove-project": "Voulez-vous vraiment supprimer ce projet ?",
+      "confirm-remove-member": "Voulez-vous vraiment retirer ce membre?"
     },
     "view": "Voir le groupe",
     "conferences": "Conférences",
@@ -1167,7 +1152,19 @@
       "color": "Couleur",
       "current": "Actuelle",
       "pick": "Choisir une couleur existante",
-      "set-color": "Appliquer une couleur"
+      "set-color": "Appliquer une couleur",
+      "remove-color": "Supprimer la couleur",
+      "colors": {
+        "carribeanGreen": "Vert caribéen",
+        "ming": "Ming",
+        "aquamarine": "Aquamarine",
+        "mintCream": "Crème de menthe",
+        "lightSalmon": "Saumon léger",
+        "sunGlow": "Lumière du soleil",
+        "mauve": "Mauve",
+        "babyBlue": "Bébé Bleu",
+        "coquelicot": "Coquelicot"
+      }
     },
     "delete_column": "Supprimer cette colonne",
     "delete_row": "Supprimer cette ligne",
@@ -1225,9 +1222,13 @@
     "unauthorized": "Édition non autorisée",
     "underline": "souligné",
     "undo": "Annuler",
-    "video": "Vidéo",
+    "video": {
+      "label": "Vidéo",
+      "error": "Le lien doit être une vidéo YouTube ou Vimeo."
+    },
     "save": "Enregistrer sans quitter",
-    "server-offline": "Le serveur est hors ligne."
+    "server-offline": "Le serveur est hors ligne.",
+    "delete_image": "Supprimer l'image"
   },
   "homeCarousel": {
     "tab1": {
@@ -1554,7 +1555,6 @@
             "description": "Niveau doctorat ou fait un grand projet, ou peut enseigner au niveau master"
           }
         },
-        "search": "recherche",
         "nothing-yet": "Tu n'as pas encore ajouté de compétences."
       },
       "privacy": {
@@ -1664,7 +1664,6 @@
       "title": "Créer un nouveau projet"
     },
     "destroy": "Supprimer ce projet",
-    "duplicate": "Dupliquer ce projet",
     "edit": "Modifier le projet",
     "edit-linked-project": "Modifier le projet lié",
     "edit-location-point": "Modifier ce point de localisation",
@@ -1686,7 +1685,6 @@
       "resize-image": "Recadrer",
       "title-label": "Ajouter un titre",
       "title-placeholder": "Comment s'appelle ce projet ?",
-      "upload-image": "Télécharger une image",
       "title-errors": {
         "required": "Le champ titre est obligatoire",
         "max": "Le champ title ne peut pas contenir plus de 120 caractères"
@@ -1697,7 +1695,9 @@
         "min": "Le champ mission doit contenir au minimum 3 caractères"
       },
       "project-templates": "Nom du modèle",
-      "purpose-placeholder": "Quel est le but de votre projet?"
+      "purpose-placeholder": "Quel est le but de votre projet?",
+      "comment": "Le champ de commentaires est requis.",
+      "select-template": "Sélectionner le modèle ..."
     },
     "image-header": "Image",
     "image-alert": {
@@ -1746,10 +1746,19 @@
     },
     "view": "Voir le projet",
     "visibility": "Visibilité du projet",
-    "actions": "Actions rapides",
     "copy": "(copie)",
     "nothing": "Il n'y a rien ici...",
-    "tag-warning": "NB: Si un utilisateur change la langue de votre portail, les tags qui possèdent des traductions dans Wikipedia seront traduits. Les autres seront affichés en priorité en anglais et sinon dans la langue originale."
+    "tag-warning": "NB: Si un utilisateur change la langue de votre portail, les tags qui possèdent des traductions dans Wikipedia seront traduits. Les autres seront affichés en priorité en anglais et sinon dans la langue originale.",
+    "description": "Désignation des marchandises",
+    "duplicate": {
+      "title": "Voulez-vous vraiment reproduire ce projet ?",
+      "help": "Le projet sera cloné sans membres.",
+      "label": "Dupliquer le projet"
+    },
+    "groups": "Groupe | Groupes",
+    "label": "projet | projets",
+    "actions": "Action dangereuse",
+    "review-not-editable": "Vous ne pouvez pas ajouter d'avis à ce projet; le projet n'est pas actuellement ouvert à l'examen."
   },
   "project_list": {
     "updated_at": "Dernier actif",
@@ -1779,10 +1788,25 @@
     "send": "Envoi de la candidature",
     "title": "Titre",
     "traineeship": "Stage",
-    "type": "Type d'annonce",
+    "type": {
+      "title": "Type d'annonce",
+      "job": {
+        "label": "Emploi",
+        "description": "Une possibilité d'emploi traditionnelle, à temps plein ou à temps partiel, avec un salaire, des avantages sociaux et un engagement à long terme. Suite pour ceux qui cherchent des rôles stables et professionnels"
+      },
+      "traineeship": {
+        "label": "Stage",
+        "description": "Un programme de formation structuré combinant expérience de travail et apprentissage. Les stages sont souvent rémunérés, conçus pour les débutants ou les changements de carrière, et offrent un perfectionnement pratique sous supervision."
+      },
+      "participant": {
+        "label": "Participant",
+        "description": "Idéal pour les personnes qui souhaitent participer à des programmes, des ateliers ou des projets de collaboration à court terme. Souvent non rémunérées ou fondées sur les allocations, ces rôles sont axés sur l'apprentissage, le réseautage ou la contribution à une initiative particulière."
+      }
+    },
     "updated": "Modifié une annonce",
     "valid-until-the": "Valide jusqu'au",
-    "view": "Voir"
+    "view": "Voir",
+    "outdated": "L'offre n'est plus disponible."
   },
   "report": {
     "abuse": "Signaler un abus",
@@ -1805,13 +1829,32 @@
     "edit-link": "Modifier un lien",
     "edit-file": "Modifier un fichier",
     "max-size": "Taille max. 10Mo",
-    "invalid-image": "Fichier non supporté... est-ce bien une image ?",
     "error-uploading-image": "Erreur à la sauvegarde de l'image ",
     "cannot-upload-image": "Impossible de sauveagrder l'image pour l'instant",
     "link-address": "Url du lien",
-    "resources": "Ressources",
+    "resources": "Ressources | Ressources",
     "web": "Lien aux ressources web | lien aux ressources web",
-    "web-link": "Lien Web | lien Web | Liens Web"
+    "web-link": "Lien Web | lien Web | Liens Web",
+    "delete": "Êtes-vous sûr de supprimer cette ressource?",
+    "file": {
+      "add": "Ajouter un fichier | Ajouter des fichiers",
+      "edit": "Modifier un fichier | Modifier les fichiers",
+      "label": "Fichier | Fichiers",
+      "delete": "Êtes-vous sûr de supprimer ce fichier ? | Êtes-vous sûr de supprimer les fichiers ?",
+      "form": {
+        "too-big": "Le fichier est trop grand (max: {maxSize}Mb)",
+        "invalid-image": "Fichier non pris en charge, doit être une image valide.",
+        "required-image": "Un fichier est requis",
+        "required": "Un fichier est requis"
+      }
+    },
+    "link": {
+      "add": "Ajouter un lien | Ajouter des liens",
+      "edit": "Modifier un lien | Modifier les liens",
+      "label": "Adresse du lien | Liens Adresse",
+      "delete": "Êtes-vous sûr de supprimer ce lien ? | Êtes-vous sûr de supprimer les liens ?"
+    },
+    "upload-image": "Télécharger une image"
   },
   "result_box": {
     "people": "personnes",
@@ -1898,29 +1941,6 @@
     "need-help": "Besoin d'aide?",
     "contact-us": "Contactez-nous"
   },
-  "role": {
-    "role-editor": "A tous les droits d'édition pour ce groupe.",
-    "role-reviewer": "Une fois que le projet a été marqué comme 'prêt pour révision', le correcteur peut donner un feedback, peut verrouiller le projet pour ne plus autoriser d'éditions. Le correcteur a aussi les droits d'édition.",
-    "role-teammate": "Ne possède pas de droits d'édition, mais apparaît comme membre de l'équipe.",
-    "editor": "Editeur",
-    "editors": "Editeurs",
-    "editor-groups": "Groupes éditeurs",
-    "editor-group": "Groupe éditeur",
-    "reviewer": "Correcteur",
-    "reviewers": "Correcteurs",
-    "reviewer-groups": "Groupes correcteurs",
-    "reviewer-group": "Groupe correcteur",
-    "teammate": "Participant",
-    "teammates": "Participants",
-    "teammate-groups": "Groupes participants",
-    "teammate-group": "Groupe participant",
-    "select": "Sélectionnez les droits",
-    "group": "Groupes",
-    "leader": "Chef du groupe",
-    "role-leader": "Est un Éditeur qui apparaît avec un tag “Chef du groupe”.",
-    "member": "Membre",
-    "role-member": "Apparaît comme membre du groupe. Ses projets apparaissent parmi les projets du groupe."
-  },
   "search": {
     "all-filters": "Tous les filtres",
     "banner-portal": "Vous pouvez également rechercher dans les projets de toutes les communautés sur ",
@@ -1991,7 +2011,10 @@
     "current-skill-description": "Tapez l'intitulé de la compétence et sélectionnez la bonne compétence",
     "disambiguate": "(homonymie)",
     "suggestions": "Suggestions",
-    "choose-skill": "Cliquez sur la compétence de votre choix :"
+    "choose-skill": "Cliquez sur la compétence de votre choix :",
+    "label": "Recherche",
+    "empty": "Aucun résultat n'est disponible",
+    "results": "Résultats de la recherche"
   },
   "sdg": {
     "1": {
@@ -2045,10 +2068,11 @@
     "17": {
       "title": "Partenariats pour la Réalisation des Objectifs"
     },
-    "add-short": "Ajouter un odd",
     "sdg-fulltext": "objectifs de développement durable",
     "title": "ODD",
-    "empty": "Rien ici... Les contributeurs n'ont pas encore ajouté d'ODD."
+    "empty": "Rien ici... Les contributeurs n'ont pas encore ajouté d'ODD.",
+    "add-short": "Ajouter des ODDs",
+    "edit-short": "Modifier les ODDs"
   },
   "stats": {
     "cumulated-projects": "Nouveaux projets cumulés",
@@ -2097,7 +2121,17 @@
     "no-user-message": "Aucun utilisateur ne correspond à votre recherche",
     "remove-user-confirm": "Êtes-vous sûr de vouloir supprimer cet utilisateur du projet ?",
     "remove-group-confirm": "Êtes-vous sûr de vouloir supprimer ce groupe du projet ?",
-    "team": "Équipe"
+    "team": "Équipe",
+    "member": {
+      "add": "Ajouter un membre | Ajouter des membres",
+      "edit": "Modifier le membre | Modifier les membres",
+      "delete": "Supprimer le membre | Supprimer les membres"
+    },
+    "group": {
+      "add": "Ajouter un groupe | Ajouter des groupes",
+      "edit": "Modifier le groupe | Modifier les groupes",
+      "delete": "Supprimer le groupe | Supprimer les groupes"
+    }
   },
   "template": {
     "edit-tags": "Modifier les tags",
@@ -2388,6 +2422,21 @@
     "team-group-delete": {
       "success": "Le groupe a bien été supprimé",
       "error": "Erreur lors de la suppression du groupe"
+    },
+    "template-get": {
+      "error": "Erreur lors de l'obtention du modèle"
+    },
+    "group-project-create": {
+      "success": "Les projets ont été ajoutés avec succès",
+      "error": "Erreur lors des projets ajoutés"
+    },
+    "group-project-remove": {
+      "success": "Le projet a été supprimé avec succès",
+      "error": "Erreur pendant le projet supprimé"
+    },
+    "pdf": {
+      "success": "Le PDF a été généré avec succès; un lien vous sera envoyé par courriel.",
+      "error": "Une erreur s'est produite lors de la génération du PDF. Veuillez contacter un administrateur."
     }
   },
   "success": {
@@ -2544,7 +2593,8 @@
       },
       "content": {
         "label": "Information",
-        "placeholder": "Ajoutez des informations sur cet événement"
+        "placeholder": "Ajoutez des informations sur cet événement",
+        "required": "Le contenu est requis"
       },
       "event_date": {
         "label": "Date de l'événement *",
@@ -2801,12 +2851,17 @@
   "pdf": {
     "blog-entries-limited-warning": "Seuls les {max} premiers articles de blog sont inclus dans l'export PDF (sur un total de {total}).",
     "download-pdf": "PDF",
-    "generated-on": "Généré le {date}"
+    "generated-on": "Généré le {date}",
+    "confirm": "Voulez-vous générer des pdf pour ce {type} ?",
+    "choices": "Sélectionnez les éléments que vous voulez ajouter au PDF."
   },
   "pagination": {
     "previous": "Page précédente",
     "next": "Page suivante",
-    "page": "Page"
+    "page": "Page",
+    "first": "Première page",
+    "last": "Dernière page",
+    "visibility-per-page": "Nombre d'articles par page."
   },
   "gallery": {
     "title": "Galerie",
@@ -3170,6 +3225,64 @@
   "follow": {
     "follow": "Suivre",
     "unfollow": "Ne pas suivre"
+  },
+  "role": {
+    "owners": {
+      "label": "Éditeur | Éditeurs",
+      "help": "A tous les droits d'édition pour ce groupe."
+    },
+    "reviewers": {
+      "label": "Examinateur | Les évaluateurs",
+      "help": "Lorsque le projet a été marqué « prêt à faire l'objet d'un examen », l'examinateur peut donner son avis et verrouiller un projet afin d'éviter d'autres modifications dans le projet. Un examinateur a également des droits de modification."
+    },
+    "members": {
+      "label": "Participant | Participants",
+      "help": "Il n'a aucun droit d'édition, mais apparaît comme membre de l'équipe."
+    },
+    "leaders": {
+      "label": "Groupe dirigeant | Groupe des dirigeants",
+      "help": "Est un éditeur qui va apparaître avec un tag «Group Leader»."
+    },
+    "owner_groups": {
+      "label": "Groupe d'éditeurs | Groupe des éditeurs",
+      "help": "Est un éditeur qui va apparaître avec un tag «Group Leader»."
+    },
+    "reviewer_groups": {
+      "label": "Groupe des évaluateurs | Groupe des évaluateurs",
+      "help": ""
+    },
+    "member_groups": {
+      "label": "Groupe de participants | Groupe des participants",
+      "help": "Il apparaît comme membre du groupe. Leurs projets figurent parmi les projets du groupe."
+    },
+    "facilitators": {
+      "label": "Facilitateur | Facilitateurs",
+      "help": "Facilitateur : Ce rôle s'adresse aux enseignants ou aux tuteurs: Ils voient tous les projets privés dans le portail et ils peuvent les modifier. Ils ont également tous les droits des Utilisateurs."
+    },
+    "admins": {
+      "label": "Groupe administratif | Groupe des administrateurs",
+      "help": "Org administrateur: Ce rôle permet de configurer votre portail et de gérer les utilisateurs de votre portail. Org admins ont accès au menu admin du portail pour configurer le portail et gérer ses utilisateurs. Ils ont également tous les droits des facilitateurs."
+    },
+    "users": {
+      "label": "Utilisateur | Utilisateur",
+      "help": "Utilisateur : un utilisateur fait partie de votre communauté. Ils peuvent créer des projets, modifier leurs projets et écrire des commentaires sur tout projet. Ils voient un projet privé quand ils font partie de l'équipe de ces projets, ils voient tous les projets avec la visibilité communautaire, et tous les projets publics."
+    },
+    "managers": {
+      "label": "Éditeur | Éditeurs",
+      "help": ""
+    },
+    "none": {
+      "label": "",
+      "help": ""
+    },
+    "label": "Rôle | Rôles",
+    "edit": "Modifier les rôles",
+    "select": "Sélectionnez les droits",
+    "help": "Informations sur les rôles.",
+    "viewers": {
+      "label": "Affichage | Affichages",
+      "help": "Il n'a aucun droit d'édition."
+    }
   },
   "prompts": {
     "create-prompt": "Créer une invite",

@@ -41,6 +41,7 @@ type AsyncReturn<ResDataT, DataT, Result> = Omit<
       >['data']
     : Result
   isLoading: ComputedRef<boolean>
+  key: ComputedRef<string>
 }
 
 /**
@@ -72,7 +73,7 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
 
   let immediate = true
   if (params[2].immediate === false) {
-    immediate = true
+    immediate = false
   } else {
     params[2].immediate = false
   }
@@ -123,6 +124,7 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
     status,
     isLoading,
     data: dataWrapped,
+    key,
   }
 
   if (immediate) {

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Field from '~/components/base/form/Field.vue'
+
 withDefaults(
   defineProps<{
     timePicker?: boolean
@@ -35,36 +37,37 @@ const dateExist = computed(() => {
 </script>
 
 <template>
-  <div class="form-section">
-    <label>{{ label }}</label>
-    <button type="button" class="date-btn scale-hover" @click="toggleModal">
-      <IconImage class="icon" name="Calendar" />
-      {{ $t('invitation.create.field.validity.pick-date') }}
-    </button>
-    <button
-      type="button"
-      class="date-btn clear-btn scale-hover"
-      :class="{
-        'no-date': !dateExist,
-      }"
-      :aria-label="$t('common.clear-date')"
-      @click="clearDate"
-    >
-      <IconImage class="icon" name="Close" />
-    </button>
+  <Field :label="label">
+    <div>
+      <button type="button" class="date-btn scale-hover" @click="toggleModal">
+        <IconImage class="icon" name="Calendar" />
+        {{ $t('invitation.create.field.validity.pick-date') }}
+      </button>
+      <button
+        type="button"
+        class="date-btn clear-btn scale-hover"
+        :class="{
+          'no-date': !dateExist,
+        }"
+        :aria-label="$t('common.clear-date')"
+        @click="clearDate"
+      >
+        <IconImage class="icon" name="Close" />
+      </button>
 
-    <DisplayDate class="display-date" :date="model" :time="timePicker ? 'auto' : false" />
+      <DisplayDate class="display-date" :date="model" :time="timePicker ? 'auto' : false" />
 
-    <DatePickerModal
-      v-if="stateModal"
-      v-model="model"
-      :range="range"
-      :time-picker="timePicker"
-      @close="nextTick(closeModal)"
-    />
+      <DatePickerModal
+        v-if="stateModal"
+        v-model="model"
+        :range="range"
+        :time-picker="timePicker"
+        @close="nextTick(closeModal)"
+      />
 
-    <FieldErrors :errors="errors" />
-  </div>
+      <FieldErrors :errors="errors" />
+    </div>
+  </Field>
 </template>
 
 <style lang="scss" scoped>
