@@ -27,15 +27,6 @@ export default (server: TypeMcpServer) => {
       title: 'Search Tool',
       description: `Search on the platform for projects, people profile (user) and groups (of users) related to a query. ${sorbobotIsEnabled ? SORBOBOT_EXTRA : ''}`,
       inputSchema: { queryTerms: z.string().describe('The search query terms') },
-      /*outputSchema: {
-        results: N.array(
-          z.union([
-            PROJECT_PREVIEW_OUTPUT_SCHEMA,
-            USER_PREVIEW_OUTPUT_SCHEMA,
-            PEOPLE_GROUP_PREVIEW_OUTPUT_SCHEMA,
-          ])
-        ).describe('The list of search results'),
-      },*/
     },
     resultFromTool(({ queryTerms }, extras) => {
       const opts = mcpOptions(extras)
@@ -68,17 +59,13 @@ export default (server: TypeMcpServer) => {
       description: `Search on the platform only for projects related to a query. ${sorbobotIsEnabled ? SORBOBOT_EXTRA : ''}`,
       inputSchema: {
         queryTerms: z.string().describe('The search query terms'),
-        tags: z.array(z.string()).optional().describe('List of tags to filter by'),
+        tags: z.array(z.number()).optional().describe('List of tags to filter by'),
         sdgs: z.array(z.number()).optional().describe('List of SDGs id to filter by'),
         members: z.array(z.string()).optional().describe('List of members id to filter by'),
-        // categories: z.array(z.string()).optional().describe('List of categories to filter by'),
       },
-      /*outputSchema: {
-        results: N.array(PROJECT_PREVIEW_OUTPUT_SCHEMA).describe('The list of search results'),
-      },*/
     },
-    resultFromTool(({ queryTerms, skills, sdgs }, extras) => {
-      return getAllTags(skills, extras)
+    resultFromTool(({ queryTerms, tags, sdgs }, extras) => {
+      return getAllTags(tags, extras)
         .then((tagsId) => {
           const opts = mcpOptions(extras)
           return searchProjects(queryTerms, {
@@ -86,7 +73,7 @@ export default (server: TypeMcpServer) => {
             query: {
               limit: 12,
               organizations: [orgCode],
-              skills: tagsId || [],
+              tags: tagsId || [],
               sdgs: sdgs || [],
             },
           })
@@ -103,13 +90,10 @@ export default (server: TypeMcpServer) => {
       description: `Search on the platform only for people/users/members/owners related to a query. ${sorbobotIsEnabled ? SORBOBOT_EXTRA : ''}`,
       inputSchema: {
         queryTerms: z.string().describe('The search query terms'),
-        skills: z.array(z.string()).optional().describe('List of skills to filter by'),
+        skills: z.array(z.number()).optional().describe('List of skills to filter by'),
         sdgs: z.array(z.number()).optional().describe('List of SDGs id to filter by'),
         categories: z.array(z.string()).optional().describe('List of categories to filter by'),
       },
-      /*outputSchema: {
-        results: N.array(USER_PREVIEW_OUTPUT_SCHEMA).describe('The list of search results'),
-        },*/
     },
     resultFromTool(({ queryTerms, skills, sdgs }, extras) => {
       return getAllTags(skills, extras)

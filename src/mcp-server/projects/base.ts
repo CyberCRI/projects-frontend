@@ -1,6 +1,6 @@
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
+import type { InferSchema, ToolCallback } from '~/interfaces/mcp'
 import { tokenMap } from '~/server/routes/api/chat-stream'
-import type { TypeMcpServer } from '~/interfaces/mcp'
 
 const runtimeConfig = useRuntimeConfig()
 export const orgCode = runtimeConfig.public.appApiOrgCode
@@ -30,10 +30,6 @@ export function mcpOptions(extras: any = {}): UseApiOptions {
   }
 }
 
-type RegisterToolType = Parameters<TypeMcpServer['registerTool']>
-type RegisterToolCallback = RegisterToolType[2]
-type OwnRegisterToolCallback = (...args: Parameters<RegisterToolCallback>) => Promise<any>
-
 /**
  * auto contruct tool result from callback
  *
@@ -43,20 +39,17 @@ type OwnRegisterToolCallback = (...args: Parameters<RegisterToolCallback>) => Pr
  * @kind variable
  * @exports
  */
-export const resultFromTool = (callback: OwnRegisterToolCallback) => {
-  const callbackTool: RegisterToolCallback = async (args, extra) => {
-    let output = null
-    try {
-      output = await callback(args, extra)
-    } catch (error) {
-      console.error('Error fetching search results:', error)
-    }
+export const resultFromTool = <InputSchema, OutputSchema>(
+  callback: (
+    ...args: Parameters<ToolCallback<InputSchema, OutputSchema>>
+  ) => InferSchema<OutputSchema> | Promise<InferSchema<OutputSchema>>
+): ToolCallback<InputSchema, OutputSchema> => {
+  return async (args, extra) => {
+    const output = await callback(args, extra)
 
     return {
       content: [{ type: 'text', text: JSON.stringify(output) }],
       structuredContent: output,
-    } satisfies ReturnType<RegisterToolCallback>
+    }
   }
-
-  return callbackTool
 }

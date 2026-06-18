@@ -13,9 +13,7 @@ export const ALL_SDGS = SDGS.map((sdg) => ({
   ...sdg,
 }))
 
-export const mapSDG = (s: number) => {
-  return ALL_SDGS[s] || { id: s }
-}
+export const mapSDG = (s: number) => ALL_SDGS[s] || { id: s }
 
 export const SDG_OUTPUT_SCHEMA = z.object({
   id: N.number().describe('The ID of the Sustainable Development Goal (SDG)'),
@@ -32,16 +30,9 @@ export default (server: TypeMcpServer) => {
     {
       title: 'LList of all SDGs Sustainable Development Goals',
       description: 'Get name, description and id of all SDGs Sustainable Development Goals.',
-      inputSchema: {},
-      /*outputSchema: {
-        results: N.array(SDG_OUTPUT_SCHEMA),
-        },*/
     },
 
-    resultFromTool(async () => {
-      // only return sdgs
-      return ALL_SDGS
-    })
+    resultFromTool(() => ALL_SDGS)
   )
 
   server.registerTool(
@@ -54,12 +45,11 @@ export default (server: TypeMcpServer) => {
           'The ID of the Sustainable Development Goal (SDG) between 1 and 17'
         ),
       },
-      /*outputSchema: { results: SDG_OUTPUT_SCHEMA },*/
     },
 
-    resultFromTool(async ({ sdgId }, _) => {
+    resultFromTool(({ sdgId }) => {
       // only return sdgs
-      return ALL_SDGS[sdgId] || 'SDG not found'
+      return ALL_SDGS[sdgId]
     })
   )
 }

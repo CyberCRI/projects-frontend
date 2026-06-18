@@ -4,19 +4,6 @@ import type { TypeMcpServer } from '~/interfaces/mcp'
 import { getAllEvents } from '~/api/event.service'
 import { nowDate } from '~/functs/date'
 import { pick } from 'es-toolkit'
-// import N from './zod-schema-utils'
-// import { z } from 'zod'
-/*
-const EVENT_OUTPUT_SCHEMA = N.object({
-  id: N.number().describe('The ID of the event'),
-  slug: N.string().describe('The slug of the event'),
-  title: N.string().describe('The title of the event'),
-  content: N.string().describe('The content of the event'),
-  start_date: N.string().describe('The start date of the event'),
-  end_date: N.string().describe('The end date of the event'),
-  item_type: N.literal('event').describe('The type of the item, always event'),
-})
-*/
 
 const mapEvent = (event: EventModel) => ({
   item_type: 'event',
@@ -31,7 +18,6 @@ export default (server: TypeMcpServer) => {
       title: 'Future Events list',
       description: 'Get a list of future events.',
       inputSchema: {},
-      /*outputSchema: { results: z.array(EVENT_OUTPUT_SCHEMA).describe('The list of future events') },*/
     },
     resultFromTool((_, extras) => {
       const todayZeroHour = nowDate()
@@ -53,7 +39,6 @@ export default (server: TypeMcpServer) => {
       title: 'Past Events list',
       description: 'Get a list of past events.',
       inputSchema: {},
-      /*outputSchema: { results: z.array(EVENT_OUTPUT_SCHEMA).describe('The list of past events') },*/
     },
     resultFromTool((_, extras) => {
       const todayZeroHour = nowDate()
