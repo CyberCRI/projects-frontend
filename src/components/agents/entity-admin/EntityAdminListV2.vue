@@ -1,46 +1,28 @@
 <script setup>
 const props = defineProps({
-  fetchEntities: { type: Function, required: true },
+  entityList: { type: Array, required: true },
   noEntityLabel: { type: String, required: true },
   entityIcon: { type: String, required: true },
   deletableCheck: { type: Function, default: () => null },
   isLinkable: { type: Boolean, default: false },
+  isLoading: { type: Boolean, default: false },
 })
 
 const emit = defineEmits(['goto-entity', 'show-entity', 'delete-entity', 'edit-entity'])
-
-const locale = useNuxtApp().$i18n /*as any */.locale
-
-const isAsyncing = ref(false)
-const entityList = ref([])
-
-const refresh = async () => {
-  isAsyncing.value = true
-  try {
-    entityList.value = await props.fetchEntities()
-  } catch (e) {
-    console.log(e.toString())
-  } finally {
-    isAsyncing.value = false
-  }
-}
-defineExpose({ refresh })
-
-refresh()
 </script>
 <template>
-  <div v-if="isAsyncing" class="loader">
+  <div v-if="isLoading" class="loader">
     <LoaderSimple />
   </div>
   <p v-else-if="!entityList.length" class="no-entity">
     {{ noEntityLabel }}
   </p>
   <ul v-else>
-    <li v-for="entity in entityList" :key="entity.id + '-' + locale" class="entity">
+    <li v-for="entity in entityList" :key="entity.id" class="entity">
       <div class="icon">
         <IconImage :name="entityIcon" />
       </div>
-      <span>{{ entity?.$t?.title }}</span>
+
       <div class="entity-content">
         <slot :entity="entity" />
       </div>

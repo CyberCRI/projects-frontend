@@ -1,3 +1,4 @@
+import formatAgentWithTranslation from '@/server/utils/format-agent-with-translation'
 import checkAdminRights from '@/server/utils/check-admin-rights.js'
 import { safeParseInt } from '@/functs/string'
 // import useCheckpointerDb from '@/server/utils/checkpointer-db'
@@ -36,7 +37,10 @@ export default defineLazyEventHandler(() => {
       },
       include: {
         messages: { ...messageRange, orderBy: { position: 'desc' } },
-        agent: { select: { title: true } },
+        agent: {
+          select: { title: true },
+          include: { agentTranslations: { where: { fieldName: 'title' } } },
+        },
       },
     })
     let more = null
@@ -44,6 +48,13 @@ export default defineLazyEventHandler(() => {
       more = conversation.messages[limit].id
       conversation.messages = conversation.messages.slice(0, limit)
     }
-    return { conversation, more }
+
+    return {
+      conversation: {
+        ...conversation,
+        agent: formatAgentWithTranslation(conversation.agent, conversation.agent.agentTranslations),
+      },
+      more,
+    }
   })
 })

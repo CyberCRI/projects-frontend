@@ -3,6 +3,7 @@ import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 // import useLoadingFromStatus from '@/composables/useLoadingFromStatus'
 import useUsersStore from '@/stores/useUsers'
 
+const { t } = useNuxtI18n()
 // type Params = Parameters<typeof useFetch>
 const usersStore = useUsersStore()
 const isConnected = computed(() => usersStore.isConnected)
@@ -24,15 +25,23 @@ const options = {
   server: false, // ⚠️ Crucial: Skips server execution
 }
 
-const url = `/api/chatbot`
-const { data, status } = useFetch(url, { ...options })
-const agents = computed(() => data.value?.agents)
+const { translateAgents } = useAutoTranslate()
+const key = computed(() => `frontend-agents`)
+const getAgents = () =>
+  useAsyncAPI(key, () => $fetch('/api/chatbot', options), {
+    translate: (data) => translateAgents(data),
+  })
+const { /*status,*/ isLoading, data: agents /*error,*/ /*refresh*/ } = await getAgents()
 
-const isLoading = computed(() => status.value == 'pending')
+// const url = `/api/chatbot`
+// const { data, status } = useFetch(url, { ...options })
+// const agents = computed(() => data.value?.agents)
+
+// const isLoading = computed(() => status.value == 'pending')
 
 useLpiHead2({
-  title: computed(() => agent.value?.title),
-  description: computed(() => agent.value?.description),
+  title: computed(() => t('agents-home.title')), //agent.value?.title),
+  description: computed(() => t('agents-home.intro')),
 })
 </script>
 <template>
@@ -57,7 +66,7 @@ useLpiHead2({
       <LoaderSimple />
     </div>
     <div v-else>
-      <p v-if="!agents.length" class="centered">
+      <p v-if="!agents?.length" class="centered">
         {{ $t('agents.no-active-agent-yet') }}
       </p>
       <div v-else class="agent-list">
@@ -71,9 +80,9 @@ useLpiHead2({
             <IconImage class="agent-face" name="ChatBubble" />
           </div>
           <div class="wording">
-            <h3 class="title">{{ agent.title }}</h3>
+            <h3 class="title">{{ agent.$t.title }}</h3>
             <p class="description">
-              {{ agent.description.replace(/<[^>]*?>/gim, ' ') }}
+              {{ agent.$t.description.replace(/<[^>]*?>/gim, ' ') }}
             </p>
           </div>
         </NuxtLink>

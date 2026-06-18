@@ -6,7 +6,7 @@ import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import useUsersStore from '@/stores/useUsers'
 
 const props = defineProps({ agentSlug: { type: String, required: true } })
-
+const { translateAgent } = useAutoTranslate()
 const { locale } = useNuxtI18n()
 const { t } = useNuxtI18n()
 
@@ -69,11 +69,15 @@ const query = ref({
 })
 
 const url = computed(() => `/api/chatbot/${props.agentSlug}`)
-const { data, status, error } = useFetch(url, { ...options, query: { limit: LIMIT } }) // query is used for conversation only and would retrigger the full chat relaod
+// const { data, status, error } = useFetch(url, { ...options, query: { limit: LIMIT } }) // query is used for conversation only and would retrigger the full chat relaod
 
-const agentIsLoading = computed(() => status.value == 'pending')
+const key = computed(() => `frontend-agents`)
+const getAgent = () => useAsyncAPI(key, () => $fetch(url.value, options))
+const { /*status,*/ isLoading: agentIsLoading, data, error /*refresh*/ } = getAgent()
 
-const agent = computed(() => data.value?.agent)
+// const agentIsLoading = computed(() => status.value == 'pending')
+
+const agent = computed(() => data.value?.agent && translateAgent(data.value?.agent).value)
 const conversation = ref(null)
 const conversationId = ref(null)
 const tempKey = ref(Date.now())
@@ -238,10 +242,10 @@ const breadcrumbs = computed(() => [
   },
 ])
 
-useLpiHead2({
-  title: computed(() => agent.value?.title),
-  description: computed(() => agent.value?.description),
-})
+// useLpiHead2({
+//   title: computed(() => agent.value?.title),
+//   description: computed(() => agent.value?.description),
+// })
 </script>
 <template>
   <div class="page-section page-section-narrow page-top">
@@ -251,7 +255,7 @@ useLpiHead2({
     </div>
     <div v-else-if="agent">
       <h1 class="page-title">
-        {{ agent?.title }}
+        {{ agent?.$t.title }}
       </h1>
       <h2 v-if="!agent.isEnabled" class="preview-mode">
         <IconImage name="AlertOutline" />
@@ -264,7 +268,7 @@ useLpiHead2({
         :agent-list="agentList"
       />
       <AgentDescription
-        v-if="agent.description?.trim() && agent.description?.trim() != '<p></p>'"
+        v-if="agent.$t.description?.trim() && agent.description?.trim() != '<p></p>'"
         :agent="agent"
       />
     </div>
@@ -317,7 +321,7 @@ useLpiHead2({
           ref="chatbotUi"
           :key="chatbotUiKey"
           :endpoint="CHAT_ENDPOINT"
-          :start-message="agent?.startMessage || ''"
+          :start-message="agent?.$t.startMessage || ''"
           :context-messages="contextMessages"
           :history="history"
           :conversation-id="threadId"

@@ -1,6 +1,7 @@
+import formatAgentWithTranslation from '@/server/utils/format-agent-with-translation'
 import findSafeAgentSlug from '@/server/utils/find-safe-agent-slug.js'
+import { translateAgentFields } from '@/server/utils/translate-fields'
 import checkAdminRights from '@/server/utils/check-admin-rights.js'
-import translateFields from '@/server/utils/translate-fields'
 import slugify from '@sindresorhus/slugify'
 
 function sendError(code, message) {
@@ -93,25 +94,9 @@ export default defineLazyEventHandler(() => {
 
       return { agent, oldAgent }
     })
-    const fieldsToTranslate = []
-    if (body.title && body.title != oldAgent?.title)
-      fieldsToTranslate.push({ field_name: 'title', type: 'text', content: body.title })
-    if (body.description && body.description != oldAgent?.description)
-      fieldsToTranslate.push({
-        field_name: 'description',
-        type: 'html',
-        content: body.description,
-      })
-    if (body.startMessage && body.startMessage != oldAgent?.startMessage)
-      fieldsToTranslate.push({
-        field_name: 'startMessage',
-        type: 'markdown',
-        content: body.startMessage,
-      })
 
-    const translations = await translateFields(fieldsToTranslate)
+    const translations = await translateAgentFields(agent, oldAgent)
 
-    agent.agentTranslations = translations
-    return agent
+    return formatAgentWithTranslation(agent, translations)
   })
 })

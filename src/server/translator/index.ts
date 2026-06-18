@@ -1,48 +1,29 @@
-/**
- * Translation Agent — LangChain JS v1 (June 2026)
- *
- * Input:
- *   fields      — { field_name: string; type: "text" | "html" | "markdown"; content: string }[]
- *   targetLangs — ISO 639-1 language codes, e.g. ["en", "fr", "ca", "es"]
- *
- * Output:
- *   { field_name: string; lang: string; content: string }[]
- *
- * Design
- *   • Single LLM call for the entire input array (one round-trip, no local lang detection).
- *   • The model detects each field's source language itself.
- *   • If a field is already in a target language, its content is returned verbatim.
- *   • HTML / Markdown structure is preserved; only visible text is translated.
- *   • Structured output via withStructuredOutput (Zod) — no fragile JSON parsing.
- *   • Uses initChatModel (universal model) — swap provider via MODEL_STRING env var.
- */
-
 import { HumanMessage, SystemMessage } from '@langchain/core/messages'
 import { initChatModel } from 'langchain/chat_models/universal'
 import * as z from 'zod'
 
-// ─── Types ───────────────────────────────────────────────────────────────────
-
 export type ContentType = 'text' | 'html' | 'markdown'
 
 export interface InputField {
-  field_name: string
+  fieldName: string
   type: ContentType
   content: string
 }
 
 export interface OutputField {
-  field_name: string
+  fieldName: string
   lang: string
   content: string
+  detectedLang: string
 }
 
-// ─── Zod output schema ───────────────────────────────────────────────────────
-
 const OutputFieldSchema = z.object({
-  field_name: z.string().describe('The field identifier, unchanged from input'),
+  fieldName: z.string().describe('The field identifier, unchanged from input'),
   lang: z.string().describe('ISO 639-1 language code this translation is for'),
   content: z.string().describe('Translated (or verbatim) content'),
+  detectedLang: z
+    .string()
+    .describe('ISO 639-1 language code of the detected orginal lang for input source language'),
 })
 
 const TranslationResponseSchema = z.object({
@@ -59,7 +40,7 @@ function buildSystemPrompt(targetLangs: string[]): string {
   return `You are an expert multilingual translator and language-detection specialist.
 
 You will receive a JSON array of content fields. Each field has:
-  - field_name  : identifier string
+  - fieldName  : identifier string
   - type        : one of "text", "html", or "markdown"
   - content     : the source content to translate
 
@@ -98,7 +79,7 @@ Output format
 ─────────────
 Return a JSON object with a single key "results" containing an array of objects,
 one per (field × target language):
-  { "field_name": string, "lang": string, "content": string }
+  { "fieldName": string, "lang": string, "content": string, "detectedLang": string }
 
 Order: iterate fields in input order, and for each field iterate target languages
 in the order given: [${langList}].
@@ -106,26 +87,6 @@ in the order given: [${langList}].
 Do not include any commentary, markdown fences, or keys outside "results".`
 }
 
-// ─── Helper: extract text from LLM response content ──────────────────────────
-
-function extractText(content: string | Array<{ type: string; text?: string }>): string {
-  if (typeof content === 'string') return content
-  return content
-    .filter((c): c is { type: 'text'; text: string } => c.type === 'text')
-    .map((c) => c.text)
-    .join('')
-}
-
-// ─── Main agent ──────────────────────────────────────────────────────────────
-
-/**
- * Translate an array of content fields into all target languages in one LLM call.
- *
- * @param fields       Input fields (field_name, type, content).
- * @param targetLangs  ISO 639-1 target language codes, e.g. ["en", "fr", "es"].
- * @param modelString  LangChain universal model string, e.g. "anthropic:claude-sonnet-4-6".
- *                     Falls back to the MODEL_STRING env var, then to claude-sonnet-4-6.
- */
 export default async function translationAgent(
   fields: InputField[],
   targetLangs: string[],

@@ -116,7 +116,7 @@ model Agent {
   agentSlugAlias    AgentSlugAlias[]
   agentTranslations AgentTranslation[]
 
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
 
   @@unique([title, orgCode])
   @@unique([slug, orgCode])
@@ -141,11 +141,12 @@ model AgentTranslation {
   agentId Int
   agent   Agent @relation(fields: [agentId], references: [id])
 
-  fieldName String
-  lang      String
-  content   String
+  fieldName    String
+  lang         String
+  content      String
+  detectedLang String @default("")
 
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
 
   @@id([agentId, fieldName, lang])
   @@index([agentId])

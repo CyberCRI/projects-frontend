@@ -1,6 +1,7 @@
+import formatAgentWithTranslation from '@/server/utils/format-agent-with-translation'
 import findSafeAgentSlug from '@/server/utils/find-safe-agent-slug.js'
+import { translateAgentFields } from '@/server/utils/translate-fields'
 import checkAdminRights from '@/server/utils/check-admin-rights.js'
-import translateFields from '@/server/utils/translate-fields'
 import slugify from '@sindresorhus/slugify'
 
 function sendError(code, message) {
@@ -42,27 +43,8 @@ export default defineLazyEventHandler(() => {
       return agent
     })
 
-    // Transaction API error: A commit cannot be executed on an expired transaction. The timeout for this transaction was 5000 ms, however 6912 ms passed since the start of the transaction. Consider increasing the interactive transaction timeout or doing less work in the transaction
-    const fieldsToTranslate = []
-    if (body.title)
-      fieldsToTranslate.push({ field_name: 'title', type: 'text', content: body.title })
-    if (body.description)
-      fieldsToTranslate.push({
-        field_name: 'description',
-        type: 'html',
-        content: body.description,
-      })
-    if (body.startMessage)
-      fieldsToTranslate.push({
-        field_name: 'startMessage',
-        type: 'markdown',
-        content: body.startMessage,
-      })
-
-    const translations = await translateFields(fieldsToTranslate)
-
-    agent.agentTranslations = translations
+    const translations = await translateAgentFields(agent)
     // console.log(agent)
-    return agent
+    return formatAgentWithTranslation(agent, translations)
   })
 })
