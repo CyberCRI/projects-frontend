@@ -1,5 +1,4 @@
-import type { $Fetch } from 'ofetch'
-import { ofetch } from 'ofetch'
+import { ofetch, type $Fetch } from 'ofetch'
 
 type SorbobotResponseSession = {
   data: {
