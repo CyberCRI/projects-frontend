@@ -78,9 +78,14 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
     params[2].immediate = false
   }
 
+  const neededArgs = params[2].watch
   const checkArgs = computed(() => {
-    return params[2].watch.map((v) => unref(v)).filter((v) => isNil(v)).length === 0
+    return neededArgs.map((v) => unref(v)).filter((v) => isNil(v)).length === 0
   })
+
+  if (immediate === false) {
+    params[2].watch = []
+  }
 
   // add query params directly in keys
   // like "organization::CRI::group::55::members" (if query is empty)
@@ -116,8 +121,10 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
   )
   const isLoading = useLoadingFromStatus(status)
 
-  // @ts-expect-error 2345 todo check why
-  const dataWrapped = params[2]?.translate ? params[2]?.translate(data) : data
+  const dataWrapped = params[2]?.translate
+    ? // @ts-expect-error 2345 todo check why
+      params[2]?.translate(data)
+    : computed(() => unref(data))
 
   const results = {
     ...res,
@@ -132,6 +139,7 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
       checkArgs,
       (newValue) => {
         if (newValue) {
+          console.log('refresh')
           results.refresh()
         }
       },

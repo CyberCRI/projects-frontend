@@ -9,6 +9,7 @@ import { getProjectLocations } from '@/api/v2/project.service'
 import LocationForm from '~/components/map/LocationForm.vue'
 import LocationList from '@/components/map/LocationList.vue'
 import { PROJECT_LOCATIONS_TYPES } from '~/functs/constants'
+import GeneralMap from '~/components/map/GeneralMap.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -81,10 +82,10 @@ const onConFirmDelete = () => {
 <template>
   <FetchLoader :status="status" skeleton only-error>
     <BaseModuleHeader v-if="!preview" :editable="editable" @add="openModals('map')" />
-    <MapRecap
+    <GeneralMap
       ref="map"
+      class="map-recap"
       :locations="locations"
-      expand
       :editable="isEdit"
       @edit="onEdit"
       @expand="openModals('map')"
@@ -116,7 +117,7 @@ const onConFirmDelete = () => {
       @clear="clear"
       @confirm="onConFirmDelete"
     >
-      <MapRecap :locations="[selectedLocation]" :expand="false" />
+      <GeneralMap :locations="[selectedLocation]" :control-expand="false" />
     </ConfirmModal>
 
     <LocationForm

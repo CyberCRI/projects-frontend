@@ -5,7 +5,7 @@
         <LoaderComplex :label="$t('location.loading')" />
       </div>
     </Transition>
-    <GeneralMap :locations="data" :loading="isLoading" />
+    <GeneralMap :locations="data" :loading="isLoading" :control-expand="false" />
     <div v-if="!isLoading && isEmpty" class="empty-map">
       {{ $t('map.empty') }}
     </div>
@@ -24,9 +24,7 @@ const { t } = useNuxtI18n()
 
 const { isLoading, data } = getLocations(organizationCode)
 
-const isEmpty = computed(
-  () => Object.values(data.value).reduce((acc, el) => acc + el.length, 0) === 0
-)
+const isEmpty = computed(() => (data.value?.length ?? 0) === 0)
 
 onBeforeUnmount(() => {
   document.body.classList.remove('map-no-scroll')
@@ -70,11 +68,6 @@ useLpiHead2({
     svg {
       margin: 0 auto $space-m;
     }
-  }
-
-  .leaflet-top {
-    // override leaflet value
-    margin-top: pxToRem(40px);
   }
 
   .empty-map {

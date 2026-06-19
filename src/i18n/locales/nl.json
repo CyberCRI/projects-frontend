@@ -582,6 +582,7 @@
     "date": "Datum",
     "clear-date": "Datum wissen",
     "chose-date": "Datum selecteren | Selecteer de datum(s)",
+    "filter": "filter | filters",
     "empty": "Niets hier...",
     "file": "bestand | bestanden",
     "image": "afbeelding"
@@ -991,7 +992,7 @@
   "location": {
     "loading": "Locatie laden",
     "focus-on-map": "focus op de kaart",
-    "expand-map": "Kaart vergroten",
+    "expand": "Kaart vergroten",
     "edit-location-point": "Locatiepunt bewerken",
     "location-type-label": "Locatietype",
     "impact": "Effect",
@@ -1003,7 +1004,9 @@
     "add-location-point": "Plaatspunt toevoegen",
     "default-title": "Locatie",
     "news": "Nieuws | Nieuws",
-    "event": "Gebeurtenis"
+    "event": "Gebeurtenis",
+    "zoom-in": "Inzoomen",
+    "zoom-out": "Uitzoomen"
   },
   "map": {
     "page-title": "Kaart",

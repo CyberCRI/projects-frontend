@@ -14,11 +14,12 @@
     <template #body>
       <div class="location-map-ctn">
         <!-- form not have it, so ignore typescript -->
-        <MapRecap
+        <GeneralMap
           ref="mapInstance"
-          :locations="[form as any]"
+          :locations="[{ ...form } as any]"
           :auto-center="false"
-          :expand="false"
+          :control-expand="false"
+          :control-filter="false"
         />
       </div>
 
@@ -26,7 +27,7 @@
         <div class="location-type-label">
           {{ $t('location.location-type-label') }}
         </div>
-        <GroupButton v-model="form.type" :options="locationTypeOptions" />
+        <GroupButton v-model="form.type" :options="locationTypeOptions" has-icon />
       </div>
       <TextInput v-model="form.title" :errors="errors.title" :label="$t('common.title')" />
 
@@ -51,16 +52,16 @@
 </template>
 
 <script setup lang="ts">
-import type { LocationForm } from '~/models/location.model'
-import type { LocationType } from '~/models/types'
-
-import GroupButton from '~/components/base/button/GroupButton.vue'
-import DialogModal from '~/components/base/modal/DialogModal.vue'
-import LpiButton from '~/components/base/button/LpiButton.vue'
-import TextInput from '~/components/base/form/TextInput.vue'
-import MapRecap from '~/components/map/MapRecap.vue'
-
-import { useLocationForm } from '~/form/location'
+import type { GroupOption } from '@/components/base/button/GroupButton.vue'
+import GroupButton from '@/components/base/button/GroupButton.vue'
+import DialogModal from '@/components/base/modal/DialogModal.vue'
+import LpiButton from '@/components/base/button/LpiButton.vue'
+import TextInput from '@/components/base/form/TextInput.vue'
+import type { LocationForm } from '@/models/location.model'
+import GeneralMap from '~/components/map/GeneralMap.vue'
+import { IconMapLocationType } from '~/functs/maps'
+import type { LocationType } from '@/models/types'
+import { useLocationForm } from '@/form/location'
 
 const props = withDefaults(
   defineProps<{
@@ -78,30 +79,35 @@ defineEmits(['submit', 'close', 'delete'])
 const { t } = useNuxtI18n()
 
 const locationTypeOptions = computed(() => {
-  const arr: { value: LocationType; label: string }[] = [
+  const arr: GroupOption[] = [
     {
       value: 'team',
       label: t('location.team'),
+      iconName: IconMapLocationType('team'),
     },
     {
       value: 'impact',
       label: t('location.impact'),
+      iconName: IconMapLocationType('impact'),
     },
     {
       value: 'address',
       label: t('location.address'),
+      iconName: IconMapLocationType('address'),
     },
     {
       value: 'news',
       label: t('location.news'),
+      iconName: IconMapLocationType('news'),
     },
     {
       value: 'event',
       label: t('location.event'),
+      iconName: IconMapLocationType('event'),
     },
   ]
   if (props.locationTypes) {
-    return arr.filter(({ value }) => props.locationTypes.includes(value))
+    return arr.filter(({ value }) => props.locationTypes.includes(value as LocationType))
   }
   return arr
 })
@@ -121,7 +127,10 @@ const { form, isValid, errors } = useLocationForm({ model })
 watch(
   () => form.value.type,
   () => {
-    if (!form.value.type || !props.locationTypes?.includes(form.value.type)) {
+    if (
+      !form.value.type ||
+      (props.locationTypes && !props.locationTypes.includes(form.value.type))
+    ) {
       form.value.type = defaultLocationType.value
     }
   },
@@ -139,7 +148,7 @@ onMounted(() => {
       if (!mapInstanceRef.value) {
         return
       }
-      mapInstanceRef.value.map.map.setZoom(props.zoom)
+      mapInstanceRef.value.map.setZoom(props.zoom)
       clearInterval(timeout)
     }, 100)
   }
@@ -176,7 +185,7 @@ onMounted(() => {
 </style>
 
 <style>
-.location-map-ctn .map-recap {
+.location-map-ctn .leaflet-map {
   height: 250px;
 }
 </style>
