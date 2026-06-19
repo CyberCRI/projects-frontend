@@ -22,7 +22,7 @@ export type PrivacySettings = {
   socials: PrivacyValue
 }
 
-export interface UserModel {
+export interface UserModel extends BaseModel {
   id: number
   name: {
     firstname: string
@@ -54,6 +54,12 @@ export interface UserModel {
   } | null
   privacy_settings?: PrivacySettings
   sdgs?: number[]
+  is_superuser: boolean
+
+  linkedin: string | null
+  facebook: string | null
+  twitter: string | null
+  website: string | null
 }
 
 export interface UserFromJWTModel {

@@ -1,12 +1,13 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 
-import registerSorbobotTool, { sorbobotIsEnabled } from './sorbobot/sorbobot-tool'
 import registerOrganizationTool from './projects/organization-tool'
 import registerInstructionTool from './projects/instruction-tool'
+import registerSorbobotTool from './sorbobot/sorbobot-tool'
 import registerProjectTool from './projects/project-tool'
 import registerSearchTool from './projects/search-tool'
 import registerPeopleTool from './projects/people-tool'
 import registerEventTool from './projects/event-tool'
+import type { TypeMcpServer } from '~/interfaces/mcp'
 import registerNewsTool from './projects/news-tool'
 import registerSdgTool from './projects/sdg-tool'
 
@@ -20,7 +21,7 @@ function createMCPServer() {
   const server = new McpServer({
     name: 'demo-server',
     version: '1.0.0',
-  })
+  }) as TypeMcpServer
 
   // console.log(
   //   'Sorbobot config',
@@ -30,9 +31,7 @@ function createMCPServer() {
   //   !!sorbobotApiToken
   // )
 
-  if (sorbobotIsEnabled) {
-    registerSorbobotTool(server)
-  }
+  registerSorbobotTool(server)
 
   registerSearchTool(server)
 

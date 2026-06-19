@@ -1,30 +1,16 @@
-import { API_BASE_URL, mcpFetch, orgCode } from './base'
+import { mcpOptions, orgCode, resultFromTool } from './base'
+import type { EventModel } from '~/models/event.model'
+import type { TypeMcpServer } from '~/interfaces/mcp'
+import { getAllEvents } from '~/api/event.service'
 import { nowDate } from '~/functs/date'
-// import N from './zod-schema-utils'
-// import { z } from 'zod'
-/*
-const EVENT_OUTPUT_SCHEMA = N.object({
-  id: N.number().describe('The ID of the event'),
-  slug: N.string().describe('The slug of the event'),
-  title: N.string().describe('The title of the event'),
-  content: N.string().describe('The content of the event'),
-  start_date: N.string().describe('The start date of the event'),
-  end_date: N.string().describe('The end date of the event'),
-  item_type: N.literal('event').describe('The type of the item, always event'),
-})
-*/
+import { pick } from 'es-toolkit'
 
-const mapEvent = (e: any) => ({
-  id: e.id,
-  slug: e.slug,
-  title: e.title,
-  content: e.content,
-  start_date: e.start_date,
-  end_date: e.end_date,
+const mapEvent = (event: EventModel) => ({
   item_type: 'event',
+  ...pick(event, ['id', 'title', 'content', 'start_date', 'end_date']),
 })
 
-export default (server) => {
+export default (server: TypeMcpServer) => {
   // Add an search tool
   server.registerTool(
     'future-events-list',
@@ -32,34 +18,18 @@ export default (server) => {
       title: 'Future Events list',
       description: 'Get a list of future events.',
       inputSchema: {},
-      /*outputSchema: { results: z.array(EVENT_OUTPUT_SCHEMA).describe('The list of future events') },*/
     },
-    async (_input, extras) => {
-      // today date at midnight
+    resultFromTool((_, extras) => {
       const todayZeroHour = nowDate()
-      const params = {
-        ordering: 'start_date',
-        from_date: todayZeroHour.toISOString(),
-      }
-      let results = {}
-      try {
-        const queryResult: any = await mcpFetch(
-          // TODO: use org code from config
-          `${API_BASE_URL}organization/${orgCode}/event/`,
-          { params },
-          extras
-        )
-        results = queryResult.results.map(mapEvent)
-      } catch (error) {
-        console.error('Error fetching organization future events list:', error)
-      }
-      const output = { results }
-      console.log('MCP TOOL CALLED: future- events-list', { output })
-      return {
-        content: [{ type: 'text', text: JSON.stringify(output) }],
-        structuredContent: output,
-      }
-    }
+      const opts = mcpOptions(extras)
+      return getAllEvents(orgCode, {
+        ...opts,
+        query: {
+          ordering: 'start_date',
+          from_date: todayZeroHour.toISOString(),
+        },
+      }).then((response) => response.results.map(mapEvent))
+    })
   )
 
   // Add an search tool
@@ -69,33 +39,17 @@ export default (server) => {
       title: 'Past Events list',
       description: 'Get a list of past events.',
       inputSchema: {},
-      /*outputSchema: { results: z.array(EVENT_OUTPUT_SCHEMA).describe('The list of past events') },*/
     },
-    async (_input, extras) => {
-      // today date at midnight
+    resultFromTool((_, extras) => {
       const todayZeroHour = nowDate()
-      const params = {
-        ordering: '-start_date',
-        to_date: todayZeroHour.toISOString(),
-      }
-      let results = {}
-      try {
-        const queryResult: any = await mcpFetch(
-          // TODO: use org code from config
-          `${API_BASE_URL}organization/${orgCode}/event/`,
-          { params },
-          extras
-        )
-        results = mapEvent(queryResult.results)
-      } catch (error) {
-        console.error('Error fetching organization past events list:', error)
-      }
-      const output = results
-      console.log('MCP TOOL CALLED: past-events-list', { output })
-      return {
-        content: [{ type: 'text', text: JSON.stringify(output) }],
-        structuredContent: output,
-      }
-    }
+      const opts = mcpOptions(extras)
+      return getAllEvents(orgCode, {
+        ...opts,
+        query: {
+          ordering: '-start_date',
+          from_date: todayZeroHour.toISOString(),
+        },
+      }).then((response) => response.results.map(mapEvent))
+    })
   )
 }

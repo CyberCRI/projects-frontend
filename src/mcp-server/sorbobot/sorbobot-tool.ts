@@ -1,75 +1,81 @@
+import type { SorbobotAuthor, SorbobotResponseData } from '~/mcp-server/sorbobot/sorbobot-api'
+import { mcpOptions, resultFromTool } from '../projects/base'
 import SorbobotAPI from '~/mcp-server/sorbobot/sorbobot-api'
-import { API_BASE_URL, mcpFetch } from '../projects/base'
+import type { HarvesterType } from '~/interfaces/researcher'
+import { searchResearcher } from '~/api/crisalid.service'
+import type { TypeMcpServer } from '~/interfaces/mcp'
 import { z } from 'zod'
 
 const runtimeConfig = useRuntimeConfig()
 const sorbobotApiUrl = runtimeConfig.public.appSorbobotApiUrl
 const sorbobotApiToken = runtimeConfig.appSorbobotApiToken
+
 const orgCode = runtimeConfig.public.appApiOrgCode
 const appSorbobotApiTrace = runtimeConfig.appSorbobotApiTrace
 
 export const sorbobotIsEnabled = sorbobotApiUrl && sorbobotApiToken
 
-export const traceSorbobot = (...args) => {
+const traceSorbobot = (...args) => {
   if (appSorbobotApiTrace) {
     console.log('[Sorbobot TRACE]', ...args)
   }
 }
 
-const sorbobotApi = sorbobotIsEnabled ? new SorbobotAPI(sorbobotApiToken, sorbobotApiUrl) : null
 export const SORBOBOT_EXTRA =
   "If the query is about researchers, research topics, parpers or publications use the 'sorbobot-api' in priority."
 // console.log('Registering Sorbobot API tool')
 
-export async function resolveResearcherProfile(sorbobotResults, extras) {
+async function resolveResearcherProfile(
+  sorbobotResults: SorbobotResponseData['data']['authors'],
+  extras
+): Promise<SorbobotAuthor[]> {
   // map researchers to their profile in Projects
   traceSorbobot('Resolving researcher profiles from Sorbobot results')
   traceSorbobot('SorbobotResults:', sorbobotResults)
   const researcherEppn = Object.values(sorbobotResults)
-    .map((researcher: any) => researcher.id)
+    .map((researcher) => researcher.id)
     .filter((id) => !!id)
     .map((id) => ('' + id).split('@')[0]) // get local part of eppn only)
-  const idSource = 'local' // 'eppn'
-  const offset = '0'
-  let idMap = {}
-  try {
-    const profileResponse: any = await mcpFetch(
-      `${API_BASE_URL}crisalid/organization/${orgCode}/researcher/search/?`,
-      {
-        query: {
-          harvester: idSource,
-          offset: offset,
-          values: researcherEppn.join(','),
-        },
-      },
-      extras
-    )
-    traceSorbobot('Profile response from sorbobots extender in MCP:', profileResponse)
-    idMap = profileResponse.results || {}
-  } catch (error) {
-    console.error('Error fetching projects researcher profiles from MCP:', error)
-  }
-  const sorbobotResultsWithProfiles = Object.values(sorbobotResults).map((researcher: any) => {
-    const res = researcher
-    const resarecherId = researcher.id || ''
-    const localEppn = resarecherId.split('@')[0]
-    const profile = idMap[localEppn]
-    const user = profile?.user
-    if (user) {
-      res['id'] = user.id
-      res['slug'] = user.slug
-      res['link_url'] = `/profile/${user.slug}/`
-    } else {
-      delete res['id']
-    }
-    return res
+
+  const idSource: HarvesterType = 'local' // 'eppn'
+
+  const opts = mcpOptions(extras)
+  return searchResearcher(orgCode, {
+    ...opts,
+    query: {
+      harvester: idSource,
+      values: researcherEppn.join(','),
+    },
   })
-  traceSorbobot('Sorbobot results with profiles:', sorbobotResultsWithProfiles)
-  return sorbobotResultsWithProfiles
+    .then((profileResponse) => {
+      traceSorbobot('Profile response from sorbobots extender in MCP:', profileResponse)
+
+      const sorbobotResultsWithProfiles = Object.values(sorbobotResults).map((researcher) => {
+        const res = researcher
+        const resarecherId = researcher.id || ''
+        const localEppn = resarecherId.split('@')[0]
+        const profile = profileResponse.results[localEppn]
+        const user = profile?.user
+        if (user) {
+          res['id'] = user.id
+          res['slug'] = user.slug
+          res['link_url'] = `/profile/${user.slug}/`
+        } else {
+          delete res['id']
+        }
+        return res
+      })
+      traceSorbobot('Sorbobot results with profiles:', sorbobotResultsWithProfiles)
+      return sorbobotResultsWithProfiles
+    })
+    .catch((error) => {
+      console.error('Error fetching projects researcher profiles from MCP:', error)
+      return []
+    })
 }
 
-export const sorbobotRewriteTopics = (topics) => {
-  const topicSet = new Set()
+const sorbobotRewriteTopics = (topics: string[]) => {
+  const topicSet = new Set<string>()
   for (const topic of topics || []) {
     const t = topic.split('/')
     if (t.length < 2) continue // skip "root"
@@ -80,11 +86,12 @@ export const sorbobotRewriteTopics = (topics) => {
   return Array.from(topicSet)
 }
 
-export default (server) => {
-  if (!sorbobotApi) {
+export default (server: TypeMcpServer) => {
+  if (!sorbobotIsEnabled) {
     console.log('Sorbobot API not configured, skipping Sorbobot tool registration')
     return
   }
+
   console.log('Sorbobot API initialized')
 
   // Add an search tool
@@ -100,30 +107,24 @@ export default (server) => {
         research_topics: z.array(z.string().describe('A research topic')),
       },
     },
-    async ({ queryPrompt }, extras) => {
+    resultFromTool(async ({ queryPrompt }, extras) => {
+      const sorbobotApi = new SorbobotAPI(sorbobotApiToken, sorbobotApiUrl)
+
       let results = { researchers: [], research_topics: [] }
-      if (!sorbobotApi) {
-        console.log('Sorbobot API not initialized')
-        return results
-      }
+
       try {
         await sorbobotApi.init()
         const sorbobotResults = await sorbobotApi.query(queryPrompt)
-        await sorbobotApi.close()
-        const researchers = await resolveResearcherProfile(sorbobotResults?.authors || [], extras)
+        const researchers = await resolveResearcherProfile(sorbobotResults?.authors || {}, extras)
         results = {
           researchers: researchers,
           research_topics: sorbobotRewriteTopics(sorbobotResults.search_results),
         }
-      } catch (error) {
-        console.error('Error querying Sorbobot:', error)
+      } finally {
+        await sorbobotApi.close()
       }
-      const output = results
-      // console.log('MCP TOOL CALLED: sorbobot-api', { output })
-      return {
-        content: [{ type: 'text', text: JSON.stringify(output) }],
-        structuredContent: output,
-      }
-    }
+
+      return results
+    })
   )
 }
