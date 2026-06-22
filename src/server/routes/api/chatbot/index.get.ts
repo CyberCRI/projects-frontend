@@ -1,3 +1,4 @@
+import formatAgentWithTranslation from '@/server/utils/format-agent-with-translation'
 import { getUser } from '@/server/utils/check-admin-rights.js'
 
 export default defineLazyEventHandler(() => {
@@ -24,9 +25,10 @@ export default defineLazyEventHandler(() => {
         slug: true,
         description: true,
         isEnabled: true,
+        agentTranslations: true,
       },
     })
 
-    return { agents }
+    return agents.map((agent) => formatAgentWithTranslation(agent as any, agent.agentTranslations))
   })
 })

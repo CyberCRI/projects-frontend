@@ -1,4 +1,6 @@
+import formatAgentWithTranslation from '@/server/utils/format-agent-with-translation'
 import findSafeAgentSlug from '@/server/utils/find-safe-agent-slug.js'
+import { translateAgentFields } from '@/server/utils/translate-fields'
 import checkAdminRights from '@/server/utils/check-admin-rights.js'
 import slugify from '@sindresorhus/slugify'
 
@@ -32,7 +34,7 @@ export default defineLazyEventHandler(() => {
     const documents = body.documents || []
     delete body.documents
 
-    const agent = await chatbotPrisma.$transaction(async (tx) => {
+    const { agent, oldAgent } = await chatbotPrisma.$transaction(async (tx) => {
       const homonymous = await tx.agent.findFirst({
         where: {
           id: { not: id },
@@ -72,7 +74,7 @@ export default defineLazyEventHandler(() => {
         })
       }
 
-      return await tx.agent.update({
+      const agent = await tx.agent.update({
         where: {
           id: id,
           orgCode: appApiOrgCode,
@@ -89,7 +91,12 @@ export default defineLazyEventHandler(() => {
           },
         },
       })
+
+      return { agent, oldAgent }
     })
-    return agent
+
+    const translations = await translateAgentFields(agent, oldAgent)
+
+    return formatAgentWithTranslation(agent, translations)
   })
 })

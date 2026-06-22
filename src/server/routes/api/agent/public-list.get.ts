@@ -1,4 +1,6 @@
+import formatAgentWithTranslation from '@/server/utils/format-agent-with-translation'
 import { getUser } from '@/server/utils/check-admin-rights.js'
+
 export default defineLazyEventHandler(() => {
   const { appApiOrgCode } = useRuntimeConfig().public
   return defineEventHandler(async (event) => {
@@ -9,7 +11,7 @@ export default defineLazyEventHandler(() => {
         error: 'Unauthorized',
       }
     }
-    const agent = await chatbotPrisma.agent.findMany({
+    const agents = await chatbotPrisma.agent.findMany({
       where: {
         orgCode: appApiOrgCode,
         isEnabled: true,
@@ -22,10 +24,14 @@ export default defineLazyEventHandler(() => {
         startMessage: true,
         useProfileData: true,
         isEnabled: true,
+        agentTranslations: true,
       },
       orderBy: { title: 'asc' },
     })
     // console.log(agent)
-    return agent
+    return agents.map((agent) => ({
+      ...agent,
+      ...formatAgentWithTranslation(agent, agent.agentTranslations),
+    }))
   })
 })

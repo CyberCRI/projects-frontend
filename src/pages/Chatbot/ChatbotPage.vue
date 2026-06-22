@@ -6,7 +6,7 @@ import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import useUsersStore from '@/stores/useUsers'
 
 const props = defineProps({ agentSlug: { type: String, required: true } })
-
+const { translateAgent, translateAgents } = useAutoTranslate()
 const { locale } = useNuxtI18n()
 const { t } = useNuxtI18n()
 
@@ -34,7 +34,6 @@ function scrollToBottom() {
 
 function toConversationEnd() {
   nextTick(() => {
-    // console.log('to end', renderTriggeredBy.value)
     if (renderTriggeredBy.value == 'previous-messages') {
       scrollToTop()
     } else {
@@ -69,20 +68,22 @@ const query = ref({
 })
 
 const url = computed(() => `/api/chatbot/${props.agentSlug}`)
-const { data, status, error } = useFetch(url, { ...options, query: { limit: LIMIT } }) // query is used for conversation only and would retrigger the full chat relaod
+// const { data, status, error } = useFetch(url, { ...options, query: { limit: LIMIT } }) // query is used for conversation only and would retrigger the full chat relaod
 
-const agentIsLoading = computed(() => status.value == 'pending')
-
-const agent = computed(() => data.value?.agent)
+const key = computed(() => `frontend-agents`)
+const getAgent = () => useAsyncAPI(key, () => $fetch(url.value, options))
+const { /*status,*/ isLoading: agentIsLoading, data, error /*refresh*/ } = getAgent()
+const agent = computed(() => data.value?.agent && translateAgent(data.value?.agent).value)
 const conversation = ref(null)
 const conversationId = ref(null)
 const tempKey = ref(Date.now())
 
 const { data: publicAgents } = useFetch('/api/agent/public-list', options)
-// console.log('publicAgents', publicAgents)
-const agentList = computed(() =>
+
+const publicAgentsWithoutCurrent = computed(() =>
   (publicAgents.value || []).filter((publicAgent) => publicAgent.id != agent.value.id)
 )
+const agentList = translateAgents(publicAgentsWithoutCurrent)
 
 function onConversationRestarted() {
   renderTriggeredBy.value = 'restart'
@@ -219,8 +220,6 @@ const chatbotUiKey = computed(
     tempKey.value
 )
 
-// const loading = useLoadingFromStatus(status)
-
 const showConversationList = ref(false)
 const route = useRoute()
 watch(
@@ -251,7 +250,7 @@ useLpiHead2({
     </div>
     <div v-else-if="agent">
       <h1 class="page-title">
-        {{ agent?.title }}
+        {{ agent?.$t.title }}
       </h1>
       <h2 v-if="!agent.isEnabled" class="preview-mode">
         <IconImage name="AlertOutline" />
@@ -264,7 +263,7 @@ useLpiHead2({
         :agent-list="agentList"
       />
       <AgentDescription
-        v-if="agent.description?.trim() && agent.description?.trim() != '<p></p>'"
+        v-if="agent.$t.description?.trim() && agent.$t.description?.trim() != '<p></p>'"
         :agent="agent"
       />
     </div>
@@ -284,13 +283,6 @@ useLpiHead2({
       </div>
       <a name="chat-conversation-top"></a>
       <ClientOnly>
-        <!--div v-if="conversation">
-          <h4>{{ conversation.title }}</h4>
-          <pre>
-            {{ JSON.stringify(history, null, 2) }}
-          </pre>
-          </div-->
-
         <div v-if="showConversationList">
           Conversations:
           <LpiSelect v-model="conversationId" :options="allConversationOptions" />
@@ -317,7 +309,7 @@ useLpiHead2({
           ref="chatbotUi"
           :key="chatbotUiKey"
           :endpoint="CHAT_ENDPOINT"
-          :start-message="agent?.startMessage || ''"
+          :start-message="agent?.$t.startMessage || ''"
           :context-messages="contextMessages"
           :history="history"
           :conversation-id="threadId"
