@@ -92,7 +92,7 @@ if (!conversationStarted.value) {
 }
 
 const requestInterceptor = (requestDetails) => {
-  console.log('requestInterceptor', requestDetails)
+  // console.log('requestInterceptor', requestDetails)
   const requestMessage = [requestDetails.body.messages[requestDetails.body.messages.length - 1]]
   const allMessages = conversationStarted.value
     ? requestMessage
@@ -152,7 +152,7 @@ let replacedByNext = false
 // last token contain whole message ONLY with opeanai, let's manually fix this
 let responseMessageAcc = ''
 const responseInterceptor = (response) => {
-  console.log('ChatBotDrawer responseInterceptor', response)
+  // console.log('ChatBotDrawer responseInterceptor', response)
   if (response.role === 'meta') {
     let text = spinnerMD + '*' + t(`chatbot.${response.text}`) + '*'
     if (response.text_extra) {
