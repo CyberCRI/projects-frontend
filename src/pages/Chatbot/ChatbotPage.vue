@@ -6,7 +6,7 @@ import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import useUsersStore from '@/stores/useUsers'
 
 const props = defineProps({ agentSlug: { type: String, required: true } })
-const { translateAgent } = useAutoTranslate()
+const { translateAgent, translateAgents } = useAutoTranslate()
 const { locale } = useNuxtI18n()
 const { t } = useNuxtI18n()
 
@@ -34,7 +34,6 @@ function scrollToBottom() {
 
 function toConversationEnd() {
   nextTick(() => {
-    // console.log('to end', renderTriggeredBy.value)
     if (renderTriggeredBy.value == 'previous-messages') {
       scrollToTop()
     } else {
@@ -74,19 +73,17 @@ const url = computed(() => `/api/chatbot/${props.agentSlug}`)
 const key = computed(() => `frontend-agents`)
 const getAgent = () => useAsyncAPI(key, () => $fetch(url.value, options))
 const { /*status,*/ isLoading: agentIsLoading, data, error /*refresh*/ } = getAgent()
-
-// const agentIsLoading = computed(() => status.value == 'pending')
-
 const agent = computed(() => data.value?.agent && translateAgent(data.value?.agent).value)
 const conversation = ref(null)
 const conversationId = ref(null)
 const tempKey = ref(Date.now())
 
 const { data: publicAgents } = useFetch('/api/agent/public-list', options)
-// console.log('publicAgents', publicAgents)
-const agentList = computed(() =>
+
+const publicAgentsWithoutCurrent = computed(() =>
   (publicAgents.value || []).filter((publicAgent) => publicAgent.id != agent.value.id)
 )
+const agentList = translateAgents(publicAgentsWithoutCurrent)
 
 function onConversationRestarted() {
   renderTriggeredBy.value = 'restart'
@@ -223,8 +220,6 @@ const chatbotUiKey = computed(
     tempKey.value
 )
 
-// const loading = useLoadingFromStatus(status)
-
 const showConversationList = ref(false)
 const route = useRoute()
 watch(
@@ -242,10 +237,10 @@ const breadcrumbs = computed(() => [
   },
 ])
 
-// useLpiHead2({
-//   title: computed(() => agent.value?.title),
-//   description: computed(() => agent.value?.description),
-// })
+useLpiHead2({
+  title: computed(() => agent.value?.title),
+  description: computed(() => agent.value?.description),
+})
 </script>
 <template>
   <div class="page-section page-section-narrow page-top">
@@ -268,7 +263,7 @@ const breadcrumbs = computed(() => [
         :agent-list="agentList"
       />
       <AgentDescription
-        v-if="agent.$t.description?.trim() && agent.description?.trim() != '<p></p>'"
+        v-if="agent.$t.description?.trim() && agent.$t.description?.trim() != '<p></p>'"
         :agent="agent"
       />
     </div>
@@ -288,13 +283,6 @@ const breadcrumbs = computed(() => [
       </div>
       <a name="chat-conversation-top"></a>
       <ClientOnly>
-        <!--div v-if="conversation">
-          <h4>{{ conversation.title }}</h4>
-          <pre>
-            {{ JSON.stringify(history, null, 2) }}
-          </pre>
-          </div-->
-
         <div v-if="showConversationList">
           Conversations:
           <LpiSelect v-model="conversationId" :options="allConversationOptions" />

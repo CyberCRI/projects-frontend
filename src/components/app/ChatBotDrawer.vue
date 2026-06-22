@@ -79,6 +79,10 @@ const loadAssistant = async () => {
   }
 }
 
+const { translateAgent, translateAgents } = useAutoTranslate()
+const translatedAgent = translateAgent(agent)
+const translatedAgentList = translateAgents(agentList)
+
 watch(
   () => props.isOpened,
   (neo, old) => {
@@ -98,25 +102,7 @@ const { computePageContext, contextMessages } = useChatbotContext({
 })
 
 const route = useRoute()
-// const pageContextData = ref('')
-// const pageContext = computed(() => {
-//   // keep this out the if so it is registred for reactivity
-//   const pageData = pageContextData.value
-//   if (allowCurrentPage.value) return pageData
-//   else return ''
-// })
-// watch(
-//   () => [props.isOpened, route],
-//   () => {
-//     let res = ''
-//     const pageMeta = route.matched
-//       .filter((r) => !!r.meta.chatBotContext)
-//       .map((r) => {
-//         const chatBotContext = r.meta.chatBotContext as (any) => void
-//         chatBotContext(route)
-//       })
-//       .join('\n')
-//   })
+
 watch(() => [props.isOpened, route], computePageContext, { immediate: true })
 
 const runtimeConfig = useRuntimeConfig()
@@ -130,7 +116,6 @@ const suggestButtons = ref(setExemples())
 
 const startConversation = () => {
   // conversation was reset
-  // console.log('start conversation')
   suggestButtons.value = setExemples()
   conversationHasBegin.value = true
 }
@@ -140,17 +125,6 @@ watch(
   () => chatbotUi.value?.resetChat()
 )
 
-// const contextMessages = computed(() => [
-//   {
-//     role: 'assistant',
-//     text: userContext.value,
-//   },
-//   {
-//     role: 'assistant',
-//     text: pageContext.value,
-//   },
-// ])
-//
 function onSuggestButtonClick(message) {
   chatbotUi.value.submitUserMessage(message)
 }
@@ -160,7 +134,7 @@ function onSuggestButtonClick(message) {
   <BaseDrawer
     class="medium"
     :is-opened="isOpened"
-    :title="agent?.title || $t('chatbot.title')"
+    :title="translatedAgent?.$t.title || $t('chatbot.title')"
     no-footer
     @close="$emit('close')"
   >
@@ -168,8 +142,11 @@ function onSuggestButtonClick(message) {
       <LoaderSimple />
     </div>
     <template v-else>
-      <AgentQuickAccess :title="$t('assistant-drawer.special-agents')" :agent-list="agentList" />
-      <AgentDescription v-if="!conversationHasBegin" :agent="agent" />
+      <AgentQuickAccess
+        :title="$t('assistant-drawer.special-agents')"
+        :agent-list="translatedAgentList"
+      />
+      <AgentDescription v-if="!conversationHasBegin" :agent="translatedAgent" />
       <ChatbotOptions
         v-if="!conversationHasBegin"
         :has-user-context="hasUserContext"
@@ -191,7 +168,7 @@ function onSuggestButtonClick(message) {
         :key="chatbotUiKey"
         :endpoint="CHAT_ENDPOINT"
         :context-messages="contextMessages"
-        :start-message="agent?.startMessage || $t('chatbot.intro-message')"
+        :start-message="translatedAgent?.$t.startMessage || $t('chatbot.intro-message')"
         :agent-slug="agent.slug"
         :real-conversation-id="conversationId"
         @start-conversation="startConversation"

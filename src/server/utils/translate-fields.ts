@@ -23,10 +23,8 @@ export default async function translateFields(fieldsToTranslate: InputField[]) {
 }
 
 export async function translateAgentFields(newAgent: Agent, oldAgent?: Agent | null) {
-  const { appApiOrgCode } = useRuntimeConfig().public
-
   const fieldsToTranslate: InputField[] = []
-  // strcit check against undefined cause an empty string is still something to save
+  // strict check against undefined cause an empty string is still something to save
   if (newAgent.title !== undefined && newAgent.title != oldAgent?.title)
     fieldsToTranslate.push({ fieldName: 'title', type: 'text', content: newAgent.title })
   if (newAgent.description !== undefined && newAgent.description != oldAgent?.description)

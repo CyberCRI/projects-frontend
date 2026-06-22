@@ -174,12 +174,12 @@ export default defineLazyEventHandler(() => {
           messages: transmitedMessages,
           ...customMetadata,
         } as any,
-        { ...config, streamMode: ['messages', 'tools'] }
+        { ...config, streamMode: ['messages', 'tools' /*, 'updates' */] }
       )) as AsyncIterableIterator<[string, any]>) {
         ///
         // if (mode != 'messages')
         //   console.log('XXXXXXXXXXXXXXXXXX', JSON.stringify(mode, null, 2), chunk.constructor.name)
-
+        console.log('MODE', mode)
         if (mode == 'tools') {
           /* HANDLE TOOLS */
 
@@ -229,26 +229,26 @@ export default defineLazyEventHandler(() => {
           }
         } else if (mode == 'messages') {
           /* HANDLE LLM INFERENCE */
-
-          const [token, metadata] = chunk
-          if (token.lc_id[token.lc_id.length - 1] != 'AIMessageChunk') continue
-
+          const [token, _metadata] = chunk
           const content = token.contentBlocks || []
           const text = content
             .filter((part) => part.type == 'text')
             .map((part) => part.text)
             .join('')
-          const is_done = metadata.status === 'completed'
+          // const is_done = metadata.status === 'completed'
           const role = 'ai'
           const output = {
             text,
             role,
-            is_done,
+            is_done: false,
             conversationId,
           }
           respond(output)
         }
       }
+      // This is the authoritative "agent is done" signal
+      // (openai had 'is_done:true' on last chunk but other providers don't)
+      respond({ text: '', role: 'ai', is_done: true, conversationId })
     } catch (err) {
       // TODO rethrow interrupt exception when chepointis enabled
       traceLangchain('Stream error:', err)
@@ -261,7 +261,7 @@ export default defineLazyEventHandler(() => {
       const output = {
         text: '',
         role: 'ai',
-        is_done: true,
+        is_done: false,
         conversationId,
         error: errorMessage,
       }
