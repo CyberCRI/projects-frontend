@@ -18,7 +18,7 @@ export type UseApiOptions<
 
 export const defaultOptions = () => {
   let _localStorage = null
-  if (import.meta.client) _localStorage = window?.localStorage
+  if (import.meta.client && import.meta.env.VITEST !== 'true') _localStorage = window?.localStorage
   const localStorage = _localStorage
   const runtimeConfig = useRuntimeConfig()
   const usersStore = useUsersStore()
@@ -31,7 +31,14 @@ export const defaultOptions = () => {
     onRequest({ options }) {
       if (import.meta.client) {
         const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
-        if (accessToken) options.headers.set('Authorization', `Bearer ${accessToken}`)
+
+        // if token alreadyset, ignore it
+        if (options.headers.get('Authorization')) {
+          return
+        }
+        if (accessToken) {
+          options.headers.set('Authorization', `Bearer ${accessToken}`)
+        }
       }
     },
     onRequestError() {
@@ -43,11 +50,12 @@ export const defaultOptions = () => {
       if (response?._data) localStorage?.setItem('token', response._data.token)
     },
     async onResponseError({ request, options, response }) {
+      const opts = options as UseApiOptions
       // // keep for futur debug
       // console.error(response)
       // var e = new Error()
       // console.log(e.stack.split('\n').map((s) => s.substring(s.lastIndexOf('/'))))
-      if (options.noError) {
+      if (opts.noError) {
         // console.error(error)
         return null
       }
@@ -58,7 +66,7 @@ export const defaultOptions = () => {
       // We could add specific notification to display the errors
       // And we could also handle refresh token there if needed when catching error
       if (response) {
-        const { status }: { data: any; status: number } = response
+        const { status } = response
 
         const data: any = response._data
 
@@ -99,7 +107,7 @@ export const defaultOptions = () => {
 
       return Promise.reject(response)
     },
-  }
+  } satisfies UseApiOptions
 }
 
 const useAPI = <T, Query = unknown, Body = unknown>(

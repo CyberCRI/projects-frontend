@@ -21,6 +21,8 @@ import { ImageFactory } from './image.factory'
 import { GoalFactory } from './goal.factory'
 import { BaseFactory } from './base.factory'
 import TagFactory from './tag.factory'
+import SdgFactory from './sdg.factory'
+import { fa } from 'zod/v4/locales'
 
 export const ProjectFactory = createFactory<ProjectModel>((faker) => ({
   ...BaseFactory.generate(),
@@ -90,22 +92,14 @@ export const TranslatedProjectFactory = createFactory<TranslatedProject>(() => {
 
 export const ProjectOutputFactory = createFactory<ProjectOutput>((faker) => ({
   ...ProjectFactory.generate(),
-  team: ProjectTeamOutputFactory.generate(),
   organizations: OrganizationOutputFactory.generateMany(2),
   categories: ProjectCategoryOutputFactory.generateMany(2),
   geolocation_coordinates: LocationFactory.generate(),
   tags: TagFactory.generateMany(2),
   sdgs: [],
-  goals: GoalFactory.generateMany(2),
-  links: AttachmentLinkFactory.generateMany(2),
-  files: AttachmentFileFactory.generateMany(2),
   images: ImageFactory.generateMany(2),
-  comments: CommentFactory.generateMany(2),
-  blog_entries: BlogEntryFactory.generateMany(2),
-  linked_projects: [],
   views: faker.datatype.number(),
   template: TemplateFactory.generate(),
-  follows: [],
   is_followed: {
     is_followed: false,
     follow_id: null,

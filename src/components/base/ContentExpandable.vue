@@ -51,7 +51,9 @@ const emit = defineEmits<{
 
 const showLess = ref(true)
 const isLimited = ref(true)
-
+watchEffect(() => {
+  emit('limited', isLimited.value)
+})
 const contentRef = useTemplateRef('content')
 const actualHeight = ref(0)
 const minHeight = computed(() => Math.min(props.heightLimit, actualHeight.value))

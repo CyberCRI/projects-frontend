@@ -11,17 +11,13 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedLocation } from '~/models/location.model'
-import type { TranslatedProject } from '~/models/project.model'
-
-import { deleteLocation, patchLocation, postLocations } from '~/api/locations.service'
-
-import LocationDrawer from '~/components/map/LocationDrawer.vue'
-
-import useToasterStore from '~/stores/useToaster'
-
+import { postLocations, patchLocation, deleteLocation } from '@/api/locations.service'
+import type { TranslatedLocation } from '@/models/location.model'
+import LocationDrawer from '@/components/map/LocationDrawer.vue'
+import type { TranslatedProject } from '@/models/project.model'
 import { PROJECT_LOCATIONS_TYPES } from '~/functs/constants'
-import analytics from '~/analytics'
+import useToasterStore from '@/stores/useToaster'
+import analytics from '@/analytics'
 
 const props = withDefaults(
   defineProps<{

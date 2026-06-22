@@ -8,7 +8,7 @@ import type { OrganizationModel } from '~/models/organization.model'
 import type { UseApiOptions } from '~/composables/useAPI'
 import useAPI from '~/composables/useAPI'
 
-type Config = UseApiOptions<PaginationQuery>
+export type Config = UseApiOptions<PaginationQuery>
 
 export async function getAllOrgClassifications(
   organizationCode: OrganizationModel['code'],

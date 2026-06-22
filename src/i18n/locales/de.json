@@ -220,7 +220,13 @@
       "groups": "Gruppen",
       "settings": "Einstellungen",
       "terms": "ToS",
-      "vector-store": "Vector store"
+      "vector-store": "Vector store",
+      "prompts": "Anweisungen",
+      "agent-skills": "Agentenfähigkeiten",
+      "agents": "Agenten",
+      "conversations": "Gespräche",
+      "checkpoints": "Checkpoints",
+      "side-assistant": "Nebenassistent"
     },
     "page-title": "Admin",
     "portal": {
@@ -576,6 +582,7 @@
     "date": "Datum",
     "clear-date": "Datum",
     "chose-date": "Wählen Sie Datum | Wählen Sie das Datum(en)",
+    "filter": "Filter | Filter",
     "empty": "Nichts hier...",
     "file": "Datei | Dateien",
     "image": "Bild"
@@ -913,7 +920,6 @@
     "cookies": "Cookies",
     "accessibility": "Zugänglichkeit",
     "personal-data": "Persönliche Daten",
-    "directory": "Entdecken Sie weitere Projekte anderer Organisationen auf unserem Meta-Portal:",
     "help": "Hilfe",
     "projects": "Projektplattform",
     "madeBy": "wird von",
@@ -969,7 +975,8 @@
     },
     "create-project": "Projekt erstellen",
     "check-locations": "Standorte ansehen",
-    "our-locations": "Unsere Standorte"
+    "our-locations": "Unsere Standorte",
+    "agents": "KI-Agenten"
   },
   "language": {
     "label-en": "Englisch",
@@ -985,7 +992,7 @@
   "location": {
     "loading": "Ladestellen",
     "focus-on-map": "Fokus auf der Karte",
-    "expand-map": "Karte vergrößern",
+    "expand": "Karte vergrößern",
     "edit-location-point": "Standortpunkt bearbeiten",
     "location-type-label": "Standort",
     "edit-map": "Geolokation bearbeiten",
@@ -997,7 +1004,9 @@
     "team": "Team",
     "address": "Anschrift",
     "news": "Nachrichten | Nachrichten",
-    "event": "Veranstaltung"
+    "event": "Veranstaltung",
+    "zoom-in": "zoom in",
+    "zoom-out": "zoom out"
   },
   "map": {
     "empty": "Nichts hier noch... Die Mitarbeiter haben noch keine Projekte lokalisiert.",
@@ -2742,9 +2751,11 @@
     "fetching_data": "Daten werden abgerufen...",
     "reasoning": "Denken...",
     "restart": "Konversation neu starten",
+    "export": "Exportkonversation",
     "before-we-start": "Bevor wir beginnen, würden Sie:",
     "allow-profile": "Erlauben Sie mir, Ihr Profil zu sehen - damit ich meine Antworten besser anpassen kann",
-    "allow-current-page": "Erlauben Sie mir, die Seite zu sehen, auf der Sie sich befinden - damit ich den Kontext besser verstehe"
+    "allow-current-page": "Erlauben Sie mir, die Seite zu sehen, auf der Sie sich befinden - damit ich den Kontext besser verstehe",
+    "previous-messages": "Vorherige Nachrichten"
   },
   "tos": {
     "evolved": "Unsere Nutzungsbedingungen wurden aktualisiert, bitte nehmen Sie sich einen Moment Zeit, um sie zu überprüfen und zu akzeptieren.",
@@ -3207,7 +3218,9 @@
     "title-field": "Titel",
     "file-field": "Datei",
     "document-added": "Dokument hinzugefügt.",
-    "document-updated": "Dokument bearbeitet."
+    "document-updated": "Dokument bearbeitet.",
+    "is-global-field": "Global document",
+    "is-global-label": "Global"
   },
   "announcements": {
     "empty": "Noch keine Ankündigung."
@@ -3273,5 +3286,111 @@
       "label": "Blick | Sichter",
       "help": "Viewer: Er hat keine Bearbeitungsrechte."
     }
+  },
+  "prompts": {
+    "create-prompt": "Prompt erstellen",
+    "create-success": "Prompt erfolgreich erstellt",
+    "create-error": "Fehler beim Erstellen des Prompts",
+    "edit-prompt": "Prompt bearbeiten",
+    "edit-success": "Prompt erfolgreich bearbeitet",
+    "edit-error": "Fehler beim Aktualisieren des Prompts",
+    "title": "Titel",
+    "content": "Inhalt",
+    "confirm-deletion": "Löschung des Prompts bestätigen",
+    "confirm-deletion-of": "Möchtest du den Prompt '{title}' wirklich löschen?",
+    "deleted": "Prompt gelöscht",
+    "delete-error": "Fehler beim Löschen des Prompts",
+    "empty-list": "Noch kein Prompt vorhanden.",
+    "form": {
+      "invalid": "Das Formular ist unvollständig, bitte füllen Sie die erforderlichen Felder aus",
+      "title-required": "Titel ist erforderlich",
+      "content-required": "Inhalt ist erforderlich"
+    }
+  },
+  "agent-skills": {
+    "create-skill": "Agenten-Skill erstellen",
+    "create-success": "Agenten-Skill erfolgreich erstellt",
+    "create-error": "Fehler beim Erstellen des Agenten-Skills",
+    "edit-skill": "Agenten-Skill bearbeiten",
+    "edit-success": "Agenten-Skill erfolgreich bearbeitet",
+    "edit-error": "Fehler beim Aktualisieren des Agenten-Skills",
+    "title": "Titel",
+    "description": "Beschreibung",
+    "content": "Inhalt",
+    "confirm-deletion": "Löschung des Agenten-Skills bestätigen",
+    "confirm-deletion-of": "Möchtest du den Agenten-Skill '{title}' wirklich löschen?",
+    "deleted": "Agenten-Skill gelöscht",
+    "delete-error": "Fehler beim Löschen des Agenten-Skills",
+    "empty-list": "Noch kein Agenten-Skill vorhanden.",
+    "form": {
+      "invalid": "Das Formular ist unvollständig, bitte füllen Sie die erforderlichen Felder aus",
+      "title-required": "Titel ist erforderlich",
+      "content-required": "Inhalt ist erforderlich",
+      "description-required": "Beschreibung ist erforderlich"
+    }
+  },
+  "agents": {
+    "no-active-agent-yet": "Derzeit ist kein Agent verfügbar.",
+    "need-login": "Sie müssen angemeldet sein, um diesen Agenten zu nutzen.",
+    "create-agent": "Agent erstellen",
+    "create-success": "Agent erfolgreich erstellt",
+    "create-error": "Fehler beim Erstellen des Agents",
+    "edit-agent": "Agent bearbeiten",
+    "edit-success": "Agent erfolgreich bearbeitet",
+    "edit-error": "Fehler beim Aktualisieren des Agents",
+    "title": "Titel",
+    "description": "Beschreibung",
+    "is-enabled": "Aktiviert",
+    "model-section": "Modell",
+    "model-name": "Modellname",
+    "model-temperature": "Modelltemperatur",
+    "prompt-section": "Prompt",
+    "prompt-placeholder": "Wähle einen Prompt",
+    "start-message-section": "Begrüßungsnachricht des Agenten",
+    "use-latest-prompt-version": "Neueste Prompt-Version verwenden",
+    "use-prompt-version": "Prompt-Version verwenden: ",
+    "use-profile-data": "Benutzerprofildaten aufrufen",
+    "use-project-mcp": "Projekte MCP nutzen",
+    "prompt-version-placeholder": "Wähle die Prompt-Version",
+    "tools-section": "Werkzeuge",
+    "docs-section": "Dokumente",
+    "skills-section": "Skills",
+    "use-latest-skill-version": "Neueste Skill-Version verwenden",
+    "use-skill-version": "Skill-Version verwenden:",
+    "choose-skill-version": "Wähle die Skill-Version",
+    "preview-mode": "Vorschaumodus",
+    "confirm-deletion": "Löschung des Agents bestätigen",
+    "confirm-deletion-of": "Möchtest du den Agent '{title}' wirklich löschen?",
+    "deleted": "Agent gelöscht",
+    "delete-error": "Fehler beim Löschen des Agents",
+    "empty-list": "Noch kein Agent vorhanden.",
+    "confirm-restart-title": "Unterhaltung neu starten",
+    "confirm-restart-content": "Möchten Sie eine neue Unterhaltung beginnen?",
+    "is-used-as-side-assistant": "Dieser Agent wird derzeit als Seitenassistent verwendet und kann nicht deaktiviert werden.",
+    "title-already-used": "Dieser Titel wird bereits von einem anderen Makler verwendet.",
+    "form": {
+      "invalid": "Das Formular ist unvollständig, bitte füllen Sie die erforderlichen Felder aus",
+      "title-required": "Titel ist erforderlich",
+      "model-name-required": "Modellname ist erforderlich",
+      "model-temperature-required": "Modelltemperatur ist erforderlich",
+      "model-temperature-is-float": "Die Modelltemperatur muss eine Gleitkommazahl sein",
+      "model-temperature-is-bounded": "Die Modelltemperatur muss zwischen 0 und 2 liegen",
+      "prompt-required": "Prompt ist erforderlich"
+    }
+  },
+  "side-assistant": {
+    "default": "Default",
+    "save-success": "Side assistant saved",
+    "save-error": "Error while saving side assistant",
+    "choose": "Choose an agent for the side assistant"
+  },
+  "agents-home": {
+    "title": "Let's talk!",
+    "intro": "Welcome to a curated gathering of conversational agents - AI companions designed to chat, help, and engage. Whether you're looking for research assistance, casual conversation, creative collaboration, or practical support, you'll find different voices here, each with its own strengths and personality."
+  },
+  "assistant-drawer": {
+    "ice-breakers": "Hier sind einige Eisbrecher-Themen",
+    "special-agents": "Auf der Suche nach einem spezialisierten Agenten?",
+    "other-special-agents": "Auf der Suche nach einem anderen spezialisierten Agenten?"
   }
 }

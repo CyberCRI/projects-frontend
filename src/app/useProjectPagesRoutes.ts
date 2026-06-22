@@ -223,6 +223,14 @@ export default function useProjectPagesRoutes() {
           },
         },
         {
+          path: 'reviews/edit',
+          name: 'ProjectReviewsEdit',
+          component: () => import('../pages/ProjectPageV2/Tabs/Reviews/ProjectReviewsTab.vue'),
+          meta: {
+            requiresAuth: true,
+          },
+        },
+        {
           path: 'additionals/:tabId/edit',
           name: 'projectAdditionalsEdit',
           component: () =>

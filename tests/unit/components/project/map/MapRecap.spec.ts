@@ -1,7 +1,7 @@
-import { ProjectOutputFactory } from '~~/tests/factories/project.factory'
+import { ProjectOutputFactory } from '@/../tests/factories/project.factory'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
-import MapRecap from '~/components/map/MapRecap.vue'
+import GeneralMap from '@/components/map/GeneralMap.vue'
 import useProjectsStore from '~/stores/useProjects'
 import pinia from '~/stores'
 
@@ -10,13 +10,9 @@ describe('MapRecap.vue', () => {
     beforeEach(() => {
       const projectsStore = useProjectsStore(pinia)
 
-      projectsStore.project = {
-        ...ProjectOutputFactory.generate(),
-        files: [],
-        links: [],
-      }
+      projectsStore.project = ProjectOutputFactory.generate()
     })
-    const wrapper = lpiShallowMount(MapRecap, {
+    const wrapper = lpiShallowMount(GeneralMap, {
       props: {
         locations: [
           {

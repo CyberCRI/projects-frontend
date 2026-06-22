@@ -14,11 +14,8 @@ describe('GoalDrawer.vue', () => {
   beforeEach(() => {
     const projectsStore = useProjectsStore(pinia)
 
-    projectsStore.project = {
-      ...TranslatedProjectFactory.generate(),
-      files: [],
-      links: [],
-    }
+    projectsStore.project = TranslatedProjectFactory.generate()
+
     const organizationsStore = useOrganizationsStore(pinia)
     organizationsStore._current = OrganizationOutputFactory.generate()
     defaultProps = {

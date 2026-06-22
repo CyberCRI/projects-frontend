@@ -68,7 +68,13 @@
             {{ event.location.$t?.title || $t('location.address') }}
           </span>
         </component>
-        <MapRecap v-if="locationPreview" :locations="[event.location]" />
+        <GeneralMap
+          v-if="locationPreview"
+          class="map-recap"
+          :locations="[event.location]"
+          :control-expand="false"
+          :control-filter="false"
+        />
       </template>
     </div>
 
@@ -90,7 +96,6 @@ import ContentExpandable from '~/components/base/ContentExpandable.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 import LineClamped from '~/components/base/LineClamped.vue'
 import DisplayDate from '~/components/base/DisplayDate.vue'
-import MapRecap from '~/components/map/MapRecap.vue'
 
 import { useIntervalNow } from '~/composables/useDate'
 

@@ -73,7 +73,7 @@ import LpiButton from '@/components/base/button/LpiButton.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import { patchUser } from '@/api/people.service.ts'
 import useUsersStore from '@/stores/useUsers.ts'
-import { I18nT } from 'vue-i18n'
+// import { I18nT } from 'vue-i18n'
 
 export default {
   name: 'OnboardingTodoBlock',
@@ -83,7 +83,7 @@ export default {
     LpiButton,
     IconImage,
     LinkButton,
-    I18nT,
+    // I18nT,
   },
 
   setup() {

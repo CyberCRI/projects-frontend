@@ -1,6 +1,9 @@
-import { tokenMap, traceMcp } from '~/server/routes/api/chat-stream'
+import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
+import type { InferSchema, ToolCallback } from '~/interfaces/mcp'
+import { tokenMap } from '~/server/routes/api/chat-stream'
 
 const runtimeConfig = useRuntimeConfig()
+export const orgCode = runtimeConfig.public.appApiOrgCode
 
 export function getUserToken(extras) {
   const convesrationId = (extras.requestInfo.headers['authorization'] || '').replace('Bearer ', '')
@@ -15,19 +18,43 @@ export function getUserToken(extras) {
   return null
 }
 
-export function mcpFetch(url: string, options: any, extras: any = {}) {
-  const _options = options || {}
+export function mcpOptions(extras: any = {}): UseApiOptions {
   const accessToken = getUserToken(extras)
-  if (accessToken) {
-    if (!_options.headers) {
-      _options.headers = {}
-    }
-    _options.headers['Authorization'] = `Bearer ${accessToken}`
+  if (!accessToken) {
+    return {}
   }
-  return $fetch(url, _options)
+  return {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  }
 }
 
-export const orgCode = runtimeConfig.public.appApiOrgCode
+/**
+ * auto contruct tool result from callback
+ *
+ * @async
+ * @function
+ * @name resultFromTool
+ * @kind variable
+ * @exports
+ */
+export const resultFromTool = <InputSchema, OutputSchema>(
+  callback: (
+    ...args: Parameters<ToolCallback<InputSchema, OutputSchema>>
+  ) => InferSchema<OutputSchema> | Promise<InferSchema<OutputSchema>>
+): ToolCallback<InputSchema, OutputSchema> => {
+  return async (args, extra) => {
+    let output = null
+    try {
+      output = await callback(args, extra)
+    } catch (error) {
+      console.error('Error fetching search results:', error)
+    }
 
-export const API_BASE_URL =
-  runtimeConfig.public.appApiUrl + runtimeConfig.public.appApiDefaultVersion + '/'
+    return {
+      content: [{ type: 'text', text: JSON.stringify(output) }],
+      structuredContent: output,
+    }
+  }
+}

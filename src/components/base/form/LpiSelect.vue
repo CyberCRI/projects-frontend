@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts" generic="ModelType extends string | number">
-import type IconImage from '~/components/base/media/IconImage.vue'
+import IconImage from '~/components/base/media/IconImage.vue'
 import type { IconImageChoice } from '~/functs/IconImage'
 import type { Properties } from 'csstype'
 import type { StyleValue } from 'vue'
@@ -58,7 +58,7 @@ const props = withDefaults(
     maxHeight?: Properties['maxHeight']
   }>(),
   {
-    placeholder: 'Select ...',
+    placeholder: null,
     maxHeight: null,
   }
 )
@@ -66,14 +66,17 @@ const emit = defineEmits<{
   blur: []
 }>()
 
+const { t } = useNuxtI18n()
 const model = defineModel<ModelType>({ default: null })
 const { stateModal, toggleModal, closeModal } = useModal(false)
 const icon = computed<IconImageChoice>(() => (stateModal.value ? 'ChevronUp' : 'ChevronDown'))
 
 const selected = computed(() => props.options.find((option) => option.value === model.value))
 
+const translatedPlaceholder = computed(() => props.placeholder || t('common.select-placeholder'))
+
 const styles = computed<StyleValue>(() => {
-  let maxCharLength = props.placeholder ? props.placeholder.length : 0
+  let maxCharLength = translatedPlaceholder.value ? translatedPlaceholder.value.length : 0
   for (let i = 0; i < props.options.length; i++) {
     maxCharLength = Math.max(
       maxCharLength,
@@ -82,7 +85,7 @@ const styles = computed<StyleValue>(() => {
   }
 
   return {
-    width: `${maxCharLength}em`, // use em to get current font width
+    width: `${maxCharLength * 8}px`, // use em to get current font width
   }
 })
 
@@ -159,7 +162,7 @@ const clickOutside = () => {
     padding: pxToRem(10px) $space-l;
     appearance: none;
     font-size: $font-size-m;
-    font-weight: 700;
+    font-weight: 400;
     width: 100%;
     max-width: 100%;
     padding-right: $space-xl;

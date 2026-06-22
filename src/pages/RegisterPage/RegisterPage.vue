@@ -9,7 +9,7 @@ import { getInvitation } from '@/api/invitations.service'
 import { usePublicURL } from '@/composables/usePublic'
 import useToasterStore from '@/stores/useToaster'
 import useVuelidate from '@vuelidate/core'
-import { I18nT } from 'vue-i18n'
+// import { I18nT } from 'vue-i18n'
 
 const props = defineProps<{
   token: string

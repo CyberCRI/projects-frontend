@@ -1,12 +1,14 @@
-import checkVectorDbRights from '~/server/utils/check-vector-db-rights'
-import getVectorStore from '~/server/utils/vector-db'
+import checkAdminRights from '~/server/utils/check-admin-rights.js'
+import getVectorStore from '~/server/utils/vector-db-new.js'
 import format from 'pg-format'
 
 export default defineLazyEventHandler(() => {
   return defineEventHandler(async (event) => {
-    await checkVectorDbRights(event)
+    await checkAdminRights(event)
     const rawTitle = getQuery(event)?.title
     const title = typeof rawTitle === 'string' ? rawTitle.trim() : ''
+
+    const isGlobal = !!getQuery(event)?.is_global
 
     if (!title) {
       setResponseStatus(event, 400)
@@ -26,6 +28,8 @@ export default defineLazyEventHandler(() => {
       })
     }
 
+    const orgCodeOrGlobal = isGlobal ? '' : appApiOrgCode
+
     const client = await pool.connect()
 
     try {
@@ -39,7 +43,7 @@ export default defineLazyEventHandler(() => {
     `,
         vectorTableName
       )
-      const result = await client.query(sql, [appApiOrgCode, title])
+      const result = await client.query(sql, [orgCodeOrGlobal, title])
 
       const docs = result.rows
       return docs

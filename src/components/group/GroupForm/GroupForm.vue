@@ -194,8 +194,8 @@
     v-if="showRemoveQuit"
     :content="$t('common.remove-group')"
     :title="$t('project.remove-group')"
-    :cancel-button-label="'common.cancel'"
-    :confirm-button-label="'project.remove-group'"
+    :cancel-button-label="$t('common.cancel')"
+    :confirm-button-label="$t('common.delete')"
     @cancel="toggleShowRemoveGroupVisible"
     @confirm="removeGroup"
   />
@@ -381,7 +381,7 @@ export default {
       await deleteGroup(organization, this.$route.params.groupIdOrSlug)
       this.loading = false
       this.$router.push({
-        name: 'HomeRoot',
+        name: 'Groups',
       })
     },
     async removeLocations(location) {

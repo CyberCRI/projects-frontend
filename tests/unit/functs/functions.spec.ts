@@ -5,8 +5,8 @@ import { test, beforeEach, describe, expect, it } from 'vitest'
 import MockComponent from '~~/tests/helpers/MockComponent.vue'
 import { UserFactory } from '~~/tests/factories/user.factory'
 import useOrganizationsStore from '~/stores/useOrganizations'
+import { getOrgsFromRoles } from '~/functs/rolesUtils.js'
 import { lpiMount } from '~~/tests/helpers/LpiMount'
-import { getOrgsFromRoles } from '~/functs/utils.js'
 import useUsersStore from '~/stores/useUsers'
 import pinia from '~/stores'
 
@@ -83,10 +83,6 @@ describe('Function projectCanBeEdited', () => {
   test("that project can be edited if user is one of project's owners and project is not locked", () => {
     const user = UserFactory.generate()
     const project = ProjectOutputFactory.generate()
-    project.team.owners[0] = {
-      ...UserFactory.generate({ id: 1 }),
-      role: 'owners',
-    } as ProjectMemberModel
     project.is_locked = false
 
     usersStore.user = user // getters are writable only in tests

@@ -220,7 +220,13 @@
       "groups": "Grupid",
       "settings": "Seadistused",
       "terms": "Tos",
-      "vector-store": "Vector store"
+      "vector-store": "Vector store",
+      "prompts": "Soovid",
+      "agent-skills": "Agendi oskused",
+      "agents": "Agendid",
+      "conversations": "Vestlused",
+      "checkpoints": "Checkpoints",
+      "side-assistant": "Külgne assistent"
     },
     "page-title": "Admin",
     "portal": {
@@ -576,6 +582,7 @@
     "date": "Kuupäev",
     "clear-date": "Puhasta kuupäev",
     "chose-date": "Vali kuupäev | Kuupäevade valimine",
+    "filter": "filter | filtrid",
     "empty": "Siin pole midagi...",
     "file": "faili | failid",
     "image": "pilt"
@@ -913,7 +920,6 @@
     "cookies": "Küpsised",
     "accessibility": "Ligipääsetavus",
     "personal-data": "Isikuandmed",
-    "directory": "Avasta meie metaportaalist veel palju teiste organisatsioonide projekte:",
     "help": "Abi",
     "projects": "Projektiplatvorm",
     "madeBy": "tehtud",
@@ -969,7 +975,8 @@
     },
     "create-project": "Projekti loomine",
     "check-locations": "Vaata meie asukohti",
-    "our-locations": "Meie asukohad"
+    "our-locations": "Meie asukohad",
+    "agents": "AI agendid"
   },
   "language": {
     "label-en": "Inglise",
@@ -985,7 +992,7 @@
   "location": {
     "loading": "Laadimiskohad",
     "focus-on-map": "keskendu kaardile",
-    "expand-map": "Suurenda kaart",
+    "expand": "Suurenda kaart",
     "edit-location-point": "Muuda asukohapunkti",
     "location-type-label": "Asukoha liik",
     "impact": "Mõju",
@@ -997,7 +1004,9 @@
     "add-location-point": "Asukohapunkti lisamine",
     "default-title": "Asukoht",
     "news": "Uudised | Uudised",
-    "event": "Sündmus"
+    "event": "Sündmus",
+    "zoom-in": "suumida",
+    "zoom-out": "suumida"
   },
   "map": {
     "page-title": "Kaart",
@@ -2742,9 +2751,11 @@
     "fetching_data": "Andmete hankimine...",
     "reasoning": "Mõtlemine...",
     "restart": "Vestluse taaskäivitamine",
+    "export": "Ekspordi vestlus",
     "before-we-start": "Enne alustamist, kas sooviksite:",
     "allow-profile": "Lubage mul näha teie profiili - et saaksin oma vastuseid paremini kohandada",
-    "allow-current-page": "Lubage mul näha lehte, kus viibite - et mõistaksin konteksti paremini"
+    "allow-current-page": "Lubage mul näha lehte, kus viibite - et mõistaksin konteksti paremini",
+    "previous-messages": "Eelmised sõnumid"
   },
   "tos": {
     "evolved": "Meie teenusetingimusi on uuendatud, palun vaadake need üle ja kinnitage.",
@@ -3207,7 +3218,9 @@
     "title-field": "Pealkiri",
     "file-field": "Fail",
     "document-added": "Dokument lisatud.",
-    "document-updated": "Dokument uuendatud."
+    "document-updated": "Dokument uuendatud.",
+    "is-global-field": "Global document",
+    "is-global-label": "Global"
   },
   "announcements": {
     "empty": "Pole veel teadaannet."
@@ -3273,5 +3286,111 @@
       "label": "Vaataja | Vaatajad",
       "help": "Vaataja: tal ei ole redigeerimisõigusi."
     }
+  },
+  "prompts": {
+    "create-prompt": "Loo käsk",
+    "create-success": "Käsk loodud edukalt",
+    "create-error": "Viga käsu loomisel",
+    "edit-prompt": "Redigeeri käsku",
+    "edit-success": "Käsk redigeeritud edukalt",
+    "edit-error": "Viga käsu värskendamisel",
+    "title": "Pealkiri",
+    "content": "Sisu",
+    "confirm-deletion": "Kinnita käsu kustutamine",
+    "confirm-deletion-of": "Kas tõesti soovid kustutada käsu '{title}'?",
+    "deleted": "Käsk kustutatud",
+    "delete-error": "Viga käsu kustutamisel",
+    "empty-list": "Käskusid veel ei ole.",
+    "form": {
+      "invalid": "Vorm on mittetäielik, palun täida nõutud väljad",
+      "title-required": "Pealkiri on kohustuslik",
+      "content-required": "Sisu on kohustuslik"
+    }
+  },
+  "agent-skills": {
+    "create-skill": "Loo agendi oskus",
+    "create-success": "Agendi oskus loodud edukalt",
+    "create-error": "Viga agendi oskuse loomisel",
+    "edit-skill": "Redigeeri agendi oskust",
+    "edit-success": "Agendi oskus redigeeritud edukalt",
+    "edit-error": "Viga agendi oskuse värskendamisel",
+    "title": "Pealkiri",
+    "description": "Kirjeldus",
+    "content": "Sisu",
+    "confirm-deletion": "Kinnita agendi oskuse kustutamine",
+    "confirm-deletion-of": "Kas tõesti soovid kustutada agendi oskuse '{title}'?",
+    "deleted": "Agendi oskus kustutatud",
+    "delete-error": "Viga agendi oskuse kustutamisel",
+    "empty-list": "Agendi oskusi veel ei ole.",
+    "form": {
+      "invalid": "Vorm on mittetäielik, palun täida nõutud väljad",
+      "title-required": "Pealkiri on kohustuslik",
+      "content-required": "Sisu on kohustuslik",
+      "description-required": "Kirjeldus on kohustuslik"
+    }
+  },
+  "agents": {
+    "no-active-agent-yet": "Hetkel pole ühtegi agenti saadaval.",
+    "need-login": "Selle agendi kasutamiseks peate sisse logima.",
+    "create-agent": "Loo agent",
+    "create-success": "Agent loodud edukalt",
+    "create-error": "Viga agendi loomisel",
+    "edit-agent": "Redigeeri agenti",
+    "edit-success": "Agent redigeeritud edukalt",
+    "edit-error": "Viga agendi värskendamisel",
+    "title": "Pealkiri",
+    "description": "Kirjeldus",
+    "is-enabled": "Lubatud",
+    "model-section": "Mudel",
+    "model-name": "Mudeli nimi",
+    "model-temperature": "Mudeli temperatuur",
+    "prompt-section": "käsk",
+    "prompt-placeholder": "Vali käsk",
+    "use-latest-prompt-version": "Kasuta uusimat käsu versiooni",
+    "use-prompt-version": "Kasuta käsu versiooni: ",
+    "use-profile-data": "Juurdepääs kasutajaprofiili andmetele",
+    "use-project-mcp": "Kasutage Projects MCP-d",
+    "prompt-version-placeholder": "Vali käsu versioon",
+    "start-message-section": "Agendi tervitussõnum",
+    "tools-section": "Tööriistad",
+    "docs-section": "Dokumendid",
+    "skills-section": "Oskused",
+    "use-latest-skill-version": "Kasuta uusimat oskuse versiooni",
+    "use-skill-version": "Kasuta oskuse versiooni:",
+    "choose-skill-version": "Vali oskuse versioon",
+    "preview-mode": "Eelvaate režiim",
+    "confirm-deletion": "Kinnita agendi kustutamine",
+    "confirm-deletion-of": "Kas tõesti soovid kustutada agendi '{title}'?",
+    "deleted": "Agent kustutatud",
+    "delete-error": "Viga agendi kustutamisel",
+    "empty-list": "Agente veel ei ole.",
+    "confirm-restart-title": "Alusta vestlust uuesti",
+    "confirm-restart-content": "Kas soovite alustada uut vestlust?",
+    "is-used-as-side-assistant": "Seda agenti kasutatakse praegu abilise rollis ja seda ei saa deaktiveerida.",
+    "title-already-used": "Teine agent kasutab juba tiitlit",
+    "form": {
+      "invalid": "Vorm on mittetäielik, palun täitke nõutud väljad",
+      "title-required": "Pealkiri on nõutud",
+      "model-name-required": "Mudeli nimi on nõutud",
+      "model-temperature-required": "Mudeli temperatuur on nõutud",
+      "model-temperature-is-float": "Mudeli temperatuur peab olema ujukomaarv",
+      "model-temperature-is-bounded": "Mudeli temperatuur peab jääma vahemikku 0 kuni 2",
+      "prompt-required": "Prompt on nõutud"
+    }
+  },
+  "side-assistant": {
+    "default": "Default",
+    "save-success": "Side assistant saved",
+    "save-error": "Error while saving side assistant",
+    "choose": "Choose an agent for the side assistant"
+  },
+  "agents-home": {
+    "title": "Let's talk!",
+    "intro": "Welcome to a curated gathering of conversational agents - AI companions designed to chat, help, and engage. Whether you're looking for research assistance, casual conversation, creative collaboration, or practical support, you'll find different voices here, each with its own strengths and personality."
+  },
+  "assistant-drawer": {
+    "ice-breakers": "Siin on mõned jäämurdjad",
+    "special-agents": "Otsite spetsialiseeritud agenti?",
+    "other-special-agents": "Otsite teist spetsialiseeritudagenti?"
   }
 }

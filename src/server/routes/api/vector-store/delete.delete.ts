@@ -1,5 +1,5 @@
-import checkVectorDbRights from '~/server/utils/check-vector-db-rights'
-import getVectorStore from '~/server/utils/vector-db'
+import checkAdminRights from '~/server/utils/check-admin-rights.js'
+import getVectorStore from '~/server/utils/vector-db-new.js'
 
 export default defineLazyEventHandler(() => {
   return defineEventHandler(async (event) => {
@@ -13,7 +13,7 @@ export default defineLazyEventHandler(() => {
       })
     }
 
-    await checkVectorDbRights(event)
+    const { superAdmin } = await checkAdminRights(event)
 
     const rawTitle = getQuery(event)?.title
     const title = typeof rawTitle === 'string' ? rawTitle.trim() : ''
@@ -23,10 +23,14 @@ export default defineLazyEventHandler(() => {
       return { status: 'bad_request' }
     }
 
+    let isGlobal = !!getQuery(event)?.is_global
+    // only super admin can create or modify or delete global docs
+    if (isGlobal && !superAdmin) isGlobal = false
+
     await vectorStore.delete({
       filter: {
         title: title,
-        orgCode: appApiOrgCode,
+        orgCode: isGlobal ? '' : appApiOrgCode,
       },
     })
 

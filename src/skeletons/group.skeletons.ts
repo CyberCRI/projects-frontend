@@ -1,4 +1,5 @@
 import type { PeopleGroupModel } from '~/models/invitation.model'
+import { userSkeleton } from '~/skeletons/user.skeletons'
 import type { GroupMember } from '~/models/group.model'
 
 export const groupSkeleton = (def?: Partial<PeopleGroupModel>): PeopleGroupModel => ({
@@ -35,24 +36,7 @@ export const groupSkeleton = (def?: Partial<PeopleGroupModel>): PeopleGroupModel
 })
 
 export const memberSkeleton = (def?: Partial<GroupMember>): Omit<GroupMember, 'id'> => ({
-  name: {
-    firstname: 'firstname',
-    lastname: 'lastname',
-  },
-  slug: 'string',
-  email: 'email@email.fr',
-  roles: [],
-  orgs: [],
-  given_name: 'given_name',
-  family_name: 'family_name',
-  permissions: [],
-  description: 'description',
-  short_description: 'short_description',
-  job: 'job',
-  resources: {
-    files: 0,
-    links: 0,
-  },
+  ...userSkeleton(),
   role: 'members',
   ...def,
 })

@@ -1,0 +1,91 @@
+<template>
+  <div class="location-tooltip" :class="location.type">
+    <div class="location-tooltip-header">
+      <LocationType :location-type="location.type" />
+      <LpiButton
+        btn-icon="Close"
+        class="location-tooltip-icon skeletons-background"
+        :title="$t('common.close')"
+        @click="closePopUp"
+      />
+    </div>
+
+    <div v-if="title || description" class="location-tooltip-info">
+      <h3 class="skeletons-text">
+        {{ title }}
+      </h3>
+      <p class="skeletons-text">
+        {{ description }}
+      </p>
+    </div>
+    <slot />
+  </div>
+</template>
+
+<script setup lang="ts">
+import type { AnyLocation } from '~/models/location.model'
+
+import LpiButton from '~/components/base/button/LpiButton.vue'
+import LocationType from '~/components/map/LocationType.vue'
+
+import { cropIfTooLong } from '~/functs/string'
+
+const props = defineProps<{ location: AnyLocation }>()
+
+// when create new point (from locationDrawer) we not have $t
+const title = computed(() => cropIfTooLong(props.location?.$t?.title || props.location.title, 45))
+const description = computed(() =>
+  cropIfTooLong(props.location?.$t?.description || props.location.description, 85)
+)
+
+const closePopUp = inject('closePopUp')
+</script>
+
+<style lang="scss" scoped>
+.location-tooltip {
+  width: pxToRem(300px);
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  // 25px is the size of "line" in map (a 5px too)
+  transform: translate(calc(-50% + 25px), calc(-100% + 5px));
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 0.2rem;
+  background-color: var(--white);
+  transition: opacity 0.15s ease-in-out;
+  border: $border-width-l solid;
+  border-radius: $border-radius-m;
+  border-color: var(--location-color);
+
+  > * {
+    padding: 0.5rem 1rem;
+  }
+
+  > *:first-child {
+    padding: 0.5rem;
+  }
+}
+
+.location-tooltip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.location-tooltip-icon {
+  width: 22px !important;
+  height: 22px !important;
+}
+
+.location-tooltip-info {
+  padding-bottom: 0.5rem;
+
+  h3 {
+    font-size: medium;
+  }
+}
+</style>

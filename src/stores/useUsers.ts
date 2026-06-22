@@ -12,9 +12,10 @@ import { removeApiCookie } from '~/api/auth/cookie.service'
 import { getUser as _getUser } from '~/api/people.service'
 import type { AuthResult } from '~/api/auth/keycloak'
 
-import { getOrgsFromRoles } from '~/functs/utils'
+import { getOrgsFromRoles } from '~/functs/rolesUtils'
 import analytics from '~/analytics'
 import { defineStore } from 'pinia'
+import { pick } from 'es-toolkit'
 
 // fix undefined localStorage on sever
 let _localStorage = null
@@ -87,6 +88,13 @@ const useUsersStore = defineStore('users', () => {
           researcher: userFromToken.value.researcher,
           resources: userFromToken.value.resources,
           signed_terms_and_conditions: userFromApi.value?.signed_terms_and_conditions || {},
+          ...pick(userFromApi.value || {}, [
+            'is_superuser',
+            'linkedin',
+            'facebook',
+            'twitter',
+            'website',
+          ]),
         }
       }
       return null

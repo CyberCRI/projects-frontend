@@ -75,3 +75,29 @@ export const textIsEmpty = (text: string | null): boolean => {
 export const getFirstTextNotEmpty = (texts: (string | null)[]): string => {
   return texts.find((text) => !textIsEmpty(text)) || ''
 }
+
+export function safeParseFloat(s: any, fallback: number = 0): number {
+  if (!s) return fallback
+  if (typeof s === 'number') return s
+  try {
+    const res = parseFloat('' + s)
+    if (isNaN(res)) throw 'Not a number'
+    return res
+  } catch (err) {
+    console.error(`parseFLoat error for ${s}`, err)
+    return fallback
+  }
+}
+
+export function safeParseInt(s: any, fallback: number = 0): number {
+  if (!s) return fallback
+  if (typeof s === 'number') return Math.floor(s)
+  try {
+    const res = parseInt('' + s, 10)
+    if (isNaN(res)) throw 'Not a number'
+    return res
+  } catch (err) {
+    console.error(`parseInt error for ${s}`, err)
+    return fallback
+  }
+}

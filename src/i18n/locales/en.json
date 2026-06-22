@@ -227,7 +227,13 @@
       "groups": "Groups",
       "settings": "Settings",
       "terms": "ToS",
-      "vector-store": "Vector store"
+      "vector-store": "Vector store",
+      "prompts": "Prompts",
+      "agent-skills": "Agent skills",
+      "agents": "Agents",
+      "conversations": "Conversations",
+      "checkpoints": "Checkpoints",
+      "side-assistant": "Side assistant"
     },
     "page-title": "Admin",
     "portal": {
@@ -500,6 +506,7 @@
     "delete-description": "Are you sure you want to permanently delete your comments? This action will be irreversible."
   },
   "common": {
+    "select-placeholder": "Select...",
     "file": "file | files",
     "empty": "Nothing here...",
     "select": "select",
@@ -578,7 +585,8 @@
     "no-date": "No date",
     "date": "Date",
     "clear-date": "Clear Date",
-    "chose-date": "Select Date | Select the date(s)"
+    "chose-date": "Select Date | Select the date(s)",
+    "filter": "filter | filters"
   },
   "complete-profile": {
     "bio": {
@@ -913,7 +921,6 @@
     "cookies": "Cookies",
     "accessibility": "Accessibility",
     "personal-data": "Personal data",
-    "directory": "Discover many more projects of other organisations on our meta-portal :",
     "help": "Help",
     "projects": "Projects Platform",
     "madeBy": "is made by",
@@ -969,7 +976,8 @@
     },
     "create-project": "Create a project",
     "check-locations": "Check our locations",
-    "our-locations": "Our locations"
+    "our-locations": "Our locations",
+    "agents": "AI Agents"
   },
   "language": {
     "label-en": "English",
@@ -990,14 +998,16 @@
     "news": "News | News",
     "event": "Event",
     "focus-on-map": "focus on the map",
-    "expand-map": "Enlarge map",
+    "expand": "Enlarge map",
     "edit-location-point": "Edit location point",
     "location-type-label": "Location type",
     "edit-map": "Edit geolocation",
     "map": "Geolocation",
     "add-location": "Add a location",
     "add-location-point": "Add a location point",
-    "default-title": "Location"
+    "default-title": "Location",
+    "zoom-in": "zoom in",
+    "zoom-out": "zoom out"
   },
   "map": {
     "empty": "Nothing here yet... Contributors did not localize any points yet.",
@@ -2807,9 +2817,11 @@
     "fetching_data": "Fetching data...",
     "reasoning": "Thinking...",
     "restart": "Restart conversation",
+    "export": "Export conversation",
     "before-we-start": "Before we start, would you:",
     "allow-profile": "Allow me to see your profile - so I can better tailor my responses",
-    "allow-current-page": "Allow me to see the page you are on - so I have a better sense of the context"
+    "allow-current-page": "Allow me to see the page you are on - so I have a better sense of the context",
+    "previous-messages": "Previous messages"
   },
   "researcher": {
     "relators": {
@@ -3272,78 +3284,115 @@
     "title-field": "Title",
     "file-field": "File",
     "document-added": "Document added.",
-    "document-updated": "Document edited."
+    "document-updated": "Document edited.",
+    "is-global-field": "Global document",
+    "is-global-label": "Global"
   },
-  "icon": {
-    "select": "Select an icon"
-  },
-  "tab": {
-    "tab": {
-      "delete-confirm": "Are you sure you want to delete this tab? all content will be removed.",
-      "delete": "Delete tab",
-      "add": "Add a new Tab.",
-      "edit": "Edit Tab",
-      "title": "Tab Creation",
-      "label": "Tab | Tabs"
-    },
-    "item": {
-      "delete-confirm": "Are you sure you want to delete this item.",
-      "delete": "Delete item",
-      "add": "Add a new item",
-      "edit": "Edit item",
-      "title": "Item form"
-    },
+  "prompts": {
+    "create-prompt": "Create prompt",
+    "create-success": "Prompt created successfuly",
+    "create-error": "Error creating prompt",
+    "edit-prompt": "Edit prompt",
+    "edit-success": "Prompt edited successfuly",
+    "edit-error": "Error updting prompt",
+    "title": "Title",
+    "content": "Content",
+    "confirm-deletion": "Confirm deletion of prompt",
+    "confirm-deletion-of": "Do you really want to delete the prompt '{title}'?",
+    "deleted": "Prompt deleted",
+    "delete-error": "Error deleting the prompt",
+    "empty-list": "No prompt yet.",
     "form": {
-      "title": {
-        "label": "Title"
-      },
-      "description": {
-        "label": "Description"
-      },
-      "icon": {
-        "label": "Icon"
-      },
-      "show_preview": {
-        "label": "Show preview in summary page."
-      },
-      "type": {
-        "label": "Type",
-        "required": "The type of tab is required.",
-        "text": {
-          "label": "text",
-          "help": "the Content is a full text content."
-        },
-        "blog": {
-          "label": "blog",
-          "help": "the Content is list for blog entry."
-        }
-      }
-    },
-    "toasts": {
-      "tab-create": {
-        "success": "The tab has been created successfully.",
-        "error": "Failed to create the tab. Please try again."
-      },
-      "tab-update": {
-        "success": "The tab has been updated successfully.",
-        "error": "Failed to update the tab. Please try again."
-      },
-      "tab-delete": {
-        "success": "The tab has been deleted successfully.",
-        "error": "Failed to delete the tab. Please try again."
-      },
-      "item-delete": {
-        "success": "The item has been deleted successfully.",
-        "error": "Failed to delete the item. Please try again."
-      },
-      "item-update": {
-        "success": "The item has been updated successfully.",
-        "error": "Failed to update the item. Please try again."
-      },
-      "item-create": {
-        "success": "The item has been created successfully.",
-        "error": "Failed to create the item. Please try again."
-      }
+      "invalid": "Form is incomplete, please provide required fields",
+      "title-required": "Title is required",
+      "content-required": "Content is required"
     }
+  },
+  "agent-skills": {
+    "create-skill": "Create agent skill",
+    "create-success": "Agent skill created successfuly",
+    "create-error": "Error creating agent skill",
+    "edit-skill": "Edit agent skill",
+    "edit-success": "Agent skill edited successfuly",
+    "edit-error": "Error updting agent skill",
+    "title": "Title",
+    "description": "Description",
+    "content": "Content",
+    "confirm-deletion": "Confirm deletion of agent skill",
+    "confirm-deletion-of": "Do you really want to delete the agent skill '{title}'?",
+    "deleted": "Agent skill deleted",
+    "delete-error": "Error deleting the agent skill",
+    "empty-list": "No agent skill yet.",
+    "form": {
+      "invalid": "Form is incomplete, please provide required fields",
+      "title-required": "Title is required",
+      "content-required": "Content is required",
+      "description-required": "The description is required"
+    }
+  },
+
+  "agents": {
+    "no-active-agent-yet": "No agent available for now.",
+    "need-login": "You need to be logged in to use this agent.",
+    "create-agent": "Create agent",
+    "create-success": "Agent created successfuly",
+    "create-error": "Error creating agent",
+    "edit-agent": "Edit agent",
+    "edit-success": "Agent edited successfuly",
+    "edit-error": "Error updting agent",
+    "title": "Title",
+    "description": "Description",
+    "is-enabled": "Enabled",
+    "model-section": "Model",
+    "model-name": "Model name",
+    "model-temperature": "Model temperature",
+    "prompt-section": "prompt",
+    "prompt-placeholder": "Choose a prompt",
+    "use-latest-prompt-version": "Use latest prompt version",
+    "use-prompt-version": "Use prompt version: ",
+    "use-profile-data": "Access user profile data",
+    "use-project-mcp": "Use Projects MCP",
+    "prompt-version-placeholder": "Choose prompt version",
+    "start-message-section": "Agent welcome message",
+    "tools-section": "Tools",
+    "docs-section": "Documents",
+    "skills-section": "Skills",
+    "use-latest-skill-version": "Use latest skill version",
+    "use-skill-version": "Use skill version :",
+    "choose-skill-version": "Choose skill version",
+    "preview-mode": "Preview mode",
+    "confirm-deletion": "Confirm deletion of agent",
+    "confirm-deletion-of": "Do you really want to delete the agent '{title}'?",
+    "deleted": "Agent deleted",
+    "delete-error": "Error deleting the agent",
+    "empty-list": "No agent yet.",
+    "confirm-restart-title": "Restart conversation",
+    "confirm-restart-content": "Do you want to start a new conversation?",
+    "is-used-as-side-assistant": "This agent is currently used as side assistant and cannot be deactivated.",
+    "title-already-used": "Title is already used by another agent",
+    "form": {
+      "invalid": "Form is incomplete, please provide required fields",
+      "title-required": "Title is required",
+      "model-name-required": "Model name is required",
+      "model-temperature-required": "Model temperature is required",
+      "model-temperature-is-float": "Model temperature must be a floating number",
+      "model-temperature-is-bounded": "Model temperature must be between 0 and 2",
+      "prompt-required": "Prompt is required"
+    }
+  },
+  "side-assistant": {
+    "default": "Default",
+    "save-success": "Side assistant saved",
+    "save-error": "Error while saving side assistant",
+    "choose": "Choose an agent for the side assistant"
+  },
+  "agents-home": {
+    "title": "Let's talk!",
+    "intro": "Welcome to a curated gathering of conversational agents - AI companions designed to chat, help, and engage. Whether you're looking for research assistance, casual conversation, creative collaboration, or practical support, you'll find different voices here, each with its own strengths and personality."
+  },
+  "assistant-drawer": {
+    "ice-breakers": "Here are some ice-breakers",
+    "special-agents": "Looking for a specialized agent?",
+    "other-special-agents": "Looking for another specialized agent?"
   }
 }
