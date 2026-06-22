@@ -585,7 +585,8 @@
     "filter": "filter | filters",
     "empty": "Niets hier...",
     "file": "bestand | bestanden",
-    "image": "afbeelding"
+    "image": "afbeelding",
+    "select-placeholder": "Selecteren..."
   },
   "complete-profile": {
     "bio": {
@@ -3392,5 +3393,74 @@
     "ice-breakers": "Hier zijn een paar ijsbrekers",
     "special-agents": "Op zoek naar een gespecialiseerde agent?",
     "other-special-agents": "Op zoek naar een andere gespecialiseerde agent?"
+  },
+  "tab": {
+    "tab": {
+      "delete-confirm": "Weet u zeker dat u dit tabblad wilt verwijderen? alle inhoud wordt verwijderd.",
+      "delete": "Tabblad verwijderen",
+      "add": "Een nieuw tabblad toevoegen.",
+      "edit": "Tabblad bewerken",
+      "title": "Tab aanmaken",
+      "label": "Tab | Tabbladen"
+    },
+    "item": {
+      "delete-confirm": "Weet u zeker dat u dit item wilt verwijderen.",
+      "delete": "Item verwijderen",
+      "add": "Een nieuw item toevoegen",
+      "edit": "Item bewerken",
+      "title": "Postformulier"
+    },
+    "form": {
+      "title": {
+        "label": "Titel"
+      },
+      "description": {
+        "label": "Omschrijving"
+      },
+      "icon": {
+        "label": "Pictogram"
+      },
+      "show_preview": {
+        "label": "Voorbeeld tonen in beknopte pagina."
+      },
+      "type": {
+        "label": "Type",
+        "required": "Het type tabblad is vereist.",
+        "text": {
+          "label": "tekst",
+          "help": "de inhoud is een volledige tekstinhoud."
+        },
+        "blog": {
+          "label": "blog",
+          "help": "de inhoud is lijst voor blog invoer."
+        }
+      }
+    },
+    "toasts": {
+      "tab-create": {
+        "success": "Het tabblad is succesvol aangemaakt.",
+        "error": "Aanmaken van het tabblad mislukt. Probeer het nog eens."
+      },
+      "tab-update": {
+        "success": "Het tabblad is succesvol bijgewerkt.",
+        "error": "Bijwerken van het tabblad is mislukt. Probeer het nog eens."
+      },
+      "tab-delete": {
+        "success": "Het tabblad is succesvol verwijderd.",
+        "error": "Verwijderen van het tabblad is mislukt. Probeer het nog eens."
+      },
+      "item-delete": {
+        "success": "Het item is succesvol verwijderd.",
+        "error": "Verwijderen van item is mislukt. Probeer het nog eens."
+      },
+      "item-update": {
+        "success": "Het item is succesvol bijgewerkt.",
+        "error": "Bijwerken van het item is mislukt. Probeer het nog eens."
+      },
+      "item-create": {
+        "success": "Het item is succesvol aangemaakt.",
+        "error": "Aanmaken van het item is mislukt. Probeer het nog eens."
+      }
+    }
   }
 }

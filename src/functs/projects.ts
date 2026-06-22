@@ -17,9 +17,11 @@ export const safeProjectIconTab = (
   icon: ProjectTab['icon'],
   type: ProjectTab['type']
 ): IconTabImageChoice => {
+  // if icon exists in iCONS_TABS, is ok
   if (ICONS_TABS[icon]) {
-    return ICONS_TABS[icon]
+    return icon
   }
 
+  // else return default type form tab or 'tab' icon
   return DEFAULT_ICONS_TABS[type] || 'Tab'
 }

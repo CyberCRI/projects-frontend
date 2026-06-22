@@ -1,6 +1,6 @@
+import type { IconTabImageChoice } from '~/functs/IconImage'
 import type { ProjectModel } from '~/models/project.model'
 import type { Translated } from '~/interfaces/translated'
-import type { IconImageChoice } from '~/functs/IconImage'
 import type { ImageModel } from '~/models/image.model'
 import type { ProjectTabType } from '~/models/types'
 import type { Ordering } from '~/interfaces/query'
@@ -12,7 +12,7 @@ export interface ProjectTab extends BaseModel {
   title: string
   type: ProjectTabType
   description: string | null
-  icon: IconImageChoice | null
+  icon: IconTabImageChoice | null
   images?: ImageModel[]
   show_preview: boolean
   modules: {
