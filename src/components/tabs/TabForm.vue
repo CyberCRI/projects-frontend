@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defualtProjectTabForm, useProjectTabForm } from '~/form/project-tabs'
+import { defaultProjectTabForm, useProjectTabForm } from '~/form/project-tabs'
 import type { GroupOption } from '~/components/base/button/GroupButton.vue'
 import GroupButton from '~/components/base/button/GroupButton.vue'
 import type { ProjectTabForm } from '~/models/projects-tabs.model'
@@ -13,6 +13,7 @@ import type { IconTabImageChoice } from '~/functs/IconImage'
 import FormPanel from '~/components/base/FormPanel.vue'
 import { DEFAULT_ICONS_TABS } from '~/functs/constants'
 import type { ImageModel } from '~/models/image.model'
+import { safeProjectIconTab } from '~/functs/projects'
 import { getFirstTextNotEmpty } from '~/functs/string'
 import type { ProjectTabType } from '~/models/types'
 import { ICONS_TABS } from '~/functs/IconImage'
@@ -40,15 +41,15 @@ const { stateModals, closeModals, toggleModals } = useModals({
 })
 
 const defaultLocalForm = () => {
-  const newForm = defualtProjectTabForm()
+  const newForm = defaultProjectTabForm()
 
   const tab = props.tab
   if (tab) {
     newForm.id = tab.id
     newForm.title = tab.title || newForm.title
     newForm.description = getFirstTextNotEmpty([tab.description]) || newForm.description
-    newForm.icon = tab.icon || newForm.icon
     newForm.type = tab.type || newForm.type
+    newForm.icon = safeProjectIconTab(tab.icon, newForm.type)
     // not or || for boolean
     newForm.show_preview = tab.show_preview ?? newForm.show_preview
   }

@@ -17,7 +17,7 @@ import {
   createProjectTabItemImage,
   updateProjectTabItem,
 } from '~/api/project-tabs.service'
-import { defualtProjectTabItemForm, useProjectTabItemForm } from '~/form/project-tabs'
+import { defaultProjectTabItemForm, useProjectTabItemForm } from '~/form/project-tabs'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
 import type { TranslatedProject } from '~/models/project.model'
 import FormPanel from '~/components/base/FormPanel.vue'
@@ -43,7 +43,7 @@ const emit = defineEmits<{
 }>()
 
 const defaultLocalForm = () => {
-  const baseForm = defualtProjectTabItemForm()
+  const baseForm = defaultProjectTabItemForm()
   const newForm = {
     ...baseForm,
   }

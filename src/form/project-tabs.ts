@@ -2,7 +2,7 @@ import type { ProjectTabForm, ProjectTabItemForm } from '~/models/projects-tabs.
 import { helpers, required } from '@vuelidate/validators'
 import { DEFAULT_ICONS_TABS } from '~/functs/constants'
 
-export const defualtProjectTabForm = (): ProjectTabForm => {
+export const defaultProjectTabForm = (): ProjectTabForm => {
   return {
     title: '',
     description: '',
@@ -13,7 +13,7 @@ export const defualtProjectTabForm = (): ProjectTabForm => {
   }
 }
 
-export const defualtProjectTabItemForm = (): ProjectTabItemForm => {
+export const defaultProjectTabItemForm = (): ProjectTabItemForm => {
   return {
     title: '',
     content: '',

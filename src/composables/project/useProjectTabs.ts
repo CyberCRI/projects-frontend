@@ -4,6 +4,7 @@ import { projectTabSkeleton } from '~/skeletons/project-tabs.skeletons'
 import { getAllProjectTab } from '~/api/v2/project-tabs.service'
 import { projectSkeleton } from '@/skeletons/project.skeletons'
 import { factoryPagination } from '~/skeletons/base.skeletons'
+import { safeProjectIconTab } from '~/functs/projects'
 
 export const useProjectTabs = (
   projectId: ComputedRef<ProjectSlugOrId>,
@@ -160,7 +161,7 @@ export const useProjectTabs = (
           altView: `/projects/${projectId.value}/additionals/${tab.id}/edit`,
           dataTest: `project-additionals-${tab.id}`,
           condition: tab.modules.items >= 1,
-          icon: tab.icon || 'Tab',
+          icon: safeProjectIconTab(tab.icon, tab.type),
           props: {
             tab,
           },
@@ -288,7 +289,7 @@ export const useProjectTabs = (
           altView: `/projects/${projectId.value}/additionals/${tab.id}`,
           dataTest: `project-additionals-${tab.id}`,
           condition: true,
-          icon: tab.icon,
+          icon: safeProjectIconTab(tab.icon, tab.type),
           props: {
             tab,
           },
