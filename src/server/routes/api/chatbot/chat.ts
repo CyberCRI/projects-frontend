@@ -185,7 +185,7 @@ export default defineLazyEventHandler(() => {
           /* HANDLE TOOLS */
 
           let text = ''
-          let is_done = false
+          const is_done = false
           let text_extra = ''
           switch (chunk.event) {
             case 'on_tool_start':
