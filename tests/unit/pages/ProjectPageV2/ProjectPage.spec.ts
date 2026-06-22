@@ -1,6 +1,7 @@
 import ProjectPage from '~/pages/ProjectPageV2/ProjectPage.vue'
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
+import { ProjectTabFactory, ProjectTabItemFactory } from '~~/tests/factories/projects-tabs.factory'
 import { AttachmentLinkFactory } from '~~/tests/factories/attachment-link.factory'
 import { AttachmentFileFactory } from '~~/tests/factories/attachment-file.factory'
 import ProjectSnapshotTab from '~/pages/ProjectPageV2/ProjectSnapshotTab.vue'
@@ -56,6 +57,20 @@ describe('ProjectPage.vue', () => {
     )
     registerEndpoint(`project/${project.id}/similar/`, () => [])
     registerEndpoint(`project/${project.id}/location/`, () => [])
+
+    const tabs = ProjectTabFactory.generateMany(10)
+    registerEndpoint(`project/${project.id}/tab/`, () =>
+      PaginationsFactory.generate({
+        results: tabs,
+      })
+    )
+    tabs.forEach((tab) => {
+      registerEndpoint(`project/${project.id}/tab/${tab.id}/item/`, () =>
+        PaginationsFactory.generate({
+          results: ProjectTabItemFactory.generateMany(10),
+        })
+      )
+    })
 
     // alway at end to no match other endpoints
     registerEndpoint(`project/${project.id}/`, () => project)

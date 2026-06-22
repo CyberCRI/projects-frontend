@@ -24,7 +24,7 @@ export const useProjectTabs = (
   })
 
   const { data: tabs } = getAllProjectTab(organizationCode, projectId, {
-    default: () => factoryPagination(projectTabSkeleton, 0),
+    default: () => factoryPagination(projectTabSkeleton, project?.value?.modules?.tabs || 0),
   })
 
   const { isAdmin, isMember } = usePermissions()
@@ -295,7 +295,6 @@ export const useProjectTabs = (
           },
         }
       }),
-
       {
         key: 'project-additionals-add',
         label: t('tab.tab.add'),

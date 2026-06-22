@@ -100,6 +100,9 @@ const setExpanded = (state: boolean, item: TranslatedProjectTabItem) => {
 }
 
 watchEffect(() => {
+  if (!route.hash) {
+    return
+  }
   expanded.value = parseInt(route.hash.replaceAll('#item:', ''), 10)
 })
 </script>
