@@ -12,7 +12,6 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import EmptyLabel from '~/components/base/EmptyLabel.vue'
 import { flushPromises } from '@vue/test-utils'
-import { delay } from 'es-toolkit'
 
 const aTag = { title: '123', description: 'abc' }
 
