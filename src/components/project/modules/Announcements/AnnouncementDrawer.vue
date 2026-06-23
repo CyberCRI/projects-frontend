@@ -59,7 +59,10 @@ const defaultLocalForm = () => {
   return newForm
 }
 
-const { isValid, errors, form, reset } = useAnnouncementForm({ lazy: true })
+const { isValid, errors, form, reset } = useAnnouncementForm({
+  default: defaultLocalForm(),
+  lazy: true,
+})
 const { stateModals, closeModals, openModals } = useModals({ saveChange: false })
 
 const asyncing = ref(false)

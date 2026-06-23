@@ -77,7 +77,7 @@ export default {
       return {
         limit: this.limit,
         ordering: '-updated_at',
-        member_role: [this.memberRoles],
+        member_role: this.memberRoles,
         members: [this.user.id],
         organizations: [this.organizationsStore.current.code],
         // page: this.pagination.currentPage,
