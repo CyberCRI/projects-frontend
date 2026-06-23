@@ -41,20 +41,22 @@ const userStore = useUsersStore()
     <div v-if="review.reviewer" class="reviewed-by">
       <CroppedApiImage
         :alt="`${review.reviewer.given_name} ${review.reviewer.family_name} image`"
-        class="image"
+        class="image skeletons-background"
         :picture-data="review.reviewer.profile_picture"
         picture-size="medium"
         :default-picture="DEFAULT_USER_PATATOID"
       />
-      <p class="name">{{ review.reviewer.given_name }} {{ review.reviewer.family_name }}</p>
+      <p class="name skeletons-text">
+        {{ review.reviewer.given_name }} {{ review.reviewer.family_name }}
+      </p>
 
-      <div class="date">
+      <div class="date skeletons-text">
         {{ ` - ${$t('project.reviewed-on-the')} ${formatDate(review.created_at, locale)}` }}
       </div>
     </div>
 
     <div class="review-content">
-      <h3 class="title">
+      <h3 class="title skeletons-text">
         {{ review.$t.title }}
       </h3>
 
