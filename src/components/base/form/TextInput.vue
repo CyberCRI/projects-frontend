@@ -8,6 +8,10 @@
     :bottom-text="bottomText"
     :big-input="bigInput"
   >
+    <template v-if="$slots.default" #label>
+      <slot />
+    </template>
+
     <textarea
       v-if="inputType === 'textarea'"
       :id="inputId || (label ? randomId : null)"
