@@ -585,7 +585,8 @@
     "filter": "filter | filters",
     "empty": "Niets hier...",
     "file": "bestand | bestanden",
-    "image": "afbeelding"
+    "image": "afbeelding",
+    "select-placeholder": "Selecteren..."
   },
   "complete-profile": {
     "bio": {
@@ -3274,10 +3275,6 @@
       "label": "Uitgever | Uitgevers",
       "help": ""
     },
-    "none": {
-      "label": "",
-      "help": ""
-    },
     "label": "Rol | Rol",
     "edit": "Modifier les roles",
     "select": "De rechten selecteren",
@@ -3285,6 +3282,10 @@
     "viewers": {
       "label": "Viewer | Viewers",
       "help": "Kijker: Hij heeft geen bewerkingsrechten."
+    },
+    "none": {
+      "label": "Aucun",
+      "help": "Gebruiker geen recht."
     }
   },
   "prompts": {

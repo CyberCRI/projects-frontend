@@ -585,7 +585,8 @@
     "filter": "Filter | Filter",
     "empty": "Nichts hier...",
     "file": "Datei | Dateien",
-    "image": "Bild"
+    "image": "Bild",
+    "select-placeholder": "Wählen Sie..."
   },
   "complete-profile": {
     "bio": {
@@ -3274,10 +3275,6 @@
       "label": "Verlag | Verlag",
       "help": ""
     },
-    "none": {
-      "label": "",
-      "help": ""
-    },
     "label": "Laufsohle | Roggen",
     "edit": "Modifier les rôles",
     "select": "Wählen Sie die Rechte",
@@ -3285,6 +3282,10 @@
     "viewers": {
       "label": "Blick | Sichter",
       "help": "Viewer: Er hat keine Bearbeitungsrechte."
+    },
+    "none": {
+      "label": "Aucun",
+      "help": "Benutzer kein Recht."
     }
   },
   "prompts": {
