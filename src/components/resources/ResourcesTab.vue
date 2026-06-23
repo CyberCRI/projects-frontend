@@ -1,6 +1,6 @@
 <template>
   <div class="project-resources">
-    <BaseModuleHeader :editable="editable" @add="$emit('edit')" />
+    <BaseModuleHeader :editable="isEditionEnabled" @add="$emit('edit')" />
 
     <SectionHeader
       v-if="fileResources.length"
@@ -23,7 +23,6 @@
         @delete="openModal(file, 'file')"
       />
     </div>
-    <EmptyLabel v-else />
 
     <SectionHeader
       v-if="linkResources.length"
@@ -47,6 +46,8 @@
         @delete="openModal(link, 'link')"
       />
     </div>
+
+    <EmptyLabel v-if="linkResources.length === 0 && fileResources.length === 0" />
 
     <ConfirmModal
       v-if="confirmModalVisible"
@@ -113,9 +114,7 @@ const openModal = (resource, type) => {
   currentResource.value = resource
 
   confirmModalContent.value =
-    currentType.value === 'link'
-      ? t('resources.link-confirm-delete')
-      : t('resources.file-confirm-delete')
+    currentType.value === 'link' ? t('resource.link.delete') : t('resource.file.delete')
 }
 
 const deleteResource = async (resource, type) => {

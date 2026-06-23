@@ -8,6 +8,9 @@
         :delete-attachment-link="deleteAttachmentLink"
         :delete-attachment-file="deleteAttachmentFile"
         :permissions="canEditUser"
+        :editable="isInEditingMode"
+        @reload-link-resources="refreshLinks"
+        @reload-file-resources="refreshFiles"
         @edit="onEdit"
       />
       <ResourceDrawer
