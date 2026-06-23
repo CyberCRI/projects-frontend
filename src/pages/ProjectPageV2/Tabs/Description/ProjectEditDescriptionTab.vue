@@ -14,9 +14,11 @@ const props = withDefaults(
     project: TranslatedProject
     // eslint-disable-next-line vue/no-unused-properties
     editable?: boolean
+    loading?: boolean
   }>(),
   {
     editable: true,
+    loading: false,
   }
 )
 
@@ -69,7 +71,6 @@ const isFormEqual = useBlockNavigation(() => {
     ? 1
     : editorRef.value?.editor?.storage?.collaborationCursor?.users?.length || 0
 
-  console.log(numberEditor, form.value, defaultLocalForm())
   // if form is same or your are in multiple user editor
   return isEqual(form.value, defaultLocalForm()) || numberEditor !== 1
 })
@@ -141,6 +142,7 @@ const checkSubmit = () => {
     >
       <ClientOnly>
         <TipTapCollaborativeEditor
+          v-if="!loading"
           ref="tiptapEditor"
           v-model="form.description"
           :room="room"
