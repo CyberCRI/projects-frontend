@@ -1,4 +1,6 @@
+import formatAgentWithTranslation from '@/server/utils/format-agent-with-translation'
 import findSafeAgentSlug from '@/server/utils/find-safe-agent-slug.js'
+import { translateAgentFields } from '@/server/utils/translate-fields'
 import checkAdminRights from '@/server/utils/check-admin-rights.js'
 import slugify from '@sindresorhus/slugify'
 
@@ -37,9 +39,12 @@ export default defineLazyEventHandler(() => {
       const agent = await tx.agent.create({
         data: { ...body, orgCode: appApiOrgCode },
       })
+
       return agent
     })
+
+    const translations = await translateAgentFields(agent)
     // console.log(agent)
-    return agent
+    return formatAgentWithTranslation(agent, translations)
   })
 })

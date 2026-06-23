@@ -108,7 +108,7 @@ export default class ConversationPersistenceHandler extends BaseCallbackHandler 
           conversationId: this.conversation!.id,
           role: 'assistant',
           content: message.content || message.text,
-          toolCalls: message.tool_calls ?? null,
+          toolCalls: message.tool_call_chunks ?? null,
           position,
         },
       })
@@ -125,7 +125,10 @@ export default class ConversationPersistenceHandler extends BaseCallbackHandler 
     // console.log(JSON.stringify(output.generations[0][0], null, 2))
     // const message = output.generations[0][0].message
     const message = output.generations[0][0]
-    await this.handleAssistantMessage(message)
+    await this.handleAssistantMessage({
+      text: message?.text,
+      tool_call_chunks: message?.message?.tool_call_chunks,
+    })
   }
 
   override async handleToolEnd(
@@ -202,7 +205,12 @@ export default class ConversationPersistenceHandler extends BaseCallbackHandler 
         if (message.text) await this.handleUserMessage({ content: message.text })
       } else if (message.role === 'assistant') {
         traceAgentMemory('Saving last assistant message:', message.text)
-        if (message.text) await this.handleAssistantMessage({ content: message.text })
+        if (message?.text || message?.message?.tool_call_chunks) {
+          await this.handleAssistantMessage({
+            content: message?.text,
+            tool_call_chunks: message?.message?.tool_call_chunks,
+          })
+        }
       } else if (message.role === 'retriever') {
         // handle "user profile" stuffed. TODO: make a real server side tool
         traceAgentMemory('Saving last retriever message:', message.text)

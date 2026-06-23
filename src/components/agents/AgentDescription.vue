@@ -3,7 +3,7 @@ defineProps({ agent: { type: Object, required: true } })
 </script>
 <template>
   <div v-if="agent?.description" class="agent-description">
-    <TipTapOutput :content="agent.description" />
+    <TipTapOutput :content="agent.$t.description" />
   </div>
 </template>
 <style lang="scss" scoped>

@@ -24,6 +24,7 @@ import type { TranslatedEventModel } from '@/models/event.model'
 import type { TranslatedComment } from '@/models/comment.model'
 import type { TranslatedUserModel } from '@/models/user.model'
 import type { TranslatedReview } from '~/models/review.model'
+import type { TranslatedAgent } from '~/models/agent.model'
 import type { TranslatedNews } from '@/models/news.model'
 import type { TranslatedGoal } from '@/models/goal.model'
 import type { TranslatedTag } from '~/models/tag.model'
@@ -404,6 +405,14 @@ export default function useAutoTranslate() {
   const translateProjectTabItems = (datas) =>
     translateEntities<TranslatedProjectTabItem>(datas, translateProjectTabItem)
 
+  /*
+  agent
+  */
+
+  const translateAgent = (data) =>
+    translateEntity<TranslatedAgent>(data, ['title', 'description', 'startMessage'])
+  const translateAgents = (datas) => translateEntities<TranslatedAgent>(datas, translateAgent)
+
   return {
     isAutoTranslateActivated,
     getTranslatableField,
@@ -490,5 +499,8 @@ export default function useAutoTranslate() {
     translateProjectTabs,
     translateProjectTabItem,
     translateProjectTabItems,
+    // agent
+    translateAgent,
+    translateAgents,
   }
 }

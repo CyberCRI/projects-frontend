@@ -169,22 +169,23 @@ export default defineLazyEventHandler(() => {
       traceLangchain(transmitedMessages)
       traceLangchain('========== /MESSAGES =======')
 
+      let last_role = 'ai'
       for await (const [mode, chunk] of (await agent.stream(
         {
           messages: transmitedMessages,
           ...customMetadata,
         } as any,
-        { ...config, streamMode: ['messages', 'tools'] }
+        { ...config, streamMode: ['messages', 'tools' /*, 'updates' */] }
       )) as AsyncIterableIterator<[string, any]>) {
         ///
         // if (mode != 'messages')
         //   console.log('XXXXXXXXXXXXXXXXXX', JSON.stringify(mode, null, 2), chunk.constructor.name)
-
+        console.log('MODE', mode)
         if (mode == 'tools') {
           /* HANDLE TOOLS */
 
           let text = ''
-          let is_done = false
+          const is_done = false
           let text_extra = ''
           switch (chunk.event) {
             case 'on_tool_start':
@@ -201,13 +202,13 @@ export default defineLazyEventHandler(() => {
               // const { name, output, toolCallId } = chunk
               text = 'fetching_data'
               text_extra = '✅' // chunk.output
-              is_done = true
+              // is_done = true
               break
             case 'on_tool_error':
               // const { name, error, toolCallId } = chunk
               text = 'fetching_data'
               text_extra = '❌'
-              is_done = true
+              // is_done = true
               break
             default:
               console.error('Unknown tool event', chunk.event)
@@ -225,30 +226,77 @@ export default defineLazyEventHandler(() => {
               is_done,
               conversationId,
             }
+            last_role = role
             respond(output)
           }
         } else if (mode == 'messages') {
           /* HANDLE LLM INFERENCE */
+          const [token, _metadata] = chunk
 
-          const [token, metadata] = chunk
-          if (token.lc_id[token.lc_id.length - 1] != 'AIMessageChunk') continue
+          const tokenClass = token.lc_id?.[token.lc_id.length - 1]
+          /*
+         AIMessageChunk with text The actual AI response
+         AIMessageChunk with tool_call_chunks AI deciding to call a tool (no text)
+         ToolMessageChunkTool result being added to state
+         HumanMessageChunkRare, but possible - skip
+          */
 
-          const content = token.contentBlocks || []
-          const text = content
-            .filter((part) => part.type == 'text')
-            .map((part) => part.text)
-            .join('')
-          const is_done = metadata.status === 'completed'
-          const role = 'ai'
-          const output = {
-            text,
-            role,
-            is_done,
-            conversationId,
+          if (tokenClass !== 'AIMessageChunk') continue
+          const hasTool = token.tool_call_chunks?.length > 0
+
+          if (tokenClass === 'ToolMessageChunkTool') {
+            // tool results being added to state
+            const role = 'meta'
+            const text = 'fetching_data'
+            const text_extra = '✨' //''
+            const output = {
+              text,
+              text_extra,
+              role,
+              is_done: false,
+              conversationId,
+            }
+            last_role = role
+            respond(output)
+          } else if (tokenClass === 'AIMessageChunk') {
+            if (hasTool) {
+              // AI deciding to call
+              const role = 'meta'
+              const text = 'fetching_data' // 'fetching_tools' 'reasoning'
+              const text_extra = '👀' // chunk.input.query || ''
+              const output = {
+                text,
+                text_extra,
+                role,
+                is_done: false,
+                conversationId,
+              }
+              last_role = role
+              respond(output)
+            } else {
+              // The actual AI response
+              const content = token.contentBlocks || []
+              const text = content
+                .filter((part) => part.type == 'text')
+                .map((part) => part.text)
+                .join('')
+              // const is_done = metadata.status === 'completed'
+              const role = 'ai'
+              const output = {
+                text,
+                role,
+                is_done: false,
+                conversationId,
+              }
+              last_role = role
+              respond(output)
+            }
           }
-          respond(output)
         }
       }
+      // This is the authoritative "agent is done" signal
+      // (openai had 'is_done:true' on last chunk but other providers don't)
+      respond({ text: '', role: last_role, is_done: true, conversationId })
     } catch (err) {
       // TODO rethrow interrupt exception when chepointis enabled
       traceLangchain('Stream error:', err)

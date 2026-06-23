@@ -1,3 +1,4 @@
+import formatAgentWithTranslation from '@/server/utils/format-agent-with-translation'
 import agentFindBySlug from '@/server/utils/agent-find-by-slug'
 import { getUser } from '@/server/utils/check-admin-rights.js'
 export default defineLazyEventHandler(() => {
@@ -29,6 +30,7 @@ export default defineLazyEventHandler(() => {
       startMessage: true,
       useProfileData: true,
       isEnabled: true,
+      agentTranslations: true,
     }
 
     const agent = await agentFindBySlug(chatbotPrisma, slug, appApiOrgCode, agentFields)
@@ -59,6 +61,10 @@ export default defineLazyEventHandler(() => {
       orderBy: { lastActiveAt: 'desc' },
     })
 
-    return { agent, lastConversation, allConversations }
+    return {
+      agent: formatAgentWithTranslation(agent, agent.agentTranslations),
+      lastConversation,
+      allConversations,
+    }
   })
 })

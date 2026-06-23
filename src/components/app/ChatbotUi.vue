@@ -54,45 +54,51 @@ const chatStyle = ref({
 })
 
 const conversationId = ref(props.conversationId)
-const conversation = useState('chat-box', () => [])
-const history = ref(props.history)
+
+const liveMessages = ref([]) // new message e.g not in history yet
 
 const chatBox = useTemplateRef('deep-chat')
 
-const CONVERSATION_LIMIT = 50
+// const CONVERSATION_LIMIT = 50
 const addToConversation = (...args) => {
-  conversation.value.push(...args)
+  liveMessages.value.push(...args)
+  // TODO: clamp history + liveMessage
   // clamp to last x messages
-  if (conversation.value.length > CONVERSATION_LIMIT) {
-    conversation.value.splice(0, conversation.value.length - CONVERSATION_LIMIT)
-  }
+  // if (history.value.length > CONVERSATION_LIMIT) {
+  //   history.value.splice(0, conversation.value.length - CONVERSATION_LIMIT)
+  // }
 }
 
-const welcoming = []
-if (props.startMessage) {
-  const msg = {
-    role: 'assistant',
-    text: props.startMessage,
-  }
-  welcoming.push(msg)
-  addToConversation(welcoming[0])
+// NOT reactive on purpose : only recompute when deep-chat is rerender
+// to circumvent issue with history and new message rendering
+// (and still preserve chat messages when switching lang)
+const conversation = () => {
+  const res = [...props.history, ...liveMessages.value]
+  console.log('conversation()', res)
+  return res
 }
+
+const startMessage = computed(() => ({
+  role: 'assistant',
+  text: props.startMessage,
+}))
+
+const welcoming = computed(() => (props.startMessage ? [startMessage.value] : []))
 
 const conversationStarted = ref(!!props.history?.length)
 // TODO this is a bit hackish/brittle
 if (!conversationStarted.value) {
-  history.value = welcoming
+  liveMessages.value = welcoming.value
 }
 
 const requestInterceptor = (requestDetails) => {
+  // console.log('requestInterceptor', requestDetails)
+  const requestMessage = [requestDetails.body.messages[requestDetails.body.messages.length - 1]]
   const allMessages = conversationStarted.value
-    ? // Server maintains full history via LangGraph checkpointer — only send the new message
-      [requestDetails.body.messages[requestDetails.body.messages.length - 1]]
-    : // but initial request has also context messages
-      [...props.contextMessages, ...welcoming, ...requestDetails.body.messages]
-  // console.log('allMessages', allMessages)
+    ? requestMessage
+    : [...props.contextMessages, ...welcoming.value, ...requestMessage] // initial request has also context messages
   conversationStarted.value = true
-  addToConversation(...allMessages)
+  addToConversation(...requestMessage)
   requestDetails.body.messages = allMessages
   requestDetails.body.conversationId = conversationId.value
   analytics.chatbot.send(requestDetails.body)
@@ -141,9 +147,10 @@ const spinner = `
   </svg>`
 
 const spinnerMD = `![](data:image/svg+xml;base64,${btoa(spinner)}) `
-
 // to handle 'meta' messages get replaced by next message
 let replacedByNext = false
+// last token contain whole message ONLY with opeanai, let's manually fix this
+let responseMessageAcc = ''
 const responseInterceptor = (response) => {
   // console.log('ChatBotDrawer responseInterceptor', response)
   if (response.role === 'meta') {
@@ -162,20 +169,28 @@ const responseInterceptor = (response) => {
     }
   }
   if (!IS_STREAMED.value || response.is_done) {
-    // only add complete response, not individual chunks
+    // only add complete response, not individual chunks, to live messages
+    const text = IS_STREAMED.value ? response.done_text || responseMessageAcc : response.text
     addToConversation({
       role: 'assistant',
-      text: IS_STREAMED.value ? response.done_text : response.text,
+      text,
     })
-    analytics.chatbot.receive(response)
+    analytics.chatbot.receive({ ...response, text })
+    // reset accumulator
+    responseMessageAcc = ''
   }
   // console.log('Updated conversation', response.conversationId)
   conversationId.value = response.conversationId
-  const overwrite = replacedByNext
+
+  // reset accumulator is last message is replaceable (tool message), else accumulate tokens
+  if (replacedByNext) responseMessageAcc = ''
+  else responseMessageAcc += response.text
+
   // no way to know when a true message begin, so just assume next is not overwrite
-  // BUT if first message is empty text it mess up replaceByNext...
+  // BUT if first message is empty text, it mess up replaceByNext...
+  const overwrite = replacedByNext
   if (response.text) replacedByNext = false
-  // console.log('meta overwrite', replacedByNext)
+
   return { ...response, overwrite }
 }
 
@@ -187,45 +202,6 @@ const htmlWrappers = ref({
       <span class="html-wrapper"></span>
     </div>`,
 })
-
-// const runtimeConfig = useRuntimeConfig()
-// const chatExemples = (runtimeConfig.public.appChatbotExemples || '')
-//   .split('§')
-//   .filter((s) => !!s && s.trim().length)
-
-// const setExemples = () => shuffle(chatExemples).slice(0, 3)
-
-// const suggestButtons = ref(setExemples())
-
-/*
-function placeCaretAtEnd(el) {
-  // https://stackoverflow.com/questions/4233265/contenteditable-set-caret-at-the-end-of-the-text-cross-browser
-  el.focus()
-  if (typeof window.getSelection != 'undefined' && typeof document.createRange != 'undefined') {
-    const range = document.createRange()
-    range.selectNodeContents(el)
-    range.collapse(false)
-    const sel = window.getSelection()
-    sel.removeAllRanges()
-    sel.addRange(range)
-  } else if (typeof document.body.createTextRange != 'undefined') {
-    const textRange = document.body.createTextRange()
-    textRange.moveToElementText(el)
-    textRange.collapse(false)
-    textRange.select()
-  }
-}*/
-
-/*
-const onSuggestButtonClick = (buttonText) => {
-  if (chatBox.value) {
-    console.log(chatBox.value.textInput)
-    const inputBox = chatBox.value.shadowRoot.querySelector('#text-input')
-    inputBox.innerText = buttonText
-    placeCaretAtEnd(inputBox)
-  }
-}
-*/
 
 const textInputOptions = computed(() => ({
   placeholder: { text: placeholderText.value },
@@ -347,13 +323,15 @@ if (window && !window.handleChatClick) {
 
 const remarkableOptions = ref({ linkify: true, linkTarget: '_blank' })
 
-const resetChat = () => {
+const resetConversation = () => {
   conversationStarted.value = false
-  conversation.value = []
+  liveMessages.value = welcoming.value
+}
+
+const resetChat = () => {
+  resetConversation()
   conversationId.value = null
-  history.value = welcoming
   emit('conversation-restarted', {})
-  // addToConversation(welcoming[0])
 }
 
 function scrollToBottom() {
@@ -376,7 +354,6 @@ watch(
   (neo, old) => {
     if (neo != old) {
       // conversation was reset
-      // suggestButtons.value = setExemples()
       emit('start-conversation')
     }
   }
@@ -396,9 +373,6 @@ watch(
       neo.onMessage = onMessage
       neo.onComponentRender = onComponentRender
     }
-    // ??
-    // console.log('chatbox change', JSON.parse(JSON.stringify(conversation.value)))
-    // history.value = JSON.parse(JSON.stringify(conversation.value))
   }
 )
 
@@ -417,6 +391,20 @@ const confirmRestart = () => {
 const cancelRestart = () => {
   showConfirmRestart.value = false
 }
+
+const chatMessages = ref(conversation())
+const { locale } = useNuxtI18n()
+watch(
+  () => locale.value,
+  (neo, old) => {
+    if (neo != old) {
+      if (!conversationStarted.value) {
+        liveMessages.value = welcoming.value
+      }
+      chatMessages.value = conversation()
+    }
+  }
+)
 
 const isExporting = ref(false)
 async function exportConversation() {
@@ -460,7 +448,7 @@ async function exportConversation() {
   <deep-chat
     ref="deep-chat"
     :textInput="textInputOptions"
-    :history="history"
+    :history="chatMessages"
     :style="chatStyle"
     :connect="connectOptions"
     :avatars="true"
@@ -506,23 +494,11 @@ async function exportConversation() {
       class="action-button"
       secondary
       btn-icon="RestartLeft"
+      :disabled="!conversationStarted"
       :label="$t('chatbot.restart')"
       @click.prevent="showConfirmRestart = true"
     />
   </div>
-  <!--div v-if="suggestButtons?.length && conversationStarted">
-    <a
-      v-for="button in suggestButtons"
-      :key="button"
-      class="prompt-suggestion action-button"
-      href="#"
-      @click.prevent="onSuggestButtonClick(button)"
-    >
-      <IconImage class="icon" name="ChatBubble" />
-      {{ button }}
-    </a>
-  </div -->
-
   <ConfirmModal
     v-if="showConfirmRestart"
     :title="$t('agents.confirm-restart-title')"

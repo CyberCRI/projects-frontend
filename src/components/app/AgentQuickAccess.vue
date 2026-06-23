@@ -4,6 +4,10 @@ type SpecialAgent = {
   slug: string
   title: string
   description: string
+  $t: {
+    title: string
+    description: string
+  }
 }
 withDefaults(
   defineProps<{
@@ -22,8 +26,8 @@ withDefaults(
       <li v-for="specialAgent in agentList" :key="specialAgent.id">
         <LinkButton
           btn-icon="ArrowUpRightFromSquare"
-          :label="specialAgent.title"
-          :title="specialAgent.description?.replace(/<[^>]*?>/gim, '')"
+          :label="specialAgent.$t.title"
+          :title="specialAgent.$t.description?.replace(/<[^>]*?>/gim, '')"
           :to="{ name: 'AgentPage', params: { agentSlug: specialAgent.slug } }"
         />
       </li>
