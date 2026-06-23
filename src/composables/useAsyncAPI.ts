@@ -139,7 +139,6 @@ export default function useAsyncAPI<ResDataT, DataT = ResDataT, Result = undefin
       checkArgs,
       (newValue) => {
         if (newValue) {
-          console.log('refresh')
           results.refresh()
         }
       },
