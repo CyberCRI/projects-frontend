@@ -39,7 +39,6 @@ const { stateModals, openModals, closeModals, closeAllModals } = useModals({
 
 const userStore = useUsersStore()
 
-const recapchaKey = ref(useUniqueId())
 const asyncing = ref(false)
 const toaster = useToasterStore()
 
@@ -68,10 +67,7 @@ const { form, errors, isValid, cleanedData, reset } = useAnnouncementReplyForm({
 
 watch(
   () => [props.isOpened, props.announcement, props.project],
-  () => {
-    reset(defaultLocalForm())
-    recapchaKey.value = useUniqueId()
-  },
+  () => reset(defaultLocalForm()),
   { immediate: true, deep: true }
 )
 
@@ -153,7 +149,7 @@ const onApplyAnnouncement = () => {
         />
       </Field>
 
-      <Recaptcha v-model="form.recaptcha" :recapcha-key="recapchaKey" />
+      <Recaptcha v-model="form.recaptcha" />
     </div>
 
     <!-- drawer/modal -->
