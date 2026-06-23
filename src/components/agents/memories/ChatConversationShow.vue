@@ -181,6 +181,7 @@ summary {
   color: $primary-dark;
   background-color: $primary-lighter;
   font-size: 1.16em;
+
   em {
     font-size: 0.8em;
     color: #666;
