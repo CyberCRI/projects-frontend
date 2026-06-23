@@ -96,11 +96,11 @@ const clear = () => {
   closeAllModals()
 }
 
-const fullRefresh = () => {
-  refreshProjectData(props.project)
-  refresh()
-  clear()
-}
+const fullRefresh = () =>
+  refreshProjectData(props.project).then(() => {
+    refresh()
+    clear()
+  })
 
 const onAdd = () => {
   selectedGroup.value = null

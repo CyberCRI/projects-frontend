@@ -63,11 +63,11 @@ const cancel = () => {
   closeAllModals()
 }
 
-const fullRefresh = () => {
-  refreshProjectData(props.project)
-  refresh()
-  cancel()
-}
+const fullRefresh = () =>
+  refreshProjectData(props.project).then(() => {
+    refresh()
+    cancel()
+  })
 
 const selectedFile = ref<TranslatedAttachmentFile>()
 const onEdit = (item) => {

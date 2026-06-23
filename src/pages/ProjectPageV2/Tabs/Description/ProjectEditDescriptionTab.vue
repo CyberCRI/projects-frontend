@@ -44,8 +44,8 @@ const defaultLocalForm = () => {
 
   newForm.description =
     getFirstTextNotEmpty([
-      props.project.$t.description,
-      props.project.template?.$t.project_description,
+      props.project.description,
+      props.project.template?.project_description,
     ]) || newForm.description
   return newForm
 }
@@ -69,6 +69,7 @@ const isFormEqual = useBlockNavigation(() => {
     ? 1
     : editorRef.value?.editor?.storage?.collaborationCursor?.users?.length || 0
 
+  console.log(numberEditor, form.value, defaultLocalForm())
   // if form is same or your are in multiple user editor
   return isEqual(form.value, defaultLocalForm()) || numberEditor !== 1
 })
@@ -106,8 +107,9 @@ const onSubmit = () => {
     .then(() => {
       // TODO notify + analytics
       toaster.pushSuccess(t('toasts.description-update.success'))
-      refreshProjectData(props.project)
-      redirect()
+      refreshProjectData(props.project).then(() => {
+        redirect()
+      })
     })
     .catch(() => toaster.pushSuccess(t('toasts.description-update.error')))
     .then(() => (asyncing.value = false))
