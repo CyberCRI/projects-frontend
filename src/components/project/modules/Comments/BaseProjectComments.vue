@@ -46,8 +46,7 @@ const {
 const throttleRefresh = throttle(() => refresh(), 100)
 
 const throttlefullRefresh = throttle(() => {
-  refreshProjectData(props.project)
-  throttleRefresh()
+  refreshProjectData(props.project).then(() => throttleRefresh())
 }, 100)
 </script>
 

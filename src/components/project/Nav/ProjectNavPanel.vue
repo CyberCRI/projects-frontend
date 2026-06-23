@@ -247,13 +247,15 @@ const onDuplicate = () => {
       })
     })
     .then((project) => {
-      // redirect to new projects
-      toaster.pushSuccess(t('toasts.project-duplication.success'))
-      router.push({
-        name: 'ProjectSnapshot',
-        params: {
-          slugOrId: project.slug || project.id,
-        },
+      return usersStore.refreshUser().then(() => {
+        // redirect to new projects
+        toaster.pushSuccess(t('toasts.project-duplication.success'))
+        router.push({
+          name: 'ProjectSnapshot',
+          params: {
+            slugOrId: project.slug || project.id,
+          },
+        })
       })
     })
     .catch(() => toaster.pushError(t('toasts.project-duplication.error')))

@@ -14,12 +14,20 @@ import { pick } from 'es-toolkit'
 
 const { t, locale } = useNuxtI18n()
 const router = useRouter()
+const route = useRoute()
 const loading = ref(false)
 const organizationCode = useOrganizationCode()
 const usersStore = useUsersStore()
 const { onboardingTrap } = useOnboardingStatus()
 
-const { form, isValid } = useProjectTemplatesForm()
+const { form, isValid } = useProjectTemplatesForm({
+  default: {
+    // pre add category from queryparams
+    categorie: route.query.category
+      ? { id: parseInt(route.query.category.toString(), 10), templates: [] }
+      : null,
+  },
+})
 
 const toaster = useToasterStore()
 

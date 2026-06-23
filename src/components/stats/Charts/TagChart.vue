@@ -21,7 +21,6 @@ const props = withDefaults(
 )
 
 const tagTexts = useTagTexts()
-const chartData = ref(undefined)
 const options = ref({
   maintainAspectRatio: true,
   responsive: true,
@@ -40,31 +39,25 @@ const options = ref({
   },
 })
 
-const populateDataChart = () => {
-  if (props.stats.length) {
-    const tagLabels = []
-    const tagData = []
-    const tagColors = []
-    props.stats.forEach((tag, i) => {
-      tagLabels.push(tagTexts.title(tag))
-      tagData.push(tag.project_count)
-      tagColors.push(CHART_COLORS[i % CHART_COLORS.length])
-    })
+const chartData = computed(() => {
+  const tagLabels = []
+  const tagData = []
+  const tagColors = []
+  props.stats.forEach((tag, i) => {
+    tagLabels.push(tagTexts.title(tag))
+    tagData.push(tag.project_count)
+    tagColors.push(CHART_COLORS[i % CHART_COLORS.length])
+  })
 
-    chartData.value = {
-      datasets: [
-        {
-          data: tagData,
-          backgroundColor: tagColors,
-        },
-      ],
-      labels: tagLabels,
-    }
+  return {
+    datasets: [
+      {
+        data: tagData,
+        backgroundColor: tagColors,
+      },
+    ],
+    labels: tagLabels,
   }
-}
-
-onMounted(() => {
-  populateDataChart()
 })
 </script>
 

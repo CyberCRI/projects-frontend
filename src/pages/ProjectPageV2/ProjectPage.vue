@@ -21,6 +21,7 @@ const {
   status,
   data: project,
   error,
+  isLoading,
 } = getProject(organizationCode, projectIdOrSlug, {
   default: projectSkeleton,
 })
@@ -43,6 +44,7 @@ const editable = computed(() => isEditing.value && canEditProject.value)
 const propsTab = computed(() => ({
   editable: editable.value,
   project: project.value,
+  loading: isLoading.value,
 }))
 </script>
 

@@ -5,7 +5,7 @@ export const refreshProjectData = <T extends ProjectModel | TranslatedProject>(p
 
   const organizationCode = useOrganizationCode()
 
-  refreshNuxtData([
+  return refreshNuxtData([
     `${organizationCode}::project::${project.id}`,
     `${organizationCode}::project::${project.slug}`,
     `${organizationCode}::project::${route.params?.slugOrId}`,
