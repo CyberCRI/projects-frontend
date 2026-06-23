@@ -95,8 +95,9 @@ const defaultLocalForm = () => {
 
   newForm.content =
     getFirstTextNotEmpty([
-      props.project.template?.$t.comment_content,
       props.originalComment?.content,
+      props.project.template?.$t?.comment_content,
+      props.project.template?.comment_content,
     ]) || newForm.content
 
   return newForm
