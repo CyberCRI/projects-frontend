@@ -51,15 +51,15 @@ const defaultLocalForm = () => {
   if (project) {
     newForm.title =
       getFirstTextNotEmpty([
-        project.$t?.title,
         project.title,
-        project.template?.$t.project_title,
+        project.template?.$t?.project_title,
+        project.template?.project_title,
       ]) || newForm.title
     newForm.purpose =
       getFirstTextNotEmpty([
-        project.$t?.purpose,
         project.purpose,
-        project.template?.$t.project_purpose,
+        project.template?.$t?.project_purpose,
+        project.template?.project_purpose,
       ]) || newForm.purpose
     newForm.imageSizes = pictureApiToImageSizes(project.header_image) || newForm.imageSizes
     newForm.file = project.header_image || newForm.file

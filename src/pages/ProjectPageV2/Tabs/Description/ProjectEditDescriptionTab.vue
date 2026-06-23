@@ -47,6 +47,7 @@ const defaultLocalForm = () => {
   newForm.description =
     getFirstTextNotEmpty([
       props.project.description,
+      props.project.template?.$t?.project_description,
       props.project.template?.project_description,
     ]) || newForm.description
   return newForm

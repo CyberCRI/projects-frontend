@@ -585,7 +585,8 @@
     "filter": "filter | filtrid",
     "empty": "Siin pole midagi...",
     "file": "faili | failid",
-    "image": "pilt"
+    "image": "pilt",
+    "select-placeholder": "Valige..."
   },
   "complete-profile": {
     "bio": {
@@ -3274,10 +3275,6 @@
       "label": "Kirjastaja | Kirjastus",
       "help": ""
     },
-    "none": {
-      "label": "",
-      "help": ""
-    },
     "label": "Roll | Rollid",
     "edit": "Modifier les rôles",
     "select": "Õiguste valimine",
@@ -3285,6 +3282,10 @@
     "viewers": {
       "label": "Vaataja | Vaatajad",
       "help": "Vaataja: tal ei ole redigeerimisõigusi."
+    },
+    "none": {
+      "label": "Aucuni",
+      "help": "Kasuta õigust."
     }
   },
   "prompts": {

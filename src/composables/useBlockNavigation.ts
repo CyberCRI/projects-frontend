@@ -24,7 +24,12 @@ export const useBlockNavigation = (func: () => boolean): ComputedRef<boolean> =>
     })
   )
 
-  onClientMounted(() => (mounted.value = true))
+  onUnmounted(() => {
+    if (!isEqual.value) {
+      globalStore.hasUnsavedEdit = false
+    }
+  })
 
+  onClientMounted(() => (mounted.value = true))
   return isEqual
 }

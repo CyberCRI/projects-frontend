@@ -55,13 +55,13 @@ const defaultLocalForm = () => {
 
   // set default content from template
   newForm.title =
-    getFirstTextNotEmpty([blog?.title, template?.$t.blogentry_title, template?.blogentry_title]) ||
+    getFirstTextNotEmpty([blog?.title, template?.$t?.blogentry_title, template?.blogentry_title]) ||
     newForm.title
   newForm.content =
     getFirstTextNotEmpty([
       blog?.content,
-      template?.$t.blogentry_content,
-      template?.blogentry_title,
+      template?.$t?.blogentry_content,
+      template?.blogentry_content,
     ]) || newForm.content
   return newForm
 }

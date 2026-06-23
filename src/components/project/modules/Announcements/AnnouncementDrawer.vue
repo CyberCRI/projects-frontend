@@ -45,13 +45,10 @@ const defaultLocalForm = () => {
 
   if (props.announcement) {
     newForm.id = props.announcement.id
-    newForm.title =
-      getFirstTextNotEmpty([props.announcement?.$t.title, props.announcement?.title]) ||
-      newForm.title
+    newForm.title = getFirstTextNotEmpty([props.announcement?.title]) || newForm.title
 
     newForm.description =
-      getFirstTextNotEmpty([props.announcement?.$t.description, props.announcement?.description]) ||
-      newForm.description
+      getFirstTextNotEmpty([props.announcement?.description]) || newForm.description
 
     newForm.deadline = props.announcement.deadline || props.announcement.deadline
     newForm.type = props.announcement.type || newForm.type
@@ -62,7 +59,9 @@ const defaultLocalForm = () => {
   return newForm
 }
 
-const { isValid, errors, form, reset } = useAnnouncementForm({ lazy: true })
+const { isValid, errors, form, reset } = useAnnouncementForm({
+  default: defaultLocalForm(),
+})
 const { stateModals, closeModals, openModals } = useModals({ saveChange: false })
 
 const asyncing = ref(false)

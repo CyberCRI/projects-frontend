@@ -52,6 +52,7 @@
       >
         {{ !stateModals.showMore ? $t('common.see-more') : $t('common.see-less') }}
       </LpiButton>
+      <div v-else />
 
       <LpiButton
         v-if="showApplyAction && !outdated"

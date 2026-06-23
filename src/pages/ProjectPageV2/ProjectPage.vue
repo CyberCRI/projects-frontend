@@ -5,6 +5,7 @@ import { useProjectTabs } from '~/composables/project/useProjectTabs'
 import { projectSkeleton } from '@/skeletons/project.skeletons'
 import type { ProjectSlugOrId } from '@/models/project.model'
 import { getProject } from '@/api/v2/project.service'
+import useProjectsStore from '~/stores/useProjects'
 
 const route = useRoute()
 
@@ -46,6 +47,18 @@ const propsTab = computed(() => ({
   project: project.value,
   loading: isLoading.value,
 }))
+
+// TODO rework this
+// this is only for permission project
+const projectStore = useProjectsStore()
+watchEffect(() => {
+  if (project.value.id) {
+    projectStore.project = project.value
+  }
+})
+onUnmounted(() => {
+  projectStore.project = null
+})
 </script>
 
 <template>
