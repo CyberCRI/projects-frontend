@@ -10,7 +10,9 @@ import useAPI from '~/composables/useAPI'
 import { useRuntimeConfig } from '#imports'
 
 // TODO fix this in uxt sever side (windows is undefined)
-const DASHBOARD_URL = `${window?.location?.protocol}//${window?.location?.host}/dashboard`
+const DASHBOARD_URL = import.meta.client
+  ? `${window?.location?.protocol}//${window?.location?.host}/dashboard`
+  : '/dashboard'
 
 /**
  *  The Authorization Code Flow with Proof Key for Code Exchange is described here :
