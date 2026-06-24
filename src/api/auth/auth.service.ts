@@ -9,7 +9,10 @@ import useAPI from '~/composables/useAPI'
 
 import { useRuntimeConfig } from '#imports'
 
-const dashboardUrl = () => `${window?.location?.protocol}//${window?.location?.host}/dashboard`
+// TODO fix this in uxt sever side (windows is undefined)
+const DASHBOARD_URL = import.meta.client
+  ? `${window?.location?.protocol}//${window?.location?.host}/dashboard`
+  : '/dashboard'
 
 /**
  *  The Authorization Code Flow with Proof Key for Code Exchange is described here :
@@ -87,7 +90,7 @@ function getLogoutRedirectUri() {
 
   // redirect to home after logout if we are on 404 page
   if (currentRoute && currentRoute.value.name == 'page404') {
-    redirectUri = dashboardUrl()
+    redirectUri = DASHBOARD_URL
   }
 
   // redirect to dashboard if we are on a page requiring auth to avoid a 404
@@ -98,7 +101,7 @@ function getLogoutRedirectUri() {
       (route) => route.meta && (route.meta.requiresAuth || route.meta.requiresAdmin)
     )
   ) {
-    redirectUri = dashboardUrl()
+    redirectUri = DASHBOARD_URL
   }
 
   // redirect to dashboard if we are on a non-public project to avoid a 404
@@ -109,7 +112,7 @@ function getLogoutRedirectUri() {
   ) {
     const project = projectsStore.project
     if (!project || project.publication_status !== 'public') {
-      redirectUri = dashboardUrl()
+      redirectUri = DASHBOARD_URL
     }
   }
   return redirectUri

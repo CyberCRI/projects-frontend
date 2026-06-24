@@ -1910,8 +1910,8 @@
       "help": ""
     },
     "none": {
-      "label": "",
-      "help": ""
+      "label": "Aucun",
+      "help": "User a no right."
     },
     "help": "Information about roles.",
     "label": "Role | Roles",

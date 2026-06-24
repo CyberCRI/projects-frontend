@@ -1,7 +1,6 @@
 <template>
   <NuxtLink :to="target" class="resource-count shadow-box skeletons-background">
     <div class="icon-ctn">
-      {{ isFile }}
       <div v-if="isFile" class="resource-type">
         <IconImage name="Archive" />
         <span>{{ $t('file.attachment', count) }}</span>

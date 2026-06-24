@@ -65,10 +65,7 @@ const cancel = () => {
   asyncing.value = false
 }
 
-const onReload = () => {
-  refreshProjectData(props.project)
-  refresh()
-}
+const onReload = () => refreshProjectData(props.project).then(() => refresh())
 
 const onDelete = (review: TranslatedReview) => {
   selectedReview.value = review

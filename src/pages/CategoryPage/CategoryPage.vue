@@ -152,12 +152,10 @@ watchEffect(() => {
           btn-icon="Plus"
           secondary
           data-test="create-project-from-category"
-          @click="
-            $router.push({
-              name: 'createProject',
-              query: { category: category.id },
-            })
-          "
+          :to="{
+            name: 'createProject',
+            query: { category: category.id },
+          }"
         />
       </div>
       <ClientOnly>

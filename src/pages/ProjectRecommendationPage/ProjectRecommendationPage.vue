@@ -25,15 +25,15 @@ useLpiHead2({
     </h1>
 
     <FetchLoader :status="status" only-error skeleton>
-      <div class="list-users">
+      <div class="list-projects">
         <ProjectCard
           v-for="project in data"
           :key="project.id"
           :project="project"
           :to-link="{
-            name: 'ProfileOtherUser',
+            name: 'ProjectSnapshot',
             params: {
-              userId: project.slug || project.id,
+              slugOrId: project.slug || project.id,
             },
           }"
         />
@@ -46,7 +46,7 @@ useLpiHead2({
 </template>
 
 <style lang="scss" scoped>
-.list-users {
+.list-projects {
   display: flex;
   gap: 0.5rem;
   justify-content: space-between;

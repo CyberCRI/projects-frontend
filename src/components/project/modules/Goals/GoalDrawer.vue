@@ -50,9 +50,15 @@ const defaultLocalForm = () => {
 
   newForm.project_id = props.project.id
 
-  newForm.title = getFirstTextNotEmpty([goal?.title, template?.goal_title]) || newForm.title
+  newForm.title =
+    getFirstTextNotEmpty([goal?.title, template?.$t?.goal_title, template?.goal_title]) ||
+    newForm.title
   newForm.description =
-    getFirstTextNotEmpty([goal?.description, template?.goal_description]) || newForm.description
+    getFirstTextNotEmpty([
+      goal?.description,
+      template?.$t?.goal_description,
+      template?.goal_description,
+    ]) || newForm.description
 
   return newForm
 }

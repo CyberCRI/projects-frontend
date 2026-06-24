@@ -122,6 +122,7 @@ refresh()
               <span v-else>(Result)</span>
             </template>
           </strong>
+          <em>{{ prettyDate(message.createdAt) }}</em>
         </summary>
         <div class="message-content">
           <pre v-if="message.role == 'tool' && !message.toolCallId?.startsWith('retriever_')">
@@ -174,9 +175,17 @@ refresh()
 }
 
 summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
   color: $primary-dark;
   background-color: $primary-lighter;
   font-size: 1.16em;
+
+  em {
+    font-size: 0.8em;
+    color: #666;
+  }
 }
 
 .message-content {

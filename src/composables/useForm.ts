@@ -1,5 +1,5 @@
 import type { ErrorObject, useVuelidate } from '@vuelidate/core'
-import { difference, isNil } from 'es-toolkit'
+import { difference, isEqual, isNil } from 'es-toolkit'
 import useValidate from '@vuelidate/core'
 
 export type OptionsForm<T, CleanResult> = {
@@ -29,12 +29,12 @@ const differencesObjects = (obj: any, obj2: any): string[] => {
   const diff = difference(key, key2)
 
   key.forEach((k) => {
-    if (obj[k] !== obj2[k]) {
+    if (!isEqual(obj[k], obj2[k])) {
       diff.push(k)
     }
   })
   key2.forEach((k) => {
-    if (obj[k] !== obj2[k]) {
+    if (!isEqual(obj[k], obj2[k])) {
       diff.push(k)
     }
   })
@@ -69,7 +69,7 @@ const useForm = <T extends object, CleanResult = T>(
   })
   const isValid = computed(() => !v$.value.$invalid)
 
-  const lazy = isNil(options.lazy) ? true : !options.lazy
+  const lazy = isNil(options.lazy) ? true : options.lazy
   watch(
     () => ({ ...unref(form) }),
     (newForm, oldForm) => {
@@ -81,7 +81,7 @@ const useForm = <T extends object, CleanResult = T>(
         }
       })
     },
-    { deep: true, immediate: lazy }
+    { deep: true, immediate: !lazy }
   )
 
   const errors = computed(() => {

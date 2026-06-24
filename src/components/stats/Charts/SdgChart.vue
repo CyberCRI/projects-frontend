@@ -20,7 +20,6 @@ const props = withDefaults(
 
 const { t } = useNuxtI18n()
 
-const formattedData = ref(undefined)
 const options = ref({
   responsive: true,
   maintainAspectRatio: true,
@@ -41,7 +40,7 @@ const options = ref({
   },
 })
 
-const populateDataChart = () => {
+const formattedData = computed(() => {
   const sdgsLabels = []
   const sdgsColors = []
   SDGS.forEach((sdg, i) => {
@@ -51,7 +50,7 @@ const populateDataChart = () => {
 
   const sdgsData = [...props.stats].sort((a, b) => a.sdg - b.sdg).map((item) => item.project_count)
 
-  formattedData.value = {
+  return {
     datasets: [
       {
         data: sdgsData,
@@ -60,9 +59,7 @@ const populateDataChart = () => {
     ],
     labels: sdgsLabels,
   }
-}
-
-onMounted(() => populateDataChart())
+})
 </script>
 
 <style lang="scss" scoped>

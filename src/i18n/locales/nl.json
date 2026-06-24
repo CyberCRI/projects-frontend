@@ -3275,10 +3275,6 @@
       "label": "Uitgever | Uitgevers",
       "help": ""
     },
-    "none": {
-      "label": "",
-      "help": ""
-    },
     "label": "Rol | Rol",
     "edit": "Modifier les roles",
     "select": "De rechten selecteren",
@@ -3286,6 +3282,10 @@
     "viewers": {
       "label": "Viewer | Viewers",
       "help": "Kijker: Hij heeft geen bewerkingsrechten."
+    },
+    "none": {
+      "label": "Aucun",
+      "help": "Gebruiker geen recht."
     }
   },
   "prompts": {

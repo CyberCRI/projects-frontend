@@ -3275,10 +3275,6 @@
       "label": "Editorial | Editores",
       "help": ""
     },
-    "none": {
-      "label": "",
-      "help": ""
-    },
     "label": "Función | Funciones",
     "edit": "Modifier les rôles",
     "select": "Seleccione los derechos",
@@ -3286,6 +3282,10 @@
     "viewers": {
       "label": "Viewer | Viewers",
       "help": "Viewer: No tiene derechos de edición."
+    },
+    "none": {
+      "label": "Aucun",
+      "help": "Usuario no derecho."
     }
   },
   "prompts": {

@@ -62,11 +62,11 @@ const cancel = () => {
   closeAllModals()
 }
 
-const fullRefresh = () => {
-  refreshProjectData(props.project)
-  refresh()
-  cancel()
-}
+const fullRefresh = () =>
+  refreshProjectData(props.project).then(() => {
+    refresh()
+    cancel()
+  })
 
 const selectedLink = ref()
 const onEdit = (item) => {

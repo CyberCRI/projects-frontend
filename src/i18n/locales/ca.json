@@ -3275,10 +3275,6 @@
       "label": "Editor | Editors",
       "help": ""
     },
-    "none": {
-      "label": "",
-      "help": ""
-    },
     "label": "Funció | Rols",
     "edit": "Modificadors de rôles",
     "select": "Seleccioneu els drets",
@@ -3286,6 +3282,10 @@
     "viewers": {
       "label": "Visor | Visors",
       "help": "Visor: no té drets d' edició."
+    },
+    "none": {
+      "label": "Aucunstar name",
+      "help": "Usuari no correcte."
     }
   },
   "prompts": {

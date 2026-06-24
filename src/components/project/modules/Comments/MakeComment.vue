@@ -95,8 +95,9 @@ const defaultLocalForm = () => {
 
   newForm.content =
     getFirstTextNotEmpty([
-      props.project.template?.$t.comment_content,
       props.originalComment?.content,
+      props.project.template?.$t?.comment_content,
+      props.project.template?.comment_content,
     ]) || newForm.content
 
   return newForm
@@ -104,7 +105,7 @@ const defaultLocalForm = () => {
 
 const asyncing = ref(false)
 
-const { form, isValid, errors, reset } = useProjectMessageForm({ lazy: true })
+const { form, isValid, errors, reset } = useProjectMessageForm({ default: defaultLocalForm() })
 watch(
   () => [props.project, props.originalComment, props.repliedComment],
   () => reset(defaultLocalForm()),

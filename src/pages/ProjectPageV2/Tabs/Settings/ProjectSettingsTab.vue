@@ -243,12 +243,13 @@ const onQuitProject = () => {
         },
       })
       toaster.pushSuccess(t('toasts.project-quit.success'))
-      if (props.project.publication_status == 'private') {
-        router.push({ name: 'HomeRoot' })
-      } else {
-        redirect()
-      }
-      refresh()
+      refresh().then(() => {
+        if (props.project.publication_status == 'private') {
+          router.push({ name: 'HomeRoot' })
+        } else {
+          redirect()
+        }
+      })
     })
     .catch(() => toaster.pushError(t('toasts.project-quit.error')))
     .finally(() => (asyncing.value = false))

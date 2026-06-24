@@ -26,8 +26,9 @@ const categoryDropdownRef = useTemplateRef('categoryDropdown')
 
 // change form categories with store categories + templaes
 watchEffect(() => {
-  if (form.value.categorie) {
-    form.value.categorie = projectCategoriesStore.all.find((el) => {
+  const category = projectCategoriesStore.all
+  if (form.value.categorie && category.length) {
+    form.value.categorie = category.find((el) => {
       return form.value.categorie.id == el.id
     })
   }

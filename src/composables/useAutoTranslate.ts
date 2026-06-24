@@ -61,10 +61,13 @@ export default function useAutoTranslate() {
       const _field = unref(field)
       const _defaultValue = unref(defaultValue)
       if (!_entity || !_field) return _defaultValue
+      const isNotTranslated = !!_entity[`${_field}_detected_language`]
+      const isDetectectedLanguage = locale.value == _entity[`${_field}_detected_language`]
       //    TODO: temp fix for multilingual edits
       //    display translated text even if we are on original language
       // if (useOriginalValue(_entity, _field)) return _entity[_field] || _defaultValue
-      if (useOriginalValue()) return _entity[_field] || _defaultValue
+      if (useOriginalValue() || isDetectectedLanguage || isNotTranslated)
+        return _entity[_field] || _defaultValue
       return _entity[`${_field}_${locale.value}`] || _entity[_field] || _defaultValue
     })
 
@@ -76,10 +79,14 @@ export default function useAutoTranslate() {
       for (const field of fields) {
         const _field = unref(field)
         if (!_entity || !_field) continue
+
+        const isNotTranslated = !!_entity[`${_field}_detected_language`]
+        const isDetectectedLanguage = locale.value == _entity[`${_field}_detected_language`]
         //    TODO: temp fix for multilingual edits
         //    display translated text even if we are on original language
         // else if (useOriginalValue(_entity, _field)) res[_field] = _entity[_field] || _defaultValue
-        else if (useOriginalValue()) res[_field] = _entity[_field] || _defaultValue
+        if (useOriginalValue() || isDetectectedLanguage || isNotTranslated)
+          res[_field] = _entity[_field] || _defaultValue
         else res[_field] = _entity[`${_field}_${locale.value}`] || _entity[_field] || _defaultValue
       }
       return res

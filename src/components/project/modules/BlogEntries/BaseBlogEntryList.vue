@@ -68,10 +68,7 @@ const cancel = () => {
   closeModals('delete', 'edit')
 }
 
-const refreshData = () => {
-  refreshProjectData(props.project)
-  refresh()
-}
+const refreshData = () => refreshProjectData(props.project).then(() => refresh())
 
 const onDeleteConfirm = () => {
   asyncing.value = true

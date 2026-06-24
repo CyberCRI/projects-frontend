@@ -14,9 +14,11 @@ const props = withDefaults(
     project: TranslatedProject
     // eslint-disable-next-line vue/no-unused-properties
     editable?: boolean
+    loading?: boolean
   }>(),
   {
     editable: true,
+    loading: false,
   }
 )
 
@@ -44,8 +46,9 @@ const defaultLocalForm = () => {
 
   newForm.description =
     getFirstTextNotEmpty([
-      props.project.$t.description,
-      props.project.template?.$t.project_description,
+      props.project.description,
+      props.project.template?.$t?.project_description,
+      props.project.template?.project_description,
     ]) || newForm.description
   return newForm
 }
@@ -106,8 +109,9 @@ const onSubmit = () => {
     .then(() => {
       // TODO notify + analytics
       toaster.pushSuccess(t('toasts.description-update.success'))
-      refreshProjectData(props.project)
-      redirect()
+      refreshProjectData(props.project).then(() => {
+        redirect()
+      })
     })
     .catch(() => toaster.pushSuccess(t('toasts.description-update.error')))
     .then(() => (asyncing.value = false))
@@ -139,6 +143,7 @@ const checkSubmit = () => {
     >
       <ClientOnly>
         <TipTapCollaborativeEditor
+          v-if="!loading"
           ref="tiptapEditor"
           v-model="form.description"
           :room="room"
