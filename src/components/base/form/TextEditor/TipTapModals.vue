@@ -82,8 +82,6 @@ const { stateModals, closeModals, openModals } = useModals({
     @open="openModals('link')"
   />
 
-  <ColorMenuBar v-if="showMenu && mode !== 'none'" :editor="editor" />
-
   <ImageMenuBar v-if="showMenu && mode !== 'none'" :editor="editor" />
 
   <VideoMenuBar v-if="showMenu && mode !== 'none'" :editor="editor" />
