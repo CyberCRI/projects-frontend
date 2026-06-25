@@ -51,18 +51,6 @@ const {
   immediate: false,
 })
 
-// reset and refresh when opened
-watch(
-  () => props.isOpened,
-  () => {
-    if (props.isOpened) {
-      search.value = ''
-      refresh()
-    }
-  },
-  { immediate: true }
-)
-
 const results = computed(() => searchUsers.value.map((searchObj) => searchObj.user))
 </script>
 
@@ -76,6 +64,7 @@ const results = computed(() => searchUsers.value.map((searchObj) => searchObj.us
       :pagination="pagination"
       :results="results"
       :selected="selectedUsers"
+      @search="refresh"
       @close="emit('close')"
       @confirm="emit('submit', $event)"
     >

@@ -56,18 +56,6 @@ const {
     immediate: false,
   }
 )
-
-// reset and refresh when opened
-watch(
-  () => props.isOpened,
-  () => {
-    if (props.isOpened) {
-      search.value = ''
-      refresh()
-    }
-  },
-  { immediate: true }
-)
 </script>
 
 <template>
@@ -80,6 +68,7 @@ watch(
       :pagination="pagination"
       :results="tags"
       :selected="selectedTags"
+      @search="refresh"
       @close="emit('close')"
       @confirm="emit('submit', $event)"
     >
