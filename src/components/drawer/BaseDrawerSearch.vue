@@ -29,6 +29,7 @@ const props = withDefaults(defineProps<DrawerSearchProps<Item>>(), {
 const emit = defineEmits<{
   close: []
   confirm: [Item[]]
+  search: []
 }>()
 
 const search = defineModel<string>('search', { default: '' })
@@ -99,6 +100,21 @@ const labelMaxSelected = computed(() => {
     return ''
   }
   return `(${selectedItems.value.length}/${props.maxSelected})`
+})
+
+// reset search when drawer change state
+watch(
+  () => props.isOpened,
+  () => (search.value = ''),
+  { immediate: true }
+)
+
+// trigger when search change, and if drawer is opened emit event
+watchEffect(() => {
+  void search.value
+  if (props.isOpened) {
+    emit('search')
+  }
 })
 </script>
 
