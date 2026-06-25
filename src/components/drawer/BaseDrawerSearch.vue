@@ -110,12 +110,17 @@ watch(
 )
 
 // trigger when search change, and if drawer is opened emit event
-watchEffect(() => {
-  void search.value
-  if (props.isOpened) {
-    emit('search')
-  }
-})
+watch(
+  () => [search.value, props.isOpened],
+  () => {
+    if (props.isOpened) {
+      // reset page to first if search vlaue changes
+      props.pagination?.first()
+      emit('search')
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <template>
