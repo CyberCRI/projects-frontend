@@ -9,8 +9,8 @@
         :delete-attachment-file="deleteAttachmentFile"
         :permissions="canEditUser"
         :editable="isInEditingMode"
-        @reload-link-resources="refreshLinks"
-        @reload-file-resources="refreshFiles"
+        @reload-link-resources="refresh(refreshLinks)"
+        @reload-file-resources="refresh(refreshFiles)"
         @edit="onEdit"
       />
       <ResourceDrawer
@@ -24,8 +24,8 @@
         :post-attachment-links="postAttachmentLinks"
         :patch-attachment-link="patchAttachmentLink"
         @close="isOpened = false"
-        @reload-link-resources="refreshLinks"
-        @reload-file-resources="refreshFiles"
+        @reload-link-resources="refresh(refreshLinks)"
+        @reload-file-resources="refresh(refreshFiles)"
       />
     </FetchLoader>
   </div>
@@ -51,7 +51,11 @@ import ResourceDrawer from '~/components/resources/ResourceDrawer.vue'
 import ResourcesTab from '~/components/resources/ResourcesTab.vue'
 import FetchLoader from '~/components/base/FetchLoader.vue'
 
-const props = defineProps<{ user: UserModel; isInEditingMode: boolean }>()
+const props = defineProps<{
+  user: UserModel
+  isInEditingMode: boolean
+  onProfileEdited: () => void
+}>()
 const { canEditUser } = usePermissions()
 const { translateFiles, translateLinks } = useAutoTranslate()
 const selectedItem = ref(null)
@@ -75,6 +79,10 @@ const {
 } = getUserAttachmentLink(props.user.id, query)
 const resultsLinks = computed(() => dataLinks.value?.results)
 const LinksTranslated = translateLinks(resultsLinks)
+
+// refresh local links or files + projects (the onProfileEdited)
+const refresh = (refreshFunction: () => Promise<void>) =>
+  refreshFunction().then(() => props.onProfileEdited())
 
 const deleteAttachmentLink = (linkId) => deleteUserAttachmentLink(props.user.id, linkId)
 const deleteAttachmentFile = (fileId) => deleteUserAttachmentFile(props.user.id, fileId)

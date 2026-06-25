@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { PropsDefinitions } from '~/components/base/form/TextEditor/useTipTap'
-import ColorMenuBar from '~/components/base/form/TextEditor/ColorMenuBar.vue'
 import type { ImageModealCreated } from '~/models/image.model.js'
 import EditorModalVideo from './modals/EditorModalVideo.vue'
 import EditorModalImage from './modals/EditorModalImage.vue'
@@ -81,8 +80,6 @@ const { stateModals, closeModals, openModals } = useModals({
     class="editorlinkmenu"
     @open="openModals('link')"
   />
-
-  <ColorMenuBar v-if="showMenu && mode !== 'none'" :editor="editor" />
 
   <ImageMenuBar v-if="showMenu && mode !== 'none'" :editor="editor" />
 
