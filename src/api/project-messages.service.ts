@@ -4,8 +4,8 @@ import type {
   ProjectMessageModel,
   QueryFilterProjectMessage,
 } from '@/models/project-message.model'
-import type { ImageModealCreated } from '~/models/image.model'
 import type { ProjectSlugOrId } from '@/models/project.model'
+import type { ImageModelCreated } from '~/models/image.model'
 import useAPI from '@/composables/useAPI'
 
 type Config = UseApiOptions<QueryFilterProjectMessage>
@@ -58,7 +58,7 @@ export async function postProjectMessageImage(
   body: FormData,
   config: Config = {}
 ): Promise<any> {
-  return await useAPI<ImageModealCreated>(`project/${projectId}/project-message-image/`, {
+  return await useAPI<ImageModelCreated>(`project/${projectId}/project-message-image/`, {
     body,
     method: 'POST',
     ...config,

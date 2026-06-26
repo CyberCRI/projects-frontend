@@ -2356,6 +2356,18 @@
     "pdf": {
       "success": "El PDF s' ha generat amb èxit; s' enviarà un enllaç a través de correu electrònic.",
       "error": "Hi ha hagut un error en generar el PDF. Si us plau, contacteu amb un administrador."
+    },
+    "template-update": {
+      "success": "la plantilla s' ha actualitzat correctament",
+      "error": "Error durant l' actualització de la plantilla"
+    },
+    "template-create": {
+      "success": "s' ha creat amb èxit la plantillaName",
+      "error": "Error durant la creació de la plantilla"
+    },
+    "template-delete": {
+      "success": "la plantilla s' ha esborrat correctament",
+      "error": "Error durant l' esborrat de plantilles"
     }
   },
   "success": {

@@ -2356,6 +2356,18 @@
     "pdf": {
       "success": "De PDF is met succes gegenereerd; een link wordt u per e-mail toegestuurd.",
       "error": "Er is een fout opgetreden bij het aanmaken van de PDF. Neem contact op met een beheerder."
+    },
+    "template-update": {
+      "success": "template is succesvol bijgewerkt",
+      "error": "Fout tijdens sjabloon-update"
+    },
+    "template-create": {
+      "success": "template is succesvol aangemaakt",
+      "error": "Fout tijdens aanmaken van sjabloon"
+    },
+    "template-delete": {
+      "success": "template is succesvol verwijderd",
+      "error": "Fout tijdens het verwijderen van sjabloon"
     }
   },
   "success": {

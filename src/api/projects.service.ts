@@ -14,7 +14,7 @@ import type {
   QueryFilterProject,
   QueryFilterProjectMembers,
 } from '@/models/project-member.model'
-import type { ImageModealCreated, ImageModel } from '~/models/image.model'
+import type { ImageModelCreated, ImageModel } from '~/models/image.model'
 import type { PeopleGroupModel } from '~/models/invitation.model'
 
 type ConfigProject = UseApiOptions<QueryFilterProject>
@@ -79,11 +79,11 @@ export async function getProjectMembers(
 }
 
 export async function postProjectImage(projectId: ProjectSlugOrId, body: FormData) {
-  return await useAPI<ImageModealCreated>(`project/${projectId}/image/`, { body, method: 'POST' })
+  return await useAPI<ImageModelCreated>(`project/${projectId}/image/`, { body, method: 'POST' })
 }
 
 export async function postProjectHeader(projectId: ProjectSlugOrId, body: any) {
-  return await useAPI<ImageModealCreated>(`project/${projectId}/header/`, {
+  return await useAPI<ImageModelCreated>(`project/${projectId}/header/`, {
     body,
     method: 'POST',
   })

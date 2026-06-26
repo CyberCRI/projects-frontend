@@ -1,16 +1,28 @@
 <template>
   <LayoutTab>
     <FetchLoader :status="status">
-      <TemplateForm v-model="form" :errors="errors" :save-image-callback="saveImageTemplate" />
-      <div class="form-actions">
-        <LpiButton data-test="cancel" :label="capitalize(t('common.cancel'))" @click="redirect" />
-        <LpiButton
-          data-test="submit"
-          :disabled="!isValid"
-          :label="capitalize(t('common.save'))"
-          @click="submit"
+      <FormPanel
+        :asyncing="asyncing"
+        :confirm-action-disabled="!stateModals.isValid || stateModals.isFormEqual"
+        @confirm="submit"
+        @close="checkClose"
+      >
+        <TemplateForm
+          v-model="cleanedData"
+          :template="templateRaw"
+          :save-image-callback="saveImageTemplate"
+          @is-valid="setModals('isValid', $event)"
+          @is-form-equal="setModals('isFormEqual', $event)"
         />
-      </div>
+      </FormPanel>
+
+      <ConfirmModal
+        v-if="stateModals.saveChange"
+        :title="$t('form.quit-without-saving-title')"
+        :content="$t('common.confirm-close')"
+        @cancel="closeModals('saveChange')"
+        @confirm="redirect"
+      />
     </FetchLoader>
   </LayoutTab>
 </template>
@@ -22,36 +34,52 @@ import TemplateForm from '~/components/templates/TemplateForm.vue'
 import FetchLoader from '~/components/base/FetchLoader.vue'
 import LayoutTab from '~/components/admin/LayoutTab.vue'
 
-import useNuxtI18n from '~/composables/useNuxtI18n'
-
+import type { TemplateModel } from '~/models/template.model'
 import { getTemplate } from '~/api/v2/templates.service'
-import { useTemplateForm } from '~/form/template'
-import { capitalize } from '~/functs/string'
+import FormPanel from '~/components/base/FormPanel.vue'
+import { omit } from 'es-toolkit'
 
-const { t } = useNuxtI18n()
+const cleanedData = ref()
+const { stateModals, setModals, openModals, closeModals } = useModals({
+  isValid: false,
+  isFormEqual: false,
+  saveChange: false,
+})
+
+const toaster = useToaster()
 const route = useRoute()
 const router = useRouter()
+const asyncing = ref(false)
 const organizationCode = useOrganizationCode()
 const templateId = computed(() => parseInt(route.params.id.toString(), 10))
-const { data: template, status } = getTemplate(organizationCode, templateId)
-const { form, errors, isValid, cleanedData } = useTemplateForm()
+const { data: template, status, refresh } = getTemplate(organizationCode, templateId)
 
-// assing fetching templates to localform
-watch(
-  template,
-  () => {
-    form.value = { ...form.value, ...template.value }
-  },
-  { immediate: true }
-)
+const templateRaw = computed<TemplateModel>(() => omit(template.value, ['$t']))
+
+const redirect = () => router.push({ name: 'templatesList' })
 
 const submit = () => {
+  asyncing.value = true
   patchTemplate(organizationCode, templateId.value, cleanedData.value)
-    .then(() => redirect())
-    .catch(console.error)
+    .then(() => {
+      toaster.pushSuccess('toasts.template-update.success')
+      return refresh().then(() => redirect())
+    })
+    .catch((error) => {
+      toaster.pushError('toasts.template-update.error')
+      console.log(error)
+    })
+    .finally(() => (asyncing.value = false))
 }
-const redirect = () => router.push({ name: 'templatesList' })
 const saveImageTemplate = (file) => postTemplateImage(organizationCode, templateId.value, file)
+
+const checkClose = () => {
+  if (stateModals.value.isFormEqual) {
+    close()
+  } else {
+    openModals('saveChange')
+  }
+}
 </script>
 
 <style lang="scss">

@@ -1,4 +1,4 @@
-import TemplatesCreateTab from '~/pages/AdminPortalPageV2/Tabs/TemplatesCreateTab.vue'
+import TemplatesCreateTab from '~/pages/AdminPortalPageV2/Tabs/Templates/TemplatesCreateTab.vue'
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import { describe, expect, it } from 'vitest'
 import { delay } from 'es-toolkit'

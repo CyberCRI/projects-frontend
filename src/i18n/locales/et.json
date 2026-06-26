@@ -2356,6 +2356,18 @@
     "pdf": {
       "success": "PDF on edukalt genereeritud; link saadetakse teile e-posti teel.",
       "error": "PDF-i genereerimisel tekkis viga. Palun võtke ühendust administraatoriga."
+    },
+    "template-update": {
+      "success": "malli uuendati edukalt",
+      "error": "Viga malli uuendamisel"
+    },
+    "template-create": {
+      "success": "mall on edukalt loodud",
+      "error": "Viga malli loomisel"
+    },
+    "template-delete": {
+      "success": "mall on edukalt kustutatud",
+      "error": "Viga malli kustutamisel"
     }
   },
   "success": {

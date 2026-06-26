@@ -2441,6 +2441,18 @@
     "pdf": {
       "success": "Le PDF a été généré avec succès; un lien vous sera envoyé par courriel.",
       "error": "Une erreur s'est produite lors de la génération du PDF. Veuillez contacter un administrateur."
+    },
+    "template-update": {
+      "success": "modèle a été mis à jour avec succès",
+      "error": "Erreur lors de la mise à jour du modèle"
+    },
+    "template-create": {
+      "success": "modèle a été créé avec succès",
+      "error": "Erreur lors de la création du modèle"
+    },
+    "template-delete": {
+      "success": "modèle a été supprimé avec succès",
+      "error": "Erreur lors de la suppression du modèle"
     }
   },
   "success": {

@@ -1,4 +1,4 @@
-import { TemplateModel } from '~/models/template.model'
+import type { TemplateModel } from '~/models/template.model'
 
 export const templateSkeleton = (def?: Partial<TemplateModel>): TemplateModel => ({
   id: -1,

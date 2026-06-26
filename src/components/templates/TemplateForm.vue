@@ -1,143 +1,134 @@
 <template>
-  <div class="block-container form">
-    <div class="block-container">
-      <h4 class="title">
-        {{ $t('template.template') }}
-      </h4>
-      <span class="description">{{ $t('template.tips-template') }}</span>
+  <div class="">
+    <div class="list-container m4">
       <TextInput
         v-model="form.name"
         data-test="name"
+        required
+        :label="$t('template.template')"
+        :help="$t('template.tips-template')"
         :placeholder="$t('project.form.project-templates')"
+        :erorrs="errors.name"
       />
-      <FieldErrors :errors="errors.name" />
-    </div>
 
-    <div class="block-container">
-      <h4 class="title">
-        {{ $t('template.description') }}
-      </h4>
-      <span class="description">{{ $t('template.tips-template') }}</span>
-      <TipTapEditor
-        :key="`description-${editorKey}`"
-        v-model="form.description"
-        :save-image-callback="saveImageCallback"
-        mode="full"
-      />
-    </div>
-
-    <div class="block-container">
-      <div class="title-button-ctn">
-        <h4 class="title">
-          {{ $t('template.category') }}
-        </h4>
-        <LpiButton :label="$t('category.edit')" @click="categorySearchIsOpened = true" />
-      </div>
-
-      <div v-if="form.categories.length" class="tag-grid">
-        <FilterValue
-          v-for="category in form.categories"
-          :key="category.id"
-          :label="category.name"
+      <Field :label="$t('template.description')" :help="$t('template.tips-template')">
+        <TipTapEditor
+          v-model="form.description"
+          class="w-full"
+          :save-image-callback="saveImageCallback"
+          mode="full"
         />
-      </div>
+      </Field>
 
-      <span v-if="form.categories.length === 0" class="description">
-        {{ $t('template.no-category-set') }}
-      </span>
-      <BaseDrawer
-        :confirm-action-name="$t('common.confirm')"
-        :is-opened="categorySearchIsOpened"
-        :title="$t('template.edit-category')"
-        class="small"
-        @close="closeCategory"
-        @confirm="confirmCategory"
-      >
-        <CategoriesFilterEditor v-model="tmpCategories" />
-      </BaseDrawer>
+      <Field :label="$t('template.category')">
+        <template #in-label>
+          <LpiButton :label="$t('category.edit')" @click="openModals('category')" />
+        </template>
+        <div v-if="form.categories.length" class="tag-grid">
+          <FilterValue
+            v-for="category in form.categories"
+            :key="category.id"
+            :label="category.name"
+          />
+        </div>
+        <span v-else class="description">
+          {{ $t('template.no-category-set') }}
+        </span>
+      </Field>
     </div>
 
-    <h4 class="divider-title">
-      {{ t('template.title-project') }}
-    </h4>
-    <div>
-      <TextInput v-model="form.project_title" :label="t('template.project-title')" />
-    </div>
-
-    <div>
-      <TextInput v-model="form.project_purpose" :label="t('template.project-purpose')" />
-    </div>
-
-    <div>
-      <label class="label">{{ capitalize(t('template.project-description')) }}</label>
-      <TipTapEditor
-        :key="`project-description-${editorKey}`"
-        v-model="form.project_description"
-        :save-image-callback="saveImageCallback"
-        mode="full"
+    <TemplateFormSection
+      :title="$t('template.title-project')"
+      :errors="haveError(errors.project_title, errors.project_purpose, errors.project_description)"
+    >
+      <TextInput
+        v-model="form.project_title"
+        :label="$t('template.project-title')"
+        :errors="errors.project_title"
       />
-    </div>
-
-    <h4 class="divider-title">
-      {{ t('template.title-blog') }}
-    </h4>
-
-    <div>
-      <TextInput v-model="form.blogentry_title" :label="capitalize(t('template.blog-title'))" />
-    </div>
-
-    <div>
-      <label class="label">{{ capitalize(t('template.blog-content')) }}</label>
-      <TipTapEditor
-        :key="`blog-${editorKey}`"
-        v-model="form.blogentry_content"
-        :save-image-callback="saveImageCallback"
-        mode="full"
+      <TextInput
+        v-model="form.project_purpose"
+        :label="$t('template.project-purpose')"
+        :errors="errors.project_purpose"
       />
-    </div>
 
-    <h4 class="divider-title">
-      {{ t('template.title-goal') }}
-    </h4>
+      <Field :label="$t('template.project-description')">
+        <TipTapEditor
+          v-model="form.project_description"
+          :save-image-callback="saveImageCallback"
+          mode="full"
+          class="w-full"
+          :errors="errors.project_description"
+        />
+      </Field>
+    </TemplateFormSection>
 
-    <div>
+    <TemplateFormSection
+      :title="$t('template.title-blog')"
+      :errors="haveError(errors.blogentry_title, errors.blogentry_content)"
+    >
+      <TextInput v-model="form.blogentry_title" :label="$t('template.blog-title')" />
+
+      <Field :label="$t('template.blog-content')">
+        <TipTapEditor
+          v-model="form.blogentry_content"
+          :save-image-callback="saveImageCallback"
+          mode="full"
+          class="w-full"
+          :errors="errors.blogentry_content"
+        />
+      </Field>
+    </TemplateFormSection>
+
+    <TemplateFormSection
+      :title="$t('template.title-goal')"
+      :errors="haveError(errors.goal_title, errors.goal_description)"
+    >
       <TextInput
         v-model="form.goal_title"
-        :label="capitalize(t('template.advancement-goal-title'))"
+        :label="$t('template.advancement-goal-title')"
+        :errors="errors.goal_title"
       />
-    </div>
 
-    <div>
-      <label class="label">
-        {{ capitalize(t('template.advancement-goal-content')) }}
-      </label>
-      <TipTapEditor
-        :key="`advancement-goal-${editorKey}`"
-        v-model="form.goal_description"
-        :save-image-callback="saveImageCallback"
-        data-test="template-advancement-goal-content-editor"
-        mode="full"
-      />
-    </div>
+      <Field :label="$t('template.advancement-goal-content')">
+        <TipTapEditor
+          v-model="form.goal_description"
+          :save-image-callback="saveImageCallback"
+          data-test="template-advancement-goal-content-editor"
+          class="w-full"
+          mode="full"
+          :errors="errors.goal_description"
+        />
+      </Field>
+    </TemplateFormSection>
 
-    <h4 class="divider-title">
-      {{ t('template.title-comment') }}
-    </h4>
+    <TemplateFormSection
+      :title="$t('template.title-comment')"
+      :errors="haveError(errors.comment_content)"
+    >
+      <Field :label="$t('template.comment')">
+        <TipTapEditor
+          v-model="form.comment_content"
+          :save-image-callback="saveImageCallback"
+          class="comment-description w-full"
+          mode="full"
+          data-test="template-comment-editor"
+          :errors="errors.comment_content"
+        />
+      </Field>
+    </TemplateFormSection>
 
-    <div>
-      <label class="label">
-        {{ capitalize(t('template.comment')) }}
-      </label>
-
-      <TipTapEditor
-        :key="`comment-${editorKey}`"
-        v-model="form.comment_content"
-        :save-image-callback="saveImageCallback"
-        class="comment-description"
-        mode="full"
-        data-test="template-comment-editor"
-      />
-    </div>
+    <!-- drawer / modal -->
+    <BaseDrawer
+      :confirm-action-name="$t('common.confirm')"
+      :is-opened="stateModals.category"
+      :title="$t('template.edit-category')"
+      class="small"
+      @close="closeModals('category')"
+      @confirm="confirmCategory"
+    >
+      <CategoriesFilterEditor v-model="tmpCategories" />
+    </BaseDrawer>
   </div>
 </template>
 
@@ -147,84 +138,72 @@ import LpiButton from '~/components/base/button/LpiButton.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
-import useNuxtI18n from '~/composables/useNuxtI18n'
-
-import type { ImageModealCreated } from '~/models/image.model'
+import type { PropsDefinitions } from '~/components/base/form/TextEditor/useTipTap'
+import TemplateFormSection from '~/components/templates/TemplateFormSection.vue'
+import { defaultTemplateForm, useTemplateForm } from '~/form/template'
+import type { TemplateForm } from '~/models/template.model'
 import type { ErrorObject } from '@vuelidate/core'
-import { capitalize } from '~/functs/string'
+import { isEqual } from 'es-toolkit'
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
-    errors?: {
-      [key: string]: ErrorObject[]
-    }
-    saveImageCallback: (file: File) => Promise<ImageModealCreated>
+    template?: TemplateForm
+    saveImageCallback: PropsDefinitions['saveImageCallback']
   }>(),
   {
-    errors: () => ({
-      name: [],
-    }),
+    template: null,
   }
 )
 
-const { t } = useNuxtI18n()
+const emit = defineEmits<{
+  isValid: [boolean]
+  isFormEqual: [boolean]
+}>()
 
-const form = defineModel({ type: Object })
-const editorKey = ref(0)
-const categorySearchIsOpened = ref(false)
+const { stateModals, openModals, closeModals } = useModals({ category: false })
+
+// form utils
+const localeDefaultForm = () => {
+  return {
+    ...defaultTemplateForm(),
+    ...(props.template || {}),
+  }
+}
+const model = defineModel<TemplateForm>()
+const { form, errors, isValid, cleanedData, reset } = useTemplateForm()
+const isFormEqual = useBlockNavigation(() => isEqual(form.value, localeDefaultForm()))
+watch(
+  () => props.template,
+  () => {
+    console.log('watch templates', props.template)
+    reset(localeDefaultForm())
+  },
+  { deep: true, immediate: true }
+)
+watchEffect(() => emit('isValid', isValid.value))
+watchEffect(() => (model.value = cleanedData.value))
+watchEffect(() => emit('isFormEqual', isFormEqual.value))
 
 // temp categories select in drawer
 const tmpCategories = ref([])
-watch(categorySearchIsOpened, () => {
-  tmpCategories.value = [...form.value.categories]
-})
-const closeCategory = () => {
-  categorySearchIsOpened.value = false
-}
+watch(
+  () => stateModals.value.category,
+  () => (tmpCategories.value = [...form.value.categories])
+)
 const confirmCategory = () => {
   form.value.categories = [...tmpCategories.value]
-  closeCategory()
+  closeModals('category')
+}
+
+const haveError = (...errors: ErrorObject[][]): boolean => {
+  return errors.filter((err) => err.length !== 0).length !== 0
 }
 </script>
 
 <style lang="scss" scoped>
-.title-button-ctn {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: $space-l;
-
-  .title {
-    margin: unset;
-    font-size: $font-size-l;
-  }
-}
-
 .tag-grid {
   display: flex;
   flex-wrap: wrap;
   gap: $space-s;
-}
-
-.block-container {
-  margin-bottom: 1rem;
-}
-
-.divider-title {
-  text-align: center;
-  margin-top: 2rem;
-  font-size: 2.5rem;
-  color: $primary-dark;
-
-  &::before,
-  &::after {
-    content: '';
-    transform: translateY(-0.7rem);
-    display: inline-block;
-    width: 3rem;
-    height: 0.2rem;
-    background-color: $primary-dark;
-    border-radius: 40px;
-  }
 }
 </style>

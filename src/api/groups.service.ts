@@ -9,7 +9,7 @@ import type {
 } from '~/models/group.model'
 import type { PeopleGroupIdOrSlug, PeopleGroupModel } from '~/models/invitation.model'
 import type { BaseLocationModel, LocationModel } from '~/models/location.model'
-import type { ImageModealCreated, ImageModel } from '~/models/image.model'
+import type { ImageModelCreated, ImageModel } from '~/models/image.model'
 import type { ProjectModel } from '~/models/project.model'
 import type { EventModel } from '~/models/event.model'
 import type { NewsModel } from '~/models/news.model'
@@ -307,7 +307,7 @@ export function postGroupGallery(
   body: FormData,
   config = {}
 ) {
-  return useAPI<ImageModealCreated>(
+  return useAPI<ImageModelCreated>(
     `organization/${organizationCode}/people-group/${groupId}/gallery/`,
     {
       ...config,

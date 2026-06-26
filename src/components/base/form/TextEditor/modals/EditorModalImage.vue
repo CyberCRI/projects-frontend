@@ -40,7 +40,7 @@ import ImageInput from '~/components/base/form/ImageInput.vue'
 
 import useToasterStore from '~/stores/useToaster'
 
-import type { ImageModealCreated, ImageModel } from '~/models/image.model'
+import type { ImageModelCreated, ImageModel } from '~/models/image.model'
 import GalleryItem from '~/components/base/gallery/GalleryItem.vue'
 import { fileToImageModel } from '~/functs/imageSizesUtils'
 import { useTipTapImageForm } from '~/form/tiptap/image'
@@ -48,7 +48,7 @@ import type { Editor } from '@tiptap/vue-3'
 
 const props = defineProps<{
   // function must take a file argument and return a promise resolving to an {url, width, height} object
-  saveImageCallback: (file: File) => Promise<ImageModealCreated>
+  saveImageCallback: (file: File) => Promise<ImageModelCreated>
   editor: Editor
 }>()
 
@@ -70,7 +70,7 @@ const displayedImage = computed(() => {
   return null
 })
 
-const addImageToEditor = (img: ImageModealCreated) => {
+const addImageToEditor = (img: ImageModelCreated) => {
   const MAX_SIZE = 1100
   const width = img.width < MAX_SIZE ? img.width : MAX_SIZE
   const height = img.height < MAX_SIZE ? img.height : img.height * (MAX_SIZE / img.width)

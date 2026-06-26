@@ -50,10 +50,7 @@ export const getTemplate = (
         ...config,
       }),
     {
-      translate: (data) => {
-        console.log(data)
-        return translateTemplate(data)
-      },
+      translate: (data) => translateTemplate(data),
       watch: onlyRefs([organization, templateId]),
       ...config,
     }

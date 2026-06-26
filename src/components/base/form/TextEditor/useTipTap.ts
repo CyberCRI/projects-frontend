@@ -11,8 +11,8 @@ import Color from '@tiptap/extension-color'
 import Link from '@tiptap/extension-link'
 
 import CustomTableCell from './tiptap-extensions/CustomTableCell.js'
-import type { ImageModealCreated } from '~/models/image.model.js'
 import ExternalVideo from './tiptap-extensions/ExternalVideo.js'
+import type { ImageModelCreated } from '~/models/image.model.js'
 import LpiCodeBlock from './tiptap-extensions/LpiCodeBlock.js'
 import CustomImage from './tiptap-extensions/CustomImage.js'
 import type { ErrorObject } from '@vuelidate/core'
@@ -28,7 +28,7 @@ export type PropsDefinitions = {
   errors?: ErrorObject[]
   saveIconVisible?: boolean
   // function must take a file argument and return a promise resolving to an {url, width, height} object
-  saveImageCallback?: (image: File) => Promise<ImageModealCreated>
+  saveImageCallback?: (image: File) => Promise<ImageModelCreated>
   disableSave?: boolean
 }
 

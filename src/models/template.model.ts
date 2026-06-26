@@ -55,6 +55,8 @@ export type TranslatedTemplate = Omit<
   project_tags: TranslatedTag[]
 }
 
+export type TemplateForm = Partial<TemplateModel>
+
 export type TemplateCreateInput = Required<TemplateModel> & {
   project_categories_ids: number[]
 }

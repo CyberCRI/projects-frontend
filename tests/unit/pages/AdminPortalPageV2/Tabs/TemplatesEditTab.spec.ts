@@ -1,6 +1,6 @@
-import TemplatesEditTab from '~/pages/AdminPortalPageV2/Tabs/TemplatesEditTab.vue'
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
+import TemplatesEditTab from '~/pages/AdminPortalPageV2/Tabs/Templates/TemplatesEditTab.vue'
 import { mockNuxtImport, registerEndpoint } from '@nuxt/test-utils/runtime'
 import TemplateFactory from '~~/tests/factories/template.factory'
 import { flushPromises } from '@vue/test-utils'

@@ -1,19 +1,26 @@
 <template>
-  <LayoutTab :title="$t('template.create')" :notice="t('template.info')">
-    <TemplateForm v-model="form" :errors="errors" :save-image-callback="saveImageTemplate" />
-    <div class="form-actions">
-      <LpiButton
-        data-test="cancel"
-        :label="capitalize(t('common.cancel'))"
-        :to="LOCATION_TEMPLATES"
+  <LayoutTab>
+    <FormPanel
+      :asyncing="asyncing"
+      :confirm-action-disabled="!stateModals.isValid || stateModals.isFormEqual"
+      @confirm="submit"
+      @close="checkClose"
+    >
+      <TemplateForm
+        v-model="cleanedData"
+        :save-image-callback="saveImageTemplate"
+        @is-valid="setModals('isValid', $event)"
+        @is-form-equal="setModals('isFormEqual', $event)"
       />
-      <LpiButton
-        data-test="submit"
-        :disabled="!isValid"
-        :label="capitalize(t('common.save'))"
-        @click="submit"
-      />
-    </div>
+    </FormPanel>
+
+    <ConfirmModal
+      v-if="stateModals.saveChange"
+      :title="$t('form.quit-without-saving-title')"
+      :content="$t('common.confirm-close')"
+      @cancel="closeModals('saveChange')"
+      @confirm="redirect"
+    />
   </LayoutTab>
 </template>
 
@@ -23,28 +30,45 @@ import { postTemplate, postTemplateImage } from '~/api/templates.service'
 import TemplateForm from '~/components/templates/TemplateForm.vue'
 import LayoutTab from '~/components/admin/LayoutTab.vue'
 
-import useNuxtI18n from '~/composables/useNuxtI18n'
+import FormPanel from '~/components/base/FormPanel.vue'
 
-import type { RouteLocationRaw } from 'vue-router'
-import { useTemplateForm } from '~/form/template'
-import { capitalize } from '~/functs/string'
+const cleanedData = ref()
+const { stateModals, setModals, openModals, closeModals } = useModals({
+  isValid: false,
+  isFormEqual: false,
+  saveChange: false,
+})
 
-const { t } = useNuxtI18n()
+const toaster = useToaster()
 const router = useRouter()
+const asyncing = ref(false)
 const organizationCode = useOrganizationCode()
-const { form, errors, isValid, cleanedData } = useTemplateForm()
+const global = useGlobals()
 
-const LOCATION_TEMPLATES: RouteLocationRaw = { name: 'templatesList' }
-
+const redirect = () => router.push({ name: 'templatesList' })
 const submit = () => {
+  asyncing.value = true
   postTemplate(organizationCode, cleanedData.value)
-    .then(() => router.push(LOCATION_TEMPLATES))
-    .catch(console.error)
+    .then(() => {
+      toaster.pushSuccess('toasts.template-create.success')
+      global.hasUnsavedEdit = false
+      return redirect()
+    })
+    .catch((error) => {
+      toaster.pushError('toasts.template-create.error')
+      console.log(error)
+    })
+    .finally(() => (asyncing.value = false))
 }
-
-// we don't have the templateId (we are on creation) so we put -1
-// backend have a task to check/replace image from templates
 const saveImageTemplate = (file) => postTemplateImage(organizationCode, -1, file)
+
+const checkClose = () => {
+  if (stateModals.value.isFormEqual) {
+    close()
+  } else {
+    openModals('saveChange')
+  }
+}
 </script>
 
 <style lang="scss">

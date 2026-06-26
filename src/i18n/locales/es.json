@@ -2356,6 +2356,18 @@
     "pdf": {
       "success": "El PDF se ha generado con éxito; un enlace se enviará a usted por correo electrónico.",
       "error": "Se produjo un error al generar el PDF. Por favor contacte con un administrador."
+    },
+    "template-update": {
+      "success": "plantilla se ha actualizado con éxito",
+      "error": "Error durante la actualización de plantilla"
+    },
+    "template-create": {
+      "success": "plantilla se ha creado con éxito",
+      "error": "Error durante la creación de plantilla"
+    },
+    "template-delete": {
+      "success": "plantilla se ha eliminado con éxito",
+      "error": "Error durante la eliminación de plantilla"
     }
   },
   "success": {

@@ -2180,6 +2180,18 @@
     "template-get": {
       "error": "Error during getting template"
     },
+    "template-update": {
+      "success": "template has been updated successfully",
+      "error": "Error during template update"
+    },
+    "template-create": {
+      "success": "template has been created successfully",
+      "error": "Error during template creation"
+    },
+    "template-delete": {
+      "success": "template has been deleted successfully",
+      "error": "Error during template deletion"
+    },
     "category-template-update": {
       "success": "The category template has been updated successfully",
       "error": "Error during the category template update"

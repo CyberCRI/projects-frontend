@@ -64,6 +64,7 @@ const {
   default: () => factoryPagination(templateSkeleton),
 })
 
+const toaster = useToaster()
 const router = useRouter()
 const redirectEditTemplate = (template) =>
   router.push({ name: 'templatesEdit', params: { id: template.id } })
@@ -73,7 +74,15 @@ const templateToDelete = ref(null)
 const setDeleted = (template) => (templateToDelete.value = template)
 const cancelDelete = () => (templateToDelete.value = null)
 const confirmDelete = () => {
-  deleteTemplate(organizationCode, templateToDelete.value.id).then(() => refresh())
+  deleteTemplate(organizationCode, templateToDelete.value.id)
+    .then(() => {
+      toaster.pushSuccess('toasts.template-delete.success')
+      refresh()
+    })
+    .catch((error) => {
+      toaster.pushError('toasts.template-delete.error')
+      console.error(error)
+    })
   templateToDelete.value = null
 }
 </script>

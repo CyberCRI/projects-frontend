@@ -6,8 +6,8 @@ import type {
   QueryFilterProjectTab,
   QueryFilterProjectTabItem,
 } from '~/models/projects-tabs.model'
-import type { ImageModealCreated } from '~/models/image.model'
 import type { ProjectSlugOrId } from '~/models/project.model'
+import type { ImageModelCreated } from '~/models/image.model'
 
 type Config = UseApiOptions
 type ConfigTab = UseApiOptions<QueryFilterProjectTab>
@@ -137,7 +137,7 @@ export async function createProjectTabImage(
   body: FormData,
   config: Config = {}
 ) {
-  return await useAPI<ImageModealCreated>(`project/${projectId}/tab-image/`, {
+  return await useAPI<ImageModelCreated>(`project/${projectId}/tab-image/`, {
     method: 'POST',
     body,
     ...config,
@@ -150,7 +150,7 @@ export async function createProjectTabItemImage(
   body: FormData,
   config: Config = {}
 ) {
-  return await useAPI<ImageModealCreated>(`project/${projectId}/tab/${projectTabId}/item-image/`, {
+  return await useAPI<ImageModelCreated>(`project/${projectId}/tab/${projectTabId}/item-image/`, {
     method: 'POST',
     body,
     ...config,

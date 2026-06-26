@@ -2356,6 +2356,18 @@
     "pdf": {
       "success": "Das PDF wurde erfolgreich generiert; ein Link wird per E-Mail an Sie gesendet.",
       "error": "Bei der Generierung des PDF wurde ein Fehler aufgetreten. Bitte kontaktieren Sie einen Administrator."
+    },
+    "template-update": {
+      "success": "Template wurde erfolgreich aktualisiert",
+      "error": "Fehler beim Template-Update"
+    },
+    "template-create": {
+      "success": "Template wurde erfolgreich erstellt",
+      "error": "Fehler bei der Erstellung von Vorlagen"
+    },
+    "template-delete": {
+      "success": "Template wurde erfolgreich gelöscht",
+      "error": "Fehler bei der Löschung der Vorlage"
     }
   },
   "success": {
