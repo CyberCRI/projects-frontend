@@ -1,10 +1,10 @@
 <template>
   <li class="sub-list">
     <div class="top-list">
-      <div class="name black-text">
+      <div class="name black-text skeletons-text">
         {{ label }}
       </div>
-      <div class="actions">
+      <div class="actions skeletons-background">
         <ContextActionMenu>
           <ContextActionButton
             v-if="actionEdit"
