@@ -14,6 +14,7 @@
   - [Typescript](#typescript)
   - [Backend Endpoints and Schemas](#backend-endpoints-and-schemas)
   - [Environments](#environments)
+  - [Agents Environments](./README-AGENTS.md)
 - [License](#license)
 
 
