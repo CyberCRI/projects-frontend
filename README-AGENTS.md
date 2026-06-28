@@ -1,219 +1,331 @@
-# Agents setup in Projects
+# Configuration des Agents Conversationnels dans Projects
 
+## Vue d'ensemble
+L'infrastructure agent conversationnelle de Projects se compose de :
 
-La couche agent conversationnel de Projects est constituée :
-- d'un serveur mcp ayant accès (en lecture) aux données de Projects
-- d'une base de donnée vectorielle pour l'indexation sémantique de documents (faq...)
-- d'agent proprement dit
-  - un agent "général" accessible dans toutes les pages via un bouton flottant
-  - des agents spécialisé configurable par les admins
+-   **Un serveur MCP** avec accès en lecture aux données de Projects
+-   **Une base de données vectorielle** pour l'indexation sémantique
+    des documents (FAQ, bases de connaissances...)
+-   **Des agents intelligents** :
+    -   Un agent **\"Général\"** accessible sur toutes les pages via un
+        bouton flottant
+    -   Des **agents Spécialisés** configurables par les administrateurs
 
-## Environnement pour les agents
+------------------------------------------------------------------------
 
-En raison de l'évolution du code et de la nécessité de maintenir le fonctionnement précédent le temps de migrer les plateformes, les agent peuvent avoir trois types de configuration :
-- entièrement géré via OpenAI (propmpt, configuration et vector store sur la plateforme openai)
-- via Langchain, configuré dans les variables d'environnement
-- via Langchain, configuré par les admins ("agents specialisés")
+## Table des Matières
 
+1.  [Environnement des Agents](#environnement-des-agents)
+2.  [Activation Globale](#activation-globale)
+3.  [Trois Types de Configuration](#trois-types-de-configuration)
+4.  [Vector Store RAG](#vector-store-rag)
+5.  [Tracing Debugging](#tracing-debugging)
+6.  [FAQ Troubleshooting](#faq-troubleshooting)
 
-### Général
+------------------------------------------------------------------------
 
-#### Activation
+## Environnement des Agents
 
-Les agents ne sont actifs que si cette variable est présente:
+En raison de l'évolution progressive du codebase et de la nécessité de
+maintenir la compatibilité rétroactive pendant la migration des
+plateformes, les agents peuvent fonctionner selon trois modes de
+configuration différents :
+
+| Mode                          | Gestion                        | Cas d'usage |
+| ----------------------------- | ------------------------------ | ---------------------------------------- |
+| OpenAI Natif                  | Plateforme OpenAI uniquement   | Agent général uniquement |
+| Langchain (.env)              | Variables d'environnement     | Tests rapides, déploiements simples |
+| Langchain (Base de Données)   | Formulaires administrateur     | Production, multi-agents personnalisés |
+
+------------------------------------------------------------------------
+
+## Activation Globale
+
+Les agents ne sont actifs que si cette variable est définie :
 
 ```bash
 NUXT_APP_CHATBOT_ENABLED=1
 ```
 
-#### Accès des agents au serveur MCP de Projects
+### Accès au Serveur MCP de Projects
 
 ```bash
 NUXT_APP_MCP_SERVER_URL=<PROJECTS_FRONTEND_URL>/mcp/
 ```
 
-### Paramètres des agents
+> **Note :** Remplacez `<PROJECTS_FRONTEND_URL>` par l'URL réelle de
+> votre instance Projects.
 
-#### Entierement géré dans OpenAI
+------------------------------------------------------------------------
 
-(cela n'est possible que pour l'agent général)
+## Trois Types de Configuration
 
-paramètres d'OpenAI
+### 1. Agent Entièrement Géré via OpenAI ⚠️
+
+**Restriction :** Cette configuration n'est disponible que pour
+l'**agent général**.
+
+#### Paramètres OpenAI
 
 ```bash
-# clé d'api
+# Clé API OpenAI
 NUXT_APP_OPENAI_API_KEY=sk-proj-XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-# identifiant et version d'un prompt créé sur la plateforme opeanai
+
+# Identifiant et version d'un prompt créé sur la plateforme OpenAI
 NUXT_APP_OPENAI_API_PROMPT_ID=pmpt_XXXXXXXXXXXXX
-NUXT_APP_OPENAI_API_PROMPT_VERSION= # leave empty for the last version
-# optionellement identifiant d'un store pour le RAG
+NUXT_APP_OPENAI_API_PROMPT_VERSION= # Laisser vide pour utiliser la dernière version
+
+# Optionnellement : identifiant d'un vecteur store pour le RAG
 NUXT_APP_OPENAI_API_VECTOR_STORE_ID=vs_XXXXXXXXXXXXX
 ```
 
-le backend pour le chatbot doit être
+#### Backend Chatbot
+
+Pour ce mode, configurez le backend comme suit :
 
 ```bash
 NUXT_PUBLIC_APP_CHATBOT_BACKEND=/api/chat-stream
 ```
 
+------------------------------------------------------------------------
 
-#### Agent langchain via l'environnement
+### 2. Agent via Langchain (Variables d'Environnement)
 
-le backend pour le chatbot est
+Cette méthode permet une configuration complète via `.env`.
+
+#### Endpoint Backend
 
 ```bash
 NUXT_PUBLIC_APP_CHATBOT_BACKEND=/api/chat-lg-stream
 ```
 
-On configure la clé du provider d'inférence (actuellement OpenAI, Anthropic, Mistral ou Groq)
+#### Provider d'Inférence
+
+Configurez la clé API du provider choisi (actuellement supportés :
+OpenAI, Anthropic, Mistral, Groq) :
 
 ```bash
-NUXT_APP_LANGCHAIN_MODEL_API_KEY=...
+NUXT_APP_LANGCHAIN_MODEL_API_KEY=<votre-clé-api>
 ```
 
-l'agent et entièrement paramètré dans les `.env`
+#### Configuration Complète (.env)
 
 ```bash
-NUXT_APP_LANGCHAIN_PROMPT="You are a useful assistant" # system prompt
-NUXT_APP_LANGCHAIN_TEMPERATURE=0.7 # temperature
-NUXT_APP_LANGCHAIN_MODEL_NAME="openai:gpt-4o-mini"  # model name, see below
-NUXT_APP_LANGCHAIN_MODEL_API_KEY=....
+# Prompt système
+NUXT_APP_LANGCHAIN_PROMPT="You are a helpful assistant."
+
+# Température (crée du random, 0 = déterministe)
+NUXT_APP_LANGCHAIN_TEMPERATURE=0.7
+
+# Nom complet du modèle avec prefix provider
+NUXT_APP_LANGCHAIN_MODEL_NAME=openai:gpt-4o-mini
+
+# Clé API (dupliquée ici pour simplicité, ou utilisez MODEL_API_KEY global ci-dessus)
+NUXT_APP_LANGCHAIN_MODEL_API_KEY=<votre-clé-api>
 ```
 
-#### Agent spécialisés
+------------------------------------------------------------------------
 
+### 3. Agents Spécialisés (Configuration Administrateur) ✅ Recommandé pour la production
 
-Ces agents sont créé par les admins via des formulaires dédiés.
-(le chatbot "général" peut être affecté à un de ces agents via un onglet de l'admin)
+Ces agents sont créés via des formulaires dédiés par les
+administrateurs. Le chatbot \"général\" peut être rattaché à ces agents
+spécialisés depuis le panel admin.
 
-Cela nécessite une base de données Postgres, configurée via :
+#### Base de Données PostgreSQL Requis
+
+Configuration de la connexion :
 
 ```bash
-NUXT_APP_CHATBOT_PROMPT_DB=postgresql://...
+NUXT_APP_CHATBOT_PROMPT_DB=postgresql://username:password@host:port/database
 ```
 
-La base doit être intialisée "à la main" (**Une seule fois, quelque oit le nombre de pods qui y accedent**),
-puis à chaque évolution du schéma ("migration") via :
+#### Initialisation de la Base
+
+La base doit être initialisée manuellement **(une seule fois, quel que
+soit le nombre de pods accédant)** :
 
 ```bash
 prisma --config ./prisma-chatbot-db/prisma-config.ts migrate deploy
 ```
 
-Le backend pour le chatbot est aussi
+⚠️ À exécuter à chaque évolution du schéma (migration).
+
+#### Endpoint Backend
 
 ```bash
 NUXT_PUBLIC_APP_CHATBOT_BACKEND=/api/chat-lg-stream
 ```
 
-et on configure toujours la clé du provider d'inférence (actuellement OpenAI, Anthropic, Mistral ou Groq)
+#### Multi-Provider API Keys
 
-```bash
-NUXT_APP_LANGCHAIN_MODEL_API_KEY=...
-```
-
-Dans ce contexte (agent spécialisé) on peut éventuellement ajouter d'autres clés d'api (pour les autres providers) via
+Vous pouvez ajouter plusieurs clés API pour différents providers :
 
 ```bash
 NUXT_APP_LANGCHAIN_EXTRA_MODEL_API_KEYS='{
-"openai": "sk-proj-....",
-"groq:": "gsk_....",
-"anthropic": "sk-ant-...."
+  "openai": "sk-proj-....",
+  "groq": "gsk_....",
+  "anthropic": "sk-ant-...."
 }'
 ```
 
-Noter le format JSON et les quotes pour une valeur multiligne.
+**Important :**
 
-La clé sera matchée par le provider prefix du nom du modèle.
+-   Utilisez le format JSON valide
+-   Les guillemets doivent échapper correctement pour les valeurs
+    multilignes
+-   La correspondance se fait par préfixe provider dans le nom du modèle
 
-On peut indiquer une liste de modèles suggérés pour les admin (voir "Note sur les modèles dans langchain")
+#### Modèles Suggérés (Liste pour Admins)
 
 ```bash
 NUXT_PUBLIC_APP_LLM_MODEL_SUGGESTIONS="openai:gpt-4o-mini|openai:gpt-4o|openai:gpt-5-nano|openai:gpt-5-mini|openai:gpt-5|openai:gpt-5.4-nano|openai:gpt-5.4-mini|openai:gpt-5.4"
 ```
 
-Enfin, on active la fonctionalité (agents specialisés) avec :
+#### Activation de la Fonctionnalité
 
 ```bash
 NUXT_PUBLIC_APP_HAS_CHATBOT_PROMPT_DB=1
 ```
+------------------------------------------------------------------------
 
+### Note sur les Modèles dans Langchain 🔗
 
-#### Note sur les modèles dans langchain
+Nous supportons plusieurs providers (OpenAI, Mistral, Groq, Anthropic).
 
-Nous supportons plusieurs providers (actuellement: openai, mistral, groq, anthropic)
+Le nom du modèle (`NUXT_APP_LANGCHAIN_MODEL_NAME`) doit être précédé du
+**code provider**, par exemple :
 
-Le nom du modèle `NUXT_APP_LANGCHAIN_MODEL_NAME` (ou dans le formulaires pour les agents spécialisé) doit être préfixé du code du provider,
-par exemple `openai:` pour OpenAi, ce qui donne le nom complete `openai:gpt-4o-mini`
+| Provider    | Préfixe        | Exemple Complet |
+| ----------- | -------------- | -------------------------------- |
+| OpenAI      | `openai:`      | `openai:gpt-4o-mini` |
+| Anthropic   | `anthropic:`   | `anthropic:claude-3-sonnet` |
+| Groq        | `groq:`        | `groq:mixtral-8x7b-32768` |
+| Mistral     | `mistral:`     | `mistral:mistral-large-latest` |
 
-Voir la liste des préfixes sur https://github.com/langchain-ai/langchainjs/blob/443253bd5336597d3619f2e21a8d5a814202997e/libs/langchain/src/chat_models/universal.ts#L734 et and https://docs.langchain.com/oss/javascript/integrations/chat
+**Références officielles :**
 
-#### Gestion de la mémoire dans langchain
+-   Liste des préfixes : [LangChain.js Universal Chat
+    Models](https://github.com/langchain-ai/langchainjs/blob/main/libs/langchain/src/chat_models/universal.ts)
+-   Documentation intégrations : [LangChain JavaScript Chat
+    Integrations](https://docs.langchain.com/docs/components/chat-models)
 
-Pour limiter le nombre de tokens consommés, le nombre de message précédents de la conversation qui sont envoyés au oteur d'inférence peut être limité via :
+------------------------------------------------------------------------
+
+## Gestion de la Mémoire 🧠
+
+Pour limiter la consommation de tokens, vous pouvez restreindre le
+nombre de messages précédents envoyés au moteur d'inférence :
 
 ```bash
-# unset or 0 to use full history
+# Défaut : 0 (tout l'historique)
+# Valeurs > 0 limitent au nombre de messages spécifié
 NUXT_APP_AGENT_MEMORY_SLIDING_WINDOW_SIZE=30
 ```
-(Tous les messages restent néanmoins conservés en base de données)
 
+> **Important :** Tous les messages restent néanmoins conservés en base
+> de données ; ce paramètre affecte uniquement ce qui est envoyé au
+> provider d'inférence.
 
-## Vector Store (RAG)
+------------------------------------------------------------------------
 
-Note: cela ne marche qu'avec l'environnement Langchain.
+## Vector Store RAG
 
-Il faut ajouter une base postgres (avec l'extension `pgvector` activée) et indiquer la table des collections :
+⚠️ **Compatibilité :** Cette fonctionnalité ne fonctionne qu'avec
+l'environnement **Langchain**.
+
+### Configuration PostgreSQL + pgvector
+
+Ajoutez une base PostgreSQL avec l'extension `pgvector` activée :
 
 ```bash
-NUXT_APP_VECTOR_DB_URL=postgresql://...
-NUXT_APP_VECTOR_TABLE_NAME='my_collection'
+# URL de connexion à la base vectorielle
+NUXT_APP_VECTOR_DB_URL=postgresql://user:pass@host:5432/vector_db
+
+# Nom de la table contenant les collections/embeddings
+NUXT_APP_VECTOR_TABLE_NAME=my_collection
 ```
 
-On paramètre le modèle d'embedding (**pour l'instant seul OpenAI est supporté**)
+### Modèle d'Embedding 🎯
+
+Actuellement seul **OpenAI** est supporté pour les embeddings :
 
 ```bash
 NUXT_APP_VECTOR_EMBEDDING_MODEL=text-embedding-3-small
 NUXT_APP_VECTOR_EMBEDDING_API_KEY=sk-proj-....
-NUXT_APP_VECTOR_EMBEDDING_DIMENSIONS=1536 # doit matcher les dimensions du modèle d'embedding
+
+# Doit correspondre aux dimensions du modèle choisie
+NUXT_APP_VECTOR_EMBEDDING_DIMENSIONS=1536
 ```
 
-On indique aussi un prompt pour le l'outil de récupération des données, qui permettra à l'agent de décider quand y faire appel
+### Prompt d'Outil de Recherche RAG
+
+Ce prompt guide l'agent sur quand utiliser le RAG :
 
 ```bash
-NUXT_APP_VECTOR_TOOL_PROMPT="Always use this tool"
+NUXT_APP_VECTOR_TOOL_PROMPT="Utilisez cet outil systématiquement pour rechercher dans la base de connaissances"
 ```
 
-On peut alors activer la fonctionnalité via
+### Activation
 
 ```bash
 NUXT_PUBLIC_APP_HAS_CHATBOT_PROMPT_DB=1
 ```
 
-## Tracing
+> **Remarque :** Ce même flag active également la base de prompts pour
+> les agents spécialisés. Une installation unique suffit même si
+> multiple services y accèdent simultanément.
 
-### In-App
+------------------------------------------------------------------------
 
-Logs de déboggage (déactivés par défaut)
+## Tracing Debugging
+
+### Logs In-App (Débogage Local)
+
+Activés par défaut à `false`, débruitable en production :
 
 ```bash
-# Langchain
-NUXT_APP_LANGCHAIN_TRACE='1'
-# serveur MCP de Projects
-NUXT_APP_MCP_SERVER_TRACE='1'
-# memory middlewre de langchain
-NUXT_APP_AGENT_MEMORY_TRACE='1'
-# Sorbobot
-NUXT_APP_SORBOBOT_API_TRACE='1'
+# Langchain traces
+NUXT_APP_LANGCHAIN_TRACE=1
+
+# Serveur MCP de Projects
+NUXT_APP_MCP_SERVER_TRACE=1
+
+# Middleware mémoire Langchain
+NUXT_APP_AGENT_MEMORY_TRACE=1
+
+# SorboBot API
+NUXT_APP_SORBOBOT_API_TRACE=1
 ```
 
-### Dans Langsmith
+### Traces dans LangSmith ☁️
 
-Nécessite de créer un compte sur Langsmith.
-(Attention à bien choisir "eu" pour les datas et le rgpd)
+Prérequis : créer un compte sur
+[LangSmith](https://smith.langchain.com/)
+
+⚠️ Pour le RGPD, privilégiez l'endpoint EU :
 
 ```bash
 LANGSMITH_TRACING=true
-LANGSMITH_ENDPOINT=https://eu.api.smith.langchain.com # ou https://api.smith.langchain.com
+
+# Endpoint Europe (RGPD-friendly) ou US
+LANGSMITH_ENDPOINT=https://eu.api.smith.langchain.com
+
+# Clé API LangSmith
 LANGSMITH_API_KEY=lsv2_...
-LANGSMITH_PROJECT="my-project"
+
+# Nom du projet pour le grouping des traces
+LANGSMITH_PROJECT=projects-chatbot
 ```
+
+------------------------------------------------------------------------
+
+## FAQ Troubleshooting
+
+| Problème                           |  Solution Possible |
+| ---------------------------------- | ---------------------------------------------------------- |
+| Agent non actif                    | Vérifier `NUXT_APP_CHATBOT_ENABLED=1` |
+| Erreur connection DB Vectorielle   | Vérifier extension `pgvector` installée |
+| Modèle introuvable                 | Vérifier prefix provider (`openai:`, `anthropic:`...) |
+| Tokens limités rapidement          | activer ou diminuer `MEMORY_SLIDING_WINDOW_SIZE` |
+| Embeddings non chargés             | Vérifier compatibilité dimensions `EMBEDDING_DIMENSIONS` |
