@@ -21,7 +21,6 @@ export const defaultOptions = () => {
   if (import.meta.client && import.meta.env.VITEST !== 'true') _localStorage = window?.localStorage
   const localStorage = _localStorage
   const runtimeConfig = useRuntimeConfig()
-  const usersStore = useUsersStore()
   const headers = useRequestHeaders(['cookie'])
 
   return {
@@ -30,12 +29,13 @@ export const defaultOptions = () => {
     headers,
     onRequest({ options }) {
       if (import.meta.client) {
-        const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
-
-        // if token alreadyset, ignore it
+        // if token alreadyset, ignore it (for MCP)
         if (options.headers.get('Authorization')) {
           return
         }
+
+        const usersStore = useUsersStore()
+        const accessToken = usersStore.accessToken // localStorage?.getItem('ACCESS_TOKEN')
         if (accessToken) {
           options.headers.set('Authorization', `Bearer ${accessToken}`)
         }
