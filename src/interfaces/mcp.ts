@@ -12,7 +12,7 @@ type Schema = BaseSchema | BaseSchema[]
 
 type ToolResult<T> = {
   content: [{ type: 'text'; text: string }]
-  structuredContent: T
+  structuredContent?: T
 }
 
 // TODO: check if values is zod element, infer to it or put direclty T
