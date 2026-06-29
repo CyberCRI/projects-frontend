@@ -180,7 +180,7 @@ export default defineLazyEventHandler(() => {
         ///
         // if (mode != 'messages')
         //   console.log('XXXXXXXXXXXXXXXXXX', JSON.stringify(mode, null, 2), chunk.constructor.name)
-        console.log('MODE', mode)
+        // console.log('MODE', mode)
         if (mode == 'tools') {
           /* HANDLE TOOLS */
 
