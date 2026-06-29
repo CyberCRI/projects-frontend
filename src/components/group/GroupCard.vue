@@ -26,7 +26,7 @@
       class="picture picture-group skeletons-background"
       :picture-data="group.header_image"
       picture-size="medium"
-      :default-picture="DEFAULT_USER_PATATOID"
+      :default-picture="DEFAULT_GROUP_PATATOID"
     />
 
     <div class="text text-limit">
@@ -62,7 +62,7 @@ import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 import BasicCard from '~/components/base/BasicCard.vue'
 
-import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
+import { DEFAULT_GROUP_PATATOID } from '~/composables/usePatatoids'
 
 const props = withDefaults(
   defineProps<{
