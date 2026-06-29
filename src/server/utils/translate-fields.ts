@@ -43,7 +43,7 @@ export async function translateAgentFields(newAgent: Agent, oldAgent?: Agent | n
   const translations = await translateFields(fieldsToTranslate)
 
   const output = await chatbotPrisma.$transaction(async (tx) => {
-    if (oldAgent.id)
+    if (oldAgent?.id)
       await tx.agentTranslation.deleteMany({
         where: {
           fieldName: { in: fieldsToTranslate.map((f) => f.fieldName) },
