@@ -912,7 +912,10 @@
       "description": "Cal el camp de descripció"
     },
     "templates": "Plantilles",
-    "quit-without-saving-title": "Surto sense desar?"
+    "quit-without-saving-title": "Surto sense desar?",
+    "recaptcha": {
+      "required": "Cal reconquerir."
+    }
   },
   "footer": {
     "contact": "Contacta amb nosaltres",

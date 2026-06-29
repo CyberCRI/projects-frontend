@@ -3,6 +3,7 @@
   "compilerOptions": {
     "strict": false,
     "noImplicitAny": false,
-    "verbatimModuleSyntax": false
+    "verbatimModuleSyntax": false,
+    "types": ["grecaptcha"]
   }
 }

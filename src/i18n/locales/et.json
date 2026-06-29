@@ -912,7 +912,10 @@
       "description": "Kirjeldusväli on nõutav"
     },
     "templates": "Mallid",
-    "quit-without-saving-title": "Lõpetad säästmata?"
+    "quit-without-saving-title": "Lõpetad säästmata?",
+    "recaptcha": {
+      "required": "Recaptcha on vajalik."
+    }
   },
   "footer": {
     "contact": "Võta meiega ühendust",

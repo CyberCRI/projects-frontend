@@ -912,7 +912,10 @@
       },
       "description": "The description field is required"
     },
-    "quit-without-saving-title": "Quit without saving?"
+    "quit-without-saving-title": "Quit without saving?",
+    "recaptcha": {
+      "required": "Recaptcha is required."
+    }
   },
   "footer": {
     "contact": "Contact us",

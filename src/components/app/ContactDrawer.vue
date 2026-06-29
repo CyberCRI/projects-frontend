@@ -46,7 +46,7 @@
         :errors="errors.content"
       />
 
-      <Recaptcha />
+      <Recaptcha v-model="form.recaptcha" :errors="errors.recaptcha" />
     </form>
   </BaseDrawer>
   <ConfirmModal

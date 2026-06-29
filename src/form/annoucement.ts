@@ -57,7 +57,9 @@ export const useAnnouncementReplyForm = (options = {}) => {
     applicant_message: {
       required: helpers.withMessage(t('form.reply-announcement.description'), requiredContent),
     },
-    recaptcha: { required },
+    recaptcha: {
+      required: helpers.withMessage(t('form.recaptcha.required'), required),
+    },
   }))
 
   return useForm<AnnouncementApplyForm>({

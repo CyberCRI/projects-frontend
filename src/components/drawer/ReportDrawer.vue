@@ -139,7 +139,8 @@ const submit = async () => {
         required
         :errors="errors.message"
       />
-      <Recaptcha />
+
+      <Recaptcha v-model="form.recaptcha" :errors="errors.recaptcha" />
     </form>
 
     <ConfirmModal

@@ -912,7 +912,10 @@
       "description": "Das Beschreibungsfeld ist erforderlich"
     },
     "templates": "Vorlagen",
-    "quit-without-saving-title": "Nicht zu retten?"
+    "quit-without-saving-title": "Nicht zu retten?",
+    "recaptcha": {
+      "required": "Recaptcha ist erforderlich."
+    }
   },
   "footer": {
     "contact": "Kontaktieren Sie uns",

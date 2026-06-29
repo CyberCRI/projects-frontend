@@ -912,7 +912,10 @@
       "description": "Het beschrijvingsveld is vereist"
     },
     "templates": "Sjablonen",
-    "quit-without-saving-title": "Stoppen zonder te redden?"
+    "quit-without-saving-title": "Stoppen zonder te redden?",
+    "recaptcha": {
+      "required": "Recaptcha is vereist."
+    }
   },
   "footer": {
     "contact": "Contacteer ons",

@@ -912,7 +912,10 @@
       "description": "El campo de descripción es necesario"
     },
     "templates": "Plantillas",
-    "quit-without-saving-title": "¿Dejar de salvar?"
+    "quit-without-saving-title": "¿Dejar de salvar?",
+    "recaptcha": {
+      "required": "Recaptcha es necesaria."
+    }
   },
   "footer": {
     "contact": "Contacta con nosotros",

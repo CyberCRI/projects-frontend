@@ -149,7 +149,7 @@ const onApplyAnnouncement = () => {
         />
       </Field>
 
-      <Recaptcha v-model="form.recaptcha" />
+      <Recaptcha v-model="form.recaptcha" :errors="errors.recaptcha" />
     </div>
 
     <!-- drawer/modal -->

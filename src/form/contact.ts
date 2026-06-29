@@ -21,7 +21,9 @@ export const useContactForm = (options = {}) => {
     content: {
       required: helpers.withMessage(t('form.report.content'), required),
     },
-    recaptcha: { required },
+    recaptcha: {
+      required: helpers.withMessage(t('form.recaptcha.required'), required),
+    },
   }))
 
   return useForm<ContactForm>({ default: defaultContactForm(), rules, ...options })
