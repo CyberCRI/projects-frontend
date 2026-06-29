@@ -10,7 +10,7 @@ import { z } from 'zod'
 
 export async function getAllTags(tagsId: number[], extras): Promise<number[]> {
   const opts = mcpOptions(extras) as Config
-
+  if (!tagsId?.length) return []
   return await getAllTagsById(tagsId, opts)
     .then((results) => results.results.map((tag) => tag.id))
     .catch((error) => {
