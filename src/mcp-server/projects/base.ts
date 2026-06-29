@@ -54,7 +54,11 @@ export const resultFromTool = <InputSchema, OutputSchema>(
 
     return {
       content: [{ type: 'text', text: JSON.stringify(output) }],
-      structuredContent: output,
+      // TODO: reconsider this 'structuredContent' option
+      // format issue - too long to fix for now, so just removed it
+      // (some need {results: ...}) some dont)
+      // anyway it desnt sem reallu useful for us and consume more token
+      // structuredContent: output,
     }
   }
 }

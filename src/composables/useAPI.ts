@@ -21,14 +21,16 @@ export const defaultOptions = () => {
   if (import.meta.client && import.meta.env.VITEST !== 'true') _localStorage = window?.localStorage
   const localStorage = _localStorage
   const runtimeConfig = useRuntimeConfig()
-  const headers = useRequestHeaders(['cookie'])
 
   return {
     baseURL: runtimeConfig.public.appApiUrl + runtimeConfig.public.appApiDefaultVersion + '/',
     method: 'GET',
-    headers,
     onRequest({ options }) {
       if (import.meta.client) {
+        const cookie = useRequestHeaders(['cookie'])?.cookie
+        if (cookie) {
+          options.headers.set('cookie', cookie)
+        }
         // if token alreadyset, ignore it (for MCP)
         if (options.headers.get('Authorization')) {
           return
