@@ -45,7 +45,7 @@
         :picture-alt="`${form.name} image`"
         :contain="true"
         :round-picture="true"
-        :default-picture="defaultPictures"
+        :default-picture="DEFAULT_GROUP_PATATOID"
       />
     </Field>
 
@@ -217,7 +217,7 @@ import SdgList from '~/components/sdgs/SdgList.vue'
 
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
 
-import { usePatatoids } from '~/composables/usePatatoids'
+import { DEFAULT_GROUP_PATATOID } from '~/composables/usePatatoids'
 
 import TagSelectDrawer from '~/components/drawer/Tag/TagSelectDrawer.vue'
 import Field from '~/components/base/form/Field.vue'
@@ -256,7 +256,6 @@ export default {
   setup() {
     const organizationsStore = useOrganizationsStore()
     const runtimeConfig = useRuntimeConfig()
-    const defaultPictures = usePatatoids()
     const { stateModals, openModals, closeModals } = useModals({
       LocationForm: false,
       LocationDrawer: false,
@@ -264,10 +263,10 @@ export default {
     return {
       organizationsStore,
       runtimeConfig,
-      defaultPictures,
       stateModals,
       openModals,
       closeModals,
+      DEFAULT_GROUP_PATATOID,
     }
   },
 
@@ -349,7 +348,7 @@ export default {
     },
   },
 
-  mounted() {
+  beforeMount() {
     this.form = {
       ...this.form,
       ...this.modelValue,

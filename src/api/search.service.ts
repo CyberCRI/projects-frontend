@@ -13,7 +13,7 @@ import useAPI from '~/composables/useAPI'
 type Config = UseApiOptions<QueryFilterSearch>
 
 export async function searchAll<T = SearchResultAll>(search: string, config: Config = {}) {
-  const url = `search/${search ? `${encodeURI(search)}/` : ''}`
+  const url = `search/${search ? `${encodeURIComponent(search)}/` : ''}`
   return useAPI<PaginationResult<T>>(url, config)
 }
 

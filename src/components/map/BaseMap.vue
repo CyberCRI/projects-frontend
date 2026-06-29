@@ -45,7 +45,8 @@ const MAP_URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{
 const CONFIG: L.MapOptions = {
   center: [0, 0],
   zoom: 2,
-  maxZoom: 20,
+  // free leaflet max zoom is 18 (upper is blank)
+  maxZoom: 18,
   minZoom: 1,
   maxBoundsViscosity: 1,
   preferCanvas: true,
