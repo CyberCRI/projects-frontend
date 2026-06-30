@@ -3396,5 +3396,74 @@
     "ice-breakers": "Aquí teniu alguns temes per iniciar una conversa",
     "special-agents": "Busqueu un agent especialitzat?",
     "other-special-agents": "Cercant un altre agent especialitzat?"
+  },
+  "tab": {
+    "tab": {
+      "delete-confirm": "Esteu segur que voleu esborrar aquesta pestanya? S' eliminarà tot el contingut.",
+      "delete": "Elimina la pestanya",
+      "add": "Afegeix una nova pestanya.",
+      "edit": "Edita pestanya",
+      "title": "Creació de pestanya",
+      "label": "Pestanya | Pestanyes"
+    },
+    "item": {
+      "delete-confirm": "Esteu segur que voleu eliminar aquest element.",
+      "delete": "Esborra element",
+      "add": "Afegeix un element nou",
+      "edit": "Edita element",
+      "title": "Forma d' element"
+    },
+    "form": {
+      "title": {
+        "label": "Títol"
+      },
+      "description": {
+        "label": "Descripció"
+      },
+      "icon": {
+        "label": "Icona"
+      },
+      "show_preview": {
+        "label": "Mostra la vista prèvia en la pàgina de resum."
+      },
+      "type": {
+        "label": "Tipus",
+        "required": "El tipus de pestanya és necessari.",
+        "text": {
+          "label": "text",
+          "help": "El contingut és un contingut de text complet."
+        },
+        "blog": {
+          "label": "blog",
+          "help": "La llista de continguts és per a l' entrada del bloc."
+        }
+      }
+    },
+    "toasts": {
+      "tab-create": {
+        "success": "La pestanya s' ha creat correctament.",
+        "error": "Ha fallat en crear la pestanya. Torneu-ho a provar."
+      },
+      "tab-update": {
+        "success": "La pestanya s' ha actualitzat correctament.",
+        "error": "Ha fallat en actualitzar la pestanya. Torneu-ho a provar."
+      },
+      "tab-delete": {
+        "success": "La pestanya s' ha esborrat correctament.",
+        "error": "Ha fallat en esborrar la pestanya. Torneu-ho a provar."
+      },
+      "item-delete": {
+        "success": "L' element s' ha esborrat correctament.",
+        "error": "Ha fallat en eliminar l' element. Torneu-ho a provar."
+      },
+      "item-update": {
+        "success": "L' element s' ha actualitzat correctament.",
+        "error": "Ha fallat en actualitzar l' element. Torneu-ho a provar."
+      },
+      "item-create": {
+        "success": "L' element s' ha creat amb èxit.",
+        "error": "Ha fallat en crear l' element. Torneu-ho a provar."
+      }
+    }
   }
 }

@@ -70,6 +70,7 @@ export const ProjectFactory = createFactory<ProjectModel>((faker) => ({
     announcements: 0,
     reviews: 0,
     messages: 0,
+    tabs: 0,
   },
 }))
 

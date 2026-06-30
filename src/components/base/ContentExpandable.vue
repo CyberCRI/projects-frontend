@@ -46,6 +46,7 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   limited: [boolean]
+  expanded: [boolean]
 }>()
 
 const showLess = ref(true)
@@ -82,6 +83,9 @@ const label = computed(() => {
     more: props.seeMoreLabel || $t('common.see-more'),
   }
 })
+
+watchEffect(() => emit('limited', isLimited.value))
+watchEffect(() => emit('expanded', !showLess.value))
 </script>
 
 <style lang="scss" scoped>

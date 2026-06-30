@@ -3396,5 +3396,74 @@
     "ice-breakers": "Here are some ice-breakers",
     "special-agents": "Looking for a specialized agent?",
     "other-special-agents": "Looking for another specialized agent?"
+  },
+  "tab": {
+    "tab": {
+      "delete-confirm": "Are you sure you want to delete this tab? all content will be removed.",
+      "delete": "Delete tab",
+      "add": "Add a new Tab.",
+      "edit": "Edit Tab",
+      "title": "Tab Creation",
+      "label": "Tab | Tabs"
+    },
+    "item": {
+      "delete-confirm": "Are you sure you want to delete this item.",
+      "delete": "Delete item",
+      "add": "Add a new item",
+      "edit": "Edit item",
+      "title": "Item form"
+    },
+    "form": {
+      "title": {
+        "label": "Title"
+      },
+      "description": {
+        "label": "Description"
+      },
+      "icon": {
+        "label": "Icon"
+      },
+      "show_preview": {
+        "label": "Show preview in summary page."
+      },
+      "type": {
+        "label": "Type",
+        "required": "The type of tab is required.",
+        "text": {
+          "label": "text",
+          "help": "the Content is a full text content."
+        },
+        "blog": {
+          "label": "blog",
+          "help": "the Content is list for blog entry."
+        }
+      }
+    },
+    "toasts": {
+      "tab-create": {
+        "success": "The tab has been created successfully.",
+        "error": "Failed to create the tab. Please try again."
+      },
+      "tab-update": {
+        "success": "The tab has been updated successfully.",
+        "error": "Failed to update the tab. Please try again."
+      },
+      "tab-delete": {
+        "success": "The tab has been deleted successfully.",
+        "error": "Failed to delete the tab. Please try again."
+      },
+      "item-delete": {
+        "success": "The item has been deleted successfully.",
+        "error": "Failed to delete the item. Please try again."
+      },
+      "item-update": {
+        "success": "The item has been updated successfully.",
+        "error": "Failed to update the item. Please try again."
+      },
+      "item-create": {
+        "success": "The item has been created successfully.",
+        "error": "Failed to create the item. Please try again."
+      }
+    }
   }
 }

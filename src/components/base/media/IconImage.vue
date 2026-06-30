@@ -1,13 +1,3 @@
-<template>
-  <svg
-    ref="svgIcon"
-    viewBox="0 0 24 24"
-    xmlns="http://www.w3.org/2000/svg"
-    @click="$emit('click')"
-    v-html="icon"
-  />
-</template>
-
 <script setup lang="ts">
 import type { IconImageChoice } from '~/functs/IconImage'
 import { ICONS } from '~/functs/IconImage'
@@ -38,3 +28,13 @@ const icon = computed(() => {
 onMounted(() => emit('mounted', svgRef.value))
 onUnmounted(() => emit('unmounted'))
 </script>
+
+<template>
+  <svg
+    ref="svgIcon"
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+    @click="$emit('click')"
+    v-html="icon"
+  />
+</template>

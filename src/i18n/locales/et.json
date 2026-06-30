@@ -3396,5 +3396,74 @@
     "ice-breakers": "Siin on mõned jäämurdjad",
     "special-agents": "Otsite spetsialiseeritud agenti?",
     "other-special-agents": "Otsite teist spetsialiseeritudagenti?"
+  },
+  "tab": {
+    "tab": {
+      "delete-confirm": "Kas tõesti kustutada see kaart? kogu sisu eemaldatakse.",
+      "delete": "Kustuta kaart",
+      "add": "Lisa uus kaart.",
+      "edit": "Muuda kaarti",
+      "title": "Kaardi loomine",
+      "label": "Tab | Tabs"
+    },
+    "item": {
+      "delete-confirm": "Kas tõesti kustutada see element?",
+      "delete": "Kustuta element",
+      "add": "Lisa uus element",
+      "edit": "Redigeeri elementi",
+      "title": "Esemevorm"
+    },
+    "form": {
+      "title": {
+        "label": "Pealkiri"
+      },
+      "description": {
+        "label": "Kirjeldus"
+      },
+      "icon": {
+        "label": "Icon"
+      },
+      "show_preview": {
+        "label": "Eelvaatluse näitamine kokkuvõtteleheküljel."
+      },
+      "type": {
+        "label": "Tüüp",
+        "required": "Vajalik on kaardi tüüp.",
+        "text": {
+          "label": "tekst",
+          "help": "Sisu on täisteksti sisu."
+        },
+        "blog": {
+          "label": "blogi",
+          "help": "Sisu on blogi sissekannete nimekiri."
+        }
+      }
+    },
+    "toasts": {
+      "tab-create": {
+        "success": "Vahekaart on edukalt loodud.",
+        "error": "Kaardi loomine nurjus. Palun proovi uuesti."
+      },
+      "tab-update": {
+        "success": "Kaart on edukalt uuendatud.",
+        "error": "Kaardi uuendamine nurjus. Palun proovi uuesti."
+      },
+      "tab-delete": {
+        "success": "Kaart on edukalt kustutatud.",
+        "error": "Kaardi kustutamine nurjus. Palun proovi uuesti."
+      },
+      "item-delete": {
+        "success": "Ese on edukalt kustutatud.",
+        "error": "Elemendi kustutamine nurjus. Palun proovi uuesti."
+      },
+      "item-update": {
+        "success": "Artiklit on edukalt uuendatud.",
+        "error": "Elementi uuendamine nurjus. Palun proovi uuesti."
+      },
+      "item-create": {
+        "success": "Ese on edukalt loodud.",
+        "error": "Elemendi loomine nurjus. Palun proovi uuesti."
+      }
+    }
   }
 }

@@ -66,3 +66,5 @@ export type StatusType = 'na' | 'ongoing' | 'complete' | 'cancel'
 export type LocationType = 'team' | 'impact' | 'address' | 'news' | 'event'
 
 export type Language = 'en' | 'fr' | 'de' | 'nl' | 'et' | 'ca' | 'es'
+
+export type ProjectTabType = 'text' | 'blog'

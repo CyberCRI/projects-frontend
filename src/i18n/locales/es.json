@@ -3396,5 +3396,74 @@
     "ice-breakers": "Aquí tienes algunas ideas para romper el hielo",
     "special-agents": "¿Buscas un agente especializado?",
     "other-special-agents": "¿Buscas otro agente especializado?"
+  },
+  "tab": {
+    "tab": {
+      "delete-confirm": "¿Estás seguro de que quieres borrar esta pestaña? todo el contenido será eliminado.",
+      "delete": "Borrar la pestaña",
+      "add": "Añadir un nuevo Tab.",
+      "edit": "Editar Tab",
+      "title": "Creación de pestañas",
+      "label": "Tab | Tabs"
+    },
+    "item": {
+      "delete-confirm": "¿Estás seguro de que quieres eliminar este artículo.",
+      "delete": "Suprimir el tema",
+      "add": "Añadir un nuevo elemento",
+      "edit": "Editar el tema",
+      "title": "Forma del artículo"
+    },
+    "form": {
+      "title": {
+        "label": "Título"
+      },
+      "description": {
+        "label": "Descripción"
+      },
+      "icon": {
+        "label": "Icon"
+      },
+      "show_preview": {
+        "label": "Mostrar vista previa en la página sumaria."
+      },
+      "type": {
+        "label": "Tipo",
+        "required": "Se requiere el tipo de pestaña.",
+        "text": {
+          "label": "texto",
+          "help": "el Contenido es un contenido de texto completo."
+        },
+        "blog": {
+          "label": "blog",
+          "help": "el Contenido es lista para la entrada del blog."
+        }
+      }
+    },
+    "toasts": {
+      "tab-create": {
+        "success": "La pestaña ha sido creada con éxito.",
+        "error": "Failed to create the tab. Por favor, inténtalo de nuevo."
+      },
+      "tab-update": {
+        "success": "La ficha ha sido actualizada con éxito.",
+        "error": "Failed to update the tab. Por favor, inténtalo de nuevo."
+      },
+      "tab-delete": {
+        "success": "La pestaña se ha eliminado con éxito.",
+        "error": "Failed to delete the tab. Por favor, inténtalo de nuevo."
+      },
+      "item-delete": {
+        "success": "El tema se ha eliminado con éxito.",
+        "error": "Failed to delete the item. Por favor, inténtalo de nuevo."
+      },
+      "item-update": {
+        "success": "El artículo ha sido actualizado con éxito.",
+        "error": "No ha actualizado el tema. Por favor, inténtalo de nuevo."
+      },
+      "item-create": {
+        "success": "El artículo ha sido creado con éxito.",
+        "error": "Failed to create the item. Por favor, inténtalo de nuevo."
+      }
+    }
   }
 }

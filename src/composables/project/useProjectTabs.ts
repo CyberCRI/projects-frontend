@@ -1,6 +1,10 @@
 import type { ProjectModel, ProjectSlugOrId, TranslatedProject } from '@/models/project.model'
 import { ProjectModuleIcon, ProjectModuleTitle } from '@/models/project.model'
+import { projectTabSkeleton } from '~/skeletons/project-tabs.skeletons'
+import { getAllProjectTab } from '~/api/v2/project-tabs.service'
 import { projectSkeleton } from '@/skeletons/project.skeletons'
+import { factoryPagination } from '~/skeletons/base.skeletons'
+import { safeProjectIconTab } from '~/functs/projects'
 
 export const useProjectTabs = (
   projectId: ComputedRef<ProjectSlugOrId>,
@@ -8,6 +12,7 @@ export const useProjectTabs = (
 ) => {
   const route = useRoute()
   const router = useRouter()
+  const organizationCode = useOrganizationCode()
 
   const { t } = useNuxtI18n()
 
@@ -16,6 +21,10 @@ export const useProjectTabs = (
       ...projectSkeleton().modules,
       ...(project.value?.modules ?? {}),
     }
+  })
+
+  const { data: tabs } = getAllProjectTab(organizationCode, projectId, {
+    default: () => factoryPagination(projectTabSkeleton, project?.value?.modules?.tabs || 0),
   })
 
   const { isAdmin, isMember } = usePermissions()
@@ -143,6 +152,21 @@ export const useProjectTabs = (
         dataTest: 'project-private-exchange',
         icon: 'EmailOutline',
       },
+
+      ...tabs.value.map((tab) => {
+        return {
+          key: `project-additionals-${tab.id}`,
+          label: tab.$t.title,
+          view: `/projects/${projectId.value}/additionals/${tab.id}`,
+          altView: `/projects/${projectId.value}/additionals/${tab.id}/edit`,
+          dataTest: `project-additionals-${tab.id}`,
+          condition: tab.modules.items >= 1,
+          icon: safeProjectIconTab(tab.icon, tab.type),
+          props: {
+            tab,
+          },
+        }
+      }),
     ].map((t) => ({ ...t, isEditing: false }))
   })
 
@@ -257,6 +281,30 @@ export const useProjectTabs = (
         dataTest: 'project-reviews',
         icon: ProjectModuleIcon.reviews,
       },
+      ...tabs.value.map((tab) => {
+        return {
+          key: `project-additionals-${tab.id}`,
+          label: tab.$t.title,
+          view: `/projects/${projectId.value}/additionals/${tab.id}/edit`,
+          altView: `/projects/${projectId.value}/additionals/${tab.id}`,
+          dataTest: `project-additionals-${tab.id}`,
+          condition: true,
+          icon: safeProjectIconTab(tab.icon, tab.type),
+          props: {
+            tab,
+          },
+        }
+      }),
+      {
+        key: 'project-additionals-add',
+        label: t('tab.tab.add'),
+        view: `/projects/${projectId.value}/additionals/create`,
+        altView: ``,
+        condition: true,
+        dataTest: 'project-additionals-add',
+        icon: 'Plus',
+      },
+
       {
         key: 'project-settings',
         label: t('project.settings'),

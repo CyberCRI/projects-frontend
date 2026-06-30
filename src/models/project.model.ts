@@ -54,6 +54,7 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
     files: number
     reviews: number
     messages: number
+    tabs: number
   }
   template?: TemplateModel
 }
@@ -63,7 +64,7 @@ export type ProjectModuleExtra = ProjectModulesKeys | 'resources'
 
 export const ProjectModuleIcon: { [key in ProjectModuleExtra]: IconImageChoice } = {
   announcements: 'BullhornOutline',
-  blogs: 'Progress5',
+  blogs: 'NewsLine',
   goals: 'TimerLine',
   members: 'Users',
   similars: 'Briefcase',
@@ -76,6 +77,7 @@ export const ProjectModuleIcon: { [key in ProjectModuleExtra]: IconImageChoice }
   groups: 'PeopleGroup',
   reviews: 'Feedback',
   messages: 'ChatBubble',
+  tabs: 'Tab',
 }
 
 export const ProjectModuleTitle: { [key in ProjectModuleExtra]: string } = {
@@ -95,6 +97,7 @@ export const ProjectModuleTitle: { [key in ProjectModuleExtra]: string } = {
   groups: 'project.groups',
   reviews: 'project.reviews',
   messages: 'comment.private-exchange.tab',
+  tabs: 'tab.tab.label',
 }
 
 export type TranslatedProject = Translated<

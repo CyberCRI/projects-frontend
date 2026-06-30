@@ -62,7 +62,9 @@ const { stateModals, closeModals, openModals } = useModals({ saveChange: false }
 
 const { form, isValid, errors, cleanedData, reset } = useProjectReviewForm({ lazy: true })
 
-const isFormEqual = useBlockNavigation(() => isEqual(form.value, defaultLocalForm()))
+const isFormEqual = useBlockNavigation(
+  () => !props.isOpened || isEqual(form.value, defaultLocalForm())
+)
 
 watch(
   () => [props.project, props.review, props.isOpened],

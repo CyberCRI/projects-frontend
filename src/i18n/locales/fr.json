@@ -3396,5 +3396,74 @@
     "ice-breakers": "Voici quelques idées pour briser la glace",
     "special-agents": "Vous cherchez un agent spécialisé ?",
     "other-special-agents": "Vous cherchez un autre agent spécialisé ?"
+  },
+  "tab": {
+    "tab": {
+      "delete-confirm": "Voulez-vous vraiment supprimer cet onglet ? tout le contenu sera supprimé.",
+      "delete": "Supprimer l'onglet",
+      "add": "Ajouter un nouvel onglet.",
+      "edit": "Modifier l'onglet",
+      "title": "Création d'onglets",
+      "label": "onglet | Tables"
+    },
+    "item": {
+      "delete-confirm": "Voulez-vous vraiment supprimer cet élément.",
+      "delete": "Supprimer l' élément",
+      "add": "Ajouter un nouvel élément",
+      "edit": "Modifier l'élément",
+      "title": "Formulaire"
+    },
+    "form": {
+      "title": {
+        "label": "Titre"
+      },
+      "description": {
+        "label": "Désignation des marchandises"
+      },
+      "icon": {
+        "label": "Icône"
+      },
+      "show_preview": {
+        "label": "Afficher l'aperçu dans la page de résumé."
+      },
+      "type": {
+        "label": "Type",
+        "required": "Le type d'onglet est requis.",
+        "text": {
+          "label": "texte",
+          "help": "le Contenu est un texte complet."
+        },
+        "blog": {
+          "label": "blog",
+          "help": "le Contenu est la liste pour l'entrée de blog."
+        }
+      }
+    },
+    "toasts": {
+      "tab-create": {
+        "success": "L'onglet a été créé avec succès.",
+        "error": "Impossible de créer l'onglet. Veuillez réessayer."
+      },
+      "tab-update": {
+        "success": "L'onglet a été mis à jour avec succès.",
+        "error": "Impossible de mettre à jour l'onglet. Veuillez réessayer."
+      },
+      "tab-delete": {
+        "success": "L'onglet a été supprimé avec succès.",
+        "error": "Impossible de supprimer l'onglet. Veuillez réessayer."
+      },
+      "item-delete": {
+        "success": "L'article a été supprimé avec succès.",
+        "error": "Impossible de supprimer l'élément. Veuillez réessayer."
+      },
+      "item-update": {
+        "success": "Cet article a été mis à jour avec succès.",
+        "error": "Impossible de mettre à jour l'élément. Veuillez réessayer."
+      },
+      "item-create": {
+        "success": "L'article a été créé avec succès.",
+        "error": "Impossible de créer l'élément. Veuillez réessayer."
+      }
+    }
   }
 }

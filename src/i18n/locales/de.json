@@ -3396,5 +3396,74 @@
     "ice-breakers": "Hier sind einige Eisbrecher-Themen",
     "special-agents": "Auf der Suche nach einem spezialisierten Agenten?",
     "other-special-agents": "Auf der Suche nach einem anderen spezialisierten Agenten?"
+  },
+  "tab": {
+    "tab": {
+      "delete-confirm": "Sind Sie sicher, dass Sie diese Registerkarte löschen möchten? alle Inhalte werden entfernt.",
+      "delete": "Register löschen",
+      "add": "Fügen Sie ein neues Tab hinzu.",
+      "edit": "Tab bearbeiten",
+      "title": "Tab Erstellung",
+      "label": "Register | Tabs"
+    },
+    "item": {
+      "delete-confirm": "Sind Sie sicher, dass Sie diesen Artikel löschen möchten.",
+      "delete": "Artikel löschen",
+      "add": "Neues Produkt hinzufügen",
+      "edit": "Artikel bearbeiten",
+      "title": "Warenbezeichnung"
+    },
+    "form": {
+      "title": {
+        "label": "Titel"
+      },
+      "description": {
+        "label": "Warenbezeichnung"
+      },
+      "icon": {
+        "label": "Icon"
+      },
+      "show_preview": {
+        "label": "Vorschau in der Zusammenfassungsseite anzeigen."
+      },
+      "type": {
+        "label": "Typ",
+        "required": "Die Art der Registerkarte ist erforderlich.",
+        "text": {
+          "label": "Text",
+          "help": "der Inhalt ist ein vollständiger Textinhalt."
+        },
+        "blog": {
+          "label": "Blog",
+          "help": "der Inhalt ist Liste für Blogeintrag."
+        }
+      }
+    },
+    "toasts": {
+      "tab-create": {
+        "success": "Die Registerkarte wurde erfolgreich erstellt.",
+        "error": "Versäumt, die Registerkarte zu erstellen. Bitte versuchen Sie es noch mal."
+      },
+      "tab-update": {
+        "success": "Die Registerkarte wurde erfolgreich aktualisiert.",
+        "error": "Versäumt, die Registerkarte zu aktualisieren. Bitte versuchen Sie es noch mal."
+      },
+      "tab-delete": {
+        "success": "Die Registerkarte wurde erfolgreich gelöscht.",
+        "error": "Nicht gelöscht. Bitte versuchen Sie es noch mal."
+      },
+      "item-delete": {
+        "success": "Der Artikel wurde erfolgreich gelöscht.",
+        "error": "Nicht gelöscht. Bitte versuchen Sie es noch mal."
+      },
+      "item-update": {
+        "success": "Der Artikel wurde erfolgreich aktualisiert.",
+        "error": "Versäumt, den Artikel zu aktualisieren. Bitte versuchen Sie es noch mal."
+      },
+      "item-create": {
+        "success": "Der Artikel wurde erfolgreich erstellt.",
+        "error": "Versäumt, den Artikel zu erstellen. Bitte versuchen Sie es noch mal."
+      }
+    }
   }
 }
