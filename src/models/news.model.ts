@@ -85,6 +85,6 @@ export type QueryFilterNews = Partial<
     ordering: Ordering<'created_at' | 'updated_at' | 'publication_date'>
     from_date: string
     to_date: string
-    serializer: 'light' | 'superlight'
+    serializer: 'light'
   } & PaginationQuery
 >

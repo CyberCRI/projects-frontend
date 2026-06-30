@@ -107,18 +107,18 @@ const onMapClick = (event) => {
 }
 
 const locationsFilter = computed(() => {
-  let locations = props.locations
+  const locations = props.locations
   if (!locations) {
     return []
   }
 
   // filter by locationsTypes
-  locations = locations.filter((location) => {
+  const filteredLocations = locations.filter((location) => {
     return !!filters.value.locationType[location.type]
   })
 
   // TODO add more filters (event current running, search bar ...ect)
-  return locations
+  return filteredLocations
 })
 
 watch(

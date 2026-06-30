@@ -46,7 +46,6 @@ const {
 } = getProject(organizationCode, contentIdString, {
   default: () => projectSkeleton(),
   query: {
-    info_details: 'summary',
     serializer: 'superlight',
   },
   immediate: false,

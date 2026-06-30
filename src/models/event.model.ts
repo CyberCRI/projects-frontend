@@ -42,6 +42,6 @@ export type QueryFilterEvent = Partial<
     ordering: Ordering<'start_date' | 'end_date' | 'updated_at' | 'created_at'>
     from_date: string
     to_date: string
-    serializer: 'light' | 'superlight'
+    serializer: 'light'
   } & PaginationQuery
 >

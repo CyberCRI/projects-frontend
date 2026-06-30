@@ -7,7 +7,12 @@ import type {
   PostGroupProjects,
   RemoveGroupMember,
 } from '~/models/group.model'
-import type { PeopleGroupIdOrSlug, PeopleGroupModel } from '~/models/invitation.model'
+import type {
+  PeopleGroupIdOrSlug,
+  PeopleGroupModel,
+  QueryFilterGroup,
+  QueryFilterGroupHierarchy,
+} from '~/models/invitation.model'
 import type { BaseLocationModel, LocationModel } from '~/models/location.model'
 import type { ImageModealCreated, ImageModel } from '~/models/image.model'
 import type { ProjectModel } from '~/models/project.model'
@@ -17,23 +22,17 @@ import type { NewsModel } from '~/models/news.model'
 import { _adaptParamsToGetQuery } from '~/api/utils.service'
 
 import type { OrganizationModel } from '~/models/organization.model'
+import type { UseApiOptions } from '~/composables/useAPI'
 import useAPI from '~/composables/useAPI'
 
 // HIERARCHY
-export async function getHierarchyGroups(organizationCode: OrganizationModel['code'], config = {}) {
+export async function getHierarchyGroups(
+  organizationCode: OrganizationModel['code'],
+  config: UseApiOptions<QueryFilterGroupHierarchy> = {}
+) {
   return await useAPI<HierarchyGroupModel>(
     `organization/${organizationCode}/people-groups-hierarchy/`,
     config
-  )
-}
-
-// ALL GROUPS
-export async function getPeopleGroups(organizationCode, config) {
-  return await useAPI<PaginationResult<PeopleGroupModel>>(
-    `organization/${organizationCode}/people-group/`,
-    {
-      ..._adaptParamsToGetQuery(config),
-    }
   )
 }
 
@@ -59,7 +58,7 @@ export async function addParentGroup(
 export function getGroup(
   organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
-  config = {}
+  config: UseApiOptions<QueryFilterGroup> = {}
 ) {
   return useAPI<PeopleGroupModel>(
     `organization/${organizationCode}/people-group/${groupId}/`,

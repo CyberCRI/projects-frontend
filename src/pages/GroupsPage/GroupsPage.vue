@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { PeopleGroupModulesKeys } from '~/models/invitation.model'
-
 import { getHierarchyGroups } from '~/api/v2/group.service'
 
 import { useLpiHead2 } from '~/composables/useLpiHead'
@@ -21,7 +19,7 @@ const {
   error,
 } = getHierarchyGroups(organizationCode, {
   query: {
-    modules: ['members', 'subgroups'] satisfies PeopleGroupModulesKeys[],
+    modules: ['members', 'subgroups'],
     depth: 1,
     parent: props.groupIdOrSlug || undefined,
   },
