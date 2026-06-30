@@ -14,20 +14,25 @@ export interface TemplateModel extends BaseModel {
   id: number
   name: string
   description: string
-  language: LanguageType
+  language: LanguageType // this is unused in backend
   images: ImageModel[]
   organization: OrganizationModel
   categories: ProjectCategoryModel[]
+  // projects
   project_title: string
   project_description: string
   project_purpose: string
   project_tags: TagModel[]
+  // blogs
   blogentry_title: string
   blogentry_content: string
+  // goals
   goal_title: string
   goal_description: string
+  // reviews
   review_title: string
   review_description: string
+  // comment
   comment_content: string
 }
 
@@ -56,13 +61,3 @@ export type TranslatedTemplate = Omit<
 }
 
 export type TemplateForm = Partial<TemplateModel>
-
-export type TemplateCreateInput = Required<TemplateModel> & {
-  project_categories_ids: number[]
-}
-
-export type TemplatePutInput = Required<TemplateCreateInput>
-
-export type TemplatePatchInput = Partial<TemplateCreateInput>
-
-export type TemplateOutput = Required<TemplateModel>

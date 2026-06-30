@@ -1,4 +1,4 @@
-import type { TemplateModel, TemplateOutput, TranslatedTemplate } from '@/models/template.model'
+import type { TemplateModel, TranslatedTemplate } from '@/models/template.model'
 import type { TagModel, TagOutput, TranslatedTag } from '@/models/tag.model'
 import type { OrganizationModel } from '@/models/organization.model'
 import type { ImageSizes } from '~/functs/imageSizesUtils'
@@ -68,7 +68,7 @@ export type ProjectCategoryPatchInput = Partial<Omit<ProjectCategoryModel, 'tags
 
 export type ProjectCategoryOutput = BaseModel &
   Required<Omit<ProjectCategoryModel, 'tags'>> & {
-    template: TemplateOutput
+    template: TemplateModel
     organization: OrganizationModel['code']
     tags: TagOutput[]
   }

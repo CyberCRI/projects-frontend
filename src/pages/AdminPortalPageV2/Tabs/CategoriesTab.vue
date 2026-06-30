@@ -1,21 +1,12 @@
 <template>
-  <div class="categories-tab">
-    <div class="header">
-      <div class="notices">
-        <p>
-          {{ $t('category.info-organize') }}
-          <br />
-          {{ $t('category.info-limit') }}
-        </p>
-      </div>
-      <div class="actions">
-        <LinkButton
-          btn-icon="Plus"
-          :label="$t('admin.portal.categories.add')"
-          @click="addCategory(null)"
-        />
-      </div>
-    </div>
+  <LayoutTab :title="$t('category.info-organize')" :notice="$t('category.info-limit')">
+    <template #actions>
+      <LpiButton
+        btn-icon="Plus"
+        :label="$t('admin.portal.categories.add')"
+        @click="addCategory(null)"
+      />
+    </template>
 
     <div class="categories-container">
       <LpiLoader v-if="isLoading" class="loader" type="simple" />
@@ -82,7 +73,7 @@
       @cancel="categoryToDelete = null"
       @confirm="deleteCategory"
     />
-  </div>
+  </LayoutTab>
 </template>
 
 <script>
@@ -98,7 +89,6 @@ import CategoryAdminElement from '~/components/category/CategoryAdminElement.vue
 import CategoryDrawer from '~/components/category/CategoryDrawer.vue'
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
-import LinkButton from '~/components/base/button/LinkButton.vue'
 import LpiLoader from '~/components/base/loader/LpiLoader.vue'
 import LpiSnackbar from '~/components/base/LpiSnackbar.vue'
 
@@ -108,6 +98,7 @@ import useToasterStore from '~/stores/useToaster.ts'
 import useOrganizationCode from '~/composables/useOrganizationCode.ts'
 
 import { imageSizesFormData } from '~/functs/imageSizesUtils.ts'
+import LayoutTab from '~/components/admin/LayoutTab.vue'
 import { Sortable } from 'sortablejs-vue3'
 import { toRaw } from 'vue'
 
@@ -117,7 +108,7 @@ export default {
   components: {
     CategoryAdminElement,
     LpiSnackbar,
-    LinkButton,
+    LayoutTab,
     CategoryDrawer,
     LpiLoader,
     Sortable,

@@ -143,7 +143,7 @@ const tabs = computed(() => {
       label: t('admin.tabs.templates'),
       view: { name: 'templates' },
       props: {},
-      icon: 'CheckBoxBlankOutline',
+      icon: 'ClipBoard',
       condition: true,
     },
     {

@@ -174,10 +174,7 @@ const { form, errors, isValid, cleanedData, reset } = useTemplateForm()
 const isFormEqual = useBlockNavigation(() => isEqual(form.value, localeDefaultForm()))
 watch(
   () => props.template,
-  () => {
-    console.log('watch templates', props.template)
-    reset(localeDefaultForm())
-  },
+  () => reset(localeDefaultForm()),
   { deep: true, immediate: true }
 )
 watchEffect(() => emit('isValid', isValid.value))

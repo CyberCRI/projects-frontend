@@ -5,16 +5,21 @@
         {{ label }}
       </div>
       <div class="actions skeletons-background">
-        <ContextActionMenu>
+        <ContextActionMenuInline
+          :can-delete="actionDelete"
+          :can-edit="actionEdit"
+          @delete="$emit('delete')"
+          @edit="$emit('edit')"
+        >
           <ContextActionButton
-            v-if="actionEdit"
-            action-icon="Pen"
+            v-if="actionSee"
+            action-icon="Eye"
             class="edit-btn small"
             secondary
             no-border
-            data-test="action-edit"
-            :action-label="t('common.edit')"
-            @click.stop.prevent="emit('edit')"
+            data-test="action-see"
+            :action-label="t('common.see')"
+            @click.stop.prevent="$emit('see')"
           />
 
           <ContextActionButton
@@ -25,31 +30,9 @@
             no-border
             data-test="action-add"
             :action-label="t('common.add')"
-            @click.stop.prevent="emit('add')"
+            @click.stop.prevent="$emit('add')"
           />
-
-          <ContextActionButton
-            v-if="actionSee"
-            action-icon="Eye"
-            class="edit-btn small"
-            secondary
-            no-border
-            data-test="action-see"
-            :action-label="t('common.see')"
-            @click.stop.prevent="emit('see')"
-          />
-
-          <ContextActionButton
-            v-if="actionDelete"
-            action-icon="TrashCanOutline"
-            class="edit-btn small"
-            secondary
-            no-border
-            data-test="action-delete"
-            :action-label="t('common.delete')"
-            @click.stop.prevent="emit('delete')"
-          />
-        </ContextActionMenu>
+        </ContextActionMenuInline>
       </div>
     </div>
   </li>
@@ -57,40 +40,31 @@
 
 <script setup lang="ts">
 import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
-import ContextActionMenu from '~/components/base/button/ContextActionMenu.vue'
-
 import useNuxtI18n from '~/composables/useNuxtI18n'
-
-defineOptions({
-  name: 'AdminListItem',
-})
 
 const { t } = useNuxtI18n()
 
-defineProps({
-  label: {
-    type: String,
-    required: true,
-  },
-  actionEdit: {
-    type: Boolean,
-    default: true,
-  },
-  actionAdd: {
-    type: Boolean,
-    default: true,
-  },
-  actionSee: {
-    type: Boolean,
-    default: true,
-  },
-  actionDelete: {
-    type: Boolean,
-    default: true,
-  },
-})
-
-const emit = defineEmits(['edit', 'add', 'see', 'delete'])
+withDefaults(
+  defineProps<{
+    label: string
+    actionEdit?: boolean
+    actionAdd?: boolean
+    actionSee?: boolean
+    actionDelete?: boolean
+  }>(),
+  {
+    actionEdit: true,
+    actionAdd: true,
+    actionSee: true,
+    actionDelete: true,
+  }
+)
+defineEmits<{
+  edit: []
+  add: []
+  see: []
+  delete: []
+}>()
 </script>
 
 <style lang="scss" scoped>
@@ -99,7 +73,7 @@ const emit = defineEmits(['edit', 'add', 'see', 'delete'])
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: solid $lighter-gray 1px;
+  border-bottom: solid var(--lighter-gray) 1px;
 }
 
 .sub-list {
@@ -136,11 +110,11 @@ li {
 }
 
 .grey-color {
-  fill: $lighter-gray;
+  fill: var(--lighter-gray);
 }
 
 .black-text {
-  color: $almost-black;
+  color: var(--almost-black);
   font-weight: 400;
 }
 </style>
