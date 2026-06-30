@@ -14,6 +14,7 @@ describe('ProfileResourcesTab.vue', () => {
     const props = {
       user: UserFactory.generate(),
       isInEditingMode: false,
+      onProfileEdited: () => {},
     }
 
     registerEndpoint(`user/${props.user.id}/link/`, () => {

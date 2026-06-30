@@ -140,3 +140,14 @@ export interface InvitationModelInput {
   description: string
   expire_at: string
 }
+
+export type QueryFilterGroup = Partial<{
+  modules: PeopleGroupModulesKeys[] | 'none'
+  serializer: 'light' | 'superlight'
+}>
+
+export type QueryFilterGroupHierarchy = QueryFilterGroup &
+  Partial<{
+    depth: number
+    parent: PeopleGroupIdOrSlug
+  }>

@@ -1,5 +1,9 @@
+import type {
+  PeopleGroupIdOrSlug,
+  QueryFilterGroup,
+  QueryFilterGroupHierarchy,
+} from '~/models/invitation.model'
 import type { OrganizationModel } from '~/models/organization.model'
-import type { PeopleGroupIdOrSlug } from '~/models/invitation.model'
 
 import type { RefOrRaw } from '~/interfaces/utils'
 
@@ -25,7 +29,7 @@ import { onlyRefs } from '~/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}
 
-type Config = UseAsyncApiConfig
+type Config = UseAsyncApiConfig<QueryFilterGroup>
 type ConfigPagination = UseAsyncPaginationApiConfig
 
 export const getGroup = (
@@ -50,7 +54,7 @@ export const getGroup = (
 
 export const getHierarchyGroups = (
   organizationCode: RefOrRaw<OrganizationModel['code']>,
-  config: Config = {}
+  config: UseAsyncApiConfig<QueryFilterGroupHierarchy> = {}
 ) => {
   const { translateGroup } = useAutoTranslate()
   const key = computed(() => `${unref(organizationCode)}::hierarchy-groups`)

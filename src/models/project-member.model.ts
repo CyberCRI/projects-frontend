@@ -68,6 +68,7 @@ export type QueryFilterProject = Partial<
     creation_year: string[]
     ids: ProjectModel['id'][]
     modules: 'none' | ProjectModulesKeys[]
+    serializer: 'light' | 'superlight'
   } & PaginationQuery
 >
 
