@@ -121,16 +121,11 @@ function fallbackToSoloMode() {
 }
 
 function getCollaborativeExtensions() {
-  const exts = getExtensions({ disableHistory: true })
-
-  exts.push(
-    // @ts-expect-error ignore error (TODO)
+  return [
+    ...getExtensions({ disableHistory: true }),
     Collaboration.configure({
       document: toRaw(provider.value.document),
-    })
-  )
-  exts.push(
-    // @ts-expect-error ignore error (TODO)
+    }),
     CollaborationCursor.configure({
       provider: toRaw(provider.value),
       user: {
@@ -139,12 +134,9 @@ function getCollaborativeExtensions() {
         pid: user.value.id,
         profile_picture: user.value.profile_picture,
       },
-    })
-  )
-  // @ts-expect-error ignore error (TODO)
-  exts.push(ClearHistoryWS.configure({}))
-
-  return exts
+    }),
+    ClearHistoryWS.configure({}),
+  ]
 }
 
 const getCollaborativeContent = () => {
@@ -167,9 +159,10 @@ function initCollaborativeEditor() {
   editorInited.value = true
 
   status.value = 'connecting'
-  // this.ydoc = new Y.Doc()
 
   const providerParams = {
+    // add initialContent as a value for first time eding/creating
+    content: initialContent.value,
     ...props.providerParams,
   }
 
@@ -194,8 +187,9 @@ function initCollaborativeEditor() {
       // clear "unconnectable" timeout
       if (cnxTimer.value) clearTimeout(cnxTimer.value)
     },
-    onAuthenticationFailed: () => {
+    onAuthenticationFailed: (data) => {
       emit('unauthorized')
+      console.error(data)
       toaster.pushError(t('multieditor.unauthorized'))
     },
     // it tell us if server is down or not
@@ -256,7 +250,7 @@ function handleDisconnection() {
   disconnectionGrace.value = true
   disconnectionGraceTimeout.value = setTimeout(() => {
     disconnectionGrace.value = false
-    editor.value.setEditable(false)
+    editor.value?.setEditable(false)
   }, DISCONNECTION_GRACE_DURATION)
 }
 

@@ -30,8 +30,6 @@ const socketReady = ref(false)
 const router = useRouter()
 const organizationsStore = useOrganizationsStore()
 
-const editorRef = useTemplateRef('tiptapEditor')
-
 const room = computed(() => `description_${props.project.id}`)
 const providerParams = computed(() => {
   return {
@@ -67,14 +65,7 @@ const { stateModals, openModals, closeModals, closeAllModals } = useModals({
   unauthorized: false,
 })
 
-const isFormEqual = useBlockNavigation(() => {
-  const numberEditor = inSoloMode.value
-    ? 1
-    : editorRef.value?.editor?.storage?.collaborationCursor?.users?.length || 0
-
-  // if form is same or your are in multiple user editor
-  return isEqual(form.value, defaultLocalForm()) || numberEditor !== 1
-})
+const isFormEqual = useBlockNavigation(() => isEqual(form.value, defaultLocalForm()))
 
 // callback
 
