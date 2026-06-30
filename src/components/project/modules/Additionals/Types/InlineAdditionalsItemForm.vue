@@ -83,8 +83,6 @@ const isFormEqual = useBlockNavigation(() => isEqual(form.value, defaultLocalFor
 const asyncing = ref(false)
 
 const providerParams = computed(() => ({
-  itemId: props.item?.id ?? null,
-  tabId: props.tab.id,
   projectId: props.project.id,
   organizationId: organizationsStore.current.id,
 }))
@@ -93,7 +91,7 @@ const inOfflineMode = ref(false)
 
 const isCreated = computed(() => isNil(props.item?.id) || inOfflineMode.value)
 
-const room = computed(() => (props.item?.id ? `blog_${props.item.id}` : null))
+const room = computed(() => (props.item?.id ? `additional_${props.item.id}` : null))
 
 const handleImage = (img: ImageModel) => {
   form.value.images_ids.push(img.id)
@@ -201,7 +199,7 @@ const checkClose = () => {
           @image="handleImage"
         />
         <TipTapCollaborativeEditor
-          v-else
+          v-else-if="room"
           ref="tiptapEditor"
           v-model="form.content"
           class="w-full"

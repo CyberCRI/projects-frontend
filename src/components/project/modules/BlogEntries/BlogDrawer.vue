@@ -209,7 +209,7 @@ const checkClose = () => {
         @image="handleImage"
       />
       <TipTapCollaborativeEditor
-        v-else
+        v-else-if="room"
         ref="tiptapEditor"
         v-model="form.content"
         :room="room"

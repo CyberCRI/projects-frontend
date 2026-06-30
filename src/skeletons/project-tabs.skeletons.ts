@@ -7,7 +7,6 @@ export const projectTabSkeleton = (def?: Partial<ProjectTab>): ProjectTab => {
     description: 'description',
     icon: DEFAULT_ICONS_TABS.text,
     type: 'text',
-    id: -1,
     show_preview: true,
     modules: {
       items: 0,
@@ -20,10 +19,11 @@ export const projectTabSkeleton = (def?: Partial<ProjectTab>): ProjectTab => {
   return obj
 }
 
-export const projectTabItemSkeleton = (def?: Partial<ProjectTabItem>): ProjectTabItem => ({
+export const projectTabItemSkeleton = (
+  def?: Partial<ProjectTabItem>
+): Omit<ProjectTabItem, 'id'> => ({
   title: 'title',
   content: 'description',
-  id: -1,
   created_at: new Date().toISOString(),
   updated_at: new Date().toISOString(),
   ...(def ?? {}),
