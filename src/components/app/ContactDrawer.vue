@@ -1,156 +1,133 @@
 <template>
   <BaseDrawer
-    :custom-style="customNotificationStyle"
     :is-opened="isOpened"
     class="medium"
     :confirm-action-name="$t('common.send')"
-    :confirm-action-disabled="v$.$invalid"
+    :confirm-action-disabled="!isValid"
     :title="$t('footer.contact')"
-    :asyncing="isLoading"
-    @close="$emit('close')"
+    :asyncing="asyncing"
+    @close="checkClose"
     @confirm="submit"
   >
-    <form class="form">
+    <form class="list-container">
       <h3 class="sub-title">
         {{ $t('form.contact.subtitle') }}
       </h3>
-      <div class="form-input">
-        <h4 class="title">
-          {{ $t('form.contact.subject') }}
-        </h4>
-        <TextInput
-          v-model="form.subject"
-          class="text-input"
-          data-test="contact-subject"
-          :placeholder="$t('form.contact.subject-placeholder')"
-          @blur="v$.subject.$validate"
-        />
 
-        <FieldErrors :errors="v$.subject.$errors" />
-      </div>
+      <TextInput
+        v-model="form.subject"
+        class="text-input"
+        data-test="contact-subject"
+        :placeholder="$t('form.contact.subject-placeholder')"
+        :label="$t('form.contact.subject')"
+        required
+        :errors="errors.subject"
+      />
 
-      <div class="form-input">
-        <h4 class="title">
-          {{ $t('form.contact.email') }}
-        </h4>
-        <TextInput
-          v-model="form.email"
-          class="text-input"
-          data-test="contact-email"
-          :placeholder="$t('form.contact.email-placeholder')"
-          @blur="v$.email.$validate"
-        />
-        <FieldErrors :errors="v$.email.$errors" />
-      </div>
+      <TextInput
+        v-model="form.email"
+        class="text-input"
+        data-test="contact-email"
+        :placeholder="$t('form.contact.email-placeholder')"
+        :label="$t('form.contact.email')"
+        required
+        :errors="errors.email"
+      />
 
-      <div class="form-input">
-        <h4 class="title">
-          {{ $t('form.contact.content') }}
-        </h4>
-        <TextInput
-          v-model="form.content"
-          :rows="10"
-          input-type="textarea"
-          class="text-input"
-          data-test="contact-content"
-          :placeholder="$t('form.contact.content-placeholder')"
-          @blur="v$.content.$validate"
-        />
-        <FieldErrors :errors="v$.content.$errors" />
-      </div>
+      <TextInput
+        v-model="form.content"
+        required
+        :rows="10"
+        input-type="textarea"
+        class="text-input"
+        data-test="contact-content"
+        :placeholder="$t('form.contact.content-placeholder')"
+        :label="$t('form.contact.content')"
+        :errors="errors.content"
+      />
+
+      <Recaptcha v-model="form.recaptcha" :errors="errors.recaptcha" />
     </form>
   </BaseDrawer>
+  <ConfirmModal
+    v-if="stateModals.saveChange"
+    :title="$t('form.quit-without-saving-title')"
+    :content="$t('common.confirm-close')"
+    @cancel="closeModals('saveChange')"
+    @confirm="close()"
+  />
 </template>
 
 <script setup lang="ts">
-import FieldErrors from '@/components/base/form/FieldErrors.vue'
-import { email, helpers, required } from '@vuelidate/validators'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import { defaultContactForm } from '@/form/contact'
+import { defaultContactForm, useContactForm } from '@/form/contact'
 import useToasterStore from '@/stores/useToaster'
 import { contactUs } from '@/api/report.service'
-import useValidate from '@vuelidate/core'
 
 import TextInput from '~/components/base/form/TextInput.vue'
+import Recaptcha from '~/components/base/form/Recaptcha.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
+import useUsersStore from '~/stores/useUsers'
+import { isEqual, omit } from 'es-toolkit'
 
 const props = defineProps<{ isOpened: boolean }>()
 const emit = defineEmits<{ close: [] }>()
 
-const toaster = useToasterStore()
-const organizationsStore = useOrganizationsStore()
 const { t } = useNuxtI18n()
-const rules = computed(() => ({
-  subject: {
-    required: helpers.withMessage(t('form.report.message'), required),
-  },
-  email: {
-    required: helpers.withMessage(t('form.report.email.required'), required),
-    email: helpers.withMessage(t('form.report.email.format'), email),
-  },
-  content: {
-    required: helpers.withMessage(t('form.report.content'), required),
-  },
-}))
-const form = ref(defaultContactForm())
-const v$ = useValidate(rules, form)
-const isLoading = ref(false)
-const customNotificationStyle = {
-  maxHeight: 'unset',
-  padding: 'unset',
-}
-const orgCode = computed(() => organizationsStore?.current?.code)
+const toaster = useToasterStore()
+const organizationCode = useOrganizationCode()
+const userStore = useUsersStore()
 
+const defaultLocalForm = () => {
+  const newForm = defaultContactForm()
+
+  // add users logged email
+  if (userStore.user) {
+    newForm.email = userStore.user.email
+  }
+
+  return newForm
+}
+
+const { form, isValid, reset, errors, cleanedData } = useContactForm({
+  default: defaultLocalForm(),
+})
 watch(
   () => props.isOpened,
-  () => {
-    form.value = defaultContactForm()
-    v$.value.$reset()
-  }
+  () => reset(defaultLocalForm()),
+  { immediate: true }
 )
 
-const submit = async () => {
-  const isValid = await v$.value.$validate()
+const { stateModals, closeModals, openModals, closeAllModals } = useModals({ saveChange: false })
 
-  if (isValid) {
-    isLoading.value = true
+const isFormEqual = computed(() =>
+  isEqual(omit(form.value, ['recaptcha']), omit(defaultLocalForm(), ['recaptcha']))
+)
 
-    try {
-      await contactUs(orgCode.value, form.value)
-      toaster.pushSuccess(t('toasts.contact.success'))
-    } catch (error) {
-      toaster.pushError(`${t('toasts.contact.error')} (${error})`)
-      console.error(error)
-    } finally {
-      isLoading.value = false
-      emit('close')
-    }
+const close = () => {
+  closeAllModals()
+  emit('close')
+}
+
+const checkClose = () => {
+  if (isFormEqual.value) {
+    close()
+  } else {
+    openModals('saveChange')
   }
+}
+
+const asyncing = ref(false)
+const submit = () => {
+  asyncing.value = true
+  return contactUs(organizationCode, cleanedData.value)
+    .then(() => {
+      toaster.pushSuccess(t('toasts.contact.success'))
+      close()
+    })
+    .catch((error) => {
+      toaster.pushError(t('toasts.contact.error'))
+      console.error(error)
+    })
+    .finally(() => (asyncing.value = false))
 }
 </script>
-
-<style scoped lang="scss">
-.form {
-  padding: 0 1.5rem;
-
-  .title {
-    font-size: $font-size-m;
-    color: $primary-dark;
-    font-weight: bold;
-    margin: $space-m 0;
-  }
-
-  .sub-title {
-    font-size: $font-size-s;
-    margin: $space-l 0;
-  }
-
-  .save-button {
-    margin: $space-l 0;
-  }
-
-  .form-input {
-    margin-bottom: $space-l;
-  }
-}
-</style>

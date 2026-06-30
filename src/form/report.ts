@@ -7,6 +7,7 @@ export const defaultReportForm = (): ReportForm => {
     message: '',
     url: '',
     reported_by: null,
+    recaptcha: null,
   }
 }
 
@@ -27,6 +28,9 @@ export const useReportForm = (options = {}) => {
     },
     title: {
       required: helpers.withMessage(t('form.report.title'), required),
+    },
+    recaptcha: {
+      required: helpers.withMessage(t('form.recaptcha.required'), required),
     },
   }))
 

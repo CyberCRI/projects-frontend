@@ -8,10 +8,17 @@ export interface ReportModel extends BaseModel {
   reported_by: string
 }
 
-export type ReportForm = Omit<ReportModel, 'id'>
+export type ReportForm = Omit<ReportModel, 'id'> & {
+  recaptcha: string
+}
 
-export interface ContactModel {
+export interface ContactModel extends BaseModel {
+  id: number
   subject: string
   email: string
   content: string
+}
+
+export type ContactForm = Omit<ContactModel, 'id'> & {
+  recaptcha: string
 }

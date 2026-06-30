@@ -1,4 +1,4 @@
-import type { ContactModel, ReportForm, ReportModel } from '~/models/report.model'
+import type { ContactForm, ReportForm, ReportModel } from '~/models/report.model'
 
 import type { OrganizationModel } from '~/models/organization.model'
 import useAPI from '~/composables/useAPI'
@@ -22,7 +22,7 @@ export async function reportAbuse(
 
 export async function contactUs(
   organizationCode: OrganizationModel['code'],
-  formData: ContactModel
+  formData: ContactForm
 ) {
   return await useAPI(`organization/${organizationCode}/contact/us/`, {
     body: formData,

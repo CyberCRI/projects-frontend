@@ -912,7 +912,10 @@
       "description": "Le champ description est obligatoire"
     },
     "templates": "Modèles",
-    "quit-without-saving-title": "Quitter sans enregistrer ?"
+    "quit-without-saving-title": "Quitter sans enregistrer ?",
+    "recaptcha": {
+      "required": "Recaptcha est nécessaire."
+    }
   },
   "footer": {
     "contact": "Contactez-nous",
