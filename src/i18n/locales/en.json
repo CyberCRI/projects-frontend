@@ -3426,7 +3426,8 @@
         "required": "The content is required."
       },
       "icon": {
-        "label": "Icon"
+        "label": "Icon",
+        "select": "Select Icon"
       },
       "show_preview": {
         "label": "Show preview in summary page."

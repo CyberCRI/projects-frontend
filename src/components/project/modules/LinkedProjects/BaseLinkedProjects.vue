@@ -74,7 +74,7 @@ const onDeleteConfirm = () => {
       toaster.pushSuccess($t('toasts.linked-project-delete.success'))
       refreshData()
     })
-    .catch(() => toaster.pushSuccess($t('toasts.linked-project-delete.error')))
+    .catch(() => toaster.pushError($t('toasts.linked-project-delete.error')))
     .finally(() => clear())
 }
 

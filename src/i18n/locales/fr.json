@@ -3401,7 +3401,7 @@
     "tab": {
       "delete-confirm": "Voulez-vous vraiment supprimer cet onglet ? tout le contenu sera supprimé.",
       "delete": "Supprimer l'onglet",
-      "add": "Ajouter un nouvel onglet.",
+      "add": "Nouvelle onglet",
       "edit": "Modifier l'onglet",
       "title": "Création d'onglets",
       "label": "onglet | Tables"
@@ -3419,10 +3419,11 @@
         "required": "Le titre est requis."
       },
       "description": {
-        "label": "Désignation des marchandises"
+        "label": "Description"
       },
       "icon": {
-        "label": "Icône"
+        "label": "Icône",
+        "select": "Sélectionner une icône"
       },
       "show_preview": {
         "label": "Afficher l'aperçu dans la page de résumé."

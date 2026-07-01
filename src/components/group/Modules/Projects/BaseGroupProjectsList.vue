@@ -65,7 +65,7 @@ const onSubmit = (projects: TranslatedProject[]) => {
       toaster.pushSuccess(t('toasts.group-project-create.success'))
       fullRefresh()
     })
-    .catch(() => toaster.pushSuccess(t('toasts.group-project-create.error')))
+    .catch(() => toaster.pushError(t('toasts.group-project-create.error')))
     .finally(() => clear())
 }
 
@@ -84,7 +84,7 @@ const onDeleteConfirm = () => {
       toaster.pushSuccess(t('toasts.group-project-remove.success'))
       fullRefresh()
     })
-    .catch(() => toaster.pushSuccess(t('toasts.group-project-remove.error')))
+    .catch(() => toaster.pushError(t('toasts.group-project-remove.error')))
     .finally(() => clear())
 }
 </script>

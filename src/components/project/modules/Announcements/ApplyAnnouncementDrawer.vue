@@ -101,7 +101,7 @@ const onApplyAnnouncement = () => {
       toaster.pushSuccess(t('project.apply-succes'))
       close()
     })
-    .catch(() => toaster.pushSuccess(t('project.apply-error')))
+    .catch(() => toaster.pushError(t('project.apply-error')))
     .finally(() => (asyncing.value = false))
 }
 </script>

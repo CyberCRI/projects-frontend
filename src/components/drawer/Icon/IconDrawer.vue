@@ -33,7 +33,7 @@ const confirm = () => {
 <template>
   <BaseDrawer
     :is-opened="isOpened"
-    :title="$t('icon.select')"
+    :title="$t('tab.form.icon.select')"
     class="medium"
     :confirm-action-disabled="tempModel === model"
     @close="emit('close')"

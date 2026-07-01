@@ -157,7 +157,7 @@ const onDeleteConfirm = () => {
       toaster.pushSuccess(t('toasts.goal.success'))
       fullRefresh()
     })
-    .catch(() => toaster.pushSuccess(t('toasts.goal.error')))
+    .catch(() => toaster.pushError(t('toasts.goal.error')))
     .finally(() => cancel())
 }
 

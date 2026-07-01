@@ -108,7 +108,7 @@ const onAddMembers = (memberRoles: { [key: TranslatedGroupMember['id']]: GroupMe
       toaster.pushSuccess(t('toasts.team-member-create.success'))
       fullRefresh()
     })
-    .catch(() => toaster.pushSuccess(t('toasts.team-member-create.error')))
+    .catch(() => toaster.pushError(t('toasts.team-member-create.error')))
     .finally(() => clear())
 }
 
@@ -123,7 +123,7 @@ const onDeleteConfirm = () => {
       toaster.pushSuccess(t('toasts.group-project-remove.success'))
       fullRefresh()
     })
-    .catch(() => toaster.pushSuccess(t('toasts.group-project-remove.error')))
+    .catch(() => toaster.pushError(t('toasts.group-project-remove.error')))
     .finally(() => clear())
 }
 </script>

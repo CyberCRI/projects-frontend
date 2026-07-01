@@ -3422,7 +3422,8 @@
         "label": "Warenbezeichnung"
       },
       "icon": {
-        "label": "Icon"
+        "label": "Icon",
+        "select": "Wählen Sie Icon"
       },
       "show_preview": {
         "label": "Vorschau in der Zusammenfassungsseite anzeigen."

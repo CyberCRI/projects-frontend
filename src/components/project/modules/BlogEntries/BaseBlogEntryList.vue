@@ -77,7 +77,7 @@ const onDeleteConfirm = () => {
       toaster.pushSuccess($t('toasts.blog-delete.success'))
       refreshData()
     })
-    .catch(() => toaster.pushSuccess($t('toasts.blog-delete.error')))
+    .catch(() => toaster.pushError($t('toasts.blog-delete.error')))
     .finally(() => cancel())
 }
 
