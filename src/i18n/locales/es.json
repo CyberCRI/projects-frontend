@@ -3422,7 +3422,8 @@
         "label": "Descripción"
       },
       "icon": {
-        "label": "Icon"
+        "label": "Icon",
+        "select": "Seleccione Icon"
       },
       "show_preview": {
         "label": "Mostrar vista previa en la página sumaria."

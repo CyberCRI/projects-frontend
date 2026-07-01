@@ -174,7 +174,7 @@ const icons = Object.keys(ICONS_TABS).toSorted((a, b) =>
         <IconImage
           class="tab-icon shadow-drop"
           :name="form.icon"
-          :title="$t('icon.select')"
+          :title="$t('common.select')"
           @click="toggleModals('editIcon')"
         />
         <FieldErrors :errors="errors.icon" />

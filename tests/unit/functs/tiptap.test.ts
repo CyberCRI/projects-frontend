@@ -1,7 +1,7 @@
 import { html2Text, textIsEmpty } from '~/functs/tiptap'
 import { describe, expect, it } from 'vitest'
 
-describe('tiptaps.ts', () => {
+describe('tiptap.ts', () => {
   it('html2Text', () => {
     expect(html2Text(undefined)).toEqual('')
     expect(html2Text(null)).toEqual('')

@@ -94,6 +94,7 @@ const onConfirmDeleteTab = () => {
 
 <template>
   <template v-if="!preview">
+    <!-- descriptions -->
     <BaseModuleHeader v-if="editable" :editable="false">
       <div />
       <LpiButton
@@ -104,6 +105,13 @@ const onConfirmDeleteTab = () => {
       />
     </BaseModuleHeader>
 
+    <ContentExpandable
+      v-if="!textIsEmpty(tab.$t.description) && !stateModals.editTab"
+      key="description"
+      class="description-info"
+      :description="tab.$t.description"
+      :height-limit="300"
+    />
     <ContentExpandable
       v-if="editable"
       :height-limit="0"
@@ -128,13 +136,6 @@ const onConfirmDeleteTab = () => {
         </template>
       </TabForm>
     </ContentExpandable>
-    <ContentExpandable
-      v-else-if="!textIsEmpty(tab.$t.description)"
-      key="description"
-      class="description-info"
-      :description="tab.$t.description"
-      :height-limit="300"
-    />
   </template>
 
   <slot />

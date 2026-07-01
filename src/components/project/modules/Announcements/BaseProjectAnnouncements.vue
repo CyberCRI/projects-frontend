@@ -89,7 +89,7 @@ const onDeleteConfirm = () => {
       toaster.pushSuccess($t('toasts.announcement-delete.success'))
       refreshData()
     })
-    .catch(() => toaster.pushSuccess($t('toasts.announcement-delete.error')))
+    .catch(() => toaster.pushError($t('toasts.announcement-delete.error')))
     .finally(() => cancel())
 }
 </script>

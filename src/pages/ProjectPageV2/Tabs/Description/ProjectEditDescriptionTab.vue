@@ -107,7 +107,7 @@ const onSubmit = () => {
         redirect()
       })
     })
-    .catch(() => toaster.pushSuccess(t('toasts.description-update.error')))
+    .catch(() => toaster.pushError(t('toasts.description-update.error')))
     .then(() => (asyncing.value = false))
 }
 
