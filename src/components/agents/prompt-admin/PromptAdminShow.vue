@@ -32,9 +32,7 @@ const fetchPrompt = async () => {
 <template>
   <EntityAdminShow :fetch-entity="fetchPrompt" :entity-title="prompt.title" @close="emit('close')">
     <template #default="{ entity }">
-      <CodeBlock language="json">
-        {{ JSON.stringify(entity, null, 2) }}
-      </CodeBlock>
+      <CodeBlock language="json" :content="JSON.stringify(entity, null, 2)" />
     </template>
   </EntityAdminShow>
 </template>

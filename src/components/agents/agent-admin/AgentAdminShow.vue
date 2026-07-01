@@ -32,9 +32,7 @@ const fetchAgent = async () => {
 <template>
   <EntityAdminShow :fetch-entity="fetchAgent" :entity-title="agent.title" @close="emit('close')">
     <template #default="{ entity }">
-      <CodeBlock language="json">
-        {{ JSON.stringify(entity, null, 2) }}
-      </CodeBlock>
+      <CodeBlock language="json" :content="JSON.stringify(entity, null, 2)" />
     </template>
   </EntityAdminShow>
 </template>

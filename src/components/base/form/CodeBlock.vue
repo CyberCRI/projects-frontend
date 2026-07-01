@@ -5,7 +5,7 @@ const props = withDefaults(
   defineProps<{
     theme?: 'dark' | 'light'
     language: string
-    value: string
+    content: string
     tab?: 2 | 4
   }>(),
   {
@@ -17,7 +17,7 @@ const props = withDefaults(
 // when values changes, reload higlightAll
 watchEffect(
   onClient(() => {
-    void props.value
+    void props.content
     hljs.highlightAll()
   })
 )
@@ -31,6 +31,6 @@ onClientMounted(() => hljs.highlightAll())
       class="content-dom hljs"
       :class="[`language-${language}`]"
       spellcheck="false"
-      >{{ value }}</code></pre>
+      >{{ content }}</code></pre>
   </div>
 </template>
