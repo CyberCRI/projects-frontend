@@ -1,6 +1,6 @@
 import type { ValidationRuleWithoutParams, ValidationRuleWithParams } from '@vuelidate/core'
 import { isEqual, mapValues, omit, pick } from 'es-toolkit'
-import { textIsEmpty, html2html } from '~/functs/tiptap'
+import { html2html, textIsEmpty } from '~/functs/tiptap'
 import { required, url } from '@vuelidate/validators'
 import { MIMETYPES_IMAGES } from '~/functs/constants'
 

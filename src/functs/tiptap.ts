@@ -13,6 +13,7 @@ import { isNil } from 'es-toolkit'
  * @exports
  */
 export const html2html = onClient((html: string | null): string => {
+  html = (html || '').trim()
   if (!html) {
     return ''
   }
@@ -24,7 +25,7 @@ export const html2html = onClient((html: string | null): string => {
   const doc = generateJSON(html, extentions)
 
   // convert jsondoc to html
-  return generateHTML(doc, extentions).trim()
+  return generateHTML(doc, extentions)
 }, '')
 
 /**
@@ -43,7 +44,7 @@ export const html2Text = (text: string): string => {
   }
   const span = document.createElement('span')
   span.innerHTML = text || ''
-  return span.innerText.trim()
+  return span.innerText
 }
 
 /**
