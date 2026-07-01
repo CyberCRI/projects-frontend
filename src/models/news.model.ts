@@ -1,13 +1,13 @@
 import type { BaseLocationModel, BaseTranslatedLocationModel } from '~/models/location.model'
 import type { OrganizationModel } from '~/models/organization.model'
-import type { PeopleGroupModel } from '~/models/invitation.model'
+import type { PeopleGroupModel } from '@/models/people-group.model'
 import type { ImageModel } from '~/models/image.model'
 import type BaseModel from '~/models/base.model'
 
 import type { Translated } from '~/interfaces/translated'
 import type { Ordering } from '~/interfaces/query'
 
-import type { ImageSizes } from '~/functs/imageSizesUtils'
+import type { ImageSizeConverted } from '~/functs/imageSizesUtils'
 
 /**
  * @name NewsModel
@@ -28,14 +28,14 @@ export interface NewsModel extends BaseModel {
   location: BaseLocationModel
 }
 
-export type TranslatedNews = Omit<Translated<NewsModel, 'title' | 'content'>, 'location'> & {
-  location: BaseTranslatedLocationModel
-}
-
 export interface NewsImageModel {
   file: string
   name: string
   gallery: string
+}
+
+export type TranslatedNews = Omit<Translated<NewsModel, 'title' | 'content'>, 'location'> & {
+  location: BaseTranslatedLocationModel
 }
 
 export type NewsOutput = BaseModel &
@@ -49,35 +49,10 @@ export type NewsInput = Required<
 
 export type NewsForm = Omit<NewsInput, 'people_groups'> & {
   organization_code?: string
-  imageSizes?: ImageSizes
+  imageSizes?: ImageSizeConverted
   people_groups: {
     [key: number]: boolean
   }
-}
-
-export interface HeaderImage {
-  id: number
-  name: string
-  url: string
-  height: number
-  width: number
-  created_at: Date
-  variations: {
-    full: string
-    large: string
-    medium: string
-    original: string
-    small: string
-  }
-}
-
-export type NewsHeaderOutput = {
-  id: number
-  name: string
-  url: string
-  height: number
-  width: number
-  created_at: Date
 }
 
 export type QueryFilterNews = Partial<

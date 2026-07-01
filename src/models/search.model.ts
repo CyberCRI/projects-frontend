@@ -3,7 +3,7 @@ import type {
   PeopleGroupModel,
   PeopleGroupModulesKeys,
   TranslatedPeopleGroupModel,
-} from '~/models/invitation.model'
+} from '@/models/people-group.model'
 import type {
   ProjectModel,
   ProjectModulesKeys,

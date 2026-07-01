@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
 
 import { getGroupProject } from '~/api/v2/group.service'
 

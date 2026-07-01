@@ -19,11 +19,6 @@ export interface ReviewModel extends BaseModel {
 
 export type ReviewId = ReviewModel['id']
 
-export type ReviewModelInput = Required<ReviewModel> & {
-  reviewer_id: string
-  project_id: string
-}
-
 export type TranslatedReview = Translated<ReviewModel, 'title' | 'description'>
 
 export type QueryFilterReviews = Partial<

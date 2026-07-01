@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { ImageSizes } from '~/functs/imageSizesUtils'
+import type { ImageSizeConverted } from '~/functs/imageSizesUtils'
 import 'croppr/dist/croppr.css'
 import Croppr from 'croppr'
 
 const props = withDefaults(
   defineProps<{
-    imageSizes?: ImageSizes
+    imageSizes?: ImageSizeConverted
     image?: string
     // is crop area a circle
     roundShape?: boolean
@@ -178,7 +178,7 @@ const imageSizesExposed = computed(() => {
     left: left.value,
     top: top.value,
     naturalRatio: naturalRatio.value,
-  } satisfies ImageSizes
+  } satisfies ImageSizeConverted
 })
 defineExpose({
   imageSizes: imageSizesExposed,

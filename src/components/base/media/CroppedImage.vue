@@ -4,13 +4,13 @@
   </div>
 </template>
 <script setup lang="ts">
+import type { ImageSizeConverted } from '~/functs/imageSizesUtils'
 import { IMAGES_SIZES_DEFAULTS } from '~/functs/imageSizesUtils'
-import type { ImageSizes } from '~/functs/imageSizesUtils'
 import type { StyleValue } from 'vue'
 
 const props = withDefaults(
   defineProps<{
-    imageSizes?: ImageSizes
+    imageSizes?: ImageSizeConverted
     src?: string
     alt?: string
     contain?: boolean

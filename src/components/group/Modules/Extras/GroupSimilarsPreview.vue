@@ -31,11 +31,11 @@
 
 <script setup lang="ts">
 import GroupSimilarDrawer from '@/components/group/Modules/Extras/GroupSimilarDrawer.vue'
+import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
 import { maxSkeleton, factoryPagination } from '@/skeletons/base.skeletons'
-import type { TranslatedPeopleGroupModel } from '@/models/invitation.model'
 import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
 import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
-import { GroupModuleTitle } from '@/models/invitation.model'
+import { GroupModuleTitle } from '@/models/people-group.model'
 import { groupSkeleton } from '@/skeletons/group.skeletons'
 import GroupCard from '@/components/group/GroupCard.vue'
 import { getGroupSimilar } from '@/api/v2/group.service'

@@ -1,9 +1,9 @@
 import { createFactory } from 'faker-create-factory'
 
-import { TagOutput } from '~/models/tag.model'
+import { TagModel } from '~/models/tag.model'
 import BaseFactory from './base.factory'
 
-const OrganizationTagFactory = createFactory<TagOutput>((faker) => ({
+const OrganizationTagFactory = createFactory<TagModel>((faker) => ({
   ...BaseFactory.generate(),
   id: faker.datatype.number(),
   title: faker.name.title(),

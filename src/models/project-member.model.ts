@@ -1,7 +1,7 @@
 import type { ProjectGroupRoleType, ProjectMemberRoleType, ProjectStatusType } from '@/models/types'
 import type { ProjectModel, ProjectModulesKeys } from '~/models/project.model'
 import type { TranslatedUserModel, UserModel } from '@/models/user.model'
-import type { PeopleGroupIdOrSlug } from '~/models/invitation.model'
+import type { PeopleGroupIdOrSlug } from '@/models/people-group.model'
 import type { Ordering } from '@/interfaces/query'
 import type BaseModel from '@/models/base.model'
 

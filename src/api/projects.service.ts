@@ -15,7 +15,7 @@ import type {
   QueryFilterProjectMembers,
 } from '@/models/project-member.model'
 import type { ImageModealCreated, ImageModel } from '~/models/image.model'
-import type { PeopleGroupModel } from '~/models/invitation.model'
+import type { PeopleGroupModel } from '@/models/people-group.model'
 
 type ConfigProject = UseApiOptions<QueryFilterProject>
 type ConfigProjectLinked = UseApiOptions<Partial<PaginationQuery>>

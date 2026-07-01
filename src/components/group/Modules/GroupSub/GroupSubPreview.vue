@@ -19,8 +19,8 @@
 
 <script setup lang="ts">
 import GroupSubList from '@/components/group/Modules/GroupSub/GroupSubList.vue'
-import { GroupModuleIcon, GroupModuleTitle } from '@/models/invitation.model'
-import type { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import { GroupModuleIcon, GroupModuleTitle } from '@/models/people-group.model'
+import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
 import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
 
 defineProps<{ group: TranslatedPeopleGroupModel }>()

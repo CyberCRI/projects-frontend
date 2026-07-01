@@ -1,9 +1,9 @@
 import { createFactory } from 'faker-create-factory'
 
-import { BlogEntryOutput, BlogEntryInput } from '~/models/blog-entry.model'
+import { BlogEntryModel } from '~/models/blog-entry.model'
 import BaseFactory from './base.factory'
 
-export const BlogEntryFactory = createFactory<BlogEntryOutput>((faker) => ({
+export const BlogEntryFactory = createFactory<BlogEntryModel>((faker) => ({
   ...BaseFactory.generate(),
   id: faker.datatype.number(),
   title: faker.lorem.word(),
@@ -11,12 +11,6 @@ export const BlogEntryFactory = createFactory<BlogEntryOutput>((faker) => ({
   updated_at: faker.datatype.datetime().toISOString(),
   created_at: faker.datatype.datetime().toISOString(),
   images: [],
-}))
-
-export const BlogEntryInputFactory = createFactory<BlogEntryInput>((faker) => ({
-  ...BlogEntryFactory.generate(),
-  project_id: faker.datatype.string(),
-  blog_entry_id: faker.datatype.string(),
 }))
 
 export default BlogEntryFactory

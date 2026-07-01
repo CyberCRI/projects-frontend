@@ -31,10 +31,3 @@ export type BlogEntryForm = Omit<BlogEntryModel, 'id' | 'created_at' | 'updated_
   images_ids: number[]
   project_id?: ProjectSlugOrId
 }
-
-export type BlogEntryOutput = Required<BlogEntryModel>
-
-export type BlogEntryInput = Required<BlogEntryModel> & {
-  project_id: string
-  blog_entry_id: string
-}

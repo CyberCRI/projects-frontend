@@ -20,11 +20,3 @@ export interface TagModel extends BaseModel {
 }
 
 export type TranslatedTag = Translated<TagModel, 'title' | 'description'>
-
-export type TagCreateInput = Required<TagModel>
-
-export type TagPutInput = Required<TagModel>
-
-export type TagPatchInput = Partial<TagModel>
-
-export type TagOutput = Required<TagModel>

@@ -24,10 +24,7 @@ export type AttachmentFileForm = Omit<AttachmentFileModel, 'id'> & {
 
 export type TranslatedAttachmentFile = Translated<AttachmentFileModel, 'title' | 'description'>
 
-export type AttachmentFileOutput = Omit<Required<AttachmentFileModel>, 'file'> & {
+export type AttachmentFileInput = Required<AttachmentFileModel> & {
   file: File
-}
-
-export type AttachmentFileInput = Required<AttachmentFileOutput> & {
   project_id: string
 }

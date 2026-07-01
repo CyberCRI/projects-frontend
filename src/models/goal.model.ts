@@ -18,14 +18,6 @@ export interface GoalModel extends BaseModel {
 
 export type TranslatedGoal = Translated<GoalModel, 'title' | 'description'>
 
-export type GoalInput = Required<GoalModel> & {
-  project_id: string
-  goal_id: string
-}
-
-export type GoalForm = Omit<GoalModel, 'id'> & {
-  id?: GoalModel['id']
+export type GoalForm = Partial<GoalModel> & {
   project_id?: ProjectSlugOrId
 }
-
-export type GoalOutput = Required<GoalModel>

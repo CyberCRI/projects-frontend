@@ -1,7 +1,7 @@
-import type { /*GroupModel,*/ GroupModelInput, RemoveGroupModelInput } from '@/models/group.model'
-import type { /*ImageOrganizationOutput,*/ ImageOrganizationInput } from '@/models/image.model'
 import type { OrganizationModel, OrganizationPatchInput } from '@/models/organization.model'
+import type { GroupModelInput, RemoveGroupModelInput } from '@/models/group.model'
 import type { ProjectModel, ProjectSlugOrId } from '@/models/project.model'
+import type { ImageOrganizationInput } from '@/models/image.model'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import useAPI from '@/composables/useAPI'
 

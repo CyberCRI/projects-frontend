@@ -1,4 +1,4 @@
-import type { InvitationModel, InvitationModelInput } from '@/models/invitation.model'
+import type { InvitationModel, InvitationModelInput } from '~/models/invitation.model'
 import type { OrganizationModel } from '@/models/organization.model'
 import useAPI from '@/composables/useAPI'
 

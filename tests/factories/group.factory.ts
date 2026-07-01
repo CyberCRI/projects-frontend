@@ -1,4 +1,4 @@
-import { PeopleGroupModel, TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import { PeopleGroupModel, TranslatedPeopleGroupModel } from '@/models/people-group.model'
 import { BaseTranslatedLocationModelFactory } from './location.factory'
 import { OrganizationOutputFactory } from './organization.factory'
 import { GroupModel, GroupModelInput } from '~/models/group.model'

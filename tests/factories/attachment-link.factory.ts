@@ -1,9 +1,9 @@
 import { createFactory } from 'faker-create-factory'
 
-import { AttachmentLinkInput, AttachmentLinkOutput } from '~/models/attachment-link.model'
+import { AttachmentLinkModel } from '~/models/attachment-link.model'
 import BaseFactory from './base.factory'
 
-export const AttachmentLinkFactory = createFactory<AttachmentLinkOutput>((faker) => ({
+export const AttachmentLinkFactory = createFactory<AttachmentLinkModel>((faker) => ({
   ...BaseFactory.generate(),
   id: faker.datatype.number(),
   attachment_type: 'file',
@@ -12,10 +12,4 @@ export const AttachmentLinkFactory = createFactory<AttachmentLinkOutput>((faker)
   site_name: faker.lorem.word(),
   site_url: faker.internet.url(),
   title: faker.lorem.word(),
-}))
-
-export const AttachmentLinkInputFactory = createFactory<AttachmentLinkInput>((faker) => ({
-  ...AttachmentLinkFactory.generate(),
-  project_id: faker.datatype.string(),
-  link_id: faker.datatype.string(),
 }))

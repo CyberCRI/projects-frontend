@@ -52,7 +52,7 @@
 
 <script setup lang="ts">
 import type { QueryFilterEvent, TranslatedEventModel } from '~/models/event.model'
-import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
 
 import { getGroupEvent } from '~/api/v2/group.service'
 import { deleteEvent } from '~/api/event.service'

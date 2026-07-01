@@ -6,7 +6,7 @@ import type {
 import type { LanguageType, ProjectPublicationStatusType, ProjectStatusType } from '@/models/types'
 import type { OrganizationModel, OrganizationOutput } from '@/models/organization.model'
 import type { TemplateModel, TranslatedTemplate } from '@/models/template.model'
-import type { TagModel, TagOutput, TranslatedTag } from '@/models/tag.model'
+import type { TagModel, TranslatedTag } from '@/models/tag.model'
 import type { LocationOutput } from '@/models/location.model'
 import type { Translated } from '@/interfaces/translated'
 import type { IconImageChoice } from '@/functs/IconImage'
@@ -137,21 +137,12 @@ export type ProjectOutput = Required<ProjectModel> & {
   organizations: OrganizationOutput[]
   categories: ProjectCategoryOutput[]
   geolocation_coordinates: LocationOutput
-  tags: TagOutput[]
+  tags: TagModel[]
   sdgs: number[]
   images: ImageModel[]
   views: number
   template: TemplateModel
   slug: string
-}
-
-export type ProjectHeaderOutput = {
-  id: number
-  name: string
-  url: string
-  height: number
-  width: number
-  created_at: Date
 }
 
 export type ProjectForm = Partial<

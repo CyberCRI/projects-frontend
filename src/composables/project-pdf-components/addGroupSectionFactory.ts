@@ -6,7 +6,7 @@ import {
 import { cardListStyles } from '~/composables/project-pdf-components/common-styles'
 import type { Container } from '~/composables/pdf-helpers/doc-builder'
 
-import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
 import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 import { cropIfTooLong } from '~/functs/string'
 

@@ -14,7 +14,6 @@ export const newsFeedSkeleton = (def?: Partial<NewsfeedModel>): Omit<NewsfeedMod
   }
   switch (type) {
     case 'project':
-      // @ts-expect-error no id
       return { ...data, project: projectSkeleton() }
     case 'announcement':
       // @ts-expect-error no id

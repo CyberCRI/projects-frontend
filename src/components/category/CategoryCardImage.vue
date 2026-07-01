@@ -27,7 +27,7 @@
 import CategoryCardDefaultBackground from '~/components/category/CategoryCardDefaultBackground.vue'
 import CroppedImage from '~/components/base/media/CroppedImage.vue'
 
-import type { ImageSizes } from '~/functs/imageSizesUtils'
+import type { ImageSizeConverted } from '~/functs/imageSizesUtils'
 
 const props = withDefaults(
   defineProps<{
@@ -36,7 +36,7 @@ const props = withDefaults(
     imageHeight: string
     imageWidth: string
     url?: string
-    imageSizes?: ImageSizes
+    imageSizes?: ImageSizeConverted
     forcedRatio?: number
   }>(),
   {
