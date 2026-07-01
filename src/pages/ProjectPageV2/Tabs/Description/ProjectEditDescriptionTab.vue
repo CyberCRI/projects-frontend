@@ -6,8 +6,9 @@ import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
 import type { TranslatedProject } from '~/models/project.model'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import FormPanel from '~/components/base/FormPanel.vue'
-import { getFirstTextNotEmpty } from '~/functs/string'
-import { isEqual, pick } from 'es-toolkit'
+import { getFirstTextNotEmpty } from '~/functs/tiptap'
+import { formEqual } from '~/form/base'
+import { pick } from 'es-toolkit'
 
 const props = withDefaults(
   defineProps<{
@@ -65,7 +66,9 @@ const { stateModals, openModals, closeModals, closeAllModals } = useModals({
   unauthorized: false,
 })
 
-const isFormEqual = useBlockNavigation(() => isEqual(form.value, defaultLocalForm()))
+const isFormEqual = useBlockNavigation(() =>
+  formEqual(form.value, defaultLocalForm(), { html: ['description'] })
+)
 
 // callback
 

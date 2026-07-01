@@ -9,11 +9,11 @@ import { useBlockNavigation } from '~/composables/useBlockNavigation'
 import type { TranslatedProject } from '@/models/project.model'
 import DateField from '@/components/base/form/DateField.vue'
 import { defaultGoalForm, useGoalForm } from '@/form/goal'
-import { getFirstTextNotEmpty } from '@/functs/string'
+import { getFirstTextNotEmpty } from '@/functs/tiptap'
 import type { GoalModel } from '@/models/goal.model'
 import { fullYearDateFormat } from '@/functs/date'
 import useToasterStore from '@/stores/useToaster'
-import { isEqual } from 'es-toolkit'
+import { formEqual } from '~/form/base'
 import analytics from '@/analytics'
 
 const props = withDefaults(
@@ -73,7 +73,7 @@ watch(
 )
 
 const isFormEqual = useBlockNavigation(
-  () => !props.isOpened || isEqual(form.value, defaultLocalForm())
+  () => !props.isOpened || formEqual(form.value, defaultLocalForm(), { html: ['description'] })
 )
 
 const asyncing = ref(false)

@@ -3415,10 +3415,15 @@
     },
     "form": {
       "title": {
-        "label": "Title"
+        "label": "Title",
+        "required": "The title is required."
       },
       "description": {
         "label": "Description"
+      },
+      "content": {
+        "label": "Content",
+        "required": "The content is required."
       },
       "icon": {
         "label": "Icon"

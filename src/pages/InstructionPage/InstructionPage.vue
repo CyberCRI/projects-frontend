@@ -9,7 +9,7 @@ import FetchLoader from '~/components/base/FetchLoader.vue'
 import useToasterStore from '~/stores/useToaster'
 
 import { instructionSkeleton } from '~/skeletons/instructions.skeletons'
-import { html2Text } from '~/functs/string'
+import { html2Text } from '~/functs/tiptap'
 import { formatDate } from '~/functs/date'
 
 const props = defineProps<{

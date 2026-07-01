@@ -5,13 +5,14 @@ import { HocuspocusProvider } from '@hocuspocus/provider'
 import { Editor } from '@tiptap/vue-3'
 
 import TipTapCollaborativeReconnectionStatus from '~/components/base/form/TextEditor/TipTapCollaborativeReconnectionStatus.vue'
-import TipTapCollaborativeConnectingStatus from '~/components/base/form/TextEditor/TipTapCollaborativeConnectingStatus.vue'
-import TipTapCollaborativeConnectedStatus from '~/components/base/form/TextEditor/TipTapCollaborativeConnectedStatus.vue'
 import {
   PropsDefault,
   emitsDefinitions,
+  getExtensions,
   useTipTap,
 } from '~/components/base/form/TextEditor/useTipTap'
+import TipTapCollaborativeConnectingStatus from '~/components/base/form/TextEditor/TipTapCollaborativeConnectingStatus.vue'
+import TipTapCollaborativeConnectedStatus from '~/components/base/form/TextEditor/TipTapCollaborativeConnectedStatus.vue'
 import TipTapEditorContainer from '~/components/base/form/TextEditor/TipTapEditorContainer.vue'
 import TipTapEditorContent from '~/components/base/form/TextEditor/TipTapEditorContent.vue'
 import type { PropsDefinitions } from '~/components/base/form/TextEditor/useTipTap'
@@ -69,7 +70,6 @@ const {
   editorInited,
   appendTranslationsStyle,
   destroyEditor,
-  getExtensions,
   initialContent,
   resetContent,
   onBlur,
@@ -122,7 +122,7 @@ function fallbackToSoloMode() {
 
 function getCollaborativeExtensions() {
   return [
-    ...getExtensions({ disableHistory: true }),
+    ...getExtensions({ history: false }),
     Collaboration.configure({
       document: toRaw(provider.value.document),
     }),

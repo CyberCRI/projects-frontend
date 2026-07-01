@@ -11,7 +11,7 @@ import ContentExpandable from '~/components/base/ContentExpandable.vue'
 import type { TranslatedProject } from '@/models/project.model'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import TabForm from '~/components/tabs/TabForm.vue'
-import { textIsEmpty } from '~/functs/string'
+import { textIsEmpty } from '~/functs/tiptap'
 import analytics from '~/analytics'
 
 const props = withDefaults(

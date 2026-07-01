@@ -3415,7 +3415,8 @@
     },
     "form": {
       "title": {
-        "label": "Titre"
+        "label": "Titre",
+        "required": "Le titre est requis."
       },
       "description": {
         "label": "Désignation des marchandises"
@@ -3437,6 +3438,10 @@
           "label": "blog",
           "help": "le Contenu est la liste pour l'entrée de blog."
         }
+      },
+      "content": {
+        "label": "Contenu",
+        "required": "Le contenu est requis."
       }
     },
     "toasts": {

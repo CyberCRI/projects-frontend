@@ -16,9 +16,10 @@ import { useBlockNavigation } from '~/composables/useBlockNavigation'
 import type { TranslatedProject } from '~/models/project.model'
 import { defaultBlogForm, useBlogEntryForm } from '~/form/blog'
 import type { ImageModel } from '~/models/image.model'
-import { getFirstTextNotEmpty } from '~/functs/string'
-import { isEqual, isNil } from 'es-toolkit'
+import { getFirstTextNotEmpty } from '~/functs/tiptap'
+import { formEqual } from '~/form/base'
 import analytics from '~/analytics'
+import { isNil } from 'es-toolkit'
 
 const props = withDefaults(
   defineProps<{
@@ -85,7 +86,7 @@ watch(
   { immediate: true, deep: true }
 )
 const isFormEqual = useBlockNavigation(
-  () => !props.isOpened || isEqual(form.value, defaultLocalForm())
+  () => !props.isOpened || formEqual(form.value, defaultLocalForm(), { html: ['content'] })
 )
 
 const asyncing = ref(false)

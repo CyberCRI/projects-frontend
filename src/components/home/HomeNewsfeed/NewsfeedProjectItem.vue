@@ -33,7 +33,8 @@ import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 
 import { DEFAULT_PROJECT_PATATOID } from '~/composables/usePatatoids'
 
-import { capitalize, cropIfTooLong, html2Text } from '~/functs/string'
+import { capitalize, cropIfTooLong } from '~/functs/string'
+import { html2Text } from '~/functs/tiptap'
 
 defineOptions({ name: 'NewsfeedProjectItem' })
 

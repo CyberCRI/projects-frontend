@@ -51,8 +51,8 @@ import { useBlockNavigation } from '~/composables/useBlockNavigation'
 import type { TranslatedProject } from '~/models/project.model'
 import type { CommentModel } from '~/models/comment.model'
 import type { ImageModel } from '~/models/image.model'
-import { getFirstTextNotEmpty } from '~/functs/string'
-import { isEqual } from 'es-toolkit'
+import { getFirstTextNotEmpty } from '~/functs/tiptap'
+import { formEqual } from '~/form/base'
 import analytics from '~/analytics'
 
 const props = withDefaults(
@@ -114,7 +114,11 @@ watch(
     deep: true,
   }
 )
-const isFormEqual = useBlockNavigation(() => isEqual(form.value, defaultLocalForm()))
+const isFormEqual = useBlockNavigation(() =>
+  formEqual(form.value, defaultLocalForm(), {
+    html: ['content'],
+  })
+)
 const canSubmitComment = computed(() => !isFormEqual.value && canCreateComments.value)
 
 const scrollToNewComment = (comment) => {

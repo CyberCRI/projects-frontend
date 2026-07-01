@@ -64,7 +64,7 @@ import type { TranslatedProject } from '@/models/project.model'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import FetchLoader from '~/components/base/FetchLoader.vue'
 import useUsersStore from '~/stores/useUsers'
-import { textIsEmpty } from '@/functs/string'
+import { textIsEmpty } from '@/functs/tiptap'
 
 const props = defineProps<{
   project: TranslatedProject

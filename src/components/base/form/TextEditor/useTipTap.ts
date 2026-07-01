@@ -1,4 +1,5 @@
 import useOrganizationsStore from '~/stores/useOrganizations'
+import type { StarterKitOptions } from '@tiptap/starter-kit'
 import TableHeader from '@tiptap/extension-table-header'
 import TextStyle from '@tiptap/extension-text-style'
 import TextAlign from '@tiptap/extension-text-align'
@@ -19,6 +20,37 @@ import type { ErrorObject } from '@vuelidate/core'
 import type { ExtractDefaultPropTypes } from 'vue'
 import lowlight from '~/functs/lowlight'
 import { Editor } from '@tiptap/vue-3'
+
+export const getExtensions = (options: Partial<StarterKitOptions> = {}) => {
+  return [
+    // Collaborative (socket) use its own history
+    StarterKit.configure({ ...options, codeBlock: false }), // TODO: was !this.socket
+    Link.configure({
+      openOnClick: false,
+    }),
+    TextStyle,
+    Color,
+    // TODO: Check if need history
+    // History,
+    Underline,
+    TextAlign.configure({
+      types: ['heading', 'paragraph'],
+      alignments: ['left', 'center', 'right'],
+    }),
+    ExternalVideo,
+    Table.configure({
+      resizable: true,
+      cellMinWidth: 300,
+    }),
+    TableRow,
+    TableHeader,
+    CustomTableCell,
+    CustomImage,
+    LpiCodeBlock.configure({
+      lowlight,
+    }),
+  ]
+}
 
 export const emitsDefinitions = ['saved', 'image', 'blur', 'update:modelValue']
 
@@ -128,38 +160,6 @@ export function useTipTap({
     }
   }
 
-  function getExtensions(options: { disableHistory: any } = { disableHistory: false }) {
-    const history = options?.disableHistory || false
-    return [
-      // Collaborative (socket) use its own history
-      StarterKit.configure({ history, codeBlock: false }), // TODO: was !this.socket
-      Link.configure({
-        openOnClick: false,
-      }),
-      TextStyle,
-      Color,
-      // TODO: Check if need history
-      // History,
-      Underline,
-      TextAlign.configure({
-        types: ['heading', 'paragraph'],
-        alignments: ['left', 'center', 'right'],
-      }),
-      ExternalVideo,
-      Table.configure({
-        resizable: true,
-        cellMinWidth: 300,
-      }),
-      TableRow,
-      TableHeader,
-      CustomTableCell,
-      CustomImage,
-      LpiCodeBlock.configure({
-        lowlight,
-      }),
-    ]
-  }
-
   function getContent() {
     return props.modelValue
   }
@@ -220,7 +220,6 @@ export function useTipTap({
     appendTranslationsStyle,
     initEditor,
     destroyEditor,
-    getExtensions,
     getContent,
     initialContent,
     resetContent,

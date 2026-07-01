@@ -3415,7 +3415,8 @@
     },
     "form": {
       "title": {
-        "label": "Titel"
+        "label": "Titel",
+        "required": "De titel is vereist."
       },
       "description": {
         "label": "Omschrijving"
@@ -3437,6 +3438,10 @@
           "label": "blog",
           "help": "de inhoud is lijst voor blog invoer."
         }
+      },
+      "content": {
+        "label": "Inhoud",
+        "required": "De inhoud is vereist."
       }
     },
     "toasts": {

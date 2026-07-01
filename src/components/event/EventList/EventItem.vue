@@ -100,7 +100,7 @@ import DisplayDate from '~/components/base/DisplayDate.vue'
 import { useIntervalNow } from '~/composables/useDate'
 
 import { dateWithoutHours, sanitizeDate } from '~/functs/date'
-import { html2Text } from '~/functs/string'
+import { html2Text } from '~/functs/tiptap'
 
 const props = withDefaults(
   defineProps<{

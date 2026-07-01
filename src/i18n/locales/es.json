@@ -3415,7 +3415,8 @@
     },
     "form": {
       "title": {
-        "label": "Título"
+        "label": "Título",
+        "required": "Se requiere el título."
       },
       "description": {
         "label": "Descripción"
@@ -3437,6 +3438,10 @@
           "label": "blog",
           "help": "el Contenido es lista para la entrada del blog."
         }
+      },
+      "content": {
+        "label": "Índice",
+        "required": "El contenido es necesario."
       }
     },
     "toasts": {

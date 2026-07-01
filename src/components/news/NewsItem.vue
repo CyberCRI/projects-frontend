@@ -62,7 +62,7 @@ import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 
 import { DEFAULT_NEWS_PATATOID } from '~/composables/usePatatoids'
 
-import { html2Text } from '~/functs/string'
+import { html2Text } from '~/functs/tiptap'
 
 const props = withDefaults(
   defineProps<{ news: TranslatedNews; editable?: boolean; is?: string }>(),
