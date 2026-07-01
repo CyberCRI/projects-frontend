@@ -1,13 +1,19 @@
 import type BaseModel from '~/models/base.model'
 
-import type { ImageSizesFromApi } from '~/functs/imageSizesUtils'
+export interface ImageSize {
+  scale_x: number | null
+  scale_y: number | null
+  left: number | null
+  top: number | null
+  natural_ratio: number | null
+}
 
 /**
  * @name ImageModel
  * @description Image of a project
  */
 export type ImageModel = BaseModel &
-  ImageSizesFromApi & {
+  ImageSize & {
     id?: number
     url: string
     file: string
@@ -22,15 +28,11 @@ export type ImageModel = BaseModel &
       small: string
     }
   }
+export type ImageVariations = keyof ImageModel['variations']
+
 // when created return static_url
 export type ImageModealCreated = ImageModel & {
   static_url: string
-}
-
-export type ImageVariations = keyof ImageModel['variations']
-
-export type ImageOrganizationOutput = Partial<ImageModel> & {
-  gallery: string
 }
 
 export type ImageInput = Partial<ImageModel> & {

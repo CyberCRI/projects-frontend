@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
 
 import type { DocumentType } from '~/interfaces/researcher'
 

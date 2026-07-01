@@ -1,5 +1,5 @@
+import type { PeopleGroupIdOrSlug } from '@/models/people-group.model'
 import type { OrganizationModel } from '~/models/organization.model'
-import type { PeopleGroupIdOrSlug } from '~/models/invitation.model'
 
 import type { Document, DocumentType, Researcher } from '~/interfaces/researcher'
 import type { RefOrRaw } from '~/interfaces/utils'

@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
 import PickGroup from '~/components/group/PickGroup/PickGroup.vue'
 import type { HierarchyGroupModel } from '~/models/group.model'
 import FetchLoader from '~/components/base/FetchLoader.vue'

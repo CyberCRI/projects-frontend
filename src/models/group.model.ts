@@ -1,4 +1,4 @@
-import type { PeopleGroupModel, TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import type { PeopleGroupModel, TranslatedPeopleGroupModel } from '@/models/people-group.model'
 import type { UserFromJWTModel, UserModel } from '~/models/user.model'
 import type { ProjectSlugOrId } from '~/models/project.model'
 import type { Translated } from '~/interfaces/translated'

@@ -6,7 +6,7 @@ import type {
 import type {
   GeneralLocationPeopleGroup,
   TranslatedPeopleGroupModel,
-} from '@/models/invitation.model'
+} from '@/models/people-group.model'
 import type { AttachmentLinkModel, TranslatedAttachmentLink } from '@/models/attachment-link.model'
 import type { AttachmentFileModel, TranslatedAttachmentFile } from '@/models/attachment-file.model'
 import type { TranslatedProjectTab, TranslatedProjectTabItem } from '~/models/projects-tabs.model'

@@ -2,7 +2,7 @@ import type {
   PeopleGroupIdOrSlug,
   QueryFilterGroup,
   QueryFilterGroupHierarchy,
-} from '~/models/invitation.model'
+} from '@/models/people-group.model'
 import type { OrganizationModel } from '~/models/organization.model'
 
 import type { RefOrRaw } from '~/interfaces/utils'

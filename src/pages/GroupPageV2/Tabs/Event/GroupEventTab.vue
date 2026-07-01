@@ -6,9 +6,9 @@
 
 <script setup lang="ts">
 import BaseGroupEventList from '@/components/group/Modules/Event/BaseGroupEventList.vue'
-import type { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
 import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
-import { GroupModuleTitle } from '@/models/invitation.model'
+import { GroupModuleTitle } from '@/models/people-group.model'
 
 const props = withDefaults(
   defineProps<{

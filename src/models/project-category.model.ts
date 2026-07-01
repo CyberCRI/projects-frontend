@@ -1,7 +1,7 @@
-import type { TemplateModel, TemplateOutput, TranslatedTemplate } from '@/models/template.model'
-import type { TagModel, TagOutput, TranslatedTag } from '@/models/tag.model'
+import type { TemplateModel, TranslatedTemplate } from '@/models/template.model'
 import type { OrganizationModel } from '@/models/organization.model'
-import type { ImageSizes } from '~/functs/imageSizesUtils'
+import type { ImageSizeConverted } from '~/functs/imageSizesUtils'
+import type { TagModel, TranslatedTag } from '@/models/tag.model'
 import type { Translated } from '@/interfaces/translated'
 import type { ImageModel } from '@/models/image.model'
 import type BaseModel from '@/models/base.model'
@@ -68,21 +68,12 @@ export type ProjectCategoryPatchInput = Partial<Omit<ProjectCategoryModel, 'tags
 
 export type ProjectCategoryOutput = BaseModel &
   Required<Omit<ProjectCategoryModel, 'tags'>> & {
-    template: TemplateOutput
+    template: TemplateModel
     organization: OrganizationModel['code']
-    tags: TagOutput[]
+    tags: TagModel[]
   }
-
-export interface ProjectCategoryBackgroundOutput {
-  id: number
-  name: string
-  url: string
-  height: number
-  width: number
-  created_at: Date
-}
 
 export type ProjectCategoryForm = Omit<ProjectCategoryModel, 'parent'> & {
   parent: number
-  imageSizes?: ImageSizes
+  imageSizes?: ImageSizeConverted
 }

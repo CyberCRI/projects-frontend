@@ -1,4 +1,4 @@
-import type { PeopleGroupModel } from '~/models/invitation.model'
+import type { PeopleGroupModel } from '@/models/people-group.model'
 import type BaseModel from '~/models/base.model'
 
 import type { Translated } from '~/interfaces/translated'
@@ -21,7 +21,6 @@ export interface InstructionModel extends BaseModel {
 // can be id or id in string
 export type InstructionId = InstructionModel['id'] | string
 
-export type InstructionOutput = Required<InstructionModel>
 export type InstructionForm = Omit<InstructionModel, 'id' | 'people_groups'> & {
   id?: number
   people_groups: any

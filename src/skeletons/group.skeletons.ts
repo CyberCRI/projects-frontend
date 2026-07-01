@@ -1,4 +1,4 @@
-import type { PeopleGroupModel } from '~/models/invitation.model'
+import type { PeopleGroupModel } from '@/models/people-group.model'
 import { userSkeleton } from '~/skeletons/user.skeletons'
 import type { GroupMember } from '~/models/group.model'
 

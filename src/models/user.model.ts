@@ -2,7 +2,7 @@
  * @name UserModel
  * @description user data set on the project app
  */
-import type { PeopleGroupModel, TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import type { PeopleGroupModel, TranslatedPeopleGroupModel } from '@/models/people-group.model'
 import type { ImageModel } from '~/models/image.model'
 
 import type { ResearcherLight } from '~/interfaces/researcher'

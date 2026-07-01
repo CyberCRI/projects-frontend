@@ -2,6 +2,7 @@ import type { BaseLocationModel, BaseTranslatedLocationModel } from '~/models/lo
 import type BaseModel from '~/models/base.model'
 
 import type { Translated } from '~/interfaces/translated'
+import type { Optional } from '~/interfaces/utils'
 import type { Ordering } from '~/interfaces/query'
 
 /**
@@ -25,7 +26,10 @@ export type EventIdOrSlug = EventModel['id']
 
 export type EventInput = Required<Omit<EventModel, 'id' | 'created_at' | 'updated_at'>>
 
-export type EventForm = Omit<EventInput, 'people_groups' | 'start_date' | 'end_date'> & {
+export type EventForm = Omit<
+  Optional<EventModel, 'id'>,
+  'people_groups' | 'start_date' | 'end_date'
+> & {
   start_date: Date
   end_date: Date
   people_groups: {

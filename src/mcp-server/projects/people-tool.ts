@@ -1,6 +1,6 @@
 import { addIfExists, tagMapPreview } from '~/mcp-server/projects/utils'
 import type { UserModel, UserSkillModel } from '~/models/user.model'
-import type { PeopleGroupModel } from '~/models/invitation.model'
+import type { PeopleGroupModel } from '@/models/people-group.model'
 import { mcpOptions, orgCode, resultFromTool } from './base'
 import { getUser as fetchUser } from '~/api/people.service'
 import type { TypeMcpServer } from '~/interfaces/mcp'

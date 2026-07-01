@@ -51,7 +51,7 @@
 <script setup lang="ts">
 import type { MenuEntry } from '~/components/base/navigation/NavPanelMenu.vue'
 
-import { GroupModuleIcon, GroupModuleTitle } from '~/models/invitation.model'
+import { GroupModuleIcon, GroupModuleTitle } from '@/models/people-group.model'
 
 import { getGroup } from '~/api/v2/group.service'
 

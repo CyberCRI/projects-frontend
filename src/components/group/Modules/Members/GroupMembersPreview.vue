@@ -20,8 +20,8 @@
 
 <script setup lang="ts">
 import BaseGroupMembersList from '@/components/group/Modules/Members/BaseGroupMembersList.vue'
-import { GroupModuleIcon, GroupModuleTitle } from '@/models/invitation.model'
-import type { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import { GroupModuleIcon, GroupModuleTitle } from '@/models/people-group.model'
+import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
 import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
 
 defineProps<{

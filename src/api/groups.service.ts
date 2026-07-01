@@ -12,7 +12,7 @@ import type {
   PeopleGroupModel,
   QueryFilterGroup,
   QueryFilterGroupHierarchy,
-} from '~/models/invitation.model'
+} from '@/models/people-group.model'
 import type { BaseLocationModel, LocationModel } from '~/models/location.model'
 import type { ImageModealCreated, ImageModel } from '~/models/image.model'
 import type { ProjectModel } from '~/models/project.model'

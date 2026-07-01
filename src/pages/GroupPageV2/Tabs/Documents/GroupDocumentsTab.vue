@@ -9,8 +9,8 @@ import GroupResearcherDocumentsList from '~/components/people/Researcher/GroupRe
 import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
 import type { DocumentType } from '@/interfaces/researcher'
 
-import type { TranslatedPeopleGroupModel } from '@/models/invitation.model'
-import { GroupModuleTitle } from '@/models/invitation.model'
+import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
+import { GroupModuleTitle } from '@/models/people-group.model'
 
 const props = defineProps<{
   documentType: DocumentType

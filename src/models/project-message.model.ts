@@ -43,10 +43,6 @@ export type ProjectMessageForm = Partial<{
   reply_on_id: number
 }>
 
-export type ProjectMessageOutput = Required<ProjectMessageModel> & {
-  replies: Array<ProjectMessageModel>
-}
-
 export type QueryFilterProjectMessage = Partial<
   {
     ordering: Ordering<'created_at' | 'updated_at'>

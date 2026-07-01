@@ -23,17 +23,6 @@ export type TranslatedComment = Translated<Omit<CommentModel, 'replies'>, 'conte
   replies: TranslatedComment[]
 }
 
-export type CommentInputModel = Required<CommentModel> & {
-  author_id: number // user_id
-  reply_on_id: number
-  project_id: string
-  comment_id: string
-}
-
-export type CommentOutput = Required<CommentModel> & {
-  replies: Array<CommentModel>
-}
-
 export type QueryFilterComments = Partial<
   {
     ordering: Ordering<'updated_at' | 'created_at'>

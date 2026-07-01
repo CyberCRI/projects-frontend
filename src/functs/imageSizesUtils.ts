@@ -1,8 +1,8 @@
+import type { ImageModel, ImageSize } from '~/models/image.model'
 import type { IconImageChoice } from '~/functs/IconImage'
-import type { ImageModel } from '~/models/image.model'
 import type { AttachmentType } from '~/models/types'
 
-export type ImageSizes = {
+export type ImageSizeConverted = {
   scaleX: number
   scaleY: number
   left: number
@@ -10,15 +10,7 @@ export type ImageSizes = {
   naturalRatio: number
 } | null
 
-export interface ImageSizesFromApi {
-  scale_x: number | null
-  scale_y: number | null
-  left: number | null
-  top: number | null
-  natural_ratio: number | null
-}
-
-export function pictureApiToImageSizes(pictureApiData: ImageSizesFromApi | null): ImageSizes {
+export function pictureApiToImageSizes(pictureApiData: ImageSize | null): ImageSizeConverted {
   return pictureApiData &&
     ['scale_x', 'scale_y', 'left', 'top', 'natural_ratio'].reduce(
       (acc, key) => acc && typeof pictureApiData[key] === 'number',
@@ -39,7 +31,7 @@ export function pictureApiToImageSizes(pictureApiData: ImageSizesFromApi | null)
     : null
 }
 
-export const IMAGES_SIZES_DEFAULTS: ImageSizes = Object.freeze({
+export const IMAGES_SIZES_DEFAULTS: ImageSizeConverted = Object.freeze({
   naturalRatio: 1,
   scaleX: 1,
   scaleY: 1,
@@ -47,7 +39,7 @@ export const IMAGES_SIZES_DEFAULTS: ImageSizes = Object.freeze({
   top: 0,
 })
 
-export function imageSizesToPictureApi(imagesSizes: ImageSizes): ImageSizesFromApi {
+export function imageSizesToPictureApi(imagesSizes: ImageSizeConverted): ImageSize {
   return imagesSizes
     ? {
         scale_x: imagesSizes.scaleX,
@@ -65,7 +57,11 @@ export function imageSizesToPictureApi(imagesSizes: ImageSizes): ImageSizesFromA
       }
 }
 
-function _imageSizesFormData(formData: FormData, imageSizes: ImageSizes, keyMap: object): void {
+function _imageSizesFormData(
+  formData: FormData,
+  imageSizes: ImageSizeConverted,
+  keyMap: object
+): void {
   if (!imageSizes) return
   for (const [source, target] of Object.entries(keyMap)) {
     const value = imageSizes[source]
@@ -74,7 +70,7 @@ function _imageSizesFormData(formData: FormData, imageSizes: ImageSizes, keyMap:
   }
 }
 
-export function imageSizesFormData(formData: FormData, imageSizes: ImageSizes): void {
+export function imageSizesFormData(formData: FormData, imageSizes: ImageSizeConverted): void {
   const keyMap = {
     scaleX: 'scale_x',
     scaleY: 'scale_y',
@@ -89,7 +85,10 @@ export function imageSizesFormData(formData: FormData, imageSizes: ImageSizes): 
 // temporary pseudo duplicate (only key prefix change)
 // to accomodate API change for post user
 // while patch keep old behavior
-export function imageSizesFormDataPost(formData: FormData, imageSizes: ImageSizes = null): void {
+export function imageSizesFormDataPost(
+  formData: FormData,
+  imageSizes: ImageSizeConverted = null
+): void {
   const keyMap = {
     scaleX: 'profile_picture_scale_x',
     scaleY: 'profile_picture_scale_y',

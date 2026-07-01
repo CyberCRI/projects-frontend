@@ -20,8 +20,11 @@
 </template>
 
 <script setup lang="ts">
-import type { PeopleGroupModulesKeys, TranslatedPeopleGroupModel } from '~/models/invitation.model'
-import { GroupModuleIcon, GroupModuleTitle } from '~/models/invitation.model'
+import type {
+  PeopleGroupModulesKeys,
+  TranslatedPeopleGroupModel,
+} from '@/models/people-group.model'
+import { GroupModuleIcon, GroupModuleTitle } from '@/models/people-group.model'
 
 import { scrollToHash } from '~/composables/useScrollToTab'
 

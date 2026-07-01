@@ -1,4 +1,4 @@
-import type { PeopleGroupIdOrSlug } from '~/models/invitation.model'
+import type { PeopleGroupIdOrSlug } from '@/models/people-group.model'
 
 import type {
   Document,

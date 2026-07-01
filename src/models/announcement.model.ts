@@ -39,8 +39,6 @@ export type AnnouncementApplyInput = {
   applicant_message: string
 }
 
-export type AnnouncementOutput = Required<AnnouncementModel>
-
 export type AnnouncementForm = Omit<
   AnnouncementModel,
   'id' | 'updated_at' | 'created_at' | 'deadline'

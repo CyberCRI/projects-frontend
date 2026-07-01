@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { addProjectMembers, deleteProjectMembers } from '~/api/project-members.service'
 import GroupSelectDrawer from '~/components/drawer/Group/GroupSelectDrawer.vue'
+import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
 import CardInlineGroup from '~/components/drawer/Group/CardInlineGroup.vue'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
-import type { TranslatedPeopleGroupModel } from '~/models/invitation.model'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import RolesDrawer from '~/components/drawer/Role/RolesDrawer.vue'

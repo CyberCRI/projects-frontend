@@ -1,4 +1,4 @@
-import type { PeopleGroupModel, TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import type { PeopleGroupModel, TranslatedPeopleGroupModel } from '@/models/people-group.model'
 
 import type { Translated } from '~/interfaces/translated'
 import type { Roles } from '~/models/types'

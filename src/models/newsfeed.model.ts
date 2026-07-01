@@ -1,9 +1,6 @@
-import type { Project } from '@playwright/test'
-
+import type { AnnouncementModel, TranslatedAnnouncement } from '~/models/announcement.model'
+import type { ProjectModel, TranslatedProject } from '~/models/project.model'
 import type { NewsModel, TranslatedNews } from '~/models/news.model'
-
-import type { AnnouncementModel, TranslatedAnnouncement } from './announcement.model'
-import type { TranslatedProject } from './project.model'
 
 /**
  * @name NewsfeedModel
@@ -13,7 +10,7 @@ import type { TranslatedProject } from './project.model'
 export type NewsfeedModel = {
   id: number
   type: 'project' | 'announcement' | 'news'
-  project?: Project
+  project?: ProjectModel
   news?: NewsModel
   announcement?: AnnouncementModel
 }

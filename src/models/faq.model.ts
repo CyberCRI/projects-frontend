@@ -17,11 +17,6 @@ export interface FaqImageModel {
   gallery: string
 }
 
-export type FaqOutput = BaseModel &
-  Required<FaqModel> & {
-    images?: Array<FaqImageModel>
-  }
-
 export type FaqInput = Required<FaqModel> & {
   organization_code: string
 }

@@ -103,7 +103,7 @@
 <script setup lang="ts">
 import GroupMemberItem from '@/components/group/Modules/Members/GroupMemberItem.vue'
 import UserProfileDrawer from '~/components/drawer/User/UserProfileDrawer.vue'
-import type { TranslatedPeopleGroupModel } from '@/models/invitation.model'
+import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
 import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
 import { DEFAULT_GROUP_PATATOID } from '@/composables/usePatatoids'
 import LocationDrawer from '@/components/map/LocationDrawer.vue'

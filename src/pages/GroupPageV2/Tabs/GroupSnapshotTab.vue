@@ -34,7 +34,10 @@
 </template>
 
 <script setup lang="ts">
-import type { PeopleGroupModulesKeys, TranslatedPeopleGroupModel } from '~/models/invitation.model'
+import type {
+  PeopleGroupModulesKeys,
+  TranslatedPeopleGroupModel,
+} from '@/models/people-group.model'
 
 import GroupDescriptionPreview from '~/components/group/Modules/Extras/GroupDescriptionPreview.vue'
 import GroupDocumentsPreview from '~/components/group/Modules/Documents/GroupDocumentsPreview.vue'
