@@ -1,8 +1,11 @@
-<script setup>
+<script setup lang="ts">
 import useUsersStore from '@/stores/useUsers'
 const usersStore = useUsersStore()
 
-const props = defineProps({ skill: { type: [Object, null], required: true } })
+const props = defineProps({
+  skill: { type: [Object, null], required: true },
+  prompt: { type: Object, required: true },
+})
 const emit = defineEmits(['close'])
 
 let headers = {}
@@ -31,10 +34,7 @@ const fetchSkill = async () => {
 <template>
   <EntityAdminShow :fetch-entity="fetchSkill" :entity-title="skill.title" @close="emit('close')">
     <template #default="{ entity }">
-      <pre>
-      {{ JSON.stringify(entity, null, 2) }}
-    </pre
-      >
+      <CodeBlock language="json" :content="JSON.stringify(entity, null, 2)" />
     </template>
   </EntityAdminShow>
 </template>

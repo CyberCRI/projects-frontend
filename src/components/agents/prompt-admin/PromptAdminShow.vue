@@ -1,4 +1,5 @@
 <script setup>
+import CodeBlock from '~/components/base/form/CodeBlock.vue'
 import useUsersStore from '@/stores/useUsers'
 const usersStore = useUsersStore()
 
@@ -31,10 +32,7 @@ const fetchPrompt = async () => {
 <template>
   <EntityAdminShow :fetch-entity="fetchPrompt" :entity-title="prompt.title" @close="emit('close')">
     <template #default="{ entity }">
-      <pre>
-      {{ JSON.stringify(entity, null, 2) }}
-    </pre
-      >
+      <CodeBlock language="json" :content="JSON.stringify(entity, null, 2)" />
     </template>
   </EntityAdminShow>
 </template>
