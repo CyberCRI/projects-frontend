@@ -67,7 +67,7 @@ import TextInput from '~/components/base/form/TextInput.vue'
 import Recaptcha from '~/components/base/form/Recaptcha.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 import useUsersStore from '~/stores/useUsers'
-import { isEqual, omit } from 'es-toolkit'
+import { formEqual } from '~/form/base'
 
 const props = defineProps<{ isOpened: boolean }>()
 const emit = defineEmits<{ close: [] }>()
@@ -100,7 +100,7 @@ watch(
 const { stateModals, closeModals, openModals, closeAllModals } = useModals({ saveChange: false })
 
 const isFormEqual = computed(() =>
-  isEqual(omit(form.value, ['recaptcha']), omit(defaultLocalForm(), ['recaptcha']))
+  formEqual(form.value, defaultLocalForm(), { exclude: ['recaptcha'] })
 )
 
 const close = () => {

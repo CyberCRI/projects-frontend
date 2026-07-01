@@ -42,7 +42,7 @@ import BreadCrumbs from '~/components/base/navigation/BreadCrumbs.vue'
 import useToasterStore from '~/stores/useToaster'
 
 import { eventSkeleton } from '~/skeletons/event.skeletons'
-import { html2Text } from '~/functs/string'
+import { html2Text } from '~/functs/tiptap'
 
 const props = defineProps<{ eventId: number | string }>()
 

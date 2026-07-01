@@ -1,6 +1,7 @@
 import type { ProjectTabForm, ProjectTabItemForm } from '~/models/projects-tabs.model'
+import { DEFAULT_ICONS_TABS, NULL_CONTENT } from '~/functs/constants'
 import { helpers, required } from '@vuelidate/validators'
-import { DEFAULT_ICONS_TABS } from '~/functs/constants'
+import { requiredContent } from '~/form/base'
 
 export const defaultProjectTabForm = (): ProjectTabForm => {
   return {
@@ -16,7 +17,7 @@ export const defaultProjectTabForm = (): ProjectTabForm => {
 export const defaultProjectTabItemForm = (): ProjectTabItemForm => {
   return {
     title: '',
-    content: '',
+    content: NULL_CONTENT,
     images_ids: [],
   }
 }
@@ -44,7 +45,10 @@ export const useProjectTabItemForm = (options = {}) => {
 
   const rules = computed(() => ({
     title: {
-      required: helpers.withMessage(t('project.form.title-errors.required'), required),
+      required: helpers.withMessage(t('tab.form.title.required'), required),
+    },
+    content: {
+      required: helpers.withMessage(t('tab.form.content.required'), requiredContent),
     },
   }))
 

@@ -13,7 +13,7 @@ import type { TranslatedProject } from '~/models/project.model'
 import Recaptcha from '~/components/base/form/Recaptcha.vue'
 import Field from '~/components/base/form/Field.vue'
 import useUsersStore from '~/stores/useUsers'
-import { isEqual, omit } from 'es-toolkit'
+import { formEqual } from '~/form/base'
 
 const props = withDefaults(
   defineProps<{
@@ -77,7 +77,7 @@ const close = () => {
 }
 
 const isFormEqual = computed(() =>
-  isEqual(omit(form.value, ['recaptcha']), omit(defaultLocalForm(), ['recaptcha']))
+  formEqual(form.value, defaultLocalForm(), { exclude: ['recaptcha'] })
 )
 
 const checkClose = () => {

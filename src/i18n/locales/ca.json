@@ -3415,7 +3415,8 @@
     },
     "form": {
       "title": {
-        "label": "Títol"
+        "label": "Títol",
+        "required": "Es requereix el títol."
       },
       "description": {
         "label": "Descripció"
@@ -3437,6 +3438,10 @@
           "label": "blog",
           "help": "La llista de continguts és per a l' entrada del bloc."
         }
+      },
+      "content": {
+        "label": "Contingut",
+        "required": "Es requereix el contingut."
       }
     },
     "toasts": {

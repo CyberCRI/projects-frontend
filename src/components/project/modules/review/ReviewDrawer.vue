@@ -14,7 +14,7 @@ import type { ReviewForm, ReviewModel, TranslatedReview } from '~/models/review.
 import { defaultProjectReviewForm, useProjectReviewForm } from '~/form/review'
 import type { ProjectForm, TranslatedProject } from '~/models/project.model'
 import { patchProject } from '~/api/projects.service'
-import { isEqual } from 'es-toolkit'
+import { formEqual } from '~/form/base'
 
 const props = withDefaults(
   defineProps<{
@@ -63,7 +63,7 @@ const { stateModals, closeModals, openModals } = useModals({ saveChange: false }
 const { form, isValid, errors, cleanedData, reset } = useProjectReviewForm({ lazy: true })
 
 const isFormEqual = useBlockNavigation(
-  () => !props.isOpened || isEqual(form.value, defaultLocalForm())
+  () => !props.isOpened || formEqual(form.value, defaultLocalForm(), { html: ['description'] })
 )
 
 watch(

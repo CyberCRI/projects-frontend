@@ -19,7 +19,8 @@ import type { InstructionModel } from '~/models/instruction.model'
 
 import ContextActionMenu from '~/components/base/button/ContextActionMenu.vue'
 
-import { cropIfTooLong, html2Text } from '~/functs/string'
+import { cropIfTooLong } from '~/functs/string'
+import { html2Text } from '~/functs/tiptap'
 
 const props = defineProps<{
   instruction: InstructionModel

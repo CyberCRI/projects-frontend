@@ -1,4 +1,4 @@
-import { capitalize as esCapitalize, isNil } from 'es-toolkit'
+import { capitalize as esCapitalize } from 'es-toolkit'
 
 /**
  * crop text if is too long
@@ -23,57 +23,6 @@ export const capitalize = (text: string | undefined | null): string => {
     return ''
   }
   return esCapitalize(text)
-}
-
-/**
- * convert html string based to text string (without html tags)
- *
- * @function
- * @name html2Text
- * @kind variable
- * @param {string} text
- * @returns {string}
- * @exports
- */
-export const html2Text = (text: string): string => {
-  if (!import.meta.client) {
-    return ''
-  }
-  const span = document.createElement('span')
-  span.innerHTML = text || ''
-  return span.innerText
-}
-
-/**
- * check if text is empty (from html context like "<p></p>")
- *
- * @function
- * @name textIsEmpty
- * @kind variable
- * @param {string} text
- * @returns {boolean}
- * @exports
- */
-export const textIsEmpty = (text: string | null): boolean => {
-  if (isNil(text)) {
-    return true
-  }
-  return html2Text(text).trim() === ''
-}
-
-/**
- * get first text is not empty (html content string)
- *  or return empty string
- *
- * @function
- * @name getFirstTextNotEmpty
- * @kind variable
- * @param {string[]} texts
- * @returns {string}
- * @exports
- */
-export const getFirstTextNotEmpty = (texts: (string | null)[]): string => {
-  return texts.find((text) => !textIsEmpty(text)) || ''
 }
 
 export function safeParseFloat(s: any, fallback: number = 0): number {

@@ -3415,7 +3415,8 @@
     },
     "form": {
       "title": {
-        "label": "Pealkiri"
+        "label": "Pealkiri",
+        "required": "Pealkiri on vajalik."
       },
       "description": {
         "label": "Kirjeldus"
@@ -3437,6 +3438,10 @@
           "label": "blogi",
           "help": "Sisu on blogi sissekannete nimekiri."
         }
+      },
+      "content": {
+        "label": "Sisu",
+        "required": "Vajalik on sisu."
       }
     },
     "toasts": {

@@ -17,8 +17,9 @@ import FormPanel from '~/components/base/FormPanel.vue'
 import { useProjectSettingForm } from '~/form/project'
 import Section from '~/components/base/Section.vue'
 import useUsersStore from '~/stores/useUsers'
-import { isEqual, pick } from 'es-toolkit'
+import { formEqual } from '~/form/base'
 import analytics from '~/analytics'
+import { pick } from 'es-toolkit'
 
 const props = withDefaults(
   defineProps<{
@@ -81,7 +82,7 @@ const isFormEqual = useBlockNavigation(() => {
   const compareForm = form.value
   const orginalForm = defaultLocalForm()
   // change categorie/template with id (to avoid compare element memoryCheck)
-  return isEqual(
+  return formEqual(
     {
       ...compareForm,
       categorie: compareForm.categorie?.id,

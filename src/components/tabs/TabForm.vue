@@ -14,10 +14,10 @@ import FormPanel from '~/components/base/FormPanel.vue'
 import { DEFAULT_ICONS_TABS } from '~/functs/constants'
 import type { ImageModel } from '~/models/image.model'
 import { safeProjectIconTab } from '~/functs/projects'
-import { getFirstTextNotEmpty } from '~/functs/string'
+import { getFirstTextNotEmpty } from '~/functs/tiptap'
 import type { ProjectTabType } from '~/models/types'
 import { ICONS_TABS } from '~/functs/IconImage'
-import { isEqual } from 'es-toolkit'
+import { formEqual } from '~/form/base'
 import analytics from '~/analytics'
 
 const props = withDefaults(
@@ -81,7 +81,11 @@ const selectedTypeDescription = computed(
   () => optionsType.value.find((option) => option.value === form.value.type)?.title
 )
 
-const isFormEqual = useBlockNavigation(() => isEqual(form.value, defaultLocalForm()))
+const isFormEqual = useBlockNavigation(() =>
+  formEqual(form.value, defaultLocalForm(), {
+    html: ['description'],
+  })
+)
 watch(
   () => [props.project, props.tab],
   () => reset(defaultLocalForm()),

@@ -76,7 +76,7 @@ import type { NewsModel } from '@/models/news.model'
 import useToasterStore from '@/stores/useToaster'
 import { getNews } from '@/api/v2/news.service'
 import { deleteNews } from '@/api/news.service'
-import { html2Text } from '@/functs/string'
+import { html2Text } from '~/functs/tiptap'
 
 const props = defineProps<{
   slugOrId: string | number

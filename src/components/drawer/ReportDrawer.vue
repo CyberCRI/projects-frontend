@@ -8,7 +8,7 @@ import { defaultReportForm, useReportForm } from '~/form/report'
 import useToasterStore from '~/stores/useToaster'
 import { cropIfTooLong } from '~/functs/string'
 import useUsersStore from '~/stores/useUsers'
-import { isEqual, omit } from 'es-toolkit'
+import { formEqual } from '~/form/base'
 
 const props = withDefaults(defineProps<{ type: 'abuse' | 'bug'; isOpened?: boolean }>(), {
   isOpened: false,
@@ -45,7 +45,7 @@ const defaultLocalForm = () => ({
 })
 
 const isFormEqual = computed(() => {
-  return isEqual(omit(form.value, ['recaptcha']), omit(defaultLocalForm(), ['recaptcha']))
+  return formEqual(form.value, defaultLocalForm(), { exclude: ['recaptcha'] })
 })
 
 const checkClose = () => {

@@ -22,9 +22,10 @@ import { useBlockNavigation } from '~/composables/useBlockNavigation'
 import type { TranslatedProject } from '~/models/project.model'
 import FormPanel from '~/components/base/FormPanel.vue'
 import type { ImageModel } from '~/models/image.model'
-import { getFirstTextNotEmpty } from '~/functs/string'
-import { isEqual, isNil } from 'es-toolkit'
+import { getFirstTextNotEmpty } from '~/functs/tiptap'
+import { formEqual } from '~/form/base'
 import analytics from '~/analytics'
+import { isNil } from 'es-toolkit'
 
 const props = withDefaults(
   defineProps<{
@@ -41,6 +42,17 @@ const emit = defineEmits<{
   close: []
   reload: []
 }>()
+
+const providerParams = computed(() => ({
+  projectId: props.project.id,
+  organizationId: organizationsStore.current.id,
+}))
+
+const inOfflineMode = ref(false)
+
+const isCreated = computed(() => isNil(props.item?.id) || inOfflineMode.value)
+
+const room = computed(() => (props.item?.id ? `additional_${props.item.id}` : null))
 
 const defaultLocalForm = () => {
   const baseForm = defaultProjectTabItemForm()
@@ -74,24 +86,15 @@ const { form, isValid, errors, cleanedData, reset } = useProjectTabItemForm({
   default: defaultLocalForm(),
 })
 watch(
-  () => [props.item, props.project],
+  () => [props.item, props.project, room.value],
   () => reset(defaultLocalForm()),
   { immediate: true, deep: true }
 )
-const isFormEqual = useBlockNavigation(() => isEqual(form.value, defaultLocalForm()))
+const isFormEqual = useBlockNavigation(() =>
+  formEqual(form.value, defaultLocalForm(), { html: ['content'] })
+)
 
 const asyncing = ref(false)
-
-const providerParams = computed(() => ({
-  projectId: props.project.id,
-  organizationId: organizationsStore.current.id,
-}))
-
-const inOfflineMode = ref(false)
-
-const isCreated = computed(() => isNil(props.item?.id) || inOfflineMode.value)
-
-const room = computed(() => (props.item?.id ? `additional_${props.item.id}` : null))
 
 const handleImage = (img: ImageModel) => {
   form.value.images_ids.push(img.id)

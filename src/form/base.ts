@@ -1,7 +1,8 @@
 import type { ValidationRuleWithoutParams, ValidationRuleWithParams } from '@vuelidate/core'
+import { isEqual, mapValues, omit, pick } from 'es-toolkit'
+import { html2html, textIsEmpty } from '~/functs/tiptap'
 import { required, url } from '@vuelidate/validators'
 import { MIMETYPES_IMAGES } from '~/functs/constants'
-import { textIsEmpty } from '~/functs/string'
 
 /**
  * required rules for vuelidate to valie html is not empty (empty <p></p> , only space ...ect)
@@ -94,4 +95,46 @@ export const urlCheck: ValidationRuleWithoutParams = {
     return url.$validator(value, siblingState, vm)
   },
   $message: url.$message,
+}
+
+// options to formEqual
+type Options<A, B, Keys extends keyof (A & B)> = {
+  html?: readonly Keys[]
+  exclude?: readonly Keys[]
+}
+/**
+ * compare 2 form if equal, you can add exlucude to exlucde keys, and html to compare real html value
+ *
+ * @constant
+ * @name formEqual
+ * @kind variable
+ * @type {<A, B, Keys extends keyof A | keyof B>(a: A, b: B, options?: Options<A, B, Keys>) => boolean}
+ * @exports
+ */
+export const formEqual = <A, B, Keys extends keyof (A & B)>(
+  a: A,
+  b: B,
+  options: Options<A, B, Keys> = {}
+): boolean => {
+  // remove html/xclude keys
+  const keysToExclude = [...(options.exclude || []), ...(options.html || [])]
+  const aOmited = omit(a, keysToExclude as (keyof A)[])
+  const bOmited = omit(b, keysToExclude as (keyof B)[])
+
+  if (!isEqual(aOmited, bOmited)) {
+    return false
+  }
+
+  if (options.html) {
+    const keysHtml = [...options.html]
+    // pick only html keys, and convert it to htmlvalue ( to check diff)
+    const aHtml = mapValues(pick(a, keysHtml as (keyof A)[]), (val) => html2html(val as string))
+    const bHtml = mapValues(pick(b, keysHtml as (keyof B)[]), (val) => html2html(val as string))
+
+    if (!isEqual(aHtml, bHtml)) {
+      return false
+    }
+  }
+
+  return true
 }

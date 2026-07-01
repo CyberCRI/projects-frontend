@@ -14,10 +14,10 @@ import type { AnnouncementModel, TranslatedAnnouncement } from '~/models/announc
 import { defaultAnnouncementForm, useAnnouncementForm } from '~/form/annoucement'
 import FieldErrors from '~/components/base/form/FieldErrors.vue'
 import type { TranslatedProject } from '~/models/project.model'
-import { getFirstTextNotEmpty } from '~/functs/string'
+import { getFirstTextNotEmpty } from '~/functs/tiptap'
 import Field from '~/components/base/form/Field.vue'
 import { fullYearDateFormat } from '~/functs/date'
-import { isEqual } from 'es-toolkit'
+import { formEqual } from '~/form/base'
 import analytics from '~/analytics'
 
 const props = withDefaults(
@@ -97,7 +97,9 @@ const selectedTypeDescription = computed(() => {
   return t(`recruit.type.${form.value.type}.description`)
 })
 
-const isFormEqual = computed(() => isEqual(form.value, defaultLocalForm()))
+const isFormEqual = computed(() =>
+  formEqual(form.value, defaultLocalForm(), { html: ['description'] })
+)
 
 watch(
   () => [props.announcement, props.isOpened, props.project],

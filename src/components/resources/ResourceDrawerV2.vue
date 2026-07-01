@@ -3,7 +3,7 @@ import { defaultAttachmentForm, useAttachmentForm } from '~/form/attachement'
 import type { AttachmentLinkModel } from '~/models/attachment-link.model'
 import type { AttachmentFileModel } from '~/models/attachment-file.model'
 import ResourceCard from '~/components/resources/ResourceCard.vue'
-import { isEqual } from 'es-toolkit'
+import { formEqual } from '~/form/base'
 
 const props = withDefaults(
   defineProps<{
@@ -85,7 +85,7 @@ const isFormEqual = computed(() => {
   if (actualForm.id && props.formType === 'file') {
     actualForm.file = originalForm.file = null
   }
-  return isEqual(actualForm, originalForm)
+  return formEqual(actualForm, originalForm)
 })
 
 const onClose = () => {

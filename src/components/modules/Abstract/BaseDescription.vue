@@ -31,7 +31,7 @@ import PageStickyHead from '~/components/base/navigation/PageStickyHead.vue'
 import PageIndex from '~/components/base/navigation/PageIndex.vue'
 import NothingHere from '~/components/base/NothingHere.vue'
 import { onClient } from '~/composables/onClient'
-import { textIsEmpty } from '~/functs/string'
+import { textIsEmpty } from '~/functs/tiptap'
 
 const props = defineProps<{
   title: string

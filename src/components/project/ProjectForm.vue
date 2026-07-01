@@ -6,9 +6,10 @@ import { defaultProjectForm, useProjectForm } from '~/form/project'
 import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import useOrganizationsStore from '~/stores/useOrganizations'
-import { getFirstTextNotEmpty } from '~/functs/string'
+import { getFirstTextNotEmpty } from '~/functs/tiptap'
 import Field from '~/components/base/form/Field.vue'
-import { isEqual, isNil, pick } from 'es-toolkit'
+import { isNil, pick } from 'es-toolkit'
+import { formEqual } from '~/form/base'
 
 const props = withDefaults(
   defineProps<{
@@ -83,7 +84,9 @@ watch(
   () => reset(defaultLocalForm()),
   { immediate: true, deep: true }
 )
-const isFormEqual = useBlockNavigation(() => isEqual(form.value, defaultLocalForm()))
+const isFormEqual = useBlockNavigation(() =>
+  formEqual(form.value, defaultLocalForm(), { html: ['description'] })
+)
 
 const languageOptions = computed(() => {
   return organizationsStore.languages.map((language) => {
