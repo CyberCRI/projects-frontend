@@ -97,11 +97,20 @@ export const urlCheck: ValidationRuleWithoutParams = {
   $message: url.$message,
 }
 
+// options to formEqual
 type Options<A, B, Keys extends keyof (A & B)> = {
   html?: readonly Keys[]
   exclude?: readonly Keys[]
 }
-
+/**
+ * compare 2 form if equal, you can add exlucude to exlucde keys, and html to compare real html value
+ *
+ * @constant
+ * @name formEqual
+ * @kind variable
+ * @type {<A, B, Keys extends keyof A | keyof B>(a: A, b: B, options?: Options<A, B, Keys>) => boolean}
+ * @exports
+ */
 export const formEqual = <A, B, Keys extends keyof (A & B)>(
   a: A,
   b: B,
