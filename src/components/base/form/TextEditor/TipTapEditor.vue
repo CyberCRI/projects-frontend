@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import TipTapEditorContainer from '@/components/base/form/TextEditor/TipTapEditorContainer.vue'
+import type TipTapEditorMenus from '~/components/base/form/TextEditor/TipTapEditorMenus.vue'
 import TipTapEditorContent from '@/components/base/form/TextEditor/TipTapEditorContent.vue'
-import TipTapEditorMenus from '~/components/base/form/TextEditor/TipTapEditorMenus.vue'
 import { PropsDefault, emitsDefinitions, useTipTap } from '~/composables/tiptap'
 import type { PropsDefinitions } from '~/composables/tiptap'
 

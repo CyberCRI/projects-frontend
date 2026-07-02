@@ -10,8 +10,8 @@ import Color from '@tiptap/extension-color'
 import Link from '@tiptap/extension-link'
 
 import CustomTableCell from '~/composables/tiptap/extensions/CustomTableCell'
-import LpiCodeBlock from '~/composables/tiptap/extensions/LpiCodeBlock.js'
 import ExternalVideo from '~/composables/tiptap/extensions/ExternalVideo'
+import LpiCodeBlock from '~/composables/tiptap/extensions/LpiCodeBlock'
 import CustomImage from '~/composables/tiptap/extensions/CustomImage'
 import lowlight from '~/functs/lowlight'
 
@@ -22,8 +22,6 @@ export const getExtensions = (options: Partial<StarterKitOptions> = {}) => [
   }),
   TextStyle,
   Color,
-  // TODO: Check if need history
-  // History,
   Underline,
   TextAlign.configure({
     types: ['heading', 'paragraph'],

@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import LpiBubbleMenu from '~/components/base/form/TextEditor/LpiBubbleMenu'
-
-import { DEFAULT_COLOR_TIPTAP } from '~/functs/constants.js'
-import type { IconImageChoice } from '~/functs/IconImage.js'
+import { DEFAULT_COLOR_TIPTAP } from '~/functs/constants'
+import type { IconImageChoice } from '~/functs/IconImage'
 import type { Editor } from '@tiptap/vue-3'
 
 const props = defineProps<{

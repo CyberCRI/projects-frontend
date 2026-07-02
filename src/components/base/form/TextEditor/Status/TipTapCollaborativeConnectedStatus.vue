@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import UserPresenceCard from '~/components/base/form/TextEditor/Utils/UserPresenceCard.vue'
-import type { CollaborativeUser } from '~/interfaces/tiptap.js'
+import type { CollaborativeUser } from '~/interfaces/tiptap'
 
 defineProps<{
   users: CollaborativeUser[]

@@ -1,7 +1,9 @@
 import { Extension } from '@tiptap/core'
 
-import type { LpiBubbleMenuPluginProps } from './lpi-bubble-menu-plugin'
-import { LpiBubbleMenuPlugin } from './lpi-bubble-menu-plugin'
+import {
+  LpiBubbleMenuPlugin,
+  type LpiBubbleMenuPluginProps,
+} from '~/composables/tiptap/extensions/LpiBubblePlugin'
 import type { Editor } from '@tiptap/vue-3'
 
 export type LpiBubbleMenuOptions = Omit<LpiBubbleMenuPluginProps, 'editor' | 'element'> & {

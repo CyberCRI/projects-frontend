@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { posToDOMRect } from '@tiptap/core'
 
-import LpiBubbleMenu from '~/components/base/form/TextEditor/LpiBubbleMenu'
-
-import type { IconImageChoice } from '~/functs/IconImage.js'
+import type { IconImageChoice } from '~/functs/IconImage'
 import type { Editor } from '@tiptap/vue-3'
 
 const props = defineProps<{

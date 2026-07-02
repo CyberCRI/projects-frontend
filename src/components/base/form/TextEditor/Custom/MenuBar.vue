@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { IconImageChoice } from '~/functs/IconImage.js'
 import type { PropsDefinitions } from '~/composables/tiptap'
+import type { IconImageChoice } from '~/functs/IconImage'
 import type { Editor } from '@tiptap/vue-3'
 import MenuItem from './MenuItem.vue'
 

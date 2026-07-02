@@ -4,7 +4,7 @@ import EditorModalImage from './Custom/Image/EditorModalImage.vue'
 import EditorModalColor from './Custom/Color/EditorModalColor.vue'
 import EditorModalLink from './Custom/Link/EditorModalLink.vue'
 import type { PropsDefinitions } from '~/composables/tiptap'
-import type { ImageModel } from '~/models/image.model.js'
+import type { ImageModel } from '~/models/image.model'
 import type { Editor } from '@tiptap/vue-3'
 
 withDefaults(
@@ -29,7 +29,7 @@ const emit = defineEmits<{
   saved: []
 }>()
 
-const { stateModals, closeModals, openModals } = useModals({
+const { stateModals, closeModals, openAndCloseAll } = useModals({
   image: false,
   link: false,
   video: false,
@@ -57,10 +57,10 @@ const { stateModals, closeModals, openModals } = useModals({
     class="editor-header"
     :editor="editor"
     :mode="mode"
-    :open-color-modal="openModals('color')"
-    :open-image-modal="openModals('image')"
-    :open-link-modal="openModals('link')"
-    :open-video-modal="openModals('video')"
+    :open-color-modal="() => openAndCloseAll('color')"
+    :open-image-modal="() => openAndCloseAll('image')"
+    :open-link-modal="() => openAndCloseAll('link')"
+    :open-video-modal="() => openAndCloseAll('video')"
     :save-icon-visible="saveIconVisible"
     :disable-save="disableSave"
     @saved="$emit('saved')"
@@ -69,7 +69,7 @@ const { stateModals, closeModals, openModals } = useModals({
   <template v-if="showMenu && mode !== 'none'">
     <TableMenuBar v-if="mode != 'simple'" :editor="editor" class="editortablemenu" />
 
-    <LinkMenuBar :editor="editor" class="editorlinkmenu" @open="openModals('link')" />
+    <LinkMenuBar :editor="editor" class="editorlinkmenu" @open="openAndCloseAll('link')" />
 
     <ImageMenuBar :editor="editor" />
 

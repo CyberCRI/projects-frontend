@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import LpiBubbleMenu from '~/components/base/form/TextEditor/LpiBubbleMenu'
-
 import menuBarTippyOptions from '~/composables/tiptap/menuBarTippyOptions'
-import type { IconImageChoice } from '~/functs/IconImage.js'
+import type { IconImageChoice } from '~/functs/IconImage'
 import type { Editor } from '@tiptap/vue-3'
 
 const props = defineProps<{

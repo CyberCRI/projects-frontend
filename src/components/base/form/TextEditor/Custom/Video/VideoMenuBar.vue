@@ -15,10 +15,8 @@
 </template>
 
 <script setup lang="ts">
-import LpiBubbleMenu from '~/components/base/form/TextEditor/LpiBubbleMenu.js'
-
-import menuBarTippyOptions from '~/composables/tiptap/menuBarTippyOptions.js'
-import type { IconImageChoice } from '~/functs/IconImage.js'
+import menuBarTippyOptions from '~/composables/tiptap/menuBarTippyOptions'
+import type { IconImageChoice } from '~/functs/IconImage'
 import type { Editor } from '@tiptap/vue-3'
 
 const props = defineProps<{

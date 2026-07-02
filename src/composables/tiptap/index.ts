@@ -1,4 +1,4 @@
-import type { ImageModealCreated } from '~/models/image.model.js'
+import type { ImageModealCreated } from '~/models/image.model'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { getExtensions } from '~/composables/tiptap/options'
 import type { ErrorObject } from '@vuelidate/core'
@@ -38,7 +38,7 @@ export function useTipTap({
   extraOptions?: any
 }) {
   // data
-  const editor = ref<Editor>(null)
+  const editor = ref<Editor | undefined>(undefined)
   const editorInited = ref(false)
   const initialContent = ref<string>(props.modelValue)
   const toaster = useToasterStore()
