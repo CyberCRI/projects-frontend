@@ -1,4 +1,4 @@
-import type { LpiBubbleMenuPluginProps } from '~/components/base/form/TextEditor/tiptap-extensions/extension-lpi-bubble-menu'
+import type { LpiBubbleMenuPluginProps } from '~/composables/tiptap/tiptap-extensions/extension-lpi-bubble-menu'
 import type { TemplateRef } from 'vue'
 
 export default function (

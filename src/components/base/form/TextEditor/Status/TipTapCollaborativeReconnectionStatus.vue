@@ -29,6 +29,7 @@ withDefaults(
     <div v-if="!disconnectionGrace" class="connection-status" v-text="t(`multieditor.frozen`)" />
   </div>
 </template>
+
 <style lang="scss" scoped>
 .status-bar {
   justify-content: center;
@@ -50,4 +51,3 @@ withDefaults(
   }
 }
 </style>
-`;

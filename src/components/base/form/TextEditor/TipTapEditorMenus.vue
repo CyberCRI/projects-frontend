@@ -1,18 +1,11 @@
 <script setup lang="ts">
-import type { PropsDefinitions } from '~/components/base/form/TextEditor/useTipTap'
-import TableMenuBar from './Custom/Table/TableMenuBar.vue/index.js'
 import EditorModalVideo from './Custom/Video/EditorModalVideo.vue'
 import EditorModalImage from './Custom/Image/EditorModalImage.vue'
 import EditorModalColor from './Custom/Color/EditorModalColor.vue'
-import type { ImageModealCreated } from '~/models/image.model.js'
 import EditorModalLink from './Custom/Link/EditorModalLink.vue'
-import type MenuBar from './Custom/MenuBar.vue/index.js'
-import VideoMenuBar from './VideoMenuBar.vue'
-import ImageMenuBar from './ImageMenuBar.vue'
-import LinkMenuBar from './LinkMenuBar.vue'
+import type { PropsDefinitions } from '~/composables/tiptap'
+import type { ImageModel } from '~/models/image.model.js'
 import type { Editor } from '@tiptap/vue-3'
-
-const emit = defineEmits(['image', 'saved'])
 
 withDefaults(
   defineProps<{
@@ -21,7 +14,7 @@ withDefaults(
     mode: PropsDefinitions['mode']
     disableSave?: boolean
     saveIconVisible?: boolean
-    saveImageCallback?: (file: File) => Promise<ImageModealCreated>
+    saveImageCallback?: PropsDefinitions['saveImageCallback']
   }>(),
   {
     disableSave: false,
@@ -30,6 +23,11 @@ withDefaults(
     saveImageCallback: null,
   }
 )
+
+const emit = defineEmits<{
+  image: [ImageModel]
+  saved: []
+}>()
 
 const { stateModals, closeModals, openModals } = useModals({
   image: false,
@@ -59,31 +57,24 @@ const { stateModals, closeModals, openModals } = useModals({
     class="editor-header"
     :editor="editor"
     :mode="mode"
-    :open-color-modal="() => openModals('color')"
-    :open-image-modal="() => openModals('image')"
-    :open-link-modal="() => openModals('link')"
-    :open-video-modal="() => openModals('video')"
+    :open-color-modal="openModals('color')"
+    :open-image-modal="openModals('image')"
+    :open-link-modal="openModals('link')"
+    :open-video-modal="openModals('video')"
     :save-icon-visible="saveIconVisible"
     :disable-save="disableSave"
     @saved="$emit('saved')"
   />
 
-  <TableMenuBar
-    v-if="showMenu && !['none', 'simple'].includes(mode)"
-    :editor="editor"
-    class="editortablemenu"
-  />
+  <template v-if="showMenu && mode !== 'none'">
+    <TableMenuBar v-if="mode != 'simple'" :editor="editor" class="editortablemenu" />
 
-  <LinkMenuBar
-    v-if="showMenu && mode !== 'none'"
-    :editor="editor"
-    class="editorlinkmenu"
-    @open="openModals('link')"
-  />
+    <LinkMenuBar :editor="editor" class="editorlinkmenu" @open="openModals('link')" />
 
-  <ImageMenuBar v-if="showMenu && mode !== 'none'" :editor="editor" />
+    <ImageMenuBar :editor="editor" />
 
-  <VideoMenuBar v-if="showMenu && mode !== 'none'" :editor="editor" />
+    <VideoMenuBar :editor="editor" />
+  </template>
 </template>
 
 <style lang="scss" scoped>

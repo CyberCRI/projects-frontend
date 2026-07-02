@@ -4,27 +4,20 @@ import Collaboration from '@tiptap/extension-collaboration'
 import { HocuspocusProvider } from '@hocuspocus/provider'
 import { Editor } from '@tiptap/vue-3'
 
-import TipTapCollaborativeReconnectionStatus from '~/components/base/form/TextEditor/TipTapCollaborativeReconnectionStatus.vue'
-import {
-  PropsDefault,
-  emitsDefinitions,
-  getExtensions,
-  useTipTap,
-} from '~/components/base/form/TextEditor/useTipTap'
-import TipTapCollaborativeConnectingStatus from '~/components/base/form/TextEditor/TipTapCollaborativeConnectingStatus.vue'
-import TipTapCollaborativeConnectedStatus from '~/components/base/form/TextEditor/TipTapCollaborativeConnectedStatus.vue'
 import TipTapEditorContainer from '~/components/base/form/TextEditor/TipTapEditorContainer.vue'
 import TipTapEditorContent from '~/components/base/form/TextEditor/TipTapEditorContent.vue'
-import type { PropsDefinitions } from '~/components/base/form/TextEditor/useTipTap'
-import TipTapModals from '~/components/base/form/TextEditor/TipTapModals.vue'
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
+import type { PropsDefinitions } from '~/composables/tiptap'
 import LpiSnackbar from '~/components/base/LpiSnackbar.vue'
 
 import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'
 
+import { ClearHistoryWS } from '../../../../composables/tiptap/tiptap-extensions/ClearHistoryWS'
+import TipTapEditorMenus from '~/components/base/form/TextEditor/TipTapEditorMenus.vue'
+import { emitsDefinitions, PropsDefault, useTipTap } from '~/composables/tiptap'
 import { onClientMounted, onClientUnmounted } from '~/composables/onClient'
-import { ClearHistoryWS } from './tiptap-extensions/ClearHistoryWS'
+import { getExtensions } from '~/composables/tiptap/options'
 import type { CollaborativeUser } from '~/interfaces/tiptap'
 import { useRuntimeConfig } from '#imports'
 import { randomInt } from 'es-toolkit'
@@ -328,7 +321,7 @@ defineExpose({
         :users="editor.storage.collaborationCursor.users"
       />
 
-      <TipTapModals
+      <TipTapEditorMenus
         v-if="editor"
         :editor="editor"
         :mode="mode"

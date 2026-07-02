@@ -43,7 +43,7 @@ import LpiFooter from '~/components/app/LpiFooter.vue'
 import useGlobalsStore from '~/stores/useGlobals'
 import useUsersStore from '~/stores/useUsers'
 
-import { fixTiptapTableHeight } from '~/functs/editorUtils'
+import { fixTiptapTableHeight } from '~/composables/tiptap/editorUtils'
 
 useRuntimeHook('app:error', (error) => {
   console.error('app:error', error)

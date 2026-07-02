@@ -6,7 +6,7 @@ import {
   DEFAULT_LANGUAGE,
   DEFAULT_TAB,
   DEFAULT_THEME,
-} from '~/components/base/form/TextEditor/Custom/Code/LpiCodeBlock'
+} from '~/composables/tiptap/extensions/LpiCodeBlock'
 import type { GroupOption } from '~/components/base/button/GroupButton.vue'
 import GroupButton from '~/components/base/button/GroupButton.vue'
 import LpiSelect from '~/components/base/form/LpiSelect.vue'

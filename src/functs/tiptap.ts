@@ -1,4 +1,4 @@
-import { getExtensions } from '~/components/base/form/TextEditor/useTipTap'
+import { getExtensions } from '~/composables/tiptap/options'
 import { generateHTML, generateJSON } from '@tiptap/core'
 import { isNil } from 'es-toolkit'
 

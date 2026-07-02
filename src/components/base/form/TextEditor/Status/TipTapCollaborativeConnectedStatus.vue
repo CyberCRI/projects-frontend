@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import UserPresenceCard from '~/components/base/form/TextEditor/Utils/UserPresenceCard.vue'
 import type { CollaborativeUser } from '~/interfaces/tiptap.js'
-import UserCard from './UserPresenceCard.vue'
 
 defineProps<{
   users: CollaborativeUser[]
@@ -12,7 +12,7 @@ defineProps<{
   <div class="editor-socket">
     <div :class="`editor-status editorstatus--${status}`">
       <div v-if="onlineAndConnected" class="list currenteditors">
-        <UserCard
+        <UserPresenceCard
           v-for="(u, index) in users"
           :key="index"
           :user="u"

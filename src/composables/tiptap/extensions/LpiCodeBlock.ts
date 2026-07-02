@@ -1,10 +1,9 @@
+import LpiCodeBlockNodeView from '~/components/base/form/TextEditor/Custom/Code/LpiCodeBlockNodeView.vue'
 import type { CodeBlockLowlightOptions } from '@tiptap/extension-code-block-lowlight'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
 import { mergeAttributes } from '@tiptap/core'
 import { PluginKey } from '@tiptap/pm/state'
-
-import LpiCodeBlockNodeView from './LpiCodeBlockNodeView.vue'
 
 export const DEFAULT_LANGUAGE = 'plaintext'
 export const DEFAULT_THEME = 'dark'

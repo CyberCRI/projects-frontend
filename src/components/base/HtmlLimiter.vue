@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import fixEditorContent from '~/functs/editorUtils.ts'
+import fixEditorContent from '~/composables/tiptap/editorUtils'
 import { debounce } from 'es-toolkit'
 
 const TIMER = 0 // set this to some thing like 1000 for visual debugging

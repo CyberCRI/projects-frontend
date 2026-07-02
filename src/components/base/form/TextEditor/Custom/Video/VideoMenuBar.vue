@@ -15,12 +15,10 @@
 </template>
 
 <script setup lang="ts">
-import LpiBubbleMenu from '~/components/base/form/TextEditor/LpiBubbleMenu/LpiBubbleMenu'
+import LpiBubbleMenu from '~/components/base/form/TextEditor/LpiBubbleMenu.js'
 
-import ContexttualToolMenu from './Custom/ContexttualToolMenu.vue/index.js'
-import menuBarTippyOptions from '~/functs/menuBarTippyOptions'
+import menuBarTippyOptions from '~/composables/tiptap/menuBarTippyOptions.js'
 import type { IconImageChoice } from '~/functs/IconImage.js'
-import type MenuItem from './Custom/MenuItem.vue/index.js'
 import type { Editor } from '@tiptap/vue-3'
 
 const props = defineProps<{
