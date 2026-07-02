@@ -1,22 +1,23 @@
 <script setup lang="ts">
-import UserPresenceCard from '~/components/base/form/TextEditor/Utils/UserPresenceCard.vue'
+import type UserPresenceCard from '~/components/base/form/TextEditor/Utils/UserPresenceCard.vue'
 import type { CollaborativeUser } from '~/interfaces/tiptap'
+import type { WebSocketStatus } from '@hocuspocus/provider'
 
 defineProps<{
   users: CollaborativeUser[]
-  status: string
+  status: WebSocketStatus | 'offline'
   onlineAndConnected: boolean
 }>()
 </script>
+
 <template>
   <div class="editor-socket">
     <div :class="`editor-status editorstatus--${status}`">
       <div v-if="onlineAndConnected" class="list currenteditors">
         <UserPresenceCard
-          v-for="(u, index) in users"
-          :key="index"
-          :user="u"
-          mode="full"
+          v-for="user in users"
+          :key="user.pid"
+          :user="user"
           size="s"
           tint="inverse"
         />
@@ -24,6 +25,7 @@ defineProps<{
     </div>
   </div>
 </template>
+
 <style lang="scss" scoped>
 .editor-socket {
   align-items: center;

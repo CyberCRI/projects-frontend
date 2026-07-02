@@ -9,7 +9,7 @@
 import {
   LpiBubbleMenuPlugin,
   type LpiBubbleMenuPluginProps,
-} from '~/composables/tiptap/tiptap-extensions/extension-lpi-bubble-menu'
+} from '~/composables/tiptap/extensions/LpiBubblePlugin'
 import type { Plugin } from '@tiptap/pm/state'
 
 const props = defineProps<Omit<LpiBubbleMenuPluginProps, 'element'>>()

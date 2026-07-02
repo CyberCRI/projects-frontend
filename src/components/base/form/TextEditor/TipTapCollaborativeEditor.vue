@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { HocuspocusProvider, WebSocketStatus } from '@hocuspocus/provider'
 import CollaborationCursor from '@tiptap/extension-collaboration-cursor'
+import type { onStatusParameters } from '@hocuspocus/provider'
 import Collaboration from '@tiptap/extension-collaboration'
-import { HocuspocusProvider } from '@hocuspocus/provider'
 import { Editor } from '@tiptap/vue-3'
 
 import TipTapEditorContainer from '~/components/base/form/TextEditor/TipTapEditorContainer.vue'
@@ -79,7 +80,7 @@ const {
 const provider = ref(null)
 // TODO ref ?
 const sockerserver = runtimeConfig.public.appWssHost
-const status = ref('offline')
+const status = ref<onStatusParameters['status'] | 'offline'>('offline')
 const online = ref(navigator.onLine)
 const synced = ref(false) // current sync status
 const firstSync = ref(false) // was synced at least once
@@ -152,7 +153,7 @@ function initCollaborativeEditor() {
   initialContent.value = props.modelValue
   editorInited.value = true
 
-  status.value = 'connecting'
+  status.value = WebSocketStatus.Connecting
 
   const providerParams = {
     // add initialContent as a value for first time eding/creating

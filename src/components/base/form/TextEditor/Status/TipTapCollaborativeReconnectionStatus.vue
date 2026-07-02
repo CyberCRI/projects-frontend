@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import type { WebSocketStatus } from '@hocuspocus/provider'
+
 const { t } = useNuxtI18n()
 
 withDefaults(
   defineProps<{
     disconnectionGrace: boolean
-    status: string
+    status: WebSocketStatus | 'offline'
     online?: boolean
   }>(),
   {
