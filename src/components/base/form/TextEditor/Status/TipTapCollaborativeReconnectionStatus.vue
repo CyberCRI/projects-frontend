@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import type { WebSocketStatus } from '@hocuspocus/provider'
+
 const { t } = useNuxtI18n()
 
 withDefaults(
   defineProps<{
     disconnectionGrace: boolean
-    status: string
+    status: WebSocketStatus | 'offline'
     online?: boolean
   }>(),
   {
@@ -29,6 +31,7 @@ withDefaults(
     <div v-if="!disconnectionGrace" class="connection-status" v-text="t(`multieditor.frozen`)" />
   </div>
 </template>
+
 <style lang="scss" scoped>
 .status-bar {
   justify-content: center;
@@ -50,4 +53,3 @@ withDefaults(
   }
 }
 </style>
-`;

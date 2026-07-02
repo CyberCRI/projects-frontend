@@ -17,10 +17,7 @@ const props = withDefaults(
 
 const emit = defineEmits(['blur'])
 
-const onBlur = (event) => {
-  console.log('qssfqsdq')
-  emit('blur', event)
-}
+const onBlur = (event) => emit('blur', event)
 
 // computed
 const dataTest = computed(() =>

@@ -1,13 +1,9 @@
 <script setup lang="ts">
-import {
-  PropsDefault,
-  emitsDefinitions,
-  useTipTap,
-} from '~/components/base/form/TextEditor/useTipTap'
 import TipTapEditorContainer from '@/components/base/form/TextEditor/TipTapEditorContainer.vue'
+import type TipTapEditorMenus from '~/components/base/form/TextEditor/TipTapEditorMenus.vue'
 import TipTapEditorContent from '@/components/base/form/TextEditor/TipTapEditorContent.vue'
-import type { PropsDefinitions } from '~/components/base/form/TextEditor/useTipTap'
-import TipTapModals from '~/components/base/form/TextEditor/TipTapModals.vue'
+import { PropsDefault, emitsDefinitions, useTipTap } from '~/composables/tiptap'
+import type { PropsDefinitions } from '~/composables/tiptap'
 
 const { t } = useNuxtI18n()
 
@@ -48,7 +44,7 @@ defineExpose({
 
 <template>
   <TipTapEditorContainer v-if="editor" :editor="editor" :mode="mode" :errors="errors">
-    <TipTapModals
+    <TipTapEditorMenus
       :editor="editor"
       :mode="mode"
       :show-menu="mode !== 'none'"

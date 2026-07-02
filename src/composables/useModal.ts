@@ -45,6 +45,12 @@ export const useModals = <modalNames = { [key: string]: boolean }>(
     }
   }
 
+  const openAndCloseAll = <K extends keyof modalNames>(key: K) => {
+    const keys = Object.keys(defaultValue).filter((k) => k !== key) as (keyof modalNames)[]
+    closeModals(...keys)
+    openModals(key)
+  }
+
   return {
     stateModals,
     openModals,
@@ -52,6 +58,7 @@ export const useModals = <modalNames = { [key: string]: boolean }>(
     closeAllModals,
     toggleModals,
     setModals,
+    openAndCloseAll,
   }
 }
 

@@ -42,13 +42,14 @@ import useToasterStore from '~/stores/useToaster'
 
 import type { ImageModealCreated, ImageModel } from '~/models/image.model'
 import GalleryItem from '~/components/base/gallery/GalleryItem.vue'
+import type { PropsDefinitions } from '~/composables/tiptap'
 import { fileToImageModel } from '~/functs/imageSizesUtils'
 import { useTipTapImageForm } from '~/form/tiptap/image'
 import type { Editor } from '@tiptap/vue-3'
 
 const props = defineProps<{
   // function must take a file argument and return a promise resolving to an {url, width, height} object
-  saveImageCallback: (file: File) => Promise<ImageModealCreated>
+  saveImageCallback: PropsDefinitions['saveImageCallback']
   editor: Editor
 }>()
 

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
+import type { WebSocketStatus } from '@hocuspocus/provider'
 
 const { t } = useNuxtI18n()
 
@@ -8,7 +9,7 @@ const emit = defineEmits(['do-fallback-edit'])
 
 defineProps<{
   cnxTimedout: boolean
-  status: string
+  status: WebSocketStatus | 'offline'
 }>()
 
 const riskAck = ref(false)
