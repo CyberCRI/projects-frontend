@@ -11,11 +11,11 @@ import Table from '@tiptap/extension-table'
 import Color from '@tiptap/extension-color'
 import Link from '@tiptap/extension-link'
 
-import CustomTableCell from './tiptap-extensions/CustomTableCell.js'
+import LpiCodeBlock from '~/components/base/form/TextEditor/Custom/Code/LpiCodeBlock.js'
 import type { ImageModealCreated } from '~/models/image.model.js'
-import ExternalVideo from './tiptap-extensions/ExternalVideo.js'
-import LpiCodeBlock from './tiptap-extensions/LpiCodeBlock.js'
-import CustomImage from './tiptap-extensions/CustomImage.js'
+import CustomTableCell from './Custom/Table/CustomTableCell.js'
+import ExternalVideo from './Custom/Video/ExternalVideo.js'
+import CustomImage from './Custom/Image/CustomImage.js'
 import type { ErrorObject } from '@vuelidate/core'
 import type { ExtractDefaultPropTypes } from 'vue'
 import lowlight from '~/functs/lowlight'
@@ -84,9 +84,9 @@ export function useTipTap({
   extraOptions?: any
 }) {
   // data
-  const editor = ref(null)
+  const editor = ref<Editor>(null)
   const editorInited = ref(false)
-  const initialContent = ref(props.modelValue)
+  const initialContent = ref<string>(props.modelValue)
   const toaster = useToasterStore()
   const organizationsStore = useOrganizationsStore()
 

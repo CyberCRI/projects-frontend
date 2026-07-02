@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import ContexttualToolMenu from '~/components/base/form/TextEditor/ContexttualToolMenu.vue'
 import { NodeViewContent, NodeViewWrapper, nodeViewProps } from '@tiptap/vue-3'
 import Field from '~/components/base/form/Field.vue'
 
@@ -7,19 +6,19 @@ import {
   DEFAULT_LANGUAGE,
   DEFAULT_TAB,
   DEFAULT_THEME,
-} from '~/components/base/form/TextEditor/tiptap-extensions/LpiCodeBlock'
-
+} from '~/components/base/form/TextEditor/Custom/Code/LpiCodeBlock'
 import type { GroupOption } from '~/components/base/button/GroupButton.vue'
 import GroupButton from '~/components/base/button/GroupButton.vue'
 import LpiSelect from '~/components/base/form/LpiSelect.vue'
+import CodeBlock from '~/components/base/form/CodeBlock.vue'
 import lowlight from '~/functs/lowlight'
 
 const props = defineProps(nodeViewProps)
 const { t } = useNuxtI18n()
 
 const language = ref(DEFAULT_LANGUAGE)
-const theme = ref(DEFAULT_THEME)
-const tab = ref(DEFAULT_TAB)
+const theme = ref<'dark' | 'light'>(DEFAULT_THEME)
+const tab = ref<2 | 4>(DEFAULT_TAB)
 
 const optionsLanguages = computed(() => {
   return lowlight.listLanguages().map((language) => ({
@@ -114,12 +113,9 @@ watch(tab, (neo, old) => {
       </Field>
     </ContexttualToolMenu>
 
-    <pre class="lpi-code-block" :class="[`theme-${theme} tab-${tab}`]"><NodeViewContent
-        as="code"
-        class="content-dom hljs"
-        :class="[`language-${node.attrs.language}`]"
-        spellcheck="false"
-      /></pre>
+    <CodeBlock :language="node.attrs.language" :theme="theme" :tab="tab">
+      <NodeViewContent />
+    </CodeBlock>
   </NodeViewWrapper>
 </template>
 

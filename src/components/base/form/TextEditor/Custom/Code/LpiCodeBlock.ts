@@ -8,7 +8,7 @@ import LpiCodeBlockNodeView from './LpiCodeBlockNodeView.vue'
 
 export const DEFAULT_LANGUAGE = 'plaintext'
 export const DEFAULT_THEME = 'dark'
-export const DEFAULT_TAB = '2'
+export const DEFAULT_TAB = 2
 
 export interface LpiBlockOptions extends CodeBlockLowlightOptions {
   tabClassPrefix: string
@@ -66,7 +66,7 @@ export default CodeBlockLowlight.extend<LpiBlockOptions>({
           const tab = tabs[0]
 
           if (!tab) {
-            return DEFAULT_TAB
+            return DEFAULT_TAB.toString()
           }
 
           return tab
@@ -96,7 +96,7 @@ export default CodeBlockLowlight.extend<LpiBlockOptions>({
 
     const tabClass = node.attrs.tab
       ? this.options.tabClassPrefix + node.attrs.tab
-      : this.options.tabClassPrefix + DEFAULT_TAB
+      : this.options.tabClassPrefix + DEFAULT_TAB.toString()
 
     return [
       'pre',

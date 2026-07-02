@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { TranslatedUserModel } from '~/models/user.model'
+import type { CollaborativeUser } from '~/interfaces/tiptap.js'
 import UserCard from './UserPresenceCard.vue'
 
 defineProps<{
-  users: TranslatedUserModel[]
+  users: CollaborativeUser[]
   status: string
   onlineAndConnected: boolean
 }>()

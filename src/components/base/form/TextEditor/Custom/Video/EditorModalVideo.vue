@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { getFormatedVideoSrc } from '~/components/base/form/TextEditor/tiptap-extensions/ExternalVideo'
+import { getFormatedVideoSrc } from '~/components/base/form/TextEditor/Custom/Video/ExternalVideo'
 import DialogModal from '~/components/base/modal/DialogModal.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import { useTipTapVideoForm } from '~/form/tiptap/video'

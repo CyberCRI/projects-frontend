@@ -25,6 +25,7 @@ import useUsersStore from '~/stores/useUsers'
 
 import { onClientMounted, onClientUnmounted } from '~/composables/onClient'
 import { ClearHistoryWS } from './tiptap-extensions/ClearHistoryWS'
+import type { CollaborativeUser } from '~/interfaces/tiptap'
 import { useRuntimeConfig } from '#imports'
 import { randomInt } from 'es-toolkit'
 
@@ -133,7 +134,7 @@ function getCollaborativeExtensions() {
         color: props.color,
         pid: user.value.id,
         profile_picture: user.value.profile_picture,
-      },
+      } satisfies CollaborativeUser,
     }),
     ClearHistoryWS.configure({}),
   ]
@@ -363,13 +364,6 @@ defineExpose({
 
 <!--SCOPED TO FIX BUG ON DEFAULT EDITOR, UN-SCOPE IF NEEDED LATER-->
 <style lang="scss" scoped>
-// TODO dead code ???
-// .connecting,
-// .disconnected {
-//     padding: 20px;
-//     text-align: center;
-// }
-
 .solo-mode-warning {
   margin: 0 auto 1rem;
 }

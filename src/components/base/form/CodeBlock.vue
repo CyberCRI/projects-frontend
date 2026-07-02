@@ -5,12 +5,15 @@ const props = withDefaults(
   defineProps<{
     theme?: 'dark' | 'light'
     language: string
-    content: string
+    content?: string
     tab?: 2 | 4
+    spellcheck?: boolean
   }>(),
   {
     theme: 'dark',
     tab: 4,
+    content: null,
+    spellcheck: false,
   }
 )
 
@@ -30,7 +33,7 @@ onClientMounted(() => hljs.highlightAll())
     <pre class="lpi-code-block" :class="[`theme-${theme} tab-${tab}`]"><code
       class="content-dom hljs"
       :class="[`language-${language}`]"
-      spellcheck="false"
-      >{{ content }}</code></pre>
+      :spellcheck="spellcheck"
+      ><slot>{{ content }}</slot></code></pre>
   </div>
 </template>

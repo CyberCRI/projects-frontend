@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import type { PropsDefinitions } from '~/components/base/form/TextEditor/useTipTap'
+import TableMenuBar from './Custom/Table/TableMenuBar.vue/index.js'
+import EditorModalVideo from './Custom/Video/EditorModalVideo.vue'
+import EditorModalImage from './Custom/Image/EditorModalImage.vue'
+import EditorModalColor from './Custom/Color/EditorModalColor.vue'
 import type { ImageModealCreated } from '~/models/image.model.js'
-import EditorModalVideo from './modals/EditorModalVideo.vue'
-import EditorModalImage from './modals/EditorModalImage.vue'
-import EditorModalColor from './modals/EditorModalColor.vue'
-import EditorModalLink from './modals/EditorModalLink.vue'
+import EditorModalLink from './Custom/Link/EditorModalLink.vue'
+import type MenuBar from './Custom/MenuBar.vue/index.js'
 import VideoMenuBar from './VideoMenuBar.vue'
-import TableMenuBar from './TableMenuBar.vue'
 import ImageMenuBar from './ImageMenuBar.vue'
 import LinkMenuBar from './LinkMenuBar.vue'
 import type { Editor } from '@tiptap/vue-3'
-import type MenuBar from './MenuBar.vue'
 
 const emit = defineEmits(['image', 'saved'])
 

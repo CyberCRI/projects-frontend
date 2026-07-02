@@ -20,14 +20,14 @@
 </template>
 
 <script lang="ts" setup>
-import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
+import type CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
+import type { CollaborativeUser } from '~/interfaces/tiptap'
 
-defineOptions({ name: 'UserPresenceCard' })
 withDefaults(
   defineProps<{
-    user: any // TODO(remi): made tiptap user interface
+    user: CollaborativeUser
     size: string
     tint?: string
   }>(),
