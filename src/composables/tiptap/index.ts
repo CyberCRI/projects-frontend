@@ -2,6 +2,7 @@ import type { ImageModealCreated } from '~/models/image.model'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { getExtensions } from '~/composables/tiptap/options'
 import type { ErrorObject } from '@vuelidate/core'
+import type { EditorOptions } from '@tiptap/vue-3'
 import type { ExtractDefaultPropTypes } from 'vue'
 import useToasterStore from '~/stores/useToaster'
 import { Editor } from '@tiptap/vue-3'
@@ -26,17 +27,29 @@ export const PropsDefault: ExtractDefaultPropTypes<PropsDefinitions> = {
   errors: () => [],
 }
 
-export function useTipTap({
-  props,
-  emit,
-  t,
-  extraOptions,
-}: {
+type Options = {
   props: any
   emit: any
   t: any
   extraOptions?: any
-}) {
+}
+
+type TipTapResult = {
+  editor: Ref<any>
+  editorInited: Ref<boolean>
+  appendTranslationsStyle: () => void
+  initEditor: () => void
+  destroyEditor: () => void
+  getContent: () => string
+  initialContent: Ref<string>
+  resetContent: () => void
+  onUpdate: EditorOptions['onUpdate']
+  onBlur: EditorOptions['onBlur']
+  onDrop: EditorOptions['onDrop']
+  onPaste: EditorOptions['onPaste']
+}
+
+export const useTipTap = ({ props, emit, t, extraOptions }: Options): TipTapResult => {
   // data
   const editor = ref<Editor | undefined>(undefined)
   const editorInited = ref(false)
