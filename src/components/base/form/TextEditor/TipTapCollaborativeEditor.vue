@@ -18,6 +18,7 @@ import TipTapEditorMenus from '~/components/base/form/TextEditor/TipTapEditorMen
 import { emitsDefinitions, PropsDefault, useTipTap } from '~/composables/tiptap'
 import { ClearHistoryWS } from '~/composables/tiptap/extensions/ClearHistoryWS'
 import { onClientMounted, onClientUnmounted } from '~/composables/onClient'
+import type { ProviderParams } from '~/interfaces/colaboratives'
 import { getExtensions } from '~/composables/tiptap/options'
 import type { CollaborativeUser } from '~/interfaces/tiptap'
 import { useRuntimeConfig } from '#imports'
@@ -42,7 +43,7 @@ const props = withDefaults(
     PropsDefinitions & {
       room: string
       color?: string
-      providerParams?: any
+      providerParams: ProviderParams
     }
   >(),
   {
@@ -54,7 +55,6 @@ const props = withDefaults(
       const lightness = randomInt(20, 60) // neither too dark nor too light
       return `hsl(${hue}deg ${saturation}% ${lightness}%)`
     },
-    providerParams: null,
   }
 )
 
@@ -155,12 +155,6 @@ function initCollaborativeEditor() {
 
   status.value = WebSocketStatus.Connecting
 
-  const providerParams = {
-    // add initialContent as a value for first time eding/creating
-    content: initialContent.value,
-    ...props.providerParams,
-  }
-
   // there's no way in provide to detect failure if server is not reached at least once
   // so we use a simple timeout that check if the connection was ever open
   // and if not display a message and kill the editor
@@ -176,7 +170,7 @@ function initCollaborativeEditor() {
     url: sockerserver,
     name: props.room,
     token: accessToken.value,
-    parameters: providerParams,
+    parameters: props.providerParams,
     onOpen: () => {
       cnxOpen.value = true
       // clear "unconnectable" timeout

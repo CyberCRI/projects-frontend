@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { defaultProjectForm, useProjectDescriptionForm } from '~/form/project'
 import { refreshProjectData } from '~/composables/project/refreshProject'
+import { getFirstTextNotEmpty, roomKeyFromParams } from '~/functs/tiptap'
 import { patchProject, postProjectImage } from '~/api/projects.service'
 import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
+import type { ProviderParams } from '~/interfaces/colaboratives'
 import type { TranslatedProject } from '~/models/project.model'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import FormPanel from '~/components/base/FormPanel.vue'
-import { getFirstTextNotEmpty } from '~/functs/tiptap'
 import { formEqual } from '~/form/base'
 import { pick } from 'es-toolkit'
 
@@ -31,13 +32,14 @@ const socketReady = ref(false)
 const router = useRouter()
 const organizationsStore = useOrganizationsStore()
 
-const room = computed(() => `description_${props.project.id}`)
-const providerParams = computed(() => {
+const providerParams = computed<ProviderParams>(() => {
   return {
-    projectId: props.project.id,
+    type: 'project-description',
+    projectId: props.project.slug,
     organizationId: organizationsStore.current.id,
   }
 })
+const room = computed(() => roomKeyFromParams(providerParams.value))
 
 const defaultLocalForm = () => {
   const defaultForm = pick(defaultProjectForm(), ['description'])

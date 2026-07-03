@@ -18,11 +18,12 @@ import {
   updateProjectTabItem,
 } from '~/api/project-tabs.service'
 import { defaultProjectTabItemForm, useProjectTabItemForm } from '~/form/project-tabs'
+import { getFirstTextNotEmpty, roomKeyFromParams } from '~/functs/tiptap'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
+import type { ProviderParams } from '~/interfaces/colaboratives'
 import type { TranslatedProject } from '~/models/project.model'
 import FormPanel from '~/components/base/FormPanel.vue'
 import type { ImageModel } from '~/models/image.model'
-import { getFirstTextNotEmpty } from '~/functs/tiptap'
 import { formEqual } from '~/form/base'
 import analytics from '~/analytics'
 import { isNil } from 'es-toolkit'
@@ -43,16 +44,19 @@ const emit = defineEmits<{
   reload: []
 }>()
 
-const providerParams = computed(() => ({
+const providerParams = computed<ProviderParams>(() => ({
+  type: 'project-tab-item',
   projectId: props.project.id,
   organizationId: organizationsStore.current.id,
+  tabId: props.tab.id,
+  tabItemId: props.item?.id,
 }))
 
 const inOfflineMode = ref(false)
 
 const isCreated = computed(() => isNil(props.item?.id) || inOfflineMode.value)
 
-const room = computed(() => (props.item?.id ? `additional_${props.item.id}` : null))
+const room = computed(() => roomKeyFromParams(providerParams.value))
 
 const defaultLocalForm = () => {
   const baseForm = defaultProjectTabItemForm()

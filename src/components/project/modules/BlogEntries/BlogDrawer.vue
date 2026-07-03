@@ -12,11 +12,12 @@ import useOrganizationsStore from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'
 
 import type { BlogEntryForm, BlogEntryModel } from '~/models/blog-entry.model'
+import { getFirstTextNotEmpty, roomKeyFromParams } from '~/functs/tiptap'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
+import type { ProviderParams } from '~/interfaces/colaboratives'
 import type { TranslatedProject } from '~/models/project.model'
 import { defaultBlogForm, useBlogEntryForm } from '~/form/blog'
 import type { ImageModel } from '~/models/image.model'
-import { getFirstTextNotEmpty } from '~/functs/tiptap'
 import { formEqual } from '~/form/base'
 import analytics from '~/analytics'
 import { isNil } from 'es-toolkit'
@@ -91,7 +92,8 @@ const isFormEqual = useBlockNavigation(
 
 const asyncing = ref(false)
 
-const providerParams = computed(() => ({
+const providerParams = computed<ProviderParams>(() => ({
+  type: 'project-blog',
   blogId: props.blog?.id ?? null,
   projectId: props.project.id,
   organizationId: organizationsStore.current.id,
@@ -101,7 +103,7 @@ const inOfflineMode = ref(false)
 
 const isCreated = computed(() => isNil(props.blog?.id) || inOfflineMode.value)
 
-const room = computed(() => (props.blog?.id ? `blog_${props.blog.id}` : null))
+const room = computed(() => roomKeyFromParams(providerParams.value))
 
 const handleImage = (img: ImageModel) => {
   console.log(img)

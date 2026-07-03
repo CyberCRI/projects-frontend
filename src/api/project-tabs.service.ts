@@ -81,7 +81,7 @@ export async function getProjectTabItem(
   projectTabItemId: ProjectTabItem['id'],
   config: Config = {}
 ) {
-  return await useAPI<PaginationResult<ProjectTabItem>>(
+  return await useAPI<ProjectTabItem>(
     `project/${projectId}/tab/${projectTabId}/item/${projectTabItemId}/`,
     config
   )
