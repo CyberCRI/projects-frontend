@@ -5,8 +5,8 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import { usePublicURL } from '~/composables/usePublic'
 
+import type { ImageModel, ImageVariations } from 'shared-projects-frontend/models/image.model'
 import { fileToImageModel, type ImageSizeConverted } from '~/functs/imageSizesUtils'
-import type { ImageModel, ImageVariations } from '~/models/image.model'
 import { getFileFromURL } from '~/api/utils.service'
 
 const { t } = useNuxtI18n()

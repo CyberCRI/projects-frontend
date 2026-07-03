@@ -19,8 +19,8 @@
 <script setup lang="ts">
 import FilterValue from '~/components/search/Filters/FilterValue.vue'
 
+import type { TagModel } from 'shared-projects-frontend/models/tag.model'
 import useTagTexts from '~/composables/useTagTexts'
-import type { TagModel } from '~/models/tag.model'
 
 withDefaults(
   defineProps<{

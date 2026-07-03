@@ -1,8 +1,8 @@
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import App from '~/app.vue'
 
+import type { OrganizationOutput } from 'shared-projects-frontend/models/organization.model'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import type { OrganizationOutput } from '~/models/organization.model'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { checkExpiredToken } from '~/api/auth/keycloakUtils'
 import { flushPromises } from '@vue/test-utils'

@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import BaseBlogEntryList from '@/components/project/modules/BlogEntries/BaseBlogEntryList.vue'
-import { ProjectModuleIcon, ProjectModuleTitle } from '@/models/project.model'
-import type { TranslatedProject } from '@/models/project.model'
+import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
+import { PROJECT_MODULE_ICON, PROJECT_MODULE_TITLE } from '~/functs/constants'
 
 defineProps<{ project: TranslatedProject }>()
 </script>
 
 <template>
   <BaseModulePreview
-    :title="$t(ProjectModuleTitle.blogs)"
-    :icon="ProjectModuleIcon.blogs"
+    :title="$t(PROJECT_MODULE_TITLE.blogs)"
+    :icon="PROJECT_MODULE_ICON.blogs"
     :total="project.modules.blogs"
     :see-more="{
       name: 'projectBlog',

@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedAnnouncement } from '~/models/announcement.model'
+import type { TranslatedAnnouncement } from 'shared-projects-frontend/models/announcement.model'
 
 import SummaryAction from '~/components/home/SummaryCards/SummaryAction.vue'
 import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'

@@ -48,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedEventModel } from '~/models/event.model'
+import type { TranslatedEventModel } from 'shared-projects-frontend/models/event.model'
 
 import { deleteEvent } from '~/api/event.service'
 

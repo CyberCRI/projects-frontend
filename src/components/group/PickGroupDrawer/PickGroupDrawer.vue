@@ -23,9 +23,9 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models/people-group.model'
+import type { HierarchyGroupModel } from 'shared-projects-frontend/models/group.model'
 import PickGroup from '~/components/group/PickGroup/PickGroup.vue'
-import type { HierarchyGroupModel } from '~/models/group.model'
 import FetchLoader from '~/components/base/FetchLoader.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 import type { AsyncDataRequestStatus } from '#app'

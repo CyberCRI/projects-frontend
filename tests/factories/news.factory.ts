@@ -1,6 +1,6 @@
+import { NewsModel } from 'shared-projects-frontend/models/news.model'
 import { OrganizationOutputFactory } from './organization.factory'
 import { createFactory } from 'faker-create-factory'
-import { NewsModel } from '~/models/news.model'
 import BaseFactory from './base.factory'
 
 export const NewsFactory = createFactory<NewsModel>((faker) => ({

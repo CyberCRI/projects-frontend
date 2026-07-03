@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import ProjectLocationDrawer from '~/components/project/modules/Locations/ProjectLocationDrawer.vue'
+import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { locationSkeleton } from '@/skeletons/location.skeleton'
-import type { TranslatedProject } from '@/models/project.model'
 import { factoriesSkeleton } from '@/skeletons/base.skeletons'
 import { getProjectLocations } from '@/api/v2/project.service'
 import LocationForm from '~/components/map/LocationForm.vue'

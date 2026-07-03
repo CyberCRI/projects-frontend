@@ -1,8 +1,8 @@
 import addBlogLimitWarningFactory from '~/composables/project-pdf-components/addBlogLimitWarningFactory'
 import addBlogSectionFactory from '~/composables/project-pdf-components/addBlogSectionFactory'
+import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import PageTitle from '~/composables/project-pdf-components/PageTitle'
 import type { Doc } from '~/composables/pdf-helpers/doc-builder'
-import type { TranslatedProject } from '~/models/project.model'
 import { Page } from '~/composables/pdf-helpers/doc-builder'
 import { getBlogEntries } from '~/api/blogentries.service'
 

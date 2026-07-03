@@ -2,10 +2,10 @@ import {
   getTemplate as fetchTemplate,
   getTemplates as fetchTemplates,
 } from '~/api/templates.service'
+import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
-import type { OrganizationModel } from '@/models/organization.model'
-import type { TemplateId } from '~/models/template.model'
-import type { RefOrRaw } from '@/interfaces/utils'
+import type { TemplateId } from 'shared-projects-frontend/models/template.model'
+import type { RefOrRaw } from '~/interfaces/utils'
 import { onlyRefs } from '@/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}

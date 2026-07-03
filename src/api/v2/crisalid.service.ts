@@ -1,7 +1,11 @@
-import type { PeopleGroupIdOrSlug } from '@/models/people-group.model'
-import type { OrganizationModel } from '~/models/organization.model'
+import type { PeopleGroupIdOrSlug } from 'shared-projects-frontend/models/people-group.model'
+import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
 
-import type { Document, DocumentType, Researcher } from '~/interfaces/researcher'
+import type {
+  Document,
+  DocumentType,
+  Researcher,
+} from 'shared-projects-frontend/interfaces/researcher'
 import type { RefOrRaw } from '~/interfaces/utils'
 
 import {

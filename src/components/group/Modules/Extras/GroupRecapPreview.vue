@@ -23,8 +23,8 @@
 import type {
   PeopleGroupModulesKeys,
   TranslatedPeopleGroupModel,
-} from '@/models/people-group.model'
-import { GroupModuleIcon, GroupModuleTitle } from '@/models/people-group.model'
+} from 'shared-projects-frontend/models/people-group.model'
+import { GROUP_MODULE_ICON, GROUP_MODULE_TITLE } from '~/functs/constants'
 
 import { scrollToHash } from '~/composables/useScrollToTab'
 
@@ -56,9 +56,9 @@ const modulesArray = computed(() => {
         .map(([name, count]) => {
           const obj = {
             key: name,
-            name: props.noTitle ? '' : t(GroupModuleTitle[name], count),
+            name: props.noTitle ? '' : t(GROUP_MODULE_TITLE[name], count),
             count,
-            icon: GroupModuleIcon[name],
+            icon: GROUP_MODULE_ICON[name],
           }
           return obj
         })

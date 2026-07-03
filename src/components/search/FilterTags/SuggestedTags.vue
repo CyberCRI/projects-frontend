@@ -20,8 +20,8 @@
 import FilterValue from '~/components/search/Filters/FilterValue.vue'
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 
+import type { TagModel } from 'shared-projects-frontend/models/tag.model'
 import useTagTexts from '~/composables/useTagTexts'
-import type { TagModel } from '~/models/tag.model'
 
 const props = withDefaults(
   defineProps<{

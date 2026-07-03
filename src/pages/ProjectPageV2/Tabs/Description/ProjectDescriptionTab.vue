@@ -5,9 +5,9 @@
 </template>
 
 <script setup lang="ts">
+import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import BaseDescription from '~/components/modules/Abstract/BaseDescription.vue'
 import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
-import type { TranslatedProject } from '~/models/project.model'
 
 defineProps<{
   project: TranslatedProject

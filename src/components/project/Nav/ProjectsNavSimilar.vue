@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedProject } from '~/models/project.model'
+import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import { isNil } from 'es-toolkit'
 
 const props = withDefaults(

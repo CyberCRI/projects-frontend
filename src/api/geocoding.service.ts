@@ -1,4 +1,4 @@
-import type { Geocoding } from '~/interfaces/maps'
+import type { Geocoding } from 'shared-projects-frontend/interfaces/maps'
 
 /**
  * suggest location from nuxt server (google maps)

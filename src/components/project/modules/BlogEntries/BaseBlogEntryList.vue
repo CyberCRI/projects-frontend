@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import type { TranslatedBlogEntry } from 'shared-projects-frontend/models/blog-entry.model'
+import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import BlogDrawer from '~/components/project/modules/BlogEntries/BlogDrawer.vue'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { blogentriesSkeletons } from '@/skeletons/blogentries.skeletons'
-import type { TranslatedBlogEntry } from '~/models/blog-entry.model'
-import type { TranslatedProject } from '@/models/project.model'
 import { getBlogEntries } from '@/api/v2/blogentries.service'
 import NothingHere from '~/components/base/NothingHere.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'

@@ -1,6 +1,6 @@
-import type { ImageModel, ImageSize } from '~/models/image.model'
+import type { ImageModel, ImageSize } from 'shared-projects-frontend/models/image.model'
+import type { AttachmentType } from 'shared-projects-frontend/models/types'
 import type { IconImageChoice } from '~/functs/IconImage'
-import type { AttachmentType } from '~/models/types'
 
 export type ImageSizeConverted = {
   scaleX: number

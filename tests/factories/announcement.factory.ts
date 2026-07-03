@@ -2,7 +2,7 @@ import {
   AnnouncementInput,
   AnnouncementModel,
   TranslatedAnnouncement,
-} from '~/models/announcement.model'
+} from 'shared-projects-frontend/models/announcement.model'
 import { ProjectFactory, TranslatedProjectFactory } from './project.factory'
 import { createFactory } from 'faker-create-factory'
 import BaseFactory from './base.factory'

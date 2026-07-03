@@ -64,6 +64,7 @@
 </template>
 
 <script setup lang="ts">
+import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import GoalSummaryItem from '~/components/project/modules/Goals/GoalSummaryItem.vue'
 import SdgPreview from '~/components/project/modules/Goals/sdg/SdgPreview.vue'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
@@ -71,7 +72,6 @@ import GoalDrawer from '~/components/project/modules/Goals/GoalDrawer.vue'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import GoalItem from '~/components/project/modules/Goals/GoalItem.vue'
-import type { TranslatedProject } from '@/models/project.model'
 import NothingHere from '~/components/base/NothingHere.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { goalSkeletons } from '@/skeletons/goals.skeletons'

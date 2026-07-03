@@ -2,7 +2,7 @@
 import type {
   ProjectCategoryModel,
   TranslatedProjectCategory,
-} from '~/models/project-category.model'
+} from 'shared-projects-frontend/models/project-category.model'
 
 import IconImage from '~/components/base/media/IconImage.vue'
 

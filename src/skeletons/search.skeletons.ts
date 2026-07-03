@@ -3,11 +3,11 @@ import type {
   SearchResultGroup,
   SearchResultProject,
   SearchResultUser,
-} from '~/models/search.model'
+} from 'shared-projects-frontend/models/search.model'
+import type { SearchObjectType } from 'shared-projects-frontend/models/types'
 import { projectSkeleton } from '~/skeletons/project.skeletons'
 import { groupSkeleton } from '~/skeletons/group.skeletons'
 import { userSkeleton } from '~/skeletons/user.skeletons'
-import type { SearchObjectType } from '~/models/types'
 import { shuffle } from 'es-toolkit'
 
 export const searchUserSkeleton = (): SearchResultUser => {

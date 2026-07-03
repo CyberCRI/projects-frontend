@@ -1,5 +1,10 @@
-import type { QueryFilterReviews, ReviewForm, ReviewId, ReviewModel } from '@/models/review.model'
-import type { ProjectSlugOrId } from '@/models/project.model'
+import type {
+  QueryFilterReviews,
+  ReviewForm,
+  ReviewId,
+  ReviewModel,
+} from 'shared-projects-frontend/models/review.model'
+import type { ProjectSlugOrId } from 'shared-projects-frontend/models/project.model'
 import useAPI from '@/composables/useAPI'
 
 type Config = UseApiOptions<QueryFilterReviews>

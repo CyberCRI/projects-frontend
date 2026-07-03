@@ -12,7 +12,7 @@ import EditTagModal from '~/components/admin/EditTagModal.vue'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'
 
-import type { TagClassificationModel } from '~/models/tagclassification.model'
+import type { TagClassificationModel } from 'shared-projects-frontend/models/tagclassification.model'
 import useTagTexts from '~/composables/useTagTexts'
 import useAPI from '~/composables/useAPI'
 import { debounce } from 'es-toolkit'

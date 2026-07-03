@@ -1,4 +1,4 @@
-import type { ProjectModel, TranslatedProject } from '~/models/project.model'
+import type { ProjectModel, TranslatedProject } from 'shared-projects-frontend/models/project.model'
 
 export const refreshProjectData = <T extends ProjectModel | TranslatedProject>(project: T) => {
   const route = useRoute()

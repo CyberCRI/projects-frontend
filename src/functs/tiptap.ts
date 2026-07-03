@@ -1,4 +1,4 @@
-import type { ProviderParams } from '~/interfaces/colaboratives'
+import type { ProviderParams } from 'shared-projects-frontend/interfaces/colaboratives'
 import { getExtensions } from '~/composables/tiptap/options'
 import { generateHTML, generateJSON } from '@tiptap/core'
 import { isNil } from 'es-toolkit'

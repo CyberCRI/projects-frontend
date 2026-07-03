@@ -19,7 +19,10 @@
 </template>
 
 <script setup lang="ts">
-import type { InstructionInput, InstructionModel } from '~/models/instruction.model'
+import type {
+  InstructionInput,
+  InstructionModel,
+} from 'shared-projects-frontend/models/instruction.model'
 
 import { createInstruction, putInstruction } from '~/api/instruction.service'
 

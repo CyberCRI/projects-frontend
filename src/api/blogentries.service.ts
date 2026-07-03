@@ -3,9 +3,9 @@ import type {
   BlogEntryId,
   BlogEntryModel,
   QueryFilterBlogEntry,
-} from '@/models/blog-entry.model'
-import type { ImageModealCreated } from '~/models/image.model'
-import type { ProjectSlugOrId } from '@/models/project.model'
+} from 'shared-projects-frontend/models/blog-entry.model'
+import type { ImageModealCreated } from 'shared-projects-frontend/models/image.model'
+import type { ProjectSlugOrId } from 'shared-projects-frontend/models/project.model'
 import useAPI from '@/composables/useAPI'
 
 type ConfigBlogEntry = UseApiOptions

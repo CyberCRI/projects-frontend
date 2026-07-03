@@ -1,5 +1,5 @@
-import type { OrganizationModel } from '~/models/organization.model'
-import type { UserModel } from '~/models/user.model'
+import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
+import type { UserModel } from 'shared-projects-frontend/models/user.model'
 
 export function parseJwt(token) {
   try {

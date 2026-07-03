@@ -125,16 +125,19 @@
 </template>
 
 <script setup lang="ts">
-import type { ProjectMessageModel, TranslatedProjectMessage } from '@/models/project-message.model'
+import type {
+  ProjectMessageModel,
+  TranslatedProjectMessage,
+} from 'shared-projects-frontend/models/project-message.model'
+import type { CommentModel, TranslatedComment } from 'shared-projects-frontend/models/comment.model'
 import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
+import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import MakeComment from '~/components/project/modules/Comments/MakeComment.vue'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
-import type { CommentModel, TranslatedComment } from '@/models/comment.model'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import { deleteProjectMessage } from '@/api/project-messages.service'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
-import type { TranslatedProject } from '@/models/project.model'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import { deleteComment } from '@/api/comments.service'

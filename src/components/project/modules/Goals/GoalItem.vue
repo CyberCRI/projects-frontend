@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedGoal } from '~/models/goal.model'
+import type { TranslatedGoal } from 'shared-projects-frontend/models/goal.model'
 
 import { formatDate } from '~/functs/date'
 

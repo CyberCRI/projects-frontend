@@ -1,4 +1,4 @@
-import type { OrganizationModel } from '~/models/organization.model'
+import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
 
 import type { RefOrRaw } from '~/interfaces/utils'
 
@@ -15,8 +15,8 @@ import type {
   ProjectTabItem,
   QueryFilterProjectTab,
   QueryFilterProjectTabItem,
-} from '~/models/projects-tabs.model'
-import type { ProjectSlugOrId } from '~/models/project.model'
+} from 'shared-projects-frontend/models/projects-tabs.model'
+import type { ProjectSlugOrId } from 'shared-projects-frontend/models/project.model'
 import { onlyRefs } from '~/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}

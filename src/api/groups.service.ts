@@ -6,22 +6,25 @@ import type {
   PostGroupData,
   PostGroupProjects,
   RemoveGroupMember,
-} from '~/models/group.model'
+} from 'shared-projects-frontend/models/group.model'
 import type {
   PeopleGroupIdOrSlug,
   PeopleGroupModel,
   QueryFilterGroup,
   QueryFilterGroupHierarchy,
-} from '@/models/people-group.model'
-import type { BaseLocationModel, LocationModel } from '~/models/location.model'
-import type { ImageModealCreated, ImageModel } from '~/models/image.model'
-import type { ProjectModel } from '~/models/project.model'
-import type { EventModel } from '~/models/event.model'
-import type { NewsModel } from '~/models/news.model'
+} from 'shared-projects-frontend/models/people-group.model'
+import type {
+  BaseLocationModel,
+  LocationModel,
+} from 'shared-projects-frontend/models/location.model'
+import type { ImageModealCreated, ImageModel } from 'shared-projects-frontend/models/image.model'
+import type { ProjectModel } from 'shared-projects-frontend/models/project.model'
+import type { EventModel } from 'shared-projects-frontend/models/event.model'
+import type { NewsModel } from 'shared-projects-frontend/models/news.model'
 
 import { _adaptParamsToGetQuery } from '~/api/utils.service'
 
-import type { OrganizationModel } from '~/models/organization.model'
+import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
 import type { UseApiOptions } from '~/composables/useAPI'
 import useAPI from '~/composables/useAPI'
 

@@ -1,4 +1,4 @@
-import type { AttachmentForm } from '~/models/attachment.model'
+import type { AttachmentForm } from 'shared-projects-frontend/models/attachment.model'
 import { helpers, required } from '@vuelidate/validators'
 import { maxFileSize, urlCheck } from '~/form/base'
 import type { RefOrRaw } from '~/interfaces/utils'

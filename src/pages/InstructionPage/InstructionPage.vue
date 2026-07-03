@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { InstructionId } from '~/models/instruction.model'
+import type { InstructionId } from 'shared-projects-frontend/models/instruction.model'
 
 import { getInstruction } from '~/api/v2/instruction.service'
 import { deleteInstruction } from '~/api/instruction.service'

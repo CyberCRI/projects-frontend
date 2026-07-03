@@ -1,7 +1,7 @@
 import SkillsEditDrawer from '~/components/people/skill/SkillsEditDrawer.vue'
 import { lpiMount } from '~~/tests/helpers/LpiMount'
 
-import { OrganizationOutput } from '~/models/organization.model'
+import { OrganizationOutput } from 'shared-projects-frontend/models/organization.model'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import pinia from '~/stores'
 

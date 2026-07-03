@@ -4,11 +4,11 @@ import {
   patchOrganizationFile,
   postOrganizationFiles,
 } from '~/api/organization-files.service'
+import type { AttachmentFileModel } from 'shared-projects-frontend/models/attachment-file.model'
+import type { AttachmentForm } from 'shared-projects-frontend/models/attachment.model'
 import { attachementFileSkeletons } from '~/skeletons/attachements.skeletons'
 import ResourceDrawerV2 from '~/components/resources/ResourceDrawerV2.vue'
 import { getOrganizationFiles } from '~/api/v2/organization-files.service'
-import type { AttachmentFileModel } from '~/models/attachment-file.model'
-import type { AttachmentForm } from '~/models/attachment.model'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'

@@ -2,11 +2,11 @@ import {
   getProjectAnnouncements as fetchProjectAnnouncements,
   getAnnouncements as fetchAnnouncements,
 } from '@/api/announcements.service'
-import type { QueryFilterAnnouncement } from '@/models/announcement.model'
+import type { QueryFilterAnnouncement } from 'shared-projects-frontend/models/announcement.model'
+import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
+import type { ProjectSlugOrId } from 'shared-projects-frontend/models/project.model'
 import type { UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
-import type { OrganizationModel } from '@/models/organization.model'
-import type { ProjectSlugOrId } from '@/models/project.model'
-import type { RefOrRaw } from '@/interfaces/utils'
+import type { RefOrRaw } from '~/interfaces/utils'
 import { onlyRefs } from '@/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}

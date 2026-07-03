@@ -38,7 +38,7 @@
 import type {
   ProjectCategoryModel,
   TranslatedProjectCategory,
-} from '~/models/project-category.model'
+} from 'shared-projects-frontend/models/project-category.model'
 
 import CategoryCardImage from '~/components/category/CategoryCardImage.vue'
 

@@ -3,12 +3,12 @@ import type {
   ProjectTabForm,
   TranslatedProjectTab,
   TranslatedProjectTabItem,
-} from '~/models/projects-tabs.model'
+} from 'shared-projects-frontend/models/projects-tabs.model'
+import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import { deleteProjectTab, updateProjectTab } from '~/api/project-tabs.service'
 import { refreshProjectTabs } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import ContentExpandable from '~/components/base/ContentExpandable.vue'
-import type { TranslatedProject } from '@/models/project.model'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import TabForm from '~/components/tabs/TabForm.vue'
 import { textIsEmpty } from '~/functs/tiptap'

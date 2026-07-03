@@ -43,8 +43,8 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
-import type { QueryFilterNews, TranslatedNews } from '~/models/news.model'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models/people-group.model'
+import type { QueryFilterNews, TranslatedNews } from 'shared-projects-frontend/models/news.model'
 
 import { getGroupNews } from '~/api/v2/group.service'
 import { deleteNews } from '~/api/news.service'

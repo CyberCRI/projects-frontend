@@ -5,8 +5,8 @@ import LpiButton from '~/components/base/button/LpiButton.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 import ToolTip from '~/components/base/ToolTip.vue'
 
+import type { UserSkillModel } from 'shared-projects-frontend/models/user.model'
 import useSkillLevels from '~/composables/useSkillLevels'
-import type { UserSkillModel } from '~/models/user.model'
 import useSkillTexts from '~/composables/useSkillTexts'
 
 const props = withDefaults(

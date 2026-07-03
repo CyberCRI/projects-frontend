@@ -1,5 +1,5 @@
-import type { EventModel, QueryFilterEvent } from '~/models/event.model'
-import type { OrganizationModel } from '~/models/organization.model'
+import type { EventModel, QueryFilterEvent } from 'shared-projects-frontend/models/event.model'
+import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
 
 import type { RefOrRaw } from '~/interfaces/utils'
 

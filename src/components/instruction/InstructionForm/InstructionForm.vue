@@ -56,11 +56,11 @@
 </template>
 
 <script setup lang="ts">
+import type { InstructionForm } from 'shared-projects-frontend/models/instruction.model'
 import MultiGroupPicker from '@/components/group/MultiGroupPicker/MultiGroupPicker.vue'
 import { defaultInstructionForm, useInstructionForm } from '~/form/instruction'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
 import { postOrganizationImage } from '@/api/organizations.service'
-import type { InstructionForm } from '@/models/instruction.model'
 import IconImage from '@/components/base/media/IconImage.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
 import DateField from '@/components/base/form/DateField.vue'

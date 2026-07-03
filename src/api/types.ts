@@ -1,5 +1,5 @@
-import type { LanguageType, ProjectMemberRoleType } from '~/models/types'
-import type { ProjectModel } from '~/models/project.model'
+import type { LanguageType, ProjectMemberRoleType } from 'shared-projects-frontend/models/types'
+import type { ProjectModel } from 'shared-projects-frontend/models/project.model'
 
 export interface APIParams {
   limit?: number // Number of results to return per page.

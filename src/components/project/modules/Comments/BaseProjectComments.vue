@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import { getProjectComments, getProjectMessages } from '@/api/v2/comments.service'
 import EmptyComment from '~/components/project/modules/Comments/EmptyComment.vue'
 import CommentItem from '~/components/project/modules/Comments/CommentItem.vue'
@@ -6,7 +7,6 @@ import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import { projectCommentSkeleton } from '@/skeletons/comments.skeletons'
 import type FetchLoader from '@/components/base/FetchLoader.vue'
-import type { TranslatedProject } from '@/models/project.model'
 import { throttle } from 'es-toolkit'
 
 const props = withDefaults(

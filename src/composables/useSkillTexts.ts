@@ -1,4 +1,4 @@
-import type { UserSkillModel } from '~/models/user.model'
+import type { UserSkillModel } from 'shared-projects-frontend/models/user.model'
 
 import useTagTexts from '~/composables/useTagTexts'
 

@@ -1,9 +1,9 @@
 <template>
   <BaseGroupPreview
     id="gallery"
-    :title="$t(GroupModuleTitle.gallery, group.modules.gallery)"
+    :title="$t(GROUP_MODULE_TITLE.gallery, group.modules.gallery)"
     :total="group.modules.gallery"
-    :icon="GroupModuleIcon.gallery"
+    :icon="GROUP_MODULE_ICON.gallery"
   >
     <template #header>
       <SeeMoreArrow
@@ -20,9 +20,9 @@
 </template>
 
 <script setup lang="ts">
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models/people-group.model'
 import BaseGroupGallery from '@/components/group/Modules/Gallery/BaseGroupGallery.vue'
-import { GroupModuleIcon, GroupModuleTitle } from '@/models/people-group.model'
-import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
+import { GROUP_MODULE_ICON, GROUP_MODULE_TITLE } from '~/functs/constants'
 import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
 
 defineProps<{ group: TranslatedPeopleGroupModel }>()

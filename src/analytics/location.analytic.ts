@@ -1,4 +1,4 @@
-import type { ProjectLocationForm } from '~/models/location.model'
+import type { ProjectLocationForm } from 'shared-projects-frontend/models/location.model'
 
 import analytics from '~/analytics/index'
 

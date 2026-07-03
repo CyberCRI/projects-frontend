@@ -20,8 +20,8 @@
 </template>
 
 <script setup lang="ts">
+import type { TranslatedUserModel } from 'shared-projects-frontend/models/user.model'
 import SeeMoreArrow from '~/components/base/button/SeeMoreArrow.vue'
-import type { TranslatedUserModel } from '~/models/user.model'
 import HtmlLimiter from '~/components/base/HtmlLimiter.vue'
 import type { StyleValue } from 'vue'
 

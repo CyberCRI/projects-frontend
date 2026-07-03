@@ -124,7 +124,7 @@
 </template>
 
 <script setup lang="ts">
-import type { UserModel } from '~/models/user.model'
+import type { UserModel } from 'shared-projects-frontend/models/user.model'
 
 import useProjectCategories from '~/stores/useProjectCategories'
 import useUsersStore from '~/stores/useUsers'

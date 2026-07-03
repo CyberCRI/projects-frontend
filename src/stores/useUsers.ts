@@ -1,4 +1,4 @@
-import type { NotificationsSettings, UserModel } from '~/models/user.model'
+import type { NotificationsSettings, UserModel } from 'shared-projects-frontend/models/user.model'
 
 import {
   getNotifications as apiGetNotifications,

@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import BaseLinkedProjects from '@/components/project/modules/LinkedProjects/BaseLinkedProjects.vue'
-import { ProjectModuleIcon, ProjectModuleTitle } from '@/models/project.model'
+import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
+import { PROJECT_MODULE_ICON, PROJECT_MODULE_TITLE } from '~/functs/constants'
 import BaseModulePreview from '@/components/modules/BaseModulePreview.vue'
-import type { TranslatedProject } from '@/models/project.model'
 
 defineProps<{ project: TranslatedProject }>()
 </script>
 
 <template>
   <BaseModulePreview
-    :title="$t(ProjectModuleTitle.linked_projects)"
-    :icon="ProjectModuleIcon.linked_projects"
+    :title="$t(PROJECT_MODULE_TITLE.linked_projects)"
+    :icon="PROJECT_MODULE_ICON.linked_projects"
     :total="project.modules.linked_projects"
     :see-more="{
       name: 'projectLinkedProjects',

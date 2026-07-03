@@ -1,7 +1,7 @@
-import type { OrganizationModel } from '~/models/organization.model'
-import type { ProjectSlugOrId } from '~/models/project.model'
+import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
+import type { ProjectSlugOrId } from 'shared-projects-frontend/models/project.model'
+import type { TagModel } from 'shared-projects-frontend/models/tag.model'
 import type { UseApiOptions } from '~/composables/useAPI'
-import type { TagModel } from '~/models/tag.model'
 import useAPI from '~/composables/useAPI'
 
 type Config = UseApiOptions<{

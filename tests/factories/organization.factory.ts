@@ -4,7 +4,7 @@ import {
   OrganizationModel,
   OrganizationOutput,
   OrganizationPatchInput,
-} from '~/models/organization.model'
+} from 'shared-projects-frontend/models/organization.model'
 import OrganizationDirectoryFactory from './organization-directory.factory'
 import { ImageFactory } from './image.factory'
 import BaseFactory from './base.factory'

@@ -6,7 +6,7 @@ import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
-import type { TagClassificationModel } from '~/models/tagclassification.model'
+import type { TagClassificationModel } from 'shared-projects-frontend/models/tagclassification.model'
 import { defaultTagClassificationForm } from '~/form/classification'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'

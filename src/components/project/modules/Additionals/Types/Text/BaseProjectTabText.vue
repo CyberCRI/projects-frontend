@@ -1,13 +1,16 @@
 <script setup lang="ts">
+import type {
+  TranslatedProjectTab,
+  TranslatedProjectTabItem,
+} from 'shared-projects-frontend/models/projects-tabs.model'
 import InlineAdditionalsItemForm from '~/components/project/modules/Additionals/Types/InlineAdditionalsItemForm.vue'
 import BaseAdditionalsTab from '~/components/project/modules/Additionals/Types/BaseAdditionalsTab.vue'
-import type { TranslatedProjectTab, TranslatedProjectTabItem } from '~/models/projects-tabs.model'
+import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import BaseDescription from '~/components/modules/Abstract/BaseDescription.vue'
 import { projectTabItemSkeleton } from '~/skeletons/project-tabs.skeletons'
 import { refreshProjectTabs } from '~/composables/project/refreshProject'
 import ContentExpandable from '~/components/base/ContentExpandable.vue'
 import { getAllProjectTabItem } from '~/api/v2/project-tabs.service'
-import type { TranslatedProject } from '@/models/project.model'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import FetchLoader from '~/components/base/FetchLoader.vue'
 

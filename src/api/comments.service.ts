@@ -1,6 +1,9 @@
-import type { CommentModel, QueryFilterComments } from '@/models/comment.model'
-import type { ProjectMessageForm } from '~/models/project-message.model'
-import type { ProjectSlugOrId } from '@/models/project.model'
+import type {
+  CommentModel,
+  QueryFilterComments,
+} from 'shared-projects-frontend/models/comment.model'
+import type { ProjectMessageForm } from 'shared-projects-frontend/models/project-message.model'
+import type { ProjectSlugOrId } from 'shared-projects-frontend/models/project.model'
 import useAPI from '@/composables/useAPI'
 
 type Config = UseApiOptions<QueryFilterComments>

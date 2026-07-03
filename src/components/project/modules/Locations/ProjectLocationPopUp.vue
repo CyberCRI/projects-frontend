@@ -11,10 +11,10 @@
 </template>
 
 <script setup lang="ts" generic="T extends AnyTranslatedLocation">
+import type { AnyTranslatedLocation } from 'shared-projects-frontend/models/location.model'
+import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import CardLocationPopUp from '@/components/map/CardLocationPopUp.vue'
 import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
-import type { AnyTranslatedLocation } from '@/models/location.model'
-import type { TranslatedProject } from '@/models/project.model'
 
 defineProps<{ location: T; project: TranslatedProject }>()
 </script>

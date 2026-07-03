@@ -4,8 +4,10 @@ import type {
   ProjectGroupRoleType,
   ProjectMemberRoleType,
   ProjectTabType,
-} from '~/models/types'
-import type { IconTabImageChoice } from '~/functs/IconImage'
+} from 'shared-projects-frontend/models/types'
+import type { PeopleGroupModulesKeys } from 'shared-projects-frontend/models/people-group.model'
+import type { ProjectModuleExtra } from 'shared-projects-frontend/models/project.model'
+import type { IconImageChoice, IconTabImageChoice } from '~/functs/IconImage'
 
 export const RESOURCE_PROJECT_CATEGORY = [
   'inspired-by',
@@ -203,4 +205,69 @@ export const DEFAULT_COLOR_TIPTAP = [
 export const DEFAULT_ICONS_TABS: { [key in ProjectTabType]: IconTabImageChoice } = {
   blog: 'NewsLine',
   text: 'Briefcase',
+}
+
+export const PROJECT_MODULE_ICON: { [key in ProjectModuleExtra]: IconImageChoice } = {
+  announcements: 'BullhornOutline',
+  blogs: 'NewsLine',
+  goals: 'TimerLine',
+  members: 'Users',
+  similars: 'Briefcase',
+  locations: 'Map',
+  links: 'Paperclip',
+  files: 'Globe',
+  resources: 'Globe',
+  linked_projects: 'LinkRotated',
+  comments: 'ChatBubble',
+  groups: 'PeopleGroup',
+  reviews: 'Feedback',
+  messages: 'ChatBubble',
+  tabs: 'Tab',
+}
+
+export const PROJECT_MODULE_TITLE: { [key in ProjectModuleExtra]: string } = {
+  announcements: 'home.announcements',
+  blogs: 'blog.title',
+  goals: 'goal.goals',
+  members: 'team.team',
+  similars: 'project.similars',
+  locations: 'project.add-to-project.location',
+  files: 'project.files',
+  links: 'project.links',
+
+  resources: 'resource.resources',
+
+  linked_projects: 'project.linked-projects',
+  comments: 'comment.comments',
+  groups: 'project.groups',
+  reviews: 'project.reviews',
+  messages: 'comment.private-exchange.tab',
+  tabs: 'tab.tab.label',
+}
+
+// groups
+export const GROUP_MODULE_ICON: { [key in PeopleGroupModulesKeys]: IconImageChoice } = {
+  conferences: 'Article',
+  featured_projects: 'Briefcase',
+  publications: 'Article',
+  members: 'Users',
+  similars: 'PeopleGroup',
+  subgroups: 'nodeTree',
+  locations: 'Map',
+  gallery: 'Gallery',
+  news: 'NewsLine',
+  event: 'Calendar',
+}
+
+export const GROUP_MODULE_TITLE: { [key in PeopleGroupModulesKeys]: string } = {
+  conferences: 'group.conferences',
+  featured_projects: 'group.projects',
+  publications: 'group.publications',
+  members: 'group.members',
+  similars: 'group.similars',
+  subgroups: 'group.subgroups',
+  locations: 'group.locations',
+  gallery: 'gallery.pictures',
+  news: 'group.news',
+  event: 'group.event',
 }

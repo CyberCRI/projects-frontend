@@ -4,7 +4,9 @@ import {
   patchProjectAttachmentFile,
   postProjectAttachmentFiles,
 } from '~/api/attachment-files.service'
-import type { TranslatedAttachmentFile } from '~/models/attachment-file.model'
+import type { TranslatedAttachmentFile } from 'shared-projects-frontend/models/attachment-file.model'
+import type { AttachmentForm } from 'shared-projects-frontend/models/attachment.model'
+import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import { attachementFileSkeletons } from '~/skeletons/attachements.skeletons'
 import { getProjectAttachmentFiles } from '~/api/v2/attachment-files.service'
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
@@ -14,8 +16,6 @@ import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import ResourceCard from '~/components/resources/ResourceCard.vue'
 import SectionHeader from '~/components/base/SectionHeader.vue'
-import type { AttachmentForm } from '~/models/attachment.model'
-import type { TranslatedProject } from '@/models/project.model'
 import NothingHere from '~/components/base/NothingHere.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 

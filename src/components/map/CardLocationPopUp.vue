@@ -29,11 +29,11 @@
 </template>
 
 <script setup lang="ts">
+import type { AnyTranslatedLocation } from 'shared-projects-frontend/models/location.model'
+import type { ImageModel } from 'shared-projects-frontend/models/image.model'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import type { AnyTranslatedLocation } from '@/models/location.model'
 import LinkButton from '~/components/base/button/LinkButton.vue'
 import LocationPopUp from '@/components/map/LocationPopUp.vue'
-import type { ImageModel } from '~/models/image.model'
 import type { RouteLocationRaw } from 'vue-router'
 import { cropIfTooLong } from '@/functs/string'
 

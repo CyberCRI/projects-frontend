@@ -44,7 +44,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { TranslatedUserModel } from '~/models/user.model'
+import type { TranslatedUserModel } from 'shared-projects-frontend/models/user.model'
 
 import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
 import ListPaginator from '~/components/base/navigation/ListPaginator.vue'

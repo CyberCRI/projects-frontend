@@ -1,7 +1,7 @@
 import type { SorbobotAuthor, SorbobotResponseData } from '~/mcp-server/sorbobot/sorbobot-api'
+import type { HarvesterType } from 'shared-projects-frontend/interfaces/researcher'
 import { mcpOptions, resultFromTool } from '../projects/base'
 import SorbobotAPI from '~/mcp-server/sorbobot/sorbobot-api'
-import type { HarvesterType } from '~/interfaces/researcher'
 import { searchResearcher } from '~/api/crisalid.service'
 import type { TypeMcpServer } from '~/interfaces/mcp'
 import { z } from 'zod'

@@ -39,8 +39,8 @@ import { getUser } from '~/api/people.service'
 import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 
+import type { TranslatedUserModel } from 'shared-projects-frontend/models/user.model'
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
-import type { TranslatedUserModel } from '~/models/user.model'
 import { roleI18n } from '~/functs/rolesUtils'
 
 const props = defineProps<{

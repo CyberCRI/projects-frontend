@@ -1,5 +1,5 @@
 <template>
-  <BaseModuleTab :title="$t(GroupModuleTitle.featured_projects)" :count="countElement">
+  <BaseModuleTab :title="$t(GROUP_MODULE_TITLE.featured_projects)" :count="countElement">
     <BaseGroupProjectsList :group="group" :editable="editable" />
   </BaseModuleTab>
 </template>
@@ -8,8 +8,8 @@
 import BaseGroupProjectsList from '@/components/group/Modules/Projects/BaseGroupProjectsList.vue'
 import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
 
-import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
-import { GroupModuleTitle } from '@/models/people-group.model'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models/people-group.model'
+import { GROUP_MODULE_TITLE } from '~/functs/constants'
 
 const props = defineProps<{
   group: TranslatedPeopleGroupModel

@@ -1,4 +1,4 @@
-import type { BaseLocationModel } from '~/models/location.model'
+import type { BaseLocationModel } from 'shared-projects-frontend/models/location.model'
 
 export const locationSkeleton = (
   def?: Partial<BaseLocationModel>

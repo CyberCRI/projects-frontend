@@ -1,7 +1,7 @@
 import addGroupSectionFactory from '~/composables/project-pdf-components/addGroupSectionFactory'
+import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import PageTitle from '~/composables/project-pdf-components/PageTitle'
 import type { Doc } from '~/composables/pdf-helpers/doc-builder'
-import type { TranslatedProject } from '~/models/project.model'
 import { Page } from '~/composables/pdf-helpers/doc-builder'
 import { getProjectGroups } from '~/api/projects.service'
 import { roleI18n } from '~/functs/rolesUtils'

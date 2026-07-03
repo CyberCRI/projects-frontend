@@ -59,13 +59,13 @@
 </template>
 
 <script setup lang="ts">
+import type { SkillModel } from 'shared-projects-frontend/models/skill.model'
 import { askMentorship, offerMentorship } from '@/api/mentorship.service'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { email, helpers, required } from '@vuelidate/validators'
 import TextInput from '@/components/base/form/TextInput.vue'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import { defaultMentoringForm } from '@/form/mentorship'
-import type { SkillModel } from '@/models/skill.model'
 import useToasterStore from '@/stores/useToaster'
 import useUsersStore from '@/stores/useUsers'
 import useValidate from '@vuelidate/core'

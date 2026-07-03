@@ -54,7 +54,7 @@
   </component>
 </template>
 <script setup lang="ts">
-import type { TranslatedNews } from '~/models/news.model'
+import type { TranslatedNews } from 'shared-projects-frontend/models/news.model'
 
 import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
 import SummaryAction from '~/components/home/SummaryCards/SummaryAction.vue'

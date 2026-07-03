@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import BaseProjectGroupsList from '~/components/project/modules/Groups/BaseProjectGroupsList.vue'
-import { ProjectModuleIcon, ProjectModuleTitle } from '@/models/project.model'
+import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
+import { PROJECT_MODULE_ICON, PROJECT_MODULE_TITLE } from '~/functs/constants'
 import BaseModulePreview from '@/components/modules/BaseModulePreview.vue'
-import type { TranslatedProject } from '@/models/project.model'
 
 defineProps<{ project: TranslatedProject }>()
 </script>
 
 <template>
   <BaseModulePreview
-    :title="$t(ProjectModuleTitle.groups)"
-    :icon="ProjectModuleIcon.groups"
+    :title="$t(PROJECT_MODULE_TITLE.groups)"
+    :icon="PROJECT_MODULE_ICON.groups"
     :total="project.modules.groups"
     :see-more="{
       name: 'projectGroups',

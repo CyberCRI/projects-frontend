@@ -4,9 +4,9 @@ import type {
   AnnouncementForm,
   AnnouncementId,
   AnnouncementApplyForm,
-} from '@/models/announcement.model'
+} from 'shared-projects-frontend/models/announcement.model'
 
-import type { ProjectSlugOrId } from '@/models/project.model'
+import type { ProjectSlugOrId } from 'shared-projects-frontend/models/project.model'
 import useAPI from '@/composables/useAPI'
 
 type Config = UseApiOptions<QueryFilterAnnouncement>

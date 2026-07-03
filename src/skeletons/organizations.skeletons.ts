@@ -1,4 +1,4 @@
-import type { OrganizationModel } from '~/models/organization.model'
+import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
 import { imageSkeletons } from '~/skeletons/image.skeletons'
 
 export const organizationSkeleton = (def?: OrganizationModel): OrganizationModel => ({

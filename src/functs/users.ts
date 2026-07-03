@@ -1,5 +1,5 @@
 // project members can  be group or user
-import type { UserModel } from '~/models/user.model'
+import type { UserModel } from 'shared-projects-frontend/models/user.model'
 
 // group have a members_count attribute, user don't
 export const isNotGroup = (groupOrUser) =>

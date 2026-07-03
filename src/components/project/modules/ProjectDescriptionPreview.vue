@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import BaseModulePreview from '@/components/modules/BaseModulePreview.vue'
 import ContentExpandable from '@/components/base/ContentExpandable.vue'
-import type { TranslatedProject } from '@/models/project.model'
 
 defineProps<{ project: TranslatedProject }>()
 </script>

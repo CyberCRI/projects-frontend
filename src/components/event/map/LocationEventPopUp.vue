@@ -11,10 +11,10 @@
 </template>
 
 <script setup lang="ts" generic="T extends AnyTranslatedLocation">
+import type { AnyTranslatedLocation } from 'shared-projects-frontend/models/location.model'
+import type { TranslatedEventModel } from 'shared-projects-frontend/models/event.model'
 import type CardLocationPopUp from '@/components/map/CardLocationPopUp.vue'
-import type { AnyTranslatedLocation } from '@/models/location.model'
 import EventItem from '@/components/event/EventList/EventItem.vue'
-import type { TranslatedEventModel } from '@/models/event.model'
 import { html2Text } from '~/functs/tiptap'
 
 const props = defineProps<{ location: T; event: TranslatedEventModel }>()

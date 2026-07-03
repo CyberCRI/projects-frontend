@@ -1,4 +1,4 @@
-import type { InstructionModel } from '~/models/instruction.model'
+import type { InstructionModel } from 'shared-projects-frontend/models/instruction.model'
 
 export const instructionSkeleton = (def?: Partial<InstructionModel>): InstructionModel => ({
   id: -1,

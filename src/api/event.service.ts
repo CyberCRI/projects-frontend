@@ -1,5 +1,10 @@
-import type { EventIdOrSlug, EventInput, EventModel, QueryFilterEvent } from '~/models/event.model'
-import type { OrganizationModel } from '~/models/organization.model'
+import type {
+  EventIdOrSlug,
+  EventInput,
+  EventModel,
+  QueryFilterEvent,
+} from 'shared-projects-frontend/models/event.model'
+import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
 
 import type { UseApiOptions } from '~/composables/useAPI'
 import useAPI from '~/composables/useAPI'

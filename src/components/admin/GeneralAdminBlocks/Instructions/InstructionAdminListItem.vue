@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import type { InstructionModel } from '~/models/instruction.model'
+import type { InstructionModel } from 'shared-projects-frontend/models/instruction.model'
 
 import ContextActionMenu from '~/components/base/button/ContextActionMenu.vue'
 

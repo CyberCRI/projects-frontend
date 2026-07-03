@@ -1,4 +1,4 @@
-import type { PeopleGroupIdOrSlug } from '@/models/people-group.model'
+import type { PeopleGroupIdOrSlug } from 'shared-projects-frontend/models/people-group.model'
 
 import type {
   Document,
@@ -6,8 +6,8 @@ import type {
   QueryFilterResearcher,
   Researcher,
   ResearcherDocumentAnalytics,
-} from '~/interfaces/researcher'
-import type { OrganizationModel } from '~/models/organization.model'
+} from 'shared-projects-frontend/interfaces/researcher'
+import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
 
 export async function getOwnResearchDocument(
   organisationCode: string,

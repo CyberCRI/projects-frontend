@@ -1,8 +1,8 @@
 import type { Container } from '~/composables/pdf-helpers/doc-builder'
 
-import type { TranslatedAttachmentLink } from '~/models/attachment-link.model'
-import type { TranslatedAttachmentFile } from '~/models/attachment-file.model'
-import type { TranslatedProject } from '~/models/project.model'
+import type { TranslatedAttachmentLink } from 'shared-projects-frontend/models/attachment-link.model'
+import type { TranslatedAttachmentFile } from 'shared-projects-frontend/models/attachment-file.model'
+import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import QRCode from 'qrcode'
 
 export default async function addResourceSectionFactory(

@@ -1,4 +1,4 @@
-import type { PeopleModel } from '~/models/people.model'
+import type { PeopleModel } from 'shared-projects-frontend/models/people.model'
 
 export const peopleSkeleton = (def?: Partial<PeopleModel>): Omit<PeopleModel, 'id'> => ({
   slug: 'slug',

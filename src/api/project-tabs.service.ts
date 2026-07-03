@@ -5,9 +5,9 @@ import type {
   ProjectTabItemForm,
   QueryFilterProjectTab,
   QueryFilterProjectTabItem,
-} from '~/models/projects-tabs.model'
-import type { ImageModealCreated } from '~/models/image.model'
-import type { ProjectSlugOrId } from '~/models/project.model'
+} from 'shared-projects-frontend/models/projects-tabs.model'
+import type { ImageModealCreated } from 'shared-projects-frontend/models/image.model'
+import type { ProjectSlugOrId } from 'shared-projects-frontend/models/project.model'
 
 type Config = UseApiOptions
 type ConfigTab = UseApiOptions<QueryFilterProjectTab>

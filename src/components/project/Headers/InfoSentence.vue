@@ -71,7 +71,7 @@
 
 <script setup lang="ts">
 // TODO need to change this whole things (wtf components)
-import type { TagModel } from '~/models/tag.model'
+import type { TagModel } from 'shared-projects-frontend/models/tag.model'
 
 import IconImage from '~/components/base/media/IconImage.vue'
 import TagsList from '~/components/tags/TagsList.vue'

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import ProjectSelectDrawer from '~/components/drawer/Project/ProjectSelectDrawer.vue'
 import { addLinkedProject, deleteLinkedProject } from '~/api/projects.service'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
@@ -6,7 +7,6 @@ import { refreshProjectData } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { projectLinkedSkeleton } from '@/skeletons/project.skeletons'
 import ProjectPreview from '~/components/project/ProjectPreview.vue'
-import type { TranslatedProject } from '@/models/project.model'
 import NothingHere from '~/components/base/NothingHere.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
 import { getLinkedProject } from '@/api/v2/project.service'

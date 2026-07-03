@@ -4,10 +4,10 @@ import {
   getUsersRecommendationsForUser as fetchUsersRecommendationsForUser,
   getRandomUsersRecommendationsForUser as fetchRandomUsersRecommendationsForUser,
 } from '@/api/recommendations.service'
+import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
 import type { QueryFilterRecomendation } from '@/api/recommendations.service'
-import type { OrganizationModel } from '@/models/organization.model'
-import type { RefOrRaw } from '@/interfaces/utils'
+import type { RefOrRaw } from '~/interfaces/utils'
 import { onlyRefs } from '@/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}

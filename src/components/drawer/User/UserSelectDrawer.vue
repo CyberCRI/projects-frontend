@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import type { QueryFilterSearch } from 'shared-projects-frontend/models/search.model'
+import type { TranslatedUserModel } from 'shared-projects-frontend/models/user.model'
 import type { DrawerSearchProps } from '~/components/drawer/BaseDrawerSearch.vue'
 import CardInlineUser from '~/components/drawer/User/CardInlineUser.vue'
 import BaseDrawerSearch from '~/components/drawer/BaseDrawerSearch.vue'
 import { searchUserSkeleton } from '~/skeletons/search.skeletons'
 import { factoryPagination } from '~/skeletons/base.skeletons'
-import type { QueryFilterSearch } from '~/models/search.model'
-import type { TranslatedUserModel } from '~/models/user.model'
 import FetchLoader from '~/components/base/FetchLoader.vue'
 import { getSearchUser } from '~/api/v2/search.service'
 

@@ -1,14 +1,14 @@
 <template>
-  <BaseModuleTab :title="$t(GroupModuleTitle.event)" :count="countElement">
+  <BaseModuleTab :title="$t(GROUP_MODULE_TITLE.event)" :count="countElement">
     <BaseGroupEventList :group="group" :editable="editable" />
   </BaseModuleTab>
 </template>
 
 <script setup lang="ts">
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models/people-group.model'
 import BaseGroupEventList from '@/components/group/Modules/Event/BaseGroupEventList.vue'
-import type { TranslatedPeopleGroupModel } from '@/models/people-group.model'
 import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
-import { GroupModuleTitle } from '@/models/people-group.model'
+import { GROUP_MODULE_TITLE } from '~/functs/constants'
 
 const props = withDefaults(
   defineProps<{

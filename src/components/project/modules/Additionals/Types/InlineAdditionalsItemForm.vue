@@ -11,19 +11,19 @@ import type {
   ProjectTabItemForm,
   TranslatedProjectTab,
   TranslatedProjectTabItem,
-} from '~/models/projects-tabs.model'
+} from 'shared-projects-frontend/models/projects-tabs.model'
 import {
   createProjectTabItem,
   createProjectTabItemImage,
   updateProjectTabItem,
 } from '~/api/project-tabs.service'
+import type { ProviderParams } from 'shared-projects-frontend/interfaces/colaboratives'
+import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import { defaultProjectTabItemForm, useProjectTabItemForm } from '~/form/project-tabs'
+import type { ImageModel } from 'shared-projects-frontend/models/image.model'
 import { getFirstTextNotEmpty, roomKeyFromParams } from '~/functs/tiptap'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
-import type { ProviderParams } from '~/interfaces/colaboratives'
-import type { TranslatedProject } from '~/models/project.model'
 import FormPanel from '~/components/base/FormPanel.vue'
-import type { ImageModel } from '~/models/image.model'
 import { formEqual } from '~/form/base'
 import analytics from '~/analytics'
 import { isNil } from 'es-toolkit'

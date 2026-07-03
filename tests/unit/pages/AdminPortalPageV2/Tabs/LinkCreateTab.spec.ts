@@ -6,7 +6,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import pinia from '~/stores'
 
-import type { OrganizationOutput } from '~/models/organization.model'
+import type { OrganizationOutput } from 'shared-projects-frontend/models/organization.model'
 import { flushPromises } from '@vue/test-utils'
 
 describe('LinkCreateTab.vue', () => {

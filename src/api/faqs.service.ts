@@ -1,4 +1,4 @@
-import type { FaqInput } from '~/models/faq.model'
+import type { FaqInput } from 'shared-projects-frontend/models/faq.model'
 
 import useAPI from '~/composables/useAPI'
 

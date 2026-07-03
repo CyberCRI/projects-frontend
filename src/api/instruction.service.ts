@@ -3,8 +3,8 @@ import type {
   InstructionInput,
   InstructionModel,
   QueryFilterInstruction,
-} from '~/models/instruction.model'
-import type { OrganizationModel } from '~/models/organization.model'
+} from 'shared-projects-frontend/models/instruction.model'
+import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
 
 import type { UseApiOptions } from '~/composables/useAPI'
 import useAPI from '~/composables/useAPI'

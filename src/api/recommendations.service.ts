@@ -1,6 +1,6 @@
-import type { OrganizationModel } from '@/models/organization.model'
-import type { ProjectModel } from '@/models/project.model'
-import type { UserModel } from '@/models/user.model'
+import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
+import type { ProjectModel } from 'shared-projects-frontend/models/project.model'
+import type { UserModel } from 'shared-projects-frontend/models/user.model'
 import useAPI from '@/composables/useAPI'
 
 export type QueryFilterRecomendation = Partial<{

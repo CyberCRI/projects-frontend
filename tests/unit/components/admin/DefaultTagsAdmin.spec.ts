@@ -4,7 +4,7 @@ import { lpiMount } from '~~/tests/helpers/LpiMount'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import pinia from '~/stores'
 
-import { OrganizationOutput } from '~/models/organization.model'
+import { OrganizationOutput } from 'shared-projects-frontend/models/organization.model'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'

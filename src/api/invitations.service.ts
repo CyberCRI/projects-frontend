@@ -1,5 +1,8 @@
-import type { InvitationModel, InvitationModelInput } from '~/models/invitation.model'
-import type { OrganizationModel } from '@/models/organization.model'
+import type {
+  InvitationModel,
+  InvitationModelInput,
+} from 'shared-projects-frontend/models/invitation.model'
+import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
 import useAPI from '@/composables/useAPI'
 
 export async function getInvitation(

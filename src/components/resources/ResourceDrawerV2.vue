@@ -1,7 +1,7 @@
 <script setup lang="ts" generic="T extends AttachmentFileModel | AttachmentLinkModel">
+import type { AttachmentLinkModel } from 'shared-projects-frontend/models/attachment-link.model'
+import type { AttachmentFileModel } from 'shared-projects-frontend/models/attachment-file.model'
 import { defaultAttachmentForm, useAttachmentForm } from '~/form/attachement'
-import type { AttachmentLinkModel } from '~/models/attachment-link.model'
-import type { AttachmentFileModel } from '~/models/attachment-file.model'
 import ResourceCard from '~/components/resources/ResourceCard.vue'
 import { formEqual } from '~/form/base'
 

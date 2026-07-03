@@ -2,8 +2,8 @@ import type {
   PeopleGroupIdOrSlug,
   QueryFilterGroup,
   QueryFilterGroupHierarchy,
-} from '@/models/people-group.model'
-import type { OrganizationModel } from '~/models/organization.model'
+} from 'shared-projects-frontend/models/people-group.model'
+import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
 
 import type { RefOrRaw } from '~/interfaces/utils'
 
@@ -24,7 +24,7 @@ import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/ba
 import useAsyncPaginationAPI from '~/composables/useAsyncPaginationAPI'
 import useAsyncAPI from '~/composables/useAsyncAPI'
 
-import type { TranslatedGroupMember } from '~/models/group.model'
+import type { TranslatedGroupMember } from 'shared-projects-frontend/models/group.model'
 import { onlyRefs } from '~/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}

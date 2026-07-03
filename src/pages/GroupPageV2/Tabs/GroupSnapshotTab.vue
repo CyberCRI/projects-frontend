@@ -37,7 +37,7 @@
 import type {
   PeopleGroupModulesKeys,
   TranslatedPeopleGroupModel,
-} from '@/models/people-group.model'
+} from 'shared-projects-frontend/models/people-group.model'
 
 import GroupDescriptionPreview from '~/components/group/Modules/Extras/GroupDescriptionPreview.vue'
 import GroupDocumentsPreview from '~/components/group/Modules/Documents/GroupDocumentsPreview.vue'

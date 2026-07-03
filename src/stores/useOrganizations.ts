@@ -2,7 +2,7 @@ import type {
   OrganizationModel,
   OrganizationOutput,
   OrganizationPatchInput,
-} from '~/models/organization.model'
+} from 'shared-projects-frontend/models/organization.model'
 
 import {
   getOrganizationByCode,

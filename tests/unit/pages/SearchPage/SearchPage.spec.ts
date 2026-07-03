@@ -1,4 +1,4 @@
-import { OrganizationOutput } from '~/models/organization.model'
+import { OrganizationOutput } from 'shared-projects-frontend/models/organization.model'
 import { UserFactory } from '~~/tests/factories/user.factory'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'

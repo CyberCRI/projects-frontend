@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedInstruction } from '~/models/instruction.model'
+import type { TranslatedInstruction } from 'shared-projects-frontend/models/instruction.model'
 
 import ContextActionMenu from '~/components/base/button/ContextActionMenu.vue'
 import HtmlLimiter from '~/components/base/HtmlLimiter.vue'

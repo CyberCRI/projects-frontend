@@ -1,4 +1,4 @@
-import type { Roles } from '~/models/types'
+import type { Roles } from 'shared-projects-frontend/models/types'
 
 export function roleIndex(user) {
   const index = user.roles?.reduce((acc, roleString) => {

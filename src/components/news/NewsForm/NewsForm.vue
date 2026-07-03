@@ -109,6 +109,8 @@
 <script setup lang="ts">
 import MultiGroupPicker from '@/components/group/MultiGroupPicker/MultiGroupPicker.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
+import type { NewsForm } from 'shared-projects-frontend/models/news.model'
+import type { LocationType } from 'shared-projects-frontend/models/types'
 import { postOrganizationImage } from '@/api/organizations.service'
 import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
@@ -118,8 +120,6 @@ import TextInput from '@/components/base/form/TextInput.vue'
 import DateField from '@/components/base/form/DateField.vue'
 import { usePatatoids } from '@/composables/usePatatoids'
 import { helpers, required } from '@vuelidate/validators'
-import type { NewsForm } from '@/models/news.model'
-import type { LocationType } from '@/models/types'
 import { defaultNewsForm } from '@/form/news'
 import useVuelidate from '@vuelidate/core'
 

@@ -1,7 +1,7 @@
 import { ProjectOutputFactory } from '~~/tests/factories/project.factory'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
-import { OrganizationOutput } from '~/models/organization.model'
+import { OrganizationOutput } from 'shared-projects-frontend/models/organization.model'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useUsersStore from '~/stores/useUsers'
 import pinia from '~/stores'

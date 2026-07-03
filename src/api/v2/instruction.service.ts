@@ -1,5 +1,8 @@
-import type { InstructionId, QueryFilterInstruction } from '~/models/instruction.model'
-import type { OrganizationModel } from '~/models/organization.model'
+import type {
+  InstructionId,
+  QueryFilterInstruction,
+} from 'shared-projects-frontend/models/instruction.model'
+import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
 
 import type { RefOrRaw } from '~/interfaces/utils'
 

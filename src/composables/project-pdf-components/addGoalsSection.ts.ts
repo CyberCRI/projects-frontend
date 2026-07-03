@@ -1,7 +1,7 @@
 import addGoalsSectionFactory from '~/composables/project-pdf-components/addGoalsSectionFactory'
+import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import PageTitle from '~/composables/project-pdf-components/PageTitle'
 import type { Doc } from '~/composables/pdf-helpers/doc-builder'
-import type { TranslatedProject } from '~/models/project.model'
 import { Page } from '~/composables/pdf-helpers/doc-builder'
 import { getProjectGoals } from '~/api/goals.service'
 

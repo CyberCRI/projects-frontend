@@ -1,7 +1,7 @@
 import { createFactory } from 'faker-create-factory'
 
+import { UserSkillModel } from 'shared-projects-frontend/models/user.model'
 import OrganizationTagFactory from '~~/tests/factories/tag.factory'
-import { UserSkillModel } from '~/models/user.model'
 import BaseFactory from './base.factory'
 
 const UserSkillFactory = createFactory<UserSkillModel>((faker) => ({

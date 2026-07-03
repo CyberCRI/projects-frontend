@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AnyLocation } from '~/models/location.model'
+import type { AnyLocation } from 'shared-projects-frontend/models/location.model'
 
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import LocationType from '~/components/map/LocationType.vue'

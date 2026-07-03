@@ -1,4 +1,7 @@
-import type { ProjectTabForm, ProjectTabItemForm } from '~/models/projects-tabs.model'
+import type {
+  ProjectTabForm,
+  ProjectTabItemForm,
+} from 'shared-projects-frontend/models/projects-tabs.model'
 import { DEFAULT_ICONS_TABS, NULL_CONTENT } from '~/functs/constants'
 import { helpers, required } from '@vuelidate/validators'
 import { requiredContent } from '~/form/base'

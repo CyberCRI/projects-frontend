@@ -67,14 +67,14 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedAnnouncement } from '~/models/announcement.model'
+import type { TranslatedAnnouncement } from 'shared-projects-frontend/models/announcement.model'
 
 import LpiButton from '~/components/base/button/LpiButton.vue'
 
 import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
+import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import ContentExpandable from '~/components/base/ContentExpandable.vue'
 import { dateWithoutHours, formatDate, nowDate } from '~/functs/date'
-import type { TranslatedProject } from '~/models/project.model'
 
 const props = withDefaults(
   defineProps<{

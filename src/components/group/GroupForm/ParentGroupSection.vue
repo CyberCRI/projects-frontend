@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TrasnlatedHierarchyGroupModel } from '~/models/group.model'
+import type { TrasnlatedHierarchyGroupModel } from 'shared-projects-frontend/models/group.model'
 import { getHierarchyGroups } from '~/api/v2/group.service'
 
 const props = defineProps<{

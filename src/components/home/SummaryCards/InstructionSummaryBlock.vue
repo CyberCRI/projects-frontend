@@ -49,7 +49,7 @@ import InstructionItem from '~/components/home/SummaryCards/InstructionItem.vue'
 import SummaryAction from '~/components/home/SummaryCards/SummaryAction.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 
-import type { TranslatedInstruction } from '~/models/instruction.model'
+import type { TranslatedInstruction } from 'shared-projects-frontend/models/instruction.model'
 import useToasterStore from '~/stores/useToaster'
 
 withDefaults(

@@ -69,8 +69,8 @@
 </template>
 
 <script setup lang="ts">
+import type { PeopleModel } from 'shared-projects-frontend/models/people.model'
 import type { MenuEntry } from '~/components/base/navigation/NavPanelMenu.vue'
-import type { PeopleModel } from '~/models/people.model'
 import type { RouteLocationRaw } from 'vue-router'
 
 const props = withDefaults(

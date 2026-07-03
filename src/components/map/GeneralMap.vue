@@ -36,14 +36,14 @@
 
 <script setup lang="ts" generic="T extends AnyLocation">
 import ContainerMapControl from '@/components/map/Control/ContainerMapControl.vue'
+import type { AnyLocation } from 'shared-projects-frontend/models/location.model'
 import MarkerLocationsDynamic from '@/components/map/MarkerLocationsDynamic.vue'
 import MapControlExpand from '@/components/map/Control/MapControlExpand.vue'
+import type { LocationType } from 'shared-projects-frontend/models/types'
 import MapControlZoom from '@/components/map/Control/MapControlZoom.vue'
 import MarkerLocations from '@/components/map/MarkerLocations.vue'
 import type { ExposeMap } from '@/components/map/BaseMap.vue'
-import type { AnyLocation } from '@/models/location.model'
 import BaseMap from '@/components/map/BaseMap.vue'
-import type { LocationType } from '@/models/types'
 
 const props = withDefaults(
   defineProps<{

@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import type { QueryFilterNews } from '~/models/news.model'
+import type { QueryFilterNews } from 'shared-projects-frontend/models/news.model'
 
 import { getAllNews } from '~/api/v2/news.service'
 import { deleteNews } from '~/api/news.service'

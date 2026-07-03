@@ -1,6 +1,10 @@
-import type { LocationId, LocationModel, ProjectLocationForm } from '@/models/location.model'
-import type { ProjectSlugOrId } from '@/models/project.model'
-import type { LocationGeneral } from '~/interfaces/maps'
+import type {
+  LocationId,
+  LocationModel,
+  ProjectLocationForm,
+} from 'shared-projects-frontend/models/location.model'
+import type { ProjectSlugOrId } from 'shared-projects-frontend/models/project.model'
+import type { LocationGeneral } from 'shared-projects-frontend/interfaces/maps'
 import useAPI from '@/composables/useAPI'
 
 type Config = UseApiOptions

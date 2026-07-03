@@ -1,4 +1,4 @@
-import type { ImageModel } from '~/models/image.model'
+import type { ImageModel } from 'shared-projects-frontend/models/image.model'
 
 export const imageGallerySkeleton = (def?: Partial<ImageModel>): Omit<ImageModel, 'id'> => {
   const url = ''

@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import type { HarvesterType, Identifier } from '~/interfaces/researcher'
+import type { HarvesterType, Identifier } from 'shared-projects-frontend/interfaces/researcher'
 
 import { documentHarvesterToUrl, researcherHarvesterToUrl } from '~/functs/researcher'
 import googlescholarIcon from '~/assets/svg/googlescholar.svg'

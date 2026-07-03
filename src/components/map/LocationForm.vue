@@ -52,15 +52,15 @@
 </template>
 
 <script setup lang="ts">
+import type { LocationForm } from 'shared-projects-frontend/models/location.model'
 import type { GroupOption } from '@/components/base/button/GroupButton.vue'
+import type { LocationType } from 'shared-projects-frontend/models/types'
 import GroupButton from '@/components/base/button/GroupButton.vue'
 import DialogModal from '@/components/base/modal/DialogModal.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import TextInput from '@/components/base/form/TextInput.vue'
-import type { LocationForm } from '@/models/location.model'
 import GeneralMap from '~/components/map/GeneralMap.vue'
 import { IconMapLocationType } from '~/functs/maps'
-import type { LocationType } from '@/models/types'
 import { useLocationForm } from '@/form/location'
 
 const props = withDefaults(

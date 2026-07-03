@@ -10,10 +10,13 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import useToasterStore from '~/stores/useToaster'
 
-import type { AnnouncementModel, TranslatedAnnouncement } from '~/models/announcement.model'
+import type {
+  AnnouncementModel,
+  TranslatedAnnouncement,
+} from 'shared-projects-frontend/models/announcement.model'
+import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import { defaultAnnouncementForm, useAnnouncementForm } from '~/form/annoucement'
 import FieldErrors from '~/components/base/form/FieldErrors.vue'
-import type { TranslatedProject } from '~/models/project.model'
 import { getFirstTextNotEmpty } from '~/functs/tiptap'
 import Field from '~/components/base/form/Field.vue'
 import { fullYearDateFormat } from '~/functs/date'

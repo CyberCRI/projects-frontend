@@ -10,9 +10,13 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'
 
-import type { ReviewForm, ReviewModel, TranslatedReview } from '~/models/review.model'
+import type {
+  ReviewForm,
+  ReviewModel,
+  TranslatedReview,
+} from 'shared-projects-frontend/models/review.model'
+import type { ProjectForm, TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import { defaultProjectReviewForm, useProjectReviewForm } from '~/form/review'
-import type { ProjectForm, TranslatedProject } from '~/models/project.model'
 import { patchProject } from '~/api/projects.service'
 import { formEqual } from '~/form/base'
 

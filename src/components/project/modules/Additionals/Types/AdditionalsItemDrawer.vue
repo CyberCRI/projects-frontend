@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
+import type {
+  TranslatedProjectTab,
+  TranslatedProjectTabItem,
+} from 'shared-projects-frontend/models/projects-tabs.model'
 import InlineAdditionalsItemForm from '~/components/project/modules/Additionals/Types/InlineAdditionalsItemForm.vue'
-import type { TranslatedProjectTab, TranslatedProjectTabItem } from '~/models/projects-tabs.model'
-import type { TranslatedProject } from '~/models/project.model'
+import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 
 withDefaults(
   defineProps<{

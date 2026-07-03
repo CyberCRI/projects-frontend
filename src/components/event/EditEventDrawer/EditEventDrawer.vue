@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import type { EventModel } from '~/models/event.model'
+import type { EventModel } from 'shared-projects-frontend/models/event.model'
 
 import { createEvent, putEvent } from '~/api/event.service'
 

@@ -39,7 +39,7 @@
 import { email as emailValidator, helpers, required } from '@vuelidate/validators'
 import useValidate from '@vuelidate/core'
 
-import type { UserModel } from '~/models/user.model'
+import type { UserModel } from 'shared-projects-frontend/models/user.model'
 
 import { searchPeopleByExactMail } from '~/api/people.service'
 

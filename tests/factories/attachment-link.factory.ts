@@ -1,6 +1,6 @@
 import { createFactory } from 'faker-create-factory'
 
-import { AttachmentLinkModel } from '~/models/attachment-link.model'
+import { AttachmentLinkModel } from 'shared-projects-frontend/models/attachment-link.model'
 import BaseFactory from './base.factory'
 
 export const AttachmentLinkFactory = createFactory<AttachmentLinkModel>((faker) => ({

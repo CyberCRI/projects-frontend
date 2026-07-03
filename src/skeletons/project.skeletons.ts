@@ -1,8 +1,8 @@
-import type { LinkedProject, ProjectModel } from '@/models/project.model'
-import type { ProjectMemberModel } from '~/models/project-member.model'
+import type { LinkedProject, ProjectModel } from 'shared-projects-frontend/models/project.model'
+import type { ProjectMemberModel } from 'shared-projects-frontend/models/project-member.model'
+import type { TagModel } from 'shared-projects-frontend/models/tag.model'
 import { factoriesSkeleton } from '@/skeletons/base.skeletons'
 import { userSkeleton } from '~/skeletons/user.skeletons'
-import type { TagModel } from '@/models/tag.model'
 import { randomInt } from 'es-toolkit'
 
 export const tagSkeleton = (def?: Partial<ProjectModel>): Omit<TagModel, 'id'> => ({

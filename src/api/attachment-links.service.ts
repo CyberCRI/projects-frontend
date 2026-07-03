@@ -2,10 +2,10 @@ import type {
   AttachmentLinkId,
   AttachmentLinkInput,
   AttachmentLinkModel,
-} from '~/models/attachment-link.model'
+} from 'shared-projects-frontend/models/attachment-link.model'
 
-import type { AttachmentForm } from '~/models/attachment.model'
-import type { ProjectSlugOrId } from '~/models/project.model'
+import type { AttachmentForm } from 'shared-projects-frontend/models/attachment.model'
+import type { ProjectSlugOrId } from 'shared-projects-frontend/models/project.model'
 import type { UseApiOptions } from '~/composables/useAPI'
 import useAPI from '~/composables/useAPI'
 

@@ -2,7 +2,7 @@
 import MentorshipForm from '~/components/people/skill/MentorshipForm.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
-import type { UserSkillModel } from '~/models/user.model'
+import type { UserSkillModel } from 'shared-projects-frontend/models/user.model'
 import useSkillTexts from '~/composables/useSkillTexts'
 
 const emit = defineEmits(['close', 'update-mentorship'])

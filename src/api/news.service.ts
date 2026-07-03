@@ -1,5 +1,9 @@
-import type { NewsInput, NewsModel, QueryFilterNews } from '~/models/news.model'
-import type { OrganizationModel } from '~/models/organization.model'
+import type {
+  NewsInput,
+  NewsModel,
+  QueryFilterNews,
+} from 'shared-projects-frontend/models/news.model'
+import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
 
 import type { UseApiOptions } from '~/composables/useAPI'
 import useAPI from '~/composables/useAPI'

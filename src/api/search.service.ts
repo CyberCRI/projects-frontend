@@ -6,7 +6,7 @@ import type {
   SearchResultGroup,
   SearchResultProject,
   SearchResultUser,
-} from '~/models/search.model'
+} from 'shared-projects-frontend/models/search.model'
 import type { UseApiOptions } from '~/composables/useAPI'
 import useAPI from '~/composables/useAPI'
 

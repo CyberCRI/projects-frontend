@@ -4,7 +4,7 @@ import {
   ProjectCategoryCreateInput,
   ProjectCategoryOutput,
   ProjectCategoryPatchInput,
-} from '~/models/project-category.model'
+} from 'shared-projects-frontend/models/project-category.model'
 import { OrganizationOutputFactory } from './organization.factory'
 import TemplateFactory from './template.factory'
 import BaseFactory from './base.factory'

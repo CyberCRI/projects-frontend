@@ -1,4 +1,4 @@
-import type { AnnouncementModel } from '~/models/announcement.model'
+import type { AnnouncementModel } from 'shared-projects-frontend/models/announcement.model'
 import type { ProjectAnalytic } from '~/analytics/project.analytic'
 import analytics from '~/analytics'
 

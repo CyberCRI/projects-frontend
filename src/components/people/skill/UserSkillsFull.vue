@@ -36,10 +36,10 @@
 </template>
 
 <script setup lang="ts">
+import type { UserSkillModel } from 'shared-projects-frontend/models/user.model'
 import SkillLevelTip from '~/components/people/skill/SkillLevelTip.vue'
 import SkillItemFull from '~/components/people/skill/SkillItemFull.vue'
 import LinkButton from '~/components/base/button/LinkButton.vue'
-import type { UserSkillModel } from '~/models/user.model'
 
 withDefaults(
   defineProps<{

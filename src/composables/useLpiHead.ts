@@ -2,8 +2,8 @@ import type { RefOrRaw } from '~/interfaces/utils'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
 
+import type { ImageModel } from 'shared-projects-frontend/models/image.model'
 import { usePublicURL } from '~/composables/usePublic'
-import type { ImageModel } from '~/models/image.model'
 import useNuxtI18n from '~/composables/useNuxtI18n'
 
 const useLpiHead = (url, _title, _description, image, dimensions = null) => {

@@ -5,8 +5,8 @@ import { flushPromises } from '@vue/test-utils'
 
 import { ProjectCategoryOutputFactory } from '~~/tests/factories/project-category.factory'
 
+import { OrganizationOutput } from 'shared-projects-frontend/models/organization.model'
 import useProjectCategoriesStore from '~/stores/useProjectCategories'
-import { OrganizationOutput } from '~/models/organization.model'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useUsersStore from '~/stores/useUsers'
 import pinia from '~/stores'

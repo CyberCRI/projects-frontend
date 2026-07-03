@@ -45,6 +45,7 @@
 </template>
 
 <script setup lang="ts">
+import type { QueryFilterNews } from 'shared-projects-frontend/models/news.model'
 import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
 import AdminBlock from '@/components/admin/GeneralAdminBlocks/AdminBlock.vue'
 import type LinkButton from '@/components/base/button/LinkButton.vue'
@@ -52,7 +53,6 @@ import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import FetchLoader from '@/components/base/FetchLoader.vue'
-import type { QueryFilterNews } from '@/models/news.model'
 import { newsSkeleton } from '~/skeletons/news.skeletons'
 import NewsItem from '@/components/news/NewsItem.vue'
 import { useModals } from '@/composables/useModal'

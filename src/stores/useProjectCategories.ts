@@ -1,7 +1,7 @@
 import type {
   ProjectCategoryOutput,
   TranslatedProjectCategory,
-} from '~/models/project-category.model'
+} from 'shared-projects-frontend/models/project-category.model'
 
 import {
   getAllProjectCategories as apiGetAllProjectCategories,

@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AnyLocation } from '@/models/location.model'
+import type { AnyLocation } from 'shared-projects-frontend/models/location.model'
 import { createClusterIcons } from '@/functs/leaflet'
 import fixLeaflet from '~/app/fixLeaflet'
 import type { UnwrapRef } from 'vue'

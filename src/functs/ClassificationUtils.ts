@@ -1,4 +1,4 @@
-import type { TagModel } from '~/models/tag.model'
+import type { TagModel } from 'shared-projects-frontend/models/tag.model'
 
 export function isClassificationOfType(classification: TagModel, type: TagModel['type']) {
   return classification.type === type

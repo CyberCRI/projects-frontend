@@ -1,4 +1,4 @@
-import type { AttachmentLinkModel } from '~/models/attachment-link.model'
+import type { AttachmentLinkModel } from 'shared-projects-frontend/models/attachment-link.model'
 
 import analytics from '~/analytics'
 

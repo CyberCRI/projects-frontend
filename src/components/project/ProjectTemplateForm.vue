@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { TranslatedProjectCategory } from '~/models/project-category.model'
-import type { TemplateModel } from '~/models/template.model'
-import type { ProjectForm } from '~/models/project.model'
+import type { TranslatedProjectCategory } from 'shared-projects-frontend/models/project-category.model'
+import type { TemplateModel } from 'shared-projects-frontend/models/template.model'
+import type { ProjectForm } from 'shared-projects-frontend/models/project.model'
 import { useProjectTemplatesForm } from '~/form/project'
 import { getTemplate } from '~/api/templates.service'
 import Field from '~/components/base/form/Field.vue'

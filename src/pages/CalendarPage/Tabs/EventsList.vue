@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import type { QueryFilterEvent } from '~/models/event.model'
+import type { QueryFilterEvent } from 'shared-projects-frontend/models/event.model'
 
 import { getAllEvents } from '~/api/v2/event.service'
 

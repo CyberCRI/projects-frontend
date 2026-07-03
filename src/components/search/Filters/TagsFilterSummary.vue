@@ -6,8 +6,8 @@
 </template>
 
 <script setup lang="ts">
+import type { TagModel } from 'shared-projects-frontend/models/tag.model'
 import CurrentTags from '~/components/search/FilterTags/CurrentTags.vue'
-import type { TagModel } from '~/models/tag.model'
 
 const model = defineModel<TagModel[]>({ default: [] })
 
