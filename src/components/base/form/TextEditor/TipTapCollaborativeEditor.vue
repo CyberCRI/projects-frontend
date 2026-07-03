@@ -1,30 +1,26 @@
 <script setup lang="ts">
+import { HocuspocusProvider, WebSocketStatus } from '@hocuspocus/provider'
 import CollaborationCursor from '@tiptap/extension-collaboration-cursor'
+import type { onStatusParameters } from '@hocuspocus/provider'
 import Collaboration from '@tiptap/extension-collaboration'
-import { HocuspocusProvider } from '@hocuspocus/provider'
 import { Editor } from '@tiptap/vue-3'
 
-import TipTapCollaborativeReconnectionStatus from '~/components/base/form/TextEditor/TipTapCollaborativeReconnectionStatus.vue'
-import {
-  PropsDefault,
-  emitsDefinitions,
-  getExtensions,
-  useTipTap,
-} from '~/components/base/form/TextEditor/useTipTap'
-import TipTapCollaborativeConnectingStatus from '~/components/base/form/TextEditor/TipTapCollaborativeConnectingStatus.vue'
-import TipTapCollaborativeConnectedStatus from '~/components/base/form/TextEditor/TipTapCollaborativeConnectedStatus.vue'
 import TipTapEditorContainer from '~/components/base/form/TextEditor/TipTapEditorContainer.vue'
 import TipTapEditorContent from '~/components/base/form/TextEditor/TipTapEditorContent.vue'
-import type { PropsDefinitions } from '~/components/base/form/TextEditor/useTipTap'
-import TipTapModals from '~/components/base/form/TextEditor/TipTapModals.vue'
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
+import type { PropsDefinitions } from '~/composables/tiptap'
 import LpiSnackbar from '~/components/base/LpiSnackbar.vue'
 
 import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'
 
+import TipTapEditorMenus from '~/components/base/form/TextEditor/TipTapEditorMenus.vue'
+import { emitsDefinitions, PropsDefault, useTipTap } from '~/composables/tiptap'
+import { ClearHistoryWS } from '~/composables/tiptap/extensions/ClearHistoryWS'
 import { onClientMounted, onClientUnmounted } from '~/composables/onClient'
-import { ClearHistoryWS } from './tiptap-extensions/ClearHistoryWS'
+import type { ProviderParams } from '~/interfaces/colaboratives'
+import { getExtensions } from '~/composables/tiptap/options'
+import type { CollaborativeUser } from '~/interfaces/tiptap'
 import { useRuntimeConfig } from '#imports'
 import { randomInt } from 'es-toolkit'
 
@@ -47,7 +43,7 @@ const props = withDefaults(
     PropsDefinitions & {
       room: string
       color?: string
-      providerParams?: any
+      providerParams: ProviderParams
     }
   >(),
   {
@@ -59,7 +55,6 @@ const props = withDefaults(
       const lightness = randomInt(20, 60) // neither too dark nor too light
       return `hsl(${hue}deg ${saturation}% ${lightness}%)`
     },
-    providerParams: null,
   }
 )
 
@@ -85,7 +80,7 @@ const {
 const provider = ref(null)
 // TODO ref ?
 const sockerserver = runtimeConfig.public.appWssHost
-const status = ref('offline')
+const status = ref<onStatusParameters['status'] | 'offline'>('offline')
 const online = ref(navigator.onLine)
 const synced = ref(false) // current sync status
 const firstSync = ref(false) // was synced at least once
@@ -133,7 +128,7 @@ function getCollaborativeExtensions() {
         color: props.color,
         pid: user.value.id,
         profile_picture: user.value.profile_picture,
-      },
+      } satisfies CollaborativeUser,
     }),
     ClearHistoryWS.configure({}),
   ]
@@ -158,13 +153,7 @@ function initCollaborativeEditor() {
   initialContent.value = props.modelValue
   editorInited.value = true
 
-  status.value = 'connecting'
-
-  const providerParams = {
-    // add initialContent as a value for first time eding/creating
-    content: initialContent.value,
-    ...props.providerParams,
-  }
+  status.value = WebSocketStatus.Connecting
 
   // there's no way in provide to detect failure if server is not reached at least once
   // so we use a simple timeout that check if the connection was ever open
@@ -181,7 +170,7 @@ function initCollaborativeEditor() {
     url: sockerserver,
     name: props.room,
     token: accessToken.value,
-    parameters: providerParams,
+    parameters: props.providerParams,
     onOpen: () => {
       cnxOpen.value = true
       // clear "unconnectable" timeout
@@ -327,7 +316,7 @@ defineExpose({
         :users="editor.storage.collaborationCursor.users"
       />
 
-      <TipTapModals
+      <TipTapEditorMenus
         v-if="editor"
         :editor="editor"
         :mode="mode"
@@ -363,13 +352,6 @@ defineExpose({
 
 <!--SCOPED TO FIX BUG ON DEFAULT EDITOR, UN-SCOPE IF NEEDED LATER-->
 <style lang="scss" scoped>
-// TODO dead code ???
-// .connecting,
-// .disconnected {
-//     padding: 20px;
-//     text-align: center;
-// }
-
 .solo-mode-warning {
   margin: 0 auto 1rem;
 }

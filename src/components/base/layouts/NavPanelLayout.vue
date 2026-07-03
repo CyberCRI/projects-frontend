@@ -129,6 +129,7 @@ const { isMobile } = useViewportWidth()
 
 .content-panel {
   flex-basis: 100%;
-  overflow: auto;
+  overflow: hidden;
+  padding: 0 2px;
 }
 </style>

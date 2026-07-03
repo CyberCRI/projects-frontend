@@ -149,7 +149,7 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import useNuxtI18n from '~/composables/useNuxtI18n'
 
-import type { ImageModealCreated } from '~/models/image.model'
+import type { PropsDefinitions } from '~/composables/tiptap'
 import type { ErrorObject } from '@vuelidate/core'
 import { capitalize } from '~/functs/string'
 
@@ -158,7 +158,7 @@ withDefaults(
     errors?: {
       [key: string]: ErrorObject[]
     }
-    saveImageCallback: (file: File) => Promise<ImageModealCreated>
+    saveImageCallback: PropsDefinitions['saveImageCallback']
   }>(),
   {
     errors: () => ({

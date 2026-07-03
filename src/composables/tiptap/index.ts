@@ -1,56 +1,11 @@
+import type { ImageModealCreated } from '~/models/image.model'
 import useOrganizationsStore from '~/stores/useOrganizations'
-import type { StarterKitOptions } from '@tiptap/starter-kit'
-import TableHeader from '@tiptap/extension-table-header'
-import TextStyle from '@tiptap/extension-text-style'
-import TextAlign from '@tiptap/extension-text-align'
-import Underline from '@tiptap/extension-underline'
-import TableRow from '@tiptap/extension-table-row'
-import useToasterStore from '~/stores/useToaster'
-import StarterKit from '@tiptap/starter-kit'
-import Table from '@tiptap/extension-table'
-import Color from '@tiptap/extension-color'
-import Link from '@tiptap/extension-link'
-
-import CustomTableCell from './tiptap-extensions/CustomTableCell.js'
-import type { ImageModealCreated } from '~/models/image.model.js'
-import ExternalVideo from './tiptap-extensions/ExternalVideo.js'
-import LpiCodeBlock from './tiptap-extensions/LpiCodeBlock.js'
-import CustomImage from './tiptap-extensions/CustomImage.js'
+import { getExtensions } from '~/composables/tiptap/options'
 import type { ErrorObject } from '@vuelidate/core'
+import type { EditorOptions } from '@tiptap/vue-3'
 import type { ExtractDefaultPropTypes } from 'vue'
-import lowlight from '~/functs/lowlight'
+import useToasterStore from '~/stores/useToaster'
 import { Editor } from '@tiptap/vue-3'
-
-export const getExtensions = (options: Partial<StarterKitOptions> = {}) => {
-  return [
-    // Collaborative (socket) use its own history
-    StarterKit.configure({ ...options, codeBlock: false }), // TODO: was !this.socket
-    Link.configure({
-      openOnClick: false,
-    }),
-    TextStyle,
-    Color,
-    // TODO: Check if need history
-    // History,
-    Underline,
-    TextAlign.configure({
-      types: ['heading', 'paragraph'],
-      alignments: ['left', 'center', 'right'],
-    }),
-    ExternalVideo,
-    Table.configure({
-      resizable: true,
-      cellMinWidth: 300,
-    }),
-    TableRow,
-    TableHeader,
-    CustomTableCell,
-    CustomImage,
-    LpiCodeBlock.configure({
-      lowlight,
-    }),
-  ]
-}
 
 export const emitsDefinitions = ['saved', 'image', 'blur', 'update:modelValue']
 
@@ -72,21 +27,33 @@ export const PropsDefault: ExtractDefaultPropTypes<PropsDefinitions> = {
   errors: () => [],
 }
 
-export function useTipTap({
-  props,
-  emit,
-  t,
-  extraOptions,
-}: {
+type Options = {
   props: any
   emit: any
   t: any
   extraOptions?: any
-}) {
+}
+
+type TipTapResult = {
+  editor: Ref<any>
+  editorInited: Ref<boolean>
+  appendTranslationsStyle: () => void
+  initEditor: () => void
+  destroyEditor: () => void
+  getContent: () => string
+  initialContent: Ref<string>
+  resetContent: () => void
+  onUpdate: EditorOptions['onUpdate']
+  onBlur: EditorOptions['onBlur']
+  onDrop: EditorOptions['onDrop']
+  onPaste: EditorOptions['onPaste']
+}
+
+export const useTipTap = ({ props, emit, t, extraOptions }: Options): TipTapResult => {
   // data
-  const editor = ref(null)
+  const editor = ref<Editor | undefined>(undefined)
   const editorInited = ref(false)
-  const initialContent = ref(props.modelValue)
+  const initialContent = ref<string>(props.modelValue)
   const toaster = useToasterStore()
   const organizationsStore = useOrganizationsStore()
 

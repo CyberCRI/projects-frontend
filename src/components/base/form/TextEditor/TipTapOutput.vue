@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import fixEditorContent from '~/functs/editorUtils'
+import fixEditorContent from '~/composables/tiptap/editorUtils'
 
 const props = withDefaults(
   defineProps<{
@@ -10,13 +10,13 @@ const props = withDefaults(
 
 const attrs = useAttrs()
 
-const wrapper = ref(null)
+const rootRef = useTemplateRef('root')
 
 watch(
-  () => [props.content, wrapper.value],
+  () => [props.content, rootRef.value],
   () => {
     nextTick(() => {
-      if (wrapper.value) fixEditorContent(wrapper.value)
+      if (rootRef.value) fixEditorContent(rootRef.value)
     })
   },
   {
@@ -25,5 +25,5 @@ watch(
 )
 </script>
 <template>
-  <div ref="wrapper" v-bind="attrs" v-html="content" />
+  <div ref="root" v-bind="attrs" v-html="content" />
 </template>

@@ -17,7 +17,7 @@ const props = withDefaults(
 const attrs = useAttrs()
 
 // methods
-function focusEditor() {
+const onFocus = () => {
   if (props.editor) {
     props.editor.commands.focus('end')
   }
@@ -33,7 +33,7 @@ const { locale } = useNuxtI18n()
       errors: !!errors?.length,
     }"
     v-bind="attrs"
-    @click.self="focusEditor"
+    @click.self="onFocus"
   >
     <slot />
   </div>
