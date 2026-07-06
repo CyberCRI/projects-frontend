@@ -29,10 +29,11 @@
 <script setup lang="ts">
 import type { TranslatedInstruction } from 'shared-projects-frontend'
 
+import { usePermissionInstruction } from '~/composables/usePermissions/useInstructionPermissions'
 import ContextActionMenu from '~/components/base/button/ContextActionMenu.vue'
 import HtmlLimiter from '~/components/base/HtmlLimiter.vue'
 
-defineProps<{
+const props = defineProps<{
   instruction: TranslatedInstruction
 }>()
 
@@ -41,7 +42,10 @@ defineEmits<{
   'edit-instruction': [TranslatedInstruction]
 }>()
 
-const { canEditInstruction, canDeleteInstruction } = usePermissions()
+const { canEditInstruction, canDeleteInstruction } = usePermissionInstruction(
+  computed(() => props.instruction.id)
+)
+
 const style = ref({})
 
 const computeLayout = () => {

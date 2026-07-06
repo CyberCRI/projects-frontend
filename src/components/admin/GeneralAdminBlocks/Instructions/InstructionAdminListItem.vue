@@ -17,6 +17,7 @@
 <script setup lang="ts">
 import type { InstructionModel } from 'shared-projects-frontend'
 
+import { usePermissionInstruction } from '~/composables/usePermissions/useInstructionPermissions'
 import ContextActionMenu from '~/components/base/button/ContextActionMenu.vue'
 
 import { cropIfTooLong } from '~/functs/string'
@@ -31,7 +32,9 @@ defineEmits<{
   'edit-instruction': [InstructionModel]
 }>()
 
-const { canEditInstruction, canDeleteInstruction } = usePermissions()
+const { canEditInstruction, canDeleteInstruction } = usePermissionInstruction(
+  computed(() => props.instruction.id)
+)
 
 const instructionText = computed(() => {
   return cropIfTooLong(html2Text(props.instruction.content), 255)

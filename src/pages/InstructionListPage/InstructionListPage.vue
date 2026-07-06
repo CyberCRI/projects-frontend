@@ -8,12 +8,15 @@ import FetchLoader from '~/components/base/FetchLoader.vue'
 
 import useToasterStore from '~/stores/useToaster'
 
+import { usePermissionInstruction } from '~/composables/usePermissions/useInstructionPermissions'
 import { instructionSkeleton } from '~/skeletons/instructions.skeletons'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import { nowDate } from '~/functs/date'
 
 const toaster = useToasterStore()
-const { canCreateInstruction, canEditInstruction, canDeleteInstruction } = usePermissions()
+
+const { canCreateInstruction, canEditInstruction, canDeleteInstruction } =
+  usePermissionInstruction(null)
 const { t } = useNuxtI18n()
 
 const editedInstruction = ref(null)

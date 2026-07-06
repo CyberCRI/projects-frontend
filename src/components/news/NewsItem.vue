@@ -9,7 +9,7 @@
         {{ news.title }}
       </h3>
       <ContextActionMenuInline
-        v-if="editable"
+        v-if="editable && (canDeleteNews || canEditNews)"
         class="news-item-editable"
         :can-delete="canDeleteNews"
         :can-edit="canEditNews"
@@ -34,7 +34,7 @@
         </h3>
 
         <ContextActionMenuInline
-          v-if="editable"
+          v-if="editable && canDeleteNews"
           class="news-item-editable"
           :can-delete="canDeleteNews"
           :can-edit="canEditNews"
@@ -62,6 +62,7 @@ import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 
 import { DEFAULT_NEWS_PATATOID } from '~/composables/usePatatoids'
 
+import { usePermissionNews } from '~/composables/usePermissions/useNewsPermissions'
 import { html2Text } from '~/functs/tiptap'
 
 const props = withDefaults(
@@ -79,7 +80,7 @@ const emit = defineEmits<{
 const isComponent = computed(() => props.is ?? resolveComponent('NuxtLink'))
 
 const { t } = useNuxtI18n()
-const { canEditNews, canDeleteNews } = usePermissions()
+const { canEditNews, canDeleteNews } = usePermissionNews(computed(() => props.news.id))
 const style = ref({})
 const textsStyle = ref({})
 

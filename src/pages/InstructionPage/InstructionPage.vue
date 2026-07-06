@@ -8,6 +8,7 @@ import FetchLoader from '~/components/base/FetchLoader.vue'
 
 import useToasterStore from '~/stores/useToaster'
 
+import { usePermissionInstruction } from '~/composables/usePermissions/useInstructionPermissions'
 import { instructionSkeleton } from '~/skeletons/instructions.skeletons'
 import { html2Text } from '~/functs/tiptap'
 import { formatDate } from '~/functs/date'
@@ -17,7 +18,6 @@ const props = defineProps<{
 }>()
 
 const { t, locale } = useNuxtI18n()
-const { canEditInstruction, canDeleteInstruction } = usePermissions()
 const toaster = useToasterStore()
 const router = useRouter()
 
@@ -42,6 +42,10 @@ const {
 } = getInstruction(organizationCode, instructionId, {
   default: () => instructionSkeleton(),
 })
+
+const { canEditInstruction, canDeleteInstruction } = usePermissionInstruction(
+  computed(() => instruction.value.id)
+)
 
 const publicationDate = computed(() => {
   if (!instruction.value?.publication_date) {

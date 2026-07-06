@@ -18,9 +18,10 @@
 </template>
 
 <script setup lang="ts">
+import { usePermissionEvent } from '~/composables/usePermissions/useEventPermissions'
 import EventsList from '~/pages/CalendarPage/Tabs/EventsList.vue'
 
-const { canCreateEvent } = usePermissions()
+const { canCreateEvent } = usePermissionEvent(null)
 const { t } = useNuxtI18n()
 useLpiHead2({
   title: computed(() => t('event.calendar.title')),

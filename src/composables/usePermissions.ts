@@ -1,41 +1,57 @@
+import {
+  canCreateGroup as globalCanCreateGroup,
+  canEditGroup as globalCanEditGroup,
+  PeopleGroupModel,
+} from 'shared-projects-frontend'
 import { hasPermission as globalHasPermission } from '~/functs/permissions'
 import useOrganizationsStore from '~/stores/useOrganizations'
+import { RefOrRaw } from '~/interfaces/utils'
 
 import usePeopleGroupsStore from '~/stores/usePeopleGroups'
 import useProjectsStore from '~/stores/useProjects'
 import useUsersStore from '~/stores/useUsers'
 
+/**
+ * Permissions check for group
+ *
+ * @function
+ * @name usePermissionGroup
+ * @kind variable
+ * @param {RefOrRaw<number>} groupId
+ * @returns {{ canEditGroup: globalThis.ComputedRef<boolean>; }}
+ * @exports
+ */
+export const usePermissionGroup = (groupId: RefOrRaw<PeopleGroupModel['id'] | null>) => {
+  const organizationStore = useOrganizationsStore()
+  const userStore = useUsersStore()
+
+  const internalGroupId = computed(() => unref(groupId))
+
+  const canEditGroup = computed(() => {
+    if (!internalGroupId.value || !userStore.isConnected) {
+      return false
+    }
+    return globalCanEditGroup(userStore.rights, organizationStore.current.id, internalGroupId.value)
+  })
+
+  const canCreateGroup = computed(
+    () =>
+      userStore.isConnected && globalCanCreateGroup(userStore.rights, organizationStore.current.id)
+  )
+
+  return {
+    canEditGroup,
+    canCreateGroup,
+  }
+}
+
 export default function usePermissions() {
-  // const { currentPeopleGroupIdForPermissions.value } = mapState(usePeopleGroupsStore, {
-  //     // unique name so it doesn(t conflict with a name in the component)
-  //     currentPeopleGroupIdForPermissions.value: 'currentId',
-  // })
-  // const { currentOrganizationForPermissions.value } = mapState(useOrganizationsStore, {
-  //     // unique name so it doesn(t conflict with a name in the component)
-  //     currentOrganizationForPermissions.value: 'current',
-  // })
-  // const { currentProjectIdForPermissions.value } = mapState(useProjectsStore, {
-  //     // unique name so it doesn(t conflict with a name in the component)
-  //     currentProjectIdForPermissions.value: 'currentProjectId',
-  // })
-  // const { isConnectedForPermissions.value, getPermissionsForPermissions.value, getUserRolesForPermissions.value } =
-  //     mapState(useUsersStore, {
-  //         // unique name so it doesn(t conflict with a name in the component)
-  //         isConnectedForPermissions.value: 'isConnected',
-  //         getPermissionsForPermissions.value: 'permissions',
-  //         getUserRolesForPermissions.value: 'roles',
-  //     })
-
-  const peopleGroupStore = usePeopleGroupsStore()
-  const currentPeopleGroupIdForPermissions = computed(() => peopleGroupStore.currentId)
-
   const organizationStore = useOrganizationsStore()
   const currentOrganizationForPermissions = computed(() => organizationStore.current)
 
   const projectStore = useProjectsStore()
   const currentProjectIdForPermissions = computed(() => projectStore.currentProjectId)
 
-  const userStore = useUsersStore()
   // unique name so it doesn't conflict with a name in the component)
   // note this is legacy of when permissions where in a mixin and can be simplified now
   const isConnectedForPermissions = computed(() => userStore.isConnected)
@@ -268,71 +284,6 @@ export default function usePermissions() {
     )
   })
 
-  /* PEOPLE-GROUPS */
-  const canCreateGroup = computed(() => {
-    return (
-      hasPermission('organizations', 'add_peoplegroup', currentPeopleGroupIdForPermissions.value) ||
-      hasPermission('organizations', 'add_peoplegroup') ||
-      hasPermission('peoplegroup', 'add_peoplegroup') ||
-      isAdmin.value
-    )
-  })
-
-  const canEditGroup = computed(() => {
-    return (
-      isAdmin.value ||
-      hasPermission(
-        'accounts',
-        'change_peoplegroup',
-        currentPeopleGroupIdForPermissions.value || null
-      ) ||
-      hasPermission(
-        'organizations',
-        'change_peoplegroup',
-        currentPeopleGroupIdForPermissions.value || null
-      ) ||
-      hasPermission('organizations', 'change_peoplegroup') ||
-      hasPermission('peoplegroup', 'update')
-    )
-  })
-
-  /* NEWS */
-
-  const canCreateNews = computed(() => {
-    return isAdminOrFacilitator.value
-  })
-  const canEditNews = computed(() => {
-    return isAdminOrFacilitator.value
-  })
-  const canDeleteNews = computed(() => {
-    return isAdminOrFacilitator.value
-  })
-
-  /* EVENTS */
-
-  const canCreateEvent = computed(() => {
-    return isAdminOrFacilitator.value
-  })
-  const canEditEvent = computed(() => {
-    return isAdminOrFacilitator.value
-  })
-  const canDeleteEvent = computed(() => {
-    return isAdminOrFacilitator.value
-  })
-
-  /* INSTRUCTIONS */
-
-  const canCreateInstruction = computed(() => {
-    return isAdminOrFacilitator.value
-  })
-
-  const canEditInstruction = computed(() => {
-    return isAdminOrFacilitator.value
-  })
-  const canDeleteInstruction = computed(() => {
-    return isAdminOrFacilitator.value
-  })
-
   return {
     hasPermission,
 
@@ -392,23 +343,5 @@ export default function usePermissions() {
     canCreateGroup,
 
     canEditGroup,
-
-    /* NEWS */
-
-    canCreateNews,
-    canEditNews,
-    canDeleteNews,
-
-    /* EVENTS */
-
-    canCreateEvent,
-    canEditEvent,
-    canDeleteEvent,
-
-    /* INSTRUCTIONS */
-
-    canCreateInstruction,
-    canEditInstruction,
-    canDeleteInstruction,
   }
 }

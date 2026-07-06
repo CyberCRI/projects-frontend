@@ -64,6 +64,7 @@
 </template>
 
 <script setup lang="ts">
+import { usePermissionNews } from '~/composables/usePermissions/useNewsPermissions'
 import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
@@ -84,8 +85,6 @@ const props = defineProps<{
 
 const toaster = useToasterStore()
 
-const { canEditNews, canDeleteNews } = usePermissions()
-
 const { locale, t } = useNuxtI18n()
 
 const organizationCode = useOrganizationCode()
@@ -98,6 +97,7 @@ const {
 } = getNews(organizationCode, newsId, {
   default: () => newsSkeleton(),
 })
+const { canEditNews, canDeleteNews } = usePermissionNews(computed(() => news.value.id))
 
 const asyncingDelete = ref(false)
 const breadcrumbs = computed(() => [

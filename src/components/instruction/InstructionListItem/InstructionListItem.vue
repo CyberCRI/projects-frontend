@@ -30,10 +30,11 @@
 <script setup lang="ts">
 import type { TranslatedInstruction } from 'shared-projects-frontend'
 
+import { usePermissionInstruction } from '~/composables/usePermissions/useInstructionPermissions'
 import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
 import SummaryAction from '~/components/home/SummaryCards/SummaryAction.vue'
 
-defineProps<{ instruction: TranslatedInstruction }>()
+const props = defineProps<{ instruction: TranslatedInstruction }>()
 
 const { t } = useNuxtI18n()
 const emit = defineEmits<{
@@ -41,7 +42,9 @@ const emit = defineEmits<{
   'edit-instruction': [TranslatedInstruction]
 }>()
 
-const { canEditInstruction, canDeleteInstruction } = usePermissions()
+const { canEditInstruction, canDeleteInstruction } = usePermissionInstruction(
+  computed(() => props.instruction.id)
+)
 </script>
 
 <style scoped lang="scss">

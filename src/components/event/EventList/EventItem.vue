@@ -99,6 +99,7 @@ import DisplayDate from '~/components/base/DisplayDate.vue'
 
 import { useIntervalNow } from '~/composables/useDate'
 
+import { usePermissionEvent } from '~/composables/usePermissions/useEventPermissions'
 import { dateWithoutHours, sanitizeDate } from '~/functs/date'
 import { html2Text } from '~/functs/tiptap'
 
@@ -131,7 +132,8 @@ const emit = defineEmits<{
   edit: [TranslatedEventModel]
   location: [TranslatedEventModel]
 }>()
-const { canEditEvent, canDeleteEvent } = usePermissions()
+
+const { canEditEvent, canDeleteEvent } = usePermissionEvent(computed(() => props.event.id))
 
 const { locale } = useNuxtI18n()
 

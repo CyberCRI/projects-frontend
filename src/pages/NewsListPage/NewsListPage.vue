@@ -23,7 +23,7 @@
           v-for="news in allNews"
           :key="news.title"
           :news="news"
-          :editable="editable"
+          editable
           @edit="onEdit"
           @delete="onDelete"
         />
@@ -65,6 +65,7 @@ import NewsItem from '~/components/news/NewsItem.vue'
 
 import useToasterStore from '~/stores/useToaster'
 
+import { usePermissionNews } from '~/composables/usePermissions/useNewsPermissions'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import { newsSkeleton } from '~/skeletons/news.skeletons'
 
@@ -72,8 +73,7 @@ const organizationCode = useOrganizationCode()
 const asyncingDelete = ref(false)
 const toaster = useToasterStore()
 const { t } = useNuxtI18n()
-const { canEditNews, canDeleteNews, canCreateNews } = usePermissions()
-const editable = computed(() => canEditNews.value || canDeleteNews.value)
+
 const selectedNews = ref()
 
 const { query } = useQuery<QueryFilterNews>({
@@ -92,6 +92,8 @@ const {
   },
   default: () => factoryPagination(newsSkeleton, LIMIT),
 })
+
+const { canCreateNews } = usePermissionNews(null)
 
 const { stateModals, openModals, closeModals } = useModals({ edit: false, delete: false })
 
