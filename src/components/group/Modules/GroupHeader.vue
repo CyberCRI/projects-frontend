@@ -149,7 +149,7 @@ const groupVisibilityIcon = computed(() =>
 )
 
 const hasLinks = computed(() => {
-  return props.group.locations.length
+  return props.group.locations.length || props.group.email
 })
 const hasExtras = computed(() => {
   return props.group.sdgs.length || hasLinks.value
