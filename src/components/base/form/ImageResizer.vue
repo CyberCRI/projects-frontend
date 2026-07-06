@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { ImageSizeConverted } from '~/functs/imageSizesUtils'
+import type { ImageSize } from 'shared-projects-frontend/models/image.model'
 import 'croppr/dist/croppr.css'
 import Croppr from 'croppr'
 
 const props = withDefaults(
   defineProps<{
-    imageSizes?: ImageSizeConverted
+    imageSizes?: ImageSize
     image?: string
     // is crop area a circle
     roundShape?: boolean
@@ -106,10 +106,10 @@ const init = () => {
     y.value = -bboxHeight.value * (props.imageSizes.top / 100) // percentage to pixel size
 
     if ((props.ratio || 1) > naturalRatio.value) {
-      width.value = bboxWidth.value / props.imageSizes.scaleX // ratio to pixel size
+      width.value = bboxWidth.value / props.imageSizes.scale_x // ratio to pixel size
       height.value = width.value / (props.ratio || 1) // ratio to pixel size
     } else {
-      height.value = bboxHeight.value / props.imageSizes.scaleY // ratio to pixel size
+      height.value = bboxHeight.value / props.imageSizes.scale_y // ratio to pixel size
       width.value = height.value * (props.ratio || 1) // ratio to pixel size
     }
   }
@@ -173,12 +173,12 @@ const updateData = (data) => {
 
 const imageSizesExposed = computed(() => {
   return {
-    scaleX: scaleX.value,
-    scaleY: scaleY.value,
+    scale_x: scaleX.value,
+    scale_y: scaleY.value,
     left: left.value,
     top: top.value,
-    naturalRatio: naturalRatio.value,
-  } satisfies ImageSizeConverted
+    natural_ratio: naturalRatio.value,
+  } satisfies ImageSize
 })
 defineExpose({
   imageSizes: imageSizesExposed,

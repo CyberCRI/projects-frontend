@@ -4,13 +4,13 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { ImageSizeConverted } from '~/functs/imageSizesUtils'
+import type { ImageSize } from 'shared-projects-frontend/models/image.model'
 import { IMAGES_SIZES_DEFAULTS } from '~/functs/imageSizesUtils'
 import type { StyleValue } from 'vue'
 
 const props = withDefaults(
   defineProps<{
-    imageSizes?: ImageSizeConverted
+    imageSizes?: ImageSize
     src?: string
     alt?: string
     contain?: boolean
@@ -37,11 +37,11 @@ const imageStyles = computed<StyleValue>(() => {
   // create "fake" image size to use the same imageStyle for every pictures
   const imageSizes = props.imageSizes || IMAGES_SIZES_DEFAULTS
   return {
-    width: props.ratio >= imageSizes.naturalRatio ? '100%' : 'auto',
-    height: props.ratio < imageSizes.naturalRatio ? '100%' : 'auto',
+    width: props.ratio >= imageSizes.natural_ratio ? '100%' : 'auto',
+    height: props.ratio < imageSizes.natural_ratio ? '100%' : 'auto',
     objectFit: 'unset',
     objectPosition: 'unset',
-    transform: `translateZ(0)  scale(${imageSizes.scaleX}, ${imageSizes.scaleY}) translate(${imageSizes.left}%, ${imageSizes.top}%)`,
+    transform: `translateZ(0)  scale(${imageSizes.scale_x}, ${imageSizes.scale_y}) translate(${imageSizes.left}%, ${imageSizes.top}%)`,
     position: 'absolute',
     top: 0,
     left: 0,

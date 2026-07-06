@@ -50,26 +50,23 @@ const setBanner = async (file) => {
 }
 
 const resizeBanner = async (imageSizes) => {
-  if (!imageSizes) return
-  if (!isEqual(imageSizes, pictureApiToImageSizes(organization.value.banner_image))) {
-    const formData = new FormData()
-    imageSizesFormData(formData, imageSizes)
-    try {
-      if (organization.value.banner_image?.id) {
-        await patchOrganisationBanner(
-          organizationCode,
-          organization.value.banner_image.id,
-          formData
-        )
-      }
-      toaster.pushSuccess(t('admin.portal.general.banner-edit.success'))
+  if (!imageSizes || isEqual(imageSizes, pictureApiToImageSizes(organization.value.banner_image)))
+    return
 
-      await organizationsStore.getCurrentOrganization(organizationCode)
-    } catch (error) {
-      console.error(error)
+  const formData = new FormData()
+  imageSizesFormData(formData, imageSizes)
 
-      toaster.pushError(t('admin.portal.general.banner-edit.error'))
+  try {
+    if (organization.value.banner_image?.id) {
+      await patchOrganisationBanner(organizationCode, organization.value.banner_image.id, formData)
     }
+    toaster.pushSuccess(t('admin.portal.general.banner-edit.success'))
+
+    await organizationsStore.getCurrentOrganization(organizationCode)
+  } catch (error) {
+    console.error(error)
+
+    toaster.pushError(t('admin.portal.general.banner-edit.error'))
   }
 }
 </script>

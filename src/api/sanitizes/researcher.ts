@@ -1,8 +1,7 @@
 import type {
   Document,
   ResearcherDocumentAnalytics,
-} from 'shared-projects-frontend/interfaces/researcher.ts'
-
+} from 'shared-projects-frontend/interfaces/researcher'
 import type { PaginationResult } from '~/composables/usePagination'
 
 /**

@@ -5,15 +5,19 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import { usePublicURL } from '~/composables/usePublic'
 
-import type { ImageModel, ImageVariations } from 'shared-projects-frontend/models/image.model'
-import { fileToImageModel, type ImageSizeConverted } from '~/functs/imageSizesUtils'
+import type {
+  ImageModel,
+  ImageSize,
+  ImageVariations,
+} from 'shared-projects-frontend/models/image.model'
+import { fileToImageModel } from '~/functs/imageSizesUtils'
 import { getFileFromURL } from '~/api/utils.service'
 
 const { t } = useNuxtI18n()
 
 const props = withDefaults(
   defineProps<{
-    imageSizes?: ImageSizeConverted
+    imageSizes?: ImageSize
     picture?: File | ImageModel
     defaultPicture: string | string[]
     pictureAlt?: string
@@ -41,7 +45,7 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  'update:imageSizes': [ImageSizeConverted]
+  'update:imageSizes': [ImageSize]
   'update:picture': [File]
 }>()
 

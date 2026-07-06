@@ -1,102 +1,58 @@
 import type { ImageModel, ImageSize } from 'shared-projects-frontend/models/image.model'
 import type { AttachmentType } from 'shared-projects-frontend/models/types'
 import type { IconImageChoice } from '~/functs/IconImage'
+import { mapKeys, pick } from 'es-toolkit'
 
-export type ImageSizeConverted = {
-  scaleX: number
-  scaleY: number
-  left: number
-  top: number
-  naturalRatio: number
-} | null
-
-export function pictureApiToImageSizes(pictureApiData: ImageSize | null): ImageSizeConverted {
-  return pictureApiData &&
-    ['scale_x', 'scale_y', 'left', 'top', 'natural_ratio'].reduce(
-      (acc, key) => acc && typeof pictureApiData[key] === 'number',
-      true
-    ) &&
-    ['scale_x', 'scale_y', 'natural_ratio'].reduce(
-      // null scale or ratio mean a null image size
-      (acc, key) => acc && pictureApiData[key] != 0,
-      true
-    )
-    ? {
-        scaleX: pictureApiData.scale_x,
-        scaleY: pictureApiData.scale_y,
-        left: pictureApiData.left,
-        top: pictureApiData.top,
-        naturalRatio: pictureApiData.natural_ratio,
-      }
-    : null
-}
-
-export const IMAGES_SIZES_DEFAULTS: ImageSizeConverted = Object.freeze({
-  naturalRatio: 1,
-  scaleX: 1,
-  scaleY: 1,
+export const IMAGES_SIZES_DEFAULTS: ImageSize = Object.freeze({
+  natural_ratio: 1,
+  scale_x: 1,
+  scale_y: 1,
   left: 0,
   top: 0,
 })
 
-export function imageSizesToPictureApi(imagesSizes: ImageSizeConverted): ImageSize {
-  return imagesSizes
-    ? {
-        scale_x: imagesSizes.scaleX,
-        scale_y: imagesSizes.scaleY,
-        left: imagesSizes.left,
-        top: imagesSizes.top,
-        natural_ratio: imagesSizes.naturalRatio,
-      }
-    : {
-        scale_x: null, // for json null is ok, if we swicth to formdata, we'll use 0
-        scale_y: null,
-        left: null,
-        top: null,
-        natural_ratio: null,
-      }
+export const pictureApiToImageSizes = <T extends ImageSize>(image: T | null): ImageSize | null => {
+  if (!image) {
+    return null
+  }
+  return {
+    ...IMAGES_SIZES_DEFAULTS,
+    ...pick(image, ['left', 'top', 'scale_x', 'scale_y', 'natural_ratio']),
+  }
 }
 
-function _imageSizesFormData(
+export const imageSizesFormData = <T extends ImageSize>(
   formData: FormData,
-  imageSizes: ImageSizeConverted,
-  keyMap: object
-): void {
-  if (!imageSizes) return
-  for (const [source, target] of Object.entries(keyMap)) {
-    const value = imageSizes[source]
-    if (typeof value == 'number') formData.append(target, String(value))
-    else formData.append(target, '0') // null scale or ratio mean a null image size
+  imageSizes: T | null = null
+) => {
+  const safeImageSize = {
+    ...IMAGES_SIZES_DEFAULTS,
+    ...(imageSizes || {}),
   }
+  Object.entries(safeImageSize).forEach(([key, value]) => {
+    formData.set(key, value.toString())
+  })
 }
 
-export function imageSizesFormData(formData: FormData, imageSizes: ImageSizeConverted): void {
-  const keyMap = {
-    scaleX: 'scale_x',
-    scaleY: 'scale_y',
-    left: 'left',
-    top: 'top',
-    naturalRatio: 'natural_ratio',
-  }
-  _imageSizesFormData(formData, imageSizes, keyMap)
-}
-
-// TODO:
+// TODO: remove this
 // temporary pseudo duplicate (only key prefix change)
 // to accomodate API change for post user
 // while patch keep old behavior
-export function imageSizesFormDataPost(
+export const imageSizesFormDataPost = <T extends ImageSize>(
   formData: FormData,
-  imageSizes: ImageSizeConverted = null
-): void {
-  const keyMap = {
-    scaleX: 'profile_picture_scale_x',
-    scaleY: 'profile_picture_scale_y',
-    left: 'profile_picture_left',
-    top: 'profile_picture_top',
-    naturalRatio: 'profile_picture_natural_ratio',
+  imageSizes: T | null = null
+) => {
+  const safeImageSize = {
+    ...IMAGES_SIZES_DEFAULTS,
+    ...(imageSizes || {}),
   }
-  _imageSizesFormData(formData, imageSizes, keyMap)
+
+  // add prefix for users
+  const objs = mapKeys(safeImageSize, (key) => `profile_picture_${key}`)
+
+  Object.entries(objs).forEach(([key, value]) => {
+    formData.set(key, value.toString())
+  })
 }
 
 /**
@@ -121,11 +77,7 @@ export const urlToImageModel = (url: string): ImageModel => {
       small: url,
       original: url,
     },
-    scale_x: 0,
-    scale_y: 0,
-    left: 0,
-    top: 0,
-    natural_ratio: 0,
+    ...IMAGES_SIZES_DEFAULTS,
   }
 }
 
