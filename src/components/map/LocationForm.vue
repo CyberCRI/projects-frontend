@@ -52,9 +52,8 @@
 </template>
 
 <script setup lang="ts">
-import type { LocationForm } from 'shared-projects-frontend/models/location.model'
 import type { GroupOption } from '@/components/base/button/GroupButton.vue'
-import type { LocationType } from 'shared-projects-frontend/models/types'
+import type { LocationForm, LocationType } from 'shared-projects-frontend'
 import GroupButton from '@/components/base/button/GroupButton.vue'
 import DialogModal from '@/components/base/modal/DialogModal.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'

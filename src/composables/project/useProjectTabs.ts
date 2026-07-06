@@ -1,8 +1,4 @@
-import type {
-  ProjectModel,
-  ProjectSlugOrId,
-  TranslatedProject,
-} from 'shared-projects-frontend/models/project.model'
+import type { ProjectModel, ProjectSlugOrId, TranslatedProject } from 'shared-projects-frontend'
 import { PROJECT_MODULE_ICON, PROJECT_MODULE_TITLE } from '~/functs/constants'
 import { projectTabSkeleton } from '~/skeletons/project-tabs.skeletons'
 import { getAllProjectTab } from '~/api/v2/project-tabs.service'

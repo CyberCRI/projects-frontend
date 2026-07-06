@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { ProjectSlugOrId } from 'shared-projects-frontend/models/project.model'
 import { useProjectHierarchy } from '~/composables/project/useProjectHierarchy'
 import ProjectNavPanel from '~/components/project/Nav/ProjectNavPanel.vue'
 import { useProjectTabs } from '~/composables/project/useProjectTabs'
 import { projectSkeleton } from '@/skeletons/project.skeletons'
+import type { ProjectSlugOrId } from 'shared-projects-frontend'
 import { getProject } from '@/api/v2/project.service'
 import useProjectsStore from '~/stores/useProjects'
 

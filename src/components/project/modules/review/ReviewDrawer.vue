@@ -14,8 +14,9 @@ import type {
   ReviewForm,
   ReviewModel,
   TranslatedReview,
-} from 'shared-projects-frontend/models/review.model'
-import type { ProjectForm, TranslatedProject } from 'shared-projects-frontend/models/project.model'
+  ProjectForm,
+  TranslatedProject,
+} from 'shared-projects-frontend'
 import { defaultProjectReviewForm, useProjectReviewForm } from '~/form/review'
 import { patchProject } from '~/api/projects.service'
 import { formEqual } from '~/form/base'

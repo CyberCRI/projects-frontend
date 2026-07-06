@@ -146,8 +146,7 @@ export async function refreshAccessToken(): Promise<any> {
   const as = await keycloak.as.get()
   const client = keycloak.client.get()
   const response = await oauth.refreshTokenGrantRequest(as, client, token.replace('JWT' + ' ', ''))
-  const result: oauth.TokenEndpointResponse | oauth.OAuth2Error =
-    await oauth.processRefreshTokenResponse(as, client, response)
+  const result = await oauth.processRefreshTokenResponse(as, client, response)
   const payload = await keycloak.processKeycloakResponse(result)
   return {
     expires_in: payload.expires_in,

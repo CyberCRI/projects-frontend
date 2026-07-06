@@ -28,7 +28,7 @@
   </NuxtLink>
 </template>
 <script setup lang="ts">
-import type { TranslatedInstruction } from 'shared-projects-frontend/models/instruction.model'
+import type { TranslatedInstruction } from 'shared-projects-frontend'
 
 import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
 import SummaryAction from '~/components/home/SummaryCards/SummaryAction.vue'

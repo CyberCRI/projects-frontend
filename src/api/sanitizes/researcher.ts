@@ -1,7 +1,4 @@
-import type {
-  Document,
-  ResearcherDocumentAnalytics,
-} from 'shared-projects-frontend/interfaces/researcher'
+import type { Document, ResearcherDocumentAnalytics } from 'shared-projects-frontend'
 import type { PaginationResult } from '~/composables/usePagination'
 
 /**

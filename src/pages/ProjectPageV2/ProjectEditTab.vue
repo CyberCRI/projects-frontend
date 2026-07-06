@@ -5,10 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import type {
-  ProjectForm as ProjectFormType,
-  TranslatedProject,
-} from 'shared-projects-frontend/models/project.model'
+import type { ProjectForm as ProjectFormType, TranslatedProject } from 'shared-projects-frontend'
 import { patchProject, patchProjectHeader, postProjectHeader } from '~/api/projects.service'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'

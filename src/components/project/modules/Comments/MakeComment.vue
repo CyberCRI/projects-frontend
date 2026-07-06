@@ -45,11 +45,13 @@ import LpiButton from '~/components/base/button/LpiButton.vue'
 import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'
 
-import type { ProjectMessageModel } from 'shared-projects-frontend/models/project-message.model'
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
+import type {
+  ProjectMessageModel,
+  TranslatedProject,
+  CommentModel,
+  ImageModel,
+} from 'shared-projects-frontend'
 import { defaultProjectMessageForm, useProjectMessageForm } from '~/form/messages'
-import type { CommentModel } from 'shared-projects-frontend/models/comment.model'
-import type { ImageModel } from 'shared-projects-frontend/models/image.model'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
 import { getFirstTextNotEmpty } from '~/functs/tiptap'
 import { formEqual } from '~/form/base'

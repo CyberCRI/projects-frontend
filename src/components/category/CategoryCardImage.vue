@@ -25,8 +25,8 @@
 
 <script setup lang="ts">
 import CategoryCardDefaultBackground from '~/components/category/CategoryCardDefaultBackground.vue'
-import type { ImageSize } from 'shared-projects-frontend/models/image.model'
 import type CroppedImage from '~/components/base/media/CroppedImage.vue'
+import type { ImageSize } from 'shared-projects-frontend'
 
 const props = withDefaults(
   defineProps<{

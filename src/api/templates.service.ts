@@ -1,5 +1,4 @@
-import type { TemplateId, TemplateModel } from 'shared-projects-frontend/models/template.model'
-import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
+import type { TemplateId, TemplateModel, OrganizationModel } from 'shared-projects-frontend'
 
 import type { UseApiOptions } from '~/composables/useAPI'
 import useAPI from '~/composables/useAPI'

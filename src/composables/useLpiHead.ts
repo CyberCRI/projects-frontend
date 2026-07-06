@@ -2,7 +2,7 @@ import type { RefOrRaw } from '~/interfaces/utils'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
 
-import type { ImageModel } from 'shared-projects-frontend/models/image.model'
+import type { ImageModel } from 'shared-projects-frontend'
 import { usePublicURL } from '~/composables/usePublic'
 import useNuxtI18n from '~/composables/useNuxtI18n'
 

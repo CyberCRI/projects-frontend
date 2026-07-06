@@ -61,8 +61,8 @@
 <script setup lang="ts">
 import { capitalize } from '@/functs/string'
 
-import type { TranslatedUserModel } from 'shared-projects-frontend/models/user.model'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
+import type { TranslatedUserModel } from 'shared-projects-frontend'
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 import BadgeItem from '@/components/base/BadgeItem.vue'
 import useSkillTexts from '@/composables/useSkillTexts'

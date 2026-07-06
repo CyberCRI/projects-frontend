@@ -56,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import type { HierarchyGroupModel } from 'shared-projects-frontend/models/group.model'
+import type { HierarchyGroupModel } from 'shared-projects-frontend'
 import IconImage from '~/components/base/media/IconImage.vue'
 
 defineProps<{

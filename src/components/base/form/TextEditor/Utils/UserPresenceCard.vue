@@ -22,8 +22,8 @@
 <script lang="ts" setup>
 import type CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 
-import type { CollaborativeUser } from 'shared-projects-frontend/interfaces/tiptap'
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
+import type { CollaborativeUser } from 'shared-projects-frontend'
 
 withDefaults(
   defineProps<{

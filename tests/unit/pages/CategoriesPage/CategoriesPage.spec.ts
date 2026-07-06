@@ -7,9 +7,9 @@ import { ProjectCategoryOutputFactory } from '~~/tests/factories/project-categor
 
 import pinia from '~/stores'
 
-import { OrganizationOutput } from 'shared-projects-frontend/models/organization.model'
 import useProjectCategoriesStore from '~/stores/useProjectCategories'
 import useOrganizationsStore from '~/stores/useOrganizations'
+import { OrganizationOutput } from 'shared-projects-frontend'
 import { flushPromises } from '@vue/test-utils'
 
 const router = [{ name: 'Home', path: '/', component: MockComponent }]

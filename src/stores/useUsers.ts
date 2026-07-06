@@ -1,4 +1,4 @@
-import type { NotificationsSettings, UserModel } from 'shared-projects-frontend/models/user.model'
+import type { NotificationsSettings, UserModel, Right } from 'shared-projects-frontend'
 
 import {
   getNotifications as apiGetNotifications,
@@ -52,6 +52,13 @@ const useUsersStore = defineStore('users', () => {
   const permissions = ref({})
   const id_token = ref(localStorage?.getItem('ID_TOKEN'))
   const roles = ref([])
+
+  const rights = computed<Right>(() => {
+    return {
+      permissions: permissions.value,
+      roles: roles.value,
+    }
+  })
   const notificationsCount = ref(0)
   const notificationsSettings = ref(null)
   const userDataRefreshLoop = ref(null)
@@ -314,6 +321,7 @@ const useUsersStore = defineStore('users', () => {
     accessToken,
     keycloak_id,
     permissions,
+    rights,
     id_token,
     roles,
     notificationsCount,

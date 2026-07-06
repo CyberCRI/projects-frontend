@@ -4,7 +4,7 @@ import type {
   FollowProjectOutput,
   // FollowOutput,
   // FollowOutputList,
-} from 'shared-projects-frontend/models/follow.model'
+} from 'shared-projects-frontend'
 
 import useAPI from '~/composables/useAPI'
 

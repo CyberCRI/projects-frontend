@@ -5,11 +5,7 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import { usePublicURL } from '~/composables/usePublic'
 
-import type {
-  ImageModel,
-  ImageSize,
-  ImageVariations,
-} from 'shared-projects-frontend/models/image.model'
+import type { ImageModel, ImageSize, ImageVariations } from 'shared-projects-frontend'
 import { fileToImageModel } from '~/functs/imageSizesUtils'
 import { getFileFromURL } from '~/api/utils.service'
 

@@ -1,5 +1,4 @@
-import type { PeopleGroupModel } from 'shared-projects-frontend/models/people-group.model'
-import type { GroupMember } from 'shared-projects-frontend/models/group.model'
+import type { PeopleGroupModel, GroupMember } from 'shared-projects-frontend'
 import { userSkeleton } from '~/skeletons/user.skeletons'
 
 export const groupSkeleton = (def?: Partial<PeopleGroupModel>): PeopleGroupModel => ({

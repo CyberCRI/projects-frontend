@@ -3,8 +3,8 @@ import type {
   SearchResultGroup,
   SearchResultProject,
   SearchResultUser,
-} from 'shared-projects-frontend/models/search.model'
-import type { SearchObjectType } from 'shared-projects-frontend/models/types'
+  SearchObjectType,
+} from 'shared-projects-frontend'
 import { projectSkeleton } from '~/skeletons/project.skeletons'
 import { groupSkeleton } from '~/skeletons/group.skeletons'
 import { userSkeleton } from '~/skeletons/user.skeletons'

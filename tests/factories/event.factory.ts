@@ -1,4 +1,4 @@
-import { EventModel } from 'shared-projects-frontend/models/event.model'
+import { EventModel } from 'shared-projects-frontend'
 import { createFactory } from 'faker-create-factory'
 import BaseFactory from './base.factory'
 

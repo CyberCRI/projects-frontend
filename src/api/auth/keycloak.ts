@@ -17,7 +17,7 @@ export type AuthResult = {
   refresh_token: string
   expires_in: number
   refresh_token_exp: number
-  parsedToken: any
+  parsedToken: oauth.IDToken
   fromURL?: string
   id_token: string
 }
@@ -194,7 +194,9 @@ export default function useKeycloak() {
       }
     },
 
-    processKeycloakResponse: async function (result): Promise<AuthResult | null> {
+    processKeycloakResponse: async function (
+      result: oauth.OpenIDTokenEndpointResponse | oauth.TokenEndpointResponse | oauth.OAuth2Error
+    ): Promise<AuthResult | null> {
       if (oauth.isOAuth2Error(result)) {
         console.error(result)
         this.onLoginError()
@@ -203,7 +205,8 @@ export default function useKeycloak() {
       const id_token: string = result.id_token
       const access_token: string = result.access_token
       const refresh_token: string = result.refresh_token
-      const refresh_token_exp: number = result.refresh_expires_in + Math.floor(Date.now() / 1000)
+      const refresh_expires_in = result.refresh_expires_in as number
+      const refresh_token_exp: number = refresh_expires_in + Math.floor(Date.now() / 1000)
       // expires is in second so 300 is 5 minutes
       const expires_in: number = result.expires_in * 1000
       const parsedToken = await oauth.getValidatedIdTokenClaims(result)

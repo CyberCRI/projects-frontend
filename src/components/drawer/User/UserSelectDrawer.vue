@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import type { QueryFilterSearch } from 'shared-projects-frontend/models/search.model'
-import type { TranslatedUserModel } from 'shared-projects-frontend/models/user.model'
+import type { TranslatedUserModel, QueryFilterSearch } from 'shared-projects-frontend'
 import type { DrawerSearchProps } from '~/components/drawer/BaseDrawerSearch.vue'
 import CardInlineUser from '~/components/drawer/User/CardInlineUser.vue'
 import BaseDrawerSearch from '~/components/drawer/BaseDrawerSearch.vue'

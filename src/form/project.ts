@@ -1,8 +1,10 @@
-import type { TranslatedProjectCategory } from 'shared-projects-frontend/models/project-category.model'
+import type {
+  TranslatedProjectCategory,
+  TranslatedTemplate,
+  ProjectForm,
+} from 'shared-projects-frontend'
 import { helpers, maxLength, minLength, required, requiredIf } from '@vuelidate/validators'
-import type { TranslatedTemplate } from 'shared-projects-frontend/models/template.model'
 import type ProjectTemplateForm from '~/components/project/ProjectTemplateForm.vue'
-import type { ProjectForm } from 'shared-projects-frontend/models/project.model'
 import { NULL_CONTENT } from '~/functs/constants'
 
 const onCleanProjectForm = (data: ProjectForm) => {

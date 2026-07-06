@@ -48,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedUserModel } from 'shared-projects-frontend/models/user.model'
+import type { TranslatedUserModel } from 'shared-projects-frontend'
 import { patchUser } from '~/api/people.service'
 import { defaultFormBio } from '~/form/profile'
 

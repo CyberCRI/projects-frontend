@@ -1,5 +1,4 @@
-import type { GoalForm, GoalModel } from 'shared-projects-frontend/models/goal.model'
-import type { ProjectSlugOrId } from 'shared-projects-frontend/models/project.model'
+import type { GoalForm, GoalModel, ProjectSlugOrId } from 'shared-projects-frontend'
 import useAPI from '@/composables/useAPI'
 
 type ConfigGoal = UseApiOptions

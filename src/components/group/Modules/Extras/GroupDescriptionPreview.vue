@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models/people-group.model'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend'
 import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
 
 defineProps<{ group: TranslatedPeopleGroupModel }>()

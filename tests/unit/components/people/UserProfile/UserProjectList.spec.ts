@@ -1,7 +1,7 @@
-import { OrganizationOutput } from 'shared-projects-frontend/models/organization.model'
 import UserProjectList from '~/components/people/UserProfile/UserProjectList.vue'
 import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import useOrganizationsStore from '~/stores/useOrganizations'
+import { OrganizationOutput } from 'shared-projects-frontend'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import { beforeEach, describe, expect, it } from 'vitest'
 import pinia from '~/stores'

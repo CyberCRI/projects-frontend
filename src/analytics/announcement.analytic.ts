@@ -1,5 +1,5 @@
-import type { AnnouncementModel } from 'shared-projects-frontend/models/announcement.model'
 import type { ProjectAnalytic } from '~/analytics/project.analytic'
+import type { AnnouncementModel } from 'shared-projects-frontend'
 import analytics from '~/analytics'
 
 export interface Announcement {

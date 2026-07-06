@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import type { ProjectTabForm } from 'shared-projects-frontend/models/projects-tabs.model'
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
+import type {
+  TranslatedProject,
+  ProjectTabForm,
+  ProjectTabType,
+  ImageModel,
+} from 'shared-projects-frontend'
 import { defaultProjectTabForm, useProjectTabForm } from '~/form/project-tabs'
-import type { ImageModel } from 'shared-projects-frontend/models/image.model'
 import type { GroupOption } from '~/components/base/button/GroupButton.vue'
-import type { ProjectTabType } from 'shared-projects-frontend/models/types'
 import GroupButton from '~/components/base/button/GroupButton.vue'
 import { createProjectTabImage } from '~/api/project-tabs.service'
 import IconDrawer from '~/components/drawer/Icon/IconDrawer.vue'

@@ -30,9 +30,9 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models/people-group.model'
 import GroupSimilarDrawer from '@/components/group/Modules/Extras/GroupSimilarDrawer.vue'
 import { maxSkeleton, factoryPagination } from '@/skeletons/base.skeletons'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend'
 import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
 import SeeMoreArrow from '@/components/base/button/SeeMoreArrow.vue'
 import { groupSkeleton } from '@/skeletons/group.skeletons'

@@ -1,6 +1,8 @@
-import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
-import type { QueryFilterReviews } from 'shared-projects-frontend/models/review.model'
-import type { ProjectSlugOrId } from 'shared-projects-frontend/models/project.model'
+import type {
+  QueryFilterReviews,
+  OrganizationModel,
+  ProjectSlugOrId,
+} from 'shared-projects-frontend'
 import type { UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
 import { getReviews as fetchReviews } from '@/api/reviews.service'
 import type { RefOrRaw } from '~/interfaces/utils'

@@ -1,6 +1,6 @@
-import { OrganizationOutput } from 'shared-projects-frontend/models/organization.model'
 import { UserFactory } from '~~/tests/factories/user.factory'
 import useOrganizationsStore from '~/stores/useOrganizations'
+import { OrganizationOutput } from 'shared-projects-frontend'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import SearchPage from '~/pages/SearchPage/SearchPage.vue'
 import { beforeEach, describe, expect, it } from 'vitest'

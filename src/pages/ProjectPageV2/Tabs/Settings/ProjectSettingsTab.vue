@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import ProjectTemplateForm from '~/components/project/ProjectTemplateForm.vue'
 import type { GroupOption } from '~/components/base/button/GroupButton.vue'
 import { refreshProjectData } from '~/composables/project/refreshProject'
@@ -9,6 +8,7 @@ import { deleteProject, patchProject } from '~/api/projects.service'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
 import { getOrganizations } from '~/api/v2/organizations.service'
+import type { TranslatedProject } from 'shared-projects-frontend'
 import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import { factoryPagination } from '~/skeletons/base.skeletons'

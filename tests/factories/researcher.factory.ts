@@ -1,9 +1,4 @@
-import {
-  Document,
-  Identifier,
-  Researcher,
-  HarvesterType,
-} from 'shared-projects-frontend/interfaces/researcher'
+import { Document, Identifier, Researcher, HarvesterType } from 'shared-projects-frontend'
 import { createFactory } from 'faker-create-factory'
 import { UserFactory } from './user.factory'
 

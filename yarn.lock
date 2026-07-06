@@ -4052,6 +4052,14 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.15.tgz#596a1747233694d50f6ad8a7869fcb6f56cf5841"
   integrity sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==
 
+"@types/jsonwebtoken@^9.0.10":
+  version "9.0.10"
+  resolved "https://registry.yarnpkg.com/@types/jsonwebtoken/-/jsonwebtoken-9.0.10.tgz#a7932a47177dcd4283b6146f3bd5c26d82647f09"
+  integrity sha512-asx5hIG9Qmf/1oStypjanR7iKTv0gXQ1Ov/jfrX6kS/EO0OFni8orbmGCn0672NHR3kXHwpAwR+B368ZGN/2rA==
+  dependencies:
+    "@types/ms" "*"
+    "@types/node" "*"
+
 "@types/leaflet.markercluster@1.5.6":
   version "1.5.6"
   resolved "https://registry.yarnpkg.com/@types/leaflet.markercluster/-/leaflet.markercluster-1.5.6.tgz#3fff147abeee2303b3814d5799151ae14d72654e"
@@ -4095,6 +4103,11 @@
   integrity sha512-07zYZZ9ZVHc7R4ktM+3a2clZvKkj+EJcYZ/FevTs011Fr9tdp59lVgAskMf6ZQUp3lOHLqi7K3f+9QtmEsqh1w==
   dependencies:
     mixpanel-browser "*"
+
+"@types/ms@*":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@types/ms/-/ms-2.1.0.tgz#052aa67a48eccc4309d7f0191b7e41434b90bb78"
+  integrity sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==
 
 "@types/node-fetch@^2.6.4":
   version "2.6.13"
@@ -12646,7 +12659,7 @@ setprototypeof@~1.2.0:
 
 "shared-projects-frontend@git+ssh://git@github.com:CyberCRI/shared-projects-frontend.git#main":
   version "1.0.0"
-  resolved "git+ssh://git@github.com:CyberCRI/shared-projects-frontend.git#9575e05c699c5bc43a95dcabff9ec23bd8d29057"
+  resolved "git+ssh://git@github.com:CyberCRI/shared-projects-frontend.git#0a9e96a2511233926272a327ed527bae53596322"
   dependencies:
     typescript "^6.0.3"
 

@@ -1,13 +1,12 @@
 import type {
   OrganizationModel,
   OrganizationPatchInput,
-} from 'shared-projects-frontend/models/organization.model'
-import type {
   GroupModelInput,
   RemoveGroupModelInput,
-} from 'shared-projects-frontend/models/group.model'
-import type { ProjectModel, ProjectSlugOrId } from 'shared-projects-frontend/models/project.model'
-import type { ImageOrganizationInput } from 'shared-projects-frontend/models/image.model'
+  ProjectModel,
+  ProjectSlugOrId,
+  ImageOrganizationInput,
+} from 'shared-projects-frontend'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import useAPI from '@/composables/useAPI'
 

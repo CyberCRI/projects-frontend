@@ -35,10 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import type {
-  ProjectCategoryModel,
-  TranslatedProjectCategory,
-} from 'shared-projects-frontend/models/project-category.model'
+import type { ProjectCategoryModel, TranslatedProjectCategory } from 'shared-projects-frontend'
 
 import CategoryCardImage from '~/components/category/CategoryCardImage.vue'
 

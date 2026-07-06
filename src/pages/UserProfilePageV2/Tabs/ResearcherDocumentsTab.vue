@@ -14,9 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import type { UserModel } from 'shared-projects-frontend/models/user.model'
-
-import type { DocumentType } from 'shared-projects-frontend/interfaces/researcher'
+import type { UserModel, DocumentType } from 'shared-projects-frontend'
 
 import OwnResearcherDocumentsList from '~/components/people/Researcher/OwnResearcherDocumentsList.vue'
 

@@ -3,9 +3,9 @@
   lang="ts"
   generic="Item extends { id: number | string; role?: string }, Role extends Roles"
 >
-import type { Roles } from 'shared-projects-frontend/models/types'
 import { roleHelpI18n, roleI18n } from '~/functs/rolesUtils'
 import TableInfo from '~/components/base/TableInfo.vue'
+import type { Roles } from 'shared-projects-frontend'
 import { remToPx } from '~/functs/style'
 import { isEqual } from 'es-toolkit'
 

@@ -259,10 +259,7 @@ import Drawer from '~/components/base/BaseDrawer.vue'
 
 import useOrganizationCode from '~/composables/useOrganizationCode'
 
-import type {
-  ProjectCategoryForm,
-  ProjectCategoryModel,
-} from 'shared-projects-frontend/models/project-category.model'
+import type { ProjectCategoryForm, ProjectCategoryModel } from 'shared-projects-frontend'
 import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 import { defaultProjectCategoryForm } from '~/form/category'
 import { getTemplates } from '~/api/v2/templates.service'

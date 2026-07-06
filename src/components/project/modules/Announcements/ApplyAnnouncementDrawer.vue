@@ -7,9 +7,8 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import useToasterStore from '~/stores/useToaster'
 
-import type { TranslatedAnnouncement } from 'shared-projects-frontend/models/announcement.model'
 import { defaultAnnouncementReplyForm, useAnnouncementReplyForm } from '~/form/annoucement'
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
+import type { TranslatedAnnouncement, TranslatedProject } from 'shared-projects-frontend'
 import Recaptcha from '~/components/base/form/Recaptcha.vue'
 import Field from '~/components/base/form/Field.vue'
 import useUsersStore from '~/stores/useUsers'

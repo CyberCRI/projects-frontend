@@ -3,8 +3,8 @@ import type {
   EventInput,
   EventModel,
   QueryFilterEvent,
-} from 'shared-projects-frontend/models/event.model'
-import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
+  OrganizationModel,
+} from 'shared-projects-frontend'
 
 import type { UseApiOptions } from '~/composables/useAPI'
 import useAPI from '~/composables/useAPI'

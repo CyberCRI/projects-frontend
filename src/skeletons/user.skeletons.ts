@@ -1,4 +1,4 @@
-import type { UserModel } from 'shared-projects-frontend/models/user.model'
+import type { UserModel } from 'shared-projects-frontend'
 
 export const userSkeleton = (def?: Partial<UserModel>): UserModel => ({
   id: -1,

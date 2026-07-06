@@ -1,5 +1,5 @@
-import type { EventModel } from 'shared-projects-frontend/models/event.model'
 import { mcpOptions, orgCode, resultFromTool } from './base'
+import type { EventModel } from 'shared-projects-frontend'
 import type { TypeMcpServer } from '~/interfaces/mcp'
 import { getAllEvents } from '~/api/event.service'
 import { nowDate } from '~/functs/date'

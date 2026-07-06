@@ -1,4 +1,4 @@
-import type { LinkedProject } from 'shared-projects-frontend/models/project.model'
+import type { LinkedProject } from 'shared-projects-frontend'
 
 import analytics from '~/analytics'
 

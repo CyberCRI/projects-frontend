@@ -1,4 +1,4 @@
-import type { ImageModealCreated } from 'shared-projects-frontend/models/image.model'
+import type { ImageModealCreated } from 'shared-projects-frontend'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { getExtensions } from '~/composables/tiptap/options'
 import type { ErrorObject } from '@vuelidate/core'

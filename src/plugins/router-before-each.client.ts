@@ -2,8 +2,10 @@ import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
 
 import useUsersStore from '~/stores/useUsers'
 
-import { isAdmin, isAdminOrFacilitator } from '~/functs/permissions'
+import { isAdminOrFacilitator } from 'shared-projects-frontend'
+import useOrganizationsStore from '~/stores/useOrganizations'
 import { resetScroll } from '~/composables/useScrollToTab'
+import { isAdmin } from '~/functs/permissions'
 
 export default defineNuxtPlugin(async () => {
   useRouter().beforeEach((to, from, next) => {
@@ -13,6 +15,7 @@ export default defineNuxtPlugin(async () => {
     }
 
     const usersStore = useUsersStore()
+    const organizationStore = useOrganizationsStore()
     if (to.matched.some((route) => route.meta.requiresAuth) && !usersStore.isConnected) {
       let proceed = true
 
@@ -58,7 +61,7 @@ export default defineNuxtPlugin(async () => {
       next({ name: 'Home' })
     } else if (
       to.matched.some((route) => route.meta.requiresAdminOrFacilitator) &&
-      !isAdminOrFacilitator()
+      !isAdminOrFacilitator(usersStore.rights, organizationStore.current?.id)
     ) {
       next({ name: 'Home' })
     } else {

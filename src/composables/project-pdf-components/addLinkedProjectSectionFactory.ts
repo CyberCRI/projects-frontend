@@ -6,7 +6,7 @@ import {
 import { cardListStyles } from '~/composables/project-pdf-components/common-styles'
 import type { Container } from '~/composables/pdf-helpers/doc-builder'
 
-import type { TranslatedLinkedProject } from 'shared-projects-frontend/models/project.model'
+import type { TranslatedLinkedProject } from 'shared-projects-frontend'
 import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 
 export default async function addLinkedProjectSectionFactory(

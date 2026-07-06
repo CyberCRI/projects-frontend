@@ -1,5 +1,4 @@
-import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
-import type { NewsfeedModel } from 'shared-projects-frontend/models/newsfeed.model'
+import type { OrganizationModel, NewsfeedModel } from 'shared-projects-frontend'
 
 import useAPI from '~/composables/useAPI'
 

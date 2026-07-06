@@ -3,8 +3,8 @@ import type {
   ProjectTabForm,
   TranslatedProjectTab,
   TranslatedProjectTabItem,
-} from 'shared-projects-frontend/models/projects-tabs.model'
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
+  TranslatedProject,
+} from 'shared-projects-frontend'
 import { deleteProjectTab, updateProjectTab } from '~/api/project-tabs.service'
 import { refreshProjectTabs } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'

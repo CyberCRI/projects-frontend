@@ -3,8 +3,7 @@ import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 import type { IconImageChoice } from '~/functs/IconImage'
 
-import type { ImageModel } from 'shared-projects-frontend/models/image.model'
-import type { Roles } from 'shared-projects-frontend/models/types'
+import type { ImageModel, Roles } from 'shared-projects-frontend'
 
 withDefaults(
   defineProps<{

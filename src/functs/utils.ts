@@ -1,4 +1,4 @@
-import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
+import type { OrganizationModel } from 'shared-projects-frontend'
 
 import { DEFAULT_ORGANIZATION_CODE } from '~/functs/constants'
 

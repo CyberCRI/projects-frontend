@@ -39,8 +39,8 @@ import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 import BasicCard from '~/components/base/BasicCard.vue'
 
-import type { UserModel } from 'shared-projects-frontend/models/user.model'
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
+import type { UserModel } from 'shared-projects-frontend'
 import type { RouteLocationRaw } from 'vue-router'
 
 const props = withDefaults(

@@ -1,4 +1,4 @@
-import { InstructionModel } from 'shared-projects-frontend/models/instruction.model'
+import { InstructionModel } from 'shared-projects-frontend'
 import { createFactory } from 'faker-create-factory'
 import { peopleGroupFactory } from './group.factory'
 import BaseFactory from './base.factory'

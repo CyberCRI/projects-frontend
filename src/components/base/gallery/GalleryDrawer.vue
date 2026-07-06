@@ -47,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ImageModel } from 'shared-projects-frontend/models/image.model'
+import type { ImageModel } from 'shared-projects-frontend'
 
 import GalleryItem from '~/components/base/gallery/GalleryItem.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'

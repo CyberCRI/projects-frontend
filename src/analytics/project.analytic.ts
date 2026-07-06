@@ -1,11 +1,11 @@
 import type {
   ProjectMembersAddInput,
   ProjectMembersDeleteInput,
-} from 'shared-projects-frontend/models/project-member.model'
+  ProjectSlugOrId,
+} from 'shared-projects-frontend'
 
 import type { SearchParams } from '~/api/types'
 
-import type { ProjectSlugOrId } from 'shared-projects-frontend/models/project.model'
 import analytics from '~/analytics'
 
 export interface ProjectAnalytic {

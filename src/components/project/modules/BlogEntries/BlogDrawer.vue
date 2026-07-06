@@ -11,16 +11,17 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'
 
-import type {
-  BlogEntryForm,
-  BlogEntryModel,
-} from 'shared-projects-frontend/models/blog-entry.model'
-import type { ProviderParams } from 'shared-projects-frontend/interfaces/colaboratives'
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
-import type { ImageModel } from 'shared-projects-frontend/models/image.model'
-import { getFirstTextNotEmpty, roomKeyFromParams } from '~/functs/tiptap'
+import {
+  type BlogEntryForm,
+  type BlogEntryModel,
+  type TranslatedProject,
+  type ProviderParams,
+  type ImageModel,
+  roomKeyFromParams,
+} from 'shared-projects-frontend'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
 import { defaultBlogForm, useBlogEntryForm } from '~/form/blog'
+import { getFirstTextNotEmpty } from '~/functs/tiptap'
 import { formEqual } from '~/form/base'
 import analytics from '~/analytics'
 import { isNil } from 'es-toolkit'

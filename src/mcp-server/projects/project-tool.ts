@@ -1,3 +1,15 @@
+import type {
+  ProjectModel,
+  ProjectModulesKeys,
+  ProjectCategoryModel,
+  AttachmentLinkModel,
+  AttachmentFileModel,
+  AnnouncementModel,
+  BlogEntryModel,
+  LocationModel,
+  ReviewModel,
+  GoalModel,
+} from 'shared-projects-frontend'
 import {
   getLinkedProject,
   getProject,
@@ -5,19 +17,7 @@ import {
   getProjectMembers,
   getProjectSimilars,
 } from '~/api/projects.service'
-import type {
-  ProjectModel,
-  ProjectModulesKeys,
-} from 'shared-projects-frontend/models/project.model'
-import type { ProjectCategoryModel } from 'shared-projects-frontend/models/project-category.model'
-import type { AttachmentLinkModel } from 'shared-projects-frontend/models/attachment-link.model'
-import type { AttachmentFileModel } from 'shared-projects-frontend/models/attachment-file.model'
-import type { AnnouncementModel } from 'shared-projects-frontend/models/announcement.model'
 import { mapPeopleGroupPreview, mapUserPreview } from '~/mcp-server/projects/people-tool'
-import type { BlogEntryModel } from 'shared-projects-frontend/models/blog-entry.model'
-import type { LocationModel } from 'shared-projects-frontend/models/location.model'
-import type { ReviewModel } from 'shared-projects-frontend/models/review.model'
-import type { GoalModel } from 'shared-projects-frontend/models/goal.model'
 import { getProjectAttachmentLinks } from '~/api/attachment-links.service'
 import { getProjectAttachmentFiles } from '~/api/attachment-files.service'
 import { addIfExists, tagMapPreview } from '~/mcp-server/projects/utils'

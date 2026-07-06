@@ -2,9 +2,9 @@ import type {
   ContactForm,
   ReportForm,
   ReportModel,
-} from 'shared-projects-frontend/models/report.model'
+  OrganizationModel,
+} from 'shared-projects-frontend'
 
-import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
 import useAPI from '~/composables/useAPI'
 
 export async function reportBug(organizationCode: OrganizationModel['code'], formData: ReportForm) {

@@ -1,4 +1,4 @@
-import type { TagModel } from 'shared-projects-frontend/models/tag.model'
+import type { TagModel } from 'shared-projects-frontend'
 
 export const defaultTagForm = (): TagModel => ({
   id: null,

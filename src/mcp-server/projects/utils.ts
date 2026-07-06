@@ -1,4 +1,4 @@
-import type { TagModel } from 'shared-projects-frontend/models/tag.model'
+import type { TagModel } from 'shared-projects-frontend'
 import { pick } from 'es-toolkit'
 
 export const addIfExists = <T, Res>(key: string, obj: any, func: (data: T) => Res) => {

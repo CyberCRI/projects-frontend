@@ -1,4 +1,4 @@
-import type { TagModel } from 'shared-projects-frontend/models/tag.model'
+import type { TagModel } from 'shared-projects-frontend'
 
 export default function useTagTexts() {
   const { locale } = useNuxtI18n()

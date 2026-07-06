@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import BaseProjectGroupsList from '~/components/project/modules/Groups/BaseProjectGroupsList.vue'
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
+import type { TranslatedProject } from 'shared-projects-frontend'
 
 withDefaults(
   defineProps<{

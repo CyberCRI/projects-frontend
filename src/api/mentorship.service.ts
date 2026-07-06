@@ -1,6 +1,4 @@
-import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
-import type { Mentoring } from 'shared-projects-frontend/models/mentoring.model'
-import type { SkillModel } from 'shared-projects-frontend/models/skill.model'
+import type { OrganizationModel, Mentoring, SkillModel } from 'shared-projects-frontend'
 import useAPI from '@/composables/useAPI'
 
 // fetch mentorshup demand and offer for currentr user

@@ -4,8 +4,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { ImageSize } from 'shared-projects-frontend/models/image.model'
 import { IMAGES_SIZES_DEFAULTS } from '~/functs/imageSizesUtils'
+import type { ImageSize } from 'shared-projects-frontend'
 import type { StyleValue } from 'vue'
 
 const props = withDefaults(

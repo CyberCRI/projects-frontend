@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import FilterValue from '~/components/search/Filters/FilterValue.vue'
 
-import type { TagModel } from 'shared-projects-frontend/models/tag.model'
+import type { TagModel } from 'shared-projects-frontend'
 import useTagTexts from '~/composables/useTagTexts'
 
 withDefaults(

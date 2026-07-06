@@ -4,9 +4,9 @@ import type {
   ProjectGroupRoleType,
   ProjectMemberRoleType,
   ProjectTabType,
-} from 'shared-projects-frontend/models/types'
-import type { PeopleGroupModulesKeys } from 'shared-projects-frontend/models/people-group.model'
-import type { ProjectModuleExtra } from 'shared-projects-frontend/models/project.model'
+  PeopleGroupModulesKeys,
+  ProjectModuleExtra,
+} from 'shared-projects-frontend'
 import type { IconImageChoice, IconTabImageChoice } from '~/functs/IconImage'
 
 export const RESOURCE_PROJECT_CATEGORY = [

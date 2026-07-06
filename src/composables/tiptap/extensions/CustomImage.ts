@@ -1,4 +1,4 @@
-import type { ImageVariations } from 'shared-projects-frontend/models/image.model'
+import type { ImageVariations } from 'shared-projects-frontend'
 import { mergeAttributes } from '@tiptap/core'
 import Image from '@tiptap/extension-image'
 

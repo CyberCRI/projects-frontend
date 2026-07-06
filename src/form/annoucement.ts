@@ -1,7 +1,4 @@
-import type {
-  AnnouncementApplyForm,
-  AnnouncementForm,
-} from 'shared-projects-frontend/models/announcement.model'
+import type { AnnouncementApplyForm, AnnouncementForm } from 'shared-projects-frontend'
 import { helpers, required, email } from '@vuelidate/validators'
 import { NULL_CONTENT } from '~/functs/constants'
 import { requiredContent } from '~/form/base'

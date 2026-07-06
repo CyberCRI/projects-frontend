@@ -12,9 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models/people-group.model'
-
-import type { DocumentType } from 'shared-projects-frontend/interfaces/researcher'
+import type { TranslatedPeopleGroupModel, DocumentType } from 'shared-projects-frontend'
 
 import {
   getGroupResearchDocument,

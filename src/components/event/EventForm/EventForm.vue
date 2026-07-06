@@ -95,8 +95,7 @@
 import { helpers, required } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
 
-import type { EventForm } from 'shared-projects-frontend/models/event.model'
-import type { LocationType } from 'shared-projects-frontend/models/types'
+import type { LocationType, EventForm } from 'shared-projects-frontend'
 
 import MultiGroupPicker from '~/components/group/MultiGroupPicker/MultiGroupPicker.vue'
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'

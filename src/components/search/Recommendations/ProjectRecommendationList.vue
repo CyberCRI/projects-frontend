@@ -13,7 +13,7 @@
 <script setup lang="ts">
 import ProjectRecommendationItem from '@/components/search/Recommendations/ProjectRecommendationItem.vue'
 import BaseRecommendationList from '@/components/search/Recommendations/BaseRecommendationList.vue'
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
+import type { TranslatedProject } from 'shared-projects-frontend'
 
 defineProps<{
   projects: TranslatedProject[]

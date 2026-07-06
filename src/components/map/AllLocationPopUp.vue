@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models/people-group.model'
+import type {
+  TranslatedPeopleGroupModel,
+  TranslatedEventModel,
+  TranslatedProject,
+  LocationGeneral,
+  TranslatedNews,
+} from 'shared-projects-frontend'
 import ProjectLocationPopUp from '~/components/project/modules/Locations/ProjectLocationPopUp.vue'
-import type { TranslatedEventModel } from 'shared-projects-frontend/models/event.model'
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
-import type { TranslatedNews } from 'shared-projects-frontend/models/news.model'
-import type { LocationGeneral } from 'shared-projects-frontend/interfaces/maps'
 import GroupLocationPopUp from '@/components/group/Map/GroupLocationPopUp.vue'
 import LocationEventPopUp from '@/components/event/map/LocationEventPopUp.vue'
 import LocationNewsPopUp from '@/components/news/map/LocationNewsPopUp.vue'

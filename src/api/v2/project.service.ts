@@ -8,12 +8,10 @@ import {
 import type {
   QueryFilterProjectMembers,
   TranslatedProjectMember,
-} from 'shared-projects-frontend/models/project-member.model'
-import type {
   ProjectSlugOrId,
   QueryFilterProjectSimilars,
-} from 'shared-projects-frontend/models/project.model'
-import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
+  OrganizationModel,
+} from 'shared-projects-frontend'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
 import { getProjectLocations as fetchProjectLocations } from '@/api/locations.service'
 import type { RefOrRaw } from '~/interfaces/utils'

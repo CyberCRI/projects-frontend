@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedDocument } from 'shared-projects-frontend/interfaces/researcher'
+import type { TranslatedDocument } from 'shared-projects-frontend'
 
 import { getResearchDocumentSimilars } from '~/api/v2/crisalid.service'
 

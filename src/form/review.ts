@@ -1,4 +1,4 @@
-import type { ReviewForm } from 'shared-projects-frontend/models/review.model'
+import type { ReviewForm } from 'shared-projects-frontend'
 import { helpers, required } from '@vuelidate/validators'
 import { NULL_CONTENT } from '~/functs/constants'
 import { requiredContent } from '~/form/base'

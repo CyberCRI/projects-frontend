@@ -1,6 +1,6 @@
 import addLinkedProjectSectionFactory from '~/composables/project-pdf-components/addLinkedProjectSectionFactory'
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import PageTitle from '~/composables/project-pdf-components/PageTitle'
+import type { TranslatedProject } from 'shared-projects-frontend'
 import type { Doc } from '~/composables/pdf-helpers/doc-builder'
 import { Page } from '~/composables/pdf-helpers/doc-builder'
 import { getLinkedProject } from '~/api/projects.service'

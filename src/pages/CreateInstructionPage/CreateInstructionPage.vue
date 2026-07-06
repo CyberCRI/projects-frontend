@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { createInstruction } from '~/api/instruction.service'
 
-import type { InstructionInput } from 'shared-projects-frontend/models/instruction.model'
+import type { InstructionInput } from 'shared-projects-frontend'
 import useToasterStore from '~/stores/useToaster'
 
 const toaster = useToasterStore()

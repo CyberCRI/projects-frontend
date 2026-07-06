@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import BaseBlogEntryList from '@/components/project/modules/BlogEntries/BaseBlogEntryList.vue'
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import { PROJECT_MODULE_ICON, PROJECT_MODULE_TITLE } from '~/functs/constants'
+import type { TranslatedProject } from 'shared-projects-frontend'
 
 defineProps<{ project: TranslatedProject }>()
 </script>

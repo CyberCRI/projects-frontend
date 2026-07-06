@@ -1,11 +1,11 @@
 import addProjectPhotoFactory from '~/composables/project-pdf-components/addProjectPhotoFactory'
 import ProjectHeaderContent from '~/composables/project-pdf-components/ProjectHeaderContent'
 import addPurposeFactory from '~/composables/project-pdf-components/addPurposeFactory'
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import addSdgsFactory from '~/composables/project-pdf-components/addSdgsFactory'
 import addTagsFactory from '~/composables/project-pdf-components/addTagFactory'
 import ProjectHeader from '~/composables/project-pdf-components/ProjectHeader'
 import PageTitle from '~/composables/project-pdf-components/PageTitle'
+import type { TranslatedProject } from 'shared-projects-frontend'
 import type { Doc } from '~/composables/pdf-helpers/doc-builder'
 import { Page } from '~/composables/pdf-helpers/doc-builder'
 

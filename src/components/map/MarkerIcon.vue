@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { LocationType } from 'shared-projects-frontend/models/types'
+import type { LocationType } from 'shared-projects-frontend'
 
 withDefaults(defineProps<{ locationType: LocationType; editable?: boolean }>(), {
   editable: false,

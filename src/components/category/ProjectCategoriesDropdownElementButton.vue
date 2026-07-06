@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedProjectCategory } from 'shared-projects-frontend/models/project-category.model'
+import type { TranslatedProjectCategory } from 'shared-projects-frontend'
 
 import { capitalize } from '~/functs/string'
 

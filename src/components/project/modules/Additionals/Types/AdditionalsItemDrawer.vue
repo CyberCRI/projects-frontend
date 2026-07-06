@@ -4,9 +4,9 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 import type {
   TranslatedProjectTab,
   TranslatedProjectTabItem,
-} from 'shared-projects-frontend/models/projects-tabs.model'
+  TranslatedProject,
+} from 'shared-projects-frontend'
 import InlineAdditionalsItemForm from '~/components/project/modules/Additionals/Types/InlineAdditionalsItemForm.vue'
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 
 withDefaults(
   defineProps<{

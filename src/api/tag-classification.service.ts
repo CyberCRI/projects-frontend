@@ -1,10 +1,10 @@
-import type { TagModel } from 'shared-projects-frontend/models/tag.model'
-
 import type {
+  TagModel,
   QueryFilterTagClassification,
   TagClassificationModel,
-} from 'shared-projects-frontend/models/tagclassification.model'
-import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
+  OrganizationModel,
+} from 'shared-projects-frontend'
+
 import type { UseApiOptions } from '~/composables/useAPI'
 import useAPI from '~/composables/useAPI'
 

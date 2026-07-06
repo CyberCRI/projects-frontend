@@ -2,10 +2,7 @@ import GroupDocumentsTab from '~/pages/GroupPageV2/Tabs/Documents/GroupDocuments
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import { flushPromises } from '@vue/test-utils'
 
-import {
-  DocumentType,
-  ResearcherDocumentAnalytics,
-} from 'shared-projects-frontend/interfaces/researcher'
+import { DocumentType, ResearcherDocumentAnalytics } from 'shared-projects-frontend'
 import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
 import { documentAnalyticsSkeleton } from '~/skeletons/crisalid.skeletons'

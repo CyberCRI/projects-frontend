@@ -77,8 +77,8 @@ import BasicCard from '~/components/base/BasicCard.vue'
 
 import useUsersStore from '~/stores/useUsers'
 
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import type { DEFAULT_PROJECT_PATATOID } from '~/composables/usePatatoids'
+import type { TranslatedProject } from 'shared-projects-frontend'
 import type { IconImageChoice } from '~/functs/IconImage'
 
 const props = withDefaults(

@@ -2,10 +2,10 @@
 import type {
   TranslatedProjectTab,
   TranslatedProjectTabItem,
-} from 'shared-projects-frontend/models/projects-tabs.model'
+  TranslatedProject,
+} from 'shared-projects-frontend'
 import InlineAdditionalsItemForm from '~/components/project/modules/Additionals/Types/InlineAdditionalsItemForm.vue'
 import BaseAdditionalsTab from '~/components/project/modules/Additionals/Types/BaseAdditionalsTab.vue'
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import BaseDescription from '~/components/modules/Abstract/BaseDescription.vue'
 import { projectTabItemSkeleton } from '~/skeletons/project-tabs.skeletons'
 import { refreshProjectTabs } from '~/composables/project/refreshProject'

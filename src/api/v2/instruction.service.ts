@@ -1,8 +1,8 @@
 import type {
   InstructionId,
   QueryFilterInstruction,
-} from 'shared-projects-frontend/models/instruction.model'
-import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
+  OrganizationModel,
+} from 'shared-projects-frontend'
 
 import type { RefOrRaw } from '~/interfaces/utils'
 

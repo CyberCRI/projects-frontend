@@ -1,4 +1,4 @@
-import type { NewsForm } from 'shared-projects-frontend/models/news.model'
+import type { NewsForm } from 'shared-projects-frontend'
 import { NULL_CONTENT } from '~/functs/constants'
 
 export const defaultNewsForm = (): NewsForm => ({

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import BaseProjectGroupsList from '~/components/project/modules/Groups/BaseProjectGroupsList.vue'
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import { PROJECT_MODULE_ICON, PROJECT_MODULE_TITLE } from '~/functs/constants'
 import BaseModulePreview from '@/components/modules/BaseModulePreview.vue'
+import type { TranslatedProject } from 'shared-projects-frontend'
 
 defineProps<{ project: TranslatedProject }>()
 </script>

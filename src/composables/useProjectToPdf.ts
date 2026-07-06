@@ -2,13 +2,10 @@ import useOrganizationsStore from '~/stores/useOrganizations'
 
 // TODO: blog are disabled for now (as per client request) keep code for later use
 
-import type {
-  ProjectModulesKeys,
-  TranslatedProject,
-} from 'shared-projects-frontend/models/project.model'
 import addPageLinkedProjectsFactory from '~/composables/project-pdf-components/addPageLinkedProjects'
 import addPageResourceFactory from '~/composables/project-pdf-components/PageResource'
 import addGoalsSection from '~/composables/project-pdf-components/addGoalsSection.ts'
+import type { ProjectModulesKeys, TranslatedProject } from 'shared-projects-frontend'
 import addPageMembersFactory from '~/composables/project-pdf-components/PageMembers'
 import addPageGroupsFactory from '~/composables/project-pdf-components/PageGroups'
 import addPageDescriptionFactory from '~/composables/pdf-helpers/PageDescription'

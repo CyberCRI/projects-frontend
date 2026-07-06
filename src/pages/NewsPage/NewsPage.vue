@@ -66,12 +66,12 @@
 <script setup lang="ts">
 import EditNewsDrawer from '@/components/news/EditNewsDrawer/EditNewsDrawer.vue'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
-import type { NewsModel } from 'shared-projects-frontend/models/news.model'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import type { DEFAULT_NEWS_PATATOID } from '@/composables/usePatatoids'
 import BreadCrumbs from '@/components/base/navigation/BreadCrumbs.vue'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { newsSkeleton } from '@/skeletons/news.skeletons'
+import type { NewsModel } from 'shared-projects-frontend'
 import NewsItem from '@/components/news/NewsItem.vue'
 import useToasterStore from '@/stores/useToaster'
 import { getNews } from '@/api/v2/news.service'

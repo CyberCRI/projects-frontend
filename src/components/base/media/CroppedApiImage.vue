@@ -10,7 +10,7 @@
   />
 </template>
 <script setup lang="ts">
-import type { ImageModel, ImageVariations } from 'shared-projects-frontend/models/image.model'
+import type { ImageModel, ImageVariations } from 'shared-projects-frontend'
 
 import CroppedImage from '~/components/base/media/CroppedImage.vue'
 

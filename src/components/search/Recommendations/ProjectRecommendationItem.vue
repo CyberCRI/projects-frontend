@@ -28,9 +28,9 @@
 </template>
 
 <script setup lang="ts" generic="">
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
+import type { TranslatedProject } from 'shared-projects-frontend'
 
 type TranslatedProjectRecomended = TranslatedProject & {
   isFeatured?: boolean

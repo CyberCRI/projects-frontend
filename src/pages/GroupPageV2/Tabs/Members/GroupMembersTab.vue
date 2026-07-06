@@ -5,8 +5,8 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models/people-group.model'
 import BaseGroupMembersList from '@/components/group/Modules/Members/BaseGroupMembersList.vue'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend'
 import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
 import { GROUP_MODULE_TITLE } from '~/functs/constants'
 

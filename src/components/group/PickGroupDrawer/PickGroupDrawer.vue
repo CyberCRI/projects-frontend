@@ -23,8 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models/people-group.model'
-import type { HierarchyGroupModel } from 'shared-projects-frontend/models/group.model'
+import type { TranslatedPeopleGroupModel, HierarchyGroupModel } from 'shared-projects-frontend'
 import PickGroup from '~/components/group/PickGroup/PickGroup.vue'
 import FetchLoader from '~/components/base/FetchLoader.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'

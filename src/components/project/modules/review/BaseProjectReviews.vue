@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
-import type { TranslatedReview } from 'shared-projects-frontend/models/review.model'
+import type { TranslatedProject, TranslatedReview } from 'shared-projects-frontend'
 import ReviewDrawer from '~/components/project/modules/review/ReviewDrawer.vue'
 import ReviewItem from '~/components/project/modules/review/ReviewItem.vue'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'

@@ -4,7 +4,7 @@ import { lpiMount } from '~~/tests/helpers/LpiMount'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import pinia from '~/stores'
 
-import { OrganizationOutput } from 'shared-projects-frontend/models/organization.model'
+import { OrganizationOutput } from 'shared-projects-frontend'
 
 import OrganizationTagFactory from '~~/tests/factories/tag.factory'
 import UserSkillFactory from '~~/tests/factories/skill.factory'

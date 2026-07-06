@@ -1,5 +1,5 @@
-import type { TranslatedBlogEntry } from 'shared-projects-frontend/models/blog-entry.model'
 import type { Container } from '~/composables/pdf-helpers/doc-builder'
+import type { TranslatedBlogEntry } from 'shared-projects-frontend'
 
 export default async function addBlogLimitWarningFactory(
   blogEntries: TranslatedBlogEntry[],

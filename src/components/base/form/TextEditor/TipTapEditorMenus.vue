@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { ImageModel } from 'shared-projects-frontend/models/image.model'
 import EditorModalVideo from './Custom/Video/EditorModalVideo.vue'
 import EditorModalImage from './Custom/Image/EditorModalImage.vue'
 import EditorModalColor from './Custom/Color/EditorModalColor.vue'
 import EditorModalLink from './Custom/Link/EditorModalLink.vue'
 import type { PropsDefinitions } from '~/composables/tiptap'
+import type { ImageModel } from 'shared-projects-frontend'
 import type { Editor } from '@tiptap/vue-3'
 
 withDefaults(

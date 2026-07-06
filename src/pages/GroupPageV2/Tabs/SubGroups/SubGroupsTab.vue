@@ -10,8 +10,8 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models/people-group.model'
 import GroupSubList from '@/components/group/Modules/GroupSub/GroupSubList.vue'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend'
 import { GROUP_MODULE_ICON, GROUP_MODULE_TITLE } from '~/functs/constants'
 
 defineProps<{ group: TranslatedPeopleGroupModel }>()

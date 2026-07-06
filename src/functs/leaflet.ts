@@ -1,4 +1,4 @@
-import type { LocationType } from 'shared-projects-frontend/models/types'
+import type { LocationType } from 'shared-projects-frontend'
 import { IconMapLocationType } from '@/functs/maps'
 import { ICONS } from '@/functs/IconImage'
 import * as L from 'leaflet'

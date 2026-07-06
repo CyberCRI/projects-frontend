@@ -1,6 +1,5 @@
-import type { TranslatedProjectMember } from 'shared-projects-frontend/models/project-member.model'
 import addTeamSectionFactory from '~/composables/project-pdf-components/addTeamSectionFactory'
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
+import type { TranslatedProjectMember, TranslatedProject } from 'shared-projects-frontend'
 import PageTitle from '~/composables/project-pdf-components/PageTitle'
 import type { Doc } from '~/composables/pdf-helpers/doc-builder'
 import { Page } from '~/composables/pdf-helpers/doc-builder'

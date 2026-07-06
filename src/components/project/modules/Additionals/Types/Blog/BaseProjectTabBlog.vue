@@ -2,11 +2,11 @@
 import type {
   TranslatedProjectTab,
   TranslatedProjectTabItem,
-} from 'shared-projects-frontend/models/projects-tabs.model'
+  TranslatedBlogEntry,
+  TranslatedProject,
+} from 'shared-projects-frontend'
 import AdditionalsItemDrawer from '~/components/project/modules/Additionals/Types/AdditionalsItemDrawer.vue'
 import BaseAdditionalsTab from '~/components/project/modules/Additionals/Types/BaseAdditionalsTab.vue'
-import type { TranslatedBlogEntry } from 'shared-projects-frontend/models/blog-entry.model'
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import BlogEntry from '~/components/project/modules/BlogEntries/BlogEntry.vue'
 import { projectTabItemSkeleton } from '~/skeletons/project-tabs.skeletons'
 import { refreshProjectTabs } from '~/composables/project/refreshProject'

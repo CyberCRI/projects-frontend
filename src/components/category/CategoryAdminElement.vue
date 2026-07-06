@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ProjectCategoryModel } from 'shared-projects-frontend/models/project-category.model'
+import type { ProjectCategoryModel } from 'shared-projects-frontend'
 
 import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
 import ContextActionMenu from '~/components/base/button/ContextActionMenu.vue'

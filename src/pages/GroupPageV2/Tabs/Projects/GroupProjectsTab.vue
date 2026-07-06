@@ -8,7 +8,7 @@
 import BaseGroupProjectsList from '@/components/group/Modules/Projects/BaseGroupProjectsList.vue'
 import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
 
-import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models/people-group.model'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend'
 import { GROUP_MODULE_TITLE } from '~/functs/constants'
 
 const props = defineProps<{

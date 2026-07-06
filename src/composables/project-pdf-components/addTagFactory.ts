@@ -1,5 +1,5 @@
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import type { Container } from '~/composables/pdf-helpers/doc-builder'
+import type { TranslatedProject } from 'shared-projects-frontend'
 
 export default function addTagsFactory(project: TranslatedProject) {
   const tagTexts = useTagTexts()

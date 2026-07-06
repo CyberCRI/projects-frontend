@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import type { TranslatedBlogEntry } from 'shared-projects-frontend/models/blog-entry.model'
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
+import type { TranslatedBlogEntry, TranslatedProject } from 'shared-projects-frontend'
 import BlogDrawer from '~/components/project/modules/BlogEntries/BlogDrawer.vue'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import { refreshProjectData } from '~/composables/project/refreshProject'

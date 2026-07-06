@@ -128,10 +128,11 @@
 import type {
   ProjectMessageModel,
   TranslatedProjectMessage,
-} from 'shared-projects-frontend/models/project-message.model'
-import type { CommentModel, TranslatedComment } from 'shared-projects-frontend/models/comment.model'
+  CommentModel,
+  TranslatedComment,
+  TranslatedProject,
+} from 'shared-projects-frontend'
 import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import MakeComment from '~/components/project/modules/Comments/MakeComment.vue'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'

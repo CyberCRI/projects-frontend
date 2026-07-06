@@ -5,7 +5,7 @@ import {
   ImageOrganizationInput,
   ImageTemplateInput,
   ImageModel,
-} from 'shared-projects-frontend/models/image.model'
+} from 'shared-projects-frontend'
 
 import BaseFactory from './base.factory'
 

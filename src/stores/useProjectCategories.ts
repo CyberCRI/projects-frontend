@@ -1,7 +1,4 @@
-import type {
-  ProjectCategoryOutput,
-  TranslatedProjectCategory,
-} from 'shared-projects-frontend/models/project-category.model'
+import type { ProjectCategoryOutput, TranslatedProjectCategory } from 'shared-projects-frontend'
 
 import {
   getAllProjectCategories as apiGetAllProjectCategories,

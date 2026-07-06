@@ -1,9 +1,9 @@
 import type {
   ProjectMembersAddInput,
   ProjectMembersDeleteInput,
-} from 'shared-projects-frontend/models/project-member.model'
+  ProjectSlugOrId,
+} from 'shared-projects-frontend'
 
-import type { ProjectSlugOrId } from 'shared-projects-frontend/models/project.model'
 import useAPI from '~/composables/useAPI'
 
 export async function addProjectMembers(projectId: ProjectSlugOrId, data: ProjectMembersAddInput) {

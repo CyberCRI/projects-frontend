@@ -52,7 +52,7 @@ import EmptyCard from '~/components/people/UserProfile/EmptyCard.vue'
 import GroupCard from '~/components/group/GroupCard.vue'
 import CardList from '~/components/base/CardList.vue'
 
-import type { TranslatedUserModel } from 'shared-projects-frontend/models/user.model'
+import type { TranslatedUserModel } from 'shared-projects-frontend'
 import useUsersStore from '~/stores/useUsers'
 
 const props = defineProps<{

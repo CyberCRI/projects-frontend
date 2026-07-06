@@ -1,5 +1,5 @@
-import type { NewsModel } from 'shared-projects-frontend/models/news.model'
 import { mcpOptions, orgCode, resultFromTool } from './base'
+import type { NewsModel } from 'shared-projects-frontend'
 import { getAllNews, getNews } from '~/api/news.service'
 import type { TypeMcpServer } from '~/interfaces/mcp'
 import { pick } from 'es-toolkit'

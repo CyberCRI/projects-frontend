@@ -109,8 +109,7 @@
 <script setup lang="ts">
 import MultiGroupPicker from '@/components/group/MultiGroupPicker/MultiGroupPicker.vue'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import type { NewsForm } from 'shared-projects-frontend/models/news.model'
-import type { LocationType } from 'shared-projects-frontend/models/types'
+import type { LocationType, NewsForm } from 'shared-projects-frontend'
 import { postOrganizationImage } from '@/api/organizations.service'
 import LpiCheckbox from '@/components/base/form/LpiCheckbox.vue'
 import ImageEditor from '@/components/base/form/ImageEditor.vue'

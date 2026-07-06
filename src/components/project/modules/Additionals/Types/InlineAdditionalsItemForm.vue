@@ -7,23 +7,24 @@ import TextInput from '~/components/base/form/TextInput.vue'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'
 
-import type {
-  ProjectTabItemForm,
-  TranslatedProjectTab,
-  TranslatedProjectTabItem,
-} from 'shared-projects-frontend/models/projects-tabs.model'
+import {
+  type ProjectTabItemForm,
+  type TranslatedProjectTab,
+  type TranslatedProjectTabItem,
+  type ProviderParams,
+  type TranslatedProject,
+  type ImageModel,
+  roomKeyFromParams,
+} from 'shared-projects-frontend'
 import {
   createProjectTabItem,
   createProjectTabItemImage,
   updateProjectTabItem,
 } from '~/api/project-tabs.service'
-import type { ProviderParams } from 'shared-projects-frontend/interfaces/colaboratives'
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import { defaultProjectTabItemForm, useProjectTabItemForm } from '~/form/project-tabs'
-import type { ImageModel } from 'shared-projects-frontend/models/image.model'
-import { getFirstTextNotEmpty, roomKeyFromParams } from '~/functs/tiptap'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
 import FormPanel from '~/components/base/FormPanel.vue'
+import { getFirstTextNotEmpty } from '~/functs/tiptap'
 import { formEqual } from '~/form/base'
 import analytics from '~/analytics'
 import { isNil } from 'es-toolkit'

@@ -3,9 +3,9 @@ import type {
   ProjectMessageInputModel,
   ProjectMessageModel,
   QueryFilterProjectMessage,
-} from 'shared-projects-frontend/models/project-message.model'
-import type { ImageModealCreated } from 'shared-projects-frontend/models/image.model'
-import type { ProjectSlugOrId } from 'shared-projects-frontend/models/project.model'
+  ImageModealCreated,
+  ProjectSlugOrId,
+} from 'shared-projects-frontend'
 import useAPI from '@/composables/useAPI'
 
 type Config = UseApiOptions<QueryFilterProjectMessage>

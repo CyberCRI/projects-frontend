@@ -101,9 +101,9 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models/people-group.model'
 import GroupMemberItem from '@/components/group/Modules/Members/GroupMemberItem.vue'
 import UserProfileDrawer from '~/components/drawer/User/UserProfileDrawer.vue'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend'
 import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
 import { DEFAULT_GROUP_PATATOID } from '@/composables/usePatatoids'
 import LocationDrawer from '@/components/map/LocationDrawer.vue'

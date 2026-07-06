@@ -1,6 +1,6 @@
 import { createFactory } from 'faker-create-factory'
 
-import { OrganizationDirectoryModel } from 'shared-projects-frontend/models/organization-directory.model'
+import { OrganizationDirectoryModel } from 'shared-projects-frontend'
 import BaseFactory from './base.factory'
 
 export const OrganizationDirectoryFactory = createFactory<OrganizationDirectoryModel>((faker) => ({

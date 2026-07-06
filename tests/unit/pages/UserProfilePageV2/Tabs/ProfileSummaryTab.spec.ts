@@ -5,8 +5,8 @@ import { flushPromises } from '@vue/test-utils'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { OrganizationOutput } from 'shared-projects-frontend/models/organization.model'
 import useOrganizationsStore from '~/stores/useOrganizations'
+import { OrganizationOutput } from 'shared-projects-frontend'
 import useUsersStore from '~/stores/useUsers'
 import pinia from '~/stores'
 vi.mock('~/api/follows.service', () => ({

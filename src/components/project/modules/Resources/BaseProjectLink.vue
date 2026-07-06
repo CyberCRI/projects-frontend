@@ -4,8 +4,7 @@ import {
   patchProjectAttachmentLink,
   postProjectAttachmentLinks,
 } from '~/api/attachment-links.service'
-import type { AttachmentForm } from 'shared-projects-frontend/models/attachment.model'
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
+import type { TranslatedProject, AttachmentForm } from 'shared-projects-frontend'
 import { attachementLinkSkeletons } from '~/skeletons/attachements.skeletons'
 import { getProjectAttachmentLinks } from '~/api/v2/attachment-link.service'
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'

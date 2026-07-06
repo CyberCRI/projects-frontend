@@ -1,5 +1,4 @@
-import type { NewsModel, QueryFilterNews } from 'shared-projects-frontend/models/news.model'
-import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
+import type { NewsModel, QueryFilterNews, OrganizationModel } from 'shared-projects-frontend'
 
 import type { RefOrRaw } from '~/interfaces/utils'
 

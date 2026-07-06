@@ -1,4 +1,4 @@
-import type { TagClassificationModel } from 'shared-projects-frontend/models/tagclassification.model'
+import type { TagClassificationModel } from 'shared-projects-frontend'
 
 export const defaultTagClassificationForm = (): Partial<TagClassificationModel> => ({
   id: null,

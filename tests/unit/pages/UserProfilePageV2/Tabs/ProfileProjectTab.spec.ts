@@ -11,7 +11,7 @@ import pinia from '~/stores'
 import usePeopleGroupsStore from '~/stores/usePeopleGroups'
 import useProjectsStore from '~/stores/useProjects'
 
-import { OrganizationOutput } from 'shared-projects-frontend/models/organization.model'
+import { OrganizationOutput } from 'shared-projects-frontend'
 
 vi.mock('~/api/follows.service', () => ({
   getUserFollows: vi.fn().mockResolvedValue({ results: [] }),

@@ -1,4 +1,4 @@
-import type { LocationType } from 'shared-projects-frontend/models/types'
+import type { LocationType } from 'shared-projects-frontend'
 
 import type { IconImageChoice } from '~/functs/IconImage'
 

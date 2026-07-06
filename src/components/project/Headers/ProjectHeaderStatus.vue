@@ -3,8 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
-import type { ProjectStatusType } from 'shared-projects-frontend/models/types'
+import type { TranslatedProject, ProjectStatusType } from 'shared-projects-frontend'
 
 import BadgeItem from '~/components/base/BadgeItem.vue'
 

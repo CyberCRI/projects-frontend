@@ -89,7 +89,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedEventModel } from 'shared-projects-frontend/models/event.model'
+import type { TranslatedEventModel } from 'shared-projects-frontend'
 
 import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
 import ContentExpandable from '~/components/base/ContentExpandable.vue'

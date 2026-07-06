@@ -2,7 +2,7 @@ import type { APIParams } from '~/api/types'
 
 import useAPI from '~/composables/useAPI'
 
-import type { NotificationModel } from 'shared-projects-frontend/models/notifications.model'
+import type { NotificationModel } from 'shared-projects-frontend'
 import type { PaginationResult } from '#imports'
 import { useRuntimeConfig } from '#imports'
 

@@ -19,7 +19,7 @@ type IconTabRegistery = {
   [K in IconTabImageChoice]: true
 }
 
-declare module 'shared-projects-frontend/interfaces/icons' {
+declare module 'shared-projects-frontend' {
   export interface Icon extends IconRegistery {}
   export interface IconTab extends IconTabRegistery {}
 }

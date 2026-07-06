@@ -2,8 +2,8 @@
 import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
 import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 
-import type { TranslatedReview } from 'shared-projects-frontend/models/review.model'
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
+import type { TranslatedReview } from 'shared-projects-frontend'
 import useUsersStore from '~/stores/useUsers'
 import { formatDate } from '~/functs/date'
 

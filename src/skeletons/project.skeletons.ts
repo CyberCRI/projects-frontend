@@ -1,6 +1,9 @@
-import type { LinkedProject, ProjectModel } from 'shared-projects-frontend/models/project.model'
-import type { ProjectMemberModel } from 'shared-projects-frontend/models/project-member.model'
-import type { TagModel } from 'shared-projects-frontend/models/tag.model'
+import type {
+  LinkedProject,
+  ProjectModel,
+  ProjectMemberModel,
+  TagModel,
+} from 'shared-projects-frontend'
 import { factoriesSkeleton } from '@/skeletons/base.skeletons'
 import { userSkeleton } from '~/skeletons/user.skeletons'
 import { randomInt } from 'es-toolkit'

@@ -1,6 +1,8 @@
-import type { QueryFilterProject } from 'shared-projects-frontend/models/project-member.model'
-import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
-import type { ProjectSlugOrId } from 'shared-projects-frontend/models/project.model'
+import type {
+  QueryFilterProject,
+  OrganizationModel,
+  ProjectSlugOrId,
+} from 'shared-projects-frontend'
 import { getProject as fetchProject } from '@/api/projects.service'
 import type { UseAsyncApiConfig } from '~/api/v2/base.service'
 import type { RefOrRaw } from '~/interfaces/utils'

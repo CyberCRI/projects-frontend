@@ -4,18 +4,16 @@ import type {
   ProjectModel,
   ProjectSlugOrId,
   QueryFilterProjectSimilars,
-} from 'shared-projects-frontend/models/project.model'
-import { _adaptParamsToGetQuery } from '@/api/utils.service'
-import type { UseApiOptions } from '@/composables/useAPI'
-import useAPI from '@/composables/useAPI'
-
-import type {
   ProjectMemberModel,
   QueryFilterProject,
   QueryFilterProjectMembers,
-} from 'shared-projects-frontend/models/project-member.model'
-import type { ImageModealCreated, ImageModel } from 'shared-projects-frontend/models/image.model'
-import type { PeopleGroupModel } from 'shared-projects-frontend/models/people-group.model'
+  ImageModealCreated,
+  ImageModel,
+  PeopleGroupModel,
+} from 'shared-projects-frontend'
+import { _adaptParamsToGetQuery } from '@/api/utils.service'
+import type { UseApiOptions } from '@/composables/useAPI'
+import useAPI from '@/composables/useAPI'
 
 type ConfigProject = UseApiOptions<QueryFilterProject>
 type ConfigProjectLinked = UseApiOptions<Partial<PaginationQuery>>

@@ -12,8 +12,7 @@ import TextInput from '~/components/base/form/TextInput.vue'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'
 
-import type { TagClassificationModel } from 'shared-projects-frontend/models/tagclassification.model'
-import type { TagModel } from 'shared-projects-frontend/models/tag.model'
+import type { TagClassificationModel, TagModel } from 'shared-projects-frontend'
 import LpiButton from '../base/button/LpiButton.vue'
 import { defaultTagForm } from '~/form/tag'
 

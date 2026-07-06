@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import type { TranslatedProjectMember } from 'shared-projects-frontend/models/project-member.model'
+import type {
+  TranslatedProjectMember,
+  ProjectMemberRoleType,
+  TranslatedUserModel,
+  TranslatedProject,
+} from 'shared-projects-frontend'
 import { addProjectMembers, deleteProjectMembers } from '~/api/project-members.service'
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
-import type { TranslatedUserModel } from 'shared-projects-frontend/models/user.model'
-import type { ProjectMemberRoleType } from 'shared-projects-frontend/models/types'
 import UserProfileDrawer from '~/components/drawer/User/UserProfileDrawer.vue'
 import UserSelectDrawer from '~/components/drawer/User/UserSelectDrawer.vue'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'

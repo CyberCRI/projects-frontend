@@ -1,4 +1,4 @@
-import type { AnnouncementModel } from 'shared-projects-frontend/models/announcement.model'
+import type { AnnouncementModel } from 'shared-projects-frontend'
 
 import { projectSkeleton } from '~/skeletons/project.skeletons'
 

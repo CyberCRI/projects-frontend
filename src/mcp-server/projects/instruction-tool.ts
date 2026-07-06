@@ -1,5 +1,5 @@
-import type { InstructionModel } from 'shared-projects-frontend/models/instruction.model'
 import { getAllInstructions, getInstruction } from '~/api/instruction.service'
+import type { InstructionModel } from 'shared-projects-frontend'
 import { mcpOptions, orgCode, resultFromTool } from './base'
 import type { TypeMcpServer } from '~/interfaces/mcp'
 import { pick } from 'es-toolkit'

@@ -13,8 +13,8 @@ import useToasterStore from '~/stores/useToaster'
 import type {
   AnnouncementModel,
   TranslatedAnnouncement,
-} from 'shared-projects-frontend/models/announcement.model'
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
+  TranslatedProject,
+} from 'shared-projects-frontend'
 import { defaultAnnouncementForm, useAnnouncementForm } from '~/form/annoucement'
 import FieldErrors from '~/components/base/form/FieldErrors.vue'
 import { getFirstTextNotEmpty } from '~/functs/tiptap'

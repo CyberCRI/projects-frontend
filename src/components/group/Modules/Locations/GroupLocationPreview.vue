@@ -16,8 +16,8 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models/people-group.model'
 import GroupLocationBase from '@/components/group/Modules/Locations/GroupLocationBase.vue'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend'
 import { GROUP_MODULE_ICON, GROUP_MODULE_TITLE } from '~/functs/constants'
 import BaseGroupPreview from '@/components/modules/BaseModulePreview.vue'
 

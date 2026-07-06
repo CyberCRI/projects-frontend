@@ -121,13 +121,13 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import ProjectsNavSimilar from '~/components/project/Nav/ProjectsNavSimilar.vue'
 import type { MenuEntry } from '~/components/base/navigation/NavPanelMenu.vue'
 import { useProjectFollow } from '~/composables/project/useProjectFollow'
 import { duplicateProject, patchProject } from '~/api/projects.service'
 import ProjectPDFModal from '~/components/project/ProjectPDFModal.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
+import type { TranslatedProject } from 'shared-projects-frontend'
 import ReportDrawer from '~/components/drawer/ReportDrawer.vue'
 import { projectSkeleton } from '~/skeletons/project.skeletons'
 import { factoriesSkeleton } from '~/skeletons/base.skeletons'

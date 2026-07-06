@@ -1,6 +1,8 @@
-import type { QueryFilterBlogEntry } from 'shared-projects-frontend/models/blog-entry.model'
-import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
-import type { ProjectSlugOrId } from 'shared-projects-frontend/models/project.model'
+import type {
+  QueryFilterBlogEntry,
+  OrganizationModel,
+  ProjectSlugOrId,
+} from 'shared-projects-frontend'
 import { getBlogEntries as fetchBlogEntries } from '@/api/blogentries.service'
 import type { UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
 import type { RefOrRaw } from '~/interfaces/utils'

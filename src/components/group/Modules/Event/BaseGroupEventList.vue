@@ -54,8 +54,8 @@
 import type {
   QueryFilterEvent,
   TranslatedEventModel,
-} from 'shared-projects-frontend/models/event.model'
-import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models/people-group.model'
+  TranslatedPeopleGroupModel,
+} from 'shared-projects-frontend'
 
 import { getGroupEvent } from '~/api/v2/group.service'
 import { deleteEvent } from '~/api/event.service'

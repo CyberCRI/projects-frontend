@@ -11,9 +11,8 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedLocation } from 'shared-projects-frontend/models/location.model'
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import { postLocations, patchLocation, deleteLocation } from '@/api/locations.service'
+import type { TranslatedLocation, TranslatedProject } from 'shared-projects-frontend'
 import LocationDrawer from '@/components/map/LocationDrawer.vue'
 import { PROJECT_LOCATIONS_TYPES } from '~/functs/constants'
 import useToasterStore from '@/stores/useToaster'

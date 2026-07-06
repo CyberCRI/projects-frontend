@@ -40,7 +40,7 @@ import ImageInput from '~/components/base/form/ImageInput.vue'
 
 import useToasterStore from '~/stores/useToaster'
 
-import type { ImageModealCreated, ImageModel } from 'shared-projects-frontend/models/image.model'
+import type { ImageModealCreated, ImageModel } from 'shared-projects-frontend'
 import GalleryItem from '~/components/base/gallery/GalleryItem.vue'
 import type { PropsDefinitions } from '~/composables/tiptap'
 import { fileToImageModel } from '~/functs/imageSizesUtils'

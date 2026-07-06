@@ -1,5 +1,4 @@
-import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
-import type { ProjectSlugOrId } from 'shared-projects-frontend/models/project.model'
+import type { OrganizationModel, ProjectSlugOrId } from 'shared-projects-frontend'
 import { getProjectGoals as fetchProjectGoals } from '@/api/goals.service'
 import type { UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
 import type { RefOrRaw } from '~/interfaces/utils'

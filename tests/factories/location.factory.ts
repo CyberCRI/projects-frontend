@@ -1,9 +1,6 @@
 import { createFactory } from 'faker-create-factory'
 
-import {
-  BaseTranslatedLocationModel,
-  LocationModel,
-} from 'shared-projects-frontend/models/location.model'
+import { BaseTranslatedLocationModel, LocationModel } from 'shared-projects-frontend'
 import BaseFactory from './base.factory'
 
 const LocationFactory = createFactory<LocationModel>((faker) => ({

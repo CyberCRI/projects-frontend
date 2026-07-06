@@ -6,8 +6,8 @@ import {
 import type { Container } from '~/composables/pdf-helpers/doc-builder'
 import { usePublicURL } from '~/composables/usePublic'
 
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
+import type { TranslatedProject } from 'shared-projects-frontend'
 
 export default async function addProjectPhotoFactory(project: TranslatedProject) {
   const defaultProjectPicture = usePublicURL(DEFAULT_PROJECT_PATATOID)

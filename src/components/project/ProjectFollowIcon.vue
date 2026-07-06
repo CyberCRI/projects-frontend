@@ -3,8 +3,8 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import { useProjectFollow } from '~/composables/project/useProjectFollow'
+import type { TranslatedProject } from 'shared-projects-frontend'
 
 const props = defineProps<{
   project: TranslatedProject

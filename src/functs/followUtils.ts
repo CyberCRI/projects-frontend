@@ -3,7 +3,7 @@ import type {
   FollowInput,
   FollowOutput,
   UnfollowCategoryInput,
-} from 'shared-projects-frontend/models/follow.model'
+} from 'shared-projects-frontend'
 
 import {
   deleteProjectCategoryFollow,

@@ -11,8 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AnyTranslatedLocation } from 'shared-projects-frontend/models/location.model'
-import type { TranslatedNews } from 'shared-projects-frontend/models/news.model'
+import type { AnyTranslatedLocation, TranslatedNews } from 'shared-projects-frontend'
 import type CardLocationPopUp from '@/components/map/CardLocationPopUp.vue'
 import { DEFAULT_NEWS_PATATOID } from '@/composables/usePatatoids'
 import { html2Text } from '~/functs/tiptap'

@@ -1,6 +1,5 @@
-import type { AttachmentFileModel } from 'shared-projects-frontend/models/attachment-file.model'
+import type { AttachmentFileModel, OrganizationModel } from 'shared-projects-frontend'
 
-import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
 import type { UseApiOptions } from '~/composables/useAPI'
 import useAPI from '~/composables/useAPI'
 

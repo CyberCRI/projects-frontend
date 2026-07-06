@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { QueryFilterInstruction } from 'shared-projects-frontend/models/instruction.model'
+import type { QueryFilterInstruction } from 'shared-projects-frontend'
 
 import { getAllInstructions } from '~/api/v2/instruction.service'
 import { deleteInstruction } from '~/api/instruction.service'

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
 import { DEFAULT_PDF_OPTIONS } from '~/composables/useProjectToPdf'
+import type { TranslatedProject } from 'shared-projects-frontend'
 import { PROJECT_MODULE_TITLE } from '~/functs/constants'
 
 const props = defineProps<{

@@ -1,4 +1,4 @@
-import type { NewsfeedModel } from 'shared-projects-frontend/models/newsfeed.model'
+import type { NewsfeedModel } from 'shared-projects-frontend'
 
 import { announcementSkeleton } from '~/skeletons/announcement.skeletons'
 import { projectSkeleton } from '~/skeletons/project.skeletons'

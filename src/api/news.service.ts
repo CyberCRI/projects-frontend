@@ -2,8 +2,8 @@ import type {
   NewsInput,
   NewsModel,
   QueryFilterNews,
-} from 'shared-projects-frontend/models/news.model'
-import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
+  OrganizationModel,
+} from 'shared-projects-frontend'
 
 import type { UseApiOptions } from '~/composables/useAPI'
 import useAPI from '~/composables/useAPI'

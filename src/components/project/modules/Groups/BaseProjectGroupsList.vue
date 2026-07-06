@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models/people-group.model'
+import type {
+  TranslatedPeopleGroupModel,
+  ProjectGroupRoleType,
+  TranslatedProject,
+} from 'shared-projects-frontend'
 import { addProjectMembers, deleteProjectMembers } from '~/api/project-members.service'
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
-import type { ProjectGroupRoleType } from 'shared-projects-frontend/models/types'
 import GroupSelectDrawer from '~/components/drawer/Group/GroupSelectDrawer.vue'
 import CardInlineGroup from '~/components/drawer/Group/CardInlineGroup.vue'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'

@@ -1,4 +1,4 @@
-import { LocationGeneral } from 'shared-projects-frontend/interfaces/maps'
+import { LocationGeneral } from 'shared-projects-frontend'
 import GeneralMap from '@/components/map/GeneralMap.vue'
 import { lpiMount } from '@/../tests/helpers/LpiMount'
 import { flushPromises } from '@vue/test-utils'

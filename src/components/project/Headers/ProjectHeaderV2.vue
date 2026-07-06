@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
 import ProjectHeaderStatus from '~/components/project/Headers/ProjectHeaderStatus.vue'
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
+import type { TranslatedProject } from 'shared-projects-frontend'
 
 defineProps<{
   project: TranslatedProject

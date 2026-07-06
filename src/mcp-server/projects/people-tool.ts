@@ -1,5 +1,4 @@
-import type { UserModel, UserSkillModel } from 'shared-projects-frontend/models/user.model'
-import type { PeopleGroupModel } from 'shared-projects-frontend/models/people-group.model'
+import type { UserModel, UserSkillModel, PeopleGroupModel } from 'shared-projects-frontend'
 import { addIfExists, tagMapPreview } from '~/mcp-server/projects/utils'
 import { mcpOptions, orgCode, resultFromTool } from './base'
 import { getUser as fetchUser } from '~/api/people.service'

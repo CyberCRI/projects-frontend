@@ -1,10 +1,10 @@
 // @vitest-environment nuxt
-import { ProjectMemberModel } from 'shared-projects-frontend/models/project-member.model'
 import { ProjectOutputFactory } from '~~/tests/factories/project.factory'
 import { test, beforeEach, describe, expect, it } from 'vitest'
 import MockComponent from '~~/tests/helpers/MockComponent.vue'
 import { UserFactory } from '~~/tests/factories/user.factory'
 import useOrganizationsStore from '~/stores/useOrganizations'
+import { ProjectMemberModel } from 'shared-projects-frontend'
 import { getOrgsFromRoles } from '~/functs/rolesUtils'
 import { lpiMount } from '~~/tests/helpers/LpiMount'
 import useUsersStore from '~/stores/useUsers'

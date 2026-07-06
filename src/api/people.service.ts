@@ -3,9 +3,9 @@ import type {
   UserPatchModel,
   UserPrivacyPatchModel,
   UserSkillModel,
-} from 'shared-projects-frontend/models/user.model'
-import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
-import type { PeopleModel } from 'shared-projects-frontend/models/people.model'
+  OrganizationModel,
+  PeopleModel,
+} from 'shared-projects-frontend'
 
 import { _adaptParamsToGetQuery } from '~/api/utils.service'
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TagModel } from 'shared-projects-frontend/models/tag.model'
+import type { TagModel } from 'shared-projects-frontend'
 
 import { isEscoClassification } from '~/functs/ClassificationUtils'
 

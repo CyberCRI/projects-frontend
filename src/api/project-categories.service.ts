@@ -3,12 +3,11 @@ import type {
   ProjectCategoryModel,
   ProjectCategoryPatchInput,
   ProjectCategoryPutInput,
-} from 'shared-projects-frontend/models/project-category.model'
+  OrganizationModel,
+} from 'shared-projects-frontend'
 
 import type { UseApiOptions } from '~/composables/useAPI'
 import useAPI from '~/composables/useAPI'
-
-import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
 
 type Config = UseApiOptions
 

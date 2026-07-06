@@ -44,9 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models/people-group.model'
-
-import type { ImageGalleryForm } from 'shared-projects-frontend/interfaces/gallery'
+import type { TranslatedPeopleGroupModel, ImageGalleryForm } from 'shared-projects-frontend'
 
 import { deleteGroupGallery, postGroupGallery } from '~/api/groups.service'
 import { getGroupGallery } from '~/api/v2/group.service'

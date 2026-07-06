@@ -3,8 +3,8 @@ import type {
   ReviewForm,
   ReviewId,
   ReviewModel,
-} from 'shared-projects-frontend/models/review.model'
-import type { ProjectSlugOrId } from 'shared-projects-frontend/models/project.model'
+  ProjectSlugOrId,
+} from 'shared-projects-frontend'
 import useAPI from '@/composables/useAPI'
 
 type Config = UseApiOptions<QueryFilterReviews>

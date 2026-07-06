@@ -1,8 +1,8 @@
 import SkillsEditDrawer from '~/components/people/skill/SkillsEditDrawer.vue'
 import { lpiMount } from '~~/tests/helpers/LpiMount'
 
-import { OrganizationOutput } from 'shared-projects-frontend/models/organization.model'
 import useOrganizationsStore from '~/stores/useOrganizations'
+import { OrganizationOutput } from 'shared-projects-frontend'
 import pinia from '~/stores'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'

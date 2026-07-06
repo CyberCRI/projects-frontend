@@ -1,10 +1,6 @@
 import { getProject, lockUnlockProject, patchProject } from '~/api/projects.service'
 
-import type {
-  ProjectForm,
-  ProjectModel,
-  ProjectOutput,
-} from 'shared-projects-frontend/models/project.model'
+import type { ProjectForm, ProjectModel, ProjectOutput } from 'shared-projects-frontend'
 import { defineStore } from 'pinia'
 
 export interface ProjectState {

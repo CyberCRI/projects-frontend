@@ -1,4 +1,4 @@
-import type { OrganizationModel } from 'shared-projects-frontend/models/organization.model'
+import type { OrganizationModel, TranslatedLocationGeneral } from 'shared-projects-frontend'
 
 import type { RefOrRaw } from '~/interfaces/utils'
 
@@ -6,7 +6,6 @@ import { getLocations as fetchGetLocations } from '~/api/locations.service'
 
 import useAsyncAPI from '~/composables/useAsyncAPI'
 
-import type { TranslatedLocationGeneral } from 'shared-projects-frontend/interfaces/maps'
 import { onlyRefs } from '~/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}

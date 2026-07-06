@@ -1,4 +1,4 @@
-import type { CommentModel, TranslatedComment } from 'shared-projects-frontend/models/comment.model'
+import type { CommentModel, TranslatedComment } from 'shared-projects-frontend'
 import analytics from '@/analytics/index'
 
 export interface CommentAnalytic {

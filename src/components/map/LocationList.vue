@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AnyTranslatedLocation } from 'shared-projects-frontend/models/location.model'
+import type { AnyTranslatedLocation } from 'shared-projects-frontend'
 
 import LocationType from '~/components/map/LocationType.vue'
 import LocationItem from '~/components/map/LocationItem.vue'

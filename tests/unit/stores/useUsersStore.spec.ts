@@ -374,6 +374,7 @@ describe('Store module | users | actions', () => {
       given_name: 'test',
       family_name: 'auto',
       email: 'test.auto.cri@yopmail.com',
+      aud: '',
     }
 
     const usersStore = useUsersStore(pinia)

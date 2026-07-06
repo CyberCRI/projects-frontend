@@ -1,4 +1,4 @@
-import type { HarvesterType, Identifier } from 'shared-projects-frontend/interfaces/researcher'
+import type { HarvesterType, Identifier } from 'shared-projects-frontend'
 
 const cleanIdentifier = (identifier: Identifier): Identifier => {
   const newIdentifier = { ...identifier }

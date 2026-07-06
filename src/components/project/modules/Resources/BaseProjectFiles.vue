@@ -4,9 +4,11 @@ import {
   patchProjectAttachmentFile,
   postProjectAttachmentFiles,
 } from '~/api/attachment-files.service'
-import type { TranslatedAttachmentFile } from 'shared-projects-frontend/models/attachment-file.model'
-import type { AttachmentForm } from 'shared-projects-frontend/models/attachment.model'
-import type { TranslatedProject } from 'shared-projects-frontend/models/project.model'
+import type {
+  TranslatedAttachmentFile,
+  TranslatedProject,
+  AttachmentForm,
+} from 'shared-projects-frontend'
 import { attachementFileSkeletons } from '~/skeletons/attachements.skeletons'
 import { getProjectAttachmentFiles } from '~/api/v2/attachment-files.service'
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
