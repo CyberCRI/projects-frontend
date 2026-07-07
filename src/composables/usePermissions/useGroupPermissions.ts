@@ -24,7 +24,7 @@ export const usePermissionGroup = (groupId: RefOrRaw<PeopleGroupModel['id'] | nu
 
   const internalGroupId = computed(() => unref(groupId))
 
-  const permissions = computed(() => !internalGroupId.value || !userStore.isConnected)
+  const permissions = computed(() => internalGroupId.value && userStore.isConnected)
 
   const canEditGroup = computed(() => {
     return (

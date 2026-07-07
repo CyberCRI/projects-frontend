@@ -8,7 +8,6 @@ import type {
   ProjectModuleExtra,
 } from 'shared-projects-frontend'
 import type { IconImageChoice, IconTabImageChoice } from '~/functs/IconImage'
-import LocationType from '~/components/map/LocationType.vue'
 
 export const RESOURCE_PROJECT_CATEGORY = [
   'inspired-by',

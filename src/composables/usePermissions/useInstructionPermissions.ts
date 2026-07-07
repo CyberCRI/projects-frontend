@@ -27,7 +27,7 @@ export const usePermissionInstruction = (
 
   const internalInstructionId = computed(() => unref(instructionId))
 
-  const permissions = computed(() => !internalInstructionId.value || !userStore.isConnected)
+  const permissions = computed(() => internalInstructionId.value && userStore.isConnected)
 
   const canCreateInstruction = computed(() => {
     return (

@@ -8,7 +8,6 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import useUsersStore from '~/stores/useUsers'
 import pinia from '~/stores'
 
-import usePeopleGroupsStore from '~/stores/usePeopleGroups'
 import useProjectsStore from '~/stores/useProjects'
 
 import { OrganizationOutput } from 'shared-projects-frontend'
@@ -28,7 +27,6 @@ describe('ProfileProjectTab', () => {
     usersStore.getUser = vi.fn()
     const organizationsStore = useOrganizationsStore(pinia)
     organizationsStore._current = { id: 'TEST' } as unknown as OrganizationOutput
-    usePeopleGroupsStore(pinia)
     useProjectsStore(pinia)
   })
 

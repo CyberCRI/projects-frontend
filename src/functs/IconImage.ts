@@ -176,7 +176,9 @@ type IconTabRegistery = typeof ICONS_TABS
 
 // module augementations in shared-projects-frontend to change all icons infos
 declare module 'shared-projects-frontend' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   export interface Icon extends IconRegistery {}
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   export interface IconTab extends IconTabRegistery {}
 }
 

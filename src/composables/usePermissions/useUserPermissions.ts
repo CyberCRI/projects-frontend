@@ -21,7 +21,7 @@ export const usePermissionUser = (userId: RefOrRaw<UserModel['id'] | null>) => {
 
   const internalUserId = computed(() => unref(userId))
 
-  const permissions = computed(() => !internalUserId.value || !userStore.isConnected)
+  const permissions = computed(() => internalUserId.value && userStore.isConnected)
 
   const canEditUser = computed(() => {
     return (

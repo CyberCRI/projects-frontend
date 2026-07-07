@@ -33,18 +33,7 @@ export const usePermissionProject = (projectId: RefOrRaw<ProjectModel['id'] | nu
 
   const internalProjectId = computed(() => unref(projectId))
 
-  const permissions = computed(() => !internalProjectId.value || !userStore.isConnected)
-
-  const canEditProject = computed(() => {
-    if (permissions.value) {
-      return false
-    }
-    return globalCanEditProject(
-      userStore.rights,
-      organizationStore.current.id,
-      internalProjectId.value
-    )
-  })
+  const permissions = computed(() => internalProjectId.value && userStore.isConnected)
 
   const canCreateProject = computed(
     () =>
@@ -52,97 +41,88 @@ export const usePermissionProject = (projectId: RefOrRaw<ProjectModel['id'] | nu
       globalCanCreateProject(userStore.rights, organizationStore.current.id)
   )
 
+  const canEditProject = computed(() => {
+    return (
+      permissions.value &&
+      globalCanEditProject(userStore.rights, organizationStore.current.id, internalProjectId.value)
+    )
+  })
+
   const canDeleteProject = computed(() => {
-    if (permissions.value) {
-      return false
-    }
-    return globalCanDeleteProject(
-      userStore.rights,
-      organizationStore.current.id,
-      internalProjectId.value
+    return (
+      permissions.value &&
+      globalCanDeleteProject(
+        userStore.rights,
+        organizationStore.current.id,
+        internalProjectId.value
+      )
     )
   })
 
   // comments
   const canCreateComment = computed(() => {
-    if (permissions.value) {
-      return false
-    }
-    return globalCanCreateComment(
-      userStore.rights,
-      organizationStore.current.id,
-      internalProjectId.value
+    return (
+      permissions.value &&
+      globalCanCreateComment(
+        userStore.rights,
+        organizationStore.current.id,
+        internalProjectId.value
+      )
     )
   })
 
   const canEditComment = computed(() => {
-    if (permissions.value) {
-      return false
-    }
-    return globalCanEditComment(
-      userStore.rights,
-      organizationStore.current.id,
-      internalProjectId.value
+    return (
+      permissions.value &&
+      globalCanEditComment(userStore.rights, organizationStore.current.id, internalProjectId.value)
     )
   })
 
   const canDeleteComment = computed(() => {
-    if (permissions.value) {
-      return false
-    }
-    return globalCanDeleteComment(
-      userStore.rights,
-      organizationStore.current.id,
-      internalProjectId.value
+    return (
+      permissions.value &&
+      globalCanDeleteComment(
+        userStore.rights,
+        organizationStore.current.id,
+        internalProjectId.value
+      )
     )
   })
 
   // reviews
   const canCreateReview = computed(() => {
-    if (permissions.value) {
-      return false
-    }
-    return globalCanAddReview(
-      userStore.rights,
-      organizationStore.current.id,
-      internalProjectId.value
+    return (
+      permissions.value &&
+      globalCanAddReview(userStore.rights, organizationStore.current.id, internalProjectId.value)
     )
   })
 
   const canEditReview = computed(() => {
-    if (permissions.value) {
-      return false
-    }
-    return globalCanEditReview(
-      userStore.rights,
-      organizationStore.current.id,
-      internalProjectId.value
+    return (
+      permissions.value &&
+      globalCanEditReview(userStore.rights, organizationStore.current.id, internalProjectId.value)
     )
   })
 
   const canDeleteReview = computed(() => {
-    if (permissions.value) {
-      return false
-    }
-    return globalCanDeleteReview(
-      userStore.rights,
-      organizationStore.current.id,
-      internalProjectId.value
+    return (
+      permissions.value &&
+      globalCanDeleteReview(userStore.rights, organizationStore.current.id, internalProjectId.value)
     )
   })
 
   const isMember = computed(() => {
-    if (permissions.value) {
-      return false
-    }
-    return globalIsMember(userStore.rights, organizationStore.current.id, internalProjectId.value)
+    return (
+      permissions.value &&
+      globalIsMember(userStore.rights, organizationStore.current.id, internalProjectId.value)
+    )
   })
 
   const isOwner = computed(() => {
-    if (permissions.value) {
-      return false
-    }
-    return globalIsOwner(userStore.rights, organizationStore.current.id, internalProjectId.value)
+    return (
+      permissions.value &&
+      globalIsOwner(userStore.rights, organizationStore.current.id, internalProjectId.value)
+    )
   })
 
   return {

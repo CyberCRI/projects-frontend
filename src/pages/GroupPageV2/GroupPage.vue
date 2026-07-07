@@ -75,6 +75,11 @@ const { data: group, isLoading, status, error } = getGroup(organizationCode, gro
 
 const { canEditGroup } = usePermissionGroup(computed(() => group.value?.id))
 
+watchEffect(() => {
+  console.log('canEditGroup', canEditGroup.value)
+  console.log(group.value?.id)
+})
+
 const groupLoading = computed(() => isLoading.value && !group.value?.id)
 
 watchEffect(() => {

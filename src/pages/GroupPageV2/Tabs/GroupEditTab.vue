@@ -18,7 +18,6 @@ import { useLpiHead2 } from '~/composables/useLpiHead'
 import { usePermissionGroup } from '~/composables/usePermissions/useGroupPermissions'
 import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 import { refreshGroupData } from '~/composables/groups/refreshGroup'
-import type { PeopleGroupModel } from 'shared-projects-frontend'
 import type { AsyncDataRequestStatus } from 'nuxt/app'
 import { isEqual } from 'es-toolkit'
 
@@ -45,11 +44,12 @@ const props = defineProps({
 
 const emit = defineEmits(['close', 'reload-group'])
 const toaster = useToasterStore()
-const groupId = ref<PeopleGroupModel['id']>()
+const groupData = ref(null)
+
 const organizationCode = useOrganizationCode()
 const usersStore = useUsersStore()
 
-const { canCreateGroup, canEditGroup } = usePermissionGroup(groupId)
+const { canCreateGroup, canEditGroup } = usePermissionGroup(computed(() => groupData.value?.id))
 const route = useRoute()
 const router = useRouter()
 const { t } = useNuxtI18n()
@@ -77,7 +77,6 @@ const form = ref({
 const { startEditWatcher, stopEditWatcher } = useEditWatcher(form)
 
 const isSaving = ref(false)
-const groupData = ref(null)
 
 const rules = computed(() => ({
   form: {
@@ -200,6 +199,7 @@ const createGroup = async () => {
     const payload = buildPayload()
 
     const newGroup = await postGroup(orgCode.value, payload)
+    groupData.value = newGroup
     const newGroupId = newGroup.slug || newGroup.id
 
     // save header
@@ -217,7 +217,7 @@ const createGroup = async () => {
         : { name: 'Group', params: { groupIdOrSlug: newGroup.slug || newGroup.id } }
     )
   } catch (error) {
-    toaster.pushError(`${t('toasts.group-create.error')} (${error})`)
+    toaster.pushError(t('toasts.group-create.error'))
     console.error(error)
   } finally {
     isSaving.value = false
@@ -288,8 +288,8 @@ onBeforeMount(async () => {
     // general data
     try {
       const originalGroupData = await getGroup(orgCode.value, props.groupIdOrSlug)
-      // now we can get the real id (not slug)
-      groupId.value = originalGroupData.id
+      groupData.value = originalGroupData
+
       if (!canEditGroup.value) {
         router.push({
           name: 'Group',
@@ -298,8 +298,6 @@ onBeforeMount(async () => {
         return
       }
 
-      groupData.value = originalGroupData
-      form.value.name = originalGroupData.name
       form.value.description = originalGroupData.description
       form.value.short_description = originalGroupData.short_description
       form.value.email = originalGroupData.email

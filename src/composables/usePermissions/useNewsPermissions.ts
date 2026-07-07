@@ -25,7 +25,7 @@ export const usePermissionNews = (newsId: RefOrRaw<NewsModel['id'] | null>) => {
 
   const internalNewsId = computed(() => unref(newsId))
 
-  const permissions = computed(() => !internalNewsId.value || !userStore.isConnected)
+  const permissions = computed(() => internalNewsId.value && userStore.isConnected)
 
   const canCreateNews = computed(() => {
     return permissions.value && globalCanCreateNews(userStore.rights, organizationStore.current.id)

@@ -25,7 +25,7 @@ export const usePermissionEvent = (eventId: RefOrRaw<EventModel['id'] | null>) =
 
   const internalEventId = computed(() => unref(eventId))
 
-  const permissions = computed(() => !internalEventId.value || !userStore.isConnected)
+  const permissions = computed(() => internalEventId.value && userStore.isConnected)
 
   const canCreateEvent = computed(() => {
     return permissions.value && globalCanCreateEvent(userStore.rights, organizationStore.current.id)
