@@ -2,16 +2,11 @@
 import { NodeViewContent, NodeViewWrapper, nodeViewProps } from '@tiptap/vue-3'
 import Field from '~/components/base/form/Field.vue'
 
-import {
-  DEFAULT_LANGUAGE,
-  DEFAULT_TAB,
-  DEFAULT_THEME,
-} from '~/composables/tiptap/extensions/LpiCodeBlock'
+import { DEFAULT_LANGUAGE, DEFAULT_TAB, DEFAULT_THEME, lowlight } from 'shared-projects-frontend'
 import type { GroupOption } from '~/components/base/button/GroupButton.vue'
 import GroupButton from '~/components/base/button/GroupButton.vue'
 import LpiSelect from '~/components/base/form/LpiSelect.vue'
 import CodeBlock from '~/components/base/form/CodeBlock.vue'
-import lowlight from '~/functs/lowlight'
 
 const props = defineProps(nodeViewProps)
 const { t } = useNuxtI18n()

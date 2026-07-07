@@ -4,6 +4,11 @@
     "strict": false,
     "noImplicitAny": false,
     "verbatimModuleSyntax": false,
-    "types": ["grecaptcha"]
+    "types": [
+      "grecaptcha",
+      "@tiptap/extension-table",
+      "@tiptap/extension-link",
+      "@tiptap/extension-text-align"
+    ]
   }
 }

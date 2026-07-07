@@ -1,6 +1,7 @@
 import type { ImageModealCreated } from 'shared-projects-frontend'
 import useOrganizationsStore from '~/stores/useOrganizations'
-import { getExtensions } from '~/composables/tiptap/options'
+import { getExtensions } from 'shared-projects-frontend'
+
 import type { ErrorObject } from '@vuelidate/core'
 import type { EditorOptions } from '@tiptap/vue-3'
 import type { ExtractDefaultPropTypes } from 'vue'

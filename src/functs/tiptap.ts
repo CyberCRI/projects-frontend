@@ -1,5 +1,5 @@
-import { getExtensions } from '~/composables/tiptap/options'
 import { generateHTML, generateJSON } from '@tiptap/core'
+import { getExtensions } from 'shared-projects-frontend'
 import { isNil } from 'es-toolkit'
 
 /**
@@ -19,7 +19,7 @@ export const html2html = onClient((html: string | null): string => {
   }
 
   // get tiptap extentions
-  const extentions = getExtensions()
+  const extentions = getExtensions({ history: false })
 
   // generate jsondoc
   const doc = generateJSON(html, extentions)

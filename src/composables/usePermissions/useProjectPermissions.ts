@@ -1,5 +1,5 @@
 import {
-  canAddReview as globalCanAddReview,
+  canCreateReview as globalCanCreateReview,
   canCreateComment as globalCanCreateComment,
   canDeleteComment as globalCanDeleteComment,
   canDeleteProject as globalCanDeleteProject,
@@ -93,7 +93,7 @@ export const usePermissionProject = (projectId: RefOrRaw<ProjectModel['id'] | nu
   const canCreateReview = computed(() => {
     return (
       permissions.value &&
-      globalCanAddReview(userStore.rights, organizationStore.current.id, internalProjectId.value)
+      globalCanCreateReview(userStore.rights, organizationStore.current.id, internalProjectId.value)
     )
   })
 

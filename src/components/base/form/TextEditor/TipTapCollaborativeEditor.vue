@@ -17,11 +17,11 @@ import useUsersStore from '~/stores/useUsers'
 import TipTapEditorMenus from '~/components/base/form/TextEditor/TipTapEditorMenus.vue'
 import type { CollaborativeUser, ProviderParams } from 'shared-projects-frontend'
 import { emitsDefinitions, PropsDefault, useTipTap } from '~/composables/tiptap'
-import { ClearHistoryWS } from '~/composables/tiptap/extensions/ClearHistoryWS'
 import { onClientMounted, onClientUnmounted } from '~/composables/onClient'
-import { getExtensions } from '~/composables/tiptap/options'
 import { useRuntimeConfig } from '#imports'
 import { randomInt } from 'es-toolkit'
+
+import { getExtensions, ClearHistoryWS } from 'shared-projects-frontend'
 
 const runtimeConfig = useRuntimeConfig()
 const { t } = useNuxtI18n()
