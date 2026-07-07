@@ -2,13 +2,15 @@
 import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
 import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
+import type { TranslatedProject, TranslatedReview } from 'shared-projects-frontend'
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
-import type { TranslatedReview } from 'shared-projects-frontend'
 import useUsersStore from '~/stores/useUsers'
 import { formatDate } from '~/functs/date'
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
+    project: TranslatedProject
     review: TranslatedReview
     editable?: boolean
   }>(),
@@ -23,7 +25,7 @@ defineEmits<{
 }>()
 
 const { locale } = useNuxtI18n()
-const { canDestroyReview, canAddReview } = usePermissions()
+const { canDeleteReview, canCreateReview } = usePermissionProject(computed(() => props.project.id))
 const userStore = useUsersStore()
 </script>
 
@@ -32,8 +34,8 @@ const userStore = useUsersStore()
     <div class="actions">
       <ContextActionMenuInline
         v-if="editable"
-        :can-delete="canDestroyReview && review.reviewer.id === userStore.id"
-        :can-edit="canAddReview && review.reviewer.id === userStore.id"
+        :can-delete="canDeleteReview && review.reviewer.id === userStore.id"
+        :can-edit="canCreateReview && review.reviewer.id === userStore.id"
         @delete="$emit('delete')"
         @edit="$emit('edit')"
       />

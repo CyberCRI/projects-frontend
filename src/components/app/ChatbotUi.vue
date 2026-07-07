@@ -5,6 +5,7 @@ import analytics from '@/analytics'
 import 'deep-chat'
 
 const { isAdmin } = usePermissions()
+
 const { t } = useI18n()
 const router = useRouter()
 const props = defineProps({

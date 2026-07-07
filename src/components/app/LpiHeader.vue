@@ -112,7 +112,7 @@
           @click="logInUser()"
         />
         <HeaderDropDown
-          v-else-if="isOrgAdmin || isFacilitator || isSuperAdmin"
+          v-else-if="isAdmin || isFacilitator || isSuperAdmin"
           :label="loginName"
           :menu-items="userMenu"
           :rounded-icon="true"
@@ -203,6 +203,7 @@ import useProjectCategories from '~/stores/useProjectCategories.ts'
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
 import useUsersStore from '~/stores/useUsers.ts'
 
+import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import { nowDate } from '~/functs/date'
 
 export default {
@@ -225,7 +226,7 @@ export default {
     const projectCategoriesStore = useProjectCategories()
     const organizationsStore = useOrganizationsStore()
     const usersStore = useUsersStore()
-    const { isAdmin, isFacilitator, isSuperAdmin, isOrgAdmin } = usePermissions()
+    const { isAdmin, isFacilitator, isSuperAdmin } = usePermissions()
     const { locale, setLocale } = useNuxtI18n()
     const { isAutoTranslateActivated } = useAutoTranslate()
     return {
@@ -236,7 +237,6 @@ export default {
       isAdmin,
       isFacilitator,
       isSuperAdmin,
-      isOrgAdmin,
       locale,
       isAutoTranslateActivated,
       setLocale,
@@ -493,7 +493,7 @@ export default {
 
     AdminLabel() {
       if (this.isSuperAdmin) return 'super admin'
-      if (this.isOrgAdmin) return 'org admin'
+      if (this.isAdmin) return 'org admin'
       if (this.isFacilitator) return 'facilitator'
       return ''
     },

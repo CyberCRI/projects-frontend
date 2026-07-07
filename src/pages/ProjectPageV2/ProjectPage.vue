@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import { useProjectHierarchy } from '~/composables/project/useProjectHierarchy'
 import ProjectNavPanel from '~/components/project/Nav/ProjectNavPanel.vue'
 import { useProjectTabs } from '~/composables/project/useProjectTabs'
@@ -13,8 +14,6 @@ const uniqueId = 'project-nav-panel'
 const { isNavCollapsed, toggleNavPanel, collapseIfUnderBreakpoint } =
   useToggleableNavPanel(uniqueId)
 
-const { canEditProject } = usePermissions()
-
 const projectIdOrSlug = computed<ProjectSlugOrId>(() => route.params.slugOrId.toString())
 
 const organizationCode = useOrganizationCode()
@@ -26,6 +25,8 @@ const {
 } = getProject(organizationCode, projectIdOrSlug, {
   default: projectSkeleton,
 })
+
+const { canEditProject } = usePermissionProject(computed(() => project.value?.id))
 
 const { tabs, currentTab, isEditing, toggleEditing } = useProjectTabs(projectIdOrSlug, project)
 

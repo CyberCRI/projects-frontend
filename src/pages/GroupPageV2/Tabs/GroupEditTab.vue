@@ -16,6 +16,7 @@ import useUsersStore from '~/stores/useUsers'
 
 import { useLpiHead2 } from '~/composables/useLpiHead'
 
+import { usePermissionGroup } from '~/composables/usePermissions/useGroupPermissions'
 import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 import { refreshGroupData } from '~/composables/groups/refreshGroup'
 import type { AsyncDataRequestStatus } from 'nuxt/app'
@@ -47,7 +48,10 @@ const toaster = useToasterStore()
 const peopleGroupsStore = usePeopleGroupsStore()
 const organizationCode = useOrganizationCode()
 const usersStore = useUsersStore()
-const { canCreateGroup, canEditGroup } = usePermissions()
+
+const { canCreateGroup, canEditGroup } = usePermissionGroup(
+  computed(() => peopleGroupsStore.currentId)
+)
 const route = useRoute()
 const router = useRouter()
 const { t } = useNuxtI18n()

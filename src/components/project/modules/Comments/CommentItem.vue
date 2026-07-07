@@ -135,6 +135,7 @@ import type {
 import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
 import MakeComment from '~/components/project/modules/Comments/MakeComment.vue'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
+import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import { deleteProjectMessage } from '@/api/project-messages.service'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'

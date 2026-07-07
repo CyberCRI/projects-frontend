@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import RecommendationBlock from '@/components/search/Recommendations/RecommendationBlock.vue'
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useUsersStore from '@/stores/useUsers'
 const organizationsStore = useOrganizationsStore()
 const usersStore = useUsersStore()
 const router = useRouter()
 
-const { canCreateProject } = usePermissions()
+const { canCreateProject } = usePermissionProject(null)
 
 const organization = computed(() => organizationsStore.current)
 const loggedIn = computed(() => usersStore.isConnected)

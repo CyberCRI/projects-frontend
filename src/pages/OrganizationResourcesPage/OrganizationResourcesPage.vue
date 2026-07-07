@@ -6,6 +6,7 @@ import {
 } from '~/api/organization-files.service'
 import type { AttachmentFileModel, AttachmentForm } from 'shared-projects-frontend'
 import { attachementFileSkeletons } from '~/skeletons/attachements.skeletons'
+import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import ResourceDrawerV2 from '~/components/resources/ResourceDrawerV2.vue'
 import { getOrganizationFiles } from '~/api/v2/organization-files.service'
 import { factoryPagination } from '~/skeletons/base.skeletons'

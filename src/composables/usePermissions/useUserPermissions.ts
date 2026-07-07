@@ -1,7 +1,8 @@
 import useOrganizationsStore from '~/stores/useOrganizations'
-import { RefOrRaw } from '~/interfaces/utils'
+import type { RefOrRaw } from '~/interfaces/utils'
 
-import { canEditUser as globalCanEditUser, UserModel } from 'shared-projects-frontend'
+import { canEditUser as globalCanEditUser } from 'shared-projects-frontend'
+import type { UserModel } from 'shared-projects-frontend'
 import useUsersStore from '~/stores/useUsers'
 
 /**

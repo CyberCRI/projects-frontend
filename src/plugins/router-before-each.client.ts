@@ -2,10 +2,8 @@ import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
 
 import useUsersStore from '~/stores/useUsers'
 
-import { isAdminOrFacilitator } from 'shared-projects-frontend'
-import useOrganizationsStore from '~/stores/useOrganizations'
+import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import { resetScroll } from '~/composables/useScrollToTab'
-import { isAdmin } from '~/functs/permissions'
 
 export default defineNuxtPlugin(async () => {
   useRouter().beforeEach((to, from, next) => {
@@ -13,9 +11,9 @@ export default defineNuxtPlugin(async () => {
     if (to.matched.some((route) => route.meta.resetScroll)) {
       resetScroll()
     }
+    const { isAdmin, isAdminOrFacilitator } = usePermissions()
 
     const usersStore = useUsersStore()
-    const organizationStore = useOrganizationsStore()
     if (to.matched.some((route) => route.meta.requiresAuth) && !usersStore.isConnected) {
       let proceed = true
 
@@ -57,11 +55,11 @@ export default defineNuxtPlugin(async () => {
       if (proceed) {
         next({ name: 'Home' })
       }
-    } else if (to.matched.some((route) => route.meta.requiresAdmin) && !isAdmin()) {
+    } else if (to.matched.some((route) => route.meta.requiresAdmin) && !isAdmin.value) {
       next({ name: 'Home' })
     } else if (
       to.matched.some((route) => route.meta.requiresAdminOrFacilitator) &&
-      !isAdminOrFacilitator(usersStore.rights, organizationStore.current?.id)
+      !isAdminOrFacilitator.value
     ) {
       next({ name: 'Home' })
     } else {

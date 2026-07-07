@@ -72,6 +72,7 @@ import type { TranslatedAnnouncement, TranslatedProject } from 'shared-projects-
 import LpiButton from '~/components/base/button/LpiButton.vue'
 
 import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import ContentExpandable from '~/components/base/ContentExpandable.vue'
 import { dateWithoutHours, formatDate, nowDate } from '~/functs/date'
 
@@ -102,7 +103,7 @@ defineEmits<{
 
 const { locale, t } = useNuxtI18n()
 
-const { canEditProject } = usePermissions()
+const { canEditProject } = usePermissionProject(computed(() => props.project.id))
 
 const { stateModals, toggleModals, setModals } = useModals({
   showMore: false,

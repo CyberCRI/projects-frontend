@@ -1,12 +1,12 @@
 import useOrganizationsStore from '~/stores/useOrganizations'
-import { RefOrRaw } from '~/interfaces/utils'
+import type { RefOrRaw } from '~/interfaces/utils'
 
 import {
   canCreateInstruction as globalCanCreateInstruction,
   canEditInstruction as globalCanEditInstruction,
   canDeleteInstruction as globalCanDeleteInstruction,
-  InstructionModel,
 } from 'shared-projects-frontend'
+import type { InstructionModel } from 'shared-projects-frontend'
 import useUsersStore from '~/stores/useUsers'
 
 /**

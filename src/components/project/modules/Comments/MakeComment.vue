@@ -51,6 +51,7 @@ import type {
   CommentModel,
   ImageModel,
 } from 'shared-projects-frontend'
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import { defaultProjectMessageForm, useProjectMessageForm } from '~/form/messages'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
 import { getFirstTextNotEmpty } from '~/functs/tiptap'
@@ -82,7 +83,7 @@ const emit = defineEmits<{
 
 const toaster = useToasterStore()
 const usersStore = useUsersStore()
-const { canCreateComments } = usePermissions()
+const { canCreateComment } = usePermissionProject(computed(() => props.project.id))
 
 const { t } = useNuxtI18n()
 
@@ -121,7 +122,7 @@ const isFormEqual = useBlockNavigation(() =>
     html: ['content'],
   })
 )
-const canSubmitComment = computed(() => !isFormEqual.value && canCreateComments.value)
+const canSubmitComment = computed(() => !isFormEqual.value && canCreateComment.value)
 
 const scrollToNewComment = (comment) => {
   document.getElementById(comment.id)?.scrollIntoView({

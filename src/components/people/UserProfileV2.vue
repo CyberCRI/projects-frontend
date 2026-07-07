@@ -55,6 +55,7 @@ import { getUser } from '~/api/people.service.ts'
 import useUsersStore from '~/stores/useUsers.ts'
 
 import ProfileSummaryTab from '~/pages/UserProfilePageV2/Tabs/ProfileSummaryTab.vue'
+import { usePermissionUser } from '~/composables/usePermissions/useUserPermissions'
 
 export default {
   name: 'UserProfileV2',
@@ -97,7 +98,7 @@ export default {
 
   setup() {
     const usersStore = useUsersStore()
-    const { canEditUser } = usePermissions()
+    const { canEditUser } = usePermissionUser(computed(() => usersStore.id))
     const { onboardingTrap } = useOnboardingStatus()
     const { t } = useNuxtI18n()
     const uniqueId = 'project-nav-panel'

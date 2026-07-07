@@ -1,4 +1,5 @@
-import type { OrganizationModel, UserModel } from 'shared-projects-frontend'
+import type { OrganizationModel, Right, UserModel } from 'shared-projects-frontend'
+import { isAdmin, isSuperAdmin } from 'shared-projects-frontend'
 
 export function parseJwt(token) {
   try {
@@ -79,13 +80,6 @@ export async function getUserByKeycloakId(kcId, tokenHeader): Promise<UserModel 
   return user
 }
 
-export function isSuperAdmin(user) {
-  return !!user?.is_superuser
-}
-export function isAdmin(user, orgId) {
-  return (user.roles || []).some((role) => role === `organization:#${orgId}:admins`)
-}
-
 export async function getUser(event) {
   const tokenHeader = getRequestHeader(event, 'authorization') || ''
   const kcId = getKeycloakIdFromToken(tokenHeader)
@@ -102,10 +96,15 @@ export default async function checkAdminRights(event) {
       message: 'You must authenticate to access this resource.',
     })
   }
+
+  const rights: Right = {
+    permissions: user.permissions.reduce((acc, name) => ({ ...acc, [name]: true }), {}),
+    roles: user.roles,
+  }
   const org = await getOrg(event)
   const orgId = org?.id
-  const superAdmin = isSuperAdmin(user)
-  const admin = isAdmin(user, orgId)
+  const superAdmin = isSuperAdmin(rights)
+  const admin = isAdmin(rights, orgId)
   if (!superAdmin && !admin) {
     throw createError({
       statusCode: 403,

@@ -59,12 +59,12 @@ import usePeopleGroupsStore from '~/stores/usePeopleGroups'
 
 import { useLpiHead2 } from '~/composables/useLpiHead'
 
+import { usePermissionGroup } from '~/composables/usePermissions/useGroupPermissions'
 import { groupSkeleton } from '~/skeletons/group.skeletons'
 import { onClient } from '~/composables/onClient'
 
 const uniqueId = 'group-nav-panel'
 const peopleGroupsStore = usePeopleGroupsStore()
-const { canEditGroup } = usePermissions()
 const { isNavCollapsed, toggleNavPanel, collapseIfUnderBreakpoint } =
   useToggleableNavPanel(uniqueId)
 const organizationCode = useOrganizationCode()
@@ -75,6 +75,8 @@ const { t } = useNuxtI18n()
 const groupIdOrSlug = computed(() => route.params.groupIdOrSlug.toString())
 
 const { data: group, isLoading, status, error } = getGroup(organizationCode, groupIdOrSlug)
+
+const { canEditGroup } = usePermissionGroup(computed(() => group.value?.id))
 
 const groupLoading = computed(() => isLoading.value && !group.value?.id)
 

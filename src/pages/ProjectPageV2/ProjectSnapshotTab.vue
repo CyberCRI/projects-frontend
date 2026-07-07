@@ -58,6 +58,8 @@ import ProjectDescriptionPreview from '@/components/project/modules/ProjectDescr
 import ProjectReviewPreview from '~/components/project/modules/review/ProjectReviewPreview.vue'
 import ProjectGroupsPreview from '~/components/project/modules/Groups/ProjectGroupsPreview.vue'
 import ProjectGoalsPreview from '@/components/project/modules/Goals/ProjectGoalsPreview.vue'
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
+import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import { projectTabSkeleton } from '~/skeletons/project-tabs.skeletons'
 import type { TranslatedProject } from 'shared-projects-frontend'
 import { getAllProjectTab } from '~/api/v2/project-tabs.service'
@@ -70,7 +72,8 @@ const props = defineProps<{
   project: TranslatedProject
 }>()
 
-const { isMember, isAdmin } = usePermissions()
+const { isAdmin } = usePermissions()
+const { isMember } = usePermissionProject(computed(() => props.project.id))
 
 const { isConnected } = useUsersStore()
 

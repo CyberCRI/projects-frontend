@@ -1,12 +1,12 @@
 import useOrganizationsStore from '~/stores/useOrganizations'
-import { RefOrRaw } from '~/interfaces/utils'
+import type { RefOrRaw } from '~/interfaces/utils'
 
 import {
   canCreateEvent as globalCanCreateEvent,
   canEditEvent as globalCanEditEvent,
   canDeleteEvent as globalCanDeleteEvent,
-  EventModel,
 } from 'shared-projects-frontend'
+import type { EventModel } from 'shared-projects-frontend'
 import useUsersStore from '~/stores/useUsers'
 
 /**

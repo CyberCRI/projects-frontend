@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
+import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import useProjectCategories from '~/stores/useProjectCategories'
 
-const { isAdmin, canCreateProject } = usePermissions()
+const { canCreateProject } = usePermissionProject(null)
+const { isAdmin } = usePermissions()
 const projectCategoriesStore = useProjectCategories()
 const { searchFromQuery } = useSearch('projects')
 const { t } = useNuxtI18n()

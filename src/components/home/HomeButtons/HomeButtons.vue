@@ -28,6 +28,7 @@
 </template>
 
 <script setup lang="ts">
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
@@ -41,7 +42,7 @@ const hasChatButton = computed(
 
 const router = useRouter()
 
-const { canCreateProject } = usePermissions()
+const { canCreateProject } = usePermissionProject(null)
 
 const goToChat = () => {
   window.open(organization.value.chat_url, '_blank')

@@ -88,7 +88,7 @@ export default {
 
   setup() {
     const usersStore = useUsersStore()
-    const { canCreateProject } = usePermissions()
+    const { canCreateProject } = usePermissionProject(null)
     return {
       usersStore,
       canCreateProject,

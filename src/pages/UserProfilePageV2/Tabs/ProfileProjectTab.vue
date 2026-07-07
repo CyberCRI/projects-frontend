@@ -101,6 +101,7 @@ import UserProjectsSearch from '~/components/people/UserProfile/UserProjectsSear
 import UserProjectList from '~/components/people/UserProfile/UserProjectList.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import useProjectCategories from '~/stores/useProjectCategories'
 import useUsersStore from '~/stores/useUsers'
 
@@ -111,7 +112,7 @@ const props = defineProps<{
 const { t } = useNuxtI18n()
 
 const usersStore = useUsersStore()
-const { canCreateProject } = usePermissions()
+const { canCreateProject } = usePermissionProject(null)
 const projectCategoriesStore = useProjectCategories()
 
 const followedCategories = computed(() => {

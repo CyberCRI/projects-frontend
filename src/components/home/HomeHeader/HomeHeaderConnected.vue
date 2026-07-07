@@ -67,6 +67,7 @@ import LpiButton from '~/components/base/button/LpiButton.vue'
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
 import useUsersStore from '~/stores/useUsers.ts'
 
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import { nowDate } from '~/functs/date'
 
 export default {
@@ -97,7 +98,7 @@ export default {
     const summaryMaxInstructions = ref(1)
     const isLoading = ref(true)
 
-    const { canCreateProject } = usePermissions()
+    const { canCreateProject } = usePermissionProject(null)
     return {
       organizationsStore,
       usersStore,

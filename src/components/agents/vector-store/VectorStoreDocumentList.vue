@@ -1,4 +1,6 @@
 <script setup>
+import { usePermissions } from '~/composables/usePermissions/usePermissions'
+
 const emit = defineEmits(['show-document', 'delete-document', 'edit-document'])
 
 const { fetchAll } = useVectorStore()

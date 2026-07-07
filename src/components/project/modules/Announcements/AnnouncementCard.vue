@@ -56,6 +56,7 @@
 </template>
 
 <script setup lang="ts">
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import type { TranslatedAnnouncement, TranslatedProject } from 'shared-projects-frontend'
 import IconImage from '@/components/base/media/IconImage.vue'
 import { usePatatoid } from '@/composables/usePatatoids'
@@ -90,7 +91,7 @@ const is = computed(() => (props.to ? NuxtLink : 'div'))
 
 const projectActual = computed(() => props.project ?? props.announcement.project)
 
-const { canEditProject } = usePermissions()
+const { canEditProject } = usePermissionProject(computed(() => props.project.id))
 
 const projectImage = computed(() => {
   return `url(${projectActual.value?.header_image?.variations?.small}), url(${usePatatoid(1)})`

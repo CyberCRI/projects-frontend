@@ -108,6 +108,7 @@ const onDeleteConfirm = () => {
       <ReviewItem
         v-for="review in reviews"
         :key="review.id"
+        :project="project"
         :review="review"
         :editable="editable"
         @delete="onDelete(review)"
@@ -133,7 +134,7 @@ const onDeleteConfirm = () => {
     @cancel="cancel"
     @confirm="onDeleteConfirm"
   >
-    <ReviewItem :review="selectedReview" />
+    <ReviewItem :project="project" :review="selectedReview" />
   </ConfirmModal>
 </template>
 

@@ -1,5 +1,7 @@
 import type { ProjectModel, ProjectSlugOrId, TranslatedProject } from 'shared-projects-frontend'
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import { PROJECT_MODULE_ICON, PROJECT_MODULE_TITLE } from '~/functs/constants'
+import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import { projectTabSkeleton } from '~/skeletons/project-tabs.skeletons'
 import { getAllProjectTab } from '~/api/v2/project-tabs.service'
 import { projectSkeleton } from '@/skeletons/project.skeletons'
@@ -27,7 +29,8 @@ export const useProjectTabs = (
     default: () => factoryPagination(projectTabSkeleton, project?.value?.modules?.tabs || 0),
   })
 
-  const { isAdmin, isMember } = usePermissions()
+  const { isAdmin } = usePermissions()
+  const { isMember } = usePermissionProject(projectId)
 
   const isMemberOrAdmin = computed(() => isMember.value || isAdmin.value)
 

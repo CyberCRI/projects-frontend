@@ -8,10 +8,12 @@ import {
   canEditReview as globalCanEditReview,
   canCreateProject as globalCanCreateProject,
   canEditProject as globalCanEditProject,
-  ProjectModel,
+  isMember as globalIsMember,
+  isOwner as globalIsOwner,
 } from 'shared-projects-frontend'
 import useOrganizationsStore from '~/stores/useOrganizations'
-import { RefOrRaw } from '~/interfaces/utils'
+import type { ProjectModel } from 'shared-projects-frontend'
+import type { RefOrRaw } from '~/interfaces/utils'
 
 import useUsersStore from '~/stores/useUsers'
 
@@ -31,8 +33,10 @@ export const usePermissionProject = (projectId: RefOrRaw<ProjectModel['id'] | nu
 
   const internalProjectId = computed(() => unref(projectId))
 
+  const permissions = computed(() => !internalProjectId.value || !userStore.isConnected)
+
   const canEditProject = computed(() => {
-    if (!internalProjectId.value || !userStore.isConnected) {
+    if (permissions.value) {
       return false
     }
     return globalCanEditProject(
@@ -49,7 +53,7 @@ export const usePermissionProject = (projectId: RefOrRaw<ProjectModel['id'] | nu
   )
 
   const canDeleteProject = computed(() => {
-    if (!internalProjectId.value || !userStore.isConnected) {
+    if (permissions.value) {
       return false
     }
     return globalCanDeleteProject(
@@ -61,7 +65,7 @@ export const usePermissionProject = (projectId: RefOrRaw<ProjectModel['id'] | nu
 
   // comments
   const canCreateComment = computed(() => {
-    if (!internalProjectId.value || !userStore.isConnected) {
+    if (permissions.value) {
       return false
     }
     return globalCanCreateComment(
@@ -72,7 +76,7 @@ export const usePermissionProject = (projectId: RefOrRaw<ProjectModel['id'] | nu
   })
 
   const canEditComment = computed(() => {
-    if (!internalProjectId.value || !userStore.isConnected) {
+    if (permissions.value) {
       return false
     }
     return globalCanEditComment(
@@ -83,7 +87,7 @@ export const usePermissionProject = (projectId: RefOrRaw<ProjectModel['id'] | nu
   })
 
   const canDeleteComment = computed(() => {
-    if (!internalProjectId.value || !userStore.isConnected) {
+    if (permissions.value) {
       return false
     }
     return globalCanDeleteComment(
@@ -95,7 +99,7 @@ export const usePermissionProject = (projectId: RefOrRaw<ProjectModel['id'] | nu
 
   // reviews
   const canCreateReview = computed(() => {
-    if (!internalProjectId.value || !userStore.isConnected) {
+    if (permissions.value) {
       return false
     }
     return globalCanAddReview(
@@ -106,7 +110,7 @@ export const usePermissionProject = (projectId: RefOrRaw<ProjectModel['id'] | nu
   })
 
   const canEditReview = computed(() => {
-    if (!internalProjectId.value || !userStore.isConnected) {
+    if (permissions.value) {
       return false
     }
     return globalCanEditReview(
@@ -117,7 +121,7 @@ export const usePermissionProject = (projectId: RefOrRaw<ProjectModel['id'] | nu
   })
 
   const canDeleteReview = computed(() => {
-    if (!internalProjectId.value || !userStore.isConnected) {
+    if (permissions.value) {
       return false
     }
     return globalCanDeleteReview(
@@ -125,6 +129,20 @@ export const usePermissionProject = (projectId: RefOrRaw<ProjectModel['id'] | nu
       organizationStore.current.id,
       internalProjectId.value
     )
+  })
+
+  const isMember = computed(() => {
+    if (permissions.value) {
+      return false
+    }
+    return globalIsMember(userStore.rights, organizationStore.current.id, internalProjectId.value)
+  })
+
+  const isOwner = computed(() => {
+    if (permissions.value) {
+      return false
+    }
+    return globalIsOwner(userStore.rights, organizationStore.current.id, internalProjectId.value)
   })
 
   return {
@@ -141,5 +159,9 @@ export const usePermissionProject = (projectId: RefOrRaw<ProjectModel['id'] | nu
     canCreateReview,
     canEditReview,
     canDeleteReview,
+
+    // members
+    isMember,
+    isOwner,
   }
 }

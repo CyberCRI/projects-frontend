@@ -47,6 +47,7 @@ import {
   postUserAttachmentFile,
 } from '~/api/attachment-files.service'
 
+import { usePermissionUser } from '~/composables/usePermissions/useUserPermissions'
 import ResourceDrawer from '~/components/resources/ResourceDrawer.vue'
 import ResourcesTab from '~/components/resources/ResourcesTab.vue'
 import FetchLoader from '~/components/base/FetchLoader.vue'
@@ -56,7 +57,7 @@ const props = defineProps<{
   isInEditingMode: boolean
   onProfileEdited: () => void
 }>()
-const { canEditUser } = usePermissions()
+const { canEditUser } = usePermissionUser(computed(() => props.user.id))
 const { translateFiles, translateLinks } = useAutoTranslate()
 const selectedItem = ref(null)
 const isOpened = ref(false)

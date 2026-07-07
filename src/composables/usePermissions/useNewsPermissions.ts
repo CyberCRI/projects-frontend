@@ -1,12 +1,12 @@
 import useOrganizationsStore from '~/stores/useOrganizations'
-import { RefOrRaw } from '~/interfaces/utils'
+import type { RefOrRaw } from '~/interfaces/utils'
 
 import {
   canCreateNews as globalCanCreateNews,
   canEditNews as globalCanEditNews,
   canDeleteNews as globalCanDeleteNews,
-  NewsModel,
 } from 'shared-projects-frontend'
+import type { NewsModel } from 'shared-projects-frontend'
 import useUsersStore from '~/stores/useUsers'
 
 /**

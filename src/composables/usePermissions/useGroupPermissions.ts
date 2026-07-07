@@ -1,11 +1,11 @@
 import useOrganizationsStore from '~/stores/useOrganizations'
-import { RefOrRaw } from '~/interfaces/utils'
+import type { RefOrRaw } from '~/interfaces/utils'
 
 import {
   canEditGroup as globalCanEditGroup,
   canCreateGroup as globalCanCreateGroup,
 } from 'shared-projects-frontend'
-import { PeopleGroupModel } from 'shared-projects-frontend'
+import type { PeopleGroupModel } from 'shared-projects-frontend'
 import useUsersStore from '~/stores/useUsers'
 
 /**

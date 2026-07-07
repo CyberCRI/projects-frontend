@@ -3,12 +3,13 @@ import useProjectCategories from '~/stores/useProjectCategories'
 
 import { onResize } from '~/composables/onResize'
 
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 import { resetScroll } from '~/composables/useScrollToTab'
 
 const { t } = useNuxtI18n()
 const route = useRoute()
-const { canCreateProject } = usePermissions()
+const { canCreateProject } = usePermissionProject(null)
 const projectCategoriesStore = useProjectCategories()
 const { searchFromQuery } = useSearch('projects')
 

@@ -121,6 +121,7 @@
 </template>
 
 <script setup lang="ts">
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import ProjectsNavSimilar from '~/components/project/Nav/ProjectsNavSimilar.vue'
 import type { MenuEntry } from '~/components/base/navigation/NavPanelMenu.vue'
 import { useProjectFollow } from '~/composables/project/useProjectFollow'
@@ -174,7 +175,7 @@ const organizationCode = useOrganizationCode()
 const project = computed(() => props.project)
 const projectId = computed(() => project.value.id)
 
-const { canEditProject, isOrgUser } = usePermissions()
+const { canEditProject } = usePermissionProject(projectId)
 const { isFollowing, toggleFollow } = useProjectFollow(project)
 
 const LIMIT_SIMILARS = 5
@@ -198,7 +199,7 @@ const actionMenu = computed(
       {
         icon: 'Copy' as IconImageChoice,
         key: 'duplicate',
-        condition: canEditProject.value || isOrgUser.value,
+        condition: canEditProject.value,
         label: t('project.duplicate.label'),
         isAddAction: true,
         addModal: 'duplicate',
