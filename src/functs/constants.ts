@@ -8,6 +8,7 @@ import type {
   ProjectModuleExtra,
 } from 'shared-projects-frontend'
 import type { IconImageChoice, IconTabImageChoice } from '~/functs/IconImage'
+import LocationType from '~/components/map/LocationType.vue'
 
 export const RESOURCE_PROJECT_CATEGORY = [
   'inspired-by',
@@ -270,4 +271,21 @@ export const GROUP_MODULE_TITLE: { [key in PeopleGroupModulesKeys]: string } = {
   gallery: 'gallery.pictures',
   news: 'group.news',
   event: 'group.event',
+}
+
+// location
+export const LOCATION_TYPE_ICON: { [key in LocationType]: IconImageChoice } = {
+  impact: 'Sun',
+  team: 'Users',
+  address: 'Home',
+  news: 'NewsLine',
+  event: 'Calendar',
+}
+
+export const LOCATION_TYPE_TITLE: { [key in LocationType]: string } = {
+  impact: 'location.impact',
+  team: 'location.team',
+  address: 'location.address',
+  news: 'location.news',
+  event: 'location.event',
 }

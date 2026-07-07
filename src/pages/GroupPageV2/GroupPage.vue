@@ -55,8 +55,6 @@ import { GROUP_MODULE_ICON, GROUP_MODULE_TITLE } from '~/functs/constants'
 
 import { getGroup } from '~/api/v2/group.service'
 
-import usePeopleGroupsStore from '~/stores/usePeopleGroups'
-
 import { useLpiHead2 } from '~/composables/useLpiHead'
 
 import { usePermissionGroup } from '~/composables/usePermissions/useGroupPermissions'
@@ -64,7 +62,6 @@ import { groupSkeleton } from '~/skeletons/group.skeletons'
 import { onClient } from '~/composables/onClient'
 
 const uniqueId = 'group-nav-panel'
-const peopleGroupsStore = usePeopleGroupsStore()
 const { isNavCollapsed, toggleNavPanel, collapseIfUnderBreakpoint } =
   useToggleableNavPanel(uniqueId)
 const organizationCode = useOrganizationCode()
@@ -79,9 +76,6 @@ const { data: group, isLoading, status, error } = getGroup(organizationCode, gro
 const { canEditGroup } = usePermissionGroup(computed(() => group.value?.id))
 
 const groupLoading = computed(() => isLoading.value && !group.value?.id)
-
-// TODO rework this permissions
-watch(group, (newValue) => (peopleGroupsStore.currentId = newValue.id), { immediate: true })
 
 watchEffect(() => {
   useLpiHead2({

@@ -11,9 +11,8 @@
 </template>
 
 <script setup lang="ts">
+import { LOCATION_TYPE_ICON, LOCATION_TYPE_TITLE } from '~/functs/constants'
 import type { LocationType } from 'shared-projects-frontend'
-
-import { IconMapLocationType } from '~/functs/maps'
 
 const props = withDefaults(defineProps<{ locationType: LocationType; label?: boolean }>(), {
   label: true,
@@ -21,24 +20,8 @@ const props = withDefaults(defineProps<{ locationType: LocationType; label?: boo
 
 const { t } = useNuxtI18n()
 
-const typeLabel = computed(() => {
-  switch (props.locationType) {
-    case 'impact':
-      return t('location.impact')
-    case 'team':
-      return t('location.team')
-    case 'address':
-      return t('location.address')
-    case 'news':
-      return t('location.news')
-    case 'event':
-      return t('location.event')
-    default:
-      return ''
-  }
-})
-
-const pointerIcon = computed(() => IconMapLocationType(props.locationType))
+const typeLabel = computed(() => t(LOCATION_TYPE_TITLE[props.locationType] || ''))
+const pointerIcon = computed(() => LOCATION_TYPE_ICON[props.locationType] || 'Alert')
 </script>
 
 <style lang="scss" scoped>

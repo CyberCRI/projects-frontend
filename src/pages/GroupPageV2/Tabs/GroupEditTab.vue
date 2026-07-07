@@ -10,7 +10,6 @@ import {
   postGroupHeader,
 } from '~/api/groups.service'
 
-import usePeopleGroupsStore from '~/stores/usePeopleGroups'
 import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'
 
@@ -19,6 +18,7 @@ import { useLpiHead2 } from '~/composables/useLpiHead'
 import { usePermissionGroup } from '~/composables/usePermissions/useGroupPermissions'
 import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 import { refreshGroupData } from '~/composables/groups/refreshGroup'
+import type { PeopleGroupModel } from 'shared-projects-frontend'
 import type { AsyncDataRequestStatus } from 'nuxt/app'
 import { isEqual } from 'es-toolkit'
 
@@ -45,13 +45,11 @@ const props = defineProps({
 
 const emit = defineEmits(['close', 'reload-group'])
 const toaster = useToasterStore()
-const peopleGroupsStore = usePeopleGroupsStore()
+const groupId = ref<PeopleGroupModel['id']>()
 const organizationCode = useOrganizationCode()
 const usersStore = useUsersStore()
 
-const { canCreateGroup, canEditGroup } = usePermissionGroup(
-  computed(() => peopleGroupsStore.currentId)
-)
+const { canCreateGroup, canEditGroup } = usePermissionGroup(groupId)
 const route = useRoute()
 const router = useRouter()
 const { t } = useNuxtI18n()
@@ -279,7 +277,6 @@ const status = ref<AsyncDataRequestStatus>('pending')
 onBeforeMount(async () => {
   stopEditWatcher()
   if (!props.groupIdOrSlug) {
-    peopleGroupsStore.currentId = null
     // check right to create (if no grouip id passed) or edit (if group id passed)
     // and 404 if not allowed
     if (!canCreateGroup.value) {
@@ -292,7 +289,7 @@ onBeforeMount(async () => {
     try {
       const originalGroupData = await getGroup(orgCode.value, props.groupIdOrSlug)
       // now we can get the real id (not slug)
-      peopleGroupsStore.currentId = originalGroupData.id
+      groupId.value = originalGroupData.id
       if (!canEditGroup.value) {
         router.push({
           name: 'Group',
