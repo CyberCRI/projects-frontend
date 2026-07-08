@@ -12659,7 +12659,7 @@ setprototypeof@~1.2.0:
 
 "shared-projects-frontend@git+ssh://git@github.com:CyberCRI/shared-projects-frontend.git#main":
   version "1.0.0"
-  resolved "git+ssh://git@github.com:CyberCRI/shared-projects-frontend.git#434f2e2caaab114b53427e92f81f7eac1c21b530"
+  resolved "git+ssh://git@github.com:CyberCRI/shared-projects-frontend.git#fe00d4ffbed67ed21aff23fe242ef44ae82f7101"
   dependencies:
     "@tiptap/core" "2.26.3"
     "@tiptap/extension-code-block" "2.26.3"
@@ -12685,6 +12685,7 @@ setprototypeof@~1.2.0:
     typescript "^6.0.3"
     y-prosemirror "1.3.7"
     yjs "13.6.27"
+    zod "^4.4.3"
 
 shebang-command@^2.0.0:
   version "2.0.0"
@@ -14815,7 +14816,7 @@ zod@4.3.6:
   resolved "https://registry.yarnpkg.com/zod/-/zod-4.3.6.tgz#89c56e0aa7d2b05107d894412227087885ab112a"
   integrity sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==
 
-"zod@^3.25 || ^4.0", "zod@^3.25.0 || ^4.0.0", "zod@^3.25.76 || ^4":
+"zod@^3.25 || ^4.0", "zod@^3.25.0 || ^4.0.0", "zod@^3.25.76 || ^4", zod@^4.4.3:
   version "4.4.3"
   resolved "https://registry.yarnpkg.com/zod/-/zod-4.4.3.tgz#b680f172885d18bbebf21a834ea25e55a1bbf356"
   integrity sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ==

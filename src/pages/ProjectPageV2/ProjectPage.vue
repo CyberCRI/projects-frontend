@@ -48,7 +48,8 @@ const propsTab = computed(() => ({
   project: project.value,
   // @ts-expect-error ignore props not defined
   ...(currentTab.value.props || {}),
-  loading: isLoading.value,
+  // only add loading when project is not set or is skeleton
+  loading: !project.value?.id && isLoading.value,
 }))
 
 // TODO rework this
