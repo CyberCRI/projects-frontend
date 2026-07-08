@@ -1,4 +1,8 @@
-import type { Document, Identifier, ResearcherDocumentAnalytics } from 'shared-projects-frontend'
+import type {
+  Document,
+  Identifier,
+  ResearcherDocumentAnalytics,
+} from 'shared-projects-frontend/models'
 
 import { factoriesSkeleton } from '~/skeletons/base.skeletons'
 import { randomInt } from 'es-toolkit'

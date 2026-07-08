@@ -2,7 +2,7 @@
 import BaseProjectResources from '~/components/project/modules/Resources/BaseProjectResources.vue'
 import { PROJECT_MODULE_ICON, PROJECT_MODULE_TITLE } from '~/functs/constants'
 import BaseModulePreview from '@/components/modules/BaseModulePreview.vue'
-import type { TranslatedProject } from 'shared-projects-frontend'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 
 const props = defineProps<{ project: TranslatedProject }>()
 

@@ -1,4 +1,4 @@
-import type { AttachmentFileModel, AttachmentLinkModel } from 'shared-projects-frontend'
+import type { AttachmentFileModel, AttachmentLinkModel } from 'shared-projects-frontend/models'
 
 export const attachementLinkSkeletons = (
   def?: Partial<AttachmentLinkModel>

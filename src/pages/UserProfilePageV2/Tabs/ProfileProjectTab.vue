@@ -95,7 +95,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedUserModel } from 'shared-projects-frontend'
+import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 
 import UserProjectsSearch from '~/components/people/UserProfile/UserProjectsSearch.vue'
 import UserProjectList from '~/components/people/UserProfile/UserProjectList.vue'

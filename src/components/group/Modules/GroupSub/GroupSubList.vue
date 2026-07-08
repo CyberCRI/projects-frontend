@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
 
 import { getSubGroup } from '~/api/v2/group.service'
 

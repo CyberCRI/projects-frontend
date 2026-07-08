@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import type { UserModel, DocumentType } from 'shared-projects-frontend'
+import type { UserModel, DocumentType } from 'shared-projects-frontend/models'
 
 import { getOwnResearchDocument, getOwnResearchDocumentAnalytics } from '~/api/v2/crisalid.service'
 

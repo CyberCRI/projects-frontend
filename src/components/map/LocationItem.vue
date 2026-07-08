@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AnyTranslatedLocation } from 'shared-projects-frontend'
+import type { AnyTranslatedLocation } from 'shared-projects-frontend/models'
 
 import LocationType from '~/components/map/LocationType.vue'
 

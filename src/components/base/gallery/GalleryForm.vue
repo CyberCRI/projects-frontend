@@ -61,7 +61,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ImageGalleryForm } from 'shared-projects-frontend'
+import type { ImageGalleryForm } from 'shared-projects-frontend/models'
 
 import GalleryList from '~/components/base/gallery/GalleryList.vue'
 import GalleryItem from '~/components/base/gallery/GalleryItem.vue'

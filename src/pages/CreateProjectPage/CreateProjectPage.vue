@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import type { ProjectForm as ProjectFormType } from 'shared-projects-frontend/models'
 import ProjectTemplateForm from '~/components/project/ProjectTemplateForm.vue'
-import type { ProjectForm as ProjectFormType } from 'shared-projects-frontend'
-import { postProject, postProjectHeader } from '~/api/projects.service'
+import { postProject, postProjectHeader } from 'shared-projects-frontend/apis'
 import ProjectForm from '~/components/project/ProjectForm.vue'
 import { imageSizesFormData } from '~/functs/imageSizesUtils'
 import { useProjectTemplatesForm } from '~/form/project'

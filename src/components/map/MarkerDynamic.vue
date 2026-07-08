@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="T extends AnyLocation">
 import type { MarkerDynamicInfo } from '@/components/map/MarkerLocationsDynamic.vue'
-import type { AnyLocation } from 'shared-projects-frontend'
+import type { AnyLocation } from 'shared-projects-frontend/models'
 
 const props = withDefaults(
   defineProps<{

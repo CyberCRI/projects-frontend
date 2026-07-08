@@ -3,8 +3,8 @@ import {
   deleteOrganizationFile,
   patchOrganizationFile,
   postOrganizationFiles,
-} from '~/api/organization-files.service'
-import type { AttachmentFileModel, AttachmentForm } from 'shared-projects-frontend'
+} from 'shared-projects-frontend/apis'
+import type { AttachmentFileModel, AttachmentForm } from 'shared-projects-frontend/models'
 import { attachementFileSkeletons } from '~/skeletons/attachements.skeletons'
 import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import ResourceDrawerV2 from '~/components/resources/ResourceDrawerV2.vue'

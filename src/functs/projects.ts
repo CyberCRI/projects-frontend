@@ -1,5 +1,5 @@
+import type { ProjectTab } from 'shared-projects-frontend/models'
 import type { IconTabImageChoice } from '~/functs/IconImage'
-import type { ProjectTab } from 'shared-projects-frontend'
 import { DEFAULT_ICONS_TABS } from '~/functs/constants'
 import { ICONS_TABS } from '~/functs/IconImage'
 

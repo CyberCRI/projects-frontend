@@ -2,8 +2,8 @@ import type {
   QueryFilterBlogEntry,
   OrganizationModel,
   ProjectSlugOrId,
-} from 'shared-projects-frontend'
-import { getProjectAttachmentLinks as fetchProjectAttachmentLinks } from '~/api/attachment-links.service'
+} from 'shared-projects-frontend/models'
+import { getProjectAttachmentLinks as fetchProjectAttachmentLinks } from 'shared-projects-frontend/apis'
 import type { UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
 import type { RefOrRaw } from '~/interfaces/utils'
 import { onlyRefs } from '@/functs/onlyRefs'

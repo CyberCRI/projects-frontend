@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ImageModel, ImageVariations } from 'shared-projects-frontend'
+import type { ImageModel, ImageVariations } from 'shared-projects-frontend/models'
 
 import LpiButton from '~/components/base/button/LpiButton.vue'
 

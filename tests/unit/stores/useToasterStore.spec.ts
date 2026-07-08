@@ -3,7 +3,7 @@ import { setActivePinia, createPinia } from 'pinia'
 import useToasterStore, { ToastType } from '~/stores/useToaster'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-vi.mock('~/api/notifications.service')
+vi.mock('shared-projects-frontend/apis')
 
 describe('Toaster Store', () => {
   beforeEach(() => {

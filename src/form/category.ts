@@ -1,4 +1,4 @@
-import type { ProjectCategoryModel } from 'shared-projects-frontend'
+import type { ProjectCategoryModel } from 'shared-projects-frontend/models'
 import { NULL_CONTENT } from '~/functs/constants'
 
 export const defaultProjectCategoryForm = (): Partial<ProjectCategoryModel> => {

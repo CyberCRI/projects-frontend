@@ -133,9 +133,9 @@ import {
   patchUserPicture,
   postUser,
   postUserPicture,
-} from '~/api/people.service'
+  getOrgUnits,
+} from 'shared-projects-frontend/apis'
 import { resetUserPassword } from '~/api/people.service.ts'
-import { getOrgUnits } from '~/api/google.service'
 
 import AccountGroupsForm from '~/components/people/Account/AccountGroupsForm.vue'
 import OtherOrgUserCard from '~/components/people/Account/OtherOrgUserCard.vue'

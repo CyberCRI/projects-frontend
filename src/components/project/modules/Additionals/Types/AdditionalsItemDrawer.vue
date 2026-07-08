@@ -5,7 +5,7 @@ import type {
   TranslatedProjectTab,
   TranslatedProjectTabItem,
   TranslatedProject,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 import InlineAdditionalsItemForm from '~/components/project/modules/Additionals/Types/InlineAdditionalsItemForm.vue'
 
 withDefaults(

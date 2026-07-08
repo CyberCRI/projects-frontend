@@ -5,19 +5,19 @@ import waitForExpect from 'wait-for-expect'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import pinia from '~/stores'
 
-import { OrganizationOutput } from 'shared-projects-frontend'
+import { OrganizationOutput } from 'shared-projects-frontend/models'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
 
-import { getOrgClassificationTags } from '~/api/tag-classification.service'
+import { getOrgClassificationTags } from 'shared-projects-frontend/apis'
 
 vi.mock('es-toolkit', () => ({
   debounce: vi.fn((fn) => fn),
   throttle: vi.fn((fn) => fn),
   capitalize: vi.fn((t) => t || ''),
 }))
-vi.mock('~/api/tag-classification.service', () => ({
+vi.mock('shared-projects-frontend/apis', () => ({
   getOrgClassificationTags: vi.fn().mockResolvedValue({
     count: 3,
     current_page: 1,

@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import type { InstructionModel } from 'shared-projects-frontend'
+import type { InstructionModel } from 'shared-projects-frontend/models'
 
 import { usePermissionInstruction } from '~/composables/usePermissions/useInstructionPermissions'
 import ContextActionMenu from '~/components/base/button/ContextActionMenu.vue'

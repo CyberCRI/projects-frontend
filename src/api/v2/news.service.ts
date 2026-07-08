@@ -1,9 +1,9 @@
-import type { NewsModel, QueryFilterNews, OrganizationModel } from 'shared-projects-frontend'
+import type { NewsModel, QueryFilterNews, OrganizationModel } from 'shared-projects-frontend/models'
 
 import type { RefOrRaw } from '~/interfaces/utils'
 
+import { getAllNews as fetchAllNews, getNews as fetchNews } from 'shared-projects-frontend/apis'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
-import { getAllNews as fetchAllNews, getNews as fetchNews } from '~/api/news.service'
 
 import { onlyRefs } from '~/functs/onlyRefs'
 

@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import type { TranslatedBlogEntry, TranslatedProject } from 'shared-projects-frontend'
+import type { TranslatedBlogEntry, TranslatedProject } from 'shared-projects-frontend/models'
 import BlogDrawer from '~/components/project/modules/BlogEntries/BlogDrawer.vue'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { blogentriesSkeletons } from '@/skeletons/blogentries.skeletons'
+import { deleteBlogEntry } from 'shared-projects-frontend/apis'
 import { getBlogEntries } from '@/api/v2/blogentries.service'
 import NothingHere from '~/components/base/NothingHere.vue'
 import FetchLoader from '@/components/base/FetchLoader.vue'
-import { deleteBlogEntry } from '~/api/blogentries.service'
 
 const props = withDefaults(
   defineProps<{

@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedBlogEntry } from 'shared-projects-frontend'
+import type { TranslatedBlogEntry } from 'shared-projects-frontend/models'
 
 import TipTapOutput from '~/components/base/form/TextEditor/TipTapOutput.vue'
 import type { RouteLocationRaw } from 'vue-router'

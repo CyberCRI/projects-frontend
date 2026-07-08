@@ -54,9 +54,7 @@
   </div>
 </template>
 <script>
-import { getAllInstructions } from '~/api/instruction.service'
-import { searchProjects } from '~/api/search.service'
-import { getAllEvents } from '~/api/event.service'
+import { getAllInstructions, searchProjects, getAllEvents } from 'shared-projects-frontend/apis'
 
 import InstructionSummaryBlock from '~/components/home/SummaryCards/InstructionSummaryBlock.vue'
 import ProjectSummaryBlock from '~/components/home/SummaryCards/ProjectSummaryBlock.vue'

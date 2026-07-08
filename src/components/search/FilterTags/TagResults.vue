@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { getOrgClassificationTags } from '~/api/tag-classification.service'
+import { getOrgClassificationTags } from 'shared-projects-frontend/apis'
 
 import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'

@@ -11,7 +11,10 @@
 </template>
 
 <script setup lang="ts" generic="T extends AnyTranslatedLocation">
-import type { TranslatedPeopleGroupModel, AnyTranslatedLocation } from 'shared-projects-frontend'
+import type {
+  TranslatedPeopleGroupModel,
+  AnyTranslatedLocation,
+} from 'shared-projects-frontend/models'
 import type CardLocationPopUp from '@/components/map/CardLocationPopUp.vue'
 import { DEFAULT_GROUP_PATATOID } from '@/composables/usePatatoids'
 

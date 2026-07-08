@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { postOrgClassification, putOrgClassification } from '~/api/tag-classification.service'
+import { postOrgClassification, putOrgClassification } from 'shared-projects-frontend/apis'
 
 import TagClassificationAdmin from '~/components/admin/TagClassificationAdmin.vue'
 import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
-import type { TagClassificationModel } from 'shared-projects-frontend'
+import type { TagClassificationModel } from 'shared-projects-frontend/models'
 import { defaultTagClassificationForm } from '~/form/classification'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'

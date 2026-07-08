@@ -70,7 +70,7 @@
 
 <script setup lang="ts">
 import type { MenuEntry } from '~/components/base/navigation/NavPanelMenu.vue'
-import type { PeopleModel } from 'shared-projects-frontend'
+import type { PeopleModel } from 'shared-projects-frontend/models'
 import type { RouteLocationRaw } from 'vue-router'
 
 const props = withDefaults(

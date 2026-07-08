@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { patchTermsAndConditions } from '~/api/organizations.service'
+import { patchTermsAndConditions } from 'shared-projects-frontend/apis'
 import { NULL_CONTENT } from '~/functs/constants'
 
 import useOrganizations from '~/stores/useOrganizations'

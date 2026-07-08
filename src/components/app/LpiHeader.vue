@@ -185,8 +185,8 @@
 </template>
 
 <script>
+import { getAnnouncements } from 'shared-projects-frontend/apis'
 import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
-import { getAnnouncements } from '~/api/announcements.service'
 import { patchUser } from '~/api/people.service.ts'
 
 import HeaderItemList from '~/components/base/navigation/HeaderItemList.vue'

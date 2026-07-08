@@ -1,6 +1,6 @@
 import { createFactory } from 'faker-create-factory'
 
-import { BlogEntryModel } from 'shared-projects-frontend'
+import { BlogEntryModel } from 'shared-projects-frontend/models'
 import BaseFactory from './base.factory'
 
 export const BlogEntryFactory = createFactory<BlogEntryModel>((faker) => ({

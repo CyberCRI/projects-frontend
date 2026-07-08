@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedUserModel } from 'shared-projects-frontend'
+import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 
 import { getUserMentorship } from '~/api/v2/mentoring.service'
 

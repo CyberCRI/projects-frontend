@@ -59,11 +59,11 @@
 </template>
 
 <script setup lang="ts">
-import { askMentorship, offerMentorship } from '@/api/mentorship.service'
+import { askMentorship, offerMentorship } from 'shared-projects-frontend/apis'
+import type { SkillModel } from 'shared-projects-frontend/models'
 import FieldErrors from '@/components/base/form/FieldErrors.vue'
 import { email, helpers, required } from '@vuelidate/validators'
 import TextInput from '@/components/base/form/TextInput.vue'
-import type { SkillModel } from 'shared-projects-frontend'
 import BaseDrawer from '@/components/base/BaseDrawer.vue'
 import { defaultMentoringForm } from '@/form/mentorship'
 import useToasterStore from '@/stores/useToaster'

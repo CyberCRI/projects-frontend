@@ -4,7 +4,7 @@ import type {
   SearchResultProject,
   SearchResultUser,
   SearchObjectType,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 import { projectSkeleton } from '~/skeletons/project.skeletons'
 import { groupSkeleton } from '~/skeletons/group.skeletons'
 import { userSkeleton } from '~/skeletons/user.skeletons'

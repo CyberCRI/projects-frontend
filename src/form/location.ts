@@ -1,6 +1,6 @@
 import { maxLength, required } from '@vuelidate/validators'
 
-import type { LocationForm } from 'shared-projects-frontend'
+import type { LocationForm } from 'shared-projects-frontend/models'
 
 import useForm from '~/composables/useForm'
 

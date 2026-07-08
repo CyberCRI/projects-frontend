@@ -5,7 +5,7 @@ import type {
   TranslatedProject,
   LocationGeneral,
   TranslatedNews,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 import ProjectLocationPopUp from '~/components/project/modules/Locations/ProjectLocationPopUp.vue'
 import GroupLocationPopUp from '@/components/group/Map/GroupLocationPopUp.vue'
 import LocationEventPopUp from '@/components/event/map/LocationEventPopUp.vue'

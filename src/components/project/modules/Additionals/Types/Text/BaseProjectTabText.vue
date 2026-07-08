@@ -3,7 +3,7 @@ import type {
   TranslatedProjectTab,
   TranslatedProjectTabItem,
   TranslatedProject,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 import InlineAdditionalsItemForm from '~/components/project/modules/Additionals/Types/InlineAdditionalsItemForm.vue'
 import BaseAdditionalsTab from '~/components/project/modules/Additionals/Types/BaseAdditionalsTab.vue'
 import BaseDescription from '~/components/modules/Abstract/BaseDescription.vue'

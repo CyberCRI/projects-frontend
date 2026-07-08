@@ -4,7 +4,7 @@ import type {
   TranslatedAttachmentLink,
   TranslatedAttachmentFile,
   TranslatedProject,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 import QRCode from 'qrcode'
 
 export default async function addResourceSectionFactory(

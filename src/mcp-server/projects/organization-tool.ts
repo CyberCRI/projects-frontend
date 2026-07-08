@@ -1,4 +1,4 @@
-import { getFeaturedProjects, getOrganizationByCode } from '~/api/organizations.service'
+import { getFeaturedProjects, getOrganizationByCode } from 'shared-projects-frontend/apis'
 import { mcpOptions, orgCode, resultFromTool } from './base'
 import type { TypeMcpServer } from '~/interfaces/mcp'
 import { mapProjectPreview } from './project-tool'

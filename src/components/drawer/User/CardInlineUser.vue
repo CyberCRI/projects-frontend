@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 import BaseCardInline from '~/components/drawer/BaseCardInline.vue'
-import type { TranslatedUserModel } from 'shared-projects-frontend'
 import { capitalize } from '~/functs/string'
 
 const props = defineProps<{

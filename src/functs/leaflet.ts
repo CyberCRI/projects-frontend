@@ -1,4 +1,4 @@
-import type { LocationType } from 'shared-projects-frontend'
+import type { LocationType } from 'shared-projects-frontend/models'
 import { LOCATION_TYPE_ICON } from '~/functs/constants'
 import { ICONS } from '@/functs/IconImage'
 import * as L from 'leaflet'

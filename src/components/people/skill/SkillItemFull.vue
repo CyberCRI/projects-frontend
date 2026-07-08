@@ -106,7 +106,7 @@ import ToolTip from '~/components/base/ToolTip.vue'
 
 import useSkillTexts from '~/composables/useSkillTexts'
 
-import type { UserSkillModel } from 'shared-projects-frontend'
+import type { UserSkillModel } from 'shared-projects-frontend/models'
 import { capitalize } from '~/functs/string'
 
 const props = withDefaults(

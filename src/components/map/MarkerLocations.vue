@@ -1,7 +1,7 @@
 <script setup lang="ts" generic="TLocation extends AnyTranslatedLocation">
 import * as L from 'leaflet'
 
-import type { AnyTranslatedLocation, LocationType } from 'shared-projects-frontend'
+import type { AnyTranslatedLocation, LocationType } from 'shared-projects-frontend/models'
 import AllLocationPopUp from '@/components/map/AllLocationPopUp.vue'
 import MarkerIcon from '@/components/map/MarkerIcon.vue'
 import { isEqual } from 'es-toolkit'

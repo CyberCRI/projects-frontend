@@ -1,4 +1,4 @@
-import type { Roles } from 'shared-projects-frontend'
+import type { Roles } from 'shared-projects-frontend/models'
 
 /**
  * return translaged name from role

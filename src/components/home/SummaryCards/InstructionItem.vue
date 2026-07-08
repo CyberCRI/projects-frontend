@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedInstruction } from 'shared-projects-frontend'
+import type { TranslatedInstruction } from 'shared-projects-frontend/models'
 
 import { usePermissionInstruction } from '~/composables/usePermissions/useInstructionPermissions'
 import ContextActionMenu from '~/components/base/button/ContextActionMenu.vue'

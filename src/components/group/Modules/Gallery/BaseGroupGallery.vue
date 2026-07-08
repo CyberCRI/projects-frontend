@@ -44,9 +44,9 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel, ImageGalleryForm } from 'shared-projects-frontend'
+import type { TranslatedPeopleGroupModel, ImageGalleryForm } from 'shared-projects-frontend/models'
 
-import { deleteGroupGallery, postGroupGallery } from '~/api/groups.service'
+import { deleteGroupGallery, postGroupGallery } from 'shared-projects-frontend/apis'
 import { getGroupGallery } from '~/api/v2/group.service'
 
 import PaginationButtonsV2 from '~/components/base/navigation/PaginationButtonsV2.vue'

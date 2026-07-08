@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { getStats } from '~/api/stats.service'
+import { getStats } from 'shared-projects-frontend/apis'
 
 import TimeOrgChart from '~/components/stats/Charts/TimeOrgChart.vue'
 import LpiLoader from '~/components/base/loader/LoaderSimple.vue'

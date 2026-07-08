@@ -34,8 +34,10 @@ import {
   patchProjectMessage,
   postProjectMessage,
   postProjectMessageImage,
-} from '~/api/project-messages.service'
-import { patchComment, postComment, postCommentImage } from '~/api/comments.service'
+  patchComment,
+  postComment,
+  postCommentImage,
+} from 'shared-projects-frontend/apis'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
@@ -50,7 +52,7 @@ import type {
   TranslatedProject,
   CommentModel,
   ImageModel,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import { defaultProjectMessageForm, useProjectMessageForm } from '~/form/messages'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'

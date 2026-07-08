@@ -28,7 +28,7 @@ import type {
   TranslatedNews,
   TranslatedGoal,
   TranslatedTag,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 import type { TranslatedAgent } from '~/models/agent.model'
 import type { RefOrRaw } from '~/interfaces/utils'
 

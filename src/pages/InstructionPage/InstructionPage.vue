@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { InstructionId } from 'shared-projects-frontend'
+import type { InstructionId } from 'shared-projects-frontend/models'
 
+import { deleteInstruction } from 'shared-projects-frontend/apis'
 import { getInstruction } from '~/api/v2/instruction.service'
-import { deleteInstruction } from '~/api/instruction.service'
 
 import FetchLoader from '~/components/base/FetchLoader.vue'
 

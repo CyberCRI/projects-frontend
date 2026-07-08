@@ -1,11 +1,10 @@
 <script setup lang="ts">
+import { postUserWithInvitation, getInvitation } from 'shared-projects-frontend/apis'
 import { imageSizesFormDataPost } from '@/functs/imageSizesUtils'
 import { email, helpers, required } from '@vuelidate/validators'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
-import useOrganizationsStore from '@/stores/useOrganizations'
-import { postUserWithInvitation } from '@/api/people.service'
+import useOrganizationsStore from '~/stores/useOrganizations'
 import { getPatatoidFile } from '@/composables/usePatatoids'
-import { getInvitation } from '@/api/invitations.service'
 import { usePublicURL } from '@/composables/usePublic'
 import useToasterStore from '@/stores/useToaster'
 import useVuelidate from '@vuelidate/core'
@@ -99,7 +98,7 @@ const register = async () => {
 
     formData.append('language', locale.value)
 
-    await postUserWithInvitation(props.token, formData)
+    await postUserWithInvitation(organizationCode, props.token, formData)
 
     confirm.value = true
   } catch (error) {

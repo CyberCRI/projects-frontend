@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { patchBlogEntry, postBlogEntry, postBlogEntryImage } from '~/api/blogentries.service'
+import { patchBlogEntry, postBlogEntry, postBlogEntryImage } from 'shared-projects-frontend/apis'
 
 import TipTapCollaborativeEditor from '~/components/base/form/TextEditor/TipTapCollaborativeEditor.vue'
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
@@ -11,15 +11,15 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'
 
-import {
-  type BlogEntryForm,
-  type BlogEntryModel,
-  type TranslatedProject,
-  type ProviderParams,
-  type ImageModel,
-  roomKeyFromParams,
-} from 'shared-projects-frontend'
+import type {
+  BlogEntryForm,
+  BlogEntryModel,
+  TranslatedProject,
+  ImageModel,
+} from 'shared-projects-frontend/models'
+import type { ProviderParams } from 'shared-projects-frontend/interfaces'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
+import { roomKeyFromParams } from 'shared-projects-frontend/lib'
 import { defaultBlogForm, useBlogEntryForm } from '~/form/blog'
 import { getFirstTextNotEmpty } from '~/functs/tiptap'
 import { formEqual } from '~/form/base'

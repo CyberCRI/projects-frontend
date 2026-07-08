@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import { LOCATION_TYPE_ICON, LOCATION_TYPE_TITLE } from '~/functs/constants'
-import type { LocationType } from 'shared-projects-frontend'
+import type { LocationType } from 'shared-projects-frontend/models'
 
 const props = withDefaults(defineProps<{ locationType: LocationType; label?: boolean }>(), {
   label: true,

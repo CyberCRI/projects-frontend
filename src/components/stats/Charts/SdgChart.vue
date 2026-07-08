@@ -5,9 +5,9 @@
 </template>
 
 <script setup lang="ts">
+import type { Stats } from 'shared-projects-frontend/models'
 import { CHART_COLORS, SDGS } from '~/functs/constants'
 import LpiBarChart from './Generic/LpiBarChart.vue'
-import type { Stats } from '~/api/stats.service'
 
 const props = withDefaults(
   defineProps<{

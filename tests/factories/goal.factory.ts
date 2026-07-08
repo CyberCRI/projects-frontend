@@ -1,6 +1,6 @@
 import { createFactory } from 'faker-create-factory'
 
-import { GoalModel, TranslatedGoal } from 'shared-projects-frontend'
+import { GoalModel, TranslatedGoal } from 'shared-projects-frontend/models'
 import BaseFactory from './base.factory'
 
 export const GoalFactory = createFactory<GoalModel>((faker) => ({

@@ -1,5 +1,5 @@
 import { OrganizationOutputFactory } from './organization.factory'
-import { NewsModel } from 'shared-projects-frontend'
+import { NewsModel } from 'shared-projects-frontend/models'
 import { createFactory } from 'faker-create-factory'
 import BaseFactory from './base.factory'
 

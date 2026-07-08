@@ -10,9 +10,9 @@ import {
   canEditProject as globalCanEditProject,
   isMember as globalIsMember,
   isOwner as globalIsOwner,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/lib'
+import type { ProjectModel } from 'shared-projects-frontend/models'
 import useOrganizationsStore from '~/stores/useOrganizations'
-import type { ProjectModel } from 'shared-projects-frontend'
 import type { RefOrRaw } from '~/interfaces/utils'
 
 import useUsersStore from '~/stores/useUsers'

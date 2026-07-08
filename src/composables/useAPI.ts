@@ -1,28 +1,17 @@
 import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'
 
+import type { clientAPIOptions } from 'shared-projects-frontend/apis'
+import { configureAPI } from 'shared-projects-frontend/apis'
 import { useRuntimeConfig } from '#imports'
 
-import { merge } from 'es-toolkit'
-
-type OFetchOrgiginalOptions = Parameters<typeof $fetch>['1']
-
-export type UseApiOptions<
-  Query extends OFetchOrgiginalOptions['query'] = OFetchOrgiginalOptions['query'],
-  Body extends OFetchOrgiginalOptions['body'] = OFetchOrgiginalOptions['body'],
-> = OFetchOrgiginalOptions & {
-  query?: Query
-  body?: Body
-  noError?: boolean
-}
-
-export const defaultOptions = () => {
+export const initializeClientApi = () => {
   let _localStorage = null
   if (import.meta.client && import.meta.env.VITEST !== 'true') _localStorage = window?.localStorage
   const localStorage = _localStorage
   const runtimeConfig = useRuntimeConfig()
 
-  return {
+  configureAPI({
     baseURL: runtimeConfig.public.appApiUrl + runtimeConfig.public.appApiDefaultVersion + '/',
     method: 'GET',
     onRequest({ options }) {
@@ -52,7 +41,7 @@ export const defaultOptions = () => {
       if (response?._data) localStorage?.setItem('token', response._data.token)
     },
     async onResponseError({ request, options, response }) {
-      const opts = options as UseApiOptions
+      const opts = options as clientAPIOptions
       // // keep for futur debug
       // console.error(response)
       // var e = new Error()
@@ -109,15 +98,5 @@ export const defaultOptions = () => {
 
       return Promise.reject(response)
     },
-  } satisfies UseApiOptions
+  })
 }
-
-const useAPI = <T, Query = unknown, Body = unknown>(
-  url: string,
-  options?: UseApiOptions<Query, Body>
-) => {
-  const _options = merge(defaultOptions(), options || {})
-  return $fetch<T>(url, _options)
-}
-
-export default useAPI

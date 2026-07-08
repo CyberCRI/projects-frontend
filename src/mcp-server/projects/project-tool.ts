@@ -1,3 +1,18 @@
+import {
+  getLinkedProject,
+  getProject,
+  getProjectGroups,
+  getProjectMembers,
+  getProjectSimilars,
+  getProjectAttachmentLinks,
+  getProjectAttachmentFiles,
+  getBlogEntries,
+  getBlogEntry,
+  getProjectAnnouncements,
+  getProjectLocations,
+  getProjectGoals,
+  getReviews,
+} from 'shared-projects-frontend/apis'
 import type {
   ProjectModel,
   ProjectModulesKeys,
@@ -9,25 +24,11 @@ import type {
   LocationModel,
   ReviewModel,
   GoalModel,
-} from 'shared-projects-frontend'
-import {
-  getLinkedProject,
-  getProject,
-  getProjectGroups,
-  getProjectMembers,
-  getProjectSimilars,
-} from '~/api/projects.service'
+} from 'shared-projects-frontend/models'
 import { mapPeopleGroupPreview, mapUserPreview } from '~/mcp-server/projects/people-tool'
-import { getProjectAttachmentLinks } from '~/api/attachment-links.service'
-import { getProjectAttachmentFiles } from '~/api/attachment-files.service'
 import { addIfExists, tagMapPreview } from '~/mcp-server/projects/utils'
-import { getBlogEntries, getBlogEntry } from '~/api/blogentries.service'
-import { getProjectAnnouncements } from '~/api/announcements.service'
-import { getProjectLocations } from '~/api/locations.service'
 import { mcpOptions, orgCode, resultFromTool } from './base'
-import { getProjectGoals } from '~/api/goals.service'
 import type { TypeMcpServer } from '~/interfaces/mcp'
-import { getReviews } from '~/api/reviews.service'
 import { mapSDG } from './sdg-tool'
 import { pick } from 'es-toolkit'
 import { z } from 'zod'

@@ -2,9 +2,9 @@
 import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import { useProjectHierarchy } from '~/composables/project/useProjectHierarchy'
 import ProjectNavPanel from '~/components/project/Nav/ProjectNavPanel.vue'
+import type { ProjectSlugOrId } from 'shared-projects-frontend/models'
 import { useProjectTabs } from '~/composables/project/useProjectTabs'
 import { projectSkeleton } from '@/skeletons/project.skeletons'
-import type { ProjectSlugOrId } from 'shared-projects-frontend'
 import { getProject } from '@/api/v2/project.service'
 import useProjectsStore from '~/stores/useProjects'
 

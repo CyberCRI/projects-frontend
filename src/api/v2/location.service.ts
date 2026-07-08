@@ -1,8 +1,8 @@
-import type { OrganizationModel, TranslatedLocationGeneral } from 'shared-projects-frontend'
+import type { OrganizationModel, TranslatedLocationGeneral } from 'shared-projects-frontend/models'
 
 import type { RefOrRaw } from '~/interfaces/utils'
 
-import { getLocations as fetchGetLocations } from '~/api/locations.service'
+import { getLocations as fetchGetLocations } from 'shared-projects-frontend/apis'
 
 import useAsyncAPI from '~/composables/useAsyncAPI'
 

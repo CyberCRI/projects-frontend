@@ -1,4 +1,8 @@
-import type { ProjectModel, ProjectSlugOrId, TranslatedProject } from 'shared-projects-frontend'
+import type {
+  ProjectModel,
+  ProjectSlugOrId,
+  TranslatedProject,
+} from 'shared-projects-frontend/models'
 import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import { PROJECT_MODULE_ICON, PROJECT_MODULE_TITLE } from '~/functs/constants'
 import { usePermissions } from '~/composables/usePermissions/usePermissions'

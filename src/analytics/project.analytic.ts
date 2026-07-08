@@ -2,7 +2,7 @@ import type {
   ProjectMembersAddInput,
   ProjectMembersDeleteInput,
   ProjectSlugOrId,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 
 import type { SearchParams } from '~/api/types'
 

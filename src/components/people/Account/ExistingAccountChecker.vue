@@ -39,9 +39,9 @@
 import { email as emailValidator, helpers, required } from '@vuelidate/validators'
 import useValidate from '@vuelidate/core'
 
-import type { UserModel } from 'shared-projects-frontend'
+import type { UserModel } from 'shared-projects-frontend/models'
 
-import { searchPeopleByExactMail } from '~/api/people.service'
+import { searchPeopleByExactMail } from 'shared-projects-frontend/apis'
 
 import AccountFormTitleBlock from '~/components/people/Account/AccountFormTitleBlock.vue'
 import FieldErrors from '~/components/base/form/FieldErrors.vue'

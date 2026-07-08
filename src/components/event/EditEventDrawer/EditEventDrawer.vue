@@ -20,9 +20,9 @@
 </template>
 
 <script setup lang="ts">
-import type { EventModel } from 'shared-projects-frontend'
+import type { EventModel } from 'shared-projects-frontend/models'
 
-import { createEvent, putEvent } from '~/api/event.service'
+import { createEvent, putEvent } from 'shared-projects-frontend/apis'
 
 import EventForm from '~/components/event/EventForm/EventForm.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'

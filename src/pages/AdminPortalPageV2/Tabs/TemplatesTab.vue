@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { deleteTemplate } from '~/api/templates.service'
+import { deleteTemplate } from 'shared-projects-frontend/apis'
 
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import AdminList from '~/components/admin/AdminListItem.vue'

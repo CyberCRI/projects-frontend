@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import GroupResearcherDocumentsList from '~/components/people/Researcher/GroupResearcherDocumentsList.vue'
-import type { DocumentType, TranslatedPeopleGroupModel } from 'shared-projects-frontend'
+import type { DocumentType, TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
 import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
 
 import { GROUP_MODULE_TITLE } from '~/functs/constants'

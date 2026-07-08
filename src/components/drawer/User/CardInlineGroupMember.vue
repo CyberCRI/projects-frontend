@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TranslatedGroupMember } from 'shared-projects-frontend'
+import type { TranslatedGroupMember } from 'shared-projects-frontend/models'
 import BaseCardInline from '~/components/drawer/BaseCardInline.vue'
 import { capitalize } from '~/functs/string'
 

@@ -8,7 +8,7 @@ import BaseFactory from './base.factory'
 //     ProjectMembersDeleteInput,
 //     ProjectMemberPeopleGroupOutput,
 //     ProjectTeamModel,
-// } from 'shared-projects-frontend'
+// } from 'shared-projects-frontend/models'
 
 // todo use groupmember model
 export const GroupMemberFactory = createFactory<any>((faker) => ({

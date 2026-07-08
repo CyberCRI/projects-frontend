@@ -92,7 +92,7 @@ import {
   patchProjectCategory,
   patchProjectCategoryBackground,
   postProjectCategoryBackground,
-} from '~/api/project-categories.service'
+} from 'shared-projects-frontend/apis'
 
 import CategoryAdminElement from '~/components/category/CategoryAdminElement.vue'
 import CategoryDrawer from '~/components/category/CategoryDrawer.vue'

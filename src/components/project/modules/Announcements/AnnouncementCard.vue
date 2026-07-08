@@ -56,8 +56,8 @@
 </template>
 
 <script setup lang="ts">
+import type { TranslatedAnnouncement, TranslatedProject } from 'shared-projects-frontend/models'
 import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
-import type { TranslatedAnnouncement, TranslatedProject } from 'shared-projects-frontend'
 import IconImage from '@/components/base/media/IconImage.vue'
 import { usePatatoid } from '@/composables/usePatatoids'
 import type { RouteLocationRaw } from 'vue-router'

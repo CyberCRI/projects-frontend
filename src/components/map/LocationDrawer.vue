@@ -116,8 +116,8 @@ import type {
   LocationForm as LocationFormType,
   Geocoding,
   LocationType,
-} from 'shared-projects-frontend'
-import { useSuggestLocations } from '~/api/geocoding.service'
+} from 'shared-projects-frontend/models'
+import { useSuggestLocations } from 'shared-projects-frontend/apis'
 import GeneralMap from '@/components/map/GeneralMap.vue'
 import useToasterStore from '@/stores/useToaster'
 

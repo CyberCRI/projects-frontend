@@ -3,8 +3,8 @@ import type {
   TranslatedPeopleGroupModel,
   ProjectGroupRoleType,
   TranslatedProject,
-} from 'shared-projects-frontend'
-import { addProjectMembers, deleteProjectMembers } from '~/api/project-members.service'
+} from 'shared-projects-frontend/models'
+import { addProjectMembers, deleteProjectMembers } from 'shared-projects-frontend/apis'
 import GroupSelectDrawer from '~/components/drawer/Group/GroupSelectDrawer.vue'
 import CardInlineGroup from '~/components/drawer/Group/CardInlineGroup.vue'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'

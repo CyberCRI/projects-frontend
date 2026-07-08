@@ -65,7 +65,10 @@ import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import ResourceCard from '~/components/resources/ResourceCard.vue'
 import SectionHeader from '~/components/base/SectionHeader.vue'
 
-import type { TranslatedAttachmentLink, TranslatedAttachmentFile } from 'shared-projects-frontend'
+import type {
+  TranslatedAttachmentLink,
+  TranslatedAttachmentFile,
+} from 'shared-projects-frontend/models'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { getMimeFromType } from '~/functs/imageSizesUtils'
 import useToasterStore from '~/stores/useToaster'

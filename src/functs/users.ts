@@ -1,5 +1,5 @@
 // project members can  be group or user
-import type { UserModel } from 'shared-projects-frontend'
+import type { UserModel } from 'shared-projects-frontend/models'
 
 /**
  * check if user is anonymous

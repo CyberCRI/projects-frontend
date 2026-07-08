@@ -5,8 +5,8 @@ import {
   canCreateNews as globalCanCreateNews,
   canEditNews as globalCanEditNews,
   canDeleteNews as globalCanDeleteNews,
-} from 'shared-projects-frontend'
-import type { NewsModel } from 'shared-projects-frontend'
+} from 'shared-projects-frontend/lib'
+import type { NewsModel } from 'shared-projects-frontend/models'
 import useUsersStore from '~/stores/useUsers'
 
 /**

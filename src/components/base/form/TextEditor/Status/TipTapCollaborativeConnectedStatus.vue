@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type UserPresenceCard from '~/components/base/form/TextEditor/Utils/UserPresenceCard.vue'
-import type { CollaborativeUser } from 'shared-projects-frontend'
+import type { CollaborativeUser } from 'shared-projects-frontend/interfaces'
 import type { WebSocketStatus } from '@hocuspocus/provider'
 
 defineProps<{

@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import type { TranslatedTag } from 'shared-projects-frontend/models'
 import BaseCardInline from '~/components/drawer/BaseCardInline.vue'
-import type { TranslatedTag } from 'shared-projects-frontend'
 
 const props = defineProps<{
   tag: TranslatedTag

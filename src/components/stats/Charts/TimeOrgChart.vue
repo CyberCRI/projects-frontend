@@ -5,8 +5,8 @@
 </template>
 
 <script setup lang="ts">
+import type { Stats } from 'shared-projects-frontend/models'
 import type LpiLineChart from './Generic/LpiLineChart.vue'
-import type { Stats } from '~/api/stats.service'
 
 const props = withDefaults(
   defineProps<{

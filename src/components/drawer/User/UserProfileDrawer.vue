@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { UserModel } from 'shared-projects-frontend'
+import type { UserModel } from 'shared-projects-frontend/models'
 
 withDefaults(
   defineProps<{

@@ -3,9 +3,9 @@ import type {
   TranslatedProjectCategory,
   TemplateModel,
   ProjectForm,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
+import { getTemplate } from 'shared-projects-frontend/apis'
 import { useProjectTemplatesForm } from '~/form/project'
-import { getTemplate } from '~/api/templates.service'
 import Field from '~/components/base/form/Field.vue'
 import useToasterStore from '~/stores/useToaster'
 import { useOrganizationCode } from '#imports'

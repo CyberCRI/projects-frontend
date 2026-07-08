@@ -9,8 +9,8 @@
 
 <script setup lang="ts">
 import BaseProjectAnnouncements from '@/components/project/modules/Announcements/BaseProjectAnnouncements.vue'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
-import type { TranslatedProject } from 'shared-projects-frontend'
 import { PROJECT_MODULE_TITLE } from '~/functs/constants'
 
 const props = withDefaults(

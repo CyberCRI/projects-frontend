@@ -1,12 +1,12 @@
 import LinkListTab from '~/pages/AdminPortalPageV2/Tabs/LinksListTab.vue'
+import * as invitationSrv from 'shared-projects-frontend/apis'
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
-import * as invitationSrv from '~/api/invitations.service'
 import { flushPromises } from '@vue/test-utils'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
 import pinia from '~/stores'
 
-import { OrganizationOutput } from 'shared-projects-frontend'
+import { OrganizationOutput } from 'shared-projects-frontend/models'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
 

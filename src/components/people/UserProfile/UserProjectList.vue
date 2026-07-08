@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedProject } from 'shared-projects-frontend'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 
 import ProjectCard from '~/components/project/ProjectCard.vue'
 import CardList from '~/components/base/CardList.vue'

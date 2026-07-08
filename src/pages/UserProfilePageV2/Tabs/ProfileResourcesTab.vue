@@ -32,20 +32,18 @@
 </template>
 
 <script setup lang="ts">
-import type { UserModel } from 'shared-projects-frontend'
+import type { UserModel } from 'shared-projects-frontend/models'
 
 import {
   deleteUserAttachmentLink,
   getUserAttachmentLink,
   patchUserAttachmentLink,
   postUserAttachmentLink,
-} from '~/api/attachment-links.service'
-import {
   deleteUserAttachmentFile,
   getUserAttachmentFile,
   patchUserAttachmentFile,
   postUserAttachmentFile,
-} from '~/api/attachment-files.service'
+} from 'shared-projects-frontend/apis'
 
 import { usePermissionUser } from '~/composables/usePermissions/useUserPermissions'
 import ResourceDrawer from '~/components/resources/ResourceDrawer.vue'

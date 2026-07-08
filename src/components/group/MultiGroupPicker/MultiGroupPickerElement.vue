@@ -42,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import type { GroupModel, HierarchyGroupModel } from 'shared-projects-frontend'
+import type { GroupModel, HierarchyGroupModel } from 'shared-projects-frontend/models'
 import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 

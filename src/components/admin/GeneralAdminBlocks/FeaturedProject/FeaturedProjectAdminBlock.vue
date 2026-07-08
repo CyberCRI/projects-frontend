@@ -28,7 +28,7 @@
   />
 </template>
 <script setup lang="ts">
-import { addFeaturedProject, removeFeaturedProject } from '~/api/organizations.service'
+import { addFeaturedProject, removeFeaturedProject } from 'shared-projects-frontend/apis'
 import { getFeaturedProjects } from '~/api/v2/organizations.service'
 import { projectSkeleton } from '~/skeletons/project.skeletons'
 import { factoryPagination } from '~/skeletons/base.skeletons'

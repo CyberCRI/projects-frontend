@@ -1,4 +1,4 @@
-import type { EventForm } from 'shared-projects-frontend'
+import type { EventForm } from 'shared-projects-frontend/models'
 import { NULL_CONTENT } from '~/functs/constants'
 
 export const defaultEventForm = (): EventForm => ({

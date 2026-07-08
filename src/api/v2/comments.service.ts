@@ -2,10 +2,12 @@ import type {
   QueryFilterComments,
   OrganizationModel,
   ProjectSlugOrId,
-} from 'shared-projects-frontend'
-import { getProjectMessages as fetchgProjectMessages } from '@/api/project-messages.service'
+} from 'shared-projects-frontend/models'
+import {
+  getProjectMessages as fetchgProjectMessages,
+  getComments,
+} from 'shared-projects-frontend/apis'
 import type { UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
-import { getComments } from '@/api/comments.service'
 import type { RefOrRaw } from '~/interfaces/utils'
 import { onlyRefs } from '@/functs/onlyRefs'
 

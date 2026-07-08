@@ -1,6 +1,6 @@
 import { fetchImageAsDataUrl, proxyImageUrl } from '~/composables/pdf-helpers/usePdfHelpers'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import type { Container } from '~/composables/pdf-helpers/doc-builder'
-import type { TranslatedProject } from 'shared-projects-frontend'
 
 export default async function addSdgsFactory(projectSdgs: TranslatedProject['sdgs']) {
   const { locale } = useNuxtI18n()

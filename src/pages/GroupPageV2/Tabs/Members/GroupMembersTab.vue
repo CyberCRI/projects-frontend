@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import BaseGroupMembersList from '@/components/group/Modules/Members/BaseGroupMembersList.vue'
-import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
 import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
 import { GROUP_MODULE_TITLE } from '~/functs/constants'
 

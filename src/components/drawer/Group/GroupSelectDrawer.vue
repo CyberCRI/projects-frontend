@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel, QueryFilterSearch } from 'shared-projects-frontend'
+import type { TranslatedPeopleGroupModel, QueryFilterSearch } from 'shared-projects-frontend/models'
 import type { DrawerSearchProps } from '~/components/drawer/BaseDrawerSearch.vue'
 import CardInlineGroup from '~/components/drawer/Group/CardInlineGroup.vue'
 import BaseDrawerSearch from '~/components/drawer/BaseDrawerSearch.vue'

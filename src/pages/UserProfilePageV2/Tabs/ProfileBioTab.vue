@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedUserModel } from 'shared-projects-frontend'
+import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 import useUsersStore from '~/stores/useUsers'
 
 const props = defineProps<{

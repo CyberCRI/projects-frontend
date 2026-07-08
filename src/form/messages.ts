@@ -1,4 +1,4 @@
-import type { ProjectMessageForm } from 'shared-projects-frontend'
+import type { ProjectMessageForm } from 'shared-projects-frontend/models'
 import { NULL_CONTENT } from '~/functs/constants'
 import { helpers } from '@vuelidate/validators'
 import { requiredContent } from '~/form/base'

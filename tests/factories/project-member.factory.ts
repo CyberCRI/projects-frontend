@@ -7,7 +7,7 @@ import {
   ProjectMembersDeleteInput,
   ProjectMemberPeopleGroupOutput,
   ProjectTeamModel,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 import { UserFactory } from './user.factory'
 import BaseFactory from './base.factory'
 

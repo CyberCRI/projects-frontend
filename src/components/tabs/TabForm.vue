@@ -4,11 +4,11 @@ import type {
   ProjectTabForm,
   ProjectTabType,
   ImageModel,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 import { defaultProjectTabForm, useProjectTabForm } from '~/form/project-tabs'
 import type { GroupOption } from '~/components/base/button/GroupButton.vue'
+import { createProjectTabImage } from 'shared-projects-frontend/apis'
 import GroupButton from '~/components/base/button/GroupButton.vue'
-import { createProjectTabImage } from '~/api/project-tabs.service'
 import IconDrawer from '~/components/drawer/Icon/IconDrawer.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 import TextInput from '~/components/base/form/TextInput.vue'

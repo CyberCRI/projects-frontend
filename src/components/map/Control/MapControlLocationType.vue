@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T extends AnyTranslatedLocation">
-import type { AnyTranslatedLocation, LocationType } from 'shared-projects-frontend'
+import type { AnyTranslatedLocation, LocationType } from 'shared-projects-frontend/models'
 import LocationTypeComponent from '@/components/map/LocationType.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import { groupBy } from 'es-toolkit'

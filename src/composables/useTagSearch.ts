@@ -1,7 +1,4 @@
-import {
-  getAllOrgClassifications,
-  getOrgClassificationTags,
-} from '~/api/tag-classification.service'
+import { getAllOrgClassifications, getOrgClassificationTags } from 'shared-projects-frontend/apis'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
 

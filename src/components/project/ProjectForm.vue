@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ProjectForm, TranslatedProject } from 'shared-projects-frontend'
+import type { ProjectForm, TranslatedProject } from 'shared-projects-frontend/models'
 import TagSelectDrawer from '~/components/drawer/Tag/TagSelectDrawer.vue'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
 import { defaultProjectForm, useProjectForm } from '~/form/project'

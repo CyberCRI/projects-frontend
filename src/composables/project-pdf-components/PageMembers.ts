@@ -1,9 +1,9 @@
+import type { TranslatedProjectMember, TranslatedProject } from 'shared-projects-frontend/models'
 import addTeamSectionFactory from '~/composables/project-pdf-components/addTeamSectionFactory'
-import type { TranslatedProjectMember, TranslatedProject } from 'shared-projects-frontend'
 import PageTitle from '~/composables/project-pdf-components/PageTitle'
+import { getProjectMembers } from 'shared-projects-frontend/apis'
 import type { Doc } from '~/composables/pdf-helpers/doc-builder'
 import { Page } from '~/composables/pdf-helpers/doc-builder'
-import { getProjectMembers } from '~/api/projects.service'
 import { roleI18n } from '~/functs/rolesUtils'
 import { groupBy } from 'es-toolkit'
 

@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { postOrganisationBanner, patchOrganisationBanner } from '@/api/organizations.service'
+import { postOrganisationBanner, patchOrganisationBanner } from 'shared-projects-frontend/apis'
 import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils'
 import { DEFAULT_IMAGE_PATATOID } from '@/composables/usePatatoids'
 import ImageEditor from '@/components/base/form/ImageEditor.vue'

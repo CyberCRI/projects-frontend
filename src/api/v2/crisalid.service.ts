@@ -4,7 +4,7 @@ import type {
   Document,
   DocumentType,
   Researcher,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 
 import type { RefOrRaw } from '~/interfaces/utils'
 
@@ -14,7 +14,7 @@ import {
   getOwnResearchDocument as fetchOwnResearchDocument,
   getOwnResearchDocumentAnalytics as fetchOwnResearchDocumentAnalytics,
   getResearchDocumentSimilars as fetchResearchDocumentSimilars,
-} from '~/api/crisalid.service'
+} from 'shared-projects-frontend/apis'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
 
 import useAsyncPaginationAPI from '~/composables/useAsyncPaginationAPI'

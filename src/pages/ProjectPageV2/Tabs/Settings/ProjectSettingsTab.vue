@@ -1,16 +1,19 @@
 <script setup lang="ts">
+import {
+  deleteProjectMembersSelf,
+  deleteProject,
+  patchProject,
+} from 'shared-projects-frontend/apis'
 import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import ProjectTemplateForm from '~/components/project/ProjectTemplateForm.vue'
 import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import type { GroupOption } from '~/components/base/button/GroupButton.vue'
 import { refreshProjectData } from '~/composables/project/refreshProject'
-import { deleteProjectMembersSelf } from '~/api/project-members.service'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import { useBlockNavigation } from '~/composables/useBlockNavigation'
-import { deleteProject, patchProject } from '~/api/projects.service'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
 import { getOrganizations } from '~/api/v2/organizations.service'
-import type { TranslatedProject } from 'shared-projects-frontend'
 import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import { factoryPagination } from '~/skeletons/base.skeletons'

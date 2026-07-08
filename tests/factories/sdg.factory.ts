@@ -1,6 +1,6 @@
 import { createFactory } from 'faker-create-factory'
 
-import { SdgModel } from 'shared-projects-frontend'
+import { SdgModel } from 'shared-projects-frontend/models'
 import { SDGS } from '~/functs/constants'
 
 const SdgFactory = createFactory<SdgModel>((faker) => {

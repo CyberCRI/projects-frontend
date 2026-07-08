@@ -2,13 +2,13 @@ import type {
   OrganizationModel,
   OrganizationOutput,
   OrganizationPatchInput,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 
 import {
   getOrganizationByCode,
   getOrganizations,
   patchOrganization,
-} from '~/api/organizations.service'
+} from 'shared-projects-frontend/apis'
 
 import useAutoTranslate from '~/composables/useAutoTranslate'
 

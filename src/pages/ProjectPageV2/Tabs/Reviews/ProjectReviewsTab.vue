@@ -6,8 +6,8 @@
 
 <script setup lang="ts">
 import BaseProjectReviews from '~/components/project/modules/review/BaseProjectReviews.vue'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
-import type { TranslatedProject } from 'shared-projects-frontend'
 import { PROJECT_MODULE_TITLE } from '~/functs/constants'
 
 const props = defineProps<{

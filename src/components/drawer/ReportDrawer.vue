@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reportAbuse, reportBug } from '~/api/report.service'
+import { reportAbuse, reportBug } from 'shared-projects-frontend/apis'
 
 import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'

@@ -1,5 +1,5 @@
 import { email, helpers, required, url } from '@vuelidate/validators'
-import type { ReportForm } from 'shared-projects-frontend'
+import type { ReportForm } from 'shared-projects-frontend/models'
 
 export const defaultReportForm = (): ReportForm => {
   return {

@@ -1,6 +1,6 @@
-import type { ImageModealCreated } from 'shared-projects-frontend'
+import type { ImageModelCreated } from 'shared-projects-frontend/models'
+import { getExtensions } from 'shared-projects-frontend/models'
 import useOrganizationsStore from '~/stores/useOrganizations'
-import { getExtensions } from 'shared-projects-frontend'
 
 import type { ErrorObject } from '@vuelidate/core'
 import type { EditorOptions } from '@tiptap/vue-3'
@@ -16,7 +16,7 @@ export type PropsDefinitions = {
   errors?: ErrorObject[]
   saveIconVisible?: boolean
   // function must take a file argument and return a promise resolving to an {url, width, height} object
-  saveImageCallback?: (image: File) => Promise<ImageModealCreated>
+  saveImageCallback?: (image: File) => Promise<ImageModelCreated>
   disableSave?: boolean
 }
 

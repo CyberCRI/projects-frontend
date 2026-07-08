@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import CurrentTags from '~/components/search/FilterTags/CurrentTags.vue'
-import type { TagModel } from 'shared-projects-frontend'
+import type { TagModel } from 'shared-projects-frontend/models'
 
 const model = defineModel<TagModel[]>({ default: [] })
 

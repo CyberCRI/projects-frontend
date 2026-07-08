@@ -7,9 +7,9 @@
 <script setup lang="ts">
 import useTagTexts from '~/composables/useTagTexts'
 
+import type { Stats } from 'shared-projects-frontend/models'
 import LpiBarChart from './Generic/LpiBarChart.vue'
 import { CHART_COLORS } from '~/functs/constants'
-import type { Stats } from '~/api/stats.service'
 
 const props = withDefaults(
   defineProps<{

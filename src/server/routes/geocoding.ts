@@ -1,4 +1,4 @@
-import type { Geocoding } from 'shared-projects-frontend'
+import { Geocoding } from 'shared-projects-frontend/interfaces'
 
 async function fetchFromPhoton(address, locale, runtimeConfig) {
   // TODO: use an env variable for the geocoding API URL

@@ -43,9 +43,9 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedEventModel } from 'shared-projects-frontend'
+import type { TranslatedEventModel } from 'shared-projects-frontend/models'
 
-import { deleteEvent } from '~/api/event.service'
+import { deleteEvent } from 'shared-projects-frontend/apis'
 
 import EditEventDrawer from '~/components/event/EditEventDrawer/EditEventDrawer.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'

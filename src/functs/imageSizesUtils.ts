@@ -1,4 +1,4 @@
-import type { ImageModel, ImageSize, AttachmentType } from 'shared-projects-frontend'
+import type { ImageModel, ImageSize, AttachmentType } from 'shared-projects-frontend/models'
 import type { IconImageChoice } from '~/functs/IconImage'
 import { mapKeys, pick } from 'es-toolkit'
 

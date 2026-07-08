@@ -1,5 +1,5 @@
 import type { Container } from '~/composables/pdf-helpers/doc-builder'
-import type { TranslatedGoal } from 'shared-projects-frontend'
+import type { TranslatedGoal } from 'shared-projects-frontend/models'
 
 export default async function addGoalsSectionFactory(goals: TranslatedGoal[]) {
   const { t, d } = useNuxtI18n()

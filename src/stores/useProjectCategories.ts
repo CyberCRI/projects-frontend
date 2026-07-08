@@ -1,9 +1,12 @@
-import type { ProjectCategoryOutput, TranslatedProjectCategory } from 'shared-projects-frontend'
+import type {
+  ProjectCategoryOutput,
+  TranslatedProjectCategory,
+} from 'shared-projects-frontend/models'
 
 import {
   getAllProjectCategories as apiGetAllProjectCategories,
   getRootProjectCategory as apiGetRootProjectCategory,
-} from '~/api/project-categories.service'
+} from 'shared-projects-frontend/apis'
 import type { APIResponseList } from '~/api/types'
 
 import useOrganizationCode from '~/composables/useOrganizationCode'

@@ -1,9 +1,9 @@
 import addLinkedProjectSectionFactory from '~/composables/project-pdf-components/addLinkedProjectSectionFactory'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import PageTitle from '~/composables/project-pdf-components/PageTitle'
-import type { TranslatedProject } from 'shared-projects-frontend'
 import type { Doc } from '~/composables/pdf-helpers/doc-builder'
+import { getLinkedProject } from 'shared-projects-frontend/apis'
 import { Page } from '~/composables/pdf-helpers/doc-builder'
-import { getLinkedProject } from '~/api/projects.service'
 
 export default async function addPageLinkedProjectsFactory(project: TranslatedProject) {
   const { t } = useNuxtI18n()

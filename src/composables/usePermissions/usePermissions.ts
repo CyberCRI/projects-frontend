@@ -6,7 +6,7 @@ import {
   isViewer as globalIsViewer,
   isAdmin as globalIsAdmin,
   isAdminOrFacilitator as globalIsAdminOrFacilitator,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/lib'
 import useUsersStore from '~/stores/useUsers'
 
 /**

@@ -1,6 +1,6 @@
 import type { BreadCrumbItem } from '@/components/base/navigation/BreadCrumbs.vue'
+import type { AnyProject } from 'shared-projects-frontend/models'
 import useOrganizationsStore from '@/stores/useOrganizations'
-import type { AnyProject } from 'shared-projects-frontend'
 
 export const useProjectHierarchy = (project: ComputedRef<AnyProject>) => {
   const organizationsStore = useOrganizationsStore()

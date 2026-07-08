@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TranslatedProject, TranslatedReview } from 'shared-projects-frontend'
+import type { TranslatedProject, TranslatedReview } from 'shared-projects-frontend/models'
 import ReviewDrawer from '~/components/project/modules/review/ReviewDrawer.vue'
 import ReviewItem from '~/components/project/modules/review/ReviewItem.vue'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
@@ -8,9 +8,9 @@ import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { projectReviewsSkeleton } from '~/skeletons/reviews.skeletons'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import type FetchLoader from '@/components/base/FetchLoader.vue'
+import { deleteReview } from 'shared-projects-frontend/apis'
 import { getProjectReviews } from '~/api/v2/reviews.service'
 import LpiSnackbar from '~/components/base/LpiSnackbar.vue'
-import { deleteReview } from '~/api/reviews.service'
 
 const props = withDefaults(
   defineProps<{

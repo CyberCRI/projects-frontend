@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ImageModel } from 'shared-projects-frontend'
+import type { ImageModel } from 'shared-projects-frontend/models'
 
 import GalleryItem from '~/components/base/gallery/GalleryItem.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'

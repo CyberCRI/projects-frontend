@@ -1,10 +1,10 @@
-import type { OrganizationModel } from 'shared-projects-frontend'
+import type { OrganizationModel } from 'shared-projects-frontend/models'
 
 import type { RefOrRaw } from '~/interfaces/utils'
 
 import type { UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
 
-import { getAllProjectCategories as fetchAllProjectCategories } from '~/api/project-categories.service'
+import { getAllProjectCategories as fetchAllProjectCategories } from 'shared-projects-frontend/apis'
 import { onlyRefs } from '~/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}

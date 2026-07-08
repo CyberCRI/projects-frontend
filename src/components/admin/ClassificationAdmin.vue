@@ -115,7 +115,7 @@
   />
 </template>
 <script>
-import { deleteOrgClassification } from '~/api/tag-classification.service'
+import { deleteOrgClassification } from 'shared-projects-frontend/apis'
 
 import ClassificationDescription from '~/components/admin/ClassificationDescription.vue'
 import ContextActionButton from '~/components/base/button/ContextActionButton.vue'

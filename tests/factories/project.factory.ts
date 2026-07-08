@@ -5,7 +5,7 @@ import {
   ProjectModel,
   ProjectOutput,
   TranslatedProject,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 import { ProjectCategoryOutputFactory } from './project-category.factory'
 import { ProjectTeamOutputFactory } from './project-member.factory'
 import { OrganizationOutputFactory } from './organization.factory'

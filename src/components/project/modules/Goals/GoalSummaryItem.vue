@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
-import type { TranslatedProject, TranslatedGoal } from 'shared-projects-frontend'
+import type { TranslatedProject, TranslatedGoal } from 'shared-projects-frontend/models'
 import { formatDate } from '@/functs/date'
 
 const props = withDefaults(

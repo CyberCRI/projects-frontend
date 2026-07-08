@@ -47,10 +47,10 @@ import type {
   QueryFilterNews,
   TranslatedNews,
   TranslatedPeopleGroupModel,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 
+import { deleteNews } from 'shared-projects-frontend/apis'
 import { getGroupNews } from '~/api/v2/group.service'
-import { deleteNews } from '~/api/news.service'
 
 import EditNewsDrawer from '~/components/news/EditNewsDrawer/EditNewsDrawer.vue'
 import FetchLoader from '~/components/base/FetchLoader.vue'

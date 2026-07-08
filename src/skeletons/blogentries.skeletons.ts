@@ -1,4 +1,4 @@
-import type { BlogEntryModel } from 'shared-projects-frontend'
+import type { BlogEntryModel } from 'shared-projects-frontend/models'
 
 export const blogentriesSkeletons = (
   def?: Partial<BlogEntryModel>

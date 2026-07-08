@@ -52,10 +52,10 @@
 </template>
 
 <script setup lang="ts">
-import type { QueryFilterNews } from 'shared-projects-frontend'
+import type { QueryFilterNews } from 'shared-projects-frontend/models'
 
+import { deleteNews } from 'shared-projects-frontend/apis'
 import { getAllNews } from '~/api/v2/news.service'
-import { deleteNews } from '~/api/news.service'
 
 import PaginationButtonsV2 from '~/components/base/navigation/PaginationButtonsV2.vue'
 import EditNewsDrawer from '~/components/news/EditNewsDrawer/EditNewsDrawer.vue'

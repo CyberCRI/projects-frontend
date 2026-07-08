@@ -29,8 +29,8 @@
 </template>
 
 <script setup lang="ts">
+import { getFormatedVideoSrc } from 'shared-projects-frontend/lib'
 import DialogModal from '~/components/base/modal/DialogModal.vue'
-import { getFormatedVideoSrc } from 'shared-projects-frontend'
 import TextInput from '~/components/base/form/TextInput.vue'
 import { useTipTapVideoForm } from '~/form/tiptap/video'
 import type { Editor } from '@tiptap/vue-3'

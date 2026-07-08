@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { searchAll, searchGroups, searchProjects, searchUser } from '~/api/search.service'
+import { searchAll, searchGroups, searchProjects, searchUser } from 'shared-projects-frontend/apis'
 
 import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
 

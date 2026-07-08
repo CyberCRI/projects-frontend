@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import BaseProjectComments from '@/components/project/modules/Comments/BaseProjectComments.vue'
 import { PROJECT_MODULE_ICON, PROJECT_MODULE_TITLE } from '~/functs/constants'
-import type { TranslatedProject } from 'shared-projects-frontend'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 
 defineProps<{ project: TranslatedProject }>()
 </script>

@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import { useProjectFollow } from '~/composables/project/useProjectFollow'
-import type { TranslatedProject } from 'shared-projects-frontend'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 
 const props = defineProps<{
   project: TranslatedProject

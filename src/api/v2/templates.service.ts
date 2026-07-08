@@ -1,9 +1,9 @@
 import {
   getTemplate as fetchTemplate,
   getTemplates as fetchTemplates,
-} from '~/api/templates.service'
+} from 'shared-projects-frontend/apis'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
-import type { OrganizationModel, TemplateId } from 'shared-projects-frontend'
+import type { OrganizationModel, TemplateId } from 'shared-projects-frontend/models'
 import type { RefOrRaw } from '~/interfaces/utils'
 import { onlyRefs } from '@/functs/onlyRefs'
 

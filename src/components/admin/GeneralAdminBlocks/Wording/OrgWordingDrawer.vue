@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { patchOrganization, postOrganizationImage } from '~/api/organizations.service'
+import { patchOrganization, postOrganizationImage } from 'shared-projects-frontend/apis'
 
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
 import TextInput from '~/components/base/form/TextInput.vue'

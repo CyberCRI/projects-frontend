@@ -60,8 +60,8 @@
 
 <script setup lang="ts">
 import { defaultContactForm, useContactForm } from '@/form/contact'
+import { contactUs } from 'shared-projects-frontend/apis'
 import useToasterStore from '@/stores/useToaster'
-import { contactUs } from '@/api/report.service'
 
 import TextInput from '~/components/base/form/TextInput.vue'
 import Recaptcha from '~/components/base/form/Recaptcha.vue'

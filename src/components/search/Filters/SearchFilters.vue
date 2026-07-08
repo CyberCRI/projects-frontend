@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { getProjectCategory } from '~/api/project-categories.service'
-import { getAllTagsById } from '~/api/tag-classification.service'
+import { getProjectCategory, getAllTagsById } from 'shared-projects-frontend/apis'
 
 import useContextualFilters, {
   ALL_FILTERS_MODE,

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { deleteClassificationTag, getOrgClassificationTags } from '~/api/tag-classification.service'
+import { deleteClassificationTag, getOrgClassificationTags } from 'shared-projects-frontend/apis'
 
 import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
 import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
@@ -12,7 +12,7 @@ import EditTagModal from '~/components/admin/EditTagModal.vue'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'
 
-import type { TagClassificationModel } from 'shared-projects-frontend'
+import type { TagClassificationModel } from 'shared-projects-frontend/models'
 import useTagTexts from '~/composables/useTagTexts'
 import useAPI from '~/composables/useAPI'
 import { debounce } from 'es-toolkit'

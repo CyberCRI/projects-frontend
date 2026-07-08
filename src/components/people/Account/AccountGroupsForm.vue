@@ -75,7 +75,7 @@
   </template>
 </template>
 <script>
-import { getHierarchyGroups } from '~/api/groups.service'
+import { getHierarchyGroups } from 'shared-projects-frontend/apis'
 
 import GroupHierarchyList from '~/components/people/Account/GroupHierarchyList.vue'
 import AccountSection from '~/components/people/Account/AccountSection.vue'

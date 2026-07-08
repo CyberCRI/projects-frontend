@@ -1,5 +1,5 @@
+import { getExtensions } from 'shared-projects-frontend/lib'
 import { generateHTML, generateJSON } from '@tiptap/core'
-import { getExtensions } from 'shared-projects-frontend'
 import { isNil } from 'es-toolkit'
 
 /**

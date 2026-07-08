@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { createNews, postNewsHeader } from '~/api/news.service'
+import { createNews, postNewsHeader } from 'shared-projects-frontend/apis'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'

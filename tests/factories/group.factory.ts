@@ -1,6 +1,6 @@
-import { PeopleGroupModel, TranslatedPeopleGroupModel } from 'shared-projects-frontend'
+import { PeopleGroupModel, TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
+import { GroupModel, GroupModelInput } from 'shared-projects-frontend/models'
 import { BaseTranslatedLocationModelFactory } from './location.factory'
-import { GroupModel, GroupModelInput } from 'shared-projects-frontend'
 import { OrganizationOutputFactory } from './organization.factory'
 import { createFactory } from 'faker-create-factory'
 import { ImageFactory } from './image.factory'

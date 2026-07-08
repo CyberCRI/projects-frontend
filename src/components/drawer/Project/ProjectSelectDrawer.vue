@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TranslatedProject, QueryFilterSearch } from 'shared-projects-frontend'
+import type { TranslatedProject, QueryFilterSearch } from 'shared-projects-frontend/models'
 import type { DrawerSearchProps } from '~/components/drawer/BaseDrawerSearch.vue'
 import BaseDrawerSearch from '~/components/drawer/BaseDrawerSearch.vue'
 import { searchProjectSkeleton } from '~/skeletons/search.skeletons'

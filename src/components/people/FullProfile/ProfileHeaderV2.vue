@@ -81,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedUserModel } from 'shared-projects-frontend'
+import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 
 import IdentifierLink from '~/components/people/Researcher/IdentifierLink.vue'
 import SdgList from '~/components/sdgs/SdgList.vue'

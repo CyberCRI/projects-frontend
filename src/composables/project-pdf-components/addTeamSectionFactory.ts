@@ -6,7 +6,7 @@ import {
 import { cardListStyles } from '~/composables/project-pdf-components/common-styles'
 import type { Container } from '~/composables/pdf-helpers/doc-builder'
 
-import type { TranslatedProjectMember } from 'shared-projects-frontend'
+import type { TranslatedProjectMember } from 'shared-projects-frontend/models'
 import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 
 export default async function addTeamSectionFactory(

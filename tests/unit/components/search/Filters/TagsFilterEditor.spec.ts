@@ -5,15 +5,15 @@ import waitForExpect from 'wait-for-expect'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import pinia from '~/stores'
 
-import { OrganizationOutput } from 'shared-projects-frontend'
+import { OrganizationOutput } from 'shared-projects-frontend/models'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
 
-import { getOrgClassificationTags } from '~/api/tag-classification.service'
+import { getOrgClassificationTags } from 'shared-projects-frontend/apis'
 import NothingHere from '~/components/base/NothingHere.vue'
 
-vi.mock('~/api/tag-classification.service', () => ({
+vi.mock('shared-projects-frontend/apis', () => ({
   getOrgClassificationTags: vi
     .fn()
     .mockResolvedValue({ results: [{ id: 1 }, { id: 2 }, { id: 3 }] }),

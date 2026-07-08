@@ -5,8 +5,8 @@ import {
   canCreateEvent as globalCanCreateEvent,
   canEditEvent as globalCanEditEvent,
   canDeleteEvent as globalCanDeleteEvent,
-} from 'shared-projects-frontend'
-import type { EventModel } from 'shared-projects-frontend'
+} from 'shared-projects-frontend/lib'
+import type { EventModel } from 'shared-projects-frontend/models'
 import useUsersStore from '~/stores/useUsers'
 
 /**

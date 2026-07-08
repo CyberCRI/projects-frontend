@@ -28,7 +28,7 @@
   </NuxtLink>
 </template>
 <script setup lang="ts">
-import type { TranslatedInstruction } from 'shared-projects-frontend'
+import type { TranslatedInstruction } from 'shared-projects-frontend/models'
 
 import { usePermissionInstruction } from '~/composables/usePermissions/useInstructionPermissions'
 import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'

@@ -4,7 +4,7 @@ import type {
   TranslatedProjectTabItem,
   TranslatedBlogEntry,
   TranslatedProject,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 import AdditionalsItemDrawer from '~/components/project/modules/Additionals/Types/AdditionalsItemDrawer.vue'
 import BaseAdditionalsTab from '~/components/project/modules/Additionals/Types/BaseAdditionalsTab.vue'
 import BlogEntry from '~/components/project/modules/BlogEntries/BlogEntry.vue'
@@ -12,7 +12,7 @@ import { projectTabItemSkeleton } from '~/skeletons/project-tabs.skeletons'
 import { refreshProjectTabs } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { getAllProjectTabItem } from '~/api/v2/project-tabs.service'
-import { deleteProjectTabItem } from '~/api/project-tabs.service'
+import { deleteProjectTabItem } from 'shared-projects-frontend/apis'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import FetchLoader from '~/components/base/FetchLoader.vue'
 import analytics from '~/analytics'

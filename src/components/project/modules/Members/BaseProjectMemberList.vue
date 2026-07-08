@@ -4,8 +4,8 @@ import type {
   ProjectMemberRoleType,
   TranslatedUserModel,
   TranslatedProject,
-} from 'shared-projects-frontend'
-import { addProjectMembers, deleteProjectMembers } from '~/api/project-members.service'
+} from 'shared-projects-frontend/models'
+import { addProjectMembers, deleteProjectMembers } from 'shared-projects-frontend/apis'
 import UserProfileDrawer from '~/components/drawer/User/UserProfileDrawer.vue'
 import UserSelectDrawer from '~/components/drawer/User/UserSelectDrawer.vue'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'

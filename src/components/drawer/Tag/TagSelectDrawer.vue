@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import type { QueryFilterSearch, TranslatedTag } from 'shared-projects-frontend/models'
 import type { DrawerSearchProps } from '~/components/drawer/BaseDrawerSearch.vue'
-import type { QueryFilterSearch, TranslatedTag } from 'shared-projects-frontend'
 import BaseDrawerSearch from '~/components/drawer/BaseDrawerSearch.vue'
 import CardInlineTag from '~/components/drawer/Tag/CardInlineTag.vue'
 import { factoryPagination } from '~/skeletons/base.skeletons'

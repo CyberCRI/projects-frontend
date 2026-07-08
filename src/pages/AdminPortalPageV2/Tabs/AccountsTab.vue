@@ -157,7 +157,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Ordering } from 'shared-projects-frontend'
+import type { Ordering } from 'shared-projects-frontend/interfaces'
 
 import { searchPeopleAdmin } from '~/api/v2/people.service'
 

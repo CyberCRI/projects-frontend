@@ -1,8 +1,8 @@
 import SkillsEditDrawer from '~/components/people/skill/SkillsEditDrawer.vue'
 import { lpiMount } from '~~/tests/helpers/LpiMount'
 
+import { OrganizationOutput } from 'shared-projects-frontend/models'
 import useOrganizationsStore from '~/stores/useOrganizations'
-import { OrganizationOutput } from 'shared-projects-frontend'
 import pinia from '~/stores'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
@@ -11,7 +11,7 @@ vi.mock('~/api/people.service.ts', () => ({
   postUserSkill: vi.fn().mockResolvedValue({}),
 }))
 
-vi.mock('~/api/tag-classification.service', () => ({
+vi.mock('shared-projects-frontend/apis', () => ({
   getOrgClassificationTags: vi
     .fn()
     .mockResolvedValue({ results: [{ id: 1 }, { id: 2 }, { id: 3 }] }),

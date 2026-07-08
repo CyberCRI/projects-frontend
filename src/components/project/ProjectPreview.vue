@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedProject } from 'shared-projects-frontend'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 
 import ProjectFollowIcon from '~/components/project/ProjectFollowIcon.vue'
 import TagsList from '~/components/tags/TagsList.vue'

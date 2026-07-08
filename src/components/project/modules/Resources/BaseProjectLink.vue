@@ -3,8 +3,8 @@ import {
   deleteProjectAttachmentLink,
   patchProjectAttachmentLink,
   postProjectAttachmentLinks,
-} from '~/api/attachment-links.service'
-import type { TranslatedProject, AttachmentForm } from 'shared-projects-frontend'
+} from 'shared-projects-frontend/apis'
+import type { TranslatedProject, AttachmentForm } from 'shared-projects-frontend/models'
 import { attachementLinkSkeletons } from '~/skeletons/attachements.skeletons'
 import { getProjectAttachmentLinks } from '~/api/v2/attachment-link.service'
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'

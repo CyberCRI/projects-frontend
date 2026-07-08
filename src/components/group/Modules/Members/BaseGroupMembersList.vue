@@ -5,7 +5,7 @@ import type {
   TranslatedGroupMember,
   TranslatedUserModel,
   GroupMemberRoleType,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 
 import { getGroupMember } from '~/api/v2/group.service'
 
@@ -13,10 +13,10 @@ import PaginationButtonsV2 from '~/components/base/navigation/PaginationButtonsV
 import GroupMemberItem from '~/components/group/Modules/Members/GroupMemberItem.vue'
 
 import CardInlineGroupMember from '~/components/drawer/User/CardInlineGroupMember.vue'
+import { postGroupMembers, removeGroupMember } from 'shared-projects-frontend/apis'
 import UserProfileDrawer from '~/components/drawer/User/UserProfileDrawer.vue'
 import UserSelectDrawer from '~/components/drawer/User/UserSelectDrawer.vue'
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'
-import { postGroupMembers, removeGroupMember } from '~/api/groups.service'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import { refreshGroupData } from '~/composables/groups/refreshGroup'
 import RolesDrawer from '~/components/drawer/Role/RolesDrawer.vue'

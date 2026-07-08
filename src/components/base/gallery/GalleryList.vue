@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ImageModel, ImageVariations } from 'shared-projects-frontend'
+import type { ImageModel, ImageVariations } from 'shared-projects-frontend/models'
 
 import GalleryItem from '~/components/base/gallery/GalleryItem.vue'
 

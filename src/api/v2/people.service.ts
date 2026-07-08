@@ -1,8 +1,8 @@
-import type { OrganizationModel } from 'shared-projects-frontend'
+import type { OrganizationModel } from 'shared-projects-frontend/models'
 
 import type { RefOrRaw } from '~/interfaces/utils'
 
-import { searchPeopleAdmin as fetchSearchPeopleAdmin } from '~/api/people.service'
+import { searchPeopleAdmin as fetchSearchPeopleAdmin } from 'shared-projects-frontend/apis'
 import type { UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
 
 import { onlyRefs } from '~/functs/onlyRefs'

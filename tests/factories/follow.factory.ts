@@ -1,6 +1,6 @@
 import { createFactory } from 'faker-create-factory'
 
-import { FollowModel, FollowInput } from 'shared-projects-frontend'
+import { FollowModel, FollowInput } from 'shared-projects-frontend/models'
 import { BaseFactory } from './base.factory'
 
 export const FollowFactory = createFactory<FollowModel>((faker) => ({

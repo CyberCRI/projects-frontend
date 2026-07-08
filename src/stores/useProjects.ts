@@ -1,6 +1,6 @@
-import { getProject, lockUnlockProject, patchProject } from '~/api/projects.service'
+import { getProject, lockUnlockProject, patchProject } from 'shared-projects-frontend/apis'
 
-import type { ProjectForm, ProjectModel, ProjectOutput } from 'shared-projects-frontend'
+import type { ProjectForm, ProjectModel, ProjectOutput } from 'shared-projects-frontend/models'
 import { defineStore } from 'pinia'
 
 export interface ProjectState {
@@ -36,7 +36,7 @@ const useProjectsStore = defineStore('projects', {
       }
     },
 
-    async lockUnlockProject({ project_id, context }): Promise<ProjectOutput> {
+    async lockUnlockProject({ project_id, context }) {
       try {
         this.project.is_locked = context === 'lock'
         return await lockUnlockProject({ project_id, context })

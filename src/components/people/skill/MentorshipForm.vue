@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import type { UserSkillModel } from 'shared-projects-frontend/models'
 import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
-import type { UserSkillModel } from 'shared-projects-frontend'
 import TextInput from '~/components/base/form/TextInput.vue'
 
 const model = defineModel<Partial<UserSkillModel>>()

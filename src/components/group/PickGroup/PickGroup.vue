@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { searchGroups } from '~/api/search.service'
+import { searchGroups } from 'shared-projects-frontend/apis'
 
 import GroupsElementRadio from '~/components/group/GroupsElement/GroupsElementRadio.vue'
 import SearchInput from '~/components/base/form/SearchInput.vue'

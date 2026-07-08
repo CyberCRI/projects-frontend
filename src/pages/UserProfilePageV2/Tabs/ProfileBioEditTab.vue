@@ -48,8 +48,8 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedUserModel } from 'shared-projects-frontend'
-import { patchUser } from '~/api/people.service'
+import type { TranslatedUserModel } from 'shared-projects-frontend/models'
+import { patchUser } from 'shared-projects-frontend/apis'
 import { defaultFormBio } from '~/form/profile'
 
 import useToasterStore from '~/stores/useToaster'

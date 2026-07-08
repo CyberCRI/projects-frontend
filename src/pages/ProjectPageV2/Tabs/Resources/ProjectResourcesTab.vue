@@ -6,8 +6,8 @@
 
 <script setup lang="ts">
 import BaseProjectResources from '~/components/project/modules/Resources/BaseProjectResources.vue'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
-import type { TranslatedProject } from 'shared-projects-frontend'
 
 withDefaults(defineProps<{ project: TranslatedProject; editable?: boolean }>(), {
   editable: false,

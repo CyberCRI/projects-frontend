@@ -38,8 +38,8 @@
 <script setup lang="ts">
 import SkillLevelTip from '~/components/people/skill/SkillLevelTip.vue'
 import SkillItemFull from '~/components/people/skill/SkillItemFull.vue'
+import type { UserSkillModel } from 'shared-projects-frontend/models'
 import LinkButton from '~/components/base/button/LinkButton.vue'
-import type { UserSkillModel } from 'shared-projects-frontend'
 
 withDefaults(
   defineProps<{

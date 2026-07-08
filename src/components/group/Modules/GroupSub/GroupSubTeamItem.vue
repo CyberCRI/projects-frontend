@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
 
 import BaseGroupMembersList from '~/components/group/Modules/Members/BaseGroupMembersList.vue'
 import GroupRecapPreview from '~/components/group/Modules/Extras/GroupRecapPreview.vue'

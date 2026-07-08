@@ -116,7 +116,7 @@ import type {
   Relators,
   ResearcherDocumentAnalytics,
   TranslatedDocument,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 
 import { sanitizeResearcherDocumentAnalyticsYears } from '~/api/sanitizes/researcher'
 

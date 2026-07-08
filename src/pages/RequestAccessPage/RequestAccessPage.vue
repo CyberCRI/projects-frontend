@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { postAccessRequest } from 'shared-projects-frontend/apis'
 import { email, helpers, required } from '@vuelidate/validators'
-import { postAccessRequest } from '@/api/organizations.service'
 import { goToKeycloakLoginPage } from '@/api/auth/auth.service'
 import useOrganizationsStore from '@/stores/useOrganizations'
 import useToasterStore from '@/stores/useToaster'

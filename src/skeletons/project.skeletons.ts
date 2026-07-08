@@ -3,7 +3,7 @@ import type {
   ProjectModel,
   ProjectMemberModel,
   TagModel,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 import { factoriesSkeleton } from '@/skeletons/base.skeletons'
 import { userSkeleton } from '~/skeletons/user.skeletons'
 import { randomInt } from 'es-toolkit'

@@ -1,4 +1,4 @@
-import type { BlogEntryModel } from 'shared-projects-frontend'
+import type { BlogEntryModel } from 'shared-projects-frontend/models'
 
 import analytics from '~/analytics'
 

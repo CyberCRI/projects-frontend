@@ -12,8 +12,7 @@
 </template>
 
 <script>
-import { getAllProjects } from '~/api/projects.service'
-import { getUserFollows } from '~/api/follows.service'
+import { getAllProjects, getUserFollows } from 'shared-projects-frontend/apis'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
 

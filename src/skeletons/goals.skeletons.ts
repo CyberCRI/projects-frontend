@@ -1,4 +1,4 @@
-import type { GoalModel } from 'shared-projects-frontend'
+import type { GoalModel } from 'shared-projects-frontend/models'
 
 export const goalSkeletons = (def?: Partial<GoalModel>): Omit<GoalModel, 'id'> => ({
   title: 'title',

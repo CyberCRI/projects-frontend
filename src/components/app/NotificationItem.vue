@@ -119,7 +119,7 @@ import IconImage from '~/components/base/media/IconImage.vue'
 
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
 
-import type { NotificationModel } from 'shared-projects-frontend'
+import type { NotificationModel } from 'shared-projects-frontend/models'
 import type { IconImageChoice } from '~/functs/IconImage'
 import type { RouteLocationRaw } from 'vue-router'
 import { getTimePassed } from '@/functs/date'

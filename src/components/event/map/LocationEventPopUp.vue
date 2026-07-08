@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts" generic="T extends AnyTranslatedLocation">
-import type { AnyTranslatedLocation, TranslatedEventModel } from 'shared-projects-frontend'
+import type { AnyTranslatedLocation, TranslatedEventModel } from 'shared-projects-frontend/models'
 import type CardLocationPopUp from '@/components/map/CardLocationPopUp.vue'
 import EventItem from '@/components/event/EventList/EventItem.vue'
 import { html2Text } from '~/functs/tiptap'

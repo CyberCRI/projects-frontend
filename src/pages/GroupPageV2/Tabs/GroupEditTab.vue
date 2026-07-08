@@ -8,7 +8,7 @@ import {
   patchGroupHeader,
   postGroup,
   postGroupHeader,
-} from '~/api/groups.service'
+} from 'shared-projects-frontend/apis'
 
 import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'

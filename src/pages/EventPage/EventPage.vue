@@ -34,8 +34,8 @@
 </template>
 
 <script setup lang="ts">
+import { deleteEvent } from 'shared-projects-frontend/apis'
 import { getEvent } from '~/api/v2/event.service'
-import { deleteEvent } from '~/api/event.service'
 
 import BreadCrumbs from '~/components/base/navigation/BreadCrumbs.vue'
 

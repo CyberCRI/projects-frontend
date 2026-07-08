@@ -4,8 +4,8 @@ import EmptyComment from '~/components/project/modules/Comments/EmptyComment.vue
 import CommentItem from '~/components/project/modules/Comments/CommentItem.vue'
 import { factoryPagination, maxSkeleton } from '@/skeletons/base.skeletons'
 import { refreshProjectData } from '~/composables/project/refreshProject'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import { projectCommentSkeleton } from '@/skeletons/comments.skeletons'
-import type { TranslatedProject } from 'shared-projects-frontend'
 import type FetchLoader from '@/components/base/FetchLoader.vue'
 import { throttle } from 'es-toolkit'
 

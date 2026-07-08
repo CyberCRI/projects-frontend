@@ -5,8 +5,8 @@ import {
   canCreateInstruction as globalCanCreateInstruction,
   canEditInstruction as globalCanEditInstruction,
   canDeleteInstruction as globalCanDeleteInstruction,
-} from 'shared-projects-frontend'
-import type { InstructionModel } from 'shared-projects-frontend'
+} from 'shared-projects-frontend/lib'
+import type { InstructionModel } from 'shared-projects-frontend/models'
 import useUsersStore from '~/stores/useUsers'
 
 /**

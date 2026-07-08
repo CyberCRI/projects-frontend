@@ -1,4 +1,4 @@
-import type { NotificationsSettings, UserModel, Right } from 'shared-projects-frontend'
+import type { NotificationsSettings, UserModel } from 'shared-projects-frontend/models'
 
 import {
   getNotifications as apiGetNotifications,
@@ -6,10 +6,9 @@ import {
   logoutFromKeycloak,
   refreshAccessToken,
 } from '~/api/auth/auth.service'
-import { getProjectCategoriesFollow } from '~/api/project-categories.service'
+import { getProjectCategoriesFollow, getUser as _getUser } from 'shared-projects-frontend/apis'
 import { checkExpiredToken } from '~/api/auth/keycloakUtils'
 import { removeApiCookie } from '~/api/auth/cookie.service'
-import { getUser as _getUser } from '~/api/people.service'
 import type { AuthResult } from '~/api/auth/keycloak'
 
 import { getOrgsFromRoles } from '~/functs/rolesUtils'

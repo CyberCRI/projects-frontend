@@ -2,8 +2,8 @@ import type {
   QueryFilterProject,
   OrganizationModel,
   ProjectSlugOrId,
-} from 'shared-projects-frontend'
-import { getProject as fetchProject } from '@/api/projects.service'
+} from 'shared-projects-frontend/models'
+import { getProject as fetchProject } from 'shared-projects-frontend/apis'
 import type { UseAsyncApiConfig } from '~/api/v2/base.service'
 import type { RefOrRaw } from '~/interfaces/utils'
 import { onlyRefs } from '@/functs/onlyRefs'

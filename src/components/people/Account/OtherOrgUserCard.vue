@@ -33,13 +33,12 @@
 </template>
 
 <script setup lang="ts">
-import { getOrganizations } from '~/api/organizations.service'
-import { getUser } from '~/api/people.service'
+import { getOrganizations, getUser } from 'shared-projects-frontend/apis'
 
 import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 
-import type { TranslatedUserModel } from 'shared-projects-frontend'
+import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
 import { roleI18n } from '~/functs/rolesUtils'
 

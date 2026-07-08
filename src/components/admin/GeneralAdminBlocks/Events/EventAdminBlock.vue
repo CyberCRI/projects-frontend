@@ -64,10 +64,10 @@ import LocationDrawer from '@/components/map/LocationDrawer.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import { factoryPagination } from '~/skeletons/base.skeletons'
 import FetchLoader from '@/components/base/FetchLoader.vue'
+import { deleteEvent } from 'shared-projects-frontend/apis'
 import { eventSkeleton } from '~/skeletons/event.skeletons'
 import { getAllEvents } from '@/api/v2/event.service'
 import useToasterStore from '@/stores/useToaster'
-import { deleteEvent } from '@/api/event.service'
 import { defaultEventForm } from '@/form/event'
 
 const toaster = useToasterStore()

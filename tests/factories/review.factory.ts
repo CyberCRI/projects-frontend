@@ -1,4 +1,4 @@
-import { ReviewModel } from 'shared-projects-frontend'
+import { ReviewModel } from 'shared-projects-frontend/models'
 import { createFactory } from 'faker-create-factory'
 import { UserFactory } from './user.factory'
 import BaseFactory from './base.factory'

@@ -2,7 +2,7 @@ import type {
   TranslatedProjectCategory,
   TranslatedTemplate,
   ProjectForm,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 import { helpers, maxLength, minLength, required, requiredIf } from '@vuelidate/validators'
 import type ProjectTemplateForm from '~/components/project/ProjectTemplateForm.vue'
 import { NULL_CONTENT } from '~/functs/constants'

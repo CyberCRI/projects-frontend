@@ -131,18 +131,17 @@ import type {
   CommentModel,
   TranslatedComment,
   TranslatedProject,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 import ContextActionMenuInline from '~/components/base/button/ContextActionMenuInline.vue'
+import { deleteProjectMessage, deleteComment } from 'shared-projects-frontend/apis'
 import MakeComment from '~/components/project/modules/Comments/MakeComment.vue'
 import TipTapOutput from '@/components/base/form/TextEditor/TipTapOutput.vue'
 import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
-import { deleteProjectMessage } from '@/api/project-messages.service'
 import ConfirmModal from '@/components/base/modal/ConfirmModal.vue'
 import { DEFAULT_USER_PATATOID } from '@/composables/usePatatoids'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
-import { deleteComment } from '@/api/comments.service'
 import useToasterStore from '@/stores/useToaster'
 import useUsersStore from '@/stores/useUsers'
 import { formatDate } from '~/functs/date'

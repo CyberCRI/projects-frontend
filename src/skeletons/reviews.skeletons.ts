@@ -1,4 +1,4 @@
-import type { ReviewModel } from 'shared-projects-frontend'
+import type { ReviewModel } from 'shared-projects-frontend/models'
 import { userSkeleton } from '@/skeletons/user.skeletons'
 
 export const projectReviewsSkeleton = (def?: Partial<ReviewModel>): ReviewModel => ({

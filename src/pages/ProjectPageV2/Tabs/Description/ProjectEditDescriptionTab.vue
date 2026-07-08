@@ -1,12 +1,8 @@
 <script setup lang="ts">
-import {
-  type TranslatedProject,
-  type ProviderParams,
-  roomKeyFromParams,
-} from 'shared-projects-frontend'
+import { type ProviderParams, roomKeyFromParams } from 'shared-projects-frontend/lib'
+import { patchProject, postProjectImage } from 'shared-projects-frontend/apis'
 import { defaultProjectForm, useProjectDescriptionForm } from '~/form/project'
-import { refreshProjectData } from '~/composables/project/refreshProject'
-import { patchProject, postProjectImage } from '~/api/projects.service'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import FormPanel from '~/components/base/FormPanel.vue'

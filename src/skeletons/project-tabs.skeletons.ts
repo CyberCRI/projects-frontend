@@ -1,4 +1,4 @@
-import type { ProjectTab, ProjectTabItem } from 'shared-projects-frontend'
+import type { ProjectTab, ProjectTabItem } from 'shared-projects-frontend/models'
 import { DEFAULT_ICONS_TABS } from '~/functs/constants'
 
 export const projectTabSkeleton = (def?: Partial<ProjectTab>): ProjectTab => {

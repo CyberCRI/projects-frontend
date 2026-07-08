@@ -4,8 +4,8 @@ import type {
   TranslatedProjectTab,
   TranslatedProjectTabItem,
   TranslatedProject,
-} from 'shared-projects-frontend'
-import { deleteProjectTab, updateProjectTab } from '~/api/project-tabs.service'
+} from 'shared-projects-frontend/models'
+import { deleteProjectTab, updateProjectTab } from 'shared-projects-frontend/apis'
 import { refreshProjectTabs } from '~/composables/project/refreshProject'
 import BaseModuleHeader from '~/components/modules/BaseModuleHeader.vue'
 import ContentExpandable from '~/components/base/ContentExpandable.vue'

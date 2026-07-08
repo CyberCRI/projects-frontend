@@ -7,7 +7,7 @@ import useOrganizationsStore from '~/stores/useOrganizations'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import pinia from '~/stores'
 
-vi.mock('~/api/stats.service', () => {
+vi.mock('shared-projects-frontend/apis', () => {
   const stats = {
     byMonth: [
       {

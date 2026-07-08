@@ -40,7 +40,7 @@ import IconImage from '~/components/base/media/IconImage.vue'
 import BasicCard from '~/components/base/BasicCard.vue'
 
 import { DEFAULT_USER_PATATOID } from '~/composables/usePatatoids'
-import type { UserModel } from 'shared-projects-frontend'
+import type { UserModel } from 'shared-projects-frontend/models'
 import type { RouteLocationRaw } from 'vue-router'
 
 const props = withDefaults(

@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend'
+import type { TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
 import LocationDrawer from '@/components/map/LocationDrawer.vue'
 import { locationSkeleton } from '@/skeletons/location.skeleton'
 import { factoriesSkeleton } from '@/skeletons/base.skeletons'

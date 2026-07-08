@@ -14,7 +14,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { TranslatedNewsfeed } from 'shared-projects-frontend'
+import type { TranslatedNewsfeed } from 'shared-projects-frontend/models'
 
 import NewsfeedAnnouncementsItem from '~/components/home/HomeNewsfeed/NewsfeedAnnouncementsItem.vue'
 import NewsfeedProjectItem from '~/components/home/HomeNewsfeed/NewsfeedProjectItem.vue'

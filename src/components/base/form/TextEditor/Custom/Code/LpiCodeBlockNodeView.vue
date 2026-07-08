@@ -2,7 +2,12 @@
 import { NodeViewContent, NodeViewWrapper, nodeViewProps } from '@tiptap/vue-3'
 import Field from '~/components/base/form/Field.vue'
 
-import { DEFAULT_LANGUAGE, DEFAULT_TAB, DEFAULT_THEME, lowlight } from 'shared-projects-frontend'
+import {
+  DEFAULT_LANGUAGE,
+  DEFAULT_TAB,
+  DEFAULT_THEME,
+  lowlight,
+} from 'shared-projects-frontend/lib'
 import type { GroupOption } from '~/components/base/button/GroupButton.vue'
 import GroupButton from '~/components/base/button/GroupButton.vue'
 import LpiSelect from '~/components/base/form/LpiSelect.vue'

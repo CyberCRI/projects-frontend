@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { createEvent } from '~/api/event.service'
+import { createEvent } from 'shared-projects-frontend/apis'
 
 import useToasterStore from '~/stores/useToaster'
 

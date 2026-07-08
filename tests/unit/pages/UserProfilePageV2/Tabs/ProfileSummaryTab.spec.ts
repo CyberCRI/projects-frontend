@@ -5,11 +5,11 @@ import { flushPromises } from '@vue/test-utils'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
+import { OrganizationOutput } from 'shared-projects-frontend/models'
 import useOrganizationsStore from '~/stores/useOrganizations'
-import { OrganizationOutput } from 'shared-projects-frontend'
 import useUsersStore from '~/stores/useUsers'
 import pinia from '~/stores'
-vi.mock('~/api/follows.service', () => ({
+vi.mock('shared-projects-frontend/apis', () => ({
   getUserFollows: vi.fn().mockResolvedValue({ results: [] }),
 }))
 

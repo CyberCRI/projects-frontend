@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { patchReview, postReview } from '~/api/reviews.service'
+import { patchReview, postReview, patchProject } from 'shared-projects-frontend/apis'
 
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
@@ -16,9 +16,8 @@ import type {
   TranslatedReview,
   ProjectForm,
   TranslatedProject,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 import { defaultProjectReviewForm, useProjectReviewForm } from '~/form/review'
-import { patchProject } from '~/api/projects.service'
 import { formEqual } from '~/form/base'
 
 const props = withDefaults(

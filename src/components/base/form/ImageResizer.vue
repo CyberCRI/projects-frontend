@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ImageSize } from 'shared-projects-frontend'
+import type { ImageSize } from 'shared-projects-frontend/models'
 import 'croppr/dist/croppr.css'
 import Croppr from 'croppr'
 

@@ -1,5 +1,5 @@
+import type { ContactForm } from 'shared-projects-frontend/models'
 import { email, helpers, required } from '@vuelidate/validators'
-import type { ContactForm } from 'shared-projects-frontend'
 
 export const defaultContactForm = (): ContactForm => ({
   subject: '',

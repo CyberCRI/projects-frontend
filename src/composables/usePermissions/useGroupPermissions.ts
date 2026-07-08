@@ -4,8 +4,8 @@ import type { RefOrRaw } from '~/interfaces/utils'
 import {
   canEditGroup as globalCanEditGroup,
   canCreateGroup as globalCanCreateGroup,
-} from 'shared-projects-frontend'
-import type { PeopleGroupModel } from 'shared-projects-frontend'
+} from 'shared-projects-frontend/lib'
+import type { PeopleGroupModel } from 'shared-projects-frontend/models'
 import useUsersStore from '~/stores/useUsers'
 
 /**

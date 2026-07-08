@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { patchUser } from '~/api/people.service'
+import { patchUser } from 'shared-projects-frontend/apis'
 
 import useOrganizations from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'

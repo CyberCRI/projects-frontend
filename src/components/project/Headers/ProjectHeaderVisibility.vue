@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import InfoSentence from '~/components/project/Headers/InfoSentence.vue'
-import type { TranslatedProject } from 'shared-projects-frontend'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import type { IconImageChoice } from '@/functs/IconImage'
 
 const props = defineProps<{

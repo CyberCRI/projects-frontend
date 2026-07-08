@@ -2,9 +2,9 @@ import type {
   QueryFilterReviews,
   OrganizationModel,
   ProjectSlugOrId,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
+import { getReviews as fetchReviews } from 'shared-projects-frontend/apis'
 import type { UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
-import { getReviews as fetchReviews } from '@/api/reviews.service'
 import type { RefOrRaw } from '~/interfaces/utils'
 import { onlyRefs } from '@/functs/onlyRefs'
 

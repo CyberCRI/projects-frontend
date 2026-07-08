@@ -3,12 +3,12 @@ import {
   deleteProjectAttachmentFile,
   patchProjectAttachmentFile,
   postProjectAttachmentFiles,
-} from '~/api/attachment-files.service'
+} from 'shared-projects-frontend/apis'
 import type {
   TranslatedAttachmentFile,
   TranslatedProject,
   AttachmentForm,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 import { attachementFileSkeletons } from '~/skeletons/attachements.skeletons'
 import { getProjectAttachmentFiles } from '~/api/v2/attachment-files.service'
 import { factoryPagination, maxSkeleton } from '~/skeletons/base.skeletons'

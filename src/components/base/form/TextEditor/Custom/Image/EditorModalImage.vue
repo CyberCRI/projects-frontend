@@ -40,7 +40,7 @@ import ImageInput from '~/components/base/form/ImageInput.vue'
 
 import useToasterStore from '~/stores/useToaster'
 
-import type { ImageModealCreated, ImageModel } from 'shared-projects-frontend'
+import type { ImageModelCreated, ImageModel } from 'shared-projects-frontend/models'
 import GalleryItem from '~/components/base/gallery/GalleryItem.vue'
 import type { PropsDefinitions } from '~/composables/tiptap'
 import { fileToImageModel } from '~/functs/imageSizesUtils'
@@ -71,7 +71,7 @@ const displayedImage = computed(() => {
   return null
 })
 
-const addImageToEditor = (img: ImageModealCreated) => {
+const addImageToEditor = (img: ImageModelCreated) => {
   const MAX_SIZE = 1100
   const width = img.width < MAX_SIZE ? img.width : MAX_SIZE
   const height = img.height < MAX_SIZE ? img.height : img.height * (MAX_SIZE / img.width)

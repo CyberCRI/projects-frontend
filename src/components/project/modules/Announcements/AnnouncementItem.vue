@@ -67,7 +67,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedAnnouncement, TranslatedProject } from 'shared-projects-frontend'
+import type { TranslatedAnnouncement, TranslatedProject } from 'shared-projects-frontend/models'
 
 import LpiButton from '~/components/base/button/LpiButton.vue'
 

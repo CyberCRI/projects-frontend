@@ -12,7 +12,7 @@ import { flushPromises } from '@vue/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
 
-vi.mock('~/api/people.service')
+vi.mock('shared-projects-frontend/apis')
 vi.mock('~/api/auth/auth.service')
 vi.mock('~/analytics')
 vi.mock('~/functs/functions')

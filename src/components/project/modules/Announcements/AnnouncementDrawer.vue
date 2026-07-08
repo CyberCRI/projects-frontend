@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { patchAnnouncement, postAnnouncement } from '~/api/announcements.service'
+import { patchAnnouncement, postAnnouncement } from 'shared-projects-frontend/apis'
 
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
 import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
@@ -14,7 +14,7 @@ import type {
   AnnouncementModel,
   TranslatedAnnouncement,
   TranslatedProject,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 import { defaultAnnouncementForm, useAnnouncementForm } from '~/form/annoucement'
 import FieldErrors from '~/components/base/form/FieldErrors.vue'
 import { getFirstTextNotEmpty } from '~/functs/tiptap'

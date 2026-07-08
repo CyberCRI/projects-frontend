@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts" generic="T extends AnyTranslatedLocation">
-import type { AnyTranslatedLocation, TranslatedProject } from 'shared-projects-frontend'
+import type { AnyTranslatedLocation, TranslatedProject } from 'shared-projects-frontend/models'
 import CardLocationPopUp from '@/components/map/CardLocationPopUp.vue'
 import { DEFAULT_PROJECT_PATATOID } from '@/composables/usePatatoids'
 

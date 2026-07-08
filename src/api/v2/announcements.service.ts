@@ -1,12 +1,12 @@
 import {
   getProjectAnnouncements as fetchProjectAnnouncements,
   getAnnouncements as fetchAnnouncements,
-} from '@/api/announcements.service'
+} from 'shared-projects-frontend/apis'
 import type {
   QueryFilterAnnouncement,
   OrganizationModel,
   ProjectSlugOrId,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 import type { UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
 import type { RefOrRaw } from '~/interfaces/utils'
 import { onlyRefs } from '@/functs/onlyRefs'

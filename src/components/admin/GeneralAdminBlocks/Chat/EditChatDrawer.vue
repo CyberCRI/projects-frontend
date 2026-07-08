@@ -38,7 +38,7 @@
   </BaseDrawer>
 </template>
 <script setup lang="ts">
-import { patchOrganization } from '~/api/organizations.service'
+import { patchOrganization } from 'shared-projects-frontend/apis'
 
 import TextInput from '~/components/base/form/TextInput.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'

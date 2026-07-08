@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AnyTranslatedLocation, ImageModel } from 'shared-projects-frontend'
+import type { AnyTranslatedLocation, ImageModel } from 'shared-projects-frontend/models'
 import CroppedApiImage from '@/components/base/media/CroppedApiImage.vue'
 import LinkButton from '~/components/base/button/LinkButton.vue'
 import LocationPopUp from '@/components/map/LocationPopUp.vue'

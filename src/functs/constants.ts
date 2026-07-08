@@ -6,7 +6,7 @@ import type {
   ProjectTabType,
   PeopleGroupModulesKeys,
   ProjectModuleExtra,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 import type { IconImageChoice, IconTabImageChoice } from '~/functs/IconImage'
 
 export const RESOURCE_PROJECT_CATEGORY = [

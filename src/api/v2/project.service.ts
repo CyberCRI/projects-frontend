@@ -4,16 +4,16 @@ import {
   getProjectMembers as fetchProjectMembers,
   getProjectSimilars as fetchProjectSimilars,
   getProjectGroups as fetchProjectGroups,
-} from '@/api/projects.service'
+  getProjectLocations as fetchProjectLocations,
+} from 'shared-projects-frontend/apis'
 import type {
   QueryFilterProjectMembers,
   TranslatedProjectMember,
   ProjectSlugOrId,
   QueryFilterProjectSimilars,
   OrganizationModel,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
-import { getProjectLocations as fetchProjectLocations } from '@/api/locations.service'
 import type { RefOrRaw } from '~/interfaces/utils'
 import { onlyRefs } from '@/functs/onlyRefs'
 

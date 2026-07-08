@@ -1,8 +1,8 @@
 import UserProfileV2 from '~/components/people/UserProfileV2.vue'
 import { UserFactory } from '~~/tests/factories/user.factory'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import { getUser } from 'shared-projects-frontend/apis'
 import { flushPromises } from '@vue/test-utils'
-import { getUser } from '~/api/people.service'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 

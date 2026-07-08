@@ -1,4 +1,4 @@
-import type { EventModel } from 'shared-projects-frontend'
+import type { EventModel } from 'shared-projects-frontend/models'
 
 export const eventSkeleton = (def?: Partial<EventModel>): Omit<EventModel, 'id'> => ({
   id: -1,

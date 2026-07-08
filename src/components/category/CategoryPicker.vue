@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import type { ProjectCategoryModel, TranslatedProjectCategory } from 'shared-projects-frontend'
+import type {
+  ProjectCategoryModel,
+  TranslatedProjectCategory,
+} from 'shared-projects-frontend/models'
 
 import IconImage from '~/components/base/media/IconImage.vue'
 

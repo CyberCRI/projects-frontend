@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { refreshProjectData, refreshProjectTabs } from '~/composables/project/refreshProject'
-import type { TranslatedProject, ProjectTabForm } from 'shared-projects-frontend'
-import { createProjectTab } from '~/api/project-tabs.service'
+import type { TranslatedProject, ProjectTabForm } from 'shared-projects-frontend/models'
+import { createProjectTab } from 'shared-projects-frontend/apis'
 import TabForm from '~/components/tabs/TabForm.vue'
 import analytics from '~/analytics'
 

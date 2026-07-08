@@ -4,7 +4,7 @@ import type {
   QueryFilterGroupHierarchy,
   OrganizationModel,
   TranslatedGroupMember,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 
 import type { RefOrRaw } from '~/interfaces/utils'
 
@@ -19,7 +19,7 @@ import {
   getGroupEvent as fetchGroupEvent,
   getGroupGallery as fetchGroupGallery,
   getGroupNews as fetchGroupNews,
-} from '~/api/groups.service'
+} from 'shared-projects-frontend/apis'
 import type { UseAsyncApiConfig, UseAsyncPaginationApiConfig } from '~/api/v2/base.service'
 
 import useAsyncPaginationAPI from '~/composables/useAsyncPaginationAPI'

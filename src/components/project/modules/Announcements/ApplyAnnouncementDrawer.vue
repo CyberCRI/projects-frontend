@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { applyAnnouncement } from '~/api/announcements.service'
+import { applyAnnouncement } from 'shared-projects-frontend/apis'
 
 import TipTapEditor from '~/components/base/form/TextEditor/TipTapEditor.vue'
 import TextInput from '~/components/base/form/TextInput.vue'
@@ -7,8 +7,8 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import useToasterStore from '~/stores/useToaster'
 
+import type { TranslatedAnnouncement, TranslatedProject } from 'shared-projects-frontend/models'
 import { defaultAnnouncementReplyForm, useAnnouncementReplyForm } from '~/form/annoucement'
-import type { TranslatedAnnouncement, TranslatedProject } from 'shared-projects-frontend'
 import Recaptcha from '~/components/base/form/Recaptcha.vue'
 import Field from '~/components/base/form/Field.vue'
 import useUsersStore from '~/stores/useUsers'

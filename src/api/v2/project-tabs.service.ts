@@ -5,7 +5,7 @@ import type {
   QueryFilterProjectTab,
   QueryFilterProjectTabItem,
   ProjectSlugOrId,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 
 import type { RefOrRaw } from '~/interfaces/utils'
 
@@ -16,7 +16,7 @@ import {
   getProjectTab as fetchProjectTab,
   getAllProjectTabItem as fetchAllProjectTabItem,
   getProjectTabItem as fetchProjectTabItem,
-} from '~/api/project-tabs.service'
+} from 'shared-projects-frontend/apis'
 import { onlyRefs } from '~/functs/onlyRefs'
 
 const DEFAULT_CONFIG = {}

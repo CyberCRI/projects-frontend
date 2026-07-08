@@ -6,8 +6,8 @@
 
 <script setup lang="ts">
 import BaseDescription from '~/components/modules/Abstract/BaseDescription.vue'
+import type { TranslatedProject } from 'shared-projects-frontend/models'
 import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
-import type { TranslatedProject } from 'shared-projects-frontend'
 
 defineProps<{
   project: TranslatedProject

@@ -48,9 +48,9 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedEventModel } from 'shared-projects-frontend'
+import type { TranslatedEventModel } from 'shared-projects-frontend/models'
 
-import { deleteEvent } from '~/api/event.service'
+import { deleteEvent } from 'shared-projects-frontend/apis'
 
 import BaseListSummaryBlock from '~/components/home/SummaryCards/BaseListSummaryBlock.vue'
 import EditEventDrawer from '~/components/event/EditEventDrawer/EditEventDrawer.vue'

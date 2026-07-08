@@ -55,10 +55,10 @@ import type {
   QueryFilterEvent,
   TranslatedEventModel,
   TranslatedPeopleGroupModel,
-} from 'shared-projects-frontend'
+} from 'shared-projects-frontend/models'
 
+import { deleteEvent } from 'shared-projects-frontend/apis'
 import { getGroupEvent } from '~/api/v2/group.service'
-import { deleteEvent } from '~/api/event.service'
 
 import EditEventDrawer from '~/components/event/EditEventDrawer/EditEventDrawer.vue'
 import EventItem from '~/components/event/EventList/EventItem.vue'
