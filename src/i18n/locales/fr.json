@@ -1756,7 +1756,7 @@
     "copy": "(copie)",
     "nothing": "Il n'y a rien ici...",
     "tag-warning": "NB: Si un utilisateur change la langue de votre portail, les tags qui possèdent des traductions dans Wikipedia seront traduits. Les autres seront affichés en priorité en anglais et sinon dans la langue originale.",
-    "description": "Désignation des marchandises",
+    "description": "Description",
     "duplicate": {
       "title": "Voulez-vous vraiment reproduire ce projet ?",
       "help": "Le projet sera cloné sans membres.",
