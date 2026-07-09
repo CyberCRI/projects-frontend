@@ -3,14 +3,12 @@
     class="drop-down-menu-item-content"
     :to="{ name: 'Category', params: { slugOrId: category.slug || category.id } }"
   >
-    <span class="label">{{ capitalize(category.$t.name) }}</span>
+    <span class="label">{{ category.$t.name }}</span>
   </NuxtLink>
 </template>
 
 <script setup lang="ts">
 import type { TranslatedProjectCategory } from '~/models/project-category.model'
-
-import { capitalize } from '~/functs/string'
 
 defineProps<{
   category: TranslatedProjectCategory

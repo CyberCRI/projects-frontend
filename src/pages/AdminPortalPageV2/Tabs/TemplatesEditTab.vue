@@ -3,11 +3,11 @@
     <FetchLoader :status="status">
       <TemplateForm v-model="form" :errors="errors" :save-image-callback="saveImageTemplate" />
       <div class="form-actions">
-        <LpiButton data-test="cancel" :label="capitalize(t('common.cancel'))" @click="redirect" />
+        <LpiButton data-test="cancel" :label="t('common.cancel')" @click="redirect" />
         <LpiButton
           data-test="submit"
           :disabled="!isValid"
-          :label="capitalize(t('common.save'))"
+          :label="t('common.save')"
           @click="submit"
         />
       </div>
@@ -26,7 +26,6 @@ import useNuxtI18n from '~/composables/useNuxtI18n'
 
 import { getTemplate } from '~/api/v2/templates.service'
 import { useTemplateForm } from '~/form/template'
-import { capitalize } from '~/functs/string'
 
 const { t } = useNuxtI18n()
 const route = useRoute()
