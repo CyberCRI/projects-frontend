@@ -10,7 +10,7 @@
             <slot name="header_prefix" />
 
             <div class="header__title">
-              {{ capitalize(title) }}
+              {{ title }}
             </div>
 
             <slot name="header_clear" />
@@ -48,7 +48,7 @@
 
             <LpiButton
               :disabled="confirmActionDisabled || asyncing"
-              :label="capitalize(confirmActionName || $t('common.confirm'))"
+              :label="confirmActionName || $t('common.confirm')"
               :btn-icon="asyncing ? 'LoaderSimple' : null"
               class="footer__right-button"
               data-test="confirm-button"
@@ -66,7 +66,6 @@ import LpiButton from '~/components/base/button/LpiButton.vue'
 import type { StyleValue } from 'vue'
 
 import { onClient, onClientUnmounted } from '~/composables/onClient'
-import { capitalize } from '~/functs/string'
 
 const props = withDefaults(
   defineProps<{

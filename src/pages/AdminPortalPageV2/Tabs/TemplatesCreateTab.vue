@@ -2,15 +2,11 @@
   <LayoutTab :title="$t('template.create')" :notice="t('template.info')">
     <TemplateForm v-model="form" :errors="errors" :save-image-callback="saveImageTemplate" />
     <div class="form-actions">
-      <LpiButton
-        data-test="cancel"
-        :label="capitalize(t('common.cancel'))"
-        :to="LOCATION_TEMPLATES"
-      />
+      <LpiButton data-test="cancel" :label="t('common.cancel')" :to="LOCATION_TEMPLATES" />
       <LpiButton
         data-test="submit"
         :disabled="!isValid"
-        :label="capitalize(t('common.save'))"
+        :label="t('common.save')"
         @click="submit"
       />
     </div>
@@ -27,7 +23,6 @@ import useNuxtI18n from '~/composables/useNuxtI18n'
 
 import type { RouteLocationRaw } from 'vue-router'
 import { useTemplateForm } from '~/form/template'
-import { capitalize } from '~/functs/string'
 
 const { t } = useNuxtI18n()
 const router = useRouter()

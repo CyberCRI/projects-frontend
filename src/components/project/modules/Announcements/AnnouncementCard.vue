@@ -21,7 +21,7 @@
 
       <div class="main-content horizontal-padding bottom-padding">
         <h3 class="announcement-title bottom-padding skeletons-text">
-          {{ capitalize(announcement.title) }}
+          {{ announcement.title }}
         </h3>
 
         <div class="description skeletons-text" v-html="announcement.description" />
@@ -61,7 +61,6 @@ import type { TranslatedProject } from '@/models/project.model'
 import IconImage from '@/components/base/media/IconImage.vue'
 import { usePatatoid } from '@/composables/usePatatoids'
 import type { RouteLocationRaw } from 'vue-router'
-import { capitalize } from '@/functs/string'
 import { formatDate } from '~/functs/date'
 import { NuxtLink } from '#components'
 

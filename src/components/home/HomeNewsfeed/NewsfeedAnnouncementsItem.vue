@@ -19,7 +19,7 @@
       <div :style="announcementStyle" class="announcement-overlay skeletons-opacity" />
     </div>
     <h3 class="announcement-title skeletons-text">
-      {{ capitalize(announcement?.$t?.title) }}
+      {{ announcement?.$t?.title }}
     </h3>
     <div class="announcement-infos">
       <span class="date-ctn skeletons-text">
@@ -52,8 +52,6 @@ import HtmlLimiter from '~/components/base/HtmlLimiter.vue'
 
 import { DEFAULT_ANNOUNCEMENT_PATATOID, DEFAULT_PROJECT_PATATOID } from '~/composables/usePatatoids'
 import { usePublicURL } from '~/composables/usePublic'
-
-import { capitalize } from '~/functs/string'
 
 const props = withDefaults(
   defineProps<{

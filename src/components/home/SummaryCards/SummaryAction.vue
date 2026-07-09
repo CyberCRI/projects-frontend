@@ -1,7 +1,7 @@
 <template>
   <component :is="is" :to="to" class="summary-action skeletons-background">
     <IconImage class="icon" :name="actionIcon" />
-    <span class="label">{{ capitalize(actionLabel) }}</span>
+    <span class="label">{{ actionLabel }}</span>
   </component>
 </template>
 <script setup lang="ts">
@@ -9,7 +9,6 @@ import IconImage from '~/components/base/media/IconImage.vue'
 
 import type { IconImageChoice } from '~/functs/IconImage'
 import type { RouteLocationRaw } from 'vue-router'
-import { capitalize } from '~/functs/string'
 
 const props = withDefaults(
   defineProps<{
