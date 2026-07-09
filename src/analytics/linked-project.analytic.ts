@@ -9,7 +9,7 @@ export interface LinkedProjectAnalytic {
   linkedProject: LinkedProject
 }
 export default {
-  addLinkedProject(project: LinkedProjectAnalytic) {
+  addLinkedProject(project: LinkedProjectAnalytic[]) {
     analytics.track('add_linked_project', project)
   },
 

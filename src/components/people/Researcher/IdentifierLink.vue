@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import type { HarvesterType, Identifier } from 'shared-projects-frontend/models'
+import type { HarvesterType, ResearcherIdentifier } from 'shared-projects-frontend/models'
 
 import { documentHarvesterToUrl, researcherHarvesterToUrl } from '~/functs/researcher'
 import googlescholarIcon from '~/assets/svg/googlescholar.svg'
@@ -50,7 +50,7 @@ const ICONS: Partial<Record<HarvesterType, string>> = {
 
 const props = withDefaults(
   defineProps<{
-    identifier: Identifier
+    identifier: ResearcherIdentifier
     type: 'researcher' | 'document'
     height?: string
     title?: string

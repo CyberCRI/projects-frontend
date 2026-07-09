@@ -5,14 +5,17 @@
 </template>
 
 <script setup lang="ts">
+import type {
+  ResearcherDocumentType,
+  TranslatedPeopleGroupModel,
+} from 'shared-projects-frontend/models'
 import GroupResearcherDocumentsList from '~/components/people/Researcher/GroupResearcherDocumentsList.vue'
-import type { DocumentType, TranslatedPeopleGroupModel } from 'shared-projects-frontend/models'
 import BaseModuleTab from '@/components/modules/BaseModuleTab.vue'
 
 import { GROUP_MODULE_TITLE } from '~/functs/constants'
 
 const props = defineProps<{
-  documentType: DocumentType
+  documentType: ResearcherDocumentType
   group: TranslatedPeopleGroupModel
 }>()
 

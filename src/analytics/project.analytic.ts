@@ -3,8 +3,7 @@ import type {
   ProjectMembersDeleteInput,
   ProjectSlugOrId,
 } from 'shared-projects-frontend/models'
-
-import type { SearchParams } from '~/api/types'
+import type { SearchParams } from 'shared-projects-frontend/apis'
 
 import analytics from '~/analytics'
 

@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TranslatedDocument } from 'shared-projects-frontend/models'
+import type { TranslatedResearcherDocument } from 'shared-projects-frontend/models'
 
 import { getResearchDocumentSimilars } from '~/api/v2/crisalid.service'
 
@@ -43,7 +43,7 @@ defineOptions({ name: 'ResearcherDocumentSimilars' })
 const { t } = useNuxtI18n()
 const emit = defineEmits(['close'])
 const props = defineProps<{
-  document?: TranslatedDocument
+  document?: TranslatedResearcherDocument
   docType: string
 }>()
 

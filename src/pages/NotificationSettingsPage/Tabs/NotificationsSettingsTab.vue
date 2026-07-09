@@ -21,13 +21,14 @@
   </div>
 </template>
 <script setup lang="ts">
+import type { NotificationSettingsForm } from 'shared-projects-frontend/models'
 import GroupButton from '~/components/base/button/GroupButton.vue'
 import LpiLoader from '~/components/base/loader/LpiLoader.vue'
 
 import useUsersStore from '~/stores/useUsers'
 
 const usersStore = useUsersStore()
-const form = ref({
+const form = ref<NotificationSettingsForm>({
   followed_project_has_been_edited: false,
   notify_added_to_project: false,
   project_has_been_commented: false,
@@ -42,6 +43,7 @@ const form = ref({
   new_instruction: false,
   category_project_created: false,
   category_project_updated: false,
+  announcement_has_new_application: false,
 })
 const isLoading = ref(true)
 
@@ -150,6 +152,12 @@ const switches = computed(() => {
       value: form.value.new_instruction,
       settingValue: 'new_instruction',
     },
+    {
+      label: t('notifications.project.announcement-has-new-application'),
+      subLabel: t('notifications.project.announcement-has-new-application-sub'),
+      value: form.value.announcement_has_new_application,
+      settingValue: 'announcement_has_new_application',
+    },
   ]
 })
 
@@ -164,13 +172,7 @@ const updateNotifications = async (setting) => {
   }
 
   payload[setting] = !notifications.value[setting]
-
-  const body = {
-    id: usersStore.id,
-    payload: payload,
-  }
-
-  await usersStore.patchNotifications(body)
+  await usersStore.patchNotifications(usersStore.id, payload)
 }
 
 onMounted(async () => {

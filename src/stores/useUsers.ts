@@ -1,16 +1,22 @@
-import type { NotificationsSettings, UserModel } from 'shared-projects-frontend/models'
+import type {
+  NotificationSettingsForm,
+  NotificationsSettings,
+  UserIdOrSlug,
+  UserModel,
+} from 'shared-projects-frontend/models'
 
 import {
-  getNotifications as apiGetNotifications,
-  patchNotifications as apiPatchNotifications,
-  logoutFromKeycloak,
-  refreshAccessToken,
-} from '~/api/auth/auth.service'
-import { getProjectCategoriesFollow, getUser as _getUser } from 'shared-projects-frontend/apis'
+  getProjectCategoriesFollow,
+  getUser as _getUser,
+  getUserNotificationSettings,
+  patchUserNotificationSettings,
+} from 'shared-projects-frontend/apis'
+import { logoutFromKeycloak, refreshAccessToken } from '~/api/auth/auth.service'
 import { checkExpiredToken } from '~/api/auth/keycloakUtils'
 import { removeApiCookie } from '~/api/auth/cookie.service'
 import type { AuthResult } from '~/api/auth/keycloak'
 
+import type { Right } from 'shared-projects-frontend/interfaces'
 import { getOrgsFromRoles } from '~/functs/rolesUtils'
 import analytics from '~/analytics'
 import { defineStore } from 'pinia'
@@ -267,7 +273,7 @@ const useUsersStore = defineStore('users', () => {
   async function getNotifications(id) {
     // TODO: should be getNotificationsSetting
     try {
-      const result = await apiGetNotifications(id)
+      const result = await getUserNotificationSettings(id)
 
       notificationsSettings.value = result
 
@@ -277,10 +283,10 @@ const useUsersStore = defineStore('users', () => {
     }
   }
 
-  async function patchNotifications({ id, payload }) {
+  async function patchNotifications(userId: UserIdOrSlug, body: NotificationSettingsForm) {
     // TODO: should be patchNotificationsSetting
     try {
-      const result = await apiPatchNotifications({ id, payload })
+      const result = await patchUserNotificationSettings(userId, body)
 
       notificationsSettings.value = result
 

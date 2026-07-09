@@ -7,7 +7,6 @@ import {
   getAllProjectCategories as apiGetAllProjectCategories,
   getRootProjectCategory as apiGetRootProjectCategory,
 } from 'shared-projects-frontend/apis'
-import type { APIResponseList } from '~/api/types'
 
 import useOrganizationCode from '~/composables/useOrganizationCode'
 import useAutoTranslate from '~/composables/useAutoTranslate'
@@ -82,48 +81,30 @@ const useProjectCategoriesStore = defineStore('projectCategories', () => {
   })
 
   // actions: {
-  const getAllProjectCategories = (): Promise<APIResponseList<ProjectCategoryOutput>> => {
+  const getAllProjectCategories = () => {
     // If no organization set in the param use default one
     // TODO check why rootState.organizations.current is sometimes null
     // the fallback on env value is a temporary fix
     const organizationCode = useOrganizationCode()
 
-    return new Promise((resolve, reject) => {
-      apiGetAllProjectCategories(organizationCode)
-        .then((response) => {
-          // Only store project categories from org
-          // Except in "TheAdvancedProjectOptions" where we need all project categories from every org
-          //commit('SET_PROJECT_CATEGORIES', response.results)
-          _all.value = response.results
-          // @ts-expect-error idk
-          resolve(response)
-        })
-        .catch((error) => {
-          console.error('Error getting the categories', error)
-          reject(error)
-        })
+    return apiGetAllProjectCategories(organizationCode).then((resp) => {
+      _all.value = resp.results
+      return resp.results
     })
   }
 
-  const getRootProjectCategory = (): Promise<ProjectCategoryOutput> => {
+  const getRootProjectCategory = () => {
     // If no organization set in the param use default one
     // TODO check why rootState.organizations.current is sometimes null
     // the fallback on env value is a temporary fix
     const organizationCode = useOrganizationCode()
 
-    return new Promise((resolve, reject) => {
-      apiGetRootProjectCategory(organizationCode)
-        .then((response) => {
-          // Only store project categories from org
-          // Except in "TheAdvancedProjectOptions" where we need all project categories from every org
-          //commit('SET_PROJECT_CATEGORIES', response.results)
-          _root.value = response
-          resolve(response)
-        })
-        .catch((error) => {
-          console.error('Error getting the categories', error)
-          reject(error)
-        })
+    return apiGetRootProjectCategory(organizationCode).then((data) => {
+      // Only store project categories from org
+      // Except in "TheAdvancedProjectOptions" where we need all project categories from every org
+      //commit('SET_PROJECT_CATEGORIES', response.results)
+      _root.value = data
+      return data
     })
   }
 

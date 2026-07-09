@@ -45,8 +45,6 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import useUsersStore from '~/stores/useUsers'
 
-import useAPI from '~/composables/useAPI'
-
 const props = withDefaults(defineProps<{ isOpened?: boolean }>(), { isOpened: false })
 
 defineEmits<{ close: [] }>()

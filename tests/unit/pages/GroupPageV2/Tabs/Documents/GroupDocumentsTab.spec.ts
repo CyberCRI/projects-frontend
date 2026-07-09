@@ -2,7 +2,10 @@ import GroupDocumentsTab from '~/pages/GroupPageV2/Tabs/Documents/GroupDocuments
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import { flushPromises } from '@vue/test-utils'
 
-import { DocumentType, ResearcherDocumentAnalytics } from 'shared-projects-frontend/models'
+import {
+  ResearcherDocumentType,
+  ResearcherDocumentAnalytics,
+} from 'shared-projects-frontend/models'
 import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
 import { documentAnalyticsSkeleton } from '~/skeletons/crisalid.skeletons'
@@ -13,7 +16,7 @@ import { describe, expect, it } from 'vitest'
 describe('GroupDocumentsTab.vue', () => {
   it('should render component', async () => {
     const group = TranslatedProjectFactory.generate()
-    const documentType: DocumentType = 'publications'
+    const documentType: ResearcherDocumentType = 'publications'
     const props = { group, documentType }
 
     const organisationCode = useOrganizationCode()

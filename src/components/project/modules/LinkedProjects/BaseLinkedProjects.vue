@@ -88,12 +88,7 @@ const onSubmit = (linkedProjects: TranslatedProject[]) => {
 
   addLinkedProject(props.project.id, body)
     .then((linkedProject) => {
-      analytics.linkedProject.addLinkedProject({
-        project: {
-          id: props.project.id,
-        },
-        linkedProject,
-      })
+      analytics.linkedProject.addLinkedProject(linkedProject.map(() => ))
       toaster.pushSuccess(t('toasts.linked-project-create.success'))
       refreshData()
     })

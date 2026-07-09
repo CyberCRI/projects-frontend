@@ -115,7 +115,7 @@ import type {
   QueryFilterDocument,
   Relators,
   ResearcherDocumentAnalytics,
-  TranslatedDocument,
+  TranslatedResearcherDocument,
 } from 'shared-projects-frontend/models'
 
 import { sanitizeResearcherDocumentAnalyticsYears } from '~/api/sanitizes/researcher'
@@ -131,7 +131,7 @@ import { isNil } from 'es-toolkit'
 
 const props = withDefaults(
   defineProps<{
-    documents: TranslatedDocument[]
+    documents: TranslatedResearcherDocument[]
     documentsAnalytics: ResearcherDocumentAnalytics
     pagination?: PaginationType
     preview?: boolean
@@ -144,7 +144,7 @@ const { t } = useNuxtI18n()
 const { count: paginationCount } = props.pagination
 
 // when we click to "show similars documents"
-const documentSelected = ref<TranslatedDocument>()
+const documentSelected = ref<TranslatedResearcherDocument>()
 
 const SORTING_RESULTS = {
   publication_date: t('common.order-asc'),

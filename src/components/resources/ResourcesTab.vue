@@ -77,8 +77,8 @@ const props = withDefaults(
   defineProps<{
     fileResources?: TranslatedAttachmentFile[]
     linkResources?: TranslatedAttachmentLink[]
-    deleteAttachmentLink: (item: TranslatedAttachmentFile) => Promise<undefined>
-    deleteAttachmentFile: (item: TranslatedAttachmentLink) => Promise<undefined>
+    deleteAttachmentLink: (item: TranslatedAttachmentFile) => Promise<unknown>
+    deleteAttachmentFile: (item: TranslatedAttachmentLink) => Promise<unknown>
     editable?: boolean
     permissions?: boolean
   }>(),

@@ -1,6 +1,6 @@
 import type { OrganizationModel, UserModel } from 'shared-projects-frontend/models'
 import { isAdmin, isSuperAdmin } from 'shared-projects-frontend/lib'
-import { Right } from 'shared-projects-frontend/interfaces'
+import type { Right } from 'shared-projects-frontend/interfaces'
 
 export function parseJwt(token) {
   try {

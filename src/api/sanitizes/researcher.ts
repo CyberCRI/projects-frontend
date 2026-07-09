@@ -1,4 +1,7 @@
-import type { Document, ResearcherDocumentAnalytics } from 'shared-projects-frontend/models'
+import type {
+  ResearcherDocument,
+  ResearcherDocumentAnalytics,
+} from 'shared-projects-frontend/models'
 import type { PaginationResult } from '~/composables/usePagination'
 
 /**
@@ -12,7 +15,7 @@ import type { PaginationResult } from '~/composables/usePagination'
  * @returns {any}
  * @exports
  */
-export const sanitizeResearcherDocuments = (data: PaginationResult<Document>) => {
+export const sanitizeResearcherDocuments = (data: PaginationResult<ResearcherDocument>) => {
   const result = data.results
   result.forEach((el) => {
     if (el.publication_date) {

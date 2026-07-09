@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import type { UserModel, DocumentType } from 'shared-projects-frontend/models'
+import type { UserModel, ResearcherDocumentType } from 'shared-projects-frontend/models'
 
 import { getOwnResearchDocument, getOwnResearchDocumentAnalytics } from '~/api/v2/crisalid.service'
 
@@ -22,7 +22,12 @@ import { documentAnalyticsSkeleton, researchDocumentSkeleton } from '~/skeletons
 import { factoryPagination } from '~/skeletons/base.skeletons'
 
 const props = withDefaults(
-  defineProps<{ preview?: boolean; limit?: number; user: UserModel; docType: DocumentType }>(),
+  defineProps<{
+    preview?: boolean
+    limit?: number
+    user: UserModel
+    docType: ResearcherDocumentType
+  }>(),
   { preview: false, limit: null }
 )
 const orgaCode = useOrganizationCode()

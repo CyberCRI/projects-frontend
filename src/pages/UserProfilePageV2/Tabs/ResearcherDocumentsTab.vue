@@ -14,13 +14,13 @@
 </template>
 
 <script setup lang="ts">
-import type { UserModel, DocumentType } from 'shared-projects-frontend/models'
+import type { UserModel, ResearcherDocumentType } from 'shared-projects-frontend/models'
 
 import OwnResearcherDocumentsList from '~/components/people/Researcher/OwnResearcherDocumentsList.vue'
 
 const { t } = useNuxtI18n()
 
-const props = defineProps<{ docType: DocumentType; user: UserModel }>()
+const props = defineProps<{ docType: ResearcherDocumentType; user: UserModel }>()
 
 const title = computed(() => t(`me.${props.docType}`))
 const documentEmpty = computed(() => t(`you.no-${props.docType}`))

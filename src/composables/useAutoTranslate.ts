@@ -20,7 +20,7 @@ import type {
   TranslatedBlogEntry,
   TranslatedTemplate,
   TranslatedNewsfeed,
-  TranslatedDocument,
+  TranslatedResearcherDocument,
   TranslatedEventModel,
   TranslatedComment,
   TranslatedUserModel,
@@ -396,9 +396,9 @@ export default function useAutoTranslate() {
   */
 
   const translateResearcherDocument = (data) =>
-    translateEntity<TranslatedDocument>(data, ['title', 'description'])
+    translateEntity<TranslatedResearcherDocument>(data, ['title', 'description'])
   const translateResearcherDocuments = (datas) =>
-    translateEntities<TranslatedDocument>(datas, translateResearcherDocument)
+    translateEntities<TranslatedResearcherDocument>(datas, translateResearcherDocument)
 
   /*
     project tabs

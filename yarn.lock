@@ -7327,6 +7327,11 @@ es-toolkit@1.40.0:
   resolved "https://registry.yarnpkg.com/es-toolkit/-/es-toolkit-1.40.0.tgz#1132e3d8a990298edd08d7b830a12c4eebbe82bb"
   integrity sha512-8o6w0KFmU0CiIl0/Q/BCEOabF2IJaELM1T2PWj6e8KqzHv1gdx+7JtFnDwOx1kJH/isJ5NwlDG1nCr1HrRF94Q==
 
+es-toolkit@^1.49.0:
+  version "1.49.0"
+  resolved "https://registry.yarnpkg.com/es-toolkit/-/es-toolkit-1.49.0.tgz#93c5b031865792fc03cbf5bd20c132a4f976a52a"
+  integrity sha512-G5iZ6Pc/FNRY/soKZHC+TxGDD83rHUDXxzaWhGCX44vAv/tMs56WMusnm/KMNK+luUPsgA9U28cGr4RDlSzL2g==
+
 esbuild@0.25.10:
   version "0.25.10"
   resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.25.10.tgz#37f5aa5cd14500f141be121c01b096ca83ac34a9"
@@ -12659,7 +12664,7 @@ setprototypeof@~1.2.0:
 
 "shared-projects-frontend@git+ssh://git@github.com:CyberCRI/shared-projects-frontend.git#main":
   version "1.0.0"
-  resolved "git+ssh://git@github.com:CyberCRI/shared-projects-frontend.git#fe00d4ffbed67ed21aff23fe242ef44ae82f7101"
+  resolved "git+ssh://git@github.com:CyberCRI/shared-projects-frontend.git#8bf9584c2f5703f96e4bc7b5111c4892e07e37c9"
   dependencies:
     "@tiptap/core" "2.26.3"
     "@tiptap/extension-code-block" "2.26.3"
@@ -12681,7 +12686,9 @@ setprototypeof@~1.2.0:
     "@tiptap/html" "2.26.3"
     "@tiptap/pm" "2.26.3"
     "@tiptap/starter-kit" "2.26.3"
+    es-toolkit "^1.49.0"
     lowlight "^3.3.0"
+    ofetch "^1.5.1"
     typescript "^6.0.3"
     y-prosemirror "1.3.7"
     yjs "13.6.27"

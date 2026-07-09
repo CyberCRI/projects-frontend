@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { deleteClassificationTag, getOrgClassificationTags } from 'shared-projects-frontend/apis'
+import {
+  clientAPI,
+  deleteClassificationTag,
+  getOrgClassificationTags,
+} from 'shared-projects-frontend/apis'
 
 import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
 import ContextActionButton from '~/components/base/button/ContextActionButton.vue'
@@ -14,7 +18,6 @@ import useToasterStore from '~/stores/useToaster'
 
 import type { TagClassificationModel } from 'shared-projects-frontend/models'
 import useTagTexts from '~/composables/useTagTexts'
-import useAPI from '~/composables/useAPI'
 import { debounce } from 'es-toolkit'
 
 const { t } = useNuxtI18n()
@@ -161,7 +164,7 @@ const pagination = computed(() => {
 
 const onClickPagination = async (requestedPage) => {
   isLoading.value = true
-  const tagResults = await useAPI(requestedPage, {})
+  const tagResults = await clientAPI(requestedPage, {})
   request.value = tagResults
   isLoading.value = false
   // const el = document.querySelector('.group-user-selection .search-section')

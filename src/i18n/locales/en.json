@@ -2473,6 +2473,8 @@
       "project-sub": "Be notified when other team members modify your projects",
       "announcement": "Announcements",
       "announcement-sub": "Be notified when new announcements are published on the website",
+      "announcement-has-new-application": "Announcements Application",
+      "announcement-has-new-application-sub": "Be notified when announcements have a new application",
       "review": "Ready for review",
       "review-sub": "When you are a reviewer of a project, be notified when a project is ready to be reviewed by you",
       "reviewed": "Has been reviewed",

@@ -22,11 +22,13 @@ export const usePermissionUser = (userId: RefOrRaw<UserModel['id'] | null>) => {
   const internalUserId = computed(() => unref(userId))
 
   const permissions = computed(() => internalUserId.value && userStore.isConnected)
+  const isSelf = computed(() => userStore.id === internalUserId.value)
 
   const canEditUser = computed(() => {
     return (
       permissions.value &&
-      globalCanEditUser(userStore.rights, organizationStore.current.id, internalUserId.value)
+      (globalCanEditUser(userStore.rights, organizationStore.current.id, internalUserId.value) ||
+        isSelf.value)
     )
   })
 

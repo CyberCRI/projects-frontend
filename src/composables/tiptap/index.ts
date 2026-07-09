@@ -1,6 +1,6 @@
 import type { ImageModelCreated } from 'shared-projects-frontend/models'
-import { getExtensions } from 'shared-projects-frontend/models'
 import useOrganizationsStore from '~/stores/useOrganizations'
+import { getExtensions } from 'shared-projects-frontend/lib'
 
 import type { ErrorObject } from '@vuelidate/core'
 import type { EditorOptions } from '@tiptap/vue-3'

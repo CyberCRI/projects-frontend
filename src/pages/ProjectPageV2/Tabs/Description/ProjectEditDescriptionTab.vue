@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { type ProviderParams, roomKeyFromParams } from 'shared-projects-frontend/lib'
 import { patchProject, postProjectImage } from 'shared-projects-frontend/apis'
 import { defaultProjectForm, useProjectDescriptionForm } from '~/form/project'
+import { refreshProjectData } from '~/composables/project/refreshProject'
+import type { ProviderParams } from 'shared-projects-frontend/interfaces'
 import type { TranslatedProject } from 'shared-projects-frontend/models'
 import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
+import { roomKeyFromParams } from 'shared-projects-frontend/lib'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import FormPanel from '~/components/base/FormPanel.vue'
 import { getFirstTextNotEmpty } from '~/functs/tiptap'

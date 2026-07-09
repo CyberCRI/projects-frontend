@@ -5,8 +5,6 @@ import useKeycloak from '~/api/auth/keycloak'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useProjectsStore from '~/stores/useProjects'
 
-import useAPI from '~/composables/useAPI'
-
 import { useRuntimeConfig } from '#imports'
 
 // TODO fix this in uxt sever side (windows is undefined)
@@ -156,14 +154,4 @@ export async function refreshAccessToken(): Promise<any> {
     parsedToken: { ...payload.parsedToken },
     id_token: payload.id_token,
   }
-}
-
-export async function getNotifications(id) {
-  // TODO: should getNotificationsSetting
-  return await useAPI(`notifications-setting/${id}/`, {})
-}
-
-export async function patchNotifications({ id, payload }) {
-  // TODO: should patchNotificationsSetting
-  return await useAPI(`notifications-setting/${id}/`, { body: payload, method: 'PATCH' })
 }

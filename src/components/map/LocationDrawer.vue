@@ -114,11 +114,11 @@
 import type {
   AnyTranslatedLocation,
   LocationForm as LocationFormType,
-  Geocoding,
   LocationType,
 } from 'shared-projects-frontend/models'
-import { useSuggestLocations } from 'shared-projects-frontend/apis'
+import { useSuggestLocations } from '~/api/geocoding.service'
 import GeneralMap from '@/components/map/GeneralMap.vue'
+import type { Geocoding } from '~/interfaces/maps'
 import useToasterStore from '@/stores/useToaster'
 
 const props = withDefaults(
