@@ -2,6 +2,7 @@ import type { NewsInput, NewsModel, QueryFilterNews } from '~/models/news.model'
 import type { OrganizationModel } from '~/models/organization.model'
 
 import type { UseApiOptions } from '~/composables/useAPI'
+import type { ImageModel } from '~/models/image.model'
 import useAPI from '~/composables/useAPI'
 
 type ConfigNews = UseApiOptions<QueryFilterNews>
@@ -74,5 +75,15 @@ export async function patchNewsHeader(
   return await useAPI(`organization/${organizationCode}/news/${newsId}/header/${image_id}/`, {
     body,
     method: 'PATCH',
+  })
+}
+
+export async function deleteNewsHeader(
+  organizationCode: OrganizationModel['code'],
+  newsId: NewsModel['id'],
+  imageId: ImageModel['id']
+) {
+  await useAPI(`organization/${organizationCode}/news/${newsId}/header/${imageId}/`, {
+    method: 'DELETE',
   })
 }

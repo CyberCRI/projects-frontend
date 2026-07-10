@@ -1,7 +1,7 @@
 import type { OrganizationModel, OrganizationPatchInput } from '@/models/organization.model'
 import type { GroupModelInput, RemoveGroupModelInput } from '@/models/group.model'
+import type { ImageModel, ImageOrganizationInput } from '@/models/image.model'
 import type { ProjectModel, ProjectSlugOrId } from '@/models/project.model'
-import type { ImageOrganizationInput } from '@/models/image.model'
 import { _adaptParamsToGetQuery } from '@/api/utils.service'
 import useAPI from '@/composables/useAPI'
 
@@ -31,6 +31,13 @@ export async function patchOrganisationBanner(code: string, banner_id: number, b
   return await useAPI(`organization/${code}/banner/${banner_id}/`, { body, method: 'PATCH' })
 }
 
+export async function deleteOrganisationBanner(
+  organizationCode: OrganizationModel['code'],
+  imageId: ImageModel['id']
+) {
+  await useAPI(`organization/${organizationCode}/banner/${imageId}/`, { method: 'DELETE' })
+}
+
 export async function postOrganisationLogo({
   code,
   body,
@@ -39,6 +46,13 @@ export async function postOrganisationLogo({
   body: ImageOrganizationInput | FormData
 }) {
   return await useAPI(`organization/${code}/logo/`, { body, method: 'POST' })
+}
+
+export async function deleteOrganisationLogo(
+  organizationCode: OrganizationModel['code'],
+  imageId: ImageModel['id']
+) {
+  await useAPI(`organization/${organizationCode}/logo/${imageId}/`, { method: 'DELETE' })
 }
 
 export async function addOrgMember({ org_id, body }: { org_id: number; body: GroupModelInput[] }) {

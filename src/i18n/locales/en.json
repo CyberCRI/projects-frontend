@@ -1768,7 +1768,8 @@
         "too-big": "File is too big (max: {maxSize}Mb)",
         "invalid-image": "Unsupported file, need to be a valid image.",
         "required-image": "A file is required",
-        "required": "A file is required"
+        "required": "A file is required",
+        "delete": "Delete file"
       }
     },
     "link": {

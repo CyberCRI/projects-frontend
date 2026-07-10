@@ -1767,7 +1767,8 @@
         "too-big": "Fail on liiga suur (maksimaalselt: {maxSize}Mb)",
         "invalid-image": "Toetamata fail peab olema korrektne pilt.",
         "required-image": "Vajalik on fail",
-        "required": "Vajalik on fail"
+        "required": "Vajalik on fail",
+        "delete": "Kustuta fail"
       }
     },
     "link": {

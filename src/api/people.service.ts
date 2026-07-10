@@ -76,6 +76,10 @@ export async function patchUserPicture(id: string | number, pictureId: string, b
   return await useAPI(`user/${id}/profile-picture/${pictureId}/`, { body, method: 'PATCH' })
 }
 
+export async function deleteUserPicture(id: string | number, pictureId: string) {
+  await useAPI(`user/${id}/profile-picture/${pictureId}/`, { method: 'DELETE' })
+}
+
 export async function deleteUser(id: string) {
   return await useAPI(`user/${id}/`, { method: 'DELETE' })
 }

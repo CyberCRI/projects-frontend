@@ -94,8 +94,15 @@
             @upload-image="showNewImage"
           />
 
+          <LpiButton
+            v-if="category.background_image?.variations"
+            btn-icon="TrashCanOutline"
+            :label="$t('resource.file.form.delete')"
+            @click.prevent="deleteImage"
+          />
+
           <LinkButton
-            v-if="displayedImage"
+            :image="displayedImage?.variations?.large"
             :label="$t('project.form.resize-image')"
             btn-icon="CropFree"
             data-test="resize-image-button"
@@ -108,7 +115,7 @@
           <template #content>
             <LazyImageResizer
               ref="imageResizer"
-              :image="displayedImage"
+              :image="displayedImage?.variations?.large"
               :image-sizes="category.imageSizes"
               :ratio="PICTURE_RATIO"
               from-center
@@ -130,7 +137,7 @@
       >
         <div class="category-previewer">
           <CategoryCardImage
-            :url="displayedImage"
+            :url="displayedImage?.variations?.large"
             :background-color="category.background_color || '#FFF'"
             image-height="150px"
             image-width="100%"
@@ -260,7 +267,7 @@ import Drawer from '~/components/base/BaseDrawer.vue'
 import useOrganizationCode from '~/composables/useOrganizationCode'
 
 import type { ProjectCategoryForm, ProjectCategoryModel } from '~/models/project-category.model'
-import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
+import { fileToImageModel, pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 import { defaultProjectCategoryForm } from '~/form/category'
 import { getTemplates } from '~/api/v2/templates.service'
 import { LazyImageResizer } from '#components'
@@ -284,7 +291,7 @@ const emits = defineEmits(['close-modal', 'submit-category'])
 const organizationCode = useOrganizationCode()
 const { data: templates, status } = getTemplates(organizationCode)
 
-const category = ref({
+const category = ref<ProjectCategoryForm>({
   ...defaultProjectCategoryForm(),
   ...props.editedCategory,
   parent: props.parentCategory,
@@ -295,7 +302,6 @@ const bgImage = category.value.background_image
 category.value.imageSizes = (bgImage && pictureApiToImageSizes(bgImage)) || null
 
 const router = useRouter()
-const displayedImage = ref(null)
 const asyncing = ref(false)
 const PICTURE_RATIO = 16 / 9
 const showImageResizer = ref(false)
@@ -312,16 +318,6 @@ const setColor = (color: Payload) => {
   category.value.background_color = color.hex
 }
 
-// not using computed
-// beacuse can also be set from a file object in form
-watch(
-  () => category.value.background_image,
-  (val) => {
-    displayedImage.value = val && val.variations ? val.variations.small : null
-  },
-  { immediate: true }
-)
-
 const imageResizer = useTemplateRef('imageResizer')
 const saveImageSizes = () => {
   category.value.imageSizes = imageResizer.value.imageSizes
@@ -334,20 +330,25 @@ const onReorder = (event) => {
   category.value.children.splice(newIndex, 0, movedChild)
 }
 
+const deleteImage = () => {
+  category.value.imageSizes = null
+  category.value.background_image = null
+}
+
 const closeModal = () => {
   emits('close-modal')
 }
 
-const showNewImage = (image) => {
-  const newImage = image
-
-  const fileReader = new FileReader()
-  fileReader.readAsDataURL(newImage)
-
-  fileReader.onload = (fileReaderEvent) => {
-    displayedImage.value = fileReaderEvent.target.result
+// convert File to imageModel (only for display)
+const displayedImage = computed(() => {
+  if (category.value.background_image instanceof File) {
+    return fileToImageModel(category.value.background_image)
   }
-  category.value.imageSizes = null // reset image framing
+  return category.value.background_image
+})
+
+const showNewImage = (image) => {
+  category.value.imageSizes = null
   category.value.background_image = image
 }
 
