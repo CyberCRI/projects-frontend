@@ -1,6 +1,6 @@
-import { initializeClientApi } from '~/composables/useAPI'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
 import initOrganization from './app/initOrganization'
+import { initializeClientApi } from '~/config/apis'
 import quickLogin from '~/app/quickLogin'
 import initSentry from '~/app/initSentry'
 //import initApp from '~/app/initApp'

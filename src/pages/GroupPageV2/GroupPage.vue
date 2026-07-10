@@ -75,11 +75,6 @@ const { data: group, isLoading, status, error } = getGroup(organizationCode, gro
 
 const { canEditGroup } = usePermissionGroup(computed(() => group.value?.id))
 
-watchEffect(() => {
-  console.log('canEditGroup', canEditGroup.value)
-  console.log(group.value?.id)
-})
-
 const groupLoading = computed(() => isLoading.value && !group.value?.id)
 
 watchEffect(() => {
@@ -100,7 +95,10 @@ const groupHierarchy = computed(() => {
     root,
     ...(group.value?.hierarchy || []).map((group) => ({
       name: group.name,
-      route: { name: 'Group', params: { groupIdOrSlug: group.slug || group.id } },
+      route: {
+        name: 'Group',
+        params: { groupIdOrSlug: group.slug || group.id },
+      },
     })),
   ]
 })

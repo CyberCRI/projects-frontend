@@ -16,7 +16,10 @@ import type CardLocationPopUp from '@/components/map/CardLocationPopUp.vue'
 import { DEFAULT_NEWS_PATATOID } from '@/composables/usePatatoids'
 import { html2Text } from '~/functs/tiptap'
 
-const props = defineProps<{ location: AnyTranslatedLocation; news: TranslatedNews }>()
+const props = defineProps<{
+  location: AnyTranslatedLocation
+  news: TranslatedNews
+}>()
 
 const description = computed(() => html2Text(props.news.$t.content))
 </script>

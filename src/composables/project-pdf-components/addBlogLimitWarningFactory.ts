@@ -11,7 +11,10 @@ export default async function addBlogLimitWarningFactory(
   if (entryCount > MAX_BLOG_ENTRIES) {
     limitedWarning = /* HTML */ `
       <span class="blog-limited-warning">
-        ${t('pdf.blog-entries-limited-warning', { count: MAX_BLOG_ENTRIES, total: entryCount })}
+        ${t('pdf.blog-entries-limited-warning', {
+          count: MAX_BLOG_ENTRIES,
+          total: entryCount,
+        })}
       </span>
     `
   }

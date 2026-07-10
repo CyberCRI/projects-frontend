@@ -20,7 +20,10 @@ import OwnResearcherDocumentsList from '~/components/people/Researcher/OwnResear
 
 const { t } = useNuxtI18n()
 
-const props = defineProps<{ docType: ResearcherDocumentType; user: UserModel }>()
+const props = defineProps<{
+  docType: ResearcherDocumentType
+  user: UserModel
+}>()
 
 const title = computed(() => t(`me.${props.docType}`))
 const documentEmpty = computed(() => t(`you.no-${props.docType}`))

@@ -107,7 +107,9 @@ export default (server: TypeMcpServer) => {
     {
       title: 'People group data',
       description: `Get main general data about a people group (or member group, or user group) given its id or slug. ${FETCH_GROUP_SLUG_OR_ID}.`,
-      inputSchema: { idOrSlug: z.string().describe('The id or slug of the people group') },
+      inputSchema: {
+        idOrSlug: z.string().describe('The id or slug of the people group'),
+      },
       outputSchema: {
         people_group_data: PEOPLE_GROUP_PREVIEW_OUTPUT_SCHEMA,
       },

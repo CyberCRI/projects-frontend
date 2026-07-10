@@ -39,7 +39,9 @@ const organizationCode = useOrganizationCode()
 const resetOnboardingStatus = async () => {
   reseting.value = true
   try {
-    const payload = { onboarding_status: { show_welcome: true, show_progress: true } }
+    const payload = {
+      onboarding_status: { show_welcome: true, show_progress: true },
+    }
     const user = usersStore.userFromApi
     const keycloak_id = user.keycloak_id
     await patchUser(keycloak_id, payload)

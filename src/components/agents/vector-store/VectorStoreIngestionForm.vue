@@ -130,7 +130,9 @@ const submit = async () => {
         :disabled="isEdit"
         @change="titleExists = false"
       />
-      <p v-if="titleExists" class="error">{{ $t('vector-store.title-exists') }}</p>
+      <p v-if="titleExists" class="error">
+        {{ $t('vector-store.title-exists') }}
+      </p>
     </div>
     <div class="form-section">
       <LpiCheckbox

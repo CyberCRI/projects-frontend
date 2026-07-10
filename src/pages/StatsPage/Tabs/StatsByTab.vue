@@ -47,7 +47,9 @@ const isLoading = ref(true)
 const stats = ref()
 
 onMounted(async () => {
-  stats.value = await getStats(organizationCode, { query: { publication_status: props.filter } })
+  stats.value = await getStats(organizationCode, {
+    query: { publication_status: props.filter },
+  })
   isLoading.value = false
 })
 </script>

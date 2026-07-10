@@ -43,7 +43,10 @@ export const getGroup = (
   return useAsyncAPI(
     key,
     ({ config }) =>
-      fetchGetGroup(unref(organizationCode), unref(groupId), { ...DEFAULT_CONFIG, ...config }),
+      fetchGetGroup(unref(organizationCode), unref(groupId), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
     {
       translate: translateGroup,
       watch: onlyRefs([organizationCode, groupId]),
@@ -62,7 +65,10 @@ export const getHierarchyGroups = (
   return useAsyncAPI(
     key,
     ({ config }) =>
-      fetchGetHierarchyGroups(unref(organizationCode), { ...DEFAULT_CONFIG, ...config }),
+      fetchGetHierarchyGroups(unref(organizationCode), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
     {
       translate: translateGroup,
       watch: onlyRefs([organizationCode]),

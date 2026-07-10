@@ -148,7 +148,10 @@
         />
 
         <LinkButton
-          :class="{ 'header__open-icon': !isNavOpen, 'header__close-icon': isNavOpen }"
+          :class="{
+            'header__open-icon': !isNavOpen,
+            'header__close-icon': isNavOpen,
+          }"
           :data-test="isNavOpen ? 'close-menu-button' : 'open-menu-button'"
           :btn-icon="isNavOpen ? 'Close' : 'BarsStaggered'"
           class="header__mobile-btn"
@@ -185,9 +188,8 @@
 </template>
 
 <script>
-import { getAnnouncements } from 'shared-projects-frontend/apis'
+import { getAnnouncements, patchUser } from 'shared-projects-frontend/apis'
 import { goToKeycloakLoginPage } from '~/api/auth/auth.service'
-import { patchUser } from '~/api/people.service.ts'
 
 import HeaderItemList from '~/components/base/navigation/HeaderItemList.vue'
 import HeaderDropDown from '~/components/base/navigation/HeaderDropDown.vue'
@@ -199,9 +201,9 @@ import ContactDrawer from '~/components/app/ContactDrawer.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 import BadgeItem from '~/components/base/BadgeItem.vue'
 
-import useProjectCategories from '~/stores/useProjectCategories.ts'
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
-import useUsersStore from '~/stores/useUsers.ts'
+import useProjectCategories from '~/stores/useProjectCategories'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useUsersStore from '~/stores/useUsers'
 
 import { usePermissions } from '~/composables/usePermissions/usePermissions'
 import { nowDate } from '~/functs/date'

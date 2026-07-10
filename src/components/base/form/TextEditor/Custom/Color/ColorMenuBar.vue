@@ -3,6 +3,11 @@ import { DEFAULT_COLOR_TIPTAP } from '~/functs/constants'
 import type { IconImageChoice } from '~/functs/IconImage'
 import type { Editor } from '@tiptap/vue-3'
 
+// "@tiptap/extension-table",
+// "@tiptap/starter-kit",
+// "@tiptap/extension-link",
+// "@tiptap/extension-text-align",
+
 const props = defineProps<{
   editor: Editor
 }>()

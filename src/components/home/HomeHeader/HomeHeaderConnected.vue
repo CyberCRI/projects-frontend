@@ -196,7 +196,9 @@ export default {
         limit: 1,
       }
       this.originalInstructions = (
-        await getAllInstructions(this.organizationsStore.current?.code, { query })
+        await getAllInstructions(this.organizationsStore.current?.code, {
+          query,
+        })
       ).results
     },
   },

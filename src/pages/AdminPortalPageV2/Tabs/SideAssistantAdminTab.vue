@@ -50,7 +50,10 @@ refreshSideAgent()
 
 const assistantOptions = computed(() => [
   { label: t('side-assistant.default'), value: 0 },
-  ...(entityList.value || []).map((agent) => ({ label: agent.title, value: agent.id })),
+  ...(entityList.value || []).map((agent) => ({
+    label: agent.title,
+    value: agent.id,
+  })),
 ])
 
 const isSaving = ref(false)

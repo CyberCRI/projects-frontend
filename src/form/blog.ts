@@ -24,5 +24,9 @@ export const useBlogEntryForm = (options = {}) => {
     },
   }))
 
-  return useForm<BlogEntryForm>({ default: defaultBlogForm(), rules, ...options })
+  return useForm<BlogEntryForm>({
+    default: defaultBlogForm(),
+    rules,
+    ...options,
+  })
 }

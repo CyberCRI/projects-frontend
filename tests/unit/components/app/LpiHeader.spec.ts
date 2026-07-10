@@ -10,9 +10,9 @@ import pinia from '~/stores'
 // quick fix for vi error
 // "Cannot log after tests are done. Did you forget to wait for something async in your test?"
 // caused by error log af failing call to fetch announcement in LpiHeader
-vi.mock('~/composables/useAPI', () => {
+vi.mock('shared-projects-frontend/apis', () => {
   return {
-    default: vi.fn().mockResolvedValue({ data: { results: [] } }), // TODO nuxt check this
+    clientAPI: vi.fn().mockResolvedValue({ data: { results: [] } }), // TODO nuxt check this
   }
 })
 

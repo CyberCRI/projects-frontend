@@ -274,7 +274,10 @@ const submit = async () => {
     }))
 
   try {
-    const body = { ...form.value, startMessage: html2md(form.value.startMessage) }
+    const body = {
+      ...form.value,
+      startMessage: html2md(form.value.startMessage),
+    }
     if (isEdit.value) {
       await $fetch(`/api/agent/${props.agent.id}/`, {
         method: 'put' as any, // weird issue with ts here :/
@@ -409,7 +412,9 @@ const submit = async () => {
           :placeholder="$t('agents.prompt-version-placeholder')"
         />
       </div>
-      <h4 class="form-section-title">{{ $t('agents.start-message-section') }}</h4>
+      <h4 class="form-section-title">
+        {{ $t('agents.start-message-section') }}
+      </h4>
       <div class="form-section">
         <TipTapEditor
           v-model.trim="form.startMessage"

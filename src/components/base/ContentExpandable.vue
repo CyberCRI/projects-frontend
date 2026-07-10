@@ -41,7 +41,13 @@ const props = withDefaults(
     seeLessLabel?: string
     hideSeeMore?: boolean
   }>(),
-  { opened: null, description: null, seeMoreLabel: null, seeLessLabel: null, hideSeeMore: false }
+  {
+    opened: null,
+    description: null,
+    seeMoreLabel: null,
+    seeLessLabel: null,
+    hideSeeMore: false,
+  }
 )
 
 const emit = defineEmits<{

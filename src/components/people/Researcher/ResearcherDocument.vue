@@ -11,7 +11,10 @@
         <NuxtLink
           v-if="author.user?.slug"
           class="profile-document-contributor"
-          :to="{ name: 'ProfileOtherUser', params: { userId: author.user.slug } }"
+          :to="{
+            name: 'ProfileOtherUser',
+            params: { userId: author.user.slug },
+          }"
         >
           <strong>{{ author.display_name }}</strong>
         </NuxtLink>

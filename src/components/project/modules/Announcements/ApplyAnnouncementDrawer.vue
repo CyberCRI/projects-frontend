@@ -62,7 +62,9 @@ const defaultLocalForm = () => {
   return newForm
 }
 
-const { form, errors, isValid, cleanedData, reset } = useAnnouncementReplyForm({ lazy: true })
+const { form, errors, isValid, cleanedData, reset } = useAnnouncementReplyForm({
+  lazy: true,
+})
 
 watch(
   () => [props.isOpened, props.announcement, props.project],

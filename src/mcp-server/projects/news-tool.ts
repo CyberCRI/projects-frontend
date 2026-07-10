@@ -37,7 +37,9 @@ export default (server: TypeMcpServer) => {
     {
       title: 'News data',
       description: 'Get a news article. Use the news-list tool to get news ids.',
-      inputSchema: { slugOrId: z.number().describe('The id of the news article') },
+      inputSchema: {
+        slugOrId: z.number().describe('The id of the news article'),
+      },
     },
     resultFromTool(({ slugOrId }, extras) => {
       const opts = mcpOptions(extras)

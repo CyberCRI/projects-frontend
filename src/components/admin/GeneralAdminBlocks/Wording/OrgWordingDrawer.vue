@@ -44,7 +44,9 @@ import useOrganizationsStore from '~/stores/useOrganizations'
 import useToasterStore from '~/stores/useToaster'
 import { NULL_CONTENT } from '~/functs/constants'
 
-const props = withDefaults(defineProps<{ isOpened?: boolean }>(), { isOpened: false })
+const props = withDefaults(defineProps<{ isOpened?: boolean }>(), {
+  isOpened: false,
+})
 
 const emit = defineEmits<{
   close: []

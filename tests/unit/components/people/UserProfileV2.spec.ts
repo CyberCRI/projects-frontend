@@ -10,7 +10,7 @@ import useOrganizationsStore from '~/stores/useOrganizations'
 import useUsersStore from '~/stores/useUsers'
 import pinia from '~/stores'
 
-vi.mock('~/api/people.service.ts', () => ({
+vi.mock('shared-projects-frontend/apis', () => ({
   getUser: vi.fn(() => Promise.resolve({ id: 12, permissions: [] })),
 }))
 

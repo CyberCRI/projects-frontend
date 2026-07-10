@@ -1,6 +1,9 @@
 <template>
   <NuxtLink
-    :to="{ name: 'pageProject', params: { slugOrId: project.slug || project.id } }"
+    :to="{
+      name: 'pageProject',
+      params: { slugOrId: project.slug || project.id },
+    }"
     class="line"
   >
     <CroppedApiImage

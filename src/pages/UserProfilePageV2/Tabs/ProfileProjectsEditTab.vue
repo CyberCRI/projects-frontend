@@ -124,7 +124,7 @@
 </template>
 
 <script setup lang="ts">
-import type { UserModel } from 'shared-projects-frontend/models'
+import type { TranslatedUserModel } from 'shared-projects-frontend/models'
 
 import useProjectCategories from '~/stores/useProjectCategories'
 import useUsersStore from '~/stores/useUsers'
@@ -133,7 +133,7 @@ const PROJECTS_LIMIT = 12
 const PROJECTS_COLUMNS = 4
 
 defineProps<{
-  user: UserModel
+  user: TranslatedUserModel
 }>()
 
 defineEmits<{

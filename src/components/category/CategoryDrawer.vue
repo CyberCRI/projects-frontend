@@ -358,7 +358,10 @@ const submitCategory = () => {
 
 const templateNavigate = (template) => {
   // redirect to template editor
-  const route = router.resolve({ name: 'templatesEdit', params: { id: template.id } })
+  const route = router.resolve({
+    name: 'templatesEdit',
+    params: { id: template.id },
+  })
   window.open(route.href, '_blank')
 }
 </script>

@@ -26,7 +26,11 @@ export const useAnnouncementForm = (options = {}) => {
     },
   }))
 
-  return useForm<AnnouncementForm>({ default: defaultAnnouncementForm(), rules, ...options })
+  return useForm<AnnouncementForm>({
+    default: defaultAnnouncementForm(),
+    rules,
+    ...options,
+  })
 }
 
 export const defaultAnnouncementReplyForm = (): AnnouncementApplyForm => {

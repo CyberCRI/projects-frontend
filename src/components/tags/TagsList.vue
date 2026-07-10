@@ -208,7 +208,10 @@ export default {
       ),
       showExtraTags: false,
       straightCorner: false,
-      onResizeLayoutTagsBis: debounce(this.layoutTagsBis, 42, { leading: false, trailing: true }),
+      onResizeLayoutTagsBis: debounce(this.layoutTagsBis, 42, {
+        leading: false,
+        trailing: true,
+      }),
     }
   },
 

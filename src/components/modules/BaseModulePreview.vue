@@ -47,7 +47,13 @@ withDefaults(
     icon?: IconImageChoice
     seeMorePosition?: 'bottom' | 'top'
   }>(),
-  { loading: false, icon: null, total: null, seeMore: null, seeMorePosition: 'top' }
+  {
+    loading: false,
+    icon: null,
+    total: null,
+    seeMore: null,
+    seeMorePosition: 'top',
+  }
 )
 </script>
 

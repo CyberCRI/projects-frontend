@@ -10,12 +10,20 @@
         : null
     "
     class="event"
-    :class="{ editable: editable && (canEditEvent || canDeleteEvent), 'scale-hover': !props.is }"
+    :class="{
+      editable: editable && (canEditEvent || canDeleteEvent),
+      'scale-hover': !props.is,
+    }"
   >
     <time class="date skeletons-background" :datetime="displayDate.toISOString()">
       <template v-if="!isToday">
         <span class="month-day">
-          {{ displayDate.toLocaleDateString(locale, { month: 'long', day: '2-digit' }) }}
+          {{
+            displayDate.toLocaleDateString(locale, {
+              month: 'long',
+              day: '2-digit',
+            })
+          }}
         </span>
         <span class="year">
           {{ displayDate.getFullYear() }}

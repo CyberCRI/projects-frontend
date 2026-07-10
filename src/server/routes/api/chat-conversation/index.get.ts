@@ -19,7 +19,10 @@ export default defineLazyEventHandler(() => {
       },
       include: {
         agent: {
-          select: { title: true, agentTranslations: { where: { fieldName: 'title' } } },
+          select: {
+            title: true,
+            agentTranslations: { where: { fieldName: 'title' } },
+          },
         },
       },
       orderBy: { lastActiveAt: 'desc' },

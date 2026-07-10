@@ -79,10 +79,14 @@
                 <dt>{{ $t('header.views') }}</dt>
                 <dd>{{ project?.views }}</dd>
                 <dt>{{ $t('header.creation') }}</dt>
-                <dd v-if="project.created_at">{{ $d(new Date(project.created_at)) }}</dd>
+                <dd v-if="project.created_at">
+                  {{ $d(new Date(project.created_at)) }}
+                </dd>
 
                 <dt>{{ $t('header.update') }}</dt>
-                <dd v-if="project.updated_at">{{ $d(new Date(project.updated_at)) }}</dd>
+                <dd v-if="project.updated_at">
+                  {{ $d(new Date(project.updated_at)) }}
+                </dd>
               </dl>
             </template>
             <span class="navpanel-menu-link" data-test="project-infos">

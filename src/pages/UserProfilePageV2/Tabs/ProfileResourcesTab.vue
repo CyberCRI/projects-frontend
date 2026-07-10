@@ -18,7 +18,7 @@
         :is-add-mode="!!!selectedItem"
         :selected-item="selectedItem"
         :is-opened="isOpened"
-        :links="resultsLinks"
+        :links="LinksTranslated"
         :post-attachment-files="postAttachmentFiles"
         :patch-attachment-file="patchAttachmentFile"
         :post-attachment-links="postAttachmentLinks"

@@ -38,7 +38,10 @@ export default defineLazyEventHandler(() => {
       include: {
         messages: { ...messageRange, orderBy: { position: 'desc' } },
         agent: {
-          select: { title: true, agentTranslations: { where: { fieldName: 'title' } } },
+          select: {
+            title: true,
+            agentTranslations: { where: { fieldName: 'title' } },
+          },
         },
       },
     })

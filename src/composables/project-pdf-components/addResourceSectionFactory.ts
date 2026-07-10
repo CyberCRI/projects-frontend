@@ -24,7 +24,9 @@ export default async function addResourceSectionFactory(
       // proxyed because we need fresh access token and short url for qrcode
       const url = `${apiUrl}/v1/project/${project.id}/${type}/${resource.id}/`
       if (url) {
-        const qrCodeDataUrl = await QRCode.toDataURL(url, { color: { dark: '#1d727c' } })
+        const qrCodeDataUrl = await QRCode.toDataURL(url, {
+          color: { dark: '#1d727c' },
+        })
         qrCodeImg = `<a class="resource-qr-code-link" href="${url}"><img src="${qrCodeDataUrl}" alt="QR Code" class="resource-qr-code"/></a>`
       }
 

@@ -41,7 +41,9 @@ async function createConversationPersistenceHandler({
   if (contextWindowSize) messagesOption.take = contextWindowSize
 
   let conversation:
-    | (Awaited<ReturnType<typeof chatbotPrisma.conversation.findUnique>> & { messages: any[] })
+    | (Awaited<ReturnType<typeof chatbotPrisma.conversation.findUnique>> & {
+        messages: any[]
+      })
     | null = null
 
   const found = await chatbotPrisma.conversation.findUnique({

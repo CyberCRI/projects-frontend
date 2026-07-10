@@ -110,7 +110,9 @@ const defaultLocalForm = () => {
 
 const asyncing = ref(false)
 
-const { form, isValid, errors, reset } = useProjectMessageForm({ default: defaultLocalForm() })
+const { form, isValid, errors, reset } = useProjectMessageForm({
+  default: defaultLocalForm(),
+})
 watch(
   () => [props.project, props.originalComment, props.repliedComment],
   () => reset(defaultLocalForm()),

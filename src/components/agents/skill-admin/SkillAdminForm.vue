@@ -132,7 +132,9 @@ const submit = async () => {
         @blur="v$.title.$validate"
       />
       <FieldErrors :errors="v$.title.$errors" />
-      <p v-if="titleExists" class="error">{{ $t('agent-skills.title-exists') }}</p>
+      <p v-if="titleExists" class="error">
+        {{ $t('agent-skills.title-exists') }}
+      </p>
     </div>
     <div class="form-section">
       <h4>{{ $t('agent-skills.description') }}</h4>

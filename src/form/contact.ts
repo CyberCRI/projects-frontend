@@ -26,5 +26,9 @@ export const useContactForm = (options = {}) => {
     },
   }))
 
-  return useForm<ContactForm>({ default: defaultContactForm(), rules, ...options })
+  return useForm<ContactForm>({
+    default: defaultContactForm(),
+    rules,
+    ...options,
+  })
 }

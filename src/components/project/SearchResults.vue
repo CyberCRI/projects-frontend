@@ -15,13 +15,17 @@
 </template>
 
 <script>
-import { searchAll, searchGroups, searchProjects, searchUser } from 'shared-projects-frontend/apis'
+import {
+  clientAPI,
+  searchAll,
+  searchGroups,
+  searchProjects,
+  searchUser,
+} from 'shared-projects-frontend/apis'
 
 import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
 
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
-
-import useAPI from '~/composables/useAPI.ts'
 
 import { searchEquals } from '~/functs/search.ts'
 import { debounce, omit } from 'es-toolkit'
@@ -135,7 +139,7 @@ export default {
       // Get projects and update project list
       let response
       if (specificPageIndex) {
-        response = await useAPI(specificPageIndex, {})
+        response = await clientAPI(specificPageIndex, {})
       } else if (this.mode === 'projects') {
         response = await searchProjects(search, { query })
       } else if (this.mode === 'groups') {

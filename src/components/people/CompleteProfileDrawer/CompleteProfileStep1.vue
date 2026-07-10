@@ -177,7 +177,12 @@
 import { helpers, required } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
 
-import { getUser, patchUser, patchUserPicture, postUserPicture } from '~/api/people.service.ts'
+import {
+  getUser,
+  patchUser,
+  patchUserPicture,
+  postUserPicture,
+} from 'shared-projects-frontend/apis'
 
 import useToasterStore from '~/stores/useToaster.ts'
 import useUsersStore from '~/stores/useUsers.ts'

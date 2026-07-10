@@ -97,7 +97,10 @@ const toLink = computed(() => {
   // witch we dont want when just selecting project
   return showAddButton.value || !props.group.id
     ? null
-    : { name: 'Group', params: { groupIdOrSlug: props.group.slug || props.group.id } }
+    : {
+        name: 'Group',
+        params: { groupIdOrSlug: props.group.slug || props.group.id },
+      }
 })
 
 const modules = computed(() => props.group.modules ?? ({} as TranslatedPeopleGroupModel['modules']))

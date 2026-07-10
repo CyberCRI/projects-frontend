@@ -49,7 +49,7 @@
   </template>
 </template>
 <script>
-import { getHierarchyGroups } from '~/api/groups.service.ts'
+import { getHierarchyGroups } from 'shared-projects-frontend/apis'
 
 import FilterSearchInput from '~/components/search/Filters/FilterSearchInput.vue'
 import FilterValue from '~/components/search/Filters/FilterValue.vue'

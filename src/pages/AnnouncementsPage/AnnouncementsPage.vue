@@ -40,7 +40,9 @@ useLpiHead2({
           :announcement="announcement"
           :to="{
             name: 'projectAnnouncements',
-            params: { slugOrId: announcement.project.slug || announcement.project.id },
+            params: {
+              slugOrId: announcement.project.slug || announcement.project.id,
+            },
           }"
         />
       </div>

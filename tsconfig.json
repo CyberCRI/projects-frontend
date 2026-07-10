@@ -9,7 +9,8 @@
       "@tiptap/extension-table",
       "@tiptap/starter-kit",
       "@tiptap/extension-link",
-      "@tiptap/extension-text-align"
+      "@tiptap/extension-text-align",
+      "shared-projects-frontend"
     ]
   }
 }

@@ -5,7 +5,7 @@ import {
 import type {
   OrganizationModel,
   ProjectSlugOrId,
-  UserIdOrSlug,
+  UserSlugOrId,
 } from 'shared-projects-frontend/models'
 import type { UseAsyncPaginationApiConfig } from '@/api/v2/base.service'
 import type { RefOrRaw } from '~/interfaces/utils'
@@ -44,7 +44,7 @@ export const getProjectAttachmentLinks = (
 
 export const getUserAttachmentLinks = (
   organization: RefOrRaw<OrganizationModel['code']>,
-  userId: RefOrRaw<UserIdOrSlug>,
+  userId: RefOrRaw<UserSlugOrId>,
   config: ConfigPagination = {}
 ) => {
   const key = computed(

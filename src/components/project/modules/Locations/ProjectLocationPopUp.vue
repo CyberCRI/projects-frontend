@@ -2,7 +2,10 @@
   <CardLocationPopUp
     :location="location"
     :label="$t('project.view')"
-    :to="{ name: 'pageProject', params: { slugOrId: project.slug || project.id } }"
+    :to="{
+      name: 'pageProject',
+      params: { slugOrId: project.slug || project.id },
+    }"
     :image="project.header_image"
     :default-picture="DEFAULT_PROJECT_PATATOID"
     :title="project.$t.title"

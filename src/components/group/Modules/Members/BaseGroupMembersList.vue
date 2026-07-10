@@ -34,7 +34,13 @@ const props = withDefaults(
 
     focusLeader?: boolean
   }>(),
-  { withPagination: true, limit: null, focusLeader: false, editable: false, preview: false }
+  {
+    withPagination: true,
+    limit: null,
+    focusLeader: false,
+    editable: false,
+    preview: false,
+  }
 )
 
 const toaster = useToaster()

@@ -44,7 +44,9 @@ refresh()
         <h4 class="chunk-header">Checkpoint {{ i + 1 }}/{{ checkpoints.length }}</h4>
         <div v-for="message in checkpoint.messages" :key="message.kwargs.id">
           <div v-if="showMessage(message)" class="message">
-            <h5 class="message-header">{{ message.id[message.id.length - 1] }}</h5>
+            <h5 class="message-header">
+              {{ message.id[message.id.length - 1] }}
+            </h5>
             <pre v-if="message.kwargs.content">{{ message.kwargs.content }}</pre>
             <div v-if="message.kwargs.tool_calls?.length">
               <ul>

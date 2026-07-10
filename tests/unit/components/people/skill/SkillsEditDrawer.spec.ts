@@ -7,7 +7,7 @@ import pinia from '~/stores'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('~/api/people.service.ts', () => ({
+vi.mock('shared-projects-frontend/apis', () => ({
   postUserSkill: vi.fn().mockResolvedValue({}),
 }))
 

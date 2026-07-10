@@ -54,5 +54,10 @@ export const useAttachmentForm = (type: RefOrRaw<'file' | 'link'>, options = {})
     return cleanedData
   }
 
-  return useForm<AttachmentForm>({ default: defaultAttachmentForm(), rules, onClean, ...options })
+  return useForm<AttachmentForm>({
+    default: defaultAttachmentForm(),
+    rules,
+    onClean,
+    ...options,
+  })
 }

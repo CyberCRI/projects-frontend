@@ -29,28 +29,40 @@ const items = computed(() => [
   {
     label: t('multieditor.image.small'),
     title: t('multieditor.image.25_width'),
-    action: () => props.editor.commands.updateAttributes('external-video', { size: 'small' }),
+    action: () =>
+      props.editor.commands.updateAttributes('external-video', {
+        size: 'small',
+      }),
     isActive: () => props.editor.getAttributes('external-video').size == 'small',
     isDisabled: false,
   },
   {
     label: t('multieditor.image.medium'),
     title: t('multieditor.image.50_width'),
-    action: () => props.editor.commands.updateAttributes('external-video', { size: 'medium' }),
+    action: () =>
+      props.editor.commands.updateAttributes('external-video', {
+        size: 'medium',
+      }),
     isActive: () => props.editor.getAttributes('external-video').size == 'medium',
     isDisabled: false,
   },
   {
     label: t('multieditor.image.large'),
     title: t('multieditor.image.75_width'),
-    action: () => props.editor.commands.updateAttributes('external-video', { size: 'large' }),
+    action: () =>
+      props.editor.commands.updateAttributes('external-video', {
+        size: 'large',
+      }),
     isActive: () => props.editor.getAttributes('external-video').size == 'large',
     isDisabled: false,
   },
   {
     label: t('multieditor.image.full'),
     title: t('multieditor.image.100_width'),
-    action: () => props.editor.commands.updateAttributes('external-video', { size: 'full' }),
+    action: () =>
+      props.editor.commands.updateAttributes('external-video', {
+        size: 'full',
+      }),
     isActive: () => props.editor.getAttributes('external-video').size == 'full',
     isDisabled: false,
   },

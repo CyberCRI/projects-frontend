@@ -210,7 +210,7 @@
 import { email, helpers, required, url } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
 
-import { patchUser, patchUserPicture, postUserPicture } from '~/api/people.service.ts'
+import { patchUser, patchUserPicture, postUserPicture } from 'shared-projects-frontend/apis'
 
 import SdgList from '~/components/sdgs/SdgList.vue'
 

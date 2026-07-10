@@ -9,10 +9,12 @@ import type { UserSkillModel } from 'shared-projects-frontend/models'
 import useSkillLevels from '~/composables/useSkillLevels'
 import useSkillTexts from '~/composables/useSkillTexts'
 
+export type SkillType = 'skills' | 'hobbies'
+
 const props = withDefaults(
   defineProps<{
     skill: UserSkillModel
-    type: 'skills' | 'hobbies'
+    type: SkillType
     scrollIntoView?: boolean
     noMentorship?: boolean
   }>(),

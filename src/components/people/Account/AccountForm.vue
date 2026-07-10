@@ -134,8 +134,8 @@ import {
   postUser,
   postUserPicture,
   getOrgUnits,
+  resetUserPassword,
 } from 'shared-projects-frontend/apis'
-import { resetUserPassword } from '~/api/people.service.ts'
 
 import AccountGroupsForm from '~/components/people/Account/AccountGroupsForm.vue'
 import OtherOrgUserCard from '~/components/people/Account/OtherOrgUserCard.vue'

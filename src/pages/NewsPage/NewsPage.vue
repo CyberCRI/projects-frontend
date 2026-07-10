@@ -47,7 +47,7 @@
     <EditNewsDrawer
       :is-opened="stateModals.edit"
       :news="news"
-      @news-edited="refresh"
+      @news-edited="() => refresh()"
       @close="onCancel"
     />
 
@@ -108,10 +108,15 @@ const breadcrumbs = computed(() => [
 ])
 
 const publicationDate = computed(() =>
-  new Date(news.value.publication_date).toLocaleDateString(locale.value, { dateStyle: 'full' })
+  new Date(news.value.publication_date).toLocaleDateString(locale.value, {
+    dateStyle: 'full',
+  })
 )
 
-const { stateModals, openModals, closeModals } = useModals({ edit: false, delete: false })
+const { stateModals, openModals, closeModals } = useModals({
+  edit: false,
+  delete: false,
+})
 
 const onConfirmDelete = async () => {
   asyncingDelete.value = true

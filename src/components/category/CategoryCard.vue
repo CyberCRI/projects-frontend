@@ -2,7 +2,10 @@
   <NuxtLink
     class="category-card shadow-box"
     :style="{ width: IMAGE_WIDTH }"
-    :to="{ name: 'Category', params: { slugOrId: category.slug || category.id } }"
+    :to="{
+      name: 'Category',
+      params: { slugOrId: category.slug || category.id },
+    }"
   >
     <CategoryCardImage
       :background-color="category.background_color"
@@ -46,7 +49,9 @@ import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 import { capitalize } from '~/functs/string'
 
 // TODO: many components use this withtout translated Category
-const props = defineProps<{ category: ProjectCategoryModel | TranslatedProjectCategory }>()
+const props = defineProps<{
+  category: ProjectCategoryModel | TranslatedProjectCategory
+}>()
 
 const IMAGE_WIDTH = '288px'
 const IMAGE_HEIGHT = '76px'

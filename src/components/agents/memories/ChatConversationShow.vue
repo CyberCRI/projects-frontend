@@ -45,7 +45,10 @@ function getPreviousMessages() {
 }
 
 function fetchAll() {
-  return useFetch(`/api/chat-conversation/${props.documentTitle}`, { headers, query })
+  return useFetch(`/api/chat-conversation/${props.documentTitle}`, {
+    headers,
+    query,
+  })
 }
 const { data, status /* , error */, refresh } = fetchAll()
 const isAsyncing = computed(() => status.value === 'pending')

@@ -19,7 +19,11 @@ export const getLocations = (
 
   return useAsyncAPI(
     key,
-    ({ config }) => fetchGetLocations(unref(organizationCode), { ...DEFAULT_CONFIG, ...config }),
+    ({ config }) =>
+      fetchGetLocations(unref(organizationCode), {
+        ...DEFAULT_CONFIG,
+        ...config,
+      }),
     {
       watch: onlyRefs([organizationCode]),
       translate: (data) => translateLocations<TranslatedLocationGeneral>(data),

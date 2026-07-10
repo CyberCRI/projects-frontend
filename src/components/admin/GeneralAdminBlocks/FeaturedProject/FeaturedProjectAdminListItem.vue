@@ -1,7 +1,10 @@
 <template>
   <NuxtLink
     class="featured-project-admin-list-item"
-    :to="{ name: 'pageProject', params: { slugOrId: project.slug || project.id } }"
+    :to="{
+      name: 'pageProject',
+      params: { slugOrId: project.slug || project.id },
+    }"
   >
     <div class="project-image">
       <CroppedApiImage

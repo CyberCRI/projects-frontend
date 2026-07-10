@@ -84,7 +84,9 @@ const close = () => {
 
 const toaster = useToasterStore()
 const organizationsStore = useOrganizationsStore()
-const { form, isValid, errors, cleanedData, reset } = useBlogEntryForm({ lazy: true })
+const { form, isValid, errors, cleanedData, reset } = useBlogEntryForm({
+  lazy: true,
+})
 watch(
   () => [props.blog, props.isOpened, props.project],
   () => reset(defaultLocalForm()),

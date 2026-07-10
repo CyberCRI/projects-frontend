@@ -232,7 +232,9 @@ export default {
               parent: newParentId,
             })
           } else if (index != child.order_index) {
-            return await patchProjectCategory(organizationCode, child.id, { order_index: index })
+            return await patchProjectCategory(organizationCode, child.id, {
+              order_index: index,
+            })
           } else return Promise.resolve()
         })
         // update old parent children if necessary
@@ -283,14 +285,21 @@ export default {
       if (data.background_image instanceof File && id) {
         const formData = new FormData()
         formData.append('file', data.background_image, data.background_image.name)
-        const res = await postProjectCategoryBackground(organizationCode, { id, body: formData })
+        const res = await postProjectCategoryBackground(organizationCode, {
+          id,
+          body: formData,
+        })
         imageId = res.id
       }
       if (imageSizes && id) {
         delete data.background_image
         const formData = new FormData()
         imageSizesFormData(formData, imageSizes)
-        await patchProjectCategoryBackground(organizationCode, { id, imageId, body: formData })
+        await patchProjectCategoryBackground(organizationCode, {
+          id,
+          imageId,
+          body: formData,
+        })
       }
     },
 
@@ -322,7 +331,9 @@ export default {
         await Promise.all(
           category.children.map(async (child, index) => {
             if (index != child.order_index)
-              return await patchProjectCategory(organizationCode, child.id, { order_index: index })
+              return await patchProjectCategory(organizationCode, child.id, {
+                order_index: index,
+              })
             else return Promise.resolve()
           })
         )
@@ -338,7 +349,10 @@ export default {
     },
 
     goToCategory(category) {
-      this.$router.push({ name: 'Category', params: { slugOrId: category.slug || category.id } })
+      this.$router.push({
+        name: 'Category',
+        params: { slugOrId: category.slug || category.id },
+      })
     },
 
     close() {

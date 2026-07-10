@@ -132,7 +132,7 @@
   </div>
 </template>
 <script>
-import { postInvitation } from '~/api/invitations.service.ts'
+import { postInvitation } from 'shared-projects-frontend/apis'
 
 import DatePickerModal from '~/components/base/modal/DatePickerModal.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'

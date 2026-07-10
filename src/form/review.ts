@@ -26,5 +26,9 @@ export const useProjectReviewForm = (options = {}) => {
     },
   }))
 
-  return useForm<ReviewForm>({ default: defaultProjectReviewForm(), rules, ...options })
+  return useForm<ReviewForm>({
+    default: defaultProjectReviewForm(),
+    rules,
+    ...options,
+  })
 }

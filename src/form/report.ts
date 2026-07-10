@@ -34,5 +34,9 @@ export const useReportForm = (options = {}) => {
     },
   }))
 
-  return useForm<ReportForm>({ default: defaultReportForm(), rules, ...options })
+  return useForm<ReportForm>({
+    default: defaultReportForm(),
+    rules,
+    ...options,
+  })
 }

@@ -133,7 +133,10 @@ watchEffect(() => {
             preview
               ? {
                   name: 'projectAdditionals',
-                  params: { slugOrId: project.slug || project.id, tabId: tab.id },
+                  params: {
+                    slugOrId: project.slug || project.id,
+                    tabId: tab.id,
+                  },
                   hash: `#item:${item.id}`,
                 }
               : null

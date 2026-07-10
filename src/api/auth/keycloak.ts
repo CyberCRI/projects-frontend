@@ -210,7 +210,14 @@ export default function useKeycloak() {
       // expires is in second so 300 is 5 minutes
       const expires_in: number = result.expires_in * 1000
       const parsedToken = await oauth.getValidatedIdTokenClaims(result)
-      return { access_token, refresh_token, expires_in, refresh_token_exp, parsedToken, id_token }
+      return {
+        access_token,
+        refresh_token,
+        expires_in,
+        refresh_token_exp,
+        parsedToken,
+        id_token,
+      }
     },
 
     onLoginError(): void {

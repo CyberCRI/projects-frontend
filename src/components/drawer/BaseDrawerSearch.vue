@@ -33,7 +33,9 @@ const emit = defineEmits<{
 }>()
 
 const search = defineModel<string>('search', { default: '' })
-const { stateModals, openModals, closeModals } = useModals({ saveChange: false })
+const { stateModals, openModals, closeModals } = useModals({
+  saveChange: false,
+})
 
 const selectedItems = ref<Item[]>([]) as Ref<Item[]>
 

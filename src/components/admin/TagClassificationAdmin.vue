@@ -54,13 +54,17 @@ const deleteTag = async () => {
       tagToDelete.value.id
     )
     toaster.pushSuccess(
-      t('admin.classification.tag-delete.success', { tagName: tagToDelete.value.title })
+      t('admin.classification.tag-delete.success', {
+        tagName: tagToDelete.value.title,
+      })
     )
     reloadClassification()
   } catch (e) {
     console.error(e)
     toaster.pushError(
-      t('admin.classification.tag-delete.error', { tagName: tagToDelete.value.title })
+      t('admin.classification.tag-delete.error', {
+        tagName: tagToDelete.value.title,
+      })
     )
   } finally {
     isDeletingTag.value = false
@@ -118,7 +122,11 @@ const getTags = debounce(async function () {
       organizationsStore.current.code,
       props.classification.id,
       {
-        query: { search: search.value, ordering: 'title', limit: props.pageLimit },
+        query: {
+          search: search.value,
+          ordering: 'title',
+          limit: props.pageLimit,
+        },
       }
     )
     request.value = apiReq
@@ -246,7 +254,9 @@ watch(() => [props.classification, search.value], getTags, { immediate: true })
     </table>
     <div
       v-if="pagination.total > 1"
-      :style="{ visibility: (!isLoading && pagination.total > 1 && 'visible') || 'hidden' }"
+      :style="{
+        visibility: (!isLoading && pagination.total > 1 && 'visible') || 'hidden',
+      }"
       class="pagination-container"
     >
       <PaginationButtons

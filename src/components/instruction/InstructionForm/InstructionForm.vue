@@ -83,9 +83,13 @@ const defaultLocalForm = () => {
   return newForm
 }
 
-const model = defineModel<InstructionForm>({ default: defaultInstructionForm() })
+const model = defineModel<InstructionForm>({
+  default: defaultInstructionForm(),
+})
 
-const { form, isValid, errors, cleanedData, reset } = useInstructionForm({ lazy: true })
+const { form, isValid, errors, cleanedData, reset } = useInstructionForm({
+  lazy: true,
+})
 watch(
   () => props.instruction,
   () => reset(defaultLocalForm()),

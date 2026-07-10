@@ -59,8 +59,14 @@ const { status: statusRecomendationsProjects, data: recomendedProject } =
 
 const allProjects = computed(() => {
   return [
-    ...featuredProjects.value.map((project) => ({ ...project, isFeatured: true })),
-    ...recomendedProject.value.map((project) => ({ ...project, isFeatured: false })),
+    ...featuredProjects.value.map((project) => ({
+      ...project,
+      isFeatured: true,
+    })),
+    ...recomendedProject.value.map((project) => ({
+      ...project,
+      isFeatured: false,
+    })),
   ]
 })
 

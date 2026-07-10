@@ -110,7 +110,9 @@ const onDeleteEvent = async () => {
 }
 
 const getMonthFromDate = (yearMonth) => {
-  return new Date(yearMonth).toLocaleDateString(locale.value, { month: 'long' })
+  return new Date(yearMonth).toLocaleDateString(locale.value, {
+    month: 'long',
+  })
 }
 
 const onCancel = () => {

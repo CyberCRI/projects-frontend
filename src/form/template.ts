@@ -41,5 +41,10 @@ export const useTemplateForm = (options = {}) => {
 
     return data
   }
-  return useForm({ default: clone(DEFAULT_FORM), rules: clone(RULES), onClean, ...options })
+  return useForm({
+    default: clone(DEFAULT_FORM),
+    rules: clone(RULES),
+    onClean,
+    ...options,
+  })
 }

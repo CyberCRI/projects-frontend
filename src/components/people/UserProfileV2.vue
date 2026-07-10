@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { getUser } from '~/api/people.service.ts'
+import { getUser } from 'shared-projects-frontend/apis'
 
 import useUsersStore from '~/stores/useUsers.ts'
 
@@ -375,7 +375,10 @@ export default {
     },
 
     profileDisplayTabsFiltered() {
-      return this.profileDisplayTabs.map((entry) => ({ ...entry, dataTest: entry.key }))
+      return this.profileDisplayTabs.map((entry) => ({
+        ...entry,
+        dataTest: entry.key,
+      }))
     },
 
     profileEditTabs() {
@@ -553,7 +556,10 @@ export default {
     },
 
     profileEditTabsFiltered() {
-      return this.profileEditTabs.map((entry) => ({ ...entry, dataTest: entry.key }))
+      return this.profileEditTabs.map((entry) => ({
+        ...entry,
+        dataTest: entry.key,
+      }))
     },
 
     allProfileTabs() {
@@ -629,7 +635,9 @@ export default {
     async loadUser() {
       if (!this.userId || this.userId === this.usersStore.id) {
         // get the connected user
-        this.originalUser = await this.usersStore.getUser(this.usersStore.id, { noError: true })
+        this.originalUser = await this.usersStore.getUser(this.usersStore.id, {
+          noError: true,
+        })
       } else {
         // get another user
         this.originalUser = await getUser(this.userId, { noError: true })

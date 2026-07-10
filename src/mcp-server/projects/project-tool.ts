@@ -94,7 +94,9 @@ export default (server: TypeMcpServer) => {
     {
       title: 'Project general data',
       description: `Get main general data (description, goals, blog entries, members...) about a project given its id or slug. ${FETCH_PROJECT_SLUG_OR_ID}`,
-      inputSchema: { idOrSlug: z.string().describe('The id or slug of the project') },
+      inputSchema: {
+        idOrSlug: z.string().describe('The id or slug of the project'),
+      },
     },
     resultFromTool(async ({ idOrSlug }, extras) => {
       const opts = mcpOptions(extras)
@@ -171,7 +173,9 @@ export default (server: TypeMcpServer) => {
     {
       title: 'Project similar projects',
       description: `Get projects that are similar to the one given by its id or slug.   ${FETCH_PROJECT_SLUG_OR_ID}`,
-      inputSchema: { idOrSlug: z.string().describe('The id or slug of the project') },
+      inputSchema: {
+        idOrSlug: z.string().describe('The id or slug of the project'),
+      },
     },
     resultFromTool(({ idOrSlug }, extras) => {
       const opts = mcpOptions(extras)
@@ -190,7 +194,9 @@ export default (server: TypeMcpServer) => {
     {
       title: 'Project blog entries',
       description: `Get main blog entries about a project given its id or slug. ${FETCH_PROJECT_SLUG_OR_ID}`,
-      inputSchema: { idOrSlug: z.string().describe('The id or slug of the project') },
+      inputSchema: {
+        idOrSlug: z.string().describe('The id or slug of the project'),
+      },
     },
     resultFromTool(({ idOrSlug }, extras) => {
       const opts = mcpOptions(extras)

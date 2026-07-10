@@ -35,7 +35,7 @@
     <EditNewsDrawer
       :is-opened="stateModals.edit"
       :news="selectedNews"
-      @news-edited="refresh"
+      @news-edited="() => refresh()"
       @close="onCancel"
     />
 
@@ -95,7 +95,10 @@ const {
 
 const { canCreateNews } = usePermissionNews(null)
 
-const { stateModals, openModals, closeModals } = useModals({ edit: false, delete: false })
+const { stateModals, openModals, closeModals } = useModals({
+  edit: false,
+  delete: false,
+})
 
 const onEdit = (news) => {
   selectedNews.value = news

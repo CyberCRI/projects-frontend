@@ -207,7 +207,7 @@ import {
   patchGroupLocation,
   postGroupLocation,
   removeGroupLocation,
-} from '~/api/groups.service.ts'
+} from 'shared-projects-frontend/apis'
 
 import TagsFilterSummary from '~/components/search/Filters/TagsFilterSummary.vue'
 import LocationDrawer from '~/components/map/LocationDrawer.vue'

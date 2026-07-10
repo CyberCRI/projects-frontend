@@ -4,7 +4,10 @@
     :title="$t(GROUP_MODULE_TITLE.members, group.modules.members)"
     :total="group.modules.members"
     :icon="GROUP_MODULE_ICON.members"
-    :see-more="{ name: 'groupMembers', params: { groupIdOrSlug: group.slug || group.id } }"
+    :see-more="{
+      name: 'groupMembers',
+      params: { groupIdOrSlug: group.slug || group.id },
+    }"
   >
     <template #content>
       <BaseGroupMembersList

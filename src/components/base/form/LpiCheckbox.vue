@@ -1,7 +1,11 @@
 <template>
   <label
     class="lpi-checkbox pointer"
-    :class="{ disabled: disabled, 'is-checked': modelValue, 'as-button': asButton }"
+    :class="{
+      disabled: disabled,
+      'is-checked': modelValue,
+      'as-button': asButton,
+    }"
   >
     <div class="checkbox-container">
       <input

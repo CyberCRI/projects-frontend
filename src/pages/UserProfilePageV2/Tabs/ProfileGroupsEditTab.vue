@@ -15,7 +15,9 @@
               <template #default="cardListSlotProps">
                 <GroupCard
                   v-if="cardListSlotProps.item"
-                  :class="{ 'is-other-org': groupIsOtherOrg(cardListSlotProps.item) }"
+                  :class="{
+                    'is-other-org': groupIsOtherOrg(cardListSlotProps.item),
+                  }"
                   :group="cardListSlotProps.item"
                   @click.capture="cancelIfOtherOrg($event, cardListSlotProps.item)"
                 />

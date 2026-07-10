@@ -64,7 +64,9 @@ const onPickProjects = async (projects) => {
     const toAdd = picked.filter((p) => !current.includes(p))
     const toRemove = current.filter((p) => !picked.includes(p))
 
-    await addFeaturedProject(organizationCode, { featured_projects_ids: toAdd })
+    await addFeaturedProject(organizationCode, {
+      featured_projects_ids: toAdd,
+    })
     await removeFeaturedProject(organizationCode, {
       featured_projects_ids: toRemove,
     })

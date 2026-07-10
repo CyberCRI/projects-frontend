@@ -101,7 +101,9 @@ export default (server: TypeMcpServer) => {
       title: 'Research, researchers, experts and science topics and publication finder',
       description:
         'Get a list of researchers and their research papers based on a query. Also get a list of research topics. Use this tool in priority if it is relevant to the user question.',
-      inputSchema: { queryPrompt: z.string().describe('The research query prompt') },
+      inputSchema: {
+        queryPrompt: z.string().describe('The research query prompt'),
+      },
       outputSchema: {
         researchers: z.array(z.object({}).describe('A researcher object')),
         research_topics: z.array(z.string().describe('A research topic')),

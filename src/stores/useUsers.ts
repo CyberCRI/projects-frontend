@@ -1,7 +1,7 @@
 import type {
   NotificationSettingsForm,
   NotificationsSettings,
-  UserIdOrSlug,
+  UserSlugOrId,
   UserModel,
 } from 'shared-projects-frontend/models'
 
@@ -283,7 +283,7 @@ const useUsersStore = defineStore('users', () => {
     }
   }
 
-  async function patchNotifications(userId: UserIdOrSlug, body: NotificationSettingsForm) {
+  async function patchNotifications(userId: UserSlugOrId, body: NotificationSettingsForm) {
     // TODO: should be patchNotificationsSetting
     try {
       const result = await patchUserNotificationSettings(userId, body)

@@ -30,7 +30,9 @@ export default (server: TypeMcpServer) => {
     {
       title: 'Search Tool',
       description: `Search on the platform for projects, people profile (user) and groups (of users) related to a query. ${sorbobotIsEnabled ? SORBOBOT_EXTRA : ''}`,
-      inputSchema: { queryTerms: z.string().describe('The search query terms') },
+      inputSchema: {
+        queryTerms: z.string().describe('The search query terms'),
+      },
     },
     resultFromTool(({ queryTerms }, extras) => {
       const opts = mcpOptions(extras)

@@ -71,7 +71,7 @@ import OnboardingTodo from '@/components/onboarding/OnboardingTodoBlock/Onboardi
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
-import { patchUser } from '@/api/people.service.ts'
+import { patchUser } from 'shared-projects-frontend/apis'
 import useUsersStore from '@/stores/useUsers.ts'
 // import { I18nT } from 'vue-i18n'
 

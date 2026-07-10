@@ -78,7 +78,9 @@ const defaultLocalForm = () => {
   return newForm
 }
 
-const { form, errors, isValid, cleanedData, reset } = useProjectForm({ lazy: true })
+const { form, errors, isValid, cleanedData, reset } = useProjectForm({
+  lazy: true,
+})
 watch(
   () => props.project,
   () => reset(defaultLocalForm()),

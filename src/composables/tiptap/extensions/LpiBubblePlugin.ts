@@ -107,7 +107,9 @@ export class LpiBubbleMenuView {
       this.shouldShow = shouldShow
     }
 
-    this.element.addEventListener('mousedown', this.mousedownHandler, { capture: true })
+    this.element.addEventListener('mousedown', this.mousedownHandler, {
+      capture: true,
+    })
     this.view.dom.addEventListener('dragstart', this.dragstartHandler)
     // WAS: this.editor.on('focus', this.focusHandler)
     this.editor.on('selectionUpdate', this.selectionHandler)
@@ -290,7 +292,9 @@ export class LpiBubbleMenuView {
       )
     }
     this.tippy?.destroy()
-    this.element.removeEventListener('mousedown', this.mousedownHandler, { capture: true })
+    this.element.removeEventListener('mousedown', this.mousedownHandler, {
+      capture: true,
+    })
     this.view.dom.removeEventListener('dragstart', this.dragstartHandler)
     // WAS : this.editor.off('focus', this.focusHandler)
     this.editor.off('selectionUpdate', this.selectionHandler)
@@ -305,6 +309,10 @@ export const LpiBubbleMenuPlugin = (options: LpiBubbleMenuPluginProps) => {
   return new Plugin({
     key:
       typeof options.pluginKey === 'string' ? new PluginKey(options.pluginKey) : options.pluginKey,
-    view: (view) => new LpiBubbleMenuView({ ...options, view } as LpiBubbleMenuViewProps) as any,
+    view: (view) =>
+      new LpiBubbleMenuView({
+        ...options,
+        view,
+      } as LpiBubbleMenuViewProps) as any,
   })
 }

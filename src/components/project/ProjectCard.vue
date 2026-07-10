@@ -48,7 +48,9 @@
       class="picture picture-project skeletons-background"
     />
     <div
-      :class="{ 'has-description': translatedPurpose && translatedPurpose.length }"
+      :class="{
+        'has-description': translatedPurpose && translatedPurpose.length,
+      }"
       class="text text-limit"
     >
       <div ref="type" class="card-type">

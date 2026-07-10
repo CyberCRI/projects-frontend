@@ -30,8 +30,16 @@ const optionsLanguages = computed(() => {
 const optionsThemes = computed(
   () =>
     [
-      { value: 'light', title: t('multieditor.code.theme.light'), iconName: 'Sun' },
-      { value: 'dark', title: t('multieditor.code.theme.dark'), iconName: 'Moon' },
+      {
+        value: 'light',
+        title: t('multieditor.code.theme.light'),
+        iconName: 'Sun',
+      },
+      {
+        value: 'dark',
+        title: t('multieditor.code.theme.dark'),
+        iconName: 'Moon',
+      },
     ] satisfies GroupOption[]
 )
 

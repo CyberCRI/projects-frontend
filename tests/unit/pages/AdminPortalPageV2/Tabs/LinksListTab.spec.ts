@@ -10,7 +10,7 @@ import { OrganizationOutput } from 'shared-projects-frontend/models'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
 
-vi.mock('~/api/invitations.service.ts', () => {
+vi.mock('shared-projects-frontend/apis', () => {
   return {
     getInvitations: vi.fn(() => ({ results: [] })),
     postInvitations: vi.fn(),

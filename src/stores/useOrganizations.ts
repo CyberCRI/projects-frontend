@@ -103,7 +103,11 @@ const useOrganizationsStore = defineStore('organizations', () => {
   async function updateCurrentOrganization(organization: OrganizationPatchInput | FormData) {
     try {
       const result = await patchOrganization(current.value.code, organization)
-      const currentOrganization = { ...current.value, ...organization, ...result }
+      const currentOrganization = {
+        ...current.value,
+        ...organization,
+        ...result,
+      }
       _current.value = currentOrganization
       return currentOrganization
     } catch (err) {

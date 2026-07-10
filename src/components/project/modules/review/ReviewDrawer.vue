@@ -62,9 +62,13 @@ const toaster = useToasterStore()
 const { t } = useNuxtI18n()
 
 const asyncing = ref(false)
-const { stateModals, closeModals, openModals } = useModals({ saveChange: false })
+const { stateModals, closeModals, openModals } = useModals({
+  saveChange: false,
+})
 
-const { form, isValid, errors, cleanedData, reset } = useProjectReviewForm({ lazy: true })
+const { form, isValid, errors, cleanedData, reset } = useProjectReviewForm({
+  lazy: true,
+})
 
 const isFormEqual = useBlockNavigation(
   () => !props.isOpened || formEqual(form.value, defaultLocalForm(), { html: ['description'] })

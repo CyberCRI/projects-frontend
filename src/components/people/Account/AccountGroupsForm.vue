@@ -89,7 +89,13 @@ import { roleHelpI18n, roleI18n } from '~/functs/rolesUtils'
 export default {
   name: 'AccountGroupsForm',
 
-  components: { GroupHierarchyList, FilterValue, LpiCheckbox, LoaderSimple, AccountSection },
+  components: {
+    GroupHierarchyList,
+    FilterValue,
+    LpiCheckbox,
+    LoaderSimple,
+    AccountSection,
+  },
   props: {
     modelValue: {
       // can contain also groups from other orgs
@@ -188,7 +194,10 @@ export default {
         typeof groupId == 'string' && groupId[0] == '#' ? groupId : '#' + groupId
 
       if (this.modelValue[prefixedGroupId])
-        this.$emit('update:modelValue', { ...this.modelValue, [prefixedGroupId]: false })
+        this.$emit('update:modelValue', {
+          ...this.modelValue,
+          [prefixedGroupId]: false,
+        })
       else
         this.$emit('update:modelValue', {
           ...this.modelValue,
@@ -204,7 +213,11 @@ export default {
           ...this.modelValue,
           [prefixedGroupId]: 'members',
         })
-      else this.$emit('update:modelValue', { ...this.modelValue, [prefixedGroupId]: role })
+      else
+        this.$emit('update:modelValue', {
+          ...this.modelValue,
+          [prefixedGroupId]: role,
+        })
     },
   },
 }

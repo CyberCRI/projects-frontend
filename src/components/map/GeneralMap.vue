@@ -90,7 +90,10 @@ const filters = ref<{
 const mapRef = useTemplateRef('map')
 const centerMap = () => mapRef.value.centerMap()
 const map = computed(() => toRaw(mapRef.value.map))
-defineExpose<{ map: ComputedRef<ExposeMap['map']>; centerMap: ExposeMap['centerMap'] }>({
+defineExpose<{
+  map: ComputedRef<ExposeMap['map']>
+  centerMap: ExposeMap['centerMap']
+}>({
   centerMap,
   map,
 })

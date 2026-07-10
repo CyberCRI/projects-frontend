@@ -7,7 +7,9 @@ export default async function usePdfFooter(url?: string, title?: string) {
   const { t } = useNuxtI18n()
   let qrCodeImg = ''
   if (url) {
-    const qrCodeDataUrl = await QRCode.toDataURL(url, { color: { dark: '#1d727c' } })
+    const qrCodeDataUrl = await QRCode.toDataURL(url, {
+      color: { dark: '#1d727c' },
+    })
     qrCodeImg = `<a class="project-qr-code-link" href="${url}"><img src="${qrCodeDataUrl}" alt="QR Code" class="project-qr-code"/></a>`
   }
 

@@ -10,7 +10,9 @@
     >
       <div v-if="editable" class="top">
         <div v-if="!formMode">
-          <p v-if="GEOCODING_ENABLED" class="notice">{{ $t('geocoding.choose-method') }}</p>
+          <p v-if="GEOCODING_ENABLED" class="notice">
+            {{ $t('geocoding.choose-method') }}
+          </p>
           <div class="buttons-line">
             <LpiButton
               :label="
@@ -66,7 +68,11 @@
           </div>
           <div v-else>
             <p class="notice">
-              {{ $t('geocoding.found-number', { number: suggestedLocations.length }) }}
+              {{
+                $t('geocoding.found-number', {
+                  number: suggestedLocations.length,
+                })
+              }}
             </p>
             <p class="notice">{{ $t('geocoding.pick-location') }}</p>
 
@@ -161,7 +167,6 @@ const formMode = ref<'click' | 'form'>()
 const form = ref(null)
 
 const openEditModal = (location) => {
-  console.log('icic')
   form.value = location
   showForm.value = true
 }

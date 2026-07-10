@@ -7,9 +7,9 @@ import { mockNuxtImport } from '@nuxt/test-utils/runtime'
 import { describe, expect, it, vi } from 'vitest'
 
 // fix unhnadled rejection due to invalid url
-vi.mock('~/composables/useAPI', () => {
+vi.mock('shared-projects-frontend/apis', () => {
   return {
-    default: vi.fn().mockResolvedValue({ data: { results: [] } }), // TODO nuxt check this
+    clientAPI: vi.fn().mockResolvedValue({ data: { results: [] } }), // TODO nuxt check this
   }
 })
 

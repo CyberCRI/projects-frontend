@@ -97,7 +97,9 @@ watch(
   { immediate: true }
 )
 
-const { stateModals, closeModals, openModals, closeAllModals } = useModals({ saveChange: false })
+const { stateModals, closeModals, openModals, closeAllModals } = useModals({
+  saveChange: false,
+})
 
 const isFormEqual = computed(() =>
   formEqual(form.value, defaultLocalForm(), { exclude: ['recaptcha'] })

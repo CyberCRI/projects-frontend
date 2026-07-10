@@ -81,7 +81,10 @@ const props = withDefaults(
 const { t } = useNuxtI18n()
 
 const selectedNews = ref<any>()
-const { stateModals, openModals, closeModals } = useModals({ delete: false, edit: false })
+const { stateModals, openModals, closeModals } = useModals({
+  delete: false,
+  edit: false,
+})
 const toaster = useToasterStore()
 const organizationCode = useOrganizationCode()
 const groupId = computed(() => props.group?.id)

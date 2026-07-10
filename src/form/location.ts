@@ -24,5 +24,9 @@ const RULES = {
 }
 
 export const useLocationForm = (options) => {
-  return useForm<LocationForm>({ default: clone(DEFAULT_FORM), rules: clone(RULES), ...options })
+  return useForm<LocationForm>({
+    default: clone(DEFAULT_FORM),
+    rules: clone(RULES),
+    ...options,
+  })
 }

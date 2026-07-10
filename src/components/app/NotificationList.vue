@@ -45,7 +45,9 @@ import BaseDrawer from '~/components/base/BaseDrawer.vue'
 
 import useUsersStore from '~/stores/useUsers'
 
-const props = withDefaults(defineProps<{ isOpened?: boolean }>(), { isOpened: false })
+const props = withDefaults(defineProps<{ isOpened?: boolean }>(), {
+  isOpened: false,
+})
 
 defineEmits<{ close: [] }>()
 const usersStore = useUsersStore()

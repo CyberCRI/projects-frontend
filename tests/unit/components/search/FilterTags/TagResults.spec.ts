@@ -4,9 +4,9 @@ import { flushPromises } from '@vue/test-utils'
 
 import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('~/api/api.config', function () {
+vi.mock('shared-projects-frontend/apis', () => {
   return {
-    useAPI: vi.fn().mockResolvedValue({ data: { results: [] } }), // TODO nuxt check this
+    clientAPI: vi.fn().mockResolvedValue({ data: { results: [] } }), // TODO nuxt check this
   }
 })
 

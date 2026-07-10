@@ -114,7 +114,7 @@
   </div>
 </template>
 <script>
-import { getUser, patchUserPrivacy } from '~/api/people.service.ts'
+import { getUser, patchUserPrivacy } from 'shared-projects-frontend/apis'
 
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 import GroupButton from '~/components/base/button/GroupButton.vue'

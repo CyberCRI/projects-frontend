@@ -62,9 +62,13 @@ const defaultLocalForm = () => {
   return newForm
 }
 
-const { stateModals, closeModals, openModals } = useModals({ saveChange: false })
+const { stateModals, closeModals, openModals } = useModals({
+  saveChange: false,
+})
 
-const { form, isValid, errors, cleanedData, reset } = useGoalForm({ lazy: true })
+const { form, isValid, errors, cleanedData, reset } = useGoalForm({
+  lazy: true,
+})
 watch(
   () => [props.goal, props.isOpened, props.project],
   () => reset(defaultLocalForm()),

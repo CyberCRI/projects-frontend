@@ -33,7 +33,9 @@ export default (server: TypeMcpServer) => {
       title: 'Instruction data',
       description:
         'Get an instruction article. Use the instructions-list tool to get instruction ids.',
-      inputSchema: { slugOrId: z.string().describe('The slug or id of the instruction article') },
+      inputSchema: {
+        slugOrId: z.string().describe('The slug or id of the instruction article'),
+      },
     },
     resultFromTool(({ slugOrId }, extras) => {
       const opts = mcpOptions(extras)

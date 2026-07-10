@@ -214,7 +214,10 @@ const createGroup = async () => {
     router.push(
       props.postCreateRouteFactory
         ? props.postCreateRouteFactory(newGroup.slug || newGroup.id)
-        : { name: 'Group', params: { groupIdOrSlug: newGroup.slug || newGroup.id } }
+        : {
+            name: 'Group',
+            params: { groupIdOrSlug: newGroup.slug || newGroup.id },
+          }
     )
   } catch (error) {
     toaster.pushError(t('toasts.group-create.error'))

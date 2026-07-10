@@ -53,7 +53,9 @@ export default {
       })
 
       if (this.total - this.current > 2)
-        pages.splice(this.current + 1, this.total - this.current - 2, { value: '...' })
+        pages.splice(this.current + 1, this.total - this.current - 2, {
+          value: '...',
+        })
       if (this.current > 3) pages.splice(1, this.current - 3, { value: '...' })
 
       return pages

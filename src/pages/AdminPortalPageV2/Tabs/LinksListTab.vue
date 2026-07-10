@@ -104,7 +104,7 @@
   </div>
 </template>
 <script>
-import { deleteInvitation, getInvitations } from '~/api/invitations.service.ts'
+import { deleteInvitation, getInvitations } from 'shared-projects-frontend/apis'
 
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
 import useToasterStore from '~/stores/useToaster.ts'

@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { addParentGroup, getHierarchyGroups } from '~/api/groups.service.ts'
+import { addParentGroup, getHierarchyGroups } from 'shared-projects-frontend/apis'
 
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
 import useToasterStore from '~/stores/useToaster.ts'

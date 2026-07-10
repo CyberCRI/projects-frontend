@@ -42,7 +42,10 @@ const formatedDates = computed(() => {
 
 const newFormatDates = computed(() => {
   const dates = formatedDates.value
-  const formater = new Intl.DateTimeFormat(locale.value, { month: 'long', year: 'numeric' })
+  const formater = new Intl.DateTimeFormat(locale.value, {
+    month: 'long',
+    year: 'numeric',
+  })
   return dates.map((date) => formater.format(date))
 })
 

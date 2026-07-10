@@ -118,8 +118,6 @@ import type {
   TranslatedResearcherDocument,
 } from 'shared-projects-frontend/models'
 
-import { sanitizeResearcherDocumentAnalyticsYears } from '~/api/sanitizes/researcher'
-
 import ResearcherDocumentSimilars from '~/components/people/Researcher/ResearcherDocumentSimilars.vue'
 import ResearcherDocument from '~/components/people/Researcher/ResearcherDocument.vue'
 import PaginationButtonsV2 from '~/components/base/navigation/PaginationButtonsV2.vue'
@@ -127,6 +125,7 @@ import PaginationButtonsV2 from '~/components/base/navigation/PaginationButtonsV
 import type { Pagination as PaginationType } from '~/composables/usePagination'
 import { useQuery } from '~/composables/useQuery'
 
+import { sanitizeResearcherDocumentAnalyticsYears } from '~/api/sanitizes/researcher'
 import { isNil } from 'es-toolkit'
 
 const props = withDefaults(

@@ -20,5 +20,9 @@ export const useProjectMessageForm = (options = {}) => {
     },
   }))
 
-  return useForm<ProjectMessageForm>({ default: defaultProjectMessageForm(), rules, ...options })
+  return useForm<ProjectMessageForm>({
+    default: defaultProjectMessageForm(),
+    rules,
+    ...options,
+  })
 }

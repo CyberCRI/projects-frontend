@@ -56,7 +56,10 @@ const categoryHierarchy = computed(() => {
     })),
     {
       name: category.value?.$t?.name,
-      route: { name: 'Category', params: { slugOrId: category.value?.slug || category.value?.id } },
+      route: {
+        name: 'Category',
+        params: { slugOrId: category.value?.slug || category.value?.id },
+      },
     },
   ]
 })
@@ -136,7 +139,10 @@ watchEffect(() => {
         <NuxtLink
           v-for="child in sortedChildren"
           :key="child.id"
-          :to="{ name: 'Category', params: { slugOrId: child.slug || child.id } }"
+          :to="{
+            name: 'Category',
+            params: { slugOrId: child.slug || child.id },
+          }"
           class="category-child shadow-box"
         >
           <h3 class="child-title">

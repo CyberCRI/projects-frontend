@@ -24,7 +24,10 @@ const { /*status,*/ isLoading, data: agents, /*error,*/ refresh } = getAgents()
 defineExpose({ refresh })
 const router = useRouter()
 const gotoAgent = (agent) => {
-  const routeData = router.resolve({ name: 'AgentPage', params: { agentSlug: agent.slug } })
+  const routeData = router.resolve({
+    name: 'AgentPage',
+    params: { agentSlug: agent.slug },
+  })
   window.open(routeData.href, '_blank')
 }
 </script>

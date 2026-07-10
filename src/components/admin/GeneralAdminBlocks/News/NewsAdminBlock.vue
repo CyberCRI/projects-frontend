@@ -30,7 +30,7 @@
     :is-opened="stateModals.edit"
     :news="selectedNews"
     @close="onCancel"
-    @news-edited="refresh"
+    @news-edited="() => refresh()"
   />
 
   <ConfirmModal
@@ -67,7 +67,10 @@ const organizationCode = useOrganizationCode()
 
 const { t } = useNuxtI18n()
 
-const { stateModals, openModals, closeModals } = useModals({ edit: false, delete: false })
+const { stateModals, openModals, closeModals } = useModals({
+  edit: false,
+  delete: false,
+})
 const isDeletingNews = ref(false)
 const selectedNews = ref()
 

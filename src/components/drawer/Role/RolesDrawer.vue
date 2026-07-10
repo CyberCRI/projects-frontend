@@ -30,7 +30,9 @@ const emit = defineEmits<{
   update: [RoleUser]
 }>()
 
-const { stateModals, closeModals, openModals } = useModals({ saveChange: false })
+const { stateModals, closeModals, openModals } = useModals({
+  saveChange: false,
+})
 
 const rolesValue = ref<RoleUser>()
 

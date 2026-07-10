@@ -2,8 +2,15 @@ import { getAllOrgClassifications, getOrgClassificationTags } from 'shared-proje
 
 import useOrganizationsStore from '~/stores/useOrganizations'
 
+type TagSearch = {
+  useSkills?: boolean
+  useProjects?: boolean
+  hideOrganizationTags?: boolean
+  classificationType?: boolean
+}
+
 export default function useTagSearch(
-  { useSkills, useProjects, hideOrganizationTags, classificationType } = {
+  { useSkills, useProjects, hideOrganizationTags, classificationType }: TagSearch = {
     useSkills: false,
     useProjects: false,
     hideOrganizationTags: false,
@@ -131,7 +138,9 @@ export default function useTagSearch(
 
   // watch
 
-  watch(selectedClassificationId, loadSelectedClassificationTags, { immediate: true })
+  watch(selectedClassificationId, loadSelectedClassificationTags, {
+    immediate: true,
+  })
 
   const resetTagSearch = () => {
     search.value = ''

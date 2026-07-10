@@ -106,7 +106,8 @@ import {
   acceptAccessRequest,
   declineAccessRequest,
   getAccessRequests,
-} from '~/api/organizations.service.ts'
+  clientAPI,
+} from 'shared-projects-frontend/apis'
 
 import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
 import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
@@ -116,8 +117,6 @@ import ToolTip from '~/components/base/ToolTip.vue'
 
 import useOrganizationsStore from '~/stores/useOrganizations.ts'
 import useToasterStore from '~/stores/useToaster.ts'
-
-import useAPI from '~/composables/useAPI.ts'
 
 import { capitalize } from '~/functs/string'
 import { debounce } from 'es-toolkit'
@@ -229,7 +228,7 @@ export default {
   methods: {
     async onClickPagination(requestedPage) {
       this.isLoading = true
-      this.request = await useAPI(requestedPage, {})
+      this.request = await clientAPI(requestedPage, {})
       this.isLoading = false
       const el = document.querySelector('.role-tab .search-input-container')
       if (el) el.scrollIntoView({ behavior: 'smooth' })
@@ -268,7 +267,9 @@ export default {
 
     async acceptRequest(request) {
       try {
-        await acceptAccessRequest(this.organization.code, { access_requests: [request.id] })
+        await acceptAccessRequest(this.organization.code, {
+          access_requests: [request.id],
+        })
         this.toaster.pushSuccess(this.$t('admin.requests.accept-success'))
 
         await this.searchRequest()

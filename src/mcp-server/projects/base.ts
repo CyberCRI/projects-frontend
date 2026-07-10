@@ -1,4 +1,4 @@
-import type { clientAPIOptions } from 'shared-projects-frontend/apis'
+import type { ClientAPIOptions } from 'shared-projects-frontend/apis'
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
 import type { InferSchema, ToolCallback } from '~/interfaces/mcp'
 import { tokenMap } from '~/server/routes/api/chat-stream'
@@ -19,7 +19,7 @@ export function getUserToken(extras) {
   return null
 }
 
-export function mcpOptions(extras: any = {}): clientAPIOptions {
+export function mcpOptions(extras: any = {}): ClientAPIOptions {
   const accessToken = getUserToken(extras)
   if (!accessToken) {
     return {}

@@ -80,7 +80,7 @@
   </div>
 </template>
 <script>
-import { getMentorshipDetails, respondMentorship } from '~/api/mentorship.service.ts'
+import { getMentorshipDetails, respondMentorship } from 'shared-projects-frontend/apis'
 
 import useUsersStore from '~/stores/useUsers.ts'
 
@@ -120,9 +120,18 @@ export default {
   computed: {
     answerOptions() {
       return [
-        { label: this.$t('mentorship.respond.options.accept'), value: 'accepted' },
-        { label: this.$t('mentorship.respond.options.decline'), value: 'rejected' },
-        { label: this.$t('mentorship.respond.options.need-infos'), value: 'pending' },
+        {
+          label: this.$t('mentorship.respond.options.accept'),
+          value: 'accepted',
+        },
+        {
+          label: this.$t('mentorship.respond.options.decline'),
+          value: 'rejected',
+        },
+        {
+          label: this.$t('mentorship.respond.options.need-infos'),
+          value: 'pending',
+        },
       ]
     },
     isConnected() {
