@@ -269,7 +269,7 @@ export default {
 
     editCategory(category) {
       this.editedCategory = category
-      this.parentCategory = category.hierarchy?.[0]?.id
+      this.parentCategory = (category.hierarchy || []).at(-1)?.id
       this.categoryDrawerOpened = true
     },
 
