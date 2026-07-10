@@ -8,6 +8,7 @@
       :picture-ratio="1 / 1"
       :default-picture="DEFAULT_IMAGE_PATATOID"
       no-resize
+      disable-delete
       @update:picture="setLogo($event)"
     />
   </AdminBlock>

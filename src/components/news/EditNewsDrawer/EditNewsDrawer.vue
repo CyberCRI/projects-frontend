@@ -19,7 +19,13 @@
   </BaseDrawer>
 </template>
 <script>
-import { createNews, patchNews, patchNewsHeader, postNewsHeader } from '~/api/news.service.ts'
+import {
+  createNews,
+  deleteNewsHeader,
+  patchNews,
+  patchNewsHeader,
+  postNewsHeader,
+} from '~/api/news.service.ts'
 
 import NewsForm from '~/components/news/NewsForm/NewsForm.vue'
 import BaseDrawer from '~/components/base/BaseDrawer.vue'
@@ -129,6 +135,18 @@ export default {
         const formData = new FormData()
         if (this.form.imageSizes) imageSizesFormData(formData, this.form.imageSizes)
 
+        if (
+          !(this.form.header_image instanceof File) &&
+          savedNews?.header_image?.id != this.form.header_image?.id &&
+          savedNews?.header_image?.id
+        ) {
+          await deleteNewsHeader(
+            this.organizationsStore.current?.code,
+            savedNews.id,
+            savedNews.header_image.id
+          )
+        }
+
         if (payload.header_image instanceof File) {
           const formData = new FormData()
 
@@ -144,7 +162,7 @@ export default {
             payload.header_image_id,
             formData
           )
-        } else if (savedNews.header_image?.id) {
+        } else if (this.form.header_image?.id) {
           await patchNewsHeader(
             this.organizationsStore.current?.code,
             this.news.id,

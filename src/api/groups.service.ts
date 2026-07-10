@@ -180,6 +180,16 @@ export async function patchGroupHeader(
   })
 }
 
+export async function deleteGroupHeader(
+  organizationCode: OrganizationModel['code'],
+  groupId: PeopleGroupIdOrSlug,
+  imageId: ImageModel['id']
+) {
+  await useAPI(`organization/${organizationCode}/people-group/${groupId}/header/${imageId}/`, {
+    method: 'DELETE',
+  })
+}
+
 export async function getGroupSimilar(
   organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,

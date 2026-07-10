@@ -89,6 +89,12 @@ export async function postProjectHeader(projectId: ProjectSlugOrId, body: any) {
   })
 }
 
+export async function deleteProjectHeader(projectId: ProjectSlugOrId, imageId: ImageModel['id']) {
+  await useAPI(`project/${projectId}/header/${imageId}/`, {
+    method: 'DELETE',
+  })
+}
+
 export async function patchProjectHeader(
   projectId: ProjectSlugOrId,
   imageId: ImageModel['id'],

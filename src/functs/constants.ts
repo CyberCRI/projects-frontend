@@ -170,8 +170,10 @@ export const GROUP_MEMBERS_ROLES: GroupMemberRoleType[] = ['leaders', 'managers'
 
 export const PROJECT_LOCATIONS_TYPES: LocationType[] = ['address', 'impact', 'team']
 
-// max size file
+// bytes
 export const MAX_FILE_SIZE = Math.round(10 * 1024 * 1024)
+// max size file en mb
+export const MAX_FILE_SIZE_MB = MAX_FILE_SIZE / 1024 / 1024
 
 // valid image mimetype for upload
 export const MIMETYPES_IMAGES = [

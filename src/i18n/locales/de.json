@@ -1767,7 +1767,8 @@
         "too-big": "Die Datei ist zu groß (max: {maxSize}Mb)",
         "invalid-image": "Nicht unterstützte Datei, muss ein gültiges Bild sein.",
         "required-image": "Eine Datei ist erforderlich",
-        "required": "Eine Datei ist erforderlich"
+        "required": "Eine Datei ist erforderlich",
+        "delete": "Löschen der Datei"
       }
     },
     "link": {

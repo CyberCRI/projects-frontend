@@ -1767,7 +1767,8 @@
         "too-big": "El fitxer és massa gran (màx. {maxSize}Mb)",
         "invalid-image": "Fitxer no acceptat, ha de ser una imatge vàlida.",
         "required-image": "Es requereix un fitxer",
-        "required": "Es requereix un fitxer"
+        "required": "Es requereix un fitxer",
+        "delete": "Esborra el fitxer"
       }
     },
     "link": {

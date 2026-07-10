@@ -1767,7 +1767,8 @@
         "too-big": "Bestand is te groot (max: {maxSize}Mb)",
         "invalid-image": "Niet-ondersteund bestand, moet een geldige afbeelding zijn.",
         "required-image": "Een bestand is vereist",
-        "required": "Een bestand is vereist"
+        "required": "Een bestand is vereist",
+        "delete": "Bestand verwijderen"
       }
     },
     "link": {
