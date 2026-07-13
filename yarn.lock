@@ -12664,7 +12664,7 @@ setprototypeof@~1.2.0:
 
 "shared-projects-frontend@git+ssh://git@github.com:CyberCRI/shared-projects-frontend.git#main":
   version "1.0.0"
-  resolved "git+ssh://git@github.com:CyberCRI/shared-projects-frontend.git#ff725be24a2ca237b026a132eff12c0e568b6c5d"
+  resolved "git+ssh://git@github.com:CyberCRI/shared-projects-frontend.git#37473f772a81f235df2202dc16bdc23d42da3348"
   dependencies:
     "@tiptap/core" "2.26.3"
     "@tiptap/extension-code-block" "2.26.3"

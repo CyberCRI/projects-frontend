@@ -4,16 +4,16 @@ import type { IconImageChoice } from '~/functs/IconImage'
 withDefaults(
   defineProps<{
     icon?: IconImageChoice
-    description: string
+    description?: string
   }>(),
-  { icon: 'HelpCircle' }
+  { icon: 'HelpCircle', description: null }
 )
 </script>
 
 <template>
   <p class="content-visibility skeletons-background">
     <IconImage :name="icon" class="icon" />
-    {{ description }}
+    <slot>{{ description }}</slot>
   </p>
 </template>
 

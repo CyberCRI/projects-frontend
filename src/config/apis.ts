@@ -5,6 +5,15 @@ import type { ClientAPIOptions } from 'shared-projects-frontend/apis'
 import { configureAPI } from 'shared-projects-frontend/apis'
 import { useRuntimeConfig } from '#imports'
 
+/**
+ * this is a functions to initialize clientAPI from shared-projects-frontends (ofetch)
+ *
+ * @function
+ * @name initializeClientApi
+ * @kind variable
+ * @returns {void}
+ * @exports
+ */
 export const initializeClientApi = () => {
   configureAPI(() => {
     let _localStorage = null

@@ -152,6 +152,7 @@ onBeforeUnmount(() => {
   }
 })
 </script>
+
 <style lang="scss">
 @import '~/design/scss/main';
 

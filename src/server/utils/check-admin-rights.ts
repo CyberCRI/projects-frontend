@@ -1,6 +1,5 @@
 import type { OrganizationModel, UserModel } from 'shared-projects-frontend/models'
-import { isAdmin, isSuperAdmin } from 'shared-projects-frontend/lib'
-import type { Right } from 'shared-projects-frontend/interfaces'
+import { isAdmin, isSuperAdmin, userRights } from 'shared-projects-frontend/lib'
 
 export function parseJwt(token) {
   try {
@@ -98,10 +97,7 @@ export default async function checkAdminRights(event) {
     })
   }
 
-  const rights: Right = {
-    permissions: user.permissions.reduce((acc, name) => ({ ...acc, [name]: true }), {}),
-    roles: user.roles,
-  }
+  const rights = userRights(user)
   const org = await getOrg(event)
   const orgId = org?.id
   const superAdmin = isSuperAdmin(rights)
