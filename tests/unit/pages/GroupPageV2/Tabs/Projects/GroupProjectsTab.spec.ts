@@ -15,12 +15,7 @@ describe('GroupProjectsTab', () => {
     const group = groupTranslatedFactory.generate()
     registerEndpoint(`organization/${orgaCode}/people-group/${group.id}/project/`, () => {
       return PaginationsFactory.generate({
-        results: [
-          ProjectFactory.generate(),
-          ProjectFactory.generate(),
-          ProjectFactory.generate(),
-          ProjectFactory.generate(),
-        ],
+        results: ProjectFactory.generateMany(4),
       })
     })
 

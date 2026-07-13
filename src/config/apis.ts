@@ -1,8 +1,8 @@
 import useToasterStore from '~/stores/useToaster'
 import useUsersStore from '~/stores/useUsers'
 
+import { configureClientAPI, configureOptionsAPI } from 'shared-projects-frontend/apis'
 import type { ClientAPIOptions } from 'shared-projects-frontend/apis'
-import { configureAPI } from 'shared-projects-frontend/apis'
 import { useRuntimeConfig } from '#imports'
 
 /**
@@ -15,15 +15,22 @@ import { useRuntimeConfig } from '#imports'
  * @exports
  */
 export const initializeClientApi = () => {
-  configureAPI(() => {
+  // custom fetch from nuxt
+  // @ts-expect-error ignore types
+  configureClientAPI($fetch)
+
+  // custom options
+  configureOptionsAPI(() => {
     let _localStorage = null
     if (import.meta.client && import.meta.env.VITEST !== 'true')
       _localStorage = window?.localStorage
     const localStorage = _localStorage
     const runtimeConfig = useRuntimeConfig()
 
+    const baseURL = runtimeConfig.public.appApiUrl + runtimeConfig.public.appApiDefaultVersion + '/'
+
     return {
-      baseURL: runtimeConfig.public.appApiUrl + runtimeConfig.public.appApiDefaultVersion + '/',
+      baseURL,
       method: 'GET',
       onRequest({ options }) {
         if (import.meta.client) {

@@ -1,6 +1,8 @@
+import { getUser as globalGetUser, getOrganizationByCode } from 'shared-projects-frontend/apis'
 import type { OrganizationModel, UserModel } from 'shared-projects-frontend/models'
 import { isAdmin, isSuperAdmin, userRights } from 'shared-projects-frontend/lib'
 
+// TODO: add parseToken/jwt in shared-project-backend
 export function parseJwt(token) {
   try {
     const base64Url = token.split('.')[1]
@@ -45,63 +47,42 @@ export async function getOrg(event): Promise<OrganizationModel | null> {
   const runtimeConfig = useRuntimeConfig()
   const orgCode = runtimeConfig.public.appApiOrgCode
   const tokenHeader = getRequestHeader(event, 'authorization') || ''
-  let org
-  try {
-    const baseUrl = runtimeConfig.public.appApiUrl + runtimeConfig.public.appApiDefaultVersion + '/'
-    org = await $fetch(`${baseUrl}/organization/${orgCode}/`, {
-      headers: { Authorization: tokenHeader },
-    })
-  } catch (e) {
+
+  return getOrganizationByCode(orgCode, {
+    headers: { Authorization: tokenHeader },
+  }).catch((e) => {
     throw createError({
       statusCode: 401,
       statusMessage: 'no_org',
       message: 'Could not retrieve org: ' + e.toString(),
     })
-  }
-  return org
-}
-
-export async function getUserByKeycloakId(kcId, tokenHeader): Promise<UserModel | null> {
-  let user = null
-  try {
-    const runtimeConfig = useRuntimeConfig()
-    const baseUrl = runtimeConfig.public.appApiUrl + runtimeConfig.public.appApiDefaultVersion + '/'
-    user = await $fetch(`${baseUrl}/user/${kcId}/`, {
-      headers: { Authorization: tokenHeader },
-    })
-  } catch (e) {
-    throw createError({
-      statusCode: 401,
-      statusMessage: 'no_user',
-      message: 'Could not retrieve user: ' + e.toString(),
-    })
-  }
-
-  return user
+  })
 }
 
 export async function getUser(event) {
   const tokenHeader = getRequestHeader(event, 'authorization') || ''
   const kcId = getKeycloakIdFromToken(tokenHeader)
-  const user = await getUserByKeycloakId(kcId, tokenHeader)
-  return user
+
+  return globalGetUser(kcId, {
+    headers: { Authorization: tokenHeader },
+  }).catch((e) => {
+    throw createError({
+      statusCode: 401,
+      statusMessage: 'no_user',
+      message: 'Could not retrieve user: ' + e.toString(),
+    })
+  })
 }
 
 export default async function checkAdminRights(event) {
-  const user = await getUser(event)
-  if (!user) {
-    throw createError({
-      statusCode: 401,
-      statusMessage: 'Unauthorized',
-      message: 'You must authenticate to access this resource.',
-    })
-  }
+  const organization = await getOrg(event)
 
+  const user = await getUser(event)
   const rights = userRights(user)
-  const org = await getOrg(event)
-  const orgId = org?.id
+
   const superAdmin = isSuperAdmin(rights)
-  const admin = isAdmin(rights, orgId)
+  const admin = isAdmin(rights, organization.id)
+
   if (!superAdmin && !admin) {
     throw createError({
       statusCode: 403,

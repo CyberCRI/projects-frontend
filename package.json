@@ -119,7 +119,7 @@
     "prosemirror-state": "1.4.3",
     "prosemirror-view": "1.41.3",
     "qrcode": "1.5.4",
-    "shared-projects-frontend": "git+ssh://git@github.com:CyberCRI/shared-projects-frontend.git#main",
+    "shared-projects-frontend": "git://git@github.com:CyberCRI/shared-projects-frontend.git#main",
     "sortablejs": "1.15.6",
     "sortablejs-vue3": "1.3.0",
     "turndown": "^7.2.4",

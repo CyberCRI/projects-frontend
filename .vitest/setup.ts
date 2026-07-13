@@ -3,6 +3,7 @@
 // workaround for @panva/oauth4webapi
 // that needs a TextEncoder
 // see https://github.com/inrupt/solid-client-authn-js/issues/1676
+
 import { TextEncoder, TextDecoder } from 'util'
 import flushPromises from 'flush-promises'
 import 'regenerator-runtime/runtime'
