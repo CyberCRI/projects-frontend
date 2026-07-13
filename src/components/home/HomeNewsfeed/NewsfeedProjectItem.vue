@@ -14,7 +14,7 @@
       />
     </div>
     <h3 class="project-title skeletons-text">
-      {{ capitalize(project?.$t?.title) }}
+      {{ project?.$t?.title }}
     </h3>
     <div class="project-description">
       <p class="clamped skeletons-text">
@@ -33,7 +33,7 @@ import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 
 import { DEFAULT_PROJECT_PATATOID } from '~/composables/usePatatoids'
 
-import { capitalize, cropIfTooLong } from '~/functs/string'
+import { cropIfTooLong } from '~/functs/string'
 import { html2Text } from '~/functs/tiptap'
 
 defineOptions({ name: 'NewsfeedProjectItem' })

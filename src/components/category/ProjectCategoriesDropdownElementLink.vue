@@ -6,14 +6,12 @@
       params: { slugOrId: category.slug || category.id },
     }"
   >
-    <span class="label">{{ capitalize(category.$t.name) }}</span>
+    <span class="label">{{ category.$t.name }}</span>
   </NuxtLink>
 </template>
 
 <script setup lang="ts">
 import type { TranslatedProjectCategory } from 'shared-projects-frontend/models'
-
-import { capitalize } from '~/functs/string'
 
 defineProps<{
   category: TranslatedProjectCategory

@@ -1767,7 +1767,9 @@
         "too-big": "Bestand is te groot (max: {maxSize}Mb)",
         "invalid-image": "Niet-ondersteund bestand, moet een geldige afbeelding zijn.",
         "required-image": "Een bestand is vereist",
-        "required": "Een bestand is vereist"
+        "required": "Een bestand is vereist",
+        "delete": "Bestand verwijderen",
+        "delete-image": "Afbeelding verwijderen"
       }
     },
     "link": {
@@ -2420,7 +2422,9 @@
       "reviewed": "Is herzien",
       "reviewed-sub": "Wanneer uw project klaar is voor beoordeling, moet u op de hoogte worden gesteld wanneer de beoordelaar van uw project zijn beoordeling heeft ingediend",
       "reply": "Antwoord op uw commentaar",
-      "reply-sub": "Op de hoogte wanneer iemand antwoordt op uw reactie"
+      "reply-sub": "Op de hoogte wanneer iemand antwoordt op uw reactie",
+      "announcement-has-new-application": "Aanmeldingen Toepassing",
+      "announcement-has-new-application-sub": "Waarschuwen wanneer aankondigingen een nieuwe toepassing hebben"
     },
     "follow": {
       "title": "Aanmelding volgen",

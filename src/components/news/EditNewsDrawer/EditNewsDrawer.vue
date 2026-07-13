@@ -22,6 +22,7 @@
 <script setup lang="ts">
 import {
   createNews,
+  deleteNewsHeader,
   patchNews,
   patchNewsHeader,
   postNewsHeader,
@@ -120,6 +121,18 @@ const saveNews = async () => {
     const formData = new FormData()
     if (form.value.imageSizes) imageSizesFormData(formData, form.value.imageSizes)
 
+    if (
+      !(form.value.header_image instanceof File) &&
+      savedNews?.header_image?.id != form.value.header_image?.id &&
+      savedNews?.header_image?.id
+    ) {
+      await deleteNewsHeader(
+        organizationsStore.current?.code,
+        savedNews.id,
+        savedNews.header_image.id
+      )
+    }
+
     if (payload.header_image instanceof File) {
       const formData = new FormData()
 
@@ -143,7 +156,6 @@ const saveNews = async () => {
         formData
       )
     }
-
     emit('news-edited', savedNews)
     toaster.pushSuccess(t('news.save.success'))
   } catch (err) {

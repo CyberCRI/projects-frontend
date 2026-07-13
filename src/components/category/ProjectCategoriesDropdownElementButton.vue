@@ -8,14 +8,12 @@
     :data-test="`project-form-${category.id}`"
     @click="emit('choose-category', category)"
   >
-    <span class="label">{{ capitalize(category.$t.name) }}</span>
+    <span class="label">{{ category.$t.name }}</span>
   </button>
 </template>
 
 <script setup lang="ts">
 import type { TranslatedProjectCategory } from 'shared-projects-frontend/models'
-
-import { capitalize } from '~/functs/string'
 
 defineProps<{
   category: TranslatedProjectCategory

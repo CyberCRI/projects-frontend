@@ -25,6 +25,8 @@ const props = withDefaults(
     maxSizeMb?: number
     variation?: ImageVariations
     dontResizeOnChange?: boolean
+
+    disableDelete?: boolean
   }>(),
   {
     imageSizes: null,
@@ -37,12 +39,13 @@ const props = withDefaults(
     maxSizeMb: null,
     variation: 'large',
     dontResizeOnChange: false,
+    disableDelete: false,
   }
 )
 
 const emit = defineEmits<{
   'update:imageSizes': [ImageSize]
-  'update:picture': [File]
+  'update:picture': [File | null]
 }>()
 
 const { stateModals, openModals, closeModals } = useModals({ resizer: false })
@@ -56,12 +59,17 @@ const defaultPictureURL = computed(() => {
 
 const defaultPictureIndex = ref(0)
 
+const defaultPatatoid = ref()
+onMounted(async () => (defaultPatatoid.value = await getFileFromURL(defaultPictureURL.value[0])))
+
 const displayedImage = computed(() => {
   let image: ImageModel
   if (props.picture instanceof File) {
     image = fileToImageModel(props.picture)
-  } else {
+  } else if (props.picture) {
     image = props.picture
+  } else if (defaultPatatoid.value) {
+    image = fileToImageModel(defaultPatatoid.value)
   }
 
   if (props.imageSizes) {
@@ -73,7 +81,7 @@ const displayedImage = computed(() => {
   return image
 })
 
-const setImage = (image: File) => {
+const setImage = (image: File | null) => {
   emit('update:picture', image)
   // reinit image cropping data
   // weird bug : cant emits several event in the same tick
@@ -87,6 +95,8 @@ const onUploadImage = (image) => {
   }
 }
 
+const onDelete = () => setImage(null)
+
 const imageResizerRef = useTemplateRef('imageResizer')
 const saveImageSizes = () => {
   if (imageResizerRef.value) {
@@ -98,16 +108,10 @@ const saveImageSizes = () => {
 const nextDefaultPicture = async () => {
   if (defaultPictureURL.value.length) {
     defaultPictureIndex.value = (defaultPictureIndex.value + 1) % defaultPictureURL.value.length
+    console.log(defaultPictureIndex.value, defaultPictureURL.value[defaultPictureIndex.value])
     setImage(await getFileFromURL(defaultPictureURL.value[defaultPictureIndex.value]))
   }
 }
-
-// safe check image (if not set, set first default pictures)
-watchEffect(async () => {
-  if (!props.picture) {
-    setImage(await getFileFromURL(defaultPictureURL.value[0]))
-  }
-})
 </script>
 
 <template>
@@ -149,7 +153,14 @@ watchEffect(async () => {
       />
 
       <LpiButton
-        v-if="!noResize"
+        v-if="picture && !disableDelete"
+        btn-icon="TrashCanOutline"
+        :label="$t('resource.file.form.delete-image')"
+        @click.prevent="onDelete"
+      />
+
+      <LpiButton
+        v-if="!noResize && picture"
         v-disable-focus="disabled"
         :label="$t('project.form.resize-image')"
         btn-icon="CropFree"

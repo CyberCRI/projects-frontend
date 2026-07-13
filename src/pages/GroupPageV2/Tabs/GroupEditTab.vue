@@ -3,6 +3,7 @@ import { email, helpers, maxLength, required } from '@vuelidate/validators'
 import useValidate from '@vuelidate/core'
 
 import {
+  deleteGroupHeader,
   getGroup,
   patchGroup,
   patchGroupHeader,
@@ -135,6 +136,14 @@ const updateHeader = async (groupId) => {
     form.value.header_image != groupData.value?.header_image?.url ||
     !isEqual(form.value.imageSizes, pictureApiToImageSizes(groupData.value?.header_image))
   ) {
+    if (
+      !(form.value.header_image instanceof File) &&
+      groupData.value?.header_image?.id != form.value.header_image?.id &&
+      groupData.value?.header_image?.id
+    ) {
+      await deleteGroupHeader(orgCode.value, groupId, groupData.value.header_image.id)
+    }
+
     const payloadHeader = new FormData()
     if (form.value.imageSizes) imageSizesFormData(payloadHeader, form.value.imageSizes)
 

@@ -101,15 +101,12 @@
     </h4>
 
     <div>
-      <TextInput
-        v-model="form.goal_title"
-        :label="capitalize(t('template.advancement-goal-title'))"
-      />
+      <TextInput v-model="form.goal_title" :label="t('template.advancement-goal-title')" />
     </div>
 
     <div>
       <label class="label">
-        {{ capitalize(t('template.advancement-goal-content')) }}
+        {{ t('template.advancement-goal-content') }}
       </label>
       <TipTapEditor
         :key="`advancement-goal-${editorKey}`"
@@ -126,7 +123,7 @@
 
     <div>
       <label class="label">
-        {{ capitalize(t('template.comment')) }}
+        {{ t('template.comment') }}
       </label>
 
       <TipTapEditor

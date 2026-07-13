@@ -144,7 +144,7 @@ const emit = defineEmits<{
 }>()
 
 const organizationsStore = useOrganizationsStore()
-const defaultPictures = usePatatoids()
+const defaultPictures = [DEFAULT_NEWS_PATATOID, ...usePatatoids()]
 const { t } = useNuxtI18n()
 
 const rules = computed(() => {

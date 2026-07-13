@@ -1767,7 +1767,9 @@
         "too-big": "El archivo es demasiado grande (max: {maxSize}Mb)",
         "invalid-image": "Archivo sin soporte, necesita ser una imagen válida.",
         "required-image": "Se requiere un archivo",
-        "required": "Se requiere un archivo"
+        "required": "Se requiere un archivo",
+        "delete": "Borrar el archivo",
+        "delete-image": "Eliminar imagen"
       }
     },
     "link": {
@@ -2420,7 +2422,9 @@
       "reviewed": "Has been reviewed",
       "reviewed-sub": "Cuando su proyecto esté listo para su revisión, sea notificado cuando el revisor de su proyecto haya presentado su revisión",
       "reply": "Responder a su comentario",
-      "reply-sub": "Ser notificado cuando alguien responde a su comentario"
+      "reply-sub": "Ser notificado cuando alguien responde a su comentario",
+      "announcement-has-new-application": "Anuncios Aplicación",
+      "announcement-has-new-application-sub": "Ser notificado cuando los anuncios tienen una nueva aplicación"
     },
     "follow": {
       "title": "Notificación de seguimiento",

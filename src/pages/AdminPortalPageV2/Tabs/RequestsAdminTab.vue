@@ -33,7 +33,7 @@
             <td>
               <a class="mail-link" :href="`mailto:${user.email}`">{{ user.email }}</a>
             </td>
-            <td>{{ capitalize(user.job) }}</td>
+            <td>{{ user.job }}</td>
             <td class="has-more">
               <ToolTip
                 v-if="user.message?.length > 36"

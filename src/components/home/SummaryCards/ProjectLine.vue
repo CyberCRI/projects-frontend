@@ -15,7 +15,7 @@
       :default-picture="DEFAULT_PROJECT_PATATOID"
     />
     <div class="project-title">
-      {{ capitalize(project?.$t?.title) }}
+      {{ project?.$t?.title }}
     </div>
   </NuxtLink>
 </template>
@@ -26,8 +26,6 @@ import type { TranslatedProject } from 'shared-projects-frontend/models'
 import CroppedApiImage from '~/components/base/media/CroppedApiImage.vue'
 
 import { DEFAULT_PROJECT_PATATOID } from '~/composables/usePatatoids'
-
-import { capitalize } from '~/functs/string'
 
 defineProps<{
   project: TranslatedProject

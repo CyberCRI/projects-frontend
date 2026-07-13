@@ -21,7 +21,7 @@
         <h3 class="title">
           {{
             // @ts-expect-error TS2339 (translate category or not transalted ?)
-            capitalize(category.$t?.name ?? category.name)
+            category.$t?.name ?? category.name
           }}
         </h3>
         <CategoryFollowButton :category-id="category.id" @click.stop.prevent="" />
@@ -46,7 +46,6 @@ import type {
 import CategoryCardImage from '~/components/category/CategoryCardImage.vue'
 
 import { pictureApiToImageSizes } from '~/functs/imageSizesUtils'
-import { capitalize } from '~/functs/string'
 
 // TODO: many components use this withtout translated Category
 const props = defineProps<{

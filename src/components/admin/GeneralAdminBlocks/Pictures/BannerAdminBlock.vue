@@ -15,7 +15,11 @@
 </template>
 
 <script setup lang="ts">
-import { postOrganisationBanner, patchOrganisationBanner } from 'shared-projects-frontend/apis'
+import {
+  postOrganisationBanner,
+  patchOrganisationBanner,
+  deleteOrganisationBanner,
+} from 'shared-projects-frontend/apis'
 import { pictureApiToImageSizes, imageSizesFormData } from '@/functs/imageSizesUtils'
 import { DEFAULT_IMAGE_PATATOID } from '@/composables/usePatatoids'
 import ImageEditor from '@/components/base/form/ImageEditor.vue'
@@ -34,10 +38,16 @@ const bannerImageSizes = computed(() => pictureApiToImageSizes(organization.valu
 
 const setBanner = async (file) => {
   try {
-    const formData = new FormData()
-    formData.append('file', file, file.name)
+    // if image alredy exists, delete it
+    if (organization.value.banner_image) {
+      await deleteOrganisationBanner(organization.value.code, organization.value.banner_image.id)
+    }
 
-    await postOrganisationBanner({ code: organizationCode, body: formData })
+    if (file) {
+      const formData = new FormData()
+      formData.append('file', file, file.name)
+      await postOrganisationBanner({ code: organizationCode, body: formData })
+    }
 
     toaster.pushSuccess(t('admin.portal.general.banner-edit.success'))
 

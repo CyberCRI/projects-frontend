@@ -5,11 +5,16 @@
 </template>
 
 <script setup lang="ts">
+import {
+  deleteProjectHeader,
+  patchProject,
+  patchProjectHeader,
+  postProjectHeader,
+} from 'shared-projects-frontend/apis'
 import type {
   ProjectForm as ProjectFormType,
   TranslatedProject,
 } from 'shared-projects-frontend/models'
-import { patchProject, patchProjectHeader, postProjectHeader } from 'shared-projects-frontend/apis'
 import { refreshProjectData } from '~/composables/project/refreshProject'
 import BaseModuleTab from '~/components/modules/BaseModuleTab.vue'
 import ProjectForm from '~/components/project/ProjectForm.vue'
@@ -51,17 +56,24 @@ const onSubmit = (form: ProjectFormType) => {
   }
 
   patchProject(props.project.id, body)
-    .then(() => {
+    .then(async () => {
       const formData = new FormData()
       imageSizesFormData(formData, form.imageSizes)
-      // if instanceof File (new file)
+      // delete old file if is changed
+      if (
+        !(form.file instanceof File) &&
+        props.project.header_image?.id != form.file?.id &&
+        props.project.header_image?.id
+      ) {
+        await deleteProjectHeader(props.project.id, props.project.header_image.id)
+      }
       if (form.file instanceof File) {
         formData.append('file', form.file, form.file.name)
 
-        return postProjectHeader(props.project.id, formData)
-      } else {
+        return await postProjectHeader(props.project.id, formData)
+      } else if (form.file) {
         formData.append('image_id', form.file.id.toString())
-        return patchProjectHeader(props.project.id, form.file.id, formData)
+        return await patchProjectHeader(props.project.id, form.file.id, formData)
       }
     })
     .then(() => {

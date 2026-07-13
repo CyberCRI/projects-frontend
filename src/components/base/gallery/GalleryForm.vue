@@ -49,13 +49,7 @@
     </template>
 
     <template #extra-buttons>
-      <ImageInput
-        v-if="!status"
-        :label="$t('common.add')"
-        multiple
-        :max-size-mb="10"
-        @upload-images="uploadImages"
-      />
+      <ImageInput v-if="!status" :label="$t('common.add')" multiple @upload-images="uploadImages" />
     </template>
   </DialogModal>
 </template>

@@ -8,7 +8,7 @@
       >
         <div class="skill-title">
           <IconImage class="chevron" :name="isOpen ? 'Minus' : 'Plus'" />
-          <span class="skill-title">{{ capitalize(label) }}</span>
+          <span class="skill-title">{{ label }}</span>
         </div>
         <transition name="open">
           <div v-show="isOpen" class="description mobile">
@@ -107,7 +107,6 @@ import ToolTip from '~/components/base/ToolTip.vue'
 import useSkillTexts from '~/composables/useSkillTexts'
 
 import type { UserSkillModel } from 'shared-projects-frontend/models'
-import { capitalize } from '~/functs/string'
 
 const props = withDefaults(
   defineProps<{

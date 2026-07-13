@@ -89,6 +89,7 @@
 import {
   createProjectCategory,
   deleteProjectCategory,
+  deleteProjectCategoryBackground,
   patchProjectCategory,
   patchProjectCategoryBackground,
   postProjectCategoryBackground,
@@ -270,7 +271,7 @@ export default {
 
     editCategory(category) {
       this.editedCategory = category
-      this.parentCategory = category.parent
+      this.parentCategory = (category.hierarchy || []).at(-1)?.id
       this.categoryDrawerOpened = true
     },
 
@@ -280,9 +281,18 @@ export default {
       this.categoryDrawerOpened = false
     },
 
-    async setImage(data, id, imageSizes, imageId) {
+    async setImage(categoryId, oldImage, newImage, imageSizes) {
       const organizationCode = useOrganizationCode()
-      if (data.background_image instanceof File && id) {
+      let imageId = newImage?.id
+
+      if (oldImage?.id !== imageId && oldImage?.id) {
+        await deleteProjectCategoryBackground(organizationCode, {
+          category_id: categoryId,
+          id: oldImage.id,
+        })
+      }
+
+      if (newImage instanceof File) {
         const formData = new FormData()
         formData.append('file', data.background_image, data.background_image.name)
         const res = await postProjectCategoryBackground(organizationCode, {
@@ -291,12 +301,11 @@ export default {
         })
         imageId = res.id
       }
-      if (imageSizes && id) {
-        delete data.background_image
+      if (imageSizes && imageId) {
         const formData = new FormData()
         imageSizesFormData(formData, imageSizes)
         await patchProjectCategoryBackground(organizationCode, {
-          id,
+          id: categoryId,
           imageId,
           body: formData,
         })
@@ -305,8 +314,6 @@ export default {
 
     async submitCategory(category) {
       const organizationCode = useOrganizationCode()
-      const imageSizes = category.imageSizes || null
-      const imageId = category.background_image?.id || null
       const data = {
         ...category,
         // some category have tags for historical reasons
@@ -324,7 +331,12 @@ export default {
         // edit catgeory
         await patchProjectCategory(organizationCode, categoryId, data)
       }
-      await this.setImage(data, categoryId, imageSizes, imageId)
+      await this.setImage(
+        categoryId,
+        this.editedCategory.background_image,
+        category.background_image,
+        category.imageSizes
+      )
 
       try {
         // Update order index of children
