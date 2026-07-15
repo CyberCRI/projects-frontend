@@ -12,7 +12,6 @@ import { AttachmentLinkFactory } from './attachment-link.factory'
 import { AttachmentFileFactory } from './attachment-file.factory'
 import { TemplateFactory } from './template.factory'
 import BlogEntryFactory from './blog-entry.factory'
-import locationFactory from './location.factory'
 import LocationFactory from './location.factory'
 import { ReviewFactory } from './review.factory'
 import { ImageFactory } from './image.factory'
@@ -32,7 +31,7 @@ export const ProjectFactory = createFactory<ProjectModel>((faker) => ({
   is_shareable: faker.datatype.boolean(),
   purpose: faker.lorem.sentence(),
   language: 'fr',
-  locations: locationFactory.generateMany(2),
+  locations: LocationFactory.generateMany(2),
   publication_status: 'public',
   life_status: 'running',
   reviews: ReviewFactory.generateMany(2),

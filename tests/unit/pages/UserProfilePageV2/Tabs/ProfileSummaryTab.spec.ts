@@ -9,9 +9,6 @@ import type { OrganizationOutput } from 'shared-projects-frontend/models'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useUsersStore from '~/stores/useUsers'
 import pinia from '~/stores'
-vi.mock('shared-projects-frontend/apis', () => ({
-  getUserFollows: vi.fn().mockResolvedValue({ results: [] }),
-}))
 
 describe('ProfileSummaryTab', () => {
   let usersStore

@@ -33,7 +33,8 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss" scoped>
-@use '~/design/scss/variables.scss';
+@use '~/design/scss/variables';
+
 .total-container {
   display: flex;
   flex-direction: column;

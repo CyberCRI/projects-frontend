@@ -15,6 +15,7 @@ import MockComponent from './MockComponent.vue'
 import english from '~/i18n/locales/en.json'
 import french from '~/i18n/locales/fr.json'
 import { setActivePinia } from 'pinia'
+import { beforeAll } from 'vitest'
 import pinia from '~/stores'
 
 type OptionsMount<T> = ComponentMountingOptions<T> & {
@@ -33,6 +34,10 @@ const DEFAULT_I18N_OPTIONS = {
 } as I18nOptions
 
 const i18n = createI18n({ legacy: false, globalInjection: true, ...DEFAULT_I18N_OPTIONS })
+
+beforeAll(() => {
+  setActivePinia(pinia)
+})
 
 /**
  * build options for mount utils (auto create router/locale)
