@@ -33,6 +33,8 @@ const zoomOut = () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .zoom-container {
   display: flex;
   justify-content: center;

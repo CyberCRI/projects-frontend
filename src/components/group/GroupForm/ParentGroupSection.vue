@@ -55,6 +55,8 @@ const confirmGroup = (group) => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .group-section {
   label {
     display: flex;
@@ -62,11 +64,11 @@ const confirmGroup = (group) => {
     align-items: center;
     flex-direction: row;
     width: 100%;
-    font-size: $font-size-m;
-    margin-bottom: $space-l;
+    font-size: variables.$font-size-m;
+    margin-bottom: variables.$space-l;
 
     .section-title {
-      color: $black;
+      color: variables.$black;
       font-weight: bold;
       display: block;
     }
@@ -76,15 +78,15 @@ const confirmGroup = (group) => {
     display: grid;
     grid-template-columns: 1fr;
     justify-items: stretch;
-    gap: $space-l;
+    gap: variables.$space-l;
   }
 
   .disabled {
-    color: $almost-white;
+    color: variables.$almost-white;
 
     svg {
       width: 18px;
-      fill: $almost-white;
+      fill: variables.$almost-white;
     }
   }
 }

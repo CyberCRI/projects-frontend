@@ -53,33 +53,35 @@ const goToProfileBio = () => tabsLayoutSelectTab(1)
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .limited-description {
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: stretch;
-  height: pxToRem(320px);
+  height: variables.pxToRem(320px);
 }
 
 .user-descriptions {
-  padding: $space-l;
+  padding: variables.$space-l;
 
   &.limited {
-    @media all and (min-width: $max-tablet) {
-      border: $border-width-s solid $primary;
-      border-radius: $border-radius-l;
+    @media all and (min-width: variables.$max-tablet) {
+      border: variables.$border-width-s solid variables.$primary;
+      border-radius: variables.$border-radius-l;
     }
   }
 
   .description-content {
-    margin-bottom: $space-l;
+    margin-bottom: variables.$space-l;
   }
 
   :deep(.title) {
-    font-size: $font-size-m;
+    font-size: variables.$font-size-m;
     font-weight: 700;
-    color: $primary-dark;
-    margin-bottom: $space-l;
+    color: variables.$primary-dark;
+    margin-bottom: variables.$space-l;
   }
 }
 

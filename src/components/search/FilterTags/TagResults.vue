@@ -177,6 +177,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .search-mode-ctn {
   position: relative;
   width: 100%;

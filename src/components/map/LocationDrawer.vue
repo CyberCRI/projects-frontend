@@ -232,11 +232,13 @@ const onSubmit = () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .top {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  margin-bottom: $space-l;
+  margin-bottom: variables.$space-l;
 
   & > div {
     width: 100%;
@@ -246,7 +248,7 @@ const onSubmit = () => {
 
 .location-map-ctn {
   height: 500px;
-  border-radius: $border-radius-l;
+  border-radius: variables.$border-radius-l;
   overflow: hidden;
 
   .leaflet-container {
@@ -275,7 +277,7 @@ const onSubmit = () => {
 
 .input-field,
 .notice {
-  margin-bottom: $space-l;
+  margin-bottom: variables.$space-l;
 }
 
 .notice {

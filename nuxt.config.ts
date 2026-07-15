@@ -50,7 +50,14 @@ export default defineNuxtConfig({
     },
   },
   srcDir: 'src/',
-  modules: ['@pinia/nuxt', '@nuxtjs/i18n', '@nuxt/test-utils/module', 'nuxt-svgo', '@nuxt/eslint'],
+  modules: [
+    '@pinia/nuxt',
+    '@nuxtjs/i18n',
+    '@nuxt/test-utils/module',
+    'nuxt-svgo',
+    '@nuxt/eslint',
+    '@nuxtjs/stylelint-module',
+  ],
   // disable caching
   routeRules: {
     '/**': {
@@ -113,20 +120,12 @@ export default defineNuxtConfig({
       // rest of the app uses the top-level v1.4.3. Both create keyless plugins
       // (new Plugin({})) that each get key "plugin$1" from their counter — a
       // collision that causes "Adding different instances of a keyed plugin".
-      alias: {
-        'prosemirror-state': path.resolve('./node_modules/prosemirror-state'),
-        'prosemirror-view': path.resolve('./node_modules/prosemirror-view'),
-        'prosemirror-model': path.resolve('./node_modules/prosemirror-model'),
-        'prosemirror-transform': path.resolve('./node_modules/prosemirror-transform'),
-      },
     },
     css: {
       preprocessorOptions: {
         scss: {
           additionalData: `
                         @use 'sass:math';
-                        @import '@/design/scss/variables.scss';
-                        $PUBLIC_BINARIES_PREFIX: '/public-assets';
                     `,
         },
       },

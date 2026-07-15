@@ -144,24 +144,26 @@ const outdated = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .announcement {
   position: relative;
-  padding: $space-m $space-s;
-  border: $border-width-m solid var(--primary-dark);
-  border-radius: $border-radius-m;
+  padding: variables.$space-m variables.$space-s;
+  border: variables.$border-width-m solid var(--primary-dark);
+  border-radius: variables.$border-radius-m;
 
   .banner {
     display: inline-flex;
     align-items: center;
-    color: $white;
-    border-radius: $border-radius-s;
+    color: variables.$white;
+    border-radius: variables.$border-radius-s;
     overflow: hidden;
-    border: $border-width-s solid $white;
-    font-size: $font-size-xs;
+    border: variables.$border-width-s solid variables.$white;
+    font-size: variables.$font-size-xs;
     width: fit-content;
 
     > div {
-      padding: $space-2xs $space-xs;
+      padding: variables.$space-2xs variables.$space-xs;
     }
 
     font-weight: 500;
@@ -173,7 +175,7 @@ const outdated = computed(() => {
   }
 
   .title {
-    color: $primary-dark;
+    color: variables.$primary-dark;
     font-weight: 700;
     font-size: 1.5rem;
     overflow-wrap: break-word;
@@ -183,7 +185,7 @@ const outdated = computed(() => {
   }
 
   .description {
-    font-size: $font-size-xs;
+    font-size: variables.$font-size-xs;
   }
 
   .announcement-date {
@@ -201,7 +203,7 @@ const outdated = computed(() => {
     z-index: 1;
 
     > button:nth-child(2) {
-      margin-left: $space-m;
+      margin-left: variables.$space-m;
     }
   }
 
@@ -226,7 +228,7 @@ const outdated = computed(() => {
   }
 
   a {
-    color: $primary-dark;
+    color: variables.$primary-dark;
 
     &:hover {
       text-decoration: underline;

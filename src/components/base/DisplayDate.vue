@@ -97,6 +97,8 @@ const haveEndDate = computed(() => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .date-preview {
   align-self: center;
   display: inline-block;

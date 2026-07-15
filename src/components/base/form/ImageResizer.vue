@@ -199,6 +199,8 @@ onResize(() => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .image-resizer {
   flex-grow: 1;
   max-height: 100%;

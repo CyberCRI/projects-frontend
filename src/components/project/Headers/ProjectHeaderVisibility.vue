@@ -43,10 +43,12 @@ const visibility = computed<{ icon: IconImageChoice; title: string }>(() => {
 })
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .visibility {
   font-weight: 700;
   font-size: 14px;
-  line-height: $line-height-compact;
-  color: $primary-dark;
+  line-height: variables.$line-height-compact;
+  color: variables.$primary-dark;
 }
 </style>

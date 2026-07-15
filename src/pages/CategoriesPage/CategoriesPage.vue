@@ -112,12 +112,14 @@ useLpiHead2({
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .categories-layout {
   .btn-ctn {
     display: flex;
     align-items: center;
     flex-direction: column;
-    margin: $space-2xl 0;
+    margin: variables.$space-2xl 0;
   }
 
   .action-ctn {
@@ -132,14 +134,14 @@ useLpiHead2({
   .sub-title {
     text-align: center;
     font-weight: 700;
-    font-size: $font-size-2xl;
-    line-height: $line-height-tight;
-    color: $black;
+    font-size: variables.$font-size-2xl;
+    line-height: variables.$line-height-tight;
+    color: variables.$black;
     width: 100%;
   }
 
   .title-ctn {
-    margin-bottom: $space-xl;
+    margin-bottom: variables.$space-xl;
     width: 100%;
   }
 
@@ -148,7 +150,7 @@ useLpiHead2({
     flex-flow: row wrap;
     justify-content: center;
     align-items: stretch;
-    gap: $space-l;
+    gap: variables.$space-l;
   }
 }
 
@@ -157,6 +159,6 @@ useLpiHead2({
   width: max-content;
   padding: 1rem;
   border-radius: 1rem;
-  background-color: $primary-lighter;
+  background-color: variables.$primary-lighter;
 }
 </style>

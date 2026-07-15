@@ -309,6 +309,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .outer {
   position: relative;
   flex-shrink: 0;

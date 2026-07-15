@@ -78,6 +78,8 @@ useLpiHead(useRequestURL().toString(), title.value, title.value, imageFullUrl.va
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .page404 {
   display: flex;
   flex-flow: column nowrap;
@@ -90,8 +92,8 @@ useLpiHead(useRequestURL().toString(), title.value, title.value, imageFullUrl.va
     flex-flow: column;
     background: #fff;
     flex: 1 1 50%;
-    margin-top: pxToRem(92px);
-    margin-bottom: pxToRem(92px);
+    margin-top: variables.pxToRem(92px);
+    margin-bottom: variables.pxToRem(92px);
   }
 
   .banner-404 {
@@ -101,14 +103,14 @@ useLpiHead(useRequestURL().toString(), title.value, title.value, imageFullUrl.va
     align-items: center;
     flex-grow: 1;
     flex-shrink: 1;
-    width: pxToRem(832px);
+    width: variables.pxToRem(832px);
 
     .title {
-      font-size: pxToRem(40px);
+      font-size: variables.pxToRem(40px);
       font-weight: 900;
-      color: $primary-dark;
-      line-height: $line-height-tight;
-      margin-bottom: pxToRem(28px);
+      color: variables.$primary-dark;
+      line-height: variables.$line-height-tight;
+      margin-bottom: variables.pxToRem(28px);
     }
 
     .notice {
@@ -116,41 +118,41 @@ useLpiHead(useRequestURL().toString(), title.value, title.value, imageFullUrl.va
 
       & + .notice {
         margin-top: 1em;
-        font-size: $font-size-m;
-        line-height: $line-height-tight;
-        margin-bottom: $space-l;
+        font-size: variables.$font-size-m;
+        line-height: variables.$line-height-tight;
+        margin-bottom: variables.$space-l;
       }
 
       a {
         font-weight: 700;
-        color: $primary-dark;
+        color: variables.$primary-dark;
         text-decoration: underline;
       }
     }
 
     .illustration {
-      margin: pxToRem(42px) pxToRem(62px) 0;
+      margin: variables.pxToRem(42px) variables.pxToRem(62px) 0;
       position: relative;
 
       img {
-        border-radius: pxToRem(16px);
+        border-radius: variables.pxToRem(16px);
       }
 
       .text {
         position: absolute;
-        left: pxToRem(88px);
-        right: pxToRem(88px);
-        bottom: pxToRem(57px);
-        font-size: pxToRem(40px);
+        left: variables.pxToRem(88px);
+        right: variables.pxToRem(88px);
+        bottom: variables.pxToRem(57px);
+        font-size: variables.pxToRem(40px);
         line-height: 0.75;
         text-align: center;
-        color: $primary;
+        color: variables.$primary;
         font-weight: 700;
         filter: drop-shadow(8px 0 0 #20393d) drop-shadow(-8px 0 0 #20393d)
           drop-shadow(0 8px 0 #20393d) drop-shadow(0 -8px 0 #20393d);
 
         &--connected {
-          bottom: pxToRem(313px);
+          bottom: variables.pxToRem(313px);
         }
       }
     }

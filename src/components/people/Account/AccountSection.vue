@@ -24,17 +24,19 @@ withDefaults(
 )
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .sub-section {
-  padding-top: $space-xl;
+  padding-top: variables.$space-xl;
 
   .title {
     font-weight: 700;
-    font-size: $font-size-l;
-    color: $black;
+    font-size: variables.$font-size-l;
+    color: variables.$black;
   }
 
   .notice {
-    margin: pxToRem(16px) 0;
+    margin: variables.pxToRem(16px) 0;
   }
 }
 </style>

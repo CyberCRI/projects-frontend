@@ -23,7 +23,9 @@ defineProps<{
 const { t } = useNuxtI18n()
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .title-block {
   padding-bottom: $space-m;
 

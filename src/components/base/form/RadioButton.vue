@@ -46,45 +46,47 @@ const toggle = () => {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .form-control {
-  font-size: $font-size-m;
-  color: $primary-dark;
+  font-size: variables.$font-size-m;
+  color: variables.$primary-dark;
   font-weight: 400;
-  line-height: $line-height-squashed;
+  line-height: variables.$line-height-squashed;
   display: inline-flex;
   align-items: center;
-  gap: $space-s;
+  gap: variables.$space-s;
   cursor: pointer;
 }
 
 .as-button {
   text-transform: capitalize;
-  border: $border-width-s solid $primary-dark;
-  border-radius: $border-radius-xs;
-  padding: $space-m $space-s;
-  margin-right: $space-m;
+  border: variables.$border-width-s solid variables.$primary-dark;
+  border-radius: variables.$border-radius-xs;
+  padding: variables.$space-m variables.$space-s;
+  margin-right: variables.$space-m;
 
   &:hover {
-    background-color: $primary-lighter;
+    background-color: variables.$primary-lighter;
   }
 
   &.is-checked {
-    background-color: $primary-dark;
-    color: $white;
+    background-color: variables.$primary-dark;
+    color: variables.$white;
     cursor: default;
   }
 }
 
 input[type='radio'] {
   appearance: none;
-  background-color: $white;
+  background-color: variables.$white;
   margin: 0;
   font: inherit;
-  width: pxToRem(20px);
-  height: pxToRem(20px);
-  border: $border-width-s solid $primary-dark;
-  border-radius: pxToRem(20px);
+  width: variables.pxToRem(20px);
+  height: variables.pxToRem(20px);
+  border: variables.$border-width-s solid variables.$primary-dark;
+  border-radius: variables.pxToRem(20px);
   transform: translateY(-0.075em);
   display: grid;
   place-content: center;
@@ -93,12 +95,12 @@ input[type='radio'] {
 
 input[type='radio']::before {
   content: '';
-  width: pxToRem(12px);
-  height: pxToRem(12px);
-  border-radius: pxToRem(12px);
+  width: variables.pxToRem(12px);
+  height: variables.pxToRem(12px);
+  border-radius: variables.pxToRem(12px);
   transform: translateZ(0) scale(0);
   transition: 120ms transform ease-in-out;
-  box-shadow: inset 1em 1em $primary-dark;
+  box-shadow: inset 1em 1em variables.$primary-dark;
 }
 
 input[type='radio']:checked::before {
@@ -106,13 +108,13 @@ input[type='radio']:checked::before {
 }
 
 input[type='radio']:disabled {
-  border: $border-width-s solid $mid-gray;
-  color: $mid-gray;
+  border: variables.$border-width-s solid variables.$mid-gray;
+  color: variables.$mid-gray;
   cursor: not-allowed;
 }
 
 .form-control--disabled {
-  color: $mid-gray;
+  color: variables.$mid-gray;
   cursor: not-allowed;
 }
 </style>

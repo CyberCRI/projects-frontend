@@ -52,10 +52,12 @@ const onClose = (snackbar) => toaster.deleteToast(snackbar.toast)
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .toast-list {
   position: fixed;
-  z-index: $zindex-toast;
-  top: calc($navbar-height + 10px);
+  z-index: variables.$zindex-toast;
+  top: calc(variables.$navbar-height + 10px);
   left: 0;
   width: 100%;
   display: flex;

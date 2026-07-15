@@ -31,14 +31,16 @@ const { skillLevels } = useSkillLevels()
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .container {
   display: inline-flex;
-  padding: $space-m calc($space-l / 1.5);
+  padding: variables.$space-m calc(variables.$space-l / 1.5);
   align-items: center;
 }
 
 .border {
-  border: $border-width-l solid $primary-dark;
+  border: variables.$border-width-l solid variables.$primary-dark;
   border-radius: 25px;
 }
 
@@ -46,18 +48,18 @@ const { skillLevels } = useSkillLevels()
   height: 10px;
   width: 10px;
   margin-right: 8px;
-  background-color: $white;
-  border: $border-width-m solid $primary-dark;
+  background-color: variables.$white;
+  border: variables.$border-width-m solid variables.$primary-dark;
   border-radius: 50%;
   display: inline-block;
 }
 
 .level-label {
-  padding-right: $space-m;
+  padding-right: variables.$space-m;
 }
 
 .step-completed {
-  background-color: $primary-dark;
+  background-color: variables.$primary-dark;
 }
 
 .step:last-child {

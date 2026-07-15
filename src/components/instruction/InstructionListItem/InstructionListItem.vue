@@ -47,7 +47,9 @@ const { canEditInstruction, canDeleteInstruction } = usePermissionInstruction(
 )
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .instruction-list-item {
   --instruction-dimension: 13rem;
 

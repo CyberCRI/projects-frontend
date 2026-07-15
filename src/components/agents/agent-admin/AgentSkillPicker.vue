@@ -50,6 +50,8 @@ const onChange = () => {
   </div>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .agent-skill-picker {
   border: 1px solid #ccc;
   border-radius: 4px;

@@ -162,6 +162,8 @@ const onConfirmDeleteEvent = () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .filter-list {
   display: flex;
   justify-content: center;
@@ -171,7 +173,7 @@ const onConfirmDeleteEvent = () => {
 .events-wrapper {
   display: flex;
   flex-flow: column nowrap;
-  gap: $space-l;
-  padding: $space-m;
+  gap: variables.$space-l;
+  padding: variables.$space-m;
 }
 </style>

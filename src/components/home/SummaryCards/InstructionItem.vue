@@ -55,7 +55,9 @@ const layoutComputed = (event) => {
   style.value = { height: event.height + 'px' }
 }
 </script>
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .instruction-item {
   --instruction-dimension: 15rem;
 

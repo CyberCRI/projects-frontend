@@ -321,6 +321,8 @@ const resetTime = () => {
 </template>
 
 <style lang="scss">
+@use '~/design/scss/variables';
+
 .custom-vue-picker {
   display: flex;
   justify-content: center;

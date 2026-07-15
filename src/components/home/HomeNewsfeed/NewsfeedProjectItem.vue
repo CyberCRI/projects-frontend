@@ -52,22 +52,24 @@ const purpose = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 $dimension: 120px;
 
 .home-project-item {
   display: grid;
-  border: $border-width-s solid var(--lighter-gray);
-  border-radius: $border-radius-s;
-  padding: $space-l;
+  border: variables.$border-width-s solid var(--lighter-gray);
+  border-radius: variables.$border-radius-s;
+  padding: variables.$space-l;
   min-height: $dimension;
-  column-gap: $space-l;
+  column-gap: variables.$space-l;
   grid-template-columns: $dimension auto;
   grid-template-rows: auto 1fr auto;
 
-  @media screen and (max-width: $min-tablet) {
+  @media screen and (max-width: variables.$min-tablet) {
     grid-template-columns: 1fr;
     grid-template-rows: repeat(4, auto);
-    row-gap: $space-l;
+    row-gap: variables.$space-l;
   }
 
   .project-img-container {
@@ -78,7 +80,7 @@ $dimension: 120px;
     aspect-ratio: 1;
     margin: 0 auto;
 
-    @media screen and (max-width: $min-tablet) {
+    @media screen and (max-width: variables.$min-tablet) {
       grid-column: 1;
       grid-row: 2;
       width: 200px; // see NewsfeedAnnouncementsItem.vue
@@ -91,7 +93,7 @@ $dimension: 120px;
       max-height: inherit;
       height: inherit;
       width: inherit;
-      border-radius: $border-radius-s;
+      border-radius: variables.$border-radius-s;
       border: 1px solid var(--lighter-gray);
     }
   }
@@ -99,13 +101,13 @@ $dimension: 120px;
 
 .project-title {
   display: block;
-  font-size: $font-size-l;
-  line-height: $line-height-tight;
-  margin-bottom: $space-s;
+  font-size: variables.$font-size-l;
+  line-height: variables.$line-height-tight;
+  margin-bottom: variables.$space-s;
   grid-column: 2;
   grid-row: 1;
 
-  @media screen and (max-width: $min-tablet) {
+  @media screen and (max-width: variables.$min-tablet) {
     grid-column: 1;
     grid-row: 1;
   }
@@ -115,7 +117,7 @@ $dimension: 120px;
   grid-column: 2;
   grid-row: 2;
 
-  @media screen and (max-width: $min-tablet) {
+  @media screen and (max-width: variables.$min-tablet) {
     grid-column: 1;
     grid-row: 3;
   }
@@ -132,7 +134,7 @@ $dimension: 120px;
   grid-column: 2;
   grid-row: 3;
 
-  @media screen and (max-width: $min-tablet) {
+  @media screen and (max-width: variables.$min-tablet) {
     grid-column: 1;
     grid-row: 4;
   }

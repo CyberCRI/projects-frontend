@@ -137,6 +137,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .form-control {
   display: flex;
   align-items: center;
@@ -154,7 +156,7 @@ export default {
 }
 
 .child-list-ctn {
-  margin-left: $space-l;
+  margin-left: variables.$space-l;
 }
 
 li {
@@ -180,18 +182,18 @@ input[type='radio'] {
 
   /* background-color only for content */
   background-clip: content-box;
-  border: 2px solid $primary-dark;
-  background-color: $white;
+  border: 2px solid variables.$primary-dark;
+  background-color: variables.$white;
   border-radius: 50%;
 
   &.disabled {
-    border-color: $lighter-gray;
+    border-color: variables.$lighter-gray;
   }
 }
 
 /* appearance for checked radiobutton */
 input[type='radio']:checked {
-  background-color: $primary-dark;
+  background-color: variables.$primary-dark;
 }
 
 .nested-list {
@@ -200,7 +202,7 @@ input[type='radio']:checked {
 }
 
 .icon-td {
-  width: pxToRem(25px);
+  width: variables.pxToRem(25px);
   padding: 7px;
 }
 
@@ -210,21 +212,21 @@ input[type='radio']:checked {
 }
 
 .name {
-  padding: $space-unit;
+  padding: variables.$space-unit;
   margin: 8px;
 }
 
 .searched-group {
-  background-color: $primary;
+  background-color: variables.$primary;
 }
 
 .has-children {
-  color: $primary-dark;
+  color: variables.$primary-dark;
   font-weight: 700;
 }
 
 .green-color {
-  fill: $primary-dark;
+  fill: variables.$primary-dark;
 }
 
 .clickable {
@@ -232,11 +234,11 @@ input[type='radio']:checked {
 }
 
 .green-text {
-  color: $primary-dark;
+  color: variables.$primary-dark;
 }
 
 .black-text {
-  color: $almost-black;
+  color: variables.$almost-black;
   font-weight: 400;
 }
 </style>

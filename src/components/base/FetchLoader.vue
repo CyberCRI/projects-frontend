@@ -131,6 +131,8 @@ watch(
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .loading {
   font-style: italic;
   opacity: 0.4;

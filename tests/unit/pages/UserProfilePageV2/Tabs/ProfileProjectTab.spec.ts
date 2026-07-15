@@ -10,7 +10,7 @@ import pinia from '~/stores'
 
 import useProjectsStore from '~/stores/useProjects'
 
-import { OrganizationOutput } from 'shared-projects-frontend/models'
+import type { OrganizationOutput } from 'shared-projects-frontend/models'
 
 vi.mock('shared-projects-frontend/apis', () => ({
   getUserFollows: vi.fn().mockResolvedValue({ results: [] }),

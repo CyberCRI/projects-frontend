@@ -60,6 +60,8 @@ const save = async () => {
 defineExpose({ save })
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .loader {
   flex-grow: 1;
   display: flex;

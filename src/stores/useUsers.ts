@@ -272,28 +272,18 @@ const useUsersStore = defineStore('users', () => {
 
   async function getNotifications(id) {
     // TODO: should be getNotificationsSetting
-    try {
-      const result = await getUserNotificationSettings(id)
-
-      notificationsSettings.value = result
-
-      return result
-    } catch (err) {
-      throw new Error(err)
-    }
+    const result = await getUserNotificationSettings(id)
+    notificationsSettings.value = result
+    return result
   }
 
   async function patchNotifications(userId: UserSlugOrId, body: NotificationSettingsForm) {
     // TODO: should be patchNotificationsSetting
-    try {
-      const result = await patchUserNotificationSettings(userId, body)
+    const result = await patchUserNotificationSettings(userId, body)
 
-      notificationsSettings.value = result
+    notificationsSettings.value = result
 
-      return result
-    } catch (err) {
-      throw new Error(err)
-    }
+    return result
   }
 
   async function fetchFollowedCategories() {

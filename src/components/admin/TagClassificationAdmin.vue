@@ -291,8 +291,10 @@ watch(() => [props.classification, search.value], getTags, { immediate: true })
   </div>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .classification-title {
-  font-size: $font-size-l;
+  font-size: variables.$font-size-l;
   margin-bottom: 1rem;
   text-align: center;
   justify-content: center;
@@ -332,7 +334,7 @@ strong {
 
   thead,
   tbody tr {
-    border-bottom: $border-width-s solid $mid-gray;
+    border-bottom: variables.$border-width-s solid variables.$mid-gray;
   }
 
   th {
@@ -342,7 +344,7 @@ strong {
 
   td,
   th {
-    padding: $space-m;
+    padding: variables.$space-m;
   }
 
   td.loader-td {
@@ -351,7 +353,7 @@ strong {
 
   .actions {
     display: flex;
-    gap: $space-s;
+    gap: variables.$space-s;
   }
 }
 

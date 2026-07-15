@@ -70,7 +70,8 @@ onMounted(() => {
 })
 </script>
 <style lang="scss" scoped>
-@import '~/design/scss/skeletons';
+@use '~/design/scss/variables';
+@use '~/design/scss/skeletons';
 
 .cropped-image {
   // higher specificity to override BasicCard styles
@@ -87,7 +88,7 @@ onMounted(() => {
     width: 100%;
     object-fit: cover;
     object-position: center;
-    background-color: $white; // request of Wien University for transparent images
+    background-color: variables.$white; // request of Wien University for transparent images
     flex-grow: 1;
     flex-basis: 0; // so image take minimum space possible to cover conbtainer
   }

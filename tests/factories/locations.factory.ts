@@ -1,4 +1,4 @@
-import { LocationModel, LocationInput } from 'shared-projects-frontend/models'
+import type { LocationModel, LocationInput } from 'shared-projects-frontend/models'
 import { createFactory } from 'faker-create-factory'
 import BaseFactory from './base.factory'
 

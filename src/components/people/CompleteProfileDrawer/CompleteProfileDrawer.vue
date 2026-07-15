@@ -137,6 +137,8 @@ const save = async () => {
 }
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 iframe {
   width: 100%;
 
@@ -163,35 +165,35 @@ iframe {
 }
 
 .progression {
-  color: $primary-dark;
-  font-size: $font-size-m;
+  color: variables.$primary-dark;
+  font-size: variables.$font-size-m;
   margin-bottom: 1rem;
   font-weight: 700;
 }
 
 .title {
-  font-size: $font-size-5xl;
-  line-height: $line-height-squashed;
-  margin-bottom: pxToRem(22px);
+  font-size: variables.$font-size-5xl;
+  line-height: variables.$line-height-squashed;
+  margin-bottom: variables.pxToRem(22px);
 }
 
 .notice {
-  font-size: $font-size-m;
-  margin-bottom: pxToRem(48px);
+  font-size: variables.$font-size-m;
+  margin-bottom: variables.pxToRem(48px);
 }
 
 .link {
-  color: $primary-dark;
+  color: variables.$primary-dark;
   text-decoration: underline;
   font-weight: 700;
 }
 
 footer {
-  border-top: $border-width-m solid $lighter-gray;
+  border-top: variables.$border-width-m solid variables.$lighter-gray;
   display: flex;
   justify-content: center;
   gap: 1rem;
-  padding: pxToRem(28px) 0;
-  margin-top: pxToRem(74px);
+  padding: variables.pxToRem(28px) 0;
+  margin-top: variables.pxToRem(74px);
 }
 </style>

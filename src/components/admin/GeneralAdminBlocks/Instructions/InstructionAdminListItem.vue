@@ -42,6 +42,8 @@ const instructionText = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .instruction-excerpt-wrapper {
   position: relative;
   padding-right: 1.4rem;

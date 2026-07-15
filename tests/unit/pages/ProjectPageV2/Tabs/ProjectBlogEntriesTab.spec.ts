@@ -5,8 +5,8 @@ import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
 import BlogEntryFactory from '~~/tests/factories/blog-entry.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
-import { describe, expect, it, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
+import { describe, expect, it } from 'vitest'
 
 describe('ProjectBlogEntriesTab.vue', () => {
   it('should render component', async () => {

@@ -21,27 +21,29 @@ defineProps<{
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .page-container {
   width: 100%;
-  max-width: pxToRem(532px);
-  margin: $navbar-height auto 0 auto;
-  padding: 0 $space-l;
+  max-width: variables.pxToRem(532px);
+  margin: variables.$navbar-height auto 0 auto;
+  padding: 0 variables.$space-l;
   box-sizing: border-box;
 }
 
 .header {
-  margin-top: pxToRem(110px);
-  margin-bottom: $space-xl;
+  margin-top: variables.pxToRem(110px);
+  margin-bottom: variables.$space-xl;
 
   h1 {
-    font-size: $font-size-5xl;
+    font-size: variables.$font-size-5xl;
     font-weight: 700;
     text-align: center;
   }
 
   p {
-    font-size: $font-size-m;
-    margin: $space-xl 0;
+    font-size: variables.$font-size-m;
+    margin: variables.$space-xl 0;
   }
 }
 </style>

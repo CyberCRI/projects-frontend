@@ -284,6 +284,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 strong {
   font-weight: bold;
 }
@@ -293,20 +295,20 @@ strong {
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  margin-block: $space-l;
+  margin-block: variables.$space-l;
 }
 
 .title {
   text-transform: uppercase;
   font-weight: bold;
-  color: $primary-dark;
-  margin-bottom: $space-xl;
-  font-size: $font-size-l;
+  color: variables.$primary-dark;
+  margin-bottom: variables.$space-xl;
+  font-size: variables.$font-size-l;
 }
 
 .notice {
-  margin-bottom: $space-l;
-  font-size: $font-size-s;
+  margin-bottom: variables.$space-l;
+  font-size: variables.$font-size-s;
 }
 
 .table {
@@ -316,7 +318,7 @@ strong {
 
   thead,
   tbody tr {
-    border-bottom: $border-width-s solid $mid-gray;
+    border-bottom: variables.$border-width-s solid variables.$mid-gray;
   }
 
   th {
@@ -326,7 +328,7 @@ strong {
 
   td,
   th {
-    padding: $space-m;
+    padding: variables.$space-m;
   }
 
   td.loader-td {
@@ -335,7 +337,7 @@ strong {
 
   .actions {
     display: flex;
-    gap: $space-s;
+    gap: variables.$space-s;
   }
 }
 </style>

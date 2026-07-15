@@ -219,18 +219,20 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .title {
   font-style: normal;
   font-weight: 700;
-  font-size: $font-size-5xl;
-  line-height: $line-height-tight;
+  font-size: variables.$font-size-5xl;
+  line-height: variables.$line-height-tight;
   text-align: center;
-  margin-bottom: $layout-size-l;
+  margin-bottom: variables.$layout-size-l;
 }
 
 .intro {
   display: flex;
-  gap: $space-l;
+  gap: variables.$space-l;
 
   .action {
     flex-grow: 1;
@@ -238,7 +240,7 @@ export default {
 }
 
 .list {
-  margin-top: $space-2xl;
+  margin-top: variables.$space-2xl;
 }
 
 .copy-link {
@@ -253,10 +255,10 @@ table {
   overflow: hidden;
 
   thead {
-    background-color: $primary-lighter;
+    background-color: variables.$primary-lighter;
 
     tr th {
-      border-bottom: 1px solid $primary;
+      border-bottom: 1px solid variables.$primary;
     }
   }
 
@@ -264,7 +266,7 @@ table {
     tr {
       &:not(:last-child) {
         td {
-          border-bottom: 1px solid $primary;
+          border-bottom: 1px solid variables.$primary;
         }
       }
     }
@@ -272,14 +274,14 @@ table {
 
   td,
   th {
-    padding: $space-unit;
+    padding: variables.$space-unit;
     vertical-align: middle;
     text-align: left;
     white-space: nowrap;
   }
 
   .loader {
-    padding: $space-2xl;
+    padding: variables.$space-2xl;
     text-align: center;
 
     svg {
@@ -294,13 +296,13 @@ table {
 }
 
 .sort-icon {
-  fill: $black;
-  width: $layout-size-m;
+  fill: variables.$black;
+  width: variables.$layout-size-m;
   display: inline-block;
   cursor: pointer;
 
   &.active {
-    fill: $primary;
+    fill: variables.$primary;
   }
 }
 </style>

@@ -46,6 +46,8 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .suggestion-info {
   text-align: center;
   display: flex;

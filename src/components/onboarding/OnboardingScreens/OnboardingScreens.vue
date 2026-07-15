@@ -146,13 +146,15 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .loader {
   position: fixed;
   inset: 0;
   z-index: 9999;
   width: 100vw;
   height: 100vh;
-  background-color: $modal-background;
+  background-color: variables.$modal-background;
   display: flex;
   justify-content: center;
   align-items: center;

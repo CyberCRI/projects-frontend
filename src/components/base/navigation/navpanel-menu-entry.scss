@@ -1,6 +1,8 @@
+// @use "~/design/scss/variables";
+
 .navpanel-menu-entry {
   cursor: pointer;
-  border-radius: $border-radius-s;
+  border-radius: variables.$border-radius-s;
 
   &:hover,
   &.active {

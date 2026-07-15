@@ -18,7 +18,9 @@ defineProps<{
 }>()
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .notice {
-  padding: 0 $space-l;
+  padding: 0 variables.$space-l;
 }
 </style>

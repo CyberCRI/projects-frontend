@@ -41,7 +41,9 @@ const showFull = ref(false)
 const isClamped = ref(false)
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .revealable-clamped {
   width: 100%;
   display: flex;
@@ -51,12 +53,12 @@ const isClamped = ref(false)
 }
 
 .revealable-full {
-  $pad: $space-m;
+  $pad: variables.$space-m;
 
   position: absolute;
   top: -$pad;
   left: -$pad;
-  background-color: $white;
+  background-color: variables.$white;
   box-shadow: 0 0 6px rgb(0 0 0 / 15%);
   border-radius: 16px;
   padding: $pad;
@@ -69,11 +71,11 @@ const isClamped = ref(false)
 
 .icon {
   width: 24px;
-  fill: $white;
+  fill: variables.$white;
   cursor: pointer;
-  border: 1px solid $primary-dark;
+  border: 1px solid variables.$primary-dark;
   border-radius: 50%;
-  background-color: $primary-dark;
+  background-color: variables.$primary-dark;
 }
 
 .icon-open {

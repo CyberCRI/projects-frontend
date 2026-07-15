@@ -247,21 +247,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .section {
-  margin-bottom: $space-m;
+  margin-bottom: variables.$space-m;
 }
 
 .notice {
-  font-size: $font-size-s;
-  margin-bottom: $space-s;
+  font-size: variables.$font-size-s;
+  margin-bottom: variables.$space-s;
 }
 
 .notice-suggested {
-  margin-top: $space-m;
+  margin-top: variables.$space-m;
 }
 
 .current-tags {
-  margin-top: pxToRem(16px);
+  margin-top: variables.pxToRem(16px);
 }
 
 .input-ctn {
@@ -281,7 +283,7 @@ export default {
 }
 
 .classification-description {
-  margin-top: $space-m;
-  margin-left: $space-m;
+  margin-top: variables.$space-m;
+  margin-left: variables.$space-m;
 }
 </style>

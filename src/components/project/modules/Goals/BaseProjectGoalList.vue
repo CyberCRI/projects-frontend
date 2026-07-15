@@ -174,6 +174,8 @@ const onUpdateSdgs = (sdgs: number[]) => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .list-container.goal-editable {
   gap: 1.5rem;
   margin-top: 1.5rem;

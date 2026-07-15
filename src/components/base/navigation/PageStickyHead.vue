@@ -46,7 +46,9 @@ onBeforeUnmount(() => {
   window?.removeEventListener('scroll', checkIfSummaryIsSticked)
 })
 </script>
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 aside {
   padding: $space-m 0;
   display: flex;

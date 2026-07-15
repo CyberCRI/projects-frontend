@@ -390,6 +390,8 @@ useLpiHead2({
   </div>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .create-group {
   width: 100%;
   box-sizing: border-box;
@@ -399,30 +401,30 @@ useLpiHead2({
 }
 
 .header {
-  margin-top: pxToRem(110px);
-  margin-bottom: $space-xl;
+  margin-top: variables.pxToRem(110px);
+  margin-bottom: variables.$space-xl;
 
   h1 {
-    font-size: $font-size-5xl;
+    font-size: variables.$font-size-5xl;
     font-weight: 700;
     text-align: center;
   }
 
   p {
-    font-size: $font-size-m;
-    margin: $space-xl 0;
+    font-size: variables.$font-size-m;
+    margin: variables.$space-xl 0;
   }
 
   .help-link {
-    color: $primary-dark;
+    color: variables.$primary-dark;
   }
 }
 
 .actions {
   display: flex;
   justify-content: center;
-  gap: $space-xl;
-  margin-top: $space-m;
-  margin-bottom: $space-xl;
+  gap: variables.$space-xl;
+  margin-top: variables.$space-m;
+  margin-bottom: variables.$space-xl;
 }
 </style>

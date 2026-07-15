@@ -185,22 +185,24 @@ const confirmCategory = () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .title-button-ctn {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: $space-l;
+  margin-bottom: variables.$space-l;
 
   .title {
     margin: unset;
-    font-size: $font-size-l;
+    font-size: variables.$font-size-l;
   }
 }
 
 .tag-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: $space-s;
+  gap: variables.$space-s;
 }
 
 .block-container {
@@ -211,7 +213,7 @@ const confirmCategory = () => {
   text-align: center;
   margin-top: 2rem;
   font-size: 2.5rem;
-  color: $primary-dark;
+  color: variables.$primary-dark;
 
   &::before,
   &::after {
@@ -220,7 +222,7 @@ const confirmCategory = () => {
     display: inline-block;
     width: 3rem;
     height: 0.2rem;
-    background-color: $primary-dark;
+    background-color: variables.$primary-dark;
     border-radius: 40px;
   }
 }

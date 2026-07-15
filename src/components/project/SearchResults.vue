@@ -177,9 +177,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .project-list-pagination {
-  padding-top: $space-l;
-  padding-bottom: $space-2xl;
+  padding-top: variables.$space-l;
+  padding-bottom: variables.$space-2xl;
   display: flex;
   justify-content: center;
   align-items: center;

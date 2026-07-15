@@ -1,13 +1,13 @@
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
 import ProjectResourcesTab from '@/pages/ProjectPageV2/Tabs/Resources/ProjectResourcesTab.vue'
-import { ProjectFactory, TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import { AttachmentLinkFactory } from '~~/tests/factories/attachment-link.factory'
 import { AttachmentFileFactory } from '~~/tests/factories/attachment-file.factory'
+import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
-import { describe, expect, it, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
+import { describe, expect, it } from 'vitest'
 
 describe('ProjectResourcesTab.vue', () => {
   it('should render component', async () => {

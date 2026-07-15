@@ -140,7 +140,9 @@ const saveClassification = async () => {
     <TagClassificationAdmin v-if="classification" :classification="classification" />
   </BaseDrawer>
 </template>
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .form-section + .form-section {
   margin-top: 1rem;
 }

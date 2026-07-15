@@ -27,6 +27,8 @@ defineProps<{
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .project-list {
   display: flex;
   flex-direction: column;

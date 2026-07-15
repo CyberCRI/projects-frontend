@@ -52,14 +52,16 @@ const sdgsArray = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .sdg-ctn {
   display: flex;
   flex-wrap: wrap;
-  gap: $space-s;
+  gap: variables.$space-s;
 
   .sdg-img {
-    width: pxToRem(40px);
-    height: pxToRem(40px);
+    width: variables.pxToRem(40px);
+    height: variables.pxToRem(40px);
     transition: all 0.2s ease-in-out;
     transform: translateZ(0);
 

@@ -182,8 +182,10 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .notification-tab {
-  padding: $space-l;
+  padding: variables.$space-l;
   display: flex;
   flex-direction: column;
 
@@ -196,28 +198,28 @@ onMounted(async () => {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: $space-xl;
+    margin-bottom: variables.$space-xl;
 
     .labels {
       display: flex;
       flex-direction: column;
-      margin-bottom: $layout-size-m;
+      margin-bottom: variables.$layout-size-m;
 
       .sub-label {
-        font-size: $font-size-s;
+        font-size: variables.$font-size-s;
       }
 
       .label {
-        font-size: $font-size-m;
-        color: $primary-dark;
+        font-size: variables.$font-size-m;
+        color: variables.$primary-dark;
       }
     }
   }
 }
 
-@media (min-width: $min-tablet) {
+@media (min-width: variables.$min-tablet) {
   .notification-tab {
-    padding: $space-l pxToRem(100px);
+    padding: variables.$space-l variables.pxToRem(100px);
 
     .notification-ctn {
       flex-direction: row;

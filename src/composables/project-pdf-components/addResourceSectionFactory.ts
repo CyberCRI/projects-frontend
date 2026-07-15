@@ -129,9 +129,11 @@ export default async function addResourceSectionFactory(
     this.content.push(/* HTML */ `
       <div class="resource-entries-ctn">
         <h3 class="resource-title">
-          ${type === 'file'
-            ? t('project.files', resources.length)
-            : t('resource.web', resources.length)}
+          ${
+            type === 'file'
+              ? t('project.files', resources.length)
+              : t('resource.web', resources.length)
+          }
         </h3>
         <div>${resourceList}</div>
       </div>

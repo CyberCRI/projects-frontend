@@ -89,7 +89,9 @@ const patchUser = async (choice) => {
   status.value = ''
 }
 </script>
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .portal-logo-ctn {
   width: 16rem;
   height: 16rem;
@@ -103,19 +105,19 @@ const patchUser = async (choice) => {
 .welcome-title {
   text-align: center;
   font-weight: 700;
-  font-size: $font-size-3xl;
-  line-height: $line-height-tight;
-  margin-bottom: pxToRem(56px);
+  font-size: variables.$font-size-3xl;
+  line-height: variables.$line-height-tight;
+  margin-bottom: pxtorem(56px);
 }
 
 .notice {
-  font-size: $font-size-m;
+  font-size: variables.$font-size-m;
 }
 
 .footer {
   width: 100%;
   display: flex;
   justify-content: center;
-  gap: $space-l;
+  gap: variables.$space-l;
 }
 </style>

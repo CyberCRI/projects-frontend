@@ -4,7 +4,7 @@ import { getOrgsFromRoles } from '~/functs/rolesUtils'
 import { setActivePinia, createPinia } from 'pinia'
 import * as auth from '~/api/auth/auth.service'
 import useUsersStore from '~/stores/useUsers'
-import waitForExpect from 'wait-for-expect'
+
 import analytics from '~/analytics'
 
 import { flushPromises } from '@vue/test-utils'
@@ -335,7 +335,7 @@ describe('Store module | users | actions', () => {
     await flushPromises()
     expect(removeApiCookie).toHaveBeenCalled()
     expect(logoutFromKeycloakMock).toHaveBeenCalled()
-    waitForExpect(() => expect(usersStore.resetUser).toHaveBeenCalledTimes(1))
+    expect.poll(() => expect(usersStore.resetUser).toHaveBeenCalledTimes(1))
   })
 
   it('logIn', async () => {
@@ -453,7 +453,7 @@ describe('Store module | users | actions', () => {
     const usersStore = useUsersStore(pinia)
     vi.spyOn(usersStore, 'setUser')
     await usersStore.doRefreshToken()
-    waitForExpect(() =>
+    expect.poll(() =>
       expect(usersStore.setUser).toHaveBeenNthCalledWith(1, {
         refreshToken: refresh_token,
         refreshTokenExp: 123456,

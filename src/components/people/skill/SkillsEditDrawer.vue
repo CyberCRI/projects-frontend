@@ -236,6 +236,8 @@ const setTalentLevel = (talent, level) => {
 }
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .no-shrink {
   flex-shrink: 0;
 }
@@ -246,19 +248,19 @@ const setTalentLevel = (talent, level) => {
   flex-grow: 1;
 
   .notice {
-    font-size: $font-size-m;
-    margin-bottom: $space-s;
+    font-size: variables.$font-size-m;
+    margin-bottom: variables.$space-s;
   }
 
   .selected-list {
-    margin-top: $space-m;
+    margin-top: variables.$space-m;
     display: flex;
     flex-flow: row wrap;
-    gap: $space-m;
+    gap: variables.$space-m;
   }
 
   .search-field {
-    margin-top: $space-m;
+    margin-top: variables.$space-m;
     display: flex;
     justify-content: stretch;
     align-items: center;
@@ -278,48 +280,48 @@ const setTalentLevel = (talent, level) => {
   }
 
   .search-results {
-    margin-top: $space-42;
+    margin-top: variables.$space-42;
     display: flex;
     flex-flow: row wrap;
-    gap: $space-s;
-    background-color: $primary-lighter;
-    border-radius: $space-s;
-    padding: $space-s;
+    gap: variables.$space-s;
+    background-color: variables.$primary-lighter;
+    border-radius: variables.$space-s;
+    padding: variables.$space-s;
   }
 
   .loader {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: $space-xl;
+    padding: variables.$space-xl;
   }
 }
 
 .edit-skill-mode {
   .notice {
-    margin-top: $space-m;
+    margin-top: variables.$space-m;
   }
 
   .help-link {
-    color: $primary-dark;
+    color: variables.$primary-dark;
     text-decoration: underline;
     font-weight: 700;
   }
 
   .help-icon {
-    width: $layout-size-l;
-    height: $layout-size-l;
-    fill: $primary-dark;
+    width: variables.$layout-size-l;
+    height: variables.$layout-size-l;
+    fill: variables.$primary-dark;
     display: inline-block;
     vertical-align: middle;
   }
 }
 
 .section + .section {
-  margin-top: $space-l;
+  margin-top: variables.$space-l;
 }
 
 .level-editor-list {
-  margin-top: $space-xl;
+  margin-top: variables.$space-xl;
 }
 </style>

@@ -81,13 +81,15 @@ withDefaults(
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .icon-container {
   display: flex;
   align-items: center;
   justify-content: start;
   gap: 0.4rem;
   font-weight: 700;
-  color: $primary;
+  color: variables.$primary;
   text-transform: capitalize;
   letter-spacing: -0.1;
 }
@@ -106,7 +108,7 @@ withDefaults(
 
 // if is a link, add correct color and underline
 a.profile-document-contributor {
-  color: $primary-dark;
+  color: variables.$primary-dark;
   text-decoration: underline;
 }
 

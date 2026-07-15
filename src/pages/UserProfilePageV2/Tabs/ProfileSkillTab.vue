@@ -93,7 +93,9 @@ const noSkillLabel = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .section + .section {
-  margin-top: $space-xl;
+  margin-top: variables.$space-xl;
 }
 </style>

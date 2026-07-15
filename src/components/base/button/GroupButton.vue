@@ -148,6 +148,8 @@ watch(model, () => setSliderStyle(), { immediate: true })
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 /* This will be moved to the reset file */
 *,
 *::before,
@@ -161,22 +163,22 @@ watch(model, () => setSliderStyle(), { immediate: true })
   font-size: inherit;
   font-weight: bold;
   transition: 0.15s color ease-in-out;
-  line-height: $line-height-squashed;
+  line-height: variables.$line-height-squashed;
 }
 
 .label-selected {
-  color: $white;
+  color: variables.$white;
 }
 
 .icon {
   width: 20px;
   height: 18px;
-  fill: $primary-dark;
+  fill: variables.$primary-dark;
   transition: 0.15s fill ease-in-out;
 }
 
 .icon-selected {
-  fill: $white;
+  fill: variables.$white;
 }
 
 .group-button {
@@ -184,12 +186,12 @@ watch(model, () => setSliderStyle(), { immediate: true })
   display: inline-flex;
   vertical-align: middle;
   overflow: hidden;
-  box-shadow: 0 0 0 $border-width-s var(--primary-dark) inset;
-  border-radius: $border-radius-l;
+  box-shadow: 0 0 0 variables.$border-width-s var(--primary-dark) inset;
+  border-radius: variables.$border-radius-l;
   z-index: 1;
 
   &.is-danger {
-    box-shadow: 0 0 0 $border-width-s var(--salmon) inset;
+    box-shadow: 0 0 0 variables.$border-width-s var(--salmon) inset;
 
     .button-container.selected {
       background: var(--salmon);
@@ -228,8 +230,8 @@ watch(model, () => setSliderStyle(), { immediate: true })
 .button-container {
   display: flex;
   align-items: center;
-  padding: $space-s $space-l;
-  font-size: $font-size-m;
+  padding: variables.$space-s variables.$space-l;
+  font-size: variables.$font-size-m;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.15s ease-in-out;
@@ -243,7 +245,7 @@ watch(model, () => setSliderStyle(), { immediate: true })
   }
 
   *:not(:last-child) {
-    margin-right: $space-s;
+    margin-right: variables.$space-s;
   }
 }
 
@@ -254,20 +256,20 @@ watch(model, () => setSliderStyle(), { immediate: true })
   transition: all 0.15s ease-in-out;
   background: var(--primary-dark);
   z-index: -1;
-  border-radius: $border-radius-l;
-  border: $border-width-s solid var(--primary-dark);
+  border-radius: variables.$border-radius-l;
+  border: variables.$border-width-s solid var(--primary-dark);
 }
 
 // TODO: remove "s-" in the following classes when we don't import Buefy style anymore
 .s-small {
-  font-size: $font-size-xs;
-  padding: $space-s 14px;
+  font-size: variables.$font-size-xs;
+  padding: variables.$space-s 14px;
   height: 24px;
 }
 
 .s-extra-small {
-  font-size: $font-size-2xs;
-  padding: $space-2xs $space-m;
+  font-size: variables.$font-size-2xs;
+  padding: variables.$space-2xs variables.$space-m;
   height: 13px;
 }
 </style>

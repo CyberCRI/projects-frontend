@@ -37,6 +37,8 @@ defineEmits<{
 </script>
 
 <style lang="scss">
+@use '~/design/scss/variables';
+
 .gallery-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -45,14 +47,14 @@ defineEmits<{
   height: 100%;
 
   > * {
-    height: pxToRem(130px);
+    height: variables.pxToRem(130px);
   }
 
-  @media screen and (min-width: $min-desktop) {
+  @media screen and (min-width: variables.$min-desktop) {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 
-  @media screen and (max-width: $min-tablet) {
+  @media screen and (max-width: variables.$min-tablet) {
     grid-template-columns: 1fr 1fr;
   }
 }

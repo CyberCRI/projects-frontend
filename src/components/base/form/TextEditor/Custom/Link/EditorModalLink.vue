@@ -110,6 +110,8 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .button-delete {
   color: var(--white);
   background: var(--salmon);

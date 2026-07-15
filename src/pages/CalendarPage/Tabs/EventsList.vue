@@ -55,6 +55,8 @@ const eventsGrouped = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .no-event {
   padding: 3rem 0;
 }

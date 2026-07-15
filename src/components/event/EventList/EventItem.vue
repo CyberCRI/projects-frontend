@@ -178,10 +178,12 @@ const editEvent = (event) => emit('edit', event)
 const locationEvent = (event) => emit('location', event)
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .event {
   display: grid;
   grid-template-columns: auto 4fr auto;
-  gap: $space-l;
+  gap: variables.$space-l;
   position: relative;
 
   &.editable {
@@ -196,7 +198,7 @@ const locationEvent = (event) => emit('location', event)
     justify-content: center;
     padding: 0.5rem;
     color: black;
-    border-radius: $border-radius-m;
+    border-radius: variables.$border-radius-m;
     height: fit-content;
 
     .month-day {
@@ -220,8 +222,8 @@ const locationEvent = (event) => emit('location', event)
   vertical-align: middle;
   padding: 0.4rem;
   fill: var(--primary);
-  width: pxToRem(24px);
-  height: pxToRem(24px);
+  width: variables.pxToRem(24px);
+  height: variables.pxToRem(24px);
 }
 
 .title {

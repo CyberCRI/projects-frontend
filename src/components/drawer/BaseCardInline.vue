@@ -82,20 +82,22 @@ withDefaults(
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .card-small {
   display: flex;
   align-items: center;
-  padding: $space-s;
+  padding: variables.$space-s;
   box-sizing: border-box;
-  border: $border-width-s solid var(--primary);
-  border-radius: $border-radius-m;
-  background-color: $white;
-  height: pxToRem(70px);
+  border: variables.$border-width-s solid var(--primary);
+  border-radius: variables.$border-radius-m;
+  background-color: variables.$white;
+  height: variables.pxToRem(70px);
   color: var(--black);
   position: relative;
   justify-content: space-between;
   cursor: pointer;
-  width: pxToRem(240px);
+  width: variables.pxToRem(240px);
 
   &.minimal {
     height: fit-content;
@@ -120,13 +122,13 @@ withDefaults(
     border-radius: 50%;
     background-size: cover;
     background-position: top center;
-    width: pxToRem(48px);
-    height: pxToRem(48px);
+    width: variables.pxToRem(48px);
+    height: variables.pxToRem(48px);
     flex-shrink: 0;
   }
 
   .card-info {
-    margin-left: $space-m;
+    margin-left: variables.$space-m;
     flex-grow: 1;
 
     &.minimal {
@@ -134,11 +136,12 @@ withDefaults(
     }
 
     .title {
-      font-size: $font-size-xs;
+      font-size: variables.$font-size-xs;
       font-weight: 400;
       overflow: hidden;
       text-overflow: ellipsis;
-      word-break: break-word;
+      word-break: normal;
+      overflow-wrap: break-word;
       display: -webkit-box;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 1;
@@ -152,34 +155,34 @@ withDefaults(
 
   .icon {
     fill: var(--primary-dark);
-    width: pxToRem(20px);
-    height: pxToRem(20px);
+    width: variables.pxToRem(20px);
+    height: variables.pxToRem(20px);
     position: absolute;
     right: 4px;
     top: 4px;
-    border-radius: $border-radius-50;
+    border-radius: variables.$border-radius-50;
     cursor: pointer;
 
     &--selected {
       background: var(--primary-dark);
-      fill: $white;
+      fill: variables.$white;
     }
   }
 
   .name {
     font-weight: 700;
-    font-size: $font-size-s;
-    margin-bottom: $space-s;
+    font-size: variables.$font-size-s;
+    margin-bottom: variables.$space-s;
   }
 
   .role {
     background: var(--primary);
-    color: $black;
-    font-size: $font-size-s;
+    color: variables.$black;
+    font-size: variables.$font-size-s;
     font-weight: 700;
     display: inline-block;
-    padding: $space-2xs $space-xs;
-    margin-bottom: $space-m;
+    padding: variables.$space-2xs variables.$space-xs;
+    margin-bottom: variables.$space-m;
   }
 }
 

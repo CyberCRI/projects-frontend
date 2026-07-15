@@ -68,53 +68,57 @@ withDefaults(
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .tooltip {
-  --popper-theme-background-color: #{$primary-lighter};
+  --popper-theme-background-color: #{variables.$primary-lighter};
   --popper-theme-border-width: 2px;
   --popper-theme-border-style: solid;
-  --popper-theme-border-radius: #{$border-radius-m};
-  --popper-theme-border-color: #{$primary-dark};
-  --popper-theme-text-color: #{$primary-dark};
+  --popper-theme-border-radius: #{variables.$border-radius-m};
+  --popper-theme-border-color: #{variables.$primary-dark};
+  --popper-theme-text-color: #{variables.$primary-dark};
   --popper-theme-box-shadow: none;
   --popper-theme-background-color-hover: var(--popper-theme-background-color);
-  --popper-theme-padding: #{$space-s};
+  --popper-theme-padding: #{variables.$space-s};
 
   .popper {
-    font-size: $font-size-xs;
+    font-size: variables.$font-size-xs;
     font-weight: 700;
   }
 
   &.secondary {
-    --popper-theme-background-color: #{$primary-dark};
-    --popper-theme-border-color: #{$primary-dark};
-    --popper-theme-text-color: #{$white};
+    --popper-theme-background-color: #{variables.$primary-dark};
+    --popper-theme-border-color: #{variables.$primary-dark};
+    --popper-theme-text-color: #{variables.$white};
   }
 
   &.shadowed {
     --popper-theme-box-shadow: 0 2px 5px rgb(190 190 190 / 50%);
-    --popper-theme-border-color: #{$primary};
-    --popper-theme-background-color: #{$white};
-    --popper-theme-padding: #{$space-m};
+    --popper-theme-border-color: #{variables.$primary};
+    --popper-theme-background-color: #{variables.$white};
+    --popper-theme-padding: #{variables.$space-m};
   }
 }
 </style>
 
 <style lang="scss">
+@use '~/design/scss/variables';
+
 .tooltip {
   .popper[x-placement^='top'] .popper__arrow {
-    border-color: $primary-dark transparent transparent transparent;
+    border-color: variables.$primary-dark transparent transparent transparent;
   }
 
   .popper[x-placement^='right'] .popper__arrow {
-    border-color: transparent $primary-dark transparent transparent;
+    border-color: transparent variables.$primary-dark transparent transparent;
   }
 
   .popper[x-placement^='bottom'] .popper__arrow {
-    border-color: transparent transparent $primary-dark;
+    border-color: transparent transparent variables.$primary-dark;
   }
 
   .popper[x-placement^='left'] .popper__arrow {
-    border-color: transparent transparent transparent $primary-dark;
+    border-color: transparent transparent transparent variables.$primary-dark;
   }
 }
 </style>

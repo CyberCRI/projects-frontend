@@ -29,6 +29,8 @@ useLpiHead2({
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .create-event-button {
   align-self: flex-end;
 }

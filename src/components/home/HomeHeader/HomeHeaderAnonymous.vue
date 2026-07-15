@@ -102,16 +102,18 @@ const descriptionLayoutComputed = (event) => {
 const logInUser = () => goToKeycloakLoginPage()
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .introduction {
-  margin-top: $space-3xl;
-  margin-bottom: $space-2xl;
+  margin-top: variables.$space-3xl;
+  margin-bottom: variables.$space-2xl;
 
   .mobile-not-connected-main-title {
-    font-size: $font-size-xl;
+    font-size: variables.$font-size-xl;
     text-align: center;
-    margin-bottom: $space-m;
+    margin-bottom: variables.$space-m;
 
-    @media screen and (min-width: $min-tablet) {
+    @media screen and (min-width: variables.$min-tablet) {
       display: none;
     }
   }
@@ -119,16 +121,16 @@ const logInUser = () => goToKeycloakLoginPage()
   .banner {
     display: flex;
     flex-direction: column;
-    gap: $space-l;
+    gap: variables.$space-l;
 
-    @media screen and (min-width: $min-tablet) {
+    @media screen and (min-width: variables.$min-tablet) {
       flex-direction: row;
-      gap: $space-2xl;
+      gap: variables.$space-2xl;
       align-items: stretch;
     }
 
     .banner-wrapper {
-      @media screen and (min-width: $min-tablet) {
+      @media screen and (min-width: variables.$min-tablet) {
         flex-basis: 30%;
         flex-shrink: 0;
 
@@ -142,16 +144,16 @@ const logInUser = () => goToKeycloakLoginPage()
     .organization-banner {
       width: 100%;
       aspect-ratio: 1;
-      border-radius: pxToRem(8px);
+      border-radius: variables.pxToRem(8px);
 
-      @media screen and (max-width: $min-tablet) {
+      @media screen and (max-width: variables.$min-tablet) {
         width: 80%;
         margin: 0 auto;
       }
 
-      @media screen and (min-width: $min-tablet) {
+      @media screen and (min-width: variables.$min-tablet) {
         margin-bottom: 0;
-        margin-right: $space-2xl;
+        margin-right: variables.$space-2xl;
       }
     }
 
@@ -174,20 +176,20 @@ const logInUser = () => goToKeycloakLoginPage()
         display: none;
       }
 
-      @media screen and (min-width: $min-tablet) {
+      @media screen and (min-width: variables.$min-tablet) {
         .image-main-title {
           display: flex;
           font-weight: 700;
-          font-size: $font-size-4xl;
-          margin-bottom: $space-l;
+          font-size: variables.$font-size-4xl;
+          margin-bottom: variables.$space-l;
         }
       }
 
       .image-account-buttons {
         display: flex;
-        margin-top: $space-l;
+        margin-top: variables.$space-l;
 
-        @media screen and (max-width: $min-tablet) {
+        @media screen and (max-width: variables.$min-tablet) {
           justify-content: center;
         }
       }
@@ -196,7 +198,7 @@ const logInUser = () => goToKeycloakLoginPage()
 }
 
 .login-button {
-  margin-left: $space-s;
+  margin-left: variables.$space-s;
 }
 
 .description-toggle {
@@ -215,7 +217,7 @@ const logInUser = () => goToKeycloakLoginPage()
   flex-grow: 1;
   align-self: stretch;
 
-  @media screen and (max-width: $min-tablet) {
+  @media screen and (max-width: variables.$min-tablet) {
     min-height: 8rem;
     height: 8rem;
   }

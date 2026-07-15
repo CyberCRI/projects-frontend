@@ -63,7 +63,9 @@ useLpiHead2({
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .portal-layout {
   display: flex;
   flex-direction: column;
@@ -87,8 +89,8 @@ useLpiHead2({
       border: $border-width-s solid var(--primary);
       overflow: hidden;
       padding: $space-m;
-      height: pxToRem(96px);
-      width: pxToRem(290px);
+      height: pxtorem(96px);
+      width: pxtorem(290px);
 
       .portal-image {
         flex-grow: 1;

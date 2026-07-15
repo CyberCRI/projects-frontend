@@ -23,7 +23,9 @@ defineProps<{
 }>()
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .tag-ctn-skeleton {
   margin: 0;
   display: flex;

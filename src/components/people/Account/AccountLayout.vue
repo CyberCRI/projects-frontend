@@ -76,6 +76,8 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .loader {
   position: absolute;
   margin: auto;
@@ -96,6 +98,6 @@ onMounted(async () => {
   flex-direction: column;
   align-items: stretch;
   margin: 0 auto;
-  width: pxToRem(500px);
+  width: variables.pxToRem(500px);
 }
 </style>

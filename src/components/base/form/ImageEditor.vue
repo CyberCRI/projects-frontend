@@ -192,11 +192,13 @@ const nextDefaultPicture = async () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .img-inner {
   width: 100%;
   display: flex;
   align-items: center;
-  gap: $space-m;
+  gap: variables.$space-m;
 
   .img-preview,
   .img-actions {
@@ -207,13 +209,13 @@ const nextDefaultPicture = async () => {
   .img-actions {
     display: flex;
     flex-flow: column;
-    gap: $space-m;
+    gap: variables.$space-m;
     justify-content: center;
     align-items: flex-start;
   }
 
   .img-preview {
-    border: $border-width-s solid var(--primary);
+    border: variables.$border-width-s solid var(--primary);
     background-color: var(--white);
     overflow: hidden;
   }

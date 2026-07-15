@@ -1,11 +1,10 @@
 import TagClassificationAdmin from '~/components/admin/TagClassificationAdmin.vue'
 import { lpiMount } from '~~/tests/helpers/LpiMount'
-import waitForExpect from 'wait-for-expect'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
 import pinia from '~/stores'
 
-import { OrganizationOutput } from 'shared-projects-frontend/models'
+import type { OrganizationOutput } from 'shared-projects-frontend/models'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
@@ -113,7 +112,7 @@ describe('TagClassificationAdmin', () => {
     expect(vm.isLoading).toBeFalsy()
     expect(vm.tagResults.length).toBe(3)
     const tagEntries = wrapper.findAll('[data-test="tag-entry"]')
-    await waitForExpect(() => {
+    await expect.poll(() => {
       expect(tagEntries.length).toBe(3)
     })
   })

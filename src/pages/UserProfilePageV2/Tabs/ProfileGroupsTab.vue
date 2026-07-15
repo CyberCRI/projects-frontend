@@ -88,9 +88,11 @@ const cancelIfOtherOrg = (evt, group) => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .groups-tab {
   .loader {
-    padding: $space-3xl 0;
+    padding: variables.$space-3xl 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -98,10 +100,10 @@ const cancelIfOtherOrg = (evt, group) => {
   }
 
   .title {
-    font-size: $font-size-l;
+    font-size: variables.$font-size-l;
     font-weight: 700;
-    color: $primary-dark;
-    margin: $space-l 0;
+    color: variables.$primary-dark;
+    margin: variables.$space-l 0;
   }
 
   .pagination-container {

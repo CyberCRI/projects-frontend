@@ -54,6 +54,8 @@ const { count } = pagination
 </script>
 
 <style lang="scss">
+@use '~/design/scss/variables';
+
 $profile-groups: 1rem;
 
 .groups-list-similars {

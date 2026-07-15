@@ -126,6 +126,8 @@ const onCancel = () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .event {
   padding: 0;
   flex-grow: 1;

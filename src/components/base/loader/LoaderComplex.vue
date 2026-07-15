@@ -229,7 +229,9 @@ withDefaults(
 )
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .loader-container {
   display: flex;
   flex-direction: column;
@@ -268,7 +270,7 @@ withDefaults(
   .dot {
     width: 6px;
     height: 6px;
-    background-color: $primary;
+    background-color: variables.$primary;
     border-radius: 50%;
     animation: dotFlashing 1s infinite alternate;
 
@@ -284,11 +286,11 @@ withDefaults(
 
 @keyframes dotFlashing {
   0% {
-    background-color: $primary;
+    background-color: variables.$primary;
   }
 
   100% {
-    background-color: $primary-dark;
+    background-color: variables.$primary-dark;
   }
 }
 </style>

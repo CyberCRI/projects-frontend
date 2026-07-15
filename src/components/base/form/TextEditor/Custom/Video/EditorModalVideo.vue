@@ -63,6 +63,8 @@ const updateVideo = () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .video-preview {
   display: flex;
   justify-content: center;

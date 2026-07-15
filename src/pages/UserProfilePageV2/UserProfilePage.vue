@@ -48,6 +48,8 @@ function display404() {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .profile-page {
   padding-top: 6.5rem;
   padding-bottom: 6.5rem;

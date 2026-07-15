@@ -244,32 +244,34 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .links-tab {
-  padding: 0 $space-l;
+  padding: 0 variables.$space-l;
 }
 
 .title {
   font-style: normal;
   font-weight: 700;
-  font-size: $font-size-5xl;
-  line-height: $line-height-tight;
+  font-size: variables.$font-size-5xl;
+  line-height: variables.$line-height-tight;
   text-align: center;
-  margin-bottom: $layout-size-l;
+  margin-bottom: variables.$layout-size-l;
 }
 
 .form {
-  margin: $space-2xl;
+  margin: variables.$space-2xl;
 
   .form-section {
-    padding: $space-2xl 0;
+    padding: variables.$space-2xl 0;
 
     & + .form-section {
-      border-top: $border-width-s solid $light-gray;
+      border-top: variables.$border-width-s solid variables.$light-gray;
     }
 
     .section-header {
       display: flex;
-      padding-bottom: $space-m;
+      padding-bottom: variables.$space-m;
       width: 100%;
 
       .label {
@@ -278,54 +280,54 @@ export default {
     }
 
     .notice {
-      margin: $space-m 0;
+      margin: variables.$space-m 0;
     }
   }
 
   .actions {
     display: flex;
     justify-content: center;
-    gap: $space-l;
+    gap: variables.$space-l;
   }
 }
 
 .help-link {
-  color: $primary-dark;
+  color: variables.$primary-dark;
 }
 
 .validity-type-btn {
-  padding: $space-s;
-  background-color: $white;
-  border: $border-width-s solid $primary-dark;
-  border-radius: $border-radius-s;
+  padding: variables.$space-s;
+  background-color: variables.$white;
+  border: variables.$border-width-s solid variables.$primary-dark;
+  border-radius: variables.$border-radius-s;
   vertical-align: middle;
   display: inline-flex;
   align-items: center;
-  gap: $space-m;
-  color: $primary-dark;
+  gap: variables.$space-m;
+  color: variables.$primary-dark;
   font-weight: 700;
   cursor: pointer;
 
   &:hover {
-    background-color: $primary-lighter;
+    background-color: variables.$primary-lighter;
   }
 
   & + .validity-type-btn {
-    margin-left: $space-unit;
+    margin-left: variables.$space-unit;
   }
 
   .icon {
-    width: $layout-size-2xl;
-    fill: $primary-dark;
+    width: variables.$layout-size-2xl;
+    fill: variables.$primary-dark;
   }
 }
 
 .selected-validity {
-  margin-top: $space-unit;
+  margin-top: variables.$space-unit;
   display: flex;
   justify-content: center;
-  gap: $space-s;
-  font-size: $font-size-xl;
+  gap: variables.$space-s;
+  font-size: variables.$font-size-xl;
 
   strong {
     font-weight: 700;
@@ -336,8 +338,8 @@ export default {
   display: flex;
   flex-flow: column;
   align-items: center;
-  margin-top: $space-unit;
-  gap: $space-unit;
+  margin-top: variables.$space-unit;
+  gap: variables.$space-unit;
   width: 100%;
 }
 </style>

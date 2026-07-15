@@ -29,20 +29,22 @@ defineProps<{
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .project-header-ctn {
   position: relative;
   display: flex;
   flex-flow: column nowrap;
   gap: 1.25rem;
 
-  @media screen and (min-width: $min-tablet) {
-    border: $border-width-s solid var(--primary);
-    border-radius: $border-radius-l;
+  @media screen and (min-width: variables.$min-tablet) {
+    border: variables.$border-width-s solid var(--primary);
+    border-radius: variables.$border-radius-l;
     z-index: 1;
     padding: 2.5rem;
   }
 
-  @media screen and (min-width: $max-tablet) {
+  @media screen and (min-width: variables.$max-tablet) {
     flex-flow: row nowrap;
     align-items: center;
     gap: 2.5rem;
@@ -71,7 +73,7 @@ defineProps<{
   position: relative;
   gap: 1.25rem;
 
-  @media screen and (max-width: $min-tablet) {
+  @media screen and (max-width: variables.$min-tablet) {
     .title-block {
       order: 1;
     }
@@ -100,7 +102,7 @@ defineProps<{
   top: 0;
   margin: 0.5rem;
 
-  @media screen and (max-width: $min-tablet) {
+  @media screen and (max-width: variables.$min-tablet) {
     position: relative;
     margin: -0.5rem 0;
     width: fit-content;

@@ -28,7 +28,9 @@ useLpiHead2({
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .browse-layout {
-  padding-top: pxToRem(74px);
+  padding-top: variables.pxToRem(74px);
 }
 </style>

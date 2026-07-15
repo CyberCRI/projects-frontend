@@ -200,23 +200,25 @@ useLpiHead2({
   <ContactDrawer :is-opened="showContactUsDrawer" @close="closeDrawer" />
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .confirm {
-  border-radius: $border-radius-m;
-  padding: $space-xl;
+  border-radius: variables.$border-radius-m;
+  padding: variables.$space-xl;
 }
 
 .notice {
-  font-size: $font-size-m;
-  margin-bottom: $space-l;
+  font-size: variables.$font-size-m;
+  margin-bottom: variables.$space-l;
 }
 
 .action {
   display: flex;
-  padding-bottom: pxToRem(24px);
+  padding-bottom: variables.pxToRem(24px);
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: $space-l;
+  gap: variables.$space-l;
 
   .register-btn,
   .cancel-btn {
@@ -225,11 +227,11 @@ useLpiHead2({
 }
 
 .extra-links {
-  margin-top: pxToRem(29px);
+  margin-top: variables.pxToRem(29px);
   width: 100%;
   display: flex;
   flex-flow: row nowrap;
-  gap: $space-unit;
+  gap: variables.$space-unit;
 
   .extra-link {
     flex-basis: 50%;
@@ -256,7 +258,7 @@ useLpiHead2({
 
 .link {
   display: inline-block; // avoid breaking link on new line
-  color: $primary-dark;
+  color: variables.$primary-dark;
   text-decoration: underline;
   font-weight: 400;
 
@@ -276,18 +278,18 @@ useLpiHead2({
 }
 
 .title {
-  font-size: pxToRem(40px);
+  font-size: variables.pxToRem(40px);
   font-weight: 900;
-  color: $primary-dark;
-  line-height: $line-height-tight;
-  margin-bottom: pxToRem(15px);
+  color: variables.$primary-dark;
+  line-height: variables.$line-height-tight;
+  margin-bottom: variables.pxToRem(15px);
 }
 
 .expired-text {
-  font-size: pxToRem(40px);
-  line-height: $line-height-squashed;
+  font-size: variables.pxToRem(40px);
+  line-height: variables.$line-height-squashed;
   text-align: center;
-  color: $primary;
+  color: variables.$primary;
   font-weight: 700;
   padding-left: 30px;
   padding-right: 30px;
@@ -314,14 +316,14 @@ useLpiHead2({
 
   a {
     font-weight: 700;
-    color: $primary-dark;
+    color: variables.$primary-dark;
     text-decoration: underline;
   }
 }
 
 .confirm-message strong {
   font-weight: 700;
-  color: $primary-dark;
+  color: variables.$primary-dark;
 }
 
 .fade-leave-active,

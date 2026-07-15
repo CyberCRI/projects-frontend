@@ -1,6 +1,6 @@
 import { createFactory } from 'faker-create-factory'
 
-import { TemplateForm, TemplateModel } from 'shared-projects-frontend/models'
+import type { TemplateForm, TemplateModel } from 'shared-projects-frontend/models'
 import { OrganizationFactory } from './organization.factory'
 import { ImageFactory } from './image.factory'
 import BaseFactory from './base.factory'

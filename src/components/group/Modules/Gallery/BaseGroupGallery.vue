@@ -169,6 +169,8 @@ const closeForm = () => {
 </script>
 
 <style lang="scss">
+@use '~/design/scss/variables';
+
 .edit-btn {
   align-self: end;
 }

@@ -176,24 +176,26 @@ const onSubmit = (form: AttachmentForm) => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .resource-container {
   display: flex;
   flex-wrap: wrap;
-  gap: $space-m;
-  padding: $space-m 0;
+  gap: variables.$space-m;
+  padding: variables.$space-m 0;
 
   &:empty {
     display: none;
   }
 
   > div {
-    width: calc(33% - $space-m);
+    width: calc(33% - variables.$space-m);
 
-    @media screen and (max-width: $max-tablet) {
-      width: calc(50% - $space-m);
+    @media screen and (max-width: variables.$max-tablet) {
+      width: calc(50% - variables.$space-m);
     }
 
-    @media screen and (max-width: $min-tablet) {
+    @media screen and (max-width: variables.$min-tablet) {
       width: 100%;
     }
   }

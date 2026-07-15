@@ -88,6 +88,8 @@ const mimeInfo = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .resource-wrapper {
   width: 100%;
   position: relative;
@@ -101,13 +103,13 @@ const mimeInfo = computed(() => {
     display: flex;
 
     button:last-of-type {
-      margin-left: $space-s;
+      margin-left: variables.$space-s;
     }
   }
 
   .resource-card {
-    border: $border-width-s solid var(--color-resource);
-    border-radius: $border-radius-m;
+    border: variables.$border-width-s solid var(--color-resource);
+    border-radius: variables.$border-radius-m;
     display: flex;
     height: 96px;
     overflow: hidden;
@@ -129,7 +131,7 @@ const mimeInfo = computed(() => {
     .icon-ctn {
       background: var(--color-resource);
       border-right: 1px solid var(--color-resource);
-      padding: $space-l;
+      padding: variables.$space-l;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -144,8 +146,8 @@ const mimeInfo = computed(() => {
 
     .content {
       background-color: var(--white);
-      font-size: $font-size-m;
-      padding: $space-s pxToRem(18px);
+      font-size: variables.$font-size-m;
+      padding: variables.$space-s variables.pxToRem(18px);
       margin-right: auto;
       transition: background-color 0.3s ease-in-out;
       overflow: hidden;
@@ -157,18 +159,18 @@ const mimeInfo = computed(() => {
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
         overflow: hidden;
-        word-wrap: break-word;
+        overflow-wrap: break-word;
       }
 
       .resource-subtitle {
-        font-size: $font-size-s;
-        line-height: $line-height-tight;
+        font-size: variables.$font-size-s;
+        line-height: variables.$line-height-tight;
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
-        margin-top: $space-s;
-        word-wrap: break-word;
+        margin-top: variables.$space-s;
+        overflow-wrap: break-word;
       }
 
       span {
@@ -183,10 +185,10 @@ const mimeInfo = computed(() => {
       display: flex;
 
       .svg-wrapper {
-        padding: $space-2xs;
+        padding: variables.$space-2xs;
         background: var(--color-resource-2);
         border-radius: 100%;
-        border: $border-width-s solid var(--color-resource);
+        border: variables.$border-width-s solid var(--color-resource);
         width: 20px;
         height: 20px;
         display: flex;
@@ -201,7 +203,7 @@ const mimeInfo = computed(() => {
         }
 
         &:nth-child(2) {
-          margin-left: $space-2xs;
+          margin-left: variables.$space-2xs;
         }
       }
     }

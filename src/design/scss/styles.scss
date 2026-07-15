@@ -1,3 +1,5 @@
+@use 'variables';
+
 .custom-scrollbar {
   &::-webkit-scrollbar {
     width: 6px;
@@ -9,7 +11,7 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: $primary-dark;
+    background-color: variables.$primary-dark;
     border-radius: 9px;
   }
 }
@@ -107,33 +109,33 @@ input {
 }
 
 .form {
-  padding-bottom: $space-l;
+  padding-bottom: variables.$space-l;
 
   .title {
-    font-size: $font-size-m;
-    color: $primary-dark;
+    font-size: variables.$font-size-m;
+    color: variables.$primary-dark;
     font-weight: bold;
-    margin: 0 0 $space-l;
+    margin: 0 0 variables.$space-l;
   }
 
   .description {
     display: block;
-    margin-bottom: $space-m;
-    font-size: $font-size-xs;
+    margin-bottom: variables.$space-m;
+    font-size: variables.$font-size-xs;
   }
 
   .image-input-ctn {
-    margin: $space-m auto 0;
+    margin: variables.$space-m auto 0;
   }
 
   > *:not(:first-of-type) {
-    margin-top: $space-l;
+    margin-top: variables.$space-l;
   }
 
   .error-description {
-    color: $red;
-    margin-top: $space-s;
-    font-size: $font-size-s;
+    color: variables.$red;
+    margin-top: variables.$space-s;
+    font-size: variables.$font-size-s;
   }
 }
 
@@ -146,18 +148,18 @@ body[class*='has-open-modal-'] {
 
 .narrow-body {
   width: 100%;
-  max-width: pxToRem(1200px);
+  max-width: variables.pxToRem(1200px);
   margin: 0 auto;
   box-sizing: border-box;
 
-  @media screen and (min-width: $max-desktop) {
-    max-width: pxToRem(1280px);
+  @media screen and (min-width: variables.$max-desktop) {
+    max-width: variables.pxToRem(1280px);
   }
 }
 
 .narrow-content {
   width: 100%;
-  max-width: pxToRem(800px);
+  max-width: variables.pxToRem(800px);
   margin: 0 auto;
   box-sizing: border-box;
 }
@@ -167,8 +169,8 @@ body[class*='has-open-modal-'] {
 .page-section-wide,
 .page-section-medium,
 .page-section-narrow {
-  padding-left: $space-m;
-  padding-right: $space-m;
+  padding-left: variables.$space-m;
+  padding-right: variables.$space-m;
   box-sizing: border-box;
   max-width: 100%;
   margin: 0 auto;
@@ -179,43 +181,43 @@ body[class*='has-open-modal-'] {
 }
 
 .page-section-extra-wide {
-  width: pxToRem(1400px);
+  width: variables.pxToRem(1400px);
 }
 
 .page-section-wide {
-  width: pxToRem(1200px);
+  width: variables.pxToRem(1200px);
 }
 
 .page-section-medium {
-  width: pxToRem(1024px);
+  width: variables.pxToRem(1024px);
 }
 
 .page-section-narrow {
-  width: pxToRem(820px);
+  width: variables.pxToRem(820px);
 }
 
 .page-title {
   text-align: center;
   font-weight: 700;
-  font-size: $font-size-5xl;
-  line-height: $line-height-tight;
-  color: $black;
+  font-size: variables.$font-size-5xl;
+  line-height: variables.$line-height-tight;
+  color: variables.$black;
   width: 100%;
-  margin-bottom: $space-m;
+  margin-bottom: variables.$space-m;
 }
 
 .page-top {
-  margin-top: calc($navbar-height + $space-xl);
+  margin-top: calc(variables.$navbar-height + variables.$space-xl);
 
-  @media screen and (min-width: $min-tablet) {
-    margin-top: calc($navbar-height + $space-2xl);
+  @media screen and (min-width: variables.$min-tablet) {
+    margin-top: calc(variables.$navbar-height + variables.$space-2xl);
   }
 }
 
 .divider {
   width: 100%;
   height: 0.2rem;
-  background-color: $mid-gray;
+  background-color: variables.$mid-gray;
   opacity: 0.4;
 }
 

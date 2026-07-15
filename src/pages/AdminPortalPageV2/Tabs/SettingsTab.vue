@@ -190,21 +190,23 @@ const saveData = async () => {
   </ClientOnly>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .information-tab {
   display: flex;
   flex-direction: column;
 
   section:last-of-type {
-    margin-top: $space-l;
+    margin-top: variables.$space-l;
   }
 
   .block-container {
-    padding-bottom: $space-l;
-    background: $white;
-    border-radius: $border-radius-l;
+    padding-bottom: variables.$space-l;
+    background: variables.$white;
+    border-radius: variables.$border-radius-l;
 
     &:not(:first-of-type) {
-      margin-top: $space-l;
+      margin-top: variables.$space-l;
     }
 
     &:first-child .admin-block {
@@ -213,29 +215,29 @@ const saveData = async () => {
 
     .description {
       display: block;
-      margin-bottom: $space-m;
-      font-size: $font-size-s;
+      margin-bottom: variables.$space-m;
+      font-size: variables.$font-size-s;
     }
 
     button {
-      margin: $space-m auto 0;
+      margin: variables.$space-m auto 0;
     }
 
     .save-button {
-      margin-top: $space-2xl;
+      margin-top: variables.$space-2xl;
     }
 
     .input-container:not(:first-of-type) {
-      margin-top: $space-2xl;
+      margin-top: variables.$space-2xl;
     }
 
     .color-ctn {
-      margin-top: $space-m;
+      margin-top: variables.$space-m;
     }
   }
 }
 
-@media (min-width: $min-desktop) {
+@media (min-width: variables.$min-desktop) {
   .information-tab {
     align-items: stretch;
     flex-direction: row;
@@ -245,13 +247,13 @@ const saveData = async () => {
 
       &:first-of-type {
         .block-container:not(:first-of-type) {
-          margin-top: $space-xl;
+          margin-top: variables.$space-xl;
         }
       }
 
       &:last-of-type {
         margin-top: 0;
-        margin-left: $space-xl;
+        margin-left: variables.$space-xl;
       }
     }
   }

@@ -86,7 +86,9 @@ const textsStyle = ref({})
 
 const content = computed(() => html2Text(props.news.$t.content))
 </script>
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .news-item {
   --news-dimension: 8rem;
   --picture-ratio: calc(4 / 3);

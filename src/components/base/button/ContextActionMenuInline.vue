@@ -34,6 +34,8 @@ defineEmits<{
 }>()
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .context-action-menu-inline {
   pointer-events: all;
   display: flex;

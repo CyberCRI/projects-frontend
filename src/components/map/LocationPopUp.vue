@@ -42,8 +42,10 @@ const closePopUp = inject('closePopUp')
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .location-tooltip {
-  width: pxToRem(300px);
+  width: variables.pxToRem(300px);
   position: absolute;
   top: 0;
   left: 0;
@@ -56,8 +58,8 @@ const closePopUp = inject('closePopUp')
   gap: 0.2rem;
   background-color: var(--white);
   transition: opacity 0.15s ease-in-out;
-  border: $border-width-l solid;
-  border-radius: $border-radius-m;
+  border: variables.$border-width-l solid;
+  border-radius: variables.$border-radius-m;
   border-color: var(--location-color);
 
   > * {

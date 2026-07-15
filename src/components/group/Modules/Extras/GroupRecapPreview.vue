@@ -71,6 +71,8 @@ const modulesArray = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .group-recap {
   display: flex;
   align-items: center;
@@ -83,7 +85,7 @@ const modulesArray = computed(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: $primary-dark;
+  color: variables.$primary-dark;
   gap: 0.4rem;
   cursor: pointer;
   border-radius: 10px;
@@ -91,7 +93,7 @@ const modulesArray = computed(() => {
 
   svg {
     width: 25px;
-    fill: $primary;
+    fill: variables.$primary;
   }
 }
 

@@ -209,24 +209,26 @@ const notificationRoute = computed<RouteLocationRaw>(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .notification {
-  margin: $space-m 0;
-  font-size: $font-size-m;
+  margin: variables.$space-m 0;
+  font-size: variables.$font-size-m;
   line-height: 1.2;
 
   &--spacer {
-    padding: $space-s 16px;
+    padding: variables.$space-s 16px;
   }
 
   &:hover {
-    background: $primary-lighter;
+    background: variables.$primary-lighter;
   }
 }
 
 .notification-link {
   display: flex;
   align-items: center;
-  padding: $space-s;
+  padding: variables.$space-s;
   cursor: pointer;
 }
 
@@ -237,30 +239,30 @@ const notificationRoute = computed<RouteLocationRaw>(() => {
   width: 50px;
   height: 50px;
   flex: none;
-  margin-right: $space-s;
+  margin-right: variables.$space-s;
 }
 
 .icon {
-  fill: $primary;
+  fill: variables.$primary;
   width: 10px;
   height: 10px;
-  margin-right: $space-s;
+  margin-right: variables.$space-s;
   flex: none;
 }
 
 .date {
-  color: $mid-gray;
+  color: variables.$mid-gray;
   font-weight: 400;
   width: 100%;
   display: inline-block;
-  font-size: $font-size-xs;
+  font-size: variables.$font-size-xs;
 }
 
 .container {
   strong,
   a {
     font-weight: 700;
-    color: $primary-dark;
+    color: variables.$primary-dark;
     text-transform: capitalize;
   }
 }

@@ -62,6 +62,7 @@ const chartData = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables.scss';
 .container {
   width: 100%;
 }

@@ -45,15 +45,17 @@ useLpiHead2({
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .newsfeed-container {
-  padding: $space-xl 0;
-  padding-inline: $space-xs;
+  padding: variables.$space-xl 0;
+  padding-inline: variables.$space-xs;
 }
 
 .news-container {
   display: flex;
   flex-direction: column;
-  gap: $space-l;
+  gap: variables.$space-l;
   justify-content: stretch;
 }
 </style>

@@ -55,6 +55,8 @@ const confirm = () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .icon-choices {
   display: inline-block;
   width: 4rem;

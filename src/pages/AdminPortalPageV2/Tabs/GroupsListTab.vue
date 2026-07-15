@@ -52,9 +52,11 @@ export default {
   setup() {
     const toaster = useToasterStore()
     const organizationsStore = useOrganizationsStore()
+    const organizationsCode = useOrganizationCode()
     return {
       toaster,
       organizationsStore,
+      organizationsCode,
     }
   },
 
@@ -179,6 +181,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .loader {
   display: flex;
   justify-content: center;
@@ -186,7 +190,7 @@ export default {
 
 .intro {
   display: flex;
-  gap: $space-l;
+  gap: variables.$space-l;
 
   .action {
     flex-grow: 1;
@@ -194,7 +198,7 @@ export default {
 }
 
 .list {
-  margin-top: $space-2xl;
+  margin-top: variables.$space-2xl;
   display: flex;
   flex-direction: column;
   margin-inline: auto;

@@ -60,6 +60,8 @@ const formatedLabel = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .input-ctn {
   display: flex;
   flex-direction: column;
@@ -73,37 +75,37 @@ const formatedLabel = computed(() => {
     width: 100%;
 
     > *:last-child {
-      margin-bottom: $space-m;
+      margin-bottom: variables.$space-m;
     }
 
     &.large-space {
-      margin-bottom: $space-l;
+      margin-bottom: variables.$space-l;
     }
   }
 
   label {
-    font-size: $font-size-s;
+    font-size: variables.$font-size-s;
     font-weight: bold;
-    color: $black;
+    color: variables.$black;
   }
 
   small {
-    font-size: $font-size-xs;
+    font-size: variables.$font-size-xs;
     align-self: flex-end;
-    color: $black;
+    color: variables.$black;
   }
 
   &.disabled {
     input {
-      color: $light-gray;
+      color: variables.$light-gray;
     }
 
     label {
-      color: $light-gray;
+      color: variables.$light-gray;
     }
 
     small {
-      color: $light-gray;
+      color: variables.$light-gray;
     }
   }
 }
@@ -117,26 +119,28 @@ const formatedLabel = computed(() => {
 </style>
 
 <style lang="scss">
+@use '~/design/scss/variables';
+
 .input-ctn {
   .disabled {
     input {
-      color: $light-gray;
+      color: variables.$light-gray;
     }
   }
 
   &.big-input input {
     height: 60px;
     border-radius: 35px;
-    font-size: $font-size-3xl;
+    font-size: variables.$font-size-3xl;
     line-height: 1;
   }
 
-  @media screen and (min-width: $min-tablet) {
+  @media screen and (min-width: variables.$min-tablet) {
     &.big-input input {
       height: 90px;
-      font-size: $font-size-5xl;
+      font-size: variables.$font-size-5xl;
       line-height: 1;
-      border-radius: $border-radius-s;
+      border-radius: variables.$border-radius-s;
     }
   }
 }

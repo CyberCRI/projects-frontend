@@ -41,7 +41,9 @@ const submit = async () => {
   </BaseDrawer>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .error {
-  color: $salmon;
+  color: variables.$salmon;
 }
 </style>

@@ -112,6 +112,8 @@ const uploadImage = (event) => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .image-input-ctn {
   width: fit-content;
   display: flex;
@@ -127,7 +129,7 @@ const uploadImage = (event) => {
   }
 
   .error-message {
-    color: $salmon;
+    color: variables.$salmon;
     font-weight: bold;
   }
 }

@@ -6,20 +6,21 @@ import pinia from '~/stores'
 
 import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
 import UserSkillsFull from '~/components/people/skill/UserSkillsFull.vue'
-import { OrganizationOutput } from 'shared-projects-frontend/models'
+import type { OrganizationOutput } from 'shared-projects-frontend/models'
+import OrganizationTagFactory from '~~/tests/factories/tag.factory'
+import UserSkillFactory from '~~/tests/factories/skill.factory'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import EmptyLabel from '~/components/base/EmptyLabel.vue'
 import { flushPromises } from '@vue/test-utils'
 
-const aTag = { title: '123', description: 'abc' }
+const aTag = OrganizationTagFactory.generate({ title: '123', description: 'abc' })
 
 describe('ProfileSkillTab', () => {
-  let usersStore
+  let usersStore: ReturnType<typeof useUsersStore>
   beforeEach(() => {
     usersStore = useUsersStore(pinia)
-    usersStore.id = 123
     usersStore.userFromApi = {}
     usersStore.permissions = {}
     usersStore.getUser = vi.fn()
@@ -43,11 +44,11 @@ describe('ProfileSkillTab', () => {
   })
 
   it('should see that current user is the logged one', async () => {
-    const id = '123'
-    const user: any = UserFactory.generate()
-    user.id = id
+    const user = UserFactory.generate({ id: 123 })
 
-    usersStore.id = id
+    registerEndpoint(`user/${user.id}/category-follow/`, () => PaginationsFactory.generate())
+
+    usersStore.userFromApi = usersStore.userFromToken = user
     const wrapper = await lpiMountSuspended(ProfileSkillTab, { props: { user } })
     await flushPromises()
     const vm: any = wrapper.vm
@@ -55,10 +56,12 @@ describe('ProfileSkillTab', () => {
   })
 
   it('should see that current user is not the logged one', async () => {
-    const user: any = UserFactory.generate()
-    user.id = '123'
+    const user = UserFactory.generate()
+    const user2 = UserFactory.generate()
+    registerEndpoint(`user/${user.id}/category-follow/`, () => PaginationsFactory.generate())
+    registerEndpoint(`user/${user2.id}/category-follow/`, () => PaginationsFactory.generate())
 
-    usersStore.id = '456'
+    usersStore.userFromApi = usersStore.userFromToken = user2
 
     const wrapper = await lpiMountSuspended(ProfileSkillTab, { props: { user } })
     await flushPromises()
@@ -67,10 +70,12 @@ describe('ProfileSkillTab', () => {
   })
 
   it('should display a message if no skill and no hobby', async () => {
-    const user: any = UserFactory.generate()
-    user.id = '123'
+    const user = UserFactory.generate()
+    const user2 = UserFactory.generate()
 
-    usersStore.id = '456'
+    registerEndpoint(`user/${user.id}/category-follow/`, () => PaginationsFactory.generate())
+    registerEndpoint(`user/${user2.id}/category-follow/`, () => PaginationsFactory.generate())
+    usersStore.userFromApi = usersStore.userFromToken = user2
 
     const wrapper = await lpiMountSuspended(ProfileSkillTab, { props: { user } })
     await flushPromises()
@@ -79,10 +84,13 @@ describe('ProfileSkillTab', () => {
   })
 
   it('should display one list if user has skill but no hobby', async () => {
-    const user: any = UserFactory.generate()
-    user.id = '123'
-    user.skills = [{ id: '123', type: 'skill', tag: aTag }]
-    usersStore.id = '456'
+    const user = UserFactory.generate()
+    const user2 = UserFactory.generate()
+
+    registerEndpoint(`user/${user.id}/category-follow/`, () => PaginationsFactory.generate())
+    registerEndpoint(`user/${user2.id}/category-follow/`, () => PaginationsFactory.generate())
+    user.skills = [UserSkillFactory.generate({ id: 123, type: 'hobby', tag: aTag })]
+    usersStore.userFromApi = usersStore.userFromToken = user2
 
     const wrapper = await lpiMountSuspended(ProfileSkillTab, { props: { user } })
     await flushPromises()
@@ -91,10 +99,13 @@ describe('ProfileSkillTab', () => {
   })
 
   it('should display one list if user has hobbies but no skills', async () => {
-    const user: any = UserFactory.generate()
-    user.id = '123'
-    user.skills = [{ id: '123', type: 'hobby', tag: aTag }]
-    usersStore.id = '456'
+    const user = UserFactory.generate()
+    const user2 = UserFactory.generate()
+
+    registerEndpoint(`user/${user.id}/category-follow/`, () => PaginationsFactory.generate())
+    registerEndpoint(`user/${user2.id}/category-follow/`, () => PaginationsFactory.generate())
+    user.skills = [UserSkillFactory.generate({ id: 123, type: 'hobby', tag: aTag })]
+    usersStore.userFromApi = usersStore.userFromToken = user2
 
     const wrapper = await lpiMountSuspended(ProfileSkillTab, { props: { user } })
     await flushPromises()
@@ -103,13 +114,16 @@ describe('ProfileSkillTab', () => {
   })
 
   it('should display two lists if user has hobbies and skills', async () => {
-    const user: any = UserFactory.generate()
-    user.id = '123'
+    const user = UserFactory.generate()
+    const user2 = UserFactory.generate()
+
+    registerEndpoint(`user/${user.id}/category-follow/`, () => PaginationsFactory.generate())
+    registerEndpoint(`user/${user2.id}/category-follow/`, () => PaginationsFactory.generate())
     user.skills = [
-      { id: '123', type: 'skill', tag: aTag },
-      { id: '123', type: 'hobby', tag: aTag },
+      UserSkillFactory.generate({ id: 123, type: 'hobby', tag: aTag }),
+      UserSkillFactory.generate({ id: 123, type: 'skill', tag: aTag }),
     ]
-    usersStore.id = '456'
+    usersStore.userFromApi = usersStore.userFromToken = user2
 
     const wrapper = await lpiMountSuspended(ProfileSkillTab, { props: { user } })
     await flushPromises()
@@ -118,13 +132,16 @@ describe('ProfileSkillTab', () => {
   })
 
   it('should display a tip if list are displayed', async () => {
-    const user: any = UserFactory.generate()
-    user.id = '123'
+    const user = UserFactory.generate()
+    const user2 = UserFactory.generate()
+
+    registerEndpoint(`user/${user.id}/category-follow/`, () => PaginationsFactory.generate())
+    registerEndpoint(`user/${user2.id}/category-follow/`, () => PaginationsFactory.generate())
     user.skills = [
-      { id: '123', type: 'skill', tag: aTag },
-      { id: '123', type: 'hobby', tag: aTag },
+      UserSkillFactory.generate({ id: 123, type: 'hobby', tag: aTag }),
+      UserSkillFactory.generate({ id: 123, type: 'skill', tag: aTag }),
     ]
-    usersStore.id = '456'
+    usersStore.userFromApi = usersStore.userFromToken = user2
 
     const wrapper = await lpiMountSuspended(ProfileSkillTab, { props: { user } })
     await flushPromises()

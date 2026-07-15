@@ -77,6 +77,8 @@ const resetTermsSigned = async () => {
 }
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .debug-onboarding {
   margin: 1rem;
   text-align: center;

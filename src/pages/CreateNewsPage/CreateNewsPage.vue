@@ -97,9 +97,11 @@ useLpiHead2({
   </div>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .page-title {
-  margin-top: pxToRem(60px);
-  margin-bottom: pxToRem(60px);
+  margin-top: variables.pxToRem(60px);
+  margin-bottom: variables.pxToRem(60px);
 }
 
 .form-actions {
@@ -109,15 +111,15 @@ useLpiHead2({
   width: 100%;
   display: flex;
   justify-content: center;
-  border-top: $border-width-s solid $lighter-gray;
-  color: $primary-dark;
+  border-top: variables.$border-width-s solid variables.$lighter-gray;
+  color: variables.$primary-dark;
   font-weight: 700;
-  padding-top: $space-l;
-  padding-bottom: $space-l;
+  padding-top: variables.$space-l;
+  padding-bottom: variables.$space-l;
   position: sticky;
   bottom: 0;
-  background: $white;
-  gap: $space-l;
+  background: variables.$white;
+  gap: variables.$space-l;
 
   button ~ button {
     text-transform: capitalize;

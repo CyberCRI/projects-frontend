@@ -45,15 +45,17 @@ const toggle = (e: Event) => {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .lpi-checkbox {
-  font-size: $font-size-m;
+  font-size: variables.$font-size-m;
   color: var(--primary-dark);
   font-weight: 400;
-  line-height: $line-height-squashed;
+  line-height: variables.$line-height-squashed;
   display: grid;
   grid-template-columns: 1em auto;
-  gap: $space-m;
+  gap: variables.$space-m;
 }
 
 .checkbox-container {
@@ -63,15 +65,15 @@ const toggle = (e: Event) => {
   height: calc(20px - (var(--padding-checkbox) * 2));
   padding: var(--padding-checkbox);
   background-color: var(--white);
-  border-radius: $border-radius-xs;
+  border-radius: variables.$border-radius-xs;
 }
 
 .as-button {
   text-transform: capitalize;
-  border: $border-width-s solid var(--primary-dark);
-  border-radius: $border-radius-xs;
-  padding: $space-m $space-s;
-  margin-right: $space-m;
+  border: variables.$border-width-s solid var(--primary-dark);
+  border-radius: variables.$border-radius-xs;
+  padding: variables.$space-m variables.$space-s;
+  margin-right: variables.$space-m;
 
   &:hover {
     background-color: var(--primary-lighter);
@@ -79,7 +81,7 @@ const toggle = (e: Event) => {
 
   &.is-checked {
     background-color: var(--primary-dark);
-    color: $white;
+    color: variables.$white;
     cursor: default;
   }
 }
@@ -97,7 +99,7 @@ input[type='checkbox'] {
 }
 
 .disabled input[type='checkbox']::before {
-  box-shadow: inset 1em 1em $mid-gray;
+  box-shadow: inset 1em 1em variables.$mid-gray;
 }
 
 input[type='checkbox']:checked::before {
@@ -105,13 +107,13 @@ input[type='checkbox']:checked::before {
 }
 
 input[type='checkbox']:disabled {
-  border: $border-width-s solid $mid-gray;
-  color: $mid-gray;
+  border: variables.$border-width-s solid variables.$mid-gray;
+  color: variables.$mid-gray;
   cursor: not-allowed;
 }
 
 .disabled {
-  color: $mid-gray;
+  color: variables.$mid-gray;
   cursor: not-allowed;
 }
 </style>

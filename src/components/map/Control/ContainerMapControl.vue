@@ -5,6 +5,8 @@
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .container-map-control {
   position: absolute;
   top: 0;

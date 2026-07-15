@@ -232,22 +232,23 @@ const getSkillOfType = (type: SkillType) => {
 }
 </script>
 
-<style scoped lang="scss">
-@import './profile-form';
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+@use '~/pages/UserProfilePageV2/Tabs/profile-form';
 
 .initial-screen {
   .intro {
-    margin-top: $space-xl;
+    margin-top: variables.$space-xl;
     text-align: center;
-    font-size: $font-size-m;
+    font-size: variables.$font-size-m;
   }
 
   .actions {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: $space-unit;
-    margin-top: $space-xl;
+    gap: variables.$space-unit;
+    margin-top: variables.$space-xl;
   }
 }
 
@@ -255,11 +256,11 @@ const getSkillOfType = (type: SkillType) => {
   .following-screen-inner + .following-screen-inner {
     padding-top: 2rem;
     margin-top: 2rem;
-    border-top: $border-width-s solid $primary;
+    border-top: variables.$border-width-s solid variables.$primary;
   }
 
   .actions {
-    margin-top: $space-xl;
+    margin-top: variables.$space-xl;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -270,52 +271,52 @@ const getSkillOfType = (type: SkillType) => {
       margin-bottom: 1.4rem;
     }
 
-    margin-top: $space-xl;
+    margin-top: variables.$space-xl;
   }
 
   .skill-list {
-    margin-top: $space-xl;
-    background-color: $primary-lighter;
-    padding: $space-l pxToRem(17px);
+    margin-top: variables.$space-xl;
+    background-color: variables.$primary-lighter;
+    padding: variables.$space-l pxToRem(17px);
     display: flex;
     flex-flow: column nowrap;
-    gap: $space-m;
-    border-radius: $border-radius-l;
+    gap: variables.$space-m;
+    border-radius: variables.$border-radius-l;
   }
 }
 
 .talent-title {
-  font-size: $font-size-l;
+  font-size: variables.$font-size-l;
   font-weight: 700;
-  color: $primary-dark;
-  margin-top: $space-l;
-  margin-bottom: $space-m;
+  color: variables.$primary-dark;
+  margin-top: variables.$space-l;
+  margin-bottom: variables.$space-m;
   text-align: center;
 }
 
 .level-editor-list {
-  margin-top: $space-xl;
+  margin-top: variables.$space-xl;
   position: relative;
 }
 
 .skill-columns-header {
   display: flex;
   justify-content: stretch;
-  gap: $space-unit;
+  gap: variables.$space-unit;
   align-items: center;
-  padding-bottom: $space-l;
-  border-bottom: $border-width-s solid $primary;
+  padding-bottom: variables.$space-l;
+  border-bottom: variables.$border-width-s solid variables.$primary;
 
   .column-label {
     font-weight: 700;
     text-transform: uppercase;
-    color: $primary-dark;
+    color: variables.$primary-dark;
   }
 
   .skill-name {
     flex-basis: 30%;
 
-    @media screen and (max-width: $min-tablet) {
+    @media screen and (max-width: variables.$min-tablet) {
       flex-basis: 100%;
       text-align: center;
     }
@@ -327,7 +328,7 @@ const getSkillOfType = (type: SkillType) => {
     align-items: center;
     justify-content: center;
 
-    @media screen and (max-width: $min-tablet) {
+    @media screen and (max-width: variables.$min-tablet) {
       display: none;
     }
   }
@@ -337,7 +338,7 @@ const getSkillOfType = (type: SkillType) => {
     justify-content: center;
     flex-basis: 30%;
 
-    @media screen and (max-width: $min-tablet) {
+    @media screen and (max-width: variables.$min-tablet) {
       display: none;
     }
   }
@@ -345,9 +346,9 @@ const getSkillOfType = (type: SkillType) => {
   .delete-action,
   .edit-action {
     flex-shrink: 0;
-    flex-basis: $layout-size-l;
+    flex-basis: variables.$layout-size-l;
 
-    @media screen and (max-width: $min-tablet) {
+    @media screen and (max-width: variables.$min-tablet) {
       display: none;
     }
   }

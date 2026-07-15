@@ -5,17 +5,19 @@
     </div>
   </div>
 </template>
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .nav-panel {
   flex-shrink: 0;
   flex-grow: 0;
 }
 
-@media screen and (max-width: $min-tablet) {
+@media screen and (max-width: variables.$min-tablet) {
   .nav-panel {
     position: fixed;
     box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 10%);
-    background-color: $white;
+    background-color: variables.$white;
     z-index: 105;
     width: calc(18rem + 2.125rem);
     top: 3rem;
@@ -28,7 +30,7 @@
   }
 }
 
-@media screen and (min-width: $min-tablet) {
+@media screen and (min-width: variables.$min-tablet) {
   .nav-panel-inner {
     width: 16rem;
   }

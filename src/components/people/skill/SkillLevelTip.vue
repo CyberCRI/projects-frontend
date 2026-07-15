@@ -37,12 +37,14 @@ const { t } = useNuxtI18n()
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .tip-ctn {
   max-width: 20rem;
-  padding: $space-m;
+  padding: variables.$space-m;
 
   p {
-    margin-bottom: $space-m;
+    margin-bottom: variables.$space-m;
   }
 
   strong {
@@ -51,11 +53,11 @@ const { t } = useNuxtI18n()
 
   ul {
     list-style-type: disc;
-    margin-left: $space-m;
+    margin-left: variables.$space-m;
   }
 
   li + li {
-    margin-top: $space-s;
+    margin-top: variables.$space-s;
   }
 }
 </style>

@@ -249,16 +249,18 @@ const checkClose = () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .blog-drawer {
   height: 100%;
 
   :deep(.drawer__main) {
-    gap: $space-unit;
+    gap: variables.$space-unit;
   }
 
   .content-editor {
     flex-grow: 1;
-    min-height: pxToRem(300px);
+    min-height: variables.pxToRem(300px);
   }
 }
 

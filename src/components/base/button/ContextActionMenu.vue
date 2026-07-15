@@ -47,9 +47,11 @@ defineEmits<{
 }>()
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .context-action-menu {
   display: flex;
   flex-flow: column nowrap;
-  gap: $space-s;
+  gap: variables.$space-s;
 }
 </style>

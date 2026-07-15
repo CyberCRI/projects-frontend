@@ -196,6 +196,8 @@ const icons = Object.keys(ICONS_TABS).toSorted((a, b) =>
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .tab-icon {
   display: inline-block;
   width: 3rem;

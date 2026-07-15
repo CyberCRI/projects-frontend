@@ -136,8 +136,10 @@ useLpiHead2({
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .page-title {
-  margin-bottom: $space-2xl;
+  margin-bottom: variables.$space-2xl;
 }
 
 .create-news-button-ctn {

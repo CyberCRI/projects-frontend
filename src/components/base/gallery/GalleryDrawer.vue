@@ -131,9 +131,11 @@ const next = () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .gallery-switch {
   display: grid;
-  grid-template-columns: pxToRem(40px) 1fr pxToRem(40px);
+  grid-template-columns: variables.pxToRem(40px) 1fr variables.pxToRem(40px);
   margin: 0 auto;
   width: 100%;
   height: calc(100% - 64px);

@@ -220,17 +220,19 @@ const saveCommentImage = (file: File) => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .make-comment {
   .action {
     display: flex;
-    gap: $space-m;
+    gap: variables.$space-m;
     justify-content: flex-end;
-    margin-top: $space-m;
+    margin-top: variables.$space-m;
   }
 
   .no-account {
-    background-color: $almost-white;
-    padding: $space-m;
+    background-color: variables.$almost-white;
+    padding: variables.$space-m;
     display: flex;
     align-items: center;
     justify-content: space-between;

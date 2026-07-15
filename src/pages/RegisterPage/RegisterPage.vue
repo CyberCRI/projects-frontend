@@ -259,14 +259,16 @@ useLpiHead2({
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .confirm {
-  border-radius: $border-radius-m;
-  padding: $space-xl;
+  border-radius: variables.$border-radius-m;
+  padding: variables.$space-xl;
 }
 
 .tos-wrapper {
   display: flex;
-  gap: $space-m;
+  gap: variables.$space-m;
   align-items: flex-start;
   justify-content: stretch;
 
@@ -281,7 +283,7 @@ useLpiHead2({
 
 .action {
   display: flex;
-  padding-bottom: pxToRem(24px);
+  padding-bottom: variables.pxToRem(24px);
   flex-direction: column;
   align-items: center;
 
@@ -292,11 +294,11 @@ useLpiHead2({
 }
 
 .extra-links {
-  margin-top: pxToRem(29px);
+  margin-top: variables.pxToRem(29px);
   width: 100%;
   display: flex;
   flex-flow: row nowrap;
-  gap: $space-unit;
+  gap: variables.$space-unit;
 
   .extra-link {
     flex-basis: 50%;
@@ -323,7 +325,7 @@ useLpiHead2({
 
 .link {
   display: inline-block; // avoid breaking link on new line
-  color: $primary-dark;
+  color: variables.$primary-dark;
   text-decoration: underline;
   font-weight: 400;
 
@@ -341,10 +343,10 @@ useLpiHead2({
 }
 
 .expired-text {
-  font-size: pxToRem(40px);
-  line-height: $line-height-squashed;
+  font-size: variables.pxToRem(40px);
+  line-height: variables.$line-height-squashed;
   text-align: center;
-  color: $primary;
+  color: variables.$primary;
   font-weight: 700;
   padding-left: 30px;
   padding-right: 30px;
@@ -371,14 +373,14 @@ useLpiHead2({
 
   a {
     font-weight: 700;
-    color: $primary-dark;
+    color: variables.$primary-dark;
     text-decoration: underline;
   }
 }
 
 .confirm-message strong {
   font-weight: 700;
-  color: $primary-dark;
+  color: variables.$primary-dark;
 }
 
 .fade-leave-active,

@@ -199,37 +199,39 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .page-title {
-  margin-bottom: $space-3xl;
+  margin-bottom: variables.$space-3xl;
 }
 
 .answer-options {
   display: flex;
-  gap: $space-unit;
+  gap: variables.$space-unit;
 }
 
 .form-field {
-  margin-top: $space-unit;
+  margin-top: variables.$space-unit;
 
   .label {
-    margin-bottom: $space-m;
+    margin-bottom: variables.$space-m;
   }
 }
 
 .notice {
-  margin-bottom: $space-m;
+  margin-bottom: variables.$space-m;
 }
 
 .submit-field {
   display: flex;
   justify-content: center;
-  margin-bottom: $space-2xl;
+  margin-bottom: variables.$space-2xl;
 }
 
 a,
 strong {
   font-weight: bold;
-  color: $primary-dark;
+  color: variables.$primary-dark;
 }
 
 a:hover {
@@ -237,10 +239,10 @@ a:hover {
 }
 
 .response-sent {
-  margin-top: $space-xl;
-  background-color: $primary-lighter;
+  margin-top: variables.$space-xl;
+  background-color: variables.$primary-lighter;
   text-align: center;
-  border-radius: $space-m;
-  padding: $space-xl $space-m;
+  border-radius: variables.$space-m;
+  padding: variables.$space-xl variables.$space-m;
 }
 </style>

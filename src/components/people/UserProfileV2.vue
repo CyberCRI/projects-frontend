@@ -648,12 +648,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .profile-links {
   display: inline-flex;
   width: 100%;
   justify-content: flex-end;
   padding-bottom: 24px;
   text-transform: none;
-  gap: $space-unit;
+  gap: variables.$space-unit;
 }
 </style>

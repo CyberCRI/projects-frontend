@@ -76,32 +76,34 @@ onMounted(() => loadRoles())
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .other-org-account-card {
   display: flex;
   align-items: center;
-  padding: $space-m;
-  gap: $space-m;
+  padding: variables.$space-m;
+  gap: variables.$space-m;
   box-sizing: border-box;
-  border-radius: $border-radius-m;
-  background-color: $primary-lighter;
+  border-radius: variables.$border-radius-m;
+  background-color: variables.$primary-lighter;
 }
 
 .img-container {
   border-radius: 50%;
   background-size: cover;
   background-position: top center;
-  width: pxToRem(80px);
-  height: pxToRem(80px);
+  width: variables.pxToRem(80px);
+  height: variables.pxToRem(80px);
   flex-shrink: 0;
 }
 
 .name {
-  font-size: $font-size-m;
+  font-size: variables.$font-size-m;
 }
 
 .job {
   font-weight: normal;
-  font-size: $font-size-m;
+  font-size: variables.$font-size-m;
 }
 
 .loader {

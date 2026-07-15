@@ -1,8 +1,4 @@
-import {
-  AnnouncementInput,
-  AnnouncementModel,
-  TranslatedAnnouncement,
-} from 'shared-projects-frontend/models'
+import type { AnnouncementModel, TranslatedAnnouncement } from 'shared-projects-frontend/models'
 import { ProjectFactory, TranslatedProjectFactory } from './project.factory'
 import { createFactory } from 'faker-create-factory'
 import BaseFactory from './base.factory'

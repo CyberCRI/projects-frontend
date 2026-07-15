@@ -39,6 +39,8 @@ const fetchSkill = async () => {
   </EntityAdminShow>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .loader {
   display: flex;
   justify-content: center;

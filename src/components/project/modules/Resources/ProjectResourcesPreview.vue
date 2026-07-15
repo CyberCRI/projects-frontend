@@ -28,6 +28,8 @@ const resources = computed(() => props.project.modules.links + props.project.mod
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .resources-list {
   display: flex;
   gap: 1rem;

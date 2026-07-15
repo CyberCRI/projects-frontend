@@ -64,6 +64,8 @@ onBeforeMount(() => {
 })
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .dynamic-grid.card {
   display: grid;
 }

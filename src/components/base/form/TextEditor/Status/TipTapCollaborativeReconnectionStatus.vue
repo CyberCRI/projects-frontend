@@ -33,11 +33,13 @@ withDefaults(
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .status-bar {
   justify-content: center;
   top: 30px;
-  background: $white;
-  color: $primary-dark;
+  background: variables.$white;
+  color: variables.$primary-dark;
   display: flex;
   padding: 5px 20px;
   position: sticky;

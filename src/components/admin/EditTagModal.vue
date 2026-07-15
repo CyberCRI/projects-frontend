@@ -191,6 +191,8 @@ async function saveTag() {
   </BaseModal>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .form-section + .form-section {
   margin-top: 1.5rem;
 }

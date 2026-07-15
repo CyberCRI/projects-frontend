@@ -28,6 +28,8 @@ const notEditable = computed(() => t(`profile.edit.${props.docType}.no-editable`
 </script>
 
 <style lang="scss">
+@use '~/design/scss/variables';
+
 .profile-documents {
   border-radius: 5px;
   padding: 0.2rem;
@@ -39,7 +41,7 @@ const notEditable = computed(() => t(`profile.edit.${props.docType}.no-editable`
   padding: 1rem;
   margin-top: 1rem;
   background-color: $salmon;
-  color: rgba(0 0 0 / 80%);
+  color: rgb(0 0 0 / 80%);
   font-style: italic;
 
   svg {

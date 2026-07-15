@@ -33,20 +33,22 @@ const iconOnly = computed(() => (!props.label || !props.label.length) && props.b
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .link-button {
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: 700;
-  font-size: $font-size-m;
+  font-size: variables.$font-size-m;
   transition: 0.15s all ease-in-out;
   cursor: pointer;
   will-change: transform;
   border: none;
   background: transparent;
-  color: $primary-dark;
+  color: variables.$primary-dark;
   padding: 0;
-  gap: $space-s;
+  gap: variables.$space-s;
 
   &.icon-only {
     border-radius: 50%;
@@ -63,7 +65,7 @@ const iconOnly = computed(() => (!props.label || !props.label.length) && props.b
     transform-origin: center center;
     transform: translateY(4px) translateZ(0) scale(0, 1);
     transition: 200ms ease-in-out;
-    border-bottom: $border-width-m solid $primary-dark;
+    border-bottom: variables.$border-width-m solid variables.$primary-dark;
   }
 
   &:hover::before {
@@ -73,6 +75,6 @@ const iconOnly = computed(() => (!props.label || !props.label.length) && props.b
 
 .link-button :deep(svg) {
   transition: 0.15s fill ease-in-out;
-  fill: $primary-dark;
+  fill: variables.$primary-dark;
 }
 </style>

@@ -48,9 +48,11 @@ watchEffect(() => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .buttons-group {
   display: flex;
-  gap: $space-unit;
+  gap: variables.$space-unit;
 
   > * {
     flex-basis: 50%;
@@ -58,6 +60,6 @@ watchEffect(() => {
 }
 
 .form-group + .form-group {
-  margin-top: $space-unit;
+  margin-top: variables.$space-unit;
 }
 </style>

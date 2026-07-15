@@ -34,6 +34,8 @@ defineEmits<{
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .project-team-editor {
   display: inline-block;
   position: relative;
@@ -46,7 +48,7 @@ defineEmits<{
     right: 0;
     left: 0;
     justify-content: flex-end;
-    gap: $space-m;
+    gap: variables.$space-m;
     z-index: 10;
     transform: translate(0, -50%);
   }

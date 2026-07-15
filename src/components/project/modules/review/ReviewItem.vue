@@ -68,12 +68,14 @@ const userStore = useUsersStore()
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .review {
   background: var(--white);
-  border-radius: $border-radius-l;
-  padding: $space-l;
+  border-radius: variables.$border-radius-l;
+  padding: variables.$space-l;
   color: var(--black);
-  border: $border-width-s solid var(--primary-dark);
+  border: variables.$border-width-s solid var(--primary-dark);
   box-sizing: border-box;
   position: relative;
 
@@ -85,7 +87,7 @@ const userStore = useUsersStore()
     flex-shrink: 0;
 
     .delete-btn + .edit-btn {
-      margin-left: $space-m;
+      margin-left: variables.$space-m;
     }
   }
 
@@ -93,12 +95,12 @@ const userStore = useUsersStore()
     display: flex;
     align-items: center;
     color: var(--primary-dark);
-    margin-bottom: $space-m;
-    gap: $space-m;
+    margin-bottom: variables.$space-m;
+    gap: variables.$space-m;
 
     .image {
-      width: pxToRem(40px);
-      height: pxToRem(40px);
+      width: variables.pxToRem(40px);
+      height: variables.pxToRem(40px);
       display: inline-block;
       border-radius: 50%;
     }
@@ -107,8 +109,8 @@ const userStore = useUsersStore()
   .review-content {
     .title {
       color: var(--primary-dark);
-      margin-bottom: $space-m;
-      font-size: $font-size-l;
+      margin-bottom: variables.$space-m;
+      font-size: variables.$font-size-l;
     }
   }
 }

@@ -2,7 +2,7 @@ import GroupDocumentsTab from '~/pages/GroupPageV2/Tabs/Documents/GroupDocuments
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import { flushPromises } from '@vue/test-utils'
 
-import {
+import type {
   ResearcherDocumentType,
   ResearcherDocumentAnalytics,
 } from 'shared-projects-frontend/models'

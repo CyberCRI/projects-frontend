@@ -157,6 +157,8 @@ const onConfirmDeleteTab = () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .description-info {
   display: grid;
   grid-template-columns: 20px 1fr;

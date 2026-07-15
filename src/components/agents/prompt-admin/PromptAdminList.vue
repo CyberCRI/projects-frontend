@@ -35,8 +35,10 @@ const countAgents = (p) => p.promptContents.reduce((acc, pc) => acc + pc.agents.
   </EntityAdminList>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .title {
   font-size: 1.2rem;
-  color: $primary-dark;
+  color: variables.$primary-dark;
 }
 </style>

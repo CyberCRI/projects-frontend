@@ -511,6 +511,8 @@ async function exportConversation() {
   />
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .action-bar {
   display: flex;
   justify-content: flex-end;

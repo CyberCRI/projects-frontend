@@ -398,17 +398,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .categories-tab {
   .header {
     display: flex;
     align-items: flex-start;
-    gap: $space-2xl;
+    gap: variables.$space-2xl;
 
     .notices {
       flex-basis: 75%;
 
       p + p {
-        margin-top: $space-m;
+        margin-top: variables.$space-m;
       }
     }
 
@@ -420,12 +422,12 @@ export default {
   }
 
   > button {
-    margin: 0 auto $space-l;
+    margin: 0 auto variables.$space-l;
   }
 
   svg {
     width: 24px;
-    fill: $white;
+    fill: variables.$white;
   }
 
   .icon-tip {
@@ -433,7 +435,7 @@ export default {
     height: 1.2em;
     display: inline-block;
     vertical-align: bottom;
-    fill: $primary-dark;
+    fill: variables.$primary-dark;
   }
 
   .categories-container {
@@ -441,9 +443,9 @@ export default {
     width: 30rem;
     display: flex;
     flex-wrap: wrap;
-    gap: $space-l;
+    gap: variables.$space-l;
     justify-content: stretch;
-    padding: $space-m;
+    padding: variables.$space-m;
 
     > ul {
       flex-grow: 1;
@@ -452,7 +454,7 @@ export default {
 }
 
 .category-ghost {
-  background-color: $primary-lighter;
+  background-color: variables.$primary-lighter;
 }
 
 .flip-list-move {

@@ -132,7 +132,7 @@ withDefaults(
   { selectedGroup: true }
 )
 
-const model = defineModel<NewsForm>({ default: defaultNewsForm() })
+const model = defineModel<NewsForm>({ default: defaultNewsForm })
 const { stateModals, openModals, closeModals } = useModals({
   LocationForm: false,
   LocationDrawer: false,
@@ -208,18 +208,20 @@ const updateLocation = (location) => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .input-field {
-  margin: $space-l;
-  margin-bottom: $space-xs;
+  margin: variables.$space-l;
+  margin-bottom: variables.$space-xs;
 }
 
 .content-editor {
   flex-grow: 1;
-  min-height: pxToRem(300px);
+  min-height: variables.pxToRem(300px);
 }
 
 .img-ctn {
-  margin-bottom: $space-xl;
+  margin-bottom: variables.$space-xl;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -230,13 +232,13 @@ const updateLocation = (location) => {
 }
 
 .form-section + .form-section {
-  margin-top: $space-xl;
+  margin-top: variables.$space-xl;
 }
 
 label {
   font-size: 0.875rem;
   font-weight: bold;
-  color: $black;
+  color: variables.$black;
   display: block;
 }
 
@@ -246,7 +248,7 @@ label {
 
 label,
 .notice {
-  margin-bottom: $space-l !important;
+  margin-bottom: variables.$space-l !important;
 }
 
 // TODO fix cleanly

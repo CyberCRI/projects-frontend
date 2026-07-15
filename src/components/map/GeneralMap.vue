@@ -135,6 +135,8 @@ watch(
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .leaflet-map {
   transition: filter 1s ease;
   overflow: hidden;

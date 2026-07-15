@@ -1,6 +1,6 @@
 import { getUser as globalGetUser, getOrganizationByCode } from 'shared-projects-frontend/apis'
-import type { OrganizationModel, UserModel } from 'shared-projects-frontend/models'
 import { isAdmin, isSuperAdmin, userRights } from 'shared-projects-frontend/lib'
+import type { OrganizationModel } from 'shared-projects-frontend/models'
 
 // TODO: add parseToken/jwt in shared-project-backend
 export function parseJwt(token) {
@@ -22,25 +22,20 @@ export function parseJwt(token) {
 
     return JSON.parse(jsonPayload)
   } catch (error) {
-    throw new Error(`Failed to parse JWT: ${error.message}`)
+    throw new Error(`Failed to parse JWT: ${error.message}`, { cause: error })
   }
 }
 
 export function getKeycloakIdFromToken(tokenHeader) {
-  let kcId = null
   try {
-    const jwt = parseJwt(tokenHeader)
-    kcId = jwt.sub
-  } catch (err) {
-    console.error(err)
+    return parseJwt(tokenHeader).sub
+  } catch {
     throw createError({
       statusCode: 400,
       statusMessage: 'bad_request',
       message: 'Malformed token.',
     })
   }
-
-  return kcId
 }
 
 export async function getOrg(event): Promise<OrganizationModel | null> {

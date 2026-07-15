@@ -33,30 +33,32 @@ defineProps<{
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .line {
   display: flex;
   align-items: center;
   cursor: pointer;
 
   &:hover {
-    background-color: $primary-lighter;
+    background-color: variables.$primary-lighter;
   }
 }
 
 .img-container {
-  border-radius: $border-radius-s;
+  border-radius: variables.$border-radius-s;
   background-size: cover;
   background-position: top center;
   width: 50px;
   height: 50px;
   flex: none;
-  margin-right: $space-s;
+  margin-right: variables.$space-s;
 }
 
 .project-title {
   font-weight: 700;
-  color: $primary-dark;
+  color: variables.$primary-dark;
   -webkit-line-clamp: 1;
-  line-height: $line-height-tight;
+  line-height: variables.$line-height-tight;
 }
 </style>

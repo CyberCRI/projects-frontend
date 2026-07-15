@@ -1,15 +1,12 @@
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
-import {
-  AnnouncementFactory,
-  TranslatedAnnouncementFactory,
-} from '~~/tests/factories/announcement.factory'
 import ProjectAnnouncementsTab from '~/pages/ProjectPageV2/Tabs/Announcements/ProjectAnnouncementsTab.vue'
-import { ProjectFactory, TranslatedProjectFactory } from '~~/tests/factories/project.factory'
+import { AnnouncementFactory } from '~~/tests/factories/announcement.factory'
+import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
-import { describe, expect, it, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
+import { describe, expect, it } from 'vitest'
 
 describe('ProjectAnnouncementsTab.vue', () => {
   it('should render component', async () => {

@@ -22,9 +22,11 @@ const escoLink = computed(
   </p>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .classification-description {
   a {
-    color: $primary-dark;
+    color: variables.$primary-dark;
     font-weight: 700;
 
     &:hover {

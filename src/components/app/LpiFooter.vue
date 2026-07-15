@@ -181,15 +181,17 @@ const showOnboardingScreen = computed(() => organizationsStore.current?.onboardi
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 footer {
-  border-top: 1px solid $light-gray;
-  color: $almost-black;
+  border-top: 1px solid variables.$light-gray;
+  color: variables.$almost-black;
 
   .footer-content {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    margin: pxToRem(42px) auto;
+    margin: variables.pxToRem(42px) auto;
   }
 
   .footer-lists {
@@ -200,33 +202,33 @@ footer {
     gap: 1rem;
     flex-grow: 1;
 
-    @media screen and (min-width: $min-tablet) {
+    @media screen and (min-width: variables.$min-tablet) {
       grid-template-columns: 1fr 1fr;
     }
 
-    @media screen and (min-width: $min-desktop) {
+    @media screen and (min-width: variables.$min-desktop) {
       grid-template-columns: 1fr 1fr 1fr 1fr;
     }
   }
 
   .footer-links {
-    font-size: $font-size-m;
+    font-size: variables.$font-size-m;
     font-weight: 400;
     flex-basis: 100%;
 
     li {
       cursor: pointer;
-      margin: $space-m auto;
+      margin: variables.$space-m auto;
 
       .source-link {
         display: flex;
         align-items: center;
         cursor: pointer;
-        gap: $space-s;
+        gap: variables.$space-s;
 
         img {
           width: auto;
-          height: $layout-size-2xl;
+          height: variables.$layout-size-2xl;
         }
       }
     }
@@ -239,23 +241,23 @@ footer {
   .creators {
     display: flex;
     align-items: center;
-    font-size: $font-size-s;
+    font-size: variables.$font-size-s;
     overflow-x: hidden; // fix mobile layout break on commit hashes
 
     > div {
-      margin-right: $space-m;
+      margin-right: variables.$space-m;
       text-align: right;
       overflow-x: hidden; // fix mobile layout break on commit hashes
     }
 
     .lpi-logo {
-      width: pxToRem(95px);
-      height: pxToRem(87px);
+      width: variables.pxToRem(95px);
+      height: variables.pxToRem(87px);
     }
 
     .projects {
       font-weight: 700;
-      font-size: $font-size-s;
+      font-size: variables.$font-size-s;
     }
   }
 
@@ -274,11 +276,11 @@ footer {
     }
 
     .link {
-      margin-bottom: $space-m;
+      margin-bottom: variables.$space-m;
     }
 
     ul {
-      margin-bottom: $space-m;
+      margin-bottom: variables.$space-m;
     }
   }
 }

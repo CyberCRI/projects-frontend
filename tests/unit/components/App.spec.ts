@@ -6,7 +6,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { checkExpiredToken } from '~/api/auth/keycloakUtils'
 import { flushPromises } from '@vue/test-utils'
-import { Router } from 'vue-router'
+import type { Router } from 'vue-router'
 import type { Mock } from 'vitest'
 // issue with webcrypto, so mock so offending import
 import pinia from '~/stores'

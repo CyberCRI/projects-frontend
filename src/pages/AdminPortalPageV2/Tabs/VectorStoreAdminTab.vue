@@ -111,6 +111,8 @@ const deleteDocument = async () => {
   </div>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .actions {
   margin-bottom: 1rem;
   display: flex;

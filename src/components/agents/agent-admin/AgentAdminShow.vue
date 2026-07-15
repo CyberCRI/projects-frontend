@@ -37,18 +37,20 @@ const fetchAgent = async () => {
   </EntityAdminShow>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .chunk {
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
 
 .chunk ~ .chunk {
-  border-top: 1px solid $light-gray;
+  border-top: 1px solid variables.$light-gray;
 }
 
 .chunk-header {
   text-align: center;
-  color: $light-gray;
+  color: variables.$light-gray;
   font-style: italic;
   font-weight: normal;
 }

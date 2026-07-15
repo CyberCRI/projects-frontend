@@ -31,12 +31,14 @@ const documentsCount = computed(() => props.user.researcher?.documents?.[props.d
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .document-tab {
   .title {
-    font-size: $font-size-l;
+    font-size: variables.$font-size-l;
     font-weight: 700;
-    color: $primary-dark;
-    margin: $space-l 0;
+    color: variables.$primary-dark;
+    margin: variables.$space-l 0;
   }
 }
 

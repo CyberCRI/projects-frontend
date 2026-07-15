@@ -1,11 +1,10 @@
 import TagsFilterEditor from '~/components/search/Filters/TagsFilterEditor.vue'
 import { lpiMount } from '~~/tests/helpers/LpiMount'
-import waitForExpect from 'wait-for-expect'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
 import pinia from '~/stores'
 
-import { OrganizationOutput } from 'shared-projects-frontend/models'
+import type { OrganizationOutput } from 'shared-projects-frontend/models'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
@@ -75,7 +74,7 @@ describe('TagsFilterEditor', () => {
   it('should fetch  tags', async () => {
     wrapper = lpiMount(TagsFilterEditor, defaultParams)
     wrapper.vm.selectedClassificationId = 123
-    await waitForExpect(() => {
+    await expect.poll(() => {
       expect(getOrgClassificationTags).toHaveBeenCalled()
     })
   })
@@ -114,7 +113,7 @@ describe('TagsFilterEditor', () => {
   //     vm.search += 'b'
   //     expect(vm.isAddMode).toBe(true)
   //     vm.search += 'c'
-  //     await waitForExpect(() => {
+  //     await expect.poll(() => {
   //         expect(vm.isAddMode).toBe(false)
   //     })
   // })

@@ -102,10 +102,12 @@ const status = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .recommandations {
-  margin-top: $space-l;
-  border: 1px solid $primary;
-  border-radius: $border-radius-s;
+  margin-top: variables.$space-l;
+  border: 1px solid variables.$primary;
+  border-radius: variables.$border-radius-s;
   overflow-x: hidden;
 }
 
@@ -113,11 +115,11 @@ const status = computed(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-block: $space-l;
+  margin-block: variables.$space-l;
 }
 
 .recommendation-title {
-  font-size: $font-size-l;
+  font-size: variables.$font-size-l;
   font-weight: 700;
 }
 

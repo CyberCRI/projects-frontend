@@ -105,6 +105,8 @@ const insertImage = () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .image-preview {
   width: fit-content;
   margin: auto;

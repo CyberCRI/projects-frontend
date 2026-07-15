@@ -1,5 +1,5 @@
 import ProfileBioTab from '~/pages/UserProfilePageV2/Tabs/ProfileBioTab.vue'
-import { OrganizationOutput } from 'shared-projects-frontend/models'
+import type { OrganizationOutput } from 'shared-projects-frontend/models'
 import { UserFactory } from '~~/tests/factories/user.factory'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'

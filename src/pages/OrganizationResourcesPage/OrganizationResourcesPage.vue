@@ -162,6 +162,8 @@ useLpiHead2({
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .loader {
   display: flex;
   align-items: center;
@@ -176,7 +178,7 @@ useLpiHead2({
   display: flex;
 
   button:last-of-type {
-    margin-left: $space-s;
+    margin-left: variables.$space-s;
   }
 }
 
@@ -184,22 +186,22 @@ useLpiHead2({
   .resource-ctn {
     display: flex;
     flex-wrap: wrap;
-    gap: $space-m;
-    padding: $space-l 0;
+    gap: variables.$space-m;
+    padding: variables.$space-l 0;
 
     > div {
-      width: calc(33% - $space-m);
+      width: calc(33% - variables.$space-m);
     }
   }
 
   .link-header {
-    margin-top: $space-l;
+    margin-top: variables.$space-l;
   }
 
   .category-title {
-    color: $primary-dark;
+    color: variables.$primary-dark;
     text-transform: uppercase;
-    font-size: $font-size-xs;
+    font-size: variables.$font-size-xs;
     font-weight: 700;
   }
 }
@@ -207,18 +209,18 @@ useLpiHead2({
 .add-resource {
   display: flex;
   justify-content: flex-end;
-  padding: $space-l 0;
+  padding: variables.$space-l 0;
 }
 
-@media screen and (max-width: $max-tablet) {
+@media screen and (max-width: variables.$max-tablet) {
   .organization-resources-page .resource-ctn {
     > div {
-      width: calc(50% - $space-m);
+      width: calc(50% - variables.$space-m);
     }
   }
 }
 
-@media screen and (max-width: $min-tablet) {
+@media screen and (max-width: variables.$min-tablet) {
   .organization-resources-page .resource-ctn {
     > div {
       width: 100%;

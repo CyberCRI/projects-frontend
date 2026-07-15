@@ -272,7 +272,8 @@ const onDuplicate = () => {
 </script>
 
 <style lang="scss" scoped>
-@import '~/components/base/navigation/navpanel-menu-entry';
+@use '~/design/scss/variables';
+@use '~/components/base/navigation/navpanel-menu-entry';
 
 .edit-btn-ctn {
   padding-bottom: 1rem;

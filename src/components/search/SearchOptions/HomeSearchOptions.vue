@@ -48,9 +48,11 @@ const search = () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .search-block {
   margin: 0;
-  padding: $space-m 0;
+  padding: variables.$space-m 0;
   width: 100%;
 }
 
@@ -66,27 +68,27 @@ const search = () => {
     flex-direction: column;
     align-items: center;
 
-    @media (min-width: $min-tablet) {
+    @media (min-width: variables.$min-tablet) {
       flex-direction: row;
       width: 100%;
       justify-content: center;
 
       .search-button {
-        margin-left: $space-l;
+        margin-left: variables.$space-l;
       }
     }
   }
 }
 
 .search-input {
-  margin-bottom: $space-m;
-  width: pxToRem(600px); // drop is 250px so 350 + 250 = 600
+  margin-bottom: variables.$space-m;
+  width: variables.pxToRem(600px); // drop is 250px so 350 + 250 = 600
 
-  @media (max-width: $min-tablet) {
+  @media (max-width: variables.$min-tablet) {
     width: 100%;
   }
 
-  @media (min-width: $min-tablet) {
+  @media (min-width: variables.$min-tablet) {
     margin-bottom: 0;
 
     &.has-sections :deep(.search-input) {
@@ -96,7 +98,7 @@ const search = () => {
   }
 
   &.has-sections {
-    max-width: pxToRem(350px);
+    max-width: variables.pxToRem(350px);
   }
 }
 </style>

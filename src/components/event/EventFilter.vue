@@ -8,9 +8,10 @@ import { nowDate } from '~/functs/date'
 const { t } = useNuxtI18n()
 
 const model = defineModel<QueryFilterEvent>({
-  default: {
-    ordering: 'start_date',
-  },
+  default: () =>
+    ({
+      ordering: 'start_date',
+    }) satisfies QueryFilterEvent,
 })
 
 const SORTING_RESULTS = computed(() => ({
@@ -62,6 +63,8 @@ changeOrder(SORTING_DEFAULT)
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .filter-list {
   display: flex;
   justify-content: center;

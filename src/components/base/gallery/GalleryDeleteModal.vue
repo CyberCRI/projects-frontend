@@ -23,6 +23,8 @@ defineEmits(['close', 'submit'])
 </script>
 
 <style lang="scss">
+@use '~/design/scss/variables';
+
 .gallery-container {
   display: flex;
   flex-direction: column;

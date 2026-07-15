@@ -33,26 +33,28 @@ defineEmits<{
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .search-input-container {
   display: flex;
-  padding: $space-l;
-  background: $primary-lighter;
+  padding: variables.$space-l;
+  background: variables.$primary-lighter;
   align-items: center;
-  border-radius: $border-radius-17;
+  border-radius: variables.$border-radius-17;
   flex-direction: column;
-  margin: $space-xl 0;
+  margin: variables.$space-xl 0;
 
   .search-input {
-    margin-bottom: pxToRem(16px);
+    margin-bottom: variables.pxToRem(16px);
   }
 
-  @media screen and (min-width: $min-tablet) {
-    padding: pxToRem(32px) pxToRem(84px);
+  @media screen and (min-width: variables.$min-tablet) {
+    padding: variables.pxToRem(32px) variables.pxToRem(84px);
     border-radius: 17px;
     flex-direction: row;
 
     .search-input {
-      margin-right: $space-l;
+      margin-right: variables.$space-l;
       margin-bottom: 0;
     }
   }

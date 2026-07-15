@@ -116,7 +116,7 @@ withDefaults(
   }
 )
 const { t } = useNuxtI18n()
-const model = defineModel<EventForm>({ default: defaultEventForm() })
+const model = defineModel<EventForm>({ default: defaultEventForm })
 const emit = defineEmits<{
   invalid: [boolean]
 }>()
@@ -202,6 +202,8 @@ const updateLocation = (location) => {
 }
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .list-container {
   gap: 2rem;
 }

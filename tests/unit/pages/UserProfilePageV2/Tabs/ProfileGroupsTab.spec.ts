@@ -4,7 +4,7 @@ import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { OrganizationOutput } from 'shared-projects-frontend/models'
+import type { OrganizationOutput } from 'shared-projects-frontend/models'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import pinia from '~/stores'
 vi.mock('shared-projects-frontend/apis', () => ({

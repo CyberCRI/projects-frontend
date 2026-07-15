@@ -48,6 +48,8 @@ const items = computed(() => [
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .color-preview {
   width: 1.5rem;
   height: 1.5rem;

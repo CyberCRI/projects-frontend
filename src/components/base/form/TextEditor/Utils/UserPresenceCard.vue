@@ -36,6 +36,8 @@ withDefaults(
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .user-card {
   padding: 0;
   position: relative;
@@ -75,8 +77,8 @@ withDefaults(
   width: auto;
   font-size: 13px;
   text-transform: uppercase;
-  color: $almost-black;
-  line-height: $line-height-tight;
+  color: variables.$almost-black;
+  line-height: variables.$line-height-tight;
   padding-left: 10px;
   align-items: center;
   display: flex;
@@ -88,8 +90,8 @@ withDefaults(
   display: inline-block;
   border-bottom: 0 solid lightgrey;
   border-left: 4px solid transparent;
-  color: $almost-black;
-  line-height: $line-height-tight;
+  color: variables.$almost-black;
+  line-height: variables.$line-height-tight;
   padding-left: 10px;
 }
 

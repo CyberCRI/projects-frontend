@@ -82,6 +82,8 @@ onMediaChange(
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .group-similars {
   .group-similars-list {
     display: flex;
@@ -97,7 +99,7 @@ onMediaChange(
   }
 }
 
-@media screen and (min-width: $min-desktop) {
+@media screen and (min-width: variables.$min-desktop) {
   #similars:not(:only-child) {
     .see-more-btn {
       padding: 0 !important;

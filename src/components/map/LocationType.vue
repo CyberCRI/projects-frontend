@@ -25,6 +25,8 @@ const pointerIcon = computed(() => LOCATION_TYPE_ICON[props.locationType] || 'Al
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .location-header {
   display: flex;
   align-items: center;

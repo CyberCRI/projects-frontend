@@ -23,8 +23,10 @@ defineProps<{
 }>()
 </script>
 
-<style scoped lang="scss">
-$sdg-size: pxToRem(38px);
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
+$sdg-size: pxtorem(38px);
 
 .sdg-link {
   width: $sdg-size;

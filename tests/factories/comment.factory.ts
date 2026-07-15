@@ -1,6 +1,6 @@
 import { createFactory } from 'faker-create-factory'
 
-import { CommentModel } from 'shared-projects-frontend/models'
+import type { CommentModel } from 'shared-projects-frontend/models'
 import { UserFactory } from './user.factory'
 import BaseFactory from './base.factory'
 

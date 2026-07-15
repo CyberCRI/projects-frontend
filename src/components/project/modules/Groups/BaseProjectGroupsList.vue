@@ -228,6 +228,8 @@ const onDeleteConfirm = () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .teams {
   display: flex;
   flex-direction: column;

@@ -217,6 +217,8 @@ const onDeleteConfirm = () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .pagination-span {
   margin-top: 1rem;
 }

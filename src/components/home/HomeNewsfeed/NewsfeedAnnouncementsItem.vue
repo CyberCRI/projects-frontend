@@ -70,25 +70,27 @@ const description = computed(() => props.announcement?.$t?.description || '')
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 $dimension: 200px;
 
 .home-announcement-item {
   display: grid;
-  border: $border-width-s solid $lighter-gray;
-  border-radius: $border-radius-s;
-  padding: $space-l;
+  border: variables.$border-width-s solid variables.$lighter-gray;
+  border-radius: variables.$border-radius-s;
+  padding: variables.$space-l;
   align-items: center;
-  column-gap: $space-l;
+  column-gap: variables.$space-l;
   grid-template-columns: $dimension auto;
   grid-template-rows: auto auto 1fr auto;
 
-  @media screen and (max-width: $min-tablet) {
+  @media screen and (max-width: variables.$min-tablet) {
     grid-template-columns: 1fr;
     grid-template-rows: repeat(5, auto);
-    row-gap: $space-l;
+    row-gap: variables.$space-l;
   }
 
-  @media screen and (min-width: $min-tablet) {
+  @media screen and (min-width: variables.$min-tablet) {
     align-items: flex-start;
     min-height: $dimension;
   }
@@ -102,7 +104,7 @@ $dimension: 200px;
     grid-column: 1;
     grid-row: 1 / 5;
 
-    @media screen and (max-width: $min-tablet) {
+    @media screen and (max-width: variables.$min-tablet) {
       grid-column: 1;
       grid-row: 2;
     }
@@ -125,34 +127,34 @@ $dimension: 200px;
       max-height: inherit;
       height: inherit;
       width: inherit;
-      border-radius: $border-radius-s;
-      border: 1px solid $lighter-gray;
+      border-radius: variables.$border-radius-s;
+      border: 1px solid variables.$lighter-gray;
     }
   }
 }
 
 .announcement-title {
   display: block;
-  font-size: $font-size-l;
-  margin-bottom: $space-s;
+  font-size: variables.$font-size-l;
+  margin-bottom: variables.$space-s;
   grid-column: 2;
   grid-row: 1;
 
-  @media screen and (max-width: $min-tablet) {
+  @media screen and (max-width: variables.$min-tablet) {
     grid-column: 1;
     grid-row: 1;
   }
 }
 
 .announcement-infos {
-  font-size: $font-size-s;
-  color: $primary-dark;
+  font-size: variables.$font-size-s;
+  color: variables.$primary-dark;
   font-weight: 700;
-  margin-bottom: $space-s;
+  margin-bottom: variables.$space-s;
   grid-column: 2;
   grid-row: 2;
 
-  @media screen and (max-width: $min-tablet) {
+  @media screen and (max-width: variables.$min-tablet) {
     grid-column: 1;
     grid-row: 3;
   }
@@ -161,7 +163,7 @@ $dimension: 200px;
 .dot {
   position: relative;
   top: -1px;
-  padding: 0 $space-2xs;
+  padding: 0 variables.$space-2xs;
 }
 
 .announcement-type {
@@ -191,7 +193,7 @@ $dimension: 200px;
     }
 
     a {
-      color: $primary-dark;
+      color: variables.$primary-dark;
 
       &:hover {
         text-decoration: underline;
@@ -199,7 +201,7 @@ $dimension: 200px;
     }
   }
 
-  @media screen and (max-width: $min-tablet) {
+  @media screen and (max-width: variables.$min-tablet) {
     grid-column: 1;
     grid-row: 4;
   }
@@ -209,7 +211,7 @@ $dimension: 200px;
   grid-column: 2;
   grid-row: 4;
 
-  @media screen and (max-width: $min-tablet) {
+  @media screen and (max-width: variables.$min-tablet) {
     grid-column: 1;
     grid-row: 5;
   }

@@ -37,23 +37,25 @@ const beforeLeave = (el) => (el.style.height = '100%')
 const leave = (el) => (el.style.height = '0')
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .header {
   display: inline-flex;
   align-items: center;
   width: 100%;
   padding: 8px;
-  border-radius: $border-radius-xs;
+  border-radius: variables.$border-radius-xs;
 
   &-active {
-    background: $primary;
-    color: $primary-dark;
+    background: variables.$primary;
+    color: variables.$primary-dark;
   }
 }
 
 .accordion .icon {
-  width: pxToRem(24px);
-  fill: $white;
+  width: variables.pxToRem(24px);
+  fill: variables.$white;
   transform: rotate(0deg);
   transition-duration: 0.3s;
 }
@@ -62,13 +64,13 @@ const leave = (el) => (el.style.height = '0')
   display: block;
   overflow: scroll;
   border-top: 0;
-  border-bottom-left-radius: $border-radius-s;
-  border-bottom-right-radius: $border-radius-s;
+  border-bottom-left-radius: variables.$border-radius-s;
+  border-bottom-right-radius: variables.$border-radius-s;
   transition: 150ms ease-out;
 }
 
 .accordion .body-inner {
-  padding: $space-s;
+  padding: variables.$space-s;
   overflow-wrap: break-word;
   overflow: auto;
 
@@ -78,6 +80,6 @@ const leave = (el) => (el.style.height = '0')
 .accordion .icon.rotate {
   transform: rotate(180deg);
   transition-duration: 0.3s;
-  fill: $primary-dark;
+  fill: variables.$primary-dark;
 }
 </style>

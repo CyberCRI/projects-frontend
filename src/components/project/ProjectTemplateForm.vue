@@ -97,6 +97,8 @@ const onChangeCategories = async (categorie: TranslatedProjectCategory) => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .template-field {
   margin-top: 1rem;
 }

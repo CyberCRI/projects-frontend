@@ -1,4 +1,3 @@
-import waitForExpect from 'wait-for-expect'
 import analytics from '~/analytics'
 
 import { describe, expect, it, vi } from 'vitest'
@@ -38,7 +37,7 @@ describe.skip('Router redirections on routes requiring auth', () => {
     const router = useRouter()
     router.push('/restricted').catch(() => {})
 
-    await waitForExpect(() => {
+    await expect.poll(() => {
       expect(router.currentRoute.value.path).toEqual('/dashboard')
     })
   })
@@ -52,7 +51,7 @@ describe.skip('Router redirections on routes requiring auth', () => {
 
   //     router.push('/restricted').catch(() => {})
 
-  //     await waitForExpect(() => {
+  //     await expect.poll(() => {
   //         expect(router.currentRoute.value.path).toEqual('/discover')
   //     })
 

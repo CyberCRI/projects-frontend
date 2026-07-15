@@ -89,7 +89,9 @@ const canSave = computed(
     </template>
   </div>
 </template>
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .loader {
   display: flex;
   justify-content: center;

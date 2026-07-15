@@ -1,6 +1,6 @@
 import { createFactory } from 'faker-create-factory'
 
-import { FollowModel, FollowInput } from 'shared-projects-frontend/models'
+import type { FollowModel, FollowInput } from 'shared-projects-frontend/models'
 import { ProjectFactory } from '~~/tests/factories/project.factory'
 import { BaseFactory } from './base.factory'
 

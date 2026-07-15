@@ -17,7 +17,9 @@ defineProps<{
   project: TranslatedProject
 }>()
 </script>
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .project-header-image-ctn {
   display: flex;
   align-items: center;

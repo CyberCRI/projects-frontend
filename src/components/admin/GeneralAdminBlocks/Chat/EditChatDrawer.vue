@@ -102,13 +102,15 @@ const saveChat = async () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .notice,
 .label {
   display: block;
-  padding-bottom: $space-m;
+  padding-bottom: variables.$space-m;
 }
 
 .form-section {
-  padding-bottom: $space-l;
+  padding-bottom: variables.$space-l;
 }
 </style>

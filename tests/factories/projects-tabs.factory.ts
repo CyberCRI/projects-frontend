@@ -1,6 +1,10 @@
 import { createFactory } from 'faker-create-factory'
 
-import { ProjectTab, ProjectTabItem, TranslatedProjectTab } from 'shared-projects-frontend/models'
+import type {
+  ProjectTab,
+  ProjectTabItem,
+  TranslatedProjectTab,
+} from 'shared-projects-frontend/models'
 
 export const ProjectTabFactory = createFactory<ProjectTab>((faker) => ({
   id: faker.datatype.number(),

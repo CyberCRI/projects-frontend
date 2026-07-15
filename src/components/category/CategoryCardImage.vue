@@ -63,6 +63,8 @@ const imageStyle = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .category-card-image {
   overflow: hidden;
   position: relative;

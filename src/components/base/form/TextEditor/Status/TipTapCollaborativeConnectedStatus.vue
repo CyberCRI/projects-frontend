@@ -27,16 +27,18 @@ defineProps<{
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .editor-socket {
   align-items: center;
-  background: $primary-lighter;
+  background: variables.$primary-lighter;
   display: flex;
   justify-content: space-between;
 }
 
 .editor-status {
   align-items: center;
-  color: $white;
+  color: variables.$white;
   display: flex;
   justify-content: space-between;
   padding: 5px 20px;

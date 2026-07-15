@@ -461,8 +461,10 @@ const submit = async () => {
   </BaseDrawer>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .error {
-  color: $salmon;
+  color: variables.$salmon;
 }
 
 .form-section ~ .form-section {
@@ -470,7 +472,7 @@ const submit = async () => {
 }
 
 .form-section-title {
-  color: $primary-dark;
+  color: variables.$primary-dark;
   font-size: 1.3em;
   padding-block: 1rem;
 }
@@ -503,7 +505,7 @@ const submit = async () => {
 
 .warn-notice {
   display: block;
-  border-left: 2px solid $salmon;
+  border-left: 2px solid variables.$salmon;
   padding-left: 1rem;
   margin-left: 0.5rem;
   margin-bottom: 1rem;

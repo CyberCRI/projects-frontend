@@ -55,24 +55,26 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .stats-by-tab {
-  padding: $space-xl $space-l;
+  padding: variables.$space-xl variables.$space-l;
   display: flex;
   flex-wrap: wrap;
-  gap: $space-m;
+  gap: variables.$space-m;
 }
 
 :deep(.stat-card) {
-  flex: 1 1 calc(50% - $space-m);
+  flex: 1 1 calc(50% - variables.$space-m);
 
   .loader-simple {
     margin: auto;
   }
 }
 
-@media screen and (max-width: $max-tablet) {
+@media screen and (max-width: variables.$max-tablet) {
   .stats-by-tab {
-    padding: $space-l $space-s;
+    padding: variables.$space-l variables.$space-s;
   }
 
   :deep(.stat-card) {

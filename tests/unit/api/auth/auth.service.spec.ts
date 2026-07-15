@@ -1,6 +1,6 @@
 import { goToKeycloakLoginPage, logoutFromKeycloak } from '~/api/auth/auth.service'
+import type { OrganizationOutput } from 'shared-projects-frontend/models'
 import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest'
-import { OrganizationOutput } from 'shared-projects-frontend/models'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useKeycloak from '~/api/auth/keycloak'
 import pinia from '~/stores'

@@ -4,9 +4,9 @@ import {
   ProjectTabItemFactory,
   TranslatedProjectTabFactory,
 } from '~~/tests/factories/projects-tabs.factory'
-import { ProjectOutputFactory, TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import ProjectAddiionalsTab from '~/pages/ProjectPageV2/Tabs/Additionals/ProjectAddiionalsTab.vue'
 import ProjectSnapshotTab from '~/pages/ProjectPageV2/ProjectSnapshotTab.vue'
+import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
 import { mockNuxtImport, registerEndpoint } from '@nuxt/test-utils/runtime'
 import { UserFactory } from '~~/tests/factories/user.factory'

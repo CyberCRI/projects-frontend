@@ -100,12 +100,14 @@ const clickOutside = () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .lpi-select {
   display: inline-block;
   position: relative;
-  background: $white;
-  border-radius: $border-radius-s;
-  border: $border-width-s solid var(--light-gray);
+  background: variables.$white;
+  border-radius: variables.$border-radius-s;
+  border: variables.$border-width-s solid var(--light-gray);
 
   &.active {
     border-bottom-left-radius: 0;
@@ -120,9 +122,9 @@ const clickOutside = () => {
   }
 
   .option-list {
-    background-color: $white;
-    border: $border-width-s solid var(--light-gray);
-    border-radius: $border-radius-s;
+    background-color: variables.$white;
+    border: variables.$border-width-s solid var(--light-gray);
+    border-radius: variables.$border-radius-s;
 
     &.height-limit {
       max-height: v-bind('maxHeight');
@@ -132,13 +134,13 @@ const clickOutside = () => {
 
   .menu-header {
     z-index: 14;
-    padding: pxToRem(12px) $space-l;
+    padding: variables.pxToRem(12px) variables.$space-l;
     appearance: none;
-    font-size: $font-size-m;
+    font-size: variables.$font-size-m;
     font-weight: 700;
     max-width: 100%;
     transition: 0.15s all ease-in-out;
-    padding-right: $space-xl;
+    padding-right: variables.$space-xl;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -149,7 +151,7 @@ const clickOutside = () => {
       font-weight: 400;
 
       &--open {
-        padding-top: pxToRem(13px);
+        padding-top: variables.pxToRem(13px);
       }
     }
 
@@ -159,13 +161,13 @@ const clickOutside = () => {
   }
 
   .menu-dropdown {
-    padding: pxToRem(10px) $space-l;
+    padding: variables.pxToRem(10px) variables.$space-l;
     appearance: none;
-    font-size: $font-size-m;
+    font-size: variables.$font-size-m;
     font-weight: 400;
     width: 100%;
     max-width: 100%;
-    padding-right: $space-xl;
+    padding-right: variables.$space-xl;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -179,7 +181,7 @@ const clickOutside = () => {
 
   .selected-label {
     display: inline-block;
-    font-size: $font-size-m;
+    font-size: variables.$font-size-m;
   }
 }
 
@@ -187,8 +189,8 @@ const clickOutside = () => {
   position: absolute;
   top: 100%;
   min-width: 100%;
-  left: -$border-width-s;
-  right: -$border-width-s;
+  left: -(variables.$border-width-s);
+  right: -(variables.$border-width-s);
   z-index: 100;
   overflow: hidden;
 
@@ -220,21 +222,21 @@ const clickOutside = () => {
 
 .lpi-select.small {
   .menu-header {
-    padding: pxToRem(8px) $space-m;
-    font-size: $font-size-m;
+    padding: variables.pxToRem(8px) variables.$space-m;
+    font-size: variables.$font-size-m;
 
     &.placeholder--open {
-      padding-top: pxToRem(9px);
+      padding-top: variables.pxToRem(9px);
     }
   }
 
   .menu-dropdown {
-    padding: pxToRem(6px) $space-m;
-    padding-right: $space-l;
+    padding: variables.pxToRem(6px) variables.$space-m;
+    padding-right: variables.$space-l;
   }
 
   .selected-label {
-    font-size: $font-size-m;
+    font-size: variables.$font-size-m;
   }
 }
 
@@ -242,7 +244,7 @@ const clickOutside = () => {
 // TODO check if still needed
 .lpi-select.primary {
   background: var(--primary-dark);
-  border-radius: $border-radius-l;
+  border-radius: variables.$border-radius-l;
   border: 0 none;
 
   &.active {
@@ -261,7 +263,7 @@ const clickOutside = () => {
 
   .option-list {
     background-color: var(--primary-dark);
-    border-radius: $border-radius-l;
+    border-radius: variables.$border-radius-l;
   }
 
   .menu-dropdown {

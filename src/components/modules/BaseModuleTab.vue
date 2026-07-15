@@ -26,6 +26,8 @@ withDefaults(
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .basemodule-card {
   .basemodule {
     display: flex;
@@ -37,11 +39,11 @@ withDefaults(
       justify-content: flex-start;
       align-items: center;
       width: 100%;
-      gap: $space-l;
+      gap: variables.$space-l;
 
       .title {
         font-weight: 700;
-        font-size: $font-size-l;
+        font-size: variables.$font-size-l;
         color: var(--primary-dark);
         margin-bottom: 1rem;
       }

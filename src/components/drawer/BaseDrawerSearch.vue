@@ -187,6 +187,8 @@ watch(
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .list-flow-container {
   justify-content: space-around;
 }

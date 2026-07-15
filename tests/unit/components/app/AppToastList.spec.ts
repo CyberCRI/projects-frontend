@@ -3,7 +3,6 @@ import AppToastList from '~/components/app/AppToastList.vue'
 import LpiSnackbar from '~/components/base/LpiSnackbar.vue'
 
 import { describe, expect, it } from 'vitest'
-import waitForExpect from 'wait-for-expect'
 
 import useToasterStore from '~/stores/useToaster'
 
@@ -25,6 +24,6 @@ describe('AppToastList', () => {
     await nextTick()
     const snackbarComponent = wrapper.findComponent(LpiSnackbar)
     expect(snackbarComponent.exists()).toBeTruthy()
-    waitForExpect(() => expect(toaster.deleteToast).toHaveBeenLastCalledWith(0))
+    expect.poll(() => expect(toaster.deleteToast).toHaveBeenLastCalledWith(0))
   })
 })

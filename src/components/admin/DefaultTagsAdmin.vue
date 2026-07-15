@@ -128,24 +128,26 @@ const deleteOrganizationTag = async () => {
   </div>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .tags-ctn {
   display: flex;
   flex-wrap: wrap;
-  gap: $space-m;
-  margin-bottom: $space-l;
-  margin-top: $space-l;
+  gap: variables.$space-m;
+  margin-bottom: variables.$space-l;
+  margin-top: variables.$space-l;
 }
 
 .title {
   text-transform: uppercase;
   font-weight: bold;
-  color: $primary-dark;
-  margin-bottom: $space-xl;
-  font-size: $font-size-l;
+  color: variables.$primary-dark;
+  margin-bottom: variables.$space-xl;
+  font-size: variables.$font-size-l;
 }
 
 .notice {
-  margin-bottom: $space-l;
-  font-size: $font-size-s;
+  margin-bottom: variables.$space-l;
+  font-size: variables.$font-size-s;
 }
 </style>

@@ -1,4 +1,4 @@
-import { User, UserType } from './lib/interfaces'
+import type { User, UserType } from './lib/interfaces'
 
 export const users: User[] = [
   {

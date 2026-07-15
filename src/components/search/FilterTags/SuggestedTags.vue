@@ -51,17 +51,19 @@ const addTag = (tag) => emit('add-tag', tag)
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .suggested-tags-ctn {
-  background: $primary-lighter;
-  border-radius: $border-radius-xs;
-  padding: $space-m;
+  background: variables.$primary-lighter;
+  border-radius: variables.$border-radius-xs;
+  padding: variables.$space-m;
   display: flex;
   flex-wrap: wrap;
-  gap: $space-s;
+  gap: variables.$space-s;
 }
 
 .loader-ctn {
-  padding: $space-m;
+  padding: variables.$space-m;
   display: flex;
   justify-content: center;
   align-items: center;

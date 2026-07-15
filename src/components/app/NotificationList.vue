@@ -94,6 +94,8 @@ const loadNextPage = async () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .loading {
   display: flex;
   flex-direction: column;
@@ -107,7 +109,7 @@ const loadNextPage = async () => {
   align-items: center;
   margin-top: 50%;
   font-weight: 700;
-  color: $primary-dark;
+  color: variables.$primary-dark;
   font-size: 20px;
 }
 

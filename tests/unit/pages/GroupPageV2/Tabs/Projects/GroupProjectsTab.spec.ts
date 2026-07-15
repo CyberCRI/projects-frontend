@@ -41,7 +41,6 @@ describe('GroupProjectsTab', () => {
       },
     })
 
-    // @ts-expect-error TS2349
     await expect.poll(() => wrapper.text()).includes('An error occured')
   })
 })

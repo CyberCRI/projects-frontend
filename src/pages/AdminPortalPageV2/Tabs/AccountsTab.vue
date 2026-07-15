@@ -274,6 +274,8 @@ const closeAccountDrawer = () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .role-tab {
   display: flex;
   flex-direction: column;
@@ -284,7 +286,7 @@ const closeAccountDrawer = () => {
     align-items: center;
     gap: 2rem;
 
-    @media screen and (max-width: $max-tablet) {
+    @media screen and (max-width: variables.$max-tablet) {
       flex-direction: column;
       gap: 1rem;
       align-items: stretch;
@@ -294,23 +296,23 @@ const closeAccountDrawer = () => {
   .create-wrapper {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: $space-l;
+    margin-bottom: variables.$space-l;
   }
 
   .search-input-container {
     display: flex;
     align-items: center;
     flex-basis: 40rem;
-    gap: $space-l;
+    gap: variables.$space-l;
 
-    @media screen and (max-width: $max-tablet) {
+    @media screen and (max-width: variables.$max-tablet) {
       flex-basis: 100%;
       flex-grow: 1;
     }
   }
 
   .user-list {
-    margin-top: $space-xl;
+    margin-top: variables.$space-xl;
     width: 100%;
     overflow-x: auto;
     display: flex;
@@ -320,7 +322,7 @@ const closeAccountDrawer = () => {
 
   .loader {
     margin: auto;
-    padding-top: $space-l;
+    padding-top: variables.$space-l;
   }
 
   .button {
@@ -329,9 +331,9 @@ const closeAccountDrawer = () => {
     align-items: center;
     background: transparent;
     border: none;
-    font-size: $font-size-s;
-    line-height: $line-height-tight;
-    color: $almost-black;
+    font-size: variables.$font-size-s;
+    line-height: variables.$line-height-tight;
+    color: variables.$almost-black;
     cursor: pointer;
 
     &.unsotable {
@@ -342,7 +344,7 @@ const closeAccountDrawer = () => {
     .icon {
       width: 20px;
       height: 20px;
-      fill: $almost-black;
+      fill: variables.$almost-black;
     }
   }
 }
@@ -356,7 +358,7 @@ const closeAccountDrawer = () => {
 .toggle-user-icon {
   width: 28px;
   height: 28px;
-  fill: $almost-black;
+  fill: variables.$almost-black;
 }
 
 table {
@@ -367,7 +369,7 @@ table {
   width: 100%;
 
   tr:first-child {
-    background: $primary-lighter;
+    background: variables.$primary-lighter;
   }
 
   th,
@@ -393,8 +395,8 @@ table {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: $space-xl;
-  padding-bottom: $space-xl;
+  padding-top: variables.$space-xl;
+  padding-bottom: variables.$space-xl;
 }
 
 .has-more {
@@ -403,15 +405,15 @@ table {
 
 .first-item,
 .more-items {
-  line-height: $line-height-squashed;
+  line-height: variables.$line-height-squashed;
   vertical-align: baseline;
 }
 
 .more-items {
   display: inline-block;
   margin-left: 1rem;
-  background-color: $primary-dark;
-  color: $white;
+  background-color: variables.$primary-dark;
+  color: variables.$white;
   font-weight: 700;
   border-radius: 1rem;
   font-size: 0.8rem;
@@ -423,15 +425,15 @@ table {
 }
 
 .color-tip {
-  color: $black !important;
+  color: variables.$black !important;
 }
 
 .tooltip-div {
   max-width: 20rem;
   white-space: break-spaces;
-  padding: $space-m;
+  padding: variables.$space-m;
   text-align: center;
-  color: $black;
+  color: variables.$black;
 }
 
 .num-results-label {
@@ -448,7 +450,7 @@ table {
 
 .user-details-wrapper {
   display: flex;
-  gap: $space-m;
+  gap: variables.$space-m;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-start;
@@ -456,7 +458,7 @@ table {
 
 .user-details {
   dt {
-    color: $primary-dark;
+    color: variables.$primary-dark;
   }
 
   ul {

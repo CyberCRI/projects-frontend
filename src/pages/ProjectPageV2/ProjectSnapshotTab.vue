@@ -99,6 +99,8 @@ const {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .project-summary {
   display: flex;
   flex-flow: column;

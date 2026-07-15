@@ -50,3 +50,17 @@ export const onClientMounted = (callback: () => void) => {
 export const onClientUnmounted = (callback: () => void) => {
   onUnmounted(onClient(callback))
 }
+
+/**
+ * run onBeforeUnmount only if we are in client mode
+ *
+ * @function
+ * @name onClientBeforeUnmounted
+ * @kind variable
+ * @param {() => void} callback
+ * @returns {void}
+ * @exports
+ */
+export const onClientBeforeUnmounted = (callback: () => void) => {
+  onBeforeUnmount(onClient(callback))
+}

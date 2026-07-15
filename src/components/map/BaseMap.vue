@@ -154,8 +154,10 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
+@use '~/design/scss/variables';
+
 // do NOT scope this style, it will break the map
-@import '@/design/scss/map';
+@use '~/design/scss/map';
 
 .leaflet-container {
   min-height: 100%;
@@ -163,10 +165,12 @@ onMounted(() => {
 </style>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .map {
   height: 100%;
   background-color: #cee2ea;
-  border-radius: $border-radius-l;
+  border-radius: variables.$border-radius-l;
   position: relative;
 }
 

@@ -45,6 +45,8 @@ const switchView = () => emit('toggle-editing', !props.isEditing)
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .edit-btn-ctn {
   padding-bottom: 1rem;
   display: flex;
@@ -52,7 +54,7 @@ const switchView = () => emit('toggle-editing', !props.isEditing)
 }
 
 .group-contacts-ctn {
-  border: 1px solid $lighter-gray;
+  border: 1px solid variables.$lighter-gray;
   border-radius: 1rem;
   padding: 1rem;
   display: flex;

@@ -161,7 +161,9 @@ const confirm = async () => {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .title {
   font-size: $font-size-m;
   font-weight: bold;

@@ -85,6 +85,8 @@ const setPage = (value) => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .pagination {
   display: flex;
   align-items: center;

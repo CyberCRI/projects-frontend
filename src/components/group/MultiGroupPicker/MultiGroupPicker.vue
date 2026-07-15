@@ -235,11 +235,13 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .selected-groups {
   display: flex;
   flex-wrap: wrap;
-  gap: $space-m;
-  margin-bottom: $space-m;
+  gap: variables.$space-m;
+  margin-bottom: variables.$space-m;
 }
 
 .group-filter {

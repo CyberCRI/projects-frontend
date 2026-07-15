@@ -66,6 +66,8 @@ const modules = computed(() => ({
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .asyncing {
   opacity: 0.7;
 }

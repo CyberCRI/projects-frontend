@@ -173,7 +173,9 @@ const title = computed(() => `${translatedTitle.value}\n\n${translatedPurpose.va
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .icon {
-  fill: $primary-dark;
+  fill: variables.$primary-dark;
 }
 </style>

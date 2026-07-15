@@ -129,29 +129,31 @@ const toGroupPage = () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .group-count {
   display: flex;
   font-weight: 700;
-  font-size: $font-size-xs;
-  color: $primary-dark;
+  font-size: variables.$font-size-xs;
+  color: variables.$primary-dark;
   align-items: center;
 
   .icon {
-    fill: $primary-dark;
-    margin-right: $space-s;
+    fill: variables.$primary-dark;
+    margin-right: variables.$space-s;
     width: 16px;
   }
 }
 
 .card .group-count {
-  margin-top: $space-s;
+  margin-top: variables.$space-s;
   justify-content: center;
 }
 
 .card-type {
   font-weight: 500;
-  font-size: $font-size-s;
-  color: $almost-black;
+  font-size: variables.$font-size-s;
+  color: variables.$almost-black;
 }
 
 .card-description {
@@ -160,23 +162,23 @@ const toGroupPage = () => {
 }
 
 .subgroups-link {
-  background-color: $primary-dark;
-  color: $white;
+  background-color: variables.$primary-dark;
+  color: variables.$white;
   font-weight: bold;
   text-align: center;
   justify-self: end;
-  padding: $space-xs $space-s;
+  padding: variables.$space-xs variables.$space-s;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: $layout-size-xs;
+  gap: variables.$layout-size-xs;
   cursor: pointer;
-  font-size: $font-size-xs;
+  font-size: variables.$font-size-xs;
 
   .arrow {
-    fill: $white;
-    height: $layout-size-s;
-    width: $layout-size-s;
+    fill: variables.$white;
+    height: variables.$layout-size-s;
+    width: variables.$layout-size-s;
   }
 }
 </style>

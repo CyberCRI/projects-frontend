@@ -79,9 +79,11 @@ const showChildren = () => {
 const toggleGroup = (group) => emit('toggle-group', group)
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .icon-td {
-  width: pxToRem(25px);
-  padding: $space-xs;
+  width: variables.pxToRem(25px);
+  padding: variables.$space-xs;
 }
 
 .top-list {
@@ -110,7 +112,7 @@ li {
 }
 
 .child-list {
-  padding-left: pxToRem(35px);
+  padding-left: variables.pxToRem(35px);
 }
 
 .nested-list {
@@ -119,12 +121,12 @@ li {
 }
 
 .name {
-  padding: $space-unit;
+  padding: variables.$space-unit;
 }
 
 .green-color {
-  fill: $primary-dark;
-  color: $primary-dark;
+  fill: variables.$primary-dark;
+  color: variables.$primary-dark;
 }
 
 .checkbox {

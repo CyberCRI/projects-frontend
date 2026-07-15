@@ -22,18 +22,20 @@ defineEmits<{ click: [] }>()
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .notification-icon {
   display: inline-block;
   position: relative;
 
   svg {
-    height: $layout-size-2xl;
-    fill: $primary-dark;
+    height: variables.$layout-size-2xl;
+    fill: variables.$primary-dark;
   }
 
   &.white {
     svg {
-      fill: $white;
+      fill: variables.$white;
     }
   }
 
@@ -45,16 +47,16 @@ defineEmits<{ click: [] }>()
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: pxToRem(16px);
-    max-width: pxToRem(32px);
-    height: pxToRem(16px);
-    border-radius: pxToRem(8px);
-    background-color: $salmon;
+    min-width: variables.pxToRem(16px);
+    max-width: variables.pxToRem(32px);
+    height: variables.pxToRem(16px);
+    border-radius: variables.pxToRem(8px);
+    background-color: variables.$salmon;
 
     .inner {
-      font-size: $font-size-xs;
-      line-height: $line-height-squashed;
-      color: $white;
+      font-size: variables.$font-size-xs;
+      line-height: variables.$line-height-squashed;
+      color: variables.$white;
     }
   }
 }

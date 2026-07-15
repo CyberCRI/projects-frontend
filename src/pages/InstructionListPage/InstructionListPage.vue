@@ -118,8 +118,10 @@ useLpiHead2({
   />
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .page-title {
-  margin-bottom: $space-2xl;
+  margin-bottom: variables.$space-2xl;
 }
 
 .create-instruction-button {

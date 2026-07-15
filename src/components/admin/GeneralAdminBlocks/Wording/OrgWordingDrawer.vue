@@ -113,6 +113,8 @@ const close = () => emit('close')
 const handleImage = (img) => addedImages.value.push(img.id)
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .field-section {
   display: flex;
   flex-direction: column;
@@ -128,8 +130,8 @@ const handleImage = (img) => addedImages.value.push(img.id)
 }
 
 .field-label {
-  font-size: $font-size-s;
-  margin-top: $space-l;
-  margin-bottom: $space-m;
+  font-size: variables.$font-size-s;
+  margin-top: variables.$space-l;
+  margin-bottom: variables.$space-m;
 }
 </style>

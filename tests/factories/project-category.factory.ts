@@ -1,6 +1,6 @@
 import { createFactory } from 'faker-create-factory'
 
-import {
+import type {
   ProjectCategoryCreateInput,
   ProjectCategoryOutput,
   ProjectCategoryPatchInput,

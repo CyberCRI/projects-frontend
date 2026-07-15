@@ -50,20 +50,22 @@ const goToChat = () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .home-buttons {
-  margin-top: $space-l;
+  margin-top: variables.$space-l;
   display: flex;
   align-items: center;
   justify-content: space-around;
   flex-wrap: wrap;
-  padding: $space-l $space-s;
-  border-radius: $border-radius-8;
-  background-color: $primary-lighter;
+  padding: variables.$space-l variables.$space-s;
+  border-radius: variables.$border-radius-8;
+  background-color: variables.$primary-lighter;
 }
 
 .home-btn-container {
   display: flex;
   place-content: center center;
-  gap: $space-xs;
+  gap: variables.$space-xs;
 }
 </style>

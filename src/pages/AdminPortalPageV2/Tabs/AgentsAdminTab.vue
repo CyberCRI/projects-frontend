@@ -96,6 +96,8 @@ const onCloseAdminForm = () => {
   </div>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .actions {
   display: flex;
   justify-content: flex-end;

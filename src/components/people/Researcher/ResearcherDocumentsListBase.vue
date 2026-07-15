@@ -216,6 +216,8 @@ const documentsRoleInfos = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 $profile-documents: 1rem;
 
 .profile-documents-container {
@@ -251,7 +253,7 @@ $profile-documents: 1rem;
   }
 }
 
-@media screen and (width <=pxToRem(1000px)) {
+@media screen and (width <=variables.pxToRem(1000px)) {
   .profile-info-container {
     display: flex;
     flex-direction: column;
@@ -301,7 +303,7 @@ $profile-documents: 1rem;
 
   width: 12.5px;
   display: inline-block;
-  background-color: $primary-dark;
+  background-color: variables.$primary-dark;
   height: calc((var(--max-bar-height) * (var(--bar-count) / 100) + var(--min-bar-height)) * 1px);
   transition: all 0.4s;
   transform-origin: bottom;
@@ -351,7 +353,7 @@ $profile-documents: 1rem;
   align-items: baseline;
   font-weight: bold;
 
-  @media screen and (width <=pxToRem(1000px)) {
+  @media screen and (width <=variables.pxToRem(1000px)) {
     justify-content: center;
   }
 }
@@ -376,7 +378,7 @@ $profile-documents: 1rem;
 
     &:hover,
     &.selected {
-      background-color: $primary-dark;
+      background-color: variables.$primary-dark;
       color: white;
 
       & :first-child {
@@ -390,7 +392,7 @@ $profile-documents: 1rem;
   }
 
   & :first-child {
-    color: $primary-dark;
+    color: variables.$primary-dark;
     font-size: 2rem;
   }
 

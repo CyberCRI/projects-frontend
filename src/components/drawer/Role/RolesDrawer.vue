@@ -124,6 +124,8 @@ const checkClose = () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .member-item {
   display: grid;
   grid-template-columns: 1fr 1fr;

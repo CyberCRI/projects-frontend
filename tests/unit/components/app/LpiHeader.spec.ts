@@ -7,6 +7,8 @@ import LpiHeader from '~/components/app/LpiHeader.vue'
 import useUsersStore from '~/stores/useUsers'
 import pinia from '~/stores'
 
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+
 // quick fix for vi error
 // "Cannot log after tests are done. Did you forget to wait for something async in your test?"
 // caused by error log af failing call to fetch announcement in LpiHeader
@@ -15,8 +17,6 @@ vi.mock('shared-projects-frontend/apis', () => {
     clientAPI: vi.fn().mockResolvedValue({ data: { results: [] } }), // TODO nuxt check this
   }
 })
-
-import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const organization = OrganizationOutputFactory.generate()
 const organizations = OrganizationOutputFactory.generateMany(2)

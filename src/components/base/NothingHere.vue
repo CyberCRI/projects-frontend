@@ -20,6 +20,8 @@ const SRC = usePublicURL(`/empties/emptyBox.svg`)
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .card-list__empty {
   display: flex;
   flex-direction: column;
@@ -30,7 +32,7 @@ const SRC = usePublicURL(`/empties/emptyBox.svg`)
 .card-list__empty--text {
   font-weight: 400;
   font-size: 22px;
-  color: $primary-dark;
+  color: variables.$primary-dark;
   margin-bottom: 24px;
 }
 

@@ -133,8 +133,9 @@ watch(
   { immediate: true }
 )
 </script>
-<style scoped lang="scss">
-@import './profile-form';
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+@use '~/pages/UserProfilePageV2/Tabs/profile-form';
 
 .form-actions {
   position: sticky;

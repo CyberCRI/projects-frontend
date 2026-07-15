@@ -110,7 +110,9 @@ onUnmounted(() => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .project-layout {
-  margin-top: pxToRem(48px);
+  margin-top: variables.pxToRem(48px);
 }
 </style>

@@ -25,11 +25,13 @@ const DEBUG_TABS = [
 ]
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .debug-layout {
-  margin-top: pxToRem(48px);
+  margin-top: variables.pxToRem(48px);
 
   .page-title {
-    margin-bottom: $space-xl;
+    margin-bottom: variables.$space-xl;
   }
 }
 </style>

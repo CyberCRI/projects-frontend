@@ -82,9 +82,11 @@ watch(
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .blog-entry {
-  border-radius: $border-radius-l;
-  border: $border-width-s solid var(--primary);
+  border-radius: variables.$border-radius-l;
+  border: variables.$border-width-s solid var(--primary);
   box-sizing: border-box;
   background: var(--white);
   position: relative;
@@ -97,30 +99,30 @@ watch(
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: $space-m $space-l;
+      padding: variables.$space-m variables.$space-l;
       font-weight: 700;
       width: 100%;
 
       .entry-title {
-        font-size: $font-size-m;
-        line-height: $line-height-tight;
+        font-size: variables.$font-size-m;
+        line-height: variables.$line-height-tight;
       }
 
       .date {
-        font-size: $font-size-xs;
+        font-size: variables.$font-size-xs;
       }
     }
 
     .expand-button {
-      border-left: $border-width-s solid var(--primary);
+      border-left: variables.$border-width-s solid var(--primary);
       display: flex;
       align-items: center;
-      padding: 0 $space-l;
+      padding: 0 variables.$space-l;
       text-transform: uppercase;
       font-weight: 700;
-      font-size: $font-size-2xs;
+      font-size: variables.$font-size-2xs;
       cursor: pointer;
-      flex-basis: pxToRem(75px);
+      flex-basis: variables.pxToRem(75px);
       justify-content: space-between;
       color: var(--primary-dark);
 
@@ -132,21 +134,21 @@ watch(
   }
 
   .last-publication-flag {
-    border-top: $border-width-s solid var(--primary);
-    background: $primary-light;
+    border-top: variables.$border-width-s solid var(--primary);
+    background: variables.$primary-light;
     color: var(--primary-dark);
     text-transform: uppercase;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    font-size: $font-size-2xs;
-    padding: $space-s 0;
+    font-size: variables.$font-size-2xs;
+    padding: variables.$space-s 0;
   }
 
   .entry-body {
-    border-top: $border-width-s solid var(--primary);
-    padding: $space-m $space-l;
+    border-top: variables.$border-width-s solid var(--primary);
+    padding: variables.$space-m variables.$space-l;
 
     &::after {
       // fix floated image overflow

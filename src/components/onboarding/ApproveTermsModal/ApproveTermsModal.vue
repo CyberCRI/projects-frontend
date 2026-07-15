@@ -140,7 +140,10 @@ const onTermApproved = async () => {
     </template>
   </BaseModal>
 </template>
-<style scoped lang="scss">
+
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .notice {
   font-style: italic;
   margin-bottom: 1rem;
@@ -152,9 +155,9 @@ const onTermApproved = async () => {
 }
 
 .instructions {
-  background-color: $primary-lighter;
+  background-color: variables.$primary-lighter;
   padding: 1rem;
-  border-radius: $border-radius-m;
+  border-radius: variables.$border-radius-m;
   text-align: center;
 }
 
@@ -178,6 +181,6 @@ const onTermApproved = async () => {
   margin-bottom: 1rem;
   font-size: 0.9rem;
   text-align: right;
-  color: $mid-gray;
+  color: variables.$mid-gray;
 }
 </style>

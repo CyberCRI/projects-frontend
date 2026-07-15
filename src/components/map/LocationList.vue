@@ -49,6 +49,8 @@ const locationsGrouped = computed(() => groupBy(props.locations, (location) => l
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .location-list {
   list-style: none;
   display: grid;
@@ -56,11 +58,11 @@ const locationsGrouped = computed(() => groupBy(props.locations, (location) => l
   grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
 
-  @media screen and (max-width: $max-tablet) {
+  @media screen and (max-width: variables.$max-tablet) {
     grid-template-columns: 1fr 1fr;
   }
 
-  @media screen and (max-width: $min-tablet) {
+  @media screen and (max-width: variables.$min-tablet) {
     grid-template-columns: 1fr;
   }
 }
@@ -71,8 +73,8 @@ const locationsGrouped = computed(() => groupBy(props.locations, (location) => l
 
 .list-title {
   text-transform: uppercase;
-  font-size: $font-size-l;
-  color: $primary-dark;
+  font-size: variables.$font-size-l;
+  color: variables.$primary-dark;
   font-weight: 700;
 }
 </style>

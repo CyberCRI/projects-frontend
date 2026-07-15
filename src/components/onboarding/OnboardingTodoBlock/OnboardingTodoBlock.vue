@@ -191,9 +191,11 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .onboarding-todo-block {
   position: relative;
-  margin-top: $navbar-height;
+  margin-top: variables.$navbar-height;
 }
 
 .extra-actions {
@@ -204,7 +206,7 @@ export default {
 
 .plateform-tour-button {
   appearance: none;
-  background-color: $white;
+  background-color: variables.$white;
   display: flex;
   width: max-content;
   align-items: center;
@@ -214,7 +216,7 @@ export default {
   position: absolute;
   right: 1rem;
   top: 1rem;
-  border: $border-width-s solid $blue;
+  border: variables.$border-width-s solid variables.$blue;
   cursor: pointer;
 
   .btn-label {
@@ -240,7 +242,7 @@ export default {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      fill: $primary-dark;
+      fill: variables.$primary-dark;
     }
   }
 
@@ -288,13 +290,13 @@ export default {
   position: relative;
   background-size: cover;
   background-position: center;
-  background-color: $white;
+  background-color: variables.$white;
 
   .close-btn {
     position: absolute;
     right: 1rem;
     top: 1rem;
-    background-color: $white;
+    background-color: variables.$white;
   }
 }
 
@@ -303,9 +305,9 @@ export default {
 }
 
 .welcome-title {
-  font-size: $font-size-2xl;
+  font-size: variables.$font-size-2xl;
   font-weight: 700;
-  line-height: $line-height-tight;
+  line-height: variables.$line-height-tight;
   text-align: center;
 }
 
@@ -314,18 +316,18 @@ export default {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-around;
-  gap: $space-unit;
-  padding: $space-unit;
+  gap: variables.$space-unit;
+  padding: variables.$space-unit;
   background-color: rgb(108 213 255 / 40%);
-  border-radius: $border-radius-8;
+  border-radius: variables.$border-radius-8;
 
-  @media screen and (max-width: $min-tablet) {
+  @media screen and (max-width: variables.$min-tablet) {
     flex-flow: column nowrap;
   }
 }
 
 .action-link {
-  color: $primary-dark;
+  color: variables.$primary-dark;
   font-weight: 700;
   text-decoration: underline;
 

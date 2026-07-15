@@ -165,9 +165,11 @@ const onApplyAnnouncement = () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .reply-to {
-  margin-bottom: $space-m;
+  margin-bottom: variables.$space-m;
   text-align: center;
-  font-size: $font-size-l;
+  font-size: variables.$font-size-l;
 }
 </style>

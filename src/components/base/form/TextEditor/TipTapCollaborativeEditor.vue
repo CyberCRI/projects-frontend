@@ -21,7 +21,8 @@ import { onClientMounted, onClientUnmounted } from '~/composables/onClient'
 import { useRuntimeConfig } from '#imports'
 import { randomInt } from 'es-toolkit'
 
-import { getExtensions, ClearHistoryWS } from 'shared-projects-frontend/lib'
+import { ClearHistoryWS } from '~/composables/tiptap/extensions/ClearHistoryWS'
+import { getExtensions } from 'shared-projects-frontend/lib'
 
 const runtimeConfig = useRuntimeConfig()
 const { t } = useNuxtI18n()

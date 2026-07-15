@@ -59,20 +59,22 @@ const underlined = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .header-link,
 button.header-link,
 a.header-link:visited {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: $space-m $space-l;
+  padding: variables.$space-m variables.$space-l;
   font-weight: 700;
-  font-size: $font-size-m;
+  font-size: variables.$font-size-m;
   cursor: pointer;
   will-change: transform;
   overflow: hidden;
   background-color: transparent;
-  color: $primary-dark;
+  color: variables.$primary-dark;
   border: 0 none;
   text-transform: uppercase;
 
@@ -85,23 +87,23 @@ a.header-link:visited {
       position: absolute;
       left: 0;
       right: 0;
-      height: pxToRem(6px);
-      background-color: $primary-dark;
-      bottom: pxToRem(-8px);
+      height: variables.pxToRem(6px);
+      background-color: variables.$primary-dark;
+      bottom: variables.pxToRem(-8px);
       transform: translateZ(0) scale(0);
       transition: transform 0.15s ease-in-out;
     }
   }
 
   .icon {
-    margin-right: $space-s;
-    height: pxToRem(18px);
-    fill: $primary-dark;
+    margin-right: variables.$space-s;
+    height: variables.pxToRem(18px);
+    fill: variables.$primary-dark;
 
     &.rounded {
-      fill: $white;
-      background-color: $primary-dark;
-      border-radius: pxToRem(9px);
+      fill: variables.$white;
+      background-color: variables.$primary-dark;
+      border-radius: variables.pxToRem(9px);
     }
   }
 

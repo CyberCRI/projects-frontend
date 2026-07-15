@@ -53,9 +53,11 @@ const gotoAgent = (agent) => {
   </EntityAdminListV2>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .title {
   font-size: 1.2rem;
-  color: $primary-dark;
+  color: variables.$primary-dark;
 }
 
 .prompt {

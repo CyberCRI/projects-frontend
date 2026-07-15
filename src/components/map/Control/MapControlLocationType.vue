@@ -60,6 +60,8 @@ watchEffect(() => emit('update', toRaw(query)))
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .menu-header {
   display: flex;
   align-items: center;

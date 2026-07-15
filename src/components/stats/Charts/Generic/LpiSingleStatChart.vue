@@ -33,6 +33,7 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables.scss';
 .total-container {
   display: flex;
   flex-direction: column;
@@ -42,14 +43,14 @@ onBeforeUnmount(() => {
   .projects-count {
     font-size: 7rem;
     font-weight: 700;
-    color: $primary;
+    color: variables.$primary;
     margin-bottom: -10px;
   }
 
   .projects-word {
     font-size: 1.5rem;
     font-weight: 700;
-    color: $primary-dark;
+    color: variables.$primary-dark;
   }
 }
 </style>

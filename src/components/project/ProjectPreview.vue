@@ -77,6 +77,8 @@ const lastUpdated = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .project-preview {
   display: grid;
   grid-template-columns: 1fr 87px;
@@ -121,7 +123,7 @@ const lastUpdated = computed(() => {
   }
 
   .icon {
-    width: pxToRem(30px);
+    width: variables.pxToRem(30px);
   }
 }
 

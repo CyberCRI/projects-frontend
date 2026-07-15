@@ -119,7 +119,9 @@ const updateForm = (f) => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .help-link {
-  color: $primary-dark;
+  color: variables.$primary-dark;
 }
 </style>

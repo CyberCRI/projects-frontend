@@ -170,6 +170,8 @@ const onClose = () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .file-form {
   display: flex;
   justify-content: center;

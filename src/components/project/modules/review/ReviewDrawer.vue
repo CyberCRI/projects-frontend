@@ -189,6 +189,8 @@ const onClose = () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .list-container {
   gap: 2rem;
 }

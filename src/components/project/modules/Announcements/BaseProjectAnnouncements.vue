@@ -153,6 +153,8 @@ const onDeleteConfirm = () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .announcement-list {
   display: grid;
   grid-template-columns: 1fr;

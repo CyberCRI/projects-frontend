@@ -128,6 +128,8 @@ watch(tab, (neo, old) => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .code-menu-bar {
   display: flex;
   gap: 1rem;

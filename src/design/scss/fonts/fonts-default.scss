@@ -1,3 +1,6 @@
+@use 'sass:string';
+@use '../variables';
+
 /*
 ** https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-weight#common_weight_name_mapping
 ** You can find more information on the font weights that exists.
@@ -6,7 +9,7 @@
 ** Uses google fonts API with a better number of font formats
 */
 
-$uniqId: unique_id();
+$uniqId: string.unique_id();
 
 /* ubuntu-300 - latin */
 @font-face {
@@ -16,9 +19,12 @@ $uniqId: unique_id();
   font-display: swap;
   src:
     local('Ubuntu-Thin'),
-    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300.woff2?v=#{$uniqId}') format('woff2'),
-    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300.woff?v=#{$uniqId}') format('woff'),
-    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300.ttf?v=#{$uniqId}') format('truetype');
+    url('#{variables.$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300.woff2?v=#{$uniqId}')
+      format('woff2'),
+    url('#{variables.$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300.woff?v=#{$uniqId}')
+      format('woff'),
+    url('#{variables.$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300.ttf?v=#{$uniqId}')
+      format('truetype');
 }
 
 /* ubuntu-300italic - latin */
@@ -29,11 +35,11 @@ $uniqId: unique_id();
   font-display: swap;
   src:
     local('Ubuntu-Thin-Italic'),
-    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300italic.woff2?v=#{$uniqId}')
+    url('#{variables.$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300italic.woff2?v=#{$uniqId}')
       format('woff2'),
-    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300italic.woff?v=#{$uniqId}')
+    url('#{variables.$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300italic.woff?v=#{$uniqId}')
       format('woff'),
-    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300italic.ttf?v=#{$uniqId}')
+    url('#{variables.$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-300italic.ttf?v=#{$uniqId}')
       format('truetype');
 }
 
@@ -45,11 +51,11 @@ $uniqId: unique_id();
   font-display: swap;
   src:
     local('Ubuntu'),
-    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-regular.woff2?v=#{$uniqId}')
+    url('#{variables.$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-regular.woff2?v=#{$uniqId}')
       format('woff2'),
-    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-regular.woff?v=#{$uniqId}')
+    url('#{variables.$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-regular.woff?v=#{$uniqId}')
       format('woff'),
-    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-regular.ttf?v=#{$uniqId}')
+    url('#{variables.$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-regular.ttf?v=#{$uniqId}')
       format('truetype');
 }
 
@@ -61,10 +67,11 @@ $uniqId: unique_id();
   font-display: swap;
   src:
     local('Ubuntu-Italic'),
-    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-italic.woff2?v=#{$uniqId}')
+    url('#{variables.$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-italic.woff2?v=#{$uniqId}')
       format('woff2'),
-    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-italic.woff?v=#{$uniqId}') format('woff'),
-    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-italic.ttf?v=#{$uniqId}')
+    url('#{variables.$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-italic.woff?v=#{$uniqId}')
+      format('woff'),
+    url('#{variables.$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-italic.ttf?v=#{$uniqId}')
       format('truetype');
 }
 
@@ -76,9 +83,12 @@ $uniqId: unique_id();
   font-display: swap;
   src:
     local('Ubuntu-Medium'),
-    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500.woff2?v=#{$uniqId}') format('woff2'),
-    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500.woff?v=#{$uniqId}') format('woff'),
-    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500.ttf?v=#{$uniqId}') format('truetype');
+    url('#{variables.$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500.woff2?v=#{$uniqId}')
+      format('woff2'),
+    url('#{variables.$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500.woff?v=#{$uniqId}')
+      format('woff'),
+    url('#{variables.$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500.ttf?v=#{$uniqId}')
+      format('truetype');
 }
 
 /* ubuntu-500italic - latin */
@@ -89,11 +99,11 @@ $uniqId: unique_id();
   font-display: swap;
   src:
     local('Ubuntu-Medium-Italic'),
-    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500italic.woff2?v=#{$uniqId}')
+    url('#{variables.$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500italic.woff2?v=#{$uniqId}')
       format('woff2'),
-    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500italic.woff?v=#{$uniqId}')
+    url('#{variables.$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500italic.woff?v=#{$uniqId}')
       format('woff'),
-    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500italic.ttf?v=#{$uniqId}')
+    url('#{variables.$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-500italic.ttf?v=#{$uniqId}')
       format('truetype');
 }
 
@@ -105,9 +115,12 @@ $uniqId: unique_id();
   font-display: swap;
   src:
     local('Ubuntu-Bold'),
-    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700.woff2?v=#{$uniqId}') format('woff2'),
-    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700.woff?v=#{$uniqId}') format('woff'),
-    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700.ttf?v=#{$uniqId}') format('truetype');
+    url('#{variables.$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700.woff2?v=#{$uniqId}')
+      format('woff2'),
+    url('#{variables.$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700.woff?v=#{$uniqId}')
+      format('woff'),
+    url('#{variables.$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700.ttf?v=#{$uniqId}')
+      format('truetype');
 }
 
 /* ubuntu-700italic - latin */
@@ -118,11 +131,11 @@ $uniqId: unique_id();
   font-display: swap;
   src:
     local('Ubuntu-Bold-Italic'),
-    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700italic.woff2?v=#{$uniqId}')
+    url('#{variables.$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700italic.woff2?v=#{$uniqId}')
       format('woff2'),
-    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700italic.woff?v=#{$uniqId}')
+    url('#{variables.$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700italic.woff?v=#{$uniqId}')
       format('woff'),
-    url('#{$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700italic.ttf?v=#{$uniqId}')
+    url('#{variables.$PUBLIC_BINARIES_PREFIX}/fonts/ubuntu-v20-latin-700italic.ttf?v=#{$uniqId}')
       format('truetype');
 }
 
@@ -228,7 +241,7 @@ h6,
 
   body {
     line-height: 1.1;
-    font-size: $font-size-m;
+    font-size: variables.$font-size-m;
   }
 
   h1,
@@ -242,11 +255,11 @@ h6,
   }
 
   .search-input-ctn .search-input {
-    padding: 11px $space-2xl 10px; // 11 + 1 px border
+    padding: 11px variables.$space-2xl 10px; // 11 + 1 px border
   }
 
   .notification-icon svg {
-    height: $font-size-l;
+    height: variables.$font-size-l;
   }
 
   .card-description,
@@ -260,7 +273,7 @@ h6,
     }
 */
   .subgroups-title .name {
-    font-size: $font-size-s;
+    font-size: variables.$font-size-s;
   }
 
   /*

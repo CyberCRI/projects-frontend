@@ -52,6 +52,8 @@ const {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .subgroup-list {
   display: flex;
   flex-direction: column;

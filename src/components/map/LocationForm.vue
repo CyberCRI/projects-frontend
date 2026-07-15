@@ -155,6 +155,8 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .new-coords {
   text-align: center;
   font-style: italic;
@@ -162,24 +164,24 @@ onMounted(() => {
 }
 
 .description-input {
-  margin-top: $space-m;
+  margin-top: variables.$space-m;
 }
 
 .location-type-ctn {
-  margin: $space-m 0;
+  margin: variables.$space-m 0;
 
   .location-type-label {
-    font-size: $font-size-s;
-    color: $primary-dark;
+    font-size: variables.$font-size-s;
+    color: variables.$primary-dark;
     font-weight: bold;
-    margin-bottom: $space-2xs;
+    margin-bottom: variables.$space-2xs;
   }
 }
 
 .delete-button {
-  color: $white;
-  border-color: $salmon;
-  background: $salmon;
+  color: variables.$white;
+  border-color: variables.$salmon;
+  background: variables.$salmon;
 }
 </style>
 

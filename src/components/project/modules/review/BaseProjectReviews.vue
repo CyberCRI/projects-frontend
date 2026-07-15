@@ -139,6 +139,8 @@ const onDeleteConfirm = () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .review-warning {
   margin: 1rem auto;
 }

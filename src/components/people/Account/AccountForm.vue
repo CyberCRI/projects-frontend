@@ -539,7 +539,9 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .form-ctn {
   padding: $space-l 0;
 

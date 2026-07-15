@@ -76,11 +76,13 @@ refresh()
   </ul>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .entity {
   display: flex;
   gap: 1rem;
   padding: 0.6rem;
-  border: 1px solid $primary;
+  border: 1px solid variables.$primary;
   border-radius: 0.6rem;
   justify-content: stretch;
   align-items: center;
@@ -102,7 +104,7 @@ refresh()
 
 .icon svg {
   width: 2rem;
-  fill: $light-gray;
+  fill: variables.$light-gray;
 }
 
 .actions {

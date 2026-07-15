@@ -144,29 +144,31 @@ const noParticipate = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .project-list-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: $space-l;
+  margin-bottom: variables.$space-l;
 
   .title {
-    font-size: $font-size-l;
+    font-size: variables.$font-size-l;
     font-weight: 700;
-    color: $primary-dark;
-    margin-bottom: $space-l;
+    color: variables.$primary-dark;
+    margin-bottom: variables.$space-l;
   }
 }
 
 .create-project {
-  padding-top: $space-l;
+  padding-top: variables.$space-l;
   display: flex;
   justify-content: flex-end;
 }
 
-@media screen and (max-width: $min-tablet) {
+@media screen and (max-width: variables.$min-tablet) {
   .project-tab {
-    padding: 0 $space-s;
+    padding: 0 variables.$space-s;
   }
 }
 

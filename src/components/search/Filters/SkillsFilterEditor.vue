@@ -204,26 +204,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .section {
-  margin-bottom: $space-m;
+  margin-bottom: variables.$space-m;
 }
 
 .notice {
-  font-size: $font-size-s;
-  margin-bottom: $space-s;
+  font-size: variables.$font-size-s;
+  margin-bottom: variables.$space-s;
 }
 
 .notice-suggested {
-  margin-top: $space-m;
+  margin-top: variables.$space-m;
 }
 
 .current-skill {
-  margin-top: pxToRem(16px);
+  margin-top: variables.pxToRem(16px);
 }
 
 .search-input-ctn {
-  margin-bottom: $space-l;
-  margin-top: $space-l;
+  margin-bottom: variables.$space-l;
+  margin-top: variables.$space-l;
 }
 
 .input-ctn {

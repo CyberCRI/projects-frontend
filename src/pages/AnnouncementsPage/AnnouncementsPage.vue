@@ -53,6 +53,8 @@ useLpiHead2({
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .announcemet-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -60,10 +62,10 @@ useLpiHead2({
 }
 
 .page-title {
-  margin-bottom: $space-2xl;
+  margin-bottom: variables.$space-2xl;
 }
 
 .announcements-page {
-  margin-bottom: $space-2xl;
+  margin-bottom: variables.$space-2xl;
 }
 </style>

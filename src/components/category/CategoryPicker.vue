@@ -104,12 +104,14 @@ const chevronImage = computed(() => {
   </li>
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .top-list {
   flex-grow: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: solid $lighter-gray 1px;
+  border-bottom: solid variables.$lighter-gray 1px;
 }
 
 .sub-list {
@@ -142,7 +144,7 @@ li {
 }
 
 .child-list {
-  padding-left: pxToRem(35px);
+  padding-left: variables.pxToRem(35px);
 }
 
 .nested-list {
@@ -151,40 +153,40 @@ li {
 }
 
 .icon-td {
-  width: pxToRem(25px);
+  width: variables.pxToRem(25px);
   padding: 7px;
 }
 
 .name {
-  padding: $space-unit;
+  padding: variables.$space-unit;
 }
 
 .green-color {
-  fill: $primary-dark;
+  fill: variables.$primary-dark;
 }
 
 .grey-color {
-  fill: $lighter-gray;
+  fill: variables.$lighter-gray;
 }
 
 .green-text {
-  color: $primary-dark;
+  color: variables.$primary-dark;
 }
 
 .black-text {
-  color: $almost-black;
+  color: variables.$almost-black;
   font-weight: 400;
 }
 
 input[type='radio'] {
   appearance: none;
-  background-color: $white;
+  background-color: variables.$white;
   margin: 0;
   font: inherit;
-  width: pxToRem(20px);
-  height: pxToRem(20px);
-  border: $border-width-s solid $primary-dark;
-  border-radius: pxToRem(20px);
+  width: variables.pxToRem(20px);
+  height: variables.pxToRem(20px);
+  border: variables.$border-width-s solid variables.$primary-dark;
+  border-radius: variables.pxToRem(20px);
   transform: translateY(-0.075em);
   display: grid;
   place-content: center;
@@ -193,12 +195,12 @@ input[type='radio'] {
 
 input[type='radio']::before {
   content: '';
-  width: pxToRem(12px);
-  height: pxToRem(12px);
-  border-radius: pxToRem(12px);
+  width: variables.pxToRem(12px);
+  height: variables.pxToRem(12px);
+  border-radius: variables.pxToRem(12px);
   transform: translateZ(0) scale(0);
   transition: 120ms transform ease-in-out;
-  box-shadow: inset 1em 1em $primary-dark;
+  box-shadow: inset 1em 1em variables.$primary-dark;
 }
 
 input[type='radio']:checked::before {
@@ -207,13 +209,13 @@ input[type='radio']:checked::before {
 
 input[type='checkbox'] {
   appearance: none;
-  background-color: $white;
+  background-color: variables.$white;
   margin: 0;
   font: inherit;
-  width: pxToRem(20px);
-  height: pxToRem(20px);
-  border: $border-width-s solid $primary-dark;
-  border-radius: $border-radius-xs;
+  width: variables.pxToRem(20px);
+  height: variables.pxToRem(20px);
+  border: variables.$border-width-s solid variables.$primary-dark;
+  border-radius: variables.$border-radius-xs;
   transform: translateY(-0.075em);
   display: grid;
   place-content: center;
@@ -222,11 +224,11 @@ input[type='checkbox'] {
 
 input[type='checkbox']::before {
   content: '';
-  width: pxToRem(12px);
-  height: pxToRem(12px);
+  width: variables.pxToRem(12px);
+  height: variables.pxToRem(12px);
   transform: translateZ(0) scale(0);
   transition: 120ms transform ease-in-out;
-  box-shadow: inset 1em 1em $primary-dark;
+  box-shadow: inset 1em 1em variables.$primary-dark;
 }
 
 input[type='checkbox']:checked::before {

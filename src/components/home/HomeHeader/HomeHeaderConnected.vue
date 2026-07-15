@@ -205,27 +205,29 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .title-container {
-  margin-top: $space-3xl;
-  margin-bottom: $space-l;
+  margin-top: variables.$space-3xl;
+  margin-bottom: variables.$space-l;
 }
 
 .loading {
   display: flex;
   justify-content: center;
-  padding-top: $space-l;
+  padding-top: variables.$space-l;
 }
 
 .main-title {
   font-weight: 700;
-  font-size: $font-size-xl;
+  font-size: variables.$font-size-xl;
   text-align: center;
 
-  @media (min-width: $min-tablet) {
-    padding-top: $space-m;
+  @media (min-width: variables.$min-tablet) {
+    padding-top: variables.$space-m;
     font-weight: 700;
-    font-size: $font-size-4xl;
-    line-height: $line-height-squashed;
+    font-size: variables.$font-size-4xl;
+    line-height: variables.$line-height-squashed;
     text-align: center;
   }
 }
@@ -234,12 +236,12 @@ export default {
   padding-inline: 0;
 
   .summary-container {
-    background-color: $primary-lighter;
+    background-color: variables.$primary-lighter;
 
-    @media screen and (min-width: $min-tablet) {
-      padding: $space-l;
+    @media screen and (min-width: variables.$min-tablet) {
+      padding: variables.$space-l;
       display: flex;
-      gap: $space-unit;
+      gap: variables.$space-unit;
       align-items: stretch;
 
       & > :deep(*) {
@@ -253,6 +255,6 @@ export default {
 .empty-dashboard {
   display: flex;
   justify-content: center;
-  padding: $space-l 0;
+  padding: variables.$space-l 0;
 }
 </style>

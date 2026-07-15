@@ -79,10 +79,12 @@ const editGroup = (group) => emit('edit', group)
 const moveGroup = (group) => emit('move', group)
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .top-list {
   display: flex;
   justify-content: space-between;
-  border-bottom: solid $lighter-gray 1px;
+  border-bottom: solid variables.$lighter-gray 1px;
 }
 
 .sub-list {
@@ -107,7 +109,7 @@ li {
 }
 
 .child-list {
-  padding-left: pxToRem(35px);
+  padding-left: variables.pxToRem(35px);
 }
 
 .nested-list {
@@ -116,16 +118,16 @@ li {
 }
 
 .icon-td {
-  width: pxToRem(25px);
+  width: variables.pxToRem(25px);
   padding: 7px;
 }
 
 .name {
-  padding: $space-unit;
+  padding: variables.$space-unit;
 }
 
 .green-color {
-  fill: $primary-dark;
+  fill: variables.$primary-dark;
 }
 
 .clickable {
@@ -133,15 +135,15 @@ li {
 }
 
 .grey-color {
-  fill: $lighter-gray;
+  fill: variables.$lighter-gray;
 }
 
 .green-text {
-  color: $primary-dark;
+  color: variables.$primary-dark;
 }
 
 .black-text {
-  color: $almost-black;
+  color: variables.$almost-black;
   font-weight: 400;
 }
 </style>

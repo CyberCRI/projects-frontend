@@ -127,13 +127,15 @@ watchEffect(() => {
   />
 </template>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .instruction-header {
   margin-top: 70px;
   margin-bottom: 3rem;
 }
 
 .page-title {
-  font-size: $font-size-3xl;
+  font-size: variables.$font-size-3xl;
   margin: 1rem 0;
 }
 
@@ -147,7 +149,7 @@ watchEffect(() => {
 
 .intruction-actions {
   display: flex;
-  gap: $space-s;
+  gap: variables.$space-s;
   justify-content: flex-end;
 }
 </style>

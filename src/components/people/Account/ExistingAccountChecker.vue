@@ -96,13 +96,15 @@ const searchUser = async () => {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .account-layout {
   display: flex;
   flex-direction: column;
   align-items: stretch;
   margin: 0 auto;
-  width: pxToRem(500px);
+  width: pxtorem(500px);
 }
 
 .input-field {

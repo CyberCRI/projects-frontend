@@ -188,6 +188,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .search-section {
   margin-block: 1rem;
   flex-shrink: 0;

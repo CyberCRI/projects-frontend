@@ -56,6 +56,8 @@ const src = computed(() => {
 </script>
 
 <style lang="scss">
+@use '~/design/scss/variables';
+
 .gallery-img-button {
   cursor: pointer;
   width: 100%;

@@ -282,12 +282,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .requests-admin-tab {
   display: flex;
   flex-direction: column;
 
   .intro {
-    font-size: $font-size-m;
+    font-size: variables.$font-size-m;
     margin: 2.2rem 0;
   }
 
@@ -296,21 +298,21 @@ export default {
     align-items: center;
     flex-basis: 40rem;
 
-    @media screen and (max-width: $max-tablet) {
+    @media screen and (max-width: variables.$max-tablet) {
       flex-basis: auto;
     }
 
     .search-input {
-      margin-right: $space-l;
+      margin-right: variables.$space-l;
     }
 
     .create-account {
-      margin-left: $space-m;
+      margin-left: variables.$space-m;
     }
   }
 
   .user-list {
-    margin-top: $space-xl;
+    margin-top: variables.$space-xl;
     width: 100%;
     overflow-x: auto;
   }
@@ -322,9 +324,9 @@ export default {
     align-items: center;
     background: transparent;
     border: none;
-    font-size: $font-size-s;
-    line-height: $line-height-tight;
-    color: $almost-black;
+    font-size: variables.$font-size-s;
+    line-height: variables.$line-height-tight;
+    color: variables.$almost-black;
   }
 }
 
@@ -336,7 +338,7 @@ table {
   width: 100%;
 
   tr:first-child {
-    background: $primary-lighter;
+    background: variables.$primary-lighter;
   }
 
   th,
@@ -345,9 +347,9 @@ table {
     text-align: start;
 
     label {
-      color: $almost-black !important;
+      color: variables.$almost-black !important;
       font-weight: 700 !important;
-      font-size: $font-size-s !important;
+      font-size: variables.$font-size-s !important;
       display: flex;
       align-items: center;
     }
@@ -373,8 +375,8 @@ table {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: $space-xl;
-  padding-bottom: $space-xl;
+  padding-top: variables.$space-xl;
+  padding-bottom: variables.$space-xl;
 }
 
 .has-more {
@@ -383,7 +385,7 @@ table {
 
 .first-item,
 .more-items {
-  line-height: $line-height-squashed;
+  line-height: variables.$line-height-squashed;
   vertical-align: baseline;
 }
 
@@ -394,40 +396,40 @@ table {
 }
 
 .color-tip {
-  color: $black !important;
+  color: variables.$black !important;
 }
 
 .tooltip-div {
   max-width: 20rem;
   white-space: break-spaces;
-  padding: $space-m;
+  padding: variables.$space-m;
   text-align: center;
-  color: $black;
+  color: variables.$black;
 }
 
 .status-wrapper {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: $space-m;
+  gap: variables.$space-m;
   justify-items: start;
 }
 
 .status-widget {
   display: inline-flex;
-  gap: $space-xs;
+  gap: variables.$space-xs;
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  font-size: $font-size-s;
+  font-size: variables.$font-size-s;
 
   svg {
-    $icon-dim: $layout-size-m;
+    $icon-dim: variables.$layout-size-m;
 
     width: $icon-dim;
     height: $icon-dim;
     border-radius: $icon-dim;
-    fill: $white;
+    fill: variables.$white;
     padding: 0.1rem;
     box-sizing: border-box;
     display: inline-block;
@@ -438,7 +440,7 @@ table {
   appearance: none;
   margin: 0;
   padding: 0;
-  color: $primary-dark;
+  color: variables.$primary-dark;
   background: none;
   border: 0 none;
   cursor: pointer;
@@ -452,22 +454,22 @@ table {
 
   &.decline-action {
     svg {
-      background-color: $salmon;
+      background-color: variables.$salmon;
     }
   }
 
   &.accept-action {
     svg {
-      background-color: $primary;
+      background-color: variables.$primary;
     }
   }
 }
 
 .action-status {
-  color: $mid-gray;
+  color: variables.$mid-gray;
 
   svg {
-    background-color: $mid-gray;
+    background-color: variables.$mid-gray;
   }
 }
 

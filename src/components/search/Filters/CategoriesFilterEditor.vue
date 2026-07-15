@@ -125,7 +125,9 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .filter-categories {
   display: flex;
   justify-content: stretch;

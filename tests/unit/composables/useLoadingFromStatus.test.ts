@@ -1,4 +1,4 @@
-import { AsyncDataRequestStatus } from 'nuxt/app'
+import type { AsyncDataRequestStatus } from 'nuxt/app'
 import { flushPromises } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
 

@@ -1,6 +1,5 @@
 // @vitest-environment nuxt
 import { ProjectOutputFactory } from '~~/tests/factories/project.factory'
-import { ProjectMemberModel } from 'shared-projects-frontend/models'
 import { test, beforeEach, describe, expect, it } from 'vitest'
 import MockComponent from '~~/tests/helpers/MockComponent.vue'
 import { UserFactory } from '~~/tests/factories/user.factory'

@@ -19,8 +19,7 @@ describe('LocationForm', () => {
   })
 
   it('invalid LocationType', async () => {
-    let wrapper
-    wrapper = lpiMount(LocationForm, {
+    const wrapper = lpiMount(LocationForm, {
       props: {
         modelValue: {
           lat: 55,

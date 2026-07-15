@@ -14,23 +14,25 @@ defineProps<{ title: string }>()
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .section {
-  border: $border-width-s solid var(--primary);
-  border-radius: $border-radius-l;
-  padding: $space-l;
+  border: variables.$border-width-s solid var(--primary);
+  border-radius: variables.$border-radius-l;
+  padding: variables.$space-l;
 
   .separator {
-    border-bottom: $border-width-s solid var(--primary-dark);
-    width: pxToRem(50px);
-    margin: $space-m 0;
+    border-bottom: variables.$border-width-s solid var(--primary-dark);
+    width: variables.pxToRem(50px);
+    margin: variables.$space-m 0;
   }
 
   .label {
     color: var(--black);
-    margin-bottom: $space-l;
+    margin-bottom: variables.$space-l;
     font-weight: 700;
-    font-size: $font-size-2xl;
-    line-height: $line-height-tight;
+    font-size: variables.$font-size-2xl;
+    line-height: variables.$line-height-tight;
   }
 }
 </style>

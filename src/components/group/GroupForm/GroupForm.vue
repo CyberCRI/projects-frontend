@@ -431,15 +431,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .loader-ctn {
-  padding: $space-xl 0;
+  padding: variables.$space-xl 0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .category-ctn {
-  margin-bottom: $space-xl;
+  margin-bottom: variables.$space-xl;
 }
 
 .category-select {
@@ -452,12 +454,12 @@ export default {
 
 .completed-form-snackbar {
   width: fit-content;
-  margin: $space-xl auto;
-  border: $border-width-s solid $salmon;
+  margin: variables.$space-xl auto;
+  border: variables.$border-width-s solid variables.$salmon;
 }
 
 .visibility {
-  margin-bottom: $space-xl;
+  margin-bottom: variables.$space-xl;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -468,7 +470,7 @@ export default {
     grid-template-columns: min-content max-content;
     align-items: center;
 
-    @media screen and (max-width: $med-mobile) {
+    @media screen and (max-width: variables.$med-mobile) {
       display: flex;
       flex-flow: column;
       align-items: stretch;
@@ -478,51 +480,51 @@ export default {
   .checkbox-description {
     width: 70%;
 
-    @media screen and (max-width: $med-mobile) {
+    @media screen and (max-width: variables.$med-mobile) {
       width: 100%;
-      padding: $space-2xs 0 $space-s 0;
+      padding: variables.$space-2xs 0 variables.$space-s 0;
     }
   }
 
   .checkbox-item {
-    border: 1px solid $primary-dark;
-    padding: $space-m;
-    margin: $space-s pxToRem(16px) $space-s 0;
-    border-radius: $border-radius-xs;
+    border: 1px solid variables.$primary-dark;
+    padding: variables.$space-m;
+    margin: variables.$space-s variables.pxToRem(16px) variables.$space-s 0;
+    border-radius: variables.$border-radius-xs;
     display: flex;
     align-items: center;
     text-align: right;
 
     &:hover {
-      background-color: $primary-lighter;
+      background-color: variables.$primary-lighter;
     }
 
     > .label {
       font-weight: 700;
-      font-size: $font-size-m;
-      line-height: $line-height-compact;
-      color: $primary-dark;
+      font-size: variables.$font-size-m;
+      line-height: variables.$line-height-compact;
+      color: variables.$primary-dark;
       margin: 0;
       cursor: pointer;
     }
 
     &.selected {
-      background-color: $primary-dark;
-      color: $white;
+      background-color: variables.$primary-dark;
+      color: variables.$white;
 
       > .label {
-        color: $white;
+        color: variables.$white;
       }
     }
   }
 
   .form-control {
-    font-size: $font-size-m;
-    color: $primary-dark;
+    font-size: variables.$font-size-m;
+    color: variables.$primary-dark;
     font-weight: 400;
     display: grid;
     grid-template-columns: 1em auto;
-    gap: $space-m;
+    gap: variables.$space-m;
   }
 
   .form-control + .form-control {
@@ -531,12 +533,12 @@ export default {
 
   input[type='radio'] {
     appearance: none;
-    background-color: $white;
+    background-color: variables.$white;
     margin: 0;
     font: inherit;
-    width: pxToRem(20px);
-    height: pxToRem(20px);
-    border: $border-width-s solid $primary-dark;
+    width: variables.pxToRem(20px);
+    height: variables.pxToRem(20px);
+    border: variables.$border-width-s solid variables.$primary-dark;
     border-radius: 50%;
     transform: translateY(-0.075em);
     display: grid;
@@ -546,11 +548,11 @@ export default {
 
   input[type='radio']::before {
     content: '';
-    width: pxToRem(12px);
-    height: pxToRem(12px);
+    width: variables.pxToRem(12px);
+    height: variables.pxToRem(12px);
     transform: scale(0);
     transition: 120ms transform ease-in-out;
-    box-shadow: inset 1em 1em $primary-dark;
+    box-shadow: inset 1em 1em variables.$primary-dark;
     border-radius: 50%;
   }
 
@@ -559,13 +561,13 @@ export default {
   }
 
   input[type='radio']:disabled {
-    border: $border-width-s solid $mid-gray;
-    color: $mid-gray;
+    border: variables.$border-width-s solid variables.$mid-gray;
+    color: variables.$mid-gray;
     cursor: not-allowed;
   }
 
   .form-control--disabled {
-    color: $mid-gray;
+    color: variables.$mid-gray;
     cursor: not-allowed;
   }
 }
@@ -577,18 +579,18 @@ export default {
     align-items: center;
     flex-direction: row;
     width: 100%;
-    font-size: $font-size-m;
-    margin-bottom: $space-l;
+    font-size: variables.$font-size-m;
+    margin-bottom: variables.$space-l;
 
     .section-title {
-      color: $black;
+      color: variables.$black;
       font-weight: bold;
       display: block;
     }
   }
 
   .img-ctn {
-    margin-bottom: $space-xl;
+    margin-bottom: variables.$space-xl;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -605,11 +607,11 @@ export default {
   align-items: center;
   flex-direction: row;
   width: 100%;
-  margin-bottom: $space-l;
+  margin-bottom: variables.$space-l;
 
   .section-title {
-    font-size: $font-size-s;
-    color: $black;
+    font-size: variables.$font-size-s;
+    color: variables.$black;
     font-weight: bold;
     display: block;
   }

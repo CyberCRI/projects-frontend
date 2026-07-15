@@ -3,9 +3,8 @@ import useSectionFilters, { ALL_SECTION_KEY } from '~/components/search/Filters/
 import LpiLoader from '~/components/base/loader/LpiLoader.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 
-const selectedSection = defineModel('selectedSection', {
-  type: String,
-  default: () => ALL_SECTION_KEY,
+const selectedSection = defineModel<string>('selectedSection', {
+  default: ALL_SECTION_KEY,
 })
 
 const { sectionFilters } = useSectionFilters({ selectedSection })
@@ -98,12 +97,14 @@ function menuAction(key) {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .header-drop-down {
   position: relative;
-  margin-bottom: $space-m;
+  margin-bottom: variables.$space-m;
   width: 100%;
 
-  @media (min-width: $min-tablet) {
+  @media (min-width: variables.$min-tablet) {
     margin-bottom: 0;
     width: auto;
   }
@@ -113,36 +114,36 @@ function menuAction(key) {
   }
 
   .caret {
-    margin-left: $space-l;
-    fill: $primary-dark;
-    width: pxToRem(20px);
+    margin-left: variables.$space-l;
+    fill: variables.$primary-dark;
+    width: variables.pxToRem(20px);
   }
 
   .drop-down-toggle {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: pxToRem(10px) $space-l;
+    padding: variables.pxToRem(10px) variables.$space-l;
     font-weight: 700;
-    font-size: $font-size-m;
+    font-size: variables.$font-size-m;
     transition: 0.15s all ease-in-out;
     cursor: pointer;
     will-change: transform;
     overflow: hidden;
-    min-width: pxToRem(250px);
-    color: $primary-dark;
-    background: $white;
-    border-radius: $border-radius-24;
-    box-shadow: 0 0 0 1px $primary;
+    min-width: variables.pxToRem(250px);
+    color: variables.$primary-dark;
+    background: variables.$white;
+    border-radius: variables.$border-radius-24;
+    box-shadow: 0 0 0 1px variables.$primary;
     width: 100%;
 
     .icon {
-      fill: $primary-dark;
-      margin-right: $space-s;
-      width: pxToRem(18px);
+      fill: variables.$primary-dark;
+      margin-right: variables.$space-s;
+      width: variables.pxToRem(18px);
     }
 
-    @media (min-width: $min-tablet) {
+    @media (min-width: variables.$min-tablet) {
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
       border-right: none;
@@ -155,10 +156,10 @@ function menuAction(key) {
   }
 
   &.is-open .drop-down-toggle {
-    color: $primary-dark;
+    color: variables.$primary-dark;
 
     .icon {
-      fill: $primary-dark;
+      fill: variables.$primary-dark;
     }
   }
 
@@ -172,53 +173,53 @@ function menuAction(key) {
   }
 
   .drop-down-menu {
-    background-color: $white;
-    padding-bottom: $border-radius-l;
-    border-radius: $border-radius-l;
-    max-height: pxToRem(450px);
+    background-color: variables.$white;
+    padding-bottom: variables.$border-radius-l;
+    border-radius: variables.$border-radius-l;
+    max-height: variables.pxToRem(450px);
     overflow: hidden auto;
-    border: 1px solid $primary;
+    border: 1px solid variables.$primary;
     box-shadow: 0 4px 4px rgb(0 0 0 / 15%);
 
-    @media (min-width: $min-tablet) {
+    @media (min-width: variables.$min-tablet) {
       border-bottom-right-radius: 0;
       border-top-right-radius: 0;
     }
 
     &.round-corner {
-      border-top-right-radius: $border-radius-s;
+      border-top-right-radius: variables.$border-radius-s;
     }
 
     .drop-down-menu-item {
-      margin: $space-s;
+      margin: variables.$space-s;
 
       .drop-down-menu-item-content {
-        color: $primary-dark;
-        padding: $space-xs;
+        color: variables.$primary-dark;
+        padding: variables.$space-xs;
         font-weight: 700;
-        font-size: $font-size-s;
+        font-size: variables.$font-size-s;
         display: flex;
         align-items: center;
         background: transparent;
         width: 100%;
 
         &--selected {
-          background: $primary-light;
-          border-radius: $border-radius-xs;
+          background: variables.$primary-light;
+          border-radius: variables.$border-radius-xs;
         }
 
         .menu-icon {
           &.left-icon {
-            margin-right: $space-s;
+            margin-right: variables.$space-s;
           }
 
           &.right-icon {
-            margin-left: $space-s;
+            margin-left: variables.$space-s;
           }
 
           svg {
-            width: pxToRem(16px);
-            fill: $primary-dark;
+            width: variables.pxToRem(16px);
+            fill: variables.$primary-dark;
             transform-origin: right center;
           }
         }
@@ -253,7 +254,7 @@ function menuAction(key) {
 
     &.has-separator {
       .drop-down-menu-item ~ .drop-down-menu-item {
-        border-top: $border-width-m solid $white;
+        border-top: variables.$border-width-m solid variables.$white;
       }
     }
 
@@ -261,7 +262,7 @@ function menuAction(key) {
       margin-left: auto;
       margin-right: auto;
       width: max-content;
-      margin-top: $space-l;
+      margin-top: variables.$space-l;
     }
   }
 }

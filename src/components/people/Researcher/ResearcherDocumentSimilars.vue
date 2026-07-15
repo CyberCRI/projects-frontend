@@ -67,6 +67,8 @@ const havePagination = computed(() => pagination.canNext.value || pagination.can
 </script>
 
 <style lang="scss">
+@use '~/design/scss/variables';
+
 $profile-documents: 1rem;
 
 .documents-list-similars > *:not(:last-child)::after {

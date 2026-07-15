@@ -31,6 +31,8 @@ withDefaults(
 )
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .label {
   display: inline-block;
   text-transform: lowercase;
@@ -49,7 +51,7 @@ withDefaults(
 }
 
 .btn-icon {
-  height: var(--btn-icon-size, pxToRem(18px));
+  height: var(--btn-icon-size, variables.pxToRem(18px));
 }
 
 .loader-simple {
@@ -57,7 +59,7 @@ withDefaults(
   height: 22px;
 
   path {
-    fill: $primary-dark;
+    fill: variables.$primary-dark;
   }
 }
 </style>

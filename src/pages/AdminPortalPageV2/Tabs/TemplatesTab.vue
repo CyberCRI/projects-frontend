@@ -69,10 +69,12 @@ const confirmDelete = () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .list {
   display: flex;
   flex-wrap: wrap;
-  gap: $space-l;
+  gap: variables.$space-l;
   justify-content: stretch;
 
   ul {

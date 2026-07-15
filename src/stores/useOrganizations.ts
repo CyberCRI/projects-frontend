@@ -66,19 +66,15 @@ const useOrganizationsStore = defineStore('organizations', () => {
   const hasTerms = computed((): boolean => !!(termsId.value && termsContent.value))
 
   async function getCurrentOrganization(code: string): Promise<OrganizationModel> {
-    try {
-      // foo
-      const organization = await getOrganizationByCode(code)
-      // TODO: temp fix while API is not setup
-      organization.languages = organization.languages || ['en', 'fr']
+    // foo
+    const organization = await getOrganizationByCode(code)
+    // TODO: temp fix while API is not setup
+    organization.languages = organization.languages || ['en', 'fr']
 
-      _current.value = organization
-      analytics.setOrganizationProperties()
+    _current.value = organization
+    analytics.setOrganizationProperties()
 
-      return organization
-    } catch (err) {
-      throw new Error(err)
-    }
+    return organization
   }
 
   async function getOrFetchOrganization() {
@@ -90,29 +86,21 @@ const useOrganizationsStore = defineStore('organizations', () => {
   }
 
   async function getAllOrganizations() {
-    try {
-      const response = await getOrganizations()
-      _all.value = response.results
+    const response = await getOrganizations()
+    _all.value = response.results
 
-      return response
-    } catch (err) {
-      throw new Error(err)
-    }
+    return response
   }
 
   async function updateCurrentOrganization(organization: OrganizationPatchInput | FormData) {
-    try {
-      const result = await patchOrganization(current.value.code, organization)
-      const currentOrganization = {
-        ...current.value,
-        ...organization,
-        ...result,
-      }
-      _current.value = currentOrganization
-      return currentOrganization
-    } catch (err) {
-      throw new Error(err)
+    const result = await patchOrganization(current.value.code, organization)
+    const currentOrganization = {
+      ...current.value,
+      ...organization,
+      ...result,
     }
+    _current.value = currentOrganization
+    return currentOrganization
   }
 
   return {

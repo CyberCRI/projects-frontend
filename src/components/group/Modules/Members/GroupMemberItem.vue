@@ -49,6 +49,8 @@ const click = () => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .user {
   display: flex;
   flex-direction: column;
@@ -56,20 +58,20 @@ const click = () => {
   width: min-content;
 
   .picture {
-    width: pxToRem(120px);
-    height: pxToRem(120px);
+    width: variables.pxToRem(120px);
+    height: variables.pxToRem(120px);
     object-fit: cover;
     object-position: top center;
     border-radius: 50%;
   }
 
   .badge {
-    background: $primary-dark;
+    background: variables.$primary-dark;
     font-weight: 400;
-    font-size: $font-size-s;
-    margin-top: $space-s;
-    padding: $space-2xs;
-    color: $white;
+    font-size: variables.$font-size-s;
+    margin-top: variables.$space-s;
+    padding: variables.$space-2xs;
+    color: variables.$white;
   }
 
   .user-name {
@@ -79,29 +81,29 @@ const click = () => {
   .name-ctn {
     display: flex;
     align-items: center;
-    margin-top: $space-s;
+    margin-top: variables.$space-s;
     text-align: center;
 
     h4 {
       margin: 0;
       font-weight: 700;
-      font-size: $font-size-m;
-      line-height: $line-height-tight;
+      font-size: variables.$font-size-m;
+      line-height: variables.$line-height-tight;
     }
 
     svg {
       height: 16px;
       width: 16px;
-      fill: $primary-dark;
+      fill: variables.$primary-dark;
       cursor: pointer;
-      margin-left: $space-s;
+      margin-left: variables.$space-s;
     }
   }
 
   .job {
-    margin-top: $space-s;
+    margin-top: variables.$space-s;
     text-align: center;
-    font-size: $font-size-s;
+    font-size: variables.$font-size-s;
   }
 }
 

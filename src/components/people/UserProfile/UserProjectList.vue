@@ -58,16 +58,18 @@ const gridLayout = computed(() => `desktop-col--${props.numberColumn}`)
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .empty-ctn {
   display: grid;
   justify-items: center;
   justify-content: left;
-  grid-template-columns: $card_width;
+  grid-template-columns: variables.$card_width;
 }
 
 .project-list-pagination {
-  padding-top: $space-l;
-  padding-bottom: $space-2xl;
+  padding-top: variables.$space-l;
+  padding-bottom: variables.$space-2xl;
   display: flex;
   justify-content: center;
   align-items: center;

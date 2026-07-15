@@ -223,61 +223,63 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .loader {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: $space-2xl 0;
+  margin: variables.$space-2xl 0;
 }
 
 .current-groups-ctn {
   display: flex;
   flex-wrap: wrap;
-  gap: $space-s;
-  margin-bottom: $space-l;
+  gap: variables.$space-s;
+  margin-bottom: variables.$space-l;
 }
 
 .title {
   font-weight: 700;
-  font-size: $font-size-l;
-  color: $black;
-  line-height: $line-height-tight;
+  font-size: variables.$font-size-l;
+  color: variables.$black;
+  line-height: variables.$line-height-tight;
 }
 
 .sub-section {
-  padding-top: $space-xl;
+  padding-top: variables.$space-xl;
 
   .title {
     font-weight: 700;
-    font-size: $font-size-l;
-    color: $black;
+    font-size: variables.$font-size-l;
+    color: variables.$black;
   }
 
   .sub-title {
-    margin: pxToRem(16px) 0;
+    margin: variables.pxToRem(16px) 0;
   }
 }
 
 .list-label {
-  font-size: $font-size-s;
+  font-size: variables.$font-size-s;
 
   &--has-children {
     font-weight: 700;
-    color: $primary-dark;
+    color: variables.$primary-dark;
   }
 }
 
 .label {
   font-weight: 500;
-  font-size: $font-size-m;
-  padding-bottom: $space-m;
+  font-size: variables.$font-size-m;
+  padding-bottom: variables.$space-m;
 }
 
 .current-groups-ctn {
   display: flex;
   flex-wrap: wrap;
-  gap: $space-s;
-  margin-bottom: $space-l;
+  gap: variables.$space-s;
+  margin-bottom: variables.$space-l;
 }
 
 .group-rights {
@@ -289,7 +291,7 @@ export default {
   }
 
   .group-item + .group-item {
-    border-top: $border-width-s solid $lighter-gray;
+    border-top: variables.$border-width-s solid variables.$lighter-gray;
   }
 
   .group-name {
@@ -303,7 +305,7 @@ export default {
     justify-content: space-around;
 
     .item {
-      color: $primary-dark;
+      color: variables.$primary-dark;
       font-weight: bold;
       display: inline-flex;
       align-items: center;
@@ -312,11 +314,11 @@ export default {
 }
 
 .no-group-selected {
-  background-color: $almost-white;
-  color: $mid-gray;
-  border: $border-width-s solid $mid-gray;
-  border-radius: $border-radius-30;
-  padding: $space-s $space-m;
+  background-color: variables.$almost-white;
+  color: variables.$mid-gray;
+  border: variables.$border-width-s solid variables.$mid-gray;
+  border-radius: variables.$border-radius-30;
+  padding: variables.$space-s variables.$space-m;
   text-transform: uppercase;
 }
 

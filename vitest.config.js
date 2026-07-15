@@ -27,7 +27,39 @@ export default defineVitestConfig({
   plugins: [fixPrismaExtensionlessImports],
   root: './',
   resolve: {
-    dedupe: ['prosemirror-state'],
+    dedupe: [
+      'prosemirror-state',
+      'prosemirror-model',
+      'prosemirror-view',
+      'prosemirror-transform',
+
+      '@tiptap/core',
+      '@tiptap/extension-blockquote',
+      '@tiptap/extension-bold',
+      '@tiptap/extension-bullet-list',
+      '@tiptap/extension-code-block',
+      '@tiptap/extension-code-block-lowlight',
+      '@tiptap/extension-collaboration',
+      '@tiptap/extension-collaboration-cursor',
+      '@tiptap/extension-color',
+      '@tiptap/extension-heading',
+      '@tiptap/extension-image',
+      '@tiptap/extension-italic',
+      '@tiptap/extension-link',
+      '@tiptap/extension-list-item',
+      '@tiptap/extension-ordered-list',
+      '@tiptap/extension-table',
+      '@tiptap/extension-table-cell',
+      '@tiptap/extension-table-header',
+      '@tiptap/extension-table-row',
+      '@tiptap/extension-text-align',
+      '@tiptap/extension-text-style',
+      '@tiptap/extension-underline',
+      '@tiptap/html',
+      '@tiptap/pm',
+      '@tiptap/starter-kit',
+      '@tiptap/vue-3',
+    ],
   },
   test: {
     server: {
@@ -36,7 +68,7 @@ export default defineVitestConfig({
         // a single prosemirror-state instance. Without this, the CJS extension
         // packages and the ESM @tiptap/core each load their own copy, both
         // generating 'plugin$' as their first auto-keyed plugin → conflict.
-        inline: [/@tiptap/, /prosemirror/],
+        inline: [/@tiptap/, /prosemirror/, /yjs/, /y-js/, 'vue3-popper'],
       },
     },
     include: ['tests/unit/**/*.{test,spec}.?(c|m)[jt]s?(x)'],
@@ -45,12 +77,11 @@ export default defineVitestConfig({
     hookTimeout: 30_000,
     setupFiles: [
       './.vitest/setup.ts',
-      './.vitest/setupVitest.js',
-      './.vitest/setEnvVars.js',
-      // './.vitest/register-context.ts',
-      './.vitest/mockApiCookie.ts',
-      './.vitest/mockOauth.ts',
+      // './.vitest/setupVitest.ts',
+      './.vitest/setEnvVars.ts',
       './.vitest/mockMixpanel.ts',
+      './.vitest/mockApi.ts',
+      './.vitest/mockOauth.ts',
       './.vitest/mockPatatoids.ts',
     ],
     environmentOptions: {

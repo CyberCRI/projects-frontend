@@ -427,6 +427,8 @@ const checkClose = () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .section-red {
   background-color: var(--gray);
   border: none;
@@ -438,7 +440,7 @@ const checkClose = () => {
 
 .organization-ctn {
   flex-wrap: wrap;
-  gap: $space-m;
+  gap: variables.$space-m;
   margin: 1rem 0;
 }
 

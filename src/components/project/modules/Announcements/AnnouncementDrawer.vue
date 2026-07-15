@@ -228,6 +228,8 @@ const submit = async () => {
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .announcement-type {
   opacity: 0.7;
   padding: 1rem 0;

@@ -235,17 +235,19 @@ const onDeleteComment = async () => {
 </script>
 
 <style lang="scss" scoped>
-$comment-pic-size: pxToRem(72px);
+@use '~/design/scss/variables';
+
+$comment-pic-size: variables.pxToRem(72px);
 
 .comment {
   display: flex;
   align-items: stretch;
   padding: 0;
-  padding-top: $space-l;
+  padding-top: variables.$space-l;
 
   .comment-picture {
     flex-shrink: 0;
-    padding-right: $space-l;
+    padding-right: variables.$space-l;
 
     .image {
       display: inline-block;
@@ -258,19 +260,19 @@ $comment-pic-size: pxToRem(72px);
   .comment-body {
     width: 100%;
     flex-grow: 1;
-    padding-bottom: $space-l;
-    border-bottom: $border-width-s solid var(--primary);
+    padding-bottom: variables.$space-l;
+    border-bottom: variables.$border-width-s solid var(--primary);
 
     .comment-meta {
       display: flex;
       align-items: center;
-      padding-bottom: $space-l;
+      padding-bottom: variables.$space-l;
 
       .authorship {
         flex-grow: 1;
         color: var(--primary-dark);
         font-weight: 700;
-        font-size: $font-size-m;
+        font-size: variables.$font-size-m;
 
         .separator {
           padding: 0 0.5rem;
@@ -283,19 +285,19 @@ $comment-pic-size: pxToRem(72px);
     }
 
     .comment-content {
-      font-size: $font-size-m;
+      font-size: variables.$font-size-m;
     }
   }
 
   .comment-footer {
-    padding-top: $space-m;
+    padding-top: variables.$space-m;
 
     .actions {
       display: flex;
       justify-content: space-between;
 
       .external-btn + .external-btn {
-        margin-left: $space-l;
+        margin-left: variables.$space-l;
       }
     }
   }
@@ -308,13 +310,13 @@ $comment-pic-size: pxToRem(72px);
     svg {
       height: 24px;
       width: 24px;
-      margin-right: $space-s;
+      margin-right: variables.$space-s;
     }
   }
 }
 
 .comment-reply-ctn,
 .comment-replies-ctn {
-  margin: $space-2xs 0 0 #{$comment-pic-size + $space-l};
+  margin: variables.$space-2xs 0 0 #{$comment-pic-size + variables.$space-l};
 }
 </style>

@@ -77,12 +77,14 @@ const label = computed(() => props.title || `${$t('common.link-to')} ${props.ide
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .link-identifier {
   border: 1px gray;
   border-radius: 30px;
   padding: 0.2rem 0.4rem;
   transition: all 0.2s;
-  background-color: $primary-light;
+  background-color: variables.$primary-light;
   transform: translateZ(0);
 
   &:hover {

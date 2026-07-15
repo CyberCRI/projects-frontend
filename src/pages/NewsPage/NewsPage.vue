@@ -142,6 +142,8 @@ useLpiHead2({
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .news-container {
   margin-bottom: 1rem;
   display: flex;
@@ -170,7 +172,7 @@ useLpiHead2({
 
 .news-actions {
   display: flex;
-  gap: $space-s;
+  gap: variables.$space-s;
   height: min-content;
 }
 
@@ -182,11 +184,11 @@ useLpiHead2({
 }
 
 .picture {
-  border-radius: $border-radius-m;
+  border-radius: variables.$border-radius-m;
 }
 
 .page-title {
-  font-size: $font-size-3xl;
+  font-size: variables.$font-size-3xl;
   text-align: left;
 }
 </style>

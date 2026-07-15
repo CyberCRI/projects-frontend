@@ -69,6 +69,8 @@ const duplicateIcons = computed(() => {
 })
 </script>
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .wrapper {
   display: flex;
   flex-flow: row wrap;

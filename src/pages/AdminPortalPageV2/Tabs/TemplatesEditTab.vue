@@ -54,6 +54,8 @@ const saveImageTemplate = (file) => postTemplateImage(organizationCode, template
 </script>
 
 <style lang="scss">
+@use '~/design/scss/variables';
+
 .form-actions {
   display: flex;
   justify-content: center;

@@ -75,7 +75,9 @@ const onPaginationChange = (pagination) => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .list-container {
-  margin-top: $space-l;
+  margin-top: variables.$space-l;
 }
 </style>

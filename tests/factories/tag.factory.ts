@@ -1,6 +1,6 @@
 import { createFactory } from 'faker-create-factory'
 
-import { TagModel } from 'shared-projects-frontend/models'
+import type { TagModel } from 'shared-projects-frontend/models'
 import BaseFactory from './base.factory'
 
 const OrganizationTagFactory = createFactory<TagModel>((faker) => ({

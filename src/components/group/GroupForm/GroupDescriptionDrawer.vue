@@ -82,17 +82,19 @@ const handleImage = (img) => {
 </script>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .group-drawer {
   height: 100%;
 
   .input-field {
-    margin: $space-l;
-    margin-bottom: $space-xs;
+    margin: variables.$space-l;
+    margin-bottom: variables.$space-xs;
   }
 
   .content-editor {
     flex-grow: 1;
-    min-height: pxToRem(300px);
+    min-height: variables.pxToRem(300px);
   }
 }
 

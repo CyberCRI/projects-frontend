@@ -112,21 +112,19 @@ export default (server: TypeMcpServer) => {
     resultFromTool(async ({ queryPrompt }, extras) => {
       const sorbobotApi = new SorbobotAPI(sorbobotApiToken, sorbobotApiUrl)
 
-      let results = { researchers: [], research_topics: [] }
-
       try {
         await sorbobotApi.init()
         const sorbobotResults = await sorbobotApi.query(queryPrompt)
         const researchers = await resolveResearcherProfile(sorbobotResults?.authors || {}, extras)
-        results = {
+        return {
           researchers: researchers,
           research_topics: sorbobotRewriteTopics(sorbobotResults.search_results),
         }
+      } catch {
+        return { researchers: [], research_topics: [] }
       } finally {
         await sorbobotApi.close()
       }
-
-      return results
     })
   )
 }

@@ -22,6 +22,8 @@ const description = computed(() => html2Text(props.event.$t.content))
 </script>
 
 <style lang="scss">
+@use '~/design/scss/variables';
+
 .hide-extra-description {
   // same columns
   grid-template-columns: 1fr !important;

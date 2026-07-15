@@ -38,11 +38,13 @@ const is = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-$icon-size: pxToRem(18px);
+@use '~/design/scss/variables';
+
+$icon-size: variables.pxToRem(18px);
 
 .see-more-arrow {
-  color: $primary-dark;
-  padding: 0 $space-l;
+  color: variables.$primary-dark;
+  padding: 0 variables.$space-l;
   display: inline-block;
   font-weight: 700;
   cursor: pointer;
@@ -59,14 +61,14 @@ $icon-size: pxToRem(18px);
   }
 
   .arrow-ctn {
-    margin-left: $space-s;
+    margin-left: variables.$space-s;
     display: inline-block;
     vertical-align: middle;
 
     .arrow {
       height: $icon-size;
       width: $icon-size;
-      fill: $primary-dark;
+      fill: variables.$primary-dark;
       transform: translateZ(0);
     }
   }

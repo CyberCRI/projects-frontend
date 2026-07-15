@@ -79,6 +79,8 @@ const item = computed(() => data.value[0])
 </template>
 
 <style lang="scss" scoped>
+@use '~/design/scss/variables';
+
 .description-info {
   padding: 1rem;
   border-radius: 4px;
