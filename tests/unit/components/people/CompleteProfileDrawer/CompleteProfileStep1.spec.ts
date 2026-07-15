@@ -2,7 +2,6 @@ import CompleteProfileStep1 from '~/components/people/CompleteProfileDrawer/Comp
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
 import useUsersStore from '~/stores/useUsers'
-import pinia from '~/stores'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -11,7 +10,7 @@ describe('CompleteProfileStep1.vue', () => {
   let defaultParams
 
   beforeEach(() => {
-    const usersStore = useUsersStore(pinia)
+    const usersStore = useUsersStore()
     usersStore.$patch({
       id: 123,
       userFromApi: {},

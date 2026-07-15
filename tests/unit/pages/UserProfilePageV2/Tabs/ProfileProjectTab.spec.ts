@@ -12,7 +12,8 @@ import useProjectsStore from '~/stores/useProjects'
 
 import type { OrganizationOutput } from 'shared-projects-frontend/models'
 
-vi.mock('shared-projects-frontend/apis', () => ({
+vi.mock('shared-projects-frontend/apis', async (orginalImporter) => ({
+  ...(await orginalImporter()),
   getUserFollows: vi.fn().mockResolvedValue({ results: [] }),
 }))
 
@@ -20,9 +21,7 @@ describe('ProfileProjectTab', () => {
   let usersStore
   beforeEach(() => {
     usersStore = useUsersStore(pinia)
-    usersStore.id = 123
-    usersStore.userFromApi = {}
-    usersStore.permissions = {}
+    usersStore.userFromApi = usersStore.userFromToken = UserFactory.generate({ id: 123 })
     usersStore.isConnected = true
     usersStore.getUser = vi.fn()
     const organizationsStore = useOrganizationsStore(pinia)
@@ -53,11 +52,11 @@ describe('ProfileProjectTab', () => {
   })
 
   it('should display a create project button if on self profile and has persimission', async () => {
-    const id = 123
-    const user: any = UserFactory.generate()
-    user.id = id
+    const user = UserFactory.generate({ id: 123 })
+    const organizationCode = useOrganizationCode()
 
-    usersStore.id = id
+    user.roles.push(`organization:#${organizationCode}:viewers`)
+    usersStore.userFromApi = usersStore.userFromToken = user
     const wrapper = lpiShallowMount(ProfileProjectTab, { props: { user } })
 
     await flushPromises()

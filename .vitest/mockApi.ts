@@ -1,4 +1,5 @@
-import { initializeClientApi } from '~/config/apis'
+import { PaginationsFactory } from '../tests/factories/paginations.factory'
+import { initializeClientApi } from '../src/config/apis'
 import { vi } from 'vitest'
 
 // add global options and $fetch
@@ -8,14 +9,9 @@ initializeClientApi()
 vi.mock('shared-projects-frontend/apis', async (importOriginal) => {
   return {
     ...(await importOriginal()),
-    getUserFollows: vi.fn().mockResolvedValue({ results: [] }),
-  }
-})
-
-vi.mock('@/api/auth/cookie.service', function () {
-  return {
-    removeApiCookie: vi.fn(async function () {
-      return await Promise.resolve({})
-    }),
+    // hide auto
+    getUserFollows: vi.fn().mockResolvedValue(PaginationsFactory.generate()),
+    getProjectCategoriesFollow: vi.fn().mockResolvedValue(PaginationsFactory.generate()),
+    removeUserCookie: vi.fn().mockResolvedValue('removeUserCookie'),
   }
 })

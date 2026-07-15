@@ -27,23 +27,23 @@ const { t } = useNuxtI18n()
 @use '~/design/scss/variables';
 
 .title-block {
-  padding-bottom: $space-m;
+  padding-bottom: variables.$space-m;
 
   .main-title {
     font-weight: 700;
-    font-size: $font-size-5xl;
+    font-size: variables.$font-size-5xl;
     text-align: center;
-    line-height: $line-height-tight;
+    line-height: variables.$line-height-tight;
   }
 
   .sub-main-title {
     font-weight: 400;
-    font-size: $font-size-m;
-    margin-top: $space-xl;
+    font-size: variables.$font-size-m;
+    margin-top: variables.$space-xl;
 
     .link {
       font-weight: 700;
-      color: $primary-dark;
+      color: variables.$primary-dark;
       text-decoration: underline;
     }
   }

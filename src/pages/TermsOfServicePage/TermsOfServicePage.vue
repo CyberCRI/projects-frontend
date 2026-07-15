@@ -36,6 +36,6 @@ useLpiHead2({
   margin-bottom: 1rem;
   font-size: 0.9rem;
   text-align: right;
-  color: $mid-gray;
+  color: variables.$mid-gray;
 }
 </style>

@@ -30,7 +30,7 @@ defineProps<{
   margin: 0;
   display: flex;
   flex-wrap: nowrap;
-  gap: $space-2xs;
+  gap: variables.$space-2xs;
   overflow: hidden;
 }
 </style>

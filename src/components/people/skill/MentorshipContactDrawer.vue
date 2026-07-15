@@ -165,20 +165,20 @@ const confirm = async () => {
 @use '~/design/scss/variables';
 
 .title {
-  font-size: $font-size-m;
+  font-size: variables.$font-size-m;
   font-weight: bold;
-  margin: $space-m 0;
+  margin: variables.$space-m 0;
 }
 
 .save-button {
-  margin: $space-l 0;
+  margin: variables.$space-l 0;
 }
 
 .form-input {
-  margin-bottom: $space-l;
+  margin-bottom: variables.$space-l;
 }
 
 .notice {
-  margin: $space-m 0;
+  margin: variables.$space-m 0;
 }
 </style>

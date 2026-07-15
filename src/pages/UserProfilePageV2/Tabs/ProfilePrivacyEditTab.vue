@@ -307,7 +307,7 @@ export default {
 @use '~/pages/UserProfilePageV2/Tabs/profile-form';
 
 .profile-edit-privacy {
-  margin-top: $space-xl;
+  margin-top: variables.$space-xl;
   position: relative;
 
   &.frozen {
@@ -327,7 +327,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: $border-width-s solid $lighter-gray;
+  border-bottom: variables.$border-width-s solid variables.$lighter-gray;
 
   .wording {
     flex-grow: 1;
@@ -335,8 +335,8 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: $space-unit;
-    padding: $space-l 0;
+    gap: variables.$space-unit;
+    padding: variables.$space-l 0;
 
     &.vertical {
       flex-direction: column;
@@ -349,15 +349,15 @@ export default {
     }
 
     label {
-      font-size: $font-size-l;
+      font-size: variables.$font-size-l;
       font-weight: 500;
-      line-height: $line-height-squashed;
+      line-height: variables.$line-height-squashed;
     }
 
     .notice {
-      font-size: $font-size-m;
+      font-size: variables.$font-size-m;
       font-weight: 400;
-      line-height: $line-height-squashed;
+      line-height: variables.$line-height-squashed;
     }
   }
 

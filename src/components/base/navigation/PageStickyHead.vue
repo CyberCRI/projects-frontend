@@ -29,8 +29,8 @@ const computeAnchorOffset = throttle(() => {
 
 const checkIfSummaryIsSticked = throttle(() => {
   isHeaderSticked.value =
-    aside.value?.getBoundingClientRect().top <= 50 /* $navbar-height */ &&
-    window?.innerWidth > 768 /* $min-tablet */
+    aside.value?.getBoundingClientRect().top <= 50 /* variables.$navbar-height */ &&
+    window?.innerWidth > 768 /* variables.$min-tablet */
 }, 16)
 
 onResize(computeAnchorOffset)
@@ -50,7 +50,7 @@ onBeforeUnmount(() => {
 @use '~/design/scss/variables';
 
 aside {
-  padding: $space-m 0;
+  padding: variables.$space-m 0;
   display: flex;
   flex-flow: row;
   justify-content: flex-end;
@@ -59,13 +59,13 @@ aside {
   background-color: rgb(255 255 255 / 70%);
   position: sticky;
   z-index: 100;
-  top: $navbar-height;
+  top: variables.$navbar-height;
 }
 
 .page-title-recall {
   flex-grow: 1;
   text-align: left;
-  font-size: $font-size-2xl;
+  font-size: variables.$font-size-2xl;
   position: relative;
   height: 1.2em;
 

@@ -7,7 +7,8 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { OrganizationOutput } from 'shared-projects-frontend/models'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import pinia from '~/stores'
-vi.mock('shared-projects-frontend/apis', () => ({
+vi.mock('shared-projects-frontend/apis', async (orginalImporter) => ({
+  ...(await orginalImporter()),
   getGroup: vi.fn().mockResolvedValue({ results: {} }),
 }))
 

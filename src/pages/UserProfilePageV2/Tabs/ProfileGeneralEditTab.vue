@@ -473,7 +473,7 @@ export default {
 @use '~/pages/UserProfilePageV2/Tabs/profile-form';
 
 .img-ctn {
-  margin-bottom: $space-xl;
+  margin-bottom: variables.$space-xl;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -493,7 +493,7 @@ export default {
   display: inline-flex;
   font-weight: bold;
   text-decoration: underline;
-  color: $primary-dark;
+  color: variables.$primary-dark;
   cursor: pointer;
 }
 </style>

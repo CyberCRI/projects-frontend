@@ -3,15 +3,12 @@ import { lpiMount } from '~~/tests/helpers/LpiMount'
 
 import type { OrganizationOutput } from 'shared-projects-frontend/models'
 import useOrganizationsStore from '~/stores/useOrganizations'
-import pinia from '~/stores'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('shared-projects-frontend/apis', () => ({
+vi.mock('shared-projects-frontend/apis', async (orginalImporter) => ({
+  ...(await orginalImporter()),
   postUserSkill: vi.fn().mockResolvedValue({}),
-}))
-
-vi.mock('shared-projects-frontend/apis', () => ({
   getOrgClassificationTags: vi
     .fn()
     .mockResolvedValue({ results: [{ id: 1 }, { id: 2 }, { id: 3 }] }),
@@ -43,7 +40,7 @@ describe('SkillsEditDrawer.vue', () => {
   let wrapper
 
   beforeEach(() => {
-    const organizationsStore = useOrganizationsStore(pinia)
+    const organizationsStore = useOrganizationsStore()
     organizationsStore._current = {
       code: 'test',
       tags: [],

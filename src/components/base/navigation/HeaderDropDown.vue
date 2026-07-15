@@ -134,7 +134,8 @@ watch(open, (neo) => {
         const menuBbox = menu.getBoundingClientRect()
         const wrapperBbox = dropDownRef.value.getBoundingClientRect()
         // round corner if drop down is wider than wrapper plus border radius
-        roundCorner.value = menuBbox.width > wrapperBbox.width + 6 /* $border-radius-s: 6px;*/
+        roundCorner.value =
+          menuBbox.width > wrapperBbox.width + 6 /* variables.$border-radius-s: 6px;*/
         // clamp corner if drop down is wider than wrapper but not enough to have round corner
         clampCorner.value = menuBbox.width > wrapperBbox.width && !roundCorner.value
       }

@@ -12,7 +12,8 @@ import { flushPromises } from '@vue/test-utils'
 import { getOrgClassificationTags } from 'shared-projects-frontend/apis'
 import NothingHere from '~/components/base/NothingHere.vue'
 
-vi.mock('shared-projects-frontend/apis', () => ({
+vi.mock('shared-projects-frontend/apis', async (orginalImporter) => ({
+  ...(await orginalImporter()),
   getOrgClassificationTags: vi
     .fn()
     .mockResolvedValue({ results: [{ id: 1 }, { id: 2 }, { id: 3 }] }),

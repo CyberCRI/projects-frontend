@@ -71,24 +71,24 @@ useLpiHead2({
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: $space-2xl;
+  margin-bottom: variables.$space-2xl;
 
   .org-card-ctn {
     display: flex;
     flex-flow: column wrap;
-    gap: $space-2xl;
-    margin-top: $space-xl;
-    margin-bottom: $space-xl;
+    gap: variables.$space-2xl;
+    margin-top: variables.$space-xl;
+    margin-bottom: variables.$space-xl;
 
     .org-card {
       display: flex;
       flex-direction: column;
       justify-content: stretch;
       align-items: stretch;
-      border-radius: $border-radius-m;
-      border: $border-width-s solid var(--primary);
+      border-radius: variables.$border-radius-m;
+      border: variables.$border-width-s solid var(--primary);
       overflow: hidden;
-      padding: $space-m;
+      padding: variables.$space-m;
       height: pxtorem(96px);
       width: pxtorem(290px);
 
@@ -102,13 +102,13 @@ useLpiHead2({
   }
 }
 
-@media (min-width: $min-tablet) {
+@media (min-width: variables.$min-tablet) {
   .portal-layout {
     .org-card-ctn {
       flex-direction: row;
       justify-content: center;
-      margin-top: $space-3xl;
-      margin-bottom: $space-3xl;
+      margin-top: variables.$space-3xl;
+      margin-bottom: variables.$space-3xl;
 
       .org-card {
         margin: unset;

@@ -104,8 +104,8 @@ const canSave = computed(
   margin-bottom: 1rem;
   padding: 1rem;
   text-align: center;
-  background-color: $primary-lighter;
-  border-radius: $border-radius-m;
+  background-color: variables.$primary-lighter;
+  border-radius: variables.$border-radius-m;
 }
 
 .actions {

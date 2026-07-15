@@ -71,7 +71,7 @@ const description = computed(() =>
 
 .location-list-item {
   display: flex;
-  background-color: $primary-lighter;
+  background-color: variables.$primary-lighter;
   border-radius: 0.8rem;
   padding: 0.5em;
   align-items: flex-start;

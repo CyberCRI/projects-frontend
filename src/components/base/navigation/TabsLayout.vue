@@ -339,7 +339,7 @@ provide('tabsLayoutSelectTab', selectTab)
       padding-top: 2px; // room for the tab upper border not to be cropped
       margin-bottom: -1px; // merge with content top border if it has some (admin, carousel)
 
-      // same as border-bottom: $border-width-s solid $primary;
+      // same as border-bottom: variables.$border-width-s solid $primary;
       // but with a background-image so it passes under the child tab element
       background: transparent
         url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2NguL38PwAE4wKCsDeq2gAAAABJRU5ErkJggg==')

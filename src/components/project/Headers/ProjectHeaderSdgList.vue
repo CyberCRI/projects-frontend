@@ -47,8 +47,8 @@ $sdg-size: pxtorem(38px);
 .sdg-list {
   display: flex;
   flex-wrap: wrap;
-  gap: $space-xs;
-  row-gap: $space-m;
+  gap: variables.$space-xs;
+  row-gap: variables.$space-m;
 }
 
 .sdg-enter-active,

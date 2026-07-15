@@ -10,19 +10,23 @@ import pinia from '~/stores'
 import type { OrganizationOutput } from 'shared-projects-frontend/models'
 import useProjectCategoriesStore from '~/stores/useProjectCategories'
 import useOrganizationsStore from '~/stores/useOrganizations'
+import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import { flushPromises } from '@vue/test-utils'
-
-const router = [{ name: 'Home', path: '/', component: MockComponent }]
 
 describe('CategoriesPage', () => {
   beforeEach(() => {
-    const organizationsStore = useOrganizationsStore(pinia)
+    const organizationsStore = useOrganizationsStore()
     organizationsStore._current = { ID: 'TEST', code: 'TEST' } as unknown as OrganizationOutput
-    const projectCategories = useProjectCategoriesStore(pinia)
+    const projectCategories = useProjectCategoriesStore()
     projectCategories._all = ProjectCategoryOutputFactory.generateMany(8)
   })
   it('should render CategoriesPage', async () => {
-    const wrapper = await lpiShallowMountSuspended(CategoriesPage, { router })
+    const organizationCode = useOrganizationCode()
+
+    registerEndpoint(`organization/${organizationCode}/categories-hierarchy/`, () => {
+      return ProjectCategoryOutputFactory.generate()
+    })
+    const wrapper = await lpiShallowMountSuspended(CategoriesPage)
     await flushPromises()
 
     expect(wrapper.exists()).toBeTruthy()

@@ -1,17 +1,18 @@
-import { getAllOrgClassifications } from 'shared-projects-frontend/apis'
-import useOrganizationsStore from '~/stores/useOrganizations'
+import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import useTagSearch from '~/composables/useTagSearch.ts'
 
 vi.mock('~/stores/useOrganizations')
-vi.mock('shared-projects-frontend/apis', () => ({
+vi.mock('shared-projects-frontend/apis', async (orginalImporter) => ({
+  ...(await orginalImporter()),
   getAllOrgClassifications: vi
     .fn()
-    .mockResolvedValue({ count: 1, results: [{ id: 1, title: 'test' }] }),
-  getOrgClassificationTags: vi
-    .fn()
-    .mockResolvedValue({ count: 1, results: [{ id: 1, title: 'test' }] }),
+    .mockResolvedValue(PaginationsFactory.generate({ results: [{ id: 1, title: 'test' }] })),
+  getOrgClassificationTags: vi.fn().mockResolvedValue({ results: [{ id: 1, title: 'test' }] }),
 }))
+
+import { getAllOrgClassifications } from 'shared-projects-frontend/apis'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useTagSearch from '~/composables/useTagSearch.ts'
 
 describe('useTagSearch', () => {
   let organizationsStoreMock

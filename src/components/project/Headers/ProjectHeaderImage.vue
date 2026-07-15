@@ -24,9 +24,9 @@ defineProps<{
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: $border-radius-l;
+  border-radius: variables.$border-radius-l;
   overflow: hidden;
-  background-color: $white;
+  background-color: variables.$white;
   position: absolute;
   inset: 0;
 
@@ -36,7 +36,7 @@ defineProps<{
   }
 
   &.img-mobile-ctn .cropped-image {
-    border-radius: $border-radius-l;
+    border-radius: variables.$border-radius-l;
   }
 }
 </style>

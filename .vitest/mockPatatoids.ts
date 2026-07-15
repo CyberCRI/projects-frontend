@@ -1,10 +1,11 @@
 import { usePatatoids } from '../src/composables/usePatatoids.ts'
 import { useNuxtApp } from 'nuxt/app'
-import { beforeAll } from 'vitest'
+import { beforeEach } from 'vitest'
 
-beforeAll(async () => {
+let alreadyMocked = false
+beforeEach(async () => {
   const isNuxtTestEnv = typeof $fetch !== 'undefined' || typeof useNuxtApp !== 'undefined'
-  if (!isNuxtTestEnv) {
+  if (!isNuxtTestEnv || alreadyMocked) {
     return
   }
 
@@ -18,6 +19,7 @@ beforeAll(async () => {
   const { registerEndpoint } = await import('@nuxt/test-utils/runtime')
   // mock result fetch blob for patatoid (no error during rendering in tests)
   usePatatoids().forEach((path) => {
-    registerEndpoint(path, () => [])
+    registerEndpoint(path, () => new Blob([]))
   })
+  alreadyMocked = true
 })

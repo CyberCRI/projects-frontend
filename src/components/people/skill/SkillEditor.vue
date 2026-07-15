@@ -241,12 +241,12 @@ function onUpdateMentorship(mentorship) {
       /*
             input[type='radio'] {
                 appearance: none;
-                background-color: $white;
+                background-color: variables.$white;
                 margin: 0;
                 font: inherit;
                 width: $layout-size-l;
                 height: $layout-size-l;
-                border: $border-width-s solid $primary-dark;
+                border: variables.$border-width-s solid variables.$primary-dark;
                 border-radius: 100%;
                 transform: translateY(-0.075em);
                 display: inline-block;
@@ -264,7 +264,7 @@ function onUpdateMentorship(mentorship) {
                 left: 50%;
                 transform: translate(-50%, -50%) scale(0);
                 transition: 120ms transform ease-in-out;
-                box-shadow: inset 1em 1em $primary-dark;
+                box-shadow: inset 1em 1em variables.$primary-dark;
                 border-radius: 100%;
             }
 

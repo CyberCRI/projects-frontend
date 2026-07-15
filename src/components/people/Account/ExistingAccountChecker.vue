@@ -108,7 +108,7 @@ const searchUser = async () => {
 }
 
 .input-field {
-  padding: $space-2xs 0;
+  padding: variables.$space-2xs 0;
 }
 
 .footer {
@@ -116,16 +116,16 @@ const searchUser = async () => {
   width: 100%;
   display: flex;
   justify-content: center;
-  color: $primary-dark;
+  color: variables.$primary-dark;
   font-weight: 700;
-  padding-top: $space-l;
-  padding-bottom: $space-l;
+  padding-top: variables.$space-l;
+  padding-bottom: variables.$space-l;
   position: sticky;
   bottom: 0;
-  background: $white;
+  background: variables.$white;
 
   button ~ button {
-    margin-left: $space-m;
+    margin-left: variables.$space-m;
     text-transform: capitalize;
   }
 }

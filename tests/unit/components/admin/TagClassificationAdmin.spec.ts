@@ -16,7 +16,8 @@ vi.mock('es-toolkit', () => ({
   throttle: vi.fn((fn) => fn),
   capitalize: vi.fn((t) => t || ''),
 }))
-vi.mock('shared-projects-frontend/apis', () => ({
+vi.mock('shared-projects-frontend/apis', async (orginalImporter) => ({
+  ...(await orginalImporter()),
   getOrgClassificationTags: vi.fn().mockResolvedValue({
     count: 3,
     current_page: 1,

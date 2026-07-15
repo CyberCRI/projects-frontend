@@ -28,6 +28,6 @@ const removeCategory = (category) => {
 .filter-categories-suggestions {
   display: flex;
   flex-wrap: wrap;
-  gap: $space-2xs;
+  gap: variables.$space-2xs;
 }
 </style>

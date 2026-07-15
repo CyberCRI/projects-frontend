@@ -543,17 +543,17 @@ export default {
 @use '~/design/scss/variables';
 
 .form-ctn {
-  padding: $space-l 0;
+  padding: variables.$space-l 0;
 
   .label {
     font-weight: 500;
-    font-size: $font-size-m;
-    padding-bottom: $space-m;
+    font-size: variables.$font-size-m;
+    padding-bottom: variables.$space-m;
   }
 
   .role-options-ctn {
     display: inline-flex;
-    margin-top: $space-l;
+    margin-top: variables.$space-l;
   }
 
   .password-btn-ctn {
@@ -575,8 +575,8 @@ export default {
   }
 
   .spacer {
-    margin-top: $space-xl;
-    border-bottom: $border-width-s solid $lighter-gray;
+    margin-top: variables.$space-xl;
+    border-bottom: variables.$border-width-s solid variables.$lighter-gray;
   }
 }
 
@@ -585,48 +585,48 @@ export default {
   width: 100%;
   display: flex;
   justify-content: center;
-  border-top: $border-width-s solid $lighter-gray;
-  color: $primary-dark;
+  border-top: variables.$border-width-s solid variables.$lighter-gray;
+  color: variables.$primary-dark;
   font-weight: 700;
-  padding-top: $space-l;
-  padding-bottom: $space-l;
+  padding-top: variables.$space-l;
+  padding-bottom: variables.$space-l;
   position: sticky;
   bottom: 0;
-  background: $white;
+  background: variables.$white;
 
   button ~ button {
-    margin-left: $space-m;
+    margin-left: variables.$space-m;
     text-transform: capitalize;
   }
 }
 
 .invite-notice,
 .other-org-user-card {
-  margin: $space-l 0;
+  margin: variables.$space-l 0;
 }
 
 .checkbox-item {
-  border: 1px solid $primary-dark;
-  padding: $space-m;
-  margin: $space-s pxToRem(16px) $space-s 0;
-  border-radius: $border-radius-xs;
+  border: 1px solid variables.$primary-dark;
+  padding: variables.$space-m;
+  margin: variables.$space-s pxToRem(16px) variables.$space-s 0;
+  border-radius: variables.$border-radius-xs;
   display: flex;
   align-items: center;
   text-align: right;
   width: max-content;
 
   &:hover {
-    background-color: $primary-lighter;
+    background-color: variables.$primary-lighter;
   }
 
   > label {
     font-weight: 700;
-    font-size: $font-size-m;
-    line-height: $line-height-tight;
-    color: $primary-dark;
+    font-size: variables.$font-size-m;
+    line-height: variables.$line-height-tight;
+    color: variables.$primary-dark;
     margin: 0;
     cursor: pointer;
-    margin-left: $space-s;
+    margin-left: variables.$space-s;
   }
 }
 </style>
