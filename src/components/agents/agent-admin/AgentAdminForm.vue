@@ -223,6 +223,7 @@ watch(
 
       form.value = defaultForm(props.agent)
       tiptapId.value = 'TipTapEditor'
+      // @ts-expect-error TODO
       tted.value?.resetContent()
     } catch (e) {
       console.error(e)

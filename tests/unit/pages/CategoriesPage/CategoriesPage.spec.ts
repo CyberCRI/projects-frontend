@@ -1,11 +1,8 @@
 import CategoriesPage from '~/pages/CategoriesPage/CategoriesPage.vue'
 import { lpiShallowMountSuspended } from '~~/tests/helpers/LpiMount'
-import MockComponent from '~~/tests/helpers/MockComponent.vue'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { ProjectCategoryOutputFactory } from '~~/tests/factories/project-category.factory'
-
-import pinia from '~/stores'
 
 import type { OrganizationOutput } from 'shared-projects-frontend/models'
 import useProjectCategoriesStore from '~/stores/useProjectCategories'
