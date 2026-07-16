@@ -1,46 +1,47 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
-
 import type { OrganizationOutput } from 'shared-projects-frontend/models'
 import useOrganizationsStore from '~/stores/useOrganizations'
-import { checkExpiredToken } from '~/api/auth/keycloakUtils'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import { flushPromises } from '@vue/test-utils'
 import type { Router } from 'vue-router'
-import type { Mock } from 'vitest'
-import App from '~/app.vue'
+
+const checkExpiredToken = vi.fn()
+const cleanLocalStorage = vi.fn()
+const getRefreshTokenInterval = vi.fn().mockReturnValue(1)
 
 vi.mock('~/api/auth/keycloakUtils', () => {
   return {
-    checkExpiredToken: vi.fn(),
-    cleanLocalStorage: vi.fn(),
-    getRefreshTokenInterval: vi.fn().mockReturnValue(1),
+    checkExpiredToken,
+    cleanLocalStorage,
+    getRefreshTokenInterval,
   }
 })
 
 vi.mock('~/api/auth/auth.service', async (origi) => {
   return {
     ...(await origi()),
-    refreshAccessToken: vi.fn(() =>
-      Promise.resolve({
-        access_token: 'access',
-        refresh_token: 'refresh',
-        refresh_token_exp: 1,
-        parsedToken: {},
-        fromURL: 'url',
-        id_token: 'id',
-      })
-    ),
+    refreshAccessToken: vi.fn().mockImplementation(() => ({
+      access_token: 'access',
+      refresh_token: 'refresh',
+      refresh_token_exp: 1,
+      parsedToken: {},
+      fromURL: 'url',
+      id_token: 'id',
+    })),
   }
 })
 
 describe('On tab focus', () => {
   beforeEach(() => {
+    vi.resetModules()
     const organizationsStore = useOrganizationsStore()
     organizationsStore._current = { code: '123' } as OrganizationOutput
   })
 
-  const localeMount = () => {
+  const localeMount = async () => {
+    const App = (await import('~/app.vue')).default
+
     const wrapper = lpiShallowMount(App, {
       stubs: { NuxtLink: true, NuxtPage: true },
     })
@@ -60,10 +61,11 @@ describe('On tab focus', () => {
   })
 
   it('logout if token has expired', async () => {
-    const { wrapper, router, usersStore } = localeMount()
+    const { wrapper, router, usersStore } = await localeMount()
 
+    vi.spyOn(usersStore, 'resetUser')
     vi.spyOn(router, 'push')
-    ;(checkExpiredToken as Mock).mockImplementation(() => true)
+    checkExpiredToken.mockImplementation(() => true)
 
     // // token in both
     usersStore.accessToken = 'access'
@@ -81,7 +83,8 @@ describe('On tab focus', () => {
   })
 
   it('logout if logged in but has no more user token', async () => {
-    const { wrapper, router, usersStore } = localeMount()
+    const { wrapper, router, usersStore } = await localeMount()
+    vi.spyOn(usersStore, 'resetUser')
     vi.spyOn(router, 'push')
 
     // token in store
@@ -99,8 +102,8 @@ describe('On tab focus', () => {
   })
 
   it('do not logout if not logged in', async () => {
-    const { wrapper, router, usersStore } = localeMount()
-
+    const { wrapper, router, usersStore } = await localeMount()
+    vi.spyOn(usersStore, 'resetUser')
     vi.spyOn(router, 'push')
 
     // not token in store and no in local storage

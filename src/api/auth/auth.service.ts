@@ -36,6 +36,7 @@ export async function goToKeycloakLoginPage(): Promise<void> {
   const organizationsStore = useOrganizationsStore()
   keycloak.codeVerifier.generate()
   keycloak.appSecret.generate()
+
   const currentUrl = new URL(keycloak.getCurrentUrl())
   const url = new URL(
     `${runtimeConfig.public.appKeycloakUrl}/realms/${

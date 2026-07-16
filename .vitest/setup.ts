@@ -1,3 +1,4 @@
+import MockComponent from '~~/tests/helpers/MockComponent.vue'
 import { flushPromises } from '@vue/test-utils'
 
 import { afterEach, vi } from 'vitest'
@@ -7,6 +8,13 @@ vi.mock('vue3-popper', () => ({
     name: 'Popper',
     template: '<div><slot /></div>',
   },
+}))
+
+vi.mock('~/components/base/form/TextEditor/TipTapEditor.vue', () => ({
+  default: MockComponent,
+}))
+vi.mock('~/components/base/form/TextEditor/TipTapCollaborativeEditor.vue', () => ({
+  default: MockComponent,
 }))
 
 // this ignore some warn when mounting compoennets (suspended from nuxt test)

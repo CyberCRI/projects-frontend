@@ -35,6 +35,6 @@ describe('KeycloakUtils', () => {
   })
 
   afterAll(() => {
-    vi.resetAllMocks()
+    vi.clearAllMocks()
   })
 })

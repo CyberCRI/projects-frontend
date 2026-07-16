@@ -1,10 +1,18 @@
 import { PaginationsFactory } from '../tests/factories/paginations.factory'
 import { initializeClientApi } from '../src/config/apis'
 import createFetchMock from 'vitest-fetch-mock'
+import { onlyOnce, isNuxtReady } from './utils'
 import { vi } from 'vitest'
 
+beforeEach(
+  onlyOnce(() => {
+    if (isNuxtReady()) {
+      initializeClientApi()
+    }
+  })
+)
+
 // add global options and $fetch
-initializeClientApi()
 
 // hide userFollows (when changing in stores)
 vi.mock('shared-projects-frontend/apis', async (importOriginal) => {
