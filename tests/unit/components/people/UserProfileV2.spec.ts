@@ -3,7 +3,7 @@ import { UserFactory } from '~~/tests/factories/user.factory'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import { flushPromises } from '@vue/test-utils'
 
-import { beforeEach, describe, expect, it } from 'vitest'
+import { beforeAll, beforeEach, describe, expect, it } from 'vitest'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
@@ -28,14 +28,24 @@ const buildParams = (userId: number, showPageLink: boolean) => ({
 
 describe('UserProfileV2', () => {
   let usersStore
-  beforeEach(() => {
+  const user = UserFactory.generate()
+  const user2 = UserFactory.generate()
+
+  beforeAll(() => {
+    registerEndpoint(`user/${user.id}/`, () => user)
+    registerEndpoint(`user/${user2.id}/`, () => user2)
+
     const organizationsStore = useOrganizationsStore(pinia)
     organizationsStore.$patch({ _current: { id: 'TEST' } as any })
-
     usersStore = useUsersStore()
   })
+
+  beforeEach(() => {
+    usersStore.userFromApi = usersStore.userFromToken = user
+  })
+
   it('should render UserProfileV2 component', () => {
-    const wrapper = lpiShallowMount(UserProfileV2, buildParams(123, false))
+    const wrapper = lpiShallowMount(UserProfileV2, buildParams(user.id, false))
 
     expect(wrapper.exists()).toBeTruthy()
   })
@@ -58,11 +68,6 @@ describe('UserProfileV2', () => {
   })
 
   it('should see that current user is not the logged one', async () => {
-    const user = UserFactory.generate({ id: 123 })
-    registerEndpoint(`user/${user.id}/`, () => user)
-
-    const user2 = UserFactory.generate({ id: 456 })
-    registerEndpoint(`user/${user2.id}/`, () => user2)
     usersStore.userFromApi = usersStore.userFromToken = user2
 
     const wrapper = lpiShallowMount(UserProfileV2, buildParams(user.id, false))
@@ -72,10 +77,6 @@ describe('UserProfileV2', () => {
   })
 
   it('should allow edition of self profile', async () => {
-    const user = UserFactory.generate({ id: 123 })
-    registerEndpoint(`user/${user.id}/`, () => user)
-    usersStore.userFromApi = usersStore.userFromToken = user
-
     const wrapper = lpiShallowMount(UserProfileV2, buildParams(null, false))
     const vm: any = wrapper.vm
     await flushPromises()
@@ -83,14 +84,7 @@ describe('UserProfileV2', () => {
   })
 
   it('should not allow edition of other profile without specific rights', async () => {
-    const user = UserFactory.generate({ id: 123 })
-    registerEndpoint(`user/${user.id}/`, () => user)
-
-    const user2 = UserFactory.generate({ id: 456 })
-    registerEndpoint(`user/${user2.id}/`, () => user2)
-    usersStore.userFromApi = usersStore.userFromToken = user2
-
-    const wrapper = lpiShallowMount(UserProfileV2, buildParams(user.id, false))
+    const wrapper = lpiShallowMount(UserProfileV2, buildParams(user2.id, false))
     const vm: any = wrapper.vm
     await flushPromises()
     expect(vm.canEditUserOrIsSelf).toBe(false)
