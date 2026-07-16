@@ -10,6 +10,7 @@ vi.mock('vue3-popper', () => ({
   },
 }))
 
+// TODO remove mock for tiptaps
 vi.mock('~/components/base/form/TextEditor/TipTapEditor.vue', () => ({
   default: MockComponent,
 }))

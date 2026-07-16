@@ -1,6 +1,5 @@
 import type { ImageModelCreated } from 'shared-projects-frontend/models'
 import useOrganizationsStore from '~/stores/useOrganizations'
-import { getExtensions } from 'shared-projects-frontend/lib'
 
 // this is needed to module overide in tiptap commands (only for typescript)
 import '@tiptap/extension-ordered-list'
@@ -19,6 +18,7 @@ import '@tiptap/extension-color'
 import '@tiptap/extension-bold'
 import '@tiptap/starter-kit'
 
+import { getExtensions } from '~/composables/tiptap/extensions/all'
 import type { ErrorObject } from '@vuelidate/core'
 import type { EditorOptions } from '@tiptap/vue-3'
 import type { ExtractDefaultPropTypes } from 'vue'

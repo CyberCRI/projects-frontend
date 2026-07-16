@@ -1,4 +1,4 @@
-import { getExtensions } from 'shared-projects-frontend/lib'
+import { getExtensions } from '~/composables/tiptap/extensions/all'
 import { generateHTML, generateJSON } from '@tiptap/core'
 import { isNil } from 'es-toolkit'
 

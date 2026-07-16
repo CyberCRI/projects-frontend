@@ -1,7 +1,7 @@
 <template>
   <div class="user-card-wrapper">
     <div class="user-card-ctn">
-      <div :class="[size, tint]" class="user-card">
+      <div :class="[size, tint]" class="user-card" :title="user.name">
         <CroppedApiImage
           :alt="`${user.name} image`"
           class="picture"

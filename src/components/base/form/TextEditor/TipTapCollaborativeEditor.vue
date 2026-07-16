@@ -22,7 +22,7 @@ import { useRuntimeConfig } from '#imports'
 import { randomInt } from 'es-toolkit'
 
 import { ClearHistoryWS } from '~/composables/tiptap/extensions/ClearHistoryWS'
-import { getExtensions } from 'shared-projects-frontend/lib'
+import { getExtensions } from '~/composables/tiptap/extensions/all'
 
 const runtimeConfig = useRuntimeConfig()
 const { t } = useNuxtI18n()

@@ -9,7 +9,7 @@ services:
       - ./src:/app/src
       - ./prisma-chatbot-db:/app/prisma-chatbot-db
       - ./nuxt.config.ts:/app/nuxt.config.ts
-      # - ./node_modules:/app/node_modules
+      - ./node_modules:/app/node_modules
     environment:
       - NUXT_PUBLIC_APP_API_URL:${NUXT_PUBLIC_APP_API_URL}
       - NUXT_PUBLIC_APP_KEYCLOAK_URL:${NUXT_PUBLIC_APP_KEYCLOAK_URL}
