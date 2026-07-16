@@ -633,7 +633,7 @@ export default {
     },
 
     async loadUser() {
-      if (this.userId && this.userId === this.usersStore.id) {
+      if (!this.userId || this.userId === this.usersStore.id) {
         // get the connected user
         this.originalUser = await this.usersStore.getUser(this.usersStore.id, {
           noError: true,

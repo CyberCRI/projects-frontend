@@ -214,7 +214,7 @@ useLpiHead2({
 
 .action {
   display: flex;
-  padding-bottom: variables.pxToRem(24px);
+  padding-bottom: variables.pxtorem(24px);
   flex-direction: row;
   align-items: center;
   justify-content: center;
@@ -227,7 +227,7 @@ useLpiHead2({
 }
 
 .extra-links {
-  margin-top: variables.pxToRem(29px);
+  margin-top: variables.pxtorem(29px);
   width: 100%;
   display: flex;
   flex-flow: row nowrap;
@@ -274,19 +274,19 @@ useLpiHead2({
   align-items: center;
   margin: 90px auto;
 
-  // padding-top: pxToRem(20px);
+  // padding-top: variables.pxtorem(20px);
 }
 
 .title {
-  font-size: variables.pxToRem(40px);
+  font-size: variables.pxtorem(40px);
   font-weight: 900;
   color: variables.$primary-dark;
   line-height: variables.$line-height-tight;
-  margin-bottom: variables.pxToRem(15px);
+  margin-bottom: variables.pxtorem(15px);
 }
 
 .expired-text {
-  font-size: variables.pxToRem(40px);
+  font-size: variables.pxtorem(40px);
   line-height: variables.$line-height-squashed;
   text-align: center;
   color: variables.$primary;

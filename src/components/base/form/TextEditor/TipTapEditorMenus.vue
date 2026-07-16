@@ -66,7 +66,7 @@ const { stateModals, closeModals, openAndCloseAll } = useModals({
     @saved="$emit('saved')"
   />
 
-  <!-- <template v-if="showMenu && mode !== 'none'">
+  <template v-if="showMenu && mode !== 'none'">
     <TableMenuBar v-if="mode != 'simple'" :editor="editor" class="editortablemenu" />
 
     <LinkMenuBar :editor="editor" class="editorlinkmenu" @open="openAndCloseAll('link')" />
@@ -74,7 +74,7 @@ const { stateModals, closeModals, openAndCloseAll } = useModals({
     <ImageMenuBar :editor="editor" />
 
     <VideoMenuBar :editor="editor" />
-  </template> -->
+  </template>
 </template>
 
 <style lang="scss" scoped>

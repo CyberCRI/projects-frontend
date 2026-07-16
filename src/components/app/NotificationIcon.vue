@@ -47,10 +47,10 @@ defineEmits<{ click: [] }>()
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: variables.pxToRem(16px);
-    max-width: variables.pxToRem(32px);
-    height: variables.pxToRem(16px);
-    border-radius: variables.pxToRem(8px);
+    min-width: variables.pxtorem(16px);
+    max-width: variables.pxtorem(32px);
+    height: variables.pxtorem(16px);
+    border-radius: variables.pxtorem(8px);
     background-color: variables.$salmon;
 
     .inner {

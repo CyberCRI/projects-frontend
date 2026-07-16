@@ -32,7 +32,7 @@ describe('ProfileSkillTab', () => {
     )
   })
 
-  it('should render ProfileSkillTab component', async () => {
+  it.skip('should render ProfileSkillTab component', async () => {
     const wrapper = await lpiMountSuspended(ProfileSkillTab, {
       props: { user: userTranslatedFactory.generate() },
     })

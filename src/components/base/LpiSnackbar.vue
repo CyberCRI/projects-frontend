@@ -45,7 +45,7 @@ const close = () => emit('close')
   align-items: center;
   color: variables.$black;
   box-shadow: 0 4px 4px rgb(0 0 0 / 15%);
-  max-width: variables.pxToRem(740px);
+  max-width: variables.pxtorem(740px);
 
   &.success,
   &.info {

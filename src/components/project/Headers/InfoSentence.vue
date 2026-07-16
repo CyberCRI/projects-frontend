@@ -208,7 +208,7 @@ const iconSrc = computed(() => usePublicURL(props.data.icon || ''))
 
   .icon {
     margin-right: variables.$space-s;
-    height: variables.pxToRem(25px);
+    height: variables.pxtorem(25px);
     fill: variables.$primary-dark;
   }
 

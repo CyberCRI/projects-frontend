@@ -107,7 +107,7 @@ const patchUser = async (choice) => {
   font-weight: 700;
   font-size: variables.$font-size-3xl;
   line-height: variables.$line-height-tight;
-  margin-bottom: pxtorem(56px);
+  margin-bottom: variables.pxtorem(56px);
 }
 
 .notice {

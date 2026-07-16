@@ -1,4 +1,9 @@
 <template>
+  {{
+    JSON.stringify({
+      canCreateProject,
+    })
+  }}
   <div v-if="canCreateProject || hasChatButton" class="home-buttons">
     <div class="home-btn-container">
       <LpiButton

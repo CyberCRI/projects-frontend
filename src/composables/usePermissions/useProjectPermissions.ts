@@ -35,11 +35,12 @@ export const usePermissionProject = (projectId: RefOrRaw<ProjectModel['id'] | nu
 
   const permissions = computed(() => internalProjectId.value && userStore.isConnected)
 
-  const canCreateProject = computed(
-    () =>
+  const canCreateProject = computed(() => {
+    return (
       userStore.isConnected &&
       globalCanCreateProject(userStore.rights, organizationStore.current.id)
-  )
+    )
+  })
 
   const canEditProject = computed(() => {
     return (

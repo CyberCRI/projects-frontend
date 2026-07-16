@@ -22,8 +22,8 @@ withDefaults(
 @use '~/design/scss/variables';
 
 .profile-edit-block {
-  padding: variables.pxToRem(43px) variables.pxToRem(63px);
-  border-radius: variables.pxToRem(21px);
+  padding: variables.pxtorem(43px) variables.pxtorem(63px);
+  border-radius: variables.pxtorem(21px);
   border: variables.$border-width-m solid variables.$lighter-gray;
 }
 

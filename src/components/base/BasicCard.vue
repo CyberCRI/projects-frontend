@@ -98,8 +98,8 @@ const is = computed(() => {
   $picture-width: 90px;
 
   display: flex;
-  width: variables.pxToRem($picture-width);
-  height: variables.pxToRem($picture-width);
+  width: variables.pxtorem($picture-width);
+  height: variables.pxtorem($picture-width);
   border-radius: variables.$border-radius-xs;
   box-shadow: 0 0 2px rgb(0 0 0 / 15%);
   flex-shrink: 0;
@@ -109,21 +109,21 @@ const is = computed(() => {
   :deep(.picture-user) {
     $picture-width: 110px;
 
-    width: variables.pxToRem($picture-width);
-    height: variables.pxToRem($picture-width);
+    width: variables.pxtorem($picture-width);
+    height: variables.pxtorem($picture-width);
   }
 
   :deep(.picture-project) {
     $picture-width: 86px;
 
-    width: variables.pxToRem($picture-width);
-    height: variables.pxToRem($picture-width);
+    width: variables.pxtorem($picture-width);
+    height: variables.pxtorem($picture-width);
   }
 
   :deep(.picture-group) {
     border-radius: 50%;
-    width: variables.pxToRem(90px);
-    height: variables.pxToRem(90px);
+    width: variables.pxtorem(90px);
+    height: variables.pxtorem(90px);
   }
 }
 
@@ -133,8 +133,8 @@ const is = computed(() => {
   :deep(.picture-group) {
     $picture-width: 80px;
 
-    width: variables.pxToRem($picture-width);
-    height: variables.pxToRem($picture-width);
+    width: variables.pxtorem($picture-width);
+    height: variables.pxtorem($picture-width);
   }
 
   :deep(.picture-group) {

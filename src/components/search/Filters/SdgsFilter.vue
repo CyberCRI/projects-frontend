@@ -32,7 +32,7 @@ const toggleSdg = (sdgId) => {
 .sdg-filter-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: variables.pxToRem(16px);
+  gap: variables.pxtorem(16px);
   justify-items: center;
   margin-top: 1rem;
 }

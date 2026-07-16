@@ -101,7 +101,7 @@ const projectImage = computed(() => {
 @use '~/design/scss/variables';
 
 $annoucement-picto-size: 72px;
-$annoucement-padding: variables.pxToRem(20px);
+$annoucement-padding: variables.pxtorem(20px);
 
 .announcement-wrapper {
   width: 100%;
@@ -218,10 +218,10 @@ $annoucement-padding: variables.pxToRem(20px);
       }
 
       .picto {
-        width: variables.pxToRem($annoucement-picto-size);
-        flex-basis: variables.pxToRem($annoucement-picto-size);
+        width: variables.pxtorem($annoucement-picto-size);
+        flex-basis: variables.pxtorem($annoucement-picto-size);
         flex-shrink: 0;
-        height: variables.pxToRem($annoucement-picto-size);
+        height: variables.pxtorem($annoucement-picto-size);
         background-position: center center;
         background-size: cover;
         border-radius: variables.$border-radius-xs;

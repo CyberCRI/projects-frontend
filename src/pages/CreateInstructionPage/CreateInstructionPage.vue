@@ -69,8 +69,8 @@ useLpiHead2({
 @use '~/design/scss/variables';
 
 .page-title {
-  margin-top: variables.pxToRem(60px);
-  margin-bottom: variables.pxToRem(60px);
+  margin-top: variables.pxtorem(60px);
+  margin-bottom: variables.pxtorem(60px);
 }
 
 .form-actions {

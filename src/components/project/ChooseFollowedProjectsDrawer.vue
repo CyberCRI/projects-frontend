@@ -152,8 +152,8 @@ const close = () => emit('close')
 
     $picture-width: 86px;
 
-    width: variables.pxToRem($picture-width);
-    height: variables.pxToRem($picture-width);
+    width: variables.pxtorem($picture-width);
+    height: variables.pxtorem($picture-width);
     border-radius: variables.$border-radius-xs;
     background-repeat: no-repeat;
     background-position: center center;

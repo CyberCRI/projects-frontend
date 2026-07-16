@@ -119,16 +119,16 @@ withDefaults(
 
   > * {
     height: 11px;
-    padding: variables.pxToRem(4px) variables.pxToRem(8px);
+    padding: variables.pxtorem(4px) variables.pxtorem(8px);
   }
 
   &.has-icon {
     .icon-container {
-      padding-right: variables.pxToRem(4px);
+      padding-right: variables.pxtorem(4px);
     }
 
     .label {
-      padding-left: variables.pxToRem(4px);
+      padding-left: variables.pxtorem(4px);
     }
   }
 }
@@ -138,16 +138,16 @@ withDefaults(
 
   > * {
     height: 14px;
-    padding: variables.pxToRem(6px) variables.pxToRem(12px);
+    padding: variables.pxtorem(6px) variables.pxtorem(12px);
   }
 
   &.has-icon {
     .icon-container {
-      padding-right: variables.pxToRem(6px);
+      padding-right: variables.pxtorem(6px);
     }
 
     .label {
-      padding-left: variables.pxToRem(6px);
+      padding-left: variables.pxtorem(6px);
     }
   }
 }

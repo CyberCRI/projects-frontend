@@ -25,14 +25,14 @@ defineProps<{
 
 .page-container {
   width: 100%;
-  max-width: variables.pxToRem(532px);
+  max-width: variables.pxtorem(532px);
   margin: variables.$navbar-height auto 0 auto;
   padding: 0 variables.$space-l;
   box-sizing: border-box;
 }
 
 .header {
-  margin-top: variables.pxToRem(110px);
+  margin-top: variables.pxtorem(110px);
   margin-bottom: variables.$space-xl;
 
   h1 {

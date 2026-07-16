@@ -62,7 +62,7 @@ const defaultLocalForm = () => {
         project.template?.$t?.project_purpose,
         project.template?.project_purpose,
       ]) || newForm.purpose
-    newForm.imageSizes = pictureApiToImageSizes(project.header_image) || newForm.imageSizes
+    newForm.imageSizes = pictureApiToImageSizes(project.header_image || newForm.imageSizes)
     newForm.file = project.header_image || newForm.file
     newForm.language = project.language || locale.value || newForm.language
 

@@ -75,7 +75,7 @@ const onApply = (announcement) => {
 }
 
 const cancel = () => {
-  asyncing.value = true
+  asyncing.value = false
   selectedAnnouncement.value = null
   closeAllModals()
 }

@@ -129,7 +129,7 @@ li {
 }
 
 .icon-td {
-  width: variables.pxToRem(25px);
+  width: variables.pxtorem(25px);
   padding: 7px;
 }
 

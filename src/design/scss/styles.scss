@@ -148,18 +148,18 @@ body[class*='has-open-modal-'] {
 
 .narrow-body {
   width: 100%;
-  max-width: variables.pxToRem(1200px);
+  max-width: variables.pxtorem(1200px);
   margin: 0 auto;
   box-sizing: border-box;
 
   @media screen and (min-width: variables.$max-desktop) {
-    max-width: variables.pxToRem(1280px);
+    max-width: variables.pxtorem(1280px);
   }
 }
 
 .narrow-content {
   width: 100%;
-  max-width: variables.pxToRem(800px);
+  max-width: variables.pxtorem(800px);
   margin: 0 auto;
   box-sizing: border-box;
 }
@@ -181,19 +181,19 @@ body[class*='has-open-modal-'] {
 }
 
 .page-section-extra-wide {
-  width: variables.pxToRem(1400px);
+  width: variables.pxtorem(1400px);
 }
 
 .page-section-wide {
-  width: variables.pxToRem(1200px);
+  width: variables.pxtorem(1200px);
 }
 
 .page-section-medium {
-  width: variables.pxToRem(1024px);
+  width: variables.pxtorem(1024px);
 }
 
 .page-section-narrow {
-  width: variables.pxToRem(820px);
+  width: variables.pxtorem(820px);
 }
 
 .page-title {

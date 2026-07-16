@@ -174,12 +174,12 @@ iframe {
 .title {
   font-size: variables.$font-size-5xl;
   line-height: variables.$line-height-squashed;
-  margin-bottom: variables.pxToRem(22px);
+  margin-bottom: variables.pxtorem(22px);
 }
 
 .notice {
   font-size: variables.$font-size-m;
-  margin-bottom: variables.pxToRem(48px);
+  margin-bottom: variables.pxtorem(48px);
 }
 
 .link {
@@ -193,7 +193,7 @@ footer {
   display: flex;
   justify-content: center;
   gap: 1rem;
-  padding: variables.pxToRem(28px) 0;
-  margin-top: variables.pxToRem(74px);
+  padding: variables.pxtorem(28px) 0;
+  margin-top: variables.pxtorem(74px);
 }
 </style>

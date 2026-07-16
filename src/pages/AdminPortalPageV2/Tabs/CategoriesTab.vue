@@ -294,9 +294,9 @@ export default {
 
       if (newImage instanceof File) {
         const formData = new FormData()
-        formData.append('file', data.background_image, data.background_image.name)
+        formData.append('file', newImage, newImage.name)
         const res = await postProjectCategoryBackground(organizationCode, {
-          id,
+          id: categoryId,
           body: formData,
         })
         imageId = res.id

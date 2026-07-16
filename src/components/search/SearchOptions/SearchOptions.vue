@@ -122,7 +122,7 @@ defineExpose({ clearSelectedFilters })
 
 .search-input {
   margin-bottom: variables.$space-m;
-  width: variables.pxToRem(600px); // drop is 250px so 350 + 250 = 600
+  width: variables.pxtorem(600px); // drop is 250px so 350 + 250 = 600
 
   @media (max-width: variables.$min-tablet) {
     width: 100%;

@@ -128,7 +128,7 @@ useLpiHead2({})
   .categories {
     border: 1px solid variables.$lighter-gray;
     border-radius: variables.$border-radius-s;
-    height: variables.pxToRem(50px);
+    height: variables.pxtorem(50px);
     display: flex;
     justify-content: space-between;
     padding-inline: variables.$space-m;
@@ -148,7 +148,7 @@ useLpiHead2({})
     .caret {
       margin-left: variables.$space-l;
       fill: variables.$primary-dark;
-      width: variables.pxToRem(20px);
+      width: variables.pxtorem(20px);
     }
   }
 }

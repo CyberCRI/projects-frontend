@@ -92,8 +92,8 @@ onMounted(() => loadRoles())
   border-radius: 50%;
   background-size: cover;
   background-position: top center;
-  width: variables.pxToRem(80px);
-  height: variables.pxToRem(80px);
+  width: variables.pxtorem(80px);
+  height: variables.pxtorem(80px);
   flex-shrink: 0;
 }
 

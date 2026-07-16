@@ -82,7 +82,7 @@ const toggleGroup = (group) => emit('toggle-group', group)
 @use '~/design/scss/variables';
 
 .icon-td {
-  width: variables.pxToRem(25px);
+  width: variables.pxtorem(25px);
   padding: variables.$space-xs;
 }
 
@@ -112,7 +112,7 @@ li {
 }
 
 .child-list {
-  padding-left: variables.pxToRem(35px);
+  padding-left: variables.pxtorem(35px);
 }
 
 .nested-list {

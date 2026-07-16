@@ -1,6 +1,6 @@
 import type { ImageModel, ImageSize, AttachmentType } from 'shared-projects-frontend/models'
 import type { IconImageChoice } from '~/functs/IconImage'
-import { mapKeys, pick } from 'es-toolkit'
+import { mapKeys, pick, pickBy } from 'es-toolkit'
 
 export const IMAGES_SIZES_DEFAULTS: ImageSize = Object.freeze({
   natural_ratio: 1,
@@ -10,25 +10,48 @@ export const IMAGES_SIZES_DEFAULTS: ImageSize = Object.freeze({
   top: 0,
 })
 
+/**
+ * safe convert/get imageSize with only correct value (only number (null removed))
+ *
+ * @constant
+ * @name sanitizeImageSize
+ * @kind variable
+ * @type {<T extends ImageSize>(image: T | null) => ImageSize}
+ */
+const sanitizeImageSize = <T extends ImageSize>(image: T | null): ImageSize => {
+  const safeSizeValue = (value: any): boolean => {
+    if (!value) {
+      return false
+    }
+    const type = typeof value
+    if (type !== 'number' && type !== 'string') {
+      return false
+    }
+
+    const num = parseInt(value.toString(), 10)
+    return !isNaN(num)
+  }
+
+  return {
+    ...IMAGES_SIZES_DEFAULTS,
+    ...(image
+      ? pickBy(pick(image, ['left', 'top', 'scale_x', 'scale_y', 'natural_ratio']), safeSizeValue)
+      : {}),
+  }
+}
+
 export const pictureApiToImageSizes = <T extends ImageSize>(image: T | null): ImageSize | null => {
   if (!image) {
     return null
   }
-  return {
-    ...IMAGES_SIZES_DEFAULTS,
-    ...pick(image, ['left', 'top', 'scale_x', 'scale_y', 'natural_ratio']),
-  }
+  return sanitizeImageSize(image)
 }
 
 export const imageSizesFormData = <T extends ImageSize>(
   formData: FormData,
   imageSizes: T | null = null
 ) => {
-  const safeImageSize = {
-    ...IMAGES_SIZES_DEFAULTS,
-    ...(imageSizes || {}),
-  }
-  Object.entries(safeImageSize).forEach(([key, value]) => {
+  Object.entries(sanitizeImageSize(imageSizes)).forEach(([key, value]) => {
     formData.set(key, value.toString())
   })
 }
@@ -41,13 +64,8 @@ export const imageSizesFormDataPost = <T extends ImageSize>(
   formData: FormData,
   imageSizes: T | null = null
 ) => {
-  const safeImageSize = {
-    ...IMAGES_SIZES_DEFAULTS,
-    ...(imageSizes || {}),
-  }
-
   // add prefix for users
-  const objs = mapKeys(safeImageSize, (key) => `profile_picture_${key}`)
+  const objs = mapKeys(sanitizeImageSize(imageSizes), (key) => `profile_picture_${key}`)
 
   Object.entries(objs).forEach(([key, value]) => {
     formData.set(key, value.toString())

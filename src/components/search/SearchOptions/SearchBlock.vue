@@ -45,11 +45,11 @@ defineEmits<{
   margin: variables.$space-xl 0;
 
   .search-input {
-    margin-bottom: variables.pxToRem(16px);
+    margin-bottom: variables.pxtorem(16px);
   }
 
   @media screen and (min-width: variables.$min-tablet) {
-    padding: variables.pxToRem(32px) variables.pxToRem(84px);
+    padding: variables.pxtorem(32px) variables.pxtorem(84px);
     border-radius: 17px;
     flex-direction: row;
 

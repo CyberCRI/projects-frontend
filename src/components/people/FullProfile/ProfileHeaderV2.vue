@@ -118,13 +118,13 @@ const displayableGroups = computed(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: 0 0 variables.pxToRem(240px);
-    width: variables.pxToRem(240px);
+    flex: 0 0 variables.pxtorem(240px);
+    width: variables.pxtorem(240px);
     margin: 0 auto variables.$space-xl;
 
     .img-ctn {
-      width: variables.pxToRem(240px);
-      height: variables.pxToRem(240px);
+      width: variables.pxtorem(240px);
+      height: variables.pxtorem(240px);
       border-radius: 100%;
       overflow: hidden;
       flex-shrink: 0;
@@ -218,8 +218,8 @@ const displayableGroups = computed(() => {
         margin-top: variables.$space-l;
 
         .sdg-img {
-          width: variables.pxToRem(40px);
-          height: variables.pxToRem(40px);
+          width: variables.pxtorem(40px);
+          height: variables.pxtorem(40px);
           transition: all 0.2s ease-in-out;
           transform: translateZ(0);
 

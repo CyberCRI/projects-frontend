@@ -64,7 +64,7 @@ withDefaults(
   color: variables.$primary-dark;
 }
 
-$checkbox-size: variables.pxToRem(20px);
+$checkbox-size: variables.pxtorem(20px);
 
 .loader {
   height: $checkbox-size;

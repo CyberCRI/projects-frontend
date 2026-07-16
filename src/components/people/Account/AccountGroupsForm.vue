@@ -256,7 +256,7 @@ export default {
   }
 
   .sub-title {
-    margin: variables.pxToRem(16px) 0;
+    margin: variables.pxtorem(16px) 0;
   }
 }
 

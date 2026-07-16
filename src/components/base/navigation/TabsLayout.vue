@@ -286,8 +286,8 @@ provide('tabsLayoutSelectTab', selectTab)
 
     &.border {
       // room for border radius of content
-      padding-left: variables.pxToRem(51px);
-      padding-right: variables.pxToRem(51px);
+      padding-left: variables.pxtorem(51px);
+      padding-right: variables.pxtorem(51px);
       box-sizing: border-box;
     }
 
@@ -349,7 +349,7 @@ provide('tabsLayoutSelectTab', selectTab)
         display: flex;
         align-items: flex-end;
         justify-content: flex-start;
-        padding-top: variables.pxToRem(4px); // room for the tab upper border not to be cropped
+        padding-top: variables.pxtorem(4px); // room for the tab upper border not to be cropped
 
         .mobile-tab-ctn {
           width: 100%;
@@ -439,7 +439,7 @@ provide('tabsLayoutSelectTab', selectTab)
       }
 
       .more-btn {
-        margin-right: variables.pxToRem(16px);
+        margin-right: variables.pxtorem(16px);
       }
     }
 

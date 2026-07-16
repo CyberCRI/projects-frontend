@@ -51,7 +51,7 @@ withDefaults(
 }
 
 .btn-icon {
-  height: var(--btn-icon-size, variables.pxToRem(18px));
+  height: var(--btn-icon-size, variables.pxtorem(18px));
 }
 
 .loader-simple {

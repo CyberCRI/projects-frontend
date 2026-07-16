@@ -54,7 +54,7 @@ const leave = (el) => (el.style.height = '0')
 }
 
 .accordion .icon {
-  width: variables.pxToRem(24px);
+  width: variables.pxtorem(24px);
   fill: variables.$white;
   transform: rotate(0deg);
   transition-duration: 0.3s;

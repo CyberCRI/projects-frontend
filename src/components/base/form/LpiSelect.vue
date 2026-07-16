@@ -134,7 +134,7 @@ const clickOutside = () => {
 
   .menu-header {
     z-index: 14;
-    padding: variables.pxToRem(12px) variables.$space-l;
+    padding: variables.pxtorem(12px) variables.$space-l;
     appearance: none;
     font-size: variables.$font-size-m;
     font-weight: 700;
@@ -151,7 +151,7 @@ const clickOutside = () => {
       font-weight: 400;
 
       &--open {
-        padding-top: variables.pxToRem(13px);
+        padding-top: variables.pxtorem(13px);
       }
     }
 
@@ -161,7 +161,7 @@ const clickOutside = () => {
   }
 
   .menu-dropdown {
-    padding: variables.pxToRem(10px) variables.$space-l;
+    padding: variables.pxtorem(10px) variables.$space-l;
     appearance: none;
     font-size: variables.$font-size-m;
     font-weight: 400;
@@ -222,16 +222,16 @@ const clickOutside = () => {
 
 .lpi-select.small {
   .menu-header {
-    padding: variables.pxToRem(8px) variables.$space-m;
+    padding: variables.pxtorem(8px) variables.$space-m;
     font-size: variables.$font-size-m;
 
     &.placeholder--open {
-      padding-top: variables.pxToRem(9px);
+      padding-top: variables.pxtorem(9px);
     }
   }
 
   .menu-dropdown {
-    padding: variables.pxToRem(6px) variables.$space-m;
+    padding: variables.pxtorem(6px) variables.$space-m;
     padding-right: variables.$space-l;
   }
 

@@ -58,14 +58,13 @@ const useUsersStore = defineStore('users', () => {
   const id_token = ref(localStorage?.getItem('ID_TOKEN'))
 
   const rights = computed<Right>(() => {
-    if (userFromToken.value || userFromApi.value) {
-      return userRights(userFromToken.value || userFromApi.value)
+    const safeUser = {
+      permissions: userFromToken.value?.permissions || userFromApi.value?.permissions || [],
+      roles: userFromToken.value?.roles || userFromApi.value?.roles || [],
     }
-    return {
-      permissions: {},
-      roles: [],
-    }
+    return userRights(safeUser)
   })
+
   const notificationsCount = ref(0)
   const notificationsSettings = ref(null)
   const userDataRefreshLoop = ref(null)

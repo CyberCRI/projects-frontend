@@ -222,8 +222,8 @@ const locationEvent = (event) => emit('location', event)
   vertical-align: middle;
   padding: 0.4rem;
   fill: var(--primary);
-  width: variables.pxToRem(24px);
-  height: variables.pxToRem(24px);
+  width: variables.pxtorem(24px);
+  height: variables.pxtorem(24px);
 }
 
 .title {

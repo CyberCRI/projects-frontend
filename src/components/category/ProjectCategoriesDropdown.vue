@@ -61,7 +61,7 @@ defineExpose({ close })
 .categories {
   border: 1px solid variables.$lighter-gray;
   border-radius: variables.$border-radius-s;
-  height: variables.pxToRem(50px);
+  height: variables.pxtorem(50px);
   display: flex;
   justify-content: space-between;
   padding-inline: variables.$space-m;
@@ -78,7 +78,7 @@ defineExpose({ close })
   .caret {
     margin-left: variables.$space-l;
     fill: variables.$primary-dark;
-    width: variables.pxToRem(20px);
+    width: variables.pxtorem(20px);
   }
 }
 
@@ -129,7 +129,7 @@ defineExpose({ close })
   border-color: variables.$lighter-gray;
   border-bottom-left-radius: variables.$border-radius-xs;
   border-bottom-right-radius: variables.$border-radius-xs;
-  max-height: variables.pxToRem(450px);
+  max-height: variables.pxtorem(450px);
   padding: variables.$space-s variables.$space-xs;
   transition: 0.15s all ease-in-out;
   cursor: pointer;

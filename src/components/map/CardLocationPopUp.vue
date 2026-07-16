@@ -69,10 +69,10 @@ const haveImage = computed(() => props.image || props.defaultPicture)
 
   &-image,
   &-image img {
-    width: variables.pxToRem(72px);
-    flex-basis: variables.pxToRem(72px);
+    width: variables.pxtorem(72px);
+    flex-basis: variables.pxtorem(72px);
     flex-shrink: 0;
-    height: variables.pxToRem(72px);
+    height: variables.pxtorem(72px);
     background-position: center center;
     background-size: cover;
     border-radius: variables.$border-radius-xs;

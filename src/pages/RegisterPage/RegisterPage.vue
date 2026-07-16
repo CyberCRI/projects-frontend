@@ -283,7 +283,7 @@ useLpiHead2({
 
 .action {
   display: flex;
-  padding-bottom: variables.pxToRem(24px);
+  padding-bottom: variables.pxtorem(24px);
   flex-direction: column;
   align-items: center;
 
@@ -294,7 +294,7 @@ useLpiHead2({
 }
 
 .extra-links {
-  margin-top: variables.pxToRem(29px);
+  margin-top: variables.pxtorem(29px);
   width: 100%;
   display: flex;
   flex-flow: row nowrap;
@@ -343,7 +343,7 @@ useLpiHead2({
 }
 
 .expired-text {
-  font-size: variables.pxToRem(40px);
+  font-size: variables.pxtorem(40px);
   line-height: variables.$line-height-squashed;
   text-align: center;
   color: variables.$primary;

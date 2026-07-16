@@ -144,7 +144,7 @@ const logInUser = () => goToKeycloakLoginPage()
     .organization-banner {
       width: 100%;
       aspect-ratio: 1;
-      border-radius: variables.pxToRem(8px);
+      border-radius: variables.pxtorem(8px);
 
       @media screen and (max-width: variables.$min-tablet) {
         width: 80%;

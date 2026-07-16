@@ -147,7 +147,7 @@ const mimeInfo = computed(() => {
     .content {
       background-color: var(--white);
       font-size: variables.$font-size-m;
-      padding: variables.$space-s variables.pxToRem(18px);
+      padding: variables.$space-s variables.pxtorem(18px);
       margin-right: auto;
       transition: background-color 0.3s ease-in-out;
       overflow: hidden;

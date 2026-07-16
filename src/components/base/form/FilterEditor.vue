@@ -78,7 +78,7 @@ li {
 }
 
 .icon-td {
-  width: variables.pxToRem(25px);
+  width: variables.pxtorem(25px);
   padding: 7px;
 }
 
@@ -105,8 +105,8 @@ input[type='checkbox'] {
   background-color: variables.$white;
   margin: 0;
   font: inherit;
-  width: variables.pxToRem(20px);
-  height: variables.pxToRem(20px);
+  width: variables.pxtorem(20px);
+  height: variables.pxtorem(20px);
   border: variables.$border-width-s solid variables.$primary-dark;
   border-radius: variables.$border-radius-xs;
   transform: translateY(-0.075em);
@@ -117,8 +117,8 @@ input[type='checkbox'] {
 
 input[type='checkbox']::before {
   content: '';
-  width: variables.pxToRem(12px);
-  height: variables.pxToRem(12px);
+  width: variables.pxtorem(12px);
+  height: variables.pxtorem(12px);
   transform: translateZ(0) scale(0);
   transition: 120ms transform ease-in-out;
   box-shadow: inset 1em 1em variables.$primary-dark;

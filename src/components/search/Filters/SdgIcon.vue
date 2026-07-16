@@ -67,8 +67,8 @@ const toggle = () => emit('toggled', props.sdgId)
 
 .sdg {
   display: inline-block;
-  width: variables.pxToRem(96px);
-  height: variables.pxToRem(96px);
+  width: variables.pxtorem(96px);
+  height: variables.pxtorem(96px);
   border-radius: variables.$border-radius-xs;
   background-repeat: no-repeat;
   background-position: center center;
@@ -95,8 +95,8 @@ const toggle = () => emit('toggled', props.sdgId)
 
   .check-icon {
     position: absolute;
-    width: variables.pxToRem(20px);
-    height: variables.pxToRem(20px);
+    width: variables.pxtorem(20px);
+    height: variables.pxtorem(20px);
     top: -14px;
     right: 8px;
     fill: variables.$primary-dark;

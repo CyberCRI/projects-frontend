@@ -52,6 +52,9 @@
             'projectPrivateExchangeEdit',
             'projectAnnouncementsEdit',
             'ProjectSettingsEdit',
+            'projectAdditionals',
+            'projectAdditionalsEdit',
+            'projectAdditionalsCreate',
           ]"
           :to="{ name: 'Categories' }"
         />
@@ -709,16 +712,16 @@ export default {
     font-size: variables.$font-size-m;
 
     &:first-child {
-      padding-top: variables.pxToRem(40px);
+      padding-top: variables.pxtorem(40px);
     }
   }
 
   .header__logo {
-    height: variables.pxToRem(25px);
+    height: variables.pxtorem(25px);
   }
 
   .header__arrows {
-    width: variables.pxToRem(42px);
+    width: variables.pxtorem(42px);
     fill: variables.$primary-dark;
 
     &--nav-open {
@@ -761,7 +764,7 @@ a:visited {
   color: variables.$white;
 }
 
-@media (min-width: variables.pxToRem(1200px)) {
+@media (min-width: variables.pxtorem(1200px)) {
   .header {
     position: fixed;
 
@@ -787,7 +790,7 @@ a:visited {
     }
 
     .header__logo {
-      height: variables.pxToRem(40px);
+      height: variables.pxtorem(40px);
     }
   }
 

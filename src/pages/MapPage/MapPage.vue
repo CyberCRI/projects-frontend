@@ -88,8 +88,8 @@ useLpiHead2({
   }
 
   .icon {
-    width: variables.pxToRem(18px);
-    height: variables.pxToRem(18px);
+    width: variables.pxtorem(18px);
+    height: variables.pxtorem(18px);
 
     &--close {
       background: variables.$primary-dark;

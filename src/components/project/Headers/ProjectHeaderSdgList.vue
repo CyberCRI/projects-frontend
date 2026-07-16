@@ -26,7 +26,7 @@ defineProps<{
 <style lang="scss" scoped>
 @use '~/design/scss/variables';
 
-$sdg-size: pxtorem(38px);
+$sdg-size: variables.pxtorem(38px);
 
 .sdg-link {
   width: $sdg-size;

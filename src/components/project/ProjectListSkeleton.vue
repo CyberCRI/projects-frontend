@@ -59,8 +59,8 @@ withDefaults(defineProps<{ limit?: number; minGap?: number; mode?: 'card' | 'lis
   }
 
   .image-placeholder {
-    width: variables.pxToRem(90px);
-    height: variables.pxToRem(90px);
+    width: variables.pxtorem(90px);
+    height: variables.pxtorem(90px);
     background: variables.$lighter-gray;
     margin-bottom: variables.$space-l;
     border-radius: 50%;
@@ -75,7 +75,7 @@ withDefaults(defineProps<{ limit?: number; minGap?: number; mode?: 'card' | 'lis
     background: variables.$lighter-gray;
     border-radius: variables.$border-radius-xs;
     width: 80%;
-    height: variables.pxToRem(16px);
+    height: variables.pxtorem(16px);
     animation: skeleton-loading 1s linear infinite alternate;
   }
 

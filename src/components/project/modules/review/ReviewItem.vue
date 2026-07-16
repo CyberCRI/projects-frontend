@@ -99,8 +99,8 @@ const userStore = useUsersStore()
     gap: variables.$space-m;
 
     .image {
-      width: variables.pxToRem(40px);
-      height: variables.pxToRem(40px);
+      width: variables.pxtorem(40px);
+      height: variables.pxtorem(40px);
       display: inline-block;
       border-radius: 50%;
     }

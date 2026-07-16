@@ -56,15 +56,15 @@ $filter-value-icon-size: 16px;
     flex-shrink: 0;
     margin-left: variables.$space-m;
     display: inline-block;
-    width: variables.pxToRem($filter-value-icon-size);
-    height: variables.pxToRem($filter-value-icon-size);
+    width: variables.pxtorem($filter-value-icon-size);
+    height: variables.pxtorem($filter-value-icon-size);
     background: var(--primary-dark);
     position: relative;
     border: variables.$border-width-m solid var(--primary-dark);
     border-radius: 100%;
 
     svg {
-      width: variables.pxToRem($filter-value-icon-size);
+      width: variables.pxtorem($filter-value-icon-size);
       fill: variables.$white;
       position: absolute;
       top: 50%;

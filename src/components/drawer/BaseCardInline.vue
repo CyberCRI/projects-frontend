@@ -92,12 +92,12 @@ withDefaults(
   border: variables.$border-width-s solid var(--primary);
   border-radius: variables.$border-radius-m;
   background-color: variables.$white;
-  height: variables.pxToRem(70px);
+  height: variables.pxtorem(70px);
   color: var(--black);
   position: relative;
   justify-content: space-between;
   cursor: pointer;
-  width: variables.pxToRem(240px);
+  width: variables.pxtorem(240px);
 
   &.minimal {
     height: fit-content;
@@ -122,8 +122,8 @@ withDefaults(
     border-radius: 50%;
     background-size: cover;
     background-position: top center;
-    width: variables.pxToRem(48px);
-    height: variables.pxToRem(48px);
+    width: variables.pxtorem(48px);
+    height: variables.pxtorem(48px);
     flex-shrink: 0;
   }
 
@@ -155,8 +155,8 @@ withDefaults(
 
   .icon {
     fill: var(--primary-dark);
-    width: variables.pxToRem(20px);
-    height: variables.pxToRem(20px);
+    width: variables.pxtorem(20px);
+    height: variables.pxtorem(20px);
     position: absolute;
     right: 4px;
     top: 4px;

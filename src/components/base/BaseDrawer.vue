@@ -199,12 +199,12 @@ $slide-duration: 400ms;
   }
 
   .small > & {
-    width: variables.pxToRem(450px);
+    width: variables.pxtorem(450px);
     max-width: 100vw;
   }
 
   .medium > & {
-    width: variables.pxToRem(850px);
+    width: variables.pxtorem(850px);
     max-width: 100vw;
   }
 

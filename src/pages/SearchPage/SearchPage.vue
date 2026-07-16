@@ -31,6 +31,6 @@ useLpiHead2({
 @use '~/design/scss/variables';
 
 .browse-layout {
-  padding-top: variables.pxToRem(74px);
+  padding-top: variables.pxtorem(74px);
 }
 </style>

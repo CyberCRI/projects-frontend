@@ -220,7 +220,7 @@ export default {
 }
 
 .current-skill {
-  margin-top: variables.pxToRem(16px);
+  margin-top: variables.pxtorem(16px);
 }
 
 .search-input-ctn {

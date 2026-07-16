@@ -91,7 +91,7 @@ $border-width-m: 2px;
 $border-width-l: 3px;
 
 // PX => REM
-@function pxToRem($size) {
+@function pxtorem($size) {
   @return calc($size / 16px * 1rem);
 }
 

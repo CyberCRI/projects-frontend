@@ -98,6 +98,6 @@ onMounted(async () => {
   flex-direction: column;
   align-items: stretch;
   margin: 0 auto;
-  width: variables.pxToRem(500px);
+  width: variables.pxtorem(500px);
 }
 </style>

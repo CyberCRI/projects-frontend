@@ -108,7 +108,6 @@ const saveImageSizes = () => {
 const nextDefaultPicture = async () => {
   if (defaultPictureURL.value.length) {
     defaultPictureIndex.value = (defaultPictureIndex.value + 1) % defaultPictureURL.value.length
-    console.log(defaultPictureIndex.value, defaultPictureURL.value[defaultPictureIndex.value])
     setImage(await getFileFromURL(defaultPictureURL.value[defaultPictureIndex.value]))
   }
 }

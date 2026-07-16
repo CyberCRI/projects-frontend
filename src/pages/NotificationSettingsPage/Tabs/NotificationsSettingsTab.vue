@@ -219,7 +219,7 @@ onMounted(async () => {
 
 @media (min-width: variables.$min-tablet) {
   .notification-tab {
-    padding: variables.$space-l variables.pxToRem(100px);
+    padding: variables.$space-l variables.pxtorem(100px);
 
     .notification-ctn {
       flex-direction: row;

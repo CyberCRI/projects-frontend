@@ -40,8 +40,8 @@ const orgLogoStyle = computed(() => {
 <style lang="scss" scoped>
 @use '~/design/scss/variables';
 
-$form-max-width: variables.pxToRem(326px);
-$form-horizontal-padding: variables.pxToRem(62px);
+$form-max-width: variables.pxtorem(326px);
+$form-horizontal-padding: variables.pxtorem(62px);
 $column-gap: variables.$space-2xl;
 $container-horizontal-padding: variables.$space-xl;
 $form-max-total-width: $form-max-width + 2 * $form-horizontal-padding;
@@ -92,12 +92,12 @@ $min-width-horizontal-layout: 2 * $form-max-total-width + $column-gap + 2 *
 
 .box {
   width: 100%;
-  padding: variables.pxToRem(40px) 0;
+  padding: variables.pxtorem(40px) 0;
   box-sizing: border-box;
 
   @media all and (min-width: $min-width-horizontal-layout) {
     max-width: $form-max-total-width;
-    padding: variables.pxToRem(40px) $form-horizontal-padding;
+    padding: variables.pxtorem(40px) $form-horizontal-padding;
     box-shadow: 0 0 6px 0 #00000026;
     border-radius: variables.$border-radius-m;
   }
@@ -141,7 +141,7 @@ $min-width-horizontal-layout: 2 * $form-max-total-width + $column-gap + 2 *
 }
 
 .directory-logo {
-  width: variables.pxToRem(200px);
+  width: variables.pxtorem(200px);
   height: auto;
 }
 </style>

@@ -608,7 +608,7 @@ export default {
 .checkbox-item {
   border: 1px solid variables.$primary-dark;
   padding: variables.$space-m;
-  margin: variables.$space-s pxToRem(16px) variables.$space-s 0;
+  margin: variables.$space-s variables.pxtorem(16px) variables.$space-s 0;
   border-radius: variables.$border-radius-xs;
   display: flex;
   align-items: center;

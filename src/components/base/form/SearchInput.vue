@@ -102,7 +102,7 @@ const acceptSuggestion = (suggestion: string) => {
     color: variables.$black;
     padding: 11px variables.$space-xl 10px; // 11 + 1 px border
     font-size: variables.$font-size-m;
-    width: variables.pxToRem(350px);
+    width: variables.pxtorem(350px);
     max-width: 100%;
     box-sizing: border-box;
 

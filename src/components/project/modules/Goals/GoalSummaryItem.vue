@@ -88,8 +88,8 @@ const deadlineAt = computed(() =>
     flex: 0 0 10em;
 
     svg {
-      width: variables.pxToRem(10px);
-      height: variables.pxToRem(10px);
+      width: variables.pxtorem(10px);
+      height: variables.pxtorem(10px);
     }
 
     &.completed {

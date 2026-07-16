@@ -123,7 +123,7 @@ const lastUpdated = computed(() => {
   }
 
   .icon {
-    width: variables.pxToRem(30px);
+    width: variables.pxtorem(30px);
   }
 }
 

@@ -135,7 +135,7 @@ const next = () => {
 
 .gallery-switch {
   display: grid;
-  grid-template-columns: variables.pxToRem(40px) 1fr variables.pxToRem(40px);
+  grid-template-columns: variables.pxtorem(40px) 1fr variables.pxtorem(40px);
   margin: 0 auto;
   width: 100%;
   height: calc(100% - 64px);

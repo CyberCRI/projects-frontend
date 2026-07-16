@@ -277,7 +277,7 @@ const getSkillOfType = (type: SkillType) => {
   .skill-list {
     margin-top: variables.$space-xl;
     background-color: variables.$primary-lighter;
-    padding: variables.$space-l pxToRem(17px);
+    padding: variables.$space-l variables.pxtorem(17px);
     display: flex;
     flex-flow: column nowrap;
     gap: variables.$space-m;

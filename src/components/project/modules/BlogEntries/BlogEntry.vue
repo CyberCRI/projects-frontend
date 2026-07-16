@@ -122,7 +122,7 @@ watch(
       font-weight: 700;
       font-size: variables.$font-size-2xs;
       cursor: pointer;
-      flex-basis: variables.pxToRem(75px);
+      flex-basis: variables.pxtorem(75px);
       justify-content: space-between;
       color: var(--primary-dark);
 

@@ -92,8 +92,8 @@ useLpiHead(useRequestURL().toString(), title.value, title.value, imageFullUrl.va
     flex-flow: column;
     background: #fff;
     flex: 1 1 50%;
-    margin-top: variables.pxToRem(92px);
-    margin-bottom: variables.pxToRem(92px);
+    margin-top: variables.pxtorem(92px);
+    margin-bottom: variables.pxtorem(92px);
   }
 
   .banner-404 {
@@ -103,14 +103,14 @@ useLpiHead(useRequestURL().toString(), title.value, title.value, imageFullUrl.va
     align-items: center;
     flex-grow: 1;
     flex-shrink: 1;
-    width: variables.pxToRem(832px);
+    width: variables.pxtorem(832px);
 
     .title {
-      font-size: variables.pxToRem(40px);
+      font-size: variables.pxtorem(40px);
       font-weight: 900;
       color: variables.$primary-dark;
       line-height: variables.$line-height-tight;
-      margin-bottom: variables.pxToRem(28px);
+      margin-bottom: variables.pxtorem(28px);
     }
 
     .notice {
@@ -131,19 +131,19 @@ useLpiHead(useRequestURL().toString(), title.value, title.value, imageFullUrl.va
     }
 
     .illustration {
-      margin: variables.pxToRem(42px) variables.pxToRem(62px) 0;
+      margin: variables.pxtorem(42px) variables.pxtorem(62px) 0;
       position: relative;
 
       img {
-        border-radius: variables.pxToRem(16px);
+        border-radius: variables.pxtorem(16px);
       }
 
       .text {
         position: absolute;
-        left: variables.pxToRem(88px);
-        right: variables.pxToRem(88px);
-        bottom: variables.pxToRem(57px);
-        font-size: variables.pxToRem(40px);
+        left: variables.pxtorem(88px);
+        right: variables.pxtorem(88px);
+        bottom: variables.pxtorem(57px);
+        font-size: variables.pxtorem(40px);
         line-height: 0.75;
         text-align: center;
         color: variables.$primary;
@@ -152,7 +152,7 @@ useLpiHead(useRequestURL().toString(), title.value, title.value, imageFullUrl.va
           drop-shadow(0 8px 0 #20393d) drop-shadow(0 -8px 0 #20393d);
 
         &--connected {
-          bottom: variables.pxToRem(313px);
+          bottom: variables.pxtorem(313px);
         }
       }
     }

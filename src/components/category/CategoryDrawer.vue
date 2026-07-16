@@ -94,24 +94,27 @@
             @upload-image="showNewImage"
           />
 
-          <LpiButton
-            v-if="category.background_image?.variations"
-            btn-icon="TrashCanOutline"
-            :label="$t('resource.file.form.delete')"
-            @click.prevent="deleteImage"
-          />
+          <template v-if="displayedImage?.variations">
+            <LpiButton
+              btn-icon="TrashCanOutline"
+              :label="$t('resource.file.form.delete')"
+              @click.prevent="deleteImage"
+            />
 
-          <LinkButton
-            :image="displayedImage?.variations?.large"
-            :label="$t('project.form.resize-image')"
-            btn-icon="CropFree"
-            data-test="resize-image-button"
-            @click="showImageResizer = true"
-          />
+            <LinkButton
+              :image="displayedImage?.variations?.large"
+              :label="$t('project.form.resize-image')"
+              btn-icon="CropFree"
+              data-test="resize-image-button"
+              @click="showImageResizer = true"
+            />
+          </template>
         </div>
 
         <BaseModal v-if="showImageResizer" @close="showImageResizer = false">
-          <template #header-title>Reframe image</template>
+          <template #header-title>
+            {{ $t('project.form.resize-image') }}
+          </template>
           <template #content>
             <LazyImageResizer
               ref="imageResizer"

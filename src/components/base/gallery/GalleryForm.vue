@@ -191,6 +191,8 @@ const submit = () => {
 </style>
 
 <style lang="scss">
+@use '~/design/scss/variables';
+
 .gallery-image-editor {
   display: flex;
   justify-content: center;
@@ -202,7 +204,7 @@ const submit = () => {
     grid-template-columns: repeat(4, 1fr);
 
     > * {
-      height: pxtorem(130px);
+      height: variables.pxtorem(130px);
     }
   }
 }

@@ -424,7 +424,7 @@ export default {
 
 .section-notice {
   font-size: variables.$font-size-m;
-  margin-bottom: pxtorem(23px);
+  margin-bottom: variables.pxtorem(23px);
 }
 
 .link {
@@ -466,26 +466,26 @@ export default {
 
   @media (min-width: variables.$med-tablet) {
     .column:first-child {
-      padding-right: pxtorem(62px);
+      padding-right: variables.pxtorem(62px);
       border-right: variables.$border-width-s solid variables.$lighter-gray;
     }
 
     .column + .column {
-      padding-left: pxtorem(62px);
+      padding-left: variables.pxtorem(62px);
       border-left: variables.$border-width-s solid variables.$lighter-gray;
     }
   }
 
   @media (max-width: variables.$med-tablet) {
     .column + .column {
-      padding-top: pxtorem(21px);
+      padding-top: variables.pxtorem(21px);
     }
   }
 }
 
 .three-columns {
   display: flex;
-  gap: pxtorem(130px);
+  gap: variables.pxtorem(130px);
   justify-content: stretch;
   align-items: center;
 
@@ -506,12 +506,12 @@ export default {
   display: block;
   font-size: variables.$font-size-m;
   font-weight: 700;
-  margin-bottom: pxtorem(13px);
+  margin-bottom: variables.pxtorem(13px);
 }
 
 .field-notice {
   font-size: variables.$font-size-s;
-  margin-bottom: pxtorem(13px);
+  margin-bottom: variables.pxtorem(13px);
 }
 
 .html-input,
@@ -519,7 +519,7 @@ input,
 textarea {
   display: block;
   width: 100%;
-  margin-bottom: pxtorem(21px);
+  margin-bottom: variables.pxtorem(21px);
   font-size: variables.$font-size-m;
   padding: 11px;
   border: variables.$border-width-s solid variables.$lighter-gray;
@@ -539,7 +539,7 @@ textarea {
 }
 
 .field-with-validation {
-  margin-bottom: pxtorem(21px);
+  margin-bottom: variables.pxtorem(21px);
 
   .field-decorator {
     position: relative;
@@ -575,7 +575,7 @@ textarea {
 }
 
 .html-input {
-  height: pxtorem(280px);
+  height: variables.pxtorem(280px);
 }
 
 .picture-block {
@@ -599,12 +599,12 @@ textarea {
 }
 
 .sdg-grid {
-  $sdg-size: pxtorem(150px);
+  $sdg-size: variables.pxtorem(150px);
 
-  margin-top: pxtorem(20px);
+  margin-top: variables.pxtorem(20px);
   display: grid;
   grid-template-columns: repeat(auto-fill, $sdg-size);
-  gap: pxtorem(10px);
+  gap: variables.pxtorem(10px);
   justify-content: space-between;
 
   .sdg {
@@ -683,11 +683,11 @@ textarea {
 }
 
 .skill-list {
-  margin-top: pxtorem(20px);
+  margin-top: variables.pxtorem(20px);
   display: flex;
   flex-wrap: wrap;
-  gap: pxtorem(10px);
-  padding: pxtorem(10px);
+  gap: variables.pxtorem(10px);
+  padding: variables.pxtorem(10px);
   background-color: variables.$primary-lighter;
   border-radius: variables.$border-radius-8;
 }

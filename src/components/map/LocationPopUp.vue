@@ -45,7 +45,7 @@ const closePopUp = inject('closePopUp')
 @use '~/design/scss/variables';
 
 .location-tooltip {
-  width: variables.pxToRem(300px);
+  width: variables.pxtorem(300px);
   position: absolute;
   top: 0;
   left: 0;

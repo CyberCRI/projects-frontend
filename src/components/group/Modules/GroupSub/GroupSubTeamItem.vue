@@ -69,7 +69,7 @@ const onMouseout = () => {
   grid-template-rows: 1fr;
   width: 100%;
   gap: 1rem;
-  min-height: variables.pxToRem(80px);
+  min-height: variables.pxtorem(80px);
 
   .subgroup-header {
     padding: 0 1.5rem;

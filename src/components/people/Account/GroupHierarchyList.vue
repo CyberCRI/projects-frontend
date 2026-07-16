@@ -66,7 +66,7 @@ const setGroupList = (groupId) => {
 
   .icon {
     fill: variables.$primary-dark;
-    width: variables.pxToRem(20px);
+    width: variables.pxtorem(20px);
   }
 }
 

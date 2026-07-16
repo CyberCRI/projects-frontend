@@ -58,8 +58,8 @@ const click = () => {
   width: min-content;
 
   .picture {
-    width: variables.pxToRem(120px);
-    height: variables.pxToRem(120px);
+    width: variables.pxtorem(120px);
+    height: variables.pxtorem(120px);
     object-fit: cover;
     object-position: top center;
     border-radius: 50%;

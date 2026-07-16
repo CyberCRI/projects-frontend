@@ -82,7 +82,7 @@ const search = () => {
 
 .search-input {
   margin-bottom: variables.$space-m;
-  width: variables.pxToRem(600px); // drop is 250px so 350 + 250 = 600
+  width: variables.pxtorem(600px); // drop is 250px so 350 + 250 = 600
 
   @media (max-width: variables.$min-tablet) {
     width: 100%;
@@ -98,7 +98,7 @@ const search = () => {
   }
 
   &.has-sections {
-    max-width: variables.pxToRem(350px);
+    max-width: variables.pxtorem(350px);
   }
 }
 </style>

@@ -140,7 +140,7 @@ export default {
 
 .separator {
   border: 1px solid variables.$primary-dark;
-  width: variables.pxToRem(50px);
+  width: variables.pxtorem(50px);
   margin-bottom: 16px;
 
   &--margin {
@@ -160,7 +160,7 @@ export default {
 }
 
 li:not(:last-of-type) {
-  margin-bottom: variables.pxToRem(16px);
+  margin-bottom: variables.pxtorem(16px);
 }
 
 li {

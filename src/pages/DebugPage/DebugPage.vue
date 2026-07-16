@@ -28,7 +28,7 @@ const DEBUG_TABS = [
 @use '~/design/scss/variables';
 
 .debug-layout {
-  margin-top: variables.pxToRem(48px);
+  margin-top: variables.pxtorem(48px);
 
   .page-title {
     margin-bottom: variables.$space-xl;

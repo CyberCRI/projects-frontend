@@ -109,7 +109,7 @@ li {
 }
 
 .child-list {
-  padding-left: variables.pxToRem(35px);
+  padding-left: variables.pxtorem(35px);
 }
 
 .nested-list {
@@ -118,7 +118,7 @@ li {
 }
 
 .icon-td {
-  width: variables.pxToRem(25px);
+  width: variables.pxtorem(25px);
   padding: 7px;
 }
 

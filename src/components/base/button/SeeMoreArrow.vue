@@ -40,7 +40,7 @@ const is = computed(() => {
 <style lang="scss" scoped>
 @use '~/design/scss/variables';
 
-$icon-size: variables.pxToRem(18px);
+$icon-size: variables.pxtorem(18px);
 
 .see-more-arrow {
   color: variables.$primary-dark;

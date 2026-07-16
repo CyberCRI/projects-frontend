@@ -116,21 +116,21 @@ function menuAction(key) {
   .caret {
     margin-left: variables.$space-l;
     fill: variables.$primary-dark;
-    width: variables.pxToRem(20px);
+    width: variables.pxtorem(20px);
   }
 
   .drop-down-toggle {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: variables.pxToRem(10px) variables.$space-l;
+    padding: variables.pxtorem(10px) variables.$space-l;
     font-weight: 700;
     font-size: variables.$font-size-m;
     transition: 0.15s all ease-in-out;
     cursor: pointer;
     will-change: transform;
     overflow: hidden;
-    min-width: variables.pxToRem(250px);
+    min-width: variables.pxtorem(250px);
     color: variables.$primary-dark;
     background: variables.$white;
     border-radius: variables.$border-radius-24;
@@ -140,7 +140,7 @@ function menuAction(key) {
     .icon {
       fill: variables.$primary-dark;
       margin-right: variables.$space-s;
-      width: variables.pxToRem(18px);
+      width: variables.pxtorem(18px);
     }
 
     @media (min-width: variables.$min-tablet) {
@@ -176,7 +176,7 @@ function menuAction(key) {
     background-color: variables.$white;
     padding-bottom: variables.$border-radius-l;
     border-radius: variables.$border-radius-l;
-    max-height: variables.pxToRem(450px);
+    max-height: variables.pxtorem(450px);
     overflow: hidden auto;
     border: 1px solid variables.$primary;
     box-shadow: 0 4px 4px rgb(0 0 0 / 15%);
@@ -218,7 +218,7 @@ function menuAction(key) {
           }
 
           svg {
-            width: variables.pxToRem(16px);
+            width: variables.pxtorem(16px);
             fill: variables.$primary-dark;
             transform-origin: right center;
           }

@@ -105,7 +105,7 @@ const isFormEqual = useBlockNavigation(() => {
 // removeOrganization
 const updateOrganisation = (orgCode: string, state: boolean) => {
   if (state) {
-    form.value.organizations_codes.push(orgCode)
+    form.value.organizations_codes = [...form.value.organizations_codes, orgCode]
   } else {
     form.value.organizations_codes = form.value.organizations_codes.filter((c) => c !== orgCode)
   }
@@ -189,7 +189,7 @@ const { data: organizations } = getOrganizations({
 })
 
 const disableLastOrg = (org) =>
-  projectOrganizationCodes.value.length === 1 && projectOrganizationCodes.value[0] === org.code
+  form.value.organizations_codes.length === 1 && form.value.organizations_codes[0] === org.code
 
 const selectedOrgLinks = computed(() => {
   return organizations.value

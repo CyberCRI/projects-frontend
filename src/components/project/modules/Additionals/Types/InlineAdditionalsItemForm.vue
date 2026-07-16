@@ -260,7 +260,7 @@ const checkClose = () => {
 
   .content-editor {
     flex-grow: 1;
-    min-height: variables.pxToRem(300px);
+    min-height: variables.pxtorem(300px);
   }
 }
 

@@ -51,12 +51,12 @@ const toggle = () => {
   line-height: variables.$line-height-tight;
   display: flex;
   align-items: center;
-  margin-top: variables.pxToRem(16px);
+  margin-top: variables.pxtorem(16px);
   color: variables.$almost-black;
   justify-content: flex-start;
 
   &.empty {
-    margin-bottom: variables.pxToRem(16px);
+    margin-bottom: variables.pxtorem(16px);
   }
 
   &.toggleable {
@@ -72,7 +72,7 @@ const toggle = () => {
 
 .filter-wrapper .body {
   border-top: 0;
-  margin: variables.pxToRem(16px) 0;
+  margin: variables.pxtorem(16px) 0;
 }
 
 .filter-wrapper .body-inner {

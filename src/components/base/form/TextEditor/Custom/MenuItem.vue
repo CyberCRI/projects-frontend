@@ -45,7 +45,7 @@ withDefaults(
   border: none;
   background-color: transparent;
   border-radius: variables.$border-radius-s;
-  padding: variables.pxToRem(4px);
+  padding: variables.pxtorem(4px);
   margin-right: variables.$space-2xs;
   height: 1.75rem;
   width: auto;

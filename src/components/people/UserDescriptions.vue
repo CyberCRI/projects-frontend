@@ -60,7 +60,7 @@ const goToProfileBio = () => tabsLayoutSelectTab(1)
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: stretch;
-  height: variables.pxToRem(320px);
+  height: variables.pxtorem(320px);
 }
 
 .user-descriptions {

@@ -113,6 +113,6 @@ onUnmounted(() => {
 @use '~/design/scss/variables';
 
 .project-layout {
-  margin-top: variables.pxToRem(48px);
+  margin-top: variables.pxtorem(48px);
 }
 </style>

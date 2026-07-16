@@ -165,7 +165,7 @@ watch(
     </div>
     <div class="child-list">
       <Sortable
-        :list="category.children as ProjectCategoryModel[]"
+        :list="category.children"
         :options="dragOptions"
         group="categories"
         tag="ul"
@@ -192,6 +192,7 @@ watch(
     </div>
   </li>
 </template>
+
 <style lang="scss" scoped>
 @use '~/design/scss/variables';
 
@@ -236,7 +237,7 @@ li {
 }
 
 .child-list {
-  padding-left: variables.pxToRem(35px);
+  padding-left: variables.pxtorem(35px);
 }
 
 .nested-list {
@@ -245,7 +246,7 @@ li {
 }
 
 .icon-td {
-  width: variables.pxToRem(25px);
+  width: variables.pxtorem(25px);
   padding: 7px;
 }
 

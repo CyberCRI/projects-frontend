@@ -237,7 +237,7 @@ const onDeleteComment = async () => {
 <style lang="scss" scoped>
 @use '~/design/scss/variables';
 
-$comment-pic-size: variables.pxToRem(72px);
+$comment-pic-size: variables.pxtorem(72px);
 
 .comment {
   display: flex;

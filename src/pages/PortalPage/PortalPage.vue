@@ -89,8 +89,8 @@ useLpiHead2({
       border: variables.$border-width-s solid var(--primary);
       overflow: hidden;
       padding: variables.$space-m;
-      height: pxtorem(96px);
-      width: pxtorem(290px);
+      height: variables.pxtorem(96px);
+      width: variables.pxtorem(290px);
 
       .portal-image {
         flex-grow: 1;

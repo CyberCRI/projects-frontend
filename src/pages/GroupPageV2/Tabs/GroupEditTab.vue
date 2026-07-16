@@ -103,6 +103,7 @@ const rules = computed(() => ({
 const v$ = useValidate(rules, { form })
 
 const formIsInvalid = computed(() => v$.value.$invalid)
+
 const isEdit = computed(() => !!props.groupIdOrSlug)
 // use group's org code if availabe
 // to allow edition of groups on the meta portal (PROJ-1032)
@@ -310,6 +311,7 @@ onBeforeMount(async () => {
         return
       }
 
+      form.value.name = originalGroupData.name
       form.value.description = originalGroupData.description
       form.value.short_description = originalGroupData.short_description
       form.value.email = originalGroupData.email
@@ -401,7 +403,7 @@ useLpiHead2({
 }
 
 .header {
-  margin-top: variables.pxToRem(110px);
+  margin-top: variables.pxtorem(110px);
   margin-bottom: variables.$space-xl;
 
   h1 {

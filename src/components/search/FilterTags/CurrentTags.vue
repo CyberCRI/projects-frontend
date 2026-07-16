@@ -53,7 +53,7 @@ const removeTag = (tag) => emit('remove-tag', tag)
 .clear-selection {
   text-transform: uppercase;
   color: variables.$primary-dark;
-  margin-bottom: variables.pxToRem(24px);
+  margin-bottom: variables.pxtorem(24px);
   text-align: center;
   font-weight: 700;
   font-size: variables.$font-size-2xs;

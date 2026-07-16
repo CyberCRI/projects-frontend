@@ -104,7 +104,7 @@ const searchUser = async () => {
   flex-direction: column;
   align-items: stretch;
   margin: 0 auto;
-  width: pxtorem(500px);
+  width: variables.pxtorem(500px);
 }
 
 .input-field {

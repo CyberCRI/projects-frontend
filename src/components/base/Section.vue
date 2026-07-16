@@ -23,7 +23,7 @@ defineProps<{ title: string }>()
 
   .separator {
     border-bottom: variables.$border-width-s solid var(--primary-dark);
-    width: variables.pxToRem(50px);
+    width: variables.pxtorem(50px);
     margin: variables.$space-m 0;
   }
 

@@ -39,7 +39,7 @@ const removeSkill = (skill) => {
   text-align: center;
   font-size: variables.$font-size-2xl;
   font-weight: 700;
-  margin: variables.pxToRem(46px) auto;
+  margin: variables.pxtorem(46px) auto;
 }
 
 .search-input-ctn {

@@ -197,7 +197,7 @@ const menuAction = (item) => {
     cursor: pointer;
     will-change: transform;
     overflow: hidden;
-    height: variables.pxToRem(56px);
+    height: variables.pxtorem(56px);
     color: variables.$primary-dark;
     text-transform: uppercase;
     border-top-left-radius: variables.$border-radius-s;
@@ -206,12 +206,12 @@ const menuAction = (item) => {
     .icon {
       fill: variables.$primary-dark;
       margin-right: variables.$space-s;
-      width: variables.pxToRem(18px);
+      width: variables.pxtorem(18px);
 
       &.rounded {
         fill: variables.$white;
         background-color: variables.$primary-dark;
-        border-radius: variables.pxToRem(9px);
+        border-radius: variables.pxtorem(9px);
       }
     }
   }
@@ -249,7 +249,7 @@ const menuAction = (item) => {
     padding-bottom: variables.$border-radius-l;
     border-bottom-left-radius: variables.$border-radius-l;
     border-bottom-right-radius: variables.$border-radius-l;
-    max-height: variables.pxToRem(450px);
+    max-height: variables.pxtorem(450px);
 
     &.round-corner {
       border-top-left-radius: variables.$border-radius-s;
@@ -277,7 +277,7 @@ const menuAction = (item) => {
           }
 
           svg {
-            width: variables.pxToRem(16px);
+            width: variables.pxtorem(16px);
             fill: variables.$white;
             transform-origin: right center;
           }
@@ -376,9 +376,9 @@ const menuAction = (item) => {
     position: absolute;
     left: 0;
     right: 0;
-    height: variables.pxToRem(6px);
+    height: variables.pxtorem(6px);
     background-color: variables.$primary-dark;
-    bottom: variables.pxToRem(-6px);
+    bottom: variables.pxtorem(-6px);
     transform: translateZ(0) scale(0);
     transition: transform 0.15s ease-in-out;
   }

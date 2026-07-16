@@ -47,7 +47,7 @@ defineEmits<{
   height: 100%;
 
   > * {
-    height: variables.pxToRem(130px);
+    height: variables.pxtorem(130px);
   }
 
   @media screen and (min-width: variables.$min-desktop) {

@@ -35,10 +35,10 @@
     package-manager-detector "^1.3.0"
     tinyexec "^1.0.1"
 
-"@anthropic-ai/sdk@^0.103.0":
-  version "0.103.0"
-  resolved "https://registry.yarnpkg.com/@anthropic-ai/sdk/-/sdk-0.103.0.tgz#9c61bca13c329fbd45bd171d06649f6d3bf3ea2e"
-  integrity sha512-1uG7RNgoHTUxzOXqSCODKt0UTVlxWiHk/2Tt2/uQJiPW7XzBeKVuJyd3Aw6T3LPyvZV/jDTnPLX7SaM70WLLjA==
+"@anthropic-ai/sdk@^0.95.1":
+  version "0.95.2"
+  resolved "https://registry.yarnpkg.com/@anthropic-ai/sdk/-/sdk-0.95.2.tgz#a3d6f079493d7abb9ccb312e25376e8850ef8f6f"
+  integrity sha512-Egddwo3sheo1PzUrMkZnH6VkQYwS0h/b/i8vSK8Ta9M45UQipAMeDFH57dYuDAfXMEUUGeKw6CMlremgMZgrSQ==
   dependencies:
     json-schema-to-ts "^3.1.1"
     standardwebhooks "^1.0.0"
@@ -1541,12 +1541,12 @@
   resolved "https://registry.yarnpkg.com/@kwsites/promise-deferred/-/promise-deferred-1.1.1.tgz#8ace5259254426ccef57f3175bc64ed7095ed919"
   integrity sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==
 
-"@langchain/anthropic@^1.4.0":
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/@langchain/anthropic/-/anthropic-1.5.1.tgz#b288fc2274b9144a2899bde0ca4510fee879b10b"
-  integrity sha512-j92zCCd5BFH3rHMRzc2wBmSKDoVpinof1oh8aFiAz9TWbSOc4tGU4n6bqwy/wP0GH1uO96zZHLGCHBMPgrxTNw==
+"@langchain/anthropic@1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@langchain/anthropic/-/anthropic-1.4.0.tgz#15c204fe8cb23ec706e37b5c928412e559bc476e"
+  integrity sha512-rs1yVydrHjyiD31uChdCnKZpmDuKa0Bpz8Raiy9GvqnqmfXPMe0oOrap/2paE+NRSinDbtax8mMpP/yv8EbO1A==
   dependencies:
-    "@anthropic-ai/sdk" "^0.103.0"
+    "@anthropic-ai/sdk" "^0.95.1"
     zod "^3.25.76 || ^4"
 
 "@langchain/classic@^1.0.27":
@@ -1580,16 +1580,13 @@
     uuid "^14.0.0"
     zod "^3.25.76 || ^4"
 
-"@langchain/core@1.1.45":
-  version "1.1.45"
-  resolved "https://registry.yarnpkg.com/@langchain/core/-/core-1.1.45.tgz#b36ea7d0b93b89447108d18b100e7b7dfa1f9618"
-  integrity sha512-Y/wvuglLTMKJahkl4QD9dBIdF/z/CxZJWdTfHJF/q2jtlJtoFf6Mb5JpGxZfsi3mBY6NSG941FSLTcqhCKrhBA==
+"@langchain/core@1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@langchain/core/-/core-1.2.2.tgz#cfc9710eb7a09e8582d7a4a46e3afa03ae0f65cd"
+  integrity sha512-KfjEOT6sCg0vvItagfEtGpmrGoLMGfma4Affb5BGEqPmS2YR3AxW54pABSkhQlzCehTB+0BnLquAe1lGF4J9zQ==
   dependencies:
     "@cfworker/json-schema" "^4.0.2"
     "@standard-schema/spec" "^1.1.0"
-    ansi-styles "^5.0.0"
-    camelcase "6"
-    decamelize "1.2.0"
     js-tiktoken "^1.0.12"
     langsmith ">=0.5.0 <1.0.0"
     mustache "^4.2.0"
@@ -1603,19 +1600,19 @@
   dependencies:
     groq-sdk "^0.37.0"
 
-"@langchain/langgraph-checkpoint-postgres@^1.0.1":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@langchain/langgraph-checkpoint-postgres/-/langgraph-checkpoint-postgres-1.0.4.tgz#86fc012d677237af9683b07943ed34b2aecf85f7"
-  integrity sha512-wuCPq7VVqwi0+nQC5GOmheoXGJHAybgXbkA9Nn0J8nYW61WFJ3uqb4wyMbLFhAlya99EaxNNsi3FzdzV2COSzw==
+"@langchain/langgraph-checkpoint-postgres@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@langchain/langgraph-checkpoint-postgres/-/langgraph-checkpoint-postgres-1.0.1.tgz#5fde164cfa55f728871be0ba673cbd029a9fd20e"
+  integrity sha512-cRXOLYZc0egMjyAQfBblWXdoBS+WKwEbCEuE+/f88XHJ1bq5jVz7aycbpjF/7F5EykG7xmybQOz5eUdg3neRzg==
   dependencies:
     pg "^8.12.0"
 
-"@langchain/langgraph-checkpoint@^1.0.0", "@langchain/langgraph-checkpoint@^1.0.2", "@langchain/langgraph-checkpoint@^1.1.3":
+"@langchain/langgraph-checkpoint@^1.0.0", "@langchain/langgraph-checkpoint@^1.1.3":
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@langchain/langgraph-checkpoint/-/langgraph-checkpoint-1.1.3.tgz#891f2f9a2e96cf2ab0920f9240f9ad1e0a86a4ab"
   integrity sha512-wgzdQNeEsdw1e+4lvlj0tdq/RYR/k1vPin10g0ymGoehZDDgd9nvIllGXSXN4TFgF9sf5qQP/KTkOcLfeseIhA==
 
-"@langchain/langgraph-sdk@~1.9.0", "@langchain/langgraph-sdk@~1.9.26":
+"@langchain/langgraph-sdk@~1.9.26":
   version "1.9.27"
   resolved "https://registry.yarnpkg.com/@langchain/langgraph-sdk/-/langgraph-sdk-1.9.27.tgz#0584518610592eeabdbf95d4cc1824e7f54e76fb"
   integrity sha512-EHGFsxawniLw2pGVUDLSSdMriASIP4oz0Mihytb50iRsIqhmODzGBWW7iLWA/0hqavggNpqjat4WD7LjmxiXSQ==
@@ -1625,18 +1622,7 @@
     p-queue "^9.0.1"
     p-retry "^7.1.1"
 
-"@langchain/langgraph@1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@langchain/langgraph/-/langgraph-1.3.0.tgz#7099013c5b8726fd1955c4cb10f630d32bdd29f1"
-  integrity sha512-QvhTjiyqFPz81A+y6LHs223w6DTjv5+882DT4mup72bd72rRhNjTYo5fhes5um0swnKArvY/arc7KeFInfHHWw==
-  dependencies:
-    "@langchain/langgraph-checkpoint" "^1.0.2"
-    "@langchain/langgraph-sdk" "~1.9.0"
-    "@langchain/protocol" "^0.0.15"
-    "@standard-schema/spec" "1.1.0"
-    uuid "^10.0.0"
-
-"@langchain/langgraph@^1.1.2":
+"@langchain/langgraph@1.4.8", "@langchain/langgraph@^1.1.2":
   version "1.4.8"
   resolved "https://registry.yarnpkg.com/@langchain/langgraph/-/langgraph-1.4.8.tgz#65ef5635b5554cd32f502a3808b92d8371998a99"
   integrity sha512-DN1Np1XefdBEbp1qBKlt39cwoL743AAGpR5Ipja0gY2YbWvsoQnOTIrjnj/orSAhaUYsdTKS8VSWdFzsHZo6Ig==
@@ -1665,7 +1651,7 @@
     "@mistralai/mistralai" "^1.3.1"
     uuid "^13.0.0"
 
-"@langchain/openai@1.5.5", "@langchain/openai@^1.4.1", "@langchain/openai@^1.4.5":
+"@langchain/openai@1.5.5", "@langchain/openai@^1.4.1":
   version "1.5.5"
   resolved "https://registry.yarnpkg.com/@langchain/openai/-/openai-1.5.5.tgz#b2f6bd17f368df1515737e0053e2cc410b55c360"
   integrity sha512-wX7dwb9z4nf5FHXlIl/X2mk08pzonvRHCt1D4+s1zXLP0duYDC95j7dulPIQJ6fmhbyYQc9Ki8mEhY/D1lB8kw==
@@ -1674,17 +1660,12 @@
     openai "^6.41.0"
     zod "^3.25.76 || ^4"
 
-"@langchain/pgvector@^0.1.0":
+"@langchain/pgvector@0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@langchain/pgvector/-/pgvector-0.1.0.tgz#3e9ca83588fa2e9bfb15e373c2e7ac051689e663"
   integrity sha512-1/3ahOTdYwstTXq7mLZWl1ri6C7RL/vALywieVglBZ1iY8ujH15WvI7Afare/OPbMUOIcL26/KmFs2Sqy9MPYA==
   dependencies:
     pg "^8.11.0"
-
-"@langchain/protocol@^0.0.15":
-  version "0.0.15"
-  resolved "https://registry.yarnpkg.com/@langchain/protocol/-/protocol-0.0.15.tgz#1e2afa7378976d38055c054a97f3b4c08403126b"
-  integrity sha512-MllvbpMjqHevUm+v94M422mH7XKN+wGCvJRBVROTWBotEDOATYB4Ktk2UheYP859y9o2LlhtPek5t1T9eyfAbQ==
 
 "@langchain/protocol@^0.0.18":
   version "0.0.18"
@@ -4800,11 +4781,6 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   dependencies:
     color-convert "^2.0.1"
 
-ansi-styles@^5.0.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-5.2.0.tgz#07449690ad45777d1924ac2abb2fc8895dba836b"
-  integrity sha512-Cxwpt2SfTzTtXcfOlzGEee8O+c+MmUgGrNiBcXnuWxuFJHe6a5Hz7qwhwe5OgaSYI0IJvkLqWX1ASG+cJOkEiA==
-
 ansi-styles@^6.1.0, ansi-styles@^6.2.1:
   version "6.2.3"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-6.2.3.tgz#c044d5dcc521a076413472597a1acb1f103c4041"
@@ -4944,12 +4920,12 @@ autolinker@^3.11.0:
     tslib "^2.3.0"
 
 autoprefixer@^10.5.0:
-  version "10.5.3"
-  resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-10.5.3.tgz#cd6f4c611cef98055c998b5de8e6b1759f024447"
-  integrity sha512-bJRzflk8GgE4JX+iZNEwz9f9p460NCHnU7bd+CZ9vIjIlZuTkt6F3WSl2oNO8StZBFx17nLEsiQ6H2wcZiY7nA==
+  version "10.5.4"
+  resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-10.5.4.tgz#3b7dd848b4155514a95ad1f6ce598844bea09697"
+  integrity sha512-MaU0U/za7N3r6brxD4YB/l4NSrFzLPlANv6wEuQVaIPlD3L4W9rFcQPbL/EilY9BHhHvhfcz3gInDLrEtWT4EA==
   dependencies:
     browserslist "^4.28.6"
-    caniuse-lite "^1.0.30001805"
+    caniuse-lite "^1.0.30001806"
     fraction.js "^5.3.4"
     picocolors "^1.1.1"
     postcss-value-parser "^4.2.0"
@@ -5224,11 +5200,6 @@ camelcase-keys@^6.2.2:
     map-obj "^4.0.0"
     quick-lru "^4.0.1"
 
-camelcase@6:
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-6.3.0.tgz#5685b95eb209ac9c0c177467778c9c84df58ba9a"
-  integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
-
 camelcase@^5.0.0, camelcase@^5.3.1:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-5.3.1.tgz#e3c9b31569e106811df242f715725a1f4c494320"
@@ -5244,7 +5215,7 @@ caniuse-api@^3.0.0:
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
-caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001803, caniuse-lite@^1.0.30001805:
+caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001803, caniuse-lite@^1.0.30001806:
   version "1.0.30001806"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001806.tgz#1bc8e502b723fa393455dfbedd5ccec0c29bb74e"
   integrity sha512-72Cuvd95zbSYPKq6Fhg8eDJRlzgWDf7/mtoZv6Qe/DYNCEBdNxoA3+rZAU2ZhGCpZlns3EssFavaZomckT5Uuw==
@@ -5822,7 +5793,7 @@ decamelize-keys@^1.1.0:
     decamelize "^1.1.0"
     map-obj "^1.0.0"
 
-decamelize@1.2.0, decamelize@^1.1.0, decamelize@^1.2.0:
+decamelize@^1.1.0, decamelize@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
   integrity sha512-z2S+W9X73hAUUki+N+9Za2lBlun89zigOyGrsax+KUQ6wKW4ZoWpEYBkGhQjwAjjDCkWxhY0VKEhk8wzY7F5cA==

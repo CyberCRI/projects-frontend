@@ -87,9 +87,9 @@ a.header-link:visited {
       position: absolute;
       left: 0;
       right: 0;
-      height: variables.pxToRem(6px);
+      height: variables.pxtorem(6px);
       background-color: variables.$primary-dark;
-      bottom: variables.pxToRem(-8px);
+      bottom: variables.pxtorem(-8px);
       transform: translateZ(0) scale(0);
       transition: transform 0.15s ease-in-out;
     }
@@ -97,13 +97,13 @@ a.header-link:visited {
 
   .icon {
     margin-right: variables.$space-s;
-    height: variables.pxToRem(18px);
+    height: variables.pxtorem(18px);
     fill: variables.$primary-dark;
 
     &.rounded {
       fill: variables.$white;
       background-color: variables.$primary-dark;
-      border-radius: variables.pxToRem(9px);
+      border-radius: variables.pxtorem(9px);
     }
   }
 

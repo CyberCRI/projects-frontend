@@ -253,7 +253,7 @@ $profile-documents: 1rem;
   }
 }
 
-@media screen and (width <=variables.pxToRem(1000px)) {
+@media screen and (width <=variables.pxtorem(1000px)) {
   .profile-info-container {
     display: flex;
     flex-direction: column;
@@ -353,7 +353,7 @@ $profile-documents: 1rem;
   align-items: baseline;
   font-weight: bold;
 
-  @media screen and (width <=variables.pxToRem(1000px)) {
+  @media screen and (width <=variables.pxtorem(1000px)) {
     justify-content: center;
   }
 }

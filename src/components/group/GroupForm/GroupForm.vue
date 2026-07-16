@@ -489,7 +489,7 @@ export default {
   .checkbox-item {
     border: 1px solid variables.$primary-dark;
     padding: variables.$space-m;
-    margin: variables.$space-s variables.pxToRem(16px) variables.$space-s 0;
+    margin: variables.$space-s variables.pxtorem(16px) variables.$space-s 0;
     border-radius: variables.$border-radius-xs;
     display: flex;
     align-items: center;
@@ -536,8 +536,8 @@ export default {
     background-color: variables.$white;
     margin: 0;
     font: inherit;
-    width: variables.pxToRem(20px);
-    height: variables.pxToRem(20px);
+    width: variables.pxtorem(20px);
+    height: variables.pxtorem(20px);
     border: variables.$border-width-s solid variables.$primary-dark;
     border-radius: 50%;
     transform: translateY(-0.075em);
@@ -548,8 +548,8 @@ export default {
 
   input[type='radio']::before {
     content: '';
-    width: variables.pxToRem(12px);
-    height: variables.pxToRem(12px);
+    width: variables.pxtorem(12px);
+    height: variables.pxtorem(12px);
     transform: scale(0);
     transition: 120ms transform ease-in-out;
     box-shadow: inset 1em 1em variables.$primary-dark;

@@ -191,7 +191,7 @@ footer {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    margin: variables.pxToRem(42px) auto;
+    margin: variables.pxtorem(42px) auto;
   }
 
   .footer-lists {
@@ -251,8 +251,8 @@ footer {
     }
 
     .lpi-logo {
-      width: variables.pxToRem(95px);
-      height: variables.pxToRem(87px);
+      width: variables.pxtorem(95px);
+      height: variables.pxtorem(87px);
     }
 
     .projects {

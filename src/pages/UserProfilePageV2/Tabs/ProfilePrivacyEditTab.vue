@@ -229,15 +229,6 @@ export default {
     },
   },
   methods: {
-    redirectToProfile() {
-      // if (this.isSelf) this.$router.push({ name: 'ProfileBio' })
-      // else
-      //   this.$router.push({
-      //     name: 'ProfileBioOther',
-      //     params: { userId: this.user.id },
-      //   })
-    },
-
     async save() {
       this.asyncing = true
       try {
@@ -250,8 +241,6 @@ export default {
         this.$emit('profile-edited')
 
         this.toaster.pushSuccess(this.$t('profile.edit.privacy.save-success'))
-
-        this.redirectToProfile()
       } catch (error) {
         this.toaster.pushError(`${this.$t('profile.edit.privacy.save-error')} (${error})`)
         console.error(error)

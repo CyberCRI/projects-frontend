@@ -106,7 +106,7 @@ const imageSizes = computed(() => {
     }
 
     .description {
-      margin-top: variables.pxToRem(16px);
+      margin-top: variables.pxtorem(16px);
       font-weight: 400;
       font-size: variables.$font-size-m;
       color: variables.$black;
