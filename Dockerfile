@@ -5,7 +5,7 @@ FROM node:${NODE_VERSION}-alpine AS base
 ARG PORT=3000
 
 WORKDIR /app
-RUN apk add --no-cache bash
+RUN apk add --no-cache bash git ca-certificates
 
 FROM base AS builder
 
