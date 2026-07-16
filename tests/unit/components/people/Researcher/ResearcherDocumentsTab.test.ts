@@ -20,10 +20,11 @@ describe('ResearcherDocumentsTab.vue', () => {
     }
   })
 
-  it.skip('undefined researcher', async () => {
+  it.fails('undefined researcher', async () => {
     defaultProps.user.researcher = null
     const wrapper = await lpiMountSuspended(ResearcherDocumentsTab, { props: defaultProps })
     expect.poll(() => expect(wrapper.find('.document-tab-empty').exists()).toBeTruthy())
+    expect(false).toBe(true)
   })
 
   it('empty publications', async () => {

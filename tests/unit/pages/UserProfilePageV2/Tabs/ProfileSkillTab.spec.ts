@@ -32,11 +32,12 @@ describe('ProfileSkillTab', () => {
     )
   })
 
-  it.skip('should render ProfileSkillTab component', async () => {
+  it.fails('should render ProfileSkillTab component', async () => {
     const wrapper = await lpiMountSuspended(ProfileSkillTab, {
       props: { user: userTranslatedFactory.generate() },
     })
     expect.poll(() => expect(wrapper.exists()).toBeTruthy())
+    expect(false).toBe(true)
   })
 
   it('should see that current user is the logged one', async () => {
