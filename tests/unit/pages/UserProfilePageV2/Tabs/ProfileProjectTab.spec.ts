@@ -42,6 +42,13 @@ describe('ProfileProjectTab', () => {
   it('should not display a create project button if not on self profile', async () => {
     const user = userTranslatedFactory.generate()
     const wrapper = lpiShallowMount(ProfileProjectTab, { props: { user } })
+    const organizationsStore = useOrganizationsStore()
+
+    await flushPromises()
+    expect(wrapper.find('.create-project').exists()).toBe(false)
+
+    user.roles.push(`organization:#${organizationsStore.current.id}:viewers`)
+    usersStore.userFromApi = usersStore.userFromToken = user
 
     await flushPromises()
     expect(wrapper.find('.create-project').exists()).toBe(false)
@@ -50,7 +57,7 @@ describe('ProfileProjectTab', () => {
   it('should display a create project button if on self profile and has persimission', async () => {
     const user = userTranslatedFactory.generate({ id: 123 })
     const organizationsStore = useOrganizationsStore()
-    user.roles.push(`organization:#${organizationsStore.current.id}:viewers`)
+    user.roles.push(`organization:#${organizationsStore.current.id}:members`)
     usersStore.userFromApi = usersStore.userFromToken = user
     const wrapper = lpiShallowMount(ProfileProjectTab, { props: { user } })
 

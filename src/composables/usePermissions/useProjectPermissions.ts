@@ -10,6 +10,7 @@ import {
   canEditProject as globalCanEditProject,
   isMember as globalIsMember,
   isOwner as globalIsOwner,
+  isViewer,
 } from 'shared-projects-frontend/lib'
 import type { ProjectModel } from 'shared-projects-frontend/models'
 import useOrganizationsStore from '~/stores/useOrganizations'
@@ -36,10 +37,8 @@ export const usePermissionProject = (projectId: RefOrRaw<ProjectModel['id'] | nu
   const permissions = computed(() => internalProjectId.value && userStore.isConnected)
 
   const canCreateProject = computed(() => {
-    return (
-      userStore.isConnected &&
-      globalCanCreateProject(userStore.rights, organizationStore.current.id)
-    )
+    // TODO fix this permissions
+    return userStore.isConnected && !isViewer(userStore.rights, organizationStore.current.id)
   })
 
   const canEditProject = computed(() => {
