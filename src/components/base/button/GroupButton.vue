@@ -44,8 +44,9 @@ const selectButton = (groupOption: GroupOption) => (model.value = groupOption.va
 
 const onIconMounted = (icon) => {
   mountedIcons.value.push(icon)
-  if (mountedIcons.value.length === props.options.filter((el) => el.iconName).length)
+  if (mountedIcons.value.length === props.options.filter((el) => el.iconName).length) {
     setSliderStyle()
+  }
 }
 
 const setSliderStyle = onClient(() => {

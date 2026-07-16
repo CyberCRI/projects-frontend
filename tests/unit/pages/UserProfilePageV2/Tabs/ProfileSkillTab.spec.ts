@@ -12,6 +12,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import EmptyLabel from '~/components/base/EmptyLabel.vue'
 import TagFactory from '~~/tests/factories/tag.factory'
+import { flushTick } from '~~/tests/helpers/utils'
 import { flushPromises } from '@vue/test-utils'
 
 const aTag = TagFactory.generate({ title: '123', description: 'abc' })
@@ -36,8 +37,7 @@ describe('ProfileSkillTab', () => {
     const wrapper = await lpiMountSuspended(ProfileSkillTab, {
       props: { user: userTranslatedFactory.generate() },
     })
-    await flushPromises()
-
+    await flushTick()
     expect(wrapper.exists()).toBeTruthy()
   })
 

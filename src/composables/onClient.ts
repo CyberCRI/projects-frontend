@@ -12,7 +12,7 @@ export const onClient = <T, Args extends any[]>(
   fallback: ((...args: Args) => T) | T = undefined
 ) => {
   return (...args: Args): T => {
-    if (import.meta.client) {
+    if (import.meta.client && typeof window !== 'undefined' && typeof document !== 'undefined') {
       return callback(...args)
     } else if (typeof fallback === 'function') {
       // @ts-expect-error ignore error

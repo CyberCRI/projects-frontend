@@ -1,5 +1,3 @@
-vi.mock('~/api/auth/keycloakUtils')
-
 import * as keycloakUtils from '~/api/auth/keycloakUtils'
 import useKeycloak from '~/api/auth/keycloak'
 
@@ -9,6 +7,8 @@ import type { Mock } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
 import useUsersStore from '~/stores/useUsers'
 import pinia from '~/stores'
+
+vi.mock('~/api/auth/keycloakUtils')
 const localStorageSetItem = vi.spyOn(Storage.prototype, 'setItem')
 const localStorageGetItem = vi.spyOn(Storage.prototype, 'getItem')
 const localStorageRemoveItem = vi.spyOn(Storage.prototype, 'removeItem')
