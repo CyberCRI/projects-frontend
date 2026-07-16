@@ -6,7 +6,6 @@ import {
   canDeleteReview as globalCanDeleteReview,
   canEditComment as globalCanEditComment,
   canEditReview as globalCanEditReview,
-  canCreateProject as globalCanCreateProject,
   canEditProject as globalCanEditProject,
   isMember as globalIsMember,
   isOwner as globalIsOwner,
