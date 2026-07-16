@@ -22,6 +22,7 @@ beforeEach(
       usePatatoids().forEach((path) => {
         registerEndpoint(path, () => new Blob([]))
       })
+      return true
     }
   })
 )

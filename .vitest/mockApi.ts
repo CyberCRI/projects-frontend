@@ -8,6 +8,7 @@ beforeEach(
   onlyOnce(() => {
     if (isNuxtReady()) {
       initializeClientApi()
+      return true
     }
   })
 )
