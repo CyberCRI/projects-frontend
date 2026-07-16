@@ -56,12 +56,14 @@ import useUsersStore from '~/stores/useUsers.ts'
 
 import ProfileSummaryTab from '~/pages/UserProfilePageV2/Tabs/ProfileSummaryTab.vue'
 import { usePermissionUser } from '~/composables/usePermissions/useUserPermissions'
+import NavPanelLoader from '~/components/base/layouts/NavPanelLoader.vue'
 
 export default {
   name: 'UserProfileV2',
 
   components: {
     ProfileSummaryTab,
+    NavPanelLoader,
   },
   provide() {
     return {

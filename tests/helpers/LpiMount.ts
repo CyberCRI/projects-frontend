@@ -40,6 +40,16 @@ beforeAll(() => {
   setActivePinia(pinia)
 })
 
+let routes
+const defaultRoutes = () => {
+  if (!routes) {
+    routes = routerOptions.routes()
+  }
+  return routes
+}
+
+const history = createWebHistory()
+
 /**
  * build options for mount utils (auto create router/locale)
  *
@@ -52,8 +62,8 @@ const buildOptions = <T>(options: OptionsMount<T> = {}): ComponentMountingOption
   const plugins = []
 
   const router = createRouter({
-    history: createWebHistory(),
-    routes: options.router || routerOptions.routes(),
+    history,
+    routes: options.router || defaultRoutes(),
   })
   if (options.route) {
     router.push(options.route)
@@ -61,7 +71,6 @@ const buildOptions = <T>(options: OptionsMount<T> = {}): ComponentMountingOption
 
   plugins.push(i18n)
   plugins.push(pinia)
-  setActivePinia(pinia)
 
   const props = (options.props || {}) as ComponentMountingOptions<T>['props']
 
