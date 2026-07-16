@@ -1,5 +1,6 @@
 import { PaginationsFactory } from '../tests/factories/paginations.factory'
 import { initializeClientApi } from '../src/config/apis'
+import createFetchMock from 'vitest-fetch-mock'
 import { vi } from 'vitest'
 
 // add global options and $fetch
@@ -10,8 +11,12 @@ vi.mock('shared-projects-frontend/apis', async (importOriginal) => {
   return {
     ...(await importOriginal()),
     // hide auto
-    getUserFollows: vi.fn().mockResolvedValue(PaginationsFactory.generate()),
-    getProjectCategoriesFollow: vi.fn().mockResolvedValue(PaginationsFactory.generate()),
+    getUserFollows: vi.fn().mockImplementation(() => PaginationsFactory.generate()),
+    getProjectCategoriesFollow: vi.fn().mockImplementation(() => PaginationsFactory.generate()),
     removeUserCookie: vi.fn().mockResolvedValue('removeUserCookie'),
   }
 })
+
+// sets globalThis.fetch and globalThis.fetchMock to our mocked version
+const fetchMocker = createFetchMock(vi)
+fetchMocker.enableMocks()

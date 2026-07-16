@@ -90,7 +90,7 @@ export const urlToImageModel = (url: string): ImageModel => {
  * @returns {ImageModel}
  * @exports
  */
-export const fileToImageModel = (file: File): ImageModel => {
+export const fileToImageModel = (file: File | Blob): ImageModel => {
   const url = URL.createObjectURL(file)
   return urlToImageModel(url)
 }

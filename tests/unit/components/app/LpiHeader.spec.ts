@@ -5,59 +5,61 @@ import useOrganizationsStore from '~/stores/useOrganizations'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 import LpiHeader from '~/components/app/LpiHeader.vue'
 import useUsersStore from '~/stores/useUsers'
-import pinia from '~/stores'
 
-import { beforeEach, describe, expect, it, vi } from 'vitest'
-
-// quick fix for vi error
-// "Cannot log after tests are done. Did you forget to wait for something async in your test?"
-// caused by error log af failing call to fetch announcement in LpiHeader
-vi.mock('shared-projects-frontend/apis', () => {
-  return {
-    clientAPI: vi.fn().mockResolvedValue({ data: { results: [] } }), // TODO nuxt check this
-  }
-})
-
-const organization = OrganizationOutputFactory.generate()
-const organizations = OrganizationOutputFactory.generateMany(2)
-const roles = ['superadmins', `organization:#${organization.id}:admins`]
-const permissions = {}
-const user = {
-  name: {
-    firstname: 'test',
-    lastname: 'test',
-  },
-}
+import { AnnouncementFactory } from '~~/tests/factories/announcement.factory'
+import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
+import { UserFactory } from '~~/tests/factories/user.factory'
+import { registerEndpoint } from '@nuxt/test-utils/runtime'
+import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('LpiHeader.vue', () => {
-  let wrapper
   let usersStore
 
+  let organization
+  let organizations
+  let user
+
   beforeEach(() => {
-    const organizationsStore = useOrganizationsStore(pinia)
+    organization = OrganizationOutputFactory.generate()
+    organizations = OrganizationOutputFactory.generateMany(2)
+    user = UserFactory.generate({
+      roles: ['superadmins', `organization:#${organization.id}:admins`],
+    })
+
+    registerEndpoint(`organization/${organization.code}/category/`, () =>
+      PaginationsFactory.generate({
+        results: ProjectCategoryOutputFactory.generateMany(10),
+      })
+    )
+
+    const organizationsStore = useOrganizationsStore()
     organizationsStore._current = organization
     organizationsStore._all = organizations
-    const projectCategories = useProjectCategoriesStore(pinia)
+
+    const projectCategories = useProjectCategoriesStore()
     projectCategories._all = ProjectCategoryOutputFactory.generateMany(2)
-    usersStore = useUsersStore(pinia)
-    usersStore.isConnected = false
-    usersStore.roles = roles
-    usersStore.permissions = permissions
-    usersStore.user = user
-    usersStore.roles = roles
-    usersStore.permissions = permissions
+
+    usersStore = useUsersStore()
+    registerEndpoint(`user/${user.id}/`, () => user)
+    usersStore.userFromApi = usersStore.userFromToken = user
+
+    registerEndpoint('announcement/', () =>
+      PaginationsFactory.generate({
+        results: AnnouncementFactory.generateMany(10),
+      })
+    )
   })
 
   it('should render LpiHeader component', () => {
-    wrapper = lpiShallowMount(LpiHeader)
-
+    const wrapper = lpiShallowMount(LpiHeader)
     expect(wrapper.exists()).toBeTruthy()
   })
 
   it('should trigger the change visibility button', () => {
-    wrapper = lpiShallowMount(LpiHeader)
-
-    const isNavOpen = wrapper.vm.$data.isNavOpen
+    usersStore.userFromApi = usersStore.userFromToken = null
+    const wrapper = lpiShallowMount(LpiHeader)
+    const vm = wrapper.vm as unknown as typeof LpiHeader
+    const isNavOpen = vm.isNavOpen
     const loginButton = wrapper.find('[data-test="login-button"]')
 
     expect(isNavOpen).toBe(false)
@@ -65,7 +67,7 @@ describe('LpiHeader.vue', () => {
   })
 
   it('should find the language button', () => {
-    wrapper = lpiShallowMount(LpiHeader)
+    const wrapper = lpiShallowMount(LpiHeader)
 
     const langButton = wrapper.find('header-drop-down-stub')
 
@@ -73,7 +75,7 @@ describe('LpiHeader.vue', () => {
   })
 
   it('should find the drawers', () => {
-    wrapper = lpiShallowMount(LpiHeader)
+    const wrapper = lpiShallowMount(LpiHeader)
 
     // Notifications
     const notificationDrawer = wrapper.findAll('notification-list-stub')
@@ -84,25 +86,23 @@ describe('LpiHeader.vue', () => {
   })
 
   it('should find the user menu content to equal only 2 as not connected', () => {
-    wrapper = lpiShallowMount(LpiHeader)
+    usersStore.userFromApi = usersStore.userFromToken = null
+    const wrapper = lpiShallowMount(LpiHeader)
 
     expect(wrapper.vm.userMenu.length).toEqual(2)
   })
 
   it('should find the user menu content to equal only 6 as user is connected and is admin', () => {
-    usersStore.isConnected = true
-
-    wrapper = lpiShallowMount(LpiHeader)
+    const wrapper = lpiShallowMount(LpiHeader)
 
     expect(wrapper.vm.userMenu.length).toEqual(6)
   })
 
   it('should find the user menu content to equal only 4 as user is connected and is not admin', () => {
-    usersStore.isConnected = true
+    user.roles = ['notadmin']
+    usersStore.userFromApi = usersStore.userFromToken = { ...user }
 
-    usersStore.roles = ['notadmin']
-
-    wrapper = lpiShallowMount(LpiHeader)
+    const wrapper = lpiShallowMount(LpiHeader)
 
     expect(wrapper.vm.userMenu.length).toEqual(4)
   })

@@ -16,7 +16,7 @@ export const OrganizationFactory = createFactory<OrganizationModel>((faker) => (
   id: faker.datatype.number(),
   background_color: faker.datatype.string(),
   banner_image: ImageFactory.generate(),
-  code: faker.lorem.slug(10).toUpperCase(),
+  code: faker.lorem.slug(2).toUpperCase(),
   contact_email: faker.internet.email(),
   dashboard_title: faker.lorem.sentence(),
   dashboard_subtitle: faker.lorem.sentence(),

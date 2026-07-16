@@ -3,6 +3,7 @@ import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 
 import { peopleGroupFactory } from '~~/tests/factories/group.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
+import { flushTick } from '~~/tests/helpers/utils'
 import { describe, expect, it } from 'vitest'
 
 describe('GroupEditTab.vue', () => {
@@ -16,6 +17,7 @@ describe('GroupEditTab.vue', () => {
     registerEndpoint(`organization/${orgganizationCode}/people-group/${group.id}/`, () => group)
 
     const wrapper = await lpiMountSuspended(GroupEditTab, { props })
+    await flushTick()
     expect(wrapper.exists()).toBe(true)
   })
 })

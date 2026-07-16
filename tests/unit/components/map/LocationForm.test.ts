@@ -6,10 +6,10 @@ import { describe, expect, it } from 'vitest'
 
 describe('LocationForm', () => {
   it('should render LocationForm component', () => {
-    const modelValue = ref({
+    const modelValue = {
       lat: 55,
       lng: 66,
-    })
+    }
     const props = {
       modelValue,
     }

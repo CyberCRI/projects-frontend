@@ -1,22 +1,22 @@
 import { lpiShallowMountSuspended } from '~~/tests/helpers/LpiMount'
 import NewHomePage from '~/pages/NewHomePage/NewHomePage.vue'
-import { beforeEach, vi, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { flushPromises } from '@vue/test-utils'
 
 import { ProjectCategoryOutputFactory } from '~~/tests/factories/project-category.factory'
 
 import type { OrganizationOutput } from 'shared-projects-frontend/models'
 import useProjectCategoriesStore from '~/stores/useProjectCategories'
+import { UserFactory } from '~~/tests/factories/user.factory'
 import useOrganizationsStore from '~/stores/useOrganizations'
+import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import useUsersStore from '~/stores/useUsers'
 import pinia from '~/stores'
 
 function connectedStore(usersStore) {
-  usersStore.id = 123
-  usersStore.userFromApi = {}
-  usersStore.permissions = {}
-  usersStore.isConnected = true
-  usersStore.getUser = vi.fn()
+  const user = UserFactory.generate({ id: 123 })
+  registerEndpoint(`user/${user.id}/`, () => user)
+  usersStore.userFromApi = usersStore.userFromToken = user
 }
 
 const router = [{ name: 'Home', path: '/', component: NewHomePage }]

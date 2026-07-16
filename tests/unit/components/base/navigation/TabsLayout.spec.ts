@@ -3,6 +3,7 @@ import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
 import MockComponent from '~~/tests/helpers/MockComponent.vue'
 
+import { mockUseRoute, mockUseRouter } from '~~/tests/helpers/Mocks'
 import { mockNuxtImport } from '@nuxt/test-utils/runtime'
 import { describe, expect, it, vi } from 'vitest'
 
@@ -13,12 +14,8 @@ vi.mock('shared-projects-frontend/apis', () => {
   }
 })
 
-const mockRouter = {
-  push: vi.fn(),
-}
-const mockRoute = {
-  path: '/test1',
-}
+const mockRouter = mockUseRouter()
+const mockRoute = mockUseRoute({ path: '/test1' })
 mockNuxtImport('useRouter', () => () => mockRouter)
 mockNuxtImport('useRoute', () => () => mockRoute)
 

@@ -6,16 +6,16 @@ import type {
   ResearcherDocumentType,
   ResearcherDocumentAnalytics,
 } from 'shared-projects-frontend/models'
-import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
 import { documentAnalyticsSkeleton } from '~/skeletons/crisalid.skeletons'
+import { groupTranslatedFactory } from '~~/tests/factories/group.factory'
 import { DocumentFactory } from '~~/tests/factories/researcher.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import { describe, expect, it } from 'vitest'
 
 describe('GroupDocumentsTab.vue', () => {
   it('should render component', async () => {
-    const group = TranslatedProjectFactory.generate()
+    const group = groupTranslatedFactory.generate()
     const documentType: ResearcherDocumentType = 'publications'
     const props = { group, documentType }
 

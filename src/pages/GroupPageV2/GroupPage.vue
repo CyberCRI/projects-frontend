@@ -18,7 +18,7 @@
           @collapse-nav-panel="isNavCollapsed = true"
         >
           <template #nav-panel>
-            <LazyGroupNavPanel
+            <GroupNavPanel
               v-if="!groupLoading && !isNavCollapsed"
               :class="{ collapsed: isNavCollapsed }"
               :group-tabs="groupTabs"

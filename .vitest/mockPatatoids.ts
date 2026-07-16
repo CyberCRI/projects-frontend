@@ -1,6 +1,17 @@
 import { usePatatoids } from '../src/composables/usePatatoids.ts'
 import { useNuxtApp } from 'nuxt/app'
 import { beforeEach } from 'vitest'
+import { vi } from 'vitest'
+
+Object.defineProperty(URL, 'createObjectURL', {
+  writable: true,
+  value: vi.fn((obj) => obj?.name),
+})
+
+Object.defineProperty(URL, 'revokeObjectURL', {
+  writable: true,
+  value: vi.fn(),
+})
 
 let alreadyMocked = false
 beforeEach(async () => {

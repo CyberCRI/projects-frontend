@@ -6,10 +6,14 @@ import { groupTranslatedFactory } from '~~/tests/factories/group.factory'
 import ProjectPreview from '~/components/project/ProjectPreview.vue'
 import { ProjectFactory } from '~~/tests/factories/project.factory'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('GroupProjectsTab', () => {
-  const orgaCode = useOrganizationCode()
+  let orgaCode
+
+  beforeEach(() => {
+    orgaCode = useOrganizationCode()
+  })
 
   it('Render', async () => {
     const group = groupTranslatedFactory.generate()

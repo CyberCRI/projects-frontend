@@ -17,8 +17,8 @@ describe('ResourcesRecap.vue', () => {
     const props = {
       target: '/file',
       redirect: '/redirect',
-      files: [],
-      links: [],
+      files: 0,
+      links: 0,
     }
     const wrapper = lpiShallowMount(ResourcesRecap, { props })
     expect(wrapper.exists()).toBe(true)

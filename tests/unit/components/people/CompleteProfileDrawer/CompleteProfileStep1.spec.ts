@@ -3,7 +3,9 @@ import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
 import useUsersStore from '~/stores/useUsers'
 
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { UserFactory } from '~~/tests/factories/user.factory'
+import { registerEndpoint } from '@nuxt/test-utils/runtime'
+import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('CompleteProfileStep1.vue', () => {
   let wrapper
@@ -11,12 +13,9 @@ describe('CompleteProfileStep1.vue', () => {
 
   beforeEach(() => {
     const usersStore = useUsersStore()
-    usersStore.$patch({
-      id: 123,
-      userFromApi: {},
-      permissions: {},
-      getUser: vi.fn(),
-    } as any)
+    const user = UserFactory.generate({ id: 123 })
+    registerEndpoint(`user/${user.id}/`, () => user)
+    usersStore.userFromApi = usersStore.userFromToken = user
     defaultParams = {}
   })
   it('should render component', () => {

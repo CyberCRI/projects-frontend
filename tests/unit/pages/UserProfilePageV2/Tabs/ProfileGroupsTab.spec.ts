@@ -1,5 +1,5 @@
 import ProfileGroupsTab from '~/pages/UserProfilePageV2/Tabs/ProfileGroupsTab.vue'
-import { UserFactory } from '~~/tests/factories/user.factory'
+import { userTranslatedFactory } from '~~/tests/factories/user.factory'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
@@ -19,7 +19,9 @@ describe('ProfileGroupsTab', () => {
   })
 
   it('should render ProfileGroupsTab component', () => {
-    const wrapper = lpiShallowMount(ProfileGroupsTab, { props: { user: UserFactory.generate() } })
+    const wrapper = lpiShallowMount(ProfileGroupsTab, {
+      props: { user: userTranslatedFactory.generate() },
+    })
 
     expect(wrapper.exists()).toBeTruthy()
   })

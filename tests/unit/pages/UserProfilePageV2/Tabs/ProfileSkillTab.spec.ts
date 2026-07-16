@@ -1,32 +1,30 @@
 import ProfileSkillTab from '~/pages/UserProfilePageV2/Tabs/ProfileSkillTab.vue'
-import { UserFactory } from '~~/tests/factories/user.factory'
+import { userTranslatedFactory } from '~~/tests/factories/user.factory'
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import useUsersStore from '~/stores/useUsers'
-import pinia from '~/stores'
 
 import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
 import UserSkillsFull from '~/components/people/skill/UserSkillsFull.vue'
 import type { OrganizationOutput } from 'shared-projects-frontend/models'
-import OrganizationTagFactory from '~~/tests/factories/tag.factory'
 import UserSkillFactory from '~~/tests/factories/skill.factory'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import EmptyLabel from '~/components/base/EmptyLabel.vue'
+import TagFactory from '~~/tests/factories/tag.factory'
 import { flushPromises } from '@vue/test-utils'
 
-const aTag = OrganizationTagFactory.generate({ title: '123', description: 'abc' })
+const aTag = TagFactory.generate({ title: '123', description: 'abc' })
 
 describe('ProfileSkillTab', () => {
   let usersStore: ReturnType<typeof useUsersStore>
   beforeEach(() => {
-    usersStore = useUsersStore(pinia)
+    usersStore = useUsersStore()
     usersStore.userFromApi = {}
-    usersStore.permissions = {}
     usersStore.getUser = vi.fn()
     usersStore.userFromToken = {}
     const organizationCode = useOrganizationCode()
-    const organizationsStore = useOrganizationsStore(pinia)
+    const organizationsStore = useOrganizationsStore()
     organizationsStore._current = { id: 'TEST', code: 'TEST' } as unknown as OrganizationOutput
 
     registerEndpoint(`organization/${organizationCode}/mentoring/`, () => {
@@ -36,7 +34,7 @@ describe('ProfileSkillTab', () => {
 
   it('should render ProfileSkillTab component', async () => {
     const wrapper = await lpiMountSuspended(ProfileSkillTab, {
-      props: { user: UserFactory.generate() },
+      props: { user: userTranslatedFactory.generate() },
     })
     await flushPromises()
 
@@ -44,7 +42,7 @@ describe('ProfileSkillTab', () => {
   })
 
   it('should see that current user is the logged one', async () => {
-    const user = UserFactory.generate({ id: 123 })
+    const user = userTranslatedFactory.generate({ id: 123 })
 
     registerEndpoint(`user/${user.id}/category-follow/`, () => PaginationsFactory.generate())
 
@@ -56,8 +54,8 @@ describe('ProfileSkillTab', () => {
   })
 
   it('should see that current user is not the logged one', async () => {
-    const user = UserFactory.generate()
-    const user2 = UserFactory.generate()
+    const user = userTranslatedFactory.generate()
+    const user2 = userTranslatedFactory.generate()
     registerEndpoint(`user/${user.id}/category-follow/`, () => PaginationsFactory.generate())
     registerEndpoint(`user/${user2.id}/category-follow/`, () => PaginationsFactory.generate())
 
@@ -70,8 +68,8 @@ describe('ProfileSkillTab', () => {
   })
 
   it('should display a message if no skill and no hobby', async () => {
-    const user = UserFactory.generate()
-    const user2 = UserFactory.generate()
+    const user = userTranslatedFactory.generate()
+    const user2 = userTranslatedFactory.generate()
 
     registerEndpoint(`user/${user.id}/category-follow/`, () => PaginationsFactory.generate())
     registerEndpoint(`user/${user2.id}/category-follow/`, () => PaginationsFactory.generate())
@@ -84,8 +82,8 @@ describe('ProfileSkillTab', () => {
   })
 
   it('should display one list if user has skill but no hobby', async () => {
-    const user = UserFactory.generate()
-    const user2 = UserFactory.generate()
+    const user = userTranslatedFactory.generate()
+    const user2 = userTranslatedFactory.generate()
 
     registerEndpoint(`user/${user.id}/category-follow/`, () => PaginationsFactory.generate())
     registerEndpoint(`user/${user2.id}/category-follow/`, () => PaginationsFactory.generate())
@@ -99,8 +97,8 @@ describe('ProfileSkillTab', () => {
   })
 
   it('should display one list if user has hobbies but no skills', async () => {
-    const user = UserFactory.generate()
-    const user2 = UserFactory.generate()
+    const user = userTranslatedFactory.generate()
+    const user2 = userTranslatedFactory.generate()
 
     registerEndpoint(`user/${user.id}/category-follow/`, () => PaginationsFactory.generate())
     registerEndpoint(`user/${user2.id}/category-follow/`, () => PaginationsFactory.generate())
@@ -114,8 +112,8 @@ describe('ProfileSkillTab', () => {
   })
 
   it('should display two lists if user has hobbies and skills', async () => {
-    const user = UserFactory.generate()
-    const user2 = UserFactory.generate()
+    const user = userTranslatedFactory.generate()
+    const user2 = userTranslatedFactory.generate()
 
     registerEndpoint(`user/${user.id}/category-follow/`, () => PaginationsFactory.generate())
     registerEndpoint(`user/${user2.id}/category-follow/`, () => PaginationsFactory.generate())
@@ -132,8 +130,8 @@ describe('ProfileSkillTab', () => {
   })
 
   it('should display a tip if list are displayed', async () => {
-    const user = UserFactory.generate()
-    const user2 = UserFactory.generate()
+    const user = userTranslatedFactory.generate()
+    const user2 = userTranslatedFactory.generate()
 
     registerEndpoint(`user/${user.id}/category-follow/`, () => PaginationsFactory.generate())
     registerEndpoint(`user/${user2.id}/category-follow/`, () => PaginationsFactory.generate())

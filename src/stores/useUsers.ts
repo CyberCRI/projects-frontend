@@ -17,6 +17,7 @@ import { removeApiCookie } from '~/api/auth/cookie.service'
 import type { AuthResult } from '~/api/auth/keycloak'
 
 import type { Right } from 'shared-projects-frontend/interfaces'
+import { userRights } from 'shared-projects-frontend/lib'
 import { getOrgsFromRoles } from '~/functs/rolesUtils'
 import analytics from '~/analytics'
 import { defineStore } from 'pinia'
@@ -49,19 +50,20 @@ const useUsersStore = defineStore('users', () => {
   // store is initialized before app is started, so we must check expiration here too
   if (import.meta.client) checkExpiredToken()
 
-  const refreshToken = ref(localStorage?.getItem('REFRESH_TOKEN'))
+  const refreshToken = ref(localStorage?.getItem('REFRESH_TOKEN') ?? null)
   const userFromToken = ref(null)
   const userFromApi = ref(null)
-  const accessToken = ref(localStorage?.getItem('ACCESS_TOKEN'))
+  const accessToken = ref(localStorage?.getItem('ACCESS_TOKEN') ?? null)
   const keycloak_id = ref('')
-  const permissions = ref({})
   const id_token = ref(localStorage?.getItem('ID_TOKEN'))
-  const roles = ref([])
 
   const rights = computed<Right>(() => {
+    if (userFromToken.value || userFromApi.value) {
+      return userRights(userFromToken.value || userFromApi.value)
+    }
     return {
-      permissions: permissions.value,
-      roles: roles.value,
+      permissions: {},
+      roles: [],
     }
   })
   const notificationsCount = ref(0)
@@ -77,41 +79,35 @@ const useUsersStore = defineStore('users', () => {
     return userFromApi.value?.id
   })
 
-  const user = computed(
-    ():
-      | (Omit<UserModel, 'permissions'> & {
-          permissions: { [key: string]: boolean }
-        })
-      | null => {
-      if (userFromToken.value) {
-        return {
-          id: userFromToken.value.pid,
-          name: {
-            firstname: userFromToken.value.given_name,
-            lastname: userFromToken.value.family_name,
-          },
-          given_name: userFromToken.value.given_name,
-          family_name: userFromToken.value.family_name,
-          email: userFromToken.value.email,
-          roles: userFromToken.value.roles || [],
-          orgs: getOrgsFromRoles(userFromToken.value.roles),
-          permissions: permissions.value,
-          slug: userFromToken.value.slug,
-          researcher: userFromToken.value.researcher,
-          resources: userFromToken.value.resources,
-          signed_terms_and_conditions: userFromApi.value?.signed_terms_and_conditions || {},
-          ...pick(userFromApi.value || {}, [
-            'is_superuser',
-            'linkedin',
-            'facebook',
-            'twitter',
-            'website',
-          ]),
-        }
+  const user = computed((): UserModel | null => {
+    if (userFromToken.value) {
+      return {
+        id: userFromToken.value.pid,
+        name: {
+          firstname: userFromToken.value.given_name,
+          lastname: userFromToken.value.family_name,
+        },
+        given_name: userFromToken.value.given_name,
+        family_name: userFromToken.value.family_name,
+        email: userFromToken.value.email,
+        roles: userFromToken.value.roles || [],
+        permissions: userFromToken.value.permissions || {},
+        orgs: getOrgsFromRoles(userFromToken.value.roles),
+        slug: userFromToken.value.slug,
+        researcher: userFromToken.value.researcher,
+        resources: userFromToken.value.resources,
+        signed_terms_and_conditions: userFromApi.value?.signed_terms_and_conditions || {},
+        ...pick(userFromApi.value || {}, [
+          'is_superuser',
+          'linkedin',
+          'facebook',
+          'twitter',
+          'website',
+        ]),
       }
-      return null
     }
-  )
+    return null
+  })
 
   function stopUserDataRefreshLoop() {
     if (userDataRefreshLoop.value) {
@@ -133,25 +129,20 @@ const useUsersStore = defineStore('users', () => {
     userFromToken.value = null
     id_token.value = ''
     userFromApi.value = null
-    permissions.value = {}
-    roles.value = []
     notificationsCount.value = 0
     notificationsSettings.value = null
     // API proxy cookie
     document.cookie = 'jwt_access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;'
   }
 
-  function logOut(): Promise<any> {
-    return new Promise((resolve) => {
-      stopUserDataRefreshLoop()
-      removeApiCookie()
-        .catch(console.error)
-        .finally(() => {
-          logoutFromKeycloak()
-          resetUser()
-          resolve(true)
-        })
-    })
+  function logOut() {
+    stopUserDataRefreshLoop()
+    return removeApiCookie()
+      .catch(console.error)
+      .then(() => {
+        logoutFromKeycloak()
+        resetUser()
+      })
   }
 
   // ex mutations
@@ -242,14 +233,6 @@ const useUsersStore = defineStore('users', () => {
     try {
       // TODO: except for permissions, useless props that are on userFromApi anyway (to check)
       const user = await _getUser(id)
-
-      const _permissions = {}
-      for (const key of user?.permissions || []) {
-        _permissions[key] = true
-      }
-      permissions.value = _permissions
-
-      roles.value = user?.roles || []
       notificationsCount.value = user?.notifications || 0
       userFromApi.value = user
 
@@ -315,10 +298,8 @@ const useUsersStore = defineStore('users', () => {
     userFromApi,
     accessToken,
     keycloak_id,
-    permissions,
     rights,
     id_token,
-    roles,
     notificationsCount,
     notificationsSettings,
     userDataRefreshLoop,

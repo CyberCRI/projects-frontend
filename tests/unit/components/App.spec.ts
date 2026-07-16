@@ -1,15 +1,14 @@
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
-import App from '~/app.vue'
 
 import type { OrganizationOutput } from 'shared-projects-frontend/models'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { checkExpiredToken } from '~/api/auth/keycloakUtils'
 import { flushPromises } from '@vue/test-utils'
 import type { Router } from 'vue-router'
 import type { Mock } from 'vitest'
-// issue with webcrypto, so mock so offending import
-import pinia from '~/stores'
+import App from '~/app.vue'
 
 vi.mock('~/api/auth/keycloakUtils', () => {
   return {
@@ -19,8 +18,9 @@ vi.mock('~/api/auth/keycloakUtils', () => {
   }
 })
 
-vi.mock('~/api/auth/auth.service', () => {
+vi.mock('~/api/auth/auth.service', async (origi) => {
   return {
+    ...(await origi()),
     refreshAccessToken: vi.fn(() =>
       Promise.resolve({
         access_token: 'access',
@@ -36,7 +36,7 @@ vi.mock('~/api/auth/auth.service', () => {
 
 describe('On tab focus', () => {
   beforeEach(() => {
-    const organizationsStore = useOrganizationsStore(pinia)
+    const organizationsStore = useOrganizationsStore()
     organizationsStore._current = { code: '123' } as OrganizationOutput
   })
 
@@ -65,7 +65,7 @@ describe('On tab focus', () => {
     vi.spyOn(router, 'push')
     ;(checkExpiredToken as Mock).mockImplementation(() => true)
 
-    // token in both
+    // // token in both
     usersStore.accessToken = 'access'
     localStorage.setItem('ACCESS_TOKEN', 'eyJhbGciOiJSUz')
     window.dispatchEvent(new Event('focus'))

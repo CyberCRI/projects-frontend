@@ -1,25 +1,20 @@
 import UserProfileV2 from '~/components/people/UserProfileV2.vue'
 import { UserFactory } from '~~/tests/factories/user.factory'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
-import { getUser } from 'shared-projects-frontend/apis'
 import { flushPromises } from '@vue/test-utils'
 
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 
 import useOrganizationsStore from '~/stores/useOrganizations'
+import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import useUsersStore from '~/stores/useUsers'
 import pinia from '~/stores'
-
-vi.mock('shared-projects-frontend/apis', async (orginalImporter) => ({
-  ...(await orginalImporter()),
-  getUser: vi.fn(() => Promise.resolve({ id: 12, permissions: [] })),
-}))
 
 const route = {
   name: 'ProfileSummary',
 }
 
-const buildParams = (userId, showPageLink) => ({
+const buildParams = (userId: number, showPageLink: boolean) => ({
   props: {
     userId, // UserFactory.generate(),
     showPageLink,
@@ -36,12 +31,8 @@ describe('UserProfileV2', () => {
   beforeEach(() => {
     const organizationsStore = useOrganizationsStore(pinia)
     organizationsStore.$patch({ _current: { id: 'TEST' } as any })
+
     usersStore = useUsersStore()
-    usersStore.$patch({
-      id: 12,
-      userFromApi: {},
-      permissions: {},
-    })
   })
   it('should render UserProfileV2 component', () => {
     const wrapper = lpiShallowMount(UserProfileV2, buildParams(123, false))
@@ -49,25 +40,17 @@ describe('UserProfileV2', () => {
     expect(wrapper.exists()).toBeTruthy()
   })
 
-  it('should use logged user if no id is provided', () => {
-    lpiShallowMount(UserProfileV2, buildParams(null, false))
-
-    expect(usersStore.getUser).toHaveBeenCalled()
-  })
-
   it("should emit 'user-not-found' if no user found", async () => {
-    vi.mocked(getUser).mockRejectedValue(null)
+    registerEndpoint(`user/123333/`, () => {
+      throw createError({ statusCode: 404 })
+    })
+    const wrapper = lpiShallowMount(UserProfileV2, buildParams(123333, false))
 
-    const wrapper = lpiShallowMount(UserProfileV2, buildParams(123, false))
     await flushPromises()
     expect(wrapper.emitted()['user-not-found']).toBeTruthy()
   })
 
   it('should see that current user is the logged one', async () => {
-    const user: any = UserFactory.generate()
-    user.id = 123
-    vi.mocked(getUser).mockResolvedValue(user)
-    usersStore.userFromApi = user
     const wrapper = lpiShallowMount(UserProfileV2, buildParams(null, false))
     const vm: any = wrapper.vm
     await flushPromises()
@@ -75,25 +58,24 @@ describe('UserProfileV2', () => {
   })
 
   it('should see that current user is not the logged one', async () => {
-    const user: any = UserFactory.generate()
-    user.id = 123
-    vi.mocked(getUser).mockResolvedValue(user)
+    const user = UserFactory.generate({ id: 123 })
+    registerEndpoint(`user/${user.id}/`, () => user)
 
-    const user2: any = UserFactory.generate()
-    user2.id = 456
-    usersStore.userFromApi = user2
+    const user2 = UserFactory.generate({ id: 456 })
+    registerEndpoint(`user/${user2.id}/`, () => user2)
+    usersStore.userFromApi = usersStore.userFromToken = user2
 
-    const wrapper = lpiShallowMount(UserProfileV2, buildParams(123, false))
+    const wrapper = lpiShallowMount(UserProfileV2, buildParams(user.id, false))
     const vm: any = wrapper.vm
     await flushPromises()
     expect(vm.isSelf).toBeFalsy()
   })
 
   it('should allow edition of self profile', async () => {
-    const user: any = UserFactory.generate()
-    user.id = 123
-    vi.mocked(getUser).mockResolvedValue(user)
-    usersStore.userFromApi = user
+    const user = UserFactory.generate({ id: 123 })
+    registerEndpoint(`user/${user.id}/`, () => user)
+    usersStore.userFromApi = usersStore.userFromToken = user
+
     const wrapper = lpiShallowMount(UserProfileV2, buildParams(null, false))
     const vm: any = wrapper.vm
     await flushPromises()
@@ -101,15 +83,14 @@ describe('UserProfileV2', () => {
   })
 
   it('should not allow edition of other profile without specific rights', async () => {
-    const user: any = UserFactory.generate()
-    user.id = 123
-    vi.mocked(getUser).mockResolvedValue(user)
+    const user = UserFactory.generate({ id: 123 })
+    registerEndpoint(`user/${user.id}/`, () => user)
 
-    const user2: any = UserFactory.generate()
-    user.id = 456
-    usersStore.userFromApi = user2
+    const user2 = UserFactory.generate({ id: 456 })
+    registerEndpoint(`user/${user2.id}/`, () => user2)
+    usersStore.userFromApi = usersStore.userFromToken = user2
 
-    const wrapper = lpiShallowMount(UserProfileV2, buildParams(123, false))
+    const wrapper = lpiShallowMount(UserProfileV2, buildParams(user.id, false))
     const vm: any = wrapper.vm
     await flushPromises()
     expect(vm.canEditUserOrIsSelf).toBe(false)

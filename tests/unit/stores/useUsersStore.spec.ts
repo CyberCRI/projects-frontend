@@ -1,29 +1,50 @@
-import { removeApiCookie } from '~/api/auth/cookie.service'
-import * as keycloakUtils from '~/api/auth/keycloakUtils'
-import { getOrgsFromRoles } from '~/functs/rolesUtils'
+import { beforeEach, beforeAll, describe, expect, it, vi } from 'vitest'
+
 import { setActivePinia, createPinia } from 'pinia'
-import * as auth from '~/api/auth/auth.service'
-import useUsersStore from '~/stores/useUsers'
 
+import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
+import { removeUserCookie } from 'shared-projects-frontend/apis'
+import { registerEndpoint } from '@nuxt/test-utils/runtime'
+import { getOrgsFromRoles } from '~/functs/rolesUtils'
+import { flushTick } from '~~/tests/helpers/utils'
 import analytics from '~/analytics'
-
-import { flushPromises } from '@vue/test-utils'
-
-import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
 
-vi.mock('shared-projects-frontend/apis')
-vi.mock('~/api/auth/auth.service')
+const logoutFromKeycloak = vi.fn()
+const refreshAccessToken = vi.fn()
+vi.mock('~/api/auth/auth.service', () => ({
+  logoutFromKeycloak,
+  refreshAccessToken,
+}))
+
+let realCheckExpiredToken: typeof import('~/api/auth/keycloakUtils').checkExpiredToken
+const checkExpiredTokenMock = vi.fn()
+
+vi.mock('~/api/auth/keycloakUtils', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('~/api/auth/keycloakUtils')>()
+
+  realCheckExpiredToken = actual.checkExpiredToken
+
+  return {
+    ...actual,
+    checkExpiredToken: checkExpiredTokenMock,
+  }
+})
 vi.mock('~/analytics')
-vi.mock('~/functs/functions')
+
+const userStore = async (pinia) => (await import('~/stores/useUsers')).default(pinia)
 
 describe('Store module | users | init', () => {
   let pinia
-  beforeEach(() => {
+  let usersStore
+
+  beforeEach(async () => {
+    vi.resetModules()
     pinia = createPinia()
     setActivePinia(pinia)
     localStorage.clear()
   })
+
   const access_token =
     'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ4dEVDUnNWai1HT3EzcXY3bVVJTDdfQUNjQ2JHZ3NwQ2FsaE55WndKbzM4In0.eyJleHAiOjE2NDYzNTM5NDUsImlhdCI6MTY0NjMxNzk0OCwiYXV0aF90aW1lIjoxNjQ2MzE3OTQ1LCJqdGkiOiI5ZTdiNmJkYS1hNzY4LTQ3MTAtOGE1NS1lMDA5ZDU0NjA2NDciLCJpc3MiOiJodHRwczovL2lkLmxlYXJuaW5nLXBsYW5ldC5vcmcvYXV0aC9yZWFsbXMvbHAiLCJzdWIiOiI0MDA1ZGRmNy0xNzIxLTQ0MGUtYWYyYS00ZGFmZTFmNDI4YzAiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJwcm9qZWN0cy1mcm9udGVuZC1kZXYiLCJzZXNzaW9uX3N0YXRlIjoiZWQxZDQyMDctZTY2MC00MGNiLWExMzUtYWZkNjdjMjYzMWNkIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL3Byb2ZpbGUucHJvamVjdHMuZGV2LmxwLWkuZGV2IiwiaHR0cDovL2xvY2FsaG9zdDo4MDgwIiwiaHR0cDovLzEyNy4wLjAuMTo4MDgwIiwiaHR0cHM6Ly9wcm9qZWN0cy5kZXYuY3JpLXBhcmlzLm9yZyIsImh0dHBzOi8vMTI3LjAuMC4xOjgwODAiLCJodHRwczovL2xvY2FsaG9zdDo4MDgwIl0sInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwiLCJzaWQiOiJlZDFkNDIwNy1lNjYwLTQwY2ItYTEzNS1hZmQ2N2MyNjMxY2QiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6Imp1bGllbiBkcm91bGV6IiwiZ3JvdXBzIjpbIi9wcm9qZWN0cy9hZG1pbmlzdHJhdG9ycyJdLCJwaWQiOiI1YTc5MGYxZS0wNGFlLTQ0ZTktOTkxOC03YWE2YjQ3ZTllNTQiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJqdWxpZW4uZHJvdWxlekBjcmktcGFyaXMub3JnIiwiZ2l2ZW5fbmFtZSI6Imp1bGllbiIsImZhbWlseV9uYW1lIjoiZHJvdWxleiIsInVzZXIiOnsiaWQiOiI1YTc5MGYxZS0wNGFlLTQ0ZTktOTkxOC03YWE2YjQ3ZTllNTQifSwiZW1haWwiOiJqdWxpZW4uZHJvdWxlekBmcmVlLmZyIn0.MQivUAcfBX-SpXvT6dAXKOOouv169ukjJcXdsFDk_XaAROvHjkoEKIaG0xMcKLDVlS6sYl4Wfdm0YV0Xpe3cCaU-OZDCES7A_Zw9icGsYIYNJLAz-ncVF09Ao3AfA_4OuSQv9lpByOh-F4TekVlVWdTbrdFcn1Y4p6UTl6w6yhcXWeFOd9db2_M0vjc9s8fffpTZIWZM-CkQBvW9wO0bQd1wBKXFfARHHsXQ6B1FNE67UWHztEJepvPdXNC0CLdzFGg-K7hDeNMrCm75ymosy44N3u_DZq1qEjnt0Ext5VJyE4RbITOdN4mxM3CAZFTeNzNb56GgkyHEgLpovWastw'
   const refresh_token =
@@ -46,46 +67,55 @@ describe('Store module | users | init', () => {
     localStorage.removeItem('REFRESH_TOKEN_EXP')
   }
 
-  it('should not set token with expired token', () => {
+  it('should not set token with expired token', async () => {
     const oldAccessToken = localStorage.getItem('ACCESS_TOKEN')
     const olRefreshToken = localStorage.getItem('REFRESH_TOKEN')
     setTokens()
-    const usersStore = useUsersStore(pinia)
+
+    checkExpiredTokenMock.mockImplementation(realCheckExpiredToken)
+    usersStore = await userStore(pinia)
     expect(usersStore.accessToken).toBe(null)
     localStorage.setItem('ACCESS_TOKEN', oldAccessToken)
     localStorage.setItem('REFRESH_TOKEN', olRefreshToken)
   })
 
-  it('should set access with valid token', () => {
-    const checkExpiredTokenSpy = vi.spyOn(keycloakUtils, 'checkExpiredToken')
-    checkExpiredTokenSpy.mockImplementationOnce(() => false)
+  it('should set access with valid token', async () => {
     const oldAccessToken = localStorage.getItem('ACCESS_TOKEN')
     const olRefreshToken = localStorage.getItem('REFRESH_TOKEN')
     setTokens()
-    const usersStore = useUsersStore(pinia)
+
+    checkExpiredTokenMock.mockImplementationOnce(() => false)
+    usersStore = await userStore(pinia)
     expect(usersStore.accessToken).toBe(access_token)
     localStorage.setItem('ACCESS_TOKEN', oldAccessToken)
     localStorage.setItem('REFRESH_TOKEN', olRefreshToken)
   })
 
-  it('should not set access token with no token', () => {
-    const oldAccessToken = window.localStorage.getItem('ACCESS_TOKEN')
-    const olRefreshToken = window.localStorage.getItem('REFRESH_TOKEN')
+  it('should not set access token with no token', async () => {
+    const oldAccessToken = localStorage.getItem('ACCESS_TOKEN')
+    const olRefreshToken = localStorage.getItem('REFRESH_TOKEN')
     unsetTokens()
-    const usersStore = useUsersStore(pinia)
+    usersStore = await userStore(pinia)
     expect(usersStore.accessToken).toBe(null)
-    window.localStorage.setItem('ACCESS_TOKEN', oldAccessToken)
-    window.localStorage.setItem('REFRESH_TOKEN', olRefreshToken)
+    localStorage.setItem('ACCESS_TOKEN', oldAccessToken)
+    localStorage.setItem('REFRESH_TOKEN', olRefreshToken)
   })
 })
 
 describe('Store module | users | getters', () => {
   let pinia
-  beforeEach(() => {
+  let usersStore
+
+  beforeEach(async () => {
+    vi.resetModules()
     pinia = createPinia()
     setActivePinia(pinia)
     localStorage.clear()
+    usersStore = await userStore(pinia)
+
+    registerEndpoint(`user/24/category-follow/`, () => PaginationsFactory.generate())
   })
+
   const stateWithSessionToken = {
     refreshToken:
       'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJydCI6eyJwaWQiOiI2YTViMWM0MC02NzQwLTQ2NjUtYTdmNS05NWI2ZDcwY2ZkNWYifSwiZXhwIjoxNjMzNzY0NjU3fQ.iIG2cjz5Tn4kq1_qiIfiCi-SoR8ZREUKoQBBgfd4c9AMhl2V4SDY47GmAImHc5XUu3hq2k0hoWGvlrBON3DwZQ',
@@ -105,7 +135,7 @@ describe('Store module | users | getters', () => {
       profile_picture: null,
       id: 24,
       language: 'en',
-      keycloak_id: '1cb609f9-b5c5-4f09-89cd-218a00545c70',
+      keycloak_id: 'swp1JsfpyX5CMErRXMKS-dLrPlyp4kAsyU6vXbS9zfg',
       people_id: '744cf291-0bde-4d0f-a7d6-0b0f7142be88',
       email: 'fares.doghri@cri-paris.org',
       given_name: 'Fares',
@@ -144,19 +174,19 @@ describe('Store module | users | getters', () => {
       given_name: 'Colin',
       family_name: 'Faivre',
       email: 'colin.faivre@gmail.com',
+      permissions: [
+        'organization.create',
+        'organization.retrieve',
+        'organization.list',
+        'organization.destroy',
+        'organization.update',
+        'organization.partial_update',
+        'organization.image',
+        'organization.member',
+        'organization.group',
+      ],
+      roles: [],
     },
-    permissions: [
-      'organization.create',
-      'organization.retrieve',
-      'organization.list',
-      'organization.destroy',
-      'organization.update',
-      'organization.partial_update',
-      'organization.image',
-      'organization.member',
-      'organization.group',
-    ],
-    roles: [],
     notificationsCount: 0,
     notificationsSettings: null,
   }
@@ -205,11 +235,13 @@ describe('Store module | users | getters', () => {
       profile_picture: null,
       id: 24,
       language: 'en',
-      keycloak_id: '1cb609f9-b5c5-4f09-89cd-218a00545c70',
+      keycloak_id: 'xtECRsVj-GOq3qv7mUIL7_ACcCbGgspCalhNyZwJo38',
       people_id: '744cf291-0bde-4d0f-a7d6-0b0f7142be88',
       email: 'fares.doghri@cri-paris.org',
       given_name: 'Fares',
       family_name: 'Doghri',
+      roles: [],
+      permissions: {},
     },
     userFromToken: {
       jti: '3b4c6e89-d22d-4fab-8724-f998d64b4ea4',
@@ -239,25 +271,34 @@ describe('Store module | users | getters', () => {
       given_name: 'hénri',
       family_name: 'delozanne',
       email: 'hnr.delozanne@gmail.com',
+      permissions: [
+        'organization.create',
+        'organization.retrieve',
+        'organization.list',
+        'organization.destroy',
+        'organization.update',
+        'organization.partial_update',
+        'organization.image',
+        'organization.member',
+        'organization.group',
+      ],
     },
-    permissions: [
-      'organization.create',
-      'organization.retrieve',
-      'organization.list',
-      'organization.destroy',
-      'organization.update',
-      'organization.partial_update',
-      'organization.image',
-      'organization.member',
-      'organization.group',
-    ],
-    roles: [],
     notificationsCount: 0,
     notificationsSettings: null,
   }
 
+  beforeAll(() => {
+    registerEndpoint(
+      `user/${stateWithSessionToken.userFromApi.keycloak_id}/`,
+      () => stateWithSessionToken.userFromApi
+    )
+    registerEndpoint(
+      `user/${stateWithUserWithSpecialCharacter.userFromApi.keycloak_id}/`,
+      () => stateWithUserWithSpecialCharacter.userFromApi
+    )
+  })
+
   it('isConnected', () => {
-    const usersStore = useUsersStore(pinia)
     usersStore.$patch(stateWithSessionToken as any)
     expect(usersStore.isConnected).toBe(true)
 
@@ -266,7 +307,6 @@ describe('Store module | users | getters', () => {
   })
 
   it('user', () => {
-    const usersStore = useUsersStore(pinia)
     usersStore.$patch(stateWithSessionToken as any)
     expect(usersStore.user).toEqual({
       name: {
@@ -300,19 +340,17 @@ describe('Store module | users | getters', () => {
     const userFromJWT = stateWithUserWithSpecialCharacter.userFromToken
     userFromJWT.given_name = 'hénri'
 
-    const spy = vi.spyOn(auth, 'refreshAccessToken').mockResolvedValueOnce({
+    const spy = refreshAccessToken.mockResolvedValueOnce({
       refresh_token: stateWithUserWithSpecialCharacter.refreshToken,
       access_token: stateWithUserWithSpecialCharacter.accessToken,
       parsedToken: userFromJWT,
     })
-    const usersStore = useUsersStore(pinia)
     usersStore.$patch(stateWithUserWithSpecialCharacter as any)
     expect(usersStore.user.name.firstname).toBe('hénri')
     spy.mockReset()
   })
 
   it('refreshToken', () => {
-    const usersStore = useUsersStore(pinia)
     usersStore.$patch(stateWithSessionToken as any)
     expect(usersStore.refreshToken).toBe(stateWithSessionToken.refreshToken)
   })
@@ -320,20 +358,26 @@ describe('Store module | users | getters', () => {
 
 describe('Store module | users | actions', () => {
   let pinia
-  beforeEach(() => {
+  let usersStore
+
+  beforeEach(async () => {
+    vi.resetModules()
     pinia = createPinia()
     setActivePinia(pinia)
     localStorage.clear()
+    usersStore = await userStore(pinia)
   })
 
   it('logOut', async () => {
-    const usersStore = useUsersStore(pinia)
-    const logoutFromKeycloakMock = auth.logoutFromKeycloak as Mock
+    const logoutFromKeycloakMock = logoutFromKeycloak as Mock
+    const removeUserCookieMock = removeUserCookie as Mock
+
     vi.spyOn(usersStore, 'resetUser')
 
     await usersStore.logOut()
-    await flushPromises()
-    expect(removeApiCookie).toHaveBeenCalled()
+    await flushTick()
+
+    expect(removeUserCookieMock).toHaveBeenCalled()
     expect(logoutFromKeycloakMock).toHaveBeenCalled()
     expect.poll(() => expect(usersStore.resetUser).toHaveBeenCalledTimes(1))
   })
@@ -377,7 +421,8 @@ describe('Store module | users | actions', () => {
       aud: '',
     }
 
-    const usersStore = useUsersStore(pinia)
+    registerEndpoint(`user/${parsedToken.sub}/`, () => parsedToken)
+
     vi.spyOn(usersStore, 'logIn')
 
     await usersStore.logIn({
@@ -443,14 +488,13 @@ describe('Store module | users | actions', () => {
     }
     const id_token = 'foobar'
 
-    const spy = vi.spyOn(auth, 'refreshAccessToken').mockResolvedValueOnce({
+    const spy = refreshAccessToken.mockResolvedValueOnce({
       refresh_token: refresh_token,
       refresh_token_exp: 123456,
       access_token: access_token,
       parsedToken: parsedToken,
       id_token: id_token,
     })
-    const usersStore = useUsersStore(pinia)
     vi.spyOn(usersStore, 'setUser')
     await usersStore.doRefreshToken()
     expect.poll(() =>
@@ -469,14 +513,17 @@ describe('Store module | users | actions', () => {
 
 describe('Store module | users | mutations', () => {
   let pinia
-  beforeEach(() => {
+  let usersStore
+
+  beforeEach(async () => {
+    vi.resetModules()
     pinia = createPinia()
     setActivePinia(pinia)
     localStorage.clear()
+    usersStore = await userStore(pinia)
   })
+
   it('resetUser', () => {
-    // TODO set an intial state ?
-    const usersStore = useUsersStore(pinia)
     usersStore.resetUser()
 
     const desiredState = {
@@ -484,11 +531,12 @@ describe('Store module | users | mutations', () => {
       accessToken: '',
       id_token: '',
       keycloak_id: '',
-      permissions: {},
       userFromToken: null,
       userFromApi: null,
-
-      roles: [],
+      rights: {
+        roles: [],
+        permissions: {},
+      },
       notificationsCount: 0,
       notificationsSettings: null,
     }
@@ -508,7 +556,6 @@ describe('Store module | users | mutations', () => {
       },
       userFromApi: null,
     }
-    const usersStore = useUsersStore(pinia)
     usersStore.setUser(payload)
 
     const desiredState = {

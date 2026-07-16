@@ -33,10 +33,10 @@
 </template>
 
 <script setup lang="ts">
-import { checkExpiredToken } from '~/api/auth/keycloakUtils'
 import useKeycloak from '~/api/auth/keycloak'
 
 import AppToastList from '~/components/app/AppToastList.vue'
+import { checkExpiredToken } from '~/api/auth/keycloakUtils'
 import LpiHeader from '~/components/app/LpiHeader.vue'
 import LpiFooter from '~/components/app/LpiFooter.vue'
 

@@ -6,9 +6,9 @@ import pinia from '~/stores'
 
 import type { OrganizationOutput } from 'shared-projects-frontend/models'
 
-import OrganizationTagFactory from '~~/tests/factories/tag.factory'
 import UserSkillFactory from '~~/tests/factories/skill.factory'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
+import TagFactory from '~~/tests/factories/tag.factory'
 import { flushPromises } from '@vue/test-utils'
 
 vi.mock('es-toolkit', () => ({
@@ -79,7 +79,7 @@ describe('DefaultSkillsAdmin', () => {
         { id: 456, slug: 'for-skill', type: 'Custom' },
         { id: 789, slug: 'for-skill-and-project', type: 'Custom' },
       ],
-      default_projects_tags: OrganizationTagFactory.generateMany(3),
+      default_projects_tags: TagFactory.generateMany(3),
       default_skills_tags: UserSkillFactory.generateMany(3),
     } as unknown as OrganizationOutput
     defaultParams = {

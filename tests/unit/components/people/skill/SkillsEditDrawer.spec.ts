@@ -4,6 +4,7 @@ import { lpiMount } from '~~/tests/helpers/LpiMount'
 import type { OrganizationOutput } from 'shared-projects-frontend/models'
 import useOrganizationsStore from '~/stores/useOrganizations'
 
+import { userTranslatedFactory } from '~~/tests/factories/user.factory'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 vi.mock('shared-projects-frontend/apis', async (orginalImporter) => ({
@@ -59,7 +60,7 @@ describe('SkillsEditDrawer.vue', () => {
       props: {
         isOpen: true,
         type: 'skills',
-        user: { id: 1, skills: [] },
+        user: userTranslatedFactory.generate({ id: 1, skills: [] }),
         searchAllMode: true,
       },
     })

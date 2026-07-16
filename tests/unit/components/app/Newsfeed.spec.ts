@@ -1,7 +1,8 @@
 import { ProjectCategoryOutputFactory } from '~~/tests/factories/project-category.factory'
-import { AnnouncementFactory } from '~~/tests/factories/announcement.factory'
-import { ProjectOutputFactory } from '~~/tests/factories/project.factory'
+import { TranslatedAnnouncementFactory } from '~~/tests/factories/announcement.factory'
+import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import type { OrganizationOutput } from 'shared-projects-frontend/models'
+import { TranslatedNewsFactory } from '~~/tests/factories/news.factory'
 import useProjectCategoriesStore from '~/stores/useProjectCategories'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
@@ -27,8 +28,8 @@ describe('Newsfeed', () => {
     const wrapper = lpiShallowMount(Newsfeed, {
       props: {
         newsfeed: [
-          { id: 1, type: 'project', project: ProjectOutputFactory.generate() },
-          { id: 2, type: 'project', project: ProjectOutputFactory.generate() },
+          { id: 1, type: 'project', project: TranslatedProjectFactory.generate() },
+          { id: 2, type: 'project', project: TranslatedProjectFactory.generate() },
         ],
       },
     })
@@ -40,8 +41,8 @@ describe('Newsfeed', () => {
     const wrapper = lpiShallowMount(Newsfeed, {
       props: {
         newsfeed: [
-          { id: 1, type: 'announcement', announcement: AnnouncementFactory.generate() },
-          { id: 2, type: 'announcement', announcement: AnnouncementFactory.generate() },
+          { id: 1, type: 'announcement', announcement: TranslatedAnnouncementFactory.generate() },
+          { id: 2, type: 'announcement', announcement: TranslatedAnnouncementFactory.generate() },
         ],
       },
     })
@@ -53,8 +54,8 @@ describe('Newsfeed', () => {
     const wrapper = lpiShallowMount(Newsfeed, {
       props: {
         newsfeed: [
-          { id: 1, type: 'news', news: { id: 1 } }, /// TODO: news factory
-          { id: 2, type: 'news', news: { id: 2 } },
+          { id: 1, type: 'news', news: TranslatedNewsFactory.generate({ id: 1 }) },
+          { id: 2, type: 'news', news: TranslatedNewsFactory.generate({ id: 2 }) },
         ],
       },
     })
@@ -66,9 +67,9 @@ describe('Newsfeed', () => {
     const wrapper = lpiShallowMount(Newsfeed, {
       props: {
         newsfeed: [
-          { id: 1, type: 'news', news: { id: 1 } }, /// TODO: news factory
-          { id: 2, type: 'announcement', announcement: AnnouncementFactory.generate() },
-          { id: 3, type: 'project', project: ProjectOutputFactory.generate() },
+          { id: 1, type: 'news', news: TranslatedNewsFactory.generate() },
+          { id: 2, type: 'announcement', announcement: TranslatedAnnouncementFactory.generate() },
+          { id: 3, type: 'project', project: TranslatedProjectFactory.generate() },
         ],
       },
     })

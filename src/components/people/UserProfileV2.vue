@@ -96,9 +96,9 @@ export default {
 
   emits: ['user-not-found', 'close', 'profile-edited'],
 
-  setup() {
+  setup(props) {
     const usersStore = useUsersStore()
-    const { canEditUser } = usePermissionUser(computed(() => usersStore.id))
+    const { canEditUser } = usePermissionUser(computed(() => props.userId))
     const { onboardingTrap } = useOnboardingStatus()
     const { t } = useNuxtI18n()
     const uniqueId = 'project-nav-panel'
@@ -633,14 +633,16 @@ export default {
     },
 
     async loadUser() {
-      if (!this.userId || this.userId === this.usersStore.id) {
+      if (this.userId && this.userId === this.usersStore.id) {
         // get the connected user
         this.originalUser = await this.usersStore.getUser(this.usersStore.id, {
           noError: true,
         })
-      } else {
+      } else if (this.userId) {
         // get another user
         this.originalUser = await getUser(this.userId, { noError: true })
+      } else {
+        throw new Error('userId is empty')
       }
     },
   },

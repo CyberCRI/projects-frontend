@@ -5,13 +5,15 @@ import { UserFactory } from '~~/tests/factories/user.factory'
 import { lpiMountSuspended } from '~~/tests/helpers/LpiMount'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import { beforeAll, describe, expect, it } from 'vitest'
+import { flushTick } from '~~/tests/helpers/utils'
 import { flushPromises } from '@vue/test-utils'
 
 describe('ResearcherDocumentsTab.vue', () => {
-  let defaultProps
-  const orgaCode = useOrganizationCode()
+  let defaultProps: any
+  let orgaCode: string
 
   beforeAll(() => {
+    orgaCode = useOrganizationCode()
     defaultProps = {
       user: UserFactory.generate(),
       docType: 'publications',
@@ -127,8 +129,9 @@ describe('ResearcherDocumentsTab.vue', () => {
 
     const wrapper = await lpiMountSuspended(ResearcherDocumentsTab, { props: defaultProps })
     expect(wrapper.find('.skeletons').exists()).toBeTruthy()
-    await flushPromises()
+    await flushTick()
     expect(wrapper.find('.skeletons').exists()).toBeFalsy()
+    await flushTick()
 
     expect(wrapper.find('.documents-list').element.childElementCount).toEqual(2)
     // no similars button show

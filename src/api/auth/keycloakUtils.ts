@@ -28,7 +28,7 @@ export function cleanLocalStorage(): void {
 }
 
 export function checkExpiredToken(): boolean {
-  async function _cleanStorage() {
+  function _cleanStorage() {
     localStorage.removeItem('REFRESH_TOKEN')
     localStorage.removeItem('REFRESH_TOKEN_EXP')
     localStorage.removeItem('ACCESS_TOKEN')
@@ -36,7 +36,7 @@ export function checkExpiredToken(): boolean {
     localStorage.removeItem('ID_TOKEN') // keep to allow old timer cleanup
     localStorage.removeItem('KEYCLOAK_ID') // keep to allow old timer cleanup
     try {
-      await removeApiCookie()
+      removeApiCookie()
     } catch (e) {
       console.error(e)
     }

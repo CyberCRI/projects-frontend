@@ -1,11 +1,11 @@
 import { PaginationsFactory } from '~~/tests/factories/paginations.factory'
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 
+import { OrganizationFactory } from '~~/tests/factories/organization.factory'
 import { getAllOrgClassifications } from 'shared-projects-frontend/apis'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import useTagSearch from '~/composables/useTagSearch.ts'
 
-vi.mock('~/stores/useOrganizations')
 vi.mock('shared-projects-frontend/apis', async (orginalImporter) => ({
   ...(await orginalImporter()),
   getAllOrgClassifications: vi
@@ -15,17 +15,13 @@ vi.mock('shared-projects-frontend/apis', async (orginalImporter) => ({
 }))
 
 describe('useTagSearch', () => {
-  let organizationsStoreMock
-
   beforeEach(() => {
-    organizationsStoreMock = {
-      current: {
-        code: 'org-code',
-        default_skills_tags: ['skill1', 'skill2'],
-        default_projects_tags: ['project1', 'project2'],
-      },
-    }
-    useOrganizationsStore.mockReturnValue(organizationsStoreMock)
+    const organizationStore = useOrganizationsStore()
+    organizationStore._current = OrganizationFactory.generate({
+      code: 'org-code',
+      default_skills_tags: ['skill1', 'skill2'],
+      default_projects_tags: ['project1', 'project2'],
+    })
   })
 
   describe('organizationTags', () => {

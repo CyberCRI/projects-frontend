@@ -1,4 +1,4 @@
-import { ProjectOutputFactory } from '~~/tests/factories/project.factory'
+import { TranslatedProjectFactory } from '~~/tests/factories/project.factory'
 import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
 
 import type { OrganizationOutput } from 'shared-projects-frontend/models'
@@ -31,7 +31,7 @@ describe('ProjectHeader.vue', () => {
   it('should render component', () => {
     const wrapper = lpiShallowMount(ProjectHeaderV2, {
       props: {
-        project: ProjectOutputFactory.generate(),
+        project: TranslatedProjectFactory.generate(),
       },
       stubs: {
         TagsList: {

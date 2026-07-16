@@ -7,7 +7,6 @@ import type {
 
 import {
   deleteProjectCategoryFollow,
-  // getProjectCategoriesFollow,
   postProjectCategoryFollow,
   deleteFollow,
   postFollow,

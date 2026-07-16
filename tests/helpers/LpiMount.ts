@@ -9,6 +9,7 @@ import routerOptions from '~/app/router.options'
 import { createI18n, I18nT } from 'vue-i18n'
 import type { I18nOptions } from 'vue-i18n'
 import { NuxtLink } from '#components'
+import type { Component } from 'vue'
 
 // create globaly i18n
 import MockComponent from './MockComponent.vue'
@@ -18,7 +19,7 @@ import { setActivePinia } from 'pinia'
 import { beforeAll } from 'vitest'
 import pinia from '~/stores'
 
-type OptionsMount<T> = ComponentMountingOptions<T> & {
+type OptionsMount<T extends Component> = ComponentMountingOptions<T> & {
   route?: RouteLocationRaw
   router?: RouteRecordRaw[]
 }
@@ -45,7 +46,7 @@ beforeAll(() => {
  * @constant
  * @name buildOptions
  * @kind variable
- * @type {<T>(options?: OptionsMount<T>) => ComponentMountingOptions<T>}
+ * @type {<T>(options?: OptionsMount<C>) => ComponentMountingOptions<T>}
  */
 const buildOptions = <T>(options: OptionsMount<T> = {}): ComponentMountingOptions<T> => {
   const plugins = []
@@ -92,18 +93,27 @@ const buildOptions = <T>(options: OptionsMount<T> = {}): ComponentMountingOption
   }
 }
 
-export const lpiMount = <T>(component, options: OptionsMount<T> = {}) => {
-  return mount(component, buildOptions<T>(options))
+export const lpiMount = <C extends Component>(component: C, options: OptionsMount<C> = {}) => {
+  return mount(component, buildOptions(options))
 }
 
-export const lpiShallowMount = <T>(component, options: OptionsMount<T> = {}) => {
-  return shallowMount(component, buildOptions<T>(options))
+export const lpiShallowMount = <C extends Component>(
+  component: C,
+  options: OptionsMount<C> = {}
+) => {
+  return shallowMount(component, buildOptions(options))
 }
 
-export const lpiMountSuspended = <T>(component, options: OptionsMount<T> = {}) => {
-  return mountSuspended(component, buildOptions<T>(options))
+export const lpiMountSuspended = <C extends Component>(
+  component: C,
+  options: OptionsMount<C> = {}
+) => {
+  return mountSuspended(component, buildOptions(options))
 }
 
-export const lpiShallowMountSuspended = <T>(component, options: OptionsMount<T> = {}) => {
-  return mountSuspended(component, { ...buildOptions<T>(options), shallow: true })
+export const lpiShallowMountSuspended = <C extends Component>(
+  component: C,
+  options: OptionsMount<C> = {}
+) => {
+  return mountSuspended(component, { ...buildOptions(options), shallow: true })
 }

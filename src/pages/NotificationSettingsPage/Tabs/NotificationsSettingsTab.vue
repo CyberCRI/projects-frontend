@@ -153,8 +153,8 @@ const switches = computed(() => {
       settingValue: 'new_instruction',
     },
     {
-      label: t('notifications.project.announcement-has-new-application'),
-      subLabel: t('notifications.project.announcement-has-new-application-sub'),
+      label: t('notifications.projects.announcement-has-new-application'),
+      subLabel: t('notifications.projects.announcement-has-new-application-sub'),
       value: form.value.announcement_has_new_application,
       settingValue: 'announcement_has_new_application',
     },
