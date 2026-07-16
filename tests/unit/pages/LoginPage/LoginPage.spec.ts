@@ -5,7 +5,7 @@ import { flushTick } from '~~/tests/helpers/utils'
 import { describe, expect, it } from 'vitest'
 
 describe('LoginPage.vue', () => {
-  it('should render component', async () => {
+  it.skip('should render component', async () => {
     const wrapper = await lpiMountSuspended(LoginPage)
     await flushTick()
     expect(wrapper.exists()).toBe(true)

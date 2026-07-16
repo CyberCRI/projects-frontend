@@ -48,8 +48,6 @@ const defaultRoutes = () => {
   return routes
 }
 
-const history = createWebHistory()
-
 /**
  * build options for mount utils (auto create router/locale)
  *
@@ -62,7 +60,7 @@ const buildOptions = <T>(options: OptionsMount<T> = {}): ComponentMountingOption
   const plugins = []
 
   const router = createRouter({
-    history,
+    history: createWebHistory(),
     routes: options.router || defaultRoutes(),
   })
   if (options.route) {
