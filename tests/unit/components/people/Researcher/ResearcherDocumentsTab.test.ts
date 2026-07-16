@@ -23,7 +23,6 @@ describe('ResearcherDocumentsTab.vue', () => {
   it('undefined researcher', async () => {
     defaultProps.user.researcher = null
     const wrapper = await lpiMountSuspended(ResearcherDocumentsTab, { props: defaultProps })
-    await flushTick()
     expect.poll(() => expect(wrapper.find('.document-tab-empty').exists()).toBeTruthy())
   })
 

@@ -12,7 +12,6 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
 import EmptyLabel from '~/components/base/EmptyLabel.vue'
 import TagFactory from '~~/tests/factories/tag.factory'
-import { flushTick } from '~~/tests/helpers/utils'
 import { flushPromises } from '@vue/test-utils'
 
 const aTag = TagFactory.generate({ title: '123', description: 'abc' })
@@ -24,21 +23,20 @@ describe('ProfileSkillTab', () => {
     usersStore.userFromApi = {}
     usersStore.getUser = vi.fn()
     usersStore.userFromToken = {}
-    const organizationCode = useOrganizationCode()
     const organizationsStore = useOrganizationsStore()
     organizationsStore._current = { id: 'TEST', code: 'TEST' } as unknown as OrganizationOutput
+    const organizationCode = useOrganizationCode()
 
-    registerEndpoint(`organization/${organizationCode}/mentoring/`, () => {
-      return PaginationsFactory.generate()
-    })
+    registerEndpoint(`organization/${organizationCode}/mentoring/`, () =>
+      PaginationsFactory.generate()
+    )
   })
 
   it('should render ProfileSkillTab component', async () => {
     const wrapper = await lpiMountSuspended(ProfileSkillTab, {
       props: { user: userTranslatedFactory.generate() },
     })
-    await flushTick()
-    expect(wrapper.exists()).toBeTruthy()
+    expect.poll(() => expect(wrapper.exists()).toBeTruthy())
   })
 
   it('should see that current user is the logged one', async () => {
