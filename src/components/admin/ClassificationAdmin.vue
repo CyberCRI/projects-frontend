@@ -114,7 +114,7 @@
     @classification-created="onClassificationCreated"
   />
 </template>
-<script>
+<script lang="ts">
 import { deleteOrgClassification } from 'shared-projects-frontend/apis'
 
 import ClassificationDescription from '~/components/admin/ClassificationDescription.vue'
@@ -125,12 +125,12 @@ import ConfirmModal from '~/components/base/modal/ConfirmModal.vue'
 import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
-import useToasterStore from '~/stores/useToaster.ts'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useToasterStore from '~/stores/useToaster'
 
-import useTagSearch from '~/composables/useTagSearch.ts'
+import useTagSearch from '~/composables/useTagSearch'
 
-import { isCustomClassification } from '~/functs/ClassificationUtils.ts'
+import { isCustomClassification } from '~/functs/ClassificationUtils'
 
 export default {
   name: 'ClassificationAdmin',
@@ -243,11 +243,11 @@ export default {
     },
     async onClassificationEdited() {
       this.closeEditClassification()
-      await this.reloadClassification(true)
+      await this.reloadClassification()
     },
     async onClassificationCreated() {
       this.closeEditClassification()
-      await this.reloadClassification(true)
+      await this.reloadClassification()
     },
     async onClassificationDeleted() {
       await this.reloadClassification()

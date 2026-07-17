@@ -113,16 +113,18 @@
     <LoaderSimple v-if="asyncing" class="loader" />
   </div>
 </template>
-<script>
+<script lang="ts">
 import { getUser, patchUserPrivacy } from 'shared-projects-frontend/apis'
 
+import type { GroupOption } from '~/components/base/button/GroupButton.vue'
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 import GroupButton from '~/components/base/button/GroupButton.vue'
 
-import useToasterStore from '~/stores/useToaster.ts'
-import useUsersStore from '~/stores/useUsers.ts'
+import type { PrivacySettings, PrivacyValue } from 'shared-projects-frontend/models'
+import useToasterStore from '~/stores/useToaster'
+import useUsersStore from '~/stores/useUsers'
 
-function defaultForm() {
+function defaultForm(): PrivacySettings {
   return {
     publication_status: 'pub',
     profile_picture: 'org',
@@ -188,21 +190,24 @@ export default {
           label: this.$t('profile.edit.privacy.options.hide'),
           iconName: 'EyeSlash',
           value: 'hide',
+          // @ts-expect-error
           rank: 0,
         },
         org: {
           label: this.$t('profile.edit.privacy.options.org'),
           iconName: 'PeopleGroup',
           value: 'org',
+          // @ts-expect-error
           rank: 1,
         },
         pub: {
           label: this.$t('profile.edit.privacy.options.pub'),
           iconName: 'Eye',
           value: 'pub',
+          // @ts-expect-error
           rank: 2,
         },
-      }
+      } satisfies { [key in PrivacyValue]: GroupOption }
     },
     settingsList() {
       return Object.values(this.optionsMap)

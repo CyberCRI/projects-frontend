@@ -117,7 +117,7 @@
                 :style="{
                   'background-image': `url(${runtimeConfig.public.appPublicBinariesPrefix}/sdgs/${lang}/${sdg.id}.svg)`,
                 }"
-                @click="toggle"
+                @click="sdg.selected = !sdg.selected"
               />
               <IconImage class="sdg-checkmark" name="Check" />
             </label>
@@ -173,7 +173,7 @@
   </template>
 </template>
 
-<script>
+<script lang="ts">
 import { helpers, required } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
 
@@ -184,15 +184,15 @@ import {
   postUserPicture,
 } from 'shared-projects-frontend/apis'
 
-import useToasterStore from '~/stores/useToaster.ts'
-import useUsersStore from '~/stores/useUsers.ts'
+import useToasterStore from '~/stores/useToaster'
+import useUsersStore from '~/stores/useUsers'
 
 import { usePatatoids } from '~/composables/usePatatoids'
 
 import ProfileEditBlock from '@/components/people/CompleteProfileDrawer/ProfileEditBlock.vue'
-import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils.ts'
+import { imageSizesFormData, pictureApiToImageSizes } from '~/functs/imageSizesUtils'
 import TipTapEditor from '@/components/base/form/TextEditor/TipTapEditor.vue'
-import { NULL_CONTENT, SDGS, VALID_NAME_REGEX } from '~/functs/constants.ts'
+import { NULL_CONTENT, SDGS, VALID_NAME_REGEX } from '~/functs/constants'
 import LoaderSimple from '@/components/base/loader/LoaderSimple.vue'
 import UserProfileV2 from '@/components/people/UserProfileV2.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
@@ -246,6 +246,7 @@ export default {
         family_name: '',
         job: '',
         description: '',
+        email: '',
       },
       bio: NULL_CONTENT,
       exempleToShow: null,

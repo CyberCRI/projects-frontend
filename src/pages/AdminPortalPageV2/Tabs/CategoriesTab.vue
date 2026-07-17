@@ -85,7 +85,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import {
   createProjectCategory,
   deleteProjectCategory,
@@ -103,12 +103,12 @@ import LinkButton from '~/components/base/button/LinkButton.vue'
 import LpiLoader from '~/components/base/loader/LpiLoader.vue'
 import LpiSnackbar from '~/components/base/LpiSnackbar.vue'
 
-import useProjectCategories from '~/stores/useProjectCategories.ts'
-import useToasterStore from '~/stores/useToaster.ts'
+import useProjectCategories from '~/stores/useProjectCategories'
+import useToasterStore from '~/stores/useToaster'
 
-import useOrganizationCode from '~/composables/useOrganizationCode.ts'
+import useOrganizationCode from '~/composables/useOrganizationCode'
 
-import { imageSizesFormData } from '~/functs/imageSizesUtils.ts'
+import { imageSizesFormData } from '~/functs/imageSizesUtils'
 import { Sortable } from 'sortablejs-vue3'
 import { toRaw } from 'vue'
 

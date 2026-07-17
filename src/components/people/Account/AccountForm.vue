@@ -348,7 +348,7 @@ export default {
   methods: {
     async resetPassword() {
       try {
-        await resetUserPassword(this.selectedUser.id)
+        await resetUserPassword(this.organization.code, this.selectedUser.id)
         this.toaster.pushSuccess(this.$t('account.password-reset.success'))
       } catch (error) {
         this.toaster.pushError(`${this.$t('account.password-reset.error')} (${error})`)
@@ -486,7 +486,7 @@ export default {
 
           imageSizesFormDataPost(formData, this.form.imageSizes)
 
-          await postUser(formData)
+          await postUser(this.organization.code, formData)
 
           this.toaster.pushSuccess(this.$t('account.create-success'))
         } else {

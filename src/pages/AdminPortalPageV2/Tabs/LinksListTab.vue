@@ -103,11 +103,11 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
 import { deleteInvitation, getInvitations } from 'shared-projects-frontend/apis'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
-import useToasterStore from '~/stores/useToaster.ts'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useToasterStore from '~/stores/useToaster'
 
 export default {
   name: 'LinksListTab',
@@ -177,8 +177,8 @@ export default {
       }
     },
     dateColor(iso_date) {
-      const date = new Date(iso_date)
-      const now = new Date()
+      const date = new Date(iso_date).getTime()
+      const now = new Date().getTime()
       const diff = date - now
       if (diff < 0) {
         // expired

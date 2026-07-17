@@ -131,7 +131,7 @@
     />
   </div>
 </template>
-<script>
+<script lang="ts">
 import { postInvitation } from 'shared-projects-frontend/apis'
 
 import DatePickerModal from '~/components/base/modal/DatePickerModal.vue'
@@ -142,8 +142,8 @@ import DisplayDate from '~/components/base/DisplayDate.vue'
 import GroupCard from '~/components/group/GroupCard.vue'
 
 import GroupSelectDrawer from '~/components/drawer/Group/GroupSelectDrawer.vue'
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
-import useToasterStore from '~/stores/useToaster.ts'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useToasterStore from '~/stores/useToaster'
 
 export default {
   name: 'LinkCreateTab',
@@ -154,7 +154,6 @@ export default {
     DatePickerModal,
     GroupSelectDrawer,
     GroupCard,
-    LpiButton,
     DisplayDate,
   },
   setup() {

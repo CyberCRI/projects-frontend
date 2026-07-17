@@ -126,7 +126,7 @@
       <LocationForm
         v-if="stateModals.LocationForm"
         v-model="locationEdit"
-        :location-types="LOCATION_TYPES"
+        :location-types="GROUP_LOCATIONS_TYPES"
         @close="closeModals('LocationForm')"
         @submit="submitLocations(locationEdit)"
         @delete="removeLocations(locationEdit)"
@@ -135,7 +135,7 @@
         :is-opened="stateModals.LocationDrawer"
         :locations="form.locations"
         editable
-        :location-types="LOCATION_TYPES"
+        :location-types="GROUP_LOCATIONS_TYPES"
         @close="closeModals('LocationDrawer')"
         @submit="submitLocations"
         @delete="removeLocations"
@@ -201,7 +201,7 @@
   />
 </template>
 
-<script>
+<script lang="ts">
 import {
   deleteGroup,
   patchGroupLocation,
@@ -215,11 +215,12 @@ import LocationList from '~/components/map/LocationList.vue'
 import SdgsDrawer from '~/components/sdgs/SdgsDrawer.vue'
 import SdgList from '~/components/sdgs/SdgList.vue'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useOrganizationsStore from '~/stores/useOrganizations'
 
 import { DEFAULT_GROUP_PATATOID } from '~/composables/usePatatoids'
 
 import TagSelectDrawer from '~/components/drawer/Tag/TagSelectDrawer.vue'
+import { GROUP_LOCATIONS_TYPES } from '~/functs/constants'
 import Field from '~/components/base/form/Field.vue'
 import { useRuntimeConfig } from '#imports'
 
@@ -261,6 +262,7 @@ export default {
       LocationDrawer: false,
     })
     return {
+      GROUP_LOCATIONS_TYPES,
       organizationsStore,
       runtimeConfig,
       stateModals,
@@ -272,7 +274,6 @@ export default {
 
   data() {
     return {
-      LOCATION_TYPES: ['address'],
       openSdg: false,
       openTags: false,
       loading: false,
@@ -377,7 +378,7 @@ export default {
     async removeGroup() {
       this.loading = true
       const organization = this.organizationsStore.current.code
-      await deleteGroup(organization, this.$route.params.groupIdOrSlug)
+      await deleteGroup(organization, this.$route.params.groupIdOrSlug.toString())
       this.loading = false
       this.$router.push({
         name: 'Groups',
@@ -388,7 +389,7 @@ export default {
       if (location.id) {
         await removeGroupLocation(
           this.organizationsStore.current.code,
-          this.$route.params.groupIdOrSlug,
+          this.$route.params.groupIdOrSlug.toString(),
           location.id
         )
         this.form.locations = this.form.locations.filter((el) => el.id !== location.id)
@@ -406,14 +407,14 @@ export default {
           this.form.locations = this.form.locations.filter((el) => el.id !== location.id)
           locationElement = await patchGroupLocation(
             this.organizationsStore.current.code,
-            this.$route.params.groupIdOrSlug,
+            this.$route.params.groupIdOrSlug.toString(),
             location.id,
             location
           )
         } else {
           locationElement = await postGroupLocation(
             this.organizationsStore.current.code,
-            this.$route.params.groupIdOrSlug,
+            this.$route.params.groupIdOrSlug.toString(),
             location
           )
         }

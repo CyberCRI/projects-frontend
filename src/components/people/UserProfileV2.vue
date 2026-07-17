@@ -100,7 +100,9 @@ export default {
 
   setup(props) {
     const usersStore = useUsersStore()
-    const { canEditUser } = usePermissionUser(computed(() => props.userId))
+    const { canEditUser } = usePermissionUser(
+      computed(() => parseInt(props.userId?.toString(), 10) || null)
+    )
     const { onboardingTrap } = useOnboardingStatus()
     const { t } = useNuxtI18n()
     const uniqueId = 'project-nav-panel'

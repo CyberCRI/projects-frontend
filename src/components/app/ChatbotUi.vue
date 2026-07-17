@@ -1,5 +1,5 @@
 <script setup>
-import useUsersStore from '@/stores/useUsers.ts'
+import useUsersStore from '@/stores/useUsers'
 // import { shuffle } from 'es-toolkit'
 import analytics from '@/analytics'
 import 'deep-chat'

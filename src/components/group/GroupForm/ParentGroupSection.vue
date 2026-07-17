@@ -30,7 +30,10 @@
 </template>
 
 <script setup lang="ts">
-import type { TrasnlatedHierarchyGroupModel } from 'shared-projects-frontend/models'
+import type {
+  TranslatedPeopleGroupModel,
+  TrasnlatedHierarchyGroupModel,
+} from 'shared-projects-frontend/models'
 import { getHierarchyGroups } from '~/api/v2/group.service'
 
 const props = defineProps<{
@@ -46,7 +49,8 @@ const { data: group, status } = getHierarchyGroups(props.organizationCode, {
     modules: 'none',
   },
 })
-const children = computed(() => group.value.children)
+// TODO fix types in shared-projects
+const children = computed(() => group.value.children as TranslatedPeopleGroupModel[])
 
 const confirmGroup = (group) => {
   model.value = group

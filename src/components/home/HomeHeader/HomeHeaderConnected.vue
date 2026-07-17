@@ -53,7 +53,7 @@
     <LpiLoader v-else class="loading" type="simple" />
   </div>
 </template>
-<script>
+<script lang="ts">
 import { getAllInstructions, searchProjects, getAllEvents } from 'shared-projects-frontend/apis'
 
 import InstructionSummaryBlock from '~/components/home/SummaryCards/InstructionSummaryBlock.vue'
@@ -62,9 +62,14 @@ import EventSummaryBlock from '~/components/home/SummaryCards/EventSummaryBlock.
 import LpiLoader from '~/components/base/loader/LpiLoader.vue'
 import LpiButton from '~/components/base/button/LpiButton.vue'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
-import useUsersStore from '~/stores/useUsers.ts'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useUsersStore from '~/stores/useUsers'
 
+import type {
+  QueryFilterEvent,
+  QueryFilterInstruction,
+  QueryFilterSearch,
+} from 'shared-projects-frontend/models'
 import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import { nowDate } from '~/functs/date'
 
@@ -169,9 +174,9 @@ export default {
         limit: 3,
         ordering: '-last_update',
         members: [this.usersStore.id],
-        member_role: ['owners', 'members', 'reviewers'],
+        // member_role: ['owners', 'members', 'reviewers'].join(','),
         organizations: [this.organizationsStore.current.code],
-      }
+      } satisfies QueryFilterSearch
       const response = await searchProjects('', { query })
       this.originalProject = response.results.map((result) => result.project)
     },
@@ -181,7 +186,7 @@ export default {
         ordering: 'start_date',
         from_date: nowDate().toISOString(),
         limit: this.summaryMaxEvents,
-      }
+      } satisfies QueryFilterEvent
       this.originalEvents = (
         await getAllEvents(this.organizationsStore.current?.code, {
           query,
@@ -194,7 +199,7 @@ export default {
         ordering: '-publication_date',
         to_date: nowDate().toISOString(),
         limit: 1,
-      }
+      } satisfies QueryFilterInstruction
       this.originalInstructions = (
         await getAllInstructions(this.organizationsStore.current?.code, {
           query,

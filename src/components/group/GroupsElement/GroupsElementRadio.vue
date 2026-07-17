@@ -56,7 +56,7 @@
   </li>
 </template>
 
-<script>
+<script lang="ts">
 import IconImage from '~/components/base/media/IconImage.vue'
 
 export default {

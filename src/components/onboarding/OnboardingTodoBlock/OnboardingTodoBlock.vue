@@ -58,7 +58,7 @@
         <div class="extra-actions">
           <LinkButton
             :label="$t('onboarding-todo.dont-show-again')"
-            :btn-icon="asyncing.show_progress ? 'LoaderSimple' : ''"
+            :btn-icon="asyncing.show_progress ? 'LoaderSimple' : null"
             @click="dontShowAgain"
           />
         </div>
@@ -66,14 +66,14 @@
     </transition>
   </div>
 </template>
-<script>
+<script lang="ts">
 import OnboardingTodo from '@/components/onboarding/OnboardingTodoBlock/OnboardingTodo.vue'
+import { usePermissionProject } from '~/composables/usePermissions/useProjectPermissions'
 import LinkButton from '@/components/base/button/LinkButton.vue'
 import LpiButton from '@/components/base/button/LpiButton.vue'
 import IconImage from '@/components/base/media/IconImage.vue'
 import { patchUser } from 'shared-projects-frontend/apis'
-import useUsersStore from '@/stores/useUsers.ts'
-// import { I18nT } from 'vue-i18n'
+import useUsersStore from '@/stores/useUsers'
 
 export default {
   name: 'OnboardingTodoBlock',
@@ -184,7 +184,7 @@ export default {
     },
 
     async dontShowAgain() {
-      this.show_progress = true
+      this.asyncing.show_progress = true
       await this.updateStatus('show_progress', false)
     },
   },

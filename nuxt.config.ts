@@ -146,14 +146,6 @@ export default defineNuxtConfig({
     },
 
     server: {
-      //host: '0.0.0.0',
-      //port: 8080,
-      // proxy: {
-      //     ...apiProxy,
-      // },
-      watch: {
-        usePolling: true,
-      },
       hmr: {
         port: 3010,
       },

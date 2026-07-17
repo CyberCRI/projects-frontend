@@ -41,11 +41,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { addParentGroup, getHierarchyGroups } from 'shared-projects-frontend/apis'
+import type { AsyncDataRequestStatus } from '#app'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
-import useToasterStore from '~/stores/useToaster.ts'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useToasterStore from '~/stores/useToaster'
 
 export default {
   name: 'GroupsListTab',
@@ -62,7 +63,7 @@ export default {
 
   data() {
     return {
-      status: 'pending',
+      status: 'pending' satisfies AsyncDataRequestStatus as AsyncDataRequestStatus,
       groups: [],
       loading: true,
       modalTitle: '',

@@ -101,13 +101,14 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import {
   acceptAccessRequest,
   declineAccessRequest,
   getAccessRequests,
   clientAPI,
 } from 'shared-projects-frontend/apis'
+import type { QueryFilterAccessRequests } from 'shared-projects-frontend/apis'
 
 import PaginationButtons from '~/components/base/navigation/PaginationButtons.vue'
 import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
@@ -115,8 +116,8 @@ import LpiLoader from '~/components/base/loader/LpiLoader.vue'
 import IconImage from '~/components/base/media/IconImage.vue'
 import ToolTip from '~/components/base/ToolTip.vue'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
-import useToasterStore from '~/stores/useToaster.ts'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import useToasterStore from '~/stores/useToaster'
 
 import { capitalize } from '~/functs/string'
 import { debounce } from 'es-toolkit'
@@ -144,7 +145,10 @@ export default {
   data() {
     return {
       isLoading: false,
-      request: {},
+      request: {
+        count: 0,
+        results: [],
+      } satisfies PaginationResult as PaginationResult,
       showPendingOnly: false,
     }
   },
@@ -182,7 +186,12 @@ export default {
           filter: 'message',
           order: '',
         },
-      ]
+      ] satisfies {
+        label: string
+        isActive: boolean
+        filter: string
+        order: ''
+      }[]
     },
     organization() {
       return this.organizationsStore.current
@@ -234,22 +243,24 @@ export default {
       if (el) el.scrollIntoView({ behavior: 'smooth' })
     },
 
-    searchRequest: debounce(async function () {
+    privateSearchRequest: async function () {
       this.isLoading = true
 
-      const activeFilter = this.filters.find((filter) => filter.isActive)
-      const params = activeFilter ? { ordering: activeFilter.order + activeFilter.filter } : {}
-
+      // TODO add filter tables
+      const query: QueryFilterAccessRequests = {}
       if (this.showPendingOnly) {
-        params.status = 'pending'
+        query.status = 'pending'
       }
 
       this.request = await getAccessRequests(this.organization.code, {
-        search: this.searchFilter,
-        ...params,
+        query,
       })
 
       this.isLoading = false
+    },
+
+    searchRequest: debounce(function (this: any) {
+      return this.privateSearchRequest()
     }, 500),
 
     async declineRequest(request) {

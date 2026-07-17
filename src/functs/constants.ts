@@ -171,6 +171,7 @@ export const PROJECTS_MEMBERS_ROLES: ProjectMemberRoleType[] = ['owners', 'membe
 export const GROUP_MEMBERS_ROLES: GroupMemberRoleType[] = ['leaders', 'managers', 'members']
 
 export const PROJECT_LOCATIONS_TYPES: LocationType[] = ['address', 'impact', 'team']
+export const GROUP_LOCATIONS_TYPES: LocationType[] = ['address']
 
 // bytes
 export const MAX_FILE_SIZE = Math.round(10 * 1024 * 1024)

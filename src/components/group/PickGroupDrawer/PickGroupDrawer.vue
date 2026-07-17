@@ -26,6 +26,7 @@
 import type {
   TranslatedPeopleGroupModel,
   HierarchyGroupModel,
+  TrasnlatedHierarchyGroupModel,
 } from 'shared-projects-frontend/models'
 import PickGroup from '~/components/group/PickGroup/PickGroup.vue'
 import FetchLoader from '~/components/base/FetchLoader.vue'
@@ -39,7 +40,7 @@ const props = withDefaults(
     // text before the serach input
     subtitle?: string
     // groups hierarchy
-    groups?: (HierarchyGroupModel | TranslatedPeopleGroupModel)[]
+    groups?: (TrasnlatedHierarchyGroupModel | TranslatedPeopleGroupModel)[]
     // initially selected group
     initialGroup?: HierarchyGroupModel
     isOpened?: boolean

@@ -1,5 +1,11 @@
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
+import { OrganizationFactory } from '~~/tests/factories/organization.factory'
+import useOrganizationsStore from '~/stores/useOrganizations'
+import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
+import { flushPromises } from '@vue/test-utils'
+import type { Router } from 'vue-router'
+
 const checkExpiredToken = vi.fn()
 const cleanLocalStorage = vi.fn()
 const getRefreshTokenInterval = vi.fn().mockReturnValue(1)
@@ -25,12 +31,6 @@ vi.mock('~/api/auth/auth.service', async (origi) => {
     })),
   }
 })
-
-import { OrganizationFactory } from '~~/tests/factories/organization.factory'
-import useOrganizationsStore from '~/stores/useOrganizations'
-import { lpiShallowMount } from '~~/tests/helpers/LpiMount'
-import { flushPromises } from '@vue/test-utils'
-import type { Router } from 'vue-router'
 
 describe('On tab focus', () => {
   beforeAll(() => {

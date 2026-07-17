@@ -74,7 +74,7 @@
     </AccountSection>
   </template>
 </template>
-<script>
+<script lang="ts">
 import { getHierarchyGroups } from 'shared-projects-frontend/apis'
 
 import GroupHierarchyList from '~/components/people/Account/GroupHierarchyList.vue'
@@ -83,7 +83,7 @@ import FilterValue from '~/components/search/Filters/FilterValue.vue'
 import LoaderSimple from '~/components/base/loader/LoaderSimple.vue'
 import LpiCheckbox from '~/components/base/form/LpiCheckbox.vue'
 
-import useOrganizationsStore from '~/stores/useOrganizations.ts'
+import useOrganizationsStore from '~/stores/useOrganizations'
 import { roleHelpI18n, roleI18n } from '~/functs/rolesUtils'
 
 export default {
