@@ -138,9 +138,10 @@ const updateHeader = async (groupId) => {
     !isEqual(form.value.imageSizes, pictureApiToImageSizes(groupData.value?.header_image))
   ) {
     if (
-      !(form.value.header_image instanceof File) &&
-      groupData.value?.header_image?.id != form.value.header_image?.id &&
-      groupData.value?.header_image?.id
+      (!(form.value.header_image instanceof File) &&
+        groupData.value?.header_image?.id != form.value.header_image?.id &&
+        groupData.value?.header_image?.id) ||
+      (form.value.header_image instanceof File && groupData.value?.header_image?.id)
     ) {
       await deleteGroupHeader(orgCode.value, groupId, groupData.value.header_image.id)
     }

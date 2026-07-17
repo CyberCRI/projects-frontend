@@ -122,8 +122,7 @@ const saveNews = async () => {
     if (form.value.imageSizes) imageSizesFormData(formData, form.value.imageSizes)
 
     if (
-      !(form.value.header_image instanceof File) &&
-      savedNews?.header_image?.id != form.value.header_image?.id &&
+      savedNews?.header_image?.id !== form.value.header_image?.id &&
       savedNews?.header_image?.id
     ) {
       await deleteNewsHeader(
@@ -148,7 +147,7 @@ const saveNews = async () => {
         payload.header_image_id,
         formData
       )
-    } else if (savedNews.header_image?.id) {
+    } else if (form.value.header_image?.id) {
       await patchNewsHeader(
         organizationsStore.current?.code,
         props.news.id,

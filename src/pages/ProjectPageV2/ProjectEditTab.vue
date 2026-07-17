@@ -61,9 +61,10 @@ const onSubmit = (form: ProjectFormType) => {
       imageSizesFormData(formData, form.imageSizes)
       // delete old file if is changed
       if (
-        !(form.file instanceof File) &&
-        props.project.header_image?.id != form.file?.id &&
-        props.project.header_image?.id
+        (!(form.file instanceof File) &&
+          props.project.header_image?.id != form.file?.id &&
+          props.project.header_image?.id) ||
+        (form.file instanceof File && props.project.header_image?.id)
       ) {
         await deleteProjectHeader(props.project.id, props.project.header_image.id)
       }

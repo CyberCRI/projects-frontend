@@ -65,11 +65,13 @@ const onClose = (snackbar) => toaster.deleteToast(snackbar.toast)
   align-items: center;
   flex-direction: column;
   gap: 0.5rem;
+  pointer-events: none;
 }
 
 .toast {
   box-shadow: 0 2px 5px rgb(54 54 54 / 50%);
   transition: all 0.5s ease;
   word-break: break-all;
+  pointer-events: all;
 }
 </style>

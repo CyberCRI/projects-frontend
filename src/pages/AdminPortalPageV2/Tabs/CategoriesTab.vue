@@ -323,16 +323,19 @@ export default {
         templates_ids: category.templates.map((el) => el.id),
       }
       delete data.imageSizes
-      let categoryId = category.id
-      if (!categoryId) {
-        const newCategory = await createProjectCategory(organizationCode, data)
-        categoryId = newCategory.id
+
+      if (!this.editedCategory?.id) {
+        this.editedCategory = await createProjectCategory(organizationCode, data)
       } else {
         // edit catgeory
-        await patchProjectCategory(organizationCode, categoryId, data)
+        this.editedCategory = await patchProjectCategory(
+          organizationCode,
+          this.editedCategory.id,
+          data
+        )
       }
       await this.setImage(
-        categoryId,
+        this.editedCategory.id,
         this.editedCategory.background_image,
         category.background_image,
         category.imageSizes
@@ -353,7 +356,7 @@ export default {
         await this.projectCategoriesStore.getAllProjectCategories()
         this.toaster.pushSuccess(this.$t('toasts.category-update.success'))
       } catch (error) {
-        this.toaster.pushError(`${this.$t('toasts.category-update.error')} (${error})`)
+        this.toaster.pushError(this.$t('toasts.category-update.error'))
         console.error(error)
       } finally {
         this.closeCategoryDrawer()
