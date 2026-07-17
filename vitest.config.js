@@ -62,6 +62,21 @@ export default defineVitestConfig({
     ],
   },
   test: {
+    onConsoleLog: (msg) => {
+      // ignore some logs (i18n/suspense)
+      const IGNORED_LOG = [
+        `[Vue warn]: App already provides property with key "Symbol(pinia)". It will be overwritten with the new value.`,
+        `[Vue warn]: Component "i18n-t" has already been registered in target app.`,
+        `[Vue warn]: Component "I18nT" has already been registered in target app.`,
+        `[Vue warn]: Component "i18n-n" has already been registered in target app.`,
+        `[Vue warn]: Component "I18nN" has already been registered in target app.`,
+        `[Vue warn]: Component "i18n-d" has already been registered in target app.`,
+        `[Vue warn]: Component "I18nD" has already been registered in target app.`,
+        `[Vue warn]: Directive "t" has already been registered in target app.`,
+        `<Suspense> is an experimental feature and its API will likely change.`,
+      ]
+      return !IGNORED_LOG.includes(msg.trim())
+    },
     server: {
       deps: {
         // Force all @tiptap packages through Vite's ESM bundler so they share
