@@ -15,7 +15,7 @@ vi.mock('~/composables/usePublic', () => ({
   usePublicURL: vi
     .fn()
     .mockImplementation(
-      (url) => `${process.env.NUXT_PUBLIC_APP_PUBLIC_BINARIES_PREFIX}${url || ''}`
+      (url) => `${process.env.NUXT_PUBLIC_APP_PUBLIC_BINARIES_PREFIX || ''}${url || ''}`
     ),
 }))
 

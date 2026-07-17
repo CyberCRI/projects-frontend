@@ -1,26 +1,31 @@
 import AccountDrawer from '~/components/people/Account/AccountDrawer.vue'
 import { lpiMount } from '~~/tests/helpers/LpiMount'
 
+import {
+  OrganizationFactory,
+  OrganizationOutputFactory,
+} from '~~/tests/factories/organization.factory'
 import ExistingAccountChecker from '~/components/people/Account/ExistingAccountChecker.vue'
-import { OrganizationOutputFactory } from '~~/tests/factories/organization.factory'
 import AccountLayout from '~/components/people/Account/AccountLayout.vue'
+import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { UserFactory } from '~~/tests/factories/user.factory'
 import useOrganizationsStore from '~/stores/useOrganizations'
 import { registerEndpoint } from '@nuxt/test-utils/runtime'
-import { beforeEach, describe, expect, it } from 'vitest'
 import { flushTick } from '~~/tests/helpers/utils'
 import { flushPromises } from '@vue/test-utils'
 
 describe('AccountDrawer', () => {
   let defaultProps
 
-  beforeEach(() => {
+  beforeAll(() => {
     const organizationStore = useOrganizationsStore()
-    const organization = OrganizationOutputFactory.generate()
+    const organization = OrganizationFactory.generate()
     organizationStore._current = organization
-
     registerEndpoint(`organization/`, () => ({ results: [organization] }))
+  })
 
+  beforeEach(() => {
+    vi.resetModules()
     defaultProps = {
       isAddMode: true,
       isInviteMode: false,
