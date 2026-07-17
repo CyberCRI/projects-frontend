@@ -130,7 +130,7 @@ export const initializeServerClientApi = (baseURL: string) => {
     return {
       baseURL,
       method: 'GET',
-      async onResponseError({ request, options, response }) {
+      async onResponseError({ options }) {
         const opts = options as ClientAPIOptions
         // // keep for futur debug
         // console.error(response)
