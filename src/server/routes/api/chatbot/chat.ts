@@ -9,6 +9,7 @@ import getMetadata from '@/server/projects-agent/agent/get-metadata'
 import { traceMcp } from '@/server/projects-agent/tracers/trace-mcp'
 import checkAdminRights from '@/server/utils/check-admin-rights.js'
 import getAgent from '@/server/projects-agent/agent/get-agent'
+import { getUser } from '@/server/utils/check-admin-rights.js'
 import { tokenMap } from '@/server/routes/api/chat-stream'
 import { v4 as uuidv4 } from 'uuid'
 
