@@ -16,9 +16,7 @@ const useLpiHead = (url, _title, _description, image, dimensions = null) => {
   let imgMimeType = 'image/jpeg'
   if (image) {
     try {
-      const imgUrl = new URL(image)
-      const imgPath = imgUrl.pathname
-      const imgExt = imgPath.split('.').pop().toLowerCase()
+      const imgExt = image.split('.').pop().toLowerCase()
       if (imgExt == 'png') imgMimeType = 'image/png'
       if (imgExt == 'webp') imgMimeType = 'image/webp'
     } catch (err) {

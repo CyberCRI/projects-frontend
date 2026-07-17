@@ -25,7 +25,7 @@ describe('NewHomePage', () => {
   let usersStore
   beforeEach(() => {
     usersStore = useUsersStore(pinia)
-    usersStore.isConnected = false
+    usersStore.userFromApi = usersStore.userFromToken = null
     const organizationsStore = useOrganizationsStore(pinia)
     organizationsStore._current = { id: 'TEST', code: 'TEST' } as unknown as OrganizationOutput
     const projectCategories = useProjectCategoriesStore(pinia)
