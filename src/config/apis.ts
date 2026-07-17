@@ -121,3 +121,26 @@ export const initializeClientApi = () => {
     } satisfies ClientAPIOptions
   })
 }
+
+export const initializeServerClientApi = (baseURL: string) => {
+  // @ts-expect-error ignore types
+  configureClientAPI($fetch)
+
+  configureOptionsAPI(() => {
+    return {
+      baseURL,
+      method: 'GET',
+      async onResponseError({ options }) {
+        const opts = options as ClientAPIOptions
+        // // keep for futur debug
+        // console.error(response)
+        // var e = new Error()
+        // console.log(e.stack.split('\n').map((s) => s.substring(s.lastIndexOf('/'))))
+        if (opts.noError) {
+          // console.error(error)
+          return null
+        }
+      },
+    }
+  })
+}
