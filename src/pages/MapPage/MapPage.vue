@@ -22,7 +22,9 @@ import { useLpiHead2 } from '~/composables/useLpiHead'
 const organizationCode = useOrganizationCode()
 const { t } = useNuxtI18n()
 
-const { isLoading, data } = getLocations(organizationCode)
+const { isLoading, data } = getLocations(organizationCode, {
+  default: () => [],
+})
 
 const isEmpty = computed(() => (data.value?.length ?? 0) === 0)
 
